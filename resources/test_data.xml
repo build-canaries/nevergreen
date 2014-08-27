@@ -1,0 +1,6 @@
+<Projects>
+    <Project name="name1 :: pipeline1 :: stage1" lastBuildStatus="Success"/>
+    <Project name="name2 :: pipeline2 :: stage2" lastBuildStatus="Success"/>
+    <Project name="name3 :: pipeline3 :: stage3" lastBuildStatus="Failure"/>
+    <random stuff="random-stuff"/>
+</Projects>

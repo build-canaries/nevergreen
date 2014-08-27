@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Leiningen: hiccup:1.0.3">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/hiccup/hiccup/1.0.3/hiccup-1.0.3.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

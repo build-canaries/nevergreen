@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Leiningen: clj-stacktrace:0.2.5">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/clj-stacktrace/clj-stacktrace/0.2.5/clj-stacktrace-0.2.5.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
