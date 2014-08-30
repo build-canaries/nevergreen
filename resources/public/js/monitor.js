@@ -1,31 +1,34 @@
-var columns = 3
-var itemPadding = 10
+var maxColumns = 3
+var buildStatusPadding = 10
+var fontResizeFactor = 1.6
+
+function buildStatusCount() {
+    return $('li').size()
+}
 
 function numberOfColumns() {
-    var buildStatusCount = $('li').size()
-    return Math.min(columns, $('li').size())
+    return Math.min(maxColumns, buildStatusCount())
 }
 
 function numberOfRows() {
-    var buildStatusCount = $('li').size()
-    return Math.ceil(buildStatusCount / columns)
+    return Math.ceil(buildStatusCount() / maxColumns)
 }
 
 function buildStatusWidth() {
-    return window.innerWidth / numberOfColumns() - itemPadding
+    return window.innerWidth / numberOfColumns() - buildStatusPadding
 }
 
 function buildStatusHeight() {
-    return window.innerHeight / numberOfRows() - itemPadding
+    return window.innerHeight / numberOfRows() - buildStatusPadding
+}
+
+function scaleFontToContainerSize() {
+    $(".outerContainer").fitText(fontResizeFactor)
 }
 
 function styleListItems() {
     $('.outerContainer').height(buildStatusHeight()).width(buildStatusWidth())
     scaleFontToContainerSize()
-}
-
-function scaleFontToContainerSize() {
-    $(".outerContainer").fitText(1.75)
 }
 
 function addBuildStatusToScreen(project) {
