@@ -1,16 +1,36 @@
-//every 5 seconds
-    //call /projects
-    //foreach proj
-        //add li
+var columns = 3
+var itemPadding = 10
 
-setInterval(function(){
+function widthGiven(itemCount) {
+  return window.innerWidth / Math.min(columns, itemCount) - itemPadding
+}
+
+function heightGiven(itemCount) {
+  return window.innerHeight / Math.ceil(itemCount / columns) - itemPadding
+}
+
+function styleListItems() {
+  var itemCount = $('li').size()
+  $('li')
+    .height(heightGiven(itemCount))
+    .width(widthGiven(itemCount))
+    .css('line-height', heightGiven(itemCount) + 'px');
+}
+
+function grabLatestData() {
     $.getJSON("/projects").then(function(data){
-        $('#projects').empty();
+        $('#projects').empty()
+
         data.body.forEach(function(project){
-            var buildStatus = project.lastBuildStatus;
+            var buildStatus = project.lastBuildStatus
             if(buildStatus !== "Success"){
-                $('#projects').append('<li>' + project.name +'</li>');
+                var item = $('#projects').append('<li>' + project.name +'</li>')
             }
-        });
-    });
-}, 5000);
+        })
+
+        styleListItems()
+    })
+}
+
+grabLatestData(); // run immediately
+setInterval(grabLatestData, 5000);
