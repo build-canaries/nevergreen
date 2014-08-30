@@ -8,6 +8,7 @@
             [cheshire.core :refer :all]))
 
 (defroutes main-routes
+           (GET "/" [] (clojure.java.io/resource "public/index.html"))
            (GET "/projects" [] (generate-string {:content-type "application/json" :body (parser/get-projects "resources/test_data.xml")}))
            (route/resources "/"))
 
