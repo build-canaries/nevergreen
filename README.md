@@ -2,9 +2,7 @@
 
 A Clojure library designed to ... well, that part is up to you.
 
-## Usage
-
-FIXME
+See a demo at [http://build-monitor-clj.herokuapp.com]
 
 ## CC Tray XML
 
