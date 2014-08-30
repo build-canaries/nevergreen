@@ -1,7 +1,7 @@
 function Styler() {
-    this.maxColumns = 3
-    this.buildStatusPadding = 10
-    this.fontResizeFactor = 1.6
+    var maxColumns = 3
+    var buildStatusPadding = 10
+    var fontResizeFactor = 1.6
 
     function buildStatusCount() {
         return $('li').size()
@@ -27,35 +27,37 @@ function Styler() {
         $(".outerContainer").fitText(fontResizeFactor)
     }
 
-    this.styleListItems = function () {
+    this.styleProjects = function () {
         $('.outerContainer').height(buildStatusHeight()).width(buildStatusWidth())
         scaleFontToContainerSize()
     }
 }
 
 function StatusAppender(projects) {
-    this.projects = projects
-
     function addBuildStatusToScreen(project) {
-        var buildStatus = project.lastBuildStatus
-        if(buildStatus !== "Success"){
-            $('#projects').append("<li><div class=outerContainer><div class=innerContainer>" +
-            project.name + "</div></div></li>")
-        }
+        $('#projects').append("<li><div class=outerContainer><div class=innerContainer>" +
+        project.name + "</div></div></li>")
     }
 
-    this.addListItems = function() {
+    this.addProjects = function() {
         $('#projects').empty()
         projects.forEach(addBuildStatusToScreen)
     }
 }
 
-function updateBuildMonitor() {
-    $.getJSON("/projects").then(function(data){
-        new StatusAppender(data.body).addListItems()
-        new Styler().styleListItems()
-    })
+function Updater(frequency) {
+    function updateBuildMonitor() {
+        $.getJSON("/projects").then(function(data){
+            new StatusAppender(data.body).addProjects()
+            new Styler().styleProjects()
+        })
+    }
+
+    this.start = function() {
+        updateBuildMonitor() // run immediately
+        setInterval(updateBuildMonitor, frequency)
+    }
 }
 
-updateBuildMonitor() // run immediately
-setInterval(updateBuildMonitor, 5000)
+var fiveSeconds = 5000
+new Updater(fiveSeconds).start()
