@@ -1,6 +1,7 @@
 <Projects>
-    <Project name="name1 :: pipeline1 :: stage1" lastBuildStatus="Success"/>
-    <Project name="name2 :: pipeline2 :: stage2" lastBuildStatus="Success"/>
-    <Project name="name3 :: pipeline3 :: stage3" lastBuildStatus="Failure"/>
+    <Project name="success-sleeping-project :: pipeline1 :: stage1" activity="Sleeping" lastBuildStatus="Success"/>
+    <Project name="success-building-project :: pipeline1 :: stage1" activity="Building" lastBuildStatus="Success"/>
+    <Project name="failure_sleeping_project :: pipeline3 :: stage3" activity="Sleeping" lastBuildStatus="Failure"/>
+    <Project name="failure_building_project :: pipeline3 :: stage3" activity="Building" lastBuildStatus="Failure"/>
     <random stuff="random-stuff"/>
 </Projects>
