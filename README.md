@@ -6,6 +6,10 @@ A Clojure library designed to ... well, that part is up to you.
 
 FIXME
 
+## CC Tray XML
+
+See [https://github.com/robertmaldon/cc_dashboard/blob/master/README.md#summary]
+
 ## License
 
 Copyright © 2014 FIXME

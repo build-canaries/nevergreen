@@ -2,19 +2,19 @@ var columns = 3
 var itemPadding = 10
 
 function widthGiven(itemCount) {
-  return window.innerWidth / Math.min(columns, itemCount) - itemPadding
+    return window.innerWidth / Math.min(columns, itemCount) - itemPadding
 }
 
 function heightGiven(itemCount) {
-  return window.innerHeight / Math.ceil(itemCount / columns) - itemPadding
+    return window.innerHeight / Math.ceil(itemCount / columns) - itemPadding
 }
 
 function styleListItems() {
-  var itemCount = $('li').size()
-  $('li')
-    .height(heightGiven(itemCount))
-    .width(widthGiven(itemCount))
-    .css('line-height', heightGiven(itemCount) + 'px');
+    var itemCount = $('li').size()
+    $('li')
+        .height(heightGiven(itemCount))
+        .width(widthGiven(itemCount))
+        .css('line-height', heightGiven(itemCount) + 'px');
 }
 
 function grabLatestData() {
@@ -24,8 +24,10 @@ function grabLatestData() {
         data.body.forEach(function(project){
             var buildStatus = project.lastBuildStatus
             if(buildStatus !== "Success"){
-                var item = $('#projects').append('<li>' + project.name +'</li>')
-            }
+                $("<li>", {
+                    class: project.lastBuildStatus,
+                    text: project.name})
+                    .appendTo('#projects')}
         })
 
         styleListItems()
