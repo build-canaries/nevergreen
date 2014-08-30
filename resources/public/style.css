@@ -14,12 +14,7 @@ ul {
 }
 
 li {
-  font-size: 4em;
   margin: 5px;
   border-radius: 5px;
-  float: left;
-}
-
-.Failure {
   background-color: red;
 }

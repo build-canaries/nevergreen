@@ -11,10 +11,15 @@ function heightGiven(itemCount) {
 
 function styleListItems() {
     var itemCount = $('li').size()
-    $('li')
+    $('.outerContainer')
         .height(heightGiven(itemCount))
         .width(widthGiven(itemCount))
-        .css('line-height', heightGiven(itemCount) + 'px');
+
+    scaleFontToContainerSize()
+}
+
+function scaleFontToContainerSize() {
+    $("li").fitText()
 }
 
 function grabLatestData() {
@@ -24,10 +29,9 @@ function grabLatestData() {
         data.body.forEach(function(project){
             var buildStatus = project.lastBuildStatus
             if(buildStatus !== "Success"){
-                $("<li>", {
-                    class: project.lastBuildStatus,
-                    text: project.name})
-                    .appendTo('#projects')}
+                $('#projects').append("<li><div class=outerContainer><div class=innerContainer>" +
+                project.name + "</div></div></li>")
+            }
         })
 
         styleListItems()
