@@ -9,7 +9,7 @@
 (defroutes main-routes
            (GET "/" [] (clojure.java.io/resource "public/index.html"))
            (GET "/projects" [] (generate-string {:content-type "application/json"
-                                                 :body         (parser/get-projects "resources/test_data.xml")}))
+                                                 :body         (parser/get-interesting-projects "resources/test_data.xml")}))
            (route/resources "/"))
 
 (def app

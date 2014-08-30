@@ -35,8 +35,9 @@ function Styler() {
 
 function StatusAppender(projects) {
     function addBuildStatusToScreen(project) {
-        $('#projects').append("<li><div class=outerContainer><div class=innerContainer>" +
-        project.name + "</div></div></li>")
+        $('#projects')
+         .append("<li class=" + project.prognosis + "><div class=outerContainer><div class=innerContainer>" +
+          project.name + "</div></div></li>")
     }
 
     this.addProjects = function() {

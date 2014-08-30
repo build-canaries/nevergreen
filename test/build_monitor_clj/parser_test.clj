@@ -1,6 +1,7 @@
 (ns build-monitor-clj.parser-test
   (:require [build-monitor-clj.parser :as subject]
-            [midje.sweet :refer :all]))
+            [midje.sweet :refer :all]
+            [build-monitor-clj.parser :as subject]))
 
 (fact "Will split projec names with hyphens and underscores in them"
       (subject/sentanceize "first_second-third") => "first second third")
@@ -16,8 +17,18 @@
          "Success" "Building" "healthy-building"
          "Failure" "Sleeping" "sick"
          "Failure" "Building" "sick-building"
-         "random"  "random"   "unknown"
-         )
+         "random"  "random"   "unknown")
+
+(fact "can filter out green projects"
+      (subject/get-interesting-projects anything) =>
+      [{:prognosis "healthy-building"}
+       {:prognosis "sick-building"}
+       {:prognosis "sick"}]
+      (provided
+        (subject/get-projects anything) => [{:prognosis "healthy-building"}
+                                            {:prognosis "sick-building"}
+                                            {:prognosis "healthy"}
+                                            {:prognosis "sick"}]))
 
 (facts "integration tests"
        (fact "will turn xml to map"

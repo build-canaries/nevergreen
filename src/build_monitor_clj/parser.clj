@@ -34,3 +34,6 @@
   (->> (:content (to-map url))
        (map #(extract-attributes %))
        (remove nil?)))
+
+(defn get-interesting-projects [url]
+  (filter (fn [{:keys [prognosis]}] (not= prognosis "healthy")) (get-projects url)))

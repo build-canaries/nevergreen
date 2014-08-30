@@ -22,5 +22,20 @@ ul {
 li {
   margin: 5px;
   border-radius: 5px;
+}
+
+.healthy {
+  background-color: green;
+}
+
+.healthy-building {
+  background-color: yellow;
+}
+
+.sick {
   background-color: red;
+}
+
+.sick-building {
+  background-color: orange;
 }
