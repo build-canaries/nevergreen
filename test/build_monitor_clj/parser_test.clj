@@ -14,3 +14,6 @@
       (subject/get-projects "resources/test_data.xml") => [{:name "name1" :pipeline "pipeline1" :stage "stage1" :lastBuildStatus "Success"}
                                                            {:name "name2" :pipeline "pipeline2" :stage "stage2" :lastBuildStatus "Success"}
                                                            {:name "name3" :pipeline "pipeline3" :stage "stage3" :lastBuildStatus "Failure"}])
+
+(fact "Will split names with hyphens and underscores in them"
+      (subject/sentanceize "first_second-third") => "first second third")

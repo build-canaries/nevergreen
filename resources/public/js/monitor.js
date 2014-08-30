@@ -19,7 +19,7 @@ function styleListItems() {
 }
 
 function scaleFontToContainerSize() {
-    $("li").fitText()
+    $(".outerContainer").fitText(1.75)
 }
 
 function grabLatestData() {
