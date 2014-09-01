@@ -2,6 +2,7 @@
             :description "An interesting build monitor"
             :url "https://github.com/cowley05/build-monitor-clj"
             :dependencies [[org.clojure/clojure "1.6.0"]
+                           [midje "1.6.3"]
                            [ring "1.2.2"]
                            [environ "0.5.0"]
                            [compojure "1.1.8"]
