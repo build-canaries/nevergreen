@@ -2,7 +2,7 @@
 /classes
 /checkouts
 pom.xml
-.idea/*
+.idea
 pom.xml.asc
 *.jar
 *.iml
