@@ -16,6 +16,7 @@ See https://github.com/robertmaldon/cc_dashboard/blob/master/README.md#summary
 * Config via environment variables (see http://12factor.net/config)
 * Themeable - Zero broken/building builds screen (http-status-cats, keep calm and keep committing, Days since last accident)
 * Themeable - Build status change noises
+* D3 screen
 
 ## License
 
