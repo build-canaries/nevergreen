@@ -2,17 +2,25 @@
   (:require [midje.sweet :refer :all]
             [build-monitor-clj.reducer :as subject]))
 
+(defn project
+  [overrides] (merge {:name      "project1"
+                      :stage     "stage1"
+                      :job       "job1"
+                      :prognosis "healthy"} overrides))
+
 (facts "aggregates project results"
-       (facts "given two projects with the same name"
-              (fact "when both have same prognosis return only one"
-                    (subject/aggregate [{:name            "project1"
-                                         :stage           "stage1"
-                                         :job             "job1"
-                                         :prognosis       "healthy"}
-                                        {:name            "project1"
-                                         :stage           "stage2"
-                                         :job             "job2"
-                                         :prognosis       "healthy"}]) => [{:name            "project1"
-                                                                            :stage           "stage2"
-                                                                            :job             "job2"
-                                                                            :prognosis       "healthy"}])))
+       (fact "when both have same prognosis, only one is returned"
+             (subject/aggregate [(project {:stage "stage1"})
+                                 (project {:stage "stage2"})])
+             => [(project {:stage "stage1"})])
+
+       (fact "different prognosis return higher priority"
+             (subject/aggregate [(project {:prognosis "sick"})
+                                 (project {:prognosis "healthy"})])
+             => [(project {:prognosis "sick"})])
+
+       (fact "projects with different names are both returned"
+             (subject/aggregate [(project {:name "one"})
+                                 (project {:name "two"})])
+             => [(project {:name "one"})
+                 (project {:name "two"})]))
