@@ -1,6 +1,7 @@
 (ns build-monitor-clj.parser
   (:require [clojure.xml :as xml]
-            [clojure.string :refer [split join]]))
+            [clojure.string :refer [split join]]
+            [build-monitor-clj.properties :refer :all]))
 
 (defn sentanceize [input-string]
   (clojure.string/replace input-string #"[-_]+", " "))
@@ -10,9 +11,9 @@
 
 (defn extract-name [name]
   (let [split-name (split name #"\s::\s")]
-    {:name     (sentanceize (first split-name))
+    {:name  (sentanceize (first split-name))
      :stage (second split-name)
-     :job    (last split-name)}))
+     :job   (last split-name)}))
 
 (defn extract-health [{:keys [lastBuildStatus activity]}]
   (cond
@@ -29,6 +30,9 @@
       (:attrs data)
       (extract-name (get-in data [:attrs :name]))
       (extract-health (get-in data [:attrs])))))
+
+(defn includes [data]
+  (filter #(some #{(:name %)} (included-projects)) data))
 
 (defn get-projects [url]
   (->> (:content (to-map url))
