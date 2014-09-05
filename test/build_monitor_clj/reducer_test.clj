@@ -27,8 +27,17 @@
                  (project {:name "two"})]))
 
 
-(fact "only includes included projects"
-      (subject/filter-for-white-listed-projects [{:name "foo"}
-                         {:name "bar"}]) => [{:name "foo"}]
-      (provided
-        (included-projects) => ["foo"]))
+(facts "white listing"
+       (fact "only includes included projects"
+             (subject/filter-for-white-listed-projects [{:name "foo"}
+                                                        {:name "bar"}]) => [{:name "foo"}]
+             (provided
+               (included-projects) => ["foo"]))
+
+       (fact "allows regular expressions"
+             (subject/filter-for-white-listed-projects [{:name "foo"}
+                                                        {:name "fwibble"}
+                                                        {:name "bar"}]) => [{:name "foo"}
+                                                                            {:name "fwibble"}]
+             (provided
+               (included-projects) => ["f.*"])))
