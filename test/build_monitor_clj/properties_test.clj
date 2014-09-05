@@ -1,8 +1,15 @@
 (ns build-monitor-clj.properties-test
   (:require [build-monitor-clj.properties :as subject]
+            [environ.core :refer [env]]
             [midje.sweet :refer :all]))
 
-(fact "included projects"
-      (subject/included-projects) => ["foo" "bar"]
-      (provided
-        (subject/env "INCLUDED_PROJECTS") => "foo,bar"))
+(facts "included projects"
+       (fact "parse simple case"
+             (subject/included-projects) => ["foo" "bar"]
+             (provided
+               (env :included-projects) => "foo,bar"))
+
+       (fact "trims spaces from begining and end"
+             (subject/included-projects) => ["foo" "bar bar"]
+             (provided
+               (env :included-projects) => " foo , bar bar ")))

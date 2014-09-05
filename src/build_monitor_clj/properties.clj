@@ -1,11 +1,9 @@
 (ns build-monitor-clj.properties
-  (:require [clojure.string :refer [split]]))
-
-(defn env [name]
-  (System/getenv name))
+  (:require [clojure.string :refer [split trim]]
+            [environ.core :refer [env]]))
 
 (defn cctray-url []
-  (env "CCTRAY_URL"))
+  (env :cctray-url))
 
 (defn included-projects []
-  (split (env "INCLUDED_PROJECTS") #","))
+  (map trim (split (env :included-projects) #",")))

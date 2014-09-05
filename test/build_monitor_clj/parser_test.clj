@@ -1,7 +1,6 @@
 (ns build-monitor-clj.parser-test
   (:require [build-monitor-clj.parser :as subject]
-            [midje.sweet :refer :all]
-            [build-monitor-clj.properties :refer :all]))
+            [midje.sweet :refer :all]))
 
 (fact "Will split projec names with hyphens and underscores in them"
       (subject/sentanceize "first_second-third") => "first second third")
@@ -30,11 +29,7 @@
                                             {:prognosis "healthy"}
                                             {:prognosis "sick"}]))
 
-(fact "only includes included projects"
-      (subject/includes [{:name "foo"}
-                         {:name "bar"}]) => [{:name "foo"}]
-      (provided
-        (included-projects) => ["foo"]))
+
 
 (facts "integration tests"
        (fact "will turn xml to map"

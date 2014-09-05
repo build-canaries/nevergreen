@@ -1,7 +1,6 @@
 (ns build-monitor-clj.parser
   (:require [clojure.xml :as xml]
-            [clojure.string :refer [split join]]
-            [build-monitor-clj.properties :refer :all]))
+            [clojure.string :refer [split join]]))
 
 (defn sentanceize [input-string]
   (clojure.string/replace input-string #"[-_]+", " "))
@@ -21,8 +20,7 @@
     (and (= lastBuildStatus "Success") (= activity "Building")) {:prognosis "healthy-building"}
     (and (= lastBuildStatus "Failure") (= activity "Sleeping")) {:prognosis "sick"}
     (and (= lastBuildStatus "Failure") (= activity "Building")) {:prognosis "sick-building"}
-    :else {:prognosis "unknown"}
-    ))
+    :else {:prognosis "unknown"}))
 
 (defn extract-attributes [data]
   (if (= (:tag data) :Project)
@@ -30,9 +28,6 @@
       (:attrs data)
       (extract-name (get-in data [:attrs :name]))
       (extract-health (get-in data [:attrs])))))
-
-(defn includes [data]
-  (filter #(some #{(:name %)} (included-projects)) data))
 
 (defn get-projects [url]
   (->> (:content (to-map url))
