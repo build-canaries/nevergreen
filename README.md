@@ -1,4 +1,4 @@
-# build-monitor-clj
+# build-monitor-clj [![Build Status](https://travis-ci.org/cowley05/build-monitor-clj.svg?branch=master)](https://travis-ci.org/cowley05/build-monitor-clj)
 
 A Clojure application designed to run an interesting build monitor.
 
