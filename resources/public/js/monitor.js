@@ -43,6 +43,10 @@ function StatusAppender(projects) {
     this.addProjects = function() {
         $('#projects').empty()
         projects.forEach(addBuildStatusToScreen)
+        if(projects.length === 0) {
+            $('#projects')
+                .append("<li><div class=outerContainer><div class=innerContainer>Status Cats will return shortly =(^.^)= ...</div></div></li>")
+        }
     }
 }
 
