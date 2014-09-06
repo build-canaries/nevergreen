@@ -6,14 +6,24 @@ It uses the *cctray.xml* format which is supported by nearly all CI servers. (I'
 
 See a demo at http://build-monitor-clj.herokuapp.com
 
-## CC Tray XML
+## How to Run
+
+The build monitor runs on port 5000.
+
+```
+export CCTRAY_URL=https://builds.apache.org/cc.xml
+export INCLUDED_PROJECTS=".*"
+lein ring server
+```
+
+# Contributing
+
+## CC Tray XML Spec
 
 See https://github.com/robertmaldon/cc_dashboard/blob/master/README.md#summary
 
 ## TODO
 
-* Connect to cctray.xml on real server
-* Config via environment variables (see http://12factor.net/config)
 * Themeable - Zero broken/building builds screen (http-status-cats, keep calm and keep committing, Days since last accident)
 * Themeable - Build status change noises
 * D3 screen
