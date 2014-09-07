@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="Leiningen: gui-diff:0.5.0">
-    <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/gui-diff/gui-diff/0.5.0/gui-diff-0.5.0.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
