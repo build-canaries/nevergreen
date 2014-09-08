@@ -4,7 +4,7 @@ function Styler() {
     var fontResizeFactor = 1.6
 
     function buildStatusCount() {
-        return $('li').size()
+            return $('li').size()
     }
 
     function numberOfColumns() {
@@ -16,7 +16,7 @@ function Styler() {
     }
 
     function buildStatusWidth() {
-        return window.innerWidth / numberOfColumns() - buildStatusPadding
+        return window.innerWidth / numberOfColumns() - (buildStatusPadding * 2)
     }
 
     function buildStatusHeight() {
@@ -52,8 +52,8 @@ function StatusAppender(projects) {
 
 function Updater(frequency) {
     function updateBuildMonitor() {
-        $.getJSON("/projects").then(function(data){
-            new StatusAppender(data.body).addProjects()
+        $.getJSON("/all").then(function(data){
+            new StatusAppender(data).addProjects()
             new Styler().styleProjects()
         })
     }
@@ -64,5 +64,5 @@ function Updater(frequency) {
     }
 }
 
-var fiveSeconds = 5000
+var fiveSeconds = 500000
 new Updater(fiveSeconds).start()

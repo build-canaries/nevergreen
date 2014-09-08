@@ -12,9 +12,12 @@
 
 (defroutes main-routes
            (GET "/" [] (clojure.java.io/resource "public/index.html"))
-           (GET "/projects" [] (generate-string {:content-type "application/json"
-                                                 :body         (reducer/show-selected-projects
-                                                                 (parser/get-interesting-projects (cctray-url)))}))
+           (GET "/all" [] {:content-type "application/json"
+                           :body         (generate-string (reducer/aggregate
+                                                            (parser/get-projects (cctray-url))))})
+           (GET "/interesting" [] {:content-type "application/json"
+                                   :body         (generate-string (reducer/show-selected-projects
+                                                                    (parser/get-interesting-projects (cctray-url))))})
            (route/resources "/"))
 
 (def app
