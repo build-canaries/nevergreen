@@ -52,7 +52,7 @@ function StatusAppender(projects) {
 
 function Updater(frequency) {
     function updateBuildMonitor() {
-        $.getJSON("/all").then(function(data){
+        $.getJSON("/interesting").then(function(data){
             new StatusAppender(data).addProjects()
             new Styler().styleProjects()
         })
@@ -64,5 +64,5 @@ function Updater(frequency) {
     }
 }
 
-var fiveSeconds = 500000
+var fiveSeconds = 5000
 new Updater(fiveSeconds).start()

@@ -7,3 +7,6 @@
 
 (defn included-projects []
   (map trim (split (env :included-projects) #",")))
+
+(defn excluded-projects []
+  (map trim (split (env :excluded-projects) #",")))
