@@ -13,12 +13,12 @@
 (defn- name-matches [regex project]
   (re-matches (Pattern/compile regex) (:name project)))
 
-(defn filter-for-white-listed-projects [projects]
+(defn include-whitelisted-projects [projects]
   (filter #(some (fn [regex] (name-matches regex %)) (included-projects)) projects))
 
-(defn filter-black-listed-projects [projects]
+(defn filter-blacklisted-projects [projects]
   (filter #(not-any? (fn [regex] (name-matches regex %)) (excluded-projects)) projects))
 
 (defn show-selected-projects [projects]
   (->> (aggregate projects)
-       (filter-for-white-listed-projects)))
+       (include-whitelisted-projects)))

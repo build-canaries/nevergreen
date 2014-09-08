@@ -27,31 +27,31 @@
                  (project {:name "two"})]))
 
 
-(facts "white listing"
+(facts "whitelisting"
        (fact "only includes included projects"
-             (subject/filter-for-white-listed-projects [{:name "foo"}
-                                                        {:name "bar"}]) => [{:name "foo"}]
+             (subject/include-whitelisted-projects [{:name "foo"}
+                                                    {:name "bar"}]) => [{:name "foo"}]
              (provided
                (included-projects) => ["foo"]))
 
        (fact "allows regular expressions"
-             (subject/filter-for-white-listed-projects [{:name "foo"}
-                                                        {:name "fwibble"}
-                                                        {:name "bar"}]) => [{:name "foo"}
-                                                                            {:name "fwibble"}]
+             (subject/include-whitelisted-projects [{:name "foo"}
+                                                    {:name "fwibble"}
+                                                    {:name "bar"}]) => [{:name "foo"}
+                                                                        {:name "fwibble"}]
              (provided
                (included-projects) => ["f.*"])))
 
-(facts "black listing"
+(facts "blacklisting"
        (fact "excludes excluded projects"
-             (subject/filter-black-listed-projects [{:name "foo"}
-                                                    {:name "bar"}]) => [{:name "foo"}]
+             (subject/filter-blacklisted-projects [{:name "foo"}
+                                                   {:name "bar"}]) => [{:name "foo"}]
              (provided
                (excluded-projects) => ["bar"]))
 
        (fact "allows regular expressions"
-             (subject/filter-black-listed-projects [{:name "foo"}
-                                                    {:name "fwibble"}
-                                                    {:name "bar"}]) => [{:name "bar"}]
+             (subject/filter-blacklisted-projects [{:name "foo"}
+                                                   {:name "fwibble"}
+                                                   {:name "bar"}]) => [{:name "bar"}]
              (provided
                (excluded-projects) => ["f.*"])))
