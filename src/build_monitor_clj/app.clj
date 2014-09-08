@@ -10,14 +10,18 @@
             [compojure.core :refer :all])
   (:gen-class))
 
+(defn- as-response [body]
+  {:content-type "application/json"
+   :body         (generate-string body)})
+
 (defroutes main-routes
            (GET "/" [] (clojure.java.io/resource "public/index.html"))
-           (GET "/all" [] {:content-type "application/json"
-                           :body         (generate-string (reducer/aggregate
-                                                            (parser/get-projects (cctray-url))))})
-           (GET "/interesting" [] {:content-type "application/json"
-                                   :body         (generate-string (reducer/show-selected-projects
-                                                                    (parser/get-interesting-projects (cctray-url))))})
+           (GET "/all" [] (-> (parser/get-projects (cctray-url))
+                              (reducer/aggregate)
+                              (as-response)))
+           (GET "/interesting" [] (-> (parser/get-interesting-projects (cctray-url))
+                                      (reducer/show-selected-projects)
+                                      (as-response)))
            (route/resources "/"))
 
 (def app
