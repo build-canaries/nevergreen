@@ -6,7 +6,7 @@
             [build-monitor-clj.reducer :as reducer]
             [cheshire.core :refer [generate-string]]
             [environ.core :refer [env]]
-            [build-monitor-clj.properties :refer :all]
+            [build-monitor-clj.config :refer :all]
             [compojure.core :refer :all])
   (:gen-class))
 

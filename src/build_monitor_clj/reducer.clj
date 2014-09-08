@@ -1,6 +1,6 @@
 (ns build-monitor-clj.reducer
   (:import (java.util.regex Pattern))
-  (:require [build-monitor-clj.properties :refer :all]))
+  (:require [build-monitor-clj.config :refer :all]))
 
 (def priorities ["sick-building" "sick" "healthy-building" "healthy" "unknown"])
 

@@ -1,7 +1,7 @@
 (ns build-monitor-clj.reducer-test
   (:require [midje.sweet :refer :all]
             [build-monitor-clj.reducer :as subject]
-            [build-monitor-clj.properties :refer :all]))
+            [build-monitor-clj.config :refer :all]))
 
 (defn project
   [overrides] (merge {:name      "project1"

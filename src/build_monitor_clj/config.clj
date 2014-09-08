@@ -1,4 +1,4 @@
-(ns build-monitor-clj.properties
+(ns build-monitor-clj.config
   (:require [clojure.string :refer [split trim]]
             [environ.core :refer [env]]))
 

@@ -1,5 +1,5 @@
-(ns build-monitor-clj.properties-test
-  (:require [build-monitor-clj.properties :as subject]
+(ns build-monitor-clj.config-test
+  (:require [build-monitor-clj.config :as subject]
             [environ.core :refer [env]]
             [midje.sweet :refer :all]))
 
