@@ -12,9 +12,19 @@ The build monitor runs on port 5000.
 
 ```
 export CCTRAY_URL=https://builds.apache.org/cc.xml
-export INCLUDED_PROJECTS=".*"
 lein ring server
 ```
+
+# Config
+
+All configuration variables are read from the environment (see http://12factor.net/config). 
+Under *nix operating systems you can use the `export` command and under Windows the `set` command to easily set this values in a start up script.
+
+Name              | Required? | Default Value | Description | Example
+------------------|-----------|---------------|-------------|---------
+CCTRAY_URL        | Yes       | N/A           | The absolute url to the cctray.xml file to parse | https://builds.apache.org/cc.xml
+INCLUDED_PROJECTS | No        | All projects  | A comma separated list of projects to include, this list is matched against the sentanceized project name and may include regular expressions | "foo service, .\*environment, test.\*" 
+EXCLUDED_PROJECTS | No        | None          | A comma separated list of projects to exclude, this list is matched against the sentanceized project name and may include regular expressions | "sandbox environment, test external stuff"
 
 # Contributing
 
