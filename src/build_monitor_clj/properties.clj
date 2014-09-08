@@ -2,11 +2,16 @@
   (:require [clojure.string :refer [split trim]]
             [environ.core :refer [env]]))
 
+(defn- split-string [s]
+  (if s
+    (set (map trim (split s #",")))
+    #{}))
+
 (defn cctray-url []
   (env :cctray-url))
 
 (defn included-projects []
-  (map trim (split (env :included-projects) #",")))
+  (split-string (or (env :included-projects) ".*")))
 
 (defn excluded-projects []
-  (map trim (split (env :excluded-projects) #",")))
+  (split-string (env :excluded-projects)))
