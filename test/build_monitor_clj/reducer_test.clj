@@ -41,3 +41,17 @@
                                                                             {:name "fwibble"}]
              (provided
                (included-projects) => ["f.*"])))
+
+(facts "black listing"
+       (fact "excludes excluded projects"
+             (subject/filter-black-listed-projects [{:name "foo"}
+                                                    {:name "bar"}]) => [{:name "foo"}]
+             (provided
+               (excluded-projects) => ["bar"]))
+
+       (fact "allows regular expressions"
+             (subject/filter-black-listed-projects [{:name "foo"}
+                                                    {:name "fwibble"}
+                                                    {:name "bar"}]) => [{:name "bar"}]
+             (provided
+               (excluded-projects) => ["f.*"])))

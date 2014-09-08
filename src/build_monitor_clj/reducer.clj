@@ -16,6 +16,9 @@
 (defn filter-for-white-listed-projects [projects]
   (filter #(some (fn [regex] (name-matches regex %)) (included-projects)) projects))
 
+(defn filter-black-listed-projects [projects]
+  (filter #(not-any? (fn [regex] (name-matches regex %)) (excluded-projects)) projects))
+
 (defn show-selected-projects [projects]
   (->> (aggregate projects)
        (filter-for-white-listed-projects)))
