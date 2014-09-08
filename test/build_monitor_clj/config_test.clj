@@ -3,6 +3,15 @@
             [environ.core :refer [env]]
             [midje.sweet :refer :all]))
 
+(facts "port"
+       (fact "from env"
+             (subject/port) => 1337
+             (provided
+               (env :port) => "1337"))
+
+       (fact "defaults to 5000"
+             (subject/port) => 5000))
+
 (facts "included projects"
        (fact "parse simple case"
              (subject/included-projects) => #{"foo" "bar"}

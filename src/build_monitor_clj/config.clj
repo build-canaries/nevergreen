@@ -7,6 +7,9 @@
     (set (map trim (split s #",")))
     #{}))
 
+(defn port []
+  (Integer. (or (env :port) 5000)))
+
 (defn cctray-url []
   (env :cctray-url))
 
