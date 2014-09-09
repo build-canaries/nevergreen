@@ -21,4 +21,5 @@
 
 (defn show-selected-projects [projects]
   (->> (aggregate projects)
-       (include-whitelisted-projects)))
+       (include-whitelisted-projects)
+       (filter-blacklisted-projects)))
