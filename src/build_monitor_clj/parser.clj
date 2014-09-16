@@ -1,9 +1,11 @@
 (ns build-monitor-clj.parser
   (:require [clojure.xml :as xml]
-            [clojure.string :refer [split join]]))
+            [clojure.string :refer [split join]]
+            [camel-snake-kebab.core :refer :all]))
 
 (defn sentanceize [input-string]
-  (clojure.string/replace input-string #"[-_]+", " "))
+  (-> (camel-snake-kebab.core/->snake_case input-string )
+      (clojure.string/replace #"[_]+", " ")))
 
 (defn to-map [url]
   (xml/parse url))

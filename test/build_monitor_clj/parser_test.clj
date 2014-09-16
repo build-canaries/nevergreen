@@ -2,12 +2,13 @@
   (:require [build-monitor-clj.parser :as subject]
             [midje.sweet :refer :all]))
 
-(fact "Will split projec names with hyphens and underscores in them"
-      (subject/sentanceize "first_second-third") => "first second third")
+(fact "Will split project names with hyphens and underscores in them"
+      (subject/sentanceize "first_second-third-fourthCamel") => "first second third fourth camel")
+
 
 (fact "will split project name to seperate attributes in map"
       (subject/extract-name "name1 :: test :: deploy")
-      => {:name "name1" :stage "test" :job "deploy"})
+      => {:name "name 1" :stage "test" :job "deploy"})
 
 (tabular "will say if the build is healthy"
          (fact (subject/extract-health {:lastBuildStatus ?status :activity ?activity}) => {:prognosis ?healthy})

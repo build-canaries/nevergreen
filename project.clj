@@ -6,6 +6,7 @@
                            [ring "1.2.2"]
                            [environ "0.5.0"]
                            [compojure "1.1.8"]
+                           [camel-snake-kebab "0.2.4"]
                            [cheshire "5.3.1"]]
             :plugins [[lein-ring "0.8.11"]
                       [lein-midje "3.1.1"]
