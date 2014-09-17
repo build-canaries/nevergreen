@@ -1,10 +1,13 @@
 function Styler() {
     var maxColumns = 3
     var buildStatusPadding = 10
-    var fontResizeFactor = 1.6
+
+    var widthOfSingleLetter = 6
+    var withOfSingleLetterAtFontSize = 10
+    var fontPaddingInCharacters = 2
 
     function buildStatusCount() {
-            return $('li').size()
+        return $('li').size()
     }
 
     function numberOfColumns() {
@@ -23,8 +26,19 @@ function Styler() {
         return window.innerHeight / numberOfRows() - buildStatusPadding
     }
 
+    function findLongestWord() {
+        var words = $.makeArray($('li div div').map(function(index, item) { return $(item).text().split(" ")}))
+        return words.reduce(function(largestFound, candidate) { return Math.max(candidate.length, largestFound)  }, 0)
+    }
+
+    function idealFontSizeForBoxBasedOffTheLongestWord() {
+        var longestWord = findLongestWord() + fontPaddingInCharacters
+        var longestWordSize = (widthOfSingleLetter * longestWord)
+        return (buildStatusWidth() / longestWordSize) * withOfSingleLetterAtFontSize
+    }
+
     function scaleFontToContainerSize() {
-        $(".outerContainer").fitText(fontResizeFactor)
+        $(".outerContainer").css("font-size", Math.floor(idealFontSizeForBoxBasedOffTheLongestWord()))
     }
 
     this.styleProjects = function () {
