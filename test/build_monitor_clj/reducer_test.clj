@@ -16,16 +16,16 @@
              => [(project {:stage "stage1"})])
 
        (fact "different prognosis return higher priority"
-             (subject/aggregate [(project {:prognosis "sick"})
-                                 (project {:prognosis "healthy"})])
-             => [(project {:prognosis "sick"})])
+             (subject/aggregate [(project {:prognosis "healthy"})
+                                 (project {:prognosis "sick-building"})
+                                 (project {:prognosis "sick"})])
+             => [(project {:prognosis "sick-building"})])
 
        (fact "projects with different names are both returned"
              (subject/aggregate [(project {:name "one"})
                                  (project {:name "two"})])
              => [(project {:name "one"})
                  (project {:name "two"})]))
-
 
 (facts "whitelisting"
        (fact "only includes included projects"

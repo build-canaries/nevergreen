@@ -4,11 +4,14 @@
 
 (def priorities ["sick-building" "sick" "healthy-building" "healthy" "unknown"])
 
+(defn prognosis [stage]
+  (.indexOf priorities (:prognosis stage)))
+
 (defn aggregate [projects]
   (->> projects
        (group-by (fn [project] (:name project)))
-       (map (fn [[k v]] [k (sort-by (fn [i] (.indexOf priorities i)) v)]))
-       (map (fn [[_ v]] (first v)))))
+       (map (fn [[k stages]] [k (sort-by prognosis stages)]))
+       (map (fn [[_ stages]] (first stages)))))
 
 (defn- name-matches [regex project]
   (re-matches (Pattern/compile regex) (:name project)))

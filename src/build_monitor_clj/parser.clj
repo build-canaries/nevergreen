@@ -4,7 +4,7 @@
             [camel-snake-kebab.core :refer :all]))
 
 (defn sentanceize [input-string]
-  (-> (camel-snake-kebab.core/->snake_case input-string )
+  (-> (camel-snake-kebab.core/->snake_case input-string)
       (clojure.string/replace #"[_]+", " ")))
 
 (defn to-map [url]
