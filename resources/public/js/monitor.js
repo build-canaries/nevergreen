@@ -3,7 +3,6 @@ function Styler() {
     var buildStatusPadding = 10
 
     var widthOfSingleLetter = 6
-//    var heightOfSingleLetter = 13
     var widthOfSingleLetterAtFontSize = 10
     var fontPaddingInCharacters = 2
 
@@ -43,9 +42,9 @@ function Styler() {
     }
 
     function correctBoxHeightForOverlappingText() {
-        var heights = $.makeArray($('li').map(function(index, item) { return $(item).height()}))
+        var heights = $.makeArray($('li div div').map(function(index, item) { return $(item).height()}))
         var largest = Math.max.apply(Math, heights)
-        $('li div').height(largest + buildStatusPadding)
+        $('li div').height(largest)
     }
 
     this.styleProjects = function () {
