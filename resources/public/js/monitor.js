@@ -4,7 +4,7 @@ function Styler() {
 
     var widthOfSingleLetter = 6
     var widthOfSingleLetterAtFontSize = 10
-    var fontPaddingInCharacters = 2
+    var fontPaddingInCharacters = 3
 
     function buildStatusCount() {
         return $('li').size()
