@@ -10,16 +10,24 @@
                       :prognosis "healthy"} overrides))
 
 (facts "aggregates project results"
-       (fact "when both have same prognosis, only one is returned"
-             (subject/aggregate [(project {:stage "stage1"})
-                                 (project {:stage "stage2"})])
-             => [(project {:stage "stage1"})])
+       (facts "same project name and stage"
+              (fact "when both have same prognosis, only one is returned"
+                    (subject/aggregate [(project {:job "job1"})
+                                        (project {:job "job2"})])
+                    => [(project {:job "job1"})]))
 
-       (fact "different prognosis return higher priority"
-             (subject/aggregate [(project {:prognosis "healthy"})
-                                 (project {:prognosis "sick-building"})
-                                 (project {:prognosis "sick"})])
-             => [(project {:prognosis "sick-building"})])
+       (facts "same project but different stages"
+              (fact "if any stage is sick and none are building then sick is returned"
+                    (subject/aggregate [(project {:stage "stage1" :prognosis "healthy"})
+                                        (project {:stage "stage2" :prognosis "healthy"})
+                                        (project {:stage "stage3" :prognosis "sick"})])
+                    => [(project {:stage "stage3" :prognosis "sick"})])
+
+              (fact "if any stage is sick and another is building then sick-building is returned"
+                    (subject/aggregate [(project {:stage "stage1" :prognosis "healthy-building"})
+                                        (project {:stage "stage2" :prognosis "healthy"})
+                                        (project {:stage "stage3" :prognosis "sick"})])
+                    => [(project {:stage "stage3" :prognosis "sick-building"})]))
 
        (fact "projects with different names are both returned"
              (subject/aggregate [(project {:name "one"})
@@ -55,3 +63,16 @@
                                                    {:name "bar"}]) => [{:name "bar"}]
              (provided
                (excluded-projects) => ["f.*"])))
+
+(facts "has healthy building project"
+       (fact "yes"
+             (subject/has-a-healthy-building-project? [(project {:prognosis "healthy"})
+                                                       (project {:prognosis "healthy-building"})
+                                                       (project {:prognosis "sick"})])
+             => true)
+
+       (fact "nope"
+             (subject/has-a-healthy-building-project? [(project {:prognosis "healthy"})
+                                                       (project {:prognosis "sick-building"})
+                                                       (project {:prognosis "sick"})])
+             => false))

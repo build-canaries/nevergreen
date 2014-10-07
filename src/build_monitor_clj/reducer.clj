@@ -4,14 +4,27 @@
 
 (def priorities ["sick-building" "sick" "healthy-building" "healthy" "unknown"])
 
-(defn prognosis [stage]
-  (.indexOf priorities (:prognosis stage)))
+(defn prognosis [project]
+  (.indexOf priorities (:prognosis project)))
+
+(defn find-most-interesting-projects [grouped-projects]
+  (->> grouped-projects
+       (map (fn [[name projects]] [name (sort-by prognosis projects)]))
+       (map (fn [[_ projects]] (first projects)))))
+
+(defn has-a-healthy-building-project? [projects]
+  (not (empty?
+         (filter (fn [project] (= "healthy-building" (:prognosis project))) projects))))
 
 (defn aggregate [projects]
-  (->> projects
-       (group-by (fn [project] (:name project)))
-       (map (fn [[k stages]] [k (sort-by prognosis stages)]))
-       (map (fn [[_ stages]] (first stages)))))
+  (let [grouped-projects (group-by (fn [project] (:name project)) projects)
+        most-interesting (find-most-interesting-projects grouped-projects)]
+    (map (fn [project]
+           (if (and (= "sick" (:prognosis project))
+                    (has-a-healthy-building-project? (get grouped-projects (:name project))))
+             (assoc project :prognosis "sick-building")
+             project))
+         most-interesting)))
 
 (defn- name-matches [regex project]
   (re-matches (Pattern/compile regex) (:name project)))
