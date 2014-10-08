@@ -11,9 +11,10 @@
 
 (defn extract-name [name]
   (let [split-name (split name #"\s::\s")]
-    {:name  (sentanceize (first split-name))
-     :stage (second split-name)
-     :job   (last split-name)}))
+    {:name     (sentanceize (first split-name))
+     :raw-name (first split-name)
+     :stage    (second split-name)
+     :job      (last split-name)}))
 
 (defn extract-health [{:keys [lastBuildStatus activity]}]
   (cond

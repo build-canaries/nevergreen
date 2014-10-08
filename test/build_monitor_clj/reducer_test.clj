@@ -4,10 +4,11 @@
             [build-monitor-clj.config :refer :all]))
 
 (defn project
-  [overrides] (merge {:name      "project1"
-                      :stage     "stage1"
-                      :job       "job1"
-                      :prognosis "healthy"} overrides))
+      [overrides] (merge {:raw-name  "project-1"
+                          :name      "project 1"
+                          :stage     "stage1"
+                          :job       "job1"
+                          :prognosis "healthy"} overrides))
 
 (facts "aggregates project results"
        (facts "same project name and stage"
@@ -37,30 +38,30 @@
 
 (facts "whitelisting"
        (fact "only includes included projects"
-             (subject/include-whitelisted-projects [{:name "foo"}
-                                                    {:name "bar"}]) => [{:name "foo"}]
+             (subject/include-whitelisted-projects [{:raw-name "foo"}
+                                                    {:raw-name "bar"}]) => [{:raw-name "foo"}]
              (provided
                (included-projects) => ["foo"]))
 
        (fact "allows regular expressions"
-             (subject/include-whitelisted-projects [{:name "foo"}
-                                                    {:name "fwibble"}
-                                                    {:name "bar"}]) => [{:name "foo"}
-                                                                        {:name "fwibble"}]
+             (subject/include-whitelisted-projects [{:raw-name "foo"}
+                                                    {:raw-name "fwibble"}
+                                                    {:raw-name "bar"}]) => [{:raw-name "foo"}
+                                                                            {:raw-name "fwibble"}]
              (provided
                (included-projects) => ["f.*"])))
 
 (facts "blacklisting"
        (fact "excludes excluded projects"
-             (subject/filter-blacklisted-projects [{:name "foo"}
-                                                   {:name "bar"}]) => [{:name "foo"}]
+             (subject/filter-blacklisted-projects [{:raw-name "foo"}
+                                                   {:raw-name "bar"}]) => [{:raw-name "foo"}]
              (provided
                (excluded-projects) => ["bar"]))
 
        (fact "allows regular expressions"
-             (subject/filter-blacklisted-projects [{:name "foo"}
-                                                   {:name "fwibble"}
-                                                   {:name "bar"}]) => [{:name "bar"}]
+             (subject/filter-blacklisted-projects [{:raw-name "foo"}
+                                                   {:raw-name "fwibble"}
+                                                   {:raw-name "bar"}]) => [{:raw-name "bar"}]
              (provided
                (excluded-projects) => ["f.*"])))
 

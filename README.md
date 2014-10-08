@@ -23,8 +23,8 @@ Under *nix operating systems you can use the `export` command and under Windows 
 Name              | Required? | Default Value | Description | Example
 ------------------|-----------|---------------|-------------|---------
 CCTRAY_URL        | Yes       | N/A           | The absolute url to the cctray.xml file to parse | https://builds.apache.org/cc.xml
-INCLUDED_PROJECTS | No        | ".\*" (i.e. Include everything)  | A comma separated list of projects to include, this list is matched against the sentanceized project name and may include regular expressions | "foo service, .\*environment, test.\*" 
-EXCLUDED_PROJECTS | No        | nil (i.e. Exclude nothing) | A comma separated list of projects to exclude, this list is matched against the sentanceized project name and may include regular expressions | "sandbox environment, test external stuff"
+INCLUDED_PROJECTS | No        | ".\*" (i.e. Include everything)  | A comma separated list of projects to include, this list is matched against the raw project name and may include regular expressions | "foo service, .\*environment, test.\*" 
+EXCLUDED_PROJECTS | No        | nil (i.e. Exclude nothing) | A comma separated list of projects to exclude, this list is matched against the raw project name and may include regular expressions | "sandbox environment, test external stuff"
 PORT              | No        | 5000          | The port to start on, if this is not a valid port number you'll get an error while trying to start the application | 1337
 
 # Contributing

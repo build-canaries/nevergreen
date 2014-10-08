@@ -27,7 +27,7 @@
          most-interesting)))
 
 (defn- name-matches [regex project]
-  (re-matches (Pattern/compile regex) (:name project)))
+  (re-matches (Pattern/compile regex) (:raw-name project)))
 
 (defn include-whitelisted-projects [projects]
   (filter #(some (fn [regex] (name-matches regex %)) (included-projects)) projects))
