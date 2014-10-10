@@ -2,8 +2,17 @@
   (:require [build-monitor-clj.parser :as subject]
             [midje.sweet :refer :all]))
 
-(fact "Will split project names with hyphens and underscores in them"
-      (subject/sentanceize "first_second-third-fourth") => "first second third fourth")
+(facts "will split project names"
+       (fact "names with hyphens and underscores go to spaces"
+             (subject/sentanceize "first_second-third-fourth") => "first second third fourth")
+
+       (fact "names with camelCase go to spaces"
+             (subject/sentanceize "firstSecondThird") => "first Second Third"
+             (subject/sentanceize "FirstSecondThird") => "First Second Third")
+
+       (fact "Acroynms are not split"
+             (subject/sentanceize "ABC") => "ABC"
+             (subject/sentanceize "somethingEndingWithABC") => "something Ending With ABC"))
 
 (fact "will split project name to seperate attributes in map"
       (subject/extract-name "name1 :: test :: deploy")

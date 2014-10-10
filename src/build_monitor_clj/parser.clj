@@ -4,7 +4,8 @@
 
 (defn sentanceize [input-string]
   (-> input-string
-      (clojure.string/replace #"[-_]+", " ")))
+      (clojure.string/replace #"[-_]+", " ")
+      (clojure.string/replace #"([a-z])([A-Z])", "$1 $2")))
 
 (defn to-map [url]
   (xml/parse url))
