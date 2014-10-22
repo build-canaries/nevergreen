@@ -1,8 +1,9 @@
 function FontScaler(listOfText, height, width) {
 
+    var fontSizeForSingleLetter = 10
     var widthOfSingleLetter = 6
     var heightOfSingleLetter = 13
-    var widthOfSingleLetterAtFontSize = 10
+
     var fontPaddingInCharacters = 3
 
     function flatten(array) {
@@ -33,7 +34,7 @@ function FontScaler(listOfText, height, width) {
     this.maxFontSizeByWidth = function() {
         var longestWord = findLongestWord() + fontPaddingInCharacters
         var longestWordSize = (widthOfSingleLetter * longestWord)
-        return (width / longestWordSize) * widthOfSingleLetterAtFontSize
+        return (width / longestWordSize) * fontSizeForSingleLetter
     }
 
     this.maxFontSizeByHeight = function() {
@@ -42,12 +43,11 @@ function FontScaler(listOfText, height, width) {
 
         var maximumFontHeightInPixels = (height / largestNumberOfLines) / heightOfSingleLetter
 
-        return maximumFontHeightInPixels * widthOfSingleLetterAtFontSize
+        return maximumFontHeightInPixels * fontSizeForSingleLetter
     }
 
     this.ideal = function() {
-        return Math.min(
-                Math.floor(this.maxFontSizeByWidth()),
-                Math.floor(this.maxFontSizeByHeight())
-    )}
+        return Math.floor(
+            Math.min(this.maxFontSizeByWidth(), this.maxFontSizeByHeight()))
+    }
 }
