@@ -3,6 +3,7 @@ function Styler() {
     var buildStatusPadding = 10
 
     var widthOfSingleLetter = 6
+    var heightOfSingleLetter = 13
     var widthOfSingleLetterAtFontSize = 10
     var fontPaddingInCharacters = 3
 
@@ -37,20 +38,45 @@ function Styler() {
         return (buildStatusWidth() / longestWordSize) * widthOfSingleLetterAtFontSize
     }
 
-    function scaleFontToContainerSize() {
-        $(".outerContainer").css("font-size", Math.floor(idealFontSizeForBoxBasedOffTheLongestWord()))
+    function linesForWord(words) {
+        var longestWordSize = findLongestWord() + fontPaddingInCharacters
+        var lineNumber = 1
+        var currentLinePosition = 0
+
+        words.forEach(function(word) {
+            if((word.length + currentLinePosition) > longestWordSize){
+                lineNumber++
+                currentLinePosition = 0
+            }
+            currentLinePosition += word.length + 1
+        })
+
+        return lineNumber
     }
 
-    function correctBoxHeightForOverlappingText() {
-        var heights = $.makeArray($('li div div').map(function(index, item) { return $(item).height()}))
-        var largest = Math.max.apply(Math, heights)
-        $('li div').height(largest)
+    function maxFontSizeByHeight() {
+        var texts = $.makeArray($('li div div').map(function(index, item) { return $(item).text()}))
+        var numberOfLines = texts.map(function(item) { return linesForWord(item.split(" "))})
+        var largestNumberOfLines = Math.max.apply(Math, numberOfLines)
+
+        var maximumFontHeightInPixels = (buildStatusHeight() / largestNumberOfLines) / heightOfSingleLetter
+
+        console.log("Max font by height " + maximumFontHeightInPixels)
+        return maximumFontHeightInPixels
+    }
+
+    function scaleFontToContainerSize() {
+        $(".outerContainer").css("font-size",
+            Math.min(
+            Math.floor(idealFontSizeForBoxBasedOffTheLongestWord()),
+            Math.floor(maxFontSizeByHeight())
+            )
+        )
     }
 
     this.styleProjects = function () {
         $('.outerContainer').height(buildStatusHeight()).width(buildStatusWidth())
         scaleFontToContainerSize()
-        correctBoxHeightForOverlappingText()
     }
 }
 
