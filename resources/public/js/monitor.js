@@ -62,7 +62,7 @@ function Styler() {
         var maximumFontHeightInPixels = (buildStatusHeight() / largestNumberOfLines) / heightOfSingleLetter
 
         console.log("Max font by height " + maximumFontHeightInPixels)
-        return maximumFontHeightInPixels
+        return maximumFontHeightInPixels * widthOfSingleLetterAtFontSize
     }
 
     function scaleFontToContainerSize() {
