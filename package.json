@@ -1,0 +1,28 @@
+{
+  "name": "build-monitor-clj",
+  "version": "0.0.1",
+  "description": "Build monitor in Clojure and Javascript",
+  "main": "karma.conf.js",
+  "directories": {
+    "doc": "doc",
+    "test": "test"
+  },
+  "devDependencies": {
+    "karma": "~0.12.24",
+    "karma-jasmine": "~0.1.5",
+    "karma-phantomjs-launcher": "~0.1.4"
+  },
+  "dependencies": {},
+  "scripts": {
+    "test": "karma start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cowley05/build-monitor-clj.git"
+  },
+  "author": "",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/cowley05/build-monitor-clj/issues"
+  }
+}
