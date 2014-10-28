@@ -14,11 +14,15 @@
   {:content-type "application/json"
    :body         (generate-string body)})
 
+(defn get-json-projects [url]
+  (-> (parser/get-projects url)
+      (reducer/aggregate)
+      (as-json-response)))
+
 (defroutes main-routes
            (GET "/" [] (clojure.java.io/resource "public/index.html"))
-           (GET "/all" [] (-> (parser/get-projects (cctray-url))
-                              (reducer/aggregate)
-                              (as-json-response)))
+           (GET "/api/projects" {params :params} (get-json-projects (:url params)))
+           (GET "/all" [] (get-json-projects (cctray-url)))
            (GET "/interesting" [] (-> (parser/get-interesting-projects (cctray-url))
                                       (reducer/show-selected-projects)
                                       (as-json-response)))
@@ -26,6 +30,7 @@
 
 (def app
   (handler/site main-routes))
+
 
 (defn -main []
   (jetty/run-jetty app {:port (port) :join? false}))
