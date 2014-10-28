@@ -1,2 +1,23 @@
+<html>
+<body onload="load()">
+<form>
+    <label title="cctray url">
+        cctray url
+        <input id="cctray-url" type="text" name="cctray"/>
+    </label>
+    <input type="button" value="save" onclick="save()">
+</form>
+</body>
 <script src="js/config.js"></script>
-<script>console.log(new Config().isReady())</script>
+<script src="js/jquery2.1.1.js"></script>
+<script>
+    function load() {
+        var settings = new Config().load()
+        $("#cctray-url").val(settings.cctray)
+    }
+
+    function save() {
+        new Config().save({cctray: $("#cctray-url").val()})
+    }
+</script>
+</html>
