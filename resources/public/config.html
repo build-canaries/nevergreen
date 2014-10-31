@@ -1,11 +1,18 @@
 <html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Build Monitor Clj - config</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <link href="css/admin.css" rel="stylesheet" type="text/css">
+    <link href="css/vertical-align.css" rel="stylesheet" type="text/css">
+</head>
 <body onload="load()">
-<form>
+<form id="cctray-form">
     <label title="cctray url">
         cctray url
         <input id="cctray-url" type="text" name="cctray"/>
     </label>
-    <input type="button" value="save" onclick="save()">
+    <input id="cctray-save" type="button" value="save" onclick="save()">
 </form>
 <div id="projects"/>
 </body>
