@@ -7,18 +7,23 @@
     </label>
     <input type="button" value="save" onclick="save()">
 </form>
+<div id="projects"/>
 </body>
-<script src="js/projectsFinder.js"></script>
+<script src="js/adminController.js"></script>
 <script src="js/config.js"></script>
 <script src="js/jquery2.1.1.js"></script>
 <script>
+    var config = new Config();
+
     function load() {
-        var settings = new Config().load()
+        var settings = config.load()
         $("#cctray-url").val(settings.cctray)
     }
 
     function save() {
-        new Config().save({cctray: $("#cctray-url").val()})
+        config.save({cctray: $("#cctray-url").val()})
+        new AdminController(config).getProjects(new AdminController(config).appendProjects)
     }
+
 </script>
 </html>
