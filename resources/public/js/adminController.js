@@ -9,7 +9,7 @@ function AdminController(config) {
     this.appendProjects = function (projects) {
         $("#projects").append("<ul />")
         projects.forEach(function (project) {
-            $("#projects ul").append("<li class='included'>" + project.name + "</li>")
+            $("#projects ul").append("<li class='included noselect'>" + project.name + "</li>")
         })
         $("#projects ul li").click(function () {
             $(this).toggleClass("included")
