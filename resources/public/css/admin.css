@@ -1,12 +1,17 @@
 form {
     border-bottom: #FFFED7 solid 1px;
-    margin-bottom: 0.5em;
-    padding-bottom: 0.5em;
-    margin-top: 0.5em;
 }
 
 #cctray-form {
     font-size: 2em;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: black;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 1em;
+    padding-bottom: 1em;
 }
 
 #cctray-save {
@@ -23,6 +28,10 @@ form {
     padding: 0 0.5em;
     font-size: 1em;
     width: calc(100% - 400px);
+}
+
+#projects {
+    margin-top: 3em;
 }
 
 li {
