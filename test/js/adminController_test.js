@@ -28,4 +28,15 @@ describe("View", function () {
 
         $("#projects").remove()
     })
+
+    it("project gets class added on click", function () {
+        $("body").append('<div id="projects"/>')
+        new AdminController(config).appendProjects([{"name": "foo"}, {"name": "bar"}])
+        var project = $('#projects ul li:first');
+        expect(project.hasClass('included')).toBeTruthy()
+
+        project.click()
+
+        expect(project.hasClass('included')).toBeFalsy()
+    })
 })

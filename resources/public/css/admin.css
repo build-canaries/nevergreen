@@ -26,13 +26,20 @@ form {
 }
 
 li {
-    background-color: rgb(48, 48, 143);
+    background-color: black;
     padding: 0.3em;
     margin: 0.3em 0.2em;
     border-radius: 10px;
     float: left;
+    border: 0.1em solid rgb(48, 48, 143);
     min-width: 32%;
     min-height: 40px;
+    vertical-align: middle;
+    line-height: 2em;
+}
+
+.included {
+    background-color: rgb(48, 48, 143);
 }
 
 .hidden {

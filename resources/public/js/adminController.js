@@ -6,10 +6,13 @@ function AdminController(config) {
         $.getJSON("/api/projects", {url: settings.cctray}, handler)
     }
 
-    this.appendProjects = function(projects) {
+    this.appendProjects = function (projects) {
         $("#projects").append("<ul />")
-        projects.forEach(function(project){
-            $("#projects ul").append("<li>" + project.name + "</li>")
+        projects.forEach(function (project) {
+            $("#projects ul").append("<li class='included'>" + project.name + "</li>")
+        })
+        $("#projects ul li").click(function () {
+            $(this).toggleClass("included")
         })
     }
 
