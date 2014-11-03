@@ -36,6 +36,7 @@ li {
     min-height: 40px;
     vertical-align: middle;
     line-height: 2em;
+    cursor: pointer
 }
 
 .included {
