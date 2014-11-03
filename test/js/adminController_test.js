@@ -14,15 +14,29 @@ describe("Configurable build monitor", function () {
 
         expect($.getJSON).toHaveBeenCalledWith("/api/projects", {url: "some-url"}, callbackFunction)
     })
+
 })
 
 describe("View", function () {
     var config = new Config()
 
-    it("prints a list of project names to the dom", function () {
+    beforeEach(function () {
         $("body").append('<div id="projects"/>')
+    })
 
-        new AdminController(config).appendProjects([{"name": "foo"}, {"name": "bar"}])
+    it("clears projects", function () {
+        $("#projects").append('some text')
+
+        new AdminController(config).clearProjects()
+
+        expect($("#projects").is(':empty')).toBeTruthy()
+    })
+
+    it("prints a list of project names to the dom", function () {
+        new AdminController(config).appendProjects([
+            {"name": "foo"},
+            {"name": "bar"}
+        ])
 
         expect($("#projects ul li").size()).toBe(2)
 
@@ -30,10 +44,13 @@ describe("View", function () {
     })
 
     it("project gets class added on click", function () {
-        $("body").append('<div id="projects"/>')
-        new AdminController(config).appendProjects([{"name": "foo"}, {"name": "bar"}])
+        new AdminController(config).appendProjects([
+            {"name": "foo"},
+            {"name": "bar"}
+        ])
         var project = $('#projects ul li:first');
         expect(project.hasClass('included')).toBeTruthy()
+        expect(project.hasClass('no-text-selection')).toBeTruthy()
 
         project.click()
 
