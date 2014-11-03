@@ -1,8 +1,8 @@
 form {
-    border-bottom: #FFFED7 solid 1px;
+    padding-bottom: 1em;
 }
 
-#cctray-form {
+#actions-panel {
     font-size: 2em;
     position: fixed;
     top: 0;
@@ -12,9 +12,11 @@ form {
     margin-bottom: 0;
     padding-top: 1em;
     padding-bottom: 1em;
+    border-bottom: #FFFED7 solid 1px;
+
 }
 
-#cctray-save {
+.button {
     font-size: 1em;
     border-radius: 10px;
     padding: 0 0.3em;
@@ -31,7 +33,7 @@ form {
 }
 
 #projects {
-    margin-top: 3em;
+    margin-top: 11.5em;
 }
 
 .noselect {

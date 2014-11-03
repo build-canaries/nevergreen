@@ -6,13 +6,16 @@
     <link href="css/admin.css" rel="stylesheet" type="text/css">
 </head>
 <body onload="load()">
-<form id="cctray-form">
-    <label title="cctray url">
-        cctray url
-        <input id="cctray-url" type="text" name="cctray"/>
-    </label>
-    <input id="cctray-save" type="button" value="monitor" onclick="save()">
-</form>
+<div id="actions-panel">
+    <form id="cctray-form">
+        <label title="cctray url">
+            cctray url
+            <input id="cctray-url" type="text" name="cctray"/>
+        </label>
+        <input id="cctray-save" class="button" type="button" value="monitor" onclick="save()">
+    </form>
+    <input id="save-projects" class="button" type="button" value="save projects">
+</div>
 <div id="projects"/>
 </body>
 <script src="js/adminController.js"></script>
