@@ -3,10 +3,10 @@ describe("Configurable build monitor", function () {
 
     it("gets the projects using the api", function () {
         var projectNames = ["proj-1", "proj-2"]
-        spyOn($, "getJSON").andCallFake(function (_) {
+        spyOn($, "getJSON").and.callFake(function (_) {
             return $.Deferred().resolve(projectNames).promise()
         })
-        spyOn(config, "load").andReturn({cctray: "some-url"})
+        spyOn(config, "load").and.returnValue({cctray: "some-url"})
         var callbackFunction = function (data) {
         }
 
@@ -29,7 +29,7 @@ describe("View", function () {
 
         new AdminController(config).clearProjects()
 
-        expect($("#projects").is(':empty')).toBeTruthy()
+        expect($("#projects")).toBeEmpty()
     })
 
     it("prints a list of project names to the dom", function () {
@@ -43,7 +43,7 @@ describe("View", function () {
         $("#projects").remove()
     })
 
-    it("project gets class added on click", function () {
+    it("project gets classes added on click", function () {
         new AdminController(config).appendProjects([
             {"name": "foo"},
             {"name": "bar"}

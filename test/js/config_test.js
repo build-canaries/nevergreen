@@ -9,7 +9,7 @@ describe("Configurable build monitor", function () {
     })
 
     it("gets the cctray url from settings", function () {
-        spyOn(localStorage, "getItem").andReturn("some-url")
+        spyOn(localStorage, "getItem").and.returnValue("some-url")
 
         var settings = new Config().load()
 
@@ -19,7 +19,7 @@ describe("Configurable build monitor", function () {
 
     describe("can tell when it has been set up", function () {
         it("is false", function () {
-            spyOn(localStorage, "hasOwnProperty").andReturn(false)
+            spyOn(localStorage, "hasOwnProperty").and.returnValue(false)
 
             var ready = new Config().isReady()
 
@@ -27,7 +27,7 @@ describe("Configurable build monitor", function () {
         })
 
         it("is true", function () {
-            spyOn(localStorage, "hasOwnProperty").andReturn(true)
+            spyOn(localStorage, "hasOwnProperty").and.returnValue(true)
 
             var ready = new Config().isReady()
 
