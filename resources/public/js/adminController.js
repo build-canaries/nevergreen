@@ -20,4 +20,10 @@ function AdminController(config) {
         })
     }
 
+    this.saveIncludedProjects = function () {
+        var includedProjects = $("#projects ul li.included").map(function(index, element){return element.textContent}).toArray()
+
+        localStorage.setItem("includedProjects", includedProjects)
+    }
+
 }

@@ -15,6 +15,19 @@ describe("Configurable build monitor", function () {
         expect($.getJSON).toHaveBeenCalledWith("/api/projects", {url: "some-url"}, callbackFunction)
     })
 
+    it("saves the included projects to local storage", function () {
+        spyOn(localStorage, "setItem")
+        $("body").append('<div id="projects"><ul>' +
+            '<li class="included">proj-1</li>' +
+            '<li class="included">proj-2</li>' +
+            '<li>proj-3</li>' +
+            '</ul></div>')
+
+        var projects = new AdminController(config).saveIncludedProjects()
+
+        expect(localStorage.setItem).toHaveBeenCalledWith("includedProjects", ["proj-1", "proj-2"])
+    })
+
 })
 
 describe("View", function () {

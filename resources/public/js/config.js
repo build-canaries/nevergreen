@@ -11,9 +11,4 @@ function Config() {
     this.isReady =  function () {
         return localStorage.hasOwnProperty("cctray")
     }
-
-    this.getProjects = function () {
-        return null
-    }
-
 }

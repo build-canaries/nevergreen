@@ -4,15 +4,16 @@
     <title>Build Monitor Clj - config</title>
     <link href="css/style.css" rel="stylesheet" type="text/css">
     <link href="css/admin.css" rel="stylesheet" type="text/css">
+    <script src="js/adminView.js"></script>
 </head>
-<body onload="load()">
+<body onload="new AdminView().init()">
 <div id="actions-panel">
     <form id="cctray-form">
         <label title="cctray url">
             cctray url
             <input id="cctray-url" type="text" name="cctray"/>
         </label>
-        <input id="cctray-save" class="button" type="button" value="monitor" onclick="save()">
+        <input id="cctray-save" class="button" type="button" value="monitor">
     </form>
     <input id="save-projects" class="button" type="button" value="save projects">
 </div>
@@ -20,19 +21,5 @@
 </body>
 <script src="js/adminController.js"></script>
 <script src="js/config.js"></script>
-<script src="js/jquery2.1.1.js"></script>
-<script>
-    var config = new Config();
-
-    function load() {
-        var settings = config.load()
-        $("#cctray-url").val(settings.cctray)
-    }
-
-    function save() {
-        config.save({cctray: $("#cctray-url").val()})
-        new AdminController(config).getProjects(new AdminController(config).appendProjects)
-    }
-
-</script>
+<script src="js/lib/jquery2.1.1.js"></script>
 </html>
