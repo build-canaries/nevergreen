@@ -6,7 +6,7 @@
     <link href="css/admin.css" rel="stylesheet" type="text/css">
     <script src="js/adminView.js"></script>
 </head>
-<body onload="new AdminView().init()">
+<body onload="new AdminView(new AdminController(new Config())).init()">
 <div id="actions-panel">
     <form id="cctray-form">
         <label title="cctray url">

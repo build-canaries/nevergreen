@@ -17,13 +17,8 @@ describe("Configurable build monitor", function () {
 
     it("saves the included projects to local storage", function () {
         spyOn(localStorage, "setItem")
-        $("body").append('<div id="projects"><ul>' +
-            '<li class="included">proj-1</li>' +
-            '<li class="included">proj-2</li>' +
-            '<li>proj-3</li>' +
-            '</ul></div>')
 
-        var projects = new AdminController(config).saveIncludedProjects()
+        new AdminController(config).saveIncludedProjects(["proj-1", "proj-2"])
 
         expect(localStorage.setItem).toHaveBeenCalledWith("includedProjects", ["proj-1", "proj-2"])
     })
@@ -43,30 +38,5 @@ describe("View", function () {
         new AdminController(config).clearProjects()
 
         expect($("#projects")).toBeEmpty()
-    })
-
-    it("prints a list of project names to the dom", function () {
-        new AdminController(config).appendProjects([
-            {"name": "foo"},
-            {"name": "bar"}
-        ])
-
-        expect($("#projects ul li").size()).toBe(2)
-
-        $("#projects").remove()
-    })
-
-    it("project gets classes added on click", function () {
-        new AdminController(config).appendProjects([
-            {"name": "foo"},
-            {"name": "bar"}
-        ])
-        var project = $('#projects ul li:first');
-        expect(project.hasClass('included')).toBeTruthy()
-        expect(project.hasClass('no-text-selection')).toBeTruthy()
-
-        project.click()
-
-        expect(project.hasClass('included')).toBeFalsy()
     })
 })

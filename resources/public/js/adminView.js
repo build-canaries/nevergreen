@@ -1,10 +1,23 @@
-function AdminView() {
+function AdminView(controller) {
     var config = new Config();
 
     this.init = function () {
         load()
         $("#cctray-save").click(saveCctray)
+        $("#save-projects").click(saveProjects)
     }
+
+    function appendProjects(projects) {
+        $("#projects").append("<ul />")
+        projects.forEach(function (project) {
+            $("#projects ul").append("<li class='included no-text-selection'>" + project.name + "</li>")
+        })
+        $("#projects ul li").click(function () {
+            $(this).toggleClass("included")
+        })
+    }
+
+    this.appendProjects = appendProjects
 
     function load() {
         var settings = config.load()
@@ -13,6 +26,11 @@ function AdminView() {
 
     function saveCctray() {
         config.save({cctray: $("#cctray-url").val()})
-        new AdminController(config).getProjects(new AdminController(config).appendProjects)
+        controller.getProjects(appendProjects)
+    }
+
+    function saveProjects() {
+        var includedProjects = $("#projects ul li.included").map(function(index, element){return element.textContent}).toArray()
+        controller.saveIncludedProjects(includedProjects)
     }
 }
