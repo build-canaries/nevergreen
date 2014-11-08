@@ -4,14 +4,14 @@ A Clojure application designed to run an interesting build monitor.
 
 It uses the *cctray.xml* format which is supported by nearly all CI servers. (I'm looking at you Bamboo) you can find each xml file under for each of the following ci servers under the following:
 
-*GO - http://servername:8154/go/cctray.xml
-*CruiseControl.rb - http://cc.rb.servername:3333/XmlStatusReport.aspx
-*CruiseControl - http://cc.java.servername:8080/cctray.xml
-*CruiseControl.NET - http://cc.net.servername/XmlStatusReport.aspx
-*Jenkins - http://jenkins.servername:8080/cc.xml
-*Hudson - http://hudson.servername:8080/cc.xml
-*Travis CI - http://travis-ci.org/ownername/repositoryname/cc.xml
-*tddium - - http://api.tddium.com/cc/long_uuid_string/cctray.xml
+* GO - http://servername:8154/go/cctray.xml
+* CruiseControl.rb - http://cc.rb.servername:3333/XmlStatusReport.aspx
+* CruiseControl - http://cc.java.servername:8080/cctray.xml
+* CruiseControl.NET - http://cc.net.servername/XmlStatusReport.aspx
+* Jenkins - http://jenkins.servername:8080/cc.xml
+* Hudson - http://hudson.servername:8080/cc.xml
+* Travis CI - http://travis-ci.org/ownername/repositoryname/cc.xml
+* tddium - - http://api.tddium.com/cc/long_uuid_string/cctray.xml
 
 See a demo at http://build-monitor-clj.herokuapp.com
 
