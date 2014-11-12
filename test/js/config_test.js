@@ -1,5 +1,9 @@
 describe("Configurable build monitor", function () {
 
+    beforeEach(function () {
+        localStorage.clear()
+    })
+
     it("stores the cctray URL", function () {
         spyOn(localStorage, "setItem")
 
@@ -9,12 +13,20 @@ describe("Configurable build monitor", function () {
     })
 
     it("gets the cctray url from settings", function () {
-        spyOn(localStorage, "getItem").and.returnValue("some-url")
+        localStorage.setItem("cctray", "some-url")
+        localStorage.setItem("includedProjects", ["proj"])
 
         var settings = new Config().load()
 
-        expect(localStorage.getItem).toHaveBeenCalledWith("cctray")
         expect(settings.cctray).toBe("some-url")
+        expect(settings.includedProjects[0]).toBe("proj")
+    })
+
+    it("loads config as null if local storage is not set", function () {
+        var settings = new Config().load()
+
+        expect(settings.cctray).toBe(null)
+        expect(settings.includedProjects).toBe(null)
     })
 
     describe("can tell when it has been set up", function () {

@@ -58,10 +58,14 @@ function StatusAppender(projectsList) {
 
 function Updater(frequency, config) {
     function updateBuildMonitor() {
-        $.post("/interesting", config.load(), function(data){
-            new StatusAppender(data).addProjects()
-            new Styler().styleProjects()
-        }, "json")
+        if (config.isReady()) {
+            $.post("/interesting", config.load(), function (data) {
+                new StatusAppender(data).addProjects()
+                new Styler().styleProjects()
+            }, "json")
+        } else {
+            window.location.replace("config.html")
+        }
     }
 
     this.start = function() {
@@ -71,6 +75,6 @@ function Updater(frequency, config) {
 }
 
 function start() {
-    var fiveSeconds = 5000000
+    var fiveSeconds = 5000
     new Updater(fiveSeconds, new Config()).start()
 }

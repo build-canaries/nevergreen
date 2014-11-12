@@ -5,13 +5,14 @@ function Config() {
     }
 
     this.load = function () {
+        var projects = localStorage.getItem("includedProjects");
         return {
             cctray: localStorage.getItem("cctray"),
-            includedProjects: localStorage.getItem("includedProjects").split(",")
+            includedProjects: projects == null ? null : projects.split(",")
         }
     }
 
     this.isReady = function () {
-        return localStorage.hasOwnProperty("cctray")
+        return localStorage.hasOwnProperty("cctray") && localStorage.hasOwnProperty("includedProjects")
     }
 }
