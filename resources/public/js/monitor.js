@@ -37,7 +37,8 @@ function Styler() {
     }
 }
 
-function StatusAppender(projects) {
+function StatusAppender(projectsList) {
+    this.projects = projectsList
     function addBuildStatusToScreen(project) {
         $('#projects')
          .append("<li class=" + project.prognosis + "><div class=outerContainer><div class=innerContainer>" +
@@ -46,21 +47,21 @@ function StatusAppender(projects) {
 
     this.addProjects = function() {
         $('#projects').empty()
-        projects.forEach(addBuildStatusToScreen)
+        this.projects.forEach(addBuildStatusToScreen)
 
-        if(projects.length === 0) {
+        if(this.projects.length === 0) {
             $('#projects')
                 .append("<li><div class=outerContainer><div class=innerContainer>=(^.^)=</div></div></li>")
         }
     }
 }
 
-function Updater(frequency) {
+function Updater(frequency, config) {
     function updateBuildMonitor() {
-        $.getJSON("/interesting").then(function(data){
+        $.post("/interesting", config.load(), function(data){
             new StatusAppender(data).addProjects()
             new Styler().styleProjects()
-        })
+        }, "json")
     }
 
     this.start = function() {
@@ -70,6 +71,6 @@ function Updater(frequency) {
 }
 
 function start() {
-    var fiveSeconds = 5000
-    new Updater(fiveSeconds).start()
+    var fiveSeconds = 5000000
+    new Updater(fiveSeconds, new Config()).start()
 }

@@ -37,5 +37,5 @@
        (map #(extract-attributes %))
        (remove nil?)))
 
-(defn get-interesting-projects [url]
-  (filter (fn [{:keys [prognosis]}] (not= prognosis "healthy")) (get-projects url)))
+(defn get-interesting-projects [{:keys [cctray]}]
+  (filter (fn [{:keys [prognosis]}] (not= prognosis "healthy")) (get-projects cctray)))

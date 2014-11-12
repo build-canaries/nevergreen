@@ -27,15 +27,17 @@
          most-interesting)))
 
 (defn- name-matches [regex project]
-  (re-matches (Pattern/compile regex) (:raw-name project)))
+  (re-matches (Pattern/compile regex) (:name project)))
 
-(defn include-whitelisted-projects [projects]
-  (filter #(some (fn [regex] (name-matches regex %)) (included-projects)) projects))
+(defn ok-project? [included-projects]
+  #(some (fn [regex] (name-matches regex %)) included-projects))
 
-(defn filter-blacklisted-projects [projects]
-  (filter #(not-any? (fn [regex] (name-matches regex %)) (excluded-projects)) projects))
+(defn include-whitelisted-projects [included-projects projects]
+  (filter (ok-project? included-projects) projects))
 
-(defn show-selected-projects [projects]
+(defn filter-blacklisted-projects [excluded-projects projects]
+  (filter #(not-any? (fn [regex] (name-matches regex %)) excluded-projects) projects))
+
+(defn show-selected-projects [request projects]
   (->> (aggregate projects)
-       (include-whitelisted-projects)
-       (filter-blacklisted-projects)))
+       (include-whitelisted-projects (:includedProjects request))))

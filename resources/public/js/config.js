@@ -5,10 +5,13 @@ function Config() {
     }
 
     this.load = function () {
-        return {cctray: localStorage.getItem("cctray")}
+        return {
+            cctray: localStorage.getItem("cctray"),
+            includedProjects: localStorage.getItem("includedProjects").split(",")
+        }
     }
 
-    this.isReady =  function () {
+    this.isReady = function () {
         return localStorage.hasOwnProperty("cctray")
     }
 }

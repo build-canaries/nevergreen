@@ -19,13 +19,16 @@
       (reducer/aggregate)
       (as-json-response)))
 
+(defn get-interesting-projects [request]
+  (->> (parser/get-interesting-projects request)
+       (reducer/show-selected-projects request)
+       (as-json-response)))
+
 (defroutes main-routes
            (GET "/" [] (clojure.java.io/resource "public/index.html"))
            (GET "/api/projects" {params :params} (get-json-projects (:url params)))
            (GET "/all" [] (get-json-projects (cctray-url)))
-           (GET "/interesting" [] (-> (parser/get-interesting-projects (cctray-url))
-                                      (reducer/show-selected-projects)
-                                      (as-json-response)))
+           (POST "/interesting" request (get-interesting-projects (:params request)))
            (route/resources "/"))
 
 (def app

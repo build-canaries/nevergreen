@@ -8,6 +8,8 @@ describe("view logic", function () {
     })
 
     it("adds click listener to page", function () {
+        localStorage.setItem("includedProjects", ["foo", "bar"])
+        localStorage.setItem("cctray", "some-url")
         spyOn(adminController, "saveIncludedProjects")
         $("body").append("<input id='save-projects'/>")
 
