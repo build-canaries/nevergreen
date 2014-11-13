@@ -5,6 +5,7 @@ function AdminView(controller) {
         load()
         $("#cctray-save").click(saveCctray)
         $("#save-projects").click(saveProjects)
+        $("#include-all").click(includeAll)
     }
 
     function appendProjects(projects) {
@@ -32,5 +33,10 @@ function AdminView(controller) {
     function saveProjects() {
         var includedProjects = $("#projects ul li.included").map(function(index, element){return element.textContent}).toArray()
         controller.saveIncludedProjects(includedProjects)
+        window.location.replace("/")
+    }
+
+    function includeAll() {
+        $("#projects ul li").addClass("included")
     }
 }

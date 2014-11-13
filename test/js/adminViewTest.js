@@ -10,6 +10,7 @@ describe("view logic", function () {
     it("adds click listener to page", function () {
         localStorage.setItem("includedProjects", ["foo", "bar"])
         localStorage.setItem("cctray", "some-url")
+        spyOn(window.location, "replace")
         spyOn(adminController, "saveIncludedProjects")
         $("body").append("<input id='save-projects'/>")
 
@@ -23,6 +24,7 @@ describe("view logic", function () {
         $("#save-projects").click()
 
         expect(adminController.saveIncludedProjects).toHaveBeenCalledWith(["proj-1", "proj-2"])
+        expect(window.location.replace).toHaveBeenCalledWith("/")
     })
 
     it("prints a list of project names to the dom", function () {
@@ -42,12 +44,35 @@ describe("view logic", function () {
             {"name": "bar"}
         ])
         var project = $('#projects ul li:first');
-        expect(project.hasClass('included')).toBeTruthy()
-        expect(project.hasClass('no-text-selection')).toBeTruthy()
+        expect(project).toHaveClass("included")
+        expect(project).toHaveClass("no-text-selection")
 
         project.click()
 
-        expect(project.hasClass('included')).toBeFalsy()
+        expect(project).not.toHaveClass("included")
+    })
+
+    describe("include and exclude all buttons", function () {
+        beforeEach(function () {
+            $("body").empty()
+        })
+
+        it("include all click will add class included to all projects", function () {
+            spyOn(window.location, "replace")
+            spyOn(adminController, "saveIncludedProjects")
+            $("body").append("<input id='save-projects'/>")
+            $("body").append("<input id='include-all'/>")
+            $("body").append('<div id="projects"><ul>' +
+            '<li>proj-1</li>' +
+            '<li>proj-2</li>' +
+            '<li>proj-3</li>' +
+            '</ul></div>')
+
+            new AdminView(adminController).init()
+            $("#include-all").click()
+
+            expect($('#projects ul li:first')).toHaveClass("included")
+        })
     })
 
 })
