@@ -19,4 +19,13 @@ function Config() {
     this.hasCctray = function () {
         return localStorage.hasOwnProperty("cctray")
     }
+
+    this.includesProject = function (projectName) {
+        var projects = localStorage.getItem("includedProjects").split(",");
+        return arrayContains(projectName, projects)
+    }
+
+    function arrayContains(needle, arrhaystack) {
+        return (arrhaystack.indexOf(needle) > -1);
+    }
 }

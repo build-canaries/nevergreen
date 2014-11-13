@@ -3,6 +3,10 @@ function AdminView(controller) {
 
     this.init = function () {
         load()
+        addClickHandlers();
+    }
+
+    function addClickHandlers() {
         $("#cctray-save").click(saveCctray)
         $("#save-projects").click(saveProjects)
         $("#include-all").click(includeAll)
@@ -12,7 +16,11 @@ function AdminView(controller) {
     function appendProjects(projects) {
         $("#projects").append("<ul />")
         projects.forEach(function (project) {
-            $("#projects ul").append("<li class='included no-text-selection'>" + project.name + "</li>")
+            var included = ""
+            if (!config.isReady() || config.includesProject(project.name)) {
+                included = "included"
+            }
+            $("#projects ul").append("<li class='" + included + " no-text-selection'>" + project.name + "</li>")
         })
         $("#projects ul li").click(function () {
             $(this).toggleClass("included")

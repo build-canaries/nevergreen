@@ -54,8 +54,6 @@ describe("view logic", function () {
         ])
 
         expect($("#projects ul li").size()).toBe(2)
-
-        $("#projects").remove()
     })
 
     it("project gets classes added on click", function () {
@@ -63,13 +61,25 @@ describe("view logic", function () {
             {"name": "foo"},
             {"name": "bar"}
         ])
-        var project = $('#projects ul li:first');
+        var project = $('#projects ul li:first')
         expect(project).toHaveClass("included")
         expect(project).toHaveClass("no-text-selection")
 
         project.click()
 
         expect(project).not.toHaveClass("included")
+    })
+
+    it("projects should only be included if the user has included them", function () {
+        localStorage.setItem("includedProjects", ["foo"])
+        localStorage.setItem("cctray", "url")
+        new AdminView(adminController).appendProjects([
+            {"name": "foo"},
+            {"name": "bar"}
+        ])
+
+        expect($('#projects ul li:first')).toHaveClass("included")
+        expect($('#projects ul li:last')).not.toHaveClass("included")
     })
 
     describe("include and exclude all buttons", function () {
