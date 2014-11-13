@@ -24,6 +24,9 @@ function AdminView(controller) {
     function load() {
         var settings = config.load()
         $("#cctray-url").val(settings.cctray)
+        if (config.hasCctray()) {
+            controller.getProjects(appendProjects)
+        }
     }
 
     function saveCctray() {
@@ -32,7 +35,9 @@ function AdminView(controller) {
     }
 
     function saveProjects() {
-        var includedProjects = $("#projects ul li.included").map(function(index, element){return element.textContent}).toArray()
+        var includedProjects = $("#projects ul li.included").map(function (index, element) {
+            return element.textContent
+        }).toArray()
         controller.saveIncludedProjects(includedProjects)
         window.location.replace("/")
     }

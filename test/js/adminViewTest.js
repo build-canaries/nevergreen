@@ -1,10 +1,11 @@
 describe("view logic", function () {
 
-    var adminController = {saveIncludedProjects: null}
+    var adminController = {saveIncludedProjects: null, getProjects: function(){}}
 
     beforeEach(function () {
         $("body").empty()
         $("body").append('<div id="projects"/>')
+        localStorage.clear()
     })
 
     it("adds click listener to page", function () {
@@ -25,6 +26,25 @@ describe("view logic", function () {
 
         expect(adminController.saveIncludedProjects).toHaveBeenCalledWith(["proj-1", "proj-2"])
         expect(window.location.replace).toHaveBeenCalledWith("/")
+    })
+
+    it("autoloads projects if cctray is available", function () {
+        localStorage.setItem("cctray", "some-url")
+        spyOn(adminController, "getProjects")
+        var view = new AdminView(adminController)
+
+        view.init()
+
+        expect(adminController.getProjects).toHaveBeenCalledWith(view.appendProjects)
+    })
+
+    it("autoloads projects if cctray is available", function () {
+        spyOn(adminController, "getProjects")
+        var view = new AdminView(adminController)
+
+        view.init()
+
+        expect(adminController.getProjects).not.toHaveBeenCalled()
     })
 
     it("prints a list of project names to the dom", function () {
@@ -54,11 +74,11 @@ describe("view logic", function () {
 
     describe("include and exclude all buttons", function () {
         beforeEach(function () {
+            spyOn(window.location, "replace")
             $("body").empty()
         })
 
         it("includes all click will add class included to all projects", function () {
-            spyOn(window.location, "replace")
             spyOn(adminController, "saveIncludedProjects")
             $("body").append("<input id='save-projects'/>")
             $("body").append("<input id='include-all'/>")
@@ -75,7 +95,6 @@ describe("view logic", function () {
         })
 
         it("excludes all click will remove class included from all projects", function () {
-            spyOn(window.location, "replace")
             spyOn(adminController, "saveIncludedProjects")
             $("body").append("<input id='save-projects'/>")
             $("body").append("<input id='exclude-all'/>")

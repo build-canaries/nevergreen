@@ -13,6 +13,10 @@ function Config() {
     }
 
     this.isReady = function () {
-        return localStorage.hasOwnProperty("cctray") && localStorage.hasOwnProperty("includedProjects")
+        return this.hasCctray() && localStorage.hasOwnProperty("includedProjects")
+    }
+
+    this.hasCctray = function () {
+        return localStorage.hasOwnProperty("cctray")
     }
 }

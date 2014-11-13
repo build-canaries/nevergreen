@@ -45,5 +45,13 @@ describe("Configurable build monitor", function () {
 
             expect(ready).toBeTruthy()
         })
+
+        it("has cctray", function () {
+            spyOn(localStorage, "hasOwnProperty").and.returnValue(true)
+
+            var hasCctray = new Config().hasCctray()
+
+            expect(hasCctray).toBeTruthy()
+        })
     })
 })
