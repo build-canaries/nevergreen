@@ -15,28 +15,26 @@ It uses the *cctray.xml* format which is supported by nearly all CI servers. (I'
 
 See a demo at http://build-monitor-clj.herokuapp.com
 
+you can use https://builds.apache.org/cc.xml as a test cctray xml
+
 ## How to Run
 
 The build monitor runs on port 5000 (by default).
 
 ```
-export CCTRAY_URL=https://builds.apache.org/cc.xml
 lein ring server
 ```
 
 # Config
 
-All configuration variables are read from the environment (see http://12factor.net/config). 
-Under *nix operating systems you can use the `export` command and under Windows the `set` command to easily set this values in a start up script.
+The port is configured as an environment variable named `PORT`. This is defaulted to 5000.
+Under *nix operating systems you can use the `export` command and under Windows the `set` command to easily set this value in a start up script.
 
-Name              | Required? | Default Value | Description | Example
-------------------|-----------|---------------|-------------|---------
-CCTRAY_URL        | Yes       | N/A           | The absolute url to the cctray.xml file to parse | https://builds.apache.org/cc.xml
-INCLUDED_PROJECTS | No        | ".\*" (i.e. Include everything)  | A comma separated list of projects to include, this list is matched against the raw project name and may include regular expressions | "foo service, .\*environment, test.\*" 
-EXCLUDED_PROJECTS | No        | nil (i.e. Exclude nothing) | A comma separated list of projects to exclude, this list is matched against the raw project name and may include regular expressions | "sandbox environment, test external stuff"
-PORT              | No        | 5000          | The port to start on, if this is not a valid port number you'll get an error while trying to start the application | 1337
+When the application starts using a web browser navigate to `http://localhost:PORT`. This will check if the cctray url and a list of included projects has been set. If either have not been set it will redirect you to `http://localhost:PORT/config.html` here you are able to enter the cctray url and select the projects to show on the monitor. Once you have done this if you navigate back to `http://localhost:PORT` you will see your lovely monitor in action.
 
 # Contributing
+
+If you would like to add a feature/fix a bug for us please create a pull request.
 
 ## CC Tray XML Spec
 
