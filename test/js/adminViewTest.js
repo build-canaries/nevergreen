@@ -57,7 +57,7 @@ describe("view logic", function () {
             $("body").empty()
         })
 
-        it("include all click will add class included to all projects", function () {
+        it("includes all click will add class included to all projects", function () {
             spyOn(window.location, "replace")
             spyOn(adminController, "saveIncludedProjects")
             $("body").append("<input id='save-projects'/>")
@@ -71,7 +71,24 @@ describe("view logic", function () {
             new AdminView(adminController).init()
             $("#include-all").click()
 
-            expect($('#projects ul li:first')).toHaveClass("included")
+            expect($('#projects ul li:last')).toHaveClass("included")
+        })
+
+        it("excludes all click will remove class included from all projects", function () {
+            spyOn(window.location, "replace")
+            spyOn(adminController, "saveIncludedProjects")
+            $("body").append("<input id='save-projects'/>")
+            $("body").append("<input id='exclude-all'/>")
+            $("body").append('<div id="projects"><ul>' +
+            '<li class="included">proj-1</li>' +
+            '<li class="included">proj-2</li>' +
+            '<li class="included">proj-3</li>' +
+            '</ul></div>')
+
+            new AdminView(adminController).init()
+            $("#exclude-all").click()
+
+            expect($('#projects ul li:first')).not.toHaveClass("included")
         })
     })
 

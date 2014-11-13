@@ -6,6 +6,7 @@ function AdminView(controller) {
         $("#cctray-save").click(saveCctray)
         $("#save-projects").click(saveProjects)
         $("#include-all").click(includeAll)
+        $("#exclude-all").click(excludeAll)
     }
 
     function appendProjects(projects) {
@@ -38,5 +39,9 @@ function AdminView(controller) {
 
     function includeAll() {
         $("#projects ul li").addClass("included")
+    }
+
+    function excludeAll() {
+        $("#projects ul li").removeClass("included")
     }
 }
