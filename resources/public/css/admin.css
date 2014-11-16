@@ -22,6 +22,7 @@ form {
     padding: 0 0.3em;
     border: 0.1em solid #FFFED7;
     background-color: #FFFED7;
+    cursor: pointer;
 }
 
 #cctray-url {
@@ -56,7 +57,7 @@ li {
     min-height: 40px;
     vertical-align: middle;
     line-height: 2em;
-    cursor: pointer
+    cursor: pointer;
 }
 
 .select-all {
