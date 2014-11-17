@@ -40,12 +40,6 @@ If you would like to add a feature/fix a bug for us please create a pull request
 
 See https://github.com/robertmaldon/cc_dashboard/blob/master/README.md#summary
 
-## TODO
-
-* Themeable - Zero broken/building builds screen (http-status-cats, keep calm and keep committing, Days since last accident)
-* Themeable - Build status change noises
-* D3 screen
-
 ## License
 
 Copyright © 2014 Ste Cowley, Joe Wright, Chris Martin and friends (insert your name here!)
