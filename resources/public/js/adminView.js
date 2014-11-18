@@ -25,6 +25,7 @@ function AdminView(controller) {
         $("#projects ul li").click(function () {
             $(this).toggleClass("included")
         })
+        $("#project-controls").removeClass("hidden")
     }
 
     this.appendProjects = appendProjects

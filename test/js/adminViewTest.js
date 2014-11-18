@@ -38,7 +38,7 @@ describe("view logic", function () {
         expect(adminController.getProjects).toHaveBeenCalledWith(view.appendProjects)
     })
 
-    it("autoloads projects if cctray is available", function () {
+    it("does not load projects if cctray is unavailable", function () {
         spyOn(adminController, "getProjects")
         var view = new AdminView(adminController)
 
@@ -48,12 +48,14 @@ describe("view logic", function () {
     })
 
     it("prints a list of project names to the dom", function () {
+        $("body").append("<div id='project-controls' class='hidden'></div>")
         new AdminView(adminController).appendProjects([
             {"name": "foo"},
             {"name": "bar"}
         ])
 
         expect($("#projects ul li").size()).toBe(2)
+        expect($("#project-controls")).not.toHaveClass("hidden")
     })
 
     it("project gets classes added on click", function () {
