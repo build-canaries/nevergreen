@@ -1,1 +1,1 @@
-web: java $JVM_OPTS -cp target/build-monitor-clj-standalone.jar clojure.main -m build-monitor-clj.app
+web: java $JVM_OPTS -cp target/nevergreen-standalone.jar clojure.main -m nevergreen.app

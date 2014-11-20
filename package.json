@@ -1,7 +1,7 @@
 {
-  "name": "build-monitor-clj",
-  "version": "0.0.1",
-  "description": "Build monitor in Clojure and Javascript",
+  "name": "nevergreen",
+  "version": "0.1.0",
+  "description": "An interesting build monitor",
   "main": "karma.conf.js",
   "directories": {
     "doc": "doc",
@@ -18,11 +18,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/cowley05/build-monitor-clj.git"
+    "url": "https://github.com/build-canaries/nevergreen.git"
   },
-  "author": "",
-  "license": "BSD-2-Clause",
+  "author": "Build Canaries",
+  "license": "Eclipse Public License",
   "bugs": {
-    "url": "https://github.com/cowley05/build-monitor-clj/issues"
+    "url": "https://github.com/build-canaries/nevergreen/issues"
   }
 }

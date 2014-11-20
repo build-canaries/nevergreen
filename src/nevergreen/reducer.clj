@@ -1,6 +1,6 @@
-(ns build-monitor-clj.reducer
+(ns nevergreen.reducer
   (:import (java.util.regex Pattern))
-  (:require [build-monitor-clj.config :refer :all]))
+  (:require [nevergreen.config :refer :all]))
 
 (def priorities ["sick-building" "sick" "healthy-building" "healthy" "unknown"])
 

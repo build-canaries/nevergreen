@@ -1,6 +1,6 @@
-(defproject build-monitor-clj "0.1.0-SNAPSHOT"
+(defproject nevergreen "0.1.0"
             :description "An interesting build monitor"
-            :url "https://github.com/cowley05/build-monitor-clj"
+            :url "https://github.com/build-canaries/nevergreen"
             :dependencies [[org.clojure/clojure "1.6.0"]
                            [midje "1.6.3"]
                            [ring "1.2.2"]
@@ -14,8 +14,8 @@
                       [lein-idea "1.0.1"]]
             :min-lein-version "2.0.0"
             :hooks [environ.leiningen.hooks]
-            :ring {:handler build-monitor-clj.app/app :port 5000}
-            :uberjar-name "build-monitor-clj-standalone.jar"
-            :main build-monitor-clj.app
-            :aot [build-monitor-clj.app]
+            :ring {:handler nevergreen.app/app :port 5000}
+            :uberjar-name "nevergreen-standalone.jar"
+            :main nevergreen.app
+            :aot [nevergreen.app]
             :profiles {:production {:env {:production true}}})

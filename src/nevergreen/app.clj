@@ -1,12 +1,12 @@
-(ns build-monitor-clj.app
+(ns nevergreen.app
   (:require [compojure.route :as route]
             [compojure.handler :as handler]
             [ring.adapter.jetty :as jetty]
-            [build-monitor-clj.parser :as parser]
-            [build-monitor-clj.reducer :as reducer]
+            [nevergreen.parser :as parser]
+            [nevergreen.reducer :as reducer]
             [cheshire.core :refer [generate-string]]
             [environ.core :refer [env]]
-            [build-monitor-clj.config :refer :all]
+            [nevergreen.config :refer :all]
             [compojure.core :refer :all])
   (:gen-class))
 

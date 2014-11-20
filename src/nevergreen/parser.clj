@@ -1,4 +1,4 @@
-(ns build-monitor-clj.parser
+(ns nevergreen.parser
   (:require [clojure.xml :as xml]
             [clojure.string :refer [split join]]))
 

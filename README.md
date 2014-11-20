@@ -1,4 +1,4 @@
-# Nevergreen [![Build Status](https://travis-ci.org/cowley05/build-monitor-clj.svg?branch=master)](https://travis-ci.org/cowley05/build-monitor-clj)
+# Nevergreen
 
 ### An interesting build monitor.
 

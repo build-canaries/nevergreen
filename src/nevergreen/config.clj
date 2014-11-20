@@ -1,4 +1,4 @@
-(ns build-monitor-clj.config
+(ns nevergreen.config
   (:require [clojure.string :refer [split trim]]
             [environ.core :refer [env]]))
 

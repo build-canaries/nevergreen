@@ -1,5 +1,5 @@
-(ns build-monitor-clj.parser-test
-  (:require [build-monitor-clj.parser :as subject]
+(ns nevergreen.parser-test
+  (:require [nevergreen.parser :as subject]
             [midje.sweet :refer :all]))
 
 (facts "will split project names"

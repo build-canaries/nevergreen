@@ -1,7 +1,7 @@
-(ns build-monitor-clj.reducer-test
+(ns nevergreen.reducer-test
   (:require [midje.sweet :refer :all]
-            [build-monitor-clj.reducer :as subject]
-            [build-monitor-clj.config :refer :all]))
+            [nevergreen.reducer :as subject]
+            [nevergreen.config :refer :all]))
 
 (defn project
   [overrides] (merge {:raw-name  "project-1"
