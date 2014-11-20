@@ -4,6 +4,7 @@ A Clojure application designed to run an interesting build monitor.
 
 It uses the *cctray.xml* format which is supported by nearly all CI servers. (I'm looking at you Bamboo) you can find each xml file under for each of the following ci servers under the following:
 
+
 * GO - http://servername:8154/go/cctray.xml
 * CruiseControl.rb - http://cc.rb.servername:3333/XmlStatusReport.aspx
 * CruiseControl - http://cc.java.servername:8080/cctray.xml
@@ -31,6 +32,13 @@ The port is configured as an environment variable named `PORT`. This is defaulte
 Under *nix operating systems you can use the `export` command and under Windows the `set` command to easily set this value in a start up script.
 
 When the application starts using a web browser navigate to `http://localhost:PORT`. This will check if the cctray url and a list of included projects has been set. If either have not been set it will redirect you to `http://localhost:PORT/config.html` here you are able to enter the cctray url and select the projects to show on the monitor. Once you have done this if you navigate back to `http://localhost:PORT` you will see your lovely monitor in action.
+
+# Heroku deployment
+
+If you are with the team you can deploy to Heroku after adding this remote
+
+`git remote add heroku git@heroku.com:nevergreen.git`
+
 
 # Contributing
 
