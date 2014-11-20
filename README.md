@@ -1,4 +1,4 @@
-# Nevergreen
+# Nevergreen [![Build Status](https://snap-ci.com/build-canaries/nevergreen/branch/master/build_image)](https://snap-ci.com/build-canaries/nevergreen/branch/master)
 
 ### An interesting build monitor.
 
