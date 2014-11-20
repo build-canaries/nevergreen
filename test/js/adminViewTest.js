@@ -1,6 +1,8 @@
 describe("view logic", function () {
 
-    var adminController = {saveIncludedProjects: null, getProjects: function(){}}
+    var adminController = { saveIncludedProjects: function(){}, 
+                            getProjects: function(){},
+                            saveSuccessText: function(){}}
 
     beforeEach(function () {
         $("body").empty()
@@ -45,6 +47,41 @@ describe("view logic", function () {
         view.init()
 
         expect(adminController.getProjects).not.toHaveBeenCalled()
+    })
+
+    describe("success text", function() {
+      
+        beforeEach(function() {
+            $("body").append("<form>" +
+               "<input id='success-text' type=text name=success-text/>" +
+               "<input id='save-success' class=button type=button value='save success text'>" +
+               "</form>")
+        })
+        
+        it("saves", function() {
+            
+            var view = new AdminView(adminController)
+            view.init()
+            var textInput = $("#success-text")
+            var saveSuccessButtton = $("#save-success")
+            var expected = "expected"
+            textInput.val(expected)
+            spyOn(adminController, "saveSuccessText")
+
+            
+            saveSuccessButtton.click()
+
+            expect(adminController.saveSuccessText).toHaveBeenCalledWith(expected)
+        })
+
+        it("loads", function() {
+            localStorage.setItem("successText", "any old value")
+            var textInput = $("#success-text")
+
+            new AdminView(adminController).init()
+
+            expect(textInput.val()).toBe("any old value")
+        })
     })
 
     it("prints a list of project names to the dom", function () {

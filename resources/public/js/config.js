@@ -8,6 +8,7 @@ function Config() {
         var projects = localStorage.getItem("includedProjects");
         return {
             cctray: localStorage.getItem("cctray"),
+            successText: localStorage.hasOwnProperty("successText") ? localStorage.getItem("successText") : "=(^.^)=",
             includedProjects: projects == null ? null : projects.split(",")
         }
     }

@@ -11,6 +11,7 @@ function AdminView(controller) {
         $("#save-projects").click(saveProjects)
         $("#include-all").click(includeAll)
         $("#exclude-all").click(excludeAll)
+        $("#save-success").click(saveSuccessText)
     }
 
     function appendProjects(projects) {
@@ -33,6 +34,7 @@ function AdminView(controller) {
     function load() {
         var settings = config.load()
         $("#cctray-url").val(settings.cctray)
+        $("#success-text").val(settings.successText)
         if (config.hasCctray()) {
             controller.getProjects(appendProjects)
         }
@@ -41,6 +43,11 @@ function AdminView(controller) {
     function saveCctray() {
         config.save({cctray: $("#cctray-url").val()})
         controller.getProjects(appendProjects)
+    }
+
+    function saveSuccessText() {
+        var text = $("#success-text").val()
+        controller.saveSuccessText(text)
     }
 
     function saveProjects() {

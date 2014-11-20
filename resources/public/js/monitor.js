@@ -45,13 +45,14 @@ function StatusAppender(projectsList) {
           project.name + "</div></div></li>")
     }
 
-    this.addProjects = function() {
+    this.addProjects = function(config) {
         $('#projects').empty()
         this.projects.forEach(addBuildStatusToScreen)
 
         if(this.projects.length === 0) {
+            var cat = config.load().successText
             $('#projects')
-                .append("<li><div class=outerContainer><div class=innerContainer>=(^.^)=</div></div></li>")
+                .append("<li><div class=outerContainer><div class=innerContainer>" + cat + "</div></div></li>")
         }
     }
 }
@@ -60,7 +61,7 @@ function Updater(frequency, config) {
     function updateBuildMonitor() {
         if (config.isReady()) {
             $.post("/interesting", config.load(), function (data) {
-                new StatusAppender(data).addProjects()
+                new StatusAppender(data).addProjects(config)
                 new Styler().styleProjects()
             }, "json")
         } else {

@@ -23,6 +23,15 @@ describe("Configurable build monitor", function () {
         expect(localStorage.setItem).toHaveBeenCalledWith("includedProjects", ["proj-1", "proj-2"])
     })
 
+
+    it("saves success text", function () {
+        spyOn(localStorage, "setItem")
+
+        new AdminController(config).saveSuccessText("anything")
+
+        expect(localStorage.setItem).toHaveBeenCalledWith("successText", "anything")
+    })
+
 })
 
 describe("View", function () {

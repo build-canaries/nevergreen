@@ -14,4 +14,8 @@ function AdminController(config) {
         localStorage.setItem("includedProjects", includedProjects)
     }
 
+    this.saveSuccessText = function(successText) {
+        localStorage.setItem("successText", successText)
+    }
+
 }
