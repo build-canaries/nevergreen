@@ -54,24 +54,19 @@ describe("view logic", function () {
         beforeEach(function() {
             $("body").append("<form>" +
                "<input id='success-text' type=text name=success-text/>" +
-               "<input id='save-success' class=button type=button value='save success text'>" +
+               "<input id='save-projects' class=button type=button>" +
                "</form>")
         })
         
         it("saves", function() {
-            
-            var view = new AdminView(adminController)
-            view.init()
-            var textInput = $("#success-text")
-            var saveSuccessButtton = $("#save-projects")
-            var expected = "expected"
-            textInput.val(expected)
+            spyOn(window.location, "replace")
+            new AdminView(adminController).init()
+            $("#success-text").val("expected")
             spyOn(adminController, "saveSuccessText")
 
-            
-            saveSuccessButtton.click()
+            $("#save-projects").click()
 
-            expect(adminController.saveSuccessText).toHaveBeenCalledWith(expected)
+            expect(adminController.saveSuccessText).toHaveBeenCalledWith("expected")
         })
 
         it("loads", function() {
