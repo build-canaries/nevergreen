@@ -39,8 +39,8 @@ label {
 }
 
 #cctray-url {
-    color: rgb(69, 69, 231);
-    border-bottom: 3px solid rgb(69, 69, 231);
+    color: #2196F3;
+    border-bottom: 3px solid #2196F3;
 }
 
 #success-text {
@@ -75,7 +75,7 @@ label {
 
 .right-button input {
   width: 4em;
-  background-color: rgb(69, 69, 231);
+  background-color: #2196F3;
   color: white;
 }
 
@@ -109,7 +109,7 @@ li {
 }
 
 .included {
-    border-left: 3px solid rgb(69, 69, 231);
+    border-left: 3px solid #2196F3;
     color: black;
 }
 
