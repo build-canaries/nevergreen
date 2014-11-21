@@ -90,6 +90,14 @@ describe("view logic", function () {
         expect($("#project-controls")).not.toHaveClass("hidden")
     })
 
+    it("clears out the projects before adding them", function () {
+        var adminView = new AdminView(adminController);
+        adminView.appendProjects([{"name": "foo"}, {"name": "bar"}])
+        adminView.appendProjects([{"name": "foo"}, {"name": "bar"}])
+
+        expect($("#projects ul li").size()).toBe(2)
+    })
+
     it("project gets classes added on click", function () {
         new AdminView(adminController).appendProjects([
             {"name": "foo"},

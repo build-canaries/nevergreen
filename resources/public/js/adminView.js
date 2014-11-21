@@ -14,6 +14,7 @@ function AdminView(controller) {
     }
 
     function appendProjects(projects) {
+        $("#projects").empty()
         $("#projects").append("<ul />")
         projects.forEach(function (project) {
             var included = ""
