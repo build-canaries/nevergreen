@@ -11,7 +11,6 @@ function AdminView(controller) {
         $("#save-projects").click(saveProjects)
         $("#include-all").click(includeAll)
         $("#exclude-all").click(excludeAll)
-        $("#save-success").click(saveSuccessText)
     }
 
     function appendProjects(projects) {
@@ -27,6 +26,7 @@ function AdminView(controller) {
             $(this).toggleClass("included")
         })
         $("#project-controls").removeClass("hidden")
+        $("#success").removeClass("hidden")
     }
 
     this.appendProjects = appendProjects
@@ -51,6 +51,7 @@ function AdminView(controller) {
     }
 
     function saveProjects() {
+        saveSuccessText()
         var includedProjects = $("#projects ul li.included").map(function (index, element) {
             return element.textContent
         }).toArray()

@@ -1,9 +1,24 @@
+<<<<<<< HEAD
 # Nevergreen [![Build Status](https://snap-ci.com/build-canaries/nevergreen/branch/master/build_image)](https://snap-ci.com/build-canaries/nevergreen/branch/master)
 
 ### An interesting build monitor.
+=======
+# Nevergreen [![Build Status](https://travis-ci.org/cowley05/build-monitor-clj.svg?branch=master)](https://travis-ci.org/cowley05/build-monitor-clj)
 
-It uses the *cctray.xml* format which is supported by nearly all CI servers. (I'm looking at you Bamboo) you can find each xml file under for each of the following ci servers under the following:
+A Clojure application designed to run an interesting build monitor. It uses the *cctray.xml* format which is supported by nearly all CI servers.
+>>>>>>> Joe - Move to Doug styling
 
+See a demo at http://build-monitor-clj.herokuapp.com
+
+you can use https://builds.apache.org/cc.xml as a test cctray xml
+
+# CCTray default locations
+
+<<<<<<< HEAD
+=======
+You can find your *cctray.xml* in these locations  
+
+>>>>>>> Joe - Move to Doug styling
 * GO - http://servername:8154/go/cctray.xml
 * CruiseControl.rb - http://cc.rb.servername:3333/XmlStatusReport.aspx
 * CruiseControl - http://cc.java.servername:8080/cctray.xml
@@ -13,13 +28,16 @@ It uses the *cctray.xml* format which is supported by nearly all CI servers. (I'
 * Travis CI - http://travis-ci.org/ownername/repositoryname/cc.xml
 * tddium - - http://api.tddium.com/cc/long_uuid_string/cctray.xml
 
+<<<<<<< HEAD
 See a demo at http://nevergreen.herokuapp.com
 
 You can use https://builds.apache.org/cc.xml as a test cctray xml
+=======
+>>>>>>> Joe - Move to Doug styling
 
 ## How to Run
 
-The build monitor runs on port 5000 (by default).
+Nevergreen runs on port 5000 (by default).
 
 ```
 lein run
@@ -48,6 +66,10 @@ See https://github.com/robertmaldon/cc_dashboard/blob/master/README.md#summary
 
 ## License
 
+<<<<<<< HEAD
 Copyright © 2014 Build Canaries and friends
+=======
+Copyright © 2014 The Build Canaries: Ste Cowley, Joe Wright, Chris Martin and friends (insert your name here!)
+>>>>>>> Joe - Move to Doug styling
 
 Distributed under the Eclipse Public License either version 1.0 or (at your option) any later version.

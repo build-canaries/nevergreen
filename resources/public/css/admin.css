@@ -1,40 +1,88 @@
-form {
-    padding-bottom: 1em;
+body{
+    background-color: white;
+    color: black;
+    text-align: left;
+    margin-left: 2%;
+    margin-right: 2%;
 }
 
 #actions-panel {
     font-size: 2em;
-    position: fixed;
     top: 0;
-    width: 100%;
-    background-color: black;
+    width: 95.3%;
     margin-top: 0;
     margin-bottom: 0;
     padding-top: 1em;
-    padding-bottom: 1em;
-    border-bottom: #FFFED7 solid 1px;
-
+    padding-bottom: 0.5em;
+    text-align: left;
+    position: fixed;
+    background-color: white;
+    border-bottom: 1px solid gray
 }
 
-.button {
-    font-size: 1em;
-    border-radius: 10px;
-    padding: 0 0.3em;
-    border: 0.1em solid #FFFED7;
-    background-color: #FFFED7;
-    cursor: pointer;
+
+
+#project-controls {
+    margin-top: 0.4em;
 }
 
-#cctray-url {
-    border-radius: 10px;
+label {
+    width: 7.2em;
+    display: inline-block;
+}
+
+#cctray-url, #success-text  {
     border: none;
     padding: 0 0.5em;
     font-size: 1em;
     width: calc(100% - 400px);
 }
 
+#cctray-url {
+    color: rgb(69, 69, 231);
+    border-bottom: 3px solid rgb(69, 69, 231);
+}
+
+#success-text {
+    color: black;
+    border-bottom: 1px solid black;
+}
+
+#success {
+    text-align: left;
+    margin-top: 0.5em;
+}
+
+.button {
+    font-size: 1em;
+    border-radius: 10px;
+    padding: 0 0.3em;
+    cursor: pointer;
+    box-shadow: none;
+}
+
+.select-all {
+  font-size: 0.6em;
+  width: 10em;
+  padding: 0.2em;
+  background-color: rgb(239, 239, 239);
+  border-color: rgb(239, 239, 239);
+}
+
+.right-button {
+  float: right;
+}
+
+.right-button input {
+  width: 4em;
+  background-color: rgb(69, 69, 231);
+  color: white;
+}
+
+
+
 #projects {
-    margin-top: 12.5em;
+    margin-top: 14.5em;
 }
 
 .no-text-selection {
@@ -47,31 +95,22 @@ form {
 }
 
 li {
-    background-color: black;
     padding: 0.3em;
     margin: 0.3em 0.2em;
-    border-radius: 10px;
     float: left;
-    border: 0.1em solid rgb(48, 48, 143);
-    min-width: 32%;
+    min-width: 30%;
     min-height: 40px;
     vertical-align: middle;
     line-height: 2em;
     cursor: pointer;
-}
-
-.select-all {
-    border: 0.1em solid rgb(48, 48, 143);
+    color: rgb(194, 185, 185);
+    border-radius: 0;
+    border-left: 3px solid rgb(239, 239, 239);
 }
 
 .included {
-    background-color: rgb(48, 48, 143);
-    color: #FFFED7;
-}
-
-.excluded {
-    background-color: #000000;
-    color: #FFFED7;
+    border-left: 3px solid rgb(69, 69, 231);
+    color: black;
 }
 
 .hidden {

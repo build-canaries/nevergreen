@@ -9,20 +9,25 @@
 <body onload="new AdminView(new AdminController(new Config())).init()">
 <div id="actions-panel">
     <form id="cctray-form">
-        <label title="cctray url">
-            cctray url
+
+        <div id="cctray">
+            <label title="cctray url">cctray url</label>
             <input id="cctray-url" type="text" name="cctray"/>
-        </label>
-        <input id="cctray-save" class="button" type="button" value="fetch">
+            <span class="right-button"><input id="cctray-save" class="button" type="button" value="fetch"></span>
+        </div>
+
+        <div id="success" class="hidden">
+            <label title="success-text">success text</label>
+            <input id="success-text" type="text" name="success-text"/>
+            <span class="right-button"><input id="save-projects" class="button" type="button" value="save"></span>
+        </div>
+
+        <div id="project-controls" class="hidden">
+            <input id="include-all" class="button select-all no-text-selection" type="button" value="include all">
+            <input id="exclude-all" class="button select-all no-text-selection" type="button" value="exclude all">
+        </div>
 
     </form>
-    <div id="project-controls" class="hidden">
-        <input id="include-all" class="button included select-all" type="button" value="include all">
-        <input id="exclude-all" class="button excluded select-all" type="button" value="exclude all">
-        <input id="save-projects" class="button" type="button" value="save projects">
-        <input id="success-text" type="text" name="success-text"/>
-        <input id="save-success" class="button" type="button" value="save success text">
-    </div>
 </div>
 <div id="projects"/>
 </body>

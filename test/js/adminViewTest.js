@@ -63,7 +63,7 @@ describe("view logic", function () {
             var view = new AdminView(adminController)
             view.init()
             var textInput = $("#success-text")
-            var saveSuccessButtton = $("#save-success")
+            var saveSuccessButtton = $("#save-projects")
             var expected = "expected"
             textInput.val(expected)
             spyOn(adminController, "saveSuccessText")
