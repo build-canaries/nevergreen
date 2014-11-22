@@ -17,7 +17,7 @@
   "scripts": {
     "test": "./node_modules/karma/bin/karma start --singleRun",
     "testing": "./node_modules/karma/bin/karma start",
-    "lint": "jshint resources/public/js/*.js"
+    "lint": "jshint resources/public/js/*.js test/js/*.js"
   },
   "repository": {
     "type": "git",
