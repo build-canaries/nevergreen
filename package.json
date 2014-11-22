@@ -10,11 +10,14 @@
   "devDependencies": {
     "karma": "^0.12.25",
     "karma-jasmine": "~0.2.2",
-    "karma-phantomjs-launcher": "~0.1.4"
+    "karma-phantomjs-launcher": "~0.1.4",
+    "jshint": "2.5.10"
   },
   "dependencies": {},
   "scripts": {
-    "test": "karma start"
+    "test": "./node_modules/karma/bin/karma start --singleRun",
+    "testing": "./node_modules/karma/bin/karma start",
+    "lint": "jshint resources/public/js/*.js"
   },
   "repository": {
     "type": "git",

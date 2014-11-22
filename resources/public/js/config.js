@@ -9,7 +9,7 @@ function Config() {
         return {
             cctray: localStorage.getItem("cctray"),
             successText: localStorage.hasOwnProperty("successText") ? localStorage.getItem("successText") : "=(^.^)=",
-            includedProjects: projects == null ? null : projects.split(",")
+            includedProjects: projects === null ? null : projects.split(",")
         }
     }
 

@@ -1,0 +1,9 @@
+{
+    "asi": true,
+    "expr": true,
+    "loopfunc": true,
+    "curly": false,
+    "evil": true,
+    "white": true,
+    "indent": 4
+  }
