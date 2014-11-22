@@ -1,10 +1,15 @@
 {
+    // ENVIRONMENT
+    "browser": true,         // Define globals exposed by modern browsers
+    "jquery": true,          // Define globals exposed by jQuery
+    "node": true,            // Define globals exposed by Node.js
+
     // ENFORCE
     "camelcase": true,        // Force all variable names to use either camelCase style or UPPER_CASE
     "newcap": true,           // Require capitalized names for constructor functions
     "indent": 2,              // Enforce tab width of 2 spaces
-    "eqeqeq": true,           // Prohibit use of == and != in favor of === and !==.
-    "quotmark": "single",     // Enforce use of single quotation marks for strings.
+    "eqeqeq": true,           // Prohibit use of == and != in favor of === and !==
+    "quotmark": "single",     // Enforce use of single quotation marks for strings
 
     // RELAX
     "asi": true               // Allow lines to be terminated by /n rather than just semi-colons
