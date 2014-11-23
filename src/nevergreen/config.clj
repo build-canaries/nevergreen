@@ -9,12 +9,3 @@
 
 (defn port []
   (Integer. (or (env :port) 5000)))
-
-(defn cctray-url []
-  (env :cctray-url))
-
-(defn included-projects []
-  (split-string (or (env :included-projects) ".*")))
-
-(defn excluded-projects []
-  (split-string (env :excluded-projects)))

@@ -42,7 +42,7 @@ function StatusAppender(projectsList) {
     function addBuildStatusToScreen(project) {
         $('#projects')
          .append('<li class=' + project.prognosis + '><div class=outerContainer><div class=innerContainer>' +
-          project.name + '</div></div></li>')
+          project['project-name'] + '</div></div></li>')
     }
 
     this.addProjects = function(config) {
