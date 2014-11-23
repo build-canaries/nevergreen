@@ -87,6 +87,7 @@ describe('view logic', function () {
         ])
 
         expect($('#projects ul li').size()).toBe(2)
+        expect($('#projects ul li:first').text()).toEqual('bar')
         expect($('#project-controls')).not.toHaveClass('hidden')
     })
 
@@ -120,8 +121,8 @@ describe('view logic', function () {
             {'name': 'bar'}
         ])
 
-        expect($('#projects ul li:first')).toHaveClass('included')
-        expect($('#projects ul li:last')).not.toHaveClass('included')
+        expect($('#projects ul li:first')).not.toHaveClass('included')
+        expect($('#projects ul li:last')).toHaveClass('included')
     })
 
     describe('include and exclude all buttons', function () {

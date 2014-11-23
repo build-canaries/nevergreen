@@ -13,10 +13,18 @@ function AdminView(controller) {
         $('#exclude-all').click(excludeAll)
     }
 
+    function sortProjectsByName(projects) {
+        var sortedProjects = projects.sort(function (item1, item2) {
+            return item1.name.toLowerCase().localeCompare(item2.name.toLowerCase())
+        })
+        return sortedProjects;
+    }
+
     function appendProjects(projects) {
+        var sortedProjects = sortProjectsByName(projects);
         $('#projects').empty()
         $('#projects').append('<ul />')
-        projects.forEach(function (project) {
+        sortedProjects.forEach(function (project) {
             var included = ''
             if (!config.isReady() || config.includesProject(project.name)) {
                 included = 'included'

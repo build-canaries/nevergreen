@@ -12,21 +12,31 @@ describe('Configurable build monitor', function () {
         expect(localStorage.setItem).toHaveBeenCalledWith('cctray', 'url')
     })
 
-    it('gets the cctray url from settings', function () {
-        localStorage.setItem('cctray', 'some-url')
-        localStorage.setItem('includedProjects', ['proj'])
+    describe('load', function () {
+        it('gets the correct saved values from local storage', function () {
+            localStorage.setItem('cctray', 'some-url')
+            localStorage.setItem('includedProjects', ['proj'])
+            localStorage.setItem('successText', 'hello world')
 
-        var settings = new Config().load()
+            var settings = new Config().load()
 
-        expect(settings.cctray).toBe('some-url')
-        expect(settings.includedProjects[0]).toBe('proj')
-    })
+            expect(settings.cctray).toBe('some-url')
+            expect(settings.includedProjects).toEqual(['proj'])
+            expect(settings.successText).toEqual('hello world')
+        })
 
-    it('loads config as null if local storage is not set', function () {
-        var settings = new Config().load()
+        it('null if local storage is not set', function () {
+            var settings = new Config().load()
 
-        expect(settings.cctray).toBe(null)
-        expect(settings.includedProjects).toBe(null)
+            expect(settings.cctray).toBe(null)
+            expect(settings.includedProjects).toBe(null)
+        })
+
+        it('default success to cat', function () {
+            var settings = new Config().load()
+
+            expect(settings.successText).toBe('=(^.^)=')
+        })
     })
 
     describe('can tell when it has been set up', function () {
