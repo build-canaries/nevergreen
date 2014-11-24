@@ -8,7 +8,7 @@ function AdminView(controller) {
 
     function addClickHandlers() {
         $('#cctray-save').click(saveCctray)
-        $('#save-projects').click(saveProjects)
+        $('#save-projects').click(monitorPage)
         $('#include-all').click(includeAll)
         $('#exclude-all').click(excludeAll)
     }
@@ -33,6 +33,7 @@ function AdminView(controller) {
         })
         $('#projects ul li').click(function () {
             $(this).toggleClass('included')
+            saveProjects()
         })
         $('#project-controls').removeClass('hidden')
         $('#success').removeClass('hidden')
@@ -59,13 +60,16 @@ function AdminView(controller) {
         controller.saveSuccessText(text)
     }
 
-    function saveProjects() {
+    function monitorPage() {
         saveSuccessText()
+        window.location.replace('/')
+    }
+
+    function saveProjects() {
         var includedProjects = $('#projects ul li.included').map(function (index, element) {
             return element.textContent
         }).toArray()
         controller.saveIncludedProjects(includedProjects)
-        window.location.replace('/')
     }
 
     function includeAll() {
