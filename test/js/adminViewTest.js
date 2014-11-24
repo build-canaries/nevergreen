@@ -42,19 +42,21 @@ describe('view logic', function () {
 
     describe('spinner', function () {
         it('is shown', function () {
-            $('body').append('<div id="spinner" style="display: none"></div>')
+            $('body').append('<div id="loading-modal"></div><div id="spinner" style="display: none"></div>')
 
             new AdminView(adminController).showSpinner(true)
 
             expect($('#spinner')).toBeVisible()
+            expect($('#loading-modal')).toHaveClass('loading')
         })
 
         it('is hidden', function () {
-            $('body').append('<div id="spinner"></div>')
+            $('body').append('<div id="loading-modal"></div><div id="spinner"></div>')
 
             new AdminView(adminController).showSpinner(false)
 
             expect($('#spinner')).not.toBeVisible()
+            expect($('#loading-modal')).not.toHaveClass('loading')
         })
     })
 

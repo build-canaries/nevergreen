@@ -81,8 +81,10 @@ function AdminView(controller) {
 
     function showSpinner(shouldShow) {
         if (shouldShow) {
+            $('#loading-modal').addClass('loading')
             $('#spinner').show()
         } else {
+            $('#loading-modal').removeClass('loading')
             $('#spinner').hide()
         }
     }

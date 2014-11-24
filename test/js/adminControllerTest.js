@@ -5,7 +5,8 @@ describe('Configurable build monitor', function () {
         it('gets the projects using the api', function () {
             var projectNames = ['proj-1', 'proj-2']
             spyOn($, 'getJSON').and.callFake(function (_) {
-                return $.Deferred().resolve(projectNames).promise()
+                $.Deferred().resolve(projectNames).promise()
+                return {complete: function(){}}
             })
             spyOn(config, 'load').and.returnValue({cctray: 'some-url'})
             var callbackFunction = function (data) {
@@ -20,7 +21,8 @@ describe('Configurable build monitor', function () {
             var adminView = {showSpinner: function () {
             }}
             spyOn($, 'getJSON').and.callFake(function (_) {
-                return $.Deferred().resolve(['foo']).promise()
+                $.Deferred().resolve(['foo']).promise()
+                return {complete: function(){adminView.showSpinner(false)}}
             })
             spyOn(adminView, 'showSpinner')
 
