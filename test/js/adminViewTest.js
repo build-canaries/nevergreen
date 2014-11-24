@@ -37,7 +37,25 @@ describe('view logic', function () {
 
         view.init()
 
-        expect(adminController.getProjects).toHaveBeenCalledWith(view.appendProjects)
+        expect(adminController.getProjects).toHaveBeenCalledWith(view.appendProjects, view.showSpinner)
+    })
+
+    describe('spinner', function () {
+        it('is shown', function () {
+            $('body').append('<div id="spinner" style="display: none"></div>')
+
+            new AdminView(adminController).showSpinner(true)
+
+            expect($('#spinner')).toBeVisible()
+        })
+
+        it('is hidden', function () {
+            $('body').append('<div id="spinner"></div>')
+
+            new AdminView(adminController).showSpinner(false)
+
+            expect($('#spinner')).not.toBeVisible()
+        })
     })
 
     it('does not load projects if cctray is unavailable', function () {

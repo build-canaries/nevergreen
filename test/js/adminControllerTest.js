@@ -1,18 +1,34 @@
 describe('Configurable build monitor', function () {
     var config = new Config()
 
-    it('gets the projects using the api', function () {
-        var projectNames = ['proj-1', 'proj-2']
-        spyOn($, 'getJSON').and.callFake(function (_) {
-            return $.Deferred().resolve(projectNames).promise()
+    describe('get projects', function () {
+        it('gets the projects using the api', function () {
+            var projectNames = ['proj-1', 'proj-2']
+            spyOn($, 'getJSON').and.callFake(function (_) {
+                return $.Deferred().resolve(projectNames).promise()
+            })
+            spyOn(config, 'load').and.returnValue({cctray: 'some-url'})
+            var callbackFunction = function (data) {
+            }
+
+            var projects = new AdminController(config).getProjects(callbackFunction, function(){})
+
+            expect($.getJSON).toHaveBeenCalledWith('/api/projects', {url: 'some-url'}, callbackFunction)
         })
-        spyOn(config, 'load').and.returnValue({cctray: 'some-url'})
-        var callbackFunction = function (data) {
-        }
 
-        var projects = new AdminController(config).getProjects(callbackFunction)
+        it('shows and hides spinner whilst getting projects', function () {
+            var adminView = {showSpinner: function () {
+            }}
+            spyOn($, 'getJSON').and.callFake(function (_) {
+                return $.Deferred().resolve(['foo']).promise()
+            })
+            spyOn(adminView, 'showSpinner')
 
-        expect($.getJSON).toHaveBeenCalledWith('/api/projects', {url: 'some-url'}, callbackFunction)
+            new AdminController(config).getProjects(function (data) {}, adminView.showSpinner)
+
+            expect(adminView.showSpinner).toHaveBeenCalledWith(true)
+            expect(adminView.showSpinner).toHaveBeenCalledWith(false)
+        })
     })
 
     it('saves the included projects to local storage', function () {

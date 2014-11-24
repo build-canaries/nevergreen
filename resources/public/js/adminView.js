@@ -14,10 +14,9 @@ function AdminView(controller) {
     }
 
     function sortProjectsByName(projects) {
-        var sortedProjects = projects.sort(function (item1, item2) {
+        return projects.sort(function (item1, item2) {
             return item1.name.toLowerCase().localeCompare(item2.name.toLowerCase())
-        })
-        return sortedProjects;
+        });
     }
 
     function appendProjects(projects) {
@@ -46,13 +45,13 @@ function AdminView(controller) {
         $('#cctray-url').val(settings.cctray)
         $('#success-text').val(settings.successText)
         if (config.hasCctray()) {
-            controller.getProjects(appendProjects)
+            controller.getProjects(appendProjects, showSpinner)
         }
     }
 
     function saveCctray() {
         config.save({cctray: $('#cctray-url').val()})
-        controller.getProjects(appendProjects)
+        controller.getProjects(appendProjects, showSpinner)
     }
 
     function saveSuccessText() {
@@ -79,4 +78,14 @@ function AdminView(controller) {
     function excludeAll() {
         $('#projects ul li').removeClass('included')
     }
+
+    function showSpinner(shouldShow) {
+        if (shouldShow) {
+            $('#spinner').show()
+        } else {
+            $('#spinner').hide()
+        }
+    }
+
+    this.showSpinner = showSpinner
 }

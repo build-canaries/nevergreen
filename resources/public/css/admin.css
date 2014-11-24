@@ -20,8 +20,6 @@ body{
     border-bottom: 1px solid gray
 }
 
-
-
 #project-controls {
     margin-top: 0.4em;
 }
@@ -79,8 +77,6 @@ label {
   color: white;
 }
 
-
-
 #projects {
     margin-top: 14.5em;
 }
@@ -115,4 +111,11 @@ li {
 
 .hidden {
     display: none;
+}
+
+.centered {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
