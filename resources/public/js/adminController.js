@@ -3,7 +3,10 @@ function AdminController(config) {
     this.getProjects = function (handler, showSpinner) {
         var settings = config.load()
         showSpinner(true)
-        $.getJSON('/api/projects', {url: settings.cctray}, handler).always(showSpinner(false))
+        var jqxhr= $.getJSON('/api/projects', {url: settings.cctray}, handler)
+        jqxhr.complete(function() {
+            showSpinner(false)
+        })
     }
 
     this.clearProjects = function () {
