@@ -3,7 +3,7 @@
 Nevergreen is a build monitor with attitude. It is awesome for two reasons:
 
 * Your builds should always be green. Nevergreen understands this and only shows you jobs that have failed or are building. 
-* Nevergreen uses HTML localStorage. So the config is local to your web browser. You only need to run it once to host hundreds of different build monitors.
+* Nevergreen uses HTML localStorage. So the config is stored in your web browser. You only need to run it once to host hundreds of different build monitors.
 
 Check out the demo at [http://nevergreen.herokuapp.com](http://nevergreen.herokuapp.com). You can use https://builds.apache.org/cc.xml as a test cctray xml.
 
@@ -55,6 +55,6 @@ If you would like to add a feature/fix a bug for us please create a pull request
 
 ## License
 
-Copyright © 2014 Build Canaries and friends
+Copyright © 2014 Build Canaries
 
 Distributed under the Eclipse Public License either version 1.0 or (at your option) any later version.
