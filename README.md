@@ -1,6 +1,6 @@
 # Nevergreen 
 
-Nevergreen is awesome for two reasons
+Nevergreen is a build monitor with attitude. It is awesome for two reasons:
 
 * Your builds should always be green. Nevergreen understands this and only shows you jobs that have failed or are building. 
 * Nevergreen uses HTML localStorage. So the config is local to your web browser. You only need to run it once to host hundreds of different build monitors.
