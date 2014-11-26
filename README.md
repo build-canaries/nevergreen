@@ -1,6 +1,4 @@
-# Nevergreen [![Build Status](https://snap-ci.com/build-canaries/nevergreen/branch/master/build_image)](https://snap-ci.com/build-canaries/nevergreen/branch/master)
-
-### An interesting build monitor.
+# Nevergreen 
 
 Nevergreen is awesome for two reasons
 
@@ -11,7 +9,7 @@ Check out the demo at [http://nevergreen.herokuapp.com](http://nevergreen.heroku
 
 ## How to run
 
-If your CI server is publishing it's cctray on the web you can use [http://nevergreen.herokuapp.com](http://nevergreen.herokuapp.com)
+If your CI server is publishing it's cctray.xml on the web you don't need to install anything. You can just use [http://nevergreen.herokuapp.com](http://nevergreen.herokuapp.com).
 
 If you'd like to run it yourself then you can run the jar file:
 
@@ -47,6 +45,8 @@ Navigate to `http://localhost:5000`. If it is the first visit to Nevergreen from
 You'll need to first put in your cctray url then it will allow you to select which builds to show on your monitor.
 
 ## Contributing
+
+[![Build Status](https://snap-ci.com/build-canaries/nevergreen/branch/master/build_image)](https://snap-ci.com/build-canaries/nevergreen/branch/master)
 
 If you would like to add a feature/fix a bug for us please create a pull request.
 
