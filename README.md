@@ -9,7 +9,7 @@ Check out the demo at [http://nevergreen.herokuapp.com](http://nevergreen.heroku
 
 ## How to run
 
-If your CI server is publishing it's cctray.xml on the web you don't need to install anything. You can just use [http://nevergreen.herokuapp.com](http://nevergreen.herokuapp.com).
+If your CI server is publishing it's *cctray.xml* on the web you don't need to install anything. You can just use [http://nevergreen.herokuapp.com](http://nevergreen.herokuapp.com).
 
 If you'd like to run it yourself then you can run the jar file:
 
@@ -23,29 +23,29 @@ Nevergreen runs on port 5000 by default. You can change this with the PORT envir
 PORT=4000 java -jar nevergreen-standalone.jar
 ```
 
-# Finding your CCTray xml
+## Finding your CCTray xml
 
 You can find your *cctray.xml* at these locations  
 
  CI Server           | Location 
  ------------------- | -----------------------------------------------------
- Jenkins             |  http://jenkins.servername:8080/cc.xml
- Hudson              |  http://hudson.servername:8080/cc.xml
- Travis CI           |  http://travis-ci.org/ownername/repositoryname/cc.xml
- GO                  |  http://servername:8154/go/cctray.xml
- Snap CI             |  https://snap-ci.com/ownername/repositoryname/branch/master/cctray.xml
- CircleCI            |  https://circleci.com/cc.xml?circle-token=:circle-token
- TeamCity            |  http://teamcity:8111/guestAuth/app/rest/cctray/projects.xml
- CruiseControl.rb    |  http://cc.rb.servername:3333/XmlStatusReport.aspx
- CruiseControl       |  http://cc.java.servername:8080/cctray.xml
- CruiseControl.NET   |  http://cc.net.servername/XmlStatusReport.aspx
- tddium              |  http://api.tddium.com/cc/long_uuid_string/cctray.xml
+ Jenkins             |  `http://jenkins.servername:8080/cc.xml`
+ Hudson              |  `http://hudson.servername:8080/cc.xml`
+ Travis CI           |  `http://travis-ci.org/ownername/repositoryname/cc.xml`
+ GO                  |  `http://servername:8154/go/cctray.xml`
+ Snap CI             |  `https://snap-ci.com/ownername/repositoryname/branch/master/cctray.xml`
+ CircleCI            |  `https://circleci.com/cc.xml?circle-token=:circle-token`
+ TeamCity            |  `http://teamcity:8111/guestAuth/app/rest/cctray/projects.xml`
+ CruiseControl.rb    |  `http://cc.rb.servername:3333/XmlStatusReport.aspx`
+ CruiseControl       |  `http://cc.java.servername:8080/cctray.xml`
+ CruiseControl.NET   |  `http://cc.net.servername/XmlStatusReport.aspx`
+ tddium              |  `http://api.tddium.com/cc/long_uuid_string/cctray.xml`
 
 ## Configuring your own Nevergreen
 
 Navigate to `http://localhost:5000`. If it is the first visit to Nevergreen from a browser then it will redirect you to `http://localhost:5000/config.html`.
 
-You'll need to first put in your cctray url then it will allow you to select which builds to show on your monitor.
+You'll need to first put in your *cctray.xml* url then it will allow you to select which builds to show on your monitor.
 
 ## Contributing
 
