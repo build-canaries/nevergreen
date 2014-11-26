@@ -33,6 +33,7 @@ You can find your *cctray.xml* in these locations
  Hudson              |  http://hudson.servername:8080/cc.xml
  Travis CI           |  http://travis-ci.org/ownername/repositoryname/cc.xml
  GO                  |  http://servername:8154/go/cctray.xml
+ Snap CI             |  https://snap-ci.com/ownername/repositoryname/branch/master/cctray.xml
  CruiseControl.rb    |  http://cc.rb.servername:3333/XmlStatusReport.aspx
  CruiseControl       |  http://cc.java.servername:8080/cctray.xml
  CruiseControl.NET   |  http://cc.net.servername/XmlStatusReport.aspx
