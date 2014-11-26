@@ -17,7 +17,7 @@ If you'd like to run it yourself then you can run the jar file:
 wget https://github.com/build-canaries/nevergreen/releases/download/v0.1.0/nevergreen-standalone.jar
 java -jar nevergreen-standalone.jar
 ```
-Nevergreen runs on Port 5000 by default. You can change this with the PORT environment variable if you wish.
+Nevergreen runs on port 5000 by default. You can change this with the PORT environment variable if you wish.
 
 ```
 PORT=4000 java -jar nevergreen-standalone.jar
@@ -25,7 +25,7 @@ PORT=4000 java -jar nevergreen-standalone.jar
 
 # Finding your CCTray xml
 
-You can find your *cctray.xml* in these locations  
+You can find your *cctray.xml* at these locations  
 
  CI Server           | Location 
  ------------------- | -----------------------------------------------------
@@ -35,6 +35,7 @@ You can find your *cctray.xml* in these locations
  GO                  |  http://servername:8154/go/cctray.xml
  Snap CI             |  https://snap-ci.com/ownername/repositoryname/branch/master/cctray.xml
  CircleCI            |  https://circleci.com/cc.xml?circle-token=:circle-token
+ TeamCity            |  http://teamcity:8111/guestAuth/app/rest/cctray/projects.xml
  CruiseControl.rb    |  http://cc.rb.servername:3333/XmlStatusReport.aspx
  CruiseControl       |  http://cc.java.servername:8080/cctray.xml
  CruiseControl.NET   |  http://cc.net.servername/XmlStatusReport.aspx
