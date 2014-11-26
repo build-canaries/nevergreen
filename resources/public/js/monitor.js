@@ -60,7 +60,7 @@ function StatusAppender(projectsList) {
 function Updater(frequency, config) {
     function updateBuildMonitor() {
         if (config.isReady()) {
-            $.post('/interesting', config.load(), function (data) {
+            $.post('/api/projects', config.load(), function (data) {
                 new StatusAppender(data).addProjects(config)
                 new Styler().styleProjects()
             }, 'json')

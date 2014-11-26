@@ -1,11 +1,11 @@
-# Nevergreen 
+# Nevergreen
 
 Nevergreen is a build monitor with attitude. It is awesome for two reasons:
 
-* Your builds should always be green. Nevergreen understands this and only shows you jobs that have failed or are building. 
+* Your builds should always be green. Nevergreen understands this and only shows you jobs that have failed or are building.
 * Nevergreen uses HTML localStorage. So the config is stored in your web browser. You only need to run it once to host hundreds of different build monitors.
 
-Check out the demo at [http://nevergreen.herokuapp.com](http://nevergreen.herokuapp.com). You can use https://builds.apache.org/cc.xml as a test cctray xml.
+Check out the demo at [http://nevergreen.herokuapp.com](http://nevergreen.herokuapp.com). You can use `https://builds.apache.org/cc.xml` as a test cctray xml.
 
 ## How to run
 
@@ -25,9 +25,9 @@ PORT=4000 java -jar nevergreen-standalone.jar
 
 ## Finding your CCTray xml
 
-You can find your *cctray.xml* at these locations  
+You can find your *cctray.xml* at these locations
 
- CI Server           | Location 
+ CI Server           | Location
  ------------------- | -----------------------------------------------------
  Jenkins             |  `http://jenkins.servername:8080/cc.xml`
  Hudson              |  `http://hudson.servername:8080/cc.xml`

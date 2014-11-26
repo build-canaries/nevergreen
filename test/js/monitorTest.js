@@ -8,7 +8,7 @@ describe('Monitor page', function () {
 
         updater.start()
 
-        expect($.post).toHaveBeenCalledWith('/interesting', jasmine.any(Object), jasmine.any(Function), 'json')
+        expect($.post).toHaveBeenCalledWith('/api/projects', jasmine.any(Object), jasmine.any(Function), 'json')
     })
 
     it('loads config page', function () {

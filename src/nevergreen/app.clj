@@ -29,9 +29,9 @@
        (as-json-response)))
 
 (defroutes main-routes
-           (GET "/" [] (clojure.java.io/resource "public/index.html"))
-           (GET "/api/projects" {params :params} (get-all-projects (:url params)))
-           (POST "/interesting" {params :params} (get-interesting-projects params))
+           (GET  "/" [] (clojure.java.io/resource "public/index.html"))
+           (GET  "/api/projects" {params :params} (get-all-projects (:url params)))
+           (POST "/api/projects" {params :params} (get-interesting-projects params))
            (route/resources "/"))
 
 (def app
