@@ -34,6 +34,7 @@ You can find your *cctray.xml* in these locations
  Travis CI           |  http://travis-ci.org/ownername/repositoryname/cc.xml
  GO                  |  http://servername:8154/go/cctray.xml
  Snap CI             |  https://snap-ci.com/ownername/repositoryname/branch/master/cctray.xml
+ CircleCI            |  https://circleci.com/cc.xml?circle-token=:circle-token
  CruiseControl.rb    |  http://cc.rb.servername:3333/XmlStatusReport.aspx
  CruiseControl       |  http://cc.java.servername:8080/cctray.xml
  CruiseControl.NET   |  http://cc.net.servername/XmlStatusReport.aspx
