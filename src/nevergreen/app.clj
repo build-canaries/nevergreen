@@ -2,8 +2,7 @@
   (:require [compojure.route :as route]
             [compojure.handler :as handler]
             [ring.adapter.jetty :as jetty]
-            [clj-cctray.parser :as parser]
-            [clj-cctray.go :as go]
+            [clj-cctray.core :as parser]
             [clj-cctray.filtering :as filtering]
             [cheshire.core :refer [generate-string]]
             [cheshire.generate :as cheshire]
@@ -17,13 +16,11 @@
    :body         (generate-string body)})
 
 (defn get-all-projects [url]
-  (-> (parser/get-projects url)
-      (go/distinct-projects)
+  (-> (parser/get-projects url :options [:go])
       (as-json-response)))
 
 (defn get-interesting-projects [params]
-  (->> (parser/get-projects (:cctray params))
-       (go/distinct-projects)
+  (->> (parser/get-projects (:cctray params) :options [:go])
        (filtering/interesting)
        (filtering/by-name (:includedProjects params))
        (as-json-response)))
