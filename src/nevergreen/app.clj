@@ -16,11 +16,11 @@
    :body         (generate-string body)})
 
 (defn get-all-projects [url]
-  (-> (parser/get-projects url :options [:go])
+  (-> (parser/get-projects url :options [:go :normalise])
       (as-json-response)))
 
 (defn get-interesting-projects [params]
-  (->> (parser/get-projects (:cctray params) :options [:go])
+  (->> (parser/get-projects (:cctray params) :options [:go :normalise])
        (filtering/interesting)
        (filtering/by-name (:includedProjects params))
        (as-json-response)))
