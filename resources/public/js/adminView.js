@@ -50,7 +50,7 @@ function AdminView(controller) {
     }
 
     function saveCctray() {
-        config.save({cctray: $('#cctray-url').val()})
+        config.save({cctray: $('#cctray-url').val().trim()})
         controller.getProjects(appendProjects, showSpinner)
     }
 

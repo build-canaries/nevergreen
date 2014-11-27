@@ -69,6 +69,21 @@ describe('view logic', function () {
         expect(adminController.getProjects).not.toHaveBeenCalled()
     })
 
+    describe('cctray url', function() {
+        it('saves', function () {
+            $('body').append('<form>' +
+            '<input id="cctray-url" type=text>' +
+            '<input id="cctray-save" class=button type=button>' +
+            '</form>')
+
+            new AdminView(adminController).init()
+            $('#cctray-url').val('   expected   ')
+            $('#cctray-save').click()
+
+            expect( localStorage.cctray).toBe('expected')
+        })
+    })
+
     describe('success text', function () {
 
         beforeEach(function () {
