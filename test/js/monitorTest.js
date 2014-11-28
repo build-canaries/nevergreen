@@ -22,6 +22,6 @@ describe('Monitor page', function () {
         updater.start()
 
         expect($.post).not.toHaveBeenCalled()
-        expect(window.location.replace).toHaveBeenCalledWith('config.html')
+        expect(window.location.replace).toHaveBeenCalledWith('config')
     })
 })

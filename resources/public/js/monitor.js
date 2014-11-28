@@ -65,7 +65,7 @@ function Updater(frequency, config) {
                 new Styler().styleProjects()
             }, 'json')
         } else {
-            window.location.replace('config.html')
+            window.location.replace('config')
         }
     }
 
