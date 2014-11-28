@@ -1,4 +1,4 @@
-body{
+body {
     background-color: white;
     color: black;
     text-align: left;
@@ -17,7 +17,7 @@ body{
     text-align: left;
     position: fixed;
     background-color: white;
-    border-bottom: 1px solid gray
+    border-bottom: 1px solid gray;
 }
 
 #project-controls {
@@ -29,7 +29,7 @@ label {
     display: inline-block;
 }
 
-#cctray-url, #success-text  {
+#cctray-url, #success-text {
     border: none;
     padding: 0 0.5em;
     font-size: 1em;
@@ -60,21 +60,21 @@ label {
 }
 
 .select-all {
-  font-size: 0.6em;
-  width: 10em;
-  padding: 0.2em;
-  background-color: rgb(239, 239, 239);
-  border-color: rgb(239, 239, 239);
+    font-size: 0.6em;
+    width: 10em;
+    padding: 0.2em;
+    background-color: rgb(239, 239, 239);
+    border-color: rgb(239, 239, 239);
 }
 
 .right-button {
-  float: right;
+    float: right;
 }
 
 .right-button input {
-  width: 4em;
-  background-color: #2196F3;
-  color: white;
+    width: 4em;
+    background-color: #2196F3;
+    color: white;
 }
 
 #projects {
@@ -93,8 +93,6 @@ label {
 li {
     padding: 0.3em;
     margin: 0.3em 0.2em;
-    float: left;
-    min-width: 30%;
     min-height: 40px;
     vertical-align: middle;
     line-height: 2em;
@@ -122,16 +120,31 @@ li {
 }
 
 .modal {
-    display:    none;
-    position:   fixed;
-    z-index:    1000;
-    top:        0;
-    left:       0;
-    height:     100%;
-    width:      100%;
-    background: rgba( 255, 255, 255, .8 )
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(255, 255, 255, .8);
 }
 
 #loading-modal.loading.modal {
     display: block;
+}
+
+.column-left {
+    float: left;
+    width: 31%;
+}
+
+.column-right {
+    float: right;
+    width: 31%;
+}
+
+.column-center {
+    display: inline-block;
+    width: 31%;
 }

@@ -19,16 +19,30 @@ function AdminView(controller) {
         });
     }
 
+    function columnClass(index) {
+        switch (index % 3) {
+            case 0:
+                return 'column-left'
+                break;
+            case 1:
+                return 'column-center'
+                break;
+            case 2:
+                return 'column-right'
+                break;
+        }
+    }
+
     function appendProjects(projects) {
         var sortedProjects = sortProjectsByName(projects);
         $('#projects').empty()
         $('#projects').append('<ul />')
-        sortedProjects.forEach(function (project) {
+        sortedProjects.forEach(function (project, index) {
             var included = ''
             if (!config.isReady() || config.includesProject(project.name)) {
                 included = 'included'
             }
-            $('#projects ul').append('<li class="' + included + ' no-text-selection">' + project.name + '</li>')
+            $('#projects ul').append('<li class="' + included + ' ' + columnClass(index) + ' no-text-selection">' + project.name + '</li>')
         })
         $('#projects ul li').click(function () {
             $(this).toggleClass('included')
