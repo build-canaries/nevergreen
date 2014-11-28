@@ -43,7 +43,7 @@ You can find your *cctray.xml* at these locations
 
 ## Configuring your own Nevergreen
 
-Navigate to `http://localhost:5000`. If it is the first visit to Nevergreen from a browser then it will redirect you to `http://localhost:5000/config.html`.
+Navigate to `http://localhost:5000`. If it is the first visit to Nevergreen from a browser then it will redirect you to `http://localhost:5000/config`.
 
 You'll need to first put in your *cctray.xml* url then it will allow you to select which builds to show on your monitor.
 
