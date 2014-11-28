@@ -13,3 +13,4 @@ pom.xml.asc
 /.nrepl-port
 *.DS_Store
 /node_modules
+/resources/public/main.js
