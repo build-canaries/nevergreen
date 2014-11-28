@@ -1,5 +1,9 @@
+var AdminController = require('./adminController')
+var Config = require('./config')
+
+var config = new Config()
+
 function AdminView(controller) {
-    var config = new Config();
 
     this.init = function () {
         load()
@@ -59,13 +63,13 @@ function AdminView(controller) {
         $('#cctray-url').val(settings.cctray)
         $('#success-text').val(settings.successText)
         if (config.hasCctray()) {
-            controller.getProjects(appendProjects, showSpinner)
+            controller.getProjects(config, appendProjects, showSpinner)
         }
     }
 
     function saveCctray() {
         config.save({cctray: $('#cctray-url').val().trim()})
-        controller.getProjects(appendProjects, showSpinner)
+        controller.getProjects(config, appendProjects, showSpinner)
     }
 
     function saveSuccessText() {
@@ -107,3 +111,8 @@ function AdminView(controller) {
 
     this.showSpinner = showSpinner
 }
+
+module.exports = AdminView
+
+// bootstrap view
+new AdminView(new AdminController()).init(new Config())

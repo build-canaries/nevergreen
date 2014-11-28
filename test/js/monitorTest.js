@@ -1,3 +1,5 @@
+var Updater = require('../../resources/public/js/monitor')
+
 describe('Monitor page', function () {
     it('loads index page', function () {
         var config = {load: null, isReady: null}

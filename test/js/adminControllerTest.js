@@ -1,3 +1,6 @@
+var AdminController = require('../../resources/public/js/adminController')
+var Config = require('../../resources/public/js/config')
+
 describe('Configurable build monitor', function () {
     var config = new Config()
 
@@ -12,7 +15,7 @@ describe('Configurable build monitor', function () {
             var callbackFunction = function (data) {
             }
 
-            var projects = new AdminController(config).getProjects(callbackFunction, function(){})
+            var projects = new AdminController(config).getProjects(config, callbackFunction, function(){})
 
             expect($.getJSON).toHaveBeenCalledWith('/api/projects', {url: 'some-url'}, callbackFunction)
         })
@@ -26,7 +29,7 @@ describe('Configurable build monitor', function () {
             })
             spyOn(adminView, 'showSpinner')
 
-            new AdminController(config).getProjects(function (data) {}, adminView.showSpinner)
+            new AdminController(config).getProjects(config, function (data) {}, adminView.showSpinner)
 
             expect(adminView.showSpinner).toHaveBeenCalledWith(true)
             expect(adminView.showSpinner).toHaveBeenCalledWith(false)

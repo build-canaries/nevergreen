@@ -1,3 +1,5 @@
+var Config = require('../../resources/public/js/config')
+
 describe('Configurable build monitor', function () {
 
     beforeEach(function () {

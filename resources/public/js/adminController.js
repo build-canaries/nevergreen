@@ -1,6 +1,6 @@
-function AdminController(config) {
+function AdminController() {
 
-    this.getProjects = function (handler, showSpinner) {
+    this.getProjects = function (config, handler, showSpinner) {
         var settings = config.load()
         showSpinner(true)
         var jqxhr= $.getJSON('/api/projects', {url: settings.cctray}, handler)
@@ -22,3 +22,5 @@ function AdminController(config) {
     }
 
 }
+
+module.exports = AdminController

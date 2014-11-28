@@ -75,7 +75,4 @@ function Updater(frequency, config) {
     }
 }
 
-function start() {
-    var fiveSeconds = 5000
-    new Updater(fiveSeconds, new Config()).start()
-}
+module.exports = Updater
