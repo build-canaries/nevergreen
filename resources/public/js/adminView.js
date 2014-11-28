@@ -73,10 +73,12 @@ function AdminView(controller) {
 
     function includeAll() {
         $('#projects ul li').addClass('included')
+        saveProjects()
     }
 
     function excludeAll() {
         $('#projects ul li').removeClass('included')
+        saveProjects()
     }
 
     function showSpinner(shouldShow) {

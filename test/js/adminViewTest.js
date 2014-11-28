@@ -179,10 +179,6 @@ describe('view logic', function () {
         beforeEach(function () {
             spyOn(window.location, 'replace')
             $('body').empty()
-        })
-
-        it('includes all click will add class included to all projects', function () {
-            spyOn(adminController, 'saveIncludedProjects')
             $('body').append('<input id="save-projects"/>')
             $('body').append('<input id="include-all"/>')
             $('body').append('<div id="projects"><ul>' +
@@ -190,6 +186,10 @@ describe('view logic', function () {
             '<li>proj-2</li>' +
             '<li>proj-3</li>' +
             '</ul></div>')
+        })
+
+        it('includes all click will add class included to all projects', function () {
+            spyOn(adminController, 'saveIncludedProjects')
 
             new AdminView(adminController).init()
             $('#include-all').click()
@@ -199,18 +199,22 @@ describe('view logic', function () {
 
         it('excludes all click will remove class included from all projects', function () {
             spyOn(adminController, 'saveIncludedProjects')
-            $('body').append('<input id="save-projects"/>')
-            $('body').append('<input id="exclude-all"/>')
-            $('body').append('<div id="projects"><ul>' +
-            '<li class="included">proj-1</li>' +
-            '<li class="included">proj-2</li>' +
-            '<li class="included">proj-3</li>' +
-            '</ul></div>')
 
             new AdminView(adminController).init()
             $('#exclude-all').click()
 
             expect($('#projects ul li:first')).not.toHaveClass('included')
+        })
+
+        it('saves', function() {
+            spyOn(adminController, 'saveIncludedProjects')
+
+            var view = new AdminView(adminController)
+            view.init()
+            view.appendProjects([{'name': 'foo'}])
+            $('#include-all').click()
+
+            expect(adminController.saveIncludedProjects).toHaveBeenCalledWith(['foo'])
         })
     })
 
