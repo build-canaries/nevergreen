@@ -1,9 +1,8 @@
 var $ = require('jquery')
-var AdminController = require('../../../src/js/config/adminController')
-var Config = require('../../../src/js/config/config')
+var adminController = require('../../../src/js/config/adminController')
+var config = require('../../../src/js/config/config')
 
 describe('Configurable build monitor', function () {
-    var config = new Config()
 
     describe('get projects', function () {
         it('gets the projects using the api', function () {
@@ -16,7 +15,7 @@ describe('Configurable build monitor', function () {
             var callbackFunction = function (data) {
             }
 
-            var projects = new AdminController(config).getProjects(config, callbackFunction, function(){})
+            var projects = adminController.getProjects(config, callbackFunction, function(){})
 
             expect($.getJSON).toHaveBeenCalledWith('/api/projects', {url: 'some-url'}, callbackFunction)
         })
@@ -30,7 +29,7 @@ describe('Configurable build monitor', function () {
             })
             spyOn(adminView, 'showSpinner')
 
-            new AdminController(config).getProjects(config, function (data) {}, adminView.showSpinner)
+            adminController.getProjects(config, function (data) {}, adminView.showSpinner)
 
             expect(adminView.showSpinner).toHaveBeenCalledWith(true)
             expect(adminView.showSpinner).toHaveBeenCalledWith(false)
@@ -40,7 +39,7 @@ describe('Configurable build monitor', function () {
     it('saves the included projects to local storage', function () {
         spyOn(localStorage, 'setItem')
 
-        new AdminController(config).saveIncludedProjects(['proj-1', 'proj-2'])
+        adminController.saveIncludedProjects(['proj-1', 'proj-2'])
 
         expect(localStorage.setItem).toHaveBeenCalledWith('includedProjects', ['proj-1', 'proj-2'])
     })
@@ -49,25 +48,9 @@ describe('Configurable build monitor', function () {
     it('saves success text', function () {
         spyOn(localStorage, 'setItem')
 
-        new AdminController(config).saveSuccessText('anything')
+        adminController.saveSuccessText('anything')
 
         expect(localStorage.setItem).toHaveBeenCalledWith('successText', 'anything')
     })
 
-})
-
-describe('View', function () {
-    var config = new Config()
-
-    beforeEach(function () {
-        $('body').append('<div id="projects"/>')
-    })
-
-    it('clears projects', function () {
-        $('#projects').append('some text')
-
-        new AdminController(config).clearProjects()
-
-        expect($('#projects')).toBeEmpty()
-    })
 })

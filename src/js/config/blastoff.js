@@ -1,5 +1,5 @@
-var AdminView = require('./adminView')
-var AdminController = require('./adminController')
-var Config = require('./config')
+var adminView = require('./adminView')
+var adminController = require('./adminController')
+var config = require('./config')
 
-new AdminView(new AdminController()).init(new Config())
+adminView(adminController).init(config)

@@ -1,7 +1,6 @@
 var $ = require('jquery')
-var AdminView = require('../../../src/js/config/adminView')
-var Config = require('../../../src/js/config/config')
-var config = new Config()
+var adminView = require('../../../src/js/config/adminView')
+var config = require('../../../src/js/config/config')
 
 describe('view logic', function () {
 
@@ -13,6 +12,7 @@ describe('view logic', function () {
         $('body').empty()
         $('body').append('<div id="projects"/>')
         localStorage.clear()
+        view = adminView(adminController)
     })
 
     it('adds click listener to page', function () {
@@ -28,7 +28,7 @@ describe('view logic', function () {
             '<li>proj-3</li>' +
             '</ul></div>')
 
-        new AdminView(adminController).init(config)
+        view.init(config)
         $('#save-projects').click()
 
         expect(adminController.saveSuccessText).toHaveBeenCalled()
@@ -38,7 +38,6 @@ describe('view logic', function () {
     it('autoloads projects if cctray is available', function () {
         localStorage.setItem('cctray', 'some-url')
         spyOn(adminController, 'getProjects')
-        var view = new AdminView(adminController)
 
         view.init(config)
 
@@ -49,7 +48,7 @@ describe('view logic', function () {
         it('is shown', function () {
             $('body').append('<div id="loading-modal"></div><div id="spinner" style="display: none"></div>')
 
-            new AdminView(adminController).showSpinner(true)
+            view.showSpinner(true)
 
             expect($('#spinner')).toBeVisible()
             expect($('#loading-modal')).toHaveClass('loading')
@@ -58,7 +57,7 @@ describe('view logic', function () {
         it('is hidden', function () {
             $('body').append('<div id="loading-modal"></div><div id="spinner"></div>')
 
-            new AdminView(adminController).showSpinner(false)
+            view.showSpinner(false)
 
             expect($('#spinner')).not.toBeVisible()
             expect($('#loading-modal')).not.toHaveClass('loading')
@@ -67,7 +66,6 @@ describe('view logic', function () {
 
     it('does not load projects if cctray is unavailable', function () {
         spyOn(adminController, 'getProjects')
-        var view = new AdminView(adminController)
 
         view.init(config)
 
@@ -81,11 +79,11 @@ describe('view logic', function () {
             '<input id="cctray-save" class=button type=button>' +
             '</form>')
 
-            new AdminView(adminController).init(config)
+            view.init(config)
             $('#cctray-url').val('   expected   ')
             $('#cctray-save').click()
 
-            expect( localStorage.cctray).toBe('expected')
+            expect(localStorage.cctray).toBe('expected')
         })
     })
 
@@ -100,7 +98,7 @@ describe('view logic', function () {
 
         it('saves', function () {
             spyOn(window.location, 'replace')
-            new AdminView(adminController).init(config)
+            view.init(config)
             $('#success-text').val('expected')
             spyOn(adminController, 'saveSuccessText')
 
@@ -113,7 +111,7 @@ describe('view logic', function () {
             localStorage.setItem('successText', 'any old value')
             var textInput = $('#success-text')
 
-            new AdminView(adminController).init(config)
+            view.init(config)
 
             expect(textInput.val()).toBe('any old value')
         })
@@ -121,7 +119,7 @@ describe('view logic', function () {
 
     it('prints a list of project names to the dom', function () {
         $('body').append('<div id="project-controls" class="hidden"></div>')
-        new AdminView(adminController).appendProjects([
+        view.appendProjects([
             {'name': 'foo'},
             {'name': 'bar'}
         ])
@@ -132,9 +130,8 @@ describe('view logic', function () {
     })
 
     it('clears out the projects before adding them', function () {
-        var adminView = new AdminView(adminController);
-        adminView.appendProjects([{'name': 'foo'}, {'name': 'bar'}])
-        adminView.appendProjects([{'name': 'foo'}, {'name': 'bar'}])
+        view.appendProjects([{'name': 'foo'}, {'name': 'bar'}])
+        view.appendProjects([{'name': 'foo'}, {'name': 'bar'}])
 
         expect($('#projects ul li').size()).toBe(2)
     })
@@ -142,7 +139,7 @@ describe('view logic', function () {
     it('projects should only be included if the user has included them', function () {
         localStorage.setItem('includedProjects', ['foo'])
         localStorage.setItem('cctray', 'url')
-        new AdminView(adminController).appendProjects([
+        view.appendProjects([
             {'name': 'foo'},
             {'name': 'bar'}
         ])
@@ -153,7 +150,7 @@ describe('view logic', function () {
 
     describe('projects click', function () {
         it('project gets classes added', function () {
-            new AdminView(adminController).appendProjects([
+            view.appendProjects([
                 {'name': 'foo'},
                 {'name': 'bar'}
             ])
@@ -168,7 +165,7 @@ describe('view logic', function () {
 
         it('project gets saved in local storage', function () {
             spyOn(adminController, 'saveIncludedProjects')
-            new AdminView(adminController).appendProjects([
+            view.appendProjects([
                 {'name': 'bar'},
                 {'name': 'foo'}
             ])
@@ -196,7 +193,7 @@ describe('view logic', function () {
         it('includes all click will add class included to all projects', function () {
             spyOn(adminController, 'saveIncludedProjects')
 
-            new AdminView(adminController).init(config)
+            view.init(config)
             $('#include-all').click()
 
             expect($('#projects ul li:last')).toHaveClass('included')
@@ -205,7 +202,7 @@ describe('view logic', function () {
         it('excludes all click will remove class included from all projects', function () {
             spyOn(adminController, 'saveIncludedProjects')
 
-            new AdminView(adminController).init(config)
+            view.init(config)
             $('#exclude-all').click()
 
             expect($('#projects ul li:first')).not.toHaveClass('included')
@@ -214,7 +211,6 @@ describe('view logic', function () {
         it('saves', function() {
             spyOn(adminController, 'saveIncludedProjects')
 
-            var view = new AdminView(adminController)
             view.init(config)
             view.appendProjects([{'name': 'foo'}])
             $('#include-all').click()

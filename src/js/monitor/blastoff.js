@@ -1,8 +1,8 @@
-var Config = require('../config/config')
+var config = require('../config/config')
 var Monitor = require('./monitor')
 
 var fiveSeconds = 5000
-var monitor = new Monitor(new Config())
+var monitor = new Monitor(config)
 
 // run immediately
 monitor.updateBuildMonitor()

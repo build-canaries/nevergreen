@@ -1,4 +1,4 @@
-var Config = require('../../../src/js/config/config')
+var config = require('../../../src/js/config/config')
 
 describe('Configurable build monitor', function () {
 
@@ -9,7 +9,7 @@ describe('Configurable build monitor', function () {
     it('stores the cctray URL', function () {
         spyOn(localStorage, 'setItem')
 
-        new Config().save({cctray: 'url'})
+        config.save({cctray: 'url'})
 
         expect(localStorage.setItem).toHaveBeenCalledWith('cctray', 'url')
     })
@@ -20,7 +20,7 @@ describe('Configurable build monitor', function () {
             localStorage.setItem('includedProjects', ['proj'])
             localStorage.setItem('successText', 'hello world')
 
-            var settings = new Config().load()
+            var settings = config.load()
 
             expect(settings.cctray).toBe('some-url')
             expect(settings.includedProjects).toEqual(['proj'])
@@ -28,14 +28,14 @@ describe('Configurable build monitor', function () {
         })
 
         it('null if local storage is not set', function () {
-            var settings = new Config().load()
+            var settings = config.load()
 
             expect(settings.cctray).toBe(null)
             expect(settings.includedProjects).toBe(null)
         })
 
         it('default success to cat', function () {
-            var settings = new Config().load()
+            var settings = config.load()
 
             expect(settings.successText).toBe('=(^.^)=')
         })
@@ -45,7 +45,7 @@ describe('Configurable build monitor', function () {
         it('is false', function () {
             spyOn(localStorage, 'hasOwnProperty').and.returnValue(false)
 
-            var ready = new Config().isReady()
+            var ready = config.isReady()
 
             expect(ready).toBeFalsy()
         })
@@ -53,7 +53,7 @@ describe('Configurable build monitor', function () {
         it('is true', function () {
             spyOn(localStorage, 'hasOwnProperty').and.returnValue(true)
 
-            var ready = new Config().isReady()
+            var ready = config.isReady()
 
             expect(ready).toBeTruthy()
         })
@@ -61,7 +61,7 @@ describe('Configurable build monitor', function () {
         it('has cctray', function () {
             spyOn(localStorage, 'hasOwnProperty').and.returnValue(true)
 
-            var hasCctray = new Config().hasCctray()
+            var hasCctray = config.hasCctray()
 
             expect(hasCctray).toBeTruthy()
         })
