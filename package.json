@@ -12,12 +12,13 @@
     "karma-jasmine": "~0.2.2",
     "karma-phantomjs-launcher": "~0.1.4",
     "jshint": "2.5.10",
-    "browserify": "6.3.3",
     "karma-browserify": "1.0.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "browserify": "6.3.3"
+  },
   "scripts": {
-    "build": "browserify -d ./resources/public/js/admin*.js ./resources/public/js/config.js -o ./resources/public/main.js && browserify -d ./resources/public/js/monitor*.js ./resources/public/js/config.js -o ./resources/public/monitor.js",
+    "postinstall": "browserify -d ./resources/public/js/admin*.js ./resources/public/js/config.js -o ./resources/public/main.js && browserify -d ./resources/public/js/monitor*.js ./resources/public/js/config.js -o ./resources/public/monitor.js",
     "test": "./node_modules/karma/bin/karma start --singleRun",
     "testing": "./node_modules/karma/bin/karma start",
     "lint": "jshint resources/public/js/*.js test/js/*.js"
