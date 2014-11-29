@@ -1,3 +1,5 @@
+var $ = require('jquery')
+
 function AdminController() {
 
     this.getProjects = function (config, handler, showSpinner) {

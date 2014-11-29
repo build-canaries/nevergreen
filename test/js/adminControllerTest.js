@@ -1,5 +1,6 @@
-var AdminController = require('../../resources/public/js/adminController')
-var Config = require('../../resources/public/js/config')
+var $ = require('jquery')
+var AdminController = require('../../src/js/adminController')
+var Config = require('../../src/js/config')
 
 describe('Configurable build monitor', function () {
     var config = new Config()

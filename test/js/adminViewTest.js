@@ -1,5 +1,6 @@
-var AdminView = require('../../resources/public/js/adminView')
-var Config = require('../../resources/public/js/config')
+var $ = require('jquery')
+var AdminView = require('../../src/js/adminView')
+var Config = require('../../src/js/config')
 var config = new Config()
 
 describe('view logic', function () {

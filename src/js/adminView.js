@@ -1,5 +1,6 @@
 var AdminController = require('./adminController')
 var Config = require('./config')
+var $ = require('jquery')
 
 var config = new Config()
 

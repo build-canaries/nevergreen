@@ -1,4 +1,4 @@
-var Config = require('../../resources/public/js/config')
+var Config = require('../../src/js/config')
 
 describe('Configurable build monitor', function () {
 

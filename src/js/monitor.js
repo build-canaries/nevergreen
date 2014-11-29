@@ -1,3 +1,6 @@
+var $ = require('jquery')
+var FontScaler = require('./fontScaler')
+
 function Styler() {
     var maxColumns = 3
     var buildStatusPadding = 10

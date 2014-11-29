@@ -11,7 +11,7 @@ function FontScaler(listOfText, height, width) {
     }
 
     function findLongestWord() {
-        var words = flatten(listOfText.map(function(item) { return item.split(" ")}))
+        var words = flatten(listOfText.map(function(item) { return item.split(' ')}))
         return words.reduce(function(largestFound, candidate) { return Math.max(candidate.length, largestFound) }, 0)
     }
 
@@ -38,7 +38,7 @@ function FontScaler(listOfText, height, width) {
     }
 
     this.maxFontSizeByHeight = function() {
-        var numberOfLines = listOfText.map(function(item) { return linesForWord(item.split(" "))})
+        var numberOfLines = listOfText.map(function(item) { return linesForWord(item.split(' '))})
         var largestNumberOfLines = Math.max.apply(Math, numberOfLines)
 
         var maximumFontHeightInPixels = (height / largestNumberOfLines) / heightOfSingleLetter
@@ -51,3 +51,5 @@ function FontScaler(listOfText, height, width) {
             Math.min(this.maxFontSizeByWidth(), this.maxFontSizeByHeight()))
     }
 }
+
+module.exports = FontScaler

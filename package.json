@@ -16,14 +16,15 @@
     "watch": "0.13.0"
   },
   "dependencies": {
-    "browserify": "6.3.3"
+    "browserify": "6.3.3",
+    "jquery": "2.1.1"
   },
   "scripts": {
-    "postinstall": "browserify -d ./resources/public/js/admin*.js ./resources/public/js/config.js -o ./resources/public/main.js && browserify -d ./resources/public/js/monitor*.js ./resources/public/js/config.js -o ./resources/public/monitor.js",
-    "building": "watch 'npm install' resources/public/js",
+    "postinstall": "browserify -d ./src/js/admin*.js ./src/js/config.js -o ./resources/public/main.js && browserify -d ./src/js/monitor*.js ./src/js/config.js -o ./resources/public/monitor.js",
+    "building": "watch 'npm install' src/js",
     "test": "./node_modules/karma/bin/karma start --singleRun",
     "testing": "./node_modules/karma/bin/karma start",
-    "lint": "jshint resources/public/js/*.js test/js/*.js"
+    "lint": "jshint src/js/*.js test/js/*.js"
   },
   "repository": {
     "type": "git",

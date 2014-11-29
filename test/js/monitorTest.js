@@ -1,4 +1,5 @@
-var Updater = require('../../resources/public/js/monitor')
+var $ = require('jquery')
+var Updater = require('../../src/js/monitor')
 
 describe('Monitor page', function () {
     it('loads index page', function () {
