@@ -29,7 +29,7 @@ describe('view logic', function () {
             '<li>proj-3</li>' +
             '</ul></div>')
 
-        view.init(config)
+        view.init()
         $('#save-projects').click()
 
         expect(adminController.saveSuccessText).toHaveBeenCalled()
@@ -40,7 +40,7 @@ describe('view logic', function () {
         localStorage.setItem('cctray', 'some-url')
         spyOn(adminController, 'getProjects')
 
-        view.init(config)
+        view.init()
 
         expect(adminController.getProjects).toHaveBeenCalled()
     })
@@ -70,6 +70,7 @@ describe('view logic', function () {
 
         view.init(config)
 
+
         expect(adminController.getProjects).not.toHaveBeenCalled()
     })
 
@@ -80,7 +81,7 @@ describe('view logic', function () {
             '<input id="cctray-save" class=button type=button>' +
             '</form>')
 
-            view.init(config)
+            view.init()
             $('#cctray-url').val('   expected   ')
             $('#cctray-save').click()
 
@@ -99,7 +100,7 @@ describe('view logic', function () {
 
         it('saves', function () {
             spyOn(window.location, 'replace')
-            view.init(config)
+            view.init()
             $('#success-text').val('expected')
             spyOn(adminController, 'saveSuccessText')
 
@@ -112,7 +113,7 @@ describe('view logic', function () {
             localStorage.setItem('successText', 'any old value')
             var textInput = $('#success-text')
 
-            view.init(config)
+            view.init()
 
             expect(textInput.val()).toBe('any old value')
         })
@@ -196,7 +197,7 @@ describe('view logic', function () {
         it('includes all click will add class included to all projects', function () {
             spyOn(adminController, 'saveIncludedProjects')
 
-            view.init(config)
+            view.init()
             $('#include-all').click()
 
             expect($('#projects ul li:last')).toHaveClass('included')
@@ -205,7 +206,7 @@ describe('view logic', function () {
         it('excludes all click will remove class included from all projects', function () {
             spyOn(adminController, 'saveIncludedProjects')
 
-            view.init(config)
+            view.init()
             $('#exclude-all').click()
 
             expect($('#projects ul li:first')).not.toHaveClass('included')
@@ -214,7 +215,7 @@ describe('view logic', function () {
         it('saves', function() {
             spyOn(adminController, 'saveIncludedProjects')
 
-            view.init(config)
+            view.init()
             view.appendProjects([{'name': 'foo'}])
             $('#include-all').click()
 
