@@ -27,10 +27,12 @@ function Styler() {
 
     function scaleFontToContainerSize() {
         $('.outerContainer').css('font-size',
-           new FontScaler(
-               $.makeArray($('li div div').map(function(index, item) { return $(item).text()})),
-               buildStatusHeight(),
-               buildStatusWidth()).ideal()
+            new FontScaler(
+                $.makeArray($('li div div').map(function (index, item) {
+                    return $(item).text()
+                })),
+                buildStatusHeight(),
+                buildStatusWidth()).ideal()
         )
     }
 
@@ -44,15 +46,15 @@ function StatusAppender(projectsList) {
     this.projects = projectsList
     function addBuildStatusToScreen(project) {
         $('#projects')
-         .append('<li class=' + project.prognosis + '><div class=outerContainer><div class=innerContainer>' +
-          project.name + '</div></div></li>')
+            .append('<li class=' + project.prognosis + '><div class=outerContainer><div class=innerContainer>' +
+            project.name + '</div></div></li>')
     }
 
-    this.addProjects = function(config) {
+    this.addProjects = function (config) {
         $('#projects').empty()
         this.projects.forEach(addBuildStatusToScreen)
 
-        if(this.projects.length === 0) {
+        if (this.projects.length === 0) {
             var cat = config.load().successText
             $('#projects')
                 .append('<li><div class=outerContainer><div class=innerContainer>' + cat + '</div></div></li>')
@@ -72,7 +74,7 @@ function Updater(frequency, config) {
         }
     }
 
-    this.start = function() {
+    this.start = function () {
         updateBuildMonitor() // run immediately
         setInterval(updateBuildMonitor, frequency)
     }

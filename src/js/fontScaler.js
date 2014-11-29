@@ -11,8 +11,12 @@ function FontScaler(listOfText, height, width) {
     }
 
     function findLongestWord() {
-        var words = flatten(listOfText.map(function(item) { return item.split(' ')}))
-        return words.reduce(function(largestFound, candidate) { return Math.max(candidate.length, largestFound) }, 0)
+        var words = flatten(listOfText.map(function (item) {
+            return item.split(' ')
+        }))
+        return words.reduce(function (largestFound, candidate) {
+            return Math.max(candidate.length, largestFound)
+        }, 0)
     }
 
     function linesForWord(words) {
@@ -20,8 +24,8 @@ function FontScaler(listOfText, height, width) {
         var lineNumber = 1
         var currentLinePosition = 0
 
-        words.forEach(function(word) {
-            if((word.length + currentLinePosition) > longestWordSize){
+        words.forEach(function (word) {
+            if ((word.length + currentLinePosition) > longestWordSize) {
                 lineNumber++
                 currentLinePosition = 0
             }
@@ -31,14 +35,16 @@ function FontScaler(listOfText, height, width) {
         return lineNumber
     }
 
-    this.maxFontSizeByWidth = function() {
+    this.maxFontSizeByWidth = function () {
         var longestWord = findLongestWord() + fontPaddingInCharacters
         var longestWordSize = (widthOfSingleLetter * longestWord)
         return (width / longestWordSize) * fontSizeForSingleLetter
     }
 
-    this.maxFontSizeByHeight = function() {
-        var numberOfLines = listOfText.map(function(item) { return linesForWord(item.split(' '))})
+    this.maxFontSizeByHeight = function () {
+        var numberOfLines = listOfText.map(function (item) {
+            return linesForWord(item.split(' '))
+        })
         var largestNumberOfLines = Math.max.apply(Math, numberOfLines)
 
         var maximumFontHeightInPixels = (height / largestNumberOfLines) / heightOfSingleLetter
@@ -46,7 +52,7 @@ function FontScaler(listOfText, height, width) {
         return maximumFontHeightInPixels * fontSizeForSingleLetter
     }
 
-    this.ideal = function() {
+    this.ideal = function () {
         return Math.floor(
             Math.min(this.maxFontSizeByWidth(), this.maxFontSizeByHeight()))
     }
