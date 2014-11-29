@@ -1,7 +1,7 @@
-#!/bin/sh
+#!/bin/bash -e
 
-lein do clean, midje
 npm install
-npm run build
 npm test
 npm run lint
+
+lein do clean, midje
