@@ -1,5 +1,5 @@
 var $ = require('jquery')
-var FontScaler = require('./fontScaler')
+var FontScaler = require('../fontScaler')
 
 function Styler() {
     var maxColumns = 3
@@ -62,8 +62,8 @@ function StatusAppender(projectsList) {
     }
 }
 
-function Updater(frequency, config) {
-    function updateBuildMonitor() {
+function Updater(config) {
+    this.updateBuildMonitor = function() {
         if (config.isReady()) {
             $.post('/api/projects', config.load(), function (data) {
                 new StatusAppender(data).addProjects(config)
@@ -72,11 +72,6 @@ function Updater(frequency, config) {
         } else {
             window.location.replace('config')
         }
-    }
-
-    this.start = function () {
-        updateBuildMonitor() // run immediately
-        setInterval(updateBuildMonitor, frequency)
     }
 }
 

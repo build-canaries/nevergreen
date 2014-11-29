@@ -115,5 +115,3 @@ function AdminView(controller) {
 
 module.exports = AdminView
 
-// bootstrap view
-new AdminView(new AdminController()).init(new Config())

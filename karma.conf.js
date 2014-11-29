@@ -15,7 +15,9 @@ module.exports = function(config) {
     files: [
       'test/js/lib/jquery2.1.1.js',
       'test/js/lib/*.js',
-      'test/js/*.js'
+      'test/js/*.js',
+      'test/js/monitor/*.js',
+      'test/js/config/*.js'
     ],
 
     // list of files to exclude
@@ -26,7 +28,9 @@ module.exports = function(config) {
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
         'src/js/*.js': [ 'browserify' ],
-        'test/js/*.js': [ 'browserify' ]
+        'test/js/*.js': [ 'browserify' ],
+        'test/js/config/*.js': [ 'browserify' ],
+        'test/js/monitor/*.js': [ 'browserify' ]
     },
 
     // test results reporter to use

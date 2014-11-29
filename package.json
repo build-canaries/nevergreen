@@ -20,7 +20,7 @@
     "jquery": "2.1.1"
   },
   "scripts": {
-    "postinstall": "browserify -d ./src/js/admin*.js ./src/js/config.js -o ./resources/public/main.js && browserify -d ./src/js/monitor*.js ./src/js/config.js -o ./resources/public/monitor.js",
+    "postinstall": "browserify -d ./src/js/config/*.js -o ./resources/public/main.js && browserify -d ./src/js/monitor/*.js ./src/js/config/config.js -o ./resources/public/monitor.js",
     "building": "watch 'npm install' src/js",
     "test": "./node_modules/karma/bin/karma start --singleRun",
     "testing": "./node_modules/karma/bin/karma start",
