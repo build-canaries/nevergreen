@@ -1,5 +1,5 @@
 var $ = require('jquery')
-var Updater = require('../../../src/js/monitor/monitor')
+var updater = require('../../../src/js/monitor/monitor')
 
 describe('Monitor page', function () {
     it('loads index page', function () {
@@ -12,9 +12,8 @@ describe('Monitor page', function () {
             }
         }
         spyOn($, 'post')
-        var updater = new Updater(config)
 
-        updater.updateBuildMonitor()
+        updater(config).updateBuildMonitor()
 
         expect($.post).toHaveBeenCalledWith('/api/projects', jasmine.any(Object), jasmine.any(Function), 'json')
     })
@@ -30,9 +29,8 @@ describe('Monitor page', function () {
         }
         spyOn(window.location, 'replace')
         spyOn($, 'post')
-        var updater = new Updater(config)
 
-        updater.updateBuildMonitor()
+        updater(config).updateBuildMonitor()
 
         expect($.post).not.toHaveBeenCalled()
         expect(window.location.replace).toHaveBeenCalledWith('config')

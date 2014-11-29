@@ -1,11 +1,10 @@
 var config = require('../config/config')
-var Monitor = require('./monitor')
+var monitor = require('./monitor')
 
 var fiveSeconds = 5000
-var monitor = new Monitor(config)
 
 // run immediately
-monitor.updateBuildMonitor()
+monitor(config).updateBuildMonitor()
 
 // now run every 5 seconds
-setInterval(function() { monitor.updateBuildMonitor() }, fiveSeconds)
+setInterval(function() { monitor(config).updateBuildMonitor() }, fiveSeconds)
