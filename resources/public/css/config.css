@@ -43,7 +43,7 @@ label {
 
 #success-text {
     color: black;
-    border-bottom: 1px solid black;
+    border-bottom: 3px solid #2196F3;
 }
 
 #success {
