@@ -1,24 +1,26 @@
 {
   "name": "nevergreen",
   "version": "0.1.0",
-  "description": "An interesting build monitor",
+  "description": "A build monitor with attitude",
   "main": "karma.conf.js",
   "directories": {
     "doc": "doc",
     "test": "test"
   },
   "devDependencies": {
+    "jshint": "2.5.10",
     "karma": "^0.12.25",
+    "karma-browserify": "1.0.0",
     "karma-jasmine": "~0.2.2",
     "karma-phantomjs-launcher": "~0.1.4",
-    "jshint": "2.5.10",
-    "karma-browserify": "1.0.0"
+    "watch": "0.13.0"
   },
   "dependencies": {
     "browserify": "6.3.3"
   },
   "scripts": {
     "postinstall": "browserify -d ./resources/public/js/admin*.js ./resources/public/js/config.js -o ./resources/public/main.js && browserify -d ./resources/public/js/monitor*.js ./resources/public/js/config.js -o ./resources/public/monitor.js",
+    "building": "watch 'npm install' resources/public/js",
     "test": "./node_modules/karma/bin/karma start --singleRun",
     "testing": "./node_modules/karma/bin/karma start",
     "lint": "jshint resources/public/js/*.js test/js/*.js"
