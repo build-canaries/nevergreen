@@ -6,12 +6,12 @@ module.exports = {
 
     load: function () {
         var projects = localStorage.getItem('includedProjects');
-        var allProjects = localStorage.getItem('allProjects');
+        var seenProjects = localStorage.getItem('seenProjects');
         return {
             cctray: localStorage.getItem('cctray'),
             successText: localStorage.hasOwnProperty('successText') ? localStorage.getItem('successText') : '=(^.^)=',
             includedProjects: projects === null ? null : projects.split(','),
-            projectsOnLastFetch: allProjects === null ? null : allProjects.split(',')
+            projectsOnLastFetch: seenProjects === null ? null : seenProjects.split(',')
         }
     },
 

@@ -12,9 +12,7 @@ module.exports = function (controller) {
         appendProjects: function (projects) {
             showExtraControls(projects, projectsView)
             view.projView().listProjects(config, projects)
-            controller.saveAllProjects($.map(projects, function (project) {
-                return project.name
-            }))
+            saveAllProjects(controller, projects);
         },
 
         saveProjects: function () {
@@ -73,4 +71,9 @@ function saveSuccessText(controller) {
 function monitorPage(controller) {
     saveSuccessText(controller)
     window.location.replace('/')
+}
+
+function saveAllProjects(controller, projects) {
+    var seenProjects = $.map(projects, function (project) { return project.name })
+    controller.saveSeenProjects(seenProjects)
 }

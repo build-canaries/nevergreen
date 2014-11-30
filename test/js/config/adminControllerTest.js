@@ -56,9 +56,9 @@ describe('Configurable build monitor', function () {
     it('saves all projects', function() {
         spyOn(localStorage, 'setItem')
 
-        adminController.saveAllProjects(['proj-1', 'proj-2'])
+        adminController.saveSeenProjects(['proj-1', 'proj-2'])
 
-        expect(localStorage.setItem).toHaveBeenCalledWith('allProjects', ['proj-1', 'proj-2'])
+        expect(localStorage.setItem).toHaveBeenCalledWith('seenProjects', ['proj-1', 'proj-2'])
     })
 
 })

@@ -19,7 +19,7 @@ describe('Configurable build monitor', function () {
             localStorage.setItem('cctray', 'some-url')
             localStorage.setItem('includedProjects', ['proj'])
             localStorage.setItem('successText', 'hello world')
-            localStorage.setItem('allProjects', ['proj'])
+            localStorage.setItem('seenProjects', ['proj'])
 
             var settings = config.load()
 
