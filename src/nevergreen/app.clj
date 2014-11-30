@@ -1,4 +1,5 @@
 (ns nevergreen.app
+  (import org.joda.time.DateTime)
   (:require [compojure.route :as route]
             [compojure.handler :as handler]
             [ring.adapter.jetty :as jetty]
@@ -10,6 +11,9 @@
             [nevergreen.config :refer :all]
             [compojure.core :refer :all])
   (:gen-class))
+
+(cheshire/add-encoder DateTime (fn [date json-generator]
+                                 (.writeString json-generator (.toString date))))
 
 (defn- as-json-response [body]
   {:content-type "application/json"
@@ -26,9 +30,9 @@
        (as-json-response)))
 
 (defroutes main-routes
-           (GET  "/" [] (clojure.java.io/resource "public/index.html"))
-           (GET  "/config" [] (clojure.java.io/resource "public/config.html"))
-           (GET  "/api/projects" {params :params} (get-all-projects (:url params)))
+           (GET "/" [] (clojure.java.io/resource "public/index.html"))
+           (GET "/config" [] (clojure.java.io/resource "public/config.html"))
+           (GET "/api/projects" {params :params} (get-all-projects (:url params)))
            (POST "/api/projects" {params :params} (get-interesting-projects params))
            (route/resources "/"))
 
@@ -36,6 +40,4 @@
   (handler/site main-routes))
 
 (defn -main []
-  (cheshire/add-encoder org.joda.time.DateTime (fn [date json-generator]
-                                                 (.writeString json-generator (.toString date))))
   (jetty/run-jetty app {:port (port) :join? false}))
