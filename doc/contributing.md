@@ -16,7 +16,7 @@ How to add your own page
 
 TODO: Add sample.html to make it easy for new people to create a customized page.
 
-Releaeses
+Releases
 =========
 
-Alphabetically using the [Crayola colours](http://en.wikipedia.org/wiki/List_of_Crayola_crayon_colors)
+Alphabetically using the [Crayola colours](http://en.wikipedia.org/wiki/List_of_Crayola_crayon_colors), but not any green variations naturally!
