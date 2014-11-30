@@ -19,12 +19,14 @@ describe('Configurable build monitor', function () {
             localStorage.setItem('cctray', 'some-url')
             localStorage.setItem('includedProjects', ['proj'])
             localStorage.setItem('successText', 'hello world')
+            localStorage.setItem('allProjects', ['proj'])
 
             var settings = config.load()
 
             expect(settings.cctray).toBe('some-url')
             expect(settings.includedProjects).toEqual(['proj'])
             expect(settings.successText).toEqual('hello world')
+            expect(settings.projectsOnLastFetch).toEqual(['proj'])
         })
 
         it('null if local storage is not set', function () {
@@ -32,6 +34,7 @@ describe('Configurable build monitor', function () {
 
             expect(settings.cctray).toBe(null)
             expect(settings.includedProjects).toBe(null)
+            expect(settings.projectsOnLastFetch).toBe(null)
         })
 
         it('default success to cat', function () {

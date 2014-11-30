@@ -8,7 +8,12 @@ module.exports = function (controller) {
             addClickHandlers(controller, this.appendProjects)
         },
 
-        appendProjects: function(projects) { appendProjects(controller, projects) },
+        appendProjects: function(projects) {
+            appendProjects(controller, projects)
+            controller.saveAllProjects($.map(projects, function (project) {
+                return project.name
+            }))
+        },
 
         showSpinner: showSpinner
     }
@@ -50,7 +55,11 @@ function appendProjects(controller, projects) {
         if (!config.isReady() || config.includesProject(project.name)) {
             included = 'included'
         }
-        $('#projects ul').append('<li class="' + included + ' ' + columnClass(index) + ' no-text-selection">' + project.name + '</li>')
+        var previouslyFetched = ''
+        if (!config.previouslyFetched(project.name)) {
+            previouslyFetched = ' <sup>new</sup>'
+        }
+        $('#projects ul').append('<li class="' + included + ' ' + columnClass(index) + ' no-text-selection">' + project.name + previouslyFetched + '</li>')
     })
     $('#projects ul li').click(function () {
         $(this).toggleClass('included')
@@ -86,7 +95,7 @@ function monitorPage(controller) {
 
 function saveProjects(controller) {
     var includedProjects = $('#projects ul li.included').map(function (index, element) {
-        return element.textContent
+        return $(element).html().replace(' <sup>new</sup>', '') // TODO: is there a better way to do this?
     }).toArray()
     controller.saveIncludedProjects(includedProjects)
 }

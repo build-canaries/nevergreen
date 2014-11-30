@@ -21,6 +21,10 @@ module.exports = {
 
     saveSuccessText: function (successText) {
         localStorage.setItem('successText', successText)
+    },
+
+    saveAllProjects: function (projects) {
+        localStorage.setItem('allProjects', projects)
     }
 
 }

@@ -6,7 +6,8 @@ describe('view logic', function () {
 
     var adminController = { saveIncludedProjects: function(){},
                             getProjects: function(){},
-                            saveSuccessText: function(){}}
+                            saveSuccessText: function(){},
+                            saveAllProjects: function(){}}
 
     beforeEach(function () {
         $('body').empty()
@@ -118,6 +119,7 @@ describe('view logic', function () {
     })
 
     it('prints a list of project names to the dom', function () {
+        localStorage.setItem('allProjects', ['foo'])
         $('body').append('<div id="project-controls" class="hidden"></div>')
         view.appendProjects([
             {'name': 'foo'},
@@ -125,7 +127,8 @@ describe('view logic', function () {
         ])
 
         expect($('#projects ul li').size()).toBe(2)
-        expect($('#projects ul li:first').text()).toEqual('bar')
+        expect($('#projects ul li:first').html()).toEqual('bar <sup>new</sup>')
+        expect($('#projects ul li:last').text()).toEqual('foo')
         expect($('#project-controls')).not.toHaveClass('hidden')
     })
 

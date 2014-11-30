@@ -102,6 +102,10 @@ li {
     border-left: 3px solid rgb(239, 239, 239);
 }
 
+sup {
+    color: #f32196;
+}
+
 .included {
     border-left: 3px solid #2196F3;
     color: black;
