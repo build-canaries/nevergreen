@@ -14,7 +14,7 @@ If your CI server is publishing it's *cctray.xml* on the web you don't need to i
 If you'd like to run it yourself then you can run the jar file:
 
 ```
-wget https://github.com/build-canaries/nevergreen/releases/download/v0.1.0/nevergreen-standalone.jar
+wget https://github.com/build-canaries/nevergreen/releases/download/v0.2.0/nevergreen-standalone.jar
 java -jar nevergreen-standalone.jar
 ```
 Nevergreen runs on port 5000 by default. You can change this with the PORT environment variable if you wish.
@@ -51,7 +51,7 @@ You'll need to first put in your *cctray.xml* url then it will allow you to sele
 
 [![Build Status](https://snap-ci.com/build-canaries/nevergreen/branch/master/build_image)](https://snap-ci.com/build-canaries/nevergreen/branch/master)
 
-We have a [development guide](doc/contributing.md) to help your get started.
+We have a [development guide](doc/contributing.md) to help you get started.
 
 If you would like to add a feature/fix a bug for us please create a pull request.
 

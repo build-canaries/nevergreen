@@ -1,5 +1,5 @@
-(defproject nevergreen "0.1.0"
-            :description "An interesting build monitor"
+(defproject nevergreen "0.2.0"
+            :description "A build monitor with attitude"
             :url "https://github.com/build-canaries/nevergreen"
             :dependencies [[org.clojure/clojure "1.6.0"]
                            [midje "1.6.3"]
