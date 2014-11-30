@@ -16,57 +16,59 @@ describe('view logic', function () {
         view = projectView(saveProjects)
     })
 
-    it('prints a list of project names to the dom', function () {
-        view.listProjects(config, [
-            {'name': 'foo'},
-            {'name': 'bar'}
-        ])
+    describe('adds projects to the dom', function () {
+        it('prints a list of project names', function () {
+            view.listProjects(config, [
+                {'name': 'foo'},
+                {'name': 'bar'}
+            ])
 
-        expect($('#projects ul li').size()).toBe(2)
-        expect($('#projects ul li:first').text()).toEqual('bar')
-    })
+            expect($('#projects ul li').size()).toBe(2)
+            expect($('#projects ul li:first').text()).toEqual('bar')
+        })
 
-    it('highlights news projects', function () {
-        var config = {
-            isReady: function () { return true },
-            includesProject: function (name) { return name === 'foo' },
-            previouslyFetched: function(name) { return name === 'foo' }
-        }
+        it('clears out the projects before adding them', function () {
+            view.listProjects(config, [{'name': 'foo'}, {'name': 'bar'}])
+            view.listProjects(config, [{'name': 'foo'}, {'name': 'bar'}])
 
-        view.listProjects(config, [
-            {'name': 'foo'},
-            {'name': 'bar'}
-        ])
+            expect($('#projects ul li').size()).toBe(2)
+        })
 
-        expect($('#projects ul li:first').html()).toEqual('bar <sup>new</sup>')
-        expect($('#projects ul li:last').text()).toEqual('foo')
-    })
+        it('highlights any new projects', function () {
+            var config = {
+                isReady: function () { return true },
+                includesProject: function (name) { return name === 'foo' },
+                previouslyFetched: function(name) { return name === 'foo' }
+            }
 
-    it('clears out the projects before adding them', function () {
-        view.listProjects(config, [{'name': 'foo'}, {'name': 'bar'}])
-        view.listProjects(config, [{'name': 'foo'}, {'name': 'bar'}])
+            view.listProjects(config, [
+                {'name': 'foo'},
+                {'name': 'bar'}
+            ])
 
-        expect($('#projects ul li').size()).toBe(2)
-    })
+            expect($('#projects ul li:first').html()).toEqual('bar <sup>new</sup>')
+            expect($('#projects ul li:last').text()).toEqual('foo')
+        })
 
-    it('projects should only be included if the user has included them', function () {
-        var config = {
-            isReady: function () { return true },
-            includesProject: function (name) { return name === 'foo' },
-            previouslyFetched: function() { return true }
-        }
+        it('remembers what projects the user has selected previously', function () {
+            var config = {
+                isReady: function () { return true },
+                includesProject: function (name) { return name === 'foo' },
+                previouslyFetched: function() { return true }
+            }
 
-        view.listProjects(config, [
-            {'name': 'foo'},
-            {'name': 'bar'}
-        ])
+            view.listProjects(config, [
+                {'name': 'foo'},
+                {'name': 'bar'}
+            ])
 
-        expect($('#projects ul li:first')).not.toHaveClass('included')
-        expect($('#projects ul li:last')).toHaveClass('included')
+            expect($('#projects ul li:first')).not.toHaveClass('included')
+            expect($('#projects ul li:last')).toHaveClass('included')
+        })
     })
 
     describe('projects click', function () {
-        it('project gets classes added', function () {
+        it('adds an included class when clicked', function () {
             view.listProjects(config, [
                 {'name': 'foo'},
                 {'name': 'bar'}
@@ -80,7 +82,7 @@ describe('view logic', function () {
             expect(project).not.toHaveClass('included')
         })
 
-        it('project gets saved in local storage', function () {
+        it('saves clicked projects to local storage', function () {
             var observer = { saveProjects: function () { } }
             spyOn(observer, 'saveProjects')
             view = projectView(observer.saveProjects)

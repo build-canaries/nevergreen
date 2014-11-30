@@ -16,12 +16,10 @@ describe('view logic', function () {
         view = adminView(adminController)
     })
 
-    it('adds click listener to page', function () {
-        localStorage.setItem('includedProjects', ['foo', 'bar'])
+    it('redirects on pressing the save button', function () {
         localStorage.setItem('cctray', 'some-url')
+        localStorage.setItem('includedProjects', ['foo', 'bar'])
         spyOn(window.location, 'replace')
-        spyOn(adminController, 'saveSuccessText')
-        spyOn(adminController, 'getProjects')
         $('body').append('<input id="save-projects"/>')
         $('body').append('<div id="projects"><ul>' +
             '<li class="included">proj-1</li>' +
@@ -32,17 +30,26 @@ describe('view logic', function () {
         view.init()
         $('#save-projects').click()
 
-        expect(adminController.saveSuccessText).toHaveBeenCalled()
         expect(window.location.replace).toHaveBeenCalledWith('/')
     })
 
-    it('autoloads projects if cctray is available', function () {
-        localStorage.setItem('cctray', 'some-url')
-        spyOn(adminController, 'getProjects')
+    describe('autoloads projects', function () {
+        it('does if cctray is available', function () {
+            localStorage.setItem('cctray', 'some-url')
+            spyOn(adminController, 'getProjects')
 
-        view.init()
+            view.init()
 
-        expect(adminController.getProjects).toHaveBeenCalled()
+            expect(adminController.getProjects).toHaveBeenCalled()
+        })
+
+        it('does not if cctray is unavailable', function () {
+            spyOn(adminController, 'getProjects')
+
+            view.init(config)
+
+            expect(adminController.getProjects).not.toHaveBeenCalled()
+        })
     })
 
     describe('spinner', function () {
@@ -65,16 +72,8 @@ describe('view logic', function () {
         })
     })
 
-    it('does not load projects if cctray is unavailable', function () {
-        spyOn(adminController, 'getProjects')
-
-        view.init(config)
-
-        expect(adminController.getProjects).not.toHaveBeenCalled()
-    })
-
     describe('cctray url', function() {
-        it('saves', function () {
+        it('saves while trimming excess spaces', function () {
             $('body').append('<form>' +
             '<input id="cctray-url" type=text>' +
             '<input id="cctray-save" class=button type=button>' +
@@ -89,7 +88,6 @@ describe('view logic', function () {
     })
 
     describe('success text', function () {
-
         beforeEach(function () {
             $('body').append('<form>' +
                '<input id="success-text" type=text name=success-text/>' +
