@@ -70,7 +70,6 @@ describe('view logic', function () {
 
         view.init(config)
 
-
         expect(adminController.getProjects).not.toHaveBeenCalled()
     })
 
@@ -116,110 +115,6 @@ describe('view logic', function () {
             view.init()
 
             expect(textInput.val()).toBe('any old value')
-        })
-    })
-
-    it('prints a list of project names to the dom', function () {
-        localStorage.setItem('allProjects', ['foo'])
-        $('body').append('<div id="project-controls" class="hidden"></div>')
-        view.appendProjects([
-            {'name': 'foo'},
-            {'name': 'bar'}
-        ])
-
-        expect($('#projects ul li').size()).toBe(2)
-        expect($('#projects ul li:first').html()).toEqual('bar <sup>new</sup>')
-        expect($('#projects ul li:last').text()).toEqual('foo')
-        expect($('#project-controls')).not.toHaveClass('hidden')
-    })
-
-    it('clears out the projects before adding them', function () {
-        view.appendProjects([{'name': 'foo'}, {'name': 'bar'}])
-        view.appendProjects([{'name': 'foo'}, {'name': 'bar'}])
-
-        expect($('#projects ul li').size()).toBe(2)
-    })
-
-    it('projects should only be included if the user has included them', function () {
-        localStorage.setItem('includedProjects', ['foo'])
-        localStorage.setItem('cctray', 'url')
-        view.appendProjects([
-            {'name': 'foo'},
-            {'name': 'bar'}
-        ])
-
-        expect($('#projects ul li:first')).not.toHaveClass('included')
-        expect($('#projects ul li:last')).toHaveClass('included')
-    })
-
-    describe('projects click', function () {
-        it('project gets classes added', function () {
-            view.appendProjects([
-                {'name': 'foo'},
-                {'name': 'bar'}
-            ])
-            var project = $('#projects ul li:first')
-            expect(project).toHaveClass('included')
-            expect(project).toHaveClass('no-text-selection')
-
-            project.click()
-
-            expect(project).not.toHaveClass('included')
-        })
-
-        it('project gets saved in local storage', function () {
-            spyOn(adminController, 'saveIncludedProjects')
-            view.appendProjects([
-                {'name': 'bar'},
-                {'name': 'foo'}
-            ])
-            var project = $('#projects ul li:first')
-
-            project.click()
-
-            expect(adminController.saveIncludedProjects).toHaveBeenCalledWith(['foo'])
-        })
-    })
-
-    describe('include and exclude all buttons', function () {
-        beforeEach(function () {
-            spyOn(window.location, 'replace')
-            $('body').empty()
-            $('body').append('<input id="save-projects"/>')
-            $('body').append('<input id="include-all"/>')
-            $('body').append('<div id="projects"><ul>' +
-            '<li>proj-1</li>' +
-            '<li>proj-2</li>' +
-            '<li>proj-3</li>' +
-            '</ul></div>')
-        })
-
-        it('includes all click will add class included to all projects', function () {
-            spyOn(adminController, 'saveIncludedProjects')
-
-            view.init()
-            $('#include-all').click()
-
-            expect($('#projects ul li:last')).toHaveClass('included')
-        })
-
-        it('excludes all click will remove class included from all projects', function () {
-            spyOn(adminController, 'saveIncludedProjects')
-
-            view.init()
-            $('#exclude-all').click()
-
-            expect($('#projects ul li:first')).not.toHaveClass('included')
-        })
-
-        it('saves', function() {
-            spyOn(adminController, 'saveIncludedProjects')
-
-            view.init()
-            view.appendProjects([{'name': 'foo'}])
-            $('#include-all').click()
-
-            expect(adminController.saveIncludedProjects).toHaveBeenCalledWith(['foo'])
         })
     })
 

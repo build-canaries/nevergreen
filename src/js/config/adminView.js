@@ -1,6 +1,6 @@
+var $ = require('jquery')
 var config = require('./config')
 var projectsView = require('./projectsView')
-var $ = require('jquery')
 
 module.exports = function (controller) {
     var view = {
@@ -10,32 +10,27 @@ module.exports = function (controller) {
         },
 
         appendProjects: function (projects) {
-            appendProjectsToView(controller, projects, view.saveProjects)
+            showExtraControls(projects, projectsView)
             controller.saveAllProjects($.map(projects, function (project) {
                 return project.name
             }))
+            view.projView().listProjects(config, projects)
         },
 
         saveProjects: function () {
-            var includedProjects = projectsView.findIncludedProjects()
+            var includedProjects = view.projView().findIncludedProjects()
             controller.saveIncludedProjects(includedProjects)
         },
 
         addClickHandlers: function () {
             $('#cctray-save').click(function() { saveCctray(controller, view.appendProjects) })
             $('#save-projects').click(function() { monitorPage(controller) })
-            $('#include-all').click(view.includeAll)
-            $('#exclude-all').click(view.excludeAll)
+            $('#include-all').click(view.projView().includeAll)
+            $('#exclude-all').click(view.projView().excludeAll)
         },
 
-        includeAll: function () {
-            $('#projects ul li').addClass('included')
-            view.saveProjects()
-        },
-
-        excludeAll: function () {
-            $('#projects ul li').removeClass('included')
-            view.saveProjects()
+        projView: function() {
+            return projectsView(view.saveProjects)
         },
 
         showSpinner: showSpinner
@@ -43,10 +38,9 @@ module.exports = function (controller) {
     return view
 }
 
-function appendProjectsToView(controller, projects, saveProjects) {
+function showExtraControls() {
     $('#project-controls').removeClass('hidden')
     $('#success').removeClass('hidden')
-    projectsView.listProjects(controller, config, projects, saveProjects)
 }
 
 function load(controller, postLoadCallback) {

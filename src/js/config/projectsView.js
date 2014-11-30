@@ -1,39 +1,54 @@
 var $ = require('jquery')
 
-module.exports = {
+module.exports = function (saveProjects) {
+    return {
+        listProjects: function (config, projects) {
+            $('#projects').empty()
 
-    listProjects: function (controller, config, projects, saveProjects) {
-        $('#projects').empty()
+            var sortedProjects = sortProjectsByName(projects);
 
-        var sortedProjects = sortProjectsByName(projects);
+            $('#projects').append('<ul />')
+            sortedProjects.forEach(function (project, index) {
+                var included = ''
+                if (!config.isReady() || config.includesProject(project.name)) {
+                    included = 'included'
+                }
+                var previouslyFetched = ''
+                if (!config.previouslyFetched(project.name)) {
+                    previouslyFetched = ' <sup>new</sup>'
+                }
 
-        $('#projects').append('<ul />')
-        sortedProjects.forEach(function (project, index) {
-            var included = ''
-            if (!config.isReady() || config.includesProject(project.name)) {
-                included = 'included'
-            }
+                $('#projects ul').append('<li class="' + included + ' ' + columnClass(index) + ' no-text-selection">' + project.name + previouslyFetched + '</li>')
+            })
 
-            var previouslyFetched = ''
-            if (!config.previouslyFetched(project.name)) {
-                previouslyFetched = ' <sup>new</sup>'
-            }
-            $('#projects ul').append('<li class="' + included + ' ' + columnClass(index) + ' no-text-selection">' + project.name + previouslyFetched + '</li>')
+            $('#projects ul li').click(function () {
+                $(this).toggleClass('included')
+                saveProjects()
+            })
+        },
 
-        })
+        findIncludedProjects: function () {
+            return $('#projects ul li.included').map(function (index, element) {
+                return element.textContent
+            }).toArray()
+        },
 
-        $('#projects ul li').click(function () {
-            $(this).toggleClass('included')
+        includeAll: function () {
+            $('#projects ul li').addClass('included')
             saveProjects()
-        })
-    },
+        },
 
-    findIncludedProjects: function () {
-        return $('#projects ul li.included').map(function (index, element) {
-            return $(element).html().replace(' <sup>new</sup>', '') // TODO: is there a better way to do this?
-        }).toArray()
+        findIncludedProjects: function () {
+            return $('#projects ul li.included').map(function (index, element) {
+                return $(element).html().replace(' <sup>new</sup>', '') // TODO: is there a better way to do this?
+            }).toArray()
+        },
+
+        excludeAll: function () {
+            $('#projects ul li').removeClass('included')
+            saveProjects()
+        }
     }
-
 }
 
 function sortProjectsByName(projects) {
