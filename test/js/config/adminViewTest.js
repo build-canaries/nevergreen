@@ -56,7 +56,7 @@ describe('view logic', function () {
         it('is shown', function () {
             $('body').append('<div id="loading-modal"></div><div id="spinner" style="display: none"></div>')
 
-            view.showSpinner(true)
+            view.showSpinner()
 
             expect($('#spinner')).toBeVisible()
             expect($('#loading-modal')).toHaveClass('loading')
@@ -65,7 +65,7 @@ describe('view logic', function () {
         it('is hidden', function () {
             $('body').append('<div id="loading-modal"></div><div id="spinner"></div>')
 
-            view.showSpinner(false)
+            view.hideSpinner()
 
             expect($('#spinner')).not.toBeVisible()
             expect($('#loading-modal')).not.toHaveClass('loading')

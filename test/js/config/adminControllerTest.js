@@ -21,18 +21,18 @@ describe('Configurable build monitor', function () {
         })
 
         it('shows and hides spinner whilst getting projects', function () {
-            var adminView = {showSpinner: function () {
-            }}
+            var adminView = {showSpinner: function () { }, hideSpinner: function () {}}
             spyOn($, 'getJSON').and.callFake(function (_) {
                 $.Deferred().resolve(['foo']).promise()
-                return {complete: function(){adminView.showSpinner(false)}}
+                return {complete: function(){adminView.hideSpinner()}}
             })
             spyOn(adminView, 'showSpinner')
+            spyOn(adminView, 'hideSpinner')
 
             adminController.getProjects(config, function (data) {}, adminView.showSpinner)
 
-            expect(adminView.showSpinner).toHaveBeenCalledWith(true)
-            expect(adminView.showSpinner).toHaveBeenCalledWith(false)
+            expect(adminView.showSpinner).toHaveBeenCalled()
+            expect(adminView.hideSpinner).toHaveBeenCalled()
         })
     })
 
