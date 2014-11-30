@@ -11,10 +11,10 @@ module.exports = function (controller) {
 
         appendProjects: function (projects) {
             showExtraControls(projects, projectsView)
+            view.projView().listProjects(config, projects)
             controller.saveAllProjects($.map(projects, function (project) {
                 return project.name
             }))
-            view.projView().listProjects(config, projects)
         },
 
         saveProjects: function () {
