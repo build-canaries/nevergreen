@@ -7,6 +7,7 @@ describe('view logic', function () {
     var config = {
         isReady: function () { return true },
         includesProject: function () { return true },
+        previouslyFetched: function() { return true }
     }
 
     beforeEach(function () {
@@ -26,6 +27,12 @@ describe('view logic', function () {
     })
 
     it('highlights news projects', function () {
+        var config = {
+            isReady: function () { return true },
+            includesProject: function (name) { return name === 'foo' },
+            previouslyFetched: function(name) { return name === 'foo' }
+        }
+
         view.listProjects(config, [
             {'name': 'foo'},
             {'name': 'bar'}
@@ -45,7 +52,8 @@ describe('view logic', function () {
     it('projects should only be included if the user has included them', function () {
         var config = {
             isReady: function () { return true },
-            includesProject: function (name) { return name === 'foo' }
+            includesProject: function (name) { return name === 'foo' },
+            previouslyFetched: function() { return true }
         }
 
         view.listProjects(config, [
