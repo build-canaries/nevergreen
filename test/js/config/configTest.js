@@ -32,9 +32,14 @@ describe('Configurable build monitor', function () {
         it('null if local storage is not set', function () {
             var settings = config.load()
 
-            expect(settings.cctray).toBe(null)
             expect(settings.includedProjects).toBe(null)
             expect(settings.projectsOnLastFetch).toBe(null)
+        })
+
+        it('should use apache as a default file', function() {
+            var settings = config.load()
+
+            expect(settings.cctray).toBe('https://builds.apache.org/cc.xml')
         })
 
         it('default success to cat', function () {
@@ -69,4 +74,5 @@ describe('Configurable build monitor', function () {
             expect(hasCctray).toBeTruthy()
         })
     })
+
 })
