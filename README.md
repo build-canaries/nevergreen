@@ -51,6 +51,8 @@ You'll need to first put in your *cctray.xml* url then it will allow you to sele
 
 [![Build Status](https://snap-ci.com/build-canaries/nevergreen/branch/master/build_image)](https://snap-ci.com/build-canaries/nevergreen/branch/master)
 
+We have a [development guide](doc/contributing.md) to help your get started.
+
 If you would like to add a feature/fix a bug for us please create a pull request.
 
 ## License
