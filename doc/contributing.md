@@ -1,13 +1,8 @@
 Run locally
 ===========
 
-You need to run three commands locally to get automatic updates for your changes
-
-```
-npm run building
-npm run testing
-lein ring server-headless
-```
+You can run the `develop.sh` script to automatically watch all the sources and run tests, see the script for more
+information.
 
 Once you are ready, run the ```pre-push.sh``` which mimics what the CI server will build.
 
