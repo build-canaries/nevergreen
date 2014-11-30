@@ -27,12 +27,6 @@ module.exports = function (saveProjects) {
             })
         },
 
-        findIncludedProjects: function () {
-            return $('#projects ul li.included').map(function (index, element) {
-                return element.textContent
-            }).toArray()
-        },
-
         includeAll: function () {
             $('#projects ul li').addClass('included')
             saveProjects()

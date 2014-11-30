@@ -1,5 +1,5 @@
 var $ = require('jquery')
-var FontScaler = require('../fontScaler')
+var ScaleText = require('scale-text')
 
 module.exports = {
     styleProjects: function () {
@@ -44,7 +44,7 @@ function everyPieceOfTextOnTheScreen() {
 }
 function scaleFontToContainerSize() {
     $('.outerContainer').css('font-size',
-        new FontScaler(
+        new ScaleText(
             everyPieceOfTextOnTheScreen(),
             buildStatusHeight(),
             buildStatusWidth()).ideal()
