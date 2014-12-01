@@ -25,7 +25,7 @@ module.exports = function (saveProjects) {
                     new ScaleText(
                         everyPieceOfTextOnTheScreen(projects),
                         40,
-                        $('ul').width() * 0.46).singleLineIdeal())
+                        $('ul').width() * 0.42).singleLineIdeal())
             })
 
             $('#projects ul li').click(function () {
