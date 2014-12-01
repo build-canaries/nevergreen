@@ -138,17 +138,7 @@ sup {
     display: block;
 }
 
-.column-left {
+li {
     float: left;
-    width: 31%;
-}
-
-.column-right {
-    float: right;
-    width: 31%;
-}
-
-.column-center {
-    display: inline-block;
-    width: 31%;
+    width: 48%;
 }

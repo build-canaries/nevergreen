@@ -18,7 +18,7 @@
   "dependencies": {
     "browserify": "6.3.3",
     "jquery": "2.1.1",
-    "scale-text": "0.2.0"
+    "scale-text": "0.2.2"
   },
   "scripts": {
     "postinstall": "browserify -d ./src/js/config/*.js -o ./resources/public/main.js && browserify -d ./src/js/monitor/*.js ./src/js/config/config.js -o ./resources/public/monitor.js",

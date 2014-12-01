@@ -1,4 +1,5 @@
 var $ = require('jquery')
+var ScaleText = require('scale-text')
 
 module.exports = function (saveProjects) {
     return {
@@ -13,12 +14,18 @@ module.exports = function (saveProjects) {
                 if (!config.isReady() || config.includesProject(project.name)) {
                     included = 'included'
                 }
+
                 var previouslyFetched = ''
                 if (!config.previouslyFetched(project.name)) {
                     previouslyFetched = ' <sup>new</sup>'
                 }
 
-                $('#projects ul').append('<li class="' + included + ' ' + columnClass(index) + ' no-text-selection">' + project.name + previouslyFetched + '</li>')
+                $('#projects ul').append('<li class="' + included + ' no-text-selection">' + project.name + previouslyFetched + '</li>')
+                $('li').css('font-size',
+                    new ScaleText(
+                        everyPieceOfTextOnTheScreen(projects),
+                        40,
+                        $('ul').width() * 0.46).singleLineIdeal())
             })
 
             $('#projects ul li').click(function () {
@@ -45,22 +52,12 @@ module.exports = function (saveProjects) {
     }
 }
 
+function everyPieceOfTextOnTheScreen(projects) {
+    return $.map(projects, function (project) { return project.name })
+}
+
 function sortProjectsByName(projects) {
     return projects.sort(function (item1, item2) {
         return item1.name.toLowerCase().localeCompare(item2.name.toLowerCase())
     });
-}
-
-function columnClass(index) {
-    switch (index % 3) {
-        case 0:
-            return 'column-left'
-            break;
-        case 1:
-            return 'column-center'
-            break;
-        case 2:
-            return 'column-right'
-            break;
-    }
 }
