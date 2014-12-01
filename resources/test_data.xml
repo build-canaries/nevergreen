@@ -1,7 +1,0 @@
-<Projects>
-    <Project name="success-sleeping-project :: stage1 :: job1" activity="Sleeping" lastBuildStatus="Success"/>
-    <Project name="success-building-project :: stage1 :: job1" activity="Building" lastBuildStatus="Success"/>
-    <Project name="failure_sleeping_project :: stage3 :: job3" activity="Sleeping" lastBuildStatus="Failure"/>
-    <Project name="failure_building_project :: stage3 :: job3" activity="Building" lastBuildStatus="Failure"/>
-    <random stuff="random-stuff"/>
-</Projects>
