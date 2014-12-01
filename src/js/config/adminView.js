@@ -12,7 +12,8 @@ module.exports = function (controller) {
         appendProjects: function (projects) {
             showExtraControls(projects, projectsView)
             view.projView().listProjects(config, projects)
-            saveAllProjects(controller, projects);
+            saveAllProjects(controller, projects)
+            view.saveProjects()
         },
 
         saveProjects: function () {

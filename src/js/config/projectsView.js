@@ -9,7 +9,7 @@ module.exports = function (saveProjects) {
             var sortedProjects = sortProjectsByName(projects);
 
             $('#projects').append('<ul />')
-            sortedProjects.forEach(function (project, index) {
+            sortedProjects.forEach(function (project) {
                 var included = ''
                 if (!config.isReady() || config.includesProject(project.name)) {
                     included = 'included'

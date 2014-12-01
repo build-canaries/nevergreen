@@ -7,7 +7,7 @@ describe('view logic', function () {
     var adminController = { saveIncludedProjects: function(){},
                             getProjects: function(){},
                             saveSuccessText: function(){},
-                            saveAllProjects: function(){}}
+                            saveSeenProjects: function(){}}
 
     beforeEach(function () {
         $('body').empty()
@@ -84,6 +84,16 @@ describe('view logic', function () {
             $('#cctray-save').click()
 
             expect(localStorage.cctray).toBe('expected')
+        })
+    })
+
+    describe('fetch projects saves afterwards', function() {
+        it('saves', function() {
+            spyOn(adminController, 'saveIncludedProjects')
+
+            view.appendProjects([])
+
+            expect(adminController.saveIncludedProjects).toHaveBeenCalled()
         })
     })
 
