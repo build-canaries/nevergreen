@@ -91,15 +91,19 @@ label {
 }
 
 li {
-    padding: 0.3em;
-    margin: 0.3em 0.2em;
-    min-height: 40px;
+    padding: 4px 8px;
+    margin: 8px 2px;
+    height: 42px;
     vertical-align: middle;
     line-height: 2em;
     cursor: pointer;
     color: rgb(194, 185, 185);
     border-radius: 0;
     border-left: 3px solid rgb(239, 239, 239);
+}
+
+li.new {
+    line-height: 1em;
 }
 
 sup {
@@ -146,5 +150,5 @@ sup {
 
 li {
     float: left;
-    width: 47%;
+    width: 31%;
 }

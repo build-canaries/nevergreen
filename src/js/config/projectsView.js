@@ -1,6 +1,9 @@
 var $ = require('jquery')
 var ScaleText = require('scale-text')
 
+var projectBoxHeight = 42
+var projectBoxWidthFactor = 0.29
+
 module.exports = function (saveProjects) {
     return {
         listProjects: function (config, projects) {
@@ -15,17 +18,16 @@ module.exports = function (saveProjects) {
                     included = 'included'
                 }
 
-                var previouslyFetched = ''
+                var newNote = ''
+                var newNoteClass = ''
                 if (!config.previouslyFetched(project.name)) {
-                    previouslyFetched = ' <sup>new</sup>'
+                    newNote = ' <sup>new</sup>'
+                    newNoteClass = ' new '
                 }
 
-                $('#projects ul').append('<li class="' + included + ' no-text-selection">' + project.name + previouslyFetched + '</li>')
-                $('li').css('font-size',
-                    new ScaleText(
-                        everyPieceOfTextOnTheScreen(projects),
-                        40,
-                        $('ul').width() * 0.42).singleLineIdeal())
+                $('#projects ul').append('<li class="' + included + newNoteClass + ' no-text-selection">' + project.name + newNote + '</li>')
+
+                calculateCorrectFontSize(projects);
             })
 
             $('#projects ul li').click(function () {
@@ -52,12 +54,18 @@ module.exports = function (saveProjects) {
     }
 }
 
-function everyPieceOfTextOnTheScreen(projects) {
-    return $.map(projects, function (project) { return project.name })
-}
-
 function sortProjectsByName(projects) {
     return projects.sort(function (item1, item2) {
         return item1.name.toLowerCase().localeCompare(item2.name.toLowerCase())
     });
+}
+
+function calculateCorrectFontSize() {
+    var width = $('ul').width() * projectBoxWidthFactor
+    $('li').each(function(index, value) {
+        var text = [value.textContent]
+        var ideal = new ScaleText(text, projectBoxHeight, width).singleLineIdeal()
+        var idealCssFontSize = Math.min(ideal, 21);
+        $(value).css('font-size', idealCssFontSize)
+    })
 }
