@@ -97,6 +97,12 @@ describe('view logic', function () {
         })
     })
 
+    it('handles errors', function() {
+        view.errorHandler('code', 'reason')
+
+        expect($('#projects')).toContainHtml('reason')
+    })
+
     describe('success text', function () {
         beforeEach(function () {
             $('body').append('<form>' +

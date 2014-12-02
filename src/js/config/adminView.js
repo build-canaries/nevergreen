@@ -5,7 +5,7 @@ var projectsView = require('./projectsView')
 module.exports = function (controller) {
     var view = {
         init: function () {
-            load(controller, view.appendProjects, view.showSpinner, view.hideSpinner)
+            load(view.getProjects)
             this.addClickHandlers()
         },
 
@@ -22,7 +22,7 @@ module.exports = function (controller) {
         },
 
         addClickHandlers: function () {
-            $('#cctray-save').click(function() { saveCctray(controller, view.appendProjects, view.showSpinner, view.hideSpinner) })
+            $('#cctray-save').click(function() { saveCctray(view.getProjects) })
             $('#save-projects').click(function() { monitorPage(controller) })
             $('#include-all').click(view.projView().includeAll)
             $('#exclude-all').click(view.projView().excludeAll)
@@ -40,7 +40,17 @@ module.exports = function (controller) {
         hideSpinner: function () {
             $('#loading-modal').removeClass('loading')
             $('#spinner').hide()
+        },
+
+        errorHandler: function(code, reason) {
+            $('#projects').empty()
+            $('#projects').append('<h1 class="error">Cannot find projects because<br />' + code + ': '+ reason + '</h1>')
+        },
+
+        getProjects: function() {
+            controller.getProjects(require('./config'), view.appendProjects, view.showSpinner, view.hideSpinner, view.errorHandler)
         }
+
     }
     return view
 }
@@ -50,18 +60,18 @@ function showExtraControls() {
     $('#success').removeClass('hidden')
 }
 
-function load(controller, postLoadCallback, showSpinner, hideSpinner) {
+function load(postLoadCallback) {
     var settings = config.load()
     $('#cctray-url').val(settings.cctray)
     $('#success-text').val(settings.successText)
     if (config.hasCctray()) {
-        controller.getProjects(config, postLoadCallback, showSpinner, hideSpinner)
+        postLoadCallback()
     }
 }
 
-function saveCctray(controller, postLoadCallback, showSpinner, hideSpinner) {
+function saveCctray(postLoadCallback) {
     config.save({cctray: $('#cctray-url').val().trim()})
-    controller.getProjects(config, postLoadCallback, showSpinner, hideSpinner)
+    postLoadCallback()
 }
 
 function saveSuccessText(controller) {

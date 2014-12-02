@@ -134,6 +134,12 @@ sup {
     background: rgba(255, 255, 255, .8);
 }
 
+.error {
+    text-align: center;
+    color: red;
+    font-size: 4em;
+}
+
 #loading-modal.loading.modal {
     display: block;
 }

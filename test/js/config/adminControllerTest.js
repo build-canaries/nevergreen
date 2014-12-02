@@ -9,13 +9,12 @@ describe('Configurable build monitor', function () {
             var projectNames = ['proj-1', 'proj-2']
             spyOn($, 'getJSON').and.callFake(function (_) {
                 $.Deferred().resolve(projectNames).promise()
-                return {complete: function(){}}
+                return {complete: function(){}, error:function(){}}
             })
             spyOn(config, 'load').and.returnValue({cctray: 'some-url'})
-            var callbackFunction = function (data) {
-            }
+            var callbackFunction = function (data) { }
 
-            var projects = adminController.getProjects(config, callbackFunction, function(){})
+            var projects = adminController.getProjects(config, callbackFunction, function(){}, function(){})
 
             expect($.getJSON).toHaveBeenCalledWith('/api/projects', {url: 'some-url'}, callbackFunction)
         })
@@ -24,7 +23,7 @@ describe('Configurable build monitor', function () {
             var adminView = {showSpinner: function () { }, hideSpinner: function () {}}
             spyOn($, 'getJSON').and.callFake(function (_) {
                 $.Deferred().resolve(['foo']).promise()
-                return {complete: function(){adminView.hideSpinner()}}
+                return {complete: function(){adminView.hideSpinner()}, error:function(){}}
             })
             spyOn(adminView, 'showSpinner')
             spyOn(adminView, 'hideSpinner')

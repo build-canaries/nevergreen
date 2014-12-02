@@ -2,12 +2,15 @@ var $ = require('jquery')
 
 module.exports = {
 
-    getProjects: function (config, handler, showSpinner, hideSpinner) {
+    getProjects: function (config, handler, showSpinner, hideSpinner, errorHandler) {
         var settings = config.load()
         showSpinner()
         var jqxhr = $.getJSON('/api/projects', {url: settings.cctray}, handler)
         jqxhr.complete(function () {
             hideSpinner()
+        })
+        jqxhr.error(function (xhr, ajaxOptions, thrownError) {
+            errorHandler(xhr.status, thrownError)
         })
     },
 
