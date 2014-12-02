@@ -9,10 +9,10 @@
   },
   "devDependencies": {
     "jshint": "2.5.10",
-    "karma": "^0.12.25",
+    "karma": "0.12.25",
     "karma-browserify": "1.0.0",
-    "karma-jasmine": "~0.2.2",
-    "karma-phantomjs-launcher": "~0.1.4",
+    "karma-jasmine": "0.2.2",
+    "karma-phantomjs-launcher": "0.1.4",
     "watch": "0.13.0"
   },
   "dependencies": {
@@ -25,7 +25,7 @@
     "building": "watch 'npm install' src/js",
     "test": "./node_modules/karma/bin/karma start --singleRun",
     "testing": "./node_modules/karma/bin/karma start",
-    "lint": "jshint src/js/**/*.js test/js/monitor/*.js test/js/config/*.js"
+    "lint": "jshint src/**/*.js test/js/monitor/*.js test/js/config/*.js"
   },
   "repository": {
     "type": "git",

@@ -10,12 +10,22 @@ module.exports = function (config) {
                 return
             }
 
-            $.post('/api/projects', config.load(), this.updateScreen, 'json')
+            $.ajax({
+                type: 'POST',
+                url: '/api/projects',
+                data: config.load(), dataType: "json",
+                success: this.updateScreen,
+                error: this.onError
+            })
         },
 
         updateScreen: function (data) {
             appender(config, data).addProjects()
             styler.styleProjects()
+        },
+
+        onError: function(data) {
+            $('#projects').text('Failed to fetch projects: ' + data.status + ' ' + data.statusText)
         }
     }
 }

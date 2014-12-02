@@ -1,6 +1,6 @@
-var location = window.location.pathname
+var currentPath = window.location.pathname
 
-if (location === "/config") {
+if (currentPath === '/config') {
     console.log('Routing: Config page')
     require('./config/blastoff')()
 } else {
