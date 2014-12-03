@@ -15,7 +15,7 @@ function resizeEachContainer() {
 }
 
 var maxColumns = 3
-var buildStatusPadding = 10
+var buildStatusPadding = 11
 
 function buildStatusCount() {
     return $('li').size()
@@ -30,7 +30,7 @@ function numberOfRows() {
 }
 
 function buildStatusWidth() {
-    return window.innerWidth / numberOfColumns() - (buildStatusPadding * 2)
+    return window.innerWidth / numberOfColumns() - (buildStatusPadding)
 }
 
 function buildStatusHeight() {
