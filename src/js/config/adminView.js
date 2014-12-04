@@ -26,6 +26,12 @@ module.exports = function (controller) {
             $('#save-projects').click(function() { monitorPage(controller) })
             $('#include-all').click(view.projView().includeAll)
             $('#exclude-all').click(view.projView().excludeAll)
+
+            $("#cctray-url").keypress(function(e) {
+                if(e.which == 13) {
+                    saveCctray(view.getProjects)
+                }
+            });
         },
 
         projView: function() {

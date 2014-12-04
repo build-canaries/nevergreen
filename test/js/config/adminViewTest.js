@@ -85,6 +85,21 @@ describe('view logic', function () {
 
             expect(localStorage.cctray).toBe('expected')
         })
+
+        it('saves on return key press', function() {
+            $('body').append('<form>' +
+            '<input id="cctray-url" type=text>' +
+            '</form>')
+
+            view.init()
+            $('#cctray-url').val('   expected   ')
+
+            // press return event
+            var e = jQuery.Event('keypress'); e.which = 13; e.keyCode = 13;
+            $('#cctray-url').trigger(e);
+
+            expect(localStorage.cctray).toBe('expected')
+        })
     })
 
     describe('fetch projects saves afterwards', function() {
