@@ -7,6 +7,8 @@ Nevergreen is a build monitor with attitude. It is awesome for two reasons:
 
 Check out the demo at [http://nevergreen.herokuapp.com](http://nevergreen.herokuapp.com). You can use `https://builds.apache.org/cc.xml` as a test cctray xml.
 
+![Example of Nevergreen on Apache builds](doc/screenshot.png)
+
 ## How to run
 
 If your CI server is publishing it's *cctray.xml* on the web you don't need to install anything. You can just use [http://nevergreen.herokuapp.com](http://nevergreen.herokuapp.com).
