@@ -152,3 +152,14 @@ li {
     float: left;
     width: 31%;
 }
+
+#version-number {
+    color: black;
+    background-color: #FFFF99;
+    font-size: 1em;
+    padding: 0.5em;
+    text-decoration: none;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+}
