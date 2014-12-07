@@ -7,28 +7,35 @@ describe('Configurable build monitor', function () {
     describe('get projects', function () {
         it('gets the projects using the api', function () {
             var projectNames = ['proj-1', 'proj-2']
-            spyOn($, 'getJSON').and.callFake(function (_) {
-                $.Deferred().resolve(projectNames).promise()
-                return {complete: function(){}, error:function(){}}
+            spyOn($, "ajax").and.callFake(function(e) {
+                e.success(projectNames);
             })
             spyOn(config, 'load').and.returnValue({cctray: 'some-url'})
             var callbackFunction = function (data) { }
 
-            var projects = adminController.getProjects(config, callbackFunction, function(){}, function(){})
+            var projects = adminController.getProjects(config, callbackFunction)
 
-            expect($.getJSON).toHaveBeenCalledWith('/api/projects', {url: 'some-url'}, callbackFunction)
+            expect($.ajax).toHaveBeenCalledWith({
+                    type: 'GET',
+                    url: '/api/projects',
+                    timeout: jasmine.any(Number),
+                    data: {url: 'some-url'}, dataType: "json",
+                    beforeSend: jasmine.any(Function),
+                    complete: jasmine.any(Function),
+                    success: callbackFunction,
+                    error: jasmine.any(Function)})
         })
 
         it('shows and hides spinner whilst getting projects', function () {
             var adminView = {showSpinner: function () { }, hideSpinner: function () {}}
-            spyOn($, 'getJSON').and.callFake(function (_) {
-                $.Deferred().resolve(['foo']).promise()
-                return {complete: function(){adminView.hideSpinner()}, error:function(){}}
+            spyOn($, "ajax").and.callFake(function(e) {
+                e.beforeSend()
+                e.complete()
             })
             spyOn(adminView, 'showSpinner')
             spyOn(adminView, 'hideSpinner')
 
-            adminController.getProjects(config, function (data) {}, adminView.showSpinner)
+            adminController.getProjects(config, null, adminView.showSpinner, adminView.hideSpinner)
 
             expect(adminView.showSpinner).toHaveBeenCalled()
             expect(adminView.hideSpinner).toHaveBeenCalled()

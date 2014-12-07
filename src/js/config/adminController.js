@@ -4,13 +4,18 @@ module.exports = {
 
     getProjects: function (config, handler, showSpinner, hideSpinner, errorHandler) {
         var settings = config.load()
-        showSpinner()
-        var jqxhr = $.getJSON('/api/projects', {url: settings.cctray}, handler)
-        jqxhr.complete(function () {
-            hideSpinner()
-        })
-        jqxhr.error(function (xhr, ajaxOptions, thrownError) {
-            errorHandler(xhr.status, thrownError)
+
+        $.ajax({
+            type: 'GET',
+            url: '/api/projects',
+            timeout: 15000,
+            data: {url: settings.cctray}, dataType: "json",
+            beforeSend: function() { showSpinner() },
+            complete: function () { hideSpinner() },
+            success: handler,
+            error: function (xhr, ajaxOptions, thrownError) {
+                errorHandler(xhr.status, thrownError)
+            }
         })
     },
 

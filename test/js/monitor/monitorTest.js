@@ -11,9 +11,10 @@ describe('Monitor page', function () {
 
         updater(config).updateBuildMonitor()
 
-         expect($.ajax).toHaveBeenCalledWith(
+        expect($.ajax).toHaveBeenCalledWith(
              {   url: '/api/projects',
                  type: 'POST',
+                 timeout: jasmine.any(Number),
                  data: jasmine.any(Object),
                  dataType: 'json',
                  success: jasmine.any(Function),

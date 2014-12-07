@@ -13,6 +13,7 @@ module.exports = function (config) {
             $.ajax({
                 type: 'POST',
                 url: '/api/projects',
+                timeout: 15000,
                 data: config.load(), dataType: "json",
                 success: this.updateScreen,
                 error: this.onError
