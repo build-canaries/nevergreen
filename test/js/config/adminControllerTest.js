@@ -7,7 +7,7 @@ describe('Configurable build monitor', function () {
     describe('get projects', function () {
         it('gets the projects using the api', function () {
             var projectNames = ['proj-1', 'proj-2']
-            spyOn($, "ajax").and.callFake(function(e) {
+            spyOn($, 'ajax').and.callFake(function(e) {
                 e.success(projectNames);
             })
             spyOn(config, 'load').and.returnValue({cctray: 'some-url'})
@@ -19,7 +19,7 @@ describe('Configurable build monitor', function () {
                     type: 'GET',
                     url: '/api/projects',
                     timeout: jasmine.any(Number),
-                    data: {url: 'some-url'}, dataType: "json",
+                    data: {url: 'some-url'}, dataType: 'json',
                     beforeSend: jasmine.any(Function),
                     complete: jasmine.any(Function),
                     success: callbackFunction,
@@ -28,7 +28,7 @@ describe('Configurable build monitor', function () {
 
         it('shows and hides spinner whilst getting projects', function () {
             var adminView = {showSpinner: function () { }, hideSpinner: function () {}}
-            spyOn($, "ajax").and.callFake(function(e) {
+            spyOn($, 'ajax').and.callFake(function(e) {
                 e.beforeSend()
                 e.complete()
             })
