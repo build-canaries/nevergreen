@@ -16,14 +16,15 @@ describe('Configurable build monitor', function () {
             var projects = adminController.getProjects(config, callbackFunction)
 
             expect($.ajax).toHaveBeenCalledWith({
-                    type: 'GET',
-                    url: '/api/projects',
-                    timeout: jasmine.any(Number),
-                    data: {url: 'some-url'}, dataType: 'json',
-                    beforeSend: jasmine.any(Function),
-                    complete: jasmine.any(Function),
-                    success: callbackFunction,
-                    error: jasmine.any(Function)})
+                type: 'GET',
+                url: '/api/projects',
+                data: {url: 'some-url'},
+                dataType: 'json',
+                timeout: jasmine.any(Number),
+                beforeSend: jasmine.any(Function),
+                complete: jasmine.any(Function),
+                success: jasmine.any(Function),
+                error: jasmine.any(Function)})
         })
 
         it('shows and hides spinner whilst getting projects', function () {

@@ -12,7 +12,9 @@ module.exports = {
             data: {url: settings.cctray}, dataType: "json",
             beforeSend: function() { showSpinner() },
             complete: function () { hideSpinner() },
-            success: handler,
+            success: function(response) {
+                localStorage.serverType = response.server
+                handler(response.projects) },
             error: function (xhr, ajaxOptions, thrownError) {
                 errorHandler(xhr.status, thrownError)
             }

@@ -11,16 +11,15 @@ describe('Monitor page', function () {
 
         updater(config).updateBuildMonitor()
 
-        expect($.ajax).toHaveBeenCalledWith(
-             {   url: '/api/projects',
-                 type: 'POST',
-                 timeout: jasmine.any(Number),
-                 data: jasmine.any(Object),
-                 dataType: 'json',
-                 success: jasmine.any(Function),
-                 error: jasmine.any(Function)
-             })
-    })
+        expect($.ajax).toHaveBeenCalledWith({
+            url: '/api/projects',
+            type: 'POST',
+            data: config.load(),
+            dataType: 'json',
+            timeout: jasmine.any(Number),
+            success: jasmine.any(Function),
+            error: jasmine.any(Function)})
+     })
 
     it('loads config page', function () {
         var config = {
