@@ -7,7 +7,7 @@
                            [environ "0.5.0"]
                            [compojure "1.1.8"]
                            [cheshire "5.3.1"]
-                           [clj-cctray "0.5.1"]]
+                           [clj-cctray "0.6.0"]]
             :plugins [[lein-ring "0.8.11"]
                       [lein-midje "3.1.1"]
                       [environ/environ.lein "0.2.1"]
