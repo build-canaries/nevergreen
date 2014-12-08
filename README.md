@@ -5,13 +5,13 @@ Nevergreen is a build monitor with attitude. It is awesome for two reasons:
 * Your builds should always be green. Nevergreen understands this and only shows you jobs that have failed or are building.
 * Nevergreen uses HTML localStorage. So the config is stored in your web browser. You only need to run it once to host hundreds of different build monitors.
 
-Check out the demo at [http://nevergreen.io/](http://nevergreen.io/). You can use `https://builds.apache.org/cc.xml` as a test cctray xml.
+Check out the demo at [http://nevergreen.io](http://nevergreen.io).
 
 ![Example of Nevergreen on Apache builds](doc/screenshot.png)
 
 ## How to run
 
-If your CI server is publishing it's *cctray.xml* on the web you don't need to install anything. You can just use [http://nevergreen.io/](http://nevergreen.io/).
+If your CI server is publishing it's *cctray.xml* on the web you don't need to install anything. You can just use [http://nevergreen.io](http://nevergreen.io).
 
 If you'd like to run it yourself then you can run the jar file:
 
