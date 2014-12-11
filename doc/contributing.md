@@ -15,3 +15,10 @@ Releases
 =========
 
 Alphabetically using the [Crayola colours](http://en.wikipedia.org/wiki/List_of_Crayola_crayon_colors), but not any green variations naturally!
+
+Heroku
+======
+
+You will need to specify a buildpack using:
+
+```heroku config:add 'BUILDPACK_URL=https://github.com/ddollar/heroku-buildpack-multi.git''```
