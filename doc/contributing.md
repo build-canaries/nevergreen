@@ -22,3 +22,10 @@ Heroku
 You will need to specify a buildpack using:
 
 ```heroku config:add 'BUILDPACK_URL=https://github.com/ddollar/heroku-buildpack-multi.git''```
+
+Our instances
+
+```
+prod	git@heroku.com:nevergreen.git
+staging	git@heroku.com:nevergreen-staging.git
+```
