@@ -22,7 +22,6 @@ module.exports = function (controller) {
         },
 
         addClickHandlers: function () {
-            $('#cctray-save').click(function() { saveCctray(view.getProjects) })
             $('#save-projects').click(function() { monitorPage(controller) })
             $('#include-all').click(view.projView().includeAll)
             $('#exclude-all').click(view.projView().excludeAll)
@@ -64,6 +63,7 @@ module.exports = function (controller) {
 function showExtraControls() {
     $('#project-controls').removeClass('hidden')
     $('#success').removeClass('hidden')
+    $('#save-projects').removeClass('hidden')
 }
 
 function load(postLoadCallback) {

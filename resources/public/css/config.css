@@ -33,7 +33,7 @@ label {
     border: none;
     padding: 0 0.5em;
     font-size: 1em;
-    width: calc(100% - 400px);
+    width: calc(100% - 250px);
 }
 
 #cctray-url {
@@ -67,18 +67,9 @@ label {
     border-color: rgb(239, 239, 239);
 }
 
-.right-button {
-    float: right;
-}
-
-.right-button input {
-    width: 4em;
-    background-color: #2196F3;
-    color: white;
-}
-
 #projects {
     margin-top: 14.5em;
+    clear: both;
 }
 
 .no-text-selection {
@@ -162,4 +153,18 @@ li {
     position: fixed;
     right: 0;
     bottom: 0;
+}
+
+#save-projects {
+    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+    margin-bottom: 2px;
+}
+
+#save-projects input {
+    width: 12em;
+    background-color: #2196F3;
+    color: white;
+    font-size: 2em
 }

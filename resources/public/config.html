@@ -14,13 +14,11 @@
         <div id="cctray">
             <label title="cctray url">cctray url</label>
             <input id="cctray-url" type="text" name="cctray"/>
-            <span class="right-button"><input id="cctray-save" class="button" type="button" value="fetch"></span>
         </div>
 
         <div id="success" class="hidden">
             <label title="success-text">success text</label>
             <input id="success-text" type="text" name="success-text" value="=(^.^)="/>
-            <span class="right-button"><input id="save-projects" class="button" type="button" value="watch"></span>
         </div>
 
         <div id="project-controls" class="hidden">
@@ -31,10 +29,14 @@
     </form>
 </div>
 <div id="projects"></div>
+
+<div id="save-projects" class="hidden"><input class="button" type="button" value="watch"></div>
+<a id="version-number" href="https://github.com/build-canaries/nevergreen/releases/tag/v0.4.0">Desert Sand</a>
+
 <div id="spinner" class="centered" style="display: none">
     <img src="img/loading-bars.svg"/>
 </div>
-<a id="version-number" href="https://github.com/build-canaries/nevergreen/releases/tag/v0.4.0">Desert Sand</a>
+
 </body>
 <script src="main.js"></script>
 </html>

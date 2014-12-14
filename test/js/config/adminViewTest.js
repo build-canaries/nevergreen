@@ -73,19 +73,6 @@ describe('view logic', function () {
     })
 
     describe('cctray url', function() {
-        it('saves while trimming excess spaces', function () {
-            $('body').append('<form>' +
-            '<input id="cctray-url" type=text>' +
-            '<input id="cctray-save" class=button type=button>' +
-            '</form>')
-
-            view.init()
-            $('#cctray-url').val('   expected   ')
-            $('#cctray-save').click()
-
-            expect(localStorage.cctray).toBe('expected')
-        })
-
         it('saves on return key press', function() {
             $('body').append('<form>' +
             '<input id="cctray-url" type=text>' +
