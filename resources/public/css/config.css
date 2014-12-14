@@ -81,9 +81,22 @@ label {
     user-select: none;
 }
 
+ul {
+    box-sizing: border-box;
+}
+
+ul, li {
+    margin:0;
+    padding:0;
+    list-style:none;
+}
+
 li {
+    box-sizing: border-box;
+    display: inline-block;
+    width: 33.3333%;
     padding: 4px 8px;
-    margin: 8px 2px;
+    margin-bottom: 10px;
     height: 42px;
     vertical-align: middle;
     line-height: 2em;
@@ -139,10 +152,7 @@ sup {
     display: block;
 }
 
-li {
-    float: left;
-    width: 31%;
-}
+
 
 #version-number {
     color: black;
