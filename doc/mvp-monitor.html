@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.2/jquery.min.js"></script>
+</head>
+<body>
+
+  <ul id="projects">
+  </ul>
+
+  <script>
+
+    function update() {
+      var cctrayUrl = 'https://builds.apache.org/cc.xml'
+
+      $.ajax({
+        type: 'GET',
+        url: 'http://staging.nevergreen.io/api/projects',
+        data: {url: cctrayUrl},
+        dataType: "json",
+        success: function(response) {
+          $("#projects").empty()
+          response.projects.forEach(function(project) {
+            $('#projects').append('<li>' + project.name + ' (' + project.prognosis + ')</li>')
+          })
+        }
+      })}
+
+    update() // run immediately
+    setInterval(update, 10000) // then every 10 seconds
+
+  </script>
+
+</body>
+</html>

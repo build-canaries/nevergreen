@@ -6,10 +6,12 @@ information.
 
 Once you are ready, run the ```pre-push.sh``` which mimics what the CI server will build.
 
-How to add your own page
-========================
+How to make your own monitor
+============================
 
-TODO: Add sample.html to make it easy for new people to create a customized page.
+If you'd like to make your own monitor page then we can provide you with a bare bones page. The page has no styling and
+just polls nevergreen.io. You can run it just by opening the file. You don't need anything else, get started with the [mvp monitor](https://github.com/build-canaries/nevergreen/tree/master/doc/mvp-monitor.html)
+
 
 Releases
 =========
