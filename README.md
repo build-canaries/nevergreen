@@ -43,6 +43,11 @@ You can find your *cctray.xml* at these locations
  CruiseControl.NET   |  `http://cc.net.servername/XmlStatusReport.aspx`
  tddium              |  `http://api.tddium.com/cc/long_uuid_string/cctray.xml`
 
+## Style your own monitor
+
+If you don't like the look of our monitor page, then you can make your own from our [minimal monitor html page](doc/contributing.md)
+```
+
 ## Configuring your own Nevergreen
 
 Navigate to `http://localhost:5000`. If it is the first visit to Nevergreen from a browser then it will redirect you to `http://localhost:5000/config`.
