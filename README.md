@@ -45,8 +45,7 @@ You can find your *cctray.xml* at these locations
 
 ## Style your own monitor
 
-If you don't like the look of our monitor page, then you can make your own from our [minimal monitor html page](doc/contributing.md)
-```
+If you don't like the look of our monitor page, then you can make your own from our [minimal monitor html page](doc/make-your-own.md)
 
 ## Configuring your own Nevergreen
 
