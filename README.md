@@ -41,7 +41,7 @@ You can find your *cctray.xml* at these locations
  CruiseControl.rb    |  `http://cc.rb.servername:3333/XmlStatusReport.aspx`
  CruiseControl       |  `http://cc.java.servername:8080/cctray.xml`
  CruiseControl.NET   |  `http://cc.net.servername/XmlStatusReport.aspx`
- tddium              |  `http://api.tddium.com/cc/long_uuid_string/cctray.xml`
+ Solano CI           |  `http://api.tddium.com/cc/long_uuid_string/cctray.xml`
 
 ## Style your own monitor
 
