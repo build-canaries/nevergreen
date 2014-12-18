@@ -33,7 +33,7 @@ label {
     border: none;
     padding: 0 0.5em;
     font-size: 1em;
-    width: calc(100% - 250px);
+    width: calc(85% - 250px);
 }
 
 #cctray-url {
@@ -68,7 +68,6 @@ label {
 }
 
 #projects {
-    margin-top: 14.5em;
     clear: both;
 }
 
@@ -93,13 +92,9 @@ ul, li {
 
 li {
     box-sizing: border-box;
-    display: inline-block;
-    width: 33.3333%;
-    padding: 4px 8px;
-    margin-bottom: 10px;
-    height: 42px;
-    vertical-align: middle;
-    line-height: 2em;
+    padding: 0 0.3em 0.3em 0.3em;
+    margin: 0.5em 0;
+    margin-bottom: 0.5em 0;
     cursor: pointer;
     color: rgb(194, 185, 185);
     border-radius: 0;
@@ -165,16 +160,28 @@ sup {
     bottom: 0;
 }
 
-#save-projects {
-    width: 50%;
-    margin: 0 auto;
-    text-align: center;
-    margin-bottom: 2px;
-}
 
-#save-projects input {
-    width: 12em;
+.save-projects-input {
     background-color: #2196F3;
     color: white;
-    font-size: 2em
+    font-size: 1em;
+    border: none;
+    padding: 0.2em 1em 0.3em;
+    position: absolute;
+    top: 0.6em;
+    right: 0;
+}
+
+
+/* Sections */
+.projects-section {
+    float: left;
+    width: 48%;
+    margin-top: 5em;
+}
+
+.success-section {
+    float: right;
+    width: 48%;
+    margin-top: 5em;
 }

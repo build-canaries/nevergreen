@@ -2,7 +2,7 @@ var $ = require('jquery')
 var ScaleText = require('scale-text')
 
 var projectBoxHeight = 42
-var projectBoxWidthFactor = 0.29
+var projectBoxWidthFactor = 0.99
 
 module.exports = function (saveProjects) {
     return {
@@ -65,7 +65,7 @@ function calculateCorrectFontSize() {
     $('li').each(function(index, value) {
         var text = [value.textContent]
         var ideal = new ScaleText(text, projectBoxHeight, width).singleLineIdeal()
-        var idealCssFontSize = Math.min(ideal, 21);
+        var idealCssFontSize = Math.min(ideal, 21)
         $(value).css('font-size', idealCssFontSize)
     })
 }

@@ -7,30 +7,50 @@
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 </head>
 <body onload="">
+
+<h1>Nevergreen config</h1>
+
 <div id="loading-modal" class="modal"></div>
 <div id="actions-panel">
     <form id="cctray-form">
 
         <div id="cctray">
-            <label title="cctray url">cctray url</label>
+            <label for="cctray-url">cctray url</label>
             <input id="cctray-url" type="text" name="cctray"/>
         </div>
 
-        <div id="success" class="hidden">
-            <label title="success-text">success text</label>
-            <input id="success-text" type="text" name="success-text" value="=(^.^)="/>
-        </div>
-
-        <div id="project-controls" class="hidden">
-            <input id="include-all" class="button select-all no-text-selection" type="button" value="include all">
-            <input id="exclude-all" class="button select-all no-text-selection" type="button" value="exclude all">
+        <div id="save-projects" class="hidden">
+            <input class="button save-projects-input" type="button" value="watch">
         </div>
 
     </form>
 </div>
-<div id="projects"></div>
 
-<div id="save-projects" class="hidden"><input class="button" type="button" value="watch"></div>
+<section class="projects-section">
+    <h2>Project list</h2>
+    <div id="project-controls" class="hidden">
+        <input id="include-all" class="button select-all no-text-selection" type="button" value="include all">
+        <input id="exclude-all" class="button select-all no-text-selection" type="button" value="exclude all">
+    </div>
+    <div id="projects"></div>
+</section>
+
+<section class="success-section">
+    <h2>Success config</h2>
+    <div id="success" class="hidden">
+        <label for="success-text">Success text</label>
+        <input id="success-text" type="text" name="success-text" value="=(^.^)="/>
+    </div>
+
+    <ul>
+        <li><img src="http://placecage.com/c/200/200" /></li>
+        <li><img src="http://placecage.com/200/201" /></li>
+        <li><img src="http://placecage.com/200/202" /></li>
+        <li><img src="http://placecage.com/200/203" /></li>
+
+    </ul>
+</section>
+
 <a id="version-number" href="https://github.com/build-canaries/nevergreen/releases/tag/v0.4.0">Desert Sand</a>
 
 <div id="spinner" class="centered" style="display: none">
