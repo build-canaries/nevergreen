@@ -6,7 +6,7 @@ if (currentPath === '/config') {
     require('./monitor/blastoff')()
 } else {
     var $ = require('jquery')
-    $('body').empty().append("There is no route for you here. Try /config or /")
+    $('body').empty().append('There is no route for you here. Try /config or /')
 }
 
 
