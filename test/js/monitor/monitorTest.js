@@ -1,5 +1,5 @@
 var $ = require('jquery')
-var updater = require('../../../src/js/monitor/monitor')
+var monitor = require('../../../src/js/monitor/monitor')
 
 describe('Monitor page', function () {
      it('loads index page', function () {
@@ -9,7 +9,7 @@ describe('Monitor page', function () {
         }
         spyOn($, 'ajax')
 
-        updater(config).updateBuildMonitor()
+        monitor(config).updateBuildMonitor()
 
         expect($.ajax).toHaveBeenCalledWith({
             url: '/api/projects',
@@ -28,7 +28,7 @@ describe('Monitor page', function () {
         }
         spyOn(window.location, 'replace')
 
-        updater(config).updateBuildMonitor()
+        monitor(config).updateBuildMonitor()
 
         expect(window.location.replace).toHaveBeenCalledWith('config')
     })
@@ -44,7 +44,7 @@ describe('Monitor page', function () {
             e.error({status: 'code', statusText: 'reason'})
         })
 
-        updater(config).updateBuildMonitor()
+        monitor(config).updateBuildMonitor()
 
         expect($('#projects')).toContainHtml('reason')
     })

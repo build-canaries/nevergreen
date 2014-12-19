@@ -4,6 +4,10 @@ var styler = require('./styler')
 
 module.exports = function (config) {
     return {
+        init: function() {
+            showConfigLinkOnMouseMove();
+        },
+
         updateBuildMonitor: function () {
             if (!config.isReady()) {
                 window.location.replace('config')
@@ -29,4 +33,15 @@ module.exports = function (config) {
             $('#projects').text('Failed to fetch projects: ' + data.status + ' ' + data.statusText)
         }
     }
+}
+
+function showConfigLinkOnMouseMove() {
+    var inprogressTimeout = null;
+    $("body").mousemove(function () {
+        clearTimeout(inprogressTimeout);
+        $("#config-link").fadeIn();
+        inprogressTimeout = setTimeout(function () {
+            $("#config-link").fadeOut()
+        }, 2000);
+    })
 }

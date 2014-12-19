@@ -4,6 +4,8 @@ module.exports = function () {
 
     var fiveSeconds = 5000
 
+    monitor(config).init()
+
     // run immediately
     monitor(config).updateBuildMonitor()
 

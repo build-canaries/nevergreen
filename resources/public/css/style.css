@@ -40,3 +40,19 @@ li {
 .sick-building {
     background-color: #FF6400;
 }
+
+.config-link {
+    z-index: 1001;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background-color: gray;
+    padding: 1em;
+    text-decoration: none;
+    border-radius: 1em;
+    color: white;
+
+    display: none;
+}
