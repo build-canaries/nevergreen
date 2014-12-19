@@ -1,9 +1,12 @@
 var currentPath = window.location.pathname
 
 if (currentPath === '/config') {
-    console.log('Routing: Config page')
     require('./config/blastoff')()
-} else {
-    console.log('Routing: Monitor page')
+} else if (currentPath === '/') {
     require('./monitor/blastoff')()
+} else {
+    var $ = require('jquery')
+    $('body').empty().append("There is no route for you here. Try /config or /")
 }
+
+
