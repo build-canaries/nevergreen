@@ -21,7 +21,7 @@
   "dependencies": {
     "browserify": "6.3.3",
     "jquery": "2.1.1",
-    "node-sass": "1.2.3",
+    "node-sass": "1.0.3",
     "scale-text": "0.2.2"
   },
   "scripts": {
