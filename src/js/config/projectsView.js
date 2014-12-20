@@ -19,13 +19,13 @@ module.exports = function (saveProjects) {
                 }
 
                 var newNote = ''
-                var newNoteClass = ''
                 if (!config.previouslyFetched(project.name)) {
                     newNote = ' <sup class="config-new-project">new</sup>'
-                    newNoteClass = ' new '
                 }
 
-                $('#projects ul').append('<li class="' + included + newNoteClass + ' config-project no-text-selection">' + project.name + newNote + '</li>')
+                $('#projects ul').append('<li data-name="' + project.name + '" '
+                + 'class="' + included + ' config-project no-text-selection">'
+                + project.name + newNote + '</li>')
 
                 calculateCorrectFontSize(projects);
             })
@@ -43,7 +43,7 @@ module.exports = function (saveProjects) {
 
         findIncludedProjects: function () {
             return $('.config-project-included').map(function (index, element) {
-                return $(element).html().replace(' <sup>new</sup>', '') // TODO: is there a better way to do this?
+                return $(element).attr('data-name')
             }).toArray()
         },
 
@@ -62,7 +62,7 @@ function sortProjectsByName(projects) {
 
 function calculateCorrectFontSize() {
     var width = $('ul').width() * projectBoxWidthFactor
-    $('li').each(function(index, value) {
+    $('li').each(function (index, value) {
         var text = [value.textContent]
         var ideal = new ScaleText(text, projectBoxHeight, width).singleLineIdeal()
         var idealCssFontSize = Math.min(ideal, 21)

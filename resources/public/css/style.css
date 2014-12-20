@@ -45,8 +45,6 @@
     font-size: 2em;
     top: 0;
     width: 95.3%;
-    margin-top: 0;
-    margin-bottom: 0;
     padding-top: 1em;
     padding-bottom: 0.5em;
     text-align: left;
@@ -101,9 +99,7 @@
     box-sizing: border-box;
 }
 
-.config-projects, .config-project {
-    margin:0;
-    padding:0;
+.config-project {
     list-style:none;
 }
 
@@ -111,15 +107,10 @@
     box-sizing: border-box;
     padding: 0 0.3em 0.3em 0.3em;
     margin: 0.5em 0;
-    margin-bottom: 0.5em 0;
     cursor: pointer;
     color: rgb(194, 185, 185);
     border-radius: 0;
     border-left: 3px solid rgb(239, 239, 239);
-}
-
-.config-project.new {
-    line-height: 1em;
 }
 
 .config-new-project {

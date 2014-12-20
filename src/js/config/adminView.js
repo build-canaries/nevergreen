@@ -61,8 +61,8 @@ module.exports = function (controller) {
 }
 
 function showExtraControls() {
-    $('#project-controls').removeClass('hidden')
-    $('#success').removeClass('hidden')
+    $('#projects-section').removeClass('hidden')
+    $('#success-section').removeClass('hidden')
     $('#save-projects').removeClass('hidden')
 }
 
