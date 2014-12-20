@@ -6,20 +6,21 @@
 * {
     margin: 0;
     padding: 0;
-    font-family: "Source Code Pro" monospace;
+    font-family: "Source Code Pro", monospace;
 }
 
-body {
+.monitor {
     background-color: black;
     color: #FFFED7;
     text-align: center;
 }
 
-ul {
+.monitor-projects {
     list-style-type: none;
 }
 
-li {
+.monitor-project {
+    float: left;
     margin: 5px;
     border-radius: 25px;
 }
@@ -52,7 +53,22 @@ li {
     padding: 1em;
     text-decoration: none;
     border-radius: 1em;
+    border: 1px solid white;
     color: white;
 
     display: none;
+}
+
+/* Vertical align - Butchered from: http://www.andy-howard.com/verticalAndHorizontalAlignment/index.html */
+
+.outerContainer {
+    display: table;
+    overflow: hidden;
+}
+
+.outerContainer .innerContainer {
+    display: table-cell;
+    vertical-align: middle;
+    width: 100%;
+    text-align: center;
 }

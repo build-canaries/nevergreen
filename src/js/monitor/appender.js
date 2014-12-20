@@ -15,7 +15,7 @@ module.exports = function (config, projects) {
 
 function addBuildStatusToScreen(project) {
     $('#projects')
-        .append('<li class=' + project.prognosis + '><div class=outerContainer><div class=innerContainer>' +
+        .append('<li class="monitor-project ' + project.prognosis + '"><div class=outerContainer><div class=innerContainer>' +
         project.name + '</div></div></li>')
 }
 
