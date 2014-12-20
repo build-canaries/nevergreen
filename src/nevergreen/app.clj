@@ -20,7 +20,7 @@
    :headers {"Access-Control-Allow-Origin" "*"}})
 
 (defroutes main-routes
-           (GET "/" [] (clojure.java.io/resource "public/index.html"))
+           (GET "/" [] (clojure.java.io/resource "public/monitor.html"))
            (GET "/config" [] (clojure.java.io/resource "public/config.html"))
            (GET "/api/projects" {params :params} (as-json-response (get-all-projects (:url params))))
            (POST "/api/projects" {params :params} (as-json-response (get-interesting-projects params)))

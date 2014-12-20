@@ -9,7 +9,7 @@ module.exports = {
 }
 
 function resizeEachContainer() {
-    $('.outerContainer')
+    $('.monitor-outerContainer')
         .height(buildStatusHeight())
         .width(buildStatusWidth())
 }
@@ -43,7 +43,7 @@ function everyPieceOfTextOnTheScreen() {
     }));
 }
 function scaleFontToContainerSize() {
-    $('.outerContainer').css('font-size',
+    $('.monitor-outerContainer').css('font-size',
         new ScaleText(
             everyPieceOfTextOnTheScreen(),
             buildStatusHeight(),

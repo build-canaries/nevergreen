@@ -15,12 +15,12 @@ module.exports = function (config, projects) {
 
 function addBuildStatusToScreen(project) {
     $('#projects')
-        .append('<li class="monitor-project ' + project.prognosis + '"><div class=outerContainer><div class=innerContainer>' +
+        .append('<li class="monitor-project monitor-' + project.prognosis + '"><div class=monitor-outerContainer><div class=monitor-innerContainer>' +
         project.name + '</div></div></li>')
 }
 
 function showSuccessMessage(projects, config) {
     var successMessage = config.load().successText
     $('#projects')
-        .append('<li><div class=outerContainer><div class=innerContainer>' + successMessage + '</div></div></li>')
+        .append('<li><div class=monitor-outerContainer><div class=monitor-innerContainer>' + successMessage + '</div></div></li>')
 }

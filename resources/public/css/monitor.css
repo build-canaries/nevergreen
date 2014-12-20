@@ -25,24 +25,24 @@
     border-radius: 25px;
 }
 
-.healthy {
+.monitor-healthy {
     background-color: #276B00;
 }
 
-.healthy-building {
+.monitor-healthy-building {
     background-color: #FFFF18;
     color: #4A2F27;
 }
 
-.sick {
+.monitor-sick {
     background-color: #B30400;
 }
 
-.sick-building {
+.monitor-sick-building {
     background-color: #FF6400;
 }
 
-.config-link {
+.monitor-config-link {
     z-index: 1001;
     position: fixed;
     bottom: 0;
@@ -59,14 +59,12 @@
     display: none;
 }
 
-/* Vertical align - Butchered from: http://www.andy-howard.com/verticalAndHorizontalAlignment/index.html */
-
-.outerContainer {
+.monitor-outerContainer {
     display: table;
     overflow: hidden;
 }
 
-.outerContainer .innerContainer {
+.monitor-innerContainer {
     display: table-cell;
     vertical-align: middle;
     width: 100%;
