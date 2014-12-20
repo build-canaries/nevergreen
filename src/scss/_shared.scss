@@ -1,0 +1,30 @@
+@font-face {
+  font-family: "Source Code Pro";
+  src: url(/fonts/SourceCodePro-Regular.otf);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Source Code Pro", monospace;
+}
+
+.no-text-selection {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.hidden {
+  display: none;
+}
+
+.center-above {
+  z-index: 1001;
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

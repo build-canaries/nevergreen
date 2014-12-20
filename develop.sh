@@ -24,7 +24,7 @@ echo "# Killing this script will automatically kill all the spawned processes.  
 echo "######################################################################################"
 
 echo "[1] watching the js for changes..."
-npm run building &
+npm run watch &
 
 echo "[2] automaitcally running the js tests on changes..."
 npm run testing &

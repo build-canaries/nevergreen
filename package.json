@@ -13,6 +13,7 @@
     "karma-browserify": "1.0.0",
     "karma-jasmine": "0.2.2",
     "karma-phantomjs-launcher": "0.1.4",
+    "node-sass": "^1.2.3",
     "watch": "0.13.0"
   },
   "dependencies": {
@@ -21,9 +22,12 @@
     "scale-text": "0.2.2"
   },
   "scripts": {
-    "postinstall": "browserify -d ./src/**/*.js -o ./resources/public/main.js",
-    "building": "watch 'npm install' src/js",
+    "postinstall": "npm run sass && npm run browserify",
     "test": "./node_modules/karma/bin/karma start --singleRun",
+
+    "watch": "watch 'npm install' src",
+    "browserify": "browserify -d ./src/**/*.js -o ./resources/public/main.js",
+    "sass": "node-sass src/scss/base.scss resources/public/main.css",
     "testing": "./node_modules/karma/bin/karma start",
     "lint": "jshint src/**/*.js test/js/monitor/*.js test/js/config/*.js"
   },

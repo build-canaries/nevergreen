@@ -13,4 +13,4 @@ pom.xml.asc
 *.DS_Store
 /node_modules
 /resources/public/main.js
-/resources/public/monitor.js
+/resources/public/main.css

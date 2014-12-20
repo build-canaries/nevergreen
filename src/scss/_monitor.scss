@@ -1,0 +1,58 @@
+
+.monitor {
+  background-color: black;
+  color: #FFFED7;
+  text-align: center;
+}
+
+.monitor-projects {
+  list-style-type: none;
+}
+
+.monitor-project {
+  float: left;
+  margin: 5px;
+  border-radius: 25px;
+}
+
+.monitor-healthy {
+  background-color: #276B00;
+}
+
+.monitor-healthy-building {
+  background-color: #FFFF18;
+  color: #4A2F27;
+}
+
+.monitor-sick {
+  background-color: #B30400;
+}
+
+.monitor-sick-building {
+  background-color: #FF6400;
+}
+
+.monitor-config-link {
+  bottom: 0;
+
+  background-color: gray;
+  padding: 1em;
+  text-decoration: none;
+  border-radius: 1em;
+  border: 1px solid white;
+  color: white;
+
+  display: none;
+}
+
+.monitor-outerContainer {
+  display: table;
+  overflow: hidden;
+}
+
+.monitor-innerContainer {
+  display: table-cell;
+  vertical-align: middle;
+  width: 100%;
+  text-align: center;
+}
