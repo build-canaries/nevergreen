@@ -8,7 +8,7 @@
     "test": "test"
   },
   "engines": {
-    "node": "0.10.x"
+    "node": "0.10.28"
   },
   "devDependencies": {
     "jshint": "2.5.10",
