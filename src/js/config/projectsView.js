@@ -1,8 +1,8 @@
 var $ = require('jquery')
 var ScaleText = require('scale-text')
 
-var projectBoxHeight = 42
-var projectBoxWidthFactor = 0.99
+var projectBoxHeight = 42 // Ideally we'd get this from the page, but we don't know if the text is wrapping already
+var maximumProjectNameFontSize = 21
 
 module.exports = function (saveProjects) {
     return {
@@ -61,11 +61,11 @@ function sortProjectsByName(projects) {
 }
 
 function calculateCorrectFontSize() {
-    var width = $('ul').width() * projectBoxWidthFactor
+    var width = $('ul').width()
     $('li').each(function (index, value) {
         var text = [value.textContent]
         var ideal = new ScaleText(text, projectBoxHeight, width).singleLineIdeal()
-        var idealCssFontSize = Math.min(ideal, 21)
+        var idealCssFontSize = Math.min(ideal, maximumProjectNameFontSize)
         $(value).css('font-size', idealCssFontSize)
     })
 }
