@@ -46,7 +46,7 @@ describe('view logic', function () {
                 {'name': 'bar'}
             ])
 
-            expect($('#projects ul li:first').html()).toEqual('bar <sup>new</sup>')
+            expect($('#projects ul li:first').html()).toEqual('bar <sup class="config-new-project">new</sup>')
             expect($('#projects ul li:last').text()).toEqual('foo')
         })
 
@@ -62,8 +62,8 @@ describe('view logic', function () {
                 {'name': 'bar'}
             ])
 
-            expect($('#projects ul li:first')).not.toHaveClass('included')
-            expect($('#projects ul li:last')).toHaveClass('included')
+            expect($('#projects ul li:first')).not.toHaveClass('config-project-included')
+            expect($('#projects ul li:last')).toHaveClass('config-project-included')
         })
     })
 
@@ -74,7 +74,7 @@ describe('view logic', function () {
                 {'name': 'bar'}
             ])
             var project = $('#projects ul li:first')
-            expect(project).toHaveClass('included')
+            expect(project).toHaveClass('config-project-included')
             expect(project).toHaveClass('no-text-selection')
 
             project.click()
@@ -113,7 +113,7 @@ describe('view logic', function () {
         it('includes all click will add class included to all projects', function () {
             view.includeAll()
 
-            expect($('#projects ul li:last')).toHaveClass('included')
+            expect($('#projects ul li:last')).toHaveClass('config-project-included')
         })
 
         it('excludes all click will remove class included from all projects', function () {

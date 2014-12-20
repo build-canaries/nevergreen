@@ -49,7 +49,7 @@ module.exports = function (controller) {
 
         errorHandler: function(code, reason) {
             $('#projects').empty()
-            $('#projects').append('<h1 class="error">Cannot find projects because<br />' + code + ': '+ reason + '</h1>')
+            $('#projects').append('<h1 class="config-error">Cannot find projects because<br />' + code + ': '+ reason + '</h1>')
         },
 
         getProjects: function() {

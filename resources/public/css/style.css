@@ -1,0 +1,241 @@
+@font-face {
+    font-family: "Source Code Pro";
+    src: url(/fonts/SourceCodePro-Regular.otf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Source Code Pro", monospace;
+}
+
+.no-text-selection {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.hidden {
+    display: none;
+}
+
+.center-above {
+    z-index: 1001;
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Config */
+/* Config */
+/* Config */
+
+.config {
+    background-color: white;
+    color: black;
+    text-align: left;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.config-actions-panel {
+    font-size: 2em;
+    top: 0;
+    width: 95.3%;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 1em;
+    padding-bottom: 0.5em;
+    text-align: left;
+    position: fixed;
+    background-color: white;
+    border-bottom: 1px solid gray;
+}
+
+.config-project-controls {
+    margin-top: 0.4em;
+}
+
+.config-cctray-url, .config-success-text {
+    border: none;
+    padding: 0 0.5em;
+    font-size: 1em;
+    width: calc(85% - 250px);
+}
+
+.config-cctray-url {
+    color: #2196F3;
+    border-bottom: 3px solid #2196F3;
+}
+
+.config-success-text {
+    color: black;
+    border-bottom: 3px solid #2196F3;
+}
+
+.config-success {
+    text-align: left;
+    margin-top: 0.5em;
+}
+
+.config-button {
+    font-size: 1em;
+    border-radius: 10px;
+    padding: 0 0.3em;
+    cursor: pointer;
+    box-shadow: none;
+}
+
+.config-select-all {
+    font-size: 0.6em;
+    width: 10em;
+    padding: 0.2em;
+    background-color: rgb(239, 239, 239);
+    border-color: rgb(239, 239, 239);
+}
+
+.config-projects {
+    box-sizing: border-box;
+}
+
+.config-projects, .config-project {
+    margin:0;
+    padding:0;
+    list-style:none;
+}
+
+.config-project {
+    box-sizing: border-box;
+    padding: 0 0.3em 0.3em 0.3em;
+    margin: 0.5em 0;
+    margin-bottom: 0.5em 0;
+    cursor: pointer;
+    color: rgb(194, 185, 185);
+    border-radius: 0;
+    border-left: 3px solid rgb(239, 239, 239);
+}
+
+.config-project.new {
+    line-height: 1em;
+}
+
+.config-new-project {
+    color: #f32196;
+}
+
+.config-version-number {
+    color: black;
+    background-color: #EFCDB8;
+    font-size: 1em;
+    padding: 0.5em;
+    text-decoration: none;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+}
+
+.config-project-included {
+    border-left: 3px solid #2196F3;
+    color: black;
+}
+
+.config-error {
+    text-align: center;
+    color: red;
+    font-size: 4em;
+}
+
+.config-watch {
+    background-color: #2196F3;
+    color: white;
+    font-size: 1em;
+    border: none;
+    padding: 0.2em 1em 0.3em;
+    position: absolute;
+    top: 0.6em;
+    right: 0;
+}
+
+.config-spinner {
+    top: 50%;
+}
+
+/* Sections */
+
+.config-projects-section {
+    float: left;
+    width: 48%;
+    margin-top: 5em;
+}
+
+.config-success-section {
+    float: right;
+    width: 48%;
+    margin-top: 5em;
+}
+
+
+/* MONITOR */
+/* MONITOR */
+/* MONITOR */
+
+.monitor {
+    background-color: black;
+    color: #FFFED7;
+    text-align: center;
+}
+
+.monitor-projects {
+    list-style-type: none;
+}
+
+.monitor-project {
+    float: left;
+    margin: 5px;
+    border-radius: 25px;
+}
+
+.monitor-healthy {
+    background-color: #276B00;
+}
+
+.monitor-healthy-building {
+    background-color: #FFFF18;
+    color: #4A2F27;
+}
+
+.monitor-sick {
+    background-color: #B30400;
+}
+
+.monitor-sick-building {
+    background-color: #FF6400;
+}
+
+.monitor-config-link {
+    bottom: 0;
+
+    background-color: gray;
+    padding: 1em;
+    text-decoration: none;
+    border-radius: 1em;
+    border: 1px solid white;
+    color: white;
+
+    display: none;
+}
+
+.monitor-outerContainer {
+    display: table;
+    overflow: hidden;
+}
+
+.monitor-innerContainer {
+    display: table-cell;
+    vertical-align: middle;
+    width: 100%;
+    text-align: center;
+}

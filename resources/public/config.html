@@ -3,57 +3,49 @@
     <meta charset="UTF-8">
     <title>Nevergreen - config</title>
     <link href="css/style.css" rel="stylesheet" type="text/css">
-    <link href="css/config.css" rel="stylesheet" type="text/css">
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 </head>
-<body onload="">
+
+<body class="config">
 
 <h1>Nevergreen config</h1>
 
-<div id="loading-modal" class="modal"></div>
-<div id="actions-panel">
+<div id="actions-panel" class="config-actions-panel">
     <form id="cctray-form">
 
         <div id="cctray">
             <label for="cctray-url">cctray url</label>
-            <input id="cctray-url" type="text" name="cctray"/>
+            <input id="cctray-url" type="text" name="cctray" class="config-cctray-url"/>
         </div>
 
         <div id="save-projects" class="hidden">
-            <input class="button save-projects-input" type="button" value="watch">
+            <input class="config-button config-watch" type="button" value="watch">
         </div>
 
     </form>
 </div>
 
-<section class="projects-section">
+<section class="config-projects-section">
     <h2>Project list</h2>
-    <div id="project-controls" class="hidden">
-        <input id="include-all" class="button select-all no-text-selection" type="button" value="include all">
-        <input id="exclude-all" class="button select-all no-text-selection" type="button" value="exclude all">
+    <div id="project-controls" class="hidden config-project-controls">
+        <input id="include-all" class="config-button config-select-all no-text-selection" type="button" value="include all">
+        <input id="exclude-all" class="config-button config-select-all no-text-selection" type="button" value="exclude all">
     </div>
-    <div id="projects"></div>
+    <div id="projects" class="config-projects"></div>
 </section>
 
-<section class="success-section">
+<section class="config-success-section">
     <h2>Success config</h2>
-    <div id="success" class="hidden">
+    <div id="success" class="hidden config-success">
         <label for="success-text">Success text</label>
-        <input id="success-text" type="text" name="success-text" value="=(^.^)="/>
+        <input id="success-text" type="text" name="success-text" class="config-success-text" value="=(^.^)="/>
     </div>
 
-    <ul>
-        <li><img src="http://placecage.com/c/200/200" /></li>
-        <li><img src="http://placecage.com/200/201" /></li>
-        <li><img src="http://placecage.com/200/202" /></li>
-        <li><img src="http://placecage.com/200/203" /></li>
-
-    </ul>
 </section>
 
-<a id="version-number" href="https://github.com/build-canaries/nevergreen/releases/tag/v0.4.0">Desert Sand</a>
+<a class="config-version-number" href="https://github.com/build-canaries/nevergreen/releases/tag/v0.4.0">Desert Sand</a>
 
-<div id="spinner" class="centered" style="display: none">
+<div id="spinner" class="center-above config-spinner" style="display: none">
     <img src="img/loading-bars.svg"/>
 </div>
 
