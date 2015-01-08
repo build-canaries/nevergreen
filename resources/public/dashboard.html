@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Nevergreen - config (static)</title>
+    <meta name="description" content="Static nevergreen config">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="main.css" rel="stylesheet" type="text/css">
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+
+    <!-- Google Roboto font -->
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
+  </head>
+  <body class="dashboard">
+
+
+    <header role="banner" class="dashboard-header">
+      <img src="img/buildcanaries-logo.png" class="dashboard-header-logo" title="Buildcanaries logo" />
+      <h1 class="dashboard-header-title">Nevergreen config</h1>
+      <a href="/" class="dashboard-header-monitor-link" title="Go to the monitor page">Goto monitor page</a>
+    </header>
+
+
+
+    <nav role="navigation" class="dashboard-navigation">
+      <h2 class="visuallyhidden">Dashboard navigation</h2>
+      <ul class="dashboard-navigation-list">
+        <li>
+          <a class="dashboard-navigation-list-item" href="#tracking">Tracking</a>
+        </li>
+        <li>
+          <a class="dashboard-navigation-list-item" href="#timing">Timing</a>
+        </li>
+        <li>
+          <a class="dashboard-navigation-list-item" href="#success">Success</a>
+        </li>
+      </ul>
+    </nav>
+
+
+    <div role="main" class="dashboard-main">
+      <section id="tracking">
+        <h2 class="visuallyhidden">Tracking</h2>
+
+        <fieldset class="tracking-cctray-group">
+          <legend class="tracking-cctray-group-legend">CC Tray 1</legend>
+          <form class="tracking-cctray-group-cctray-form">
+            <label for="cctray1-url">Url</label>
+            <input id="cctray1-url" type="text" name="cctray1-url" placeholder="http://cctray:8080.xml">
+            <button type="submit">Fetch</button>
+          </form>
+          <fieldset class="tracking-cctray-group-builds">
+            <legend>Available builds</legend>
+            <div class="tracking-cctray-group-build-toggles">
+              <button>Include all</button>
+              <button>Exclude all</button>
+            </div>
+            <div class="tracking-cctray-group-build-items">
+              <p>
+                <label>
+                  <input type="checkbox" name="" title="" checked="checked">
+                  Accumulo master
+                </label>
+              </p>
+              <p>
+                <label>
+                  <input type="checkbox" name="" title="">
+                  Ambari trunk find patches available
+                </label>
+              </p>
+              <p>
+                <label>
+                  <input type="checkbox" name="" title="">
+                  bookkepper master find patches available
+                </label>
+              </p>
+              <p>
+                <label>
+                  <input type="checkbox" name="" title="">
+                  camel.trunk.itest.karaf
+                </label>
+              </p>
+            </div>
+          </fieldset>
+        </fieldset><!-- /.tracking-cctray-group -->
+
+        <button>+ Add another CC Tray</button>
+      </section><!-- /#tracking -->
+
+
+
+      <section id="timing" class="hide-section">
+        <h2 class="visuallyhidden">Timing</h2>
+        <p>TODO - there will be some options to determine refresh rates here ?</p>
+      </section><!-- /#timing -->
+
+
+
+      <section id="success" class="hide-section">
+        <h2 class="visuallyhidden">Success</h2>
+        <form class="success-text-form">
+          <label for="success-text">Success text</label>
+          <input id="success-text" type="text" name="success-text" value="=(^.^)=">
+          <button type="submit">Save</button>
+        </form>
+      </section><!-- /#timing -->
+    </div><!-- /#main -->
+
+
+    <footer role="contentinfo" class="contentinfo">
+      <p><small>All the smallprint can go here.</small></p>
+    </footer>
+
+
+    <!-- <script src="main.js"></script> -->
+  </body>
+</html>

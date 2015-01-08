@@ -1,0 +1,130 @@
+.dashboard {
+  background: #222222;
+
+  //ROOT LEVEL
+  * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif; //TODO - move this, only here to overide other css
+  }
+
+  //HELPERS
+  @mixin visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+  .visuallyhidden { @include visuallyhidden; }
+
+
+
+  //HEADER
+  .dashboard-header {
+    position: relative;
+    padding: 1em 0;
+    background-color: #ececec;
+  }
+    .dashboard-header-logo {
+      position: absolute;
+      top: 0.5em;
+      left: 2.5em;
+      height: 55px;
+      width: 55px;
+    }
+    .dashboard-header-title {
+      text-align: center;
+      padding: 0;
+      margin: 0;
+    }
+    .dashboard-header-monitor-link {
+      position: absolute;
+      top: 1.8em;
+      right: 2em;
+    }
+
+
+  //DASHBOARD NAV
+  .dashboard-navigation {
+    background-color: #222222;
+    color: #ffffff;
+    width: 10%;
+    float: left;
+  }
+    .dashboard-navigation-list {
+      list-style: none;
+      margin: 0;
+      padding: 0.5em 0 0;
+    }
+    .dashboard-navigation-list-item {
+      display: block;
+      text-align: center;
+      color: #999999;
+      text-transform: uppercase;
+      font-size: 0.8em;
+      padding: 1em 0;
+      text-decoration: none;
+      &:hover {
+        color: white;
+        text-decoration: underline;
+      }
+    }
+
+
+
+  //DASHBOARD MAIN
+  .dashboard-main {
+    background-color: white;
+    width: 90%;
+    padding: 2%;
+    float: left;
+  }
+  .hide-section {
+    @include visuallyhidden;
+  }
+
+
+
+  //CCTRAY GROUP
+  .tracking-cctray-group {
+    border: none;
+    margin: 0;
+    padding: 0;
+  }
+    .tracking-cctray-group-legend {
+      font-weight: bold;
+    }
+    .tracking-cctray-group-cctray-form {}
+
+    .tracking-cctray-group-builds {
+      border: none;
+      margin: 0;
+      padding: 0;
+    }
+    .tracking-cctray-group-build-toggles {}
+    .tracking-cctray-group-build-items {}
+    .tracking-cctray-group-build-item {
+      display: block;
+    }
+
+
+
+  //SUCCESS
+  .success-text-form {}
+
+
+
+  //FOOTER
+  .contentinfo {
+    clear:both;
+    width: 90%;
+    margin-left: 10%;
+    padding: 2%;
+    background-color: white;
+  }
+}
