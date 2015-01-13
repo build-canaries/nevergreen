@@ -19,7 +19,7 @@
     <header role="banner" class="dashboard-header">
       <img src="img/buildcanaries-logo.png" class="dashboard-header-logo" title="Buildcanaries logo" />
       <h1 class="dashboard-header-title">Nevergreen config</h1>
-      <a href="/" class="dashboard-header-monitor-link" title="Go to the monitor page">Goto monitor page</a>
+      <a class="dashboard-button dashboard-button-primary dashboard-header-monitor-link" href="/" title="Go to the monitor page">Goto monitor page</a>
     </header>
 
 
@@ -28,34 +28,43 @@
       <h2 class="visuallyhidden">Dashboard navigation</h2>
       <ul class="dashboard-navigation-list">
         <li>
-          <a class="dashboard-navigation-list-item" href="#tracking">Tracking</a>
+          <a class="dashboard-navigation-list-item active" href="#tracking">
+            <span class="dashboard-navigation-list-item-icon icon-tools"></span>
+            <span class="dashboard-navigation-list-item-title">Tracking</span>
+          </a>
         </li>
         <li>
-          <a class="dashboard-navigation-list-item" href="#timing">Timing</a>
+          <a class="dashboard-navigation-list-item" href="#timing">
+            <span class="dashboard-navigation-list-item-icon icon-clock"></span>
+            <span class="dashboard-navigation-list-item-title">Timing</span>
+          </a>
         </li>
         <li>
-          <a class="dashboard-navigation-list-item" href="#success">Success</a>
+          <a class="dashboard-navigation-list-item" href="#success">
+            <span class="dashboard-navigation-list-item-icon icon-checkmark"></span>
+            <span class="dashboard-navigation-list-item-title">Success</span>
+          </a>
         </li>
       </ul>
     </nav>
 
 
     <div role="main" class="dashboard-main">
-      <section id="tracking">
+      <section id="tracking" class="dashboard-main-section active">
         <h2 class="visuallyhidden">Tracking</h2>
 
         <fieldset class="tracking-cctray-group">
           <legend class="tracking-cctray-group-legend">CC Tray 1</legend>
           <form class="tracking-cctray-group-cctray-form">
-            <label for="cctray1-url">Url</label>
-            <input id="cctray1-url" type="text" name="cctray1-url" placeholder="http://cctray:8080.xml">
-            <button type="submit">Fetch</button>
+            <label for="cctray1-url" class="tracking-cctray-group-cctray-form-label">Url:</label>
+            <input id="cctray1-url" class="tracking-cctray-group-cctray-form-input" type="text" name="cctray1-url" placeholder="http://cctray:8080.xml">
+            <button type="submit" class="tracking-cctray-group-cctray-form-button dashboard-button dashboard-button-secondary">Fetch</button>
           </form>
           <fieldset class="tracking-cctray-group-builds">
-            <legend>Available builds</legend>
+            <legend class="tracking-cctray-group-builds-legend ">Available builds</legend>
             <div class="tracking-cctray-group-build-toggles">
-              <button>Include all</button>
-              <button>Exclude all</button>
+              <button id="js-include-all" class="dashboard-button dashboard-button-small dashboard-button-white">Include all</button>
+              <button id="js-exclude-all" class="dashboard-button dashboard-button-small dashboard-button-white">Exclude all</button>
             </div>
             <div class="tracking-cctray-group-build-items">
               <p class="tracking-cctray-group-build-item">
@@ -86,19 +95,19 @@
           </fieldset>
         </fieldset><!-- /.tracking-cctray-group -->
 
-        <button>+ Add another CC Tray</button>
+        <button id="js-add-another-cctray" class="dashboard-button dashboard-button-secondary">+ Add another CC Tray</button>
       </section><!-- /#tracking -->
 
 
 
-      <section id="timing" class="hide-section">
+      <section id="timing" class="dashboard-main-section">
         <h2 class="visuallyhidden">Timing</h2>
         <p>TODO - there will be some options to determine refresh rates here ?</p>
       </section><!-- /#timing -->
 
 
 
-      <section id="success" class="hide-section">
+      <section id="success" class="dashboard-main-section">
         <h2 class="visuallyhidden">Success</h2>
         <form class="success-text-form">
           <label for="success-text">Success text</label>
@@ -115,5 +124,35 @@
 
 
     <!-- <script src="main.js"></script> -->
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script>
+      $(function() {
+        $('.dashboard-navigation-list-item').on('click', function(evt) {
+          evt.preventDefault();
+          $('.dashboard-navigation-list-item').removeClass('active');
+          $('.dashboard-main-section').removeClass('active');
+          $(this).addClass('active');
+          $($(this).attr('href')).addClass('active');
+        });
+
+        $('#js-include-all').on('click', function(evt){
+          evt.preventDefault();
+          $('.tracking-cctray-group-build-items input').prop('checked', true);
+        });
+
+        $('#js-exclude-all').on('click', function(evt){
+          evt.preventDefault();
+          $('.tracking-cctray-group-build-items input').prop('checked', false);
+        });
+
+        $('#js-add-another-cctray').on('click', function(evt){
+          evt.preventDefault();
+          alert('Not yet my friend, but soon... ');
+        });
+      });
+      
+    </script>
+
   </body>
 </html>
