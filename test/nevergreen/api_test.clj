@@ -1,6 +1,7 @@
 (ns nevergreen.api-test
   (:require [midje.sweet :refer :all]
             [nevergreen.api :as subject]
+            [nevergreen.http :as http]
             [clj-cctray.core :as parser]))
 
 (def valid-cctray "http://someserver/cc.xml")
@@ -14,18 +15,20 @@
        (fact "it is not a go server"
              (subject/get-all-projects valid-cctray) => (contains {:server ""})
              (provided
-               (parser/get-projects anything {:normalise :all}) => [{:name "project-1"}]))
+               (parser/get-projects ..stream.. {:normalise true}) => [{:name "project-1"}]
+               (http/http-get valid-cctray) => ..stream..))
 
        (fact "it is a go server"
              (subject/get-all-projects valid-cctray) => (contains {:server "go"})
              (provided
-               (parser/get-projects anything anything) => [{:name "project-1"} {:name "project-1 :: job1"}])))
+               (parser/get-projects ..stream.. anything) => [{:name "project-1"} {:name "project-1 :: job1"}]
+               (http/http-get valid-cctray) => ..stream..)))
 
 (facts "parses requested serverType"
        (fact "converts go server param to symbol"
-             (subject/options-from-config {:serverType "go"}) => {:normalise :all, :server :go})
+             (subject/options-from-config {:serverType "go"}) => {:normalise true, :server :go})
        (fact "gives nil for empty string"
-             (subject/options-from-config {:serverType ""}) => {:normalise :all}))
+             (subject/options-from-config {:serverType ""}) => {:normalise true}))
 
 (facts "check url is invalid"
        (fact (subject/invalid-url? "http://bleh") => false)
