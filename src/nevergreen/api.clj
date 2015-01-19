@@ -28,7 +28,7 @@
 (defn get-interesting-projects [params]
   (if (invalid-url? (:cctray params)) (throw (IllegalArgumentException. "Not a valid url")))
 
-  (->> (parser/get-projects (:cctray params) (options-from-config params))
+  (->> (parser/get-projects (http-get (:cctray params)) (options-from-config params))
        (filtering/interesting)
        (filtering/by-name (:includedProjects params))))
 

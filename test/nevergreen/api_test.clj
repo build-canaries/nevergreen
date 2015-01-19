@@ -9,7 +9,8 @@
 (fact "it finds interesting projects"
       (subject/get-interesting-projects {:includedProjects ["project-1"] :cctray valid-cctray}) => (list {:name "project-1" :prognosis :sick})
       (provided
-        (parser/get-projects anything anything) => [{:name "project-1" :prognosis :sick}]))
+        (parser/get-projects ..stream.. anything) => [{:name "project-1" :prognosis :sick}]
+        (http/http-get valid-cctray) => ..stream..))
 
 (facts "we can detect if we are using a go server"
        (fact "it is not a go server"
