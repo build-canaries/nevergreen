@@ -23,15 +23,15 @@ describe('view logic', function () {
                 {'name': 'bar'}
             ])
 
-            expect($('#projects ul li').size()).toBe(2)
-            expect($('#projects ul li:first').text()).toEqual('bar')
+            expect($('#projects input').size()).toBe(2)
+            expect($('#projects label:first').text().trim()).toEqual('bar')
         })
 
         it('clears out the projects before adding them', function () {
             view.listProjects(config, [{'name': 'foo'}, {'name': 'bar'}])
             view.listProjects(config, [{'name': 'foo'}, {'name': 'bar'}])
 
-            expect($('#projects ul li').size()).toBe(2)
+            expect($('#projects input').size()).toBe(2)
         })
 
         it('highlights any new projects', function () {
@@ -46,8 +46,8 @@ describe('view logic', function () {
                 {'name': 'bar'}
             ])
 
-            expect($('#projects ul li:first').html()).toEqual('bar <sup class="config-new-project">new</sup>')
-            expect($('#projects ul li:last').text()).toEqual('foo')
+            expect($('#projects label:first').html()).toContain('bar <sup class="config-new-project">new</sup>')
+            expect($('#projects label:last').text().trim()).toEqual('foo')
         })
 
         it('remembers what projects the user has selected previously', function () {
@@ -62,8 +62,8 @@ describe('view logic', function () {
                 {'name': 'bar'}
             ])
 
-            expect($('#projects ul li:first')).not.toHaveClass('config-project-included')
-            expect($('#projects ul li:last')).toHaveClass('config-project-included')
+            expect($('#projects input:first')).not.toBeChecked()
+            expect($('#projects input:last')).toBeChecked()
         })
     })
 
@@ -73,8 +73,8 @@ describe('view logic', function () {
                 {'name': 'foo'},
                 {'name': 'bar'}
             ])
-            var project = $('#projects ul li:first')
-            expect(project).toHaveClass('config-project-included')
+            var project = $('#projects input:first')
+            expect(project).toBeChecked()
             expect(project).toHaveClass('no-text-selection')
 
             project.click()
@@ -90,7 +90,7 @@ describe('view logic', function () {
                 {'name': 'bar'},
                 {'name': 'foo'}
             ])
-            var project = $('#projects ul li:first')
+            var project = $('#projects input:first')
 
             project.click()
 
@@ -103,23 +103,24 @@ describe('view logic', function () {
             $('body').empty()
             $('body').append('<input id="save-projects"/>')
             $('body').append('<input id="include-all"/>')
-            $('body').append('<div id="projects"><ul>' +
-            '<li>proj-1</li>' +
-            '<li>proj-2</li>' +
-            '<li>proj-3</li>' +
-            '</ul></div>')
+            $('body').append('<input id="exclude-all"/>')
+            $('body').append('<div id="projects">' +
+            '<input>proj-1</input>' +
+            '<input>proj-2</input>' +
+            '<input>proj-3</input>' +
+            '</div>')
         })
 
         it('includes all click will add class included to all projects', function () {
             view.includeAll()
 
-            expect($('#projects ul li:last')).toHaveClass('config-project-included')
+            expect($('#projects input:last')).toBeChecked()
         })
 
         it('excludes all click will remove class included from all projects', function () {
             view.excludeAll()
 
-            expect($('#projects ul li:first')).not.toHaveClass('included')
+            expect($('#projects input:first')).not.toHaveClass('included')
         })
 
         it('saves', function () {

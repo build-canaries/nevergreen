@@ -10,7 +10,6 @@ module.exports = function (controller) {
         },
 
         appendProjects: function (projects) {
-            showExtraControls(projects, projectsView)
             view.projView().listProjects(config, projects)
             saveAllProjects(controller, projects)
             view.saveProjects()
@@ -25,11 +24,17 @@ module.exports = function (controller) {
             $('#save-projects').click(function() { monitorPage(controller) })
             $('#include-all').click(view.projView().includeAll)
             $('#exclude-all').click(view.projView().excludeAll)
+            $('#save-success-text').click(function(e) { e.preventDefault(); saveSuccessText(controller) })
 
             $("#cctray-url").keypress(function(e) {
                 if(e.which == 13) {
                     saveCctray(view.getProjects)
                 }
+            });
+
+            $("#cctray-fetch").click(function(e) {
+                e.preventDefault()
+                saveCctray(view.getProjects)
             });
         },
 
@@ -60,11 +65,6 @@ module.exports = function (controller) {
     return view
 }
 
-function showExtraControls() {
-    $('#projects-section').removeClass('hidden')
-    $('#success-section').removeClass('hidden')
-    $('#save-projects').removeClass('hidden')
-}
 
 function load(postLoadCallback) {
     var settings = config.load()
@@ -87,7 +87,6 @@ function saveSuccessText(controller) {
 
 function monitorPage(controller) {
     saveSuccessText(controller)
-    window.location.replace('/')
 }
 
 function saveAllProjects(controller, projects) {

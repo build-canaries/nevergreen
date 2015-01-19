@@ -1,54 +1,120 @@
+<!doctype html>
 <html>
-<head lang="en">
-    <meta charset="UTF-8">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Nevergreen - config</title>
+    <meta name="description" content="Static nevergreen config">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link href="main.css" rel="stylesheet" type="text/css">
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+
+    <!-- Google Roboto font -->
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
 </head>
+<body class="dashboard">
 
-<body class="config">
 
-<h1>Nevergreen config</h1>
+<header role="banner" class="dashboard-header">
+    <img src="img/buildcanaries-logo.png" class="dashboard-header-logo" title="Buildcanaries logo" />
+    <h1 class="dashboard-header-title">Nevergreen config</h1>
+    <a class="dashboard-button dashboard-button-primary dashboard-header-monitor-link" href="/" title="Go to the monitor page">Goto monitor page</a>
+</header>
 
-<div id="actions-panel" class="config-actions-panel">
-    <form id="cctray-form">
 
-        <div id="cctray">
-            <label for="cctray-url">cctray url</label>
-            <input id="cctray-url" type="text" name="cctray" class="config-cctray-url config-input-text"/>
-        </div>
+<nav role="navigation" class="dashboard-navigation">
+    <h2 class="visuallyhidden">Dashboard navigation</h2>
+    <ul class="dashboard-navigation-list">
+        <li>
+            <a class="dashboard-navigation-list-item active" href="#tracking">
+                <span class="dashboard-navigation-list-item-icon icon-tools"></span>
+                <span class="dashboard-navigation-list-item-title">Tracking</span>
+            </a>
+        </li>
+        <li>
+            <a class="dashboard-navigation-list-item" href="#timing">
+                <span class="dashboard-navigation-list-item-icon icon-clock"></span>
+                <span class="dashboard-navigation-list-item-title">Timing</span>
+            </a>
+        </li>
+        <li>
+            <a class="dashboard-navigation-list-item" href="#success">
+                <span class="dashboard-navigation-list-item-icon icon-checkmark"></span>
+                <span class="dashboard-navigation-list-item-title">Success</span>
+            </a>
+        </li>
+    </ul>
+</nav>
 
-        <div id="save-projects" class="hidden">
-            <input class="config-button config-watch" type="button" value="watch">
-        </div>
 
-    </form>
-</div>
+<div role="main" class="dashboard-main">
+    <section id="tracking" class="dashboard-main-section active">
+        <h2 class="visuallyhidden">Tracking</h2>
 
-<section id="projects-section" class="config-projects-section hidden">
-    <h2>Project list</h2>
-    <div id="project-controls" class="config-project-controls">
-        <input id="include-all" class="config-button config-select-all no-text-selection" type="button" value="include all">
-        <input id="exclude-all" class="config-button config-select-all no-text-selection" type="button" value="exclude all">
-    </div>
-    <div id="projects" class="config-projects"></div>
-</section>
+        <fieldset class="tracking-cctray-group">
+            <!--<legend class="tracking-cctray-group-legend">CC Tray 1</legend>-->
+            <form class="tracking-cctray-group-cctray-form">
+                <label for="cctray-url" class="tracking-cctray-group-cctray-form-label">Url:</label>
+                <input id="cctray-url" class="tracking-cctray-group-cctray-form-input" type="text" name="cctray1-url" placeholder="http://cctray:8080.xml">
+                <button id="cctray-fetch" type="submit" class="tracking-cctray-group-cctray-form-button dashboard-button dashboard-button-secondary">Fetch</button>
+            </form>
+            <fieldset class="tracking-cctray-group-builds">
+                <legend class="tracking-cctray-group-builds-legend ">Available builds</legend>
+                <div class="tracking-cctray-group-build-toggles">
+                    <button id="include-all" class="dashboard-button dashboard-button-small dashboard-button-white">Include all</button>
+                    <button id="exclude-all" class="dashboard-button dashboard-button-small dashboard-button-white">Exclude all</button>
+                </div>
+                <div id="projects" class="tracking-cctray-group-build-items" />
+            </fieldset>
+        </fieldset><!-- /.tracking-cctray-group -->
 
-<section id="success-section" class="config-success-section hidden">
-    <h2>Success config</h2>
-    <div id="success" class="config-success">
-        <label for="success-text">Success text</label>
-        <input id="success-text" type="text" name="success-text" class="config-success-text config-input-text" value="=(^.^)="/>
-    </div>
+        <!--<button id="js-add-another-cctray" class="dashboard-button dashboard-button-secondary">+ Add another CC Tray</button>-->
+    </section><!-- /#tracking -->
 
-</section>
 
-<a class="config-version-number" href="https://github.com/build-canaries/nevergreen/releases/tag/v0.4.0">v0.4.0 (Desert Sand)</a>
+
+    <section id="timing" class="dashboard-main-section">
+        <h2 class="visuallyhidden">Timing</h2>
+        <p>TODO - there will be some options to determine refresh rates here ?</p>
+    </section><!-- /#timing -->
+
+
+
+    <section id="success" class="dashboard-main-section">
+        <h2 class="visuallyhidden">Success</h2>
+        <form class="success-text-form">
+            <label for="success-text">Success text</label>
+            <input id="success-text" type="text" name="success-text" value="=(^.^)=">
+            <button id="save-success-text" type="submit">Save</button>
+        </form>
+    </section><!-- /#timing -->
+</div><!-- /#main -->
+
+
+<footer role="contentinfo" class="contentinfo">
+    <p><small>All the smallprint can go here.</small></p>
+</footer>
+
+
+ <script src="main.js"></script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script>
+    $(function() {
+        $('.dashboard-navigation-list-item').on('click', function(evt) {
+            evt.preventDefault();
+            $('.dashboard-navigation-list-item').removeClass('active');
+            $('.dashboard-main-section').removeClass('active');
+            $(this).addClass('active');
+            $($(this).attr('href')).addClass('active');
+        });
+    });
+</script>
 
 <div id="spinner" class="center-above config-spinner" style="display: none">
     <img src="img/loading-bars.svg"/>
 </div>
 
 </body>
-<script src="main.js"></script>
 </html>

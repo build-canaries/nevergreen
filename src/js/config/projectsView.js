@@ -9,13 +9,12 @@ module.exports = function (saveProjects) {
         listProjects: function (config, projects) {
             $('#projects').empty()
 
-            var sortedProjects = sortProjectsByName(projects);
+            var sortedProjects = sortProjectsByName(projects)
 
-            $('#projects').append('<ul />')
             sortedProjects.forEach(function (project) {
                 var included = ''
                 if (!config.isReady() || config.includesProject(project.name)) {
-                    included = 'config-project-included'
+                    included = 'checked'
                 }
 
                 var newNote = ''
@@ -23,33 +22,36 @@ module.exports = function (saveProjects) {
                     newNote = ' <sup class="config-new-project">new</sup>'
                 }
 
-                $('#projects ul').append('<li data-name="' + project.name + '" '
-                + 'class="' + included + ' config-project no-text-selection">'
-                + project.name + newNote + '</li>')
+                $('#projects').append('<p class="tracking-cctray-group-build-item"> ' +
+                ' <label class="label-checkbox"> '+
+                ' <input class="checkbox no-text-selection" type="checkbox" data-name="' + project.name + '" title="" ' + included + '> ' +
+                project.name + newNote +
+                ' </label> ' +
+                ' </p>')
+
 
                 calculateCorrectFontSize(projects);
             })
 
-            $('#projects ul li').click(function () {
-                $(this).toggleClass('config-project-included')
+            $('#projects input').click(function () {
                 saveProjects()
             })
         },
 
         includeAll: function () {
-            $('#projects ul li').addClass('config-project-included')
+            $('#projects input').prop('checked', true)
+            saveProjects()
+        },
+
+        excludeAll: function () {
+            $('#projects input').prop('checked', false)
             saveProjects()
         },
 
         findIncludedProjects: function () {
-            return $('.config-project-included').map(function (index, element) {
+            return $('#projects input:checked').map(function (index, element) {
                 return $(element).attr('data-name')
             }).toArray()
-        },
-
-        excludeAll: function () {
-            $('#projects ul li').removeClass('config-project-included')
-            saveProjects()
         }
     }
 }
@@ -61,8 +63,8 @@ function sortProjectsByName(projects) {
 }
 
 function calculateCorrectFontSize() {
-    var width = $('ul').width()
-    $('li').each(function (index, value) {
+    var width = $('£projects').width()
+    $('#projects > .checkbox').each(function (index, value) {
         var text = [value.textContent]
         var ideal = new ScaleText(text, projectBoxHeight, width).singleLineIdeal()
         var idealCssFontSize = Math.min(ideal, maximumProjectNameFontSize)

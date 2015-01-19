@@ -16,23 +16,6 @@ describe('view logic', function () {
         view = adminView(adminController)
     })
 
-    it('redirects on pressing the save button', function () {
-        localStorage.setItem('cctray', 'some-url')
-        localStorage.setItem('includedProjects', ['foo', 'bar'])
-        spyOn(window.location, 'replace')
-        $('body').append('<input id="save-projects"/>')
-        $('body').append('<div id="projects"><ul>' +
-            '<li class="included">proj-1</li>' +
-            '<li class="included">proj-2</li>' +
-            '<li>proj-3</li>' +
-            '</ul></div>')
-
-        view.init()
-        $('#save-projects').click()
-
-        expect(window.location.replace).toHaveBeenCalledWith('/')
-    })
-
     describe('autoloads projects', function () {
         it('does if cctray is available', function () {
             localStorage.setItem('cctray', 'some-url')
