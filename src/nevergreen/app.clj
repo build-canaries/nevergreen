@@ -8,7 +8,9 @@
             [environ.core :refer [env]]
             [nevergreen.api :refer :all]
             [nevergreen.config :refer :all]
-            [compojure.core :refer :all])
+            [compojure.core :refer :all]
+            [com.duelinmarkers.ring-request-logging :refer [wrap-request-logging]]
+            [ring.middleware.json :refer [wrap-json-body]])
   (:gen-class))
 
 (cheshire/add-encoder DateTime (fn [date json-generator]
@@ -17,7 +19,7 @@
 (defn- as-json-response [body]
   {:content-type "application/json"
    :body         (generate-string body)
-   :headers {"Access-Control-Allow-Origin" "*"}})
+   :headers      {"Access-Control-Allow-Origin" "*"}})
 
 (defroutes main-routes
            (GET "/" [] (clojure.java.io/resource "public/monitor.html"))
@@ -27,7 +29,10 @@
            (route/resources "/"))
 
 (def app
-  (handler/site main-routes))
+  (-> main-routes
+      wrap-request-logging
+      wrap-json-body
+      handler/site))
 
 (defn -main []
   (jetty/run-jetty app {:port (port) :join? false}))
