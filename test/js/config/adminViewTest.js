@@ -7,6 +7,7 @@ describe('view logic', function () {
     var adminController = { saveIncludedProjects: function(){},
                             getProjects: function(){},
                             saveSuccessText: function(){},
+                            saveSuccessImageUrl: function(){},
                             saveSeenProjects: function(){}}
 
     beforeEach(function () {
@@ -88,32 +89,55 @@ describe('view logic', function () {
         expect($('#projects')).toContainHtml('reason')
     })
 
-    describe('success text', function () {
-        beforeEach(function () {
-            $('body').append('<form>' +
-               '<input id="success-text" type=text name=success-text/>' +
-               '<input id="save-projects" class=button type=button>' +
-               '</form>')
+    describe('success', function () {
+
+        describe('success text', function () {
+            beforeEach(function () {
+                $('body').append('<form>' +
+                   '<input id="success-text" type=text name=success-text/>' +
+                   '<input id="save-projects" class=button type=button>' +
+                   '</form>')
+            })
+
+            it('saves', function () {
+                spyOn(window.location, 'replace')
+                view.init()
+                $('#success-text').val('expected')
+                spyOn(adminController, 'saveSuccessText')
+
+                $('#save-projects').click()
+
+                expect(adminController.saveSuccessText).toHaveBeenCalledWith('expected')
+            })
+
+            it('loads', function () {
+                localStorage.setItem('successText', 'any old value')
+                var textInput = $('#success-text')
+
+                view.init()
+
+                expect(textInput.val()).toBe('any old value')
+            })
         })
 
-        it('saves', function () {
-            spyOn(window.location, 'replace')
-            view.init()
-            $('#success-text').val('expected')
-            spyOn(adminController, 'saveSuccessText')
+        describe('success image', function () {
+            beforeEach(function () {
+                $('body').append('<form>' +
+                   '<input id="success-image" type=text name=success-image/>' +
+                   '<input id="save-success-image" class=button type=button>' +
+                   '</form>')
+            })
 
-            $('#save-projects').click()
+            it('saves', function () {
+                spyOn(window.location, 'replace')
+                view.init()
+                $('#success-image').val('expected-image-url')
+                spyOn(adminController, 'saveSuccessImageUrl')
 
-            expect(adminController.saveSuccessText).toHaveBeenCalledWith('expected')
-        })
+                $('#save-success-image').click()
 
-        it('loads', function () {
-            localStorage.setItem('successText', 'any old value')
-            var textInput = $('#success-text')
-
-            view.init()
-
-            expect(textInput.val()).toBe('any old value')
+                expect(adminController.saveSuccessImageUrl).toHaveBeenCalledWith('expected-image-url')
+            })
         })
     })
 

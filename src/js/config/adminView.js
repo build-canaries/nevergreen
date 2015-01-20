@@ -25,6 +25,7 @@ module.exports = function (controller) {
             $('#include-all').click(view.projView().includeAll)
             $('#exclude-all').click(view.projView().excludeAll)
             $('#save-success-text').click(function(e) { e.preventDefault(); saveSuccessText(controller) })
+            $('#save-success-image').click(function(e) { e.preventDefault(); saveSuccessImageUrl(controller) })
 
             $("#cctray-url").keypress(function(e) {
                 if(e.which == 13) {
@@ -83,6 +84,11 @@ function saveCctray(postLoadCallback) {
 function saveSuccessText(controller) {
     var text = $('#success-text').val()
     controller.saveSuccessText(text)
+}
+
+function saveSuccessImageUrl(controller) {
+    var imageUrl = $('#success-image').val().trim()
+    controller.saveSuccessImageUrl(imageUrl)
 }
 
 function monitorPage(controller) {

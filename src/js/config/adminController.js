@@ -33,6 +33,10 @@ module.exports = {
         localStorage.setItem('successText', successText)
     },
 
+    saveSuccessImageUrl: function (successImageUrl) {
+        localStorage.setItem('successImageUrl', successImageUrl)
+    },
+
     saveSeenProjects: function (projects) {
         localStorage.setItem('seenProjects', projects)
     }

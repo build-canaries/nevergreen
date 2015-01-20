@@ -19,6 +19,7 @@ describe('Configurable build monitor', function () {
             localStorage.setItem('cctray', 'some-url')
             localStorage.setItem('includedProjects', ['proj'])
             localStorage.setItem('successText', 'hello world')
+            localStorage.setItem('successImageUrl', 'hello world ')
             localStorage.setItem('seenProjects', ['proj'])
 
             var settings = config.load()
@@ -26,6 +27,7 @@ describe('Configurable build monitor', function () {
             expect(settings.cctray).toBe('some-url')
             expect(settings.includedProjects).toEqual(['proj'])
             expect(settings.successText).toEqual('hello world')
+            expect(settings.successImageUrl).toEqual('hello world')
             expect(settings.projectsOnLastFetch).toEqual(['proj'])
         })
 

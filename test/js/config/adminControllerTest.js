@@ -51,13 +51,20 @@ describe('Configurable build monitor', function () {
         expect(localStorage.setItem).toHaveBeenCalledWith('includedProjects', ['proj-1', 'proj-2'])
     })
 
-
     it('saves success text', function () {
         spyOn(localStorage, 'setItem')
 
         adminController.saveSuccessText('anything')
 
         expect(localStorage.setItem).toHaveBeenCalledWith('successText', 'anything')
+    })
+
+    it('saves success image', function () {
+        spyOn(localStorage, 'setItem')
+
+        adminController.saveSuccessImageUrl('anything')
+
+        expect(localStorage.setItem).toHaveBeenCalledWith('successImageUrl', 'anything')
     })
 
     it('saves all projects', function() {
