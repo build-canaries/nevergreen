@@ -10,7 +10,7 @@ module.exports = {
         return {
             cctray: localStorage.hasOwnProperty('cctray') ? localStorage.getItem('cctray') : 'https://builds.apache.org/cc.xml',
             successText: localStorage.hasOwnProperty('successText') ? localStorage.getItem('successText') : '=(^.^)=',
-            successImageUrl: localStorage.hasOwnProperty('successImageUrl') ? localStorage.getItem('successText') : null,
+            successImageUrl: localStorage.hasOwnProperty('successImageUrl') ? localStorage.successImageUrl : null,
             includedProjects: projects === null ? null : projects.split(','),
             serverType: localStorage.hasOwnProperty('serverType') ? localStorage.serverType : "",
             projectsOnLastFetch: seenProjects === null ? null : seenProjects.split(',')

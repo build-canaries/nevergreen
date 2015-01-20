@@ -71,6 +71,7 @@ function load(postLoadCallback) {
     var settings = config.load()
     $('#cctray-url').val(settings.cctray)
     $('#success-text').val(settings.successText)
+    $('#success-image').val(settings.successImageUrl)
     if (config.hasCctray()) {
         postLoadCallback()
     }

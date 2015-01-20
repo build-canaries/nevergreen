@@ -138,6 +138,15 @@ describe('view logic', function () {
 
                 expect(adminController.saveSuccessImageUrl).toHaveBeenCalledWith('expected-image-url')
             })
+
+            it('loads', function () {
+                localStorage.setItem('successImageUrl', 'any old value')
+                var successImageUrl = $('#success-image')
+
+                view.init()
+
+                expect(successImageUrl.val()).toBe('any old value')
+            })
         })
     })
 
