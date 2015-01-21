@@ -25,7 +25,7 @@ module.exports = function (controller) {
             $('#include-all').click(view.projView().includeAll)
             $('#exclude-all').click(view.projView().excludeAll)
             $('#save-success-text').click(function(e) { e.preventDefault(); saveSuccessText(controller) })
-            $('#save-success-image').click(function(e) { e.preventDefault(); saveSuccessImageUrl(controller) })
+            $('#save-success-image').click(function(e) { e.preventDefault(); saveAndShowSuccessImage(controller) })
 
             $("#cctray-url").keypress(function(e) {
                 if(e.which == 13) {
@@ -71,7 +71,7 @@ function load(postLoadCallback) {
     var settings = config.load()
     $('#cctray-url').val(settings.cctray)
     $('#success-text').val(settings.successText)
-    $('#success-image').val(settings.successImageUrl)
+    $('#success-image-url').val(settings.successImageUrl)
     if (config.hasCctray()) {
         postLoadCallback()
     }
@@ -87,9 +87,20 @@ function saveSuccessText(controller) {
     controller.saveSuccessText(text)
 }
 
-function saveSuccessImageUrl(controller) {
-    var imageUrl = $('#success-image').val().trim()
+function saveAndShowSuccessImage(controller) {
+    var imageUrl = $('#success-image-url').val().trim()
+    saveSuccessImageUrl(controller, imageUrl)
+    showSuccessImage(imageUrl)
+}
+
+function saveSuccessImageUrl(controller, imageUrl) {
     controller.saveSuccessImageUrl(imageUrl)
+}
+
+function showSuccessImage(imageUrl) {
+    var successImage = $('#success-image');
+    successImage.attr('src', imageUrl)
+    successImage.removeClass('hidden')
 }
 
 function monitorPage(controller) {

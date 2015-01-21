@@ -123,15 +123,16 @@ describe('view logic', function () {
         describe('success image', function () {
             beforeEach(function () {
                 $('body').append('<form>' +
-                   '<input id="success-image" type=text name=success-image/>' +
+                   '<input id="success-image-url" type=text name=success-image/>' +
                    '<input id="save-success-image" class=button type=button>' +
-                   '</form>')
+                   '</form> ' +
+                   '<img id="success-image" src="" class="hidden"/>')
             })
 
             it('saves', function () {
                 spyOn(window.location, 'replace')
                 view.init()
-                $('#success-image').val('expected-image-url')
+                $('#success-image-url').val('expected-image-url')
                 spyOn(adminController, 'saveSuccessImageUrl')
 
                 $('#save-success-image').click()
@@ -141,11 +142,24 @@ describe('view logic', function () {
 
             it('loads', function () {
                 localStorage.setItem('successImageUrl', 'any old value')
-                var successImageUrl = $('#success-image')
+                var successImageUrl = $('#success-image-url')
 
                 view.init()
 
                 expect(successImageUrl.val()).toBe('any old value')
+            })
+
+            it('shows image on the page', function () {
+                spyOn(window.location, 'replace')
+                view.init()
+                $('#success-image-url').val('expected-image-url')
+                spyOn(adminController, 'saveSuccessImageUrl')
+
+                $('#save-success-image').click()
+
+                var imageSrc = $('#success-image').attr('src');
+                expect(imageSrc).toBe('expected-image-url')
+                expect($('#success-image')).not.toHaveClass('hidden')
             })
         })
     })
