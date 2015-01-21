@@ -129,27 +129,19 @@ describe('view logic', function () {
                    '<img id="success-image" src="" class="hidden"/>')
             })
 
-            it('saves', function () {
-                spyOn(window.location, 'replace')
-                view.init()
-                $('#success-image-url').val('expected-image-url')
-                spyOn(adminController, 'saveSuccessImageUrl')
-
-                $('#save-success-image').click()
-
-                expect(adminController.saveSuccessImageUrl).toHaveBeenCalledWith('expected-image-url')
-            })
-
             it('loads', function () {
                 localStorage.setItem('successImageUrl', 'any old value')
                 var successImageUrl = $('#success-image-url')
 
                 view.init()
 
+                var imageSrc = $('#success-image').attr('src');
                 expect(successImageUrl.val()).toBe('any old value')
+                expect(imageSrc).toBe('any old value')
+                expect($('#success-image')).not.toHaveClass('hidden')
             })
 
-            it('shows image on the page', function () {
+            it('saves and shows image on the page', function () {
                 spyOn(window.location, 'replace')
                 view.init()
                 $('#success-image-url').val('expected-image-url')
@@ -160,6 +152,7 @@ describe('view logic', function () {
                 var imageSrc = $('#success-image').attr('src');
                 expect(imageSrc).toBe('expected-image-url')
                 expect($('#success-image')).not.toHaveClass('hidden')
+                expect(adminController.saveSuccessImageUrl).toHaveBeenCalledWith('expected-image-url')
             })
         })
     })

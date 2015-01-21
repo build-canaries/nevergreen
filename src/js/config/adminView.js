@@ -66,17 +66,15 @@ module.exports = function (controller) {
     return view
 }
 
-
 function load(postLoadCallback) {
     var settings = config.load()
     $('#cctray-url').val(settings.cctray)
     $('#success-text').val(settings.successText)
-    $('#success-image-url').val(settings.successImageUrl)
+    loadSuccessImage(settings);
     if (config.hasCctray()) {
         postLoadCallback()
     }
 }
-
 function saveCctray(postLoadCallback) {
     config.save({cctray: $('#cctray-url').val().trim()})
     postLoadCallback()
@@ -101,6 +99,14 @@ function showSuccessImage(imageUrl) {
     var successImage = $('#success-image');
     successImage.attr('src', imageUrl)
     successImage.removeClass('hidden')
+}
+
+function loadSuccessImage(settings) {
+    var imageUrl = settings.successImageUrl
+    if (imageUrl) {
+        $('#success-image-url').val(imageUrl)
+        showSuccessImage(imageUrl)
+    }
 }
 
 function monitorPage(controller) {
