@@ -7,12 +7,14 @@ describe('view logic', function () {
     var config = {
         isReady: function () { return true },
         includesProject: function () { return true },
-        previouslyFetched: function() { return true }
+        previouslyFetched: function() { return true },
+        firstLoad: function() { return false }
     }
 
     beforeEach(function () {
         $('body').empty()
         $('body').append('<div id="projects"/>')
+        $('body').append('<div id="cctray-url" />')
         view = projectView(saveProjects)
     })
 
@@ -34,11 +36,12 @@ describe('view logic', function () {
             expect($('#projects input').size()).toBe(2)
         })
 
-        it('highlights any new projects', function () {
+        it('highlights any new projects if not first load', function () {
             var config = {
                 isReady: function () { return true },
                 includesProject: function (name) { return name === 'foo' },
-                previouslyFetched: function(name) { return name === 'foo' }
+                previouslyFetched: function(name) { return name === 'foo' },
+                firstLoad: function() { return false }
             }
 
             view.listProjects(config, [
@@ -50,11 +53,28 @@ describe('view logic', function () {
             expect($('#projects label:last').text().trim()).toEqual('foo')
         })
 
+        it('does not highlight any new projects on first load as they are all new', function () {
+            var config = {
+                isReady: function () { return true },
+                includesProject: function (name) { return name === 'foo' },
+                previouslyFetched: function(name) { return name === 'foo' },
+                firstLoad: function() { return true }
+            }
+
+            view.listProjects(config, [
+                {'name': 'foo'},
+                {'name': 'bar'}
+            ])
+
+            expect($('#projects label:first').html()).not.toContain('bar <sup class="config-new-project">new</sup>')
+        })
+
         it('remembers what projects the user has selected previously', function () {
             var config = {
                 isReady: function () { return true },
                 includesProject: function (name) { return name === 'foo' },
-                previouslyFetched: function() { return true }
+                previouslyFetched: function() { return true },
+                firstLoad: function() { return false }
             }
 
             view.listProjects(config, [
@@ -101,6 +121,7 @@ describe('view logic', function () {
     describe('include and exclude all buttons', function () {
         beforeEach(function () {
             $('body').empty()
+            $('body').append('<div id="cctray-url" />')
             $('body').append('<input id="save-projects"/>')
             $('body').append('<input id="include-all"/>')
             $('body').append('<input id="exclude-all"/>')

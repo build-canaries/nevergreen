@@ -1,6 +1,7 @@
 module.exports = {
 
     save: function (settings) {
+        localStorage.setItem('previousCctray', localStorage.getItem('cctray'))
         localStorage.setItem('cctray', settings.cctray)
     },
 
@@ -32,6 +33,10 @@ module.exports = {
 
     previouslyFetched: function (projectName) {
         return arrayContains(projectName, this.load().projectsOnLastFetch)
+    },
+
+    firstLoad: function(url) {
+        return url !== localStorage.getItem('previousCctray')
     }
 }
 

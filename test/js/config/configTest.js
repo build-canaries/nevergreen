@@ -14,6 +14,24 @@ describe('Configurable build monitor', function () {
         expect(localStorage.setItem).toHaveBeenCalledWith('cctray', 'url')
     })
 
+    it('first load of any cctray', function () {
+        localStorage.clear()
+
+        expect(config.firstLoad('some-url')).toBeTruthy()
+    })
+
+    it('first load of a different cctray', function () {
+        localStorage.setItem('previousCctray', 'some-url')
+
+        expect(config.firstLoad('another-url')).toBeTruthy()
+    })
+
+    it('loading same cctray', function () {
+        localStorage.setItem('previousCctray', 'some-url')
+
+        expect(config.firstLoad('some-url')).toBeFalsy()
+    })
+
     describe('load', function () {
         it('gets the correct saved values from local storage', function () {
             localStorage.setItem('cctray', 'some-url')

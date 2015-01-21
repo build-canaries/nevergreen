@@ -18,7 +18,7 @@ module.exports = function (saveProjects) {
                 }
 
                 var newNote = ''
-                if (!config.previouslyFetched(project.name)) {
+                if (!config.firstLoad($('#cctray-url').val().trim()) && !config.previouslyFetched(project.name)) {
                     newNote = ' <sup class="config-new-project">new</sup>'
                 }
 
@@ -28,7 +28,6 @@ module.exports = function (saveProjects) {
                 project.name + newNote +
                 ' </label> ' +
                 ' </p>')
-
 
                 calculateCorrectFontSize(projects);
             })
