@@ -90,22 +90,22 @@ describe('view logic', function () {
     })
 
     describe('success', function () {
+        beforeEach(function () {
+            $('body').append('<form>' +
+            '<input id="success-text" type=text name=success-text/>' +
+            '<input id="success-image-url" type=text name=success-image/>' +
+            '<input id="save-success-configuration" class=button type=button>' +
+            '</form> ' +
+            '<img id="success-image" src="" class="hidden"/>')
+        })
 
         describe('success text', function () {
-            beforeEach(function () {
-                $('body').append('<form>' +
-                   '<input id="success-text" type=text name=success-text/>' +
-                   '<input id="save-projects" class=button type=button>' +
-                   '</form>')
-            })
-
             it('saves', function () {
-                spyOn(window.location, 'replace')
-                view.init()
+                view.addClickHandlers()
                 $('#success-text').val('expected')
                 spyOn(adminController, 'saveSuccessText')
 
-                $('#save-projects').click()
+                $('#save-success-configuration').click()
 
                 expect(adminController.saveSuccessText).toHaveBeenCalledWith('expected')
             })
@@ -121,14 +121,6 @@ describe('view logic', function () {
         })
 
         describe('success image', function () {
-            beforeEach(function () {
-                $('body').append('<form>' +
-                   '<input id="success-image-url" type=text name=success-image/>' +
-                   '<input id="save-success-image" class=button type=button>' +
-                   '</form> ' +
-                   '<img id="success-image" src="" class="hidden"/>')
-            })
-
             it('loads', function () {
                 localStorage.setItem('successImageUrl', 'any old value')
                 var successImageUrl = $('#success-image-url')
@@ -142,12 +134,11 @@ describe('view logic', function () {
             })
 
             it('saves and shows image on the page', function () {
-                spyOn(window.location, 'replace')
                 view.init()
                 $('#success-image-url').val('expected-image-url')
                 spyOn(adminController, 'saveSuccessImageUrl')
 
-                $('#save-success-image').click()
+                $('#save-success-configuration').click()
 
                 var imageSrc = $('#success-image').attr('src');
                 expect(imageSrc).toBe('expected-image-url')

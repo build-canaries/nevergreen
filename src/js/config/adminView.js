@@ -21,11 +21,11 @@ module.exports = function (controller) {
         },
 
         addClickHandlers: function () {
-            $('#save-projects').click(function() { monitorPage(controller) })
             $('#include-all').click(view.projView().includeAll)
             $('#exclude-all').click(view.projView().excludeAll)
-            $('#save-success-text').click(function(e) { e.preventDefault(); saveSuccessText(controller) })
-            $('#save-success-image').click(function(e) { e.preventDefault(); saveAndShowSuccessImage(controller) })
+            $('#save-success-configuration').click(function(e) { e.preventDefault(); saveSuccessConfiguration(controller) })
+            $('#success-text').blur(function () { saveSuccessText(controller) })
+            $('#success-image-url').blur(function () { saveAndShowSuccessImage(controller) })
 
             $("#cctray-url").keypress(function(e) {
                 if(e.which == 13) {
@@ -78,6 +78,11 @@ function load(postLoadCallback) {
 function saveCctray(postLoadCallback) {
     config.save({cctray: $('#cctray-url').val().trim()})
     postLoadCallback()
+}
+
+function saveSuccessConfiguration(controller) {
+    saveSuccessText(controller)
+    saveAndShowSuccessImage(controller)
 }
 
 function saveSuccessText(controller) {
