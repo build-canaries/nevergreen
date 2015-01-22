@@ -83,22 +83,24 @@
 
     <section id="success" class="dashboard-main-section">
         <h2 class="visuallyhidden">Success</h2>
-        <form class="success-form">
-            <div>
-                <label for="success-text" class="success-form-label">Success text</label>
-                <input id="success-text" type="text" name="success-text" value="=(^.^)=">
-                <!--<button id="save-success-text" type="submit">Save</button>-->
-            </div>
-            <div class="success-image-form">
-                <label for="success-image-url">Success image url</label>
-                <input id="success-image-url" type="text" placeholder="This overrides success text" name="success-image">
-                <!--<button id="save-success-image" type="submit">Save</button>-->
-            </div>
-            <div>
-                <img id="success-image" class="hidden config-success-image"/>
-            </div>
-            <button id="save-success-configuration" class="dashboard dashboard-button dashboard-button-secondary" type="submit">Save</button>
-        </form>
+        <fieldset class="tracking-cctray-group">
+            <form class="tracking-cctray-group-cctray-form">
+                <div>
+                    <label for="success-text" class="success-form-label">Text: </label>
+                    <input id="success-text" class="tracking-cctray-group-cctray-form-input" type="text" name="success-text" value="=(^.^)=">
+                    <!--<button id="save-success-text" type="submit">Save</button>-->
+                </div>
+                <div class="success-image-form">
+                    <label for="success-image-url">Image url:</label>
+                    <input id="success-image-url" class="tracking-cctray-group-cctray-form-input" type="text" placeholder="This overrides success text" name="success-image">
+                    <!--<button id="save-success-image" type="submit">Save</button>-->
+                </div>
+                <div>
+                    <img id="success-image" class="hidden config-success-image"/>
+                </div>
+                <button id="save-success-configuration" class="dashboard-button dashboard-button-secondary tracking-cctray-group-cctray-form-button" type="submit">Save</button>
+            </form>
+        </fieldset>
     </section><!-- /#timing -->
 </div><!-- /#main -->
 
