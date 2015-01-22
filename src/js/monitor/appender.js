@@ -7,7 +7,7 @@ module.exports = function (config, projects) {
             projects.forEach(addBuildStatusToScreen)
 
             if (projects.length === 0) {
-                showSuccessMessage(projects, config);
+                showSuccessMessage(projects, config)
             }
         }
     }
@@ -20,7 +20,17 @@ function addBuildStatusToScreen(project) {
 }
 
 function showSuccessMessage(projects, config) {
-    var successMessage = config.load().successText
-    $('#projects')
-        .append('<li><div class=monitor-outerContainer><div class=monitor-innerContainer>' + successMessage + '</div></div></li>')
+    var settings = config.load()
+    var successImageUrl = settings.successImageUrl
+
+    if (successImageUrl) {
+        $('#projects')
+            .append('<li><div class=monitor-outerContainer><div class=monitor-innerContainer>' +
+            '<img id="success-image" src="'+ successImageUrl +'" />' +
+            '</div></div></li>')
+    } else {
+        var successMessage = settings.successText
+        $('#projects')
+            .append('<li><div class=monitor-outerContainer><div id="success-text" class=monitor-innerContainer>' + successMessage + '</div></div></li>')
+    }
 }
