@@ -10,11 +10,13 @@ describe('view logic', function () {
                             saveSuccessImageUrl: function(){},
                             saveSeenProjects: function(){}}
 
+    var storageRepository = {}
+
     beforeEach(function () {
         $('body').empty()
         $('body').append('<div id="projects"/>')
         localStorage.clear()
-        view = adminView(adminController)
+        view = adminView(adminController, storageRepository)
     })
 
     describe('autoloads projects', function () {
@@ -107,7 +109,7 @@ describe('view logic', function () {
 
                 $('#save-success-configuration').click()
 
-                expect(adminController.saveSuccessText).toHaveBeenCalledWith('expected')
+                expect(adminController.saveSuccessText).toHaveBeenCalledWith(storageRepository, 'expected')
             })
 
             it('loads', function () {

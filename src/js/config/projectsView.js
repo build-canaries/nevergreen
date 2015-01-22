@@ -6,7 +6,7 @@ var maximumProjectNameFontSize = 21
 
 module.exports = function (saveProjects) {
     return {
-        listProjects: function (config, projects) {
+        listProjects: function (storageRepository, config, projects) {
             $('#projects').empty()
 
             var sortedProjects = sortProjectsByName(projects)

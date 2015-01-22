@@ -10,6 +10,7 @@ describe('view logic', function () {
         previouslyFetched: function() { return true },
         firstLoad: function() { return false }
     }
+    var storageRepository = {}
 
     beforeEach(function () {
         $('body').empty()
@@ -20,7 +21,7 @@ describe('view logic', function () {
 
     describe('adds projects to the dom', function () {
         it('prints a list of project names', function () {
-            view.listProjects(config, [
+            view.listProjects(storageRepository, config, [
                 {'name': 'foo'},
                 {'name': 'bar'}
             ])
@@ -30,8 +31,8 @@ describe('view logic', function () {
         })
 
         it('clears out the projects before adding them', function () {
-            view.listProjects(config, [{'name': 'foo'}, {'name': 'bar'}])
-            view.listProjects(config, [{'name': 'foo'}, {'name': 'bar'}])
+            view.listProjects(storageRepository, config, [{'name': 'foo'}, {'name': 'bar'}])
+            view.listProjects(storageRepository, config, [{'name': 'foo'}, {'name': 'bar'}])
 
             expect($('#projects input').size()).toBe(2)
         })
@@ -44,7 +45,7 @@ describe('view logic', function () {
                 firstLoad: function() { return false }
             }
 
-            view.listProjects(config, [
+            view.listProjects(storageRepository, config, [
                 {'name': 'foo'},
                 {'name': 'bar'}
             ])
@@ -61,7 +62,7 @@ describe('view logic', function () {
                 firstLoad: function() { return true }
             }
 
-            view.listProjects(config, [
+            view.listProjects(storageRepository, config, [
                 {'name': 'foo'},
                 {'name': 'bar'}
             ])
@@ -77,7 +78,7 @@ describe('view logic', function () {
                 firstLoad: function() { return false }
             }
 
-            view.listProjects(config, [
+            view.listProjects(storageRepository, config, [
                 {'name': 'foo'},
                 {'name': 'bar'}
             ])
@@ -89,7 +90,7 @@ describe('view logic', function () {
 
     describe('projects click', function () {
         it('adds an included class when clicked', function () {
-            view.listProjects(config, [
+            view.listProjects(storageRepository, config, [
                 {'name': 'foo'},
                 {'name': 'bar'}
             ])
@@ -106,7 +107,7 @@ describe('view logic', function () {
             var observer = { saveProjects: function () { } }
             spyOn(observer, 'saveProjects')
             view = projectView(observer.saveProjects)
-            view.listProjects(config, [
+            view.listProjects(storageRepository, config, [
                 {'name': 'bar'},
                 {'name': 'foo'}
             ])
@@ -149,7 +150,7 @@ describe('view logic', function () {
             spyOn(observer, 'saveProjects')
             view = projectView(observer.saveProjects)
 
-            view.listProjects(config, [{'name': 'foo'}])
+            view.listProjects(storageRepository, config, [{'name': 'foo'}])
             view.includeAll()
 
             expect(observer.saveProjects).toHaveBeenCalled()
