@@ -25,9 +25,14 @@ function showSuccessMessage(projects, config) {
 
     if (successImageUrl) {
         $('#projects')
-            .append('<li><div class=monitor-outerContainer><div class=monitor-innerContainer>' +
-            '<img id="success-image" src="'+ successImageUrl +'" />' +
-            '</div></div></li>')
+            .append('<li><div class=monitor-outerContainer><div id="success-image" class="monitor-innerContainer" style="' +
+            'background: url(' + successImageUrl + ') no-repeat center center fixed;' +
+            '-webkit-background-size: cover;' +
+            '-moz-background-size: cover;' +
+            '-o-background-size: cover;' +
+            'background-size: cover;">' +
+            '</div>' +
+            '</div></li>')
     } else {
         var successMessage = settings.successText
         $('#projects')

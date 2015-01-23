@@ -1,21 +1,36 @@
 var $ = require('jquery')
-var config = {
-    load: function () {
-        return {successText: 'some success text', successImageUrl: 'some-success-url'}
-    }
-}
-var projects = [];
-var appender = require('../../../src/js/monitor/appender')(config, projects)
+var monitorAppender = require('../../../src/js/monitor/appender')
 
 describe('Showing success message', function () {
-    it('shows success image', function () {
+    it('image', function () {
+        var config = {
+            load: function () {
+                return {successText: 'some success text', successImageUrl: 'some-success-url'}
+            }
+        }
+        var appender = monitorAppender(config, [])
         $('body').empty()
         $('body').append('<div id="projects"/>')
 
         appender.addProjects()
 
-        var successImageUrl = $('#success-image').attr('src');
-        expect(successImageUrl).toBe('some-success-url')
+        expect($('#success-image')).toBeInDOM()
         expect($('#success-text')).not.toBeInDOM()
+    })
+
+    it('text', function () {
+        var config = {
+            load: function () {
+                return {successText: 'some success text'}
+            }
+        }
+        var appender = monitorAppender(config, [])
+        $('body').empty()
+        $('body').append('<div id="projects"/>')
+
+        appender.addProjects()
+
+        expect($('#success-text')).toBeInDOM()
+        expect($('#success-image')).not.toBeInDOM()
     })
 })
