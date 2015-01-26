@@ -3,6 +3,9 @@ var trackingView = require('../../../src/js/config/trackingView')
 
 describe('tracking view', function () {
 
+    var view
+    var $body = $('body')
+
     var adminControllerMock = {
         getProjects: function () {
         },
@@ -38,17 +41,14 @@ describe('tracking view', function () {
 
     var configViewMock = {}
 
-    var view
-
     beforeEach(function () {
-        $('body').empty()
-        $('body').append('<div id="projects"/>')
-        localStorage.clear()
+        $body.empty()
+        $body.append('<div id="projects"/>')
         view = trackingView(adminControllerMock, trackingRepositoryMock, projectsViewMock, configViewMock)
     })
 
     describe('autoloads projects', function () {
-        it('does if cctray is available', function () {
+        it('only if cctray is available', function () {
             spyOn(trackingRepositoryMock, 'hasCctray').and.returnValue(true)
             spyOn(trackingRepositoryMock, 'getCctray')
             spyOn(adminControllerMock, 'getProjects')
@@ -59,7 +59,7 @@ describe('tracking view', function () {
             expect(trackingRepositoryMock.getCctray).toHaveBeenCalled()
         })
 
-        it('does not if cctray is unavailable', function () {
+        it('expect when cctray is unavailable', function () {
             spyOn(trackingRepositoryMock, 'hasCctray').and.returnValue(false)
             spyOn(adminControllerMock, 'getProjects')
 
@@ -73,18 +73,13 @@ describe('tracking view', function () {
         it('saves on return key press', function () {
             spyOn(trackingRepositoryMock, 'saveCctray')
 
-            $('body').append('<form>' +
-            '<input id="cctray-url" type=text>' +
-            '</form>')
+            $body.append('<input id="cctray-url" type="text">')
 
             view.init()
-            $('#cctray-url').val('some-url')
 
-            // press return event
-            var e = jQuery.Event('keypress');
-            e.which = 13;
-            e.keyCode = 13;
-            $('#cctray-url').trigger(e);
+            var $cctray = $('#cctray-url');
+            $cctray.val('some-url')
+            $cctray.trigger(pressReturnEvent());
 
             expect(trackingRepositoryMock.saveCctray).toHaveBeenCalledWith('some-url')
         })
@@ -101,3 +96,10 @@ describe('tracking view', function () {
     })
 
 })
+
+function pressReturnEvent() {
+    var e = jQuery.Event('keypress');
+    e.which = 13;
+    e.keyCode = 13;
+    return e
+}

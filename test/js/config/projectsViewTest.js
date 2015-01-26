@@ -1,7 +1,10 @@
 var $ = require('jquery')
 var projectView = require('../../../src/js/config/projectsView')
 
-describe('view logic', function () {
+describe('projects view', function () {
+
+    var view
+    var $body = $('body')
 
     var storageRepositoryMock = {
         isReady: function () {
@@ -17,8 +20,8 @@ describe('view logic', function () {
     }
 
     beforeEach(function () {
-        $('body').empty()
-        $('body').append('<div id="projects"/><div id="cctray-url" />')
+        $body.empty()
+        $body.append('<div id="projects"/><div id="cctray-url" />')
 
         view = projectView(storageRepositoryMock)
     })
@@ -33,8 +36,9 @@ describe('view logic', function () {
                 {'name': 'bar'}
             ])
 
-            expect($('#projects input').size()).toBe(2)
-            expect($('#projects label:first').text().trim()).toEqual('bar')
+            var $projects = $('#projects');
+            expect($projects.find('input').size()).toBe(2)
+            expect($projects.find('label:first').text().trim()).toEqual('bar')
         })
 
         it('clears out the projects before adding them', function () {
@@ -101,8 +105,8 @@ describe('view logic', function () {
 
     describe('include and exclude all buttons', function () {
         beforeEach(function () {
-            $('body').empty()
-            $('body').append(
+            $body.empty()
+            $body.append(
                 '<div id="cctray-url" />' +
                 '<input id="save-projects"/>' +
                 '<input id="include-all"/>' +
@@ -117,13 +121,13 @@ describe('view logic', function () {
         it('includes all click will add class included to all projects', function () {
             view.includeAll()
 
-            expect($('#projects input:last')).toBeChecked()
+            expect($('#projects').find('input:last')).toBeChecked()
         })
 
         it('excludes all click will remove class included from all projects', function () {
             view.excludeAll()
 
-            expect($('#projects input:first')).not.toHaveClass('included')
+            expect($('#projects').find('input:first')).not.toHaveClass('included')
         })
     })
 

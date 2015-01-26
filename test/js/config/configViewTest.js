@@ -3,15 +3,17 @@ var view = require('../../../src/js/config/configView')
 
 describe('config view', function () {
 
+    var $body = $('body')
+
     beforeEach(function () {
-        $('body').empty()
-        $('body').append('<div id="projects"/>')
-        localStorage.clear()
+        $body.empty()
     })
 
     describe('spinner', function () {
         it('is shown', function () {
-            $('body').append('<div id="loading-modal"></div><div id="spinner" style="display: none"></div>')
+            $body.append(
+                '<div id="loading-modal" />' +
+                '<div id="spinner" style="display: none" />')
 
             view.showSpinner()
 
@@ -20,7 +22,9 @@ describe('config view', function () {
         })
 
         it('is hidden', function () {
-            $('body').append('<div id="loading-modal"></div><div id="spinner"></div>')
+            $body.append(
+                '<div id="loading-modal"/>' +
+                '<div id="spinner"/>')
 
             view.hideSpinner()
 
@@ -30,6 +34,8 @@ describe('config view', function () {
     })
 
     it('handles errors', function () {
+        $body.append('<div id="projects"/>')
+
         view.errorHandler('code', 'reason')
 
         expect($('#projects')).toContainHtml('reason')
