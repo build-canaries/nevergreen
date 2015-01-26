@@ -13,12 +13,8 @@ describe('Monitor page', function () {
         }
     }
 
-    var successRepositoryMock = {
-        hasSuccessImageUrl: function () {
-        },
-        getSuccessImageUrl: function () {
-        },
-        getSuccessText: function () {
+    var appenderMock = {
+        addProjects: function () {
         }
     }
 
@@ -29,7 +25,7 @@ describe('Monitor page', function () {
         spyOn(trackingRepositoryMock, 'getServerType').and.returnValue('server-type')
         spyOn($, 'ajax')
 
-        monitor(trackingRepositoryMock, successRepositoryMock).updateBuildMonitor()
+        monitor(trackingRepositoryMock, appenderMock).updateBuildMonitor()
 
         expect($.ajax).toHaveBeenCalledWith({
             url: '/api/projects',
@@ -50,7 +46,7 @@ describe('Monitor page', function () {
         spyOn(trackingRepositoryMock, 'isReady').and.returnValue(false)
         spyOn(window.location, 'replace')
 
-        monitor(trackingRepositoryMock, successRepositoryMock).updateBuildMonitor()
+        monitor(trackingRepositoryMock, appenderMock).updateBuildMonitor()
 
         expect(window.location.replace).toHaveBeenCalledWith('config')
     })
@@ -64,7 +60,7 @@ describe('Monitor page', function () {
             e.error({status: 'code', statusText: 'reason'})
         })
 
-        monitor(trackingRepositoryMock, successRepositoryMock).updateBuildMonitor()
+        monitor(trackingRepositoryMock, appenderMock).updateBuildMonitor()
 
         expect($('#projects')).toContainHtml('reason')
     })

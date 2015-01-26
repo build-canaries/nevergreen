@@ -1,8 +1,7 @@
 var $ = require('jquery')
-var appender = require('./appender')
 var styler = require('./styler')
 
-module.exports = function (trackingRepository, successRepository) {
+module.exports = function (trackingRepository, appender) {
     return {
         init: function () {
             showConfigLinkOnMouseMove();
@@ -26,7 +25,7 @@ module.exports = function (trackingRepository, successRepository) {
         },
 
         updateScreen: function (data) {
-            appender(successRepository, data).addProjects()
+            appender.addProjects(data)
             styler.styleProjects()
         },
 

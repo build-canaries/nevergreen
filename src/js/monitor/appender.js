@@ -1,8 +1,8 @@
 var $ = require('jquery')
 
-module.exports = function (successRepository, projects) {
+module.exports = function (successRepository) {
     return {
-        addProjects: function () {
+        addProjects: function (projects) {
             $('#projects').empty()
             projects.forEach(addBuildStatusToScreen)
 

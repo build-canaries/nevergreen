@@ -1,5 +1,5 @@
 var $ = require('jquery')
-var successRepository = {
+var successRepositoryMock = {
     hasSuccessImageUrl: function () {
     },
     getSuccessImageUrl: function () {
@@ -7,17 +7,16 @@ var successRepository = {
     getSuccessText: function () {
     }
 }
-var projects = [];
-var appender = require('../../../src/js/monitor/appender')(successRepository, projects)
+var appender = require('../../../src/js/monitor/appender')(successRepositoryMock)
 
 describe('Showing success message', function () {
     it('shows success image', function () {
-        spyOn(successRepository, 'hasSuccessImageUrl').and.returnValue(true)
-        spyOn(successRepository, 'getSuccessImageUrl').and.returnValue('some-success-url')
+        spyOn(successRepositoryMock, 'hasSuccessImageUrl').and.returnValue(true)
+        spyOn(successRepositoryMock, 'getSuccessImageUrl').and.returnValue('some-success-url')
         $('body').empty()
         $('body').append('<div id="projects"/>')
 
-        appender.addProjects()
+        appender.addProjects([])
 
         expect($('#success-image')).toBeInDOM()
         expect($('#success-text')).not.toBeInDOM()
@@ -27,7 +26,7 @@ describe('Showing success message', function () {
         $('body').empty()
         $('body').append('<div id="projects"/>')
 
-        appender.addProjects()
+        appender.addProjects([])
 
         expect($('#success-text')).toBeInDOM()
         expect($('#success-image')).not.toBeInDOM()
