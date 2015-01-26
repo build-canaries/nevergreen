@@ -16,7 +16,8 @@ module.exports = function(config) {
       'test/js/lib/jquery2.1.1.js',
       'test/js/lib/*.js',
       'test/js/monitor/*.js',
-      'test/js/config/*.js'
+      'test/js/config/*.js',
+      'test/js/storage/*.js'
     ],
 
     // list of files to exclude
@@ -28,7 +29,8 @@ module.exports = function(config) {
     preprocessors: {
         'src/**/*.js': [ 'browserify' ],
         'test/js/config/*.js': [ 'browserify' ],
-        'test/js/monitor/*.js': [ 'browserify' ]
+        'test/js/monitor/*.js': [ 'browserify' ],
+        'test/js/storage/*.js': [ 'browserify' ]
     },
 
     // test results reporter to use

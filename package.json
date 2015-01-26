@@ -32,7 +32,7 @@
     "browserify": "browserify -d ./src/**/*.js -o ./resources/public/main.js",
     "sass": "cd src/scss; cat base.scss | node-sass > ../../resources/public/main.css",
     "testing": "./node_modules/karma/bin/karma start",
-    "lint": "jshint src/**/*.js test/js/monitor/*.js test/js/config/*.js"
+    "lint": "jshint src/**/*.js test/js/monitor/*.js test/js/config/*.js test/js/storage/*.js"
   },
   "repository": {
     "type": "git",

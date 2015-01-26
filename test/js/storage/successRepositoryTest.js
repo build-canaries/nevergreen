@@ -1,4 +1,4 @@
-var storageRepository = require('../../../src/js/config/successRepository')
+var storageRepository = require('../../../src/js/storage/successRepository')
 
 describe('success repository', function () {
 

@@ -1,4 +1,4 @@
-var storageRepository = require('../../../src/js/config/trackingRepository')
+var storageRepository = require('../../../src/js/storage/trackingRepository')
 
 describe('tracking repository', function () {
 
