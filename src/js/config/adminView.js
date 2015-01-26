@@ -31,13 +31,11 @@ module.exports = function (controller, storageRepository, projectsView) {
             $('#success-image-url').blur(function () {
                 saveAndShowSuccessImage(storageRepository)
             })
-
             $("#cctray-url").keypress(function (e) {
                 if (e.which == 13) {
                     saveCctray(storageRepository, view.getProjects)
                 }
             });
-
             $("#cctray-fetch").click(function (e) {
                 e.preventDefault()
                 saveCctray(storageRepository, view.getProjects)

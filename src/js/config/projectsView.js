@@ -7,7 +7,8 @@ var maximumProjectNameFontSize = 21
 module.exports = function (storageRepository) {
     var view = {
         listProjects: function (projects) {
-            $('#projects').empty()
+            var $projects = $('#projects');
+            $projects.empty()
 
             var previouslyLoaded = storageRepository.cctraySeen($('#cctray-url').val())
             var sortedProjects = sortProjectsByName(projects)
@@ -23,30 +24,33 @@ module.exports = function (storageRepository) {
                     newNote = ' <sup class="config-new-project">new</sup>'
                 }
 
-                $('#projects').append(
-                    '<p class="tracking-cctray-group-build-item"><label class="label-checkbox"><input class="checkbox no-text-selection" type="checkbox" data-name="' +
-                    project.name + '" title="" ' + included + '> ' + project.name + newNote + ' </label></p>')
+                $projects.append(
+                    '<p class="tracking-cctray-group-build-item">' +
+                    '<label class="label-checkbox">' +
+                    '<input class="checkbox no-text-selection" type="checkbox" data-name="' + project.name + '" title="" ' + included + '> ' + project.name + newNote +
+                    '</label>' +
+                    '</p>')
 
                 calculateCorrectFontSize(projects);
             })
 
-            $('#projects input').click(function () {
+            $projects.find('input').click(function () {
                 storageRepository.saveIncludedProjects(view.findIncludedProjects())
             })
         },
 
         includeAll: function () {
-            $('#projects input').prop('checked', true)
+            $('#projects').find('input').prop('checked', true)
             storageRepository.saveIncludedProjects(view.findIncludedProjects())
         },
 
         excludeAll: function () {
-            $('#projects input').prop('checked', false)
+            $('#projects').find('input').prop('checked', false)
             storageRepository.saveIncludedProjects(view.findIncludedProjects())
         },
 
         findIncludedProjects: function () {
-            return $('#projects input:checked').map(function (index, element) {
+            return $('#projects').find('input:checked').map(function (index, element) {
                 return $(element).attr('data-name')
             }).toArray()
         }
@@ -61,8 +65,9 @@ function sortProjectsByName(projects) {
 }
 
 function calculateCorrectFontSize() {
-    var width = $('#projects').width()
-    $('#projects > .checkbox').each(function (index, value) {
+    var $projects = $('#projects');
+    var width = $projects.width()
+    $projects.find('.checkbox').each(function (index, value) {
         var text = [value.textContent]
         var ideal = new ScaleText(text, projectBoxHeight, width).singleLineIdeal()
         var idealCssFontSize = Math.min(ideal, maximumProjectNameFontSize)

@@ -22,10 +22,6 @@ module.exports = {
                 errorHandler(xhr.status, thrownError)
             }
         })
-    },
-
-    clearProjects: function () {
-        $('#projects').empty()
     }
 
 }
