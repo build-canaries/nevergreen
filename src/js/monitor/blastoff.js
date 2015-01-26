@@ -1,16 +1,16 @@
 module.exports = function () {
-    var config = require('../config/config')
+    var storageRepository = require('../config/storageRepository')
     var monitor = require('./monitor')
 
     var fiveSeconds = 5000
 
-    monitor(config).init()
+    monitor(storageRepository).init()
 
     // run immediately
-    monitor(config).updateBuildMonitor()
+    monitor(storageRepository).updateBuildMonitor()
 
     // now run every 5 seconds
     setInterval(function () {
-        monitor(config).updateBuildMonitor()
+        monitor(storageRepository).updateBuildMonitor()
     }, fiveSeconds)
 }

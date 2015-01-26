@@ -1,5 +1,10 @@
 module.exports = {
+    isReady: function () {
+        return this.hasCctray() && this.hasIncludedProjects()
+    },
+
     saveCctray: function (url) {
+        localStorage.setItem('previousCctray', this.getCctray())
         localStorage.setItem('cctray', url.trim())
     },
 
@@ -9,6 +14,10 @@ module.exports = {
 
     hasCctray: function () {
         return exists('cctray')
+    },
+
+    cctraySeen: function(url) {
+        return url.trim() === localStorage.getItem('previousCctray')
     },
 
     saveIncludedProjects: function (projects) {
@@ -54,6 +63,10 @@ module.exports = {
     getSeenProjects: function () {
         var seenProjects = localStorage.getItem('seenProjects')
         return seenProjects === null ? [] : seenProjects.split(',')
+    },
+
+    projectSeen: function (projectName) {
+        return arrayContains(projectName, this.getSeenProjects())
     },
 
     saveServerType: function (type) {

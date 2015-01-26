@@ -1,8 +1,6 @@
 var $ = require('jquery')
-var config = require('./config')
-var projectsView = require('./projectsView')
 
-module.exports = function (controller, storageRepository) {
+module.exports = function (controller, storageRepository, projectsView) {
     var view = {
         init: function () {
             load(storageRepository, view.getProjects)
@@ -10,37 +8,40 @@ module.exports = function (controller, storageRepository) {
         },
 
         appendProjects: function (projects) {
-            view.projView().listProjects(storageRepository, config, projects)
-            saveAllProjects(storageRepository, controller, projects)
+            projectsView.listProjects(projects)
+            saveAllProjects(storageRepository, projects)
             view.saveProjects()
         },
 
         saveProjects: function () {
-            var includedProjects = view.projView().findIncludedProjects()
-            controller.saveIncludedProjects(includedProjects)
+            var includedProjects = projectsView.findIncludedProjects()
+            storageRepository.saveIncludedProjects(includedProjects)
         },
 
         addClickHandlers: function () {
-            $('#include-all').click(view.projView().includeAll)
-            $('#exclude-all').click(view.projView().excludeAll)
-            $('#save-success-configuration').click(function(e) { e.preventDefault(); saveSuccessConfiguration(storageRepository, controller) })
-            $('#success-text').blur(function () { saveSuccessText(storageRepository, controller) })
-            $('#success-image-url').blur(function () { saveAndShowSuccessImage(controller) })
+            $('#include-all').click(projectsView.includeAll)
+            $('#exclude-all').click(projectsView.excludeAll)
+            $('#save-success-configuration').click(function (e) {
+                e.preventDefault();
+                saveSuccessConfiguration(storageRepository)
+            })
+            $('#success-text').blur(function () {
+                saveSuccessText(storageRepository)
+            })
+            $('#success-image-url').blur(function () {
+                saveAndShowSuccessImage(storageRepository)
+            })
 
-            $("#cctray-url").keypress(function(e) {
-                if(e.which == 13) {
+            $("#cctray-url").keypress(function (e) {
+                if (e.which == 13) {
                     saveCctray(storageRepository, view.getProjects)
                 }
             });
 
-            $("#cctray-fetch").click(function(e) {
+            $("#cctray-fetch").click(function (e) {
                 e.preventDefault()
                 saveCctray(storageRepository, view.getProjects)
             });
-        },
-
-        projView: function() {
-            return projectsView(view.saveProjects)
         },
 
         showSpinner: function () {
@@ -53,13 +54,14 @@ module.exports = function (controller, storageRepository) {
             $('#spinner').hide()
         },
 
-        errorHandler: function(code, reason) {
-            $('#projects').empty()
-            $('#projects').append('<h1 class="config-error">Cannot find projects because<br />' + code + ': '+ reason + '</h1>')
+        errorHandler: function (code, reason) {
+            var $projects = $('#projects');
+            $projects.empty()
+            $projects.append('<h1 class="config-error">Cannot find projects because<br />' + code + ': ' + reason + '</h1>')
         },
 
-        getProjects: function() {
-            controller.getProjects(require('./config'), view.appendProjects, view.showSpinner, view.hideSpinner, view.errorHandler)
+        getProjects: function () {
+            controller.getProjects(storageRepository.getCctray(), view.appendProjects, view.showSpinner, view.hideSpinner, view.errorHandler)
         }
 
     }
@@ -67,38 +69,32 @@ module.exports = function (controller, storageRepository) {
 }
 
 function load(storageRepository, postLoadCallback) {
-    var settings = config.load()
-    $('#cctray-url').val(settings.cctray)
-    $('#success-text').val(settings.successText)
-    loadSuccessImage(storageRepository, settings);
-    if (config.hasCctray()) {
+    $('#cctray-url').val(storageRepository.getCctray())
+    $('#success-text').val(storageRepository.getSuccessText())
+    loadSuccessImage(storageRepository);
+    if (storageRepository.hasCctray()) {
         postLoadCallback()
     }
 }
 
 function saveCctray(storageRepository, postLoadCallback) {
-    config.save({cctray: $('#cctray-url').val().trim()})
+    storageRepository.saveCctray($('#cctray-url').val())
     postLoadCallback()
 }
 
-function saveSuccessConfiguration(storageRepository, controller) {
-    saveSuccessText(storageRepository, controller)
-    saveAndShowSuccessImage(controller)
+function saveSuccessConfiguration(storageRepository) {
+    saveSuccessText(storageRepository)
+    saveAndShowSuccessImage(storageRepository)
 }
 
-function saveSuccessText(storageRepository, controller) {
-    var text = $('#success-text').val()
-    controller.saveSuccessText(storageRepository, text)
+function saveSuccessText(storageRepository) {
+    storageRepository.saveSuccessText($('#success-text').val())
 }
 
-function saveAndShowSuccessImage(controller) {
-    var imageUrl = $('#success-image-url').val().trim()
-    saveSuccessImageUrl(controller, imageUrl)
+function saveAndShowSuccessImage(storageRepository) {
+    var imageUrl = $('#success-image-url').val()
+    storageRepository.saveSuccessImageUrl(imageUrl)
     showSuccessImage(imageUrl)
-}
-
-function saveSuccessImageUrl(controller, imageUrl) {
-    controller.saveSuccessImageUrl(imageUrl)
 }
 
 function showSuccessImage(imageUrl) {
@@ -107,15 +103,17 @@ function showSuccessImage(imageUrl) {
     successImage.removeClass('hidden')
 }
 
-function loadSuccessImage(storageRepository, settings) {
-    var imageUrl = settings.successImageUrl
-    if (imageUrl) {
+function loadSuccessImage(storageRepository) {
+    if (storageRepository.hasSuccessImageUrl()) {
+        var imageUrl = storageRepository.getSuccessImageUrl()
         $('#success-image-url').val(imageUrl)
         showSuccessImage(imageUrl)
     }
 }
 
-function saveAllProjects(storageRepository, controller, projects) {
-    var seenProjects = $.map(projects, function (project) { return project.name })
-    controller.saveSeenProjects(seenProjects)
+function saveAllProjects(storageRepository, projects) {
+    var seenProjects = $.map(projects, function (project) {
+        return project.name
+    })
+    storageRepository.saveSeenProjects(seenProjects)
 }

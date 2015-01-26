@@ -1,32 +1,33 @@
 var $ = require('jquery')
 
-module.exports = function (config, projects) {
+module.exports = function (storageRepository, projects) {
     return {
         addProjects: function () {
             $('#projects').empty()
             projects.forEach(addBuildStatusToScreen)
 
             if (projects.length === 0) {
-                showSuccessMessage(projects, config)
+                showSuccessMessage(projects, storageRepository)
             }
         }
     }
 }
 
 function addBuildStatusToScreen(project) {
-    $('#projects')
-        .append('<li class="monitor-project monitor-' + project.prognosis + '"><div class=monitor-outerContainer><div class=monitor-innerContainer>' +
-        project.name + '</div></div></li>')
+    $('#projects').append(
+        '<li class="monitor-project monitor-' + project.prognosis + '">' +
+        '<div class=monitor-outerContainer>' +
+        '<div class=monitor-innerContainer>' + project.name +
+        '</div>' +
+        '</div>' +
+        '</li>')
 }
 
-function showSuccessMessage(projects, config) {
-    var settings = config.load()
-    var successImageUrl = settings.successImageUrl
-
-    if (successImageUrl) {
+function showSuccessMessage(projects, storageRepository) {
+    if (storageRepository.hasSuccessImageUrl()) {
         $('#projects')
             .append('<li><div class=monitor-outerContainer><div id="success-image" class="monitor-innerContainer" style="' +
-            'background: url(' + successImageUrl + ') no-repeat center center fixed;' +
+            'background: url(' + storageRepository.getSuccessImageUrl() + ') no-repeat center center fixed;' +
             '-webkit-background-size: cover;' +
             '-moz-background-size: cover;' +
             '-o-background-size: cover;' +
@@ -34,8 +35,12 @@ function showSuccessMessage(projects, config) {
             '</div>' +
             '</div></li>')
     } else {
-        var successMessage = settings.successText
-        $('#projects')
-            .append('<li><div class=monitor-outerContainer><div id="success-text" class=monitor-innerContainer>' + successMessage + '</div></div></li>')
+        $('#projects').append(
+            '<li>' +
+            '<div class=monitor-outerContainer>' +
+            '<div id="success-text" class=monitor-innerContainer>' + storageRepository.getSuccessText() +
+            '</div>' +
+            '</div>' +
+            '</li>')
     }
 }

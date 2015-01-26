@@ -2,14 +2,14 @@ var $ = require('jquery')
 var appender = require('./appender')
 var styler = require('./styler')
 
-module.exports = function (config) {
+module.exports = function (storageRepository) {
     return {
-        init: function() {
+        init: function () {
             showConfigLinkOnMouseMove();
         },
 
         updateBuildMonitor: function () {
-            if (!config.isReady()) {
+            if (!storageRepository.isReady()) {
                 window.location.replace('config')
                 return
             }
@@ -18,20 +18,29 @@ module.exports = function (config) {
                 type: 'POST',
                 url: '/api/projects',
                 timeout: 15000,
-                data: config.load(), dataType: "json",
+                data: toPayload(storageRepository),
+                dataType: "json",
                 success: this.updateScreen,
                 error: this.onError
             })
         },
 
         updateScreen: function (data) {
-            appender(config, data).addProjects()
+            appender(storageRepository, data).addProjects()
             styler.styleProjects()
         },
 
-        onError: function(data) {
+        onError: function (data) {
             $('#projects').text('Failed to fetch projects: ' + data.status + ' ' + data.statusText)
         }
+    }
+}
+
+function toPayload(storageRepository) {
+    return {
+        cctray: storageRepository.getCctray(),
+        includedProjects: storageRepository.getIncludedProjects(),
+        serverType: storageRepository.getServerType()
     }
 }
 

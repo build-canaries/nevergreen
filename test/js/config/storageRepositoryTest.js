@@ -137,6 +137,22 @@ describe('Configurable build monitor', function () {
         it('knows no projects are included if none are saved', function () {
             expect(storageRepository.includesProject('a')).toBeFalsy()
         })
+
+        it('is ready if a cctray and included projects have been set', function () {
+            localStorage.setItem('cctray', 'some-url')
+            localStorage.setItem('includedProjects', ['a', 'b', 'c'])
+            expect(storageRepository.isReady()).toBeTruthy()
+        })
+
+        it('is not ready if no included projects have been set', function () {
+            localStorage.setItem('cctray', 'some-url')
+            expect(storageRepository.isReady()).toBeFalsy()
+        })
+
+        it('is not ready if no cctray has been set', function () {
+            localStorage.setItem('includedProjects', ['a', 'b', 'c'])
+            expect(storageRepository.isReady()).toBeFalsy()
+        })
     })
 
 })

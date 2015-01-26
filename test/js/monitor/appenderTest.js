@@ -1,14 +1,19 @@
 var $ = require('jquery')
-var monitorAppender = require('../../../src/js/monitor/appender')
+var storageRepository = {
+    hasSuccessImageUrl: function () {
+    },
+    getSuccessImageUrl: function () {
+    },
+    getSuccessText: function () {
+    }
+}
+var projects = [];
+var appender = require('../../../src/js/monitor/appender')(storageRepository, projects)
 
 describe('Showing success message', function () {
-    it('image', function () {
-        var config = {
-            load: function () {
-                return {successText: 'some success text', successImageUrl: 'some-success-url'}
-            }
-        }
-        var appender = monitorAppender(config, [])
+    it('shows success image', function () {
+        spyOn(storageRepository, 'hasSuccessImageUrl').and.returnValue(true)
+        spyOn(storageRepository, 'getSuccessImageUrl').and.returnValue('some-success-url')
         $('body').empty()
         $('body').append('<div id="projects"/>')
 
@@ -19,12 +24,6 @@ describe('Showing success message', function () {
     })
 
     it('text', function () {
-        var config = {
-            load: function () {
-                return {successText: 'some success text'}
-            }
-        }
-        var appender = monitorAppender(config, [])
         $('body').empty()
         $('body').append('<div id="projects"/>')
 

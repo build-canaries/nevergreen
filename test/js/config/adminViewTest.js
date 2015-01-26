@@ -1,40 +1,77 @@
 var $ = require('jquery')
 var adminView = require('../../../src/js/config/adminView')
-var config = require('../../../src/js/config/config')
 
 describe('view logic', function () {
 
-    var adminController = { saveIncludedProjects: function(){},
-                            getProjects: function(){},
-                            saveSuccessText: function(){},
-                            saveSuccessImageUrl: function(){},
-                            saveSeenProjects: function(){}}
+    var adminControllerMock = {
+        getProjects: function () {
+        },
+        saveSeenProjects: function () {
+        }
+    }
 
-    var storageRepository = {}
+    var storageRepositoryMock = {
+        hasCctray: function () {
+        },
+        saveCctray: function () {
+        },
+        getSuccessText: function () {
+        },
+        getSuccessImageUrl: function () {
+        },
+        hasSuccessImageUrl: function () {
+        },
+        saveSuccessText: function () {
+        },
+        saveSuccessImageUrl: function () {
+        },
+        saveIncludedProjects: function () {
+        },
+        getCctray: function () {
+        },
+        saveSeenProjects: function () {
+        },
+        cctraySeen: function () {
+        }
+    }
+
+    var projectsViewMock = {
+        findIncludedProjects: function () {
+        },
+        includeAll: function () {
+        },
+        excludeAll: function () {
+        },
+        listProjects: function () {
+        }
+    }
 
     beforeEach(function () {
         $('body').empty()
         $('body').append('<div id="projects"/>')
         localStorage.clear()
-        view = adminView(adminController, storageRepository)
+        view = adminView(adminControllerMock, storageRepositoryMock, projectsViewMock)
     })
 
     describe('autoloads projects', function () {
         it('does if cctray is available', function () {
-            localStorage.setItem('cctray', 'some-url')
-            spyOn(adminController, 'getProjects')
+            spyOn(storageRepositoryMock, 'hasCctray').and.returnValue(true)
+            spyOn(storageRepositoryMock, 'getCctray')
+            spyOn(adminControllerMock, 'getProjects')
 
             view.init()
 
-            expect(adminController.getProjects).toHaveBeenCalled()
+            expect(adminControllerMock.getProjects).toHaveBeenCalled()
+            expect(storageRepositoryMock.getCctray).toHaveBeenCalled()
         })
 
         it('does not if cctray is unavailable', function () {
-            spyOn(adminController, 'getProjects')
+            spyOn(storageRepositoryMock, 'hasCctray').and.returnValue(false)
+            spyOn(adminControllerMock, 'getProjects')
 
-            view.init(config)
+            view.init()
 
-            expect(adminController.getProjects).not.toHaveBeenCalled()
+            expect(adminControllerMock.getProjects).not.toHaveBeenCalled()
         })
     })
 
@@ -58,34 +95,38 @@ describe('view logic', function () {
         })
     })
 
-    describe('cctray url', function() {
-        it('saves on return key press', function() {
+    describe('cctray url', function () {
+        it('saves on return key press', function () {
+            spyOn(storageRepositoryMock, 'saveCctray')
+
             $('body').append('<form>' +
             '<input id="cctray-url" type=text>' +
             '</form>')
 
             view.init()
-            $('#cctray-url').val('   expected   ')
+            $('#cctray-url').val('some-url')
 
             // press return event
-            var e = jQuery.Event('keypress'); e.which = 13; e.keyCode = 13;
+            var e = jQuery.Event('keypress');
+            e.which = 13;
+            e.keyCode = 13;
             $('#cctray-url').trigger(e);
 
-            expect(localStorage.cctray).toBe('expected')
+            expect(storageRepositoryMock.saveCctray).toHaveBeenCalledWith('some-url')
         })
     })
 
-    describe('fetch projects saves afterwards', function() {
-        it('saves', function() {
-            spyOn(adminController, 'saveIncludedProjects')
+    describe('fetch projects saves afterwards', function () {
+        it('saves', function () {
+            spyOn(storageRepositoryMock, 'saveIncludedProjects')
 
             view.appendProjects([])
 
-            expect(adminController.saveIncludedProjects).toHaveBeenCalled()
+            expect(storageRepositoryMock.saveIncludedProjects).toHaveBeenCalled()
         })
     })
 
-    it('handles errors', function() {
+    it('handles errors', function () {
         view.errorHandler('code', 'reason')
 
         expect($('#projects')).toContainHtml('reason')
@@ -105,15 +146,15 @@ describe('view logic', function () {
             it('saves', function () {
                 view.addClickHandlers()
                 $('#success-text').val('expected')
-                spyOn(adminController, 'saveSuccessText')
+                spyOn(storageRepositoryMock, 'saveSuccessText')
 
                 $('#save-success-configuration').click()
 
-                expect(adminController.saveSuccessText).toHaveBeenCalledWith(storageRepository, 'expected')
+                expect(storageRepositoryMock.saveSuccessText).toHaveBeenCalledWith('expected')
             })
 
             it('loads', function () {
-                localStorage.setItem('successText', 'any old value')
+                spyOn(storageRepositoryMock, 'getSuccessText').and.returnValue('any old value')
                 var textInput = $('#success-text')
 
                 view.init()
@@ -124,7 +165,8 @@ describe('view logic', function () {
 
         describe('success image', function () {
             it('loads', function () {
-                localStorage.setItem('successImageUrl', 'any old value')
+                spyOn(storageRepositoryMock, 'getSuccessImageUrl').and.returnValue('any old value')
+                spyOn(storageRepositoryMock, 'hasSuccessImageUrl').and.returnValue(true)
                 var successImageUrl = $('#success-image-url')
 
                 view.init()
@@ -138,14 +180,14 @@ describe('view logic', function () {
             it('saves and shows image on the page', function () {
                 view.init()
                 $('#success-image-url').val('expected-image-url')
-                spyOn(adminController, 'saveSuccessImageUrl')
+                spyOn(storageRepositoryMock, 'saveSuccessImageUrl')
 
                 $('#save-success-configuration').click()
 
                 var imageSrc = $('#success-image').attr('src');
                 expect(imageSrc).toBe('expected-image-url')
                 expect($('#success-image')).not.toHaveClass('hidden')
-                expect(adminController.saveSuccessImageUrl).toHaveBeenCalledWith('expected-image-url')
+                expect(storageRepositoryMock.saveSuccessImageUrl).toHaveBeenCalledWith('expected-image-url')
             })
         })
     })

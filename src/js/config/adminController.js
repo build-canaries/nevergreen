@@ -2,19 +2,22 @@ var $ = require('jquery')
 
 module.exports = {
 
-    getProjects: function (config, handler, showSpinner, hideSpinner, errorHandler) {
-        var settings = config.load()
-
+    getProjects: function (cctrayUrl, successHandler, showSpinner, hideSpinner, errorHandler) {
         $.ajax({
             type: 'GET',
             url: '/api/projects',
             timeout: 15000,
-            data: {url: settings.cctray}, dataType: "json",
-            beforeSend: function() { showSpinner() },
-            complete: function () { hideSpinner() },
-            success: function(response) {
+            data: {url: cctrayUrl}, dataType: "json",
+            beforeSend: function () {
+                showSpinner()
+            },
+            complete: function () {
+                hideSpinner()
+            },
+            success: function (response) {
                 localStorage.serverType = response.server
-                handler(response.projects) },
+                successHandler(response.projects)
+            },
             error: function (xhr, ajaxOptions, thrownError) {
                 errorHandler(xhr.status, thrownError)
             }
@@ -23,22 +26,6 @@ module.exports = {
 
     clearProjects: function () {
         $('#projects').empty()
-    },
-
-    saveIncludedProjects: function (includedProjects) {
-        localStorage.setItem('includedProjects', includedProjects)
-    },
-
-    saveSuccessText: function (successText) {
-        localStorage.setItem('successText', successText)
-    },
-
-    saveSuccessImageUrl: function (successImageUrl) {
-        localStorage.setItem('successImageUrl', successImageUrl)
-    },
-
-    saveSeenProjects: function (projects) {
-        localStorage.setItem('seenProjects', projects)
     }
 
 }
