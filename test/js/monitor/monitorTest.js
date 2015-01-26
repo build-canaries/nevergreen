@@ -2,7 +2,7 @@ var $ = require('jquery')
 var monitor = require('../../../src/js/monitor/monitor')
 
 describe('Monitor page', function () {
-    var storageRepositoryMock = {
+    var trackingRepositoryMock = {
         isReady: function () {
         },
         getCctray: function () {
@@ -13,14 +13,23 @@ describe('Monitor page', function () {
         }
     }
 
+    var successRepositoryMock = {
+        hasSuccessImageUrl: function () {
+        },
+        getSuccessImageUrl: function () {
+        },
+        getSuccessText: function () {
+        }
+    }
+
     it('loads index page', function () {
-        spyOn(storageRepositoryMock, 'isReady').and.returnValue(true)
-        spyOn(storageRepositoryMock, 'getCctray').and.returnValue('some-url')
-        spyOn(storageRepositoryMock, 'getIncludedProjects').and.returnValue(['a', 'b', 'c'])
-        spyOn(storageRepositoryMock, 'getServerType').and.returnValue('server-type')
+        spyOn(trackingRepositoryMock, 'isReady').and.returnValue(true)
+        spyOn(trackingRepositoryMock, 'getCctray').and.returnValue('some-url')
+        spyOn(trackingRepositoryMock, 'getIncludedProjects').and.returnValue(['a', 'b', 'c'])
+        spyOn(trackingRepositoryMock, 'getServerType').and.returnValue('server-type')
         spyOn($, 'ajax')
 
-        monitor(storageRepositoryMock).updateBuildMonitor()
+        monitor(trackingRepositoryMock, successRepositoryMock).updateBuildMonitor()
 
         expect($.ajax).toHaveBeenCalledWith({
             url: '/api/projects',
@@ -38,10 +47,10 @@ describe('Monitor page', function () {
     })
 
     it('loads config page', function () {
-        spyOn(storageRepositoryMock, 'isReady').and.returnValue(false)
+        spyOn(trackingRepositoryMock, 'isReady').and.returnValue(false)
         spyOn(window.location, 'replace')
 
-        monitor(storageRepositoryMock).updateBuildMonitor()
+        monitor(trackingRepositoryMock, successRepositoryMock).updateBuildMonitor()
 
         expect(window.location.replace).toHaveBeenCalledWith('config')
     })
@@ -50,12 +59,12 @@ describe('Monitor page', function () {
         $('body').empty()
         $('body').append('<div id="projects"/>')
 
-        spyOn(storageRepositoryMock, 'isReady').and.returnValue(true)
+        spyOn(trackingRepositoryMock, 'isReady').and.returnValue(true)
         spyOn($, 'ajax').and.callFake(function (e) {
             e.error({status: 'code', statusText: 'reason'})
         })
 
-        monitor(storageRepositoryMock).updateBuildMonitor()
+        monitor(trackingRepositoryMock, successRepositoryMock).updateBuildMonitor()
 
         expect($('#projects')).toContainHtml('reason')
     })

@@ -2,14 +2,14 @@ var $ = require('jquery')
 var appender = require('./appender')
 var styler = require('./styler')
 
-module.exports = function (storageRepository) {
+module.exports = function (trackingRepository, successRepository) {
     return {
         init: function () {
             showConfigLinkOnMouseMove();
         },
 
         updateBuildMonitor: function () {
-            if (!storageRepository.isReady()) {
+            if (!trackingRepository.isReady()) {
                 window.location.replace('config')
                 return
             }
@@ -18,7 +18,7 @@ module.exports = function (storageRepository) {
                 type: 'POST',
                 url: '/api/projects',
                 timeout: 15000,
-                data: toPayload(storageRepository),
+                data: toPayload(trackingRepository),
                 dataType: "json",
                 success: this.updateScreen,
                 error: this.onError
@@ -26,7 +26,7 @@ module.exports = function (storageRepository) {
         },
 
         updateScreen: function (data) {
-            appender(storageRepository, data).addProjects()
+            appender(successRepository, data).addProjects()
             styler.styleProjects()
         },
 
@@ -36,11 +36,11 @@ module.exports = function (storageRepository) {
     }
 }
 
-function toPayload(storageRepository) {
+function toPayload(trackingRepository) {
     return {
-        cctray: storageRepository.getCctray(),
-        includedProjects: storageRepository.getIncludedProjects(),
-        serverType: storageRepository.getServerType()
+        cctray: trackingRepository.getCctray(),
+        includedProjects: trackingRepository.getIncludedProjects(),
+        serverType: trackingRepository.getServerType()
     }
 }
 

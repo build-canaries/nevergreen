@@ -4,23 +4,23 @@ var ScaleText = require('scale-text')
 var projectBoxHeight = 42 // Ideally we'd get this from the page, but we don't know if the text is wrapping already
 var maximumProjectNameFontSize = 21
 
-module.exports = function (storageRepository) {
+module.exports = function (trackingRepository) {
     var view = {
         listProjects: function (projects) {
             var $projects = $('#projects');
             $projects.empty()
 
-            var previouslyLoaded = storageRepository.cctraySeen($('#cctray-url').val())
+            var previouslyLoaded = trackingRepository.cctraySeen($('#cctray-url').val())
             var sortedProjects = sortProjectsByName(projects)
 
             sortedProjects.forEach(function (project) {
                 var included = ''
-                if (!storageRepository.isReady() || storageRepository.includesProject(project.name)) {
+                if (!trackingRepository.isReady() || trackingRepository.includesProject(project.name)) {
                     included = 'checked'
                 }
 
                 var newNote = ''
-                if (previouslyLoaded && !storageRepository.projectSeen(project.name)) {
+                if (previouslyLoaded && !trackingRepository.projectSeen(project.name)) {
                     newNote = ' <sup class="config-new-project">new</sup>'
                 }
 
@@ -35,18 +35,18 @@ module.exports = function (storageRepository) {
             })
 
             $projects.find('input').click(function () {
-                storageRepository.saveIncludedProjects(view.findIncludedProjects())
+                trackingRepository.saveIncludedProjects(view.findIncludedProjects())
             })
         },
 
         includeAll: function () {
             $('#projects').find('input').prop('checked', true)
-            storageRepository.saveIncludedProjects(view.findIncludedProjects())
+            trackingRepository.saveIncludedProjects(view.findIncludedProjects())
         },
 
         excludeAll: function () {
             $('#projects').find('input').prop('checked', false)
-            storageRepository.saveIncludedProjects(view.findIncludedProjects())
+            trackingRepository.saveIncludedProjects(view.findIncludedProjects())
         },
 
         findIncludedProjects: function () {

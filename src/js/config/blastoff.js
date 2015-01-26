@@ -1,8 +1,12 @@
 module.exports = function () {
-    var adminView = require('./adminView')
+    var configView = require('./configView')
+    var trackingView = require('./trackingView')
+    var successView = require('./successView')
     var adminController = require('./adminController')
-    var storageRepository = require('./storageRepository')
+    var trackingRepository = require('../storage/trackingRepository')
+    var successRepository = require('../storage/successRepository')
     var projectsView = require('./projectsView')
 
-    adminView(adminController, storageRepository, projectsView(storageRepository)).init()
+    trackingView(adminController, trackingRepository, projectsView(trackingRepository), configView).init()
+    successView(successRepository).init()
 }

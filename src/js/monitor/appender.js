@@ -1,13 +1,13 @@
 var $ = require('jquery')
 
-module.exports = function (storageRepository, projects) {
+module.exports = function (successRepository, projects) {
     return {
         addProjects: function () {
             $('#projects').empty()
             projects.forEach(addBuildStatusToScreen)
 
             if (projects.length === 0) {
-                showSuccessMessage(projects, storageRepository)
+                showSuccessMessage(projects, successRepository)
             }
         }
     }
@@ -23,11 +23,11 @@ function addBuildStatusToScreen(project) {
         '</li>')
 }
 
-function showSuccessMessage(projects, storageRepository) {
-    if (storageRepository.hasSuccessImageUrl()) {
+function showSuccessMessage(projects, successRepository) {
+    if (successRepository.hasSuccessImageUrl()) {
         $('#projects')
             .append('<li><div class=monitor-outerContainer><div id="success-image" class="monitor-innerContainer" style="' +
-            'background: url(' + storageRepository.getSuccessImageUrl() + ') no-repeat center center fixed;' +
+            'background: url(' + successRepository.getSuccessImageUrl() + ') no-repeat center center fixed;' +
             '-webkit-background-size: cover;' +
             '-moz-background-size: cover;' +
             '-o-background-size: cover;' +
@@ -38,7 +38,7 @@ function showSuccessMessage(projects, storageRepository) {
         $('#projects').append(
             '<li>' +
             '<div class=monitor-outerContainer>' +
-            '<div id="success-text" class=monitor-innerContainer>' + storageRepository.getSuccessText() +
+            '<div id="success-text" class=monitor-innerContainer>' + successRepository.getSuccessText() +
             '</div>' +
             '</div>' +
             '</li>')

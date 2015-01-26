@@ -36,26 +36,6 @@ module.exports = {
         return localStorage.hasOwnProperty('includedProjects')
     },
 
-    saveSuccessText: function (text) {
-        localStorage.setItem('successText', text.trim())
-    },
-
-    getSuccessText: function () {
-        return getOr('successText', '')
-    },
-
-    saveSuccessImageUrl: function (url) {
-        localStorage.setItem('successImageUrl', url.trim())
-    },
-
-    getSuccessImageUrl: function () {
-        return getOr('successImageUrl', '')
-    },
-
-    hasSuccessImageUrl: function () {
-        return exists('successImageUrl')
-    },
-
     saveSeenProjects: function (projects) {
         localStorage.setItem('seenProjects', projects)
     },

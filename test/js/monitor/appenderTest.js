@@ -1,5 +1,5 @@
 var $ = require('jquery')
-var storageRepository = {
+var successRepository = {
     hasSuccessImageUrl: function () {
     },
     getSuccessImageUrl: function () {
@@ -8,12 +8,12 @@ var storageRepository = {
     }
 }
 var projects = [];
-var appender = require('../../../src/js/monitor/appender')(storageRepository, projects)
+var appender = require('../../../src/js/monitor/appender')(successRepository, projects)
 
 describe('Showing success message', function () {
     it('shows success image', function () {
-        spyOn(storageRepository, 'hasSuccessImageUrl').and.returnValue(true)
-        spyOn(storageRepository, 'getSuccessImageUrl').and.returnValue('some-success-url')
+        spyOn(successRepository, 'hasSuccessImageUrl').and.returnValue(true)
+        spyOn(successRepository, 'getSuccessImageUrl').and.returnValue('some-success-url')
         $('body').empty()
         $('body').append('<div id="projects"/>')
 
