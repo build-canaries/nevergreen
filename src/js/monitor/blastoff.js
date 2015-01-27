@@ -1,18 +1,19 @@
 module.exports = function () {
     var trackingRepository = require('../storage/trackingRepository')
     var successRepository = require('../storage/successRepository')
+    var timingRepository = require('../storage/timingRepository')
     var appender = require('./appender')(successRepository)
     var monitor = require('./monitor')(trackingRepository, appender)
 
-    var fiveSeconds = 5000
+    var pollingTime = timingRepository.getPollingTimeInMilliseconds()
 
     monitor.init()
 
     // run immediately
     monitor.updateBuildMonitor()
 
-    // now run every 5 seconds
+    //schedule runs
     setInterval(function () {
         monitor.updateBuildMonitor()
-    }, fiveSeconds)
+    }, pollingTime)
 }
