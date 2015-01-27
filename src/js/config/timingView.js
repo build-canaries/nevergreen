@@ -10,7 +10,6 @@ module.exports = function (storageRepository) {
 
         addClickHandlers: function () {
             $('#save-polling-time').click(function (e) {
-                e.preventDefault();
                 savePollingTime(storageRepository)
             })
             $('#polling-time').blur(function () {
