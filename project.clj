@@ -1,10 +1,10 @@
 (defproject nevergreen "0.4.0pre"
             :description "A build monitor with attitude"
             :url "https://github.com/build-canaries/nevergreen"
-            :dependencies [[ring "1.2.2"]
-                           [environ "0.5.0"]
-                           [compojure "1.1.8"]
-                           [cheshire "5.3.1"]
+            :dependencies [[ring "1.3.2"]
+                           [environ "1.0.0"]
+                           [compojure "1.3.1"]
+                           [cheshire "5.4.0"]
                            [clj-cctray "0.8.0"]
                            [clj-http "1.0.1"]
                            [com.duelinmarkers/ring-request-logging "0.2.0"]
