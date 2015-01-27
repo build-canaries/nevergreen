@@ -71,8 +71,15 @@
     </section><!-- /#tracking -->
 
     <section id="timing" class="dashboard-main-section">
-        <h2 class="visuallyhidden">Timing</h2>
-        <p>TODO - there will be some options to determine refresh rates here ?</p>
+        <fieldset class="tracking-cctray-group">
+           <form class="tracking-cctray-group-cctray-form" onSubmit="return false;">
+               <div>
+                   <label for="polling-time">Projects polling</label>
+                   <input id="polling-time" class="tracking-cctray-group-cctray-form-input-small tracking-cctray-group-cctray-form-input" type="number" value="5"/> seconds
+                   <button id="save-polling-time" type="submit" class="dashboard-button dashboard-button-secondary tracking-cctray-group-cctray-form-button">Save</button>
+               </div>
+           </form>
+        </fieldset>
     </section><!-- /#timing -->
 
     <section id="success" class="dashboard-main-section">
