@@ -28,7 +28,7 @@ function showSuccessMessage(projects, successRepository) {
         $('#projects')
             .append('<li><div class=monitor-outerContainer><div id="success-image" class="monitor-success-image monitor-innerContainer" style="' +
             'background: url(' + successRepository.getSuccessImageUrl() + ') no-repeat center center fixed;' +
-            'background-size: cover">' +
+            'background-size: contain">' +
             '</div>' +
             '</div></li>')
     } else {
