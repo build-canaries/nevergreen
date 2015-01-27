@@ -1,7 +1,8 @@
 (defproject nevergreen "0.4.0pre"
             :description "A build monitor with attitude"
             :url "https://github.com/build-canaries/nevergreen"
-            :dependencies [[ring "1.3.2"]
+            :dependencies [[org.clojure/clojure "1.6.0"]
+                           [ring "1.3.2"]
                            [environ "1.0.0"]
                            [compojure "1.3.1"]
                            [cheshire "5.4.0"]
@@ -20,6 +21,5 @@
             :profiles {:dev        {:plugins      [[lein-midje "3.1.3"]
                                                    [lein-ancient "0.5.5"]
                                                    [lein-idea "1.0.1"]]
-                                    :dependencies [[org.clojure/clojure "1.6.0"]
-                                                   [midje "1.6.3"]]}
+                                    :dependencies [[midje "1.6.3"]]}
                        :production {:env {:production true}}})
