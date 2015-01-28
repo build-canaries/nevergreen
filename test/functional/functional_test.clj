@@ -1,7 +1,8 @@
 (ns functional.functional-test
   (:require [clojure.test :refer :all]
             [clj-webdriver.taxi :refer :all]
-            [clj-webdriver.driver :refer [init-driver]])
+            [clj-webdriver.driver :refer [init-driver]]
+            [environ.core :refer [env]])
   (import org.openqa.selenium.phantomjs.PhantomJSDriver
           org.openqa.selenium.Dimension))
 
@@ -22,10 +23,15 @@
 
 (use-fixtures :once functional-fixture)
 
+(defn nevergreen-under-test []
+  (let [url (or (env :functional-url) "http://localhost:5000/config")]
+    (println "Running agaisnt" url)
+    url))
+
 (def expected-projects ["success building project", "failure sleeping project", "failure building project"])
 
-(deftest functional-test
-  (to "http://localhost:5000/config")
+(deftest simple-journey
+  (to (nevergreen-under-test))
 
   (clear "#cctray-url")
   (input-text "#cctray-url" "http://localhost:5000/test_data.xml")

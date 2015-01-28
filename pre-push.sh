@@ -9,7 +9,7 @@ echo 'Running the server unit tests'
 lein do clean, midje
 
 echo 'Running the functional tests (the server must be running!)'
-lein test
+lein test functional.functional-test
 
 echo 'Building an uberjar'
 lein uberjar
