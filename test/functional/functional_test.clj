@@ -24,25 +24,26 @@
 (use-fixtures :once functional-fixture)
 
 (defn nevergreen-under-test []
-  (let [url (or (env :functional-url) "http://localhost:5000/config")]
+  (let [url (or (env :functional-url) "http://localhost:5000")]
     (println "Running agaisnt" url)
     url))
 
 (def expected-projects ["success building project", "failure sleeping project", "failure building project"])
 
 (deftest simple-journey
-  (to (nevergreen-under-test))
+  (let [base-url (nevergreen-under-test)]
+    (to (str base-url "/config"))
 
-  (clear "#cctray-url")
-  (input-text "#cctray-url" "http://localhost:5000/test_data.xml")
-  (click "#cctray-fetch")
+    (clear "#cctray-url")
+    (input-text "#cctray-url" (str base-url "/test_data.xml"))
+    (click "#cctray-fetch")
 
-  (wait-until #(exists? "#projects > p > label > input"))
+    (wait-until #(exists? "#projects > p > label > input"))
 
-  (click "#include-all")
-  (click "#monitor")
+    (click "#include-all")
+    (click "#monitor")
 
-  (wait-until #(= (title) "Nevergreen"))
+    (wait-until #(= (title) "Nevergreen"))
 
-  (doseq [actual-project (elements "#projects > li > div > div")]
-    (is (in? expected-projects (text actual-project)) "Expected project not displayed")))
+    (doseq [actual-project (elements "#projects > li > div > div")]
+      (is (in? expected-projects (text actual-project)) "Expected project not displayed"))))
