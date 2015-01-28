@@ -14,3 +14,4 @@ pom.xml.asc
 /node_modules
 /resources/public/main.js
 /resources/public/main.css
+phantomjsdriver.log
