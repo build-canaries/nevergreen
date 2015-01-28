@@ -28,7 +28,7 @@ describe('Configurable build monitor', function () {
         })
 
         it('shows and hides spinner whilst getting projects', function () {
-            var condigView = {
+            var configView = {
                 showSpinner: function () {
                 },
                 hideSpinner: function () {
@@ -38,13 +38,13 @@ describe('Configurable build monitor', function () {
                 e.beforeSend()
                 e.complete()
             })
-            spyOn(condigView, 'showSpinner')
-            spyOn(condigView, 'hideSpinner')
+            spyOn(configView, 'showSpinner')
+            spyOn(configView, 'hideSpinner')
 
-            adminController.getProjects('some-url', null, condigView.showSpinner, condigView.hideSpinner)
+            adminController.getProjects('some-url', null, configView.showSpinner, configView.hideSpinner)
 
-            expect(condigView.showSpinner).toHaveBeenCalled()
-            expect(condigView.hideSpinner).toHaveBeenCalled()
+            expect(configView.showSpinner).toHaveBeenCalled()
+            expect(configView.hideSpinner).toHaveBeenCalled()
         })
     })
 

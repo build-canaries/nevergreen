@@ -2,12 +2,11 @@ var $ = require('jquery')
 
 module.exports = {
     showSpinner: function () {
-        $('#loading-modal').addClass('loading')
+        $('#projects').empty()
         $('#spinner').show()
     },
 
     hideSpinner: function () {
-        $('#loading-modal').removeClass('loading')
         $('#spinner').hide()
     },
 

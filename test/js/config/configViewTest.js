@@ -11,25 +11,21 @@ describe('config view', function () {
 
     describe('spinner', function () {
         it('is shown', function () {
-            $body.append(
-                '<div id="loading-modal" />' +
-                '<div id="spinner" style="display: none" />')
+            $body.append('<div id="projects"><ul><li>some project</li></ul></div>' +
+            '<div id="spinner" style="display: none" />')
 
             view.showSpinner()
 
             expect($('#spinner')).toBeVisible()
-            expect($('#loading-modal')).toHaveClass('loading')
+            expect($('#projects')).toBeEmpty()
         })
 
         it('is hidden', function () {
-            $body.append(
-                '<div id="loading-modal"/>' +
-                '<div id="spinner"/>')
+            $body.append('<div id="spinner"/>')
 
             view.hideSpinner()
 
             expect($('#spinner')).not.toBeVisible()
-            expect($('#loading-modal')).not.toHaveClass('loading')
         })
     })
 
