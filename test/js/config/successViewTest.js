@@ -68,6 +68,7 @@ describe('success view', function () {
             view.init()
             $('#success-image-url').val('expected-image-url')
             spyOn(successRepositoryMock, 'saveSuccessImageUrl')
+            spyOn(successRepositoryMock, 'hasSuccessImageUrl').and.returnValue(true)
 
             $('#save-success-configuration').click()
 
@@ -75,6 +76,20 @@ describe('success view', function () {
             expect($success.attr('src')).toBe('expected-image-url')
             expect($success).not.toHaveClass('hidden')
             expect(successRepositoryMock.saveSuccessImageUrl).toHaveBeenCalledWith('expected-image-url')
+        })
+
+        it('hides image if url is empty', function () {
+            view.init()
+            $('#success-image-url').val('')
+            spyOn(successRepositoryMock, 'saveSuccessImageUrl')
+            spyOn(successRepositoryMock, 'hasSuccessImageUrl').and.returnValue(false)
+
+            $('#save-success-configuration').click()
+
+            var $success = $('#success-image');
+            expect($success.attr('src')).toBe('')
+            expect($success).toHaveClass('hidden')
+            expect(successRepositoryMock.saveSuccessImageUrl).toHaveBeenCalledWith('')
         })
     })
 

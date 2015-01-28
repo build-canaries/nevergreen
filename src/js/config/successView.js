@@ -41,19 +41,19 @@ function saveSuccessText(storageRepository) {
 function saveAndShowSuccessImage(storageRepository) {
     var imageUrl = $('#success-image-url').val()
     storageRepository.saveSuccessImageUrl(imageUrl)
-    showSuccessImage(imageUrl)
+    showSuccessImage(imageUrl, storageRepository)
 }
 
-function showSuccessImage(imageUrl) {
-    var successImage = $('#success-image');
+function showSuccessImage(imageUrl, storageRepository) {
+    var successImage = $('#success-image')
     successImage.attr('src', imageUrl)
-    successImage.removeClass('hidden')
+    storageRepository.hasSuccessImageUrl() ? successImage.removeClass('hidden') : successImage.addClass('hidden')
 }
 
 function loadSuccessImage(storageRepository) {
     if (storageRepository.hasSuccessImageUrl()) {
         var imageUrl = storageRepository.getSuccessImageUrl()
         $('#success-image-url').val(imageUrl)
-        showSuccessImage(imageUrl)
+        showSuccessImage(imageUrl, storageRepository)
     }
 }
