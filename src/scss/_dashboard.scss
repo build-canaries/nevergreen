@@ -128,11 +128,12 @@
 
   //HEADER
   .dashboard-header {
-    position: relative;
+    position: fixed;
     padding: 1em 0;
     background-color: #ececec;
     box-shadow: 0 2px 5px rgba(0,0,0,0.26);
     z-index: 1;
+    width: 100%;
   }
     .dashboard-header-logo {
       position: absolute;
@@ -162,6 +163,8 @@
     color: #ffffff;
     width: 10%;
     float: left;
+    position: fixed;
+    margin-top: 4.5em;
   }
     .dashboard-navigation-list {
       list-style: none;
@@ -218,6 +221,8 @@
     width: 90%;
     padding: 2%;
     float: left;
+    margin-top: 4.5em;
+    margin-left: 10%;
   }
     .dashboard-main-section {
       display: none;
@@ -302,10 +307,10 @@
   //FOOTER
   .contentinfo {
     clear:both;
-    width: 90%;
-    margin-left: 10%;
-    padding: 2%;
     background-color: white;
+    position: fixed;
+    right: 0;
+    bottom: 0;
   }
 
   .version {
