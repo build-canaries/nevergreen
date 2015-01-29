@@ -1,5 +1,5 @@
 .dashboard {
-  background: #222222;
+  background: #FFFFFF;
 
   //ROOT LEVEL
   * {
@@ -165,6 +165,7 @@
     float: left;
     position: fixed;
     margin-top: 4.5em;
+    height: 100%;
   }
     .dashboard-navigation-list {
       list-style: none;
