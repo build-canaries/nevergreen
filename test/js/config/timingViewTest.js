@@ -19,24 +19,24 @@ describe('timing view', function () {
         })
 
         it('saves', function () {
-            view.addClickHandlers()
+            view.addEventHandlers()
             $('#polling-time').val('6')
             spyOn(timingRepositoryMock, 'savePollingTime')
 
-            $('#save-polling-time').click()
+            $('#polling-time').blur()
 
             expect(timingRepositoryMock.savePollingTime).toHaveBeenCalledWith('6')
         })
 
         it('loads', function () {
             spyOn(timingRepositoryMock, 'getPollingTime').and.returnValue(6)
-            spyOn(view, 'addClickHandlers')
+            spyOn(view, 'addEventHandlers')
             var pollingTimeInput = $('#polling-time')
 
             view.init()
 
             expect(pollingTimeInput.val()).toBe('6')
-            expect(view.addClickHandlers).toHaveBeenCalled()
+            expect(view.addEventHandlers).toHaveBeenCalled()
         })
     })
 })

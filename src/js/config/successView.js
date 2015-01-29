@@ -4,14 +4,10 @@ module.exports = function (successRepository) {
     var view = {
         init: function () {
             load(successRepository)
-            this.addClickHandlers()
+            this.addEventHandlers()
         },
 
-        addClickHandlers: function () {
-            $('#save-success-configuration').click(function (e) {
-                e.preventDefault();
-                saveSuccessConfiguration(successRepository)
-            })
+        addEventHandlers: function () {
             $('#success-text').blur(function () {
                 saveSuccessText(successRepository)
             })
@@ -27,11 +23,6 @@ module.exports = function (successRepository) {
 function load(storageRepository) {
     $('#success-text').val(storageRepository.getSuccessText())
     loadSuccessImage(storageRepository);
-}
-
-function saveSuccessConfiguration(storageRepository) {
-    saveSuccessText(storageRepository)
-    saveAndShowSuccessImage(storageRepository)
 }
 
 function saveSuccessText(storageRepository) {

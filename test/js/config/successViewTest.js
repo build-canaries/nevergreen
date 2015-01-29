@@ -32,11 +32,11 @@ describe('success view', function () {
 
     describe('success text', function () {
         it('saves', function () {
-            view.addClickHandlers()
+            view.addEventHandlers()
             $('#success-text').val('expected')
             spyOn(successRepositoryMock, 'saveSuccessText')
 
-            $('#save-success-configuration').click()
+            $('#success-text').blur()
 
             expect(successRepositoryMock.saveSuccessText).toHaveBeenCalledWith('expected')
         })
@@ -70,7 +70,7 @@ describe('success view', function () {
             spyOn(successRepositoryMock, 'saveSuccessImageUrl')
             spyOn(successRepositoryMock, 'hasSuccessImageUrl').and.returnValue(true)
 
-            $('#save-success-configuration').click()
+            $('#success-image-url').blur()
 
             var $success = $('#success-image');
             expect($success.attr('src')).toBe('expected-image-url')
@@ -84,7 +84,7 @@ describe('success view', function () {
             spyOn(successRepositoryMock, 'saveSuccessImageUrl')
             spyOn(successRepositoryMock, 'hasSuccessImageUrl').and.returnValue(false)
 
-            $('#save-success-configuration').click()
+            $('#success-image-url').blur()
 
             var $success = $('#success-image');
             expect($success.attr('src')).toBe('')

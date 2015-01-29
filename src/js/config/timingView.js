@@ -5,13 +5,10 @@ module.exports = function (storageRepository) {
     var view = {
         init: function () {
             load(storageRepository)
-            this.addClickHandlers()
+            this.addEventHandlers()
         },
 
-        addClickHandlers: function () {
-            $('#save-polling-time').click(function (e) {
-                savePollingTime(storageRepository)
-            })
+        addEventHandlers: function () {
             $('#polling-time').blur(function () {
                 savePollingTime(storageRepository)
             })

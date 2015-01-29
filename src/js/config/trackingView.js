@@ -4,7 +4,7 @@ module.exports = function (controller, trackingRepository, projectsView, configV
     var view = {
         init: function () {
             load(trackingRepository, view.getProjects)
-            this.addClickHandlers()
+            this.addEventHandlers()
         },
 
         appendProjects: function (projects) {
@@ -18,7 +18,7 @@ module.exports = function (controller, trackingRepository, projectsView, configV
             trackingRepository.saveIncludedProjects(includedProjects)
         },
 
-        addClickHandlers: function () {
+        addEventHandlers: function () {
             $('#include-all').click(projectsView.includeAll)
             $('#exclude-all').click(projectsView.excludeAll)
             $("#cctray-url").keypress(function (e) {
