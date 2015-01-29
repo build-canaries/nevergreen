@@ -23,10 +23,13 @@ echo "#                                                                         
 echo "# Killing this script will automatically kill all the spawned processes.             #"
 echo "######################################################################################"
 
+echo "[0] fetching node modules and performing first build"
+npm install
+
 echo "[1] watching the js for changes..."
 npm run watch &
 
-echo "[2] automaitcally running the js tests on changes..."
+echo "[2] automatically running the js tests on changes..."
 npm run testing &
 
 echo "[3] automatically running the server tests on changes..."
