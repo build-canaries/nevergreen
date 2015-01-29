@@ -44,7 +44,7 @@
       z-index: 1;
       width: 12px;
       height: 6px;
-      border: 2px solid #16a085; 
+      border: 2px solid #03a9f4;
       border-top-style: none;
       border-right-style: none;
     }
@@ -66,8 +66,8 @@
         border-color: #fff;
       } 
       &:after {
-        border-color: #16a085;
-        background: #16a085;
+        border-color: #03a9f4;
+        background: #03a9f4;
       }
     }
   }
@@ -106,9 +106,9 @@
     padding: 0.6em 1.5em;
   }
   .dashboard-button-primary {
-    background-color: #009587;
+    background-color: #0358F3;
     &:hover {
-      background-color: darken(#009587, 4%);
+      background-color: darken(#0358F3, 4%);
     }
   }
   .dashboard-button-secondary {
