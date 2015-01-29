@@ -266,7 +266,8 @@
     .tracking-cctray-group-builds {
       border: none;
       margin: 0;
-      padding: 0;
+      padding: 0 0 1.5em 0;
+      border-bottom: 1px solid #dcdcdc;
     }
       .tracking-cctray-group-builds-legend {
         color: #757575;
@@ -284,11 +285,12 @@
         margin-bottom: 2em;
         padding-top: 0.2em;
         padding-bottom: 2em;
-        border-bottom: 1px solid #dcdcdc;
       }
       .tracking-cctray-group-build-item {
         display: block;
         margin: 1em 0;
+        float: left;
+        width: 50%;
       }
 
 
