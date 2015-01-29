@@ -37,10 +37,12 @@
     &:before {
       transition: transform .4s cubic-bezier(.45,1.8,.5,.75);
       transform: rotate(-45deg) scale(0, 0);
-      content: "";      
+      -webkit-transition: -webkit-transform .4s cubic-bezier(.45,1.8,.5,.75);
+      -webkit-transform: rotate(315deg) scale(0, 0);
+      content: "";
       position: absolute;
-      left: 4px;
-      top: 3px;
+      left: 6px;
+      top: 4px;
       z-index: 1;
       width: 12px;
       height: 6px;
@@ -54,7 +56,7 @@
       top: -2px;
       left: 0;
       width: 1.1em;
-      height: 1.1em;      
+      height: 1.1em;
       background: #fff;
       border: 2px solid #f2f2f2;
       border-radius: 2px;
@@ -63,6 +65,7 @@
     &:checked {
       &:before {
         transform: rotate(-45deg) scale(1, 1);
+        -webkit-transform: rotate(315deg) scale(1, 1);
         border-color: #fff;
       } 
       &:after {
