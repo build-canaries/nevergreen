@@ -249,6 +249,20 @@
       font-size: 1.5rem;
       margin: 1em 0;
     }
+    .tracking-cctray-group-instructions {
+      font-size: 1.5rem;
+    }
+    .tracking-cctray-group-instructions-table {
+      width: 100%;
+      margin: 0 0 1em 0;
+      tr:nth-child(even) {
+        background-color: #ececec;
+      }
+    }
+    .tracking-cctray-group-instructions-text {
+      margin: 0 0 1em 0;
+    }
+
     .tracking-cctray-group-cctray-form {
       font-size: 1.5rem;
       margin-bottom: 1em;

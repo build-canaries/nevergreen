@@ -3,7 +3,7 @@ var $ = require('jquery')
 module.exports = function (controller, trackingRepository, projectsView, configView) {
     var view = {
         init: function () {
-            load(trackingRepository, view.getProjects)
+            load(trackingRepository, view.getProjects, projectsView.noProjects)
             this.addEventHandlers()
         },
 
@@ -33,6 +33,7 @@ module.exports = function (controller, trackingRepository, projectsView, configV
         },
 
         getProjects: function () {
+            projectsView.searching()
             controller.getProjects(trackingRepository.getCctray(), view.appendProjects, configView.showSpinner, configView.hideSpinner, configView.errorHandler)
         }
 
@@ -40,10 +41,12 @@ module.exports = function (controller, trackingRepository, projectsView, configV
     return view
 }
 
-function load(storageRepository, postLoadCallback) {
+function load(storageRepository, postLoadCallback, noProjectsCallBack) {
     $('#cctray-url').val(storageRepository.getCctray())
     if (storageRepository.hasCctray()) {
         postLoadCallback()
+    } else {
+        noProjectsCallBack()
     }
 }
 

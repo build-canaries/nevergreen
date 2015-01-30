@@ -21,12 +21,31 @@ describe('projects view', function () {
 
     beforeEach(function () {
         $body.empty()
-        $body.append('<div id="projects"/><div id="cctray-url" />')
+        $body.append('<div id="projects"/>' +
+        '<div id="cctray-url" />' +
+        '<div id="hello-text" class="visuallyhidden" />' +
+        '<div id="projects-controls" class="visuallyhidden"></div>')
 
         view = projectView(storageRepositoryMock)
     })
 
+    describe('no projects available', function() {
+        it('shows a helpful message', function() {
+            view.noProjects()
+
+            expect($('#hello-text')).not.toHaveClass('visuallyhidden')
+            expect($('#projects-controls')).toHaveClass('visuallyhidden')
+        })
+    })
+
     describe('adds projects to the dom', function () {
+        it('hides the helpful message for newcomes', function() {
+            view.listProjects([])
+
+            expect($('#hello-text')).toHaveClass('visuallyhidden')
+            expect($('#projects-controls')).not.toHaveClass('visuallyhidden')
+        })
+
         it('prints a list of project names', function () {
             spyOn(storageRepositoryMock, 'cctraySeen').and.returnValue(false)
             spyOn(storageRepositoryMock, 'includesProject').and.returnValue(true)

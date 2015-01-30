@@ -31,12 +31,14 @@ describe('tracking view', function () {
     var projectsViewMock = {
         findIncludedProjects: function () {
         },
+        searching: function() {},
         includeAll: function () {
         },
         excludeAll: function () {
         },
         listProjects: function () {
-        }
+        },
+        noProjects: function () {}
     }
 
     var configViewMock = {}
@@ -62,10 +64,12 @@ describe('tracking view', function () {
         it('expect when cctray is unavailable', function () {
             spyOn(trackingRepositoryMock, 'hasCctray').and.returnValue(false)
             spyOn(adminControllerMock, 'getProjects')
+            spyOn(projectsViewMock, 'noProjects')
 
             view.init()
 
             expect(adminControllerMock.getProjects).not.toHaveBeenCalled()
+            expect(projectsViewMock.noProjects).toHaveBeenCalled()
         })
     })
 
@@ -92,6 +96,17 @@ describe('tracking view', function () {
             view.appendProjects([])
 
             expect(trackingRepositoryMock.saveIncludedProjects).toHaveBeenCalled()
+        })
+    })
+
+    describe('getting projects', function() {
+        it('informs the projects view that is is searching', function() {
+            spyOn(projectsViewMock, 'searching')
+
+            view.getProjects()
+
+            expect(projectsViewMock.searching).toHaveBeenCalled()
+
         })
     })
 

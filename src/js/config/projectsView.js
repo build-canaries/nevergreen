@@ -6,7 +6,20 @@ var maximumProjectNameFontSize = 21
 
 module.exports = function (trackingRepository) {
     var view = {
+
+        noProjects: function() {
+            $("#hello-text").removeClass('visuallyhidden')
+            $("#projects-controls").addClass('visuallyhidden')
+        },
+
+        searching: function() {
+            $("#hello-text").addClass('visuallyhidden')
+            $("#projects-controls").removeClass('visuallyhidden')
+        },
+
         listProjects: function (projects) {
+            view.searching()
+
             var $projects = $('#projects');
             $projects.empty()
 
