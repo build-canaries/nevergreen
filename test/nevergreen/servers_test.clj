@@ -6,6 +6,9 @@
        (fact "jenkins"
              (subject/detect-server "http://jenkins.servername:8080/cc.xml") => :jenkins)
 
+       (fact "hosted jenkins"
+             (subject/detect-server "https://instance.ci.cloudbees.com/cc.xml") => :jenkins)
+
        (fact "hudson"
              (subject/detect-server "http://hudson.servername:8080/cc.xml") => :hudson)
 
@@ -41,3 +44,21 @@
 
        (fact "nil"
              (subject/detect-server nil) => nil))
+
+(tabular
+  (fact "unknown server?"
+        (subject/unknown-server? ?type) => ?result)
+  ?type ?result
+  nil true
+  (keyword "") true
+  :unknown true
+  :go false
+  :snap false
+  :jenkins false
+  :hudson false
+  :travis false
+  :team-city false
+  :cruise-control-rb false
+  :cruise-control false
+  :cruise-control-net false
+  :solano false)

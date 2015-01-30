@@ -7,7 +7,11 @@ module.exports = {
             type: 'GET',
             url: '/api/projects',
             timeout: 15000,
-            data: {url: cctrayUrl}, dataType: "json",
+            data: {
+                url: cctrayUrl,
+                serverType: localStorage.getItem('serverType')
+            },
+            dataType: "json",
             beforeSend: function () {
                 showSpinner()
             },

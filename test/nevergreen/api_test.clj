@@ -2,7 +2,8 @@
   (:require [midje.sweet :refer :all]
             [nevergreen.api :as subject]
             [nevergreen.http :as http]
-            [clj-cctray.core :as parser]))
+            [clj-cctray.core :as parser]
+            [nevergreen.servers :as servers]))
 
 (def valid-cctray "http://someserver/cc.xml")
 
@@ -12,24 +13,22 @@
         (parser/get-projects ..stream.. anything) => [{:name "project-1" :prognosis :sick}]
         (http/http-get valid-cctray) => ..stream..))
 
-(facts "we can detect if we are using a go server"
-       (fact "it is not a go server"
-             (subject/get-all-projects valid-cctray) => (contains {:server ""})
-             (provided
-               (parser/get-projects ..stream.. {:normalise true}) => [{:name "project-1"}]
-               (http/http-get valid-cctray) => ..stream..))
-
-       (fact "it is a go server"
-             (subject/get-all-projects valid-cctray) => (contains {:server "go"})
-             (provided
-               (parser/get-projects ..stream.. anything) => [{:name "project-1"} {:name "project-1 :: job1"}]
-               (http/http-get valid-cctray) => ..stream..)))
+(fact "it gets all projects"
+      (subject/get-all-projects valid-cctray) => {:projects (list {:name "project-1" :prognosis :sick})
+                                                  :server   ..server..}
+      (provided
+        (parser/get-projects ..stream.. anything) => [{:name "project-1" :prognosis :sick}]
+        (http/http-get valid-cctray) => ..stream..
+        (servers/detect-server valid-cctray) => ..server..))
 
 (facts "parses requested serverType"
        (fact "converts go server param to symbol"
-             (subject/options-from-config {:serverType "go"}) => {:normalise true, :server :go})
-       (fact "gives nil for empty string"
-             (subject/options-from-config {:serverType ""}) => {:normalise true}))
+             (subject/options-from-config {:serverType "go"}) => (contains {:server :go}))
+
+       (fact "auto detects if blank"
+             (subject/options-from-config {:serverType "" :cctray "some-url"}) => (contains {:server ..server..})
+             (provided
+               (servers/detect-server "some-url") => ..server..)))
 
 (facts "check url is invalid"
        (fact (subject/invalid-url? "http://bleh") => false)

@@ -17,7 +17,10 @@ describe('Configurable build monitor', function () {
             expect($.ajax).toHaveBeenCalledWith({
                 type: 'GET',
                 url: '/api/projects',
-                data: {url: 'some-url'},
+                data: {
+                    url: 'some-url',
+                    serverType: null
+                },
                 dataType: 'json',
                 timeout: jasmine.any(Number),
                 beforeSend: jasmine.any(Function),
