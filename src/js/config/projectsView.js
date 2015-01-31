@@ -1,8 +1,4 @@
 var $ = require('jquery')
-var ScaleText = require('scale-text')
-
-var projectBoxHeight = 42 // Ideally we'd get this from the page, but we don't know if the text is wrapping already
-var maximumProjectNameFontSize = 21
 
 module.exports = function (trackingRepository) {
     var view = {
@@ -18,36 +14,36 @@ module.exports = function (trackingRepository) {
         },
 
         listProjects: function (projects) {
+            $('#projects').empty()
             view.searching()
 
-            var $projects = $('#projects');
-            $projects.empty()
-
             var previouslyLoaded = trackingRepository.cctraySeen($('#cctray-url').val())
-            var sortedProjects = sortProjectsByName(projects)
-
-            sortedProjects.forEach(function (project) {
-                var included = ''
-                if (!trackingRepository.isReady() || trackingRepository.includesProject(project.name)) {
-                    included = 'checked'
-                }
-
-                var newNote = ''
-                if (previouslyLoaded && !trackingRepository.projectSeen(project.name)) {
-                    newNote = ' <sup class="config-new-project">new</sup>'
-                }
-
-                $projects.append(
-                    '<p class="tracking-cctray-group-build-item">' +
-                    '<label class="label-checkbox">' +
-                    '<input class="checkbox no-text-selection" type="checkbox" data-name="' + project.name + '" title="" ' + included + '> ' + project.name + newNote +
-                    '</label>' +
-                    '</p>')
-
-                calculateCorrectFontSize(projects);
+            sortProjectsByName(projects).forEach(function (project) {
+               view.addProject(project, previouslyLoaded)
             })
+        },
 
-            $projects.find('input').click(function () {
+        addProject: function(project, previouslyLoaded) {
+            var included = ''
+            if (projectIsSelected(trackingRepository, project)) {
+                included = 'checked'
+            }
+
+            var newNote = ''
+            if (projectIsBrandNew(previouslyLoaded, trackingRepository, project.name)) {
+                newNote = ' <sup class="config-new-project">new</sup>'
+            }
+
+            var $projects = $('#projects')
+            $projects.append(
+                '<p class="tracking-cctray-group-build-item">' +
+                '<label class="label-checkbox">' +
+                '<input class="checkbox no-text-selection" type="checkbox" data-name="' + project.name + '" title="" ' + included + '> ' + project.name + newNote +
+                '</label>' +
+                '</p>')
+
+
+            $projects.find('input[data-name="' + project.name + '"]').click(function () {
                 trackingRepository.saveIncludedProjects(view.findIncludedProjects())
             })
         },
@@ -71,19 +67,17 @@ module.exports = function (trackingRepository) {
     return view
 }
 
+function projectIsSelected(trackingRepository, project) {
+    return !trackingRepository.isReady() || trackingRepository.includesProject(project.name);
+}
+
+function projectIsBrandNew(previouslyLoaded, trackingRepository, projectName) {
+    return previouslyLoaded && !trackingRepository.projectSeen(projectName);
+}
+
 function sortProjectsByName(projects) {
     return projects.sort(function (item1, item2) {
         return item1.name.toLowerCase().localeCompare(item2.name.toLowerCase())
     });
 }
 
-function calculateCorrectFontSize() {
-    var $projects = $('#projects');
-    var width = $projects.width()
-    $projects.find('.checkbox').each(function (index, value) {
-        var text = [value.textContent]
-        var ideal = new ScaleText(text, projectBoxHeight, width).singleLineIdeal()
-        var idealCssFontSize = Math.min(ideal, maximumProjectNameFontSize)
-        $(value).css('font-size', idealCssFontSize)
-    })
-}

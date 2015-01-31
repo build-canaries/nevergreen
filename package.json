@@ -16,7 +16,6 @@
     "karma-browserify": "1.0.0",
     "karma-jasmine": "0.2.2",
     "karma-phantomjs-launcher": "0.1.4",
-
     "watch": "0.13.0"
   },
   "dependencies": {
