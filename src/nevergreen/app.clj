@@ -1,5 +1,7 @@
 (ns nevergreen.app
-  (import org.joda.time.DateTime)
+  (import org.joda.time.DateTime
+          org.eclipse.jetty.server.handler.GzipHandler
+          org.eclipse.jetty.server.handler.HandlerCollection)
   (:require [compojure.route :as route]
             [compojure.handler :as handler]
             [ring.adapter.jetty :as jetty]
@@ -34,5 +36,13 @@
       wrap-json-body
       handler/site))
 
+(defn- gzip-configurator [server]
+  (let [handler (.getHandler server)]
+    (.setHandler server
+                 (doto (new HandlerCollection)
+                   (.addHandler (doto (new GzipHandler)
+                                  (.setHandler handler)
+                                  (.setMimeTypes "text/html,text/css,text/javascript,image/svg+xml,text/plain,application/json")))))))
+
 (defn -main []
-  (jetty/run-jetty app {:port (port) :join? false}))
+  (jetty/run-jetty app {:configurator gzip-configurator :port (port) :join? false}))
