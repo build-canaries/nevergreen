@@ -33,7 +33,7 @@ echo "[2] automatically running the js tests on changes..."
 npm run testing &
 
 echo "[3] automatically running the server tests on changes..."
-lein midje :autotest &
+lein midje 'nevergreen.*' :autotest &
 
 echo "[4] running the server..."
 lein ring server-headless &
