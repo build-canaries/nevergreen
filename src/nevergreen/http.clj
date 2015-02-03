@@ -4,5 +4,5 @@
 (defn http-get [url auth-header]
   (:body (client/get url {:insecure? true
                           :timeout   30000
-                          :headers   {"Accept" "application/xml"}
+                          :headers   (merge {"Accept" "application/xml"} auth-header)
                           :as        :stream})))
