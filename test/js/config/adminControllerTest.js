@@ -12,7 +12,7 @@ describe('Configurable build monitor', function () {
             var callbackFunction = function (data) {
             }
 
-            var projects = adminController.getProjects('some-url', callbackFunction)
+            adminController.getProjects('some-url', callbackFunction)
 
             expect($.ajax).toHaveBeenCalledWith({
                 type: 'GET',

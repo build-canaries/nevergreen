@@ -1,13 +1,13 @@
 var $ = require('jquery')
 
-module.exports = function (successRepository) {
+module.exports = function (successRepository, successMessage) {
     return {
         addProjects: function (projects) {
-            $('#projects').empty()
-            projects.forEach(addBuildStatusToScreen)
-
             if (projects.length === 0) {
-                showSuccessMessage(projects, successRepository)
+                showSuccess(successRepository, successMessage)
+            } else {
+                $('#projects').empty()
+                projects.forEach(addBuildStatusToScreen)
             }
         }
     }
@@ -23,21 +23,39 @@ function addBuildStatusToScreen(project) {
         '</li>')
 }
 
-function showSuccessMessage(projects, successRepository) {
-    if (successRepository.hasSuccessImageUrl()) {
-        $('#projects')
-            .append('<li><div class=monitor-outerContainer><div id="success-image" class="monitor-success-image monitor-innerContainer" style="' +
-            'background: url(' + successRepository.getSuccessImageUrl() + ') no-repeat center center fixed;' +
-            'background-size: contain">' +
-            '</div>' +
-            '</div></li>')
-    } else {
-        $('#projects').append(
-            '<li>' +
-            '<div class=monitor-outerContainer>' +
-            '<div id="success-text" class=monitor-innerContainer>' + successRepository.getSuccessText() +
-            '</div>' +
-            '</div>' +
-            '</li>')
+function showSuccess(successRepository, successMessage) {
+    if (!successMessageDisplayed()) {
+        var message = randomFrom(successRepository.getSuccessMessages())
+        successMessage.ifImage(message, showSuccessImage, showSuccessMessage)
     }
+}
+
+function errorHandler(message) {
+    $('#projects').text('Failed to fetch success image: ' + message)
+}
+
+function showSuccessImage(url) {
+    $('#projects').append(
+        '<li>' +
+        '<div class="monitor-outerContainer">' +
+        '<div id="success-image" class="monitor-success-image monitor-innerContainer" style="background: url(' + url + ') no-repeat center center fixed; background-size: contain"></div>' +
+        '</div>' +
+        '</li>')
+}
+
+function showSuccessMessage(message) {
+    $('#projects').append(
+        '<li>' +
+        '<div class="monitor-outerContainer">' +
+        '<div id="success-text" class="monitor-innerContainer">' + message + '</div>' +
+        '</div>' +
+        '</li>')
+}
+
+function successMessageDisplayed() {
+    return $('#success-image').length !== 0 || $('#success-text').length !== 0
+}
+
+function randomFrom(arr) {
+    return arr[Math.floor(Math.random() * arr.length)]
 }

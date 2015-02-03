@@ -1,31 +1,15 @@
 module.exports = {
 
-    saveSuccessText: function (text) {
-        localStorage.setItem('successText', text.trim())
+    saveSuccessMessages: function (messages) {
+        localStorage.setItem('successMessages', messages)
     },
 
-    getSuccessText: function () {
-        return getOr('successText', '')
-    },
-
-    saveSuccessImageUrl: function (url) {
-        localStorage.setItem('successImageUrl', url.trim())
-    },
-
-    getSuccessImageUrl: function () {
-        return getOr('successImageUrl', '')
-    },
-
-    hasSuccessImageUrl: function () {
-        return exists('successImageUrl')
+    getSuccessMessages: function () {
+        return exists('successMessages') ? localStorage.getItem('successMessages').split(',') : []
     }
 }
 
 function exists(key) {
     var val = localStorage.getItem(key)
     return val && val.trim().length !== 0
-}
-
-function getOr(key, defaultValue) {
-    return exists(key) ? localStorage.getItem(key) : defaultValue
 }

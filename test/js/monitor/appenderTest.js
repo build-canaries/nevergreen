@@ -7,24 +7,29 @@ describe('Showing success message', function () {
     var $body = $('body')
 
     var successRepositoryMock = {
-        hasSuccessImageUrl: function () {
+        saveSuccessMessages: function () {
         },
-        getSuccessImageUrl: function () {
-        },
-        getSuccessText: function () {
+        getSuccessMessages: function () {
+        }
+    }
+
+    var successMessageMock = {
+        ifImage: function () {
         }
     }
 
     beforeEach(function () {
-        testInstance = appender(successRepositoryMock)
+        testInstance = appender(successRepositoryMock, successMessageMock)
 
         $body.empty()
+        $body.append('<div id="projects"/>')
     })
 
     it('shows success image', function () {
-        spyOn(successRepositoryMock, 'hasSuccessImageUrl').and.returnValue(true)
-        spyOn(successRepositoryMock, 'getSuccessImageUrl').and.returnValue('some-success-url')
-        $body.append('<div id="projects"/>')
+        spyOn(successRepositoryMock, 'getSuccessMessages').and.returnValue(['http://some-success-url'])
+        spyOn(successMessageMock, 'ifImage').and.callFake(function (message, trueCallback) {
+            trueCallback(message)
+        })
 
         testInstance.addProjects([])
 
@@ -33,7 +38,10 @@ describe('Showing success message', function () {
     })
 
     it('text', function () {
-        $body.append('<div id="projects"/>')
+        spyOn(successRepositoryMock, 'getSuccessMessages').and.returnValue(['success-message'])
+        spyOn(successMessageMock, 'ifImage').and.callFake(function (message, trueCallback, falseCallback) {
+            falseCallback(message)
+        })
 
         testInstance.addProjects([])
 
