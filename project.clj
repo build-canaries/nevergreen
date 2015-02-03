@@ -10,7 +10,8 @@
                            [clj-http "1.0.1"]
                            [com.duelinmarkers/ring-request-logging "0.2.0"]
                            [ring/ring-json "0.3.1"]
-                           [base64-clj "0.1.1"]]
+                           [base64-clj "0.1.1"]
+                           [org.clojars.tnoda/simple-crypto "0.1.0"]]
             :plugins [[lein-ring "0.8.11"]
                       [environ/environ.lein "0.2.1"]]
             :min-lein-version "2.0.0"

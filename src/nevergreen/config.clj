@@ -4,3 +4,6 @@
 
 (defn port []
   (Integer. (or (env :port) 5000)))
+
+(defn salt []
+  (env :salt))

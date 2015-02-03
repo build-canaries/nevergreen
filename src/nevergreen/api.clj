@@ -15,7 +15,7 @@
 
   (let [server-type (servers/detect-server url)
         auth-header (if (and username password) (security/basic-auth-header username password) {})
-        password (if password {:password (security/create-hash password)})]
+        password (if password {:password (security/encrypt password)})]
     (merge {:projects (parser/get-projects (http-get url auth-header) {:normalise true :server server-type})
             :server   server-type}
            password)))

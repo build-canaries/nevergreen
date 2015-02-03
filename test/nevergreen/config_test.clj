@@ -11,3 +11,9 @@
 
        (fact "defaults to 5000"
              (subject/port) => 5000))
+
+(facts "salt"
+       (fact "from env"
+             (subject/salt) => "a-salt"
+             (provided
+               (env :salt) => "a-salt")))
