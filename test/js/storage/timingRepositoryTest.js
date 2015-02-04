@@ -1,47 +1,44 @@
-var storageRepository = require('../../../src/js/storage/timingRepository')
+var repositoryMock = {
+    save: function () {
+    },
+    getOr: function () {
+    }
+}
+var storageRepository = require('../../../src/js/storage/timingRepository')(repositoryMock)
 
 describe('timing repository', function () {
 
-    beforeEach(function () {
-        localStorage.clear()
-    })
-
     describe('saving to local storage', function () {
         beforeEach(function () {
-            spyOn(localStorage, 'setItem')
+            spyOn(repositoryMock, 'save')
         })
-
 
         it('saves polling time', function () {
             storageRepository.savePollingTime('6')
 
-            expect(localStorage.setItem).toHaveBeenCalledWith('pollingTime', '6')
+            expect(repositoryMock.save).toHaveBeenCalledWith('pollingTime', '6')
         })
     })
 
     describe('loading from local storage', function () {
         it('polling time in seconds', function () {
-            localStorage.setItem('pollingTime', '6')
+            spyOn(repositoryMock, 'getOr').and.returnValue('6')
 
-            var pollingTime = storageRepository.getPollingTime();
-
-            expect(pollingTime).toBe('6')
+            expect(storageRepository.getPollingTime()).toBe('6')
         })
 
         it('polling time in milliseconds', function () {
-            localStorage.setItem('pollingTime', '6')
+            spyOn(repositoryMock, 'getOr').and.returnValue('6')
 
-            var pollingTime = storageRepository.getPollingTimeInMilliseconds();
-
-            expect(pollingTime).toBe(6000)
+            expect(storageRepository.getPollingTimeInMilliseconds()).toBe(6000)
         })
 
         it('default polling time', function () {
-            expect(storageRepository.getPollingTime()).toBe('5')
-        })
+            spyOn(repositoryMock, 'getOr')
 
-        it('default polling time in milliseconds', function () {
-            expect(storageRepository.getPollingTimeInMilliseconds()).toBe(5000)
+            storageRepository.getPollingTime()
+
+            expect(repositoryMock.getOr).toHaveBeenCalledWith('pollingTime', '5')
         })
     })
 })
