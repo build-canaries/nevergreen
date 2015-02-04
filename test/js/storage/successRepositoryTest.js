@@ -6,7 +6,7 @@ var repositoryMock = {
     exists: function () {
     }
 }
-var storageRepository = require('../../../src/js/storage/successRepository')(repositoryMock)
+var successRepository = require('../../../src/js/storage/successRepository')(repositoryMock)
 
 describe('success repository', function () {
 
@@ -16,7 +16,7 @@ describe('success repository', function () {
         })
 
         it('saves all success messages', function () {
-            storageRepository.saveSuccessMessages(['a', 'b', 'c'])
+            successRepository.saveSuccessMessages(['a', 'b', 'c'])
             expect(repositoryMock.save).toHaveBeenCalledWith('successMessages', ['a', 'b', 'c'])
         })
     })
@@ -24,12 +24,12 @@ describe('success repository', function () {
     describe('loading from local storage', function () {
         it('loads all success messages', function () {
             spyOn(repositoryMock, 'getArrayOr').and.returnValue(['a', 'b', 'c'])
-            expect(storageRepository.getSuccessMessages()).toEqual(['a', 'b', 'c'])
+            expect(successRepository.getSuccessMessages()).toEqual(['a', 'b', 'c'])
         })
 
         it('loads default success messages', function () {
             spyOn(repositoryMock, 'getArrayOr').and.returnValue([])
-            expect(storageRepository.getSuccessMessages()).toEqual([])
+            expect(successRepository.getSuccessMessages()).toEqual([])
         })
     })
 
@@ -39,7 +39,7 @@ describe('success repository', function () {
         })
 
         it('success messages', function () {
-            storageRepository.hasSuccessMessages()
+            successRepository.hasSuccessMessages()
             expect(repositoryMock.exists).toHaveBeenCalledWith('successMessages')
         })
     })

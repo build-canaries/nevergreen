@@ -14,7 +14,9 @@ function eggplantMigrations(successRepository) {
     pushIfSet(successMessages, successText)
     pushIfSet(successMessages, successImageUrl)
 
-    successRepository.saveSuccessMessages(successMessages)
+    if (successMessages.length > 0) {
+        successRepository.saveSuccessMessages(successMessages)
+    }
 
     localStorage.removeItem('successText')
     localStorage.removeItem('successImageUrl')
