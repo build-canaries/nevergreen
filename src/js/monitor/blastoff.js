@@ -6,6 +6,9 @@ module.exports = function () {
     var timingRepository = require('../storage/timingRepository')(repository)
     var appender = require('./appender')(successRepository, successMessage)
     var monitor = require('./monitor')(trackingRepository, appender)
+    var migrations = require('../storage/migrations')(successRepository)
+
+    migrations.migrate()
 
     var pollingTime = timingRepository.getPollingTimeInMilliseconds()
 
