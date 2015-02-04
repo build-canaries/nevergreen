@@ -1,5 +1,5 @@
 .label-checkbox {
-  font-size: 21px;
+  font-size: 17px;
   &:hover {
     cursor: pointer;
   }
@@ -16,10 +16,10 @@
     -webkit-transform: rotate(315deg) scale(0, 0);
     content: "";
     position: absolute;
-    left: 6px;
+    left: 5px;
     top: 4px;
     z-index: 1;
-    width: 12px;
+    width: 11px;
     height: 6px;
     border: 2px solid #03a9f4;
     border-top-style: none;
