@@ -35,8 +35,13 @@ function load(successRepository) {
             appendSuccessInput(i, messages[i])
         }
     } else {
-        appendSuccessInput(0, '=(^.^)=')
+        addDefaultSuccessMessage(successRepository)
     }
+}
+
+function addDefaultSuccessMessage(successRepository) {
+    appendSuccessInput(0, '=(^.^)=')
+    successRepository.saveSuccessMessages(getSuccessMessages())
 }
 
 function appendSuccessInput(i, value) {

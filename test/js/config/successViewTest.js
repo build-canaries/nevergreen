@@ -61,11 +61,13 @@ describe('success view', function () {
                 '</div>' +
                 '<button id="success-add"/>')
 
+            spyOn(successRepositoryMock, 'saveSuccessMessages')
             spyOn(successRepositoryMock, 'hasSuccessMessages').and.returnValue(false)
 
             view.init()
 
             expect($('#success-message-0').val()).toBe('=(^.^)=')
+            expect(successRepositoryMock.saveSuccessMessages).toHaveBeenCalledWith(['=(^.^)='])
         })
     })
 
