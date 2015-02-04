@@ -7,6 +7,10 @@ module.exports = function (repository) {
 
         getSuccessMessages: function () {
             return repository.getArrayOr('successMessages', [])
+        },
+
+        hasSuccessMessages: function () {
+            return repository.exists('successMessages')
         }
     }
 }

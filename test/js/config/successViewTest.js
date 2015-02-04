@@ -10,6 +10,8 @@ describe('success view', function () {
         saveSuccessMessages: function () {
         },
         getSuccessMessages: function () {
+        },
+        hasSuccessMessages: function () {
         }
     }
 
@@ -26,29 +28,44 @@ describe('success view', function () {
                 '</div>' +
                 '<button id="success-add"/>')
 
-            spyOn(successRepositoryMock, 'getSuccessMessages').and.returnValue(['any old value'])
+            spyOn(successRepositoryMock, 'hasSuccessMessages').and.returnValue(true)
+            spyOn(successRepositoryMock, 'getSuccessMessages').and.returnValue(['a', 'b', 'c'])
 
             view.init()
 
-            expect($('#success-message-0').val()).toBe('any old value')
+            expect($('#success-message-0').val()).toBe('a')
+            expect($('#success-message-1').val()).toBe('b')
+            expect($('#success-message-2').val()).toBe('c')
         })
 
         it('saves', function () {
             $body.append(
                 '<div id="success-inputs">' +
-                '<input id="success-message-0"/>' +
+                '<input id="success-message-0" value="a"/>' +
+                '<input id="success-message-1" value="b"/>' +
+                '<input id="success-message-2" value="c"/>' +
                 '</div>' +
                 '<button id="success-add"/>')
 
             spyOn(successRepositoryMock, 'saveSuccessMessages')
             view.addEventHandlers()
 
-            var $success = $('#success-message-0')
-            $success.val('expected')
+            $('#success-message-0').blur()
 
-            $success.blur()
+            expect(successRepositoryMock.saveSuccessMessages).toHaveBeenCalledWith(['a', 'b', 'c'])
+        })
 
-            expect(successRepositoryMock.saveSuccessMessages).toHaveBeenCalledWith(['expected'])
+        it('adds default', function () {
+            $body.append(
+                '<div id="success-inputs">' +
+                '</div>' +
+                '<button id="success-add"/>')
+
+            spyOn(successRepositoryMock, 'hasSuccessMessages').and.returnValue(false)
+
+            view.init()
+
+            expect($('#success-message-0').val()).toBe('=(^.^)=')
         })
     })
 

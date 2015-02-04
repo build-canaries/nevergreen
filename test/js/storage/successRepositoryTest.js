@@ -2,6 +2,8 @@ var repositoryMock = {
     save: function () {
     },
     getArrayOr: function () {
+    },
+    exists: function () {
     }
 }
 var storageRepository = require('../../../src/js/storage/successRepository')(repositoryMock)
@@ -28,6 +30,17 @@ describe('success repository', function () {
         it('loads default success messages', function () {
             spyOn(repositoryMock, 'getArrayOr').and.returnValue([])
             expect(storageRepository.getSuccessMessages()).toEqual([])
+        })
+    })
+
+    describe('has', function () {
+        beforeEach(function () {
+            spyOn(repositoryMock, 'exists')
+        })
+
+        it('success messages', function () {
+            storageRepository.hasSuccessMessages()
+            expect(repositoryMock.exists).toHaveBeenCalledWith('successMessages')
         })
     })
 

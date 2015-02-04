@@ -29,9 +29,13 @@ module.exports = function (successRepository) {
 }
 
 function load(successRepository) {
-    var messages = successRepository.getSuccessMessages()
-    for (var i = 0; i < messages.length; i++) {
-        appendSuccessInput(i, messages[i])
+    if (successRepository.hasSuccessMessages()) {
+        var messages = successRepository.getSuccessMessages()
+        for (var i = 0; i < messages.length; i++) {
+            appendSuccessInput(i, messages[i])
+        }
+    } else {
+        appendSuccessInput(0, '=(^.^)=')
     }
 }
 
