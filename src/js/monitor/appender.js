@@ -25,13 +25,16 @@ function addBuildStatusToScreen(project) {
 
 function showSuccess(successRepository, successMessage) {
     if (!successMessageDisplayed()) {
+        $('#projects').empty()
         var message = randomFrom(successRepository.getSuccessMessages())
         successMessage.ifImage(message, showSuccessImage, showSuccessMessage)
     }
 }
 
 function errorHandler(message) {
-    $('#projects').text('Failed to fetch success image: ' + message)
+    var $projects = $('#projects');
+    $projects.empty()
+    $projects.text('Failed to fetch success image: ' + message)
 }
 
 function showSuccessImage(url) {
