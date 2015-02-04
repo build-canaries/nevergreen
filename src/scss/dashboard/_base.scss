@@ -1,0 +1,80 @@
+.dashboard {
+  background: #FFFFFF;
+  font-family: 'Roboto', sans-serif; //TODO - move this, only here to overide other css
+}
+.dashboard-button {
+  font-size: 14px;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 0;
+  position: relative;
+  padding: 0.5em 1.5em;
+  margin: 0.5em;
+  cursor: pointer;
+  border-radius: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: rgba(255,255,255,.84);
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  outline: none;
+  transition: background-color 0.1s ease-in;
+  transition: box-shadow 0.1s ease-in;
+  &:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.26);
+  }
+  &:focus {
+    outline: none;
+    border-radius: 0;
+  }
+}
+.dashboard-button-small {
+  font-size: 0.7em;
+  padding: 0.6em 1.5em;
+}
+.dashboard-button-primary {
+  background-color: #0358F3;
+  &:hover {
+    background-color: darken(#0358F3, 4%);
+  }
+}
+.dashboard-button-secondary {
+  background-color: #03a9f4;
+  &:hover {
+    background-color: darken(#03a9f4, 4%);
+  }
+}
+.dashboard-button-white {
+  background-color: #ffffff;
+  color: #212121;
+  &:hover {
+    background-color: darken(#ffffff, 2%);
+  }
+}
+
+
+.dashboard-main {
+  background-color: white;
+  width: 90%;
+  padding: 2%;
+  float: left;
+  margin-top: 4.5em;
+  margin-left: 10%;
+}
+.dashboard-main-section {
+  display: none;
+  min-height: 35em;
+  &.active {
+    display: block;
+  }
+}
+
+
+.config-spinner {
+  top: 50%;
+}
+

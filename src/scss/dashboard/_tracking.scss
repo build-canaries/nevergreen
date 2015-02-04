@@ -1,0 +1,78 @@
+.tracking-cctray-group {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+  .tracking-cctray-group-legend {
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin: 1em 0;
+  }
+  .tracking-cctray-group-instructions {
+    font-size: 1.5rem;
+  }
+  .tracking-cctray-group-instructions-table {
+    width: 100%;
+    margin: 0 0 1em 0;
+    tr:nth-child(even) {
+      background-color: #ececec;
+    }
+  }
+  .tracking-cctray-group-instructions-text {
+    margin: 0 0 1em 0;
+  }
+
+  .tracking-cctray-group-cctray-form {
+    font-size: 1.5rem;
+    margin-bottom: 1em;
+  }
+    .tracking-cctray-group-cctray-form-label {
+      width: 38px;
+      display: inline-block;
+    }
+    .tracking-cctray-group-cctray-form-input {
+      width: calc(100% - 155px);
+      border: none;
+      border-bottom: 2px solid #7e7e7e;
+      &:focus {
+        outline: none;
+        border-bottom-color: #03a9f4;
+      }
+    }
+    .tracking-cctray-group-cctray-form-input-small {
+      width: 60px;
+      text-align: center;
+    }
+  .tracking-cctray-group-builds {
+    border: none;
+    margin: 0;
+    padding: 0 0 1.5em 0;
+  }
+    .tracking-cctray-group-builds-legend {
+      color: #757575;
+      margin-bottom: 1em;
+      float: left;
+    }
+    .tracking-cctray-group-build-toggles {
+      float: left;
+      position: relative;
+      top: -0.5em;
+      margin-left: 1em;
+    }
+    .tracking-cctray-group-build-items {
+      clear: both;
+      margin-bottom: 2em;
+      padding-top: 0.2em;
+      padding-bottom: 2em;
+    }
+    .tracking-cctray-group-build-item {
+      display: block;
+      margin: 1em 0;
+      float: left;
+      width: 50%;
+    }
+
+
+.config-new-project {
+  color: #f32196;
+}

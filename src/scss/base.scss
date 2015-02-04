@@ -1,8 +1,19 @@
-@import "shared";
-@import "config";
-@import "monitor";
+@import "base/normalize";
+@import "base/icon_font";
+@import "base/helpers";
+@import "base/variables";
+@import "base/root";
 
-@import "normalize";
-@import "icon_font";
-@import "dashboard";
+@import "modules/checkboxes";
+
+
+@import "dashboard/base";
+@import "dashboard/header";
+@import "dashboard/navigation";
+@import "dashboard/tracking";
+@import "dashboard/messages";
+@import "dashboard/footer";
+
+
+@import "monitor";
 
