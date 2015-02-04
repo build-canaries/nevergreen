@@ -1,4 +1,5 @@
 (ns nevergreen.crypto
+  (:require [nevergreen.config :as config])
   (import (java.security Key)
           (javax.crypto Cipher)
           (javax.crypto.spec SecretKeySpec)
@@ -13,12 +14,12 @@
 (defn- ^Key secret [^String aes-key]
   (SecretKeySpec. (.getBytes aes-key) "AES"))
 
-(defn ^bytes encrypt [^String plain-text ^String aes-key]
+(defn ^bytes encrypt [^String plain-text]
   (let [cipher (doto (Cipher/getInstance "AES/ECB/PKCS5Padding")
-                 (.init Cipher/ENCRYPT_MODE (secret aes-key)))]
+                 (.init Cipher/ENCRYPT_MODE (secret (config/salt))))]
     (bytes-to-base64 (.doFinal cipher (.getBytes plain-text "US-ASCII")))))
 
-(defn ^String decrypt [^String base64-encoded ^String aes-key]
+(defn ^String decrypt [^String base64-encoded]
   (let [cipher (doto (Cipher/getInstance "AES/ECB/PKCS5Padding")
-                 (.init Cipher/DECRYPT_MODE (secret aes-key)))]
+                 (.init Cipher/DECRYPT_MODE (secret (config/salt))))]
     (String. (.doFinal cipher (base64-to-bytes base64-encoded)) "US-ASCII")))

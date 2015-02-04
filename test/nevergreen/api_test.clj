@@ -4,7 +4,8 @@
             [nevergreen.http :as http]
             [clj-cctray.core :as parser]
             [nevergreen.servers :as servers]
-            [nevergreen.security :as security]))
+            [nevergreen.security :as security]
+            [nevergreen.crypto :as crypt]))
 
 (def valid-cctray "http://someserver/cc.xml")
 (def username "any-username")
@@ -28,7 +29,7 @@
                (security/basic-auth-header username password) => ..auth-header..
                (http/http-get valid-cctray ..auth-header..) => ..stream..
                (servers/detect-server valid-cctray) => ..server..
-               (security/encrypt password) => ..hashed-password..))
+               (crypt/encrypt password) => ..hashed-password..))
 
        (fact "without authentication"
              (subject/get-all-projects {:url valid-cctray}) => {:projects (list {:name "project-1" :prognosis :sick})
@@ -38,7 +39,7 @@
                (http/http-get valid-cctray {}) => ..stream..
                (servers/detect-server valid-cctray) => ..server..
                (security/basic-auth-header anything anything) => anything :times 0
-               (security/encrypt password) => anything :times 0)))
+               (crypt/encrypt password) => anything :times 0)))
 
 (facts "parses requested serverType"
        (fact "converts go server param to symbol"
