@@ -1,15 +1,12 @@
-module.exports = {
+module.exports = function (repository) {
 
-    saveSuccessMessages: function (messages) {
-        localStorage.setItem('successMessages', messages)
-    },
+    return {
+        saveSuccessMessages: function (messages) {
+            repository.save('successMessages', messages)
+        },
 
-    getSuccessMessages: function () {
-        return exists('successMessages') ? localStorage.getItem('successMessages').split(',') : []
+        getSuccessMessages: function () {
+            return repository.getArrayOr('successMessages', [])
+        }
     }
-}
-
-function exists(key) {
-    var val = localStorage.getItem(key)
-    return val && val.trim().length !== 0
 }

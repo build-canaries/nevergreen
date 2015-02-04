@@ -1,29 +1,32 @@
-var storageRepository = require('../../../src/js/storage/successRepository')
+var repositoryMock = {
+    save: function () {
+    },
+    getArrayOr: function () {
+    }
+}
+var storageRepository = require('../../../src/js/storage/successRepository')(repositoryMock)
 
 describe('success repository', function () {
 
-    beforeEach(function () {
-        localStorage.clear()
-    })
-
     describe('saving to local storage', function () {
         beforeEach(function () {
-            spyOn(localStorage, 'setItem')
+            spyOn(repositoryMock, 'save')
         })
 
         it('saves all success messages', function () {
             storageRepository.saveSuccessMessages(['a', 'b', 'c'])
-            expect(localStorage.setItem).toHaveBeenCalledWith('successMessages', ['a', 'b', 'c'])
+            expect(repositoryMock.save).toHaveBeenCalledWith('successMessages', ['a', 'b', 'c'])
         })
     })
 
     describe('loading from local storage', function () {
         it('loads all success messages', function () {
-            localStorage.setItem('successMessages', ['a', 'b', 'c'])
+            spyOn(repositoryMock, 'getArrayOr').and.returnValue(['a', 'b', 'c'])
             expect(storageRepository.getSuccessMessages()).toEqual(['a', 'b', 'c'])
         })
 
         it('loads default success messages', function () {
+            spyOn(repositoryMock, 'getArrayOr').and.returnValue([])
             expect(storageRepository.getSuccessMessages()).toEqual([])
         })
     })
