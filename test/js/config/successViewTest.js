@@ -24,7 +24,7 @@ describe('success view', function () {
     describe('success messages', function () {
         it('loads', function () {
             $body.append(
-                '<div id="success-inputs">' +
+                '<div id="success-messages">' +
                 '</div>' +
                 '<button id="success-add"/>')
 
@@ -40,7 +40,7 @@ describe('success view', function () {
 
         it('saves', function () {
             $body.append(
-                '<div id="success-inputs">' +
+                '<div id="success-messages">' +
                 '<input id="success-message-0" value="a"/>' +
                 '<input id="success-message-1" value="b"/>' +
                 '<input id="success-message-2" value="c"/>' +
@@ -57,7 +57,7 @@ describe('success view', function () {
 
         it('adds default', function () {
             $body.append(
-                '<div id="success-inputs">' +
+                '<div id="success-messages">' +
                 '</div>' +
                 '<button id="success-add"/>')
 

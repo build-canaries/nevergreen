@@ -10,10 +10,10 @@ module.exports = function (successRepository) {
         addEventHandlers: function () {
             $('#success-add').click(function (e) {
                 e.preventDefault()
-                appendSuccessInput($('#success-inputs').find('input').length, "")
+                appendSuccessInput($('#success-messages').find('input').length, "")
             })
 
-            var $success = $('#success-inputs')
+            var $success = $('#success-messages')
 
             $success.on('click', '.success-remove', function (e) {
                 e.preventDefault()
@@ -45,7 +45,7 @@ function appendSuccessInput(i, value) {
         removeLink = '<a href="#" class="success-remove">remove</a>'
     }
 
-    $('#success-inputs').append(
+    $('#success-messages').append(
         '<div>' +
         '<label for="success-message-"' + i + '>Message</label>' +
         '<input id="success-message-' + i + '" class="success-message-input" type="text" name="success-message" value="' + value + '">' +
@@ -54,7 +54,7 @@ function appendSuccessInput(i, value) {
 }
 
 function getSuccessMessages() {
-    return $('#success-inputs').find('input').map(function (index, element) {
+    return $('#success-messages').find('input').map(function (index, element) {
         return $(element).val()
     }).toArray()
 }
