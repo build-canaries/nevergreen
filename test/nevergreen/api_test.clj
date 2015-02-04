@@ -14,7 +14,7 @@
       (subject/get-interesting-projects {:includedProjects ["project-1"] :cctray valid-cctray}) => (list {:name "project-1" :prognosis :sick})
       (provided
         (parser/get-projects ..stream.. anything) => [{:name "project-1" :prognosis :sick}]
-        (http/http-get valid-cctray nil) => ..stream..))
+        (http/http-get valid-cctray {}) => ..stream..))
 
 (facts "it gets all projects"
        (fact "with authentication"
