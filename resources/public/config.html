@@ -16,29 +16,34 @@
 </head>
 <body class="dashboard">
 
-<header role="banner" class="dashboard-header">
-    <img src="img/buildcanaries-logo.png" class="dashboard-header-logo" alt="Build Canaries logo" />
-    <h1 class="dashboard-header-title">Nevergreen configuration</h1>
-    <a id="monitor" class="dashboard-button dashboard-button-primary dashboard-header-monitor-link" href="/" title="Go to the monitor page">Go to monitor page</a>
-</header>
+<h1 class="visuallyhidden">Nevergreen configuration</h1>
 
 <nav role="navigation" class="dashboard-navigation">
     <h2 class="visuallyhidden">Dashboard navigation</h2>
+
+    <img src="img/buildcanaries-logo.png" class="dashboard-header-logo" alt="Build Canaries logo" />
+
     <ul class="dashboard-navigation-list">
         <li>
-            <a class="dashboard-navigation-list-item active" href="#tracking">
-                <span class="dashboard-navigation-list-item-icon icon-tools"></span>
+            <a id="monitor" class="dashboard-navigation-list-item" href="/">
+                <span class="dashboard-navigation-list-item-icon icon-eye"></span>
+                <span class="dashboard-navigation-list-item-title">Monitor</span>
+            </a>
+        </li>
+        <li>
+            <a class="dashboard-navigation-list-item nav-toggle active" href="#tracking">
+                <span class="dashboard-navigation-list-item-icon icon-drawer"></span>
                 <span class="dashboard-navigation-list-item-title">Tracking</span>
             </a>
         </li>
         <li>
-            <a class="dashboard-navigation-list-item" href="#timing">
+            <a class="dashboard-navigation-list-item nav-toggle" href="#timing">
                 <span class="dashboard-navigation-list-item-icon icon-clock"></span>
                 <span class="dashboard-navigation-list-item-title">Timing</span>
             </a>
         </li>
         <li>
-            <a class="dashboard-navigation-list-item" href="#success">
+            <a class="dashboard-navigation-list-item nav-toggle" href="#success">
                 <span class="dashboard-navigation-list-item-icon icon-checkmark"></span>
                 <span class="dashboard-navigation-list-item-title">Success</span>
             </a>
@@ -131,9 +136,9 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script>
     $(function() {
-        $('.dashboard-navigation-list-item').on('click', function(evt) {
+        $('.nav-toggle').on('click', function(evt) {
             evt.preventDefault();
-            $('.dashboard-navigation-list-item').removeClass('active');
+            $('.nav-toggle').removeClass('active');
             $('.dashboard-main-section').removeClass('active');
             $(this).addClass('active');
             $($(this).attr('href')).addClass('active');

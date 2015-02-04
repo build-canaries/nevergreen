@@ -4,14 +4,23 @@
   width: 10%;
   float: left;
   position: fixed;
-  margin-top: 4.5em;
   height: 100%;
+  padding-top: 1em;
 }
+
+.dashboard-header-logo {
+  height: 55px;
+  width: 55px;
+  margin: 0 auto;
+  display: block;
+}
+
 .dashboard-navigation-list {
   list-style: none;
   margin: 0;
   padding: 0;
 }
+
 .dashboard-navigation-list-item {
   position: relative;
   display: block;
@@ -32,22 +41,22 @@
     }
   }
   &.active {
-    background: white;
-    color: #03a9f4;
+    color: white;
     .dashboard-navigation-list-item-icon {
-      color: #03a9f4;
+      color: white;
     }
     &:hover {
       cursor: default;
       .dashboard-navigation-list-item-title {
-        color: #03a9f4;
+        color: white;
       }
     }
   }
 }
+
 .dashboard-navigation-list-item-icon  {
   color: #999999;
-  font-size: 5em;
+  font-size: 3.5em;
   display: block;
   margin-bottom: 0.15em;
 }

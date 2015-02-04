@@ -1,6 +1,6 @@
 .dashboard {
-  background: #FFFFFF;
-  font-family: 'Roboto', sans-serif; //TODO - move this, only here to overide other css
+  background: $light-grey;
+  font-family: 'Roboto', sans-serif;
 }
 .dashboard-button {
   font-size: 14px;
@@ -58,11 +58,9 @@
 
 
 .dashboard-main {
-  background-color: white;
   width: 90%;
   padding: 2%;
   float: left;
-  margin-top: 4.5em;
   margin-left: 10%;
 }
 .dashboard-main-section {
