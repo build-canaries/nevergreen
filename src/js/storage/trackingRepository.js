@@ -1,70 +1,62 @@
-module.exports = {
-    isReady: function () {
-        return this.hasCctray() && this.hasIncludedProjects()
-    },
+module.exports = function (repository) {
+    return {
+        isReady: function () {
+            return this.hasCctray() && this.hasIncludedProjects()
+        },
 
-    saveCctray: function (url) {
-        localStorage.setItem('previousCctray', this.getCctray())
-        localStorage.setItem('cctray', url.trim())
-    },
+        saveCctray: function (url) {
+            repository.save('previousCctray', this.getCctray())
+            repository.save('cctray', url)
+        },
 
-    getCctray: function () {
-        return getOr('cctray', '')
-    },
+        getCctray: function () {
+            return repository.getOr('cctray', '')
+        },
 
-    hasCctray: function () {
-        return exists('cctray')
-    },
+        hasCctray: function () {
+            return repository.exists('cctray')
+        },
 
-    cctraySeen: function(url) {
-        return url.trim() === localStorage.getItem('previousCctray')
-    },
+        cctraySeen: function (url) {
+            return url.trim() === repository.getOr('previousCctray', '')
+        },
 
-    saveIncludedProjects: function (projects) {
-        localStorage.setItem('includedProjects', projects)
-    },
+        saveIncludedProjects: function (projects) {
+            repository.save('includedProjects', projects)
+        },
 
-    getIncludedProjects: function () {
-        return this.hasIncludedProjects() ? localStorage.getItem('includedProjects').split(',') : []
-    },
+        getIncludedProjects: function () {
+            return repository.getArrayOr('includedProjects', [])
+        },
 
-    includesProject: function (projectName) {
-        return arrayContains(projectName, this.getIncludedProjects())
-    },
+        includesProject: function (projectName) {
+            return arrayContains(projectName, this.getIncludedProjects())
+        },
 
-    hasIncludedProjects: function () {
-        return localStorage.hasOwnProperty('includedProjects')
-    },
+        hasIncludedProjects: function () {
+            return repository.exists('includedProjects')
+        },
 
-    saveSeenProjects: function (projects) {
-        localStorage.setItem('seenProjects', projects)
-    },
+        saveSeenProjects: function (projects) {
+            repository.save('seenProjects', projects)
+        },
 
-    getSeenProjects: function () {
-        var seenProjects = localStorage.getItem('seenProjects')
-        return seenProjects === null ? [] : seenProjects.split(',')
-    },
+        getSeenProjects: function () {
+            return repository.getArrayOr('seenProjects', [])
+        },
 
-    projectSeen: function (projectName) {
-        return arrayContains(projectName, this.getSeenProjects())
-    },
+        projectSeen: function (projectName) {
+            return arrayContains(projectName, this.getSeenProjects())
+        },
 
-    saveServerType: function (type) {
-        localStorage.setItem('serverType', type.trim())
-    },
+        saveServerType: function (type) {
+            repository.save('serverType', type)
+        },
 
-    getServerType: function () {
-        return getOr('serverType', '')
+        getServerType: function () {
+            return repository.getOr('serverType', '')
+        }
     }
-}
-
-function exists(key) {
-    var val = localStorage.getItem(key)
-    return val && val.trim().length !== 0
-}
-
-function getOr(key, defaultValue) {
-    return exists(key) ? localStorage.getItem(key) : defaultValue
 }
 
 function arrayContains(needle, arraystack) {
