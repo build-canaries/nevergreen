@@ -12,7 +12,7 @@ describe('Configurable build monitor', function () {
             var callbackFunction = function (data) {
             }
 
-            adminController.getProjects('some-url', callbackFunction)
+            adminController.getProjects('some-url', 'some-username', 'some-password', callbackFunction)
 
             expect($.ajax).toHaveBeenCalledWith({
                 type: 'GET',
@@ -44,7 +44,7 @@ describe('Configurable build monitor', function () {
             spyOn(configView, 'showSpinner')
             spyOn(configView, 'hideSpinner')
 
-            adminController.getProjects('some-url', null, configView.showSpinner, configView.hideSpinner)
+            adminController.getProjects('some-url', 'some-username', 'some-password', null, configView.showSpinner, configView.hideSpinner)
 
             expect(configView.showSpinner).toHaveBeenCalled()
             expect(configView.hideSpinner).toHaveBeenCalled()

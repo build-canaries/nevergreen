@@ -55,6 +55,14 @@ module.exports = function (repository) {
 
         getServerType: function () {
             return repository.getOr('serverType', '')
+        },
+
+        saveUsername: function (username) {
+            return repository.save('username', username)
+        },
+
+        getUsername: function () {
+            return repository.getOr('username', '')
         }
     }
 }

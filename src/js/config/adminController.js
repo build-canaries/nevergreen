@@ -2,7 +2,7 @@ var $ = require('jquery')
 
 module.exports = {
 
-    getProjects: function (cctrayUrl, successHandler, showSpinner, hideSpinner, errorHandler) {
+    getProjects: function (cctrayUrl, username, password, successHandler, showSpinner, hideSpinner, errorHandler) {
         $.ajax({
             type: 'GET',
             url: '/api/projects',

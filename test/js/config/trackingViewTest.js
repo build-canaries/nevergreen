@@ -25,13 +25,16 @@ describe('tracking view', function () {
         saveSeenProjects: function () {
         },
         cctraySeen: function () {
+        },
+        saveUsername: function () {
         }
     }
 
     var projectsViewMock = {
         findIncludedProjects: function () {
         },
-        searching: function() {},
+        searching: function () {
+        },
         includeAll: function () {
         },
         excludeAll: function () {
@@ -41,7 +44,14 @@ describe('tracking view', function () {
         noProjects: function () {}
     }
 
-    var configViewMock = {}
+    var configViewMock = {
+        showSpinner: function () {
+        },
+        hideSpinner: function () {
+        },
+        errorHandler: function () {
+        }
+    }
 
     beforeEach(function () {
         $body.empty()
@@ -100,13 +110,20 @@ describe('tracking view', function () {
     })
 
     describe('getting projects', function() {
-        it('informs the projects view that is is searching', function() {
+        it('gets projects with correct parameters', function () {
+            spyOn(adminControllerMock, 'getProjects')
             spyOn(projectsViewMock, 'searching')
+            spyOn(trackingRepositoryMock, 'saveUsername')
+            $body.append('<input id="username"/><input id="password"/>')
+            $('#username').val('user')
+            $('#password').val('pass')
 
             view.getProjects()
 
             expect(projectsViewMock.searching).toHaveBeenCalled()
-
+            expect(trackingRepositoryMock.saveUsername).toHaveBeenCalledWith('user')
+            expect(adminControllerMock.getProjects)
+                .toHaveBeenCalledWith(trackingRepositoryMock.getCctray(), 'user', 'pass', view.appendProjects, configViewMock.showSpinner, configViewMock.hideSpinner, configViewMock.errorHandler)
         })
     })
 

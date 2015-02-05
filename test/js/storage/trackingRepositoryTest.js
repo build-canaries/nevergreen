@@ -31,6 +31,11 @@ describe('tracking repository', function () {
             storageRepository.saveSeenProjects(['a', 'b', 'c'])
             expect(repositoryMock.save).toHaveBeenCalledWith('seenProjects', ['a', 'b', 'c'])
         })
+
+        it('saves username', function () {
+            storageRepository.saveUsername('some-username')
+            expect(repositoryMock.save).toHaveBeenCalledWith('username', 'some-username')
+        })
     })
 
     describe('loading from local storage', function () {
@@ -57,6 +62,11 @@ describe('tracking repository', function () {
         it('server type', function () {
             storageRepository.getServerType()
             expect(repositoryMock.getOr).toHaveBeenCalledWith('serverType', '')
+        })
+
+        it('username', function(){
+            storageRepository.getUsername()
+            expect(repositoryMock.getOr).toHaveBeenCalledWith('username', '')
         })
     })
 

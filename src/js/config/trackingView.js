@@ -34,7 +34,9 @@ module.exports = function (controller, trackingRepository, projectsView, configV
 
         getProjects: function () {
             projectsView.searching()
-            controller.getProjects(trackingRepository.getCctray(), view.appendProjects, configView.showSpinner, configView.hideSpinner, configView.errorHandler)
+            var username = $('#username').val()
+            trackingRepository.saveUsername(username)
+            controller.getProjects(trackingRepository.getCctray(), username, $('#password').val(), view.appendProjects, configView.showSpinner, configView.hideSpinner, configView.errorHandler)
         }
 
     }
