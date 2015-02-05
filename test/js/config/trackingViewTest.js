@@ -27,6 +27,8 @@ describe('tracking view', function () {
         cctraySeen: function () {
         },
         saveUsername: function () {
+        },
+        savePassword: function () {
         }
     }
 
@@ -102,10 +104,22 @@ describe('tracking view', function () {
     describe('fetch projects saves afterwards', function () {
         it('saves', function () {
             spyOn(trackingRepositoryMock, 'saveIncludedProjects')
+            spyOn(trackingRepositoryMock, 'savePassword')
 
-            view.appendProjects([])
+            view.appendProjects([], 'encrypted-password')
 
             expect(trackingRepositoryMock.saveIncludedProjects).toHaveBeenCalled()
+            expect(trackingRepositoryMock.savePassword).toHaveBeenCalledWith('encrypted-password')
+        })
+
+        it('dont save password if it is not there', function () {
+            spyOn(trackingRepositoryMock, 'saveIncludedProjects')
+            spyOn(trackingRepositoryMock, 'savePassword')
+
+            view.appendProjects([], null)
+
+            expect(trackingRepositoryMock.saveIncludedProjects).toHaveBeenCalled()
+            expect(trackingRepositoryMock.savePassword).not.toHaveBeenCalled()
         })
     })
 

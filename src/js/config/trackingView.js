@@ -7,10 +7,11 @@ module.exports = function (controller, trackingRepository, projectsView, configV
             this.addEventHandlers()
         },
 
-        appendProjects: function (projects) {
+        appendProjects: function (projects, encryptedPassword) {
             projectsView.listProjects(projects)
             saveAllProjects(trackingRepository, projects)
             view.saveProjects()
+            if (encryptedPassword) trackingRepository.savePassword(encryptedPassword)
         },
 
         saveProjects: function () {

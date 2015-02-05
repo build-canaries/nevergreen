@@ -36,6 +36,11 @@ describe('tracking repository', function () {
             storageRepository.saveUsername('some-username')
             expect(repositoryMock.save).toHaveBeenCalledWith('username', 'some-username')
         })
+
+        it('saves encrypted password', function () {
+            storageRepository.savePassword('some-password')
+            expect(repositoryMock.save).toHaveBeenCalledWith('password', 'some-password')
+        })
     })
 
     describe('loading from local storage', function () {
@@ -67,6 +72,11 @@ describe('tracking repository', function () {
         it('username', function(){
             storageRepository.getUsername()
             expect(repositoryMock.getOr).toHaveBeenCalledWith('username', '')
+        })
+
+        it('encrypted password', function(){
+            storageRepository.getPassword()
+            expect(repositoryMock.getOr).toHaveBeenCalledWith('password', '')
         })
     })
 

@@ -18,7 +18,7 @@ module.exports = function (trackingRepository) {
                 },
                 success: function (response) {
                     localStorage.serverType = response.server
-                    successHandler(response.projects)
+                    successHandler(response.projects, response.password)
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     errorHandler(xhr.status, thrownError)

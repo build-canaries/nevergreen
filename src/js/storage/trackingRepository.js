@@ -63,6 +63,14 @@ module.exports = function (repository) {
 
         getUsername: function () {
             return repository.getOr('username', '')
+        },
+
+        savePassword: function (password) {
+            return repository.save('password', password)
+        },
+
+        getPassword: function () {
+            return repository.getOr('password', '')
         }
     }
 }
