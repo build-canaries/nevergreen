@@ -11,11 +11,20 @@
 (def username "any-username")
 (def password "any-password")
 
-(fact "it finds interesting projects"
-      (subject/get-interesting-projects {:includedProjects ["project-1"] :cctray valid-cctray}) => (list {:name "project-1" :prognosis :sick})
-      (provided
-        (parser/get-projects ..stream.. anything) => [{:name "project-1" :prognosis :sick}]
-        (http/http-get valid-cctray {}) => ..stream..))
+(facts "it finds interesting projects"
+       (fact "with authentication"
+             (subject/get-interesting-projects {:includedProjects ["project-1"] :cctray valid-cctray :username "a-user" :password "encrypted-password"}) => (list {:name "project-1" :prognosis :sick})
+             (provided
+               (parser/get-projects ..stream.. anything) => [{:name "project-1" :prognosis :sick}]
+               (crypt/decrypt "encrypted-password") => ..password..
+               (security/basic-auth-header "a-user" ..password..) => ..auth-header..
+               (http/http-get valid-cctray ..auth-header..) => ..stream..))
+
+       (fact "without authentication"
+             (subject/get-interesting-projects {:includedProjects ["project-1"] :cctray valid-cctray}) => (list {:name "project-1" :prognosis :sick})
+             (provided
+               (parser/get-projects ..stream.. anything) => [{:name "project-1" :prognosis :sick}]
+               (http/http-get valid-cctray {}) => ..stream..)))
 
 (facts "it gets all projects"
        (fact "with authentication"
