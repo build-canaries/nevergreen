@@ -3,11 +3,11 @@
 .success-message-input {
   width: calc(100% - 15em);
   border: none;
-  border-bottom: 2px solid #7e7e7e;
+  border-bottom: 2px solid $mid-grey;
   margin: 1em;
   &:focus {
     outline: none;
-    border-bottom-color: #03a9f4;
+    border-bottom-color: $blue
   }
 }
 

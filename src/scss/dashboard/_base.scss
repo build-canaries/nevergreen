@@ -37,22 +37,22 @@
   padding: 0.6em 1.5em;
 }
 .dashboard-button-primary {
-  background-color: #0358F3;
+  background-color: $dark-blue;
   &:hover {
-    background-color: darken(#0358F3, 4%);
+    background-color: darken($dark-blue, 4%);
   }
 }
 .dashboard-button-secondary {
-  background-color: #03a9f4;
+  background-color: $blue;
   &:hover {
-    background-color: darken(#03a9f4, 4%);
+    background-color: darken($blue, 4%);
   }
 }
 .dashboard-button-white {
-  background-color: #ffffff;
-  color: #212121;
+  background-color: white;
+  color: $off-black;
   &:hover {
-    background-color: darken(#ffffff, 2%);
+    background-color: darken(white, 2%);
   }
 }
 

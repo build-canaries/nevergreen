@@ -17,7 +17,7 @@
     width: 100%;
     margin: 0 0 1em 0;
     tr:nth-child(even) {
-      background-color: #ececec;
+      background-color: $light-grey;
     }
   }
   .tracking-cctray-group-instructions-text {
@@ -35,10 +35,10 @@
     .tracking-cctray-group-cctray-form-input {
       width: calc(100% - 155px);
       border: none;
-      border-bottom: 2px solid #7e7e7e;
+      border-bottom: 2px solid $mid-grey;
       &:focus {
         outline: none;
-        border-bottom-color: #03a9f4;
+        border-bottom-color: $blue;
       }
     }
     .tracking-cctray-group-cctray-form-input-small {
@@ -51,7 +51,7 @@
     padding: 0 0 1.5em 0;
   }
     .tracking-cctray-group-builds-legend {
-      color: #757575;
+      color: $mid-grey;
       margin-bottom: 1em;
       float: left;
     }
@@ -76,5 +76,5 @@
 
 
 .config-new-project {
-  color: #f32196;
+  color: $hot-pink;
 }

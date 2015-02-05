@@ -1,6 +1,6 @@
 .dashboard-navigation {
-  background-color: #222222;
-  color: #ffffff;
+  background-color: $off-black;
+  color: white;
   width: 10%;
   float: left;
   position: fixed;
@@ -25,7 +25,7 @@
   position: relative;
   display: block;
   text-align: center;
-  color: #999999;
+  color: $mid-grey2;
   text-transform: uppercase;
   font-size: 0.8em;
   padding: 1.3em 0;
@@ -55,7 +55,7 @@
 }
 
 .dashboard-navigation-list-item-icon  {
-  color: #999999;
+  color: $mid-grey2;
   font-size: 3.5em;
   display: block;
   margin-bottom: 0.15em;

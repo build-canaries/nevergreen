@@ -21,7 +21,7 @@
     z-index: 1;
     width: 11px;
     height: 6px;
-    border: 2px solid #03a9f4;
+    border: 2px solid $blue;
     border-top-style: none;
     border-right-style: none;
   }
@@ -33,7 +33,7 @@
     width: 1.1em;
     height: 1.1em;
     background: #fff;
-    border: 2px solid #f2f2f2;
+    border: 2px solid $off-white;
     border-radius: 2px;
     cursor: pointer;
   }
@@ -41,11 +41,11 @@
     &:before {
       transform: rotate(-45deg) scale(1, 1);
       -webkit-transform: rotate(315deg) scale(1, 1);
-      border-color: #fff;
+      border-color: white;
     }
     &:after {
-      border-color: #03a9f4;
-      background: #03a9f4;
+      border-color: $blue;
+      background: $blue;
     }
   }
 }
