@@ -7,4 +7,4 @@
       (subject/decrypt (subject/encrypt "some-text")) => "some-text"
 
       (provided
-        (config/salt) => "abcdefghijklmnop"))
+        (config/aes-key) => "abcdefghijklmnop"))

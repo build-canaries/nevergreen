@@ -16,10 +16,10 @@
 
 (defn ^bytes encrypt [^String plain-text]
   (let [cipher (doto (Cipher/getInstance "AES/ECB/PKCS5Padding")
-                 (.init Cipher/ENCRYPT_MODE (secret (config/salt))))]
+                 (.init Cipher/ENCRYPT_MODE (secret (config/aes-key))))]
     (bytes-to-base64 (.doFinal cipher (.getBytes plain-text "US-ASCII")))))
 
 (defn ^String decrypt [^String base64-encoded]
   (let [cipher (doto (Cipher/getInstance "AES/ECB/PKCS5Padding")
-                 (.init Cipher/DECRYPT_MODE (secret (config/salt))))]
+                 (.init Cipher/DECRYPT_MODE (secret (config/aes-key))))]
     (String. (.doFinal cipher (base64-to-bytes base64-encoded)) "US-ASCII")))

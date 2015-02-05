@@ -12,8 +12,18 @@
        (fact "defaults to 5000"
              (subject/port) => 5000))
 
-(facts "salt"
+(facts "aes encryption key"
        (fact "from env"
-             (subject/salt) => "a-salt"
+             (subject/aes-key) => "key-thats-valid!"
              (provided
-               (env :salt) => "a-salt")))
+               (env :aes_key) => "key-thats-valid!"))
+
+       (fact "defaults to abcdefghijklmnop"
+             (subject/aes-key) => "abcdefghijklmnop"
+             (provided
+               (env :aes_key) => nil))
+
+       (fact "defaults to abcdefghijklmnop when incorrect key incorrect length"
+             (subject/aes-key) => "abcdefghijklmnop"
+             (provided
+               (env :aes_key) => "a-salt")))
