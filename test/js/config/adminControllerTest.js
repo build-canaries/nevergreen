@@ -1,7 +1,10 @@
 var $ = require('jquery')
-var adminController = require('../../../src/js/config/adminController')
+var controller = require('../../../src/js/config/adminController')
 
 describe('Configurable build monitor', function () {
+
+    var trackingRepositoryMock = {getServerType: function () {}}
+    var adminController = controller(trackingRepositoryMock)
 
     describe('get projects', function () {
         it('gets the projects without authentication', function () {
@@ -11,6 +14,7 @@ describe('Configurable build monitor', function () {
             })
             var callbackFunction = function (data) {
             }
+            spyOn(trackingRepositoryMock, 'getServerType').and.returnValue('go')
 
             adminController.getProjects('some-url', null, null, callbackFunction)
 
@@ -19,7 +23,7 @@ describe('Configurable build monitor', function () {
                 url: '/api/projects',
                 data: {
                     url: 'some-url',
-                    serverType: null
+                    serverType: 'go'
                 },
                 dataType: 'json',
                 timeout: jasmine.any(Number),
@@ -37,7 +41,7 @@ describe('Configurable build monitor', function () {
             })
             var callbackFunction = function (data) {
             }
-            localStorage.setItem('serverType', 'go')
+            spyOn(trackingRepositoryMock, 'getServerType').and.returnValue('go')
 
             adminController.getProjects('some-url', 'some-username', 'some-password', callbackFunction)
 
