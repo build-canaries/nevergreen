@@ -6,6 +6,10 @@ describe('Configurable build monitor', function () {
     var trackingRepositoryMock = {getServerType: function () {}}
     var adminController = controller(trackingRepositoryMock)
 
+    beforeEach(function () {
+        $.ajax.isSpy = false
+    })
+
     describe('get projects', function () {
         it('gets the projects without authentication', function () {
             var projectNames = ['proj-1', 'proj-2']
@@ -81,6 +85,28 @@ describe('Configurable build monitor', function () {
 
             expect(configView.showSpinner).toHaveBeenCalled()
             expect(configView.hideSpinner).toHaveBeenCalled()
+        })
+    })
+
+    describe('encryption', function () {
+        it('sends password to be encrypted', function () {
+            spyOn($, 'ajax')
+
+            adminController.encryptPassword('a-password')
+
+            expect($.ajax).toHaveBeenCalledWith({
+                type: 'POST',
+                url: '/api/encrypt',
+                data: {
+                    password: 'a-password'
+                },
+                dataType: 'json',
+                timeout: jasmine.any(Number),
+                beforeSend: jasmine.any(Function),
+                complete: jasmine.any(Function),
+                success: jasmine.any(Function),
+                error: jasmine.any(Function)
+            })
         })
     })
 

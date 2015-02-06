@@ -24,6 +24,30 @@ module.exports = function (trackingRepository) {
                     errorHandler(xhr.status, thrownError)
                 }
             })
+        },
+
+        encryptPassword: function (password, successHandler, beforeHandler, completeHandler, errorHandler) {
+            $.ajax({
+                type: 'POST',
+                url: '/api/encrypt',
+                data: {
+                    password: password
+                },
+                dataType: 'json',
+                timeout: 15000,
+                beforeSend: function () {
+                    beforeHandler()
+                },
+                complete: function () {
+                    completeHandler()
+                },
+                success: function (response) {
+                    successHandler(response)
+                },
+                error: function () {
+                    errorHandler()
+                }
+            })
         }
     }
 }
