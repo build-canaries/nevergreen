@@ -34,6 +34,11 @@
   (if (invalid-url? (:cctray params)) (throw (IllegalArgumentException. "Not a valid url")))
   (let [password (if (:password params) (crypt/decrypt (:password params)))]
 
-  (->> (parser/get-projects (http-get (:cctray params) (set-auth-header (:username params) password)) (options-from-config params))
-       (filtering/interesting)
-       (filtering/by-name (:includedProjects params)))))
+    (->> (parser/get-projects (http-get (:cctray params) (set-auth-header (:username params) password)) (options-from-config params))
+         (filtering/interesting)
+         (filtering/by-name (:includedProjects params)))))
+
+(defn encrypt-password [password]
+  {:password (crypt/encrypt password)
+   :links    [{:rel  "get-all-projects"
+               :href "/api/get-all-projects"}]})

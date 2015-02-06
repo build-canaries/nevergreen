@@ -64,3 +64,10 @@
        (fact (subject/invalid-url? "https://bleh") => false)
        (fact (subject/invalid-url? "gopher://bleh") => true)
        (fact (subject/invalid-url? nil) => true))
+
+(fact "encrypts password and gives get-projects link"
+      (subject/encrypt-password "some-password") => {:password "encrypted-password"
+                                                     :links    [{:rel  "get-all-projects"
+                                                                 :href "/api/get-all-projects"}]}
+      (provided
+        (crypt/encrypt "some-password") => "encrypted-password"))

@@ -26,6 +26,7 @@
 (defroutes main-routes
            (GET "/" [] (clojure.java.io/resource "public/monitor.html"))
            (GET "/config" [] (clojure.java.io/resource "public/config.html"))
+           (POST "/api/encrypt" {params :params} (as-json-response (encrypt-password (:password params))))
            (GET "/api/projects" {params :params} (as-json-response (get-all-projects params)))
            (POST "/api/projects" {params :params} (as-json-response (get-interesting-projects params)))
            (route/resources "/"))
