@@ -39,6 +39,4 @@
          (filtering/by-name (:includedProjects params)))))
 
 (defn encrypt-password [password]
-  {:password (crypt/encrypt password)
-   :links    [{:rel  "get-all-projects"
-               :href "/api/get-all-projects"}]})
+  {:password (crypt/encrypt password)})
