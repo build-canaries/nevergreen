@@ -38,6 +38,18 @@ module.exports = function (controller, trackingRepository, projectsView, configV
             var username = $('#username').val()
             trackingRepository.saveUsername(username)
             controller.getProjects(trackingRepository.getCctray(), username, $('#password').val(), view.appendProjects, configView.showSpinner, configView.hideSpinner, configView.errorHandler)
+        },
+
+        getProjectsWithUsernameAndPassword: function (response) {
+            var username = $('#username').val()
+            trackingRepository.saveUsername(username)
+            trackingRepository.savePassword(response.password)
+            controller.getProjects(trackingRepository.getCctray(), trackingRepository.getUsername(), trackingRepository.getPassword(),
+                view.appendProjects, configView.showSpinner, configView.hideSpinner, configView.errorHandler)
+        },
+
+        encryptPassword: function() {
+            controller.encryptPassword($('#password').val(), view.getProjectsWithUsernameAndPassword, configView.showSpinner, configView.hideSpinner, configView.errorHandler)
         }
 
     }

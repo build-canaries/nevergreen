@@ -10,6 +10,8 @@ describe('tracking view', function () {
         getProjects: function () {
         },
         saveSeenProjects: function () {
+        },
+        encryptPassword: function () {
         }
     }
 
@@ -29,6 +31,10 @@ describe('tracking view', function () {
         saveUsername: function () {
         },
         savePassword: function () {
+        },
+        getUsername: function () {
+        },
+        getPassword: function () {
         }
     }
 
@@ -138,6 +144,36 @@ describe('tracking view', function () {
             expect(trackingRepositoryMock.saveUsername).toHaveBeenCalledWith('user')
             expect(adminControllerMock.getProjects)
                 .toHaveBeenCalledWith(trackingRepositoryMock.getCctray(), 'user', 'pass', view.appendProjects, configViewMock.showSpinner, configViewMock.hideSpinner, configViewMock.errorHandler)
+        })
+
+        it('gets projects with username and password', function () {
+            spyOn(adminControllerMock, 'getProjects')
+            spyOn(trackingRepositoryMock, 'saveUsername')
+            spyOn(trackingRepositoryMock, 'savePassword')
+            spyOn(trackingRepositoryMock, 'getCctray').and.returnValue('cctray-url')
+            spyOn(trackingRepositoryMock, 'getUsername').and.returnValue('user')
+            spyOn(trackingRepositoryMock, 'getPassword').and.returnValue('pass')
+            $body.append('<input id="username"/>')
+            $('#username').val('user')
+
+            view.getProjectsWithUsernameAndPassword({password: 'encrypted-password'})
+
+            expect(trackingRepositoryMock.saveUsername).toHaveBeenCalledWith('user')
+            expect(trackingRepositoryMock.savePassword).toHaveBeenCalledWith('encrypted-password')
+            expect(adminControllerMock.getProjects)
+                .toHaveBeenCalledWith('cctray-url', 'user', 'pass', view.appendProjects, configViewMock.showSpinner, configViewMock.hideSpinner, configViewMock.errorHandler)
+        })
+    })
+
+    describe('encrypt password', function() {
+        it('get encrypted password', function() {
+            spyOn(adminControllerMock, 'encryptPassword')
+            $body.append('<input id="password"/>')
+            $('#password').val('pass')
+
+            view.encryptPassword()
+
+            expect(adminControllerMock.encryptPassword).toHaveBeenCalledWith('pass', view.getProjectsWithUsernameAndPassword, configViewMock.showSpinner, configViewMock.hideSpinner, configViewMock.errorHandler)
         })
     })
 
