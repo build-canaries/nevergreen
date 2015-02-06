@@ -13,6 +13,10 @@ describe('monitor view', function () {
         getIncludedProjects: function () {
         },
         getServerType: function () {
+        },
+        getUsername: function () {
+        },
+        getPassword: function () {
         }
     }
 
@@ -25,7 +29,7 @@ describe('monitor view', function () {
         testInstance = monitor(trackingRepositoryMock, appenderMock)
     })
 
-    it('loads index page', function () {
+    it('loads index page without authentication', function () {
         spyOn(trackingRepositoryMock, 'isReady').and.returnValue(true)
         spyOn(trackingRepositoryMock, 'getCctray').and.returnValue('some-url')
         spyOn(trackingRepositoryMock, 'getIncludedProjects').and.returnValue(['a', 'b', 'c'])
@@ -41,6 +45,35 @@ describe('monitor view', function () {
                 cctray: 'some-url',
                 includedProjects: ['a', 'b', 'c'],
                 serverType: 'server-type'
+            },
+            dataType: 'json',
+            timeout: jasmine.any(Number),
+            success: jasmine.any(Function),
+            error: jasmine.any(Function)
+        })
+    })
+
+    it('loads index page with authentication', function () {
+        spyOn(trackingRepositoryMock, 'isReady').and.returnValue(true)
+        spyOn(trackingRepositoryMock, 'getCctray').and.returnValue('some-url')
+        spyOn(trackingRepositoryMock, 'getIncludedProjects').and.returnValue(['a', 'b', 'c'])
+        spyOn(trackingRepositoryMock, 'getServerType').and.returnValue('server-type')
+        spyOn(trackingRepositoryMock, 'getUsername').and.returnValue('username')
+        spyOn(trackingRepositoryMock, 'getPassword').and.returnValue('encrypted-password')
+
+        spyOn($, 'ajax')
+
+        testInstance.updateBuildMonitor()
+
+        expect($.ajax).toHaveBeenCalledWith({
+            url: '/api/projects',
+            type: 'POST',
+            data: {
+                cctray: 'some-url',
+                includedProjects: ['a', 'b', 'c'],
+                serverType: 'server-type',
+                username: 'username',
+                password: 'encrypted-password'
             },
             dataType: 'json',
             timeout: jasmine.any(Number),

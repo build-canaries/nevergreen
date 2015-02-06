@@ -36,11 +36,22 @@ module.exports = function (trackingRepository, appender) {
 }
 
 function toPayload(trackingRepository) {
-    return {
+    var options = function() {
+        if(trackingRepository.getUsername() && trackingRepository.getPassword()) {
+            return {
+                username: trackingRepository.getUsername(),
+                password: trackingRepository.getPassword()
+            }
+        }
+    }
+
+    var defaults = {
         cctray: trackingRepository.getCctray(),
         includedProjects: trackingRepository.getIncludedProjects(),
         serverType: trackingRepository.getServerType()
     }
+
+    return $.extend({}, defaults, options())
 }
 
 function showConfigLinkOnMouseMove() {
