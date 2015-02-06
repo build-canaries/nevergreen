@@ -131,28 +131,19 @@ describe('tracking view', function () {
 
     describe('getting projects', function() {
         it('gets projects with correct parameters', function () {
-            spyOn(adminControllerMock, 'getProjects')
             spyOn(projectsViewMock, 'searching')
-            spyOn(trackingRepositoryMock, 'saveUsername')
-            $body.append('<input id="username"/><input id="password"/>')
-            $('#username').val('user')
-            $('#password').val('pass')
+            spyOn(adminControllerMock, 'getProjects')
 
             view.getProjects()
 
             expect(projectsViewMock.searching).toHaveBeenCalled()
-            expect(trackingRepositoryMock.saveUsername).toHaveBeenCalledWith('user')
-            expect(adminControllerMock.getProjects)
-                .toHaveBeenCalledWith(trackingRepositoryMock.getCctray(), 'user', 'pass', view.appendProjects, configViewMock.showSpinner, configViewMock.hideSpinner, configViewMock.errorHandler)
+            expect(adminControllerMock.getProjects).toHaveBeenCalledWith(view.appendProjects)
         })
 
         it('gets projects with username and password', function () {
             spyOn(adminControllerMock, 'getProjects')
             spyOn(trackingRepositoryMock, 'saveUsername')
             spyOn(trackingRepositoryMock, 'savePassword')
-            spyOn(trackingRepositoryMock, 'getCctray').and.returnValue('cctray-url')
-            spyOn(trackingRepositoryMock, 'getUsername').and.returnValue('user')
-            spyOn(trackingRepositoryMock, 'getPassword').and.returnValue('pass')
             $body.append('<input id="username"/>')
             $('#username').val('user')
 
@@ -160,8 +151,7 @@ describe('tracking view', function () {
 
             expect(trackingRepositoryMock.saveUsername).toHaveBeenCalledWith('user')
             expect(trackingRepositoryMock.savePassword).toHaveBeenCalledWith('encrypted-password')
-            expect(adminControllerMock.getProjects)
-                .toHaveBeenCalledWith('cctray-url', 'user', 'pass', view.appendProjects, configViewMock.showSpinner, configViewMock.hideSpinner, configViewMock.errorHandler)
+            expect(adminControllerMock.getProjects).toHaveBeenCalledWith(view.appendProjects)
         })
     })
 

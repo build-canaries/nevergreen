@@ -1,9 +1,9 @@
 var $ = require('jquery')
 
-module.exports = function (trackingRepository) {
+module.exports = function (trackingRepository, configView) {
     return {
-        getProjects: function (cctrayUrl, username, password, successHandler, showSpinner, hideSpinner, errorHandler) {
-            var payload = buildPayload(cctrayUrl, username, password, trackingRepository)
+        getProjects: function (successHandler) {
+            var payload = buildPayload(trackingRepository)
             $.ajax({
                 type: 'GET',
                 url: '/api/projects',
@@ -11,22 +11,22 @@ module.exports = function (trackingRepository) {
                 data: payload,
                 dataType: "json",
                 beforeSend: function () {
-                    showSpinner()
+                    configView.showSpinner()
                 },
                 complete: function () {
-                    hideSpinner()
+                    configView.hideSpinner()
                 },
                 success: function (response) {
-                    localStorage.serverType = response.server
+                    trackingRepository.saveServerType(response.server)
                     successHandler(response.projects, response.password)
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                    errorHandler(xhr.status, thrownError)
+                    configView.errorHandler(xhr.status, thrownError)
                 }
             })
         },
 
-        encryptPassword: function (password, successHandler, beforeHandler, completeHandler, errorHandler) {
+        encryptPassword: function (password, successHandler) {
             $.ajax({
                 type: 'POST',
                 url: '/api/encrypt',
@@ -36,28 +36,30 @@ module.exports = function (trackingRepository) {
                 dataType: 'json',
                 timeout: 15000,
                 beforeSend: function () {
-                    beforeHandler()
+                    configView.showSpinner()
                 },
                 complete: function () {
-                    completeHandler()
+                    configView.hideSpinner()
                 },
                 success: function (response) {
                     successHandler(response)
                 },
-                error: function () {
-                    errorHandler()
+                error: function (xhr, ajaxOptions, thrownError) {
+                    configView.errorHandler(xhr.status, thrownError)
                 }
             })
         }
     }
 }
 
-function buildPayload(cctrayUrl, username, password, storageRepository) {
+function buildPayload(storageRepository) {
     var defaults = {
-        url: cctrayUrl,
+        url: storageRepository.getCctray(),
         serverType: storageRepository.getServerType()
     }
     var options = function () {
+        var password = storageRepository.getPassword();
+        var username = storageRepository.getUsername();
         if (username && password) {
             return {
                 username: username,

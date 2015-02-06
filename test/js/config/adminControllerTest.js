@@ -3,8 +3,27 @@ var controller = require('../../../src/js/config/adminController')
 
 describe('Configurable build monitor', function () {
 
-    var trackingRepositoryMock = {getServerType: function () {}}
-    var adminController = controller(trackingRepositoryMock)
+    var trackingRepositoryMock = {
+        getServerType: function () {
+        },
+        saveServerType: function () {
+        },
+        getUsername: function () {
+        },
+        getPassword: function () {
+        },
+        getCctray: function () {
+        }
+    }
+    var configViewMock = {
+        showSpinner: function () {
+        },
+        hideSpinner: function () {
+        },
+        errorHandler: function () {
+        }
+    }
+    var adminController = controller(trackingRepositoryMock, configViewMock)
 
     beforeEach(function () {
         $.ajax.isSpy = false
@@ -19,8 +38,9 @@ describe('Configurable build monitor', function () {
             var callbackFunction = function (data) {
             }
             spyOn(trackingRepositoryMock, 'getServerType').and.returnValue('go')
+            spyOn(trackingRepositoryMock, 'getCctray').and.returnValue('some-url')
 
-            adminController.getProjects('some-url', null, null, callbackFunction)
+            adminController.getProjects(callbackFunction)
 
             expect($.ajax).toHaveBeenCalledWith({
                 type: 'GET',
@@ -43,11 +63,13 @@ describe('Configurable build monitor', function () {
             spyOn($, 'ajax').and.callFake(function (e) {
                 e.success(projectNames);
             })
-            var callbackFunction = function (data) {
-            }
+            var callbackFunction = function (data) {}
             spyOn(trackingRepositoryMock, 'getServerType').and.returnValue('go')
+            spyOn(trackingRepositoryMock, 'getCctray').and.returnValue('some-url')
+            spyOn(trackingRepositoryMock, 'getUsername').and.returnValue('some-username')
+            spyOn(trackingRepositoryMock, 'getPassword').and.returnValue('some-password')
 
-            adminController.getProjects('some-url', 'some-username', 'some-password', callbackFunction)
+            adminController.getProjects(callbackFunction)
 
             expect($.ajax).toHaveBeenCalledWith({
                 type: 'GET',
@@ -68,23 +90,17 @@ describe('Configurable build monitor', function () {
         })
 
         it('shows and hides spinner whilst getting projects', function () {
-            var configView = {
-                showSpinner: function () {
-                },
-                hideSpinner: function () {
-                }
-            }
             spyOn($, 'ajax').and.callFake(function (e) {
                 e.beforeSend()
                 e.complete()
             })
-            spyOn(configView, 'showSpinner')
-            spyOn(configView, 'hideSpinner')
+            spyOn(configViewMock, 'showSpinner')
+            spyOn(configViewMock, 'hideSpinner')
 
-            adminController.getProjects('some-url', 'some-username', 'some-password', null, configView.showSpinner, configView.hideSpinner)
+            adminController.getProjects(function(){})
 
-            expect(configView.showSpinner).toHaveBeenCalled()
-            expect(configView.hideSpinner).toHaveBeenCalled()
+            expect(configViewMock.showSpinner).toHaveBeenCalled()
+            expect(configViewMock.hideSpinner).toHaveBeenCalled()
         })
     })
 
@@ -107,6 +123,20 @@ describe('Configurable build monitor', function () {
                 success: jasmine.any(Function),
                 error: jasmine.any(Function)
             })
+        })
+
+        it('shows and hides spinner whilst encrypting password', function () {
+            spyOn($, 'ajax').and.callFake(function (e) {
+                e.beforeSend()
+                e.complete()
+            })
+            spyOn(configViewMock, 'showSpinner')
+            spyOn(configViewMock, 'hideSpinner')
+
+            adminController.encryptPassword('password', function(){})
+
+            expect(configViewMock.showSpinner).toHaveBeenCalled()
+            expect(configViewMock.hideSpinner).toHaveBeenCalled()
         })
     })
 

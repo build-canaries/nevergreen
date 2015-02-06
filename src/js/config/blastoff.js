@@ -7,7 +7,7 @@ module.exports = function () {
     var trackingRepository = require('../storage/trackingRepository')(repository)
     var successRepository = require('../storage/successRepository')(repository)
     var timingRepository = require('../storage/timingRepository')(repository)
-    var adminController = require('./adminController')(trackingRepository)
+    var adminController = require('./adminController')(trackingRepository, configView)
     var projectsView = require('./projectsView')
     var migrations = require('../storage/migrations')(successRepository)
 
