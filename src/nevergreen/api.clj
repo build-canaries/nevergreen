@@ -12,17 +12,16 @@
       (not (re-find #"https?://" url))))
 
 (defn- set-auth-header [username password]
-  (if (and username password) (security/basic-auth-header username password) {}))
+  (if (and username password) (security/basic-auth-header username password)))
 
 (defn get-all-projects [{:keys [url username password]}]
   (if (invalid-url? url) (throw (IllegalArgumentException. "Not a valid url")))
 
   (let [server-type (servers/detect-server url)
-        auth-header (set-auth-header username password)
-        encrypted-password (if password {:password (crypt/encrypt password)})]
-    (merge {:projects (parser/get-projects (http-get url auth-header) {:normalise true :server server-type})
-            :server   server-type}
-           encrypted-password)))
+        decrypted-password (if password (crypt/decrypt password))
+        auth-header (set-auth-header username decrypted-password)]
+    {:projects (parser/get-projects (http-get url auth-header) {:normalise true :server server-type})
+     :server   server-type}))
 
 (defn options-from-config [{:keys [serverType cctray]}]
   (let [server-type (keyword serverType)]
