@@ -11,7 +11,7 @@ describe('tracking view', function () {
         },
         saveSeenProjects: function () {
         },
-        encryptPassword: function () {
+        encryptPasswordAndGetProjects: function () {
         }
     }
 
@@ -108,24 +108,39 @@ describe('tracking view', function () {
     })
 
     describe('fetch projects saves afterwards', function () {
-        it('saves', function () {
+        it('saves projects', function () {
             spyOn(trackingRepositoryMock, 'saveIncludedProjects')
-            spyOn(trackingRepositoryMock, 'savePassword')
 
-            view.appendProjects([], 'encrypted-password')
+            view.appendProjects([])
 
             expect(trackingRepositoryMock.saveIncludedProjects).toHaveBeenCalled()
-            expect(trackingRepositoryMock.savePassword).toHaveBeenCalledWith('encrypted-password')
         })
 
-        it('dont save password if it is not there', function () {
-            spyOn(trackingRepositoryMock, 'saveIncludedProjects')
-            spyOn(trackingRepositoryMock, 'savePassword')
+        it('encrypts password if should be authenticated', function () {
+            spyOn(view, 'encryptPasswordAndGetProjects')
+            spyOn(view, 'getProjects')
+            $body.append('<input id="username"/><input id="password"/><input id="cctray-fetch" type="button"/>')
+            $('#password').val('pass')
+            $('#username').val('username')
 
-            view.appendProjects([], null)
+            view.init()
+            $('#cctray-fetch').trigger('click')
 
-            expect(trackingRepositoryMock.saveIncludedProjects).toHaveBeenCalled()
-            expect(trackingRepositoryMock.savePassword).not.toHaveBeenCalled()
+            expect(view.encryptPasswordAndGetProjects).toHaveBeenCalled()
+            expect(view.getProjects).not.toHaveBeenCalled()
+        })
+
+        it('doesnt encrypt password if not authenticated', function () {
+            spyOn(view, 'encryptPasswordAndGetProjects')
+            spyOn(view, 'getProjects')
+            $body.append('<input id="username"/><input id="password"/><input id="cctray-fetch" type="button"/>')
+            $('#password').val('pass')
+
+            view.init()
+            $('#cctray-fetch').trigger('click')
+
+            expect(view.encryptPasswordAndGetProjects).not.toHaveBeenCalled()
+            expect(view.getProjects).toHaveBeenCalled()
         })
     })
 
@@ -153,17 +168,19 @@ describe('tracking view', function () {
             expect(trackingRepositoryMock.savePassword).toHaveBeenCalledWith('encrypted-password')
             expect(adminControllerMock.getProjects).toHaveBeenCalledWith(view.appendProjects)
         })
+
+
     })
 
     describe('encrypt password', function() {
         it('get encrypted password', function() {
-            spyOn(adminControllerMock, 'encryptPassword')
+            spyOn(adminControllerMock, 'encryptPasswordAndGetProjects')
             $body.append('<input id="password"/>')
             $('#password').val('pass')
 
-            view.encryptPassword()
+            view.encryptPasswordAndGetProjects()
 
-            expect(adminControllerMock.encryptPassword).toHaveBeenCalledWith('pass', view.getProjectsWithUsernameAndPassword, configViewMock.showSpinner, configViewMock.hideSpinner, configViewMock.errorHandler)
+            expect(adminControllerMock.encryptPasswordAndGetProjects).toHaveBeenCalledWith('pass', view.getProjectsWithUsernameAndPassword)
         })
     })
 

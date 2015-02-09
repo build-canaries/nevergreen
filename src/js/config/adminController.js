@@ -18,7 +18,7 @@ module.exports = function (trackingRepository, configView) {
                 },
                 success: function (response) {
                     trackingRepository.saveServerType(response.server)
-                    successHandler(response.projects, response.password)
+                    successHandler(response.projects)
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     configView.errorHandler(xhr.status, thrownError)
@@ -26,7 +26,7 @@ module.exports = function (trackingRepository, configView) {
             })
         },
 
-        encryptPassword: function (password, successHandler) {
+        encryptPasswordAndGetProjects: function (password, successHandler) {
             $.ajax({
                 type: 'POST',
                 url: '/api/encrypt',

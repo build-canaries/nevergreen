@@ -7,11 +7,10 @@ module.exports = function (controller, trackingRepository, projectsView, configV
             this.addEventHandlers()
         },
 
-        appendProjects: function (projects, encryptedPassword) {
+        appendProjects: function (projects) {
             projectsView.listProjects(projects)
             saveAllProjects(trackingRepository, projects)
             view.saveProjects()
-            if (encryptedPassword) trackingRepository.savePassword(encryptedPassword)
         },
 
         saveProjects: function () {
@@ -29,7 +28,7 @@ module.exports = function (controller, trackingRepository, projectsView, configV
             });
             $("#cctray-fetch").click(function (e) {
                 e.preventDefault()
-                saveCctray(trackingRepository, view.getProjects)
+                getProjectsWithOrWithoutAuthentication(view, trackingRepository);
             });
         },
 
@@ -39,14 +38,13 @@ module.exports = function (controller, trackingRepository, projectsView, configV
         },
 
         getProjectsWithUsernameAndPassword: function (response) {
-            var username = $('#username').val()
-            trackingRepository.saveUsername(username)
+            trackingRepository.saveUsername($('#username').val())
             trackingRepository.savePassword(response.password)
             controller.getProjects(view.appendProjects)
         },
 
-        encryptPassword: function() {
-            controller.encryptPassword($('#password').val(), view.getProjectsWithUsernameAndPassword, configView.showSpinner, configView.hideSpinner, configView.errorHandler)
+        encryptPasswordAndGetProjects: function() {
+            controller.encryptPasswordAndGetProjects($('#password').val(), view.getProjectsWithUsernameAndPassword)
         }
 
     }
@@ -72,4 +70,18 @@ function saveAllProjects(storageRepository, projects) {
         return project.name
     })
     storageRepository.saveSeenProjects(seenProjects)
+}
+
+function isAuthenticated() {
+    var password = $('#password').val()
+    var username = $('#username').val()
+    return username && password
+}
+
+function getProjectsWithOrWithoutAuthentication(view, trackingRepository) {
+    if (isAuthenticated()) {
+        saveCctray(trackingRepository, view.encryptPasswordAndGetProjects)
+    } else {
+        saveCctray(trackingRepository, view.getProjects)
+    }
 }

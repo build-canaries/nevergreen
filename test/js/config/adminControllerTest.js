@@ -108,7 +108,7 @@ describe('Configurable build monitor', function () {
         it('sends password to be encrypted', function () {
             spyOn($, 'ajax')
 
-            adminController.encryptPassword('a-password')
+            adminController.encryptPasswordAndGetProjects('a-password')
 
             expect($.ajax).toHaveBeenCalledWith({
                 type: 'POST',
@@ -133,7 +133,7 @@ describe('Configurable build monitor', function () {
             spyOn(configViewMock, 'showSpinner')
             spyOn(configViewMock, 'hideSpinner')
 
-            adminController.encryptPassword('password', function(){})
+            adminController.encryptPasswordAndGetProjects('password', function(){})
 
             expect(configViewMock.showSpinner).toHaveBeenCalled()
             expect(configViewMock.hideSpinner).toHaveBeenCalled()
