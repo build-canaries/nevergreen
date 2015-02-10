@@ -11,6 +11,9 @@ module.exports = function (controller, trackingRepository, projectsView, configV
             projectsView.listProjects(projects)
             saveAllProjects(trackingRepository, projects)
             view.saveProjects()
+            if (trackingRepository.isAuthenticated()){
+                $('#password').val(trackingRepository.getPassword())
+            }
         },
 
         saveProjects: function () {

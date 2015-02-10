@@ -147,6 +147,16 @@ describe('tracking view', function () {
             expect(view.encryptPasswordAndGetProjects).not.toHaveBeenCalled()
             expect(view.getProjects).toHaveBeenCalled()
         })
+
+        it('updates password input to be encrypted password', function () {
+            spyOn(trackingRepositoryMock, 'getPassword').and.returnValue('encrypted-password')
+            spyOn(trackingRepositoryMock, 'isAuthenticated').and.returnValue(true)
+            $body.append('<input id="password">')
+
+            view.appendProjects([])
+
+            expect($('#password').val()).toBe('encrypted-password')
+        })
     })
 
     describe('getting projects', function() {
