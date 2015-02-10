@@ -17,6 +17,10 @@ module.exports = {
             var savedValue = isArray(value) ? value.map(makeSafe) : trim(value)
             localStorage.setItem(key, savedValue)
         }
+    },
+
+    clear: function (key) {
+        localStorage.removeItem(key)
     }
 }
 

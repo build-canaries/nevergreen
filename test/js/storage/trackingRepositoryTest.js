@@ -6,6 +6,8 @@ var repositoryMock = {
     getArrayOr: function () {
     },
     exists: function () {
+    },
+    clear: function () {
     }
 }
 var storageRepository = require('../../../src/js/storage/trackingRepository')(repositoryMock)
@@ -41,6 +43,11 @@ describe('tracking repository', function () {
             storageRepository.savePassword('some-password')
             expect(repositoryMock.save).toHaveBeenCalledWith('password', 'some-password')
         })
+
+        it('saves is authenticated status', function () {
+            storageRepository.setIsAuthenticated(true)
+            expect(repositoryMock.save).toHaveBeenCalledWith('isAuthenticated', true)
+        })
     })
 
     describe('loading from local storage', function () {
@@ -69,12 +76,12 @@ describe('tracking repository', function () {
             expect(repositoryMock.getOr).toHaveBeenCalledWith('serverType', '')
         })
 
-        it('username', function(){
+        it('username', function () {
             storageRepository.getUsername()
             expect(repositoryMock.getOr).toHaveBeenCalledWith('username', '')
         })
 
-        it('encrypted password', function(){
+        it('encrypted password', function () {
             storageRepository.getPassword()
             expect(repositoryMock.getOr).toHaveBeenCalledWith('password', '')
         })
@@ -126,6 +133,26 @@ describe('tracking repository', function () {
                 if (val === 'includedProjects') return true
             })
             expect(storageRepository.isReady()).toBeFalsy()
+        })
+    })
+
+    describe('authentication', function () {
+        it('clears username and password', function () {
+            spyOn(repositoryMock, 'clear')
+
+            storageRepository.clearAuthDetails()
+
+            expect(repositoryMock.clear).toHaveBeenCalledWith('username')
+            expect(repositoryMock.clear).toHaveBeenCalledWith('password')
+        })
+
+        it('loads is authenticated', function () {
+            spyOn(repositoryMock, 'getOr').and.returnValue("true")
+
+            var isAuthenticated = storageRepository.isAuthenticated();
+
+            expect(isAuthenticated).toEqual(true)
+            expect(repositoryMock.getOr).toHaveBeenCalledWith('isAuthenticated', false)
         })
     })
 

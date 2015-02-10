@@ -62,10 +62,16 @@
                 <input id="cctray-url" class="tracking-cctray-group-cctray-form-input" type="text" name="cctray1-url" placeholder="http://host/cc.xml">
                 <button id="cctray-fetch" type="submit" class="tracking-cctray-group-cctray-form-button dashboard-button dashboard-button-secondary">Fetch</button>
                 <br/>
-                <label for="username">Username</label>
-                <input id="username" class="tracking-cctray-group-cctray-form-input-authentication tracking-cctray-group-cctray-form-input" name="username" type="text"/>
-                <label for="password">Password</label>
-                <input id="password" class="tracking-cctray-group-cctray-form-input-authentication tracking-cctray-group-cctray-form-input" name="password" type="password"/>
+                <label for="is-authenticated" class="label-checkbox">
+                    <input id="is-authenticated" class="checkbox" type="checkbox" name="is-authenticated"/>
+                    use authentication
+                </label>
+                <div id="authentication-group" class="visuallyhidden tracking-cctray-group-authentication">
+                    <label for="username">Username</label>
+                    <input id="username" class="tracking-cctray-group-cctray-form-input-authentication tracking-cctray-group-cctray-form-input" name="username" type="text"/>
+                    <label for="password">Password</label>
+                    <input id="password" class="tracking-cctray-group-cctray-form-input-authentication tracking-cctray-group-cctray-form-input" name="password" type="password"/>
+                </div>
             </form>
 
             <fieldset id="hello-text" class="visuallyhidden tracking-cctray-group-instructions">

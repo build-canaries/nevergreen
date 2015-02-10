@@ -21,15 +21,18 @@ module.exports = function (controller, trackingRepository, projectsView, configV
         addEventHandlers: function () {
             $('#include-all').click(projectsView.includeAll)
             $('#exclude-all').click(projectsView.excludeAll)
-            $("#cctray-url").keypress(function (e) {
+            $('#cctray-url').keypress(function (e) {
                 if (e.which == 13) {
                     saveCctray(trackingRepository, view.getProjects)
                 }
-            });
-            $("#cctray-fetch").click(function (e) {
+            })
+            $('#cctray-fetch').click(function (e) {
                 e.preventDefault()
                 getProjectsWithOrWithoutAuthentication(view, trackingRepository);
-            });
+            })
+            $('#is-authenticated').click(function () {
+                showAuthenticationControls(trackingRepository);
+            })
         },
 
         getProjects: function () {
@@ -43,7 +46,7 @@ module.exports = function (controller, trackingRepository, projectsView, configV
             controller.getProjects(view.appendProjects)
         },
 
-        encryptPasswordAndGetProjects: function() {
+        encryptPasswordAndGetProjects: function () {
             controller.encryptPasswordAndGetProjects($('#password').val(), view.getProjectsWithUsernameAndPassword)
         }
 
@@ -83,5 +86,16 @@ function getProjectsWithOrWithoutAuthentication(view, trackingRepository) {
         saveCctray(trackingRepository, view.encryptPasswordAndGetProjects)
     } else {
         saveCctray(trackingRepository, view.getProjects)
+    }
+}
+
+function showAuthenticationControls(trackingRepository) {
+    var isAuthenticated = document.getElementById('is-authenticated').checked;
+    trackingRepository.setIsAuthenticated(isAuthenticated)
+    if (isAuthenticated) {
+        $('#authentication-group').removeClass('visuallyhidden')
+    } else {
+        $('#authentication-group').addClass('visuallyhidden')
+        trackingRepository.clearAuthDetails()
     }
 }

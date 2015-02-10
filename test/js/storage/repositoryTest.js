@@ -87,4 +87,14 @@ describe('repository', function () {
             })
         })
     })
+
+    describe('clear', function () {
+        it('clears a given value', function () {
+            localStorage.setItem('username', 'some-username')
+
+            repository.clear('username')
+
+            expect(repository.exists('username')).toBeFalsy()
+        })
+    })
 })

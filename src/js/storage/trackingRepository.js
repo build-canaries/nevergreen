@@ -71,6 +71,19 @@ module.exports = function (repository) {
 
         getPassword: function () {
             return repository.getOr('password', '')
+        },
+
+        clearAuthDetails: function () {
+            repository.clear('username')
+            repository.clear('password')
+        },
+
+        setIsAuthenticated: function (isAuthenticated) {
+            repository.save('isAuthenticated', isAuthenticated)
+        },
+
+        isAuthenticated: function () {
+            return repository.getOr('isAuthenticated', false) === 'true';
         }
     }
 }

@@ -35,6 +35,10 @@ describe('tracking view', function () {
         getUsername: function () {
         },
         getPassword: function () {
+        },
+        clearAuthDetails: function () {
+        },
+        setIsAuthenticated: function () {
         }
     }
 
@@ -181,6 +185,32 @@ describe('tracking view', function () {
             view.encryptPasswordAndGetProjects()
 
             expect(adminControllerMock.encryptPasswordAndGetProjects).toHaveBeenCalledWith('pass', view.getProjectsWithUsernameAndPassword)
+        })
+    })
+
+    describe('authentication group', function () {
+        it('hides authentication when not authenticated', function () {
+            spyOn(trackingRepositoryMock, 'setIsAuthenticated')
+            spyOn(trackingRepositoryMock, 'clearAuthDetails')
+            $body.append('<input id="is-authenticated" type="checkbox" checked/><div id="authentication-group"></div>')
+            view.addEventHandlers()
+
+            $('#is-authenticated').trigger('click')
+
+            expect(trackingRepositoryMock.setIsAuthenticated).toHaveBeenCalledWith(false)
+            expect($('#authentication-group')).toHaveClass('visuallyhidden')
+            expect(trackingRepositoryMock.clearAuthDetails).toHaveBeenCalled()
+        })
+
+        it('shows authentication when authenticated', function () {
+            spyOn(trackingRepositoryMock, 'setIsAuthenticated')
+            $body.append('<input id="is-authenticated" type="checkbox"/><div id="authentication-group" class="visuallyhidden"></div>')
+            view.addEventHandlers()
+
+            $('#is-authenticated').trigger('click')
+
+            expect(trackingRepositoryMock.setIsAuthenticated).toHaveBeenCalledWith(true)
+            expect($('#authentication-group')).not.toHaveClass('visuallyhidden')
         })
     })
 
