@@ -39,6 +39,8 @@ describe('tracking view', function () {
         clearAuthDetails: function () {
         },
         setIsAuthenticated: function () {
+        },
+        isAuthenticated: function () {
         }
     }
 
@@ -123,9 +125,8 @@ describe('tracking view', function () {
         it('encrypts password if should be authenticated', function () {
             spyOn(view, 'encryptPasswordAndGetProjects')
             spyOn(view, 'getProjects')
-            $body.append('<input id="username"/><input id="password"/><input id="cctray-fetch" type="button"/>')
-            $('#password').val('pass')
-            $('#username').val('username')
+            spyOn(trackingRepositoryMock, 'isAuthenticated').and.returnValue(true)
+            $body.append('<input id="cctray-fetch" type="button"/>')
 
             view.init()
             $('#cctray-fetch').trigger('click')
@@ -137,8 +138,8 @@ describe('tracking view', function () {
         it('doesnt encrypt password if not authenticated', function () {
             spyOn(view, 'encryptPasswordAndGetProjects')
             spyOn(view, 'getProjects')
-            $body.append('<input id="username"/><input id="password"/><input id="cctray-fetch" type="button"/>')
-            $('#password').val('pass')
+            spyOn(trackingRepositoryMock, 'isAuthenticated').and.returnValue(false)
+            $body.append('<input id="cctray-fetch" type="button"/>')
 
             view.init()
             $('#cctray-fetch').trigger('click')

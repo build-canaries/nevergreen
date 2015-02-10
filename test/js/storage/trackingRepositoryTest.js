@@ -147,7 +147,7 @@ describe('tracking repository', function () {
         })
 
         it('loads is authenticated', function () {
-            spyOn(repositoryMock, 'getOr').and.returnValue("true")
+            spyOn(repositoryMock, 'getOr').and.returnValue('true')
 
             var isAuthenticated = storageRepository.isAuthenticated();
 

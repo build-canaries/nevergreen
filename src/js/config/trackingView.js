@@ -75,27 +75,21 @@ function saveAllProjects(storageRepository, projects) {
     storageRepository.saveSeenProjects(seenProjects)
 }
 
-function isAuthenticated() {
-    var password = $('#password').val()
-    var username = $('#username').val()
-    return username && password
-}
-
-function getProjectsWithOrWithoutAuthentication(view, trackingRepository) {
-    if (isAuthenticated()) {
-        saveCctray(trackingRepository, view.encryptPasswordAndGetProjects)
+function getProjectsWithOrWithoutAuthentication(view, storageRepository) {
+    if (storageRepository.isAuthenticated()) {
+        saveCctray(storageRepository, view.encryptPasswordAndGetProjects)
     } else {
-        saveCctray(trackingRepository, view.getProjects)
+        saveCctray(storageRepository, view.getProjects)
     }
 }
 
-function showAuthenticationControls(trackingRepository) {
+function showAuthenticationControls(storageRepository) {
     var isAuthenticated = document.getElementById('is-authenticated').checked;
-    trackingRepository.setIsAuthenticated(isAuthenticated)
+    storageRepository.setIsAuthenticated(isAuthenticated)
     if (isAuthenticated) {
         $('#authentication-group').removeClass('visuallyhidden')
     } else {
         $('#authentication-group').addClass('visuallyhidden')
-        trackingRepository.clearAuthDetails()
+        storageRepository.clearAuthDetails()
     }
 }
