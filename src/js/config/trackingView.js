@@ -54,12 +54,22 @@ module.exports = function (controller, trackingRepository, projectsView, configV
     return view
 }
 
+function showAuthenticationGroup(storageRepository) {
+    $('#authentication-group').removeClass('visuallyhidden')
+    $('#username').val(storageRepository.getUsername())
+    $('#password').val(storageRepository.getPassword())
+}
 function load(storageRepository, postLoadCallback, noProjectsCallBack) {
     $('#cctray-url').val(storageRepository.getCctray())
     if (storageRepository.hasCctray()) {
         postLoadCallback()
     } else {
         noProjectsCallBack()
+    }
+
+    if (storageRepository.isAuthenticated()) {
+        document.getElementById('is-authenticated').checked = true
+        showAuthenticationGroup(storageRepository);
     }
 }
 
@@ -87,7 +97,7 @@ function showAuthenticationControls(storageRepository) {
     var isAuthenticated = document.getElementById('is-authenticated').checked;
     storageRepository.setIsAuthenticated(isAuthenticated)
     if (isAuthenticated) {
-        $('#authentication-group').removeClass('visuallyhidden')
+        showAuthenticationGroup(storageRepository)
     } else {
         $('#authentication-group').addClass('visuallyhidden')
         storageRepository.clearAuthDetails()

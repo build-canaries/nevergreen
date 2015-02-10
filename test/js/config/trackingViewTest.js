@@ -126,7 +126,7 @@ describe('tracking view', function () {
             spyOn(view, 'encryptPasswordAndGetProjects')
             spyOn(view, 'getProjects')
             spyOn(trackingRepositoryMock, 'isAuthenticated').and.returnValue(true)
-            $body.append('<input id="cctray-fetch" type="button"/>')
+            $body.append('<input id="cctray-fetch" type="button"/><input id="is-authenticated" type="checkbox">')
 
             view.init()
             $('#cctray-fetch').trigger('click')
@@ -211,6 +211,21 @@ describe('tracking view', function () {
             $('#is-authenticated').trigger('click')
 
             expect(trackingRepositoryMock.setIsAuthenticated).toHaveBeenCalledWith(true)
+            expect($('#authentication-group')).not.toHaveClass('visuallyhidden')
+        })
+
+        it('auto loads username and password', function () {
+            spyOn(trackingRepositoryMock, 'isAuthenticated').and.returnValue(true)
+            spyOn(trackingRepositoryMock, 'getUsername').and.returnValue('username')
+            spyOn(trackingRepositoryMock, 'getPassword').and.returnValue('password')
+            $body.append('<div id="authentication-group" class="visuallyhidden"></div>' +
+            '<input id="username"><input id="password">' +
+            '<input id="is-authenticated" type="checkbox">')
+
+            view.init()
+
+            expect($('#username').val()).toBe('username')
+            expect($('#password').val()).toBe('password')
             expect($('#authentication-group')).not.toHaveClass('visuallyhidden')
         })
     })
