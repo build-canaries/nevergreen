@@ -89,12 +89,13 @@ function saveAllProjects(storageRepository, projects) {
     storageRepository.saveSeenProjects(seenProjects)
 }
 
-function passwordIsNotEncrypted(storageRepository) {
-    return $('#password').val() != storageRepository.getPassword()
+function credentialsHaveChanged(storageRepository) {
+    return $('#password').val() === storageRepository.getPassword()
 }
 
 function getProjectsWithOrWithoutAuthentication(view, storageRepository) {
-    if (storageRepository.isAuthenticated() && passwordIsNotEncrypted(storageRepository)) {
+    storageRepository.saveUsername($('#username').val())
+    if (storageRepository.isAuthenticated() && !credentialsHaveChanged(storageRepository)) {
         saveCctray(storageRepository, view.encryptPasswordAndGetProjects)
     } else {
         saveCctray(storageRepository, view.getProjects)
