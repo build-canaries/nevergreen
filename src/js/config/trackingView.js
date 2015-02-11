@@ -62,6 +62,7 @@ function showAuthenticationGroup(storageRepository) {
     $('#username').val(storageRepository.getUsername())
     $('#password').val(storageRepository.getPassword())
 }
+
 function load(storageRepository, postLoadCallback, noProjectsCallBack) {
     $('#cctray-url').val(storageRepository.getCctray())
     if (storageRepository.hasCctray()) {
@@ -88,8 +89,12 @@ function saveAllProjects(storageRepository, projects) {
     storageRepository.saveSeenProjects(seenProjects)
 }
 
+function passwordIsNotEncrypted(storageRepository) {
+    return $('#password').val() != storageRepository.getPassword()
+}
+
 function getProjectsWithOrWithoutAuthentication(view, storageRepository) {
-    if (storageRepository.isAuthenticated()) {
+    if (storageRepository.isAuthenticated() && passwordIsNotEncrypted(storageRepository)) {
         saveCctray(storageRepository, view.encryptPasswordAndGetProjects)
     } else {
         saveCctray(storageRepository, view.getProjects)
@@ -97,7 +102,7 @@ function getProjectsWithOrWithoutAuthentication(view, storageRepository) {
 }
 
 function showAuthenticationControls(storageRepository) {
-    var isAuthenticated = document.getElementById('is-authenticated').checked;
+    var isAuthenticated = document.getElementById('is-authenticated').checked
     storageRepository.setIsAuthenticated(isAuthenticated)
     if (isAuthenticated) {
         showAuthenticationGroup(storageRepository)

@@ -126,9 +126,11 @@ describe('tracking view', function () {
             spyOn(view, 'encryptPasswordAndGetProjects')
             spyOn(view, 'getProjects')
             spyOn(trackingRepositoryMock, 'isAuthenticated').and.returnValue(true)
-            $body.append('<input id="cctray-fetch" type="button"/><input id="is-authenticated" type="checkbox">')
+            spyOn(trackingRepositoryMock, 'getPassword').and.returnValue('encrypted-password')
+            $body.append('<input id="cctray-fetch" type="button"/>')
+            $('#password').val('encrypted-password')
 
-            view.init()
+            view.addEventHandlers()
             $('#cctray-fetch').trigger('click')
 
             expect(view.encryptPasswordAndGetProjects).toHaveBeenCalled()
@@ -141,7 +143,7 @@ describe('tracking view', function () {
             spyOn(trackingRepositoryMock, 'isAuthenticated').and.returnValue(false)
             $body.append('<input id="cctray-fetch" type="button"/>')
 
-            view.init()
+            view.addEventHandlers()
             $('#cctray-fetch').trigger('click')
 
             expect(view.encryptPasswordAndGetProjects).not.toHaveBeenCalled()
@@ -156,6 +158,21 @@ describe('tracking view', function () {
             view.appendProjects([])
 
             expect($('#password').val()).toBe('encrypted-password')
+        })
+
+        it('doesnt encrypt password if it is already encrypted', function () {
+            spyOn(view, 'encryptPasswordAndGetProjects')
+            spyOn(view, 'getProjects')
+            spyOn(trackingRepositoryMock, 'isAuthenticated').and.returnValue(true)
+            spyOn(trackingRepositoryMock, 'getPassword').and.returnValue('encrypted-password')
+            $body.append('<input id="cctray-fetch" type="button"/><input id="password">')
+            $('#password').val('encrypted-password')
+
+            view.addEventHandlers()
+            $('#cctray-fetch').trigger('click')
+
+            expect(view.encryptPasswordAndGetProjects).not.toHaveBeenCalled()
+            expect(view.getProjects).toHaveBeenCalled()
         })
     })
 
