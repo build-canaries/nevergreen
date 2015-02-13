@@ -1,5 +1,7 @@
 # Nevergreen
 
+[![Join the chat at https://gitter.im/build-canaries/nevergreen](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/build-canaries/nevergreen?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Nevergreen is a build monitor with attitude. It is awesome for two reasons:
 
 * Your builds should always be green. Nevergreen understands this and only shows you jobs that have failed or are building.
