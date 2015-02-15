@@ -1,7 +1,4 @@
 /target
-/classes
-/checkouts
-pom.xml
 .idea
 pom.xml.asc
 *.iml
@@ -16,3 +13,4 @@ pom.xml.asc
 /resources/public/main.css
 /resources/public/main.map.json
 phantomjsdriver.log
+npm-debug.log
