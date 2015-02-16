@@ -12,7 +12,8 @@
             [nevergreen.config :refer :all]
             [compojure.core :refer :all]
             [com.duelinmarkers.ring-request-logging :refer [wrap-request-logging]]
-            [ring.middleware.json :refer [wrap-json-body]])
+            [ring.middleware.json :refer [wrap-json-body]]
+            [nevergreen.wrap-cache-control-middleware :refer [wrap-cache-control]])
   (:gen-class))
 
 (cheshire/add-encoder DateTime (fn [date json-generator]
@@ -34,6 +35,7 @@
 (def app
   (-> main-routes
       wrap-request-logging
+      wrap-cache-control
       wrap-json-body
       handler/site))
 
