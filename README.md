@@ -18,7 +18,7 @@ If your CI server is publishing it's *cctray.xml* on the web you don't need to i
 If you'd like to run it yourself then you can run the jar file:
 
 ```
-wget https://github.com/build-canaries/nevergreen/releases/download/v0.4.0/nevergreen-standalone.jar
+wget https://github.com/build-canaries/nevergreen/releases/download/v0.5.0/nevergreen-standalone.jar
 java -jar nevergreen-standalone.jar
 ```
 Nevergreen runs on port 5000 by default. You can change this with the PORT environment variable if you wish.
