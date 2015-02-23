@@ -26,6 +26,11 @@ Nevergreen runs on port 5000 by default. You can change this with the PORT envir
 ```
 PORT=4000 java -jar nevergreen-standalone.jar
 ```
+If you are using authentication with your CI server, it is strongly recommended to override the default AES key that Nevergreen uses to encrypt your passwords. The password must be 16bits and you can generate one [here](http://www.cryptool-online.org/index.php?option=com_cto&view=tool&Itemid=136&lang=en) ensure it is 16 characters with no special characters. Then run nevergreen as follows:
+
+```
+AES_KEY="GENERATED_KEY" java -jar nevergreen-standalone.jar
+```
 
 ## Finding your CCTray xml
 
