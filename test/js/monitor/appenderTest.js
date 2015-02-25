@@ -22,7 +22,7 @@ describe('Showing success message', function () {
         testInstance = appender(successRepositoryMock, successMessageMock)
 
         $body.empty()
-        $body.append('<div id="projects"/>')
+        $body.append('<div id="interesting-projects"/>')
     })
 
     it('shows success image', function () {

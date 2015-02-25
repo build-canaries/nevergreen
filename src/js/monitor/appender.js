@@ -6,7 +6,7 @@ module.exports = function (successRepository, successMessage) {
             if (projects.length === 0) {
                 showSuccess(successRepository, successMessage)
             } else {
-                $('#projects').empty()
+                $projects().empty()
                 projects.forEach(addBuildStatusToScreen)
             }
         }
@@ -14,7 +14,7 @@ module.exports = function (successRepository, successMessage) {
 }
 
 function addBuildStatusToScreen(project) {
-    $('#projects').append(
+    $projects().append(
         '<li class="monitor-project monitor-' + project.prognosis + '">' +
         '<div class=monitor-outerContainer>' +
         '<div class=monitor-innerContainer>' + project.name +
@@ -25,20 +25,20 @@ function addBuildStatusToScreen(project) {
 
 function showSuccess(successRepository, successMessage) {
     if (!successMessageDisplayed()) {
-        $('#projects').empty()
+        $projects().empty()
         var message = randomFrom(successRepository.getSuccessMessages())
         successMessage.ifImage(message, showSuccessImage, showSuccessMessage)
     }
 }
 
 function errorHandler(message) {
-    var $projects = $('#projects');
-    $projects.empty()
-    $projects.text('Failed to fetch success image: ' + message)
+    var $p = $projects();
+    $p.empty()
+    $p.text('Failed to fetch success image: ' + message)
 }
 
 function showSuccessImage(url) {
-    $('#projects').append(
+    $projects().append(
         '<li>' +
         '<div class="monitor-outerContainer">' +
         '<div id="success-image" class="monitor-success-image monitor-innerContainer" style="background: url(' + url + ') no-repeat center center fixed; background-size: contain"></div>' +
@@ -47,7 +47,7 @@ function showSuccessImage(url) {
 }
 
 function showSuccessMessage(message) {
-    $('#projects').append(
+    $projects().append(
         '<li>' +
         '<div class="monitor-outerContainer">' +
         '<div id="success-text" class="monitor-innerContainer">' + message + '</div>' +
@@ -61,4 +61,8 @@ function successMessageDisplayed() {
 
 function randomFrom(arr) {
     return arr[Math.floor(Math.random() * arr.length)]
+}
+
+function $projects() {
+    return $('#interesting-projects');
 }
