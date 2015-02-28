@@ -66,6 +66,8 @@ You'll need to first put in your *cctray.xml* url then it will allow you to sele
 
 We have a [development guide](doc/contributing.md) to help you get started.
 
+We are usually hanging out on the our [Gitter channel](https://gitter.im/build-canaries/nevergreen) if you'd like to chat.
+
 If you would like to add a feature/fix a bug for us please create a pull request.
 
 ## License
