@@ -16,20 +16,22 @@
     "karma-browserify": "3.0.2",
     "karma-jasmine": "0.3.5",
     "karma-phantomjs-launcher": "0.1.4",
-    "watch": "0.14.0"
-  },
-  "dependencies": {
-    "browserify": "9.0.1",
-    "jquery": "2.1.3",
+    "watch": "0.14.0",
+    "reactify": "1.0.0",
     "node-sass": "2.0.1",
     "minifyify": "6.2.2",
+    "browserify": "9.0.1"
+  },
+  "dependencies": {
+    "react": "0.12.2",
+    "jquery": "2.1.3",
     "scale-text": "0.2.2"
   },
   "scripts": {
     "postinstall": "npm run sass && npm run browserify",
     "test": "./node_modules/karma/bin/karma start --singleRun",
     "watch": "watch 'npm install' src",
-    "browserify": "browserify -d ./src/**/*.js -d -p [minifyify --map main.map.json --output ./resources/public/main.map.json] > ./resources/public/main.js",
+    "browserify": "browserify -d -t reactify -p [minifyify --map main.map.json --output ./resources/public/main.map.json] ./src/**/*.js > ./resources/public/main.js",
     "sass": "node-sass src/scss/base.scss resources/public/main.css",
     "testing": "./node_modules/karma/bin/karma start",
     "lint": "jshint src/**/*.js test/js/monitor/*.js test/js/config/*.js test/js/storage/*.js"

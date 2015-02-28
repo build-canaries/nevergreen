@@ -11,6 +11,14 @@ module.exports = function (repository) {
 
         hasSuccessMessages: function () {
             return repository.exists('successMessages')
+        },
+
+        randomSuccessMessage: function () {
+            return randomFrom(this.getSuccessMessages())
         }
     }
+}
+
+function randomFrom(arr) {
+    return arr[Math.floor(Math.random() * arr.length)]
 }

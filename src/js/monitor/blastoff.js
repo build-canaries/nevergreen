@@ -15,10 +15,18 @@ module.exports = function () {
     monitor.init()
 
     // run immediately
-    monitor.updateBuildMonitor()
+    //monitor.updateBuildMonitor()
 
     //schedule runs
+    //setInterval(function () {
+    //    monitor.updateBuildMonitor()
+    //}, pollingTime)
+
+    // react
+
+    var monitorService = require('../services/monitor')
+    monitorService.update()
     setInterval(function () {
-        monitor.updateBuildMonitor()
+        monitorService.update()
     }, pollingTime)
 }
