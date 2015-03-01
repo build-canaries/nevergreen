@@ -11,6 +11,10 @@ var SuccessMessage = React.createClass({
                 </div>
             </li>
         )
+    },
+
+    shouldComponentUpdate: function (nextProps, nextState) {
+        return !successMessageDisplayed()
     }
 })
 
@@ -27,6 +31,10 @@ var SuccessImage = React.createClass({
                 </div>
             </li>
         )
+    },
+
+    shouldComponentUpdate: function (nextProps, nextState) {
+        return !successMessageDisplayed()
     }
 })
 
@@ -39,9 +47,9 @@ module.exports = {
     renderMessage: function (message) {
         React.render(<SuccessMessage message={message} />, $('#content')[0])
         styler.styleProjects()
-    },
-
-    successMessageDisplayed: function () {
-        return $('#success-image').length !== 0 || $('#success-text').length !== 0
     }
+}
+
+function successMessageDisplayed() {
+    return $('#success-image').length !== 0 || $('#success-text').length !== 0
 }

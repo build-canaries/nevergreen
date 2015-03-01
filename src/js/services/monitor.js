@@ -12,13 +12,11 @@ module.exports = {
 
 var selectView = function (data) {
     if (data.length === 0) {
-        if (!successView.successMessageDisplayed()) {
-            var message = successRepository.randomSuccessMessage();
-            if (isUrl(message)) {
-                successView.renderImage(message)
-            } else {
-                successView.renderMessage(message)
-            }
+        var message = successRepository.randomSuccessMessage();
+        if (isUrl(message)) {
+            successView.renderImage(message)
+        } else {
+            successView.renderMessage(message)
         }
     } else {
         monitorView.render(data)
