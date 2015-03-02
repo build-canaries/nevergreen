@@ -1,12 +1,13 @@
 var projectsService = require('./projects')
 var monitorView = require('../views/monitor')
 var successView = require('../views/success')
+var errorView = require('../views/error')
 var repo = require('../storage/repository')
 var successRepository = require('../storage/successRepository')(repo)
 
 module.exports = {
     update: function () {
-        projectsService.fetchInteresting(selectView)
+        projectsService.fetchInteresting(selectView, errorView.render)
     }
 }
 

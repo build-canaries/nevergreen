@@ -5,51 +5,40 @@ var styler = require('../monitor/styler')
 var SuccessMessage = React.createClass({
     render: function () {
         return (
-            <li>
-                <div className='monitor-outerContainer'>
-                    <div id='success-text' className='monitor-innerContainer'>{this.props.message}</div>
-                </div>
-            </li>
+            <div id='success-text' className='monitor-success-text'>{this.props.message}</div>
         )
     },
 
     shouldComponentUpdate: function (nextProps, nextState) {
-        return !successMessageDisplayed()
+        return false
+    },
+
+    componentDidMount: function () {
+        styler.styleProjects([{name: this.props.message}], $(this.getDOMNode()))
     }
 })
 
 var SuccessImage = React.createClass({
     render: function () {
         var fullScreenImage = {
-            background: 'url(' + this.props.url + ') no-repeat center center fixed',
-            backgroundSize: 'contain'
+            background: 'url(' + this.props.url + ') no-repeat center center fixed'
         }
         return (
-            <li>
-                <div className='monitor-outerContainer'>
-                    <div id='success-image' className='monitor-success-image monitor-innerContainer' style={fullScreenImage}></div>
-                </div>
-            </li>
+            <div id='success-image' className='monitor-success-image' style={fullScreenImage}></div>
         )
     },
 
     shouldComponentUpdate: function (nextProps, nextState) {
-        return !successMessageDisplayed()
+        return false
     }
 })
 
 module.exports = {
     renderImage: function (url) {
         React.render(<SuccessImage url={url} />, $('#content')[0])
-        styler.styleProjects()
     },
 
     renderMessage: function (message) {
         React.render(<SuccessMessage message={message} />, $('#content')[0])
-        styler.styleProjects()
     }
-}
-
-function successMessageDisplayed() {
-    return $('#success-image').length !== 0 || $('#success-text').length !== 0
 }

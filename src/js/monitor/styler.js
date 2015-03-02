@@ -2,51 +2,48 @@ var $ = require('jquery')
 var ScaleText = require('scale-text')
 
 module.exports = {
-    styleProjects: function () {
-        resizeEachContainer()
-        scaleFontToContainerSize()
+    styleProjects: function (projects, $container) {
+        resizeEachContainer(projects, $container)
+        scaleFontToContainerSize(projects, $container)
     }
 }
 
-function resizeEachContainer() {
-    $('.monitor-outerContainer')
-        .height(buildStatusHeight())
-        .width(buildStatusWidth())
+function resizeEachContainer(projects, $container) {
+    $container
+        .height(buildStatusHeight(projects))
+        .width(buildStatusWidth(projects))
 }
 
 var maxColumns = 3
 var buildStatusPadding = 11
 
-function buildStatusCount() {
-    return $('li').size()
+function numberOfColumns(projects) {
+    return Math.min(maxColumns, projects.length)
 }
 
-function numberOfColumns() {
-    return Math.min(maxColumns, buildStatusCount())
+function numberOfRows(projects) {
+    return Math.ceil(projects.length / maxColumns)
 }
 
-function numberOfRows() {
-    return Math.ceil(buildStatusCount() / maxColumns)
+function buildStatusWidth(projects) {
+    return window.innerWidth / numberOfColumns(projects) - buildStatusPadding
 }
 
-function buildStatusWidth() {
-    return window.innerWidth / numberOfColumns() - (buildStatusPadding)
+function buildStatusHeight(projects) {
+    return window.innerHeight / numberOfRows(projects) - buildStatusPadding
 }
 
-function buildStatusHeight() {
-    return window.innerHeight / numberOfRows() - buildStatusPadding
+function everyPieceOfTextOnTheScreen(projects) {
+    return projects.map(function (project) {
+        return project.name
+    })
 }
 
-function everyPieceOfTextOnTheScreen() {
-    return $.makeArray($('li div div').map(function (index, item) {
-        return $(item).text()
-    }));
-}
-function scaleFontToContainerSize() {
-    $('.monitor-outerContainer').css('font-size',
+function scaleFontToContainerSize(projects, $container) {
+    $container.css('font-size',
         new ScaleText(
-            everyPieceOfTextOnTheScreen(),
-            buildStatusHeight(),
-            buildStatusWidth()).ideal()
+            everyPieceOfTextOnTheScreen(projects),
+            buildStatusHeight(projects),
+            buildStatusWidth(projects)).ideal()
     )
 }

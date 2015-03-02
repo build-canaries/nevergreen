@@ -57,8 +57,15 @@
   width: 100%;
 }
 
+.monitor-success-text {
+  display: table-cell;
+  overflow: hidden;
+  vertical-align: middle;
+}
+
 .monitor-success-image {
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
+  background-size: contain;
 }
