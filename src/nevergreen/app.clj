@@ -13,7 +13,8 @@
             [compojure.core :refer :all]
             [com.duelinmarkers.ring-request-logging :refer [wrap-request-logging]]
             [ring.middleware.json :refer [wrap-json-body]]
-            [nevergreen.wrap-cache-control-middleware :refer [wrap-cache-control]])
+            [nevergreen.wrap-cache-control-middleware :refer [wrap-cache-control]]
+            [nevergreen.wrap-exceptions :refer [wrap-exceptions]])
   (:gen-class))
 
 (cheshire/add-encoder DateTime (fn [date json-generator]
@@ -30,13 +31,14 @@
            (POST "/api/encrypt" {params :params} (as-json-response (encrypt-password (:password params))))
            (GET "/api/projects" {params :params} (as-json-response (get-all-projects params)))
            (POST "/api/projects" {params :params} (as-json-response (get-interesting-projects params)))
-           (route/resources "/"))
+           (route/resources "/")
+           (route/not-found "Nothing to see here"))
 
 (def app
   (-> main-routes
+      wrap-exceptions
       wrap-request-logging
       wrap-cache-control
-      wrap-json-body
       handler/site))
 
 (defn- gzip-configurator [server]

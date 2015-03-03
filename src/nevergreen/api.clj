@@ -2,7 +2,7 @@
   (:require [clj-cctray.core :as parser]
             [clj-cctray.filtering :as filtering]
             [clojure.string :refer [blank?]]
-            [nevergreen.http :refer :all]
+            [nevergreen.http :refer [http-get]]
             [nevergreen.servers :as servers]
             [nevergreen.security :as security]
             [nevergreen.crypto :as crypt]))

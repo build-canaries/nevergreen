@@ -32,7 +32,7 @@ describe('config view', function () {
     it('handles errors', function () {
         $body.append('<div id="projects"/>')
 
-        view.errorHandler('code', 'reason')
+        view.errorHandler('reason')
 
         expect($('#projects')).toContainHtml('reason')
     })

@@ -21,7 +21,7 @@ module.exports = function (trackingRepository, configView) {
                     successHandler(response.projects)
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                    configView.errorHandler(xhr.status, thrownError)
+                    configView.errorHandler(xhr.responseText)
                 }
             })
         },

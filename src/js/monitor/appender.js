@@ -9,6 +9,10 @@ module.exports = function (successRepository, successMessage) {
                 $projects().empty()
                 projects.forEach(addBuildStatusToScreen)
             }
+        },
+
+        showError: function (message) {
+            showErrorMessage(message)
         }
     }
 }
@@ -51,6 +55,15 @@ function showSuccessMessage(message) {
         '<li>' +
         '<div class="monitor-outerContainer">' +
         '<div id="success-text" class="monitor-innerContainer">' + message + '</div>' +
+        '</div>' +
+        '</li>')
+}
+
+function showErrorMessage(message) {
+    $projects().append(
+        '<li>' +
+        '<div class="monitor-outerContainer">' +
+        '<div id="success-text" class="monitor-innerContainer">Cannot find projects because the remote server returned a ' + message + '</div>' +
         '</div>' +
         '</li>')
 }

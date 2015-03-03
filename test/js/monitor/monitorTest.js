@@ -22,7 +22,8 @@ describe('monitor view', function () {
 
     var appenderMock = {
         addProjects: function () {
-        }
+        },
+        showError: function () {}
     }
 
     beforeEach(function () {
@@ -95,14 +96,14 @@ describe('monitor view', function () {
         var $body = $('body');
         $body.empty()
         $body.append('<div id="projects"/>')
-
+        spyOn(appenderMock, 'showError')
         spyOn(trackingRepositoryMock, 'isReady').and.returnValue(true)
         spyOn($, 'ajax').and.callFake(function (e) {
-            e.error({status: 'code', statusText: 'reason'})
+            e.error({status: 'code', responseText: 'reason'})
         })
 
         testInstance.updateBuildMonitor()
 
-        expect($('#projects')).toContainHtml('reason')
+        expect(appenderMock.showError).toHaveBeenCalledWith('reason')
     })
 })

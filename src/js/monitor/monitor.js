@@ -30,7 +30,8 @@ module.exports = function (trackingRepository, appender) {
         },
 
         onError: function (data) {
-            $('#projects').text('Failed to fetch projects: ' + data.status + ' ' + data.statusText)
+            appender.showError(data.responseText)
+            styler.styleProjects()
         }
     }
 }
