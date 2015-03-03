@@ -30,7 +30,7 @@ module.exports = function (trackingRepository, appender) {
         },
 
         onError: function (data) {
-            appender.showError(data.responseText)
+            appender.showError(data.responseText != undefined ? "the remote server returned a " + data.responseText : "Nevergreen is not responding")
             styler.styleProjects()
         }
     }

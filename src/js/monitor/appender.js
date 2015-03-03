@@ -12,6 +12,7 @@ module.exports = function (successRepository, successMessage) {
         },
 
         showError: function (message) {
+            $projects().empty()
             showErrorMessage(message)
         }
     }
@@ -33,12 +34,6 @@ function showSuccess(successRepository, successMessage) {
         var message = randomFrom(successRepository.getSuccessMessages())
         successMessage.ifImage(message, showSuccessImage, showSuccessMessage)
     }
-}
-
-function errorHandler(message) {
-    var $p = $projects();
-    $p.empty()
-    $p.text('Failed to fetch success image: ' + message)
 }
 
 function showSuccessImage(url) {
@@ -63,7 +58,7 @@ function showErrorMessage(message) {
     $projects().append(
         '<li>' +
         '<div class="monitor-outerContainer">' +
-        '<div id="success-text" class="monitor-innerContainer">Cannot find projects because the remote server returned a ' + message + '</div>' +
+        '<div id="success-text" class="monitor-innerContainer">Cannot find projects because ' + message + '</div>' +
         '</div>' +
         '</li>')
 }

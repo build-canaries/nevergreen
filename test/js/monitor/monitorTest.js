@@ -92,18 +92,33 @@ describe('monitor view', function () {
         expect(window.location.replace).toHaveBeenCalledWith('config')
     })
 
-    it('handles errors', function () {
+    it('handles errors from remote servers', function () {
         var $body = $('body');
         $body.empty()
         $body.append('<div id="projects"/>')
         spyOn(appenderMock, 'showError')
         spyOn(trackingRepositoryMock, 'isReady').and.returnValue(true)
         spyOn($, 'ajax').and.callFake(function (e) {
-            e.error({status: 'code', responseText: 'reason'})
+            e.error({status: 'code', responseText: '404'})
         })
 
         testInstance.updateBuildMonitor()
 
-        expect(appenderMock.showError).toHaveBeenCalledWith('reason')
+        expect(appenderMock.showError).toHaveBeenCalledWith('the remote server returned a 404')
+    })
+
+    it('handles errors from Nevergreen', function () {
+        var $body = $('body');
+        $body.empty()
+        $body.append('<div id="projects"/>')
+        spyOn(appenderMock, 'showError')
+        spyOn(trackingRepositoryMock, 'isReady').and.returnValue(true)
+        spyOn($, 'ajax').and.callFake(function (e) {
+            e.error({status: 'code'})
+        })
+
+        testInstance.updateBuildMonitor()
+
+        expect(appenderMock.showError).toHaveBeenCalledWith('Nevergreen is not responding')
     })
 })
