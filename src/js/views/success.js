@@ -9,7 +9,7 @@ var SuccessMessage = React.createClass({
         )
     },
 
-    shouldComponentUpdate: function (nextProps, nextState) {
+    shouldComponentUpdate: function () {
         return false
     },
 
@@ -28,12 +28,20 @@ var SuccessImage = React.createClass({
         )
     },
 
-    shouldComponentUpdate: function (nextProps, nextState) {
+    shouldComponentUpdate: function () {
         return false
     }
 })
 
 module.exports = {
+    SuccessMessage: function (message) {
+        return <SuccessMessage message={message} />
+    },
+
+    SuccessImage: function (url) {
+        return <SuccessImage url={url} />
+    },
+
     renderImage: function (url) {
         React.render(<SuccessImage url={url} />, $('#content')[0])
     },
