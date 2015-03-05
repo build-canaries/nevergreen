@@ -2,16 +2,16 @@ var $ = require('jquery')
 var ScaleText = require('scale-text')
 
 module.exports = {
-    styleProjects: function (projects, $container) {
-        resizeEachContainer(projects, $container)
-        scaleFontToContainerSize(projects, $container)
+    styleProjects: function (projects, $container, $view) {
+        resizeEachContainer(projects, $container, $view)
+        scaleFontToContainerSize(projects, $container, $view)
     }
 }
 
-function resizeEachContainer(projects, $container) {
+function resizeEachContainer(projects, $container, $view) {
     $container
-        .height(buildStatusHeight(projects))
-        .width(buildStatusWidth(projects))
+        .height(buildStatusHeight(projects, $view))
+        .width(buildStatusWidth(projects, $view))
 }
 
 var maxColumns = 3
@@ -25,11 +25,11 @@ function numberOfRows(projects) {
     return Math.ceil(projects.length / maxColumns)
 }
 
-function buildStatusWidth(projects) {
-    return window.innerWidth / numberOfColumns(projects) - buildStatusPadding
+function buildStatusWidth(projects, $view) {
+    return $view.innerWidth() / numberOfColumns(projects) - buildStatusPadding
 }
 
-function buildStatusHeight(projects) {
+function buildStatusHeight(projects, $view) {
     return window.innerHeight / numberOfRows(projects) - buildStatusPadding
 }
 
@@ -39,11 +39,11 @@ function everyPieceOfTextOnTheScreen(projects) {
     })
 }
 
-function scaleFontToContainerSize(projects, $container) {
+function scaleFontToContainerSize(projects, $container, $view) {
     $container.css('font-size',
         new ScaleText(
             everyPieceOfTextOnTheScreen(projects),
-            buildStatusHeight(projects),
-            buildStatusWidth(projects)).ideal()
+            buildStatusHeight(projects, $view),
+            buildStatusWidth(projects, $view)).ideal()
     )
 }

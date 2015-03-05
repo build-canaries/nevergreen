@@ -3,13 +3,14 @@ var React = require('react')
 var projectsView = require('./projects')
 var successView = require('./success')
 var errorView = require('./error')
+var loadingView = require('./loading')
 var projectsService = require('../services/projects')
 var repo = require('../storage/repository')
 var successRepository = require('../storage/successRepository')(repo)
 
 var MonitorContents = React.createClass({
     getInitialState: function () {
-        return {content: null}
+        return {content: loadingView.Spinner()}
     },
 
     render: function () {

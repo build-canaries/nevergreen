@@ -14,7 +14,7 @@ var SuccessMessage = React.createClass({
     },
 
     componentDidMount: function () {
-        styler.styleProjects([{name: this.props.message}], $(this.getDOMNode()))
+        styler.styleProjects([{name: this.props.message}], $(this.getDOMNode()), $('#content'))
     }
 })
 
@@ -40,13 +40,5 @@ module.exports = {
 
     SuccessImage: function (url) {
         return <SuccessImage url={url} />
-    },
-
-    renderImage: function (url) {
-        React.render(<SuccessImage url={url} />, $('#content')[0])
-    },
-
-    renderMessage: function (message) {
-        React.render(<SuccessMessage message={message} />, $('#content')[0])
     }
 }

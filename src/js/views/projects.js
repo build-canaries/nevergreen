@@ -28,16 +28,16 @@ var InterestingProjects = React.createClass({
     },
 
     componentDidMount: function () {
-        styler.styleProjects(this.props.projects, $(this.getDOMNode()).find('.monitor-outerContainer'))
+        styler.styleProjects(this.props.projects, $(this.getDOMNode()).find('.monitor-outerContainer'), $('#content'))
+    },
+
+    componentDidUpdate: function () {
+        styler.styleProjects(this.props.projects, $(this.getDOMNode()).find('.monitor-outerContainer'), $('#content'))
     }
 })
 
 module.exports = {
     InterestingProjects: function (projects) {
         return <InterestingProjects projects={projects}/>
-    },
-
-    render: function (projects) {
-        React.render(<InterestingProjects projects={projects}/>, $('#content')[0]);
     }
 }

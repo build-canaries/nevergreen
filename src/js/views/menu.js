@@ -9,7 +9,7 @@ var MenuItem = React.createClass({
         })
         return (
             <li>
-                <a onClick={this.props.onClick} id={this.props.id} className={classes} href='#'>
+                <a onClick={this.props.onClick} id={this.props.id} className={classes} href='/config'>
                     <span className={'dashboard-navigation-list-item-icon ' + this.props.iconClass}></span>
                     <span className='dashboard-navigation-list-item-title'>{this.props.title}</span>
                 </a>
@@ -25,26 +25,34 @@ var Menu = React.createClass({
 
     render: function () {
         return (
-            <nav role='navigation' className='dashboard-navigation'>
-                <h2 className='visuallyhidden'>Dashboard navigation</h2>
+            <div>
+                <nav role='navigation' className='dashboard-navigation'>
+                    <h2 className='visuallyhidden'>Dashboard navigation</h2>
 
-                <img src='img/buildcanaries-logo.png' className='dashboard-header-logo' alt='Build Canaries logo' />
+                    <img src='img/buildcanaries-logo.png' className='dashboard-header-logo' alt='Build Canaries logo' />
 
-                <ul className='dashboard-navigation-list'>
-                    {
-                        this.props.items.map(function (item) {
-                            return <MenuItem key={item.id} onClick={this.handleClick.bind(this, item.id)} active={this.isActive(item.id)} id={item.id} iconClass={'icon-' + item.iconClass} title={item.title} />
-                        }.bind(this))
-                    }
-                </ul>
-            </nav>
+                    <ul className='dashboard-navigation-list'>
+                        {
+                            this.props.items.map(function (item) {
+                                return <MenuItem key={item.id} onClick={this.handleClick.bind(this, item.id)} active={this.isActive(item.id)} id={item.id} iconClass={'icon-' + item.iconClass} title={item.title} />
+                            }.bind(this))
+                        }
+                    </ul>
+                </nav>
+                <footer role='contentinfo' className='contentinfo'>
+                    <a href='https://github.com/build-canaries/nevergreen/releases/tag/v0.6.0pre' className='version'>
+                        <p>v0.6.0pre</p>
+                        <p>Fuzzy Wuzzy</p>
+                    </a>
+                </footer>
+            </div>
         )
     },
 
     handleClick: function (item, event) {
         this.setState({active: item})
 
-        event.preventDefault()
+        //event.preventDefault()
     },
 
     isActive: function (item) {
