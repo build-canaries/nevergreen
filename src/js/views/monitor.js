@@ -11,18 +11,23 @@ var successRepository = require('../storage/successRepository')(repo)
 var MonitorContents = React.createClass({
 
     render: function () {
+        var content
         if (!this.hasLoaded()) {
-            return loadingView.Spinner()
+            content = loadingView.Spinner()
         } else if (this.hasProjects()) {
-            return projectsView.InterestingProjects(this.state.projects)
+            content = projectsView.InterestingProjects(this.state.projects)
         } else {
             var message = successRepository.randomSuccessMessage()
             if (message.isUrl) {
-                return successView.SuccessImage(message.message)
+                content = successView.SuccessImage(message.message)
             } else {
-                return successView.SuccessMessage(message.message)
+                content = successView.SuccessMessage(message.message)
             }
         }
+
+        return (
+            <div className='monitor'>{content}</div>
+        )
     },
 
     componentWillMount: function () {
