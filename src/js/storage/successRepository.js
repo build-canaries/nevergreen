@@ -6,7 +6,12 @@ module.exports = function (repository) {
         },
 
         getSuccessMessages: function () {
-            return repository.getArrayOr('successMessages', [])
+            return repository.getArrayOr('successMessages', []).map(function (message) {
+                return {
+                    message: message,
+                    isUrl: isUrl(message)
+                }
+            })
         },
 
         hasSuccessMessages: function () {
@@ -21,4 +26,12 @@ module.exports = function (repository) {
 
 function randomFrom(arr) {
     return arr[Math.floor(Math.random() * arr.length)]
+}
+
+function isUrl(message) {
+    return startsWith(message, 'http')
+}
+
+function startsWith(s, prefix) {
+    return s.lastIndexOf(prefix, 0) === 0
 }

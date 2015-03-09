@@ -24,7 +24,10 @@ describe('success repository', function () {
     describe('loading from local storage', function () {
         it('loads all success messages', function () {
             spyOn(repositoryMock, 'getArrayOr').and.returnValue(['a', 'b', 'c'])
-            expect(successRepository.getSuccessMessages()).toEqual(['a', 'b', 'c'])
+            expect(successRepository.getSuccessMessages()).toEqual([
+                {message: 'a', isUrl: false},
+                {message: 'b', isUrl: false},
+                {message: 'c', isUrl: false}])
         })
 
         it('loads default success messages', function () {

@@ -9,21 +9,29 @@ var repo = require('../storage/repository')
 var successRepository = require('../storage/successRepository')(repo)
 
 var MonitorContents = React.createClass({
-    getInitialState: function () {
-        return {content: loadingView.Spinner()}
-    },
 
     render: function () {
-        return this.state.content
+        if (!this.hasLoaded()) {
+            return loadingView.Spinner()
+        } else if (this.hasProjects()) {
+            return projectsView.InterestingProjects(this.state.projects)
+        } else {
+            var message = successRepository.randomSuccessMessage()
+            if (message.isUrl) {
+                return successView.SuccessImage(message.message)
+            } else {
+                return successView.SuccessMessage(message.message)
+            }
+        }
     },
 
     componentWillMount: function () {
-        projectsService.fetchInteresting(this.selectView, errorView.render)
+        projectsService.fetchInteresting(this.updateProjects, errorView.render)
     },
 
     componentDidMount: function () {
         var timer = setInterval(function () {
-            projectsService.fetchInteresting(this.selectView, errorView.render)
+            projectsService.fetchInteresting(this.updateProjects, errorView.render)
         }.bind(this), this.props.pollingInterval)
 
         this.setState({timer: timer})
@@ -33,21 +41,21 @@ var MonitorContents = React.createClass({
         clearInterval(this.state.timer)
     },
 
-    selectView: function (data) {
+    updateProjects: function (data) {
         if (this.isMounted()) {
-            var content
-            if (data.length === 0) {
-                var message = successRepository.randomSuccessMessage();
-                if (isUrl(message)) {
-                    content = successView.SuccessImage(message)
-                } else {
-                    content = successView.SuccessMessage(message)
-                }
-            } else {
-                content = projectsView.InterestingProjects(data)
-            }
-            this.setState({content: content})
+            this.setState({
+                loaded: true,
+                projects: data
+            })
         }
+    },
+
+    hasLoaded: function () {
+        return this.state && this.state.projects
+    },
+
+    hasProjects: function () {
+        return this.hasLoaded() && this.state.projects.length !== 0
     }
 })
 
@@ -55,12 +63,4 @@ module.exports = {
     render: function (pollingInterval) {
         React.render(<MonitorContents pollingInterval={pollingInterval} />, $('#content')[0])
     }
-}
-
-function isUrl(message) {
-    return startsWith(message, 'http')
-}
-
-function startsWith(s, prefix) {
-    return s.lastIndexOf(prefix, 0) === 0
 }
