@@ -32,7 +32,7 @@ function load(successRepository) {
     if (successRepository.hasSuccessMessages()) {
         var messages = successRepository.getSuccessMessages()
         for (var i = 0; i < messages.length; i++) {
-            appendSuccessInput(i, messages[i])
+            appendSuccessInput(i, messages[i].message)
         }
     } else {
         addDefaultSuccessMessage(successRepository)

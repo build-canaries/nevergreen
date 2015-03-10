@@ -29,7 +29,7 @@ describe('success view', function () {
                 '<button id="success-add"/>')
 
             spyOn(successRepositoryMock, 'hasSuccessMessages').and.returnValue(true)
-            spyOn(successRepositoryMock, 'getSuccessMessages').and.returnValue(['a', 'b', 'c'])
+            spyOn(successRepositoryMock, 'getSuccessMessages').and.returnValue([{message: 'a'}, {message: 'b'}, {message: 'c'}])
 
             view.init()
 
