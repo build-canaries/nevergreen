@@ -34,7 +34,7 @@
     "browserify": "browserify -d -t reactify -p [minifyify --map main.map.json --output ./resources/public/main.map.json] ./src/**/*.js > ./resources/public/main.js",
     "sass": "node-sass src/scss/base.scss resources/public/main.css",
     "testing": "./node_modules/karma/bin/karma start",
-    "lint": "jshint src/**/*.js test/js/monitor/*.js test/js/config/*.js test/js/storage/*.js"
+    "lint": "jshint src/**/*.js test/js/**/*.js --exclude test/js/lib/**/*.js"
   },
   "repository": {
     "type": "git",
