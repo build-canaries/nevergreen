@@ -1,6 +1,6 @@
 var $ = require('jquery')
 var React = require('react')
-var styler = require('../monitor/styler')
+var styler = require('../../monitor/styler')
 
 var Error = React.createClass({
 

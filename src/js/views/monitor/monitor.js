@@ -2,11 +2,11 @@ var $ = require('jquery')
 var React = require('react')
 var projectsView = require('./projects')
 var successView = require('./success')
-var errorView = require('./error')
-var loadingView = require('./loading')
-var projectsService = require('../services/projects')
-var repo = require('../storage/repository')
-var successRepository = require('../storage/successRepository')(repo)
+var errorView = require('../general/error')
+var loadingView = require('../general/loading')
+var projectsService = require('../../services/projects')
+var repo = require('../../storage/repository')
+var successRepository = require('../../storage/successRepository')(repo)
 
 var MonitorContents = React.createClass({
 
