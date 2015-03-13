@@ -45,5 +45,5 @@
 
     (wait-until #(= (title) "Nevergreen"))
 
-    (doseq [actual-project (elements "#projects > li > div > div")]
+    (doseq [actual-project (elements "#interesting-projects > li > div > div")]
       (is (in? expected-projects (text actual-project)) "Expected project not displayed"))))

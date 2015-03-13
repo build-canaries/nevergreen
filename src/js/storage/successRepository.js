@@ -1,16 +1,17 @@
+var messages = require('../services/messages')
+
 module.exports = function (repository) {
 
     return {
         saveSuccessMessages: function (messages) {
-            repository.save('successMessages', messages)
+            repository.save('successMessages', messages.map(function (message) {
+                return message.value
+            }))
         },
 
         getSuccessMessages: function () {
-            return repository.getArrayOr('successMessages', []).map(function (message) {
-                return {
-                    message: message,
-                    isUrl: isUrl(message)
-                }
+            return repository.getArrayOr('successMessages', []).map(function (value) {
+                return messages.newMessage(value)
             })
         },
 
@@ -26,12 +27,4 @@ module.exports = function (repository) {
 
 function randomFrom(arr) {
     return arr[Math.floor(Math.random() * arr.length)]
-}
-
-function isUrl(message) {
-    return startsWith(message, 'http')
-}
-
-function startsWith(s, prefix) {
-    return s.lastIndexOf(prefix, 0) === 0
 }

@@ -1,7 +1,6 @@
 module.exports = function () {
     var configView = require('./configView')
     var trackingView = require('./trackingView')
-    var successView = require('./successView')
     var timingView = require('./timingView')
     var repository = require('../storage/repository')
     var trackingRepository = require('../storage/trackingRepository')(repository)
@@ -14,6 +13,9 @@ module.exports = function () {
     migrations.migrate()
 
     trackingView(adminController, trackingRepository, projectsView(trackingRepository), configView).init()
-    successView(successRepository).init()
     timingView(timingRepository).init()
+
+    // React
+    var reactSuccessView = require('../views/config/success')
+    reactSuccessView.render(successRepository.getSuccessMessages())
 }

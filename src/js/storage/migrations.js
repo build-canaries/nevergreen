@@ -1,3 +1,5 @@
+var messages = require('../services/messages')
+
 module.exports = function (successRepository) {
     return {
         migrate: function () {
@@ -11,8 +13,8 @@ function eggplantMigrations(successRepository) {
     var successImageUrl = localStorage.getItem('successImageUrl')
     var successMessages = []
 
-    pushIfSet(successMessages, successText)
-    pushIfSet(successMessages, successImageUrl)
+    pushIfSet(successMessages, messages.newMessage(successText))
+    pushIfSet(successMessages, messages.newMessage(successImageUrl))
 
     if (successMessages.length > 0) {
         successRepository.saveSuccessMessages(successMessages)
@@ -23,7 +25,7 @@ function eggplantMigrations(successRepository) {
 }
 
 function pushIfSet(arr, val) {
-    if (val && val.trim().length !== 0) {
+    if (val.message && val.message.trim().length !== 0) {
         arr.push(val)
     }
 }

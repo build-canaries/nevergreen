@@ -6,6 +6,7 @@ var repositoryMock = {
     exists: function () {
     }
 }
+var messages = require('../../../src/js/services/messages')
 var successRepository = require('../../../src/js/storage/successRepository')(repositoryMock)
 
 describe('success repository', function () {
@@ -16,7 +17,11 @@ describe('success repository', function () {
         })
 
         it('saves all success messages', function () {
-            successRepository.saveSuccessMessages(['a', 'b', 'c'])
+            successRepository.saveSuccessMessages([
+                messages.newMessage('a'),
+                messages.newMessage('b'),
+                messages.newMessage('c')
+            ])
             expect(repositoryMock.save).toHaveBeenCalledWith('successMessages', ['a', 'b', 'c'])
         })
     })
@@ -25,9 +30,10 @@ describe('success repository', function () {
         it('loads all success messages', function () {
             spyOn(repositoryMock, 'getArrayOr').and.returnValue(['a', 'b', 'c'])
             expect(successRepository.getSuccessMessages()).toEqual([
-                {message: 'a', isUrl: false},
-                {message: 'b', isUrl: false},
-                {message: 'c', isUrl: false}])
+                messages.newMessage('a'),
+                messages.newMessage('b'),
+                messages.newMessage('c')
+            ])
         })
 
         it('loads default success messages', function () {
