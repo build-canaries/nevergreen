@@ -1,7 +1,6 @@
 var React = require('react')
 var $ = require('jquery')
-var repository = require('../../storage/repository')
-var successRepository = require('../../storage/successRepository')(repository)
+var successRepository = require('../../storage/successRepository')
 var messages = require('../../services/messages')
 
 var SuccessMessage = React.createClass({

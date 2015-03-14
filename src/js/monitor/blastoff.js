@@ -1,8 +1,7 @@
 module.exports = function () {
     var repository = require('../storage/repository')
-    var successRepository = require('../storage/successRepository')(repository)
     var timingRepository = require('../storage/timingRepository')(repository)
-    var migrations = require('../storage/migrations')(successRepository)
+    var migrations = require('../storage/migrations')
 
     migrations.migrate()
 

@@ -1,10 +1,9 @@
 var messages = require('../services/messages')
+var successRepository = require('./successRepository')
 
-module.exports = function (successRepository) {
-    return {
-        migrate: function () {
-            eggplantMigrations(successRepository)
-        }
+module.exports = {
+    migrate: function () {
+        eggplantMigrations(successRepository)
     }
 }
 

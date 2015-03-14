@@ -1,19 +1,12 @@
-var repositoryMock = {
-    save: function () {
-    },
-    getArrayOr: function () {
-    },
-    exists: function () {
-    }
-}
+var repository = require('../../../src/js/storage/repository')
 var messages = require('../../../src/js/services/messages')
-var successRepository = require('../../../src/js/storage/successRepository')(repositoryMock)
+var successRepository = require('../../../src/js/storage/successRepository')
 
 describe('success repository', function () {
 
     describe('saving to local storage', function () {
         beforeEach(function () {
-            spyOn(repositoryMock, 'save')
+            spyOn(repository, 'save')
         })
 
         it('saves all success messages', function () {
@@ -22,13 +15,13 @@ describe('success repository', function () {
                 messages.newMessage('b'),
                 messages.newMessage('c')
             ])
-            expect(repositoryMock.save).toHaveBeenCalledWith('successMessages', ['a', 'b', 'c'])
+            expect(repository.save).toHaveBeenCalledWith('successMessages', ['a', 'b', 'c'])
         })
     })
 
     describe('loading from local storage', function () {
         it('loads all success messages', function () {
-            spyOn(repositoryMock, 'getArrayOr').and.returnValue(['a', 'b', 'c'])
+            spyOn(repository, 'getArrayOr').and.returnValue(['a', 'b', 'c'])
             expect(successRepository.getSuccessMessages()).toEqual([
                 messages.newMessage('a'),
                 messages.newMessage('b'),
@@ -37,19 +30,19 @@ describe('success repository', function () {
         })
 
         it('loads default success messages', function () {
-            spyOn(repositoryMock, 'getArrayOr').and.returnValue([])
+            spyOn(repository, 'getArrayOr').and.returnValue([])
             expect(successRepository.getSuccessMessages()).toEqual([])
         })
     })
 
     describe('has', function () {
         beforeEach(function () {
-            spyOn(repositoryMock, 'exists')
+            spyOn(repository, 'exists')
         })
 
         it('success messages', function () {
             successRepository.hasSuccessMessages()
-            expect(repositoryMock.exists).toHaveBeenCalledWith('successMessages')
+            expect(repository.exists).toHaveBeenCalledWith('successMessages')
         })
     })
 

@@ -1,27 +1,25 @@
+var repository = require('./repository')
 var messages = require('../services/messages')
 
-module.exports = function (repository) {
+module.exports = {
+    saveSuccessMessages: function (messages) {
+        repository.save('successMessages', messages.map(function (message) {
+            return message.value
+        }))
+    },
 
-    return {
-        saveSuccessMessages: function (messages) {
-            repository.save('successMessages', messages.map(function (message) {
-                return message.value
-            }))
-        },
+    getSuccessMessages: function () {
+        return repository.getArrayOr('successMessages', []).map(function (value) {
+            return messages.newMessage(value)
+        })
+    },
 
-        getSuccessMessages: function () {
-            return repository.getArrayOr('successMessages', []).map(function (value) {
-                return messages.newMessage(value)
-            })
-        },
+    hasSuccessMessages: function () {
+        return repository.exists('successMessages')
+    },
 
-        hasSuccessMessages: function () {
-            return repository.exists('successMessages')
-        },
-
-        randomSuccessMessage: function () {
-            return randomFrom(this.getSuccessMessages())
-        }
+    randomSuccessMessage: function () {
+        return randomFrom(this.getSuccessMessages())
     }
 }
 

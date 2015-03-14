@@ -5,8 +5,7 @@ var successView = require('./success')
 var errorView = require('../general/error')
 var loadingView = require('../general/loading')
 var projectsService = require('../../services/projects')
-var repo = require('../../storage/repository')
-var successRepository = require('../../storage/successRepository')(repo)
+var successRepository = require('../../storage/successRepository')
 
 var MonitorContents = React.createClass({
 

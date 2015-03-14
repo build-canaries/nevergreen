@@ -1,6 +1,4 @@
-var repository = require('../../../src/js/storage/repository')
-var successRepository = require('../../../src/js/storage/successRepository')(repository)
-var migrations = require('../../../src/js/storage/migrations')(successRepository)
+var migrations = require('../../../src/js/storage/migrations')
 
 describe('migrations', function () {
 
