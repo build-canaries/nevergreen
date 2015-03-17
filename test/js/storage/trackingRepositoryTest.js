@@ -1,16 +1,5 @@
-var repositoryMock = {
-    save: function () {
-    },
-    getOr: function () {
-    },
-    getArrayOr: function () {
-    },
-    exists: function () {
-    },
-    clear: function () {
-    }
-}
-var storageRepository = require('../../../src/js/storage/trackingRepository')(repositoryMock)
+var repositoryMock = require('../../../src/js/storage/repository')
+var storageRepository = require('../../../src/js/storage/trackingRepository')
 
 describe('tracking repository', function () {
 

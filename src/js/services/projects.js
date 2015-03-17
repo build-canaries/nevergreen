@@ -1,6 +1,5 @@
 var $ = require('jquery')
-var repo = require('../storage/repository')
-var trackingRepository = require('../storage/trackingRepository')(repo)
+var trackingRepository = require('../storage/trackingRepository')
 
 module.exports = {
     fetchAll: function (tray, successCallback, errorCallback) {
