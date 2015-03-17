@@ -1,3 +1,5 @@
+var trays = require('../services/trays')
+
 module.exports = function (repository) {
     return {
         isReady: function () {
@@ -84,6 +86,20 @@ module.exports = function (repository) {
 
         isAuthenticated: function () {
             return repository.getOr('isAuthenticated', false) === 'true';
+        },
+
+        getTrays: function () {
+            return [
+                trays.newTray(this.getCctray(), this.getUsername(), this.getPassword(), this.getIncludedProjects(), this.getSeenProjects(), this.getSeenProjects())
+            ]
+        },
+
+        saveTray: function (tray) {
+            this.saveCctray(tray.url)
+            this.saveIncludedProjects(tray.includedProjects)
+            this.saveSeenProjects(tray.retrievedProjects)
+            this.saveUsername(tray.username)
+            this.savePassword(tray.password)
         }
     }
 }

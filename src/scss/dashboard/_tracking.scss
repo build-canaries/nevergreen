@@ -82,6 +82,15 @@
     }
 
 
+    .config-removed-project {
+      text-decoration: line-through;
+      color: $mid-grey;
+    }
+
 .config-new-project {
   color: $hot-pink;
+}
+
+.config-removed-info {
+  color: $mid-grey;
 }

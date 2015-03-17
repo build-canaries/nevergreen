@@ -12,10 +12,13 @@ module.exports = function () {
 
     migrations.migrate()
 
-    trackingView(adminController, trackingRepository, projectsView(trackingRepository), configView).init()
+    //trackingView(adminController, trackingRepository, projectsView(trackingRepository), configView).init()
     timingView(timingRepository).init()
 
     // React
+    var reactTrackingView = require('../views/config/tracking')
+    reactTrackingView.render(trackingRepository.getTrays())
+
     var reactSuccessView = require('../views/config/success')
     reactSuccessView.render(successRepository.getSuccessMessages())
 }

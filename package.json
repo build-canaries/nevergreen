@@ -25,7 +25,8 @@
     "reactify": "1.0.0",
     "node-sass": "2.0.1",
     "minifyify": "6.2.2",
-    "browserify": "9.0.1"
+    "browserify": "9.0.1",
+    "lodash": "3.5.0"
   },
   "scripts": {
     "postinstall": "npm run sass && npm run browserify",
