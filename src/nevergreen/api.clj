@@ -12,13 +12,14 @@
       (not (re-find #"https?://" url))))
 
 (defn- set-auth-header [username password]
-  (if (and username password) (security/basic-auth-header username password)))
+  (if-not (or (blank? username) (blank? password))
+    (security/basic-auth-header username password)))
 
 (defn get-all-projects [{:keys [url username password]}]
   (if (invalid-url? url) (throw (IllegalArgumentException. "Not a valid url")))
 
   (let [server-type (servers/detect-server url)
-        decrypted-password (if password (crypt/decrypt password))
+        decrypted-password (if-not (blank? password) (crypt/decrypt password))
         auth-header (set-auth-header username decrypted-password)]
     {:projects (parser/get-projects (http-get url auth-header) {:normalise true :server server-type})
      :server   server-type}))
@@ -31,8 +32,9 @@
 
 (defn get-interesting-projects [params]
   (if (invalid-url? (:cctray params)) (throw (IllegalArgumentException. "Not a valid url")))
-  (let [password (if (:password params) (crypt/decrypt (:password params)))]
 
+  (let [password (if-not (blank? (:password params))
+                   (crypt/decrypt (:password params)))]
     (->> (parser/get-projects (http-get (:cctray params) (set-auth-header (:username params) password)) (options-from-config params))
          (filtering/interesting)
          (filtering/by-name (:includedProjects params)))))

@@ -16,8 +16,8 @@
              (subject/get-interesting-projects {:includedProjects ["project-1"] :cctray valid-cctray :username "a-user" :password "encrypted-password"}) => (list {:name "project-1" :prognosis :sick})
              (provided
                (parser/get-projects ..stream.. anything) => [{:name "project-1" :prognosis :sick}]
-               (crypt/decrypt "encrypted-password") => ..password..
-               (security/basic-auth-header "a-user" ..password..) => ..auth-header..
+               (crypt/decrypt "encrypted-password") => password
+               (security/basic-auth-header "a-user" password) => ..auth-header..
                (http/http-get valid-cctray ..auth-header..) => ..stream..))
 
        (fact "without authentication"
@@ -42,6 +42,18 @@
        (fact "without authentication"
              (subject/get-all-projects {:url valid-cctray}) => {:projects (list {:name "project-1" :prognosis :sick})
                                                                 :server   ..server..}
+             (provided
+               (parser/get-projects ..stream.. anything) => [{:name "project-1" :prognosis :sick}]
+               (http/http-get valid-cctray nil) => ..stream..
+               (servers/detect-server valid-cctray) => ..server..
+               (crypt/decrypt anything) => anything :times 0
+               (security/basic-auth-header anything anything) => anything :times 0))
+
+       (fact "without authentication if blank username and password"
+             (subject/get-all-projects {:url      valid-cctray
+                                        :username ""
+                                        :password ""}) => {:projects (list {:name "project-1" :prognosis :sick})
+                                                           :server   ..server..}
              (provided
                (parser/get-projects ..stream.. anything) => [{:name "project-1" :prognosis :sick}]
                (http/http-get valid-cctray nil) => ..stream..
