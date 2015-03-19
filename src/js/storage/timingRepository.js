@@ -1,15 +1,15 @@
-module.exports = function (repository) {
-    return {
-        savePollingTime: function (time) {
-            repository.save('pollingTime', time)
-        },
+var repository = require('./repository')
 
-        getPollingTime: function () {
-            return repository.getOr('pollingTime', '5')
-        },
+module.exports = {
+    savePollingTime: function (time) {
+        repository.save('pollingTime', time)
+    },
 
-        getPollingTimeInMilliseconds: function () {
-            return this.getPollingTime() * 1000
-        }
+    getPollingTime: function () {
+        return parseInt(repository.getOr('pollingTime', 5))
+    },
+
+    getPollingTimeInMilliseconds: function () {
+        return this.getPollingTime() * 1000
     }
 }

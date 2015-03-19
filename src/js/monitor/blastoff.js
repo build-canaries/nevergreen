@@ -1,14 +1,11 @@
 module.exports = function () {
-    var repository = require('../storage/repository')
-    var timingRepository = require('../storage/timingRepository')(repository)
+    var timingRepository = require('../storage/timingRepository')
     var migrations = require('../storage/migrations')
 
     migrations.migrate()
 
-    var pollingTime = timingRepository.getPollingTimeInMilliseconds()
-
     var monitor = require('../views/monitor/monitorSection')
-    monitor.render(pollingTime)
+    monitor.render(timingRepository.getPollingTimeInMilliseconds())
 
     var menu = require('../views/general/menu')
     menu.render()

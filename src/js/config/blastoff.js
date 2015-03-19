@@ -1,15 +1,10 @@
 module.exports = function () {
-    var timingView = require('./timingView')
-    var repository = require('../storage/repository')
     var trackingRepository = require('../storage/trackingRepository')
     var successRepository = require('../storage/successRepository')
-    var timingRepository = require('../storage/timingRepository')(repository)
+    var timingRepository = require('../storage/timingRepository')
 
     var migrations = require('../storage/migrations')
     migrations.migrate()
-
-    //trackingView(adminController, trackingRepository, projectsView(trackingRepository), configView).init()
-    timingView(timingRepository).init()
 
     // React
     var reactTrackingView = require('../views/tracking/trackingSection')
@@ -17,4 +12,7 @@ module.exports = function () {
 
     var reactSuccessView = require('../views/config/success')
     reactSuccessView.render(successRepository.getSuccessMessages())
+
+    var reactTimingView = require('../views/config/timingSection')
+    reactTimingView.render(timingRepository.getPollingTime())
 }

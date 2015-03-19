@@ -1,10 +1,5 @@
-var repositoryMock = {
-    save: function () {
-    },
-    getOr: function () {
-    }
-}
-var storageRepository = require('../../../src/js/storage/timingRepository')(repositoryMock)
+var repositoryMock = require('../../../src/js/storage/repository')
+var storageRepository = require('../../../src/js/storage/timingRepository')
 
 describe('timing repository', function () {
 
@@ -24,7 +19,7 @@ describe('timing repository', function () {
         it('polling time in seconds', function () {
             spyOn(repositoryMock, 'getOr').and.returnValue('6')
 
-            expect(storageRepository.getPollingTime()).toBe('6')
+            expect(storageRepository.getPollingTime()).toBe(6)
         })
 
         it('polling time in milliseconds', function () {
@@ -38,7 +33,7 @@ describe('timing repository', function () {
 
             storageRepository.getPollingTime()
 
-            expect(repositoryMock.getOr).toHaveBeenCalledWith('pollingTime', '5')
+            expect(repositoryMock.getOr).toHaveBeenCalledWith('pollingTime', 5)
         })
     })
 })
