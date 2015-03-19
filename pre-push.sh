@@ -13,6 +13,7 @@ echo '[Step 4 of 6] Running the server unit tests...'
 lein do clean, midje 'nevergreen.*'
 
 echo '[Step 5 of 6] Running the functional tests (the server must be running!)...'
+export JVM_OPTS="-Dwebdriver.chrome.driver=./node_modules/chromedriver/bin/chromedriver"
 lein test functional.functional-test
 
 echo '[Step 6 of 6] Building an uberjar...'

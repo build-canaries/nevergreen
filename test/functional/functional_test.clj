@@ -10,7 +10,7 @@
 (defn in? [seq elm]
   (some #(= elm %) seq))
 
-(def hd-tv-size (Dimension. 1920 1080))
+(def hd-tv-size (Dimension. 1280 1024))
 
 (defn functional-fixture [test-fn]
   (let [driver (ChromeDriver.)]
