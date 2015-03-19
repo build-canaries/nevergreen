@@ -5,7 +5,7 @@ var styler = require('../../monitor/styler')
 module.exports = {
     SimpleMessage: React.createClass({
         propTypes: {
-            status: React.PropTypes.string,
+            status: React.PropTypes.number,
             reason: React.PropTypes.string
         },
 

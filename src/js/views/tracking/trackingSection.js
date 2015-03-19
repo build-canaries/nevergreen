@@ -6,6 +6,10 @@ var AddTrayComponent = require('./addTrayComponent')
 var TrayComponent = require('./trayComponent')
 
 var TrackingSection = React.createClass({
+    propTypes: {
+        trays: React.PropTypes.arrayOf(React.PropTypes.object).isRequired
+    },
+
     getInitialState: function () {
         return {trays: this.props.trays}
     },
@@ -34,14 +38,22 @@ var TrackingSection = React.createClass({
                     $set: [{
                         url: tray.url,
                         username: tray.username,
-                        password: data.password
+                        password: data.password,
+                        includedProjects: [],
+                        previousProjects: []
                     }]
                 })
                 this.setState({trays: newTrays})
             }.bind(this))
         } else {
             var newTrays = React.addons.update(this.state.trays, {
-                $set: [{url: tray.url}]
+                $set: [{
+                    url: tray.url,
+                    username: '',
+                    password: '',
+                    includedProjects: [],
+                    previousProjects: []
+                }]
             })
             this.setState({trays: newTrays})
         }

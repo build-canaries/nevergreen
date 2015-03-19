@@ -4,6 +4,7 @@
             [clj-webdriver.driver :refer [init-driver]]
             [environ.core :refer [env]])
   (import org.openqa.selenium.phantomjs.PhantomJSDriver
+          org.openqa.selenium.chrome.ChromeDriver
           org.openqa.selenium.Dimension))
 
 (defn in? [seq elm]
@@ -12,7 +13,7 @@
 (def hd-tv-size (Dimension. 1920 1080))
 
 (defn functional-fixture [test-fn]
-  (let [driver (PhantomJSDriver.)]
+  (let [driver (ChromeDriver.)]
     (.. driver (manage) (window) (setSize hd-tv-size))
     (set-driver! (init-driver {:webdriver driver})))
 

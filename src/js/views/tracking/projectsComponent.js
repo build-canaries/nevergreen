@@ -4,7 +4,8 @@ var AvailableProjectComponent = require('./availableProjectComponent')
 module.exports = {
 
     propTypes: {
-        tray: React.PropTypes.arrayOf(React.PropTypes.object).isRequired
+        projects: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+        selectProject: React.PropTypes.func.isRequired
     },
 
     Projects: React.createClass({

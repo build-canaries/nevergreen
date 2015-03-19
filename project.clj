@@ -19,7 +19,8 @@
             :uberjar-name "nevergreen-standalone.jar"
             :main nevergreen.app
             :aot [nevergreen.app]
-            :jvm-opts ["-Dphantomjs.binary.path=./node_modules/karma-phantomjs-launcher/node_modules/phantomjs/bin/phantomjs"]
+            :jvm-opts ["-Dphantomjs.binary.path=./node_modules/karma-phantomjs-launcher/node_modules/phantomjs/bin/phantomjs"
+                       "-Dwebdriver.chrome.driver=./node_modules/chromedriver/bin/chromedriver"]
             :profiles {:dev        {:plugins      [[lein-midje "3.1.3"]
                                                    [lein-ancient "0.5.5"]
                                                    [lein-idea "1.0.1"]]
