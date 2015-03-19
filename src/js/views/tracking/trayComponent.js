@@ -25,7 +25,7 @@ module.exports = {
             if (!this.state.loaded) {
                 return <Loading.Bars />
             } else if (this.state.error) {
-                return <Error.SimpleMessage status={data.status} reason={data.statusText} />
+                return <Error.SimpleMessage status={this.state.error.status} reason={this.state.error.statusText} />
             } else {
                 return (
                     <fieldset id='projects-controls' className='tracking-cctray-group-builds'>

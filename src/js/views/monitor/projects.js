@@ -3,6 +3,11 @@ var React = require('react')
 var styler = require('../../monitor/styler')
 
 var InterestingProject = React.createClass({
+    propTypes: {
+        prognosis: React.PropTypes.string.isRequired,
+        name: React.PropTypes.string.isRequired
+    },
+
     render: function () {
         return (
             <li className={'monitor-project monitor-' + this.props.prognosis}>
@@ -14,30 +19,32 @@ var InterestingProject = React.createClass({
     }
 })
 
-var InterestingProjects = React.createClass({
-    render: function () {
-        return (
-            <ul id='interesting-projects' className='monitor-projects'>
-            {
-                this.props.projects.map(function (project) {
-                    return <InterestingProject key={project.name} prognosis={project.prognosis} name={project.name} />
-                })
-            }
-            </ul>
-        )
-    },
-
-    componentDidMount: function () {
-        styler.styleProjects(this.props.projects, $(this.getDOMNode()).find('.monitor-outerContainer'), $('#content'))
-    },
-
-    componentDidUpdate: function () {
-        styler.styleProjects(this.props.projects, $(this.getDOMNode()).find('.monitor-outerContainer'), $('#content'))
-    }
-})
-
 module.exports = {
-    InterestingProjects: function (projects) {
-        return <InterestingProjects projects={projects}/>
-    }
+    InterestingProjects: React.createClass({
+        propTypes: {
+            projects: React.PropTypes.arrayOf(React.PropTypes.object).isRequired
+        },
+
+        render: function () {
+            return (
+                <ul id='interesting-projects' className='monitor-projects'>
+                {
+                    this.props.projects.map(function (project) {
+                        return <InterestingProject key={project.name} prognosis={project.prognosis} name={project.name} />
+                    })
+                    }
+                </ul>
+            )
+        },
+
+        componentDidMount: function () {
+            var $node = $(this.getDOMNode())
+            styler.styleProjects(this.props.projects, $node.find('.monitor-outerContainer'), $node)
+        },
+
+        componentDidUpdate: function () {
+            var $node = $(this.getDOMNode())
+            styler.styleProjects(this.props.projects, $node.find('.monitor-outerContainer'), $node)
+        }
+    })
 }

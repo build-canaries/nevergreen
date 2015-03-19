@@ -7,7 +7,7 @@ module.exports = function () {
 
     var pollingTime = timingRepository.getPollingTimeInMilliseconds()
 
-    var monitor = require('../views/monitor/monitor')
+    var monitor = require('../views/monitor/monitorSection')
     monitor.render(pollingTime)
 
     var menu = require('../views/general/menu')
