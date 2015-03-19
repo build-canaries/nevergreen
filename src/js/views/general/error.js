@@ -22,5 +22,7 @@ var Error = React.createClass({
 module.exports = {
     render: function (data) {
         React.render(<Error status={data.status} reason={data.statusText}/>, $('#content')[0])
-    }
+    },
+
+    SimpleMessage: Error
 }

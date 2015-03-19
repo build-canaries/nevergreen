@@ -8,7 +8,9 @@ module.exports = {
             url: '/api/projects',
             timeout: 15000,
             data: {
-                url: tray.url
+                url: tray.url,
+                username: tray.username,
+                password: tray.password
             },
             dataType: "json",
             success: successCallback,
@@ -21,29 +23,16 @@ module.exports = {
             type: 'POST',
             url: '/api/projects',
             timeout: 15000,
-            data: toPayload(trackingRepository),
+            data: {
+                cctray: trackingRepository.getCctray(),
+                username: trackingRepository.getUsername(),
+                password: trackingRepository.getPassword(),
+                includedProjects: trackingRepository.getIncludedProjects(),
+                serverType: trackingRepository.getServerType()
+            },
             dataType: "json",
             success: successCallback,
             error: errorCallback
         })
     }
-}
-
-function toPayload(trackingRepository) {
-    var options = function () {
-        if (trackingRepository.getUsername() && trackingRepository.getPassword()) {
-            return {
-                username: trackingRepository.getUsername(),
-                password: trackingRepository.getPassword()
-            }
-        }
-    }
-
-    var defaults = {
-        cctray: trackingRepository.getCctray(),
-        includedProjects: trackingRepository.getIncludedProjects(),
-        serverType: trackingRepository.getServerType()
-    }
-
-    return $.extend({}, defaults, options())
 }

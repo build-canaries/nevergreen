@@ -2,8 +2,9 @@ var React = require('react/addons')
 var Loading = require('../general/loading')
 var projectsService = require('../../services/projects')
 var trackingRepository = require('../../storage/trackingRepository')
-var AvailableProjectComponent = require('./availableProjectComponent')
+var ProjectsComponent = require('./projectsComponent')
 var trays = require('../../services/trays')
+var Error = require('../general/error')
 
 module.exports = {
     Tray: React.createClass({
@@ -14,6 +15,7 @@ module.exports = {
         getInitialState: function () {
             return {
                 loaded: false,
+                error: false,
                 tray: this.props.tray,
                 retrievedProjects: []
             }
@@ -22,6 +24,8 @@ module.exports = {
         render: function () {
             if (!this.state.loaded) {
                 return <Loading.Bars />
+            } else if (this.state.error) {
+                return <Error.SimpleMessage status={data.status} reason={data.statusText} />
             } else {
                 return (
                     <fieldset id='projects-controls' className='tracking-cctray-group-builds'>
@@ -30,23 +34,14 @@ module.exports = {
                             <button id='include-all' className='dashboard-button dashboard-button-small dashboard-button-white' onClick={this.includeAll}>Include all</button>
                             <button id='exclude-all' className='dashboard-button dashboard-button-small dashboard-button-white' onClick={this.excludeAll}>Exclude all</button>
                         </div>
-                        <div id='projects' className='tracking-cctray-group-build-items'>
-                        {
-                            trays.projects(this.state.tray, this.state.retrievedProjects).map(function (project) {
-                                return <AvailableProjectComponent.AvailableProject
-                                    key={project.name}
-                                    project={project}
-                                    selectProject={this.selectProject.bind(this, project.name)} />
-                            }.bind(this))
-                            }
-                        </div>
+                        <ProjectsComponent.Projects projects={trays.projects(this.state.tray, this.state.retrievedProjects)} selectProject={this.selectProject} />
                     </fieldset>
                 )
             }
         },
 
         componentDidMount: function () {
-            projectsService.fetchAll(this.state.tray, this.projectsLoaded)
+            projectsService.fetchAll(this.state.tray, this.projectsLoaded, this.projectsFailed)
         },
 
         projectsLoaded: function (data) {
@@ -56,7 +51,17 @@ module.exports = {
                 })
                 this.setState({
                     loaded: true,
+                    error: false,
                     retrievedProjects: retrievedProjectNames
+                })
+            }
+        },
+
+        projectsFailed: function (data) {
+            if (this.isMounted()) {
+                this.setState({
+                    loaded: true,
+                    error: data
                 })
             }
         },
