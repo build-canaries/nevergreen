@@ -1,9 +1,16 @@
-var React = require('react')
+var React = require('react/addons')
 var $ = require('jquery')
 var successRepository = require('../../storage/successRepository')
 var messages = require('../../services/messages')
 
 var SuccessMessage = React.createClass({
+    propTypes: {
+        index: React.PropTypes.number.isRequired,
+        message: React.PropTypes.string.isRequired,
+        removeMessage: React.PropTypes.func.isRequired,
+        updateMessage: React.PropTypes.func.isRequired
+    },
+
     render: function () {
         return (
             <div>
@@ -21,14 +28,15 @@ var SuccessMessage = React.createClass({
     },
 
     onChange: function (event) {
-        var value = event.target.value;
-
-        this.setState({value: value})
-        this.props.saveMessages(value)
+        this.props.updateMessage(event.target.value)
     }
 })
 
 var RemoveLink = React.createClass({
+    propTypes: {
+        removeMessage: React.PropTypes.func.isRequired
+    },
+
     render: function () {
         return (
             <a href='#' className='success-remove' onClick={this.onClick}>remove</a>
@@ -42,6 +50,10 @@ var RemoveLink = React.createClass({
 })
 
 var SuccessMessages = React.createClass({
+    propTypes: {
+        messages: React.PropTypes.arrayOf(React.PropTypes.object).isRequired
+    },
+
     getInitialState: function () {
         return {messages: this.props.messages};
     },
@@ -52,9 +64,9 @@ var SuccessMessages = React.createClass({
                 <div id='success-messages'>
                 {
                     this.state.messages.map(function (message, i) {
-                        return <SuccessMessage key={i} index={i} message={message} removeMessage={this.removeMessage.bind(this, i)} saveMessages={this.saveMessages.bind(this, i)} />
+                        return <SuccessMessage key={i} index={i} message={message} removeMessage={this.removeMessage.bind(this, i)} updateMessage={this.updateMessage.bind(this, i)} />
                     }.bind(this))
-                }
+                    }
                 </div>
                 <button id='success-add' className='dashboard-button' onClick={this.addNewMessage}>Add</button>
             </div>
@@ -63,25 +75,39 @@ var SuccessMessages = React.createClass({
 
     addNewMessage: function (event) {
         var newMessage = messages.newMessage()
-        this.state.messages.push(newMessage)
-        this.setState({ messages: this.state.messages})
+        var newMessages = React.addons.update(this.state.messages, {
+            $push: [newMessage]
+        })
+        this.setState({messages: newMessages})
         event.preventDefault()
     },
 
     removeMessage: function (index) {
-        this.state.messages.splice(index, 1)
-        this.setState({ messages: this.state.messages})
-        successRepository.saveSuccessMessages(this.state.messages)
+        var newMessages = React.addons.update(this.state.messages, {
+            $splice: [[index, 1]]
+        })
+        this.setState({messages: newMessages})
     },
 
-    saveMessages: function (index, value) {
-        this.state.messages[index] = messages.newMessage(value)
-        this.setState({ messages: this.state.messages})
-        successRepository.saveSuccessMessages(this.state.messages)
+    updateMessage: function (index, value) {
+        var command = {}
+        command[index] = {$set: {value: value}}
+        var newMessages = React.addons.update(this.state.messages, command)
+        this.setState({messages: newMessages})
+    },
+
+    componentWillUpdate: function (nextProps, nextState) {
+        if (this.state.message !== nextState.messages) {
+            successRepository.saveSuccessMessages(nextState.messages)
+        }
     }
 })
 
 var SuccessSection = React.createClass({
+    propTypes: {
+        messages: React.PropTypes.arrayOf(React.PropTypes.object).isRequired
+    },
+
     render: function () {
         return (
             <section id='success' className='dashboard-main-section'>

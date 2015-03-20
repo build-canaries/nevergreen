@@ -1,7 +1,7 @@
 module.exports = {
     newMessage: function (value) {
         return {
-            message: value,
+            message: value, // Deprecated, use value instead
             value: value,
             isUrl: isUrl(value)
         }

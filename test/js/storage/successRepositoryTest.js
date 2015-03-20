@@ -17,6 +17,16 @@ describe('success repository', function () {
             ])
             expect(repository.save).toHaveBeenCalledWith('successMessages', ['a', 'b', 'c'])
         })
+
+        it('does not save empty success messages', function () {
+            successRepository.saveSuccessMessages([
+                messages.newMessage('a'),
+                messages.newMessage(''),
+                messages.newMessage(null),
+                messages.newMessage('c')
+            ])
+            expect(repository.save).toHaveBeenCalledWith('successMessages', ['a', 'c'])
+        })
     })
 
     describe('loading from local storage', function () {

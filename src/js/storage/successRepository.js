@@ -1,9 +1,13 @@
 var repository = require('./repository')
 var messages = require('../services/messages')
+var _ = require('lodash')
 
 module.exports = {
     saveSuccessMessages: function (messages) {
-        repository.save('successMessages', messages.map(function (message) {
+        var filteredMessages = _.filter(messages, function (message) {
+            return !_.isEmpty(message.value)
+        })
+        repository.save('successMessages', filteredMessages.map(function (message) {
             return message.value
         }))
     },
