@@ -5,28 +5,16 @@ var _ = require('lodash')
 module.exports = {
     saveSuccessMessages: function (messages) {
         var filteredMessages = _.filter(messages, function (message) {
-            return !_.isEmpty(message.value)
+            return !_.isEmpty(message)
         })
-        repository.save('successMessages', filteredMessages.map(function (message) {
-            return message.value
-        }))
+        repository.save('successMessages', filteredMessages)
     },
 
     getSuccessMessages: function () {
-        return repository.getArrayOr('successMessages', []).map(function (value) {
-            return messages.newMessage(value)
-        })
+        return repository.getArrayOr('successMessages', [])
     },
 
     hasSuccessMessages: function () {
         return repository.exists('successMessages')
-    },
-
-    randomSuccessMessage: function () {
-        return randomFrom(this.getSuccessMessages())
     }
-}
-
-function randomFrom(arr) {
-    return arr[Math.floor(Math.random() * arr.length)]
 }

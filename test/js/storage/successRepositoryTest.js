@@ -1,5 +1,4 @@
 var repository = require('../../../src/js/storage/repository')
-var messages = require('../../../src/js/controllers/messages')
 var successRepository = require('../../../src/js/storage/successRepository')
 
 describe('success repository', function () {
@@ -10,21 +9,12 @@ describe('success repository', function () {
         })
 
         it('saves all success messages', function () {
-            successRepository.saveSuccessMessages([
-                messages.newMessage('a'),
-                messages.newMessage('b'),
-                messages.newMessage('c')
-            ])
+            successRepository.saveSuccessMessages(['a', 'b', 'c'])
             expect(repository.save).toHaveBeenCalledWith('successMessages', ['a', 'b', 'c'])
         })
 
         it('does not save empty success messages', function () {
-            successRepository.saveSuccessMessages([
-                messages.newMessage('a'),
-                messages.newMessage(''),
-                messages.newMessage(null),
-                messages.newMessage('c')
-            ])
+            successRepository.saveSuccessMessages(['a', '', null, 'c'])
             expect(repository.save).toHaveBeenCalledWith('successMessages', ['a', 'c'])
         })
     })
@@ -32,11 +22,7 @@ describe('success repository', function () {
     describe('loading from local storage', function () {
         it('loads all success messages', function () {
             spyOn(repository, 'getArrayOr').and.returnValue(['a', 'b', 'c'])
-            expect(successRepository.getSuccessMessages()).toEqual([
-                messages.newMessage('a'),
-                messages.newMessage('b'),
-                messages.newMessage('c')
-            ])
+            expect(successRepository.getSuccessMessages()).toEqual(['a', 'b', 'c'])
         })
 
         it('loads default success messages', function () {

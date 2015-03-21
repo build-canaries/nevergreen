@@ -12,8 +12,8 @@ function eggplantMigrations(successRepository) {
     var successImageUrl = localStorage.getItem('successImageUrl')
     var successMessages = []
 
-    pushIfSet(successMessages, messages.newMessage(successText))
-    pushIfSet(successMessages, messages.newMessage(successImageUrl))
+    pushIfSet(successMessages, successText)
+    pushIfSet(successMessages, successImageUrl)
 
     if (successMessages.length > 0) {
         successRepository.saveSuccessMessages(successMessages)
@@ -24,7 +24,7 @@ function eggplantMigrations(successRepository) {
 }
 
 function pushIfSet(arr, val) {
-    if (val.message && val.message.trim().length !== 0) {
+    if (val && val.trim().length !== 0) {
         arr.push(val)
     }
 }

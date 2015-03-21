@@ -30,9 +30,8 @@ module.exports = {
         },
 
         addNewMessage: function (event) {
-            var newMessage = messagesController.newMessage()
             var newMessages = React.addons.update(this.state.messages, {
-                $push: [newMessage]
+                $push: ['']
             })
             this.setState({messages: newMessages})
             event.preventDefault()

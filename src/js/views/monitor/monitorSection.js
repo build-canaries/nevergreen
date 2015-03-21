@@ -1,11 +1,10 @@
 var $ = require('jquery')
 var React = require('react')
 var ProjectsView = require('./projects')
-var Success = require('./success')
+var Success = require('./successView')
 var Error = require('../general/error')
 var LoadingView = require('../general/loading')
 var projectsController = require('../../controllers/projects')
-var successRepository = require('../../storage/successRepository')
 
 var MonitorSection = React.createClass({
     getDefaultProps: function() {
@@ -35,12 +34,7 @@ var MonitorSection = React.createClass({
         } else if (this.hasProjects()) {
             content = <ProjectsView.InterestingProjects projects={this.state.projects} />
         } else {
-            var message = successRepository.randomSuccessMessage()
-            if (message.isUrl) {
-                content = <Success.Image url={message.value} />
-            } else {
-                content = <Success.Message message={message.value} />
-            }
+            content = <Success.Success />
         }
 
         return (
