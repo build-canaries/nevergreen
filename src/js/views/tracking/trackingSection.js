@@ -1,7 +1,7 @@
 var React = require('react/addons')
 var $ = require('jquery')
-var trays = require('../../services/trays')
-var security = require('../../services/security')
+var trays = require('../../controllers/trays')
+var security = require('../../controllers/security')
 var AddTrayComponent = require('./addTrayComponent')
 var TrayComponent = require('./trayComponent')
 

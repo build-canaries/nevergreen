@@ -4,7 +4,7 @@ var ProjectsView = require('./projects')
 var Success = require('./success')
 var Error = require('../general/error')
 var LoadingView = require('../general/loading')
-var projectsService = require('../../services/projects')
+var projectsController = require('../../controllers/projects')
 var successRepository = require('../../storage/successRepository')
 
 var MonitorSection = React.createClass({
@@ -49,12 +49,12 @@ var MonitorSection = React.createClass({
     },
 
     componentWillMount: function () {
-        projectsService.fetchInteresting(this.updateProjects, this.updateFailed)
+        projectsController.fetchInteresting(this.updateProjects, this.updateFailed)
     },
 
     componentDidMount: function () {
         var timer = setInterval(function () {
-            projectsService.fetchInteresting(this.updateProjects, this.updateFailed)
+            projectsController.fetchInteresting(this.updateProjects, this.updateFailed)
         }.bind(this), this.props.pollingInterval)
 
         this.setState({timer: timer})

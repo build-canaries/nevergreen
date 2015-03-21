@@ -1,4 +1,4 @@
-var messages = require('../services/messages')
+var messages = require('../controllers/messages')
 var successRepository = require('./successRepository')
 
 module.exports = {

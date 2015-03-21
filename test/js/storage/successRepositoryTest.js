@@ -1,5 +1,5 @@
 var repository = require('../../../src/js/storage/repository')
-var messages = require('../../../src/js/services/messages')
+var messages = require('../../../src/js/controllers/messages')
 var successRepository = require('../../../src/js/storage/successRepository')
 
 describe('success repository', function () {

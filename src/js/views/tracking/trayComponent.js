@@ -1,9 +1,9 @@
 var React = require('react/addons')
 var Loading = require('../general/loading')
-var projectsService = require('../../services/projects')
+var projectsController = require('../../controllers/projects')
 var trackingRepository = require('../../storage/trackingRepository')
 var ProjectsComponent = require('./projectsComponent')
-var trays = require('../../services/trays')
+var trays = require('../../controllers/trays')
 var Error = require('../general/error')
 
 module.exports = {
@@ -41,7 +41,7 @@ module.exports = {
         },
 
         componentDidMount: function () {
-            projectsService.fetchAll(this.state.tray, this.projectsLoaded, this.projectsFailed)
+            projectsController.fetchAll(this.state.tray, this.projectsLoaded, this.projectsFailed)
         },
 
         projectsLoaded: function (data) {

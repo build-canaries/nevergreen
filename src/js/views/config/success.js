@@ -1,7 +1,7 @@
 var React = require('react/addons')
 var $ = require('jquery')
 var successRepository = require('../../storage/successRepository')
-var messages = require('../../services/messages')
+var messages = require('../../controllers/messages')
 
 var SuccessMessage = React.createClass({
     propTypes: {
