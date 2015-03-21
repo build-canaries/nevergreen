@@ -10,7 +10,7 @@ module.exports = function () {
     var reactTrackingView = require('../views/tracking/trackingSection')
     reactTrackingView.render(trackingRepository.getTrays())
 
-    var reactSuccessView = require('../views/config/success')
+    var reactSuccessView = require('../views/success/successSection')
     reactSuccessView.render(successRepository.getSuccessMessages())
 
     var reactTimingView = require('../views/config/timingSection')
