@@ -60,6 +60,10 @@ Navigate to `http://localhost:5000`. If it is the first visit to Nevergreen from
 
 You'll need to first put in your *cctray.xml* url then it will allow you to select which builds to show on your monitor.
 
+## Docker
+
+Nevergreen is also available on Dockerhub. You can access it [here](https://registry.hub.docker.com/u/buildcanariesteam/nevergreen/).
+
 ## Contributing
 
 [![Build Status](https://snap-ci.com/build-canaries/nevergreen/branch/master/build_image)](https://snap-ci.com/build-canaries/nevergreen/branch/master)
