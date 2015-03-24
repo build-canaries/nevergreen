@@ -7,7 +7,7 @@ var messagesController = require('../../controllers/messages')
 module.exports = {
     Success: React.createClass({
         getInitialState: function () {
-            return {message: '=(^.^)='}
+            return {message: messagesController.randomMessage()}
         },
 
         render: function () {
@@ -19,11 +19,7 @@ module.exports = {
         },
 
         componentWillMount: function () {
-            messagesController.randomMessage(this.setMessage)
-        },
-
-        setMessage: function (message) {
-            this.setState({message: message})
+            this.setState({message: messagesController.randomMessage()})
         }
     })
 }

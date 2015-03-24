@@ -1,8 +1,8 @@
 var $ = require('jquery')
 var React = require('react')
-var ProjectsView = require('./projects')
-var Success = require('./successView')
-var Error = require('../general/error')
+var ProjectsView = require('./projectsView')
+var SuccessView = require('./successView')
+var ErrorView = require('../general/errorView')
 var LoadingView = require('../general/loading')
 var projectsController = require('../../controllers/projects')
 var timingRepository = require('../../storage/timingRepository')
@@ -21,12 +21,15 @@ module.exports = {
             var content
             if (!this.state.loaded) {
                 content = <LoadingView.Bars />
+
             } else if (this.state.error) {
-                content = <Error.SimpleMessage status={this.state.error.status} reason={this.state.error.statusText} />
+                content = <ErrorView.SimpleMessage status={this.state.error.status} reason={this.state.error.statusText} />
+
             } else if (this.hasProjects()) {
                 content = <ProjectsView.InterestingProjects projects={this.state.projects} />
+
             } else {
-                content = <Success.Success />
+                content = <SuccessView.Success />
             }
 
             return (

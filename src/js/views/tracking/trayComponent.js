@@ -1,10 +1,10 @@
 var React = require('react/addons')
-var Loading = require('../general/loading')
+var LoadingView = require('../general/loading')
 var projectsController = require('../../controllers/projects')
 var trackingRepository = require('../../storage/trackingRepository')
 var ProjectsComponent = require('./projectsComponent')
 var trays = require('../../controllers/trays')
-var Error = require('../general/error')
+var ErrorView = require('../general/errorView')
 
 module.exports = {
     Tray: React.createClass({
@@ -23,9 +23,11 @@ module.exports = {
 
         render: function () {
             if (!this.state.loaded) {
-                return <Loading.Bars />
+                return <LoadingView.Bars />
+
             } else if (this.state.error) {
-                return <Error.SimpleMessage status={this.state.error.status} reason={this.state.error.statusText} />
+                return <ErrorView.SimpleMessage status={this.state.error.status} reason={this.state.error.statusText} />
+
             } else {
                 return (
                     <fieldset id='projects-controls' className='tracking-cctray-group-builds'>

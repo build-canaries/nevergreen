@@ -24,6 +24,7 @@ echo "# Killing this script will automatically kill all the spawned processes.  
 echo "######################################################################################"
 
 echo "[0] fetching node modules and performing first build"
+npm prune
 npm install
 
 echo "[1] watching the js for changes..."

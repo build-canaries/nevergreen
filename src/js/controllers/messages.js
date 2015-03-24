@@ -1,8 +1,8 @@
 var successRepository = require('../storage/successRepository')
 
 module.exports = {
-    randomMessage: function (successCallback) {
-        successCallback(randomFrom(successRepository.getSuccessMessages()))
+    randomMessage: function () {
+        return randomFrom(successRepository.getSuccessMessages())
     },
 
     isUrl: function (value) {
