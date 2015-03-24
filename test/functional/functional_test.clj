@@ -33,18 +33,18 @@
 
 (deftest simple-journey
   (let [base-url (nevergreen-under-test)]
-    (to (str base-url "/config"))
+    (to (str base-url "/#/tracking"))
 
     (clear "#cctray-url")
     (input-text "#cctray-url" (str base-url "/test_data.xml"))
     (click "#cctray-fetch")
 
-    (wait-until #(exists? "#projects > p > label > input"))
+    (wait-until #(exists? "#projects"))
 
     (click "#include-all")
     (click "#monitor")
 
-    (wait-until #(= (title) "Nevergreen"))
+    (wait-until #(exists? "#interesting-projects"))
 
     (doseq [actual-project (elements "#interesting-projects > li > div > div")]
       (is (in? expected-projects (text actual-project)) "Expected project not displayed"))))

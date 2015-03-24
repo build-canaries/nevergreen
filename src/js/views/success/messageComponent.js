@@ -8,13 +8,12 @@ var RemoveLink = React.createClass({
 
     render: function () {
         return (
-            <a href='#' className='success-remove' onClick={this.onClick}>remove</a>
+            <button className='success-remove dashboard-button' onClick={this.onClick}>remove</button>
         )
     },
 
-    onClick: function (event) {
+    onClick: function () {
         this.props.removeMessage()
-        event.preventDefault()
     }
 })
 
@@ -35,7 +34,7 @@ module.exports = {
                         className='success-message-input'
                         type='text'
                         name='success-message'
-                        value={this.props.message.value}
+                        value={this.props.message}
                         onChange={this.onChange}
                         placeholder='success message or image url'/>
                 {this.props.index > 0 ? <RemoveLink removeMessage={this.props.removeMessage} /> : ''}

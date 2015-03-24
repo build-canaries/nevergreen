@@ -1,73 +1,59 @@
 var $ = require('jquery')
-var React = require('react/addons')
+var React = require('react')
+var Router = require('react-router');
+
+var Link = Router.Link;
 
 var MenuItem = React.createClass({
     render: function () {
-        var classes = React.addons.classSet({
-            'dashboard-navigation-list-item': true,
-            'active': this.props.active
-        })
         return (
             <li>
-                <a onClick={this.props.onClick} id={this.props.id} className={classes} href='/config'>
+                <Link id={this.props.id} to={this.props.id} className='dashboard-navigation-list-item'>
                     <span className={'dashboard-navigation-list-item-icon ' + this.props.iconClass}></span>
                     <span className='dashboard-navigation-list-item-title'>{this.props.title}</span>
-                </a>
+                </Link>
             </li>
         )
     }
 })
 
-var Menu = React.createClass({
-    getInitialState: function () {
-        return {active: 'monitor'}
-    },
+module.exports = {
+    Menu: React.createClass({
+        getDefaultProps: function () {
+            return {
+                items: [
+                    {id: 'monitor', iconClass: 'eye', title: 'Monitor'},
+                    {id: 'tracking', iconClass: 'drawer', title: 'Tracking'},
+                    {id: 'timing', iconClass: 'clock', title: 'Timing'},
+                    {id: 'success', iconClass: 'checkmark', title: 'Success'}
+                ]
+            }
+        },
 
-    render: function () {
-        return (
-            <div>
-                <nav role='navigation' className='dashboard-navigation'>
-                    <h2 className='visuallyhidden'>Dashboard navigation</h2>
+        render: function () {
+            return (
+                <div>
+                    <nav role='navigation' className='dashboard-navigation'>
+                        <h2 className='visuallyhidden'>Dashboard navigation</h2>
 
-                    <img src='img/buildcanaries-logo.png' className='dashboard-header-logo' alt='Build Canaries logo' />
+                        <img src='img/buildcanaries-logo.png' className='dashboard-header-logo' alt='Build Canaries logo' />
 
-                    <ul className='dashboard-navigation-list'>
+                        <ul className='dashboard-navigation-list'>
                         {
                             this.props.items.map(function (item) {
-                                return <MenuItem key={item.id} onClick={this.handleClick.bind(this, item.id)} active={this.isActive(item.id)} id={item.id} iconClass={'icon-' + item.iconClass} title={item.title} />
+                                return <MenuItem key={item.id} id={item.id} iconClass={'icon-' + item.iconClass} title={item.title} />
                             }.bind(this))
-                        }
-                    </ul>
-                </nav>
-                <footer role='contentinfo' className='contentinfo'>
-                    <a href='https://github.com/build-canaries/nevergreen/releases/tag/v0.6.0pre' className='version'>
-                        <p>v0.6.0pre</p>
-                        <p>Fuzzy Wuzzy</p>
-                    </a>
-                </footer>
-            </div>
-        )
-    },
-
-    handleClick: function (item, event) {
-        this.setState({active: item})
-
-        //event.preventDefault()
-    },
-
-    isActive: function (item) {
-        return this.state.active === item
-    }
-})
-
-module.exports = {
-    render: function () {
-        var items = [
-            {id: 'monitor', iconClass: 'eye', title: 'Monitor'},
-            {id: 'tracking', iconClass: 'drawer', title: 'Tracking'},
-            {id: 'timing', iconClass: 'clock', title: 'Timing'},
-            {id: 'success', iconClass: 'checkmark', title: 'Success'}
-        ]
-        React.render(<Menu items={items} />, $('#menu')[0])
-    }
+                            }
+                        </ul>
+                    </nav>
+                    <footer role='contentinfo' className='contentinfo'>
+                        <a href='https://github.com/build-canaries/nevergreen/releases/tag/v0.6.0pre' className='version'>
+                            <p>v0.6.0pre</p>
+                            <p>Fuzzy Wuzzy</p>
+                        </a>
+                    </footer>
+                </div>
+            )
+        }
+    })
 }

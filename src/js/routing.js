@@ -1,12 +1,27 @@
-var currentPath = window.location.pathname
+var $ = require('jquery')
+var React = require('react')
+var Router = require('react-router')
+var App = require('./views/app')
+var MonitorSection = require('./views/monitor/monitorSection')
+var TrackingSection = require('./views/tracking/trackingSection')
+var TimingSection = require('./views/config/timingSection')
+var SuccessSection = require('./views/success/successSection')
 
-if (currentPath === '/config') {
-    require('./config/blastoff')()
-} else if (currentPath === '/') {
-    require('./monitor/blastoff')()
-} else {
-    var $ = require('jquery')
-    $('body').empty().append('There is no route for you here. Try /config or /')
-}
+var DefaultRoute = Router.DefaultRoute
+var Route = Router.Route
 
+/* jshint ignore:start */
+var routes = (
+    <Route name='app' path='/' handler={App.App}>
+        <Route name='monitor' handler={MonitorSection.MonitorSection}/>
+        <Route name='tracking' handler={TrackingSection.TrackingSection}/>
+        <Route name='timing' handler={TimingSection.TimingSection}/>
+        <Route name='success' handler={SuccessSection.SuccessSection}/>
+        <DefaultRoute handler={TrackingSection.TrackingSection}/>
+    </Route>
+)
 
+Router.run(routes, function (Handler) {
+    React.render(<Handler/>, $('#content')[0]);
+})
+/* jshint ignore:end */

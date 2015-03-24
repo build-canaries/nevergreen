@@ -64,7 +64,10 @@
   margin-left: 10%;
 }
 .dashboard-main-section {
-  display: none;
+  width: 90%;
+  padding: 2%;
+  float: left;
+  margin-left: 10%;
   min-height: 35em;
   &.active {
     display: block;
