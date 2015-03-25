@@ -1,3 +1,5 @@
+/* global describe, it, beforeEach, spyOn, expect */
+
 var migrations = require('../../../src/js/storage/migrations')
 
 describe('migrations', function () {

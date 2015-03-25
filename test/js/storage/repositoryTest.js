@@ -1,3 +1,5 @@
+/* global describe, it, beforeEach, spyOn, expect */
+
 var repository = require('../../../src/js/storage/repository')
 
 describe('repository', function () {
