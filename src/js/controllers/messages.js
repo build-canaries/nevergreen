@@ -1,21 +1,14 @@
 var successRepository = require('../storage/successRepository')
+var _ = require('lodash')
 
 module.exports = {
     randomMessage: function () {
-        return randomFrom(successRepository.getSuccessMessages())
+        return randomFrom(successRepository.getSuccessMessages()) || ''
     },
 
     isUrl: function (value) {
-        return isUrl(value)
+        return _.startsWith(value, 'http')
     }
-}
-
-function isUrl(value) {
-    return startsWith(value, 'http')
-}
-
-function startsWith(str, prefix) {
-    return str && str.lastIndexOf(prefix, 0) === 0
 }
 
 function randomFrom(arr) {

@@ -13,11 +13,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'test/js/lib/jquery2.1.1.js',
-      'test/js/lib/*.js',
-      'test/js/monitor/*.js',
-      'test/js/config/*.js',
-      'test/js/storage/*.js'
+      'test/js/**/*.js'
     ],
 
     // list of files to exclude
@@ -27,10 +23,8 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-        'src/**/*.js': [ 'browserify' ],
-        'test/js/config/*.js': [ 'browserify' ],
-        'test/js/monitor/*.js': [ 'browserify' ],
-        'test/js/storage/*.js': [ 'browserify' ]
+        'src/js/**/*.js': [ 'browserify' ],
+        'test/js/**/*.js': [ 'browserify' ]
     },
 
     // test results reporter to use

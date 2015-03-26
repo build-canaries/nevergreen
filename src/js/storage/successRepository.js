@@ -1,5 +1,4 @@
 var repository = require('./repository')
-var messages = require('../controllers/messages')
 var _ = require('lodash')
 
 module.exports = {
