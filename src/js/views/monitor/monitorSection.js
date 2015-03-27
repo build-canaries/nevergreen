@@ -33,22 +33,28 @@ module.exports = {
             }
 
             return (
-                <div className='monitor'>{content}</div>
+                <div className='monitor' onMouseMove={this.animateMenu}>{content}</div>
             )
         },
 
         componentWillMount: function () {
             projectsController.fetchInteresting(this.updateProjects, this.updateFailed)
 
-            var timer = setInterval(function () {
+            var updateTimer = setInterval(function () {
                 projectsController.fetchInteresting(this.updateProjects, this.updateFailed)
             }.bind(this), timingRepository.getPollingTimeInMilliseconds())
 
-            this.setState({timer: timer})
+            this.setState({timer: updateTimer})
         },
 
         componentWillUnmount: function () {
             clearInterval(this.state.timer)
+            this.clearMenuTimeOut()
+            this.showMenu()
+        },
+
+        componentDidMount: function () {
+            this.hideMenu()
         },
 
         updateProjects: function (data) {
@@ -72,6 +78,26 @@ module.exports = {
 
         hasProjects: function () {
             return this.state.projects.length > 0
+        },
+
+        animateMenu: function () {
+            this.clearMenuTimeOut()
+            this.showMenu()
+            this.setState({menuTimer: setInterval(function () {
+                this.hideMenu()
+            }.bind(this), 1000)})
+        },
+
+        showMenu: function () {
+            $("#menu").fadeIn()
+        },
+
+        hideMenu: function () {
+            $("#menu").fadeOut(1000)
+        },
+
+        clearMenuTimeOut: function () {
+            clearInterval(this.state.menuTimer)
         }
     })
 }
