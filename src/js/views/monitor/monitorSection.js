@@ -93,7 +93,9 @@ module.exports = {
         },
 
         hideMenu: function () {
-            $("#menu").fadeOut(1000)
+            if (this.isMounted()) {
+                $("#menu").fadeOut(1000)
+            }
         },
 
         clearMenuTimeOut: function () {
