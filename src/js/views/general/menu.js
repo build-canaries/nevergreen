@@ -23,7 +23,7 @@ module.exports = {
             return {
                 items: [
                     {id: 'monitor', iconClass: 'eye', title: 'Monitor'},
-                    {id: 'tracking', iconClass: 'drawer', title: 'Tracking'},
+                    {id: 'tracking', iconClass: 'drawer2', title: 'Tracking'},
                     {id: 'timing', iconClass: 'clock', title: 'Timing'},
                     {id: 'success', iconClass: 'checkmark', title: 'Success'}
                 ]

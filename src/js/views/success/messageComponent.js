@@ -8,7 +8,10 @@ var RemoveLink = React.createClass({
 
     render: function () {
         return (
-            <button className='success-remove dashboard-button' onClick={this.onClick}>remove</button>
+            <button className='success-remove dashboard-button-small' onClick={this.onClick}>
+                <span className='icon-cross'></span>
+                <span className='visuallyhidden'>remove</span>
+            </button>
         )
     },
 
