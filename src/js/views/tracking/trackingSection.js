@@ -4,6 +4,7 @@ var security = require('../../controllers/security')
 var trackingRepository = require('../../storage/trackingRepository')
 var AddTrayComponent = require('./addTrayComponent')
 var TrayComponent = require('./trayComponent')
+var uuid = require('node-uuid')
 
 module.exports = {
     TrackingSection: React.createClass({
@@ -19,8 +20,8 @@ module.exports = {
                     <fieldset className='tracking-cctray-group'>
                         <AddTrayComponent.AddTray addTray={this.addTray} />
                         {
-                            this.state.trays.map(function (tray) {
-                                return <TrayComponent.Tray key={tray.url} tray={tray} />
+                            this.state.trays.map(function (trayId) {
+                                return <TrayComponent.Tray key={trayId} trayId={trayId} />
                             }.bind(this))
                             }
                     </fieldset>
@@ -32,31 +33,32 @@ module.exports = {
             this.setState({trays: trackingRepository.getTrays()})
         },
 
-        addTray: function (tray) {
-            if (trays.requiresAuth(tray)) {
-                security.encryptPassword(tray.password, function (data) {
-                    var newTrays = React.addons.update(this.state.trays, {
-                        $set: [{
-                            url: tray.url,
-                            username: tray.username,
-                            password: data.password,
-                            includedProjects: [],
-                            previousProjects: []
-                        }]
+        addTray: function (addTray) {
+            var trayId = uuid.v4()
+
+            if (trays.requiresAuth(addTray)) {
+                security.encryptPassword(addTray.password, function (data) {
+                    trackingRepository.saveTray(trayId, {
+                        url: addTray.url,
+                        username: addTray.username,
+                        password: data.password
                     })
+
+                    var newTrays = React.addons.update(this.state.trays, {$set: [trayId]})
                     this.setState({trays: newTrays})
                 }.bind(this))
             } else {
-                var newTrays = React.addons.update(this.state.trays, {
-                    $set: [{
-                        url: tray.url,
-                        username: '',
-                        password: '',
-                        includedProjects: [],
-                        previousProjects: []
-                    }]
+                trackingRepository.saveTray(trayId, {
+                    url: addTray.url
                 })
+                var newTrays = React.addons.update(this.state.trays, {$set: [trayId]})
                 this.setState({trays: newTrays})
+            }
+        },
+
+        componentWillUpdate: function (nextProps, nextState) {
+            if (this.state.trays !== nextState.trays) {
+                trackingRepository.saveTrays(nextState.trays)
             }
         }
     })

@@ -55,6 +55,22 @@ describe('repository', function () {
         })
     })
 
+    describe('get object or', function () {
+        it('returns the given default if the key does not exist', function () {
+            expect(repository.getObjectOr('missing-key', {foo: 'bar'})).toEqual({foo: 'bar'})
+        })
+
+        it('expects the stored value to be a json string', function () {
+            localStorage.setItem('key', '{"foo":"bar"}')
+            expect(repository.getObjectOr('key', {})).toEqual({foo: 'bar'})
+        })
+
+        it('merges the default values with the parsed object', function () {
+            localStorage.setItem('key', '{"foo":"bar"}')
+            expect(repository.getObjectOr('key', {bar: 'baz'})).toEqual({foo: 'bar', bar: 'baz'})
+        })
+    })
+
     describe('save', function () {
         it('trims', function () {
             repository.save('key', '  value  ')
@@ -87,6 +103,13 @@ describe('repository', function () {
                 repository.save('key', ['a,b', 'c,d'])
                 expect(localStorage.getItem('key')).toEqual('a&#44;b,c&#44;d')
             })
+        })
+    })
+
+    describe('save object', function () {
+        it('saves as json strings', function () {
+            repository.saveObject('key', {foo: 'bar'})
+            expect(localStorage.getItem('key')).toEqual('{"foo":"bar"}')
         })
     })
 

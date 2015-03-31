@@ -5,18 +5,19 @@ var trackingRepository = require('../../storage/trackingRepository')
 var ProjectsComponent = require('./projectsComponent')
 var trays = require('../../controllers/trays')
 var ErrorView = require('../general/errorView')
+var _ = require('lodash')
 
 module.exports = {
     Tray: React.createClass({
         propTypes: {
-            tray: React.PropTypes.object.isRequired
+            trayId: React.PropTypes.string.isRequired
         },
-        
+
         getInitialState: function () {
             return {
                 loaded: false,
                 error: false,
-                tray: this.props.tray,
+                tray: trackingRepository.getTray(this.props.trayId),
                 retrievedProjects: []
             }
         },
@@ -29,6 +30,8 @@ module.exports = {
                 return <ErrorView.SimpleMessage status={this.state.error.status} reason={this.state.error.statusText} />
 
             } else {
+                var projects = trays.projects(this.state.tray, this.state.retrievedProjects)
+
                 return (
                     <fieldset id='projects-controls' className='tracking-cctray-group-builds'>
                         <legend className='tracking-cctray-group-builds-legend'>Available builds</legend>
@@ -36,7 +39,7 @@ module.exports = {
                             <button id='include-all' className='dashboard-button dashboard-button-small dashboard-button-white' onClick={this.includeAll}>Include all</button>
                             <button id='exclude-all' className='dashboard-button dashboard-button-small dashboard-button-white' onClick={this.excludeAll}>Exclude all</button>
                         </div>
-                        <ProjectsComponent.Projects projects={trays.projects(this.state.tray, this.state.retrievedProjects)} selectProject={this.selectProject} />
+                        <ProjectsComponent.Projects projects={projects} selectProject={this.selectProject} />
                     </fieldset>
                 )
             }
@@ -63,7 +66,8 @@ module.exports = {
             if (this.isMounted()) {
                 this.setState({
                     loaded: true,
-                    error: data
+                    error: data,
+                    retrievedProjects: []
                 })
             }
         },
@@ -98,7 +102,8 @@ module.exports = {
 
         componentWillUpdate: function (nextProps, nextState) {
             if (this.state.tray !== nextState.tray) {
-                trackingRepository.saveTray(nextState.tray)
+                var updatedTray = _.assign({}, nextState.tray, {previousProjects: nextState.retrievedProjects})
+                trackingRepository.saveTray(this.props.trayId, updatedTray)
             }
         }
     })

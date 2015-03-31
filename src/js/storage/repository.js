@@ -1,7 +1,13 @@
+var _ = require('lodash')
+
 module.exports = {
     exists: function (key) {
         var val = localStorage.getItem(key)
         return val && val.trim().length !== 0
+    },
+
+    getObjectOr: function (key, defaultValues) {
+        return this.exists(key) ? _.assign({}, defaultValues, JSON.parse(localStorage.getItem(key))) : defaultValues
     },
 
     getOr: function (key, defaultValue) {
@@ -16,6 +22,12 @@ module.exports = {
         if (value != null) {
             var savedValue = isArray(value) ? value.map(makeSafe) : trim(value)
             localStorage.setItem(key, savedValue)
+        }
+    },
+
+    saveObject: function (key, value) {
+        if (value != null) {
+            localStorage.setItem(key, JSON.stringify(value))
         }
     },
 

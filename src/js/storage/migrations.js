@@ -2,10 +2,12 @@ var messages = require('../controllers/messages')
 var successRepository = require('./successRepository')
 var uuid = require('node-uuid')
 var _ = require('lodash')
+var repository = require('./repository')
 
 module.exports = {
     migrate: function () {
         this.eggplantMigrations()
+        this.fuzzyWuzzyMigrations()
     },
 
     eggplantMigrations: function () {
@@ -26,17 +28,17 @@ module.exports = {
     fuzzyWuzzyMigrations: function () {
         if (_.isEmpty(localStorage.getItem('trays'))) {
             var trayId = uuid.v4();
-            localStorage.setItem('trays', trayId)
-            localStorage.setItem(trayId, JSON.stringify({
-                url: localStorage.getItem('cctray'),
-                includedProjects: localStorage.getItem('includedProjects'),
-                retrievedProjects: localStorage.getItem('seenProjects'),
-                serverType: localStorage.getItem('serverType'),
-                username: localStorage.getItem('username'),
-                password: localStorage.getItem('password')
-            }))
+            repository.save('trays', trayId)
+            repository.saveObject(trayId, {
+                url: repository.getOr('cctray', ''),
+                includedProjects: repository.getArrayOr('includedProjects', []),
+                previousProjects: repository.getArrayOr('seenProjects', []),
+                serverType: repository.getOr('serverType', ''),
+                username: repository.getOr('username', ''),
+                password: repository.getOr('password', '')
+            })
 
-            remove(['cctray', 'includedProjects', 'seenProjects', 'serverType', 'previousCctray', 'username', 'password'])
+            remove(['cctray', 'includedProjects', 'seenProjects', 'serverType', 'previousCctray', 'username', 'password', 'isAuthenticated'])
         }
     }
 }

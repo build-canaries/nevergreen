@@ -10,7 +10,8 @@ module.exports = {
             data: {
                 url: tray.url,
                 username: tray.username,
-                password: tray.password
+                password: tray.password,
+                serverType: tray.serverType
             },
             dataType: "json",
             success: successCallback,
@@ -19,16 +20,19 @@ module.exports = {
     },
 
     fetchInteresting: function (successCallback, errorCallback) {
+        var trays = trackingRepository.getTrays()
+        var tray = trackingRepository.getTray(trays[0]) // Hardcoded assuming a single tray for now
+
         $.ajax({
             type: 'POST',
             url: '/api/projects',
             timeout: 15000,
             data: {
-                cctray: trackingRepository.getCctray(),
-                username: trackingRepository.getUsername(),
-                password: trackingRepository.getPassword(),
-                includedProjects: trackingRepository.getIncludedProjects(),
-                serverType: trackingRepository.getServerType()
+                cctray: tray.url,
+                username: tray.username,
+                password: tray.password,
+                includedProjects: tray.includedProjects,
+                serverType: tray.serverType
             },
             dataType: "json",
             success: successCallback,

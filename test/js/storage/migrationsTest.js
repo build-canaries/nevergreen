@@ -45,7 +45,7 @@ describe('migrations', function () {
         beforeEach(function () {
             localStorage.clear()
 
-            addKeys(['cctray', 'includedProjects', 'previousCctray', 'seenProjects', 'serverType', 'successMessages', 'username', 'password'])
+            addKeys(['cctray', 'includedProjects', 'previousCctray', 'seenProjects', 'serverType', 'successMessages', 'username', 'password', 'isAuthenticated'])
         })
 
         it('adds trays entry with a generated uuid', function () {
@@ -62,8 +62,8 @@ describe('migrations', function () {
 
             expect(tray).toEqual(jasmine.objectContaining({
                 url: 'cctray',
-                includedProjects: 'includedProjects',
-                retrievedProjects: 'seenProjects',
+                includedProjects: ['includedProjects'],
+                previousProjects: ['seenProjects'],
                 serverType: 'serverType',
                 username: 'username',
                 password: 'password'
@@ -83,7 +83,7 @@ describe('migrations', function () {
         it('removes the migrated entries and previousCctray', function () {
             migrations.fuzzyWuzzyMigrations()
 
-            expectToHaveBeenRemoved(['cctray', 'includedProjects', 'seenProjects', 'serverType', 'previousCctray', 'username', 'password'])
+            expectToHaveBeenRemoved(['cctray', 'includedProjects', 'seenProjects', 'serverType', 'previousCctray', 'username', 'password', 'isAuthenticated'])
         })
 
         it('does not touch all the other entries', function () {
