@@ -2,6 +2,7 @@ var $ = require('jquery')
 var React = require('react/addons')
 var Router = require('react-router')
 var Menu = require('./general/menu')
+var migrations = require('../storage/migrations')
 
 module.exports = {
     App: React.createClass({
@@ -14,6 +15,10 @@ module.exports = {
                     <Router.RouteHandler/>
                 </div>
             )
+        },
+
+        componentWillMount: function () {
+            migrations.migrate()
         }
     })
 }

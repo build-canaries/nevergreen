@@ -28,7 +28,8 @@
     "node-sass": "2.0.1",
     "minifyify": "6.3.2",
     "browserify": "9.0.3",
-    "lodash": "3.5.0"
+    "lodash": "3.5.0",
+    "node-uuid": "1.4.3"
   },
   "scripts": {
     "postinstall": "npm run sass && npm run browserify",
