@@ -23,12 +23,12 @@ describe('success repository', function () {
 
     describe('loading from local storage', function () {
         it('loads all success messages', function () {
-            spyOn(repository, 'getArrayOr').and.returnValue(['a', 'b', 'c'])
+            spyOn(repository, 'getOr').and.returnValue(['a', 'b', 'c'])
             expect(successRepository.getSuccessMessages()).toEqual(['a', 'b', 'c'])
         })
 
         it('loads default success messages', function () {
-            spyOn(repository, 'getArrayOr').and.returnValue([])
+            spyOn(repository, 'getOr').and.returnValue([])
             expect(successRepository.getSuccessMessages()).toEqual([])
         })
     })

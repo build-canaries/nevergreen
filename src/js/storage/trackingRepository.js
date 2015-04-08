@@ -2,7 +2,7 @@ var repository = require('./repository')
 
 module.exports = {
     getTrays: function () {
-        return repository.getArrayOr('trays', [])
+        return repository.getOr('trays', [])
     },
 
     getTray: function (id) {
@@ -20,6 +20,6 @@ module.exports = {
     },
 
     saveTray: function (id, tray) {
-        repository.saveObject(id, tray)
+        repository.save(id, tray)
     }
 }

@@ -8,12 +8,11 @@ describe('tracking repository', function () {
     describe('saving to local storage', function () {
         beforeEach(function () {
             spyOn(repositoryMock, 'save')
-            spyOn(repositoryMock, 'saveObject')
         })
 
         it('saves tray', function () {
             storageRepository.saveTray('some-id', {})
-            expect(repositoryMock.saveObject).toHaveBeenCalledWith('some-id', {})
+            expect(repositoryMock.save).toHaveBeenCalledWith('some-id', {})
         })
 
         it('saves trays', function () {
@@ -24,13 +23,13 @@ describe('tracking repository', function () {
 
     describe('loading from local storage', function () {
         beforeEach(function () {
-            spyOn(repositoryMock, 'getArrayOr')
+            spyOn(repositoryMock, 'getOr')
             spyOn(repositoryMock, 'getObjectOr')
         })
 
         it('trays', function () {
             storageRepository.getTrays()
-            expect(repositoryMock.getArrayOr).toHaveBeenCalledWith('trays', [])
+            expect(repositoryMock.getOr).toHaveBeenCalledWith('trays', [])
         })
 
         it('tray', function () {

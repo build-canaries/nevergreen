@@ -10,7 +10,7 @@ module.exports = {
     },
 
     getSuccessMessages: function () {
-        return repository.getArrayOr('successMessages', [])
+        return repository.getOr('successMessages', ['=(^.^)='])
     },
 
     hasSuccessMessages: function () {

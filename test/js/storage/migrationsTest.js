@@ -1,5 +1,6 @@
 /* global describe, it, beforeEach, spyOn, expect */
 
+var _ = require('lodash')
 var migrations = require('../../../src/js/storage/migrations')
 
 describe('migrations', function () {
@@ -28,42 +29,31 @@ describe('migrations', function () {
 
             expectToBeUnchanged(['cctray', 'includedProjects', 'previousCctray', 'seenProjects', 'serverType'])
         })
-
-        it('runs idempotently', function () {
-            migrations.eggplantMigrations()
-            migrations.eggplantMigrations()
-            migrations.eggplantMigrations()
-
-            expect(localStorage.getItem('successMessages')).toEqual('successText,successImageUrl')
-
-            expectToHaveBeenRemoved(['successImageUrl', 'successText'])
-            expectToBeUnchanged(['cctray', 'includedProjects', 'previousCctray', 'seenProjects', 'serverType'])
-        })
     })
 
     describe('fuzzy wuzzy migrations', function () {
         beforeEach(function () {
             localStorage.clear()
 
-            addKeys(['cctray', 'includedProjects', 'previousCctray', 'seenProjects', 'serverType', 'successMessages', 'username', 'password', 'isAuthenticated'])
+            addKeys(['cctray', 'includedProjects', 'previousCctray', 'seenProjects', 'serverType', 'successMessages', 'username', 'password', 'isAuthenticated', 'pollingTime'])
         })
 
         it('adds trays entry with a generated uuid', function () {
             migrations.fuzzyWuzzyMigrations()
 
-            expect(localStorage.getItem('trays')).toMatch(/^\w{8}-\w{4}-\w{4}-\w{4}-\w{12}$/)
+            expect(localStorage.getItem('trays')).toMatch(/^\["\w{8}-\w{4}-\w{4}-\w{4}-\w{12}"]$/)
         })
 
         it('adds a json encoded tray under the same key as saved into the trays array', function () {
             migrations.fuzzyWuzzyMigrations()
 
-            var trayId = localStorage.getItem('trays')
+            var trayId = _.first(JSON.parse(localStorage.getItem('trays')))
             var tray = JSON.parse(localStorage.getItem(trayId))
 
             expect(tray).toEqual(jasmine.objectContaining({
                 url: 'cctray',
-                includedProjects: ['includedProjects'],
-                previousProjects: ['seenProjects'],
+                includedProjects: 'includedProjects',
+                previousProjects: 'seenProjects',
                 serverType: 'serverType',
                 username: 'username',
                 password: 'password'
@@ -86,10 +76,16 @@ describe('migrations', function () {
             expectToHaveBeenRemoved(['cctray', 'includedProjects', 'seenProjects', 'serverType', 'previousCctray', 'username', 'password', 'isAuthenticated'])
         })
 
+        it('saves the success messages as json', function () {
+            migrations.fuzzyWuzzyMigrations()
+
+            expect(localStorage.getItem('successMessages')).toEqual('["successMessages"]')
+        })
+
         it('does not touch all the other entries', function () {
             migrations.fuzzyWuzzyMigrations()
 
-            expectToBeUnchanged(['successMessages'])
+            expectToBeUnchanged(['pollingTime'])
         })
     })
 
