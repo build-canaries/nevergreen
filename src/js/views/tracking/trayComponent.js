@@ -33,14 +33,17 @@ module.exports = {
                 var projects = trays.projects(this.state.tray, this.state.retrievedProjects)
 
                 return (
-                    <fieldset id='projects-controls' className='tracking-cctray-group-builds'>
-                        <legend className='tracking-cctray-group-builds-legend'>Available builds</legend>
-                        <div className='tracking-cctray-group-build-toggles'>
-                            <button id='include-all' className='dashboard-button dashboard-button-small dashboard-button-white' onClick={this.includeAll}>Include all</button>
-                            <button id='exclude-all' className='dashboard-button dashboard-button-small dashboard-button-white' onClick={this.excludeAll}>Exclude all</button>
-                        </div>
-                        <ProjectsComponent.Projects projects={projects} selectProject={this.selectProject} />
-                    </fieldset>
+                    <section className='tray'>
+                        <h3 className='tray-title'>{this.state.tray.url}</h3>
+                        <fieldset id='projects-controls' className='tracking-cctray-group-builds tray-content'>
+                            <legend className='tracking-cctray-group-builds-legend'>Available builds</legend>
+                            <div className='tracking-cctray-group-build-toggles'>
+                                <button id='include-all' className='dashboard-button dashboard-button-small dashboard-button-white' onClick={this.includeAll}>Include all</button>
+                                <button id='exclude-all' className='dashboard-button dashboard-button-small dashboard-button-white' onClick={this.excludeAll}>Exclude all</button>
+                            </div>
+                            <ProjectsComponent.Projects projects={projects} selectProject={this.selectProject} />
+                        </fieldset>
+                    </section>
                 )
             }
         },

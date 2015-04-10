@@ -22,8 +22,7 @@
   color: rgba(255,255,255,.84);
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
   outline: none;
-  transition: background-color 0.1s ease-in;
-  transition: box-shadow 0.1s ease-in;
+  transition: background-color 0.1s ease-in, box-shadow 0.1s ease-in;
   &:hover {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.26);
   }

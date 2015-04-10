@@ -1,9 +1,6 @@
 .tracking-cctray-group {
   border: none;
   margin: 0;
-  padding: 1.5em;
-  background-color: white;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.26);
 }
   .tracking-cctray-group-legend {
     font-weight: bold;
@@ -27,6 +24,10 @@
   .tracking-cctray-group-cctray-form {
     font-size: 1.5rem;
     margin-bottom: 1em;
+
+    padding: 1.5em;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.26);
   }
     .tracking-cctray-group-cctray-form-label {
       width: 38px;
@@ -93,4 +94,27 @@
 
 .config-removed-info {
   color: $mid-grey;
+}
+
+.tracking-cctrays {
+  display: flex;
+}
+
+.tray {
+  flex: 1;
+  font-size: 1.5rem;
+  border: 1px solid $mid-grey;
+}
+
+.tray-title {
+  font-size: 1.5rem;
+  font-weight: 400;
+  padding: 0.5em 1.5em;
+  background: $mid-grey;
+  color: #fff;
+  text-overflow: ellipsis;
+}
+
+.tray-content {
+  padding: 1.5em;
 }

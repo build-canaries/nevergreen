@@ -19,11 +19,14 @@ module.exports = {
 
                     <fieldset className='tracking-cctray-group'>
                         <AddTrayComponent.AddTray addTray={this.addTray} />
-                        {
-                            this.state.trays.map(function (trayId) {
-                                return <TrayComponent.Tray key={trayId} trayId={trayId} />
-                            }.bind(this))
-                            }
+
+                        <div className='tracking-cctrays'>
+                            {
+                                this.state.trays.map(function (trayId) {
+                                    return <TrayComponent.Tray key={trayId} trayId={trayId} />
+                                }.bind(this))
+                             }
+                        </div>
                     </fieldset>
                 </section>
             )
