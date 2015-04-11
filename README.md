@@ -54,7 +54,7 @@ If you don't like the look of our monitor page, then you can make your own from 
 
 ## Configuring your own Nevergreen
 
-Navigate to `http://localhost:5000`. If it is the first visit to Nevergreen from a browser then it will redirect you to `http://localhost:5000/config`.
+Navigate to `http://localhost:5000`
 
 You'll need to first put in your *cctray.xml* url then it will allow you to select which builds to show on your monitor.
 
