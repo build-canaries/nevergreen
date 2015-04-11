@@ -27,7 +27,7 @@ module.exports = {
                 return <LoadingView.Bars />
 
             } else if (this.state.error) {
-                return <ErrorView.SimpleMessage status={this.state.error.status} reason={this.state.error.statusText} />
+                return <ErrorView.SimpleMessage status={this.state.error.status} reason={this.state.error.responseText} />
 
             } else {
                 var projects = trays.projects(this.state.tray, this.state.retrievedProjects)

@@ -23,7 +23,7 @@ module.exports = {
                 content = <LoadingView.Bars />
 
             } else if (this.state.error) {
-                content = <ErrorView.SimpleMessage status={this.state.error.status} reason={this.state.error.statusText} />
+                content = <ErrorView.SimpleMessage status={this.state.error.status} reason={this.state.error.responseText} />
 
             } else if (this.hasProjects()) {
                 content = <ProjectsView.InterestingProjects projects={this.state.projects} />

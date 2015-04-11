@@ -1,6 +1,5 @@
 var $ = require('jquery')
 var React = require('react')
-var styler = require('../../monitor/styler')
 
 module.exports = {
     SimpleMessage: React.createClass({
@@ -17,18 +16,16 @@ module.exports = {
         },
 
         message: function () {
-            return 'Failed to fetch projects because a "' + this.props.status + '" status was returned with the message "' + this.props.reason + '"'
+            if(this.props.status === 0 ) {
+                return "Nevergreen is not responding"
+            }
+            return 'The remote server is returning a "' + this.props.reason + '"'
         },
 
         render: function () {
             return (
-                <div>{this.message()}</div>
+                <div className='error-message'>{this.message()}</div>
             )
-        },
-
-        componentDidMount: function () {
-            var $node = $(this.getDOMNode())
-            styler.styleProjects([{name: this.message()}], $node, $node)
         }
     })
 }
