@@ -18,6 +18,7 @@ Downloads available from [GitHub](https://github.com/build-canaries/nevergreen/r
 * [#56](https://github.com/build-canaries/nevergreen/issues/56) Move the version label to the bottom of the left hand menu
 * [#58](https://github.com/build-canaries/nevergreen/issues/58) Single page [React](https://facebook.github.io/react/) UI
 * [#61](https://github.com/build-canaries/nevergreen/issues/61) Wrong credentials stop the app
+* [#54](https://github.com/build-canaries/nevergreen/issues/54) Propagate error codes
 
 ## Eggplant (0.5.0)
 
