@@ -6,6 +6,8 @@ Downloads available from [GitHub](https://github.com/build-canaries/nevergreen/r
 
 ### New Features
 
+* [#11](https://github.com/build-canaries/nevergreen/issues/11) Highlight projects that no longer exist since the last time you configured
+
 ### Closed Bugs
 
 * [#50](https://github.com/build-canaries/nevergreen/issues/50) You can still change tabs while project list is loading
