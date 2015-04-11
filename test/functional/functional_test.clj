@@ -10,19 +10,27 @@
 (defn in? [seq elm]
   (some #(= elm %) seq))
 
-(def hd-tv-size (Dimension. 1280 1024))
+(def snap-ci-xvfb-size (Dimension. 1280 1024))
+(def full-hd-tv-size (Dimension. 1920 1080))
+(def hd-tv-size (Dimension. 1280 720))
 
 (defn functional-fixture [test-fn]
   (let [driver (ChromeDriver.)]
-    (.. driver (manage) (window) (setSize hd-tv-size))
+    (.. driver (manage) (window) (setSize snap-ci-xvfb-size))
     (set-driver! (init-driver {:webdriver driver})))
 
   (test-fn)
 
-  (take-screenshot :file "./target/functional-test.png")
   (quit))
 
+(defn details-on-failure [test-fn]
+  (test-fn)
+
+  (take-screenshot :file "./target/functional-test.png")
+  (spit "./target/functional-test.html" (page-source)))
+
 (use-fixtures :once functional-fixture)
+(use-fixtures :each details-on-failure)
 
 (defn nevergreen-under-test []
   (let [url (or (env :functional-url) "http://localhost:5000")]
@@ -39,9 +47,9 @@
     (input-text "#cctray-url" (str base-url "/test_data.xml"))
     (click "#cctray-fetch")
 
-    (wait-until #(exists? "#projects"))
+    (wait-until #(exists? ".testing-projects"))
 
-    (click "#include-all")
+    (click ".testing-include-all")
     (click "#monitor")
 
     (wait-until #(exists? "#interesting-projects"))

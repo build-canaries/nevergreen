@@ -35,11 +35,11 @@ module.exports = {
                 return (
                     <section className='tray'>
                         <h3 className='tray-title'>{this.state.tray.url}</h3>
-                        <fieldset id='projects-controls' className='tracking-cctray-group-builds tray-content'>
+                        <fieldset className='tracking-cctray-group-builds tray-content'>
                             <legend className='tracking-cctray-group-builds-legend'>Available builds</legend>
                             <div className='tracking-cctray-group-build-toggles'>
-                                <button id='include-all' className='dashboard-button dashboard-button-small dashboard-button-white' onClick={this.includeAll}>Include all</button>
-                                <button id='exclude-all' className='dashboard-button dashboard-button-small dashboard-button-white' onClick={this.excludeAll}>Exclude all</button>
+                                <button className='testing-include-all dashboard-button dashboard-button-small dashboard-button-white' onClick={this.includeAll}>Include all</button>
+                                <button className='dashboard-button dashboard-button-small dashboard-button-white' onClick={this.excludeAll}>Exclude all</button>
                             </div>
                             <ProjectsComponent.Projects projects={projects} selectProject={this.selectProject} />
                         </fieldset>

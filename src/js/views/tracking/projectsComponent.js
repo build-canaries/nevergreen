@@ -11,7 +11,7 @@ module.exports = {
     Projects: React.createClass({
         render: function () {
             return (
-                <div id='projects' className='tracking-cctray-group-build-items'>
+                <div className='testing-projects tracking-cctray-group-build-items'>
                     {
                         this.props.projects.map(function (project) {
                             return <AvailableProjectComponent.AvailableProject
