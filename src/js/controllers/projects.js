@@ -13,7 +13,7 @@ module.exports = {
                 password: tray.password,
                 serverType: tray.serverType
             },
-            dataType: "json",
+            dataType: 'json',
             success: successCallback,
             error: errorCallback
         })
@@ -34,7 +34,7 @@ module.exports = {
                 includedProjects: tray.includedProjects,
                 serverType: tray.serverType
             },
-            dataType: "json",
+            dataType: 'json',
             success: successCallback,
             error: errorCallback
         })

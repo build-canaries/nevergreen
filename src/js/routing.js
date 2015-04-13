@@ -10,7 +10,6 @@ var SuccessSection = require('./views/success/successSection')
 var DefaultRoute = Router.DefaultRoute
 var Route = Router.Route
 
-/* jshint ignore:start */
 var routes = (
     <Route name='app' path='/' handler={App.App}>
         <Route name='monitor' handler={MonitorSection.MonitorSection}/>
@@ -24,4 +23,3 @@ var routes = (
 Router.run(routes, function (Handler) {
     React.render(<Handler/>, $('#content')[0]);
 })
-/* jshint ignore:end */

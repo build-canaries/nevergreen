@@ -8,7 +8,7 @@ module.exports = {
             reason: React.PropTypes.string
         },
 
-        getDefaultProps: function() {
+        getDefaultProps: function () {
             return {
                 status: 'unknown',
                 reason: 'unknown'
@@ -16,8 +16,8 @@ module.exports = {
         },
 
         message: function () {
-            if(this.props.status === 0 ) {
-                return "Nevergreen is not responding"
+            if (this.props.status === 0) {
+                return 'Nevergreen is not responding'
             }
             return 'The remote server is returning a "' + this.props.reason + '"'
         },
