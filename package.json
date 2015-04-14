@@ -11,14 +11,15 @@
     "node": "0.12.0"
   },
   "devDependencies": {
+    "chromedriver": "2.14.1",
     "jshint": "2.6.3",
     "karma": "0.12.31",
     "karma-browserify": "4.0.0",
     "karma-jasmine": "0.3.5",
     "karma-phantomjs-launcher": "0.1.4",
     "karma-phantomjs-shim": "1.0.0",
-    "watch": "0.14.0",
-    "chromedriver": "2.14.1"
+    "react-tools": "0.13.1",
+    "watch": "0.14.0"
   },
   "dependencies": {
     "react": "0.13.1",
@@ -33,10 +34,11 @@
     "node-uuid": "1.4.3"
   },
   "scripts": {
-    "postinstall": "npm run sass && npm run browserify",
+    "postinstall": "npm run sass && npm run jsx && npm run browserify",
     "test": "./node_modules/karma/bin/karma start --singleRun",
     "watch": "watch 'npm install' src",
-    "browserify": "browserify -d -t reactify -p [minifyify --map main.map.json --output ./resources/public/main.map.json] ./src/**/*.js > ./resources/public/main.js",
+    "jsx": "jsx --extension jsx src/ build/ && jsx --extension js src/ build/",
+    "browserify": "browserify -d -p [minifyify --map main.map.json --output ./resources/public/main.map.json] ./build/**/*.js > ./resources/public/main.js",
     "sass": "node-sass src/scss/base.scss resources/public/main.css",
     "testing": "./node_modules/karma/bin/karma start",
     "lint": "jshint src/js/**/*.js test/js/**/*.js"
