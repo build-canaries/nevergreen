@@ -14,7 +14,8 @@
             [com.duelinmarkers.ring-request-logging :refer [wrap-request-logging]]
             [ring.middleware.json :refer [wrap-json-body]]
             [nevergreen.wrap-cache-control-middleware :refer [wrap-cache-control]]
-            [nevergreen.wrap-exceptions :refer [wrap-exceptions]])
+            [nevergreen.wrap-exceptions :refer [wrap-exceptions]]
+            [nevergreen.api.routes :refer [api-routes]])
   (:gen-class))
 
 (cheshire/add-encoder DateTime (fn [date json-generator]
@@ -29,15 +30,21 @@
            (GET "/" [] (clojure.java.io/resource "public/index.html"))
            (POST "/api/encrypt" {params :params} (as-json-response (encrypt-password (:password params))))
            (GET "/api/projects" {params :params} (as-json-response (get-all-projects params)))
-           (POST "/api/projects" {params :params} (as-json-response (get-interesting-projects params)))
+           (POST "/api/projects" {body :body} (merge-with merge
+                                                          {:headers {"Warning" "Deprecated as of 0.6.0, use POST /api/projects/interesting instead"}}
+                                                          (as-json-response (get-interesting-projects body))))
            (route/resources "/")
            (route/not-found "Nothing to see here"))
 
+(def all-routes
+  (routes api-routes main-routes))
+
 (def app
-  (-> main-routes
-      wrap-exceptions
+  (-> all-routes
       wrap-request-logging
+      wrap-exceptions
       wrap-cache-control
+      (wrap-json-body {:keywords? true})
       handler/site))
 
 (defn- gzip-configurator [server]

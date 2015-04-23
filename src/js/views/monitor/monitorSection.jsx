@@ -6,6 +6,7 @@ var ErrorView = require('../general/errorView')
 var LoadingView = require('../general/loading')
 var projectsController = require('../../controllers/projects')
 var timingRepository = require('../../storage/timingRepository')
+var trackingRepository = require('../../storage/trackingRepository')
 
 module.exports = {
     MonitorSection: React.createClass({
@@ -38,10 +39,14 @@ module.exports = {
         },
 
         componentWillMount: function () {
-            projectsController.fetchInteresting(this.updateProjects, this.updateFailed)
+            projectsController.interesting(trackingRepository.getTraysContent())
+                .done(this.updateProjects)
+                .fail(this.updateFailed)
 
             var updateTimer = setInterval(function () {
-                projectsController.fetchInteresting(this.updateProjects, this.updateFailed)
+                projectsController.interesting(trackingRepository.getTraysContent())
+                    .done(this.updateProjects)
+                    .fail(this.updateFailed)
             }.bind(this), timingRepository.getPollingTimeInMilliseconds())
 
             this.setState({timer: updateTimer})
@@ -62,7 +67,7 @@ module.exports = {
                 this.setState({
                     loaded: true,
                     error: false,
-                    projects: data
+                    projects: JSON.parse(data)
                 })
             }
         },
@@ -71,7 +76,7 @@ module.exports = {
             if (this.isMounted()) {
                 this.setState({
                     loaded: true,
-                    error: data
+                    error: JSON.parse(data)
                 })
             }
         },

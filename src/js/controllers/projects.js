@@ -1,5 +1,5 @@
 var $ = require('jquery')
-var trackingRepository = require('../storage/trackingRepository')
+var _ = require('lodash')
 
 module.exports = {
     fetchAll: function (tray, successCallback, errorCallback) {
@@ -19,24 +19,23 @@ module.exports = {
         })
     },
 
-    fetchInteresting: function (successCallback, errorCallback) {
-        var trays = trackingRepository.getTrays()
-        var tray = trackingRepository.getTray(trays[0]) // Hardcoded assuming a single tray for now
-
-        $.ajax({
-            type: 'POST',
-            url: '/api/projects',
-            timeout: 15000,
-            data: {
-                cctray: tray.url,
+    interesting: function (trays) {
+        var data = _.map(trays, function (tray) {
+            return {
+                url: tray.url,
                 username: tray.username,
                 password: tray.password,
-                includedProjects: tray.includedProjects,
+                included: tray.includedProjects,
                 serverType: tray.serverType
-            },
-            dataType: 'json',
-            success: successCallback,
-            error: errorCallback
+            }
+        })
+
+        return $.ajax({
+            type: 'POST',
+            url: '/api/projects/interesting',
+            timeout: 15000,
+            data: JSON.stringify(data),
+            contentType: 'application/json'
         })
     }
 }

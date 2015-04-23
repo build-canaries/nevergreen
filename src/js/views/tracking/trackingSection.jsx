@@ -54,7 +54,7 @@ module.exports = {
                 trackingRepository.saveTray(trayId, {
                     url: addTray.url
                 })
-                var newTrays = React.addons.update(this.state.trays, {$set: [trayId]})
+                var newTrays = React.addons.update(this.state.trays, {$push: [trayId]})
                 this.setState({trays: newTrays})
             }
         },

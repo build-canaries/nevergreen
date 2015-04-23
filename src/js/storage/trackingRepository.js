@@ -1,4 +1,5 @@
 var repository = require('./repository')
+var _ = require('lodash')
 
 module.exports = {
     getTrays: function () {
@@ -13,6 +14,12 @@ module.exports = {
             includedProjects: [],
             previousProjects: []
         })
+    },
+
+    getTraysContent: function () {
+        return _.map(this.getTrays(), function (id) {
+            return this.getTray(id)
+        }, this)
     },
 
     saveTrays: function (trays) {
