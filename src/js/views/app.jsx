@@ -1,7 +1,7 @@
 var $ = require('jquery')
 var React = require('react/addons')
 var Router = require('react-router')
-var Menu = require('./general/menu')
+var Menu = require('./general/menu').Menu
 var migrations = require('../storage/migrations')
 
 module.exports = {
@@ -10,7 +10,7 @@ module.exports = {
             return (
                 <div>
                     <div id="menu">
-                        <Menu.Menu />
+                        <Menu />
                     </div>
                     <Router.RouteHandler/>
                 </div>

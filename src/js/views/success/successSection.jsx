@@ -1,6 +1,6 @@
 var React = require('react/addons')
 var successRepository = require('../../storage/successRepository')
-var Message = require('./messageComponent')
+var Message = require('./messageComponent').Message
 
 module.exports = {
     SuccessSection: React.createClass({
@@ -15,10 +15,10 @@ module.exports = {
                     <fieldset className='tracking-cctray-group'>
                         <form className='tracking-cctray-group-cctray-form'>
                             <div id='success-messages'>
-                            {
-                                this.state.messages.map(function (message, i) {
-                                    return <Message.Message key={i} index={i} message={message} removeMessage={this.removeMessage.bind(this, i)} updateMessage={this.updateMessage.bind(this, i)} />
-                                }.bind(this))
+                                {
+                                    this.state.messages.map(function (message, i) {
+                                        return <Message key={i} index={i} message={message} removeMessage={this.removeMessage.bind(this, i)} updateMessage={this.updateMessage.bind(this, i)}/>
+                                    }.bind(this))
                                 }
                             </div>
                             <button id='success-add' className='dashboard-button' onClick={this.addNewMessage}>Add</button>

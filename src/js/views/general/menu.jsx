@@ -36,13 +36,13 @@ module.exports = {
                     <nav role='navigation' className='dashboard-navigation'>
                         <h2 className='visuallyhidden'>Dashboard navigation</h2>
 
-                        <img src='img/buildcanaries-logo.png' className='dashboard-header-logo' alt='Build Canaries logo' />
+                        <img src='img/buildcanaries-logo.png' className='dashboard-header-logo' alt='Build Canaries logo'/>
 
                         <ul className='dashboard-navigation-list'>
-                        {
-                            this.props.items.map(function (item) {
-                                return <MenuItem key={item.id} id={item.id} iconClass={'icon-' + item.iconClass} title={item.title} />
-                            }.bind(this))
+                            {
+                                this.props.items.map(function (item) {
+                                    return <MenuItem key={item.id} id={item.id} iconClass={'icon-' + item.iconClass} title={item.title}/>
+                                }.bind(this))
                             }
                         </ul>
                     </nav>

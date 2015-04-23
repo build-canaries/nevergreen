@@ -1,7 +1,7 @@
 var $ = require('jquery')
 var React = require('react')
-var Message = require('./messageComponent')
-var Image = require('./imageComponent')
+var Message = require('./messageComponent').Message
+var Image = require('./imageComponent').Image
 var messagesController = require('../../controllers/messages')
 
 module.exports = {
@@ -12,9 +12,9 @@ module.exports = {
 
         render: function () {
             if (messagesController.isUrl(this.state.message)) {
-                return <Image.Image url={this.state.message} />
+                return <Image url={this.state.message}/>
             } else {
-                return <Message.Message message={this.state.message} />
+                return <Message message={this.state.message}/>
             }
         },
 

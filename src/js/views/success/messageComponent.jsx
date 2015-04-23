@@ -1,5 +1,4 @@
 var React = require('react/addons')
-var $ = require('jquery')
 
 var RemoveLink = React.createClass({
     propTypes: {

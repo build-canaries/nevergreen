@@ -2,8 +2,8 @@ var React = require('react/addons')
 var trays = require('../../controllers/trays')
 var security = require('../../controllers/security')
 var trackingRepository = require('../../storage/trackingRepository')
-var AddTrayComponent = require('./addTrayComponent')
-var TrayComponent = require('./trayComponent')
+var AddTray = require('./addTrayComponent').AddTray
+var Tray = require('./trayComponent').Tray
 var uuid = require('node-uuid')
 
 module.exports = {
@@ -18,12 +18,12 @@ module.exports = {
                     <h2 className='visuallyhidden'>Tracking</h2>
 
                     <fieldset className='tracking-cctray-group'>
-                        <AddTrayComponent.AddTray addTray={this.addTray} />
+                        <AddTray addTray={this.addTray} />
 
                         <div className='tracking-cctrays'>
                             {
                                 this.state.trays.map(function (trayId) {
-                                    return <TrayComponent.Tray key={trayId} trayId={trayId} />
+                                    return <Tray key={trayId} trayId={trayId} />
                                 }.bind(this))
                              }
                         </div>

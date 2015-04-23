@@ -1,9 +1,9 @@
 var $ = require('jquery')
 var React = require('react')
-var ProjectsView = require('./projectsView')
-var SuccessView = require('./successView')
-var ErrorView = require('../general/errorView')
-var LoadingView = require('../general/loading')
+var InterestingProjects = require('./projectsView').InterestingProjects
+var Success = require('./successView').Success
+var ErrorView = require('../general/errorView').SimpleMessage
+var Loading = require('../general/loading').Bars
 var projectsController = require('../../controllers/projects')
 var timingRepository = require('../../storage/timingRepository')
 var trackingRepository = require('../../storage/trackingRepository')
@@ -21,16 +21,16 @@ module.exports = {
         render: function () {
             var content
             if (!this.state.loaded) {
-                content = <LoadingView.Bars />
+                content = <Loading />
 
             } else if (this.state.error) {
-                content = <ErrorView.SimpleMessage status={this.state.error.status} reason={this.state.error.responseText} />
+                content = <ErrorView status={this.state.error.status} reason={this.state.error.responseText}/>
 
             } else if (this.hasProjects()) {
-                content = <ProjectsView.InterestingProjects projects={this.state.projects} />
+                content = <InterestingProjects projects={this.state.projects}/>
 
             } else {
-                content = <SuccessView.Success />
+                content = <Success />
             }
 
             return (
@@ -88,9 +88,11 @@ module.exports = {
         animateMenu: function () {
             this.clearMenuTimeOut()
             this.showMenu()
-            this.setState({menuTimer: setInterval(function () {
-                this.hideMenu()
-            }.bind(this), 1000)})
+            this.setState({
+                menuTimer: setInterval(function () {
+                    this.hideMenu()
+                }.bind(this), 1000)
+            })
         },
 
         showMenu: function () {

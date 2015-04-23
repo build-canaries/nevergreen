@@ -1,10 +1,10 @@
 var React = require('react/addons')
-var LoadingView = require('../general/loading')
+var LoadingView = require('../general/loading').Bars
 var projectsController = require('../../controllers/projects')
 var trackingRepository = require('../../storage/trackingRepository')
-var ProjectsComponent = require('./projectsComponent')
+var Projects = require('./projectsComponent').Projects
 var trays = require('../../controllers/trays')
-var ErrorView = require('../general/errorView')
+var ErrorView = require('../general/errorView').SimpleMessage
 var _ = require('lodash')
 
 module.exports = {
@@ -24,10 +24,10 @@ module.exports = {
 
         render: function () {
             if (!this.state.loaded) {
-                return <LoadingView.Bars />
+                return <LoadingView />
 
             } else if (this.state.error) {
-                return <ErrorView.SimpleMessage status={this.state.error.status} reason={this.state.error.responseText} />
+                return <ErrorView status={this.state.error.status} reason={this.state.error.responseText} />
 
             } else {
                 var projects = trays.projects(this.state.tray, this.state.retrievedProjects)
@@ -41,7 +41,7 @@ module.exports = {
                                 <button className='testing-include-all dashboard-button dashboard-button-small dashboard-button-white' onClick={this.includeAll}>Include all</button>
                                 <button className='dashboard-button dashboard-button-small dashboard-button-white' onClick={this.excludeAll}>Exclude all</button>
                             </div>
-                            <ProjectsComponent.Projects projects={projects} selectProject={this.selectProject} />
+                            <Projects projects={projects} selectProject={this.selectProject} />
                         </fieldset>
                     </section>
                 )
