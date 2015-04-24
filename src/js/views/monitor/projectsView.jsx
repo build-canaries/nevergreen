@@ -28,10 +28,10 @@ module.exports = {
         render: function () {
             return (
                 <ul id='interesting-projects' className='monitor-projects'>
-                {
-                    this.props.projects.map(function (project) {
-                        return <InterestingProject key={project.name} prognosis={project.prognosis} name={project.name} />
-                    })
+                    {
+                        this.props.projects.map(function (project) {
+                            return <InterestingProject key={project.name} prognosis={project.prognosis} name={project.name}/>
+                        })
                     }
                 </ul>
             )

@@ -67,7 +67,7 @@ module.exports = {
                 this.setState({
                     loaded: true,
                     error: false,
-                    projects: JSON.parse(data)
+                    projects: data
                 })
             }
         },
@@ -76,7 +76,7 @@ module.exports = {
             if (this.isMounted()) {
                 this.setState({
                     loaded: true,
-                    error: JSON.parse(data)
+                    error: data
                 })
             }
         },

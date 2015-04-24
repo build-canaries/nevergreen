@@ -2,20 +2,23 @@ var $ = require('jquery')
 var _ = require('lodash')
 
 module.exports = {
-    fetchAll: function (tray, successCallback, errorCallback) {
-        $.ajax({
+    fetchAll: function (tray) {
+        var data = {
+            url: tray.url,
+            username: tray.username,
+            password: tray.password,
+            serverType: tray.serverType
+        }
+
+        return $.ajax({
             type: 'GET',
             url: '/api/projects',
             timeout: 15000,
-            data: {
-                url: tray.url,
-                username: tray.username,
-                password: tray.password,
-                serverType: tray.serverType
-            },
-            dataType: 'json',
-            success: successCallback,
-            error: errorCallback
+            data: data,
+            accepts: 'application/json',
+            dataFilter: function (data) {
+                return JSON.parse(data)
+            }
         })
     },
 
@@ -35,7 +38,11 @@ module.exports = {
             url: '/api/projects/interesting',
             timeout: 15000,
             data: JSON.stringify(data),
-            contentType: 'application/json'
+            accepts: 'application/json',
+            contentType: 'application/json',
+            dataFilter: function (data) {
+                return JSON.parse(data)
+            }
         })
     }
 }

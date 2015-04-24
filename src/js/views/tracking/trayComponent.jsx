@@ -1,7 +1,6 @@
 var React = require('react/addons')
 var LoadingView = require('../general/loading').Bars
 var projectsController = require('../../controllers/projects')
-var trackingRepository = require('../../storage/trackingRepository')
 var Projects = require('./projectsComponent').Projects
 var trays = require('../../controllers/trays')
 var ErrorView = require('../general/errorView').SimpleMessage
@@ -37,8 +36,13 @@ module.exports = {
                     <fieldset className='tracking-cctray-group-builds tray-content'>
                         <legend className='tracking-cctray-group-builds-legend'>Available builds</legend>
                         <div className='tracking-cctray-group-build-toggles'>
-                            <button className='testing-include-all dashboard-button dashboard-button-small dashboard-button-white' onClick={this.includeAll}>Include all</button>
-                            <button className='dashboard-button dashboard-button-small dashboard-button-white' onClick={this.excludeAll}>Exclude all</button>
+                            <button
+                                className='testing-include-all dashboard-button dashboard-button-small dashboard-button-white'
+                                onClick={this.includeAll}>Include all
+                            </button>
+                            <button className='dashboard-button dashboard-button-small dashboard-button-white'
+                                    onClick={this.excludeAll}>Exclude all
+                            </button>
                         </div>
                         <Projects projects={projects} selectProject={this.selectProject}/>
                     </fieldset>
@@ -47,7 +51,10 @@ module.exports = {
         },
 
         componentDidMount: function () {
-            projectsController.fetchAll(this.props.tray, this.projectsLoaded, this.projectsFailed)
+            projectsController
+                .fetchAll(this.props.tray)
+                .done(this.projectsLoaded)
+                .fail(this.projectsFailed)
         },
 
         projectsLoaded: function (data) {
