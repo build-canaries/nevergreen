@@ -16,6 +16,10 @@ module.exports = {
         })
     },
 
+    removeTray: function (id) {
+        repository.clear(id)
+    },
+
     getTraysContent: function () {
         return _.map(this.getTrays(), function (id) {
             return this.getTray(id)

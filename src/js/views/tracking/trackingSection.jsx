@@ -3,8 +3,9 @@ var trays = require('../../controllers/trays')
 var security = require('../../controllers/security')
 var trackingRepository = require('../../storage/trackingRepository')
 var AddTray = require('./addTrayComponent').AddTray
-var Tray = require('./trayComponent').Tray
+var Tray = require('./trayContainer').TrayContainer
 var uuid = require('node-uuid')
+var _ = require('lodash')
 
 module.exports = {
     TrackingSection: React.createClass({
@@ -18,14 +19,14 @@ module.exports = {
                     <h2 className='visuallyhidden'>Tracking</h2>
 
                     <fieldset className='tracking-cctray-group'>
-                        <AddTray addTray={this.addTray} />
+                        <AddTray addTray={this.addTray}/>
 
                         <div className='tracking-cctrays'>
                             {
-                                this.state.trays.map(function (trayId) {
-                                    return <Tray key={trayId} trayId={trayId} />
+                                _.map(this.state.trays, function (trayId) {
+                                    return <Tray key={trayId} trayId={trayId} removeTray={this.removeTray}/>
                                 }.bind(this))
-                             }
+                            }
                         </div>
                     </fieldset>
                 </section>
@@ -59,9 +60,17 @@ module.exports = {
             }
         },
 
+        removeTray: function (trayId) {
+            var updatedTrays = React.addons.update(this.state.trays, {$splice: [[this.state.trays.indexOf(trayId), 1]]})
+            this.setState({trays: updatedTrays})
+        },
+
         componentWillUpdate: function (nextProps, nextState) {
             if (this.state.trays !== nextState.trays) {
                 trackingRepository.saveTrays(nextState.trays)
+                _.forEach(_.difference(this.state.trays, nextState.trays), function (id) {
+                    trackingRepository.removeTray(id)
+                })
             }
         }
     })
