@@ -24,7 +24,10 @@ module.exports = {
             if (this.state.showSettings) {
                 view = <TraySettings trayId={this.props.trayId} tray={this.state.tray} removeTray={this.props.removeTray}/>
             } else {
-                view = <Tray tray={this.state.tray} includeAll={this.includeAll} excludeAll={this.excludeAll} selectProject={this.selectProject}/>
+                view = <Tray tray={this.state.tray}
+                             includeAll={this.includeAll} excludeAll={this.excludeAll}
+                             selectProject={this.selectProject}
+                             setRetrievedProjects={this.setRetrievedProjects}/>
             }
 
             return (
@@ -74,9 +77,13 @@ module.exports = {
             this.setState({tray: updatedTray})
         },
 
+        setRetrievedProjects: function (projects) {
+            this.retrievedProjects = projects
+        },
+
         componentWillUpdate: function (nextProps, nextState) {
             if (this.state.tray !== nextState.tray) {
-                var updatedTray = _.assign({}, nextState.tray, {previousProjects: nextState.retrievedProjects})
+                var updatedTray = _.assign({}, nextState.tray, {previousProjects: this.retrievedProjects})
                 trackingRepository.saveTray(this.props.trayId, updatedTray)
             }
         }

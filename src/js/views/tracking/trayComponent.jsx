@@ -11,7 +11,8 @@ module.exports = {
             tray: React.PropTypes.object.isRequired,
             includeAll: React.PropTypes.func.isRequired,
             excludeAll: React.PropTypes.func.isRequired,
-            selectProject: React.PropTypes.func.isRequired
+            selectProject: React.PropTypes.func.isRequired,
+            setRetrievedProjects: React.PropTypes.func.isRequired
         },
 
         getInitialState: function () {
@@ -34,7 +35,7 @@ module.exports = {
 
                 return (
                     <fieldset className='tracking-cctray-group-builds tray-content'>
-                        <legend className='tracking-cctray-group-builds-legend'>Available builds</legend>
+                        <legend className='tracking-cctray-group-builds-legend'>Available projects</legend>
                         <div className='tracking-cctray-group-build-toggles'>
                             <button
                                 className='testing-include-all dashboard-button dashboard-button-small dashboard-button-white'
@@ -67,6 +68,7 @@ module.exports = {
                     error: false,
                     retrievedProjects: retrievedProjectNames
                 })
+                this.props.setRetrievedProjects(retrievedProjectNames)
             }
         },
 
