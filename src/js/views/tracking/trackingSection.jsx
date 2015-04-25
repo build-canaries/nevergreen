@@ -1,11 +1,11 @@
 var React = require('react/addons')
+var _ = require('lodash')
+var uuid = require('node-uuid')
 var trays = require('../../controllers/trays')
 var security = require('../../controllers/security')
 var trackingRepository = require('../../storage/trackingRepository')
 var AddTray = require('./addTrayComponent').AddTray
 var Tray = require('./trayContainer').TrayContainer
-var uuid = require('node-uuid')
-var _ = require('lodash')
 
 module.exports = {
     TrackingSection: React.createClass({
@@ -25,7 +25,7 @@ module.exports = {
                             {
                                 _.map(this.state.trays, function (trayId) {
                                     return <Tray key={trayId} trayId={trayId} removeTray={this.removeTray}/>
-                                }.bind(this))
+                                }, this)
                             }
                         </div>
                     </fieldset>

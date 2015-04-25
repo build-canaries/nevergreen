@@ -15,7 +15,9 @@ module.exports = {
             url: '/api/projects',
             timeout: 15000,
             data: data,
-            accepts: 'application/json',
+            headers: {
+                Accept: 'application/json; charset=utf-8'
+            },
             dataFilter: function (data) {
                 return JSON.parse(data)
             }
@@ -38,8 +40,10 @@ module.exports = {
             url: '/api/projects/interesting',
             timeout: 15000,
             data: JSON.stringify(data),
-            accepts: 'application/json',
-            contentType: 'application/json',
+            headers: {
+                Accept: 'application/json; charset=utf-8',
+                'Content-Type': 'application/json; charset=utf-8'
+            },
             dataFilter: function (data) {
                 return JSON.parse(data)
             }

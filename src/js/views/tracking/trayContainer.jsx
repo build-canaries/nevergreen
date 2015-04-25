@@ -1,8 +1,11 @@
 var React = require('react')
+var _ = require('lodash')
 var trackingRepository = require('../../storage/trackingRepository')
+var projectsController = require('../../controllers/projects')
+var trays = require('../../controllers/trays')
 var Tray = require('./trayComponent').Tray
 var TraySettings = require('./traySettings').TraySettings
-var _ = require('lodash')
+var AsyncActionWrapper = require('../general/asyncActionWrapper').AsyncActionWrapper
 
 module.exports = {
     TrayContainer: React.createClass({
@@ -14,7 +17,8 @@ module.exports = {
         getInitialState: function () {
             return {
                 showSettings: false,
-                tray: trackingRepository.getTray(this.props.trayId)
+                tray: trackingRepository.getTray(this.props.trayId),
+                retrievedProjects: []
             }
         },
 
@@ -24,25 +28,21 @@ module.exports = {
             if (this.state.showSettings) {
                 view = <TraySettings trayId={this.props.trayId} tray={this.state.tray} removeTray={this.props.removeTray}/>
             } else {
-                view = <Tray tray={this.state.tray}
-                             includeAll={this.includeAll} excludeAll={this.excludeAll}
-                             selectProject={this.selectProject}
-                             setRetrievedProjects={this.setRetrievedProjects}/>
+                var projects = trays.projects(this.state.tray, this.state.retrievedProjects)
+                view = <Tray projects={projects} includeAll={this.includeAll} excludeAll={this.excludeAll} selectProject={this.selectProject}/>
             }
 
-            return (
+            var doneView = (
                 <section className='tray'>
                     <h3 className='tray-title'>{this.state.tray.url}</h3>
-                    <button
-                        className='dashboard-button dashboard-button-small dashboard-button-white'
-                        onClick={this.toggleSettingsView}>
-                        {
-                            this.state.showSettings ? 'Projects' : 'Settings'
-                        }
+                    <button className='dashboard-button dashboard-button-small dashboard-button-white' onClick={this.toggleSettingsView}>
+                        { this.state.showSettings ? 'Projects' : 'Settings' }
                     </button>
                     {view}
                 </section>
             )
+
+            return <AsyncActionWrapper promise={this.fetchProjects} doneView={doneView}/>
         },
 
         toggleSettingsView: function () {
@@ -63,9 +63,9 @@ module.exports = {
             this.setState({tray: updatedTray})
         },
 
-        includeAll: function (retrievedProjects) {
+        includeAll: function () {
             var updatedTray = React.addons.update(this.state.tray, {
-                includedProjects: {$set: retrievedProjects}
+                includedProjects: {$set: this.state.retrievedProjects}
             })
             this.setState({tray: updatedTray})
         },
@@ -77,15 +77,25 @@ module.exports = {
             this.setState({tray: updatedTray})
         },
 
-        setRetrievedProjects: function (projects) {
-            this.retrievedProjects = projects
-        },
-
         componentWillUpdate: function (nextProps, nextState) {
             if (this.state.tray !== nextState.tray) {
-                var updatedTray = _.assign({}, nextState.tray, {previousProjects: this.retrievedProjects})
+                var updatedTray = _.assign({}, nextState.tray, {previousProjects: this.state.retrievedProjects})
                 trackingRepository.saveTray(this.props.trayId, updatedTray)
             }
+        },
+
+        projectsLoaded: function (data) {
+            if (this.isMounted()) {
+                var retrievedProjectNames = data.projects.map(function (project) {
+                    return project.name
+                })
+                this.setState({retrievedProjects: retrievedProjectNames})
+            }
+        },
+
+        fetchProjects: function () {
+            return projectsController.fetchAll(this.state.tray)
+                .done(this.projectsLoaded)
         }
     })
 
