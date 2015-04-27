@@ -11,9 +11,13 @@ module.exports = {
         render: function () {
             return (
                 <section className='tray-settings'>
-                    <p>id: {this.props.trayId}</p>
-                    <p>url: {this.props.tray.url}</p>
-                    <button className='dashboard-button dashboard-button-small dashboard-button-white' onClick={this.removeTray}>Remove</button>
+                    <label>id</label>
+                    <span>{this.props.trayId}</span>
+                    <label>url</label>
+                    <span>{this.props.tray.url}</span>
+
+                    <h4 className='tray-settings-danger-zone-title'>Danger Zone</h4>
+                    <button className='dashboard-button dashboard-button-small dashboard-button-white' onClick={this.removeTray}>Delete this tray</button>
                 </section>
             )
         },

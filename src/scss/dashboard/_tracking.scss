@@ -118,3 +118,22 @@
 .tray-content {
   padding: 1.5em;
 }
+
+.tray-settings {
+  padding: 1.5em;
+
+  label {
+    width: 20%;
+    display: inline-block;
+  }
+
+  span {
+    width: 80%;
+    display: inline-block;
+  }
+}
+
+.tray-settings-danger-zone-title {
+  background-color: red;
+  color: white;
+}
