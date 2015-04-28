@@ -1,8 +1,10 @@
-var React = require('react')
+var React = require('react/addons')
 
 module.exports = {
 
     AddTray: React.createClass({
+        mixins: [React.addons.LinkedStateMixin],
+
         propTypes: {
             addTray: React.PropTypes.func.isRequired
         },
@@ -19,30 +21,18 @@ module.exports = {
             return (
                 <div className='tracking-cctray-group-cctray-form'>
                     <label htmlFor='cctray-url' className='tracking-cctray-group-cctray-form-label'>url</label>
-                    <input id='cctray-url' className='tracking-cctray-group-cctray-form-input' type='text' placeholder='cctray url' onChange={this.updateUrl}/>
+                    <input id='cctray-url' className='tracking-cctray-group-cctray-form-input' type='text' placeholder='cctray url' valueLink={this.linkState('url')}/>
                     <button id='cctray-fetch' className='tracking-cctray-group-cctray-form-button dashboard-button dashboard-button-secondary' onClick={this.onClick}>add</button>
                     <div>
                         <div id='authentication-group' className='tracking-cctray-group-authentication'>
                             <label htmlFor='username'>username</label>
-                            <input id='username' className='tracking-cctray-group-cctray-form-input-authentication tracking-cctray-group-cctray-form-input' type='text' onChange={this.updateUsername}/>
+                            <input id='username' className='tracking-cctray-group-cctray-form-input-authentication tracking-cctray-group-cctray-form-input' type='text' valueLink={this.linkState('username')}/>
                             <label htmlFor='password'>password</label>
-                            <input id='password' className='tracking-cctray-group-cctray-form-input-authentication tracking-cctray-group-cctray-form-input' type='password' onChange={this.updatePassword}/>
+                            <input id='password' className='tracking-cctray-group-cctray-form-input-authentication tracking-cctray-group-cctray-form-input' type='password' valueLink={this.linkState('password')}/>
                         </div>
                     </div>
                 </div>
             )
-        },
-
-        updateUrl: function (event) {
-            this.setState({url: event.target.value})
-        },
-
-        updateUsername: function (event) {
-            this.setState({username: event.target.value})
-        },
-
-        updatePassword: function (event) {
-            this.setState({password: event.target.value})
         },
 
         onClick: function () {
