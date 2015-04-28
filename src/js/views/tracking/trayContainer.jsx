@@ -33,16 +33,20 @@ module.exports = {
             }
 
             var doneView = (
-                <section className='tray'>
-                    <h3 className='tray-title'>{this.state.tray.url}</h3>
+                <div>
                     <button className='dashboard-button dashboard-button-small dashboard-button-white' onClick={this.toggleSettingsView}>
                         { this.state.showSettings ? 'Projects' : 'Settings' }
                     </button>
                     {view}
-                </section>
+                </div>
             )
 
-            return <AsyncActionWrapper promise={this.fetchProjects} doneView={doneView}/>
+            return (
+                <section className='tray'>
+                    <h3 className='tray-title'>{this.state.tray.url}</h3>
+                    <AsyncActionWrapper promise={this.fetchProjects} doneView={doneView}/>
+                </section>
+            )
         },
 
         toggleSettingsView: function () {
