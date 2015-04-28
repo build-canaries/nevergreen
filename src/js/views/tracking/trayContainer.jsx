@@ -23,28 +23,23 @@ module.exports = {
         },
 
         render: function () {
-            var view
+            var content
 
             if (this.state.showSettings) {
-                view = <TraySettings trayId={this.props.trayId} tray={this.state.tray} removeTray={this.props.removeTray}/>
+                content = <TraySettings trayId={this.props.trayId} tray={this.state.tray} removeTray={this.props.removeTray}/>
             } else {
                 var projects = trays.projects(this.state.tray, this.state.retrievedProjects)
-                view = <Projects projects={projects} includeAll={this.includeAll} excludeAll={this.excludeAll} selectProject={this.selectProject}/>
+                var doneView = <Projects projects={projects} includeAll={this.includeAll} excludeAll={this.excludeAll} selectProject={this.selectProject}/>
+                content = <AsyncActionWrapper promise={this.fetchProjects} doneView={doneView}/>
             }
-
-            var doneView = (
-                <div>
-                    <button className='dashboard-button dashboard-button-small dashboard-button-white' onClick={this.toggleSettingsView}>
-                        { this.state.showSettings ? 'Projects' : 'Settings' }
-                    </button>
-                    {view}
-                </div>
-            )
 
             return (
                 <section className='tray'>
                     <h3 className='tray-title'>{this.state.tray.url}</h3>
-                    <AsyncActionWrapper promise={this.fetchProjects} doneView={doneView}/>
+                    <button className='dashboard-button dashboard-button-small dashboard-button-white' onClick={this.toggleSettingsView}>
+                        { this.state.showSettings ? 'Projects' : 'Settings' }
+                    </button>
+                    {content}
                 </section>
             )
         },

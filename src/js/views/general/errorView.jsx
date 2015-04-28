@@ -18,7 +18,7 @@ module.exports = {
             if (this.props.status === 0) {
                 return 'Nevergreen is not responding'
             }
-            return 'The remote server is returning a "' + this.props.reason + '"'
+            return 'The remote server is returning "' + this.props.reason + '"'
         },
 
         render: function () {

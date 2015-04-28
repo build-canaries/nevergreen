@@ -4,7 +4,7 @@ module.exports = {
     Bars: React.createClass({
         render: function () {
             return (
-                <div id='spinner' className='center-above config-spinner'>
+                <div className='config-spinner'>
                     <img src='img/loading-bars.svg' alt='loading'/>
                 </div>
             )
