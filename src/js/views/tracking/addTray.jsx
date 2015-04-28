@@ -1,8 +1,12 @@
-var React = require('react/addons')
+var React = require('react')
 
 module.exports = {
 
     AddTray: React.createClass({
+        propTypes: {
+            addTray: React.PropTypes.func.isRequired
+        },
+
         getInitialState: function () {
             return {
                 url: '',
@@ -20,9 +24,9 @@ module.exports = {
                     <div>
                         <div id='authentication-group' className='tracking-cctray-group-authentication'>
                             <label htmlFor='username'>username</label>
-                            <input id='username' className='tracking-cctray-group-cctray-form-input-authentication tracking-cctray-group-cctray-form-input' type='text' onChange={this.updateUsername} />
+                            <input id='username' className='tracking-cctray-group-cctray-form-input-authentication tracking-cctray-group-cctray-form-input' type='text' onChange={this.updateUsername}/>
                             <label htmlFor='password'>password</label>
-                            <input id='password' className='tracking-cctray-group-cctray-form-input-authentication tracking-cctray-group-cctray-form-input' type='password' onChange={this.updatePassword} />
+                            <input id='password' className='tracking-cctray-group-cctray-form-input-authentication tracking-cctray-group-cctray-form-input' type='password' onChange={this.updatePassword}/>
                         </div>
                     </div>
                 </div>

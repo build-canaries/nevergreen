@@ -1,8 +1,8 @@
-var React = require('react/addons')
-var Projects = require('./projectsComponent').Projects
+var React = require('react')
+var AvailableProject = require('./availableProject').AvailableProject
 
 module.exports = {
-    Tray: React.createClass({
+    Projects: React.createClass({
         propTypes: {
             projects: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
             includeAll: React.PropTypes.func.isRequired,
@@ -13,12 +13,18 @@ module.exports = {
         render: function () {
             return (
                 <fieldset className='tracking-cctray-group-builds tray-content'>
-                    <legend className='tracking-cctray-group-builds-legend'>Available projects</legend>
+                    <legend className='tracking-cctray-group-builds-legend'>Available Projects</legend>
                     <div className='tracking-cctray-group-build-toggles'>
                         <button className='testing-include-all dashboard-button dashboard-button-small dashboard-button-white' onClick={this.includeAll}>Include all</button>
                         <button className='dashboard-button dashboard-button-small dashboard-button-white' onClick={this.excludeAll}>Exclude all</button>
                     </div>
-                    <Projects projects={this.props.projects} selectProject={this.selectProject}/>
+                    <div className='testing-projects tracking-cctray-group-build-items'>
+                        {
+                            this.props.projects.map(function (project) {
+                                return <AvailableProject key={project.name} project={project} selectProject={this.selectProject.bind(this, project.name)}/>
+                            }.bind(this))
+                        }
+                    </div>
                 </fieldset>
             )
         },

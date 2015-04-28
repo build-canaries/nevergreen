@@ -4,7 +4,7 @@ var uuid = require('node-uuid')
 var trays = require('../../controllers/trays')
 var security = require('../../controllers/security')
 var trackingRepository = require('../../storage/trackingRepository')
-var AddTray = require('./addTrayComponent').AddTray
+var AddTray = require('./addTray').AddTray
 var Tray = require('./trayContainer').TrayContainer
 
 module.exports = {

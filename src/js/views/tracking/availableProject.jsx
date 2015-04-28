@@ -1,7 +1,6 @@
 var React = require('react/addons')
 
 module.exports = {
-
     AvailableProject: React.createClass({
         propTypes: {
             project: React.PropTypes.object.isRequired,
@@ -25,5 +24,4 @@ module.exports = {
             this.props.selectProject(event.target.checked)
         }
     })
-
 }

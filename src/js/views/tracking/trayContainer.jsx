@@ -3,7 +3,7 @@ var _ = require('lodash')
 var trackingRepository = require('../../storage/trackingRepository')
 var projectsController = require('../../controllers/projects')
 var trays = require('../../controllers/trays')
-var Tray = require('./trayComponent').Tray
+var Projects = require('./projects').Projects
 var TraySettings = require('./traySettings').TraySettings
 var AsyncActionWrapper = require('../general/asyncActionWrapper').AsyncActionWrapper
 
@@ -29,7 +29,7 @@ module.exports = {
                 view = <TraySettings trayId={this.props.trayId} tray={this.state.tray} removeTray={this.props.removeTray}/>
             } else {
                 var projects = trays.projects(this.state.tray, this.state.retrievedProjects)
-                view = <Tray projects={projects} includeAll={this.includeAll} excludeAll={this.excludeAll} selectProject={this.selectProject}/>
+                view = <Projects projects={projects} includeAll={this.includeAll} excludeAll={this.excludeAll} selectProject={this.selectProject}/>
             }
 
             var doneView = (
