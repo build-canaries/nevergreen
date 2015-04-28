@@ -38,12 +38,12 @@ module.exports = {
         },
 
         componentDidMount: function () {
-            var $node = $(this.getDOMNode())
+            var $node = $(React.findDOMNode(this))
             styler.styleProjects(this.props.projects, $node.find('.monitor-outerContainer'), $node)
         },
 
         componentDidUpdate: function () {
-            var $node = $(this.getDOMNode())
+            var $node = $(React.findDOMNode(this))
             styler.styleProjects(this.props.projects, $node.find('.monitor-outerContainer'), $node)
         }
     })

@@ -19,7 +19,7 @@ module.exports = {
         },
 
         componentDidMount: function () {
-            var $node = $(this.getDOMNode())
+            var $node = $(React.findDOMNode(this))
             styler.styleProjects([{name: this.props.message}], $node, $node.parent())
         }
     })
