@@ -73,8 +73,9 @@
   }
 }
 
-
 .config-spinner {
-  top: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
