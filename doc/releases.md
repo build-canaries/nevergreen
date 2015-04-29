@@ -1,4 +1,4 @@
-# Releases
+# Releases
 
 Downloads available from [GitHub](https://github.com/build-canaries/nevergreen/releases)
 
@@ -23,7 +23,7 @@ Downloads available from [GitHub](https://github.com/build-canaries/nevergreen/r
 
 ## Eggplant (0.5.0)
 
-### New Features
+### New Features
 
 * [#38](https://github.com/build-canaries/nevergreen/issues/38) Add support for HTTP basic authentication
 * [#9](https://github.com/build-canaries/nevergreen/issues/9) Allow multiple success messages to be set
@@ -36,14 +36,14 @@ Downloads available from [GitHub](https://github.com/build-canaries/nevergreen/r
 
 ## Desert Sand (0.4.0)
 
-### New Features
+### New Features
 
 * [#33](https://github.com/build-canaries/nevergreen/issues/33) All new configuration UI
 * [#24](https://github.com/build-canaries/nevergreen/issues/24) Monitor refresh time is now configurable
 * [#34](https://github.com/build-canaries/nevergreen/issues/34) A link now appears on the monitor page (on mouse move) allowing the user to get back to the configuration page
 * [#46](https://github.com/build-canaries/nevergreen/issues/46) An image can now be used on success
 
-### Improvements
+### Improvements
 
 * [#22](https://github.com/build-canaries/nevergreen/issues/22) Functional test has been added
 * [#31](https://github.com/build-canaries/nevergreen/issues/31) Exception messages are now show to the user
@@ -53,11 +53,11 @@ Downloads available from [GitHub](https://github.com/build-canaries/nevergreen/r
 
 ## Canary (0.3.0)
 
-### New Features
+### New Features
 
 * [#10](https://github.com/build-canaries/nevergreen/issues/10) Add error feedback when projects fail to fetch
 
-## Improvements
+### Improvements
 
 * [#1](https://github.com/build-canaries/nevergreen/issues/1) Layout projects consistently on the config screen
 * [#26](https://github.com/build-canaries/nevergreen/issues/26) Add version number to config screen
