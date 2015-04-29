@@ -1,3 +1,15 @@
+# Prerequisites
+
+You'll need the follow tools installed to run locally:
+
+* [Java](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+* [Node](https://nodejs.org/)
+* [Leiningen](http://leiningen.org/)
+
+## Mac OSX
+
+These tools can be easily installed on OSX using [Homebrew](http://brew.sh/).
+
 # Run locally
 
 You can run the `develop.sh` script to automatically watch all the sources and run tests, see the script for more
