@@ -11,6 +11,7 @@ killall() {
     echo "done!"
 }
 
+echo
 echo "######################################################################################"
 echo "# This script will run several commands to watch the source files for changes.       #"
 echo "#                                                                                    #"
@@ -22,6 +23,17 @@ echo "# and may get a little hard to read.                                      
 echo "#                                                                                    #"
 echo "# Killing this script will automatically kill all the spawned processes.             #"
 echo "######################################################################################"
+echo
+
+hash npm 2>/dev/null || {
+    echo >&2 "npm command not found, you need to install Node. See doc/contributing.md for a full list of required prerequisites."
+    exit 1
+}
+
+hash lein 2>/dev/null || {
+    echo >&2 "lein command not found, you need to install Leiningen. See doc/contributing.md for a full list of required prerequisites."
+    exit 1
+}
 
 echo "[0] fetching node modules and performing first build"
 npm prune
