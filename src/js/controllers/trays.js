@@ -1,23 +1,5 @@
 var _ = require('lodash')
 
-module.exports = {
-    projects: function (tray, retrievedProjects) {
-        var allProjects = sort(_.union(tray.includedProjects, tray.previousProjects, retrievedProjects));
-        return allProjects.map(function (name) {
-            return {
-                name: name,
-                included: includes(tray, name),
-                isNew: firstTimeSeen(tray, retrievedProjects, name),
-                wasRemoved: removed(retrievedProjects, name)
-            }
-        }.bind(this))
-    },
-
-    requiresAuth: function (tray) {
-        return tray.username && tray.password
-    }
-}
-
 function includes(tray, projectName) {
     return _.indexOf(tray.includedProjects, projectName) >= 0
 }
@@ -42,4 +24,22 @@ function sort(projects) {
     return projects.sort(function (item1, item2) {
         return item1.toLowerCase().localeCompare(item2.toLowerCase())
     });
+}
+
+module.exports = {
+    projects: function (tray, retrievedProjects) {
+        var allProjects = sort(_.union(tray.includedProjects, tray.previousProjects, retrievedProjects));
+        return allProjects.map(function (name) {
+            return {
+                name: name,
+                included: includes(tray, name),
+                isNew: firstTimeSeen(tray, retrievedProjects, name),
+                wasRemoved: removed(retrievedProjects, name)
+            }
+        }.bind(this))
+    },
+
+    requiresAuth: function (tray) {
+        return tray.username && tray.password
+    }
 }

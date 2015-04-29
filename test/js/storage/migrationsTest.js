@@ -1,7 +1,25 @@
-/* global describe, it, beforeEach, spyOn, expect */
+/* global jasmine, describe, it, beforeEach, spyOn, expect */
 
 var _ = require('lodash')
 var migrations = require('../../../src/js/storage/migrations')
+
+function expectToBeUnchanged(keys) {
+    keys.map(function (key) {
+        expect(localStorage.getItem(key)).toEqual(key)
+    })
+}
+
+function expectToHaveBeenRemoved(keys) {
+    keys.map(function (key) {
+        expect(localStorage.getItem(key)).toBeNull()
+    })
+}
+
+function addKeys(keys) {
+    keys.map(function (key) {
+        localStorage.setItem(key, key)
+    })
+}
 
 describe('migrations', function () {
 
@@ -90,21 +108,3 @@ describe('migrations', function () {
     })
 
 })
-
-function expectToBeUnchanged(keys) {
-    keys.map(function (key) {
-        expect(localStorage.getItem(key)).toEqual(key)
-    })
-}
-
-function expectToHaveBeenRemoved(keys) {
-    keys.map(function (key) {
-        expect(localStorage.getItem(key)).toBeNull()
-    })
-}
-
-function addKeys(keys) {
-    keys.map(function (key) {
-        localStorage.setItem(key, key)
-    })
-}

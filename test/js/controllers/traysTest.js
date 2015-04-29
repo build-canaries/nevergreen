@@ -1,4 +1,4 @@
-/* global describe, it, beforeEach, spyOn, expect */
+/* global jasmine, describe, it, expect */
 
 var trays = require('../../../src/js/controllers/trays')
 

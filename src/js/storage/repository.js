@@ -1,5 +1,12 @@
 var _ = require('lodash')
 
+function trimReplacer(key, value) {
+    if (_.isString(value)) {
+        return _.trim(value)
+    }
+    return value
+}
+
 module.exports = {
     exists: function (key) {
         return !_.isEmpty(_.trim(localStorage.getItem(key)))
@@ -26,11 +33,4 @@ module.exports = {
     isEmpty: function () {
         return localStorage.length === 0
     }
-}
-
-function trimReplacer(key, value) {
-    if (_.isString(value)) {
-        return _.trim(value)
-    }
-    return value
 }

@@ -1,4 +1,4 @@
-/* global describe, it, beforeEach, spyOn, expect */
+/* global describe, it, spyOn, expect */
 
 var successRepository = require('../../../src/js/storage/successRepository')
 var messages = require('../../../src/js/controllers/messages')

@@ -1,4 +1,4 @@
-/* global describe, it, beforeEach, spyOn, expect */
+/* global describe, it, beforeEach, expect */
 
 var repository = require('../../../src/js/storage/repository')
 

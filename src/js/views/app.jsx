@@ -1,5 +1,4 @@
-var $ = require('jquery')
-var React = require('react/addons')
+var React = require('react')
 var Router = require('react-router')
 var Menu = require('./general/menu').Menu
 var migrations = require('../storage/migrations')
@@ -9,7 +8,7 @@ module.exports = {
         render: function () {
             return (
                 <div>
-                    <div id="menu">
+                    <div id='menu'>
                         <Menu />
                     </div>
                     <Router.RouteHandler/>

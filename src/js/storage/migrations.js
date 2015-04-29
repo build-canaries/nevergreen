@@ -1,7 +1,34 @@
-var messages = require('../controllers/messages')
 var uuid = require('node-uuid')
 var _ = require('lodash')
 var repository = require('./repository')
+
+function pushIfSet(arr, val) {
+    if (!_.isEmpty(val)) {
+        arr.push(val)
+    }
+}
+
+function remove(keys) {
+    _.forEach(keys, function (key) {
+        localStorage.removeItem(key)
+    })
+}
+
+function unescapeCommas(value) {
+    return value.replace(new RegExp('&#44;', 'g'), ',')
+}
+
+function getArray(key) {
+    return localStorage.getItem(key).split(',').map(unescapeCommas)
+}
+
+function escapeCommas(value) {
+    return value.replace(new RegExp(',', 'g'), '&#44;')
+}
+
+function makeSafe(value) {
+    return escapeCommas(_.trim(value))
+}
 
 module.exports = {
     migrate: function () {
@@ -52,32 +79,4 @@ module.exports = {
             repository.save('version-revision', '0')
         }
     }
-}
-
-function pushIfSet(arr, val) {
-    if (!_.isEmpty(val)) {
-        arr.push(val)
-    }
-}
-
-function remove(keys) {
-    _.forEach(keys, function (key) {
-        localStorage.removeItem(key)
-    })
-}
-
-function getArray(key) {
-    return localStorage.getItem(key).split(',').map(unescapeCommas)
-}
-
-function makeSafe(value) {
-    return escapeCommas(_.trim(value))
-}
-
-function escapeCommas(value) {
-    return value.replace(new RegExp(',', 'g'), '&#44;')
-}
-
-function unescapeCommas(value) {
-    return value.replace(new RegExp('&#44;', 'g'), ',')
 }
