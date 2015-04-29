@@ -19,6 +19,7 @@ Downloads available from [GitHub](https://github.com/build-canaries/nevergreen/r
 * [#58](https://github.com/build-canaries/nevergreen/issues/58) Single page [React](https://facebook.github.io/react/) UI
 * [#61](https://github.com/build-canaries/nevergreen/issues/61) Wrong credentials stop the app
 * [#54](https://github.com/build-canaries/nevergreen/issues/54) Propagate error codes
+* [#72](https://github.com/build-canaries/nevergreen/issues/72) Update the contributing doc with prerequisites
 
 ## Eggplant (0.5.0)
 
