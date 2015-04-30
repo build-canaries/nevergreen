@@ -60,3 +60,20 @@
   display: block;
   margin-bottom: 0.15em;
 }
+
+.menu-show
+{
+  left: 0;
+  transition-property: left;
+  transition-duration: 0.5s;
+  transition-timing: ease;
+  transition-delay: 0;
+}
+.menu-hide
+{
+  left: -10%;
+  transition-property: left;
+  transition-duration: 0.5s;
+  transition-timing: ease;
+  transition-delay: 0;
+}

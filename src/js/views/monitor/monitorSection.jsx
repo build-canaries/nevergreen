@@ -91,17 +91,17 @@ module.exports = {
             this.setState({
                 menuTimer: setInterval(function () {
                     this.hideMenu()
-                }.bind(this), 1000)
+                }.bind(this), 3000)
             })
         },
 
         showMenu: function () {
-            $("#menu").fadeIn()
+            $("#menu .dashboard-navigation, .contentinfo").removeClass("menu-hide").addClass("menu-show");
         },
 
         hideMenu: function () {
             if (this.isMounted()) {
-                $("#menu").fadeOut(1000)
+                $("#menu .dashboard-navigation, .contentinfo").removeClass("menu-show").addClass("menu-hide");
             }
         },
 
