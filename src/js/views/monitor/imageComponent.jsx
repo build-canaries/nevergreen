@@ -7,11 +7,9 @@ module.exports = {
         },
 
         render: function () {
-            var fullScreenImage = {
-                background: 'url(' + this.props.url + ') no-repeat center center fixed'
-            }
             return (
-                <div id='success-image' className='monitor-success-image' style={fullScreenImage}></div>
+                <div id='success-image'>
+                    <img src={this.props.url} className="monitor-success-image" alt="" /></div>
             )
         },
 
