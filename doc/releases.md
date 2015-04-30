@@ -21,6 +21,7 @@ Downloads available from [GitHub](https://github.com/build-canaries/nevergreen/r
 * [#54](https://github.com/build-canaries/nevergreen/issues/54) Propagate error codes
 * [#72](https://github.com/build-canaries/nevergreen/issues/72) Update the contributing doc with prerequisites
 * [#70](https://github.com/build-canaries/nevergreen/issues/70) Lint jsx files
+* [#59](https://github.com/build-canaries/nevergreen/issues/59) Auto hide the menu on the monitor section
 
 ## Eggplant (0.5.0)
 
