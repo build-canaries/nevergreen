@@ -35,20 +35,26 @@ hash lein 2>/dev/null || {
     exit 1
 }
 
-echo "[0] fetching node modules and performing first build"
+echo "[0] Clear build directory"
+rm -rf build
+
+echo "[1] fetching node modules and performing first build"
 npm prune
 npm install
 
-echo "[1] watching the js for changes..."
-npm run watch &
+echo "[2] watching the css for changes..."
+npm run watchJs &
 
-echo "[2] automatically running the js tests on changes..."
+echo "[3] watching the js for changes..."
+npm run watchCss &
+
+echo "[4] automatically running the js tests on changes..."
 npm run testing &
 
-echo "[3] automatically running the server tests on changes..."
+echo "[5] automatically running the server tests on changes..."
 lein midje 'nevergreen.*' :autotest &
 
-echo "[4] running the server..."
+echo "[6] running the server..."
 lein ring server-headless &
 
 wait

@@ -35,13 +35,17 @@
   },
   "scripts": {
     "postinstall": "npm run sass && npm run jsx && npm run browserify",
-    "test": "./node_modules/karma/bin/karma start --singleRun",
-    "watch": "watch 'npm install' src",
     "jsx": "jsx --extension jsx src/ build/ && jsx --extension js src/ build/",
     "browserify": "browserify -d -p [minifyify --map main.map.json --output ./resources/public/main.map.json] ./build/**/*.js > ./resources/public/main.js",
     "sass": "node-sass src/scss/base.scss resources/public/main.css",
+
+    "test": "./node_modules/karma/bin/karma start --singleRun",
     "testing": "./node_modules/karma/bin/karma start",
-    "lint": "jsxhint --jsx-only src/js/**/* test/js/**/*"
+    "lint": "jsxhint --jsx-only src/js/**/* test/js/**/*",
+
+    "watchJs": "watch 'npm run jsx && npm run browserifyNoMini' src/js",
+    "watchCss": "watch 'npm run sass' src/scss",
+    "browserifyNoMini": "browserify -d ./build/**/*.js > ./resources/public/main.js"
   },
   "repository": {
     "type": "git",
