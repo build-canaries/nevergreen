@@ -1,14 +1,7 @@
-.success-text-form {}
-
-.success-message-input {
+.success-message {
+  font-size: 2em;
   width: calc(100% - 15em);
-  border: none;
-  border-bottom: 2px solid $mid-grey;
   margin: 1em;
-  &:focus {
-    outline: none;
-    border-bottom-color: $blue
-  }
 }
 
 .success-remove {
@@ -19,4 +12,15 @@
   text-align: center;
   color: red;
   font-size: 4em;
+}
+
+.success-list {
+  list-style: none;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.success-list-image {
+  width: 400px;
+  height: auto;
 }

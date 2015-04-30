@@ -1,6 +1,9 @@
 var React = require('react/addons')
 var successRepository = require('../../storage/successRepository')
-var Message = require('./messageComponent').Message
+var messagesController = require('../../controllers/messages')
+var Message = require('./message').Message
+var Image = require('./image').Image
+var AddMessage = require('./addMessage').AddMessage
 
 module.exports = {
     SuccessSection: React.createClass({
@@ -13,16 +16,28 @@ module.exports = {
                 <section id='success' className='dashboard-main-section'>
                     <h2 className='visuallyhidden'>Success</h2>
                     <fieldset className='tracking-cctray-group'>
-                        <form className='tracking-cctray-group-cctray-form'>
-                            <div id='success-messages'>
-                                {
-                                    this.state.messages.map(function (message, i) {
-                                        return <Message key={i} index={i} message={message} removeMessage={this.removeMessage.bind(this, i)} updateMessage={this.updateMessage.bind(this, i)}/>
-                                    }.bind(this))
-                                }
-                            </div>
-                            <button id='success-add' className='dashboard-button' onClick={this.addNewMessage}>Add</button>
-                        </form>
+                        <AddMessage addMessage={this.addNewMessage}/>
+
+                        <div>
+                            <h3>Messages</h3>
+                            <ul>
+                            {
+                                this.state.messages.map(function (message, i) {
+                                    return !messagesController.isUrl(message) ? <Message key={i} message={message} removeMessage={this.removeMessage.bind(this, i)}/> : ''
+                                }.bind(this))
+                            }
+                            </ul>
+                        </div>
+                        <div>
+                            <h3>Images</h3>
+                            <ul className='success-list'>
+                            {
+                                this.state.messages.map(function (message, i) {
+                                    return messagesController.isUrl(message) ? <Image key={i} url={message} removeMessage={this.removeMessage.bind(this, i)}/> : ''
+                                }.bind(this))
+                            }
+                            </ul>
+                        </div>
                     </fieldset>
                 </section>
             )
@@ -32,9 +47,9 @@ module.exports = {
             this.setState({messages: successRepository.getSuccessMessages()})
         },
 
-        addNewMessage: function () {
+        addNewMessage: function (message) {
             var newMessages = React.addons.update(this.state.messages, {
-                $push: ['']
+                $push: [message]
             })
             this.setState({messages: newMessages})
         },
@@ -43,13 +58,6 @@ module.exports = {
             var newMessages = React.addons.update(this.state.messages, {
                 $splice: [[index, 1]]
             })
-            this.setState({messages: newMessages})
-        },
-
-        updateMessage: function (index, value) {
-            var command = {}
-            command[index] = {$set: {value: value}}
-            var newMessages = React.addons.update(this.state.messages, command)
             this.setState({messages: newMessages})
         },
 
