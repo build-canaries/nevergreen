@@ -10,10 +10,10 @@ module.exports = {
 
         render: function () {
             return (
-                <li>
-                    <span className='success-message'>{this.props.message}</span>
-                    <RemoveLink removeMessage={this.props.removeMessage}/>
-                </li>
+                    <li className='success-item'>
+                        <span className='success-message'>{this.props.message}</span>
+                        <RemoveLink removeMessage={this.props.removeMessage}/>
+                    </li>
             )
         }
     })

@@ -18,18 +18,18 @@ module.exports = {
                     <fieldset className='tracking-cctray-group'>
                         <AddMessage addMessage={this.addNewMessage}/>
 
-                        <div>
-                            <h3>Messages</h3>
-                            <ul>
+                        <section className='success-section'>
+                            <h3 className='success-title'>Messages</h3>
+                            <ul className='success-list'>
                             {
                                 this.state.messages.map(function (message, i) {
                                     return !messagesController.isUrl(message) ? <Message key={i} message={message} removeMessage={this.removeMessage.bind(this, i)}/> : ''
                                 }.bind(this))
                             }
                             </ul>
-                        </div>
-                        <div>
-                            <h3>Images</h3>
+                        </section>
+                        <section className='success-section'>
+                            <h3 className='success-title'>Images</h3>
                             <ul className='success-list'>
                             {
                                 this.state.messages.map(function (message, i) {
@@ -37,7 +37,7 @@ module.exports = {
                                 }.bind(this))
                             }
                             </ul>
-                        </div>
+                        </section>
                     </fieldset>
                 </section>
             )

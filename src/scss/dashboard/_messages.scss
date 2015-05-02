@@ -1,11 +1,20 @@
 .success-message {
-  font-size: 2em;
+  font-size: 1.5rem;
   width: calc(100% - 15em);
   margin: 1em;
 }
 
+.success-message-prompt {
+  width: 4.5em;;
+  display: inline-block;
+}
+
 .success-remove {
   color: black;
+}
+
+.success-message-input {
+  width: calc(100% - 8em);
 }
 
 .config-error {
@@ -18,9 +27,34 @@
   list-style: none;
   display: flex;
   flex-flow: row wrap;
+  padding: 0.5em 0.5em 0.5em 2em;
 }
 
 .success-list-image {
   width: 400px;
   height: auto;
+}
+
+.success-section {
+  flex: 1;
+  font-size: 1.5rem;
+  border: 1px solid $mid-grey;
+  background-color: white;
+}
+
+.success-title {
+  font-size: 1.5rem;
+  font-weight: 400;
+  padding: 0.5em 1.5em;
+  background: $mid-grey;
+  color: #fff;
+  text-overflow: ellipsis;
+}
+
+.success-content {
+  padding: 1.5em;
+}
+
+.success-item {
+  padding: 0.1em;
 }
