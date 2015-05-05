@@ -5,6 +5,50 @@ var Message = require('./message').Message
 var Image = require('./image').Image
 var AddMessage = require('./addMessage').AddMessage
 
+var AddedImages = React.createClass({
+    propTypes: {
+        messages: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+        removeMessage: React.PropTypes.func.isRequired
+    },
+
+    render: function () {
+        return (
+            <section className='success-section'>
+                <h3 className='success-title'>Images</h3>
+                <ul className='success-list'>
+                    {
+                        this.props.messages.map(function (message) {
+                            return <Image key={message.index} url={message.value} removeMessage={this.props.removeMessage.bind(null, message.index)}/>
+                        }.bind(this))
+                    }
+                </ul>
+            </section>
+        )
+    }
+})
+
+var AddedMessages = React.createClass({
+    propTypes: {
+        messages: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+        removeMessage: React.PropTypes.func.isRequired
+    },
+
+    render: function () {
+        return (
+            <section className='success-section'>
+                <h3 className='success-title'>Messages</h3>
+                <ul className='success-list'>
+                    {
+                        this.props.messages.map(function (message) {
+                            return <Message key={message.index} message={message.value} removeMessage={this.props.removeMessage.bind(null, message.index)}/>
+                        }.bind(this))
+                    }
+                </ul>
+            </section>
+        )
+    }
+})
+
 module.exports = {
     SuccessSection: React.createClass({
         getInitialState: function () {
@@ -12,39 +56,20 @@ module.exports = {
         },
 
         render: function () {
+            var messages = this.messages()
+            var images = this.images()
+
             return (
                 <section id='success' className='dashboard-main-section'>
                     <h2 className='visuallyhidden'>Success</h2>
                     <fieldset className='tracking-cctray-group'>
                         <AddMessage addMessage={this.addNewMessage}/>
 
-                        <section className='success-section'>
-                            <h3 className='success-title'>Messages</h3>
-                            <ul className='success-list'>
-                            {
-                                this.state.messages.map(function (message, i) {
-                                    return !messagesController.isUrl(message) ? <Message key={i} message={message} removeMessage={this.removeMessage.bind(this, i)}/> : ''
-                                }.bind(this))
-                            }
-                            </ul>
-                        </section>
-                        <section className='success-section'>
-                            <h3 className='success-title'>Images</h3>
-                            <ul className='success-list'>
-                            {
-                                this.state.messages.map(function (message, i) {
-                                    return messagesController.isUrl(message) ? <Image key={i} url={message} removeMessage={this.removeMessage.bind(this, i)}/> : ''
-                                }.bind(this))
-                            }
-                            </ul>
-                        </section>
+                        { messages.length > 0 ? <AddedMessages messages={messages} removeMessage={this.removeMessage}/> : '' }
+                        { images.length > 0 ? <AddedImages messages={images} removeMessage={this.removeMessage}/> : '' }
                     </fieldset>
                 </section>
             )
-        },
-
-        componentWillMount: function () {
-            this.setState({messages: successRepository.getSuccessMessages()})
         },
 
         addNewMessage: function (message) {
@@ -65,6 +90,24 @@ module.exports = {
             if (this.state.messages !== nextState.messages) {
                 successRepository.saveSuccessMessages(nextState.messages)
             }
+        },
+
+        images: function () {
+            return this.indexedMessages().filter(function (message) {
+                return messagesController.isUrl(message.value)
+            })
+        },
+
+        messages: function () {
+            return this.indexedMessages().filter(function (message) {
+                return !messagesController.isUrl(message.value)
+            })
+        },
+
+        indexedMessages: function () {
+            return this.state.messages.map(function (message, i) {
+                return {index: i, value: message}
+            })
         }
     })
 }
