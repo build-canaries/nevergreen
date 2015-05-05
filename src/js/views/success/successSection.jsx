@@ -1,53 +1,9 @@
 var React = require('react/addons')
 var successRepository = require('../../storage/successRepository')
 var messagesController = require('../../controllers/messages')
-var Message = require('./message').Message
-var Image = require('./image').Image
+var AddedMessages = require('./addedMessages').AddedMessages
+var AddedImages = require('./addedImages').AddedImages
 var AddMessage = require('./addMessage').AddMessage
-
-var AddedImages = React.createClass({
-    propTypes: {
-        messages: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-        removeMessage: React.PropTypes.func.isRequired
-    },
-
-    render: function () {
-        return (
-            <section className='success-section'>
-                <h3 className='success-title'>Images</h3>
-                <ul className='success-list'>
-                    {
-                        this.props.messages.map(function (message) {
-                            return <Image key={message.index} url={message.value} removeMessage={this.props.removeMessage.bind(null, message.index)}/>
-                        }.bind(this))
-                    }
-                </ul>
-            </section>
-        )
-    }
-})
-
-var AddedMessages = React.createClass({
-    propTypes: {
-        messages: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-        removeMessage: React.PropTypes.func.isRequired
-    },
-
-    render: function () {
-        return (
-            <section className='success-section'>
-                <h3 className='success-title'>Messages</h3>
-                <ul className='success-list'>
-                    {
-                        this.props.messages.map(function (message) {
-                            return <Message key={message.index} message={message.value} removeMessage={this.props.removeMessage.bind(null, message.index)}/>
-                        }.bind(this))
-                    }
-                </ul>
-            </section>
-        )
-    }
-})
 
 module.exports = {
     SuccessSection: React.createClass({
