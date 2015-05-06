@@ -8,7 +8,7 @@
                            [cheshire "5.4.0"]
                            [clj-cctray "0.8.0"]
                            [clj-http "1.0.1"]
-                           [com.duelinmarkers/ring-request-logging "0.2.0"]
+                           [ring-curl "0.2.1"]
                            [ring/ring-json "0.3.1"]
                            [base64-clj "0.1.1"]]
             :plugins [[lein-ring "0.8.11"]
