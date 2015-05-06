@@ -29,7 +29,9 @@
 (defroutes main-routes
            (GET "/" [] (clojure.java.io/resource "public/index.html"))
            (POST "/api/encrypt" {params :params} (as-json-response (encrypt-password (:password params))))
-           (GET "/api/projects" {params :params} (as-json-response (get-all-projects params)))
+           (GET "/api/projects" {params :params} (merge-with merge
+                                                             {:headers {"Warning" "Deprecated as of 0.6.0, use POST /api/projects instead"}}
+                                                             (as-json-response (get-all-projects params))))
            (POST "/api/projects" {body :body} (merge-with merge
                                                           {:headers {"Warning" "Deprecated as of 0.6.0, use POST /api/projects/interesting instead"}}
                                                           (as-json-response (get-interesting-projects body))))

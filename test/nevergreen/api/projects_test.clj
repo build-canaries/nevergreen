@@ -8,11 +8,10 @@
             [nevergreen.crypto :as crypt]))
 
 (def valid-url "http://someserver/cc.xml")
-(def username "any-username")
 (def password "any-password")
 
 (facts "it gets interesting projects"
-       (fact "throws exception if the url is not valid"
+       (fact "throws exception if the url is not http[s]"
              (subject/get-interesting [{:url "not-http"}]) => (throws Exception))
 
        (fact "with authentication"
@@ -40,6 +39,34 @@
                     (provided
                       (pmap anything anything) => irrelevant :times 0
                       (subject/fetch-interesting anything) => irrelevant))))
+
+(facts "it gets all projects"
+       (fact "throws exception if the url is not http[s]"
+             (subject/get-all [{:url "not-http"}]) => (throws Exception))
+
+       (fact "with authentication"
+             (subject/get-all {:url valid-url :username "a-user" :password "encrypted-password"}) => (list {:name "project-1" :prognosis :sick})
+             (provided
+               (parser/get-projects ..stream.. anything) => [{:name "project-1" :prognosis :sick}]
+               (crypt/decrypt "encrypted-password") => password
+               (security/basic-auth-header "a-user" password) => ..auth-header..
+               (http/http-get valid-url ..auth-header..) => ..stream..))
+
+       (fact "without authentication"
+             (subject/get-all {:url valid-url}) => (list {:name "project-1" :prognosis :sick})
+             (provided
+               (parser/get-projects ..stream.. anything) => [{:name "project-1" :prognosis :sick}]
+               (http/http-get valid-url nil) => ..stream..
+               (crypt/decrypt anything) => anything :times 0
+               (security/basic-auth-header anything anything) => anything :times 0))
+
+       (fact "without authentication if blank username and password"
+             (subject/get-all {:url valid-url :username "" :password ""}) => (list {:name "project-1" :prognosis :sick})
+             (provided
+               (parser/get-projects ..stream.. anything) => [{:name "project-1" :prognosis :sick}]
+               (http/http-get valid-url nil) => ..stream..
+               (crypt/decrypt anything) => anything :times 0
+               (security/basic-auth-header anything anything) => anything :times 0)))
 
 (facts "gets the server type"
        (fact "converts known server value to a symbol"

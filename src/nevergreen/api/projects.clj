@@ -27,9 +27,9 @@
 
 (defn fetch-interesting [project]
   (ensure-url-is-valid project)
-  (let [password (if-not (blank? (:password project)) (crypt/decrypt (:password project)))]
+  (let [decrypted-password (if-not (blank? (:password project)) (crypt/decrypt (:password project)))]
     (->> (parser/get-projects
-           (http-get (:url project) (set-auth-header (:username project) password))
+           (http-get (:url project) (set-auth-header (:username project) decrypted-password))
            {:normalise true :server (get-server-type project)})
          (filtering/interesting)
          (filtering/by-name (:included project)))))
@@ -38,3 +38,10 @@
   (if (= (count projects) 1)
     (fetch-interesting (first projects))
     (flatten (pmap fetch-interesting projects))))
+
+(defn get-all [project]
+  (ensure-url-is-valid project)
+  (let [server-type (get-server-type project)
+        decrypted-password (if-not (blank? (:password project)) (crypt/decrypt (:password project)))]
+    (parser/get-projects (http-get (:url project) (set-auth-header (:username project) decrypted-password))
+                         {:normalise true :server server-type})))

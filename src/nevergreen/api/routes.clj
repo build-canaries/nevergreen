@@ -9,4 +9,6 @@
    :headers      {"Access-Control-Allow-Origin" "*"}})
 
 (def api-routes
-  (POST "/api/projects/interesting" {body :body} (as-json-response (projects/get-interesting body))))
+  (routes
+    (POST "/api/projects" {body :body} (as-json-response (projects/get-all body)))
+    (POST "/api/projects/interesting" {body :body} (as-json-response (projects/get-interesting body)))))
