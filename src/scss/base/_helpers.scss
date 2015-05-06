@@ -28,4 +28,7 @@
   position: absolute;
   width: 1px;
 }
-.visuallyhidden { @include visuallyhidden; }
+
+.visuallyhidden {
+  @include visuallyhidden;
+}

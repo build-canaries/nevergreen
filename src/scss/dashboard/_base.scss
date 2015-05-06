@@ -2,6 +2,7 @@
   background: $light-grey;
   font-family: 'Roboto', sans-serif;
 }
+
 .dashboard-button {
   font-size: 14px;
   text-align: center;
@@ -19,7 +20,7 @@
   border-radius: 2px;
   text-transform: uppercase;
   text-decoration: none;
-  color: rgba(255,255,255,.84);
+  color: rgba(255, 255, 255, .84);
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
   outline: none;
   transition: background-color 0.1s ease-in, box-shadow 0.1s ease-in;
@@ -31,22 +32,26 @@
     border-radius: 0;
   }
 }
+
 .dashboard-button-small {
   font-size: 0.7em;
   padding: 0.6em 1.5em;
 }
+
 .dashboard-button-primary {
   background-color: $dark-blue;
   &:hover {
     background-color: darken($dark-blue, 4%);
   }
 }
+
 .dashboard-button-secondary {
   background-color: $blue;
   &:hover {
     background-color: darken($blue, 4%);
   }
 }
+
 .dashboard-button-white {
   background-color: white;
   color: $off-black;
@@ -55,13 +60,13 @@
   }
 }
 
-
 .dashboard-main {
   width: 90%;
   padding: 2%;
   float: left;
   margin-left: 10%;
 }
+
 .dashboard-main-section {
   width: 90%;
   padding: 2%;

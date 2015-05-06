@@ -4,15 +4,16 @@
     cursor: pointer;
   }
 }
+
 .checkbox {
   position: relative;
   top: -2px;
-  margin: 0 0.7em 0 0 ;
+  margin: 0 0.7em 0 0;
   cursor: pointer;
   &:before {
-    transition: transform .4s cubic-bezier(.45,1.8,.5,.75);
+    transition: transform .4s cubic-bezier(.45, 1.8, .5, .75);
     transform: rotate(-45deg) scale(0, 0);
-    -webkit-transition: -webkit-transform .4s cubic-bezier(.45,1.8,.5,.75);
+    -webkit-transition: -webkit-transform .4s cubic-bezier(.45, 1.8, .5, .75);
     -webkit-transform: rotate(315deg) scale(0, 0);
     content: "";
     position: absolute;

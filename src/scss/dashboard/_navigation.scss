@@ -54,23 +54,22 @@
   }
 }
 
-.dashboard-navigation-list-item-icon  {
+.dashboard-navigation-list-item-icon {
   color: $mid-grey2;
   font-size: 3.5em;
   display: block;
   margin-bottom: 0.15em;
 }
 
-.menu-show
-{
+.menu-show {
   left: 0;
   transition-property: left;
   transition-duration: 0.5s;
   transition-timing: ease;
   transition-delay: 0;
 }
-.menu-hide
-{
+
+.menu-hide {
   left: -10%;
   transition-property: left;
   transition-duration: 0.5s;

@@ -2,91 +2,104 @@
   border: none;
   margin: 0;
 }
-  .tracking-cctray-group-legend {
-    font-weight: bold;
-    font-size: 1.5rem;
-    margin: 1em 0;
-  }
-  .tracking-cctray-group-instructions {
-    font-size: 1.5rem;
-  }
-  .tracking-cctray-group-instructions-table {
-    width: 100%;
-    margin: 0 0 1em 0;
-    tr:nth-child(even) {
-      background-color: $light-grey;
-    }
-  }
-  .tracking-cctray-group-instructions-text {
-    margin: 0 0 1em 0;
-  }
 
-  .tracking-cctray-group-cctray-form {
-    font-size: 1.5rem;
-    margin-bottom: 1em;
+.tracking-cctray-group-legend {
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin: 1em 0;
+}
 
-    padding: 1.5em;
-    background-color: white;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.26);
+.tracking-cctray-group-instructions {
+  font-size: 1.5rem;
+}
+
+.tracking-cctray-group-instructions-table {
+  width: 100%;
+  margin: 0 0 1em 0;
+  tr:nth-child(even) {
+    background-color: $light-grey;
   }
-    .tracking-cctray-group-cctray-form-label {
-      width: 38px;
-      display: inline-block;
-    }
-    .tracking-cctray-group-cctray-form-input {
-      width: calc(100% - 155px);
-      border: none;
-      border-bottom: 2px solid $mid-grey;
-      &:focus {
-        outline: none;
-        border-bottom-color: $blue;
-      }
-    }
-    .tracking-cctray-group-cctray-form-input-small {
-      width: 60px;
-      text-align: center;
-    }
-    .tracking-cctray-group-authentication {
-      margin-top: 1em;
-      font-size: 17px;
-    }
-    .tracking-cctray-group-cctray-form-input-authentication {
-      width: 20em;
-    }
-  .tracking-cctray-group-builds {
-    border: none;
-    margin: 0;
-    padding: 0 0 1.5em 0;
+}
+
+.tracking-cctray-group-instructions-text {
+  margin: 0 0 1em 0;
+}
+
+.tracking-cctray-group-cctray-form {
+  font-size: 1.5rem;
+  margin-bottom: 1em;
+
+  padding: 1.5em;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
+}
+
+.tracking-cctray-group-cctray-form-label {
+  width: 38px;
+  display: inline-block;
+}
+
+.tracking-cctray-group-cctray-form-input {
+  width: calc(100% - 155px);
+  border: none;
+  border-bottom: 2px solid $mid-grey;
+  &:focus {
+    outline: none;
+    border-bottom-color: $blue;
   }
-    .tracking-cctray-group-builds-legend {
-      color: $mid-grey;
-      margin-bottom: 1em;
-      float: left;
-    }
-    .tracking-cctray-group-build-toggles {
-      float: left;
-      position: relative;
-      top: -0.5em;
-      margin-left: 1em;
-    }
-    .tracking-cctray-group-build-items {
-      clear: both;
-      margin-bottom: 2em;
-      padding-top: 0.2em;
-      padding-bottom: 2em;
-    }
-    .tracking-cctray-group-build-item {
-      display: block;
-      margin: 0.8em 0;
-      float: left;
-      width: 50%;
-    }
+}
 
+.tracking-cctray-group-cctray-form-input-small {
+  width: 60px;
+  text-align: center;
+}
 
-    .config-removed-project {
-      text-decoration: line-through;
-      color: $mid-grey;
-    }
+.tracking-cctray-group-authentication {
+  margin-top: 1em;
+  font-size: 17px;
+}
+
+.tracking-cctray-group-cctray-form-input-authentication {
+  width: 20em;
+}
+
+.tracking-cctray-group-builds {
+  border: none;
+  margin: 0;
+  padding: 0 0 1.5em 0;
+}
+
+.tracking-cctray-group-builds-legend {
+  color: $mid-grey;
+  margin-bottom: 1em;
+  float: left;
+}
+
+.tracking-cctray-group-build-toggles {
+  float: left;
+  position: relative;
+  top: -0.5em;
+  margin-left: 1em;
+}
+
+.tracking-cctray-group-build-items {
+  clear: both;
+  margin-bottom: 2em;
+  padding-top: 0.2em;
+  padding-bottom: 2em;
+}
+
+.tracking-cctray-group-build-item {
+  display: block;
+  margin: 0.8em 0;
+  float: left;
+  width: 50%;
+}
+
+.config-removed-project {
+  text-decoration: line-through;
+  color: $mid-grey;
+}
 
 .config-new-project {
   color: $hot-pink;
