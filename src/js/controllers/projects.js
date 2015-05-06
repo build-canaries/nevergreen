@@ -1,6 +1,22 @@
 var $ = require('jquery')
 var _ = require('lodash')
 
+function postJson(url, data) {
+    return $.ajax({
+        type: 'POST',
+        url: url,
+        timeout: 15000,
+        data: JSON.stringify(data),
+        headers: {
+            Accept: 'application/json; charset=utf-8',
+            'Content-Type': 'application/json; charset=utf-8'
+        },
+        dataFilter: function (data) {
+            return JSON.parse(data)
+        }
+    })
+}
+
 module.exports = {
     fetchAll: function (tray) {
         var data = {
@@ -10,18 +26,7 @@ module.exports = {
             serverType: tray.serverType
         }
 
-        return $.ajax({
-            type: 'GET',
-            url: '/api/projects',
-            timeout: 15000,
-            data: data,
-            headers: {
-                Accept: 'application/json; charset=utf-8'
-            },
-            dataFilter: function (data) {
-                return JSON.parse(data)
-            }
-        })
+        return postJson('/api/projects/all', data)
     },
 
     interesting: function (trays) {
@@ -35,18 +40,6 @@ module.exports = {
             }
         })
 
-        return $.ajax({
-            type: 'POST',
-            url: '/api/projects/interesting',
-            timeout: 15000,
-            data: JSON.stringify(data),
-            headers: {
-                Accept: 'application/json; charset=utf-8',
-                'Content-Type': 'application/json; charset=utf-8'
-            },
-            dataFilter: function (data) {
-                return JSON.parse(data)
-            }
-        })
+        return postJson('/api/projects/interesting', data)
     }
 }

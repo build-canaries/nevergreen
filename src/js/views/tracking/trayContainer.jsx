@@ -85,7 +85,7 @@ module.exports = {
 
         projectsLoaded: function (data) {
             if (this.isMounted()) {
-                var retrievedProjectNames = data.projects.map(function (project) {
+                var retrievedProjectNames = data.map(function (project) {
                     return project.name
                 })
                 this.setState({retrievedProjects: retrievedProjectNames})

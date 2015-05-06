@@ -10,5 +10,5 @@
 
 (def api-routes
   (routes
-    (POST "/api/projects" {body :body} (as-json-response (projects/get-all body)))
+    (POST "/api/projects/all" {body :body} (as-json-response (projects/get-all body)))
     (POST "/api/projects/interesting" {body :body} (as-json-response (projects/get-interesting body)))))
