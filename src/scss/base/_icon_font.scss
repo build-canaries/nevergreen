@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src: url('fonts/nevergreen.eot?-k42nl4');
-  src: url('fonts/nevergreen.eot?#iefix-k42nl4') format('embedded-opentype'),
-  url('fonts/nevergreen.woff?-k42nl4') format('woff'),
-  url('fonts/nevergreen.ttf?-k42nl4') format('truetype'),
-  url('fonts/nevergreen.svg?-k42nl4#icomoon') format('svg');
+  src:url('fonts/icomoon.eot?-rx7tpw');
+  src:url('fonts/icomoon.eot?#iefix-rx7tpw') format('embedded-opentype'),
+  url('fonts/icomoon.woff?-rx7tpw') format('woff'),
+  url('fonts/icomoon.ttf?-rx7tpw') format('truetype'),
+  url('fonts/icomoon.svg?-rx7tpw#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -23,24 +23,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-image:before {
-  content: "\e90d";
-}
-
 .icon-clock:before {
   content: "\e94e";
 }
 
 .icon-drawer2:before {
   content: "\e95d";
-}
-
-.icon-quotes-left:before {
-  content: "\e977";
-}
-
-.icon-quotes-right:before {
-  content: "\e978";
 }
 
 .icon-cog:before {
@@ -51,12 +39,8 @@
   content: "\e9ce";
 }
 
-.icon-eye-plus:before {
-  content: "\e9cf";
-}
-
-.icon-eye-minus:before {
-  content: "\e9d0";
+.icon-question:before {
+  content: "\ea09";
 }
 
 .icon-cross:before {
@@ -75,7 +59,11 @@
   content: "\ea93";
 }
 
-.icon-github:before {
-  content: "\eab1";
+.icon-github4:before {
+  content: "\eab4";
+}
+
+.icon-IcoMoon:before {
+  content: "\eaea";
 }
 

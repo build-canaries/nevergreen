@@ -1,0 +1,41 @@
+.help-section {
+  flex: 1;
+  font-size: 1.5rem;
+  border: 1px solid $mid-grey;
+  background-color: white;
+}
+
+.help-title {
+  font-size: 1.5rem;
+  font-weight: 400;
+  padding: 0.5em 1.5em;
+  background: $mid-grey;
+  color: #fff;
+  text-overflow: ellipsis;
+}
+
+.help-links {
+  list-style: none;
+  padding: 1em;
+}
+
+.help-contents {
+  margin: 1em;
+}
+
+.help-link-icon {
+  font-size: 1.5em;
+  padding-right: 0.5em;
+}
+
+.help-tracking-table {
+  width: 100%;
+  margin: 0 0 1em 0;
+  tr:nth-child(even) {
+    background-color: $light-grey;
+  }
+}
+
+.help-text {
+  margin: 0 0 1em 0;
+}

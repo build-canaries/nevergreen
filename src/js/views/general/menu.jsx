@@ -25,7 +25,8 @@ module.exports = {
                     {id: 'monitor', iconClass: 'eye', title: 'Monitor'},
                     {id: 'tracking', iconClass: 'drawer2', title: 'Tracking'},
                     {id: 'timing', iconClass: 'clock', title: 'Timing'},
-                    {id: 'success', iconClass: 'checkmark', title: 'Success'}
+                    {id: 'success', iconClass: 'checkmark', title: 'Success'},
+                    {id: 'help', iconClass: 'question', title: 'Help'}
                 ]
             }
         },
