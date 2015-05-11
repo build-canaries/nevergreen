@@ -38,7 +38,7 @@ module.exports = {
                     <div className='tray-title-container'>
                         <h3 className='tray-title'>{this.state.tray.url}</h3>
                         <button className='tray-settings-button' onClick={this.toggleSettingsView}>
-                            <span className={'icon-' + (this.state.showSettings ? 'cross' : 'cog') }></span>
+                            <span className={'icon-' + (this.state.showSettings ? 'list' : 'cog') }></span>
                             <span className='visuallyhidden'>{this.state.showSettings ? 'close' : 'settings'}</span>
                         </button>
                     </div>
