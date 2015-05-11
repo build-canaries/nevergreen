@@ -7,16 +7,47 @@ module.exports = {
                 <section className='dashboard-main-section'>
                     <h2 className='visuallyhidden'>Help</h2>
                     <section className='help-section'>
+                        <h3 className='help-title'>Monitor</h3>
+                        <div className='help-contents'>
+                            <table className='help-tracking-table'>
+                                <thead>
+                                    <tr>
+                                        <th>Colour</th>
+                                        <th>Meaning</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th className='monitor-healthy-building'>Yellow</th>
+                                        <td>The project is currently building and was previously successful.</td>
+                                    </tr>
+                                    <tr>
+                                        <th className='monitor-sick'>Red</th>
+                                        <td>The project is broken!</td>
+                                    </tr>
+                                    <tr>
+                                        <th className='monitor-sick-building'>Orange</th>
+                                        <td>The project is currently building and was previously broken.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p className="help-text">If nothing is broken or building then a random success message will be shown.</p>
+                        </div>
+                    </section>
+
+                    <section className='help-section'>
                         <h3 className='help-title'>Tracking</h3>
 
                         <div className='help-contents'>
                             <p className="help-text">To get started you need to enter the URL to your cctray xml file. Where it lives depends on your CI Server of choice: </p>
                             <table className="help-tracking-table">
+                                <thead>
+                                    <tr>
+                                        <th>CI Server</th>
+                                        <th>Location</th>
+                                    </tr>
+                                </thead>
                                 <tbody>
-                                <tr>
-                                    <th>CI Server</th>
-                                    <th>Location</th>
-                                </tr>
                                 <tr>
                                     <td>Jenkins</td>
                                     <td>http://jenkins.&lt;servername&gt;:8080/cc.xml</td>
@@ -79,7 +110,7 @@ module.exports = {
                     </section>
 
                     <section className='help-section'>
-                        <h3 className='help-title'>Links</h3>
+                        <h3 className='help-title'>Additional Links</h3>
                         <ul className='help-links'>
                             <li>
                                 <span className='help-link-icon icon-github4'></span>
