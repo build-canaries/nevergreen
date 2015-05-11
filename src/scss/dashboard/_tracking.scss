@@ -107,10 +107,10 @@
 .tray-title {
   font-size: 1.5rem;
   font-weight: 400;
-  padding: 0.5em 1.5em;
   background: $mid-grey;
   color: #fff;
   text-overflow: ellipsis;
+  display: inline;
 }
 
 .tray-content {
@@ -133,5 +133,21 @@
 
 .tray-settings-danger-zone-title {
   background-color: red;
+  color: white;
+}
+
+.tray-title-container {
+  padding: 0.5em;
+  background: $mid-grey;
+  color: #fff;
+}
+
+.tray-settings-button {
+  font-size: 1.3em;
+  display: inline;
+  float: right;
+  padding: 0;
+  border: none;
+  background: none;
   color: white;
 }

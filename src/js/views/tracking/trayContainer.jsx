@@ -35,10 +35,13 @@ module.exports = {
 
             return (
                 <section className='tray'>
-                    <h3 className='tray-title'>{this.state.tray.url}</h3>
-                    <button className='dashboard-button dashboard-button-small dashboard-button-white' onClick={this.toggleSettingsView}>
-                        { this.state.showSettings ? 'Projects' : 'Settings' }
-                    </button>
+                    <div className='tray-title-container'>
+                        <h3 className='tray-title'>{this.state.tray.url}</h3>
+                        <button className='tray-settings-button' onClick={this.toggleSettingsView}>
+                            <span className={'icon-' + (this.state.showSettings ? 'cross' : 'cog') }></span>
+                            <span className='visuallyhidden'>{this.state.showSettings ? 'close' : 'settings'}</span>
+                        </button>
+                    </div>
                     {content}
                 </section>
             )
