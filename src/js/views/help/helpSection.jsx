@@ -101,7 +101,7 @@ module.exports = {
                     <section className='help-section'>
                         <h3 className='help-title'>Success</h3>
                         <div className='help-contents'>
-                            <p className="help-text">You can add text or image urls, these will get displayed when no projects are broken or building on the monitor page.</p>
+                            <p className="help-text">You can add text or image urls, these will get displayed when no projects are broken or building on the monitor page. Images are previewed in a 16:9 ratio which is how they would look on a full HD TV (1920x1080).</p>
                             <p className="help-text">Need some inspiration?</p>
                             <p className="help-text">
                                 Try searching for some <a href='https://duckduckgo.com/?q=nature+1920x1080&iax=1&ia=images' target='_blank'>nice images</a> or check out <a href='http://www.disapprovallook.com/' target='_blank'>ಠ_ಠ Disapproval Look</a> for some fun messages, like jelly guy! ༼つ◕_◕༽つ

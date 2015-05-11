@@ -33,7 +33,11 @@
 
 .success-list-image {
   width: 400px;
-  height: auto;
+  height: 225px;
+  object-fit: contain;
+  object-position: 50% 0;
+  border: 1px solid $mid-grey;
+  background-color: black;
 }
 
 .success-section {
