@@ -22,6 +22,7 @@ Downloads available from [GitHub](https://github.com/build-canaries/nevergreen/r
 * [#72](https://github.com/build-canaries/nevergreen/issues/72) Update the contributing doc with prerequisites
 * [#70](https://github.com/build-canaries/nevergreen/issues/70) Lint jsx files
 * [#59](https://github.com/build-canaries/nevergreen/issues/59) Auto hide the menu on the monitor section
+* [#69](https://github.com/build-canaries/nevergreen/issues/69) Separate watch tasks for JS and CSS
 
 ## Eggplant (0.5.0)
 
