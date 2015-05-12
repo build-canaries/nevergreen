@@ -131,9 +131,32 @@
   }
 }
 
+.tray-settings-danger-zone {
+  border-radius: 3px;
+  border: 1px solid #d8d8d8;
+  margin-top: 1em;
+}
+
 .tray-settings-danger-zone-title {
-  background-color: red;
+  background-color: #df3e3e;
   color: white;
+  padding: 0.5em 1em;
+}
+
+.tray-settings-danger-zone-content {
+  padding: 1em;
+}
+
+.tray-settings-table {
+  width: 100%;
+  margin: 0 0 1em 0;
+  tr:nth-child(even) {
+    background-color: $light-grey;
+  }
+}
+
+.danger-button {
+  color: #900;
 }
 
 .tray-title-container {

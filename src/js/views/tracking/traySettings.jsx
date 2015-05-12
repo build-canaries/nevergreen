@@ -1,4 +1,5 @@
 var React = require('react')
+var _ = require('lodash')
 
 module.exports = {
     TraySettings: React.createClass({
@@ -11,13 +12,30 @@ module.exports = {
         render: function () {
             return (
                 <section className='tray-settings'>
-                    <label>id</label>
-                    <span>{this.props.trayId}</span>
-                    <label>url</label>
-                    <span>{this.props.tray.url}</span>
+                    <table className='tray-settings-table'>
+                        <tbody>
+                            <tr>
+                                <td>id</td>
+                                <td>{this.props.trayId}</td>
+                            </tr>
+                            <tr>
+                                <td>url</td>
+                                <td>{this.props.tray.url}</td>
+                            </tr>
+                            <tr>
+                                <td>uses auth?</td>
+                                <td>{_.trim(this.props.tray.username) === '' ? 'no' : 'yes'}</td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-                    <h4 className='tray-settings-danger-zone-title'>Danger Zone</h4>
-                    <button className='dashboard-button dashboard-button-small dashboard-button-white' onClick={this.removeTray}>Delete this tray</button>
+                    <div className='tray-settings-danger-zone'>
+                        <h4 className='tray-settings-danger-zone-title'>Danger Zone</h4>
+                        <div className='tray-settings-danger-zone-content'>
+                            <p>Once you delete a tray, there is no going back. Please be certain.</p>
+                            <button className='dashboard-button dashboard-button-small dashboard-button-white danger-button' onClick={this.removeTray}>Delete this tray</button>
+                        </div>
+                    </div>
                 </section>
             )
         },
