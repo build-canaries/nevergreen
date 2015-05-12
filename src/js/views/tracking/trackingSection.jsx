@@ -15,13 +15,13 @@ module.exports = {
 
         render: function () {
             return (
-                <section id='tracking' className='dashboard-main-section active'>
+                <section className='dashboard-main-section active'>
                     <h2 className='visuallyhidden'>Tracking</h2>
 
                     <fieldset className='tracking-cctray-group'>
                         <AddTray addTray={this.addTray}/>
 
-                        <div className='tracking-cctrays'>
+                        <div>
                             {
                                 _.map(this.state.trays, function (trayId) {
                                     return <Tray key={trayId} trayId={trayId} removeTray={this.removeTray}/>

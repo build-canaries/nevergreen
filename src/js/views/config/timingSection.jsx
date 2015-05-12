@@ -11,7 +11,7 @@ module.exports = {
 
         render: function () {
             return (
-                <section id="timing" className="dashboard-main-section">
+                <section className="dashboard-main-section">
                     <h3 className='success-title'>Polling</h3>
                     <div className="tracking-cctray-group-cctray-form">
                         <div>

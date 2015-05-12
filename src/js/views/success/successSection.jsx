@@ -16,7 +16,7 @@ module.exports = {
             var images = this.images()
 
             return (
-                <section id='success' className='dashboard-main-section'>
+                <section className='dashboard-main-section'>
                     <h2 className='visuallyhidden'>Success</h2>
                     <fieldset className='tracking-cctray-group'>
                         <AddMessage addMessage={this.addNewMessage}/>
