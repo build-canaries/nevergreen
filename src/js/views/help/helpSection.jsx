@@ -18,15 +18,15 @@ module.exports = {
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <th className='monitor-healthy-building'>Yellow</th>
+                                        <td className='monitor-healthy-building help-monitor-example-light'>Yellow</td>
                                         <td>The project is currently building and was previously successful.</td>
                                     </tr>
                                     <tr>
-                                        <th className='monitor-sick'>Red</th>
+                                        <td className='monitor-sick help-monitor-example-dark'>Red</td>
                                         <td>The project is broken!</td>
                                     </tr>
                                     <tr>
-                                        <th className='monitor-sick-building'>Orange</th>
+                                        <td className='monitor-sick-building help-monitor-example-dark'>Orange</td>
                                         <td>The project is currently building and was previously broken.</td>
                                     </tr>
                                 </tbody>
