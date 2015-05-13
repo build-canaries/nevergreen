@@ -119,16 +119,6 @@
 
 .tray-settings {
   padding: 1.5em;
-
-  label {
-    width: 20%;
-    display: inline-block;
-  }
-
-  span {
-    width: 80%;
-    display: inline-block;
-  }
 }
 
 .tray-settings-danger-zone {
@@ -153,6 +143,10 @@
   tr:nth-child(even) {
     background-color: $light-grey;
   }
+}
+
+.tray-settings-table-heading {
+  width: 15%;
 }
 
 .danger-button {

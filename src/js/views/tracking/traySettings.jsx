@@ -15,15 +15,7 @@ module.exports = {
                     <table className='tray-settings-table'>
                         <tbody>
                             <tr>
-                                <td>id</td>
-                                <td>{this.props.trayId}</td>
-                            </tr>
-                            <tr>
-                                <td>url</td>
-                                <td>{this.props.tray.url}</td>
-                            </tr>
-                            <tr>
-                                <td>uses auth?</td>
+                                <td className='tray-settings-table-heading'>uses auth?</td>
                                 <td>{_.trim(this.props.tray.username) === '' ? 'no' : 'yes'}</td>
                             </tr>
                         </tbody>
