@@ -12,7 +12,7 @@ module.exports = {
             return (
                 <section className='success-section'>
                     <h3 className='success-title'>Images</h3>
-                    <ul className='success-list'>
+                    <ul className='success-list success-images-list'>
                         {
                             this.props.messages.map(function (message) {
                                 return <Image key={message.index} url={message.value} removeMessage={this.props.removeMessage.bind(null, message.index)}/>
