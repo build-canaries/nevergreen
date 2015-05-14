@@ -13,6 +13,7 @@ Downloads available from [GitHub](https://github.com/build-canaries/nevergreen/r
 
 * [#50](https://github.com/build-canaries/nevergreen/issues/50) You can still change tabs while project list is loading
 * [#52](https://github.com/build-canaries/nevergreen/issues/52) Interesting projects still being polled in config screen
+* [#68](https://github.com/build-canaries/nevergreen/issues/68) Server unit tests not running from develop.sh
 
 ### Improvements
 
