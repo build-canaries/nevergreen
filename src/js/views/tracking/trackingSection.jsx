@@ -33,35 +33,19 @@ module.exports = {
             )
         },
 
-        componentWillMount: function () {
-            this.setState({trays: trackingRepository.getTrays()})
-        },
-
-        addTray: function (addTray) {
-            var trayId = uuid.v4()
-
-            if (trays.requiresAuth(addTray)) {
-                security.encryptPassword(addTray.password, function (data) {
-                    trackingRepository.saveTray(trayId, {
-                        url: addTray.url,
-                        username: addTray.username,
-                        password: data.password
-                    })
-
-                    var newTrays = React.addons.update(this.state.trays, {$set: [trayId]})
-                    this.setState({trays: newTrays})
+        addTray: function (trayToAdd) {
+            if (trays.requiresAuth(trayToAdd)) {
+                security.encryptPassword(trayToAdd.password, function (data) {
+                    this.saveTrays(_.extend({}, trayToAdd, {password: data.password}))
                 }.bind(this))
             } else {
-                trackingRepository.saveTray(trayId, {
-                    url: addTray.url
-                })
-                var newTrays = React.addons.update(this.state.trays, {$push: [trayId]})
-                this.setState({trays: newTrays})
+                this.saveTrays(trayToAdd)
             }
         },
 
         removeTray: function (trayId) {
-            var updatedTrays = React.addons.update(this.state.trays, {$splice: [[this.state.trays.indexOf(trayId), 1]]})
+            var trayIndex = this.state.trays.indexOf(trayId)
+            var updatedTrays = React.addons.update(this.state.trays, {$splice: [[trayIndex, 1]]})
             this.setState({trays: updatedTrays})
         },
 
@@ -72,6 +56,19 @@ module.exports = {
                     trackingRepository.removeTray(id)
                 })
             }
+        },
+
+        saveTrays: function (newTray) {
+            var trayId = uuid.v4()
+
+            trackingRepository.saveTray(trayId, {
+                url: newTray.url,
+                username: newTray.username,
+                password: newTray.password
+            })
+
+            var newTrays = React.addons.update(this.state.trays, {$push: [trayId]})
+            this.setState({trays: newTrays})
         }
     })
 }
