@@ -109,7 +109,7 @@ module.exports = {
                         </div>
                     </section>
 
-                    <section className='help-section'>
+                    <section role='seealso' className='help-section'>
                         <h3 className='help-title'>Additional Links</h3>
                         <ul className='help-links'>
                             <li>

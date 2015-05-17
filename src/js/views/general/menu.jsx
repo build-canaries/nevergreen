@@ -1,4 +1,3 @@
-var $ = require('jquery')
 var React = require('react')
 var Router = require('react-router');
 
@@ -47,7 +46,7 @@ module.exports = {
                             }
                         </ul>
                     </nav>
-                    <footer role='contentinfo' className='contentinfo'>
+                    <footer role='contentinfo' className='content-info'>
                         <a href='https://github.com/build-canaries/nevergreen/releases/tag/v0.6.0pre' target='_blank' className='version'>
                             <p>v0.6.0pre</p>
                             <p>Fuzzy Wuzzy</p>

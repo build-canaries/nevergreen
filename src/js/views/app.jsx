@@ -1,5 +1,5 @@
 var React = require('react')
-var Router = require('react-router')
+var RouteHandler = require('react-router').RouteHandler
 var Menu = require('./general/menu').Menu
 var migrations = require('../storage/migrations')
 
@@ -12,7 +12,7 @@ module.exports = {
                     <div id='menu'>
                         <Menu />
                     </div>
-                    <Router.RouteHandler/>
+                    <RouteHandler/>
                 </div>
             )
         },
