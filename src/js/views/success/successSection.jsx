@@ -17,7 +17,7 @@ module.exports = {
 
             return (
                 <section className='dashboard-main-section'>
-                    <h2 className='visuallyhidden'>Success</h2>
+                    <h2 className='visually-hidden'>Success</h2>
                     <fieldset className='tracking-cctray-group'>
                         <AddMessage addMessage={this.addNewMessage}/>
 

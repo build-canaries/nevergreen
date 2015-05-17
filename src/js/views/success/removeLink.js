@@ -10,7 +10,7 @@ module.exports = {
             return (
                 <button className='success-remove dashboard-button-small' onClick={this.props.removeMessage}>
                     <span className='icon-cross'></span>
-                    <span className='visuallyhidden'>remove</span>
+                    <span className='visually-hidden'>remove</span>
                 </button>
             )
         }

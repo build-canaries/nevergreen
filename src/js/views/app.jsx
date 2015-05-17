@@ -8,6 +8,7 @@ module.exports = {
         render: function () {
             return (
                 <div>
+                    <h1 className='visually-hidden'>Nevergreen</h1>
                     <div id='menu'>
                         <Menu />
                     </div>

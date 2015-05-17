@@ -1,4 +1,4 @@
-.dashboard-navigation {
+.navigation {
   background-color: $off-black;
   color: white;
   width: 10%;
@@ -8,20 +8,20 @@
   padding-top: 1em;
 }
 
-.dashboard-header-logo {
+.header-logo {
   height: 55px;
   width: 55px;
   margin: 0.4em auto;
   display: block;
 }
 
-.dashboard-navigation-list {
+.navigation-list {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.dashboard-navigation-list-item {
+.navigation-list-item {
   position: relative;
   display: block;
   text-align: center;
@@ -31,48 +31,48 @@
   padding: 1.3em 0;
   text-decoration: none;
   &:hover {
-    .dashboard-navigation-list-item-icon {
+    .navigation-list-item-icon {
       transition: color .2s ease-in-out;
       color: white;
     }
-    .dashboard-navigation-list-item-title {
+    .navigation-list-item-title {
       transition: color .2s ease-in-out;
       color: white;
     }
   }
   &.active {
     color: white;
-    .dashboard-navigation-list-item-icon {
+    .navigation-list-item-icon {
       color: white;
     }
     &:hover {
       cursor: default;
-      .dashboard-navigation-list-item-title {
+      .navigation-list-item-title {
         color: white;
       }
     }
   }
 }
 
-.dashboard-navigation-list-item-icon {
+.navigation-list-item-icon {
   color: $mid-grey2;
   font-size: 3.5em;
   display: block;
   margin-bottom: 0.15em;
 }
 
-.menu-show {
+.navigation-show {
   left: 0;
   transition-property: left;
   transition-duration: 0.5s;
   transition-timing: ease;
-  transition-delay: 0;
+  transition-delay: 0s;
 }
 
-.menu-hide {
+.navigation-hide {
   left: -10%;
   transition-property: left;
   transition-duration: 0.5s;
   transition-timing: ease;
-  transition-delay: 0;
+  transition-delay: 0s;
 }

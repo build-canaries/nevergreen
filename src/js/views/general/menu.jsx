@@ -8,9 +8,9 @@ var MenuItem = React.createClass({
     render: function () {
         return (
             <li>
-                <Link id={this.props.id} to={this.props.id} className='dashboard-navigation-list-item'>
-                    <span className={'dashboard-navigation-list-item-icon ' + this.props.iconClass}></span>
-                    <span className='dashboard-navigation-list-item-title'>{this.props.title}</span>
+                <Link id={this.props.id} to={this.props.id} className='navigation-list-item'>
+                    <span className={'navigation-list-item-icon ' + this.props.iconClass}></span>
+                    <span className='navigation-list-item-title'>{this.props.title}</span>
                 </Link>
             </li>
         )
@@ -34,12 +34,12 @@ module.exports = {
         render: function () {
             return (
                 <div>
-                    <nav role='navigation' className='dashboard-navigation'>
-                        <h2 className='visuallyhidden'>Dashboard navigation</h2>
+                    <nav role='navigation' className='navigation'>
+                        <h2 className='visually-hidden'>Navigation</h2>
 
-                        <img src='img/buildcanaries-logo.png' className='dashboard-header-logo' alt='Build Canaries logo'/>
+                        <img src='img/buildcanaries-logo.png' className='header-logo' alt='Build Canaries logo'/>
 
-                        <ul className='dashboard-navigation-list'>
+                        <ul className='navigation-list'>
                             {
                                 this.props.items.map(function (item) {
                                     return <MenuItem key={item.id} id={item.id} iconClass={'icon-' + item.iconClass} title={item.title}/>

@@ -16,7 +16,7 @@ module.exports = {
         render: function () {
             return (
                 <section className='dashboard-main-section active'>
-                    <h2 className='visuallyhidden'>Tracking</h2>
+                    <h2 className='visually-hidden'>Tracking</h2>
 
                     <fieldset className='tracking-cctray-group'>
                         <AddTray addTray={this.addTray}/>

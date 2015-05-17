@@ -96,12 +96,12 @@ module.exports = {
         },
 
         showMenu: function () {
-            $("#menu .dashboard-navigation, .contentinfo").removeClass("menu-hide").addClass("menu-show");
+            $("#menu .navigation, .contentinfo").removeClass("navigation-hide").addClass("navigation-show");
         },
 
         hideMenu: function () {
             if (this.isMounted()) {
-                $("#menu .dashboard-navigation, .contentinfo").removeClass("menu-show").addClass("menu-hide");
+                $("#menu .navigation, .contentinfo").removeClass("navigation-show").addClass("navigation-hide");
             }
         },
 

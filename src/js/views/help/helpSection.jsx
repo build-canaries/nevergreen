@@ -5,7 +5,7 @@ module.exports = {
         render: function () {
             return (
                 <section className='dashboard-main-section'>
-                    <h2 className='visuallyhidden'>Help</h2>
+                    <h2 className='visually-hidden'>Help</h2>
                     <section className='help-section'>
                         <h3 className='help-title'>Monitor</h3>
                         <div className='help-contents'>

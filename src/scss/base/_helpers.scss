@@ -11,14 +11,7 @@
   display: none;
 }
 
-.center-above {
-  z-index: 1001;
-  position: fixed;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-@mixin visuallyhidden {
+@mixin visually-hidden {
   border: 0;
   clip: rect(0 0 0 0);
   height: 1px;
@@ -29,6 +22,6 @@
   width: 1px;
 }
 
-.visuallyhidden {
-  @include visuallyhidden;
+.visually-hidden {
+  @include visually-hidden;
 }
