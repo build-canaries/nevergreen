@@ -13,6 +13,7 @@ pom.xml.asc
 /resources/public/main.js
 /resources/public/main.css
 /resources/public/main.map.json
+/resources/public/main.css.map
 phantomjsdriver.log
 npm-debug.log
 src/.module-cache/

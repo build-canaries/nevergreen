@@ -37,7 +37,7 @@
     "postinstall": "npm run sass && npm run jsx && npm run browserify",
     "jsx": "jsx --extension jsx src/ build/ && jsx --extension js src/ build/",
     "browserify": "browserify -d -p [minifyify --map main.map.json --output ./resources/public/main.map.json] ./build/**/*.js > ./resources/public/main.js",
-    "sass": "node-sass src/scss/base.scss resources/public/main.css",
+    "sass": "node-sass src/scss/base.scss resources/public/main.css --source-map resources/public/main.css.map",
 
     "test": "./node_modules/karma/bin/karma start --singleRun",
     "testing": "./node_modules/karma/bin/karma start",
