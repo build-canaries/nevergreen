@@ -1,6 +1,6 @@
 var $ = require('jquery')
 var React = require('react')
-var styler = require('../../monitor/styler')
+var styler = require('../../controllers/styler')
 
 module.exports = {
     Message: React.createClass({
