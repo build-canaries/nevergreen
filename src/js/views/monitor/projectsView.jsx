@@ -11,8 +11,8 @@ var InterestingProject = React.createClass({
     render: function () {
         return (
             <li className={'monitor-project monitor-' + this.props.prognosis}>
-                <div className='monitor-outerContainer'>
-                    <div className='monitor-innerContainer'>{this.props.name}</div>
+                <div className='monitor-outer-container'>
+                    <div className='monitor-inner-container'>{this.props.name}</div>
                 </div>
             </li>
         )
@@ -39,12 +39,12 @@ module.exports = {
 
         componentDidMount: function () {
             var $node = $(React.findDOMNode(this))
-            styler.styleProjects(this.props.projects, $node.find('.monitor-outerContainer'), $node)
+            styler.styleProjects(this.props.projects, $node.find('.monitor-outer-container'), $node)
         },
 
         componentDidUpdate: function () {
             var $node = $(React.findDOMNode(this))
-            styler.styleProjects(this.props.projects, $node.find('.monitor-outerContainer'), $node)
+            styler.styleProjects(this.props.projects, $node.find('.monitor-outer-container'), $node)
         }
     })
 }

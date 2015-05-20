@@ -20,12 +20,6 @@
   width: calc(100% - 8em);
 }
 
-.config-error {
-  text-align: center;
-  color: red;
-  font-size: 4em;
-}
-
 .success-list {
   list-style: none;
   display: flex;
@@ -59,10 +53,6 @@
   background: $mid-grey;
   color: #fff;
   text-overflow: ellipsis;
-}
-
-.success-content {
-  padding: 1.5em;
 }
 
 .success-item {

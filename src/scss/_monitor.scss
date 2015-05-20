@@ -34,25 +34,16 @@
   background-color: #FF6400;
 }
 
-.monitor-config-link {
-  bottom: 0;
-
-  background-color: gray;
-  padding: 1em;
-  text-decoration: none;
-  border-radius: 1em;
-  border: 1px solid white;
-  color: white;
-
-  display: none;
+.monitor-unknown {
+  background-color: $mid-grey;
 }
 
-.monitor-outerContainer {
+.monitor-outer-container {
   display: table;
   overflow: hidden;
 }
 
-.monitor-innerContainer {
+.monitor-inner-container {
   display: table-cell;
   vertical-align: middle;
   width: 100%;

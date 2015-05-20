@@ -80,21 +80,17 @@
   width: 50%;
 }
 
-.config-removed-project {
+.tracking-removed-project {
   text-decoration: line-through;
   color: $mid-grey;
 }
 
-.config-new-project {
+.tracking-new-project {
   color: $hot-pink;
 }
 
-.config-removed-info {
+.tracking-removed-info {
   color: $mid-grey;
-}
-
-.tracking-cctrays {
-
 }
 
 .tray {
@@ -149,7 +145,7 @@
   width: 15%;
 }
 
-.danger-button {
+.tray-settings-danger-button {
   color: #900;
   float: right;
   margin: -0.5em 0 0 0;

@@ -38,13 +38,6 @@
   padding: 0.6em 1.5em;
 }
 
-.dashboard-button-primary {
-  background-color: $dark-blue;
-  &:hover {
-    background-color: darken($dark-blue, 4%);
-  }
-}
-
 .dashboard-button-secondary {
   background-color: $blue;
   &:hover {
@@ -58,13 +51,6 @@
   &:hover {
     background-color: darken(white, 2%);
   }
-}
-
-.dashboard-main {
-  width: 90%;
-  padding: 2%;
-  float: left;
-  margin-left: 10%;
 }
 
 .dashboard-main-section {
