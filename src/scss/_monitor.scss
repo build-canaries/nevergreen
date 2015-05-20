@@ -1,7 +1,7 @@
 
 .monitor {
   background-color: black;
-  color: #FFFED7;
+  color: $off-white2;
   text-align: center;
   font-family: $monospace;
   height: 100vh;
@@ -17,21 +17,19 @@
   border-radius: 25px;
 }
 
-.monitor-healthy {
-  background-color: #276B00;
-}
-
 .monitor-healthy-building {
-  background-color: #FFFF18;
-  color: #4A2F27;
+  background-color: $healthy-building;
+  color: $healthy-building-text;
 }
 
 .monitor-sick {
-  background-color: #B30400;
+  background-color: $sick;
+  color: $off-white2;
 }
 
 .monitor-sick-building {
-  background-color: #FF6400;
+  background-color: $sick-building;
+  color: $off-white2;
 }
 
 .monitor-unknown {

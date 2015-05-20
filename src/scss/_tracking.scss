@@ -86,7 +86,7 @@
 }
 
 .tracking-new-project {
-  color: $hot-pink;
+  color: $new-text;
 }
 
 .tracking-removed-info {
@@ -119,12 +119,12 @@
 
 .tray-settings-danger-zone {
   border-radius: 3px;
-  border: 1px solid #d8d8d8;
+  border: 1px solid $off-white;
   margin-top: 1em;
 }
 
 .tray-settings-danger-zone-title {
-  background-color: #df3e3e;
+  background-color: $danger-text;
   color: white;
   padding: 0.5em 1em;
 }
@@ -146,7 +146,7 @@
 }
 
 .tray-settings-danger-button {
-  color: #900;
+  color: $danger;
   float: right;
   margin: -0.5em 0 0 0;
 }
@@ -154,7 +154,7 @@
 .tray-title-container {
   padding: 0.5em;
   background: $mid-grey;
-  color: #fff;
+  color: white;
 }
 
 .tray-settings-button {
