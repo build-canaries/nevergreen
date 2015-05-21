@@ -5,6 +5,14 @@
   }
 }
 
+.label-checkbox-disabled {
+  @extend .label-checkbox;
+  color: $mid-grey;
+  &:hover {
+    cursor: default;
+  }
+}
+
 .checkbox {
   position: relative;
   top: -2px;
@@ -47,6 +55,17 @@
     &:after {
       border-color: $blue;
       background: $blue;
+    }
+  }
+  &:disabled {
+    &:after {
+      cursor: default;
+    }
+    &:checked {
+      &:after {
+        border-color: $mid-grey;
+        background: $mid-grey;
+      }
     }
   }
 }

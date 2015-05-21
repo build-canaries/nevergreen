@@ -8,13 +8,22 @@ module.exports = {
         },
 
         render: function () {
+            var labelClass = this.props.project.wasRemoved ? 'label-checkbox-disabled' : 'label-checkbox'
+            var nameClass = this.props.project.wasRemoved ? 'tracking-removed-project' : ''
+            var info = ''
+
+            if (this.props.project.isNew) {
+                info = <sup className='tracking-new-project'> new</sup>
+            } else if (this.props.project.wasRemoved) {
+                info = <sup> removed</sup>
+            }
+
             return (
                 <p className='tracking-cctray-group-build-item'>
-                    <label className='label-checkbox'>
-                        <input className='checkbox no-text-selection' type='checkbox' checked={this.props.project.included} onChange={this.onChange} disabled={this.props.project.wasRemoved} />
-                        <span className={this.props.project.wasRemoved ? 'tracking-removed-project' : ''}>{this.props.project.name}</span>
-                    {this.props.project.isNew ? <sup className='tracking-new-project'> new</sup> : ''}
-                    {this.props.project.wasRemoved ? <sup className='tracking-removed-info'> removed</sup> : ''}
+                    <label className={labelClass}>
+                        <input className='checkbox no-text-selection' type='checkbox' checked={this.props.project.included} onChange={this.onChange} disabled={this.props.project.wasRemoved}/>
+                        <span className={nameClass}>{this.props.project.name}</span>
+                        {info}
                     </label>
                 </p>
             )

@@ -76,20 +76,15 @@
   display: block;
   margin: 0.5em 0;
   float: left;
-  width: 50%;
+  width: 33.333333%;
 }
 
 .tracking-removed-project {
   text-decoration: line-through;
-  color: $mid-grey;
 }
 
 .tracking-new-project {
   color: $new-text;
-}
-
-.tracking-removed-info {
-  color: $mid-grey;
 }
 
 .tray {
