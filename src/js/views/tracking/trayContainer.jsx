@@ -18,7 +18,8 @@ module.exports = {
             return {
                 showSettings: false,
                 tray: trackingRepository.getTray(this.props.trayId),
-                retrievedProjects: []
+                retrievedProjects: [],
+                hidden: false
             }
         },
 
@@ -33,22 +34,33 @@ module.exports = {
                 content = <AsyncActionWrapper promise={this.fetchProjects} doneView={doneView}/>
             }
 
+            var hideText = this.state.hidden ? 'expand tray' : 'collapse tray'
+            var settingsText = this.state.showSettings ? 'show projects' : 'show settings'
+
             return (
                 <section className='tray'>
                     <div className='tray-title-container'>
+                        <button className='tray-hidden-button' onClick={this.toggleHidden} title={hideText}>
+                            <span className={'icon-' + (this.state.hidden ? 'arrow-down2' : 'arrow-up2') }></span>
+                            <span className='visually-hidden'>{hideText}</span>
+                        </button>
                         <h3 className='tray-title'>{this.state.tray.url}</h3>
-                        <button className='tray-settings-button' onClick={this.toggleSettingsView}>
+                        <button className='tray-settings-button' onClick={this.toggleSettingsView} title={settingsText}>
                             <span className={'icon-' + (this.state.showSettings ? 'list' : 'cog') }></span>
-                            <span className='visually-hidden'>{this.state.showSettings ? 'close' : 'settings'}</span>
+                            <span className='visually-hidden'>{settingsText}</span>
                         </button>
                     </div>
-                    {content}
+                    {this.state.hidden ? '' : content}
                 </section>
             )
         },
 
         toggleSettingsView: function () {
             this.setState({showSettings: !this.state.showSettings})
+        },
+
+        toggleHidden: function () {
+            this.setState({hidden: !this.state.hidden})
         },
 
         selectProject: function (name, included) {
