@@ -1,5 +1,3 @@
-/* global jasmine, describe, it, beforeEach, spyOn, expect */
-
 var _ = require('lodash')
 var migrations = require('../../../src/js/storage/migrations')
 

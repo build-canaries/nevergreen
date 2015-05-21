@@ -57,7 +57,7 @@ module.exports = {
 
     fuzzyWuzzyMigrations: function () {
         if (!repository.exists('trays')) {
-            var trayId = uuid.v4();
+            var trayId = uuid.v4()
             repository.save('trays', [trayId])
             repository.save(trayId, {
                 url: localStorage.getItem('cctray'),

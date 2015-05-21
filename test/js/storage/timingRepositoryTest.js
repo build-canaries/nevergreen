@@ -1,5 +1,3 @@
-/* global describe, it, beforeEach, spyOn, expect */
-
 var repositoryMock = require('../../../src/js/storage/repository')
 var storageRepository = require('../../../src/js/storage/timingRepository')
 

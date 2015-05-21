@@ -1,5 +1,3 @@
-/* global describe, it, beforeEach, expect */
-
 var repository = require('../../../src/js/storage/repository')
 
 describe('repository', function () {

@@ -12,6 +12,8 @@
   },
   "devDependencies": {
     "chromedriver": "2.15.0",
+    "esprima-fb": "^15001.1.0-dev-harmony-fb",
+    "jscs": "^1.13.1",
     "jsxhint": "0.14.0",
     "karma": "0.12.31",
     "karma-browserify": "4.1.2",
@@ -41,7 +43,9 @@
 
     "test": "./node_modules/karma/bin/karma start --singleRun",
     "testing": "./node_modules/karma/bin/karma start",
-    "lint": "jsxhint --jsx-only src/js/**/* test/js/**/*",
+    "lintCorrectness": "jsxhint --jsx-only src/js/**/* test/js/**/*",
+    "lintStyle": "jscs src/js/**/* test/js/**/*",
+    "lint": "npm run lintCorrectness && npm run lintStyle",
 
     "watchJs": "watch 'npm run jsx && npm run browserifyNoMini' src/js",
     "watchCss": "watch 'npm run sass' src/scss",

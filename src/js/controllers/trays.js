@@ -23,12 +23,12 @@ function removed(retrievedProjects, projectName) {
 function sort(projects) {
     return projects.sort(function (item1, item2) {
         return item1.toLowerCase().localeCompare(item2.toLowerCase())
-    });
+    })
 }
 
 module.exports = {
     projects: function (tray, retrievedProjects) {
-        var allProjects = sort(_.union(tray.includedProjects, tray.previousProjects, retrievedProjects));
+        var allProjects = sort(_.union(tray.includedProjects, tray.previousProjects, retrievedProjects))
         return allProjects.map(function (name) {
             return {
                 name: name,

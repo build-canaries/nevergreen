@@ -2,6 +2,7 @@
   // ENVIRONMENT
   "browser": true,
   "node": true,
+  "jasmine": true,
 
   // ENFORCE
   "eqeqeq": true,
