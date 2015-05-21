@@ -26,7 +26,7 @@
 .tracking-cctray-group-cctray-form-input {
   width: calc(100% - 155px);
   border: none;
-  border-bottom: 2px solid $mid-grey;
+  border-bottom: 1px solid $mid-grey;
   &:focus {
     outline: none;
     border-bottom-color: $blue;
@@ -45,6 +45,8 @@
 
 .tracking-cctray-group-cctray-form-input-authentication {
   width: 20em;
+  margin-right: 1em;
+  margin-left: 1em;
 }
 
 .tracking-cctray-group-builds {
@@ -68,14 +70,11 @@
 
 .tracking-cctray-group-build-items {
   clear: both;
-  margin-bottom: 2em;
-  padding-top: 0.2em;
-  padding-bottom: 2em;
 }
 
 .tracking-cctray-group-build-item {
   display: block;
-  margin: 0.8em 0;
+  margin: 0.5em 0;
   float: left;
   width: 50%;
 }

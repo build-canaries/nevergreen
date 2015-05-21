@@ -21,7 +21,7 @@ module.exports = {
             return (
                 <div className='tracking-cctray-group-cctray-form'>
                     <label htmlFor='cctray-url' className='tracking-cctray-group-cctray-form-label'>url</label>
-                    <input id='cctray-url' className='tracking-cctray-group-cctray-form-input' type='text' placeholder='cctray url' valueLink={this.linkState('url')} onKeyPress={this.onKeyPress}/>
+                    <input id='cctray-url' className='tracking-cctray-group-cctray-form-input' type='text' placeholder='e.g. http(s)://host:port/cc.xml' valueLink={this.linkState('url')} onKeyPress={this.onKeyPress}/>
                     <button id='cctray-fetch' className='dashboard-button dashboard-button-secondary' onClick={this.onClick}>add</button>
                     <div>
                         <div id='authentication-group' className='tracking-cctray-group-authentication'>
