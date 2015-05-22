@@ -41,7 +41,7 @@ module.exports = {
                 <section className='tray'>
                     <div className='tray-title-container'>
                         <button className='tray-hidden-button' onClick={this.toggleHidden} title={hideText}>
-                            <span className={'icon-' + (this.state.hidden ? 'arrow-down2' : 'arrow-up2') }></span>
+                            <span className={'icon-' + (this.state.hidden ? 'circle-down' : 'circle-up') }></span>
                             <span className='visually-hidden'>{hideText}</span>
                         </button>
                         <h3 className='tray-title'>{this.state.tray.url}</h3>
