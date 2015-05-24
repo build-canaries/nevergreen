@@ -25,6 +25,7 @@ Downloads available from [GitHub](https://github.com/build-canaries/nevergreen/r
 * [#70](https://github.com/build-canaries/nevergreen/issues/70) Lint jsx files
 * [#59](https://github.com/build-canaries/nevergreen/issues/59) Auto hide the menu on the monitor section
 * [#69](https://github.com/build-canaries/nevergreen/issues/69) Separate watch tasks for JS and CSS
+* [#74](https://github.com/build-canaries/nevergreen/issues/74) Use JSCS to check JS style
 
 ## Eggplant (0.5.0)
 
