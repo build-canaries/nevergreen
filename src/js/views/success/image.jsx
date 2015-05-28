@@ -10,7 +10,7 @@ module.exports = {
 
         render: function () {
             return (
-                    <li className='success-item'>
+                    <li className='success-item image'>
                         <image className='success-list-image' src={this.props.url} alt={this.props.url}/>
                         <RemoveLink removeMessage={this.props.removeMessage}/>
                     </li>
