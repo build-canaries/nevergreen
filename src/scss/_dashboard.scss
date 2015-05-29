@@ -3,56 +3,6 @@
   font-family: 'Roboto', sans-serif;
 }
 
-.dashboard-button {
-  font-size: 14px;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  border: 0;
-  position: relative;
-  padding: 0.5em 1.5em;
-  margin: 0.5em;
-  cursor: pointer;
-  border-radius: 2px;
-  text-transform: uppercase;
-  text-decoration: none;
-  color: white;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-  outline: none;
-  transition: background-color 0.1s ease-in, box-shadow 0.1s ease-in;
-  &:hover {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.26);
-  }
-  &:focus {
-    outline: none;
-    border-radius: 0;
-  }
-}
-
-.dashboard-button-small {
-  font-size: 0.7em;
-  padding: 0.6em 1.5em;
-}
-
-.dashboard-button-secondary {
-  background-color: $blue;
-  &:hover {
-    background-color: darken($blue, 4%);
-  }
-}
-
-.dashboard-button-white {
-  background-color: white;
-  color: $off-black;
-  &:hover {
-    background-color: darken(white, 2%);
-  }
-}
-
 .dashboard-main-section {
   width: 90%;
   padding: 2%;

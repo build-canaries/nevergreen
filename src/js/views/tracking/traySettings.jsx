@@ -24,7 +24,7 @@ module.exports = {
                     <div className='tray-settings-danger-zone'>
                         <h4 className='tray-settings-danger-zone-title'>Danger Zone</h4>
                         <div className='tray-settings-danger-zone-content'>
-                            <button className='dashboard-button dashboard-button-small dashboard-button-white tray-settings-danger-button' onClick={this.removeTray}>Delete this tray</button>
+                            <button className='button tray-settings-danger-button' onClick={this.removeTray}>Delete this tray</button>
                             <span>Once you delete a tray, there is no going back. Please be certain.</span>
                         </div>
                     </div>

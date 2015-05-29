@@ -8,7 +8,7 @@ module.exports = {
 
         render: function () {
             return (
-                <button className='success-remove dashboard-button-small' onClick={this.props.removeMessage}>
+                <button className='success-remove button' onClick={this.props.removeMessage} title='remove'>
                     <span className='icon-cross'></span>
                     <span className='visually-hidden'>remove</span>
                 </button>

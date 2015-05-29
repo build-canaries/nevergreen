@@ -15,8 +15,8 @@ module.exports = {
                 <fieldset className='tracking-cctray-group-builds tray-content'>
                     <legend className='tracking-cctray-group-builds-legend'>Available Projects</legend>
                     <div className='tracking-cctray-group-build-toggles'>
-                        <button className='testing-include-all dashboard-button dashboard-button-small dashboard-button-white' onClick={this.includeAll}>Include all</button>
-                        <button className='dashboard-button dashboard-button-small dashboard-button-white' onClick={this.excludeAll}>Exclude all</button>
+                        <button className='testing-include-all button' onClick={this.includeAll}>Include all</button>
+                        <button className='button' onClick={this.excludeAll}>Exclude all</button>
                     </div>
                     <div className='testing-projects tracking-cctray-group-build-items'>
                         {
