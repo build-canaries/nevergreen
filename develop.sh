@@ -26,12 +26,12 @@ echo "##########################################################################
 echo
 
 hash npm 2>/dev/null || {
-    echo >&2 "npm command not found, you need to install Node. See doc/contributing.md for a full list of required prerequisites."
+    echo >&2 "npm command not found, you need to install Node. See wiki/contributing for more details."
     exit 1
 }
 
 hash lein 2>/dev/null || {
-    echo >&2 "lein command not found, you need to install Leiningen. See doc/contributing.md for a full list of required prerequisites."
+    echo >&2 "lein command not found, you need to install Leiningen. See wiki/contributing for more details."
     exit 1
 }
 
@@ -42,19 +42,19 @@ echo "[1] fetching node modules and performing first build"
 npm prune
 npm install
 
-echo "[2] watching the css for changes..."
+echo "[2] watching the css for changes ..."
 npm run watchJs &
 
-echo "[3] watching the js for changes..."
+echo "[3] watching the js for changes ..."
 npm run watchCss &
 
-echo "[4] automatically running the js tests on changes..."
+echo "[4] automatically running the js tests on changes ..."
 npm run testing &
 
-echo "[5] automatically running the server tests on changes..."
+echo "[5] automatically running the server tests on changes ..."
 lein midje :autotest 'src/nevergreen' 'test/nevergreen' &
 
-echo "[6] running the server..."
+echo "[6] running the server ..."
 lein ring server-headless &
 
 wait

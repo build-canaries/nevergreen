@@ -1,12 +1,12 @@
 #!/bin/bash -e
 
 hash npm 2>/dev/null || {
-    echo >&2 "npm command not found, you need to install Node. See doc/contributing.md for a full list of required prerequisites."
+    echo >&2 "npm command not found, you need to install Node. See wiki/contributing for more details.."
     exit 1
 }
 
 hash lein 2>/dev/null || {
-    echo >&2 "lein command not found, you need to install Leiningen. See doc/contributing.md for a full list of required prerequisites."
+    echo >&2 "lein command not found, you need to install Leiningen. See wiki/contributing for more details.."
     exit 1
 }
 

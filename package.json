@@ -8,7 +8,7 @@
     "test": "test"
   },
   "engines": {
-    "node": "0.12.0"
+    "node": "0.10.x"
   },
   "devDependencies": {
     "chromedriver": "2.15.1",
