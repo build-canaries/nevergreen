@@ -1,6 +1,6 @@
 {
   "name": "nevergreen",
-  "version": "0.6.0pre",
+  "version": "0.6.0",
   "description": "A build monitor with attitude",
   "main": "karma.conf.js",
   "directories": {
