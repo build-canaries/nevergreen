@@ -8,6 +8,7 @@ Downloads available from [GitHub](https://github.com/build-canaries/nevergreen/r
 
 * [#11](https://github.com/build-canaries/nevergreen/issues/11) Highlight projects that no longer exist since the last time you configured
 * Help page
+* [#37](https://github.com/build-canaries/nevergreen/issues/37) Multiple cctrays can now be added
 
 ### Closed Bugs
 
@@ -26,6 +27,7 @@ Downloads available from [GitHub](https://github.com/build-canaries/nevergreen/r
 * [#59](https://github.com/build-canaries/nevergreen/issues/59) Auto hide the menu on the monitor section
 * [#69](https://github.com/build-canaries/nevergreen/issues/69) Separate watch tasks for JS and CSS
 * [#74](https://github.com/build-canaries/nevergreen/issues/74) Use JSCS to check JS style
+* [#55](https://github.com/build-canaries/nevergreen/issues/55) Shows a thumbnail preview for success images
 
 ## Eggplant (0.5.0)
 
