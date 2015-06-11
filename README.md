@@ -13,7 +13,7 @@ Check out the demo at [http://nevergreen.io](http://nevergreen.io).
 
 On the [tracking page](http://nevergreen.io/#/tracking) enter the url of your [cctray xml](wiki/find-cctray).
 
-Additional help and information can be found on the [help page](http://nevergreen.io/#/help) of Nevergreen or in the [wiki](wiki).
+Additional help and information can be found on the [help page](http://nevergreen.io/#/help) of Nevergreen or in the [wiki](https://github.com/build-canaries/nevergreen/wiki).
 
 ## Build status
 
