@@ -2,7 +2,13 @@
 
 Downloads available from [GitHub](https://github.com/build-canaries/nevergreen/releases)
 
-## Fuzzy Wuzzy (0.6.0)
+## Fuzzy Wuzzy
+
+## 0.6.1
+
+* [#83](https://github.com/build-canaries/nevergreen/issues/83) An incorrect AES key is silently ignored
+
+## 0.6.0
 
 ### New Features
 
