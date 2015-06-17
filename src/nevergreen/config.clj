@@ -1,13 +1,24 @@
 (ns nevergreen.config
   (:require [clojure.string :refer [split trim]]
-            [environ.core :refer [env]]))
+            [environ.core :refer [env]]
+            [clojure.tools.logging :as log]))
 
 (def default-aes-key "abcdefghijklmnop")
 (def aes-key-length 16)
+
+(defn- use-default-key []
+  (log/warn "No AES_KEY environment variable set, so using the default key. This is NOT recommended, a unique key should be provided!")
+  default-aes-key)
+
+(defn- invalid-key [aes-key]
+  (throw (IllegalArgumentException. (str "An invalid AES_KEY was provided with length [" (count aes-key) "], a key length of [" aes-key-length "] is required"))))
 
 (defn port []
   (Integer. (or (env :port) 5000)))
 
 (defn aes-key []
   (let [aes-key (env :aes_key)]
-    (if (= aes-key-length (count aes-key)) aes-key default-aes-key)))
+    (cond
+      (nil? aes-key) (use-default-key)
+      (= aes-key-length (count aes-key)) aes-key
+      :else (invalid-key aes-key))))

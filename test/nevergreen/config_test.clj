@@ -18,12 +18,12 @@
              (provided
                (env :aes_key) => "key-thats-valid!"))
 
-       (fact "defaults to abcdefghijklmnop"
-             (subject/aes-key) => "abcdefghijklmnop"
+       (fact "uses the default if no key is set in the environment"
+             (subject/aes-key) => subject/default-aes-key
              (provided
                (env :aes_key) => nil))
 
-       (fact "defaults to abcdefghijklmnop when incorrect key incorrect length"
-             (subject/aes-key) => "abcdefghijklmnop"
+       (fact "throws an exception if an invalid key is provided"
+             (subject/aes-key) => (throws RuntimeException)
              (provided
-               (env :aes_key) => "a-salt")))
+               (env :aes_key) => "not-long-enough")))
