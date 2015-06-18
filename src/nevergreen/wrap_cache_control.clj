@@ -1,4 +1,4 @@
-(ns nevergreen.wrap-cache-control-middleware)
+(ns nevergreen.wrap-cache-control)
 
 (defn wrap-cache-control [app]
   (fn [req]

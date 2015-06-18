@@ -5,8 +5,7 @@
 
 (defn- as-json-response [body]
   {:content-type "application/json"
-   :body         (generate-string body)
-   :headers      {"Access-Control-Allow-Origin" "*"}})
+   :body         (generate-string body)})
 
 (def api-routes
   (routes

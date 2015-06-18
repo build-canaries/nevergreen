@@ -1,6 +1,6 @@
-(ns nevergreen.wrap-cache-control-middleware-test
+(ns nevergreen.wrap-cache-control-test
   (:require [midje.sweet :refer :all]
-            [nevergreen.wrap-cache-control-middleware :as subject]))
+            [nevergreen.wrap-cache-control :as subject]))
 
 (facts "wrap cache control"
        (fact "just adds a no cache header for now"

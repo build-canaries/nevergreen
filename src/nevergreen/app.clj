@@ -12,7 +12,8 @@
             [nevergreen.config :refer :all]
             [compojure.core :refer :all]
             [ring.middleware.json :refer [wrap-json-body]]
-            [nevergreen.wrap-cache-control-middleware :refer [wrap-cache-control]]
+            [nevergreen.wrap-cache-control :refer [wrap-cache-control]]
+            [nevergreen.wrap-cors-headers :refer [wrap-cors-headers]]
             [nevergreen.wrap-exceptions :refer [wrap-exceptions]]
             [nevergreen.api.routes :refer [api-routes]]
             [ring-curl.middleware :refer [log-as-curl]])
@@ -23,8 +24,7 @@
 
 (defn- as-json-response [body]
   {:content-type "application/json"
-   :body         (generate-string body)
-   :headers      {"Access-Control-Allow-Origin" "*"}})
+   :body         (generate-string body)})
 
 (defroutes main-routes
            (GET "/" [] (clojure.java.io/resource "public/index.html"))
@@ -46,6 +46,7 @@
       (log-as-curl :level :info)
       wrap-exceptions
       wrap-cache-control
+      wrap-cors-headers
       (wrap-json-body {:keywords? true})
       handler/site))
 
