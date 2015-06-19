@@ -17,7 +17,7 @@
   (Integer. (or (env :port) 5000)))
 
 (defn aes-key []
-  (let [aes-key (env :aes_key)]
+  (let [aes-key (env :aes-key)]
     (cond
       (nil? aes-key) (use-default-key)
       (= aes-key-length (count aes-key)) aes-key

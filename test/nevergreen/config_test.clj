@@ -10,20 +10,22 @@
                (env :port) => "1337"))
 
        (fact "defaults to 5000"
-             (subject/port) => 5000))
+             (subject/port) => 5000
+             (provided
+                (env :port) => nil)))
 
 (facts "aes encryption key"
        (fact "from env"
              (subject/aes-key) => "key-thats-valid!"
              (provided
-               (env :aes_key) => "key-thats-valid!"))
+               (env :aes-key) => "key-thats-valid!"))
 
        (fact "uses the default if no key is set in the environment"
              (subject/aes-key) => subject/default-aes-key
              (provided
-               (env :aes_key) => nil))
+               (env :aes-key) => nil))
 
        (fact "throws an exception if an invalid key is provided"
              (subject/aes-key) => (throws RuntimeException)
              (provided
-               (env :aes_key) => "not-long-enough")))
+               (env :aes-key) => "not-long-enough")))
