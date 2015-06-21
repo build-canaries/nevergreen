@@ -1,7 +1,7 @@
 var React = require('react')
 var _ = require('lodash')
 var trackingRepository = require('../../storage/trackingRepository')
-var projectsController = require('../../controllers/projects')
+var projectsGateway = require('../../gateways/projectsGateway')
 var trays = require('../../controllers/trays')
 var Projects = require('./projects').Projects
 var TraySettings = require('./traySettings').TraySettings
@@ -108,7 +108,7 @@ module.exports = {
         },
 
         fetchProjects: function () {
-            return projectsController.fetchAll(this.state.tray)
+            return projectsGateway.fetchAll(this.state.tray)
                 .done(this.projectsLoaded)
         }
     })

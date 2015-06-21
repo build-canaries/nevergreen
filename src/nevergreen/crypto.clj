@@ -5,14 +5,14 @@
           (javax.crypto Cipher)
           (javax.crypto.spec SecretKeySpec)))
 
+(def transformation "AES/ECB/PKCS5Padding")
+(def charset "UTF-8")
+
 (defn- bytes->base64 [bytes]
-  (String. (base64/encode-bytes bytes)))
+  (String. (base64/encode-bytes bytes) charset))
 
 (defn- base64->bytes [^String b64]
   (base64/decode-bytes (.getBytes b64)))
-
-(def transformation "AES/ECB/PKCS5Padding")
-(def charset "US-ASCII")
 
 (defn- ^Key secret [^String aes-key]
   (SecretKeySpec. (.getBytes aes-key) "AES"))
@@ -21,7 +21,7 @@
   (doto (Cipher/getInstance transformation)
     (.init mode (secret (config/aes-key)))))
 
-(defn ^bytes encrypt [^String plain-text]
+(defn ^String encrypt [^String plain-text]
   (let [cipher (cipher Cipher/ENCRYPT_MODE)]
     (bytes->base64 (.doFinal cipher (.getBytes plain-text charset)))))
 

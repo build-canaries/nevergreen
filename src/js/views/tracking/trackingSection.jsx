@@ -2,7 +2,7 @@ var React = require('react/addons')
 var _ = require('lodash')
 var uuid = require('node-uuid')
 var trays = require('../../controllers/trays')
-var security = require('../../controllers/security')
+var securityGateway = require('../../gateways/securityGateway')
 var trackingRepository = require('../../storage/trackingRepository')
 var AddTray = require('./addTray').AddTray
 var Tray = require('./trayContainer').TrayContainer
@@ -35,8 +35,8 @@ module.exports = {
 
         addTray: function (trayToAdd) {
             if (trays.requiresAuth(trayToAdd)) {
-                security.encryptPassword(trayToAdd.password, function (data) {
-                    this.saveTrays(_.extend({}, trayToAdd, {password: data.password}))
+                securityGateway.encryptPassword(trayToAdd.password).done(function (data) {
+                    this.saveTrays(_.extend({}, trayToAdd, data))
                 }.bind(this))
             } else {
                 this.saveTrays(trayToAdd)

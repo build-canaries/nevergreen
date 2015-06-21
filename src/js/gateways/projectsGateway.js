@@ -1,21 +1,5 @@
-var $ = require('jquery')
 var _ = require('lodash')
-
-function postJson(url, data) {
-    return $.ajax({
-        type: 'POST',
-        url: url,
-        timeout: 15000,
-        data: JSON.stringify(data),
-        headers: {
-            Accept: 'application/json; charset=utf-8',
-            'Content-Type': 'application/json; charset=utf-8'
-        },
-        dataFilter: function (data) {
-            return JSON.parse(data)
-        }
-    })
-}
+var gateway = require('../gateways/gateway')
 
 module.exports = {
     fetchAll: function (tray) {
@@ -26,7 +10,7 @@ module.exports = {
             serverType: tray.serverType
         }
 
-        return postJson('/api/projects/all', data)
+        return gateway.post('/api/projects/all', data)
     },
 
     interesting: function (trays) {
@@ -40,6 +24,6 @@ module.exports = {
             }
         })
 
-        return postJson('/api/projects/interesting', data)
+        return gateway.post('/api/projects/interesting', data)
     }
 }

@@ -4,7 +4,7 @@ var InterestingProjects = require('./projectsView').InterestingProjects
 var Success = require('./successView').Success
 var ErrorView = require('../general/errorView').SimpleMessage
 var Loading = require('../general/loading').Bars
-var projectsController = require('../../controllers/projects')
+var projectsGateway = require('../../gateways/projectsGateway')
 var timingRepository = require('../../storage/timingRepository')
 var trackingRepository = require('../../storage/trackingRepository')
 
@@ -39,12 +39,12 @@ module.exports = {
         },
 
         componentWillMount: function () {
-            projectsController.interesting(trackingRepository.getTraysContent())
+            projectsGateway.interesting(trackingRepository.getTraysContent())
                 .done(this.updateProjects)
                 .fail(this.updateFailed)
 
             var updateTimer = setInterval(function () {
-                projectsController.interesting(trackingRepository.getTraysContent())
+                projectsGateway.interesting(trackingRepository.getTraysContent())
                     .done(this.updateProjects)
                     .fail(this.updateFailed)
             }.bind(this), timingRepository.getPollingTimeInMilliseconds())

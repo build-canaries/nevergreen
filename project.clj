@@ -15,7 +15,7 @@
                       [environ/environ.lein "0.2.1"]]
             :min-lein-version "2.0.0"
             :hooks [environ.leiningen.hooks]
-            :ring {:handler nevergreen.app/app :port 5000}
+            :ring {:handler nevergreen.app/all-routes :port 5000}
             :uberjar-name "nevergreen-standalone.jar"
             :main nevergreen.app
             :aot [nevergreen.app]
