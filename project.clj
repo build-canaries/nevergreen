@@ -10,6 +10,7 @@
                            [clj-http "1.1.2"]
                            [ring-curl "0.2.1"]
                            [ring/ring-json "0.3.1"]
+                           [ring/ring-defaults "0.1.5"]
                            [base64-clj "0.1.1"]]
             :plugins [[lein-ring "0.8.11"]
                       [environ/environ.lein "0.2.1"]]
