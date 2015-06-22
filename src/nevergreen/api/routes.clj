@@ -8,10 +8,17 @@
             [nevergreen.wrap-exceptions :refer [wrap-exceptions]]
             [ring-curl.middleware :refer [log-as-curl]]))
 
+(def preflight-response {:status 200})
+
 (def api-routes
   (routes
+    (OPTIONS "/api/projects/all" [] preflight-response)
     (POST "/api/projects/all" {body :body} {:body (projects/get-all body)})
+
+    (OPTIONS "/api/projects/interesting" [] preflight-response)
     (POST "/api/projects/interesting" {body :body} {:body (projects/get-interesting body)})
+
+    (OPTIONS "/api/encrypt" [] preflight-response)
     (POST "/api/encrypt" {body :body} {:body (security/encrypt-password body)})))
 
 (defn wrap-api-middleware [routes]
