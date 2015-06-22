@@ -22,9 +22,6 @@
             headers: {
                 Accept: 'application/json; charset=utf-8',
                 'Content-Type': 'application/json; charset=utf-8'
-            },
-            dataFilter: function (data) {
-                return JSON.parse(data)
             }
         }).done(function (response) {
             $("#projects").empty()
