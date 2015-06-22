@@ -4,6 +4,11 @@ Downloads available from [GitHub](https://github.com/build-canaries/nevergreen/r
 
 ## Grape (0.7.0)
 
+### Improvements
+
+* Server side refactoring of ring middleware
+* Updates libraries to latest versions
+
 ### Closed Bugs
 
 * [#84](https://github.com/build-canaries/nevergreen/issues/84) Cross site AJAX requests don't work
