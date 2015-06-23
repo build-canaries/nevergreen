@@ -8,7 +8,7 @@
             [nevergreen.wrap-exceptions :refer [wrap-exceptions]]
             [ring-curl.middleware :refer [log-as-curl]]))
 
-(def preflight-response {:status 200})
+(def ^:private preflight-response {:status 200})
 
 (def api-routes
   (routes

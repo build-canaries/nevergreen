@@ -1,5 +1,5 @@
 (ns nevergreen.servers
-  (:require [clj-cctray.util :as util]))
+  (:require [clj-cctray.util :refer [in?]]))
 
 (defn detect-server [url]
   (cond
@@ -19,14 +19,14 @@
     :else :unknown))
 
 (defn unknown-server? [server-type]
-  (not (util/in? [:jenkins
-                  :hudson
-                  :travis
-                  :go
-                  :snap
-                  :circle
-                  :team-city
-                  :cruise-control-rb
-                  :cruise-control
-                  :cruise-control-net
-                  :solano] server-type)))
+  (not (in? [:jenkins
+             :hudson
+             :travis
+             :go
+             :snap
+             :circle
+             :team-city
+             :cruise-control-rb
+             :cruise-control
+             :cruise-control-net
+             :solano] server-type)))

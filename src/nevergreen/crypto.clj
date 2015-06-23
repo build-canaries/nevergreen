@@ -5,8 +5,8 @@
           (javax.crypto Cipher)
           (javax.crypto.spec SecretKeySpec)))
 
-(def transformation "AES/ECB/PKCS5Padding")
-(def charset "UTF-8")
+(def ^:private transformation "AES/ECB/PKCS5Padding")
+(def ^:private charset "UTF-8")
 
 (defn- bytes->base64 [bytes]
   (String. (base64/encode-bytes bytes) charset))

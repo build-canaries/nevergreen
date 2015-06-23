@@ -1,9 +1,8 @@
 (ns nevergreen.wrap-cors-headers
   (:require [clj-cctray.util :refer [in?]]))
 
-(def twenty-four-hours (str (* 60 60 24)))
-
-(def allowed-methods [:post :get :options])
+(def ^:private twenty-four-hours (str (* 60 60 24)))
+(def ^:private allowed-methods [:post :get :options])
 
 (defn wrap-cors-headers [app]
   (fn [req]
