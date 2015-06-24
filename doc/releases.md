@@ -8,6 +8,7 @@ Downloads available from [GitHub](https://github.com/build-canaries/nevergreen/r
 
 * Server side refactoring of ring middleware
 * Updates libraries to latest versions
+* [#86](https://github.com/build-canaries/nevergreen/issues/86) Requests from Nevergreen to CI servers are not logged
 
 ### Closed Bugs
 
