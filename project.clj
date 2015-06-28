@@ -25,5 +25,6 @@
                                                    [lein-idea "1.0.1"]]
                                     :dependencies [[midje "1.6.3"]
                                                    [clj-webdriver/clj-webdriver "0.6.1"]
-                                                   [com.github.detro/phantomjsdriver "1.2.0"]]}
+                                                   [com.github.detro/phantomjsdriver "1.2.0"]
+                                                   [ring/ring-mock "0.2.0"]]}
                        :production {:env {:production true}}})
