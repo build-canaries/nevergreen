@@ -4,6 +4,10 @@ Downloads available from [GitHub](https://github.com/build-canaries/nevergreen/r
 
 ## Grape (0.7.0)
 
+### New Features
+
+* [#73](https://github.com/build-canaries/nevergreen/issues/73) An endpoint that redirects to the latest release on GitHub
+
 ### Improvements
 
 * Server side refactoring of ring middleware
