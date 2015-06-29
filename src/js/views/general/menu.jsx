@@ -48,8 +48,8 @@ module.exports = {
                     </nav>
                     <footer role='contentinfo' className='content-info'>
                         <a href='https://github.com/build-canaries/nevergreen/releases' target='_blank' className='version'>
-                            <p>v0.6.1</p>
-                            <p>Fuzzy Wuzzy</p>
+                            <p id='version-number'>v0.6.1</p>
+                            <p id='version-name'>Fuzzy Wuzzy</p>
                         </a>
                     </footer>
                 </div>
