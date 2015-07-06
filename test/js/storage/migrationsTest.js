@@ -1,3 +1,7 @@
+jest.dontMock('node-uuid')
+jest.dontMock('../../../src/js/storage/repository')
+jest.dontMock('../../../src/js/storage/migrations')
+
 var _ = require('lodash')
 var migrations = require('../../../src/js/storage/migrations')
 

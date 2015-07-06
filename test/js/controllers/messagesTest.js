@@ -1,7 +1,10 @@
-var successRepository = require('../../../src/js/storage/successRepository')
+jest.dontMock('../../../src/js/controllers/messages')
+
+var successRepositoryMock = require('../../../src/js/storage/successRepository')
 var messages = require('../../../src/js/controllers/messages')
 
 describe('messages controller', function () {
+
     describe('is url', function () {
         it('true if value starts with http', function () {
             expect(messages.isUrl('http')).toBeTruthy()
@@ -33,17 +36,17 @@ describe('messages controller', function () {
 
     describe('random message', function () {
         it('one message saved', function () {
-            spyOn(successRepository, 'getSuccessMessages').and.returnValue(['message'])
+            successRepositoryMock.getSuccessMessages.mockReturnValue(['message'])
             expect(messages.randomMessage()).toEqual('message')
         })
 
         it('multiple message saved', function () {
-            spyOn(successRepository, 'getSuccessMessages').and.returnValue(['a', 'b', 'c'])
+            successRepositoryMock.getSuccessMessages.mockReturnValue(['a', 'b', 'c'])
             expect(['a', 'b', 'c']).toContain(messages.randomMessage())
         })
 
         it('no message saved', function () {
-            spyOn(successRepository, 'getSuccessMessages').and.returnValue([])
+            successRepositoryMock.getSuccessMessages.mockReturnValue([])
             expect(messages.randomMessage()).toEqual('')
         })
     })

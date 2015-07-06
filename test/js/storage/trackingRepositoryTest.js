@@ -1,38 +1,31 @@
+jest.dontMock('../../../src/js/storage/trackingRepository')
+
 var repositoryMock = require('../../../src/js/storage/repository')
-var storageRepository = require('../../../src/js/storage/trackingRepository')
+var trackingRepository = require('../../../src/js/storage/trackingRepository')
 
 describe('tracking repository', function () {
 
     describe('saving to local storage', function () {
-        beforeEach(function () {
-            spyOn(repositoryMock, 'save')
-        })
-
         it('saves tray', function () {
-            storageRepository.saveTray('some-id', {})
-            expect(repositoryMock.save).toHaveBeenCalledWith('some-id', {})
+            trackingRepository.saveTray('some-id', {})
+            expect(repositoryMock.save).toBeCalledWith('some-id', {})
         })
 
         it('saves trays', function () {
-            storageRepository.saveTrays(['some-id'])
-            expect(repositoryMock.save).toHaveBeenCalledWith('trays', ['some-id'])
+            trackingRepository.saveTrays(['some-id'])
+            expect(repositoryMock.save).toBeCalledWith('trays', ['some-id'])
         })
     })
 
     describe('loading from local storage', function () {
-        beforeEach(function () {
-            spyOn(repositoryMock, 'getOr')
-            spyOn(repositoryMock, 'getObjectOr')
-        })
-
         it('trays', function () {
-            storageRepository.getTrays()
-            expect(repositoryMock.getOr).toHaveBeenCalledWith('trays', [])
+            trackingRepository.getTrays()
+            expect(repositoryMock.getOr).toBeCalledWith('trays', [])
         })
 
         it('tray', function () {
-            storageRepository.getTray('some-id')
-            expect(repositoryMock.getObjectOr).toHaveBeenCalledWith('some-id', {
+            trackingRepository.getTray('some-id')
+            expect(repositoryMock.getObjectOr).toBeCalledWith('some-id', {
                 url: '',
                 username: '',
                 password: '',

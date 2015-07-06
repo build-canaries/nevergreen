@@ -49,12 +49,15 @@ echo "[3] watching the js for changes ..."
 npm run watchCss &
 
 echo "[4] automatically running the js tests on changes ..."
-npm run testing &
+npm run watchTest &
 
-echo "[5] automatically running the server tests on changes ..."
+echo "[5] automatically running js lint on changes ..."
+npm run watchLint &
+
+echo "[6] automatically running the server tests on changes ..."
 lein midje :autotest 'src/nevergreen' 'test/nevergreen' &
 
-echo "[6] running the server ..."
+echo "[7] running the server ..."
 lein ring server-headless &
 
 wait

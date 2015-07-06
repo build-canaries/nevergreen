@@ -1,3 +1,5 @@
+jest.dontMock('../../../src/js/controllers/trays')
+
 var trays = require('../../../src/js/controllers/trays')
 
 describe('trays controller', function () {
