@@ -17,8 +17,8 @@ module.exports = {
             return (
                 <div className='tracking-cctray-group-cctray-form'>
                     <label htmlFor='message-input' className='success-message-prompt'>message</label>
-                    <input id="message-input" className='tracking-cctray-group-cctray-form-input success-message-input' type='text' placeholder='text or image url' valueLink={this.linkState('message')} onKeyPress={this.onKeyPress}/>
-                    <button className='button-primary' onClick={this.onClick}>add</button>
+                    <input ref='messageInput' id="message-input" className='tracking-cctray-group-cctray-form-input success-message-input' type='text' placeholder='text or image url' valueLink={this.linkState('message')} onKeyPress={this.onKeyPress}/>
+                    <button ref='addButton' className='button-primary' onClick={this.onClick}>add</button>
                 </div>
             )
         },
