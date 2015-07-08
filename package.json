@@ -43,6 +43,10 @@
     "testPathIgnorePatterns": [
       "node_modules",
       "jest"
+    ],
+    "testFileExtensions": [
+      "js",
+      "jsx"
     ]
   },
   "scripts": {
