@@ -9,7 +9,7 @@ module.exports = {
 
         getDefaultProps: function () {
             return {
-                status: 'unknown',
+                status: NaN,
                 reason: 'unknown'
             }
         },
