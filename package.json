@@ -20,17 +20,18 @@
     "watch": "0.16.0"
   },
   "dependencies": {
+    "browserify": "^9.0.3",
+    "jquery": "2.1.4",
+    "lodash": "3.9.3",
+    "minifyify": "7.0.1",
+    "node-sass": "3.2.0",
+    "node-uuid": "1.4.3",
     "react": "0.13.3",
     "react-router": "0.13.3",
-    "jquery": "2.1.4",
-    "scale-text": "0.2.2",
+    "react-tools": "0.13.3",
     "reactify": "1.1.1",
-    "node-sass": "3.2.0",
-    "minifyify": "7.0.1",
-    "browserify": "^9.0.3",
-    "lodash": "3.9.3",
-    "node-uuid": "1.4.3",
-    "react-tools": "0.13.3"
+    "scale-text": "0.2.2",
+    "semver": "^5.0.1"
   },
   "jest": {
     "setupEnvScriptFile": "<rootDir>/test/js/jest/localStorage.js",

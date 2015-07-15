@@ -1,112 +1,52 @@
-jest.dontMock('node-uuid')
-jest.dontMock('../../../src/js/storage/repository')
-jest.dontMock('../../../src/js/storage/migrations')
+jest.dontMock('semver')
+    .dontMock('jquery')
+    .dontMock('../../../src/js/storage/migrations')
 
-var _ = require('lodash')
-var migrations = require('../../../src/js/storage/migrations')
-
-function expectToBeUnchanged(keys) {
-    keys.map(function (key) {
-        expect(localStorage.getItem(key)).toEqual(key)
-    })
-}
-
-function expectToHaveBeenRemoved(keys) {
-    keys.map(function (key) {
-        expect(localStorage.getItem(key)).toBeNull()
-    })
-}
-
-function addKeys(keys) {
-    keys.map(function (key) {
-        localStorage.setItem(key, key)
-    })
+function resolve(promiseMock, args) {
+    promiseMock.done.mock.calls[0][0](args)
 }
 
 describe('migrations', function () {
 
-    describe('eggplant migrations', function () {
-        beforeEach(function () {
-            localStorage.clear()
+    var migrations, repositoryMock, versionRepositoryMock, versionGatewayMock
 
-            addKeys(['cctray', 'includedProjects', 'previousCctray', 'seenProjects', 'serverType', 'successImageUrl', 'successText'])
-        })
+    beforeEach(function () {
+        repositoryMock = require('../../../src/js/storage/repository')
+        versionRepositoryMock = require('../../../src/js/storage/versionRepository')
+        versionGatewayMock = require('../../../src/js/gateways/versionGateway')
 
-        it('adds successMessages list by copying values from successText and successImageUrl', function () {
-            migrations.eggplantMigrations()
-
-            expect(localStorage.getItem('successMessages')).toEqual('successText,successImageUrl')
-        })
-
-        it('removes the previous success message/image entries', function () {
-            migrations.eggplantMigrations()
-
-            expectToHaveBeenRemoved(['successImageUrl', 'successText'])
-        })
-
-        it('does not touch all the other entries', function () {
-            migrations.eggplantMigrations()
-
-            expectToBeUnchanged(['cctray', 'includedProjects', 'previousCctray', 'seenProjects', 'serverType'])
-        })
+        migrations = require('../../../src/js/storage/migrations')
     })
 
-    describe('fuzzy wuzzy migrations', function () {
-        beforeEach(function () {
-            localStorage.clear()
+    it('clears local storage if settings were saved in a version older than 0.7.0', function () {
+        var promiseMock = {done: jest.genMockFunction()}
+        versionRepositoryMock.getVersion.mockReturnValueOnce('0.6.1')
+        versionGatewayMock.getVersion.mockReturnValueOnce(promiseMock)
 
-            addKeys(['cctray', 'includedProjects', 'previousCctray', 'seenProjects', 'serverType', 'successMessages', 'username', 'password', 'isAuthenticated', 'pollingTime'])
-        })
+        migrations.migrate()
 
-        it('adds trays entry with a generated uuid', function () {
-            migrations.fuzzyWuzzyMigrations()
+        resolve(promiseMock, 'x.y.z')
 
-            expect(localStorage.getItem('trays')).toMatch(/^\["\w{8}-\w{4}-\w{4}-\w{4}-\w{12}"]$/)
-        })
+        expect(repositoryMock.clear).toBeCalled()
+        expect(versionRepositoryMock.saveVersion).toBeCalledWith('x.y.z')
+    })
 
-        it('adds a json encoded tray under the same key as saved into the trays array', function () {
-            migrations.fuzzyWuzzyMigrations()
+    it('does not clear local storage if settings were saved in version 0.7.0', function () {
+        versionRepositoryMock.getVersion.mockReturnValueOnce('0.7.0')
 
-            var trayId = _.first(JSON.parse(localStorage.getItem('trays')))
-            var tray = JSON.parse(localStorage.getItem(trayId))
+        migrations.migrate()
 
-            expect(tray).toEqual(jasmine.objectContaining({
-                url: 'cctray',
-                includedProjects: 'includedProjects',
-                previousProjects: 'seenProjects',
-                serverType: 'serverType',
-                username: 'username',
-                password: 'password'
-            }))
-        })
+        expect(repositoryMock.clear).not.toBeCalled()
+        expect(versionRepositoryMock.saveVersion).not.toBeCalled()
+    })
 
-        it('does not run if trays is already set up', function () {
-            localStorage.setItem('trays', ['some-id'])
+    it('does not clear local storage if settings were saved in a version greater than 0.7.0', function () {
+        versionRepositoryMock.getVersion.mockReturnValueOnce('1.0.0')
 
-            spyOn(localStorage, 'setItem')
+        migrations.migrate()
 
-            migrations.fuzzyWuzzyMigrations()
-
-            expect(localStorage.setItem).not.toHaveBeenCalled()
-        })
-
-        it('removes the migrated entries and previousCctray', function () {
-            migrations.fuzzyWuzzyMigrations()
-
-            expectToHaveBeenRemoved(['cctray', 'includedProjects', 'seenProjects', 'serverType', 'previousCctray', 'username', 'password', 'isAuthenticated'])
-        })
-
-        it('saves the success messages as json', function () {
-            migrations.fuzzyWuzzyMigrations()
-
-            expect(localStorage.getItem('successMessages')).toEqual('["successMessages"]')
-        })
-
-        it('does not touch all the other entries', function () {
-            migrations.fuzzyWuzzyMigrations()
-
-            expectToBeUnchanged(['pollingTime'])
-        })
+        expect(repositoryMock.clear).not.toBeCalled()
+        expect(versionRepositoryMock.saveVersion).not.toBeCalled()
     })
 
 })

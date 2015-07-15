@@ -26,8 +26,8 @@ module.exports = {
         }
     },
 
-    clear: function (key) {
-        localStorage.removeItem(key)
+    clear: function () {
+        localStorage.clear()
     },
 
     isEmpty: function () {

@@ -12,5 +12,16 @@ module.exports = {
                 'Content-Type': 'application/json; charset=utf-8'
             }
         }).promise()
+    },
+
+    get: function (url) {
+        return $.ajax({
+            type: 'GET',
+            url: url,
+            timeout: 15000,
+            headers: {
+                Accept: 'application/json; charset=utf-8'
+            }
+        }).promise()
     }
 }

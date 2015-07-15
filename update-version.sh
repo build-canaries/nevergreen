@@ -22,10 +22,8 @@ version="$major.$minor.$revision$pre"
 
 echo "Updating to version $version $name ..."
 
-echo "Updating file ./resources/public/index.html ... "
-sed -i '' "s|data-version-major=\"[^\"]*\"|data-version-major=\"$major\"|" ./resources/public/index.html
-sed -i '' "s|data-version-minor=\"[^\"]*\"|data-version-minor=\"$minor\"|" ./resources/public/index.html
-sed -i '' "s|data-version-revision=\"[^\"]*\"|data-version-revision=\"$revision\"|" ./resources/public/index.html
+echo "Updating file ./src/nevergreen/api/routes.clj ..."
+sed -i '' "s|{:body \"[^\"]*\"}|{:body \"$version\"}|" ./src/nevergreen/api/routes.clj
 
 echo "Updating file ./project.clj ..."
 sed -i '' "s|defproject nevergreen \"[^\"]*\"|defproject nevergreen \"$version\"|" ./project.clj
