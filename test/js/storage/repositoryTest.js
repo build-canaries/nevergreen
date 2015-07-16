@@ -1,10 +1,12 @@
 jest.dontMock('../../../src/js/storage/repository')
 
-var repository = require('../../../src/js/storage/repository')
-
 describe('repository', function () {
+
+    var repository
+
     beforeEach(function () {
         localStorage.clear()
+        repository = require('../../../src/js/storage/repository')
     })
 
     describe('exists?', function () {

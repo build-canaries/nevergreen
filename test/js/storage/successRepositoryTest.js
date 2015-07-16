@@ -1,9 +1,13 @@
 jest.dontMock('../../../src/js/storage/successRepository')
 
-var repositoryMock = require('../../../src/js/storage/repository')
-var successRepository = require('../../../src/js/storage/successRepository')
-
 describe('success repository', function () {
+
+    var repositoryMock, successRepository
+
+    beforeEach(function () {
+        repositoryMock = require('../../../src/js/storage/repository')
+        successRepository = require('../../../src/js/storage/successRepository')
+    })
 
     describe('saving to local storage', function () {
         it('saves all success messages', function () {

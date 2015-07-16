@@ -1,14 +1,18 @@
 jest.dontMock('../../../../src/js/views/general/errorView.jsx')
 
-var React = require('react/addons')
-var TestUtils = React.addons.TestUtils
-var ErrorView = require('../../../../src/js/views/general/errorView.jsx').SimpleMessage
-
 function textFrom(element) {
     return element.getDOMNode().textContent
 }
 
 describe('error view', function () {
+
+    var React, TestUtils, ErrorView
+
+    beforeEach(function () {
+        React = require('react/addons')
+        TestUtils = React.addons.TestUtils
+        ErrorView = require('../../../../src/js/views/general/errorView.jsx').SimpleMessage
+    })
 
     it('renders with a default reason', function () {
         var component = TestUtils.renderIntoDocument(<ErrorView />)

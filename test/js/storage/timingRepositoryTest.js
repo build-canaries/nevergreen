@@ -1,9 +1,13 @@
 jest.dontMock('../../../src/js/storage/timingRepository')
 
-var repositoryMock = require('../../../src/js/storage/repository')
-var storageRepository = require('../../../src/js/storage/timingRepository')
-
 describe('timing repository', function () {
+
+    var repositoryMock, storageRepository
+
+    beforeEach(function () {
+        repositoryMock = require('../../../src/js/storage/repository')
+        storageRepository = require('../../../src/js/storage/timingRepository')
+    })
 
     describe('saving to local storage', function () {
         it('saves polling time', function () {

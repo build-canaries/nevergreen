@@ -1,17 +1,18 @@
 jest.dontMock('../../../../src/js/views/tracking/addTray.jsx')
 
-var React = require('react/addons')
-var TestUtils = React.addons.TestUtils
-var AddTray = require('../../../../src/js/views/tracking/addTray.jsx').AddTray
-
 describe('add tray component', function () {
-    describe('calls the add tray function', function () {
-        var callback, component
+    var React, TestUtils, AddTray, callback, component
 
-        beforeEach(function () {
-            callback = jest.genMockFunction()
-            component = TestUtils.renderIntoDocument(<AddTray addTray={callback}/>)
-        })
+    beforeEach(function () {
+        React = require('react/addons')
+        TestUtils = React.addons.TestUtils
+        AddTray = require('../../../../src/js/views/tracking/addTray.jsx').AddTray
+
+        callback = jest.genMockFunction()
+        component = TestUtils.renderIntoDocument(<AddTray addTray={callback}/>)
+    })
+
+    describe('calls the add tray function', function () {
 
         it('does on click of the add button', function () {
             TestUtils.Simulate.click(component.refs.addButton.getDOMNode())

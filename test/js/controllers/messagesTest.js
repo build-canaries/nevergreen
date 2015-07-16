@@ -1,9 +1,13 @@
 jest.dontMock('../../../src/js/controllers/messages')
 
-var successRepositoryMock = require('../../../src/js/storage/successRepository')
-var messages = require('../../../src/js/controllers/messages')
-
 describe('messages controller', function () {
+
+    var successRepositoryMock, messages
+
+    beforeEach(function () {
+        successRepositoryMock = require('../../../src/js/storage/successRepository')
+        messages = require('../../../src/js/controllers/messages')
+    })
 
     describe('is url', function () {
         it('true if value starts with http', function () {

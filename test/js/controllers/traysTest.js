@@ -1,8 +1,13 @@
 jest.dontMock('../../../src/js/controllers/trays')
 
-var trays = require('../../../src/js/controllers/trays')
-
 describe('trays controller', function () {
+
+    var trays
+
+    beforeEach(function () {
+        trays = require('../../../src/js/controllers/trays')
+    })
+
     describe('requiresAuth', function () {
         it('true if tray has username and password', function () {
             expect(trays.requiresAuth({

@@ -1,9 +1,13 @@
 jest.dontMock('../../../src/js/storage/trackingRepository')
 
-var repositoryMock = require('../../../src/js/storage/repository')
-var trackingRepository = require('../../../src/js/storage/trackingRepository')
-
 describe('tracking repository', function () {
+
+    var repositoryMock, trackingRepository
+
+    beforeEach(function () {
+        repositoryMock = require('../../../src/js/storage/repository')
+        trackingRepository = require('../../../src/js/storage/trackingRepository')
+    })
 
     describe('saving to local storage', function () {
         it('saves tray', function () {
