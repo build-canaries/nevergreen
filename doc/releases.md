@@ -13,10 +13,12 @@ Downloads available from [GitHub](https://github.com/build-canaries/nevergreen/r
 * Server side refactoring of ring middleware
 * Updates libraries to latest versions
 * [#86](https://github.com/build-canaries/nevergreen/issues/86) Requests from Nevergreen to CI servers are not logged
+* [#78](https://github.com/build-canaries/nevergreen/issues/78) Switch to [Jest](https://facebook.github.io/jest/) for JS testing
 
 ### Closed Bugs
 
 * [#84](https://github.com/build-canaries/nevergreen/issues/84) Cross site AJAX requests don't work
+* [#95](https://github.com/build-canaries/nevergreen/issues/95) Custom AES keys are ignored
 
 ## Fuzzy Wuzzy
 
