@@ -15,7 +15,7 @@
              (subject/get-interesting [{:url "not-http"}]) => (throws Exception))
 
        (fact "with authentication"
-             (subject/get-interesting [{:included ["project-1"] :url valid-url :username "a-user" :password "encrypted-password"}]) => (list {:name "project-1" :prognosis :sick})
+             (subject/get-interesting [{:tray "a-tray" :included ["project-1"] :url valid-url :username "a-user" :password "encrypted-password"}]) => (list {:name "project-1" :prognosis :sick :tray "a-tray"})
              (provided
                (parser/get-projects ..stream.. anything) => [{:name "project-1" :prognosis :sick}]
                (crypt/decrypt "encrypted-password") => password
@@ -23,7 +23,7 @@
                (http/http-get valid-url ..auth-header..) => ..stream..))
 
        (fact "without authentication"
-             (subject/get-interesting [{:included ["project-1"] :url valid-url}]) => (list {:name "project-1" :prognosis :sick})
+             (subject/get-interesting [{:tray "a-tray" :included ["project-1"] :url valid-url}]) => (list {:name "project-1" :prognosis :sick :tray "a-tray"})
              (provided
                (parser/get-projects ..stream.. anything) => [{:name "project-1" :prognosis :sick}]
                (http/http-get valid-url nil) => ..stream..))
@@ -38,7 +38,13 @@
                     (subject/get-interesting [{:url "http://a"}]) => irrelevant
                     (provided
                       (pmap anything anything) => irrelevant :times 0
-                      (subject/fetch-interesting anything) => irrelevant))))
+                      (subject/fetch-interesting anything) => irrelevant)))
+
+       (fact "handles no tray being given"
+                (subject/get-interesting [{:included ["project"] :url valid-url}]) => (list {:tray nil :name "project" :prognosis :sick})
+                (provided
+                  (parser/get-projects ..stream.. anything) => [{:name "project" :prognosis :sick}]
+                  (http/http-get valid-url nil) => ..stream..)))
 
 (facts "it gets all projects"
        (fact "throws exception if the url is not http[s]"

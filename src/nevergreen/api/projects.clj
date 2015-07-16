@@ -25,6 +25,9 @@
       (servers/detect-server url)
       server-type)))
 
+(defn- merge-tray [tray project]
+  (list (merge {:tray tray} (first project))))
+
 (defn fetch-interesting [project]
   (ensure-url-is-valid project)
   (let [decrypted-password (if-not (blank? (:password project)) (crypt/decrypt (:password project)))]
@@ -32,7 +35,8 @@
            (http-get (:url project) (set-auth-header (:username project) decrypted-password))
            {:normalise true :server (get-server-type project)})
          (filtering/interesting)
-         (filtering/by-name (:included project)))))
+         (filtering/by-name (:included project))
+         (merge-tray (:tray project)))))
 
 (defn get-interesting [projects]
   (if (= (count projects) 1)
