@@ -8,6 +8,7 @@ module.exports = {
 
     getTray: function (id) {
         return repository.getObjectOr(id, {
+            id: id,
             url: '',
             username: '',
             password: '',

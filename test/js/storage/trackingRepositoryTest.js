@@ -30,6 +30,7 @@ describe('tracking repository', function () {
         it('tray', function () {
             trackingRepository.getTray('some-id')
             expect(repositoryMock.getObjectOr).toBeCalledWith('some-id', {
+                id: 'some-id',
                 url: '',
                 username: '',
                 password: '',
