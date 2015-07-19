@@ -4,7 +4,8 @@
             [nevergreen.wrap-cache-control :refer [wrap-cache-control]]
             [nevergreen.wrap-exceptions :refer [wrap-exceptions]]
             [ring.middleware.defaults :refer :all]
-            [ring.util.response :refer :all]))
+            [ring.util.response :refer :all]
+            [ring.middleware.gzip :refer :all]))
 
 (def app-routes
   (routes
@@ -16,4 +17,5 @@
 (defn wrap-app-middleware [routes]
   (-> (wrap-defaults routes (assoc site-defaults :session false))
       wrap-cache-control
-      wrap-exceptions))
+      wrap-exceptions
+      wrap-gzip))
