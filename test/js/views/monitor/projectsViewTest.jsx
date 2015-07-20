@@ -4,7 +4,7 @@ function textFrom(element) {
     return element.getDOMNode().textContent
 }
 
-describe('add tray component', function () {
+describe('projects view', function () {
     var React, TestUtils, InterestingProjects, projects, component, trackingRepositoryMock
 
     beforeEach(function () {

@@ -31,6 +31,7 @@ describe('tracking repository', function () {
             trackingRepository.getTray('some-id')
             expect(repositoryMock.getObjectOr).toBeCalledWith('some-id', {
                 id: 'some-id',
+                showStage: false,
                 url: '',
                 username: '',
                 password: '',
@@ -39,5 +40,4 @@ describe('tracking repository', function () {
             })
         })
     })
-
 })

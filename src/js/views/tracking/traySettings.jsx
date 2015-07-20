@@ -1,12 +1,18 @@
 var React = require('react')
 var _ = require('lodash')
+var trackingRepository = require('../../storage/trackingRepository')
 
 module.exports = {
     TraySettings: React.createClass({
         propTypes: {
             trayId: React.PropTypes.string.isRequired,
-            tray: React.PropTypes.object.isRequired,
             removeTray: React.PropTypes.func.isRequired
+        },
+
+        getInitialState: function () {
+            return {
+                tray: trackingRepository.getTray(this.props.trayId)
+            }
         },
 
         render: function () {
@@ -16,7 +22,13 @@ module.exports = {
                         <tbody>
                             <tr>
                                 <td className='tray-settings-table-heading'>uses auth?</td>
-                                <td>{_.trim(this.props.tray.username) === '' ? 'no' : 'yes'}</td>
+                                <td>{_.trim(this.state.tray.username) === '' ? 'no' : 'yes'}</td>
+                            </tr>
+                            <tr>
+                                <td className='tray-settings-table-heading'>Show stage name?</td>
+                                <td>
+                                    <input ref='showStage' className='checkbox no-text-selection' type='checkbox' checked={this.state.tray.showStage} onChange={this.toggleShowStage} />
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -34,6 +46,13 @@ module.exports = {
 
         removeTray: function () {
             this.props.removeTray(this.props.trayId)
+        },
+
+        toggleShowStage: function () {
+            var updatedTray = this.state.tray
+            updatedTray.showStage = !updatedTray.showStage
+            this.setState({tray: updatedTray})
+            trackingRepository.saveTray(this.props.trayId, this.state.tray)
         }
     })
 }

@@ -27,7 +27,7 @@ module.exports = {
             var content
 
             if (this.state.showSettings) {
-                content = <TraySettings trayId={this.props.trayId} tray={this.state.tray} removeTray={this.props.removeTray}/>
+                content = <TraySettings trayId={this.props.trayId} removeTray={this.props.removeTray}/>
             } else {
                 var projects = trays.projects(this.state.tray, this.state.retrievedProjects)
                 var doneView = <Projects projects={projects} includeAll={this.includeAll} excludeAll={this.excludeAll} selectProject={this.selectProject}/>
