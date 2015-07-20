@@ -1,18 +1,25 @@
 var $ = require('jquery')
 var React = require('react')
 var styler = require('../../controllers/styler')
+var trackingRepository = require('../../storage/trackingRepository')
 
 var InterestingProject = React.createClass({
     propTypes: {
         prognosis: React.PropTypes.string.isRequired,
-        name: React.PropTypes.string.isRequired
+        name: React.PropTypes.string.isRequired,
+        stage: React.PropTypes.string.isRequired
+    },
+
+    showStage: function () {
+        var tray = trackingRepository.getTray()
+        return tray.showStage ? '::' + this.props.stage : ''
     },
 
     render: function () {
         return (
             <li className={'monitor-project monitor-' + this.props.prognosis}>
                 <div className='monitor-outer-container'>
-                    <div className='monitor-inner-container'>{this.props.name}</div>
+                    <div className='monitor-inner-container'>{this.props.name + this.showStage()}</div>
                 </div>
             </li>
         )
@@ -30,7 +37,7 @@ module.exports = {
                 <ul id='interesting-projects' className='monitor-projects'>
                     {
                         this.props.projects.map(function (project) {
-                            return <InterestingProject key={project.name} prognosis={project.prognosis} name={project.name}/>
+                            return <InterestingProject key={project.name} prognosis={project.prognosis} name={project.name} stage={project.stage}/>
                         })
                     }
                 </ul>
@@ -39,7 +46,9 @@ module.exports = {
 
         componentDidMount: function () {
             var $node = $(React.findDOMNode(this))
-            styler.styleProjects(this.props.projects, $node.find('.monitor-outer-container'), $node)
+            if ($node) {
+                styler.styleProjects(this.props.projects, $node.find('.monitor-outer-container'), $node)
+            }
         },
 
         componentDidUpdate: function () {
