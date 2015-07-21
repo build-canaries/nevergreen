@@ -54,5 +54,8 @@
 
     (wait-until #(exists? "#interesting-projects"))
 
+    (let [actual-project-list (elements "#interesting-projects > li")]
+      (is (= (count expected-projects) (count actual-project-list)) "Incorrect amount of projects displayed"))
+
     (doseq [actual-project (elements "#interesting-projects > li > div > div")]
       (is (in? expected-projects (text actual-project)) "Expected project not displayed"))))
