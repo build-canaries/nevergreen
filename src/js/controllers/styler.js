@@ -25,16 +25,24 @@ function resizeEachContainer(projects, $container, $view) {
         .width(buildStatusWidth(projects, $view))
 }
 
-function everyPieceOfTextOnTheScreen(projects) {
+function getProjectNames(projects) {
     return projects.map(function (project) {
-        return project.name + '::' + project.stage
+        return project.name
     })
+}
+
+function everyPieceOfTextOnTheScreen(projects, $container) {
+    var allTheTextInContainers = []
+    $container.find('.monitor-inner-container').each(function () {
+        allTheTextInContainers.push(this.textContent)
+    })
+    return allTheTextInContainers.length > 0 ? allTheTextInContainers : getProjectNames(projects)
 }
 
 function scaleFontToContainerSize(projects, $container, $view) {
     $container.css('font-size',
         new ScaleText(
-            everyPieceOfTextOnTheScreen(projects),
+            everyPieceOfTextOnTheScreen(projects, $container),
             buildStatusHeight(projects, $view),
             buildStatusWidth(projects, $view)).ideal()
     )
