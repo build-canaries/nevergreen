@@ -7,12 +7,13 @@ var InterestingProject = React.createClass({
     propTypes: {
         prognosis: React.PropTypes.string.isRequired,
         name: React.PropTypes.string.isRequired,
-        stage: React.PropTypes.string.isRequired
+        stage: React.PropTypes.string,
+        trayId: React.PropTypes.string.isRequired
     },
 
     showStage: function () {
-        var tray = trackingRepository.getTray()
-        return tray.showStage ? '::' + this.props.stage : ''
+        var tray = trackingRepository.getTray(this.props.trayId)
+        return tray.showStage && this.props.stage ? '::' + this.props.stage : ''
     },
 
     render: function () {
@@ -37,7 +38,7 @@ module.exports = {
                 <ul id='interesting-projects' className='monitor-projects'>
                     {
                         this.props.projects.map(function (project) {
-                            return <InterestingProject key={project.name} prognosis={project.prognosis} name={project.name} stage={project.stage}/>
+                            return <InterestingProject key={project.name} trayId={project.tray} prognosis={project.prognosis} name={project.name} stage={project.stage}/>
                         })
                     }
                 </ul>

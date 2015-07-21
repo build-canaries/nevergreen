@@ -27,7 +27,7 @@ function resizeEachContainer(projects, $container, $view) {
 
 function everyPieceOfTextOnTheScreen(projects) {
     return projects.map(function (project) {
-        return project.name
+        return project.name + '::' + project.stage
     })
 }
 

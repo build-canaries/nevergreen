@@ -15,9 +15,17 @@ describe('projects view', function () {
     })
 
     describe('showing projects', function () {
+        it('gets tray associated with project', function () {
+            trackingRepositoryMock.getTray.mockReturnValue({showStage: true})
+            projects = [{tray: '12345-abcde', name: 'proj-1', stage: 'a-stage', prognosis: 'sick'}]
+            component = TestUtils.renderIntoDocument(<InterestingProjects projects={projects}/>)
+
+            expect(trackingRepositoryMock.getTray).toBeCalledWith('12345-abcde')
+        })
+
         it('shows stage name when project is configured to', function () {
             trackingRepositoryMock.getTray.mockReturnValue({showStage: true})
-            projects = [{name: 'proj-1', stage: 'a-stage', prognosis: 'sick'}]
+            projects = [{tray: '', name: 'proj-1', stage: 'a-stage', prognosis: 'sick'}]
             component = TestUtils.renderIntoDocument(<InterestingProjects projects={projects}/>)
 
             var div = TestUtils.findRenderedDOMComponentWithClass(component, 'monitor-inner-container')
@@ -28,12 +36,23 @@ describe('projects view', function () {
 
         it('does not show stage name when it is configured off', function () {
             trackingRepositoryMock.getTray.mockReturnValue({showStage: false})
-            projects = [{name: 'proj-2', stage: 'some-stage', prognosis: 'sick'}]
+            projects = [{tray: '', name: 'proj-2', stage: 'some-stage', prognosis: 'sick'}]
             component = TestUtils.renderIntoDocument(<InterestingProjects projects={projects}/>)
 
             var div = TestUtils.findRenderedDOMComponentWithClass(component, 'monitor-inner-container')
 
             expect(textFrom(div)).not.toContain(projects[0].stage)
         })
+
+        it('does not show stage name when it is null', function () {
+            trackingRepositoryMock.getTray.mockReturnValue({showStage: true})
+            projects = [{tray: '', name: 'proj-2', stage: null, prognosis: 'sick'}]
+            component = TestUtils.renderIntoDocument(<InterestingProjects projects={projects}/>)
+
+            var div = TestUtils.findRenderedDOMComponentWithClass(component, 'monitor-inner-container')
+
+            expect(textFrom(div)).not.toContain(projects[0].name + '::')
+        })
+
     })
 })
