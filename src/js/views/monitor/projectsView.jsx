@@ -38,7 +38,9 @@ module.exports = {
                 <ul id='interesting-projects' className='monitor-projects'>
                     {
                         this.props.projects.map(function (project) {
-                            return <InterestingProject key={project.name} trayId={project.tray} prognosis={project.prognosis} name={project.name} stage={project.stage}/>
+                            return <InterestingProject key={project.name} trayId={project.tray}
+                                                       prognosis={project.prognosis} name={project.name}
+                                                       stage={project.stage}/>
                         })
                     }
                 </ul>
@@ -47,9 +49,7 @@ module.exports = {
 
         componentDidMount: function () {
             var $node = $(React.findDOMNode(this))
-            if ($node) {
-                styler.styleProjects(this.props.projects, $node.find('.monitor-outer-container'), $node)
-            }
+            styler.styleProjects(this.props.projects, $node.find('.monitor-outer-container'), $node)
         },
 
         componentDidUpdate: function () {

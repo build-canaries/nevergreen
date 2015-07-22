@@ -1,4 +1,5 @@
 jest.dontMock('../../../../src/js/views/monitor/projectsView.jsx')
+    .dontMock('jquery')
 
 function textFrom(element) {
     return element.getDOMNode().textContent
