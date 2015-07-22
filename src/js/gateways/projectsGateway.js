@@ -16,7 +16,7 @@ module.exports = {
     interesting: function (trays) {
         var data = _.map(trays, function (tray) {
             return {
-                tray: tray.id,
+                trayId: tray.id,
                 url: tray.url,
                 username: tray.username,
                 password: tray.password,

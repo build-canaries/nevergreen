@@ -24,7 +24,7 @@ describe('repository', function () {
             subject.interesting(trays)
 
             var data = [{
-                tray: tray.id,
+                trayId: tray.id,
                 url: tray.url,
                 username: tray.username,
                 password: tray.password,

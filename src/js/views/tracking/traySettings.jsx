@@ -1,4 +1,4 @@
-var React = require('react')
+var React = require('react/addons')
 var _ = require('lodash')
 var trackingRepository = require('../../storage/trackingRepository')
 
@@ -49,10 +49,11 @@ module.exports = {
         },
 
         toggleShowStage: function () {
-            var updatedTray = this.state.tray
-            updatedTray.showStage = !updatedTray.showStage
+            var updatedTray = React.addons.update(this.state.tray, {
+                showStage: {$set: !this.state.tray.displayText}
+            })
+            trackingRepository.saveTray(this.props.trayId, updatedTray)
             this.setState({tray: updatedTray})
-            trackingRepository.saveTray(this.props.trayId, this.state.tray)
         }
     })
 }

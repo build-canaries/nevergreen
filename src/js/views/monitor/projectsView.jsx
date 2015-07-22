@@ -11,16 +11,20 @@ var InterestingProject = React.createClass({
         trayId: React.PropTypes.string.isRequired
     },
 
-    showStage: function () {
-        var tray = trackingRepository.getTray(this.props.trayId)
-        return tray.showStage && this.props.stage ? '::' + this.props.stage : ''
+    displayText: function () {
+        var showStage = trackingRepository.getTray(this.props.trayId).showStage
+        if (showStage && this.props.stage) {
+            return this.props.name + ' :: ' + this.props.stage
+        } else {
+            return this.props.name
+        }
     },
 
     render: function () {
         return (
             <li className={'monitor-project monitor-' + this.props.prognosis}>
                 <div className='monitor-outer-container'>
-                    <div className='monitor-inner-container'>{this.props.name + this.showStage()}</div>
+                    <div className='monitor-inner-container'>{this.displayText()}</div>
                 </div>
             </li>
         )
@@ -38,9 +42,10 @@ module.exports = {
                 <ul id='interesting-projects' className='monitor-projects'>
                     {
                         this.props.projects.map(function (project) {
-                            return <InterestingProject key={project.name} trayId={project.tray}
-                                                       prognosis={project.prognosis} name={project.name}
-                                                       stage={project.stage}/>
+                            var key = project['tray-id'] + '.' + project.name
+                            return <InterestingProject key={key} trayId={project['tray-id']}
+                                                       prognosis={project.prognosis}
+                                                       name={project.name} stage={project.stage}/>
                         })
                     }
                 </ul>

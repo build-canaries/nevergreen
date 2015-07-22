@@ -1,15 +1,13 @@
 jest.dontMock('../../../../src/js/views/tracking/traySettings.jsx')
 
 describe('tray setting', function () {
-    var React, TestUtils, TraySettings, callback, component, trackingRepositoryMock
+    var React, TestUtils, TraySettings, component, trackingRepositoryMock
 
     beforeEach(function () {
         React = require('react/addons')
         TestUtils = React.addons.TestUtils
         TraySettings = require('../../../../src/js/views/tracking/traySettings.jsx').TraySettings
         trackingRepositoryMock = require('../../../../src/js/storage/trackingRepository')
-
-        callback = jest.genMockFunction()
     })
 
     describe('changes value of show stage', function () {
