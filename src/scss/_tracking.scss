@@ -130,13 +130,23 @@
 .tray-settings-table {
   width: 100%;
   margin: 0 0 1em 0;
+  tr {
+    height: 3rem;
+  }
   tr:nth-child(even) {
     background-color: $light-grey;
+  }
+  td {
+    padding-left: 1.5rem;
+  }
+  .checkbox {
+    top: -5px;
+    font-size: 1.1rem;
   }
 }
 
 .tray-settings-table-heading {
-  width: 15%;
+  width: 25%;
 }
 
 .tray-settings-danger-button {
