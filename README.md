@@ -22,6 +22,10 @@ Additional help and information can be found on the [help page](http://nevergree
 
 We are usually hanging out on the our [Gitter channel](https://gitter.im/build-canaries/nevergreen) if you'd like to chat.
 
+## Contributing
+
+You can run nevergreen locally by just running the ```develop.sh``` script. For more info see the [Contributing](https://github.com/build-canaries/nevergreen/wiki/contributing) section of our wiki.
+
 If you would like to add a feature/fix a bug for us please create a pull request.
 
 ## License
