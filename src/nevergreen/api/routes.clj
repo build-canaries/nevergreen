@@ -14,7 +14,7 @@
 (def api-routes
   (routes
     (OPTIONS "/api/version" [] preflight-response)
-    (GET "/api/version" [] {:body "0.7.0"})
+    (GET "/api/version" [] {:body "0.8.0-alpha"})
 
     (OPTIONS "/api/projects/all" [] preflight-response)
     (POST "/api/projects/all" {body :body} {:body (projects/get-all body)})
