@@ -1,4 +1,4 @@
-(defproject nevergreen "0.7.0-alpha"
+(defproject nevergreen "0.7.0"
             :description "A build monitor with attitude"
             :url "https://github.com/build-canaries/nevergreen"
             :dependencies [[org.clojure/clojure "1.6.0"]
