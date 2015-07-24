@@ -24,6 +24,12 @@ module.exports = {
                                 <td className='tray-settings-table-heading'>uses auth?</td>
                                 <td>{_.trim(this.state.tray.username) === '' ? 'no' : 'yes'}</td>
                             </tr>
+                            <tr>
+                                <td className='tray-settings-table-heading'>Show stage name?</td>
+                                <td>
+                                    <input ref='showStage' className='checkbox no-text-selection' type='checkbox' checked={this.state.tray.showStage} onChange={this.toggleShowStage} />
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
 
