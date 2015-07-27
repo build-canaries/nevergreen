@@ -6,7 +6,7 @@
             [nevergreen.wrap-cache-control :refer [wrap-cache-control]]
             [nevergreen.wrap-cors-headers :refer [wrap-cors-headers]]
             [nevergreen.wrap-exceptions :refer [wrap-exceptions]]
-            [ring-curl.middleware :refer [log-as-curl]]
+            [ring-curl.middleware :refer [wrap-curl-logging]]
             [ring.middleware.gzip :refer :all]))
 
 (def ^:private preflight-response {:status 200})
@@ -27,7 +27,7 @@
 
 (defn wrap-api-middleware [routes]
   (-> routes
-      (log-as-curl :level :info)
+      (wrap-curl-logging {:level :info})
       (wrap-json-body {:keywords? true})
       (wrap-json-response {:pretty true})
       wrap-cache-control

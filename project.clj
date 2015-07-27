@@ -8,7 +8,7 @@
                            [cheshire "5.5.0"]
                            [clj-cctray "0.8.0"]
                            [clj-http "2.0.0"]
-                           [ring-curl "0.2.1"]
+                           [ring-curl "0.3.0"]
                            [ring/ring-json "0.3.1"]
                            [ring/ring-defaults "0.1.5"]
                            [bk/ring-gzip "0.1.1"]
