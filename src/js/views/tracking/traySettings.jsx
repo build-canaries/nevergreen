@@ -50,7 +50,7 @@ module.exports = {
 
         toggleShowStage: function () {
             var updatedTray = React.addons.update(this.state.tray, {
-                showStage: {$set: !this.state.tray.displayText}
+                showStage: {$set: !this.state.tray.showStage}
             })
             trackingRepository.saveTray(this.props.trayId, updatedTray)
             this.setState({tray: updatedTray})

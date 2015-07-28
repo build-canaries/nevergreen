@@ -11,13 +11,22 @@ describe('tray setting', function () {
     })
 
     describe('changes value of show stage', function () {
-        it('on change', function () {
+        it('turns show stage on', function () {
             trackingRepositoryMock.getTray.mockReturnValue({username: '', showStage: false})
             component = TestUtils.renderIntoDocument(<TraySettings trayId={'id'} removeTray={function(){}}/>)
 
             TestUtils.Simulate.change(component.refs.showStage.getDOMNode())
 
             expect(trackingRepositoryMock.saveTray).toBeCalledWith('id', {username: '', showStage: true})
+        })
+
+        it('turns show stage off', function () {
+            trackingRepositoryMock.getTray.mockReturnValue({username: '', showStage: true})
+            component = TestUtils.renderIntoDocument(<TraySettings trayId={'id'} removeTray={function(){}}/>)
+
+            TestUtils.Simulate.change(component.refs.showStage.getDOMNode())
+
+            expect(trackingRepositoryMock.saveTray).toBeCalledWith('id', {username: '', showStage: false})
         })
     })
 })
