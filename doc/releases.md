@@ -2,13 +2,13 @@
 
 Downloads available from [GitHub](https://github.com/build-canaries/nevergreen/releases)
 
-## 0.8.0 - Heat Wave (2015-07-24)
+## 0.8.0 - Heat Wave
 
 ### New Features
 
 * [\#62](https://github.com/build-canaries/nevergreen/issues/62) Show stage name underneath pipeline name
 
-## 0.7.0 - Grape
+## 0.7.0 - Grape (2015-07-24)
 
 ### New Features
 
