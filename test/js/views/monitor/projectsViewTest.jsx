@@ -31,8 +31,8 @@ describe('projects view', function () {
 
             var div = TestUtils.findRenderedDOMComponentWithClass(component, 'monitor-inner-container')
 
-            var expectedText = projects[0].name + ' :: ' + projects[0].stage
-            expect(textFrom(div)).toContain(expectedText)
+            expect(textFrom(div)).toContain(projects[0].name)
+            expect(textFrom(div)).toContain(projects[0].stage)
         })
 
         it('does not show stage name when it is configured off', function () {
@@ -52,7 +52,7 @@ describe('projects view', function () {
 
             var div = TestUtils.findRenderedDOMComponentWithClass(component, 'monitor-inner-container')
 
-            expect(textFrom(div)).not.toContain(projects[0].name + ' ::')
+            expect(textFrom(div)).toBe(projects[0].name)
         })
 
     })

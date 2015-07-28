@@ -14,7 +14,7 @@ var InterestingProject = React.createClass({
     displayText: function () {
         var showStage = trackingRepository.getTray(this.props.trayId).showStage
         if (showStage && this.props.stage) {
-            return this.props.name + ' :: ' + this.props.stage
+            return this.props.name + ' [' + this.props.stage + ']'
         } else {
             return this.props.name
         }
