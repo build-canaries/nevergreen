@@ -2,7 +2,13 @@
 
 Downloads available from [GitHub](https://github.com/build-canaries/nevergreen/releases)
 
-## Grape (0.7.0)
+## 0.8.0 - Heat Wave (2015-07-24)
+
+### New Features
+
+* [\#62](https://github.com/build-canaries/nevergreen/issues/62) Show stage name underneath pipeline name
+
+## 0.7.0 - Grape
 
 ### New Features
 
@@ -21,15 +27,13 @@ Downloads available from [GitHub](https://github.com/build-canaries/nevergreen/r
 * [\#84](https://github.com/build-canaries/nevergreen/issues/84) Cross site AJAX requests don't work
 * [\#95](https://github.com/build-canaries/nevergreen/issues/95) Custom AES keys are ignored
 
-## Fuzzy Wuzzy
-
-## 0.6.1
+## 0.6.1 - Fuzzy Wuzzy (2015-06-17)
 
 ### Improvements
 
 * [\#83](https://github.com/build-canaries/nevergreen/issues/83) An incorrect AES key is silently ignored
 
-## 0.6.0
+## 0.6.0 - Fuzzy Wuzzy (2015-07-04)
 
 ### New Features
 
@@ -56,7 +60,7 @@ Downloads available from [GitHub](https://github.com/build-canaries/nevergreen/r
 * [\#74](https://github.com/build-canaries/nevergreen/issues/74) Use JSCS to check JS style
 * [\#55](https://github.com/build-canaries/nevergreen/issues/55) Shows a thumbnail preview for success images
 
-## Eggplant (0.5.0)
+## 0.5.0 - Eggplant (2015-02-20)
 
 ### New Features
 
@@ -69,7 +73,7 @@ Downloads available from [GitHub](https://github.com/build-canaries/nevergreen/r
 * [\#43](https://github.com/build-canaries/nevergreen/issues/43) Auto detect server type better
 * [\#48](https://github.com/build-canaries/nevergreen/issues/48) Cache busting for releases
 
-## Desert Sand (0.4.0)
+## 0.4.0 - Desert Sand (2015-01-30)
 
 ### New Features
 
@@ -86,7 +90,7 @@ Downloads available from [GitHub](https://github.com/build-canaries/nevergreen/r
 * [\#36](https://github.com/build-canaries/nevergreen/issues/36) A minimal working page has been added allowing developers to quickly create their own monitors
 * [\#41](https://github.com/build-canaries/nevergreen/issues/41) The new label no longer appears on the first load of a cctray
 
-## Canary (0.3.0)
+## 0.3.0 - Canary (2014-12-08)
 
 ### New Features
 
@@ -100,7 +104,7 @@ Downloads available from [GitHub](https://github.com/build-canaries/nevergreen/r
 * [\#23](https://github.com/build-canaries/nevergreen/issues/23) First load does not auto-save included projects
 * [\#18](https://github.com/build-canaries/nevergreen/issues/18) Make Apache cctray url be the default in the config
 
-## Burnt Orange (0.2.0)
+## 0.2.0 - Burnt Orange (2014-11-30)
 
 ### New Features
 
@@ -116,6 +120,6 @@ Downloads available from [GitHub](https://github.com/build-canaries/nevergreen/r
 * [\#19](https://github.com/build-canaries/nevergreen/issues/19) Introduce Browserify for organising the JS code
 * [\#12](https://github.com/build-canaries/nevergreen/issues/12) Use the clj-cctray library
 
-## Atomic Tangerine (0.1.0)
+## 0.1.0 - Atomic Tangerine (2014-11-24)
 
 Initial release!
