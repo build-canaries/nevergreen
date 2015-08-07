@@ -21,7 +21,12 @@ module.exports = {
                     <div className='testing-projects tracking-cctray-group-build-items'>
                         {
                             this.props.projects.map(function (project) {
-                                return <AvailableProject key={project.name} project={project} selectProject={this.selectProject.bind(this, project.name)}/>
+                                return <AvailableProject key={project.name}
+                                                         name={project.name}
+                                                         included={project.included}
+                                                         wasRemoved={project.wasRemoved}
+                                                         isNew={project.isNew}
+                                                         selectProject={this.selectProject.bind(this, project.name)}/>
                             }.bind(this))
                         }
                     </div>

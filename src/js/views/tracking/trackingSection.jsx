@@ -5,7 +5,7 @@ var trays = require('../../controllers/trays')
 var securityGateway = require('../../gateways/securityGateway')
 var trackingRepository = require('../../storage/trackingRepository')
 var AddTray = require('./addTray').AddTray
-var Tray = require('./trayContainer').TrayContainer
+var Tray = require('./tray').Tray
 
 module.exports = {
     TrackingSection: React.createClass({

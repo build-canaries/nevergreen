@@ -8,7 +8,7 @@ var TraySettings = require('./traySettings').TraySettings
 var AsyncActionWrapper = require('../general/asyncActionWrapper').AsyncActionWrapper
 
 module.exports = {
-    TrayContainer: React.createClass({
+    Tray: React.createClass({
         propTypes: {
             trayId: React.PropTypes.string.isRequired,
             removeTray: React.PropTypes.func.isRequired
