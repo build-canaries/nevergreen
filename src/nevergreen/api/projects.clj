@@ -11,6 +11,9 @@
   (or (blank? url)
       (not (re-find #"https?://" url))))
 
+(defn- remove-jobs [projects]
+  (map #(dissoc % :job) (filter #(not (:job %)) projects)))
+
 (defn- ensure-url-is-valid [{:keys [url]}]
   (if (invalid-url? url)
     (throw (IllegalArgumentException. (str url " is not a valid url! Only http(s) urls are supported.")))))
@@ -28,24 +31,23 @@
 (defn- add-tray-id [tray-id projects]
   (map #(merge {:tray-id tray-id} %) projects))
 
-(defn fetch-interesting [tray]
+(defn get-all [tray]
   (ensure-url-is-valid tray)
-  (let [decrypted-password (if-not (blank? (:password tray)) (crypt/decrypt (:password tray)))]
-    (->> (parser/get-projects
-           (http-get (:url tray) (set-auth-header (:username tray) decrypted-password))
-           {:normalise true :server (get-server-type tray)})
-         (filtering/interesting)
-         (filtering/by-name (:included tray))
-         (add-tray-id (:trayId tray)))))
+  (let [server-type (get-server-type tray)
+        decrypted-password (if-not (blank? (:password tray)) (crypt/decrypt (:password tray)))]
+    (->>
+      (parser/get-projects
+        (http-get (:url tray) (set-auth-header (:username tray) decrypted-password))
+        {:normalise true :server server-type})
+      (remove-jobs))))
+
+(defn fetch-interesting [tray]
+  (->> (get-all tray)
+       (filtering/interesting)
+       (filtering/by-name (:included tray))
+       (add-tray-id (:trayId tray))))
 
 (defn get-interesting [trays]
   (if (= (count trays) 1)
     (fetch-interesting (first trays))
     (flatten (pmap fetch-interesting trays))))
-
-(defn get-all [tray]
-  (ensure-url-is-valid tray)
-  (let [server-type (get-server-type tray)
-        decrypted-password (if-not (blank? (:password tray)) (crypt/decrypt (:password tray)))]
-    (parser/get-projects (http-get (:url tray) (set-auth-header (:username tray) decrypted-password))
-                         {:normalise true :server server-type})))

@@ -14,19 +14,10 @@
        (fact "throws exception if the url is not http[s]"
              (subject/get-interesting [{:url "not-http"}]) => (throws Exception))
 
-       (fact "with authentication"
-             (subject/get-interesting [{:trayId "a-tray" :included ["project-1"] :url valid-url :username "a-user" :password "encrypted-password"}]) => (list {:name "project-1" :prognosis :sick :tray-id "a-tray"})
+       (fact "removes healthy projects"
+             (subject/get-interesting [{:trayId "a-tray" :included ["project-1"] :url valid-url}]) => (list)
              (provided
-               (parser/get-projects ..stream.. anything) => [{:name "project-1" :prognosis :sick}]
-               (crypt/decrypt "encrypted-password") => password
-               (security/basic-auth-header "a-user" password) => ..auth-header..
-               (http/http-get valid-url ..auth-header..) => ..stream..))
-
-       (fact "without authentication"
-             (subject/get-interesting [{:trayId "a-tray" :included ["project-1"] :url valid-url}]) => (list {:name "project-1" :prognosis :sick :tray-id "a-tray"})
-             (provided
-               (parser/get-projects ..stream.. anything) => [{:name "project-1" :prognosis :sick}]
-               (http/http-get valid-url nil) => ..stream..))
+               (subject/get-all anything) => [{:name "project-1" :prognosis :healthy}]))
 
        (facts "uses pmap to parallelise the work"
               (fact "if multiple projects are given"
@@ -40,11 +31,10 @@
                       (pmap anything anything) => irrelevant :times 0
                       (subject/fetch-interesting anything) => irrelevant)))
 
-       (fact "handles no tray being given"
-                (subject/get-interesting [{:included ["project"] :url valid-url}]) => (list {:tray-id nil :name "project" :prognosis :sick})
-                (provided
-                  (parser/get-projects ..stream.. anything) => [{:name "project" :prognosis :sick}]
-                  (http/http-get valid-url nil) => ..stream..)))
+       (fact "handles no tray id being given"
+             (subject/get-interesting [{:included ["project"] :url valid-url}]) => (list {:tray-id nil :name "project" :prognosis :sick})
+             (provided
+               (subject/get-all anything) => [{:name "project" :prognosis :sick}])))
 
 (facts "it gets all projects"
        (fact "throws exception if the url is not http[s]"
@@ -72,7 +62,15 @@
                (parser/get-projects ..stream.. anything) => [{:name "project-1" :prognosis :sick}]
                (http/http-get valid-url nil) => ..stream..
                (crypt/decrypt anything) => anything :times 0
-               (security/basic-auth-header anything anything) => anything :times 0)))
+               (security/basic-auth-header anything anything) => anything :times 0))
+
+       (fact "removes any jobs"
+             (subject/get-all {:url valid-url}) => (list {:name "project-1" :stage "test"})
+             (provided
+               (parser/get-projects ..stream.. anything) => [{:name "project-1" :stage "test" :job nil}
+                                                             {:name "project-1" :stage "test" :job "unit"}
+                                                             {:name "project-1" :stage "test" :job "integration"}]
+               (http/http-get valid-url nil) => ..stream..)))
 
 (facts "gets the server type"
        (fact "converts known server value to a symbol"
