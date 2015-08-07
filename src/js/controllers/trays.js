@@ -1,19 +1,19 @@
 var _ = require('lodash')
 
-function includes(tray, projectName) {
-    return _.indexOf(tray.includedProjects, projectName) >= 0
+function includes(includedProjects, projectName) {
+    return _.indexOf(includedProjects, projectName) >= 0
 }
 
-function seen(tray, projectName) {
-    return _.indexOf(tray.previousProjects, projectName) >= 0
+function seen(previousProjects, projectName) {
+    return _.indexOf(previousProjects, projectName) >= 0
 }
 
 function retrieved(retrievedProjects, projectName) {
     return _.indexOf(retrievedProjects, projectName) >= 0
 }
 
-function firstTimeSeen(tray, retrievedProjects, projectName) {
-    return retrieved(retrievedProjects, projectName) && tray.previousProjects.length > 0 && !seen(tray, projectName)
+function firstTimeSeen(previousProjects, retrievedProjects, projectName) {
+    return retrieved(retrievedProjects, projectName) && previousProjects.length > 0 && !seen(previousProjects, projectName)
 }
 
 function removed(retrievedProjects, projectName) {
@@ -27,13 +27,13 @@ function sort(projects) {
 }
 
 module.exports = {
-    projects: function (tray, retrievedProjects) {
-        var allProjects = sort(_.union(tray.includedProjects, tray.previousProjects, retrievedProjects))
+    projects: function (includedProjects, previousProjects, retrievedProjects) {
+        var allProjects = sort(_.union(includedProjects, previousProjects, retrievedProjects))
         return allProjects.map(function (name) {
             return {
                 name: name,
-                included: includes(tray, name),
-                isNew: firstTimeSeen(tray, retrievedProjects, name),
+                included: includes(includedProjects, name),
+                isNew: firstTimeSeen(previousProjects, retrievedProjects, name),
                 wasRemoved: removed(retrievedProjects, name)
             }
         }.bind(this))

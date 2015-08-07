@@ -31,78 +31,43 @@ describe('trays controller', function () {
 
     describe('projects', function () {
         it('includes the project name', function () {
-            var tray = {
-                includedProjects: [],
-                previousProjects: []
-            }
-
-            var actualProjects = trays.projects(tray, ['a'])
+            var actualProjects = trays.projects([], [], ['a'])
 
             expect(actualProjects).toContain(jasmine.objectContaining({name: 'a'}))
         })
 
         it('does not mark project as new if it is the first time the tray was loaded (previous projects is empty)', function () {
-            var tray = {
-                includedProjects: [],
-                previousProjects: []
-            }
-
-            var actualProjects = trays.projects(tray, ['a'])
+            var actualProjects = trays.projects([], [], ['a'])
 
             expect(actualProjects).toContain(jasmine.objectContaining({isNew: false}))
         })
 
         it('marks project as new if not previously loaded but not the first time the tray was loaded', function () {
-            var tray = {
-                includedProjects: [],
-                previousProjects: ['b']
-            }
-
-            var actualProjects = trays.projects(tray, ['a'])
+            var actualProjects = trays.projects([], ['b'], ['a'])
 
             expect(actualProjects).toContain(jasmine.objectContaining({isNew: true}))
         })
 
         it('marks project as included', function () {
-            var tray = {
-                includedProjects: ['a'],
-                previousProjects: []
-            }
-
-            var actualProjects = trays.projects(tray, ['a'])
+            var actualProjects = trays.projects(['a'], [], ['a'])
 
             expect(actualProjects).toContain(jasmine.objectContaining({included: true}))
         })
 
         it('marks project as not included', function () {
-            var tray = {
-                includedProjects: [],
-                previousProjects: []
-            }
-
-            var actualProjects = trays.projects(tray, ['a'])
+            var actualProjects = trays.projects([], [], ['a'])
 
             expect(actualProjects).toContain(jasmine.objectContaining({included: false}))
         })
 
         it('marks project as not included', function () {
-            var tray = {
-                includedProjects: [],
-                previousProjects: []
-            }
-
-            var actualProjects = trays.projects(tray, ['a'])
+            var actualProjects = trays.projects([], [], ['a'])
 
             expect(actualProjects).toContain(jasmine.objectContaining({included: false}))
         })
 
         it('marks project as removed', function () {
-            var tray = {
-                includedProjects: [],
-                previousProjects: ['a']
-            }
-
-            var actualProjects = trays.projects(tray, ['b'])
+            var actualProjects = trays.projects([], ['a'], ['b'])
 
             expect(actualProjects).toContain(jasmine.objectContaining({
                 name: 'a',
@@ -111,12 +76,7 @@ describe('trays controller', function () {
         })
 
         it('merges projects from included, previous and retrieved', function () {
-            var tray = {
-                includedProjects: ['a', 'b'],
-                previousProjects: ['c', 'd']
-            }
-
-            var actualProjects = trays.projects(tray, ['e', 'f'])
+            var actualProjects = trays.projects(['a', 'b'], ['c', 'd'], ['e', 'f'])
 
             expect(actualProjects).toEqual([
                 jasmine.objectContaining({name: 'a'}),

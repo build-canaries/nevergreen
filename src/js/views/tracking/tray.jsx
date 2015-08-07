@@ -1,11 +1,8 @@
 var React = require('react')
 var _ = require('lodash')
 var trackingRepository = require('../../storage/trackingRepository')
-var projectsGateway = require('../../gateways/projectsGateway')
-var trays = require('../../controllers/trays')
 var Projects = require('./projects').Projects
 var TraySettings = require('./traySettings').TraySettings
-var AsyncActionWrapper = require('../general/asyncActionWrapper').AsyncActionWrapper
 
 module.exports = {
     Tray: React.createClass({
@@ -18,7 +15,6 @@ module.exports = {
             return {
                 showSettings: false,
                 tray: trackingRepository.getTray(this.props.trayId),
-                retrievedProjects: [],
                 hidden: false
             }
         },
@@ -29,9 +25,7 @@ module.exports = {
             if (this.state.showSettings) {
                 content = <TraySettings trayId={this.props.trayId} removeTray={this.props.removeTray}/>
             } else {
-                var projects = trays.projects(this.state.tray, this.state.retrievedProjects)
-                var doneView = <Projects projects={projects} includeAll={this.includeAll} excludeAll={this.excludeAll} selectProject={this.selectProject}/>
-                content = <AsyncActionWrapper promise={this.fetchProjects} doneView={doneView}/>
+                content = <Projects tray={this.state.tray} updateTray={this.updateTray}/>
             }
 
             var hideText = this.state.hidden ? 'expand tray' : 'collapse tray'
@@ -63,53 +57,18 @@ module.exports = {
             this.setState({hidden: !this.state.hidden})
         },
 
-        selectProject: function (name, included) {
-            var command
-            if (included) {
-                command = {$push: [name]}
-            } else {
-                command = {$splice: [[this.state.tray.includedProjects.indexOf(name), 1]]}
-            }
-
-            var updatedTray = React.addons.update(this.state.tray, {
-                includedProjects: command
-            })
-            this.setState({tray: updatedTray})
-        },
-
-        includeAll: function () {
-            var updatedTray = React.addons.update(this.state.tray, {
-                includedProjects: {$set: this.state.retrievedProjects}
-            })
-            this.setState({tray: updatedTray})
-        },
-
-        excludeAll: function () {
-            var updatedTray = React.addons.update(this.state.tray, {
-                includedProjects: {$set: []}
-            })
-            this.setState({tray: updatedTray})
-        },
-
         componentWillUpdate: function (nextProps, nextState) {
             if (this.state.tray !== nextState.tray) {
-                var updatedTray = _.assign({}, nextState.tray, {previousProjects: this.state.retrievedProjects})
-                trackingRepository.saveTray(this.props.trayId, updatedTray)
+                trackingRepository.saveTray(this.props.trayId, nextState.tray)
             }
         },
 
-        projectsLoaded: function (data) {
-            if (this.isMounted()) {
-                var retrievedProjectNames = data.map(function (project) {
-                    return project.name
-                })
-                this.setState({retrievedProjects: retrievedProjectNames})
-            }
-        },
-
-        fetchProjects: function () {
-            return projectsGateway.fetchAll(this.state.tray)
-                .done(this.projectsLoaded)
+        updateTray: function (includedProjects, retrievedProjects) {
+            var updatedTray = React.addons.update(this.state.tray, {
+                includedProjects: {$set: includedProjects},
+                previousProjects: {$set: retrievedProjects}
+            })
+            this.setState({tray: updatedTray})
         }
     })
 
