@@ -11,19 +11,19 @@
     "node": "0.10.x"
   },
   "devDependencies": {
-    "chromedriver": "2.15.1",
-    "esprima-fb": "^15001.1.0-dev-harmony-fb",
+    "chromedriver": "2.16.0",
+    "esprima-fb": "15001.1001.0-dev-harmony-fb",
     "jasmine-core": "2.3.4",
-    "jest-cli": "^0.4.15",
-    "jscs": "^1.13.1",
+    "jest-cli": "0.4.19",
+    "jscs": "2.1.0",
     "jsxhint": "0.15.1",
     "watch": "0.16.0"
   },
   "dependencies": {
     "browserify": "^9.0.3",
     "jquery": "2.1.4",
-    "lodash": "3.9.3",
-    "minifyify": "7.0.1",
+    "lodash": "3.10.1",
+    "minifyify": "7.0.5",
     "node-sass": "3.2.0",
     "node-uuid": "1.4.3",
     "react": "0.13.3",
@@ -31,7 +31,7 @@
     "react-tools": "0.13.3",
     "reactify": "1.1.1",
     "scale-text": "0.2.2",
-    "semver": "^5.0.1"
+    "semver": "5.0.1"
   },
   "jest": {
     "setupEnvScriptFile": "<rootDir>/test/js/jest/localStorage.js",
