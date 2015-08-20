@@ -9,7 +9,7 @@
                            [clj-cctray "0.9.0"]
                            [clj-http "2.0.0"]
                            [ring-curl "0.3.0"]
-                           [ring/ring-json "0.3.1"]
+                           [ring/ring-json "0.4.0"]
                            [ring/ring-defaults "0.1.5"]
                            [bk/ring-gzip "0.1.1"]
                            [base64-clj "0.1.1"]]
@@ -25,7 +25,7 @@
                                                    [lein-ancient "0.6.7"]
                                                    [lein-idea "1.0.1"]]
                                     :dependencies [[midje "1.7.0"]
-                                                   [clj-webdriver/clj-webdriver "0.6.1"]
+                                                   [clj-webdriver/clj-webdriver "0.7.2"]
                                                    [com.github.detro/phantomjsdriver "1.2.0"]
                                                    [ring/ring-mock "0.2.0"]]}
                        :production {:env {:production true}}})
