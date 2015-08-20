@@ -8,6 +8,10 @@ Downloads available from [GitHub](https://github.com/build-canaries/nevergreen/r
 
 * [\#62](https://github.com/build-canaries/nevergreen/issues/62) Show stage name underneath pipeline name
 
+### Improvements
+
+* [\#87](https://github.com/build-canaries/nevergreen/issues/87) Passwords are exposed in request logs
+
 ## 0.7.0 - Grape (2015-07-24)
 
 ### New Features

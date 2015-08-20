@@ -6,6 +6,7 @@
             [nevergreen.wrap-cache-control :refer [wrap-cache-control]]
             [nevergreen.wrap-cors-headers :refer [wrap-cors-headers]]
             [nevergreen.wrap-exceptions :refer [wrap-exceptions]]
+            [nevergreen.wrap-redact-sensitive :refer [wrap-redact-sensitive wrap-restore-sensitive]]
             [ring-curl.middleware :refer [wrap-curl-logging]]
             [ring.middleware.gzip :refer :all]))
 
@@ -25,9 +26,15 @@
     (OPTIONS "/api/encrypt" [] preflight-response)
     (POST "/api/encrypt" {body :body} {:body (security/encrypt-password body)})))
 
+(defn- wrap-logging [handler]
+  (-> handler
+      wrap-restore-sensitive
+      (wrap-curl-logging {:level :info})
+      wrap-redact-sensitive))
+
 (defn wrap-api-middleware [routes]
   (-> routes
-      (wrap-curl-logging {:level :info})
+      wrap-logging
       (wrap-json-body {:keywords? true})
       (wrap-json-response {:pretty true})
       wrap-cache-control
