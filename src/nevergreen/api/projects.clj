@@ -5,14 +5,18 @@
             [nevergreen.http :refer [http-get]]
             [nevergreen.servers :as servers]
             [nevergreen.security :as security]
-            [nevergreen.crypto :as crypt]))
+            [nevergreen.crypto :as crypt]
+            [base64-clj.core :as base64]))
 
 (defn invalid-url? [url]
   (or (blank? url)
       (not (re-find #"https?://" url))))
 
-(defn- remove-jobs [projects]
-  (map #(dissoc % :job) (filter #(not (:job %)) projects)))
+(defn- generate-project-id [project]
+  (base64/encode (str (:name project) "/" (:stage project) "/" (:job project))))
+
+(defn- add-project-ids [projects]
+  (map #(assoc % :project-id (generate-project-id %)) projects))
 
 (defn- ensure-url-is-valid [{:keys [url]}]
   (if (invalid-url? url)
@@ -39,7 +43,7 @@
       (parser/get-projects
         (http-get (:url tray) (set-auth-header (:username tray) decrypted-password))
         {:normalise true :server server-type})
-      (remove-jobs))))
+      (add-project-ids))))
 
 (defn fetch-interesting [tray]
   (->> (get-all tray)

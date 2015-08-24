@@ -41,7 +41,9 @@
              (subject/get-all [{:url "not-http"}]) => (throws Exception))
 
        (fact "with authentication"
-             (subject/get-all {:url valid-url :username "a-user" :password "encrypted-password"}) => (list {:name "project-1" :prognosis :sick})
+             (subject/get-all {:url valid-url :username "a-user" :password "encrypted-password"}) => (contains (list (contains {:name       "project-1"
+                                                                                                                                :prognosis  :sick
+                                                                                                                                :project-id anything})))
              (provided
                (parser/get-projects ..stream.. anything) => [{:name "project-1" :prognosis :sick}]
                (crypt/decrypt "encrypted-password") => password
@@ -49,7 +51,9 @@
                (http/http-get valid-url ..auth-header..) => ..stream..))
 
        (fact "without authentication"
-             (subject/get-all {:url valid-url}) => (list {:name "project-1" :prognosis :sick})
+             (subject/get-all {:url valid-url}) => (contains (list (contains {:name       "project-1"
+                                                                              :prognosis  :sick
+                                                                              :project-id anything})))
              (provided
                (parser/get-projects ..stream.. anything) => [{:name "project-1" :prognosis :sick}]
                (http/http-get valid-url nil) => ..stream..
@@ -57,20 +61,14 @@
                (security/basic-auth-header anything anything) => anything :times 0))
 
        (fact "without authentication if blank username and password"
-             (subject/get-all {:url valid-url :username "" :password ""}) => (list {:name "project-1" :prognosis :sick})
+             (subject/get-all {:url valid-url :username "" :password ""}) => (contains (list (contains {:name       "project-1"
+                                                                                                        :prognosis  :sick
+                                                                                                        :project-id anything})))
              (provided
                (parser/get-projects ..stream.. anything) => [{:name "project-1" :prognosis :sick}]
                (http/http-get valid-url nil) => ..stream..
                (crypt/decrypt anything) => anything :times 0
-               (security/basic-auth-header anything anything) => anything :times 0))
-
-       (fact "removes any jobs"
-             (subject/get-all {:url valid-url}) => (list {:name "project-1" :stage "test"})
-             (provided
-               (parser/get-projects ..stream.. anything) => [{:name "project-1" :stage "test" :job nil}
-                                                             {:name "project-1" :stage "test" :job "unit"}
-                                                             {:name "project-1" :stage "test" :job "integration"}]
-               (http/http-get valid-url nil) => ..stream..)))
+               (security/basic-auth-header anything anything) => anything :times 0)))
 
 (facts "gets the server type"
        (fact "converts known server value to a symbol"
