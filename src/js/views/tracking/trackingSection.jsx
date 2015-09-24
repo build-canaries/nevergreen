@@ -1,74 +1,65 @@
 var React = require('react/addons')
-var _ = require('lodash')
-var uuid = require('node-uuid')
-var trays = require('../../controllers/trays')
-var securityGateway = require('../../gateways/securityGateway')
-var trackingRepository = require('../../storage/trackingRepository')
-var AddTray = require('./addTray').AddTray
-var Tray = require('./tray').Tray
+var AddTray = require('./addTray')
+var Tray = require('./tray')
+var TrayStore = require('../../stores/TrayStore')
+var TrayActions = require('../../actions/TrayActions')
 
-module.exports = {
-    TrackingSection: React.createClass({
-        getInitialState: function () {
-            return {trays: trackingRepository.getTrays()}
-        },
-
-        render: function () {
-            return (
-                <section className='dashboard-main-section active'>
-                    <h2 className='visually-hidden'>Tracking</h2>
-
-                    <fieldset className='tracking-cctray-group'>
-                        <AddTray addTray={this.addTray}/>
-
-                        <div>
-                            {
-                                _.map(this.state.trays, function (trayId) {
-                                    return <Tray key={trayId} trayId={trayId} removeTray={this.removeTray}/>
-                                }, this)
-                            }
-                        </div>
-                    </fieldset>
-                </section>
-            )
-        },
-
-        addTray: function (trayToAdd) {
-            if (trays.requiresAuth(trayToAdd)) {
-                securityGateway.encryptPassword(trayToAdd.password).done(function (data) {
-                    this.saveTrays(_.extend({}, trayToAdd, data))
-                }.bind(this))
-            } else {
-                this.saveTrays(trayToAdd)
-            }
-        },
-
-        removeTray: function (trayId) {
-            var trayIndex = this.state.trays.indexOf(trayId)
-            var updatedTrays = React.addons.update(this.state.trays, {$splice: [[trayIndex, 1]]})
-            this.setState({trays: updatedTrays})
-        },
-
-        componentWillUpdate: function (nextProps, nextState) {
-            if (this.state.trays !== nextState.trays) {
-                trackingRepository.saveTrays(nextState.trays)
-                _.forEach(_.difference(this.state.trays, nextState.trays), function (id) {
-                    trackingRepository.removeTray(id)
-                })
-            }
-        },
-
-        saveTrays: function (newTray) {
-            var trayId = uuid.v4()
-
-            trackingRepository.saveTray(trayId, {
-                url: newTray.url,
-                username: newTray.username,
-                password: newTray.password
-            })
-
-            var newTrays = React.addons.update(this.state.trays, {$push: [trayId]})
-            this.setState({trays: newTrays})
-        }
-    })
+function getStateFromStore() {
+  return {
+    trays: TrayStore.getAll()
+  }
 }
+
+module.exports = React.createClass({
+  getInitialState: function () {
+    return getStateFromStore()
+  },
+
+  componentDidMount: function () {
+    TrayStore.addListener(this._onChange)
+  },
+
+  componentWillUnmount: function () {
+    TrayStore.removeListener(this._onChange)
+  },
+
+  render: function () {
+    return (
+      <section className='dashboard-main-section active'>
+        <h2 className='visually-hidden'>Tracking</h2>
+
+        <fieldset className='tracking-cctray-group'>
+          <AddTray addTray={this._addTray}/>
+
+          <div>
+            {
+              this.state.trays.map(function (tray) {
+                return <Tray key={tray.id} tray={tray}
+                             removeTray={this._removeTray.bind(this, tray.id)}
+                             refreshTray={this._refreshTray.bind(this, tray)}/>
+              }, this)
+            }
+          </div>
+        </fieldset>
+      </section>
+    )
+  },
+
+  _addTray: function (trayToAdd) {
+    TrayActions.addTray(trayToAdd.url, trayToAdd.username, trayToAdd.password)
+  },
+
+  _removeTray: function (trayId) {
+    TrayActions.removeTray(trayId)
+  },
+
+  _refreshTray: function (tray) {
+    TrayActions.refreshTray(tray)
+  },
+
+  _onChange: function () {
+    if (this.isMounted()) {
+      this.setState(getStateFromStore())
+    }
+  }
+})

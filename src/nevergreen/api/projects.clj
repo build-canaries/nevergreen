@@ -1,6 +1,7 @@
 (ns nevergreen.api.projects
   (:require [clj-cctray.core :as parser]
             [clj-cctray.filtering :as filtering]
+            [clj-cctray.util :refer [in?]]
             [clojure.string :refer [blank?]]
             [nevergreen.http :refer [http-get]]
             [nevergreen.servers :as servers]
@@ -17,6 +18,9 @@
 
 (defn- add-project-ids [projects]
   (map #(assoc % :project-id (generate-project-id %)) projects))
+
+(defn filter-by-ids [ids projects]
+  (filter #(in? ids (:project-id %)) projects))
 
 (defn- ensure-url-is-valid [{:keys [url]}]
   (if (invalid-url? url)
@@ -48,7 +52,7 @@
 (defn fetch-interesting [tray]
   (->> (get-all tray)
        (filtering/interesting)
-       (filtering/by-name (:included tray))
+       (filter-by-ids (:included tray))
        (add-tray-id (:trayId tray))))
 
 (defn get-interesting [trays]

@@ -17,7 +17,7 @@
        (fact "removes healthy projects"
              (subject/get-interesting [{:trayId "a-tray" :included ["project-1"] :url valid-url}]) => (list)
              (provided
-               (subject/get-all anything) => [{:name "project-1" :prognosis :healthy}]))
+               (subject/get-all anything) => [{:project-id "project-1" :prognosis :healthy}]))
 
        (facts "uses pmap to parallelise the work"
               (fact "if multiple projects are given"
@@ -32,9 +32,9 @@
                       (subject/fetch-interesting anything) => irrelevant)))
 
        (fact "handles no tray id being given"
-             (subject/get-interesting [{:included ["project"] :url valid-url}]) => (list {:tray-id nil :name "project" :prognosis :sick})
+             (subject/get-interesting [{:included ["project"] :url valid-url}]) => (list {:tray-id nil :project-id "project" :prognosis :sick})
              (provided
-               (subject/get-all anything) => [{:name "project" :prognosis :sick}])))
+               (subject/get-all anything) => [{:project-id "project" :prognosis :sick}])))
 
 (facts "it gets all projects"
        (fact "throws exception if the url is not http[s]"

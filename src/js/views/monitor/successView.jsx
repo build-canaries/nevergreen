@@ -1,25 +1,23 @@
 var $ = require('jquery')
 var React = require('react')
-var Message = require('./messageComponent').Message
-var Image = require('./imageComponent').Image
-var messagesController = require('../../controllers/messages')
+var Message = require('./messageComponent')
+var Image = require('./imageComponent')
+var SuccessStore = require('../../stores/SuccessStore')
 
-module.exports = {
-    Success: React.createClass({
-        getInitialState: function () {
-            return {message: messagesController.randomMessage()}
-        },
+module.exports = React.createClass({
+  getInitialState: function () {
+    return {message: SuccessStore.randomMessage()}
+  },
 
-        render: function () {
-            if (messagesController.isUrl(this.state.message)) {
-                return <Image url={this.state.message}/>
-            } else {
-                return <Message message={this.state.message}/>
-            }
-        },
+  render: function () {
+    if (this.state.message.isImage) {
+      return <Image url={this.state.message.value}/>
+    } else {
+      return <Message message={this.state.message.value}/>
+    }
+  },
 
-        componentWillMount: function () {
-            this.setState({message: messagesController.randomMessage()})
-        }
-    })
-}
+  componentWillMount: function () {
+    this.setState({message: SuccessStore.randomMessage()})
+  }
+})

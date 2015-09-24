@@ -1,119 +1,96 @@
 var React = require('react')
-var projectsGateway = require('../../gateways/projectsGateway')
-var trays = require('../../controllers/trays')
-var AvailableProject = require('./availableProject').AvailableProject
-var ErrorView = require('../general/errorView').SimpleMessage
-var Loading = require('../general/loading').Bars
+var AvailableProject = require('./availableProject')
+var _ = require('lodash')
+var SelectedProjectsStore = require('../../stores/SelectedProjectsStore')
+var SelectProjectActions = require('../../actions/SelectProjectActions')
+var FetchedProjectsStore = require('../../stores/FetchedProjectsStore')
 
-module.exports = {
-    Projects: React.createClass({
-        propTypes: {
-            tray: React.PropTypes.object.isRequired,
-            updateTray: React.PropTypes.func.isRequired
-        },
-
-        getInitialState: function () {
-            return {
-                loaded: false,
-                error: false,
-                retrievedProjects: this.props.tray.previousProjects,
-                includedProjects: this.props.tray.includedProjects
-            }
-        },
-
-        componentWillMount: function () {
-            projectsGateway.fetchAll(this.props.tray)
-                .done(this.projectsLoaded)
-                .fail(this.updateFailed)
-        },
-
-        render: function () {
-            var content
-
-            if (!this.state.loaded) {
-                content = <Loading />
-
-            } else if (this.state.error) {
-                content = <ErrorView status={this.state.error.status} reason={this.state.error.responseText}/>
-
-            } else {
-                var projects = trays.projects(this.state.includedProjects, this.props.tray.previousProjects, this.state.retrievedProjects)
-
-                content = (
-                    <fieldset className='tracking-cctray-group-builds tray-content'>
-                        <legend className='tracking-cctray-group-builds-legend'>Available Projects</legend>
-                        <div className='tracking-cctray-group-build-toggles'>
-                            <button className='testing-include-all button' onClick={this.includeAll}>Include all</button>
-                            <button className='button' onClick={this.excludeAll}>Exclude all</button>
-                        </div>
-                        <div className='testing-projects tracking-cctray-group-build-items'>
-                            {
-                                projects.map(function (project) {
-                                    return <AvailableProject key={project.name}
-                                                             name={project.name}
-                                                             included={project.included}
-                                                             wasRemoved={project.wasRemoved}
-                                                             isNew={project.isNew}
-                                                             selectProject={this.selectProject.bind(this, project.name)}/>
-                                }.bind(this))
-                            }
-                        </div>
-                    </fieldset>
-                )
-            }
-
-            return content
-        },
-
-        selectProject: function (name, included) {
-            var command
-            if (included) {
-                command = {$push: [name]}
-            } else {
-                command = {$splice: [[this.state.includedProjects.indexOf(name), 1]]}
-            }
-
-            var updatedIncludedProjects = React.addons.update(this.state.includedProjects, command)
-            this.setState({includedProjects: updatedIncludedProjects})
-        },
-
-        includeAll: function () {
-            this.setState({includedProjects: this.state.retrievedProjects})
-        },
-
-        excludeAll: function () {
-            this.setState({includedProjects: []})
-        },
-
-        projectsLoaded: function (data) {
-            if (this.isMounted()) {
-                var retrievedProjectNames = data.map(function (project) {
-                    return project.name
-                })
-                this.setState({
-                    loaded: true,
-                    error: false,
-                    retrievedProjects: retrievedProjectNames
-                })
-            }
-        },
-
-        updateFailed: function (data) {
-            if (this.isMounted()) {
-                this.setState({
-                    loaded: true,
-                    error: data
-                })
-            }
-        },
-
-        componentWillUpdate: function (nextProps, nextState) {
-            if (this.state.includedProjects !== nextState.includedProjects
-                || this.state.retrievedProjects !== nextState.retrievedProjects)
-            {
-                this.props.updateTray(nextState.includedProjects, nextState.retrievedProjects)
-            }
-        }
-    })
-
+function projectName(project) {
+  return project.name
 }
+
+function getStateFromStore(trayId) {
+  return {
+    projects: FetchedProjectsStore.getAll(trayId),
+    selectedProjects: SelectedProjectsStore.getForTray(trayId)
+  }
+}
+
+module.exports = React.createClass({
+  propTypes: {
+    trayId: React.PropTypes.string.isRequired,
+    refreshTray: React.PropTypes.func.isRequired
+  },
+
+  getInitialState: function () {
+    return getStateFromStore(this.props.trayId)
+  },
+
+  componentDidMount: function () {
+    SelectedProjectsStore.addListener(this._onChange)
+    FetchedProjectsStore.addListener(this._onChange)
+  },
+
+  componentWillUnmount: function () {
+    SelectedProjectsStore.removeListener(this._onChange)
+    FetchedProjectsStore.removeListener(this._onChange)
+  },
+
+  render: function () {
+    return (
+      <fieldset className='tracking-cctray-group-builds tray-content'>
+        <legend className='tracking-cctray-group-builds-legend'>Available Projects</legend>
+        <div className='tracking-cctray-group-build-toggles'>
+          <button className='testing-include-all button' onClick={this._includeAll}>Include all</button>
+          <button className='button' onClick={this._excludeAll}>Exclude all</button>
+          <button className='button' onClick={this.props.refreshTray}>Refresh</button>
+        </div>
+        <div className='testing-projects tracking-cctray-group-build-items'>
+          {
+            _.sortBy(this.state.projects, projectName).map(function (project) {
+              var included = _.indexOf(this.state.selectedProjects, project.id) >= 0
+
+              return <AvailableProject key={project.id}
+                                       name={project.name}
+                                       included={included}
+                                       wasRemoved={project.wasRemoved}
+                                       isNew={project.isNew}
+                                       selectProject={this._selectProject.bind(this, project.id)}/>
+            }, this)
+          }
+        </div>
+      </fieldset>
+    )
+  },
+
+  _selectProject: function (projectId, included) {
+    if (included) {
+      SelectProjectActions.selectProject(this.props.trayId, [projectId])
+    } else {
+      SelectProjectActions.removeProject(this.props.trayId, [projectId])
+    }
+  },
+
+  _includeAll: function () {
+    var projectIds = this.state.projects
+      .filter(function (project) {
+        return !project.wasRemoved
+      }).map(function (project) {
+        return project.id
+      })
+    SelectProjectActions.selectProject(this.props.trayId, projectIds)
+  },
+
+  _excludeAll: function () {
+    var projectIds = this.state.projects.map(function (project) {
+      return project.id
+    })
+    SelectProjectActions.removeProject(this.props.trayId, projectIds)
+  },
+
+  _onChange: function () {
+    if (this.isMounted()) {
+      this.setState(getStateFromStore(this.props.trayId))
+    }
+  }
+})
