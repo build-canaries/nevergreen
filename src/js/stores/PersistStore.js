@@ -101,8 +101,12 @@ function dispatchActions(tray) {
   if (tray.password) {
     TrayActions._dispatchPasswordEncrypted(tray.id, tray.password)
   }
-  TrayActions._dispatchProjectsLoaded(tray.id, tray.projects)
-  SelectProjectActions.selectProject(tray.id, tray.selected)
+  if (tray.projects) {
+    TrayActions._dispatchProjectsLoaded(tray.id, tray.projects)
+  }
+  if (tray.selected) {
+    SelectProjectActions.selectProject(tray.id, tray.selected)
+  }
   TrayActions.refreshTray(tray)
 }
 
