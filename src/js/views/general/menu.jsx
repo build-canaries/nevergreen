@@ -7,7 +7,7 @@ var MenuItem = React.createClass({
   render: function () {
     return (
       <li>
-        <Link id={this.props.id} to={this.props.id} className='navigation-list-item'>
+        <Link id={this.props.id} to={'/' + this.props.id} className='navigation-list-item'>
           <span className={'navigation-list-item-icon ' + this.props.iconClass}></span>
           <span className='navigation-list-item-title'>{this.props.title}</span>
         </Link>
@@ -20,10 +20,10 @@ module.exports = React.createClass({
   getDefaultProps: function () {
     return {
       items: [
-        {id: '/monitor', iconClass: 'eye', title: 'Monitor'},
-        {id: '/tracking', iconClass: 'drawer2', title: 'Tracking'},
-        {id: '/success', iconClass: 'checkmark', title: 'Success'},
-        {id: '/help', iconClass: 'question', title: 'Help'}
+        {id: 'monitor', iconClass: 'eye', title: 'Monitor'},
+        {id: 'tracking', iconClass: 'drawer2', title: 'Tracking'},
+        {id: 'success', iconClass: 'checkmark', title: 'Success'},
+        {id: 'help', iconClass: 'question', title: 'Help'}
       ]
     }
   },
