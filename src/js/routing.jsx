@@ -7,20 +7,18 @@ var TimingSection = require('./views/timing/timingSection')
 var SuccessSection = require('./views/success/successSection')
 var HelpSection = require('./views/help/helpSection')
 
-var DefaultRoute = Router.DefaultRoute
+var IndexRoute = Router.IndexRoute
 var Route = Router.Route
 
 var routes = (
-  <Route name='app' path='/' handler={App}>
-    <Route name='monitor' handler={MonitorSection}/>
-    <Route name='tracking' handler={TrackingSection}/>
-    <Route name='timing' handler={TimingSection}/>
-    <Route name='success' handler={SuccessSection}/>
-    <Route name='help' handler={HelpSection}/>
-    <DefaultRoute handler={TrackingSection}/>
+  <Route path='/' component={App}>
+    <Route path='monitor' component={MonitorSection}/>
+    <Route path='tracking' component={TrackingSection}/>
+    <Route path='timing' component={TimingSection}/>
+    <Route path='success' component={SuccessSection}/>
+    <Route path='help' component={HelpSection}/>
+    <IndexRoute component={TrackingSection}/>
   </Route>
 )
 
-Router.run(routes, function (Handler) {
-  React.render(<Handler/>, document.getElementById('content'))
-})
+React.render(<Router.Router routes={routes}/>, document.getElementById('content'))

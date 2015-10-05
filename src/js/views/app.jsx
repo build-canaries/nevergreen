@@ -1,5 +1,4 @@
 var React = require('react')
-var RouteHandler = require('react-router').RouteHandler
 var Menu = require('./general/menu')
 
 var persistStore = require('../stores/PersistStore')
@@ -13,7 +12,7 @@ module.exports = React.createClass({
         <div id='menu'>
           <Menu />
         </div>
-        <RouteHandler/>
+        {this.props.children}
       </div>
     )
   },

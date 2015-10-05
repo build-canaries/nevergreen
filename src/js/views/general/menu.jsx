@@ -20,10 +20,10 @@ module.exports = React.createClass({
   getDefaultProps: function () {
     return {
       items: [
-        {id: 'monitor', iconClass: 'eye', title: 'Monitor'},
-        {id: 'tracking', iconClass: 'drawer2', title: 'Tracking'},
-        {id: 'success', iconClass: 'checkmark', title: 'Success'},
-        {id: 'help', iconClass: 'question', title: 'Help'}
+        {id: '/monitor', iconClass: 'eye', title: 'Monitor'},
+        {id: '/tracking', iconClass: 'drawer2', title: 'Tracking'},
+        {id: '/success', iconClass: 'checkmark', title: 'Success'},
+        {id: '/help', iconClass: 'question', title: 'Help'}
       ]
     }
   },

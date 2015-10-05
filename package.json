@@ -8,33 +8,33 @@
     "test": "test"
   },
   "engines": {
-    "node": "0.10.x"
+    "iojs": "3.3.1"
   },
   "devDependencies": {
-    "chromedriver": "2.16.0",
+    "chromedriver": "2.19.0",
     "esprima-fb": "15001.1001.0-dev-harmony-fb",
     "jasmine-core": "2.3.4",
-    "jest-cli": "0.4.19",
-    "jscs": "2.1.0",
+    "jest-cli": "0.5.8",
+    "jscs": "2.2.1",
     "jsxhint": "0.15.1",
     "watch": "0.16.0"
   },
   "dependencies": {
-    "browserify": "^9.0.3",
+    "browserify": "^11.2.0",
     "flux": "2.1.1",
     "jquery": "2.1.4",
     "localforage": "1.2.10",
     "lodash": "3.10.1",
-    "minifyify": "7.0.5",
-    "node-sass": "3.2.0",
+    "minifyify": "7.1.0",
+    "node-sass": "3.3.3",
     "node-uuid": "1.4.3",
     "promise": "7.0.4",
     "react": "0.13.3",
-    "react-router": "0.13.3",
+    "react-router": "1.0.0-rc1",
     "react-tools": "0.13.3",
     "reactify": "1.1.1",
     "scale-text": "0.2.2",
-    "semver": "5.0.1",
+    "semver": "5.0.3",
     "whatwg-fetch": "^0.9.0"
   },
   "jest": {
@@ -55,7 +55,6 @@
     ]
   },
   "scripts": {
-    "postinstall": "npm run sass && npm run jsx && npm run browserify",
     "jsx": "jsx --extension jsx src/ build/ && jsx --extension js src/ build/",
     "browserify": "browserify -d -p [minifyify --map main.map.json --output ./resources/public/main.map.json] ./build/**/*.js > ./resources/public/main.js",
     "sass": "node-sass src/scss/base.scss resources/public/main.css --source-map resources/public/main.css.map",
