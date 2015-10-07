@@ -42,20 +42,15 @@ module.exports = React.createClass({
 
   componentDidMount: function () {
     InterestingProjectsStore.addListener(this._onChange)
-    InterestingProjectActions.fetchInteresting(TrayStore.getAll(), SelectedProjectsStore.getAll())
+    InterestingProjectActions.pollForChanges(5000, TrayStore.getAll, SelectedProjectsStore.getAll)
 
-    var updateTimer = setInterval(function () {
-      InterestingProjectActions.fetchInteresting(TrayStore.getAll(), SelectedProjectsStore.getAll())
-    }, 5000)
-
-    this.setState({timer: updateTimer})
     this._hideMenu()
   },
 
   componentWillUnmount: function () {
     InterestingProjectsStore.removeListener(this._onChange)
+    InterestingProjectActions.stopPollingForChanges()
 
-    clearInterval(this.state.timer)
     this._clearMenuTimeOut()
     this._showMenu()
   },
@@ -68,7 +63,7 @@ module.exports = React.createClass({
     this._clearMenuTimeOut()
     this._showMenu()
     this.setState({
-      menuTimer: setInterval(function () {
+      menuTimer: setTimeout(function () {
         this._hideMenu()
       }.bind(this), 3000)
     })
@@ -89,7 +84,7 @@ module.exports = React.createClass({
   },
 
   _clearMenuTimeOut: function () {
-    clearInterval(this.state.menuTimer)
+    clearTimeout(this.state.menuTimer)
   },
 
   _onChange: function () {
