@@ -13,12 +13,12 @@ module.exports = {
     this._dispatchTrayAdded(trayId, url, username)
 
     if (requiresAuth) {
-      securityGateway.encryptPassword(password).then(function (encryptedPassword) {
-        this._dispatchPasswordEncrypted(trayId, encryptedPassword)
+      securityGateway.encryptPassword(password).then(function (encryptPasswordResponse) {
+        this._dispatchPasswordEncrypted(trayId, encryptPasswordResponse.password)
         this._dispatchProjectsFetching(trayId)
-        return projectsGateway.fetchAll({url: url, username: username, password: encryptedPassword})
-      }.bind(this)).then(function (projects) {
-        this._dispatchProjectsLoaded(trayId, projects)
+        return projectsGateway.fetchAll({url: url, username: username, password: encryptPasswordResponse.password})
+      }.bind(this)).then(function (fetchAllResponse) {
+        this._dispatchProjectsLoaded(trayId, fetchAllResponse)
       }.bind(this)).catch(function (err) {
         this._dispatchApiError(trayId, err)
       }.bind(this))
