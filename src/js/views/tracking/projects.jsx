@@ -41,9 +41,18 @@ module.exports = React.createClass({
       <fieldset className='tracking-cctray-group-builds tray-content'>
         <legend className='tracking-cctray-group-builds-legend'>Available Projects</legend>
         <div className='tracking-cctray-group-build-toggles'>
-          <button className='testing-include-all button' onClick={this._includeAll}>Include all</button>
-          <button className='button' onClick={this._excludeAll}>Exclude all</button>
-          <button className='button' onClick={this.props.refreshTray}>Refresh</button>
+          <button className='testing-include-all button' onClick={this._includeAll}>
+            <span className='icon-checkbox-checked'></span>
+            <span className='text-with-icon'>Include all</span>
+          </button>
+          <button className='button' onClick={this._excludeAll}>
+            <span className='icon-checkbox-unchecked'></span>
+            <span className='text-with-icon'>Exclude all</span>
+          </button>
+          <button className='button' onClick={this.props.refreshTray}>
+            <span className='icon-loop2'></span>
+            <span className='text-with-icon'>Refresh</span>
+          </button>
         </div>
         <div className='testing-projects tracking-cctray-group-build-items'>
           {

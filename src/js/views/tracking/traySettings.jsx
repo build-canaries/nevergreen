@@ -20,7 +20,10 @@ module.exports = React.createClass({
         </table>
 
         <div className='tray-settings-danger-zone'>
-          <h4 className='tray-settings-danger-zone-title'>Danger Zone</h4>
+          <h4 className='tray-settings-danger-zone-title'>
+            <span className='icon-notification'></span>
+            <span className='text-with-icon'>Danger Zone</span>
+          </h4>
 
           <div className='tray-settings-danger-zone-content'>
             <button className='button tray-settings-danger-button' onClick={this.removeTray}>Delete this tray</button>
