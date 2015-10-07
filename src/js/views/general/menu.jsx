@@ -7,7 +7,7 @@ var MenuItem = React.createClass({
   render: function () {
     return (
       <li>
-        <Link id={this.props.id} to={'/' + this.props.id} className='navigation-list-item'>
+        <Link id={this.props.id} to={'/' + this.props.id} className='navigation-list-item' activeClassName="active">
           <span className={'navigation-list-item-icon ' + this.props.iconClass}></span>
           <span className='navigation-list-item-title'>{this.props.title}</span>
         </Link>
