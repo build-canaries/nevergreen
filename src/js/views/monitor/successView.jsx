@@ -1,4 +1,3 @@
-var $ = require('jquery')
 var React = require('react')
 var Message = require('./messageComponent')
 var Image = require('./imageComponent')
