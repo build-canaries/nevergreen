@@ -5,16 +5,13 @@ var _ = require('lodash')
 var Constants = require('../constants/NevergreenConstants')
 var localforage = require('localforage')
 var Promise = require('promise')
-var SelectProjectActions = require('../actions/SelectProjectActions')
-var TrayActions = require('../actions/TrayActions')
 var TrayStore = require('./TrayStore')
 var SelectedProjectsStore = require('./SelectedProjectsStore')
 var SuccessStore = require('./SuccessStore')
-var SuccessActions = require('../actions/SuccessActions')
 
 var CHANGE_EVENT = 'storage-change'
 
-function addProjectsToTray(action) {
+function _addProjectsToTray(action) {
   localforage.getItem(action.id).then(function (tray) {
     var updatedTray = _.merge(tray, {projects: action.projects})
     return localforage.setItem(action.id, updatedTray)
@@ -23,7 +20,7 @@ function addProjectsToTray(action) {
   })
 }
 
-function updateTrays(trays) {
+function _updateTrays(trays) {
   var newTrayIds = trays.map(function (tray) {
     return tray.id
   })
@@ -45,7 +42,7 @@ function updateTrays(trays) {
   })
 }
 
-function updatedSelectedProjectsForTray(trayId, selectedProjects) {
+function _updatedSelectedProjectsForTray(trayId, selectedProjects) {
   localforage.getItem(trayId).then(function (tray) {
     tray.selected = selectedProjects
     return localforage.setItem(trayId, tray)
@@ -54,13 +51,13 @@ function updatedSelectedProjectsForTray(trayId, selectedProjects) {
   })
 }
 
-function updateMessages(messages) {
+function _updateMessages(messages) {
   localforage.setItem('messages', messages).then(function () {
     eventEmitter.emit(CHANGE_EVENT)
   })
 }
 
-function registerWithDispatcher() {
+function _registerWithDispatcher() {
   return AppDispatcher.register(function (action) {
     switch (action.type) {
       case Constants.PasswordEncrypted:
@@ -68,26 +65,26 @@ function registerWithDispatcher() {
       case Constants.TrayRemove:
       {
         AppDispatcher.waitFor([TrayStore.dispatchToken])
-        updateTrays(TrayStore.getAll())
+        _updateTrays(TrayStore.getAll())
         break
       }
       case Constants.ProjectsFetched:
       {
-        addProjectsToTray(action)
+        _addProjectsToTray(action)
         break
       }
       case Constants.ProjectSelected:
       case Constants.ProjectUnselected:
       {
         AppDispatcher.waitFor([SelectedProjectsStore.dispatchToken])
-        updatedSelectedProjectsForTray(action.trayId, SelectedProjectsStore.getForTray(action.trayId))
+        _updatedSelectedProjectsForTray(action.trayId, SelectedProjectsStore.getForTray(action.trayId))
         break
       }
       case Constants.MessageAdd:
       case Constants.MessageRemove:
       {
         AppDispatcher.waitFor([SuccessStore.dispatchToken])
-        updateMessages(SuccessStore.getAll())
+        _updateMessages(SuccessStore.getAll())
         break
       }
     }
@@ -96,62 +93,11 @@ function registerWithDispatcher() {
   })
 }
 
-function dispatchActions(tray) {
-  TrayActions._dispatchTrayAdded(tray.id, tray.url, tray.username)
-  if (tray.password) {
-    TrayActions._dispatchPasswordEncrypted(tray.id, tray.password)
-  }
-  if (tray.projects) {
-    TrayActions._dispatchProjectsLoaded(tray.id, tray.projects)
-  }
-  if (tray.selected) {
-    SelectProjectActions.selectProject(tray.id, tray.selected)
-  }
-  TrayActions.refreshTray(tray)
-}
-
 module.exports = {
   dispatchToken: null,
 
-  init: function () {
-    localforage.config({
-      name: 'nevergreen',
-      storeName: 'nevergreen'
-    })
-
-    return localforage.getItem('trays').then(function (trayIds) {
-      if (_.isNull(trayIds)) {
-        return localforage.setItem('trays', [])
-      }
-    }).then(function () {
-      return localforage.getItem('messages')
-    }).then(function (messages) {
-      if (_.isNull(messages)) {
-        return localforage.setItem('messages', ['=(^.^)='])
-      }
-    })
-  },
-
-  load: function () {
-    if (this.dispatchToken) {
-      AppDispatcher.unregister(this.dispatchToken)
-    }
-
-    localforage.getItem('trays').then(function (trayIds) {
-      return Promise.all(trayIds.map(function (trayId) {
-        return localforage.getItem(trayId)
-      }))
-    }).then(function (trays) {
-      trays.forEach(dispatchActions)
-    }).then(function () {
-      return localforage.getItem('messages')
-    }).then(function (messages) {
-      messages.forEach(function (message) {
-        SuccessActions.addMessage(message)
-      })
-    }).then(function () {
-      this.dispatchToken = registerWithDispatcher()
-    }.bind(this))
+  registerWithDispatcher: function () {
+    this.dispatchToken = _registerWithDispatcher()
   },
 
   addListener: function (callback) {

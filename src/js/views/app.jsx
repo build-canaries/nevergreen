@@ -1,7 +1,8 @@
 var React = require('react')
 var Menu = require('./general/menu')
 
-var persistStore = require('../stores/PersistStore')
+var LocalRepository = require('../storage/LocalRepository')
+var PersistStore = require('../stores/PersistStore')
 
 module.exports = React.createClass({
   render: function () {
@@ -18,8 +19,10 @@ module.exports = React.createClass({
   },
 
   componentDidMount: function () {
-    persistStore.init().then(function () {
-      persistStore.load()
+    LocalRepository.init().then(function () {
+      return LocalRepository.load()
+    }).then(function () {
+      PersistStore.registerWithDispatcher()
     })
   }
 })
