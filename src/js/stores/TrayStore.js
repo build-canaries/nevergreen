@@ -6,7 +6,7 @@ var Constants = require('../constants/NevergreenConstants')
 
 var CHANGE_EVENT = 'tray-change'
 
-var _trays = {}
+var _storeState = {}
 
 function createTray(action) {
   return {
@@ -20,36 +20,41 @@ var dispatchToken = AppDispatcher.register(function (action) {
   switch (action.type) {
     case Constants.PasswordEncrypted:
     {
-      _trays[action.id].password = action.password
-      _trays[action.id].error = null
+      _storeState[action.id].password = action.password
+      _storeState[action.id].error = null
       break
     }
     case Constants.TrayAdd:
     {
-      _trays[action.id] = createTray(action)
+      _storeState[action.id] = createTray(action)
       break
     }
     case Constants.TrayRemove:
     {
-      delete _trays[action.id]
+      delete _storeState[action.id]
       break
     }
     case Constants.ProjectsFetching:
     {
-      _trays[action.id].fetching = true
-      _trays[action.id].error = null
+      _storeState[action.id].fetching = true
+      _storeState[action.id].error = null
       break
     }
     case Constants.ProjectsFetched:
     {
-      _trays[action.id].fetching = false
-      _trays[action.id].error = null
+      _storeState[action.id].fetching = false
+      _storeState[action.id].error = null
       break
     }
     case Constants.ApiError:
     {
-      _trays[action.id].fetching = false
-      _trays[action.id].error = action.error
+      _storeState[action.id].fetching = false
+      _storeState[action.id].error = action.error
+      break
+    }
+    case Constants.ImportedData:
+    {
+      _storeState = {}
       break
     }
     default :
@@ -66,11 +71,11 @@ module.exports = {
   dispatchToken: dispatchToken,
 
   getAll: function () {
-    return _.values(_trays)
+    return _.values(_storeState)
   },
 
   getById: function (trayId) {
-    return _trays[trayId]
+    return _storeState[trayId]
   },
 
   addListener: function (callback) {

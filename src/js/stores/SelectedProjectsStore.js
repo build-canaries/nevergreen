@@ -6,28 +6,33 @@ var Constants = require('../constants/NevergreenConstants')
 
 var CHANGE_EVENT = 'selected-projects-change'
 
-var _selectedProjects = {}
+var _storeState = {}
 
 var dispatchToken = AppDispatcher.register(function (action) {
   switch (action.type) {
     case Constants.TrayAdd:
     {
-      _selectedProjects[action.id] = []
+      _storeState[action.id] = []
       break
     }
     case Constants.TrayRemove:
     {
-      delete _selectedProjects[action.id]
+      delete _storeState[action.id]
       break
     }
     case Constants.ProjectSelected:
     {
-      _selectedProjects[action.trayId] = _selectedProjects[action.trayId].concat(action.projectIds)
+      _storeState[action.trayId] = _storeState[action.trayId].concat(action.projectIds)
       break
     }
     case Constants.ProjectUnselected:
     {
-      _selectedProjects[action.trayId] = _.difference(_selectedProjects[action.trayId], action.projectIds)
+      _storeState[action.trayId] = _.difference(_storeState[action.trayId], action.projectIds)
+      break
+    }
+    case Constants.ImportedData:
+    {
+      _storeState = {}
       break
     }
     default :
@@ -44,11 +49,11 @@ module.exports = {
   dispatchToken: dispatchToken,
 
   getAll: function () {
-    return _selectedProjects
+    return _storeState
   },
 
   getForTray: function (trayId) {
-    return _selectedProjects[trayId] || []
+    return _storeState[trayId] || []
   },
 
   addListener: function (callback) {

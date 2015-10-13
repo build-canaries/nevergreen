@@ -26,6 +26,11 @@ var dispatchToken = AppDispatcher.register(function (action) {
       _projects = action.projects.map(toProject)
       break
     }
+    case Constants.ImportedData:
+    {
+      _projects = []
+      break
+    }
     default :
     {
       return true

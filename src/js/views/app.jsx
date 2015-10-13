@@ -22,7 +22,7 @@ module.exports = React.createClass({
     LocalRepository.init().then(function () {
       return LocalRepository.load()
     }).then(function () {
-      PersistStore.registerWithDispatcher()
+      PersistStore.init()
     })
   }
 })

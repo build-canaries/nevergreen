@@ -9,5 +9,9 @@ module.exports = {
   InterestingProjects: 'interesting-projects',
   MessageAdd: 'message-add',
   MessageRemove: 'message-removed',
-  ApiError: 'api-error'
+  ApiError: 'api-error',
+  ImportingData: 'importing-data',
+  ImportedData: 'imported-data',
+  ImportError: 'import-error',
+  ImportLoaded: 'import-loaded'
 }

@@ -36,6 +36,12 @@ var dispatchToken = AppDispatcher.register(function (action) {
       })
       break
     }
+    case Constants.ImportedData:
+    {
+      _messages = []
+      _images = []
+      break
+    }
     default :
     {
       return true

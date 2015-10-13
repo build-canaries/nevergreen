@@ -67,5 +67,11 @@ module.exports = {
     }).then(function (messages) {
       messages.forEach(_dispatchSuccessActions)
     }.bind(this))
+  },
+
+  importData: function (dataObject) {
+    return Promise.all(_.pairs(dataObject).map(function (pair) {
+      return localforage.setItem(pair[0], pair[1])
+    }))
   }
 }
