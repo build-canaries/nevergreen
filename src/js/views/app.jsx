@@ -1,8 +1,7 @@
 var React = require('react')
 var Menu = require('./general/menu')
-
 var LocalRepository = require('../storage/LocalRepository')
-var PersistStore = require('../stores/PersistStore')
+var ConfigurationActions = require('../actions/ConfigurationActions')
 
 module.exports = React.createClass({
   render: function () {
@@ -19,10 +18,7 @@ module.exports = React.createClass({
   },
 
   componentDidMount: function () {
-    LocalRepository.init().then(function () {
-      return LocalRepository.load()
-    }).then(function () {
-      PersistStore.init()
-    })
+    LocalRepository.init()
+      .then(ConfigurationActions.load)
   }
 })

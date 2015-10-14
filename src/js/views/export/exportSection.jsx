@@ -1,13 +1,13 @@
 var React = require('react/addons')
-var PersistStore = require('../../stores/PersistStore')
-var ImportActions = require('../../actions/ImportActions')
+var ConfigurationStore = require('../../stores/ConfigurationStore')
+var ConfigurationActions = require('../../actions/ConfigurationActions')
 var _ = require('lodash')
 
 function _getStateFromStore() {
   return {
-    configuration: PersistStore.getConfiguration(),
-    importing: PersistStore.isImporting(),
-    importError: PersistStore.getImportError()
+    configuration: ConfigurationStore.getConfiguration(),
+    loading: ConfigurationStore.isImporting(),
+    importError: ConfigurationStore.getImportError()
   }
 }
 
@@ -19,11 +19,11 @@ module.exports = React.createClass({
   },
 
   componentDidMount: function () {
-    PersistStore.addListener(this._onChange)
+    ConfigurationStore.addListener(this._onChange)
   },
 
   componentWillUnmount: function () {
-    PersistStore.removeListener(this._onChange)
+    ConfigurationStore.removeListener(this._onChange)
   },
 
   render: function () {
@@ -43,10 +43,11 @@ module.exports = React.createClass({
             <h3 className='success-title'>Import</h3>
             <textarea className='export-text'
                       placeholder='paste exported configuration here and press import'
-                      valueLink={this.linkState('importData')}/>
+                      valueLink={this.linkState('importData')}
+                      spellCheck='false'/>
             <button className='button-primary'
                     onClick={this._import}
-                    disabled={this.state.importing}>
+                    disabled={this.state.loading}>
               import
             </button>
             {this.state.importError ? error : ''}
@@ -57,7 +58,8 @@ module.exports = React.createClass({
               <textarea className='export-text'
                         placeholder='loading...'
                         value={JSON.stringify(this.state.configuration, null, 2)}
-                        readOnly/>
+                        readOnly='true'
+                        spellCheck='false'/>
             </pre>
           </section>
         </fieldset>
@@ -70,6 +72,6 @@ module.exports = React.createClass({
   },
 
   _import: function () {
-    ImportActions.importData(this.state.importData)
+    ConfigurationActions.importData(this.state.importData)
   }
 })

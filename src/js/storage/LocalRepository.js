@@ -1,32 +1,11 @@
 var localforage = require('localforage')
 var Promise = require('promise')
 var _ = require('lodash')
-var TrayActions = require('../actions/TrayActions')
-var SelectProjectActions = require('../actions/SelectProjectActions')
-var SuccessActions = require('../actions/SuccessActions')
 
-function _setIfMissing(key, existing, defaultValue) {
+function setIfMissing(key, existing, defaultValue) {
   if (_.isNull(existing)) {
     return localforage.setItem(key, defaultValue)
   }
-}
-
-function _dispatchTrackingActions(tray) {
-  TrayActions._dispatchTrayAdded(tray.id, tray.url, tray.username)
-  if (tray.password) {
-    TrayActions._dispatchPasswordEncrypted(tray.id, tray.password)
-  }
-  if (tray.projects) {
-    TrayActions._dispatchProjectsLoaded(tray.id, tray.projects)
-  }
-  if (tray.selected) {
-    SelectProjectActions.selectProject(tray.id, tray.selected)
-  }
-  TrayActions.refreshTray(tray)
-}
-
-function _dispatchSuccessActions(message) {
-  SuccessActions.addMessage(message)
 }
 
 module.exports = {
@@ -51,27 +30,35 @@ module.exports = {
     })).then(function (existingValues) {
       var entriesWithDefaults = _.zip(keys, existingValues, defaultValues)
       return Promise.all(entriesWithDefaults.map(function (triple) {
-        return _setIfMissing.apply(this, triple)
+        return setIfMissing.apply(this, triple)
       }))
     })
-  },
-
-  load: function () {
-    return localforage.getItem('trays').then(function (trayIds) {
-      return Promise.all(trayIds.map(function (trayId) {
-        return localforage.getItem(trayId)
-      }))
-    }).then(function (trays) {
-      trays.forEach(_dispatchTrackingActions)
-      return localforage.getItem('messages')
-    }).then(function (messages) {
-      messages.forEach(_dispatchSuccessActions)
-    }.bind(this))
   },
 
   importData: function (dataObject) {
     return Promise.all(_.pairs(dataObject).map(function (pair) {
       return localforage.setItem(pair[0], pair[1])
     }))
+  },
+
+  getConfiguration: function () {
+    var configuration = {}
+    return localforage.iterate(function (value, key) {
+      configuration[key] = value
+    }).then(function () {
+      return configuration
+    })
+  },
+
+  getItem: function (key) {
+    return localforage.getItem(key)
+  },
+
+  setItem: function (key, value) {
+    return localforage.setItem(key, value)
+  },
+
+  removeItem: function (key) {
+    return localforage.removeItem(key)
   }
 }

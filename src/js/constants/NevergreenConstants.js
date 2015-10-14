@@ -13,5 +13,5 @@ module.exports = {
   ImportingData: 'importing-data',
   ImportedData: 'imported-data',
   ImportError: 'import-error',
-  ImportLoaded: 'import-loaded'
+  ConfigurationLoaded: 'configuration-loaded'
 }
