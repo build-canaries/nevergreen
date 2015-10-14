@@ -47,9 +47,12 @@ module.exports = React.createClass({
         </nav>
         <footer role='contentinfo' className='content-info'>
           <a href='https://github.com/build-canaries/nevergreen/releases' target='_blank' className='version'>
-            <p id='version-number'>v0.8.0-alpha</p>
+            <p>v{this.props.versionNumber}</p>
 
-            <p id='version-name'>Heat Wave</p>
+            <p>{this.props.versionName}</p>
+          </a>
+          <a href='https://github.com/build-canaries/nevergreen/commits/master' target='_blank' className='version'>
+            <p>{this.props.commitHash}</p>
           </a>
         </footer>
       </div>
