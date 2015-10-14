@@ -27,26 +27,26 @@ version="$major.$minor.$revision"
 echo "Updating to version $version $name ..."
 
 echo "Updating file ./project.clj ..."
-sed -i '' -e "s|defproject nevergreen \"[^\"]*\"|defproject nevergreen \"$version\"|" ./project.clj
+sed "s|defproject nevergreen \"[^\"]*\"|defproject nevergreen \"$version\"|" ./project.clj > ./project.clj.tmp && mv ./project.clj.tmp ./project.clj
 
 echo "Updating file ./package.json ..."
-sed -i '' -e "s|\"version\": \"[^\"]*\"|\"version\": \"$version\"|" ./package.json
+sed "s|\"version\": \"[^\"]*\"|\"version\": \"$version\"|" ./package.json > ./package.json.tmp && mv ./package.json.tmp ./package.json
 
 echo "Updating file ./src/js/views/app.jsx ..."
-sed -i '' -e "s|versionNumber: '[^']*'|versionNumber: '$version'|" ./src/js/views/app.jsx
+sed "s|versionNumber: '[^']*'|versionNumber: '$version'|" ./src/js/views/app.jsx > ./src/js/views/app.jsx.tmp && mv ./src/js/views/app.jsx.tmp ./src/js/views/app.jsx
 
 if [ -z "$name" ]
 then
     echo "Skipping updating name in file ./src/js/views/app.jsx as name was blank"
 else
-    sed -i '' -e "s|versionName: '[^']*'|versionName: '$name'|" ./src/js/views/app.jsx
+    sed "s|versionName: '[^']*'|versionName: '$name'|" ./src/js/views/app.jsx > ./src/js/views/app.jsx.tmp && mv ./src/js/views/app.jsx.tmp ./src/js/views/app.jsx
 fi
 
 if [ -z "$hash" ]
 then
     echo "Skipping updating commit hash in file ./src/js/views/app.jsx as hash was blank"
 else
-    sed -i '' -e "s|commitHash: '[^']*'|commitHash: '$hash'|" ./src/js/views/app.jsx
+    sed "s|commitHash: '[^']*'|commitHash: '$hash'|" ./src/js/views/app.jsx > ./src/js/views/app.jsx.tmp && mv ./src/js/views/app.jsx.tmp ./src/js/views/app.jsx
 fi
 
 if [ -z "$hex" ]
@@ -54,5 +54,5 @@ then
     echo "Skipping file ./src/scss/base/_variables.scss as colour was blank"
 else
     echo "Updating file ./src/scss/base/_variables.scss ..."
-    sed -i '' -e "s|\$version.*|\$version: $hex\;|" ./src/scss/base/_variables.scss
+    sed "s|\$version.*|\$version: $hex\;|" ./src/scss/base/_variables.scss > ./src/scss/base/_variables.scss.tmp && mv ./src/scss/base/_variables.scss.tmp ./src/scss/base/_variables.scss
 fi
