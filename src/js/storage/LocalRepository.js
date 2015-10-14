@@ -9,7 +9,7 @@ function setIfMissing(key, existing, defaultValue) {
 }
 
 module.exports = {
-  init: function () {
+  init: function (versionNumber) {
     localforage.config({
       name: 'nevergreen',
       storeName: 'nevergreen'
@@ -17,12 +17,14 @@ module.exports = {
 
     var keys = [
       'trays',
-      'messages'
+      'messages',
+      'versionNumber'
     ]
 
     var defaultValues = [
       [],
-      ['=(^.^)=']
+      ['=(^.^)='],
+      versionNumber
     ]
 
     return Promise.all(keys.map(function (key) {
