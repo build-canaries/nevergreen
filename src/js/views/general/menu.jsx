@@ -52,7 +52,7 @@ module.exports = React.createClass({
             <p>{this.props.versionName}</p>
           </a>
           <a href='https://github.com/build-canaries/nevergreen/commits/master' target='_blank' className='version'>
-            <p>{this.props.commitHash}</p>
+            <p className='commit-hash'>{'<' + this.props.commitHash + '>'}</p>
           </a>
         </footer>
       </div>

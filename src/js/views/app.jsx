@@ -6,8 +6,8 @@ var ConfigurationActions = require('../actions/ConfigurationActions')
 module.exports = React.createClass({
   getDefaultProps: function () {
     return {
-      versionNumber: '0.8.0',
-      versionName: 'Heat Wave',
+      versionNumber: '0.0.0',
+      versionName: 'Dev Build',
       commitHash: 'local'
     }
   },
