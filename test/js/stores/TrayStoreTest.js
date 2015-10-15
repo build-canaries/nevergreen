@@ -98,4 +98,11 @@ describe('success store', function () {
     })
   })
 
+  it('clears the store state when new data is imported', function () {
+    callback({
+      type: Constants.ImportedData
+    })
+    expect(store.getAll()).toEqual({})
+  })
+
 })

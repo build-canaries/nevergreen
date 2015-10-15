@@ -28,6 +28,13 @@ describe('fetched projects store', function () {
     expect(store.getAll('some-id')).toEqual([])
   })
 
+  it('clears the store state when new data is imported', function () {
+    callback({
+      type: Constants.ImportedData
+    })
+    expect(store.getAll('some-id')).toEqual([])
+  })
+
   describe('adding fetched projects', function () {
 
     beforeEach(function () {

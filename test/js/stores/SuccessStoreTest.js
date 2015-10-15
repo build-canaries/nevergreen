@@ -75,4 +75,11 @@ describe('success store', function () {
     expect(store.getAll()).toEqual(['some-message', 'http://some-url'])
   })
 
+  it('clears the store state when new data is imported', function () {
+    callback({
+      type: Constants.ImportedData
+    })
+    expect(store.getAll()).toEqual([])
+  })
+
 })

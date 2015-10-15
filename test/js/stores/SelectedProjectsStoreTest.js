@@ -49,4 +49,11 @@ describe('success store', function () {
     expect(store.getForTray('some-id')).toEqual([])
   })
 
+  it('clears the store state when new data is imported', function () {
+    callback({
+      type: Constants.ImportedData
+    })
+    expect(store.getAll()).toEqual({})
+  })
+
 })
