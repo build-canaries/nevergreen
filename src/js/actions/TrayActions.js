@@ -2,7 +2,19 @@ var AppDispatcher = require('../dispatcher/AppDispatcher')
 var securityGateway = require('../gateways/securityGateway')
 var projectsGateway = require('../gateways/projectsGateway')
 var uuid = require('node-uuid')
+var validate = require('validate.js')
 var Constants = require('../constants/NevergreenConstants')
+
+var _validationOptions = {format: 'flat'}
+
+var _addTrayValidation = {
+  url: {
+    presence: true,
+    url: {
+      allowLocal: true
+    }
+  }
+}
 
 module.exports = {
 
@@ -10,20 +22,29 @@ module.exports = {
     var requiresAuth = username && password
     var trayId = uuid.v4()
 
-    this._dispatchTrayAdded(trayId, url, username)
+    var validationMessages = validate({url: url}, _addTrayValidation, _validationOptions)
 
-    if (requiresAuth) {
-      securityGateway.encryptPassword(password).then(function (encryptPasswordResponse) {
-        this._dispatchPasswordEncrypted(trayId, encryptPasswordResponse.password)
-        this._dispatchProjectsFetching(trayId)
-        return projectsGateway.fetchAll({url: url, username: username, password: encryptPasswordResponse.password})
-      }.bind(this)).then(function (fetchAllResponse) {
-        this._dispatchProjectsLoaded(trayId, fetchAllResponse)
-      }.bind(this)).catch(function (err) {
-        this._dispatchApiError(trayId, err)
-      }.bind(this))
+    if (validationMessages) {
+      this._dispatchInvalidInput(url, username, password, validationMessages)
     } else {
-      this.refreshTray({id: trayId, url: url})
+      this._dispatchTrayAdded(trayId, url, username)
+
+      if (requiresAuth) {
+        return securityGateway.encryptPassword(password).then(function (encryptPasswordResponse) {
+          this._dispatchPasswordEncrypted(trayId, encryptPasswordResponse.password)
+          return this.refreshTray({
+            id: trayId,
+            url: url,
+            username: username,
+            password: encryptPasswordResponse.password
+          })
+        }.bind(this))
+      } else {
+        return this.refreshTray({
+          id: trayId,
+          url: url
+        })
+      }
     }
   },
 
@@ -36,7 +57,7 @@ module.exports = {
 
   refreshTray: function (tray) {
     this._dispatchProjectsFetching(tray.id)
-    projectsGateway.fetchAll(tray).then(function (projects) {
+    return projectsGateway.fetchAll(tray).then(function (projects) {
       this._dispatchProjectsLoaded(tray.id, projects)
     }.bind(this)).catch(function (err) {
       this._dispatchApiError(tray.id, err)
@@ -80,6 +101,16 @@ module.exports = {
       type: Constants.ApiError,
       id: trayId,
       error: error
+    })
+  },
+
+  _dispatchInvalidInput: function (url, username, password, messages) {
+    AppDispatcher.dispatch({
+      type: Constants.TrayInvalidInput,
+      url: url,
+      username: username,
+      password: password,
+      messages: messages
     })
   }
 

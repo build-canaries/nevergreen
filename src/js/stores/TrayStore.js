@@ -6,55 +6,103 @@ var Constants = require('../constants/NevergreenConstants')
 
 var CHANGE_EVENT = 'tray-change'
 
-var _storeState = {}
+var _storeState = {
+  trays: {},
+  validation: {}
+}
 
-function createTray(action) {
-  return {
+function addTray(action) {
+  _storeState.trays[action.id] = {
     id: action.id,
     url: action.url,
     username: action.username
   }
 }
 
+function removeTray(trayId) {
+  delete _storeState.trays[trayId]
+}
+
+function clearAllTrays() {
+  _storeState.trays = {}
+}
+
+function setTrayError(trayId, error) {
+  _storeState.trays[trayId].error = error
+}
+
+function clearTrayError(trayId) {
+  _storeState.trays[trayId].error = null
+}
+
+function setTrayFetching(trayId) {
+  _storeState.trays[trayId].fetching = true
+}
+
+function setTrayFetched(trayId) {
+  _storeState.trays[trayId].fetching = false
+}
+
+function setTrayPassword(trayId, password) {
+  _storeState.trays[trayId].password = password
+}
+
+function clearValidation() {
+  _storeState.validation = {}
+}
+
+function setValidation(action) {
+  _storeState.validation.messages = action.messages
+  _storeState.validation.url = action.url
+  _storeState.validation.username = action.username
+  _storeState.validation.password = action.password
+}
+
 var dispatchToken = AppDispatcher.register(function (action) {
   switch (action.type) {
     case Constants.PasswordEncrypted:
     {
-      _storeState[action.id].password = action.password
-      _storeState[action.id].error = null
+      setTrayPassword(action.id, action.password)
+      clearTrayError(action.id)
       break
     }
     case Constants.TrayAdd:
     {
-      _storeState[action.id] = createTray(action)
+      addTray(action)
+      clearValidation()
+      break
+    }
+    case Constants.TrayInvalidInput:
+    {
+      setValidation(action)
       break
     }
     case Constants.TrayRemove:
     {
-      delete _storeState[action.id]
+      removeTray(action.id)
       break
     }
     case Constants.ProjectsFetching:
     {
-      _storeState[action.id].fetching = true
-      _storeState[action.id].error = null
+      setTrayFetching(action.id)
+      clearTrayError(action.id)
       break
     }
     case Constants.ProjectsFetched:
     {
-      _storeState[action.id].fetching = false
-      _storeState[action.id].error = null
+      setTrayFetched(action.id)
+      clearTrayError(action.id)
       break
     }
     case Constants.ApiError:
     {
-      _storeState[action.id].fetching = false
-      _storeState[action.id].error = action.error
+      setTrayFetched(action.id)
+      setTrayError(action.id, action.error)
       break
     }
     case Constants.ImportedData:
     {
-      _storeState = {}
+      clearAllTrays()
       break
     }
     default :
@@ -71,11 +119,15 @@ module.exports = {
   dispatchToken: dispatchToken,
 
   getAll: function () {
-    return _.values(_storeState)
+    return _.values(_storeState.trays)
   },
 
   getById: function (trayId) {
-    return _storeState[trayId]
+    return _storeState.trays[trayId]
+  },
+
+  getValidationObject: function () {
+    return _storeState.validation
   },
 
   addListener: function (callback) {

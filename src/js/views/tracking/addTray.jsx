@@ -4,18 +4,35 @@ module.exports = React.createClass({
   mixins: [React.addons.LinkedStateMixin],
 
   propTypes: {
-    addTray: React.PropTypes.func.isRequired
+    addTray: React.PropTypes.func.isRequired,
+    validationMessages: React.PropTypes.arrayOf(React.PropTypes.string),
+    initialUrl: React.PropTypes.string,
+    initialUsername: React.PropTypes.string,
+    initialPassword: React.PropTypes.string
   },
 
   getInitialState: function () {
     return {
-      url: '',
-      username: '',
-      password: ''
+      url: this.props.initialUrl || '',
+      username: this.props.initialUsername || '',
+      password: this.props.initialPassword || ''
     }
   },
 
   render: function () {
+    var validationMessages = ''
+
+    if (this.props.validationMessages) {
+      validationMessages = this.props.validationMessages.map(function (msg, index) {
+        return (
+          <div key={index} className='import-error'>
+            <span className='icon-notification'></span>
+            <span className='text-with-icon'>{msg}</span>
+          </div>
+        )
+      })
+    }
+
     return (
       <div className='tracking-cctray-group-cctray-form'>
         <label htmlFor='cctray-url' className='tracking-cctray-group-cctray-form-label'>url</label>
@@ -45,6 +62,7 @@ module.exports = React.createClass({
                    onKeyPress={this._onKeyPress}/>
           </div>
         </div>
+        {validationMessages}
       </div>
     )
   },
