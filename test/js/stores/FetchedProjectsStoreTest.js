@@ -23,7 +23,7 @@ describe('fetched projects store', function () {
   it('creates an empty seq of fetched projects when a tray is added', function () {
     callback({
       type: Constants.TrayAdd,
-      id: 'some-id'
+      trayId: 'some-id'
     })
     expect(store.getAll('some-id')).toEqual([])
   })
@@ -40,14 +40,14 @@ describe('fetched projects store', function () {
     beforeEach(function () {
       callback({
         type: Constants.TrayAdd,
-        id: 'some-id'
+        trayId: 'some-id'
       })
     })
 
     it('filters out jobs', function () {
       callback({
         type: Constants.ProjectsFetched,
-        id: 'some-id',
+        trayId: 'some-id',
         projects: [{
           'project-id': 'some-project-id',
           name: 'name',
@@ -61,7 +61,7 @@ describe('fetched projects store', function () {
         }]
       })
       expect(store.getAll('some-id')).toEqual([{
-        id: 'some-project-id',
+        projectId: 'some-project-id',
         name: 'name [stage]',
         isNew: true,
         wasRemoved: false
@@ -72,7 +72,7 @@ describe('fetched projects store', function () {
       beforeEach(function () {
         callback({
           type: Constants.ProjectsFetched,
-          id: 'some-id',
+          trayId: 'some-id',
           projects: [{
             'project-id': 'some-project-id',
             name: 'name',
@@ -85,7 +85,7 @@ describe('fetched projects store', function () {
       it('removes the new flag if the same project is fetched again', function () {
         callback({
           type: Constants.ProjectsFetched,
-          id: 'some-id',
+          trayId: 'some-id',
           projects: [{
             'project-id': 'some-project-id',
             name: 'name',
@@ -94,7 +94,7 @@ describe('fetched projects store', function () {
           }]
         })
         expect(store.getAll('some-id')).toEqual([{
-          id: 'some-project-id',
+          projectId: 'some-project-id',
           name: 'name [stage]',
           isNew: false,
           wasRemoved: false
@@ -104,11 +104,11 @@ describe('fetched projects store', function () {
       it('sets the removed flag if the project is not fetched again', function () {
         callback({
           type: Constants.ProjectsFetched,
-          id: 'some-id',
+          trayId: 'some-id',
           projects: []
         })
         expect(store.getAll('some-id')).toEqual([{
-          id: 'some-project-id',
+          projectId: 'some-project-id',
           name: 'name [stage]',
           isNew: false,
           wasRemoved: true

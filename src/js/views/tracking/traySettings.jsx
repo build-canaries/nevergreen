@@ -2,6 +2,8 @@ var React = require('react/addons')
 var _ = require('lodash')
 
 module.exports = React.createClass({
+  displayName: 'TraySettings',
+
   propTypes: {
     tray: React.PropTypes.object.isRequired,
     removeTray: React.PropTypes.func.isRequired
@@ -26,15 +28,12 @@ module.exports = React.createClass({
           </h4>
 
           <div className='tray-settings-danger-zone-content'>
-            <button className='button tray-settings-danger-button' onClick={this.removeTray}>Delete this tray</button>
+            <button className='button tray-settings-danger-button' onClick={this.props.removeTray}>Delete this tray
+            </button>
             <span>Once you delete a tray, there is no going back. Please be certain.</span>
           </div>
         </div>
       </section>
     )
-  },
-
-  removeTray: function () {
-    this.props.removeTray(this.props.trayId)
   }
 })

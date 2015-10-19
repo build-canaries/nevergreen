@@ -12,6 +12,8 @@ function getStateFromStore() {
 }
 
 module.exports = React.createClass({
+  displayName: 'TrackingSection',
+
   getInitialState: function () {
     return getStateFromStore()
   },
@@ -39,8 +41,9 @@ module.exports = React.createClass({
           <div>
             {
               this.state.trays.map(function (tray) {
-                return <Tray key={tray.id} tray={tray}
-                             removeTray={this._removeTray.bind(this, tray.id)}
+                return <Tray key={tray.trayId}
+                             tray={tray}
+                             removeTray={this._removeTray.bind(this, tray.trayId)}
                              refreshTray={this._refreshTray.bind(this, tray)}/>
               }, this)
             }
@@ -55,7 +58,7 @@ module.exports = React.createClass({
   },
 
   _removeTray: function (trayId) {
-    TrayActions.removeTray(trayId)
+    TrayActions._removeTray(trayId)
   },
 
   _refreshTray: function (tray) {

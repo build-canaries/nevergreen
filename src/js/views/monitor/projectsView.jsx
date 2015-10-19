@@ -29,7 +29,7 @@ module.exports = React.createClass({
       <ul id='interesting-projects' className='monitor-projects'>
         {
           this.props.projects.map(function (project) {
-            return <InterestingProject key={project.id} prognosis={project.prognosis} name={project.name}/>
+            return <InterestingProject key={project.projectId} prognosis={project.prognosis} name={project.name}/>
           })
         }
       </ul>

@@ -14,10 +14,10 @@ function previouslyRemovedProjects(project) {
 
 function updateNewAndRemovedFlags(fetchedProjects, project) {
   var whereIdsMatch = function (fetchedProject) {
-    return fetchedProject['project-id'] === project.id
+    return fetchedProject['project-id'] === project.projectId
   }
   return {
-    id: project.id,
+    projectId: project.projectId,
     name: project.name,
     isNew: false,
     wasRemoved: _.findIndex(fetchedProjects, whereIdsMatch) < 0
@@ -30,7 +30,7 @@ function getName(project) {
 
 function toProject(project) {
   return {
-    id: project['project-id'],
+    projectId: project['project-id'],
     name: getName(project),
     isNew: true,
     wasRemoved: false
@@ -43,7 +43,7 @@ function removeJobs(project) {
 
 function removeExisting(previousProjects, project) {
   var whereIdsMatch = function (previousProject) {
-    return previousProject.id === project.id
+    return previousProject.projectId === project.projectId
   }
   return _.findIndex(previousProjects, whereIdsMatch) < 0
 }
@@ -62,17 +62,17 @@ var dispatchToken = AppDispatcher.register(function (action) {
   switch (action.type) {
     case Constants.TrayAdd:
     {
-      _storeState[action.id] = []
+      _storeState[action.trayId] = []
       break
     }
     case Constants.TrayRemove:
     {
-      delete _storeState[action.id]
+      delete _storeState[action.trayId]
       break
     }
     case Constants.ProjectsFetched:
     {
-      _storeState[action.id] = createProjects(_storeState[action.id], action.projects)
+      _storeState[action.trayId] = createProjects(_storeState[action.trayId], action.projects)
       break
     }
     case Constants.ImportedData:

@@ -33,7 +33,7 @@ module.exports = {
         return securityGateway.encryptPassword(password).then(function (encryptPasswordResponse) {
           this._dispatchPasswordEncrypted(trayId, encryptPasswordResponse.password)
           return this.refreshTray({
-            id: trayId,
+            trayId: trayId,
             url: url,
             username: username,
             password: encryptPasswordResponse.password
@@ -41,33 +41,33 @@ module.exports = {
         }.bind(this))
       } else {
         return this.refreshTray({
-          id: trayId,
+          trayId: trayId,
           url: url
         })
       }
     }
   },
 
-  removeTray: function (id) {
+  _removeTray: function (trayId) {
     AppDispatcher.dispatch({
       type: Constants.TrayRemove,
-      id: id
+      trayId: trayId
     })
   },
 
   refreshTray: function (tray) {
-    this._dispatchProjectsFetching(tray.id)
+    this._dispatchProjectsFetching(tray.trayId)
     return projectsGateway.fetchAll(tray).then(function (projects) {
-      this._dispatchProjectsLoaded(tray.id, projects)
+      this._dispatchProjectsLoaded(tray.trayId, projects)
     }.bind(this)).catch(function (err) {
-      this._dispatchApiError(tray.id, err)
+      this._dispatchApiError(tray.trayId, err)
     }.bind(this))
   },
 
   _dispatchTrayAdded: function (trayId, url, username) {
     AppDispatcher.dispatch({
       type: Constants.TrayAdd,
-      id: trayId,
+      trayId: trayId,
       url: url,
       username: username
     })
@@ -76,7 +76,7 @@ module.exports = {
   _dispatchPasswordEncrypted: function (trayId, encryptedPassword) {
     AppDispatcher.dispatch({
       type: Constants.PasswordEncrypted,
-      id: trayId,
+      trayId: trayId,
       password: encryptedPassword
     })
   },
@@ -84,14 +84,14 @@ module.exports = {
   _dispatchProjectsFetching: function (trayId) {
     AppDispatcher.dispatch({
       type: Constants.ProjectsFetching,
-      id: trayId
+      trayId: trayId
     })
   },
 
   _dispatchProjectsLoaded: function (trayId, data) {
     AppDispatcher.dispatch({
       type: Constants.ProjectsFetched,
-      id: trayId,
+      trayId: trayId,
       projects: data
     })
   },
@@ -99,7 +99,7 @@ module.exports = {
   _dispatchApiError: function (trayId, error) {
     AppDispatcher.dispatch({
       type: Constants.ApiError,
-      id: trayId,
+      trayId: trayId,
       error: error
     })
   },

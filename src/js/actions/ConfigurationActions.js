@@ -21,15 +21,15 @@ function dispatchLoaded(configuration) {
 }
 
 function dispatchTrackingActions(tray) {
-  TrayActions._dispatchTrayAdded(tray.id, tray.url, tray.username)
+  TrayActions._dispatchTrayAdded(tray.trayId, tray.url, tray.username)
   if (tray.password) {
-    TrayActions._dispatchPasswordEncrypted(tray.id, tray.password)
+    TrayActions._dispatchPasswordEncrypted(tray.trayId, tray.password)
   }
   if (tray.projects) {
-    TrayActions._dispatchProjectsLoaded(tray.id, tray.projects)
+    TrayActions._dispatchProjectsLoaded(tray.trayId, tray.projects)
   }
   if (tray.selected) {
-    SelectProjectActions.selectProject(tray.id, tray.selected)
+    SelectProjectActions.selectProject(tray.trayId, tray.selected)
   }
   TrayActions.refreshTray(tray)
 }

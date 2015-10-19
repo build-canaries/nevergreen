@@ -17,6 +17,8 @@ function getStateFromStore(trayId) {
 }
 
 module.exports = React.createClass({
+  displayName: 'Projects',
+
   propTypes: {
     trayId: React.PropTypes.string.isRequired,
     refreshTray: React.PropTypes.func.isRequired
@@ -57,14 +59,14 @@ module.exports = React.createClass({
         <div className='testing-projects tracking-cctray-group-build-items'>
           {
             _.sortBy(this.state.projects, projectName).map(function (project) {
-              var included = _.indexOf(this.state.selectedProjects, project.id) >= 0
+              var included = _.indexOf(this.state.selectedProjects, project.projectId) >= 0
 
-              return <AvailableProject key={project.id}
+              return <AvailableProject key={project.projectId}
                                        name={project.name}
                                        included={included}
                                        wasRemoved={project.wasRemoved}
                                        isNew={project.isNew}
-                                       selectProject={this._selectProject.bind(this, project.id)}/>
+                                       selectProject={this._selectProject.bind(this, project.projectId)}/>
             }, this)
           }
         </div>
@@ -85,14 +87,14 @@ module.exports = React.createClass({
       .filter(function (project) {
         return !project.wasRemoved
       }).map(function (project) {
-        return project.id
+        return project.projectId
       })
     SelectProjectActions.selectProject(this.props.trayId, projectIds)
   },
 
   _excludeAll: function () {
     var projectIds = this.state.projects.map(function (project) {
-      return project.id
+      return project.projectId
     })
     SelectProjectActions.removeProject(this.props.trayId, projectIds)
   },

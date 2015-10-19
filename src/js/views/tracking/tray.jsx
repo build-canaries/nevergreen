@@ -5,6 +5,8 @@ var Loading = require('../general/loading')
 var Error = require('../general/errorView')
 
 module.exports = React.createClass({
+  displayName: 'Tray',
+
   propTypes: {
     tray: React.PropTypes.object.isRequired,
     removeTray: React.PropTypes.func.isRequired,
@@ -29,7 +31,7 @@ module.exports = React.createClass({
       } else if (this.props.tray.error) {
         content = <Error status={this.props.tray.error.status} reason={this.props.tray.error.responseText}/>
       } else {
-        content = <Projects trayId={this.props.tray.id} refreshTray={this.props.refreshTray}/>
+        content = <Projects trayId={this.props.tray.trayId} refreshTray={this.props.refreshTray}/>
       }
     }
 

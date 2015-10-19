@@ -22,16 +22,16 @@ function resetImportError() {
 }
 
 function addProjectsToTray(action) {
-  return LocalRepository.getItem(action.id)
+  return LocalRepository.getItem(action.trayId)
     .then(function (tray) {
       tray.projects = action.projects
-      return LocalRepository.setItem(action.id, tray)
+      return LocalRepository.setItem(action.trayId, tray)
     })
 }
 
 function updateTrays(trays) {
   var newTrayIds = trays.map(function (tray) {
-    return tray.id
+    return tray.trayId
   })
 
   return LocalRepository.getItem('trays')

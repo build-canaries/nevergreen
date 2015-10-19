@@ -7,15 +7,15 @@ var CHANGE_EVENT = 'interesting-projects-change'
 
 var _projects = []
 
-function getName(project) {
-  return project.stage ? project.name + ' [' + project.stage + ']' : project.name
+function getName(apiProject) {
+  return apiProject.stage ? apiProject.name + ' [' + apiProject.stage + ']' : apiProject.name
 }
 
-function toProject(project) {
+function toProject(apiProject) {
   return {
-    id: project['project-id'],
-    name: getName(project),
-    prognosis: project.prognosis
+    projectId: apiProject['project-id'],
+    name: getName(apiProject),
+    prognosis: apiProject.prognosis
   }
 }
 

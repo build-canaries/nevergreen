@@ -12,8 +12,8 @@ var _storeState = {
 }
 
 function addTray(action) {
-  _storeState.trays[action.id] = {
-    id: action.id,
+  _storeState.trays[action.trayId] = {
+    trayId: action.trayId,
     url: action.url,
     username: action.username
   }
@@ -62,8 +62,8 @@ var dispatchToken = AppDispatcher.register(function (action) {
   switch (action.type) {
     case Constants.PasswordEncrypted:
     {
-      setTrayPassword(action.id, action.password)
-      clearTrayError(action.id)
+      setTrayPassword(action.trayId, action.password)
+      clearTrayError(action.trayId)
       break
     }
     case Constants.TrayAdd:
@@ -79,25 +79,25 @@ var dispatchToken = AppDispatcher.register(function (action) {
     }
     case Constants.TrayRemove:
     {
-      removeTray(action.id)
+      removeTray(action.trayId)
       break
     }
     case Constants.ProjectsFetching:
     {
-      setTrayFetching(action.id)
-      clearTrayError(action.id)
+      setTrayFetching(action.trayId)
+      clearTrayError(action.trayId)
       break
     }
     case Constants.ProjectsFetched:
     {
-      setTrayFetched(action.id)
-      clearTrayError(action.id)
+      setTrayFetched(action.trayId)
+      clearTrayError(action.trayId)
       break
     }
     case Constants.ApiError:
     {
-      setTrayFetched(action.id)
-      setTrayError(action.id, action.error)
+      setTrayFetched(action.trayId)
+      setTrayError(action.trayId, action.error)
       break
     }
     case Constants.ImportedData:

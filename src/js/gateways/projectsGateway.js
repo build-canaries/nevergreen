@@ -15,11 +15,11 @@ module.exports = {
   interesting: function (trays, selected) {
     var data = trays.map(function (tray) {
       return {
-        trayId: tray.id,
+        trayId: tray.trayId,
         url: tray.url,
         username: tray.username,
         password: tray.password,
-        included: selected[tray.id],
+        included: selected[tray.trayId],
         serverType: tray.serverType
       }
     })

@@ -13,7 +13,7 @@ describe('repository', function () {
     it('has all data', function () {
       var selected = {id: ['some-project-id']}
       var tray = {
-        id: 'id',
+        trayId: 'id',
         url: 'url',
         username: 'uname',
         password: 'pword',
@@ -24,7 +24,7 @@ describe('repository', function () {
       subject.interesting(trays, selected)
 
       var data = [{
-        trayId: tray.id,
+        trayId: tray.trayId,
         url: tray.url,
         username: tray.username,
         password: tray.password,

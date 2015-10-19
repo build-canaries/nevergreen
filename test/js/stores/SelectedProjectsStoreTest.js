@@ -13,7 +13,7 @@ describe('success store', function () {
 
     callback({
       type: Constants.TrayAdd,
-      id: 'some-id'
+      trayId: 'some-id'
     })
   })
 

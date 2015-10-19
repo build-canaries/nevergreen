@@ -19,12 +19,12 @@ describe('success store', function () {
   it('adds a tray', function () {
     callback({
       type: Constants.TrayAdd,
-      id: 'some-id',
+      trayId: 'some-id',
       url: 'some-url',
       username: 'some-username'
     })
     expect(store.getById('some-id')).toEqual({
-      id: 'some-id',
+      trayId: 'some-id',
       url: 'some-url',
       username: 'some-username'
     })
@@ -34,7 +34,7 @@ describe('success store', function () {
     beforeEach(function () {
       callback({
         type: Constants.TrayAdd,
-        id: 'some-id',
+        trayId: 'some-id',
         url: 'some-url',
         username: 'some-username'
       })
@@ -43,7 +43,7 @@ describe('success store', function () {
     it('removes a tray', function () {
       callback({
         type: Constants.TrayRemove,
-        id: 'some-id'
+        trayId: 'some-id'
       })
       expect(store.getById('some-id')).toBeUndefined()
     })
@@ -51,7 +51,7 @@ describe('success store', function () {
     it('sets the fetching flag to true while fetching', function () {
       callback({
         type: Constants.ProjectsFetching,
-        id: 'some-id'
+        trayId: 'some-id'
       })
       expect(store.getById('some-id').fetching).toBeTruthy()
     })
@@ -59,7 +59,7 @@ describe('success store', function () {
     it('clears the error object while fetching', function () {
       callback({
         type: Constants.ProjectsFetching,
-        id: 'some-id'
+        trayId: 'some-id'
       })
       expect(store.getById('some-id').error).toBeNull()
     })
@@ -67,7 +67,7 @@ describe('success store', function () {
     it('sets the fetching flag to false when fetched', function () {
       callback({
         type: Constants.ProjectsFetched,
-        id: 'some-id'
+        trayId: 'some-id'
       })
       expect(store.getById('some-id').fetching).toBeFalsy()
     })
@@ -75,7 +75,7 @@ describe('success store', function () {
     it('clears the error object once fetched', function () {
       callback({
         type: Constants.ProjectsFetched,
-        id: 'some-id'
+        trayId: 'some-id'
       })
       expect(store.getById('some-id').error).toBeNull()
     })
@@ -83,7 +83,7 @@ describe('success store', function () {
     it('sets the error object on api error', function () {
       callback({
         type: Constants.ApiError,
-        id: 'some-id',
+        trayId: 'some-id',
         error: 'some-error'
       })
       expect(store.getById('some-id').error).toEqual('some-error')
@@ -92,7 +92,7 @@ describe('success store', function () {
     it('sets the fetching flag to false on error', function () {
       callback({
         type: Constants.ApiError,
-        id: 'some-id'
+        trayId: 'some-id'
       })
       expect(store.getById('some-id').fetching).toBeFalsy()
     })

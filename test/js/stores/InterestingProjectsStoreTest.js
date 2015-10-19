@@ -35,7 +35,7 @@ describe('success store', function () {
       }]
     })
     expect(store.getAll()).toEqual([{
-      id: 'some-id',
+      projectId: 'some-id',
       name: 'name [stage]',
       prognosis: 'some-prognosis'
     }])

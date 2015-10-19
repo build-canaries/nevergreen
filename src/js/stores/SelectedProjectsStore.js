@@ -12,12 +12,12 @@ var dispatchToken = AppDispatcher.register(function (action) {
   switch (action.type) {
     case Constants.TrayAdd:
     {
-      _storeState[action.id] = []
+      _storeState[action.trayId] = []
       break
     }
     case Constants.TrayRemove:
     {
-      delete _storeState[action.id]
+      delete _storeState[action.trayId]
       break
     }
     case Constants.ProjectSelected:
