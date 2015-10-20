@@ -37,7 +37,7 @@ module.exports = {
     })
   },
 
-  importData: function (dataObject) {
+  save: function (dataObject) {
     return Promise.all(_.pairs(dataObject).map(function (pair) {
       return localforage.setItem(pair[0], pair[1])
     }))

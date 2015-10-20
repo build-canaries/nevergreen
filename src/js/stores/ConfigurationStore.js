@@ -3,7 +3,6 @@ var EventEmitter = require('events').EventEmitter
 var eventEmitter = new EventEmitter()
 var _ = require('lodash')
 var Constants = require('../constants/NevergreenConstants')
-var Promise = require('promise')
 var TrayStore = require('./TrayStore')
 var SelectedProjectsStore = require('./SelectedProjectsStore')
 var SuccessStore = require('./SuccessStore')
@@ -13,7 +12,10 @@ var CHANGE_EVENT = 'storage-change'
 
 var _storeState = {
   loading: true,
-  configuration: null,
+  configuration: {
+    trays: [],
+    messages: []
+  },
   importError: null
 }
 
@@ -21,68 +23,58 @@ function resetImportError() {
   _storeState.importError = null
 }
 
-function addProjectsToTray(action) {
-  return LocalRepository.getItem(action.trayId)
-    .then(function (tray) {
-      tray.projects = action.projects
-      return LocalRepository.setItem(action.trayId, tray)
-    })
+function setImportError(err) {
+  _storeState.importError = err
 }
 
-function updateTrays(trays) {
-  var newTrayIds = trays.map(function (tray) {
-    return tray.trayId
-  })
+function setLoading() {
+  _storeState.loading = true
+}
 
-  return LocalRepository.getItem('trays')
-    .then(function (existingTrayIds) {
-      return Promise.all(
-        _.difference(existingTrayIds, newTrayIds).map(function (idToRemove) {
-          return LocalRepository.removeItem(idToRemove)
-        })
-      )
-    })
-    .then(function () {
-      return LocalRepository.setItem('trays', newTrayIds)
-    })
-    .then(function () {
-      return Promise.all(trays.map(function (tray) {
-        return LocalRepository.setItem(tray.id, _.pick(tray, ['id', 'url', 'username', 'password']))
-      }))
-    })
+function setLoaded() {
+  _storeState.loading = false
+}
+
+function addProjectsToTray(action) {
+  _storeState.configuration[action.trayId].projects = action.projects
+}
+
+function addTray(tray) {
+  _storeState.configuration.trays = _storeState.configuration.trays.concat(tray.trayId)
+  _storeState.configuration[tray.trayId] = _.pick(tray, ['trayId', 'url', 'username', 'password'])
+}
+
+function removeTray(trayId) {
+  _storeState.configuration.trays = _.remove(_storeState.configuration.trays, trayId)
 }
 
 function updatedSelectedProjectsForTray(trayId, selectedProjects) {
-  return LocalRepository.getItem(trayId)
-    .then(function (tray) {
-      tray.selected = selectedProjects
-      return LocalRepository.setItem(trayId, tray)
-    })
+  _storeState.configuration[trayId].selected = selectedProjects
 }
 
 function updateMessages(messages) {
-  return LocalRepository.setItem('messages', messages)
+  _storeState.configuration.messages = messages
 }
 
 var dispatchToken = AppDispatcher.register(function (action) {
-  var savingPromise = null
-
   if (_storeState.loading) {
     switch (action.type) {
       case Constants.ConfigurationLoaded:
       {
-        _storeState.loading = false
+        setLoaded()
         _storeState.configuration = action.configuration
         resetImportError()
-        savingPromise = Promise.resolve()
         break
       }
       case Constants.ImportError:
       {
-        _storeState.loading = false
-        _storeState.importError = action.message
-        savingPromise = Promise.resolve()
+        setLoaded()
+        setImportError(action.message)
         break
+      }
+      default:
+      {
+        return true
       }
     }
   } else {
@@ -91,54 +83,55 @@ var dispatchToken = AppDispatcher.register(function (action) {
     switch (action.type) {
       case Constants.PasswordEncrypted:
       case Constants.TrayAdd:
-      case Constants.TrayRemove:
       {
         AppDispatcher.waitFor([TrayStore.dispatchToken])
-        savingPromise = updateTrays(TrayStore.getAll())
+        addTray(TrayStore.getById(action.trayId))
+        break
+      }
+      case Constants.TrayRemove:
+      {
+        removeTray(action.trayId)
         break
       }
       case Constants.ProjectsFetched:
       {
-        savingPromise = addProjectsToTray(action)
+        addProjectsToTray(action)
         break
       }
       case Constants.ProjectSelected:
       case Constants.ProjectUnselected:
       {
         AppDispatcher.waitFor([SelectedProjectsStore.dispatchToken])
-        savingPromise = updatedSelectedProjectsForTray(action.trayId, SelectedProjectsStore.getForTray(action.trayId))
+        updatedSelectedProjectsForTray(action.trayId, SelectedProjectsStore.getForTray(action.trayId))
         break
       }
       case Constants.MessageAdd:
       case Constants.MessageRemove:
       {
         AppDispatcher.waitFor([SuccessStore.dispatchToken])
-        savingPromise = updateMessages(SuccessStore.getAll())
+        updateMessages(SuccessStore.getAll())
         break
       }
       case Constants.ImportingData:
       {
-        _storeState.loading = true
-        savingPromise = Promise.resolve()
+        setLoading()
         break
       }
       case Constants.ImportError:
       {
-        _storeState.importError = action.message
-        savingPromise = Promise.resolve()
+        setImportError(action.message)
         break
+      }
+      default:
+      {
+        return true
       }
     }
   }
 
-  if (!_.isNull(savingPromise)) {
-    savingPromise
-      .then(LocalRepository.getConfiguration)
-      .then(function (configuration) {
-        _storeState.configuration = configuration
-        eventEmitter.emit(CHANGE_EVENT)
-      })
-  }
+  LocalRepository.save(_storeState.configuration).then(function () {
+    eventEmitter.emit(CHANGE_EVENT)
+  })
 
   return true
 })
@@ -150,7 +143,7 @@ module.exports = {
     return _storeState.configuration
   },
 
-  isImporting: function () {
+  isLoading: function () {
     return _storeState.loading
   },
 

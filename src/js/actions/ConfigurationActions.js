@@ -49,7 +49,7 @@ module.exports = {
         data: data
       })
 
-      LocalRepository.importData(data)
+      LocalRepository.save(data)
         .then(function () {
           AppDispatcher.dispatch({
             type: Constants.ImportedData,
