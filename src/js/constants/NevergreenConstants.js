@@ -9,6 +9,7 @@ module.exports = {
   ProjectUnselected: 'project-unselected',
   InterestingProjects: 'interesting-projects',
   MessageAdd: 'message-add',
+  MessageInvalidInput: 'message-invalid-input',
   MessageRemove: 'message-removed',
   ApiError: 'api-error',
   ImportingData: 'importing-data',

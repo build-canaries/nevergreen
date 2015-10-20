@@ -4,14 +4,31 @@ module.exports = React.createClass({
   mixins: [React.addons.LinkedStateMixin],
 
   propTypes: {
-    addMessage: React.PropTypes.func.isRequired
+    addMessage: React.PropTypes.func.isRequired,
+    validationMessages: React.PropTypes.arrayOf(React.PropTypes.string),
+    initialMessage: React.PropTypes.string
   },
 
   getInitialState: function () {
-    return {message: ''}
+    return {
+      message: this.props.initialMessage || ''
+    }
   },
 
   render: function () {
+    var validationMessages = ''
+
+    if (this.props.validationMessages) {
+      validationMessages = this.props.validationMessages.map(function (msg, index) {
+        return (
+          <div key={index} className='import-error'>
+            <span className='icon-notification'></span>
+            <span className='text-with-icon'>{msg}</span>
+          </div>
+        )
+      })
+    }
+
     return (
       <div className='tracking-cctray-group-cctray-form'>
         <label htmlFor='message-input' className='success-message-prompt'>message</label>
@@ -23,6 +40,7 @@ module.exports = React.createClass({
                valueLink={this.linkState('message')}
                onKeyPress={this.onKeyPress}/>
         <button ref='addButton' className='button-primary' onClick={this.onClick}>add</button>
+        {validationMessages}
       </div>
     )
   },

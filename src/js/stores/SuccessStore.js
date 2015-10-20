@@ -6,40 +6,49 @@ var _ = require('lodash')
 
 var CHANGE_EVENT = 'success-change'
 
-var _messages = []
-var _images = []
+var _storeState = {
+  messages: [],
+  validation: {}
+}
 
 function randomFrom(arr) {
   return arr[Math.floor(Math.random() * arr.length)]
 }
 
-function isUrl(value) {
-  return _.startsWith(value, 'http')
+function clearValidation() {
+  _storeState.validation = {}
 }
 
 var dispatchToken = AppDispatcher.register(function (action) {
   switch (action.type) {
     case Constants.MessageAdd:
     {
-      if (isUrl(action.message)) {
-        _images = _images.concat(action.message)
-      } else {
-        _messages = _messages.concat(action.message)
-      }
+      _storeState.messages = _storeState.messages.concat(action.message)
+      clearValidation()
       break
     }
     case Constants.MessageRemove:
     {
-      var arr = isUrl(action.message) ? _images : _messages
-      _.remove(arr, function (message) {
-        return message === action.message
+      _.remove(_storeState.messages, function (msg) {
+        return msg === action.message
       })
+      clearValidation()
+      break
+    }
+    case Constants.MessageInvalidInput:
+    {
+      _storeState.validation = {
+        validationMessages: action.validationMessages,
+        message: action.message
+      }
       break
     }
     case Constants.ImportedData:
     {
-      _messages = []
-      _images = []
+      _storeState = {
+        messages: [],
+        validation: {}
+      }
       break
     }
     default :
@@ -56,23 +65,31 @@ module.exports = {
   dispatchToken: dispatchToken,
 
   getMessages: function () {
-    return _messages
+    return _storeState.messages.filter(function (message) {
+      return !this.isUrl(message)
+    }.bind(this))
   },
 
   getImages: function () {
-    return _images
+    return _storeState.messages.filter(function (message) {
+      return this.isUrl(message)
+    }.bind(this))
   },
 
   getAll: function () {
-    return _messages.concat(_images)
+    return _storeState.messages
   },
 
   randomMessage: function () {
-    var message = randomFrom(this.getAll()) || ''
-    return {
-      value: message,
-      isImage: _.indexOf(_images, message) >= 0
-    }
+    return randomFrom(_storeState.messages) || ''
+  },
+
+  getValidationObject: function () {
+    return _storeState.validation
+  },
+
+  isUrl: function (value) {
+    return _.startsWith(value, 'http')
   },
 
   addListener: function (callback) {

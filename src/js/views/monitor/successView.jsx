@@ -9,14 +9,10 @@ module.exports = React.createClass({
   },
 
   render: function () {
-    if (this.state.message.isImage) {
-      return <Image url={this.state.message.value}/>
+    if (SuccessStore.isUrl(this.state.message)) {
+      return <Image url={this.state.message}/>
     } else {
-      return <Message message={this.state.message.value}/>
+      return <Message message={this.state.message}/>
     }
-  },
-
-  componentWillMount: function () {
-    this.setState({message: SuccessStore.randomMessage()})
   }
 })

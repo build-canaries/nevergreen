@@ -57,10 +57,7 @@ describe('success store', function () {
   })
 
   it('returns a blank random message if none have been added', function () {
-    expect(store.randomMessage()).toEqual({
-      value: '',
-      isImage: false
-    })
+    expect(store.randomMessage()).toEqual('')
   })
 
   it('get all returns all messages and images', function () {

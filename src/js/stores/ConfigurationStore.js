@@ -45,7 +45,9 @@ function addTray(tray) {
 }
 
 function removeTray(trayId) {
-  _storeState.configuration.trays = _.remove(_storeState.configuration.trays, trayId)
+  _.remove(_storeState.configuration.trays, function (id) {
+    return id === trayId
+  })
 }
 
 function updatedSelectedProjectsForTray(trayId, selectedProjects) {
