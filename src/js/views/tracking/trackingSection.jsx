@@ -32,11 +32,7 @@ module.exports = React.createClass({
         <h2 className='visually-hidden'>Tracking</h2>
 
         <fieldset className='tracking-cctray-group'>
-          <AddTray addTray={this._addTray}
-                   validationMessages={this.state.validation.messages}
-                   initialUrl={this.state.validation.url}
-                   initialUsername={this.state.validation.username}
-                   initialPassword={this.state.validation.password}/>
+          <AddTray addTray={this._addTray} validationMessages={this.state.validation.messages}/>
 
           <div>
             {

@@ -5,17 +5,14 @@ module.exports = React.createClass({
 
   propTypes: {
     addTray: React.PropTypes.func.isRequired,
-    validationMessages: React.PropTypes.arrayOf(React.PropTypes.string),
-    initialUrl: React.PropTypes.string,
-    initialUsername: React.PropTypes.string,
-    initialPassword: React.PropTypes.string
+    validationMessages: React.PropTypes.arrayOf(React.PropTypes.string)
   },
 
   getInitialState: function () {
     return {
-      url: this.props.initialUrl || '',
-      username: this.props.initialUsername || '',
-      password: this.props.initialPassword || ''
+      url: '',
+      username: '',
+      password: ''
     }
   },
 
@@ -65,6 +62,16 @@ module.exports = React.createClass({
         {validationMessages}
       </div>
     )
+  },
+
+  componentWillReceiveProps: function (nextProps) {
+    if (!nextProps.validationMessages) {
+      this.setState({
+        url: '',
+        username: '',
+        password: ''
+      })
+    }
   },
 
   _onClick: function () {

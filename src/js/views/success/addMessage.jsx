@@ -5,14 +5,11 @@ module.exports = React.createClass({
 
   propTypes: {
     addMessage: React.PropTypes.func.isRequired,
-    validationMessages: React.PropTypes.arrayOf(React.PropTypes.string),
-    initialMessage: React.PropTypes.string
+    validationMessages: React.PropTypes.arrayOf(React.PropTypes.string)
   },
 
   getInitialState: function () {
-    return {
-      message: this.props.initialMessage || ''
-    }
+    return {message: ''}
   },
 
   render: function () {
@@ -38,18 +35,24 @@ module.exports = React.createClass({
                type='text'
                placeholder='text or image url'
                valueLink={this.linkState('message')}
-               onKeyPress={this.onKeyPress}/>
-        <button ref='addButton' className='button-primary' onClick={this.onClick}>add</button>
+               onKeyPress={this._onKeyPress}/>
+        <button ref='addButton' className='button-primary' onClick={this._onClick}>add</button>
         {validationMessages}
       </div>
     )
   },
 
-  onClick: function () {
+  componentWillReceiveProps: function (nextProps) {
+    if (!nextProps.validationMessages) {
+      this.setState({message: ''})
+    }
+  },
+
+  _onClick: function () {
     this.props.addMessage(this.state.message)
   },
 
-  onKeyPress: function (evt) {
+  _onKeyPress: function (evt) {
     if (evt.key === 'Enter') {
       this.props.addMessage(this.state.message)
     }
