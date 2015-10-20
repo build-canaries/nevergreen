@@ -18,13 +18,16 @@ module.exports = {
     var keys = [
       'trays',
       'messages',
-      'versionNumber'
+      'created'
     ]
 
     var defaultValues = [
       [],
       ['=(^.^)='],
-      versionNumber
+      {
+        versionNumber: versionNumber,
+        timestamp: new Date().toUTCString()
+      }
     ]
 
     return Promise.all(keys.map(function (key) {
