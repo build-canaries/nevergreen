@@ -54,7 +54,7 @@ module.exports = React.createClass({
   },
 
   _removeTray: function (trayId) {
-    TrayActions._removeTray(trayId)
+    TrayActions.removeTray(trayId)
   },
 
   _refreshTray: function (tray) {

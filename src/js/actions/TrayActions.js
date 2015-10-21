@@ -48,7 +48,7 @@ module.exports = {
     }
   },
 
-  _removeTray: function (trayId) {
+  removeTray: function (trayId) {
     AppDispatcher.dispatch({
       type: Constants.TrayRemove,
       trayId: trayId

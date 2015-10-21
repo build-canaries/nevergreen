@@ -60,7 +60,43 @@ describe('success store', function () {
     expect(store.randomMessage()).toEqual('')
   })
 
-  it('get all returns all messages and images', function () {
+  it('returns a random message', function () {
+    callback({
+      type: Constants.MessageAdd,
+      message: 'some-message'
+    })
+    callback({
+      type: Constants.MessageAdd,
+      message: 'http://some-url'
+    })
+    expect(store.randomMessage()).not.toEqual('')
+  })
+
+  it('can return just messages', function () {
+    callback({
+      type: Constants.MessageAdd,
+      message: 'some-message'
+    })
+    callback({
+      type: Constants.MessageAdd,
+      message: 'http://some-url'
+    })
+    expect(store.getMessages()).toEqual(['some-message'])
+  })
+
+  it('can return just images', function () {
+    callback({
+      type: Constants.MessageAdd,
+      message: 'some-message'
+    })
+    callback({
+      type: Constants.MessageAdd,
+      message: 'http://some-url'
+    })
+    expect(store.getImages()).toEqual(['http://some-url'])
+  })
+
+  it('can return all images and messages', function () {
     callback({
       type: Constants.MessageAdd,
       message: 'some-message'
@@ -77,6 +113,16 @@ describe('success store', function () {
       type: Constants.ImportedData
     })
     expect(store.getAll()).toEqual([])
+  })
+
+  describe('knows if a string is a url or not', function () {
+    it('returns true for any string starting with http', function () {
+      expect(store.isUrl('http')).toBeTruthy()
+    })
+
+    it('if returns false if the string does not start with http', function () {
+      expect(store.isUrl('ftp')).toBeFalsy()
+    })
   })
 
 })
