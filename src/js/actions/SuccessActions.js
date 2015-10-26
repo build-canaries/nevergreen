@@ -2,8 +2,6 @@ var AppDispatcher = require('../dispatcher/AppDispatcher')
 var Constants = require('../constants/NevergreenConstants')
 var validate = require('validate.js')
 
-var _validationOptions = {format: 'flat'}
-
 var _addMessageValidation = {
   message: {
     presence: true
@@ -13,7 +11,7 @@ var _addMessageValidation = {
 module.exports = {
 
   addMessage: function (message) {
-    var validationMessages = validate({message: message}, _addMessageValidation, _validationOptions)
+    var validationMessages = validate({message: message}, _addMessageValidation)
 
     if (validationMessages) {
       AppDispatcher.dispatch({

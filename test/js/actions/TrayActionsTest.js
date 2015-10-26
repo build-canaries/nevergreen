@@ -26,7 +26,7 @@ describe('tray actions', function () {
       url: '',
       username: null,
       password: null,
-      messages: ['Url can\'t be blank']
+      messages: {url: {0: 'Url can\'t be blank'}}
     })
   })
 
@@ -38,7 +38,7 @@ describe('tray actions', function () {
       url: 'not-a-valid-url',
       username: null,
       password: null,
-      messages: ['Url is not a valid url']
+      messages: {url: {0: 'Url is not a valid url'}}
     })
   })
 })

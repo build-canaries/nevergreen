@@ -16,15 +16,15 @@ var _storeState = {
     trays: [],
     messages: []
   },
-  importError: null
+  validationMessages: null
 }
 
 function resetImportError() {
-  _storeState.importError = null
+  _storeState.validationMessages = null
 }
 
-function setImportError(err) {
-  _storeState.importError = err
+function setImportError(messages) {
+  _storeState.validationMessages = messages
 }
 
 function setLoading() {
@@ -71,7 +71,7 @@ var dispatchToken = AppDispatcher.register(function (action) {
       case Constants.ImportError:
       {
         setLoaded()
-        setImportError(action.message)
+        setImportError(action.messages)
         break
       }
       default:
@@ -121,7 +121,7 @@ var dispatchToken = AppDispatcher.register(function (action) {
       }
       case Constants.ImportError:
       {
-        setImportError(action.message)
+        setImportError(action.messages)
         break
       }
       default:
@@ -150,7 +150,7 @@ module.exports = {
   },
 
   getImportError: function () {
-    return _storeState.importError
+    return _storeState.validationMessages
   },
 
   addListener: function (callback) {

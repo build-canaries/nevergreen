@@ -5,8 +5,6 @@ var uuid = require('node-uuid')
 var validate = require('validate.js')
 var Constants = require('../constants/NevergreenConstants')
 
-var _validationOptions = {format: 'flat'}
-
 var _addTrayValidation = {
   url: {
     presence: true,
@@ -22,7 +20,7 @@ module.exports = {
     var requiresAuth = username && password
     var trayId = uuid.v4()
 
-    var validationMessages = validate({url: url}, _addTrayValidation, _validationOptions)
+    var validationMessages = validate({url: url}, _addTrayValidation)
 
     if (validationMessages) {
       this._dispatchInvalidInput(url, username, password, validationMessages)

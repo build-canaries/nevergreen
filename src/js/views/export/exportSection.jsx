@@ -1,4 +1,5 @@
 var React = require('react/addons')
+var ValidationMessages = require('../general/validationMessages')
 var ConfigurationStore = require('../../stores/ConfigurationStore')
 var ConfigurationActions = require('../../actions/ConfigurationActions')
 var _ = require('lodash')
@@ -7,7 +8,7 @@ function getStateFromStore() {
   return {
     configuration: ConfigurationStore.getConfiguration(),
     loading: ConfigurationStore.isLoading(),
-    importError: ConfigurationStore.getImportError()
+    validationMessages: ConfigurationStore.getImportError()
   }
 }
 
@@ -27,13 +28,6 @@ module.exports = React.createClass({
   },
 
   render: function () {
-    var error = (
-      <span className='import-error'>
-        <span className='icon-notification'></span>
-        <span className='text-with-icon'>{this.state.importError}</span>
-      </span>
-    )
-
     return (
       <section className='dashboard-main-section active'>
         <h2 className='visually-hidden'>Export</h2>
@@ -50,7 +44,7 @@ module.exports = React.createClass({
                     disabled={this.state.loading}>
               import
             </button>
-            {this.state.importError ? error : ''}
+            <ValidationMessages messages={this.state.validationMessages}/>
           </section>
           <section className='success-section'>
             <h3 className='success-title'>Export</h3>

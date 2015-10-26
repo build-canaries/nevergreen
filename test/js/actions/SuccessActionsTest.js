@@ -17,7 +17,7 @@ describe('success actions', function () {
 
     expect(AppDispatcher.dispatch).toBeCalledWith({
       type: Constants.MessageInvalidInput,
-      validationMessages: ['Message can\'t be blank'],
+      validationMessages: {message: {0: 'Message can\'t be blank'}},
       message: ''
     })
   })

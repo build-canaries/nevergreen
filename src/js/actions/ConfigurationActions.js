@@ -5,11 +5,21 @@ var LocalRepository = require('../storage/LocalRepository')
 var TrayActions = require('../actions/TrayActions')
 var SelectProjectActions = require('../actions/SelectProjectActions')
 var SuccessActions = require('../actions/SuccessActions')
+var validate = require('validate.js')
 
-function dispatchError(message) {
+var _importValidation = {
+  trays: {
+    stringArray: true
+  },
+  messages: {
+    stringArray: true
+  }
+}
+
+function dispatchError(messages) {
   AppDispatcher.dispatch({
     type: Constants.ImportError,
-    message: message
+    messages: messages
   })
 }
 
@@ -44,25 +54,31 @@ module.exports = {
     try {
       var data = JSON.parse(jsonData)
 
-      AppDispatcher.dispatch({
-        type: Constants.ImportingData,
-        data: data
-      })
+      var validationMessages = validate(data, _importValidation)
 
-      LocalRepository.save(data)
-        .then(function () {
-          AppDispatcher.dispatch({
-            type: Constants.ImportedData,
-            data: data
+      if (validationMessages) {
+        dispatchError(validationMessages)
+      } else {
+        AppDispatcher.dispatch({
+          type: Constants.ImportingData,
+          data: data
+        })
+
+        LocalRepository.save(data)
+          .then(function () {
+            AppDispatcher.dispatch({
+              type: Constants.ImportedData,
+              data: data
+            })
           })
-        })
-        .then(this.load)
-        .catch(function (e) {
-          dispatchError('Unable to import - ' + e.message)
-        })
+          .then(this.load)
+          .catch(function (e) {
+            dispatchError(['Unable to import - ' + e.message])
+          })
+      }
 
     } catch (e) {
-      dispatchError('Invalid JSON - ' + e.message)
+      dispatchError(['Invalid JSON - ' + e.message])
     }
   },
 

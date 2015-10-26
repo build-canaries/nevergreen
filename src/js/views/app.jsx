@@ -2,6 +2,7 @@ var React = require('react')
 var Menu = require('./general/menu')
 var LocalRepository = require('../storage/LocalRepository')
 var ConfigurationActions = require('../actions/ConfigurationActions')
+var Validation = require('../validation')
 
 module.exports = React.createClass({
   getDefaultProps: function () {
@@ -28,6 +29,7 @@ module.exports = React.createClass({
   },
 
   componentDidMount: function () {
+    Validation.init()
     LocalRepository.init(this.props.versionNumber)
       .then(ConfigurationActions.load)
   }

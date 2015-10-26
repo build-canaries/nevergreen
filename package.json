@@ -38,7 +38,7 @@
     "whatwg-fetch": "^0.9.0"
   },
   "jest": {
-    "setupEnvScriptFile": "<rootDir>/test/js/jest/localStorage.js",
+    "setupEnvScriptFile": "<rootDir>/test/js/jest/setupEnv.js",
     "scriptPreprocessor": "<rootDir>/test/js/jest/jsxPreprocessor.js",
     "unmockedModulePathPatterns": [
       "<rootDir>/node_modules/react",
