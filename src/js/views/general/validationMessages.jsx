@@ -19,6 +19,6 @@ module.exports = React.createClass({
       })
     }
 
-    return <div>{validationMessages}</div>
+    return <div className='import-error-box'>{validationMessages}</div>
   }
 })
