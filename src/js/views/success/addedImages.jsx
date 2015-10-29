@@ -9,8 +9,8 @@ module.exports = React.createClass({
 
   render: function () {
     return (
-      <section className='success-section'>
-        <h3 className='success-title'>Images</h3>
+      <section className='sub-section'>
+        <h3 className='section-title'>Images</h3>
         <ul className='success-list success-images-list'>
           {
             this.props.messages.map(function (message) {

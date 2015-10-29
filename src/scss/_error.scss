@@ -2,3 +2,14 @@
   width: 100%;
   font-size: 3em;
 }
+
+.validation-messages {
+  margin: 0.5em;
+  border-radius: 0.5em;
+  background-color: $danger-text;
+  color: white;
+}
+
+.validation-message {
+  padding: 0.5em;
+}

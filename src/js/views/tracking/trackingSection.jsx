@@ -28,23 +28,20 @@ module.exports = React.createClass({
 
   render: function () {
     return (
-      <section className='dashboard-main-section active'>
+      <section className='dashboard-main-section'>
         <h2 className='visually-hidden'>Tracking</h2>
+        <AddTray addTray={this._addTray} validationMessages={this.state.validation.messages}/>
 
-        <fieldset className='tracking-cctray-group'>
-          <AddTray addTray={this._addTray} validationMessages={this.state.validation.messages}/>
-
-          <div>
-            {
-              this.state.trays.map(function (tray) {
-                return <Tray key={tray.trayId}
-                             tray={tray}
-                             removeTray={this._removeTray.bind(this, tray.trayId)}
-                             refreshTray={this._refreshTray.bind(this, tray)}/>
-              }, this)
-            }
-          </div>
-        </fieldset>
+        <div>
+          {
+            this.state.trays.map(function (tray) {
+              return <Tray key={tray.trayId}
+                           tray={tray}
+                           removeTray={this._removeTray.bind(this, tray.trayId)}
+                           refreshTray={this._refreshTray.bind(this, tray)}/>
+            }, this)
+          }
+        </div>
       </section>
     )
   },

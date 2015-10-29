@@ -30,14 +30,12 @@ module.exports = React.createClass({
     return (
       <section className='dashboard-main-section'>
         <h2 className='visually-hidden'>Success</h2>
-        <fieldset className='tracking-cctray-group'>
-          <AddMessage addMessage={this._addNewMessage} validationMessages={this.state.validation.validationMessages}/>
+        <AddMessage addMessage={this._addNewMessage} validationMessages={this.state.validation.validationMessages}/>
 
-          { this.state.messages.length > 0 ?
-            <AddedMessages messages={this.state.messages} removeMessage={this._removeMessage}/> : '' }
-          { this.state.images.length > 0 ?
-            <AddedImages messages={this.state.images} removeMessage={this._removeMessage}/> : '' }
-        </fieldset>
+        { this.state.messages.length > 0 ?
+          <AddedMessages messages={this.state.messages} removeMessage={this._removeMessage}/> : '' }
+        { this.state.images.length > 0 ?
+          <AddedImages messages={this.state.images} removeMessage={this._removeMessage}/> : '' }
       </section>
     )
   },

@@ -11,7 +11,7 @@ module.exports = React.createClass({
     if (this.props.messages) {
       validationMessages = this.props.messages.map(function (msg, index) {
         return (
-          <div key={index} className='import-error'>
+          <div key={index} className='validation-message'>
             <span className='icon-notification'></span>
             <span className='text-with-icon'>{msg}</span>
           </div>
@@ -19,6 +19,6 @@ module.exports = React.createClass({
       })
     }
 
-    return <div className='import-error-box'>{validationMessages}</div>
+    return <div className='validation-messages'>{validationMessages}</div>
   }
 })

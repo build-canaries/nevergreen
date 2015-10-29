@@ -5,13 +5,29 @@
 
 .dashboard-main-section {
   width: 90%;
-  padding: 2%;
+  padding: 2em;
   float: left;
   margin-left: 10%;
   min-height: 35em;
   &.active {
     display: block;
   }
+}
+
+.sub-section {
+  flex: 1;
+  font-size: 1.5rem;
+  border: 1px solid $mid-grey;
+  background-color: white;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 400;
+  padding: 0.5em 1.5em;
+  background: $mid-grey;
+  color: white;
+  text-overflow: ellipsis;
 }
 
 .config-spinner {

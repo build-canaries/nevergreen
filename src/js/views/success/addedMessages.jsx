@@ -10,8 +10,8 @@ module.exports = React.createClass({
 
   render: function () {
     return (
-      <section className='success-section'>
-        <h3 className='success-title'>Messages</h3>
+      <section className='sub-section'>
+        <h3 className='section-title'>Messages</h3>
         <ul className='success-list success-text-list'>
           {
             this.props.messages.map(function (message) {

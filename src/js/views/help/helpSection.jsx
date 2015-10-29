@@ -5,8 +5,8 @@ module.exports = React.createClass({
     return (
       <section className='dashboard-main-section'>
         <h2 className='visually-hidden'>Help</h2>
-        <section className='help-section'>
-          <h3 className='help-title'>Monitor</h3>
+        <section className='sub-section'>
+          <h3 className='section-title'>Monitor</h3>
 
           <div className='help-contents'>
             <table className='help-tracking-table'>
@@ -35,8 +35,8 @@ module.exports = React.createClass({
           </div>
         </section>
 
-        <section className='help-section'>
-          <h3 className='help-title'>Tracking</h3>
+        <section className='sub-section'>
+          <h3 className='section-title'>Tracking</h3>
 
           <div className='help-contents'>
             <p className="help-text">To get started you need to enter the URL to your cctray xml file. Where it lives
@@ -100,8 +100,8 @@ module.exports = React.createClass({
           </div>
         </section>
 
-        <section className='help-section'>
-          <h3 className='help-title'>Success</h3>
+        <section className='sub-section'>
+          <h3 className='section-title'>Success</h3>
 
           <div className='help-contents'>
             <p className="help-text">You can add text or image urls, these will get displayed when no projects are
@@ -119,8 +119,8 @@ module.exports = React.createClass({
           </div>
         </section>
 
-        <section role='seealso' className='help-section'>
-          <h3 className='help-title'>Additional Links</h3>
+        <section role='seealso' className='sub-section'>
+          <h3 className='section-title'>Additional Links</h3>
           <ul className='help-links'>
             <li>
               <span className='help-link-icon icon-github4'></span>

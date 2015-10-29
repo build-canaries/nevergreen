@@ -29,25 +29,24 @@ module.exports = React.createClass({
 
   render: function () {
     return (
-      <section className='dashboard-main-section active'>
+      <section className='dashboard-main-section'>
         <h2 className='visually-hidden'>Export</h2>
 
-        <fieldset className='tracking-cctray-group'>
-          <section className='success-section'>
-            <h3 className='success-title'>Import</h3>
+        <section className='sub-section'>
+          <h3 className='section-title'>Import</h3>
             <textarea className='export-text'
                       placeholder='paste exported configuration here and press import'
                       valueLink={this.linkState('importData')}
                       spellCheck='false'/>
-            <button className='button-primary'
-                    onClick={this._import}
-                    disabled={this.state.loading}>
-              import
-            </button>
-            <ValidationMessages messages={this.state.validationMessages}/>
-          </section>
-          <section className='success-section'>
-            <h3 className='success-title'>Export</h3>
+          <button className='button-primary'
+                  onClick={this._import}
+                  disabled={this.state.loading}>
+            import
+          </button>
+          <ValidationMessages messages={this.state.validationMessages}/>
+        </section>
+        <section className='sub-section'>
+          <h3 className='section-title'>Export</h3>
             <pre>
               <textarea className='export-text'
                         placeholder='loading...'
@@ -55,8 +54,7 @@ module.exports = React.createClass({
                         readOnly='true'
                         spellCheck='false'/>
             </pre>
-          </section>
-        </fieldset>
+        </section>
       </section>
     )
   },
