@@ -35,7 +35,9 @@ module.exports = React.createClass({
         <nav role='navigation' className='navigation'>
           <h2 className='visually-hidden'>Navigation</h2>
 
-          <img src='img/buildcanaries-logo.png' className='header-logo' alt='Build Canaries logo'/>
+          <a href='https://build-canaries.github.io/' target='_blank'>
+            <img src='img/buildcanaries-logo.png' className='header-logo' alt='Build Canaries logo' title='Click to visit the Build Canaries homepage'/>
+          </a>
 
           <ul className='navigation-list'>
             {
