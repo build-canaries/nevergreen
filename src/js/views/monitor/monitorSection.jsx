@@ -7,10 +7,12 @@ var InterestingProjectsStore = require('../../stores/InterestingProjectsStore')
 var InterestingProjectActions = require('../../actions/InterestingProjectActions')
 var TrayStore = require('../../stores/TrayStore')
 var SelectedProjectsStore = require('../../stores/SelectedProjectsStore')
+var Error = require('../general/errorView')
 
 function getStateFromStore() {
   return {
     projects: InterestingProjectsStore.getAll(),
+    error: InterestingProjectsStore.getLastError(),
     loaded: true
   }
 }
@@ -27,10 +29,10 @@ module.exports = React.createClass({
     var content
     if (!this.state.loaded) {
       content = <Loading />
-
+    } else if (this.state.error) {
+      content = <Error status={this.state.error.status} reason={this.state.error.message}/>
     } else if (this._hasProjects()) {
       content = <InterestingProjects projects={this.state.projects}/>
-
     } else {
       content = <Success />
     }

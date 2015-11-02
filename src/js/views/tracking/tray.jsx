@@ -29,7 +29,7 @@ module.exports = React.createClass({
       if (this.props.tray.fetching) {
         content = <Loading/>
       } else if (this.props.tray.error) {
-        content = <Error status={this.props.tray.error.status} reason={this.props.tray.error.responseText}/>
+        content = <Error status={this.props.tray.error.status} reason={this.props.tray.error.message}/>
       } else {
         content = <Projects trayId={this.props.tray.trayId} refreshTray={this.props.refreshTray}/>
       }

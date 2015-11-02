@@ -10,7 +10,7 @@ var processStatus = function (response) {
   } else {
     return Promise.reject({
       status: response.status,
-      responseText: response.statusText
+      message: response.statusText
     })
   }
 }

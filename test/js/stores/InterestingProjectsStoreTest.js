@@ -41,6 +41,14 @@ describe('success store', function () {
     }])
   })
 
+  it('adds an error', function () {
+    callback({
+      type: Constants.InterestingProjectsError,
+      error: 'some-error'
+    })
+    expect(store.getLastError()).toEqual('some-error')
+  })
+
   it('clears the store state when new data is imported', function () {
     callback({
       type: Constants.ImportedData

@@ -5,7 +5,10 @@ var Constants = require('../constants/NevergreenConstants')
 
 var CHANGE_EVENT = 'interesting-projects-change'
 
-var _projects = []
+var _storeState = {
+  projects: [],
+  error: null
+}
 
 function getName(apiProject) {
   return apiProject.stage ? apiProject.name + ' [' + apiProject.stage + ']' : apiProject.name
@@ -23,12 +26,21 @@ var dispatchToken = AppDispatcher.register(function (action) {
   switch (action.type) {
     case Constants.InterestingProjects:
     {
-      _projects = action.projects.map(toProject)
+      _storeState.projects = action.projects.map(toProject)
+      _storeState.error = null
+      break
+    }
+    case Constants.InterestingProjectsError:
+    {
+      _storeState.error = action.error
       break
     }
     case Constants.ImportedData:
     {
-      _projects = []
+      _storeState = {
+        projects: [],
+        error: null
+      }
       break
     }
     default :
@@ -45,7 +57,11 @@ module.exports = {
   dispatchToken: dispatchToken,
 
   getAll: function () {
-    return _projects
+    return _storeState.projects
+  },
+
+  getLastError: function () {
+    return _storeState.error
   },
 
   addListener: function (callback) {

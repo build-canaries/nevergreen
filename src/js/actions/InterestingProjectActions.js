@@ -12,6 +12,11 @@ module.exports = {
         type: Constants.InterestingProjects,
         projects: data
       })
+    }).catch(function (err) {
+      AppDispatcher.dispatch({
+        type: Constants.InterestingProjectsError,
+        error: err
+      })
     })
   },
 

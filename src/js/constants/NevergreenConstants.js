@@ -8,6 +8,7 @@ module.exports = {
   ProjectSelected: 'project-selected',
   ProjectUnselected: 'project-unselected',
   InterestingProjects: 'interesting-projects',
+  InterestingProjectsError: 'interesting-projects-error',
   MessageAdd: 'message-add',
   MessageInvalidInput: 'message-invalid-input',
   MessageRemove: 'message-removed',
