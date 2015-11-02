@@ -4,11 +4,13 @@ var ConfigurationStore = require('../../stores/ConfigurationStore')
 var ConfigurationActions = require('../../actions/ConfigurationActions')
 var _ = require('lodash')
 
-function getStateFromStore() {
+function getStateFromStore(currentImportData) {
+  var importError = ConfigurationStore.getImportError()
   return {
     configuration: ConfigurationStore.getConfiguration(),
     loading: ConfigurationStore.isLoading(),
-    validationMessages: ConfigurationStore.getImportError()
+    validationMessages: importError,
+    importData: importError ? currentImportData : ''
   }
 }
 
@@ -16,7 +18,7 @@ module.exports = React.createClass({
   mixins: [React.addons.LinkedStateMixin],
 
   getInitialState: function () {
-    return getStateFromStore()
+    return getStateFromStore('')
   },
 
   componentDidMount: function () {
@@ -60,7 +62,7 @@ module.exports = React.createClass({
   },
 
   _onChange: function () {
-    this.setState(getStateFromStore())
+    this.setState(getStateFromStore(this.state.importData))
   },
 
   _import: function () {
