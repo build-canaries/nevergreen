@@ -1,10 +1,9 @@
 jest.dontMock('../../../src/js/actions/TrayActions')
   .dontMock('../../../src/js/constants/NevergreenConstants')
-  .dontMock('validate.js')
 
 describe('tray actions', function () {
 
-  var subject, AppDispatcher, Constants, projectsGateway, securityGateway, promiseMock, uuid
+  var subject, AppDispatcher, Constants, projectsGateway, securityGateway, promiseMock, uuid, validate
 
   beforeEach(function () {
     subject = require('../../../src/js/actions/TrayActions')
@@ -13,32 +12,36 @@ describe('tray actions', function () {
     projectsGateway = require('../../../src/js/gateways/projectsGateway')
     securityGateway = require('../../../src/js/gateways/securityGateway')
     uuid = require('node-uuid')
+    validate = require('validate.js')
     promiseMock = {
-      then: jest.genMockFunction()
+      then: jest.genMockFunction(),
+      catch: jest.genMockFunction()
     }
+    promiseMock.then.mockReturnValue(promiseMock)
+    promiseMock.catch.mockReturnValue(promiseMock)
   })
 
-  it('dispatches invalid input action when tray url is blank', function () {
-    subject.addTray('', null, null)
+  it('dispatches invalid input action when validation fails', function () {
+    validate.mockReturnValue('some-validation-message')
+
+    subject.addTray('some-url', 'some-username', 'some-password')
 
     expect(AppDispatcher.dispatch).toBeCalledWith({
       type: Constants.TrayInvalidInput,
-      url: '',
-      username: null,
-      password: null,
-      messages: {url: {0: 'Url can\'t be blank'}}
+      url: 'some-url',
+      username: 'some-username',
+      password: 'some-password',
+      messages: 'some-validation-message'
     })
   })
 
-  it('dispatches invalid input action when tray url is not a valid url', function () {
-    subject.addTray('not-a-valid-url', null, null)
+  it('dispatches tray remove action when removing a tray', function () {
+    subject.removeTray('some-id')
 
     expect(AppDispatcher.dispatch).toBeCalledWith({
-      type: Constants.TrayInvalidInput,
-      url: 'not-a-valid-url',
-      username: null,
-      password: null,
-      messages: {url: {0: 'Url is not a valid url'}}
+      type: Constants.TrayRemove,
+      trayId: 'some-id'
     })
   })
+
 })

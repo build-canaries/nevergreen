@@ -1,23 +1,25 @@
 jest.dontMock('../../../src/js/actions/SuccessActions')
   .dontMock('../../../src/js/constants/NevergreenConstants')
-  .dontMock('validate.js')
 
 describe('success actions', function () {
 
-  var subject, AppDispatcher, Constants
+  var subject, AppDispatcher, Constants, validate
 
   beforeEach(function () {
     subject = require('../../../src/js/actions/SuccessActions')
     AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
     Constants = require('../../../src/js/constants/NevergreenConstants')
+    validate = require('validate.js')
   })
 
   it('dispatches a invalid action for blank messages', function () {
+    validate.mockReturnValue('some message')
+
     subject.addMessage('')
 
     expect(AppDispatcher.dispatch).toBeCalledWith({
       type: Constants.MessageInvalidInput,
-      validationMessages: {message: {0: 'Message can\'t be blank'}},
+      validationMessages: 'some message',
       message: ''
     })
   })

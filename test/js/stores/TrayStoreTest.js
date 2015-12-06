@@ -1,7 +1,7 @@
 jest.dontMock('../../../src/js/stores/TrayStore')
   .dontMock('../../../src/js/constants/NevergreenConstants')
 
-describe('success store', function () {
+describe('tray store', function () {
 
   var store, AppDispatcher, Constants, callback
 
@@ -102,7 +102,7 @@ describe('success store', function () {
     callback({
       type: Constants.ImportedData
     })
-    expect(store.getAll()).toEqual({})
+    expect(store.getAll()).toEqual([])
   })
 
 })
