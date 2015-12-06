@@ -43,6 +43,7 @@ module.exports = React.createClass({
   },
 
   componentDidMount: function () {
+    window.addEventListener('resize', this._onChange)
     InterestingProjectsStore.addListener(this._onChange)
     InterestingProjectActions.pollForChanges(5000, TrayStore.getAll, SelectedProjectsStore.getAll)
 
@@ -50,6 +51,7 @@ module.exports = React.createClass({
   },
 
   componentWillUnmount: function () {
+    window.removeEventListener('resize', this._onChange)
     InterestingProjectsStore.removeListener(this._onChange)
     InterestingProjectActions.stopPollingForChanges()
 
