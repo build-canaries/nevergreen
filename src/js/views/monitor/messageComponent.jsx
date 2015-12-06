@@ -13,11 +13,12 @@ module.exports = React.createClass({
     )
   },
 
-  shouldComponentUpdate: function () {
-    return false
+  componentDidMount: function () {
+    var $node = $(React.findDOMNode(this))
+    styler.styleProjects([{name: this.props.message}], $node, $node.parent())
   },
 
-  componentDidMount: function () {
+  componentDidUpdate: function () {
     var $node = $(React.findDOMNode(this))
     styler.styleProjects([{name: this.props.message}], $node, $node.parent())
   }
