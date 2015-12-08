@@ -58,7 +58,7 @@
   (->> (fetch-tray tray)
        (filtering/interesting)
        (filter-by-ids (:included tray))
-       (add-tray-id (:trayId tray))))
+       (add-tray-id (:tray-id tray))))
 
 (defn get-interesting [trays]
   (if (= (count trays) 1)

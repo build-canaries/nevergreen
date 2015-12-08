@@ -66,7 +66,7 @@
                (subject/invalid-url? "url") => true))
 
        (fact "removes healthy projects"
-             (subject/get-interesting [{:trayId "a-tray" :included ["project-1"] :url valid-url}]) => (list)
+             (subject/get-interesting [{:tray-id "a-tray" :included ["project-1"] :url valid-url}]) => (list)
              (provided
                (subject/fetch-tray anything) => {:project-id "project-1" :prognosis :healthy}))
 
