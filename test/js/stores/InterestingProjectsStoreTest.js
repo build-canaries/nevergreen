@@ -28,7 +28,7 @@ describe('success store', function () {
     callback({
       type: Constants.InterestingProjects,
       projects: [{
-        'project-id': 'some-id',
+        projectId: 'some-id',
         name: 'name',
         stage: 'stage',
         prognosis: 'some-prognosis'
