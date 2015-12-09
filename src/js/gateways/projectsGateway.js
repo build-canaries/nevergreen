@@ -1,13 +1,15 @@
 var gateway = require('../gateways/gateway')
 
 module.exports = {
-  fetchAll: function (tray) {
-    var data = {
-      url: tray.url,
-      username: tray.username,
-      password: tray.password,
-      serverType: tray.serverType
-    }
+  fetchAll: function (trays) {
+    var data = trays.map(function (tray) {
+      return {
+        url: tray.url,
+        username: tray.username,
+        password: tray.password,
+        serverType: tray.serverType
+      }
+    })
 
     return gateway.post('/api/projects/all', data)
   },

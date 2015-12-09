@@ -11,16 +11,21 @@ describe('projects gateway', function () {
 
   describe('getting all projects', function () {
     it('has all data', function () {
-      var tray = {
+      var trays = [{
         url: 'url',
         username: 'uname',
         password: 'pword',
         serverType: 'GO'
-      }
+      }, {
+        url: 'another-url',
+        username: 'another-uname',
+        password: 'another-pword',
+        serverType: 'GO'
+      }]
 
-      subject.fetchAll(tray)
+      subject.fetchAll(trays)
 
-      expect(gateway.post).toBeCalledWith('/api/projects/all', tray)
+      expect(gateway.post).toBeCalledWith('/api/projects/all', trays)
     })
   })
 
@@ -46,6 +51,7 @@ describe('projects gateway', function () {
         included: ['some-project-id'],
         serverType: tray.serverType
       }]
+
       expect(gateway.post).toBeCalledWith('/api/projects/interesting', data)
     })
   })
