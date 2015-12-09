@@ -55,7 +55,7 @@ module.exports = {
 
   refreshTray: function (tray) {
     this._dispatchProjectsFetching(tray.trayId)
-    return projectsGateway.fetchAll(tray).then(function (projects) {
+    return projectsGateway.fetchAll([tray]).then(function (projects) {
       this._dispatchProjectsLoaded(tray.trayId, projects)
     }.bind(this)).catch(function (err) {
       this._dispatchApiError(tray.trayId, err)
