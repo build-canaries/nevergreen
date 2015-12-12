@@ -31,13 +31,15 @@ describe('success store', function () {
         projectId: 'some-id',
         name: 'name',
         stage: 'stage',
-        prognosis: 'some-prognosis'
+        prognosis: 'some-prognosis',
+        lastBuildTime: 'some-last-build-time'
       }]
     })
     expect(store.getAll()).toEqual([{
       projectId: 'some-id',
       name: 'name [stage]',
-      prognosis: 'some-prognosis'
+      prognosis: 'some-prognosis',
+      lastBuildTime: 'some-last-build-time'
     }])
   })
 

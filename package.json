@@ -33,6 +33,8 @@
     "jquery": "2.1.4",
     "localforage": "1.3.0",
     "lodash": "3.10.1",
+    "minifyify": "7.1.0",
+    "moment": "^2.10.6",
     "node-sass": "3.4.2",
     "node-uuid": "1.4.7",
     "promise": "7.0.4",

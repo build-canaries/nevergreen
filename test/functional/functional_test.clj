@@ -34,7 +34,7 @@
 
 (defn nevergreen-under-test []
   (let [url (or (env :functional-url) "http://localhost:5000")]
-    (println "Running agaisnt" url)
+    (println "Running against" url)
     url))
 
 (def expected-projects ["success building project", "failure sleeping project", "failure building project"])
@@ -57,5 +57,5 @@
     (let [actual-project-list (elements "#interesting-projects > li")]
       (is (= (count expected-projects) (count actual-project-list)) "Incorrect amount of projects displayed"))
 
-    (doseq [actual-project (elements "#interesting-projects > li > div > div")]
+    (doseq [actual-project (elements "#interesting-projects > li > div > div > span.monitor-project-name")]
       (is (in? expected-projects (text actual-project)) "Expected project not displayed"))))
