@@ -1,7 +1,7 @@
 <Projects>
-    <Project name="success-sleeping-project" activity="Sleeping" lastBuildStatus="Success"/>
-    <Project name="success-building-project" activity="Building" lastBuildStatus="Success"/>
-    <Project name="failure_sleeping_project" activity="Sleeping" lastBuildStatus="Failure"/>
-    <Project name="failure_building_project" activity="Building" lastBuildStatus="Failure"/>
+    <Project name="success-sleeping-project" activity="Sleeping" lastBuildStatus="Success" lastBuildTime="2015-12-09T10:31:10Z"/>
+    <Project name="success-building-project" activity="Building" lastBuildStatus="Success" lastBuildTime="2015-12-09T10:31:10Z"/>
+    <Project name="failure_sleeping_project" activity="Sleeping" lastBuildStatus="Failure" lastBuildTime="2015-12-09T10:31:10Z"/>
+    <Project name="failure_building_project" activity="Building" lastBuildStatus="Failure" lastBuildTime="2015-12-09T10:31:10Z"/>
     <random stuff="random-stuff"/>
 </Projects>
