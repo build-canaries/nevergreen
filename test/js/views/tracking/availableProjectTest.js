@@ -1,4 +1,4 @@
-jest.dontMock('../../../../src/js/views/tracking/availableProject.jsx')
+jest.dontMock('../../../../src/js/views/tracking/availableProject.js')
 
 describe('available project', function () {
   var React, TestUtils, AvailableProject, callback
@@ -6,7 +6,7 @@ describe('available project', function () {
   beforeEach(function () {
     React = require('react/addons')
     TestUtils = React.addons.TestUtils
-    AvailableProject = require('../../../../src/js/views/tracking/availableProject.jsx')
+    AvailableProject = require('../../../../src/js/views/tracking/availableProject.js')
 
     callback = jest.genMockFunction()
   })

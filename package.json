@@ -15,7 +15,8 @@
     "dev": "npm run watch & npm run server-dev",
     "watch": "watchify main.js -o resources/public/bundle.js -dv",
     "server-dev": "node browser-sync.js",
-    "test": "standard & babel-node test/test.js | faucet"
+    "test2": "standard & babel-node test/js/test.js | faucet",
+    "test": "jest"
   },
   "standard": {
     "parser": "babel-eslint"
@@ -41,14 +42,36 @@
     "node-uuid": "1.4.7",
     "flux": "2.1.1",
     "scale-text": "0.2.2",
-    "whatwg-fetch": "^0.10.1"
+    "whatwg-fetch": "^0.10.1",
+    "react-tools": "0.13.3"
   },
   "devDependencies": {
+    "babel-jest": "*",
+    "jest-cli": "*",
+
     "faucet": "0.0.1",
     "standard": "4.5.4",
     "standard-format": "1.6.0",
     "tape": "2.3.3",
     "uglify": "~0.1.5"
+  },
+  "jest": {
+    "testRunner": "<rootDir>/node_modules/jest-cli/src/testRunners/jasmine/jasmine2.js",
+    "setupEnvScriptFile": "<rootDir>/test/js/jest/setupEnv.js",
+    "scriptPreprocessor": "<rootDir>/test/js/jest/jsxPreprocessor.js",
+    "unmockedModulePathPatterns": [
+      "<rootDir>/node_modules/react",
+      "<rootDir>/node_modules/lodash"
+    ],
+    "testDirectoryName": "test/js",
+    "testPathIgnorePatterns": [
+      "node_modules",
+      "jest"
+    ],
+    "testFileExtensions": [
+      "js",
+      "jsx"
+    ]
   },
   "repository": {
     "type": "git",
