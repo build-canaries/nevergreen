@@ -49,12 +49,12 @@ describe('fetched projects store', function () {
         type: Constants.ProjectsFetched,
         trayId: 'some-id',
         projects: [{
-          'project-id': 'some-project-id',
+          projectId: 'some-project-id',
           name: 'name',
           stage: 'stage',
           job: null
         }, {
-          'project-id': 'another-project-id',
+          projectId: 'another-project-id',
           name: 'something-else',
           stage: 'stage',
           job: 'job'
@@ -74,7 +74,7 @@ describe('fetched projects store', function () {
           type: Constants.ProjectsFetched,
           trayId: 'some-id',
           projects: [{
-            'project-id': 'some-project-id',
+            projectId: 'some-project-id',
             name: 'name',
             stage: 'stage',
             job: null
@@ -87,7 +87,7 @@ describe('fetched projects store', function () {
           type: Constants.ProjectsFetched,
           trayId: 'some-id',
           projects: [{
-            'project-id': 'some-project-id',
+            projectId: 'some-project-id',
             name: 'name',
             stage: 'stage',
             job: null

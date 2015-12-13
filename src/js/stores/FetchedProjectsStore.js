@@ -14,7 +14,7 @@ function previouslyRemovedProjects(project) {
 
 function updateNewAndRemovedFlags(fetchedProjects, project) {
   var whereIdsMatch = function (fetchedProject) {
-    return fetchedProject['project-id'] === project.projectId
+    return fetchedProject.projectId === project.projectId
   }
   return {
     projectId: project.projectId,
@@ -30,7 +30,7 @@ function getName(project) {
 
 function toProject(project) {
   return {
-    projectId: project['project-id'],
+    projectId: project.projectId,
     name: getName(project),
     isNew: true,
     wasRemoved: false

@@ -1,12 +1,32 @@
 jest.dontMock('../../../src/js/gateways/projectsGateway')
 
-describe('repository', function () {
+describe('projects gateway', function () {
 
   var subject, gateway
 
   beforeEach(function () {
     subject = require('../../../src/js/gateways/projectsGateway')
     gateway = require('../../../src/js/gateways/gateway')
+  })
+
+  describe('getting all projects', function () {
+    it('has all data', function () {
+      var trays = [{
+        url: 'url',
+        username: 'uname',
+        password: 'pword',
+        serverType: 'GO'
+      }, {
+        url: 'another-url',
+        username: 'another-uname',
+        password: 'another-pword',
+        serverType: 'GO'
+      }]
+
+      subject.fetchAll(trays)
+
+      expect(gateway.post).toBeCalledWith('/api/projects/all', trays)
+    })
   })
 
   describe('getting interesting projects', function () {
@@ -31,6 +51,7 @@ describe('repository', function () {
         included: ['some-project-id'],
         serverType: tray.serverType
       }]
+
       expect(gateway.post).toBeCalledWith('/api/projects/interesting', data)
     })
   })

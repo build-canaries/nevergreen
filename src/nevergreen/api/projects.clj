@@ -39,7 +39,7 @@
 (defn- add-tray-id [tray-id projects]
   (map #(merge {:tray-id tray-id} %) projects))
 
-(defn get-all [tray]
+(defn fetch-tray [tray]
   (ensure-url-is-valid tray)
   (let [server-type (get-server-type tray)
         decrypted-password (if-not (blank? (:password tray)) (crypt/decrypt (:password tray)))]
@@ -49,11 +49,16 @@
         {:normalise true :server server-type})
       (add-project-ids))))
 
+(defn get-all [trays]
+  (if (= (count trays) 1)
+    (fetch-tray (first trays))
+    (flatten (pmap fetch-tray trays))))
+
 (defn fetch-interesting [tray]
-  (->> (get-all tray)
+  (->> (fetch-tray tray)
        (filtering/interesting)
        (filter-by-ids (:included tray))
-       (add-tray-id (:trayId tray))))
+       (add-tray-id (:tray-id tray))))
 
 (defn get-interesting [trays]
   (if (= (count trays) 1)

@@ -16,7 +16,7 @@ function getName(apiProject) {
 
 function toProject(apiProject) {
   return {
-    projectId: apiProject['project-id'],
+    projectId: apiProject.projectId,
     name: getName(apiProject),
     prognosis: apiProject.prognosis
   }

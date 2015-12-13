@@ -4,6 +4,7 @@
             [nevergreen.api.security :as security]
             [ring.middleware.json :refer [wrap-json-body wrap-json-response]]
             [nevergreen.wrap-cache-control :refer [wrap-cache-control]]
+            [nevergreen.wrap-convert-keys :refer [wrap-convert-keys]]
             [nevergreen.wrap-cors-headers :refer [wrap-cors-headers]]
             [nevergreen.wrap-exceptions :refer [wrap-exceptions]]
             [nevergreen.wrap-redact-sensitive :refer [wrap-redact-sensitive wrap-restore-sensitive]]
@@ -31,6 +32,7 @@
 
 (defn wrap-api-middleware [routes]
   (-> routes
+      wrap-convert-keys
       wrap-logging
       (wrap-json-body {:keywords? true})
       (wrap-json-response {:pretty true})
