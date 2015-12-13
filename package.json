@@ -15,7 +15,6 @@
     "dev": "npm run watch & npm run server-dev",
     "watch": "watchify main.js -o resources/public/bundle.js -dv",
     "server-dev": "node browser-sync.js",
-    "test2": "standard & babel-node test/js/test.js | faucet",
     "test": "jest"
   },
   "standard": {
@@ -49,9 +48,6 @@
     "babel-jest": "*",
     "jest-cli": "*",
 
-    "faucet": "0.0.1",
-    "standard": "4.5.4",
-    "standard-format": "1.6.0",
     "tape": "2.3.3",
     "uglify": "~0.1.5"
   },
