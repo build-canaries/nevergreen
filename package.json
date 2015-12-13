@@ -38,7 +38,6 @@
     "promise": "7.0.4",
     "react": "0.14.3",
     "react-router": "1.0.2",
-    "react-tools": "0.13.3",
     "reactify": "^1.1.1",
     "scale-text": "0.2.2",
     "tap": "2.3.1",
@@ -63,7 +62,7 @@
   "jest": {
     "testRunner": "<rootDir>/node_modules/jest-cli/src/testRunners/jasmine/jasmine2.js",
     "setupEnvScriptFile": "<rootDir>/test/js/jest/setupEnv.js",
-    "scriptPreprocessor": "<rootDir>/test/js/jest/jsxPreprocessor.js",
+    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
     "unmockedModulePathPatterns": [
       "<rootDir>/node_modules/react",
       "<rootDir>/node_modules/lodash"
@@ -72,10 +71,6 @@
     "testPathIgnorePatterns": [
       "node_modules",
       "jest"
-    ],
-    "testFileExtensions": [
-      "js",
-      "jsx"
     ]
   },
   "repository": {
