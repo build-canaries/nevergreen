@@ -29,7 +29,7 @@
     "browserify": "12.0.1",
     "clipboard": "^1.5.5",
     "flux": "2.1.1",
-    "history": "^1.13.1",
+    "history": "1.13.1",
     "jquery": "2.1.4",
     "localforage": "1.3.0",
     "lodash": "3.10.1",
