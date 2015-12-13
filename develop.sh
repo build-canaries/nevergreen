@@ -42,10 +42,10 @@ echo "[1] fetching node modules and performing first build"
 npm prune
 npm install
 
-echo "[2] watching the css for changes ..."
+echo "[2] watching the js for changes ..."
 npm run watchJs &
 
-echo "[3] watching the js for changes ..."
+echo "[3] watching the css for changes ..."
 npm run watchCss &
 
 echo "[4] automatically running the js tests on changes ..."

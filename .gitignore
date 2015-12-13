@@ -10,6 +10,7 @@ pom.xml.asc
 /.nrepl-port
 *.DS_Store
 /node_modules
+/resources/public/bundle.js
 /resources/public/main.js
 /resources/public/main.css
 /resources/public/main.map.json

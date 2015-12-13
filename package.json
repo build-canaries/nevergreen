@@ -10,12 +10,16 @@
   },
   "main": "main.js",
   "scripts": {
-    "start": "ecstatic -p 8000 resources/public",
     "build": "NODE_ENV=production browserify main.js | uglifyjs -cm > resources/public/bundle.js",
-    "dev": "npm run watch & npm run server-dev",
-    "watch": "watchify main.js -o resources/public/bundle.js -dv",
-    "server-dev": "node browser-sync.js",
-    "test": "jest"
+
+    "test": "jest",
+    "sass": "node-sass src/scss/base.scss resources/public/main.css --source-map resources/public/main.css.map",
+    "lint": "jsxhint src/js/**/* test/js/**/*",
+
+    "watchJs": "watchify main.js -o resources/public/bundle.js -dv",
+    "watchCss": "watch 'npm run sass' src/scss",
+    "watchTest": "watch 'npm run test' src/js test/js",
+    "watchLint": "watch 'npm run lint' src/js test/js"
   },
   "standard": {
     "parser": "babel-eslint"
@@ -42,12 +46,20 @@
     "flux": "2.1.1",
     "scale-text": "0.2.2",
     "whatwg-fetch": "^0.10.1",
-    "react-tools": "0.13.3"
+    "react-tools": "0.13.3",
+    "node-sass": "3.4.2"
   },
   "devDependencies": {
     "babel-jest": "*",
     "jest-cli": "*",
 
+    "standard": "4.5.4",
+    "standard-format": "1.6.0",
+    "jsxhint": "0.15.1",
+
+    "chromedriver": "2.20.0",
+
+    "watch": "0.16.0",
     "tape": "2.3.3",
     "uglify": "~0.1.5"
   },

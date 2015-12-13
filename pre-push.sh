@@ -14,7 +14,7 @@ echo '[Step 1 of 7] Updating node packages...'
 npm install
 
 echo '[Step 2 of 7] Compiling...'
-npm run sass && npm run jsx && npm run browserify
+npm run sass && npm build
 
 echo '[Step 3 of 7] Running the ui unit tests...'
 npm test
