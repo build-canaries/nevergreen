@@ -6,4 +6,4 @@ machine:
 
 general:
     artifacts:
-        target/nevergreen-standalone.jar
+        - "target/nevergreen-standalone.jar"
