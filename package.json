@@ -2,72 +2,53 @@
   "name": "nevergreen",
   "version": "0.0.0",
   "description": "A build monitor with attitude",
-  "main": "karma.conf.js",
-  "directories": {
-    "doc": "doc",
-    "test": "test"
-  },
-  "engines": {
-    "node": "4.1.1"
-  },
-  "devDependencies": {
-    "chromedriver": "2.20.0",
-    "esprima-fb": "15001.1001.0-dev-harmony-fb",
-    "jasmine-core": "2.3.4",
-    "jest-cli": "0.8.0",
-    "jscs": "2.6.0",
-    "jsxhint": "0.15.1",
-    "watch": "0.16.0"
-  },
-  "dependencies": {
-    "browserify": "^12.0.1",
-    "flux": "2.1.1",
-    "jquery": "2.1.4",
-    "localforage": "1.3.0",
-    "lodash": "3.10.1",
-    "minifyify": "7.1.0",
-    "node-sass": "3.4.2",
-    "node-uuid": "1.4.7",
-    "promise": "7.0.4",
-    "react": "0.13.3",
-    "react-router": "1.0.0",
-    "react-tools": "0.13.3",
-    "reactify": "1.1.1",
-    "scale-text": "0.2.2",
-    "validate.js": "^0.9.0",
-    "whatwg-fetch": "^0.10.1"
-  },
-  "jest": {
-    "testRunner": "<rootDir>/node_modules/jest-cli/src/testRunners/jasmine/jasmine2.js",
-    "setupEnvScriptFile": "<rootDir>/test/js/jest/setupEnv.js",
-    "scriptPreprocessor": "<rootDir>/test/js/jest/jsxPreprocessor.js",
-    "unmockedModulePathPatterns": [
-      "<rootDir>/node_modules/react",
-      "<rootDir>/node_modules/lodash"
-    ],
-    "testDirectoryName": "test/js",
-    "testPathIgnorePatterns": [
-      "node_modules",
-      "jest"
-    ],
-    "testFileExtensions": [
-      "js",
-      "jsx"
+  "browserify": {
+    "transform": [
+      "babelify",
+      "reactify"
     ]
   },
+  "main": "main.js",
   "scripts": {
-    "jsx": "jsx --extension jsx src/ build/ && jsx --extension js src/ build/",
-    "browserify": "browserify -d -p [minifyify --map main.map.json --output ./resources/public/main.map.json] ./build/**/*.js > ./resources/public/main.js",
-    "sass": "node-sass src/scss/base.scss resources/public/main.css --source-map resources/public/main.css.map",
-    "test": "jest",
-    "lintCorrectness": "jsxhint --jsx-only src/js/**/* test/js/**/*",
-    "lintStyle": "jscs src/js/**/* test/js/**/*",
-    "lint": "npm run lintCorrectness && npm run lintStyle",
-    "watchJs": "watch 'npm run jsx && npm run browserifyNoMini' src/js",
-    "watchCss": "watch 'npm run sass' src/scss",
-    "watchTest": "watch 'npm run test' src/js test/js",
-    "watchLint": "watch 'npm run lint' src/js test/js",
-    "browserifyNoMini": "browserify -d ./build/**/*.js > ./resources/public/main.js"
+    "start": "ecstatic -p 8000 resources/public",
+    "build": "NODE_ENV=production browserify main.js | uglifyjs -cm > resources/public/bundle.js",
+    "dev": "npm run watch & npm run server-dev",
+    "watch": "watchify main.js -o resources/public/bundle.js -dv",
+    "server-dev": "node browser-sync.js",
+    "test": "standard & babel-node test/test.js | faucet"
+  },
+  "standard": {
+    "parser": "babel-eslint"
+  },
+  "dependencies": {
+    "babel": "^5.6.23",
+    "babel-eslint": "^3.1.23",
+    "babelify": "^6.1.2",
+    "browser-sync": "2.7.13",
+    "browserify": "^10.2.6",
+    "ecstatic": "~0.8.0",
+    "react": "~0.13.3",
+    "reactify": "^1.1.1",
+    "tap": "1.0.5",
+    "watchify": "^3.2.3",
+
+    "jquery": "2.1.4",
+    "react-router": "1.0.0",
+    "localforage": "1.3.0",
+    "lodash": "3.10.1",
+    "validate.js": "^0.9.0",
+    "promise": "7.0.4",
+    "node-uuid": "1.4.7",
+    "flux": "2.1.1",
+    "scale-text": "0.2.2",
+    "whatwg-fetch": "^0.10.1"
+  },
+  "devDependencies": {
+    "faucet": "0.0.1",
+    "standard": "4.5.4",
+    "standard-format": "1.6.0",
+    "tape": "2.3.3",
+    "uglify": "~0.1.5"
   },
   "repository": {
     "type": "git",
