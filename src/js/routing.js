@@ -1,16 +1,16 @@
-var React = require('react')
-var Router = require('react-router')
-var App = require('./views/app')
-var MonitorSection = require('./views/monitor/monitorSection')
-var TrackingSection = require('./views/tracking/trackingSection')
-var SuccessSection = require('./views/success/successSection')
-var ExportSection = require('./views/export/exportSection')
-var HelpSection = require('./views/help/helpSection')
+let React = require('react')
+let Router = require('react-router')
+let App = require('./views/app')
+let MonitorSection = require('./views/monitor/monitorSection')
+let TrackingSection = require('./views/tracking/trackingSection')
+let SuccessSection = require('./views/success/successSection')
+let ExportSection = require('./views/export/exportSection')
+let HelpSection = require('./views/help/helpSection')
 
-var IndexRoute = Router.IndexRoute
-var Route = Router.Route
+let IndexRoute = Router.IndexRoute
+let Route = Router.Route
 
-var routes = (
+let routes = (
   <Route path='/' component={App}>
     <Route path='monitor' component={MonitorSection}/>
     <Route path='tracking' component={TrackingSection}/>

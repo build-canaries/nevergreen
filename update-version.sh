@@ -32,21 +32,21 @@ sed "s|defproject nevergreen \"[^\"]*\"|defproject nevergreen \"$version\"|" pro
 echo "Updating file ./package.json ..."
 sed "s|\"version\": \"[^\"]*\"|\"version\": \"$version\"|" package.json > package.json.tmp && mv package.json.tmp package.json
 
-echo "Updating file ./src/js/views/app.jsx ..."
-sed "s|versionNumber: '[^']*'|versionNumber: '$version'|" src/js/views/app.jsx > src/js/views/app.jsx.tmp && mv src/js/views/app.jsx.tmp src/js/views/app.jsx
+echo "Updating file ./src/js/views/app.js ..."
+sed "s|versionNumber: '[^']*'|versionNumber: '$version'|" src/js/views/app.js > src/js/views/app.js.tmp && mv src/js/views/app.js.tmp src/js/views/app.js
 
 if [ -z "$name" ]
 then
-    echo "Skipping updating name in file ./src/js/views/app.jsx as name was blank"
+    echo "Skipping updating name in file ./src/js/views/app.js as name was blank"
 else
-    sed "s|versionName: '[^']*'|versionName: '$name'|" src/js/views/app.jsx > src/js/views/app.jsx.tmp && mv src/js/views/app.jsx.tmp src/js/views/app.jsx
+    sed "s|versionName: '[^']*'|versionName: '$name'|" src/js/views/app.js > src/js/views/app.js.tmp && mv src/js/views/app.js.tmp src/js/views/app.js
 fi
 
 if [ -z "$hash" ]
 then
-    echo "Skipping updating commit hash in file ./src/js/views/app.jsx as hash was blank"
+    echo "Skipping updating commit hash in file ./src/js/views/app.js as hash was blank"
 else
-    sed "s|commitHash: '[^']*'|commitHash: '$hash'|" src/js/views/app.jsx > src/js/views/app.jsx.tmp && mv src/js/views/app.jsx.tmp src/js/views/app.jsx
+    sed "s|commitHash: '[^']*'|commitHash: '$hash'|" src/js/views/app.js > src/js/views/app.js.tmp && mv src/js/views/app.js.tmp src/js/views/app.js
 fi
 
 if [ -z "$hex" ]
