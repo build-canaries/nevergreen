@@ -2,4 +2,8 @@ machine:
   node:
     version: 4.1.0
   java:
-    version: openjdk8
+    version: openjdk7
+
+general:
+    artifacts:
+        target/nevergreen-standalone.jar
