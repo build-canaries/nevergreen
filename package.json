@@ -56,6 +56,7 @@
     "standard-format": "1.6.0",
     "tape": "2.3.3",
     "uglify": "~0.1.5",
+    "uglify-js": "^2.6.1",
     "watch": "0.16.0"
   },
   "jest": {
