@@ -39,6 +39,7 @@
     "react": "0.14.3",
     "react-addons-linked-state-mixin": "^0.14.3",
     "react-addons-test-utils": "^0.14.3",
+    "react-dom": "^0.14.3",
     "react-router": "1.0.2",
     "reactify": "^1.1.1",
     "scale-text": "0.2.2",
@@ -67,6 +68,7 @@
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
     "unmockedModulePathPatterns": [
       "<rootDir>/node_modules/react",
+      "<rootDir>/node_modules/react-dom",
       "<rootDir>/node_modules/lodash"
     ],
     "testDirectoryName": "test/js",

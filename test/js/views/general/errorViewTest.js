@@ -1,7 +1,8 @@
 jest.dontMock('../../../../src/js/views/general/errorView.js')
+var ReactDOM = require('react-dom');
 
 function textFrom(element) {
-  return element.getDOMNode().textContent
+  return ReactDOM.findDOMNode(element).textContent
 }
 
 describe('error view', function () {

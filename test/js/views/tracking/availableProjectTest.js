@@ -1,4 +1,5 @@
 jest.dontMock('../../../../src/js/views/tracking/availableProject.js')
+var ReactDOM = require('react-dom');
 
 describe('available project', function () {
   var React, TestUtils, AvailableProject, callback
@@ -18,7 +19,7 @@ describe('available project', function () {
                                                                      wasRemoved={false} isNew={false}
                                                                      selectProject={callback}/>)
 
-      TestUtils.Simulate.change(component.refs.toggleIncluded.getDOMNode(), {target: {checked: true}})
+      TestUtils.Simulate.change(ReactDOM.findDOMNode(component.refs.toggleIncluded), {target: {checked: true}})
       expect(callback).toBeCalledWith(true)
     })
 
@@ -26,7 +27,7 @@ describe('available project', function () {
       var component = TestUtils.renderIntoDocument(<AvailableProject name='some-name' included={true} wasRemoved={false}
                                                                      isNew={false} selectProject={callback}/>)
 
-      TestUtils.Simulate.change(component.refs.toggleIncluded.getDOMNode(), {target: {checked: false}})
+      TestUtils.Simulate.change(ReactDOM.findDOMNode(component.refs.toggleIncluded), {target: {checked: false}})
       expect(callback).toBeCalledWith(false)
     })
 
@@ -38,20 +39,20 @@ describe('available project', function () {
       var component = TestUtils.renderIntoDocument(<AvailableProject name='some-name' included={false}
                                                                      wasRemoved={false} isNew={false}
                                                                      selectProject={callback}/>)
-      expect(component.getDOMNode().textContent).toContain('some-name')
+      expect(TestUtils.findRenderedDOMComponentWithTag(component, 'p').textContent).toContain('some-name')
     })
 
     it('renders if the project is new', function () {
       var component = TestUtils.renderIntoDocument(<AvailableProject name='some-name' included={false}
                                                                      wasRemoved={false} isNew={true}
                                                                      selectProject={callback}/>)
-      expect(component.getDOMNode().textContent).toContain('new')
+      expect(TestUtils.findRenderedDOMComponentWithTag(component, 'p').textContent).toContain('new')
     })
 
     it('renders if the project was removed', function () {
       var component = TestUtils.renderIntoDocument(<AvailableProject name='some-name' included={false} wasRemoved={true}
                                                                      isNew={false} selectProject={callback}/>)
-      expect(component.getDOMNode().textContent).toContain('removed')
+      expect(TestUtils.findRenderedDOMComponentWithTag(component, 'p').textContent).toContain('removed')
     })
 
   })
