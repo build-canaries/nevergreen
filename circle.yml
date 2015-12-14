@@ -18,8 +18,6 @@ general:
         - "target/nevergreen-standalone.jar"
 
 test:
-    pre:
-        - npm run sass
     override:
         - npm test
         - npm run lint
