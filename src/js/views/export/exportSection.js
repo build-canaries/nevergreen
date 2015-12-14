@@ -1,4 +1,5 @@
-var React = require('react/addons')
+var React = require('react')
+var LinkedStateMixin = require('react-addons-linked-state-mixin')
 var ValidationMessages = require('../general/validationMessages')
 var ConfigurationStore = require('../../stores/ConfigurationStore')
 var ConfigurationActions = require('../../actions/ConfigurationActions')
@@ -17,7 +18,7 @@ function getStateFromStore(currentImportData) {
 }
 
 module.exports = React.createClass({
-  mixins: [React.addons.LinkedStateMixin],
+  mixins: [LinkedStateMixin],
 
   getInitialState: function () {
     return getStateFromStore('')

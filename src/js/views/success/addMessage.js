@@ -1,8 +1,9 @@
-var React = require('react/addons')
+var React = require('react')
+var LinkedStateMixin = require('react-addons-linked-state-mixin')
 var ValidationMessages = require('../general/validationMessages')
 
 module.exports = React.createClass({
-  mixins: [React.addons.LinkedStateMixin],
+  mixins: [LinkedStateMixin],
 
   propTypes: {
     addMessage: React.PropTypes.func.isRequired,

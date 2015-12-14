@@ -1,4 +1,4 @@
-var React = require('react/addons')
+var React = require('react')
 var AddedMessages = require('./addedMessages')
 var AddedImages = require('./addedImages')
 var AddMessage = require('./addMessage')

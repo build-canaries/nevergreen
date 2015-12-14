@@ -37,6 +37,8 @@
     "node-uuid": "1.4.7",
     "promise": "7.0.4",
     "react": "0.14.3",
+    "react-addons-linked-state-mixin": "^0.14.3",
+    "react-addons-test-utils": "^0.14.3",
     "react-router": "1.0.2",
     "reactify": "^1.1.1",
     "scale-text": "0.2.2",
