@@ -1,4 +1,4 @@
-var React = require('react/addons')
+var React = require('react')
 var AddTray = require('./addTray')
 var Tray = require('./tray')
 var TrayStore = require('../../stores/TrayStore')

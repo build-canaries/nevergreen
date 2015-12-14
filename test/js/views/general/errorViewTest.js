@@ -9,8 +9,8 @@ describe('error view', function () {
   var React, TestUtils, ErrorView
 
   beforeEach(function () {
-    React = require('react/addons')
-    TestUtils = React.addons.TestUtils
+    React = require('react')
+    TestUtils = require('react-addons-test-utils')
     ErrorView = require('../../../../src/js/views/general/errorView.js')
   })
 

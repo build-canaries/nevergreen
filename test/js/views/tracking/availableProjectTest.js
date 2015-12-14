@@ -4,8 +4,8 @@ describe('available project', function () {
   var React, TestUtils, AvailableProject, callback
 
   beforeEach(function () {
-    React = require('react/addons')
-    TestUtils = React.addons.TestUtils
+    React = require('react')
+    TestUtils = require('react-addons-test-utils')
     AvailableProject = require('../../../../src/js/views/tracking/availableProject.js')
 
     callback = jest.genMockFunction()
