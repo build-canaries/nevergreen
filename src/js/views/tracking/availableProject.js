@@ -21,7 +21,7 @@ module.exports = React.createClass({
     }
 
     return (
-      <p className='tracking-cctray-group-build-item'>
+      <p className='checkbox-container'>
         <label className={labelClass}>
           <input ref='toggleIncluded'
                  className='checkbox no-text-selection'

@@ -9,7 +9,7 @@ module.exports = React.createClass({
 
   render: function () {
     return (
-      <p className='tracking-cctray-group-build-item'>
+      <p className='checkbox-container'>
         <label className='label-checkbox'>
           <input ref='toggleIncluded'
                  className='checkbox no-text-selection'
