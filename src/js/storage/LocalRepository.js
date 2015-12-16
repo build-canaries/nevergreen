@@ -18,12 +18,16 @@ module.exports = {
     var keys = [
       'trays',
       'messages',
+      'displaySettings',
       'created'
     ]
 
     var defaultValues = [
       [],
       ['=(^.^)='],
+      {
+        showBrokenBuildTimers: false
+      },
       {
         versionNumber: versionNumber,
         timestamp: new Date().toUTCString()

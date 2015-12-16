@@ -14,7 +14,10 @@ var _storeState = {
   loading: true,
   configuration: {
     trays: [],
-    messages: []
+    messages: [],
+    displaySettings: {
+      showBrokenBuildTimers: false
+    }
   },
   validationMessages: null
 }
@@ -48,6 +51,10 @@ function removeTray(trayId) {
   _.remove(_storeState.configuration.trays, function (id) {
     return id === trayId
   })
+}
+
+function setBrokenBuildTimers(value) {
+    _storeState.configuration.displaySettings.showBrokenBuildTimers = (value === true)
 }
 
 function updatedSelectedProjectsForTray(trayId, selectedProjects) {
@@ -114,6 +121,11 @@ var dispatchToken = AppDispatcher.register(function (action) {
         updateMessages(SuccessStore.getAll())
         break
       }
+      case Constants.BrokenBuildTimersChanged:
+      {
+          setBrokenBuildTimers(action.value)
+          break
+      }
       case Constants.ImportingData:
       {
         setLoading()
@@ -143,6 +155,10 @@ module.exports = {
 
   getConfiguration: function () {
     return _storeState.configuration
+  },
+
+  areBrokenBuildTimersEnabled: function () {
+    return _storeState.configuration.displaySettings.showBrokenBuildTimers
   },
 
   isLoading: function () {

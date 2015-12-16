@@ -45,6 +45,7 @@
   display: table-cell;
   vertical-align: middle;
   width: 100%;
+  padding: 0.1em;
 }
 
 .monitor-success-text {
@@ -57,4 +58,10 @@
   width: 100vw;
   height: 100vh;
   object-fit: contain;
+}
+
+.monitor-time-broken {
+  opacity: 0.5;
+  font-style: italic;
+  width: 100%;
 }

@@ -19,6 +19,7 @@
   font-size: 1.5rem;
   border: 1px solid $mid-grey;
   background-color: white;
+  overflow: hidden;
 }
 
 .section-title {
@@ -38,4 +39,11 @@
 
 .text-with-icon {
   padding-left: 1em;
+}
+
+.checkbox-container {
+  display: block;
+  margin: 0.5em 0;
+  float: left;
+  width: 33.333333%;
 }
