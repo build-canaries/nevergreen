@@ -34,7 +34,7 @@ var InterestingProject = React.createClass({
   },
 
   _brokenBuildTimer: function () {
-    if (ConfigurationStore.areBrokenBuildTimersEnabled()) {
+    if (ConfigurationStore.areBrokenBuildTimersEnabled() && this.props.prognosis === "sick") {
       return <span className='monitor-time-broken'> {this._toRelativeTime(this.props.time)}</span>
     }
   },
