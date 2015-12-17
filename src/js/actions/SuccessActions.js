@@ -22,7 +22,7 @@ module.exports = {
     } else {
       AppDispatcher.dispatch({
         type: Constants.MessageAdd,
-        message: message
+        message: message.replace(/ /g, String.fromCharCode(160))
       })
     }
   },
@@ -30,7 +30,7 @@ module.exports = {
   removeMessage(message) {
     AppDispatcher.dispatch({
       type: Constants.MessageRemove,
-      message: message
+      message: message.replace(/ /g, String.fromCharCode(160))
     })
   }
 
