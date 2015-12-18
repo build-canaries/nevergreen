@@ -1,11 +1,14 @@
+/*eslint no-unused-vars: 1*/
+/* Even though it isn't used if React isn't defined the tests fail for some reason... */
+
 jest.dontMock('../../../../src/js/views/tracking/availableProject.js')
-var ReactDOM = require('react-dom');
 
 describe('available project', function () {
-  var React, TestUtils, AvailableProject, callback
+  var ReactDOM, React, TestUtils, AvailableProject, callback
 
   beforeEach(function () {
     React = require('react')
+    ReactDOM = require('react-dom')
     TestUtils = require('react-addons-test-utils')
     AvailableProject = require('../../../../src/js/views/tracking/availableProject.js')
 

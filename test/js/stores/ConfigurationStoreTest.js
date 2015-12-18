@@ -51,7 +51,7 @@ describe('display settings store', function () {
     it('return false when the callback changes the value to anything else', function () {
       callback({
         type: Constants.BrokenBuildTimersChanged,
-        value: "a string"
+        value: 'a string'
       })
       expect(store.areBrokenBuildTimersEnabled()).toBeFalsy()
     })
