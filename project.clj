@@ -22,10 +22,10 @@
             :uberjar-name "nevergreen-standalone.jar"
             :main nevergreen.app
             :aot [nevergreen.app]
-            :profiles {:dev        {:plugins      [[lein-midje "3.1.3"]
-                                                   [lein-ancient "0.6.7"]
+            :profiles {:dev        {:plugins      [[lein-midje "3.2"]
+                                                   [lein-ancient "0.6.8"]
                                                    [lein-idea "1.0.1"]]
-                                    :dependencies [[midje "1.7.0"]
+                                    :dependencies [[midje "1.8.2"]
                                                    [clj-webdriver/clj-webdriver "0.7.2"]
                                                    [com.github.detro/phantomjsdriver "1.2.0"]
                                                    [ring/ring-mock "0.3.0"]]}
