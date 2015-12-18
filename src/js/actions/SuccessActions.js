@@ -8,12 +8,20 @@ const _addMessageValidation = {
   }
 }
 
+function isASentence(message) {
+  const numberOfLetters = (message.match(/[A-Za-z]/g) || []).length
+  return (numberOfLetters / message.length) > 0.3
+}
+
 function transformMessage(message) {
+  if (isASentence(message)) {
+    return message
+  }
+
   return message.replace(/ /g, String.fromCharCode(160))
 }
 
 module.exports = {
-
   addMessage(message) {
     const validationMessages = validate({message: message}, _addMessageValidation)
 

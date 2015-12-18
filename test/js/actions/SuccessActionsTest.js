@@ -46,12 +46,23 @@ describe('success actions', () => {
     })
   })
 
-  it('converts messages containing spaces to use non-breaking spaces', function () {
-    subject.addMessage('some message')
+  describe('dealing with spaces', function () {
+    it('converts messages which do not look like text to use non-breaking spaces', function () {
+      subject.addMessage('=(^ . ^)=')
 
-    expect(AppDispatcher.dispatch).toBeCalledWith({
-      type: Constants.MessageAdd,
-      message: 'some message'.replace(/ /g, String.fromCharCode(160))
+      expect(AppDispatcher.dispatch).toBeCalledWith({
+        type: Constants.MessageAdd,
+        message: '=(^ . ^)='.replace(/ /g, String.fromCharCode(160))
+      })
+    })
+
+    it('does not convert messages which look like text', function () {
+      subject.addMessage('some message')
+
+      expect(AppDispatcher.dispatch).toBeCalledWith({
+        type: Constants.MessageAdd,
+        message: 'some message'
+      })
     })
   })
 })
