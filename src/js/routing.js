@@ -1,4 +1,5 @@
 let React = require('react')
+let ReactDOM = require('react-dom')
 let Router = require('react-router')
 let App = require('./views/app')
 let MonitorSection = require('./views/monitor/monitorSection')
@@ -23,4 +24,4 @@ let routes = (
   </Route>
 )
 
-React.render(<Router.Router routes={routes}/>, document.getElementById('content'))
+ReactDOM.render(<Router.Router routes={routes}/>, document.getElementById('content'))

@@ -1,5 +1,6 @@
 var $ = require('jquery')
 var React = require('react')
+var ReactDOM = require('react-dom')
 var styler = require('../../controllers/styler')
 var ConfigurationStore = require('../../stores/ConfigurationStore')
 var moment = require('moment')
@@ -48,7 +49,7 @@ var InterestingProject = React.createClass({
       <li className={'monitor-project monitor-' + this.props.prognosis}>
         <div className='monitor-outer-container'>
           <div className='monitor-inner-container'>
-            <span class="monitor-project-name">{this.props.name}</span>
+            <span className="monitor-project-name">{this.props.name}</span>
             {this._brokenBuildTimer()}
           </div>
         </div>
@@ -76,12 +77,12 @@ module.exports = React.createClass({
   },
 
   componentDidMount: function () {
-    var $node = $(React.findDOMNode(this))
+    var $node = $(ReactDOM.findDOMNode(this))
     styler.styleProjects(this.props.projects, $node.find('.monitor-outer-container'), $node)
   },
 
   componentDidUpdate: function () {
-    var $node = $(React.findDOMNode(this))
+    var $node = $(ReactDOM.findDOMNode(this))
     styler.styleProjects(this.props.projects, $node.find('.monitor-outer-container'), $node)
   }
 })
