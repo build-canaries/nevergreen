@@ -8,6 +8,10 @@ const _addMessageValidation = {
   }
 }
 
+function transformMessage(message) {
+  return message.replace(/ /g, String.fromCharCode(160))
+}
+
 module.exports = {
 
   addMessage(message) {
@@ -22,7 +26,7 @@ module.exports = {
     } else {
       AppDispatcher.dispatch({
         type: Constants.MessageAdd,
-        message: message.replace(/ /g, String.fromCharCode(160))
+        message: transformMessage(message)
       })
     }
   },
@@ -30,7 +34,7 @@ module.exports = {
   removeMessage(message) {
     AppDispatcher.dispatch({
       type: Constants.MessageRemove,
-      message: message.replace(/ /g, String.fromCharCode(160))
+      message: transformMessage(message)
     })
   }
 
