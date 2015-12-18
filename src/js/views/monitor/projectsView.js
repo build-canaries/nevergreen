@@ -26,7 +26,11 @@ var InterestingProject = React.createClass({
   propTypes: {
     prognosis: React.PropTypes.string.isRequired,
     name: React.PropTypes.string.isRequired,
-    time: React.PropTypes.string.isRequired
+    lastBuildTime: React.PropTypes.string.isRequired
+  },
+
+  _isSick: function () {
+    return this.props.prognosis === 'sick'
   },
 
   _toRelativeTime: function (time) {
@@ -34,8 +38,8 @@ var InterestingProject = React.createClass({
   },
 
   _brokenBuildTimer: function () {
-    if (ConfigurationStore.areBrokenBuildTimersEnabled() && this.props.prognosis === "sick") {
-      return <span className='monitor-time-broken'> {this._toRelativeTime(this.props.time)}</span>
+    if (ConfigurationStore.areBrokenBuildTimersEnabled() && this._isSick()) {
+      return <span className='monitor-time-broken'> {this._toRelativeTime(this.props.lastBuildTime)}</span>
     }
   },
 
@@ -64,7 +68,7 @@ module.exports = React.createClass({
       <ul id='interesting-projects' className='monitor-projects'>
         {
           this.props.projects.map(function (project) {
-            return <InterestingProject key={project.projectId} prognosis={project.prognosis} name={project.name} time={project.lastBuildTime}/>
+            return <InterestingProject key={project.projectId} prognosis={project.prognosis} name={project.name} lastBuildTime={project.lastBuildTime}/>
           })
         }
       </ul>
