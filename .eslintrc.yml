@@ -1,23 +1,15 @@
-extends: standard
+extends: eslint:recommended
 plugins:
-  - standard
+  - react
 env:
   es6: true
   jest: true
   browser: true
-  jquery: true
-
-plugins:
-  - react
+  node: true
 
 ecmaFeatures:
   jsx: true
 
 rules:
-  space-before-function-paren:  0
-  indent: 0
-  padded-blocks: 0
-  operator-linebreak: 0
-  no-extra-bind: 0
-  quotes: 0
-  no-unused-vars: 0
+  quotes: [2, 'single']
+  semi: [2, 'never']
