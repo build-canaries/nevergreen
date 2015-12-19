@@ -4,8 +4,7 @@
   "description": "A build monitor with attitude",
   "browserify": {
     "transform": [
-      "babelify",
-      "reactify"
+      "babelify"
     ]
   },
   "main": "main.js",
@@ -23,7 +22,6 @@
     "babel": "6.3.13",
     "browserify": "12.0.1",
     "babelify": "7.2.0",
-    "reactify": "1.1.1",
     "watchify": "3.2.3",
     "browser-sync": "2.10.1",
     "clipboard": "1.5.5",
