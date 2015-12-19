@@ -18,7 +18,8 @@ function toProject(apiProject) {
   return {
     projectId: apiProject.projectId,
     name: getName(apiProject),
-    prognosis: apiProject.prognosis
+    prognosis: apiProject.prognosis,
+    lastBuildTime: apiProject.lastBuildTime
   }
 }
 

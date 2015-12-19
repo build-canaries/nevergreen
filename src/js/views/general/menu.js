@@ -23,6 +23,7 @@ module.exports = React.createClass({
         {id: 'monitor', iconClass: 'eye', title: 'Monitor'},
         {id: 'tracking', iconClass: 'drawer2', title: 'Tracking'},
         {id: 'success', iconClass: 'checkmark', title: 'Success'},
+        {id: 'display', iconClass: 'display', title: 'Display'},
         {id: 'export', iconClass: 'floppy-disk', title: 'Export'},
         {id: 'help', iconClass: 'question', title: 'Help'}
       ]

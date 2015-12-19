@@ -1,11 +1,13 @@
-const React = require('react')
-const Router = require('react-router')
-const App = require('./views/app')
-const MonitorSection = require('./views/monitor/monitorSection')
-const TrackingSection = require('./views/tracking/trackingSection')
-const SuccessSection = require('./views/success/successSection')
-const ExportSection = require('./views/export/exportSection')
-const HelpSection = require('./views/help/helpSection')
+let React = require('react')
+let ReactDOM = require('react-dom')
+let Router = require('react-router')
+let App = require('./views/app')
+let MonitorSection = require('./views/monitor/monitorSection')
+let TrackingSection = require('./views/tracking/trackingSection')
+let SuccessSection = require('./views/success/successSection')
+let DisplaySection = require('./views/display/displaySection')
+let ExportSection = require('./views/export/exportSection')
+let HelpSection = require('./views/help/helpSection')
 
 const IndexRoute = Router.IndexRoute
 const Route = Router.Route
@@ -15,10 +17,11 @@ const routes = (
     <Route path='monitor' component={MonitorSection}/>
     <Route path='tracking' component={TrackingSection}/>
     <Route path='success' component={SuccessSection}/>
+    <Route path='display' component={DisplaySection}/>
     <Route path='export' component={ExportSection}/>
     <Route path='help' component={HelpSection}/>
     <IndexRoute component={TrackingSection}/>
   </Route>
 )
 
-React.render(<Router.Router routes={routes}/>, document.getElementById('content'))
+ReactDOM.render(<Router.Router routes={routes}/>, document.getElementById('content'))

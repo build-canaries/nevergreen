@@ -3,15 +3,12 @@ jest.dontMock('../../../src/js/actions/TrayActions')
 
 describe('tray actions', () => {
 
-  let subject, AppDispatcher, Constants, projectsGateway, securityGateway, promiseMock, uuid, validate
+  var subject, AppDispatcher, Constants, promiseMock, validate
 
   beforeEach(() => {
     subject = require('../../../src/js/actions/TrayActions')
     AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
     Constants = require('../../../src/js/constants/NevergreenConstants')
-    projectsGateway = require('../../../src/js/gateways/projectsGateway')
-    securityGateway = require('../../../src/js/gateways/securityGateway')
-    uuid = require('node-uuid')
     validate = require('validate.js')
     promiseMock = {
       then: jest.genMockFunction(),

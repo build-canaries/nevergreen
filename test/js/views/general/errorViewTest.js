@@ -1,6 +1,9 @@
-jest.dontMock('../../../../src/js/views/general/errorView.js')
-var ReactDOM = require('react-dom')
+/*eslint no-unused-vars: 1*/
+/* Even though it isn't used if React isn't defined the tests fail for some reason... */
 
+jest.dontMock('../../../../src/js/views/general/errorView.js')
+
+var ReactDOM = require('react-dom')
 function textFrom(element) {
   return ReactDOM.findDOMNode(element).textContent
 }

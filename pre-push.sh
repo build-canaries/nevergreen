@@ -11,6 +11,7 @@ hash lein 2>/dev/null || {
 }
 
 echo '[Step 1 of 7] Updating node packages...'
+npm prune
 npm install
 
 echo '[Step 2 of 7] Compiling...'
