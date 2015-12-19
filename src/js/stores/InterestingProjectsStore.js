@@ -1,17 +1,17 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher')
-var EventEmitter = require('events').EventEmitter
-var eventEmitter = new EventEmitter()
-var Constants = require('../constants/NevergreenConstants')
+const AppDispatcher = require('../dispatcher/AppDispatcher')
+const EventEmitter = require('events').EventEmitter
+const eventEmitter = new EventEmitter()
+const Constants = require('../constants/NevergreenConstants')
 
-var CHANGE_EVENT = 'interesting-projects-change'
+const CHANGE_EVENT = 'interesting-projects-change'
 
-var _storeState = {
+let _storeState = {
   projects: [],
   error: null
 }
 
 function getName(apiProject) {
-  return apiProject.stage ? apiProject.name + ' [' + apiProject.stage + ']' : apiProject.name
+  return apiProject.stage ? `${apiProject.name} [${apiProject.stage}]` : apiProject.name
 }
 
 function toProject(apiProject) {
@@ -22,7 +22,7 @@ function toProject(apiProject) {
   }
 }
 
-var dispatchToken = AppDispatcher.register(function (action) {
+const dispatchToken = AppDispatcher.register(action => {
   switch (action.type) {
     case Constants.InterestingProjects:
     {
@@ -56,19 +56,19 @@ var dispatchToken = AppDispatcher.register(function (action) {
 module.exports = {
   dispatchToken: dispatchToken,
 
-  getAll: function () {
+  getAll() {
     return _storeState.projects
   },
 
-  getLastError: function () {
+  getLastError() {
     return _storeState.error
   },
 
-  addListener: function (callback) {
+  addListener(callback) {
     eventEmitter.on(CHANGE_EVENT, callback)
   },
 
-  removeListener: function (callback) {
+  removeListener(callback) {
     eventEmitter.removeListener(CHANGE_EVENT, callback)
   }
 }

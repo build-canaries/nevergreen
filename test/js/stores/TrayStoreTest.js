@@ -1,22 +1,22 @@
 jest.dontMock('../../../src/js/stores/TrayStore')
   .dontMock('../../../src/js/constants/NevergreenConstants')
 
-describe('tray store', function () {
+describe('tray store', () => {
 
-  var store, AppDispatcher, Constants, callback
+  let store, AppDispatcher, Constants, callback
 
-  beforeEach(function () {
+  beforeEach(() => {
     AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
     Constants = require('../../../src/js/constants/NevergreenConstants')
     store = require('../../../src/js/stores/TrayStore')
     callback = AppDispatcher.register.mock.calls[0][0]
   })
 
-  it('registers a callback with the dispatcher', function () {
+  it('registers a callback with the dispatcher', () => {
     expect(AppDispatcher.register.mock.calls.length).toBe(1)
   })
 
-  it('adds a tray', function () {
+  it('adds a tray', () => {
     callback({
       type: Constants.TrayAdd,
       trayId: 'some-id',
@@ -30,8 +30,8 @@ describe('tray store', function () {
     })
   })
 
-  describe('once a tray is added', function () {
-    beforeEach(function () {
+  describe('once a tray is added', () => {
+    beforeEach(() => {
       callback({
         type: Constants.TrayAdd,
         trayId: 'some-id',
@@ -40,7 +40,7 @@ describe('tray store', function () {
       })
     })
 
-    it('removes a tray', function () {
+    it('removes a tray', () => {
       callback({
         type: Constants.TrayRemove,
         trayId: 'some-id'
@@ -48,7 +48,7 @@ describe('tray store', function () {
       expect(store.getById('some-id')).toBeUndefined()
     })
 
-    it('sets the fetching flag to true while fetching', function () {
+    it('sets the fetching flag to true while fetching', () => {
       callback({
         type: Constants.ProjectsFetching,
         trayId: 'some-id'
@@ -56,7 +56,7 @@ describe('tray store', function () {
       expect(store.getById('some-id').fetching).toBeTruthy()
     })
 
-    it('clears the error object while fetching', function () {
+    it('clears the error object while fetching', () => {
       callback({
         type: Constants.ProjectsFetching,
         trayId: 'some-id'
@@ -64,7 +64,7 @@ describe('tray store', function () {
       expect(store.getById('some-id').error).toBeNull()
     })
 
-    it('sets the fetching flag to false when fetched', function () {
+    it('sets the fetching flag to false when fetched', () => {
       callback({
         type: Constants.ProjectsFetched,
         trayId: 'some-id'
@@ -72,7 +72,7 @@ describe('tray store', function () {
       expect(store.getById('some-id').fetching).toBeFalsy()
     })
 
-    it('clears the error object once fetched', function () {
+    it('clears the error object once fetched', () => {
       callback({
         type: Constants.ProjectsFetched,
         trayId: 'some-id'
@@ -80,7 +80,7 @@ describe('tray store', function () {
       expect(store.getById('some-id').error).toBeNull()
     })
 
-    it('sets the error object on api error', function () {
+    it('sets the error object on api error', () => {
       callback({
         type: Constants.ApiError,
         trayId: 'some-id',
@@ -89,7 +89,7 @@ describe('tray store', function () {
       expect(store.getById('some-id').error).toEqual('some-error')
     })
 
-    it('sets the fetching flag to false on error', function () {
+    it('sets the fetching flag to false on error', () => {
       callback({
         type: Constants.ApiError,
         trayId: 'some-id'
@@ -98,7 +98,7 @@ describe('tray store', function () {
     })
   })
 
-  it('clears the store state when new data is imported', function () {
+  it('clears the store state when new data is imported', () => {
     callback({
       type: Constants.ImportedData
     })

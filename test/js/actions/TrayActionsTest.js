@@ -1,11 +1,11 @@
 jest.dontMock('../../../src/js/actions/TrayActions')
   .dontMock('../../../src/js/constants/NevergreenConstants')
 
-describe('tray actions', function () {
+describe('tray actions', () => {
 
-  var subject, AppDispatcher, Constants, projectsGateway, securityGateway, promiseMock, uuid, validate
+  let subject, AppDispatcher, Constants, projectsGateway, securityGateway, promiseMock, uuid, validate
 
-  beforeEach(function () {
+  beforeEach(() => {
     subject = require('../../../src/js/actions/TrayActions')
     AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
     Constants = require('../../../src/js/constants/NevergreenConstants')
@@ -21,7 +21,7 @@ describe('tray actions', function () {
     promiseMock.catch.mockReturnValue(promiseMock)
   })
 
-  it('dispatches invalid input action when validation fails', function () {
+  it('dispatches invalid input action when validation fails', () => {
     validate.mockReturnValue('some-validation-message')
 
     subject.addTray('some-url', 'some-username', 'some-password')
@@ -35,7 +35,7 @@ describe('tray actions', function () {
     })
   })
 
-  it('dispatches tray remove action when removing a tray', function () {
+  it('dispatches tray remove action when removing a tray', () => {
     subject.removeTray('some-id')
 
     expect(AppDispatcher.dispatch).toBeCalledWith({

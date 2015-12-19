@@ -1,12 +1,12 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher')
-var EventEmitter = require('events').EventEmitter
-var eventEmitter = new EventEmitter()
-var Constants = require('../constants/NevergreenConstants')
-var _ = require('lodash')
+const AppDispatcher = require('../dispatcher/AppDispatcher')
+const EventEmitter = require('events').EventEmitter
+const eventEmitter = new EventEmitter()
+const Constants = require('../constants/NevergreenConstants')
+const _ = require('lodash')
 
-var CHANGE_EVENT = 'success-change'
+const CHANGE_EVENT = 'success-change'
 
-var _storeState = {
+let _storeState = {
   messages: [],
   validation: {}
 }
@@ -19,7 +19,7 @@ function clearValidation() {
   _storeState.validation = {}
 }
 
-var dispatchToken = AppDispatcher.register(function (action) {
+const dispatchToken = AppDispatcher.register(action => {
   switch (action.type) {
     case Constants.MessageAdd:
     {
@@ -29,7 +29,7 @@ var dispatchToken = AppDispatcher.register(function (action) {
     }
     case Constants.MessageRemove:
     {
-      _.remove(_storeState.messages, function (msg) {
+      _.remove(_storeState.messages, msg => {
         return msg === action.message
       })
       clearValidation()
@@ -64,39 +64,39 @@ var dispatchToken = AppDispatcher.register(function (action) {
 module.exports = {
   dispatchToken: dispatchToken,
 
-  getMessages: function () {
-    return _storeState.messages.filter(function (message) {
+  getMessages() {
+    return _storeState.messages.filter(function(message) {
       return !this.isUrl(message)
     }.bind(this))
   },
 
-  getImages: function () {
-    return _storeState.messages.filter(function (message) {
+  getImages() {
+    return _storeState.messages.filter(function(message) {
       return this.isUrl(message)
     }.bind(this))
   },
 
-  getAll: function () {
+  getAll() {
     return _storeState.messages
   },
 
-  randomMessage: function () {
+  randomMessage() {
     return randomFrom(_storeState.messages) || ''
   },
 
-  getValidationObject: function () {
+  getValidationObject() {
     return _storeState.validation
   },
 
-  isUrl: function (value) {
+  isUrl(value) {
     return _.startsWith(value, 'http')
   },
 
-  addListener: function (callback) {
+  addListener(callback) {
     eventEmitter.on(CHANGE_EVENT, callback)
   },
 
-  removeListener: function (callback) {
+  removeListener(callback) {
     eventEmitter.removeListener(CHANGE_EVENT, callback)
   }
 }

@@ -1,5 +1,5 @@
 jest.dontMock('../../../../src/js/views/tracking/availableProject.js')
-var ReactDOM = require('react-dom');
+var ReactDOM = require('react-dom')
 
 describe('available project', function () {
   var React, TestUtils, AvailableProject, callback

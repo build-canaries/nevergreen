@@ -1,8 +1,8 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher')
-var Constants = require('../constants/NevergreenConstants')
-var validate = require('validate.js')
+const AppDispatcher = require('../dispatcher/AppDispatcher')
+const Constants = require('../constants/NevergreenConstants')
+const validate = require('validate.js')
 
-var _addMessageValidation = {
+const _addMessageValidation = {
   message: {
     presence: true
   }
@@ -10,8 +10,8 @@ var _addMessageValidation = {
 
 module.exports = {
 
-  addMessage: function (message) {
-    var validationMessages = validate({message: message}, _addMessageValidation)
+  addMessage(message) {
+    const validationMessages = validate({message: message}, _addMessageValidation)
 
     if (validationMessages) {
       AppDispatcher.dispatch({
@@ -27,7 +27,7 @@ module.exports = {
     }
   },
 
-  removeMessage: function (message) {
+  removeMessage(message) {
     AppDispatcher.dispatch({
       type: Constants.MessageRemove,
       message: message

@@ -1,14 +1,14 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher')
-var EventEmitter = require('events').EventEmitter
-var eventEmitter = new EventEmitter()
-var _ = require('lodash')
-var Constants = require('../constants/NevergreenConstants')
+const AppDispatcher = require('../dispatcher/AppDispatcher')
+const EventEmitter = require('events').EventEmitter
+const eventEmitter = new EventEmitter()
+const _ = require('lodash')
+const Constants = require('../constants/NevergreenConstants')
 
-var CHANGE_EVENT = 'selected-projects-change'
+const CHANGE_EVENT = 'selected-projects-change'
 
-var _storeState = {}
+let _storeState = {}
 
-var dispatchToken = AppDispatcher.register(function (action) {
+const dispatchToken = AppDispatcher.register(action => {
   switch (action.type) {
     case Constants.TrayAdd:
     {
@@ -48,19 +48,19 @@ var dispatchToken = AppDispatcher.register(function (action) {
 module.exports = {
   dispatchToken: dispatchToken,
 
-  getAll: function () {
+  getAll() {
     return _storeState
   },
 
-  getForTray: function (trayId) {
+  getForTray(trayId) {
     return _storeState[trayId] || []
   },
 
-  addListener: function (callback) {
+  addListener(callback) {
     eventEmitter.on(CHANGE_EVENT, callback)
   },
 
-  removeListener: function (callback) {
+  removeListener(callback) {
     eventEmitter.removeListener(CHANGE_EVENT, callback)
   }
 }

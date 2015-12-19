@@ -1,12 +1,12 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher')
-var EventEmitter = require('events').EventEmitter
-var eventEmitter = new EventEmitter()
-var _ = require('lodash')
-var Constants = require('../constants/NevergreenConstants')
+const AppDispatcher = require('../dispatcher/AppDispatcher')
+const EventEmitter = require('events').EventEmitter
+const eventEmitter = new EventEmitter()
+const _ = require('lodash')
+const Constants = require('../constants/NevergreenConstants')
 
-var CHANGE_EVENT = 'tray-change'
+const CHANGE_EVENT = 'tray-change'
 
-var _storeState = {
+const _storeState = {
   trays: {},
   validation: {}
 }
@@ -58,7 +58,7 @@ function setValidation(action) {
   _storeState.validation.password = action.password
 }
 
-var dispatchToken = AppDispatcher.register(function (action) {
+const dispatchToken = AppDispatcher.register(action => {
   switch (action.type) {
     case Constants.PasswordEncrypted:
     {
@@ -118,23 +118,23 @@ var dispatchToken = AppDispatcher.register(function (action) {
 module.exports = {
   dispatchToken: dispatchToken,
 
-  getAll: function () {
+  getAll() {
     return _.values(_storeState.trays)
   },
 
-  getById: function (trayId) {
+  getById(trayId) {
     return _storeState.trays[trayId]
   },
 
-  getValidationObject: function () {
+  getValidationObject() {
     return _storeState.validation
   },
 
-  addListener: function (callback) {
+  addListener(callback) {
     eventEmitter.on(CHANGE_EVENT, callback)
   },
 
-  removeListener: function (callback) {
+  removeListener(callback) {
     eventEmitter.removeListener(CHANGE_EVENT, callback)
   }
 }

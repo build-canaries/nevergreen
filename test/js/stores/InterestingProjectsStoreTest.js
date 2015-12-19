@@ -1,22 +1,22 @@
 jest.dontMock('../../../src/js/stores/InterestingProjectsStore')
   .dontMock('../../../src/js/constants/NevergreenConstants')
 
-describe('success store', function () {
+describe('success store', () => {
 
-  var store, AppDispatcher, Constants, callback
+  let store, AppDispatcher, Constants, callback
 
-  beforeEach(function () {
+  beforeEach(() => {
     AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
     Constants = require('../../../src/js/constants/NevergreenConstants')
     store = require('../../../src/js/stores/InterestingProjectsStore')
     callback = AppDispatcher.register.mock.calls[0][0]
   })
 
-  it('registers a callback with the dispatcher', function () {
+  it('registers a callback with the dispatcher', () => {
     expect(AppDispatcher.register.mock.calls.length).toBe(1)
   })
 
-  it('adds empty projects', function () {
+  it('adds empty projects', () => {
     callback({
       type: Constants.InterestingProjects,
       projects: []
@@ -24,7 +24,7 @@ describe('success store', function () {
     expect(store.getAll()).toEqual([])
   })
 
-  it('adds a project', function () {
+  it('adds a project', () => {
     callback({
       type: Constants.InterestingProjects,
       projects: [{
@@ -41,7 +41,7 @@ describe('success store', function () {
     }])
   })
 
-  it('adds an error', function () {
+  it('adds an error', () => {
     callback({
       type: Constants.InterestingProjectsError,
       error: 'some-error'
@@ -49,7 +49,7 @@ describe('success store', function () {
     expect(store.getLastError()).toEqual('some-error')
   })
 
-  it('clears the store state when new data is imported', function () {
+  it('clears the store state when new data is imported', () => {
     callback({
       type: Constants.ImportedData
     })

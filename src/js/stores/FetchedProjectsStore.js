@@ -1,19 +1,19 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher')
-var EventEmitter = require('events').EventEmitter
-var eventEmitter = new EventEmitter()
-var _ = require('lodash')
-var Constants = require('../constants/NevergreenConstants')
+const AppDispatcher = require('../dispatcher/AppDispatcher')
+const EventEmitter = require('events').EventEmitter
+const eventEmitter = new EventEmitter()
+const _ = require('lodash')
+const Constants = require('../constants/NevergreenConstants')
 
-var CHANGE_EVENT = 'projects-change'
+const CHANGE_EVENT = 'projects-change'
 
-var _storeState = {}
+let _storeState = {}
 
 function previouslyRemovedProjects(project) {
   return !project.wasRemoved
 }
 
 function updateNewAndRemovedFlags(fetchedProjects, project) {
-  var whereIdsMatch = function (fetchedProject) {
+  const whereIdsMatch = function(fetchedProject) {
     return fetchedProject.projectId === project.projectId
   }
   return {
@@ -25,7 +25,7 @@ function updateNewAndRemovedFlags(fetchedProjects, project) {
 }
 
 function getName(project) {
-  return project.stage ? project.name + ' [' + project.stage + ']' : project.name
+  return project.stage ? `${project.name} [${project.stage}]` : project.name
 }
 
 function toProject(project) {
@@ -42,7 +42,7 @@ function removeJobs(project) {
 }
 
 function removeExisting(previousProjects, project) {
-  var whereIdsMatch = function (previousProject) {
+  const whereIdsMatch = function(previousProject) {
     return previousProject.projectId === project.projectId
   }
   return _.findIndex(previousProjects, whereIdsMatch) < 0
@@ -58,7 +58,7 @@ function createProjects(previousProjects, fetchedProjects) {
       .filter(removeExisting.bind(this, previousProjects)))
 }
 
-var dispatchToken = AppDispatcher.register(function (action) {
+const dispatchToken = AppDispatcher.register(action => {
   switch (action.type) {
     case Constants.TrayAdd:
     {
@@ -93,15 +93,15 @@ var dispatchToken = AppDispatcher.register(function (action) {
 module.exports = {
   dispatchToken: dispatchToken,
 
-  getAll: function (trayId) {
+  getAll(trayId) {
     return _storeState[trayId] || []
   },
 
-  addListener: function (callback) {
+  addListener(callback) {
     eventEmitter.on(CHANGE_EVENT, callback)
   },
 
-  removeListener: function (callback) {
+  removeListener(callback) {
     eventEmitter.removeListener(CHANGE_EVENT, callback)
   }
 }

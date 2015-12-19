@@ -1,9 +1,9 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher')
-var Constants = require('../constants/NevergreenConstants')
+const AppDispatcher = require('../dispatcher/AppDispatcher')
+const Constants = require('../constants/NevergreenConstants')
 
 module.exports = {
 
-  selectProject: function (trayId, projectIds) {
+  selectProject(trayId, projectIds) {
     AppDispatcher.dispatch({
       type: Constants.ProjectSelected,
       trayId: trayId,
@@ -11,7 +11,7 @@ module.exports = {
     })
   },
 
-  removeProject: function (trayId, projectIds) {
+  removeProject(trayId, projectIds) {
     AppDispatcher.dispatch({
       type: Constants.ProjectUnselected,
       trayId: trayId,

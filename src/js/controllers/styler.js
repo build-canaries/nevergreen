@@ -1,7 +1,7 @@
-var ScaleText = require('scale-text')
+const ScaleText = require('scale-text')
 
-var maxColumns = 3
-var buildStatusPadding = 11
+const maxColumns = 3
+const buildStatusPadding = 11
 
 function numberOfColumns(projects) {
   return Math.min(maxColumns, projects.length)
@@ -26,13 +26,13 @@ function resizeEachContainer(projects, $container, $view) {
 }
 
 function getProjectNames(projects) {
-  return projects.map(function (project) {
+  return projects.map(project => {
     return project.name
   })
 }
 
 function everyPieceOfTextOnTheScreen(projects, $container) {
-  var allTheTextInContainers = []
+  const allTheTextInContainers = []
   $container.find('.monitor-inner-container').each(function () {
     allTheTextInContainers.push(this.textContent)
   })
@@ -40,16 +40,14 @@ function everyPieceOfTextOnTheScreen(projects, $container) {
 }
 
 function scaleFontToContainerSize(projects, $container, $view) {
-  $container.css('font-size',
-    new ScaleText(
-      everyPieceOfTextOnTheScreen(projects, $container),
-      buildStatusHeight(projects, $view),
-      buildStatusWidth(projects, $view)).ideal()
-  )
+  $container.css('font-size', new ScaleText(
+    everyPieceOfTextOnTheScreen(projects, $container),
+    buildStatusHeight(projects, $view),
+    buildStatusWidth(projects, $view)).ideal())
 }
 
 module.exports = {
-  styleProjects: function (projects, $container, $view) {
+  styleProjects(projects, $container, $view) {
     resizeEachContainer(projects, $container, $view)
     scaleFontToContainerSize(projects, $container, $view)
   }

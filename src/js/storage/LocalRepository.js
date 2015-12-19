@@ -1,6 +1,6 @@
-var localforage = require('localforage')
-var Promise = require('promise')
-var _ = require('lodash')
+const localforage = require('localforage')
+const Promise = require('promise')
+const _ = require('lodash')
 
 function setIfMissing(key, existing, defaultValue) {
   if (_.isNull(existing)) {
@@ -9,19 +9,19 @@ function setIfMissing(key, existing, defaultValue) {
 }
 
 module.exports = {
-  init: function (versionNumber) {
+  init(versionNumber) {
     localforage.config({
       name: 'nevergreen',
       storeName: 'nevergreen'
     })
 
-    var keys = [
+    const keys = [
       'trays',
       'messages',
       'created'
     ]
 
-    var defaultValues = [
+    const defaultValues = [
       [],
       ['=(^.^)='],
       {
@@ -30,40 +30,40 @@ module.exports = {
       }
     ]
 
-    return Promise.all(keys.map(function (key) {
+    return Promise.all(keys.map(key => {
       return localforage.getItem(key)
-    })).then(function (existingValues) {
-      var entriesWithDefaults = _.zip(keys, existingValues, defaultValues)
-      return Promise.all(entriesWithDefaults.map(function (triple) {
+    })).then(existingValues => {
+      const entriesWithDefaults = _.zip(keys, existingValues, defaultValues)
+      return Promise.all(entriesWithDefaults.map(triple => {
         return setIfMissing.apply(this, triple)
       }))
     })
   },
 
-  save: function (dataObject) {
-    return Promise.all(_.pairs(dataObject).map(function (pair) {
+  save(dataObject) {
+    return Promise.all(_.pairs(dataObject).map(pair => {
       return localforage.setItem(pair[0], pair[1])
     }))
   },
 
-  getConfiguration: function () {
-    var configuration = {}
-    return localforage.iterate(function (value, key) {
+  getConfiguration() {
+    const configuration = {}
+    return localforage.iterate((value, key) => {
       configuration[key] = value
-    }).then(function () {
+    }).then(() => {
       return configuration
     })
   },
 
-  getItem: function (key) {
+  getItem(key) {
     return localforage.getItem(key)
   },
 
-  setItem: function (key, value) {
+  setItem(key, value) {
     return localforage.setItem(key, value)
   },
 
-  removeItem: function (key) {
+  removeItem(key) {
     return localforage.removeItem(key)
   }
 }

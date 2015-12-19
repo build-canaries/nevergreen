@@ -1,11 +1,11 @@
 jest.dontMock('../../../src/js/actions/InterestingProjectActions')
   .dontMock('../../../src/js/constants/NevergreenConstants')
 
-describe('interesting actions', function () {
+describe('interesting actions', () => {
 
-  var subject, AppDispatcher, Constants, projectsGateway, promiseMock
+  let subject, AppDispatcher, Constants, projectsGateway, promiseMock
 
-  beforeEach(function () {
+  beforeEach(() => {
     subject = require('../../../src/js/actions/InterestingProjectActions')
     AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
     Constants = require('../../../src/js/constants/NevergreenConstants')
@@ -18,7 +18,7 @@ describe('interesting actions', function () {
     promiseMock.catch.mockReturnValue(promiseMock)
   })
 
-  it('calls the projects gateway', function () {
+  it('calls the projects gateway', () => {
     projectsGateway.interesting.mockReturnValueOnce(promiseMock)
 
     subject.fetchInteresting('some-trays', 'some-selected-projects')
@@ -26,12 +26,12 @@ describe('interesting actions', function () {
     expect(projectsGateway.interesting).toBeCalledWith('some-trays', 'some-selected-projects')
   })
 
-  it('dispatches a interesting projects action', function () {
+  it('dispatches a interesting projects action', () => {
     projectsGateway.interesting.mockReturnValueOnce(promiseMock)
 
     subject.fetchInteresting('irrelevant', 'irrelevant')
 
-    var callback = promiseMock.then.mock.calls[0][0]
+    const callback = promiseMock.then.mock.calls[0][0]
 
     callback('the-data')
 
@@ -41,12 +41,12 @@ describe('interesting actions', function () {
     })
   })
 
-  it('dispatches a interesting projects error action', function () {
+  it('dispatches a interesting projects error action', () => {
     projectsGateway.interesting.mockReturnValueOnce(promiseMock)
 
     subject.fetchInteresting('irrelevant', 'irrelevant')
 
-    var callback = promiseMock.catch.mock.calls[0][0]
+    const callback = promiseMock.catch.mock.calls[0][0]
 
     callback('the-error')
 

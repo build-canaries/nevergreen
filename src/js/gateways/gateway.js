@@ -1,10 +1,10 @@
-var Promise = require('promise')
+const Promise = require('promise')
 
 if (!window.fetch) {
   window.fetch = require('whatwg-fetch')
 }
 
-var processStatus = function (response) {
+const processStatus = function(response) {
   if (response.status >= 200 && response.status < 300) {
     return Promise.resolve(response)
   } else {
@@ -16,7 +16,7 @@ var processStatus = function (response) {
 }
 
 module.exports = {
-  post: function (url, data) {
+  post(url, data) {
     return fetch(url, {
       method: 'post',
       body: JSON.stringify(data),
@@ -24,17 +24,17 @@ module.exports = {
         Accept: 'application/json; charset=utf-8',
         'Content-Type': 'application/json; charset=utf-8'
       }
-    }).then(processStatus).then(function (response) {
+    }).then(processStatus).then(response => {
       return response.json()
     })
   },
 
-  get: function (url) {
+  get(url) {
     return fetch(url, {
       headers: {
         Accept: 'application/json; charset=utf-8'
       }
-    }).then(processStatus).then(function (response) {
+    }).then(processStatus).then(response => {
       return response.json()
     })
   }

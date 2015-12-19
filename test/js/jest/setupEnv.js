@@ -1,18 +1,18 @@
-var store = (function () {
-  var store = {}
+const store = (() => {
+  let store = {}
   return {
-    getItem: function (key) {
+    getItem(key) {
       return store[key] || null
     },
-    setItem: function (key, value) {
+    setItem(key, value) {
       store[key] = value.toString()
       this.length = store.length
     },
-    removeItem: function (key) {
+    removeItem(key) {
       delete store[key]
       this.length = store.length
     },
-    clear: function () {
+    clear() {
       store = {}
       this.length = 0
     },

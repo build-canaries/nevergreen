@@ -1,11 +1,11 @@
 jest.dontMock('../../../src/js/stores/SelectedProjectsStore')
   .dontMock('../../../src/js/constants/NevergreenConstants')
 
-describe('success store', function () {
+describe('success store', () => {
 
-  var store, AppDispatcher, Constants, callback
+  let store, AppDispatcher, Constants, callback
 
-  beforeEach(function () {
+  beforeEach(() => {
     AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
     Constants = require('../../../src/js/constants/NevergreenConstants')
     store = require('../../../src/js/stores/SelectedProjectsStore')
@@ -17,11 +17,11 @@ describe('success store', function () {
     })
   })
 
-  it('registers a callback with the dispatcher', function () {
+  it('registers a callback with the dispatcher', () => {
     expect(AppDispatcher.register.mock.calls.length).toBe(1)
   })
 
-  it('concatenates selected project ids', function () {
+  it('concatenates selected project ids', () => {
     callback({
       type: Constants.ProjectSelected,
       trayId: 'some-id',
@@ -35,7 +35,7 @@ describe('success store', function () {
     expect(store.getForTray('some-id')).toEqual(['id-1', 'id-2'])
   })
 
-  it('removes unselected projects', function () {
+  it('removes unselected projects', () => {
     callback({
       type: Constants.ProjectSelected,
       trayId: 'some-id',
@@ -49,7 +49,7 @@ describe('success store', function () {
     expect(store.getForTray('some-id')).toEqual([])
   })
 
-  it('clears the store state when new data is imported', function () {
+  it('clears the store state when new data is imported', () => {
     callback({
       type: Constants.ImportedData
     })

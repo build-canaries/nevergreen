@@ -1,18 +1,18 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher')
-var Constants = require('../constants/NevergreenConstants')
-var projectsGateway = require('../gateways/projectsGateway')
+const AppDispatcher = require('../dispatcher/AppDispatcher')
+const Constants = require('../constants/NevergreenConstants')
+const projectsGateway = require('../gateways/projectsGateway')
 
-var _timerId
+let _timerId
 
 module.exports = {
 
-  fetchInteresting: function (trays, selected) {
-    return projectsGateway.interesting(trays, selected).then(function (data) {
+  fetchInteresting(trays, selected) {
+    return projectsGateway.interesting(trays, selected).then(data => {
       AppDispatcher.dispatch({
         type: Constants.InterestingProjects,
         projects: data
       })
-    }).catch(function (err) {
+    }).catch(err => {
       AppDispatcher.dispatch({
         type: Constants.InterestingProjectsError,
         error: err
@@ -20,15 +20,15 @@ module.exports = {
     })
   },
 
-  pollForChanges: function (waitTime, getTraysFn, getSelectedFn) {
-    this.fetchInteresting(getTraysFn(), getSelectedFn()).then(function () {
-      _timerId = setTimeout(function () {
+  pollForChanges(waitTime, getTraysFn, getSelectedFn) {
+    this.fetchInteresting(getTraysFn(), getSelectedFn()).then(function() {
+      _timerId = setTimeout(function() {
         this.pollForChanges(waitTime, getTraysFn, getSelectedFn)
       }.bind(this), waitTime)
     }.bind(this))
   },
 
-  stopPollingForChanges: function () {
+  stopPollingForChanges() {
     if (_timerId) {
       clearTimeout(_timerId)
     }

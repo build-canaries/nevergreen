@@ -1,13 +1,13 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher')
-var Constants = require('../constants/NevergreenConstants')
-var Promise = require('promise')
-var LocalRepository = require('../storage/LocalRepository')
-var TrayActions = require('../actions/TrayActions')
-var SelectProjectActions = require('../actions/SelectProjectActions')
-var SuccessActions = require('../actions/SuccessActions')
-var validate = require('validate.js')
+const AppDispatcher = require('../dispatcher/AppDispatcher')
+const Constants = require('../constants/NevergreenConstants')
+const Promise = require('promise')
+const LocalRepository = require('../storage/LocalRepository')
+const TrayActions = require('../actions/TrayActions')
+const SelectProjectActions = require('../actions/SelectProjectActions')
+const SuccessActions = require('../actions/SuccessActions')
+const validate = require('validate.js')
 
-var _importValidation = {
+const _importValidation = {
   trays: {
     stringArray: true
   },
@@ -50,11 +50,11 @@ function dispatchSuccessActions(message) {
 
 module.exports = {
 
-  importData: function (jsonData) {
+  importData(jsonData) {
     try {
-      var data = JSON.parse(jsonData)
+      const data = JSON.parse(jsonData)
 
-      var validationMessages = validate(data, _importValidation)
+      const validationMessages = validate(data, _importValidation)
 
       if (validationMessages) {
         dispatchError(validationMessages)
@@ -65,35 +65,35 @@ module.exports = {
         })
 
         LocalRepository.save(data)
-          .then(function () {
+          .then(() => {
             AppDispatcher.dispatch({
               type: Constants.ImportedData,
               data: data
             })
           })
           .then(this.load)
-          .catch(function (e) {
-            dispatchError(['Unable to import - ' + e.message])
+          .catch(e => {
+            dispatchError([`Unable to import - ${e.message}`])
           })
       }
 
     } catch (e) {
-      dispatchError(['Invalid JSON - ' + e.message])
+      dispatchError([`Invalid JSON - ${e.message}`])
     }
   },
 
-  load: function () {
+  load() {
     return LocalRepository.getItem('trays')
-      .then(function (trayIds) {
-        return Promise.all(trayIds.map(function (trayId) {
+      .then(trayIds => {
+        return Promise.all(trayIds.map(trayId => {
           return LocalRepository.getItem(trayId)
         }))
       })
-      .then(function (trays) {
+      .then(trays => {
         trays.forEach(dispatchTrackingActions)
         return LocalRepository.getItem('messages')
       })
-      .then(function (messages) {
+      .then(messages => {
         messages.forEach(dispatchSuccessActions)
         return LocalRepository.getConfiguration()
       })

@@ -1,8 +1,8 @@
-var gateway = require('../gateways/gateway')
+const gateway = require('../gateways/gateway')
 
 module.exports = {
-  fetchAll: function (trays) {
-    var data = trays.map(function (tray) {
+  fetchAll(trays) {
+    const data = trays.map(tray => {
       return {
         url: tray.url,
         username: tray.username,
@@ -14,8 +14,8 @@ module.exports = {
     return gateway.post('/api/projects/all', data)
   },
 
-  interesting: function (trays, selected) {
-    var data = trays.map(function (tray) {
+  interesting(trays, selected) {
+    const data = trays.map(tray => {
       return {
         trayId: tray.trayId,
         url: tray.url,

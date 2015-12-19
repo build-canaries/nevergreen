@@ -1,16 +1,16 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher')
-var EventEmitter = require('events').EventEmitter
-var eventEmitter = new EventEmitter()
-var _ = require('lodash')
-var Constants = require('../constants/NevergreenConstants')
-var TrayStore = require('./TrayStore')
-var SelectedProjectsStore = require('./SelectedProjectsStore')
-var SuccessStore = require('./SuccessStore')
-var LocalRepository = require('../storage/LocalRepository')
+const AppDispatcher = require('../dispatcher/AppDispatcher')
+const EventEmitter = require('events').EventEmitter
+const eventEmitter = new EventEmitter()
+const _ = require('lodash')
+const Constants = require('../constants/NevergreenConstants')
+const TrayStore = require('./TrayStore')
+const SelectedProjectsStore = require('./SelectedProjectsStore')
+const SuccessStore = require('./SuccessStore')
+const LocalRepository = require('../storage/LocalRepository')
 
-var CHANGE_EVENT = 'storage-change'
+const CHANGE_EVENT = 'storage-change'
 
-var _storeState = {
+const _storeState = {
   loading: true,
   configuration: {
     trays: [],
@@ -45,7 +45,7 @@ function addTray(tray) {
 }
 
 function removeTray(trayId) {
-  _.remove(_storeState.configuration.trays, function (id) {
+  _.remove(_storeState.configuration.trays, id => {
     return id === trayId
   })
 }
@@ -58,7 +58,7 @@ function updateMessages(messages) {
   _storeState.configuration.messages = messages
 }
 
-var dispatchToken = AppDispatcher.register(function (action) {
+const dispatchToken = AppDispatcher.register(action => {
   if (_storeState.loading) {
     switch (action.type) {
       case Constants.ConfigurationLoaded:
@@ -131,7 +131,7 @@ var dispatchToken = AppDispatcher.register(function (action) {
     }
   }
 
-  LocalRepository.save(_storeState.configuration).then(function () {
+  LocalRepository.save(_storeState.configuration).then(() => {
     eventEmitter.emit(CHANGE_EVENT)
   })
 
@@ -141,23 +141,23 @@ var dispatchToken = AppDispatcher.register(function (action) {
 module.exports = {
   dispatchToken: dispatchToken,
 
-  getConfiguration: function () {
+  getConfiguration() {
     return _storeState.configuration
   },
 
-  isLoading: function () {
+  isLoading() {
     return _storeState.loading
   },
 
-  getImportError: function () {
+  getImportError() {
     return _storeState.validationMessages
   },
 
-  addListener: function (callback) {
+  addListener(callback) {
     eventEmitter.on(CHANGE_EVENT, callback)
   },
 
-  removeListener: function (callback) {
+  removeListener(callback) {
     eventEmitter.removeListener(CHANGE_EVENT, callback)
   }
 }

@@ -1,7 +1,7 @@
-var gateway = require('./gateway')
+const gateway = require('./gateway')
 
 module.exports = {
-  encryptPassword: function (password) {
+  encryptPassword(password) {
     return gateway.post('/api/encrypt', {password: password})
   }
 }

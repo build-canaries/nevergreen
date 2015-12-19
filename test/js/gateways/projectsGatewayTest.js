@@ -1,17 +1,17 @@
 jest.dontMock('../../../src/js/gateways/projectsGateway')
 
-describe('projects gateway', function () {
+describe('projects gateway', () => {
 
-  var subject, gateway
+  let subject, gateway
 
-  beforeEach(function () {
+  beforeEach(() => {
     subject = require('../../../src/js/gateways/projectsGateway')
     gateway = require('../../../src/js/gateways/gateway')
   })
 
-  describe('getting all projects', function () {
-    it('has all data', function () {
-      var trays = [{
+  describe('getting all projects', () => {
+    it('has all data', () => {
+      const trays = [{
         url: 'url',
         username: 'uname',
         password: 'pword',
@@ -29,21 +29,21 @@ describe('projects gateway', function () {
     })
   })
 
-  describe('getting interesting projects', function () {
-    it('has all data', function () {
-      var selected = {id: ['some-project-id']}
-      var tray = {
+  describe('getting interesting projects', () => {
+    it('has all data', () => {
+      const selected = {id: ['some-project-id']}
+      const tray = {
         trayId: 'id',
         url: 'url',
         username: 'uname',
         password: 'pword',
         serverType: 'GO'
       }
-      var trays = [tray]
+      const trays = [tray]
 
       subject.interesting(trays, selected)
 
-      var data = [{
+      const data = [{
         trayId: tray.trayId,
         url: tray.url,
         username: tray.username,

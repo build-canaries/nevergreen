@@ -1,26 +1,26 @@
 jest.dontMock('../../../src/js/stores/FetchedProjectsStore')
   .dontMock('../../../src/js/constants/NevergreenConstants')
 
-describe('fetched projects store', function () {
+describe('fetched projects store', () => {
 
-  var store, AppDispatcher, Constants, callback
+  let store, AppDispatcher, Constants, callback
 
-  beforeEach(function () {
+  beforeEach(() => {
     AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
     Constants = require('../../../src/js/constants/NevergreenConstants')
     store = require('../../../src/js/stores/FetchedProjectsStore')
     callback = AppDispatcher.register.mock.calls[0][0]
   })
 
-  it('registers a callback with the dispatcher', function () {
+  it('registers a callback with the dispatcher', () => {
     expect(AppDispatcher.register.mock.calls.length).toBe(1)
   })
 
-  it('creates an empty seq by default', function () {
+  it('creates an empty seq by default', () => {
     expect(store.getAll('some-id')).toEqual([])
   })
 
-  it('creates an empty seq of fetched projects when a tray is added', function () {
+  it('creates an empty seq of fetched projects when a tray is added', () => {
     callback({
       type: Constants.TrayAdd,
       trayId: 'some-id'
@@ -28,23 +28,23 @@ describe('fetched projects store', function () {
     expect(store.getAll('some-id')).toEqual([])
   })
 
-  it('clears the store state when new data is imported', function () {
+  it('clears the store state when new data is imported', () => {
     callback({
       type: Constants.ImportedData
     })
     expect(store.getAll('some-id')).toEqual([])
   })
 
-  describe('adding fetched projects', function () {
+  describe('adding fetched projects', () => {
 
-    beforeEach(function () {
+    beforeEach(() => {
       callback({
         type: Constants.TrayAdd,
         trayId: 'some-id'
       })
     })
 
-    it('filters out jobs', function () {
+    it('filters out jobs', () => {
       callback({
         type: Constants.ProjectsFetched,
         trayId: 'some-id',
@@ -68,8 +68,8 @@ describe('fetched projects store', function () {
       }])
     })
 
-    describe('with previous projects added', function () {
-      beforeEach(function () {
+    describe('with previous projects added', () => {
+      beforeEach(() => {
         callback({
           type: Constants.ProjectsFetched,
           trayId: 'some-id',
@@ -82,7 +82,7 @@ describe('fetched projects store', function () {
         })
       })
 
-      it('removes the new flag if the same project is fetched again', function () {
+      it('removes the new flag if the same project is fetched again', () => {
         callback({
           type: Constants.ProjectsFetched,
           trayId: 'some-id',
@@ -101,7 +101,7 @@ describe('fetched projects store', function () {
         }])
       })
 
-      it('sets the removed flag if the project is not fetched again', function () {
+      it('sets the removed flag if the project is not fetched again', () => {
         callback({
           type: Constants.ProjectsFetched,
           trayId: 'some-id',
