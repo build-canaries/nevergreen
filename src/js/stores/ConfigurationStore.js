@@ -54,7 +54,7 @@ function removeTray(trayId) {
 }
 
 function setBrokenBuildTimers(value) {
-    _storeState.configuration.displaySettings.showBrokenBuildTimers = (value === true)
+    _storeState.configuration.displaySettings.showBrokenBuildTimers = value === true
 }
 
 function updatedSelectedProjectsForTray(trayId, selectedProjects) {
@@ -157,11 +157,11 @@ module.exports = {
     return _storeState.configuration
   },
 
-  areBrokenBuildTimersEnabled: function () {
+  areBrokenBuildTimersEnabled() {
     return _storeState.configuration.displaySettings.showBrokenBuildTimers
   },
 
-  isLoading: function () {
+  isLoading() {
     return _storeState.loading
   },
 

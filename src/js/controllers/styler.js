@@ -33,7 +33,7 @@ function getProjectNames(projects) {
 
 function everyPieceOfTextOnTheScreen(projects, $container) {
   const allTheTextInContainers = []
-  $container.find('.monitor-inner-container').each(function () {
+  $container.find('.monitor-inner-container').each(function() {
     allTheTextInContainers.push(this.textContent)
   })
   return allTheTextInContainers.length > 0 ? allTheTextInContainers : getProjectNames(projects)

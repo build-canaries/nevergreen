@@ -1,16 +1,16 @@
 jest.dontMock('../../../src/js/actions/DisplayActions')
   .dontMock('../../../src/js/constants/NevergreenConstants')
 
-describe('display actions', function () {
-  var subject, AppDispatcher, Constants
+describe('display actions', () => {
+  let subject, AppDispatcher, Constants
 
-  beforeEach(function () {
+  beforeEach(() => {
     subject = require('../../../src/js/actions/DisplayActions')
     AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
     Constants = require('../../../src/js/constants/NevergreenConstants')
   })
 
-  it('dispatches an action with the value given', function () {
+  it('dispatches an action with the value given', () => {
     subject.setBrokenBuildTimers('some-value')
 
     expect(AppDispatcher.dispatch).toBeCalledWith({

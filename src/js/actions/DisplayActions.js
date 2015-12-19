@@ -1,8 +1,8 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher')
-var Constants = require('../constants/NevergreenConstants')
+const AppDispatcher = require('../dispatcher/AppDispatcher')
+const Constants = require('../constants/NevergreenConstants')
 
 module.exports = {
-  setBrokenBuildTimers: function (value) {
+  setBrokenBuildTimers(value) {
     AppDispatcher.dispatch({
       type: Constants.BrokenBuildTimersChanged,
       value: value

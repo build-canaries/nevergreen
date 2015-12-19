@@ -3,7 +3,7 @@ jest.dontMock('../../../src/js/actions/TrayActions')
 
 describe('tray actions', () => {
 
-  var subject, AppDispatcher, Constants, promiseMock, validate
+  let subject, AppDispatcher, Constants, promiseMock, validate
 
   beforeEach(() => {
     subject = require('../../../src/js/actions/TrayActions')
