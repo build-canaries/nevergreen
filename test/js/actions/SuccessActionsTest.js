@@ -12,6 +12,10 @@ describe('success actions', () => {
     validate = require('validate.js')
   })
 
+  it('should not change messages which do not need to change', () => {
+      expect('some-string').toEqual('some-string'.replace(/ /g, String.fromCharCode(160)))
+  })
+
   it('dispatches a invalid action for blank messages', () => {
     validate.mockReturnValue('some message')
 
@@ -39,6 +43,26 @@ describe('success actions', () => {
     expect(AppDispatcher.dispatch).toBeCalledWith({
       type: Constants.MessageRemove,
       message: '=(^.^)='
+    })
+  })
+
+  describe('dealing with spaces', () => {
+    it('converts messages which do not look like text to use non-breaking spaces', () => {
+      subject.addMessage('=(^ . ^)=')
+
+      expect(AppDispatcher.dispatch).toBeCalledWith({
+        type: Constants.MessageAdd,
+        message: '=(^ . ^)='.replace(/ /g, String.fromCharCode(160))
+      })
+    })
+
+    it('does not convert messages which look like text', () => {
+      subject.addMessage('some message')
+
+      expect(AppDispatcher.dispatch).toBeCalledWith({
+        type: Constants.MessageAdd,
+        message: 'some message'
+      })
     })
   })
 })

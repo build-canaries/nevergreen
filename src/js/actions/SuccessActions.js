@@ -8,8 +8,20 @@ const _addMessageValidation = {
   }
 }
 
-module.exports = {
+function isASentence(message) {
+  const numberOfLetters = (message.match(/[A-Za-z]/g) || []).length
+  return (numberOfLetters / message.length) > 0.3
+}
 
+function transformMessage(message) {
+  if (isASentence(message)) {
+    return message
+  }
+
+  return message.replace(/ /g, String.fromCharCode(160))
+}
+
+module.exports = {
   addMessage(message) {
     const validationMessages = validate({message: message}, _addMessageValidation)
 
@@ -22,7 +34,7 @@ module.exports = {
     } else {
       AppDispatcher.dispatch({
         type: Constants.MessageAdd,
-        message: message
+        message: transformMessage(message)
       })
     }
   },
@@ -30,7 +42,7 @@ module.exports = {
   removeMessage(message) {
     AppDispatcher.dispatch({
       type: Constants.MessageRemove,
-      message: message
+      message: transformMessage(message)
     })
   }
 
