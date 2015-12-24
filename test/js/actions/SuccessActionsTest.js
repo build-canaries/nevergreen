@@ -46,8 +46,8 @@ describe('success actions', () => {
     })
   })
 
-  describe('dealing with spaces', function () {
-    it('converts messages which do not look like text to use non-breaking spaces', function () {
+  describe('dealing with spaces', () => {
+    it('converts messages which do not look like text to use non-breaking spaces', () => {
       subject.addMessage('=(^ . ^)=')
 
       expect(AppDispatcher.dispatch).toBeCalledWith({
@@ -56,7 +56,7 @@ describe('success actions', () => {
       })
     })
 
-    it('does not convert messages which look like text', function () {
+    it('does not convert messages which look like text', () => {
       subject.addMessage('some message')
 
       expect(AppDispatcher.dispatch).toBeCalledWith({
