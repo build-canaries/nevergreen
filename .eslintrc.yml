@@ -1,6 +1,7 @@
 extends: eslint:recommended
-plugins:
-  - react
+
+plugins: ['react']
+
 env:
   es6: true
   jest: true
