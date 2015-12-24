@@ -1,7 +1,7 @@
-var React = require('react')
-var Message = require('./messageComponent')
-var Image = require('./imageComponent')
-var SuccessStore = require('../../stores/SuccessStore')
+const React = require('react')
+const Message = require('./messageComponent')
+const Image = require('./imageComponent')
+const SuccessStore = require('../../stores/SuccessStore')
 
 module.exports = React.createClass({
   getInitialState: function () {

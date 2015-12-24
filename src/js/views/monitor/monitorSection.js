@@ -1,13 +1,13 @@
-var $ = require('jquery')
-var React = require('react')
-var InterestingProjects = require('./projectsView')
-var Success = require('./successView')
-var Loading = require('../general/loading')
-var InterestingProjectsStore = require('../../stores/InterestingProjectsStore')
-var InterestingProjectActions = require('../../actions/InterestingProjectActions')
-var TrayStore = require('../../stores/TrayStore')
-var SelectedProjectsStore = require('../../stores/SelectedProjectsStore')
-var Error = require('../general/errorView')
+const $ = require('jquery')
+const React = require('react')
+const InterestingProjects = require('./projectsView')
+const Success = require('./successView')
+const Loading = require('../general/loading')
+const InterestingProjectsStore = require('../../stores/InterestingProjectsStore')
+const InterestingProjectActions = require('../../actions/InterestingProjectActions')
+const TrayStore = require('../../stores/TrayStore')
+const SelectedProjectsStore = require('../../stores/SelectedProjectsStore')
+const Error = require('../general/errorView')
 
 function getStateFromStore() {
   return {
@@ -26,7 +26,7 @@ module.exports = React.createClass({
   },
 
   render: function () {
-    var content
+    let content
     if (!this.state.loaded) {
       content = <Loading />
     } else if (this.state.error) {

@@ -1,12 +1,12 @@
-var React = require('react')
-var LinkedStateMixin = require('react-addons-linked-state-mixin')
-var ValidationMessages = require('../general/validationMessages')
-var ConfigurationStore = require('../../stores/ConfigurationStore')
-var ConfigurationActions = require('../../actions/ConfigurationActions')
-var Clipboard = require('clipboard')
+const React = require('react')
+const LinkedStateMixin = require('react-addons-linked-state-mixin')
+const ValidationMessages = require('../general/validationMessages')
+const ConfigurationStore = require('../../stores/ConfigurationStore')
+const ConfigurationActions = require('../../actions/ConfigurationActions')
+const Clipboard = require('clipboard')
 
 function getStateFromStore(currentImportData) {
-  var importError = ConfigurationStore.getImportError()
+  const importError = ConfigurationStore.getImportError()
   return {
     configuration: ConfigurationStore.getConfiguration(),
     loading: ConfigurationStore.isLoading(),
@@ -27,7 +27,7 @@ module.exports = React.createClass({
   componentDidMount: function () {
     ConfigurationStore.addListener(this._onChange)
 
-    var clipboard = new Clipboard('#copy-to-clipboard')
+    const clipboard = new Clipboard('#copy-to-clipboard')
     clipboard.on('error', function () {
       this.setState({exportErrors: ['Unfortunately your browser doesn\'t support automatically copying to clipboard, please manually copy']})
     }.bind(this))
@@ -46,7 +46,7 @@ module.exports = React.createClass({
   },
 
   render: function () {
-    var exportMessage = <div className='export-info-message'>
+    const exportMessage = <div className='export-info-message'>
       <span className='icon-checkmark'></span>
       <span className='text-with-icon'>{this.state.exportMessage}</span>
     </div>

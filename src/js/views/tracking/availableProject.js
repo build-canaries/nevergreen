@@ -1,4 +1,4 @@
-var React = require('react')
+const React = require('react')
 
 module.exports = React.createClass({
   propTypes: {
@@ -10,9 +10,9 @@ module.exports = React.createClass({
   },
 
   render: function () {
-    var labelClass = this.props.wasRemoved ? 'label-checkbox-disabled' : 'label-checkbox'
-    var nameClass = this.props.wasRemoved ? 'tracking-removed-project' : ''
-    var info = ''
+    const labelClass = this.props.wasRemoved ? 'label-checkbox-disabled' : 'label-checkbox'
+    const nameClass = this.props.wasRemoved ? 'tracking-removed-project' : ''
+    let info = ''
 
     if (this.props.isNew) {
       info = <sup className='tracking-new-project'> new</sup>

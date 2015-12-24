@@ -1,7 +1,7 @@
-var $ = require('jquery')
-var React = require('react')
-var ReactDOM = require('react-dom')
-var styler = require('../../controllers/styler')
+const $ = require('jquery')
+const React = require('react')
+const ReactDOM = require('react-dom')
+const styler = require('../../controllers/styler')
 
 module.exports = React.createClass({
   propTypes: {
@@ -15,12 +15,12 @@ module.exports = React.createClass({
   },
 
   componentDidMount: function () {
-    var $node = $(ReactDOM.findDOMNode(this))
+    const $node = $(ReactDOM.findDOMNode(this))
     styler.styleProjects([{name: this.props.message}], $node, $node.parent())
   },
 
   componentDidUpdate: function () {
-    var $node = $(ReactDOM.findDOMNode(this))
+    const $node = $(ReactDOM.findDOMNode(this))
     styler.styleProjects([{name: this.props.message}], $node, $node.parent())
   }
 })

@@ -1,9 +1,9 @@
-var React = require('react')
-var AvailableProject = require('./availableProject')
-var _ = require('lodash')
-var SelectedProjectsStore = require('../../stores/SelectedProjectsStore')
-var SelectProjectActions = require('../../actions/SelectProjectActions')
-var FetchedProjectsStore = require('../../stores/FetchedProjectsStore')
+const React = require('react')
+const AvailableProject = require('./availableProject')
+const _ = require('lodash')
+const SelectedProjectsStore = require('../../stores/SelectedProjectsStore')
+const SelectProjectActions = require('../../actions/SelectProjectActions')
+const FetchedProjectsStore = require('../../stores/FetchedProjectsStore')
 
 function projectName(project) {
   return project.name
@@ -59,7 +59,7 @@ module.exports = React.createClass({
         <div className='testing-projects tracking-cctray-group-build-items'>
           {
             _.sortBy(this.state.projects, projectName).map(function (project) {
-              var included = _.indexOf(this.state.selectedProjects, project.projectId) >= 0
+              const included = _.indexOf(this.state.selectedProjects, project.projectId) >= 0
 
               return <AvailableProject key={project.projectId}
                                        name={project.name}
@@ -83,7 +83,7 @@ module.exports = React.createClass({
   },
 
   _includeAll: function () {
-    var projectIds = this.state.projects
+    const projectIds = this.state.projects
       .filter(function (project) {
         return !project.wasRemoved
       }).map(function (project) {
@@ -93,7 +93,7 @@ module.exports = React.createClass({
   },
 
   _excludeAll: function () {
-    var projectIds = this.state.projects.map(function (project) {
+    const projectIds = this.state.projects.map(function (project) {
       return project.projectId
     })
     SelectProjectActions.removeProject(this.props.trayId, projectIds)

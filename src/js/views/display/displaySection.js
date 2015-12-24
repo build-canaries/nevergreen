@@ -1,7 +1,7 @@
-var React = require('react')
-var ConfigOption = require('./configOption')
-var ConfigurationStore = require('../../stores/ConfigurationStore')
-var DisplayActions = require('../../actions/DisplayActions')
+const React = require('react')
+const ConfigOption = require('./configOption')
+const ConfigurationStore = require('../../stores/ConfigurationStore')
+const DisplayActions = require('../../actions/DisplayActions')
 
 function getStateFromStore() {
   return {

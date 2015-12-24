@@ -1,5 +1,5 @@
-var React = require('react')
-var Message = require('./message')
+const React = require('react')
+const Message = require('./message')
 
 module.exports = React.createClass({
   propTypes: {

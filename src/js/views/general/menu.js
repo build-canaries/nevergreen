@@ -1,9 +1,9 @@
-var React = require('react')
-var Router = require('react-router')
+const React = require('react')
+const Router = require('react-router')
 
-var Link = Router.Link
+const Link = Router.Link
 
-var MenuItem = React.createClass({
+const MenuItem = React.createClass({
   render: function () {
     return (
       <li>

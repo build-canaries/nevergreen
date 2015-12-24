@@ -1,9 +1,9 @@
-var React = require('react')
-var Menu = require('./general/menu')
-var LocalRepository = require('../storage/LocalRepository')
-var ConfigurationActions = require('../actions/ConfigurationActions')
-var Validation = require('../validation')
-var Package = require('../../../package')
+const React = require('react')
+const Menu = require('./general/menu')
+const LocalRepository = require('../storage/LocalRepository')
+const ConfigurationActions = require('../actions/ConfigurationActions')
+const Validation = require('../validation')
+const Package = require('../../../package')
 
 module.exports = React.createClass({
   getDefaultProps: function () {

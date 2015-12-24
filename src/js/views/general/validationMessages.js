@@ -1,4 +1,4 @@
-var React = require('react')
+const React = require('react')
 
 module.exports = React.createClass({
   propTypes: {
@@ -6,7 +6,7 @@ module.exports = React.createClass({
   },
 
   render: function () {
-    var validationMessages = ''
+    let validationMessages = ''
 
     if (this.props.messages) {
       validationMessages = this.props.messages.map(function (msg, index) {

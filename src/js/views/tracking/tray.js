@@ -1,8 +1,8 @@
-var React = require('react')
-var Projects = require('./projects')
-var TraySettings = require('./traySettings')
-var Loading = require('../general/loading')
-var Error = require('../general/errorView')
+const React = require('react')
+const Projects = require('./projects')
+const TraySettings = require('./traySettings')
+const Loading = require('../general/loading')
+const Error = require('../general/errorView')
 
 module.exports = React.createClass({
   displayName: 'Tray',
@@ -21,7 +21,7 @@ module.exports = React.createClass({
   },
 
   render: function () {
-    var content
+    let content
 
     if (this.state.showSettings) {
       content = <TraySettings tray={this.props.tray} removeTray={this.props.removeTray}/>
@@ -35,8 +35,8 @@ module.exports = React.createClass({
       }
     }
 
-    var hideText = this.state.hidden ? 'expand tray' : 'collapse tray'
-    var settingsText = this.state.showSettings ? 'show projects' : 'show settings'
+    const hideText = this.state.hidden ? 'expand tray' : 'collapse tray'
+    const settingsText = this.state.showSettings ? 'show projects' : 'show settings'
 
     return (
       <section className='tray'>

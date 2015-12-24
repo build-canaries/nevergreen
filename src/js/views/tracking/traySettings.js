@@ -1,5 +1,5 @@
-var React = require('react')
-var _ = require('lodash')
+const React = require('react')
+const _ = require('lodash')
 
 module.exports = React.createClass({
   displayName: 'TraySettings',

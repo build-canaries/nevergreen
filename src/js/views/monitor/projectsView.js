@@ -1,9 +1,9 @@
-var $ = require('jquery')
-var React = require('react')
-var ReactDOM = require('react-dom')
-var styler = require('../../controllers/styler')
-var ConfigurationStore = require('../../stores/ConfigurationStore')
-var moment = require('moment')
+const $ = require('jquery')
+const React = require('react')
+const ReactDOM = require('react-dom')
+const styler = require('../../controllers/styler')
+const ConfigurationStore = require('../../stores/ConfigurationStore')
+const moment = require('moment')
 
 moment.locale('en', {
   relativeTime: {
@@ -23,7 +23,7 @@ moment.locale('en', {
   }
 })
 
-var InterestingProject = React.createClass({
+const InterestingProject = React.createClass({
   propTypes: {
     prognosis: React.PropTypes.string.isRequired,
     name: React.PropTypes.string.isRequired,
@@ -77,12 +77,12 @@ module.exports = React.createClass({
   },
 
   componentDidMount: function () {
-    var $node = $(ReactDOM.findDOMNode(this))
+    const $node = $(ReactDOM.findDOMNode(this))
     styler.styleProjects(this.props.projects, $node.find('.monitor-outer-container'), $node)
   },
 
   componentDidUpdate: function () {
-    var $node = $(ReactDOM.findDOMNode(this))
+    const $node = $(ReactDOM.findDOMNode(this))
     styler.styleProjects(this.props.projects, $node.find('.monitor-outer-container'), $node)
   }
 })

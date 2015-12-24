@@ -1,9 +1,9 @@
-var React = require('react')
-var AddedMessages = require('./addedMessages')
-var AddedImages = require('./addedImages')
-var AddMessage = require('./addMessage')
-var SuccessStore = require('../../stores/SuccessStore')
-var SuccessActions = require('../../actions/SuccessActions')
+const React = require('react')
+const AddedMessages = require('./addedMessages')
+const AddedImages = require('./addedImages')
+const AddMessage = require('./addMessage')
+const SuccessStore = require('../../stores/SuccessStore')
+const SuccessActions = require('../../actions/SuccessActions')
 
 function getStateFromStore() {
   return {

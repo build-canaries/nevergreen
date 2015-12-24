@@ -1,5 +1,5 @@
-var React = require('react')
-var Image = require('./image')
+const React = require('react')
+const Image = require('./image')
 
 module.exports = React.createClass({
   propTypes: {

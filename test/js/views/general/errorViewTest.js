@@ -3,14 +3,14 @@
 
 jest.dontMock('../../../../src/js/views/general/errorView.js')
 
-var ReactDOM = require('react-dom')
+const ReactDOM = require('react-dom')
 function textFrom(element) {
   return ReactDOM.findDOMNode(element).textContent
 }
 
 describe('error view', function () {
 
-  var React, TestUtils, ErrorView
+  let React, TestUtils, ErrorView
 
   beforeEach(function () {
     React = require('react')
@@ -19,20 +19,20 @@ describe('error view', function () {
   })
 
   it('renders with a default reason', function () {
-    var component = TestUtils.renderIntoDocument(<ErrorView />)
-    var div = TestUtils.findRenderedDOMComponentWithClass(component, 'error-message')
+    const component = TestUtils.renderIntoDocument(<ErrorView />)
+    const div = TestUtils.findRenderedDOMComponentWithClass(component, 'error-message')
     expect(textFrom(div)).toContain('unknown')
   })
 
   it('renders the given reason', function () {
-    var component = TestUtils.renderIntoDocument(<ErrorView reason='some-reason'/>)
-    var div = TestUtils.findRenderedDOMComponentWithClass(component, 'error-message')
+    const component = TestUtils.renderIntoDocument(<ErrorView reason='some-reason'/>)
+    const div = TestUtils.findRenderedDOMComponentWithClass(component, 'error-message')
     expect(textFrom(div)).toContain('some-reason')
   })
 
   it('renders a different message if no status is returned', function () {
-    var component = TestUtils.renderIntoDocument(<ErrorView status={0}/>)
-    var div = TestUtils.findRenderedDOMComponentWithClass(component, 'error-message')
+    const component = TestUtils.renderIntoDocument(<ErrorView status={0}/>)
+    const div = TestUtils.findRenderedDOMComponentWithClass(component, 'error-message')
     expect(textFrom(div)).toEqual('Nevergreen is not responding')
   })
 })

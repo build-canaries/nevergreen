@@ -1,5 +1,5 @@
-var React = require('react')
-var RemoveLink = require('./removeLink')
+const React = require('react')
+const RemoveLink = require('./removeLink')
 
 module.exports = React.createClass({
   propTypes: {
