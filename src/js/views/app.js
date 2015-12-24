@@ -3,12 +3,13 @@ var Menu = require('./general/menu')
 var LocalRepository = require('../storage/LocalRepository')
 var ConfigurationActions = require('../actions/ConfigurationActions')
 var Validation = require('../validation')
+var Package = require('../../../package')
 
 module.exports = React.createClass({
   getDefaultProps: function () {
     return {
-      versionNumber: '0.0.0',
-      versionName: 'Dev Build',
+      versionNumber: Package.version,
+      versionName:  Package.versionName,
       commitHash: 'local'
     }
   },
