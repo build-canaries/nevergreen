@@ -27,23 +27,23 @@ version="$major.$minor.$revision"
 echo "Updating to version $version $name ..."
 
 echo "Updating file ./project.clj ..."
-sed -i '' "s|defproject nevergreen \"[^\"]*\"|defproject nevergreen \"$version\"|" project.clj
+sed -i'' "s|defproject nevergreen \"[^\"]*\"|defproject nevergreen \"$version\"|" project.clj
 
 echo "Updating file ./package.json ..."
-sed -i '' "s|\"version\": \"[^\"]*\"|\"version\": \"$version\"|" package.json
+sed -i'' "s|\"version\": \"[^\"]*\"|\"version\": \"$version\"|" package.json
 
 if [ -z "$name" ]
 then
     echo "Skipping updating name in file ./src/js/views/app.js as name was blank"
 else
-    sed -i '' "s|\"versionName\": \"[^\"]*\"|\"versionName\": \"$name\"|" package.json
+    sed -i'' "s|\"versionName\": \"[^\"]*\"|\"versionName\": \"$name\"|" package.json
 fi
 
 if [ -z "$hash" ]
 then
     echo "Skipping updating commit hash in file ./src/js/views/app.js as hash was blank"
 else
-    sed -i '' "s|commitHash: '[^']*'|commitHash: '$hash'|" src/js/views/app.js
+    sed -i'' "s|commitHash: '[^']*'|commitHash: '$hash'|" src/js/views/app.js
 fi
 
 if [ -z "$hex" ]
@@ -51,5 +51,5 @@ then
     echo "Skipping file ./src/scss/base/_variables.scss as colour was blank"
 else
     echo "Updating file ./src/scss/base/_variables.scss ..."
-    sed -i '' "s|\$version.*|\$version: $hex\;|" src/scss/base/_variables.scss
+    sed -i'' "s|\$version.*|\$version: $hex\;|" src/scss/base/_variables.scss
 fi
