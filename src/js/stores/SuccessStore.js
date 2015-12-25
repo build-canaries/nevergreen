@@ -6,10 +6,7 @@ const _ = require('lodash')
 
 const CHANGE_EVENT = 'success-change'
 
-let _storeState = {
-  messages: [],
-  validation: {}
-}
+let _storeState = null
 
 function randomFrom(arr) {
   return arr[Math.floor(Math.random() * arr.length)]
@@ -21,6 +18,14 @@ function clearValidation() {
 
 const dispatchToken = AppDispatcher.register(action => {
   switch (action.type) {
+    case Constants.AppInit:
+    {
+      _storeState = {
+        messages: [],
+        validation: {}
+      }
+      break
+    }
     case Constants.MessageAdd:
     {
       _storeState.messages = _storeState.messages.concat(action.message)

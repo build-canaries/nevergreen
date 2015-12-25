@@ -1,4 +1,5 @@
 module.exports = {
+  AppInit: 'app-init',
   TrayAdd: 'tray-add',
   TrayRemove: 'tray-remove',
   TrayInvalidInput: 'tray-invalid-input',

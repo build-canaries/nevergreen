@@ -6,10 +6,15 @@ const Constants = require('../constants/NevergreenConstants')
 
 const CHANGE_EVENT = 'selected-projects-change'
 
-let _storeState = {}
+let _storeState = null
 
 const dispatchToken = AppDispatcher.register(action => {
   switch (action.type) {
+    case Constants.AppInit:
+    {
+      _storeState = {}
+      break
+    }
     case Constants.TrayAdd:
     {
       _storeState[action.trayId] = []
@@ -53,7 +58,7 @@ module.exports = {
   },
 
   getForTray(trayId) {
-    return _storeState[trayId] || []
+    return _storeState[trayId]
   },
 
   addListener(callback) {

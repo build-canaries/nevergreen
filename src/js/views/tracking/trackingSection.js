@@ -18,7 +18,7 @@ module.exports = React.createClass({
     return getStateFromStore()
   },
 
-  componentDidMount: function () {
+  componentWillMount: function () {
     TrayStore.addListener(this._onChange)
   },
 
@@ -59,8 +59,6 @@ module.exports = React.createClass({
   },
 
   _onChange: function () {
-    if (this.isMounted()) {
-      this.setState(getStateFromStore())
-    }
+    this.setState(getStateFromStore())
   }
 })

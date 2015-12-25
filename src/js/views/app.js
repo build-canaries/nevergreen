@@ -1,20 +1,38 @@
 const React = require('react')
 const Menu = require('./general/menu')
-const LocalRepository = require('../storage/LocalRepository')
-const ConfigurationActions = require('../actions/ConfigurationActions')
-const Validation = require('../validation')
 const Package = require('../../../package')
+const AppActions = require('../actions/AppActions')
+const AppStore = require('../stores/AppStore')
+
+function getStateFromStore() {
+  return {
+    loaded: AppStore.isInitalised()
+  }
+}
 
 module.exports = React.createClass({
-  getDefaultProps: function () {
+  getDefaultProps() {
     return {
       versionNumber: Package.version,
-      versionName:  Package.versionName,
+      versionName: Package.versionName,
       commitHash: 'local'
     }
   },
 
-  render: function () {
+  getInitialState() {
+    return getStateFromStore()
+  },
+
+  componentWillMount() {
+    AppStore.addListener(this._onChange)
+    AppActions.init(this.props.versionNumber)
+  },
+
+  componentWillUnmount() {
+    AppStore.removeListener(this._onChange)
+  },
+
+  render() {
     return (
       <div>
         <h1 className='visually-hidden'>Nevergreen</h1>
@@ -24,14 +42,12 @@ module.exports = React.createClass({
                 versionName={this.props.versionName}
                 commitHash={this.props.commitHash}/>
         </div>
-        {this.props.children}
+        {this.state.loaded ? this.props.children : 'LOADING...'}
       </div>
     )
   },
 
-  componentDidMount: function () {
-    Validation.init()
-    LocalRepository.init(this.props.versionNumber)
-      .then(ConfigurationActions.load)
+  _onChange() {
+    this.setState(getStateFromStore())
   }
 })

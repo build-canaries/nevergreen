@@ -10,6 +10,8 @@ describe('tray store', () => {
     Constants = require('../../../src/js/constants/NevergreenConstants')
     store = require('../../../src/js/stores/TrayStore')
     callback = AppDispatcher.register.mock.calls[0][0]
+
+    callback({type: Constants.AppInit})
   })
 
   it('registers a callback with the dispatcher', () => {

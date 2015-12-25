@@ -10,14 +10,16 @@ describe('fetched projects store', () => {
     Constants = require('../../../src/js/constants/NevergreenConstants')
     store = require('../../../src/js/stores/FetchedProjectsStore')
     callback = AppDispatcher.register.mock.calls[0][0]
+
+    callback({type: Constants.AppInit})
   })
 
   it('registers a callback with the dispatcher', () => {
     expect(AppDispatcher.register.mock.calls.length).toBe(1)
   })
 
-  it('creates an empty seq by default', () => {
-    expect(store.getAll('some-id')).toEqual([])
+  it('returns undefined for unknown tray ids', () => {
+    expect(store.getAll('some-id')).toBeUndefined()
   })
 
   it('creates an empty seq of fetched projects when a tray is added', () => {
@@ -30,9 +32,13 @@ describe('fetched projects store', () => {
 
   it('clears the store state when new data is imported', () => {
     callback({
+      type: Constants.TrayAdd,
+      trayId: 'some-id'
+    })
+    callback({
       type: Constants.ImportedData
     })
-    expect(store.getAll('some-id')).toEqual([])
+    expect(store.getAll('some-id')).toBeUndefined()
   })
 
   describe('adding fetched projects', () => {

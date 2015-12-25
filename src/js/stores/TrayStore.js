@@ -6,10 +6,7 @@ const Constants = require('../constants/NevergreenConstants')
 
 const CHANGE_EVENT = 'tray-change'
 
-const _storeState = {
-  trays: {},
-  validation: {}
-}
+let _storeState = null
 
 function addTray(action) {
   _storeState.trays[action.trayId] = {
@@ -60,6 +57,14 @@ function setValidation(action) {
 
 const dispatchToken = AppDispatcher.register(action => {
   switch (action.type) {
+    case Constants.AppInit:
+    {
+      _storeState = {
+        trays: {},
+        validation: {}
+      }
+      break
+    }
     case Constants.PasswordEncrypted:
     {
       setTrayPassword(action.trayId, action.password)

@@ -6,7 +6,7 @@ const Constants = require('../constants/NevergreenConstants')
 
 const CHANGE_EVENT = 'projects-change'
 
-let _storeState = {}
+let _storeState = null
 
 function previouslyRemovedProjects(project) {
   return !project.wasRemoved
@@ -60,6 +60,11 @@ function createProjects(previousProjects, fetchedProjects) {
 
 const dispatchToken = AppDispatcher.register(action => {
   switch (action.type) {
+    case Constants.AppInit:
+    {
+      _storeState = {}
+      break
+    }
     case Constants.TrayAdd:
     {
       _storeState[action.trayId] = []
@@ -94,7 +99,7 @@ module.exports = {
   dispatchToken: dispatchToken,
 
   getAll(trayId) {
-    return _storeState[trayId] || []
+    return _storeState[trayId]
   },
 
   addListener(callback) {

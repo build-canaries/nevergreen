@@ -10,7 +10,7 @@ const LocalRepository = require('../storage/LocalRepository')
 
 const CHANGE_EVENT = 'storage-change'
 
-const _storeState = {
+let _storeState = {
   loading: true,
   configuration: {
     trays: [],

@@ -11,6 +11,7 @@ describe('success store', () => {
     store = require('../../../src/js/stores/SelectedProjectsStore')
     callback = AppDispatcher.register.mock.calls[0][0]
 
+    callback({type: Constants.AppInit})
     callback({
       type: Constants.TrayAdd,
       trayId: 'some-id'

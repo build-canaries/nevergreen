@@ -5,10 +5,7 @@ const Constants = require('../constants/NevergreenConstants')
 
 const CHANGE_EVENT = 'interesting-projects-change'
 
-let _storeState = {
-  projects: [],
-  error: null
-}
+let _storeState = null
 
 function getName(apiProject) {
   return apiProject.stage ? `${apiProject.name} [${apiProject.stage}]` : apiProject.name
@@ -25,6 +22,14 @@ function toProject(apiProject) {
 
 const dispatchToken = AppDispatcher.register(action => {
   switch (action.type) {
+    case Constants.AppInit:
+    {
+      _storeState = {
+        projects: [],
+        error: null
+      }
+      break
+    }
     case Constants.InterestingProjects:
     {
       _storeState.projects = action.projects.map(toProject)
