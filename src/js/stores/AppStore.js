@@ -2,14 +2,19 @@ const AppDispatcher = require('../dispatcher/AppDispatcher')
 const EventEmitter = require('events').EventEmitter
 const eventEmitter = new EventEmitter()
 const Constants = require('../constants/NevergreenConstants')
+const ConfigurationStore = require('./ConfigurationStore')
+const DisplayStore = require('./DisplayStore')
 const FetchedProjectsStore = require('./FetchedProjectsStore')
 const InterestingProjectsStore = require('./InterestingProjectsStore')
 const SelectedProjectsStore = require('./SelectedProjectsStore')
 const SuccessStore = require('./SuccessStore')
 const TrayStore = require('./TrayStore')
+
 const CHANGE_EVENT = 'app-change'
 
 const allStoreTokens = [
+  ConfigurationStore.dispatchToken,
+  DisplayStore.dispatchToken,
   FetchedProjectsStore.dispatchToken,
   InterestingProjectsStore.dispatchToken,
   SelectedProjectsStore.dispatchToken,

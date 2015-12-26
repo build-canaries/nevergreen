@@ -2,45 +2,11 @@ const localforage = require('localforage')
 const Promise = require('promise')
 const _ = require('lodash')
 
-function setIfMissing(key, existing, defaultValue) {
-  if (_.isNull(existing)) {
-    return localforage.setItem(key, defaultValue)
-  }
-}
-
 module.exports = {
-  init(versionNumber) {
+  init() {
     localforage.config({
       name: 'nevergreen',
       storeName: 'nevergreen'
-    })
-
-    const keys = [
-      'trays',
-      'messages',
-      'displaySettings',
-      'created'
-    ]
-
-    const defaultValues = [
-      [],
-      ['=(^.^)='],
-      {
-        showBrokenBuildTimers: false
-      },
-      {
-        versionNumber: versionNumber,
-        timestamp: new Date().toUTCString()
-      }
-    ]
-
-    return Promise.all(keys.map(key => {
-      return localforage.getItem(key)
-    })).then(existingValues => {
-      const entriesWithDefaults = _.zip(keys, existingValues, defaultValues)
-      return Promise.all(entriesWithDefaults.map(triple => {
-        return setIfMissing.apply(this, triple)
-      }))
     })
   },
 
@@ -51,7 +17,7 @@ module.exports = {
   },
 
   getConfiguration() {
-    const configuration = {}
+    let configuration = {}
     return localforage.iterate((value, key) => {
       configuration[key] = value
     }).then(() => {

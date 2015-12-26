@@ -3,7 +3,9 @@ const EventEmitter = require('events').EventEmitter
 const eventEmitter = new EventEmitter()
 const Constants = require('../constants/NevergreenConstants')
 const _ = require('lodash')
+const LocalRepository = require('../storage/LocalRepository')
 
+const storageKey = 'success'
 const CHANGE_EVENT = 'success-change'
 
 let _storeState = null
@@ -20,10 +22,15 @@ const dispatchToken = AppDispatcher.register(action => {
   switch (action.type) {
     case Constants.AppInit:
     {
-      _storeState = {
-        messages: [],
-        validation: {}
-      }
+      _storeState = action.configuration[storageKey] || {
+          messages: ['=(^.^)='],
+          validation: {}
+        }
+      break
+    }
+    case Constants.RestoreConfiguration:
+    {
+      _storeState = action.configuration[storageKey]
       break
     }
     case Constants.MessageAdd:
@@ -48,20 +55,13 @@ const dispatchToken = AppDispatcher.register(action => {
       }
       break
     }
-    case Constants.ImportedData:
-    {
-      _storeState = {
-        messages: [],
-        validation: {}
-      }
-      break
-    }
     default :
     {
       return true
     }
   }
 
+  LocalRepository.setItem(storageKey, _storeState)
   eventEmitter.emit(CHANGE_EVENT)
   return true
 })
@@ -70,13 +70,13 @@ module.exports = {
   dispatchToken: dispatchToken,
 
   getMessages() {
-    return _storeState.messages.filter(function(message) {
+    return _storeState.messages.filter(function (message) {
       return !this.isUrl(message)
     }.bind(this))
   },
 
   getImages() {
-    return _storeState.messages.filter(function(message) {
+    return _storeState.messages.filter(function (message) {
       return this.isUrl(message)
     }.bind(this))
   },

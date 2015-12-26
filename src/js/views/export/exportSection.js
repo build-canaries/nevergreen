@@ -9,7 +9,8 @@ function getStateFromStore(currentImportData) {
   const importError = ConfigurationStore.getImportError()
   return {
     configuration: ConfigurationStore.getConfiguration(),
-    loading: ConfigurationStore.isLoading(),
+    importing: ConfigurationStore.isImporting(),
+    exporting: ConfigurationStore.isExporting(),
     importErrors: importError,
     importData: importError ? currentImportData : '',
     exportMessage: '',
@@ -20,32 +21,34 @@ function getStateFromStore(currentImportData) {
 module.exports = React.createClass({
   mixins: [LinkedStateMixin],
 
-  getInitialState: function () {
+  getInitialState() {
     return getStateFromStore('')
   },
 
-  componentDidMount: function () {
+  componentDidMount() {
     ConfigurationStore.addListener(this._onChange)
 
     const clipboard = new Clipboard('#copy-to-clipboard')
-    clipboard.on('error', function () {
+    clipboard.on('error', () => {
       this.setState({exportErrors: ['Unfortunately your browser doesn\'t support automatically copying to clipboard, please manually copy']})
-    }.bind(this))
+    })
 
-    clipboard.on('success', function (e) {
+    clipboard.on('success', e => {
       this.setState({exportMessage: 'Successfully copied to clipboard'})
       e.clearSelection()
-    }.bind(this))
+    })
 
     this.setState({clipboard: clipboard})
+
+    ConfigurationActions.exportData()
   },
 
-  componentWillUnmount: function () {
+  componentWillUnmount() {
     ConfigurationStore.removeListener(this._onChange)
     this.state.clipboard.destroy()
   },
 
-  render: function () {
+  render() {
     const exportMessage = <div className='export-info-message'>
       <span className='icon-checkmark'></span>
       <span className='text-with-icon'>{this.state.exportMessage}</span>
@@ -63,7 +66,7 @@ module.exports = React.createClass({
                       spellCheck='false'/>
           <button className='button-primary'
                   onClick={this._import}
-                  disabled={this.state.loading}>
+                  disabled={this.state.importing}>
             import
           </button>
           <ValidationMessages messages={this.state.importErrors}/>
@@ -81,7 +84,7 @@ module.exports = React.createClass({
           <button id='copy-to-clipboard'
                   className='button-primary'
                   data-clipboard-target='#export-data'
-                  disabled={this.state.loading}>
+                  disabled={this.state.exporting}>
             copy to clipboard
           </button>
           <ValidationMessages messages={this.state.exportErrors}/>
@@ -91,11 +94,11 @@ module.exports = React.createClass({
     )
   },
 
-  _onChange: function () {
+  _onChange() {
     this.setState(getStateFromStore(this.state.importData))
   },
 
-  _import: function () {
+  _import() {
     ConfigurationActions.importData(this.state.importData)
   }
 })

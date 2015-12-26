@@ -25,7 +25,7 @@ module.exports = React.createClass({
 
   componentWillMount() {
     AppStore.addListener(this._onChange)
-    AppActions.init(this.props.versionNumber)
+    AppActions.init()
   },
 
   componentWillUnmount() {
@@ -42,7 +42,7 @@ module.exports = React.createClass({
                 versionName={this.props.versionName}
                 commitHash={this.props.commitHash}/>
         </div>
-        {this.state.loaded ? this.props.children : 'LOADING...'}
+        {this.state.loaded ? this.props.children : ''}
       </div>
     )
   },

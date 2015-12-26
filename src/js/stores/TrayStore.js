@@ -3,7 +3,9 @@ const EventEmitter = require('events').EventEmitter
 const eventEmitter = new EventEmitter()
 const _ = require('lodash')
 const Constants = require('../constants/NevergreenConstants')
+const LocalRepository = require('../storage/LocalRepository')
 
+const storageKey = 'tray'
 const CHANGE_EVENT = 'tray-change'
 
 let _storeState = null
@@ -18,10 +20,6 @@ function addTray(action) {
 
 function removeTray(trayId) {
   delete _storeState.trays[trayId]
-}
-
-function clearAllTrays() {
-  _storeState.trays = {}
 }
 
 function setTrayError(trayId, error) {
@@ -59,10 +57,15 @@ const dispatchToken = AppDispatcher.register(action => {
   switch (action.type) {
     case Constants.AppInit:
     {
-      _storeState = {
-        trays: {},
-        validation: {}
-      }
+      _storeState = action.configuration[storageKey] || {
+          trays: {},
+          validation: {}
+        }
+      break
+    }
+    case Constants.RestoreConfiguration:
+    {
+      _storeState = action.configuration[storageKey]
       break
     }
     case Constants.PasswordEncrypted:
@@ -105,17 +108,13 @@ const dispatchToken = AppDispatcher.register(action => {
       setTrayError(action.trayId, action.error)
       break
     }
-    case Constants.ImportedData:
-    {
-      clearAllTrays()
-      break
-    }
     default :
     {
       return true
     }
   }
 
+  LocalRepository.setItem(storageKey, _storeState)
   eventEmitter.emit(CHANGE_EVENT)
   return true
 })

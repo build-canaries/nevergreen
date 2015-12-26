@@ -11,7 +11,14 @@ describe('success store', () => {
     store = require('../../../src/js/stores/SuccessStore')
     callback = AppDispatcher.register.mock.calls[0][0]
 
-    callback({type: Constants.AppInit})
+    callback({
+      type: Constants.AppInit,
+      configuration: {
+        success: {
+          messages: []
+        }
+      }
+    })
   })
 
   it('registers a callback with the dispatcher', () => {

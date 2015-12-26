@@ -2,16 +2,16 @@ const AppDispatcher = require('../dispatcher/AppDispatcher')
 const Constants = require('../constants/NevergreenConstants')
 const LocalRepository = require('../storage/LocalRepository')
 const Validation = require('../validation')
-const ConfigurationActions = require('../actions/ConfigurationActions')
 
 module.exports = {
-  init(versionNumber) {
+  init() {
     Validation.init()
-    return LocalRepository.init(versionNumber).then(() => {
+    LocalRepository.init()
+    LocalRepository.getConfiguration().then(configuration => {
       AppDispatcher.dispatch({
-        type: Constants.AppInit
+        type: Constants.AppInit,
+        configuration: configuration
       })
-      ConfigurationActions.load()
     })
   }
 }

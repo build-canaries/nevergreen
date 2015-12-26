@@ -3,7 +3,9 @@ const EventEmitter = require('events').EventEmitter
 const eventEmitter = new EventEmitter()
 const _ = require('lodash')
 const Constants = require('../constants/NevergreenConstants')
+const LocalRepository = require('../storage/LocalRepository')
 
+const storageKey = 'selectedProjects'
 const CHANGE_EVENT = 'selected-projects-change'
 
 let _storeState = null
@@ -12,7 +14,12 @@ const dispatchToken = AppDispatcher.register(action => {
   switch (action.type) {
     case Constants.AppInit:
     {
-      _storeState = {}
+      _storeState = action.configuration[storageKey] || {}
+      break
+    }
+    case Constants.RestoreConfiguration:
+    {
+      _storeState = action.configuration[storageKey]
       break
     }
     case Constants.TrayAdd:
@@ -35,17 +42,13 @@ const dispatchToken = AppDispatcher.register(action => {
       _storeState[action.trayId] = _.difference(_storeState[action.trayId], action.projectIds)
       break
     }
-    case Constants.ImportedData:
-    {
-      _storeState = {}
-      break
-    }
     default :
     {
       return true
     }
   }
 
+  LocalRepository.setItem(storageKey, _storeState)
   eventEmitter.emit(CHANGE_EVENT)
   return true
 })

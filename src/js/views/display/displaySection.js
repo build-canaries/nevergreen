@@ -1,11 +1,11 @@
 const React = require('react')
 const ConfigOption = require('./configOption')
-const ConfigurationStore = require('../../stores/ConfigurationStore')
+const DisplayStore = require('../../stores/DisplayStore')
 const DisplayActions = require('../../actions/DisplayActions')
 
 function getStateFromStore() {
   return {
-    showBrokenBuildTimers: ConfigurationStore.areBrokenBuildTimersEnabled()
+    showBrokenBuildTimers: DisplayStore.areBrokenBuildTimersEnabled()
   }
 }
 
@@ -15,11 +15,11 @@ module.exports = React.createClass({
   },
 
   componentDidMount: function () {
-    ConfigurationStore.addListener(this._onChange)
+    DisplayStore.addListener(this._onChange)
   },
 
   componentWillUnmount: function () {
-    ConfigurationStore.removeListener(this._onChange)
+    DisplayStore.removeListener(this._onChange)
   },
 
   _onToggle: function (newValue) {

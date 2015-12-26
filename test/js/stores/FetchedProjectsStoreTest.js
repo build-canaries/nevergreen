@@ -11,7 +11,10 @@ describe('fetched projects store', () => {
     store = require('../../../src/js/stores/FetchedProjectsStore')
     callback = AppDispatcher.register.mock.calls[0][0]
 
-    callback({type: Constants.AppInit})
+    callback({
+      type: Constants.AppInit,
+      configuration: {}
+    })
   })
 
   it('registers a callback with the dispatcher', () => {
@@ -30,15 +33,12 @@ describe('fetched projects store', () => {
     expect(store.getAll('some-id')).toEqual([])
   })
 
-  it('clears the store state when new data is imported', () => {
+  it('restores the state from configuration', () => {
     callback({
-      type: Constants.TrayAdd,
-      trayId: 'some-id'
+      type: Constants.RestoreConfiguration,
+      configuration: {fetchedProjects: {someId: 'some-configuration'}}
     })
-    callback({
-      type: Constants.ImportedData
-    })
-    expect(store.getAll('some-id')).toBeUndefined()
+    expect(store.getAll('someId')).toEqual('some-configuration')
   })
 
   describe('adding fetched projects', () => {

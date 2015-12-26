@@ -2,7 +2,7 @@ const $ = require('jquery')
 const React = require('react')
 const ReactDOM = require('react-dom')
 const styler = require('../../controllers/styler')
-const ConfigurationStore = require('../../stores/ConfigurationStore')
+const DisplayStore = require('../../stores/DisplayStore')
 const moment = require('moment')
 
 moment.locale('en', {
@@ -39,7 +39,7 @@ const InterestingProject = React.createClass({
   },
 
   _brokenBuildTimer: function () {
-    if (ConfigurationStore.areBrokenBuildTimersEnabled() && this._isSick()) {
+    if (DisplayStore.areBrokenBuildTimersEnabled() && this._isSick()) {
       return <span className='monitor-time-broken'> {this._toRelativeTime(this.props.lastBuildTime)}</span>
     }
   },

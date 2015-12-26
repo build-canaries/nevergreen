@@ -4,31 +4,17 @@ const eventEmitter = new EventEmitter()
 const Constants = require('../constants/NevergreenConstants')
 const LocalRepository = require('../storage/LocalRepository')
 
-const storageKey = 'interestingProjects'
-const CHANGE_EVENT = 'interesting-projects-change'
+const storageKey = 'display'
+const CHANGE_EVENT = 'display-change'
 
 let _storeState = null
-
-function getName(apiProject) {
-  return apiProject.stage ? `${apiProject.name} [${apiProject.stage}]` : apiProject.name
-}
-
-function toProject(apiProject) {
-  return {
-    projectId: apiProject.projectId,
-    name: getName(apiProject),
-    prognosis: apiProject.prognosis,
-    lastBuildTime: apiProject.lastBuildTime
-  }
-}
 
 const dispatchToken = AppDispatcher.register(action => {
   switch (action.type) {
     case Constants.AppInit:
     {
       _storeState = action.configuration[storageKey] || {
-          projects: [],
-          error: null
+          showBrokenBuildTimers: false
         }
       break
     }
@@ -37,15 +23,9 @@ const dispatchToken = AppDispatcher.register(action => {
       _storeState = action.configuration[storageKey]
       break
     }
-    case Constants.InterestingProjects:
+    case Constants.BrokenBuildTimersChanged:
     {
-      _storeState.projects = action.projects.map(toProject)
-      _storeState.error = null
-      break
-    }
-    case Constants.InterestingProjectsError:
-    {
-      _storeState.error = action.error
+      _storeState.showBrokenBuildTimers = action.value === true
       break
     }
     default :
@@ -62,12 +42,8 @@ const dispatchToken = AppDispatcher.register(action => {
 module.exports = {
   dispatchToken: dispatchToken,
 
-  getAll() {
-    return _storeState.projects
-  },
-
-  getLastError() {
-    return _storeState.error
+  areBrokenBuildTimersEnabled() {
+    return _storeState.showBrokenBuildTimers
   },
 
   addListener(callback) {

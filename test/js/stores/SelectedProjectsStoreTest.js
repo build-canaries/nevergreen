@@ -1,7 +1,7 @@
 jest.dontMock('../../../src/js/stores/SelectedProjectsStore')
   .dontMock('../../../src/js/constants/NevergreenConstants')
 
-describe('success store', () => {
+describe('selected projects store', () => {
 
   let store, AppDispatcher, Constants, callback
 
@@ -11,7 +11,10 @@ describe('success store', () => {
     store = require('../../../src/js/stores/SelectedProjectsStore')
     callback = AppDispatcher.register.mock.calls[0][0]
 
-    callback({type: Constants.AppInit})
+    callback({
+      type: Constants.AppInit,
+      configuration: {}
+    })
     callback({
       type: Constants.TrayAdd,
       trayId: 'some-id'
@@ -50,11 +53,12 @@ describe('success store', () => {
     expect(store.getForTray('some-id')).toEqual([])
   })
 
-  it('clears the store state when new data is imported', () => {
+  it('restores the state from configuration', () => {
     callback({
-      type: Constants.ImportedData
+      type: Constants.RestoreConfiguration,
+      configuration: {selectedProjects: 'some-configuration'}
     })
-    expect(store.getAll()).toEqual({})
+    expect(store.getAll()).toEqual('some-configuration')
   })
 
 })

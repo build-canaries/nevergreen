@@ -3,7 +3,9 @@ const EventEmitter = require('events').EventEmitter
 const eventEmitter = new EventEmitter()
 const _ = require('lodash')
 const Constants = require('../constants/NevergreenConstants')
+const LocalRepository = require('../storage/LocalRepository')
 
+const storageKey = 'fetchedProjects'
 const CHANGE_EVENT = 'projects-change'
 
 let _storeState = null
@@ -13,7 +15,7 @@ function previouslyRemovedProjects(project) {
 }
 
 function updateNewAndRemovedFlags(fetchedProjects, project) {
-  const whereIdsMatch = function(fetchedProject) {
+  const whereIdsMatch = function (fetchedProject) {
     return fetchedProject.projectId === project.projectId
   }
   return {
@@ -42,7 +44,7 @@ function removeJobs(project) {
 }
 
 function removeExisting(previousProjects, project) {
-  const whereIdsMatch = function(previousProject) {
+  const whereIdsMatch = function (previousProject) {
     return previousProject.projectId === project.projectId
   }
   return _.findIndex(previousProjects, whereIdsMatch) < 0
@@ -62,7 +64,12 @@ const dispatchToken = AppDispatcher.register(action => {
   switch (action.type) {
     case Constants.AppInit:
     {
-      _storeState = {}
+      _storeState = action.configuration[storageKey] || {}
+      break
+    }
+    case Constants.RestoreConfiguration:
+    {
+      _storeState = action.configuration[storageKey]
       break
     }
     case Constants.TrayAdd:
@@ -80,17 +87,13 @@ const dispatchToken = AppDispatcher.register(action => {
       _storeState[action.trayId] = createProjects(_storeState[action.trayId], action.projects)
       break
     }
-    case Constants.ImportedData:
-    {
-      _storeState = {}
-      break
-    }
     default :
     {
       return true
     }
   }
 
+  LocalRepository.setItem(storageKey, _storeState)
   eventEmitter.emit(CHANGE_EVENT)
   return true
 })

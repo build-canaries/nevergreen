@@ -1,18 +1,20 @@
-jest.dontMock('../../../src/js/stores/ConfigurationStore')
+jest.dontMock('../../../src/js/stores/DisplayStore')
   .dontMock('../../../src/js/constants/NevergreenConstants')
-  .dontMock('promise')
 
-describe('display settings store', () => {
+describe('display store', () => {
 
-  let LocalRepository, AppDispatcher, Constants, Promise, store, callback
+  let AppDispatcher, Constants, store, callback
 
   beforeEach(() => {
-    LocalRepository = require('../../../src/js/storage/LocalRepository')
     AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
     Constants = require('../../../src/js/constants/NevergreenConstants')
-    Promise = require('promise')
-    store = require('../../../src/js/stores/ConfigurationStore')
+    store = require('../../../src/js/stores/DisplayStore')
     callback = AppDispatcher.register.mock.calls[0][0]
+
+    callback({
+      type: Constants.AppInit,
+      configuration: {}
+    })
   })
 
   it('registers a callback with the dispatcher', () => {
@@ -25,32 +27,15 @@ describe('display settings store', () => {
     })
 
     it('returns true when the callback changes the value to true', () => {
-      LocalRepository.save.mockImplementation(() => {
-        return new Promise(function(resolve) { return resolve() })
-      })
-
-      callback({
-        type: Constants.ConfigurationLoaded,
-        configuration: {
-          displaySettings: {
-            showBrokenBuildTimers: false
-          }
-        }
-      })
-
-      expect(store.areBrokenBuildTimersEnabled()).toBeFalsy()
-
       callback({
         type: Constants.BrokenBuildTimersChanged,
         value: true
       })
 
-        expect(store.areBrokenBuildTimersEnabled()).toBeTruthy()
+      expect(store.areBrokenBuildTimersEnabled()).toBeTruthy()
     })
 
-    it(
-      'return false when the callback changes the value to anything else',
-      () => {
+    it('return false when the callback changes the value to anything else', () => {
         callback({
           type: Constants.BrokenBuildTimersChanged,
           value: 'a string'

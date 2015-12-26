@@ -1,5 +1,6 @@
 module.exports = {
   AppInit: 'app-init',
+  RestoreConfiguration: 'restore-configuration',
   TrayAdd: 'tray-add',
   TrayRemove: 'tray-remove',
   TrayInvalidInput: 'tray-invalid-input',
@@ -15,8 +16,8 @@ module.exports = {
   MessageRemove: 'message-removed',
   ApiError: 'api-error',
   ImportingData: 'importing-data',
-  ImportedData: 'imported-data',
   ImportError: 'import-error',
+  ExportData: 'export-data',
   ConfigurationLoaded: 'configuration-loaded',
   BrokenBuildTimersChanged: 'broken-build-timers-changed'
 }

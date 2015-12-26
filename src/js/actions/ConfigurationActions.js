@@ -1,18 +1,26 @@
 const AppDispatcher = require('../dispatcher/AppDispatcher')
 const Constants = require('../constants/NevergreenConstants')
-const Promise = require('promise')
 const LocalRepository = require('../storage/LocalRepository')
-const TrayActions = require('../actions/TrayActions')
-const SelectProjectActions = require('../actions/SelectProjectActions')
-const SuccessActions = require('../actions/SuccessActions')
 const validate = require('validate.js')
 
 const _importValidation = {
-  trays: {
-    stringArray: true
+  display: {
+    presence: true
   },
-  messages: {
-    stringArray: true
+  fetchedProjects: {
+    presence: true
+  },
+  interestingProjects: {
+    presence: true
+  },
+  selectedProjects: {
+    presence: true
+  },
+  success: {
+    presence: true
+  },
+  tray: {
+    presence: true
   }
 }
 
@@ -21,31 +29,6 @@ function dispatchError(messages) {
     type: Constants.ImportError,
     messages: messages
   })
-}
-
-function dispatchLoaded(configuration) {
-  AppDispatcher.dispatch({
-    type: Constants.ConfigurationLoaded,
-    configuration: configuration
-  })
-}
-
-function dispatchTrackingActions(tray) {
-  TrayActions._dispatchTrayAdded(tray.trayId, tray.url, tray.username)
-  if (tray.password) {
-    TrayActions._dispatchPasswordEncrypted(tray.trayId, tray.password)
-  }
-  if (tray.projects) {
-    TrayActions._dispatchProjectsLoaded(tray.trayId, tray.projects)
-  }
-  if (tray.selected) {
-    SelectProjectActions.selectProject(tray.trayId, tray.selected)
-  }
-  TrayActions.refreshTray(tray)
-}
-
-function dispatchSuccessActions(message) {
-  SuccessActions.addMessage(message)
 }
 
 module.exports = {
@@ -64,17 +47,18 @@ module.exports = {
           data: data
         })
 
-        LocalRepository.save(data)
-          .then(() => {
-            AppDispatcher.dispatch({
-              type: Constants.ImportedData,
-              data: data
-            })
+        LocalRepository.save(data).then(() => {
+          AppDispatcher.dispatch({
+            type: Constants.RestoreConfiguration,
+            configuration: data
           })
-          .then(this.load)
-          .catch(e => {
-            dispatchError([`Unable to import - ${e.message}`])
+          AppDispatcher.dispatch({
+            type: Constants.ExportData,
+            configuration: data
           })
+        }).catch(e => {
+          dispatchError([`Unable to import - ${e.message}`])
+        })
       }
 
     } catch (e) {
@@ -82,22 +66,12 @@ module.exports = {
     }
   },
 
-  load() {
-    return LocalRepository.getItem('trays')
-      .then(trayIds => {
-        return Promise.all(trayIds.map(trayId => {
-          return LocalRepository.getItem(trayId)
-        }))
+  exportData() {
+    LocalRepository.getConfiguration().then(configuration => {
+      AppDispatcher.dispatch({
+        type: Constants.ExportData,
+        configuration: configuration
       })
-      .then(trays => {
-        trays.forEach(dispatchTrackingActions)
-        return LocalRepository.getItem('messages')
-      })
-      .then(messages => {
-        messages.forEach(dispatchSuccessActions)
-        return LocalRepository.getConfiguration()
-      })
-      .then(dispatchLoaded)
+    })
   }
-
 }
