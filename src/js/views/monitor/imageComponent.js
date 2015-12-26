@@ -5,7 +5,7 @@ module.exports = React.createClass({
     url: React.PropTypes.string.isRequired
   },
 
-  render: function () {
+  render() {
     return (
       <div id='success-image'>
         <img src={this.props.url} className="monitor-success-image" alt=""/>
@@ -13,7 +13,7 @@ module.exports = React.createClass({
     )
   },
 
-  shouldComponentUpdate: function () {
+  shouldComponentUpdate() {
     return false
   }
 })

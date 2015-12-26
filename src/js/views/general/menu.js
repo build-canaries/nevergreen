@@ -4,7 +4,7 @@ const Router = require('react-router')
 const Link = Router.Link
 
 const MenuItem = React.createClass({
-  render: function () {
+  render() {
     return (
       <li>
         <Link id={this.props.id} to={'/' + this.props.id} className='navigation-list-item' activeClassName='active'>
@@ -17,7 +17,7 @@ const MenuItem = React.createClass({
 })
 
 module.exports = React.createClass({
-  getDefaultProps: function () {
+  getDefaultProps() {
     return {
       items: [
         {id: 'monitor', iconClass: 'eye', title: 'Monitor'},
@@ -30,21 +30,24 @@ module.exports = React.createClass({
     }
   },
 
-  render: function () {
+  render() {
     return (
       <div>
         <nav role='navigation' className='navigation'>
           <h2 className='visually-hidden'>Navigation</h2>
 
           <a href='https://build-canaries.github.io/' target='_blank'>
-            <img src='img/buildcanaries-logo.png' className='header-logo' alt='Build Canaries logo' title='Click to visit the Build Canaries homepage'/>
+            <img src='img/buildcanaries-logo.png'
+                 className='header-logo'
+                 alt='Build Canaries logo'
+                 title='Click to visit the Build Canaries homepage'/>
           </a>
 
           <ul className='navigation-list'>
             {
-              this.props.items.map(function (item) {
+              this.props.items.map(item => {
                 return <MenuItem key={item.id} id={item.id} iconClass={'icon-' + item.iconClass} title={item.title}/>
-              }.bind(this))
+              })
             }
           </ul>
         </nav>

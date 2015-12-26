@@ -1,7 +1,7 @@
 const React = require('react')
 
 module.exports = React.createClass({
-  render: function () {
+  render() {
     return (
       <section className='dashboard-main-section'>
         <h2 className='visually-hidden'>Help</h2>

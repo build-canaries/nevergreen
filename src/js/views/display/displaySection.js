@@ -10,37 +10,39 @@ function getStateFromStore() {
 }
 
 module.exports = React.createClass({
-  getInitialState: function () {
+  getInitialState() {
     return getStateFromStore()
   },
 
-  componentDidMount: function () {
+  componentDidMount() {
     DisplayStore.addListener(this._onChange)
   },
 
-  componentWillUnmount: function () {
+  componentWillUnmount() {
     DisplayStore.removeListener(this._onChange)
   },
 
-  _onToggle: function (newValue) {
+  _onToggle(newValue) {
     DisplayActions.setBrokenBuildTimers(newValue)
   },
 
-  render: function () {
+  render() {
     return (
       <section className='dashboard-main-section'>
         <h2 className='visually-hidden'>Display</h2>
         <section className='sub-section'>
           <h3 className='section-title'>Display Settings</h3>
           <fieldset className='settings-list'>
-            <ConfigOption name='Show broken build timers' enabled={this.state.showBrokenBuildTimers} onToggle={this._onToggle}/>
+            <ConfigOption name='Show broken build timers'
+                          enabled={this.state.showBrokenBuildTimers}
+                          onToggle={this._onToggle}/>
           </fieldset>
         </section>
       </section>
     )
   },
 
-  _onChange: function () {
+  _onChange() {
     this.setState(getStateFromStore())
   }
 })

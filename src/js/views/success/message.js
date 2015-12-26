@@ -7,7 +7,7 @@ module.exports = React.createClass({
     removeMessage: React.PropTypes.func.isRequired
   },
 
-  render: function () {
+  render() {
     return (
       <li className='success-item'>
         <span className='success-message'>{this.props.message}</span>

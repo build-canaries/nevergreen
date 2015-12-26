@@ -6,21 +6,21 @@ module.exports = React.createClass({
     reason: React.PropTypes.string
   },
 
-  getDefaultProps: function () {
+  getDefaultProps() {
     return {
       status: NaN,
       reason: 'unknown'
     }
   },
 
-  message: function () {
+  message() {
     if (this.props.status === 0) {
       return 'Nevergreen is not responding'
     }
     return 'The remote server is returning "' + this.props.reason + '"'
   },
 
-  render: function () {
+  render() {
     return (
       <div className='error-message'>{this.message()}</div>
     )

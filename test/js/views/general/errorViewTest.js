@@ -8,29 +8,29 @@ function textFrom(element) {
   return ReactDOM.findDOMNode(element).textContent
 }
 
-describe('error view', function () {
+describe('error view', () => {
 
   let React, TestUtils, ErrorView
 
-  beforeEach(function () {
+  beforeEach(() => {
     React = require('react')
     TestUtils = require('react-addons-test-utils')
     ErrorView = require('../../../../src/js/views/general/errorView.js')
   })
 
-  it('renders with a default reason', function () {
+  it('renders with a default reason', () => {
     const component = TestUtils.renderIntoDocument(<ErrorView />)
     const div = TestUtils.findRenderedDOMComponentWithClass(component, 'error-message')
     expect(textFrom(div)).toContain('unknown')
   })
 
-  it('renders the given reason', function () {
+  it('renders the given reason', () => {
     const component = TestUtils.renderIntoDocument(<ErrorView reason='some-reason'/>)
     const div = TestUtils.findRenderedDOMComponentWithClass(component, 'error-message')
     expect(textFrom(div)).toContain('some-reason')
   })
 
-  it('renders a different message if no status is returned', function () {
+  it('renders a different message if no status is returned', () => {
     const component = TestUtils.renderIntoDocument(<ErrorView status={0}/>)
     const div = TestUtils.findRenderedDOMComponentWithClass(component, 'error-message')
     expect(textFrom(div)).toEqual('Nevergreen is not responding')

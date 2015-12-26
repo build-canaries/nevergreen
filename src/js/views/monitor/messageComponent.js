@@ -8,18 +8,18 @@ module.exports = React.createClass({
     message: React.PropTypes.string.isRequired
   },
 
-  render: function () {
+  render() {
     return (
       <div id='success-text' className='monitor-success-text'>{this.props.message}</div>
     )
   },
 
-  componentDidMount: function () {
+  componentDidMount() {
     const $node = $(ReactDOM.findDOMNode(this))
     styler.styleProjects([{name: this.props.message}], $node, $node.parent())
   },
 
-  componentDidUpdate: function () {
+  componentDidUpdate() {
     const $node = $(ReactDOM.findDOMNode(this))
     styler.styleProjects([{name: this.props.message}], $node, $node.parent())
   }

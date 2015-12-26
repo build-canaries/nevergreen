@@ -7,7 +7,7 @@ module.exports = React.createClass({
     removeMessage: React.PropTypes.func.isRequired
   },
 
-  render: function () {
+  render() {
     return (
       <li className='success-item image'>
         <image className='success-list-image' src={this.props.url} alt={this.props.url}/>

@@ -30,21 +30,21 @@ const InterestingProject = React.createClass({
     lastBuildTime: React.PropTypes.string.isRequired
   },
 
-  _isSick: function () {
+  _isSick() {
     return this.props.prognosis === 'sick'
   },
 
-  _toRelativeTime: function (time) {
+  _toRelativeTime(time) {
     return moment(time).fromNow(true)
   },
 
-  _brokenBuildTimer: function () {
+  _brokenBuildTimer() {
     if (DisplayStore.areBrokenBuildTimersEnabled() && this._isSick()) {
       return <span className='monitor-time-broken'> {this._toRelativeTime(this.props.lastBuildTime)}</span>
     }
   },
 
-  render: function () {
+  render() {
     return (
       <li className={'monitor-project monitor-' + this.props.prognosis}>
         <div className='monitor-outer-container'>
@@ -64,24 +64,27 @@ module.exports = React.createClass({
     projects: React.PropTypes.arrayOf(React.PropTypes.object).isRequired
   },
 
-  render: function () {
+  render() {
     return (
       <ul id='interesting-projects' className='monitor-projects'>
         {
-          this.props.projects.map(function (project) {
-            return <InterestingProject key={project.projectId} prognosis={project.prognosis} name={project.name} lastBuildTime={project.lastBuildTime}/>
+          this.props.projects.map(project => {
+            return <InterestingProject key={project.projectId}
+                                       prognosis={project.prognosis}
+                                       name={project.name}
+                                       lastBuildTime={project.lastBuildTime}/>
           })
         }
       </ul>
     )
   },
 
-  componentDidMount: function () {
+  componentDidMount() {
     const $node = $(ReactDOM.findDOMNode(this))
     styler.styleProjects(this.props.projects, $node.find('.monitor-outer-container'), $node)
   },
 
-  componentDidUpdate: function () {
+  componentDidUpdate() {
     const $node = $(ReactDOM.findDOMNode(this))
     styler.styleProjects(this.props.projects, $node.find('.monitor-outer-container'), $node)
   }

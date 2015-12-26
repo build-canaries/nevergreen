@@ -9,7 +9,7 @@ module.exports = React.createClass({
     selectProject: React.PropTypes.func.isRequired
   },
 
-  render: function () {
+  render() {
     const labelClass = this.props.wasRemoved ? 'label-checkbox-disabled' : 'label-checkbox'
     const nameClass = this.props.wasRemoved ? 'tracking-removed-project' : ''
     let info = ''
@@ -36,7 +36,7 @@ module.exports = React.createClass({
     )
   },
 
-  _onChange: function (event) {
+  _onChange(event) {
     this.props.selectProject(event.target.checked)
   }
 })

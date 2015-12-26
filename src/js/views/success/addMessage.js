@@ -10,11 +10,11 @@ module.exports = React.createClass({
     validationMessages: React.PropTypes.arrayOf(React.PropTypes.string)
   },
 
-  getInitialState: function () {
+  getInitialState() {
     return {message: ''}
   },
 
-  render: function () {
+  render() {
     return (
       <div className='tracking-cctray-group-cctray-form'>
         <label htmlFor='message-input' className='success-message-prompt'>message</label>
@@ -31,17 +31,17 @@ module.exports = React.createClass({
     )
   },
 
-  componentWillReceiveProps: function (nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (!nextProps.validationMessages) {
       this.setState({message: ''})
     }
   },
 
-  _onClick: function () {
+  _onClick() {
     this.props.addMessage(this.state.message)
   },
 
-  _onKeyPress: function (evt) {
+  _onKeyPress(evt) {
     if (evt.key === 'Enter') {
       this.props.addMessage(this.state.message)
     }

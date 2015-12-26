@@ -4,11 +4,11 @@ const Image = require('./imageComponent')
 const SuccessStore = require('../../stores/SuccessStore')
 
 module.exports = React.createClass({
-  getInitialState: function () {
+  getInitialState() {
     return {message: SuccessStore.randomMessage()}
   },
 
-  render: function () {
+  render() {
     if (SuccessStore.isUrl(this.state.message)) {
       return <Image url={this.state.message}/>
     } else {

@@ -18,14 +18,14 @@ function getStateFromStore() {
 }
 
 module.exports = React.createClass({
-  getInitialState: function () {
+  getInitialState() {
     return {
       projects: [],
       loaded: false
     }
   },
 
-  render: function () {
+  render() {
     let content
     if (!this.state.loaded) {
       content = <Loading />
@@ -42,7 +42,7 @@ module.exports = React.createClass({
     )
   },
 
-  componentDidMount: function () {
+  componentDidMount() {
     window.addEventListener('resize', this._onChange)
     InterestingProjectsStore.addListener(this._onChange)
     InterestingProjectActions.pollForChanges(5000, TrayStore.getAll, SelectedProjectsStore.getAll)
@@ -50,7 +50,7 @@ module.exports = React.createClass({
     this._hideMenu()
   },
 
-  componentWillUnmount: function () {
+  componentWillUnmount() {
     window.removeEventListener('resize', this._onChange)
     InterestingProjectsStore.removeListener(this._onChange)
     InterestingProjectActions.stopPollingForChanges()
@@ -59,27 +59,27 @@ module.exports = React.createClass({
     this._showMenu()
   },
 
-  _hasProjects: function () {
+  _hasProjects() {
     return this.state.projects.length > 0
   },
 
-  _animateMenu: function () {
+  _animateMenu() {
     this._clearMenuTimeOut()
     this._showMenu()
     this.setState({
-      menuTimer: setTimeout(function () {
+      menuTimer: setTimeout(() => {
         this._hideMenu()
-      }.bind(this), 3000)
+      }, 3000)
     })
   },
 
-  _showMenu: function () {
+  _showMenu() {
     $('#menu .navigation, .content-info')
       .removeClass('navigation-hide')
       .addClass('navigation-show')
   },
 
-  _hideMenu: function () {
+  _hideMenu() {
     if (this.isMounted()) {
       $('#menu .navigation, .content-info')
         .removeClass('navigation-show')
@@ -87,11 +87,11 @@ module.exports = React.createClass({
     }
   },
 
-  _clearMenuTimeOut: function () {
+  _clearMenuTimeOut() {
     clearTimeout(this.state.menuTimer)
   },
 
-  _onChange: function () {
+  _onChange() {
     this.setState(getStateFromStore())
   }
 })

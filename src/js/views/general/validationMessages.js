@@ -5,11 +5,11 @@ module.exports = React.createClass({
     messages: React.PropTypes.arrayOf(React.PropTypes.string)
   },
 
-  render: function () {
+  render() {
     let validationMessages = ''
 
     if (this.props.messages) {
-      validationMessages = this.props.messages.map(function (msg, index) {
+      validationMessages = this.props.messages.map((msg, index) => {
         return (
           <div key={index} className='validation-message'>
             <span className='icon-notification'></span>

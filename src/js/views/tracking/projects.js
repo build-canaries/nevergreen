@@ -24,21 +24,21 @@ module.exports = React.createClass({
     refreshTray: React.PropTypes.func.isRequired
   },
 
-  getInitialState: function () {
+  getInitialState() {
     return getStateFromStore(this.props.trayId)
   },
 
-  componentDidMount: function () {
+  componentDidMount() {
     SelectedProjectsStore.addListener(this._onChange)
     FetchedProjectsStore.addListener(this._onChange)
   },
 
-  componentWillUnmount: function () {
+  componentWillUnmount() {
     SelectedProjectsStore.removeListener(this._onChange)
     FetchedProjectsStore.removeListener(this._onChange)
   },
 
-  render: function () {
+  render() {
     return (
       <fieldset className='tracking-cctray-group-builds tray-content'>
         <legend className='tracking-cctray-group-builds-legend'>Available Projects</legend>
@@ -58,7 +58,7 @@ module.exports = React.createClass({
         </div>
         <div className='testing-projects tracking-cctray-group-build-items'>
           {
-            _.sortBy(this.state.projects, projectName).map(function (project) {
+            _.sortBy(this.state.projects, projectName).map(project => {
               const included = _.indexOf(this.state.selectedProjects, project.projectId) >= 0
 
               return <AvailableProject key={project.projectId}
@@ -67,14 +67,14 @@ module.exports = React.createClass({
                                        wasRemoved={project.wasRemoved}
                                        isNew={project.isNew}
                                        selectProject={this._selectProject.bind(this, project.projectId)}/>
-            }, this)
+            })
           }
         </div>
       </fieldset>
     )
   },
 
-  _selectProject: function (projectId, included) {
+  _selectProject(projectId, included) {
     if (included) {
       SelectProjectActions.selectProject(this.props.trayId, [projectId])
     } else {
@@ -82,26 +82,23 @@ module.exports = React.createClass({
     }
   },
 
-  _includeAll: function () {
-    const projectIds = this.state.projects
-      .filter(function (project) {
-        return !project.wasRemoved
-      }).map(function (project) {
-        return project.projectId
-      })
+  _includeAll() {
+    const projectIds = this.state.projects.filter(project => {
+      return !project.wasRemoved
+    }).map(project => {
+      return project.projectId
+    })
     SelectProjectActions.selectProject(this.props.trayId, projectIds)
   },
 
-  _excludeAll: function () {
-    const projectIds = this.state.projects.map(function (project) {
+  _excludeAll() {
+    const projectIds = this.state.projects.map(project => {
       return project.projectId
     })
     SelectProjectActions.removeProject(this.props.trayId, projectIds)
   },
 
-  _onChange: function () {
-    if (this.isMounted()) {
-      this.setState(getStateFromStore(this.props.trayId))
-    }
+  _onChange() {
+    this.setState(getStateFromStore(this.props.trayId))
   }
 })

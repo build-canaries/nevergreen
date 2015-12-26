@@ -14,19 +14,19 @@ function getStateFromStore() {
 }
 
 module.exports = React.createClass({
-  getInitialState: function () {
+  getInitialState() {
     return getStateFromStore()
   },
 
-  componentDidMount: function () {
+  componentDidMount() {
     SuccessStore.addListener(this._onChange)
   },
 
-  componentWillUnmount: function () {
+  componentWillUnmount() {
     SuccessStore.removeListener(this._onChange)
   },
 
-  render: function () {
+  render() {
     return (
       <section className='dashboard-main-section'>
         <h2 className='visually-hidden'>Success</h2>
@@ -40,17 +40,15 @@ module.exports = React.createClass({
     )
   },
 
-  _addNewMessage: function (message) {
+  _addNewMessage(message) {
     SuccessActions.addMessage(message)
   },
 
-  _removeMessage: function (message) {
+  _removeMessage(message) {
     SuccessActions.removeMessage(message)
   },
 
-  _onChange: function () {
-    if (this.isMounted()) {
-      this.setState(getStateFromStore())
-    }
+  _onChange() {
+    this.setState(getStateFromStore())
   }
 })

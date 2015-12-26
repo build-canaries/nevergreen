@@ -13,14 +13,14 @@ module.exports = React.createClass({
     refreshTray: React.PropTypes.func.isRequired
   },
 
-  getInitialState: function () {
+  getInitialState() {
     return {
       showSettings: false,
       hidden: false
     }
   },
 
-  render: function () {
+  render() {
     let content
 
     if (this.state.showSettings) {
@@ -56,13 +56,13 @@ module.exports = React.createClass({
     )
   },
 
-  toggleSettingsView: function () {
+  toggleSettingsView() {
     this.setState({
       showSettings: !this.state.showSettings
     })
   },
 
-  toggleHidden: function () {
+  toggleHidden() {
     this.setState({
       hidden: !this.state.hidden
     })

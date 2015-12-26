@@ -14,19 +14,19 @@ function getStateFromStore() {
 module.exports = React.createClass({
   displayName: 'TrackingSection',
 
-  getInitialState: function () {
+  getInitialState() {
     return getStateFromStore()
   },
 
-  componentWillMount: function () {
+  componentWillMount() {
     TrayStore.addListener(this._onChange)
   },
 
-  componentWillUnmount: function () {
+  componentWillUnmount() {
     TrayStore.removeListener(this._onChange)
   },
 
-  render: function () {
+  render() {
     return (
       <section className='dashboard-main-section'>
         <h2 className='visually-hidden'>Tracking</h2>
@@ -34,31 +34,31 @@ module.exports = React.createClass({
 
         <div>
           {
-            this.state.trays.map(function (tray) {
+            this.state.trays.map(tray => {
               return <Tray key={tray.trayId}
                            tray={tray}
                            removeTray={this._removeTray.bind(this, tray.trayId)}
                            refreshTray={this._refreshTray.bind(this, tray)}/>
-            }, this)
+            })
           }
         </div>
       </section>
     )
   },
 
-  _addTray: function (trayToAdd) {
+  _addTray(trayToAdd) {
     TrayActions.addTray(trayToAdd.url, trayToAdd.username, trayToAdd.password)
   },
 
-  _removeTray: function (trayId) {
+  _removeTray(trayId) {
     TrayActions.removeTray(trayId)
   },
 
-  _refreshTray: function (tray) {
+  _refreshTray(tray) {
     TrayActions.refreshTray(tray)
   },
 
-  _onChange: function () {
+  _onChange() {
     this.setState(getStateFromStore())
   }
 })

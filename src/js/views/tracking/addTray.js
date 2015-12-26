@@ -10,7 +10,7 @@ module.exports = React.createClass({
     validationMessages: React.PropTypes.arrayOf(React.PropTypes.string)
   },
 
-  getInitialState: function () {
+  getInitialState() {
     return {
       url: '',
       username: '',
@@ -18,7 +18,7 @@ module.exports = React.createClass({
     }
   },
 
-  render: function () {
+  render() {
     return (
       <div className='tracking-cctray-group-cctray-form'>
         <label htmlFor='cctray-url' className='tracking-cctray-group-cctray-form-label'>url</label>
@@ -53,7 +53,7 @@ module.exports = React.createClass({
     )
   },
 
-  componentWillReceiveProps: function (nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (!nextProps.validationMessages) {
       this.setState({
         url: '',
@@ -63,11 +63,11 @@ module.exports = React.createClass({
     }
   },
 
-  _onClick: function () {
+  _onClick() {
     this.props.addTray(this.state)
   },
 
-  _onKeyPress: function (evt) {
+  _onKeyPress(evt) {
     if (evt.key === 'Enter') {
       this.props.addTray(this.state)
     }

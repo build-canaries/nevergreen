@@ -9,7 +9,7 @@ module.exports = React.createClass({
     removeTray: React.PropTypes.func.isRequired
   },
 
-  render: function () {
+  render() {
     return (
       <section className='tray-settings'>
         <table className='tray-settings-table'>

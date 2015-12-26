@@ -7,7 +7,7 @@ module.exports = React.createClass({
     onToggle: React.PropTypes.func.isRequired
   },
 
-  render: function () {
+  render() {
     return (
       <p className='checkbox-container'>
         <label className='label-checkbox'>
@@ -22,7 +22,7 @@ module.exports = React.createClass({
     )
   },
 
-  _onChange: function (event) {
-      this.props.onToggle(event.target.checked)
+  _onChange(event) {
+    this.props.onToggle(event.target.checked)
   }
 })
