@@ -38,6 +38,10 @@ function setTrayFetched(trayId) {
   _storeState.trays[trayId].fetching = false
 }
 
+function setTrayTimestamp(trayId, timestamp) {
+  _storeState.trays[trayId].timestamp = timestamp
+}
+
 function setTrayPassword(trayId, password) {
   _storeState.trays[trayId].password = password
 }
@@ -58,9 +62,9 @@ const dispatchToken = AppDispatcher.register(action => {
     case Constants.AppInit:
     {
       _storeState = action.configuration[storageKey] || {
-          trays: {},
-          validation: {}
+          trays: {}
         }
+      _storeState.validation = {}
       break
     }
     case Constants.RestoreConfiguration:
@@ -100,12 +104,14 @@ const dispatchToken = AppDispatcher.register(action => {
     {
       setTrayFetched(action.trayId)
       clearTrayError(action.trayId)
+      setTrayTimestamp(action.trayId, action.timestamp)
       break
     }
     case Constants.ApiError:
     {
       setTrayFetched(action.trayId)
       setTrayError(action.trayId, action.error)
+      setTrayTimestamp(action.trayId, action.timestamp)
       break
     }
     default :
@@ -114,7 +120,7 @@ const dispatchToken = AppDispatcher.register(action => {
     }
   }
 
-  LocalRepository.setItem(storageKey, _storeState)
+  LocalRepository.setItem(storageKey, _.omit(_storeState, 'validation'))
   eventEmitter.emit(CHANGE_EVENT)
   return true
 })

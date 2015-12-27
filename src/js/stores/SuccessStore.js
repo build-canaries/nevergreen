@@ -23,9 +23,9 @@ const dispatchToken = AppDispatcher.register(action => {
     case Constants.AppInit:
     {
       _storeState = action.configuration[storageKey] || {
-          messages: ['=(^.^)='],
-          validation: {}
+          messages: ['=(^.^)=']
         }
+      _storeState.validation = {}
       break
     }
     case Constants.RestoreConfiguration:
@@ -61,7 +61,7 @@ const dispatchToken = AppDispatcher.register(action => {
     }
   }
 
-  LocalRepository.setItem(storageKey, _storeState)
+  LocalRepository.setItem(storageKey, _.omit(_storeState, 'validation'))
   eventEmitter.emit(CHANGE_EVENT)
   return true
 })
@@ -70,15 +70,15 @@ module.exports = {
   dispatchToken: dispatchToken,
 
   getMessages() {
-    return _storeState.messages.filter(function (message) {
+    return _storeState.messages.filter(message => {
       return !this.isUrl(message)
-    }.bind(this))
+    })
   },
 
   getImages() {
-    return _storeState.messages.filter(function (message) {
+    return _storeState.messages.filter(message => {
       return this.isUrl(message)
-    }.bind(this))
+    })
   },
 
   getAll() {

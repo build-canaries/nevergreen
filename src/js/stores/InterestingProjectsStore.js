@@ -2,7 +2,6 @@ const AppDispatcher = require('../dispatcher/AppDispatcher')
 const EventEmitter = require('events').EventEmitter
 const eventEmitter = new EventEmitter()
 const Constants = require('../constants/NevergreenConstants')
-const LocalRepository = require('../storage/LocalRepository')
 
 const storageKey = 'interestingProjects'
 const CHANGE_EVENT = 'interesting-projects-change'
@@ -26,10 +25,10 @@ const dispatchToken = AppDispatcher.register(action => {
   switch (action.type) {
     case Constants.AppInit:
     {
-      _storeState = action.configuration[storageKey] || {
-          projects: [],
-          error: null
-        }
+      _storeState = {
+        projects: [],
+        error: null
+      }
       break
     }
     case Constants.RestoreConfiguration:
@@ -54,7 +53,6 @@ const dispatchToken = AppDispatcher.register(action => {
     }
   }
 
-  LocalRepository.setItem(storageKey, _storeState)
   eventEmitter.emit(CHANGE_EVENT)
   return true
 })

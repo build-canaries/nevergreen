@@ -86,11 +86,11 @@
 }
 
 .tray-content {
-  padding: 1.5em;
+  padding: 1em;
 }
 
 .tray-settings {
-  padding: 1.5em;
+  padding: 1em;
 }
 
 .tray-settings-danger-zone {
@@ -161,4 +161,13 @@
   background: none;
   color: white;
   margin-right: 0.5em;
+}
+
+.tray-refresh {
+  padding: 1em 1em 0 1em;
+}
+
+.tray-refresh-last-fetch {
+  color: $mid-grey;
+  padding-left: 1em;
 }

@@ -26,13 +26,28 @@ module.exports = React.createClass({
     if (this.state.showSettings) {
       content = <TraySettings tray={this.props.tray} removeTray={this.props.removeTray}/>
     } else {
+      let subContent
+
       if (this.props.tray.fetching) {
-        content = <Loading/>
+        subContent = <Loading/>
       } else if (this.props.tray.error) {
-        content = <Error status={this.props.tray.error.status} reason={this.props.tray.error.message}/>
+        subContent = <Error status={this.props.tray.error.status} reason={this.props.tray.error.message}/>
       } else {
-        content = <Projects trayId={this.props.tray.trayId} refreshTray={this.props.refreshTray}/>
+        subContent = <Projects trayId={this.props.tray.trayId}/>
       }
+
+      content = (
+        <div>
+          <div className='tray-refresh'>
+            <button className='button' onClick={this.props.refreshTray}>
+              <span className='icon-loop2'></span>
+              <span className='text-with-icon'>Refresh</span>
+            </button>
+            <span className='tray-refresh-last-fetch'>Last Fetch: {this.props.tray.timestamp}</span>
+          </div>
+          {subContent}
+        </div>
+      )
     }
 
     const hideText = this.state.hidden ? 'expand tray' : 'collapse tray'

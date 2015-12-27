@@ -20,8 +20,7 @@ module.exports = React.createClass({
   displayName: 'Projects',
 
   propTypes: {
-    trayId: React.PropTypes.string.isRequired,
-    refreshTray: React.PropTypes.func.isRequired
+    trayId: React.PropTypes.string.isRequired
   },
 
   getInitialState() {
@@ -50,10 +49,6 @@ module.exports = React.createClass({
           <button className='button' onClick={this._excludeAll}>
             <span className='icon-checkbox-unchecked'></span>
             <span className='text-with-icon'>Exclude all</span>
-          </button>
-          <button className='button' onClick={this.props.refreshTray}>
-            <span className='icon-loop2'></span>
-            <span className='text-with-icon'>Refresh</span>
           </button>
         </div>
         <div className='testing-projects tracking-cctray-group-build-items'>

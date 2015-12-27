@@ -4,6 +4,7 @@ const projectsGateway = require('../gateways/projectsGateway')
 const uuid = require('node-uuid')
 const validate = require('validate.js')
 const Constants = require('../constants/NevergreenConstants')
+const moment = require('moment')
 
 const _addTrayValidation = {
   url: {
@@ -28,7 +29,7 @@ module.exports = {
       this._dispatchTrayAdded(trayId, url, username)
 
       if (requiresAuth) {
-        return securityGateway.encryptPassword(password).then(function(encryptPasswordResponse) {
+        return securityGateway.encryptPassword(password).then(encryptPasswordResponse => {
           this._dispatchPasswordEncrypted(trayId, encryptPasswordResponse.password)
           return this.refreshTray({
             trayId: trayId,
@@ -36,7 +37,7 @@ module.exports = {
             username: username,
             password: encryptPasswordResponse.password
           })
-        }.bind(this))
+        })
       } else {
         return this.refreshTray({
           trayId: trayId,
@@ -55,11 +56,11 @@ module.exports = {
 
   refreshTray(tray) {
     this._dispatchProjectsFetching(tray.trayId)
-    return projectsGateway.fetchAll([tray]).then(function(projects) {
+    return projectsGateway.fetchAll([tray]).then(projects => {
       this._dispatchProjectsLoaded(tray.trayId, projects)
-    }.bind(this)).catch(function(err) {
+    }).catch(err => {
       this._dispatchApiError(tray.trayId, err)
-    }.bind(this))
+    })
   },
 
   _dispatchTrayAdded(trayId, url, username) {
@@ -90,7 +91,8 @@ module.exports = {
     AppDispatcher.dispatch({
       type: Constants.ProjectsFetched,
       trayId: trayId,
-      projects: data
+      projects: data,
+      timestamp: moment().format()
     })
   },
 
@@ -98,7 +100,8 @@ module.exports = {
     AppDispatcher.dispatch({
       type: Constants.ApiError,
       trayId: trayId,
-      error: error
+      error: error,
+      timestamp: moment().format()
     })
   },
 
