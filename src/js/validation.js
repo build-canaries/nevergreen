@@ -18,25 +18,41 @@ function formatArray(arr) {
 module.exports = {
   init() {
     validate.options = {format: "flat"}
-    validate.validators.stringArray = this._stringArray
+    validate.prettify = str => {
+      return `"${str}"`
+    }
+    validate.validators.array = this._array
+    validate.validators.object = this._object
   },
 
-  _stringArray(value) {
+  _object(value) {
+    if (!validate.isObject(value) || validate.isArray(value)) {
+      return 'must be an object'
+    }
+  },
+
+  _array(value, options) {
     if (!validate.isArray(value)) {
       return 'must be an array'
     }
 
-    const invalidIndices = value.reduce((previousValue, currentValue, index) => {
-      if (!validate.isString(currentValue) || validate.isEmpty(currentValue)) {
-        return previousValue.concat(index)
-      }
-      return previousValue
-    }, [])
+    if (options && options.elementValidation) {
+      const invalidIndices = value.reduce((previousValue, currentValue, index) => {
+        if (!options.elementValidation(currentValue, index)) {
+          return previousValue.concat(index)
+        }
+        return previousValue
+      }, [])
 
-    if (invalidIndices.length > 0) {
-      return invalidIndices.length === 1 ?
-      `can only contain non blank strings, value at index ${invalidIndices} is invalid` :
-      `can only contain non blank strings, values at indices ${formatArray(invalidIndices)} are invalid`
+      if (invalidIndices.length > 0) {
+        return invalidIndices.length === 1 ?
+          `has an invalid value at index ${invalidIndices}` :
+          `has invalid values at indices ${formatArray(invalidIndices)}`
+      }
     }
+  },
+
+  nonEmptyStrings(value) {
+    return validate.isString(value) && !validate.isEmpty(value)
   }
 }

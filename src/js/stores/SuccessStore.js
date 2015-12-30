@@ -3,6 +3,7 @@ const EventEmitter = require('events').EventEmitter
 const eventEmitter = new EventEmitter()
 const Constants = require('../constants/NevergreenConstants')
 const _ = require('lodash')
+const validation = require('../validation')
 const LocalRepository = require('../storage/LocalRepository')
 
 const storageKey = 'success'
@@ -31,6 +32,7 @@ const dispatchToken = AppDispatcher.register(action => {
     case Constants.RestoreConfiguration:
     {
       _storeState = action.configuration[storageKey]
+      _storeState.validation = {}
       break
     }
     case Constants.MessageAdd:
@@ -103,5 +105,15 @@ module.exports = {
 
   removeListener(callback) {
     eventEmitter.removeListener(CHANGE_EVENT, callback)
+  },
+
+  storageKey: storageKey,
+
+  validation: {
+    messages: {
+      array: {
+        elementValidation: validation.nonEmptyStrings
+      }
+    }
   }
 }

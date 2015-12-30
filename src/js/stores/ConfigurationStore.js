@@ -28,11 +28,13 @@ const dispatchToken = AppDispatcher.register(action => {
     {
       _storeState.importing = true
       _storeState.exporting = true
+      _storeState.validationMessages = []
       break
     }
     case Constants.ImportError:
     {
       _storeState.importing = false
+      _storeState.exporting = false
       _storeState.validationMessages = action.messages
       break
     }

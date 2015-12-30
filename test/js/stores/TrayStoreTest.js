@@ -21,6 +21,14 @@ describe('tray store', () => {
     expect(AppDispatcher.register.mock.calls.length).toBe(1)
   })
 
+  it('returns the storage key', () => {
+    expect(store.storageKey).toBe('tray')
+  })
+
+  it('returns a validation description', () => {
+    expect(store.validation).toBeTruthy()
+  })
+
   it('adds a tray', () => {
     callback({
       type: Constants.TrayAdd,

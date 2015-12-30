@@ -25,6 +25,14 @@ describe('selected projects store', () => {
     expect(AppDispatcher.register.mock.calls.length).toBe(1)
   })
 
+  it('returns the storage key', () => {
+    expect(store.storageKey).toBe('selectedProjects')
+  })
+
+  it('returns a validation description', () => {
+    expect(store.validation).toBeTruthy()
+  })
+
   it('concatenates selected project ids', () => {
     callback({
       type: Constants.ProjectSelected,

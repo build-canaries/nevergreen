@@ -3,19 +3,13 @@ jest.dontMock('../../../src/js/actions/TrayActions')
 
 describe('tray actions', () => {
 
-  let subject, AppDispatcher, Constants, promiseMock, validate
+  let subject, AppDispatcher, Constants, validate
 
   beforeEach(() => {
     subject = require('../../../src/js/actions/TrayActions')
     AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
     Constants = require('../../../src/js/constants/NevergreenConstants')
     validate = require('validate.js')
-    promiseMock = {
-      then: jest.genMockFunction(),
-      catch: jest.genMockFunction()
-    }
-    promiseMock.then.mockReturnValue(promiseMock)
-    promiseMock.catch.mockReturnValue(promiseMock)
   })
 
   it('dispatches invalid input action when validation fails', () => {

@@ -70,6 +70,7 @@ const dispatchToken = AppDispatcher.register(action => {
     case Constants.RestoreConfiguration:
     {
       _storeState = action.configuration[storageKey]
+      _storeState.validation = {}
       break
     }
     case Constants.PasswordEncrypted:
@@ -146,5 +147,13 @@ module.exports = {
 
   removeListener(callback) {
     eventEmitter.removeListener(CHANGE_EVENT, callback)
+  },
+
+  storageKey: storageKey,
+
+  validation: {
+    trays: {
+      object: true
+    }
   }
 }

@@ -52,5 +52,9 @@ module.exports = {
 
   removeListener(callback) {
     eventEmitter.removeListener(CHANGE_EVENT, callback)
-  }
+  },
+
+  storageKey: storageKey,
+
+  validation: {}
 }

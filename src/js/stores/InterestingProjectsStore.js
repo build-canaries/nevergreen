@@ -3,7 +3,6 @@ const EventEmitter = require('events').EventEmitter
 const eventEmitter = new EventEmitter()
 const Constants = require('../constants/NevergreenConstants')
 
-const storageKey = 'interestingProjects'
 const CHANGE_EVENT = 'interesting-projects-change'
 
 let _storeState = null
@@ -29,11 +28,6 @@ const dispatchToken = AppDispatcher.register(action => {
         projects: [],
         error: null
       }
-      break
-    }
-    case Constants.RestoreConfiguration:
-    {
-      _storeState = action.configuration[storageKey]
       break
     }
     case Constants.InterestingProjects:

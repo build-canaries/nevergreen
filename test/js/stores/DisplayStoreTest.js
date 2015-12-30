@@ -21,6 +21,14 @@ describe('display store', () => {
     expect(AppDispatcher.register.mock.calls.length).toBe(1)
   })
 
+  it('returns the storage key', () => {
+    expect(store.storageKey).toBe('display')
+  })
+
+  it('returns a validation description', () => {
+    expect(store.validation).toBeTruthy()
+  })
+
   describe('are broken build timers enabled', () => {
     it('returns false by default', () => {
       expect(store.areBrokenBuildTimersEnabled()).toBeFalsy()
