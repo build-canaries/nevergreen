@@ -5,7 +5,7 @@ var fs = require('fs')
 var app = express()
 
 var response = function(req, res) {
-  fs.readFile('resources/public/test_data.xml', 'utf8', function(err, contents) {
+  fs.readFile('resources/public/cctray.xml', 'utf8', function(err, contents) {
     res.setHeader('Content-Type', 'application/xml')
     res.send(contents)
   })}

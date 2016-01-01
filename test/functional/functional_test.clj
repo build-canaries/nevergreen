@@ -37,14 +37,20 @@
     (println "Running against" url)
     url))
 
+(defn ci-to-target []
+  (let [url (or (env :functional-url) "http://localhost:5050")]
+    (println "CI target" url)
+    url))
+
 (def expected-projects ["success building project", "failure sleeping project", "failure building project"])
 
 (deftest simple-journey
-  (let [base-url (nevergreen-under-test)]
+  (let [base-url (nevergreen-under-test)
+        ci-taget (ci-to-target)]
     (to (str base-url "/#/tracking"))
 
     (clear "#cctray-url")
-    (input-text "#cctray-url" "http://localhost:5050/cctray.xml")
+    (input-text "#cctray-url" (str ci-taget "/cctray.xml"))
     (click "#cctray-fetch")
 
     (wait-until #(exists? ".testing-projects"))
