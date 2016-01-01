@@ -54,10 +54,13 @@ npm run watchTest &
 echo "[5] automatically running js lint on changes ..."
 npm run watchLint &
 
-echo "[6] automatically running the server tests on changes ..."
+echo "[6] Run a fake CI server to target on port 5050"
+npm run fake-server &
+
+echo "[7] automatically running the server tests on changes ..."
 lein midje :autotest 'src/nevergreen' 'test/nevergreen' &
 
-echo "[7] running the server ..."
+echo "[8] running the server ..."
 lein ring server-headless &
 
 wait

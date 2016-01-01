@@ -44,7 +44,7 @@
     (to (str base-url "/#/tracking"))
 
     (clear "#cctray-url")
-    (input-text "#cctray-url" (str base-url "/test_data.xml"))
+    (input-text "#cctray-url" "http://localhost:5050/cctray.xml")
     (click "#cctray-fetch")
 
     (wait-until #(exists? ".testing-projects"))
