@@ -51,7 +51,7 @@
     "babel-jest": "6.0.1",
     "babel-preset-es2015": "6.3.13",
     "babel-preset-react": "6.3.13",
-    "chromedriver": "2.20.0",
+    "chromedriver": "2.19.0",
     "eslint": "1.10.3",
     "eslint-plugin-react": "3.11.3",
     "jest-cli": "0.8.2",
