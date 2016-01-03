@@ -3,6 +3,7 @@ const Projects = require('./projects')
 const TraySettings = require('./traySettings')
 const Loading = require('../general/loading')
 const Error = require('../general/errorView')
+const moment = require('moment')
 
 module.exports = React.createClass({
   displayName: 'Tray',
@@ -16,8 +17,24 @@ module.exports = React.createClass({
   getInitialState() {
     return {
       showSettings: false,
-      hidden: false
+      hidden: false,
+      lastFetched: this._updateLastFetch()
     }
+  },
+
+  componentDidMount() {
+    const intervalId = setInterval(() => {
+      this.setState({lastFetched: this._updateLastFetch()})
+    }, 60000)
+    this.setState({intervalId: intervalId})
+  },
+
+  componentWillUnmount() {
+    clearInterval(this.state.intervalId)
+  },
+
+  componentWillReceiveProps() {
+    this.setState({lastFetched: this._updateLastFetch()})
   },
 
   render() {
@@ -41,9 +58,9 @@ module.exports = React.createClass({
           <div className='tray-refresh'>
             <button className='button' onClick={this.props.refreshTray}>
               <span className='icon-loop2'></span>
-              <span className='text-with-icon'>Refresh</span>
+              <span className='text-with-icon'>Refresh tray</span>
             </button>
-            <span className='tray-refresh-last-fetch'>Last Fetch: {this.props.tray.timestamp}</span>
+            <span className='tray-refresh-last-fetch'>last refreshed {this.state.lastFetched} ago</span>
           </div>
           {subContent}
         </div>
@@ -56,12 +73,12 @@ module.exports = React.createClass({
     return (
       <section className='tray'>
         <div className='tray-title-container'>
-          <button className='tray-hidden-button' onClick={this.toggleHidden} title={hideText}>
+          <button className='tray-hidden-button' onClick={this._toggleHidden} title={hideText}>
             <span className={'icon-' + (this.state.hidden ? 'circle-down' : 'circle-up') }></span>
             <span className='visually-hidden'>{hideText}</span>
           </button>
           <h3 className='tray-title'>{this.props.tray.url}</h3>
-          <button className='tray-settings-button' onClick={this.toggleSettingsView} title={settingsText}>
+          <button className='tray-settings-button' onClick={this._toggleSettingsView} title={settingsText}>
             <span className={'icon-' + (this.state.showSettings ? 'list' : 'cog') }></span>
             <span className='visually-hidden'>{settingsText}</span>
           </button>
@@ -71,15 +88,21 @@ module.exports = React.createClass({
     )
   },
 
-  toggleSettingsView() {
+  _toggleSettingsView() {
     this.setState({
       showSettings: !this.state.showSettings
     })
   },
 
-  toggleHidden() {
+  _toggleHidden() {
     this.setState({
       hidden: !this.state.hidden
     })
+  },
+
+  _updateLastFetch() {
+    if (this.props.tray.timestamp) {
+      return moment(this.props.tray.timestamp).fromNow(true)
+    }
   }
 })

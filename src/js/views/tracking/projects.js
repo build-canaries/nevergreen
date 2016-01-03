@@ -40,7 +40,7 @@ module.exports = React.createClass({
   render() {
     return (
       <fieldset className='tracking-cctray-group-builds tray-content'>
-        <legend className='tracking-cctray-group-builds-legend'>Available Projects</legend>
+        <legend className='tracking-cctray-group-builds-legend'>Available projects</legend>
         <div className='tracking-cctray-group-build-toggles'>
           <button className='testing-include-all button' onClick={this._includeAll}>
             <span className='icon-checkbox-checked'></span>
