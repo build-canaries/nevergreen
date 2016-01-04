@@ -52,14 +52,15 @@ module.exports = {
         LocalRepository.save(data).then(() => {
           AppDispatcher.dispatch({
             type: Constants.RestoreConfiguration,
-            configuration: data
+            configuration: data,
+            messages: ['Successfully imported']
           })
           AppDispatcher.dispatch({
             type: Constants.ExportData,
             configuration: data
           })
         }).catch(e => {
-          dispatchError([`Unable to import - ${e.message}`])
+          dispatchError(['Unable to import because of an error while trying to save to local storage', e.message])
         })
       }
 
@@ -68,7 +69,7 @@ module.exports = {
     }
   },
 
-  exportData() {
+  refreshConfiguration() {
     LocalRepository.getConfiguration().then(configuration => {
       AppDispatcher.dispatch({
         type: Constants.ExportData,

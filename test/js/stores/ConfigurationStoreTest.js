@@ -35,8 +35,9 @@ describe('configuration store', () => {
       expect(store.isExporting()).toBeTruthy()
     })
 
-    it('clears import error messages', () => {
-      expect(store.getImportError()).toEqual([])
+    it('clears the import messages', () => {
+      expect(store.getImportErrors()).toEqual([])
+      expect(store.getImportInfos()).toEqual([])
     })
   })
 
@@ -56,8 +57,9 @@ describe('configuration store', () => {
       expect(store.isExporting()).toBeFalsy()
     })
 
-    it('sets import error messages', () => {
-      expect(store.getImportError()).toEqual(['some-error'])
+    it('sets the import messages', () => {
+      expect(store.getImportErrors()).toEqual(['some-error'])
+      expect(store.getImportInfos()).toEqual([])
     })
   })
 
@@ -80,8 +82,10 @@ describe('configuration store', () => {
 
   it('sets importing to false once configuration is restored', () => {
     callback({
-      type: Constants.RestoreConfiguration
+      type: Constants.RestoreConfiguration,
+      messages: ['some-message']
     })
     expect(store.isImporting()).toBeFalsy()
+    expect(store.getImportInfos()).toEqual(['some-message'])
   })
 })

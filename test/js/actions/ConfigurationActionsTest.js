@@ -20,7 +20,7 @@ describe('configuration actions', () => {
   it('dispatches the up to most recent configuration loaded from storage', () => {
     LocalRepository.getConfiguration.mockReturnValue(promiseMock)
 
-    subject.exportData()
+    subject.refreshConfiguration()
 
     promiseMock.then.mock.calls[0][0]('some-value') // call the callback passed to the promise mock
 
