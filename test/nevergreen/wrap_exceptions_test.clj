@@ -1,7 +1,8 @@
 (ns nevergreen.wrap-exceptions-test
   (:require [midje.sweet :refer :all]
             [nevergreen.wrap-exceptions :as subject])
-  (:import (clojure.lang ExceptionInfo)))
+  (:import (clojure.lang ExceptionInfo)
+           (java.util.concurrent ExecutionException)))
 
 (fact "normal exceptions should be convereted to 500 status with the message propagated"
       ((subject/wrap-exceptions (fn [_]
@@ -28,3 +29,14 @@
       ((subject/wrap-exceptions (fn [_]
                                   (throw (ExceptionInfo. "message" {})))) {})
       => (contains {:status 500 :body "Server Error"}))
+
+(facts "ExecutionException gets handled correctly depending on the cause"
+       (fact "normal exception"
+             ((subject/wrap-exceptions (fn [_]
+                                         (throw (ExecutionException. (Exception. "message"))))) {})
+             => (contains {:status 500 :body "message"}))
+
+       (fact "ExceptionInfo"
+             ((subject/wrap-exceptions (fn [_]
+                                         (throw (ExecutionException. (ExceptionInfo. "message" {:status 404}))))) {})
+             => (contains {:status 404 :body "Not Found"})))

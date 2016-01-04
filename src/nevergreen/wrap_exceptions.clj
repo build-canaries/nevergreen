@@ -1,5 +1,6 @@
 (ns nevergreen.wrap-exceptions
-  (:import (clojure.lang ExceptionInfo))
+  (:import (clojure.lang ExceptionInfo)
+           (java.util.concurrent ExecutionException))
   (:require [clojure.tools.logging :as log]))
 
 (def headers {"Content-Type" "text/plain; charset=utf-8"})
@@ -13,14 +14,25 @@
 (defn get-body [data]
   (or (get bodies (:status data)) "Server Error"))
 
+(defn handle-exception-info [e]
+  (let [data (ex-data e)]
+    (log/warn "ExceptionInfo thrown with data" data)
+    {:status (get-status data) :body (get-body data) :headers headers}))
+
+(defn handle-unknown [e]
+  (log/error (str "Unexpected expection thrown with message [" (.getMessage e) "]"))
+  {:status 500 :body (.getMessage e) :headers headers})
+
 (defn wrap-exceptions [app]
   (fn [req]
     (try
       (app req)
+      (catch ExecutionException e
+        (let [cause (.getCause e)]
+          (if (instance? ExceptionInfo cause)
+            (handle-exception-info cause)
+            (handle-unknown cause))))
       (catch ExceptionInfo e
-        (let [data (ex-data e)]
-          (log/warn "ExceptionInfo thrown with data" data)
-          {:status (get-status data) :body (get-body data) :headers headers}))
+        (handle-exception-info e))
       (catch Exception e
-        (log/error (str "Unexpected expection thrown with message [" (.getMessage e) "]"))
-        {:status 500 :body (.getMessage e) :headers headers}))))
+        (handle-unknown e)))))
