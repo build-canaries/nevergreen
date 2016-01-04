@@ -45,15 +45,14 @@ module.exports = React.createClass({
   componentDidMount() {
     window.addEventListener('resize', this._onChange)
     InterestingProjectsStore.addListener(this._onChange)
-    InterestingProjectActions.pollForChanges(5000, TrayStore.getAll, SelectedProjectsStore.getAll)
 
+    this._poll()
     this._hideMenu()
   },
 
   componentWillUnmount() {
     window.removeEventListener('resize', this._onChange)
     InterestingProjectsStore.removeListener(this._onChange)
-    InterestingProjectActions.stopPollingForChanges()
 
     this._clearMenuTimeOut()
     this._showMenu()
@@ -93,5 +92,15 @@ module.exports = React.createClass({
 
   _onChange() {
     this.setState(getStateFromStore())
+  },
+
+  _poll() {
+    if (this.isMounted()) {
+      InterestingProjectActions.fetchInteresting(TrayStore.getAll(), SelectedProjectsStore.getAll()).then(() => {
+        setTimeout(() => {
+          this._poll()
+        }, 5000)
+      })
+    }
   }
 })
