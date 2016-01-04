@@ -11,12 +11,11 @@ module.exports = React.createClass({
     return (
       <p className='checkbox-container'>
         <label className='label-checkbox'>
-          <input ref='toggleIncluded'
-                 className='checkbox no-text-selection'
+          <input className='checkbox no-text-selection'
                  type='checkbox'
                  checked={this.props.enabled}
                  onChange={this._onChange}/>
-          <span className=''>{this.props.name}</span>
+          <span>{this.props.name}</span>
         </label>
       </p>
     )
