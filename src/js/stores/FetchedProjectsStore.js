@@ -27,7 +27,7 @@ function updateNewAndRemovedFlags(fetchedProjects, project) {
 }
 
 function getName(project) {
-  return project.stage ? `${project.name} [${project.stage}]` : project.name
+  return project.stage ? `${project.name} ${project.stage}` : project.name
 }
 
 function toProject(project) {

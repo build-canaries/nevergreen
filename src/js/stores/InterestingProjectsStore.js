@@ -8,7 +8,7 @@ const CHANGE_EVENT = 'interesting-projects-change'
 let _storeState = null
 
 function getName(apiProject) {
-  return apiProject.stage ? `${apiProject.name} [${apiProject.stage}]` : apiProject.name
+  return apiProject.stage ? `${apiProject.name} ${apiProject.stage}` : apiProject.name
 }
 
 function toProject(apiProject) {

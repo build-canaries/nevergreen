@@ -21,11 +21,11 @@ module.exports = {
   },
 
   pollForChanges(waitTime, getTraysFn, getSelectedFn) {
-    this.fetchInteresting(getTraysFn(), getSelectedFn()).then(function() {
-      _timerId = setTimeout(function() {
+    this.fetchInteresting(getTraysFn(), getSelectedFn()).then(() => {
+      _timerId = setTimeout(() => {
         this.pollForChanges(waitTime, getTraysFn, getSelectedFn)
-      }.bind(this), waitTime)
-    }.bind(this))
+      }, waitTime)
+    })
   },
 
   stopPollingForChanges() {

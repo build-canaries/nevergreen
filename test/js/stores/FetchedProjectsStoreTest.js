@@ -76,7 +76,7 @@ describe('fetched projects store', () => {
       })
       expect(store.getAll('some-id')).toEqual([{
         projectId: 'some-project-id',
-        name: 'name [stage]',
+        name: 'name stage',
         isNew: true,
         wasRemoved: false
       }])
@@ -109,7 +109,7 @@ describe('fetched projects store', () => {
         })
         expect(store.getAll('some-id')).toEqual([{
           projectId: 'some-project-id',
-          name: 'name [stage]',
+          name: 'name stage',
           isNew: false,
           wasRemoved: false
         }])
@@ -123,7 +123,7 @@ describe('fetched projects store', () => {
         })
         expect(store.getAll('some-id')).toEqual([{
           projectId: 'some-project-id',
-          name: 'name [stage]',
+          name: 'name stage',
           isNew: false,
           wasRemoved: true
         }])
