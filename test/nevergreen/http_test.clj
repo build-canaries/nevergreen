@@ -7,14 +7,16 @@
        (fact "without authentication"
              (subject/http-get ..url.. {}) => ..some-body..
              (provided
-               (client/get ..url.. {:insecure? true
-                                    :timeout   30000
-                                    :headers   {"Accept" "application/xml"}
-                                    :as        :stream}) => {:body ..some-body..}))
+               (client/get ..url.. {:insecure?             true
+                                    :timeout               30000
+                                    :headers               {"Accept" "application/xml"}
+                                    :as                    :stream
+                                    :throw-entire-message? true}) => {:body ..some-body..}))
        (fact "with authentication"
              (subject/http-get ..url.. {"Authentication" "Basic some-password"}) => ..some-body..
              (provided
-               (client/get ..url.. {:insecure? true
-                                    :timeout   30000
-                                    :headers   {"Accept" "application/xml" "Authentication" "Basic some-password"}
-                                    :as        :stream}) => {:body ..some-body..})))
+               (client/get ..url.. {:insecure?             true
+                                    :timeout               30000
+                                    :headers               {"Accept" "application/xml" "Authentication" "Basic some-password"}
+                                    :as                    :stream
+                                    :throw-entire-message? true}) => {:body ..some-body..})))
