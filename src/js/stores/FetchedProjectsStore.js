@@ -15,7 +15,7 @@ function previouslyRemovedProjects(project) {
 }
 
 function updateNewAndRemovedFlags(fetchedProjects, project) {
-  const whereIdsMatch = function (fetchedProject) {
+  const whereIdsMatch = fetchedProject => {
     return fetchedProject.projectId === project.projectId
   }
   return {
@@ -44,7 +44,7 @@ function removeJobs(project) {
 }
 
 function removeExisting(previousProjects, project) {
-  const whereIdsMatch = function (previousProject) {
+  const whereIdsMatch = previousProject => {
     return previousProject.projectId === project.projectId
   }
   return _.findIndex(previousProjects, whereIdsMatch) < 0

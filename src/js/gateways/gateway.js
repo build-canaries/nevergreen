@@ -4,7 +4,7 @@ if (!window.fetch) {
   window.fetch = require('whatwg-fetch')
 }
 
-const processStatus = function(response) {
+const processStatus = response => {
   if (response.status >= 200 && response.status < 300) {
     return Promise.resolve(response)
   } else {

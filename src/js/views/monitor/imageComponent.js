@@ -11,9 +11,5 @@ module.exports = React.createClass({
         <img src={this.props.url} className="monitor-success-image" alt=""/>
       </div>
     )
-  },
-
-  shouldComponentUpdate() {
-    return false
   }
 })
