@@ -98,7 +98,7 @@ module.exports = {
 
   _dispatchApiError(trayId, error) {
     AppDispatcher.dispatch({
-      type: Constants.ApiError,
+      type: Constants.ProjectsFetchError,
       trayId: trayId,
       error: error,
       timestamp: moment().format()

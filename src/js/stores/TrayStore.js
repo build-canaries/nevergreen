@@ -108,7 +108,7 @@ const dispatchToken = AppDispatcher.register(action => {
       setTrayTimestamp(action.trayId, action.timestamp)
       break
     }
-    case Constants.ApiError:
+    case Constants.ProjectsFetchError:
     {
       setTrayFetched(action.trayId)
       setTrayError(action.trayId, action.error)

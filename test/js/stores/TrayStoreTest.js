@@ -95,7 +95,7 @@ describe('tray store', () => {
 
     it('sets the error object on api error', () => {
       callback({
-        type: Constants.ApiError,
+        type: Constants.ProjectsFetchError,
         trayId: 'some-id',
         error: 'some-error'
       })
@@ -104,7 +104,7 @@ describe('tray store', () => {
 
     it('sets the fetching flag to false on error', () => {
       callback({
-        type: Constants.ApiError,
+        type: Constants.ProjectsFetchError,
         trayId: 'some-id'
       })
       expect(store.getById('some-id').fetching).toBeFalsy()
