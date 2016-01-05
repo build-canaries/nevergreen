@@ -1,24 +1,19 @@
 const React = require('react')
 const Menu = require('./general/menu')
-const Package = require('../../../package')
 const AppActions = require('../actions/AppActions')
 const AppStore = require('../stores/AppStore')
 
 function getStateFromStore() {
   return {
-    loaded: AppStore.isInitalised()
+    loaded: AppStore.isInitalised(),
+    versionNumber: AppStore.versionNumber(),
+    versionName: AppStore.versionName(),
+    versionColour: AppStore.versionColour(),
+    commitHash: AppStore.commitHash()
   }
 }
 
 module.exports = React.createClass({
-  getDefaultProps() {
-    return {
-      versionNumber: Package.version,
-      versionName: Package.versionName,
-      commitHash: 'local'
-    }
-  },
-
   getInitialState() {
     return getStateFromStore()
   },
@@ -38,9 +33,10 @@ module.exports = React.createClass({
         <h1 className='visually-hidden'>Nevergreen</h1>
 
         <div id='menu'>
-          <Menu versionNumber={this.props.versionNumber}
-                versionName={this.props.versionName}
-                commitHash={this.props.commitHash}/>
+          <Menu versionNumber={this.state.versionNumber}
+                versionName={this.state.versionName}
+                versionColour={this.state.versionColour}
+                commitHash={this.state.commitHash}/>
         </div>
         {this.state.loaded ? this.props.children : ''}
       </div>

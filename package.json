@@ -2,6 +2,8 @@
   "name": "nevergreen",
   "version": "0.0.0",
   "versionName": "Dev Build",
+  "versionColour": "#7E7E7E",
+  "commitHash": "dev",
   "description": "A build monitor with attitude",
   "browserify": {
     "transform": [

@@ -9,6 +9,7 @@ const InterestingProjectsStore = require('./InterestingProjectsStore')
 const SelectedProjectsStore = require('./SelectedProjectsStore')
 const SuccessStore = require('./SuccessStore')
 const TrayStore = require('./TrayStore')
+const Package = require('../../../package')
 
 const CHANGE_EVENT = 'app-change'
 
@@ -21,14 +22,23 @@ const allStoreTokens = [
   SuccessStore.dispatchToken,
   TrayStore.dispatchToken
 ]
-let _initalised = false
+
+let _storeState = {
+  initalised: false
+}
 
 const dispatchToken = AppDispatcher.register(action => {
   switch (action.type) {
     case Constants.AppInit:
     {
       AppDispatcher.waitFor(allStoreTokens)
-      _initalised = true
+      _storeState = {
+        initalised: true,
+        versionNumber: Package.version,
+        versionName: Package.versionName,
+        versionColour: Package.versionColour,
+        commitHash: Package.commitHash
+      }
       break
     }
     default :
@@ -45,7 +55,23 @@ module.exports = {
   dispatchToken: dispatchToken,
 
   isInitalised() {
-    return _initalised
+    return _storeState.initalised
+  },
+
+  versionNumber() {
+    return _storeState.versionNumber
+  },
+
+  versionName() {
+    return _storeState.versionName
+  },
+
+  versionColour() {
+    return _storeState.versionColour
+  },
+
+  commitHash() {
+    return _storeState.commitHash
   },
 
   addListener(callback) {

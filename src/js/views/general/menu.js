@@ -17,6 +17,13 @@ const MenuItem = React.createClass({
 })
 
 module.exports = React.createClass({
+  propTypes: {
+    versionNumber: React.PropTypes.string,
+    versionName: React.PropTypes.string,
+    commitHash: React.PropTypes.string,
+    versionColour: React.PropTypes.string
+  },
+
   getDefaultProps() {
     return {
       items: [
@@ -26,11 +33,19 @@ module.exports = React.createClass({
         {id: 'display', iconClass: 'display', title: 'Display'},
         {id: 'export', iconClass: 'floppy-disk', title: 'Export'},
         {id: 'help', iconClass: 'question', title: 'Help'}
-      ]
+      ],
+      versionNumber: 'loading...',
+      versionName: 'loading...',
+      commitHash: '#####',
+      versionColour: '#7E7E7E'
     }
   },
 
   render() {
+    const footerStyle = {
+      backgroundColor: this.props.versionColour
+    }
+
     return (
       <div>
         <nav role='navigation' className='navigation'>
@@ -51,7 +66,7 @@ module.exports = React.createClass({
             }
           </ul>
         </nav>
-        <footer role='contentinfo' className='content-info'>
+        <footer role='contentinfo' className='content-info' style={footerStyle}>
           <a href='https://github.com/build-canaries/nevergreen/releases' target='_blank' className='version'>
             <p>v{this.props.versionNumber}</p>
 
