@@ -20,7 +20,7 @@
     {:status (get-status data) :body (get-body data) :headers headers}))
 
 (defn handle-unknown [e]
-  (log/error (str "Unexpected expection thrown with message [" (.getMessage e) "]"))
+  (.printStackTrace e)
   {:status 500 :body (.getMessage e) :headers headers})
 
 (defn wrap-exceptions [app]
