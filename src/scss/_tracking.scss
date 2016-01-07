@@ -1,52 +1,23 @@
 .tracking-cctray-group-cctray-form {
   font-size: 1.5rem;
   margin-bottom: 1em;
-
-  padding: 1.5em;
+  padding: 1em;
   background-color: white;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
 }
 
-.tracking-cctray-group-cctray-form-label {
-  width: 38px;
-  display: inline-block;
-}
-
-.tracking-cctray-group-cctray-form-input {
-  width: calc(100% - 155px);
-  border: none;
-  border-bottom: 1px solid $mid-grey;
-  &:focus {
-    outline: none;
-    border-bottom-color: $blue;
-  }
-}
-
-.tracking-cctray-group-cctray-form-input-small {
-  width: 60px;
-  text-align: center;
-}
-
-.tracking-cctray-group-authentication {
-  margin-top: 1em;
-  font-size: 17px;
-}
-
-.tracking-cctray-group-cctray-form-input-authentication {
-  width: 20em;
-  margin-right: 1em;
-  margin-left: 1em;
+.tracking-tray-url {
+  width: calc(100% - 8em);
 }
 
 .tracking-cctray-group-builds {
   border: none;
-  margin: 0;
-  padding: 0 0 1.5em 0;
+  margin: 1em;
+  padding: 0;
 }
 
 .tracking-cctray-group-builds-legend {
   color: $mid-grey;
-  margin-bottom: 1em;
   float: left;
 }
 
@@ -67,6 +38,7 @@
 
 .tracking-new-project {
   color: $new-text;
+  margin-left: 0.5em;
 }
 
 .tray {
@@ -85,12 +57,8 @@
   display: inline;
 }
 
-.tray-content {
-  padding: 1em;
-}
-
 .tray-settings {
-  padding: 1em;
+  margin: 1em;
 }
 
 .tray-settings-danger-zone {
@@ -106,25 +74,7 @@
 }
 
 .tray-settings-danger-zone-content {
-  padding: 1em;
-}
-
-.tray-settings-table {
-  width: 100%;
-  margin: 0 0 1em 0;
-  tr {
-    height: 3rem;
-  }
-  tr:nth-child(even) {
-    background-color: $light-grey;
-  }
-  td {
-    padding-left: 1.5rem;
-  }
-  .checkbox {
-    top: -5px;
-    font-size: 1.1rem;
-  }
+  margin: 1em;
 }
 
 .tray-settings-table-heading {
@@ -164,10 +114,10 @@
 }
 
 .tray-refresh {
-  padding: 1em 1em 0 1em;
+  margin: 1em 1em 0 1em;
 }
 
 .tray-refresh-last-fetch {
   color: $mid-grey;
-  padding-left: 1em;
+  margin-left: 1em;
 }

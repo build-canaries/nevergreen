@@ -17,14 +17,16 @@ module.exports = React.createClass({
   render() {
     return (
       <div className='tracking-cctray-group-cctray-form'>
-        <label htmlFor='message-input' className='success-message-prompt'>message</label>
-        <input ref='messageInput'
-               id="message-input"
-               className='tracking-cctray-group-cctray-form-input success-message-input'
-               type='text'
-               placeholder='text or image url'
-               valueLink={this.linkState('message')}
-               onKeyPress={this._onKeyPress}/>
+        <span className='text-input'>
+          <label htmlFor='message-input'>message</label>
+          <input ref='messageInput'
+                 id="message-input"
+                 className='tracking-cctray-group-cctray-form-input success-message-input'
+                 type='text'
+                 placeholder='text or image url'
+                 valueLink={this.linkState('message')}
+                 onKeyPress={this._onKeyPress}/>
+        </span>
         <button ref='addButton' className='button-primary' onClick={this._onClick}>add</button>
         <ValidationMessages messages={this.props.validationMessages}/>
       </div>

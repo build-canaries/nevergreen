@@ -1,29 +1,22 @@
 .success-message {
-  font-size: 1.5rem;
-  width: calc(100% - 15em);
-  margin: 1em;
-}
-
-.success-message-prompt {
-  width: 4.5em;
-  display: inline-block;
+  font-family: $monospace;
+  margin-right: 1em;
 }
 
 .success-remove {
-  vertical-align: top;
   font-size: 0.3em;
   padding: 1em;
 }
 
 .success-message-input {
-  width: calc(100% - 10em);
+  width: calc(100% - 11em);
+  font-family: $monospace;
 }
 
 .success-list {
   list-style: none;
   display: flex;
   flex-flow: row wrap;
-  padding: 0.5em 0.5em 0.5em 2em;
 }
 
 .success-text-list {
@@ -31,15 +24,15 @@
 }
 
 .success-list-image {
-  width: 400px;
-  height: 225px;
+  width: 496px;
+  height: 279px;
   object-fit: contain;
   border: 1px solid $mid-grey;
   background-color: black;
 }
 
 .success-item {
-  padding: 0.1em;
+  margin: 1em;
 }
 
 .success-item.image {

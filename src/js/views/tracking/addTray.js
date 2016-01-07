@@ -21,32 +21,35 @@ module.exports = React.createClass({
   render() {
     return (
       <div className='tracking-cctray-group-cctray-form'>
-        <label htmlFor='cctray-url' className='tracking-cctray-group-cctray-form-label'>url</label>
-        <input ref='urlInput'
-               id='cctray-url'
-               className='tracking-cctray-group-cctray-form-input'
-               type='text'
-               placeholder='e.g. http(s)://host:port/cc.xml'
-               valueLink={this.linkState('url')}
-               onKeyPress={this._onKeyPress}/>
+        <span className='text-input'>
+          <label htmlFor='cctray-url'>url</label>
+          <input ref='urlInput'
+                 id='cctray-url'
+                 className='tracking-tray-url'
+                 type='text'
+                 placeholder='e.g. http(s)://host:port/cc.xml'
+                 valueLink={this.linkState('url')}
+                 onKeyPress={this._onKeyPress}/>
+        </span>
         <button ref='addButton' id='cctray-fetch' className='button-primary' onClick={this._onClick}>add</button>
         <div>
-          <div id='authentication-group' className='tracking-cctray-group-authentication'>
-            <label htmlFor='username'>username</label>
-            <input ref='usernameInput'
-                   id='username'
-                   className='tracking-cctray-group-cctray-form-input-authentication tracking-cctray-group-cctray-form-input'
-                   type='text'
-                   valueLink={this.linkState('username')}
-                   onKeyPress={this._onKeyPress}/>
-            <label htmlFor='password'>password</label>
-            <input ref='passwordInput'
-                   id='password'
-                   className='tracking-cctray-group-cctray-form-input-authentication tracking-cctray-group-cctray-form-input'
-                   type='password'
-                   valueLink={this.linkState('password')}
-                   onKeyPress={this._onKeyPress}/>
-          </div>
+            <span className='text-input'>
+              <label htmlFor='username'>username</label>
+              <input ref='usernameInput'
+                     id='username'
+                     type='text'
+                     valueLink={this.linkState('username')}
+                     onKeyPress={this._onKeyPress}/>
+            </span>
+            <span className='text-input'>
+              <label htmlFor='password' className='text-label'>password</label>
+              <input ref='passwordInput'
+                     id='password'
+                     className='text-input'
+                     type='password'
+                     valueLink={this.linkState('password')}
+                     onKeyPress={this._onKeyPress}/>
+            </span>
         </div>
         <ValidationMessages messages={this.props.validationMessages}/>
       </div>

@@ -1,5 +1,8 @@
 .label-checkbox {
-  font-size: 17px;
+  font-size: 0.8em;
+  span {
+    margin-left: 0.8em;
+  }
   &:hover {
     cursor: pointer;
   }

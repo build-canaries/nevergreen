@@ -1,5 +1,4 @@
 const React = require('react')
-const _ = require('lodash')
 
 module.exports = React.createClass({
   displayName: 'TraySettings',
@@ -12,14 +11,22 @@ module.exports = React.createClass({
   render() {
     return (
       <section className='tray-settings'>
-        <table className='tray-settings-table'>
-          <tbody>
-          <tr>
-            <td className='tray-settings-table-heading'>uses auth?</td>
-            <td>{_.trim(this.props.tray.username) === '' ? 'no' : 'yes'}</td>
-          </tr>
-          </tbody>
-        </table>
+        <div className='text-input'>
+          <label htmlFor='settings-username'>username</label>
+          <input id='settings-username'
+                 type='text'
+                 readOnly='true'
+                 placeholder='not set'
+                 value={this.props.tray.username}/>
+        </div>
+        <div className='text-input'>
+          <label htmlFor='settings-password'>password</label>
+          <input id='settings-password'
+                 type='password'
+                 readOnly='true'
+                 placeholder='not set'
+                 value={this.props.tray.password ? '******' : ''}/>
+        </div>
 
         <div className='tray-settings-danger-zone'>
           <h4 className='tray-settings-danger-zone-title'>
