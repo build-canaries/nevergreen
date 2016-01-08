@@ -13,8 +13,8 @@
 
 .monitor-project {
   float: left;
-  margin: 5px;
-  border-radius: 25px;
+  margin: 0.3em;
+  border-radius: 1.5em;
 }
 
 .monitor-healthy-building {
@@ -44,8 +44,6 @@
 .monitor-inner-container {
   display: table-cell;
   vertical-align: middle;
-  width: 100%;
-  padding: 0.1em;
 }
 
 .monitor-success-text {
@@ -63,5 +61,4 @@
 .monitor-time-broken {
   opacity: 0.5;
   font-style: italic;
-  width: 100%;
 }
