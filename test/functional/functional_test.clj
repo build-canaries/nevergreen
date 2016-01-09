@@ -2,13 +2,10 @@
   (:require [clojure.test :refer :all]
             [clj-webdriver.taxi :refer :all]
             [clj-webdriver.driver :refer [init-driver]]
-            [environ.core :refer [env]])
-  (import org.openqa.selenium.phantomjs.PhantomJSDriver
-          org.openqa.selenium.chrome.ChromeDriver
+            [environ.core :refer [env]]
+            [functional.helpers :refer :all])
+  (import org.openqa.selenium.chrome.ChromeDriver
           org.openqa.selenium.Dimension))
-
-(defn in? [seq elm]
-  (some #(= elm %) seq))
 
 (def snap-ci-xvfb-size (Dimension. 1280 1024))
 (def full-hd-tv-size (Dimension. 1920 1080))
@@ -32,33 +29,26 @@
 (use-fixtures :once functional-fixture)
 (use-fixtures :each details-on-failure)
 
-(defn nevergreen-under-test []
-  (let [url (or (env :functional-url) "http://localhost:5000")]
-    (println "Running against" url)
-    url))
-
-(defn ci-to-target []
-  (let [url (or (env :functional-url) "http://localhost:5050")]
-    (println "CI target" url)
-    url))
-
 (def expected-projects ["success building project", "failure sleeping project", "failure building project"])
 
 (deftest simple-journey
   (let [base-url (nevergreen-under-test)
-        ci-taget (ci-to-target)]
+        tray-url (tray-url-to-fetch)
+        tray-username (tray-username-to-use)
+        tray-password (tray-password-to-use)]
     (to (str base-url "/#/tracking"))
 
-    (clear "#cctray-url")
-    (input-text "#cctray-url" (str ci-taget "/cctray.xml"))
+    (input "#cctray-url" tray-url)
+    (input "#username" tray-username)
+    (input "#password" tray-password)
     (click "#cctray-fetch")
 
-    (wait-until #(exists? ".testing-projects"))
+    (wait-until #(visible? ".testing-projects"))
 
     (click ".testing-include-all")
     (click "#monitor")
 
-    (wait-until #(exists? "#interesting-projects"))
+    (wait-until #(visible? "#interesting-projects"))
 
     (let [actual-project-list (elements "#interesting-projects > li")]
       (is (= (count expected-projects) (count actual-project-list)) "Incorrect amount of projects displayed"))

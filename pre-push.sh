@@ -10,27 +10,11 @@ hash lein 2>/dev/null || {
     exit 1
 }
 
-echo '[Step 1 of 7] Updating node packages...'
-npm prune
-npm install
+echo '[Step 1 of 2] Running the ci test script...'
+./ci/test.sh
 
-echo '[Step 2 of 7] Compiling...'
-npm run sass && npm build
-
-echo '[Step 3 of 7] Running the ui unit tests...'
-npm test
-
-echo '[Step 4 of 7] Linting the JavaScript...'
-npm run lint
-
-echo '[Step 5 of 7] Running the server unit tests...'
-lein do clean, midje 'nevergreen.*'
-
-echo '[Step 6 of 7] Running the functional tests (the server must be running!)...'
+echo '[Step 2 of 2] Running the functional tests (the server must be running!)...'
 export JVM_OPTS="-Dwebdriver.chrome.driver=./node_modules/chromedriver/bin/chromedriver"
 lein test functional.functional-test
-
-echo '[Step 7 of 7] Building an uberjar...'
-lein uberjar
 
 echo 'Done! Check the output for any errors!'
