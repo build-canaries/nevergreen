@@ -2,6 +2,7 @@ module.exports = {
   AppInit: 'app-init',
   RestoreConfiguration: 'restore-configuration',
   TrayAdd: 'tray-add',
+  TrayUpdate: 'tray-update',
   TrayRemove: 'tray-remove',
   TrayInvalidInput: 'tray-invalid-input',
   PasswordEncrypted: 'password-encrypted',

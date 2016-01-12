@@ -117,4 +117,47 @@ describe('tray actions', () => {
     })
   })
 
+  describe('updating a tray', () => {
+    beforeEach(() => {
+      validate.mockReturnValue(null) // validate.js returns null on success
+    })
+
+    it('dispatches invalid input action when validation fails', () => {
+      validate.mockReturnValue('some-validation-messages')
+
+      subject.addTray('some-url', 'some-username', 'some-password')
+
+      expect(AppDispatcher.dispatch).toBeCalledWith({
+        type: Constants.TrayInvalidInput,
+        url: 'some-url',
+        username: 'some-username',
+        password: 'some-password',
+        messages: 'some-validation-messages'
+      })
+    })
+
+    it('dispatches tray update with the given id', () => {
+      subject.updateTray('some-id', 'some-url', 'some-username', 'some-password')
+
+      expect(AppDispatcher.dispatch).toBeCalledWith({
+        type: Constants.TrayUpdate,
+        trayId: 'some-id',
+        url: 'some-url',
+        username: 'some-username'
+      })
+    })
+
+    it('dispatches password encrypted if the tray has a password', () => {
+      subject.updateTray('some-id', 'some-url', 'some-username', 'some-password')
+
+      promiseMock.then.mock.calls[0][0]({password: 'some-encrypted-password'}) // call the callback passed to the promise mock
+
+      expect(AppDispatcher.dispatch).toBeCalledWith({
+        type: Constants.PasswordEncrypted,
+        trayId: 'some-id',
+        password: 'some-encrypted-password'
+      })
+    })
+  })
+
 })
