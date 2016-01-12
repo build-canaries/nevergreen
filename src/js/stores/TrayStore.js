@@ -80,6 +80,7 @@ const dispatchToken = AppDispatcher.register(action => {
       break
     }
     case Constants.TrayAdd:
+    case Constants.TrayUpdate:
     {
       addTray(action)
       clearValidation()
