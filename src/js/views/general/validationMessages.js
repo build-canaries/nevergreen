@@ -1,6 +1,8 @@
 const React = require('react')
 
 module.exports = React.createClass({
+  displayName: 'Tray',
+
   propTypes: {
     messages: React.PropTypes.arrayOf(React.PropTypes.string)
   },

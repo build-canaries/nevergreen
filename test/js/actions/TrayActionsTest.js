@@ -44,7 +44,7 @@ describe('tray actions', () => {
         url: 'some-url',
         username: 'some-username',
         password: 'some-password',
-        messages: 'some-validation-messages'
+        errors: 'some-validation-messages'
       })
     })
 

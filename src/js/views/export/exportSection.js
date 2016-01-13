@@ -1,5 +1,6 @@
 const React = require('react')
 const ConfigurationStore = require('../../stores/ConfigurationStore')
+const UiMessageStore = require('../../stores/UiMessageStore')
 const ConfigurationActions = require('../../actions/ConfigurationActions')
 const Import = require('./import')
 const Export = require('./export')
@@ -9,8 +10,8 @@ function getStateFromStore() {
     exporting: ConfigurationStore.isExporting(),
     configuration: ConfigurationStore.getConfiguration(),
     importing: ConfigurationStore.isImporting(),
-    importErrors: ConfigurationStore.getImportErrors(),
-    importInfos: ConfigurationStore.getImportInfos()
+    importErrors: UiMessageStore.getImportErrors(),
+    importInfos: UiMessageStore.getImportInfos()
   }
 }
 
@@ -22,11 +23,13 @@ module.exports = React.createClass({
 
   componentDidMount() {
     ConfigurationStore.addListener(this._onChange)
+    UiMessageStore.addListener(this._onChange)
     ConfigurationActions.refreshConfiguration()
   },
 
   componentWillUnmount() {
     ConfigurationStore.removeListener(this._onChange)
+    UiMessageStore.removeListener(this._onChange)
   },
 
   render() {

@@ -12,34 +12,27 @@ const dispatchToken = AppDispatcher.register(action => {
     case Constants.AppInit:
     {
       _storeState = {
-        configuration: {},
+        configuration: action.configuration,
         importing: false,
-        exporting: true,
-        importErrors: [],
-        importInfos: []
+        exporting: true
       }
       break
     }
     case Constants.RestoreConfiguration:
     {
       _storeState.importing = false
-      _storeState.importInfos = action.messages
       break
     }
     case Constants.ImportingData:
     {
       _storeState.importing = true
       _storeState.exporting = true
-      _storeState.importErrors = []
-      _storeState.importInfos = []
       break
     }
     case Constants.ImportError:
     {
       _storeState.importing = false
       _storeState.exporting = false
-      _storeState.importErrors = action.messages
-      _storeState.importInfos = []
       break
     }
     case Constants.ExportData:
@@ -71,14 +64,6 @@ module.exports = {
 
   isExporting() {
     return _storeState.exporting
-  },
-
-  getImportErrors() {
-    return _storeState.importErrors
-  },
-
-  getImportInfos() {
-    return _storeState.importInfos
   },
 
   addListener(callback) {

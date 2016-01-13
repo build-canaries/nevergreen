@@ -15,10 +15,6 @@ function randomFrom(arr) {
   return arr[Math.floor(Math.random() * arr.length)]
 }
 
-function clearValidation() {
-  _storeState.validation = {}
-}
-
 const dispatchToken = AppDispatcher.register(action => {
   switch (action.type) {
     case Constants.AppInit:
@@ -26,19 +22,16 @@ const dispatchToken = AppDispatcher.register(action => {
       _storeState = action.configuration[storageKey] || {
           messages: ['=(^.^)=']
         }
-      _storeState.validation = {}
       break
     }
     case Constants.RestoreConfiguration:
     {
       _storeState = action.configuration[storageKey]
-      _storeState.validation = {}
       break
     }
     case Constants.MessageAdd:
     {
       _storeState.messages = _storeState.messages.concat(action.message)
-      clearValidation()
       break
     }
     case Constants.MessageRemove:
@@ -46,15 +39,6 @@ const dispatchToken = AppDispatcher.register(action => {
       _.remove(_storeState.messages, msg => {
         return msg === action.message
       })
-      clearValidation()
-      break
-    }
-    case Constants.MessageInvalidInput:
-    {
-      _storeState.validation = {
-        validationMessages: action.validationMessages,
-        message: action.message
-      }
       break
     }
     default :

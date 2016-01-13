@@ -28,7 +28,7 @@ module.exports = {
     if (validationMessages) {
       AppDispatcher.dispatch({
         type: Constants.MessageInvalidInput,
-        validationMessages: validationMessages,
+        errors: validationMessages,
         message: message
       })
     } else {

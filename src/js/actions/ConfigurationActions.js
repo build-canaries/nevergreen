@@ -26,10 +26,10 @@ const _importValidation = _storesWithConfiguration.reduce((previous, current) =>
   return previous
 }, {})
 
-function dispatchError(messages) {
+function dispatchError(errors) {
   AppDispatcher.dispatch({
     type: Constants.ImportError,
-    messages: messages
+    errors: errors
   })
 }
 
@@ -53,7 +53,7 @@ module.exports = {
           AppDispatcher.dispatch({
             type: Constants.RestoreConfiguration,
             configuration: data,
-            messages: ['Successfully imported']
+            errors: ['Successfully imported']
           })
           AppDispatcher.dispatch({
             type: Constants.ExportData,

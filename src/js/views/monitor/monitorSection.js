@@ -7,7 +7,7 @@ const InterestingProjectsStore = require('../../stores/InterestingProjectsStore'
 const InterestingProjectActions = require('../../actions/InterestingProjectActions')
 const TrayStore = require('../../stores/TrayStore')
 const SelectedProjectsStore = require('../../stores/SelectedProjectsStore')
-const Error = require('../general/errorView')
+const ValidationMessages = require('../general/validationMessages')
 
 function getStateFromStore() {
   return {
@@ -30,7 +30,15 @@ module.exports = React.createClass({
     if (!this.state.loaded) {
       content = <Loading />
     } else if (this.state.error) {
-      content = <Error status={this.state.error.status} reason={this.state.error.message}/>
+      const errorMessages = [
+        'Unable to fetch projects because of an error:',
+        `${this.state.error.status} - ${this.state.error.message}`
+      ]
+      content = (
+        <div className='monitor-error'>
+          <ValidationMessages messages={errorMessages}/>
+        </div>
+      )
     } else if (this._hasProjects()) {
       content = <InterestingProjects projects={this.state.projects}/>
     } else {

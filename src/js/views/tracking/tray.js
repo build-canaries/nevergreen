@@ -2,7 +2,7 @@ const React = require('react')
 const Projects = require('./projects')
 const TraySettings = require('./traySettings')
 const Loading = require('../general/loading')
-const Error = require('../general/errorView')
+const ValidationMessages = require('../general/validationMessages')
 const moment = require('moment')
 
 module.exports = React.createClass({
@@ -50,7 +50,11 @@ module.exports = React.createClass({
       if (this.props.tray.fetching) {
         subContent = <Loading/>
       } else if (this.props.tray.error) {
-        subContent = <Error status={this.props.tray.error.status} reason={this.props.tray.error.message}/>
+        const errorMessages = [
+          'Unable to fetch projects because of an error:',
+          `${this.props.tray.error.status} - ${this.props.tray.error.message}`
+        ]
+        subContent = <ValidationMessages messages={errorMessages}/>
       } else {
         subContent = <Projects trayId={this.props.tray.trayId}/>
       }
@@ -59,7 +63,7 @@ module.exports = React.createClass({
         <div>
           <div className='tray-refresh'>
             <button className='button' onClick={this.props.refreshTray}>
-              <span className='icon-loop2'></span>
+              <span className='icon-loop2'/>
               <span className='text-with-icon'>Refresh tray</span>
             </button>
             <span className='tray-refresh-last-fetch'>last refreshed {this.state.lastFetched} ago</span>
@@ -76,12 +80,12 @@ module.exports = React.createClass({
       <section className='tray'>
         <div className='tray-title-container'>
           <button className='tray-hidden-button' onClick={this._toggleHidden} title={hideText}>
-            <span className={'icon-' + (this.state.hidden ? 'circle-down' : 'circle-up') }></span>
+            <span className={'icon-' + (this.state.hidden ? 'circle-down' : 'circle-up') }/>
             <span className='visually-hidden'>{hideText}</span>
           </button>
           <h3 className='tray-title'>{this.props.tray.url}</h3>
           <button className='tray-settings-button' onClick={this._toggleSettingsView} title={settingsText}>
-            <span className={'icon-' + (this.state.showSettings ? 'list' : 'cog') }></span>
+            <span className={'icon-' + (this.state.showSettings ? 'list' : 'cog') }/>
             <span className='visually-hidden'>{settingsText}</span>
           </button>
         </div>

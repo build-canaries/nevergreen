@@ -9,6 +9,7 @@ const InterestingProjectsStore = require('./InterestingProjectsStore')
 const SelectedProjectsStore = require('./SelectedProjectsStore')
 const SuccessStore = require('./SuccessStore')
 const TrayStore = require('./TrayStore')
+const UiMessageStore = require('./UiMessageStore')
 const Package = require('../../../package')
 
 const CHANGE_EVENT = 'app-change'
@@ -20,7 +21,8 @@ const allStoreTokens = [
   InterestingProjectsStore.dispatchToken,
   SelectedProjectsStore.dispatchToken,
   SuccessStore.dispatchToken,
-  TrayStore.dispatchToken
+  TrayStore.dispatchToken,
+  UiMessageStore.dispatchToken
 ]
 
 let _storeState = {

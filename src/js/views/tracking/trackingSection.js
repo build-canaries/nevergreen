@@ -2,12 +2,13 @@ const React = require('react')
 const AddTray = require('./addTray')
 const Tray = require('./tray')
 const TrayStore = require('../../stores/TrayStore')
+const UiMessageStore = require('../../stores/UiMessageStore')
 const TrayActions = require('../../actions/TrayActions')
 
 function getStateFromStore() {
   return {
     trays: TrayStore.getAll(),
-    validation: TrayStore.getValidationObject()
+    errors: UiMessageStore.getAddTrayErrors()
   }
 }
 
@@ -20,17 +21,19 @@ module.exports = React.createClass({
 
   componentWillMount() {
     TrayStore.addListener(this._onChange)
+    UiMessageStore.addListener(this._onChange)
   },
 
   componentWillUnmount() {
     TrayStore.removeListener(this._onChange)
+    UiMessageStore.removeListener(this._onChange)
   },
 
   render() {
     return (
       <section className='dashboard-main-section'>
         <h2 className='visually-hidden'>Tracking</h2>
-        <AddTray addTray={this._addTray} validationMessages={this.state.validation.messages}/>
+        <AddTray addTray={this._addTray} validationMessages={this.state.errors}/>
 
         <div>
           {

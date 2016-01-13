@@ -30,7 +30,7 @@ module.exports = {
         url: url,
         username: username,
         password: password,
-        messages: validationMessages
+        errors: validationMessages
       })
     } else {
       AppDispatcher.dispatch({

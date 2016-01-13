@@ -34,18 +34,13 @@ describe('configuration store', () => {
     it('sets exporting to true', () => {
       expect(store.isExporting()).toBeTruthy()
     })
-
-    it('clears the import messages', () => {
-      expect(store.getImportErrors()).toEqual([])
-      expect(store.getImportInfos()).toEqual([])
-    })
   })
 
   describe('import error', () => {
     beforeEach(() => {
       callback({
         type: Constants.ImportError,
-        messages: ['some-error']
+        errors: ['some-error']
       })
     })
 
@@ -55,11 +50,6 @@ describe('configuration store', () => {
 
     it('sets exporting to false', () => {
       expect(store.isExporting()).toBeFalsy()
-    })
-
-    it('sets the import messages', () => {
-      expect(store.getImportErrors()).toEqual(['some-error'])
-      expect(store.getImportInfos()).toEqual([])
     })
   })
 
@@ -86,6 +76,5 @@ describe('configuration store', () => {
       messages: ['some-message']
     })
     expect(store.isImporting()).toBeFalsy()
-    expect(store.getImportInfos()).toEqual(['some-message'])
   })
 })

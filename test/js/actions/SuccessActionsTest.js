@@ -23,7 +23,7 @@ describe('success actions', () => {
 
     expect(AppDispatcher.dispatch).toBeCalledWith({
       type: Constants.MessageInvalidInput,
-      validationMessages: 'some message',
+      errors: 'some message',
       message: ''
     })
   })

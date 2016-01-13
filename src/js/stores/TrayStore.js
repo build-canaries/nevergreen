@@ -51,17 +51,6 @@ function setTrayPassword(trayId, password) {
   _storeState.trays[trayId].password = password
 }
 
-function clearValidation() {
-  _storeState.validation = {}
-}
-
-function setValidation(action) {
-  _storeState.validation.messages = action.messages
-  _storeState.validation.url = action.url
-  _storeState.validation.username = action.username
-  _storeState.validation.password = action.password
-}
-
 const dispatchToken = AppDispatcher.register(action => {
   switch (action.type) {
     case Constants.AppInit:
@@ -69,13 +58,11 @@ const dispatchToken = AppDispatcher.register(action => {
       _storeState = action.configuration[storageKey] || {
           trays: {}
         }
-      _storeState.validation = {}
       break
     }
     case Constants.RestoreConfiguration:
     {
       _storeState = action.configuration[storageKey]
-      _storeState.validation = {}
       break
     }
     case Constants.PasswordEncrypted:
@@ -87,17 +74,11 @@ const dispatchToken = AppDispatcher.register(action => {
     case Constants.TrayAdd:
     {
       addTray(action)
-      clearValidation()
       break
     }
     case Constants.TrayUpdate:
     {
       updateTray(action)
-      break
-    }
-    case Constants.TrayInvalidInput:
-    {
-      setValidation(action)
       break
     }
     case Constants.TrayRemove:
@@ -131,7 +112,7 @@ const dispatchToken = AppDispatcher.register(action => {
     }
   }
 
-  LocalRepository.setItem(storageKey, _.omit(_storeState, 'validation'))
+  LocalRepository.setItem(storageKey, _storeState)
   eventEmitter.emit(CHANGE_EVENT)
   return true
 })
@@ -145,10 +126,6 @@ module.exports = {
 
   getById(trayId) {
     return _storeState.trays[trayId]
-  },
-
-  getValidationObject() {
-    return _storeState.validation
   },
 
   addListener(callback) {
