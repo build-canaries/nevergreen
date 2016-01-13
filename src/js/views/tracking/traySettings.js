@@ -1,32 +1,51 @@
 const React = require('react')
+const LinkedStateMixin = require('react-addons-linked-state-mixin')
 
 module.exports = React.createClass({
+  mixins: [LinkedStateMixin],
+
   displayName: 'TraySettings',
 
   propTypes: {
     tray: React.PropTypes.object.isRequired,
-    removeTray: React.PropTypes.func.isRequired
+    removeTray: React.PropTypes.func.isRequired,
+    updateTray: React.PropTypes.func.isRequired
+  },
+
+  getInitialState() {
+    return {
+      url: this.props.tray.url,
+      username: this.props.tray.username,
+      password: this.props.tray.password
+    }
+  },
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      url: nextProps.tray.url,
+      username: nextProps.tray.username,
+      password: nextProps.tray.password
+    })
   },
 
   render() {
     return (
       <section className='tray-settings'>
         <div className='text-input'>
-          <label htmlFor='settings-username'>username</label>
-          <input id='settings-username'
+          <label htmlFor={this.props.tray.trayId + 'settings-username'}>username</label>
+          <input id={this.props.tray.trayId + 'settings-username'}
                  type='text'
-                 readOnly='true'
                  placeholder='not set'
-                 value={this.props.tray.username}/>
+                 valueLink={this.linkState('username')}/>
         </div>
         <div className='text-input'>
-          <label htmlFor='settings-password'>password</label>
-          <input id='settings-password'
+          <label htmlFor={this.props.tray.trayId + 'settings-password'}>password</label>
+          <input id={this.props.tray.trayId + 'settings-password'}
                  type='password'
-                 readOnly='true'
                  placeholder='not set'
-                 value={this.props.tray.password ? '******' : ''}/>
+                 valueLink={this.linkState('password')}/>
         </div>
+        <button className='button-primary tray-settings-update-button' onClick={this._updateTray}>update tray</button>
 
         <div className='tray-settings-danger-zone'>
           <h4 className='tray-settings-danger-zone-title'>
@@ -42,5 +61,9 @@ module.exports = React.createClass({
         </div>
       </section>
     )
+  },
+
+  _updateTray() {
+    this.props.updateTray(this.props.tray.trayId, this.state.url, this.state.username, this.state.password)
   }
 })

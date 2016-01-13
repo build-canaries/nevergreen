@@ -18,6 +18,11 @@ function addTray(action) {
   }
 }
 
+function updateTray(action) {
+  _storeState.trays[action.trayId].url = action.url
+  _storeState.trays[action.trayId].username = action.username
+}
+
 function removeTray(trayId) {
   delete _storeState.trays[trayId]
 }
@@ -80,10 +85,14 @@ const dispatchToken = AppDispatcher.register(action => {
       break
     }
     case Constants.TrayAdd:
-    case Constants.TrayUpdate:
     {
       addTray(action)
       clearValidation()
+      break
+    }
+    case Constants.TrayUpdate:
+    {
+      updateTray(action)
       break
     }
     case Constants.TrayInvalidInput:

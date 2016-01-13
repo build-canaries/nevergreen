@@ -43,20 +43,6 @@ describe('tray store', () => {
     })
   })
 
-  it('updates a tray', () => {
-    callback({
-      type: Constants.TrayUpdate,
-      trayId: 'some-id',
-      url: 'some-url',
-      username: 'some-username'
-    })
-    expect(store.getById('some-id')).toEqual({
-      trayId: 'some-id',
-      url: 'some-url',
-      username: 'some-username'
-    })
-  })
-
   describe('once a tray is added', () => {
     beforeEach(() => {
       callback({
@@ -64,6 +50,20 @@ describe('tray store', () => {
         trayId: 'some-id',
         url: 'some-url',
         username: 'some-username'
+      })
+    })
+
+    it('updates a tray', () => {
+      callback({
+        type: Constants.TrayUpdate,
+        trayId: 'some-id',
+        url: 'another-url',
+        username: 'another-username'
+      })
+      expect(store.getById('some-id')).toEqual({
+        trayId: 'some-id',
+        url: 'another-url',
+        username: 'another-username'
       })
     })
 

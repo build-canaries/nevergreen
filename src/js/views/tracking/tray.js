@@ -11,7 +11,8 @@ module.exports = React.createClass({
   propTypes: {
     tray: React.PropTypes.object.isRequired,
     removeTray: React.PropTypes.func.isRequired,
-    refreshTray: React.PropTypes.func.isRequired
+    refreshTray: React.PropTypes.func.isRequired,
+    updateTray: React.PropTypes.func.isRequired
   },
 
   getInitialState() {
@@ -41,7 +42,8 @@ module.exports = React.createClass({
     let content
 
     if (this.state.showSettings) {
-      content = <TraySettings tray={this.props.tray} removeTray={this.props.removeTray}/>
+      content =
+        <TraySettings tray={this.props.tray} removeTray={this.props.removeTray} updateTray={this.props.updateTray}/>
     } else {
       let subContent
 

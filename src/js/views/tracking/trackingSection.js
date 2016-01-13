@@ -38,7 +38,8 @@ module.exports = React.createClass({
               return <Tray key={tray.trayId}
                            tray={tray}
                            removeTray={this._removeTray.bind(this, tray.trayId)}
-                           refreshTray={this._refreshTray.bind(this, tray)}/>
+                           refreshTray={this._refreshTray.bind(this, tray)}
+                           updateTray={this._updateTray}/>
             })
           }
         </div>
@@ -56,6 +57,10 @@ module.exports = React.createClass({
 
   _refreshTray(tray) {
     TrayActions.refreshTray(tray)
+  },
+
+  _updateTray(trayId, url, username, password) {
+    TrayActions.updateTray(trayId, url, username, password)
   },
 
   _onChange() {

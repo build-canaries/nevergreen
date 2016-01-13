@@ -5,6 +5,7 @@ const uuid = require('node-uuid')
 const validate = require('validate.js')
 const Constants = require('../constants/NevergreenConstants')
 const moment = require('moment')
+const trayStore = require('../stores/TrayStore')
 
 const _addTrayValidation = {
   url: {
@@ -15,58 +16,72 @@ const _addTrayValidation = {
   }
 }
 
-function _refreshTray(tray) {
-  AppDispatcher.dispatch({
-    type: Constants.ProjectsFetching,
-    trayId: tray.trayId
-  })
-  projectsGateway.fetchAll([tray]).then(projects => {
-    AppDispatcher.dispatch({
-      type: Constants.ProjectsFetched,
-      trayId: tray.trayId,
-      projects: projects,
-      timestamp: moment().format()
-    })
-  }).catch(err => {
-    AppDispatcher.dispatch({
-      type: Constants.ProjectsFetchError,
-      trayId: tray.trayId,
-      error: err,
-      timestamp: moment().format()
-    })
-  })
-}
+module.exports = {
 
-function _handleTray(id, url, username, password) {
-  const requiresAuth = username && password
-  const trayId = id || uuid.v4()
+  addTray(url, username, password) {
+    const requiresAuth = username && password
+    const trayId = uuid.v4()
 
-  const validationMessages = validate({url: url}, _addTrayValidation)
+    const validationMessages = validate({url: url}, _addTrayValidation)
 
-  if (validationMessages) {
+    if (validationMessages) {
+      AppDispatcher.dispatch({
+        type: Constants.TrayInvalidInput,
+        url: url,
+        username: username,
+        password: password,
+        messages: validationMessages
+      })
+    } else {
+      AppDispatcher.dispatch({
+        type: Constants.TrayAdd,
+        trayId: trayId,
+        url: url,
+        username: username
+      })
+
+      if (requiresAuth) {
+        securityGateway.encryptPassword(password).then(encryptPasswordResponse => {
+          AppDispatcher.dispatch({
+            type: Constants.PasswordEncrypted,
+            trayId: trayId,
+            password: encryptPasswordResponse.password
+          })
+          this.refreshTray({
+            trayId: trayId,
+            url: url,
+            username: username,
+            password: encryptPasswordResponse.password
+          })
+        })
+      } else {
+        this.refreshTray({
+          trayId: trayId,
+          url: url
+        })
+      }
+    }
+  },
+
+  updateTray(trayId, url, username, password) {
+    const passwordSame = trayStore.getById(trayId).password === password
+    const newPassword = passwordSame ? null : password
+
     AppDispatcher.dispatch({
-      type: Constants.TrayInvalidInput,
-      url: url,
-      username: username,
-      password: password,
-      messages: validationMessages
-    })
-  } else {
-    AppDispatcher.dispatch({
-      type: id ? Constants.TrayUpdate : Constants.TrayAdd,
+      type: Constants.TrayUpdate,
       trayId: trayId,
       url: url,
       username: username
     })
 
-    if (requiresAuth) {
-      securityGateway.encryptPassword(password).then(encryptPasswordResponse => {
+    if (newPassword) {
+      securityGateway.encryptPassword(newPassword).then(encryptPasswordResponse => {
         AppDispatcher.dispatch({
           type: Constants.PasswordEncrypted,
           trayId: trayId,
           password: encryptPasswordResponse.password
         })
-        _refreshTray({
+        this.refreshTray({
           trayId: trayId,
           url: url,
           username: username,
@@ -74,22 +89,13 @@ function _handleTray(id, url, username, password) {
         })
       })
     } else {
-      _refreshTray({
+      this.refreshTray({
         trayId: trayId,
-        url: url
+        url: url,
+        username: username,
+        password: password
       })
     }
-  }
-}
-
-module.exports = {
-
-  addTray(url, username, password) {
-    _handleTray(null, url, username, password)
-  },
-
-  updateTray(trayId, url, username, password) {
-    _handleTray(trayId, url, username, password)
   },
 
   removeTray(trayId) {
@@ -100,7 +106,25 @@ module.exports = {
   },
 
   refreshTray(tray) {
-    _refreshTray(tray)
+    AppDispatcher.dispatch({
+      type: Constants.ProjectsFetching,
+      trayId: tray.trayId
+    })
+    projectsGateway.fetchAll([tray]).then(projects => {
+      AppDispatcher.dispatch({
+        type: Constants.ProjectsFetched,
+        trayId: tray.trayId,
+        projects: projects,
+        timestamp: moment().format()
+      })
+    }).catch(err => {
+      AppDispatcher.dispatch({
+        type: Constants.ProjectsFetchError,
+        trayId: tray.trayId,
+        error: err,
+        timestamp: moment().format()
+      })
+    })
   }
 
 }

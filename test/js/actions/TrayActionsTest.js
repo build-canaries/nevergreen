@@ -3,7 +3,7 @@ jest.dontMock('../../../src/js/actions/TrayActions')
 
 describe('tray actions', () => {
 
-  let subject, AppDispatcher, Constants, validate, projectsGateway, securityGateway, promiseMock, moment, uuid
+  let subject, AppDispatcher, Constants, validate, projectsGateway, securityGateway, promiseMock, moment, uuid, trayStore
 
   beforeEach(() => {
     subject = require('../../../src/js/actions/TrayActions')
@@ -14,6 +14,7 @@ describe('tray actions', () => {
     securityGateway = require('../../../src/js/gateways/securityGateway')
     moment = require('moment')
     uuid = require('node-uuid')
+    trayStore = require('../../../src/js/stores/TrayStore')
 
     promiseMock = {
       then: jest.genMockFunction(),
@@ -29,7 +30,7 @@ describe('tray actions', () => {
 
   describe('adding a tray', () => {
     beforeEach(() => {
-      validate.mockReturnValue(null) // validate.js returns null on success
+      validate.mockReturnValue(undefined) // validate.js returns undefined on success
       uuid.v4.mockReturnValue('some-uuid')
     })
 
@@ -119,21 +120,7 @@ describe('tray actions', () => {
 
   describe('updating a tray', () => {
     beforeEach(() => {
-      validate.mockReturnValue(null) // validate.js returns null on success
-    })
-
-    it('dispatches invalid input action when validation fails', () => {
-      validate.mockReturnValue('some-validation-messages')
-
-      subject.addTray('some-url', 'some-username', 'some-password')
-
-      expect(AppDispatcher.dispatch).toBeCalledWith({
-        type: Constants.TrayInvalidInput,
-        url: 'some-url',
-        username: 'some-username',
-        password: 'some-password',
-        messages: 'some-validation-messages'
-      })
+      trayStore.getById.mockReturnValue({password: 'existing-password'})
     })
 
     it('dispatches tray update with the given id', () => {
@@ -153,6 +140,16 @@ describe('tray actions', () => {
       promiseMock.then.mock.calls[0][0]({password: 'some-encrypted-password'}) // call the callback passed to the promise mock
 
       expect(AppDispatcher.dispatch).toBeCalledWith({
+        type: Constants.PasswordEncrypted,
+        trayId: 'some-id',
+        password: 'some-encrypted-password'
+      })
+    })
+
+    it('does not dispatch password encrypted if the given password is the same as the current tray password', () => {
+      subject.updateTray('some-id', 'some-url', 'some-username', 'existing-password')
+
+      expect(AppDispatcher.dispatch).not.toBeCalledWith({
         type: Constants.PasswordEncrypted,
         trayId: 'some-id',
         password: 'some-encrypted-password'
