@@ -1,6 +1,8 @@
 const React = require('react')
 
 module.exports = React.createClass({
+  displayName: 'Image',
+
   propTypes: {
     url: React.PropTypes.string.isRequired
   },
@@ -8,7 +10,7 @@ module.exports = React.createClass({
   render() {
     return (
       <div id='success-image'>
-        <img src={this.props.url} className="monitor-success-image" alt=""/>
+        <img src={this.props.url} className='monitor-success-image' alt=''/>
       </div>
     )
   }

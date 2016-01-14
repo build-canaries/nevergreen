@@ -43,11 +43,11 @@ module.exports = React.createClass({
         <legend className='tracking-cctray-group-builds-legend'>Available projects</legend>
         <div className='tracking-cctray-group-build-toggles'>
           <button className='testing-include-all button' onClick={this._includeAll}>
-            <span className='icon-checkbox-checked'></span>
+            <span className='icon-checkbox-checked'/>
             <span className='text-with-icon'>Include all</span>
           </button>
           <button className='button' onClick={this._excludeAll}>
-            <span className='icon-checkbox-unchecked'></span>
+            <span className='icon-checkbox-unchecked'/>
             <span className='text-with-icon'>Exclude all</span>
           </button>
         </div>

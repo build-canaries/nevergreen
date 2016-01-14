@@ -5,9 +5,11 @@ const ValidationMessages = require('../general/validationMessages')
 module.exports = React.createClass({
   mixins: [LinkedStateMixin],
 
+  displayName: 'AddMessage',
+
   propTypes: {
     addMessage: React.PropTypes.func.isRequired,
-    validationMessages: React.PropTypes.arrayOf(React.PropTypes.string)
+    errors: React.PropTypes.arrayOf(React.PropTypes.string)
   },
 
   getInitialState() {
@@ -28,13 +30,13 @@ module.exports = React.createClass({
                  onKeyPress={this._onKeyPress}/>
         </span>
         <button ref='addButton' className='button-primary' onClick={this._onClick}>add</button>
-        <ValidationMessages messages={this.props.validationMessages}/>
+        <ValidationMessages messages={this.props.errors}/>
       </div>
     )
   },
 
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.validationMessages) {
+    if (!nextProps.errors) {
       this.setState({message: ''})
     }
   },

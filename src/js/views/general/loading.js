@@ -1,6 +1,8 @@
 const React = require('react')
 
 module.exports = React.createClass({
+  displayName: 'Loading',
+
   render() {
     return (
       <div className='config-spinner'>

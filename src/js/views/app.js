@@ -14,6 +14,8 @@ function getStateFromStore() {
 }
 
 module.exports = React.createClass({
+  displayName: 'App',
+
   getInitialState() {
     return getStateFromStore()
   },

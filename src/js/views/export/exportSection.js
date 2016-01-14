@@ -16,6 +16,7 @@ function getStateFromStore() {
 }
 
 module.exports = React.createClass({
+  displayName: 'ExportSection',
 
   getInitialState() {
     return getStateFromStore()

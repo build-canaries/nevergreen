@@ -10,6 +10,8 @@ function getStateFromStore() {
 }
 
 module.exports = React.createClass({
+  displayName: 'DisplaySection',
+
   getInitialState() {
     return getStateFromStore()
   },

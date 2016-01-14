@@ -3,6 +3,8 @@ const ReactDOM = require('react-dom')
 const styler = require('../../controllers/styler')
 
 module.exports = React.createClass({
+  displayName: 'Message',
+
   propTypes: {
     message: React.PropTypes.string.isRequired
   },

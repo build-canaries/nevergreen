@@ -1,6 +1,8 @@
 const React = require('react')
 
 module.exports = React.createClass({
+  displayName: 'ConfigOption',
+
   propTypes: {
     name: React.PropTypes.string.isRequired,
     enabled: React.PropTypes.bool.isRequired,

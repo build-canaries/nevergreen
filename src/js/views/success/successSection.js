@@ -15,6 +15,8 @@ function getStateFromStore() {
 }
 
 module.exports = React.createClass({
+  displayName: 'SuccessSection',
+
   getInitialState() {
     return getStateFromStore()
   },
@@ -33,7 +35,7 @@ module.exports = React.createClass({
     return (
       <section className='dashboard-main-section'>
         <h2 className='visually-hidden'>Success</h2>
-        <AddMessage addMessage={this._addNewMessage} validationMessages={this.state.errors}/>
+        <AddMessage addMessage={this._addNewMessage} errors={this.state.errors}/>
 
         { this.state.messages.length > 0 ?
           <AddedMessages messages={this.state.messages} removeMessage={this._removeMessage}/> : '' }

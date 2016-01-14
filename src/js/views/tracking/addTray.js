@@ -5,6 +5,8 @@ const ValidationMessages = require('../general/validationMessages')
 module.exports = React.createClass({
   mixins: [LinkedStateMixin],
 
+  displayName: 'AddTray',
+
   propTypes: {
     addTray: React.PropTypes.func.isRequired,
     validationMessages: React.PropTypes.arrayOf(React.PropTypes.string)

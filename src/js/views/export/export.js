@@ -5,6 +5,8 @@ const Clipboard = require('clipboard')
 const Loading = require('../general/loading')
 
 module.exports = React.createClass({
+  displayName: 'Export',
+
   propTypes: {
     loading: React.PropTypes.bool,
     configuration: React.PropTypes.string

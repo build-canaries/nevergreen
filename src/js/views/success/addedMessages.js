@@ -1,7 +1,9 @@
 const React = require('react')
-const Message = require('./message')
+const RemoveLink = require('./removeLink')
 
 module.exports = React.createClass({
+  displayName: 'AddedMessages',
+
   propTypes: {
     messages: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
     removeMessage: React.PropTypes.func.isRequired
@@ -14,8 +16,12 @@ module.exports = React.createClass({
         <ul className='success-list success-text-list'>
           {
             this.props.messages.map(message => {
-              return <Message key={message} message={message}
-                              removeMessage={this.props.removeMessage.bind(null, message)}/>
+              return (
+                <li key={message} className='success-item'>
+                  <span className='success-message'>{message}</span>
+                  <RemoveLink removeMessage={this.props.removeMessage.bind(null, message)}/>
+                </li>
+              )
             })
           }
         </ul>

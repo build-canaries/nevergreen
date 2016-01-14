@@ -8,6 +8,8 @@ const Loading = require('../general/loading')
 module.exports = React.createClass({
   mixins: [LinkedStateMixin],
 
+  displayName: 'Import',
+
   propTypes: {
     loading: React.PropTypes.bool,
     errors: React.PropTypes.arrayOf(React.PropTypes.string),

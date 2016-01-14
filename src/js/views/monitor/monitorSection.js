@@ -2,8 +2,8 @@ const React = require('react')
 const InterestingProjects = require('./projectsView')
 const Success = require('./successView')
 const Loading = require('../general/loading')
-const InterestingProjectsStore = require('../../stores/InterestingProjectsStore')
 const InterestingProjectActions = require('../../actions/InterestingProjectActions')
+const InterestingProjectsStore = require('../../stores/InterestingProjectsStore')
 const TrayStore = require('../../stores/TrayStore')
 const SelectedProjectsStore = require('../../stores/SelectedProjectsStore')
 const ValidationMessages = require('../general/validationMessages')
@@ -17,6 +17,8 @@ function getStateFromStore() {
 }
 
 module.exports = React.createClass({
+  displayName: 'MonitorSection',
+
   getInitialState() {
     return {
       projects: [],
@@ -26,8 +28,10 @@ module.exports = React.createClass({
 
   render() {
     let content
+
     if (!this.state.loaded) {
       content = <Loading />
+
     } else if (this.state.error) {
       const errorMessages = [
         'Unable to fetch projects because of an error:',
@@ -40,13 +44,12 @@ module.exports = React.createClass({
       )
     } else if (this._hasProjects()) {
       content = <InterestingProjects projects={this.state.projects}/>
+
     } else {
       content = <Success />
     }
 
-    return (
-      <div className='monitor' onMouseMove={this._animateMenu}>{content}</div>
-    )
+    return <div className='monitor' onMouseMove={this._animateMenu}>{content}</div>
   },
 
   componentDidMount() {

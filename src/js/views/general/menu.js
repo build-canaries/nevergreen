@@ -4,11 +4,13 @@ const Router = require('react-router')
 const Link = Router.Link
 
 const MenuItem = React.createClass({
+  displayName: 'MenuItem',
+
   render() {
     return (
       <li>
         <Link id={this.props.id} to={'/' + this.props.id} className='navigation-list-item' activeClassName='active'>
-          <span className={'navigation-list-item-icon ' + this.props.iconClass}></span>
+          <span className={'navigation-list-item-icon ' + this.props.iconClass}/>
           <span className='navigation-list-item-title'>{this.props.title}</span>
         </Link>
       </li>
@@ -17,6 +19,8 @@ const MenuItem = React.createClass({
 })
 
 module.exports = React.createClass({
+  displayName: 'Menu',
+
   propTypes: {
     versionNumber: React.PropTypes.string,
     versionName: React.PropTypes.string,
@@ -73,7 +77,7 @@ module.exports = React.createClass({
             <p>{this.props.versionName}</p>
           </a>
           <a href='https://github.com/build-canaries/nevergreen/commits/master' target='_blank' className='version'>
-            <p className='commit-hash'>{'<' + this.props.commitHash + '>'}</p>
+            <p className='commit-hash'>{`<${this.props.commitHash}>`}</p>
           </a>
         </footer>
       </div>

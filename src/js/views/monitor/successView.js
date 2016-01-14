@@ -4,6 +4,8 @@ const Image = require('./imageComponent')
 const SuccessStore = require('../../stores/SuccessStore')
 
 module.exports = React.createClass({
+  displayName: 'Success',
+
   getInitialState() {
     return {message: SuccessStore.randomMessage()}
   },

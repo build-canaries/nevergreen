@@ -1,6 +1,8 @@
 const React = require('react')
 
 module.exports = React.createClass({
+  displayName: 'AvailableProject',
+
   propTypes: {
     name: React.PropTypes.string.isRequired,
     isNew: React.PropTypes.bool.isRequired,

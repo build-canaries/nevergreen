@@ -1,6 +1,8 @@
 const React = require('react')
 
 module.exports = React.createClass({
+  displayName: 'HelpSection',
+
   render() {
     return (
       <section className='dashboard-main-section'>
@@ -123,17 +125,17 @@ module.exports = React.createClass({
           <h3 className='section-title'>Additional Links</h3>
           <ul className='help-links'>
             <li>
-              <span className='help-link-icon icon-github4'></span>
+              <span className='help-link-icon icon-github4'/>
               The full Nevergreen source is available on <a href='https://github.com/build-canaries/nevergreen'
                                                             target='_blank'>Github</a>.
             </li>
             <li>
-              <span className='help-link-icon  icon-twitter3'></span>
+              <span className='help-link-icon  icon-twitter3'/>
               Follow Build Canaries on <a href='https://twitter.com/BuildCanaries' target='_blank'>Twitter</a> for
               news and updates.
             </li>
             <li>
-              <span className='help-link-icon  icon-IcoMoon'></span>
+              <span className='help-link-icon  icon-IcoMoon'/>
               Fonts from <a href='https://icomoon.io/' target='_blank'>IcoMoon</a> "custom built and crisp icon fonts,
               done right".
             </li>
