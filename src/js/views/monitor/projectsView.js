@@ -1,4 +1,3 @@
-const $ = require('jquery')
 const React = require('react')
 const ReactDOM = require('react-dom')
 const styler = require('../../controllers/styler')
@@ -62,12 +61,12 @@ module.exports = React.createClass({
   },
 
   componentDidMount() {
-    const $node = $(ReactDOM.findDOMNode(this))
-    styler.styleProjects(this.props.projects, $node.find('.monitor-outer-container'), $node)
+    const node = ReactDOM.findDOMNode(this)
+    styler.styleProjects(this.props.projects, node.querySelectorAll('.monitor-outer-container'), node)
   },
 
   componentDidUpdate() {
-    const $node = $(ReactDOM.findDOMNode(this))
-    styler.styleProjects(this.props.projects, $node.find('.monitor-outer-container'), $node)
+    const node = ReactDOM.findDOMNode(this)
+    styler.styleProjects(this.props.projects, node.querySelectorAll('.monitor-outer-container'), node)
   }
 })

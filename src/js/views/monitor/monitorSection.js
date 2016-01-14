@@ -1,4 +1,3 @@
-const $ = require('jquery')
 const React = require('react')
 const InterestingProjects = require('./projectsView')
 const Success = require('./successView')
@@ -81,16 +80,18 @@ module.exports = React.createClass({
   },
 
   _showMenu() {
-    $('#menu .navigation, .content-info')
-      .removeClass('navigation-hide')
-      .addClass('navigation-show')
+    Array.from(document.querySelectorAll('#menu .navigation, .content-info')).forEach(elem => {
+      elem.classList.remove('navigation-hide')
+      elem.classList.add('navigation-show')
+    })
   },
 
   _hideMenu() {
     if (this.isMounted()) {
-      $('#menu .navigation, .content-info')
-        .removeClass('navigation-show')
-        .addClass('navigation-hide')
+      Array.from(document.querySelectorAll('#menu .navigation, .content-info')).forEach(elem => {
+        elem.classList.remove('navigation-show')
+        elem.classList.add('navigation-hide')
+      })
     }
   },
 
