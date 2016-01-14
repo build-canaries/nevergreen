@@ -69,13 +69,13 @@ module.exports = React.createClass({
     }
   },
 
-  _onClick() {
-    this.props.addTray(this.state)
-  },
-
   _onKeyPress(evt) {
     if (evt.key === 'Enter') {
-      this.props.addTray(this.state)
+      this._onClick()
     }
+  },
+
+  _onClick() {
+    this.props.addTray(this.state.url, this.state.username, this.state.password)
   }
 })

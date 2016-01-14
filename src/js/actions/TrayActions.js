@@ -6,6 +6,7 @@ const validate = require('validate.js')
 const Constants = require('../constants/NevergreenConstants')
 const moment = require('moment')
 const trayStore = require('../stores/TrayStore')
+const _ = require('lodash')
 
 const _addTrayValidation = {
   url: {
@@ -19,17 +20,12 @@ const _addTrayValidation = {
 module.exports = {
 
   addTray(url, username, password) {
-    const requiresAuth = username && password
     const trayId = uuid.v4()
-
     const validationMessages = validate({url: url}, _addTrayValidation)
 
     if (validationMessages) {
       AppDispatcher.dispatch({
         type: Constants.TrayInvalidInput,
-        url: url,
-        username: username,
-        password: password,
         errors: validationMessages
       })
     } else {
@@ -40,24 +36,13 @@ module.exports = {
         username: username
       })
 
-      if (requiresAuth) {
-        securityGateway.encryptPassword(password).then(encryptPasswordResponse => {
-          AppDispatcher.dispatch({
-            type: Constants.PasswordEncrypted,
-            trayId: trayId,
-            password: encryptPasswordResponse.password
-          })
-          this.refreshTray({
-            trayId: trayId,
-            url: url,
-            username: username,
-            password: encryptPasswordResponse.password
-          })
-        })
+      if (_.size(password) > 0) {
+        this._encryptPasswordAndRefresh(trayId, url, username, password)
       } else {
         this.refreshTray({
           trayId: trayId,
-          url: url
+          url: url,
+          username: username
         })
       }
     }
@@ -65,7 +50,7 @@ module.exports = {
 
   updateTray(trayId, url, username, password) {
     const passwordSame = trayStore.getById(trayId).password === password
-    const newPassword = passwordSame ? null : password
+    const newPassword = passwordSame ? '' : password
 
     AppDispatcher.dispatch({
       type: Constants.TrayUpdate,
@@ -74,27 +59,29 @@ module.exports = {
       username: username
     })
 
-    if (newPassword) {
-      securityGateway.encryptPassword(newPassword).then(encryptPasswordResponse => {
-        AppDispatcher.dispatch({
-          type: Constants.PasswordEncrypted,
-          trayId: trayId,
-          password: encryptPasswordResponse.password
-        })
-        this.refreshTray({
-          trayId: trayId,
-          url: url,
-          username: username,
-          password: encryptPasswordResponse.password
-        })
-      })
-    } else {
+    if (passwordSame) {
       this.refreshTray({
         trayId: trayId,
         url: url,
         username: username,
         password: password
       })
+    } else {
+      if (_.size(newPassword) > 0) {
+        this._encryptPasswordAndRefresh(trayId, url, username, password)
+      } else {
+        AppDispatcher.dispatch({
+          type: Constants.PasswordEncrypted,
+          trayId: trayId,
+          password: ''
+        })
+        this.refreshTray({
+          trayId: trayId,
+          url: url,
+          username: username,
+          password: password
+        })
+      }
     }
   },
 
@@ -123,6 +110,22 @@ module.exports = {
         trayId: tray.trayId,
         error: err,
         timestamp: moment().format()
+      })
+    })
+  },
+
+  _encryptPasswordAndRefresh(trayId, url, username, password) {
+    securityGateway.encryptPassword(password).then(encryptPasswordResponse => {
+      AppDispatcher.dispatch({
+        type: Constants.PasswordEncrypted,
+        trayId: trayId,
+        password: encryptPasswordResponse.password
+      })
+      this.refreshTray({
+        trayId: trayId,
+        url: url,
+        username: username,
+        password: encryptPasswordResponse.password
       })
     })
   }

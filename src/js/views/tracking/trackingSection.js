@@ -50,8 +50,8 @@ module.exports = React.createClass({
     )
   },
 
-  _addTray(trayToAdd) {
-    TrayActions.addTray(trayToAdd.url, trayToAdd.username, trayToAdd.password)
+  _addTray(url, username, password) {
+    TrayActions.addTray(url, username, password)
   },
 
   _removeTray(trayId) {
