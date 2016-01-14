@@ -1,6 +1,7 @@
 const React = require('react')
 const LinkedStateMixin = require('react-addons-linked-state-mixin')
 const ValidationMessages = require('../general/validationMessages')
+const _ = require('lodash')
 
 module.exports = React.createClass({
   mixins: [LinkedStateMixin],
@@ -59,7 +60,7 @@ module.exports = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.validationMessages) {
+    if (_.size(nextProps.validationMessages) === 0) {
       this.setState({
         url: '',
         username: '',
