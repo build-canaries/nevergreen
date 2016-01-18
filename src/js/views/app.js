@@ -17,7 +17,13 @@ module.exports = React.createClass({
   displayName: 'App',
 
   getInitialState() {
-    return getStateFromStore()
+    return {
+      loaded: false,
+      versionNumber: 'loading...',
+      versionName: 'loading...',
+      versionColour: '#7E7E7E',
+      commitHash: '#####'
+    }
   },
 
   componentWillMount() {

@@ -23,3 +23,9 @@
       (nil? aes-key) @use-default-key
       (= aes-key-length (count aes-key)) aes-key
       :else (invalid-key aes-key))))
+
+(defn admin-username []
+  (or (env :admin-username) "nevergreen"))
+
+(defn admin-password []
+  (or (env :admin-password) "changeme"))

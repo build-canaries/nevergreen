@@ -12,8 +12,10 @@
                            [ring/ring-json "0.4.0"]
                            [ring/ring-defaults "0.1.5"]
                            [bk/ring-gzip "0.1.1"]
+                           [ring-basic-authentication "1.0.5"]
                            [base64-clj "0.1.1"]
-                           [camel-snake-kebab "0.3.2"]]
+                           [camel-snake-kebab "0.3.2"]
+                           [http-kit "2.1.19"]]
             :plugins [[lein-ring "0.9.7"]
                       [environ/environ.lein "0.3.1"]]
             :min-lein-version "2.0.0"

@@ -37,11 +37,7 @@ module.exports = React.createClass({
         {id: 'display', iconClass: 'display', title: 'Display'},
         {id: 'export', iconClass: 'floppy-disk', title: 'Export'},
         {id: 'help', iconClass: 'question', title: 'Help'}
-      ],
-      versionNumber: 'loading...',
-      versionName: 'loading...',
-      commitHash: '#####',
-      versionColour: '#7E7E7E'
+      ]
     }
   },
 
@@ -73,7 +69,6 @@ module.exports = React.createClass({
         <footer role='contentinfo' className='content-info' style={footerStyle}>
           <a href='https://github.com/build-canaries/nevergreen/releases' target='_blank' className='version'>
             <p>v{this.props.versionNumber}</p>
-
             <p>{this.props.versionName}</p>
           </a>
           <a href='https://github.com/build-canaries/nevergreen/commits/master' target='_blank' className='version'>

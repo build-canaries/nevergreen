@@ -1,7 +1,5 @@
-(ns nevergreen.api.routes
+(ns nevergreen.admin.routes
   (:require [compojure.core :refer :all]
-            [nevergreen.api.projects :as projects]
-            [nevergreen.api.security :as security]
             [ring.middleware.json :refer [wrap-json-body wrap-json-response]]
             [nevergreen.wrap-cache-control :refer [wrap-cache-control]]
             [nevergreen.wrap-convert-keys :refer [wrap-convert-keys]]
@@ -10,22 +8,17 @@
             [nevergreen.wrap-redact-sensitive :refer [wrap-redact-sensitive wrap-restore-sensitive]]
             [ring-curl.middleware :refer [wrap-curl-logging]]
             [ring.middleware.gzip :refer :all]
-            [nevergreen.api.server-side-events :as sse]))
+            [ring.middleware.basic-authentication :refer [wrap-basic-authentication]]
+            [nevergreen.api.server-side-events :as sse]
+            [nevergreen.config :as config]))
 
-(def ^:private preflight-response {:status 200})
+(defn authenticated? [name pass]
+  (and (= name (config/admin-username))
+       (= pass (config/admin-password))))
 
-(def api-routes
+(def admin-routes
   (routes
-    (OPTIONS "/api/projects/all" [] preflight-response)
-    (POST "/api/projects/all" {body :body} {:body (projects/get-all body)})
-
-    (OPTIONS "/api/projects/interesting" [] preflight-response)
-    (POST "/api/projects/interesting" {body :body} {:body (projects/get-interesting body)})
-
-    (OPTIONS "/api/encrypt" [] preflight-response)
-    (POST "/api/encrypt" {body :body} {:body (security/encrypt-password body)})
-
-    (GET "/api/register" [] sse/handler)))
+    (POST "/admin/push-msg" {body :body} (sse/push-msg (:data body)))))
 
 (defn- wrap-logging [handler]
   (-> handler
@@ -33,8 +26,9 @@
       (wrap-curl-logging {:level :info})
       wrap-redact-sensitive))
 
-(defn wrap-api-middleware [routes]
+(defn wrap-admin-middleware [routes]
   (-> routes
+      (wrap-basic-authentication authenticated?)
       wrap-convert-keys
       wrap-logging
       (wrap-json-body {:keywords? true})

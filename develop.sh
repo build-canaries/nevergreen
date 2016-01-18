@@ -61,7 +61,7 @@ echo "[7] automatically running the server tests on changes ..."
 lein midje :autotest 'src/nevergreen' 'test/nevergreen' &
 
 echo "[8] running the server ..."
-lein ring server-headless &
+lein run &
 
 wait
 
