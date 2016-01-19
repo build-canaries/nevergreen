@@ -22,3 +22,16 @@
   background-color: $blue;
   color: white;
 }
+
+.notification {
+  font-size: 1em;
+  padding: 0.5em;
+  margin: 0.5em;
+  border-radius: 0.5em;
+  background-color: $blue;
+  color: white;
+  width: calc(#{$menu-width} - 1em);
+  float: left;
+  position: fixed;
+  bottom: 5em;
+}

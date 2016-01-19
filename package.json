@@ -63,12 +63,12 @@
   },
   "jest": {
     "testRunner": "<rootDir>/node_modules/jest-cli/src/testRunners/jasmine/jasmine2.js",
-    "setupEnvScriptFile": "<rootDir>/test/js/jest/setupEnv.js",
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
     "unmockedModulePathPatterns": [
       "<rootDir>/node_modules/react",
       "<rootDir>/node_modules/react-dom",
-      "<rootDir>/node_modules/lodash"
+      "<rootDir>/node_modules/lodash",
+      "<rootDir>/test/js/jest"
     ],
     "testDirectoryName": "test/js",
     "testPathIgnorePatterns": [

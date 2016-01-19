@@ -1,7 +1,7 @@
 .navigation {
   background-color: $off-black;
   color: white;
-  width: 10%;
+  width: $menu-width;
   float: left;
   position: fixed;
   height: 100%;
@@ -70,7 +70,7 @@
 }
 
 .navigation-hide {
-  left: -10%;
+  left: -$menu-width;
   transition-property: left;
   transition-duration: 0.5s;
   transition-timing: ease;

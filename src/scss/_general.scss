@@ -4,10 +4,10 @@
 }
 
 .dashboard-main-section {
-  width: 90%;
+  width: calc(100% - #{$menu-width});
   padding: 2em;
   float: left;
-  margin-left: 10%;
+  margin-left: $menu-width;
   min-height: 35em;
   &.active {
     display: block;

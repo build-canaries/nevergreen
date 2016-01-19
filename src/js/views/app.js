@@ -1,7 +1,9 @@
 const React = require('react')
 const Menu = require('./general/menu')
+const Notification = require('./general/Notification')
 const AppActions = require('../actions/AppActions')
 const AppStore = require('../stores/AppStore')
+const PushedMessagesStore = require('../stores/PushedMessagesStore')
 
 function getStateFromStore() {
   return {
@@ -9,7 +11,8 @@ function getStateFromStore() {
     versionNumber: AppStore.versionNumber(),
     versionName: AppStore.versionName(),
     versionColour: AppStore.versionColour(),
-    commitHash: AppStore.commitHash()
+    commitHash: AppStore.commitHash(),
+    notification: PushedMessagesStore.getLastMessage()
   }
 }
 
@@ -22,17 +25,20 @@ module.exports = React.createClass({
       versionNumber: 'loading...',
       versionName: 'loading...',
       versionColour: '#7E7E7E',
-      commitHash: '#####'
+      commitHash: '#####',
+      notification: ''
     }
   },
 
   componentWillMount() {
     AppStore.addListener(this._onChange)
+    PushedMessagesStore.addListener(this._onChange)
     AppActions.init()
   },
 
   componentWillUnmount() {
     AppStore.removeListener(this._onChange)
+    PushedMessagesStore.removeListener(this._onChange)
   },
 
   render() {
@@ -46,6 +52,7 @@ module.exports = React.createClass({
                 versionColour={this.state.versionColour}
                 commitHash={this.state.commitHash}/>
         </div>
+        <Notification message={this.state.notification}/>
         {this.state.loaded ? this.props.children : ''}
       </div>
     )

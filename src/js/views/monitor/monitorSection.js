@@ -83,7 +83,7 @@ module.exports = React.createClass({
   },
 
   _showMenu() {
-    Array.from(document.querySelectorAll('#menu .navigation, .content-info')).forEach(elem => {
+    Array.from(document.querySelectorAll('#menu .navigation, .content-info, .notification')).forEach(elem => {
       elem.classList.remove('navigation-hide')
       elem.classList.add('navigation-show')
     })
@@ -91,7 +91,7 @@ module.exports = React.createClass({
 
   _hideMenu() {
     if (this.isMounted()) {
-      Array.from(document.querySelectorAll('#menu .navigation, .content-info')).forEach(elem => {
+      Array.from(document.querySelectorAll('#menu .navigation, .content-info, .notification')).forEach(elem => {
         elem.classList.remove('navigation-show')
         elem.classList.add('navigation-hide')
       })

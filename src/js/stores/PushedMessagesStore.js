@@ -2,10 +2,11 @@ const AppDispatcher = require('../dispatcher/AppDispatcher')
 const EventEmitter = require('events').EventEmitter
 const eventEmitter = new EventEmitter()
 const Constants = require('../constants/NevergreenConstants')
+const _ = require('lodash')
 
 const CHANGE_EVENT = 'pushed-messages-change'
 
-let eventSource = null
+let _eventSource = null
 let _storeState = null
 
 const dispatchToken = AppDispatcher.register(action => {
@@ -13,8 +14,8 @@ const dispatchToken = AppDispatcher.register(action => {
     case Constants.AppInit:
     {
       _storeState = []
-      eventSource = new EventSource('/api/register')
-      eventSource.onmessage = evt => {
+      _eventSource = new EventSource('/api/register')
+      _eventSource.onmessage = evt => {
         _storeState.push(evt.data)
         eventEmitter.emit(CHANGE_EVENT)
       }
@@ -33,8 +34,8 @@ const dispatchToken = AppDispatcher.register(action => {
 module.exports = {
   dispatchToken: dispatchToken,
 
-  getMessages() {
-    return _storeState
+  getLastMessage() {
+    return _.last(_storeState) || ''
   },
 
   addListener(callback) {
