@@ -5,4 +5,4 @@ scp -i /var/go/nevergreen_rsa ./target/nevergreen-standalone.jar nevergreen@neve
 ssh -i /var/go/nevergreen_rsa nevergreen@nevergreen.io "sudo /etc/init.d/nevergreen-staging restart"
 
 # smoke test
-./smoke-test.sh https://staging.nevergreen.io/api/ping
+./ci/smoke-test.sh https://staging.nevergreen.io/api/ping
