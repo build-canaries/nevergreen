@@ -25,7 +25,9 @@
     (OPTIONS "/api/encrypt" [] preflight-response)
     (POST "/api/encrypt" {body :body} {:body (security/encrypt-password body)})
 
-    (GET "/api/register" [] sse/handler)))
+    (GET "/api/register" [] sse/handler)
+
+    (GET "/api/ping" [] {:status 204})))
 
 (defn- wrap-logging [handler]
   (-> handler
