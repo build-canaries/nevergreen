@@ -9,17 +9,26 @@ const CHANGE_EVENT = 'pushed-messages-change'
 let _eventSource = null
 let _storeState = null
 
+function register() {
+  _eventSource = new EventSource('/api/register')
+
+  _eventSource.onmessage = evt => {
+    _storeState.push(evt.data)
+    eventEmitter.emit(CHANGE_EVENT)
+  }
+  _eventSource.onerror = () => {
+    _eventSource.close()
+    register()
+  }
+}
+
 const dispatchToken = AppDispatcher.register(action => {
   switch (action.type) {
     case Constants.AppInit:
     {
       _storeState = []
       if (EventSource) {
-        _eventSource = new EventSource('/api/register')
-        _eventSource.onmessage = evt => {
-          _storeState.push(evt.data)
-          eventEmitter.emit(CHANGE_EVENT)
-        }
+        register()
       }
       break
     }
