@@ -14,10 +14,12 @@ const dispatchToken = AppDispatcher.register(action => {
     case Constants.AppInit:
     {
       _storeState = []
-      _eventSource = new EventSource('/api/register')
-      _eventSource.onmessage = evt => {
-        _storeState.push(evt.data)
-        eventEmitter.emit(CHANGE_EVENT)
+      if (EventSource) {
+        _eventSource = new EventSource('/api/register')
+        _eventSource.onmessage = evt => {
+          _storeState.push(evt.data)
+          eventEmitter.emit(CHANGE_EVENT)
+        }
       }
       break
     }
