@@ -29,25 +29,3 @@
              (subject/aes-key) => (throws RuntimeException)
              (provided
                (env :aes-key) => "not-long-enough")))
-
-(facts "admin username"
-       (fact "from env"
-             (subject/admin-username) => "some-username"
-             (provided
-               (env :admin-username) => "some-username"))
-
-       (fact "defaults to nevergreen"
-             (subject/admin-username) => "nevergreen"
-             (provided
-               (env :admin-username) => nil)))
-
-(facts "admin password"
-       (fact "from env"
-             (subject/admin-password) => "some-password"
-             (provided
-               (env :admin-password) => "some-password"))
-
-       (fact "defaults to changeme"
-             (subject/admin-password) => "changeme"
-             (provided
-               (env :admin-password) => nil)))
