@@ -9,8 +9,7 @@
             [nevergreen.wrap-exceptions :refer [wrap-exceptions]]
             [nevergreen.wrap-redact-sensitive :refer [wrap-redact-sensitive wrap-restore-sensitive]]
             [ring-curl.middleware :refer [wrap-curl-logging]]
-            [ring.middleware.gzip :refer :all]
-            [nevergreen.api.server-side-events :as sse]))
+            [ring.middleware.gzip :refer :all]))
 
 (def ^:private preflight-response {:status 200})
 
@@ -24,8 +23,6 @@
 
     (OPTIONS "/api/encrypt" [] preflight-response)
     (POST "/api/encrypt" {body :body} {:body (security/encrypt-password body)})
-
-    (GET "/api/register" [] sse/handler)
 
     (GET "/api/ping" [] {:status 204})))
 

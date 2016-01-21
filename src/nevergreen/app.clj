@@ -5,7 +5,6 @@
             [cheshire.generate :as cheshire]
             [nevergreen.config :as config]
             [nevergreen.api.routes :refer :all]
-            [nevergreen.admin.routes :refer :all]
             [nevergreen.app.routes :refer :all])
   (:gen-class))
 
@@ -16,8 +15,6 @@
   (routes
     (-> api-routes
         (wrap-routes wrap-api-middleware))
-    (-> admin-routes
-        (wrap-routes wrap-admin-middleware))
     (-> app-routes
         (wrap-routes wrap-app-middleware))))
 

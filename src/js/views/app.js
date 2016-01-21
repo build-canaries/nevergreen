@@ -3,7 +3,7 @@ const Menu = require('./general/menu')
 const Notification = require('./general/Notification')
 const AppActions = require('../actions/AppActions')
 const AppStore = require('../stores/AppStore')
-const PushedMessagesStore = require('../stores/PushedMessagesStore')
+const NotificationStore = require('../stores/NotificationStore')
 
 function getStateFromStore() {
   return {
@@ -12,7 +12,7 @@ function getStateFromStore() {
     versionName: AppStore.versionName(),
     versionColour: AppStore.versionColour(),
     commitHash: AppStore.commitHash(),
-    notification: PushedMessagesStore.getLastMessage()
+    notification: NotificationStore.getNotification()
   }
 }
 
@@ -32,13 +32,13 @@ module.exports = React.createClass({
 
   componentWillMount() {
     AppStore.addListener(this._onChange)
-    PushedMessagesStore.addListener(this._onChange)
+    NotificationStore.addListener(this._onChange)
     AppActions.init()
   },
 
   componentWillUnmount() {
     AppStore.removeListener(this._onChange)
-    PushedMessagesStore.removeListener(this._onChange)
+    NotificationStore.removeListener(this._onChange)
   },
 
   render() {

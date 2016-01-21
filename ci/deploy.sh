@@ -6,6 +6,3 @@ ssh -i /var/go/nevergreen_rsa nevergreen@nevergreen.io "sudo /etc/init.d/nevergr
 
 # smoke test
 ./ci/smoke-test.sh https://staging.nevergreen.io/api/ping
-
-# notify users
-./ci/notify-new-release.sh  https://staging.nevergreen.io/admin/push-msg
