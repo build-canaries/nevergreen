@@ -3,7 +3,10 @@ const Menu = require('./general/menu')
 const Notification = require('./general/Notification')
 const AppActions = require('../actions/AppActions')
 const AppStore = require('../stores/AppStore')
+const NotificationActions = require('../actions/NotificationActions')
 const NotificationStore = require('../stores/NotificationStore')
+
+const twentyFourHours = 24 * 60 * 60 * 1000
 
 function getStateFromStore() {
   return {
@@ -34,11 +37,16 @@ module.exports = React.createClass({
     AppStore.addListener(this._onChange)
     NotificationStore.addListener(this._onChange)
     AppActions.init()
+
+    const versionCheckId = setInterval(NotificationActions.pollForNewVersion, twentyFourHours)
+    this.setState({versionCheckId: versionCheckId})
   },
 
   componentWillUnmount() {
     AppStore.removeListener(this._onChange)
     NotificationStore.removeListener(this._onChange)
+
+    clearInterval(this.state.versionCheckId)
   },
 
   render() {

@@ -20,5 +20,6 @@ module.exports = {
   ImportError: 'import-error',
   ExportData: 'export-data',
   ConfigurationLoaded: 'configuration-loaded',
-  BrokenBuildTimersChanged: 'broken-build-timers-changed'
+  BrokenBuildTimersChanged: 'broken-build-timers-changed',
+  Notification: 'notification'
 }

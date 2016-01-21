@@ -78,6 +78,10 @@ module.exports = {
     return _storeState.commitHash
   },
 
+  hostname() {
+    return window.location.hostname
+  },
+
   addListener(callback) {
     eventEmitter.on(CHANGE_EVENT, callback)
   },

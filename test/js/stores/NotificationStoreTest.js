@@ -33,4 +33,21 @@ describe('notification store', () => {
     expect(store.getNotification()).toBe('')
   })
 
+  describe('notification event', () => {
+    beforeEach(() => {
+      callback({
+        type: Constants.Notification,
+        message: 'some-message'
+      })
+    })
+
+    it('sets the notification to the message', () => {
+      expect(store.getNotification()).toBe('some-message')
+    })
+
+    it('emits a change after notification received', () => {
+      expect(eventEmitterMock.emit).toBeCalledWith('notification-change')
+    })
+  })
+
 })

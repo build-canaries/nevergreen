@@ -14,6 +14,11 @@ const dispatchToken = AppDispatcher.register(action => {
       _storeState = ''
       break
     }
+    case Constants.Notification:
+    {
+      _storeState = action.message
+      break
+    }
     default :
     {
       return true
