@@ -22,7 +22,7 @@ describe('notification store', () => {
     expect(AppDispatcher.register.mock.calls.length).toBe(1)
   })
 
-  it('emits an event after app init', () => {
+  it('emits an change after app init', () => {
     callback({
       type: Constants.AppInit
     })
@@ -45,7 +45,27 @@ describe('notification store', () => {
       expect(store.getNotification()).toBe('some-message')
     })
 
-    it('emits a change after notification received', () => {
+    it('emits a change', () => {
+      expect(eventEmitterMock.emit).toBeCalledWith('notification-change')
+    })
+  })
+
+  describe('dismissing the notification', () => {
+    beforeEach(() => {
+      callback({
+        type: Constants.Notification,
+        message: 'some-message'
+      })
+      callback({
+        type: Constants.NotificationDismiss
+      })
+    })
+
+    it('sets the notification back to an empty string', () => {
+      expect(store.getNotification()).toBe('')
+    })
+
+    it('emits an change', () => {
       expect(eventEmitterMock.emit).toBeCalledWith('notification-change')
     })
   })

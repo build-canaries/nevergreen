@@ -60,7 +60,7 @@ module.exports = React.createClass({
                 versionColour={this.state.versionColour}
                 commitHash={this.state.commitHash}/>
         </div>
-        <Notification message={this.state.notification}/>
+        <Notification message={this.state.notification} dismiss={NotificationActions.dismiss}/>
         {this.state.loaded ? this.props.children : ''}
       </div>
     )

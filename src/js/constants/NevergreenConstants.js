@@ -21,5 +21,6 @@ module.exports = {
   ExportData: 'export-data',
   ConfigurationLoaded: 'configuration-loaded',
   BrokenBuildTimersChanged: 'broken-build-timers-changed',
-  Notification: 'notification'
+  Notification: 'notification',
+  NotificationDismiss: 'notification-dismiss'
 }

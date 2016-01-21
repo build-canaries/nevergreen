@@ -10,6 +10,7 @@ let _storeState = null
 const dispatchToken = AppDispatcher.register(action => {
   switch (action.type) {
     case Constants.AppInit:
+    case Constants.NotificationDismiss:
     {
       _storeState = ''
       break

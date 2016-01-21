@@ -21,7 +21,7 @@
   outline: none;
   transition: background-color 0.1s ease-in, box-shadow 0.1s ease-in;
   &:hover {
-    background-color: darken(white, 2%);
+    background-color: darken(white, 5%);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.26);
   }
   &:focus {
@@ -36,6 +36,6 @@
   background-color: $blue;
   color: $off-white;
   &:hover {
-    background-color: darken($blue, 4%);
+    background-color: darken($blue, 5%);
   }
 }

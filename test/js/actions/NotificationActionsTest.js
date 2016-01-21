@@ -68,4 +68,12 @@ describe('notification actions', () => {
 
     expect(AppDispatcher.dispatch).not.toBeCalled()
   })
+
+  it('dispatches a dismiss notification action', () => {
+    subject.dismiss()
+
+    expect(AppDispatcher.dispatch).toBeCalledWith({
+      type: Constants.NotificationDismiss
+    })
+  })
 })

@@ -5,7 +5,8 @@ module.exports = React.createClass({
   displayName: 'Notification',
 
   propTypes: {
-    message: React.PropTypes.string
+    message: React.PropTypes.string,
+    dismiss: React.PropTypes.func.isRequired
   },
 
   render() {
@@ -15,6 +16,7 @@ module.exports = React.createClass({
       <div>
         <span className='icon-notification'/>
         <span className='text-with-icon'>Notification</span>
+        <span className='icon-cross notification-dismiss' onClick={this.props.dismiss}/>
       </div>
       {this.props.message}
     </div>

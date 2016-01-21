@@ -28,5 +28,11 @@ module.exports = {
 
   pollForNewVersion() {
     _checkForNewVersion(AppStore.versionNumber(), AppStore.hostname())
+  },
+
+  dismiss() {
+    AppDispatcher.dispatch({
+      type: Constants.NotificationDismiss
+    })
   }
 }

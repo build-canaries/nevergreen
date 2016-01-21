@@ -35,3 +35,13 @@
   position: fixed;
   bottom: 5em;
 }
+
+.notification-dismiss {
+  float: right;
+  font-size: 0.7em;
+  cursor: pointer;
+
+  &:hover {
+    color: darken(white, 10%);
+  }
+}

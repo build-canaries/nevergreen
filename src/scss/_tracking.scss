@@ -104,6 +104,10 @@
   border: none;
   background: none;
   color: white;
+
+  &:hover {
+    color: darken(white, 10%);
+  }
 }
 
 .tray-hidden-button {
@@ -114,6 +118,10 @@
   background: none;
   color: white;
   margin-right: 0.5em;
+
+  &:hover {
+    color: darken(white, 10%);
+  }
 }
 
 .tray-refresh {
