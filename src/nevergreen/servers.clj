@@ -1,21 +1,22 @@
 (ns nevergreen.servers
-  (:require [clj-cctray.util :refer [in?]]))
+  (:require [clojure.string :refer [includes?]]
+            [clj-cctray.util :refer [in?]]))
 
 (defn detect-server [url]
   (cond
     (nil? url) nil
-    (.contains url "//jenkins") :jenkins
-    (.contains url ".ci.cloudbees.com") :jenkins
-    (.contains url "//hudson") :hudson
-    (.contains url "//travis-ci.org") :travis
-    (.contains url "/go/") :go
-    (.contains url "//snap-ci.com") :snap
-    (.contains url "//circleci.com") :circle
-    (.contains url "//teamcity") :team-city
-    (.contains url "//cc.rb.") :cruise-control-rb
-    (.contains url "//cc.java.") :cruise-control
-    (.contains url "//cc.net.") :cruise-control-net
-    (.contains url "//api.tddium.com") :solano
+    (includes? url "//jenkins") :jenkins
+    (includes? url ".ci.cloudbees.com") :jenkins
+    (includes? url "//hudson") :hudson
+    (includes? url "//travis-ci.org") :travis
+    (includes? url "/go/") :go
+    (includes? url "//snap-ci.com") :snap
+    (includes? url "//circleci.com") :circle
+    (includes? url "//teamcity") :team-city
+    (includes? url "//cc.rb.") :cruise-control-rb
+    (includes? url "//cc.java.") :cruise-control
+    (includes? url "//cc.net.") :cruise-control-net
+    (includes? url "//api.tddium.com") :solano
     :else :unknown))
 
 (defn unknown-server? [server-type]
