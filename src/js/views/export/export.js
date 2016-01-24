@@ -2,6 +2,7 @@ const React = require('react')
 const ValidationMessages = require('../general/validationMessages')
 const InfoMessages = require('../general/InfoMessages')
 const Clipboard = require('clipboard')
+const Container = require('../general/container')
 const Loading = require('../general/loading')
 
 module.exports = React.createClass({
@@ -59,10 +60,9 @@ module.exports = React.createClass({
     )
 
     return (
-      <section className='sub-section'>
-        <h3 className='section-title'>Export</h3>
+      <Container title='Export'>
         {this.props.loading ? <Loading/> : content}
-      </section>
+      </Container>
     )
   }
 })

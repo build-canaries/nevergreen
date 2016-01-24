@@ -1,5 +1,6 @@
 const React = require('react')
 const ConfigOption = require('./configOption')
+const Container = require('../general/container')
 const DisplayStore = require('../../stores/DisplayStore')
 const DisplayActions = require('../../actions/DisplayActions')
 
@@ -31,15 +32,13 @@ module.exports = React.createClass({
   render() {
     return (
       <section className='dashboard-main-section'>
-        <h2 className='visually-hidden'>Display</h2>
-        <section className='sub-section'>
-          <h3 className='section-title'>Display Settings</h3>
+        <Container title='Display Settings'>
           <fieldset className='settings-list'>
             <ConfigOption name='Show broken build timers'
                           enabled={this.state.showBrokenBuildTimers}
                           onToggle={this._onToggle}/>
           </fieldset>
-        </section>
+        </Container>
       </section>
     )
   },
