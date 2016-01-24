@@ -1,4 +1,5 @@
 const React = require('react')
+const Container = require('../general/container')
 const Projects = require('./projects')
 const TraySettings = require('./traySettings')
 const Loading = require('../general/loading')
@@ -39,14 +40,12 @@ module.exports = React.createClass({
   },
 
   render() {
-    let content
+    let subContent
 
     if (this.state.showSettings) {
-      content =
+      subContent =
         <TraySettings tray={this.props.tray} removeTray={this.props.removeTray} updateTray={this.props.updateTray}/>
     } else {
-      let subContent
-
       if (this.props.tray.fetching) {
         subContent = <Loading/>
       } else if (this.props.tray.error) {
@@ -58,51 +57,37 @@ module.exports = React.createClass({
       } else {
         subContent = <Projects trayId={this.props.tray.trayId}/>
       }
+    }
 
-      content = (
+    return (
+      <Container title={this.props.tray.url}>
         <div>
-          <div className='tray-refresh'>
+          <div className='tray-sub-bar'>
+            <button className='button' onClick={this._toggleSettingsView} title='Toggle settings'>
+              <span className={'icon-' + (this.state.showSettings ? 'list' : 'cog') }/>
+              <span className='text-with-icon'>{this._toggleSettingsLabel()}</span>
+            </button>
             <button className='button' onClick={this.props.refreshTray}>
               <span className='icon-loop2'/>
               <span className='text-with-icon'>Refresh tray</span>
             </button>
             <span className='tray-refresh-last-fetch'>last refreshed {this.state.lastFetched} ago</span>
           </div>
-          {subContent}
+          <div>
+            {subContent}
+          </div>
         </div>
-      )
-    }
-
-    const hideText = this.state.hidden ? 'expand tray' : 'collapse tray'
-    const settingsText = this.state.showSettings ? 'show projects' : 'show settings'
-
-    return (
-      <section className='tray'>
-        <div className='tray-title-container'>
-          <button className='tray-hidden-button' onClick={this._toggleHidden} title={hideText}>
-            <span className={'icon-' + (this.state.hidden ? 'circle-down' : 'circle-up') }/>
-            <span className='visually-hidden'>{hideText}</span>
-          </button>
-          <h3 className='tray-title'>{this.props.tray.url}</h3>
-          <button className='tray-settings-button' onClick={this._toggleSettingsView} title={settingsText}>
-            <span className={'icon-' + (this.state.showSettings ? 'list' : 'cog') }/>
-            <span className='visually-hidden'>{settingsText}</span>
-          </button>
-        </div>
-        {this.state.hidden ? '' : content}
-      </section>
+      </Container>
     )
+  },
+
+  _toggleSettingsLabel() {
+      return this.state.showSettings ? 'Show projects' : 'Show settings'
   },
 
   _toggleSettingsView() {
     this.setState({
       showSettings: !this.state.showSettings
-    })
-  },
-
-  _toggleHidden() {
-    this.setState({
-      hidden: !this.state.hidden
     })
   },
 

@@ -3,6 +3,7 @@ const LinkedStateMixin = require('react-addons-linked-state-mixin')
 const ValidationMessages = require('../general/validationMessages')
 const InfoMessages = require('../general/InfoMessages')
 const ConfigurationActions = require('../../actions/ConfigurationActions')
+const Container = require('../general/container')
 const Loading = require('../general/loading')
 
 module.exports = React.createClass({
@@ -40,10 +41,9 @@ module.exports = React.createClass({
     )
 
     return (
-      <section className='sub-section'>
-        <h3 className='section-title'>Import</h3>
+      <Container title='Import'>
         {this.props.loading ? <Loading/> : content}
-      </section>
+      </Container>
     )
   },
 

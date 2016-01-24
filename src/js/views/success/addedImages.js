@@ -1,4 +1,5 @@
 const React = require('react')
+const Container = require('../general/container')
 const RemoveLink = require('./removeLink')
 
 module.exports = React.createClass({
@@ -11,8 +12,7 @@ module.exports = React.createClass({
 
   render() {
     return (
-      <section className='sub-section'>
-        <h3 className='section-title'>Images</h3>
+      <Container title='Images'>
         <ul className='success-list success-images-list'>
           {
             this.props.messages.map(message => {
@@ -25,7 +25,7 @@ module.exports = React.createClass({
             })
           }
         </ul>
-      </section>
+      </Container>
     )
   }
 })

@@ -111,12 +111,10 @@
 }
 
 .tray-hidden-button {
-  font-size: 1.8rem;
+  font-size: 1.2rem;
   display: inline;
-  padding: 0;
   border: none;
   background: none;
-  color: white;
   margin-right: 0.5em;
 
   &:hover {
@@ -124,11 +122,12 @@
   }
 }
 
-.tray-refresh {
-  margin: 1em 1em 0 1em;
+.tray-sub-bar {
+  background: $light-grey;
+  color: $mid-grey;
+  padding: 0.3em;
 }
 
 .tray-refresh-last-fetch {
-  color: $mid-grey;
   margin-left: 1em;
 }

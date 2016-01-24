@@ -1,4 +1,5 @@
 const React = require('react')
+const Container = require('../general/container')
 
 module.exports = React.createClass({
   displayName: 'HelpSection',
@@ -7,9 +8,8 @@ module.exports = React.createClass({
     return (
       <section className='dashboard-main-section'>
         <h2 className='visually-hidden'>Help</h2>
-        <section className='sub-section'>
-          <h3 className='section-title'>Monitor</h3>
 
+        <Container title='Monitor'>
           <div className='help-contents'>
             <table className='help-tracking-table'>
               <thead>
@@ -35,11 +35,9 @@ module.exports = React.createClass({
             </table>
             <p className="help-text">If nothing is broken or building then a random success message will be shown.</p>
           </div>
-        </section>
+        </Container>
 
-        <section className='sub-section'>
-          <h3 className='section-title'>Tracking</h3>
-
+        <Container title='Tracking'>
           <div className='help-contents'>
             <p className="help-text">To get started you need to enter the URL to your cctray xml file. Where it lives
               depends on your CI Server of choice: </p>
@@ -100,11 +98,9 @@ module.exports = React.createClass({
             <p className="help-text">If you are just checking us out then you can use the Apache projects cctray at:
               https://builds.apache.org/cc.xml</p>
           </div>
-        </section>
+        </Container>
 
-        <section className='sub-section'>
-          <h3 className='section-title'>Success</h3>
-
+        <Container title='Success'>
           <div className='help-contents'>
             <p className="help-text">You can add text or image urls, these will get displayed when no projects are
               broken or building on the monitor page. Images are previewed in a 16:9 ratio which is how they would
@@ -119,10 +115,9 @@ module.exports = React.createClass({
               like jelly guy! ༼つ◕_◕༽つ
             </p>
           </div>
-        </section>
+        </Container>
 
-        <section role='seealso' className='sub-section'>
-          <h3 className='section-title'>Additional Links</h3>
+        <Container title='Additional Links'>
           <ul className='help-links'>
             <li>
               <span className='help-link-icon icon-github4'/>
@@ -140,7 +135,7 @@ module.exports = React.createClass({
               done right".
             </li>
           </ul>
-        </section>
+        </Container>
       </section>
     )
   }
