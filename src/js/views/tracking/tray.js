@@ -44,7 +44,7 @@ module.exports = React.createClass({
 
     if (this.state.showSettings) {
       subContent =
-        <TraySettings tray={this.props.tray} removeTray={this.props.removeTray} updateTray={this.props.updateTray}/>
+        <TraySettings tray={this.props.tray} removeTray={this.props.removeTray} updateTray={this._updateTray}/>
     } else {
       if (this.props.tray.fetching) {
         subContent = <Loading/>
@@ -95,5 +95,12 @@ module.exports = React.createClass({
     if (this.props.tray.timestamp) {
       return moment(this.props.tray.timestamp).fromNow(true)
     }
+  },
+
+  _updateTray(trayId, url, username, password) {
+    this.setState({
+      showSettings: false
+    })
+    this.props.updateTray(trayId, url, username, password)
   }
 })
