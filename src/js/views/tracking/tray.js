@@ -5,6 +5,7 @@ const TraySettings = require('./traySettings')
 const Loading = require('../general/loading')
 const ValidationMessages = require('../general/validationMessages')
 const moment = require('moment')
+const Mousetrap = require('mousetrap')
 
 module.exports = React.createClass({
   displayName: 'Tray',
@@ -30,10 +31,13 @@ module.exports = React.createClass({
       this.setState({lastFetched: this._updateLastFetch()})
     }, 60000)
     this.setState({intervalId: intervalId})
+
+    Mousetrap.bind(`r ${this.props.index}`, this.props.refreshTray)
   },
 
   componentWillUnmount() {
     clearInterval(this.state.intervalId)
+    Mousetrap.unbind(`r ${this.props.index}`)
   },
 
   componentWillReceiveProps() {

@@ -16,7 +16,7 @@ module.exports = React.createClass({
               <thead>
               <tr>
                 <th>Bindings</th>
-                <th>Works on?</th>
+                <th>Works in?</th>
                 <th>Action</th>
               </tr>
               </thead>
@@ -70,6 +70,11 @@ module.exports = React.createClass({
                 <td className='binding'>- &lt;index&gt;</td>
                 <td>Tracking section</td>
                 <td>Excludes all projects for the tray with the given index (the first tray is at index 0).</td>
+              </tr>
+              <tr>
+                <td className='binding'>r &lt;index&gt;</td>
+                <td>Tracking section</td>
+                <td>Refresh the tray with the given index (the first tray is at index 0).</td>
               </tr>
               <tr>
                 <td className='binding'>d m &lt;index&gt;</td>
