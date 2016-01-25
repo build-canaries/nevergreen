@@ -46,7 +46,9 @@ module.exports = React.createClass({
               </tr>
               <tr>
                 <td className='binding'>a</td>
-                <td>Focus the primary action input of that section (if it has one)</td>
+                <td>Focus the primary action input of that section (if it has one) e.g. the url input in the tracking
+                  section
+                </td>
               </tr>
               <tr>
                 <td className='binding'>esc</td>
@@ -54,6 +56,12 @@ module.exports = React.createClass({
               </tr>
               </tbody>
             </table>
+            <div className='help-text'>
+              <div>Key:</div>
+              <div><span className='binding'>a, b</span> means a OR b</div>
+              <div><span className='binding'>a+b</span> means a AND b</div>
+              <div><span className='binding'>a b</span> means a THEN b</div>
+            </div>
           </div>
         </Container>
 
@@ -81,7 +89,7 @@ module.exports = React.createClass({
               </tr>
               </tbody>
             </table>
-            <p className="help-text">If nothing is broken or building then a random success message will be shown.</p>
+            <p className='help-text'>If nothing is broken or building then a random success message will be shown.</p>
           </div>
         </Container>
 

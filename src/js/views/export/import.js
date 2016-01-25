@@ -5,7 +5,7 @@ const InfoMessages = require('../general/InfoMessages')
 const ConfigurationActions = require('../../actions/ConfigurationActions')
 const Container = require('../general/container')
 const Loading = require('../general/loading')
-const Mousetrap = require('mousetrap')
+const PrimaryInput = require('../general/PrimaryInput')
 
 module.exports = React.createClass({
   mixins: [LinkedStateMixin],
@@ -28,23 +28,15 @@ module.exports = React.createClass({
     }
   },
 
-  componentDidMount() {
-    Mousetrap.bind('a', this._focusInput)
-    Mousetrap(this.refs.importInput).bind('esc', this._unfocusInputs)
-  },
-
-  componentWillUnmount() {
-    Mousetrap.unbind(['a', 'esc'])
-  },
-
   render() {
     const content = (
       <div>
-        <textarea ref='importInput'
-                  className='export-text'
-                  placeholder='paste exported configuration here and press import'
-                  valueLink={this.linkState('data')}
-                  spellCheck='false'/>
+        <PrimaryInput>
+          <textarea className='export-text'
+                    placeholder='paste exported configuration here and press import'
+                    valueLink={this.linkState('data')}
+                    spellCheck='false'/>
+        </PrimaryInput>
         <button className='button-primary' onClick={this._import }> import</button>
         <ValidationMessages messages={this.props.errors}/>
         <InfoMessages messages={this.props.infos}/>
@@ -60,15 +52,5 @@ module.exports = React.createClass({
 
   _import() {
     ConfigurationActions.importData(this.state.data)
-  },
-
-  _focusInput() {
-    this.refs.importInput.focus()
-    return false
-  },
-
-  _unfocusInputs() {
-    this.refs.importInput.blur()
-    return false
   }
 })

@@ -13,7 +13,7 @@ const MenuItem = React.createClass({
   },
 
   componentDidMount() {
-    Mousetrap.bind(this.props.shortcuts, this._keyboardShortcut)
+    Mousetrap.bind(this.props.shortcuts, this._navigate)
   },
 
   componentWillUnmount() {
@@ -31,7 +31,7 @@ const MenuItem = React.createClass({
     )
   },
 
-  _keyboardShortcut() {
+  _navigate() {
     browserHistory.push('/' + this.props.id)
   }
 })

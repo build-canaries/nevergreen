@@ -2,7 +2,7 @@ const React = require('react')
 const LinkedStateMixin = require('react-addons-linked-state-mixin')
 const ValidationMessages = require('../general/validationMessages')
 const _ = require('lodash')
-const Mousetrap = require('mousetrap')
+const PrimaryInput = require('../general/PrimaryInput')
 
 module.exports = React.createClass({
   mixins: [LinkedStateMixin],
@@ -22,44 +22,32 @@ module.exports = React.createClass({
     }
   },
 
-  componentDidMount() {
-    Mousetrap.bind('a', this._focusUrlInput)
-    Mousetrap(this.refs.urlInput).bind('esc', this._unfocusInputs)
-    Mousetrap(this.refs.usernameInput).bind('esc', this._unfocusInputs)
-    Mousetrap(this.refs.passwordInput).bind('esc', this._unfocusInputs)
-  },
-
-  componentWillUnmount() {
-    Mousetrap.unbind(['a', 'esc'])
-  },
-
   render() {
     return (
       <div className='tracking-cctray-group-cctray-form'>
         <span className='text-input'>
           <label htmlFor='cctray-url'>url</label>
-          <input ref='urlInput'
-                 id='cctray-url'
-                 className='tracking-tray-url'
-                 type='text'
-                 placeholder='e.g. http(s)://host:port/cc.xml'
-                 valueLink={this.linkState('url')}
-                 onKeyPress={this._onKeyPress}/>
+          <PrimaryInput>
+            <input id='cctray-url'
+                   className='tracking-tray-url'
+                   type='text'
+                   placeholder='e.g. http(s)://host:port/cc.xml'
+                   valueLink={this.linkState('url')}
+                   onKeyPress={this._onKeyPress}/>
+          </PrimaryInput>
         </span>
-        <button ref='addButton' id='cctray-fetch' className='button-primary' onClick={this._onClick}>add</button>
+        <button id='cctray-fetch' className='button-primary' onClick={this._onClick}>add</button>
         <div>
             <span className='text-input'>
               <label htmlFor='username'>username</label>
-              <input ref='usernameInput'
-                     id='username'
+              <input id='username'
                      type='text'
                      valueLink={this.linkState('username')}
                      onKeyPress={this._onKeyPress}/>
             </span>
             <span className='text-input'>
               <label htmlFor='password' className='text-label'>password</label>
-              <input ref='passwordInput'
-                     id='password'
+              <input id='password'
                      className='text-input'
                      type='password'
                      valueLink={this.linkState('password')}
@@ -89,17 +77,5 @@ module.exports = React.createClass({
 
   _onClick() {
     this.props.addTray(this.state.url, this.state.username, this.state.password)
-  },
-
-  _focusUrlInput() {
-    this.refs.urlInput.focus()
-    return false
-  },
-
-  _unfocusInputs() {
-    this.refs.urlInput.blur()
-    this.refs.usernameInput.blur()
-    this.refs.passwordInput.blur()
-    return false
   }
 })

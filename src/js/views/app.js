@@ -5,6 +5,9 @@ const AppActions = require('../actions/AppActions')
 const AppStore = require('../stores/AppStore')
 const NotificationActions = require('../actions/NotificationActions')
 const NotificationStore = require('../stores/NotificationStore')
+const Mousetrap = require('mousetrap')
+
+require('mousetrap/plugins/global-bind/mousetrap-global-bind') // adds bindGlobal to Mousetrap
 
 const twentyFourHours = 24 * 60 * 60 * 1000
 
@@ -40,6 +43,10 @@ module.exports = React.createClass({
 
     const versionCheckId = setInterval(NotificationActions.pollForNewVersion, twentyFourHours)
     this.setState({versionCheckId: versionCheckId})
+
+    Mousetrap.bindGlobal('esc', () => {
+      document.activeElement.blur()
+    })
   },
 
   componentWillUnmount() {
