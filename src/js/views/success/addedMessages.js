@@ -1,6 +1,7 @@
 const React = require('react')
 const Container = require('../general/container')
 const RemoveLink = require('./removeLink')
+const Mousetrap = require('mousetrap')
 
 module.exports = React.createClass({
   displayName: 'AddedMessages',
@@ -8,6 +9,19 @@ module.exports = React.createClass({
   propTypes: {
     messages: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
     removeMessage: React.PropTypes.func.isRequired
+  },
+
+  componentDidMount() {
+    this._bindKeyEvents(this.props.messages)
+  },
+
+  componentWillUnmount() {
+    this._unbindKeyEvents(this.props.messages)
+  },
+
+  componentWillReceiveProps(nextProps) {
+    this._unbindKeyEvents(this.props.messages)
+    this._bindKeyEvents(nextProps.messages)
   },
 
   render() {
@@ -27,5 +41,17 @@ module.exports = React.createClass({
         </ul>
       </Container>
     )
+  },
+
+  _bindKeyEvents(messages) {
+    messages.forEach((message, index) => {
+      Mousetrap.bind(`d m ${index}`, this.props.removeMessage.bind(null, message))
+    })
+  },
+
+  _unbindKeyEvents(messages) {
+    messages.forEach((_, index) => {
+      Mousetrap.unbind(`d m ${index}`)
+    })
   }
 })

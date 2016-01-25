@@ -16,7 +16,7 @@ module.exports = React.createClass({
               <thead>
               <tr>
                 <th>Bindings</th>
-                <th>Works?</th>
+                <th>Works on?</th>
                 <th>Action</th>
               </tr>
               </thead>
@@ -71,12 +71,21 @@ module.exports = React.createClass({
                 <td>Tracking section</td>
                 <td>Excludes all projects for the tray with the given index (the first tray is at index 0).</td>
               </tr>
+              <tr>
+                <td className='binding'>d m &lt;index&gt;</td>
+                <td>Success section</td>
+                <td>Deletes the message at the given index (the first message is at index 0).</td>
+              </tr>
+              <tr>
+                <td className='binding'>d i &lt;index&gt;</td>
+                <td>Success section</td>
+                <td>Deletes the image at the given index (the first image is at index 0).</td>
+              </tr>
               </tbody>
             </table>
             <div className='help-text'>
               <div>Key:</div>
               <div><span className='binding'>a, b</span> means a OR b</div>
-              <div><span className='binding'>a+b</span> means a AND b</div>
               <div><span className='binding'>a b</span> means a THEN b</div>
             </div>
           </div>
