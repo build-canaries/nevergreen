@@ -37,8 +37,9 @@ module.exports = React.createClass({
 
         <div>
           {
-            this.state.trays.map(tray => {
+            this.state.trays.map((tray, index) => {
               return <Tray key={tray.trayId}
+                           index={index}
                            tray={tray}
                            removeTray={this._removeTray.bind(this, tray.trayId)}
                            refreshTray={this._refreshTray.bind(this, tray)}

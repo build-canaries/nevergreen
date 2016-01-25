@@ -16,43 +16,60 @@ module.exports = React.createClass({
               <thead>
               <tr>
                 <th>Bindings</th>
+                <th>Works?</th>
                 <th>Action</th>
               </tr>
               </thead>
               <tbody>
               <tr>
                 <td className='binding'>m, 1</td>
-                <td>Navigate to the Monitor section</td>
+                <td>All sections</td>
+                <td>Navigate to the monitor section.</td>
               </tr>
               <tr>
                 <td className='binding'>t, 2</td>
-                <td>Navigate to the Tracking section</td>
+                <td>All sections</td>
+                <td>Navigate to the tracking section.</td>
               </tr>
               <tr>
                 <td className='binding'>s, 3</td>
-                <td>Navigate to the Success section</td>
+                <td>All sections</td>
+                <td>Navigate to the success section.</td>
               </tr>
               <tr>
                 <td className='binding'>d, 4</td>
-                <td>Navigate to the Display section</td>
+                <td>All sections</td>
+                <td>Navigate to the display section.</td>
               </tr>
               <tr>
                 <td className='binding'>e, 5</td>
-                <td>Navigate to the Export section</td>
+                <td>All sections</td>
+                <td>Navigate to the export section.</td>
               </tr>
               <tr>
                 <td className='binding'>h, ?, 6</td>
-                <td>Navigate to this (the Help) section</td>
+                <td>All sections</td>
+                <td>Navigate to this (the help) section.</td>
               </tr>
               <tr>
                 <td className='binding'>a</td>
-                <td>Focus the primary action input of that section (if it has one) e.g. the url input in the tracking
-                  section
-                </td>
+                <td>Tracking, success & export sections</td>
+                <td>Focus the primary action input e.g. the url input in the tracking section.</td>
               </tr>
               <tr>
                 <td className='binding'>esc</td>
-                <td>Blur the currently focused input, allowing other shortcuts to be used again</td>
+                <td>Tracking, success & export sections</td>
+                <td>Blur the currently focused input, allowing other shortcuts to be used again.</td>
+              </tr>
+              <tr>
+                <td className='binding'>+ &lt;index&gt;</td>
+                <td>Tracking section</td>
+                <td>Includes all projects for the tray with the given index (the first tray is at index 0).</td>
+              </tr>
+              <tr>
+                <td className='binding'>- &lt;index&gt;</td>
+                <td>Tracking section</td>
+                <td>Excludes all projects for the tray with the given index (the first tray is at index 0).</td>
               </tr>
               </tbody>
             </table>

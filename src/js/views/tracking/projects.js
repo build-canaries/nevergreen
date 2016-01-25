@@ -4,6 +4,7 @@ const _ = require('lodash')
 const SelectedProjectsStore = require('../../stores/SelectedProjectsStore')
 const SelectProjectActions = require('../../actions/SelectProjectActions')
 const FetchedProjectsStore = require('../../stores/FetchedProjectsStore')
+const Mousetrap = require('mousetrap')
 
 function projectName(project) {
   return project.name
@@ -20,6 +21,7 @@ module.exports = React.createClass({
   displayName: 'Projects',
 
   propTypes: {
+    index: React.PropTypes.number.isRequired,
     trayId: React.PropTypes.string.isRequired
   },
 
@@ -30,11 +32,16 @@ module.exports = React.createClass({
   componentDidMount() {
     SelectedProjectsStore.addListener(this._onChange)
     FetchedProjectsStore.addListener(this._onChange)
+
+    Mousetrap.bind(`+ ${this.props.index}`, this._includeAll)
+    Mousetrap.bind(`- ${this.props.index}`, this._excludeAll)
   },
 
   componentWillUnmount() {
     SelectedProjectsStore.removeListener(this._onChange)
     FetchedProjectsStore.removeListener(this._onChange)
+
+    Mousetrap.unbind([`+ ${this.props.index}`, `- ${this.props.index}`])
   },
 
   render() {

@@ -10,6 +10,7 @@ module.exports = React.createClass({
   displayName: 'Tray',
 
   propTypes: {
+    index: React.PropTypes.number.isRequired,
     tray: React.PropTypes.object.isRequired,
     removeTray: React.PropTypes.func.isRequired,
     refreshTray: React.PropTypes.func.isRequired,
@@ -55,7 +56,7 @@ module.exports = React.createClass({
         ]
         subContent = <ValidationMessages messages={errorMessages}/>
       } else {
-        subContent = <Projects trayId={this.props.tray.trayId}/>
+        subContent = <Projects index={this.props.index} trayId={this.props.tray.trayId}/>
       }
     }
 
