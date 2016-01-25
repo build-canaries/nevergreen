@@ -9,6 +9,54 @@ module.exports = React.createClass({
       <section className='dashboard-main-section'>
         <h2 className='visually-hidden'>Help</h2>
 
+        <Container title='Keyboard Shortcuts'>
+          <div className='help-contents'>
+            <p className='help-text'>The following keyboard shortcuts can be used to:</p>
+            <table className='help-tracking-table'>
+              <thead>
+              <tr>
+                <th>Bindings</th>
+                <th>Action</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td className='binding'>m, 1</td>
+                <td>Navigate to the Monitor section</td>
+              </tr>
+              <tr>
+                <td className='binding'>t, 2</td>
+                <td>Navigate to the Tracking section</td>
+              </tr>
+              <tr>
+                <td className='binding'>s, 3</td>
+                <td>Navigate to the Success section</td>
+              </tr>
+              <tr>
+                <td className='binding'>d, 4</td>
+                <td>Navigate to the Display section</td>
+              </tr>
+              <tr>
+                <td className='binding'>e, 5</td>
+                <td>Navigate to the Export section</td>
+              </tr>
+              <tr>
+                <td className='binding'>h, ?, 6</td>
+                <td>Navigate to this (the Help) section</td>
+              </tr>
+              <tr>
+                <td className='binding'>a</td>
+                <td>Focus the primary action input of that section (if it has one)</td>
+              </tr>
+              <tr>
+                <td className='binding'>esc</td>
+                <td>Blur the currently focused input, allowing other shortcuts to be used again</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </Container>
+
         <Container title='Monitor'>
           <div className='help-contents'>
             <table className='help-tracking-table'>
@@ -39,9 +87,9 @@ module.exports = React.createClass({
 
         <Container title='Tracking'>
           <div className='help-contents'>
-            <p className="help-text">To get started you need to enter the URL to your cctray xml file. Where it lives
+            <p className='help-text'>To get started you need to enter the URL to your cctray xml file. Where it lives
               depends on your CI Server of choice: </p>
-            <table className="help-tracking-table">
+            <table className='help-tracking-table'>
               <thead>
               <tr>
                 <th>CI Server</th>
@@ -102,13 +150,13 @@ module.exports = React.createClass({
 
         <Container title='Success'>
           <div className='help-contents'>
-            <p className="help-text">You can add text or image urls, these will get displayed when no projects are
+            <p className='help-text'>You can add text or image urls, these will get displayed when no projects are
               broken or building on the monitor page. Images are previewed in a 16:9 ratio which is how they would
               look on a full HD TV (1920x1080).</p>
 
-            <p className="help-text">Need some inspiration?</p>
+            <p className='help-text'>Need some inspiration?</p>
 
-            <p className="help-text">
+            <p className='help-text'>
               Try searching for some <a href='https://duckduckgo.com/?q=nature+1920x1080&iax=1&ia=images'
                                         target='_blank'>nice images</a> or check out <a
               href='http://www.disapprovallook.com/' target='_blank'>ಠ_ಠ Disapproval Look</a> for some fun messages,
@@ -131,7 +179,7 @@ module.exports = React.createClass({
             </li>
             <li>
               <span className='help-link-icon  icon-IcoMoon'/>
-              Fonts from <a href='https://icomoon.io/' target='_blank'>IcoMoon</a> "custom built and crisp icon fonts,
+              Icons from <a href='https://icomoon.io/' target='_blank'>IcoMoon</a> "custom built and crisp icon fonts,
               done right".
             </li>
           </ul>
