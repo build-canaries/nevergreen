@@ -1,10 +1,24 @@
 const React = require('react')
-const Router = require('react-router')
+const Mousetrap = require('mousetrap')
 
-const Link = Router.Link
+import { browserHistory, Link } from 'react-router'
 
 const MenuItem = React.createClass({
   displayName: 'MenuItem',
+
+  propTypes: {
+    iconClass: React.PropTypes.string.isRequired,
+    title: React.PropTypes.string.isRequired,
+    shortcuts: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
+  },
+
+  componentDidMount() {
+    Mousetrap.bind(this.props.shortcuts, this._keyboardShortcut)
+  },
+
+  componentWillUnmount() {
+    Mousetrap.unbind(this.props.shortcuts)
+  },
 
   render() {
     return (
@@ -15,6 +29,10 @@ const MenuItem = React.createClass({
         </Link>
       </li>
     )
+  },
+
+  _keyboardShortcut() {
+    browserHistory.push('/' + this.props.id)
   }
 })
 
@@ -31,12 +49,12 @@ module.exports = React.createClass({
   getDefaultProps() {
     return {
       items: [
-        {id: 'monitor', iconClass: 'eye', title: 'Monitor'},
-        {id: 'tracking', iconClass: 'drawer2', title: 'Tracking'},
-        {id: 'success', iconClass: 'checkmark', title: 'Success'},
-        {id: 'display', iconClass: 'display', title: 'Display'},
-        {id: 'export', iconClass: 'floppy-disk', title: 'Export'},
-        {id: 'help', iconClass: 'question', title: 'Help'}
+        {id: 'monitor', iconClass: 'eye', title: 'Monitor', shortcuts: ['m', '1']},
+        {id: 'tracking', iconClass: 'drawer2', title: 'Tracking', shortcuts: ['t', '2']},
+        {id: 'success', iconClass: 'checkmark', title: 'Success', shortcuts: ['s', '3']},
+        {id: 'display', iconClass: 'display', title: 'Display', shortcuts: ['d', '4']},
+        {id: 'export', iconClass: 'floppy-disk', title: 'Export', shortcuts: ['e', '5']},
+        {id: 'help', iconClass: 'question', title: 'Help', shortcuts: ['h', '?', '6']}
       ]
     }
   },
@@ -61,7 +79,10 @@ module.exports = React.createClass({
           <ul className='navigation-list'>
             {
               this.props.items.map(item => {
-                return <MenuItem key={item.id} id={item.id} iconClass={'icon-' + item.iconClass} title={item.title}/>
+                return <MenuItem key={item.id} id={item.id}
+                                 iconClass={'icon-' + item.iconClass}
+                                 title={item.title}
+                                 shortcuts={item.shortcuts}/>
               })
             }
           </ul>

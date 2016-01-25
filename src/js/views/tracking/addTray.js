@@ -2,6 +2,7 @@ const React = require('react')
 const LinkedStateMixin = require('react-addons-linked-state-mixin')
 const ValidationMessages = require('../general/validationMessages')
 const _ = require('lodash')
+const Mousetrap = require('mousetrap')
 
 module.exports = React.createClass({
   mixins: [LinkedStateMixin],
@@ -19,6 +20,17 @@ module.exports = React.createClass({
       username: '',
       password: ''
     }
+  },
+
+  componentDidMount() {
+    Mousetrap.bind('a', this._focusUrlInput)
+    Mousetrap(this.refs.urlInput).bind('esc', this._unfocusInputs)
+    Mousetrap(this.refs.usernameInput).bind('esc', this._unfocusInputs)
+    Mousetrap(this.refs.passwordInput).bind('esc', this._unfocusInputs)
+  },
+
+  componentWillUnmount() {
+    Mousetrap.unbind(['a', 'esc'])
   },
 
   render() {
@@ -77,5 +89,17 @@ module.exports = React.createClass({
 
   _onClick() {
     this.props.addTray(this.state.url, this.state.username, this.state.password)
+  },
+
+  _focusUrlInput() {
+    this.refs.urlInput.focus()
+    return false
+  },
+
+  _unfocusInputs() {
+    this.refs.urlInput.blur()
+    this.refs.usernameInput.blur()
+    this.refs.passwordInput.blur()
+    return false
   }
 })

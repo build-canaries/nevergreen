@@ -4,7 +4,7 @@ module.exports = React.createClass({
     displayName: 'Container',
 
     propTypes: {
-      name: React.PropTypes.string.isRequired
+      title: React.PropTypes.string.isRequired
     },
 
     getInitialState() {

@@ -10,6 +10,7 @@ env:
   node: true
 
 ecmaFeatures:
+  modules: true
   jsx: true
 
 rules:

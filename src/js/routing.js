@@ -1,6 +1,5 @@
 const React = require('react')
 const ReactDOM = require('react-dom')
-const Router = require('react-router')
 const App = require('./views/app')
 const MonitorSection = require('./views/monitor/monitorSection')
 const TrackingSection = require('./views/tracking/trackingSection')
@@ -9,8 +8,7 @@ const DisplaySection = require('./views/display/displaySection')
 const ExportSection = require('./views/export/exportSection')
 const HelpSection = require('./views/help/helpSection')
 
-const IndexRoute = Router.IndexRoute
-const Route = Router.Route
+import { browserHistory, Router, Route, IndexRoute } from 'react-router'
 
 const routes = (
   <Route path='/' component={App}>
@@ -20,8 +18,9 @@ const routes = (
     <Route path='display' component={DisplaySection}/>
     <Route path='export' component={ExportSection}/>
     <Route path='help' component={HelpSection}/>
+    <Route path="*" component={TrackingSection}/>
     <IndexRoute component={TrackingSection}/>
   </Route>
 )
 
-ReactDOM.render(<Router.Router routes={routes}/>, document.getElementById('content'))
+ReactDOM.render(<Router history={browserHistory} routes={routes}/>, document.getElementById('content'))

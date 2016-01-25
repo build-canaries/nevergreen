@@ -2,6 +2,7 @@ const React = require('react')
 const LinkedStateMixin = require('react-addons-linked-state-mixin')
 const ValidationMessages = require('../general/validationMessages')
 const _ = require('lodash')
+const Mousetrap = require('mousetrap')
 
 module.exports = React.createClass({
   mixins: [LinkedStateMixin],
@@ -15,6 +16,15 @@ module.exports = React.createClass({
 
   getInitialState() {
     return {message: ''}
+  },
+
+  componentDidMount() {
+    Mousetrap.bind('a', this._focusInput)
+    Mousetrap(this.refs.messageInput).bind('esc', this._unfocusInputs)
+  },
+
+  componentWillUnmount() {
+    Mousetrap.unbind(['a', 'esc'])
   },
 
   render() {
@@ -50,5 +60,15 @@ module.exports = React.createClass({
     if (evt.key === 'Enter') {
       this.props.addMessage(this.state.message)
     }
+  },
+
+  _focusInput() {
+    this.refs.messageInput.focus()
+    return false
+  },
+
+  _unfocusInputs() {
+    this.refs.messageInput.blur()
+    return false
   }
 })

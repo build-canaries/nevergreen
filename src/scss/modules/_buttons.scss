@@ -25,6 +25,8 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.26);
   }
   &:focus {
+    background-color: darken(white, 5%);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.26);
     outline: none;
     border-radius: 0;
   }
@@ -36,6 +38,9 @@
   background-color: $blue;
   color: $off-white;
   &:hover {
+    background-color: darken($blue, 5%);
+  }
+  &:focus {
     background-color: darken($blue, 5%);
   }
 }
