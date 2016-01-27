@@ -12,6 +12,7 @@ module.exports = React.createClass({
 
   propTypes: {
     index: React.PropTypes.number.isRequired,
+    isLast: React.PropTypes.bool.isRequired,
     tray: React.PropTypes.object.isRequired,
     removeTray: React.PropTypes.func.isRequired,
     refreshTray: React.PropTypes.func.isRequired,
@@ -32,17 +33,23 @@ module.exports = React.createClass({
     }, 60000)
     this.setState({intervalId: intervalId})
 
-    Mousetrap.bind(`r ${this.props.index}`, this.props.refreshTray)
-    Mousetrap.bind(`p ${this.props.index}`, this._toggleSettingsView)
+    this._bindKeyboardEvents(this.props.index, this.props.refreshTray)
   },
 
   componentWillUnmount() {
     clearInterval(this.state.intervalId)
-    Mousetrap.unbind([`r ${this.props.index}`, `p ${this.props.index}`])
+    if (this.props.isLast) {
+      this._unbindKeyboardEvents(this.props.index)
+    }
   },
 
-  componentWillReceiveProps() {
+  componentWillReceiveProps(nextProps) {
     this.setState({lastFetched: this._updateLastFetch()})
+
+    if (this.props.index !== nextProps.index) {
+      this._unbindKeyboardEvents(this.props.index)
+      this._bindKeyboardEvents(nextProps.index, nextProps.refreshTray)
+    }
   },
 
   render() {
@@ -61,7 +68,7 @@ module.exports = React.createClass({
         ]
         subContent = <ValidationMessages messages={errorMessages}/>
       } else {
-        subContent = <Projects index={this.props.index} trayId={this.props.tray.trayId}/>
+        subContent = <Projects index={this.props.index} isLast={this.props.isLast} trayId={this.props.tray.trayId}/>
       }
     }
 
@@ -88,7 +95,7 @@ module.exports = React.createClass({
   },
 
   _toggleSettingsLabel() {
-      return this.state.showSettings ? 'Show projects' : 'Show settings'
+    return this.state.showSettings ? 'Show projects' : 'Show settings'
   },
 
   _toggleSettingsView() {
@@ -108,5 +115,14 @@ module.exports = React.createClass({
       showSettings: false
     })
     this.props.updateTray(trayId, name, url, username, password)
+  },
+
+  _bindKeyboardEvents(index, refreshTray) {
+    Mousetrap.bind(`r ${index}`, refreshTray)
+    Mousetrap.bind(`p ${index}`, this._toggleSettingsView)
+  },
+
+  _unbindKeyboardEvents(index) {
+    Mousetrap.unbind([`r ${index}`, `p ${index}`])
   }
 })

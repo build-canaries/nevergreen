@@ -22,6 +22,7 @@ module.exports = React.createClass({
 
   propTypes: {
     index: React.PropTypes.number.isRequired,
+    isLast: React.PropTypes.bool.isRequired,
     trayId: React.PropTypes.string.isRequired
   },
 
@@ -33,15 +34,23 @@ module.exports = React.createClass({
     SelectedProjectsStore.addListener(this._onChange)
     FetchedProjectsStore.addListener(this._onChange)
 
-    Mousetrap.bind(`+ ${this.props.index}`, this._includeAll)
-    Mousetrap.bind(`- ${this.props.index}`, this._excludeAll)
+    this._bindKeyboardEvents(this.props.index)
   },
 
   componentWillUnmount() {
     SelectedProjectsStore.removeListener(this._onChange)
     FetchedProjectsStore.removeListener(this._onChange)
 
-    Mousetrap.unbind([`+ ${this.props.index}`, `- ${this.props.index}`])
+    if (this.props.isLast) {
+      this._unbindKeyboardEvents(this.props.index)
+    }
+  },
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.index !== nextProps.index) {
+      this._unbindKeyboardEvents(this.props.index)
+      this._bindKeyboardEvents(nextProps.index)
+    }
   },
 
   render() {
@@ -102,5 +111,14 @@ module.exports = React.createClass({
 
   _onChange() {
     this.setState(getStateFromStore(this.props.trayId))
+  },
+
+  _bindKeyboardEvents(index) {
+    Mousetrap.bind(`+ ${index}`, this._includeAll)
+    Mousetrap.bind(`- ${index}`, this._excludeAll)
+  },
+
+  _unbindKeyboardEvents(index) {
+    Mousetrap.unbind([`+ ${index}`, `- ${index}`])
   }
 })
