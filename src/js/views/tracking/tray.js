@@ -57,7 +57,10 @@ module.exports = React.createClass({
 
     if (this.state.showSettings) {
       subContent =
-        <TraySettings tray={this.props.tray} removeTray={this.props.removeTray} updateTray={this._updateTray}/>
+        <TraySettings tray={this.props.tray}
+                      removeTray={this.props.removeTray}
+                      updateTray={this._updateTray}
+                      cancel={this._toggleSettingsView}/>
     } else {
       if (this.props.tray.fetching) {
         subContent = <Loading/>
@@ -102,6 +105,8 @@ module.exports = React.createClass({
     this.setState({
       showSettings: !this.state.showSettings
     })
+
+    return false
   },
 
   _updateLastFetch() {

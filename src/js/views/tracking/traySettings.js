@@ -11,7 +11,8 @@ module.exports = React.createClass({
   propTypes: {
     tray: React.PropTypes.object.isRequired,
     removeTray: React.PropTypes.func.isRequired,
-    updateTray: React.PropTypes.func.isRequired
+    updateTray: React.PropTypes.func.isRequired,
+    cancel: React.PropTypes.func.isRequired
   },
 
   getInitialState() {
@@ -32,6 +33,10 @@ module.exports = React.createClass({
     })
   },
 
+  componentDidMount() {
+    this.refs.name.focus()
+  },
+
   render() {
     return (
       <section className='tray-settings'>
@@ -39,6 +44,7 @@ module.exports = React.createClass({
           <label htmlFor={this.props.tray.trayId + 'settings-url'}>name</label>
           <input className='tray-settings-name'
                  id={this.props.tray.trayId + 'settings-name'}
+                 ref='name'
                  type='text'
                  valueLink={this.linkState('name')}
                  placeholder='e.g. project or team name'/>
@@ -49,7 +55,8 @@ module.exports = React.createClass({
           <input className='tray-settings-url'
                  id={this.props.tray.trayId + 'settings-url'}
                  type='text'
-                 valueLink={this.linkState('url')}/>
+                 valueLink={this.linkState('url')}
+                 placeholder='this should not be blank...'/>
         </div>
         <div className='text-input'>
           <label htmlFor={this.props.tray.trayId + 'settings-username'}>username</label>
@@ -65,6 +72,7 @@ module.exports = React.createClass({
                  placeholder='not set'
                  valueLink={this.linkState('password')}/>
         </div>
+        <button className='button tray-settings-update-button' onClick={this.props.cancel}>cancel</button>
         <button className='button-primary tray-settings-update-button' onClick={this._updateTray}>update tray</button>
 
         <div className='tray-settings-danger-zone'>
