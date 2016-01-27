@@ -63,8 +63,8 @@ module.exports = React.createClass({
     TrayActions.refreshTray(tray)
   },
 
-  _updateTray(trayId, url, username, password) {
-    TrayActions.updateTray(trayId, url, username, password)
+  _updateTray(trayId, name, url, username, password) {
+    TrayActions.updateTray(trayId, name, url, username, password)
   },
 
   _onChange() {

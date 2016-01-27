@@ -4,6 +4,7 @@ const eventEmitter = new EventEmitter()
 const _ = require('lodash')
 const Constants = require('../constants/NevergreenConstants')
 const LocalRepository = require('../storage/LocalRepository')
+const nameGenerator = require('project-name-generator')
 
 const storageKey = 'tray'
 const CHANGE_EVENT = 'tray-change'
@@ -12,6 +13,7 @@ let _storeState = null
 
 function addTray(action) {
   _storeState.trays[action.trayId] = {
+    name: _.startCase(nameGenerator().spaced),
     trayId: action.trayId,
     url: action.url,
     username: action.username
@@ -19,6 +21,7 @@ function addTray(action) {
 }
 
 function updateTray(action) {
+  _storeState.trays[action.trayId].name = action.name
   _storeState.trays[action.trayId].url = action.url
   _storeState.trays[action.trayId].username = action.username
 }

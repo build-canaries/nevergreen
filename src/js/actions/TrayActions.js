@@ -48,13 +48,14 @@ module.exports = {
     }
   },
 
-  updateTray(trayId, url, username, password) {
+  updateTray(trayId, name, url, username, password) {
     const passwordSame = trayStore.getById(trayId).password === password
     const newPassword = passwordSame ? '' : password
 
     AppDispatcher.dispatch({
       type: Constants.TrayUpdate,
       trayId: trayId,
+      name: name,
       url: url,
       username: username
     })

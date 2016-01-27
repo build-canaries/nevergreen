@@ -66,7 +66,7 @@ module.exports = React.createClass({
     }
 
     return (
-      <Container title={this.props.tray.url}>
+      <Container title={this.props.tray.name || this.props.tray.url}>
         <div>
           <div className='tray-sub-bar'>
             <button className='button' onClick={this._toggleSettingsView} title='Toggle settings'>
@@ -103,10 +103,10 @@ module.exports = React.createClass({
     }
   },
 
-  _updateTray(trayId, url, username, password) {
+  _updateTray(trayId, name, url, username, password) {
     this.setState({
       showSettings: false
     })
-    this.props.updateTray(trayId, url, username, password)
+    this.props.updateTray(trayId, name, url, username, password)
   }
 })

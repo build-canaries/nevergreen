@@ -140,18 +140,19 @@ describe('tray actions', () => {
     })
 
     it('dispatches tray update with the given id', () => {
-      subject.updateTray('some-id', 'some-url', 'some-username', 'some-password')
+      subject.updateTray('some-id', 'some-name', 'some-url', 'some-username', 'some-password')
 
       expect(AppDispatcher.dispatch).toBeCalledWith({
         type: Constants.TrayUpdate,
         trayId: 'some-id',
+        name: 'some-name',
         url: 'some-url',
         username: 'some-username'
       })
     })
 
     it('dispatches password encrypted if the tray has a new different password', () => {
-      subject.updateTray('some-id', 'some-url', 'some-username', 'some-password')
+      subject.updateTray('some-id', 'some-name', 'some-url', 'some-username', 'some-password')
 
       promiseMock.then.mock.calls[0][0]({password: 'some-encrypted-password'}) // call the callback passed to the promise mock
 
@@ -170,7 +171,7 @@ describe('tray actions', () => {
     })
 
     it('does not dispatch password encrypted if the given password is the same as the current password', () => {
-      subject.updateTray('some-id', 'some-url', 'some-username', 'existing-password')
+      subject.updateTray('some-id', 'some-name', 'some-url', 'some-username', 'existing-password')
 
       expect(AppDispatcher.dispatch).not.toBeCalledWith({
         type: Constants.PasswordEncrypted,
@@ -187,7 +188,7 @@ describe('tray actions', () => {
     })
 
     it('allows the password to be unset aka updated to blank', () => {
-      subject.updateTray('some-id', 'some-url', 'some-username', '')
+      subject.updateTray('some-id', 'some-name', 'some-url', 'some-username', '')
 
       expect(AppDispatcher.dispatch).toBeCalledWith({
         type: Constants.PasswordEncrypted,

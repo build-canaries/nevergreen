@@ -68,6 +68,10 @@
   width: calc(100% - 7em);
 }
 
+.tray-settings-name {
+  width: calc(50% - 7em);
+}
+
 .tray-settings-danger-zone {
   border-radius: 3px;
   border: 1px solid $off-white;

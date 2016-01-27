@@ -1,5 +1,7 @@
 const React = require('react')
 const LinkedStateMixin = require('react-addons-linked-state-mixin')
+const nameGenerator = require('project-name-generator')
+const _ = require('lodash')
 
 module.exports = React.createClass({
   mixins: [LinkedStateMixin],
@@ -14,6 +16,7 @@ module.exports = React.createClass({
 
   getInitialState() {
     return {
+      name: this.props.tray.name,
       url: this.props.tray.url,
       username: this.props.tray.username,
       password: this.props.tray.password
@@ -22,6 +25,7 @@ module.exports = React.createClass({
 
   componentWillReceiveProps(nextProps) {
     this.setState({
+      name: nextProps.tray.name,
       url: nextProps.tray.url,
       username: nextProps.tray.username,
       password: nextProps.tray.password
@@ -31,6 +35,15 @@ module.exports = React.createClass({
   render() {
     return (
       <section className='tray-settings'>
+        <div className='text-input'>
+          <label htmlFor={this.props.tray.trayId + 'settings-url'}>name</label>
+          <input className='tray-settings-name'
+                 id={this.props.tray.trayId + 'settings-name'}
+                 type='text'
+                 valueLink={this.linkState('name')}
+                 placeholder='e.g. project or team name'/>
+          <button className='button' onClick={this._generateRandomName}>random</button>
+        </div>
         <div className='text-input'>
           <label htmlFor={this.props.tray.trayId + 'settings-url'}>url</label>
           <input className='tray-settings-url'
@@ -56,7 +69,7 @@ module.exports = React.createClass({
 
         <div className='tray-settings-danger-zone'>
           <h4 className='tray-settings-danger-zone-title'>
-            <span className='icon-notification'></span>
+            <span className='icon-notification'/>
             <span className='text-with-icon'>Danger Zone</span>
           </h4>
 
@@ -71,6 +84,12 @@ module.exports = React.createClass({
   },
 
   _updateTray() {
-    this.props.updateTray(this.props.tray.trayId, this.state.url, this.state.username, this.state.password)
+    this.props.updateTray(this.props.tray.trayId, this.state.name, this.state.url, this.state.username, this.state.password)
+  },
+
+  _generateRandomName() {
+    this.setState({
+      name: _.startCase(nameGenerator().spaced)
+    })
   }
 })

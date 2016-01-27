@@ -3,17 +3,22 @@ jest.dontMock('../../../src/js/stores/TrayStore')
 
 describe('tray store', () => {
 
-  let store, AppDispatcher, Constants, callback
+  let store, AppDispatcher, Constants, callback, nameGenerator
 
   beforeEach(() => {
     AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
     Constants = require('../../../src/js/constants/NevergreenConstants')
     store = require('../../../src/js/stores/TrayStore')
+    nameGenerator = require('project-name-generator')
     callback = AppDispatcher.register.mock.calls[0][0]
 
     callback({
       type: Constants.AppInit,
       configuration: {}
+    })
+
+    nameGenerator.mockReturnValue({
+      spaced: 'some generated name'
     })
   })
 
@@ -38,6 +43,7 @@ describe('tray store', () => {
     })
     expect(store.getById('some-id')).toEqual({
       trayId: 'some-id',
+      name: 'Some Generated Name',
       url: 'some-url',
       username: 'some-username'
     })
@@ -57,11 +63,13 @@ describe('tray store', () => {
       callback({
         type: Constants.TrayUpdate,
         trayId: 'some-id',
+        name: 'some-name',
         url: 'another-url',
         username: 'another-username'
       })
       expect(store.getById('some-id')).toEqual({
         trayId: 'some-id',
+        name: 'some-name',
         url: 'another-url',
         username: 'another-username'
       })
