@@ -4,9 +4,11 @@ const processStatus = response => {
   if (response.status >= 200 && response.status < 300) {
     return Promise.resolve(response)
   } else {
-    return Promise.reject({
-      status: response.status,
-      message: response.statusText
+    return response.text().then(body => {
+      return Promise.reject({
+        status: response.status,
+        message: body
+      })
     })
   }
 }

@@ -32,6 +32,13 @@ module.exports = React.createClass({
     return (
       <section className='tray-settings'>
         <div className='text-input'>
+          <label htmlFor={this.props.tray.trayId + 'settings-url'}>url</label>
+          <input className='tray-settings-url'
+                 id={this.props.tray.trayId + 'settings-url'}
+                 type='text'
+                 valueLink={this.linkState('url')}/>
+        </div>
+        <div className='text-input'>
           <label htmlFor={this.props.tray.trayId + 'settings-username'}>username</label>
           <input id={this.props.tray.trayId + 'settings-username'}
                  type='text'

@@ -22,9 +22,17 @@
 (defn filter-by-ids [ids projects]
   (filter #(in? ids (:project-id %)) projects))
 
+(defn- invalid-url-error-message [url]
+  (if (blank? url)
+    "url was blank! A http(s) url must be provided."
+    (str "'" url "' is not a valid url! Only http(s) urls are supported.")))
+
 (defn- ensure-url-is-valid [{:keys [url]}]
   (if (invalid-url? url)
-    (throw (IllegalArgumentException. (str url " is not a valid url! Only http(s) urls are supported.")))))
+    (let [msg (invalid-url-error-message url)]
+      (throw (ex-info msg {:status  422
+                           :message msg
+                           :url     url})))))
 
 (defn- set-auth-header [username password]
   (if-not (or (blank? username) (blank? password))

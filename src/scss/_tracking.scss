@@ -58,6 +58,14 @@
 
 .tray-settings {
   margin: 1em;
+  label {
+    width: 5em;
+    display: inline-flex;
+  }
+}
+
+.tray-settings-url {
+  width: calc(100% - 7em);
 }
 
 .tray-settings-danger-zone {

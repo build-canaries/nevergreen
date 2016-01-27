@@ -12,7 +12,7 @@
   (or (:status data) 500))
 
 (defn get-body [data]
-  (or (get bodies (:status data)) "Server Error"))
+  (or (:message data) (get bodies (:status data)) "Server Error"))
 
 (defn handle-exception-info [e]
   (let [data (ex-data e)]
