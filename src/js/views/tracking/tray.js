@@ -33,11 +33,12 @@ module.exports = React.createClass({
     this.setState({intervalId: intervalId})
 
     Mousetrap.bind(`r ${this.props.index}`, this.props.refreshTray)
+    Mousetrap.bind(`p ${this.props.index}`, this._toggleSettingsView)
   },
 
   componentWillUnmount() {
     clearInterval(this.state.intervalId)
-    Mousetrap.unbind(`r ${this.props.index}`)
+    Mousetrap.unbind([`r ${this.props.index}`, `p ${this.props.index}`])
   },
 
   componentWillReceiveProps() {

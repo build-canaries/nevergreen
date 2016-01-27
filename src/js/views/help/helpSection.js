@@ -77,6 +77,11 @@ module.exports = React.createClass({
                 <td>Refresh the tray with the given index (the first tray is at index 0).</td>
               </tr>
               <tr>
+                <td className='binding'>p &lt;index&gt;</td>
+                <td>Tracking section</td>
+                <td>Toggle project and settings views for the tray with the given index (the first tray is at index 0).</td>
+              </tr>
+              <tr>
                 <td className='binding'>d m &lt;index&gt;</td>
                 <td>Success section</td>
                 <td>Deletes the message at the given index (the first message is at index 0).</td>
