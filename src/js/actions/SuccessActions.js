@@ -1,12 +1,6 @@
 const AppDispatcher = require('../dispatcher/AppDispatcher')
 const Constants = require('../constants/NevergreenConstants')
-const validate = require('validate.js')
-
-const _addMessageValidation = {
-  message: {
-    presence: true
-  }
-}
+const _ = require('lodash')
 
 function isASentence(message) {
   const numberOfLetters = (message.match(/[A-Za-z]/g) || []).length
@@ -21,9 +15,15 @@ function transformMessage(message) {
   return message.replace(/ /g, String.fromCharCode(160))
 }
 
+function validateMessage(message) {
+  if (_.isEmpty(_.trim(message))) {
+    return [`message can not be blank!`]
+  }
+}
+
 module.exports = {
   addMessage(message) {
-    const validationMessages = validate({message: message}, _addMessageValidation)
+    const validationMessages = validateMessage(message)
 
     if (validationMessages) {
       AppDispatcher.dispatch({

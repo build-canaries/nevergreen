@@ -3,13 +3,12 @@ jest.dontMock('../../../src/js/actions/SuccessActions')
 
 describe('success actions', () => {
 
-  let subject, AppDispatcher, Constants, validate
+  let subject, AppDispatcher, Constants
 
   beforeEach(() => {
     subject = require('../../../src/js/actions/SuccessActions')
     AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
     Constants = require('../../../src/js/constants/NevergreenConstants')
-    validate = require('validate.js')
   })
 
   it('should not change messages which do not need to change', () => {
@@ -17,13 +16,11 @@ describe('success actions', () => {
   })
 
   it('dispatches a invalid action for blank messages', () => {
-    validate.mockReturnValue('some message')
-
     subject.addMessage('')
 
     expect(AppDispatcher.dispatch).toBeCalledWith({
       type: Constants.MessageInvalidInput,
-      errors: 'some message',
+      errors: jasmine.arrayContaining([jasmine.any(String)]),
       message: ''
     })
   })
