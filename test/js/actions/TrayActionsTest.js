@@ -3,25 +3,20 @@ jest.dontMock('../../../src/js/actions/TrayActions')
 
 describe('tray actions', () => {
 
-  let subject, AppDispatcher, Constants, validate, projectsGateway, securityGateway, promiseMock, moment, uuid, trayStore
+  let subject, AppDispatcher, Constants, projectsGateway, securityGateway, promiseMock, moment, uuid, trayStore, Helpers
 
   beforeEach(() => {
+    Helpers = require('../jest/Helpers')
     subject = require('../../../src/js/actions/TrayActions')
     AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
     Constants = require('../../../src/js/constants/NevergreenConstants')
-    validate = require('validate.js')
     projectsGateway = require('../../../src/js/gateways/projectsGateway')
     securityGateway = require('../../../src/js/gateways/securityGateway')
     moment = require('moment')
     uuid = require('node-uuid')
     trayStore = require('../../../src/js/stores/TrayStore')
 
-    promiseMock = {
-      then: jest.genMockFunction(),
-      catch: jest.genMockFunction()
-    }
-    promiseMock.then.mockReturnValue(promiseMock)
-    promiseMock.catch.mockReturnValue(promiseMock)
+    promiseMock = Helpers.promiseMock()
 
     projectsGateway.fetchAll.mockReturnValue(promiseMock)
     securityGateway.encryptPassword.mockReturnValue(promiseMock)
@@ -30,45 +25,42 @@ describe('tray actions', () => {
 
   describe('adding a tray', () => {
     beforeEach(() => {
-      validate.mockReturnValue(undefined) // validate.js returns undefined on success
       uuid.v4.mockReturnValue('some-uuid')
       subject.refreshTray = jest.genMockFunction()
     })
 
     it('dispatches invalid input action when validation fails', () => {
-      validate.mockReturnValue('some-validation-messages')
-
-      subject.addTray('some-url', 'some-username', 'some-password')
+      subject.addTray('some-invalid-url', 'some-username', 'some-password')
 
       expect(AppDispatcher.dispatch).toBeCalledWith({
         type: Constants.TrayInvalidInput,
-        errors: 'some-validation-messages'
+        errors: jasmine.arrayContaining([jasmine.stringMatching(/some-invalid-url/)])
       })
     })
 
     it('dispatches tray add', () => {
-      subject.addTray('some-url', 'some-username', 'some-password')
+      subject.addTray('http://some-url', 'some-username', 'some-password')
 
       expect(AppDispatcher.dispatch).toBeCalledWith({
         type: Constants.TrayAdd,
         trayId: 'some-uuid',
-        url: 'some-url',
+        url: 'http://some-url',
         username: 'some-username'
       })
     })
 
     it('refreshes the tray with the username even if a blank password is given', () => {
-      subject.addTray('some-url', 'some-username', '')
+      subject.addTray('http://some-url', 'some-username', '')
 
       expect(subject.refreshTray).toBeCalledWith({
         trayId: 'some-uuid',
-        url: 'some-url',
+        url: 'http://some-url',
         username: 'some-username'
       })
     })
 
     it('dispatches password encrypted if the tray has a password', () => {
-      subject.addTray('some-url', 'some-username', 'some-password')
+      subject.addTray('http://some-url', 'some-username', 'some-password')
 
       promiseMock.then.mock.calls[0][0]({password: 'some-encrypted-password'}) // call the callback passed to the promise mock
 
@@ -78,12 +70,9 @@ describe('tray actions', () => {
         password: 'some-encrypted-password'
       })
 
-      expect(subject.refreshTray).toBeCalledWith({
-        trayId: 'some-uuid',
-        url: 'some-url',
-        username: 'some-username',
+      expect(subject.refreshTray).toBeCalledWith(jasmine.objectContaining({
         password: 'some-encrypted-password'
-      })
+      }))
     })
   })
 

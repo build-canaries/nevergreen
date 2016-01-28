@@ -2,18 +2,18 @@ const AppDispatcher = require('../dispatcher/AppDispatcher')
 const securityGateway = require('../gateways/securityGateway')
 const projectsGateway = require('../gateways/projectsGateway')
 const uuid = require('node-uuid')
-const validate = require('validate.js')
 const Constants = require('../constants/NevergreenConstants')
 const moment = require('moment')
 const trayStore = require('../stores/TrayStore')
 const _ = require('lodash')
 
-const _addTrayValidation = {
-  url: {
-    presence: true,
-    url: {
-      allowLocal: true
-    }
+const urlRegex = /^https?:\/\//i
+
+function validateUrl(url) {
+  if (_.isEmpty(_.trim(url))) {
+    return [`url can not be blank! Only http(s) urls are supported.`]
+  } else if (!urlRegex.test(url)) {
+    return [`${url} is not a valid url! Only http(s) urls are supported.`]
   }
 }
 
@@ -21,7 +21,7 @@ module.exports = {
 
   addTray(url, username, password) {
     const trayId = uuid.v4()
-    const validationMessages = validate({url: url}, _addTrayValidation)
+    const validationMessages = validateUrl(url)
 
     if (validationMessages) {
       AppDispatcher.dispatch({
