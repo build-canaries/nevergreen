@@ -25,14 +25,6 @@ describe('selected projects store', () => {
     expect(AppDispatcher.register.mock.calls.length).toBe(1)
   })
 
-  it('returns the storage key', () => {
-    expect(store.storageKey).toBe('selectedProjects')
-  })
-
-  it('returns a validation description', () => {
-    expect(store.validation).toBeTruthy()
-  })
-
   it('concatenates selected project ids', () => {
     callback({
       type: Constants.ProjectSelected,
@@ -69,4 +61,17 @@ describe('selected projects store', () => {
     expect(store.getAll()).toEqual('some-configuration')
   })
 
+  describe('validation', () => {
+    it('returns an error message if the storage key does not exist', () => {
+      const obj = {}
+      expect(store.validate(obj)).toEqual([jasmine.any(String)])
+    })
+
+    it('returns an error message if the storage key is not an object', () => {
+      const obj = {
+        selectedProjects: 'not-an-object'
+      }
+      expect(store.validate(obj)).toEqual([jasmine.any(String)])
+    })
+  })
 })

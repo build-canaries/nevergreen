@@ -46,7 +46,6 @@
     "react-router": "2.0.0-rc5",
     "scale-text": "0.2.2",
     "semver": "5.1.0",
-    "validate.js": "0.9.0",
     "watchify": "3.7.0",
     "whatwg-fetch": "0.11.0"
   },

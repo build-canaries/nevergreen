@@ -21,14 +21,6 @@ describe('fetched projects store', () => {
     expect(AppDispatcher.register.mock.calls.length).toBe(1)
   })
 
-  it('returns the storage key', () => {
-    expect(store.storageKey).toBe('fetchedProjects')
-  })
-
-  it('returns a validation description', () => {
-    expect(store.validation).toBeTruthy()
-  })
-
   it('returns undefined for unknown tray ids', () => {
     expect(store.getAll('some-id')).toBeUndefined()
   })
@@ -128,6 +120,20 @@ describe('fetched projects store', () => {
           wasRemoved: true
         }])
       })
+    })
+  })
+
+  describe('validation', () => {
+    it('returns an error message if the storage key does not exist', () => {
+      const obj = {}
+      expect(store.validate(obj)).toEqual([jasmine.any(String)])
+    })
+
+    it('returns an error message if the storage key is not an object', () => {
+      const obj = {
+        fetchedProjects: 'not-an-object'
+      }
+      expect(store.validate(obj)).toEqual([jasmine.any(String)])
     })
   })
 

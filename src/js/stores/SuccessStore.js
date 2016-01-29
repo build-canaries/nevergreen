@@ -3,7 +3,6 @@ const EventEmitter = require('events').EventEmitter
 const eventEmitter = new EventEmitter()
 const Constants = require('../constants/NevergreenConstants')
 const _ = require('lodash')
-const validation = require('../validation')
 const LocalRepository = require('../storage/LocalRepository')
 
 const storageKey = 'success'
@@ -91,13 +90,21 @@ module.exports = {
     eventEmitter.removeListener(CHANGE_EVENT, callback)
   },
 
-  storageKey: storageKey,
-
-  validation: {
-    messages: {
-      array: {
-        elementValidation: validation.nonEmptyStrings
-      }
+  validate(obj) {
+    if (!_.has(obj, storageKey)) {
+      return [`The top level key ${storageKey} is missing!`]
     }
+    if (!_.has(obj, [storageKey, 'messages'])) {
+      return [`The nested key ${storageKey}.messages is missing!`]
+    }
+    if (!_.isArray(obj[storageKey].messages)) {
+      return [`The nested key ${storageKey}.messages must be an array!`]
+    }
+    return obj[storageKey].messages.reduce((errors, elem, index) => {
+      if (!_.isString(elem)) {
+        errors.push(`The nested key ${storageKey}.messages has an invalid element at index ${index}! It can only contain strings.`)
+      }
+      return errors
+    }, [])
   }
 }

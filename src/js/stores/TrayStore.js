@@ -139,11 +139,16 @@ module.exports = {
     eventEmitter.removeListener(CHANGE_EVENT, callback)
   },
 
-  storageKey: storageKey,
-
-  validation: {
-    trays: {
-      object: true
+  validate(obj) {
+    if (!_.has(obj, storageKey)) {
+      return [`The top level key ${storageKey} is missing!`]
+    }
+    if (!_.has(obj, [storageKey, 'trays'])) {
+      return [`The nested key ${storageKey}.trays is missing!`]
+    }
+    if (!_.isPlainObject(obj[storageKey].trays)) {
+      return [`The nested key ${storageKey}.trays must be an object!`]
     }
   }
+
 }

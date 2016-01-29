@@ -1,7 +1,6 @@
 const AppDispatcher = require('../dispatcher/AppDispatcher')
 const Constants = require('../constants/NevergreenConstants')
 const LocalRepository = require('../storage/LocalRepository')
-const Validation = require('../validation')
 const moment = require('moment')
 
 function momentInit() {
@@ -27,7 +26,6 @@ function momentInit() {
 module.exports = {
   init() {
     momentInit()
-    Validation.init()
     LocalRepository.init()
     LocalRepository.getConfiguration().then(configuration => {
       AppDispatcher.dispatch({

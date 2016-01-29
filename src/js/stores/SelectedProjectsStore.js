@@ -72,7 +72,12 @@ module.exports = {
     eventEmitter.removeListener(CHANGE_EVENT, callback)
   },
 
-  storageKey: storageKey,
-
-  validation: {}
+  validate(obj) {
+    if (!_.has(obj, storageKey)) {
+      return [`The top level key ${storageKey} is missing!`]
+    }
+    if (!_.isPlainObject(obj[storageKey])) {
+      return [`The top level key ${storageKey} must be an object!`]
+    }
+  }
 }

@@ -2,19 +2,15 @@ jest.dontMock('../../../src/js/actions/ConfigurationActions')
   .dontMock('../../../src/js/constants/NevergreenConstants')
 
 describe('configuration actions', () => {
-  let subject, AppDispatcher, Constants, LocalRepository, promiseMock
+  let subject, AppDispatcher, Constants, LocalRepository, promiseMock, Helpers
 
   beforeEach(() => {
+    Helpers = require('../jest/Helpers')
     subject = require('../../../src/js/actions/ConfigurationActions')
     AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
     Constants = require('../../../src/js/constants/NevergreenConstants')
     LocalRepository = require('../../../src/js/storage/LocalRepository')
-    promiseMock = {
-      then: jest.genMockFunction(),
-      catch: jest.genMockFunction()
-    }
-    promiseMock.then.mockReturnValue(promiseMock)
-    promiseMock.catch.mockReturnValue(promiseMock)
+    promiseMock = Helpers.promiseMock()
   })
 
   it('dispatches the up to most recent configuration loaded from storage', () => {

@@ -1,7 +1,7 @@
 const AppDispatcher = require('../dispatcher/AppDispatcher')
 const Constants = require('../constants/NevergreenConstants')
 const LocalRepository = require('../storage/LocalRepository')
-const validate = require('validate.js')
+const _ = require('lodash')
 const DisplayStore = require('../stores/DisplayStore')
 const FetchedProjectsStore = require('../stores/FetchedProjectsStore')
 const SelectedProjectsStore = require('../stores/SelectedProjectsStore')
@@ -16,15 +16,15 @@ const _storesWithConfiguration = [
   TrayStore
 ]
 
-const _importValidation = _storesWithConfiguration.reduce((previous, current) => {
-  previous[current.storageKey] = {
-    object: true
-  }
-  Object.keys(current.validation).map(key => {
-    previous[`${current.storageKey}.${key}`] = current.validation[key]
-  })
-  return previous
-}, {})
+function validateData(data) {
+  return _storesWithConfiguration.reduce((errors, store) => {
+    const storeErrors = store.validate(data)
+    if (!_.isEmpty(storeErrors)) {
+      return errors.concat(storeErrors)
+    }
+    return errors
+  }, [])
+}
 
 function dispatchError(errors) {
   AppDispatcher.dispatch({
@@ -39,10 +39,10 @@ module.exports = {
     try {
       const data = JSON.parse(jsonData)
 
-      const validationMessages = validate(data, _importValidation)
+      const validationMessages = validateData(data)
 
-      if (validationMessages) {
-        dispatchError(['Unable to import because of semantically invalid JSON with the following errors:'].concat(validationMessages))
+      if (!_.isEmpty(validationMessages)) {
+        dispatchError(validationMessages)
       } else {
         AppDispatcher.dispatch({
           type: Constants.ImportingData,
@@ -53,7 +53,7 @@ module.exports = {
           AppDispatcher.dispatch({
             type: Constants.RestoreConfiguration,
             configuration: data,
-            errors: ['Successfully imported']
+            messages: ['Successfully imported']
           })
           AppDispatcher.dispatch({
             type: Constants.ExportData,

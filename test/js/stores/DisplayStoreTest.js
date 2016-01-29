@@ -21,14 +21,6 @@ describe('display store', () => {
     expect(AppDispatcher.register.mock.calls.length).toBe(1)
   })
 
-  it('returns the storage key', () => {
-    expect(store.storageKey).toBe('display')
-  })
-
-  it('returns a validation description', () => {
-    expect(store.validation).toBeTruthy()
-  })
-
   describe('are broken build timers enabled', () => {
     it('returns false by default', () => {
       expect(store.areBrokenBuildTimersEnabled()).toBeFalsy()
@@ -51,5 +43,12 @@ describe('display store', () => {
         expect(store.areBrokenBuildTimersEnabled()).toBeFalsy()
       }
     )
+  })
+
+  describe('validation', () => {
+    it('returns an error message if the storage key does not exist', () => {
+      const obj = {}
+      expect(store.validate(obj)).toEqual([jasmine.any(String)])
+    })
   })
 })

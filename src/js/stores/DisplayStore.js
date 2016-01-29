@@ -3,6 +3,7 @@ const EventEmitter = require('events').EventEmitter
 const eventEmitter = new EventEmitter()
 const Constants = require('../constants/NevergreenConstants')
 const LocalRepository = require('../storage/LocalRepository')
+const _ = require('lodash')
 
 const storageKey = 'display'
 const CHANGE_EVENT = 'display-change'
@@ -54,7 +55,9 @@ module.exports = {
     eventEmitter.removeListener(CHANGE_EVENT, callback)
   },
 
-  storageKey: storageKey,
-
-  validation: {}
+  validate(obj) {
+    if (!_.has(obj, storageKey)) {
+      return [`The top level key ${storageKey} is missing!`]
+    }
+  }
 }

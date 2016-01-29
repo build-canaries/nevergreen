@@ -25,14 +25,6 @@ describe('success store', () => {
     expect(AppDispatcher.register.mock.calls.length).toBe(1)
   })
 
-  it('returns the storage key', () => {
-    expect(store.storageKey).toBe('success')
-  })
-
-  it('returns a validation description', () => {
-    expect(store.validation).toBeTruthy()
-  })
-
   it('adds a message', () => {
     callback({
       type: Constants.MessageAdd,
@@ -139,6 +131,38 @@ describe('success store', () => {
 
     it('if returns false if the string does not start with http', () => {
       expect(store.isUrl('ftp')).toBeFalsy()
+    })
+  })
+
+  describe('validation', () => {
+    it('returns an error message if the storage key does not exist', () => {
+      const obj = {}
+      expect(store.validate(obj)).toEqual([jasmine.any(String)])
+    })
+
+    it('returns an error message if the messages key does not exist', () => {
+      const obj = {
+        success: {}
+      }
+      expect(store.validate(obj)).toEqual([jasmine.any(String)])
+    })
+
+    it('returns an error message if the messages key is not an array', () => {
+      const obj = {
+        success: {
+          messages: 'not-an-array'
+        }
+      }
+      expect(store.validate(obj)).toEqual([jasmine.any(String)])
+    })
+
+    it('returns an error message if the messages key is an array with elements that are not strings', () => {
+      const obj = {
+        success: {
+          messages: ['ok', 1, 'also-ok']
+        }
+      }
+      expect(store.validate(obj)).toEqual([jasmine.any(String)])
     })
   })
 

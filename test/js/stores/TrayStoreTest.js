@@ -26,14 +26,6 @@ describe('tray store', () => {
     expect(AppDispatcher.register.mock.calls.length).toBe(1)
   })
 
-  it('returns the storage key', () => {
-    expect(store.storageKey).toBe('tray')
-  })
-
-  it('returns a validation description', () => {
-    expect(store.validation).toBeTruthy()
-  })
-
   it('adds a tray', () => {
     callback({
       type: Constants.TrayAdd,
@@ -138,6 +130,29 @@ describe('tray store', () => {
       type: Constants.ImportedData
     })
     expect(store.getAll()).toEqual([])
+  })
+
+  describe('validation', () => {
+    it('returns an error message if the storage key does not exist', () => {
+      const obj = {}
+      expect(store.validate(obj)).toEqual([jasmine.any(String)])
+    })
+
+    it('returns an error message if the trays key does not exist', () => {
+      const obj = {
+        success: {}
+      }
+      expect(store.validate(obj)).toEqual([jasmine.any(String)])
+    })
+
+    it('returns an error message if the trays key is not an object', () => {
+      const obj = {
+        success: {
+          trays: 'not-an-object'
+        }
+      }
+      expect(store.validate(obj)).toEqual([jasmine.any(String)])
+    })
   })
 
 })
