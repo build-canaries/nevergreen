@@ -4,7 +4,7 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [ring "1.4.0"]
                  [compojure "1.4.0"]
-                 [environ "1.0.1"]
+                 [environ "1.0.2"]
                  [cheshire "5.5.0"]
                  [clj-cctray "0.9.0"]
                  [clj-http "2.0.1"]
