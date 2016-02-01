@@ -35,7 +35,7 @@ hash lein 2>/dev/null || {
     exit 1
 }
 
-echo "[0] Clear build directory"
+echo "[0] clear build directory"
 rm -rf build
 
 echo "[1] fetching node modules and performing first build"
