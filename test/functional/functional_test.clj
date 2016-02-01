@@ -36,7 +36,7 @@
         tray-url (tray-url-to-fetch)
         tray-username (tray-username-to-use)
         tray-password (tray-password-to-use)]
-    (to (str base-url "/#/tracking"))
+    (to (str base-url "/tracking"))
 
     (input "#cctray-url" tray-url)
     (input "#username" tray-username)
