@@ -17,12 +17,14 @@ Additional help and information can be found on the [help page](https://nevergre
 
 ## Build status
 
-[![Build Status](https://snap-ci.com/build-canaries/nevergreen/branch/master/build_image)](https://snap-ci.com/build-canaries/nevergreen/branch/master)
-[![Join the chat at https://gitter.im/build-canaries/nevergreen](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/build-canaries/nevergreen?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Clojure Dependencies Status](http://jarkeeper.com/build-canaries/nevergreen/status.svg)](http://jarkeeper.com/build-canaries/nevergreen)
-[![Javascript Dependencies Status](https://david-dm.org/build-canaries/nevergreen.svg)](https://david-dm.org/build-canaries/nevergreen)
+|   | Status |
+|---|---|
+| CI     | [![Build Status](https://snap-ci.com/build-canaries/nevergreen/branch/master/build_image)](https://snap-ci.com/build-canaries/nevergreen/branch/master) |
+| Server | [![Clojure Dependencies Status](http://jarkeeper.com/build-canaries/nevergreen/status.svg)](http://jarkeeper.com/build-canaries/nevergreen) |
+| Client | [![Javascript Dependencies Status](https://david-dm.org/build-canaries/nevergreen.svg)](https://david-dm.org/build-canaries/nevergreen) |
 
-We are usually hanging out on the our [Gitter channel](https://gitter.im/build-canaries/nevergreen) if you'd like to chat.
+We are usually hanging out on [chat](https://gitter.im/build-canaries/nevergreen) if you have any questions or comments.
+[![Join the chat at https://gitter.im/build-canaries/nevergreen](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/build-canaries/nevergreen?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Contributing
 
