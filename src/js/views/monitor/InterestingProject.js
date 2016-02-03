@@ -1,5 +1,6 @@
 const React = require('react')
 const moment = require('moment')
+const _ = require('lodash')
 
 module.exports = React.createClass({
   displayName: 'InterestingProject',
@@ -16,7 +17,7 @@ module.exports = React.createClass({
   },
 
   _toRelativeTime(time) {
-    return moment(time).fromNow(true)
+    return _.isEmpty(_.trim(time)) ? '??' : moment(time).fromNow(true)
   },
 
   _brokenBuildTimer() {
