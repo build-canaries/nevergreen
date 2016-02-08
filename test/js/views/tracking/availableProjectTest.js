@@ -15,7 +15,7 @@ describe('available project', () => {
     callback = jest.genMockFunction()
   })
 
-  xdescribe('calls the add select project function', () => {
+  describe('calls the add select project function', () => {
 
     it('does on change of the checkbox to checked', () => {
       const component = TestUtils.renderIntoDocument(<AvailableProject name='some-name' included={false}
@@ -37,7 +37,7 @@ describe('available project', () => {
 
   })
 
-  xdescribe('rendering info', () => {
+  describe('rendering info', () => {
 
     it('renders the name', () => {
       const component = TestUtils.renderIntoDocument(<AvailableProject name='some-name' included={false}
