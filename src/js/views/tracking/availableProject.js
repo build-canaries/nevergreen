@@ -17,9 +17,9 @@ module.exports = React.createClass({
     let info = ''
 
     if (this.props.isNew) {
-      info = <sup className='tracking-new-project'>new</sup>
+      info = <sup className='tracking-new-info'>new</sup>
     } else if (this.props.wasRemoved) {
-      info = <sup>removed</sup>
+      info = <sup className='tracking-removed-info'>removed</sup>
     }
 
     return (

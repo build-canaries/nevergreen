@@ -36,7 +36,11 @@
   text-decoration: line-through;
 }
 
-.tracking-new-project {
+.tracking-removed-info {
+  margin-left: 0.5em;
+}
+
+.tracking-new-info {
   color: $new-text;
   margin-left: 0.5em;
 }
