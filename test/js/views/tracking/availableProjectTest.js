@@ -1,7 +1,7 @@
 /*eslint no-unused-vars: 1*/
 /* Even though it isn't used if React isn't defined the tests fail for some reason... */
 
-jest.dontMock('../../../../src/js/views/tracking/availableProject.js')
+jest.autoMockOff()
 
 describe('available project', () => {
   let ReactDOM, React, TestUtils, AvailableProject, callback
