@@ -9,98 +9,6 @@ module.exports = React.createClass({
       <section className='dashboard-main-section'>
         <h2 className='visually-hidden'>Help</h2>
 
-        <Container title='Keyboard Shortcuts'>
-          <div className='help-contents'>
-            <p className='help-text'>The following keyboard shortcuts can be used to:</p>
-            <table className='help-tracking-table'>
-              <thead>
-              <tr>
-                <th>Bindings</th>
-                <th>Works in?</th>
-                <th>Action</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr>
-                <td className='binding'>m, 1</td>
-                <td>All sections</td>
-                <td>Navigate to the monitor section.</td>
-              </tr>
-              <tr>
-                <td className='binding'>t, 2</td>
-                <td>All sections</td>
-                <td>Navigate to the tracking section.</td>
-              </tr>
-              <tr>
-                <td className='binding'>s, 3</td>
-                <td>All sections</td>
-                <td>Navigate to the success section.</td>
-              </tr>
-              <tr>
-                <td className='binding'>d, 4</td>
-                <td>All sections</td>
-                <td>Navigate to the display section.</td>
-              </tr>
-              <tr>
-                <td className='binding'>e, 5</td>
-                <td>All sections</td>
-                <td>Navigate to the export section.</td>
-              </tr>
-              <tr>
-                <td className='binding'>h, ?, 6</td>
-                <td>All sections</td>
-                <td>Navigate to this (the help) section.</td>
-              </tr>
-              <tr>
-                <td className='binding'>a</td>
-                <td>Tracking, success & export sections</td>
-                <td>Focus the primary action input e.g. the url input in the tracking section.</td>
-              </tr>
-              <tr>
-                <td className='binding'>esc</td>
-                <td>Tracking, success & export sections</td>
-                <td>Blur the currently focused input, allowing other shortcuts to be used again.</td>
-              </tr>
-              <tr>
-                <td className='binding'>+ &lt;index&gt;</td>
-                <td>Tracking section</td>
-                <td>Includes all projects for the tray with the given index (the first tray is at index 0).</td>
-              </tr>
-              <tr>
-                <td className='binding'>- &lt;index&gt;</td>
-                <td>Tracking section</td>
-                <td>Excludes all projects for the tray with the given index (the first tray is at index 0).</td>
-              </tr>
-              <tr>
-                <td className='binding'>r &lt;index&gt;</td>
-                <td>Tracking section</td>
-                <td>Refresh the tray with the given index (the first tray is at index 0).</td>
-              </tr>
-              <tr>
-                <td className='binding'>p &lt;index&gt;</td>
-                <td>Tracking section</td>
-                <td>Toggle project and settings views for the tray with the given index (the first tray is at index 0).</td>
-              </tr>
-              <tr>
-                <td className='binding'>d m &lt;index&gt;</td>
-                <td>Success section</td>
-                <td>Deletes the message at the given index (the first message is at index 0).</td>
-              </tr>
-              <tr>
-                <td className='binding'>d i &lt;index&gt;</td>
-                <td>Success section</td>
-                <td>Deletes the image at the given index (the first image is at index 0).</td>
-              </tr>
-              </tbody>
-            </table>
-            <div className='help-text'>
-              <div>Key:</div>
-              <div><span className='binding'>a, b</span> means a OR b</div>
-              <div><span className='binding'>a b</span> means a THEN b</div>
-            </div>
-          </div>
-        </Container>
-
         <Container title='Monitor'>
           <div className='help-contents'>
             <table className='help-tracking-table'>
@@ -206,6 +114,98 @@ module.exports = React.createClass({
               href='http://www.disapprovallook.com/' target='_blank'>ಠ_ಠ Disapproval Look</a> for some fun messages,
               like jelly guy! ༼つ◕_◕༽つ
             </p>
+          </div>
+        </Container>
+
+        <Container title='Keyboard Shortcuts'>
+          <div className='help-contents'>
+            <p className='help-text'>The following keyboard shortcuts can be used to:</p>
+            <table className='help-tracking-table'>
+              <thead>
+              <tr>
+                <th>Bindings</th>
+                <th>Works in?</th>
+                <th>Action</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td className='binding'>m, 1</td>
+                <td>All sections</td>
+                <td>Navigate to the monitor section.</td>
+              </tr>
+              <tr>
+                <td className='binding'>t, 2</td>
+                <td>All sections</td>
+                <td>Navigate to the tracking section.</td>
+              </tr>
+              <tr>
+                <td className='binding'>s, 3</td>
+                <td>All sections</td>
+                <td>Navigate to the success section.</td>
+              </tr>
+              <tr>
+                <td className='binding'>d, 4</td>
+                <td>All sections</td>
+                <td>Navigate to the display section.</td>
+              </tr>
+              <tr>
+                <td className='binding'>e, 5</td>
+                <td>All sections</td>
+                <td>Navigate to the export section.</td>
+              </tr>
+              <tr>
+                <td className='binding'>h, ?, 6</td>
+                <td>All sections</td>
+                <td>Navigate to this (the help) section.</td>
+              </tr>
+              <tr>
+                <td className='binding'>a</td>
+                <td>Tracking, success & export sections</td>
+                <td>Focus the primary action input e.g. the url input in the tracking section.</td>
+              </tr>
+              <tr>
+                <td className='binding'>esc</td>
+                <td>Tracking, success & export sections</td>
+                <td>Blur the currently focused input, allowing other shortcuts to be used again.</td>
+              </tr>
+              <tr>
+                <td className='binding'>+ &lt;index&gt;</td>
+                <td>Tracking section</td>
+                <td>Includes all projects for the tray with the given index (the first tray is at index 0).</td>
+              </tr>
+              <tr>
+                <td className='binding'>- &lt;index&gt;</td>
+                <td>Tracking section</td>
+                <td>Excludes all projects for the tray with the given index (the first tray is at index 0).</td>
+              </tr>
+              <tr>
+                <td className='binding'>r &lt;index&gt;</td>
+                <td>Tracking section</td>
+                <td>Refresh the tray with the given index (the first tray is at index 0).</td>
+              </tr>
+              <tr>
+                <td className='binding'>p &lt;index&gt;</td>
+                <td>Tracking section</td>
+                <td>Toggle project and settings views for the tray with the given index (the first tray is at index 0).</td>
+              </tr>
+              <tr>
+                <td className='binding'>d m &lt;index&gt;</td>
+                <td>Success section</td>
+                <td>Deletes the message at the given index (the first message is at index 0).</td>
+              </tr>
+              <tr>
+                <td className='binding'>d i &lt;index&gt;</td>
+                <td>Success section</td>
+                <td>Deletes the image at the given index (the first image is at index 0).</td>
+              </tr>
+              </tbody>
+            </table>
+            <div className='help-text'>
+              <div>Key:</div>
+              <div><span className='binding'>a, b</span> means a OR b</div>
+              <div><span className='binding'>a b</span> means a THEN b</div>
+            </div>
           </div>
         </Container>
 
