@@ -1,16 +1,18 @@
 /*eslint no-unused-vars: 1*/
 /* Even though it isn't used if React isn't defined the tests fail for some reason... */
 
-jest.autoMockOff()
-
 describe('available project', () => {
   let ReactDOM, React, TestUtils, AvailableProject, callback
 
   beforeEach(() => {
+    jest.autoMockOff()
+
     React = require('react')
     ReactDOM = require('react-dom')
     TestUtils = require('react-addons-test-utils')
     AvailableProject = require('../../../../src/js/views/tracking/availableProject.js')
+
+    jest.autoMockOn()
 
     callback = jest.genMockFunction()
   })
