@@ -1,0 +1,13 @@
+@import "../base/variables";
+
+$main-section-background: white;
+$main-section-border-color: $light-grey;
+
+.main-section {
+  background: $main-section-background;
+  border: 3px solid $main-section-border-color;
+  border-radius: 0.5em;
+  font-size: 1.3em;
+  margin-bottom: 1em;
+  padding: 1em;
+}

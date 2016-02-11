@@ -2,16 +2,19 @@
   margin-top: 1em;
 
   label {
+    font-weight: bold;
     margin-right: 1em;
   }
 
   input {
-    border: none;
-    border-bottom: 1px solid $mid-grey;
+    border: 2px solid $light-grey;
+    border-radius: 0.3em;
     margin-right: 1em;
+    padding: 0.5em;
+
     &:focus {
       outline: none;
-      border-bottom-color: $blue;
+      border-color: $blue;
     }
   }
 }

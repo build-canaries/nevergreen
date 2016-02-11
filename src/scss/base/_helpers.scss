@@ -22,6 +22,12 @@
   width: 1px;
 }
 
+@mixin box-sizing($value) {
+  -webkit-box-sizing: $value;
+  -moz-box-sizing: $value;
+  box-sizing: $value;
+}
+
 .visually-hidden {
   @include visually-hidden;
 }
