@@ -123,24 +123,12 @@
   color: white;
 
   &:hover {
-    color: darken(white, 10%);
-  }
-}
-
-.tray-hidden-button {
-  font-size: 1.2rem;
-  display: inline;
-  border: none;
-  background: none;
-  margin-right: 0.5em;
-
-  &:hover {
-    color: darken(white, 10%);
+    color: darken($blue, 10%);
   }
 }
 
 .tray-sub-bar {
-  background: $light-grey;
+  background: $off-white;
   color: $mid-grey;
   padding: 0.3em;
 }

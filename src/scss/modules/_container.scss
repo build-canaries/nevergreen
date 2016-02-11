@@ -1,0 +1,36 @@
+@import "../base/variables";
+
+$container-background: white;
+$container-border-color: $light-grey;
+$container-title-color: $blue;
+
+.section {
+  background: $container-background;
+  border: 3px solid $container-border-color;
+  border-radius: 0.5em;
+  font-size: 1.3em;
+  margin-bottom: 1em;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  padding: 0.5em;
+  color: $container-title-color;
+  text-overflow: ellipsis;
+}
+
+.section-body {
+  padding: 1em;
+}
+
+.section-show-hide-button {
+  font-size: 1.2rem;
+  display: inline;
+  border: none;
+  background: none;
+  margin-right: 0.5em;
+
+  &:hover {
+    color: darken($container-title-color, 10%);
+  }
+}

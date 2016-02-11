@@ -26,8 +26,8 @@ module.exports = React.createClass({
 
     _renderShowHideToggle() {
       return (
-        <button className='tray-hidden-button' onClick={this._toggleHidden} title={this._showHideLabel()}>
-          <span className={'icon-' + (this.state.hidden ? 'circle-down' : 'circle-up') }/>
+        <button className='section-show-hide-button' onClick={this._toggleHidden} title={this._showHideLabel()}>
+          <span className={'icon-' + (this.state.hidden ? 'circle-up' : 'circle-down') }/>
           <span className='visually-hidden'>{this._showHideLabel()}</span>
         </button>
       )
@@ -35,7 +35,7 @@ module.exports = React.createClass({
 
     render() {
       return (
-        <section className='sub-section'>
+        <section className='section'>
           <h3 className='section-title'>
             {this._renderShowHideToggle()}
             {this.props.title}

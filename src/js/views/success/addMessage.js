@@ -22,20 +22,22 @@ module.exports = React.createClass({
 
   render() {
     return (
-      <div className='main-section'>
-        <span className='text-input'>
-          <label htmlFor='message-input'>message</label>
-          <PrimaryInput>
-            <input id="message-input"
-                   className='tracking-cctray-group-cctray-form-input success-message-input'
-                   type='text'
-                   placeholder='text or image url'
-                   valueLink={this.linkState('message')}
-                   onKeyPress={this._onKeyPress}/>
-          </PrimaryInput>
-        </span>
-        <button ref='addButton' className='button-primary' onClick={this._onClick}>add</button>
-        {this._renderValidationMessages()}
+      <div className='section'>
+        <div className='section-body'>
+          <span className='text-input'>
+            <label htmlFor='message-input'>message</label>
+            <PrimaryInput>
+              <input id="message-input"
+                     className='tracking-cctray-group-cctray-form-input success-message-input'
+                     type='text'
+                     placeholder='text or image url'
+                     valueLink={this.linkState('message')}
+                     onKeyPress={this._onKeyPress}/>
+            </PrimaryInput>
+          </span>
+          <button ref='addButton' className='button-primary' onClick={this._onClick}>add</button>
+          {this._renderValidationMessages()}
+        </div>
       </div>
     )
   },
