@@ -32,7 +32,7 @@ module.exports = React.createClass({
     const content = (
       <div>
         <PrimaryInput>
-          <textarea className='export-text'
+          <textarea className='import-export-text'
                     placeholder='paste exported configuration here and press import'
                     valueLink={this.linkState('data')}
                     spellCheck='false'/>
@@ -45,7 +45,9 @@ module.exports = React.createClass({
 
     return (
       <Container title='Import'>
-        {this.props.loading ? <Loading/> : content}
+        <div className="section-body">
+          {this.props.loading ? <Loading/> : content}
+        </div>
       </Container>
     )
   },
