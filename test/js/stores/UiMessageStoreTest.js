@@ -27,10 +27,6 @@ describe('ui message store', () => {
       })
     })
 
-    it('starts with no add tray errors', () => {
-      expect(store.getAddTrayErrors()).toEqual([])
-    })
-
     it('starts with no success errors', () => {
       expect(store.getSuccessErrors()).toEqual([])
     })
@@ -52,10 +48,6 @@ describe('ui message store', () => {
       })
     })
 
-    it('clears add tray errors', () => {
-      expect(store.getAddTrayErrors()).toEqual([])
-    })
-
     it('clears success errors', () => {
       expect(store.getSuccessErrors()).toEqual([])
     })
@@ -66,33 +58,6 @@ describe('ui message store', () => {
 
     it('sets import infos to event messages', () => {
       expect(store.getImportInfos()).toEqual(['some-message'])
-    })
-  })
-
-  describe('adding a tray', () => {
-    beforeEach(() => {
-      callback({
-        type: Constants.TrayInvalidInput,
-        errors: ['some-error']
-      })
-    })
-
-    it('sets errors', () => {
-      expect(store.getAddTrayErrors()).toEqual(['some-error'])
-    })
-
-    it('clears errors on successful add', () => {
-      callback({
-        type: Constants.TrayAdd
-      })
-      expect(store.getAddTrayErrors()).toEqual([])
-    })
-
-    it('clears errors on removal', () => {
-      callback({
-        type: Constants.TrayRemove
-      })
-      expect(store.getAddTrayErrors()).toEqual([])
     })
   })
 

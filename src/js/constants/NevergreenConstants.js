@@ -4,7 +4,6 @@ module.exports = {
   TrayAdd: 'tray-add',
   TrayUpdate: 'tray-update',
   TrayRemove: 'tray-remove',
-  TrayInvalidInput: 'tray-invalid-input',
   PasswordEncrypted: 'password-encrypted',
   ProjectsFetching: 'projects-fetching',
   ProjectsFetched: 'projects-fetched',

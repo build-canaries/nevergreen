@@ -9,7 +9,7 @@
             [nevergreen.crypto :as crypt]
             [base64-clj.core :as base64]))
 
-(defn invalid-url? [url]
+(defn invalid-scheme? [url]
   (or (blank? url)
       (not (re-find #"https?://" url))))
 
@@ -24,15 +24,13 @@
 
 (defn- invalid-url-error-message [url]
   (if (blank? url)
-    "url was blank! A http(s) url must be provided."
-    (str "'" url "' is not a valid url! Only http(s) urls are supported.")))
+    "URL was blank! A http(s) URL must be provided."
+    (str "Only http(s) URLs are supported: " url)))
 
 (defn- ensure-url-is-valid [{:keys [url]}]
-  (if (invalid-url? url)
+  (if (invalid-scheme? url)
     (let [msg (invalid-url-error-message url)]
-      (throw (ex-info msg {:status  422
-                           :message msg
-                           :url     url})))))
+      (throw (ex-info msg {:status 422 :message msg :url url})))))
 
 (defn- set-auth-header [username password]
   (if-not (or (blank? username) (blank? password))

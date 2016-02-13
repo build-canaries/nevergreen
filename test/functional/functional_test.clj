@@ -8,8 +8,9 @@
           org.openqa.selenium.Dimension))
 
 (def snap-ci-xvfb-size (Dimension. 1280 1024))
-(def full-hd-tv-size (Dimension. 1920 1080))
-(def hd-tv-size (Dimension. 1280 720))
+; (def full-hd-tv-size (Dimension. 1920 1080))
+; (def hd-tv-size (Dimension. 1280 720))
+; (def xbox-one-size (Dimension. 1236 701))
 
 (defn functional-fixture [test-fn]
   (let [driver (ChromeDriver.)]

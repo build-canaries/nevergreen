@@ -1,7 +1,5 @@
 const React = require('react')
 const LinkedStateMixin = require('react-addons-linked-state-mixin')
-const ValidationMessages = require('../general/validationMessages')
-const _ = require('lodash')
 const PrimaryInput = require('../general/PrimaryInput')
 
 module.exports = React.createClass({
@@ -10,8 +8,7 @@ module.exports = React.createClass({
   displayName: 'AddTray',
 
   propTypes: {
-    addTray: React.PropTypes.func.isRequired,
-    validationMessages: React.PropTypes.arrayOf(React.PropTypes.string)
+    addTray: React.PropTypes.func.isRequired
   },
 
   getInitialState() {
@@ -54,19 +51,16 @@ module.exports = React.createClass({
                      onKeyPress={this._onKeyPress}/>
             </span>
         </div>
-        <ValidationMessages messages={this.props.validationMessages}/>
       </div>
     )
   },
 
-  componentWillReceiveProps(nextProps) {
-    if (_.size(nextProps.validationMessages) === 0) {
-      this.setState({
-        url: '',
-        username: '',
-        password: ''
-      })
-    }
+  componentWillReceiveProps() {
+    this.setState({
+      url: '',
+      username: '',
+      password: ''
+    })
   },
 
   _onKeyPress(evt) {

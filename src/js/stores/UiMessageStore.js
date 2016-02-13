@@ -13,9 +13,6 @@ const dispatchToken = AppDispatcher.register(action => {
     case Constants.RestoreConfiguration:
     {
       _storeState = {
-        addTray: {
-          errors: []
-        },
         success: {
           errors: []
         },
@@ -24,17 +21,6 @@ const dispatchToken = AppDispatcher.register(action => {
           infos: action.messages || []
         }
       }
-      break
-    }
-    case Constants.TrayInvalidInput:
-    {
-      _storeState.addTray.errors = action.errors
-      break
-    }
-    case Constants.TrayAdd:
-    case Constants.TrayRemove:
-    {
-      _storeState.addTray.errors = []
       break
     }
     case Constants.MessageInvalidInput:
@@ -72,10 +58,6 @@ const dispatchToken = AppDispatcher.register(action => {
 
 module.exports = {
   dispatchToken: dispatchToken,
-
-  getAddTrayErrors() {
-    return _storeState.addTray.errors
-  },
 
   getSuccessErrors() {
     return _storeState.success.errors

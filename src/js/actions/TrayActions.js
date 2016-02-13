@@ -7,44 +7,32 @@ const moment = require('moment')
 const trayStore = require('../stores/TrayStore')
 const _ = require('lodash')
 
-const urlRegex = /^https?:\/\//i
-
-function validateUrl(url) {
-  if (_.isEmpty(_.trim(url))) {
-    return [`url can not be blank! Only http(s) urls are supported.`]
-  } else if (!urlRegex.test(url)) {
-    return [`${url} is not a valid url! Only http(s) urls are supported.`]
-  }
+function hasScheme(url) {
+  return _.size(_.split(url, '://')) > 1
 }
 
 module.exports = {
 
-  addTray(url, username, password) {
+  addTray(enteredUrl, username, password) {
     const trayId = uuid.v4()
-    const validationMessages = validateUrl(url)
 
-    if (validationMessages) {
-      AppDispatcher.dispatch({
-        type: Constants.TrayInvalidInput,
-        errors: validationMessages
-      })
+    const url =  hasScheme(enteredUrl) ? enteredUrl : 'http://' + enteredUrl
+
+    AppDispatcher.dispatch({
+      type: Constants.TrayAdd,
+      trayId: trayId,
+      url: url,
+      username: username
+    })
+
+    if (_.size(password) > 0) {
+      this._encryptPasswordAndRefresh(trayId, url, username, password)
     } else {
-      AppDispatcher.dispatch({
-        type: Constants.TrayAdd,
+      this.refreshTray({
         trayId: trayId,
         url: url,
         username: username
       })
-
-      if (_.size(password) > 0) {
-        this._encryptPasswordAndRefresh(trayId, url, username, password)
-      } else {
-        this.refreshTray({
-          trayId: trayId,
-          url: url,
-          username: username
-        })
-      }
     }
   },
 

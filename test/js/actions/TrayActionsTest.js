@@ -29,15 +29,6 @@ describe('tray actions', () => {
       subject.refreshTray = jest.genMockFunction()
     })
 
-    it('dispatches invalid input action when validation fails', () => {
-      subject.addTray('some-invalid-url', 'some-username', 'some-password')
-
-      expect(AppDispatcher.dispatch).toBeCalledWith({
-        type: Constants.TrayInvalidInput,
-        errors: jasmine.arrayContaining([jasmine.stringMatching(/some-invalid-url/)])
-      })
-    })
-
     it('dispatches tray add', () => {
       subject.addTray('http://some-url', 'some-username', 'some-password')
 
@@ -47,6 +38,14 @@ describe('tray actions', () => {
         url: 'http://some-url',
         username: 'some-username'
       })
+    })
+
+    it('adds the http scheme if no scheme is given', () => {
+      subject.addTray('some-url', 'some-username', 'some-password')
+
+      expect(AppDispatcher.dispatch).toBeCalledWith(jasmine.objectContaining({
+        url: 'http://some-url'
+      }))
     })
 
     it('refreshes the tray with the username even if a blank password is given', () => {

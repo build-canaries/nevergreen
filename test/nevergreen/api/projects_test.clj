@@ -45,7 +45,7 @@
        (fact "throws exception if the url is not valid"
              (subject/get-all [{:url "url"}]) => (throws Exception)
              (provided
-               (subject/invalid-url? "url") => true))
+               (subject/invalid-scheme? "url") => true))
 
        (facts "uses pmap to parallelise the work"
               (fact "if multiple projects are given"
@@ -63,7 +63,7 @@
        (fact "throws exception if the url is not http[s]"
              (subject/get-interesting [{:url "url"}]) => (throws Exception)
              (provided
-               (subject/invalid-url? "url") => true))
+               (subject/invalid-scheme? "url") => true))
 
        (fact "removes healthy projects"
              (subject/get-interesting [{:tray-id "a-tray" :included ["project-1"] :url valid-url}]) => (list)
@@ -102,7 +102,7 @@
                (servers/detect-server "some-url") => ..server..)))
 
 (facts "check url is invalid"
-       (fact (subject/invalid-url? "http://bleh") => false)
-       (fact (subject/invalid-url? "https://bleh") => false)
-       (fact (subject/invalid-url? "gopher://bleh") => true)
-       (fact (subject/invalid-url? nil) => true))
+       (fact (subject/invalid-scheme? "http://bleh") => false)
+       (fact (subject/invalid-scheme? "https://bleh") => false)
+       (fact (subject/invalid-scheme? "gopher://bleh") => true)
+       (fact (subject/invalid-scheme? nil) => true))
