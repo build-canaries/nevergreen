@@ -75,8 +75,11 @@ module.exports = React.createClass({
       }
     }
 
+    const title = this.props.tray.name || this.props.tray.url
+    const subTitle = this.props.tray.name ? this.props.tray.url : ''
+
     return (
-      <Container title={this.props.tray.name || this.props.tray.url}>
+      <Container title={title} subTitle={subTitle}>
         <div>
           <div className='tray-sub-bar'>
             <button className='button' onClick={this._toggleSettingsView} title='Toggle settings'>

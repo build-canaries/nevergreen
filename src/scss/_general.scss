@@ -30,6 +30,13 @@
   text-overflow: ellipsis;
 }
 
+.section-sub-title {
+  font-size: 1.2rem;
+  padding-left: 1em;
+  color: darken(white, 10%);
+  text-overflow: ellipsis;
+}
+
 .config-spinner {
   width: 100px;
   margin-left: auto;

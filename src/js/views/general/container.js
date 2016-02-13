@@ -4,7 +4,8 @@ module.exports = React.createClass({
     displayName: 'Container',
 
     propTypes: {
-      title: React.PropTypes.string.isRequired
+      title: React.PropTypes.string.isRequired,
+      subTitle: React.PropTypes.string
     },
 
     getInitialState() {
@@ -38,6 +39,7 @@ module.exports = React.createClass({
           <h3 className='section-title'>
             {this._renderShowHideToggle()}
             {this.props.title}
+            <span className='section-sub-title'>{this.props.subTitle}</span>
           </h3>
           {this.state.hidden ? '' : this.props.children}
         </section>
