@@ -36,7 +36,6 @@ module.exports = React.createClass({
             this.state.trays.map((tray, index) => {
               return <Tray key={tray.trayId}
                            index={index}
-                           isLast={(index + 1) === this.state.trays.length}
                            tray={tray}
                            removeTray={this._removeTray.bind(this, tray.trayId)}
                            refreshTray={this._refreshTray.bind(this, tray)}

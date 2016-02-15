@@ -1,7 +1,6 @@
 const React = require('react')
 const Container = require('../general/container')
 const RemoveLink = require('./removeLink')
-const Mousetrap = require('mousetrap')
 
 module.exports = React.createClass({
   displayName: 'AddedMessages',
@@ -11,29 +10,16 @@ module.exports = React.createClass({
     removeMessage: React.PropTypes.func.isRequired
   },
 
-  componentDidMount() {
-    this._bindKeyEvents(this.props.messages)
-  },
-
-  componentWillUnmount() {
-    this._unbindKeyEvents(this.props.messages)
-  },
-
-  componentWillReceiveProps(nextProps) {
-    this._unbindKeyEvents(this.props.messages)
-    this._bindKeyEvents(nextProps.messages)
-  },
-
   render() {
     return (
       <Container title='Messages'>
         <ul className='success-list success-text-list'>
           {
-            this.props.messages.map(message => {
+            this.props.messages.map((message, index) => {
               return (
-                <li key={message} className='success-item'>
+                <li key={`m${index}`} className='success-item'>
                   <span className='success-message'>{message}</span>
-                  <RemoveLink removeMessage={this.props.removeMessage.bind(null, message)}/>
+                  <RemoveLink hotkeys={[`d m ${index}`]} removeMessage={this.props.removeMessage.bind(null, message)}/>
                 </li>
               )
             })
@@ -41,17 +27,5 @@ module.exports = React.createClass({
         </ul>
       </Container>
     )
-  },
-
-  _bindKeyEvents(messages) {
-    messages.forEach((message, index) => {
-      Mousetrap.bind(`d m ${index}`, this.props.removeMessage.bind(null, message))
-    })
-  },
-
-  _unbindKeyEvents(messages) {
-    messages.forEach((_, index) => {
-      Mousetrap.unbind(`d m ${index}`)
-    })
   }
 })

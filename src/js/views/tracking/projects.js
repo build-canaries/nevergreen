@@ -1,10 +1,10 @@
 const React = require('react')
 const AvailableProject = require('./availableProject')
 const _ = require('lodash')
+const Shortcut = require('../general/Shortcut')
 const SelectedProjectsStore = require('../../stores/SelectedProjectsStore')
 const SelectProjectActions = require('../../actions/SelectProjectActions')
 const FetchedProjectsStore = require('../../stores/FetchedProjectsStore')
-const Mousetrap = require('mousetrap')
 
 function projectName(project) {
   return project.name
@@ -22,7 +22,6 @@ module.exports = React.createClass({
 
   propTypes: {
     index: React.PropTypes.number.isRequired,
-    isLast: React.PropTypes.bool.isRequired,
     trayId: React.PropTypes.string.isRequired
   },
 
@@ -33,24 +32,11 @@ module.exports = React.createClass({
   componentDidMount() {
     SelectedProjectsStore.addListener(this._onChange)
     FetchedProjectsStore.addListener(this._onChange)
-
-    this._bindKeyboardEvents(this.props.index)
   },
 
   componentWillUnmount() {
     SelectedProjectsStore.removeListener(this._onChange)
     FetchedProjectsStore.removeListener(this._onChange)
-
-    if (this.props.isLast) {
-      this._unbindKeyboardEvents(this.props.index)
-    }
-  },
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.index !== nextProps.index) {
-      this._unbindKeyboardEvents(this.props.index)
-      this._bindKeyboardEvents(nextProps.index)
-    }
   },
 
   render() {
@@ -58,14 +44,18 @@ module.exports = React.createClass({
       <fieldset className='tracking-cctray-group-builds'>
         <legend className='tracking-cctray-group-builds-legend'>Available projects</legend>
         <div className='tracking-cctray-group-build-toggles'>
-          <button className='testing-include-all button' onClick={this._includeAll}>
-            <span className='icon-checkbox-checked'/>
-            <span className='text-with-icon'>Include all</span>
-          </button>
-          <button className='button' onClick={this._excludeAll}>
-            <span className='icon-checkbox-unchecked'/>
-            <span className='text-with-icon'>Exclude all</span>
-          </button>
+          <Shortcut hotkeys={[`+ ${this.props.index}`]}>
+            <button className='testing-include-all button' onClick={this._includeAll}>
+              <span className='icon-checkbox-checked'/>
+              <span className='text-with-icon'>Include all</span>
+            </button>
+          </Shortcut>
+          <Shortcut hotkeys={[`- ${this.props.index}`]}>
+            <button className='button' onClick={this._excludeAll}>
+              <span className='icon-checkbox-unchecked'/>
+              <span className='text-with-icon'>Exclude all</span>
+            </button>
+          </Shortcut>
         </div>
         <div className='testing-projects tracking-cctray-group-build-items'>
           {
@@ -111,14 +101,5 @@ module.exports = React.createClass({
 
   _onChange() {
     this.setState(getStateFromStore(this.props.trayId))
-  },
-
-  _bindKeyboardEvents(index) {
-    Mousetrap.bind(`+ ${index}`, this._includeAll)
-    Mousetrap.bind(`- ${index}`, this._excludeAll)
-  },
-
-  _unbindKeyboardEvents(index) {
-    Mousetrap.unbind([`+ ${index}`, `- ${index}`])
   }
 })

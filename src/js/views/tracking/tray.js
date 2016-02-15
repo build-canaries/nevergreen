@@ -4,15 +4,14 @@ const Projects = require('./projects')
 const TraySettings = require('./traySettings')
 const Loading = require('../general/loading')
 const ValidationMessages = require('../general/validationMessages')
+const Shortcut = require('../general/Shortcut')
 const moment = require('moment')
-const Mousetrap = require('mousetrap')
 
 module.exports = React.createClass({
   displayName: 'Tray',
 
   propTypes: {
     index: React.PropTypes.number.isRequired,
-    isLast: React.PropTypes.bool.isRequired,
     tray: React.PropTypes.object.isRequired,
     removeTray: React.PropTypes.func.isRequired,
     refreshTray: React.PropTypes.func.isRequired,
@@ -32,35 +31,24 @@ module.exports = React.createClass({
       this.setState({lastFetched: this._updateLastFetch()})
     }, 60000)
     this.setState({intervalId: intervalId})
-
-    this._bindKeyboardEvents(this.props.index, this.props.refreshTray)
   },
 
   componentWillUnmount() {
     clearInterval(this.state.intervalId)
-    if (this.props.isLast) {
-      this._unbindKeyboardEvents(this.props.index)
-    }
   },
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps() {
     this.setState({lastFetched: this._updateLastFetch()})
-
-    if (this.props.index !== nextProps.index) {
-      this._unbindKeyboardEvents(this.props.index)
-      this._bindKeyboardEvents(nextProps.index, nextProps.refreshTray)
-    }
   },
 
   render() {
     let subContent
 
     if (this.state.showSettings) {
-      subContent =
-        <TraySettings tray={this.props.tray}
-                      removeTray={this.props.removeTray}
-                      updateTray={this._updateTray}
-                      cancel={this._toggleSettingsView}/>
+      subContent = <TraySettings tray={this.props.tray}
+                                 removeTray={this.props.removeTray}
+                                 updateTray={this._updateTray}
+                                 cancel={this._toggleSettingsView}/>
     } else {
       if (this.props.tray.fetching) {
         subContent = <Loading/>
@@ -71,7 +59,7 @@ module.exports = React.createClass({
         ]
         subContent = <ValidationMessages messages={errorMessages}/>
       } else {
-        subContent = <Projects index={this.props.index} isLast={this.props.isLast} trayId={this.props.tray.trayId}/>
+        subContent = <Projects index={this.props.index} trayId={this.props.tray.trayId}/>
       }
     }
 
@@ -82,14 +70,18 @@ module.exports = React.createClass({
       <Container title={title} subTitle={subTitle}>
         <div>
           <div className='tray-sub-bar'>
-            <button className='button' onClick={this._toggleSettingsView} title='Toggle settings'>
-              <span className={'icon-' + (this.state.showSettings ? 'list' : 'cog') }/>
-              <span className='text-with-icon'>{this._toggleSettingsLabel()}</span>
-            </button>
-            <button className='button' onClick={this.props.refreshTray}>
-              <span className='icon-loop2'/>
-              <span className='text-with-icon'>Refresh tray</span>
-            </button>
+            <Shortcut hotkeys={[`p ${this.props.index}`]}>
+              <button className='button' onClick={this._toggleSettingsView} title='Toggle settings'>
+                <span className={'icon-' + (this.state.showSettings ? 'list' : 'cog') }/>
+                <span className='text-with-icon'>{this._toggleSettingsLabel()}</span>
+              </button>
+            </Shortcut>
+            <Shortcut hotkeys={[`r ${this.props.index}`]}>
+              <button className='button' onClick={this.props.refreshTray}>
+                <span className='icon-loop2'/>
+                <span className='text-with-icon'>Refresh tray</span>
+              </button>
+            </Shortcut>
             <span className='tray-refresh-last-fetch'>last refreshed {this.state.lastFetched} ago</span>
           </div>
           <div>
@@ -123,14 +115,5 @@ module.exports = React.createClass({
       showSettings: false
     })
     this.props.updateTray(trayId, name, url, username, password)
-  },
-
-  _bindKeyboardEvents(index, refreshTray) {
-    Mousetrap.bind(`r ${index}`, refreshTray)
-    Mousetrap.bind(`p ${index}`, this._toggleSettingsView)
-  },
-
-  _unbindKeyboardEvents(index) {
-    Mousetrap.unbind([`r ${index}`, `p ${index}`])
   }
 })
