@@ -1,3 +1,15 @@
+@import "base/variables";
+
+a {
+  color: $blue;
+  cursor: pointer;
+
+  &:hover {
+    color: $blue-highlight;
+    text-decoration: none;
+  }
+}
+
 .dashboard {
   background: $off-white;
   font-family: 'Roboto', sans-serif;

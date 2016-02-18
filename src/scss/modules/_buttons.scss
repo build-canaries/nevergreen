@@ -41,14 +41,14 @@
   margin: 0;
 
   &:hover {
-    background-color: darken($blue, 10%);
-    border-color: darken($blue, 10%);
+    background-color: $blue-highlight;
+    border-color: $blue-highlight;
     color: white;
   }
 
   &:focus {
-    background-color: darken($blue, 10%);
-    border-color: darken($blue, 10%);
+    background-color: $blue-highlight;
+    border-color: $blue-highlight;
     color: white;
   }
 }
