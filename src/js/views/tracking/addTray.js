@@ -1,7 +1,6 @@
 const _ = require('lodash')
 const React = require('react')
 const LinkedStateMixin = require('react-addons-linked-state-mixin')
-const ValidationMessages = require('../general/validationMessages')
 const PrimaryInput = require('../general/PrimaryInput')
 
 module.exports = React.createClass({
@@ -52,7 +51,6 @@ module.exports = React.createClass({
                    valueLink={this.linkState('password')}
                    onKeyPress={this._onKeyPress}/>
           </span>
-          {this._renderValidationMessages()}
         </div>
       </div>
     )
@@ -64,12 +62,6 @@ module.exports = React.createClass({
       username: '',
       password: ''
     })
-  },
-
-  _renderValidationMessages() {
-    if (this.props.errors && this.props.errors.length > 0) {
-      return <ValidationMessages messages={this.props.errors}/>
-    }
   },
 
   _onKeyPress(evt) {

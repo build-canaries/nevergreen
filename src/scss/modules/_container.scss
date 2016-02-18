@@ -20,6 +20,14 @@ $container-title-hover-color: $blue-highlight;
   text-overflow: ellipsis;
 }
 
+.section-sub-title {
+  font-size: 1.2rem;
+  font-weight: normal;
+  padding-left: 1em;
+  color: $mid-grey;
+  text-overflow: ellipsis;
+}
+
 .section-body {
   padding: 1em;
 }

@@ -26,29 +26,6 @@ a {
   }
 }
 
-.sub-section {
-  font-size: 1.5rem;
-  border: 1px solid $mid-grey;
-  background-color: white;
-  margin-bottom: 1em;
-}
-
-.section-title {
-  font-size: 1.5rem;
-  font-weight: 400;
-  padding: 0.5em;
-  background: $mid-grey;
-  color: white;
-  text-overflow: ellipsis;
-}
-
-.section-sub-title {
-  font-size: 1.2rem;
-  padding-left: 1em;
-  color: darken(white, 10%);
-  text-overflow: ellipsis;
-}
-
 .config-spinner {
   width: 100px;
   margin-left: auto;
