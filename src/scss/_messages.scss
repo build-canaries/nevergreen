@@ -1,3 +1,5 @@
+@import "base/variables";
+
 .error-message {
   width: 100%;
   font-size: 2em;
@@ -7,7 +9,7 @@
 .validation-messages {
   margin: 0.5em;
   border-radius: 0.5em;
-  background-color: $danger-text;
+  background-color: $danger;
   color: white;
 }
 

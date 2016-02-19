@@ -83,7 +83,7 @@
 }
 
 .tray-settings-danger-zone-title {
-  background-color: $danger-text;
+  background-color: $danger;
   color: white;
   padding: 0.5em 1em;
 }
@@ -102,7 +102,6 @@
 }
 
 .tray-settings-danger-button {
-  color: $danger;
   float: right;
   margin: -0.5em 0 0 0;
 }
@@ -123,24 +122,12 @@
   color: white;
 
   &:hover {
-    color: darken(white, 10%);
-  }
-}
-
-.tray-hidden-button {
-  font-size: 1.2rem;
-  display: inline;
-  border: none;
-  background: none;
-  margin-right: 0.5em;
-
-  &:hover {
-    color: darken(white, 10%);
+    color: darken($blue, 10%);
   }
 }
 
 .tray-sub-bar {
-  background: $light-grey;
+  background: $off-white;
   color: $mid-grey;
   padding: 0.3em;
 }

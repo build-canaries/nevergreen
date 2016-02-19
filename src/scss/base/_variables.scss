@@ -5,7 +5,10 @@ $monospace: "Source Code Pro", monospace;
 // Colours
 
 $off-black: #212121;
-$blue: #03a9f4;
+//$blue: #03a9f4;
+//$blue: #3498DB;
+$blue: rgb(40, 143, 235);
+$blue-highlight: rgb(29, 130, 220);
 $dark-blue: #0358F3;
 $mid-grey: #7E7E7E;
 $mid-grey2: #999999;
@@ -19,7 +22,7 @@ $sick: #B30400;
 $sick-building: #FF6400;
 
 $new-text: #f32196;
-$danger: #900;
+$danger: rgb(231, 76, 60);
 $danger-text: #df3e3e;
 
 // Sizes

@@ -1,5 +1,17 @@
+@import "base/variables";
+
+a {
+  color: $blue;
+  cursor: pointer;
+
+  &:hover {
+    color: $blue-highlight;
+    text-decoration: none;
+  }
+}
+
 .dashboard {
-  background: $light-grey;
+  background: $off-white;
   font-family: 'Roboto', sans-serif;
 }
 
@@ -12,29 +24,6 @@
   &.active {
     display: block;
   }
-}
-
-.sub-section {
-  font-size: 1.5rem;
-  border: 1px solid $mid-grey;
-  background-color: white;
-  margin-bottom: 1em;
-}
-
-.section-title {
-  font-size: 1.5rem;
-  font-weight: 400;
-  padding: 0.5em;
-  background: $mid-grey;
-  color: white;
-  text-overflow: ellipsis;
-}
-
-.section-sub-title {
-  font-size: 1.2rem;
-  padding-left: 1em;
-  color: darken(white, 10%);
-  text-overflow: ellipsis;
 }
 
 .config-spinner {

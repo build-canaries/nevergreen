@@ -1,46 +1,71 @@
+@import "../base/helpers";
+@import "../base/variables";
+
 .button {
-  font-size: 0.6em;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  border: 0;
-  position: relative;
-  padding: 0.5em 1.5em;
-  margin: 0.5em;
-  cursor: pointer;
-  border-radius: 2px;
-  text-transform: uppercase;
-  text-decoration: none;
+  @include user-select(none);
+
   background-color: white;
+  border: 2px solid $light-grey;
+  border-radius: 0.3em;
   color: $off-black;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  cursor: pointer;
+  font-size: 0.6em;
+  margin: 0.5em;
   outline: none;
-  transition: background-color 0.1s ease-in, box-shadow 0.1s ease-in;
+  padding: 0.9em 1.5em;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  vertical-align: middle;
+  white-space: nowrap;
+
   &:hover {
-    background-color: darken(white, 5%);
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.26);
+    background-color: $off-white;
   }
+
   &:focus {
-    background-color: darken(white, 5%);
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.26);
+    background-color: $off-white;
+    border: 2px solid $blue;
     outline: none;
-    border-radius: 0;
   }
 }
 
 .button-primary {
   @extend .button;
-  font-size: 0.8em;
+
+  font-size: 0.75em;
   background-color: $blue;
-  color: $off-white;
+  border: 2px solid $blue;
+  color: white;
+  margin: 0;
+
   &:hover {
-    background-color: darken($blue, 5%);
+    background-color: $blue-highlight;
+    border-color: $blue-highlight;
+    color: white;
   }
+
   &:focus {
-    background-color: darken($blue, 5%);
+    background-color: $blue-highlight;
+    border-color: $blue-highlight;
+    color: white;
+  }
+}
+
+.button-danger {
+  @extend .button;
+
+  border: 2px solid $danger;
+  color: $danger;
+  
+  &:hover {
+    background-color: $danger;
+    color: white;
+  }
+
+  &:focus {
+    background-color: $danger;
+    color: white;
   }
 }

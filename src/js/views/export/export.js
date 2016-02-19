@@ -43,7 +43,7 @@ module.exports = React.createClass({
       <div>
         <pre>
           <textarea id='export-data'
-                    className='export-text'
+                    className='import-export-text'
                     placeholder='loading...'
                     value={this.props.configuration}
                     readOnly='true'
@@ -61,7 +61,9 @@ module.exports = React.createClass({
 
     return (
       <Container title='Export'>
-        {this.props.loading ? <Loading/> : content}
+        <div className="section-body">
+          {this.props.loading ? <Loading/> : content}
+        </div>
       </Container>
     )
   }

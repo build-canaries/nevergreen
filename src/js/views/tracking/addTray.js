@@ -1,3 +1,4 @@
+const _ = require('lodash')
 const React = require('react')
 const LinkedStateMixin = require('react-addons-linked-state-mixin')
 const PrimaryInput = require('../general/PrimaryInput')
@@ -21,35 +22,35 @@ module.exports = React.createClass({
 
   render() {
     return (
-      <div className='tracking-cctray-group-cctray-form'>
-        <span className='text-input'>
-          <label htmlFor='cctray-url'>url</label>
-          <PrimaryInput>
-            <input id='cctray-url'
-                   className='tracking-tray-url'
-                   type='text'
-                   placeholder='e.g. http(s)://host:port/cc.xml'
-                   valueLink={this.linkState('url')}
-                   onKeyPress={this._onKeyPress}/>
-          </PrimaryInput>
-        </span>
-        <button id='cctray-fetch' className='button-primary' onClick={this._onClick}>add</button>
-        <div>
-            <span className='text-input'>
-              <label htmlFor='username'>username</label>
+      <div className='section'>
+        <div className='section-body'>
+          <span className='text-input'>
+            <label htmlFor='cctray-url'>url</label>
+            <PrimaryInput>
+              <input id='cctray-url'
+                     className='tracking-tray-url'
+                     type='text'
+                     placeholder='e.g. http(s)://host:port/cc.xml'
+                     valueLink={this.linkState('url')}
+                     onKeyPress={this._onKeyPress}/>
+            </PrimaryInput>
+          </span>
+          <button id='cctray-fetch' className='button-primary' onClick={this._onClick}>add</button>
+          <span className='text-input'>
+            <label htmlFor='username'>username</label>
               <input id='username'
                      type='text'
                      valueLink={this.linkState('username')}
                      onKeyPress={this._onKeyPress}/>
-            </span>
-            <span className='text-input'>
-              <label htmlFor='password' className='text-label'>password</label>
-              <input id='password'
-                     className='text-input'
-                     type='password'
-                     valueLink={this.linkState('password')}
-                     onKeyPress={this._onKeyPress}/>
-            </span>
+          </span>
+          <span className='text-input'>
+            <label htmlFor='password' className='text-label'>password</label>
+            <input id='password'
+                   className='text-input'
+                   type='password'
+                   valueLink={this.linkState('password')}
+                   onKeyPress={this._onKeyPress}/>
+          </span>
         </div>
       </div>
     )

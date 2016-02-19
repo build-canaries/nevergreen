@@ -8,19 +8,19 @@ module.exports = React.createClass({
   },
 
   render() {
-    let validationMessages = ''
-
-    if (this.props.messages) {
-      validationMessages = this.props.messages.map((msg, index) => {
-        return (
-          <div key={index} className='validation-message'>
-            <span className='icon-notification'/>
-            <span className='text-with-icon'>{msg}</span>
-          </div>
-        )
-      })
-    }
-
-    return <div className='validation-messages'>{validationMessages}</div>
+    return (
+      <div className='validation-messages'>
+      {
+        this.props.messages.map((msg, index) => {
+          return (
+            <div key={index} className='validation-message'>
+              <span className='icon-notification'/>
+              <span className='text-with-icon'>{msg}</span>
+            </div>
+          )
+        })
+      }
+      </div>
+    )
   }
 })

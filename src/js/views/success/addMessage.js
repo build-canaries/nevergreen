@@ -1,8 +1,8 @@
+const _ = require('lodash')
 const React = require('react')
 const LinkedStateMixin = require('react-addons-linked-state-mixin')
 const ValidationMessages = require('../general/validationMessages')
 const PrimaryInput = require('../general/PrimaryInput')
-const _ = require('lodash')
 
 module.exports = React.createClass({
   mixins: [LinkedStateMixin],
@@ -15,25 +15,29 @@ module.exports = React.createClass({
   },
 
   getInitialState() {
-    return {message: ''}
+    return {
+      message: ''
+    }
   },
 
   render() {
     return (
-      <div className='tracking-cctray-group-cctray-form'>
-        <span className='text-input'>
-          <label htmlFor='message-input'>message</label>
-          <PrimaryInput>
-            <input id="message-input"
-                   className='tracking-cctray-group-cctray-form-input success-message-input'
-                   type='text'
-                   placeholder='text or image url'
-                   valueLink={this.linkState('message')}
-                   onKeyPress={this._onKeyPress}/>
-          </PrimaryInput>
-        </span>
-        <button ref='addButton' className='button-primary' onClick={this._onClick}>add</button>
-        <ValidationMessages messages={this.props.errors}/>
+      <div className='section'>
+        <div className='section-body'>
+          <span className='text-input'>
+            <label htmlFor='message-input'>message</label>
+            <PrimaryInput>
+              <input id="message-input"
+                     className='tracking-cctray-group-cctray-form-input success-message-input'
+                     type='text'
+                     placeholder='text or image url'
+                     valueLink={this.linkState('message')}
+                     onKeyPress={this._onKeyPress}/>
+            </PrimaryInput>
+          </span>
+          <button ref='addButton' className='button-primary' onClick={this._onClick}>add</button>
+          {this._renderValidationMessages()}
+        </div>
       </div>
     )
   },
@@ -41,6 +45,12 @@ module.exports = React.createClass({
   componentWillReceiveProps(nextProps) {
     if (_.size(nextProps.errors) === 0) {
       this.setState({message: ''})
+    }
+  },
+
+  _renderValidationMessages() {
+    if (this.props.errors && this.props.errors.length > 0) {
+      return <ValidationMessages messages={this.props.errors}/>
     }
   },
 

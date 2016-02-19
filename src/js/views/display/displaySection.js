@@ -33,11 +33,13 @@ module.exports = React.createClass({
     return (
       <section className='dashboard-main-section'>
         <Container title='Display Settings'>
-          <fieldset className='settings-list'>
-            <ConfigOption name='Show broken build timers'
-                          enabled={this.state.showBrokenBuildTimers}
-                          onToggle={this._onToggle}/>
-          </fieldset>
+          <div className="section-body">
+            <fieldset className='settings-list'>
+              <ConfigOption name='Show broken build timers'
+                            enabled={this.state.showBrokenBuildTimers}
+                            onToggle={this._onToggle}/>
+            </fieldset>
+          </div>
         </Container>
       </section>
     )

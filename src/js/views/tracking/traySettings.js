@@ -82,7 +82,7 @@ module.exports = React.createClass({
           </h4>
 
           <div className='tray-settings-danger-zone-content'>
-            <button className='button tray-settings-danger-button' onClick={this.props.removeTray}>Delete this tray
+            <button className='button-danger tray-settings-danger-button' onClick={this.props.removeTray}>Delete this tray
             </button>
             <span>Once you delete a tray, there is no going back. Please be certain.</span>
           </div>
