@@ -11,12 +11,11 @@ module.exports = React.createClass({
 
   render() {
     return (
-      <Shortcut hotkeys={this.props.hotkeys}>
-        <button className='success-remove button' onClick={this.props.removeMessage} title='remove'>
-          <span className='icon-cross'/>
-          <span className='visually-hidden'>remove</span>
-        </button>
-      </Shortcut>
+      <button className='success-remove button' onClick={this.props.removeMessage} title='remove'>
+        <span className='icon-cross'/>
+        <span className='visually-hidden'>remove</span>
+        <Shortcut hotkeys={this.props.hotkeys}/>
+      </button>
     )
   }
 })

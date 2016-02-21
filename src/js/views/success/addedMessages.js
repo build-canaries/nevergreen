@@ -19,7 +19,7 @@ module.exports = React.createClass({
               return (
                 <li key={`m${index}`} className='success-item'>
                   <span className='success-message'>{message}</span>
-                  <RemoveLink hotkeys={[`d m ${index}`]} removeMessage={this.props.removeMessage.bind(null, message)}/>
+                  <RemoveLink hotkeys={[`y m ${index}`]} removeMessage={this.props.removeMessage.bind(null, message)}/>
                 </li>
               )
             })

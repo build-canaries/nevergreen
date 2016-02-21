@@ -44,18 +44,16 @@ module.exports = React.createClass({
       <fieldset className='tracking-cctray-group-builds'>
         <legend className='tracking-cctray-group-builds-legend'>Available projects</legend>
         <div className='tracking-cctray-group-build-toggles'>
-          <Shortcut hotkeys={[`+ ${this.props.index}`]}>
-            <button className='testing-include-all button' onClick={this._includeAll}>
-              <span className='icon-checkbox-checked'/>
-              <span className='text-with-icon'>Include all</span>
-            </button>
-          </Shortcut>
-          <Shortcut hotkeys={[`- ${this.props.index}`]}>
-            <button className='button' onClick={this._excludeAll}>
-              <span className='icon-checkbox-unchecked'/>
-              <span className='text-with-icon'>Exclude all</span>
-            </button>
-          </Shortcut>
+          <button className='testing-include-all button' onClick={this._includeAll}>
+            <span className='icon-checkbox-checked'/>
+            <span className='text-with-icon'>Include all</span>
+            <Shortcut hotkeys={[`+ ${this.props.index}`, `= ${this.props.index}`]}/>
+          </button>
+          <button className='button' onClick={this._excludeAll}>
+            <span className='icon-checkbox-unchecked'/>
+            <span className='text-with-icon'>Exclude all</span>
+            <Shortcut hotkeys={[`- ${this.props.index}`]}/>
+          </button>
         </div>
         <div className='testing-projects tracking-cctray-group-build-items'>
           {

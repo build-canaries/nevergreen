@@ -13,6 +13,10 @@ const dispatchToken = AppDispatcher.register(action => {
     case Constants.RestoreConfiguration:
     {
       _storeState = {
+        keyboardShortcuts: {
+          cancel: null,
+          show: false
+        },
         success: {
           errors: []
         },
@@ -46,6 +50,15 @@ const dispatchToken = AppDispatcher.register(action => {
       _storeState.importing.infos = []
       break
     }
+    case Constants.KeyboardShortcuts:
+    {
+      if (action.show && _storeState.keyboardShortcuts.cancel) {
+        _storeState.keyboardShortcuts.cancel()
+      }
+      _storeState.keyboardShortcuts.cancel = action.cancel
+      _storeState.keyboardShortcuts.show = action.show
+      break
+    }
     default:
     {
       return true
@@ -69,6 +82,10 @@ module.exports = {
 
   getImportInfos() {
     return _storeState.importing.infos
+  },
+
+  showKeyboardShortcuts() {
+    return _storeState.keyboardShortcuts.show
   },
 
   addListener(callback) {

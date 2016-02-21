@@ -120,92 +120,92 @@ module.exports = React.createClass({
         <Container title='Keyboard Shortcuts'>
           <div className='help-contents'>
             <p className='help-text'>The following keyboard shortcuts can be used to:</p>
-            <table className='help-tracking-table'>
+            <table className='help-shortcut-table'>
               <thead>
               <tr>
-                <th>Bindings</th>
-                <th>Works in?</th>
+                <th>Shortcut Key</th>
+                <th>Definition</th>
                 <th>Action</th>
               </tr>
               </thead>
               <tbody>
               <tr>
-                <td className='binding'>m, 1</td>
-                <td>All sections</td>
+                <td><kbd className='binding'>?</kbd></td>
+                <td>Keyboard shortcuts</td>
+                <td>Shows keyboard shortcuts as tooltips hovering over the action they perform.</td>
+              </tr>
+              <tr>
+                <td><kbd className='binding'>m</kbd> or <kbd className='binding'>1</kbd></td>
+                <td>Go to Monitor</td>
                 <td>Navigate to the monitor section.</td>
               </tr>
               <tr>
-                <td className='binding'>t, 2</td>
-                <td>All sections</td>
+                <td><kbd className='binding'>t</kbd> or <kbd className='binding'>2</kbd></td>
+                <td>Go to Tracking</td>
                 <td>Navigate to the tracking section.</td>
               </tr>
               <tr>
-                <td className='binding'>s, 3</td>
-                <td>All sections</td>
+                <td><kbd className='binding'>s</kbd> or <kbd className='binding'>3</kbd></td>
+                <td>Go to Success</td>
                 <td>Navigate to the success section.</td>
               </tr>
               <tr>
-                <td className='binding'>d, 4</td>
-                <td>All sections</td>
+                <td><kbd className='binding'>d</kbd> or <kbd className='binding'>4</kbd></td>
+                <td>Go to Display</td>
                 <td>Navigate to the display section.</td>
               </tr>
               <tr>
-                <td className='binding'>e, 5</td>
-                <td>All sections</td>
+                <td><kbd className='binding'>e</kbd> or <kbd className='binding'>5</kbd></td>
+                <td>Go to Export</td>
                 <td>Navigate to the export section.</td>
               </tr>
               <tr>
-                <td className='binding'>h, ?, 6</td>
-                <td>All sections</td>
+                <td><kbd className='binding'>h</kbd> or <kbd className='binding'>6</kbd></td>
+                <td>Go to Help</td>
                 <td>Navigate to this (the help) section.</td>
               </tr>
               <tr>
-                <td className='binding'>a</td>
-                <td>Tracking, success & export sections</td>
+                <td><kbd className='binding'>a</kbd></td>
+                <td>Focus action</td>
                 <td>Focus the primary action input e.g. the url input in the tracking section.</td>
               </tr>
               <tr>
-                <td className='binding'>esc</td>
-                <td>Tracking, success & export sections</td>
+                <td><kbd className='binding'>esc</kbd></td>
+                <td>Blur action</td>
                 <td>Blur the currently focused input, allowing other shortcuts to be used again.</td>
               </tr>
               <tr>
-                <td className='binding'>+ &lt;index&gt;</td>
-                <td>Tracking section</td>
+                <td><kbd className='binding'>+</kbd><kbd className='binding'>0..n</kbd> or <kbd className='binding'>&#61;</kbd><kbd className='binding'>0..n</kbd></td>
+                <td>Include all</td>
                 <td>Includes all projects for the tray with the given index (the first tray is at index 0).</td>
               </tr>
               <tr>
-                <td className='binding'>- &lt;index&gt;</td>
-                <td>Tracking section</td>
+                <td><kbd className='binding'>-</kbd><kbd className='binding'>0..n</kbd></td>
+                <td>Exclude all</td>
                 <td>Excludes all projects for the tray with the given index (the first tray is at index 0).</td>
               </tr>
               <tr>
-                <td className='binding'>r &lt;index&gt;</td>
-                <td>Tracking section</td>
+                <td><kbd className='binding'>r</kbd><kbd className='binding'>0..n</kbd></td>
+                <td>Refresh tray</td>
                 <td>Refresh the tray with the given index (the first tray is at index 0).</td>
               </tr>
               <tr>
-                <td className='binding'>p &lt;index&gt;</td>
-                <td>Tracking section</td>
+                <td><kbd className='binding'>p</kbd><kbd className='binding'>0..n</kbd></td>
+                <td>Toggle project view</td>
                 <td>Toggle project and settings views for the tray with the given index (the first tray is at index 0).</td>
               </tr>
               <tr>
-                <td className='binding'>d m &lt;index&gt;</td>
-                <td>Success section</td>
+                <td><kbd className='binding'>y</kbd><kbd className='binding'>m</kbd><kbd className='binding'>0..n</kbd></td>
+                <td>Delete success message</td>
                 <td>Deletes the message at the given index (the first message is at index 0).</td>
               </tr>
               <tr>
-                <td className='binding'>d i &lt;index&gt;</td>
-                <td>Success section</td>
+                <td><kbd className='binding'>y</kbd><kbd className='binding'>i</kbd><kbd className='binding'>0..n</kbd></td>
+                <td>Delete success image</td>
                 <td>Deletes the image at the given index (the first image is at index 0).</td>
               </tr>
               </tbody>
             </table>
-            <div className='help-text'>
-              <div>Key:</div>
-              <div><span className='binding'>a, b</span> means a OR b</div>
-              <div><span className='binding'>a b</span> means a THEN b</div>
-            </div>
           </div>
         </Container>
 

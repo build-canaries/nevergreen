@@ -38,6 +38,10 @@ describe('ui message store', () => {
     it('starts with no import infos', () => {
       expect(store.getImportInfos()).toEqual([])
     })
+
+    it('starts with keyboard shortcuts hidden', () => {
+      expect(store.showKeyboardShortcuts()).toBeFalsy()
+    })
   })
 
   describe('restore', () => {
@@ -110,6 +114,32 @@ describe('ui message store', () => {
       })
       expect(store.getImportErrors()).toEqual([])
       expect(store.getImportInfos()).toEqual([])
+    })
+  })
+
+  describe('keyboard shortcuts', () => {
+    let cancelCallback
+
+    beforeEach(() => {
+      cancelCallback = jest.genMockFn()
+      callback({
+        type: Constants.KeyboardShortcuts,
+        show: true,
+        cancel: cancelCallback
+      })
+    })
+
+    it('sets show', () => {
+      expect(store.showKeyboardShortcuts()).toBeTruthy()
+    })
+
+    it('cancels the previous timer if the event is triggered again', () => {
+      callback({
+        type: Constants.KeyboardShortcuts,
+        show: true,
+        cancel: jest.genMockFn()
+      })
+      expect(cancelCallback).toBeCalled()
     })
   })
 })

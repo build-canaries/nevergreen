@@ -34,4 +34,17 @@
 
 .binding {
   font-family: $monospace;
+  color: $off-black;
+  border: $mid-grey 1px solid;
+  border-radius: 5px;
+  background-image: linear-gradient(to bottom, #eee, #f9f9f9, #eee);
+  padding: 0.1em 0.3em;
+  font-size: 0.85em;
+}
+
+.help-shortcut-table {
+  @extend .help-tracking-table;
+  td {
+    padding: 0.3em 0 0.3em 0;
+  }
 }

@@ -21,5 +21,6 @@ module.exports = {
   ConfigurationLoaded: 'configuration-loaded',
   BrokenBuildTimersChanged: 'broken-build-timers-changed',
   Notification: 'notification',
-  NotificationDismiss: 'notification-dismiss'
+  NotificationDismiss: 'notification-dismiss',
+  KeyboardShortcuts: 'keyboard-shortcuts'
 }

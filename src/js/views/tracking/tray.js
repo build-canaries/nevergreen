@@ -70,18 +70,16 @@ module.exports = React.createClass({
       <Container title={title} subTitle={subTitle}>
         <div>
           <div className='tray-sub-bar'>
-            <Shortcut hotkeys={[`p ${this.props.index}`]}>
-              <button className='button' onClick={this._toggleSettingsView} title='Toggle settings'>
-                <span className={'icon-' + (this.state.showSettings ? 'list' : 'cog') }/>
-                <span className='text-with-icon'>{this._toggleSettingsLabel()}</span>
-              </button>
-            </Shortcut>
-            <Shortcut hotkeys={[`r ${this.props.index}`]}>
-              <button className='button' onClick={this.props.refreshTray}>
-                <span className='icon-loop2'/>
-                <span className='text-with-icon'>Refresh tray</span>
-              </button>
-            </Shortcut>
+            <button className='button' onClick={this._toggleSettingsView} title='Toggle settings'>
+              <span className={'icon-' + (this.state.showSettings ? 'list' : 'cog') }/>
+              <span className='text-with-icon'>{this._toggleSettingsLabel()}</span>
+              <Shortcut hotkeys={[`p ${this.props.index}`]}/>
+            </button>
+            <button className='button' onClick={this.props.refreshTray}>
+              <span className='icon-loop2'/>
+              <span className='text-with-icon'>Refresh tray</span>
+              <Shortcut hotkeys={[`r ${this.props.index}`]}/>
+            </button>
             <span className='tray-refresh-last-fetch'>last refreshed {this.state.lastFetched} ago</span>
           </div>
           <div>

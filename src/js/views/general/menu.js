@@ -1,7 +1,6 @@
 const React = require('react')
-const Mousetrap = require('mousetrap')
-
-import { browserHistory, Link } from 'react-router'
+const Link = require('react-router').Link
+const Shortcut = require('./Shortcut')
 
 const MenuItem = React.createClass({
   displayName: 'MenuItem',
@@ -12,27 +11,16 @@ const MenuItem = React.createClass({
     shortcuts: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
   },
 
-  componentDidMount() {
-    Mousetrap.bind(this.props.shortcuts, this._navigate)
-  },
-
-  componentWillUnmount() {
-    Mousetrap.unbind(this.props.shortcuts)
-  },
-
   render() {
     return (
       <li>
         <Link id={this.props.id} to={'/' + this.props.id} className='navigation-list-item' activeClassName='active'>
           <span className={'navigation-list-item-icon ' + this.props.iconClass}/>
           <span className='navigation-list-item-title'>{this.props.title}</span>
+          <Shortcut hotkeys={this.props.shortcuts}/>
         </Link>
       </li>
     )
-  },
-
-  _navigate() {
-    browserHistory.push('/' + this.props.id)
   }
 })
 
@@ -54,7 +42,7 @@ module.exports = React.createClass({
         {id: 'success', iconClass: 'checkmark', title: 'Success', shortcuts: ['s', '3']},
         {id: 'display', iconClass: 'display', title: 'Display', shortcuts: ['d', '4']},
         {id: 'export', iconClass: 'floppy-disk', title: 'Export', shortcuts: ['e', '5']},
-        {id: 'help', iconClass: 'question', title: 'Help', shortcuts: ['h', '?', '6']}
+        {id: 'help', iconClass: 'question', title: 'Help', shortcuts: ['h', '6']}
       ]
     }
   },

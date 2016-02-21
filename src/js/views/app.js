@@ -3,6 +3,7 @@ const Menu = require('./general/menu')
 const Notification = require('./general/Notification')
 const AppActions = require('../actions/AppActions')
 const AppStore = require('../stores/AppStore')
+const UiActions = require('../actions/UiActions')
 const NotificationActions = require('../actions/NotificationActions')
 const NotificationStore = require('../stores/NotificationStore')
 const Mousetrap = require('mousetrap')
@@ -47,6 +48,10 @@ module.exports = React.createClass({
     Mousetrap.bindGlobal('esc', () => {
       document.activeElement.blur()
     })
+
+    Mousetrap.bind('?', () => {
+      UiActions.showKeyboardShortcuts()
+    })
   },
 
   componentWillUnmount() {
@@ -54,6 +59,8 @@ module.exports = React.createClass({
     NotificationStore.removeListener(this._onChange)
 
     clearInterval(this.state.versionCheckId)
+
+    Mousetrap.unbind('?')
   },
 
   render() {
