@@ -47,6 +47,7 @@ module.exports = React.createClass({
                  ref='name'
                  type='text'
                  valueLink={this.linkState('name')}
+                 onKeyPress={this._onKeyPress}
                  placeholder='e.g. project or team name'/>
           <button className='button' onClick={this._generateRandomName}>random</button>
         </div>
@@ -56,6 +57,7 @@ module.exports = React.createClass({
                  id={this.props.tray.trayId + 'settings-url'}
                  type='text'
                  valueLink={this.linkState('url')}
+                 onKeyPress={this._onKeyPress}
                  placeholder='this should not be blank...'/>
         </div>
         <div className='text-input'>
@@ -63,14 +65,16 @@ module.exports = React.createClass({
           <input id={this.props.tray.trayId + 'settings-username'}
                  type='text'
                  placeholder='not set'
-                 valueLink={this.linkState('username')}/>
+                 valueLink={this.linkState('username')}
+                 onKeyPress={this._onKeyPress}/>
         </div>
         <div className='text-input'>
           <label htmlFor={this.props.tray.trayId + 'settings-password'}>password</label>
           <input id={this.props.tray.trayId + 'settings-password'}
                  type='password'
                  placeholder='not set'
-                 valueLink={this.linkState('password')}/>
+                 valueLink={this.linkState('password')}
+                 onKeyPress={this._onKeyPress}/>
         </div>
         <button className='button tray-settings-update-button' onClick={this.props.cancel}>cancel</button>
         <button className='button-primary tray-settings-update-button' onClick={this._updateTray}>update tray</button>
@@ -89,6 +93,12 @@ module.exports = React.createClass({
         </div>
       </section>
     )
+  },
+
+  _onKeyPress(evt) {
+    if (evt.key === 'Enter') {
+      this._updateTray()
+    }
   },
 
   _updateTray() {
