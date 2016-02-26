@@ -1,0 +1,7 @@
+extends: stylelint-config-standard
+
+rules:
+  string-quotes: single
+  font-family-name-quotes: single-where-recommended
+  function-url-quotes: single
+  color-hex-case: upper
