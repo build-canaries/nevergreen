@@ -17,6 +17,9 @@
     (.. driver (manage) (window) (setSize snap-ci-xvfb-size))
     (set-driver! (init-driver {:webdriver driver})))
 
+  (delete-all-cookies)
+  (implicit-wait 1000)
+
   (test-fn)
 
   (quit))
@@ -44,12 +47,12 @@
     (input "#password" tray-password)
     (click "#cctray-fetch")
 
-    (wait-until #(visible? ".testing-projects"))
+    (wait-until #(present? ".testing-projects"))
 
     (click ".testing-include-all")
     (click "#monitor")
 
-    (wait-until #(visible? "#interesting-projects"))
+    (wait-until #(present? "#interesting-projects"))
 
     (let [actual-project-list (elements "#interesting-projects > li")]
       (is (= (count expected-projects) (count actual-project-list)) "Incorrect amount of projects displayed"))

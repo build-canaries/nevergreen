@@ -12,7 +12,7 @@ function getStateFromStore() {
   return {
     projects: InterestingProjectsStore.getAll(),
     error: InterestingProjectsStore.getLastError(),
-    loaded: true
+    loading: false
   }
 }
 
@@ -22,17 +22,14 @@ module.exports = React.createClass({
   getInitialState() {
     return {
       projects: [],
-      loaded: false
+      loading: true
     }
   },
 
   render() {
     let content
 
-    if (!this.state.loaded) {
-      content = <Loading />
-
-    } else if (this.state.error) {
+    if (this.state.error) {
       const errorMessages = [
         'Unable to fetch projects because of an error:',
         `${this.state.error.status} - ${this.state.error.message}`
@@ -49,7 +46,11 @@ module.exports = React.createClass({
       content = <Success />
     }
 
-    return <div className='monitor' onMouseMove={this._animateMenu}>{content}</div>
+    return <div className='monitor' onMouseMove={this._animateMenu}>
+      <Loading loading={this.state.loading}>
+        {content}
+      </Loading>
+    </div>
   },
 
   componentDidMount() {

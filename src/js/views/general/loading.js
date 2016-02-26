@@ -3,11 +3,17 @@ const React = require('react')
 module.exports = React.createClass({
   displayName: 'Loading',
 
+  propTypes: {
+    loading: React.PropTypes.bool.isRequired
+  },
+
   render() {
-    return (
-      <div className='config-spinner'>
+    if (this.props.loading) {
+      return <div className='config-spinner'>
         <img src='img/loading-bars.svg' alt='loading'/>
       </div>
-    )
+    } else {
+      return this.props.children
+    }
   }
 })

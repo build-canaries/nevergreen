@@ -50,16 +50,18 @@ module.exports = React.createClass({
                                  updateTray={this._updateTray}
                                  cancel={this._toggleSettingsView}/>
     } else {
-      if (this.props.tray.fetching) {
-        subContent = <Loading/>
-      } else if (this.props.tray.error) {
+      if (this.props.tray.error) {
         const errorMessages = [
           'Unable to fetch projects because of an error:',
           `${this.props.tray.error.status} - ${this.props.tray.error.message}`
         ]
-        subContent = <ValidationMessages messages={errorMessages}/>
+        subContent = <Loading loading={this.props.tray.fetching}>
+          <ValidationMessages messages={errorMessages}/>
+        </Loading>
       } else {
-        subContent = <Projects index={this.props.index} trayId={this.props.tray.trayId}/>
+        subContent = <Loading loading={this.props.tray.fetching}>
+          <Projects index={this.props.index} trayId={this.props.tray.trayId}/>
+        </Loading>
       }
     }
 
