@@ -25,11 +25,11 @@
     "fake-server": "node test/test-server"
   },
   "dependencies": {
-    "clipboard": "1.5.8",
+    "clipboard": "1.5.9",
     "flux": "2.1.1",
-    "jquery": "2.2.0",
-    "localforage": "1.3.3",
-    "lodash": "4.3.0",
+    "jquery": "2.2.1",
+    "localforage": "1.4.0",
+    "lodash": "4.6.1",
     "moment": "2.11.2",
     "mousetrap": "1.5.3",
     "node-uuid": "1.4.7",
