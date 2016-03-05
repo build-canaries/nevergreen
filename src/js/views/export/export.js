@@ -61,7 +61,7 @@ module.exports = React.createClass({
 
     return (
       <Container title='Export'>
-        {this.props.loading ? <Loading/> : content}
+        <Loading loading={this.props.loading}>{content}</Loading>
       </Container>
     )
   }
