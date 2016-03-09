@@ -17,9 +17,8 @@
                  [camel-snake-kebab "0.3.2"]
                  [http-kit "2.1.19"]]
   :plugins [[lein-ring "0.9.7"]
-            [environ/environ.lein "0.3.1"]]
+            [lein-environ "1.0.2"]]
   :min-lein-version "2.0.0"
-  :hooks [environ.leiningen.hooks]
   :ring {:handler nevergreen.app/all-routes :port 5000}
   :uberjar-name "nevergreen-standalone.jar"
   :main nevergreen.app
