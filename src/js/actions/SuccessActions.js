@@ -17,7 +17,7 @@ function transformMessage(message) {
 
 function validateMessage(message) {
   if (_.isEmpty(_.trim(message))) {
-    return [`message can not be blank!`]
+    return ['message can not be blank!']
   }
 }
 

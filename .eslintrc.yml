@@ -9,9 +9,10 @@ env:
   browser: true
   node: true
 
-ecmaFeatures:
-  modules: true
-  jsx: true
+parserOptions:
+  ecmaFeatures:
+    modules: true
+    jsx: true
 
 rules:
   quotes: [2, 'single']
