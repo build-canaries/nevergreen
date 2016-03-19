@@ -4,7 +4,7 @@ const LocalRepository = require('../storage/LocalRepository')
 const moment = require('moment')
 
 function momentInit() {
-  moment.locale('en', {
+  moment.updateLocale('en', {
     relativeTime: {
       future: '%s',
       past: '%s',

@@ -7,6 +7,8 @@ const CHANGE_EVENT = 'message-change'
 
 let _storeState = null
 
+eventEmitter.setMaxListeners(Infinity)
+
 const dispatchToken = AppDispatcher.register(action => {
   switch (action.type) {
     case Constants.AppInit:
