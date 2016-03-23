@@ -55,7 +55,7 @@ module.exports = React.createClass({
             <Shortcut hotkeys={[`- ${this.props.index}`]}/>
           </button>
         </div>
-        <div className='testing-projects tracking-cctray-group-build-items'>
+        <ol className='testing-projects tracking-cctray-group-build-items'>
           {
             _.sortBy(this.state.projects, projectName).map(project => {
               const included = _.indexOf(this.state.selectedProjects, project.projectId) >= 0
@@ -68,7 +68,7 @@ module.exports = React.createClass({
                                        selectProject={this._selectProject.bind(this, project.projectId)}/>
             })
           }
-        </div>
+        </ol>
       </fieldset>
     )
   },

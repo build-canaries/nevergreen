@@ -23,7 +23,7 @@ module.exports = React.createClass({
     }
 
     return (
-      <p className='checkbox-container'>
+      <li className='checkbox-container'>
         <label className={labelClass}>
           <input ref='toggleIncluded'
                  className='checkbox no-text-selection'
@@ -34,7 +34,7 @@ module.exports = React.createClass({
           <span className={nameClass}>{this.props.name}</span>
           {info}
         </label>
-      </p>
+      </li>
     )
   },
 

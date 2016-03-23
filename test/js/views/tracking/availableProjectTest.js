@@ -45,21 +45,21 @@ describe('available project', () => {
       const component = TestUtils.renderIntoDocument(<AvailableProject name='some-name' included={false}
                                                                        wasRemoved={false} isNew={false}
                                                                        selectProject={callback}/>)
-      expect(TestUtils.findRenderedDOMComponentWithTag(component, 'p').textContent).toContain('some-name')
+      expect(TestUtils.findRenderedDOMComponentWithTag(component, 'li').textContent).toContain('some-name')
     })
 
     it('renders if the project is new', () => {
       const component = TestUtils.renderIntoDocument(<AvailableProject name='some-name' included={false}
                                                                        wasRemoved={false} isNew={true}
                                                                        selectProject={callback}/>)
-      expect(TestUtils.findRenderedDOMComponentWithTag(component, 'p').textContent).toContain('new')
+      expect(TestUtils.findRenderedDOMComponentWithTag(component, 'li').textContent).toContain('new')
     })
 
     it('renders if the project was removed', () => {
       const component = TestUtils.renderIntoDocument(<AvailableProject name='some-name' included={false}
                                                                        wasRemoved={true}
                                                                        isNew={false} selectProject={callback}/>)
-      expect(TestUtils.findRenderedDOMComponentWithTag(component, 'p').textContent).toContain('removed')
+      expect(TestUtils.findRenderedDOMComponentWithTag(component, 'li').textContent).toContain('removed')
     })
 
   })
