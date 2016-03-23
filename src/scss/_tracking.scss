@@ -128,6 +128,7 @@
 }
 
 .tray-hidden-button {
+  color: $off-white;
   font-size: 1.2rem;
   display: inline;
   border: none;
@@ -135,7 +136,7 @@
   margin-right: 0.5em;
 
   &:hover {
-    color: darken(white, 10%);
+    color: darken($off-white, 10%);
   }
 }
 
