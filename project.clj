@@ -24,9 +24,7 @@
   :main nevergreen.app
   :aot [nevergreen.app]
   :javac-options ["-Dclojure.compiler.direct-linking=true"]
-  :profiles {:dev        {:plugins      [[lein-midje "3.2"]
-                                         [lein-ancient "0.6.8"]
-                                         [lein-idea "1.0.1"]]
+  :profiles {:dev        {:plugins      [[lein-midje "3.2"]]
                           :dependencies [[midje "1.8.3"]
                                          [clj-webdriver/clj-webdriver "0.7.2"]
                                          [com.github.detro/phantomjsdriver "1.2.0"]
