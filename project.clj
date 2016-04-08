@@ -6,7 +6,7 @@
                  [compojure "1.5.0"]
                  [environ "1.0.2"]
                  [cheshire "5.5.0"]
-                 [clj-cctray "0.9.1"]
+                 [clj-cctray "0.10.0"]
                  [clj-http "2.1.0"]
                  [ring-curl "0.3.0"]
                  [ring/ring-json "0.4.0"]
