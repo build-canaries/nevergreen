@@ -5,6 +5,7 @@
 
 (def ^:private aes-key-length 16)
 (def default-aes-key "abcdefghijklmnop")
+(def default-ip "0.0.0.0")
 
 (def ^:private use-default-key
   (delay
@@ -16,6 +17,9 @@
 
 (defn port []
   (Integer. (or (env :port) 5000)))
+
+(defn ip []
+  (or (env :ip) default-ip))
 
 (defn aes-key []
   (let [aes-key (env :aes-key)]
