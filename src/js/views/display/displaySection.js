@@ -6,7 +6,8 @@ const DisplayActions = require('../../actions/DisplayActions')
 
 function getStateFromStore() {
   return {
-    showBrokenBuildTimers: DisplayStore.areBrokenBuildTimersEnabled()
+    showBrokenBuildTimers: DisplayStore.areBrokenBuildTimersEnabled(),
+    showBrokenBuildSounds: DisplayStore.areBrokenBuildSoundsEnabled()
   }
 }
 
@@ -25,8 +26,12 @@ module.exports = React.createClass({
     DisplayStore.removeListener(this._onChange)
   },
 
-  _onToggle(newValue) {
+  _onToggleBrokenBuilds(newValue) {
     DisplayActions.setBrokenBuildTimers(newValue)
+  },
+
+  _onToggleSounds(newValue) {
+    DisplayActions.setBrokenBuildSounds(newValue);
   },
 
   render() {
@@ -36,7 +41,14 @@ module.exports = React.createClass({
           <fieldset className='settings-list'>
             <ConfigOption name='Show broken build timers'
                           enabled={this.state.showBrokenBuildTimers}
-                          onToggle={this._onToggle}/>
+                          onToggle={this._onToggleBrokenBuilds}/>
+          </fieldset>
+        </Container>
+        <Container title='Audio Settings'>
+          <fieldset className='settings-list'>
+            <ConfigOption name='Enable sound for broken builds'
+                          enabled={this.state.showBrokenBuildSounds}
+                          onToggle={this._onToggleSounds}/>
           </fieldset>
         </Container>
       </section>
@@ -47,3 +59,4 @@ module.exports = React.createClass({
     this.setState(getStateFromStore())
   }
 })
+

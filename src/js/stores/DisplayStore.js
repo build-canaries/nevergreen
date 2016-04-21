@@ -15,7 +15,8 @@ const dispatchToken = AppDispatcher.register(action => {
     case Constants.AppInit:
     {
       _storeState = action.configuration[storageKey] || {
-          showBrokenBuildTimers: false
+          showBrokenBuildTimers: false,
+          showBrokenBuildSounds: true
         }
       break
     }
@@ -27,6 +28,11 @@ const dispatchToken = AppDispatcher.register(action => {
     case Constants.BrokenBuildTimersChanged:
     {
       _storeState.showBrokenBuildTimers = action.value === true
+      break
+    }
+    case Constants.BrokenBuildSoundsToggled:
+    {
+      _storeState.showBrokenBuildSounds = action.value === true
       break
     }
     default :
@@ -45,6 +51,10 @@ module.exports = {
 
   areBrokenBuildTimersEnabled() {
     return _storeState.showBrokenBuildTimers
+  },
+
+  areBrokenBuildSoundsEnabled() {
+    return _storeState.showBrokenBuildSounds
   },
 
   addListener(callback) {
