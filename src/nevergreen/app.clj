@@ -19,4 +19,4 @@
         (wrap-routes wrap-app-middleware))))
 
 (defn -main []
-  (http-kit/run-server all-routes {:port (config/port)}))
+  (http-kit/run-server all-routes {:ip (config/ip) :port (config/port)}))

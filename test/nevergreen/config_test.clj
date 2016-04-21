@@ -29,3 +29,14 @@
              (subject/aes-key) => (throws RuntimeException)
              (provided
                (env :aes-key) => "not-long-enough")))
+
+(facts "ip"
+       (fact "from env"
+             (subject/ip) => "localhost"
+             (provided
+               (env :ip) => "localhost"))
+
+       (fact "defaults to 0.0.0.0"
+             (subject/ip) => "0.0.0.0"
+             (provided
+               (env :ip) => nil)))
