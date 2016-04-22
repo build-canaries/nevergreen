@@ -58,6 +58,10 @@ module.exports = {
     return _storeState.projects
   },
 
+  hasFailingProjects() {
+    return _storeState.projects.filter(project => project.prognosis === 'sick').length > 0
+  },
+
   getLastError() {
     return _storeState.error
   },
