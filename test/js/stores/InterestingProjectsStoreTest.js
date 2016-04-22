@@ -48,6 +48,20 @@ describe('success store', () => {
     }])
   })
 
+  it('should have failing projects when project list contains sick projects', () => {
+    callback({
+      type: Constants.InterestingProjects,
+      projects: [{
+        projectId: 'some-id',
+        name: 'name',
+        stage: 'stage',
+        prognosis: 'sick',
+        lastBuildTime: 'some-last-build-time'
+      }]
+    })
+    expect(store.hasFailingProjects()).toBeTruthy()
+  })
+
   it('adds an error', () => {
     callback({
       type: Constants.InterestingProjectsError,

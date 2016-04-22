@@ -8,6 +8,7 @@ const TrayStore = require('../../stores/TrayStore')
 const SelectedProjectsStore = require('../../stores/SelectedProjectsStore')
 const DisplayStore = require('../../stores/DisplayStore')
 const ValidationMessages = require('../general/validationMessages')
+const FailingProjectAudio = require('./failingProjectAudio')
 
 function getStateFromStore() {
   return {
@@ -53,6 +54,7 @@ module.exports = React.createClass({
       <Loading loading={this.state.loading}>
         {content}
       </Loading>
+      <FailingProjectAudio hasFailingProjects={this.state.hasFailingProjects} brokenBuildSoundEnabled={this.state.brokenBuildSoundEnabled}/>
     </div>
   },
 
