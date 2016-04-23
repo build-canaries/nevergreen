@@ -1,6 +1,7 @@
 const React = require('react')
 const moment = require('moment')
 const _ = require('lodash')
+const FailingProjectAudio = require('./failingProjectAudio')
 
 module.exports = React.createClass({
   displayName: 'InterestingProject',
@@ -34,6 +35,7 @@ module.exports = React.createClass({
             <span className='monitor-project-name'>{this.props.name}</span>
             {this._brokenBuildTimer()}
           </div>
+          <FailingProjectAudio/>
         </div>
       </li>
     )
