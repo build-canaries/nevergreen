@@ -57,7 +57,7 @@ describe('display store', () => {
         value: true
       })
       expect(store.areBrokenBuildSoundsEnabled()).toBeTruthy()
-    });
+    })
 
     it('disables broken builds when callbak changes value to false', () => {
       callback({
@@ -65,7 +65,7 @@ describe('display store', () => {
         value: false
       })
       expect(store.areBrokenBuildSoundsEnabled()).toBeFalsy()
-    });
+    })
   })
 
   describe('validation', () => {

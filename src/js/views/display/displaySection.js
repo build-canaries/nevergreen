@@ -31,7 +31,7 @@ module.exports = React.createClass({
   },
 
   _onToggleSounds(newValue) {
-    DisplayActions.setBrokenBuildSounds(newValue);
+    DisplayActions.setBrokenBuildSounds(newValue)
   },
 
   render() {
