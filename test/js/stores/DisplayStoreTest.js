@@ -45,6 +45,29 @@ describe('display store', () => {
     )
   })
 
+  describe('are broken build sounds enabled', () => {
+
+    it('enables broken build sounds by default', () => {
+      expect(store.areBrokenBuildSoundsEnabled()).toBeTruthy()
+    })
+
+    it('enables broken builds when callback changes value to true', () => {
+      callback({
+        type: Constants.BrokenBuildSoundsToggled,
+        value: true
+      })
+      expect(store.areBrokenBuildSoundsEnabled()).toBeTruthy()
+    })
+
+    it('disables broken builds when callbak changes value to false', () => {
+      callback({
+        type: Constants.BrokenBuildSoundsToggled,
+        value: false
+      })
+      expect(store.areBrokenBuildSoundsEnabled()).toBeFalsy()
+    })
+  })
+
   describe('validation', () => {
     it('returns an error message if the storage key does not exist', () => {
       const obj = {}

@@ -7,5 +7,11 @@ module.exports = {
       type: Constants.BrokenBuildTimersChanged,
       value: value
     })
+  },
+  setBrokenBuildSounds(value) {
+    AppDispatcher.dispatch({
+      type: Constants.BrokenBuildSoundsToggled,
+      value: value
+    })
   }
 }

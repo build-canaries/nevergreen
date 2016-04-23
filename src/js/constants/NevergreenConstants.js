@@ -20,6 +20,7 @@ module.exports = {
   ExportData: 'export-data',
   ConfigurationLoaded: 'configuration-loaded',
   BrokenBuildTimersChanged: 'broken-build-timers-changed',
+  BrokenBuildSoundsToggled: 'broken-build-sounds-toggled',
   Notification: 'notification',
   NotificationDismiss: 'notification-dismiss',
   KeyboardShortcuts: 'keyboard-shortcuts'

@@ -40,7 +40,7 @@ module.exports = React.createClass({
         {id: 'monitor', iconClass: 'eye', title: 'Monitor', shortcuts: ['m', '1']},
         {id: 'tracking', iconClass: 'drawer2', title: 'Tracking', shortcuts: ['t', '2']},
         {id: 'success', iconClass: 'checkmark', title: 'Success', shortcuts: ['s', '3']},
-        {id: 'display', iconClass: 'display', title: 'Display', shortcuts: ['d', '4']},
+        {id: 'display', iconClass: 'display', title: 'Audio/Visual', shortcuts: ['d', '4']},
         {id: 'export', iconClass: 'floppy-disk', title: 'Export', shortcuts: ['e', '5']},
         {id: 'help', iconClass: 'question', title: 'Help', shortcuts: ['h', '6']}
       ]

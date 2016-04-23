@@ -6,13 +6,15 @@ const InterestingProjectActions = require('../../actions/InterestingProjectActio
 const InterestingProjectsStore = require('../../stores/InterestingProjectsStore')
 const TrayStore = require('../../stores/TrayStore')
 const SelectedProjectsStore = require('../../stores/SelectedProjectsStore')
+const DisplayStore = require('../../stores/DisplayStore')
 const ValidationMessages = require('../general/validationMessages')
 
 function getStateFromStore() {
   return {
     projects: InterestingProjectsStore.getAll(),
     error: InterestingProjectsStore.getLastError(),
-    loading: false
+    loading: false,
+    brokenBuildSoundEnabled: DisplayStore.areBrokenBuildSoundsEnabled()
   }
 }
 
@@ -22,7 +24,8 @@ module.exports = React.createClass({
   getInitialState() {
     return {
       projects: [],
-      loading: true
+      loading: true,
+      brokenBuildSoundEnabled: false
     }
   },
 
@@ -56,6 +59,7 @@ module.exports = React.createClass({
   componentDidMount() {
     window.addEventListener('resize', this._onChange)
     InterestingProjectsStore.addListener(this._onChange)
+    DisplayStore.addListener(this._onChange)
 
     this._poll()
     this._hideMenu()
@@ -64,6 +68,7 @@ module.exports = React.createClass({
   componentWillUnmount() {
     window.removeEventListener('resize', this._onChange)
     InterestingProjectsStore.removeListener(this._onChange)
+    DisplayStore.removeListener(this._onChange)
 
     this._clearMenuTimeOut()
     this._showMenu()
