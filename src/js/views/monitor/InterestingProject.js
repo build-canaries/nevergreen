@@ -1,7 +1,6 @@
 const React = require('react')
 const moment = require('moment')
 const _ = require('lodash')
-const FailingProjectAudio = require('./failingProjectAudio')
 
 module.exports = React.createClass({
   displayName: 'InterestingProject',
@@ -10,7 +9,8 @@ module.exports = React.createClass({
     prognosis: React.PropTypes.string.isRequired,
     name: React.PropTypes.string.isRequired,
     lastBuildTime: React.PropTypes.string.isRequired,
-    showBrokenBuildTimers: React.PropTypes.bool.isRequired
+    showBrokenBuildTimers: React.PropTypes.bool.isRequired,
+    playBrokenBuildSounds: React.PropTypes.bool.isRequired
   },
 
   _isSick() {
@@ -27,6 +27,12 @@ module.exports = React.createClass({
     }
   },
 
+  _brokenBuildAudio() {
+    if (this.props.playBrokenBuildSounds && this._isSick()) {
+      return <audio src='sounds/pacman_death.mp3' autoPlay/>
+    }
+  },
+
   render() {
     return (
       <li className={'monitor-project monitor-' + this.props.prognosis}>
@@ -34,8 +40,8 @@ module.exports = React.createClass({
           <div className='monitor-inner-container'>
             <span className='monitor-project-name'>{this.props.name}</span>
             {this._brokenBuildTimer()}
+            {this._brokenBuildAudio()}
           </div>
-          <FailingProjectAudio/>
         </div>
       </li>
     )

@@ -20,7 +20,8 @@ module.exports = React.createClass({
                                        prognosis={project.prognosis}
                                        name={project.name}
                                        lastBuildTime={project.lastBuildTime}
-                                       showBrokenBuildTimers={DisplayStore.areBrokenBuildTimersEnabled()}/>
+                                       showBrokenBuildTimers={DisplayStore.areBrokenBuildTimersEnabled()}
+                                       playBrokenBuildSounds={DisplayStore.areBrokenBuildSoundsEnabled()}/>
           })
         }
       </ul>

@@ -175,7 +175,8 @@ module.exports = React.createClass({
                 <td>Blur the currently focused input, allowing other shortcuts to be used again.</td>
               </tr>
               <tr>
-                <td><kbd className='binding'>+</kbd><kbd className='binding'>0..n</kbd> or <kbd className='binding'>&#61;</kbd><kbd className='binding'>0..n</kbd></td>
+                <td><kbd className='binding'>+</kbd><kbd className='binding'>0..n</kbd> or <kbd
+                  className='binding'>&#61;</kbd><kbd className='binding'>0..n</kbd></td>
                 <td>Include all</td>
                 <td>Includes all projects for the tray with the given index (the first tray is at index 0).</td>
               </tr>
@@ -192,15 +193,19 @@ module.exports = React.createClass({
               <tr>
                 <td><kbd className='binding'>p</kbd><kbd className='binding'>0..n</kbd></td>
                 <td>Toggle project view</td>
-                <td>Toggle project and settings views for the tray with the given index (the first tray is at index 0).</td>
+                <td>Toggle project and settings views for the tray with the given index (the first tray is at index
+                  0).
+                </td>
               </tr>
               <tr>
-                <td><kbd className='binding'>y</kbd><kbd className='binding'>m</kbd><kbd className='binding'>0..n</kbd></td>
+                <td><kbd className='binding'>y</kbd><kbd className='binding'>m</kbd><kbd className='binding'>0..n</kbd>
+                </td>
                 <td>Delete success message</td>
                 <td>Deletes the message at the given index (the first message is at index 0).</td>
               </tr>
               <tr>
-                <td><kbd className='binding'>y</kbd><kbd className='binding'>i</kbd><kbd className='binding'>0..n</kbd></td>
+                <td><kbd className='binding'>y</kbd><kbd className='binding'>i</kbd><kbd className='binding'>0..n</kbd>
+                </td>
                 <td>Delete success image</td>
                 <td>Deletes the image at the given index (the first image is at index 0).</td>
               </tr>
@@ -227,6 +232,12 @@ module.exports = React.createClass({
               done right".
             </li>
           </ul>
+        </Container>
+
+        <Container title='Licenses'>
+          <div className='help-contents'>
+            <p className='help-text'>"Pacman Death Sound" by <a href='http://www.orangefreesounds.com/pacman-death-sound/' target='_blank'>Alexander</a> is licensed under <a href='https://creativecommons.org/licenses/by-nc/4.0/legalcode' target='_blank'>CC BY 4.0</a></p>
+          </div>
         </Container>
       </section>
     )
