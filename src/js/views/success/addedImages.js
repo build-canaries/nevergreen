@@ -18,7 +18,7 @@ module.exports = React.createClass({
             this.props.messages.map((message, index) => {
               return (
                 <li key={`i${index}`} className='success-item image'>
-                  <image className='success-list-image' src={message} alt={message}/>
+                  <img className='success-list-image' src={message} alt={message}/>
                   <RemoveLink hotkeys={[`y i ${index}`]} removeMessage={this.props.removeMessage.bind(null, message)}/>
                 </li>
               )
