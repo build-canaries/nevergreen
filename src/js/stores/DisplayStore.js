@@ -14,10 +14,10 @@ const dispatchToken = AppDispatcher.register(action => {
   switch (action.type) {
     case Constants.AppInit:
     {
-      _storeState = action.configuration[storageKey] || {
-          showBrokenBuildTimers: false,
-          showBrokenBuildSounds: true
-        }
+      _storeState = Object.assign({
+        showBrokenBuildTimers: false,
+        showBrokenBuildSounds: false
+      }, action.configuration[storageKey])
       break
     }
     case Constants.RestoreConfiguration:

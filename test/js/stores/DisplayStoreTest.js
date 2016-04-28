@@ -47,8 +47,8 @@ describe('display store', () => {
 
   describe('are broken build sounds enabled', () => {
 
-    it('enables broken build sounds by default', () => {
-      expect(store.areBrokenBuildSoundsEnabled()).toBeTruthy()
+    it('disables broken build sounds by default', () => {
+      expect(store.areBrokenBuildSoundsEnabled()).toBeFalsy()
     })
 
     it('enables broken builds when callback changes value to true', () => {
