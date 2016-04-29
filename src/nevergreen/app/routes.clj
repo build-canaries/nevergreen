@@ -1,8 +1,8 @@
 (ns nevergreen.app.routes
   (:require [compojure.core :refer :all]
             [nevergreen.wrap-exceptions :refer [wrap-exceptions]]
+            [nevergreen.wrap-cache-control :refer [wrap-caching]]
             [ring.middleware.defaults :refer :all]
-            [ring.middleware.not-modified :refer [wrap-not-modified]]
             [ring.util.response :refer :all]
             [ring.middleware.gzip :refer :all]))
 
@@ -12,6 +12,6 @@
 
 (defn wrap-app-middleware [routes]
   (-> (wrap-defaults routes (assoc site-defaults :session false))
-      wrap-not-modified
+      wrap-caching
       wrap-exceptions
       wrap-gzip))
