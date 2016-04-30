@@ -1,6 +1,6 @@
 import AppDispatcher from '../dispatcher/AppDispatcher'
-import securityGateway from '../gateways/securityGateway'
-import projectsGateway from '../gateways/projectsGateway'
+import {encryptPassword} from '../gateways/securityGateway'
+import {fetchAll} from '../gateways/projectsGateway'
 import uuid from 'node-uuid'
 import Constants from '../constants/NevergreenConstants'
 import moment from 'moment'
@@ -86,7 +86,7 @@ module.exports = {
       type: Constants.ProjectsFetching,
       trayId: tray.trayId
     })
-    projectsGateway.fetchAll([tray]).then((projects) => {
+    fetchAll([tray]).then((projects) => {
       AppDispatcher.dispatch({
         type: Constants.ProjectsFetched,
         trayId: tray.trayId,
@@ -104,7 +104,7 @@ module.exports = {
   },
 
   _encryptPasswordAndRefresh(trayId, url, username, password) {
-    securityGateway.encryptPassword(password).then((encryptPasswordResponse) => {
+    encryptPassword(password).then((encryptPasswordResponse) => {
       AppDispatcher.dispatch({
         type: Constants.PasswordEncrypted,
         trayId,

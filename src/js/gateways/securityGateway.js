@@ -1,7 +1,5 @@
-import gateway from './gateway'
+import {post} from './gateway'
 
-module.exports = {
-  encryptPassword(password) {
-    return gateway.post('/api/encrypt', {password})
-  }
+export function encryptPassword(password) {
+  return post('/api/encrypt', {password})
 }
