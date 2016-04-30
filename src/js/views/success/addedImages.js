@@ -1,14 +1,11 @@
-import React from 'react'
+import React, {Component, PropTypes} from 'react'
 import Container from '../general/container'
 import RemoveLink from './removeLink'
 
-module.exports = React.createClass({
-  displayName: 'AddedImages',
-
-  propTypes: {
-    messages: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-    removeMessage: React.PropTypes.func.isRequired
-  },
+class AddedImages extends Component {
+  constructor(props) {
+    super(props)
+  }
 
   render() {
     return (
@@ -28,4 +25,11 @@ module.exports = React.createClass({
       </Container>
     )
   }
-})
+}
+
+AddedImages.propTypes = {
+  messages: PropTypes.arrayOf(PropTypes.string).isRequired,
+  removeMessage: PropTypes.func.isRequired
+}
+
+export default AddedImages

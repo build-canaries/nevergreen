@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component} from 'react'
 import AddedMessages from './addedMessages'
 import AddedImages from './addedImages'
 import AddMessage from './addMessage'
@@ -14,46 +14,37 @@ function getStateFromStore() {
   }
 }
 
-module.exports = React.createClass({
-  displayName: 'SuccessSection',
-
-  getInitialState() {
-    return getStateFromStore()
-  },
+class SuccessSection extends Component {
+  constructor(props) {
+    super(props)
+    this.state = getStateFromStore()
+  }
 
   componentDidMount() {
-    SuccessStore.addListener(this._onChange)
-    UiMessageStore.addListener(this._onChange)
-  },
+    const callback = () => this.setState(getStateFromStore())
+    SuccessStore.addListener(callback)
+    UiMessageStore.addListener(callback)
+    this.setState({callback})
+  }
 
   componentWillUnmount() {
-    SuccessStore.removeListener(this._onChange)
-    UiMessageStore.removeListener(this._onChange)
-  },
+    SuccessStore.removeListener(this.state.callback)
+    UiMessageStore.removeListener(this.state.callback)
+  }
 
   render() {
     return (
       <section className='dashboard-main-section'>
         <h2 className='visually-hidden'>Success</h2>
-        <AddMessage addMessage={this._addNewMessage} errors={this.state.errors}/>
+        <AddMessage addMessage={SuccessActions.addMessage} errors={this.state.errors}/>
 
         { this.state.messages.length > 0 ?
-          <AddedMessages messages={this.state.messages} removeMessage={this._removeMessage}/> : '' }
+          <AddedMessages messages={this.state.messages} removeMessage={SuccessActions.removeMessage}/> : '' }
         { this.state.images.length > 0 ?
-          <AddedImages messages={this.state.images} removeMessage={this._removeMessage}/> : '' }
+          <AddedImages messages={this.state.images} removeMessage={SuccessActions.removeMessage}/> : '' }
       </section>
     )
-  },
-
-  _addNewMessage(message) {
-    SuccessActions.addMessage(message)
-  },
-
-  _removeMessage(message) {
-    SuccessActions.removeMessage(message)
-  },
-
-  _onChange() {
-    this.setState(getStateFromStore())
   }
-})
+}
+
+export default SuccessSection

@@ -1,14 +1,15 @@
-import React from 'react'
+import React, {Component} from 'react'
 import Message from './messageComponent'
 import Image from './imageComponent'
 import SuccessStore from '../../stores/SuccessStore'
 
-module.exports = React.createClass({
-  displayName: 'Success',
-
-  getInitialState() {
-    return {message: SuccessStore.randomMessage()}
-  },
+class Success extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      message: SuccessStore.randomMessage()
+    }
+  }
 
   render() {
     if (SuccessStore.isUrl(this.state.message)) {
@@ -17,4 +18,6 @@ module.exports = React.createClass({
       return <Message message={this.state.message}/>
     }
   }
-})
+}
+
+export default Success

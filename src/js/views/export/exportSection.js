@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component} from 'react'
 import ConfigurationStore from '../../stores/ConfigurationStore'
 import UiMessageStore from '../../stores/UiMessageStore'
 import ConfigurationActions from '../../actions/ConfigurationActions'
@@ -15,23 +15,24 @@ function getStateFromStore() {
   }
 }
 
-module.exports = React.createClass({
-  displayName: 'ExportSection',
-
-  getInitialState() {
-    return getStateFromStore()
-  },
+class ExportSection extends Component {
+  constructor(props) {
+    super(props)
+    this.state = getStateFromStore()
+  }
 
   componentDidMount() {
-    ConfigurationStore.addListener(this._onChange)
-    UiMessageStore.addListener(this._onChange)
+    const callback = () => this.setState(getStateFromStore())
+    ConfigurationStore.addListener(callback)
+    UiMessageStore.addListener(callback)
     ConfigurationActions.refreshConfiguration()
-  },
+    this.setState({callback})
+  }
 
   componentWillUnmount() {
-    ConfigurationStore.removeListener(this._onChange)
-    UiMessageStore.removeListener(this._onChange)
-  },
+    ConfigurationStore.removeListener(this.state.callback)
+    UiMessageStore.removeListener(this.state.callback)
+  }
 
   render() {
     return (
@@ -41,9 +42,7 @@ module.exports = React.createClass({
         <Export configuration={JSON.stringify(this.state.configuration, null, 2)} loading={this.state.exporting}/>
       </section>
     )
-  },
-
-  _onChange() {
-    this.setState(getStateFromStore())
   }
-})
+}
+
+export default ExportSection

@@ -1,11 +1,9 @@
-import React from 'react'
+import React, {Component, PropTypes} from 'react'
 
-module.exports = React.createClass({
-  displayName: 'Image',
-
-  propTypes: {
-    url: React.PropTypes.string.isRequired
-  },
+class Image extends Component {
+  constructor(props) {
+    super(props)
+  }
 
   render() {
     return (
@@ -14,4 +12,10 @@ module.exports = React.createClass({
       </div>
     )
   }
-})
+}
+
+Image.propTypes = {
+  url: PropTypes.string.isRequired
+}
+
+export default Image

@@ -1,37 +1,24 @@
-import React from 'react'
+import React, {Component, PropTypes} from 'react'
 import moment from 'moment'
 import _ from 'lodash'
 
-module.exports = React.createClass({
-  displayName: 'InterestingProject',
-
-  propTypes: {
-    prognosis: React.PropTypes.string.isRequired,
-    name: React.PropTypes.string.isRequired,
-    lastBuildTime: React.PropTypes.string.isRequired,
-    showBrokenBuildTimers: React.PropTypes.bool.isRequired,
-    playBrokenBuildSounds: React.PropTypes.bool.isRequired
-  },
-
-  _isSick() {
-    return this.props.prognosis === 'sick'
-  },
-
-  _toRelativeTime(time) {
-    return _.isEmpty(_.trim(time)) ? '??' : moment(time).fromNow(true)
-  },
+class InterestingProject extends Component {
+  constructor(props) {
+    super(props)
+  }
 
   _brokenBuildTimer() {
-    if (this.props.showBrokenBuildTimers && this._isSick()) {
-      return <span className='monitor-time-broken'> {this._toRelativeTime(this.props.lastBuildTime)}</span>
+    if (this.props.showBrokenBuildTimers && this.props.prognosis === 'sick') {
+      const time = _.isEmpty(_.trim(this.props.lastBuildTime)) ? '??' : moment(this.props.lastBuildTime).fromNow(true)
+      return <span className='monitor-time-broken'> {time}</span>
     }
-  },
+  }
 
   _brokenBuildAudio() {
-    if (this.props.playBrokenBuildSounds && this._isSick()) {
+    if (this.props.playBrokenBuildSounds && this.props.prognosis === 'sick') {
       return <audio src='sounds/pacman_death.mp3' autoPlay/>
     }
-  },
+  }
 
   render() {
     return (
@@ -46,4 +33,14 @@ module.exports = React.createClass({
       </li>
     )
   }
-})
+}
+
+InterestingProject.propTypes = {
+  prognosis: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  lastBuildTime: PropTypes.string.isRequired,
+  showBrokenBuildTimers: PropTypes.bool.isRequired,
+  playBrokenBuildSounds: PropTypes.bool.isRequired
+}
+
+export default InterestingProject

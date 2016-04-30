@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component} from 'react'
 import ConfigOption from './configOption'
 import Container from '../general/container'
 import DisplayStore from '../../stores/DisplayStore'
@@ -11,52 +11,45 @@ function getStateFromStore() {
   }
 }
 
-module.exports = React.createClass({
-  displayName: 'DisplaySection',
-
-  getInitialState() {
-    return getStateFromStore()
-  },
+class DisplaySection extends Component {
+  constructor(props) {
+    super(props)
+    this.state = getStateFromStore()
+  }
 
   componentDidMount() {
-    DisplayStore.addListener(this._onChange)
-  },
+    const callback = () => this.setState(getStateFromStore())
+    DisplayStore.addListener(callback)
+    this.setState({callback})
+  }
 
   componentWillUnmount() {
-    DisplayStore.removeListener(this._onChange)
-  },
-
-  _onToggleBrokenBuilds(newValue) {
-    DisplayActions.setBrokenBuildTimers(newValue)
-  },
-
-  _onToggleSounds(newValue) {
-    DisplayActions.setBrokenBuildSounds(newValue)
-  },
+    DisplayStore.removeListener(this.state.callback)
+  }
 
   render() {
+    const toggleBrokenBuilds = (newValue) => DisplayActions.setBrokenBuildTimers(newValue)
+    const toggleBrokenSounds = (newValue) => DisplayActions.setBrokenBuildSounds(newValue)
+
     return (
       <section className='dashboard-main-section'>
         <Container title='Display Settings'>
           <fieldset className='settings-list'>
             <ConfigOption name='Show broken build timers'
                           enabled={this.state.showBrokenBuildTimers}
-                          onToggle={this._onToggleBrokenBuilds}/>
+                          onToggle={toggleBrokenBuilds}/>
           </fieldset>
         </Container>
         <Container title='Audio Settings'>
           <fieldset className='settings-list'>
             <ConfigOption name='Enable sound for broken builds'
                           enabled={this.state.showBrokenBuildSounds}
-                          onToggle={this._onToggleSounds}/>
+                          onToggle={toggleBrokenSounds}/>
           </fieldset>
         </Container>
       </section>
     )
-  },
-
-  _onChange() {
-    this.setState(getStateFromStore())
   }
-})
+}
 
+export default DisplaySection

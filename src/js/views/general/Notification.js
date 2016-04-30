@@ -1,13 +1,10 @@
-import React from 'react'
+import React, {Component, PropTypes} from 'react'
 import _ from 'lodash'
 
-module.exports = React.createClass({
-  displayName: 'Notification',
-
-  propTypes: {
-    message: React.PropTypes.string,
-    dismiss: React.PropTypes.func.isRequired
-  },
+class Notification extends Component {
+  constructor(props) {
+    super(props)
+  }
 
   render() {
     const classes = 'notification' + (_.size(this.props.message) > 0 ? '' : ' hidden')
@@ -21,4 +18,11 @@ module.exports = React.createClass({
       {this.props.message}
     </div>
   }
-})
+}
+
+Notification.propTypes = {
+  message: PropTypes.string,
+  dismiss: PropTypes.func.isRequired
+}
+
+export default Notification

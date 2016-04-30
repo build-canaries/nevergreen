@@ -1,16 +1,8 @@
-import React from 'react'
+import React, {Component, PropTypes} from 'react'
 import {Link} from 'react-router'
 import Shortcut from './Shortcut'
 
-const MenuItem = React.createClass({
-  displayName: 'MenuItem',
-
-  propTypes: {
-    iconClass: React.PropTypes.string.isRequired,
-    title: React.PropTypes.string.isRequired,
-    shortcuts: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
-  },
-
+class MenuItem extends Component {
   render() {
     return (
       <li>
@@ -22,32 +14,29 @@ const MenuItem = React.createClass({
       </li>
     )
   }
-})
+}
 
-module.exports = React.createClass({
-  displayName: 'Menu',
+MenuItem.propTypes = {
+  iconClass: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  shortcuts: PropTypes.arrayOf(PropTypes.string).isRequired
+}
 
-  propTypes: {
-    versionNumber: React.PropTypes.string,
-    versionName: React.PropTypes.string,
-    commitHash: React.PropTypes.string,
-    versionColour: React.PropTypes.string
-  },
-
-  getDefaultProps() {
-    return {
-      items: [
-        {id: 'monitor', iconClass: 'eye', title: 'Monitor', shortcuts: ['m', '1']},
-        {id: 'tracking', iconClass: 'drawer2', title: 'Tracking', shortcuts: ['t', '2']},
-        {id: 'success', iconClass: 'checkmark', title: 'Success', shortcuts: ['s', '3']},
-        {id: 'display', iconClass: 'display', title: 'Audio/Visual', shortcuts: ['d', '4']},
-        {id: 'export', iconClass: 'floppy-disk', title: 'Export', shortcuts: ['e', '5']},
-        {id: 'help', iconClass: 'question', title: 'Help', shortcuts: ['h', '6']}
-      ]
-    }
-  },
+class Menu extends Component {
+  constructor(props) {
+    super(props)
+  }
 
   render() {
+    const items = [
+      {id: 'monitor', iconClass: 'eye', title: 'Monitor', shortcuts: ['m', '1']},
+      {id: 'tracking', iconClass: 'drawer2', title: 'Tracking', shortcuts: ['t', '2']},
+      {id: 'success', iconClass: 'checkmark', title: 'Success', shortcuts: ['s', '3']},
+      {id: 'display', iconClass: 'display', title: 'Audio/Visual', shortcuts: ['d', '4']},
+      {id: 'export', iconClass: 'floppy-disk', title: 'Export', shortcuts: ['e', '5']},
+      {id: 'help', iconClass: 'question', title: 'Help', shortcuts: ['h', '6']}
+    ]
+
     const footerStyle = {
       backgroundColor: this.props.versionColour
     }
@@ -66,7 +55,7 @@ module.exports = React.createClass({
 
           <ul className='navigation-list'>
             {
-              this.props.items.map((item) => {
+              items.map((item) => {
                 return <MenuItem key={item.id} id={item.id}
                                  iconClass={'icon-' + item.iconClass}
                                  title={item.title}
@@ -87,4 +76,13 @@ module.exports = React.createClass({
       </div>
     )
   }
-})
+}
+
+Menu.propTypes = {
+  versionNumber: PropTypes.string,
+  versionName: PropTypes.string,
+  commitHash: PropTypes.string,
+  versionColour: PropTypes.string
+}
+
+export default Menu

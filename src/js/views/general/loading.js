@@ -1,11 +1,9 @@
-import React from 'react'
+import React, {Component, PropTypes} from 'react'
 
-module.exports = React.createClass({
-  displayName: 'Loading',
-
-  propTypes: {
-    loading: React.PropTypes.bool.isRequired
-  },
+class Loading extends Component {
+  constructor(props) {
+    super(props)
+  }
 
   render() {
     if (this.props.loading) {
@@ -16,4 +14,10 @@ module.exports = React.createClass({
       return this.props.children
     }
   }
-})
+}
+
+Loading.propTypes = {
+  loading: PropTypes.bool.isRequired
+}
+
+export default Loading

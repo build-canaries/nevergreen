@@ -1,13 +1,10 @@
-import React from 'react'
+import React, {Component, PropTypes} from 'react'
 import Shortcut from '../general/Shortcut'
 
-module.exports = React.createClass({
-  displayName: 'RemoveLink',
-
-  propTypes: {
-    hotkeys: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-    removeMessage: React.PropTypes.func.isRequired
-  },
+class RemoveLink extends Component {
+  constructor(props) {
+    super(props)
+  }
 
   render() {
     return (
@@ -18,4 +15,11 @@ module.exports = React.createClass({
       </button>
     )
   }
-})
+}
+
+RemoveLink.propTypes = {
+  hotkeys: PropTypes.arrayOf(PropTypes.string).isRequired,
+  removeMessage: PropTypes.func.isRequired
+}
+
+export default RemoveLink

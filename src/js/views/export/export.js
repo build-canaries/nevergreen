@@ -1,24 +1,18 @@
-import React from 'react'
+import React, {Component, PropTypes} from 'react'
 import ValidationMessages from '../general/validationMessages'
 import InfoMessages from '../general/InfoMessages'
 import Clipboard from 'clipboard'
 import Container from '../general/container'
 import Loading from '../general/loading'
 
-module.exports = React.createClass({
-  displayName: 'Export',
-
-  propTypes: {
-    loading: React.PropTypes.bool,
-    configuration: React.PropTypes.string
-  },
-
-  getInitialState() {
-    return {
+class Export extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
       infos: [],
       errors: []
     }
-  },
+  }
 
   componentDidMount() {
     const clipboard = new Clipboard('#copy-to-clipboard')
@@ -32,37 +26,43 @@ module.exports = React.createClass({
     })
 
     this.setState({clipboard})
-  },
+  }
 
   componentWillUnmount() {
     this.state.clipboard.destroy()
-  },
+  }
 
   render() {
-    const content = (
-      <div>
-        <pre>
-          <textarea id='export-data'
-                    className='export-text'
-                    placeholder='loading...'
-                    value={this.props.configuration}
-                    readOnly='true'
-                    spellCheck='false'/>
-        </pre>
-        <button id='copy-to-clipboard'
-                className='button-primary'
-                data-clipboard-target='#export-data'>
-          copy to clipboard
-        </button>
-        <ValidationMessages messages={this.state.errors}/>
-        <InfoMessages messages={this.state.infos}/>
-      </div>
-    )
 
     return (
       <Container title='Export'>
-        <Loading loading={this.props.loading}>{content}</Loading>
+        <Loading loading={this.props.loading}>
+          <div>
+            <pre>
+              <textarea id='export-data'
+                        className='export-text'
+                        placeholder='loading...'
+                        value={this.props.configuration}
+                        readOnly='true'
+                        spellCheck='false'/>
+            </pre>
+            <button id='copy-to-clipboard'
+                    className='button-primary'
+                    data-clipboard-target='#export-data'>
+              copy to clipboard
+            </button>
+            <ValidationMessages messages={this.state.errors}/>
+            <InfoMessages messages={this.state.infos}/>
+          </div>
+        </Loading>
       </Container>
     )
   }
-})
+}
+
+Export.propTypes = {
+  loading: PropTypes.bool,
+  configuration: PropTypes.string
+}
+
+export default Export

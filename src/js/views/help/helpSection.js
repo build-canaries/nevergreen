@@ -1,9 +1,11 @@
-import React from 'react'
+import React, {Component} from 'react'
 import Container from '../general/container'
 
-module.exports = React.createClass({
-  displayName: 'HelpSection',
-
+class HelpSection extends Component {
+  constructor(props) {
+    super(props)
+  }
+  
   render() {
     return (
       <section className='dashboard-main-section'>
@@ -236,10 +238,14 @@ module.exports = React.createClass({
 
         <Container title='Licenses'>
           <div className='help-contents'>
-            <p className='help-text'>"Pacman Death Sound" by <a href='http://www.orangefreesounds.com/pacman-death-sound/' target='_blank'>Alexander</a> is licensed under <a href='https://creativecommons.org/licenses/by-nc/4.0/legalcode' target='_blank'>CC BY 4.0</a></p>
+            <p className='help-text'>"Pacman Death Sound" by <a
+              href='http://www.orangefreesounds.com/pacman-death-sound/' target='_blank'>Alexander</a> is licensed under
+              <a href='https://creativecommons.org/licenses/by-nc/4.0/legalcode' target='_blank'>CC BY 4.0</a></p>
           </div>
         </Container>
       </section>
     )
   }
-})
+}
+
+export default HelpSection

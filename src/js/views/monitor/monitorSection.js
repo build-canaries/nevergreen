@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component} from 'react'
 import InterestingProjects from './projectsView'
 import Success from './successView'
 import Loading from '../general/loading'
@@ -18,16 +18,31 @@ function getStateFromStore() {
   }
 }
 
-module.exports = React.createClass({
-  displayName: 'MonitorSection',
+class MonitorSection extends Component {
+  static _showMenu() {
+    Array.from(document.querySelectorAll('#menu .navigation, .content-info, .notification')).forEach((elem) => {
+      elem.classList.remove('navigation-hide')
+      elem.classList.add('navigation-show')
+    })
+  }
 
-  getInitialState() {
-    return {
+  static _hideMenu() {
+    Array.from(document.querySelectorAll('#menu .navigation, .content-info, .notification')).forEach((elem) => {
+      elem.classList.remove('navigation-show')
+      elem.classList.add('navigation-hide')
+    })
+  }
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      timer: null,
+      menuTimer: null,
       projects: [],
       loading: true,
       brokenBuildSoundEnabled: false
     }
-  },
+  }
 
   render() {
     let content
@@ -42,83 +57,65 @@ module.exports = React.createClass({
           <ValidationMessages messages={errorMessages}/>
         </div>
       )
-    } else if (this._hasProjects()) {
+    } else if (this.state.projects.length > 0) {
       content = <InterestingProjects projects={this.state.projects}/>
 
     } else {
       content = <Success />
     }
 
-    return <div className='monitor' onMouseMove={this._animateMenu}>
+    return <div className='monitor' onMouseMove={this._animateMenu.bind(this)}>
       <Loading loading={this.state.loading}>
         {content}
       </Loading>
     </div>
-  },
+  }
 
   componentDidMount() {
-    window.addEventListener('resize', this._onChange)
-    InterestingProjectsStore.addListener(this._onChange)
-    DisplayStore.addListener(this._onChange)
+    const callback = () => this.setState(getStateFromStore())
+    this.setState({callback})
+
+    window.addEventListener('resize', callback)
+    InterestingProjectsStore.addListener(callback)
+    DisplayStore.addListener(callback)
 
     this._poll()
-    this._hideMenu()
-  },
+    MonitorSection._hideMenu()
+  }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this._onChange)
-    InterestingProjectsStore.removeListener(this._onChange)
-    DisplayStore.removeListener(this._onChange)
+    window.removeEventListener('resize', this.state.callback)
+    InterestingProjectsStore.removeListener(this.state.callback)
+    DisplayStore.removeListener(this.state.callback)
 
     this._clearMenuTimeOut()
-    this._showMenu()
-  },
-
-  _hasProjects() {
-    return this.state.projects.length > 0
-  },
+    clearTimeout(this.state.timer)
+    MonitorSection._showMenu()
+  }
 
   _animateMenu() {
     this._clearMenuTimeOut()
-    this._showMenu()
+    MonitorSection._showMenu()
     this.setState({
       menuTimer: setTimeout(() => {
-        this._hideMenu()
+        MonitorSection._hideMenu()
       }, 3000)
     })
-  },
-
-  _showMenu() {
-    Array.from(document.querySelectorAll('#menu .navigation, .content-info, .notification')).forEach((elem) => {
-      elem.classList.remove('navigation-hide')
-      elem.classList.add('navigation-show')
-    })
-  },
-
-  _hideMenu() {
-    if (this.isMounted()) {
-      Array.from(document.querySelectorAll('#menu .navigation, .content-info, .notification')).forEach((elem) => {
-        elem.classList.remove('navigation-show')
-        elem.classList.add('navigation-hide')
-      })
-    }
-  },
+  }
 
   _clearMenuTimeOut() {
     clearTimeout(this.state.menuTimer)
-  },
-
-  _onChange() {
-    this.setState(getStateFromStore())
-  },
+  }
 
   _poll() {
-    if (this.isMounted()) {
-      InterestingProjectActions.fetchInteresting(TrayStore.getAll(), SelectedProjectsStore.getAll()).then(() => {
-        setTimeout(() => {
+    InterestingProjectActions.fetchInteresting(TrayStore.getAll(), SelectedProjectsStore.getAll()).then(() => {
+      this.setState({
+        timer: setTimeout(() => {
           this._poll()
         }, 5000)
       })
-    }
+    })
   }
-})
+}
+
+export default MonitorSection

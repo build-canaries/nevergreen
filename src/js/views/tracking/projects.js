@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component, PropTypes} from 'react'
 import AvailableProject from './availableProject'
 import _ from 'lodash'
 import Shortcut from '../general/Shortcut'
@@ -17,39 +17,36 @@ function getStateFromStore(trayId) {
   }
 }
 
-module.exports = React.createClass({
-  displayName: 'Projects',
-
-  propTypes: {
-    index: React.PropTypes.number.isRequired,
-    trayId: React.PropTypes.string.isRequired
-  },
-
-  getInitialState() {
-    return getStateFromStore(this.props.trayId)
-  },
+class Projects extends Component {
+  constructor(props) {
+    super(props)
+    this.state = getStateFromStore(props.trayId)
+  }
 
   componentDidMount() {
-    SelectedProjectsStore.addListener(this._onChange)
-    FetchedProjectsStore.addListener(this._onChange)
-  },
+    const callback = () => this.setState(getStateFromStore(this.props.trayId))
+    this.setState({callback})
+
+    SelectedProjectsStore.addListener(callback)
+    FetchedProjectsStore.addListener(callback)
+  }
 
   componentWillUnmount() {
-    SelectedProjectsStore.removeListener(this._onChange)
-    FetchedProjectsStore.removeListener(this._onChange)
-  },
+    SelectedProjectsStore.removeListener(this.state.callback)
+    FetchedProjectsStore.removeListener(this.state.callback)
+  }
 
   render() {
     return (
       <fieldset className='tracking-cctray-group-builds'>
         <legend className='tracking-cctray-group-builds-legend'>Available projects</legend>
         <div className='tracking-cctray-group-build-toggles'>
-          <button className='testing-include-all button' onClick={this._includeAll}>
+          <button className='testing-include-all button' onClick={this._includeAll.bind(this)}>
             <span className='icon-checkbox-checked'/>
             <span className='text-with-icon'>Include all</span>
             <Shortcut hotkeys={[`+ ${this.props.index}`, `= ${this.props.index}`]}/>
           </button>
-          <button className='button' onClick={this._excludeAll}>
+          <button className='button' onClick={this._excludeAll.bind(this)}>
             <span className='icon-checkbox-unchecked'/>
             <span className='text-with-icon'>Exclude all</span>
             <Shortcut hotkeys={[`- ${this.props.index}`]}/>
@@ -71,7 +68,7 @@ module.exports = React.createClass({
         </ol>
       </fieldset>
     )
-  },
+  }
 
   _selectProject(projectId, included) {
     if (included) {
@@ -79,7 +76,7 @@ module.exports = React.createClass({
     } else {
       SelectProjectActions.removeProject(this.props.trayId, [projectId])
     }
-  },
+  }
 
   _includeAll() {
     const projectIds = this.state.projects.filter((project) => {
@@ -88,16 +85,19 @@ module.exports = React.createClass({
       return project.projectId
     })
     SelectProjectActions.selectProject(this.props.trayId, projectIds)
-  },
+  }
 
   _excludeAll() {
     const projectIds = this.state.projects.map((project) => {
       return project.projectId
     })
     SelectProjectActions.removeProject(this.props.trayId, projectIds)
-  },
-
-  _onChange() {
-    this.setState(getStateFromStore(this.props.trayId))
   }
-})
+}
+
+Projects.propTypes = {
+  index: PropTypes.number.isRequired,
+  trayId: PropTypes.string.isRequired
+}
+
+export default Projects

@@ -1,29 +1,31 @@
-import React from 'react'
+import React, {Component, PropTypes} from 'react'
 
-module.exports = React.createClass({
-  displayName: 'ConfigOption',
-
-  propTypes: {
-    name: React.PropTypes.string.isRequired,
-    enabled: React.PropTypes.bool.isRequired,
-    onToggle: React.PropTypes.func.isRequired
-  },
+class ConfigOption extends Component {
+  constructor(props) {
+    super(props)
+  }
 
   render() {
+    const onChange = (event) => this.props.onToggle(event.target.checked)
+
     return (
       <p className='checkbox-container'>
         <label className='label-checkbox'>
           <input className='checkbox no-text-selection'
                  type='checkbox'
                  checked={this.props.enabled}
-                 onChange={this._onChange}/>
+                 onChange={onChange}/>
           <span>{this.props.name}</span>
         </label>
       </p>
     )
-  },
-
-  _onChange(event) {
-    this.props.onToggle(event.target.checked)
   }
-})
+}
+
+ConfigOption.propTypes = {
+  name: PropTypes.string.isRequired,
+  enabled: PropTypes.bool.isRequired,
+  onToggle: PropTypes.func.isRequired
+}
+
+export default ConfigOption

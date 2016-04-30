@@ -1,11 +1,9 @@
-import React from 'react'
+import React, {Component, PropTypes} from 'react'
 
-module.exports = React.createClass({
-  displayName: 'ValidationMessages',
-
-  propTypes: {
-    messages: React.PropTypes.arrayOf(React.PropTypes.string)
-  },
+class ValidationMessages extends Component {
+  constructor(props) {
+    super(props)
+  }
 
   render() {
     let validationMessages = ''
@@ -23,4 +21,10 @@ module.exports = React.createClass({
 
     return <div className='validation-messages'>{validationMessages}</div>
   }
-})
+}
+
+ValidationMessages.propTypes = {
+  messages: PropTypes.arrayOf(PropTypes.string)
+}
+
+export default ValidationMessages

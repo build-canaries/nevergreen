@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component, PropTypes} from 'react'
 import Container from '../general/container'
 import Projects from './projects'
 import TraySettings from './traySettings'
@@ -7,39 +7,30 @@ import ValidationMessages from '../general/validationMessages'
 import Shortcut from '../general/Shortcut'
 import moment from 'moment'
 
-module.exports = React.createClass({
-  displayName: 'Tray',
-
-  propTypes: {
-    index: React.PropTypes.number.isRequired,
-    tray: React.PropTypes.object.isRequired,
-    removeTray: React.PropTypes.func.isRequired,
-    refreshTray: React.PropTypes.func.isRequired,
-    updateTray: React.PropTypes.func.isRequired
-  },
-
-  getInitialState() {
-    return {
+class Tray extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
       showSettings: false,
       hidden: false,
       lastFetched: this._updateLastFetch()
     }
-  },
+  }
 
   componentDidMount() {
     const intervalId = setInterval(() => {
       this.setState({lastFetched: this._updateLastFetch()})
     }, 60000)
     this.setState({intervalId})
-  },
+  }
 
   componentWillUnmount() {
     clearInterval(this.state.intervalId)
-  },
+  }
 
   componentWillReceiveProps() {
     this.setState({lastFetched: this._updateLastFetch()})
-  },
+  }
 
   render() {
     let subContent
@@ -47,8 +38,8 @@ module.exports = React.createClass({
     if (this.state.showSettings) {
       subContent = <TraySettings tray={this.props.tray}
                                  removeTray={this.props.removeTray}
-                                 updateTray={this._updateTray}
-                                 cancel={this._toggleSettingsView}/>
+                                 updateTray={this._updateTray.bind(this)}
+                                 cancel={this._toggleSettingsView.bind(this)}/>
     } else {
       if (this.props.tray.error) {
         const errorMessages = [
@@ -65,6 +56,7 @@ module.exports = React.createClass({
       }
     }
 
+    const toggleLabel = this.state.showSettings ? 'Show projects' : 'Show settings'
     const title = this.props.tray.name || this.props.tray.url
     const subTitle = this.props.tray.name ? this.props.tray.url : ''
 
@@ -72,9 +64,9 @@ module.exports = React.createClass({
       <Container title={title} subTitle={subTitle}>
         <div>
           <div className='tray-sub-bar'>
-            <button className='button' onClick={this._toggleSettingsView} title='Toggle settings'>
+            <button className='button' onClick={this._toggleSettingsView.bind(this)} title='Toggle settings'>
               <span className={'icon-' + (this.state.showSettings ? 'list' : 'cog') }/>
-              <span className='text-with-icon'>{this._toggleSettingsLabel()}</span>
+              <span className='text-with-icon'>{toggleLabel}</span>
               <Shortcut hotkeys={[`p ${this.props.index}`]}/>
             </button>
             <button className='button' onClick={this.props.refreshTray}>
@@ -90,11 +82,7 @@ module.exports = React.createClass({
         </div>
       </Container>
     )
-  },
-
-  _toggleSettingsLabel() {
-    return this.state.showSettings ? 'Show projects' : 'Show settings'
-  },
+  }
 
   _toggleSettingsView() {
     this.setState({
@@ -102,13 +90,13 @@ module.exports = React.createClass({
     })
 
     return false
-  },
+  }
 
   _updateLastFetch() {
     if (this.props.tray.timestamp) {
       return moment(this.props.tray.timestamp).fromNow(true)
     }
-  },
+  }
 
   _updateTray(trayId, name, url, username, password) {
     this.setState({
@@ -116,4 +104,14 @@ module.exports = React.createClass({
     })
     this.props.updateTray(trayId, name, url, username, password)
   }
-})
+}
+
+Tray.propTypes = {
+  index: PropTypes.number.isRequired,
+  tray: PropTypes.object.isRequired,
+  removeTray: PropTypes.func.isRequired,
+  refreshTray: PropTypes.func.isRequired,
+  updateTray: PropTypes.func.isRequired
+}
+
+export default Tray

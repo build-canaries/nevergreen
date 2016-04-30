@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component} from 'react'
 import Menu from './general/menu'
 import Notification from './general/Notification'
 import AppActions from '../actions/AppActions'
@@ -23,23 +23,25 @@ function getStateFromStore() {
   }
 }
 
-module.exports = React.createClass({
-  displayName: 'App',
-
-  getInitialState() {
-    return {
+class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
       loaded: false,
       versionNumber: 'loading...',
       versionName: 'loading...',
-      versionColour: '#7E7E7E',
+      versionColour: '#7e7e7e',
       commitHash: '#####',
       notification: ''
     }
-  },
+  }
 
   componentWillMount() {
-    AppStore.addListener(this._onChange)
-    NotificationStore.addListener(this._onChange)
+    const callback = () => this.setState(getStateFromStore())
+    this.setState({callback})
+
+    AppStore.addListener(callback)
+    NotificationStore.addListener(callback)
     AppActions.init()
 
     const versionCheckId = setInterval(NotificationActions.pollForNewVersion, twentyFourHours)
@@ -52,16 +54,16 @@ module.exports = React.createClass({
     Mousetrap.bind('?', () => {
       UiActions.showKeyboardShortcuts()
     })
-  },
+  }
 
   componentWillUnmount() {
-    AppStore.removeListener(this._onChange)
-    NotificationStore.removeListener(this._onChange)
+    AppStore.removeListener(this.state.callback)
+    NotificationStore.removeListener(this.state.callback)
 
     clearInterval(this.state.versionCheckId)
 
     Mousetrap.unbind('?')
-  },
+  }
 
   render() {
     return (
@@ -78,9 +80,7 @@ module.exports = React.createClass({
         {this.state.loaded ? this.props.children : ''}
       </div>
     )
-  },
-
-  _onChange() {
-    this.setState(getStateFromStore())
   }
-})
+}
+
+export default App

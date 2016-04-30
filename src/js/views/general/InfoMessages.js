@@ -1,11 +1,9 @@
-import React from 'react'
+import React, {Component, PropTypes} from 'react'
 
-module.exports = React.createClass({
-  displayName: 'InfoMessages',
-
-  propTypes: {
-    messages: React.PropTypes.arrayOf(React.PropTypes.string)
-  },
+class InfoMessages extends Component {
+  constructor(props) {
+    super(props)
+  }
 
   render() {
     let infoMessages = ''
@@ -23,4 +21,10 @@ module.exports = React.createClass({
 
     return <div className='info-messages'>{infoMessages}</div>
   }
-})
+}
+
+InfoMessages.propTypes = {
+  messages: PropTypes.arrayOf(PropTypes.string)
+}
+
+export default InfoMessages

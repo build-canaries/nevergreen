@@ -1,43 +1,25 @@
-import React from 'react'
-import LinkedStateMixin from 'react-addons-linked-state-mixin'
+import React, {Component, PropTypes} from 'react'
 import nameGenerator from 'project-name-generator'
 import _ from 'lodash'
 
-module.exports = React.createClass({
-  mixins: [LinkedStateMixin],
-
-  displayName: 'TraySettings',
-
-  propTypes: {
-    tray: React.PropTypes.object.isRequired,
-    removeTray: React.PropTypes.func.isRequired,
-    updateTray: React.PropTypes.func.isRequired,
-    cancel: React.PropTypes.func.isRequired
-  },
-
-  getInitialState() {
-    return {
-      name: this.props.tray.name,
-      url: this.props.tray.url,
-      username: this.props.tray.username,
-      password: this.props.tray.password
-    }
-  },
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      name: nextProps.tray.name,
-      url: nextProps.tray.url,
-      username: nextProps.tray.username,
-      password: nextProps.tray.password
-    })
-  },
+class TraySettings extends Component {
+  constructor(props) {
+    super(props)
+  }
 
   componentDidMount() {
     this.refs.name.focus()
-  },
+  }
 
   render() {
+    const generateRandomName = () => this.refs.name.value = _.startCase(nameGenerator().spaced)
+    const updateTray = () => this.props.updateTray(this.props.tray.trayId, this.refs.name.value, this.refs.url.value, this.refs.username.value, this.refs.password.value)
+    const keyUpdate = (evt) => {
+      if (evt.key === 'Enter') {
+        updateTray()
+      }
+    }
+
     return (
       <section className='tray-settings'>
         <div className='text-input'>
@@ -46,45 +28,47 @@ module.exports = React.createClass({
                  id={this.props.tray.trayId + 'settings-name'}
                  ref='name'
                  type='text'
-                 valueLink={this.linkState('name')}
-                 onKeyPress={this._onKeyPress}
+                 defaultValue={this.props.tray.name}
+                 onKeyPress={keyUpdate}
                  placeholder='e.g. project or team name'/>
-          <button className='button' onClick={this._generateRandomName}>random</button>
+          <button className='button' onClick={generateRandomName}>random</button>
         </div>
         <div className='text-input'>
           <label htmlFor={this.props.tray.trayId + 'settings-url'}>url</label>
           <input className='tray-settings-url'
                  id={this.props.tray.trayId + 'settings-url'}
+                 ref='url'
                  type='text'
-                 valueLink={this.linkState('url')}
-                 onKeyPress={this._onKeyPress}
+                 defaultValue={this.props.tray.url}
+                 onKeyPress={keyUpdate}
                  placeholder='this should not be blank...'/>
         </div>
         <div className='text-input'>
           <label htmlFor={this.props.tray.trayId + 'settings-username'}>username</label>
           <input id={this.props.tray.trayId + 'settings-username'}
+                 ref='username'
                  type='text'
                  placeholder='not set'
-                 valueLink={this.linkState('username')}
-                 onKeyPress={this._onKeyPress}/>
+                 defaultValue={this.props.tray.username}
+                 onKeyPress={keyUpdate}/>
         </div>
         <div className='text-input'>
           <label htmlFor={this.props.tray.trayId + 'settings-password'}>password</label>
           <input id={this.props.tray.trayId + 'settings-password'}
+                 ref='password'
                  type='password'
                  placeholder='not set'
-                 valueLink={this.linkState('password')}
-                 onKeyPress={this._onKeyPress}/>
+                 defaultValue={this.props.tray.password}
+                 onKeyPress={keyUpdate}/>
         </div>
         <button className='button tray-settings-update-button' onClick={this.props.cancel}>cancel</button>
-        <button className='button-primary tray-settings-update-button' onClick={this._updateTray}>update tray</button>
+        <button className='button-primary tray-settings-update-button' onClick={updateTray}>update tray</button>
 
         <div className='tray-settings-danger-zone'>
           <h4 className='tray-settings-danger-zone-title'>
             <span className='icon-notification'/>
             <span className='text-with-icon'>Danger Zone</span>
           </h4>
-
           <div className='tray-settings-danger-zone-content'>
             <button className='button tray-settings-danger-button' onClick={this.props.removeTray}>Delete this tray
             </button>
@@ -93,21 +77,19 @@ module.exports = React.createClass({
         </div>
       </section>
     )
-  },
-
-  _onKeyPress(evt) {
-    if (evt.key === 'Enter') {
-      this._updateTray()
-    }
-  },
-
-  _updateTray() {
-    this.props.updateTray(this.props.tray.trayId, this.state.name, this.state.url, this.state.username, this.state.password)
-  },
-
-  _generateRandomName() {
-    this.setState({
-      name: _.startCase(nameGenerator().spaced)
-    })
   }
-})
+}
+
+TraySettings.propTypes = {
+  tray: PropTypes.shape({
+    name: PropTypes.string,
+    url: PropTypes.string.isRequired,
+    username: PropTypes.string,
+    password: PropTypes.string
+  }).isRequired,
+  removeTray: PropTypes.func.isRequired,
+  updateTray: PropTypes.func.isRequired,
+  cancel: PropTypes.func.isRequired
+}
+
+export default TraySettings

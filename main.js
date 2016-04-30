@@ -2,4 +2,4 @@
 require('whatwg-fetch')
 
 // app
-require ('./src/js/routing')
+require('./src/js/routing')
