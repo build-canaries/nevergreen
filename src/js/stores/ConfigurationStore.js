@@ -1,6 +1,6 @@
 import AppDispatcher from '../dispatcher/AppDispatcher'
 import {EventEmitter} from 'events'
-import Constants from '../constants/NevergreenConstants'
+import {AppInit, RestoreConfiguration, ImportingData, ImportError, ExportData} from '../constants/NevergreenConstants'
 
 const eventEmitter = new EventEmitter()
 const CHANGE_EVENT = 'storage-change'
@@ -9,7 +9,7 @@ let _storeState = null
 
 const dispatchToken = AppDispatcher.register((action) => {
   switch (action.type) {
-    case Constants.AppInit:
+    case AppInit:
     {
       _storeState = {
         configuration: action.configuration,
@@ -18,24 +18,24 @@ const dispatchToken = AppDispatcher.register((action) => {
       }
       break
     }
-    case Constants.RestoreConfiguration:
+    case RestoreConfiguration:
     {
       _storeState.importing = false
       break
     }
-    case Constants.ImportingData:
+    case ImportingData:
     {
       _storeState.importing = true
       _storeState.exporting = true
       break
     }
-    case Constants.ImportError:
+    case ImportError:
     {
       _storeState.importing = false
       _storeState.exporting = false
       break
     }
-    case Constants.ExportData:
+    case ExportData:
     {
       _storeState.exporting = false
       _storeState.configuration = action.configuration

@@ -1,6 +1,15 @@
 import AppDispatcher from '../dispatcher/AppDispatcher'
 import {EventEmitter} from 'events'
-import Constants from '../constants/NevergreenConstants'
+import {
+  AppInit,
+  RestoreConfiguration,
+  MessageAdd,
+  MessageRemove,
+  MessageInvalidInput,
+  ImportingData,
+  ImportError,
+  KeyboardShortcuts
+} from '../constants/NevergreenConstants'
 
 const eventEmitter = new EventEmitter()
 const CHANGE_EVENT = 'message-change'
@@ -11,8 +20,8 @@ eventEmitter.setMaxListeners(Infinity)
 
 const dispatchToken = AppDispatcher.register((action) => {
   switch (action.type) {
-    case Constants.AppInit:
-    case Constants.RestoreConfiguration:
+    case AppInit:
+    case RestoreConfiguration:
     {
       _storeState = {
         keyboardShortcuts: {
@@ -29,30 +38,30 @@ const dispatchToken = AppDispatcher.register((action) => {
       }
       break
     }
-    case Constants.MessageInvalidInput:
+    case MessageInvalidInput:
     {
       _storeState.success.errors = action.errors
       break
     }
-    case Constants.MessageAdd:
-    case Constants.MessageRemove:
+    case MessageAdd:
+    case MessageRemove:
     {
       _storeState.success.errors = []
       break
     }
-    case Constants.ImportingData:
+    case ImportingData:
     {
       _storeState.importing.errors = []
       _storeState.importing.infos = []
       break
     }
-    case Constants.ImportError:
+    case ImportError:
     {
       _storeState.importing.errors = action.errors
       _storeState.importing.infos = []
       break
     }
-    case Constants.KeyboardShortcuts:
+    case KeyboardShortcuts:
     {
       if (action.show && _storeState.keyboardShortcuts.cancel) {
         _storeState.keyboardShortcuts.cancel()

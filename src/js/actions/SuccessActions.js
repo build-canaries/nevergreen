@@ -1,5 +1,5 @@
 import AppDispatcher from '../dispatcher/AppDispatcher'
-import Constants from '../constants/NevergreenConstants'
+import {MessageInvalidInput, MessageAdd, MessageRemove} from '../constants/NevergreenConstants'
 import _ from 'lodash'
 
 function isASentence(message) {
@@ -27,13 +27,13 @@ module.exports = {
 
     if (validationMessages) {
       AppDispatcher.dispatch({
-        type: Constants.MessageInvalidInput,
+        type: MessageInvalidInput,
         errors: validationMessages,
         message
       })
     } else {
       AppDispatcher.dispatch({
-        type: Constants.MessageAdd,
+        type: MessageAdd,
         message: transformMessage(message)
       })
     }
@@ -41,7 +41,7 @@ module.exports = {
 
   removeMessage(message) {
     AppDispatcher.dispatch({
-      type: Constants.MessageRemove,
+      type: MessageRemove,
       message: transformMessage(message)
     })
   }

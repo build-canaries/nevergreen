@@ -1,16 +1,16 @@
 import AppDispatcher from '../dispatcher/AppDispatcher'
-import Constants from '../constants/NevergreenConstants'
+import {BrokenBuildTimersChanged, BrokenBuildSoundsToggled} from '../constants/NevergreenConstants'
 
 module.exports = {
   setBrokenBuildTimers(value) {
     AppDispatcher.dispatch({
-      type: Constants.BrokenBuildTimersChanged,
+      type: BrokenBuildTimersChanged,
       value
     })
   },
   setBrokenBuildSounds(value) {
     AppDispatcher.dispatch({
-      type: Constants.BrokenBuildSoundsToggled,
+      type: BrokenBuildSoundsToggled,
       value
     })
   }

@@ -1,7 +1,17 @@
 import AppDispatcher from '../dispatcher/AppDispatcher'
 import {EventEmitter} from 'events'
+import {
+  AppInit,
+  RestoreConfiguration,
+  PasswordEncrypted,
+  TrayAdd,
+  TrayUpdate,
+  TrayRemove,
+  ProjectsFetching,
+  ProjectsFetched,
+  ProjectsFetchError
+} from '../constants/NevergreenConstants'
 import _ from 'lodash'
-import Constants from '../constants/NevergreenConstants'
 import LocalRepository from '../storage/LocalRepository'
 import nameGenerator from 'project-name-generator'
 
@@ -56,53 +66,53 @@ function setTrayPassword(trayId, password) {
 
 const dispatchToken = AppDispatcher.register((action) => {
   switch (action.type) {
-    case Constants.AppInit:
+    case AppInit:
     {
       _storeState = action.configuration[storageKey] || {
           trays: {}
         }
       break
     }
-    case Constants.RestoreConfiguration:
+    case RestoreConfiguration:
     {
       _storeState = action.configuration[storageKey]
       break
     }
-    case Constants.PasswordEncrypted:
+    case PasswordEncrypted:
     {
       setTrayPassword(action.trayId, action.password)
       clearTrayError(action.trayId)
       break
     }
-    case Constants.TrayAdd:
+    case TrayAdd:
     {
       addTray(action)
       break
     }
-    case Constants.TrayUpdate:
+    case TrayUpdate:
     {
       updateTray(action)
       break
     }
-    case Constants.TrayRemove:
+    case TrayRemove:
     {
       removeTray(action.trayId)
       break
     }
-    case Constants.ProjectsFetching:
+    case ProjectsFetching:
     {
       setTrayFetching(action.trayId)
       clearTrayError(action.trayId)
       break
     }
-    case Constants.ProjectsFetched:
+    case ProjectsFetched:
     {
       setTrayFetched(action.trayId)
       clearTrayError(action.trayId)
       setTrayTimestamp(action.trayId, action.timestamp)
       break
     }
-    case Constants.ProjectsFetchError:
+    case ProjectsFetchError:
     {
       setTrayFetched(action.trayId)
       setTrayError(action.trayId, action.error)

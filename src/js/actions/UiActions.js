@@ -1,17 +1,17 @@
 import AppDispatcher from '../dispatcher/AppDispatcher'
-import Constants from '../constants/NevergreenConstants'
+import {KeyboardShortcuts} from '../constants/NevergreenConstants'
 
 module.exports = {
   showKeyboardShortcuts() {
     const timerId = setTimeout(() => {
       AppDispatcher.dispatch({
-        type: Constants.KeyboardShortcuts,
+        type: KeyboardShortcuts,
         show: false
       })
     }, 3000)
 
     AppDispatcher.dispatch({
-      type: Constants.KeyboardShortcuts,
+      type: KeyboardShortcuts,
       show: true,
       cancel: () => {
         clearTimeout(timerId)

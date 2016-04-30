@@ -1,6 +1,6 @@
 import AppDispatcher from '../dispatcher/AppDispatcher'
 import {EventEmitter} from 'events'
-import Constants from '../constants/NevergreenConstants'
+import {AppInit, NotificationDismiss, Notification} from '../constants/NevergreenConstants'
 
 const eventEmitter = new EventEmitter()
 const CHANGE_EVENT = 'notification-change'
@@ -9,13 +9,13 @@ let _storeState = null
 
 const dispatchToken = AppDispatcher.register((action) => {
   switch (action.type) {
-    case Constants.AppInit:
-    case Constants.NotificationDismiss:
+    case AppInit:
+    case NotificationDismiss:
     {
       _storeState = ''
       break
     }
-    case Constants.Notification:
+    case Notification:
     {
       _storeState = action.message
       break

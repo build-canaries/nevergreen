@@ -1,5 +1,5 @@
 import AppDispatcher from '../dispatcher/AppDispatcher'
-import Constants from '../constants/NevergreenConstants'
+import {Notification, NotificationDismiss} from '../constants/NevergreenConstants'
 import {get} from '../gateways/gateway'
 import semver from 'semver'
 import AppStore from '../stores/AppStore'
@@ -13,7 +13,7 @@ function _checkForNewVersion(currentVersion, hostname) {
       const additional = saas ? ', refresh to update' : 'to download from GitHub now'
 
       AppDispatcher.dispatch({
-        type: Constants.Notification,
+        type: Notification,
         message: `A new version ${data.tag_name} is available ${additional}!`
       })
     }
@@ -32,7 +32,7 @@ module.exports = {
 
   dismiss() {
     AppDispatcher.dispatch({
-      type: Constants.NotificationDismiss
+      type: NotificationDismiss
     })
   }
 }

@@ -1,11 +1,11 @@
 import AppDispatcher from '../dispatcher/AppDispatcher'
-import Constants from '../constants/NevergreenConstants'
+import {ProjectSelected, ProjectUnselected} from '../constants/NevergreenConstants'
 
 module.exports = {
 
   selectProject(trayId, projectIds) {
     AppDispatcher.dispatch({
-      type: Constants.ProjectSelected,
+      type: ProjectSelected,
       trayId,
       projectIds
     })
@@ -13,7 +13,7 @@ module.exports = {
 
   removeProject(trayId, projectIds) {
     AppDispatcher.dispatch({
-      type: Constants.ProjectUnselected,
+      type: ProjectUnselected,
       trayId,
       projectIds
     })

@@ -1,5 +1,5 @@
 import AppDispatcher from '../dispatcher/AppDispatcher'
-import Constants from '../constants/NevergreenConstants'
+import {AppInit} from '../constants/NevergreenConstants'
 import LocalRepository from '../storage/LocalRepository'
 import moment from 'moment'
 
@@ -29,7 +29,7 @@ module.exports = {
     LocalRepository.init()
     LocalRepository.getConfiguration().then((configuration) => {
       AppDispatcher.dispatch({
-        type: Constants.AppInit,
+        type: AppInit,
         configuration
       })
     })

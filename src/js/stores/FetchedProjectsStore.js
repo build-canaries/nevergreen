@@ -1,7 +1,7 @@
 import AppDispatcher from '../dispatcher/AppDispatcher'
 import {EventEmitter} from 'events'
+import {AppInit, RestoreConfiguration, TrayAdd, TrayRemove, ProjectsFetched} from '../constants/NevergreenConstants'
 import _ from 'lodash'
-import Constants from '../constants/NevergreenConstants'
 import LocalRepository from '../storage/LocalRepository'
 
 const eventEmitter = new EventEmitter()
@@ -62,27 +62,27 @@ function createProjects(previousProjects, fetchedProjects) {
 
 const dispatchToken = AppDispatcher.register((action) => {
   switch (action.type) {
-    case Constants.AppInit:
+    case AppInit:
     {
       _storeState = action.configuration[storageKey] || {}
       break
     }
-    case Constants.RestoreConfiguration:
+    case RestoreConfiguration:
     {
       _storeState = action.configuration[storageKey]
       break
     }
-    case Constants.TrayAdd:
+    case TrayAdd:
     {
       _storeState[action.trayId] = []
       break
     }
-    case Constants.TrayRemove:
+    case TrayRemove:
     {
       delete _storeState[action.trayId]
       break
     }
-    case Constants.ProjectsFetched:
+    case ProjectsFetched:
     {
       _storeState[action.trayId] = createProjects(_storeState[action.trayId], action.projects)
       break

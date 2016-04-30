@@ -1,5 +1,5 @@
 import AppDispatcher from '../dispatcher/AppDispatcher'
-import Constants from '../constants/NevergreenConstants'
+import {ImportError, ImportingData, RestoreConfiguration, ExportData} from '../constants/NevergreenConstants'
 import LocalRepository from '../storage/LocalRepository'
 import _ from 'lodash'
 import DisplayStore from '../stores/DisplayStore'
@@ -28,7 +28,7 @@ function validateData(data) {
 
 function dispatchError(errors) {
   AppDispatcher.dispatch({
-    type: Constants.ImportError,
+    type: ImportError,
     errors
   })
 }
@@ -45,18 +45,18 @@ module.exports = {
         dispatchError(validationMessages)
       } else {
         AppDispatcher.dispatch({
-          type: Constants.ImportingData,
+          type: ImportingData,
           data
         })
 
         LocalRepository.save(data).then(() => {
           AppDispatcher.dispatch({
-            type: Constants.RestoreConfiguration,
+            type: RestoreConfiguration,
             configuration: data,
             messages: ['Successfully imported']
           })
           AppDispatcher.dispatch({
-            type: Constants.ExportData,
+            type: ExportData,
             configuration: data
           })
         }).catch((e) => {
@@ -72,7 +72,7 @@ module.exports = {
   refreshConfiguration() {
     LocalRepository.getConfiguration().then((configuration) => {
       AppDispatcher.dispatch({
-        type: Constants.ExportData,
+        type: ExportData,
         configuration
       })
     })

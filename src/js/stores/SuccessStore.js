@@ -1,6 +1,6 @@
 import AppDispatcher from '../dispatcher/AppDispatcher'
 import {EventEmitter} from 'events'
-import Constants from '../constants/NevergreenConstants'
+import {AppInit, RestoreConfiguration, MessageAdd, MessageRemove} from '../constants/NevergreenConstants'
 import _ from 'lodash'
 import LocalRepository from '../storage/LocalRepository'
 
@@ -16,24 +16,24 @@ function randomFrom(arr) {
 
 const dispatchToken = AppDispatcher.register((action) => {
   switch (action.type) {
-    case Constants.AppInit:
+    case AppInit:
     {
       _storeState = action.configuration[storageKey] || {
           messages: ['=(^.^)=']
         }
       break
     }
-    case Constants.RestoreConfiguration:
+    case RestoreConfiguration:
     {
       _storeState = action.configuration[storageKey]
       break
     }
-    case Constants.MessageAdd:
+    case MessageAdd:
     {
       _storeState.messages = _storeState.messages.concat(action.message)
       break
     }
-    case Constants.MessageRemove:
+    case MessageRemove:
     {
       _.remove(_storeState.messages, (msg) => {
         return msg === action.message

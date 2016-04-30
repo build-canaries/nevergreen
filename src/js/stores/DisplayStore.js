@@ -1,6 +1,11 @@
 import AppDispatcher from '../dispatcher/AppDispatcher'
 import {EventEmitter} from 'events'
-import Constants from '../constants/NevergreenConstants'
+import {
+  AppInit,
+  RestoreConfiguration,
+  BrokenBuildTimersChanged,
+  BrokenBuildSoundsToggled
+} from '../constants/NevergreenConstants'
 import LocalRepository from '../storage/LocalRepository'
 import _ from 'lodash'
 
@@ -12,7 +17,7 @@ let _storeState = null
 
 const dispatchToken = AppDispatcher.register((action) => {
   switch (action.type) {
-    case Constants.AppInit:
+    case AppInit:
     {
       _storeState = Object.assign({
         showBrokenBuildTimers: false,
@@ -20,17 +25,17 @@ const dispatchToken = AppDispatcher.register((action) => {
       }, action.configuration[storageKey])
       break
     }
-    case Constants.RestoreConfiguration:
+    case RestoreConfiguration:
     {
       _storeState = action.configuration[storageKey]
       break
     }
-    case Constants.BrokenBuildTimersChanged:
+    case BrokenBuildTimersChanged:
     {
       _storeState.showBrokenBuildTimers = action.value === true
       break
     }
-    case Constants.BrokenBuildSoundsToggled:
+    case BrokenBuildSoundsToggled:
     {
       _storeState.showBrokenBuildSounds = action.value === true
       break

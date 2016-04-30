@@ -1,27 +1,24 @@
-module.exports = {
-  AppInit: 'app-init',
-  RestoreConfiguration: 'restore-configuration',
-  TrayAdd: 'tray-add',
-  TrayUpdate: 'tray-update',
-  TrayRemove: 'tray-remove',
-  PasswordEncrypted: 'password-encrypted',
-  ProjectsFetching: 'projects-fetching',
-  ProjectsFetched: 'projects-fetched',
-  ProjectsFetchError: 'projects-fetch-error',
-  ProjectSelected: 'project-selected',
-  ProjectUnselected: 'project-unselected',
-  InterestingProjects: 'interesting-projects',
-  InterestingProjectsError: 'interesting-projects-error',
-  MessageAdd: 'message-add',
-  MessageInvalidInput: 'message-invalid-input',
-  MessageRemove: 'message-removed',
-  ImportingData: 'importing-data',
-  ImportError: 'import-error',
-  ExportData: 'export-data',
-  ConfigurationLoaded: 'configuration-loaded',
-  BrokenBuildTimersChanged: 'broken-build-timers-changed',
-  BrokenBuildSoundsToggled: 'broken-build-sounds-toggled',
-  Notification: 'notification',
-  NotificationDismiss: 'notification-dismiss',
-  KeyboardShortcuts: 'keyboard-shortcuts'
-}
+export const AppInit = 'app-init'
+export const RestoreConfiguration = 'restore-configuration'
+export const TrayAdd = 'tray-add'
+export const TrayUpdate = 'tray-update'
+export const TrayRemove = 'tray-remove'
+export const PasswordEncrypted = 'password-encrypted'
+export const ProjectsFetching = 'projects-fetching'
+export const ProjectsFetched = 'projects-fetched'
+export const ProjectsFetchError = 'projects-fetch-error'
+export const ProjectSelected = 'project-selected'
+export const ProjectUnselected = 'project-unselected'
+export const InterestingProjects = 'interesting-projects'
+export const InterestingProjectsError = 'interesting-projects-error'
+export const MessageAdd = 'message-add'
+export const MessageInvalidInput = 'message-invalid-input'
+export const MessageRemove = 'message-removed'
+export const ImportingData = 'importing-data'
+export const ImportError = 'import-error'
+export const ExportData = 'export-data'
+export const BrokenBuildTimersChanged = 'broken-build-timers-changed'
+export const BrokenBuildSoundsToggled = 'broken-build-sounds-toggled'
+export const Notification = 'notification'
+export const NotificationDismiss = 'notification-dismiss'
+export const KeyboardShortcuts = 'keyboard-shortcuts'

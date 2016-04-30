@@ -1,5 +1,5 @@
 import AppDispatcher from '../dispatcher/AppDispatcher'
-import Constants from '../constants/NevergreenConstants'
+import {InterestingProjects, InterestingProjectsError} from '../constants/NevergreenConstants'
 import {interesting} from '../gateways/projectsGateway'
 
 module.exports = {
@@ -7,12 +7,12 @@ module.exports = {
   fetchInteresting(trays, selected) {
     return interesting(trays, selected).then((projects) => {
       AppDispatcher.dispatch({
-        type: Constants.InterestingProjects,
+        type: InterestingProjects,
         projects
       })
     }).catch((error) => {
       AppDispatcher.dispatch({
-        type: Constants.InterestingProjectsError,
+        type: InterestingProjectsError,
         error
       })
     })

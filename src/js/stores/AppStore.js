@@ -1,6 +1,6 @@
 import AppDispatcher from '../dispatcher/AppDispatcher'
 import {EventEmitter} from 'events'
-import Constants from '../constants/NevergreenConstants'
+import {AppInit} from '../constants/NevergreenConstants'
 import ConfigurationStore from './ConfigurationStore'
 import DisplayStore from './DisplayStore'
 import FetchedProjectsStore from './FetchedProjectsStore'
@@ -33,7 +33,7 @@ let _storeState = {
 
 const dispatchToken = AppDispatcher.register((action) => {
   switch (action.type) {
-    case Constants.AppInit:
+    case AppInit:
     {
       AppDispatcher.waitFor(allStoreTokens)
       _storeState = {

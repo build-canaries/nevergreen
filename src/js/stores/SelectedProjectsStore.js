@@ -1,7 +1,14 @@
 import AppDispatcher from '../dispatcher/AppDispatcher'
 import {EventEmitter} from 'events'
+import {
+  AppInit,
+  RestoreConfiguration,
+  TrayAdd,
+  TrayRemove,
+  ProjectSelected,
+  ProjectUnselected
+} from '../constants/NevergreenConstants'
 import _ from 'lodash'
-import Constants from '../constants/NevergreenConstants'
 import LocalRepository from '../storage/LocalRepository'
 
 const eventEmitter = new EventEmitter()
@@ -12,32 +19,32 @@ let _storeState = null
 
 const dispatchToken = AppDispatcher.register((action) => {
   switch (action.type) {
-    case Constants.AppInit:
+    case AppInit:
     {
       _storeState = action.configuration[storageKey] || {}
       break
     }
-    case Constants.RestoreConfiguration:
+    case RestoreConfiguration:
     {
       _storeState = action.configuration[storageKey]
       break
     }
-    case Constants.TrayAdd:
+    case TrayAdd:
     {
       _storeState[action.trayId] = []
       break
     }
-    case Constants.TrayRemove:
+    case TrayRemove:
     {
       delete _storeState[action.trayId]
       break
     }
-    case Constants.ProjectSelected:
+    case ProjectSelected:
     {
       _storeState[action.trayId] = _storeState[action.trayId].concat(action.projectIds)
       break
     }
-    case Constants.ProjectUnselected:
+    case ProjectUnselected:
     {
       _storeState[action.trayId] = _.difference(_storeState[action.trayId], action.projectIds)
       break

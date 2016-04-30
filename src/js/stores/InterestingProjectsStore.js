@@ -1,6 +1,6 @@
 import AppDispatcher from '../dispatcher/AppDispatcher'
 import {EventEmitter} from 'events'
-import Constants from '../constants/NevergreenConstants'
+import {AppInit, InterestingProjects, InterestingProjectsError} from '../constants/NevergreenConstants'
 
 const eventEmitter = new EventEmitter()
 const CHANGE_EVENT = 'interesting-projects-change'
@@ -22,7 +22,7 @@ function toProject(apiProject) {
 
 const dispatchToken = AppDispatcher.register((action) => {
   switch (action.type) {
-    case Constants.AppInit:
+    case AppInit:
     {
       _storeState = {
         projects: [],
@@ -30,13 +30,13 @@ const dispatchToken = AppDispatcher.register((action) => {
       }
       break
     }
-    case Constants.InterestingProjects:
+    case InterestingProjects:
     {
       _storeState.projects = action.projects.map(toProject)
       _storeState.error = null
       break
     }
-    case Constants.InterestingProjectsError:
+    case InterestingProjectsError:
     {
       _storeState.error = action.error
       break

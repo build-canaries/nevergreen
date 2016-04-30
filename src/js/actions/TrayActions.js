@@ -2,7 +2,15 @@ import AppDispatcher from '../dispatcher/AppDispatcher'
 import {encryptPassword} from '../gateways/securityGateway'
 import {fetchAll} from '../gateways/projectsGateway'
 import uuid from 'node-uuid'
-import Constants from '../constants/NevergreenConstants'
+import {
+  TrayAdd,
+  TrayUpdate,
+  PasswordEncrypted,
+  TrayRemove,
+  ProjectsFetching,
+  ProjectsFetched,
+  ProjectsFetchError
+} from '../constants/NevergreenConstants'
 import moment from 'moment'
 import trayStore from '../stores/TrayStore'
 import _ from 'lodash'
@@ -19,7 +27,7 @@ module.exports = {
     const url = hasScheme(enteredUrl) ? enteredUrl : 'http://' + enteredUrl
 
     AppDispatcher.dispatch({
-      type: Constants.TrayAdd,
+      type: TrayAdd,
       trayId,
       url,
       username
@@ -41,7 +49,7 @@ module.exports = {
     const newPassword = passwordSame ? '' : password
 
     AppDispatcher.dispatch({
-      type: Constants.TrayUpdate,
+      type: TrayUpdate,
       trayId,
       name,
       url,
@@ -60,7 +68,7 @@ module.exports = {
         this._encryptPasswordAndRefresh(trayId, url, username, password)
       } else {
         AppDispatcher.dispatch({
-          type: Constants.PasswordEncrypted,
+          type: PasswordEncrypted,
           trayId,
           password: ''
         })
@@ -76,26 +84,26 @@ module.exports = {
 
   removeTray(trayId) {
     AppDispatcher.dispatch({
-      type: Constants.TrayRemove,
+      type: TrayRemove,
       trayId
     })
   },
 
   refreshTray(tray) {
     AppDispatcher.dispatch({
-      type: Constants.ProjectsFetching,
+      type: ProjectsFetching,
       trayId: tray.trayId
     })
     fetchAll([tray]).then((projects) => {
       AppDispatcher.dispatch({
-        type: Constants.ProjectsFetched,
+        type: ProjectsFetched,
         trayId: tray.trayId,
         projects,
         timestamp: moment().format()
       })
     }).catch((error) => {
       AppDispatcher.dispatch({
-        type: Constants.ProjectsFetchError,
+        type: ProjectsFetchError,
         trayId: tray.trayId,
         error,
         timestamp: moment().format()
@@ -106,7 +114,7 @@ module.exports = {
   _encryptPasswordAndRefresh(trayId, url, username, password) {
     encryptPassword(password).then((encryptPasswordResponse) => {
       AppDispatcher.dispatch({
-        type: Constants.PasswordEncrypted,
+        type: PasswordEncrypted,
         trayId,
         password: encryptPasswordResponse.password
       })
