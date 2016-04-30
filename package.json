@@ -35,13 +35,12 @@
     "node-uuid": "1.4.7",
     "normalize.css": "4.1.1",
     "project-name-generator": "2.1.2",
-    "react": "15.0.1",
-    "react-addons-linked-state-mixin": "15.0.1",
-    "react-dom": "15.0.1",
+    "react": "15.0.2",
+    "react-dom": "15.0.2",
     "react-router": "2.4.0",
     "scale-text": "0.2.2",
     "semver": "5.1.0",
-    "whatwg-fetch": "0.11.0"
+    "whatwg-fetch": "1.0.0"
   },
   "devDependencies": {
     "babel": "6.5.2",
@@ -53,17 +52,17 @@
     "basic-auth-connect": "1.0.0",
     "browserify": "13.0.0",
     "chromedriver": "2.19.0",
-    "eslint": "2.8.0",
+    "eslint": "2.9.0",
     "eslint-plugin-babel": "3.2.0",
     "eslint-plugin-react": "5.0.1",
     "express": "4.13.4",
     "jest-cli": "12.0.2",
     "node-sass": "3.6.0",
-    "react-addons-test-utils": "15.0.1",
+    "react-addons-test-utils": "15.0.2",
     "stylelint": "6.2.2",
     "stylelint-config-standard": "6.0.0",
     "uglify-js": "2.6.2",
-    "watch": "0.17.1",
+    "watch": "0.18.0",
     "watchify": "3.7.0"
   },
   "jest": {
