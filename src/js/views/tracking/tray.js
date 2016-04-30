@@ -1,11 +1,11 @@
-const React = require('react')
-const Container = require('../general/container')
-const Projects = require('./projects')
-const TraySettings = require('./traySettings')
-const Loading = require('../general/loading')
-const ValidationMessages = require('../general/validationMessages')
-const Shortcut = require('../general/Shortcut')
-const moment = require('moment')
+import React from 'react'
+import Container from '../general/container'
+import Projects from './projects'
+import TraySettings from './traySettings'
+import Loading from '../general/loading'
+import ValidationMessages from '../general/validationMessages'
+import Shortcut from '../general/Shortcut'
+import moment from 'moment'
 
 module.exports = React.createClass({
   displayName: 'Tray',

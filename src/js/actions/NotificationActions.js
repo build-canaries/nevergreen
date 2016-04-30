@@ -1,8 +1,8 @@
-const AppDispatcher = require('../dispatcher/AppDispatcher')
-const Constants = require('../constants/NevergreenConstants')
-const gateway = require('../gateways/gateway')
-const semver = require('semver')
-const AppStore = require('../stores/AppStore')
+import AppDispatcher from '../dispatcher/AppDispatcher'
+import Constants from '../constants/NevergreenConstants'
+import gateway from '../gateways/gateway'
+import semver from 'semver'
+import AppStore from '../stores/AppStore'
 
 const nevergreenioRegEx = /nevergreen\.io/i
 

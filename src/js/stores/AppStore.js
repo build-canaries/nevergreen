@@ -1,18 +1,18 @@
-const AppDispatcher = require('../dispatcher/AppDispatcher')
-const EventEmitter = require('events').EventEmitter
-const eventEmitter = new EventEmitter()
-const Constants = require('../constants/NevergreenConstants')
-const ConfigurationStore = require('./ConfigurationStore')
-const DisplayStore = require('./DisplayStore')
-const FetchedProjectsStore = require('./FetchedProjectsStore')
-const InterestingProjectsStore = require('./InterestingProjectsStore')
-const SelectedProjectsStore = require('./SelectedProjectsStore')
-const SuccessStore = require('./SuccessStore')
-const TrayStore = require('./TrayStore')
-const UiMessageStore = require('./UiMessageStore')
-const NotificationStore = require('./NotificationStore')
-const Package = require('../../../package')
+import AppDispatcher from '../dispatcher/AppDispatcher'
+import {EventEmitter} from 'events'
+import Constants from '../constants/NevergreenConstants'
+import ConfigurationStore from './ConfigurationStore'
+import DisplayStore from './DisplayStore'
+import FetchedProjectsStore from './FetchedProjectsStore'
+import InterestingProjectsStore from './InterestingProjectsStore'
+import SelectedProjectsStore from './SelectedProjectsStore'
+import SuccessStore from './SuccessStore'
+import TrayStore from './TrayStore'
+import UiMessageStore from './UiMessageStore'
+import NotificationStore from './NotificationStore'
+import Package from '../../../package'
 
+const eventEmitter = new EventEmitter()
 const CHANGE_EVENT = 'app-change'
 
 const allStoreTokens = [

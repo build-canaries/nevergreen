@@ -1,6 +1,6 @@
-const React = require('react')
-const Link = require('react-router').Link
-const Shortcut = require('./Shortcut')
+import React from 'react'
+import {Link} from 'react-router'
+import Shortcut from './Shortcut'
 
 const MenuItem = React.createClass({
   displayName: 'MenuItem',

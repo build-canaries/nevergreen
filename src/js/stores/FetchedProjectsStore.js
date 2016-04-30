@@ -1,10 +1,10 @@
-const AppDispatcher = require('../dispatcher/AppDispatcher')
-const EventEmitter = require('events').EventEmitter
-const eventEmitter = new EventEmitter()
-const _ = require('lodash')
-const Constants = require('../constants/NevergreenConstants')
-const LocalRepository = require('../storage/LocalRepository')
+import AppDispatcher from '../dispatcher/AppDispatcher'
+import {EventEmitter} from 'events'
+import _ from 'lodash'
+import Constants from '../constants/NevergreenConstants'
+import LocalRepository from '../storage/LocalRepository'
 
+const eventEmitter = new EventEmitter()
 const storageKey = 'fetchedProjects'
 const CHANGE_EVENT = 'projects-change'
 

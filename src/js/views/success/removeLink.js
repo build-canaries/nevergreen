@@ -1,5 +1,5 @@
-const React = require('react')
-const Shortcut = require('../general/Shortcut')
+import React from 'react'
+import Shortcut from '../general/Shortcut'
 
 module.exports = React.createClass({
   displayName: 'RemoveLink',

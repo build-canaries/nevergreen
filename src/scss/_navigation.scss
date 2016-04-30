@@ -2,7 +2,6 @@
   background-color: $off-black;
   color: white;
   width: $menu-width;
-  float: left;
   position: fixed;
   height: 100%;
   padding-top: 1em;
@@ -32,11 +31,11 @@
   text-decoration: none;
   &:hover {
     .navigation-list-item-icon {
-      transition: color .2s ease-in-out;
+      transition: color 0.2s ease-in-out;
       color: white;
     }
     .navigation-list-item-title {
-      transition: color .2s ease-in-out;
+      transition: color 0.2s ease-in-out;
       color: white;
     }
   }

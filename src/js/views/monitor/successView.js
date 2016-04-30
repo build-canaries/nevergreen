@@ -1,7 +1,7 @@
-const React = require('react')
-const Message = require('./messageComponent')
-const Image = require('./imageComponent')
-const SuccessStore = require('../../stores/SuccessStore')
+import React from 'react'
+import Message from './messageComponent'
+import Image from './imageComponent'
+import SuccessStore from '../../stores/SuccessStore'
 
 module.exports = React.createClass({
   displayName: 'Success',

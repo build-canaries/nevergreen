@@ -1,6 +1,6 @@
-const React = require('react')
-const ReactDOM = require('react-dom')
-const Mousetrap = require('mousetrap')
+import React from 'react'
+import ReactDOM from 'react-dom'
+import Mousetrap from 'mousetrap'
 
 module.exports = React.createClass({
   displayName: 'PrimaryInput',

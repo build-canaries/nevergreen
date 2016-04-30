@@ -1,9 +1,9 @@
-const React = require('react')
-const ValidationMessages = require('../general/validationMessages')
-const InfoMessages = require('../general/InfoMessages')
-const Clipboard = require('clipboard')
-const Container = require('../general/container')
-const Loading = require('../general/loading')
+import React from 'react'
+import ValidationMessages from '../general/validationMessages'
+import InfoMessages from '../general/InfoMessages'
+import Clipboard from 'clipboard'
+import Container from '../general/container'
+import Loading from '../general/loading'
 
 module.exports = React.createClass({
   displayName: 'Export',

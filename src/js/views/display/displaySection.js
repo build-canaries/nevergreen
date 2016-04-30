@@ -1,8 +1,8 @@
-const React = require('react')
-const ConfigOption = require('./configOption')
-const Container = require('../general/container')
-const DisplayStore = require('../../stores/DisplayStore')
-const DisplayActions = require('../../actions/DisplayActions')
+import React from 'react'
+import ConfigOption from './configOption'
+import Container from '../general/container'
+import DisplayStore from '../../stores/DisplayStore'
+import DisplayActions from '../../actions/DisplayActions'
 
 function getStateFromStore() {
   return {

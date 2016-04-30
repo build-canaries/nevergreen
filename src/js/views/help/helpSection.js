@@ -1,5 +1,5 @@
-const React = require('react')
-const Container = require('../general/container')
+import React from 'react'
+import Container from '../general/container'
 
 module.exports = React.createClass({
   displayName: 'HelpSection',

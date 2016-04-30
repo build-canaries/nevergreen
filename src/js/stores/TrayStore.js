@@ -1,11 +1,11 @@
-const AppDispatcher = require('../dispatcher/AppDispatcher')
-const EventEmitter = require('events').EventEmitter
-const eventEmitter = new EventEmitter()
-const _ = require('lodash')
-const Constants = require('../constants/NevergreenConstants')
-const LocalRepository = require('../storage/LocalRepository')
-const nameGenerator = require('project-name-generator')
+import AppDispatcher from '../dispatcher/AppDispatcher'
+import {EventEmitter} from 'events'
+import _ from 'lodash'
+import Constants from '../constants/NevergreenConstants'
+import LocalRepository from '../storage/LocalRepository'
+import nameGenerator from 'project-name-generator'
 
+const eventEmitter = new EventEmitter()
 const storageKey = 'tray'
 const CHANGE_EVENT = 'tray-change'
 

@@ -1,14 +1,13 @@
-const React = require('react')
-const ReactDOM = require('react-dom')
-const App = require('./views/app')
-const MonitorSection = require('./views/monitor/monitorSection')
-const TrackingSection = require('./views/tracking/trackingSection')
-const SuccessSection = require('./views/success/successSection')
-const DisplaySection = require('./views/display/displaySection')
-const ExportSection = require('./views/export/exportSection')
-const HelpSection = require('./views/help/helpSection')
-
-import { browserHistory, Router, Route, IndexRoute } from 'react-router'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import App from './views/app'
+import MonitorSection from './views/monitor/monitorSection'
+import TrackingSection from './views/tracking/trackingSection'
+import SuccessSection from './views/success/successSection'
+import DisplaySection from './views/display/displaySection'
+import ExportSection from './views/export/exportSection'
+import HelpSection from './views/help/helpSection'
+import {browserHistory, Router, Route, IndexRoute} from 'react-router'
 
 const routes = (
   <Route path='/' component={App}>

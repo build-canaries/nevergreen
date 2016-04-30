@@ -1,6 +1,6 @@
-const localforage = require('localforage')
-const Promise = require('promise')
-const _ = require('lodash')
+import localforage from 'localforage'
+import Promise from 'promise'
+import _ from 'lodash'
 
 module.exports = {
   init() {

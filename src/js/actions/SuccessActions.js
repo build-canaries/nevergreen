@@ -1,6 +1,6 @@
-const AppDispatcher = require('../dispatcher/AppDispatcher')
-const Constants = require('../constants/NevergreenConstants')
-const _ = require('lodash')
+import AppDispatcher from '../dispatcher/AppDispatcher'
+import Constants from '../constants/NevergreenConstants'
+import _ from 'lodash'
 
 function isASentence(message) {
   const numberOfLetters = (message.match(/[A-Za-z]/g) || []).length

@@ -1,11 +1,11 @@
-const React = require('react')
-const LinkedStateMixin = require('react-addons-linked-state-mixin')
-const ValidationMessages = require('../general/validationMessages')
-const InfoMessages = require('../general/InfoMessages')
-const ConfigurationActions = require('../../actions/ConfigurationActions')
-const Container = require('../general/container')
-const Loading = require('../general/loading')
-const PrimaryInput = require('../general/PrimaryInput')
+import React from 'react'
+import LinkedStateMixin from 'react-addons-linked-state-mixin'
+import ValidationMessages from '../general/validationMessages'
+import InfoMessages from '../general/InfoMessages'
+import ConfigurationActions from '../../actions/ConfigurationActions'
+import Container from '../general/container'
+import Loading from '../general/loading'
+import PrimaryInput from '../general/PrimaryInput'
 
 module.exports = React.createClass({
   mixins: [LinkedStateMixin],

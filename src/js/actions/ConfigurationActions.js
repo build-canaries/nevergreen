@@ -1,12 +1,12 @@
-const AppDispatcher = require('../dispatcher/AppDispatcher')
-const Constants = require('../constants/NevergreenConstants')
-const LocalRepository = require('../storage/LocalRepository')
-const _ = require('lodash')
-const DisplayStore = require('../stores/DisplayStore')
-const FetchedProjectsStore = require('../stores/FetchedProjectsStore')
-const SelectedProjectsStore = require('../stores/SelectedProjectsStore')
-const SuccessStore = require('../stores/SuccessStore')
-const TrayStore = require('../stores/TrayStore')
+import AppDispatcher from '../dispatcher/AppDispatcher'
+import Constants from '../constants/NevergreenConstants'
+import LocalRepository from '../storage/LocalRepository'
+import _ from 'lodash'
+import DisplayStore from '../stores/DisplayStore'
+import FetchedProjectsStore from '../stores/FetchedProjectsStore'
+import SelectedProjectsStore from '../stores/SelectedProjectsStore'
+import SuccessStore from '../stores/SuccessStore'
+import TrayStore from '../stores/TrayStore'
 
 const _storesWithConfiguration = [
   DisplayStore,

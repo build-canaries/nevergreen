@@ -1,5 +1,5 @@
-const AppDispatcher = require('../dispatcher/AppDispatcher')
-const Constants = require('../constants/NevergreenConstants')
+import AppDispatcher from '../dispatcher/AppDispatcher'
+import Constants from '../constants/NevergreenConstants'
 
 module.exports = {
 

@@ -1,6 +1,6 @@
 .dashboard {
   background: $light-grey;
-  font-family: 'Roboto', sans-serif;
+  font-family: Roboto, sans-serif;
 }
 
 .dashboard-main-section {
@@ -63,24 +63,24 @@
   left: 0;
   min-width: 100%;
   color: $off-white;
-  background-color: rgba($blue, .9);
+  background-color: rgba($blue, 0.9);
   display: flex;
   align-items: center;
   justify-content: center;
   text-transform: none;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
 
-  &:after {
+  &::after {
     position: absolute;
     bottom: -10px;
     left: 50%;
     margin-left: -10px;
     width: 0;
-    border-top: 10px solid rgba($blue, .9);
-    border-top: 10px solid rgba($blue, .9);
+    border-top: 10px solid rgba($blue, 0.9);
+    border-top: 10px solid rgba($blue, 0.9);
     border-right: 10px solid transparent;
     border-left: 10px solid transparent;
-    content: " ";
+    content: ' ';
     font-size: 0;
     line-height: 0;
   }

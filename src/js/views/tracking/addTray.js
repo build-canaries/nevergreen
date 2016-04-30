@@ -1,6 +1,6 @@
-const React = require('react')
-const LinkedStateMixin = require('react-addons-linked-state-mixin')
-const PrimaryInput = require('../general/PrimaryInput')
+import React from 'react'
+import LinkedStateMixin from 'react-addons-linked-state-mixin'
+import PrimaryInput from '../general/PrimaryInput'
 
 module.exports = React.createClass({
   mixins: [LinkedStateMixin],

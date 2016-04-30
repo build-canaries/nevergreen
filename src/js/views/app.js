@@ -1,12 +1,12 @@
-const React = require('react')
-const Menu = require('./general/menu')
-const Notification = require('./general/Notification')
-const AppActions = require('../actions/AppActions')
-const AppStore = require('../stores/AppStore')
-const UiActions = require('../actions/UiActions')
-const NotificationActions = require('../actions/NotificationActions')
-const NotificationStore = require('../stores/NotificationStore')
-const Mousetrap = require('mousetrap')
+import React from 'react'
+import Menu from './general/menu'
+import Notification from './general/Notification'
+import AppActions from '../actions/AppActions'
+import AppStore from '../stores/AppStore'
+import UiActions from '../actions/UiActions'
+import NotificationActions from '../actions/NotificationActions'
+import NotificationStore from '../stores/NotificationStore'
+import Mousetrap from 'mousetrap'
 
 require('mousetrap/plugins/global-bind/mousetrap-global-bind') // adds bindGlobal to Mousetrap
 

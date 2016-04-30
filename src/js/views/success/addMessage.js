@@ -1,8 +1,8 @@
-const React = require('react')
-const LinkedStateMixin = require('react-addons-linked-state-mixin')
-const ValidationMessages = require('../general/validationMessages')
-const PrimaryInput = require('../general/PrimaryInput')
-const _ = require('lodash')
+import React from 'react'
+import LinkedStateMixin from 'react-addons-linked-state-mixin'
+import ValidationMessages from '../general/validationMessages'
+import PrimaryInput from '../general/PrimaryInput'
+import _ from 'lodash'
 
 module.exports = React.createClass({
   mixins: [LinkedStateMixin],

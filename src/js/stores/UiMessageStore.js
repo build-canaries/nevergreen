@@ -1,8 +1,8 @@
-const AppDispatcher = require('../dispatcher/AppDispatcher')
-const EventEmitter = require('events').EventEmitter
-const eventEmitter = new EventEmitter()
-const Constants = require('../constants/NevergreenConstants')
+import AppDispatcher from '../dispatcher/AppDispatcher'
+import {EventEmitter} from 'events'
+import Constants from '../constants/NevergreenConstants'
 
+const eventEmitter = new EventEmitter()
 const CHANGE_EVENT = 'message-change'
 
 let _storeState = null

@@ -1,6 +1,6 @@
-const AppDispatcher = require('../dispatcher/AppDispatcher')
-const Constants = require('../constants/NevergreenConstants')
-const projectsGateway = require('../gateways/projectsGateway')
+import AppDispatcher from '../dispatcher/AppDispatcher'
+import Constants from '../constants/NevergreenConstants'
+import projectsGateway from '../gateways/projectsGateway'
 
 module.exports = {
 

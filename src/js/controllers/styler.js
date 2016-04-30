@@ -1,5 +1,5 @@
-const $ = require('jquery')
-const ScaleText = require('scale-text')
+import $ from 'jquery'
+import ScaleText from 'scale-text'
 
 const maxColumns = 3
 const buildStatusPadding = 11

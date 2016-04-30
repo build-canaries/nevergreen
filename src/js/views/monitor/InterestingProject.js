@@ -1,6 +1,6 @@
-const React = require('react')
-const moment = require('moment')
-const _ = require('lodash')
+import React from 'react'
+import moment from 'moment'
+import _ from 'lodash'
 
 module.exports = React.createClass({
   displayName: 'InterestingProject',

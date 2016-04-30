@@ -1,6 +1,6 @@
-const React = require('react')
-const ReactDOM = require('react-dom')
-const styler = require('../../controllers/styler')
+import React from 'react'
+import ReactDOM from 'react-dom'
+import styler from '../../controllers/styler'
 
 module.exports = React.createClass({
   displayName: 'Message',

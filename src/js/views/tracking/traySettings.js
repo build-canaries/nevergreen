@@ -1,7 +1,7 @@
-const React = require('react')
-const LinkedStateMixin = require('react-addons-linked-state-mixin')
-const nameGenerator = require('project-name-generator')
-const _ = require('lodash')
+import React from 'react'
+import LinkedStateMixin from 'react-addons-linked-state-mixin'
+import nameGenerator from 'project-name-generator'
+import _ from 'lodash'
 
 module.exports = React.createClass({
   mixins: [LinkedStateMixin],

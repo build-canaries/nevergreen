@@ -1,7 +1,7 @@
-const React = require('react')
-const ReactDOM = require('react-dom')
-const Mousetrap = require('mousetrap')
-const UiMessageStore = require('../../stores/UiMessageStore')
+import React from 'react'
+import ReactDOM from 'react-dom'
+import Mousetrap from 'mousetrap'
+import UiMessageStore from '../../stores/UiMessageStore'
 
 function getStateFromStore() {
   return {

@@ -1,7 +1,7 @@
-const AppDispatcher = require('../dispatcher/AppDispatcher')
-const Constants = require('../constants/NevergreenConstants')
-const LocalRepository = require('../storage/LocalRepository')
-const moment = require('moment')
+import AppDispatcher from '../dispatcher/AppDispatcher'
+import Constants from '../constants/NevergreenConstants'
+import LocalRepository from '../storage/LocalRepository'
+import moment from 'moment'
 
 function momentInit() {
   moment.updateLocale('en', {

@@ -1,9 +1,9 @@
-const React = require('react')
-const ConfigurationStore = require('../../stores/ConfigurationStore')
-const UiMessageStore = require('../../stores/UiMessageStore')
-const ConfigurationActions = require('../../actions/ConfigurationActions')
-const Import = require('./import')
-const Export = require('./export')
+import React from 'react'
+import ConfigurationStore from '../../stores/ConfigurationStore'
+import UiMessageStore from '../../stores/UiMessageStore'
+import ConfigurationActions from '../../actions/ConfigurationActions'
+import Import from './import'
+import Export from './export'
 
 function getStateFromStore() {
   return {

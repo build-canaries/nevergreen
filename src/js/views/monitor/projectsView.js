@@ -1,8 +1,8 @@
-const React = require('react')
-const ReactDOM = require('react-dom')
-const styler = require('../../controllers/styler')
-const InterestingProject = require('./InterestingProject')
-const DisplayStore = require('../../stores/DisplayStore')
+import React from 'react'
+import ReactDOM from 'react-dom'
+import styler from '../../controllers/styler'
+import InterestingProject from './InterestingProject'
+import DisplayStore from '../../stores/DisplayStore'
 
 module.exports = React.createClass({
   displayName: 'Projects',

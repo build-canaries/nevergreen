@@ -1,13 +1,13 @@
-const React = require('react')
-const InterestingProjects = require('./projectsView')
-const Success = require('./successView')
-const Loading = require('../general/loading')
-const InterestingProjectActions = require('../../actions/InterestingProjectActions')
-const InterestingProjectsStore = require('../../stores/InterestingProjectsStore')
-const TrayStore = require('../../stores/TrayStore')
-const SelectedProjectsStore = require('../../stores/SelectedProjectsStore')
-const DisplayStore = require('../../stores/DisplayStore')
-const ValidationMessages = require('../general/validationMessages')
+import React from 'react'
+import InterestingProjects from './projectsView'
+import Success from './successView'
+import Loading from '../general/loading'
+import InterestingProjectActions from '../../actions/InterestingProjectActions'
+import InterestingProjectsStore from '../../stores/InterestingProjectsStore'
+import TrayStore from '../../stores/TrayStore'
+import SelectedProjectsStore from '../../stores/SelectedProjectsStore'
+import DisplayStore from '../../stores/DisplayStore'
+import ValidationMessages from '../general/validationMessages'
 
 function getStateFromStore() {
   return {

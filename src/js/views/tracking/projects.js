@@ -1,10 +1,10 @@
-const React = require('react')
-const AvailableProject = require('./availableProject')
-const _ = require('lodash')
-const Shortcut = require('../general/Shortcut')
-const SelectedProjectsStore = require('../../stores/SelectedProjectsStore')
-const SelectProjectActions = require('../../actions/SelectProjectActions')
-const FetchedProjectsStore = require('../../stores/FetchedProjectsStore')
+import React from 'react'
+import AvailableProject from './availableProject'
+import _ from 'lodash'
+import Shortcut from '../general/Shortcut'
+import SelectedProjectsStore from '../../stores/SelectedProjectsStore'
+import SelectProjectActions from '../../actions/SelectProjectActions'
+import FetchedProjectsStore from '../../stores/FetchedProjectsStore'
 
 function projectName(project) {
   return project.name

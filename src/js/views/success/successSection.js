@@ -1,10 +1,10 @@
-const React = require('react')
-const AddedMessages = require('./addedMessages')
-const AddedImages = require('./addedImages')
-const AddMessage = require('./addMessage')
-const SuccessStore = require('../../stores/SuccessStore')
-const UiMessageStore = require('../../stores/UiMessageStore')
-const SuccessActions = require('../../actions/SuccessActions')
+import React from 'react'
+import AddedMessages from './addedMessages'
+import AddedImages from './addedImages'
+import AddMessage from './addMessage'
+import SuccessStore from '../../stores/SuccessStore'
+import UiMessageStore from '../../stores/UiMessageStore'
+import SuccessActions from '../../actions/SuccessActions'
 
 function getStateFromStore() {
   return {

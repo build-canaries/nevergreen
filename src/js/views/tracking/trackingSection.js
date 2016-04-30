@@ -1,8 +1,8 @@
-const React = require('react')
-const AddTray = require('./addTray')
-const Tray = require('./tray')
-const TrayStore = require('../../stores/TrayStore')
-const TrayActions = require('../../actions/TrayActions')
+import React from 'react'
+import AddTray from './addTray'
+import Tray from './tray'
+import TrayStore from '../../stores/TrayStore'
+import TrayActions from '../../actions/TrayActions'
 
 function getStateFromStore() {
   return {

@@ -1,6 +1,6 @@
-const React = require('react')
-const Container = require('../general/container')
-const RemoveLink = require('./removeLink')
+import React from 'react'
+import Container from '../general/container'
+import RemoveLink from './removeLink'
 
 module.exports = React.createClass({
   displayName: 'AddedMessages',

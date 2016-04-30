@@ -1,4 +1,4 @@
-const gateway = require('./gateway')
+import gateway from './gateway'
 
 module.exports = {
   fetchAll(trays) {

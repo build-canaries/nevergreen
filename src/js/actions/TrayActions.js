@@ -1,11 +1,11 @@
-const AppDispatcher = require('../dispatcher/AppDispatcher')
-const securityGateway = require('../gateways/securityGateway')
-const projectsGateway = require('../gateways/projectsGateway')
-const uuid = require('node-uuid')
-const Constants = require('../constants/NevergreenConstants')
-const moment = require('moment')
-const trayStore = require('../stores/TrayStore')
-const _ = require('lodash')
+import AppDispatcher from '../dispatcher/AppDispatcher'
+import securityGateway from '../gateways/securityGateway'
+import projectsGateway from '../gateways/projectsGateway'
+import uuid from 'node-uuid'
+import Constants from '../constants/NevergreenConstants'
+import moment from 'moment'
+import trayStore from '../stores/TrayStore'
+import _ from 'lodash'
 
 function hasScheme(url) {
   return _.size(_.split(url, '://')) > 1
