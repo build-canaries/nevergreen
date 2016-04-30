@@ -7,7 +7,7 @@ const CHANGE_EVENT = 'storage-change'
 
 let _storeState = null
 
-const dispatchToken = AppDispatcher.register(action => {
+const dispatchToken = AppDispatcher.register((action) => {
   switch (action.type) {
     case Constants.AppInit:
     {
@@ -52,7 +52,7 @@ const dispatchToken = AppDispatcher.register(action => {
 })
 
 module.exports = {
-  dispatchToken: dispatchToken,
+  dispatchToken,
 
   getConfiguration() {
     return _storeState.configuration

@@ -16,22 +16,22 @@ module.exports = {
   addTray(enteredUrl, username, password) {
     const trayId = uuid.v4()
 
-    const url =  hasScheme(enteredUrl) ? enteredUrl : 'http://' + enteredUrl
+    const url = hasScheme(enteredUrl) ? enteredUrl : 'http://' + enteredUrl
 
     AppDispatcher.dispatch({
       type: Constants.TrayAdd,
-      trayId: trayId,
-      url: url,
-      username: username
+      trayId,
+      url,
+      username
     })
 
     if (_.size(password) > 0) {
       this._encryptPasswordAndRefresh(trayId, url, username, password)
     } else {
       this.refreshTray({
-        trayId: trayId,
-        url: url,
-        username: username
+        trayId,
+        url,
+        username
       })
     }
   },
@@ -42,18 +42,18 @@ module.exports = {
 
     AppDispatcher.dispatch({
       type: Constants.TrayUpdate,
-      trayId: trayId,
-      name: name,
-      url: url,
-      username: username
+      trayId,
+      name,
+      url,
+      username
     })
 
     if (passwordSame) {
       this.refreshTray({
-        trayId: trayId,
-        url: url,
-        username: username,
-        password: password
+        trayId,
+        url,
+        username,
+        password
       })
     } else {
       if (_.size(newPassword) > 0) {
@@ -61,14 +61,14 @@ module.exports = {
       } else {
         AppDispatcher.dispatch({
           type: Constants.PasswordEncrypted,
-          trayId: trayId,
+          trayId,
           password: ''
         })
         this.refreshTray({
-          trayId: trayId,
-          url: url,
-          username: username,
-          password: password
+          trayId,
+          url,
+          username,
+          password
         })
       }
     }
@@ -77,7 +77,7 @@ module.exports = {
   removeTray(trayId) {
     AppDispatcher.dispatch({
       type: Constants.TrayRemove,
-      trayId: trayId
+      trayId
     })
   },
 
@@ -86,34 +86,34 @@ module.exports = {
       type: Constants.ProjectsFetching,
       trayId: tray.trayId
     })
-    projectsGateway.fetchAll([tray]).then(projects => {
+    projectsGateway.fetchAll([tray]).then((projects) => {
       AppDispatcher.dispatch({
         type: Constants.ProjectsFetched,
         trayId: tray.trayId,
-        projects: projects,
+        projects,
         timestamp: moment().format()
       })
-    }).catch(err => {
+    }).catch((error) => {
       AppDispatcher.dispatch({
         type: Constants.ProjectsFetchError,
         trayId: tray.trayId,
-        error: err,
+        error,
         timestamp: moment().format()
       })
     })
   },
 
   _encryptPasswordAndRefresh(trayId, url, username, password) {
-    securityGateway.encryptPassword(password).then(encryptPasswordResponse => {
+    securityGateway.encryptPassword(password).then((encryptPasswordResponse) => {
       AppDispatcher.dispatch({
         type: Constants.PasswordEncrypted,
-        trayId: trayId,
+        trayId,
         password: encryptPasswordResponse.password
       })
       this.refreshTray({
-        trayId: trayId,
-        url: url,
-        username: username,
+        trayId,
+        url,
+        username,
         password: encryptPasswordResponse.password
       })
     })

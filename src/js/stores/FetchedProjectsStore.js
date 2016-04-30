@@ -15,7 +15,7 @@ function previouslyRemovedProjects(project) {
 }
 
 function updateNewAndRemovedFlags(fetchedProjects, project) {
-  const whereIdsMatch = fetchedProject => {
+  const whereIdsMatch = (fetchedProject) => {
     return fetchedProject.projectId === project.projectId
   }
   return {
@@ -44,7 +44,7 @@ function removeJobs(project) {
 }
 
 function removeExisting(previousProjects, project) {
-  const whereIdsMatch = previousProject => {
+  const whereIdsMatch = (previousProject) => {
     return previousProject.projectId === project.projectId
   }
   return _.findIndex(previousProjects, whereIdsMatch) < 0
@@ -60,7 +60,7 @@ function createProjects(previousProjects, fetchedProjects) {
       .filter(removeExisting.bind(this, previousProjects)))
 }
 
-const dispatchToken = AppDispatcher.register(action => {
+const dispatchToken = AppDispatcher.register((action) => {
   switch (action.type) {
     case Constants.AppInit:
     {
@@ -99,7 +99,7 @@ const dispatchToken = AppDispatcher.register(action => {
 })
 
 module.exports = {
-  dispatchToken: dispatchToken,
+  dispatchToken,
 
   getAll(trayId) {
     return _storeState[trayId]

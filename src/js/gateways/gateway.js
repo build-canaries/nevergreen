@@ -1,10 +1,10 @@
 import Promise from 'promise'
 
-const processStatus = response => {
+const processStatus = (response) => {
   if (response.status >= 200 && response.status < 300) {
     return Promise.resolve(response)
   } else {
-    return response.text().then(body => {
+    return response.text().then((body) => {
       return Promise.reject({
         status: response.status,
         message: body
@@ -22,7 +22,7 @@ module.exports = {
         Accept: 'application/json; charset=utf-8',
         'Content-Type': 'application/json; charset=utf-8'
       }
-    }).then(processStatus).then(response => {
+    }).then(processStatus).then((response) => {
       return response.json()
     })
   },
@@ -32,7 +32,7 @@ module.exports = {
       headers: {
         Accept: 'application/json; charset=utf-8'
       }
-    }).then(processStatus).then(response => {
+    }).then(processStatus).then((response) => {
       return response.json()
     })
   }

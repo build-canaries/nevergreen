@@ -27,10 +27,10 @@ module.exports = {
   init() {
     momentInit()
     LocalRepository.init()
-    LocalRepository.getConfiguration().then(configuration => {
+    LocalRepository.getConfiguration().then((configuration) => {
       AppDispatcher.dispatch({
         type: Constants.AppInit,
-        configuration: configuration
+        configuration
       })
     })
   }

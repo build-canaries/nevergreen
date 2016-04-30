@@ -66,7 +66,7 @@ module.exports = React.createClass({
 
           <ul className='navigation-list'>
             {
-              this.props.items.map(item => {
+              this.props.items.map((item) => {
                 return <MenuItem key={item.id} id={item.id}
                                  iconClass={'icon-' + item.iconClass}
                                  title={item.title}

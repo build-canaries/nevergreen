@@ -57,7 +57,7 @@ module.exports = React.createClass({
         </div>
         <ol className='testing-projects tracking-cctray-group-build-items'>
           {
-            _.sortBy(this.state.projects, projectName).map(project => {
+            _.sortBy(this.state.projects, projectName).map((project) => {
               const included = _.indexOf(this.state.selectedProjects, project.projectId) >= 0
 
               return <AvailableProject key={project.projectId}
@@ -82,16 +82,16 @@ module.exports = React.createClass({
   },
 
   _includeAll() {
-    const projectIds = this.state.projects.filter(project => {
+    const projectIds = this.state.projects.filter((project) => {
       return !project.wasRemoved
-    }).map(project => {
+    }).map((project) => {
       return project.projectId
     })
     SelectProjectActions.selectProject(this.props.trayId, projectIds)
   },
 
   _excludeAll() {
-    const projectIds = this.state.projects.map(project => {
+    const projectIds = this.state.projects.map((project) => {
       return project.projectId
     })
     SelectProjectActions.removeProject(this.props.trayId, projectIds)

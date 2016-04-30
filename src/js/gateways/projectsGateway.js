@@ -2,7 +2,7 @@ import gateway from './gateway'
 
 module.exports = {
   fetchAll(trays) {
-    const data = trays.map(tray => {
+    const data = trays.map((tray) => {
       return {
         url: tray.url,
         username: tray.username,
@@ -15,7 +15,7 @@ module.exports = {
   },
 
   interesting(trays, selected) {
-    const data = trays.map(tray => {
+    const data = trays.map((tray) => {
       return {
         trayId: tray.trayId,
         url: tray.url,

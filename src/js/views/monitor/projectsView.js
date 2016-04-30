@@ -15,7 +15,7 @@ module.exports = React.createClass({
     return (
       <ul id='interesting-projects' className='monitor-projects'>
         {
-          this.props.projects.map(project => {
+          this.props.projects.map((project) => {
             return <InterestingProject key={project.projectId}
                                        prognosis={project.prognosis}
                                        name={project.name}

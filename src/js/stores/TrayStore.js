@@ -54,7 +54,7 @@ function setTrayPassword(trayId, password) {
   _storeState.trays[trayId].password = password
 }
 
-const dispatchToken = AppDispatcher.register(action => {
+const dispatchToken = AppDispatcher.register((action) => {
   switch (action.type) {
     case Constants.AppInit:
     {
@@ -121,7 +121,7 @@ const dispatchToken = AppDispatcher.register(action => {
 })
 
 module.exports = {
-  dispatchToken: dispatchToken,
+  dispatchToken,
 
   getAll() {
     return _.values(_storeState.trays)

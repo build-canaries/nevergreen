@@ -10,7 +10,7 @@ function getStateFromStore() {
 }
 
 function renderKeys(keys) {
-  return keys.split(' ').map(key => {
+  return keys.split(' ').map((key) => {
     return <kbd key={key}>{key}</kbd>
   })
 }

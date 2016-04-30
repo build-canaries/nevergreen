@@ -5,13 +5,13 @@ module.exports = {
   setBrokenBuildTimers(value) {
     AppDispatcher.dispatch({
       type: Constants.BrokenBuildTimersChanged,
-      value: value
+      value
     })
   },
   setBrokenBuildSounds(value) {
     AppDispatcher.dispatch({
       type: Constants.BrokenBuildSoundsToggled,
-      value: value
+      value
     })
   }
 }

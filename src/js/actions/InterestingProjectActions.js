@@ -5,15 +5,15 @@ import projectsGateway from '../gateways/projectsGateway'
 module.exports = {
 
   fetchInteresting(trays, selected) {
-    return projectsGateway.interesting(trays, selected).then(data => {
+    return projectsGateway.interesting(trays, selected).then((projects) => {
       AppDispatcher.dispatch({
         type: Constants.InterestingProjects,
-        projects: data
+        projects
       })
-    }).catch(err => {
+    }).catch((error) => {
       AppDispatcher.dispatch({
         type: Constants.InterestingProjectsError,
-        error: err
+        error
       })
     })
   }

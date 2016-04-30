@@ -43,7 +43,7 @@ module.exports = React.createClass({
     AppActions.init()
 
     const versionCheckId = setInterval(NotificationActions.pollForNewVersion, twentyFourHours)
-    this.setState({versionCheckId: versionCheckId})
+    this.setState({versionCheckId})
 
     Mousetrap.bindGlobal('esc', () => {
       document.activeElement.blur()

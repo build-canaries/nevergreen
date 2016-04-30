@@ -27,7 +27,7 @@ function resizeEachContainer(projects, $containers, $view) {
 }
 
 function getProjectNames(projects) {
-  return projects.map(project => {
+  return projects.map((project) => {
     return project.name
   })
 }

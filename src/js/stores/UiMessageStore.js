@@ -9,7 +9,7 @@ let _storeState = null
 
 eventEmitter.setMaxListeners(Infinity)
 
-const dispatchToken = AppDispatcher.register(action => {
+const dispatchToken = AppDispatcher.register((action) => {
   switch (action.type) {
     case Constants.AppInit:
     case Constants.RestoreConfiguration:
@@ -72,7 +72,7 @@ const dispatchToken = AppDispatcher.register(action => {
 })
 
 module.exports = {
-  dispatchToken: dispatchToken,
+  dispatchToken,
 
   getSuccessErrors() {
     return _storeState.success.errors

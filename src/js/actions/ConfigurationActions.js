@@ -29,7 +29,7 @@ function validateData(data) {
 function dispatchError(errors) {
   AppDispatcher.dispatch({
     type: Constants.ImportError,
-    errors: errors
+    errors
   })
 }
 
@@ -46,7 +46,7 @@ module.exports = {
       } else {
         AppDispatcher.dispatch({
           type: Constants.ImportingData,
-          data: data
+          data
         })
 
         LocalRepository.save(data).then(() => {
@@ -59,7 +59,7 @@ module.exports = {
             type: Constants.ExportData,
             configuration: data
           })
-        }).catch(e => {
+        }).catch((e) => {
           dispatchError(['Unable to import because of an error while trying to save to local storage', e.message])
         })
       }
@@ -70,10 +70,10 @@ module.exports = {
   },
 
   refreshConfiguration() {
-    LocalRepository.getConfiguration().then(configuration => {
+    LocalRepository.getConfiguration().then((configuration) => {
       AppDispatcher.dispatch({
         type: Constants.ExportData,
-        configuration: configuration
+        configuration
       })
     })
   }

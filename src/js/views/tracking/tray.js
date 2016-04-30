@@ -30,7 +30,7 @@ module.exports = React.createClass({
     const intervalId = setInterval(() => {
       this.setState({lastFetched: this._updateLastFetch()})
     }, 60000)
-    this.setState({intervalId: intervalId})
+    this.setState({intervalId})
   },
 
   componentWillUnmount() {

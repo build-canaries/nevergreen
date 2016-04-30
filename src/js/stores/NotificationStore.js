@@ -7,7 +7,7 @@ const CHANGE_EVENT = 'notification-change'
 
 let _storeState = null
 
-const dispatchToken = AppDispatcher.register(action => {
+const dispatchToken = AppDispatcher.register((action) => {
   switch (action.type) {
     case Constants.AppInit:
     case Constants.NotificationDismiss:
@@ -31,7 +31,7 @@ const dispatchToken = AppDispatcher.register(action => {
 })
 
 module.exports = {
-  dispatchToken: dispatchToken,
+  dispatchToken,
 
   getNotification() {
     return _storeState

@@ -26,12 +26,12 @@ module.exports = React.createClass({
       this.setState({errors: ['Unfortunately your browser doesn\'t support automatically copying to clipboard, please manually copy']})
     })
 
-    clipboard.on('success', e => {
+    clipboard.on('success', (e) => {
       this.setState({infos: ['Successfully copied to clipboard']})
       e.clearSelection()
     })
 
-    this.setState({clipboard: clipboard})
+    this.setState({clipboard})
   },
 
   componentWillUnmount() {

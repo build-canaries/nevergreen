@@ -14,7 +14,7 @@ function randomFrom(arr) {
   return arr[Math.floor(Math.random() * arr.length)]
 }
 
-const dispatchToken = AppDispatcher.register(action => {
+const dispatchToken = AppDispatcher.register((action) => {
   switch (action.type) {
     case Constants.AppInit:
     {
@@ -35,7 +35,7 @@ const dispatchToken = AppDispatcher.register(action => {
     }
     case Constants.MessageRemove:
     {
-      _.remove(_storeState.messages, msg => {
+      _.remove(_storeState.messages, (msg) => {
         return msg === action.message
       })
       break
@@ -52,16 +52,16 @@ const dispatchToken = AppDispatcher.register(action => {
 })
 
 module.exports = {
-  dispatchToken: dispatchToken,
+  dispatchToken,
 
   getMessages() {
-    return _storeState.messages.filter(message => {
+    return _storeState.messages.filter((message) => {
       return !this.isUrl(message)
     })
   },
 
   getImages() {
-    return _storeState.messages.filter(message => {
+    return _storeState.messages.filter((message) => {
       return this.isUrl(message)
     })
   },
