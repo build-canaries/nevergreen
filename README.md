@@ -9,11 +9,13 @@ Get started by visiting [nevergreen.io](https://nevergreen.io) or [run it locall
 
 ![Example of Nevergreen on Apache builds](doc/screenshot.png)
 
-## Getting started
+## Getting started
 
 On the [tracking page](https://nevergreen.io/#/tracking) enter the url of your [cctray xml](https://github.com/build-canaries/nevergreen/wiki/find-cctray).
 
 Additional help and information can be found on the [help page](https://nevergreen.io/help) of Nevergreen or in the [wiki](https://github.com/build-canaries/nevergreen/wiki).
+
+Already using Nevergreen? Please help us out by taking this [short usage survey](https://build-canaries.github.io/2015/09/14/nevergreen-survey.html).
 
 ## Build status
 
