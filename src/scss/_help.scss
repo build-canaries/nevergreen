@@ -14,14 +14,14 @@
 
 .help-tracking-table {
   width: 100%;
-  margin: 0 0 1em 0;
+  margin: 0 0 1em;
   tr:nth-child(even) {
     background-color: $light-grey;
   }
 }
 
 .help-text {
-  margin: 0 0 1em 0;
+  margin: 0 0 1em;
 }
 
 .help-monitor-example-dark {
@@ -45,6 +45,6 @@
 .help-shortcut-table {
   @extend .help-tracking-table;
   td {
-    padding: 0.3em 0 0.3em 0;
+    padding: 0.3em 0;
   }
 }
