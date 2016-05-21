@@ -4,7 +4,8 @@ import {
   AppInit,
   RestoreConfiguration,
   BrokenBuildTimersChanged,
-  BrokenBuildSoundsToggled
+  BrokenBuildSoundsToggled,
+  BrokenBuildSoundFx
 } from '../constants/NevergreenConstants'
 import LocalRepository from '../storage/LocalRepository'
 import _ from 'lodash'
@@ -21,7 +22,8 @@ const dispatchToken = AppDispatcher.register((action) => {
     {
       _storeState = Object.assign({
         showBrokenBuildTimers: false,
-        showBrokenBuildSounds: false
+        showBrokenBuildSounds: false,
+        brokenBuildSoundFx: 'sounds/pacman_death.mp3'
       }, action.configuration[storageKey])
       break
     }
@@ -38,6 +40,11 @@ const dispatchToken = AppDispatcher.register((action) => {
     case BrokenBuildSoundsToggled:
     {
       _storeState.showBrokenBuildSounds = action.value === true
+      break
+    }    
+    case BrokenBuildSoundFx:
+    {
+      _storeState.brokenBuildSoundFx = action.value
       break
     }
     default :
@@ -60,6 +67,10 @@ module.exports = {
 
   areBrokenBuildSoundsEnabled() {
     return _storeState.showBrokenBuildSounds
+  },  
+  
+  brokenBuildSoundFx() {
+    return _storeState.brokenBuildSoundFx
   },
 
   addListener(callback) {

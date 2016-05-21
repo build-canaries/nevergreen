@@ -16,7 +16,7 @@ class InterestingProject extends Component {
 
   _brokenBuildAudio() {
     if (this.props.playBrokenBuildSounds && this.props.prognosis === 'sick') {
-      return <audio src='sounds/pacman_death.mp3' autoPlay/>
+      return <audio src={this.props.brokenBuildFx} autoPlay/>
     }
   }
 
@@ -40,7 +40,8 @@ InterestingProject.propTypes = {
   name: PropTypes.string.isRequired,
   lastBuildTime: PropTypes.string.isRequired,
   showBrokenBuildTimers: PropTypes.bool.isRequired,
-  playBrokenBuildSounds: PropTypes.bool.isRequired
+  playBrokenBuildSounds: PropTypes.bool.isRequired,
+  brokenBuildFx: PropTypes.string.isRequired
 }
 
 export default InterestingProject

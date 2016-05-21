@@ -1,5 +1,5 @@
 import AppDispatcher from '../dispatcher/AppDispatcher'
-import {BrokenBuildTimersChanged, BrokenBuildSoundsToggled} from '../constants/NevergreenConstants'
+import {BrokenBuildTimersChanged, BrokenBuildSoundsToggled, BrokenBuildSoundFx} from '../constants/NevergreenConstants'
 
 module.exports = {
   setBrokenBuildTimers(value) {
@@ -8,9 +8,17 @@ module.exports = {
       value
     })
   },
+  
   setBrokenBuildSounds(value) {
     AppDispatcher.dispatch({
       type: BrokenBuildSoundsToggled,
+      value
+    })
+  },
+  
+  setBrokenBuildSoundFx(value) {
+    AppDispatcher.dispatch({
+      type: BrokenBuildSoundFx,
       value
     })
   }

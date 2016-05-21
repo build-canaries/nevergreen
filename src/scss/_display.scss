@@ -1,3 +1,16 @@
+.display {
+  .checkbox-container {
+    float: none;
+  }
+}
+
 .settings-list {
   border: 0;
+}
+
+.sound-fx {
+  width: 100%;
+  input {
+    width: calc(100% - 375px);
+  }
 }

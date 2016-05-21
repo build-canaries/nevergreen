@@ -26,5 +26,14 @@ describe('display actions', () => {
       type: Constants.BrokenBuildSoundsToggled,
       value: 'toggle on'
     })
+  })  
+  
+  it('dispatches an action for the broken build sound fx', () => {
+    subject.setBrokenBuildSoundFx('some-url')
+
+    expect(AppDispatcher.dispatch).toBeCalledWith({
+      type: Constants.BrokenBuildSoundFx,
+      value: 'some-url'
+    })
   })
 })

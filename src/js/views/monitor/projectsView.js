@@ -16,7 +16,8 @@ class Projects extends Component {
           this.props.projects.map((project) => {
             return <InterestingProject {...project} key={project.projectId}
                                                     showBrokenBuildTimers={DisplayStore.areBrokenBuildTimersEnabled()}
-                                                    playBrokenBuildSounds={DisplayStore.areBrokenBuildSoundsEnabled()}/>
+                                                    playBrokenBuildSounds={DisplayStore.areBrokenBuildSoundsEnabled()}
+                                                    brokenBuildFx={DisplayStore.brokenBuildSoundFx()}/>
           })
         }
       </ul>

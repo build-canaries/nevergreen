@@ -68,6 +68,20 @@ describe('display store', () => {
     })
   })
 
+  describe('broken build sound fx', () => {
+    it('defaults to the included pacman death sound', () => {
+      expect(store.brokenBuildSoundFx()).toBe('sounds/pacman_death.mp3')
+    })
+
+    it('sets the value', () => {
+      callback({
+        type: Constants.BrokenBuildSoundFx,
+        value: 'some-url'
+      })
+      expect(store.brokenBuildSoundFx()).toBe('some-url')
+    })
+  })
+
   describe('validation', () => {
     it('returns an error message if the storage key does not exist', () => {
       const obj = {}
