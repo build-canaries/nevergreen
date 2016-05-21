@@ -4,10 +4,10 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [ring "1.4.0"]
                  [compojure "1.5.0"]
-                 [environ "1.0.2"]
+                 [environ "1.0.3"]
                  [cheshire "5.6.1"]
                  [clj-cctray "0.10.0"]
-                 [clj-http "3.0.1"]
+                 [clj-http "3.1.0"]
                  [ring-curl "0.3.0"]
                  [ring/ring-json "0.4.0"]
                  [ring/ring-defaults "0.2.0"]
@@ -17,7 +17,7 @@
                  [camel-snake-kebab "0.4.0"]
                  [http-kit "2.1.19"]]
   :plugins [[lein-ring "0.9.7"]
-            [lein-environ "1.0.2"]]
+            [lein-environ "1.0.3"]]
   :min-lein-version "2.0.0"
   :ring {:handler nevergreen.app/all-routes :port 5000}
   :uberjar-name "nevergreen-standalone.jar"
