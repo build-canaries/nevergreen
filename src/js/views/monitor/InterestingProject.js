@@ -16,7 +16,13 @@ class InterestingProject extends Component {
 
   _brokenBuildAudio() {
     if (this.props.playBrokenBuildSounds && this.props.prognosis === 'sick') {
-      return <audio src={this.props.brokenBuildFx} autoPlay/>
+      return <audio ref='sfx' src={this.props.brokenBuildFx} autoPlay/>
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.refs.sfx) {
+      this.refs.sfx.pause()
     }
   }
 

@@ -25,6 +25,9 @@ class DisplaySection extends Component {
   }
 
   componentWillUnmount() {
+    if (this.state.audio) {
+      this.state.audio.pause()
+    }
     DisplayStore.removeListener(this.state.callback)
   }
 
@@ -32,7 +35,12 @@ class DisplaySection extends Component {
     const toggleBrokenBuilds = (newValue) => DisplayActions.setBrokenBuildTimers(newValue)
     const toggleBrokenSounds = (newValue) => DisplayActions.setBrokenBuildSounds(newValue)
     const setSoundFx = () => DisplayActions.setBrokenBuildSoundFx(this.refs.soundFx.value)
-    const testSoundFx = () => new Audio(this.refs.soundFx.value).play()
+    const testSoundFx = () => {
+      let audio = new Audio(this.refs.soundFx.value)
+      this.setState({audio})
+      audio.addEventListener('ended', () => this.setState({audio: null}))
+      audio.play()
+    }
 
     return (
       <section className='dashboard-main-section display'>
