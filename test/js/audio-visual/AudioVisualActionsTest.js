@@ -1,20 +1,18 @@
-jest.dontMock('../../../src/js/actions/DisplayActions')
-  .dontMock('../../../src/js/constants/NevergreenConstants')
+jest.dontMock('../../../src/js/audio-visual/AudioVisualActions')
 
-describe('display actions', () => {
-  let subject, AppDispatcher, Constants
+describe('audio visual actions', () => {
+  let subject, AppDispatcher
 
   beforeEach(() => {
-    subject = require('../../../src/js/actions/DisplayActions')
+    subject = require('../../../src/js/audio-visual/AudioVisualActions')
     AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
-    Constants = require('../../../src/js/constants/NevergreenConstants')
   })
 
   it('dispatches an action for broken build timers', () => {
     subject.setBrokenBuildTimers('some-value')
 
     expect(AppDispatcher.dispatch).toBeCalledWith({
-      type: Constants.BrokenBuildTimersChanged,
+      type: subject.BrokenBuildTimersChanged,
       value: 'some-value'
     })
   })
@@ -23,16 +21,16 @@ describe('display actions', () => {
     subject.setBrokenBuildSounds('toggle on')
 
     expect(AppDispatcher.dispatch).toBeCalledWith({
-      type: Constants.BrokenBuildSoundsToggled,
+      type: subject.BrokenBuildSoundsToggled,
       value: 'toggle on'
     })
-  })  
-  
+  })
+
   it('dispatches an action for the broken build sound fx', () => {
     subject.setBrokenBuildSoundFx('some-url')
 
     expect(AppDispatcher.dispatch).toBeCalledWith({
-      type: Constants.BrokenBuildSoundFx,
+      type: subject.BrokenBuildSoundFx,
       value: 'some-url'
     })
   })

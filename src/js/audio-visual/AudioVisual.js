@@ -1,40 +1,23 @@
-import React, {Component} from 'react'
-import ConfigOption from './configOption'
-import Container from '../general/container'
-import DisplayStore from '../../stores/DisplayStore'
-import DisplayActions from '../../actions/DisplayActions'
+import React, {Component, PropTypes} from 'react'
+import ConfigOption from './ConfigOption'
+import Container from '../views/general/container'
 
-function getStateFromStore() {
-  return {
-    showBrokenBuildTimers: DisplayStore.areBrokenBuildTimersEnabled(),
-    showBrokenBuildSounds: DisplayStore.areBrokenBuildSoundsEnabled(),
-    brokenBuildSoundFx: DisplayStore.brokenBuildSoundFx()
-  }
-}
-
-class DisplaySection extends Component {
+class AudioVisual extends Component {
   constructor(props) {
     super(props)
-    this.state = getStateFromStore()
-  }
-
-  componentDidMount() {
-    const callback = () => this.setState(getStateFromStore())
-    DisplayStore.addListener(callback)
-    this.setState({callback})
+    this.state = {}
   }
 
   componentWillUnmount() {
     if (this.state.audio) {
       this.state.audio.pause()
     }
-    DisplayStore.removeListener(this.state.callback)
   }
 
   render() {
-    const toggleBrokenBuilds = (newValue) => DisplayActions.setBrokenBuildTimers(newValue)
-    const toggleBrokenSounds = (newValue) => DisplayActions.setBrokenBuildSounds(newValue)
-    const setSoundFx = () => DisplayActions.setBrokenBuildSoundFx(this.refs.soundFx.value)
+    const toggleBrokenBuilds = (newValue) => this.props.setBrokenBuildTimers(newValue)
+    const toggleBrokenSounds = (newValue) => this.props.setBrokenBuildSounds(newValue)
+    const setSoundFx = () => this.props.setBrokenBuildSoundFx(this.refs.soundFx.value)
     const testSoundFx = () => {
       let audio = new Audio(this.refs.soundFx.value)
       this.setState({audio})
@@ -47,14 +30,14 @@ class DisplaySection extends Component {
         <Container title='Display Settings'>
           <fieldset className='settings-list'>
             <ConfigOption name='Show broken build timers'
-                          enabled={this.state.showBrokenBuildTimers}
+                          enabled={this.props.showBrokenBuildTimers}
                           onToggle={toggleBrokenBuilds}/>
           </fieldset>
         </Container>
         <Container title='Audio Settings'>
           <fieldset className='settings-list'>
             <ConfigOption name='Enable sound for broken builds'
-                          enabled={this.state.showBrokenBuildSounds}
+                          enabled={this.props.showBrokenBuildSounds}
                           onToggle={toggleBrokenSounds}/>
             <div className='text-input sound-fx'>
               <label htmlFor='sound-fx'>Broken build sound</label>
@@ -62,7 +45,7 @@ class DisplaySection extends Component {
                      ref='soundFx'
                      type='text'
                      placeholder='Url to an audio file'
-                     defaultValue={this.state.brokenBuildSoundFx}
+                     defaultValue={this.props.brokenBuildSoundFx}
                      onBlur={setSoundFx}/>
               <button className='button-primary' onClick={testSoundFx}>test</button>
             </div>
@@ -73,4 +56,13 @@ class DisplaySection extends Component {
   }
 }
 
-export default DisplaySection
+AudioVisual.propTypes = {
+  showBrokenBuildTimers: PropTypes.bool.isRequired,
+  showBrokenBuildSounds: PropTypes.bool.isRequired,
+  brokenBuildSoundFx: PropTypes.string.isRequired,
+  setBrokenBuildTimers: PropTypes.func.isRequired,
+  setBrokenBuildSounds: PropTypes.func.isRequired,
+  setBrokenBuildSoundFx: PropTypes.func.isRequired
+}
+
+export default AudioVisual

@@ -1,12 +1,11 @@
 import AppDispatcher from '../dispatcher/AppDispatcher'
 import {EventEmitter} from 'events'
+import {AppInit, RestoreConfiguration} from '../constants/NevergreenConstants'
 import {
-  AppInit,
-  RestoreConfiguration,
   BrokenBuildTimersChanged,
   BrokenBuildSoundsToggled,
   BrokenBuildSoundFx
-} from '../constants/NevergreenConstants'
+} from '../audio-visual/AudioVisualActions'
 import LocalRepository from '../storage/LocalRepository'
 import _ from 'lodash'
 
@@ -41,7 +40,7 @@ const dispatchToken = AppDispatcher.register((action) => {
     {
       _storeState.showBrokenBuildSounds = action.value === true
       break
-    }    
+    }
     case BrokenBuildSoundFx:
     {
       _storeState.brokenBuildSoundFx = action.value
@@ -67,8 +66,8 @@ module.exports = {
 
   areBrokenBuildSoundsEnabled() {
     return _storeState.showBrokenBuildSounds
-  },  
-  
+  },
+
   brokenBuildSoundFx() {
     return _storeState.brokenBuildSoundFx
   },

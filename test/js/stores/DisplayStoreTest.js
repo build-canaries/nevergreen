@@ -1,13 +1,15 @@
 jest.dontMock('../../../src/js/stores/DisplayStore')
   .dontMock('../../../src/js/constants/NevergreenConstants')
+  .dontMock('../../../src/js/audio-visual/AudioVisualActions')
 
 describe('display store', () => {
 
-  let AppDispatcher, Constants, store, callback
+  let AppDispatcher, Constants, AudioVisualActions, store, callback
 
   beforeEach(() => {
     AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
     Constants = require('../../../src/js/constants/NevergreenConstants')
+    AudioVisualActions = require('../../../src/js/audio-visual/AudioVisualActions')
     store = require('../../../src/js/stores/DisplayStore')
     callback = AppDispatcher.register.mock.calls[0][0]
 
@@ -28,7 +30,7 @@ describe('display store', () => {
 
     it('returns true when the callback changes the value to true', () => {
       callback({
-        type: Constants.BrokenBuildTimersChanged,
+        type: AudioVisualActions.BrokenBuildTimersChanged,
         value: true
       })
 
@@ -37,7 +39,7 @@ describe('display store', () => {
 
     it('return false when the callback changes the value to anything else', () => {
         callback({
-          type: Constants.BrokenBuildTimersChanged,
+          type: AudioVisualActions.BrokenBuildTimersChanged,
           value: 'a string'
         })
         expect(store.areBrokenBuildTimersEnabled()).toBeFalsy()
@@ -53,7 +55,7 @@ describe('display store', () => {
 
     it('enables broken builds when callback changes value to true', () => {
       callback({
-        type: Constants.BrokenBuildSoundsToggled,
+        type: AudioVisualActions.BrokenBuildSoundsToggled,
         value: true
       })
       expect(store.areBrokenBuildSoundsEnabled()).toBeTruthy()
@@ -61,7 +63,7 @@ describe('display store', () => {
 
     it('disables broken builds when callbak changes value to false', () => {
       callback({
-        type: Constants.BrokenBuildSoundsToggled,
+        type: AudioVisualActions.BrokenBuildSoundsToggled,
         value: false
       })
       expect(store.areBrokenBuildSoundsEnabled()).toBeFalsy()
@@ -75,7 +77,7 @@ describe('display store', () => {
 
     it('sets the value', () => {
       callback({
-        type: Constants.BrokenBuildSoundFx,
+        type: AudioVisualActions.BrokenBuildSoundFx,
         value: 'some-url'
       })
       expect(store.brokenBuildSoundFx()).toBe('some-url')
