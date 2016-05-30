@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react'
-import ValidationMessages from '../general/validationMessages'
-import PrimaryInput from '../general/PrimaryInput'
+import ValidationMessages from '../views/general/validationMessages'
+import PrimaryInput from '../views/general/PrimaryInput'
 import _ from 'lodash'
 
 class AddMessage extends Component {

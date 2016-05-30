@@ -1,13 +1,15 @@
 jest.dontMock('../../../src/js/stores/SuccessStore')
   .dontMock('../../../src/js/constants/NevergreenConstants')
+  .dontMock('../../../src/js/success/SuccessActions')
 
 describe('success store', () => {
 
-  let store, AppDispatcher, Constants, callback
+  let store, AppDispatcher, Constants, SuccessActions, callback
 
   beforeEach(() => {
     AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
     Constants = require('../../../src/js/constants/NevergreenConstants')
+    SuccessActions = require('../../../src/js/success/SuccessActions')
     store = require('../../../src/js/stores/SuccessStore')
     callback = AppDispatcher.register.mock.calls[0][0]
 
@@ -27,7 +29,7 @@ describe('success store', () => {
 
   it('adds a message', () => {
     callback({
-      type: Constants.MessageAdd,
+      type: SuccessActions.MessageAdd,
       message: 'some-message'
     })
     expect(store.getMessages()).toEqual(['some-message'])
@@ -35,7 +37,7 @@ describe('success store', () => {
 
   it('adds an image', () => {
     callback({
-      type: Constants.MessageAdd,
+      type: SuccessActions.MessageAdd,
       message: 'http://some-url'
     })
     expect(store.getImages()).toEqual(['http://some-url'])
@@ -43,11 +45,11 @@ describe('success store', () => {
 
   it('removes a message', () => {
     callback({
-      type: Constants.MessageAdd,
+      type: SuccessActions.MessageAdd,
       message: 'some-message'
     })
     callback({
-      type: Constants.MessageRemove,
+      type: SuccessActions.MessageRemove,
       message: 'some-message'
     })
     expect(store.getMessages()).toEqual([])
@@ -55,11 +57,11 @@ describe('success store', () => {
 
   it('removes an image', () => {
     callback({
-      type: Constants.MessageAdd,
+      type: SuccessActions.MessageAdd,
       message: 'http://some-url'
     })
     callback({
-      type: Constants.MessageRemove,
+      type: SuccessActions.MessageRemove,
       message: 'http://some-url'
     })
     expect(store.getImages()).toEqual([])
@@ -71,11 +73,11 @@ describe('success store', () => {
 
   it('returns a random message', () => {
     callback({
-      type: Constants.MessageAdd,
+      type: SuccessActions.MessageAdd,
       message: 'some-message'
     })
     callback({
-      type: Constants.MessageAdd,
+      type: SuccessActions.MessageAdd,
       message: 'http://some-url'
     })
     expect(store.randomMessage()).not.toEqual('')
@@ -83,11 +85,11 @@ describe('success store', () => {
 
   it('can return just messages', () => {
     callback({
-      type: Constants.MessageAdd,
+      type: SuccessActions.MessageAdd,
       message: 'some-message'
     })
     callback({
-      type: Constants.MessageAdd,
+      type: SuccessActions.MessageAdd,
       message: 'http://some-url'
     })
     expect(store.getMessages()).toEqual(['some-message'])
@@ -95,11 +97,11 @@ describe('success store', () => {
 
   it('can return just images', () => {
     callback({
-      type: Constants.MessageAdd,
+      type: SuccessActions.MessageAdd,
       message: 'some-message'
     })
     callback({
-      type: Constants.MessageAdd,
+      type: SuccessActions.MessageAdd,
       message: 'http://some-url'
     })
     expect(store.getImages()).toEqual(['http://some-url'])
@@ -107,11 +109,11 @@ describe('success store', () => {
 
   it('can return all images and messages', () => {
     callback({
-      type: Constants.MessageAdd,
+      type: SuccessActions.MessageAdd,
       message: 'some-message'
     })
     callback({
-      type: Constants.MessageAdd,
+      type: SuccessActions.MessageAdd,
       message: 'http://some-url'
     })
     expect(store.getAll()).toEqual(['some-message', 'http://some-url'])

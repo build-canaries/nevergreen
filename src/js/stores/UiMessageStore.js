@@ -3,13 +3,11 @@ import {EventEmitter} from 'events'
 import {
   AppInit,
   RestoreConfiguration,
-  MessageAdd,
-  MessageRemove,
-  MessageInvalidInput,
   ImportingData,
   ImportError,
   KeyboardShortcuts
 } from '../constants/NevergreenConstants'
+import {MessageAdd, MessageRemove, MessageInvalidInput} from '../success/SuccessActions'
 
 const eventEmitter = new EventEmitter()
 const CHANGE_EVENT = 'message-change'

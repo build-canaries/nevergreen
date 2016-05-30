@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import App from './views/app'
 import MonitorSection from './views/monitor/monitorSection'
 import TrackingSection from './views/tracking/trackingSection'
-import SuccessSection from './views/success/successSection'
+import SuccessContainer from './success/SuccessContainer'
 import AudioVisualContainer from './audio-visual/AudioVisualContainer'
 import ExportSection from './views/export/exportSection'
 import HelpSection from './views/help/helpSection'
@@ -13,7 +13,7 @@ const routes = (
   <Route path='/' component={App}>
     <Route path='monitor' component={MonitorSection}/>
     <Route path='tracking' component={TrackingSection}/>
-    <Route path='success' component={SuccessSection}/>
+    <Route path='success' component={SuccessContainer}/>
     <Route path='audio-visual' component={AudioVisualContainer}/>
     <Route path='export' component={ExportSection}/>
     <Route path='help' component={HelpSection}/>

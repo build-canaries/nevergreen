@@ -1,5 +1,4 @@
 import AppDispatcher from '../dispatcher/AppDispatcher'
-import {MessageInvalidInput, MessageAdd, MessageRemove} from '../constants/NevergreenConstants'
 import _ from 'lodash'
 
 function isASentence(message) {
@@ -21,29 +20,29 @@ function validateMessage(message) {
   }
 }
 
-module.exports = {
-  addMessage(message) {
-    const validationMessages = validateMessage(message)
+export const MessageInvalidInput = 'message-invalid-input'
+export const MessageAdd = 'message-add'
+export function addMessage(message) {
+  const validationMessages = validateMessage(message)
 
-    if (validationMessages) {
-      AppDispatcher.dispatch({
-        type: MessageInvalidInput,
-        errors: validationMessages,
-        message
-      })
-    } else {
-      AppDispatcher.dispatch({
-        type: MessageAdd,
-        message: transformMessage(message)
-      })
-    }
-  },
-
-  removeMessage(message) {
+  if (validationMessages) {
     AppDispatcher.dispatch({
-      type: MessageRemove,
+      type: MessageInvalidInput,
+      errors: validationMessages,
+      message
+    })
+  } else {
+    AppDispatcher.dispatch({
+      type: MessageAdd,
       message: transformMessage(message)
     })
   }
+}
 
+export const MessageRemove = 'message-removed'
+export function removeMessage(message) {
+  AppDispatcher.dispatch({
+    type: MessageRemove,
+    message: transformMessage(message)
+  })
 }

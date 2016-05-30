@@ -1,25 +1,23 @@
-jest.dontMock('../../../src/js/actions/SuccessActions')
-  .dontMock('../../../src/js/constants/NevergreenConstants')
+jest.dontMock('../../../src/js/success/SuccessActions')
 
 describe('success actions', () => {
 
-  let subject, AppDispatcher, Constants
+  let subject, AppDispatcher
 
   beforeEach(() => {
-    subject = require('../../../src/js/actions/SuccessActions')
+    subject = require('../../../src/js/success/SuccessActions')
     AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
-    Constants = require('../../../src/js/constants/NevergreenConstants')
   })
 
   it('should not change messages which do not need to change', () => {
-      expect('some-string').toEqual('some-string'.replace(/ /g, String.fromCharCode(160)))
+    expect('some-string').toEqual('some-string'.replace(/ /g, String.fromCharCode(160)))
   })
 
   it('dispatches a invalid action for blank messages', () => {
     subject.addMessage('')
 
     expect(AppDispatcher.dispatch).toBeCalledWith({
-      type: Constants.MessageInvalidInput,
+      type: subject.MessageInvalidInput,
       errors: jasmine.arrayContaining([jasmine.any(String)]),
       message: ''
     })
@@ -29,7 +27,7 @@ describe('success actions', () => {
     subject.addMessage('=(^.^)=')
 
     expect(AppDispatcher.dispatch).toBeCalledWith({
-      type: Constants.MessageAdd,
+      type: subject.MessageAdd,
       message: '=(^.^)='
     })
   })
@@ -38,7 +36,7 @@ describe('success actions', () => {
     subject.removeMessage('=(^.^)=')
 
     expect(AppDispatcher.dispatch).toBeCalledWith({
-      type: Constants.MessageRemove,
+      type: subject.MessageRemove,
       message: '=(^.^)='
     })
   })
@@ -48,7 +46,7 @@ describe('success actions', () => {
       subject.addMessage('=(^ . ^)=')
 
       expect(AppDispatcher.dispatch).toBeCalledWith({
-        type: Constants.MessageAdd,
+        type: subject.MessageAdd,
         message: '=(^ . ^)='.replace(/ /g, String.fromCharCode(160))
       })
     })
@@ -57,7 +55,7 @@ describe('success actions', () => {
       subject.addMessage('some message')
 
       expect(AppDispatcher.dispatch).toBeCalledWith({
-        type: Constants.MessageAdd,
+        type: subject.MessageAdd,
         message: 'some message'
       })
     })

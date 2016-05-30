@@ -1,13 +1,15 @@
 jest.dontMock('../../../src/js/stores/UiMessageStore')
   .dontMock('../../../src/js/constants/NevergreenConstants')
+  .dontMock('../../../src/js/success/SuccessActions')
 
 describe('ui message store', () => {
 
-  let AppDispatcher, Constants, store, callback
+  let AppDispatcher, Constants, SuccessActions, store, callback
 
   beforeEach(() => {
     AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
     Constants = require('../../../src/js/constants/NevergreenConstants')
+    SuccessActions = require('../../../src/js/success/SuccessActions')
     store = require('../../../src/js/stores/UiMessageStore')
     callback = AppDispatcher.register.mock.calls[0][0]
 
@@ -68,7 +70,7 @@ describe('ui message store', () => {
   describe('adding a success message', () => {
     beforeEach(() => {
       callback({
-        type: Constants.MessageInvalidInput,
+        type: SuccessActions.MessageInvalidInput,
         errors: ['some-error']
       })
     })
@@ -79,14 +81,14 @@ describe('ui message store', () => {
 
     it('clears errors on successful add', () => {
       callback({
-        type: Constants.MessageAdd
+        type: SuccessActions.MessageAdd
       })
       expect(store.getSuccessErrors()).toEqual([])
     })
 
     it('clears errors on removal', () => {
       callback({
-        type: Constants.MessageRemove
+        type: SuccessActions.MessageRemove
       })
       expect(store.getSuccessErrors()).toEqual([])
     })

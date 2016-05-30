@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react'
-import Container from '../general/container'
-import RemoveLink from './removeLink'
+import Container from '../views/general/container'
+import RemoveLink from './RemoveLink'
 
 class AddedMessages extends Component {
   constructor(props) {
