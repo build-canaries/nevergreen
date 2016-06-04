@@ -1,14 +1,12 @@
-jest.dontMock('../../../src/js/actions/ConfigurationActions')
-  .dontMock('../../../src/js/constants/NevergreenConstants')
+jest.dontMock('../../../src/js/backup/BackupActions')
 
-describe('configuration actions', () => {
-  let subject, AppDispatcher, Constants, LocalRepository, promiseMock, Helpers
+describe('backup actions', () => {
+  let subject, AppDispatcher, LocalRepository, promiseMock, Helpers
 
   beforeEach(() => {
     Helpers = require('../jest/Helpers')
-    subject = require('../../../src/js/actions/ConfigurationActions')
+    subject = require('../../../src/js/backup/BackupActions')
     AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
-    Constants = require('../../../src/js/constants/NevergreenConstants')
     LocalRepository = require('../../../src/js/storage/LocalRepository')
     promiseMock = Helpers.promiseMock()
   })
@@ -21,7 +19,7 @@ describe('configuration actions', () => {
     promiseMock.then.mock.calls[0][0]('some-value') // call the callback passed to the promise mock
 
     expect(AppDispatcher.dispatch).toBeCalledWith({
-      type: Constants.ExportData,
+      type: subject.ExportData,
       configuration: 'some-value'
     })
   })

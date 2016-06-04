@@ -1,13 +1,15 @@
 jest.dontMock('../../../src/js/stores/ConfigurationStore')
   .dontMock('../../../src/js/constants/NevergreenConstants')
+  .dontMock('../../../src/js/backup/BackupActions')
 
 describe('configuration store', () => {
 
-  let AppDispatcher, Constants, store, callback
+  let AppDispatcher, Constants, BackupActions, store, callback
 
   beforeEach(() => {
     AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
     Constants = require('../../../src/js/constants/NevergreenConstants')
+    BackupActions = require('../../../src/js/backup/BackupActions')
     store = require('../../../src/js/stores/ConfigurationStore')
     callback = AppDispatcher.register.mock.calls[0][0]
 
@@ -23,7 +25,7 @@ describe('configuration store', () => {
   describe('importing data', () => {
     beforeEach(() => {
       callback({
-        type: Constants.ImportingData
+        type: BackupActions.ImportingData
       })
     })
 
@@ -39,7 +41,7 @@ describe('configuration store', () => {
   describe('import error', () => {
     beforeEach(() => {
       callback({
-        type: Constants.ImportError,
+        type: BackupActions.ImportError,
         errors: ['some-error']
       })
     })
@@ -56,7 +58,7 @@ describe('configuration store', () => {
   describe('export data', () => {
     beforeEach(() => {
       callback({
-        type: Constants.ExportData,
+        type: BackupActions.ExportData,
         configuration: 'some-configuration'
       })
     })

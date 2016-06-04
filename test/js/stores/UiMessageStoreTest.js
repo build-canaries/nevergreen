@@ -1,15 +1,17 @@
 jest.dontMock('../../../src/js/stores/UiMessageStore')
   .dontMock('../../../src/js/constants/NevergreenConstants')
+  .dontMock('../../../src/js/backup/BackupActions')
   .dontMock('../../../src/js/success/SuccessActions')
 
 describe('ui message store', () => {
 
-  let AppDispatcher, Constants, SuccessActions, store, callback
+  let AppDispatcher, Constants, BackupActions, SuccessActions, store, callback
 
   beforeEach(() => {
     AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
     Constants = require('../../../src/js/constants/NevergreenConstants')
     SuccessActions = require('../../../src/js/success/SuccessActions')
+    BackupActions = require('../../../src/js/backup/BackupActions')
     store = require('../../../src/js/stores/UiMessageStore')
     callback = AppDispatcher.register.mock.calls[0][0]
 
@@ -97,7 +99,7 @@ describe('ui message store', () => {
   describe('importing data', () => {
     beforeEach(() => {
       callback({
-        type: Constants.ImportError,
+        type: BackupActions.ImportError,
         errors: ['some-error']
       })
     })
@@ -112,7 +114,7 @@ describe('ui message store', () => {
 
     it('clears errors and infos when importing', () => {
       callback({
-        type: Constants.ImportingData
+        type: BackupActions.ImportingData
       })
       expect(store.getImportErrors()).toEqual([])
       expect(store.getImportInfos()).toEqual([])

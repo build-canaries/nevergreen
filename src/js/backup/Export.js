@@ -1,9 +1,9 @@
 import React, {Component, PropTypes} from 'react'
-import ValidationMessages from '../general/validationMessages'
-import InfoMessages from '../general/InfoMessages'
+import ValidationMessages from '../views/general/validationMessages'
+import InfoMessages from '../views/general/InfoMessages'
 import Clipboard from 'clipboard'
-import Container from '../general/container'
-import Loading from '../general/loading'
+import Container from '../views/general/container'
+import Loading from '../views/general/loading'
 
 class Export extends Component {
   constructor(props) {

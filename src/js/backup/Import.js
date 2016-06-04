@@ -1,10 +1,9 @@
 import React, {Component, PropTypes} from 'react'
-import ValidationMessages from '../general/validationMessages'
-import InfoMessages from '../general/InfoMessages'
-import ConfigurationActions from '../../actions/ConfigurationActions'
-import Container from '../general/container'
-import Loading from '../general/loading'
-import PrimaryInput from '../general/PrimaryInput'
+import ValidationMessages from '../views/general/validationMessages'
+import InfoMessages from '../views/general/InfoMessages'
+import Container from '../views/general/container'
+import Loading from '../views/general/loading'
+import PrimaryInput from '../views/general/PrimaryInput'
 
 class Import extends Component {
   constructor(props) {
@@ -20,7 +19,7 @@ class Import extends Component {
 
   render() {
     const updateData = (event) => this.setState({data: event.target.value})
-    const doImport = () => ConfigurationActions.importData(this.state.data)
+    const doImport = () => this.props.importData(this.state.data)
 
     return (
       <Container title='Import'>
@@ -46,7 +45,8 @@ class Import extends Component {
 Import.propTypes = {
   loading: PropTypes.bool,
   errors: PropTypes.arrayOf(React.PropTypes.string),
-  infos: PropTypes.arrayOf(React.PropTypes.string)
+  infos: PropTypes.arrayOf(React.PropTypes.string),
+  importData: PropTypes.func.isRequired
 }
 
 export default Import

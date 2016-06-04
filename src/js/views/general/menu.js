@@ -33,7 +33,7 @@ class Menu extends Component {
       {id: 'tracking', iconClass: 'drawer2', title: 'Tracking', shortcuts: ['t', '2']},
       {id: 'success', iconClass: 'checkmark', title: 'Success', shortcuts: ['s', '3']},
       {id: 'audio-visual', iconClass: 'display', title: 'Audio/Visual', shortcuts: ['v', '4']},
-      {id: 'export', iconClass: 'floppy-disk', title: 'Export', shortcuts: ['e', '5']},
+      {id: 'backup', iconClass: 'floppy-disk', title: 'Backup', shortcuts: ['b', '5']},
       {id: 'help', iconClass: 'question', title: 'Help', shortcuts: ['h', '6']}
     ]
 

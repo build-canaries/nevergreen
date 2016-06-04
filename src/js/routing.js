@@ -5,7 +5,7 @@ import MonitorSection from './views/monitor/monitorSection'
 import TrackingSection from './views/tracking/trackingSection'
 import SuccessContainer from './success/SuccessContainer'
 import AudioVisualContainer from './audio-visual/AudioVisualContainer'
-import ExportSection from './views/export/exportSection'
+import BackupContainer from './backup/BackupContainer'
 import HelpSection from './views/help/helpSection'
 import {browserHistory, Router, Route, IndexRoute} from 'react-router'
 
@@ -15,7 +15,7 @@ const routes = (
     <Route path='tracking' component={TrackingSection}/>
     <Route path='success' component={SuccessContainer}/>
     <Route path='audio-visual' component={AudioVisualContainer}/>
-    <Route path='export' component={ExportSection}/>
+    <Route path='backup' component={BackupContainer}/>
     <Route path='help' component={HelpSection}/>
     <Route path="*" component={TrackingSection}/>
     <IndexRoute component={TrackingSection}/>
