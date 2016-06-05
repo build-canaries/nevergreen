@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
-import Container from '../general/container'
+import Container from '../views/general/container'
 
-class HelpSection extends Component {
+class Help extends Component {
   constructor(props) {
     super(props)
   }
@@ -248,4 +248,4 @@ class HelpSection extends Component {
   }
 }
 
-export default HelpSection
+export default Help
