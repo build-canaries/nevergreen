@@ -1,20 +1,22 @@
 jest.dontMock('../../../src/js/stores/NotificationStore')
   .dontMock('../../../src/js/constants/NevergreenConstants')
+  .dontMock('../../../src/js/NevergreenActions')
 
 describe('notification store', () => {
 
-  let AppDispatcher, Constants, store, callback, eventEmitterMock
+  let AppDispatcher, Constants, NevergreenActions, store, callback, eventEmitterMock
 
   beforeEach(() => {
     eventEmitterMock = require('../jest/Helpers').eventEmitterMock()
 
     AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
     Constants = require('../../../src/js/constants/NevergreenConstants')
+    NevergreenActions = require('../../../src/js/NevergreenActions')
     store = require('../../../src/js/stores/NotificationStore')
     callback = AppDispatcher.register.mock.calls[0][0]
 
     callback({
-      type: Constants.AppInit
+      type: NevergreenActions.AppInit
     })
   })
 
@@ -24,7 +26,7 @@ describe('notification store', () => {
 
   it('emits an change after app init', () => {
     callback({
-      type: Constants.AppInit
+      type: NevergreenActions.AppInit
     })
     expect(eventEmitterMock.emit).toBeCalledWith('notification-change')
   })

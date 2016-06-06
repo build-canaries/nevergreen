@@ -1,5 +1,4 @@
 import AppDispatcher from '../dispatcher/AppDispatcher'
-import {RestoreConfiguration} from '../constants/NevergreenConstants'
 import LocalRepository from '../storage/LocalRepository'
 import _ from 'lodash'
 import DisplayStore from '../stores/DisplayStore'
@@ -36,6 +35,7 @@ function dispatchError(errors) {
 export const ExportData = 'export-data'
 export const ImportError = 'import-error'
 export const ImportingData = 'importing-data'
+export const RestoreConfiguration = 'restore-configuration'
 export function importData(jsonData) {
   try {
     const data = JSON.parse(jsonData)

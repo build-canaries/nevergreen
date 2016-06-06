@@ -1,7 +1,7 @@
 import AppDispatcher from '../dispatcher/AppDispatcher'
 import {EventEmitter} from 'events'
-import {AppInit, RestoreConfiguration, KeyboardShortcuts} from '../constants/NevergreenConstants'
-import {ImportingData, ImportError} from '../backup/BackupActions'
+import {AppInit, KeyboardShortcuts} from '../NevergreenActions'
+import {RestoreConfiguration, ImportingData, ImportError} from '../backup/BackupActions'
 import {MessageAdd, MessageRemove, MessageInvalidInput} from '../success/SuccessActions'
 
 const eventEmitter = new EventEmitter()

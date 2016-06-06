@@ -1,6 +1,7 @@
 import AppDispatcher from '../dispatcher/AppDispatcher'
 import {EventEmitter} from 'events'
-import {AppInit, RestoreConfiguration} from '../constants/NevergreenConstants'
+import {AppInit} from '../NevergreenActions'
+import {RestoreConfiguration} from '../backup/BackupActions'
 import {MessageAdd, MessageRemove} from '../success/SuccessActions'
 import _ from 'lodash'
 import LocalRepository from '../storage/LocalRepository'

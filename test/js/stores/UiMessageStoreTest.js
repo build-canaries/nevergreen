@@ -1,22 +1,22 @@
 jest.dontMock('../../../src/js/stores/UiMessageStore')
-  .dontMock('../../../src/js/constants/NevergreenConstants')
   .dontMock('../../../src/js/backup/BackupActions')
   .dontMock('../../../src/js/success/SuccessActions')
+  .dontMock('../../../src/js/NevergreenActions')
 
 describe('ui message store', () => {
 
-  let AppDispatcher, Constants, BackupActions, SuccessActions, store, callback
+  let AppDispatcher, BackupActions, SuccessActions, NevergreenActions, store, callback
 
   beforeEach(() => {
     AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
-    Constants = require('../../../src/js/constants/NevergreenConstants')
     SuccessActions = require('../../../src/js/success/SuccessActions')
     BackupActions = require('../../../src/js/backup/BackupActions')
+    NevergreenActions = require('../../../src/js/NevergreenActions')
     store = require('../../../src/js/stores/UiMessageStore')
     callback = AppDispatcher.register.mock.calls[0][0]
 
     callback({
-      type: Constants.AppInit
+      type: NevergreenActions.AppInit
     })
   })
 
@@ -27,7 +27,7 @@ describe('ui message store', () => {
   describe('init', () => {
     beforeEach(() => {
       callback({
-        type: Constants.AppInit
+        type: NevergreenActions.AppInit
       })
     })
 
@@ -51,7 +51,7 @@ describe('ui message store', () => {
   describe('restore', () => {
     beforeEach(() => {
       callback({
-        type: Constants.RestoreConfiguration,
+        type: BackupActions.RestoreConfiguration,
         messages: ['some-message']
       })
     })
@@ -127,7 +127,7 @@ describe('ui message store', () => {
     beforeEach(() => {
       cancelCallback = jest.genMockFn()
       callback({
-        type: Constants.KeyboardShortcuts,
+        type: NevergreenActions.KeyboardShortcuts,
         show: true,
         cancel: cancelCallback
       })
@@ -139,7 +139,7 @@ describe('ui message store', () => {
 
     it('cancels the previous timer if the event is triggered again', () => {
       callback({
-        type: Constants.KeyboardShortcuts,
+        type: NevergreenActions.KeyboardShortcuts,
         show: true,
         cancel: jest.genMockFn()
       })

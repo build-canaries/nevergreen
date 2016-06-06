@@ -1,20 +1,22 @@
 jest.dontMock('../../../src/js/stores/InterestingProjectsStore')
-  .dontMock('../../../src/js/constants/NevergreenConstants')
+  .dontMock('../../../src/js/backup/BackupActions')
   .dontMock('../../../src/js/monitor/MonitorActions')
+  .dontMock('../../../src/js/NevergreenActions')
 
 describe('success store', () => {
 
-  let store, AppDispatcher, Constants, MonitorActions, callback
+  let store, AppDispatcher, BackupActions, NevergreenActions, MonitorActions, callback
 
   beforeEach(() => {
     AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
-    Constants = require('../../../src/js/constants/NevergreenConstants')
+    BackupActions = require('../../../src/js/backup/BackupActions')
+    NevergreenActions = require('../../../src/js/NevergreenActions')
     MonitorActions = require('../../../src/js/monitor/MonitorActions')
     store = require('../../../src/js/stores/InterestingProjectsStore')
     callback = AppDispatcher.register.mock.calls[0][0]
 
     callback({
-      type: Constants.AppInit,
+      type: NevergreenActions.AppInit,
       configuration: {}
     })
   })
@@ -60,7 +62,7 @@ describe('success store', () => {
 
   it('clears the store state when new data is imported', () => {
     callback({
-      type: Constants.RestoreConfiguration
+      type: BackupActions.RestoreConfiguration
     })
     expect(store.getAll()).toEqual([])
   })

@@ -1,7 +1,7 @@
 import AppDispatcher from '../dispatcher/AppDispatcher'
 import {EventEmitter} from 'events'
-import {AppInit, RestoreConfiguration} from '../constants/NevergreenConstants'
-import {ImportingData, ImportError, ExportData} from '../backup/BackupActions'
+import {AppInit} from '../NevergreenActions'
+import {RestoreConfiguration, ImportingData, ImportError, ExportData} from '../backup/BackupActions'
 
 const eventEmitter = new EventEmitter()
 const CHANGE_EVENT = 'storage-change'

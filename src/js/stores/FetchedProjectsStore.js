@@ -1,6 +1,8 @@
 import AppDispatcher from '../dispatcher/AppDispatcher'
 import {EventEmitter} from 'events'
-import {AppInit, RestoreConfiguration, TrayAdd, TrayRemove, ProjectsFetched} from '../constants/NevergreenConstants'
+import {TrayAdd, TrayRemove, ProjectsFetched} from '../constants/NevergreenConstants'
+import {AppInit} from '../NevergreenActions'
+import {RestoreConfiguration} from '../backup/BackupActions'
 import _ from 'lodash'
 import LocalRepository from '../storage/LocalRepository'
 

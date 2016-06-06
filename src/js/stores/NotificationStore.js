@@ -1,6 +1,7 @@
 import AppDispatcher from '../dispatcher/AppDispatcher'
 import {EventEmitter} from 'events'
-import {AppInit, NotificationDismiss, Notification} from '../constants/NevergreenConstants'
+import {NotificationDismiss, Notification} from '../constants/NevergreenConstants'
+import {AppInit} from '../NevergreenActions'
 
 const eventEmitter = new EventEmitter()
 const CHANGE_EVENT = 'notification-change'

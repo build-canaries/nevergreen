@@ -1,6 +1,6 @@
 import AppDispatcher from '../dispatcher/AppDispatcher'
 import {EventEmitter} from 'events'
-import {AppInit} from '../constants/NevergreenConstants'
+import {AppInit} from '../NevergreenActions'
 import {InterestingProjects, InterestingProjectsError} from '../monitor/MonitorActions'
 
 const eventEmitter = new EventEmitter()

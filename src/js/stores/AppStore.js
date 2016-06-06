@@ -1,6 +1,6 @@
 import AppDispatcher from '../dispatcher/AppDispatcher'
 import {EventEmitter} from 'events'
-import {AppInit} from '../constants/NevergreenConstants'
+import {AppInit} from '../NevergreenActions'
 import ConfigurationStore from './ConfigurationStore'
 import DisplayStore from './DisplayStore'
 import FetchedProjectsStore from './FetchedProjectsStore'
@@ -28,7 +28,11 @@ const allStoreTokens = [
 ]
 
 let _storeState = {
-  initalised: false
+  initalised: false,
+  versionNumber: Package.version,
+  versionName: Package.versionName,
+  versionColour: Package.versionColour,
+  commitHash: Package.commitHash
 }
 
 const dispatchToken = AppDispatcher.register((action) => {

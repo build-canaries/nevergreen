@@ -1,20 +1,20 @@
 jest.dontMock('../../../src/js/stores/DisplayStore')
-  .dontMock('../../../src/js/constants/NevergreenConstants')
+  .dontMock('../../../src/js/NevergreenActions')
   .dontMock('../../../src/js/audio-visual/AudioVisualActions')
 
 describe('display store', () => {
 
-  let AppDispatcher, Constants, AudioVisualActions, store, callback
+  let AppDispatcher, NevergreenActions, AudioVisualActions, store, callback
 
   beforeEach(() => {
     AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
-    Constants = require('../../../src/js/constants/NevergreenConstants')
+    NevergreenActions = require('../../../src/js/NevergreenActions')
     AudioVisualActions = require('../../../src/js/audio-visual/AudioVisualActions')
     store = require('../../../src/js/stores/DisplayStore')
     callback = AppDispatcher.register.mock.calls[0][0]
 
     callback({
-      type: Constants.AppInit,
+      type: NevergreenActions.AppInit,
       configuration: {}
     })
   })

@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './views/app'
+import NevergreenContainer from './NevergreenContainer'
 import MonitorContainer from './monitor/MonitorContainer'
 import TrackingSection from './views/tracking/trackingSection'
 import SuccessContainer from './success/SuccessContainer'
@@ -10,7 +10,7 @@ import Help from './help/Help'
 import {browserHistory, Router, Route, IndexRoute} from 'react-router'
 
 const routes = (
-  <Route path='/' component={App}>
+  <Route path='/' component={NevergreenContainer}>
     <Route path='monitor' component={MonitorContainer}/>
     <Route path='tracking' component={TrackingSection}/>
     <Route path='success' component={SuccessContainer}/>

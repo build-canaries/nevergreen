@@ -1,19 +1,23 @@
 jest.dontMock('../../../src/js/stores/TrayStore')
   .dontMock('../../../src/js/constants/NevergreenConstants')
+  .dontMock('../../../src/js/NevergreenActions')
+  .dontMock('../../../src/js/backup/BackupActions')
 
 describe('tray store', () => {
 
-  let store, AppDispatcher, Constants, callback, nameGenerator
+  let store, AppDispatcher, Constants, NevergreenActions, BackupActions, callback, nameGenerator
 
   beforeEach(() => {
     AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
     Constants = require('../../../src/js/constants/NevergreenConstants')
+    NevergreenActions = require('../../../src/js/NevergreenActions')
+    BackupActions = require('../../../src/js/backup/BackupActions')
     store = require('../../../src/js/stores/TrayStore')
     nameGenerator = require('project-name-generator')
     callback = AppDispatcher.register.mock.calls[0][0]
 
     callback({
-      type: Constants.AppInit,
+      type: NevergreenActions.AppInit,
       configuration: {}
     })
 
@@ -127,7 +131,7 @@ describe('tray store', () => {
 
   it('clears the store state when new data is imported', () => {
     callback({
-      type: Constants.ImportedData
+      type: BackupActions.ImportedData
     })
     expect(store.getAll()).toEqual([])
   })

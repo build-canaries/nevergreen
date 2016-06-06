@@ -1,8 +1,8 @@
 import AppDispatcher from '../dispatcher/AppDispatcher'
 import {EventEmitter} from 'events'
+import {AppInit} from '../NevergreenActions'
+import {RestoreConfiguration} from '../backup/BackupActions'
 import {
-  AppInit,
-  RestoreConfiguration,
   PasswordEncrypted,
   TrayAdd,
   TrayUpdate,

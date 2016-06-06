@@ -1,18 +1,22 @@
 jest.dontMock('../../../src/js/stores/FetchedProjectsStore')
   .dontMock('../../../src/js/constants/NevergreenConstants')
+  .dontMock('../../../src/js/backup/BackupActions')
+  .dontMock('../../../src/js/NevergreenActions')
 
 describe('fetched projects store', () => {
 
-  let store, AppDispatcher, Constants, callback
+  let store, AppDispatcher, Constants, BackupActions, NevergreenActions, callback
 
   beforeEach(() => {
     AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
     Constants = require('../../../src/js/constants/NevergreenConstants')
+    BackupActions = require('../../../src/js/backup/BackupActions')
+    NevergreenActions = require('../../../src/js/NevergreenActions')
     store = require('../../../src/js/stores/FetchedProjectsStore')
     callback = AppDispatcher.register.mock.calls[0][0]
 
     callback({
-      type: Constants.AppInit,
+      type: NevergreenActions.AppInit,
       configuration: {}
     })
   })
@@ -35,7 +39,7 @@ describe('fetched projects store', () => {
 
   it('restores the state from configuration', () => {
     callback({
-      type: Constants.RestoreConfiguration,
+      type: BackupActions.RestoreConfiguration,
       configuration: {fetchedProjects: {someId: 'some-configuration'}}
     })
     expect(store.getAll('someId')).toEqual('some-configuration')
