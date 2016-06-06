@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import ReactDOM from 'react-dom'
-import styler from '../../controllers/styler'
+import {styleProjects} from './Styler'
 
 class Message extends Component {
   constructor(props) {
@@ -9,12 +9,12 @@ class Message extends Component {
 
   componentDidMount() {
     const node = ReactDOM.findDOMNode(this)
-    styler.styleProjects([{name: this.props.message}], node, node.parentNode)
+    styleProjects([{name: this.props.message}], node, node.parentNode)
   }
 
   componentDidUpdate() {
     const node = ReactDOM.findDOMNode(this)
-    styler.styleProjects([{name: this.props.message}], node, node.parentNode)
+    styleProjects([{name: this.props.message}], node, node.parentNode)
   }
 
   render() {

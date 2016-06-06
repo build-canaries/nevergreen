@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './views/app'
-import MonitorSection from './views/monitor/monitorSection'
+import MonitorContainer from './monitor/MonitorContainer'
 import TrackingSection from './views/tracking/trackingSection'
 import SuccessContainer from './success/SuccessContainer'
 import AudioVisualContainer from './audio-visual/AudioVisualContainer'
@@ -11,7 +11,7 @@ import {browserHistory, Router, Route, IndexRoute} from 'react-router'
 
 const routes = (
   <Route path='/' component={App}>
-    <Route path='monitor' component={MonitorSection}/>
+    <Route path='monitor' component={MonitorContainer}/>
     <Route path='tracking' component={TrackingSection}/>
     <Route path='success' component={SuccessContainer}/>
     <Route path='audio-visual' component={AudioVisualContainer}/>

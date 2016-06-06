@@ -47,11 +47,9 @@ function scaleFontToContainerSize(projects, $containers, $view) {
     buildStatusWidth(projects, $view)).ideal())
 }
 
-module.exports = {
-  styleProjects(projects, containers, view) {
-    const $containers = $(containers)
-    const $view = $(view)
-    resizeEachContainer(projects, $containers, $view)
-    scaleFontToContainerSize(projects, $containers, $view)
-  }
+export function styleProjects(projects, containers, view) {
+  const $containers = $(containers)
+  const $view = $(view)
+  resizeEachContainer(projects, $containers, $view)
+  scaleFontToContainerSize(projects, $containers, $view)
 }

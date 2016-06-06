@@ -1,14 +1,12 @@
-jest.dontMock('../../../src/js/actions/InterestingProjectActions')
-  .dontMock('../../../src/js/constants/NevergreenConstants')
+jest.dontMock('../../../src/js/monitor/MonitorActions')
 
 describe('interesting actions', () => {
 
-  let subject, AppDispatcher, Constants, projectsGateway, promiseMock
+  let subject, AppDispatcher, projectsGateway, promiseMock
 
   beforeEach(() => {
-    subject = require('../../../src/js/actions/InterestingProjectActions')
+    subject = require('../../../src/js/monitor/MonitorActions')
     AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
-    Constants = require('../../../src/js/constants/NevergreenConstants')
     projectsGateway = require('../../../src/js/gateways/projectsGateway')
     promiseMock = {
       then: jest.genMockFunction(),
@@ -36,7 +34,7 @@ describe('interesting actions', () => {
     callback('the-data')
 
     expect(AppDispatcher.dispatch).toBeCalledWith({
-      type: Constants.InterestingProjects,
+      type: subject.InterestingProjects,
       projects: 'the-data'
     })
   })
@@ -51,7 +49,7 @@ describe('interesting actions', () => {
     callback('the-error')
 
     expect(AppDispatcher.dispatch).toBeCalledWith({
-      type: Constants.InterestingProjectsError,
+      type: subject.InterestingProjectsError,
       error: 'the-error'
     })
   })

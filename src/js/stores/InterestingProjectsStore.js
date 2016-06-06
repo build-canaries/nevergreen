@@ -1,6 +1,7 @@
 import AppDispatcher from '../dispatcher/AppDispatcher'
 import {EventEmitter} from 'events'
-import {AppInit, InterestingProjects, InterestingProjectsError} from '../constants/NevergreenConstants'
+import {AppInit} from '../constants/NevergreenConstants'
+import {InterestingProjects, InterestingProjectsError} from '../monitor/MonitorActions'
 
 const eventEmitter = new EventEmitter()
 const CHANGE_EVENT = 'interesting-projects-change'
