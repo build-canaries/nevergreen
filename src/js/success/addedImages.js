@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import Container from '../views/general/container'
+import Container from '../common/Container'
 import RemoveLink from './RemoveLink'
 
 class AddedImages extends Component {

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import InterestingProjects from './projectsView'
 import Success from './successView'
-import Loading from '../general/loading'
+import Loading from '../../common/Loading'
 import InterestingProjectActions from '../../actions/InterestingProjectActions'
 import InterestingProjectsStore from '../../stores/InterestingProjectsStore'
 import TrayStore from '../../stores/TrayStore'

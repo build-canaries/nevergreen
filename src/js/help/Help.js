@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import Container from '../views/general/container'
+import Container from '../common/Container'
 
 class Help extends Component {
   constructor(props) {

@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import ConfigOption from './ConfigOption'
-import Container from '../views/general/container'
+import Container from '../common/Container'
 
 class AudioVisual extends Component {
   constructor(props) {

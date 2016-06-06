@@ -1,8 +1,8 @@
 import React, {Component, PropTypes} from 'react'
 import ValidationMessages from '../views/general/validationMessages'
 import InfoMessages from '../views/general/InfoMessages'
-import Container from '../views/general/container'
-import Loading from '../views/general/loading'
+import Container from '../common/Container'
+import Loading from '../common/Loading'
 import PrimaryInput from '../views/general/PrimaryInput'
 
 class Import extends Component {
