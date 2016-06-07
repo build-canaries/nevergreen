@@ -1,15 +1,15 @@
 jest.dontMock('../../../src/js/stores/FetchedProjectsStore')
-  .dontMock('../../../src/js/constants/NevergreenConstants')
   .dontMock('../../../src/js/backup/BackupActions')
+  .dontMock('../../../src/js/tracking/TrackingActions')
   .dontMock('../../../src/js/NevergreenActions')
 
 describe('fetched projects store', () => {
 
-  let store, AppDispatcher, Constants, BackupActions, NevergreenActions, callback
+  let store, AppDispatcher, BackupActions, TrackingActions, NevergreenActions, callback
 
   beforeEach(() => {
     AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
-    Constants = require('../../../src/js/constants/NevergreenConstants')
+    TrackingActions = require('../../../src/js/tracking/TrackingActions')
     BackupActions = require('../../../src/js/backup/BackupActions')
     NevergreenActions = require('../../../src/js/NevergreenActions')
     store = require('../../../src/js/stores/FetchedProjectsStore')
@@ -31,7 +31,7 @@ describe('fetched projects store', () => {
 
   it('creates an empty seq of fetched projects when a tray is added', () => {
     callback({
-      type: Constants.TrayAdd,
+      type: TrackingActions.TrayAdd,
       trayId: 'some-id'
     })
     expect(store.getAll('some-id')).toEqual([])
@@ -49,14 +49,14 @@ describe('fetched projects store', () => {
 
     beforeEach(() => {
       callback({
-        type: Constants.TrayAdd,
+        type: TrackingActions.TrayAdd,
         trayId: 'some-id'
       })
     })
 
     it('filters out jobs', () => {
       callback({
-        type: Constants.ProjectsFetched,
+        type: TrackingActions.ProjectsFetched,
         trayId: 'some-id',
         projects: [{
           projectId: 'some-project-id',
@@ -81,7 +81,7 @@ describe('fetched projects store', () => {
     describe('with previous projects added', () => {
       beforeEach(() => {
         callback({
-          type: Constants.ProjectsFetched,
+          type: TrackingActions.ProjectsFetched,
           trayId: 'some-id',
           projects: [{
             projectId: 'some-project-id',
@@ -94,7 +94,7 @@ describe('fetched projects store', () => {
 
       it('removes the new flag if the same project is fetched again', () => {
         callback({
-          type: Constants.ProjectsFetched,
+          type: TrackingActions.ProjectsFetched,
           trayId: 'some-id',
           projects: [{
             projectId: 'some-project-id',
@@ -113,7 +113,7 @@ describe('fetched projects store', () => {
 
       it('sets the removed flag if the project is not fetched again', () => {
         callback({
-          type: Constants.ProjectsFetched,
+          type: TrackingActions.ProjectsFetched,
           trayId: 'some-id',
           projects: []
         })

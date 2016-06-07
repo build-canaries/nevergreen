@@ -1,15 +1,17 @@
 jest.dontMock('../../../src/js/stores/SelectedProjectsStore')
-  .dontMock('../../../src/js/constants/NevergreenConstants')
+  .dontMock('../../../src/js/tracking/TrackingActions')
+  .dontMock('../../../src/js/tracking/tray/TrayActions')
   .dontMock('../../../src/js/NevergreenActions')
   .dontMock('../../../src/js/backup/BackupActions')
 
 describe('selected projects store', () => {
 
-  let store, AppDispatcher, Constants, NevergreenActions, BackupActions, callback
+  let store, AppDispatcher, TrackingActions, TrayActions, NevergreenActions, BackupActions, callback
 
   beforeEach(() => {
     AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
-    Constants = require('../../../src/js/constants/NevergreenConstants')
+    TrackingActions = require('../../../src/js/tracking/TrackingActions')
+    TrayActions = require('../../../src/js/tracking/tray/TrayActions')
     NevergreenActions = require('../../../src/js/NevergreenActions')
     BackupActions = require('../../../src/js/backup/BackupActions')
     store = require('../../../src/js/stores/SelectedProjectsStore')
@@ -20,7 +22,7 @@ describe('selected projects store', () => {
       configuration: {}
     })
     callback({
-      type: Constants.TrayAdd,
+      type: TrackingActions.TrayAdd,
       trayId: 'some-id'
     })
   })
@@ -31,12 +33,12 @@ describe('selected projects store', () => {
 
   it('concatenates selected project ids', () => {
     callback({
-      type: Constants.ProjectSelected,
+      type: TrayActions.ProjectSelected,
       trayId: 'some-id',
       projectIds: ['id-1']
     })
     callback({
-      type: Constants.ProjectSelected,
+      type: TrayActions.ProjectSelected,
       trayId: 'some-id',
       projectIds: ['id-2']
     })
@@ -45,12 +47,12 @@ describe('selected projects store', () => {
 
   it('removes unselected projects', () => {
     callback({
-      type: Constants.ProjectSelected,
+      type: TrayActions.ProjectSelected,
       trayId: 'some-id',
       projectIds: ['id-1']
     })
     callback({
-      type: Constants.ProjectUnselected,
+      type: TrayActions.ProjectUnselected,
       trayId: 'some-id',
       projectIds: ['id-1']
     })

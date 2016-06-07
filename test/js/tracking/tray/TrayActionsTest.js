@@ -1,21 +1,19 @@
-jest.dontMock('../../../src/js/actions/SelectProjectActions')
-  .dontMock('../../../src/js/constants/NevergreenConstants')
+jest.dontMock('../../../../src/js/tracking/tray/TrayActions')
 
-describe('select actions', () => {
+describe('tray actions', () => {
 
-  let subject, AppDispatcher, Constants
+  let subject, AppDispatcher
 
   beforeEach(() => {
-    subject = require('../../../src/js/actions/SelectProjectActions')
-    AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
-    Constants = require('../../../src/js/constants/NevergreenConstants')
+    subject = require('../../../../src/js/tracking/tray/TrayActions')
+    AppDispatcher = require('../../../../src/js/dispatcher/AppDispatcher')
   })
 
   it('dispatches a project selected action', () => {
     subject.selectProject('some-tray-id', ['some-project-id'])
 
     expect(AppDispatcher.dispatch).toBeCalledWith({
-      type: Constants.ProjectSelected,
+      type: subject.ProjectSelected,
       trayId: 'some-tray-id',
       projectIds: ['some-project-id']
     })
@@ -25,7 +23,7 @@ describe('select actions', () => {
     subject.removeProject('some-tray-id', ['some-project-id'])
 
     expect(AppDispatcher.dispatch).toBeCalledWith({
-      type: Constants.ProjectUnselected,
+      type: subject.ProjectUnselected,
       trayId: 'some-tray-id',
       projectIds: ['some-project-id']
     })

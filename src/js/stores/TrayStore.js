@@ -10,7 +10,7 @@ import {
   ProjectsFetching,
   ProjectsFetched,
   ProjectsFetchError
-} from '../constants/NevergreenConstants'
+} from '../tracking/TrackingActions'
 import _ from 'lodash'
 import LocalRepository from '../storage/LocalRepository'
 import nameGenerator from 'project-name-generator'

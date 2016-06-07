@@ -1,15 +1,15 @@
 jest.dontMock('../../../src/js/stores/TrayStore')
-  .dontMock('../../../src/js/constants/NevergreenConstants')
+  .dontMock('../../../src/js/tracking/TrackingActions')
   .dontMock('../../../src/js/NevergreenActions')
   .dontMock('../../../src/js/backup/BackupActions')
 
 describe('tray store', () => {
 
-  let store, AppDispatcher, Constants, NevergreenActions, BackupActions, callback, nameGenerator
+  let store, AppDispatcher, TrackingActions, NevergreenActions, BackupActions, callback, nameGenerator
 
   beforeEach(() => {
     AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
-    Constants = require('../../../src/js/constants/NevergreenConstants')
+    TrackingActions = require('../../../src/js/tracking/TrackingActions')
     NevergreenActions = require('../../../src/js/NevergreenActions')
     BackupActions = require('../../../src/js/backup/BackupActions')
     store = require('../../../src/js/stores/TrayStore')
@@ -32,7 +32,7 @@ describe('tray store', () => {
 
   it('adds a tray', () => {
     callback({
-      type: Constants.TrayAdd,
+      type: TrackingActions.TrayAdd,
       trayId: 'some-id',
       url: 'some-url',
       username: 'some-username'
@@ -48,7 +48,7 @@ describe('tray store', () => {
   describe('once a tray is added', () => {
     beforeEach(() => {
       callback({
-        type: Constants.TrayAdd,
+        type: TrackingActions.TrayAdd,
         trayId: 'some-id',
         url: 'some-url',
         username: 'some-username'
@@ -57,7 +57,7 @@ describe('tray store', () => {
 
     it('updates a tray', () => {
       callback({
-        type: Constants.TrayUpdate,
+        type: TrackingActions.TrayUpdate,
         trayId: 'some-id',
         name: 'some-name',
         url: 'another-url',
@@ -73,7 +73,7 @@ describe('tray store', () => {
 
     it('removes a tray', () => {
       callback({
-        type: Constants.TrayRemove,
+        type: TrackingActions.TrayRemove,
         trayId: 'some-id'
       })
       expect(store.getById('some-id')).toBeUndefined()
@@ -81,7 +81,7 @@ describe('tray store', () => {
 
     it('sets the fetching flag to true while fetching', () => {
       callback({
-        type: Constants.ProjectsFetching,
+        type: TrackingActions.ProjectsFetching,
         trayId: 'some-id'
       })
       expect(store.getById('some-id').fetching).toBeTruthy()
@@ -89,7 +89,7 @@ describe('tray store', () => {
 
     it('clears the error object while fetching', () => {
       callback({
-        type: Constants.ProjectsFetching,
+        type: TrackingActions.ProjectsFetching,
         trayId: 'some-id'
       })
       expect(store.getById('some-id').error).toBeNull()
@@ -97,7 +97,7 @@ describe('tray store', () => {
 
     it('sets the fetching flag to false when fetched', () => {
       callback({
-        type: Constants.ProjectsFetched,
+        type: TrackingActions.ProjectsFetched,
         trayId: 'some-id'
       })
       expect(store.getById('some-id').fetching).toBeFalsy()
@@ -105,7 +105,7 @@ describe('tray store', () => {
 
     it('clears the error object once fetched', () => {
       callback({
-        type: Constants.ProjectsFetched,
+        type: TrackingActions.ProjectsFetched,
         trayId: 'some-id'
       })
       expect(store.getById('some-id').error).toBeNull()
@@ -113,7 +113,7 @@ describe('tray store', () => {
 
     it('sets the error object on api error', () => {
       callback({
-        type: Constants.ProjectsFetchError,
+        type: TrackingActions.ProjectsFetchError,
         trayId: 'some-id',
         error: 'some-error'
       })
@@ -122,7 +122,7 @@ describe('tray store', () => {
 
     it('sets the fetching flag to false on error', () => {
       callback({
-        type: Constants.ProjectsFetchError,
+        type: TrackingActions.ProjectsFetchError,
         trayId: 'some-id'
       })
       expect(store.getById('some-id').fetching).toBeFalsy()
