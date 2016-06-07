@@ -1,15 +1,13 @@
-jest.dontMock('../../../src/js/actions/NotificationActions')
-  .dontMock('../../../src/js/constants/NevergreenConstants')
+jest.dontMock('../../src/js/NevergreenActions')
 
-describe('notification actions', () => {
-  let subject, AppDispatcher, Constants, gateway, helpers, promiseMock, semver
+describe('nevergreen actions', () => {
+  let subject, AppDispatcher, gateway, helpers, promiseMock, semver
 
   beforeEach(() => {
-    helpers = require('../jest/Helpers')
-    subject = require('../../../src/js/actions/NotificationActions')
-    AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
-    Constants = require('../../../src/js/constants/NevergreenConstants')
-    gateway = require('../../../src/js/gateways/gateway')
+    helpers = require('./jest/Helpers')
+    subject = require('../../src/js/NevergreenActions')
+    AppDispatcher = require('../../src/js/dispatcher/AppDispatcher')
+    gateway = require('../../src/js/gateways/gateway')
     semver = require('semver')
 
     promiseMock = helpers.promiseMock()
@@ -30,7 +28,7 @@ describe('notification actions', () => {
 
     it('dispatches an action with the new version', () => {
       expect(AppDispatcher.dispatch).toBeCalledWith({
-        type: Constants.Notification,
+        type: subject.Notification,
         message: jasmine.stringMatching('some-version')
       })
     })
@@ -73,7 +71,7 @@ describe('notification actions', () => {
     subject.dismiss()
 
     expect(AppDispatcher.dispatch).toBeCalledWith({
-      type: Constants.NotificationDismiss
+      type: subject.NotificationDismiss
     })
   })
 })

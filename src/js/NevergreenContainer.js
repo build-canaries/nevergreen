@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import AppStore from './stores/AppStore'
-import {init, showKeyboardShortcuts} from './NevergreenActions'
-import NotificationActions from './actions/NotificationActions'
+import {init, showKeyboardShortcuts, dismiss, checkForNewVersion} from './NevergreenActions'
 import NotificationStore from './stores/NotificationStore'
 import Nevergreen from './Nevergreen'
 
@@ -15,8 +14,8 @@ function getStateFromStore() {
     notification: NotificationStore.getNotification(),
     showKeyboardShortcuts,
     init,
-    pollForNewVersion: NotificationActions.pollForNewVersion,
-    dismiss: NotificationActions.dismiss
+    checkForNewVersion: checkForNewVersion.bind(null, AppStore.versionNumber(), window.location.hostname),
+    dismiss
   }
 }
 

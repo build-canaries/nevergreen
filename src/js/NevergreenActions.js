@@ -1,6 +1,8 @@
 import AppDispatcher from './dispatcher/AppDispatcher'
 import LocalRepository from './storage/LocalRepository'
 import moment from 'moment'
+import {get} from './gateways/gateway'
+import semver from 'semver'
 
 function momentInit() {
   moment.updateLocale('en', {
@@ -49,5 +51,29 @@ export function init() {
       type: AppInit,
       configuration
     })
+  })
+}
+
+const nevergreenioRegEx = /nevergreen\.io/i
+
+export const Notification = 'notification'
+export function checkForNewVersion(currentVersion, hostname) {
+  get('https://api.github.com/repos/build-canaries/nevergreen/releases/latest').then((data) => {
+    if (semver.gt(data.tag_name, currentVersion)) {
+      const saas = nevergreenioRegEx.test(hostname)
+      const additional = saas ? ', refresh to update' : 'to download from GitHub now'
+
+      AppDispatcher.dispatch({
+        type: Notification,
+        message: `A new version ${data.tag_name} is available ${additional}!`
+      })
+    }
+  })
+}
+
+export const NotificationDismiss = 'notification-dismiss'
+export function dismiss() {
+  AppDispatcher.dispatch({
+    type: NotificationDismiss
   })
 }

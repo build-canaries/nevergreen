@@ -15,7 +15,7 @@ class Nevergreen extends Component {
   componentDidMount() {
     this.props.init()
 
-    const versionCheckId = setInterval(this.props.pollForNewVersion, twentyFourHours)
+    const versionCheckId = setInterval(this.props.checkForNewVersion, twentyFourHours)
     this.setState({versionCheckId})
 
     Mousetrap.bindGlobal('esc', () => {
@@ -69,7 +69,7 @@ Nevergreen.propTypes = {
   notification: PropTypes.string,
   init: PropTypes.func.isRequired,
   showKeyboardShortcuts: PropTypes.func.isRequired,
-  pollForNewVersion: PropTypes.func.isRequired,
+  checkForNewVersion: PropTypes.func.isRequired,
   dismiss: PropTypes.func.isRequired
 }
 

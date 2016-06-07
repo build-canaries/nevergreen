@@ -1,16 +1,14 @@
 jest.dontMock('../../../src/js/stores/NotificationStore')
-  .dontMock('../../../src/js/constants/NevergreenConstants')
   .dontMock('../../../src/js/NevergreenActions')
 
 describe('notification store', () => {
 
-  let AppDispatcher, Constants, NevergreenActions, store, callback, eventEmitterMock
+  let AppDispatcher, NevergreenActions, store, callback, eventEmitterMock
 
   beforeEach(() => {
     eventEmitterMock = require('../jest/Helpers').eventEmitterMock()
 
     AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
-    Constants = require('../../../src/js/constants/NevergreenConstants')
     NevergreenActions = require('../../../src/js/NevergreenActions')
     store = require('../../../src/js/stores/NotificationStore')
     callback = AppDispatcher.register.mock.calls[0][0]
@@ -38,7 +36,7 @@ describe('notification store', () => {
   describe('notification event', () => {
     beforeEach(() => {
       callback({
-        type: Constants.Notification,
+        type: NevergreenActions.Notification,
         message: 'some-message'
       })
     })
@@ -55,11 +53,11 @@ describe('notification store', () => {
   describe('dismissing the notification', () => {
     beforeEach(() => {
       callback({
-        type: Constants.Notification,
+        type: NevergreenActions.Notification,
         message: 'some-message'
       })
       callback({
-        type: Constants.NotificationDismiss
+        type: NevergreenActions.NotificationDismiss
       })
     })
 
