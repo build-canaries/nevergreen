@@ -1,4 +1,4 @@
-import AppDispatcher from '../dispatcher/AppDispatcher'
+import AppDispatcher from '../common/AppDispatcher'
 import {EventEmitter} from 'events'
 import {AppInit} from '../NevergreenActions'
 import {RestoreConfiguration, ImportingData, ImportError, ExportData} from '../backup/BackupActions'

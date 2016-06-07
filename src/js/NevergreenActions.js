@@ -1,7 +1,7 @@
-import AppDispatcher from './dispatcher/AppDispatcher'
-import LocalRepository from './storage/LocalRepository'
+import AppDispatcher from './common/AppDispatcher'
+import LocalRepository from './common/LocalRepository'
 import moment from 'moment'
-import {get} from './gateways/gateway'
+import {get} from './common/gateways/Gateway'
 import semver from 'semver'
 
 function momentInit() {

@@ -1,12 +1,12 @@
-jest.dontMock('../../../src/js/gateways/projectsGateway')
+jest.dontMock('../../../../src/js/common/gateways/ProjectsGateway')
 
 describe('projects gateway', () => {
 
   let subject, gateway
 
   beforeEach(() => {
-    subject = require('../../../src/js/gateways/projectsGateway')
-    gateway = require('../../../src/js/gateways/gateway')
+    subject = require('../../../../src/js/common/gateways/ProjectsGateway')
+    gateway = require('../../../../src/js/common/gateways/Gateway')
   })
 
   describe('getting all projects', () => {

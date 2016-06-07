@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import PrimaryInput from '../views/general/PrimaryInput'
+import PrimaryInput from '../common/PrimaryInput'
 
 class AddTray extends Component {
   constructor(props) {

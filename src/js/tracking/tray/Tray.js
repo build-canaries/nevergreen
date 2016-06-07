@@ -3,8 +3,8 @@ import Container from '../../common/Container'
 import AvailableProjects from './AvailableProjects'
 import TraySettings from './TraySettings'
 import Loading from '../../common/Loading'
-import ValidationMessages from '../../views/general/validationMessages'
-import Shortcut from '../../views/general/Shortcut'
+import ValidationMessages from '../../common/ValidationMessages'
+import Shortcut from '../../common/Shortcut'
 import moment from 'moment'
 
 class Tray extends Component {

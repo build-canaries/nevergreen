@@ -8,7 +8,11 @@ class PrimaryInput extends Component {
   }
 
   componentDidMount() {
-    Mousetrap.bind('a', this._focus.bind(this))
+    const focus = () => {
+      ReactDOM.findDOMNode(this).focus()
+      return false
+    }
+    Mousetrap.bind('a', focus)
   }
 
   componentWillUnmount() {
@@ -17,11 +21,6 @@ class PrimaryInput extends Component {
 
   render() {
     return this.props.children
-  }
-
-  _focus() {
-    ReactDOM.findDOMNode(this).focus()
-    return false
   }
 }
 

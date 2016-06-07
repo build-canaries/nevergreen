@@ -1,4 +1,4 @@
-import AppDispatcher from '../dispatcher/AppDispatcher'
+import AppDispatcher from '../common/AppDispatcher'
 import {EventEmitter} from 'events'
 import {NotificationDismiss, Notification, AppInit} from '../NevergreenActions'
 

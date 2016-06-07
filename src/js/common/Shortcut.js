@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import ReactDOM from 'react-dom'
 import Mousetrap from 'mousetrap'
-import UiMessageStore from '../../stores/UiMessageStore'
+import UiMessageStore from '../stores/UiMessageStore'
 
 function getStateFromStore() {
   return {

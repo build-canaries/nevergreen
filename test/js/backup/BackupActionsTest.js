@@ -6,8 +6,8 @@ describe('backup actions', () => {
   beforeEach(() => {
     Helpers = require('../jest/Helpers')
     subject = require('../../../src/js/backup/BackupActions')
-    AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
-    LocalRepository = require('../../../src/js/storage/LocalRepository')
+    AppDispatcher = require('../../../src/js/common/AppDispatcher')
+    LocalRepository = require('../../../src/js/common/LocalRepository')
     promiseMock = Helpers.promiseMock()
   })
 

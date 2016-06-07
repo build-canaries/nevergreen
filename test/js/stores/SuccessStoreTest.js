@@ -8,7 +8,7 @@ describe('success store', () => {
   let store, AppDispatcher, NevergreenActions, BackupActions, SuccessActions, callback
 
   beforeEach(() => {
-    AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
+    AppDispatcher = require('../../../src/js/common/AppDispatcher')
     NevergreenActions = require('../../../src/js/NevergreenActions')
     BackupActions = require('../../../src/js/backup/BackupActions')
     SuccessActions = require('../../../src/js/success/SuccessActions')

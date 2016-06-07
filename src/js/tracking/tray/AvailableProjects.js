@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import AvailableProject from './AvailableProject'
 import _ from 'lodash'
-import Shortcut from '../../views/general/Shortcut'
+import Shortcut from '../../common/Shortcut'
 
 function projectName(project) {
   return project.name

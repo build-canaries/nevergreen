@@ -1,5 +1,5 @@
-import AppDispatcher from '../dispatcher/AppDispatcher'
-import {interesting} from '../gateways/projectsGateway'
+import AppDispatcher from '../common/AppDispatcher'
+import {interesting} from '../common/gateways/ProjectsGateway'
 
 export const InterestingProjects = 'interesting-projects'
 export const InterestingProjectsError = 'interesting-projects-error'

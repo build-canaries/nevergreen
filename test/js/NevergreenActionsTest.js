@@ -6,8 +6,8 @@ describe('nevergreen actions', () => {
   beforeEach(() => {
     helpers = require('./jest/Helpers')
     subject = require('../../src/js/NevergreenActions')
-    AppDispatcher = require('../../src/js/dispatcher/AppDispatcher')
-    gateway = require('../../src/js/gateways/gateway')
+    AppDispatcher = require('../../src/js/common/AppDispatcher')
+    gateway = require('../../src/js/common/gateways/Gateway')
     semver = require('semver')
 
     promiseMock = helpers.promiseMock()

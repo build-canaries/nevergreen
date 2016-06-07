@@ -7,7 +7,7 @@ describe('display store', () => {
   let AppDispatcher, NevergreenActions, AudioVisualActions, store, callback
 
   beforeEach(() => {
-    AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
+    AppDispatcher = require('../../../src/js/common/AppDispatcher')
     NevergreenActions = require('../../../src/js/NevergreenActions')
     AudioVisualActions = require('../../../src/js/audio-visual/AudioVisualActions')
     store = require('../../../src/js/stores/DisplayStore')

@@ -1,13 +1,13 @@
 jest.dontMock('../../../src/js/monitor/MonitorActions')
 
-describe('interesting actions', () => {
+describe('monitor actions', () => {
 
   let subject, AppDispatcher, projectsGateway, promiseMock
 
   beforeEach(() => {
     subject = require('../../../src/js/monitor/MonitorActions')
-    AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
-    projectsGateway = require('../../../src/js/gateways/projectsGateway')
+    AppDispatcher = require('../../../src/js/common/AppDispatcher')
+    projectsGateway = require('../../../src/js/common/gateways/ProjectsGateway')
     promiseMock = {
       then: jest.genMockFunction(),
       catch: jest.genMockFunction()

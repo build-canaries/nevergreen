@@ -1,9 +1,9 @@
 import React, {Component, PropTypes} from 'react'
-import ValidationMessages from '../views/general/validationMessages'
-import InfoMessages from '../views/general/InfoMessages'
+import ValidationMessages from '../common/ValidationMessages'
+import InfoMessages from '../common/InfoMessages'
 import Container from '../common/Container'
 import Loading from '../common/Loading'
-import PrimaryInput from '../views/general/PrimaryInput'
+import PrimaryInput from '../common/PrimaryInput'
 
 class Import extends Component {
   constructor(props) {

@@ -9,7 +9,7 @@ describe('selected projects store', () => {
   let store, AppDispatcher, TrackingActions, TrayActions, NevergreenActions, BackupActions, callback
 
   beforeEach(() => {
-    AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
+    AppDispatcher = require('../../../src/js/common/AppDispatcher')
     TrackingActions = require('../../../src/js/tracking/TrackingActions')
     TrayActions = require('../../../src/js/tracking/tray/TrayActions')
     NevergreenActions = require('../../../src/js/NevergreenActions')

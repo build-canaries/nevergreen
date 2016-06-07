@@ -6,7 +6,7 @@ describe('tray actions', () => {
 
   beforeEach(() => {
     subject = require('../../../../src/js/tracking/tray/TrayActions')
-    AppDispatcher = require('../../../../src/js/dispatcher/AppDispatcher')
+    AppDispatcher = require('../../../../src/js/common/AppDispatcher')
   })
 
   it('dispatches a project selected action', () => {

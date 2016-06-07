@@ -1,4 +1,4 @@
-import AppDispatcher from '../dispatcher/AppDispatcher'
+import AppDispatcher from '../common/AppDispatcher'
 import {EventEmitter} from 'events'
 import {AppInit} from '../NevergreenActions'
 import {RestoreConfiguration} from '../backup/BackupActions'
@@ -12,7 +12,7 @@ import {
   ProjectsFetchError
 } from '../tracking/TrackingActions'
 import _ from 'lodash'
-import LocalRepository from '../storage/LocalRepository'
+import LocalRepository from '../common/LocalRepository'
 import nameGenerator from 'project-name-generator'
 
 const eventEmitter = new EventEmitter()

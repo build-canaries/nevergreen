@@ -8,7 +8,7 @@ describe('fetched projects store', () => {
   let store, AppDispatcher, BackupActions, TrackingActions, NevergreenActions, callback
 
   beforeEach(() => {
-    AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
+    AppDispatcher = require('../../../src/js/common/AppDispatcher')
     TrackingActions = require('../../../src/js/tracking/TrackingActions')
     BackupActions = require('../../../src/js/backup/BackupActions')
     NevergreenActions = require('../../../src/js/NevergreenActions')

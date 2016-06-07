@@ -2,11 +2,19 @@ import React, {Component, PropTypes} from 'react'
 import InterestingProjects from './InterestingProjects'
 import Success from './Success'
 import Loading from '../common/Loading'
-import ValidationMessages from '../views/general/validationMessages'
+import ValidationMessages from '../common/ValidationMessages'
 
 class Monitor extends Component {
   constructor(props) {
     super(props)
+  }
+
+  componentDidMount() {
+    this.props.poll()
+  }
+
+  componentWillUnmount() {
+    this.props.stopPolling()
   }
 
   render() {
@@ -30,7 +38,7 @@ class Monitor extends Component {
                              brokenBuildFx={this.props.brokenBuildFx}/>
 
     } else {
-      content = <Success message={this.props.successMessage()} />
+      content = <Success message={this.props.successMessage} />
     }
 
     return <div className='monitor' onMouseMove={this.props.showMenu}>
@@ -38,14 +46,6 @@ class Monitor extends Component {
         {content}
       </Loading>
     </div>
-  }
-
-  componentDidMount() {
-    this.props.poll()
-  }
-
-  componentWillUnmount() {
-    this.props.stopPolling()
   }
 }
 

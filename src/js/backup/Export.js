@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react'
-import ValidationMessages from '../views/general/validationMessages'
-import InfoMessages from '../views/general/InfoMessages'
+import ValidationMessages from '../common/ValidationMessages'
+import InfoMessages from '../common/InfoMessages'
 import Clipboard from 'clipboard'
 import Container from '../common/Container'
 import Loading from '../common/Loading'

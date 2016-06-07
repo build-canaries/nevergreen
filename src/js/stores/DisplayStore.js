@@ -1,4 +1,4 @@
-import AppDispatcher from '../dispatcher/AppDispatcher'
+import AppDispatcher from '../common/AppDispatcher'
 import {EventEmitter} from 'events'
 import {AppInit} from '../NevergreenActions'
 import {RestoreConfiguration} from '../backup/BackupActions'
@@ -7,7 +7,7 @@ import {
   BrokenBuildSoundsToggled,
   BrokenBuildSoundFx
 } from '../audio-visual/AudioVisualActions'
-import LocalRepository from '../storage/LocalRepository'
+import LocalRepository from '../common/LocalRepository'
 import _ from 'lodash'
 
 const eventEmitter = new EventEmitter()

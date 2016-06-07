@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import ReactDOM from 'react-dom'
 import {styleProjects} from './Styler'
 
-class Message extends Component {
+class SuccessMessage extends Component {
   constructor(props) {
     super(props)
   }
@@ -24,8 +24,8 @@ class Message extends Component {
   }
 }
 
-Message.propTypes = {
+SuccessMessage.propTypes = {
   message: PropTypes.string.isRequired
 }
 
-export default Message
+export default SuccessMessage

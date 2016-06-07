@@ -1,5 +1,5 @@
-import AppDispatcher from '../dispatcher/AppDispatcher'
-import LocalRepository from '../storage/LocalRepository'
+import AppDispatcher from '../common/AppDispatcher'
+import LocalRepository from '../common/LocalRepository'
 import _ from 'lodash'
 import DisplayStore from '../stores/DisplayStore'
 import FetchedProjectsStore from '../stores/FetchedProjectsStore'

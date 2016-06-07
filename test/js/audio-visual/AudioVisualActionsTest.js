@@ -5,7 +5,7 @@ describe('audio visual actions', () => {
 
   beforeEach(() => {
     subject = require('../../../src/js/audio-visual/AudioVisualActions')
-    AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
+    AppDispatcher = require('../../../src/js/common/AppDispatcher')
   })
 
   it('dispatches an action for broken build timers', () => {

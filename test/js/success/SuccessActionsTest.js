@@ -6,7 +6,7 @@ describe('success actions', () => {
 
   beforeEach(() => {
     subject = require('../../../src/js/success/SuccessActions')
-    AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
+    AppDispatcher = require('../../../src/js/common/AppDispatcher')
   })
 
   it('should not change messages which do not need to change', () => {

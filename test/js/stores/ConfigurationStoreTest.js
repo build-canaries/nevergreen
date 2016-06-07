@@ -7,7 +7,7 @@ describe('configuration store', () => {
   let AppDispatcher, BackupActions, NevergreenActions, store, callback
 
   beforeEach(() => {
-    AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
+    AppDispatcher = require('../../../src/js/common/AppDispatcher')
     BackupActions = require('../../../src/js/backup/BackupActions')
     NevergreenActions = require('../../../src/js/NevergreenActions')
     store = require('../../../src/js/stores/ConfigurationStore')

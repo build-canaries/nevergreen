@@ -8,7 +8,7 @@ describe('notification store', () => {
   beforeEach(() => {
     eventEmitterMock = require('../jest/Helpers').eventEmitterMock()
 
-    AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
+    AppDispatcher = require('../../../src/js/common/AppDispatcher')
     NevergreenActions = require('../../../src/js/NevergreenActions')
     store = require('../../../src/js/stores/NotificationStore')
     callback = AppDispatcher.register.mock.calls[0][0]

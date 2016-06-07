@@ -8,7 +8,7 @@ describe('ui message store', () => {
   let AppDispatcher, BackupActions, SuccessActions, NevergreenActions, store, callback
 
   beforeEach(() => {
-    AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
+    AppDispatcher = require('../../../src/js/common/AppDispatcher')
     SuccessActions = require('../../../src/js/success/SuccessActions')
     BackupActions = require('../../../src/js/backup/BackupActions')
     NevergreenActions = require('../../../src/js/NevergreenActions')

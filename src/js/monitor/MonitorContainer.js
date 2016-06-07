@@ -15,7 +15,8 @@ function getStateFromStore() {
     brokenBuildSoundEnabled: DisplayStore.areBrokenBuildSoundsEnabled(),
     showBrokenBuildTimers: DisplayStore.areBrokenBuildTimersEnabled(),
     playBrokenBuildSounds: DisplayStore.areBrokenBuildSoundsEnabled(),
-    brokenBuildFx: DisplayStore.brokenBuildSoundFx()
+    brokenBuildFx: DisplayStore.brokenBuildSoundFx(),
+    successMessage: SuccessStore.randomMessage
   }
 }
 
@@ -35,7 +36,7 @@ function hideMenu() {
   })
 }
 
-class MonitorSection extends Component {
+class MonitorContainer extends Component {
 
   constructor(props) {
     super(props)
@@ -49,7 +50,7 @@ class MonitorSection extends Component {
     window.addEventListener('resize', callback)
     InterestingProjectsStore.addListener(callback)
     DisplayStore.addListener(callback)
-    
+
     hideMenu()
   }
 
@@ -64,11 +65,10 @@ class MonitorSection extends Component {
   render() {
     const poll = () => {
       fetchInteresting(TrayStore.getAll(), SelectedProjectsStore.getAll()).then(() => {
-        this.setState({
-          pollingTimer: setTimeout(() => {
-            poll()
-          }, 5000)
-        })
+        const pollingTimer = setTimeout(() => {
+          poll()
+        }, 5000)
+        this.setState({pollingTimer})
       })
     }
     const stopPolling = () => {
@@ -82,13 +82,9 @@ class MonitorSection extends Component {
         }, 3000)
       })
     }
-    const successMessage = () => {
-      return SuccessStore.randomMessage()
-    }
 
-    return <Monitor {...this.state} poll={poll} stopPolling={stopPolling} showMenu={showMenu}
-                                    successMessage={successMessage}/>
+    return <Monitor {...this.state} poll={poll} stopPolling={stopPolling} showMenu={showMenu}/>
   }
 }
 
-export default MonitorSection
+export default MonitorContainer

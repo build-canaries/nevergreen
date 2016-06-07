@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 
-class Image extends Component {
+class SuccessImage extends Component {
   constructor(props) {
     super(props)
   }
@@ -14,8 +14,8 @@ class Image extends Component {
   }
 }
 
-Image.propTypes = {
+SuccessImage.propTypes = {
   url: PropTypes.string.isRequired
 }
 
-export default Image
+export default SuccessImage

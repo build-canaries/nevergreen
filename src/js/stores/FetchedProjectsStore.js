@@ -1,10 +1,10 @@
-import AppDispatcher from '../dispatcher/AppDispatcher'
+import AppDispatcher from '../common/AppDispatcher'
 import {EventEmitter} from 'events'
 import {TrayAdd, TrayRemove, ProjectsFetched} from '../tracking/TrackingActions'
 import {AppInit} from '../NevergreenActions'
 import {RestoreConfiguration} from '../backup/BackupActions'
 import _ from 'lodash'
-import LocalRepository from '../storage/LocalRepository'
+import LocalRepository from '../common/LocalRepository'
 
 const eventEmitter = new EventEmitter()
 const storageKey = 'fetchedProjects'

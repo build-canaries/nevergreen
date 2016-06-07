@@ -1,26 +1,14 @@
 import React, {Component, PropTypes} from 'react'
-import {Link} from 'react-router'
-import Shortcut from './Shortcut'
+import MenuItem from './MenuItem'
 
-class MenuItem extends Component {
-  render() {
-    return (
-      <li>
-        <Link id={this.props.id} to={'/' + this.props.id} className='navigation-list-item' activeClassName='active'>
-          <span className={'navigation-list-item-icon ' + this.props.iconClass}/>
-          <span className='navigation-list-item-title'>{this.props.title}</span>
-          <Shortcut hotkeys={this.props.shortcuts}/>
-        </Link>
-      </li>
-    )
-  }
-}
-
-MenuItem.propTypes = {
-  iconClass: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  shortcuts: PropTypes.arrayOf(PropTypes.string).isRequired
-}
+const items = [
+  {id: 'monitor', iconClass: 'eye', title: 'Monitor', shortcuts: ['m', '1']},
+  {id: 'tracking', iconClass: 'drawer2', title: 'Tracking', shortcuts: ['t', '2']},
+  {id: 'success', iconClass: 'checkmark', title: 'Success', shortcuts: ['s', '3']},
+  {id: 'audio-visual', iconClass: 'display', title: 'Audio/Visual', shortcuts: ['v', '4']},
+  {id: 'backup', iconClass: 'floppy-disk', title: 'Backup', shortcuts: ['b', '5']},
+  {id: 'help', iconClass: 'question', title: 'Help', shortcuts: ['h', '6']}
+]
 
 class Menu extends Component {
   constructor(props) {
@@ -28,15 +16,6 @@ class Menu extends Component {
   }
 
   render() {
-    const items = [
-      {id: 'monitor', iconClass: 'eye', title: 'Monitor', shortcuts: ['m', '1']},
-      {id: 'tracking', iconClass: 'drawer2', title: 'Tracking', shortcuts: ['t', '2']},
-      {id: 'success', iconClass: 'checkmark', title: 'Success', shortcuts: ['s', '3']},
-      {id: 'audio-visual', iconClass: 'display', title: 'Audio/Visual', shortcuts: ['v', '4']},
-      {id: 'backup', iconClass: 'floppy-disk', title: 'Backup', shortcuts: ['b', '5']},
-      {id: 'help', iconClass: 'question', title: 'Help', shortcuts: ['h', '6']}
-    ]
-
     const footerStyle = {
       backgroundColor: this.props.versionColour
     }

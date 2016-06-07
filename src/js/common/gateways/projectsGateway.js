@@ -1,4 +1,4 @@
-import {post} from './gateway'
+import {post} from './Gateway'
 
 export function fetchAll(trays) {
   const data = trays.map((tray) => {

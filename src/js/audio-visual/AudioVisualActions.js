@@ -1,4 +1,4 @@
-import AppDispatcher from '../dispatcher/AppDispatcher'
+import AppDispatcher from '../common/AppDispatcher'
 
 export const BrokenBuildTimersChanged = 'broken-build-timers-changed'
 export function setBrokenBuildTimers(value) {

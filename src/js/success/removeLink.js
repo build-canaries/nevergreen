@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import Shortcut from '../views/general/Shortcut'
+import Shortcut from '../common/Shortcut'
 
 class RemoveLink extends Component {
   constructor(props) {

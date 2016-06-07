@@ -8,7 +8,7 @@ describe('tray store', () => {
   let store, AppDispatcher, TrackingActions, NevergreenActions, BackupActions, callback, nameGenerator
 
   beforeEach(() => {
-    AppDispatcher = require('../../../src/js/dispatcher/AppDispatcher')
+    AppDispatcher = require('../../../src/js/common/AppDispatcher')
     TrackingActions = require('../../../src/js/tracking/TrackingActions')
     NevergreenActions = require('../../../src/js/NevergreenActions')
     BackupActions = require('../../../src/js/backup/BackupActions')

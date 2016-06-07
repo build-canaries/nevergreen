@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import Menu from './views/general/menu'
+import Menu from './navigation/Menu'
 import Mousetrap from 'mousetrap'
 import 'mousetrap/plugins/global-bind/mousetrap-global-bind'
 import _ from 'lodash'

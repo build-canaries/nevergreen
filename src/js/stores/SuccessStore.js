@@ -1,10 +1,10 @@
-import AppDispatcher from '../dispatcher/AppDispatcher'
+import AppDispatcher from '../common/AppDispatcher'
 import {EventEmitter} from 'events'
 import {AppInit} from '../NevergreenActions'
 import {RestoreConfiguration} from '../backup/BackupActions'
 import {MessageAdd, MessageRemove} from '../success/SuccessActions'
 import _ from 'lodash'
-import LocalRepository from '../storage/LocalRepository'
+import LocalRepository from '../common/LocalRepository'
 
 const eventEmitter = new EventEmitter()
 const storageKey = 'success'
