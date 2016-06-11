@@ -2,7 +2,7 @@
   :description "A build monitor with attitude"
   :url "https://github.com/build-canaries/nevergreen"
   :dependencies [[org.clojure/clojure "1.8.0"]
-                 [ring "1.4.0"]
+                 [ring "1.5.0"]
                  [compojure "1.5.0"]
                  [environ "1.0.3"]
                  [cheshire "5.6.1"]
@@ -10,7 +10,7 @@
                  [clj-http "3.1.0"]
                  [ring-curl "0.3.0"]
                  [ring/ring-json "0.4.0"]
-                 [ring/ring-defaults "0.2.0"]
+                 [ring/ring-defaults "0.2.1"]
                  [bk/ring-gzip "0.1.1"]
                  [ring-basic-authentication "1.0.5"]
                  [base64-clj "0.1.1"]
