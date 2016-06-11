@@ -2,5 +2,5 @@ extends: stylelint-config-standard
 
 rules:
   string-quotes: single
-  font-family-name-quotes: single-where-recommended
-  function-url-quotes: single
+  font-family-name-quotes: always-where-required
+  function-url-quotes: always
