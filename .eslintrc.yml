@@ -6,8 +6,6 @@ parser: 'babel-eslint'
 
 env:
   es6: true
-  jest: true
-  jasmine: true
   browser: true
   node: true
 

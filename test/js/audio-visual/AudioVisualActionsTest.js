@@ -1,17 +1,25 @@
-jest.dontMock('../../../src/js/audio-visual/AudioVisualActions')
+import '../UnitSpec'
+import {describe, it, before, beforeEach} from 'mocha'
+import {expect} from 'chai'
+import sinon from 'sinon'
+import proxyquire from 'proxyquire'
 
 describe('audio visual actions', () => {
   let subject, AppDispatcher
 
+  before(() => {
+    AppDispatcher = {}
+    subject = proxyquire('../../../src/js/audio-visual/AudioVisualActions', {'../common/AppDispatcher': AppDispatcher})
+  })
+
   beforeEach(() => {
-    subject = require('../../../src/js/audio-visual/AudioVisualActions')
-    AppDispatcher = require('../../../src/js/common/AppDispatcher')
+    AppDispatcher.dispatch = sinon.spy()
   })
 
   it('dispatches an action for broken build timers', () => {
     subject.setBrokenBuildTimers('some-value')
 
-    expect(AppDispatcher.dispatch).toBeCalledWith({
+    expect(AppDispatcher.dispatch).to.have.been.calledWith({
       type: subject.BrokenBuildTimersChanged,
       value: 'some-value'
     })
@@ -20,7 +28,7 @@ describe('audio visual actions', () => {
   it('dispatches an action for the broken build sounds toggled', () => {
     subject.setBrokenBuildSounds('toggle on')
 
-    expect(AppDispatcher.dispatch).toBeCalledWith({
+    expect(AppDispatcher.dispatch).to.have.been.calledWith({
       type: subject.BrokenBuildSoundsToggled,
       value: 'toggle on'
     })
@@ -29,7 +37,7 @@ describe('audio visual actions', () => {
   it('dispatches an action for the broken build sound fx', () => {
     subject.setBrokenBuildSoundFx('some-url')
 
-    expect(AppDispatcher.dispatch).toBeCalledWith({
+    expect(AppDispatcher.dispatch).to.have.been.calledWith({
       type: subject.BrokenBuildSoundFx,
       value: 'some-url'
     })

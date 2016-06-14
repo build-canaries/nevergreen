@@ -1,123 +1,130 @@
-jest.dontMock('../../../src/js/stores/UiMessageStore')
-  .dontMock('../../../src/js/backup/BackupActions')
-  .dontMock('../../../src/js/success/SuccessActions')
-  .dontMock('../../../src/js/NevergreenActions')
+import '../UnitSpec'
+import {describe, it, before, beforeEach} from 'mocha'
+import {expect} from 'chai'
+import sinon from 'sinon'
+import proxyquire from 'proxyquire'
+import {AppInit, KeyboardShortcuts} from '../../../src/js/NevergreenActions'
+import {RestoreConfiguration, ImportingData, ImportError} from '../../../src/js/backup/BackupActions'
+import {MessageInvalidInput, MessageAdd, MessageRemove} from '../../../src/js/success/SuccessActions'
 
 describe('ui message store', () => {
 
-  let AppDispatcher, BackupActions, SuccessActions, NevergreenActions, store, callback
+  let AppDispatcher, subject, callback
+
+  before(() => {
+    AppDispatcher = {
+      register: sinon.spy()
+    }
+    subject = proxyquire('../../../src/js/stores/UiMessageStore', {'../common/AppDispatcher': AppDispatcher})
+
+    callback = AppDispatcher.register.getCall(0).args[0]
+  })
 
   beforeEach(() => {
-    AppDispatcher = require('../../../src/js/common/AppDispatcher')
-    SuccessActions = require('../../../src/js/success/SuccessActions')
-    BackupActions = require('../../../src/js/backup/BackupActions')
-    NevergreenActions = require('../../../src/js/NevergreenActions')
-    store = require('../../../src/js/stores/UiMessageStore')
-    callback = AppDispatcher.register.mock.calls[0][0]
-
+    AppDispatcher.dispatch = sinon.spy()
     callback({
-      type: NevergreenActions.AppInit
+      type: AppInit
     })
   })
 
   it('registers a callback with the dispatcher', () => {
-    expect(AppDispatcher.register.mock.calls.length).toBe(1)
+    expect(AppDispatcher.register).to.have.been.called
   })
 
   describe('init', () => {
     beforeEach(() => {
       callback({
-        type: NevergreenActions.AppInit
+        type: AppInit
       })
     })
 
     it('starts with no success errors', () => {
-      expect(store.getSuccessErrors()).toEqual([])
+      expect(subject.getSuccessErrors()).to.deep.equal([])
     })
 
     it('starts with no import errors', () => {
-      expect(store.getImportErrors()).toEqual([])
+      expect(subject.getImportErrors()).to.deep.equal([])
     })
 
     it('starts with no import infos', () => {
-      expect(store.getImportInfos()).toEqual([])
+      expect(subject.getImportInfos()).to.deep.equal([])
     })
 
     it('starts with keyboard shortcuts hidden', () => {
-      expect(store.showKeyboardShortcuts()).toBeFalsy()
+      expect(subject.showKeyboardShortcuts()).to.be.false
     })
   })
 
   describe('restore', () => {
     beforeEach(() => {
       callback({
-        type: BackupActions.RestoreConfiguration,
+        type: RestoreConfiguration,
         messages: ['some-message']
       })
     })
 
     it('clears success errors', () => {
-      expect(store.getSuccessErrors()).toEqual([])
+      expect(subject.getSuccessErrors()).to.deep.equal([])
     })
 
     it('clears import errors', () => {
-      expect(store.getImportErrors()).toEqual([])
+      expect(subject.getImportErrors()).to.deep.equal([])
     })
 
     it('sets import infos to event messages', () => {
-      expect(store.getImportInfos()).toEqual(['some-message'])
+      expect(subject.getImportInfos()).to.deep.equal(['some-message'])
     })
   })
 
   describe('adding a success message', () => {
     beforeEach(() => {
       callback({
-        type: SuccessActions.MessageInvalidInput,
+        type: MessageInvalidInput,
         errors: ['some-error']
       })
     })
 
     it('sets errors', () => {
-      expect(store.getSuccessErrors()).toEqual(['some-error'])
+      expect(subject.getSuccessErrors()).to.deep.equal(['some-error'])
     })
 
     it('clears errors on successful add', () => {
       callback({
-        type: SuccessActions.MessageAdd
+        type: MessageAdd
       })
-      expect(store.getSuccessErrors()).toEqual([])
+      expect(subject.getSuccessErrors()).to.deep.equal([])
     })
 
     it('clears errors on removal', () => {
       callback({
-        type: SuccessActions.MessageRemove
+        type: MessageRemove
       })
-      expect(store.getSuccessErrors()).toEqual([])
+      expect(subject.getSuccessErrors()).to.deep.equal([])
     })
   })
 
   describe('importing data', () => {
     beforeEach(() => {
       callback({
-        type: BackupActions.ImportError,
+        type: ImportError,
         errors: ['some-error']
       })
     })
 
     it('sets errors', () => {
-      expect(store.getImportErrors()).toEqual(['some-error'])
+      expect(subject.getImportErrors()).to.deep.equal(['some-error'])
     })
 
     it('clears infos', () => {
-      expect(store.getImportInfos()).toEqual([])
+      expect(subject.getImportInfos()).to.deep.equal([])
     })
 
     it('clears errors and infos when importing', () => {
       callback({
-        type: BackupActions.ImportingData
+        type: ImportingData
       })
-      expect(store.getImportErrors()).toEqual([])
-      expect(store.getImportInfos()).toEqual([])
+      expect(subject.getImportErrors()).to.deep.equal([])
+      expect(subject.getImportInfos()).to.deep.equal([])
     })
   })
 
@@ -125,25 +132,25 @@ describe('ui message store', () => {
     let cancelCallback
 
     beforeEach(() => {
-      cancelCallback = jest.genMockFn()
+      cancelCallback = sinon.spy()
       callback({
-        type: NevergreenActions.KeyboardShortcuts,
+        type: KeyboardShortcuts,
         show: true,
         cancel: cancelCallback
       })
     })
 
     it('sets show', () => {
-      expect(store.showKeyboardShortcuts()).toBeTruthy()
+      expect(subject.showKeyboardShortcuts()).to.be.true
     })
 
     it('cancels the previous timer if the event is triggered again', () => {
       callback({
-        type: NevergreenActions.KeyboardShortcuts,
+        type: KeyboardShortcuts,
         show: true,
-        cancel: jest.genMockFn()
+        cancel: sinon.spy()
       })
-      expect(cancelCallback).toBeCalled()
+      expect(cancelCallback).to.have.been.called
     })
   })
 })

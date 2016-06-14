@@ -1,36 +1,43 @@
-jest.dontMock('../../../src/js/tracking/TrackingActions')
+import '../UnitSpec'
+import {describe, it, before, beforeEach} from 'mocha'
+import {expect} from 'chai'
+import sinon from 'sinon'
+import proxyquire from 'proxyquire'
 
 describe('tracking actions', () => {
 
-  let subject, AppDispatcher, projectsGateway, securityGateway, promiseMock, moment, uuid, trayStore, Helpers
+  let subject, AppDispatcher, ProjectsGateway, SecurityGateway, TrayStore, uuid
+
+  before(() => {
+    AppDispatcher = {}
+    ProjectsGateway = {}
+    SecurityGateway = {}
+    TrayStore = {}
+    uuid = {}
+    subject = proxyquire('../../../src/js/tracking/TrackingActions', {
+      '../common/AppDispatcher': AppDispatcher,
+      '../common/gateways/ProjectsGateway': ProjectsGateway,
+      '../common/gateways/SecurityGateway': SecurityGateway,
+      '../stores/TrayStore': TrayStore,
+      'node-uuid': uuid
+    })
+  })
 
   beforeEach(() => {
-    Helpers = require('../jest/Helpers')
-    subject = require('../../../src/js/tracking/TrackingActions')
-    AppDispatcher = require('../../../src/js/common/AppDispatcher')
-    projectsGateway = require('../../../src/js/common/gateways/ProjectsGateway')
-    securityGateway = require('../../../src/js/common/gateways/SecurityGateway')
-    moment = require('moment')
-    uuid = require('node-uuid')
-    trayStore = require('../../../src/js/stores/TrayStore')
-
-    promiseMock = Helpers.promiseMock()
-
-    projectsGateway.fetchAll.mockReturnValue(promiseMock)
-    securityGateway.encryptPassword.mockReturnValue(promiseMock)
-    moment.mockReturnValue({format: () => 'some-timestamp'})
+    AppDispatcher.dispatch = sinon.spy()
+    ProjectsGateway.fetchAll = sinon.stub().returnsPromise()
+    SecurityGateway.encryptPassword = sinon.stub().returnsPromise()
   })
 
   describe('adding a tray', () => {
     beforeEach(() => {
-      uuid.v4.mockReturnValue('some-uuid')
-      subject.refreshTray = jest.genMockFunction()
+      uuid.v4 = sinon.stub().returns('some-uuid')
     })
 
     it('dispatches tray add', () => {
       subject.addTray('http://some-url', 'some-username', 'some-password')
 
-      expect(AppDispatcher.dispatch).toBeCalledWith({
+      expect(AppDispatcher.dispatch).to.have.been.calledWith({
         type: subject.TrayAdd,
         trayId: 'some-uuid',
         url: 'http://some-url',
@@ -41,42 +48,38 @@ describe('tracking actions', () => {
     it('adds the http scheme if no scheme is given', () => {
       subject.addTray('some-url', 'some-username', 'some-password')
 
-      expect(AppDispatcher.dispatch).toBeCalledWith(jasmine.objectContaining({
+      expect(AppDispatcher.dispatch).to.have.been.calledWithMatch({
         url: 'http://some-url'
-      }))
+      })
     })
 
-    xit('refreshes the tray with the username even if a blank password is given', () => {
+    it('refreshes the tray with the username even if a blank password is given', () => {
       subject.addTray('http://some-url', 'some-username', '')
 
-      expect(subject.refreshTray).toBeCalledWith({
-        trayId: 'some-uuid',
-        url: 'http://some-url',
-        username: 'some-username'
+      expect(AppDispatcher.dispatch).to.have.been.calledWithMatch({
+        type: subject.ProjectsFetching
       })
     })
 
     it('dispatches password encrypted if the tray has a password', () => {
+      SecurityGateway.encryptPassword.resolves({password: 'some-encrypted-password'})
+
       subject.addTray('http://some-url', 'some-username', 'some-password')
 
-      promiseMock.then.mock.calls[0][0]({password: 'some-encrypted-password'}) // call the callback passed to the promise mock
-
-      expect(AppDispatcher.dispatch).toBeCalledWith({
+      expect(AppDispatcher.dispatch).to.have.been.calledWithMatch({
         type: subject.PasswordEncrypted,
         trayId: 'some-uuid',
         password: 'some-encrypted-password'
       })
 
-      // expect(subject.refreshTray).toBeCalledWith(jasmine.objectContaining({
-      //   password: 'some-encrypted-password'
-      // }))
-    })
+      expect(ProjectsGateway.fetchAll.getCall(0).args[0]).to.have.deep.property('[0].password', 'some-encrypted-password')
+  })
   })
 
   it('dispatches tray remove action when removing a tray', () => {
     subject.removeTray('some-id')
 
-    expect(AppDispatcher.dispatch).toBeCalledWith({
+    expect(AppDispatcher.dispatch).to.have.been.calledWith({
       type: subject.TrayRemove,
       trayId: 'some-id'
     })
@@ -86,49 +89,46 @@ describe('tracking actions', () => {
     it('dispatches projects fetching with the tray id', () => {
       subject.refreshTray({trayId: 'some-id'})
 
-      expect(AppDispatcher.dispatch).toBeCalledWith({
+      expect(AppDispatcher.dispatch).to.have.been.calledWith({
         type: subject.ProjectsFetching,
         trayId: 'some-id'
       })
     })
 
     it('dispatches projects fetched action on success', () => {
+      ProjectsGateway.fetchAll.resolves('some-projects')
+
       subject.refreshTray({trayId: 'some-id'})
 
-      promiseMock.then.mock.calls[0][0]('some-projects') // call the callback passed to the promise mock
-
-      expect(AppDispatcher.dispatch).toBeCalledWith({
+      expect(AppDispatcher.dispatch).to.have.been.calledWithMatch({
         type: subject.ProjectsFetched,
         trayId: 'some-id',
-        projects: 'some-projects',
-        timestamp: 'some-timestamp'
+        projects: 'some-projects'
       })
     })
 
     it('dispatches projects fetching failed action on error', () => {
+      ProjectsGateway.fetchAll.rejects('some-error')
+
       subject.refreshTray({trayId: 'some-id'})
 
-      promiseMock.catch.mock.calls[0][0]('some-error') // call the callback passed to the promise mock
-
-      expect(AppDispatcher.dispatch).toBeCalledWith({
+      expect(AppDispatcher.dispatch).to.have.been.calledWithMatch({
         type: subject.ProjectsFetchError,
         trayId: 'some-id',
-        error: 'some-error',
-        timestamp: 'some-timestamp'
+        error: 'some-error'
       })
     })
   })
 
   describe('updating a tray', () => {
     beforeEach(() => {
-      trayStore.getById.mockReturnValue({password: 'existing-password'})
-      subject.refreshTray = jest.genMockFunction()
+      TrayStore.getById = sinon.stub().returns({password: 'existing-password'})
     })
 
     it('dispatches tray update with the given id', () => {
       subject.updateTray('some-id', 'some-name', 'some-url', 'some-username', 'some-password')
 
-      expect(AppDispatcher.dispatch).toBeCalledWith({
+      expect(AppDispatcher.dispatch).to.have.been.calledWith({
         type: subject.TrayUpdate,
         trayId: 'some-id',
         name: 'some-name',
@@ -138,56 +138,35 @@ describe('tracking actions', () => {
     })
 
     it('dispatches password encrypted if the tray has a new different password', () => {
+      SecurityGateway.encryptPassword.resolves({password: 'some-encrypted-password'})
+
       subject.updateTray('some-id', 'some-name', 'some-url', 'some-username', 'some-password')
 
-      promiseMock.then.mock.calls[0][0]({password: 'some-encrypted-password'}) // call the callback passed to the promise mock
-
-      expect(AppDispatcher.dispatch).toBeCalledWith({
+      expect(AppDispatcher.dispatch).to.have.been.calledWith({
         type: subject.PasswordEncrypted,
         trayId: 'some-id',
         password: 'some-encrypted-password'
       })
-
-      // expect(subject.refreshTray).toBeCalledWith({
-      //   trayId: 'some-id',
-      //   url: 'some-url',
-      //   username: 'some-username',
-      //   password: 'some-encrypted-password'
-      // })
     })
 
     it('does not dispatch password encrypted if the given password is the same as the current password', () => {
       subject.updateTray('some-id', 'some-name', 'some-url', 'some-username', 'existing-password')
 
-      expect(AppDispatcher.dispatch).not.toBeCalledWith({
+      expect(AppDispatcher.dispatch).to.not.have.been.calledWith({
         type: subject.PasswordEncrypted,
         trayId: 'some-id',
         password: 'some-encrypted-password'
       })
-
-      // expect(subject.refreshTray).toBeCalledWith({
-      //   trayId: 'some-id',
-      //   url: 'some-url',
-      //   username: 'some-username',
-      //   password: 'existing-password'
-      // })
     })
 
     it('allows the password to be unset aka updated to blank', () => {
       subject.updateTray('some-id', 'some-name', 'some-url', 'some-username', '')
 
-      expect(AppDispatcher.dispatch).toBeCalledWith({
+      expect(AppDispatcher.dispatch).to.have.been.calledWith({
         type: subject.PasswordEncrypted,
         trayId: 'some-id',
         password: ''
       })
-
-      // expect(subject.refreshTray).toBeCalledWith({
-      //   trayId: 'some-id',
-      //   url: 'some-url',
-      //   username: 'some-username',
-      //   password: ''
-      // })
     })
   })
 

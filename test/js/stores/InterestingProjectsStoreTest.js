@@ -1,41 +1,49 @@
-jest.dontMock('../../../src/js/stores/InterestingProjectsStore')
-  .dontMock('../../../src/js/backup/BackupActions')
-  .dontMock('../../../src/js/monitor/MonitorActions')
-  .dontMock('../../../src/js/NevergreenActions')
+import '../UnitSpec'
+import {describe, it, before, beforeEach} from 'mocha'
+import {expect} from 'chai'
+import sinon from 'sinon'
+import proxyquire from 'proxyquire'
+import {AppInit} from '../../../src/js/NevergreenActions'
+import {RestoreConfiguration} from '../../../src/js/backup/BackupActions'
+import {InterestingProjects, InterestingProjectsError} from '../../../src/js/monitor/MonitorActions'
 
-describe('success store', () => {
+describe('interesting projects store', () => {
 
-  let store, AppDispatcher, BackupActions, NevergreenActions, MonitorActions, callback
+  let subject, AppDispatcher, callback
 
+  before(() => {
+    AppDispatcher = {
+      register: sinon.spy()
+    }
+    subject = proxyquire('../../../src/js/stores/InterestingProjectsStore', {'../common/AppDispatcher': AppDispatcher})
+
+    callback = AppDispatcher.register.getCall(0).args[0]
+  })
+  
   beforeEach(() => {
-    AppDispatcher = require('../../../src/js/common/AppDispatcher')
-    BackupActions = require('../../../src/js/backup/BackupActions')
-    NevergreenActions = require('../../../src/js/NevergreenActions')
-    MonitorActions = require('../../../src/js/monitor/MonitorActions')
-    store = require('../../../src/js/stores/InterestingProjectsStore')
-    callback = AppDispatcher.register.mock.calls[0][0]
-
+    AppDispatcher.dispatch = sinon.spy()
+    
     callback({
-      type: NevergreenActions.AppInit,
+      type: AppInit,
       configuration: {}
     })
   })
 
   it('registers a callback with the dispatcher', () => {
-    expect(AppDispatcher.register.mock.calls.length).toBe(1)
+    expect(AppDispatcher.register).to.have.been.called
   })
 
   it('adds empty projects', () => {
     callback({
-      type: MonitorActions.InterestingProjects,
+      type: InterestingProjects,
       projects: []
     })
-    expect(store.getAll()).toEqual([])
+    expect(subject.getAll()).to.deep.equal([])
   })
 
   it('adds a project', () => {
     callback({
-      type: MonitorActions.InterestingProjects,
+      type: InterestingProjects,
       projects: [{
         projectId: 'some-id',
         name: 'name',
@@ -44,7 +52,7 @@ describe('success store', () => {
         lastBuildTime: 'some-last-build-time'
       }]
     })
-    expect(store.getAll()).toEqual([{
+    expect(subject.getAll()).to.deep.equal([{
       projectId: 'some-id',
       name: 'name stage',
       prognosis: 'some-prognosis',
@@ -54,17 +62,17 @@ describe('success store', () => {
 
   it('adds an error', () => {
     callback({
-      type: MonitorActions.InterestingProjectsError,
+      type: InterestingProjectsError,
       error: 'some-error'
     })
-    expect(store.getLastError()).toEqual('some-error')
+    expect(subject.getLastError()).to.equal('some-error')
   })
 
   it('clears the store state when new data is imported', () => {
     callback({
-      type: BackupActions.RestoreConfiguration
+      type: RestoreConfiguration
     })
-    expect(store.getAll()).toEqual([])
+    expect(subject.getAll()).to.deep.equal([])
   })
 
 })

@@ -1,83 +1,90 @@
-jest.dontMock('../../../src/js/stores/SelectedProjectsStore')
-  .dontMock('../../../src/js/tracking/TrackingActions')
-  .dontMock('../../../src/js/tracking/tray/TrayActions')
-  .dontMock('../../../src/js/NevergreenActions')
-  .dontMock('../../../src/js/backup/BackupActions')
+import '../UnitSpec'
+import {describe, it, before, beforeEach} from 'mocha'
+import {expect} from 'chai'
+import sinon from 'sinon'
+import proxyquire from 'proxyquire'
+import {AppInit} from '../../../src/js/NevergreenActions'
+import {TrayAdd} from '../../../src/js/tracking/TrackingActions'
+import {ProjectSelected, ProjectUnselected} from '../../../src/js/tracking/tray/TrayActions'
+import {RestoreConfiguration} from '../../../src/js/backup/BackupActions'
 
 describe('selected projects store', () => {
 
-  let store, AppDispatcher, TrackingActions, TrayActions, NevergreenActions, BackupActions, callback
+  let subject, AppDispatcher, callback
+
+  before(() => {
+    AppDispatcher = {
+      register: sinon.spy()
+    }
+    subject = proxyquire('../../../src/js/stores/SelectedProjectsStore', {'../common/AppDispatcher': AppDispatcher})
+
+    callback = AppDispatcher.register.getCall(0).args[0]
+  })
 
   beforeEach(() => {
-    AppDispatcher = require('../../../src/js/common/AppDispatcher')
-    TrackingActions = require('../../../src/js/tracking/TrackingActions')
-    TrayActions = require('../../../src/js/tracking/tray/TrayActions')
-    NevergreenActions = require('../../../src/js/NevergreenActions')
-    BackupActions = require('../../../src/js/backup/BackupActions')
-    store = require('../../../src/js/stores/SelectedProjectsStore')
-    callback = AppDispatcher.register.mock.calls[0][0]
+    AppDispatcher.dispatch = sinon.spy()
 
     callback({
-      type: NevergreenActions.AppInit,
+      type: AppInit,
       configuration: {}
     })
     callback({
-      type: TrackingActions.TrayAdd,
+      type: TrayAdd,
       trayId: 'some-id'
     })
   })
 
   it('registers a callback with the dispatcher', () => {
-    expect(AppDispatcher.register.mock.calls.length).toBe(1)
+    expect(AppDispatcher.register).to.have.been.called
   })
 
   it('concatenates selected project ids', () => {
     callback({
-      type: TrayActions.ProjectSelected,
+      type: ProjectSelected,
       trayId: 'some-id',
       projectIds: ['id-1']
     })
     callback({
-      type: TrayActions.ProjectSelected,
+      type: ProjectSelected,
       trayId: 'some-id',
       projectIds: ['id-2']
     })
-    expect(store.getForTray('some-id')).toEqual(['id-1', 'id-2'])
+    expect(subject.getForTray('some-id')).to.deep.equal(['id-1', 'id-2'])
   })
 
   it('removes unselected projects', () => {
     callback({
-      type: TrayActions.ProjectSelected,
+      type: ProjectSelected,
       trayId: 'some-id',
       projectIds: ['id-1']
     })
     callback({
-      type: TrayActions.ProjectUnselected,
+      type: ProjectUnselected,
       trayId: 'some-id',
       projectIds: ['id-1']
     })
-    expect(store.getForTray('some-id')).toEqual([])
+    expect(subject.getForTray('some-id')).to.deep.equal([])
   })
 
   it('restores the state from configuration', () => {
     callback({
-      type: BackupActions.RestoreConfiguration,
+      type: RestoreConfiguration,
       configuration: {selectedProjects: 'some-configuration'}
     })
-    expect(store.getAll()).toEqual('some-configuration')
+    expect(subject.getAll()).to.equal('some-configuration')
   })
 
   describe('validation', () => {
     it('returns an error message if the storage key does not exist', () => {
       const obj = {}
-      expect(store.validate(obj)).toEqual([jasmine.any(String)])
+      expect(subject.validate(obj)).to.deep.equal(['The top level key selectedProjects is missing!'])
     })
 
     it('returns an error message if the storage key is not an object', () => {
       const obj = {
         selectedProjects: 'not-an-object'
       }
-      expect(store.validate(obj)).toEqual([jasmine.any(String)])
+      expect(subject.validate(obj)).to.deep.equal(['The top level key selectedProjects must be an object!'])
     })
   })
 })

@@ -1,12 +1,20 @@
-jest.dontMock('../../../../src/js/common/gateways/ProjectsGateway')
+import '../../UnitSpec'
+import {describe, it, before, beforeEach} from 'mocha'
+import {expect} from 'chai'
+import sinon from 'sinon'
+import proxyquire from 'proxyquire'
 
 describe('projects gateway', () => {
 
-  let subject, gateway
+  let subject, Gateway
+
+  before(() => {
+    Gateway = {}
+    subject = proxyquire('../../../../src/js/common/gateways/ProjectsGateway', {'./Gateway': Gateway})
+  })
 
   beforeEach(() => {
-    subject = require('../../../../src/js/common/gateways/ProjectsGateway')
-    gateway = require('../../../../src/js/common/gateways/Gateway')
+    Gateway.post = sinon.spy()
   })
 
   describe('getting all projects', () => {
@@ -25,7 +33,7 @@ describe('projects gateway', () => {
 
       subject.fetchAll(trays)
 
-      expect(gateway.post).toBeCalledWith('/api/projects/all', trays)
+      expect(Gateway.post).to.have.been.calledWith('/api/projects/all', trays)
     })
   })
 
@@ -52,7 +60,7 @@ describe('projects gateway', () => {
         serverType: tray.serverType
       }]
 
-      expect(gateway.post).toBeCalledWith('/api/projects/interesting', data)
+      expect(Gateway.post).to.have.been.calledWith('/api/projects/interesting', data)
     })
   })
 })

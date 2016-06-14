@@ -1,43 +1,60 @@
-jest.dontMock('../../../src/js/stores/TrayStore')
-  .dontMock('../../../src/js/tracking/TrackingActions')
-  .dontMock('../../../src/js/NevergreenActions')
-  .dontMock('../../../src/js/backup/BackupActions')
+import '../UnitSpec'
+import {describe, it, before, beforeEach} from 'mocha'
+import {expect} from 'chai'
+import sinon from 'sinon'
+import proxyquire from 'proxyquire'
+import {AppInit} from '../../../src/js/NevergreenActions'
+import {ImportingData} from '../../../src/js/backup/BackupActions'
+import {
+  TrayAdd,
+  TrayUpdate,
+  TrayRemove,
+  ProjectsFetched,
+  ProjectsFetching,
+  ProjectsFetchError
+} from '../../../src/js/tracking/TrackingActions'
 
 describe('tray store', () => {
 
-  let store, AppDispatcher, TrackingActions, NevergreenActions, BackupActions, callback, nameGenerator
+  let subject, AppDispatcher, callback, NameGenerator
 
-  beforeEach(() => {
-    AppDispatcher = require('../../../src/js/common/AppDispatcher')
-    TrackingActions = require('../../../src/js/tracking/TrackingActions')
-    NevergreenActions = require('../../../src/js/NevergreenActions')
-    BackupActions = require('../../../src/js/backup/BackupActions')
-    store = require('../../../src/js/stores/TrayStore')
-    nameGenerator = require('project-name-generator')
-    callback = AppDispatcher.register.mock.calls[0][0]
-
-    callback({
-      type: NevergreenActions.AppInit,
-      configuration: {}
+  before(() => {
+    AppDispatcher = {
+      register: sinon.spy()
+    }
+    NameGenerator = {}
+    subject = proxyquire('../../../src/js/stores/TrayStore', {
+      '../common/AppDispatcher': AppDispatcher,
+      'project-name-generator': () => NameGenerator
     })
 
-    nameGenerator.mockReturnValue({
-      spaced: 'some generated name'
+    callback = AppDispatcher.register.getCall(0).args[0]
+  })
+
+  beforeEach(() => {
+    AppDispatcher.dispatch = sinon.spy()
+
+    callback({
+      type: AppInit,
+      configuration: {}
     })
   })
 
   it('registers a callback with the dispatcher', () => {
-    expect(AppDispatcher.register.mock.calls.length).toBe(1)
+    expect(AppDispatcher.register).to.have.been.called
   })
 
   it('adds a tray', () => {
+    NameGenerator.spaced = 'some generated name'
+    
     callback({
-      type: TrackingActions.TrayAdd,
+      type: TrayAdd,
       trayId: 'some-id',
       url: 'some-url',
       username: 'some-username'
     })
-    expect(store.getById('some-id')).toEqual({
+    
+    expect(subject.getById('some-id')).to.deep.equal({
       trayId: 'some-id',
       name: 'Some Generated Name',
       url: 'some-url',
@@ -48,7 +65,7 @@ describe('tray store', () => {
   describe('once a tray is added', () => {
     beforeEach(() => {
       callback({
-        type: TrackingActions.TrayAdd,
+        type: TrayAdd,
         trayId: 'some-id',
         url: 'some-url',
         username: 'some-username'
@@ -57,13 +74,13 @@ describe('tray store', () => {
 
     it('updates a tray', () => {
       callback({
-        type: TrackingActions.TrayUpdate,
+        type: TrayUpdate,
         trayId: 'some-id',
         name: 'some-name',
         url: 'another-url',
         username: 'another-username'
       })
-      expect(store.getById('some-id')).toEqual({
+      expect(subject.getById('some-id')).to.deep.equal({
         trayId: 'some-id',
         name: 'some-name',
         url: 'another-url',
@@ -73,80 +90,80 @@ describe('tray store', () => {
 
     it('removes a tray', () => {
       callback({
-        type: TrackingActions.TrayRemove,
+        type: TrayRemove,
         trayId: 'some-id'
       })
-      expect(store.getById('some-id')).toBeUndefined()
+      expect(subject.getById('some-id')).to.be.undefined
     })
 
     it('sets the fetching flag to true while fetching', () => {
       callback({
-        type: TrackingActions.ProjectsFetching,
+        type: ProjectsFetching,
         trayId: 'some-id'
       })
-      expect(store.getById('some-id').fetching).toBeTruthy()
+      expect(subject.getById('some-id').fetching).to.be.true
     })
 
     it('clears the error object while fetching', () => {
       callback({
-        type: TrackingActions.ProjectsFetching,
+        type: ProjectsFetching,
         trayId: 'some-id'
       })
-      expect(store.getById('some-id').error).toBeNull()
+      expect(subject.getById('some-id').error).to.be.null
     })
 
     it('sets the fetching flag to false when fetched', () => {
       callback({
-        type: TrackingActions.ProjectsFetched,
+        type: ProjectsFetched,
         trayId: 'some-id'
       })
-      expect(store.getById('some-id').fetching).toBeFalsy()
+      expect(subject.getById('some-id').fetching).to.be.false
     })
 
     it('clears the error object once fetched', () => {
       callback({
-        type: TrackingActions.ProjectsFetched,
+        type: ProjectsFetched,
         trayId: 'some-id'
       })
-      expect(store.getById('some-id').error).toBeNull()
+      expect(subject.getById('some-id').error).to.be.null
     })
 
     it('sets the error object on api error', () => {
       callback({
-        type: TrackingActions.ProjectsFetchError,
+        type: ProjectsFetchError,
         trayId: 'some-id',
         error: 'some-error'
       })
-      expect(store.getById('some-id').error).toEqual('some-error')
+      expect(subject.getById('some-id').error).to.equal('some-error')
     })
 
     it('sets the fetching flag to false on error', () => {
       callback({
-        type: TrackingActions.ProjectsFetchError,
+        type: ProjectsFetchError,
         trayId: 'some-id'
       })
-      expect(store.getById('some-id').fetching).toBeFalsy()
+      expect(subject.getById('some-id').fetching).to.be.false
     })
   })
 
   it('clears the store state when new data is imported', () => {
     callback({
-      type: BackupActions.ImportedData
+      type: ImportingData
     })
-    expect(store.getAll()).toEqual([])
+    expect(subject.getAll()).to.deep.equal([])
   })
 
   describe('validation', () => {
     it('returns an error message if the storage key does not exist', () => {
       const obj = {}
-      expect(store.validate(obj)).toEqual([jasmine.any(String)])
+      expect(subject.validate(obj)).to.deep.equal(['The top level key tray is missing!'])
     })
 
     it('returns an error message if the trays key does not exist', () => {
       const obj = {
         success: {}
       }
-      expect(store.validate(obj)).toEqual([jasmine.any(String)])
+      expect(subject.validate(obj)).to.deep.equal(['The top level key tray is missing!'])
     })
 
     it('returns an error message if the trays key is not an object', () => {
@@ -155,7 +172,7 @@ describe('tray store', () => {
           trays: 'not-an-object'
         }
       }
-      expect(store.validate(obj)).toEqual([jasmine.any(String)])
+      expect(subject.validate(obj)).to.deep.equal(['The top level key tray is missing!'])
     })
   })
 

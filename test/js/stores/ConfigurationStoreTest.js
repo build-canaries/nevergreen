@@ -1,82 +1,91 @@
-jest.dontMock('../../../src/js/stores/ConfigurationStore')
-  .dontMock('../../../src/js/backup/BackupActions')
-  .dontMock('../../../src/js/NevergreenActions')
+import '../UnitSpec'
+import {describe, it, before, beforeEach} from 'mocha'
+import {expect} from 'chai'
+import sinon from 'sinon'
+import proxyquire from 'proxyquire'
+import {AppInit} from '../../../src/js/NevergreenActions'
+import {RestoreConfiguration, ImportingData, ImportError, ExportData} from '../../../src/js/backup/BackupActions'
 
 describe('configuration store', () => {
 
-  let AppDispatcher, BackupActions, NevergreenActions, store, callback
+  let subject, AppDispatcher, callback
+
+  before(() => {
+    AppDispatcher = {
+      register: sinon.spy()
+    }
+    subject = proxyquire('../../../src/js/stores/ConfigurationStore', {'../common/AppDispatcher': AppDispatcher})
+
+    callback = AppDispatcher.register.getCall(0).args[0]
+  })
 
   beforeEach(() => {
-    AppDispatcher = require('../../../src/js/common/AppDispatcher')
-    BackupActions = require('../../../src/js/backup/BackupActions')
-    NevergreenActions = require('../../../src/js/NevergreenActions')
-    store = require('../../../src/js/stores/ConfigurationStore')
-    callback = AppDispatcher.register.mock.calls[0][0]
+    AppDispatcher.dispatch = sinon.spy()
 
     callback({
-      type: NevergreenActions.AppInit
+      type: AppInit
     })
   })
 
   it('registers a callback with the dispatcher', () => {
-    expect(AppDispatcher.register.mock.calls.length).toBe(1)
+    expect(AppDispatcher.register).to.have.been.called
   })
 
   describe('importing data', () => {
     beforeEach(() => {
       callback({
-        type: BackupActions.ImportingData
+        type: ImportingData
       })
     })
 
     it('sets importing to true', () => {
-      expect(store.isImporting()).toBeTruthy()
+      expect(subject.isImporting()).to.be.true
     })
 
     it('sets exporting to true', () => {
-      expect(store.isExporting()).toBeTruthy()
+      expect(subject.isExporting()).to.be.true
     })
   })
 
   describe('import error', () => {
     beforeEach(() => {
       callback({
-        type: BackupActions.ImportError,
+        type: ImportError,
         errors: ['some-error']
       })
     })
 
     it('sets importing to false', () => {
-      expect(store.isImporting()).toBeFalsy()
+      expect(subject.isImporting()).to.be.false
     })
 
     it('sets exporting to false', () => {
-      expect(store.isExporting()).toBeFalsy()
+      expect(subject.isExporting()).to.be.false
     })
   })
 
   describe('export data', () => {
     beforeEach(() => {
       callback({
-        type: BackupActions.ExportData,
+        type: ExportData,
         configuration: 'some-configuration'
       })
     })
 
     it('sets exporting to false', () => {
-      expect(store.isExporting()).toBeFalsy()
+      expect(subject.isExporting()).to.be.false
     })
 
     it('sets the configuration', () => {
-      expect(store.getConfiguration()).toEqual('some-configuration')
+      expect(subject.getConfiguration()).to.equal('some-configuration')
     })
   })
 
   it('sets importing to false once configuration is restored', () => {
     callback({
-      type: BackupActions.RestoreConfiguration,
+      type: RestoreConfiguration,
       messages: ['some-message']
     })
-    expect(store.isImporting()).toBeFalsy()
+    expect(subject.isImporting()).to.be.false
   })
 })

@@ -1,76 +1,73 @@
-jest.dontMock('../../src/js/NevergreenActions')
+import './UnitSpec'
+import {describe, it, before, beforeEach} from 'mocha'
+import {expect} from 'chai'
+import sinon from 'sinon'
+import proxyquire from 'proxyquire'
 
 describe('nevergreen actions', () => {
-  let subject, AppDispatcher, gateway, helpers, promiseMock, semver
+  let subject, AppDispatcher, LocalRepository, Gateway
+
+  before(() => {
+    AppDispatcher = {}
+    LocalRepository = {}
+    Gateway = {}
+    subject = proxyquire('../../src/js/NevergreenActions', {
+      './common/AppDispatcher': AppDispatcher,
+      './common/LocalRepository': LocalRepository,
+      './common/gateways/Gateway': Gateway
+    })
+  })
 
   beforeEach(() => {
-    helpers = require('./jest/Helpers')
-    subject = require('../../src/js/NevergreenActions')
-    AppDispatcher = require('../../src/js/common/AppDispatcher')
-    gateway = require('../../src/js/common/gateways/Gateway')
-    semver = require('semver')
-
-    promiseMock = helpers.promiseMock()
-    gateway.get.mockReturnValue(promiseMock)
+    AppDispatcher.dispatch = sinon.spy()
+    LocalRepository.getConfiguration = sinon.stub().returnsPromise()
+    Gateway.get = sinon.stub().returnsPromise()
   })
 
   describe('a new version is available', () => {
-    beforeEach(() => {
-      semver.gt.mockReturnValue(true)
+    it('dispatches an action with the correct type', () => {
+      Gateway.get.resolves({tag_name: '0.2.0'})
 
       subject.checkForNewVersion('0.1.0', 'nevergreen.io')
 
-      // call the callback passed to the gateway promise
-      promiseMock.then.mock.calls[0][0]({
-        tag_name: 'some-version'
-      })
-    })
-
-    it('dispatches an action with the new version', () => {
-      expect(AppDispatcher.dispatch).toBeCalledWith({
-        type: subject.Notification,
-        message: jasmine.stringMatching('some-version')
+      expect(AppDispatcher.dispatch).to.have.been.calledWithMatch({
+        type: subject.Notification
       })
     })
 
     it('dispatches an action mentioning refreshing if on nevergreen.io', () => {
-      expect(AppDispatcher.dispatch).toBeCalledWith(jasmine.objectContaining({
-        message: jasmine.stringMatching('refresh')
-      }))
-    })
-  })
+      Gateway.get.resolves({tag_name: '0.2.0'})
 
-  it('dispatches an action mentioning GitHub if self hosting', () => {
-    semver.gt.mockReturnValue(true)
-    subject.checkForNewVersion('0.1.0', 'my-internal-server-name')
+      subject.checkForNewVersion('0.1.0', 'nevergreen.io')
 
-    // call the callback passed to the gateway promise
-    promiseMock.then.mock.calls[0][0]({
-      tag_name: 'some-version'
+      expect(AppDispatcher.dispatch).to.have.been.calledWithMatch({
+        message: 'A new version 0.2.0 is available, refresh to update!'
+      })
     })
 
-    expect(AppDispatcher.dispatch).toBeCalledWith(jasmine.objectContaining({
-      message: jasmine.stringMatching('GitHub')
-    }))
+    it('dispatches an action mentioning GitHub if self hosting', () => {
+      Gateway.get.resolves({tag_name: '0.2.0'})
+
+      subject.checkForNewVersion('0.1.0', 'my-internal-server-name')
+
+      expect(AppDispatcher.dispatch).to.have.been.calledWithMatch({
+        message: 'A new version 0.2.0 is available to download from GitHub now!'
+      })
+    })
   })
 
   it('does not dispatches an action if you are on the latest version', () => {
-    semver.gt.mockReturnValue(false)
+    Gateway.get.resolves({tag_name: '0.1.0'})
 
     subject.checkForNewVersion('0.1.0')
 
-    // call the callback passed to the gateway promise
-    promiseMock.then.mock.calls[0][0]({
-      tag_name: 'some-version'
-    })
-
-    expect(AppDispatcher.dispatch).not.toBeCalled()
+    expect(AppDispatcher.dispatch).to.not.have.been.called
   })
 
   it('dispatches a dismiss notification action', () => {
     subject.dismiss()
 
-    expect(AppDispatcher.dispatch).toBeCalledWith({
+    expect(AppDispatcher.dispatch).to.have.been.calledWith({
       type: subject.NotificationDismiss
     })
   })

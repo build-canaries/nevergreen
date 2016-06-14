@@ -1,48 +1,61 @@
-jest.dontMock('../../../src/js/stores/DisplayStore')
-  .dontMock('../../../src/js/NevergreenActions')
-  .dontMock('../../../src/js/audio-visual/AudioVisualActions')
+import '../UnitSpec'
+import {describe, it, before, beforeEach} from 'mocha'
+import {expect} from 'chai'
+import sinon from 'sinon'
+import proxyquire from 'proxyquire'
+import {AppInit} from '../../../src/js/NevergreenActions'
+import {
+  BrokenBuildTimersChanged,
+  BrokenBuildSoundsToggled,
+  BrokenBuildSoundFx
+} from '../../../src/js/audio-visual/AudioVisualActions'
 
 describe('display store', () => {
 
-  let AppDispatcher, NevergreenActions, AudioVisualActions, store, callback
+  let AppDispatcher, subject, callback
 
+  before(() => {
+    AppDispatcher = {
+      register: sinon.spy()
+    }
+    subject = proxyquire('../../../src/js/stores/DisplayStore', {'../common/AppDispatcher': AppDispatcher})
+
+    callback = AppDispatcher.register.getCall(0).args[0]
+  })
+  
   beforeEach(() => {
-    AppDispatcher = require('../../../src/js/common/AppDispatcher')
-    NevergreenActions = require('../../../src/js/NevergreenActions')
-    AudioVisualActions = require('../../../src/js/audio-visual/AudioVisualActions')
-    store = require('../../../src/js/stores/DisplayStore')
-    callback = AppDispatcher.register.mock.calls[0][0]
+    AppDispatcher.dispatch = sinon.spy()
 
     callback({
-      type: NevergreenActions.AppInit,
+      type: AppInit,
       configuration: {}
     })
   })
 
   it('registers a callback with the dispatcher', () => {
-    expect(AppDispatcher.register.mock.calls.length).toBe(1)
+    expect(AppDispatcher.register).to.have.been.called
   })
 
   describe('are broken build timers enabled', () => {
     it('returns false by default', () => {
-      expect(store.areBrokenBuildTimersEnabled()).toBeFalsy()
+      expect(subject.areBrokenBuildTimersEnabled()).to.be.false
     })
 
     it('returns true when the callback changes the value to true', () => {
       callback({
-        type: AudioVisualActions.BrokenBuildTimersChanged,
+        type: BrokenBuildTimersChanged,
         value: true
       })
 
-      expect(store.areBrokenBuildTimersEnabled()).toBeTruthy()
+      expect(subject.areBrokenBuildTimersEnabled()).to.be.true
     })
 
     it('return false when the callback changes the value to anything else', () => {
         callback({
-          type: AudioVisualActions.BrokenBuildTimersChanged,
+          type: BrokenBuildTimersChanged,
           value: 'a string'
         })
-        expect(store.areBrokenBuildTimersEnabled()).toBeFalsy()
+        expect(subject.areBrokenBuildTimersEnabled()).to.be.false
       }
     )
   })
@@ -50,44 +63,44 @@ describe('display store', () => {
   describe('are broken build sounds enabled', () => {
 
     it('disables broken build sounds by default', () => {
-      expect(store.areBrokenBuildSoundsEnabled()).toBeFalsy()
+      expect(subject.areBrokenBuildSoundsEnabled()).to.be.false
     })
 
     it('enables broken builds when callback changes value to true', () => {
       callback({
-        type: AudioVisualActions.BrokenBuildSoundsToggled,
+        type: BrokenBuildSoundsToggled,
         value: true
       })
-      expect(store.areBrokenBuildSoundsEnabled()).toBeTruthy()
+      expect(subject.areBrokenBuildSoundsEnabled()).to.be.true
     })
 
     it('disables broken builds when callbak changes value to false', () => {
       callback({
-        type: AudioVisualActions.BrokenBuildSoundsToggled,
+        type: BrokenBuildSoundsToggled,
         value: false
       })
-      expect(store.areBrokenBuildSoundsEnabled()).toBeFalsy()
+      expect(subject.areBrokenBuildSoundsEnabled()).to.be.false
     })
   })
 
   describe('broken build sound fx', () => {
     it('defaults to the included pacman death sound', () => {
-      expect(store.brokenBuildSoundFx()).toBe('sounds/pacman_death.mp3')
+      expect(subject.brokenBuildSoundFx()).to.equal('sounds/pacman_death.mp3')
     })
 
     it('sets the value', () => {
       callback({
-        type: AudioVisualActions.BrokenBuildSoundFx,
+        type: BrokenBuildSoundFx,
         value: 'some-url'
       })
-      expect(store.brokenBuildSoundFx()).toBe('some-url')
+      expect(subject.brokenBuildSoundFx()).to.equal('some-url')
     })
   })
 
   describe('validation', () => {
     it('returns an error message if the storage key does not exist', () => {
       const obj = {}
-      expect(store.validate(obj)).toEqual([jasmine.any(String)])
+      expect(subject.validate(obj)).to.deep.equal(['The top level key display is missing!'])
     })
   })
 })

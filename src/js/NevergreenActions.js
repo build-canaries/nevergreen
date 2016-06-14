@@ -61,11 +61,11 @@ export function checkForNewVersion(currentVersion, hostname) {
   get('https://api.github.com/repos/build-canaries/nevergreen/releases/latest').then((data) => {
     if (semver.gt(data.tag_name, currentVersion)) {
       const saas = nevergreenioRegEx.test(hostname)
-      const additional = saas ? ', refresh to update' : 'to download from GitHub now'
+      const additional = saas ? ', refresh to update' : ' to download from GitHub now'
 
       AppDispatcher.dispatch({
         type: Notification,
-        message: `A new version ${data.tag_name} is available ${additional}!`
+        message: `A new version ${data.tag_name} is available${additional}!`
       })
     }
   })

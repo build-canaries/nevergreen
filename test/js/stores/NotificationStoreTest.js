@@ -1,72 +1,65 @@
-jest.dontMock('../../../src/js/stores/NotificationStore')
-  .dontMock('../../../src/js/NevergreenActions')
+import '../UnitSpec'
+import {describe, it, before, beforeEach} from 'mocha'
+import {expect} from 'chai'
+import sinon from 'sinon'
+import proxyquire from 'proxyquire'
+import {AppInit, Notification, NotificationDismiss} from '../../../src/js/NevergreenActions'
 
 describe('notification store', () => {
 
-  let AppDispatcher, NevergreenActions, store, callback, eventEmitterMock
+  let AppDispatcher, subject, callback
+
+  before(() => {
+    AppDispatcher = {
+      register: sinon.spy()
+    }
+    subject = proxyquire('../../../src/js/stores/NotificationStore', {'../common/AppDispatcher': AppDispatcher})
+
+    callback = AppDispatcher.register.getCall(0).args[0]
+  })
 
   beforeEach(() => {
-    eventEmitterMock = require('../jest/Helpers').eventEmitterMock()
-
-    AppDispatcher = require('../../../src/js/common/AppDispatcher')
-    NevergreenActions = require('../../../src/js/NevergreenActions')
-    store = require('../../../src/js/stores/NotificationStore')
-    callback = AppDispatcher.register.mock.calls[0][0]
+    AppDispatcher.dispatch = sinon.spy()
 
     callback({
-      type: NevergreenActions.AppInit
+      type: AppInit
     })
   })
 
   it('registers a callback with the dispatcher', () => {
-    expect(AppDispatcher.register.mock.calls.length).toBe(1)
-  })
-
-  it('emits an change after app init', () => {
-    callback({
-      type: NevergreenActions.AppInit
-    })
-    expect(eventEmitterMock.emit).toBeCalledWith('notification-change')
+    expect(AppDispatcher.register).to.have.been.called
   })
 
   it('returns an empty string by default', () => {
-    expect(store.getNotification()).toBe('')
+    expect(subject.getNotification()).to.equal('')
   })
 
   describe('notification event', () => {
     beforeEach(() => {
       callback({
-        type: NevergreenActions.Notification,
+        type: Notification,
         message: 'some-message'
       })
     })
 
     it('sets the notification to the message', () => {
-      expect(store.getNotification()).toBe('some-message')
-    })
-
-    it('emits a change', () => {
-      expect(eventEmitterMock.emit).toBeCalledWith('notification-change')
+      expect(subject.getNotification()).to.equal('some-message')
     })
   })
 
   describe('dismissing the notification', () => {
     beforeEach(() => {
       callback({
-        type: NevergreenActions.Notification,
+        type: Notification,
         message: 'some-message'
       })
       callback({
-        type: NevergreenActions.NotificationDismiss
+        type: NotificationDismiss
       })
     })
 
     it('sets the notification back to an empty string', () => {
-      expect(store.getNotification()).toBe('')
-    })
-
-    it('emits an change', () => {
-      expect(eventEmitterMock.emit).toBeCalledWith('notification-change')
+      expect(subject.getNotification()).to.equal('')
     })
   })
 

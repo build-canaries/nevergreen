@@ -1,62 +1,70 @@
-jest.dontMock('../../../src/js/stores/FetchedProjectsStore')
-  .dontMock('../../../src/js/backup/BackupActions')
-  .dontMock('../../../src/js/tracking/TrackingActions')
-  .dontMock('../../../src/js/NevergreenActions')
+import '../UnitSpec'
+import {describe, it, before, beforeEach} from 'mocha'
+import {expect} from 'chai'
+import sinon from 'sinon'
+import proxyquire from 'proxyquire'
+import {AppInit} from '../../../src/js/NevergreenActions'
+import {RestoreConfiguration} from '../../../src/js/backup/BackupActions'
+import {TrayAdd, ProjectsFetched} from '../../../src/js/tracking/TrackingActions'
 
 describe('fetched projects store', () => {
 
-  let store, AppDispatcher, BackupActions, TrackingActions, NevergreenActions, callback
+  let subject, AppDispatcher, callback
+
+  before(() => {
+    AppDispatcher = {
+      register: sinon.spy()
+    }
+    subject = proxyquire('../../../src/js/stores/FetchedProjectsStore', {'../common/AppDispatcher': AppDispatcher})
+
+    callback = AppDispatcher.register.getCall(0).args[0]
+  })
 
   beforeEach(() => {
-    AppDispatcher = require('../../../src/js/common/AppDispatcher')
-    TrackingActions = require('../../../src/js/tracking/TrackingActions')
-    BackupActions = require('../../../src/js/backup/BackupActions')
-    NevergreenActions = require('../../../src/js/NevergreenActions')
-    store = require('../../../src/js/stores/FetchedProjectsStore')
-    callback = AppDispatcher.register.mock.calls[0][0]
+    AppDispatcher.dispatch = sinon.spy()
 
     callback({
-      type: NevergreenActions.AppInit,
+      type: AppInit,
       configuration: {}
     })
   })
 
   it('registers a callback with the dispatcher', () => {
-    expect(AppDispatcher.register.mock.calls.length).toBe(1)
+    expect(AppDispatcher.register).to.have.been.called
   })
 
   it('returns undefined for unknown tray ids', () => {
-    expect(store.getAll('some-id')).toBeUndefined()
+    expect(subject.getAll('not-an-id')).to.be.undefined
   })
 
   it('creates an empty seq of fetched projects when a tray is added', () => {
     callback({
-      type: TrackingActions.TrayAdd,
+      type: TrayAdd,
       trayId: 'some-id'
     })
-    expect(store.getAll('some-id')).toEqual([])
+    expect(subject.getAll('some-id')).to.deep.equal([])
   })
 
   it('restores the state from configuration', () => {
     callback({
-      type: BackupActions.RestoreConfiguration,
-      configuration: {fetchedProjects: {someId: 'some-configuration'}}
+      type: RestoreConfiguration,
+      configuration: {fetchedProjects: {someId: 'the-configuration'}}
     })
-    expect(store.getAll('someId')).toEqual('some-configuration')
+    expect(subject.getAll('someId')).to.equal('the-configuration')
   })
 
   describe('adding fetched projects', () => {
 
     beforeEach(() => {
       callback({
-        type: TrackingActions.TrayAdd,
+        type: TrayAdd,
         trayId: 'some-id'
       })
     })
 
     it('filters out jobs', () => {
       callback({
-        type: TrackingActions.ProjectsFetched,
+        type: ProjectsFetched,
         trayId: 'some-id',
         projects: [{
           projectId: 'some-project-id',
@@ -70,7 +78,7 @@ describe('fetched projects store', () => {
           job: 'job'
         }]
       })
-      expect(store.getAll('some-id')).toEqual([{
+      expect(subject.getAll('some-id')).to.deep.equal([{
         projectId: 'some-project-id',
         name: 'name stage',
         isNew: true,
@@ -81,7 +89,7 @@ describe('fetched projects store', () => {
     describe('with previous projects added', () => {
       beforeEach(() => {
         callback({
-          type: TrackingActions.ProjectsFetched,
+          type: ProjectsFetched,
           trayId: 'some-id',
           projects: [{
             projectId: 'some-project-id',
@@ -94,7 +102,7 @@ describe('fetched projects store', () => {
 
       it('removes the new flag if the same project is fetched again', () => {
         callback({
-          type: TrackingActions.ProjectsFetched,
+          type: ProjectsFetched,
           trayId: 'some-id',
           projects: [{
             projectId: 'some-project-id',
@@ -103,7 +111,7 @@ describe('fetched projects store', () => {
             job: null
           }]
         })
-        expect(store.getAll('some-id')).toEqual([{
+        expect(subject.getAll('some-id')).to.deep.equal([{
           projectId: 'some-project-id',
           name: 'name stage',
           isNew: false,
@@ -113,11 +121,11 @@ describe('fetched projects store', () => {
 
       it('sets the removed flag if the project is not fetched again', () => {
         callback({
-          type: TrackingActions.ProjectsFetched,
+          type: ProjectsFetched,
           trayId: 'some-id',
           projects: []
         })
-        expect(store.getAll('some-id')).toEqual([{
+        expect(subject.getAll('some-id')).to.deep.equal([{
           projectId: 'some-project-id',
           name: 'name stage',
           isNew: false,
@@ -130,14 +138,14 @@ describe('fetched projects store', () => {
   describe('validation', () => {
     it('returns an error message if the storage key does not exist', () => {
       const obj = {}
-      expect(store.validate(obj)).toEqual([jasmine.any(String)])
+      expect(subject.validate(obj)).to.deep.equal(['The top level key fetchedProjects is missing!'])
     })
 
     it('returns an error message if the storage key is not an object', () => {
       const obj = {
         fetchedProjects: 'not-an-object'
       }
-      expect(store.validate(obj)).toEqual([jasmine.any(String)])
+      expect(subject.validate(obj)).to.deep.equal(['The top level key fetchedProjects must be an object!'])
     })
   })
 

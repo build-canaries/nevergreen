@@ -1,22 +1,30 @@
-jest.dontMock('../../../src/js/stores/SuccessStore')
-  .dontMock('../../../src/js/success/SuccessActions')
-  .dontMock('../../../src/js/NevergreenActions')
-  .dontMock('../../../src/js/backup/BackupActions')
+import '../UnitSpec'
+import {describe, it, before, beforeEach} from 'mocha'
+import {expect} from 'chai'
+import sinon from 'sinon'
+import proxyquire from 'proxyquire'
+import {AppInit} from '../../../src/js/NevergreenActions'
+import {ImportingData} from '../../../src/js/backup/BackupActions'
+import {MessageAdd, MessageRemove} from '../../../src/js/success/SuccessActions'
 
 describe('success store', () => {
 
-  let store, AppDispatcher, NevergreenActions, BackupActions, SuccessActions, callback
+  let subject, AppDispatcher, callback
+
+  before(() => {
+    AppDispatcher = {
+      register: sinon.spy()
+    }
+    subject = proxyquire('../../../src/js/stores/SuccessStore', {'../common/AppDispatcher': AppDispatcher})
+
+    callback = AppDispatcher.register.getCall(0).args[0]
+  })
 
   beforeEach(() => {
-    AppDispatcher = require('../../../src/js/common/AppDispatcher')
-    NevergreenActions = require('../../../src/js/NevergreenActions')
-    BackupActions = require('../../../src/js/backup/BackupActions')
-    SuccessActions = require('../../../src/js/success/SuccessActions')
-    store = require('../../../src/js/stores/SuccessStore')
-    callback = AppDispatcher.register.mock.calls[0][0]
-
+    AppDispatcher.dispatch = sinon.spy()
+    
     callback({
-      type: NevergreenActions.AppInit,
+      type: AppInit,
       configuration: {
         success: {
           messages: []
@@ -26,129 +34,129 @@ describe('success store', () => {
   })
 
   it('registers a callback with the dispatcher', () => {
-    expect(AppDispatcher.register.mock.calls.length).toBe(1)
+    expect(AppDispatcher.register).to.have.been.called
   })
 
   it('adds a message', () => {
     callback({
-      type: SuccessActions.MessageAdd,
+      type: MessageAdd,
       message: 'some-message'
     })
-    expect(store.getMessages()).toEqual(['some-message'])
+    expect(subject.getMessages()).to.deep.equal(['some-message'])
   })
 
   it('adds an image', () => {
     callback({
-      type: SuccessActions.MessageAdd,
+      type: MessageAdd,
       message: 'http://some-url'
     })
-    expect(store.getImages()).toEqual(['http://some-url'])
+    expect(subject.getImages()).to.deep.equal(['http://some-url'])
   })
 
   it('removes a message', () => {
     callback({
-      type: SuccessActions.MessageAdd,
+      type: MessageAdd,
       message: 'some-message'
     })
     callback({
-      type: SuccessActions.MessageRemove,
+      type: MessageRemove,
       message: 'some-message'
     })
-    expect(store.getMessages()).toEqual([])
+    expect(subject.getMessages()).to.deep.equal([])
   })
 
   it('removes an image', () => {
     callback({
-      type: SuccessActions.MessageAdd,
+      type: MessageAdd,
       message: 'http://some-url'
     })
     callback({
-      type: SuccessActions.MessageRemove,
+      type: MessageRemove,
       message: 'http://some-url'
     })
-    expect(store.getImages()).toEqual([])
+    expect(subject.getImages()).to.deep.equal([])
   })
 
   it('returns a blank random message if none have been added', () => {
-    expect(store.randomMessage()).toEqual('')
+    expect(subject.randomMessage()).to.equal('')
   })
 
   it('returns a random message', () => {
     callback({
-      type: SuccessActions.MessageAdd,
+      type: MessageAdd,
       message: 'some-message'
     })
     callback({
-      type: SuccessActions.MessageAdd,
+      type: MessageAdd,
       message: 'http://some-url'
     })
-    expect(store.randomMessage()).not.toEqual('')
+    expect(subject.randomMessage()).to.not.equal('')
   })
 
   it('can return just messages', () => {
     callback({
-      type: SuccessActions.MessageAdd,
+      type: MessageAdd,
       message: 'some-message'
     })
     callback({
-      type: SuccessActions.MessageAdd,
+      type: MessageAdd,
       message: 'http://some-url'
     })
-    expect(store.getMessages()).toEqual(['some-message'])
+    expect(subject.getMessages()).to.deep.equal(['some-message'])
   })
 
   it('can return just images', () => {
     callback({
-      type: SuccessActions.MessageAdd,
+      type: MessageAdd,
       message: 'some-message'
     })
     callback({
-      type: SuccessActions.MessageAdd,
+      type: MessageAdd,
       message: 'http://some-url'
     })
-    expect(store.getImages()).toEqual(['http://some-url'])
+    expect(subject.getImages()).to.deep.equal(['http://some-url'])
   })
 
   it('can return all images and messages', () => {
     callback({
-      type: SuccessActions.MessageAdd,
+      type: MessageAdd,
       message: 'some-message'
     })
     callback({
-      type: SuccessActions.MessageAdd,
+      type: MessageAdd,
       message: 'http://some-url'
     })
-    expect(store.getAll()).toEqual(['some-message', 'http://some-url'])
+    expect(subject.getAll()).to.deep.equal(['some-message', 'http://some-url'])
   })
 
   it('clears the store state when new data is imported', () => {
     callback({
-      type: BackupActions.ImportedData
+      type: ImportingData
     })
-    expect(store.getAll()).toEqual([])
+    expect(subject.getAll()).to.deep.equal([])
   })
 
   describe('knows if a string is a url or not', () => {
     it('returns true for any string starting with http', () => {
-      expect(store.isUrl('http')).toBeTruthy()
+      expect(subject.isUrl('http')).to.be.true
     })
 
     it('if returns false if the string does not start with http', () => {
-      expect(store.isUrl('ftp')).toBeFalsy()
+      expect(subject.isUrl('ftp')).to.be.false
     })
   })
 
   describe('validation', () => {
     it('returns an error message if the storage key does not exist', () => {
       const obj = {}
-      expect(store.validate(obj)).toEqual([jasmine.any(String)])
+      expect(subject.validate(obj)).to.deep.equal(['The top level key success is missing!'])
     })
 
     it('returns an error message if the messages key does not exist', () => {
       const obj = {
         success: {}
       }
-      expect(store.validate(obj)).toEqual([jasmine.any(String)])
+      expect(subject.validate(obj)).to.deep.equal(['The nested key success.messages is missing!'])
     })
 
     it('returns an error message if the messages key is not an array', () => {
@@ -157,7 +165,7 @@ describe('success store', () => {
           messages: 'not-an-array'
         }
       }
-      expect(store.validate(obj)).toEqual([jasmine.any(String)])
+      expect(subject.validate(obj)).to.deep.equal(['The nested key success.messages must be an array!'])
     })
 
     it('returns an error message if the messages key is an array with elements that are not strings', () => {
@@ -166,7 +174,7 @@ describe('success store', () => {
           messages: ['ok', 1, 'also-ok']
         }
       }
-      expect(store.validate(obj)).toEqual([jasmine.any(String)])
+      expect(subject.validate(obj)).to.deep.equal(['The nested key success.messages has an invalid element at index 1! It can only contain strings.'])
     })
   })
 

@@ -1,54 +1,50 @@
-jest.dontMock('../../../src/js/monitor/MonitorActions')
+import '../UnitSpec'
+import {describe, it, before, beforeEach} from 'mocha'
+import {expect} from 'chai'
+import sinon from 'sinon'
+import proxyquire from 'proxyquire'
 
 describe('monitor actions', () => {
 
-  let subject, AppDispatcher, projectsGateway, promiseMock
+  let subject, AppDispatcher, ProjectsGateway
+
+  before(() => {
+    AppDispatcher = {}
+    ProjectsGateway = {}
+    subject = proxyquire('../../../src/js/monitor/MonitorActions', {
+      '../common/AppDispatcher': AppDispatcher,
+      '../common/gateways/ProjectsGateway': ProjectsGateway
+    })
+  })
 
   beforeEach(() => {
-    subject = require('../../../src/js/monitor/MonitorActions')
-    AppDispatcher = require('../../../src/js/common/AppDispatcher')
-    projectsGateway = require('../../../src/js/common/gateways/ProjectsGateway')
-    promiseMock = {
-      then: jest.genMockFunction(),
-      catch: jest.genMockFunction()
-    }
-    promiseMock.then.mockReturnValue(promiseMock)
-    promiseMock.catch.mockReturnValue(promiseMock)
+    AppDispatcher.dispatch = sinon.spy()
+    ProjectsGateway.interesting = sinon.stub().returnsPromise()
   })
 
   it('calls the projects gateway', () => {
-    projectsGateway.interesting.mockReturnValueOnce(promiseMock)
-
     subject.fetchInteresting('some-trays', 'some-selected-projects')
 
-    expect(projectsGateway.interesting).toBeCalledWith('some-trays', 'some-selected-projects')
+    expect(ProjectsGateway.interesting).to.have.been.calledWith('some-trays', 'some-selected-projects')
   })
 
   it('dispatches a interesting projects action', () => {
-    projectsGateway.interesting.mockReturnValueOnce(promiseMock)
+    ProjectsGateway.interesting.resolves('the-data')
 
     subject.fetchInteresting('irrelevant', 'irrelevant')
 
-    const callback = promiseMock.then.mock.calls[0][0]
-
-    callback('the-data')
-
-    expect(AppDispatcher.dispatch).toBeCalledWith({
+    expect(AppDispatcher.dispatch).to.have.been.calledWith({
       type: subject.InterestingProjects,
       projects: 'the-data'
     })
   })
 
   it('dispatches a interesting projects error action', () => {
-    projectsGateway.interesting.mockReturnValueOnce(promiseMock)
+    ProjectsGateway.interesting.rejects('the-error')
 
     subject.fetchInteresting('irrelevant', 'irrelevant')
 
-    const callback = promiseMock.catch.mock.calls[0][0]
-
-    callback('the-error')
-
-    expect(AppDispatcher.dispatch).toBeCalledWith({
+    expect(AppDispatcher.dispatch).to.have.been.calledWith({
       type: subject.InterestingProjectsError,
       error: 'the-error'
     })

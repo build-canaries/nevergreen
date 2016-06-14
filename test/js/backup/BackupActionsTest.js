@@ -1,24 +1,33 @@
-jest.dontMock('../../../src/js/backup/BackupActions')
+import '../UnitSpec'
+import {describe, it, before, beforeEach} from 'mocha'
+import {expect} from 'chai'
+import sinon from 'sinon'
+import proxyquire from 'proxyquire'
 
 describe('backup actions', () => {
-  let subject, AppDispatcher, LocalRepository, promiseMock, Helpers
+  let subject, AppDispatcher, LocalRepository
+
+  before(() => {
+    AppDispatcher = {
+      dispatch: sinon.spy()
+    }
+    LocalRepository = {}
+    subject = proxyquire('../../../src/js/backup/BackupActions', {
+      '../common/AppDispatcher': AppDispatcher,
+      '../common/LocalRepository': LocalRepository
+    })
+  })
 
   beforeEach(() => {
-    Helpers = require('../jest/Helpers')
-    subject = require('../../../src/js/backup/BackupActions')
-    AppDispatcher = require('../../../src/js/common/AppDispatcher')
-    LocalRepository = require('../../../src/js/common/LocalRepository')
-    promiseMock = Helpers.promiseMock()
+    LocalRepository.getConfiguration = sinon.stub().returnsPromise()
   })
 
   it('dispatches the up to most recent configuration loaded from storage', () => {
-    LocalRepository.getConfiguration.mockReturnValue(promiseMock)
+    LocalRepository.getConfiguration.resolves('some-value')
 
     subject.refreshConfiguration()
 
-    promiseMock.then.mock.calls[0][0]('some-value') // call the callback passed to the promise mock
-
-    expect(AppDispatcher.dispatch).toBeCalledWith({
+    expect(AppDispatcher.dispatch).to.have.been.calledWith({
       type: subject.ExportData,
       configuration: 'some-value'
     })
