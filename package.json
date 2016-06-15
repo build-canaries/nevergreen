@@ -64,8 +64,8 @@
     "sinon": "^1.17.4",
     "sinon-chai": "^2.8.0",
     "sinon-stub-promise": "^2.0.0",
-    "stylelint": "6.5.1",
-    "stylelint-config-standard": "8.0.0",
+    "stylelint": "6.6.0",
+    "stylelint-config-standard": "9.0.0",
     "uglify-js": "2.6.2",
     "watch": "0.18.0",
     "watchify": "3.7.0"
