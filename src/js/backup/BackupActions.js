@@ -25,17 +25,39 @@ function validateData(data) {
   }, [])
 }
 
-function dispatchError(errors) {
+export const ImportError = 'import-error'
+export function importError(errors) {
   AppDispatcher.dispatch({
     type: ImportError,
     errors
   })
 }
 
-export const ExportData = 'export-data'
-export const ImportError = 'import-error'
 export const ImportingData = 'importing-data'
+export function importingData(data) {
+  AppDispatcher.dispatch({
+    type: ImportingData,
+    data
+  })
+}
+
 export const RestoreConfiguration = 'restore-configuration'
+export function restoreConfiguration(data) {
+  AppDispatcher.dispatch({
+    type: RestoreConfiguration,
+    configuration: data,
+    messages: ['Successfully imported']
+  })
+}
+
+export const ExportData = 'export-data'
+export function exportData(data) {
+  AppDispatcher.dispatch({
+    type: ExportData,
+    configuration: data
+  })
+}
+
 export function importData(jsonData) {
   try {
     const data = JSON.parse(jsonData)
@@ -43,38 +65,24 @@ export function importData(jsonData) {
     const validationMessages = validateData(data)
 
     if (!_.isEmpty(validationMessages)) {
-      dispatchError(validationMessages)
+      importError(validationMessages)
     } else {
-      AppDispatcher.dispatch({
-        type: ImportingData,
-        data
-      })
+      importingData(data)
 
       LocalRepository.save(data).then(() => {
-        AppDispatcher.dispatch({
-          type: RestoreConfiguration,
-          configuration: data,
-          messages: ['Successfully imported']
-        })
-        AppDispatcher.dispatch({
-          type: ExportData,
-          configuration: data
-        })
+        restoreConfiguration(data)
+        exportData(data)
       }).catch((e) => {
-        dispatchError(['Unable to import because of an error while trying to save to local storage', e.message])
+        importError(['Unable to import because of an error while trying to save to local storage', e.message])
       })
     }
-
   } catch (e) {
-    dispatchError(['Unable to import because of syntactically Invalid JSON with the following errors:', e.message])
+    importError(['Unable to import because of syntactically Invalid JSON with the following errors:', e.message])
   }
 }
 
 export function refreshConfiguration() {
   LocalRepository.getConfiguration().then((configuration) => {
-    AppDispatcher.dispatch({
-      type: ExportData,
-      configuration
-    })
+    exportData(configuration)
   })
 }
