@@ -5,7 +5,7 @@ const items = [
   {id: 'monitor', iconClass: 'eye', title: 'Monitor', shortcuts: ['m', '1']},
   {id: 'tracking', iconClass: 'drawer2', title: 'Tracking', shortcuts: ['t', '2']},
   {id: 'success', iconClass: 'checkmark', title: 'Success', shortcuts: ['s', '3']},
-  {id: 'audio-visual', iconClass: 'display', title: 'Audio/Visual', shortcuts: ['v', '4']},
+  {id: 'audio-visual', iconClass: 'display', title: 'Audio', shortcuts: ['v', '4']},
   {id: 'backup', iconClass: 'floppy-disk', title: 'Backup', shortcuts: ['b', '5']},
   {id: 'help', iconClass: 'question', title: 'Help', shortcuts: ['h', '6']}
 ]
