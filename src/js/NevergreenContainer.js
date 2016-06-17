@@ -4,7 +4,7 @@ import {init, showKeyboardShortcuts, dismiss, checkForNewVersion} from './Neverg
 import NotificationStore from './stores/NotificationStore'
 import Nevergreen from './Nevergreen'
 
-function getStateFromStore() {
+function mapStateToProps() {
   return {
     loaded: AppStore.isInitalised(),
     versionNumber: AppStore.versionNumber(),
@@ -22,11 +22,11 @@ function getStateFromStore() {
 class NevergreenContainer extends Component {
   constructor(props) {
     super(props)
-    this.state = getStateFromStore()
+    this.state = mapStateToProps()
   }
 
   componentWillMount() {
-    const callback = () => this.setState(getStateFromStore())
+    const callback = () => this.setState(mapStateToProps())
     this.setState({callback})
 
     AppStore.addListener(callback)

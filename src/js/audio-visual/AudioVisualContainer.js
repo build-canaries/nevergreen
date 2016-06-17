@@ -3,7 +3,7 @@ import DisplayStore from '../stores/DisplayStore'
 import {setBrokenBuildSoundFx, setBrokenBuildSounds, setBrokenBuildTimers} from './AudioVisualActions'
 import AudioVisual from './AudioVisual'
 
-function getStateFromStore() {
+function mapStateToProps() {
   return {
     showBrokenBuildTimers: DisplayStore.areBrokenBuildTimersEnabled(),
     showBrokenBuildSounds: DisplayStore.areBrokenBuildSoundsEnabled(),
@@ -17,11 +17,11 @@ function getStateFromStore() {
 class AudioVisualContainer extends Component {
   constructor(props) {
     super(props)
-    this.state = getStateFromStore()
+    this.state = mapStateToProps()
   }
 
   componentDidMount() {
-    const callback = () => this.setState(getStateFromStore())
+    const callback = () => this.setState(mapStateToProps())
     DisplayStore.addListener(callback)
     this.setState({callback})
   }

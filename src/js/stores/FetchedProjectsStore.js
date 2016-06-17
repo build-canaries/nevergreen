@@ -66,7 +66,7 @@ const dispatchToken = AppDispatcher.register((action) => {
   switch (action.type) {
     case AppInit:
     {
-      _storeState = action.configuration[storageKey] || {}
+      _storeState = Object.assign({}, action.configuration[storageKey])
       break
     }
     case RESTORE_CONFIGURATION:

@@ -9,9 +9,20 @@ class AddMessage extends Component {
     this.state = {message: ''}
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (_.size(nextProps.errors) === 0) {
+      this.setState({message: ''})
+    }
+  }
+
   render() {
     const addMessage = () => this.props.addMessage(this.state.message)
     const updateMessage = (evt) => this.setState({message: evt.target.value})
+    const addOnEnter = (evt) => {
+      if (evt.key === 'Enter') {
+        this.props.addMessage(this.state.message)
+      }
+    }
 
     return (
       <div className='tracking-cctray-group-cctray-form'>
@@ -24,25 +35,13 @@ class AddMessage extends Component {
                    placeholder='text or image url'
                    value={this.state.message}
                    onChange={updateMessage}
-                   onKeyPress={this._onKeyPress.bind(this)}/>
+                   onKeyPress={addOnEnter}/>
           </PrimaryInput>
         </span>
         <button className='button-primary' onClick={addMessage}>add</button>
         <ValidationMessages messages={this.props.errors}/>
       </div>
     )
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (_.size(nextProps.errors) === 0) {
-      this.setState({message: ''})
-    }
-  }
-
-  _onKeyPress(evt) {
-    if (evt.key === 'Enter') {
-      this.props.addMessage(this.state.message)
-    }
   }
 }
 

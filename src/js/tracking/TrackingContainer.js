@@ -3,7 +3,7 @@ import TrayStore from '../stores/TrayStore'
 import {addTray, removeTray, refreshTray, updateTray} from './TrackingActions'
 import Tracking from './Tracking'
 
-function getStateFromStore() {
+function mapStateToProps() {
   return {
     trays: TrayStore.getAll(),
     addTray,
@@ -16,11 +16,11 @@ function getStateFromStore() {
 class TrackingContainer extends Component {
   constructor(props) {
     super(props)
-    this.state = getStateFromStore()
+    this.state = mapStateToProps()
   }
 
   componentWillMount() {
-    const callback = () => this.setState(getStateFromStore())
+    const callback = () => this.setState(mapStateToProps())
     this.setState({callback})
     TrayStore.addListener(callback)
   }

@@ -20,9 +20,7 @@ const dispatchToken = AppDispatcher.register((action) => {
   switch (action.type) {
     case AppInit:
     {
-      _storeState = action.configuration[storageKey] || {
-          messages: ['=(^.^)=']
-        }
+      _storeState = Object.assign({messages: ['=(^.^)=']}, action.configuration[storageKey])
       break
     }
     case RESTORE_CONFIGURATION:

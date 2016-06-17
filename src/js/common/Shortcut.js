@@ -19,6 +19,13 @@ function renderOr() {
   return <span className='hotkey-or'>or</span>
 }
 
+function click(component) {
+  const parent = ReactDOM.findDOMNode(component).parentNode
+  parent.focus()
+  parent.click()
+  return false
+}
+
 class Shortcut extends Component {
   constructor(props) {
     super(props)
@@ -30,7 +37,7 @@ class Shortcut extends Component {
   componentDidMount() {
     const callback = () => this.setState(getStateFromStore())
     UiMessageStore.addListener(callback)
-    Mousetrap.bind(this.props.hotkeys, this._click.bind(this))
+    Mousetrap.bind(this.props.hotkeys, () => click(this))
     this.setState({callback})
   }
 
@@ -42,7 +49,7 @@ class Shortcut extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.hotkeys !== nextProps.hotkeys) {
       Mousetrap.unbind(this.props.hotkeys)
-      Mousetrap.bind(nextProps.hotkeys, this._click.bind(this))
+      Mousetrap.bind(nextProps.hotkeys, () => click(this))
     }
   }
 
@@ -54,13 +61,6 @@ class Shortcut extends Component {
     })
 
     return <span className={hotkeyClass}>{keys}</span>
-  }
-
-  _click() {
-    const parent = ReactDOM.findDOMNode(this).parentNode
-    parent.focus()
-    parent.click()
-    return false
   }
 }
 

@@ -4,7 +4,7 @@ import {selectProject, removeProject} from './TrayActions'
 import FetchedProjectsStore from '../../stores/FetchedProjectsStore'
 import Tray from './Tray'
 
-function getStateFromStore(props) {
+function mapStateToProps(props) {
   return {
     projects: FetchedProjectsStore.getAll(props.tray.trayId),
     selectedProjects: SelectedProjectsStore.getForTray(props.tray.trayId),
@@ -25,11 +25,11 @@ function getStateFromStore(props) {
 class TrayContainer extends Component {
   constructor(props) {
     super(props)
-    this.state = getStateFromStore(props)
+    this.state = mapStateToProps(props)
   }
 
   componentDidMount() {
-    const callback = () => this.setState(getStateFromStore(this.props))
+    const callback = () => this.setState(mapStateToProps(this.props))
     this.setState({callback})
 
     SelectedProjectsStore.addListener(callback)
