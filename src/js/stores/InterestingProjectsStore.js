@@ -1,7 +1,7 @@
 import AppDispatcher from '../common/AppDispatcher'
 import {EventEmitter} from 'events'
 import {AppInit} from '../NevergreenActions'
-import {InterestingProjects, InterestingProjectsError} from '../monitor/MonitorActions'
+import {INTERESTING_PROJECTS, INTERESTING_PROJECTS_ERROR} from '../monitor/MonitorActions'
 
 const eventEmitter = new EventEmitter()
 const CHANGE_EVENT = 'interesting-projects-change'
@@ -31,13 +31,13 @@ const dispatchToken = AppDispatcher.register((action) => {
       }
       break
     }
-    case InterestingProjects:
+    case INTERESTING_PROJECTS:
     {
       _storeState.projects = action.projects.map(toProject)
       _storeState.error = null
       break
     }
-    case InterestingProjectsError:
+    case INTERESTING_PROJECTS_ERROR:
     {
       _storeState.error = action.error
       break

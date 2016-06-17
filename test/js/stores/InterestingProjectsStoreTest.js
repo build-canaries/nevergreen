@@ -5,7 +5,7 @@ import sinon from 'sinon'
 import proxyquire from 'proxyquire'
 import {AppInit} from '../../../src/js/NevergreenActions'
 import {RESTORE_CONFIGURATION} from '../../../src/js/backup/BackupActions'
-import {InterestingProjects, InterestingProjectsError} from '../../../src/js/monitor/MonitorActions'
+import {INTERESTING_PROJECTS, INTERESTING_PROJECTS_ERROR} from '../../../src/js/monitor/MonitorActions'
 
 describe('interesting projects store', () => {
 
@@ -35,7 +35,7 @@ describe('interesting projects store', () => {
 
   it('adds empty projects', () => {
     callback({
-      type: InterestingProjects,
+      type: INTERESTING_PROJECTS,
       projects: []
     })
     expect(subject.getAll()).to.deep.equal([])
@@ -43,7 +43,7 @@ describe('interesting projects store', () => {
 
   it('adds a project', () => {
     callback({
-      type: InterestingProjects,
+      type: INTERESTING_PROJECTS,
       projects: [{
         projectId: 'some-id',
         name: 'name',
@@ -62,7 +62,7 @@ describe('interesting projects store', () => {
 
   it('adds an error', () => {
     callback({
-      type: InterestingProjectsError,
+      type: INTERESTING_PROJECTS_ERROR,
       error: 'some-error'
     })
     expect(subject.getLastError()).to.equal('some-error')

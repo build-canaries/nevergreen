@@ -6,12 +6,12 @@ import proxyquire from 'proxyquire'
 
 describe('monitor actions', () => {
 
-  let subject, AppDispatcher, ProjectsGateway
+  let MonitorActions, AppDispatcher, ProjectsGateway
 
   before(() => {
     AppDispatcher = {}
     ProjectsGateway = {}
-    subject = proxyquire('../../../src/js/monitor/MonitorActions', {
+    MonitorActions = proxyquire('../../../src/js/monitor/MonitorActions', {
       '../common/AppDispatcher': AppDispatcher,
       '../common/gateways/ProjectsGateway': ProjectsGateway
     })
@@ -22,31 +22,55 @@ describe('monitor actions', () => {
     ProjectsGateway.interesting = sinon.stub().returnsPromise()
   })
 
-  it('calls the projects gateway', () => {
-    subject.fetchInteresting('some-trays', 'some-selected-projects')
+  describe('interesting projects', () => {
+    it('should return the correct type', () => {
+      const actual = MonitorActions.interestingProjects('irrelevant')
+      expect(actual).to.have.property('type', MonitorActions.INTERESTING_PROJECTS)
+    })
 
-    expect(ProjectsGateway.interesting).to.have.been.calledWith('some-trays', 'some-selected-projects')
-  })
-
-  it('dispatches a interesting projects action', () => {
-    ProjectsGateway.interesting.resolves('the-data')
-
-    subject.fetchInteresting('irrelevant', 'irrelevant')
-
-    expect(AppDispatcher.dispatch).to.have.been.calledWith({
-      type: subject.InterestingProjects,
-      projects: 'the-data'
+    it('should return the projects', () => {
+      const actual = MonitorActions.interestingProjects('the-projects')
+      expect(actual).to.have.property('projects', 'the-projects')
     })
   })
 
-  it('dispatches a interesting projects error action', () => {
-    ProjectsGateway.interesting.rejects('the-error')
+  describe('interesting projects error', () => {
+    it('should return the correct type', () => {
+      const actual = MonitorActions.interestingProjectsError('irrelevant')
+      expect(actual).to.have.property('type', MonitorActions.INTERESTING_PROJECTS_ERROR)
+    })
 
-    subject.fetchInteresting('irrelevant', 'irrelevant')
+    it('should return the error', () => {
+      const actual = MonitorActions.interestingProjectsError('the-error')
+      expect(actual).to.have.property('error', 'the-error')
+    })
+  })
 
-    expect(AppDispatcher.dispatch).to.have.been.calledWith({
-      type: subject.InterestingProjectsError,
-      error: 'the-error'
+  describe('fetch interesting', () => {
+    it('calls the projects gateway', () => {
+      MonitorActions.fetchInteresting('some-trays', 'some-selected-projects')
+
+      expect(ProjectsGateway.interesting).to.have.been.calledWith('some-trays', 'some-selected-projects')
+    })
+
+    it('dispatches a interesting projects action', () => {
+      ProjectsGateway.interesting.resolves('the-data')
+
+      MonitorActions.fetchInteresting('irrelevant', 'irrelevant')
+
+      expect(AppDispatcher.dispatch).to.have.been.calledWithMatch({
+        type: MonitorActions.INTERESTING_PROJECTS
+      })
+    })
+
+    it('dispatches a interesting projects error action', () => {
+      ProjectsGateway.interesting.rejects('the-error')
+
+      MonitorActions.fetchInteresting('irrelevant', 'irrelevant')
+
+      expect(AppDispatcher.dispatch).to.have.been.calledWithMatch({
+        type: MonitorActions.INTERESTING_PROJECTS_ERROR
+      })
     })
   })
 })
