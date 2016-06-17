@@ -2,7 +2,7 @@ import AppDispatcher from '../common/AppDispatcher'
 import {EventEmitter} from 'events'
 import {AppInit, KeyboardShortcuts} from '../NevergreenActions'
 import {RESTORE_CONFIGURATION, IMPORTING_DATA, IMPORT_ERROR} from '../backup/BackupActions'
-import {MessageAdd, MessageRemove, MessageInvalidInput} from '../success/SuccessActions'
+import {MESSAGE_ADD, MESSAGE_REMOVE, MESSAGE_INVALID_INPUT} from '../success/SuccessActions'
 
 const eventEmitter = new EventEmitter()
 const CHANGE_EVENT = 'message-change'
@@ -31,13 +31,13 @@ const dispatchToken = AppDispatcher.register((action) => {
       }
       break
     }
-    case MessageInvalidInput:
+    case MESSAGE_INVALID_INPUT:
     {
       _storeState.success.errors = action.errors
       break
     }
-    case MessageAdd:
-    case MessageRemove:
+    case MESSAGE_ADD:
+    case MESSAGE_REMOVE:
     {
       _storeState.success.errors = []
       break

@@ -2,7 +2,7 @@ import AppDispatcher from '../common/AppDispatcher'
 import {EventEmitter} from 'events'
 import {AppInit} from '../NevergreenActions'
 import {RESTORE_CONFIGURATION} from '../backup/BackupActions'
-import {MessageAdd, MessageRemove} from '../success/SuccessActions'
+import {MESSAGE_ADD, MESSAGE_REMOVE} from '../success/SuccessActions'
 import _ from 'lodash'
 import LocalRepository from '../common/LocalRepository'
 
@@ -30,12 +30,12 @@ const dispatchToken = AppDispatcher.register((action) => {
       _storeState = action.configuration[storageKey]
       break
     }
-    case MessageAdd:
+    case MESSAGE_ADD:
     {
       _storeState.messages = _storeState.messages.concat(action.message)
       break
     }
-    case MessageRemove:
+    case MESSAGE_REMOVE:
     {
       _.remove(_storeState.messages, (msg) => {
         return msg === action.message

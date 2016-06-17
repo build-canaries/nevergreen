@@ -5,7 +5,7 @@ import sinon from 'sinon'
 import proxyquire from 'proxyquire'
 import {AppInit} from '../../../src/js/NevergreenActions'
 import {IMPORTING_DATA} from '../../../src/js/backup/BackupActions'
-import {MessageAdd, MessageRemove} from '../../../src/js/success/SuccessActions'
+import {MESSAGE_ADD, MESSAGE_REMOVE} from '../../../src/js/success/SuccessActions'
 
 describe('success store', () => {
 
@@ -39,7 +39,7 @@ describe('success store', () => {
 
   it('adds a message', () => {
     callback({
-      type: MessageAdd,
+      type: MESSAGE_ADD,
       message: 'some-message'
     })
     expect(subject.getMessages()).to.deep.equal(['some-message'])
@@ -47,7 +47,7 @@ describe('success store', () => {
 
   it('adds an image', () => {
     callback({
-      type: MessageAdd,
+      type: MESSAGE_ADD,
       message: 'http://some-url'
     })
     expect(subject.getImages()).to.deep.equal(['http://some-url'])
@@ -55,11 +55,11 @@ describe('success store', () => {
 
   it('removes a message', () => {
     callback({
-      type: MessageAdd,
+      type: MESSAGE_ADD,
       message: 'some-message'
     })
     callback({
-      type: MessageRemove,
+      type: MESSAGE_REMOVE,
       message: 'some-message'
     })
     expect(subject.getMessages()).to.deep.equal([])
@@ -67,11 +67,11 @@ describe('success store', () => {
 
   it('removes an image', () => {
     callback({
-      type: MessageAdd,
+      type: MESSAGE_ADD,
       message: 'http://some-url'
     })
     callback({
-      type: MessageRemove,
+      type: MESSAGE_REMOVE,
       message: 'http://some-url'
     })
     expect(subject.getImages()).to.deep.equal([])
@@ -83,11 +83,11 @@ describe('success store', () => {
 
   it('returns a random message', () => {
     callback({
-      type: MessageAdd,
+      type: MESSAGE_ADD,
       message: 'some-message'
     })
     callback({
-      type: MessageAdd,
+      type: MESSAGE_ADD,
       message: 'http://some-url'
     })
     expect(subject.randomMessage()).to.not.equal('')
@@ -95,11 +95,11 @@ describe('success store', () => {
 
   it('can return just messages', () => {
     callback({
-      type: MessageAdd,
+      type: MESSAGE_ADD,
       message: 'some-message'
     })
     callback({
-      type: MessageAdd,
+      type: MESSAGE_ADD,
       message: 'http://some-url'
     })
     expect(subject.getMessages()).to.deep.equal(['some-message'])
@@ -107,11 +107,11 @@ describe('success store', () => {
 
   it('can return just images', () => {
     callback({
-      type: MessageAdd,
+      type: MESSAGE_ADD,
       message: 'some-message'
     })
     callback({
-      type: MessageAdd,
+      type: MESSAGE_ADD,
       message: 'http://some-url'
     })
     expect(subject.getImages()).to.deep.equal(['http://some-url'])
@@ -119,11 +119,11 @@ describe('success store', () => {
 
   it('can return all images and messages', () => {
     callback({
-      type: MessageAdd,
+      type: MESSAGE_ADD,
       message: 'some-message'
     })
     callback({
-      type: MessageAdd,
+      type: MESSAGE_ADD,
       message: 'http://some-url'
     })
     expect(subject.getAll()).to.deep.equal(['some-message', 'http://some-url'])

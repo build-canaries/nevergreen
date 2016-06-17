@@ -3,25 +3,30 @@ import SuccessStore from '../stores/SuccessStore'
 import UiMessageStore from '../stores/UiMessageStore'
 import Success from './Success'
 import {removeMessage, addMessage} from './SuccessActions'
+import AppDispatcher from '../common/AppDispatcher'
 
-function getStateFromStore() {
+function mapStateToProps() {
   return {
     messages: SuccessStore.getMessages(),
     images: SuccessStore.getImages(),
     errors: UiMessageStore.getSuccessErrors(),
-    removeMessage,
-    addMessage
+    removeMessage(message) {
+      removeMessage(message)(AppDispatcher)
+    },
+    addMessage(message) {
+      addMessage(message)(AppDispatcher)
+    }
   }
 }
 
 class SuccessContainer extends Component {
   constructor(props) {
     super(props)
-    this.state = getStateFromStore()
+    this.state = mapStateToProps()
   }
 
   componentDidMount() {
-    const callback = () => this.setState(getStateFromStore())
+    const callback = () => this.setState(mapStateToProps())
     SuccessStore.addListener(callback)
     UiMessageStore.addListener(callback)
     this.setState({callback})

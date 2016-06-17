@@ -1,4 +1,3 @@
-import AppDispatcher from '../common/AppDispatcher'
 import _ from 'lodash'
 
 function isASentence(message) {
@@ -20,29 +19,41 @@ function validateMessage(message) {
   }
 }
 
-export const MessageInvalidInput = 'message-invalid-input'
-export const MessageAdd = 'message-add'
-export function addMessage(message) {
-  const validationMessages = validateMessage(message)
+export const MESSAGE_INVALID_INPUT = 'MESSAGE_INVALID_INPUT'
+export function messageInvalid(validationMessages, message) {
+  return {
+    type: MESSAGE_INVALID_INPUT,
+    errors: validationMessages,
+    message
+  }
+}
 
-  if (validationMessages) {
+export const MESSAGE_ADD = 'MESSAGE_ADD'
+export function messageAdd(message) {
+  return {
+    type: MESSAGE_ADD,
+    message: transformMessage(message)
+  }
+}
+
+export const MESSAGE_REMOVE = 'MESSAGE_REMOVE'
+export function removeMessage(message) {
+  return function (AppDispatcher) {
     AppDispatcher.dispatch({
-      type: MessageInvalidInput,
-      errors: validationMessages,
-      message
-    })
-  } else {
-    AppDispatcher.dispatch({
-      type: MessageAdd,
+      type: MESSAGE_REMOVE,
       message: transformMessage(message)
     })
   }
 }
 
-export const MessageRemove = 'message-removed'
-export function removeMessage(message) {
-  AppDispatcher.dispatch({
-    type: MessageRemove,
-    message: transformMessage(message)
-  })
+export function addMessage(message) {
+  return function (AppDispatcher) {
+    const validationMessages = validateMessage(message)
+
+    if (validationMessages) {
+      AppDispatcher.dispatch(messageInvalid(validationMessages, message))
+    } else {
+      AppDispatcher.dispatch(messageAdd(message))
+    }
+  }
 }

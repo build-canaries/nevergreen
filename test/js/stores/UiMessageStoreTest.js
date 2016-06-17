@@ -5,7 +5,7 @@ import sinon from 'sinon'
 import proxyquire from 'proxyquire'
 import {AppInit, KeyboardShortcuts} from '../../../src/js/NevergreenActions'
 import {RESTORE_CONFIGURATION, IMPORTING_DATA, IMPORT_ERROR} from '../../../src/js/backup/BackupActions'
-import {MessageInvalidInput, MessageAdd, MessageRemove} from '../../../src/js/success/SuccessActions'
+import {MESSAGE_INVALID_INPUT, MESSAGE_ADD, MESSAGE_REMOVE} from '../../../src/js/success/SuccessActions'
 
 describe('ui message store', () => {
 
@@ -79,7 +79,7 @@ describe('ui message store', () => {
   describe('adding a success message', () => {
     beforeEach(() => {
       callback({
-        type: MessageInvalidInput,
+        type: MESSAGE_INVALID_INPUT,
         errors: ['some-error']
       })
     })
@@ -90,14 +90,14 @@ describe('ui message store', () => {
 
     it('clears errors on successful add', () => {
       callback({
-        type: MessageAdd
+        type: MESSAGE_ADD
       })
       expect(subject.getSuccessErrors()).to.deep.equal([])
     })
 
     it('clears errors on removal', () => {
       callback({
-        type: MessageRemove
+        type: MESSAGE_REMOVE
       })
       expect(subject.getSuccessErrors()).to.deep.equal([])
     })
