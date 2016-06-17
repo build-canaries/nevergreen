@@ -1,7 +1,7 @@
 import AppDispatcher from '../common/AppDispatcher'
 import {EventEmitter} from 'events'
 import {AppInit} from '../NevergreenActions'
-import {RestoreConfiguration, ImportingData, ImportError, ExportData} from '../backup/BackupActions'
+import {RESTORE_CONFIGURATION, IMPORTING_DATA, IMPORT_ERROR, EXPORT_DATA} from '../backup/BackupActions'
 
 const eventEmitter = new EventEmitter()
 const CHANGE_EVENT = 'storage-change'
@@ -19,24 +19,24 @@ const dispatchToken = AppDispatcher.register((action) => {
       }
       break
     }
-    case RestoreConfiguration:
+    case RESTORE_CONFIGURATION:
     {
       _storeState.importing = false
       break
     }
-    case ImportingData:
+    case IMPORTING_DATA:
     {
       _storeState.importing = true
       _storeState.exporting = true
       break
     }
-    case ImportError:
+    case IMPORT_ERROR:
     {
       _storeState.importing = false
       _storeState.exporting = false
       break
     }
-    case ExportData:
+    case EXPORT_DATA:
     {
       _storeState.exporting = false
       _storeState.configuration = action.configuration

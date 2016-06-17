@@ -4,7 +4,7 @@ import {expect} from 'chai'
 import sinon from 'sinon'
 import proxyquire from 'proxyquire'
 import {AppInit, KeyboardShortcuts} from '../../../src/js/NevergreenActions'
-import {RestoreConfiguration, ImportingData, ImportError} from '../../../src/js/backup/BackupActions'
+import {RESTORE_CONFIGURATION, IMPORTING_DATA, IMPORT_ERROR} from '../../../src/js/backup/BackupActions'
 import {MessageInvalidInput, MessageAdd, MessageRemove} from '../../../src/js/success/SuccessActions'
 
 describe('ui message store', () => {
@@ -58,7 +58,7 @@ describe('ui message store', () => {
   describe('restore', () => {
     beforeEach(() => {
       callback({
-        type: RestoreConfiguration,
+        type: RESTORE_CONFIGURATION,
         messages: ['some-message']
       })
     })
@@ -106,7 +106,7 @@ describe('ui message store', () => {
   describe('importing data', () => {
     beforeEach(() => {
       callback({
-        type: ImportError,
+        type: IMPORT_ERROR,
         errors: ['some-error']
       })
     })
@@ -121,7 +121,7 @@ describe('ui message store', () => {
 
     it('clears errors and infos when importing', () => {
       callback({
-        type: ImportingData
+        type: IMPORTING_DATA
       })
       expect(subject.getImportErrors()).to.deep.equal([])
       expect(subject.getImportInfos()).to.deep.equal([])

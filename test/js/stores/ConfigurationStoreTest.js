@@ -4,7 +4,7 @@ import {expect} from 'chai'
 import sinon from 'sinon'
 import proxyquire from 'proxyquire'
 import {AppInit} from '../../../src/js/NevergreenActions'
-import {RestoreConfiguration, ImportingData, ImportError, ExportData} from '../../../src/js/backup/BackupActions'
+import {RESTORE_CONFIGURATION, IMPORTING_DATA, IMPORT_ERROR, EXPORT_DATA} from '../../../src/js/backup/BackupActions'
 
 describe('configuration store', () => {
 
@@ -34,7 +34,7 @@ describe('configuration store', () => {
   describe('importing data', () => {
     beforeEach(() => {
       callback({
-        type: ImportingData
+        type: IMPORTING_DATA
       })
     })
 
@@ -50,7 +50,7 @@ describe('configuration store', () => {
   describe('import error', () => {
     beforeEach(() => {
       callback({
-        type: ImportError,
+        type: IMPORT_ERROR,
         errors: ['some-error']
       })
     })
@@ -67,7 +67,7 @@ describe('configuration store', () => {
   describe('export data', () => {
     beforeEach(() => {
       callback({
-        type: ExportData,
+        type: EXPORT_DATA,
         configuration: 'some-configuration'
       })
     })
@@ -83,7 +83,7 @@ describe('configuration store', () => {
 
   it('sets importing to false once configuration is restored', () => {
     callback({
-      type: RestoreConfiguration,
+      type: RESTORE_CONFIGURATION,
       messages: ['some-message']
     })
     expect(subject.isImporting()).to.be.false

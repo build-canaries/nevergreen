@@ -6,7 +6,7 @@ import proxyquire from 'proxyquire'
 import {AppInit} from '../../../src/js/NevergreenActions'
 import {TrayAdd} from '../../../src/js/tracking/TrackingActions'
 import {ProjectSelected, ProjectUnselected} from '../../../src/js/tracking/tray/TrayActions'
-import {RestoreConfiguration} from '../../../src/js/backup/BackupActions'
+import {RESTORE_CONFIGURATION} from '../../../src/js/backup/BackupActions'
 
 describe('selected projects store', () => {
 
@@ -68,7 +68,7 @@ describe('selected projects store', () => {
 
   it('restores the state from configuration', () => {
     callback({
-      type: RestoreConfiguration,
+      type: RESTORE_CONFIGURATION,
       configuration: {selectedProjects: 'some-configuration'}
     })
     expect(subject.getAll()).to.equal('some-configuration')

@@ -12,7 +12,7 @@ class Import extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.errors.length === 0) {
+    if (nextProps.infos.length > 0 && nextProps.errors.length === 0) {
       this.setState({data: ''})
     }
   }

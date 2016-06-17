@@ -1,7 +1,7 @@
 import AppDispatcher from '../common/AppDispatcher'
 import {EventEmitter} from 'events'
 import {AppInit} from '../NevergreenActions'
-import {RestoreConfiguration} from '../backup/BackupActions'
+import {RESTORE_CONFIGURATION} from '../backup/BackupActions'
 import {
   BrokenBuildTimersChanged,
   BrokenBuildSoundsToggled,
@@ -27,7 +27,7 @@ const dispatchToken = AppDispatcher.register((action) => {
       }, action.configuration[storageKey])
       break
     }
-    case RestoreConfiguration:
+    case RESTORE_CONFIGURATION:
     {
       _storeState = action.configuration[storageKey]
       break

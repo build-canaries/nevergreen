@@ -1,7 +1,7 @@
 import AppDispatcher from '../common/AppDispatcher'
 import {EventEmitter} from 'events'
 import {AppInit} from '../NevergreenActions'
-import {RestoreConfiguration} from '../backup/BackupActions'
+import {RESTORE_CONFIGURATION} from '../backup/BackupActions'
 import {ProjectSelected, ProjectUnselected} from '../tracking/tray/TrayActions'
 import {TrayAdd, TrayRemove} from '../tracking/TrackingActions'
 import _ from 'lodash'
@@ -20,7 +20,7 @@ const dispatchToken = AppDispatcher.register((action) => {
       _storeState = action.configuration[storageKey] || {}
       break
     }
-    case RestoreConfiguration:
+    case RESTORE_CONFIGURATION:
     {
       _storeState = action.configuration[storageKey]
       break

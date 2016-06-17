@@ -7,6 +7,14 @@ class Backup extends Component {
     super(props)
   }
 
+  componentDidMount() {
+    this.props.refresh()
+  }
+
+  componentWillReceiveProps(nextProps) {
+    nextProps.refresh()
+  }
+
   render() {
     const importProps = {
       errors: this.props.importErrors,
@@ -15,7 +23,7 @@ class Backup extends Component {
       importData: this.props.importData
     }
     const exportProps = {
-      configuration: JSON.stringify(this.props.configuration, null, 2),
+      configuration: this.props.configuration,
       loading: this.props.exporting
     }
 
@@ -31,10 +39,11 @@ class Backup extends Component {
 
 Backup.propTypes = {
   exporting: PropTypes.bool.isRequired,
-  configuration: PropTypes.object.isRequired,
+  configuration: PropTypes.string.isRequired,
   importing: PropTypes.bool.isRequired,
   importErrors: PropTypes.arrayOf(React.PropTypes.string),
   importInfos: PropTypes.arrayOf(React.PropTypes.string),
+  refresh: PropTypes.func.isRequired,
   importData: PropTypes.func.isRequired
 }
 

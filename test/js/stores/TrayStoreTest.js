@@ -4,7 +4,7 @@ import {expect} from 'chai'
 import sinon from 'sinon'
 import proxyquire from 'proxyquire'
 import {AppInit} from '../../../src/js/NevergreenActions'
-import {ImportingData} from '../../../src/js/backup/BackupActions'
+import {IMPORTING_DATA} from '../../../src/js/backup/BackupActions'
 import {
   TrayAdd,
   TrayUpdate,
@@ -148,7 +148,7 @@ describe('tray store', () => {
 
   it('clears the store state when new data is imported', () => {
     callback({
-      type: ImportingData
+      type: IMPORTING_DATA
     })
     expect(subject.getAll()).to.deep.equal([])
   })

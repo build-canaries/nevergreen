@@ -3,29 +3,34 @@ import ConfigurationStore from '../stores/ConfigurationStore'
 import UiMessageStore from '../stores/UiMessageStore'
 import {refreshConfiguration, importData} from './BackupActions'
 import Backup from './Backup'
+import AppDispatcher from '../common/AppDispatcher'
 
-function getStateFromStore() {
+function mapStateToProps() {
   return {
     exporting: ConfigurationStore.isExporting(),
-    configuration: ConfigurationStore.getConfiguration(),
+    configuration: JSON.stringify(ConfigurationStore.getConfiguration(), null, 2),
     importing: ConfigurationStore.isImporting(),
     importErrors: UiMessageStore.getImportErrors(),
     importInfos: UiMessageStore.getImportInfos(),
-    importData
+    importData(jsonData) {
+      importData(jsonData)(AppDispatcher)
+    },
+    refresh() {
+      refreshConfiguration()(AppDispatcher)
+    }
   }
 }
 
 class BackupComponent extends Component {
   constructor(props) {
     super(props)
-    this.state = getStateFromStore()
+    this.state = mapStateToProps()
   }
 
   componentDidMount() {
-    const callback = () => this.setState(getStateFromStore())
+    const callback = () => this.setState(mapStateToProps())
     ConfigurationStore.addListener(callback)
     UiMessageStore.addListener(callback)
-    refreshConfiguration()
     this.setState({callback})
   }
 

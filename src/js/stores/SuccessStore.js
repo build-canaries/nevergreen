@@ -1,7 +1,7 @@
 import AppDispatcher from '../common/AppDispatcher'
 import {EventEmitter} from 'events'
 import {AppInit} from '../NevergreenActions'
-import {RestoreConfiguration} from '../backup/BackupActions'
+import {RESTORE_CONFIGURATION} from '../backup/BackupActions'
 import {MessageAdd, MessageRemove} from '../success/SuccessActions'
 import _ from 'lodash'
 import LocalRepository from '../common/LocalRepository'
@@ -25,7 +25,7 @@ const dispatchToken = AppDispatcher.register((action) => {
         }
       break
     }
-    case RestoreConfiguration:
+    case RESTORE_CONFIGURATION:
     {
       _storeState = action.configuration[storageKey]
       break

@@ -1,7 +1,7 @@
 import AppDispatcher from '../common/AppDispatcher'
 import {EventEmitter} from 'events'
 import {AppInit, KeyboardShortcuts} from '../NevergreenActions'
-import {RestoreConfiguration, ImportingData, ImportError} from '../backup/BackupActions'
+import {RESTORE_CONFIGURATION, IMPORTING_DATA, IMPORT_ERROR} from '../backup/BackupActions'
 import {MessageAdd, MessageRemove, MessageInvalidInput} from '../success/SuccessActions'
 
 const eventEmitter = new EventEmitter()
@@ -14,7 +14,7 @@ eventEmitter.setMaxListeners(Infinity)
 const dispatchToken = AppDispatcher.register((action) => {
   switch (action.type) {
     case AppInit:
-    case RestoreConfiguration:
+    case RESTORE_CONFIGURATION:
     {
       _storeState = {
         keyboardShortcuts: {
@@ -42,13 +42,13 @@ const dispatchToken = AppDispatcher.register((action) => {
       _storeState.success.errors = []
       break
     }
-    case ImportingData:
+    case IMPORTING_DATA:
     {
       _storeState.importing.errors = []
       _storeState.importing.infos = []
       break
     }
-    case ImportError:
+    case IMPORT_ERROR:
     {
       _storeState.importing.errors = action.errors
       _storeState.importing.infos = []

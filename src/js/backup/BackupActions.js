@@ -1,11 +1,10 @@
-import AppDispatcher from '../common/AppDispatcher'
 import LocalRepository from '../common/LocalRepository'
-import _ from 'lodash'
 import DisplayStore from '../stores/DisplayStore'
 import FetchedProjectsStore from '../stores/FetchedProjectsStore'
 import SelectedProjectsStore from '../stores/SelectedProjectsStore'
 import SuccessStore from '../stores/SuccessStore'
 import TrayStore from '../stores/TrayStore'
+import _ from 'lodash'
 
 const _storesWithConfiguration = [
   DisplayStore,
@@ -25,64 +24,68 @@ function validateData(data) {
   }, [])
 }
 
-export const ImportError = 'import-error'
+export const IMPORT_ERROR = 'IMPORT_ERROR'
 export function importError(errors) {
-  AppDispatcher.dispatch({
-    type: ImportError,
+  return {
+    type: IMPORT_ERROR,
     errors
-  })
+  }
 }
 
-export const ImportingData = 'importing-data'
+export const IMPORTING_DATA = 'IMPORTING_DATA'
 export function importingData(data) {
-  AppDispatcher.dispatch({
-    type: ImportingData,
+  return {
+    type: IMPORTING_DATA,
     data
-  })
+  }
 }
 
-export const RestoreConfiguration = 'restore-configuration'
+export const RESTORE_CONFIGURATION = 'RESTORE_CONFIGURATION'
 export function restoreConfiguration(data) {
-  AppDispatcher.dispatch({
-    type: RestoreConfiguration,
+  return {
+    type: RESTORE_CONFIGURATION,
     configuration: data,
     messages: ['Successfully imported']
-  })
+  }
 }
 
-export const ExportData = 'export-data'
+export const EXPORT_DATA = 'EXPORT_DATA'
 export function exportData(data) {
-  AppDispatcher.dispatch({
-    type: ExportData,
+  return {
+    type: EXPORT_DATA,
     configuration: data
-  })
+  }
 }
 
 export function importData(jsonData) {
-  try {
-    const data = JSON.parse(jsonData)
+  return function (AppDispatcher) {
+    try {
+      const data = JSON.parse(jsonData)
 
-    const validationMessages = validateData(data)
+      const validationMessages = validateData(data)
 
-    if (!_.isEmpty(validationMessages)) {
-      importError(validationMessages)
-    } else {
-      importingData(data)
+      if (!_.isEmpty(validationMessages)) {
+        AppDispatcher.dispatch(importError(validationMessages))
+      } else {
+        AppDispatcher.dispatch(importingData(data))
 
-      LocalRepository.save(data).then(() => {
-        restoreConfiguration(data)
-        exportData(data)
-      }).catch((e) => {
-        importError(['Unable to import because of an error while trying to save to local storage', e.message])
-      })
+        LocalRepository.save(data).then(() => {
+          AppDispatcher.dispatch(restoreConfiguration(data))
+          AppDispatcher.dispatch(exportData(data))
+        }).catch((e) => {
+          AppDispatcher.dispatch(importError(['Unable to import because of an error while trying to save to local storage', e.message]))
+        })
+      }
+    } catch (e) {
+      AppDispatcher.dispatch(importError(['Unable to import because of syntactically Invalid JSON with the following errors:', e.message]))
     }
-  } catch (e) {
-    importError(['Unable to import because of syntactically Invalid JSON with the following errors:', e.message])
   }
 }
 
 export function refreshConfiguration() {
-  LocalRepository.getConfiguration().then((configuration) => {
-    exportData(configuration)
-  })
+  return function (AppDispatcher) {
+    LocalRepository.getConfiguration().then((configuration) => {
+      AppDispatcher.dispatch(exportData(configuration))
+    })
+  }
 }
