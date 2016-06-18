@@ -1,0 +1,152 @@
+@import '../common/variables';
+
+.tracking-cctray-group-cctray-form {
+  font-size: 1.5rem;
+  margin-bottom: 1em;
+  padding: 1em;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
+}
+
+.tracking-tray-url {
+  width: calc(100% - 8em);
+}
+
+.tracking-cctray-group-builds {
+  border: none;
+  margin: 1em;
+  padding: 0;
+}
+
+.tracking-cctray-group-builds-legend {
+  color: $mid-grey;
+  float: left;
+}
+
+.tracking-cctray-group-build-toggles {
+  float: left;
+  position: relative;
+  top: -0.5em;
+  margin-left: 1em;
+}
+
+.tracking-cctray-group-build-items {
+  clear: both;
+}
+
+.tracking-removed-project {
+  text-decoration: line-through;
+}
+
+.tracking-removed-info {
+  margin-left: 0.5em;
+}
+
+.tracking-new-info {
+  color: $new-text;
+  margin-left: 0.5em;
+}
+
+.tray {
+  font-size: 1.5rem;
+  border: 1px solid $mid-grey;
+  background-color: white;
+}
+
+.tray-title {
+  font-size: 1.5rem;
+  font-weight: 400;
+  background: $mid-grey;
+  color: #fff;
+  text-overflow: ellipsis;
+  display: inline;
+}
+
+.tray-settings {
+  margin: 1em;
+  label {
+    width: 5em;
+    display: inline-flex;
+  }
+}
+
+.tray-settings-url {
+  width: calc(100% - 7em);
+}
+
+.tray-settings-name {
+  width: calc(50% - 7em);
+}
+
+.tray-settings-danger-zone {
+  border-radius: 3px;
+  border: 1px solid $off-white;
+  margin-top: 1em;
+}
+
+.tray-settings-danger-zone-title {
+  background-color: $danger-text;
+  color: white;
+  padding: 0.5em 1em;
+}
+
+.tray-settings-danger-zone-content {
+  margin: 1em;
+}
+
+.tray-settings-table-heading {
+  width: 25%;
+}
+
+.tray-settings-update-button {
+  margin: 2em 1em 0 0;
+  font-size: 0.8em;
+}
+
+.tray-settings-danger-button {
+  color: $danger;
+  float: right;
+  margin: -0.5em 0 0 0;
+}
+
+.tray-title-container {
+  padding: 0.5em;
+  background: $mid-grey;
+  color: white;
+}
+
+.tray-settings-button {
+  font-size: 1.8rem;
+  display: inline;
+  padding: 0;
+  border: none;
+  background: none;
+  color: white;
+
+  &:hover {
+    color: darken(white, 10%);
+  }
+}
+
+.tray-hidden-button {
+  color: $off-white;
+  font-size: 1.2rem;
+  display: inline;
+  border: none;
+  background: none;
+  margin-right: 0.5em;
+
+  &:hover {
+    color: darken($off-white, 10%);
+  }
+}
+
+.tray-sub-bar {
+  background: $light-grey;
+  color: $mid-grey;
+  padding: 0.3em;
+}
+
+.tray-refresh-last-fetch {
+  margin-left: 1em;
+}

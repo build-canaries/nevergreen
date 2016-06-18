@@ -4,11 +4,12 @@ var fs = require('fs')
 
 var app = express()
 
-var response = function(req, res) {
-  fs.readFile('resources/public/cctray.xml', 'utf8', function(err, contents) {
+var response = function (req, res) {
+  fs.readFile('test/cctray.xml', 'utf8', function (err, contents) {
     res.setHeader('Content-Type', 'application/xml')
     res.send(contents)
-  })}
+  })
+}
 
 app.get('/cctray.xml', response)
 app.get('/secure/cctray.xml', basicAuth('u', 'p'), response)

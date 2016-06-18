@@ -30,13 +30,9 @@ hash npm 2>/dev/null || {
     exit 1
 }
 
-hash lein 2>/dev/null || {
-    echo >&2 "lein command not found, you need to install Leiningen. See wiki/contributing for more details."
-    exit 1
-}
-
-echo "[0] clear build directory"
-rm -rf build
+echo "[0] clean"
+./lein.sh clean
+npm run clean
 
 echo "[1] fetching node modules and performing first build"
 npm prune
@@ -45,23 +41,20 @@ npm install
 echo "[2] watching the js for changes ..."
 npm run watchJs &
 
-echo "[3] watching the css for changes ..."
-npm run watchCss &
-
-echo "[4] automatically running the js tests on changes ..."
+echo "[3] automatically running the js tests on changes ..."
 npm run watchTest &
 
-echo "[5] automatically running js lint on changes ..."
+echo "[4] automatically running js lint on changes ..."
 npm run watchLint &
 
-echo "[6] Run a fake CI server to target on port 5050"
+echo "[5] Run a fake CI server to target on port 5050"
 npm run fake-server &
 
-echo "[7] automatically running the server tests on changes ..."
-lein midje :autotest 'src/nevergreen' 'test/nevergreen' &
+echo "[6] automatically running the server tests on changes ..."
+./lein.sh midje :autotest 'src/nevergreen' 'test/nevergreen' &
 
-echo "[8] running the server ..."
-lein run &
+echo "[7] running the server ..."
+./lein.sh run &
 
 wait
 

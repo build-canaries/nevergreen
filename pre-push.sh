@@ -13,11 +13,6 @@ hash npm 2>/dev/null || {
     exit 1
 }
 
-hash lein 2>/dev/null || {
-    echo >&2 "lein command not found, you need to install Leiningen. See wiki/contributing for more details.."
-    exit 1
-}
-
 echo '[Step 1 of 4] Stopping the ./develop.sh script (if it is running)...'
 pkill -SIGINT -f ./develop.sh
 

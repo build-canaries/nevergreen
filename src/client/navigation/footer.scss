@@ -1,0 +1,23 @@
+@import '../common/variables';
+
+.content-info {
+  background-color: white;
+  position: fixed;
+  bottom: 0;
+  width: $menu-width;
+  height: 5em;
+}
+
+.version {
+  float: right;
+  color: white;
+  font-size: 0.9em;
+  padding: 0.5em;
+  text-decoration: none;
+  width: 100%;
+}
+
+.commit-hash {
+  font-size: 0.8em;
+  font-family: $monospace;
+}

@@ -1,0 +1,274 @@
+@import '~normalize.css';
+@import 'common/variables';
+@import 'common/fonts/fonts';
+@import 'common/fonts/icon-font';
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, sans-serif;
+}
+
+body {
+  cursor: default;
+}
+
+kbd {
+  font-family: $monospace;
+}
+
+.button {
+  font-size: 0.6em;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  border: 0;
+  position: relative;
+  padding: 0.5em 1.5em;
+  margin: 0.5em;
+  cursor: pointer;
+  border-radius: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  background-color: white;
+  color: $off-black;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  outline: none;
+  transition: background-color 0.1s ease-in, box-shadow 0.1s ease-in;
+  &:hover {
+    background-color: darken(white, 5%);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.26);
+  }
+  &:focus {
+    background-color: darken(white, 5%);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.26);
+    outline: none;
+    border-radius: 0;
+  }
+}
+
+.button-primary {
+  @extend .button;
+  font-size: 0.8em;
+  background-color: $blue;
+  color: $off-white;
+  &:hover {
+    background-color: darken($blue, 5%);
+  }
+  &:focus {
+    background-color: darken($blue, 5%);
+  }
+}
+
+.label-checkbox {
+  font-size: 0.8em;
+  span {
+    margin-left: 0.8em;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.label-checkbox-disabled {
+  @extend .label-checkbox;
+  color: $mid-grey;
+  &:hover {
+    cursor: default;
+  }
+}
+
+.checkbox {
+  position: relative;
+  top: -2px;
+  margin: 0 0.7em 0 0;
+  cursor: pointer;
+  &::before {
+    transition: transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
+    transform: rotate(-45deg) scale(0, 0);
+    -webkit-transition: -webkit-transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
+    -webkit-transform: rotate(315deg) scale(0, 0);
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 4px;
+    z-index: 1;
+    width: 11px;
+    height: 6px;
+    border: 2px solid $blue;
+    border-top-style: none;
+    border-right-style: none;
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 0;
+    width: 1.1em;
+    height: 1.1em;
+    background: #fff;
+    border: 2px solid $off-white;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+  &:checked {
+    &::before {
+      transform: rotate(-45deg) scale(1, 1);
+      -webkit-transform: rotate(315deg) scale(1, 1);
+      border-color: white;
+    }
+    &::after {
+      border-color: $blue;
+      background: $blue;
+    }
+  }
+  &:disabled {
+    &::after {
+      cursor: default;
+    }
+    &:checked {
+      &::after {
+        border-color: $mid-grey;
+        background: $mid-grey;
+      }
+    }
+  }
+  &:focus {
+    outline: none;
+  }
+}
+
+.dashboard {
+  background: $light-grey;
+  font-family: Roboto, sans-serif;
+}
+
+.dashboard-main-section {
+  width: calc(100% - #{$menu-width});
+  padding: 2em;
+  float: left;
+  margin-left: $menu-width;
+  min-height: 35em;
+  &.active {
+    display: block;
+  }
+}
+
+.sub-section {
+  font-size: 1.5rem;
+  border: 1px solid $mid-grey;
+  background-color: white;
+  margin-bottom: 1em;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 400;
+  padding: 0.5em;
+  background: $mid-grey;
+  color: white;
+  text-overflow: ellipsis;
+}
+
+.section-sub-title {
+  font-size: 1.2rem;
+  padding-left: 1em;
+  color: darken(white, 10%);
+  text-overflow: ellipsis;
+}
+
+.config-spinner {
+  width: 100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.text-with-icon {
+  margin-left: 1em;
+}
+
+.checkbox-container {
+  display: block;
+  margin: 0.5em 0;
+  float: left;
+  width: 33.333333%;
+}
+
+.hotkey {
+  z-index: 999;
+  padding: 0.25em;
+  font-size: 24px;
+  position: absolute;
+  bottom: calc(100% + 5px);
+  left: 0;
+  min-width: 100%;
+  color: $off-white;
+  background-color: rgba($blue, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: none;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+
+  &::after {
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    margin-left: -10px;
+    width: 0;
+    border-top: 10px solid rgba($blue, 0.9);
+    border-top: 10px solid rgba($blue, 0.9);
+    border-right: 10px solid transparent;
+    border-left: 10px solid transparent;
+    content: ' ';
+    font-size: 0;
+    line-height: 0;
+  }
+}
+
+.hotkey-or {
+  padding: 0 0.5em;
+}
+
+.no-text-selection {
+  user-select: none;
+}
+
+.hidden {
+  display: none;
+}
+
+@mixin visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.visually-hidden {
+  @include visually-hidden;
+}
+
+.text-input {
+  margin-top: 1em;
+
+  label {
+    margin-right: 1em;
+  }
+
+  input {
+    border: none;
+    border-bottom: 1px solid $mid-grey;
+    margin-right: 1em;
+    &:focus {
+      outline: none;
+      border-bottom-color: $blue;
+    }
+  }
+}

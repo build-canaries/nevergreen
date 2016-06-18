@@ -10,6 +10,4 @@
 (defn wrap-caching [app]
   (fn [req]
     (let [res (app req)]
-      (if (starts-with? (get-header res "content-type") "audio")
-        (assoc-in res [:headers "cache-control"] "max-age=31556926")
-        res))))
+      (assoc-in res [:headers "cache-control"] "max-age=31556926"))))

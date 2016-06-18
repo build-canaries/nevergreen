@@ -1,0 +1,48 @@
+@import '../variables';
+
+.error-message {
+  width: 100%;
+  font-size: 2em;
+  padding: 0.5em;
+}
+
+.validation-messages {
+  margin: 0.5em;
+  border-radius: 0.5em;
+  background-color: $danger-text;
+  color: white;
+}
+
+.validation-message {
+  padding: 0.5em;
+}
+
+.info-message {
+  padding: 0.5em;
+  margin: 0.5em;
+  border-radius: 0.5em;
+  background-color: $blue;
+  color: white;
+}
+
+.notification {
+  font-size: 1em;
+  padding: 0.5em;
+  margin: 0.5em;
+  border-radius: 0.5em;
+  background-color: $blue;
+  color: white;
+  width: calc(#{$menu-width} - 1em);
+  position: fixed;
+  bottom: 5em;
+}
+
+.notification-dismiss {
+  float: right;
+  font-size: 0.7em;
+  cursor: pointer;
+
+  &:hover {
+    color: darken(white, 10%);
+  }
+}

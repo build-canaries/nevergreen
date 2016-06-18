@@ -1,0 +1,51 @@
+@import '../common/variables';
+
+.success-message {
+  font-family: $monospace;
+  margin-right: 1em;
+}
+
+.success-remove {
+  font-size: 0.3em;
+  padding: 1em;
+}
+
+.success-message-input {
+  width: calc(100% - 11em);
+  font-family: $monospace;
+}
+
+.success-list {
+  list-style: none;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.success-text-list {
+  display: block;
+}
+
+.success-list-image {
+  width: 496px;
+  height: 279px;
+  object-fit: contain;
+  border: 1px solid $mid-grey;
+  background-color: black;
+}
+
+.success-item {
+  margin: 1em;
+
+  .hotkey {
+    left: -0.5em;
+  }
+}
+
+.success-item.image {
+  position: relative;
+
+  .success-remove {
+    position: absolute;
+    right: 0.3em;
+  }
+}
