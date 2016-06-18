@@ -38,7 +38,7 @@ class Nevergreen extends Component {
     const classes = 'notification' + (_.size(this.props.message) > 0 ? '' : ' hidden')
 
     return (
-      <div>
+      <div className='nevergreen'>
         <h1 className='visually-hidden'>Nevergreen</h1>
 
         <div id='menu'>
