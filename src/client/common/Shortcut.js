@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import ReactDOM from 'react-dom'
 import Mousetrap from 'mousetrap'
 import UiMessageStore from '../stores/UiMessageStore'
+import './shortcut.scss'
 
 function getStateFromStore() {
   return {

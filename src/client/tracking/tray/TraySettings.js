@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import nameGenerator from 'project-name-generator'
 import _ from 'lodash'
+import './tray-settings.scss'
 
 class TraySettings extends Component {
   constructor(props) {

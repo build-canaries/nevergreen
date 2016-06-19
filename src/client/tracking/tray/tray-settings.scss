@@ -1,0 +1,48 @@
+@import '../../common/variables';
+
+.tray-settings {
+  margin: 1em;
+  label {
+    width: 5em;
+    display: inline-flex;
+  }
+
+  .tray-settings-url {
+    width: calc(100% - 7em);
+  }
+
+  .tray-settings-name {
+    width: calc(50% - 7em);
+  }
+
+  .tray-settings-danger-zone {
+    border-radius: 3px;
+    border: 1px solid $off-white;
+    margin-top: 1em;
+  }
+
+  .tray-settings-danger-zone-title {
+    background-color: $danger-text;
+    color: white;
+    padding: 0.5em 1em;
+  }
+
+  .tray-settings-danger-zone-content {
+    margin: 1em;
+  }
+
+  .tray-settings-table-heading {
+    width: 25%;
+  }
+
+  .tray-settings-update-button {
+    margin: 2em 1em 0 0;
+    font-size: 1rem;
+  }
+
+  .tray-settings-danger-button {
+    color: $danger;
+    float: right;
+    margin: -0.5em 0 0 0;
+  }
+}

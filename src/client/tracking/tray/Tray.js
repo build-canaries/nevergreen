@@ -6,6 +6,7 @@ import Loading from '../../common/Loading'
 import ValidationMessages from '../../common/messages/ValidationMessages'
 import Shortcut from '../../common/Shortcut'
 import moment from 'moment'
+import './tray.scss'
 
 class Tray extends Component {
   constructor(props) {
@@ -66,7 +67,7 @@ class Tray extends Component {
     const subTitle = this.props.tray.name ? this.props.tray.url : ''
 
     return (
-      <Container title={title} subTitle={subTitle}>
+      <Container title={title} subTitle={subTitle} className='tray'>
         <div>
           <div className='tray-sub-bar'>
             <button className='button' onClick={this._toggleSettingsView.bind(this)} title='Toggle settings'>

@@ -9,7 +9,7 @@ class Help extends Component {
   
   render() {
     return (
-      <section className='dashboard-main-section help-section'>
+      <section className='help'>
         <h2 className='visually-hidden'>Help</h2>
 
         <Container title='Monitor'>
@@ -23,15 +23,15 @@ class Help extends Component {
               </thead>
               <tbody>
               <tr>
-                <td className='monitor-healthy-building help-monitor-example-light'>Yellow</td>
+                <td className='healthy-building help-monitor-example-light'>Yellow</td>
                 <td>The project is currently building and was previously successful.</td>
               </tr>
               <tr>
-                <td className='monitor-sick help-monitor-example-dark'>Red</td>
+                <td className='sick help-monitor-example-dark'>Red</td>
                 <td>The project is broken!</td>
               </tr>
               <tr>
-                <td className='monitor-sick-building help-monitor-example-dark'>Orange</td>
+                <td className='sick-building help-monitor-example-dark'>Orange</td>
                 <td>The project is currently building and was previously broken.</td>
               </tr>
               </tbody>
@@ -153,14 +153,14 @@ class Help extends Component {
                 <td>Navigate to the success section.</td>
               </tr>
               <tr>
-                <td><kbd className='binding'>d</kbd> or <kbd className='binding'>4</kbd></td>
-                <td>Go to Display</td>
-                <td>Navigate to the display section.</td>
+                <td><kbd className='binding'>v</kbd> or <kbd className='binding'>4</kbd></td>
+                <td>Go to Audio/Visual</td>
+                <td>Navigate to the audio/visual section.</td>
               </tr>
               <tr>
-                <td><kbd className='binding'>e</kbd> or <kbd className='binding'>5</kbd></td>
-                <td>Go to Export</td>
-                <td>Navigate to the export section.</td>
+                <td><kbd className='binding'>b</kbd> or <kbd className='binding'>5</kbd></td>
+                <td>Go to Backup</td>
+                <td>Navigate to the backup section.</td>
               </tr>
               <tr>
                 <td><kbd className='binding'>h</kbd> or <kbd className='binding'>6</kbd></td>

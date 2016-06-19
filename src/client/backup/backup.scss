@@ -1,10 +1,6 @@
 @import '../common/variables';
+@import '../common/layout';
 
-.export-text {
-  font-size: 0.7em;
-  margin: 0.5em 0.5em 0;
-  padding: 0.5em;
-  width: calc(100% - 1em);
-  height: 20em;
-  font-family: $monospace;
+.backup {
+  @extend .main-section;
 }

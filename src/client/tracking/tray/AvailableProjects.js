@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import AvailableProject from './AvailableProject'
 import _ from 'lodash'
 import Shortcut from '../../common/Shortcut'
+import './available-projects.scss'
 
 function projectName(project) {
   return project.name
@@ -30,7 +31,7 @@ class AvailableProjects extends Component {
     }
 
     return (
-      <fieldset className='tracking-cctray-group-builds'>
+      <fieldset className='available-projects'>
         <legend className='tracking-cctray-group-builds-legend'>Available projects</legend>
         <div className='tracking-cctray-group-build-toggles'>
           <button className='testing-include-all button' onClick={includeAll}>

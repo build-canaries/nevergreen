@@ -1,0 +1,16 @@
+@import '../../common/variables';
+
+.available-project {
+  .tracking-removed-project {
+    text-decoration: line-through;
+  }
+
+  .tracking-removed-info {
+    margin-left: 0.5em;
+  }
+
+  .tracking-new-info {
+    color: $new-text;
+    margin-left: 0.5em;
+  }
+}

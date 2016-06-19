@@ -1,0 +1,12 @@
+@import 'variables';
+
+.main-section {
+  width: calc(100% - #{$menu-width});
+  padding: 2em;
+  float: left;
+  margin-left: $menu-width;
+  min-height: 35em;
+  &.active {
+    display: block;
+  }
+}

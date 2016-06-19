@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import PrimaryInput from '../common/PrimaryInput'
+import './add-tray.scss'
 
 class AddTray extends Component {
   constructor(props) {
@@ -20,8 +21,8 @@ class AddTray extends Component {
     }
 
     return (
-      <div className='tracking-cctray-group-cctray-form'>
-        <span className='text-input'>
+      <div className='add-tray'>
+        <span className='url-input'>
           <label htmlFor='cctray-url'>url</label>
           <PrimaryInput>
             <input id='cctray-url'

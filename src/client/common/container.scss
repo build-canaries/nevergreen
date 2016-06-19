@@ -1,0 +1,37 @@
+@import 'variables';
+
+.container {
+  font-size: 1.5rem;
+  border: 1px solid $mid-grey;
+  background-color: white;
+  margin-bottom: 1em;
+
+  .section-title {
+    font-size: 1.5rem;
+    font-weight: 400;
+    padding: 0.5em;
+    background: $mid-grey;
+    color: white;
+    text-overflow: ellipsis;
+  }
+
+  .section-sub-title {
+    font-size: 1.2rem;
+    padding-left: 1em;
+    color: darken(white, 10%);
+    text-overflow: ellipsis;
+  }
+
+  .show-hide {
+    color: $off-white;
+    font-size: 1.2rem;
+    display: inline;
+    border: none;
+    background: none;
+    margin-right: 0.5em;
+
+    &:hover {
+      color: darken($off-white, 10%);
+    }
+  }
+}

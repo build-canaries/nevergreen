@@ -27,7 +27,7 @@ class AudioVisual extends Component {
     }
 
     return (
-      <section className='dashboard-main-section display'>
+      <section className='audio-visual'>
         <Container title='Display Settings'>
           <fieldset className='settings-list'>
             <ConfigOption name='Show broken build timers'
@@ -40,7 +40,7 @@ class AudioVisual extends Component {
             <ConfigOption name='Enable sound for broken builds'
                           enabled={this.props.showBrokenBuildSounds}
                           onToggle={toggleBrokenSounds}/>
-            <div className='text-input sound-fx'>
+            <div className='sound-fx'>
               <label htmlFor='sound-fx'>Broken build sound</label>
               <input id='sound-fx'
                      ref='soundFx'
@@ -48,7 +48,7 @@ class AudioVisual extends Component {
                      placeholder='URL to an audio file'
                      defaultValue={this.props.brokenBuildSoundFx}
                      onBlur={setSoundFx}/>
-              <button className='button-primary' onClick={testSoundFx}>test</button>
+              <button className='test' onClick={testSoundFx}>test</button>
             </div>
           </fieldset>
         </Container>

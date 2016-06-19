@@ -1,0 +1,34 @@
+@import '../common/variables';
+
+.added-images {
+  .success-images-list {
+    list-style: none;
+    display: flex;
+    flex-flow: row wrap;
+  }
+
+  .success-list-image {
+    width: 496px;
+    height: 279px;
+    object-fit: contain;
+    border: 1px solid $mid-grey;
+    background-color: black;
+  }
+
+  .success-item {
+    margin: 1em;
+
+    .hotkey {
+      left: -0.5em;
+    }
+  }
+
+  .success-item.image {
+    position: relative;
+
+    .remove-link {
+      position: absolute;
+      right: 0.3em;
+    }
+  }
+}

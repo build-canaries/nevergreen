@@ -10,7 +10,7 @@ class Tracking extends Component {
 
   render() {
     return (
-      <section className='dashboard-main-section'>
+      <section className='tracking'>
         <h2 className='visually-hidden'>Tracking</h2>
         <AddTray addTray={this.props.addTray}/>
 

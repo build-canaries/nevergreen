@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react'
+import './container.scss'
 
 class Container extends Component {
   constructor(props) {
@@ -14,9 +15,9 @@ class Container extends Component {
     const showHideIcon = this.state.hidden ? 'icon-circle-down' : 'icon-circle-up'
 
     return (
-      <section className='sub-section'>
+      <section className={`container ${this.props.className}`}>
         <h3 className='section-title'>
-          <button className='tray-hidden-button' onClick={toggleHidden} title={showHideLabel}>
+          <button className='show-hide' onClick={toggleHidden} title={showHideLabel}>
             <span className={showHideIcon}/>
             <span className='visually-hidden'>{showHideLabel}</span>
           </button>
@@ -31,7 +32,8 @@ class Container extends Component {
 
 Container.propTypes = {
   title: PropTypes.string.isRequired,
-  subTitle: PropTypes.string
+  subTitle: PropTypes.string,
+  className: PropTypes.string
 }
 
 export default Container

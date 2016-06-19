@@ -1,16 +1,27 @@
-.display {
+@import '../common/layout';
+@import '../common/inputs';
+
+.audio-visual {
+  @extend .main-section;
+
   .checkbox-container {
     float: none;
   }
-}
 
-.settings-list {
-  border: 0;
-}
+  .settings-list {
+    border: 0;
+  }
 
-.sound-fx {
-  width: 100%;
-  input {
-    width: calc(100% - 375px);
+  .sound-fx {
+    @extend .text-input;
+
+    width: 100%;
+    input {
+      width: calc(100% - 375px);
+    }
+
+    .test {
+      @extend .button-primary;
+    }
   }
 }

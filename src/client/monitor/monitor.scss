@@ -7,66 +7,14 @@
   font-family: $monospace;
   height: 100vh;
 
-  .monitor-projects {
-    list-style-type: none;
-  }
-
-  .monitor-project {
-    float: left;
-    margin: 0.3em;
-    border-radius: 1.5em;
-  }
-
-  .monitor-healthy-building {
-    background-color: $healthy-building;
-    color: $healthy-building-text;
-  }
-
-  .monitor-sick {
-    background-color: $sick;
-    color: $off-white2;
-  }
-
-  .monitor-sick-building {
-    background-color: $sick-building;
-    color: $off-white2;
-  }
-
-  .monitor-unknown {
-    background-color: $mid-grey;
-  }
-
-  .monitor-outer-container {
-    display: table;
-    overflow: hidden;
-  }
-
-  .monitor-inner-container {
-    display: table-cell;
-    vertical-align: middle;
-  }
-
-  .monitor-success-text {
-    display: table-cell;
-    overflow: hidden;
-    vertical-align: middle;
-  }
-
-  .monitor-success-image {
-    width: 100vw;
-    height: 100vh;
-    object-fit: contain;
-  }
-
-  .monitor-time-broken {
-    opacity: 0.5;
-    font-style: italic;
-  }
-
-  .monitor-error {
-    font-size: 3em;
+  .validation-message {
+    font-size: 3rem;
     div {
       margin: 0;
     }
+  }
+
+  .loading {
+    font-size: 10rem;
   }
 }

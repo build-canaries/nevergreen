@@ -1,0 +1,8 @@
+@import '../common/inputs';
+
+.remove-link {
+  @extend .button;
+
+  font-size: 0.5rem;
+  padding: 1em;
+}

@@ -26,11 +26,7 @@ class Monitor extends Component {
         'Unable to fetch projects because of an error:',
         `${this.props.error.status} - ${this.props.error.message}`
       ]
-      content = (
-        <div className='monitor-error'>
-          <ValidationMessages messages={errorMessages}/>
-        </div>
-      )
+      content = <ValidationMessages messages={errorMessages}/>
     } else if (this.props.projects.length > 0) {
       content =
         <InterestingProjects projects={this.props.projects}
@@ -39,7 +35,7 @@ class Monitor extends Component {
                              brokenBuildFx={this.props.brokenBuildFx}/>
 
     } else {
-      content = <Success message={this.props.successMessage} />
+      content = <Success message={this.props.successMessage}/>
     }
 
     return <div className='monitor' onMouseMove={this.props.showMenu}>

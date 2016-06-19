@@ -4,6 +4,7 @@ import InfoMessages from '../common/messages/InfoMessages'
 import Clipboard from 'clipboard'
 import Container from '../common/Container'
 import Loading from '../common/Loading'
+import './export.scss'
 
 class Export extends Component {
   constructor(props) {
@@ -33,21 +34,20 @@ class Export extends Component {
   }
 
   render() {
-
     return (
-      <Container title='Export'>
+      <Container title='Export' className='export'>
         <Loading loading={this.props.loading}>
           <div>
             <pre>
               <textarea id='export-data'
-                        className='export-text'
+                        className='export-data'
                         placeholder='loading...'
                         value={this.props.configuration}
                         readOnly='true'
                         spellCheck='false'/>
             </pre>
             <button id='copy-to-clipboard'
-                    className='button-primary'
+                    className='copy-action'
                     data-clipboard-target='#export-data'>
               copy to clipboard
             </button>

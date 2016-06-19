@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import Container from '../common/Container'
 import RemoveLink from './RemoveLink'
+import './added-messages.scss'
 
 class AddedMessages extends Component {
   constructor(props) {
@@ -9,13 +10,13 @@ class AddedMessages extends Component {
 
   render() {
     return (
-      <Container title='Messages'>
-        <ul className='success-list success-text-list'>
+      <Container title='Messages' className='added-messages'>
+        <ul className='success-text-list'>
           {
             this.props.messages.map((message, index) => {
               return (
                 <li key={`m${index}`} className='success-item'>
-                  <span className='success-message'>{message}</span>
+                  <span className='message'>{message}</span>
                   <RemoveLink hotkeys={[`y m ${index}`]} removeMessage={this.props.removeMessage.bind(null, message)}/>
                 </li>
               )

@@ -1,0 +1,23 @@
+@import '../../common/variables';
+
+.available-projects {
+  border: none;
+  margin: 1em;
+  padding: 0;
+
+  .tracking-cctray-group-builds-legend {
+    color: $mid-grey;
+    float: left;
+  }
+
+  .tracking-cctray-group-build-toggles {
+    float: left;
+    position: relative;
+    top: -0.5em;
+    margin-left: 1em;
+  }
+
+  .tracking-cctray-group-build-items {
+    clear: both;
+  }
+}

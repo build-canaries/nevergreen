@@ -1,0 +1,17 @@
+@import '../common/variables';
+@import '../common/inputs';
+
+.export {
+  .export-data {
+    font-size: 0.8rem;
+    margin: 0.5em 0.5em 0;
+    padding: 0.5em;
+    width: calc(100% - 1em);
+    height: 20em;
+    font-family: $monospace;
+  }
+
+  .copy-action {
+    @extend .button-primary;
+  }
+}

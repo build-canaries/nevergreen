@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react'
+import './success-image.scss'
 
 class SuccessImage extends Component {
   constructor(props) {
@@ -7,8 +8,8 @@ class SuccessImage extends Component {
 
   render() {
     return (
-      <div id='success-image'>
-        <img src={this.props.url} className='monitor-success-image' alt=''/>
+      <div id='success-image' className='success-image'>
+        <img src={this.props.url} className='image' alt=''/>
       </div>
     )
   }

@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import ReactDOM from 'react-dom'
 import {styleProjects} from './Styler'
+import './success-message.scss'
 
 class SuccessMessage extends Component {
   constructor(props) {
@@ -19,7 +20,7 @@ class SuccessMessage extends Component {
 
   render() {
     return (
-      <div id='success-text' className='monitor-success-text'>{this.props.message}</div>
+      <div id='success-text' className='success-message'>{this.props.message}</div>
     )
   }
 }

@@ -11,7 +11,7 @@ class Success extends Component {
 
   render() {
     return (
-      <section className='dashboard-main-section'>
+      <section className='success'>
         <h2 className='visually-hidden'>Success</h2>
         <AddMessage addMessage={this.props.addMessage} errors={this.props.errors}/>
 

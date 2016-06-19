@@ -1,0 +1,22 @@
+@import '../common/variables';
+
+.added-messages {
+  .success-text-list {
+    display: block;
+    list-style: none;
+  }
+
+  .success-item {
+    margin: 1em;
+
+    .hotkey {
+      left: -0.5em;
+    }
+  }
+
+  .message {
+    font-family: $monospace;
+    margin-right: 1em;
+    display: inline;
+  }
+}

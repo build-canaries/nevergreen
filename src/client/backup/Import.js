@@ -4,6 +4,7 @@ import InfoMessages from '../common/messages/InfoMessages'
 import Container from '../common/Container'
 import Loading from '../common/Loading'
 import PrimaryInput from '../common/PrimaryInput'
+import './import.scss'
 
 class Import extends Component {
   constructor(props) {
@@ -22,17 +23,17 @@ class Import extends Component {
     const doImport = () => this.props.importData(this.state.data)
 
     return (
-      <Container title='Import'>
+      <Container title='Import' className='import'>
         <Loading loading={this.props.loading}>
           <div>
             <PrimaryInput>
-              <textarea className='export-text'
+              <textarea className='import-data'
                         placeholder='paste exported configuration here and press import'
                         value={this.state.data}
                         onChange={updateData}
                         spellCheck='false'/>
             </PrimaryInput>
-            <button className='button-primary' onClick={doImport}>import</button>
+            <button className='import-action' onClick={doImport}>import</button>
             <ValidationMessages messages={this.props.errors}/>
             <InfoMessages messages={this.props.infos}/>
           </div>

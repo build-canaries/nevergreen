@@ -2,7 +2,7 @@
 
 .error-message {
   width: 100%;
-  font-size: 2em;
+  font-size: 2rem;
   padding: 0.5em;
 }
 
@@ -26,7 +26,7 @@
 }
 
 .notification {
-  font-size: 1em;
+  font-size: 1rem;
   padding: 0.5em;
   margin: 0.5em;
   border-radius: 0.5em;
@@ -39,7 +39,7 @@
 
 .notification-dismiss {
   float: right;
-  font-size: 0.7em;
+  font-size: 0.7rem;
   cursor: pointer;
 
   &:hover {

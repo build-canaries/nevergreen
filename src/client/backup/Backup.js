@@ -29,7 +29,7 @@ class Backup extends Component {
     }
 
     return (
-      <section className='dashboard-main-section'>
+      <section className='backup'>
         <h2 className='visually-hidden'>Export</h2>
         <Import {...importProps}/>
         <Export {...exportProps}/>

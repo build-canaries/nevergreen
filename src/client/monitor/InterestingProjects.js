@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import ReactDOM from 'react-dom'
 import {styleProjects} from './Styler'
 import InterestingProject from './InterestingProject'
+import './interesting-projects.scss'
 
 class InterestingProjects extends Component {
   constructor(props) {
@@ -31,8 +32,8 @@ class InterestingProjects extends Component {
     const brokenSfx = playBrokenSfx ? <audio ref='sfx' src={this.props.brokenBuildFx} autoPlay/> : null
 
     return (
-      <span>
-        <ul id='interesting-projects' className='monitor-projects'>
+      <span className='interesting-projects'>
+        <ul id='interesting-projects' className='projects'>
           {
             this.props.projects.map((project) => {
               return <InterestingProject {...project} key={project.projectId}

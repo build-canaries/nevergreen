@@ -1,0 +1,41 @@
+@import '../common/variables';
+
+.interesting-project {
+  float: left;
+  margin: 0.3em;
+  border-radius: 1.5em;
+
+  &.healthy-building {
+    background-color: $healthy-building;
+    color: $healthy-building-text;
+  }
+
+  &.sick {
+    background-color: $sick;
+    color: $off-white2;
+  }
+
+  &.sick-building {
+    background-color: $sick-building;
+    color: $off-black;
+  }
+
+  &.unknown {
+    background-color: $mid-grey;
+  }
+
+  .monitor-outer-container {
+    display: table;
+    overflow: hidden;
+  }
+
+  .monitor-inner-container {
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+  .time-broken {
+    opacity: 0.5;
+    font-style: italic;
+  }
+}

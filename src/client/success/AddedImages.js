@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import Container from '../common/Container'
 import RemoveLink from './RemoveLink'
+import './added-images.scss'
 
 class AddedImages extends Component {
   constructor(props) {
@@ -9,8 +10,8 @@ class AddedImages extends Component {
 
   render() {
     return (
-      <Container title='Images'>
-        <ul className='success-list success-images-list'>
+      <Container title='Images' className='added-images'>
+        <ul className='success-images-list'>
           {
             this.props.messages.map((message, index) => {
               return (

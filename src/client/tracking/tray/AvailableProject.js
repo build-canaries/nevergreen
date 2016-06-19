@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react'
+import './available-project.scss'
 
 class AvailableProject extends Component {
   constructor(props) {
