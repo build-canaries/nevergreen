@@ -3,7 +3,7 @@
   :url "https://github.com/build-canaries/nevergreen"
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [ring "1.5.0"]
-                 [compojure "1.5.0"]
+                 [compojure "1.5.1"]
                  [environ "1.0.3"]
                  [cheshire "5.6.1"]
                  [clj-cctray "0.10.0"]
