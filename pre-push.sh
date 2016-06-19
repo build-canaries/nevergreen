@@ -27,14 +27,14 @@ echo '[Step 2 of 4] Running the ci test script...'
 ./ci/test.sh
 
 echo '[Step 3 of 4] Starting the server...'
-lein run &
+./lein.sh run &
 npm run fake-server &
 
 ./ci/smoke-test.sh "http://localhost:5000/api/ping"
 
 echo '[Step 4 of 4] Running the functional tests...'
 export JVM_OPTS="-Dwebdriver.chrome.driver=./node_modules/chromedriver/bin/chromedriver"
-lein test functional.functional-test
+./lein.sh test functional.functional-test
 
 echo
 echo 'Everything completed successfully, push away!'
