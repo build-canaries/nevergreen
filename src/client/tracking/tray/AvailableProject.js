@@ -19,7 +19,7 @@ class AvailableProject extends Component {
     }
 
     return (
-      <li className='checkbox-container'>
+      <li className='available-project checkbox-container'>
         <label className={labelClass}>
           <input className='checkbox no-text-selection'
                  type='checkbox'
