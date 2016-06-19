@@ -1,8 +1,9 @@
 import React, {Component, PropTypes} from 'react'
-import MenuItem from './MenuItem'
 import './navigation.scss'
 import './footer.scss'
-import logo from './buildcanaries-logo.png' 
+import logo from './buildcanaries-logo.png'
+import {Link} from 'react-router'
+import Shortcut from '../common/Shortcut'
 
 const items = [
   {id: 'monitor', iconClass: 'eye', title: 'Monitor', shortcuts: ['m', '1']},
@@ -24,29 +25,31 @@ class Menu extends Component {
     }
 
     return (
-      <div>
-        <nav role='navigation' className='navigation'>
+      <div className='navigation'>
+        <nav role='navigation'>
           <h2 className='visually-hidden'>Navigation</h2>
 
           <a href='https://build-canaries.github.io/' target='_blank'>
-            <img src={logo}
-                 className='header-logo'
-                 alt='Build Canaries logo'
-                 title='Click to visit the Build Canaries homepage'/>
+            <img src={logo} className='logo' alt='Build Canaries' title='Click to visit the Build Canaries homepage'/>
           </a>
 
-          <ul className='navigation-list'>
+          <ul className='menu'>
             {
               items.map((item) => {
-                return <MenuItem key={item.id} id={item.id}
-                                 iconClass={'icon-' + item.iconClass}
-                                 title={item.title}
-                                 shortcuts={item.shortcuts}/>
+                return (
+                  <li key={item.id}>
+                    <Link id={item.id} to={`/${item.id}`} className='menu-item' activeClassName='active'>
+                      <span className={`menu-icon icon-${item.iconClass}`}/>
+                      <span className='menu-title'>{item.title}</span>
+                      <Shortcut hotkeys={item.shortcuts}/>
+                    </Link>
+                  </li>
+                )
               })
             }
           </ul>
         </nav>
-        <footer role='contentinfo' className='content-info' style={footerStyle}>
+        <footer role='contentinfo' className='footer' style={footerStyle}>
           <a href='https://github.com/build-canaries/nevergreen/releases' target='_blank' className='version'>
             <p>v{this.props.versionNumber}</p>
             <p>{this.props.versionName}</p>

@@ -18,6 +18,10 @@ body {
   background: $light-grey;
 }
 
+kbd {
+  font-family: $monospace;
+}
+
 .label-checkbox {
   font-size: 1.3rem;
   span {

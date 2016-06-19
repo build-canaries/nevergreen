@@ -30,12 +30,8 @@
     font-size: 0;
     line-height: 0;
   }
-}
 
-.hotkey-or {
-  padding: 0 0.5em;
-}
-
-kbd {
-  font-family: $monospace;
+  .hotkey-or {
+    padding: 0 0.5em;
+  }
 }
