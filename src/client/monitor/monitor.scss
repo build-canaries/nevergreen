@@ -15,6 +15,9 @@
   }
 
   .loading {
-    font-size: 10rem;
+    .pulse {
+      font-size: 10rem;
+      color: $off-white;
+    }
   }
 }

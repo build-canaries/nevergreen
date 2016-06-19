@@ -54,47 +54,47 @@ class Help extends Component {
               <tbody>
               <tr>
                 <td>Jenkins</td>
-                <td>http://jenkins.&lt;servername&gt;:8080/cc.xml</td>
+                <td className='url'>http://jenkins.&lt;servername&gt;:8080/cc.xml</td>
               </tr>
               <tr>
                 <td>Hudson</td>
-                <td>http://hudson.&lt;servername&gt;:8080/cc.xml</td>
+                <td className='url'>http://hudson.&lt;servername&gt;:8080/cc.xml</td>
               </tr>
               <tr>
                 <td>Travis CI</td>
-                <td>http://travis-ci.org/&lt;ownername&gt;/&lt;repositoryname&gt;/cc.xml</td>
+                <td className='url'>http://travis-ci.org/&lt;ownername&gt;/&lt;repositoryname&gt;/cc.xml</td>
               </tr>
               <tr>
                 <td>GO</td>
-                <td>http://&lt;servername&gt;:8154/go/cctray.xml</td>
+                <td className='url'>http://&lt;servername&gt;:8154/go/cctray.xml</td>
               </tr>
               <tr>
                 <td>Snap CI</td>
-                <td>https://snap-ci.com/&lt;ownername&gt;/&lt;reponame&gt; /branch/master/cctray.xml</td>
+                <td className='url'>https://snap-ci.com/&lt;ownername&gt;/&lt;reponame&gt; /branch/master/cctray.xml</td>
               </tr>
               <tr>
                 <td>CircleCI</td>
-                <td>https://circleci.com/cc.xml?circle-token=&lt;circle-token&gt;</td>
+                <td className='url'>https://circleci.com/cc.xml?circle-token=&lt;circle-token&gt;</td>
               </tr>
               <tr>
                 <td>TeamCity</td>
-                <td>http://teamcity:8111/guestAuth/app/rest/cctray/projects.xml</td>
+                <td className='url'>http://teamcity:8111/guestAuth/app/rest/cctray/projects.xml</td>
               </tr>
               <tr>
                 <td>CruiseControl.rb</td>
-                <td>http://cc.rb.&lt;servername&gt;:3333/XmlStatusReport.aspx</td>
+                <td className='url'>http://cc.rb.&lt;servername&gt;:3333/XmlStatusReport.aspx</td>
               </tr>
               <tr>
                 <td>CruiseControl</td>
-                <td>http://cc.java.&lt;servername&gt;:8080/cctray.xml</td>
+                <td className='url'>http://cc.java.&lt;servername&gt;:8080/cctray.xml</td>
               </tr>
               <tr>
                 <td>CruiseControl.NET</td>
-                <td>http://cc.net.&lt;servername&gt;/XmlStatusReport.aspx</td>
+                <td className='url'>http://cc.net.&lt;servername&gt;/XmlStatusReport.aspx</td>
               </tr>
               <tr>
                 <td>Solano CI</td>
-                <td>http://api.tddium.com/cc/&lt;long_uuid_string&gt;/cctray.xml</td>
+                <td className='url'>http://api.tddium.com/cc/&lt;long_uuid_string&gt;/cctray.xml</td>
               </tr>
               </tbody>
             </table>

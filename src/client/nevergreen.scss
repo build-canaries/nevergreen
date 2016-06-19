@@ -9,15 +9,17 @@
   padding: 0;
 }
 
+html,
 body {
   cursor: default;
+  color: $off-black;
   font-family: Roboto, sans-serif;
-  font-size: 12px;
+  font-size: 14px;
   background: $light-grey;
 }
 
 .label-checkbox {
-  font-size: 1rem;
+  font-size: 1.3rem;
   span {
     margin-left: 0.8em;
   }
@@ -96,13 +98,6 @@ body {
 
 .text-with-icon {
   margin-left: 1em;
-}
-
-.checkbox-container {
-  display: block;
-  margin: 0.5em 0;
-  float: left;
-  width: 33.333333%;
 }
 
 .no-text-selection {

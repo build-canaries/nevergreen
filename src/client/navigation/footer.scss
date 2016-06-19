@@ -5,19 +5,19 @@
   position: fixed;
   bottom: 0;
   width: $menu-width;
-  height: 6em;
+  height: 5em;
 }
 
 .version {
   float: right;
   color: white;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   padding: 0.5em;
   text-decoration: none;
   width: 100%;
 }
 
 .commit-hash {
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   font-family: $monospace;
 }

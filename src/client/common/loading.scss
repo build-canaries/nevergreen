@@ -4,9 +4,12 @@
   text-align: center;
   padding-top: 1em;
   padding-bottom: 1em;
+  height: 100%;
+  width: 100%;
 
   .pulse {
     display: inline-block;
+    color: $mid-grey;
     font-size: 3rem;
     padding: 0.5rem;
 

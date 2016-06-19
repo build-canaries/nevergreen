@@ -22,4 +22,4 @@ const routes = (
   </Route>
 )
 
-ReactDOM.render(<Router history={browserHistory} routes={routes}/>, document.getElementById('content'))
+ReactDOM.render(<Router history={browserHistory} routes={routes}/>, document.getElementById('root'))
