@@ -40,13 +40,10 @@ class Nevergreen extends Component {
     return (
       <div className='nevergreen'>
         <h1 className='visually-hidden'>Nevergreen</h1>
-
-        <div id='menu'>
-          <Menu versionNumber={this.props.versionNumber}
-                versionName={this.props.versionName}
-                versionColour={this.props.versionColour}
-                commitHash={this.props.commitHash}/>
-        </div>
+        <Menu versionNumber={this.props.versionNumber}
+              versionName={this.props.versionName}
+              versionColour={this.props.versionColour}
+              commitHash={this.props.commitHash}/>
         <div className={classes}>
           <div>
             <span className='icon-notification'/>

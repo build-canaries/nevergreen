@@ -60,20 +60,20 @@
     display: block;
     margin-bottom: 0.15em;
   }
+}
 
-  .navigation-show {
-    left: 0;
-    transition-property: left;
-    transition-duration: 0.5s;
-    transition-timing: ease;
-    transition-delay: 0s;
-  }
+.navigation-show {
+  left: 0;
+  transition-property: left;
+  transition-duration: 0.5s;
+  transition-timing: ease;
+  transition-delay: 0s;
+}
 
-  .navigation-hide {
-    left: -$menu-width;
-    transition-property: left;
-    transition-duration: 0.5s;
-    transition-timing: ease;
-    transition-delay: 0s;
-  }
+.navigation-hide {
+  left: -$menu-width;
+  transition-property: left;
+  transition-duration: 0.5s;
+  transition-timing: ease;
+  transition-delay: 0s;
 }

@@ -23,14 +23,14 @@ function getStateFromStore() {
 function animateMenu(state) {
   clearTimeout(state.menuTimer)
 
-  Array.from(document.querySelectorAll('#menu .navigation, .content-info, .notification')).forEach((elem) => {
+  Array.from(document.querySelectorAll('.navigation, .notification')).forEach((elem) => {
     elem.classList.remove('navigation-hide')
     elem.classList.add('navigation-show')
   })
 }
 
 function hideMenu() {
-  Array.from(document.querySelectorAll('#menu .navigation, .content-info, .notification')).forEach((elem) => {
+  Array.from(document.querySelectorAll('.navigation, .notification')).forEach((elem) => {
     elem.classList.remove('navigation-show')
     elem.classList.add('navigation-hide')
   })
