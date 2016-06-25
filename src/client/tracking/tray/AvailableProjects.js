@@ -32,20 +32,20 @@ class AvailableProjects extends Component {
 
     return (
       <fieldset className='available-projects'>
-        <legend className='tracking-cctray-group-builds-legend'>Available projects</legend>
-        <div className='tracking-cctray-group-build-toggles'>
-          <button className='testing-include-all button' onClick={includeAll}>
+        <legend className='legend'>Available projects</legend>
+        <div className='toggles'>
+          <button className='include-all' onClick={includeAll}>
             <span className='icon-checkbox-checked'/>
             <span className='text-with-icon'>Include all</span>
             <Shortcut hotkeys={[`+ ${this.props.index}`, `= ${this.props.index}`]}/>
           </button>
-          <button className='button' onClick={excludeAll}>
+          <button className='exclude-all' onClick={excludeAll}>
             <span className='icon-checkbox-unchecked'/>
             <span className='text-with-icon'>Exclude all</span>
             <Shortcut hotkeys={[`- ${this.props.index}`]}/>
           </button>
         </div>
-        <ol className='testing-projects tracking-cctray-group-build-items'>
+        <ol className='build-items'>
           {
             _.sortBy(this.props.projects, projectName).map((project) => {
               const included = _.indexOf(this.props.selectedProjects, project.projectId) >= 0

@@ -1,23 +1,32 @@
 @import '../../common/variables';
+@import '../../common/inputs';
 
 .available-projects {
   border: none;
   margin: 1em;
   padding: 0;
 
-  .tracking-cctray-group-builds-legend {
+  .legend {
     color: $mid-grey;
     float: left;
   }
 
-  .tracking-cctray-group-build-toggles {
+  .toggles {
     float: left;
     position: relative;
     top: -0.5em;
     margin-left: 1em;
   }
 
-  .tracking-cctray-group-build-items {
+  .include-all {
+    @extend .button;
+  }
+
+  .exclude-all {
+    @extend .button;
+  }
+
+  .build-items {
     clear: both;
   }
 }

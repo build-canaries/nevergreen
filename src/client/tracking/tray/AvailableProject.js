@@ -9,13 +9,13 @@ class AvailableProject extends Component {
   render() {
     const toggle = (event) => this.props.selectProject(event.target.checked)
     const labelClass = this.props.wasRemoved ? 'label-checkbox-disabled' : 'label-checkbox'
-    const nameClass = this.props.wasRemoved ? 'tracking-removed-project' : ''
+    const nameClass = this.props.wasRemoved ? 'removed-project' : ''
     let info = null
 
     if (this.props.isNew) {
-      info = <sup className='tracking-new-info'>new</sup>
+      info = <sup className='new-project'>new</sup>
     } else if (this.props.wasRemoved) {
-      info = <sup className='tracking-removed-info'>removed</sup>
+      info = <sup className='removed-project'>removed</sup>
     }
 
     return (

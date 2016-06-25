@@ -1,4 +1,5 @@
 @import '../../common/variables';
+@import '../../common/inputs';
 
 .tray-settings {
   margin: 1em;
@@ -15,34 +16,42 @@
     width: calc(50% - 7em);
   }
 
-  .tray-settings-danger-zone {
+  .danger-zone {
     border-radius: 3px;
     border: 1px solid $off-white;
     margin-top: 1em;
+
+    .title {
+      background-color: $danger-text;
+      color: white;
+      padding: 0.5em 1em;
+    }
+
+    .content {
+      margin: 1em;
+    }
+
+    .delete {
+      @extend .button;
+      color: $danger;
+      float: right;
+      margin: -0.5em 0 0 0;
+    }
   }
 
-  .tray-settings-danger-zone-title {
-    background-color: $danger-text;
-    color: white;
-    padding: 0.5em 1em;
+  .generate-random {
+    @extend .button;
   }
 
-  .tray-settings-danger-zone-content {
-    margin: 1em;
-  }
-
-  .tray-settings-table-heading {
-    width: 25%;
-  }
-
-  .tray-settings-update-button {
+  .cancel {
+    @extend .button;
     margin: 2em 1em 0 0;
     font-size: 1rem;
   }
 
-  .tray-settings-danger-button {
-    color: $danger;
-    float: right;
-    margin: -0.5em 0 0 0;
+  .update {
+    @extend .button-primary;
+    margin: 2em 1em 0 0;
+    font-size: 1rem;
   }
 }

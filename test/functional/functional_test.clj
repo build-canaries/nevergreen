@@ -47,9 +47,9 @@
     (input "#password" tray-password)
     (click "#cctray-fetch")
 
-    (wait-until #(present? ".testing-projects"))
+    (wait-until #(present? ".build-items"))
 
-    (click ".testing-include-all")
+    (click ".include-all")
     (click "#monitor")
 
     (wait-until #(present? "#interesting-projects"))

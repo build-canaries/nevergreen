@@ -24,20 +24,20 @@ class TraySettings extends Component {
     return (
       <section className='tray-settings'>
         <div className='text-input'>
-          <label htmlFor={this.props.tray.trayId + 'settings-url'}>name</label>
+          <label htmlFor={`${this.props.tray.trayId}-settings-name`}>name</label>
           <input className='tray-settings-name'
-                 id={this.props.tray.trayId + 'settings-name'}
+                 id={`${this.props.tray.trayId}-settings-name`}
                  ref='name'
                  type='text'
                  defaultValue={this.props.tray.name}
                  onKeyPress={keyUpdate}
                  placeholder='e.g. project or team name'/>
-          <button className='button' onClick={generateRandomName}>random</button>
+          <button className='generate-random' onClick={generateRandomName}>random</button>
         </div>
         <div className='text-input'>
-          <label htmlFor={this.props.tray.trayId + 'settings-url'}>url</label>
+          <label htmlFor={`${this.props.tray.trayId}-settings-url`}>url</label>
           <input className='tray-settings-url'
-                 id={this.props.tray.trayId + 'settings-url'}
+                 id={`${this.props.tray.trayId}-settings-url`}
                  ref='url'
                  type='text'
                  defaultValue={this.props.tray.url}
@@ -45,8 +45,8 @@ class TraySettings extends Component {
                  placeholder='this should not be blank...'/>
         </div>
         <div className='text-input'>
-          <label htmlFor={this.props.tray.trayId + 'settings-username'}>username</label>
-          <input id={this.props.tray.trayId + 'settings-username'}
+          <label htmlFor={`${this.props.tray.trayId}-settings-username`}>username</label>
+          <input id={`${this.props.tray.trayId}-settings-username`}
                  ref='username'
                  type='text'
                  placeholder='not set'
@@ -54,25 +54,24 @@ class TraySettings extends Component {
                  onKeyPress={keyUpdate}/>
         </div>
         <div className='text-input'>
-          <label htmlFor={this.props.tray.trayId + 'settings-password'}>password</label>
-          <input id={this.props.tray.trayId + 'settings-password'}
+          <label htmlFor={`${this.props.tray.trayId}-settings-password`}>password</label>
+          <input id={`${this.props.tray.trayId}-settings-password`}
                  ref='password'
                  type='password'
                  placeholder='not set'
                  defaultValue={this.props.tray.password}
                  onKeyPress={keyUpdate}/>
         </div>
-        <button className='button tray-settings-update-button' onClick={this.props.cancel}>cancel</button>
-        <button className='button-primary tray-settings-update-button' onClick={updateTray}>update tray</button>
+        <button className='cancel' onClick={this.props.cancel}>cancel</button>
+        <button className='update' onClick={updateTray}>update tray</button>
 
-        <div className='tray-settings-danger-zone'>
-          <h4 className='tray-settings-danger-zone-title'>
+        <div className='danger-zone'>
+          <h4 className='title'>
             <span className='icon-notification'/>
             <span className='text-with-icon'>Danger Zone</span>
           </h4>
-          <div className='tray-settings-danger-zone-content'>
-            <button className='button tray-settings-danger-button' onClick={this.props.removeTray}>Delete this tray
-            </button>
+          <div className='content'>
+            <button className='delete' onClick={this.props.removeTray}>Delete this tray</button>
             <span>Once you delete a tray, there is no going back. Please be certain.</span>
           </div>
         </div>

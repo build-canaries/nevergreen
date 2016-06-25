@@ -6,15 +6,15 @@
   float: left;
   width: 33.333333%;
 
-  .tracking-removed-project {
+  span.removed-project {
     text-decoration: line-through;
   }
 
-  .tracking-removed-info {
+  sup.removed-project {
     margin-left: 0.5em;
   }
 
-  .tracking-new-info {
+  .new-project {
     color: $new-text;
     margin-left: 0.5em;
   }
