@@ -4,3 +4,7 @@ rules:
   string-quotes: single
   font-family-name-quotes: always-where-required
   function-url-quotes: always
+  at-rule-no-unknown:
+    - true
+    - ignoreAtRules:
+       - extend

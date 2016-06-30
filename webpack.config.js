@@ -40,7 +40,7 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.jsx?/i,
+        test: /\.js$/i,
         loader: 'babel',
         include: path.join(__dirname, 'src/client')
       },
@@ -57,19 +57,19 @@ module.exports = {
         loaders: ['url?limit=8192', 'img']
       },
       {
-        test: /\.woff2?(\?v=\d+\.\d+\.\d+)?$/i,
+        test: /\.woff2?(\?.*)?$/i,
         loader: 'url?limit=8192&mimetype=application/font-woff'
       },
       {
-        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/i,
+        test: /\.ttf(\?.*)?$/i,
         loader: 'url?limit=8192&mimetype=application/octet-stream'
       },
       {
-        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/i,
+        test: /\.eot(\?.*)?$/i,
         loader: 'file'
       },
       {
-        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/i,
+        test: /\.svg(\?.*)?$/i,
         loader: 'url?limit=8192&mimetype=image/svg+xml'
       },
       {

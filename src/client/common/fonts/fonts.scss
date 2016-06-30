@@ -2,43 +2,43 @@
   font-family: Roboto;
   font-weight: 400;
   font-style: normal;
-  src: url('Roboto-regular/Roboto-regular.eot');
+  src: url('common/fonts/Roboto-regular/Roboto-regular.eot');
   src:
-    url('Roboto-regular/Roboto-regular.eot?#iefix') format('embedded-opentype'),
+    url('common/fonts/Roboto-regular/Roboto-regular.eot?#iefix') format('embedded-opentype'),
     local('Roboto'),
     local('Roboto-regular'),
-    url('Roboto-regular/Roboto-regular.woff2') format('woff2'),
-    url('Roboto-regular/Roboto-regular.woff') format('woff'),
-    url('Roboto-regular/Roboto-regular.ttf') format('truetype'),
-    url('Roboto-regular/Roboto-regular.svg#Roboto') format('svg');
+    url('common/fonts/Roboto-regular/Roboto-regular.woff2') format('woff2'),
+    url('common/fonts/Roboto-regular/Roboto-regular.woff') format('woff'),
+    url('common/fonts/Roboto-regular/Roboto-regular.ttf') format('truetype'),
+    url('common/fonts/Roboto-regular/Roboto-regular.svg#Roboto') format('svg');
 }
 
 @font-face {
   font-family: Roboto;
   font-weight: 700;
   font-style: normal;
-  src: url('Roboto-700/Roboto-700.eot');
+  src: url('common/fonts/Roboto-700/Roboto-700.eot');
   src:
-    url('Roboto-700/Roboto-700.eot?#iefix') format('embedded-opentype'),
+    url('common/fonts/Roboto-700/Roboto-700.eot?#iefix') format('embedded-opentype'),
     local('Roboto Bold'),
     local('Roboto-700'),
-    url('Roboto-700/Roboto-700.woff2') format('woff2'),
-    url('Roboto-700/Roboto-700.woff') format('woff'),
-    url('Roboto-700/Roboto-700.ttf') format('truetype'),
-    url('Roboto-700/Roboto-700.svg#Roboto') format('svg');
+    url('common/fonts/Roboto-700/Roboto-700.woff2') format('woff2'),
+    url('common/fonts/Roboto-700/Roboto-700.woff') format('woff'),
+    url('common/fonts/Roboto-700/Roboto-700.ttf') format('truetype'),
+    url('common/fonts/Roboto-700/Roboto-700.svg#Roboto') format('svg');
 }
 
 @font-face {
   font-family: Source Code Pro;
   font-weight: 400;
   font-style: normal;
-  src: url('Source-Code-Pro-regular/Source-Code-Pro-regular.eot');
+  src: url('common/fonts/Source-Code-Pro-regular/Source-Code-Pro-regular.eot');
   src:
-    url('Source-Code-Pro-regular/Source-Code-Pro-regular.eot?#iefix') format('embedded-opentype'),
+    url('common/fonts/Source-Code-Pro-regular/Source-Code-Pro-regular.eot?#iefix') format('embedded-opentype'),
     local('Source Code Pro'),
     local('Source-Code-Pro-regular'),
-    url('Source-Code-Pro-regular/Source-Code-Pro-regular.woff2') format('woff2'),
-    url('Source-Code-Pro-regular/Source-Code-Pro-regular.woff') format('woff'),
-    url('Source-Code-Pro-regular/Source-Code-Pro-regular.ttf') format('truetype'),
-    url('Source-Code-Pro-regular/Source-Code-Pro-regular.svg#SourceCodePro') format('svg');
+    url('common/fonts/Source-Code-Pro-regular/Source-Code-Pro-regular.woff2') format('woff2'),
+    url('common/fonts/Source-Code-Pro-regular/Source-Code-Pro-regular.woff') format('woff'),
+    url('common/fonts/Source-Code-Pro-regular/Source-Code-Pro-regular.ttf') format('truetype'),
+    url('common/fonts/Source-Code-Pro-regular/Source-Code-Pro-regular.svg#SourceCodePro') format('svg');
 }
