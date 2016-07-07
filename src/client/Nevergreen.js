@@ -35,7 +35,7 @@ class Nevergreen extends Component {
   }
 
   render() {
-    const classes = 'notification' + (_.size(this.props.message) > 0 ? '' : ' hidden')
+    const classes = 'pop-up-notification' + (_.size(this.props.message) > 0 ? '' : ' hidden')
 
     return (
       <div className='nevergreen'>
@@ -48,7 +48,7 @@ class Nevergreen extends Component {
           <div>
             <span className='icon-notification'/>
             <span className='text-with-icon'>Notification</span>
-            <span className='icon-cross notification-dismiss' onClick={this.props.dismiss}/>
+            <span className='icon-cross pop-up-notification-dismiss' onClick={this.props.dismiss}/>
           </div>
           {this.props.notification}
         </div>

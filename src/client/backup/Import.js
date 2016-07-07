@@ -1,6 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import ValidationMessages from '../common/messages/ValidationMessages'
-import InfoMessages from '../common/messages/InfoMessages'
+import Messages from '../common/messages/Messages'
 import Container from '../common/Container'
 import Loading from '../common/Loading'
 import PrimaryInput from '../common/PrimaryInput'
@@ -34,8 +33,8 @@ class Import extends Component {
                         spellCheck='false'/>
             </PrimaryInput>
             <button className='import-action' onClick={doImport}>import</button>
-            <ValidationMessages messages={this.props.errors}/>
-            <InfoMessages messages={this.props.infos}/>
+            <Messages type='notification' messages={this.props.errors}/>
+            <Messages type='checkmark' messages={this.props.infos}/>
           </div>
         </Loading>
       </Container>

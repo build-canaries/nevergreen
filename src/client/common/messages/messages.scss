@@ -1,48 +1,21 @@
 @import '../variables';
 
-.error-message {
-  width: 100%;
-  font-size: 2rem;
-  padding: 0.5em;
-}
-
-.validation-messages {
+.messages {
   margin: 0.5em;
   border-radius: 0.5em;
-  background-color: $danger-text;
   color: white;
-}
+  background-color: $off-black;
+  list-style: none;
 
-.validation-message {
-  padding: 0.5em;
-}
+  .message {
+    padding: 0.5em;
+  }
 
-.info-message {
-  padding: 0.5em;
-  margin: 0.5em;
-  border-radius: 0.5em;
-  background-color: $blue;
-  color: white;
-}
+  &.notification {
+    background-color: $danger-text;
+  }
 
-.notification {
-  font-size: 1rem;
-  padding: 0.5em;
-  margin: 0.5em;
-  border-radius: 0.5em;
-  background-color: $blue;
-  color: white;
-  width: calc(#{$menu-width} - 1em);
-  position: fixed;
-  bottom: 5em;
-}
-
-.notification-dismiss {
-  float: right;
-  font-size: 0.7rem;
-  cursor: pointer;
-
-  &:hover {
-    color: darken(white, 10%);
+  &.checkmark {
+    background-color: $blue;
   }
 }

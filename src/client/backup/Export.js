@@ -1,6 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import ValidationMessages from '../common/messages/ValidationMessages'
-import InfoMessages from '../common/messages/InfoMessages'
+import Messages from '../common/messages/Messages'
 import Clipboard from 'clipboard'
 import Container from '../common/Container'
 import Loading from '../common/Loading'
@@ -51,8 +50,8 @@ class Export extends Component {
                     data-clipboard-target='#export-data'>
               copy to clipboard
             </button>
-            <ValidationMessages messages={this.state.errors}/>
-            <InfoMessages messages={this.state.infos}/>
+            <Messages type='notification' messages={this.state.errors}/>
+            <Messages type='checkmark' messages={this.state.infos}/>
           </div>
         </Loading>
       </Container>

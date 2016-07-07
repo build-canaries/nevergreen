@@ -3,7 +3,7 @@ import Container from '../../common/Container'
 import AvailableProjects from './AvailableProjects'
 import TraySettings from './TraySettings'
 import Loading from '../../common/Loading'
-import ValidationMessages from '../../common/messages/ValidationMessages'
+import Messages from '../../common/messages/Messages'
 import Shortcut from '../../common/Shortcut'
 import moment from 'moment'
 import './tray.scss'
@@ -48,7 +48,7 @@ class Tray extends Component {
           `${this.props.tray.error.status} - ${this.props.tray.error.message}`
         ]
         subContent = <Loading loading={this.props.tray.fetching}>
-          <ValidationMessages messages={errorMessages}/>
+          <Messages type='notification' messages={errorMessages}/>
         </Loading>
       } else {
         subContent = <Loading loading={this.props.tray.fetching}>

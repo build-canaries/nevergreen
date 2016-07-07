@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import InterestingProjects from './InterestingProjects'
 import Success from './Success'
 import Loading from '../common/Loading'
-import ValidationMessages from '../common/messages/ValidationMessages'
+import Messages from '../common/messages/Messages'
 import './monitor.scss'
 
 class Monitor extends Component {
@@ -26,7 +26,7 @@ class Monitor extends Component {
         'Unable to fetch projects because of an error:',
         `${this.props.error.status} - ${this.props.error.message}`
       ]
-      content = <ValidationMessages messages={errorMessages}/>
+      content = <Messages type='notification' messages={errorMessages}/>
     } else if (this.props.projects.length > 0) {
       content =
         <InterestingProjects projects={this.props.projects}

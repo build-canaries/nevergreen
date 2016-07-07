@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import ValidationMessages from '../common/messages/ValidationMessages'
+import Messages from '../common/messages/Messages'
 import PrimaryInput from '../common/PrimaryInput'
 import _ from 'lodash'
 import './add-message.scss'
@@ -40,7 +40,7 @@ class AddMessage extends Component {
           </PrimaryInput>
         </span>
         <button className='add-action' onClick={addMessage}>add</button>
-        <ValidationMessages messages={this.props.errors}/>
+        <Messages type='notification' messages={this.props.errors}/>
       </div>
     )
   }
