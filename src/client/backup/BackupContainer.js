@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import ConfigurationStore from '../stores/ConfigurationStore'
 import UiMessageStore from '../stores/UiMessageStore'
-import {refreshConfiguration, importData} from './BackupActions'
+import {exportData, importData} from './BackupActions'
 import Backup from './Backup'
 import AppDispatcher from '../common/AppDispatcher'
 
@@ -16,7 +16,7 @@ function mapStateToProps() {
       importData(jsonData)(AppDispatcher)
     },
     refresh() {
-      refreshConfiguration()(AppDispatcher)
+      exportData()(AppDispatcher)
     }
   }
 }

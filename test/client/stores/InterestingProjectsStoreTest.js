@@ -4,7 +4,7 @@ import {expect} from 'chai'
 import sinon from 'sinon'
 import proxyquire from 'proxyquire'
 import {AppInit} from '../../../src/client/NevergreenActions'
-import {RESTORE_CONFIGURATION} from '../../../src/client/backup/BackupActions'
+import {IMPORTED_DATA} from '../../../src/client/backup/BackupActions'
 import {INTERESTING_PROJECTS, INTERESTING_PROJECTS_ERROR} from '../../../src/client/monitor/MonitorActions'
 
 describe('interesting projects store', () => {
@@ -70,7 +70,7 @@ describe('interesting projects store', () => {
 
   it('clears the store state when new data is imported', () => {
     callback({
-      type: RESTORE_CONFIGURATION
+      type: IMPORTED_DATA
     })
     expect(subject.getAll()).to.deep.equal([])
   })

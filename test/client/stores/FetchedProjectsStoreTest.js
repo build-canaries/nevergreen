@@ -4,7 +4,7 @@ import {expect} from 'chai'
 import sinon from 'sinon'
 import proxyquire from 'proxyquire'
 import {AppInit} from '../../../src/client/NevergreenActions'
-import {RESTORE_CONFIGURATION} from '../../../src/client/backup/BackupActions'
+import {IMPORTED_DATA} from '../../../src/client/backup/BackupActions'
 import {TrayAdd, ProjectsFetched} from '../../../src/client/tracking/TrackingActions'
 
 describe('fetched projects store', () => {
@@ -47,7 +47,7 @@ describe('fetched projects store', () => {
 
   it('restores the state from configuration', () => {
     callback({
-      type: RESTORE_CONFIGURATION,
+      type: IMPORTED_DATA,
       configuration: {fetchedProjects: {someId: 'the-configuration'}}
     })
     expect(subject.getAll('someId')).to.equal('the-configuration')

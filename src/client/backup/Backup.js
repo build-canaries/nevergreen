@@ -12,10 +12,6 @@ class Backup extends Component {
     this.props.refresh()
   }
 
-  componentWillReceiveProps(nextProps) {
-    nextProps.refresh()
-  }
-
   render() {
     const importProps = {
       errors: this.props.importErrors,

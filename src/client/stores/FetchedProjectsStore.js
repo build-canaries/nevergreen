@@ -2,7 +2,7 @@ import AppDispatcher from '../common/AppDispatcher'
 import {EventEmitter} from 'events'
 import {TrayAdd, TrayRemove, ProjectsFetched} from '../tracking/TrackingActions'
 import {AppInit} from '../NevergreenActions'
-import {RESTORE_CONFIGURATION} from '../backup/BackupActions'
+import {IMPORTED_DATA} from '../backup/BackupActions'
 import _ from 'lodash'
 import LocalRepository from '../common/LocalRepository'
 
@@ -69,7 +69,7 @@ const dispatchToken = AppDispatcher.register((action) => {
       _storeState = Object.assign({}, action.configuration[storageKey])
       break
     }
-    case RESTORE_CONFIGURATION:
+    case IMPORTED_DATA:
     {
       _storeState = action.configuration[storageKey]
       break

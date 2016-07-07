@@ -4,7 +4,7 @@ import {expect} from 'chai'
 import sinon from 'sinon'
 import proxyquire from 'proxyquire'
 import {AppInit, KeyboardShortcuts} from '../../../src/client/NevergreenActions'
-import {RESTORE_CONFIGURATION, IMPORTING_DATA, IMPORT_ERROR} from '../../../src/client/backup/BackupActions'
+import {IMPORTED_DATA, IMPORTING_DATA, IMPORT_ERROR} from '../../../src/client/backup/BackupActions'
 import {MESSAGE_INVALID_INPUT, MESSAGE_ADD, MESSAGE_REMOVE} from '../../../src/client/success/SuccessActions'
 
 describe('ui message store', () => {
@@ -58,7 +58,7 @@ describe('ui message store', () => {
   describe('restore', () => {
     beforeEach(() => {
       callback({
-        type: RESTORE_CONFIGURATION,
+        type: IMPORTED_DATA,
         messages: ['some-message']
       })
     })

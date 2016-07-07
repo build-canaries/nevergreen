@@ -40,20 +40,35 @@ export function importingData(data) {
   }
 }
 
-export const RESTORE_CONFIGURATION = 'RESTORE_CONFIGURATION'
-export function restoreConfiguration(data) {
+export const IMPORTED_DATA = 'IMPORTED_DATA'
+export function importedData(data) {
   return {
-    type: RESTORE_CONFIGURATION,
+    type: IMPORTED_DATA,
     configuration: data,
     messages: ['Successfully imported']
   }
 }
 
-export const EXPORT_DATA = 'EXPORT_DATA'
-export function exportData(data) {
+export const EXPORTING_DATA = 'EXPORTING_DATA'
+export function exportingData() {
   return {
-    type: EXPORT_DATA,
+    type: EXPORTING_DATA
+  }
+}
+
+export const EXPORTED_DATA = 'EXPORTED_DATA'
+export function exportedData(data) {
+  return {
+    type: EXPORTED_DATA,
     configuration: data
+  }
+}
+
+export const EXPORT_ERROR = 'EXPORT_ERROR'
+export function exportError(errors) {
+  return {
+    type: EXPORT_ERROR,
+    errors
   }
 }
 
@@ -70,8 +85,8 @@ export function importData(jsonData) {
         AppDispatcher.dispatch(importingData(data))
 
         LocalRepository.save(data).then(() => {
-          AppDispatcher.dispatch(restoreConfiguration(data))
-          AppDispatcher.dispatch(exportData(data))
+          AppDispatcher.dispatch(importedData(data))
+          exportData()(AppDispatcher)
         }).catch((e) => {
           AppDispatcher.dispatch(importError(['Unable to import because of an error while trying to save to local storage', e.message]))
         })
@@ -82,10 +97,14 @@ export function importData(jsonData) {
   }
 }
 
-export function refreshConfiguration() {
+export function exportData() {
   return function (AppDispatcher) {
+    AppDispatcher.dispatch(exportingData())
+
     LocalRepository.getConfiguration().then((configuration) => {
-      AppDispatcher.dispatch(exportData(configuration))
+      AppDispatcher.dispatch(exportedData(configuration))
+    }).catch((e) => {
+      AppDispatcher.dispatch(exportError(['Unable to export because of an error while trying to load from local storage', e.message]))
     })
   }
 }

@@ -32,17 +32,17 @@ describe('backup actions', () => {
     expect(actual).to.have.property('data', 'the-data')
   })
 
-  it('dispatches restoring configuration', () => {
-    const actual = BackupActions.restoreConfiguration('the-data')
+  it('dispatches imported data', () => {
+    const actual = BackupActions.importedData('the-data')
 
-    expect(actual).to.have.property('type', BackupActions.RESTORE_CONFIGURATION)
+    expect(actual).to.have.property('type', BackupActions.IMPORTED_DATA)
     expect(actual).to.have.property('configuration', 'the-data')
   })
 
-  it('dispatches export data', () => {
-    const actual = BackupActions.exportData('the-data')
+  it('dispatches exported data', () => {
+    const actual = BackupActions.exportedData('the-data')
 
-    expect(actual).to.have.property('type', BackupActions.EXPORT_DATA)
+    expect(actual).to.have.property('type', BackupActions.EXPORTED_DATA)
     expect(actual).to.have.property('configuration', 'the-data')
   })
 
@@ -50,10 +50,14 @@ describe('backup actions', () => {
     const AppDispatcher = {dispatch: sinon.spy()}
     LocalRepository.getConfiguration.resolves('some-value')
 
-    BackupActions.refreshConfiguration()(AppDispatcher)
+    BackupActions.exportData()(AppDispatcher)
 
     expect(AppDispatcher.dispatch).to.have.been.calledWith({
-      type: BackupActions.EXPORT_DATA,
+      type: BackupActions.EXPORTING_DATA
+    })
+
+    expect(AppDispatcher.dispatch).to.have.been.calledWith({
+      type: BackupActions.EXPORTED_DATA,
       configuration: 'some-value'
     })
   })
