@@ -1,12 +1,15 @@
 import React, {Component, PropTypes} from 'react'
 import ConfigOption from './ConfigOption'
 import Container from '../common/Container'
+import Messages from '../common/messages/Messages'
 import './audio-visual.scss'
 
 class AudioVisual extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      errors: []
+    }
   }
 
   componentWillUnmount() {
@@ -20,10 +23,11 @@ class AudioVisual extends Component {
     const toggleBrokenSounds = (newValue) => this.props.setBrokenBuildSounds(newValue)
     const setSoundFx = () => this.props.setBrokenBuildSoundFx(this.refs.soundFx.value)
     const testSoundFx = () => {
-      let audio = new Audio(this.refs.soundFx.value)
-      this.setState({audio})
+      const audio = new Audio(this.refs.soundFx.value)
+      this.setState({audio, errors: []})
       audio.addEventListener('ended', () => this.setState({audio: null}))
       audio.play()
+        .catch((e) => this.setState({errors: ['Unable to play audio file because of an error:', e.message]}))
     }
 
     return (
@@ -49,6 +53,7 @@ class AudioVisual extends Component {
                      defaultValue={this.props.brokenBuildSoundFx}
                      onBlur={setSoundFx}/>
               <button className='test' onClick={testSoundFx}>test</button>
+              <Messages type='notification' messages={this.state.errors}/>
             </div>
           </fieldset>
         </Container>
