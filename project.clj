@@ -15,7 +15,7 @@
                  [ring-basic-authentication "1.0.5"]
                  [base64-clj "0.1.1"]
                  [camel-snake-kebab "0.4.0"]
-                 [http-kit "2.1.19"]]
+                 [http-kit "2.2.0"]]
   :plugins [[lein-ring "0.9.7"]]
   :min-lein-version "2.0.0"
   :ring {:handler nevergreen.app/all-routes :port 5000}
