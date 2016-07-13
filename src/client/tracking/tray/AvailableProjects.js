@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import AvailableProject from './AvailableProject'
 import _ from 'lodash'
 import Shortcut from '../../common/Shortcut'
+import Messages from '../../common/messages/Messages'
 import './available-projects.scss'
 
 function projectName(project) {
@@ -11,6 +12,10 @@ function projectName(project) {
 class AvailableProjects extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      filter: /.*/,
+      errors: null
+    }
   }
 
   render() {
@@ -30,6 +35,19 @@ class AvailableProjects extends Component {
       this.props.removeProject(this.props.trayId, projectIds)
     }
 
+    const updateFilter = (evt) => {
+      try {
+        const regEx = new RegExp(evt.target.value)
+        this.setState({filter: regEx, errors: null})
+      } catch (e) {
+        this.setState({errors: [`Project filter not applied, ${e.message}`]})
+      }
+    }
+
+    const filteredProjects = this.props.projects.filter((value) => {
+      return value.name.match(this.state.filter)
+    })
+
     return (
       <fieldset className='available-projects'>
         <legend className='legend'>Available projects</legend>
@@ -45,9 +63,14 @@ class AvailableProjects extends Component {
             <Shortcut hotkeys={[`- ${this.props.index}`]}/>
           </button>
         </div>
+        <span className='project-filter'>
+          <label htmlFor='project-filter'>Filter projects</label>
+          <input id='project-filter' type='text' onChange={updateFilter}/>
+        </span>
+        <Messages type='notification' messages={this.state.errors}/>
         <ol className='build-items'>
           {
-            _.sortBy(this.props.projects, projectName).map((project) => {
+            _.sortBy(filteredProjects, projectName).map((project) => {
               const included = _.indexOf(this.props.selectedProjects, project.projectId) >= 0
               const selectProject = (included) => {
                 if (included) {
@@ -74,7 +97,12 @@ class AvailableProjects extends Component {
 AvailableProjects.propTypes = {
   index: PropTypes.number.isRequired,
   trayId: PropTypes.string.isRequired,
-  projects: PropTypes.arrayOf(PropTypes.object).isRequired,
+  projects: PropTypes.arrayOf(PropTypes.shape({
+    projectId: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    isNew: PropTypes.bool.isRequired,
+    wasRemoved: PropTypes.bool.isRequired
+  })).isRequired,
   selectedProjects: PropTypes.arrayOf(PropTypes.string).isRequired,
   selectProject: PropTypes.func.isRequired,
   removeProject: PropTypes.func.isRequired

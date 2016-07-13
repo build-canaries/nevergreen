@@ -29,4 +29,13 @@
   .build-items {
     clear: both;
   }
+
+  .project-filter {
+    @extend .text-input;
+    padding-left: 1em;
+
+    label {
+      color: $mid-grey;
+    }
+  }
 }
