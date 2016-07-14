@@ -13,8 +13,9 @@ class AvailableProjects extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      filter: /.*/,
-      errors: null
+      filter: null,
+      errors: null,
+      disableButtons: false
     }
   }
 
@@ -36,28 +37,32 @@ class AvailableProjects extends Component {
     }
 
     const updateFilter = (evt) => {
-      try {
-        const regEx = new RegExp(evt.target.value)
-        this.setState({filter: regEx, errors: null})
-      } catch (e) {
-        this.setState({errors: [`Project filter not applied, ${e.message}`]})
+      if (_.isEmpty(_.trim(evt.target.value))) {
+        this.setState({filter: null, errors: null, disableButtons: false})
+      } else {
+        try {
+          const regEx = new RegExp(evt.target.value)
+          this.setState({filter: regEx, errors: null, disableButtons: true})
+        } catch (e) {
+          this.setState({errors: [`Project filter not applied, ${e.message}`]})
+        }
       }
     }
 
     const filteredProjects = this.props.projects.filter((value) => {
-      return value.name.match(this.state.filter)
+      return this.state.filter ? value.name.match(this.state.filter) : true
     })
 
     return (
       <fieldset className='available-projects'>
         <legend className='legend'>Available projects</legend>
         <div className='toggles'>
-          <button className='include-all' onClick={includeAll}>
+          <button className='include-all' onClick={includeAll} disabled={this.state.disableButtons}>
             <span className='icon-checkbox-checked'/>
             <span className='text-with-icon'>Include all</span>
             <Shortcut hotkeys={[`+ ${this.props.index}`, `= ${this.props.index}`]}/>
           </button>
-          <button className='exclude-all' onClick={excludeAll}>
+          <button className='exclude-all' onClick={excludeAll} disabled={this.state.disableButtons}>
             <span className='icon-checkbox-unchecked'/>
             <span className='text-with-icon'>Exclude all</span>
             <Shortcut hotkeys={[`- ${this.props.index}`]}/>

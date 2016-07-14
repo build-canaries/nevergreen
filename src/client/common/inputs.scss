@@ -28,24 +28,31 @@
   position: relative;
   padding: 0.5em 1.5em;
   margin: 0.5em;
-  cursor: pointer;
   border-radius: 2px;
   text-transform: uppercase;
   text-decoration: none;
   background-color: white;
   color: $off-black;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
   outline: none;
-  transition: background-color 0.1s ease-in, box-shadow 0.1s ease-in;
-  &:hover {
-    background-color: darken(white, 5%);
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.26);
+  &:enabled {
+    cursor: pointer;
+    transition: background-color 0.1s ease-in, box-shadow 0.1s ease-in;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    &:hover {
+      background-color: darken(white, 5%);
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.26);
+    }
+    &:focus {
+      background-color: darken(white, 5%);
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.26);
+      outline: none;
+      border-radius: 0;
+    }
   }
-  &:focus {
-    background-color: darken(white, 5%);
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.26);
-    outline: none;
-    border-radius: 0;
+  &:disabled {
+    cursor: default;
+    color: $mid-grey;
+    background-color: $light-grey;
   }
 }
 
