@@ -7,7 +7,7 @@ import Nevergreen from './Nevergreen'
 function mapStateToProps() {
   return {
     loaded: AppStore.isInitalised(),
-    versionNumber: AppStore.versionNumber(),
+    versionNumber: `${AppStore.versionNumber()}+${AppStore.versionMeta()}`,
     versionName: AppStore.versionName(),
     versionColour: AppStore.versionColour(),
     commitHash: AppStore.commitHash(),

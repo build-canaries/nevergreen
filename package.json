@@ -1,9 +1,10 @@
 {
   "name": "nevergreen",
-  "version": "0.0.0",
-  "versionName": "Dev Build",
-  "versionColour": "#7E7E7E",
-  "commitHash": "dev",
+  "version": "0.10.0",
+  "versionName": "Jazzberry Jam",
+  "versionColour": "#A50B5E",
+  "versionMeta": "0",
+  "commitHash": "local",
   "description": "A build monitor with attitude",
   "main": "main.js",
   "scripts": {

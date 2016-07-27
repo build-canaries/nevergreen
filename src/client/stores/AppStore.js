@@ -45,6 +45,7 @@ const dispatchToken = AppDispatcher.register((action) => {
         versionNumber: Package.version,
         versionName: Package.versionName,
         versionColour: Package.versionColour,
+        versionMeta: Package.versionMeta,
         commitHash: Package.commitHash
       }
       break
@@ -76,6 +77,10 @@ module.exports = {
 
   versionColour() {
     return _storeState.versionColour
+  },
+
+  versionMeta() {
+    return _storeState.versionMeta
   },
 
   commitHash() {
