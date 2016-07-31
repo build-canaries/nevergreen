@@ -85,7 +85,7 @@ class AvailableProjects extends Component {
                 }
               }
 
-              return <AvailableProject key={project.projectId}
+              return <AvailableProject key={project.webUrl}
                                        name={project.name}
                                        included={included}
                                        wasRemoved={project.wasRemoved}
@@ -104,6 +104,7 @@ AvailableProjects.propTypes = {
   trayId: PropTypes.string.isRequired,
   projects: PropTypes.arrayOf(PropTypes.shape({
     projectId: PropTypes.string.isRequired,
+    webUrl: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     isNew: PropTypes.bool.isRequired,
     wasRemoved: PropTypes.bool.isRequired

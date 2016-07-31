@@ -36,7 +36,7 @@ class InterestingProjects extends Component {
         <ul id='interesting-projects' className='projects'>
           {
             this.props.projects.map((project) => {
-              return <InterestingProject {...project} key={project.projectId}
+              return <InterestingProject {...project} key={project.webUrl}
                                                       showBrokenBuildTimers={this.props.showBrokenBuildTimers}/>
             })
           }
@@ -49,7 +49,7 @@ class InterestingProjects extends Component {
 
 InterestingProjects.propTypes = {
   projects: PropTypes.arrayOf(PropTypes.shape({
-    prognosis: PropTypes.string.isRequired
+    webUrl: PropTypes.string.isRequired
   })).isRequired,
   showBrokenBuildTimers: PropTypes.bool,
   playBrokenBuildSounds: PropTypes.bool,
