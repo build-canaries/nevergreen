@@ -61,10 +61,12 @@
   font-size: 1.2rem;
   background-color: $blue;
   color: $off-white;
-  &:hover {
-    background-color: darken($blue, 5%);
-  }
-  &:focus {
-    background-color: darken($blue, 5%);
+  &:enabled {
+    &:hover {
+      background-color: darken($blue, 5%);
+    }
+    &:focus {
+      background-color: darken($blue, 5%);
+    }
   }
 }
