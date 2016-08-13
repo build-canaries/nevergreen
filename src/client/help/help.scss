@@ -36,6 +36,7 @@
   .help-tracking-table {
     width: 100%;
     margin: 0 0 1em;
+
     tr:nth-child(even) {
       background-color: $light-grey;
     }
@@ -65,6 +66,7 @@
 
   .help-shortcut-table {
     @extend .help-tracking-table;
+
     td {
       padding: 0.3em 0;
     }

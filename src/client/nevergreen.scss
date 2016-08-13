@@ -24,9 +24,11 @@ kbd {
 
 .label-checkbox {
   font-size: 1.3rem;
+
   span {
     margin-left: 0.8em;
   }
+
   &:hover {
     cursor: pointer;
   }
@@ -34,7 +36,9 @@ kbd {
 
 .label-checkbox-disabled {
   @extend .label-checkbox;
+
   color: $mid-grey;
+
   &:hover {
     cursor: default;
   }
@@ -45,6 +49,7 @@ kbd {
   top: -2px;
   margin: 0 0.7em 0 0;
   cursor: pointer;
+
   &::before {
     transition: transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
     transform: rotate(-45deg) scale(0, 0);
@@ -61,6 +66,7 @@ kbd {
     border-top-style: none;
     border-right-style: none;
   }
+
   &::after {
     content: '';
     position: absolute;
@@ -73,21 +79,25 @@ kbd {
     border-radius: 2px;
     cursor: pointer;
   }
+
   &:checked {
     &::before {
       transform: rotate(-45deg) scale(1, 1);
       -webkit-transform: rotate(315deg) scale(1, 1);
       border-color: white;
     }
+
     &::after {
       border-color: $blue;
       background: $blue;
     }
   }
+
   &:disabled {
     &::after {
       cursor: default;
     }
+
     &:checked {
       &::after {
         border-color: $mid-grey;
@@ -95,6 +105,7 @@ kbd {
       }
     }
   }
+
   &:focus {
     outline: none;
   }

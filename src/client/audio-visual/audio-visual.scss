@@ -16,6 +16,7 @@
     @extend .text-input;
 
     width: 100%;
+
     input {
       width: calc(100% - 375px);
     }

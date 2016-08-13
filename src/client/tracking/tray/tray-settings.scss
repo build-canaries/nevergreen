@@ -3,6 +3,7 @@
 
 .tray-settings {
   margin: 1em;
+
   label {
     width: 5em;
     display: inline-flex;
@@ -33,6 +34,7 @@
 
     .delete {
       @extend .button;
+
       color: $danger;
       float: right;
       margin: -0.5em 0 0 0;
@@ -45,12 +47,14 @@
 
   .cancel {
     @extend .button;
+
     margin: 2em 1em 0 0;
     font-size: 1rem;
   }
 
   .update {
     @extend .button-primary;
+
     margin: 2em 1em 0 0;
     font-size: 1rem;
   }

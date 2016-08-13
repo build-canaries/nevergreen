@@ -12,7 +12,6 @@
     color: $mid-grey;
     font-size: 3rem;
     padding: 0.5rem;
-
     animation: bounce 1.4s infinite ease-in-out both;
 
     &:nth-of-type(1) {
@@ -27,12 +26,15 @@
       0% {
         transform: scale(0);
       }
+
       40% {
         transform: scale(1);
       }
+
       80% {
         transform: scale(0);
       }
+
       100% {
         transform: scale(0);
       }

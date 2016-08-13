@@ -30,23 +30,29 @@
     font-size: 1rem;
     padding: 1.05em 0;
     text-decoration: none;
+
     &:hover {
       .menu-icon {
         transition: color 0.2s ease-in-out;
         color: white;
       }
+
       .menu-title {
         transition: color 0.2s ease-in-out;
         color: white;
       }
     }
+
     &.active {
       color: white;
+
       .menu-icon {
         color: white;
       }
+
       &:hover {
         cursor: default;
+
         .menu-title {
           color: white;
         }

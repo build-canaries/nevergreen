@@ -11,6 +11,7 @@
     border: none;
     border-bottom: 1px solid $mid-grey;
     margin-right: 1em;
+
     &:focus {
       outline: none;
       border-bottom-color: $blue;
@@ -34,14 +35,17 @@
   background-color: white;
   color: $off-black;
   outline: none;
+
   &:enabled {
     cursor: pointer;
     transition: background-color 0.1s ease-in, box-shadow 0.1s ease-in;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+
     &:hover {
       background-color: darken(white, 5%);
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.26);
     }
+
     &:focus {
       background-color: darken(white, 5%);
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.26);
@@ -49,6 +53,7 @@
       border-radius: 0;
     }
   }
+
   &:disabled {
     cursor: default;
     color: $mid-grey;
@@ -58,13 +63,16 @@
 
 .button-primary {
   @extend .button;
+
   font-size: 1.2rem;
   background-color: $blue;
   color: $off-white;
+
   &:enabled {
     &:hover {
       background-color: darken($blue, 5%);
     }
+
     &:focus {
       background-color: darken($blue, 5%);
     }
