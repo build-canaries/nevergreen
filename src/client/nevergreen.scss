@@ -106,19 +106,21 @@ kbd {
     }
   }
 
-  &:focus,
-  &:hover {
-    outline: none;
+  &:enabled {
+    &:focus,
+    &:hover {
+      outline: none;
 
-    &::after {
-      border-color: darken($off-white, 8%);
-      background: darken(#fff, 8%);
-    }
-
-    &:checked {
       &::after {
-        border-color: darken($blue, 8%);
-        background: darken($blue, 8%);
+        border-color: darken($off-white, 8%);
+        background: darken(#fff, 8%);
+      }
+
+      &:checked {
+        &::after {
+          border-color: darken($blue, 8%);
+          background: darken($blue, 8%);
+        }
       }
     }
   }
