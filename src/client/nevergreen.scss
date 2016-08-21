@@ -53,8 +53,6 @@ kbd {
   &::before {
     transition: transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
     transform: rotate(-45deg) scale(0, 0);
-    -webkit-transition: -webkit-transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
-    -webkit-transform: rotate(315deg) scale(0, 0);
     content: '';
     position: absolute;
     left: 5px;
@@ -83,7 +81,6 @@ kbd {
   &:checked {
     &::before {
       transform: rotate(-45deg) scale(1, 1);
-      -webkit-transform: rotate(315deg) scale(1, 1);
       border-color: white;
     }
 
