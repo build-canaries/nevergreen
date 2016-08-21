@@ -34,22 +34,16 @@
   text-decoration: none;
   background-color: white;
   color: $off-black;
-  outline: none;
 
   &:enabled {
     cursor: pointer;
     transition: background-color 0.1s ease-in, box-shadow 0.1s ease-in;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
 
-    &:hover {
-      background-color: darken(white, 5%);
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.26);
-    }
-
+    &:hover,
     &:focus {
-      background-color: darken(white, 5%);
+      background-color: darken(white, 8%);
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.26);
-      outline: none;
       border-radius: 0;
     }
   }
@@ -69,12 +63,9 @@
   color: $off-white;
 
   &:enabled {
-    &:hover {
-      background-color: darken($blue, 5%);
-    }
-
+    &:hover,
     &:focus {
-      background-color: darken($blue, 5%);
+      background-color: darken($blue, 8%);
     }
   }
 }
