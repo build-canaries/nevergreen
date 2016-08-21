@@ -17,8 +17,16 @@
 
   .loading {
     .pulse {
-      font-size: 10rem;
+      font-size: 8rem;
       color: $off-white;
     }
+  }
+
+  &.navigation-hide {
+    cursor: none;
+  }
+
+  &.navigation-show {
+    cursor: inherit;
   }
 }

@@ -157,6 +157,22 @@ kbd {
   width: calc(#{$menu-width} - 1em);
   position: fixed;
   bottom: 5em;
+
+  &.navigation-show {
+    left: 0;
+    transition-property: left;
+    transition-duration: 0.5s;
+    transition-timing: ease;
+    transition-delay: 0s;
+  }
+
+  &.navigation-hide {
+    left: -$menu-width;
+    transition-property: left;
+    transition-duration: 0.5s;
+    transition-timing: ease;
+    transition-delay: 0s;
+  }
 }
 
 .pop-up-notification-dismiss {
