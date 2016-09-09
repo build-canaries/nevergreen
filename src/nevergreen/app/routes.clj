@@ -2,6 +2,7 @@
   (:require [compojure.core :refer :all]
             [nevergreen.wrap-exceptions :refer [wrap-exceptions]]
             [nevergreen.wrap-cache-control :refer [wrap-caching]]
+            [nevergreen.wrap-content-security-policy :refer [wrap-content-security-policy]]
             [ring.middleware.defaults :refer :all]
             [ring.util.response :refer :all]
             [ring.middleware.gzip :refer :all]))
@@ -13,5 +14,6 @@
 (defn wrap-app-middleware [routes]
   (-> (wrap-defaults routes (assoc site-defaults :session false))
       wrap-caching
+      wrap-content-security-policy
       wrap-exceptions
       wrap-gzip))
