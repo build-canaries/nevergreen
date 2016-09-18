@@ -19,10 +19,10 @@ describe('interesting projects store', () => {
 
     callback = AppDispatcher.register.getCall(0).args[0]
   })
-  
+
   beforeEach(() => {
     AppDispatcher.dispatch = sinon.spy()
-    
+
     callback({
       type: AppInit,
       configuration: {}
@@ -45,6 +45,7 @@ describe('interesting projects store', () => {
     callback({
       type: INTERESTING_PROJECTS,
       projects: [{
+        trayName: 'tray-name',
         projectId: 'some-id',
         name: 'name',
         stage: 'stage',
@@ -53,6 +54,7 @@ describe('interesting projects store', () => {
       }]
     })
     expect(subject.getAll()).to.deep.equal([{
+      trayName: 'tray-name',
       projectId: 'some-id',
       name: 'name stage',
       prognosis: 'some-prognosis',

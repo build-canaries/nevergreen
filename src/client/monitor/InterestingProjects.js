@@ -37,7 +37,8 @@ class InterestingProjects extends Component {
           {
             this.props.projects.map((project) => {
               return <InterestingProject {...project} key={project.webUrl}
-                                                      showBrokenBuildTimers={this.props.showBrokenBuildTimers}/>
+                                                      showBrokenBuildTimers={this.props.showBrokenBuildTimers}
+                                                      showTrayName={this.props.showTrayName}/>
             })
           }
         </ul>
@@ -52,6 +53,7 @@ InterestingProjects.propTypes = {
     webUrl: PropTypes.string.isRequired
   })).isRequired,
   showBrokenBuildTimers: PropTypes.bool,
+  showTrayName: PropTypes.bool,
   playBrokenBuildSounds: PropTypes.bool,
   brokenBuildFx: PropTypes.string
 }

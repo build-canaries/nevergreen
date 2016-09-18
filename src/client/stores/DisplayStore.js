@@ -4,6 +4,7 @@ import {AppInit} from '../NevergreenActions'
 import {IMPORTED_DATA} from '../backup/BackupActions'
 import {
   BrokenBuildTimersChanged,
+  TrayNameToggled,
   BrokenBuildSoundsToggled,
   BrokenBuildSoundFx
 } from '../audio-visual/AudioVisualActions'
@@ -23,6 +24,7 @@ const dispatchToken = AppDispatcher.register((action) => {
     {
       _storeState = Object.assign({
         showBrokenBuildTimers: false,
+        showTrayName: false,
         showBrokenBuildSounds: false,
         brokenBuildSoundFx: defaultBrokenBuildSoundFx
       }, action.configuration[storageKey])
@@ -36,6 +38,11 @@ const dispatchToken = AppDispatcher.register((action) => {
     case BrokenBuildTimersChanged:
     {
       _storeState.showBrokenBuildTimers = action.value === true
+      break
+    }
+    case TrayNameToggled:
+    {
+      _storeState.showTrayName = action.value === true
       break
     }
     case BrokenBuildSoundsToggled:
@@ -64,6 +71,10 @@ module.exports = {
 
   areBrokenBuildTimersEnabled() {
     return _storeState.showBrokenBuildTimers
+  },
+
+  areTrayNameEnabled() {
+    return _storeState.showTrayName
   },
 
   areBrokenBuildSoundsEnabled() {

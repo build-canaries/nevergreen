@@ -14,7 +14,7 @@ describe('projects gateway', () => {
   })
 
   beforeEach(() => {
-    Gateway.post = sinon.spy()
+    Gateway.post = sinon.stub().returns(new Promise(() => {}, () => {}))
   })
 
   describe('getting all projects', () => {
