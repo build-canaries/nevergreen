@@ -31,6 +31,7 @@ class Monitor extends Component {
       content =
         <InterestingProjects projects={this.props.projects}
                              showBrokenBuildTimers={this.props.showBrokenBuildTimers}
+                             showTrayName={this.props.showTrayName}
                              playBrokenBuildSounds={this.props.playBrokenBuildSounds}
                              brokenBuildFx={this.props.brokenBuildFx}/>
 
@@ -58,6 +59,7 @@ Monitor.propTypes = {
   stopPolling: PropTypes.func.isRequired,
   showMenu: PropTypes.func.isRequired,
   showBrokenBuildTimers: PropTypes.bool,
+  showTrayName: PropTypes.bool,
   playBrokenBuildSounds: PropTypes.bool,
   brokenBuildFx: PropTypes.string,
   successMessage: PropTypes.func.isRequired

@@ -1,14 +1,16 @@
 import React, {Component} from 'react'
 import DisplayStore from '../stores/DisplayStore'
-import {setBrokenBuildSoundFx, setBrokenBuildSounds, setBrokenBuildTimers} from './AudioVisualActions'
+import {setBrokenBuildSoundFx, setBrokenBuildSounds, setBrokenBuildTimers, setTrayNameToggled} from './AudioVisualActions'
 import AudioVisual from './AudioVisual'
 
 function mapStateToProps() {
   return {
     showBrokenBuildTimers: DisplayStore.areBrokenBuildTimersEnabled(),
+    showTrayName: DisplayStore.areTrayNameEnabled(),
     showBrokenBuildSounds: DisplayStore.areBrokenBuildSoundsEnabled(),
     brokenBuildSoundFx: DisplayStore.brokenBuildSoundFx(),
     setBrokenBuildTimers,
+    setTrayNameToggled,
     setBrokenBuildSounds,
     setBrokenBuildSoundFx
   }
