@@ -25,6 +25,15 @@ describe('audio visual actions', () => {
     })
   })
 
+  it('dispatches an action for tray name toggled', () => {
+    subject.setTrayNameToggled('some-value')
+
+    expect(AppDispatcher.dispatch).to.have.been.calledWith({
+      type: subject.TrayNameToggled,
+      value: 'some-value'
+    })
+  })
+
   it('dispatches an action for the broken build sounds toggled', () => {
     subject.setBrokenBuildSounds('toggle on')
 
