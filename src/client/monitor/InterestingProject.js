@@ -13,7 +13,7 @@ class InterestingProject extends Component {
     const timeBrokenLabel = _.isEmpty(_.trim(this.props.lastBuildTime)) ? '??' : moment(this.props.lastBuildTime).fromNow(true)
     const timeBroken = this.props.showBrokenBuildTimers && isSick ?
       <span className='time-broken'> {timeBrokenLabel}</span> : null
-    const displayName = this.props.showTrayName ? `${this.props.showTrayName} >> ${this.props.name}` : this.props.name
+    const displayName = this.props.showTrayName ? `${this.props.trayName} >> ${this.props.name}` : this.props.name
 
     return (
       <li className={`interesting-project ${this.props.prognosis}`}>
