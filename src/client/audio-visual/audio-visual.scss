@@ -6,16 +6,19 @@
 
   .checkbox-container {
     float: none;
+    padding-bottom: 1em;
   }
 
   .settings-list {
     border: 0;
+    padding: 1em 1em 0;
   }
 
   .sound-fx {
     @extend .text-input;
 
     width: 100%;
+    margin: 0;
 
     input {
       width: calc(100% - 375px);
