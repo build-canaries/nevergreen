@@ -14,6 +14,7 @@ function getStateFromStore() {
     loading: false,
     brokenBuildSoundEnabled: DisplayStore.areBrokenBuildSoundsEnabled(),
     showBrokenBuildTimers: DisplayStore.areBrokenBuildTimersEnabled(),
+    showTrayName: DisplayStore.areTrayNameEnabled(),
     playBrokenBuildSounds: DisplayStore.areBrokenBuildSoundsEnabled(),
     brokenBuildFx: DisplayStore.brokenBuildSoundFx(),
     successMessage: SuccessStore.randomMessage

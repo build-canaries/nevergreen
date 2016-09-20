@@ -6,7 +6,7 @@ import proxyquire from 'proxyquire'
 
 describe('projects gateway', () => {
 
-  let subject, Gateway
+  let subject, Gateway, projects, promised
 
   before(() => {
     Gateway = {}
@@ -14,7 +14,20 @@ describe('projects gateway', () => {
   })
 
   beforeEach(() => {
-    Gateway.post = sinon.spy()
+    projects = [{
+      trayId: 'id',
+      projectId: 'some-id',
+      name: 'name',
+      stage: 'stage',
+      prognosis: 'some-prognosis',
+      lastBuildTime: 'some-last-build-time'
+    }]
+    promised = new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(projects)
+      }, 0)
+    })
+    Gateway.post = sinon.stub().returns(promised)
   })
 
   describe('getting all projects', () => {
@@ -42,6 +55,7 @@ describe('projects gateway', () => {
       const selected = {id: ['some-project-id']}
       const tray = {
         trayId: 'id',
+        name: 'foo',
         url: 'url',
         username: 'uname',
         password: 'pword',
@@ -61,6 +75,31 @@ describe('projects gateway', () => {
       }]
 
       expect(Gateway.post).to.have.been.calledWith('/api/projects/interesting', data)
+    })
+
+    it('injects tray name into interesting projects', (done) => {
+      const selected = {id: ['some-project-id']}
+      const trays = [{
+        trayId: 'id',
+        name: 'foo',
+        url: 'url',
+        username: 'uname',
+        password: 'pword',
+        serverType: 'GO'
+      }]
+
+      subject.interesting(trays, selected).then((data) => {
+        expect(data).to.deep.equal([{
+          trayId: 'id',
+          trayName: 'foo',
+          projectId: 'some-id',
+          name: 'name',
+          stage: 'stage',
+          prognosis: 'some-prognosis',
+          lastBuildTime: 'some-last-build-time'
+        }])
+        done()
+      })
     })
   })
 })

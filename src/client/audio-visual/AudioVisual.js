@@ -20,6 +20,7 @@ class AudioVisual extends Component {
 
   render() {
     const toggleBrokenBuilds = (newValue) => this.props.setBrokenBuildTimers(newValue)
+    const toggleTrayName = (newValue) => this.props.setTrayNameToggled(newValue)
     const toggleBrokenSounds = (newValue) => this.props.setBrokenBuildSounds(newValue)
     const setSoundFx = () => this.props.setBrokenBuildSoundFx(this.refs.soundFx.value)
     const testSoundFx = () => {
@@ -34,6 +35,9 @@ class AudioVisual extends Component {
       <section className='audio-visual'>
         <Container title='Display Settings'>
           <fieldset className='settings-list'>
+            <ConfigOption name='Show tray name'
+                          enabled={this.props.showTrayName}
+                          onToggle={toggleTrayName}/>
             <ConfigOption name='Show broken build timers'
                           enabled={this.props.showBrokenBuildTimers}
                           onToggle={toggleBrokenBuilds}/>
@@ -64,9 +68,11 @@ class AudioVisual extends Component {
 
 AudioVisual.propTypes = {
   showBrokenBuildTimers: PropTypes.bool.isRequired,
+  showTrayName: PropTypes.bool.isRequired,
   showBrokenBuildSounds: PropTypes.bool.isRequired,
   brokenBuildSoundFx: PropTypes.string.isRequired,
   setBrokenBuildTimers: PropTypes.func.isRequired,
+  setTrayNameToggled: PropTypes.func.isRequired,
   setBrokenBuildSounds: PropTypes.func.isRequired,
   setBrokenBuildSoundFx: PropTypes.func.isRequired
 }

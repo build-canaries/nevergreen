@@ -8,6 +8,14 @@ export function setBrokenBuildTimers(value) {
   })
 }
 
+export const TrayNameToggled = 'tray-name-toggled'
+export function setTrayNameToggled(value) {
+  AppDispatcher.dispatch({
+    type: TrayNameToggled,
+    value
+  })
+}
+
 export const BrokenBuildSoundsToggled = 'broken-build-sounds-toggled'
 export function setBrokenBuildSounds(value) {
   AppDispatcher.dispatch({

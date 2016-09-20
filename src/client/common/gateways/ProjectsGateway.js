@@ -25,5 +25,10 @@ export function interesting(trays, selected) {
     }
   })
 
-  return post('/api/projects/interesting', data)
+  return post('/api/projects/interesting', data).then((projects) => {
+    return projects.map((project) => {
+      project.trayName = trays.find((tray) => tray.trayId === project.trayId).name
+      return project
+    })
+  })
 }

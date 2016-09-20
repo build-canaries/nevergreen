@@ -6,6 +6,7 @@ import proxyquire from 'proxyquire'
 import {AppInit} from '../../../src/client/NevergreenActions'
 import {
   BrokenBuildTimersChanged,
+  TrayNameToggled,
   BrokenBuildSoundsToggled,
   BrokenBuildSoundFx
 } from '../../../src/client/audio-visual/AudioVisualActions'
@@ -22,7 +23,7 @@ describe('display store', () => {
 
     callback = AppDispatcher.register.getCall(0).args[0]
   })
-  
+
   beforeEach(() => {
     AppDispatcher.dispatch = sinon.spy()
 
@@ -56,6 +57,30 @@ describe('display store', () => {
           value: 'a string'
         })
         expect(subject.areBrokenBuildTimersEnabled()).to.be.false
+      }
+    )
+  })
+
+  describe('are tray name toggled', () => {
+    it('returns false by default', () => {
+      expect(subject.areTrayNameEnabled()).to.be.false
+    })
+
+    it('returns true when the callback changes the value to true', () => {
+      callback({
+        type: TrayNameToggled,
+        value: true
+      })
+
+      expect(subject.areTrayNameEnabled()).to.be.true
+    })
+
+    it('return false when the callback changes the value to anything else', () => {
+        callback({
+          type: TrayNameToggled,
+          value: 'a string'
+        })
+        expect(subject.areTrayNameEnabled()).to.be.false
       }
     )
   })

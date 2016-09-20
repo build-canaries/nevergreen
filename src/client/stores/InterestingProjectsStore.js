@@ -15,6 +15,7 @@ function getName(apiProject) {
 function toProject(apiProject) {
   return {
     projectId: apiProject.projectId,
+    trayName: apiProject.trayName,
     name: getName(apiProject),
     prognosis: apiProject.prognosis,
     lastBuildTime: apiProject.lastBuildTime
