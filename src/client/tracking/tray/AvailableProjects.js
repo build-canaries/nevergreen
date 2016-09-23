@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import AvailableProject from './AvailableProject'
 import _ from 'lodash'
-import Shortcut from '../../common/Shortcut'
+import Shortcut from '../../common/shortcut/Shortcut'
 import Messages from '../../common/messages/Messages'
 import './available-projects.scss'
 
@@ -21,19 +21,15 @@ class AvailableProjects extends Component {
 
   render() {
     const includeAll = () => {
-      const projectIds = this.props.projects.filter((project) => {
-        return !project.wasRemoved
-      }).map((project) => {
-        return project.projectId
-      })
-      this.props.selectProject(this.props.trayId, projectIds)
+      this.props.projects
+        .filter((project) => !project.removed)
+        .forEach((project) => this.props.selectProject(this.props.trayId, project.projectId, true))
     }
 
     const excludeAll = () => {
-      const projectIds = this.props.projects.map((project) => {
-        return project.projectId
+      this.props.projects.forEach((project) => {
+        this.props.selectProject(this.props.trayId, project.projectId, false)
       })
-      this.props.removeProject(this.props.trayId, projectIds)
     }
 
     const updateFilter = (evt) => {
@@ -76,20 +72,12 @@ class AvailableProjects extends Component {
         <ol className='build-items'>
           {
             _.sortBy(filteredProjects, projectName).map((project) => {
-              const included = _.indexOf(this.props.selectedProjects, project.projectId) >= 0
-              const selectProject = (included) => {
-                if (included) {
-                  this.props.selectProject(this.props.trayId, [project.projectId])
-                } else {
-                  this.props.removeProject(this.props.trayId, [project.projectId])
-                }
+              const selected = this.props.selected.includes(project.projectId)
+              const selectProject = () => {
+                this.props.selectProject(this.props.trayId, project.projectId, !selected)
               }
 
-              return <AvailableProject key={project.webUrl}
-                                       name={project.name}
-                                       included={included}
-                                       wasRemoved={project.wasRemoved}
-                                       isNew={project.isNew}
+              return <AvailableProject key={project.projectId} {...project} selected={selected}
                                        selectProject={selectProject}/>
             })
           }
@@ -104,14 +92,11 @@ AvailableProjects.propTypes = {
   trayId: PropTypes.string.isRequired,
   projects: PropTypes.arrayOf(PropTypes.shape({
     projectId: PropTypes.string.isRequired,
-    webUrl: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    isNew: PropTypes.bool.isRequired,
-    wasRemoved: PropTypes.bool.isRequired
+    name: PropTypes.string,
+    removed: PropTypes.bool
   })).isRequired,
-  selectedProjects: PropTypes.arrayOf(PropTypes.string).isRequired,
-  selectProject: PropTypes.func.isRequired,
-  removeProject: PropTypes.func.isRequired
+  selected: PropTypes.arrayOf(PropTypes.string).isRequired,
+  selectProject: PropTypes.func.isRequired
 }
 
 export default AvailableProjects

@@ -1,38 +1,37 @@
-import '../../UnitSpec'
+import {proxyquire} from '../../UnitSpec'
 import {describe, it, before, beforeEach} from 'mocha'
 import {expect} from 'chai'
 import sinon from 'sinon'
-import proxyquire from 'proxyquire'
 
 describe('projects gateway', () => {
 
-  let subject, Gateway, projects, promised
+  let ProjectsGateway, Gateway
 
   before(() => {
     Gateway = {}
-    subject = proxyquire('../../../../src/client/common/gateways/ProjectsGateway', {'./Gateway': Gateway})
+    ProjectsGateway = proxyquire('../../src/client/common/gateways/ProjectsGateway', {'./Gateway': Gateway})
   })
 
   beforeEach(() => {
-    projects = [{
-      trayId: 'id',
-      projectId: 'some-id',
-      name: 'name',
-      stage: 'stage',
-      prognosis: 'some-prognosis',
-      lastBuildTime: 'some-last-build-time'
-    }]
-    promised = new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(projects)
-      }, 0)
-    })
-    Gateway.post = sinon.stub().returns(promised)
+    Gateway.post = sinon.spy()
   })
 
   describe('getting all projects', () => {
-    it('has all data', () => {
+    it('posts only the required data from the given trays', () => {
       const trays = [{
+        url: 'url',
+        username: 'uname',
+        password: 'pword',
+        serverType: 'GO',
+        foo: 'bar'
+      }, {
+        url: 'another-url',
+        username: 'another-uname',
+        password: 'another-pword',
+        serverType: 'GO',
+        extra: 'i-should-get-removed'
+      }]
+      const expected = [{
         url: 'url',
         username: 'uname',
         password: 'pword',
@@ -44,62 +43,34 @@ describe('projects gateway', () => {
         serverType: 'GO'
       }]
 
-      subject.fetchAll(trays)
+      ProjectsGateway.fetchAll(trays)
 
-      expect(Gateway.post).to.have.been.calledWith('/api/projects/all', trays)
+      expect(Gateway.post).to.have.been.calledWith('/api/projects/all', expected)
     })
   })
 
   describe('getting interesting projects', () => {
-    it('has all data', () => {
-      const selected = {id: ['some-project-id']}
-      const tray = {
-        trayId: 'id',
-        name: 'foo',
-        url: 'url',
-        username: 'uname',
-        password: 'pword',
-        serverType: 'GO'
-      }
-      const trays = [tray]
-
-      subject.interesting(trays, selected)
-
-      const data = [{
-        trayId: tray.trayId,
-        url: tray.url,
-        username: tray.username,
-        password: tray.password,
-        included: ['some-project-id'],
-        serverType: tray.serverType
-      }]
-
-      expect(Gateway.post).to.have.been.calledWith('/api/projects/interesting', data)
-    })
-
-    it('injects tray name into interesting projects', (done) => {
-      const selected = {id: ['some-project-id']}
+    it('maps selected projects to the posted data', () => {
+      const selected = {'some-tray-id': ['some-project-id']}
       const trays = [{
-        trayId: 'id',
-        name: 'foo',
-        url: 'url',
-        username: 'uname',
-        password: 'pword',
-        serverType: 'GO'
+        trayId: 'some-tray-id',
+        url: 'some-url',
+        username: 'some-uname',
+        password: 'some-pword',
+        serverType: 'some-server-type'
+      }]
+      const expected = [{
+        trayId: 'some-tray-id',
+        url: 'some-url',
+        username: 'some-uname',
+        password: 'some-pword',
+        included: ['some-project-id'],
+        serverType: 'some-server-type'
       }]
 
-      subject.interesting(trays, selected).then((data) => {
-        expect(data).to.deep.equal([{
-          trayId: 'id',
-          trayName: 'foo',
-          projectId: 'some-id',
-          name: 'name',
-          stage: 'stage',
-          prognosis: 'some-prognosis',
-          lastBuildTime: 'some-last-build-time'
-        }])
-        done()
-      })
+      ProjectsGateway.interesting(trays, selected)
+
+      expect(Gateway.post).to.have.been.calledWith('/api/projects/interesting', expected)
     })
   })
 })

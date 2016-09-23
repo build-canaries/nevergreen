@@ -1,6 +1,15 @@
 import Promise from 'promise'
 
-const processStatus = (response) => {
+const ACCEPT_HEADER = 'application/json; charset=utf-8'
+
+function timeoutError() {
+  return Promise.reject({
+    status: 0,
+    message: 'Connection timeout'
+  })
+}
+
+function processStatus(response) {
   if (response.status >= 200 && response.status < 300) {
     return Promise.resolve(response)
   } else {
@@ -18,22 +27,18 @@ export function post(url, data) {
     method: 'post',
     body: JSON.stringify(data),
     headers: {
-      Accept: 'application/json; charset=utf-8',
+      Accept: ACCEPT_HEADER,
       'Content-Type': 'application/json; charset=utf-8'
     }
-  }).then(processStatus)
-    .then((response) => {
-      return response.json()
-    })
+  })
+    .catch(timeoutError)
+    .then(processStatus)
+    .then((response) => response.json())
 }
 
 export function get(url) {
-  return fetch(url, {
-    headers: {
-      Accept: 'application/json; charset=utf-8'
-    }
-  }).then(processStatus)
-    .then((response) => {
-      return response.json()
-    })
+  return fetch(url, {headers: {Accept: ACCEPT_HEADER}})
+    .catch(timeoutError)
+    .then(processStatus)
+    .then((response) => response.json())
 }

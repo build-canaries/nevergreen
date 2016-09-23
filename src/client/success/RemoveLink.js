@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import Shortcut from '../common/Shortcut'
+import ShortcutContainer from '../common/shortcut/ShortcutContainer'
 import './remove-link.scss'
 
 class RemoveLink extends Component {
@@ -12,7 +12,7 @@ class RemoveLink extends Component {
       <button className='remove-link' onClick={this.props.removeMessage} title='remove'>
         <span className='icon-cross'/>
         <span className='visually-hidden'>remove</span>
-        <Shortcut hotkeys={this.props.hotkeys}/>
+        <ShortcutContainer hotkeys={this.props.hotkeys}/>
       </button>
     )
   }

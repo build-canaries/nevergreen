@@ -4,9 +4,17 @@ import AvailableProjects from './AvailableProjects'
 import TraySettings from './TraySettings'
 import Loading from '../../common/Loading'
 import Messages from '../../common/messages/Messages'
-import Shortcut from '../../common/Shortcut'
+import Shortcut from '../../common/shortcut/Shortcut'
 import moment from 'moment'
 import './tray.scss'
+
+const ONE_MINUTE = 60000
+
+function lastFetched(timestamp) {
+  if (timestamp) {
+    return moment(timestamp).fromNow(true)
+  }
+}
 
 class Tray extends Component {
   constructor(props) {
@@ -14,14 +22,14 @@ class Tray extends Component {
     this.state = {
       showSettings: false,
       hidden: false,
-      lastFetched: this._updateLastFetch()
+      lastFetched: lastFetched(props.timestamp)
     }
   }
 
   componentDidMount() {
     const intervalId = setInterval(() => {
-      this.setState({lastFetched: this._updateLastFetch()})
-    }, 60000)
+      this.setState({lastFetched: lastFetched(this.props.timestamp)})
+    }, ONE_MINUTE)
     this.setState({intervalId})
   }
 
@@ -30,52 +38,52 @@ class Tray extends Component {
   }
 
   componentWillReceiveProps() {
-    this.setState({lastFetched: this._updateLastFetch()})
+    this.setState({lastFetched: lastFetched(this.props.timestamp)})
   }
 
   render() {
+    const updateTray = (trayId, name, url, username, password) => {
+      this.setState({showSettings: false})
+      this.props.updateTray(trayId, name, url, username, password)
+    }
+    const toggleSettingsView = () => {
+      this.setState({showSettings: !this.state.showSettings})
+      return false
+    }
+    const refreshTray = () => {
+      this.props.refreshTray(this.props)
+    }
+
     let subContent
 
     if (this.state.showSettings) {
-      subContent = <TraySettings tray={this.props.tray}
-                                 removeTray={this.props.removeTray}
-                                 updateTray={this._updateTray.bind(this)}
-                                 cancel={this._toggleSettingsView.bind(this)}/>
+      subContent = <TraySettings {...this.props} updateTray={updateTray} cancel={toggleSettingsView}/>
     } else {
-      if (this.props.tray.error) {
-        const errorMessages = [
-          'Unable to fetch projects because of an error:',
-          `${this.props.tray.error.status} - ${this.props.tray.error.message}`
-        ]
-        subContent = <Loading loading={this.props.tray.fetching}>
-          <Messages type='notification' messages={errorMessages}/>
-        </Loading>
+      if (this.props.errors) {
+        subContent = <Messages type='notification' messages={this.props.errors}/>
       } else {
-        subContent = <Loading loading={this.props.tray.fetching}>
-          <AvailableProjects index={this.props.index}
-                             trayId={this.props.tray.trayId}
-                             projects={this.props.projects}
-                             selectedProjects={this.props.selectedProjects}
-                             selectProject={this.props.selectProject}
-                             removeProject={this.props.removeProject}/>
-        </Loading>
+        subContent = <AvailableProjects index={this.props.index}
+                                        trayId={this.props.trayId}
+                                        projects={this.props.projects}
+                                        selected={this.props.selected}
+                                        selectProject={this.props.selectProject}/>
       }
     }
 
     const toggleLabel = this.state.showSettings ? 'Show projects' : 'Show settings'
-    const title = this.props.tray.name || this.props.tray.url
-    const subTitle = this.props.tray.name ? this.props.tray.url : ''
+    const title = this.props.name || this.props.url
+    const subTitle = this.props.name ? this.props.url : ''
 
     return (
       <Container title={title} subTitle={subTitle} className='tray'>
         <div>
           <div className='tray-sub-bar'>
-            <button className='button' onClick={this._toggleSettingsView.bind(this)} title='Toggle settings'>
+            <button className='button' onClick={toggleSettingsView} title='Toggle settings'>
               <span className={'icon-' + (this.state.showSettings ? 'list' : 'cog') }/>
               <span className='text-with-icon'>{toggleLabel}</span>
               <Shortcut hotkeys={[`p ${this.props.index}`]}/>
             </button>
-            <button className='button' onClick={this.props.refreshTray}>
+            <button className='button' onClick={refreshTray}>
               <span className='icon-loop2'/>
               <span className='text-with-icon'>Refresh tray</span>
               <Shortcut hotkeys={[`r ${this.props.index}`]}/>
@@ -83,55 +91,32 @@ class Tray extends Component {
             <span className='tray-refresh-last-fetch'>last refreshed {this.state.lastFetched} ago</span>
           </div>
           <div>
-            {subContent}
+            <Loading loaded={this.props.loaded}>
+              {subContent}
+            </Loading>
           </div>
         </div>
       </Container>
     )
   }
-
-  _toggleSettingsView() {
-    this.setState({
-      showSettings: !this.state.showSettings
-    })
-
-    return false
-  }
-
-  _updateLastFetch() {
-    if (this.props.tray.timestamp) {
-      return moment(this.props.tray.timestamp).fromNow(true)
-    }
-  }
-
-  _updateTray(trayId, name, url, username, password) {
-    this.setState({
-      showSettings: false
-    })
-    this.props.updateTray(trayId, name, url, username, password)
-  }
 }
 
 Tray.propTypes = {
+  loaded: PropTypes.bool,
+  errors: PropTypes.arrayOf(PropTypes.string),
   index: PropTypes.number.isRequired,
-  tray: PropTypes.shape({
-    trayId: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    timestamp: PropTypes.string,
-    fetching: PropTypes.bool,
-    error: PropTypes.shape({
-      status: PropTypes.string.isRequired,
-      message: PropTypes.string.isRequired
-    })
-  }).isRequired,
+  trayId: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
+  name: PropTypes.string,
+  username: PropTypes.string,
+  password: PropTypes.string,
   projects: PropTypes.arrayOf(PropTypes.object).isRequired,
-  selectedProjects: PropTypes.arrayOf(PropTypes.string).isRequired,
+  timestamp: PropTypes.string,
+  selected: PropTypes.arrayOf(PropTypes.string).isRequired,
   removeTray: PropTypes.func.isRequired,
   refreshTray: PropTypes.func.isRequired,
   updateTray: PropTypes.func.isRequired,
-  selectProject: PropTypes.func.isRequired,
-  removeProject: PropTypes.func.isRequired
+  selectProject: PropTypes.func.isRequired
 }
 
 export default Tray

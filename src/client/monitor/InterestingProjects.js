@@ -36,7 +36,8 @@ class InterestingProjects extends Component {
         <ul id='interesting-projects' className='projects'>
           {
             this.props.projects.map((project) => {
-              return <InterestingProject {...project} key={project.webUrl}
+              const tray = this.props.trays.find((tray) => tray.trayId === project.trayId)
+              return <InterestingProject {...project} trayName={tray.name} key={project.projectId}
                                                       showBrokenBuildTimers={this.props.showBrokenBuildTimers}
                                                       showTrayName={this.props.showTrayName}/>
             })
@@ -50,8 +51,9 @@ class InterestingProjects extends Component {
 
 InterestingProjects.propTypes = {
   projects: PropTypes.arrayOf(PropTypes.shape({
-    webUrl: PropTypes.string.isRequired
+    projectId: PropTypes.string.isRequired
   })).isRequired,
+  trays: PropTypes.arrayOf(PropTypes.object).isRequired,
   showBrokenBuildTimers: PropTypes.bool,
   showTrayName: PropTypes.bool,
   playBrokenBuildSounds: PropTypes.bool,

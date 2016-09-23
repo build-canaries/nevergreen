@@ -41,19 +41,10 @@ npm install
 echo "[2] watching the js for changes ..."
 npm run watchJs &
 
-echo "[3] automatically running the js tests on changes ..."
-npm run watchTest &
-
-echo "[4] automatically running js lint on changes ..."
-npm run watchLint &
-
-echo "[5] Run a fake CI server to target on port 5050"
+echo "[3] run a fake CI server to target on port 5050"
 npm run fake-server &
 
-echo "[6] automatically running the server tests on changes ..."
-./lein.sh midje :autotest 'src/nevergreen' 'test/nevergreen' &
-
-echo "[7] running the server ..."
+echo "[4] running the server ..."
 ./lein.sh run &
 
 wait

@@ -7,14 +7,13 @@ class AvailableProject extends Component {
   }
 
   render() {
-    const toggle = (event) => this.props.selectProject(event.target.checked)
-    const labelClass = this.props.wasRemoved ? 'label-checkbox-disabled' : 'label-checkbox'
-    const nameClass = this.props.wasRemoved ? 'removed-project' : ''
+    const labelClass = this.props.removed ? 'label-checkbox-disabled' : 'label-checkbox'
+    const nameClass = this.props.removed ? 'removed-project' : ''
     let info = null
 
     if (this.props.isNew) {
       info = <sup className='new-project'>new</sup>
-    } else if (this.props.wasRemoved) {
+    } else if (this.props.removed) {
       info = <sup className='removed-project'>removed</sup>
     }
 
@@ -23,9 +22,9 @@ class AvailableProject extends Component {
         <label className={labelClass}>
           <input className='checkbox no-text-selection'
                  type='checkbox'
-                 checked={this.props.included}
-                 onChange={toggle}
-                 disabled={this.props.wasRemoved}/>
+                 checked={this.props.selected || false}
+                 onChange={this.props.selectProject}
+                 disabled={this.props.removed}/>
           <span className={nameClass}>{this.props.name}</span>
           {info}
         </label>
@@ -36,9 +35,9 @@ class AvailableProject extends Component {
 
 AvailableProject.propTypes = {
   name: PropTypes.string.isRequired,
-  isNew: PropTypes.bool.isRequired,
-  wasRemoved: PropTypes.bool.isRequired,
-  included: PropTypes.bool.isRequired,
+  isNew: PropTypes.bool,
+  removed: PropTypes.bool,
+  selected: PropTypes.bool,
   selectProject: PropTypes.func.isRequired
 }
 

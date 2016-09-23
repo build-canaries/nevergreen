@@ -1,47 +1,25 @@
-import React, {Component} from 'react'
-import ConfigurationStore from '../stores/ConfigurationStore'
-import UiMessageStore from '../stores/UiMessageStore'
-import {exportData, importData} from './BackupActions'
+import Immutable from 'immutable'
+import {connect} from 'react-redux'
+import {loadConfiguration, importData} from '../actions/BackupActions'
 import Backup from './Backup'
-import AppDispatcher from '../common/AppDispatcher'
+import {asJson} from '../common/repo/Data'
 
-function mapStateToProps() {
+function mapDispatchToProps(dispatch) {
   return {
-    exporting: ConfigurationStore.isExporting(),
-    configuration: JSON.stringify(ConfigurationStore.getConfiguration(), null, 2),
-    importing: ConfigurationStore.isImporting(),
-    importErrors: UiMessageStore.getImportErrors(),
-    importInfos: UiMessageStore.getImportInfos(),
-    importData(jsonData) {
-      importData(jsonData)(AppDispatcher)
+    loadConfiguration() {
+      return dispatch(loadConfiguration())
     },
-    refresh() {
-      exportData()(AppDispatcher)
+    importData(jsonData) {
+      dispatch(importData(jsonData))
     }
   }
 }
 
-class BackupComponent extends Component {
-  constructor(props) {
-    super(props)
-    this.state = mapStateToProps()
-  }
-
-  componentDidMount() {
-    const callback = () => this.setState(mapStateToProps())
-    ConfigurationStore.addListener(callback)
-    UiMessageStore.addListener(callback)
-    this.setState({callback})
-  }
-
-  componentWillUnmount() {
-    ConfigurationStore.removeListener(this.state.callback)
-    UiMessageStore.removeListener(this.state.callback)
-  }
-
-  render() {
-    return <Backup {...this.state} />
-  }
+function mapStateToProps(store) {
+  return Immutable.Map({configuration: asJson(store.toJS())}).merge(store.get('backup')).toJS()
 }
 
-export default BackupComponent
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Backup)

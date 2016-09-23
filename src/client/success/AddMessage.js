@@ -1,7 +1,6 @@
 import React, {Component, PropTypes} from 'react'
-import Messages from '../common/messages/Messages'
-import PrimaryInput from '../common/PrimaryInput'
 import _ from 'lodash'
+import PrimaryInput from '../common/PrimaryInput'
 import './add-message.scss'
 
 class AddMessage extends Component {
@@ -10,18 +9,17 @@ class AddMessage extends Component {
     this.state = {message: ''}
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (_.size(nextProps.errors) === 0) {
-      this.setState({message: ''})
-    }
-  }
-
   render() {
-    const addMessage = () => this.props.addMessage(this.state.message)
     const updateMessage = (evt) => this.setState({message: evt.target.value})
     const addOnEnter = (evt) => {
       if (evt.key === 'Enter') {
+        addMessage()
+      }
+    }
+    const addMessage = () => {
+      if (_.size(_.trim(this.state.message)) > 0) {
         this.props.addMessage(this.state.message)
+        this.setState({message: ''})
       }
     }
 
@@ -40,15 +38,13 @@ class AddMessage extends Component {
           </PrimaryInput>
         </span>
         <button className='add-action' onClick={addMessage}>add</button>
-        <Messages type='notification' messages={this.props.errors}/>
       </div>
     )
   }
 }
 
 AddMessage.propTypes = {
-  addMessage: PropTypes.func.isRequired,
-  errors: PropTypes.arrayOf(PropTypes.string)
+  addMessage: PropTypes.func.isRequired
 }
 
 export default AddMessage

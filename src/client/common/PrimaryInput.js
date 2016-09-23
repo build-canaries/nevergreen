@@ -1,4 +1,4 @@
-import {Component} from 'react'
+import {Component, PropTypes} from 'react'
 import ReactDOM from 'react-dom'
 import Mousetrap from 'mousetrap'
 
@@ -22,6 +22,13 @@ class PrimaryInput extends Component {
   render() {
     return this.props.children
   }
+}
+
+PrimaryInput.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.element
+  ])
 }
 
 export default PrimaryInput

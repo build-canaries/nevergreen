@@ -8,7 +8,8 @@ class AudioVisual extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      errors: []
+      errors: [],
+      audio: null
     }
   }
 
@@ -39,14 +40,14 @@ class AudioVisual extends Component {
                           enabled={this.props.showTrayName}
                           onToggle={toggleTrayName}/>
             <ConfigOption name='Show broken build timers'
-                          enabled={this.props.showBrokenBuildTimers}
+                          enabled={this.props.brokenBuildTimersEnabled}
                           onToggle={toggleBrokenBuilds}/>
           </fieldset>
         </Container>
         <Container title='Audio Settings'>
           <fieldset className='settings-list'>
             <ConfigOption name='Enable sound for broken builds'
-                          enabled={this.props.showBrokenBuildSounds}
+                          enabled={this.props.brokenBuildSoundsEnabled}
                           onToggle={toggleBrokenSounds}/>
             <div className='sound-fx'>
               <label htmlFor='sound-fx'>Broken build sound</label>
@@ -67,10 +68,10 @@ class AudioVisual extends Component {
 }
 
 AudioVisual.propTypes = {
-  showBrokenBuildTimers: PropTypes.bool.isRequired,
   showTrayName: PropTypes.bool.isRequired,
-  showBrokenBuildSounds: PropTypes.bool.isRequired,
-  brokenBuildSoundFx: PropTypes.string.isRequired,
+  brokenBuildTimersEnabled: PropTypes.bool.isRequired,
+  brokenBuildSoundsEnabled: PropTypes.bool.isRequired,
+  brokenBuildSoundFx: PropTypes.string,
   setBrokenBuildTimers: PropTypes.func.isRequired,
   setTrayNameToggled: PropTypes.func.isRequired,
   setBrokenBuildSounds: PropTypes.func.isRequired,

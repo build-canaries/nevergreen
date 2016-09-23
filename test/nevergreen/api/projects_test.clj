@@ -68,7 +68,7 @@
        (fact "removes healthy projects"
              (subject/get-interesting [{:tray-id "a-tray" :included ["project-1"] :url valid-url}]) => (list)
              (provided
-               (subject/fetch-tray anything) => {:project-id "project-1" :prognosis :healthy}))
+               (subject/fetch-tray anything) => {:web-url "project-1" :prognosis :healthy}))
 
        (facts "uses pmap to parallelise the work"
               (fact "if multiple projects are given"
@@ -85,7 +85,7 @@
        (fact "handles no tray id being given"
              (subject/get-interesting [{:included ["project"] :url valid-url}]) => (list {:tray-id nil :project-id "project" :prognosis :sick})
              (provided
-               (subject/fetch-tray anything) => [{:project-id "project" :prognosis :sick}])))
+               (subject/fetch-tray anything) => [{:web-url "project" :prognosis :sick}])))
 
 (facts "gets the server type"
        (fact "converts known server value to a symbol"

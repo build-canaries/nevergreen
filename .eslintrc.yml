@@ -1,4 +1,4 @@
-extends: eslint:recommended
+extends: ['eslint:recommended', 'plugin:react/recommended']
 
 plugins: ['babel', 'react']
 
@@ -15,13 +15,14 @@ parserOptions:
     jsx: true
 
 rules:
-  quotes: [2, 'single']
-  semi: [2, 'never']
-  react/jsx-uses-vars: [2]
-  react/jsx-uses-react: [2]
-  babel/generator-star-spacing: [1]
-  babel/new-cap: [1]
-  babel/object-shorthand: [1]
-  babel/arrow-parens: [1]
-  babel/no-await-in-loop: [1]
-  react/react-in-jsx-scope: [2]
+  quotes: ['error', 'single']
+  semi: ['error', 'never']
+  react/jsx-uses-vars: ['error']
+  react/jsx-uses-react: ['error']
+  babel/generator-star-spacing: ['error']
+  babel/new-cap: ['error', {capIsNewExceptions: ['Immutable.Map', 'Immutable.List', 'Immutable.Set', 'Immutable.OrderedSet']}]
+  babel/object-shorthand: ['error']
+  babel/arrow-parens: ['error']
+  babel/no-await-in-loop: ['error']
+  react/react-in-jsx-scope: ['error']
+  react/no-find-dom-node: ['warn']

@@ -13,7 +13,7 @@ class Success extends Component {
     return (
       <section className='success'>
         <h2 className='visually-hidden'>Success</h2>
-        <AddMessage addMessage={this.props.addMessage} errors={this.props.errors}/>
+        <AddMessage addMessage={this.props.addMessage}/>
 
         { this.props.messages.length > 0 ?
           <AddedMessages messages={this.props.messages} removeMessage={this.props.removeMessage}/> : null }
@@ -27,7 +27,6 @@ class Success extends Component {
 Success.propTypes = {
   messages: PropTypes.array.isRequired,
   images: PropTypes.array.isRequired,
-  errors: PropTypes.array,
   addMessage: PropTypes.func.isRequired,
   removeMessage: PropTypes.func.isRequired
 }

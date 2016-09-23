@@ -12,7 +12,7 @@ npm test
 npm run clean
 
 # build ui
-npm run build
+npm run build-prod
 
 # clean server build folders
 ./lein.sh clean

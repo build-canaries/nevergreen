@@ -3,7 +3,7 @@ import './navigation.scss'
 import './footer.scss'
 import logo from './buildcanaries-logo.png'
 import {Link} from 'react-router'
-import Shortcut from '../common/Shortcut'
+import ShortcutContainer from '../common/shortcut/ShortcutContainer'
 
 const items = [
   {id: 'monitor', iconClass: 'eye', title: 'Monitor', shortcuts: ['m', '1']},
@@ -41,7 +41,7 @@ class Menu extends Component {
                     <Link id={item.id} to={`/${item.id}`} className='menu-item' activeClassName='active'>
                       <span className={`menu-icon icon-${item.iconClass}`}/>
                       <span className='menu-title'>{item.title}</span>
-                      <Shortcut hotkeys={item.shortcuts}/>
+                      <ShortcutContainer hotkeys={item.shortcuts}/>
                     </Link>
                   </li>
                 )

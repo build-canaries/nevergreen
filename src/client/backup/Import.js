@@ -4,6 +4,7 @@ import Container from '../common/Container'
 import Loading from '../common/Loading'
 import PrimaryInput from '../common/PrimaryInput'
 import './import.scss'
+import _ from 'lodash'
 
 class Import extends Component {
   constructor(props) {
@@ -12,7 +13,7 @@ class Import extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.infos.length > 0 && nextProps.errors.length === 0) {
+    if (_.size(nextProps.infos) > 0 && _.size(nextProps.errors) === 0) {
       this.setState({data: ''})
     }
   }
@@ -23,7 +24,7 @@ class Import extends Component {
 
     return (
       <Container title='Import' className='import'>
-        <Loading loading={this.props.loading}>
+        <Loading loaded={this.props.loaded}>
           <div>
             <PrimaryInput>
               <textarea className='import-data'
@@ -43,7 +44,7 @@ class Import extends Component {
 }
 
 Import.propTypes = {
-  loading: PropTypes.bool,
+  loaded: PropTypes.bool,
   errors: PropTypes.arrayOf(React.PropTypes.string),
   infos: PropTypes.arrayOf(React.PropTypes.string),
   importData: PropTypes.func.isRequired

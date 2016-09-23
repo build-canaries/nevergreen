@@ -1,40 +1,34 @@
-import React, {Component} from 'react'
-import DisplayStore from '../stores/DisplayStore'
-import {setBrokenBuildSoundFx, setBrokenBuildSounds, setBrokenBuildTimers, setTrayNameToggled} from './AudioVisualActions'
+import {connect} from 'react-redux'
+import {
+  setBrokenBuildSoundFx,
+  setBrokenBuildSounds,
+  setBrokenBuildTimers,
+  setTrayNameToggled
+} from '../actions/AudioVisualActions'
 import AudioVisual from './AudioVisual'
 
-function mapStateToProps() {
+function mapDispatchToProps(dispatch) {
   return {
-    showBrokenBuildTimers: DisplayStore.areBrokenBuildTimersEnabled(),
-    showTrayName: DisplayStore.areTrayNameEnabled(),
-    showBrokenBuildSounds: DisplayStore.areBrokenBuildSoundsEnabled(),
-    brokenBuildSoundFx: DisplayStore.brokenBuildSoundFx(),
-    setBrokenBuildTimers,
-    setTrayNameToggled,
-    setBrokenBuildSounds,
-    setBrokenBuildSoundFx
+    setBrokenBuildTimers(value) {
+      dispatch(setBrokenBuildTimers(value))
+    },
+    setBrokenBuildSounds(value) {
+      dispatch(setBrokenBuildSounds(value))
+    },
+    setBrokenBuildSoundFx(value) {
+      dispatch(setBrokenBuildSoundFx(value))
+    },
+    setTrayNameToggled(value) {
+      dispatch(setTrayNameToggled(value))
+    }
   }
 }
 
-class AudioVisualContainer extends Component {
-  constructor(props) {
-    super(props)
-    this.state = mapStateToProps()
-  }
-
-  componentDidMount() {
-    const callback = () => this.setState(mapStateToProps())
-    DisplayStore.addListener(callback)
-    this.setState({callback})
-  }
-
-  componentWillUnmount() {
-    DisplayStore.removeListener(this.state.callback)
-  }
-
-  render() {
-    return <AudioVisual {...this.state}/>
-  }
+function mapStateToProps(store) {
+  return store.get('audioVisual').toJS()
 }
 
-export default AudioVisualContainer
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AudioVisual)

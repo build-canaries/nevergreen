@@ -6,11 +6,9 @@ import _ from 'lodash'
 class Success extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
-  }
-
-  componentWillMount() {
-    this.setState({message: this.props.message()})
+    this.state = {
+      message: props.messages[Math.floor(Math.random() * props.messages.length)]
+    }
   }
 
   render() {
@@ -25,7 +23,7 @@ class Success extends Component {
 }
 
 Success.propTypes = {
-  message: PropTypes.func.isRequired
+  messages: PropTypes.arrayOf(PropTypes.string).isRequired
 }
 
 export default Success

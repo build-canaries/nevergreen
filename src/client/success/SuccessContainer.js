@@ -1,45 +1,28 @@
-import React, {Component} from 'react'
-import SuccessStore from '../stores/SuccessStore'
-import UiMessageStore from '../stores/UiMessageStore'
+import Immutable from 'immutable'
+import {connect} from 'react-redux'
+import {addMessage, removeMessage} from '../actions/SuccessActions'
 import Success from './Success'
-import {removeMessage, addMessage} from './SuccessActions'
-import AppDispatcher from '../common/AppDispatcher'
 
-function mapStateToProps() {
+function mapDispatchToProps(dispatch) {
   return {
-    messages: SuccessStore.getMessages(),
-    images: SuccessStore.getImages(),
-    errors: UiMessageStore.getSuccessErrors(),
-    removeMessage(message) {
-      removeMessage(message)(AppDispatcher)
-    },
     addMessage(message) {
-      addMessage(message)(AppDispatcher)
+      dispatch(addMessage(message))
+    },
+    removeMessage(message) {
+      dispatch(removeMessage(message))
     }
   }
 }
 
-class SuccessContainer extends Component {
-  constructor(props) {
-    super(props)
-    this.state = mapStateToProps()
-  }
-
-  componentDidMount() {
-    const callback = () => this.setState(mapStateToProps())
-    SuccessStore.addListener(callback)
-    UiMessageStore.addListener(callback)
-    this.setState({callback})
-  }
-
-  componentWillUnmount() {
-    SuccessStore.removeListener(this.state.callback)
-    UiMessageStore.removeListener(this.state.callback)
-  }
-
-  render() {
-    return <Success {...this.state}/>
-  }
+function mapStateToProps(store) {
+  const success = store.get('success')
+  return Immutable.Map({
+    messages: success.get('texts'),
+    images: success.get('images')
+  }).toJS()
 }
 
-export default SuccessContainer
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Success)

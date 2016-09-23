@@ -5,7 +5,7 @@ import 'mousetrap/plugins/global-bind/mousetrap-global-bind'
 import _ from 'lodash'
 import './nevergreen.scss'
 
-const twentyFourHours = 24 * 60 * 60 * 1000
+const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000
 
 class Nevergreen extends Component {
   constructor(props) {
@@ -14,18 +14,12 @@ class Nevergreen extends Component {
   }
 
   componentDidMount() {
-    this.props.init()
+    this.props.initalise()
 
-    const versionCheckId = setInterval(this.props.checkForNewVersion, twentyFourHours)
-    this.setState({versionCheckId})
+    this.setState({versionCheckId: setInterval(this.props.checkForNewVersion, TWENTY_FOUR_HOURS)})
 
-    Mousetrap.bindGlobal('esc', () => {
-      document.activeElement.blur()
-    })
-
-    Mousetrap.bind('?', () => {
-      this.props.showKeyboardShortcuts()
-    })
+    Mousetrap.bindGlobal('esc', () => document.activeElement.blur())
+    Mousetrap.bind('?', () => this.props.showKeyboardShortcuts())
   }
 
   componentWillUnmount() {
@@ -35,7 +29,15 @@ class Nevergreen extends Component {
   }
 
   render() {
-    const classes = 'pop-up-notification' + (_.size(this.props.message) > 0 ? '' : ' hidden')
+    const notification = _.size(this.props.notification) > 0 ?
+      <div className='pop-up-notification'>
+        <div>
+          <span className='icon-notification'/>
+          <span className='text-with-icon'>Notification</span>
+          <span className='icon-cross pop-up-notification-dismiss' onClick={this.props.dismiss}/>
+        </div>
+        {this.props.notification}
+      </div> : null
 
     return (
       <div className='nevergreen'>
@@ -44,14 +46,7 @@ class Nevergreen extends Component {
               versionName={this.props.versionName}
               versionColour={this.props.versionColour}
               commitHash={this.props.commitHash}/>
-        <div className={classes}>
-          <div>
-            <span className='icon-notification'/>
-            <span className='text-with-icon'>Notification</span>
-            <span className='icon-cross pop-up-notification-dismiss' onClick={this.props.dismiss}/>
-          </div>
-          {this.props.notification}
-        </div>
+        {notification}
         {this.props.loaded ? this.props.children : null}
       </div>
     )
@@ -59,13 +54,17 @@ class Nevergreen extends Component {
 }
 
 Nevergreen.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.element
+  ]),
   loaded: PropTypes.bool.isRequired,
   versionNumber: PropTypes.string.isRequired,
   versionName: PropTypes.string.isRequired,
   versionColour: PropTypes.string.isRequired,
   commitHash: PropTypes.string.isRequired,
   notification: PropTypes.string,
-  init: PropTypes.func.isRequired,
+  initalise: PropTypes.func.isRequired,
   showKeyboardShortcuts: PropTypes.func.isRequired,
   checkForNewVersion: PropTypes.func.isRequired,
   dismiss: PropTypes.func.isRequired

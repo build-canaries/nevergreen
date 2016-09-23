@@ -1,37 +1,30 @@
-import React, {Component} from 'react'
-import TrayStore from '../stores/TrayStore'
-import {addTray, removeTray, refreshTray, updateTray} from './TrackingActions'
+import Immutable from 'immutable'
+import {connect} from 'react-redux'
+import {addTray, removeTray, refreshTray, updateTray} from '../actions/TrackingActions'
 import Tracking from './Tracking'
 
-function mapStateToProps() {
+function mapDispatchToProps(dispatch) {
   return {
-    trays: TrayStore.getAll(),
-    addTray,
-    removeTray,
-    refreshTray,
-    updateTray
+    addTray(url, username, password) {
+      dispatch(addTray(url, username, password))
+    },
+    removeTray(trayId) {
+      dispatch(removeTray(trayId))
+    },
+    refreshTray(tray) {
+      dispatch(refreshTray(tray))
+    },
+    updateTray(trayId, url, username, password) {
+      dispatch(updateTray(trayId, url, username, password))
+    }
   }
 }
 
-class TrackingContainer extends Component {
-  constructor(props) {
-    super(props)
-    this.state = mapStateToProps()
-  }
-
-  componentWillMount() {
-    const callback = () => this.setState(mapStateToProps())
-    this.setState({callback})
-    TrayStore.addListener(callback)
-  }
-
-  componentWillUnmount() {
-    TrayStore.removeListener(this.state.callback)
-  }
-
-  render() {
-    return <Tracking {...this.state}/>
-  }
+function mapStateToProps(store) {
+  return Immutable.Map({trays: store.get('trays').toList()}).toJS()
 }
 
-export default TrackingContainer
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Tracking)

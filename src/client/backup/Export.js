@@ -2,7 +2,6 @@ import React, {Component, PropTypes} from 'react'
 import Messages from '../common/messages/Messages'
 import Clipboard from 'clipboard'
 import Container from '../common/Container'
-import Loading from '../common/Loading'
 import './export.scss'
 
 class Export extends Component {
@@ -35,8 +34,7 @@ class Export extends Component {
   render() {
     return (
       <Container title='Export' className='export'>
-        <Loading loading={this.props.loading}>
-          <div>
+        <div>
             <pre>
               <textarea id='export-data'
                         className='export-data'
@@ -45,23 +43,19 @@ class Export extends Component {
                         readOnly='true'
                         spellCheck='false'/>
             </pre>
-            <button id='copy-to-clipboard'
-                    className='copy-action'
-                    data-clipboard-target='#export-data'>
-              copy to clipboard
-            </button>
-            <Messages type='notification' messages={this.state.errors}/>
-            <Messages type='checkmark' messages={this.state.infos}/>
-          </div>
-        </Loading>
+          <button id='copy-to-clipboard' className='copy-action' data-clipboard-target='#export-data'>
+            copy to clipboard
+          </button>
+          <Messages type='notification' messages={this.state.errors}/>
+          <Messages type='checkmark' messages={this.state.infos}/>
+        </div>
       </Container>
     )
   }
 }
 
 Export.propTypes = {
-  loading: PropTypes.bool,
-  configuration: PropTypes.string
+  configuration: PropTypes.string.isRequired
 }
 
 export default Export

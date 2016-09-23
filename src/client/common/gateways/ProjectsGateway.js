@@ -1,13 +1,8 @@
 import {post} from './Gateway'
 
 export function fetchAll(trays) {
-  const data = trays.map((tray) => {
-    return {
-      url: tray.url,
-      username: tray.username,
-      password: tray.password,
-      serverType: tray.serverType
-    }
+  const data = trays.map(({url, username, password, serverType}) => {
+    return {url, username, password, serverType}
   })
 
   return post('/api/projects/all', data)
@@ -25,10 +20,5 @@ export function interesting(trays, selected) {
     }
   })
 
-  return post('/api/projects/interesting', data).then((projects) => {
-    return projects.map((project) => {
-      project.trayName = trays.find((tray) => tray.trayId === project.trayId).name
-      return project
-    })
-  })
+  return post('/api/projects/interesting', data)
 }

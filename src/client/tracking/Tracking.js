@@ -13,13 +13,12 @@ class Tracking extends Component {
       <section className='tracking'>
         <h2 className='visually-hidden'>Tracking</h2>
         <AddTray addTray={this.props.addTray}/>
-
         <div>
           {
             this.props.trays.map((tray, index) => {
               return <TrayContainer key={tray.trayId}
                                     index={index}
-                                    tray={tray}
+                                    {...tray}
                                     removeTray={this.props.removeTray}
                                     refreshTray={this.props.refreshTray}
                                     updateTray={this.props.updateTray}/>

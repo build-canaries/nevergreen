@@ -31,6 +31,10 @@ class Container extends Component {
 }
 
 Container.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.element
+  ]),
   title: PropTypes.string.isRequired,
   subTitle: PropTypes.string,
   className: PropTypes.string

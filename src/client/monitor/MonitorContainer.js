@@ -1,91 +1,36 @@
-import React, {Component} from 'react'
-import {fetchInteresting} from './MonitorActions'
-import InterestingProjectsStore from '../stores/InterestingProjectsStore'
-import TrayStore from '../stores/TrayStore'
-import SelectedProjectsStore from '../stores/SelectedProjectsStore'
-import SuccessStore from '../stores/SuccessStore'
-import DisplayStore from '../stores/DisplayStore'
+import Immutable from 'immutable'
+import {connect} from 'react-redux'
+import {fetchInteresting} from '../actions/MonitorActions'
 import Monitor from './Monitor'
 
-function getStateFromStore() {
+function mapDispatchToProps(dispatch) {
   return {
-    projects: InterestingProjectsStore.getAll(),
-    error: InterestingProjectsStore.getLastError(),
-    loading: false,
-    brokenBuildSoundEnabled: DisplayStore.areBrokenBuildSoundsEnabled(),
-    showBrokenBuildTimers: DisplayStore.areBrokenBuildTimersEnabled(),
-    showTrayName: DisplayStore.areTrayNameEnabled(),
-    playBrokenBuildSounds: DisplayStore.areBrokenBuildSoundsEnabled(),
-    brokenBuildFx: DisplayStore.brokenBuildSoundFx(),
-    successMessage: SuccessStore.randomMessage
-  }
-}
-
-function animateMenu(state) {
-  clearTimeout(state.menuTimer)
-
-  Array.from(document.querySelectorAll('.navigation, .pop-up-notification, .monitor')).forEach((elem) => {
-    elem.classList.remove('navigation-hide')
-    elem.classList.add('navigation-show')
-  })
-}
-
-function hideMenu() {
-  Array.from(document.querySelectorAll('.navigation, .pop-up-notification, .monitor')).forEach((elem) => {
-    elem.classList.remove('navigation-show')
-    elem.classList.add('navigation-hide')
-  })
-}
-
-class MonitorContainer extends Component {
-
-  constructor(props) {
-    super(props)
-    this.state = Object.assign(getStateFromStore(), {loading: true})
-  }
-
-  componentDidMount() {
-    const callback = () => this.setState(getStateFromStore())
-    this.setState({callback})
-
-    window.addEventListener('resize', callback)
-    InterestingProjectsStore.addListener(callback)
-    DisplayStore.addListener(callback)
-
-    hideMenu()
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.state.callback)
-    InterestingProjectsStore.removeListener(this.state.callback)
-    DisplayStore.removeListener(this.state.callback)
-
-    animateMenu(this.state)
-  }
-
-  render() {
-    const poll = () => {
-      fetchInteresting(TrayStore.getAll(), SelectedProjectsStore.getAll()).then(() => {
-        const pollingTimer = setTimeout(() => {
-          poll()
-        }, 5000)
-        this.setState({pollingTimer})
-      })
+    fetchInteresting(trays, selected) {
+      return dispatch(fetchInteresting(trays, selected))
     }
-    const stopPolling = () => {
-      clearTimeout(this.state.pollingTimer)
-    }
-    const showMenu = () => {
-      animateMenu(this.state)
-      this.setState({
-        menuTimer: setTimeout(() => {
-          hideMenu()
-        }, 3000)
-      })
-    }
-
-    return <Monitor {...this.state} poll={poll} stopPolling={stopPolling} showMenu={showMenu}/>
   }
 }
 
-export default MonitorContainer
+function mapStateToProps(store) {
+  const audioVisual = store.get('audioVisual')
+  const interesting = store.get('interesting')
+  const success = store.get('success')
+
+  return Immutable.Map({
+    loaded: interesting.get('loaded'),
+    errors: interesting.get('errors'),
+    trays: store.get('trays').toList(),
+    projects: interesting.get('projects'),
+    selected: store.get('selected'),
+    showBrokenBuildTimers: audioVisual.get('brokenBuildTimersEnabled'),
+    showTrayName: audioVisual.get('showTrayName'),
+    playBrokenBuildSounds: audioVisual.get('brokenBuildSoundsEnabled'),
+    brokenBuildFx: audioVisual.get('brokenBuildSoundFx'),
+    messages: success.get('images').concat(success.get('messages'))
+  }).toJS()
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Monitor)

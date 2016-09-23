@@ -8,20 +8,15 @@ class Backup extends Component {
     super(props)
   }
 
-  componentDidMount() {
-    this.props.refresh()
-  }
-
   render() {
     const importProps = {
-      errors: this.props.importErrors,
-      infos: this.props.importInfos,
-      loading: this.props.importing,
+      errors: this.props.errors,
+      infos: this.props.infos,
+      loaded: this.props.loaded,
       importData: this.props.importData
     }
     const exportProps = {
-      configuration: this.props.configuration,
-      loading: this.props.exporting
+      configuration: this.props.configuration
     }
 
     return (
@@ -35,12 +30,10 @@ class Backup extends Component {
 }
 
 Backup.propTypes = {
-  exporting: PropTypes.bool.isRequired,
   configuration: PropTypes.string.isRequired,
-  importing: PropTypes.bool.isRequired,
-  importErrors: PropTypes.arrayOf(React.PropTypes.string),
-  importInfos: PropTypes.arrayOf(React.PropTypes.string),
-  refresh: PropTypes.func.isRequired,
+  loaded: PropTypes.bool,
+  errors: PropTypes.arrayOf(PropTypes.string),
+  infos: PropTypes.arrayOf(PropTypes.string),
   importData: PropTypes.func.isRequired
 }
 

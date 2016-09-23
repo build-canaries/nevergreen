@@ -1,46 +1,38 @@
-import React, {Component} from 'react'
-import AppStore from './stores/AppStore'
-import {init, showKeyboardShortcuts, dismiss, checkForNewVersion} from './NevergreenActions'
-import NotificationStore from './stores/NotificationStore'
+import Immutable from 'immutable'
+import {connect} from 'react-redux'
+import {initalise, showKeyboardShortcuts, dismiss, checkForNewVersion} from './actions/NevergreenActions'
 import Nevergreen from './Nevergreen'
+import Package from '../../package'
 
-function mapStateToProps() {
+function mapDispatchToProps(dispatch) {
   return {
-    loaded: AppStore.isInitalised(),
-    versionNumber: `${AppStore.versionNumber()}+${AppStore.versionMeta()}`,
-    versionName: AppStore.versionName(),
-    versionColour: AppStore.versionColour(),
-    commitHash: AppStore.commitHash(),
-    notification: NotificationStore.getNotification(),
-    showKeyboardShortcuts,
-    init,
-    checkForNewVersion: checkForNewVersion.bind(null, AppStore.versionNumber(), window.location.hostname),
-    dismiss
+    initalise() {
+      return dispatch(initalise())
+    },
+    checkForNewVersion(version) {
+      dispatch(checkForNewVersion(version, window.location.hostname))
+    },
+    dismiss() {
+      dispatch(dismiss())
+    },
+    showKeyboardShortcuts() {
+      dispatch(showKeyboardShortcuts())
+    }
   }
 }
 
-class NevergreenContainer extends Component {
-  constructor(props) {
-    super(props)
-    this.state = mapStateToProps()
-  }
-
-  componentWillMount() {
-    const callback = () => this.setState(mapStateToProps())
-    this.setState({callback})
-
-    AppStore.addListener(callback)
-    NotificationStore.addListener(callback)
-  }
-
-  componentWillUnmount() {
-    AppStore.removeListener(this.state.callback)
-    NotificationStore.removeListener(this.state.callback)
-  }
-
-  render() {
-    return <Nevergreen {...this.state}>{this.props.children}</Nevergreen>
-  }
+function mapStateToProps(store) {
+  return Immutable.Map({
+    loaded: store.get('nevergreen').get('loaded'),
+    versionNumber: Package.version,
+    versionName: Package.versionName,
+    versionColour: Package.versionColour,
+    versionMeta: Package.versionMeta,
+    commitHash: Package.commitHash
+  }).toJS()
 }
 
-export default NevergreenContainer
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Nevergreen)

@@ -6,6 +6,9 @@ import './tray-settings.scss'
 class TraySettings extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      passwordUpdated: false
+    }
   }
 
   componentDidMount() {
@@ -14,52 +17,56 @@ class TraySettings extends Component {
 
   render() {
     const generateRandomName = () => this.refs.name.value = _.startCase(nameGenerator().spaced)
-    const updateTray = () => this.props.updateTray(this.props.tray.trayId, this.refs.name.value, this.refs.url.value, this.refs.username.value, this.refs.password.value)
+    const updateTray = () => this.props.updateTray(this.props.trayId, this.refs.name.value, this.refs.url.value, this.refs.username.value, this.refs.password.value, this.state.passwordUpdated)
     const keyUpdate = (evt) => {
       if (evt.key === 'Enter') {
         updateTray()
       }
     }
+    const passwordChanged = () => {
+      this.setState({passwordUpdated: true})
+    }
 
     return (
       <section className='tray-settings'>
         <div className='text-input'>
-          <label htmlFor={`${this.props.tray.trayId}-settings-name`}>name</label>
+          <label htmlFor={`${this.props.trayId}-settings-name`}>name</label>
           <input className='tray-settings-name'
-                 id={`${this.props.tray.trayId}-settings-name`}
+                 id={`${this.props.trayId}-settings-name`}
                  ref='name'
                  type='text'
-                 defaultValue={this.props.tray.name}
+                 defaultValue={this.props.name}
                  onKeyPress={keyUpdate}
                  placeholder='e.g. project or team name'/>
           <button className='generate-random' onClick={generateRandomName}>random</button>
         </div>
         <div className='text-input'>
-          <label htmlFor={`${this.props.tray.trayId}-settings-url`}>url</label>
+          <label htmlFor={`${this.props.trayId}-settings-url`}>url</label>
           <input className='tray-settings-url'
-                 id={`${this.props.tray.trayId}-settings-url`}
+                 id={`${this.props.trayId}-settings-url`}
                  ref='url'
                  type='text'
-                 defaultValue={this.props.tray.url}
+                 defaultValue={this.props.url}
                  onKeyPress={keyUpdate}
                  placeholder='this should not be blank...'/>
         </div>
         <div className='text-input'>
-          <label htmlFor={`${this.props.tray.trayId}-settings-username`}>username</label>
-          <input id={`${this.props.tray.trayId}-settings-username`}
+          <label htmlFor={`${this.props.trayId}-settings-username`}>username</label>
+          <input id={`${this.props.trayId}-settings-username`}
                  ref='username'
                  type='text'
                  placeholder='not set'
-                 defaultValue={this.props.tray.username}
+                 defaultValue={this.props.username}
                  onKeyPress={keyUpdate}/>
         </div>
         <div className='text-input'>
-          <label htmlFor={`${this.props.tray.trayId}-settings-password`}>password</label>
-          <input id={`${this.props.tray.trayId}-settings-password`}
+          <label htmlFor={`${this.props.trayId}-settings-password`}>password</label>
+          <input id={`${this.props.trayId}-settings-password`}
                  ref='password'
                  type='password'
                  placeholder='not set'
-                 defaultValue={this.props.tray.password}
+                 defaultValue={this.props.password}
+                 onChange={passwordChanged}
                  onKeyPress={keyUpdate}/>
         </div>
         <button className='cancel' onClick={this.props.cancel}>cancel</button>
@@ -81,12 +88,11 @@ class TraySettings extends Component {
 }
 
 TraySettings.propTypes = {
-  tray: PropTypes.shape({
-    name: PropTypes.string,
-    url: PropTypes.string.isRequired,
-    username: PropTypes.string,
-    password: PropTypes.string
-  }).isRequired,
+  trayId: PropTypes.string.isRequired,
+  name: PropTypes.string,
+  url: PropTypes.string.isRequired,
+  username: PropTypes.string,
+  password: PropTypes.string,
   removeTray: PropTypes.func.isRequired,
   updateTray: PropTypes.func.isRequired,
   cancel: PropTypes.func.isRequired

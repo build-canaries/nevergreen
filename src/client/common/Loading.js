@@ -7,20 +7,24 @@ class Loading extends Component {
   }
 
   render() {
-    if (this.props.loading) {
+    if (this.props.loaded) {
+      return this.props.children
+    } else {
       return <div className='loading'>
         <span className='icon-circle pulse'/>
         <span className='icon-circle pulse'/>
         <span className='icon-circle pulse'/>
       </div>
-    } else {
-      return this.props.children
     }
   }
 }
 
 Loading.propTypes = {
-  loading: PropTypes.bool.isRequired
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.element
+  ]),
+  loaded: PropTypes.bool
 }
 
 export default Loading
