@@ -4,18 +4,16 @@ import {expect} from 'chai'
 import sinon from 'sinon'
 
 describe('TrackingActions', function () {
-  let TrackingActions, SecurityGateway, ProjectsGateway, uuid, moment, nameGenerator
+  let TrackingActions, SecurityGateway, ProjectsGateway, moment, nameGenerator
 
   before(function () {
     SecurityGateway = {}
     ProjectsGateway = {}
-    uuid = {}
     moment = sinon.stub().returns({format: sinon.stub()})
     nameGenerator = sinon.stub().returns({spaced: ''})
     TrackingActions = proxyquire('../../src/client/actions/TrackingActions', {
       '../common/gateways/SecurityGateway': SecurityGateway,
       '../common/gateways/ProjectsGateway': ProjectsGateway,
-      'node-uuid': uuid,
       moment,
       'project-name-generator': nameGenerator
     })
@@ -244,7 +242,6 @@ describe('TrackingActions', function () {
 
     beforeEach(function () {
       dispatch = sinon.spy()
-      uuid.v4 = sinon.stub()
     })
 
     it('should dispatch tray added action', function () {

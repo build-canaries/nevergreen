@@ -1,7 +1,6 @@
 import Immutable from 'immutable'
 import {encryptPassword as encrypt} from '../common/gateways/SecurityGateway'
 import {fetchAll} from '../common/gateways/ProjectsGateway'
-import uuid from 'node-uuid'
 import moment from 'moment'
 import _ from 'lodash'
 import nameGenerator from 'project-name-generator'
@@ -125,8 +124,8 @@ export function encryptPassword(trayId, password) {
 
 export function addTray(enteredUrl, username, rawPassword) {
   return function (dispatch) {
-    const trayId = uuid.v4()
     const url = hasScheme(enteredUrl) ? enteredUrl : 'http://' + enteredUrl
+    const trayId = url
 
     dispatch(trayAdded(trayId, url, username))
 
