@@ -9,10 +9,10 @@ export const schema = {
       required: true,
       type: 'object',
       properties: {
-        versionNumber: {type: 'string'},
-        versionName: {type: 'string'},
-        versionMeta: {type: 'string'},
-        commitHash: {type: 'string'},
+        versionNumber: {type: 'string', required: true},
+        versionName: {type: 'string', required: true},
+        versionMeta: {type: 'string', required: true},
+        commitHash: {type: 'string', required: true},
       },
       additionalProperties: false
     },
@@ -92,11 +92,13 @@ export const schema = {
   additionalProperties: false
 }
 
+export const schemaString = JSON.stringify(schema, null, 2)
+
 export function validate(data) {
-  const validate = validator(schema, {greedy: true})
+  const validate = validator(schema, {greedy: true, verbose: true})
   validate(data)
   const errors = validate.errors
-  return errors ? errors.map((error) => `${error.field} ${error.message}`) : []
+  return errors ? errors.map((error) => `'${error.field.replace('data.', '')}' ${error.message}, expected ${error.type} got ${error.value}`) : []
 }
 
 export function filter(data) {

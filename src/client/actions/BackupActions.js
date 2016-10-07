@@ -73,6 +73,7 @@ export function importData(jsonData) {
       } else {
         dispatch(importingData(data))
 
+        // TODO: don't save here, just update the store and let the store subscriber persist as per normal?
         return LocalRepository.save(data)
           .then(() => dispatch(importedData(data)))
           .catch((e) => dispatch(importError(['Unable to import because of an error while trying to save to local storage', e.message])))

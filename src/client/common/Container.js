@@ -5,7 +5,7 @@ class Container extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      hidden: false
+      hidden: props.hidden || false
     }
   }
 
@@ -37,7 +37,8 @@ Container.propTypes = {
   ]),
   title: PropTypes.string.isRequired,
   subTitle: PropTypes.string,
-  className: PropTypes.string
+  className: PropTypes.string,
+  hidden: PropTypes.bool
 }
 
 export default Container
