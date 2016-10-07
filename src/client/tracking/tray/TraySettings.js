@@ -78,7 +78,8 @@ class TraySettings extends Component {
             <span className='text-with-icon'>Danger Zone</span>
           </h4>
           <div className='content'>
-            <button className='delete' onClick={this.props.removeTray}>Delete this tray</button>
+            <button className='delete' onClick={() => this.props.removeTray(this.props.trayId)}>Delete this tray
+            </button>
             <span>Once you delete a tray, there is no going back. Please be certain.</span>
           </div>
         </div>
