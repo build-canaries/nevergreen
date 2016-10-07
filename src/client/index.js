@@ -12,17 +12,9 @@ import LocalRespoistory from './common/repo/LocalRepository'
 import {reducer} from './reducers/Reducer'
 import {filter} from './common/repo/Data'
 
-const immutableActions = () => (next) => (action) => {
-  if (Immutable.Iterable.isIterable(action)) {
-    return next(action.toObject())
-  } else {
-    return next(action)
-  }
-}
-
 const initialState = Immutable.Map()
 let store = createStore(reducer, initialState, compose(
-  applyMiddleware(thunkMiddleware, immutableActions),
+  applyMiddleware(thunkMiddleware),
   window.devToolsExtension ? window.devToolsExtension() : (f) => f
 ))
 
