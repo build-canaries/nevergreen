@@ -7,13 +7,12 @@ import Messages from '../../common/messages/Messages'
 import Shortcut from '../../common/shortcut/Shortcut'
 import moment from 'moment'
 import './tray.scss'
+import Timer from '../../common/Timer'
 
-const ONE_MINUTE = 60000
+const ONE_MINUTE = 60 * 1000
 
 function lastFetched(timestamp) {
-  if (timestamp) {
-    return moment(timestamp).fromNow(true)
-  }
+  return timestamp ? moment(timestamp).fromNow(true) : '???'
 }
 
 class Tray extends Component {
@@ -26,22 +25,12 @@ class Tray extends Component {
     }
   }
 
-  componentDidMount() {
-    const intervalId = setInterval(() => {
-      this.setState({lastFetched: lastFetched(this.props.timestamp)})
-    }, ONE_MINUTE)
-    this.setState({intervalId})
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.state.intervalId)
-  }
-
-  componentWillReceiveProps() {
-    this.setState({lastFetched: lastFetched(this.props.timestamp)})
+  componentWillReceiveProps(nextProps) {
+    this.setState({lastFetched: lastFetched(nextProps.timestamp)})
   }
 
   render() {
+    const updateFetchedTime = () => this.setState({lastFetched: lastFetched(this.props.timestamp)})
     const updateTray = (trayId, name, url, username, password) => {
       this.setState({showSettings: false})
       this.props.updateTray(trayId, name, url, username, password)
@@ -50,9 +39,7 @@ class Tray extends Component {
       this.setState({showSettings: !this.state.showSettings})
       return false
     }
-    const refreshTray = () => {
-      this.props.refreshTray(this.props)
-    }
+    const refreshTray = () => this.props.refreshTray(this.props)
 
     let subContent
 
@@ -76,6 +63,7 @@ class Tray extends Component {
 
     return (
       <Container title={title} subTitle={subTitle} className='tray'>
+        <Timer onTrigger={updateFetchedTime} interval={ONE_MINUTE}/>
         <div>
           <div className='tray-sub-bar'>
             <button className='button' onClick={toggleSettingsView} title='Toggle settings'>

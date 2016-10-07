@@ -4,8 +4,12 @@ import Success from './Success'
 import Loading from '../common/Loading'
 import Messages from '../common/messages/Messages'
 import './monitor.scss'
+import Timer from '../common/Timer'
 
-function animateMenu(state) {
+const THREE_SECONDS = 3 * 1000
+const FIVE_SECONDS = 5 * 1000
+
+function showMenu(state) {
   clearTimeout(state.menuTimer)
 
   Array.from(document.querySelectorAll('.navigation, .pop-up-notification, .monitor')).forEach((elem) => {
@@ -24,23 +28,10 @@ function hideMenu() {
 class Monitor extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      pollingTimer: null,
-      menuTimer: null,
-      resizeListener: null
-    }
+    this.state = {}
   }
 
   componentDidMount() {
-    const poll = () => {
-      return this.props.fetchInteresting(this.props.trays, this.props.selected).then(() => {
-        clearTimeout(this.state.pollingTimer)
-        const pollingTimer = setTimeout(() => poll(), 5000)
-        this.setState({pollingTimer})
-      })
-    }
-
-    poll()
     hideMenu()
 
     const resizeListener = () => this.forceUpdate()
@@ -49,15 +40,16 @@ class Monitor extends Component {
   }
 
   componentWillUnmount() {
-    animateMenu(this.state)
-    clearTimeout(this.state.pollingTimer)
+    showMenu(this.state)
     window.removeEventListener('resize', this.state.resizeListener)
   }
 
   render() {
-    const showMenu = () => {
-      animateMenu(this.state)
-      this.setState({menuTimer: setTimeout(() => hideMenu(), 3000)})
+    const fetch = () => this.props.fetchInteresting(this.props.trays, this.props.selected)
+
+    const animateMenu = () => {
+      showMenu(this.state)
+      this.setState({menuTimer: setTimeout(() => hideMenu(), THREE_SECONDS)})
     }
 
     let content
@@ -70,11 +62,14 @@ class Monitor extends Component {
       content = <Success messages={this.props.messages}/>
     }
 
-    return <div className='monitor' onMouseMove={showMenu}>
-      <Loading loaded={this.props.loaded}>
-        {content}
-      </Loading>
-    </div>
+    return (
+      <div className='monitor' onMouseMove={animateMenu}>
+        <Timer onTrigger={fetch} interval={FIVE_SECONDS}/>
+        <Loading loaded={this.props.loaded}>
+          {content}
+        </Loading>
+      </div>
+    )
   }
 }
 

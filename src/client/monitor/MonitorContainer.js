@@ -26,7 +26,7 @@ function mapStateToProps(store) {
     showTrayName: audioVisual.get('showTrayName'),
     playBrokenBuildSounds: audioVisual.get('brokenBuildSoundsEnabled'),
     brokenBuildFx: audioVisual.get('brokenBuildSoundFx'),
-    messages: success.get('images').concat(success.get('messages'))
+    messages: success.get('images').concat(success.get('texts'))
   }).toJS()
 }
 

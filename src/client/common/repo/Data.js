@@ -36,7 +36,8 @@ export const schema = {
             url: {required: true, type: 'string'},
             name: {type: 'string'},
             username: {type: 'string'},
-            password: {type: 'string'}
+            password: {type: 'string'},
+            timestamp: {type: 'string'}
           },
           additionalProperties: false
         }

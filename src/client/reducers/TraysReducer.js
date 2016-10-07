@@ -37,7 +37,7 @@ export function reduce(state = DefaultState, action) {
     case PROJECTS_FETCHED:
       return state.update(action.trayId, (tray) =>
         tray.withMutations((map) =>
-          map.set('loaded', true).delete('errors')))
+          map.set('loaded', true).set('timestamp', action.timestamp).delete('errors')))
 
     case PASSWORD_ENCRYPT_ERROR:
     case PROJECTS_FETCH_ERROR:

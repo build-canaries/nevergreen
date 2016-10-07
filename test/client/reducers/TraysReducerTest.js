@@ -114,6 +114,13 @@ describe('TraysReducer', function () {
       expect(newState).to.have.property('trayId').that.has.property('loaded', true)
     })
 
+    it('should set timestamp', function () {
+      const existingState = Immutable.fromJS({trayId: {}})
+      const action = {type: PROJECTS_FETCHED, trayId: 'trayId', timestamp: 'some-timestamp'}
+      const newState = reduce(existingState, action)
+      expect(newState).to.have.property('trayId').that.has.property('timestamp', 'some-timestamp')
+    })
+
     it('should remove any errors', function () {
       const existingState = Immutable.fromJS({trayId: {errors: ['some-error']}})
       const action = {type: PROJECTS_FETCHED, trayId: 'trayId'}

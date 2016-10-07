@@ -4,31 +4,29 @@ import Mousetrap from 'mousetrap'
 import 'mousetrap/plugins/global-bind/mousetrap-global-bind'
 import _ from 'lodash'
 import './nevergreen.scss'
+import Timer from './common/Timer'
 
 const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000
 
 class Nevergreen extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
   }
 
   componentDidMount() {
     this.props.initalise()
-
-    this.setState({versionCheckId: setInterval(this.props.checkForNewVersion, TWENTY_FOUR_HOURS)})
 
     Mousetrap.bindGlobal('esc', () => document.activeElement.blur())
     Mousetrap.bind('?', () => this.props.showKeyboardShortcuts())
   }
 
   componentWillUnmount() {
-    clearInterval(this.state.versionCheckId)
-
     Mousetrap.unbind('?')
   }
 
   render() {
+    const checkVersion = () => this.props.checkForNewVersion(this.props.versionNumber)
+
     const notification = _.size(this.props.notification) > 0 ?
       <div className='pop-up-notification'>
         <div>
@@ -41,6 +39,7 @@ class Nevergreen extends Component {
 
     return (
       <div className='nevergreen'>
+        <Timer onTrigger={checkVersion} interval={TWENTY_FOUR_HOURS}/>
         <h1 className='visually-hidden'>Nevergreen</h1>
         <Menu versionNumber={this.props.versionNumber}
               versionName={this.props.versionName}
