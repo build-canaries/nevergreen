@@ -11,10 +11,12 @@ export function reduce(state = DefaultState, action) {
       return state.set('loaded', false)
 
     case IMPORTED_DATA:
-      return state.set('infos', action.messages).delete('errors').set('loaded', true)
+      return state.withMutations((map) =>
+        map.set('infos', action.messages).delete('errors').set('loaded', true))
 
     case IMPORT_ERROR:
-      return state.delete('infos').set('errors', action.errors).set('loaded', true)
+      return state.withMutations((map) =>
+        map.delete('infos').set('errors', action.errors).set('loaded', true))
 
     default:
       return state
