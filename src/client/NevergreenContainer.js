@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import {connect} from 'react-redux'
-import {initalise, showKeyboardShortcuts, dismiss, checkForNewVersion} from './actions/NevergreenActions'
+import {initalise, keyboardShortcut, dismiss, checkForNewVersion} from './actions/NevergreenActions'
 import Nevergreen from './Nevergreen'
 import Package from '../../package'
 
@@ -15,8 +15,8 @@ function mapDispatchToProps(dispatch) {
     dismiss() {
       dispatch(dismiss())
     },
-    showKeyboardShortcuts() {
-      dispatch(showKeyboardShortcuts())
+    keyboardShortcut(show) {
+      dispatch(keyboardShortcut(show))
     }
   }
 }

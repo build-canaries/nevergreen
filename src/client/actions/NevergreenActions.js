@@ -27,11 +27,10 @@ function momentInit() {
 }
 
 export const KEYBOARD_SHORTCUT = 'KEYBOARD_SHORTCUT'
-export function keyboardShortcut(show, cancel) {
+export function keyboardShortcut(show) {
   return {
     type: KEYBOARD_SHORTCUT,
-    show,
-    cancel
+    show
   }
 }
 
@@ -62,17 +61,6 @@ export const NOTIFICATION_DISMISS = 'NOTIFICATION_DISMISS'
 export function dismiss() {
   return {
     type: NOTIFICATION_DISMISS
-  }
-}
-
-// TODO: move the hide timeout to the component
-export function showKeyboardShortcuts() {
-  return function (dispatch) {
-    const hide = () => dispatch(keyboardShortcut(false))
-    const timerId = setTimeout(hide, 3000)
-    const cancel = () => clearTimeout(timerId)
-
-    dispatch(keyboardShortcut(true, cancel))
   }
 }
 
