@@ -16,25 +16,13 @@ export default {
     }))
   },
 
-  getConfiguration() {
+  load() {
     let configuration = {}
     return localforage.iterate((value, key) => {
       configuration[key] = value
     }).then(() => {
       return configuration
     })
-  },
-
-  getItem(key) {
-    return localforage.getItem(key)
-  },
-
-  setItem(key, value) {
-    return localforage.setItem(key, value)
-  },
-
-  removeItem(key) {
-    return localforage.removeItem(key)
   },
 
   clear() {

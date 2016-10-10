@@ -2,6 +2,7 @@ import Immutable from 'immutable'
 import LocalRepository from '../common/repo/LocalRepository'
 import _ from 'lodash'
 import {validate} from '../common/repo/Data'
+import {fromJson} from '../common/Json'
 
 export const IMPORT_ERROR = 'IMPORT_ERROR'
 export function importError(errors) {
@@ -55,7 +56,7 @@ export function loadConfiguration() {
   return function (dispatch) {
     dispatch(loadingConfiguration())
 
-    return LocalRepository.getConfiguration()
+    return LocalRepository.load()
       .then((configuration) => dispatch(configurationLoaded(configuration)))
       .catch((e) => dispatch(configurationLoadError(['Unable to load configuration because of an error', e.message])))
   }
@@ -64,8 +65,7 @@ export function loadConfiguration() {
 export function importData(jsonData) {
   return function (dispatch) {
     try {
-      const data = JSON.parse(jsonData)
-
+      const data = fromJson(jsonData)
       const validationMessages = validate(data)
 
       if (!_.isEmpty(validationMessages)) {
@@ -79,7 +79,7 @@ export function importData(jsonData) {
           .catch((e) => dispatch(importError(['Unable to import because of an error while trying to save to local storage', e.message])))
       }
     } catch (e) {
-      dispatch(importError(['Unable to import because of syntactically invalid JSON with the following errors:', e.message]))
+      dispatch(importError(['Unable to import because of syntactically invalid JSON with the following errors:', e]))
     }
   }
 }

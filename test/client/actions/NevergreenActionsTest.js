@@ -83,7 +83,7 @@ describe('NevergreenActions', function () {
 
     it('should dispatch initalising action', function () {
       LocalRepository.init = sinon.spy()
-      LocalRepository.getConfiguration = sinon.stub().returns(Promise.resolve({}))
+      LocalRepository.load = sinon.stub().returns(Promise.resolve({}))
       moment.updateLocale = sinon.spy()
       NevergreenActions.initalise()(dispatch)
       expect(dispatch).to.have.been.calledWithMatch({type: NevergreenActions.INITIALISING})
@@ -91,7 +91,7 @@ describe('NevergreenActions', function () {
 
     it('should update the moment locale with shorter relative time strings', function () {
       LocalRepository.init = sinon.spy()
-      LocalRepository.getConfiguration = sinon.stub().returns(Promise.resolve({}))
+      LocalRepository.load = sinon.stub().returns(Promise.resolve({}))
       moment.updateLocale = sinon.spy()
       NevergreenActions.initalise()(dispatch)
       expect(moment.updateLocale).to.have.been.called
@@ -99,7 +99,7 @@ describe('NevergreenActions', function () {
 
     it('should initalise the local repository', function () {
       LocalRepository.init = sinon.spy()
-      LocalRepository.getConfiguration = sinon.stub().returns(Promise.resolve({}))
+      LocalRepository.load = sinon.stub().returns(Promise.resolve({}))
       moment.updateLocale = sinon.spy()
       NevergreenActions.initalise()(dispatch)
       expect(LocalRepository.init).to.have.been.called
@@ -107,7 +107,7 @@ describe('NevergreenActions', function () {
 
     it('should dispatch initalised action once configuration is loaded', function () {
       LocalRepository.init = sinon.spy()
-      LocalRepository.getConfiguration = sinon.stub().returns(Promise.resolve({}))
+      LocalRepository.load = sinon.stub().returns(Promise.resolve({}))
       moment.updateLocale = sinon.spy()
       return NevergreenActions.initalise()(dispatch).then(() => {
         expect(dispatch).to.have.been.calledWithMatch({type: NevergreenActions.INITIALISED})

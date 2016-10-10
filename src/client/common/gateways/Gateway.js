@@ -1,4 +1,5 @@
 import Promise from 'promise'
+import {toJson} from '../Json'
 
 const ACCEPT_HEADER = 'application/json; charset=utf-8'
 
@@ -25,13 +26,12 @@ function processStatus(response) {
 export function post(url, data) {
   return fetch(url, {
     method: 'post',
-    body: JSON.stringify(data),
+    body: toJson(data),
     headers: {
       Accept: ACCEPT_HEADER,
       'Content-Type': 'application/json; charset=utf-8'
     }
-  })
-    .catch(timeoutError)
+  }).catch(timeoutError)
     .then(processStatus)
     .then((response) => response.json())
 }

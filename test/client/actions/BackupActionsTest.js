@@ -102,20 +102,20 @@ describe('BackupActions', function () {
     })
 
     it('should dispatch loading configuration action', function () {
-      LocalRepository.getConfiguration = sinon.stub().returns(Promise.resolve({}))
+      LocalRepository.load = sinon.stub().returns(Promise.resolve({}))
       BackupActions.loadConfiguration()(dispatch)
       expect(dispatch).to.have.been.calledWithMatch({type: BackupActions.LOADING_CONFIGURATION})
     })
 
     it('should dispatch configuration loaded action on success', function () {
-      LocalRepository.getConfiguration = sinon.stub().returns(Promise.resolve({}))
+      LocalRepository.load = sinon.stub().returns(Promise.resolve({}))
       return BackupActions.loadConfiguration()(dispatch).then(() => {
         expect(dispatch).to.have.been.calledWithMatch({type: BackupActions.CONFIGURATION_LOADED})
       })
     })
 
     it('should dispatch configuration load error action on failure', function () {
-      LocalRepository.getConfiguration = sinon.stub().returns(Promise.reject([]))
+      LocalRepository.load = sinon.stub().returns(Promise.reject([]))
       return BackupActions.loadConfiguration()(dispatch).then(() => {
         expect(dispatch).to.have.been.calledWithMatch({type: BackupActions.CONFIGURATION_LOAD_ERROR})
       })

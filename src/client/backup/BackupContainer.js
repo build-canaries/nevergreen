@@ -2,7 +2,8 @@ import Immutable from 'immutable'
 import {connect} from 'react-redux'
 import {loadConfiguration, importData} from '../actions/BackupActions'
 import Backup from './Backup'
-import {asJson, schemaString} from '../common/repo/Data'
+import {SCHEMA} from '../common/repo/Data'
+import {toJson} from '../common/Json'
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -10,15 +11,15 @@ function mapDispatchToProps(dispatch) {
       return dispatch(loadConfiguration())
     },
     importData(jsonData) {
-      dispatch(importData(jsonData))
+      return dispatch(importData(jsonData))
     }
   }
 }
 
 function mapStateToProps(store) {
   return Immutable.Map({
-    configuration: asJson(store.toJS()),
-    schema: schemaString
+    configuration: toJson(store.toJS()),
+    schema: toJson(SCHEMA)
   }).merge(store.get('backup'))
     .toJS()
 }
