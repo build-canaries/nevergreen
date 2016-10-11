@@ -54,6 +54,7 @@ export const SCHEMA = {
               properties: {
                 projectId: {required: true, type: 'string'},
                 name: {required: true, type: 'string'},
+                stage: {type: 'string'},
                 removed: {type: 'boolean'},
                 isNew: {type: 'boolean'}
               },

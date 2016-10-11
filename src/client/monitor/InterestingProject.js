@@ -13,13 +13,14 @@ class InterestingProject extends Component {
     const timeBrokenLabel = _.isEmpty(_.trim(this.props.lastBuildTime)) ? '??' : moment(this.props.lastBuildTime).fromNow(true)
     const timeBroken = this.props.showBrokenBuildTimers && isSick ?
       <span className='time-broken'> {timeBrokenLabel}</span> : null
-    const displayName = this.props.showTrayNameEnabled && this.props.trayName ? `${this.props.trayName.toLowerCase()} >> ${this.props.name}` : this.props.name
+    const displayName = this.props.stage ? `${this.props.name} ${this.props.stage}` : this.props.name
+    const display = this.props.showTrayNameEnabled && this.props.trayName ? `${this.props.trayName.toLowerCase()} >> ${displayName}` : displayName
 
     return (
       <li className={`interesting-project ${this.props.prognosis}`}>
         <div className='monitor-outer-container'>
           <div className='monitor-inner-container'>
-            <span className='monitor-project-name'>{displayName}</span>
+            <span className='monitor-project-name'>{display}</span>
             {timeBroken}
           </div>
         </div>
@@ -31,6 +32,7 @@ class InterestingProject extends Component {
 InterestingProject.propTypes = {
   prognosis: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  stage: PropTypes.string,
   trayName: PropTypes.string,
   lastBuildTime: PropTypes.string.isRequired,
   showBrokenBuildTimers: PropTypes.bool,

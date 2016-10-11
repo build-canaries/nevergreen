@@ -17,6 +17,8 @@ class AvailableProject extends Component {
       info = <sup className='removed-project'>removed</sup>
     }
 
+    const displayName = this.props.stage ? `${this.props.name} ${this.props.stage}` : this.props.name
+
     return (
       <li className='available-project checkbox-container'>
         <label className={labelClass}>
@@ -25,7 +27,7 @@ class AvailableProject extends Component {
                  checked={this.props.selected || false}
                  onChange={this.props.selectProject}
                  disabled={this.props.removed}/>
-          <span className={nameClass}>{this.props.name}</span>
+          <span className={nameClass}>{displayName}</span>
           {info}
         </label>
       </li>
@@ -35,6 +37,7 @@ class AvailableProject extends Component {
 
 AvailableProject.propTypes = {
   name: PropTypes.string.isRequired,
+  stage: PropTypes.string,
   isNew: PropTypes.bool,
   removed: PropTypes.bool,
   selected: PropTypes.bool,

@@ -5,10 +5,6 @@ import Shortcut from '../../common/shortcut/Shortcut'
 import Messages from '../../common/messages/Messages'
 import './available-projects.scss'
 
-function projectName(project) {
-  return project.name
-}
-
 class AvailableProjects extends Component {
   constructor(props) {
     super(props)
@@ -71,7 +67,7 @@ class AvailableProjects extends Component {
         <Messages type='notification' messages={this.state.errors}/>
         <ol className='build-items'>
           {
-            _.sortBy(filteredProjects, projectName).map((project) => {
+            _.sortBy(filteredProjects, ['name', 'stage']).map((project) => {
               const selected = this.props.selected.includes(project.projectId)
               const selectProject = () => {
                 this.props.selectProject(this.props.trayId, project.projectId, !selected)
@@ -92,8 +88,8 @@ AvailableProjects.propTypes = {
   trayId: PropTypes.string.isRequired,
   projects: PropTypes.arrayOf(PropTypes.shape({
     projectId: PropTypes.string.isRequired,
-    name: PropTypes.string,
-    removed: PropTypes.bool
+    name: PropTypes.string.isRequired,
+    stage: PropTypes.string
   })).isRequired,
   selected: PropTypes.arrayOf(PropTypes.string).isRequired,
   selectProject: PropTypes.func.isRequired
