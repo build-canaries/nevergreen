@@ -8,7 +8,7 @@ import {
 import {INITIALISED} from '../actions/NevergreenActions'
 
 const DefaultState = Immutable.Map({
-  showTrayName: false,
+  showTrayNameEnabled: false,
   brokenBuildTimersEnabled: true,
   brokenBuildSoundsEnabled: false,
   brokenBuildSoundFx: 'pacman_death.mp3',
@@ -29,7 +29,7 @@ export function reduce(state = DefaultState, action) {
       return state.set('brokenBuildSoundFx', action.value)
 
     case TRAY_NAME_TOGGLED:
-      return state.set('showTrayName', action.value)
+      return state.set('showTrayNameEnabled', action.value)
 
     default:
       return state

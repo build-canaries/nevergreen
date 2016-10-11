@@ -5,14 +5,16 @@ import Immutable from 'immutable'
 import sinon from 'sinon'
 
 describe('BackupActions', function () {
-  let BackupActions, LocalRepository, Data
+  let BackupActions, LocalRepository, Data, Migrations
 
   before(function () {
     LocalRepository = {}
     Data = {}
+    Migrations = {}
     BackupActions = proxyquire('../../src/client/actions/BackupActions', {
       '../common/repo/LocalRepository': LocalRepository,
-      '../common/repo/Data': Data
+      '../common/repo/Data': Data,
+      '../common/repo/Migrations': Migrations
     })
   })
 
@@ -60,74 +62,14 @@ describe('BackupActions', function () {
     })
   })
 
-  describe('loading configuration', function () {
-
-    it('should return the correct type', function () {
-      const actual = BackupActions.loadingConfiguration()
-      expect(actual).to.have.property('type', BackupActions.LOADING_CONFIGURATION)
-    })
-  })
-
-  describe('configuration loaded', function () {
-
-    it('should return the correct type', function () {
-      const actual = BackupActions.configurationLoaded()
-      expect(actual).to.have.property('type', BackupActions.CONFIGURATION_LOADED)
-    })
-
-    it('should return the configuration given', function () {
-      const actual = BackupActions.configurationLoaded({foo: 'bar'})
-      expect(actual).to.have.property('data').that.contains.property('foo', 'bar')
-    })
-  })
-
-  describe('configuration load error', function () {
-
-    it('should return the correct type', function () {
-      const actual = BackupActions.configurationLoadError()
-      expect(actual).to.have.property('type', BackupActions.CONFIGURATION_LOAD_ERROR)
-    })
-
-    it('should return the errors given', function () {
-      const actual = BackupActions.configurationLoadError(['some-error'])
-      expect(actual).to.have.property('errors').that.contains('some-error')
-    })
-  })
-
-  describe('load configuration', function () {
-    let dispatch
-
-    beforeEach(function () {
-      dispatch = sinon.spy()
-    })
-
-    it('should dispatch loading configuration action', function () {
-      LocalRepository.load = sinon.stub().returns(Promise.resolve({}))
-      BackupActions.loadConfiguration()(dispatch)
-      expect(dispatch).to.have.been.calledWithMatch({type: BackupActions.LOADING_CONFIGURATION})
-    })
-
-    it('should dispatch configuration loaded action on success', function () {
-      LocalRepository.load = sinon.stub().returns(Promise.resolve({}))
-      return BackupActions.loadConfiguration()(dispatch).then(() => {
-        expect(dispatch).to.have.been.calledWithMatch({type: BackupActions.CONFIGURATION_LOADED})
-      })
-    })
-
-    it('should dispatch configuration load error action on failure', function () {
-      LocalRepository.load = sinon.stub().returns(Promise.reject([]))
-      return BackupActions.loadConfiguration()(dispatch).then(() => {
-        expect(dispatch).to.have.been.calledWithMatch({type: BackupActions.CONFIGURATION_LOAD_ERROR})
-      })
-    })
-  })
-
   describe('import data', function () {
     const validJson = '{}'
     let dispatch
 
     beforeEach(function () {
       dispatch = sinon.spy()
+      Migrations.migrate = (data) => data
+      Data.filter = (data) => data
     })
 
     it('should dispatch import error action on json parse failure', function () {

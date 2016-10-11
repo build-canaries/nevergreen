@@ -4,18 +4,20 @@ import {expect} from 'chai'
 import sinon from 'sinon'
 
 describe('NevergreenActions', function () {
-  let NevergreenActions, LocalRepository, Gateway, moment, semver
+  let NevergreenActions, LocalRepository, Gateway, moment, semver, Migrations
 
   before(function () {
     LocalRepository = {}
     Gateway = {}
     moment = {}
     semver = {}
+    Migrations = {}
     NevergreenActions = proxyquire('../../src/client/actions/NevergreenActions', {
       '../common/repo/LocalRepository': LocalRepository,
       '../common/gateways/Gateway': Gateway,
       moment,
-      semver
+      semver,
+      '../common/repo/Migrations': Migrations
     })
   })
 
@@ -79,6 +81,7 @@ describe('NevergreenActions', function () {
 
     beforeEach(function () {
       dispatch = sinon.spy()
+      Migrations.migrate = (data) => data
     })
 
     it('should dispatch initalising action', function () {

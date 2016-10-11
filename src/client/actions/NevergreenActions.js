@@ -4,6 +4,7 @@ import moment from 'moment'
 import {get} from '../common/gateways/Gateway'
 import semver from 'semver'
 import {filter} from '../common/repo/Data'
+import {migrate} from '../common/repo/Migrations'
 
 const NEVERGREEN_IO_REGEX = /nevergreen\.io/i
 
@@ -72,7 +73,7 @@ export function initalise() {
     momentInit()
     LocalRepository.init()
     return LocalRepository.load()
-      .then((configuration) => dispatch(initalised(filter(configuration))))
+      .then((configuration) => dispatch(initalised(filter(migrate(configuration)))))
   }
 }
 

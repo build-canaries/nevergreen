@@ -80,7 +80,7 @@ Monitor.propTypes = {
   selected: PropTypes.object.isRequired,
   projects: PropTypes.arrayOf(PropTypes.object).isRequired,
   showBrokenBuildTimers: PropTypes.bool,
-  showTrayName: PropTypes.bool,
+  showTrayNameEnabled: PropTypes.bool,
   playBrokenBuildSounds: PropTypes.bool,
   brokenBuildFx: PropTypes.string,
   messages: PropTypes.arrayOf(PropTypes.string).isRequired,

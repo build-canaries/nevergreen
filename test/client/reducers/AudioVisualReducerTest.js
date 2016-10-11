@@ -22,10 +22,10 @@ describe('AudioVisualReducer', function () {
   describe('initialised action', function () {
 
     it('should merge show tray name', function () {
-      const existingState = Immutable.Map({showTrayName: false})
-      const action = {type: INITIALISED, data: Immutable.fromJS({audioVisual: {showTrayName: true}})}
+      const existingState = Immutable.Map({showTrayNameEnabled: false})
+      const action = {type: INITIALISED, data: Immutable.fromJS({audioVisual: {showTrayNameEnabled: true}})}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('showTrayName', true)
+      expect(newState).to.contain.property('showTrayNameEnabled', true)
     })
 
     it('should merge broken build timers enabled', function () {
@@ -83,10 +83,10 @@ describe('AudioVisualReducer', function () {
   describe('tray name toggled action', function () {
 
     it('should set the tray name toggled property', function () {
-      const existingState = Immutable.Map({showTrayName: false})
+      const existingState = Immutable.Map({showTrayNameEnabled: false})
       const action = {type: TRAY_NAME_TOGGLED, value: true}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('showTrayName', true)
+      expect(newState).to.contain.property('showTrayNameEnabled', true)
     })
   })
 })

@@ -37,7 +37,7 @@ class AudioVisual extends Component {
         <Container title='Display Settings'>
           <fieldset className='settings-list'>
             <ConfigOption name='Show tray name'
-                          enabled={this.props.showTrayName}
+                          enabled={this.props.showTrayNameEnabled}
                           onToggle={toggleTrayName}/>
             <ConfigOption name='Show broken build timers'
                           enabled={this.props.brokenBuildTimersEnabled}
@@ -68,7 +68,7 @@ class AudioVisual extends Component {
 }
 
 AudioVisual.propTypes = {
-  showTrayName: PropTypes.bool.isRequired,
+  showTrayNameEnabled: PropTypes.bool.isRequired,
   brokenBuildTimersEnabled: PropTypes.bool.isRequired,
   brokenBuildSoundsEnabled: PropTypes.bool.isRequired,
   brokenBuildSoundFx: PropTypes.string,

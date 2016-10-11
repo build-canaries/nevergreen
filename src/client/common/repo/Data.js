@@ -19,7 +19,7 @@ export const SCHEMA = {
     audioVisual: {
       type: 'object',
       properties: {
-        showTrayName: {type: 'boolean'},
+        showTrayNameEnabled: {type: 'boolean'},
         brokenBuildTimersEnabled: {type: 'boolean'},
         brokenBuildSoundsEnabled: {type: 'boolean'},
         brokenBuildSoundFx: {type: 'string'}
