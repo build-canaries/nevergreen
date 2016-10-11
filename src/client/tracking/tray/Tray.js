@@ -4,7 +4,7 @@ import AvailableProjects from './AvailableProjects'
 import TraySettings from './TraySettings'
 import Loading from '../../common/Loading'
 import Messages from '../../common/messages/Messages'
-import Shortcut from '../../common/shortcut/Shortcut'
+import ShortcutContainer from '../../common/shortcut/ShortcutContainer'
 import moment from 'moment'
 import './tray.scss'
 import Timer from '../../common/Timer'
@@ -69,12 +69,12 @@ class Tray extends Component {
             <button className='button' onClick={toggleSettingsView} title='Toggle settings'>
               <span className={'icon-' + (this.state.showSettings ? 'list' : 'cog') }/>
               <span className='text-with-icon'>{toggleLabel}</span>
-              <Shortcut hotkeys={[`p ${this.props.index}`]}/>
+              <ShortcutContainer hotkeys={[`p ${this.props.index}`]}/>
             </button>
             <button className='button' onClick={refreshTray}>
               <span className='icon-loop2'/>
               <span className='text-with-icon'>Refresh tray</span>
-              <Shortcut hotkeys={[`r ${this.props.index}`]}/>
+              <ShortcutContainer hotkeys={[`r ${this.props.index}`]}/>
             </button>
             <span className='tray-refresh-last-fetch'>last refreshed {this.state.lastFetched} ago</span>
           </div>

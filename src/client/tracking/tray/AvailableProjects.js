@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import AvailableProject from './AvailableProject'
 import _ from 'lodash'
-import Shortcut from '../../common/shortcut/Shortcut'
+import ShortcutContainer from '../../common/shortcut/ShortcutContainer'
 import Messages from '../../common/messages/Messages'
 import './available-projects.scss'
 
@@ -52,12 +52,12 @@ class AvailableProjects extends Component {
           <button className='include-all' onClick={includeAll} disabled={this.state.disableButtons}>
             <span className='icon-checkbox-checked'/>
             <span className='text-with-icon'>Include all</span>
-            <Shortcut hotkeys={[`+ ${this.props.index}`, `= ${this.props.index}`]}/>
+            <ShortcutContainer hotkeys={[`+ ${this.props.index}`, `= ${this.props.index}`]}/>
           </button>
           <button className='exclude-all' onClick={excludeAll} disabled={this.state.disableButtons}>
             <span className='icon-checkbox-unchecked'/>
             <span className='text-with-icon'>Exclude all</span>
-            <Shortcut hotkeys={[`- ${this.props.index}`]}/>
+            <ShortcutContainer hotkeys={[`- ${this.props.index}`]}/>
           </button>
         </div>
         <span className='project-filter'>
