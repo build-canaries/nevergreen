@@ -29,6 +29,12 @@ class Tray extends Component {
     this.setState({lastFetched: lastFetched(nextProps.timestamp)})
   }
 
+  componentDidMount() {
+    if (this.props.projects.length === 0) {
+      this.props.refreshTray(this.props)
+    }
+  }
+
   render() {
     const updateFetchedTime = () => this.setState({lastFetched: lastFetched(this.props.timestamp)})
     const updateTray = (trayId, name, url, username, password) => {

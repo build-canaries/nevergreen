@@ -100,5 +100,15 @@ describe('0.11.0', function () {
       const migrated = Migration.migrate({tray: {trays: {foo: 'bar'}}})
       expect(migrated).to.not.have.deep.property('tray.trays')
     })
+
+    it('should add the projects object', function () {
+      const migrated = Migration.migrate({tray: {trays: {foo: 'bar'}}})
+      expect(migrated).to.have.property('projects').that.deep.equals({foo: {}})
+    })
+
+    it('should add the selected object', function () {
+      const migrated = Migration.migrate({tray: {trays: {foo: 'bar'}}})
+      expect(migrated).to.have.property('selected').that.deep.equals({foo: []})
+    })
   })
 })
