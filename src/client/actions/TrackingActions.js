@@ -112,9 +112,9 @@ export function encryptPassword(trayId, password) {
   return function (dispatch) {
     dispatch(encryptingPassword(trayId, password))
     return encrypt(password)
-      .then((encryptedPassword) => {
-        dispatch(passwordEncrypted(trayId, encryptedPassword))
-        return encryptedPassword
+      .then((data) => {
+        dispatch(passwordEncrypted(trayId, data.password))
+        return data.password
       }).catch((error) => dispatch(passwordEncryptError(trayId, [
         'Unable to encrypt password because of an error:',
         `${error.status} - ${error.message}`
