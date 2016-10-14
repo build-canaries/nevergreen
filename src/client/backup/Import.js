@@ -1,7 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import Messages from '../common/messages/Messages'
 import Container from '../common/Container'
-import Loading from '../common/Loading'
 import PrimaryInput from '../common/PrimaryInput'
 import './import.scss'
 import _ from 'lodash'
@@ -24,27 +23,24 @@ class Import extends Component {
 
     return (
       <Container title='Import' className='import'>
-        <Loading loaded={this.props.loaded}>
-          <div>
-            <PrimaryInput>
+        <div>
+          <PrimaryInput>
               <textarea className='import-data'
                         placeholder='paste exported configuration here and press import'
                         value={this.state.data}
                         onChange={updateData}
                         spellCheck='false'/>
-            </PrimaryInput>
-            <button className='import-action' onClick={doImport}>import</button>
-            <Messages type='notification' messages={this.props.errors}/>
-            <Messages type='checkmark' messages={this.props.infos}/>
-          </div>
-        </Loading>
+          </PrimaryInput>
+          <button className='import-action' onClick={doImport}>import</button>
+          <Messages type='notification' messages={this.props.errors}/>
+          <Messages type='checkmark' messages={this.props.infos}/>
+        </div>
       </Container>
     )
   }
 }
 
 Import.propTypes = {
-  loaded: PropTypes.bool,
   errors: PropTypes.arrayOf(React.PropTypes.string),
   infos: PropTypes.arrayOf(React.PropTypes.string),
   importData: PropTypes.func.isRequired

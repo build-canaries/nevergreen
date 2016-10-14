@@ -31,19 +31,6 @@ describe('BackupActions', function () {
     })
   })
 
-  describe('importing data', function () {
-
-    it('should return the correct type', function () {
-      const actual = BackupActions.importingData()
-      expect(actual).to.have.property('type', BackupActions.IMPORTING_DATA)
-    })
-
-    it('should return the data given', function () {
-      const actual = BackupActions.importingData({foo: 'bar'})
-      expect(actual).to.have.property('data').that.contains.property('foo', 'bar')
-    })
-  })
-
   describe('imported data', function () {
 
     it('should return the correct type', function () {
@@ -83,31 +70,10 @@ describe('BackupActions', function () {
       expect(dispatch).to.have.been.calledWithMatch({type: BackupActions.IMPORT_ERROR})
     })
 
-    describe('successful validation', function () {
-
-      beforeEach(function () {
-        Data.validate = sinon.stub().returns([])
-      })
-
-      it('should dispatch import data action', function () {
-        LocalRepository.save = sinon.stub().returns(Promise.resolve({}))
-        BackupActions.importData(validJson)(dispatch)
-        expect(dispatch).to.have.been.calledWithMatch({type: BackupActions.IMPORTING_DATA})
-      })
-
-      it('should dispatch imported data action on successful save', function () {
-        LocalRepository.save = sinon.stub().returns(Promise.resolve({}))
-        return BackupActions.importData(validJson)(dispatch).then(() => {
-          expect(dispatch).to.have.been.calledWithMatch({type: BackupActions.IMPORTED_DATA})
-        })
-      })
-
-      it('should dispatch import error action on save failure', function () {
-        LocalRepository.save = sinon.stub().returns(Promise.reject({}))
-        return BackupActions.importData(validJson)(dispatch).then(() => {
-          expect(dispatch).to.have.been.calledWithMatch({type: BackupActions.IMPORT_ERROR})
-        })
-      })
+    it('should dispatch imported data action on successful validation', function () {
+      Data.validate = sinon.stub().returns([])
+      BackupActions.importData(validJson)(dispatch)
+      expect(dispatch).to.have.been.calledWithMatch({type: BackupActions.IMPORTED_DATA})
     })
   })
 })

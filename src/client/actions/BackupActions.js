@@ -1,5 +1,4 @@
 import Immutable from 'immutable'
-import LocalRepository from '../common/repo/LocalRepository'
 import _ from 'lodash'
 import {validate, filter} from '../common/repo/Data'
 import {fromJson} from '../common/Json'
@@ -10,14 +9,6 @@ export function importError(errors) {
   return {
     type: IMPORT_ERROR,
     errors: Immutable.List(errors)
-  }
-}
-
-export const IMPORTING_DATA = 'IMPORTING_DATA'
-export function importingData(data) {
-  return {
-    type: IMPORTING_DATA,
-    data: Immutable.fromJS(data)
   }
 }
 
@@ -36,14 +27,10 @@ export function importData(jsonData) {
       const data = filter(migrate(fromJson(jsonData)))
       const validationMessages = validate(data)
 
-      if (!_.isEmpty(validationMessages)) {
-        dispatch(importError(validationMessages))
+      if (_.isEmpty(validationMessages)) {
+        dispatch(importedData(data))
       } else {
-        dispatch(importingData(data))
-
-        return LocalRepository.save(data)
-          .then(() => dispatch(importedData(data)))
-          .catch((e) => dispatch(importError(['Unable to import because of an error while trying to save to local storage', e.message])))
+        dispatch(importError(validationMessages))
       }
     } catch (e) {
       dispatch(importError(['Unable to import because of syntactically invalid JSON with the following errors:', e]))

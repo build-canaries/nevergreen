@@ -13,7 +13,6 @@ class Backup extends Component {
     const importProps = {
       errors: this.props.errors,
       infos: this.props.infos,
-      loaded: this.props.loaded,
       importData: this.props.importData
     }
     const exportProps = {
@@ -33,7 +32,6 @@ class Backup extends Component {
 
 Backup.propTypes = {
   configuration: PropTypes.string.isRequired,
-  loaded: PropTypes.bool,
   errors: PropTypes.arrayOf(PropTypes.string),
   infos: PropTypes.arrayOf(PropTypes.string),
   importData: PropTypes.func.isRequired,
