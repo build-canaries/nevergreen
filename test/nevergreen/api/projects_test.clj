@@ -13,8 +13,7 @@
 (facts "it fetches projects"
        (fact "with authentication"
              (subject/fetch-tray {:url valid-url :username "a-user" :password "encrypted-password"}) => (contains (list (contains {:name       "project-1"
-                                                                                                                                   :prognosis  :sick
-                                                                                                                                   :project-id anything})))
+                                                                                                                                   :prognosis  :sick})))
              (provided
                (parser/get-projects ..stream.. anything) => [{:name "project-1" :prognosis :sick}]
                (crypt/decrypt "encrypted-password") => password
@@ -23,8 +22,7 @@
 
        (fact "without authentication"
              (subject/fetch-tray {:url valid-url}) => (contains (list (contains {:name       "project-1"
-                                                                                 :prognosis  :sick
-                                                                                 :project-id anything})))
+                                                                                 :prognosis  :sick})))
              (provided
                (parser/get-projects ..stream.. anything) => [{:name "project-1" :prognosis :sick}]
                (http/http-get valid-url nil) => ..stream..
@@ -33,8 +31,7 @@
 
        (fact "without authentication if blank username and password"
              (subject/fetch-tray {:url valid-url :username "" :password ""}) => (contains (list (contains {:name       "project-1"
-                                                                                                           :prognosis  :sick
-                                                                                                           :project-id anything})))
+                                                                                                           :prognosis  :sick})))
              (provided
                (parser/get-projects ..stream.. anything) => [{:name "project-1" :prognosis :sick}]
                (http/http-get valid-url nil) => ..stream..
@@ -83,7 +80,7 @@
                       (subject/fetch-interesting anything) => irrelevant)))
 
        (fact "handles no tray id being given"
-             (subject/get-interesting [{:included ["project"] :url valid-url}]) => (list {:tray-id nil :project-id "project" :prognosis :sick})
+             (subject/get-interesting [{:included ["project"] :url valid-url}]) => (list {:tray-id nil :prognosis :sick :web-url "project"})
              (provided
                (subject/fetch-tray anything) => [{:web-url "project" :prognosis :sick}])))
 
