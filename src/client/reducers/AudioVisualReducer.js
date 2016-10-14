@@ -7,12 +7,13 @@ import {
 } from '../actions/AudioVisualActions'
 import {INITIALISED} from '../actions/NevergreenActions'
 import {IMPORTED_DATA} from '../actions/BackupActions'
+import defaultSoundFx from '../audio-visual/pacman_death.mp3'
 
 const DefaultState = Immutable.Map({
   showTrayNameEnabled: false,
   brokenBuildTimersEnabled: true,
   brokenBuildSoundsEnabled: false,
-  brokenBuildSoundFx: 'pacman_death.mp3',
+  brokenBuildSoundFx: defaultSoundFx,
 })
 
 export function reduce(state = DefaultState, action) {
