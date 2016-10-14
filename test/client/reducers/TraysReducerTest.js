@@ -3,6 +3,7 @@ import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {reduce} from '../../../src/client/reducers/TraysReducer'
 import {INITIALISED} from '../../../src/client/actions/NevergreenActions'
+import {IMPORTED_DATA} from '../../../src/client/actions/BackupActions'
 import {
   TRAY_ADDED,
   REMOVE_TRAY,
@@ -36,6 +37,23 @@ describe('TraysReducer', function () {
     it('should set the loaded property on merged trays', function () {
       const existingState = Immutable.Map()
       const action = {type: INITIALISED, data: Immutable.fromJS({trays: {trayId: {}}})}
+      const newState = reduce(existingState, action)
+      expect(newState).to.have.property('trayId').that.has.property('loaded', true)
+    })
+  })
+
+  describe('imported data action', function () {
+
+    it('should merge the trays data', function () {
+      const existingState = Immutable.Map()
+      const action = {type: IMPORTED_DATA, data: Immutable.fromJS({trays: {trayId: {}}})}
+      const newState = reduce(existingState, action)
+      expect(newState).to.have.property('trayId').that.is.instanceof(Immutable.Map)
+    })
+
+    it('should set the loaded property on merged trays', function () {
+      const existingState = Immutable.Map()
+      const action = {type: IMPORTED_DATA, data: Immutable.fromJS({trays: {trayId: {}}})}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('trayId').that.has.property('loaded', true)
     })

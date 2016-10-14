@@ -3,6 +3,7 @@ import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {reduce} from '../../../src/client/reducers/SuccessReducer'
 import {INITIALISED} from '../../../src/client/actions/NevergreenActions'
+import {IMPORTED_DATA} from '../../../src/client/actions/BackupActions'
 import {TEXT_ADDED, IMAGE_ADDED, TEXT_REMOVED, IMAGE_REMOVED} from '../../../src/client/actions/SuccessActions'
 import Immutable from 'immutable'
 
@@ -26,6 +27,23 @@ describe('SuccessReducer', function () {
     it('should merge the texts success data', function () {
       const existingState = Immutable.Map({images: Immutable.OrderedSet(), texts: Immutable.OrderedSet()})
       const action = {type: INITIALISED, data: Immutable.fromJS({success: {texts: ['text']}})}
+      const newState = reduce(existingState, action)
+      expect(newState).to.have.property('texts').that.is.an.instanceof(Immutable.OrderedSet).that.contains('text')
+    })
+  })
+
+  describe('imported data action', function () {
+
+    it('should merge the images success data', function () {
+      const existingState = Immutable.Map({images: Immutable.OrderedSet(), texts: Immutable.OrderedSet()})
+      const action = {type: IMPORTED_DATA, data: Immutable.fromJS({success: {images: ['url']}})}
+      const newState = reduce(existingState, action)
+      expect(newState).to.have.property('images').that.is.an.instanceof(Immutable.OrderedSet).that.contains('url')
+    })
+
+    it('should merge the texts success data', function () {
+      const existingState = Immutable.Map({images: Immutable.OrderedSet(), texts: Immutable.OrderedSet()})
+      const action = {type: IMPORTED_DATA, data: Immutable.fromJS({success: {texts: ['text']}})}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('texts').that.is.an.instanceof(Immutable.OrderedSet).that.contains('text')
     })

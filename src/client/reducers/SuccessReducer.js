@@ -1,6 +1,7 @@
 import Immutable from 'immutable'
 import {TEXT_ADDED, IMAGE_ADDED, TEXT_REMOVED, IMAGE_REMOVED} from '../actions/SuccessActions'
 import {INITIALISED} from '../actions/NevergreenActions'
+import {IMPORTED_DATA} from '../actions/BackupActions'
 
 const DefaultState = Immutable.Map({
   images: Immutable.OrderedSet(),
@@ -10,6 +11,7 @@ const DefaultState = Immutable.Map({
 export function reduce(state = DefaultState, action) {
   switch (action.type) {
     case INITIALISED:
+    case IMPORTED_DATA:
       return state.merge(action.data.get('success'))
         .update('images', (images) => images.toOrderedSet())
         .update('texts', (messages) => messages.toOrderedSet())

@@ -6,6 +6,7 @@ import {
   TRAY_NAME_TOGGLED
 } from '../actions/AudioVisualActions'
 import {INITIALISED} from '../actions/NevergreenActions'
+import {IMPORTED_DATA} from '../actions/BackupActions'
 
 const DefaultState = Immutable.Map({
   showTrayNameEnabled: false,
@@ -17,6 +18,7 @@ const DefaultState = Immutable.Map({
 export function reduce(state = DefaultState, action) {
   switch (action.type) {
     case INITIALISED:
+    case IMPORTED_DATA:
       return state.merge(action.data.get('audioVisual'))
 
     case BROKEN_BUILD_TIMERS_CHANGED:

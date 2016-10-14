@@ -11,12 +11,14 @@ import {
   UPDATING_TRAY
 } from '../actions/TrackingActions'
 import {INITIALISED} from '../actions/NevergreenActions'
+import {IMPORTED_DATA} from '../actions/BackupActions'
 
 const DefaultState = Immutable.Map()
 
 export function reduce(state = DefaultState, action) {
   switch (action.type) {
     case INITIALISED:
+    case IMPORTED_DATA:
       return state.merge(action.data.get('trays')).map((tray) => tray.set('loaded', true))
 
     case TRAY_ADDED:
