@@ -7,7 +7,9 @@ class TraySettings extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      passwordUpdated: false
+      newName: props.name,
+      newUsername: props.username,
+      newPassword: ''
     }
   }
 
@@ -16,16 +18,18 @@ class TraySettings extends Component {
   }
 
   render() {
-    const generateRandomName = () => this.refs.name.value = _.startCase(nameGenerator().spaced)
-    const updateTray = () => this.props.updateTray(this.props.trayId, this.refs.name.value, this.refs.url.value, this.refs.username.value, this.refs.password.value, this.state.passwordUpdated)
+    const generateRandomName = () => this.setState({newName: _.startCase(nameGenerator().spaced)})
+    const updateTray = () => this.props.updateTray(this.props.trayId, this.state.newName, this.props.url, this.state.newUsername, this.props.password, this.state.newPassword)
     const keyUpdate = (evt) => {
       if (evt.key === 'Enter') {
         updateTray()
       }
     }
-    const passwordChanged = () => {
-      this.setState({passwordUpdated: true})
-    }
+    const nameChanged = (evt) => this.setState({newName: evt.target.value})
+    const usernameChanged = (evt) => this.setState({newUsername: evt.target.value})
+    const passwordChanged = (evt) => this.setState({newPassword: evt.target.value})
+    const passwordPlaceholder = this.props.password ? 'password encrypted' : 'not set'
+    const deleteTray = () => this.props.removeTray(this.props.trayId)
 
     return (
       <section className='tray-settings'>
@@ -35,37 +39,27 @@ class TraySettings extends Component {
                  id={`${this.props.trayId}-settings-name`}
                  ref='name'
                  type='text'
-                 defaultValue={this.props.name}
+                 value={this.state.newName}
+                 onChange={nameChanged}
                  onKeyPress={keyUpdate}
                  placeholder='e.g. project or team name'/>
           <button className='generate-random' onClick={generateRandomName}>random</button>
         </div>
         <div className='text-input'>
-          <label htmlFor={`${this.props.trayId}-settings-url`}>url</label>
-          <input className='tray-settings-url'
-                 id={`${this.props.trayId}-settings-url`}
-                 ref='url'
-                 type='text'
-                 defaultValue={this.props.url}
-                 onKeyPress={keyUpdate}
-                 placeholder='this should not be blank...'/>
-        </div>
-        <div className='text-input'>
           <label htmlFor={`${this.props.trayId}-settings-username`}>username</label>
           <input id={`${this.props.trayId}-settings-username`}
-                 ref='username'
                  type='text'
                  placeholder='not set'
-                 defaultValue={this.props.username}
+                 value={this.state.newUsername}
+                 onChange={usernameChanged}
                  onKeyPress={keyUpdate}/>
         </div>
         <div className='text-input'>
           <label htmlFor={`${this.props.trayId}-settings-password`}>password</label>
           <input id={`${this.props.trayId}-settings-password`}
-                 ref='password'
                  type='password'
-                 placeholder='not set'
-                 defaultValue={this.props.password}
+                 placeholder={passwordPlaceholder}
+                 value={this.state.newPassword}
                  onChange={passwordChanged}
                  onKeyPress={keyUpdate}/>
         </div>
@@ -78,8 +72,7 @@ class TraySettings extends Component {
             <span className='text-with-icon'>Danger Zone</span>
           </h4>
           <div className='content'>
-            <button className='delete' onClick={() => this.props.removeTray(this.props.trayId)}>Delete this tray
-            </button>
+            <button className='delete' onClick={deleteTray}>Delete this tray</button>
             <span>Once you delete a tray, there is no going back. Please be certain.</span>
           </div>
         </div>

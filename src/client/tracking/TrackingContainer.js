@@ -14,8 +14,8 @@ function mapDispatchToProps(dispatch) {
     refreshTray(tray) {
       dispatch(refreshTray(tray))
     },
-    updateTray(trayId, url, username, password) {
-      dispatch(updateTray(trayId, url, username, password))
+    updateTray(trayId, name, url, username, oldPassword, newPassword) {
+      dispatch(updateTray(trayId, name, url, username, oldPassword, newPassword))
     }
   }
 }

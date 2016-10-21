@@ -91,9 +91,14 @@ describe('0.11.0', function () {
 
   describe('trays migration', function () {
 
-    it('should migrate trays', function () {
-      const migrated = Migration.migrate({tray: {trays: {foo: 'bar'}}})
-      expect(migrated).to.have.deep.property('trays.foo', 'bar')
+    it('should use the tray url as the key', function () {
+      const migrated = Migration.migrate({tray: {trays: {someId: {url: 'someUrl'}}}})
+      expect(migrated).to.have.deep.property('trays.someUrl')
+    })
+
+    it('should update the tray id', function () {
+      const migrated = Migration.migrate({tray: {trays: {someId: {url: 'someUrl', trayId: 'someId'}}}})
+      expect(migrated).to.have.deep.property('trays.someUrl').that.has.property('trayId', 'someUrl')
     })
 
     it('should delete the migrated trays', function () {
@@ -102,13 +107,13 @@ describe('0.11.0', function () {
     })
 
     it('should add the projects object', function () {
-      const migrated = Migration.migrate({tray: {trays: {foo: 'bar'}}})
-      expect(migrated).to.have.property('projects').that.deep.equals({foo: {}})
+      const migrated = Migration.migrate({tray: {trays: {someId: {url: 'someUrl'}}}})
+      expect(migrated).to.have.property('projects').that.deep.equals({someUrl: {}})
     })
 
     it('should add the selected object', function () {
-      const migrated = Migration.migrate({tray: {trays: {foo: 'bar'}}})
-      expect(migrated).to.have.property('selected').that.deep.equals({foo: []})
+      const migrated = Migration.migrate({tray: {trays: {someId: {url: 'someUrl'}}}})
+      expect(migrated).to.have.property('selected').that.deep.equals({someUrl: []})
     })
   })
 })

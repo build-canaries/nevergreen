@@ -138,15 +138,15 @@ export function addTray(enteredUrl, username, rawPassword) {
   }
 }
 
-export function updateTray(trayId, name, url, username, password, passwordUpdated) {
+export function updateTray(trayId, name, url, username, oldPassword, newPassword) {
   return function (dispatch) {
     dispatch(updatingTray(trayId, name, url, username))
 
-    if (passwordUpdated) {
-      return dispatch(encryptPassword(trayId, password))
+    if (isNotBlank(newPassword)) {
+      return dispatch(encryptPassword(trayId, newPassword))
         .then((encryptedPassword) => dispatch(refreshTray({trayId, url, username, password: encryptedPassword})))
     } else {
-      return dispatch(refreshTray({trayId, url, username, password}))
+      return dispatch(refreshTray({trayId, url, username, password: oldPassword}))
     }
   }
 }

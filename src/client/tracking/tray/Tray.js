@@ -37,14 +37,11 @@ class Tray extends Component {
 
   render() {
     const updateFetchedTime = () => this.setState({lastFetched: lastFetched(this.props.timestamp)})
-    const updateTray = (trayId, name, url, username, password) => {
+    const updateTray = (trayId, name, url, username, oldPassword, newPassword) => {
       this.setState({showSettings: false})
-      this.props.updateTray(trayId, name, url, username, password)
+      this.props.updateTray(trayId, name, url, username, oldPassword, newPassword)
     }
-    const toggleSettingsView = () => {
-      this.setState({showSettings: !this.state.showSettings})
-      return false
-    }
+    const toggleSettingsView = () => this.setState({showSettings: !this.state.showSettings})
     const refreshTray = () => this.props.refreshTray(this.props)
 
     let subContent
