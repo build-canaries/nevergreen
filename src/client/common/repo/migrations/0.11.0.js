@@ -49,7 +49,11 @@ function migrateSuccess(data) {
 function migrateTrays(data) {
   let migrated = {}
   if (data.tray && data.tray.trays) {
-    migrated.trays = data.tray.trays
+    migrated.trays = Object.keys(data.tray.trays).reduce((reduction, trayId) => {
+      const url = data.tray.trays[trayId].url
+      reduction[url] = Object.assign({}, data.tray.trays[trayId], {trayId: url})
+      return reduction
+    }, {})
   }
   return migrated
 }
@@ -58,7 +62,7 @@ function migrateProjects(data) {
   let migrated = {}
   if (data.tray && data.tray.trays) {
     migrated.projects = Object.keys(data.tray.trays).reduce((reduction, trayId) => {
-      reduction[trayId] = {}
+      reduction[data.tray.trays[trayId].url] = {}
       return reduction
     }, {})
   }
@@ -69,7 +73,7 @@ function migrateSelected(data) {
   let migrated = {}
   if (data.tray && data.tray.trays) {
     migrated.selected = Object.keys(data.tray.trays).reduce((reduction, trayId) => {
-      reduction[trayId] = []
+      reduction[data.tray.trays[trayId].url] = []
       return reduction
     }, {})
   }
