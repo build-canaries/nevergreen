@@ -5,15 +5,25 @@ import './add-tray.scss'
 class AddTray extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      url: '',
+      username: '',
+      password: ''
+    }
   }
 
   render() {
     const addTray = () => {
-      this.props.addTray(this.refs.url.value, this.refs.username.value, this.refs.password.value)
-      this.refs.url.value = ''
-      this.refs.username.value = ''
-      this.refs.password.value = ''
+      this.props.addTray(this.state.url, this.state.username, this.state.password)
+      this.setState({
+        url: '',
+        username: '',
+        password: ''
+      })
     }
+    const updateUrl = (evt) => this.setState({url: evt.target.value})
+    const updateUsername = (evt) => this.setState({username: evt.target.value})
+    const updatePassword = (evt) => this.setState({password: evt.target.value})
     const keyAddTray = (evt) => {
       if (evt.key === 'Enter') {
         addTray()
@@ -25,11 +35,8 @@ class AddTray extends Component {
         <span className='url-input'>
           <label htmlFor='cctray-url'>url</label>
           <PrimaryInput>
-            <input id='cctray-url'
-                   ref='url'
-                   className='tracking-tray-url'
-                   type='text'
-                   placeholder='e.g. http(s)://host:port/cc.xml'
+            <input id='cctray-url' className='tracking-tray-url' type='text'
+                   placeholder='e.g. http(s)://host:port/cc.xml' value={this.state.url} onChange={updateUrl}
                    onKeyPress={keyAddTray}/>
           </PrimaryInput>
         </span>
@@ -37,18 +44,13 @@ class AddTray extends Component {
         <div>
             <span className='text-input'>
               <label htmlFor='username'>username</label>
-              <input id='username'
-                     ref='username'
-                     type='text'
+              <input id='username' type='text' value={this.state.username} onChange={updateUsername}
                      onKeyPress={keyAddTray}/>
             </span>
-            <span className='text-input'>
+          <span className='text-input'>
               <label htmlFor='password' className='text-label'>password</label>
-              <input id='password'
-                     ref='password'
-                     className='text-input'
-                     type='password'
-                     onKeyPress={keyAddTray}/>
+              <input id='password' className='text-input' type='password' value={this.state.password}
+                     onChange={updatePassword} onKeyPress={keyAddTray}/>
             </span>
         </div>
       </div>
