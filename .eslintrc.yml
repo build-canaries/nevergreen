@@ -17,8 +17,6 @@ parserOptions:
 rules:
   quotes: ['error', 'single']
   semi: ['error', 'never']
-  react/jsx-uses-vars: ['error']
-  react/jsx-uses-react: ['error']
   babel/generator-star-spacing: ['error']
   babel/new-cap: ['error', {capIsNewExceptions: ['Immutable.Map', 'Immutable.List', 'Immutable.Set', 'Immutable.OrderedSet']}]
   babel/object-shorthand: ['error']
