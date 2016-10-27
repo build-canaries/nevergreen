@@ -48,10 +48,22 @@ export function removeText(message) {
   }
 }
 
+export const MESSAGE_INVALID = 'MESSAGE_INVALID'
+export function messageInvalid(message, errors) {
+  return {
+    type: MESSAGE_INVALID,
+    message,
+    errors
+  }
+}
+
 export function removeMessage(message) {
   return isUrl(message) ? removeImage(message) : removeText(message)
 }
 
 export function addMessage(message) {
+  if (_.isEmpty(_.trim(message))) {
+    return messageInvalid(message, ['message can not be blank'])
+  }
   return isUrl(message) ? imageAdded(message) : textAdded(message)
 }

@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react'
-import _ from 'lodash'
 import PrimaryInput from '../common/PrimaryInput'
 import './add-message.scss'
 
@@ -17,10 +16,8 @@ class AddMessage extends Component {
       }
     }
     const addMessage = () => {
-      if (_.size(_.trim(this.state.message)) > 0) {
-        this.props.addMessage(this.state.message)
-        this.setState({message: ''})
-      }
+      this.props.addMessage(this.state.message)
+      this.setState({message: ''})
     }
 
     return (
@@ -28,13 +25,8 @@ class AddMessage extends Component {
         <span className='add'>
           <label htmlFor='message-input'>message</label>
           <PrimaryInput>
-            <input id="message-input"
-                   className='add-message-input'
-                   type='text'
-                   placeholder='text or image url'
-                   value={this.state.message}
-                   onChange={updateMessage}
-                   onKeyPress={addOnEnter}/>
+            <input id='message-input' className='add-message-input' type='text' placeholder='text or image url'
+                   value={this.state.message} onChange={updateMessage} onKeyPress={addOnEnter}/>
           </PrimaryInput>
         </span>
         <button className='add-action' onClick={addMessage}>add</button>

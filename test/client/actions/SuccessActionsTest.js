@@ -6,12 +6,14 @@ import {
   removeImage,
   textAdded,
   removeText,
+  messageInvalid,
   removeMessage,
   addMessage,
   IMAGE_ADDED,
   IMAGE_REMOVED,
   TEXT_ADDED,
-  TEXT_REMOVED
+  TEXT_REMOVED,
+  MESSAGE_INVALID
 } from '../../../src/client/actions/SuccessActions'
 
 describe('SuccessActions', function () {
@@ -78,6 +80,24 @@ describe('SuccessActions', function () {
     })
   })
 
+  describe('message invalid', function () {
+
+    it('should return the correct type', function () {
+      const actual = messageInvalid()
+      expect(actual).to.have.property('type', MESSAGE_INVALID)
+    })
+
+    it('should return the message', function () {
+      const actual = messageInvalid('some-message')
+      expect(actual).to.have.property('message', 'some-message')
+    })
+
+    it('should return the errors', function () {
+      const actual = messageInvalid('some-message', ['some-error'])
+      expect(actual).to.have.property('errors').that.contains('some-error')
+    })
+  })
+
   describe('remove message', function () {
 
     it('should call remove image if the message is url-like', function () {
@@ -101,6 +121,11 @@ describe('SuccessActions', function () {
     it('should call add text if the message is not url-like', function () {
       const actual = addMessage('not-url-like')
       expect(actual).to.have.property('type', TEXT_ADDED)
+    })
+
+    it('should call message invalid if message is blank', function () {
+      const actual = addMessage('')
+      expect(actual).to.have.property('type', MESSAGE_INVALID)
     })
   })
 })
