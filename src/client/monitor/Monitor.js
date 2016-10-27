@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import InterestingProjects from './InterestingProjects'
 import Success from './Success'
-import Loading from '../common/Loading'
+import Loading from '../common/loading/Loading'
 import Messages from '../common/messages/Messages'
 import './monitor.scss'
 import Timer from '../common/Timer'
