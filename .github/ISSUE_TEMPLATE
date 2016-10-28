@@ -1,0 +1,6 @@
+For bug report please fill in as many of the following details as possible:
+
+1. how are you running? e.g. `downloaded jar` or `compiled from source` or `docker image` or `os package` or `nevergreen.io`
+2. what version? e.g. `v0.10.0+655`
+3. what commit hash? e.g. `84edb15`
+4. which browser are you running in? e.g. `Chrome 54.0.2840.71 (64-bit)`
