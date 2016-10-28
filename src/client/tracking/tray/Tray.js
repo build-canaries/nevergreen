@@ -12,7 +12,7 @@ import Timer from '../../common/Timer'
 const ONE_MINUTE = 60 * 1000
 
 function lastFetched(timestamp) {
-  return timestamp ? moment(timestamp).fromNow(true) : '???'
+  return timestamp ? moment(timestamp).fromNow(true) : '??'
 }
 
 class Tray extends Component {
