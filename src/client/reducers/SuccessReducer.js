@@ -8,8 +8,10 @@ const DefaultState = Immutable.OrderedSet()
 export function reduce(state = DefaultState, action) {
   switch (action.type) {
     case INITIALISED:
-    case IMPORTED_DATA:
-      return state.union(action.data.get('success'))
+    case IMPORTED_DATA: {
+      const success = action.data.get('success')
+      return success ? state.union(success) : state
+    }
 
     case MESSAGE_ADDED:
       return state.add(action.message)

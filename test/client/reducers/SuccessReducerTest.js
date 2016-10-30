@@ -23,6 +23,13 @@ describe('SuccessReducer', function () {
       const newState = reduce(existingState, action)
       expect(newState).to.contain('some-message')
     })
+
+    it('should handle no success data', function () {
+      const existingState = Immutable.OrderedSet()
+      const action = {type: INITIALISED, data: Immutable.Map()}
+      const newState = reduce(existingState, action)
+      expect(newState).to.be.empty
+    })
   })
 
   describe('imported data action', function () {
