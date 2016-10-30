@@ -3,7 +3,7 @@ import {MESSAGE_ADDED, MESSAGE_REMOVED} from '../actions/SuccessActions'
 import {INITIALISED} from '../actions/NevergreenActions'
 import {IMPORTED_DATA} from '../actions/BackupActions'
 
-const DefaultState = Immutable.OrderedSet()
+const DefaultState = Immutable.OrderedSet(['=(^.^)='])
 
 export function reduce(state = DefaultState, action) {
   switch (action.type) {
