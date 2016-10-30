@@ -22,7 +22,7 @@ export const SCHEMA = {
         showTrayNameEnabled: {type: 'boolean'},
         brokenBuildTimersEnabled: {type: 'boolean'},
         brokenBuildSoundsEnabled: {type: 'boolean'},
-        brokenBuildSoundFx: {type: 'string'}
+        brokenBuildSoundFx: {type: ['string', 'null']}
       },
       additionalProperties: false
     },
@@ -35,9 +35,9 @@ export const SCHEMA = {
             trayId: {required: true, type: 'string'},
             url: {required: true, type: 'string'},
             name: {type: 'string'},
-            username: {type: 'string'},
-            password: {type: 'string'},
-            timestamp: {type: 'string'}
+            username: {type: ['string', 'null']},
+            password: {type: ['string', 'null']},
+            timestamp: {type: ['string', 'null']}
           },
           additionalProperties: false
         }
@@ -54,7 +54,7 @@ export const SCHEMA = {
               properties: {
                 projectId: {required: true, type: 'string'},
                 name: {required: true, type: 'string'},
-                stage: {type: 'string'},
+                stage: {type: ['string', 'null']},
                 removed: {type: 'boolean'},
                 isNew: {type: 'boolean'}
               },
@@ -65,17 +65,8 @@ export const SCHEMA = {
       }
     },
     success: {
-      type: 'object',
-      properties: {
-        images: {
-          type: 'array',
-          items: {type: 'string'}
-        },
-        texts: {
-          type: 'array',
-          items: {type: 'string'}
-        }
-      },
+      type: 'array',
+      items: {type: 'string'},
       additionalProperties: false
     },
     selected: {

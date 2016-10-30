@@ -8,42 +8,22 @@ function isASentence(message) {
   return (numberOfLetters / message.length) > 0.3
 }
 
-function isUrl(value) {
-  return _.startsWith(value, 'http')
-}
-
 function transformMessage(message) {
   return isASentence(message) ? message : message.replace(SPACES, NON_BREAKING_SPACE)
 }
 
-export const IMAGE_ADDED = 'IMAGE_ADDED'
-export function imageAdded(url) {
+export const MESSAGE_ADDED = 'MESSAGE_ADDED'
+export function messageAdded(message) {
   return {
-    type: IMAGE_ADDED,
-    url
-  }
-}
-
-export const IMAGE_REMOVED = 'IMAGE_REMOVED'
-export function removeImage(url) {
-  return {
-    type: IMAGE_REMOVED,
-    url
-  }
-}
-
-export const TEXT_ADDED = 'TEXT_ADDED'
-export function textAdded(message) {
-  return {
-    type: TEXT_ADDED,
+    type: MESSAGE_ADDED,
     message: transformMessage(message)
   }
 }
 
-export const TEXT_REMOVED = 'TEXT_REMOVED'
-export function removeText(message) {
+export const MESSAGE_REMOVED = 'MESSAGE_REMOVED'
+export function removeMessage(message) {
   return {
-    type: TEXT_REMOVED,
+    type: MESSAGE_REMOVED,
     message: transformMessage(message)
   }
 }
@@ -57,13 +37,9 @@ export function messageInvalid(message, errors) {
   }
 }
 
-export function removeMessage(message) {
-  return isUrl(message) ? removeImage(message) : removeText(message)
-}
-
 export function addMessage(message) {
   if (_.isEmpty(_.trim(message))) {
     return messageInvalid(message, ['message can not be blank'])
   }
-  return isUrl(message) ? imageAdded(message) : textAdded(message)
+  return messageAdded(message)
 }

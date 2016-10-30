@@ -73,14 +73,9 @@ describe('0.11.0', function () {
 
   describe('success migration', function () {
 
-    it('should migrate text messages', function () {
+    it('should migrate messages', function () {
       const migrated = Migration.migrate({success: {messages: ['=(^.^)=']}})
-      expect(migrated).to.have.deep.property('success.texts').that.contains('=(^.^)=')
-    })
-
-    it('should migrate images', function () {
-      const migrated = Migration.migrate({success: {messages: ['http://some-image-url']}})
-      expect(migrated).to.have.deep.property('success.images').that.contains('http://some-image-url')
+      expect(migrated).to.have.deep.property('success').that.contains('=(^.^)=')
     })
 
     it('should delete the migrated messages', function () {

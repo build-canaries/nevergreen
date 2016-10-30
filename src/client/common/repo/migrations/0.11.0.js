@@ -39,9 +39,7 @@ function migrateDisplay(data) {
 function migrateSuccess(data) {
   let migrated = {}
   if (data.success && data.success.messages) {
-    migrated.success = {}
-    migrated.success.images = data.success.messages.filter((m) => m.startsWith('http'))
-    migrated.success.texts = data.success.messages.filter((m) => !m.startsWith('http'))
+    migrated.success = data.success.messages
   }
   return migrated
 }

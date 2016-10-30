@@ -1,32 +1,21 @@
 import Immutable from 'immutable'
-import {TEXT_ADDED, IMAGE_ADDED, TEXT_REMOVED, IMAGE_REMOVED} from '../actions/SuccessActions'
+import {MESSAGE_ADDED, MESSAGE_REMOVED} from '../actions/SuccessActions'
 import {INITIALISED} from '../actions/NevergreenActions'
 import {IMPORTED_DATA} from '../actions/BackupActions'
 
-const DefaultState = Immutable.Map({
-  images: Immutable.OrderedSet(),
-  texts: Immutable.OrderedSet(['=(^.^)='])
-})
+const DefaultState = Immutable.OrderedSet()
 
 export function reduce(state = DefaultState, action) {
   switch (action.type) {
     case INITIALISED:
     case IMPORTED_DATA:
-      return state.merge(action.data.get('success'))
-        .update('images', (images) => images.toOrderedSet())
-        .update('texts', (messages) => messages.toOrderedSet())
+      return state.union(action.data.get('success'))
 
-    case TEXT_ADDED:
-      return state.update('texts', (messages) => messages.add(action.message))
+    case MESSAGE_ADDED:
+      return state.add(action.message)
 
-    case IMAGE_ADDED:
-      return state.update('images', (images) => images.add(action.url))
-
-    case TEXT_REMOVED:
-      return state.update('texts', (messages) => messages.delete(action.message))
-
-    case IMAGE_REMOVED:
-      return state.update('images', (images) => images.delete(action.url))
+    case MESSAGE_REMOVED:
+      return state.delete(action.message)
 
     default:
       return state

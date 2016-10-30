@@ -14,7 +14,6 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(store) {
   const audioVisual = store.get('audioVisual')
   const interesting = store.get('interesting')
-  const success = store.get('success')
 
   return Immutable.Map({
     loaded: interesting.get('loaded'),
@@ -26,7 +25,7 @@ function mapStateToProps(store) {
     showTrayNameEnabled: audioVisual.get('showTrayNameEnabled'),
     playBrokenBuildSounds: audioVisual.get('brokenBuildSoundsEnabled'),
     brokenBuildFx: audioVisual.get('brokenBuildSoundFx'),
-    messages: success.get('images').concat(success.get('texts'))
+    messages: store.get('success')
   }).toJS()
 }
 

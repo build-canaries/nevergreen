@@ -3,6 +3,7 @@ import AddedMessages from './AddedMessages'
 import AddedImages from './AddedImages'
 import AddMessage from './AddMessage'
 import './success.scss'
+import _ from 'lodash'
 
 class Success extends Component {
   constructor(props) {
@@ -10,15 +11,16 @@ class Success extends Component {
   }
 
   render() {
+    const messages = this.props.messages.filter((m) => !m.startsWith('http'))
+    const images = this.props.messages.filter((m) => m.startsWith('http'))
+
     return (
       <section className='success'>
         <h2 className='visually-hidden'>Success</h2>
         <AddMessage addMessage={this.props.addMessage}/>
 
-        { this.props.messages.length > 0 ?
-          <AddedMessages messages={this.props.messages} removeMessage={this.props.removeMessage}/> : null }
-        { this.props.images.length > 0 ?
-          <AddedImages messages={this.props.images} removeMessage={this.props.removeMessage}/> : null }
+        { !_.isEmpty(messages) ? <AddedMessages messages={messages} removeMessage={this.props.removeMessage}/> : null }
+        { !_.isEmpty(images) ? <AddedImages messages={images} removeMessage={this.props.removeMessage}/> : null }
       </section>
     )
   }
@@ -26,7 +28,6 @@ class Success extends Component {
 
 Success.propTypes = {
   messages: PropTypes.array.isRequired,
-  images: PropTypes.array.isRequired,
   addMessage: PropTypes.func.isRequired,
   removeMessage: PropTypes.func.isRequired
 }

@@ -1,4 +1,3 @@
-import Immutable from 'immutable'
 import {connect} from 'react-redux'
 import {addMessage, removeMessage} from '../actions/SuccessActions'
 import Success from './Success'
@@ -15,11 +14,9 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(store) {
-  const success = store.get('success')
-  return Immutable.Map({
-    messages: success.get('texts'),
-    images: success.get('images')
-  }).toJS()
+  return {
+    messages: store.get('success').toJS()
+  }
 }
 
 export default connect(

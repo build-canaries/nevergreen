@@ -2,80 +2,49 @@ import '../UnitSpec'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {
-  imageAdded,
-  removeImage,
-  textAdded,
-  removeText,
+  messageAdded,
   messageInvalid,
   removeMessage,
   addMessage,
-  IMAGE_ADDED,
-  IMAGE_REMOVED,
-  TEXT_ADDED,
-  TEXT_REMOVED,
+  MESSAGE_ADDED,
+  MESSAGE_REMOVED,
   MESSAGE_INVALID
 } from '../../../src/client/actions/SuccessActions'
 
 describe('SuccessActions', function () {
 
-  describe('image added', function () {
-
-    it('should return the correct type', function () {
-      const actual = imageAdded()
-      expect(actual).to.have.property('type', IMAGE_ADDED)
-    })
-
-    it('should return the image url to add', function () {
-      const actual = imageAdded('some-image-url')
-      expect(actual).to.have.property('url', 'some-image-url')
-    })
-  })
-
-  describe('remove image', function () {
-
-    it('should return the correct type', function () {
-      const actual = removeImage()
-      expect(actual).to.have.property('type', IMAGE_REMOVED)
-    })
-
-    it('should return the image url being removed', function () {
-      const actual = removeImage('some-image-url')
-      expect(actual).to.have.property('url', 'some-image-url')
-    })
-  })
-
   describe('text added', function () {
 
     it('should return the correct type', function () {
-      const actual = textAdded('irrelevant')
-      expect(actual).to.have.property('type', TEXT_ADDED)
+      const actual = messageAdded('irrelevant')
+      expect(actual).to.have.property('type', MESSAGE_ADDED)
     })
 
     it('should return the text message to add', function () {
-      const actual = textAdded('some-message')
+      const actual = messageAdded('some-message')
       expect(actual).to.have.property('message', 'some-message')
     })
 
     it('should replace spaces with non-breaking spaces in emoticons so they don\'t get wrapped on the monitor page', function () {
-      const actual = textAdded('(*＾3＾) /～♡')
+      const actual = messageAdded('(*＾3＾) /～♡')
       expect(actual).to.have.property('message', '(*＾3＾)\xa0/～♡')
     })
 
     it('should not replace spaces in sentences so they do get wrapped on the monitor page', function () {
-      const actual = textAdded('nevergreen is awesome')
+      const actual = messageAdded('nevergreen is awesome')
       expect(actual).to.have.property('message', 'nevergreen is awesome')
     })
   })
 
-  describe('remove text', function () {
+  describe('remove message', function () {
 
     it('should return the correct type', function () {
-      const actual = removeText('irrelevant')
-      expect(actual).to.have.property('type', TEXT_REMOVED)
+      const actual = removeMessage('irrelevant')
+      expect(actual).to.have.property('type', MESSAGE_REMOVED)
     })
 
     it('should return the text message to add', function () {
-      const actual = removeText('some-message')
+      const actual = removeMessage('some-message')
       expect(actual).to.have.property('message', 'some-message')
     })
   })
@@ -98,29 +67,11 @@ describe('SuccessActions', function () {
     })
   })
 
-  describe('remove message', function () {
-
-    it('should call remove image if the message is url-like', function () {
-      const actual = removeMessage('http')
-      expect(actual).to.have.property('type', IMAGE_REMOVED)
-    })
-
-    it('should call remove text if the message is not url-like', function () {
-      const actual = removeMessage('not-url-like')
-      expect(actual).to.have.property('type', TEXT_REMOVED)
-    })
-  })
-
   describe('add message', function () {
 
-    it('should call add image if the message is url-like', function () {
-      const actual = addMessage('http')
-      expect(actual).to.have.property('type', IMAGE_ADDED)
-    })
-
-    it('should call add text if the message is not url-like', function () {
+    it('should call add message if the message is valid', function () {
       const actual = addMessage('not-url-like')
-      expect(actual).to.have.property('type', TEXT_ADDED)
+      expect(actual).to.have.property('type', MESSAGE_ADDED)
     })
 
     it('should call message invalid if message is blank', function () {
