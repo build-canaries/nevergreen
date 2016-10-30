@@ -27,31 +27,40 @@ describe('TraysReducer', function () {
 
   describe('initialised action', function () {
 
-    it('should merge the trays data', function () {
-      const existingState = Immutable.Map()
+    it('should set the trays data', function () {
+      const existingState = Immutable.Map({someId: {}})
       const action = {type: INITIALISED, data: Immutable.fromJS({trays: {trayId: {}}})}
       const newState = reduce(existingState, action)
+      expect(newState).to.not.have.property('someId')
       expect(newState).to.have.property('trayId').that.is.instanceof(Immutable.Map)
     })
 
-    it('should set the loaded property on merged trays', function () {
+    it('should set the loaded property on added trays', function () {
       const existingState = Immutable.Map()
       const action = {type: INITIALISED, data: Immutable.fromJS({trays: {trayId: {}}})}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('trayId').that.has.property('loaded', true)
     })
+
+    it('should handle no trays data', function () {
+      const existingState = Immutable.Map()
+      const action = {type: INITIALISED, data: Immutable.Map()}
+      const newState = reduce(existingState, action)
+      expect(newState).to.be.empty
+    })
   })
 
   describe('imported data action', function () {
 
-    it('should merge the trays data', function () {
-      const existingState = Immutable.Map()
+    it('should set the trays data', function () {
+      const existingState = Immutable.Map({someId: {}})
       const action = {type: IMPORTED_DATA, data: Immutable.fromJS({trays: {trayId: {}}})}
       const newState = reduce(existingState, action)
+      expect(newState).to.not.have.property('someId')
       expect(newState).to.have.property('trayId').that.is.instanceof(Immutable.Map)
     })
 
-    it('should set the loaded property on merged trays', function () {
+    it('should set the loaded property on added trays', function () {
       const existingState = Immutable.Map()
       const action = {type: IMPORTED_DATA, data: Immutable.fromJS({trays: {trayId: {}}})}
       const newState = reduce(existingState, action)

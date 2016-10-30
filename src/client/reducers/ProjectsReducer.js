@@ -8,8 +8,10 @@ const DefaultState = Immutable.Map()
 export function reduce(state = DefaultState, action) {
   switch (action.type) {
     case INITIALISED:
-    case IMPORTED_DATA:
-      return state.merge(action.data.get('projects'))
+    case IMPORTED_DATA: {
+      const projects = action.data.get('projects')
+      return projects ? Immutable.Map(projects) : state
+    }
 
     case TRAY_ADDED:
       return state.set(action.trayId, Immutable.Map())

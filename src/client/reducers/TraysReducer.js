@@ -18,8 +18,10 @@ const DefaultState = Immutable.Map()
 export function reduce(state = DefaultState, action) {
   switch (action.type) {
     case INITIALISED:
-    case IMPORTED_DATA:
-      return state.merge(action.data.get('trays')).map((tray) => tray.set('loaded', true))
+    case IMPORTED_DATA: {
+      const trays = action.data.get('trays')
+      return trays ? Immutable.Map(trays).map((tray) => tray.set('loaded', true)) : state
+    }
 
     case TRAY_ADDED:
       return state.set(action.trayId, action.data)

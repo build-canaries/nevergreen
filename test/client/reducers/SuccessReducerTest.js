@@ -17,8 +17,8 @@ describe('SuccessReducer', function () {
 
   describe('initialised action', function () {
 
-    it('should merge the success data', function () {
-      const existingState = Immutable.OrderedSet()
+    it('should set the success data', function () {
+      const existingState = Immutable.OrderedSet(['old-message'])
       const action = {type: INITIALISED, data: Immutable.fromJS({success: ['some-message']})}
       const newState = reduce(existingState, action)
       expect(newState).to.contain('some-message')

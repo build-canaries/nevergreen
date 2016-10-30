@@ -18,20 +18,29 @@ describe('SelectedReducer', function () {
 
   describe('initialised action', function () {
 
-    it('should merge the selected data', function () {
-      const existingState = Immutable.Map()
+    it('should set the selected data', function () {
+      const existingState = Immutable.Map({oldId: ['foo']})
       const action = {type: INITIALISED, data: Immutable.fromJS({selected: {trayId: ['bar']}})}
       const newState = reduce(existingState, action)
+      expect(newState).to.not.have.property('oldId')
       expect(newState).to.have.property('trayId').that.is.an.instanceof(Immutable.Set).that.contains('bar')
+    })
+
+    it('should handle no selected data', function () {
+      const existingState = Immutable.Map({oldId: ['foo']})
+      const action = {type: INITIALISED, data: Immutable.Map()}
+      const newState = reduce(existingState, action)
+      expect(newState).to.have.property('oldId')
     })
   })
 
   describe('imported data action', function () {
 
-    it('should merge the selected data', function () {
-      const existingState = Immutable.Map()
+    it('should set the selected data', function () {
+      const existingState = Immutable.Map({oldId: ['foo']})
       const action = {type: IMPORTED_DATA, data: Immutable.fromJS({selected: {trayId: ['bar']}})}
       const newState = reduce(existingState, action)
+      expect(newState).to.not.have.property('oldId')
       expect(newState).to.have.property('trayId').that.is.an.instanceof(Immutable.Set).that.contains('bar')
     })
   })

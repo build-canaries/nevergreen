@@ -10,7 +10,7 @@ export function reduce(state = DefaultState, action) {
     case INITIALISED:
     case IMPORTED_DATA: {
       const success = action.data.get('success')
-      return success ? state.union(success) : state
+      return success ? Immutable.OrderedSet(success) : state
     }
 
     case MESSAGE_ADDED:

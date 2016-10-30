@@ -17,20 +17,29 @@ describe('ProjectsReducer', function () {
 
   describe('initialised action', function () {
 
-    it('should merge the projects data', function () {
-      const existingState = Immutable.Map()
+    it('should set the projects data', function () {
+      const existingState = Immutable.Map({id: 'x'})
       const action = {type: INITIALISED, data: Immutable.Map({projects: {foo: 'bar'}})}
       const newState = reduce(existingState, action)
+      expect(newState).to.not.have.property('id')
       expect(newState).to.have.property('foo', 'bar')
+    })
+
+    it('should handle no projects data', function () {
+      const existingState = Immutable.Map()
+      const action = {type: INITIALISED, data: Immutable.Map()}
+      const newState = reduce(existingState, action)
+      expect(newState).to.be.empty
     })
   })
 
   describe('imported data action', function () {
 
-    it('should merge the projects data', function () {
-      const existingState = Immutable.Map()
+    it('should set the projects data', function () {
+      const existingState = Immutable.Map({id: 'x'})
       const action = {type: IMPORTED_DATA, data: Immutable.Map({projects: {foo: 'bar'}})}
       const newState = reduce(existingState, action)
+      expect(newState).to.not.have.property('id')
       expect(newState).to.have.property('foo', 'bar')
     })
   })
