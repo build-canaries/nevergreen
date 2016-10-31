@@ -5,10 +5,10 @@ import {reduce} from '../../../src/client/reducers/AudioVisualReducer'
 import {INITIALISED} from '../../../src/client/actions/NevergreenActions'
 import {IMPORTED_DATA} from '../../../src/client/actions/BackupActions'
 import {
-  BROKEN_BUILD_TIMERS_CHANGED,
-  BROKEN_BUILD_SOUNDS_CHANGED,
+  SHOW_BROKEN_BUILD_TIME,
+  PLAY_BROKEN_BUILD_SOUND_FX,
   BROKEN_BUILD_SOUND_FX,
-  TRAY_NAME_TOGGLED
+  SHOW_TRAY_NAME
 } from '../../../src/client/actions/AudioVisualActions'
 import Immutable from 'immutable'
 
@@ -23,24 +23,24 @@ describe('AudioVisualReducer', function () {
   describe('initialised action', function () {
 
     it('should merge show tray name', function () {
-      const existingState = Immutable.Map({showTrayNameEnabled: false})
-      const action = {type: INITIALISED, data: Immutable.fromJS({audioVisual: {showTrayNameEnabled: true}})}
+      const existingState = Immutable.Map({showTrayName: false})
+      const action = {type: INITIALISED, data: Immutable.fromJS({audioVisual: {showTrayName: true}})}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('showTrayNameEnabled', true)
+      expect(newState).to.contain.property('showTrayName', true)
     })
 
     it('should merge broken build timers enabled', function () {
-      const existingState = Immutable.Map({brokenBuildTimersEnabled: false})
-      const action = {type: INITIALISED, data: Immutable.fromJS({audioVisual: {brokenBuildTimersEnabled: true}})}
+      const existingState = Immutable.Map({showBrokenBuildTime: false})
+      const action = {type: INITIALISED, data: Immutable.fromJS({audioVisual: {showBrokenBuildTime: true}})}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('brokenBuildTimersEnabled', true)
+      expect(newState).to.contain.property('showBrokenBuildTime', true)
     })
 
     it('should merge broken build sounds enabled', function () {
-      const existingState = Immutable.Map({brokenBuildSoundsEnabled: false})
-      const action = {type: INITIALISED, data: Immutable.fromJS({audioVisual: {brokenBuildSoundsEnabled: true}})}
+      const existingState = Immutable.Map({playBrokenBuildSoundFx: false})
+      const action = {type: INITIALISED, data: Immutable.fromJS({audioVisual: {playBrokenBuildSoundFx: true}})}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('brokenBuildSoundsEnabled', true)
+      expect(newState).to.contain.property('playBrokenBuildSoundFx', true)
     })
 
     it('should merge broken build sound fx', function () {
@@ -54,24 +54,24 @@ describe('AudioVisualReducer', function () {
   describe('imported data action', function () {
 
     it('should merge show tray name', function () {
-      const existingState = Immutable.Map({showTrayNameEnabled: false})
-      const action = {type: IMPORTED_DATA, data: Immutable.fromJS({audioVisual: {showTrayNameEnabled: true}})}
+      const existingState = Immutable.Map({showTrayName: false})
+      const action = {type: IMPORTED_DATA, data: Immutable.fromJS({audioVisual: {showTrayName: true}})}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('showTrayNameEnabled', true)
+      expect(newState).to.contain.property('showTrayName', true)
     })
 
     it('should merge broken build timers enabled', function () {
-      const existingState = Immutable.Map({brokenBuildTimersEnabled: false})
-      const action = {type: IMPORTED_DATA, data: Immutable.fromJS({audioVisual: {brokenBuildTimersEnabled: true}})}
+      const existingState = Immutable.Map({showBrokenBuildTime: false})
+      const action = {type: IMPORTED_DATA, data: Immutable.fromJS({audioVisual: {showBrokenBuildTime: true}})}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('brokenBuildTimersEnabled', true)
+      expect(newState).to.contain.property('showBrokenBuildTime', true)
     })
 
     it('should merge broken build sounds enabled', function () {
-      const existingState = Immutable.Map({brokenBuildSoundsEnabled: false})
-      const action = {type: IMPORTED_DATA, data: Immutable.fromJS({audioVisual: {brokenBuildSoundsEnabled: true}})}
+      const existingState = Immutable.Map({playBrokenBuildSoundFx: false})
+      const action = {type: IMPORTED_DATA, data: Immutable.fromJS({audioVisual: {playBrokenBuildSoundFx: true}})}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('brokenBuildSoundsEnabled', true)
+      expect(newState).to.contain.property('playBrokenBuildSoundFx', true)
     })
 
     it('should merge broken build sound fx', function () {
@@ -85,20 +85,20 @@ describe('AudioVisualReducer', function () {
   describe('broken build timers changed action', function () {
 
     it('should set the broken build timer enabled property', function () {
-      const existingState = Immutable.Map({brokenBuildTimersEnabled: false})
-      const action = {type: BROKEN_BUILD_TIMERS_CHANGED, value: true}
+      const existingState = Immutable.Map({showBrokenBuildTime: false})
+      const action = {type: SHOW_BROKEN_BUILD_TIME, value: true}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('brokenBuildTimersEnabled', true)
+      expect(newState).to.contain.property('showBrokenBuildTime', true)
     })
   })
 
   describe('broken build sounds enabled action', function () {
 
     it('should set the broken build sounds enabled property', function () {
-      const existingState = Immutable.Map({brokenBuildSoundsEnabled: false})
-      const action = {type: BROKEN_BUILD_SOUNDS_CHANGED, value: true}
+      const existingState = Immutable.Map({playBrokenBuildSoundFx: false})
+      const action = {type: PLAY_BROKEN_BUILD_SOUND_FX, value: true}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('brokenBuildSoundsEnabled', true)
+      expect(newState).to.contain.property('playBrokenBuildSoundFx', true)
     })
   })
 
@@ -115,10 +115,10 @@ describe('AudioVisualReducer', function () {
   describe('tray name toggled action', function () {
 
     it('should set the tray name toggled property', function () {
-      const existingState = Immutable.Map({showTrayNameEnabled: false})
-      const action = {type: TRAY_NAME_TOGGLED, value: true}
+      const existingState = Immutable.Map({showTrayName: false})
+      const action = {type: SHOW_TRAY_NAME, value: true}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('showTrayNameEnabled', true)
+      expect(newState).to.contain.property('showTrayName', true)
     })
   })
 })

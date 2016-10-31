@@ -1,25 +1,25 @@
 import {connect} from 'react-redux'
 import {
   setBrokenBuildSoundFx,
-  setBrokenBuildSounds,
-  setBrokenBuildTimers,
-  setTrayNameToggled
+  playBrokenBuildSoundFx,
+  showBrokenBuildTime,
+  showTrayName
 } from '../actions/AudioVisualActions'
 import AudioVisual from './AudioVisual'
 
 function mapDispatchToProps(dispatch) {
   return {
-    setBrokenBuildTimers(value) {
-      dispatch(setBrokenBuildTimers(value))
+    setShowBrokenBuildTime(value) {
+      dispatch(showBrokenBuildTime(value))
     },
-    setBrokenBuildSounds(value) {
-      dispatch(setBrokenBuildSounds(value))
+    setPlayBrokenBuildSoundFx(value) {
+      dispatch(playBrokenBuildSoundFx(value))
     },
     setBrokenBuildSoundFx(value) {
       dispatch(setBrokenBuildSoundFx(value))
     },
-    setTrayNameToggled(value) {
-      dispatch(setTrayNameToggled(value))
+    setShowTrayName(value) {
+      dispatch(showTrayName(value))
     }
   }
 }

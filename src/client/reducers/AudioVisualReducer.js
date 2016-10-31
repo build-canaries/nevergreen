@@ -1,18 +1,18 @@
 import Immutable from 'immutable'
 import {
   BROKEN_BUILD_SOUND_FX,
-  BROKEN_BUILD_SOUNDS_CHANGED,
-  BROKEN_BUILD_TIMERS_CHANGED,
-  TRAY_NAME_TOGGLED
+  PLAY_BROKEN_BUILD_SOUND_FX,
+  SHOW_BROKEN_BUILD_TIME,
+  SHOW_TRAY_NAME
 } from '../actions/AudioVisualActions'
 import {INITIALISED} from '../actions/NevergreenActions'
 import {IMPORTED_DATA} from '../actions/BackupActions'
 import defaultSoundFx from '../audio-visual/pacman_death.mp3'
 
 const DefaultState = Immutable.Map({
-  showTrayNameEnabled: false,
-  brokenBuildTimersEnabled: true,
-  brokenBuildSoundsEnabled: false,
+  showTrayName: false,
+  showBrokenBuildTime: true,
+  playBrokenBuildSoundFx: false,
   brokenBuildSoundFx: defaultSoundFx,
 })
 
@@ -22,17 +22,17 @@ export function reduce(state = DefaultState, action) {
     case IMPORTED_DATA:
       return state.merge(action.data.get('audioVisual'))
 
-    case BROKEN_BUILD_TIMERS_CHANGED:
-      return state.set('brokenBuildTimersEnabled', action.value)
+    case SHOW_BROKEN_BUILD_TIME:
+      return state.set('showBrokenBuildTime', action.value)
 
-    case BROKEN_BUILD_SOUNDS_CHANGED:
-      return state.set('brokenBuildSoundsEnabled', action.value)
+    case PLAY_BROKEN_BUILD_SOUND_FX:
+      return state.set('playBrokenBuildSoundFx', action.value)
 
     case BROKEN_BUILD_SOUND_FX:
       return state.set('brokenBuildSoundFx', action.value)
 
-    case TRAY_NAME_TOGGLED:
-      return state.set('showTrayNameEnabled', action.value)
+    case SHOW_TRAY_NAME:
+      return state.set('showTrayName', action.value)
 
     default:
       return state

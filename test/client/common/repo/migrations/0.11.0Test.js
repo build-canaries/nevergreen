@@ -47,17 +47,17 @@ describe('0.11.0', function () {
 
     it('should migrate show tray name', function () {
       const migrated = Migration.migrate({display: {showTrayName: true}})
-      expect(migrated).to.have.deep.property('audioVisual.showTrayNameEnabled', true)
+      expect(migrated).to.have.deep.property('audioVisual.showTrayName', true)
     })
 
     it('should migrate show broken build timers', function () {
       const migrated = Migration.migrate({display: {showBrokenBuildTimers: true}})
-      expect(migrated).to.have.deep.property('audioVisual.brokenBuildTimersEnabled', true)
+      expect(migrated).to.have.deep.property('audioVisual.showBrokenBuildTime', true)
     })
 
     it('should migrate show broken build sounds', function () {
       const migrated = Migration.migrate({display: {showBrokenBuildSounds: true}})
-      expect(migrated).to.have.deep.property('audioVisual.brokenBuildSoundsEnabled', true)
+      expect(migrated).to.have.deep.property('audioVisual.playBrokenBuildSoundFx', true)
     })
 
     it('should migrate broken build sound fx', function () {

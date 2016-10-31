@@ -21,13 +21,13 @@ function migrateDisplay(data) {
   if (data.display) {
     migrated.audioVisual = {}
     if (data.display.showTrayName) {
-      migrated.audioVisual.showTrayNameEnabled = data.display.showTrayName
+      migrated.audioVisual.showTrayName = data.display.showTrayName
     }
     if (data.display.showBrokenBuildTimers) {
-      migrated.audioVisual.brokenBuildTimersEnabled = data.display.showBrokenBuildTimers
+      migrated.audioVisual.showBrokenBuildTime = data.display.showBrokenBuildTimers
     }
     if (data.display.showBrokenBuildSounds) {
-      migrated.audioVisual.brokenBuildSoundsEnabled = data.display.showBrokenBuildSounds
+      migrated.audioVisual.playBrokenBuildSoundFx = data.display.showBrokenBuildSounds
     }
     if (data.display.brokenBuildSoundFx) {
       migrated.audioVisual.brokenBuildSoundFx = data.display.brokenBuildSoundFx

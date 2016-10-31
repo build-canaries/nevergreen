@@ -20,9 +20,9 @@ class AudioVisual extends Component {
   }
 
   render() {
-    const toggleBrokenBuilds = (newValue) => this.props.setBrokenBuildTimers(newValue)
-    const toggleTrayName = (newValue) => this.props.setTrayNameToggled(newValue)
-    const toggleBrokenSounds = (newValue) => this.props.setBrokenBuildSounds(newValue)
+    const toggleBrokenBuilds = (newValue) => this.props.setShowBrokenBuildTime(newValue)
+    const toggleTrayName = (newValue) => this.props.setShowTrayName(newValue)
+    const toggleBrokenSounds = (newValue) => this.props.setPlayBrokenBuildSoundFx(newValue)
     const setSoundFx = () => this.props.setBrokenBuildSoundFx(this.refs.soundFx.value)
     const testSoundFx = () => {
       const audio = new Audio(this.refs.soundFx.value)
@@ -34,20 +34,20 @@ class AudioVisual extends Component {
 
     return (
       <section className='audio-visual'>
-        <Container title='Display Settings'>
+        <Container title='Visual Settings'>
           <fieldset className='settings-list'>
             <ConfigOption name='Show tray name'
-                          enabled={this.props.showTrayNameEnabled}
+                          enabled={this.props.showTrayName}
                           onToggle={toggleTrayName}/>
-            <ConfigOption name='Show broken build timers'
-                          enabled={this.props.brokenBuildTimersEnabled}
+            <ConfigOption name='Show broken build time'
+                          enabled={this.props.showBrokenBuildTime}
                           onToggle={toggleBrokenBuilds}/>
           </fieldset>
         </Container>
         <Container title='Audio Settings'>
           <fieldset className='settings-list'>
-            <ConfigOption name='Enable sound for broken builds'
-                          enabled={this.props.brokenBuildSoundsEnabled}
+            <ConfigOption name='Play sound for broken builds'
+                          enabled={this.props.playBrokenBuildSoundFx}
                           onToggle={toggleBrokenSounds}/>
             <div className='sound-fx'>
               <label htmlFor='sound-fx'>Broken build sound</label>
@@ -68,13 +68,13 @@ class AudioVisual extends Component {
 }
 
 AudioVisual.propTypes = {
-  showTrayNameEnabled: PropTypes.bool.isRequired,
-  brokenBuildTimersEnabled: PropTypes.bool.isRequired,
-  brokenBuildSoundsEnabled: PropTypes.bool.isRequired,
+  showTrayName: PropTypes.bool.isRequired,
+  showBrokenBuildTime: PropTypes.bool.isRequired,
+  playBrokenBuildSoundFx: PropTypes.bool.isRequired,
   brokenBuildSoundFx: PropTypes.string,
-  setBrokenBuildTimers: PropTypes.func.isRequired,
-  setTrayNameToggled: PropTypes.func.isRequired,
-  setBrokenBuildSounds: PropTypes.func.isRequired,
+  setShowBrokenBuildTime: PropTypes.func.isRequired,
+  setShowTrayName: PropTypes.func.isRequired,
+  setPlayBrokenBuildSoundFx: PropTypes.func.isRequired,
   setBrokenBuildSoundFx: PropTypes.func.isRequired
 }
 

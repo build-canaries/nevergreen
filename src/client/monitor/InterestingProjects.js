@@ -39,7 +39,7 @@ class InterestingProjects extends Component {
               const tray = this.props.trays.find((tray) => tray.trayId === project.trayId)
               return <InterestingProject {...project} trayName={tray.name} key={project.projectId}
                                                       showBrokenBuildTimers={this.props.showBrokenBuildTimers}
-                                                      showTrayNameEnabled={this.props.showTrayNameEnabled}/>
+                                                      showTrayName={this.props.showTrayName}/>
             })
           }
         </ul>
@@ -55,7 +55,7 @@ InterestingProjects.propTypes = {
   })).isRequired,
   trays: PropTypes.arrayOf(PropTypes.object).isRequired,
   showBrokenBuildTimers: PropTypes.bool,
-  showTrayNameEnabled: PropTypes.bool,
+  showTrayName: PropTypes.bool,
   playBrokenBuildSounds: PropTypes.bool,
   brokenBuildFx: PropTypes.string
 }

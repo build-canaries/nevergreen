@@ -14,7 +14,7 @@ class InterestingProject extends Component {
     const timeBroken = this.props.showBrokenBuildTimers && isSick ?
       <span className='time-broken'> {timeBrokenLabel}</span> : null
     const displayName = this.props.stage ? `${this.props.name} ${this.props.stage}` : this.props.name
-    const display = this.props.showTrayNameEnabled && this.props.trayName ? `${this.props.trayName.toLowerCase()} >> ${displayName}` : displayName
+    const display = this.props.showTrayName && this.props.trayName ? `${this.props.trayName.toLowerCase()} >> ${displayName}` : displayName
 
     return (
       <li className={`interesting-project ${this.props.prognosis}`}>
@@ -36,7 +36,7 @@ InterestingProject.propTypes = {
   trayName: PropTypes.string,
   lastBuildTime: PropTypes.string.isRequired,
   showBrokenBuildTimers: PropTypes.bool,
-  showTrayNameEnabled: PropTypes.bool
+  showTrayName: PropTypes.bool
 }
 
 export default InterestingProject

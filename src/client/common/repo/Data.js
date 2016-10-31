@@ -19,9 +19,9 @@ export const SCHEMA = {
     audioVisual: {
       type: 'object',
       properties: {
-        showTrayNameEnabled: {type: 'boolean'},
-        brokenBuildTimersEnabled: {type: 'boolean'},
-        brokenBuildSoundsEnabled: {type: 'boolean'},
+        showTrayName: {type: 'boolean'},
+        showBrokenBuildTime: {type: 'boolean'},
+        playBrokenBuildSoundFx: {type: 'boolean'},
         brokenBuildSoundFx: {type: ['string', 'null']}
       },
       additionalProperties: false

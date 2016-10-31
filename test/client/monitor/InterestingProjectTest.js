@@ -13,7 +13,7 @@ describe('<InterestingProject/>', function () {
     trayName: null,
     lastBuildTime: '',
     showBrokenBuildTimers: null,
-    showTrayNameEnabled: null
+    showTrayName: null
   }
 
   describe('show tray name disabled', function () {
@@ -33,7 +33,7 @@ describe('<InterestingProject/>', function () {
   describe('show tray name enabled', function () {
     it('should render the project name', function () {
       const props = Object.assign({}, DEFAULT_PROPS, {
-        showTrayNameEnabled: true,
+        showTrayName: true,
         trayName: 'some-tray-name',
         name: 'some-name'
       })
@@ -43,7 +43,7 @@ describe('<InterestingProject/>', function () {
 
     it('should render the project name including the stage', function () {
       const props = Object.assign({}, DEFAULT_PROPS, {
-        showTrayNameEnabled: true,
+        showTrayName: true,
         trayName: 'some-tray-name',
         name: 'some-name',
         stage: 'some-stage'

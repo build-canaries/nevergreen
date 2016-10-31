@@ -2,13 +2,13 @@ import '../UnitSpec'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {
-  setBrokenBuildTimers,
-  setTrayNameToggled,
-  setBrokenBuildSounds,
+  showBrokenBuildTime,
+  showTrayName,
+  playBrokenBuildSoundFx,
   setBrokenBuildSoundFx,
-  BROKEN_BUILD_TIMERS_CHANGED,
-  TRAY_NAME_TOGGLED,
-  BROKEN_BUILD_SOUNDS_CHANGED,
+  SHOW_BROKEN_BUILD_TIME,
+  SHOW_TRAY_NAME,
+  PLAY_BROKEN_BUILD_SOUND_FX,
   BROKEN_BUILD_SOUND_FX
 } from '../../../src/client/actions/AudioVisualActions'
 
@@ -17,12 +17,12 @@ describe('AudioVisualActions', function () {
   describe('setting broken build timers', function () {
 
     it('should return the correct type', function () {
-      const actual = setBrokenBuildTimers()
-      expect(actual).to.have.property('type', BROKEN_BUILD_TIMERS_CHANGED)
+      const actual = showBrokenBuildTime()
+      expect(actual).to.have.property('type', SHOW_BROKEN_BUILD_TIME)
     })
 
     it('should return the given value', function () {
-      const actual = setBrokenBuildTimers(true)
+      const actual = showBrokenBuildTime(true)
       expect(actual).to.have.property('value', true)
     })
   })
@@ -30,12 +30,12 @@ describe('AudioVisualActions', function () {
   describe('setting show tray names', function () {
 
     it('should return the correct type', function () {
-      const actual = setTrayNameToggled()
-      expect(actual).to.have.property('type', TRAY_NAME_TOGGLED)
+      const actual = showTrayName()
+      expect(actual).to.have.property('type', SHOW_TRAY_NAME)
     })
 
     it('should return the given value', function () {
-      const actual = setTrayNameToggled(true)
+      const actual = showTrayName(true)
       expect(actual).to.have.property('value', true)
     })
   })
@@ -43,12 +43,12 @@ describe('AudioVisualActions', function () {
   describe('setting broken build sounds', function () {
 
     it('should return the correct type', function () {
-      const actual = setBrokenBuildSounds()
-      expect(actual).to.have.property('type', BROKEN_BUILD_SOUNDS_CHANGED)
+      const actual = playBrokenBuildSoundFx()
+      expect(actual).to.have.property('type', PLAY_BROKEN_BUILD_SOUND_FX)
     })
 
     it('should return the given value', function () {
-      const actual = setBrokenBuildSounds(true)
+      const actual = playBrokenBuildSoundFx(true)
       expect(actual).to.have.property('value', true)
     })
   })

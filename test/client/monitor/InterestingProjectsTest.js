@@ -10,7 +10,7 @@ describe('<InterestingProjects/>', function () {
     projects: [],
     trays: [],
     showBrokenBuildTimers: null,
-    showTrayNameEnabled: null,
+    showTrayName: null,
     playBrokenBuildSounds: null,
     brokenBuildFx: null
   }

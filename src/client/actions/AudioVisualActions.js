@@ -1,23 +1,23 @@
-export const BROKEN_BUILD_TIMERS_CHANGED = 'BROKEN_BUILD_TIMERS_CHANGED'
-export function setBrokenBuildTimers(value) {
+export const SHOW_BROKEN_BUILD_TIME = 'SHOW_BROKEN_BUILD_TIME'
+export function showBrokenBuildTime(value) {
   return {
-    type: BROKEN_BUILD_TIMERS_CHANGED,
+    type: SHOW_BROKEN_BUILD_TIME,
     value
   }
 }
 
-export const TRAY_NAME_TOGGLED = 'TRAY_NAME_TOGGLED'
-export function setTrayNameToggled(value) {
+export const SHOW_TRAY_NAME = 'SHOW_TRAY_NAME'
+export function showTrayName(value) {
   return {
-    type: TRAY_NAME_TOGGLED,
+    type: SHOW_TRAY_NAME,
     value
   }
 }
 
-export const BROKEN_BUILD_SOUNDS_CHANGED = 'BROKEN_BUILD_SOUNDS_CHANGED'
-export function setBrokenBuildSounds(value) {
+export const PLAY_BROKEN_BUILD_SOUND_FX = 'PLAY_BROKEN_BUILD_SOUND_FX'
+export function playBrokenBuildSoundFx(value) {
   return {
-    type: BROKEN_BUILD_SOUNDS_CHANGED,
+    type: PLAY_BROKEN_BUILD_SOUND_FX,
     value
   }
 }

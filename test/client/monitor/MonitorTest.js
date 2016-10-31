@@ -16,7 +16,7 @@ describe('<Monitor/>', function () {
     selected: {},
     projects: [],
     showBrokenBuildTimers: null,
-    showTrayNameEnabled: null,
+    showTrayName: null,
     playBrokenBuildSounds: null,
     brokenBuildFx: null,
     messages: [],
