@@ -38,7 +38,7 @@ describe('<InterestingProject/>', function () {
         name: 'some-name'
       })
       const wrapper = shallow(<InterestingProject {...props} />)
-      expect(wrapper.find('.monitor-project-name')).to.have.text('some-tray-name >> some-name')
+      expect(wrapper.find('.monitor-project-name')).to.have.text('some-tray-name some-name')
     })
 
     it('should render the project name including the stage', function () {
@@ -49,7 +49,7 @@ describe('<InterestingProject/>', function () {
         stage: 'some-stage'
       })
       const wrapper = shallow(<InterestingProject {...props} />)
-      expect(wrapper.find('.monitor-project-name')).to.have.text('some-tray-name >> some-name some-stage')
+      expect(wrapper.find('.monitor-project-name')).to.have.text('some-tray-name some-name some-stage')
     })
   })
 
