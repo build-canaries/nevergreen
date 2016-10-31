@@ -63,6 +63,20 @@ class Tray extends Component {
     const toggleLabel = this.state.showSettings ? 'Show projects' : 'Show settings'
     const title = this.props.name || this.props.url
     const subTitle = this.props.name ? this.props.url : ''
+    const refreshButton = this.state.showSettings || !this.props.loaded ? null :
+      <button className='button' onClick={refreshTray}>
+        <span className='icon-loop2'/>
+        <span className='text-with-icon'>Refresh tray</span>
+        <ShortcutContainer hotkeys={[`r ${this.props.index}`]}/>
+      </button>
+    let refreshLabel
+    if (this.state.showSettings) {
+      refreshLabel = ''
+    } else if (!this.props.loaded) {
+      refreshLabel = 'refreshing...'
+    } else {
+      refreshLabel = `last refreshed ${this.state.lastFetched} ago`
+    }
 
     return (
       <Container title={title} subTitle={subTitle} className='tray'>
@@ -74,12 +88,8 @@ class Tray extends Component {
               <span className='text-with-icon'>{toggleLabel}</span>
               <ShortcutContainer hotkeys={[`p ${this.props.index}`]}/>
             </button>
-            <button className='button' onClick={refreshTray}>
-              <span className='icon-loop2'/>
-              <span className='text-with-icon'>Refresh tray</span>
-              <ShortcutContainer hotkeys={[`r ${this.props.index}`]}/>
-            </button>
-            <span className='tray-refresh-last-fetch'>last refreshed {this.state.lastFetched} ago</span>
+            {refreshButton}
+            <span className='tray-refresh-last-fetch'>{refreshLabel}</span>
           </div>
           <div>
             <Loading loaded={this.props.loaded}>
