@@ -1,6 +1,5 @@
 import Immutable from 'immutable'
-import {TRAY_ADDED, REMOVE_TRAY, PROJECTS_FETCHED} from '../actions/TrackingActions'
-import {SELECT_PROJECT} from '../actions/TrayActions'
+import {TRAY_ADDED, REMOVE_TRAY, PROJECTS_FETCHED, SELECT_PROJECT} from '../actions/TrackingActions'
 import {INITIALISED} from '../actions/NevergreenActions'
 import {IMPORTED_DATA} from '../actions/BackupActions'
 

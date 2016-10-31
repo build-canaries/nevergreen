@@ -108,6 +108,16 @@ export function updatingTray(trayId, name, url, username) {
   }
 }
 
+export const SELECT_PROJECT = 'SELECT_PROJECT'
+export function selectProject(trayId, projectId, selected) {
+  return {
+    type: SELECT_PROJECT,
+    trayId,
+    projectId,
+    selected
+  }
+}
+
 export function encryptPassword(trayId, password) {
   return function (dispatch) {
     dispatch(encryptingPassword(trayId, password))

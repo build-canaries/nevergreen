@@ -237,6 +237,29 @@ describe('TrackingActions', function () {
     })
   })
 
+  describe('select project', function () {
+
+    it('should return the correct type', function () {
+      const actual = TrackingActions.selectProject()
+      expect(actual).to.have.property('type', TrackingActions.SELECT_PROJECT)
+    })
+
+    it('should return the tray id', function () {
+      const actual = TrackingActions.selectProject('some-tray-id')
+      expect(actual).to.have.property('trayId', 'some-tray-id')
+    })
+
+    it('should return the web url', function () {
+      const actual = TrackingActions.selectProject('irrelevant', 'some-project-url')
+      expect(actual).to.have.property('projectId', 'some-project-url')
+    })
+
+    it('should return if the project was selected', function () {
+      const actual = TrackingActions.selectProject('irrelevant', 'irrelevant', true)
+      expect(actual).to.have.property('selected', true)
+    })
+  })
+
   describe('add tray', function () {
     let dispatch
 

@@ -4,8 +4,7 @@ import {expect} from 'chai'
 import {reduce} from '../../../src/client/reducers/SelectedReducer'
 import {INITIALISED} from '../../../src/client/actions/NevergreenActions'
 import {IMPORTED_DATA} from '../../../src/client/actions/BackupActions'
-import {TRAY_ADDED, REMOVE_TRAY, PROJECTS_FETCHED} from '../../../src/client/actions/TrackingActions'
-import {SELECT_PROJECT} from '../../../src/client/actions/TrayActions'
+import {TRAY_ADDED, REMOVE_TRAY, PROJECTS_FETCHED, SELECT_PROJECT} from '../../../src/client/actions/TrackingActions'
 import Immutable from 'immutable'
 
 describe('SelectedReducer', function () {
