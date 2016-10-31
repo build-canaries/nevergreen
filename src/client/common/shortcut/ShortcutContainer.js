@@ -8,7 +8,7 @@ function mapDispatchToProps() {
 function mapStateToProps(store, ownProps) {
   return {
     hotkeys: ownProps.hotkeys,
-    show: store.get('shortcut').get('show')
+    show: store.get('shortcut')
   }
 }
 
