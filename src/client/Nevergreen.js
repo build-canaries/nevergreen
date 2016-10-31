@@ -31,7 +31,7 @@ class Nevergreen extends Component {
   render() {
     const checkVersion = () => this.props.checkForNewVersion(this.props.versionNumber)
 
-    const notification = _.size(this.props.notification) > 0 ?
+    const notification = !_.isEmpty(_.trim(this.props.notification)) ?
       <div className='pop-up-notification'>
         <div>
           <span className='icon-notification'/>

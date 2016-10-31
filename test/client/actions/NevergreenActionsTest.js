@@ -4,19 +4,15 @@ import {expect} from 'chai'
 import sinon from 'sinon'
 
 describe('NevergreenActions', function () {
-  let NevergreenActions, LocalRepository, Gateway, moment, semver, Migrations
+  let NevergreenActions, LocalRepository, moment, Migrations
 
   before(function () {
     LocalRepository = {}
-    Gateway = {}
     moment = {}
-    semver = {}
     Migrations = {}
     NevergreenActions = proxyquire('../../src/client/actions/NevergreenActions', {
       '../common/repo/LocalRepository': LocalRepository,
-      '../common/gateways/Gateway': Gateway,
       moment,
-      semver,
       '../common/repo/Migrations': Migrations
     })
   })
@@ -39,27 +35,6 @@ describe('NevergreenActions', function () {
     it('should return the configuration', function () {
       const actual = NevergreenActions.initalised({foo: 'bar'})
       expect(actual).to.have.property('data').that.contains.property('foo', 'bar')
-    })
-  })
-
-  describe('notification', function () {
-
-    it('should return the correct type', function () {
-      const actual = NevergreenActions.notification()
-      expect(actual).to.have.property('type', NevergreenActions.NOTIFICATION)
-    })
-
-    it('should return the message', function () {
-      const actual = NevergreenActions.notification('some-message')
-      expect(actual).to.have.property('message', 'some-message')
-    })
-  })
-
-  describe('notification dismiss', function () {
-
-    it('should return the correct type', function () {
-      const actual = NevergreenActions.dismiss()
-      expect(actual).to.have.property('type', NevergreenActions.NOTIFICATION_DISMISS)
     })
   })
 
@@ -101,29 +76,6 @@ describe('NevergreenActions', function () {
       moment.updateLocale = sinon.spy()
       return NevergreenActions.initalise()(dispatch).then(() => {
         expect(dispatch).to.have.been.calledWithMatch({type: NevergreenActions.INITIALISED})
-      })
-    })
-  })
-
-  describe('check for new version', function () {
-    let dispatch
-
-    beforeEach(function () {
-      dispatch = sinon.spy()
-    })
-
-    it('should call the github releases api', function () {
-      Gateway.get = sinon.stub().returns(Promise.resolve({}))
-      semver.gt = sinon.stub().returns(true)
-      NevergreenActions.checkForNewVersion()(dispatch)
-      expect(Gateway.get).to.have.been.calledWith('https://api.github.com/repos/build-canaries/nevergreen/releases/latest')
-    })
-
-    it('should dispatch notification if a new version is available', function () {
-      Gateway.get = sinon.stub().returns(Promise.resolve({}))
-      semver.gt = sinon.stub().returns(true)
-      return NevergreenActions.checkForNewVersion()(dispatch).then(() => {
-        expect(dispatch).to.have.been.calledWithMatch({type: NevergreenActions.NOTIFICATION})
       })
     })
   })

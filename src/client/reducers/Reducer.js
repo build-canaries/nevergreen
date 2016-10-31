@@ -8,6 +8,7 @@ import {reduce as interesting} from './InterestingReducer'
 import {reduce as backup} from './BackupReducer'
 import {reduce as selected} from './SelectedReducer'
 import {reduce as shortcut} from './ShortcutReducer'
+import {reduce as notification} from './NotificationReducer'
 
 export const reducer = combineReducers({
   nevergreen,
@@ -18,5 +19,6 @@ export const reducer = combineReducers({
   interesting,
   backup,
   selected,
-  shortcut
+  shortcut,
+  notification
 })

@@ -1,6 +1,7 @@
 import Immutable from 'immutable'
 import {connect} from 'react-redux'
-import {initalise, dismiss, checkForNewVersion} from './actions/NevergreenActions'
+import {initalise} from './actions/NevergreenActions'
+import {dismiss, checkForNewVersion} from './actions/NotificationActions'
 import {keyboardShortcut} from './actions/ShortcutActions'
 import Nevergreen from './Nevergreen'
 import Package from '../../package'
@@ -29,7 +30,8 @@ function mapStateToProps(store) {
     versionName: Package.versionName,
     versionColour: Package.versionColour,
     versionMeta: Package.versionMeta,
-    commitHash: Package.commitHash
+    commitHash: Package.commitHash,
+    notification: store.get('notification')
   }).toJS()
 }
 
