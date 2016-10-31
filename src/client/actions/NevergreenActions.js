@@ -28,14 +28,6 @@ function momentInit() {
   })
 }
 
-export const KEYBOARD_SHORTCUT = 'KEYBOARD_SHORTCUT'
-export function keyboardShortcut(show) {
-  return {
-    type: KEYBOARD_SHORTCUT,
-    show
-  }
-}
-
 export const INITIALISING = 'INITIALISING'
 export function initalising() {
   return {

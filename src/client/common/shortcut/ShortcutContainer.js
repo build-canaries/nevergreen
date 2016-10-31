@@ -8,7 +8,7 @@ function mapDispatchToProps() {
 function mapStateToProps(store, ownProps) {
   return {
     hotkeys: ownProps.hotkeys,
-    shortcutsShown: store.get('nevergreen').get('shortcutsShown')
+    show: store.get('shortcut').get('show')
   }
 }
 

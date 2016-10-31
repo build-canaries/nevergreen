@@ -2,7 +2,7 @@ import '../UnitSpec'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {reduce} from '../../../src/client/reducers/NevergreenReducer'
-import {INITIALISING, INITIALISED, KEYBOARD_SHORTCUT} from '../../../src/client/actions/NevergreenActions'
+import {INITIALISING, INITIALISED} from '../../../src/client/actions/NevergreenActions'
 import Immutable from 'immutable'
 
 describe('NevergreenReducer', function () {
@@ -21,13 +21,6 @@ describe('NevergreenReducer', function () {
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('loaded', false)
     })
-
-    it('should set the shortcuts shown property', function () {
-      const existingState = Immutable.Map({shortcutsShown: true})
-      const action = {type: INITIALISING}
-      const newState = reduce(existingState, action)
-      expect(newState).to.have.property('shortcutsShown', false)
-    })
   })
 
   describe('initialised action', function () {
@@ -44,16 +37,6 @@ describe('NevergreenReducer', function () {
       const action = {type: INITIALISED, data: Immutable.Map({nevergreen: {foo: 'bar'}})}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('foo', 'bar')
-    })
-  })
-
-  describe('keyboard shortcut action', function () {
-
-    it('should set the shortcuts shown property', function () {
-      const existingState = Immutable.Map({shortcutsShown: true})
-      const action = {type: KEYBOARD_SHORTCUT, show: false}
-      const newState = reduce(existingState, action)
-      expect(newState).to.have.property('shortcutsShown', false)
     })
   })
 })

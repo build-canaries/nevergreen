@@ -7,6 +7,7 @@ import {reduce as success} from './SuccessReducer'
 import {reduce as interesting} from './InterestingReducer'
 import {reduce as backup} from './BackupReducer'
 import {reduce as selected} from './SelectedReducer'
+import {reduce as shortcut} from './ShortcutReducer'
 
 export const reducer = combineReducers({
   nevergreen,
@@ -16,5 +17,6 @@ export const reducer = combineReducers({
   success,
   interesting,
   backup,
-  selected
+  selected,
+  shortcut
 })

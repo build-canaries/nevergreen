@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import Package from '../../../package'
-import {INITIALISING, INITIALISED, KEYBOARD_SHORTCUT} from '../actions/NevergreenActions'
+import {INITIALISING, INITIALISED} from '../actions/NevergreenActions'
 
 const DefaultState = Immutable.Map({
   loaded: false,
@@ -8,8 +8,7 @@ const DefaultState = Immutable.Map({
   versionName: Package.versionName,
   versionColour: Package.versionColour,
   versionMeta: Package.versionMeta,
-  commitHash: Package.commitHash,
-  shortcutsShown: false
+  commitHash: Package.commitHash
 })
 
 export function reduce(state = DefaultState, action) {
@@ -19,9 +18,6 @@ export function reduce(state = DefaultState, action) {
 
     case INITIALISED:
       return state.set('loaded', true).merge(action.data.get('nevergreen'))
-
-    case KEYBOARD_SHORTCUT:
-      return state.set('shortcutsShown', action.show)
 
     default:
       return state

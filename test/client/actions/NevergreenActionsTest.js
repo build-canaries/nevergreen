@@ -21,19 +21,6 @@ describe('NevergreenActions', function () {
     })
   })
 
-  describe('keyboard shortcut', function () {
-
-    it('should return the correct type', function () {
-      const actual = NevergreenActions.keyboardShortcut()
-      expect(actual).to.have.property('type', NevergreenActions.KEYBOARD_SHORTCUT)
-    })
-
-    it('should return if they are shown', function () {
-      const actual = NevergreenActions.keyboardShortcut(true)
-      expect(actual).to.have.property('show', true)
-    })
-  })
-
   describe('initalising', function () {
 
     it('should return the correct type', function () {

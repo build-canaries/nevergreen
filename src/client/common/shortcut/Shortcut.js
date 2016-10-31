@@ -37,7 +37,7 @@ class Shortcut extends Component {
   }
 
   render() {
-    const hotkeyClass = this.props.shortcutsShown ? 'hotkey' : 'hidden'
+    const hotkeyClass = this.props.show ? 'hotkey' : 'hidden'
     const or = <span className='hotkey-or'>or</span>
 
     const keys = this.props.hotkeys.map((keySeq, index) => {
@@ -50,7 +50,7 @@ class Shortcut extends Component {
 
 Shortcut.propTypes = {
   hotkeys: PropTypes.arrayOf(PropTypes.string).isRequired,
-  shortcutsShown: PropTypes.bool
+  show: PropTypes.bool
 }
 
 export default Shortcut

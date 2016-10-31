@@ -1,6 +1,7 @@
 import Immutable from 'immutable'
 import {connect} from 'react-redux'
-import {initalise, keyboardShortcut, dismiss, checkForNewVersion} from './actions/NevergreenActions'
+import {initalise, dismiss, checkForNewVersion} from './actions/NevergreenActions'
+import {keyboardShortcut} from './actions/ShortcutActions'
 import Nevergreen from './Nevergreen'
 import Package from '../../package'
 
