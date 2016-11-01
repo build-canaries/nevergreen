@@ -4,7 +4,7 @@ import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
 import Tray from '../../../../src/client/tracking/tray/Tray'
-import AvailableProjects from '../../../../src/client/tracking/tray/AvailableProjects'
+import AvailableProjects from '../../../../src/client/tracking/projects/AvailableProjects'
 import Messages from '../../../../src/client/common/messages/Messages'
 
 describe('<Tray/>', function () {

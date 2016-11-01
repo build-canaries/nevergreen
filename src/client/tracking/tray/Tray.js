@@ -1,32 +1,20 @@
 import React, {Component, PropTypes} from 'react'
 import Container from '../../common/Container'
-import AvailableProjects from './AvailableProjects'
-import TraySettings from './TraySettings'
+import AvailableProjects from '../projects/AvailableProjects'
+import TraySettings from '../settings/TraySettings'
 import Loading from '../../common/loading/Loading'
 import Messages from '../../common/messages/Messages'
-import ShortcutContainer from '../../common/shortcut/ShortcutContainer'
-import moment from 'moment'
+import ProjectsSubMenu from '../projects/SubMenu'
+import SettingsSubMenu from '../settings/SubMenu'
 import './tray.scss'
-import Timer from '../../common/Timer'
-
-const ONE_MINUTE = 60 * 1000
-
-function lastFetched(timestamp) {
-  return timestamp ? moment(timestamp).fromNow(true) : '??'
-}
 
 class Tray extends Component {
   constructor(props) {
     super(props)
     this.state = {
       showSettings: false,
-      hidden: false,
-      lastFetched: lastFetched(props.timestamp)
+      hidden: false
     }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({lastFetched: lastFetched(nextProps.timestamp)})
   }
 
   componentDidMount() {
@@ -36,7 +24,6 @@ class Tray extends Component {
   }
 
   render() {
-    const updateFetchedTime = () => this.setState({lastFetched: lastFetched(this.props.timestamp)})
     const updateTray = (trayId, name, url, username, oldPassword, newPassword) => {
       this.setState({showSettings: false})
       this.props.updateTray(trayId, name, url, username, oldPassword, newPassword)
@@ -60,37 +47,16 @@ class Tray extends Component {
       }
     }
 
-    const toggleLabel = this.state.showSettings ? 'Show projects' : 'Show settings'
     const title = this.props.name || this.props.url
     const subTitle = this.props.name ? this.props.url : ''
-    const refreshButton = this.state.showSettings || !this.props.loaded ? null :
-      <button className='button' onClick={refreshTray}>
-        <span className='icon-loop2'/>
-        <span className='text-with-icon'>Refresh tray</span>
-        <ShortcutContainer hotkeys={[`r ${this.props.index}`]}/>
-      </button>
-    let refreshLabel
-    if (this.state.showSettings) {
-      refreshLabel = ''
-    } else if (!this.props.loaded) {
-      refreshLabel = 'refreshing...'
-    } else {
-      refreshLabel = `last refreshed ${this.state.lastFetched} ago`
-    }
 
     return (
       <Container title={title} subTitle={subTitle} className='tray'>
-        <Timer onTrigger={updateFetchedTime} interval={ONE_MINUTE}/>
         <div>
-          <div className='tray-sub-bar'>
-            <button className='button' onClick={toggleSettingsView} title='Toggle settings'>
-              <span className={'icon-' + (this.state.showSettings ? 'list' : 'cog') }/>
-              <span className='text-with-icon'>{toggleLabel}</span>
-              <ShortcutContainer hotkeys={[`p ${this.props.index}`]}/>
-            </button>
-            {refreshButton}
-            <span className='tray-refresh-last-fetch'>{refreshLabel}</span>
-          </div>
+          {this.state.showSettings ?
+            <SettingsSubMenu index={this.props.index} toggleSettingsView={toggleSettingsView}/> :
+            <ProjectsSubMenu loaded={this.props.loaded} index={this.props.index} timestamp={this.props.timestamp}
+                             refreshTray={refreshTray} toggleSettingsView={toggleSettingsView}/>}
           <div>
             <Loading loaded={this.props.loaded}>
               {subContent}

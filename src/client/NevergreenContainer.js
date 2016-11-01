@@ -1,4 +1,3 @@
-import Immutable from 'immutable'
 import {connect} from 'react-redux'
 import {initalise} from './actions/NevergreenActions'
 import {dismiss, checkForNewVersion} from './actions/NotificationActions'
@@ -24,7 +23,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(store) {
-  return Immutable.Map({
+  return {
     loaded: store.get('nevergreen').get('loaded'),
     versionNumber: Package.version,
     versionName: Package.versionName,
@@ -32,7 +31,7 @@ function mapStateToProps(store) {
     versionMeta: Package.versionMeta,
     commitHash: Package.commitHash,
     notification: store.get('notification')
-  }).toJS()
+  }
 }
 
 export default connect(

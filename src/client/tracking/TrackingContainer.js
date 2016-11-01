@@ -1,21 +1,12 @@
 import Immutable from 'immutable'
 import {connect} from 'react-redux'
-import {addTray, removeTray, refreshTray, updateTray} from '../actions/TrackingActions'
+import {addTray} from '../actions/TrackingActions'
 import Tracking from './Tracking'
 
 function mapDispatchToProps(dispatch) {
   return {
     addTray(url, username, password) {
       dispatch(addTray(url, username, password))
-    },
-    removeTray(trayId) {
-      dispatch(removeTray(trayId))
-    },
-    refreshTray(tray) {
-      dispatch(refreshTray(tray))
-    },
-    updateTray(trayId, name, url, username, oldPassword, newPassword) {
-      dispatch(updateTray(trayId, name, url, username, oldPassword, newPassword))
     }
   }
 }
