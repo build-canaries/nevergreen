@@ -1,24 +1,14 @@
 import Immutable from 'immutable'
 import {interesting} from '../common/gateways/ProjectsGateway'
 
-function replaceBuildLabels(webUrl) {
-  return webUrl.replace(/\/\d+(?:\/|$)/, '/0/')
-}
-
 export const INTERESTING_PROJECTS = 'INTERESTING_PROJECTS'
 export function interestingProjects(projects) {
-  return {
-    type: INTERESTING_PROJECTS,
-    data: Immutable.fromJS(projects).map((project) => project.set('projectId', replaceBuildLabels(project.get('webUrl'))))
-  }
+  return {type: INTERESTING_PROJECTS, data: Immutable.fromJS(projects)}
 }
 
 export const INTERESTING_PROJECTS_ERROR = 'INTERESTING_PROJECTS_ERROR'
 export function interestingProjectsError(errors) {
-  return {
-    type: INTERESTING_PROJECTS_ERROR,
-    errors: Immutable.List(errors)
-  }
+  return {type: INTERESTING_PROJECTS_ERROR, errors: Immutable.List(errors)}
 }
 
 export function fetchInteresting(trays, selected) {

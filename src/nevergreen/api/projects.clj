@@ -16,8 +16,14 @@
   (or (blank? url)
       (not (re-find #"https?://" url))))
 
-(defn filter-by-urls [urls projects]
-  (filter #(in? urls (replace-build-labels (:web-url %))) projects))
+(defn- generate-project-id [project]
+  (replace-build-labels (:web-url project)))
+
+(defn- add-project-ids [projects]
+  (map #(assoc % :project-id (generate-project-id %)) projects))
+
+(defn filter-by-ids [ids projects]
+  (filter #(in? ids (:project-id %)) projects))
 
 (defn- invalid-url-error-message [url]
   (if (blank? url)
@@ -49,7 +55,8 @@
     (->>
       (parser/get-projects
         (http-get (:url tray) (set-auth-header (:username tray) decrypted-password))
-        {:normalise true :server server-type}))))
+        {:normalise true :server server-type})
+      (add-project-ids))))
 
 (defn get-all [trays]
   (if (= (count trays) 1)
@@ -59,7 +66,7 @@
 (defn fetch-interesting [tray]
   (->> (fetch-tray tray)
        (filtering/interesting)
-       (filter-by-urls (:included tray))
+       (filter-by-ids (:included tray))
        (add-tray-id (:tray-id tray))))
 
 (defn get-interesting [trays]

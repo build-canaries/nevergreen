@@ -24,11 +24,6 @@ describe('MonitorActions', function () {
       const actual = MonitorActions.interestingProjects([{foo: 'bar', webUrl: ''}])
       expect(actual).to.have.property('data').that.includes.deep.property('[0].foo', 'bar')
     })
-
-    it('should add a project id, replacing any build labels so Go/Snap work correctly', function () {
-      const actual = MonitorActions.interestingProjects([{webUrl: 'a/1/b'}])
-      expect(actual).to.have.property('data').that.includes.deep.property('[0].projectId', 'a/0/b')
-    })
   })
 
   describe('interesting projects error', function () {

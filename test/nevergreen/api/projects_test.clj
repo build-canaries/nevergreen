@@ -13,27 +13,30 @@
 (facts "it fetches projects"
        (fact "with authentication"
              (subject/fetch-tray {:url valid-url :username "a-user" :password "encrypted-password"}) => (contains (list (contains {:name       "project-1"
-                                                                                                                                   :prognosis  :sick})))
+                                                                                                                                   :prognosis  :sick
+                                                                                                                                   :project-id anything})))
              (provided
-               (parser/get-projects ..stream.. anything) => [{:name "project-1" :prognosis :sick}]
+               (parser/get-projects ..stream.. anything) => [{:name "project-1" :web-url "project-1" :prognosis :sick}]
                (crypt/decrypt "encrypted-password") => password
                (security/basic-auth-header "a-user" password) => ..auth-header..
                (http/http-get valid-url ..auth-header..) => ..stream..))
 
        (fact "without authentication"
              (subject/fetch-tray {:url valid-url}) => (contains (list (contains {:name       "project-1"
-                                                                                 :prognosis  :sick})))
+                                                                                 :prognosis  :sick
+                                                                                 :project-id anything})))
              (provided
-               (parser/get-projects ..stream.. anything) => [{:name "project-1" :prognosis :sick}]
+               (parser/get-projects ..stream.. anything) => [{:name "project-1" :web-url "project-1" :prognosis :sick}]
                (http/http-get valid-url nil) => ..stream..
                (crypt/decrypt anything) => anything :times 0
                (security/basic-auth-header anything anything) => anything :times 0))
 
        (fact "without authentication if blank username and password"
              (subject/fetch-tray {:url valid-url :username "" :password ""}) => (contains (list (contains {:name       "project-1"
-                                                                                                           :prognosis  :sick})))
+                                                                                                           :prognosis  :sick
+                                                                                                           :project-id anything})))
              (provided
-               (parser/get-projects ..stream.. anything) => [{:name "project-1" :prognosis :sick}]
+               (parser/get-projects ..stream.. anything) => [{:name "project-1" :web-url "project-1" :prognosis :sick}]
                (http/http-get valid-url nil) => ..stream..
                (crypt/decrypt anything) => anything :times 0
                (security/basic-auth-header anything anything) => anything :times 0)))
@@ -65,7 +68,7 @@
        (fact "removes healthy projects"
              (subject/get-interesting [{:tray-id "a-tray" :included ["project-1"] :url valid-url}]) => (list)
              (provided
-               (subject/fetch-tray anything) => {:web-url "project-1" :prognosis :healthy}))
+               (subject/fetch-tray anything) => {:project-id "project-1" :prognosis :healthy}))
 
        (facts "uses pmap to parallelise the work"
               (fact "if multiple projects are given"
@@ -80,9 +83,9 @@
                       (subject/fetch-interesting anything) => irrelevant)))
 
        (fact "handles no tray id being given"
-             (subject/get-interesting [{:included ["project"] :url valid-url}]) => (list {:tray-id nil :prognosis :sick :web-url "project"})
+             (subject/get-interesting [{:included ["project"] :url valid-url}]) => (list {:tray-id nil :project-id "project" :prognosis :sick})
              (provided
-               (subject/fetch-tray anything) => [{:web-url "project" :prognosis :sick}])))
+               (subject/fetch-tray anything) => [{:project-id "project" :prognosis :sick}])))
 
 (facts "gets the server type"
        (fact "converts known server value to a symbol"
