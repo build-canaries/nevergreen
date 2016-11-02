@@ -147,13 +147,13 @@ describe('TrackingActions', function () {
     })
 
     it('should return the projects', function () {
-      const actual = TrackingActions.projectsFetched('irrelevant', [{foo: 'bar'}])
+      const actual = TrackingActions.projectsFetched('irrelevant', [{foo: 'bar', webUrl: ''}])
       expect(actual).to.have.property('data').that.includes.deep.property('[0].foo', 'bar')
     })
 
-    it('should add a project id', function () {
-      const actual = TrackingActions.projectsFetched('irrelevant', [{webUrl: 'a'}])
-      expect(actual).to.have.property('data').that.includes.deep.property('[0].projectId', 'a')
+    it('should add a project id, replacing any build labels so Go/Snap work correctly', function () {
+      const actual = TrackingActions.projectsFetched('irrelevant', [{webUrl: 'a/1/b'}])
+      expect(actual).to.have.property('data').that.includes.deep.property('[0].projectId', 'a/0/b')
     })
 
     it('should return a timestamp', function () {

@@ -17,6 +17,10 @@ function generateRandomName() {
   return _.startCase(nameGenerator().spaced)
 }
 
+function replaceBuildLabels(webUrl) {
+  return webUrl.replace(/\/\d+(?:\/|$)/, '/0/')
+}
+
 export const TRAY_ADDED = 'TRAY_ADDED'
 export function trayAdded(trayId, url, username) {
   return {
@@ -79,7 +83,7 @@ export function projectsFetched(trayId, projects) {
   return {
     type: PROJECTS_FETCHED,
     trayId,
-    data: Immutable.fromJS(projects).map((project) => project.set('projectId', project.get('webUrl'))),
+    data: Immutable.fromJS(projects).map((project) => project.set('projectId', replaceBuildLabels(project.get('webUrl')))),
     timestamp: moment().format()
   }
 }
