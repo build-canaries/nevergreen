@@ -25,10 +25,9 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(store) {
   return {
     loaded: store.get('nevergreen').get('loaded'),
-    versionNumber: Package.version,
+    versionNumber: `${Package.version}+${Package.versionMeta}`,
     versionName: Package.versionName,
     versionColour: Package.versionColour,
-    versionMeta: Package.versionMeta,
     commitHash: Package.commitHash,
     notification: store.get('notification')
   }
