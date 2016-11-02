@@ -2,18 +2,22 @@
   (:require [clj-cctray.core :as parser]
             [clj-cctray.filtering :as filtering]
             [clj-cctray.util :refer [in?]]
-            [clojure.string :refer [blank?]]
+            [clojure.string :refer [blank? replace]]
             [nevergreen.http :refer [http-get]]
             [nevergreen.servers :as servers]
             [nevergreen.security :as security]
-            [nevergreen.crypto :as crypt]))
+            [nevergreen.crypto :as crypt])
+  (:refer-clojure :exclude [replace]))
+
+(defn- replace-build-labels [webUrl]
+  (replace webUrl #"\/\d+(?:\/|$)" "/0/"))
 
 (defn invalid-scheme? [url]
   (or (blank? url)
       (not (re-find #"https?://" url))))
 
 (defn filter-by-urls [urls projects]
-  (filter #(in? urls (:web-url %)) projects))
+  (filter #(in? urls (replace-build-labels (:web-url %))) projects))
 
 (defn- invalid-url-error-message [url]
   (if (blank? url)
