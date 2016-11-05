@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import Container from '../common/Container'
 import RemoveLink from './RemoveLink'
 import './added-images.scss'
+import _ from 'lodash'
 
 class AddedImages extends Component {
   constructor(props) {
@@ -9,15 +10,21 @@ class AddedImages extends Component {
   }
 
   render() {
+    if (_.isEmpty(this.props.urls)) {
+      return null
+    }
+
     return (
       <Container title='Images' className='added-images'>
         <ul className='success-images-list'>
           {
-            this.props.messages.map((message, index) => {
+            this.props.urls.map((url, index) => {
+              const remove = () => this.props.removeMessage(url)
+
               return (
                 <li key={`i${index}`} className='success-item image'>
-                  <img className='success-list-image' src={message} alt={message}/>
-                  <RemoveLink hotkeys={[`y i ${index}`]} removeMessage={this.props.removeMessage.bind(null, message)}/>
+                  <img className='success-list-image' src={url} alt={url} title={url}/>
+                  <RemoveLink hotkeys={[`y i ${index}`]} removeMessage={remove}/>
                 </li>
               )
             })
@@ -29,7 +36,7 @@ class AddedImages extends Component {
 }
 
 AddedImages.propTypes = {
-  messages: PropTypes.arrayOf(PropTypes.string).isRequired,
+  urls: PropTypes.arrayOf(PropTypes.string).isRequired,
   removeMessage: PropTypes.func.isRequired
 }
 

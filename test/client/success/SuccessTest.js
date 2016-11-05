@@ -17,14 +17,14 @@ describe('Success <Success/>', function () {
   }
 
   it('should render text messages', function () {
-    const props = Object.assign({}, DEFAULT_PROPS, {messages: ['some-message']})
+    const props = Object.assign({}, DEFAULT_PROPS, {messages: ['some-message', 'http://some-url']})
     const wrapper = shallow(<Success {...props} />)
     expect(wrapper.find(AddedMessages)).to.have.prop('messages').that.contains('some-message')
   })
 
   it('should render images', function () {
-    const props = Object.assign({}, DEFAULT_PROPS, {messages: ['http://some-url']})
+    const props = Object.assign({}, DEFAULT_PROPS, {messages: ['some-message', 'http://some-url']})
     const wrapper = shallow(<Success {...props} />)
-    expect(wrapper.find(AddedImages)).to.have.prop('messages').that.contains('http://some-url')
+    expect(wrapper.find(AddedImages)).to.have.prop('urls').that.contains('http://some-url')
   })
 })

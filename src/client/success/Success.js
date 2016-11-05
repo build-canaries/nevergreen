@@ -3,7 +3,6 @@ import AddedMessages from './AddedMessages'
 import AddedImages from './AddedImages'
 import AddMessage from './AddMessage'
 import './success.scss'
-import _ from 'lodash'
 
 class Success extends Component {
   constructor(props) {
@@ -18,9 +17,8 @@ class Success extends Component {
       <section className='success'>
         <h2 className='visually-hidden'>Success</h2>
         <AddMessage addMessage={this.props.addMessage}/>
-
-        { !_.isEmpty(messages) ? <AddedMessages messages={messages} removeMessage={this.props.removeMessage}/> : null }
-        { !_.isEmpty(images) ? <AddedImages messages={images} removeMessage={this.props.removeMessage}/> : null }
+        <AddedMessages messages={messages} removeMessage={this.props.removeMessage}/>
+        <AddedImages urls={images} removeMessage={this.props.removeMessage}/>
       </section>
     )
   }

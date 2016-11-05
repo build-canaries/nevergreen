@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import Container from '../common/Container'
 import RemoveLink from './RemoveLink'
 import './added-messages.scss'
+import _ from 'lodash'
 
 class AddedMessages extends Component {
   constructor(props) {
@@ -9,15 +10,21 @@ class AddedMessages extends Component {
   }
 
   render() {
+    if (_.isEmpty(this.props.messages)) {
+      return null
+    }
+
     return (
       <Container title='Messages' className='added-messages'>
         <ul className='success-text-list'>
           {
             this.props.messages.map((message, index) => {
+              const remove = () => this.props.removeMessage(message)
+
               return (
                 <li key={`m${index}`} className='success-item'>
                   <span className='message'>{message}</span>
-                  <RemoveLink hotkeys={[`y m ${index}`]} removeMessage={this.props.removeMessage.bind(null, message)}/>
+                  <RemoveLink hotkeys={[`y m ${index}`]} removeMessage={remove}/>
                 </li>
               )
             })
