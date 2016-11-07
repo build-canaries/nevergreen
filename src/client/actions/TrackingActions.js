@@ -19,11 +19,7 @@ function generateRandomName() {
 
 export const TRAY_ADDED = 'TRAY_ADDED'
 export function trayAdded(trayId, url, username) {
-  return {
-    type: TRAY_ADDED,
-    trayId,
-    data: Immutable.Map({trayId, url, username, name: generateRandomName()})
-  }
+  return {type: TRAY_ADDED, trayId, data: Immutable.Map({trayId, url, username, name: generateRandomName()})}
 }
 
 export const ENCRYPTING_PASSWORD = 'ENCRYPTING_PASSWORD'
@@ -85,18 +81,20 @@ export function encryptPassword(trayId, password) {
   }
 }
 
-export function addTray(enteredUrl, username, rawPassword) {
+export function addTray(enteredUrl, username, rawPassword, existingTrays) {
   return function (dispatch) {
     const url = hasScheme(enteredUrl) ? enteredUrl : 'http://' + enteredUrl
     const trayId = url
 
-    dispatch(trayAdded(trayId, url, username))
+    if (!_.includes(existingTrays, trayId)) {
+      dispatch(trayAdded(trayId, url, username))
 
-    if (isNotBlank(rawPassword)) {
-      return dispatch(encryptPassword(trayId, rawPassword))
-        .then((encryptedPassword) => dispatch(refreshTray({trayId, url, username, password: encryptedPassword})))
-    } else {
-      return dispatch(refreshTray({trayId, url, username}))
+      if (isNotBlank(rawPassword)) {
+        return dispatch(encryptPassword(trayId, rawPassword))
+          .then((encryptedPassword) => dispatch(refreshTray({trayId, url, username, password: encryptedPassword})))
+      } else {
+        return dispatch(refreshTray({trayId, url, username}))
+      }
     }
   }
 }

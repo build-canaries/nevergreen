@@ -18,7 +18,7 @@ rules:
   quotes: ['error', 'single']
   semi: ['error', 'never']
   babel/generator-star-spacing: ['error']
-  babel/new-cap: ['error', {capIsNewExceptions: ['Immutable.Map', 'Immutable.List', 'Immutable.Set', 'Immutable.OrderedSet']}]
+  babel/new-cap: ['error', {capIsNewExceptions: ['Immutable.Map', 'Immutable.List', 'Immutable.Set', 'Immutable.OrderedSet', 'Immutable.OrderedMap']}]
   babel/object-shorthand: ['error']
   babel/arrow-parens: ['error']
   babel/no-await-in-loop: ['error']

@@ -273,6 +273,8 @@ describe('TrackingActions', function () {
     it('should encrypt any password given')
 
     it('should refresh tray')
+
+    it('should not dispatch anything if the tray has already been added')
   })
 
   describe('update tray', function () {

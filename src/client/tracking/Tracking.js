@@ -9,10 +9,12 @@ class Tracking extends Component {
   }
 
   render() {
+    const existingTrays = this.props.trays.map((tray) => tray.trayId)
+
     return (
       <section className='tracking'>
         <h2 className='visually-hidden'>Tracking</h2>
-        <AddTray addTray={this.props.addTray}/>
+        <AddTray addTray={this.props.addTray} existingTrays={existingTrays}/>
         <div>
           {this.props.trays.map((tray, index) => <TrayContainer key={tray.trayId} index={index} {...tray}/>)}
         </div>

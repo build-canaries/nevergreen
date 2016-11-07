@@ -13,7 +13,7 @@ import {
 import {INITIALISED} from '../actions/NevergreenActions'
 import {IMPORTED_DATA} from '../actions/BackupActions'
 
-const DefaultState = Immutable.Map()
+const DefaultState = Immutable.OrderedMap()
 
 export function reduce(state = DefaultState, action) {
   switch (action.type) {
