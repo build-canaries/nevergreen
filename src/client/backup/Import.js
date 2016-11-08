@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import Messages from '../common/messages/Messages'
-import Container from '../common/Container'
+import Container from '../common/container/Container'
 import PrimaryInput from '../common/PrimaryInput'
 import './import.scss'
 import _ from 'lodash'

@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import Messages from '../common/messages/Messages'
 import Clipboard from 'clipboard'
-import Container from '../common/Container'
+import Container from '../common/container/Container'
 import './export.scss'
 
 class Export extends Component {

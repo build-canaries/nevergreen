@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import Container from '../common/Container'
+import Container from '../common/container/Container'
 import RemoveLink from './RemoveLink'
 import './added-messages.scss'
 import _ from 'lodash'

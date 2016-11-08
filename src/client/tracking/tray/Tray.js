@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import Container from '../../common/Container'
+import Container from '../../common/container/Container'
 import AvailableProjects from '../projects/AvailableProjects'
 import TraySettings from '../settings/TraySettings'
 import Loading from '../../common/loading/Loading'

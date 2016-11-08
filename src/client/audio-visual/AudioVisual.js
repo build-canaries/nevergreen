@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import ConfigOption from './ConfigOption'
-import Container from '../common/Container'
+import Container from '../common/container/Container'
 import Messages from '../common/messages/Messages'
 import './audio-visual.scss'
 
