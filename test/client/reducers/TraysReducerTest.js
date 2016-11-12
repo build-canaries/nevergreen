@@ -13,7 +13,9 @@ import {
   PROJECTS_FETCHED,
   PASSWORD_ENCRYPT_ERROR,
   PROJECTS_FETCH_ERROR,
-  UPDATING_TRAY
+  UPDATING_TRAY,
+  HIGHLIGHT_TRAY,
+  CLEAR_TRAY_HIGHLIGHT
 } from '../../../src/client/actions/TrackingActions'
 import Immutable from 'immutable'
 
@@ -75,6 +77,33 @@ describe('TraysReducer', function () {
       const action = {type: TRAY_ADDED, trayId: 'trayId', data: Immutable.fromJS({foo: 'bar'})}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('trayId').that.has.property('foo', 'bar')
+    })
+  })
+
+  describe('highlight tray action', function () {
+
+    it('should set the highlight flag to true', function () {
+      const existingState = Immutable.fromJS({trayId: {highlight: false}})
+      const action = {type: HIGHLIGHT_TRAY, trayId: 'trayId'}
+      const newState = reduce(existingState, action)
+      expect(newState).to.have.property('trayId').that.has.property('highlight', true)
+    })
+  })
+
+  describe('clear tray highlight action', function () {
+
+    it('should set the highlight flag to false', function () {
+      const existingState = Immutable.fromJS({trayId: {highlight: true}})
+      const action = {type: CLEAR_TRAY_HIGHLIGHT, trayId: 'trayId'}
+      const newState = reduce(existingState, action)
+      expect(newState).to.have.property('trayId').that.has.property('highlight', false)
+    })
+
+    it('should check the tray has not been removed (we clear on unmount which happens after the remove tray action)', function () {
+      const existingState = Immutable.Map()
+      const action = {type: CLEAR_TRAY_HIGHLIGHT, trayId: 'trayId'}
+      const newState = reduce(existingState, action)
+      expect(newState).to.not.have.property('trayId')
     })
   })
 

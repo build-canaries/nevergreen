@@ -19,7 +19,21 @@ function generateRandomName() {
 
 export const TRAY_ADDED = 'TRAY_ADDED'
 export function trayAdded(trayId, url, username) {
-  return {type: TRAY_ADDED, trayId, data: Immutable.Map({trayId, url, username, name: generateRandomName()})}
+  return {
+    type: TRAY_ADDED,
+    trayId,
+    data: Immutable.Map({trayId, url, username, name: generateRandomName(), highlight: true})
+  }
+}
+
+export const HIGHLIGHT_TRAY = 'HIGHLIGHT_TRAY'
+export function highlightTray(trayId) {
+  return {type: HIGHLIGHT_TRAY, trayId}
+}
+
+export const CLEAR_TRAY_HIGHLIGHT = 'CLEAR_TRAY_HIGHLIGHT'
+export function clearTrayHighlight(trayId) {
+  return {type: CLEAR_TRAY_HIGHLIGHT, trayId}
 }
 
 export const ENCRYPTING_PASSWORD = 'ENCRYPTING_PASSWORD'
@@ -86,7 +100,9 @@ export function addTray(enteredUrl, username, rawPassword, existingTrays) {
     const url = hasScheme(enteredUrl) ? enteredUrl : 'http://' + enteredUrl
     const trayId = url
 
-    if (!_.includes(existingTrays, trayId)) {
+    if (_.includes(existingTrays, trayId)) {
+      dispatch(highlightTray(trayId))
+    } else {
       dispatch(trayAdded(trayId, url, username))
 
       if (isNotBlank(rawPassword)) {

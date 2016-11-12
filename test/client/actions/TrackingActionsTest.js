@@ -52,6 +52,37 @@ describe('TrackingActions', function () {
       const actual = TrackingActions.trayAdded()
       expect(actual).to.have.property('data').that.includes.property('name', 'Generated Name')
     })
+
+    it('should return highlight', function () {
+      const actual = TrackingActions.trayAdded('irrelevant', 'irrelevant', 'some-username')
+      expect(actual).to.have.property('data').that.includes.property('highlight', true)
+    })
+  })
+
+  describe('highlight tray', function () {
+
+    it('should return the correct type', function () {
+      const actual = TrackingActions.highlightTray()
+      expect(actual).to.have.property('type', TrackingActions.HIGHLIGHT_TRAY)
+    })
+
+    it('should return the tray id', function () {
+      const actual = TrackingActions.highlightTray('some-tray-id')
+      expect(actual).to.have.property('trayId', 'some-tray-id')
+    })
+  })
+
+  describe('clear tray highlight', function () {
+
+    it('should return the correct type', function () {
+      const actual = TrackingActions.clearTrayHighlight()
+      expect(actual).to.have.property('type', TrackingActions.CLEAR_TRAY_HIGHLIGHT)
+    })
+
+    it('should return the tray id', function () {
+      const actual = TrackingActions.clearTrayHighlight('some-tray-id')
+      expect(actual).to.have.property('trayId', 'some-tray-id')
+    })
   })
 
   describe('encrypting password', function () {

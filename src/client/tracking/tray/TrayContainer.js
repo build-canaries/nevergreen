@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import {connect} from 'react-redux'
-import {removeTray, refreshTray, updateTray, selectProject} from '../../actions/TrackingActions'
+import {removeTray, refreshTray, updateTray, selectProject, clearTrayHighlight} from '../../actions/TrackingActions'
 import Tray from './Tray'
 
 function mapDispatchToProps(dispatch) {
@@ -16,6 +16,9 @@ function mapDispatchToProps(dispatch) {
     },
     selectProject(trayId, projectUrl, selected) {
       dispatch(selectProject(trayId, projectUrl, selected))
+    },
+    clearTrayHighlight(trayId) {
+      dispatch(clearTrayHighlight(trayId))
     }
   }
 }

@@ -8,7 +8,9 @@ import {
   PROJECTS_FETCHING,
   PROJECTS_FETCH_ERROR,
   PROJECTS_FETCHED,
-  UPDATING_TRAY
+  UPDATING_TRAY,
+  HIGHLIGHT_TRAY,
+  CLEAR_TRAY_HIGHLIGHT
 } from '../actions/TrackingActions'
 import {INITIALISED} from '../actions/NevergreenActions'
 import {IMPORTED_DATA} from '../actions/BackupActions'
@@ -25,6 +27,12 @@ export function reduce(state = DefaultState, action) {
 
     case TRAY_ADDED:
       return state.set(action.trayId, action.data)
+
+    case HIGHLIGHT_TRAY:
+      return state.update(action.trayId, (tray) => tray.set('highlight', true))
+
+    case CLEAR_TRAY_HIGHLIGHT:
+      return state.has(action.trayId) ? state.update(action.trayId, (tray) => tray.set('highlight', false)) : state
 
     case REMOVE_TRAY:
       return state.delete(action.trayId)

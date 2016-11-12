@@ -19,11 +19,17 @@ class Container extends Component {
     }
     const showHideLabel = this.state.hidden ? 'Show pane' : 'Hide pane'
     const showHideIcon = this.state.hidden ? 'icon-circle-down' : 'icon-circle-up'
+    const titleClass = this.props.highlight ? 'section-title highlight' : 'section-title'
+    const highlight = (node) => {
+      if (this.props.highlight && node) {
+        node.scrollIntoView(true)
+      }
+    }
 
     return (
-      <section className={`container ${this.props.className}`} title={showHideLabel}>
-        <h3 className='section-title' onClick={toggleHidden} onKeyPress={keyToggle} tabIndex='0'>
-          <span className={` show-hide ${showHideIcon}`}/>
+      <section className={`container ${this.props.className}`} title={showHideLabel} ref={highlight}>
+        <h3 className={titleClass} onClick={toggleHidden} onKeyPress={keyToggle} tabIndex='0'>
+          <span className={`show-hide ${showHideIcon}`}/>
           {this.props.title}
           <span className='section-sub-title'>{this.props.subTitle}</span>
         </h3>
@@ -41,7 +47,8 @@ Container.propTypes = {
   title: PropTypes.string.isRequired,
   subTitle: PropTypes.string,
   className: PropTypes.string,
-  hidden: PropTypes.bool
+  hidden: PropTypes.bool,
+  highlight: PropTypes.bool
 }
 
 export default Container

@@ -11,15 +11,18 @@ import './tray.scss'
 class Tray extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      showSettings: false,
-      hidden: false
-    }
+    this.state = {showSettings: false, hidden: false}
   }
 
   componentDidMount() {
     if (this.props.projects.length === 0) {
       this.props.refreshTray(this.props)
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.props.highlight) {
+      this.props.clearTrayHighlight(this.props.trayId)
     }
   }
 
@@ -34,16 +37,16 @@ class Tray extends Component {
     let subContent
 
     if (this.state.showSettings) {
-      subContent = <TraySettings {...this.props} updateTray={updateTray} cancel={toggleSettingsView}/>
+      subContent = <TraySettings trayId={this.props.trayId} name={this.props.name} url={this.props.url}
+                                 username={this.props.username} password={this.props.password} updateTray={updateTray}
+                                 removeTray={this.props.removeTray} cancel={toggleSettingsView}/>
     } else {
       if (this.props.errors) {
         subContent = <Messages type='notification' messages={this.props.errors}/>
       } else {
-        subContent = <AvailableProjects index={this.props.index}
-                                        trayId={this.props.trayId}
-                                        projects={this.props.projects}
-                                        selected={this.props.selected}
-                                        selectProject={this.props.selectProject}/>
+        subContent =
+          <AvailableProjects index={this.props.index} trayId={this.props.trayId} projects={this.props.projects}
+                             selected={this.props.selected} selectProject={this.props.selectProject}/>
       }
     }
 
@@ -51,7 +54,7 @@ class Tray extends Component {
     const subTitle = this.props.name ? this.props.url : ''
 
     return (
-      <Container title={title} subTitle={subTitle} className='tray'>
+      <Container title={title} subTitle={subTitle} className='tray' highlight={this.props.highlight}>
         <div>
           {this.state.showSettings ?
             <SettingsSubMenu index={this.props.index} toggleSettingsView={toggleSettingsView}/> :
@@ -83,7 +86,9 @@ Tray.propTypes = {
   removeTray: PropTypes.func.isRequired,
   refreshTray: PropTypes.func.isRequired,
   updateTray: PropTypes.func.isRequired,
-  selectProject: PropTypes.func.isRequired
+  selectProject: PropTypes.func.isRequired,
+  clearTrayHighlight: PropTypes.func.isRequired,
+  highlight: PropTypes.bool
 }
 
 export default Tray

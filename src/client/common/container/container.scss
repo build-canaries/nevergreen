@@ -30,4 +30,18 @@
       color: darken(white, 10%);
     }
   }
+
+  .highlight {
+    animation: highlight 2s;
+  }
+
+  @keyframes highlight {
+    0% {
+      background: $blue;
+    }
+
+    100% {
+      background: $mid-grey;
+    }
+  }
 }
