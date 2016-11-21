@@ -17,10 +17,9 @@ parserOptions:
 rules:
   quotes: ['error', 'single']
   semi: ['error', 'never']
-  babel/generator-star-spacing: ['error']
+  generator-star-spacing: ['error']
+  object-shorthand: ['error']
+  arrow-parens: ['error']
   babel/new-cap: ['error', {capIsNewExceptions: ['Immutable.Map', 'Immutable.List', 'Immutable.Set', 'Immutable.OrderedSet', 'Immutable.OrderedMap']}]
-  babel/object-shorthand: ['error']
-  babel/arrow-parens: ['error']
-  babel/no-await-in-loop: ['error']
   react/react-in-jsx-scope: ['error']
   react/no-find-dom-node: ['warn']
