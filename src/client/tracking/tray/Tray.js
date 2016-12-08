@@ -15,7 +15,7 @@ class Tray extends Component {
   }
 
   componentDidMount() {
-    if (this.props.projects.length === 0) {
+    if (this.props.projects.length === 0 && this.props.loaded) {
       this.props.refreshTray(this.props)
     }
   }
