@@ -3,6 +3,7 @@ var webpack = require('webpack')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var autoprefixer = require('autoprefixer')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
+var CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   devtool: 'source-map',
@@ -19,7 +20,6 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: './src/client/index.html',
-      favicon: './src/client/favicon.ico',
       minify: {
         collapseWhitespace: true,
         removeComments: true,
@@ -35,7 +35,8 @@ module.exports = {
     new webpack.optimize.OccurenceOrderPlugin(),
     new ExtractTextPlugin('[hash].css', {
       allChunks: true
-    })
+    }),
+    new CopyWebpackPlugin([{from: './src/client/favicons'}])
   ],
   module: {
     loaders: [

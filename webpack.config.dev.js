@@ -3,6 +3,7 @@ var webpack = require('webpack')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var autoprefixer = require('autoprefixer')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
+var CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   devtool: 'source-map',
@@ -18,12 +19,12 @@ module.exports = {
       'process.env.NODE_ENV': '"dev"'
     }),
     new HtmlWebpackPlugin({
-      template: './src/client/index.html',
-      favicon: './src/client/favicon.ico'
+      template: './src/client/index.html'
     }),
     new ExtractTextPlugin('[hash].css', {
       allChunks: true
-    })
+    }),
+    new CopyWebpackPlugin([{from: './src/client/favicons'}])
   ],
   module: {
     loaders: [

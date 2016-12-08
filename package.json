@@ -54,6 +54,7 @@
     "chai-enzyme": "0.6.1",
     "chai-immutable": "1.6.0",
     "chromedriver": "2.24.1",
+    "copy-webpack-plugin": "4.0.1",
     "css-loader": "0.26.1",
     "enzyme": "2.6.0",
     "eslint": "3.11.1",
