@@ -46,7 +46,7 @@
   "devDependencies": {
     "babel-core": "6.18.2",
     "babel-eslint": "7.1.1",
-    "babel-loader": "6.2.8",
+    "babel-loader": "6.2.9",
     "babel-preset-es2015": "6.18.0",
     "babel-preset-react": "6.16.0",
     "basic-auth-connect": "1.0.0",
@@ -81,7 +81,7 @@
     "stylelint-config-standard": "15.0.0",
     "url-loader": "0.5.7",
     "watch": "1.0.1",
-    "webpack": "1.13.3"
+    "webpack": "1.14.0"
   },
   "repository": {
     "type": "git",
