@@ -25,7 +25,7 @@ class Nevergreen extends Component {
   }
 
   componentWillUnmount() {
-    Mousetrap.unbind('?')
+    Mousetrap.unbind(['?', 'esc'])
   }
 
   render() {

@@ -4,10 +4,8 @@ import _ from 'lodash'
 
 export default {
   init() {
-    localforage.config({
-      name: 'nevergreen',
-      storeName: 'nevergreen'
-    })
+    localforage.config({name: 'nevergreen', storeName: 'nevergreen'})
+    return localforage.ready()
   },
 
   save(data) {

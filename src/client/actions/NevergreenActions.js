@@ -39,13 +39,15 @@ export function initalised(configuration) {
   }
 }
 
-// TODO: handle loading configuration failure
 export function initalise() {
   return function (dispatch) {
     dispatch(initalising())
     momentInit()
-    LocalRepository.init()
-    return LocalRepository.load()
+    return LocalRepository.init()
+      .then(LocalRepository.load)
       .then((configuration) => dispatch(initalised(filter(migrate(configuration)))))
+      .catch(() => {
+        // TODO: handle loading configuration failure
+      })
   }
 }
