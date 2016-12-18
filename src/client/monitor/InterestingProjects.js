@@ -32,14 +32,14 @@ class InterestingProjects extends Component {
     const brokenSfx = playBrokenSfx ? <audio ref='sfx' src={this.props.brokenBuildFx} autoPlay/> : null
 
     return (
-      <span className='interesting-projects'>
+      <span className='interesting-projects' data-locator='interesting-projects'>
         <ul id='interesting-projects' className='projects'>
           {
             this.props.projects.map((project) => {
               const tray = this.props.trays.find((tray) => tray.trayId === project.trayId)
               return <InterestingProject {...project} trayName={tray.name} key={project.projectId}
-                                                      showBrokenBuildTimers={this.props.showBrokenBuildTimers}
-                                                      showTrayName={this.props.showTrayName}/>
+                                         showBrokenBuildTimers={this.props.showBrokenBuildTimers}
+                                         showTrayName={this.props.showTrayName}/>
             })
           }
         </ul>

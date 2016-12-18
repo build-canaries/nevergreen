@@ -26,10 +26,11 @@ class AddMessage extends Component {
           <label htmlFor='message-input'>message</label>
           <PrimaryInput>
             <input id='message-input' className='add-message-input' type='text' placeholder='text or image url'
-                   value={this.state.message} onChange={updateMessage} onKeyPress={addOnEnter}/>
+                   value={this.state.message} onChange={updateMessage} onKeyPress={addOnEnter}
+                   data-locator='message'/>
           </PrimaryInput>
         </span>
-        <button className='add-action' onClick={addMessage}>add</button>
+        <button className='add-action' onClick={addMessage} data-locator='add-message'>add</button>
       </div>
     )
   }

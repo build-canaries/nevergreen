@@ -36,12 +36,8 @@ class Export extends Component {
       <Container title='Export' className='export'>
         <div>
             <pre>
-              <textarea id='export-data'
-                        className='export-data'
-                        placeholder='loading...'
-                        value={this.props.configuration}
-                        readOnly='true'
-                        spellCheck='false'/>
+              <textarea id='export-data' className='export-data' placeholder='loading...'
+                        value={this.props.configuration} readOnly='true' spellCheck='false' data-locator='export-data'/>
             </pre>
           <button id='copy-to-clipboard' className='copy-action' data-clipboard-target='#export-data'>
             copy to clipboard

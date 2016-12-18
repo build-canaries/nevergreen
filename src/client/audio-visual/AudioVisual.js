@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import ConfigOption from './ConfigOption'
+import ToggleOption from './ToggleOption'
 import Container from '../common/container/Container'
 import Messages from '../common/messages/Messages'
 import './audio-visual.scss'
@@ -7,10 +7,7 @@ import './audio-visual.scss'
 class AudioVisual extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      errors: [],
-      audio: null
-    }
+    this.state = {errors: [], audio: null}
   }
 
   componentWillUnmount() {
@@ -36,27 +33,19 @@ class AudioVisual extends Component {
       <section className='audio-visual'>
         <Container title='Visual Settings'>
           <fieldset className='settings-list'>
-            <ConfigOption name='Show tray name'
-                          enabled={this.props.showTrayName}
-                          onToggle={toggleTrayName}/>
-            <ConfigOption name='Show broken build time'
-                          enabled={this.props.showBrokenBuildTime}
-                          onToggle={toggleBrokenBuilds}/>
+            <ToggleOption name='Show tray name' enabled={this.props.showTrayName} onToggle={toggleTrayName} locator='show-names'/>
+            <ToggleOption name='Show broken build time' enabled={this.props.showBrokenBuildTime}
+                          onToggle={toggleBrokenBuilds} locator='show-times'/>
           </fieldset>
         </Container>
         <Container title='Audio Settings'>
           <fieldset className='settings-list'>
-            <ConfigOption name='Play sound for broken builds'
-                          enabled={this.props.playBrokenBuildSoundFx}
-                          onToggle={toggleBrokenSounds}/>
+            <ToggleOption name='Play sound for broken builds' enabled={this.props.playBrokenBuildSoundFx}
+                          onToggle={toggleBrokenSounds} locator='play-sounds'/>
             <div className='sound-fx'>
               <label htmlFor='sound-fx'>Broken build sound</label>
-              <input id='sound-fx'
-                     ref='soundFx'
-                     type='text'
-                     placeholder='URL to an audio file'
-                     defaultValue={this.props.brokenBuildSoundFx}
-                     onBlur={setSoundFx}/>
+              <input id='sound-fx' ref='soundFx' type='text' placeholder='URL to an audio file'
+                     defaultValue={this.props.brokenBuildSoundFx} onBlur={setSoundFx}/>
               <button className='test' onClick={testSoundFx}>test</button>
               <Messages type='notification' messages={this.state.errors}/>
             </div>

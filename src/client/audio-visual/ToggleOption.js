@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 
-class ConfigOption extends Component {
+class ToggleOption extends Component {
   constructor(props) {
     super(props)
   }
@@ -11,10 +11,8 @@ class ConfigOption extends Component {
     return (
       <p className='checkbox-container'>
         <label className='label-checkbox'>
-          <input className='checkbox no-text-selection'
-                 type='checkbox'
-                 checked={this.props.enabled}
-                 onChange={onChange}/>
+          <input className='checkbox no-text-selection' type='checkbox' checked={this.props.enabled}
+                 onChange={onChange} data-locator={this.props.locator}/>
           <span>{this.props.name}</span>
         </label>
       </p>
@@ -22,10 +20,11 @@ class ConfigOption extends Component {
   }
 }
 
-ConfigOption.propTypes = {
+ToggleOption.propTypes = {
   name: PropTypes.string.isRequired,
   enabled: PropTypes.bool.isRequired,
-  onToggle: PropTypes.func.isRequired
+  onToggle: PropTypes.func.isRequired,
+  locator: PropTypes.string
 }
 
-export default ConfigOption
+export default ToggleOption

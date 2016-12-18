@@ -38,7 +38,8 @@ class Menu extends Component {
               items.map((item) => {
                 return (
                   <li key={item.id}>
-                    <Link id={item.id} to={`/${item.id}`} className='menu-item' activeClassName='active'>
+                    <Link to={`/${item.id}`} className='menu-item' activeClassName='active'
+                          data-locator={`menu-${item.id}`}>
                       <span className={`menu-icon icon-${item.iconClass}`}/>
                       <span className='menu-title'>{item.title}</span>
                       <ShortcutContainer hotkeys={item.shortcuts}/>

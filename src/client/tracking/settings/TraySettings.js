@@ -6,11 +6,7 @@ import './tray-settings.scss'
 class TraySettings extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      newName: props.name,
-      newUsername: props.username,
-      newPassword: ''
-    }
+    this.state = {newName: props.name, newUsername: props.username, newPassword: ''}
   }
 
   componentDidMount() {
@@ -32,39 +28,26 @@ class TraySettings extends Component {
     const deleteTray = () => this.props.removeTray(this.props.trayId)
 
     return (
-      <section className='tray-settings'>
+      <section className='tray-settings' data-locator='tray-settings'>
         <div className='text-input'>
           <label htmlFor={`${this.props.trayId}-settings-name`}>name</label>
-          <input className='tray-settings-name'
-                 id={`${this.props.trayId}-settings-name`}
-                 ref='name'
-                 type='text'
-                 value={this.state.newName}
-                 onChange={nameChanged}
-                 onKeyPress={keyUpdate}
-                 placeholder='e.g. project or team name'/>
-          <button className='generate-random' onClick={generateRandomName}>random</button>
+          <input className='tray-settings-name' id={`${this.props.trayId}-settings-name`} ref='name' type='text'
+                 value={this.state.newName} onChange={nameChanged} onKeyPress={keyUpdate}
+                 placeholder='e.g. project or team name' data-locator='tray-name'/>
+          <button className='generate-random' onClick={generateRandomName} data-locator='generate-random'>random</button>
         </div>
         <div className='text-input'>
           <label htmlFor={`${this.props.trayId}-settings-username`}>username</label>
-          <input id={`${this.props.trayId}-settings-username`}
-                 type='text'
-                 placeholder='not set'
-                 value={this.state.newUsername}
-                 onChange={usernameChanged}
-                 onKeyPress={keyUpdate}/>
+          <input id={`${this.props.trayId}-settings-username`} type='text' placeholder='not set'
+                 value={this.state.newUsername} onChange={usernameChanged} onKeyPress={keyUpdate}/>
         </div>
         <div className='text-input'>
           <label htmlFor={`${this.props.trayId}-settings-password`}>password</label>
-          <input id={`${this.props.trayId}-settings-password`}
-                 type='password'
-                 placeholder={passwordPlaceholder}
-                 value={this.state.newPassword}
-                 onChange={passwordChanged}
-                 onKeyPress={keyUpdate}/>
+          <input id={`${this.props.trayId}-settings-password`} type='password' placeholder={passwordPlaceholder}
+                 value={this.state.newPassword} onChange={passwordChanged} onKeyPress={keyUpdate}/>
         </div>
         <button className='cancel' onClick={this.props.cancel}>cancel</button>
-        <button className='update' onClick={updateTray}>update tray</button>
+        <button className='update' onClick={updateTray} data-locator='update-tray'>update tray</button>
 
         <div className='danger-zone'>
           <h4 className='title'>

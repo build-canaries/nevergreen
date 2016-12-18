@@ -46,10 +46,11 @@ class AvailableProjects extends Component {
     })
 
     return (
-      <fieldset className='available-projects'>
+      <fieldset className='available-projects' data-locator='available-projects'>
         <legend className='legend'>Available projects</legend>
         <div className='toggles'>
-          <button className='include-all' onClick={includeAll} disabled={this.state.disableButtons}>
+          <button className='include-all' onClick={includeAll} disabled={this.state.disableButtons}
+                  data-locator='include-all'>
             <span className='icon-checkbox-checked'/>
             <span className='text-with-icon'>Include all</span>
             <ShortcutContainer hotkeys={[`+ ${this.props.index}`, `= ${this.props.index}`]}/>

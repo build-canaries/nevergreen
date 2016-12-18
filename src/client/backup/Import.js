@@ -25,13 +25,10 @@ class Import extends Component {
       <Container title='Import' className='import'>
         <div>
           <PrimaryInput>
-              <textarea className='import-data'
-                        placeholder='paste exported configuration here and press import'
-                        value={this.state.data}
-                        onChange={updateData}
-                        spellCheck='false'/>
+            <textarea className='import-data' placeholder='paste exported configuration here and press import'
+                      value={this.state.data} onChange={updateData} spellCheck='false' data-locator='import-data'/>
           </PrimaryInput>
-          <button className='import-action' onClick={doImport}>import</button>
+          <button className='import-action' onClick={doImport} data-locator='import'>import</button>
           <Messages type='notification' messages={this.props.errors}/>
           <Messages type='checkmark' messages={this.props.infos}/>
         </div>

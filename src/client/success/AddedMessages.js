@@ -23,7 +23,7 @@ class AddedMessages extends Component {
 
               return (
                 <li key={`m${index}`} className='success-item'>
-                  <span className='message'>{message}</span>
+                  <span className='message' data-locator='success-message'>{message}</span>
                   <RemoveLink hotkeys={[`y m ${index}`]} removeMessage={remove}/>
                 </li>
               )

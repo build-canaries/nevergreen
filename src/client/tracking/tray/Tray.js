@@ -55,7 +55,7 @@ class Tray extends Component {
 
     return (
       <Container title={title} subTitle={subTitle} className='tray' highlight={this.props.highlight}>
-        <div>
+        <div data-locator='tray'>
           {this.state.showSettings ?
             <SettingsSubMenu index={this.props.index} toggleSettingsView={toggleSettingsView}/> :
             <ProjectsSubMenu loaded={this.props.loaded} index={this.props.index} timestamp={this.props.timestamp}

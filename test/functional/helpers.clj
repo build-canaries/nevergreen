@@ -1,9 +1,13 @@
 (ns functional.helpers
   (:require [environ.core :refer [env]]
-            [clj-webdriver.taxi :refer :all]))
+            [clj-webdriver.taxi :refer :all]
+            [clojure.string :as s]))
 
 (defn in? [seq elm]
   (some #(= elm %) seq))
+
+(defn element-includes? [seq elm]
+  (some #(s/includes? elm %) seq))
 
 (defn nevergreen-under-test []
   (let [url (or (env :functional-url) "http://localhost:5000")]
@@ -28,3 +32,6 @@
 (defn input [q val]
   (clear q)
   (input-text q val))
+
+(defn locator [q]
+  (str "[data-locator='" q "']"))

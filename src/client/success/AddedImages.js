@@ -23,7 +23,7 @@ class AddedImages extends Component {
 
               return (
                 <li key={`i${index}`} className='success-item image'>
-                  <img className='success-list-image' src={url} alt={url} title={url}/>
+                  <img className='success-list-image' src={url} alt={url} title={url} data-locator='success-image'/>
                   <RemoveLink hotkeys={[`y i ${index}`]} removeMessage={remove}/>
                 </li>
               )

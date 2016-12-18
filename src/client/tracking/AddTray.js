@@ -29,20 +29,20 @@ class AddTray extends Component {
           <PrimaryInput>
             <input id='cctray-url' className='tracking-tray-url' type='text'
                    placeholder='e.g. http(s)://host:port/cc.xml' value={this.state.url} onChange={updateUrl}
-                   onKeyPress={keyAddTray}/>
+                   onKeyPress={keyAddTray} data-locator='add-tray-url'/>
           </PrimaryInput>
         </span>
-        <button id='cctray-fetch' className='button-primary' onClick={addTray}>add</button>
+        <button className='button-primary' onClick={addTray} data-locator='add-tray'>add</button>
         <div>
             <span className='text-input'>
               <label htmlFor='username'>username</label>
               <input id='username' type='text' value={this.state.username} onChange={updateUsername}
-                     onKeyPress={keyAddTray}/>
+                     onKeyPress={keyAddTray} data-locator='add-tray-username'/>
             </span>
           <span className='text-input'>
               <label htmlFor='password' className='text-label'>password</label>
               <input id='password' className='text-input' type='password' value={this.state.password}
-                     onChange={updatePassword} onKeyPress={keyAddTray}/>
+                     onChange={updatePassword} onKeyPress={keyAddTray} data-locator='add-tray-password'/>
             </span>
         </div>
       </div>
