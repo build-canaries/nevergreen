@@ -69,8 +69,8 @@
           (audio-visual-page/play-sounds state)))
 
     (backup-page/navigate base-url)
-    (-> (backup-page/export)
-        (backup-page/import))
+    (-> (backup-page/export-data)
+        (backup-page/import-data))
 
     (help-page/navigate base-url)
 

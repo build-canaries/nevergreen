@@ -6,9 +6,9 @@
   (click (locator "menu-backup"))
   (wait-until #(= (current-url) (str base-url "/backup"))))
 
-(defn export []
+(defn export-data []
   (attribute (locator "export-data") :value))
 
-(defn import [data]
+(defn import-data [data]
   (input (locator "import-data") data)
   (click (locator "import")))
