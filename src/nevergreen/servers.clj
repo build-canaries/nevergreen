@@ -10,7 +10,7 @@
     (includes? url "//hudson") :hudson
     (includes? url "//travis-ci.org") :travis
     (includes? url "/go/") :go
-    (includes? url "//snap-ci.com") :snap
+    (includes? url "snap-ci.com") :snap
     (includes? url "//circleci.com") :circle
     (includes? url "//teamcity") :team-city
     (includes? url "//cc.rb.") :cruise-control-rb
