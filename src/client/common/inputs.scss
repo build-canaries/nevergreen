@@ -1,24 +1,5 @@
 @import 'variables';
 
-.text-input {
-  margin-top: 1em;
-
-  label {
-    margin-right: 1em;
-  }
-
-  input {
-    border: none;
-    border-bottom: 1px solid $mid-grey;
-    margin-right: 1em;
-
-    &:focus {
-      outline: none;
-      border-bottom-color: $blue;
-    }
-  }
-}
-
 .button {
   font-size: 1rem;
   text-align: center;

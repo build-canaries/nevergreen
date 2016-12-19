@@ -4,13 +4,8 @@
 .tray-settings {
   margin: 1em;
 
-  label {
-    width: 5em;
-    display: inline-flex;
-  }
-
-  .tray-settings-name {
-    width: calc(50% - 7em);
+  .row {
+    padding-top: 1em;
   }
 
   .danger-zone {

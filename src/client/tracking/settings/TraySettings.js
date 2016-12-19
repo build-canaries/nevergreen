@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react'
+import Text from '../../common/forms/Text'
 import nameGenerator from 'project-name-generator'
 import _ from 'lodash'
 import './tray-settings.scss'
@@ -9,18 +10,9 @@ class TraySettings extends Component {
     this.state = {newName: props.name, newUsername: props.username, newPassword: ''}
   }
 
-  componentDidMount() {
-    this.primaryInput.focus()
-  }
-
   render() {
     const generateRandomName = () => this.setState({newName: _.startCase(nameGenerator().spaced)})
     const updateTray = () => this.props.updateTray(this.props.trayId, this.state.newName, this.props.url, this.state.newUsername, this.props.password, this.state.newPassword)
-    const keyUpdate = (evt) => {
-      if (evt.key === 'Enter') {
-        updateTray()
-      }
-    }
     const nameChanged = (evt) => this.setState({newName: evt.target.value})
     const usernameChanged = (evt) => this.setState({newUsername: evt.target.value})
     const passwordChanged = (evt) => this.setState({newPassword: evt.target.value})
@@ -29,28 +21,22 @@ class TraySettings extends Component {
 
     return (
       <section className='tray-settings' data-locator='tray-settings'>
-        <div className='text-input'>
-          <label htmlFor={`${this.props.trayId}-settings-name`}>name</label>
-          <input className='tray-settings-name' id={`${this.props.trayId}-settings-name`} type='text'
-                 value={this.state.newName} onChange={nameChanged} onKeyPress={keyUpdate}
-                 placeholder='e.g. project or team name' data-locator='tray-name'
-                 ref={(node) => this.primaryInput = node}/>
+        <div>
+          <Text label='name' value={this.state.newName} onChange={nameChanged} onEnter={updateTray}
+                placeholder='e.g. project or team name' data-locator='tray-name' isPrimary={true}/>
           <button className='generate-random' onClick={generateRandomName} data-locator='generate-random'>random
           </button>
         </div>
-        <div className='text-input'>
-          <label htmlFor={`${this.props.trayId}-settings-username`}>username</label>
-          <input id={`${this.props.trayId}-settings-username`} type='text' placeholder='not set'
-                 value={this.state.newUsername} onChange={usernameChanged} onKeyPress={keyUpdate}/>
+        <div className='row'>
+          <Text label='username' placeholder='not set' value={this.state.newUsername} onChange={usernameChanged}
+                onEnter={updateTray}/>
         </div>
-        <div className='text-input'>
-          <label htmlFor={`${this.props.trayId}-settings-password`}>password</label>
-          <input id={`${this.props.trayId}-settings-password`} type='password' placeholder={passwordPlaceholder}
-                 value={this.state.newPassword} onChange={passwordChanged} onKeyPress={keyUpdate}/>
+        <div className='row'>
+          <Text label='password' placeholder={passwordPlaceholder} value={this.state.newPassword}
+                onChange={passwordChanged} onEnter={updateTray}/>
         </div>
         <button className='cancel' onClick={this.props.cancel}>cancel</button>
         <button className='update' onClick={updateTray} data-locator='update-tray'>update tray</button>
-
         <div className='danger-zone'>
           <h4 className='title'>
             <span className='icon-notification'/>

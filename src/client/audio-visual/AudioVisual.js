@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import ToggleOption from './ToggleOption'
 import Container from '../common/container/Container'
 import Messages from '../common/messages/Messages'
+import Text from '../common/forms/Text'
 import './audio-visual.scss'
 
 class AudioVisual extends Component {
@@ -44,9 +45,8 @@ class AudioVisual extends Component {
             <ToggleOption name='Play sound for broken builds' enabled={this.props.playBrokenBuildSoundFx}
                           onToggle={toggleBrokenSounds} locator='play-sounds'/>
             <div className='sound-fx'>
-              <label htmlFor='sound-fx'>Broken build sound</label>
-              <input id='sound-fx' type='text' placeholder='URL to an audio file' onChange={updateSoundFx}
-                     value={this.state.soundFx} onBlur={setSoundFx}/>
+              <Text label='Broken build sound' placeholder='URL to an audio file' onChange={updateSoundFx}
+                    value={this.state.soundFx} onBlur={setSoundFx}/>
               <button className='test' onClick={testSoundFx}>test</button>
               <Messages type='notification' messages={this.state.errors}/>
             </div>

@@ -8,10 +8,6 @@
   background-color: white;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
 
-  .add {
-    @extend .text-input;
-  }
-
   .add-message-input {
     width: calc(100% - 11em);
     font-family: $monospace;

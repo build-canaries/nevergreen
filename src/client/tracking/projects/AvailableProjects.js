@@ -3,6 +3,7 @@ import AvailableProject from './AvailableProject'
 import _ from 'lodash'
 import ShortcutContainer from '../../common/shortcut/ShortcutContainer'
 import Messages from '../../common/messages/Messages'
+import Text from '../../common/forms/Text'
 import './available-projects.scss'
 
 class AvailableProjects extends Component {
@@ -62,8 +63,7 @@ class AvailableProjects extends Component {
           </button>
         </div>
         <span className='project-filter'>
-          <label htmlFor='project-filter'>Filter projects</label>
-          <input id='project-filter' type='text' onChange={updateFilter}/>
+          <Text label='Filter projects' onChange={updateFilter}/>
         </span>
         <Messages type='notification' messages={this.state.errors}/>
         <ol className='build-items'>

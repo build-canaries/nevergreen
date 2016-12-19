@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react'
+import Text from '../common/forms/Text'
 import './add-message.scss'
 
 class AddMessage extends Component {
@@ -7,17 +8,8 @@ class AddMessage extends Component {
     this.state = {message: ''}
   }
 
-  componentDidMount() {
-    this.primaryInput.focus()
-  }
-
   render() {
     const updateMessage = (evt) => this.setState({message: evt.target.value})
-    const addOnEnter = (evt) => {
-      if (evt.key === 'Enter') {
-        addMessage()
-      }
-    }
     const addMessage = () => {
       this.props.addMessage(this.state.message)
       this.setState({message: ''})
@@ -25,12 +17,8 @@ class AddMessage extends Component {
 
     return (
       <div className='add-message'>
-        <span className='add'>
-          <label htmlFor='message-input'>message</label>
-          <input id='message-input' className='add-message-input' type='text' placeholder='text or image url'
-                 value={this.state.message} onChange={updateMessage} onKeyPress={addOnEnter} data-locator='message'
-                 ref={(node) => this.primaryInput = node}/>
-        </span>
+        <Text label='message' className='add-message-input' placeholder='text or image url' value={this.state.message}
+              onChange={updateMessage} onEnter={addMessage} data-locator='message' isPrimary={true}/>
         <button className='add-action' onClick={addMessage} data-locator='add-message'>add</button>
       </div>
     )

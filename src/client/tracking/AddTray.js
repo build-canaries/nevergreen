@@ -1,14 +1,11 @@
 import React, {Component, PropTypes} from 'react'
+import Text from '../common/forms/Text'
 import './add-tray.scss'
 
 class AddTray extends Component {
   constructor(props) {
     super(props)
     this.state = {url: '', username: '', password: ''}
-  }
-
-  componentDidMount() {
-    this.primaryInput.focus()
   }
 
   render() {
@@ -19,32 +16,18 @@ class AddTray extends Component {
     const updateUrl = (evt) => this.setState({url: evt.target.value})
     const updateUsername = (evt) => this.setState({username: evt.target.value})
     const updatePassword = (evt) => this.setState({password: evt.target.value})
-    const keyAddTray = (evt) => {
-      if (evt.key === 'Enter') {
-        addTray()
-      }
-    }
 
     return (
       <div className='add-tray'>
-        <span className='url-input'>
-          <label htmlFor='cctray-url'>url</label>
-          <input id='cctray-url' className='tracking-tray-url' type='text'
-                 placeholder='e.g. http(s)://host:port/cc.xml' value={this.state.url} onChange={updateUrl}
-                 onKeyPress={keyAddTray} data-locator='add-tray-url' ref={(node) => this.primaryInput = node}/>
-        </span>
+        <Text label='url' className='tracking-tray-url' placeholder='e.g. http(s)://host:port/cc.xml'
+              value={this.state.url} onChange={updateUrl} onEnter={addTray} data-locator='add-tray-url'
+              isPrimary={true}/>
         <button className='button-primary' onClick={addTray} data-locator='add-tray'>add</button>
-        <div>
-            <span className='text-input'>
-              <label htmlFor='username'>username</label>
-              <input id='username' type='text' value={this.state.username} onChange={updateUsername}
-                     onKeyPress={keyAddTray} data-locator='add-tray-username'/>
-            </span>
-          <span className='text-input'>
-              <label htmlFor='password' className='text-label'>password</label>
-              <input id='password' className='text-input' type='password' value={this.state.password}
-                     onChange={updatePassword} onKeyPress={keyAddTray} data-locator='add-tray-password'/>
-            </span>
+        <div className='authorisation'>
+          <Text label='username' value={this.state.username} onChange={updateUsername} onEnter={addTray}
+                data-locator='add-tray-username'/>
+          <Text label='password' value={this.state.password} onChange={updatePassword} onEnter={addTray}
+                data-locator='add-tray-password'/>
         </div>
       </div>
     )
