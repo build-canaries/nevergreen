@@ -1,17 +1,16 @@
 @import '../../common/variables';
 
 .available-project {
-  display: block;
-  margin: 0.5em 0;
   float: left;
   width: 33.333333%;
 
-  span.removed-project {
+  &.removed-project span {
     text-decoration: line-through;
   }
 
-  sup.removed-project {
+  &.removed-project sup {
     margin-left: 0.5em;
+    color: $mid-grey;
   }
 
   .new-project {

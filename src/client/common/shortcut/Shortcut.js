@@ -20,7 +20,7 @@ class Shortcut extends Component {
   }
 
   componentDidMount() {
-    Mousetrap.bind(this.props.hotkeys, () => click(this.node.parent))
+    Mousetrap.bind(this.props.hotkeys, () => click(this.node.parentNode))
   }
 
   componentWillUnmount() {
@@ -30,7 +30,7 @@ class Shortcut extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.hotkeys !== nextProps.hotkeys) {
       Mousetrap.unbind(this.props.hotkeys)
-      Mousetrap.bind(nextProps.hotkeys, () => click(this.node.parent))
+      Mousetrap.bind(nextProps.hotkeys, () => click(this.node.parentNode))
     }
   }
 

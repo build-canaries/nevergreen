@@ -4,14 +4,9 @@
 .audio-visual {
   @extend .main-section;
 
-  .checkbox-container {
-    float: none;
-    padding-bottom: 1em;
-  }
-
   .settings-list {
     border: 0;
-    padding: 1em 1em 0;
+    padding: 1em;
   }
 
   .sound-fx {
