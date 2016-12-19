@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react'
-import ReactDOM from 'react-dom'
 import {styleProjects} from './Styler'
 import './success-message.scss'
 
@@ -9,18 +8,16 @@ class SuccessMessage extends Component {
   }
 
   componentDidMount() {
-    const node = ReactDOM.findDOMNode(this)
-    styleProjects([{name: this.props.message}], node, node.parentNode)
+    styleProjects([{name: this.props.message}], this.node, this.node.parentNode)
   }
 
   componentDidUpdate() {
-    const node = ReactDOM.findDOMNode(this)
-    styleProjects([{name: this.props.message}], node, node.parentNode)
+    styleProjects([{name: this.props.message}], this.node, this.node.parentNode)
   }
 
   render() {
     return (
-      <div id='success-text' className='success-message'>{this.props.message}</div>
+      <div id='success-text' className='success-message' ref={(node) => this.node = node}>{this.props.message}</div>
     )
   }
 }

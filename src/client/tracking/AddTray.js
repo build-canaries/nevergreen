@@ -1,11 +1,14 @@
 import React, {Component, PropTypes} from 'react'
-import PrimaryInput from '../common/PrimaryInput'
 import './add-tray.scss'
 
 class AddTray extends Component {
   constructor(props) {
     super(props)
     this.state = {url: '', username: '', password: ''}
+  }
+
+  componentDidMount() {
+    this.primaryInput.focus()
   }
 
   render() {
@@ -26,11 +29,9 @@ class AddTray extends Component {
       <div className='add-tray'>
         <span className='url-input'>
           <label htmlFor='cctray-url'>url</label>
-          <PrimaryInput>
-            <input id='cctray-url' className='tracking-tray-url' type='text'
-                   placeholder='e.g. http(s)://host:port/cc.xml' value={this.state.url} onChange={updateUrl}
-                   onKeyPress={keyAddTray} data-locator='add-tray-url'/>
-          </PrimaryInput>
+          <input id='cctray-url' className='tracking-tray-url' type='text'
+                 placeholder='e.g. http(s)://host:port/cc.xml' value={this.state.url} onChange={updateUrl}
+                 onKeyPress={keyAddTray} data-locator='add-tray-url' ref={(node) => this.primaryInput = node}/>
         </span>
         <button className='button-primary' onClick={addTray} data-locator='add-tray'>add</button>
         <div>

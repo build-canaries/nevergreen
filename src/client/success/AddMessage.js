@@ -1,11 +1,14 @@
 import React, {Component, PropTypes} from 'react'
-import PrimaryInput from '../common/PrimaryInput'
 import './add-message.scss'
 
 class AddMessage extends Component {
   constructor(props) {
     super(props)
     this.state = {message: ''}
+  }
+
+  componentDidMount() {
+    this.primaryInput.focus()
   }
 
   render() {
@@ -24,11 +27,9 @@ class AddMessage extends Component {
       <div className='add-message'>
         <span className='add'>
           <label htmlFor='message-input'>message</label>
-          <PrimaryInput>
-            <input id='message-input' className='add-message-input' type='text' placeholder='text or image url'
-                   value={this.state.message} onChange={updateMessage} onKeyPress={addOnEnter}
-                   data-locator='message'/>
-          </PrimaryInput>
+          <input id='message-input' className='add-message-input' type='text' placeholder='text or image url'
+                 value={this.state.message} onChange={updateMessage} onKeyPress={addOnEnter} data-locator='message'
+                 ref={(node) => this.primaryInput = node}/>
         </span>
         <button className='add-action' onClick={addMessage} data-locator='add-message'>add</button>
       </div>

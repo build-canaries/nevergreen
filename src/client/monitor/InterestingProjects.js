@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react'
-import ReactDOM from 'react-dom'
 import {styleProjects} from './Styler'
 import InterestingProject from './InterestingProject'
 import './interesting-projects.scss'
@@ -10,7 +9,7 @@ class InterestingProjects extends Component {
   }
 
   componentDidMount() {
-    const node = ReactDOM.findDOMNode(this).querySelector('#interesting-projects')
+    const node = this.node.querySelector('#interesting-projects')
     styleProjects(this.props.projects, node.querySelectorAll('.monitor-outer-container'), node)
   }
 
@@ -21,7 +20,7 @@ class InterestingProjects extends Component {
   }
 
   componentDidUpdate() {
-    const node = ReactDOM.findDOMNode(this).querySelector('#interesting-projects')
+    const node = this.node.querySelector('#interesting-projects')
     styleProjects(this.props.projects, node.querySelectorAll('.monitor-outer-container'), node)
   }
 
@@ -32,7 +31,7 @@ class InterestingProjects extends Component {
     const brokenSfx = playBrokenSfx ? <audio ref='sfx' src={this.props.brokenBuildFx} autoPlay/> : null
 
     return (
-      <span className='interesting-projects' data-locator='interesting-projects'>
+      <span className='interesting-projects' data-locator='interesting-projects' ref={(node) => this.node = node}>
         <ul id='interesting-projects' className='projects'>
           {
             this.props.projects.map((project) => {

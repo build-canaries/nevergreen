@@ -21,5 +21,3 @@ rules:
   object-shorthand: ['error']
   arrow-parens: ['error']
   babel/new-cap: ['error', {capIsNewExceptions: ['Immutable.Map', 'Immutable.List', 'Immutable.Set', 'Immutable.OrderedSet', 'Immutable.OrderedMap']}]
-  react/react-in-jsx-scope: ['error']
-  react/no-find-dom-node: ['warn']

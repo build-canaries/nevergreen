@@ -168,11 +168,6 @@ class Help extends Component {
                 <td>Navigate to this (the help) section.</td>
               </tr>
               <tr>
-                <td><kbd className='binding'>a</kbd></td>
-                <td>Focus action</td>
-                <td>Focus the primary action input e.g. the url input in the tracking section.</td>
-              </tr>
-              <tr>
                 <td><kbd className='binding'>esc</kbd></td>
                 <td>Blur action</td>
                 <td>Blur the currently focused input, allowing other shortcuts to be used again.</td>

@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react'
-import ReactDOM from 'react-dom'
 import Mousetrap from 'mousetrap'
 import './shortcut.scss'
 
@@ -9,8 +8,7 @@ function renderKeys(keys) {
   })
 }
 
-function click(component) {
-  const parent = ReactDOM.findDOMNode(component).parentNode
+function click(parent) {
   parent.focus()
   parent.click()
   return false
@@ -22,7 +20,7 @@ class Shortcut extends Component {
   }
 
   componentDidMount() {
-    Mousetrap.bind(this.props.hotkeys, () => click(this))
+    Mousetrap.bind(this.props.hotkeys, () => click(this.node.parent))
   }
 
   componentWillUnmount() {
@@ -32,7 +30,7 @@ class Shortcut extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.hotkeys !== nextProps.hotkeys) {
       Mousetrap.unbind(this.props.hotkeys)
-      Mousetrap.bind(nextProps.hotkeys, () => click(this))
+      Mousetrap.bind(nextProps.hotkeys, () => click(this.node.parent))
     }
   }
 
@@ -44,7 +42,7 @@ class Shortcut extends Component {
       return <span key={keySeq}>{index > 0 ? or : null}{renderKeys(keySeq)}</span>
     })
 
-    return <span className={hotkeyClass}>{keys}</span>
+    return <span className={hotkeyClass} ref={(node) => this.node = node}>{keys}</span>
   }
 }
 

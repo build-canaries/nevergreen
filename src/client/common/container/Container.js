@@ -9,6 +9,12 @@ class Container extends Component {
     }
   }
 
+  componentDidMount() {
+    if (this.props.highlight) {
+      this.node.scrollIntoView(true)
+    }
+  }
+
   render() {
     const toggleHidden = () => this.setState({hidden: !this.state.hidden})
     const keyToggle = (e) => {
@@ -20,14 +26,9 @@ class Container extends Component {
     const showHideLabel = this.state.hidden ? 'Show pane' : 'Hide pane'
     const showHideIcon = this.state.hidden ? 'icon-circle-down' : 'icon-circle-up'
     const titleClass = this.props.highlight ? 'section-title highlight' : 'section-title'
-    const highlight = (node) => {
-      if (this.props.highlight && node) {
-        node.scrollIntoView(true)
-      }
-    }
 
     return (
-      <section className={`container ${this.props.className}`} title={showHideLabel} ref={highlight}>
+      <section className={`container ${this.props.className}`} title={showHideLabel} ref={(node) => this.node = node}>
         <h3 className={titleClass} onClick={toggleHidden} onKeyPress={keyToggle} tabIndex='0'>
           <span className={`show-hide ${showHideIcon}`}/>
           {this.props.title}

@@ -10,7 +10,7 @@ class TraySettings extends Component {
   }
 
   componentDidMount() {
-    this.refs.name.focus()
+    this.primaryInput.focus()
   }
 
   render() {
@@ -31,10 +31,12 @@ class TraySettings extends Component {
       <section className='tray-settings' data-locator='tray-settings'>
         <div className='text-input'>
           <label htmlFor={`${this.props.trayId}-settings-name`}>name</label>
-          <input className='tray-settings-name' id={`${this.props.trayId}-settings-name`} ref='name' type='text'
+          <input className='tray-settings-name' id={`${this.props.trayId}-settings-name`} type='text'
                  value={this.state.newName} onChange={nameChanged} onKeyPress={keyUpdate}
-                 placeholder='e.g. project or team name' data-locator='tray-name'/>
-          <button className='generate-random' onClick={generateRandomName} data-locator='generate-random'>random</button>
+                 placeholder='e.g. project or team name' data-locator='tray-name'
+                 ref={(node) => this.primaryInput = node}/>
+          <button className='generate-random' onClick={generateRandomName} data-locator='generate-random'>random
+          </button>
         </div>
         <div className='text-input'>
           <label htmlFor={`${this.props.trayId}-settings-username`}>username</label>
