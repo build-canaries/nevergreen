@@ -33,7 +33,6 @@ npm run fake-server &
 ./ci/smoke-test.sh "http://localhost:5000/api/ping"
 
 echo '[Step 4 of 4] Running the functional tests...'
-export JVM_OPTS="-Dwebdriver.chrome.driver=./node_modules/chromedriver/bin/chromedriver"
 ./lein.sh test functional.functional-test
 
 echo
