@@ -3,7 +3,7 @@
 # download ui dependencies
 npm install npm@latest -g
 npm prune
-npm install
+npm install --loglevel error
 
 # run ui tests
 npm run lint
