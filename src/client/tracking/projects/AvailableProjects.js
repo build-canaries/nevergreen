@@ -3,7 +3,7 @@ import AvailableProject from './AvailableProject'
 import _ from 'lodash'
 import Messages from '../../common/messages/Messages'
 import Text from '../../common/forms/Text'
-import Button from '../../common/forms/Button'
+import ShortcutContainer from '../../common/shortcut/ShortcutContainer'
 import './available-projects.scss'
 
 class AvailableProjects extends Component {
@@ -46,10 +46,15 @@ class AvailableProjects extends Component {
       <fieldset className='available-projects' data-locator='available-projects'>
         <legend className='legend'>Available projects</legend>
         <div className='toggles'>
-          <Button label='Include all' icon='checkbox-checked' onClick={includeAll} disabled={this.state.disableButtons}
-                  data-locator='include-all' hotkeys={[`+ ${this.props.index}`, `= ${this.props.index}`]}/>
-          <Button label='Exclude all' icon='checkbox-unchecked' onClick={excludeAll}
-                  disabled={this.state.disableButtons} hotkeys={[`- ${this.props.index}`]}/>
+          <button className='include-all' onClick={includeAll} disabled={this.state.disableButtons}
+                  data-locator='include-all'>
+            include all
+            <ShortcutContainer hotkeys={[`+ ${this.props.index}`, `= ${this.props.index}`]}/>
+          </button>
+          <button className='exclude-all' onClick={excludeAll} disabled={this.state.disableButtons}>
+            exclude all
+            <ShortcutContainer hotkeys={[`- ${this.props.index}`]}/>
+          </button>
         </div>
         <span className='project-filter'>
           <Text label='Filter projects' onChange={updateFilter}/>

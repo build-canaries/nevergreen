@@ -1,0 +1,15 @@
+@import '../../common/forms/button';
+
+.tray-sub-bar {
+  .show-settings {
+    @include button-icon('cog');
+
+    @extend .button;
+  }
+
+  .refresh {
+    @include button-icon('loop2');
+
+    @extend .button;
+  }
+}

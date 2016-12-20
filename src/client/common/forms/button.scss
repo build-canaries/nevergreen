@@ -1,4 +1,5 @@
 @import '../variables';
+@import '../fonts/icon-font';
 
 .button {
   font-size: 1rem;
@@ -48,5 +49,15 @@
     &:focus {
       background-color: darken($blue, 8%);
     }
+  }
+}
+
+@mixin button-icon($icon) {
+  @extend .icon-#{$icon};
+
+  &::before {
+    @extend .icon;
+
+    margin-right: 1em;
   }
 }

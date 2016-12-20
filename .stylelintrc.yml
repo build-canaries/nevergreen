@@ -8,3 +8,5 @@ rules:
     - true
     - ignoreAtRules:
        - extend
+       - include
+       - mixin

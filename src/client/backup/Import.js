@@ -1,7 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import Messages from '../common/messages/Messages'
 import Container from '../common/container/Container'
-import Button from '../common/forms/Button'
 import './import.scss'
 import _ from 'lodash'
 
@@ -31,7 +30,7 @@ class Import extends Component {
           <textarea className='import-data' placeholder='paste exported configuration here and press import'
                     value={this.state.data} onChange={updateData} spellCheck='false' data-locator='import-data'
                     ref={(node) => this.primaryInput = node}/>
-          <Button label='import' icon='floppy-disk' isPrimary={true} onClick={doImport} data-locator='import'/>
+          <button className='import-button' onClick={doImport} data-locator='import'>import</button>
           <Messages type='notification' messages={this.props.errors}/>
           <Messages type='checkmark' messages={this.props.infos}/>
         </div>

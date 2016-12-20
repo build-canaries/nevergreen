@@ -1,6 +1,5 @@
 import React, {Component, PropTypes} from 'react'
 import Text from '../../common/forms/Text'
-import Button from '../../common/forms/Button'
 import nameGenerator from 'project-name-generator'
 import _ from 'lodash'
 import './tray-settings.scss'
@@ -25,7 +24,7 @@ class TraySettings extends Component {
         <div>
           <Text label='name' value={this.state.newName} onChange={nameChanged} onEnter={updateTray}
                 placeholder='e.g. project or team name' data-locator='tray-name' isPrimary={true}/>
-          <Button label='random' icon='dice' onClick={generateRandomName} data-locator='generate-random'/>
+          <button className='random' onClick={generateRandomName} data-locator='generate-random'>random</button>
         </div>
         <div className='row'>
           <Text label='username' placeholder='not set' value={this.state.newUsername} onChange={usernameChanged}
@@ -36,9 +35,8 @@ class TraySettings extends Component {
                 onChange={passwordChanged} onEnter={updateTray}/>
         </div>
         <div className='row'>
-          <Button label='cancel' icon='arrow-left2' onClick={this.props.cancel}/>
-          <Button label='update tray' icon='arrow-right2' isPrimary={true} onClick={updateTray}
-                  data-locator='update-tray'/>
+          <button className='cancel' onClick={this.props.cancel}>cancel</button>
+          <button className='update' onClick={updateTray} data-locator='update-tray'>update tray</button>
         </div>
         <div className='danger-zone'>
           <h4 className='title'>
@@ -46,7 +44,7 @@ class TraySettings extends Component {
             <span className='text-with-icon'>Danger Zone</span>
           </h4>
           <div className='content'>
-            <Button label='Delete this tray' icon='bin' onClick={deleteTray}/>
+            <button className='delete' onClick={deleteTray}>delete this tray</button>
             <span>Once you delete a tray, there is no going back. Please be certain.</span>
           </div>
         </div>

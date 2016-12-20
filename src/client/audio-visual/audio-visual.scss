@@ -1,4 +1,5 @@
 @import '../common/layout';
+@import '../common/forms/button';
 
 .audio-visual {
   @extend .main-section;
@@ -15,5 +16,11 @@
     input {
       width: calc(100% - 375px);
     }
+  }
+
+  .test-sound-fx {
+    @include button-icon('play3');
+
+    @extend .button;
   }
 }

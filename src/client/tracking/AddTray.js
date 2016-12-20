@@ -1,6 +1,5 @@
 import React, {Component, PropTypes} from 'react'
 import Text from '../common/forms/Text'
-import Button from '../common/forms/Button'
 import './add-tray.scss'
 
 class AddTray extends Component {
@@ -23,7 +22,7 @@ class AddTray extends Component {
         <Text label='url' className='tracking-tray-url' placeholder='e.g. http(s)://host:port/cc.xml'
               value={this.state.url} onChange={updateUrl} onEnter={addTray} data-locator='add-tray-url'
               isPrimary={true}/>
-        <Button label='add' icon='plus' isPrimary={true} onClick={addTray} data-locator='add-tray'/>
+        <button className='add' onClick={addTray} data-locator='add-tray'>add</button>
         <div className='authorisation'>
           <Text label='username' value={this.state.username} onChange={updateUsername} onEnter={addTray}
                 data-locator='add-tray-username'/>

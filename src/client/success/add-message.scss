@@ -1,4 +1,5 @@
 @import '../common/variables';
+@import '../common/forms/button';
 
 .add-message {
   font-size: 1.5rem;
@@ -10,5 +11,11 @@
   .add-message-input {
     width: calc(100% - 13em);
     font-family: $monospace;
+  }
+
+  .add {
+    @include button-icon('plus');
+
+    @extend .button-primary;
   }
 }

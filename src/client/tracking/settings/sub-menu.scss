@@ -1,0 +1,9 @@
+@import '../../common/forms/button';
+
+.tray-sub-bar {
+  .show-projects {
+    @include button-icon('list');
+
+    @extend .button;
+  }
+}

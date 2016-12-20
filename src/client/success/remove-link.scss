@@ -1,12 +1,21 @@
 @import '../nevergreen';
+@import '../common/forms/button';
 
 .remove-link {
-  button {
+  .remove {
+    @include button-icon('cross');
+
+    @extend .button;
+
     font-size: 0.5rem;
     padding: 1em;
-  }
 
-  .text-with-icon {
-    @extend .visually-hidden;
+    &::before {
+      margin: 0;
+    }
+
+    span {
+      @extend .visually-hidden;
+    }
   }
 }
