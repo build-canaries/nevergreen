@@ -1,5 +1,4 @@
 @import '../common/variables';
-@import '../common/inputs';
 
 .export {
   .export-data {
@@ -9,9 +8,5 @@
     width: calc(100% - 1em);
     height: 20em;
     font-family: $monospace;
-  }
-
-  .copy-action {
-    @extend .button-primary;
   }
 }

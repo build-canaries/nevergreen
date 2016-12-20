@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import Text from '../../common/forms/Text'
+import Button from '../../common/forms/Button'
 import nameGenerator from 'project-name-generator'
 import _ from 'lodash'
 import './tray-settings.scss'
@@ -24,8 +25,7 @@ class TraySettings extends Component {
         <div>
           <Text label='name' value={this.state.newName} onChange={nameChanged} onEnter={updateTray}
                 placeholder='e.g. project or team name' data-locator='tray-name' isPrimary={true}/>
-          <button className='generate-random' onClick={generateRandomName} data-locator='generate-random'>random
-          </button>
+          <Button label='random' icon='dice' onClick={generateRandomName} data-locator='generate-random'/>
         </div>
         <div className='row'>
           <Text label='username' placeholder='not set' value={this.state.newUsername} onChange={usernameChanged}
@@ -35,15 +35,18 @@ class TraySettings extends Component {
           <Text label='password' placeholder={passwordPlaceholder} value={this.state.newPassword}
                 onChange={passwordChanged} onEnter={updateTray}/>
         </div>
-        <button className='cancel' onClick={this.props.cancel}>cancel</button>
-        <button className='update' onClick={updateTray} data-locator='update-tray'>update tray</button>
+        <div className='row'>
+          <Button label='cancel' icon='arrow-left2' onClick={this.props.cancel}/>
+          <Button label='update tray' icon='arrow-right2' isPrimary={true} onClick={updateTray}
+                  data-locator='update-tray'/>
+        </div>
         <div className='danger-zone'>
           <h4 className='title'>
             <span className='icon-notification'/>
             <span className='text-with-icon'>Danger Zone</span>
           </h4>
           <div className='content'>
-            <button className='delete' onClick={deleteTray}>Delete this tray</button>
+            <Button label='Delete this tray' icon='bin' onClick={deleteTray}/>
             <span>Once you delete a tray, there is no going back. Please be certain.</span>
           </div>
         </div>

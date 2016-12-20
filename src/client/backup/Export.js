@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import Messages from '../common/messages/Messages'
 import Clipboard from 'clipboard'
 import Container from '../common/container/Container'
+import Button from '../common/forms/Button'
 import './export.scss'
 
 class Export extends Component {
@@ -39,9 +40,8 @@ class Export extends Component {
               <textarea id='export-data' className='export-data' placeholder='loading...'
                         value={this.props.configuration} readOnly='true' spellCheck='false' data-locator='export-data'/>
             </pre>
-          <button id='copy-to-clipboard' className='copy-action' data-clipboard-target='#export-data'>
-            copy to clipboard
-          </button>
+          <Button label='copy to clipboard' icon='paste' isPrimary={true} id='copy-to-clipboard'
+                  data-clipboard-target='#export-data'/>
           <Messages type='notification' messages={this.state.errors}/>
           <Messages type='checkmark' messages={this.state.infos}/>
         </div>

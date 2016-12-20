@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import ShortcutContainer from '../../common/shortcut/ShortcutContainer'
+import Button from '../../common/forms/Button'
 
 class SubMenu extends Component {
   constructor(props) {
@@ -9,11 +9,7 @@ class SubMenu extends Component {
   render() {
     return (
       <div className='tray-sub-bar'>
-        <button className='button' onClick={this.props.toggleSettingsView} title='Show projects'>
-          <span className='icon-list'/>
-          <span className='text-with-icon'>Show projects</span>
-          <ShortcutContainer hotkeys={[`p ${this.props.index}`]}/>
-        </button>
+        <Button label='Show projects' icon='list' onClick={this.props.toggleSettingsView} hotkeys={[`p ${this.props.index}`]}/>
       </div>
     )
   }

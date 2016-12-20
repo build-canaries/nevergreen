@@ -1,5 +1,4 @@
 @import '../../common/variables';
-@import '../../common/inputs';
 
 .available-projects {
   border: none;
@@ -16,14 +15,6 @@
     position: relative;
     top: -0.5em;
     margin-left: 1em;
-  }
-
-  .include-all {
-    @extend .button;
-  }
-
-  .exclude-all {
-    @extend .button;
   }
 
   .build-items {

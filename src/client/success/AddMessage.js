@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import Text from '../common/forms/Text'
+import Button from '../common/forms/Button'
 import './add-message.scss'
 
 class AddMessage extends Component {
@@ -19,7 +20,7 @@ class AddMessage extends Component {
       <div className='add-message'>
         <Text label='message' className='add-message-input' placeholder='text or image url' value={this.state.message}
               onChange={updateMessage} onEnter={addMessage} data-locator='message' isPrimary={true}/>
-        <button className='add-action' onClick={addMessage} data-locator='add-message'>add</button>
+        <Button label='add' icon='plus' isPrimary={true} onClick={addMessage} data-locator='add-message'/>
       </div>
     )
   }

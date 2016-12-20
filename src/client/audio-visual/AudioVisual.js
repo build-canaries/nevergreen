@@ -3,6 +3,7 @@ import Container from '../common/container/Container'
 import Messages from '../common/messages/Messages'
 import Text from '../common/forms/Text'
 import Checkbox from '../common/forms/Checkbox'
+import Button from '../common/forms/Button'
 import './audio-visual.scss'
 
 class AudioVisual extends Component {
@@ -53,7 +54,7 @@ class AudioVisual extends Component {
             <div className='sound-fx'>
               <Text label='Broken build sound' placeholder='URL to an audio file' onChange={updateSoundFx}
                     value={this.state.soundFx} onBlur={setSoundFx}/>
-              <button className='test' onClick={testSoundFx}>test</button>
+              <Button label='test' icon='play3' isPrimary={true} onClick={testSoundFx}/>
               <Messages type='notification' messages={this.state.errors}/>
             </div>
           </fieldset>

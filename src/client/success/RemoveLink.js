@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import ShortcutContainer from '../common/shortcut/ShortcutContainer'
+import Button from '../common/forms/Button'
 import './remove-link.scss'
 
 class RemoveLink extends Component {
@@ -9,11 +9,9 @@ class RemoveLink extends Component {
 
   render() {
     return (
-      <button className='remove-link' onClick={this.props.removeMessage} title='remove'>
-        <span className='icon-cross'/>
-        <span className='visually-hidden'>remove</span>
-        <ShortcutContainer hotkeys={this.props.hotkeys}/>
-      </button>
+      <span className='remove-link'>
+        <Button label='remove' icon='cross' onClick={this.props.removeMessage} hotkeys={this.props.hotkeys}/>
+      </span>
     )
   }
 }

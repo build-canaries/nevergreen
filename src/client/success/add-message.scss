@@ -1,5 +1,4 @@
 @import '../common/variables';
-@import '../common/inputs';
 
 .add-message {
   font-size: 1.5rem;
@@ -9,11 +8,7 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
 
   .add-message-input {
-    width: calc(100% - 11em);
+    width: calc(100% - 13em);
     font-family: $monospace;
-  }
-
-  .add-action {
-    @extend .button-primary;
   }
 }

@@ -1,8 +1,12 @@
-@import '../common/inputs';
+@import '../nevergreen';
 
 .remove-link {
-  @extend .button;
+  button {
+    font-size: 0.5rem;
+    padding: 1em;
+  }
 
-  font-size: 0.5rem;
-  padding: 1em;
+  .text-with-icon {
+    @extend .visually-hidden;
+  }
 }

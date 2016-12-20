@@ -1,5 +1,4 @@
 @import '../common/layout';
-@import '../common/inputs';
 
 .audio-visual {
   @extend .main-section;
@@ -15,10 +14,6 @@
 
     input {
       width: calc(100% - 375px);
-    }
-
-    .test {
-      @extend .button-primary;
     }
   }
 }
