@@ -2,7 +2,7 @@
 
 .main-section {
   width: calc(100% - #{$menu-width});
-  padding: 2em;
+  padding: 2em 2em 0.5em;
   float: left;
   margin-left: $menu-width;
   min-height: 35em;
