@@ -2,7 +2,7 @@ import $ from 'jquery'
 import ScaleText from 'scale-text'
 
 const maxColumns = 3
-const buildStatusPadding = 11
+const buildStatusPadding = 14
 
 function numberOfColumns(projects) {
   return Math.min(maxColumns, projects.length)
