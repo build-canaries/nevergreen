@@ -34,7 +34,7 @@ InterestingProject.propTypes = {
   name: PropTypes.string.isRequired,
   stage: PropTypes.string,
   trayName: PropTypes.string,
-  lastBuildTime: PropTypes.string.isRequired,
+  lastBuildTime: PropTypes.string,
   showBrokenBuildTimers: PropTypes.bool,
   showTrayName: PropTypes.bool
 }

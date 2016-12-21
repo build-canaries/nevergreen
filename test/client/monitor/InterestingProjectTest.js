@@ -11,7 +11,7 @@ describe('<InterestingProject/>', function () {
     name: '',
     stage: null,
     trayName: null,
-    lastBuildTime: '',
+    lastBuildTime: null,
     showBrokenBuildTimers: null,
     showTrayName: null
   }
