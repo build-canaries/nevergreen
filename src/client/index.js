@@ -21,9 +21,14 @@ let store = createStore(reducer, initialState, compose(
   window.devToolsExtension ? window.devToolsExtension() : (f) => f
 ))
 
-const save = () => LocalRespoistory.save(filter(store.getState().toJS())).catch(() => {
-  // TODO: handle save failure
-})
+const save = () => {
+  const state = store.getState()
+  if (state.getIn(['nevergreen', 'loaded'], false)) {
+    LocalRespoistory.save(filter(state.toJS())).catch(() => {
+      // TODO: handle save failure
+    })
+  }
+}
 const saveDebounced = _.debounce(save, 200, {maxWait: ONE_SECOND})
 
 store.subscribe(() => saveDebounced())
