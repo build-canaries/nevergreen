@@ -66,10 +66,6 @@ module.exports = {
         loader: 'url?limit=8192&mimetype=application/octet-stream'
       },
       {
-        test: /\.eot(\?.*)?$/i,
-        loader: 'file'
-      },
-      {
         test: /\.svg(\?.*)?$/i,
         loader: 'url?limit=8192&mimetype=image/svg+xml'
       },
