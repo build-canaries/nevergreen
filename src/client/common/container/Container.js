@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react'
+import classNames from 'classnames'
 import './container.scss'
 
 class Container extends Component {
@@ -23,18 +24,22 @@ class Container extends Component {
         e.preventDefault()
       }
     }
-    const showHideLabel = this.state.hidden ? 'Show pane' : 'Hide pane'
-    const showHideIcon = this.state.hidden ? 'icon-circle-down' : 'icon-circle-up'
-    const titleClass = this.props.highlight ? 'section-title highlight' : 'section-title'
+    const sectionClasses = classNames('container', this.props.className)
+    const titleBarClasses = classNames('title-bar', {
+      highlight: this.props.highlight,
+      show: this.state.hidden,
+      hide: !this.state.hidden
+    })
+    const tooltip = this.state.hidden ? 'show pane' : 'hide pane'
+    const body = this.state.hidden ? null : <div className='container-body'>{this.props.children}</div>
 
     return (
-      <section className={`container ${this.props.className}`} title={showHideLabel} ref={(node) => this.node = node}>
-        <h3 className={titleClass} onClick={toggleHidden} onKeyPress={keyToggle} tabIndex='0'>
-          <span className={`show-hide ${showHideIcon}`}/>
-          {this.props.title}
-          <span className='section-sub-title'>{this.props.subTitle}</span>
-        </h3>
-        {this.state.hidden ? null : this.props.children}
+      <section className={sectionClasses} ref={(node) => this.node = node}>
+        <div className={titleBarClasses} title={tooltip} onClick={toggleHidden} onKeyPress={keyToggle} tabIndex='0'>
+          <h3 className='section-title'>{this.props.title}</h3>
+          <h4 className='section-sub-title'>{this.props.subTitle}</h4>
+        </div>
+        {body}
       </section>
     )
   }

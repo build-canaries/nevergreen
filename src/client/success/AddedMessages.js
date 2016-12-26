@@ -15,7 +15,7 @@ class AddedMessages extends Component {
     }
 
     return (
-      <Container title='Messages' className='added-messages'>
+      <Container title='messages' className='added-messages'>
         <ul className='success-text-list'>
           {
             this.props.messages.map((message, index) => {

@@ -15,9 +15,7 @@ class Tracking extends Component {
       <section className='tracking'>
         <h2 className='visually-hidden'>Tracking</h2>
         <AddTray addTray={this.props.addTray} existingTrays={existingTrays}/>
-        <div>
-          {this.props.trays.map((tray, index) => <TrayContainer key={tray.trayId} index={index} {...tray}/>)}
-        </div>
+        {this.props.trays.map((tray, index) => <TrayContainer key={tray.trayId} index={index} {...tray}/>)}
       </section>
     )
   }

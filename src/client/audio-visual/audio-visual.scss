@@ -4,15 +4,7 @@
 .audio-visual {
   @extend .main-section;
 
-  .settings-list {
-    border: 0;
-    padding: 1em;
-  }
-
   .sound-fx {
-    width: 100%;
-    margin: 0;
-
     input {
       width: calc(100% - 375px);
     }

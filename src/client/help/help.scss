@@ -21,11 +21,6 @@
 
   .help-links {
     list-style: none;
-    padding: 1em;
-  }
-
-  .help-contents {
-    margin: 1em;
   }
 
   .help-link-icon {
@@ -35,15 +30,10 @@
 
   .help-tracking-table {
     width: 100%;
-    margin: 0 0 1em;
 
     tr:nth-child(even) {
       background-color: $light-grey;
     }
-  }
-
-  .help-text {
-    margin: 0 0 1em;
   }
 
   .help-monitor-example-dark {
@@ -75,5 +65,9 @@
   .url {
     font-family: $monospace;
     font-size: 0.9rem;
+  }
+
+  p {
+    padding-top: 1em;
   }
 }

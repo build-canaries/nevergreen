@@ -15,7 +15,7 @@ class AddedImages extends Component {
     }
 
     return (
-      <Container title='Images' className='added-images'>
+      <Container title='images' className='added-images'>
         <ul className='success-images-list'>
           {
             this.props.urls.map((url, index) => {

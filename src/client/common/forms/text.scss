@@ -4,7 +4,13 @@
   margin-top: 1em;
 
   span {
+    display: inline-block;
     margin-right: 1em;
+    font-size: 1.3rem;
+
+    &::first-letter {
+      text-transform: capitalize;
+    }
   }
 
   input {

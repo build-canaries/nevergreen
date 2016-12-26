@@ -47,10 +47,10 @@ describe('TrackingActions', function () {
       expect(actual).to.have.property('data').that.includes.property('username', 'some-username')
     })
 
-    it('should return a sentence cased randomly generate tray name', function () {
-      nameGenerator.returns({spaced: 'generated name'})
+    it('should return a lower cased randomly generate tray name', function () {
+      nameGenerator.returns({spaced: 'GENERATED NAME'})
       const actual = TrackingActions.trayAdded()
-      expect(actual).to.have.property('data').that.includes.property('name', 'Generated Name')
+      expect(actual).to.have.property('data').that.includes.property('name', 'generated name')
     })
 
     it('should return highlight', function () {

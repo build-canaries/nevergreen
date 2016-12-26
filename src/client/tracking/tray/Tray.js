@@ -60,11 +60,9 @@ class Tray extends Component {
             <SettingsSubMenu index={this.props.index} toggleSettingsView={toggleSettingsView}/> :
             <ProjectsSubMenu loaded={this.props.loaded} index={this.props.index} timestamp={this.props.timestamp}
                              refreshTray={refreshTray} toggleSettingsView={toggleSettingsView}/>}
-          <div>
-            <Loading loaded={this.props.loaded}>
-              {subContent}
-            </Loading>
-          </div>
+          <Loading loaded={this.props.loaded}>
+            {subContent}
+          </Loading>
         </div>
       </Container>
     )

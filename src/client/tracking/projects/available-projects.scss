@@ -2,30 +2,30 @@
 @import '../../common/forms/button';
 
 .available-projects {
-  border: none;
-  margin: 1em;
-  padding: 0;
+  display: inline-block;
+  padding: 1em;
 
   .legend {
     color: $mid-grey;
     float: left;
+    padding-right: 1em;
   }
 
   .toggles {
     float: left;
-    position: relative;
-    top: -0.5em;
-    margin-left: 1em;
   }
 
   .include-all {
     @include button-icon('checkbox-checked');
-
-    @extend .button;
   }
 
   .exclude-all {
     @include button-icon('checkbox-unchecked');
+  }
+
+  .include-all,
+  .exclude-all {
+    margin: 0 0.5em;
 
     @extend .button;
   }
@@ -33,6 +33,7 @@
   .build-items {
     clear: both;
     list-style: none;
+    padding-top: 1em;
   }
 
   .project-filter {

@@ -17,7 +17,7 @@ class AddMessage extends Component {
 
     return (
       <div className='add-message'>
-        <Text label='message' className='add-message-input' placeholder='text or image url' value={this.state.message}
+        <Text label='message' className='add-message-input' placeholder='text or a URL to an image' value={this.state.message}
               onChange={updateMessage} onEnter={addMessage} data-locator='message' isPrimary={true}/>
         <button className='add' onClick={addMessage} data-locator='add-message'>add</button>
       </div>

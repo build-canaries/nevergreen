@@ -1,4 +1,17 @@
 @import '../variables';
+@import '../fonts/icon-font';
+
+@mixin show-hide-icon($icon) {
+  @extend .icon-circle-#{$icon};
+
+  &::before {
+    @extend .icon;
+
+    font-size: 1.2rem;
+    margin-left: 1em;
+    margin-right: 0.5em;
+  }
+}
 
 .container {
   font-size: 1.5rem;
@@ -6,29 +19,42 @@
   background-color: white;
   margin-bottom: 1em;
 
-  .section-title {
-    font-size: 1.5rem;
-    font-weight: 400;
-    padding: 0.5em;
+  .title-bar {
     background: $mid-grey;
     color: white;
     text-overflow: ellipsis;
     cursor: pointer;
 
-    .section-sub-title {
-      font-size: 1.2rem;
-      padding-left: 1em;
-    }
-
-    .show-hide {
-      font-size: 1.2rem;
-      margin-right: 0.5em;
-    }
-
     &:hover,
     &:focus {
       color: darken(white, 10%);
     }
+  }
+
+  .section-title {
+    display: inline-block;
+    font-size: 1.5rem;
+    font-weight: 400;
+    padding: 0.5em;
+
+    &::first-letter {
+      text-transform: uppercase;
+    }
+  }
+
+  .section-sub-title {
+    display: inline-block;
+    font-size: 1.2rem;
+    font-weight: normal;
+    padding-left: 1em;
+  }
+
+  .show {
+    @include show-hide-icon(down);
+  }
+
+  .hide {
+    @include show-hide-icon(up);
   }
 
   .highlight {
@@ -43,5 +69,9 @@
     100% {
       background: $mid-grey;
     }
+  }
+
+  .container-body {
+    padding: 1em;
   }
 }

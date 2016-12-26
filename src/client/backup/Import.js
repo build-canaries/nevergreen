@@ -25,11 +25,10 @@ class Import extends Component {
     const doImport = () => this.props.importData(this.state.data)
 
     return (
-      <Container title='Import' className='import'>
+      <Container title='import' className='import'>
         <div>
-          <textarea className='import-data' placeholder='paste exported configuration here and press import'
-                    value={this.state.data} onChange={updateData} spellCheck='false' data-locator='import-data'
-                    ref={(node) => this.primaryInput = node}/>
+          <textarea className='import-data' placeholder='paste exported configuration here and press import' value={this.state.data}
+                    onChange={updateData} spellCheck='false' data-locator='import-data' ref={(node) => this.primaryInput = node}/>
           <button className='import-button' onClick={doImport} data-locator='import'>import</button>
           <Messages type='notification' messages={this.props.errors}/>
           <Messages type='checkmark' messages={this.props.infos}/>

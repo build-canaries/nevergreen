@@ -14,7 +14,7 @@ function isNotBlank(value) {
 }
 
 function generateRandomName() {
-  return _.startCase(nameGenerator().spaced)
+  return _.lowerCase(nameGenerator().spaced)
 }
 
 export const TRAY_ADDED = 'TRAY_ADDED'

@@ -43,11 +43,10 @@ class AvailableProjects extends Component {
     })
 
     return (
-      <fieldset className='available-projects' data-locator='available-projects'>
-        <legend className='legend'>Available projects</legend>
-        <div className='toggles'>
-          <button className='include-all' onClick={includeAll} disabled={this.state.disableButtons}
-                  data-locator='include-all'>
+      <section className='available-projects' data-locator='available-projects'>
+        <fieldset className='toggles'>
+          <legend className='legend'>Available projects</legend>
+          <button className='include-all' onClick={includeAll} disabled={this.state.disableButtons} data-locator='include-all'>
             include all
             <ShortcutContainer hotkeys={[`+ ${this.props.index}`, `= ${this.props.index}`]}/>
           </button>
@@ -55,7 +54,7 @@ class AvailableProjects extends Component {
             exclude all
             <ShortcutContainer hotkeys={[`- ${this.props.index}`]}/>
           </button>
-        </div>
+        </fieldset>
         <span className='project-filter'>
           <Text label='Filter projects' onChange={updateFilter}/>
         </span>
@@ -68,12 +67,11 @@ class AvailableProjects extends Component {
                 this.props.selectProject(this.props.trayId, project.projectId, !selected)
               }
 
-              return <AvailableProject key={project.projectId} {...project} selected={selected}
-                                       selectProject={selectProject}/>
+              return <AvailableProject key={project.projectId} {...project} selected={selected} selectProject={selectProject}/>
             })
           }
         </ol>
-      </fieldset>
+      </section>
     )
   }
 }

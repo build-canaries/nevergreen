@@ -22,6 +22,12 @@ kbd {
   font-family: $monospace;
 }
 
+fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
 .text-with-icon {
   margin-left: 1em;
 }

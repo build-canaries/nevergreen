@@ -24,7 +24,7 @@ class Text extends Component {
     return (
       <label className='text-input'>
         <span>{this.props.label}</span>
-        <input type='text' onKeyPress={onEnter} ref={(node) => this.primaryInput = node} {...inputProps}/>
+        <input type='text' onKeyPress={onEnter} ref={(node) => this.primaryInput = node} spellCheck={false} {...inputProps}/>
       </label>
     )
   }

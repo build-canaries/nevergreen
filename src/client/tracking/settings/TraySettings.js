@@ -11,7 +11,7 @@ class TraySettings extends Component {
   }
 
   render() {
-    const generateRandomName = () => this.setState({newName: _.startCase(nameGenerator().spaced)})
+    const generateRandomName = () => this.setState({newName: _.lowerCase(nameGenerator().spaced)})
     const updateTray = () => this.props.updateTray(this.props.trayId, this.state.newName, this.props.url, this.state.newUsername, this.props.password, this.state.newPassword)
     const nameChanged = (evt) => this.setState({newName: evt.target.value})
     const usernameChanged = (evt) => this.setState({newUsername: evt.target.value})
@@ -22,17 +22,15 @@ class TraySettings extends Component {
     return (
       <section className='tray-settings' data-locator='tray-settings'>
         <div>
-          <Text label='name' value={this.state.newName} onChange={nameChanged} onEnter={updateTray}
-                placeholder='e.g. project or team name' data-locator='tray-name' isPrimary={true}/>
+          <Text label='name' value={this.state.newName} onChange={nameChanged} onEnter={updateTray} placeholder='e.g. project or team name'
+                data-locator='tray-name' isPrimary={true}/>
           <button className='random' onClick={generateRandomName} data-locator='generate-random'>random</button>
         </div>
         <div className='row'>
-          <Text label='username' placeholder='not set' value={this.state.newUsername} onChange={usernameChanged}
-                onEnter={updateTray}/>
+          <Text label='username' placeholder='not set' value={this.state.newUsername} onChange={usernameChanged} onEnter={updateTray}/>
         </div>
         <div className='row'>
-          <Text label='password' placeholder={passwordPlaceholder} value={this.state.newPassword}
-                onChange={passwordChanged} onEnter={updateTray}/>
+          <Text label='password' placeholder={passwordPlaceholder} value={this.state.newPassword} onChange={passwordChanged} onEnter={updateTray}/>
         </div>
         <div className='row'>
           <button className='cancel' onClick={this.props.cancel}>cancel</button>

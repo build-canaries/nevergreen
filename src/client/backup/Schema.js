@@ -9,7 +9,7 @@ class Schema extends Component {
 
   render() {
     return (
-      <Container title='Schema' className='schema' hidden={true}>
+      <Container title='schema' className='schema' hidden={true}>
         <pre>{this.props.schema}</pre>
       </Container>
     )

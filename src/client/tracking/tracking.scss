@@ -2,4 +2,8 @@
 
 .tracking {
   @extend .main-section;
+
+  .container-body {
+    padding: 0;
+  }
 }

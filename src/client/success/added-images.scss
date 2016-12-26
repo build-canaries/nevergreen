@@ -16,10 +16,14 @@
   }
 
   .success-item {
-    margin: 1em;
+    padding-bottom: 1em;
 
     .hotkey {
       left: -0.5em;
+    }
+
+    &:last-child {
+      padding-bottom: 0;
     }
   }
 

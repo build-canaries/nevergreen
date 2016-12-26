@@ -33,11 +33,11 @@ class Export extends Component {
 
   render() {
     return (
-      <Container title='Export' className='export'>
+      <Container title='export' className='export'>
         <div>
             <pre>
-              <textarea id='export-data' className='export-data' placeholder='loading...'
-                        value={this.props.configuration} readOnly='true' spellCheck='false' data-locator='export-data'/>
+              <textarea id='export-data' className='export-data' placeholder='loading...' value={this.props.configuration} readOnly='true'
+                        spellCheck='false' data-locator='export-data'/>
             </pre>
           <button className='copy' id='copy-to-clipboard' data-clipboard-target='#export-data'>copy to clipboard
           </button>
