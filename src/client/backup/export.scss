@@ -4,9 +4,9 @@
 .export {
   .export-data {
     font-size: 1rem;
-    margin: 0.5em 0.5em 0;
     padding: 0.5em;
-    width: calc(100% - 1em);
+    margin-bottom: 1em;
+    width: 100%;
     height: 20em;
     font-family: $monospace;
   }
@@ -15,5 +15,9 @@
     @include button-icon('paste');
 
     @extend .button-primary;
+  }
+
+  .messages {
+    margin-top: 1em;
   }
 }

@@ -5,8 +5,10 @@
   @extend .main-section;
 
   .sound-fx {
+    margin-top: 0.5em;
+
     input {
-      width: calc(100% - 375px);
+      width: calc(100% - 14em);
     }
   }
 
@@ -14,5 +16,9 @@
     @include button-icon('play3');
 
     @extend .button;
+  }
+
+  .messages {
+    margin-top: 1em;
   }
 }
