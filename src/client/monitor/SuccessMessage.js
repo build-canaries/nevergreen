@@ -3,10 +3,6 @@ import {styleProjects} from './Styler'
 import './success-message.scss'
 
 class SuccessMessage extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   componentDidMount() {
     styleProjects([{name: this.props.message}], this.node, this.node.parentNode)
   }

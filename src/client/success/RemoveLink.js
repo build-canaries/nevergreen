@@ -3,10 +3,6 @@ import ShortcutContainer from '../common/shortcut/ShortcutContainer'
 import './remove-link.scss'
 
 class RemoveLink extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     return (
       <span className='remove-link'>

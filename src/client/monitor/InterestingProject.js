@@ -4,10 +4,6 @@ import _ from 'lodash'
 import './interesting-project.scss'
 
 class InterestingProject extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     const isSick = this.props.prognosis === 'sick'
     const timeBrokenLabel = _.isEmpty(_.trim(this.props.lastBuildTime)) ? '??' : moment(this.props.lastBuildTime).fromNow(true)

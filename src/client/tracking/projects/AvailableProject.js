@@ -3,10 +3,6 @@ import Checkbox from '../../common/forms/Checkbox'
 import './available-project.scss'
 
 class AvailableProject extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     const nameClass = this.props.removed ? 'removed-project' : ''
     let info = null

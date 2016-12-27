@@ -10,10 +10,6 @@ const THREE_SECONDS = 3 * 1000
 const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000
 
 class Nevergreen extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   componentDidMount() {
     this.props.initalise()
 

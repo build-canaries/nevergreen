@@ -3,10 +3,6 @@ import _ from 'lodash'
 import './checkbox.scss'
 
 class Checkbox extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     const inputProps = _.omit(this.props, ['label', 'enabled', 'onToggle'])
     const onChange = (event) => this.props.onToggle(event.target.checked)

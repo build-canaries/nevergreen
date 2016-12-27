@@ -3,10 +3,6 @@ import Container from '../common/container/Container'
 import './schema.scss'
 
 class Schema extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     return (
       <Container title='schema' className='schema' hidden={true}>

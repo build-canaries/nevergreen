@@ -5,10 +5,6 @@ import AddMessage from './AddMessage'
 import './success.scss'
 
 class Success extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     const messages = this.props.messages.filter((m) => !m.startsWith('http'))
     const images = this.props.messages.filter((m) => m.startsWith('http'))

@@ -2,10 +2,6 @@ import React, {Component, PropTypes} from 'react'
 import './success-image.scss'
 
 class SuccessImage extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     return (
       <div id='success-image' className='success-image'>

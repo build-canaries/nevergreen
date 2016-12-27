@@ -5,10 +5,6 @@ import './added-images.scss'
 import _ from 'lodash'
 
 class AddedImages extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     if (_.isEmpty(this.props.urls)) {
       return null

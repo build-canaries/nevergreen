@@ -5,10 +5,6 @@ import Schema from './Schema'
 import './backup.scss'
 
 class Backup extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     const importProps = {
       errors: this.props.errors,

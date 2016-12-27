@@ -15,10 +15,6 @@ function click(parent) {
 }
 
 class Shortcut extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   componentDidMount() {
     Mousetrap.bind(this.props.hotkeys, () => click(this.node.parentNode))
   }

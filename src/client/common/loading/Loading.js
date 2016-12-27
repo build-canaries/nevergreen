@@ -2,10 +2,6 @@ import React, {Component, PropTypes} from 'react'
 import './loading.scss'
 
 class Loading extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     if (this.props.loaded) {
       return this.props.children

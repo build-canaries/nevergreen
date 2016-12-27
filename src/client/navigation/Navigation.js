@@ -15,10 +15,6 @@ const items = [
 ]
 
 class Menu extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     const footerStyle = {
       backgroundColor: this.props.versionColour

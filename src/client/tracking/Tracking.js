@@ -4,10 +4,6 @@ import TrayContainer from './tray/TrayContainer'
 import './tracking.scss'
 
 class Tracking extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     const existingTrays = this.props.trays.map((tray) => tray.trayId)
 

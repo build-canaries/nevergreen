@@ -3,10 +3,6 @@ import _ from 'lodash'
 import './text.scss'
 
 class Text extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   componentDidMount() {
     if (this.props.isPrimary) {
       this.primaryInput.focus()

@@ -7,10 +7,7 @@ import './export.scss'
 class Export extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      infos: [],
-      errors: []
-    }
+    this.state = {infos: [], errors: []}
   }
 
   componentDidMount() {
@@ -35,10 +32,10 @@ class Export extends Component {
     return (
       <Container title='export' className='export'>
         <div>
-            <pre>
-              <textarea id='export-data' className='export-data' placeholder='loading...' value={this.props.configuration} readOnly='true'
-                        spellCheck='false' data-locator='export-data'/>
-            </pre>
+          <pre>
+            <textarea id='export-data' className='export-data' placeholder='loading...' value={this.props.configuration} readOnly='true'
+                      spellCheck='false' data-locator='export-data'/>
+          </pre>
           <button className='copy' id='copy-to-clipboard' data-clipboard-target='#export-data'>copy to clipboard
           </button>
           <Messages type='error' messages={this.state.errors}/>

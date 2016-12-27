@@ -4,10 +4,6 @@ import _ from 'lodash'
 import './messages.scss'
 
 class Messages extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     if (_.isEmpty(this.props.messages)) {
       return null
@@ -18,8 +14,8 @@ class Messages extends Component {
     return (
       <ul className='messages'>
         {
-          this.props.messages.map((msg, index) => {
-            return <li key={index} className={messageClasses}>{msg}</li>
+          this.props.messages.map((msg) => {
+            return <li key={msg} className={messageClasses}>{msg}</li>
           })
         }
       </ul>

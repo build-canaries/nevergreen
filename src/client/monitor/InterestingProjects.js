@@ -4,10 +4,6 @@ import InterestingProject from './InterestingProject'
 import './interesting-projects.scss'
 
 class InterestingProjects extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   componentDidMount() {
     const node = this.node.querySelector('#interesting-projects')
     styleProjects(this.props.projects, node.querySelectorAll('.monitor-outer-container'), node)

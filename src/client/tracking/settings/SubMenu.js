@@ -3,10 +3,6 @@ import ShortcutContainer from '../../common/shortcut/ShortcutContainer'
 import './sub-menu.scss'
 
 class SubMenu extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     return (
       <div className='tray-sub-bar'>

@@ -5,10 +5,6 @@ import './added-messages.scss'
 import _ from 'lodash'
 
 class AddedMessages extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     if (_.isEmpty(this.props.messages)) {
       return null

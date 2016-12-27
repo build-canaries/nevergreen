@@ -3,10 +3,6 @@ import Container from '../common/container/Container'
 import './help.scss'
 
 class Help extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     return (
       <section className='help'>
