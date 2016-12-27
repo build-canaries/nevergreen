@@ -21,7 +21,7 @@ class AudioVisual extends Component {
     const toggleBrokenBuilds = (newValue) => this.props.setShowBrokenBuildTime(newValue)
     const toggleTrayName = (newValue) => this.props.setShowTrayName(newValue)
     const toggleBrokenSounds = (newValue) => this.props.setPlayBrokenBuildSoundFx(newValue)
-    const updateSoundFx = (evt) => this.setState({soundFx: evt.target.value})
+    const updateSoundFx = (evt) => this.setState({soundFx: evt.target.value, errors: []})
     const setSoundFx = () => this.props.setBrokenBuildSoundFx(this.state.soundFx)
     const testSoundFx = () => {
       const audio = new Audio(this.state.soundFx)
