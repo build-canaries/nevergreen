@@ -41,9 +41,7 @@ class Nevergreen extends Component {
       <div className='nevergreen'>
         <Timer onTrigger={checkVersion} interval={TWENTY_FOUR_HOURS}/>
         <h1 className='visually-hidden'>Nevergreen</h1>
-        <Menu versionNumber={this.props.versionNumber}
-              versionName={this.props.versionName}
-              versionColour={this.props.versionColour}
+        <Menu versionNumber={this.props.versionNumber} versionName={this.props.versionName} versionColour={this.props.versionColour}
               commitHash={this.props.commitHash}/>
         {notification}
         {this.props.loaded ? this.props.children : null}

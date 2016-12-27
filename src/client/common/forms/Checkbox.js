@@ -6,10 +6,11 @@ class Checkbox extends Component {
   render() {
     const inputProps = _.omit(this.props, ['label', 'enabled', 'onToggle'])
     const onChange = (event) => this.props.onToggle(event.target.checked)
+    const checked = this.props.enabled || false
 
     return (
       <label className='label-checkbox'>
-        <input className='checkbox' type='checkbox' checked={this.props.enabled} onChange={onChange} {...inputProps}/>
+        <input className='checkbox' type='checkbox' checked={checked} onChange={onChange} {...inputProps}/>
         <span>{this.props.label}</span>
       </label>
     )
@@ -18,7 +19,7 @@ class Checkbox extends Component {
 
 Checkbox.propTypes = {
   label: PropTypes.string.isRequired,
-  enabled: PropTypes.bool.isRequired,
+  enabled: PropTypes.bool,
   onToggle: PropTypes.func.isRequired
 }
 

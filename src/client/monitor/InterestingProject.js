@@ -1,19 +1,20 @@
 import React, {Component, PropTypes} from 'react'
+import classNames from 'classnames'
 import moment from 'moment'
 import _ from 'lodash'
 import './interesting-project.scss'
 
 class InterestingProject extends Component {
   render() {
+    const listClasses = classNames('interesting-project', this.props.prognosis)
     const isSick = this.props.prognosis === 'sick'
     const timeBrokenLabel = _.isEmpty(_.trim(this.props.lastBuildTime)) ? '??' : moment(this.props.lastBuildTime).fromNow(true)
-    const timeBroken = this.props.showBrokenBuildTimers && isSick ?
-      <span className='time-broken'> {timeBrokenLabel}</span> : null
+    const timeBroken = this.props.showBrokenBuildTimers && isSick ? <span className='time-broken'> {timeBrokenLabel}</span> : null
     const displayName = this.props.stage ? `${this.props.name} ${this.props.stage}` : this.props.name
     const display = this.props.showTrayName && this.props.trayName ? `${this.props.trayName.toLowerCase()} ${displayName}` : displayName
 
     return (
-      <li className={`interesting-project ${this.props.prognosis}`} data-locator='interesting-project'>
+      <li className={listClasses} data-locator='interesting-project'>
         <div className='monitor-outer-container'>
           <div className='monitor-inner-container'>
             <span className='monitor-project-name'>{display}</span>

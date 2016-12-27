@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react'
+import classNames from 'classnames'
 import './navigation.scss'
 import './footer.scss'
 import logo from './buildcanaries-logo.png'
@@ -22,30 +23,31 @@ class Menu extends Component {
 
     return (
       <div className='navigation'>
-        <nav role='navigation'>
+        <header>
           <h2 className='visually-hidden'>Navigation</h2>
-
           <a href='https://build-canaries.github.io/' target='_blank'>
             <img src={logo} className='logo' alt='Build Canaries' title='Click to visit the Build Canaries homepage'/>
           </a>
+          <nav role='navigation'>
+            <ul className='menu'>
+              {
+                items.map((item) => {
+                  const iconClasses = classNames('menu-icon', `icon-${item.iconClass}`)
 
-          <ul className='menu'>
-            {
-              items.map((item) => {
-                return (
-                  <li key={item.id}>
-                    <Link to={`/${item.id}`} className='menu-item' activeClassName='active'
-                          data-locator={`menu-${item.id}`}>
-                      <span className={`menu-icon icon-${item.iconClass}`}/>
-                      <span className='menu-title'>{item.title}</span>
-                      <ShortcutContainer hotkeys={item.shortcuts}/>
-                    </Link>
-                  </li>
-                )
-              })
-            }
-          </ul>
-        </nav>
+                  return (
+                    <li key={item.id}>
+                      <Link to={`/${item.id}`} className='menu-item' activeClassName='active' data-locator={`menu-${item.id}`}>
+                        <span className={iconClasses}/>
+                        <span className='menu-title'>{item.title}</span>
+                        <ShortcutContainer hotkeys={item.shortcuts}/>
+                      </Link>
+                    </li>
+                  )
+                })
+              }
+            </ul>
+          </nav>
+        </header>
         <footer role='contentinfo' className='footer' style={footerStyle}>
           <a href='https://github.com/build-canaries/nevergreen/releases' target='_blank' className='version'>
             <p>v{this.props.versionNumber}</p>

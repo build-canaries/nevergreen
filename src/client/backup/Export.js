@@ -31,16 +31,13 @@ class Export extends Component {
   render() {
     return (
       <Container title='export' className='export'>
-        <div>
-          <pre>
-            <textarea id='export-data' className='export-data' placeholder='loading...' value={this.props.configuration} readOnly='true'
-                      spellCheck='false' data-locator='export-data'/>
-          </pre>
-          <button className='copy' id='copy-to-clipboard' data-clipboard-target='#export-data'>copy to clipboard
-          </button>
-          <Messages type='error' messages={this.state.errors}/>
-          <Messages type='info' messages={this.state.infos}/>
-        </div>
+        <pre>
+          <textarea id='export-data' className='export-data' value={this.props.configuration} readOnly='true' spellCheck='false'
+                    data-locator='export-data'/>
+        </pre>
+        <button className='copy' id='copy-to-clipboard' data-clipboard-target='#export-data'>copy to clipboard</button>
+        <Messages type='error' messages={this.state.errors}/>
+        <Messages type='info' messages={this.state.infos}/>
       </Container>
     )
   }

@@ -1,13 +1,13 @@
 @import '../variables';
 
 .label-checkbox {
-  display: inline-block;
-  margin: 0.7em 0;
+  display: block;
+  padding: 0.7em 0;
   font-size: 1.3rem;
   cursor: pointer;
 
   span {
-    margin-left: 0.8em;
+    padding-left: 0.8em;
   }
 }
 

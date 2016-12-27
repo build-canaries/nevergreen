@@ -33,21 +33,16 @@ class AudioVisual extends Component {
     return (
       <section className='audio-visual'>
         <Container title='visual settings'>
-          <p>
-            <Checkbox label='show tray name' enabled={this.props.showTrayName} onToggle={toggleTrayName} data-locator='show-names'/>
-          </p>
-          <p>
-            <Checkbox label='show broken build time' enabled={this.props.showBrokenBuildTime} onToggle={toggleBrokenBuilds}
-                      data-locator='show-times'/>
-          </p>
+          <Checkbox label='show tray name' enabled={this.props.showTrayName} onToggle={toggleTrayName} data-locator='show-names'/>
+          <Checkbox label='show broken build time' enabled={this.props.showBrokenBuildTime} onToggle={toggleBrokenBuilds} data-locator='show-times'/>
         </Container>
         <Container title='audio settings'>
           <fieldset>
             <Checkbox label='play a sound when a build breaks' enabled={this.props.playBrokenBuildSoundFx} onToggle={toggleBrokenSounds}
                       data-locator='play-sounds'/>
             <div className='sound-fx'>
-              <Text label='broken build sound' placeholder='URL to an audio file' onChange={updateSoundFx}
-                    value={this.state.soundFx} onBlur={setSoundFx}/>
+              <Text label='broken build sound' placeholder='URL to an audio file' onChange={updateSoundFx} value={this.state.soundFx}
+                    onBlur={setSoundFx}/>
               <button className='test-sound-fx' onClick={testSoundFx}>test</button>
               <Messages type='error' messages={this.state.errors}/>
             </div>
