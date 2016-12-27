@@ -30,8 +30,8 @@ class Import extends Component {
           <textarea className='import-data' placeholder='paste exported configuration here and press import' value={this.state.data}
                     onChange={updateData} spellCheck='false' data-locator='import-data' ref={(node) => this.primaryInput = node}/>
           <button className='import-button' onClick={doImport} data-locator='import'>import</button>
-          <Messages type='notification' messages={this.props.errors}/>
-          <Messages type='checkmark' messages={this.props.infos}/>
+          <Messages type='error' messages={this.props.errors}/>
+          <Messages type='info' messages={this.props.infos}/>
         </div>
       </Container>
     )

@@ -41,8 +41,8 @@ class Export extends Component {
             </pre>
           <button className='copy' id='copy-to-clipboard' data-clipboard-target='#export-data'>copy to clipboard
           </button>
-          <Messages type='notification' messages={this.state.errors}/>
-          <Messages type='checkmark' messages={this.state.infos}/>
+          <Messages type='error' messages={this.state.errors}/>
+          <Messages type='info' messages={this.state.infos}/>
         </div>
       </Container>
     )

@@ -42,7 +42,7 @@ class Tray extends Component {
                                  removeTray={this.props.removeTray} cancel={toggleSettingsView}/>
     } else {
       if (this.props.errors) {
-        subContent = <Messages type='notification' messages={this.props.errors}/>
+        subContent = <Messages type='error' messages={this.props.errors}/>
       } else {
         subContent =
           <AvailableProjects index={this.props.index} trayId={this.props.trayId} projects={this.props.projects}

@@ -55,7 +55,7 @@ class Monitor extends Component {
     let content
 
     if (this.props.errors) {
-      content = <Messages type='notification' messages={this.props.errors}/>
+      content = <Messages type='error' messages={this.props.errors}/>
     } else if (this.props.projects.length > 0) {
       content = <InterestingProjects {...this.props}/>
     } else {

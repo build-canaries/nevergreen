@@ -49,7 +49,7 @@ class AudioVisual extends Component {
               <Text label='broken build sound' placeholder='URL to an audio file' onChange={updateSoundFx}
                     value={this.state.soundFx} onBlur={setSoundFx}/>
               <button className='test-sound-fx' onClick={testSoundFx}>test</button>
-              <Messages type='notification' messages={this.state.errors}/>
+              <Messages type='error' messages={this.state.errors}/>
             </div>
           </fieldset>
         </Container>

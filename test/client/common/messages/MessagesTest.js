@@ -7,7 +7,7 @@ import Messages from '../../../../src/client/common/messages/Messages'
 
 describe('<Messages/>', function () {
   const DEFAULT_PROPS = {
-    type: '',
+    type: 'error',
     messages: null
   }
 

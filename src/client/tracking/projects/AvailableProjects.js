@@ -58,7 +58,7 @@ class AvailableProjects extends Component {
         <span className='project-filter'>
           <Text label='Filter projects' onChange={updateFilter}/>
         </span>
-        <Messages type='notification' messages={this.state.errors}/>
+        <Messages type='error' messages={this.state.errors}/>
         <ol className='build-items'>
           {
             _.sortBy(filteredProjects, ['name', 'stage']).map((project) => {

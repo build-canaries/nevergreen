@@ -1,21 +1,40 @@
 @import '../variables';
+@import '../fonts/icon-font';
 
 .messages {
-  margin: 0.5em;
-  border-radius: 0.5em;
+  margin-top: 1em;
   color: white;
   background-color: $off-black;
   list-style: none;
 
   .message {
-    padding: 0.5em;
+    padding: 0.5em 0.5em 0.5em 2em;
+
+    &:first-child {
+      padding: 0.5em;
+
+      &::before {
+        @extend .icon;
+
+        font-size: 1rem;
+        padding-right: 1em;
+      }
+    }
   }
 
-  &.notification {
+  .error {
+    &:first-child {
+      @extend .icon-notification;
+    }
+
     background-color: $danger-text;
   }
 
-  &.checkmark {
+  .info {
+    &:first-child {
+      @extend .icon-checkmark;
+    }
+
     background-color: $blue;
   }
 }
