@@ -1,11 +1,12 @@
+@import '../common/variables';
 @import '../common/forms/button';
 
 .add-tray {
   font-size: 1.5rem;
   margin-bottom: 1em;
   padding: 1em;
-  background-color: white;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
+  background-color: $white;
+  box-shadow: $shadow;
 
   .add {
     @include button-icon('plus');

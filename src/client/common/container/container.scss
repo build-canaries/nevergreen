@@ -16,18 +16,19 @@
 .container {
   font-size: 1.5rem;
   border: 1px solid $mid-grey;
-  background-color: white;
+  background-color: $white;
   margin-bottom: 1em;
+  box-shadow: $shadow;
 
   .title-bar {
     background: $mid-grey;
-    color: white;
+    color: $white;
     text-overflow: ellipsis;
     cursor: pointer;
 
     &:hover,
     &:focus {
-      color: darken(white, 10%);
+      color: darken($white, 10%);
     }
   }
 

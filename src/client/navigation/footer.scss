@@ -1,7 +1,7 @@
 @import '../common/variables';
 
 .footer {
-  background-color: white;
+  background-color: $white;
   position: fixed;
   bottom: 0;
   width: $menu-width;
@@ -9,7 +9,7 @@
 
   .version {
     float: right;
-    color: white;
+    color: $white;
     font-size: 0.9rem;
     padding: 0.5em;
     text-decoration: none;

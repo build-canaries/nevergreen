@@ -13,17 +13,17 @@
   border-radius: 2px;
   text-transform: uppercase;
   text-decoration: none;
-  background-color: white;
+  background-color: $white;
   color: $off-black;
 
   &:enabled {
     cursor: pointer;
     transition: background-color 0.1s ease-in, box-shadow 0.1s ease-in;
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    box-shadow: $shadow;
 
     &:hover,
     &:focus {
-      background-color: darken(white, 8%);
+      background-color: darken($white, 8%);
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.26);
       border-radius: 0;
     }

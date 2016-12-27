@@ -37,10 +37,7 @@ class TraySettings extends Component {
           <button className='update' onClick={updateTray} data-locator='update-tray'>update tray</button>
         </div>
         <div className='danger-zone'>
-          <h4 className='title'>
-            <span className='icon-notification'/>
-            <span className='text-with-icon'>Danger Zone</span>
-          </h4>
+          <h4 className='danger-zone-title'>Danger Zone</h4>
           <div className='content'>
             <button className='delete' onClick={deleteTray}>delete this tray</button>
             <span>Once you delete a tray, there is no going back. Please be certain.</span>

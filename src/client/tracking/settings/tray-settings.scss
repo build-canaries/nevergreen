@@ -1,4 +1,5 @@
 @import '../../common/variables';
+@import '../../common/fonts/icon-font';
 @import '../../common/forms/button';
 
 .tray-settings {
@@ -10,13 +11,21 @@
 
   .danger-zone {
     border-radius: 3px;
-    border: 1px solid $off-white;
+    border: 1px solid $light-grey;
     margin-top: 1em;
 
-    .title {
+    .danger-zone-title {
+      @extend .icon-notification;
+
       background-color: $danger-text;
-      color: white;
+      color: $white;
       padding: 0.5em 1em;
+
+      &::before {
+        @extend .icon;
+
+        margin-right: 1em;
+      }
     }
 
     .content {
@@ -38,16 +47,16 @@
     @include button-icon('arrow-left2');
 
     @extend .button;
-
-    margin: 2em 1em 0 0;
-    font-size: 1rem;
   }
 
   .update {
     @include button-icon('arrow-right2');
 
     @extend .button-primary;
+  }
 
+  .cancel,
+  .update {
     margin: 2em 1em 0 0;
     font-size: 1rem;
   }

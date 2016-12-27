@@ -32,10 +32,6 @@ fieldset {
   margin-left: 1em;
 }
 
-.no-text-selection {
-  user-select: none;
-}
-
 .hidden {
   display: none;
 }
@@ -57,7 +53,7 @@ fieldset {
   margin: 0.5em;
   border-radius: 0.5em;
   background-color: $blue;
-  color: white;
+  color: $white;
   width: calc(#{$menu-width} - 1em);
   position: fixed;
   bottom: 5em;
@@ -79,6 +75,6 @@ fieldset {
   cursor: pointer;
 
   &:hover {
-    color: darken(white, 10%);
+    color: darken($white, 10%);
   }
 }

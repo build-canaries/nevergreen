@@ -48,7 +48,7 @@
   &:checked {
     &::before {
       transform: rotate(-45deg) scale(1, 1);
-      border-color: white;
+      border-color: $white;
     }
 
     &::after {

@@ -4,14 +4,13 @@ $monospace: Source Code Pro, monospace;
 
 // Colours
 
+$black: black;
 $off-black: #212121;
 $blue: #03a9f4;
-$dark-blue: #0358f3;
 $mid-grey: #7e7e7e;
-$mid-grey2: #999;
 $light-grey: #ececec;
-$off-white: #f2f2f2;
-$off-white2: #fffed7;
+$white: white;
+$off-white: #fffed7;
 
 $healthy-building: #ffff18;
 $healthy-building-text: #4a2f27;
@@ -25,3 +24,7 @@ $danger-text: #df3e3e;
 // Sizes
 
 $menu-width: 14em;
+
+// Decorations
+
+$shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
