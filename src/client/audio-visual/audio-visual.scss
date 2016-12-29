@@ -4,6 +4,10 @@
 .audio-visual {
   @extend .main-section;
 
+  .label-checkbox {
+    display: block;
+  }
+
   .sound-fx {
     margin-top: 0.5em;
 
