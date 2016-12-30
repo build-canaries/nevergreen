@@ -11,7 +11,7 @@
                  [ring-curl "0.3.0"]
                  [ring/ring-json "0.4.0"]
                  [ring/ring-defaults "0.2.1"]
-                 [bk/ring-gzip "0.1.1"]
+                 [bk/ring-gzip "0.2.0"]
                  [ring-basic-authentication "1.0.5"]
                  [base64-clj "0.1.1"]
                  [camel-snake-kebab "0.4.0"]
