@@ -40,7 +40,7 @@
     width: 1.1em;
     height: 1.1em;
     background: #fff;
-    border: 2px solid $off-white;
+    border: 2px solid $light-grey;
     border-radius: 2px;
     cursor: pointer;
   }
@@ -81,8 +81,8 @@
       outline: none;
 
       &::after {
-        border-color: darken($off-white, 8%);
-        background: darken(#fff, 8%);
+        border-color: darken($light-grey, 8%);
+        background: darken($white, 8%);
       }
 
       &:checked {
