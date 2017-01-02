@@ -7,12 +7,12 @@ import {Link} from 'react-router'
 import ShortcutContainer from '../common/shortcut/ShortcutContainer'
 
 const items = [
-  {id: 'monitor', iconClass: 'eye', title: 'Monitor', shortcuts: ['m', '1']},
-  {id: 'tracking', iconClass: 'drawer2', title: 'Tracking', shortcuts: ['t', '2']},
-  {id: 'success', iconClass: 'checkmark', title: 'Success', shortcuts: ['s', '3']},
-  {id: 'audio-visual', iconClass: 'display', title: 'Audio/Visual', shortcuts: ['v', '4']},
-  {id: 'backup', iconClass: 'floppy-disk', title: 'Backup', shortcuts: ['b', '5']},
-  {id: 'help', iconClass: 'question', title: 'Help', shortcuts: ['h', '6']}
+  {id: 'monitor', iconClass: 'eye', title: 'monitor', shortcuts: ['m', '1']},
+  {id: 'tracking', iconClass: 'drawer2', title: 'tracking', shortcuts: ['t', '2']},
+  {id: 'success', iconClass: 'checkmark', title: 'success', shortcuts: ['s', '3']},
+  {id: 'settings', iconClass: 'cog', title: 'settings', shortcuts: [',', '4']},
+  {id: 'backup', iconClass: 'floppy-disk', title: 'backup', shortcuts: ['b', '5']},
+  {id: 'help', iconClass: 'question', title: 'help', shortcuts: ['h', '6']}
 ]
 
 class Menu extends Component {

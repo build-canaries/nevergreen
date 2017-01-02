@@ -37,7 +37,7 @@ class SubMenu extends Component {
       <div className='tray-sub-bar'>
         <Timer onTrigger={updateFetchedTime} interval={ONE_MINUTE}/>
         <button className='show-settings' onClick={this.props.toggleSettingsView} data-locator='show-settings'>
-          show settings
+          tray specific settings
           <ShortcutContainer hotkeys={[`p ${this.props.index}`]}/>
         </button>
         {refreshButton}

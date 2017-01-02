@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
-import {setBrokenBuildSoundFx, playBrokenBuildSoundFx, showBrokenBuildTime, showTrayName, setRefreshTime} from '../actions/AudioVisualActions'
-import AudioVisual from './AudioVisual'
+import {setBrokenBuildSoundFx, playBrokenBuildSoundFx, showBrokenBuildTime, showTrayName, setRefreshTime} from '../actions/SettingsActions'
+import AudioVisual from './Settings'
 
 function mapDispatchToProps(dispatch) {
   return {

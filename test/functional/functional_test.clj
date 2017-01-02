@@ -6,7 +6,7 @@
             [functional.tracking-page :as tracking-page]
             [functional.monitor-page :as monitor-page]
             [functional.success-page :as success-page]
-            [functional.audio-visual-page :as audio-visual-page]
+            [functional.settings-page :as settings-page]
             [functional.backup-page :as backup-page]
             [functional.help-page :as help-page])
   (import org.openqa.selenium.chrome.ChromeDriver
@@ -62,11 +62,11 @@
     (is (in? (success-page/messages) success-message) "Expected success message not added")
     (is (in? (success-page/images) success-image) "Expected success image not added")
 
-    (audio-visual-page/navigate base-url)
+    (settings-page/navigate base-url)
     (doseq [state [true false]]
-      (do (audio-visual-page/show-names state)
-          (audio-visual-page/show-times state)
-          (audio-visual-page/play-sounds state)))
+      (do (settings-page/show-names state)
+          (settings-page/show-times state)
+          (settings-page/play-sounds state)))
 
     (backup-page/navigate base-url)
     (-> (backup-page/export-data)

@@ -12,9 +12,9 @@ import {
   PLAY_BROKEN_BUILD_SOUND_FX,
   BROKEN_BUILD_SOUND_FX,
   REFRESH_TIME
-} from '../../../src/client/actions/AudioVisualActions'
+} from '../../../src/client/actions/SettingsActions'
 
-describe('AudioVisualActions', function () {
+describe('SettingsActions', function () {
 
   describe('setting broken build timers', function () {
 

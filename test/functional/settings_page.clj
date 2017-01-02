@@ -1,4 +1,4 @@
-(ns functional.audio-visual-page
+(ns functional.settings-page
   (:require [clj-webdriver.taxi :refer :all]
             [functional.helpers :refer :all]))
 
@@ -8,8 +8,8 @@
     (and (not show) (selected? q)) (click q)))
 
 (defn navigate [base-url]
-  (click (locator "menu-audio-visual"))
-  (wait-until #(= (current-url) (str base-url "/audio-visual"))))
+  (click (locator "menu-settings"))
+  (wait-until #(= (current-url) (str base-url "/settings"))))
 
 (defn show-names [show]
   (checkbox show (locator "show-names")))

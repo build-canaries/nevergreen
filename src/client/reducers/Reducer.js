@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux-immutable'
 import {reduce as nevergreen} from './NevergreenReducer'
-import {reduce as audioVisual} from './AudioVisualReducer'
+import {reduce as audioVisual} from './SettingsReducer'
 import {reduce as trays} from './TraysReducer'
 import {reduce as projects} from './ProjectsReducer'
 import {reduce as success} from './SuccessReducer'

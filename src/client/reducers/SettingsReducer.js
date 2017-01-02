@@ -1,8 +1,8 @@
 import Immutable from 'immutable'
-import {BROKEN_BUILD_SOUND_FX, PLAY_BROKEN_BUILD_SOUND_FX, SHOW_BROKEN_BUILD_TIME, SHOW_TRAY_NAME, REFRESH_TIME} from '../actions/AudioVisualActions'
+import {BROKEN_BUILD_SOUND_FX, PLAY_BROKEN_BUILD_SOUND_FX, SHOW_BROKEN_BUILD_TIME, SHOW_TRAY_NAME, REFRESH_TIME} from '../actions/SettingsActions'
 import {INITIALISED} from '../actions/NevergreenActions'
 import {IMPORTED_DATA} from '../actions/BackupActions'
-import defaultSoundFx from '../audio-visual/pacman_death.mp3'
+import defaultSoundFx from '../settings/pacman_death.mp3'
 
 const DefaultState = Immutable.Map({
   showTrayName: false,

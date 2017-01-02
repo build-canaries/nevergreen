@@ -1,7 +1,7 @@
 import '../UnitSpec'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
-import {reduce} from '../../../src/client/reducers/AudioVisualReducer'
+import {reduce} from '../../../src/client/reducers/SettingsReducer'
 import {INITIALISED} from '../../../src/client/actions/NevergreenActions'
 import {IMPORTED_DATA} from '../../../src/client/actions/BackupActions'
 import {
@@ -10,10 +10,10 @@ import {
   BROKEN_BUILD_SOUND_FX,
   SHOW_TRAY_NAME,
   REFRESH_TIME
-} from '../../../src/client/actions/AudioVisualActions'
+} from '../../../src/client/actions/SettingsActions'
 import Immutable from 'immutable'
 
-describe('AudioVisualReducer', function () {
+describe('SettingsReducer', function () {
 
   it('should return the state unmodified for an unknown action', function () {
     const existingState = {foo: 'bar'}
