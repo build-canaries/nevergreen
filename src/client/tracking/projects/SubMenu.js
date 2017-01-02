@@ -4,7 +4,7 @@ import moment from 'moment'
 import Timer from '../../common/Timer'
 import './sub-menu.scss'
 
-const ONE_MINUTE = 60 * 1000
+const ONE_MINUTE = 60
 
 function lastFetched(timestamp) {
   return timestamp ? moment(timestamp).fromNow(true) : '??'

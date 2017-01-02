@@ -1,5 +1,6 @@
 @import '../common/layout';
 @import '../common/forms/button';
+@import '../common/forms/text';
 
 .audio-visual {
   @extend .main-section;
@@ -24,5 +25,17 @@
 
   .messages {
     margin-top: 1em;
+  }
+
+  .refresh-time {
+    @extend .text-input;
+
+    display: inline-block;
+    padding-bottom: 0.5em;
+    margin-top: 0;
+
+    input {
+      width: 5rem;
+    }
   }
 }

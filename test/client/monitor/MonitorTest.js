@@ -21,7 +21,8 @@ describe('<Monitor/>', function () {
     brokenBuildFx: null,
     messages: [],
     fetchInteresting: () => {
-    }
+    },
+    refreshTime: 5
   }
 
   it('should render error messages', function () {

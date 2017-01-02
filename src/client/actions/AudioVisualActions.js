@@ -29,3 +29,12 @@ export function setBrokenBuildSoundFx(value) {
     value
   }
 }
+
+export const REFRESH_TIME = 'REFRESH_TIME'
+export function setRefreshTime(value) {
+  const intValue = parseInt(value)
+  return {
+    type: REFRESH_TIME,
+    value: intValue >= 5 ? intValue : 5
+  }
+}

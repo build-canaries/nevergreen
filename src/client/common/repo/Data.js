@@ -22,7 +22,8 @@ export const SCHEMA = {
         showTrayName: {type: 'boolean'},
         showBrokenBuildTime: {type: 'boolean'},
         playBrokenBuildSoundFx: {type: 'boolean'},
-        brokenBuildSoundFx: {type: ['string', 'null']}
+        brokenBuildSoundFx: {type: ['string', 'null']},
+        refreshTime: {type: 'number'}
       },
       additionalProperties: false
     },

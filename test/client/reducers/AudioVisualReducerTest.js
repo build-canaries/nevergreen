@@ -8,7 +8,8 @@ import {
   SHOW_BROKEN_BUILD_TIME,
   PLAY_BROKEN_BUILD_SOUND_FX,
   BROKEN_BUILD_SOUND_FX,
-  SHOW_TRAY_NAME
+  SHOW_TRAY_NAME,
+  REFRESH_TIME
 } from '../../../src/client/actions/AudioVisualActions'
 import Immutable from 'immutable'
 
@@ -48,6 +49,13 @@ describe('AudioVisualReducer', function () {
       const action = {type: INITIALISED, data: Immutable.fromJS({audioVisual: {brokenBuildSoundFx: 'another-url'}})}
       const newState = reduce(existingState, action)
       expect(newState).to.contain.property('brokenBuildSoundFx', 'another-url')
+    })
+
+    it('should merge refresh time', function () {
+      const existingState = Immutable.Map({refreshTime: 5})
+      const action = {type: INITIALISED, data: Immutable.fromJS({audioVisual: {refreshTime: 10}})}
+      const newState = reduce(existingState, action)
+      expect(newState).to.contain.property('refreshTime', 10)
     })
   })
 
@@ -119,6 +127,16 @@ describe('AudioVisualReducer', function () {
       const action = {type: SHOW_TRAY_NAME, value: true}
       const newState = reduce(existingState, action)
       expect(newState).to.contain.property('showTrayName', true)
+    })
+  })
+
+  describe('refresh time updated', function () {
+
+    it('should set the refresh time property', function () {
+      const existingState = Immutable.Map({refreshTime: 5})
+      const action = {type: REFRESH_TIME, value: 10}
+      const newState = reduce(existingState, action)
+      expect(newState).to.contain.property('refreshTime', 10)
     })
   })
 })

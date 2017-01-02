@@ -8,7 +8,7 @@ import './audio-visual.scss'
 class AudioVisual extends Component {
   constructor(props) {
     super(props)
-    this.state = {errors: [], audio: null, soundFx: this.props.brokenBuildSoundFx}
+    this.state = {errors: [], audio: null, soundFx: this.props.brokenBuildSoundFx, refreshTime: props.refreshTime}
   }
 
   componentWillUnmount() {
@@ -29,10 +29,17 @@ class AudioVisual extends Component {
       audio.addEventListener('ended', () => this.setState({audio: null}))
       audio.play().catch((e) => this.setState({errors: ['Unable to play audio file because of an error:', e.message]}))
     }
+    const updateRefreshTime = (evt) => this.setState({refreshTime: evt.target.value})
+    const setRefreshTime = () => this.props.setRefreshTime(this.state.refreshTime)
 
     return (
       <section className='audio-visual'>
         <Container title='visual settings'>
+          <label className='refresh-time'>
+            <span>poll for tray updates every</span>
+            <input type='number' min='5' step='1' value={this.state.refreshTime} onChange={updateRefreshTime} onBlur={setRefreshTime} required/>
+            <span>seconds</span>
+          </label>
           <Checkbox label='show tray name' enabled={this.props.showTrayName} onToggle={toggleTrayName} data-locator='show-names'/>
           <Checkbox label='show broken build time' enabled={this.props.showBrokenBuildTime} onToggle={toggleBrokenBuilds} data-locator='show-times'/>
         </Container>
@@ -61,7 +68,9 @@ AudioVisual.propTypes = {
   setShowBrokenBuildTime: PropTypes.func.isRequired,
   setShowTrayName: PropTypes.func.isRequired,
   setPlayBrokenBuildSoundFx: PropTypes.func.isRequired,
-  setBrokenBuildSoundFx: PropTypes.func.isRequired
+  setBrokenBuildSoundFx: PropTypes.func.isRequired,
+  refreshTime: PropTypes.number.isRequired,
+  setRefreshTime: PropTypes.func.isRequired
 }
 
 export default AudioVisual

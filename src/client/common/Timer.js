@@ -9,7 +9,7 @@ class Timer extends Component {
   componentDidMount() {
     const run = () => {
       this.props.onTrigger()
-      const id = setTimeout(run, this.props.interval)
+      const id = setTimeout(run, this.props.interval * 1000)
       this.setState({id})
     }
     run()

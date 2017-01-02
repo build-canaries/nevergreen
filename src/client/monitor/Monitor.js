@@ -7,7 +7,6 @@ import './monitor.scss'
 import Timer from '../common/Timer'
 
 const THREE_SECONDS = 3 * 1000
-const FIVE_SECONDS = 5 * 1000
 
 function showMenu(state) {
   clearTimeout(state.menuTimer)
@@ -64,7 +63,7 @@ class Monitor extends Component {
 
     return (
       <div className='monitor' onMouseMove={animateMenu}>
-        <Timer onTrigger={fetch} interval={FIVE_SECONDS}/>
+        <Timer onTrigger={fetch} interval={this.props.refreshTime}/>
         <Loading loaded={this.props.loaded}>
           {content}
         </Loading>
@@ -84,7 +83,8 @@ Monitor.propTypes = {
   playBrokenBuildSounds: PropTypes.bool,
   brokenBuildFx: PropTypes.string,
   messages: PropTypes.arrayOf(PropTypes.string).isRequired,
-  fetchInteresting: PropTypes.func.isRequired
+  fetchInteresting: PropTypes.func.isRequired,
+  refreshTime: PropTypes.number.isRequired
 }
 
 export default Monitor
