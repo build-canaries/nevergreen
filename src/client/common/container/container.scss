@@ -23,7 +23,8 @@
   .title-bar {
     background: $mid-grey;
     color: $white;
-    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
     cursor: pointer;
 
     &:hover,
