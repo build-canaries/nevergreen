@@ -30,11 +30,12 @@ export function setBrokenBuildSoundFx(value) {
   }
 }
 
+export const MIN_REFRESH_TIME = 5
 export const REFRESH_TIME = 'REFRESH_TIME'
 export function setRefreshTime(value) {
   const intValue = parseInt(value)
   return {
     type: REFRESH_TIME,
-    value: intValue >= 5 ? intValue : 5
+    value: intValue >= MIN_REFRESH_TIME ? intValue : MIN_REFRESH_TIME
   }
 }

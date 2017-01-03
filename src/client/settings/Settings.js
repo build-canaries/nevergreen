@@ -37,11 +37,12 @@ class AudioVisual extends Component {
         <Container title='timing'>
           <label className='refresh-time'>
             <span>poll for tray changes every</span>
-            <input type='number' min='5' step='1' value={this.state.refreshTime} onChange={updateRefreshTime} onBlur={setRefreshTime} required/>
+            <input type='number' min={this.props.minRefreshTime} step='1' value={this.state.refreshTime} onChange={updateRefreshTime}
+                   onBlur={setRefreshTime}/>
             <span>seconds</span>
           </label>
         </Container>
-        <Container title='visual'>
+        <Container title='display'>
           <Checkbox label='show tray name' enabled={this.props.showTrayName} onToggle={toggleTrayName} data-locator='show-names'/>
           <Checkbox label='show broken build time' enabled={this.props.showBrokenBuildTime} onToggle={toggleBrokenBuilds} data-locator='show-times'/>
         </Container>
@@ -72,6 +73,7 @@ AudioVisual.propTypes = {
   setPlayBrokenBuildSoundFx: PropTypes.func.isRequired,
   setBrokenBuildSoundFx: PropTypes.func.isRequired,
   refreshTime: PropTypes.number.isRequired,
+  minRefreshTime: PropTypes.number.isRequired,
   setRefreshTime: PropTypes.func.isRequired
 }
 
