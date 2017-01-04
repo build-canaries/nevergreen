@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react'
-import Menu from './navigation/Navigation'
+import Header from './header/Header'
+import Footer from './footer/Footer'
 import Mousetrap from 'mousetrap'
 import 'mousetrap/plugins/global-bind/mousetrap-global-bind'
 import _ from 'lodash'
@@ -40,9 +41,11 @@ class Nevergreen extends Component {
     return (
       <div className='nevergreen'>
         <Timer onTrigger={checkVersion} interval={TWENTY_FOUR_HOURS}/>
-        <h1 className='visually-hidden'>Nevergreen</h1>
-        <Menu versionNumber={this.props.versionNumber} versionName={this.props.versionName} versionColour={this.props.versionColour}
-              commitHash={this.props.commitHash}/>
+        <div className='navigation'>
+          <Header/>
+          <Footer versionNumber={this.props.versionNumber} versionName={this.props.versionName} versionColour={this.props.versionColour}
+                  commitHash={this.props.commitHash}/>
+        </div>
         {notification}
         {this.props.loaded ? this.props.children : null}
       </div>

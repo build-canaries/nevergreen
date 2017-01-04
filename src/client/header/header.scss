@@ -1,14 +1,6 @@
 @import '../common/variables';
 
-.navigation {
-  background-color: $off-black;
-  color: $white;
-  width: $menu-width;
-  position: fixed;
-  height: 100%;
-  padding-top: 1em;
-  z-index: 100;
-
+.site-header {
   .logo {
     height: 55px;
     width: 55px;
@@ -66,15 +58,5 @@
     font-size: 3rem;
     display: block;
     margin-bottom: 0.15em;
-  }
-
-  &.navigation-show {
-    left: 0;
-    transition: left 0.5s ease 0s;
-  }
-
-  &.navigation-hide {
-    left: -$menu-width;
-    transition: left 0.5s ease 0s;
   }
 }
