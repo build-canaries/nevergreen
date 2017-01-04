@@ -1,27 +1,58 @@
 @import '../common/variables';
+@import '../common/responsive';
 
 .site-header {
+  background-color: $off-black;
+  color: $white;
+  padding: 0.5em 2em;
+  display: block;
+
+  &.fullscreen {
+    display: none;
+  }
+
   .logo {
     height: 55px;
     width: 55px;
-    margin: 0.4em auto;
+    margin-right: 1em;
+    display: none;
+
+    @include respond-to(tablet, desktop) {
+      display: block;
+      float: left;
+    }
+  }
+
+  .site-menu {
     display: block;
+    vertical-align: top;
   }
 
   .menu {
     list-style: none;
     margin: 0;
     padding: 0;
+
+    li {
+      display: block;
+
+      @include respond-to(tablet, desktop) {
+        display: inline-block;
+      }
+    }
+  }
+
+  .menu-title {
+    vertical-align: middle;
   }
 
   .menu-item {
-    position: relative;
-    display: block;
-    text-align: center;
+    display: inline-block;
     color: $mid-grey;
     text-transform: uppercase;
     font-size: 1rem;
-    padding: 1.05em 0;
+    padding: 1em;
+    margin-right: 1em;
     text-decoration: none;
 
     &:hover {
@@ -55,8 +86,11 @@
 
   .menu-icon {
     color: $mid-grey;
-    font-size: 3rem;
-    display: block;
-    margin-bottom: 0.15em;
+    font-size: 2rem;
+    vertical-align: middle;
+
+    &::before {
+      padding-right: 0.5em;
+    }
   }
 }

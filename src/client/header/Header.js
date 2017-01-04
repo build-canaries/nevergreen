@@ -22,7 +22,7 @@ class Header extends Component {
         <a href='https://build-canaries.github.io/' target='_blank'>
           <img src={logo} className='logo' alt='Build Canaries' title='Visit the Build Canaries homepage'/>
         </a>
-        <nav role='navigation'>
+        <nav role='navigation' className='site-menu'>
           <h2 className='visually-hidden'>Navigation</h2>
           <ul className='menu'>
             {
@@ -32,7 +32,7 @@ class Header extends Component {
                 return (
                   <li key={item.id}>
                     <Link to={`/${item.id}`} className='menu-item' activeClassName='active' data-locator={`menu-${item.id}`}>
-                      <span className={iconClasses}/>
+                      <i className={iconClasses}/>
                       <span className='menu-title'>{item.title}</span>
                       <ShortcutContainer hotkeys={item.shortcuts}/>
                     </Link>

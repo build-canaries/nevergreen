@@ -11,3 +11,4 @@ rules:
        - include
        - mixin
        - content
+       - each

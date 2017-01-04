@@ -1,15 +1,26 @@
 import $ from 'jquery'
 import ScaleText from 'scale-text'
 
-const maxColumns = 3
+const tablet = 768
+const desktop = 1440
 const buildStatusPadding = 14
 
+function columns() {
+  if (window.innerWidth < tablet) {
+    return 1
+  } else if (window.innerWidth < desktop) {
+    return 2
+  } else {
+    return 3
+  }
+}
+
 function numberOfColumns(projects) {
-  return Math.min(maxColumns, projects.length)
+  return Math.min(columns(), projects.length)
 }
 
 function numberOfRows(projects) {
-  return Math.ceil(projects.length / maxColumns)
+  return Math.ceil(projects.length / columns())
 }
 
 function buildStatusWidth(projects, $view) {

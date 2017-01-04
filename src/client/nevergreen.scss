@@ -49,29 +49,18 @@ fieldset {
 
 .pop-up-notification {
   font-size: 1rem;
-  padding: 0.5em;
-  margin: 0.5em;
-  border-radius: 0.5em;
+  padding: 1em;
   background-color: $blue;
   color: $white;
-  width: calc(#{$menu-width} - 1em);
-  position: fixed;
-  bottom: 5em;
+  display: block;
 
-  &.navigation-show {
-    left: 0;
-    transition: left 0.5s ease 0s;
-  }
-
-  &.navigation-hide {
-    left: -$menu-width;
-    transition: left 0.5s ease 0s;
+  &.fullscreen {
+    display: none;
   }
 }
 
 .pop-up-notification-dismiss {
   float: right;
-  font-size: 0.7rem;
   cursor: pointer;
 
   &:hover {
@@ -79,22 +68,8 @@ fieldset {
   }
 }
 
-.navigation {
-  background-color: $off-black;
-  color: $white;
-  width: $menu-width;
-  position: fixed;
-  height: 100%;
-  padding-top: 1em;
-  z-index: 100;
-
-  &.navigation-show {
-    left: 0;
-    transition: left 0.5s ease 0s;
-  }
-
-  &.navigation-hide {
-    left: -$menu-width;
-    transition: left 0.5s ease 0s;
-  }
+.nevergreen {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }

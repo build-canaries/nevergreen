@@ -11,16 +11,14 @@ const THREE_SECONDS = 3 * 1000
 function showMenu(state) {
   clearTimeout(state.menuTimer)
 
-  Array.from(document.querySelectorAll('.navigation, .pop-up-notification, .monitor')).forEach((elem) => {
-    elem.classList.remove('navigation-hide')
-    elem.classList.add('navigation-show')
+  Array.from(document.querySelectorAll('.site-header, .site-footer, .pop-up-notification, .monitor')).forEach((elem) => {
+    elem.classList.remove('fullscreen')
   })
 }
 
 function hideMenu() {
-  Array.from(document.querySelectorAll('.navigation, .pop-up-notification, .monitor')).forEach((elem) => {
-    elem.classList.remove('navigation-show')
-    elem.classList.add('navigation-hide')
+  Array.from(document.querySelectorAll('.site-header, .site-footer, .pop-up-notification, .monitor')).forEach((elem) => {
+    elem.classList.add('fullscreen')
   })
 }
 

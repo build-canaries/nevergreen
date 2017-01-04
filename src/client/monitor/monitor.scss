@@ -6,6 +6,7 @@
   text-align: center;
   font-family: $monospace;
   height: 100vh;
+  cursor: inherit;
 
   .validation-message {
     font-size: 3rem;
@@ -22,11 +23,7 @@
     }
   }
 
-  &.navigation-hide {
+  &.fullscreen {
     cursor: none;
-  }
-
-  &.navigation-show {
-    cursor: inherit;
   }
 }

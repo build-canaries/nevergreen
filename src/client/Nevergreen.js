@@ -39,16 +39,14 @@ class Nevergreen extends Component {
       </div> : null
 
     return (
-      <div className='nevergreen'>
+      <main className='nevergreen'>
         <Timer onTrigger={checkVersion} interval={TWENTY_FOUR_HOURS}/>
-        <div className='navigation'>
-          <Header/>
-          <Footer versionNumber={this.props.versionNumber} versionName={this.props.versionName} versionColour={this.props.versionColour}
-                  commitHash={this.props.commitHash}/>
-        </div>
+        <Header/>
         {notification}
         {this.props.loaded ? this.props.children : null}
-      </div>
+        <Footer versionNumber={this.props.versionNumber} versionName={this.props.versionName} versionColour={this.props.versionColour}
+                commitHash={this.props.commitHash}/>
+      </main>
     )
   }
 }

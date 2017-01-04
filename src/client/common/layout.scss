@@ -1,9 +1,8 @@
 @import 'variables';
 
 .main-section {
+  flex: 1;
   padding: 2em 2em 0.5em;
-  margin-left: $menu-width;
-  min-height: 35em;
 
   &.active {
     display: block;

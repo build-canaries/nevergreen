@@ -6,8 +6,10 @@ $breakpoints: (
   desktop: new-breakpoint(min-width 1440px, 12)
 );
 
-@mixin respond-to($media) {
-  @include media(map-get($breakpoints, $media)) {
-    @content;
+@mixin respond-to($medias...) {
+  @each $media in $medias {
+    @include media(map-get($breakpoints, $media)) {
+      @content;
+    }
   }
 }
