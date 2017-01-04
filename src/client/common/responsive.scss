@@ -1,0 +1,13 @@
+@import '~bourbon-neat/app/assets/stylesheets/neat';
+
+$breakpoints: (
+  mobile: new-breakpoint(min-width 0 max-width 767px, 4),
+  tablet: new-breakpoint(min-width 768px max-width 1439px, 8),
+  desktop: new-breakpoint(min-width 1440px, 12)
+);
+
+@mixin respond-to($media) {
+  @include media(map-get($breakpoints, $media)) {
+    @content;
+  }
+}

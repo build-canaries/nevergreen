@@ -1,5 +1,7 @@
 @import '../common/variables';
 @import '../common/forms/button';
+@import '~bourbon-neat/app/assets/stylesheets/neat';
+@import '../common/responsive';
 
 .add-message {
   font-size: 1.5rem;

@@ -1,38 +1,68 @@
 @import '../common/variables';
+@import '~bourbon-neat/app/assets/stylesheets/neat';
+@import '../common/responsive';
 
 .added-images {
   .success-images-list {
+    display: inline-block;
+    width: 100%;
     list-style: none;
-    display: flex;
-    flex-flow: row wrap;
+    margin-top: -0.5em;
+    margin-bottom: -0.5em;
+  }
+
+  .image-wrapper {
+    position: relative;
+
+    &::before {
+      display: block;
+      content: '';
+      width: 100%;
+      padding-top: 56.25%; // 16:9
+    }
   }
 
   .success-list-image {
-    width: 496px;
-    height: 279px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
     border: 1px solid $mid-grey;
     background-color: $black;
   }
 
   .success-item {
-    padding-bottom: 1em;
+    @include span-columns(4 of 4);
+
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+
+    @include respond-to(tablet) {
+      @include span-columns(4 of 8);
+      @include omega(2n);
+    }
+
+    @include respond-to(desktop) {
+      @include span-columns(4 of 12);
+      @include omega(3n);
+    }
 
     .hotkey {
       left: -0.5em;
     }
 
-    &:last-child {
-      padding-bottom: 0;
-    }
-  }
+    &.image {
+      position: relative;
 
-  .success-item.image {
-    position: relative;
-
-    .remove-link {
-      position: absolute;
-      right: 0.3em;
+      .remove-link {
+        position: absolute;
+        top: 18px;
+        left: 7px;
+      }
     }
   }
 }

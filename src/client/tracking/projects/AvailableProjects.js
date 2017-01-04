@@ -44,21 +44,23 @@ class AvailableProjects extends Component {
 
     return (
       <section className='available-projects' data-locator='available-projects'>
-        <fieldset className='toggles'>
-          <legend className='legend'>Available projects</legend>
-          <button className='include-all' onClick={includeAll} disabled={this.state.disableButtons} data-locator='include-all'>
-            include all
-            <ShortcutContainer hotkeys={[`+ ${this.props.index}`, `= ${this.props.index}`]}/>
-          </button>
-          <button className='exclude-all' onClick={excludeAll} disabled={this.state.disableButtons}>
-            exclude all
-            <ShortcutContainer hotkeys={[`- ${this.props.index}`]}/>
-          </button>
-        </fieldset>
-        <span className='project-filter'>
+        <div className='controls'>
+          <fieldset className='toggles'>
+            <legend className='legend'>Available projects</legend>
+            <button className='include-all' onClick={includeAll} disabled={this.state.disableButtons} data-locator='include-all'>
+              include all
+              <ShortcutContainer hotkeys={[`+ ${this.props.index}`, `= ${this.props.index}`]}/>
+            </button>
+            <button className='exclude-all' onClick={excludeAll} disabled={this.state.disableButtons}>
+              exclude all
+              <ShortcutContainer hotkeys={[`- ${this.props.index}`]}/>
+            </button>
+          </fieldset>
+          <span className='project-filter'>
           <Text label='Filter projects' onChange={updateFilter}/>
         </span>
-        <Messages type='error' messages={this.state.errors}/>
+          <Messages type='error' messages={this.state.errors}/>
+        </div>
         <ol className='build-items'>
           {
             _.sortBy(filteredProjects, ['name', 'stage']).map((project) => {

@@ -12,20 +12,20 @@ class AddedMessages extends Component {
 
     return (
       <Container title='messages' className='added-messages'>
-        <ul className='success-text-list'>
+        <ol className='success-text-list'>
           {
             this.props.messages.map((message, index) => {
               const remove = () => this.props.removeMessage(message)
 
               return (
                 <li key={`m${index}`} className='success-item'>
+                  <RemoveLink hotkeys={[`y m ${index}`]} removeMessage={remove} message={message}/>
                   <span className='message' data-locator='success-message'>{message}</span>
-                  <RemoveLink hotkeys={[`y m ${index}`]} removeMessage={remove}/>
                 </li>
               )
             })
           }
-        </ul>
+        </ol>
       </Container>
     )
   }

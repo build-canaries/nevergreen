@@ -1,26 +1,40 @@
 @import '../common/variables';
+@import '~bourbon-neat/app/assets/stylesheets/neat';
+@import '../common/responsive';
 
 .added-messages {
   .success-text-list {
-    display: block;
+    display: inline-block;
+    width: 100%;
     list-style: none;
+    margin-top: -0.5em;
+    margin-bottom: -0.5em;
   }
 
   .success-item {
-    padding-bottom: 1em;
+    @include span-columns(4 of 4);
+
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+
+    @include respond-to(tablet) {
+      @include span-columns(4 of 8);
+      @include omega(2n);
+    }
+
+    @include respond-to(desktop) {
+      @include span-columns(4 of 12);
+      @include omega(3n);
+    }
 
     .hotkey {
       left: -0.5em;
-    }
-
-    &:last-child {
-      padding-bottom: 0;
     }
   }
 
   .message {
     font-family: $monospace;
-    margin-right: 1em;
+    margin-left: 1em;
     display: inline;
   }
 }

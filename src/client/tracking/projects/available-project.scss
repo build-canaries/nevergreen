@@ -1,8 +1,19 @@
 @import '../../common/variables';
+@import '~bourbon-neat/app/assets/stylesheets/neat';
+@import '../../common/responsive';
 
 .available-project {
-  float: left;
-  width: 33.333333%;
+  @include span-columns(4 of 4);
+
+  @include respond-to(tablet) {
+    @include span-columns(4 of 8);
+    @include omega(2n);
+  }
+
+  @include respond-to(desktop) {
+    @include span-columns(4 of 12);
+    @include omega(3n);
+  }
 
   &.removed-project span {
     text-decoration: line-through;

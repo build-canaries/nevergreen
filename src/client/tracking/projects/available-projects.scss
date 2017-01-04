@@ -3,6 +3,7 @@
 
 .available-projects {
   display: inline-block;
+  width: 100%;
   padding: 1em;
 
   .legend {
@@ -30,10 +31,14 @@
     @extend .button;
   }
 
+  .controls {
+    padding-bottom: 1em;
+  }
+
   .build-items {
-    clear: both;
+    display: block;
+    width: 100%;
     list-style: none;
-    padding-top: 1em;
   }
 
   .project-filter {

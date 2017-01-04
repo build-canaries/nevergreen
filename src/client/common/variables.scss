@@ -28,3 +28,13 @@ $menu-width: 14em;
 // Decorations
 
 $shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
+
+// Bourbon Neat grid
+
+$grid-columns: 4;
+$max-width: 1920px;
+$visual-grid: false;
+$visual-grid-index: front;
+$visual-grid-color: $blue;
+$grid-unit: 1em;
+$gutter: 1em;

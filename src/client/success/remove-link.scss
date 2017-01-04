@@ -1,21 +1,29 @@
 @import '../nevergreen';
+@import '../common/variables';
 @import '../common/forms/button';
 
 .remove-link {
-  .remove {
-    @include button-icon('cross');
+  @include button-icon('bin');
 
-    @extend .button;
+  @extend .button;
 
-    font-size: 0.5rem;
-    padding: 1em;
+  font-size: 1rem;
+  color: $danger;
+  padding: 0.5em;
 
-    &::before {
-      margin: 0;
+  &::before {
+    margin: 0;
+  }
+
+  &:focus,
+  &:hover {
+    + .message {
+      color: $danger;
+      text-decoration: line-through;
     }
+  }
 
-    span {
-      @extend .visually-hidden;
-    }
+  .label {
+    @extend .visually-hidden;
   }
 }

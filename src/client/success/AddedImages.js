@@ -12,20 +12,22 @@ class AddedImages extends Component {
 
     return (
       <Container title='images' className='added-images'>
-        <ul className='success-images-list'>
+        <ol className='success-images-list'>
           {
             this.props.urls.map((url, index) => {
               const remove = () => this.props.removeMessage(url)
 
               return (
                 <li key={`i${index}`} className='success-item image'>
-                  <img className='success-list-image' src={url} alt={url} title={url} data-locator='success-image'/>
-                  <RemoveLink hotkeys={[`y i ${index}`]} removeMessage={remove}/>
+                  <div className='image-wrapper'>
+                    <img className='success-list-image' src={url} alt={url} title={url} data-locator='success-image'/>
+                  </div>
+                  <RemoveLink hotkeys={[`y i ${index}`]} removeMessage={remove} message={url}/>
                 </li>
               )
             })
           }
-        </ul>
+        </ol>
       </Container>
     )
   }

@@ -10,3 +10,4 @@ rules:
        - extend
        - include
        - mixin
+       - content

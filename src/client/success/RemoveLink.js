@@ -5,19 +5,18 @@ import './remove-link.scss'
 class RemoveLink extends Component {
   render() {
     return (
-      <span className='remove-link'>
-        <button className='remove' onClick={this.props.removeMessage}>
-          <span>remove</span>
-          <ShortcutContainer hotkeys={this.props.hotkeys}/>
-        </button>
-      </span>
+      <button className='remove-link' onClick={this.props.removeMessage} title={`remove ${this.props.message}`}>
+        <span className='label'>remove {this.props.message}</span>
+        <ShortcutContainer hotkeys={this.props.hotkeys}/>
+      </button>
     )
   }
 }
 
 RemoveLink.propTypes = {
   hotkeys: PropTypes.arrayOf(PropTypes.string).isRequired,
-  removeMessage: PropTypes.func.isRequired
+  removeMessage: PropTypes.func.isRequired,
+  message: PropTypes.string.isRequired
 }
 
 export default RemoveLink
