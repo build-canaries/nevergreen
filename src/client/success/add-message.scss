@@ -10,14 +10,41 @@
   background-color: $white;
   box-shadow: $shadow;
 
+  @include respond-to(tablet, desktop) {
+    display: flex;
+    align-items: baseline;
+  }
+
   .add-message-input {
-    width: calc(100% - 11em);
-    font-family: $monospace;
+    input {
+      font-family: $monospace;
+      width: 100%;
+    }
+
+    @include respond-to(tablet, desktop) {
+      display: flex;
+      flex-grow: 1;
+
+      input {
+        flex-grow: 1;
+        width: auto;
+      }
+    }
   }
 
   .add {
     @include button-icon('plus');
 
     @extend .button-primary;
+
+    display: block;
+    width: 100%;
+    margin-top: 1em;
+
+    @include respond-to(tablet, desktop) {
+      display: inline-block;
+      width: auto;
+      margin-top: 0;
+    }
   }
 }

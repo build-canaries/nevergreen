@@ -1,5 +1,6 @@
 @import '../common/variables';
 @import '../common/forms/button';
+@import '../common/responsive';
 
 .add-tray {
   font-size: 1.5rem;
@@ -12,13 +13,49 @@
     @include button-icon('plus');
 
     @extend .button-primary;
+
+    display: block;
+    width: 100%;
+    margin-top: 1em;
+
+    @include respond-to(tablet, desktop) {
+      display: inline-block;
+      width: auto;
+      margin-top: 0;
+    }
   }
 
-  .tracking-tray-url {
-    width: calc(100% - 9em);
+  .tracking-tray-url,
+  .username,
+  .password {
+    display: block;
+    width: 100%;
+
+    input {
+      width: 100%;
+    }
+
+    @include respond-to(tablet, desktop) {
+      display: flex;
+
+      input {
+        flex-grow: 1;
+      }
+    }
   }
 
-  .authorisation {
-    padding-top: 1em;
+  .username,
+  .password {
+    margin-top: 1em;
+
+    @include respond-to(tablet, desktop) {
+      display: inline-block;
+      width: auto;
+      margin-right: 1em;
+
+      input {
+        width: auto;
+      }
+    }
   }
 }
