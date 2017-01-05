@@ -1,23 +1,36 @@
 @import '../../common/forms/button';
+@import '../../common/responsive';
 
 .tray-sub-bar {
   .show-settings {
     @include button-icon('cog');
-
-    @extend .button;
   }
 
   .refresh {
     @include button-icon('loop2');
+  }
 
+  .show-settings,
+  .refresh {
     @extend .button;
+
+    display: block;
+    width: 100%;
+    margin-bottom: 1em;
+
+    @include respond-to(tablet, desktop) {
+      display: inline-block;
+      width: auto;
+      margin-right: 1em;
+      margin-bottom: 0;
+    }
   }
 
   .tray-refresh-last-fetch {
-    margin-left: 1em;
-  }
+    display: block;
 
-  button {
-    margin: 0.5em;
+    @include respond-to(tablet, desktop) {
+      display: inline-block;
+    }
   }
 }

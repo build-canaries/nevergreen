@@ -56,18 +56,16 @@ class AvailableProjects extends Component {
               <ShortcutContainer hotkeys={[`- ${this.props.index}`]}/>
             </button>
           </fieldset>
-          <span className='project-filter'>
-          <Text label='Filter projects' onChange={updateFilter}/>
-        </span>
+          <div className='project-filter'>
+            <Text label='Filter projects' onChange={updateFilter}/>
+          </div>
           <Messages type='error' messages={this.state.errors}/>
         </div>
         <ol className='build-items'>
           {
             _.sortBy(filteredProjects, ['name', 'stage']).map((project) => {
               const selected = this.props.selected.includes(project.projectId)
-              const selectProject = () => {
-                this.props.selectProject(this.props.trayId, project.projectId, !selected)
-              }
+              const selectProject = () => this.props.selectProject(this.props.trayId, project.projectId, !selected)
 
               return <AvailableProject key={project.projectId} {...project} selected={selected} selectProject={selectProject}/>
             })

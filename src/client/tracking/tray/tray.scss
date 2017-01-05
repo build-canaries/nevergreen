@@ -1,9 +1,14 @@
 @import '../../common/variables';
+@import '../../common/responsive';
 
 .tray {
   .tray-sub-bar {
     background: $light-grey;
     color: $mid-grey;
-    padding: 0.3em;
+    padding: 1em;
+
+    @include respond-to(tablet, desktop) {
+      padding: 0.5em;
+    }
   }
 }

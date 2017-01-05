@@ -1,5 +1,6 @@
 @import '../../common/variables';
 @import '../../common/forms/button';
+@import '../../common/responsive';
 
 .available-projects {
   display: inline-block;
@@ -8,12 +9,23 @@
 
   .legend {
     color: $mid-grey;
-    float: left;
-    padding-right: 1em;
+    padding-bottom: 1em;
+
+    @include respond-to(tablet, desktop) {
+      padding-bottom: 0;
+      padding-right: 1em;
+      float: left;
+    }
   }
 
   .toggles {
-    float: left;
+    display: block;
+    width: 100%;
+
+    @include respond-to(tablet, desktop) {
+      display: inline-block;
+      width: auto;
+    }
   }
 
   .include-all {
@@ -26,9 +38,18 @@
 
   .include-all,
   .exclude-all {
-    margin: 0 0.5em;
-
     @extend .button;
+
+    display: block;
+    width: 100%;
+    margin-bottom: 1em;
+
+    @include respond-to(tablet, desktop) {
+      display: inline-block;
+      width: auto;
+      margin-right: 1em;
+      margin-bottom: 0;
+    }
   }
 
   .controls {
@@ -42,7 +63,14 @@
   }
 
   .project-filter {
-    padding-left: 1em;
+    display: block;
+    width: 100%;
+    padding: 0.5em 0;
+
+    @include respond-to(tablet, desktop) {
+      display: inline-block;
+      width: auto;
+    }
 
     label {
       color: $mid-grey;
