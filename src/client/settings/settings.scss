@@ -39,13 +39,9 @@
 
     @extend .button;
 
-    display: block;
-    width: 100%;
     margin-top: 1em;
 
     @include respond-to(tablet, desktop) {
-      display: inline-block;
-      width: auto;
       margin-top: 0;
     }
   }

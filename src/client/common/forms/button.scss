@@ -1,20 +1,23 @@
 @import '../variables';
+@import '../responsive';
 @import '../fonts/icon-font';
 
 .button {
+  display: block;
+  position: relative;
   font-size: 1rem;
   text-align: center;
   white-space: nowrap;
   vertical-align: middle;
   user-select: none;
   border: 0;
-  position: relative;
   padding: 0.5em 1.5em 0.5em 1em;
   border-radius: 2px;
   text-transform: uppercase;
   text-decoration: none;
   background-color: $white;
   color: $off-black;
+  width: 100%;
 
   &:enabled {
     cursor: pointer;
@@ -33,6 +36,11 @@
     cursor: default;
     color: $mid-grey;
     background-color: $light-grey;
+  }
+
+  @include respond-to(tablet, desktop) {
+    display: inline-block;
+    width: auto;
   }
 }
 

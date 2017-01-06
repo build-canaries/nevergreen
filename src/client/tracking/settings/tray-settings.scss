@@ -1,16 +1,22 @@
 @import '../../common/variables';
+@import '../../common/responsive';
 @import '../../common/fonts/icon-font';
 @import '../../common/forms/button';
 
 .tray-settings {
   margin: 1em;
 
-  .row {
+  .tray-settings-name {
+    display: inline-block;
+  }
+
+  .tray-settings-username,
+  .tray-settings-password {
+    display: block;
     padding-top: 1em;
   }
 
   .danger-zone {
-    border-radius: 3px;
     border: 1px solid $light-grey;
     margin-top: 1em;
 
@@ -38,8 +44,6 @@
       @extend .button;
 
       color: $danger;
-      float: right;
-      margin: -0.5em 0 0 0;
     }
   }
 
@@ -56,14 +60,25 @@
   }
 
   .cancel,
-  .update {
-    margin: 2em 1em 0 0;
-    font-size: 1rem;
+  .update,
+  .delete,
+  .random {
+    margin-top: 1em;
+  }
+
+  .cancel {
+    @include respond-to(tablet, desktop) {
+      margin-right: 1em;
+    }
   }
 
   .random {
     @include button-icon('dice');
 
     @extend .button;
+
+    @include respond-to(tablet, desktop) {
+      margin-top: 0;
+    }
   }
 }

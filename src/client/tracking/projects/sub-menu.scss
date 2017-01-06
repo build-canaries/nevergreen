@@ -14,13 +14,9 @@
   .refresh {
     @extend .button;
 
-    display: block;
-    width: 100%;
     margin-bottom: 1em;
 
     @include respond-to(tablet, desktop) {
-      display: inline-block;
-      width: auto;
       margin-right: 1em;
       margin-bottom: 0;
     }
