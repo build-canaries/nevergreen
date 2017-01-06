@@ -15,7 +15,20 @@ const items = [
 ]
 
 class Header extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {menuVisible: true}
+  }
+
   render() {
+    const toggleMenu = () => this.setState({menuVisible: !this.state.menuVisible})
+    const menuClassNames = classNames('menu', {'open': this.state.menuVisible})
+    const toggleLabel = this.state.menuVisible ? 'hide menu' : 'show menu'
+    const iconClassNames = classNames('site-menu-toggle-icon', {
+      'icon-menu3': !this.state.menuVisible,
+      'icon-menu4': this.state.menuVisible
+    })
+
     return (
       <header role='banner' className='site-header'>
         <h1 className='visually-hidden'>Nevergreen</h1>
@@ -23,8 +36,9 @@ class Header extends Component {
           <img src={logo} className='logo' alt='Build Canaries' title='Visit the Build Canaries homepage'/>
         </a>
         <nav role='navigation' className='site-menu'>
-          <h2 className='visually-hidden'>Navigation</h2>
-          <ul className='menu'>
+          <h2 className='visually-hidden'>Site menu</h2>
+          <button className='site-menu-toggle' onClick={toggleMenu} aria-label={toggleLabel}><i className={iconClassNames}/></button>
+          <ul className={menuClassNames}>
             {
               items.map((item) => {
                 const iconClasses = classNames('menu-icon', `icon-${item.iconClass}`)

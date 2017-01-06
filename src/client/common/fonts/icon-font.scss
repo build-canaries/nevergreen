@@ -1,9 +1,9 @@
 @font-face {
   font-family: icomoon;
   src:
-    url('common/fonts/icons/icomoon.ttf?pur8gw') format('truetype'),
-    url('common/fonts/icons/icomoon.woff?pur8gw') format('woff'),
-    url('common/fonts/icons/icomoon.svg?pur8gw#icomoon') format('svg');
+    url('common/fonts/icons/icomoon.ttf?rb9o91') format('truetype'),
+    url('common/fonts/icons/icomoon.woff?rb9o91') format('woff'),
+    url('common/fonts/icons/icomoon.svg?rb9o91#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -111,6 +111,14 @@
 
 .icon-bin::before {
   content: '\e9ac';
+}
+
+.icon-menu3::before {
+  content: '\e9bf';
+}
+
+.icon-menu4::before {
+  content: '\e9c0';
 }
 
 .icon-plus::before {

@@ -1,5 +1,6 @@
 @import '../common/variables';
 @import '../common/responsive';
+@import '../common/fonts/icon-font';
 
 .site-header {
   background-color: $off-black;
@@ -23,12 +24,32 @@
     }
   }
 
+  .site-menu-toggle {
+    color: $white;
+    text-transform: uppercase;
+    padding: 0.5em 1em;
+    border: none;
+    background-color: transparent;
+    margin: 0;
+    cursor: pointer;
+
+    @include respond-to(tablet, desktop) {
+      display: none;
+    }
+  }
+
+  .site-menu-toggle-icon {
+    font-size: 2rem;
+    padding-right: 0.5em;
+  }
+
   .site-menu {
     display: block;
     vertical-align: top;
   }
 
   .menu {
+    display: none;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -39,6 +60,14 @@
       @include respond-to(tablet, desktop) {
         display: inline-block;
       }
+    }
+
+    &.open {
+      display: inline;
+    }
+
+    @include respond-to(tablet, desktop) {
+      display: inline;
     }
   }
 
