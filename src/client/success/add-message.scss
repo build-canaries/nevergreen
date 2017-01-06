@@ -23,6 +23,7 @@
 
     @include respond-to(tablet, desktop) {
       display: flex;
+      align-items: baseline;
       flex-grow: 1;
 
       input {

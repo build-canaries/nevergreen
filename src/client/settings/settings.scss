@@ -1,6 +1,7 @@
 @import '../common/layout';
 @import '../common/forms/button';
 @import '../common/forms/text';
+@import '../common/responsive';
 
 .audio-visual {
   @extend .main-section;
@@ -13,7 +14,23 @@
     margin-top: 0.5em;
 
     input {
-      width: calc(100% - 14em);
+      width: 100%;
+    }
+
+    @include respond-to(tablet, desktop) {
+      display: flex;
+      align-items: baseline;
+
+      .sound-fx-input {
+        display: flex;
+        align-items: baseline;
+        flex-grow: 1;
+
+        input {
+          flex-grow: 1;
+          width: auto;
+        }
+      }
     }
   }
 
@@ -21,6 +38,16 @@
     @include button-icon('play3');
 
     @extend .button;
+
+    display: block;
+    width: 100%;
+    margin-top: 1em;
+
+    @include respond-to(tablet, desktop) {
+      display: inline-block;
+      width: auto;
+      margin-top: 0;
+    }
   }
 
   .messages {
