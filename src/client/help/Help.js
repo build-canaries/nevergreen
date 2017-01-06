@@ -91,7 +91,8 @@ class Help extends Component {
             </tr>
             </tbody>
           </table>
-          <p>If you are just checking us out then you can use the Apache projects cctray at: https://builds.apache.org/cc.xml</p>
+          <p>If you are just checking us out then you can use the Apache projects cctray at: <span className='example-tray'>https://builds.apache.org/cc.xml</span>
+          </p>
         </Container>
 
         <Container title='success'>
@@ -106,7 +107,7 @@ class Help extends Component {
           </p>
         </Container>
 
-        <Container title='keyboard shortcuts'>
+        <Container title='keyboard shortcuts' className='keyboard-shortcuts'>
           <span>The following keyboard shortcuts can be used to:</span>
           <table className='help-shortcut-table'>
             <thead>

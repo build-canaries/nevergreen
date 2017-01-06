@@ -1,8 +1,13 @@
 @import '../common/variables';
+@import '../common/responsive';
 @import '../common/layout';
 
 .help {
   @extend .main-section;
+
+  .example-tray {
+    word-break: break-all;
+  }
 
   .healthy-building {
     background-color: $healthy-building;
@@ -29,7 +34,9 @@
   }
 
   .help-tracking-table {
+    display: block;
     width: 100%;
+    overflow-y: scroll;
 
     tr:nth-child(even) {
       background-color: $light-grey;
@@ -52,6 +59,14 @@
     background-image: linear-gradient(to bottom, #eee, #f9f9f9, #eee);
     padding: 0.1em 0.3em;
     font-size: 0.85rem;
+  }
+
+  .keyboard-shortcuts {
+    display: none;
+
+    @include respond-to(tablet, desktop) {
+      display: block;
+    }
   }
 
   .help-shortcut-table {
