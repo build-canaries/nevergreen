@@ -5,7 +5,7 @@ import TrackingContainer from './tracking/TrackingContainer'
 import SuccessContainer from './success/SuccessContainer'
 import SettingsContainer from './settings/SettingsContainer'
 import BackupContainer from './backup/BackupContainer'
-import Help from './help/Help'
+import HelpContainer from './help/HelpContainer'
 import {Route, IndexRoute, Redirect} from 'react-router'
 
 export default (
@@ -16,7 +16,7 @@ export default (
     <Route path='settings' component={SettingsContainer}/>
     <Redirect from='audio-visual' to='settings'/>
     <Route path='backup' component={BackupContainer}/>
-    <Route path='help' component={Help}/>
+    <Route path='help' component={HelpContainer}/>
     <Route path="*" component={TrackingContainer}/>
     <IndexRoute component={TrackingContainer}/>
   </Route>

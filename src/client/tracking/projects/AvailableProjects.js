@@ -1,9 +1,9 @@
 import React, {Component, PropTypes} from 'react'
 import AvailableProject from './AvailableProject'
-import _ from 'lodash'
 import Messages from '../../common/messages/Messages'
 import Text from '../../common/forms/Text'
-import ShortcutContainer from '../../common/shortcut/ShortcutContainer'
+import Shortcut from '../../common/Shortcut'
+import _ from 'lodash'
 import './available-projects.scss'
 
 class AvailableProjects extends Component {
@@ -49,11 +49,11 @@ class AvailableProjects extends Component {
             <legend className='legend'>Available projects</legend>
             <button className='include-all' onClick={includeAll} disabled={this.state.disableButtons} data-locator='include-all'>
               include all
-              <ShortcutContainer hotkeys={[`+ ${this.props.index}`, `= ${this.props.index}`]}/>
+              <Shortcut hotkeys={[`+ ${this.props.index}`, `= ${this.props.index}`]}/>
             </button>
             <button className='exclude-all' onClick={excludeAll} disabled={this.state.disableButtons}>
               exclude all
-              <ShortcutContainer hotkeys={[`- ${this.props.index}`]}/>
+              <Shortcut hotkeys={[`- ${this.props.index}`]}/>
             </button>
           </fieldset>
           <div className='project-filter'>

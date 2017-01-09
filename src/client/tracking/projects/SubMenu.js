@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import ShortcutContainer from '../../common/shortcut/ShortcutContainer'
+import Shortcut from '../../common/Shortcut'
 import moment from 'moment'
 import Timer from '../../common/Timer'
 import './sub-menu.scss'
@@ -28,7 +28,7 @@ class SubMenu extends Component {
     const refreshButton = this.props.loaded ?
       <button className='refresh' onClick={this.props.refreshTray}>
         refresh tray
-        <ShortcutContainer hotkeys={[`r ${this.props.index}`]}/>
+        <Shortcut hotkeys={[`r ${this.props.index}`]}/>
       </button> : null
 
     const refreshLabel = this.props.loaded ? `last refreshed ${this.state.lastFetched} ago` : ''
@@ -38,7 +38,7 @@ class SubMenu extends Component {
         <Timer onTrigger={updateFetchedTime} interval={ONE_MINUTE}/>
         <button className='show-settings' onClick={this.props.toggleSettingsView} data-locator='show-settings'>
           tray settings
-          <ShortcutContainer hotkeys={[`p ${this.props.index}`]}/>
+          <Shortcut hotkeys={[`p ${this.props.index}`]}/>
         </button>
         {refreshButton}
         <span className='tray-refresh-last-fetch'>{refreshLabel}</span>

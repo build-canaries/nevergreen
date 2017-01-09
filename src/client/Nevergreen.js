@@ -7,7 +7,6 @@ import _ from 'lodash'
 import './nevergreen.scss'
 import Timer from './common/Timer'
 
-const THREE_SECONDS = 3 * 1000
 const TWENTY_FOUR_HOURS = 24 * 60 * 60
 
 class Nevergreen extends Component {
@@ -17,7 +16,7 @@ class Nevergreen extends Component {
     Mousetrap.bindGlobal('esc', () => document.activeElement.blur())
     Mousetrap.bind('?', () => {
       this.props.keyboardShortcut(true)
-      setTimeout(() => this.props.keyboardShortcut(false), THREE_SECONDS)
+      this.props.router.push('help')
     })
   }
 
@@ -65,7 +64,10 @@ Nevergreen.propTypes = {
   initalise: PropTypes.func.isRequired,
   keyboardShortcut: PropTypes.func.isRequired,
   checkForNewVersion: PropTypes.func.isRequired,
-  dismiss: PropTypes.func.isRequired
+  dismiss: PropTypes.func.isRequired,
+  router: PropTypes.shape({
+    push: PropTypes.func.isRequired
+  }).isRequired
 }
 
 export default Nevergreen

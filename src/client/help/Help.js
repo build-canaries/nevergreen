@@ -1,8 +1,12 @@
-import React, {Component} from 'react'
+import React, {Component, PropTypes} from 'react'
 import Container from '../common/container/Container'
 import './help.scss'
 
 class Help extends Component {
+  componentWillUnmount() {
+    this.props.keyboardShortcut(false)
+  }
+
   render() {
     return (
       <section className='help'>
@@ -107,7 +111,7 @@ class Help extends Component {
           </p>
         </Container>
 
-        <Container title='keyboard shortcuts' className='keyboard-shortcuts'>
+        <Container title='keyboard shortcuts' className='keyboard-shortcuts' highlight={this.props.showShortcuts}>
           <span>The following keyboard shortcuts can be used to:</span>
           <table className='help-shortcut-table'>
             <thead>
@@ -121,42 +125,42 @@ class Help extends Component {
             <tr>
               <td><kbd className='binding'>?</kbd></td>
               <td>Keyboard shortcuts</td>
-              <td>Shows keyboard shortcuts as tooltips hovering over the action they perform.</td>
-            </tr>
-            <tr>
-              <td><kbd className='binding'>m</kbd> or <kbd className='binding'>1</kbd></td>
-              <td>Go to Monitor</td>
-              <td>Navigate to the monitor section.</td>
-            </tr>
-            <tr>
-              <td><kbd className='binding'>t</kbd> or <kbd className='binding'>2</kbd></td>
-              <td>Go to Tracking</td>
-              <td>Navigate to the tracking section.</td>
-            </tr>
-            <tr>
-              <td><kbd className='binding'>s</kbd> or <kbd className='binding'>3</kbd></td>
-              <td>Go to Success</td>
-              <td>Navigate to the success section.</td>
-            </tr>
-            <tr>
-              <td><kbd className='binding'>v</kbd> or <kbd className='binding'>4</kbd></td>
-              <td>Go to Audio/Visual</td>
-              <td>Navigate to the audio/visual section.</td>
-            </tr>
-            <tr>
-              <td><kbd className='binding'>b</kbd> or <kbd className='binding'>5</kbd></td>
-              <td>Go to Backup</td>
-              <td>Navigate to the backup section.</td>
-            </tr>
-            <tr>
-              <td><kbd className='binding'>h</kbd> or <kbd className='binding'>6</kbd></td>
-              <td>Go to Help</td>
-              <td>Navigate to this (the help) section.</td>
+              <td>Shows keyboard shortcuts (this section).</td>
             </tr>
             <tr>
               <td><kbd className='binding'>esc</kbd></td>
               <td>Blur action</td>
               <td>Blur the currently focused input, allowing other shortcuts to be used again.</td>
+            </tr>
+            <tr>
+              <td><kbd className='binding'>m</kbd> or <kbd className='binding'>1</kbd></td>
+              <td>Go to Monitor</td>
+              <td>Navigate to the monitor page.</td>
+            </tr>
+            <tr>
+              <td><kbd className='binding'>t</kbd> or <kbd className='binding'>2</kbd></td>
+              <td>Go to Tracking</td>
+              <td>Navigate to the tracking page.</td>
+            </tr>
+            <tr>
+              <td><kbd className='binding'>s</kbd> or <kbd className='binding'>3</kbd></td>
+              <td>Go to Success</td>
+              <td>Navigate to the success page.</td>
+            </tr>
+            <tr>
+              <td><kbd className='binding'>v</kbd> or <kbd className='binding'>4</kbd></td>
+              <td>Go to Settings</td>
+              <td>Navigate to the settings page.</td>
+            </tr>
+            <tr>
+              <td><kbd className='binding'>b</kbd> or <kbd className='binding'>5</kbd></td>
+              <td>Go to Backup</td>
+              <td>Navigate to the backup page.</td>
+            </tr>
+            <tr>
+              <td><kbd className='binding'>h</kbd> or <kbd className='binding'>6</kbd></td>
+              <td>Go to Help</td>
+              <td>Navigate to this (the help) page.</td>
             </tr>
             <tr>
               <td><kbd className='binding'>+</kbd><kbd className='binding'>0..n</kbd> or <kbd
@@ -226,6 +230,11 @@ class Help extends Component {
       </section>
     )
   }
+}
+
+Help.propTypes = {
+  keyboardShortcut: PropTypes.func.isRequired,
+  showShortcuts: PropTypes.bool
 }
 
 export default Help

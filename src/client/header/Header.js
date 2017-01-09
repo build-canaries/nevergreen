@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import './header.scss'
 import logo from './buildcanaries-logo.png'
 import {Link} from 'react-router'
-import ShortcutContainer from '../common/shortcut/ShortcutContainer'
+import Shortcut from '../common/Shortcut'
 
 const items = [
   {id: 'monitor', iconClass: 'eye', title: 'monitor', shortcuts: ['m', '1']},
@@ -48,7 +48,7 @@ class Header extends Component {
                     <Link to={`/${item.id}`} className='menu-item' activeClassName='active' data-locator={`menu-${item.id}`}>
                       <i className={iconClasses}/>
                       <span className='menu-title'>{item.title}</span>
-                      <ShortcutContainer hotkeys={item.shortcuts}/>
+                      <Shortcut hotkeys={item.shortcuts}/>
                     </Link>
                   </li>
                 )

@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import ShortcutContainer from '../../common/shortcut/ShortcutContainer'
+import Shortcut from '../../common/Shortcut'
 import './sub-menu.scss'
 
 class SubMenu extends Component {
@@ -8,7 +8,7 @@ class SubMenu extends Component {
       <div className='tray-sub-bar'>
         <button className='show-projects' onClick={this.props.toggleSettingsView}>
           show projects
-          <ShortcutContainer hotkeys={[`p ${this.props.index}`]}/>
+          <Shortcut hotkeys={[`p ${this.props.index}`]}/>
         </button>
       </div>
     )
