@@ -17,7 +17,7 @@ const items = [
 class Header extends Component {
   constructor(props) {
     super(props)
-    this.state = {menuVisible: true}
+    this.state = {menuVisible: false}
   }
 
   render() {
