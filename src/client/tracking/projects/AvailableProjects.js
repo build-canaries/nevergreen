@@ -42,8 +42,13 @@ class AvailableProjects extends Component {
       return this.state.filter ? value.name.match(this.state.filter) : true
     })
 
+    const scrollToTop = (e) => {
+      this.node.scrollIntoView()
+      e.preventDefault()
+    }
+
     return (
-      <section className='available-projects' data-locator='available-projects'>
+      <section className='available-projects' data-locator='available-projects' ref={(node) => this.node = node}>
         <div className='controls'>
           <fieldset className='toggles'>
             <legend className='legend'>Available projects</legend>
@@ -71,6 +76,7 @@ class AvailableProjects extends Component {
             })
           }
         </ol>
+        <a className='back-to-top' href='#' onClick={scrollToTop}>back to top</a>
       </section>
     )
   }

@@ -76,4 +76,13 @@
   .messages {
     margin-top: 1em;
   }
+
+  .back-to-top {
+    display: inline-block;
+    margin-top: 1em;
+
+    @include respond-to(tablet, desktop) {
+      display: none;
+    }
+  }
 }
