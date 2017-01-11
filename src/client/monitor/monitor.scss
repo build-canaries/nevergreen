@@ -1,4 +1,5 @@
 @import '../common/variables';
+@import '../common/typography';
 
 .monitor {
   background-color: $black;
@@ -9,7 +10,7 @@
   cursor: inherit;
 
   .validation-message {
-    font-size: 3rem;
+    @include font-scale(4);
 
     div {
       margin: 0;
@@ -18,7 +19,8 @@
 
   .loading {
     .pulse {
-      font-size: 4rem;
+      @include font-scale(5);
+
       color: $off-white;
     }
   }

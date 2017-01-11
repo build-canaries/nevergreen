@@ -1,15 +1,18 @@
-@import '../nevergreen';
+@import '../common/layout';
 @import '../common/variables';
 @import '../common/forms/button';
+@import '../common/typography';
 
 .remove-link {
   @include button-icon('bin');
 
   @extend .button;
 
+  @include font-scale(-1);
+
   display: inline;
-  width: auto;
-  font-size: 1rem;
+  width: 2.4em;
+  height: 2.4em;
   color: $danger;
   padding: 0.5em;
 

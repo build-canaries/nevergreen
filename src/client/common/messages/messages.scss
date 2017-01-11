@@ -1,5 +1,6 @@
 @import '../variables';
 @import '../fonts/icon-font';
+@import '../typography';
 
 .messages {
   color: $white;
@@ -15,7 +16,6 @@
       &::before {
         @extend .icon;
 
-        font-size: 1rem;
         padding-right: 1em;
       }
     }

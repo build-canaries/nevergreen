@@ -1,13 +1,17 @@
 @import '../variables';
+@import '../typography';
 
 .text-input {
   span {
+    @include font-scale(1);
+
     display: inline-block;
     margin-right: 1em;
-    font-size: 1.3rem;
   }
 
   input {
+    @include font-scale(2);
+
     border: none;
     border-bottom: 1px solid $mid-grey;
     margin-right: 1em;

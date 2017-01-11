@@ -3,7 +3,6 @@
 @import '../common/responsive';
 
 .add-tray {
-  font-size: 1.5rem;
   margin-bottom: 1em;
   padding: 1em;
   background-color: $white;
@@ -19,9 +18,11 @@
     margin-top: 1em;
 
     @include respond-to(tablet, desktop) {
-      display: inline-block;
       width: auto;
-      margin-top: 0;
+    }
+
+    @include respond-to(desktop) {
+      display: inline-block;
     }
   }
 
@@ -33,6 +34,7 @@
 
     input {
       width: 100%;
+      padding-top: 0.5em;
     }
 
     @include respond-to(tablet, desktop) {
@@ -40,6 +42,7 @@
 
       input {
         flex-grow: 1;
+        padding-top: 0;
       }
     }
   }

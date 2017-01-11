@@ -1,54 +1,16 @@
-@import '~normalize.css';
+@import 'defaults';
 @import 'common/variables';
 @import 'common/fonts/fonts';
 @import 'common/fonts/icon-font';
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html,
-body {
-  cursor: default;
-  color: $off-black;
-  font-family: Roboto, sans-serif;
-  font-size: 14px;
-  background: $light-grey;
-}
-
-kbd {
-  font-family: $monospace;
-}
-
-fieldset {
-  border: none;
-  padding: 0;
-  margin: 0;
-}
+@import 'common/typography';
 
 .text-with-icon {
   margin-left: 1em;
 }
 
-.hidden {
-  display: none;
-}
-
-.visually-hidden {
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
-}
-
 .pop-up-notification {
-  font-size: 1rem;
+  @include font-scale(0);
+
   padding: 1em;
   background-color: $blue;
   color: $white;

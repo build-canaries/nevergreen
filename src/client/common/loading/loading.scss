@@ -1,4 +1,5 @@
 @import '../variables';
+@import '../typography';
 
 .loading {
   text-align: center;
@@ -8,9 +9,10 @@
   width: 100%;
 
   .pulse {
+    @include font-scale(4);
+
     display: inline-block;
     color: $mid-grey;
-    font-size: 3rem;
     padding: 0.5rem;
     animation: bounce 1.4s infinite ease-in-out both;
 

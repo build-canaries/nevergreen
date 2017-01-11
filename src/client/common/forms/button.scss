@@ -1,11 +1,13 @@
 @import '../variables';
 @import '../responsive';
 @import '../fonts/icon-font';
+@import '../typography';
 
 .button {
+  @include font-scale(0);
+
   display: block;
   position: relative;
-  font-size: 1rem;
   text-align: center;
   white-space: nowrap;
   vertical-align: middle;
@@ -13,7 +15,7 @@
   border: 0;
   padding: 0.5em 1.5em 0.5em 1em;
   border-radius: 2px;
-  text-transform: uppercase;
+  text-transform: capitalize;
   text-decoration: none;
   background-color: $white;
   color: $off-black;
@@ -47,7 +49,8 @@
 .button-primary {
   @extend .button;
 
-  font-size: 1.2rem;
+  @include font-scale(1);
+
   background-color: $blue;
   color: $off-white;
 

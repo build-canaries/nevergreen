@@ -1,5 +1,6 @@
 @import '../common/variables';
 @import '../common/responsive';
+@import '../common/typography';
 
 .site-footer {
   background-color: $off-black;
@@ -41,7 +42,8 @@
   }
 
   .commit-hash {
-    font-size: 0.9rem;
+    @include font-scale(-1);
+
     font-family: $monospace;
     margin-top: 1em;
   }

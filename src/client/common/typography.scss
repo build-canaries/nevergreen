@@ -1,0 +1,24 @@
+@import '~modularscale-sass/stylesheets/modular-scale';
+
+$ms-base: 1rem;
+$ms-ratio: $minor-third;
+
+@mixin font-scale($value) {
+  font-size: ms($value);
+}
+
+h1 {
+  @include font-scale(4);
+}
+
+h2 {
+  @include font-scale(3);
+}
+
+h3 {
+  @include font-scale(2);
+}
+
+h4 {
+  @include font-scale(1);
+}

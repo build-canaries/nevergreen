@@ -1,6 +1,7 @@
 @import '../common/variables';
 @import '../common/responsive';
 @import '../common/layout';
+@import '../common/typography';
 
 .help {
   @extend .main-section;
@@ -29,7 +30,8 @@
   }
 
   .help-link-icon {
-    font-size: 1.5rem;
+    @include font-scale(2);
+
     margin-right: 0.5em;
   }
 
@@ -52,13 +54,14 @@
   }
 
   .binding {
+    @include font-scale(-1);
+
     font-family: $monospace;
     color: $off-black;
     border: $mid-grey 1px solid;
     border-radius: 5px;
     background-image: linear-gradient(to bottom, #eee, #f9f9f9, #eee);
     padding: 0.1em 0.3em;
-    font-size: 0.85rem;
   }
 
   .keyboard-shortcuts {
@@ -78,8 +81,9 @@
   }
 
   .url {
+    @include font-scale(-1);
+
     font-family: $monospace;
-    font-size: 0.9rem;
   }
 
   p {

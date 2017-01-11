@@ -1,5 +1,6 @@
 @import '../variables';
 @import '../fonts/icon-font';
+@import '../typography';
 
 @mixin show-hide-icon($icon) {
   @extend .icon-circle-#{$icon};
@@ -7,14 +8,14 @@
   &::before {
     @extend .icon;
 
-    font-size: 1.2rem;
+    @include font-scale(1);
+
     margin-left: 1em;
     margin-right: 0.5em;
   }
 }
 
 .container {
-  font-size: 1.5rem;
   background-color: $white;
   margin-bottom: 1em;
   box-shadow: $shadow;
@@ -38,7 +39,6 @@
 
   .section-title {
     display: inline-block;
-    font-size: 1.5rem;
     font-weight: 400;
     padding: 0.5em;
 
@@ -49,7 +49,6 @@
 
   .section-sub-title {
     display: inline-block;
-    font-size: 1.2rem;
     font-weight: normal;
     padding-left: 1em;
   }

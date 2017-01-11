@@ -1,6 +1,7 @@
 @import '../common/variables';
 @import '../common/responsive';
 @import '../common/fonts/icon-font';
+@import '../common/typography';
 
 .site-header {
   background-color: $off-black;
@@ -39,7 +40,8 @@
   }
 
   .site-menu-toggle-icon {
-    font-size: 2rem;
+    @include font-scale(3);
+
     padding-right: 0.5em;
   }
 
@@ -79,7 +81,6 @@
     display: inline-block;
     color: $mid-grey;
     text-transform: uppercase;
-    font-size: 1rem;
     padding: 1em;
     margin-right: 1em;
     text-decoration: none;
@@ -114,8 +115,9 @@
   }
 
   .menu-icon {
+    @include font-scale(3);
+
     color: $mid-grey;
-    font-size: 2rem;
     vertical-align: middle;
 
     &::before {

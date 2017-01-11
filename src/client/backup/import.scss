@@ -1,9 +1,11 @@
 @import '../common/variables';
 @import '../common/forms/button';
+@import '../common/typography';
 
 .import {
   .import-data {
-    font-size: 1rem;
+    @include font-scale(-1);
+
     padding: 0.5em;
     margin-bottom: 1em;
     width: 100%;
