@@ -62,7 +62,7 @@ class AvailableProjects extends Component {
             </button>
           </fieldset>
           <div className='project-filter'>
-            <Text label='Filter projects' onChange={updateFilter}/>
+            <Text label='Filter projects' className='project-filter-input' onChange={updateFilter}/>
           </div>
           <Messages type='error' messages={this.state.errors}/>
         </div>

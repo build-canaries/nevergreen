@@ -6,13 +6,28 @@
 .tray-settings {
   padding: 1em;
 
+  .tray-settings-name,
+  .tray-settings-username,
+  .tray-settings-password {
+    display: block;
+
+    input {
+      width: 100%;
+
+      @include respond-to(tablet, desktop) {
+        width: auto;
+      }
+    }
+  }
+
   .tray-settings-name {
-    display: inline-block;
+    @include respond-to(tablet, desktop) {
+      display: inline-block;
+    }
   }
 
   .tray-settings-username,
   .tray-settings-password {
-    display: block;
     padding-top: 1em;
   }
 
