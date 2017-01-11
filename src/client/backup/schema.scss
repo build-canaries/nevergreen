@@ -4,5 +4,7 @@
 .schema {
   pre {
     @include font-scale(-2);
+
+    overflow: auto;
   }
 }
