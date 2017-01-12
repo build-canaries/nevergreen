@@ -80,8 +80,7 @@
   }
 
   .back-to-top {
-    display: inline-block;
-    margin-top: 1em;
+    @include button();
 
     @include respond-to(tablet, desktop) {
       display: none;
