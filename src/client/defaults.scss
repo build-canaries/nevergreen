@@ -24,3 +24,11 @@ fieldset {
   padding: 0;
   margin: 0;
 }
+
+a {
+  color: $blue;
+
+  &:visited {
+    color: darken($blue, 10%);
+  }
+}
