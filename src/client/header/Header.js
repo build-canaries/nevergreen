@@ -22,6 +22,7 @@ class Header extends Component {
 
   render() {
     const toggleMenu = () => this.setState({menuVisible: !this.state.menuVisible})
+    const hideMenu = () => this.setState({menuVisible: false})
     const menuClassNames = classNames('menu', {'open': this.state.menuVisible})
     const toggleLabel = this.state.menuVisible ? 'hide menu' : 'show menu'
     const iconClassNames = classNames('site-menu-toggle-icon', {
@@ -45,7 +46,7 @@ class Header extends Component {
 
                 return (
                   <li key={item.id}>
-                    <Link to={`/${item.id}`} className='menu-item' activeClassName='active' data-locator={`menu-${item.id}`}>
+                    <Link to={`/${item.id}`} className='menu-item' activeClassName='active' onClick={hideMenu} data-locator={`menu-${item.id}`}>
                       <i className={iconClasses}/>
                       <span className='menu-title'>{item.title}</span>
                       <Shortcut hotkeys={item.shortcuts}/>
