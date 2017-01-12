@@ -15,9 +15,8 @@
   }
 
   .copy {
+    @include button($off-white, $blue);
     @include button-icon('paste');
-
-    @extend .button-primary;
   }
 
   .messages {

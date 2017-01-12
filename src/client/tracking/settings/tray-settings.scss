@@ -38,7 +38,7 @@
     .danger-zone-title {
       @extend .icon-notification;
 
-      background-color: $danger-text;
+      background-color: $danger;
       color: $white;
       padding: 0.5em 1em;
 
@@ -54,24 +54,19 @@
     }
 
     .delete {
+      @include button($white, $danger);
       @include button-icon('bin');
-
-      @extend .button;
-
-      color: $danger;
     }
   }
 
   .cancel {
+    @include button();
     @include button-icon('arrow-left2');
-
-    @extend .button;
   }
 
   .update {
+    @include button($off-white, $blue);
     @include button-icon('arrow-right2');
-
-    @extend .button-primary;
   }
 
   .cancel,
@@ -88,9 +83,8 @@
   }
 
   .random {
+    @include button();
     @include button-icon('dice');
-
-    @extend .button;
 
     @include respond-to(tablet, desktop) {
       margin-top: 0;

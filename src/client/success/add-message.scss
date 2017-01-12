@@ -33,9 +33,8 @@
   }
 
   .add {
+    @include button($off-white, $blue);
     @include button-icon('plus');
-
-    @extend .button-primary;
 
     display: block;
     width: 100%;

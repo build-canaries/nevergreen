@@ -15,9 +15,8 @@
   }
 
   .import-button {
+    @include button($off-white, $blue);
     @include button-icon('floppy-disk');
-
-    @extend .button-primary;
   }
 
   .messages {

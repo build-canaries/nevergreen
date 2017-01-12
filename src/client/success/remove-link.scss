@@ -4,16 +4,13 @@
 @import '../common/typography';
 
 .remove-link {
+  @include button($white, $danger);
   @include button-icon('bin');
-
-  @extend .button;
-
   @include font-scale(-1);
 
   display: inline;
   width: 2.4em;
   height: 2.4em;
-  color: $danger;
   padding: 0.5em;
 
   &::before {

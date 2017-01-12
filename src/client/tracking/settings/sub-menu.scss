@@ -3,8 +3,7 @@
 
 .tray-sub-bar {
   .show-projects {
+    @include button();
     @include button-icon('list');
-
-    @extend .button;
   }
 }

@@ -3,7 +3,17 @@
 @import '../fonts/icon-font';
 @import '../typography';
 
-.button {
+@mixin button-icon($icon) {
+  @extend .icon-#{$icon};
+
+  &::before {
+    @extend .icon;
+
+    margin-right: 1em;
+  }
+}
+
+@mixin button($color:$off-black, $background-color:$white) {
   @include font-scale(0);
 
   display: block;
@@ -17,8 +27,8 @@
   border-radius: 2px;
   text-transform: capitalize;
   text-decoration: none;
-  background-color: $white;
-  color: $off-black;
+  background-color: $background-color;
+  color: $color;
   width: 100%;
 
   &:enabled {
@@ -28,7 +38,7 @@
 
     &:hover,
     &:focus {
-      background-color: darken($white, 8%);
+      background-color: darken($background-color, 8%);
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.26);
       border-radius: 0;
     }
@@ -43,31 +53,5 @@
   @include respond-to(tablet, desktop) {
     display: inline-block;
     width: auto;
-  }
-}
-
-.button-primary {
-  @extend .button;
-
-  @include font-scale(1);
-
-  background-color: $blue;
-  color: $off-white;
-
-  &:enabled {
-    &:hover,
-    &:focus {
-      background-color: darken($blue, 8%);
-    }
-  }
-}
-
-@mixin button-icon($icon) {
-  @extend .icon-#{$icon};
-
-  &::before {
-    @extend .icon;
-
-    margin-right: 1em;
   }
 }

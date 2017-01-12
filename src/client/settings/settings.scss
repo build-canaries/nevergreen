@@ -35,9 +35,8 @@
   }
 
   .test-sound-fx {
+    @include button();
     @include button-icon('play3');
-
-    @extend .button;
 
     margin-top: 1em;
 
