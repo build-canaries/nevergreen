@@ -4,12 +4,6 @@ import _ from 'lodash'
 import './text.scss'
 
 class Text extends Component {
-  componentDidMount() {
-    if (this.props.isPrimary) {
-      this.primaryInput.focus()
-    }
-  }
-
   render() {
     const inputProps = _.omit(this.props, ['label', 'onEnter', 'isPrimary', 'className'])
     const onEnter = (evt) => {
@@ -22,7 +16,7 @@ class Text extends Component {
     return (
       <label className={labelClasses}>
         <span>{this.props.label}</span>
-        <input type='text' onKeyPress={onEnter} ref={(node) => this.primaryInput = node} spellCheck={false} {...inputProps}/>
+        <input type='text' onKeyPress={onEnter} spellCheck={false} autoFocus={this.props.isPrimary} autoComplete='off' {...inputProps}/>
       </label>
     )
   }

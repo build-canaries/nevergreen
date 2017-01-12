@@ -19,7 +19,7 @@ class AddTray extends Component {
 
     return (
       <div className='add-tray'>
-        <Text label='URL' className='tracking-tray-url' placeholder='http(s)://host:port/cc.xml' value={this.state.url}
+        <Text label='URL' type='url' className='tracking-tray-url' placeholder='http(s)://host:port/cc.xml' value={this.state.url}
               onChange={updateUrl} onEnter={addTray} data-locator='add-tray-url' isPrimary={true}/>
         <Text label='username' className='username' value={this.state.username} onChange={updateUsername} onEnter={addTray}
               data-locator='add-tray-username'/>

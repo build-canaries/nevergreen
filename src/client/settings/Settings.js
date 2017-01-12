@@ -51,7 +51,7 @@ class AudioVisual extends Component {
             <Checkbox label='play a sound when a build breaks' enabled={this.props.playBrokenBuildSoundFx} onToggle={toggleBrokenSounds}
                       data-locator='play-sounds'/>
             <div className='sound-fx'>
-              <Text label='broken build sound' className='sound-fx-input' placeholder='audio file URL' onChange={updateSoundFx}
+              <Text label='broken build sound' type='url' className='sound-fx-input' placeholder='audio file URL' onChange={updateSoundFx}
                     value={this.state.soundFx} onBlur={setSoundFx}/>
               <button className='test-sound-fx' onClick={testSoundFx}>test</button>
               <Messages type='error' messages={this.state.errors}/>
