@@ -13,10 +13,6 @@
   .sound-fx {
     margin-top: 0.5em;
 
-    input {
-      width: 100%;
-    }
-
     @include respond-to(tablet, desktop) {
       display: flex;
       align-items: baseline;
@@ -42,6 +38,7 @@
 
     @include respond-to(tablet, desktop) {
       margin-top: 0;
+      margin-left: 1em;
     }
   }
 
@@ -53,12 +50,16 @@
     @extend .text-input;
 
     display: inline-block;
-    padding-bottom: 0.5em;
     margin-top: 0;
+
+    span {
+      margin-right: 1em;
+    }
 
     input {
       text-align: right;
       width: 5rem;
+      margin-right: 1em;
     }
   }
 }

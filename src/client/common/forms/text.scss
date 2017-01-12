@@ -1,12 +1,24 @@
 @import '../variables';
 @import '../typography';
+@import '../responsive';
 
 .text-input {
+  display: block;
+  width: 100%;
+
+  @include respond-to(tablet, desktop) {
+    display: inline-block;
+    width: auto;
+  }
+
   span {
     @include font-scale(1);
 
     display: inline-block;
-    margin-right: 1em;
+
+    @include respond-to(tablet, desktop) {
+      margin-right: 1em;
+    }
   }
 
   input {
@@ -14,11 +26,17 @@
 
     border: none;
     border-bottom: 1px solid $mid-grey;
-    margin-right: 1em;
+    width: 100%;
+    margin-top: 0.5em;
 
     &:focus {
       outline: none;
       border-bottom-color: $blue;
+    }
+
+    @include respond-to(tablet, desktop) {
+      width: auto;
+      margin-top: 0;
     }
   }
 }

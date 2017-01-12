@@ -73,14 +73,6 @@
     span {
       color: $mid-grey;
     }
-
-    input {
-      width: 100%;
-
-      @include respond-to(tablet, desktop) {
-        width: auto;
-      }
-    }
   }
 
   .messages {

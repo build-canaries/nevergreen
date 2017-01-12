@@ -10,14 +10,6 @@
   .tray-settings-username,
   .tray-settings-password {
     display: block;
-
-    input {
-      width: 100%;
-
-      @include respond-to(tablet, desktop) {
-        width: auto;
-      }
-    }
   }
 
   .tray-settings-name {
@@ -88,6 +80,7 @@
 
     @include respond-to(tablet, desktop) {
       margin-top: 0;
+      margin-left: 1em;
     }
   }
 }
