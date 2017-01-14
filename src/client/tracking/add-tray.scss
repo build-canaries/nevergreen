@@ -38,6 +38,7 @@
 
     @include respond-to(tablet, desktop) {
       display: flex;
+      align-items: baseline;
 
       input {
         flex-grow: 1;
