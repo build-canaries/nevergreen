@@ -8,10 +8,7 @@ killall() {
     echo "Done!"
 }
 
-hash npm 2>/dev/null || {
-    echo >&2 "npm command not found, you need to install Node. See wiki/contributing for more details.."
-    exit 1
-}
+./ci/check-node.sh
 
 echo '[Step 1 of 4] Stopping the ./develop.sh script (if it is running)...'
 pkill -SIGINT -f ./develop.sh
