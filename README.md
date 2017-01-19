@@ -37,6 +37,6 @@ If you would like to add a feature/fix a bug for us please create a pull request
 
 ## License
 
-Copyright © 2016 Build Canaries
+Copyright © 2017 Build Canaries
 
 Distributed under the Eclipse Public License either version 1.0 or (at your option) any later version.
