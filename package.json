@@ -1,8 +1,8 @@
 {
   "name": "nevergreen",
-  "version": "0.11.0",
-  "versionName": "Kobi",
-  "versionColour": "#E79FC4",
+  "version": "1.0.0",
+  "versionName": "Lapis Lazuli",
+  "versionColour": "#26619C",
   "versionMeta": "0",
   "commitHash": "local",
   "description": "A build monitor with attitude",
