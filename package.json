@@ -21,7 +21,7 @@
     "fake-server": "node test/test-server"
   },
   "dependencies": {
-    "babel-polyfill": "6.20.0",
+    "babel-polyfill": "6.22.0",
     "bourbon-neat": "1.8.0",
     "classnames": "2.2.5",
     "clipboard": "1.5.16",
@@ -44,14 +44,14 @@
     "redux-thunk": "2.2.0",
     "scale-text": "0.2.2",
     "semver": "5.3.0",
-    "whatwg-fetch": "2.0.1"
+    "whatwg-fetch": "2.0.2"
   },
   "devDependencies": {
-    "babel-core": "6.21.0",
+    "babel-core": "6.22.1",
     "babel-eslint": "7.1.1",
     "babel-loader": "6.2.10",
     "babel-preset-env": "1.1.8",
-    "babel-preset-react": "6.16.0",
+    "babel-preset-react": "6.22.0",
     "basic-auth-connect": "1.0.0",
     "chai": "3.5.0",
     "chai-enzyme": "0.6.1",
@@ -59,7 +59,7 @@
     "copy-webpack-plugin": "4.0.1",
     "css-loader": "0.26.1",
     "enzyme": "2.7.0",
-    "eslint": "3.13.1",
+    "eslint": "3.14.0",
     "eslint-plugin-babel": "4.0.1",
     "eslint-plugin-react": "6.9.0",
     "express": "4.14.0",
