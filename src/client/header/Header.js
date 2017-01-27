@@ -34,9 +34,9 @@ class Header extends Component {
     return (
       <header role='banner' className={headerClassNames}>
         <h1 className='visually-hidden'>Nevergreen</h1>
-        <a href='https://build-canaries.github.io/' target='_blank'>
-          <img src={logo} className='logo' alt='Build Canaries' title='Visit the Build Canaries homepage'/>
-        </a>
+        <Link to='/monitor'>
+          <img src={logo} className='logo' alt='Build Canaries'/>
+        </Link>
         <nav role='navigation' className='site-menu'>
           <h2 className='visually-hidden'>Site menu</h2>
           <button className='site-menu-toggle' onClick={toggleMenu} aria-label={toggleLabel}><i className={iconClassNames}/></button>
