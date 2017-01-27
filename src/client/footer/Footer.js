@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react'
+import classNames from 'classnames'
 import './footer.scss'
 
 class Footer extends Component {
@@ -6,9 +7,10 @@ class Footer extends Component {
     const footerStyle = {
       borderColor: this.props.versionColour
     }
+    const footerClassNames = classNames('site-footer', {fullscreen: this.props.fullScreen})
 
     return (
-      <footer role='contentinfo' className='site-footer' style={footerStyle}>
+      <footer role='contentinfo' className={footerClassNames} style={footerStyle}>
         <a href='https://github.com/build-canaries/nevergreen/releases' target='_blank' className='version' title='version'>
           <span className='version-number'>v{this.props.versionNumber}</span>
           <span className='version-name'>{this.props.versionName}</span>
@@ -24,7 +26,8 @@ Footer.propTypes = {
   versionNumber: PropTypes.string,
   versionName: PropTypes.string,
   commitHash: PropTypes.string,
-  versionColour: PropTypes.string
+  versionColour: PropTypes.string,
+  fullScreen: PropTypes.bool
 }
 
 export default Footer

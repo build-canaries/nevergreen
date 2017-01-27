@@ -2,7 +2,7 @@ import '../UnitSpec'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {reduce} from '../../../src/client/reducers/NevergreenReducer'
-import {INITIALISING, INITIALISED} from '../../../src/client/actions/NevergreenActions'
+import {INITIALISING, INITIALISED, FULL_SCREEN, REQUEST_FULL_SCREEN} from '../../../src/client/actions/NevergreenActions'
 import Immutable from 'immutable'
 
 describe('NevergreenReducer', function () {
@@ -37,6 +37,26 @@ describe('NevergreenReducer', function () {
       const action = {type: INITIALISED, data: Immutable.Map({nevergreen: {foo: 'bar'}})}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('foo', 'bar')
+    })
+  })
+
+  describe('full screen action', function () {
+
+    it('should set the full screen property', function () {
+      const existingState = Immutable.Map({fullScreen: false})
+      const action = {type: FULL_SCREEN, enabled: true}
+      const newState = reduce(existingState, action)
+      expect(newState).to.have.property('fullScreen', true)
+    })
+  })
+
+  describe('request full screen action', function () {
+
+    it('should set the full screen requested property', function () {
+      const existingState = Immutable.Map({fullScreenRequested: false})
+      const action = {type: REQUEST_FULL_SCREEN, requested: true}
+      const newState = reduce(existingState, action)
+      expect(newState).to.have.property('fullScreenRequested', true)
     })
   })
 })

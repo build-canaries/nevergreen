@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import Package from '../../../package'
-import {INITIALISING, INITIALISED} from '../actions/NevergreenActions'
+import {INITIALISING, INITIALISED, FULL_SCREEN, REQUEST_FULL_SCREEN} from '../actions/NevergreenActions'
 
 const DefaultState = Immutable.Map({
   loaded: false,
@@ -8,7 +8,9 @@ const DefaultState = Immutable.Map({
   versionName: Package.versionName,
   versionColour: Package.versionColour,
   versionMeta: Package.versionMeta,
-  commitHash: Package.commitHash
+  commitHash: Package.commitHash,
+  fullScreen: false,
+  fullScreenRequested: false
 })
 
 export function reduce(state = DefaultState, action) {
@@ -18,6 +20,12 @@ export function reduce(state = DefaultState, action) {
 
     case INITIALISED:
       return state.set('loaded', true).merge(action.data.get('nevergreen'))
+
+    case FULL_SCREEN:
+      return state.set('fullScreen', action.enabled)
+
+    case REQUEST_FULL_SCREEN:
+      return state.set('fullScreenRequested', action.requested)
 
     default:
       return state

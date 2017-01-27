@@ -1,14 +1,15 @@
 import Immutable from 'immutable'
 import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
 import {fetchInteresting} from '../actions/MonitorActions'
+import {requestFullScreen} from '../actions/NevergreenActions'
 import Monitor from './Monitor'
 
 function mapDispatchToProps(dispatch) {
-  return {
-    fetchInteresting(trays, selected) {
-      return dispatch(fetchInteresting(trays, selected))
-    }
-  }
+  return bindActionCreators({
+    fetchInteresting,
+    requestFullScreen
+  }, dispatch)
 }
 
 function mapStateToProps(store) {
@@ -26,7 +27,8 @@ function mapStateToProps(store) {
     playBrokenBuildSounds: audioVisual.get('playBrokenBuildSoundFx'),
     brokenBuildFx: audioVisual.get('brokenBuildSoundFx'),
     messages: store.get('success'),
-    refreshTime: audioVisual.get('refreshTime')
+    refreshTime: audioVisual.get('refreshTime'),
+    isFullScreen: store.get('nevergreen').get('fullScreen')
   }).toJS()
 }
 

@@ -51,3 +51,19 @@ export function initalise() {
       })
   }
 }
+
+export const FULL_SCREEN = 'FULL_SCREEN'
+export function enableFullScreen(enabled) {
+  return {
+    type: FULL_SCREEN,
+    enabled
+  }
+}
+
+export const REQUEST_FULL_SCREEN = 'REQUEST_FULL_SCREEN'
+export function requestFullScreen(requested) {
+  return {
+    type: REQUEST_FULL_SCREEN,
+    requested
+  }
+}

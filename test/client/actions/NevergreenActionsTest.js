@@ -79,4 +79,30 @@ describe('NevergreenActions', function () {
       })
     })
   })
+
+  describe('full screen', function () {
+
+    it('should return the correct type', function () {
+      const actual = NevergreenActions.enableFullScreen()
+      expect(actual).to.have.property('type', NevergreenActions.FULL_SCREEN)
+    })
+
+    it('should return the enabled flag', function () {
+      const actual = NevergreenActions.enableFullScreen(true)
+      expect(actual).to.have.property('enabled', true)
+    })
+  })
+
+  describe('request full screen', function () {
+
+    it('should return the correct type', function () {
+      const actual = NevergreenActions.requestFullScreen()
+      expect(actual).to.have.property('type', NevergreenActions.REQUEST_FULL_SCREEN)
+    })
+
+    it('should return the requested flag', function () {
+      const actual = NevergreenActions.requestFullScreen(true)
+      expect(actual).to.have.property('requested', true)
+    })
+  })
 })

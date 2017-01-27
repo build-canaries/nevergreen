@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react'
+import classNames from 'classnames'
 import InterestingProjects from './InterestingProjects'
 import Success from './Success'
 import Loading from '../common/loading/Loading'
@@ -6,48 +7,23 @@ import Messages from '../common/messages/Messages'
 import './monitor.scss'
 import Timer from '../common/Timer'
 
-const THREE_SECONDS = 3 * 1000
-
-function showMenu(state) {
-  clearTimeout(state.menuTimer)
-
-  Array.from(document.querySelectorAll('.site-header, .site-footer, .pop-up-notification, .monitor')).forEach((elem) => {
-    elem.classList.remove('fullscreen')
-  })
-}
-
-function hideMenu() {
-  Array.from(document.querySelectorAll('.site-header, .site-footer, .pop-up-notification, .monitor')).forEach((elem) => {
-    elem.classList.add('fullscreen')
-  })
-}
-
 class Monitor extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {}
-  }
-
   componentDidMount() {
-    hideMenu()
-
     const resizeListener = () => this.forceUpdate()
     this.setState({resizeListener})
     window.addEventListener('resize', resizeListener)
+
+    this.props.requestFullScreen(true)
   }
 
   componentWillUnmount() {
-    showMenu(this.state)
+    this.props.requestFullScreen(false)
     window.removeEventListener('resize', this.state.resizeListener)
   }
 
   render() {
     const fetch = () => this.props.fetchInteresting(this.props.trays, this.props.selected)
-
-    const animateMenu = () => {
-      showMenu(this.state)
-      this.setState({menuTimer: setTimeout(() => hideMenu(), THREE_SECONDS)})
-    }
+    const monitorClassNames = classNames('monitor', {fullscreen: this.props.isFullScreen})
 
     let content
 
@@ -60,7 +36,7 @@ class Monitor extends Component {
     }
 
     return (
-      <div className='monitor' onMouseMove={animateMenu}>
+      <div className={monitorClassNames}>
         <Timer onTrigger={fetch} interval={this.props.refreshTime}/>
         <Loading loaded={this.props.loaded}>
           {content}
@@ -82,7 +58,9 @@ Monitor.propTypes = {
   brokenBuildFx: PropTypes.string,
   messages: PropTypes.arrayOf(PropTypes.string).isRequired,
   fetchInteresting: PropTypes.func.isRequired,
-  refreshTime: PropTypes.number.isRequired
+  refreshTime: PropTypes.number.isRequired,
+  requestFullScreen: PropTypes.func.isRequired,
+  isFullScreen: PropTypes.bool
 }
 
 export default Monitor

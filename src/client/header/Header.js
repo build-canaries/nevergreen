@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, PropTypes} from 'react'
 import classNames from 'classnames'
 import './header.scss'
 import logo from './buildcanaries-logo.png'
@@ -23,6 +23,7 @@ class Header extends Component {
   render() {
     const toggleMenu = () => this.setState({menuVisible: !this.state.menuVisible})
     const hideMenu = () => this.setState({menuVisible: false})
+    const headerClassNames = classNames('site-header', {'fullscreen': this.props.fullScreen})
     const menuClassNames = classNames('menu', {'open': this.state.menuVisible})
     const toggleLabel = this.state.menuVisible ? 'hide menu' : 'show menu'
     const iconClassNames = classNames('site-menu-toggle-icon', {
@@ -31,7 +32,7 @@ class Header extends Component {
     })
 
     return (
-      <header role='banner' className='site-header'>
+      <header role='banner' className={headerClassNames}>
         <h1 className='visually-hidden'>Nevergreen</h1>
         <a href='https://build-canaries.github.io/' target='_blank'>
           <img src={logo} className='logo' alt='Build Canaries' title='Visit the Build Canaries homepage'/>
@@ -60,6 +61,10 @@ class Header extends Component {
       </header>
     )
   }
+}
+
+Header.propTypes = {
+  fullScreen: PropTypes.bool
 }
 
 export default Header

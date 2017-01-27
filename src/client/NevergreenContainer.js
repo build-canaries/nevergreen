@@ -1,25 +1,19 @@
 import {connect} from 'react-redux'
-import {initalise} from './actions/NevergreenActions'
+import {bindActionCreators} from 'redux'
+import {initalise, enableFullScreen} from './actions/NevergreenActions'
 import {dismiss, checkForNewVersion} from './actions/NotificationActions'
 import {keyboardShortcut} from './actions/ShortcutActions'
 import Nevergreen from './Nevergreen'
 import Package from '../../package'
 
 function mapDispatchToProps(dispatch) {
-  return {
-    initalise() {
-      return dispatch(initalise())
-    },
-    checkForNewVersion(version) {
-      dispatch(checkForNewVersion(version, window.location.hostname))
-    },
-    dismiss() {
-      dispatch(dismiss())
-    },
-    keyboardShortcut(show) {
-      dispatch(keyboardShortcut(show))
-    }
-  }
+  return bindActionCreators({
+    initalise,
+    checkForNewVersion,
+    dismiss,
+    keyboardShortcut,
+    enableFullScreen
+  }, dispatch)
 }
 
 function mapStateToProps(store) {
@@ -29,7 +23,9 @@ function mapStateToProps(store) {
     versionName: Package.versionName,
     versionColour: Package.versionColour,
     commitHash: Package.commitHash,
-    notification: store.get('notification')
+    notification: store.get('notification'),
+    isFullScreen: store.get('nevergreen').get('fullScreen'),
+    fullScreenRequested: store.get('nevergreen').get('fullScreenRequested')
   }
 }
 
