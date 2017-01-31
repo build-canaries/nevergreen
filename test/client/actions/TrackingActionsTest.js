@@ -323,6 +323,8 @@ describe('TrackingActions', function () {
 
     it('should dispatch projects fetched action on success')
 
+    it('should filter projects containing jobs')
+
     it('should dispatch projects fetch error action on failure')
   })
 })

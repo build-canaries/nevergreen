@@ -18,7 +18,7 @@
     "watchJs": "watch 'npm run clean && npm run build' src/client",
     "watchTest": "watch 'npm run test' src/client test/client",
     "watchLint": "watch 'npm run lint' src/client test/client",
-    "fake-server": "node test/test-server"
+    "fake-server": "node ci_stub_server/server"
   },
   "dependencies": {
     "babel-polyfill": "6.22.0",

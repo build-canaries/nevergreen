@@ -22,7 +22,9 @@ describe('<Monitor/>', function () {
     messages: [],
     fetchInteresting: () => {
     },
-    refreshTime: 5
+    refreshTime: 5,
+    requestFullScreen: () => {},
+    isFullScreen: null
   }
 
   it('should render error messages', function () {

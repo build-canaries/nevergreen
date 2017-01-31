@@ -1,0 +1,10 @@
+<Projects>
+    <Project webUrl="https://host/view/Example-Service-Pipeline/job/example-service-build/" name="example-service-build" lastBuildLabel="429" lastBuildTime="2015-01-16T14:54:59Z" lastBuildStatus="Success" activity="Sleeping"/>
+    <Project webUrl="https://host/view/Example-Service-Pipeline/job/example-service-api-dev/" name="example-service-api-dev" lastBuildLabel="32" lastBuildTime="2015-01-16T14:58:25Z" lastBuildStatus="Success" activity="Sleeping"/>
+    <Project webUrl="https://host/view/Example-Service-Pipeline/job/example-service-api-dev-integration/" name="example-service-api-dev-integration" lastBuildLabel="1" lastBuildTime="2015-01-16T15:01:02Z" lastBuildStatus="Success" activity="Sleeping"/>
+    <Project webUrl="https://host/view/Example-Service-Pipeline/job/example-service-api-qa/" name="example-service-api-qa" lastBuildLabel="1" lastBuildTime="2015-01-16T15:39:06Z" lastBuildStatus="Success" activity="Sleeping"/>
+    <Project webUrl="https://host/view/Example-Service-Pipeline/job/example-service-dev/" name="example-service-dev" lastBuildLabel="406" lastBuildTime="2015-01-16T14:58:54Z" lastBuildStatus="Success" activity="Sleeping"/>
+    <Project webUrl="https://host/view/Example-Service-Pipeline/job/example-service-dev-integration/" name="example-service-dev-integration" lastBuildLabel="354" lastBuildTime="2015-01-16T15:00:36Z" lastBuildStatus="Success" activity="Sleeping"/>
+    <Project webUrl="https://host/view/Example-Service-Pipeline/job/example-service-qa/" name="example-service-qa" lastBuildLabel="127" lastBuildTime="2015-01-16T15:16:48Z" lastBuildStatus="Success" activity="Sleeping"/>
+    <Project webUrl="https://host/view/Example-Service-Pipeline/job/example-service-windows-deploy/" name="example-service-windows-deploy" lastBuildLabel="272" lastBuildTime="2015-01-16T14:58:58Z" lastBuildStatus="Success" activity="Sleeping"/>
+</Projects>

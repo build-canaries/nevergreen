@@ -133,7 +133,10 @@ export function refreshTray(tray) {
     const trayId = tray.trayId
     dispatch(projectsFetching(trayId))
     return fetchAll([tray])
-      .then((json) => dispatch(projectsFetched(trayId, json)))
+      .then((json) => {
+        const filteredProjects = json.filter((project) => !project.job)
+        return dispatch(projectsFetched(trayId, filteredProjects))
+      })
       .catch((error) => dispatch(projectsFetchError(trayId, [
         'Unable to fetch projects because of an error:',
         `${error.status} - ${error.message}`

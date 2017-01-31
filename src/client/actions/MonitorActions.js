@@ -14,7 +14,10 @@ export function interestingProjectsError(errors) {
 export function fetchInteresting(trays, selected) {
   return function (dispatch) {
     return interesting(trays, selected)
-      .then((json) => dispatch(interestingProjects(json)))
+      .then((json) => {
+        const filteredProjects = json.filter((project) => !project.job)
+        return dispatch(interestingProjects(filteredProjects))
+      })
       .catch((error) => dispatch(interestingProjectsError([
         'Unable to fetch interesting projects because of an error:',
         `${error.status} - ${error.message}`
