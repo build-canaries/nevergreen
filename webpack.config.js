@@ -5,6 +5,20 @@ var autoprefixer = require('autoprefixer')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var CopyWebpackPlugin = require('copy-webpack-plugin')
 
+var cssLoader = {
+  loader: 'css-loader',
+  options: {sourceMap: true}
+}
+
+var postCssLoader = {
+  loader: 'postcss-loader',
+  options: {
+    plugins: () => [autoprefixer({
+      browsers: ['last 2 versions']
+    })]
+  }
+}
+
 module.exports = {
   devtool: 'source-map',
   entry: ['./src/client/index'],
@@ -15,9 +29,6 @@ module.exports = {
     publicPath: ''
   },
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': '"production"'
-    }),
     new HtmlWebpackPlugin({
       template: './src/client/index.html',
       minify: {
@@ -26,63 +37,97 @@ module.exports = {
         removeRedundantAttributes: true
       }
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      minimize: true,
-      compress: {
-        warnings: false
-      }
-    }),
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new ExtractTextPlugin('[hash].css', {
+    new ExtractTextPlugin({
+      filename: '[hash].css',
       allChunks: true
     }),
     new CopyWebpackPlugin([{from: './src/client/favicons'}])
   ],
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/i,
-        loader: 'babel',
+        use: 'babel-loader',
         include: path.join(__dirname, 'src/client')
       },
       {
         test: /\.scss$/i,
-        loader: ExtractTextPlugin.extract('style', 'css?sourceMap!postcss!resolve-url!sass?sourceMap')
+        use: ExtractTextPlugin.extract({
+          loader: [
+            cssLoader,
+            postCssLoader,
+            'resolve-url-loader',
+            {
+              loader: 'sass-loader',
+              options: {sourceMap: true}
+            }
+          ]
+        })
       },
       {
         test: /\.css$/i,
-        loader: ExtractTextPlugin.extract('style', 'css?sourceMap!postcss!resolve-url')
+        use: ExtractTextPlugin.extract({
+          loader: [
+            cssLoader,
+            postCssLoader,
+            'resolve-url-loader'
+          ]
+        })
       },
       {
         test: /\.(jpe?g|png|gif)$/i,
-        loaders: ['url?limit=8192', 'img']
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: '8192'
+            }
+          },
+          'img-loader'
+        ]
       },
       {
         test: /\.woff2?(\?.*)?$/i,
-        loader: 'url?limit=8192&mimetype=application/font-woff'
+        use: [{
+          loader: 'url-loader',
+          options: {
+            limit: '8192',
+            mimetype: 'application/font-woff'
+          }
+        }]
       },
       {
         test: /\.ttf(\?.*)?$/i,
-        loader: 'url?limit=8192&mimetype=application/octet-stream'
+        use: [{
+          loader: 'url-loader',
+          options: {
+            limit: '8192',
+            mimetype: 'application/octet-stream'
+          }
+        }]
       },
       {
         test: /\.svg(\?.*)?$/i,
-        loader: 'url?limit=8192&mimetype=image/svg+xml'
-      },
-      {
-        test: /\.json$/i,
-        loader: 'json'
+        use: [{
+          loader: 'url-loader',
+          options: {
+            limit: '8192',
+            mimetype: 'image/svg+xml'
+          }
+        }]
       },
       {
         test: /\.mp3/i,
-        loader: 'file?name=[name].[ext]'
+        use: [{
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]'
+          }
+        }]
       }
     ],
     noParse: [
       /localforage\.js$/
     ]
-  },
-  postcss: [autoprefixer({
-    browsers: ['last 2 versions']
-  })]
+  }
 }
