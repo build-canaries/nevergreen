@@ -1,5 +1,5 @@
 export const SHOW_BROKEN_BUILD_TIME = 'SHOW_BROKEN_BUILD_TIME'
-export function showBrokenBuildTime(value) {
+export function setShowBrokenBuildTime(value) {
   return {
     type: SHOW_BROKEN_BUILD_TIME,
     value
@@ -7,7 +7,7 @@ export function showBrokenBuildTime(value) {
 }
 
 export const SHOW_TRAY_NAME = 'SHOW_TRAY_NAME'
-export function showTrayName(value) {
+export function setShowTrayName(value) {
   return {
     type: SHOW_TRAY_NAME,
     value
@@ -15,7 +15,7 @@ export function showTrayName(value) {
 }
 
 export const PLAY_BROKEN_BUILD_SOUND_FX = 'PLAY_BROKEN_BUILD_SOUND_FX'
-export function playBrokenBuildSoundFx(value) {
+export function setPlayBrokenBuildSoundFx(value) {
   return {
     type: PLAY_BROKEN_BUILD_SOUND_FX,
     value

@@ -1,13 +1,10 @@
 import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
 import {addTray} from '../actions/TrackingActions'
 import Tracking from './Tracking'
 
 function mapDispatchToProps(dispatch) {
-  return {
-    addTray(url, username, password, existingTrays) {
-      dispatch(addTray(url, username, password, existingTrays))
-    }
-  }
+  return bindActionCreators({addTray}, dispatch)
 }
 
 function mapStateToProps(store) {

@@ -2,9 +2,9 @@ import '../UnitSpec'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {
-  showBrokenBuildTime,
-  showTrayName,
-  playBrokenBuildSoundFx,
+  setShowBrokenBuildTime,
+  setShowTrayName,
+  setPlayBrokenBuildSoundFx,
   setBrokenBuildSoundFx,
   setRefreshTime,
   SHOW_BROKEN_BUILD_TIME,
@@ -19,12 +19,12 @@ describe('SettingsActions', function () {
   describe('setting broken build timers', function () {
 
     it('should return the correct type', function () {
-      const actual = showBrokenBuildTime()
+      const actual = setShowBrokenBuildTime()
       expect(actual).to.have.property('type', SHOW_BROKEN_BUILD_TIME)
     })
 
     it('should return the given value', function () {
-      const actual = showBrokenBuildTime(true)
+      const actual = setShowBrokenBuildTime(true)
       expect(actual).to.have.property('value', true)
     })
   })
@@ -32,12 +32,12 @@ describe('SettingsActions', function () {
   describe('setting show tray names', function () {
 
     it('should return the correct type', function () {
-      const actual = showTrayName()
+      const actual = setShowTrayName()
       expect(actual).to.have.property('type', SHOW_TRAY_NAME)
     })
 
     it('should return the given value', function () {
-      const actual = showTrayName(true)
+      const actual = setShowTrayName(true)
       expect(actual).to.have.property('value', true)
     })
   })
@@ -45,12 +45,12 @@ describe('SettingsActions', function () {
   describe('setting broken build sounds', function () {
 
     it('should return the correct type', function () {
-      const actual = playBrokenBuildSoundFx()
+      const actual = setPlayBrokenBuildSoundFx()
       expect(actual).to.have.property('type', PLAY_BROKEN_BUILD_SOUND_FX)
     })
 
     it('should return the given value', function () {
-      const actual = playBrokenBuildSoundFx(true)
+      const actual = setPlayBrokenBuildSoundFx(true)
       expect(actual).to.have.property('value', true)
     })
   })

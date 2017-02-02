@@ -1,16 +1,13 @@
 import Immutable from 'immutable'
 import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
 import {importData} from '../actions/BackupActions'
 import Backup from './Backup'
 import {SCHEMA, filter} from '../common/repo/Data'
 import {toJson} from '../common/Json'
 
 function mapDispatchToProps(dispatch) {
-  return {
-    importData(jsonData) {
-      return dispatch(importData(jsonData))
-    }
-  }
+  return bindActionCreators({importData}, dispatch)
 }
 
 function mapStateToProps(store) {

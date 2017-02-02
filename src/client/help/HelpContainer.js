@@ -1,13 +1,10 @@
 import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
 import Help from './Help'
 import {keyboardShortcut} from '../actions/ShortcutActions'
 
 function mapDispatchToProps(dispatch) {
-  return {
-    keyboardShortcut(show) {
-      dispatch(keyboardShortcut(show))
-    }
-  }
+  return bindActionCreators({keyboardShortcut}, dispatch)
 }
 
 function mapStateToProps(store) {
