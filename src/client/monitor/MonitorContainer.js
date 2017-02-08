@@ -28,7 +28,7 @@ function mapStateToProps(store) {
     brokenBuildFx: audioVisual.get('brokenBuildSoundFx'),
     messages: store.get('success'),
     refreshTime: audioVisual.get('refreshTime'),
-    isFullScreen: store.get('nevergreen').get('fullScreen')
+    isFullScreen: store.getIn(['nevergreen', 'fullScreen'])
   }).toJS()
 }
 

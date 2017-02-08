@@ -17,8 +17,8 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(store, ownProps) {
   return Immutable.Map()
     .merge({
-      projects: store.get('projects').get(ownProps.trayId).toList(),
-      selected: store.get('selected').get(ownProps.trayId)
+      projects: store.getIn(['projects', ownProps.trayId]).toList(),
+      selected: store.getIn(['selected', ownProps.trayId])
     }, ownProps)
     .toJS()
 }

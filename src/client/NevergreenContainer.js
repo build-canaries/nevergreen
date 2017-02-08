@@ -18,14 +18,14 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(store) {
   return {
-    loaded: store.get('nevergreen').get('loaded'),
+    loaded: store.getIn(['nevergreen', 'loaded']),
     versionNumber: `${Package.version}+${Package.versionMeta}`,
     versionName: Package.versionName,
     versionColour: Package.versionColour,
     commitHash: Package.commitHash,
     notification: store.get('notification'),
-    isFullScreen: store.get('nevergreen').get('fullScreen'),
-    fullScreenRequested: store.get('nevergreen').get('fullScreenRequested')
+    isFullScreen: store.getIn(['nevergreen', 'fullScreen']),
+    fullScreenRequested: store.getIn(['nevergreen', 'fullScreenRequested'])
   }
 }
 
