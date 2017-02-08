@@ -4,11 +4,15 @@
             [clojure.string :as s])
   (:import (java.net UnknownHostException URISyntaxException)))
 
+(def ^:const ten-seconds 10000)
+(def ^:const thirty-seconds 30000)
+
 (defn http-get [url auth-header]
   (log/info (str "GETing from [" url "]..."))
   (try
     (let [res (client/get url {:insecure?             true
-                               :timeout               30000
+                               :socket-timeout        thirty-seconds
+                               :conn-timeout          ten-seconds
                                :headers               (merge {"Accept" "application/xml"} auth-header)
                                :as                    :stream
                                :throw-entire-message? true})]
