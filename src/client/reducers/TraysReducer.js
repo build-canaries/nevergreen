@@ -39,7 +39,9 @@ export function reduce(state = DefaultState, action) {
 
     case ENCRYPTING_PASSWORD:
     case PROJECTS_FETCHING:
-      return state.update(action.trayId, (tray) => tray.set('loaded', false))
+      return state.update(action.trayId, (tray) =>
+        tray.withMutations((map) =>
+          map.set('loaded', false).delete('errors')))
 
     case PASSWORD_ENCRYPTED:
       return state.update(action.trayId, (tray) =>

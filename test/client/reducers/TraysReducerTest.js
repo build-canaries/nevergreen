@@ -135,6 +135,13 @@ describe('TraysReducer', function () {
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('trayId').that.has.property('loaded', false)
     })
+
+    it('should remove any errors', function () {
+      const existingState = Immutable.fromJS({trayId: {errors: 'some-error'}})
+      const action = {type: PROJECTS_FETCHING, trayId: 'trayId'}
+      const newState = reduce(existingState, action)
+      expect(newState).to.have.property('trayId').that.not.has.property('errors')
+    })
   })
 
   describe('password encrypted action', function () {
