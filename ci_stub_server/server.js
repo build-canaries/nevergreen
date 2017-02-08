@@ -29,4 +29,8 @@ app.get('/XmlStatusReport.aspx', generic) // CruiseControl.rb, CruiseControl.NET
 app.get('/cctray.xml', generic)
 app.get('/secure/cctray.xml', basicAuth('u', 'p'), generic)
 
+app.get('/error/:code', function (req, res) {
+  res.status(req.params.code).send('Oh no, an error ' + req.params.code + ' happened!')
+})
+
 app.listen(5050)
