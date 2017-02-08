@@ -35,8 +35,8 @@ npm install
 echo "watching the js for changes ..."
 npm run watchJs &
 
-echo "run a fake CI server to target on port 5050"
-npm run fake-server &
+echo "starting the CI stub server ..."
+npm run ci-stub-server &
 
 echo "running the server ..."
 ./lein.sh run &

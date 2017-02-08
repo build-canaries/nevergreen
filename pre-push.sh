@@ -25,7 +25,7 @@ echo '[Step 2 of 4] Running the ci test script...'
 
 echo '[Step 3 of 4] Starting the server...'
 ./lein.sh run &
-npm run fake-server &
+npm run ci-stub-server &
 
 ./ci/smoke-test.sh "http://localhost:5000/api/ping"
 
