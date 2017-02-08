@@ -5,30 +5,28 @@
   (:import (java.net UnknownHostException URISyntaxException)
            (clojure.lang ExceptionInfo)))
 
-(facts "sets headers"
-       (fact "without authentication"
-             (subject/http-get ..url.. {}) => ..some-body..
+(facts "http"
+       (fact "adds authentication header"
+             (subject/http-get irrelevant {"Authentication" "Basic some-password"}) => irrelevant
              (provided
-               (client/get ..url.. {:insecure?             true
-                                    :timeout               30000
-                                    :headers               {"Accept" "application/xml"}
-                                    :as                    :stream
-                                    :throw-entire-message? true}) => {:body ..some-body..}))
-       (fact "with authentication"
-             (subject/http-get ..url.. {"Authentication" "Basic some-password"}) => ..some-body..
+               (client/get anything (contains {:headers (contains {"Authentication" "Basic some-password"})})) => {:body irrelevant}))
+
+       (fact "returns the body"
+             (subject/http-get irrelevant {}) => ..some-body..
              (provided
-               (client/get ..url.. {:insecure?             true
-                                    :timeout               30000
-                                    :headers               {"Accept" "application/xml" "Authentication" "Basic some-password"}
-                                    :as                    :stream
-                                    :throw-entire-message? true}) => {:body ..some-body..}))
+               (client/get anything anything) => {:body ..some-body..}))
+
+       (fact "uses the given url"
+             (subject/http-get ..url.. {}) => irrelevant
+             (provided
+               (client/get ..url.. anything) => {:body irrelevant}))
 
        (fact "throws exception info for unknown hosts"
-             (subject/http-get ..url.. {}) => (throws ExceptionInfo "some-host is an unknown host")
+             (subject/http-get irrelevant {}) => (throws ExceptionInfo "some-host is an unknown host")
              (provided
-               (client/get ..url.. anything) =throws=> (UnknownHostException. "some-host: unkown error")))
+               (client/get anything anything) =throws=> (UnknownHostException. "some-host: unkown error")))
 
        (fact "throws exception info for bad uri syntax"
-             (subject/http-get ..url.. {}) => (throws ExceptionInfo "Illegal character in authority at index 0: some-url")
+             (subject/http-get irrelevant {}) => (throws ExceptionInfo "Illegal character in authority at index 0: some-url")
              (provided
-               (client/get ..url.. anything) =throws=> (URISyntaxException. "some-url" "Illegal character in authority at index 0"))))
+               (client/get anything anything) =throws=> (URISyntaxException. "some-url" "Illegal character in authority at index 0"))))
