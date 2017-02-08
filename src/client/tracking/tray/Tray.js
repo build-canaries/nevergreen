@@ -34,19 +34,21 @@ class Tray extends Component {
     const toggleSettingsView = () => this.setState({showSettings: !this.state.showSettings})
     const refreshTray = () => this.props.refreshTray(this.props)
 
-    let subContent
+    let subContent = null
 
     if (this.state.showSettings) {
       subContent = <TraySettings trayId={this.props.trayId} name={this.props.name} url={this.props.url}
                                  username={this.props.username} password={this.props.password} updateTray={updateTray}
-                                 removeTray={this.props.removeTray} cancel={toggleSettingsView}/>
+                                 removeTray={this.props.removeTray} cancel={toggleSettingsView} loaded={this.props.loaded}/>
     } else {
       if (this.props.errors) {
         subContent = <Messages type='error' messages={this.props.errors}/>
       } else {
         subContent =
-          <AvailableProjects index={this.props.index} trayId={this.props.trayId} projects={this.props.projects}
-                             selected={this.props.selected} selectProject={this.props.selectProject}/>
+          <Loading loaded={this.props.loaded}>
+            <AvailableProjects index={this.props.index} trayId={this.props.trayId} projects={this.props.projects}
+                               selected={this.props.selected} selectProject={this.props.selectProject}/>
+          </Loading>
       }
     }
 
@@ -60,9 +62,7 @@ class Tray extends Component {
             <SettingsSubMenu index={this.props.index} toggleSettingsView={toggleSettingsView}/> :
             <ProjectsSubMenu loaded={this.props.loaded} index={this.props.index} timestamp={this.props.timestamp}
                              refreshTray={refreshTray} toggleSettingsView={toggleSettingsView}/>}
-          <Loading loaded={this.props.loaded}>
-            {subContent}
-          </Loading>
+          {subContent}
         </div>
       </Container>
     )
