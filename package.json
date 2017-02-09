@@ -44,7 +44,7 @@
     "redux-thunk": "2.2.0",
     "scale-text": "0.2.2",
     "semver": "5.3.0",
-    "whatwg-fetch": "2.0.2"
+    "superagent": "3.4.1"
   },
   "devDependencies": {
     "babel-core": "6.22.1",
