@@ -1,11 +1,10 @@
 machine:
   java:
     version: oraclejdk8
-  post:
-    - nvm install && nvm alias default $(nvm current)
 checkout:
   post:
     - ./ci/update-version-circle-ci.sh
+    - nvm install
 compile:
   override:
     - ./ci/compile.sh
