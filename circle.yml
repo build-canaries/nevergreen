@@ -1,6 +1,8 @@
 machine:
   java:
     version: oraclejdk8
+  post:
+    - ln -s ~/nvm ~/.nvm
 checkout:
   post:
     - ./ci/update-version-circle-ci.sh
