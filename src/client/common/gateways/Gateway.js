@@ -1,5 +1,4 @@
 import request from 'superagent'
-import Promise from 'promise'
 
 const THIRTY_SECONDS = 1000 * 30
 const THREE_MINUTES = 1000 * 60 * 60 * 3
@@ -9,10 +8,6 @@ const TIMEOUT = {
 }
 const ACCEPT_HEADER = 'application/json; charset=utf-8'
 
-function mapError(err) {
-  return Promise.reject({status: err.status, message: err.response.text})
-}
-
 export function post(url, data) {
   return request
     .post(url)
@@ -20,8 +15,6 @@ export function post(url, data) {
     .accept(ACCEPT_HEADER)
     .type('application/json; charset=utf-8')
     .timeout(TIMEOUT)
-    .then((res) => res.body)
-    .catch(mapError)
 }
 
 export function get(url) {
@@ -29,6 +22,10 @@ export function get(url) {
     .get(url)
     .accept(ACCEPT_HEADER)
     .timeout(TIMEOUT)
+}
+
+export function send(request) {
+  return request
     .then((res) => res.body)
-    .catch(mapError)
+    .catch((err) => ({status: err.status, message: err.response.text}))
 }

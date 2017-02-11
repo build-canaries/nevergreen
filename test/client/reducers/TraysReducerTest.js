@@ -142,6 +142,13 @@ describe('TraysReducer', function () {
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('trayId').that.not.has.property('errors')
     })
+
+    it('should set the pending request', function () {
+      const existingState = Immutable.fromJS({trayId: {}})
+      const action = {type: PROJECTS_FETCHING, trayId: 'trayId', request: 'some-request'}
+      const newState = reduce(existingState, action)
+      expect(newState).to.have.property('trayId').that.has.property('pendingRequest', 'some-request')
+    })
   })
 
   describe('password encrypted action', function () {
@@ -165,6 +172,13 @@ describe('TraysReducer', function () {
       const action = {type: PASSWORD_ENCRYPTED, trayId: 'trayId', password: 'some-password'}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('trayId').that.not.has.property('errors')
+    })
+
+    it('should remove the request', function () {
+      const existingState = Immutable.fromJS({trayId: {pendingRequest: 'some-request'}})
+      const action = {type: PASSWORD_ENCRYPTED, trayId: 'trayId', errors: Immutable.List(['some-error'])}
+      const newState = reduce(existingState, action)
+      expect(newState).to.have.property('trayId').that.not.has.property('pendingRequest')
     })
   })
 
@@ -190,6 +204,13 @@ describe('TraysReducer', function () {
       const newState = reduce(existingState, action)
       expect(newState).to.not.have.property('errors')
     })
+
+    it('should remove the request', function () {
+      const existingState = Immutable.fromJS({trayId: {pendingRequest: 'some-request'}})
+      const action = {type: PROJECTS_FETCHED, trayId: 'trayId'}
+      const newState = reduce(existingState, action)
+      expect(newState).to.not.have.property('pendingRequest')
+    })
   })
 
   describe('password encrypt error action', function () {
@@ -207,6 +228,13 @@ describe('TraysReducer', function () {
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('trayId').that.has.property('errors').that.contains('some-error')
     })
+
+    it('should remove the request', function () {
+      const existingState = Immutable.fromJS({trayId: {pendingRequest: 'some-request'}})
+      const action = {type: PASSWORD_ENCRYPT_ERROR, trayId: 'trayId', errors: Immutable.List(['some-error'])}
+      const newState = reduce(existingState, action)
+      expect(newState).to.have.property('trayId').that.not.has.property('pendingRequest')
+    })
   })
 
   describe('projects fetch error action', function () {
@@ -223,6 +251,13 @@ describe('TraysReducer', function () {
       const action = {type: PROJECTS_FETCH_ERROR, trayId: 'trayId', errors: Immutable.List(['some-error'])}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('trayId').that.has.property('errors').that.contains('some-error')
+    })
+
+    it('should remove the request', function () {
+      const existingState = Immutable.fromJS({trayId: {pendingRequest: 'some-request'}})
+      const action = {type: PROJECTS_FETCH_ERROR, trayId: 'trayId', errors: Immutable.List(['some-error'])}
+      const newState = reduce(existingState, action)
+      expect(newState).to.have.property('trayId').that.not.has.property('pendingRequest')
     })
   })
 

@@ -1,6 +1,7 @@
 import Immutable from 'immutable'
 import {encryptPassword as encrypt} from '../common/gateways/SecurityGateway'
 import {fetchAll} from '../common/gateways/ProjectsGateway'
+import {send} from '../common/gateways/Gateway'
 import moment from 'moment'
 import _ from 'lodash'
 import nameGenerator from 'project-name-generator'
@@ -37,8 +38,8 @@ export function clearTrayHighlight(trayId) {
 }
 
 export const ENCRYPTING_PASSWORD = 'ENCRYPTING_PASSWORD'
-export function encryptingPassword(trayId, password) {
-  return {type: ENCRYPTING_PASSWORD, trayId, password}
+export function encryptingPassword(trayId, password, request) {
+  return {type: ENCRYPTING_PASSWORD, trayId, password, request}
 }
 
 export const PASSWORD_ENCRYPTED = 'PASSWORD_ENCRYPTED'
@@ -52,13 +53,16 @@ export function passwordEncryptError(trayId, errors) {
 }
 
 export const REMOVE_TRAY = 'REMOVE_TRAY'
-export function removeTray(trayId) {
+export function removeTray(trayId, pendingRequest) {
+  if (pendingRequest) {
+    pendingRequest.abort()
+  }
   return {type: REMOVE_TRAY, trayId}
 }
 
 export const PROJECTS_FETCHING = 'PROJECTS_FETCHING'
-export function projectsFetching(trayId) {
-  return {type: PROJECTS_FETCHING, trayId}
+export function projectsFetching(trayId, request) {
+  return {type: PROJECTS_FETCHING, trayId, request}
 }
 
 export const PROJECTS_FETCHED = 'PROJECTS_FETCHED'
@@ -83,8 +87,11 @@ export function selectProject(trayId, projectId, selected) {
 
 export function encryptPassword(trayId, password) {
   return function (dispatch) {
-    dispatch(encryptingPassword(trayId, password))
-    return encrypt(password)
+    const request = encrypt(password)
+
+    dispatch(encryptingPassword(trayId, password, request))
+
+    return send(request)
       .then((data) => {
         dispatch(passwordEncrypted(trayId, data.password))
         return data.password
@@ -131,13 +138,15 @@ export function updateTray(trayId, name, url, username, oldPassword, newPassword
 export function refreshTray(tray) {
   return function (dispatch) {
     const trayId = tray.trayId
-    dispatch(projectsFetching(trayId))
-    return fetchAll([tray])
+    const request = fetchAll([tray])
+
+    dispatch(projectsFetching(trayId, request))
+
+    return send(request)
       .then((json) => {
         const filteredProjects = json.filter((project) => !project.job)
         return dispatch(projectsFetched(trayId, filteredProjects))
-      })
-      .catch((error) => dispatch(projectsFetchError(trayId, [
+      }).catch((error) => dispatch(projectsFetchError(trayId, [
         'Unable to fetch projects because of an error:',
         `${error.status} - ${error.message}`
       ])))

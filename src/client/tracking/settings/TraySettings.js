@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import Text from '../../common/forms/Text'
+import Loading from '../../common/loading/Loading'
 import nameGenerator from 'project-name-generator'
 import _ from 'lodash'
 import './tray-settings.scss'
@@ -17,19 +18,21 @@ class TraySettings extends Component {
     const usernameChanged = (evt) => this.setState({newUsername: evt.target.value})
     const passwordChanged = (evt) => this.setState({newPassword: evt.target.value})
     const passwordPlaceholder = this.props.password ? 'password encrypted' : 'not set'
-    const deleteTray = () => this.props.removeTray(this.props.trayId)
+    const deleteTray = () => this.props.removeTray(this.props.trayId, this.props.pendingRequest)
 
     return (
       <section className='tray-settings' data-locator='tray-settings'>
-        <Text label='name' className='tray-settings-name' value={this.state.newName} onChange={nameChanged} onEnter={updateTray}
-              placeholder='e.g. project or team name' data-locator='tray-name' isPrimary={true}/>
-        <button className='random' onClick={generateRandomName} data-locator='generate-random'>random</button>
-        <Text label='username' className='tray-settings-username' placeholder='not set' value={this.state.newUsername} onChange={usernameChanged}
-              onEnter={updateTray}/>
-        <Text label='password' className='tray-settings-password' placeholder={passwordPlaceholder} value={this.state.newPassword}
-              onChange={passwordChanged} onEnter={updateTray}/>
-        <button className='cancel' onClick={this.props.cancel}>cancel</button>
-        <button className='update' onClick={updateTray} data-locator='update-tray'>update tray</button>
+        <Loading loaded={this.props.loaded}>
+          <Text label='name' className='tray-settings-name' value={this.state.newName} onChange={nameChanged} onEnter={updateTray}
+                placeholder='e.g. project or team name' data-locator='tray-name' isPrimary={true}/>
+          <button className='random' onClick={generateRandomName} data-locator='generate-random'>random</button>
+          <Text label='username' className='tray-settings-username' placeholder='not set' value={this.state.newUsername} onChange={usernameChanged}
+                onEnter={updateTray}/>
+          <Text label='password' className='tray-settings-password' placeholder={passwordPlaceholder} value={this.state.newPassword}
+                onChange={passwordChanged} onEnter={updateTray}/>
+          <button className='cancel' onClick={this.props.cancel}>cancel</button>
+          <button className='update' onClick={updateTray} data-locator='update-tray'>update tray</button>
+        </Loading>
         <div className='danger-zone'>
           <h4 className='danger-zone-title'>Danger Zone</h4>
           <div className='content'>
@@ -43,6 +46,7 @@ class TraySettings extends Component {
 }
 
 TraySettings.propTypes = {
+  loaded: PropTypes.bool,
   trayId: PropTypes.string.isRequired,
   name: PropTypes.string,
   url: PropTypes.string.isRequired,
@@ -50,7 +54,8 @@ TraySettings.propTypes = {
   password: PropTypes.string,
   removeTray: PropTypes.func.isRequired,
   updateTray: PropTypes.func.isRequired,
-  cancel: PropTypes.func.isRequired
+  cancel: PropTypes.func.isRequired,
+  pendingRequest: PropTypes.object
 }
 
 export default TraySettings

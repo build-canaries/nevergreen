@@ -5,12 +5,14 @@ import sinon from 'sinon'
 import Immutable from 'immutable'
 
 describe('MonitorActions', function () {
-  let MonitorActions, ProjectsGateway
+  let MonitorActions, ProjectsGateway, Gateway
 
   before(function () {
     ProjectsGateway = {}
+    Gateway = {}
     MonitorActions = proxyquire('../../src/client/actions/MonitorActions', {
-      '../common/gateways/ProjectsGateway': ProjectsGateway
+      '../common/gateways/ProjectsGateway': ProjectsGateway,
+      '../common/gateways/Gateway': Gateway
     })
   })
 
@@ -48,7 +50,8 @@ describe('MonitorActions', function () {
     })
 
     it('should dispatch interesting projects action on success', function () {
-      ProjectsGateway.interesting = sinon.stub().returns(Promise.resolve([]))
+      ProjectsGateway.interesting = sinon.stub().returns({})
+      Gateway.send = sinon.stub().returns(Promise.resolve([]))
       return MonitorActions.fetchInteresting()(dispatch).then(() => {
         expect(dispatch).to.have.been.calledWithMatch({type: MonitorActions.INTERESTING_PROJECTS})
       })
@@ -57,14 +60,16 @@ describe('MonitorActions', function () {
     it('should filter projects containing jobs', function () {
       const projectNoJob = {name: 'some-name'}
       const projectWithJob = {name: 'another-name', job: 'some-job'}
-      ProjectsGateway.interesting = sinon.stub().returns(Promise.resolve([projectNoJob, projectWithJob]))
+      ProjectsGateway.interesting = sinon.stub().returns({})
+      Gateway.send = sinon.stub().returns(Promise.resolve([projectNoJob, projectWithJob]))
       return MonitorActions.fetchInteresting()(dispatch).then(() => {
         expect(dispatch).to.have.been.calledWithMatch({data: Immutable.fromJS([projectNoJob])})
       })
     })
 
     it('should dispatch interesting projects error action on failure', function () {
-      ProjectsGateway.interesting = sinon.stub().returns(Promise.reject({}))
+      ProjectsGateway.interesting = sinon.stub().returns({})
+      Gateway.send = sinon.stub().returns(Promise.reject({}))
       return MonitorActions.fetchInteresting()(dispatch).then(() => {
         expect(dispatch).to.have.been.calledWithMatch({type: MonitorActions.INTERESTING_PROJECTS_ERROR})
       })

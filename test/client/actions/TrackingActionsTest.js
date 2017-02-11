@@ -4,16 +4,18 @@ import {expect} from 'chai'
 import sinon from 'sinon'
 
 describe('TrackingActions', function () {
-  let TrackingActions, SecurityGateway, ProjectsGateway, moment, nameGenerator
+  let TrackingActions, SecurityGateway, ProjectsGateway, Gateway, moment, nameGenerator
 
   before(function () {
     SecurityGateway = {}
     ProjectsGateway = {}
+    Gateway = {}
     moment = sinon.stub().returns({format: sinon.stub()})
     nameGenerator = sinon.stub().returns({spaced: ''})
     TrackingActions = proxyquire('../../src/client/actions/TrackingActions', {
       '../common/gateways/SecurityGateway': SecurityGateway,
       '../common/gateways/ProjectsGateway': ProjectsGateway,
+      '../common/gateways/Gateway': Gateway,
       moment,
       'project-name-generator': nameGenerator
     })
@@ -101,6 +103,11 @@ describe('TrackingActions', function () {
       const actual = TrackingActions.encryptingPassword('irrelevant', 'some-password')
       expect(actual).to.have.property('password', 'some-password')
     })
+
+    it('should return the request', function () {
+      const actual = TrackingActions.encryptingPassword('irrelevant', 'irrelevant', 'some-request')
+      expect(actual).to.have.property('request', 'some-request')
+    })
   })
 
   describe('password encrypted', function () {
@@ -150,6 +157,12 @@ describe('TrackingActions', function () {
       const actual = TrackingActions.removeTray('some-tray-id')
       expect(actual).to.have.property('trayId', 'some-tray-id')
     })
+
+    it('should abort the pending request', function () {
+      const abort = sinon.spy()
+      TrackingActions.removeTray('some-tray-id', {abort})
+      expect(abort).to.have.been.called
+    })
   })
 
   describe('projects fetching', function () {
@@ -162,6 +175,11 @@ describe('TrackingActions', function () {
     it('should return the tray id', function () {
       const actual = TrackingActions.projectsFetching('some-tray-id')
       expect(actual).to.have.property('trayId', 'some-tray-id')
+    })
+
+    it('should return the request', function () {
+      const actual = TrackingActions.projectsFetching('irrelevant', 'some-request')
+      expect(actual).to.have.property('request', 'some-request')
     })
   })
 
@@ -250,13 +268,15 @@ describe('TrackingActions', function () {
     })
 
     it('should dispatch encrypting password action', function () {
-      SecurityGateway.encryptPassword = sinon.stub().returns(Promise.resolve(''))
+      SecurityGateway.encryptPassword = sinon.stub().returns({})
+      Gateway.send = sinon.stub().returns(Promise.resolve(''))
       TrackingActions.encryptPassword()(dispatch)
       expect(dispatch).to.have.been.calledWithMatch({type: TrackingActions.ENCRYPTING_PASSWORD})
     })
 
     it('should dispatch password encrypted action', function () {
-      SecurityGateway.encryptPassword = sinon.stub().returns(Promise.resolve(''))
+      SecurityGateway.encryptPassword = sinon.stub().returns({})
+      Gateway.send = sinon.stub().returns(Promise.resolve(''))
       return TrackingActions.encryptPassword()(dispatch).then(() => {
         expect(dispatch).to.have.been.calledWithMatch({type: TrackingActions.PASSWORD_ENCRYPTED})
       })
@@ -294,7 +314,8 @@ describe('TrackingActions', function () {
     })
 
     it('should dispatch tray added action', function () {
-      ProjectsGateway.fetchAll = sinon.stub().returns(Promise.resolve(''))
+      ProjectsGateway.fetchAll = sinon.stub().returns({})
+      Gateway.send = sinon.stub().returns(Promise.resolve(''))
       TrackingActions.addTray()(dispatch)
       expect(dispatch).to.have.been.calledWithMatch({type: TrackingActions.TRAY_ADDED})
     })

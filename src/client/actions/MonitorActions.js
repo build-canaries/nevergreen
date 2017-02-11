@@ -1,5 +1,6 @@
 import Immutable from 'immutable'
 import {interesting} from '../common/gateways/ProjectsGateway'
+import {send} from '../common/gateways/Gateway'
 
 export const INTERESTING_PROJECTS = 'INTERESTING_PROJECTS'
 export function interestingProjects(projects) {
@@ -13,9 +14,9 @@ export function interestingProjectsError(errors) {
 
 export function fetchInteresting(trays, selected) {
   return function (dispatch) {
-    return interesting(trays, selected)
-      .then((json) => {
-        const filteredProjects = json.filter((project) => !project.job)
+    return send(interesting(trays, selected))
+      .then((projects) => {
+        const filteredProjects = projects.filter((project) => !project.job)
         return dispatch(interestingProjects(filteredProjects))
       })
       .catch((error) => dispatch(interestingProjectsError([

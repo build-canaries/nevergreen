@@ -39,7 +39,8 @@ class Tray extends Component {
     if (this.state.showSettings) {
       subContent = <TraySettings trayId={this.props.trayId} name={this.props.name} url={this.props.url}
                                  username={this.props.username} password={this.props.password} updateTray={updateTray}
-                                 removeTray={this.props.removeTray} cancel={toggleSettingsView} loaded={this.props.loaded}/>
+                                 removeTray={this.props.removeTray} cancel={toggleSettingsView} loaded={this.props.loaded}
+                                 pendingRequest={this.props.pendingRequest}/>
     } else {
       if (this.props.errors) {
         subContent = <Messages type='error' messages={this.props.errors}/>
@@ -86,7 +87,8 @@ Tray.propTypes = {
   updateTray: PropTypes.func.isRequired,
   selectProject: PropTypes.func.isRequired,
   clearTrayHighlight: PropTypes.func.isRequired,
-  highlight: PropTypes.bool
+  highlight: PropTypes.bool,
+  pendingRequest: PropTypes.object
 }
 
 export default Tray

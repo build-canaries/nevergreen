@@ -41,23 +41,23 @@ export function reduce(state = DefaultState, action) {
     case PROJECTS_FETCHING:
       return state.update(action.trayId, (tray) =>
         tray.withMutations((map) =>
-          map.set('loaded', false).delete('errors')))
+          map.set('loaded', false).delete('errors').set('pendingRequest', action.request)))
 
     case PASSWORD_ENCRYPTED:
       return state.update(action.trayId, (tray) =>
         tray.withMutations((map) =>
-          map.set('loaded', true).set('password', action.password).delete('errors')))
+          map.set('loaded', true).set('password', action.password).delete('errors').delete('pendingRequest')))
 
     case PROJECTS_FETCHED:
       return state.update(action.trayId, (tray) =>
         tray.withMutations((map) =>
-          map.set('loaded', true).set('timestamp', action.timestamp).delete('errors')))
+          map.set('loaded', true).set('timestamp', action.timestamp).delete('errors').delete('pendingRequest')))
 
     case PASSWORD_ENCRYPT_ERROR:
     case PROJECTS_FETCH_ERROR:
       return state.update(action.trayId, (tray) =>
         tray.withMutations((map) =>
-          map.set('loaded', true).set('errors', action.errors)))
+          map.set('loaded', true).set('errors', action.errors).delete('pendingRequest')))
 
     case UPDATING_TRAY:
       return state.update(action.trayId, (tray) => tray.merge(action.data))
