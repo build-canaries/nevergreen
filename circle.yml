@@ -30,3 +30,6 @@ test:
 #    owner: build-canaries
 #    commands:
 #      - ./ci/release.sh
+general:
+  artifacts:
+    - ./target/nevergreen-standalone.jar
