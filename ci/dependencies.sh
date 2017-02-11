@@ -8,5 +8,5 @@ npm install npm@latest -g
 npm prune
 npm install --loglevel error
 
-# clean server build folders
+# download server dependencies
 ./lein.sh deps

@@ -11,10 +11,10 @@ dependencies:
     - ./ci/dependencies.sh
 compile:
   override:
-    - ./ci/compile.sh
+    - nvm use && ./ci/compile.sh
 test:
   override:
-    - ./ci/test-circle-ci.sh
+    - nvm use && ./ci/test-circle-ci.sh
 #deployment:
 #  environment:
 #    FUNCTIONAL_URL: https://staging.nevergreen.io
