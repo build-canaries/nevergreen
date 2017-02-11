@@ -1,0 +1,32 @@
+machine:
+  java:
+    version: oraclejdk8
+checkout:
+  post:
+    - ./ci/update-version-circle-ci.sh
+compile:
+  override:
+    - ./ci/compile.sh
+test:
+  override:
+    - ./ci/test-circle-ci.sh
+#deployment:
+#  environment:
+#    FUNCTIONAL_URL: https://staging.nevergreen.io
+#    TRAY_USERNAME:
+#    TRAY_PASSWORD:
+#    TRAY_URL: https://drive.google.com/uc?export=download&id=0BzdMs1jfanaARkJJX1VRR2QtdTA
+#  staging:
+#    branch: master
+#    owner: build-canaries
+#    commands:
+#      - ./ci/deploy.sh
+#      - ./lein.sh test functional.functional-test
+#  production:
+#    tag: /v[0-9]+(\.[0-9]+)*/
+#    owner: build-canaries
+#    commands:
+#      - ./ci/release.sh
+notify:
+  webhooks:
+    - url: https://hooks.slack.com/services/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
