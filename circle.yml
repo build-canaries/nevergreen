@@ -5,6 +5,8 @@ checkout:
   post:
     - ./ci/update-version-circle-ci.sh
 compile:
+  pre:
+    - nvm install
   override:
     - ./ci/compile.sh
 test:
