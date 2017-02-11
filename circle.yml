@@ -4,7 +4,9 @@ machine:
 checkout:
   post:
     - ./ci/update-version-circle-ci.sh
-    - nvm install
+dependencies:
+  override:
+    - ./ci/dependencies.sh
 compile:
   override:
     - ./ci/compile.sh
