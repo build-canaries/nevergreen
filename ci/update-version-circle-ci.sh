@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 meta="$CIRCLE_BUILD_NUM"
-hash="$CIRCLE_SHA1" | cut -c1-7
+hash=${CIRCLE_SHA1:0:7}
 
 echo "Updating commit hash and meta in file ./package.json ..."
 sed -i.bak "s|\"versionMeta\": \"[^\"]*\"|\"versionMeta\": \"$meta\"|" package.json
