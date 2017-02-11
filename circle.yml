@@ -32,6 +32,3 @@ test:
 #    owner: build-canaries
 #    commands:
 #      - ./ci/release.sh
-notify:
-  webhooks:
-    - url: https://hooks.slack.com/services/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
