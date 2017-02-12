@@ -1,9 +1,12 @@
 machine:
   java:
     version: oraclejdk8
+  environment:
+    BUILD_NUM: $CIRCLE_BUILD_NUM
+    COMMIT_HASH: ${CIRCLE_SHA1:0:7}
 checkout:
   post:
-    - ./ci/update-version-circle-ci.sh
+    - ./ci/update-version.sh
 dependencies:
   override:
     - nvm install && ./ci/dependencies.sh
