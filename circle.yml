@@ -13,6 +13,11 @@ compile:
 test:
   override:
     - nvm use && ./ci/test-circle-ci.sh
+  post:
+    - mkdir -p $CIRCLE_TEST_REPORTS/client/
+    - find . -type f -regex ".*/target/client/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/client/ \;
+    - mkdir -p $CIRCLE_TEST_REPORTS/server/
+    - find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/server/ \;
 #deployment:
 #  environment:
 #    FUNCTIONAL_URL: https://staging.nevergreen.io
