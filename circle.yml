@@ -1,12 +1,12 @@
 machine:
   java:
     version: oraclejdk8
-  environment:
-    BUILD_NUM: $CIRCLE_BUILD_NUM
-    COMMIT_HASH: ${CIRCLE_SHA1:0:7}
 checkout:
   post:
-    - ./ci/update-version.sh
+    - ./ci/update-version.sh:
+        environment:
+          BUILD_NUM: $CIRCLE_BUILD_NUM
+          COMMIT_HASH: ${CIRCLE_SHA1:0:7}
 dependencies:
   override:
     - nvm install && ./ci/dependencies.sh
@@ -27,7 +27,7 @@ deployment:
     owner: build-canaries
     commands:
       - ./ci/deploy.sh
-      - ./lein.sh test functional.functional-test
+      - ./lein.sh test functional.functional-test:
           environment:
             FUNCTIONAL_URL: https://staging.nevergreen.io
             TRAY_USERNAME:
