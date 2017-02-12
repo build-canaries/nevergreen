@@ -12,7 +12,7 @@ compile:
     - nvm use && ./ci/compile.sh
 test:
   override:
-    - nvm use && ./ci/test-circle-ci.sh
+    - nvm use && ./ci/test.sh
   post:
     - mkdir -p $CIRCLE_TEST_REPORTS/client/
     - find . -type f -regex ".*/target/client/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/client/ \;

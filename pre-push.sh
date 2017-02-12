@@ -10,7 +10,7 @@ killall() {
 
 ./ci/check-node.sh
 
-echo '[Step 1 of 4] Stopping the ./develop.sh script (if it is running)...'
+echo '[Step 1 of 6] Stopping the ./develop.sh script (if it is running)...'
 pkill -SIGINT -f ./develop.sh
 
 # pkill returns a non zero exist status so we need to set exit on error here
@@ -20,16 +20,22 @@ set -e
 trap 'killall' EXIT
 trap 'killall' INT
 
-echo '[Step 2 of 4] Running the ci test script...'
+echo '[Step 2 of 6] Running the ci dependencies script...'
+./ci/dependencies.sh
+
+echo '[Step 3 of 6] Running the ci compile script...'
+./ci/compile.sh
+
+echo '[Step 4 of 6] Running the ci test script...'
 ./ci/test.sh
 
-echo '[Step 3 of 4] Starting the server...'
+echo '[Step 5 of 6] Starting the server...'
 ./lein.sh run &
 npm run ci-stub-server &
 
 ./ci/smoke-test.sh "http://localhost:5000/api/ping"
 
-echo '[Step 4 of 4] Running the functional tests...'
+echo '[Step 4 of 6] Running the functional tests...'
 ./lein.sh test functional.functional-test
 
 echo

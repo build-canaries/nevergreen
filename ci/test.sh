@@ -1,25 +1,8 @@
 #!/bin/bash -e
 
-# download ui dependencies
-npm install npm@latest -g
-npm prune
-npm install --loglevel error
-
 # run ui tests
 npm run lint
 npm test
 
-# clean client build folders
-npm run clean
-
-# build ui
-npm run build-prod
-
-# clean server build folders
-./lein.sh clean
-
 # run the server tests
 ./lein.sh midje 'nevergreen.*'
-
-# build the server jar
-./lein.sh uberjar
