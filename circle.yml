@@ -21,12 +21,12 @@ test:
     - find . -type f -regex ".*/target/client/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/client/ \;
     - mkdir -p $CIRCLE_TEST_REPORTS/server/
     - find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/server/ \;
-#deployment:
-#  staging:
-#    branch: master
-#    owner: build-canaries
-#    commands:
-#      - ./ci/deploy.sh
+deployment:
+  staging:
+    branch: master
+    owner: build-canaries
+    commands:
+      - ./ci/deploy.sh
 #      - ./lein.sh test functional.functional-test:
 #          environment:
 #            FUNCTIONAL_URL: https://staging.nevergreen.io
