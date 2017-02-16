@@ -22,7 +22,7 @@ echo "# Killing this script will automatically kill all the spawned processes.  
 echo "######################################################################################"
 echo
 
-./ci/check-node.sh
+./check-node.sh
 
 echo "clean"
 ./lein.sh clean

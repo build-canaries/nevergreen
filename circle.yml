@@ -18,9 +18,9 @@ test:
     - nvm use && ./ci/test.sh
   post:
     - mkdir -p $CIRCLE_TEST_REPORTS/client/
-    - find . -type f -regex ".*/target/client/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/client/ \;
+    - mv ./target/client/*.xml $CIRCLE_TEST_REPORTS/client
     - mkdir -p $CIRCLE_TEST_REPORTS/server/
-    - find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/server/ \;
+    - mv ./target/surefire-reports/*.xml $CIRCLE_TEST_REPORTS/server
 deployment:
   staging:
     branch: master
@@ -33,6 +33,8 @@ deployment:
             TRAY_USERNAME: ""
             TRAY_PASSWORD: ""
             TRAY_URL: "https://drive.google.com/uc?export=download&id=0BzdMs1jfanaARkJJX1VRR2QtdTA"
+      - mkdir -p $CIRCLE_ARTIFACTS/functional/
+      - mv ./target/functional/* $CIRCLE_ARTIFACTS/functional
 #  production:
 #    tag: /v[0-9]+(\.[0-9]+)*/
 #    owner: build-canaries

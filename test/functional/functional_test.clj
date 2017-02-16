@@ -8,7 +8,8 @@
             [functional.success-page :as success-page]
             [functional.settings-page :as settings-page]
             [functional.backup-page :as backup-page]
-            [functional.help-page :as help-page])
+            [functional.help-page :as help-page]
+            [clojure.java.io :refer [make-parents]])
   (import org.openqa.selenium.chrome.ChromeDriver
           org.openqa.selenium.Dimension))
 
@@ -29,8 +30,9 @@
 
 (defn export-details [test-fn]
   (test-fn)
-  (take-screenshot :file "./target/functional-test.png")
-  (spit "./target/functional-test.html" (page-source)))
+  (make-parents "./target/functional/screenshot.png")
+  (take-screenshot :file "./target/functional/screenshot.png")
+  (spit "./target/functional/page-source.html" (page-source)))
 
 (use-fixtures :once functional-fixture)
 (use-fixtures :each export-details)

@@ -8,7 +8,7 @@ killall() {
     echo "Done!"
 }
 
-./ci/check-node.sh
+./check-node.sh
 
 echo '[Step 1 of 6] Stopping the ./develop.sh script (if it is running)...'
 pkill -SIGINT -f ./develop.sh
