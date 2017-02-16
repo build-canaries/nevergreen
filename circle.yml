@@ -27,12 +27,12 @@ deployment:
     owner: build-canaries
     commands:
       - ./ci/deploy.sh
-#      - ./lein.sh test functional.functional-test:
-#          environment:
-#            FUNCTIONAL_URL: https://staging.nevergreen.io
-#            TRAY_USERNAME:
-#            TRAY_PASSWORD:
-#            TRAY_URL: https://drive.google.com/uc?export=download&id=0BzdMs1jfanaARkJJX1VRR2QtdTA
+      - ./ci/functional-test.sh:
+          environment:
+            FUNCTIONAL_URL: "https://staging.nevergreen.io"
+            TRAY_USERNAME: ""
+            TRAY_PASSWORD: ""
+            TRAY_URL: "https://drive.google.com/uc?export=download&id=0BzdMs1jfanaARkJJX1VRR2QtdTA"
 #  production:
 #    tag: /v[0-9]+(\.[0-9]+)*/
 #    owner: build-canaries
