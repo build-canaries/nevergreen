@@ -21,7 +21,7 @@ Already using Nevergreen? Please help us out by taking this [short usage survey]
 
 |   | Status |
 |---|---|
-| CI     | [![Build Status](https://snap-ci.com/build-canaries/nevergreen/branch/master/build_image)](https://snap-ci.com/build-canaries/nevergreen/branch/master) |
+| CI     | [![CircleCI](https://circleci.com/gh/build-canaries/nevergreen.svg?style=shield)](https://circleci.com/gh/build-canaries/nevergreen) |
 | Server | [![Clojure Dependencies Status](http://jarkeeper.com/build-canaries/nevergreen/status.svg)](http://jarkeeper.com/build-canaries/nevergreen) |
 | Client | [![Javascript Dependencies Status](https://david-dm.org/build-canaries/nevergreen.svg)](https://david-dm.org/build-canaries/nevergreen) |
 | Compliance | [![Dependency Status](https://dependencyci.com/github/build-canaries/nevergreen/badge)](https://dependencyci.com/github/build-canaries/nevergreen) |
