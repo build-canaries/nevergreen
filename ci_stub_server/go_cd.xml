@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Projects>
-    <Project name="example-service :: test" activity="Sleeping" lastBuildStatus="Success" lastBuildLabel="648" lastBuildTime="2014-10-07T12:51:38" webUrl="http://host:8153/go/pipelines/example-service/648/test/1" />
-    <Project name="example-service :: test :: unit" activity="Sleeping" lastBuildStatus="Success" lastBuildLabel="648" lastBuildTime="2014-10-07T12:50:12" webUrl="http://host:8153/go/tab/build/detail/example-service/648/test/1/unit" />
-    <Project name="example-service :: test :: acceptance" activity="Sleeping" lastBuildStatus="Success" lastBuildLabel="648" lastBuildTime="2014-10-07T12:51:38" webUrl="http://host:8153/go/tab/build/detail/example-service/648/test/1/acceptance" />
-    <Project name="example-service :: test :: integration" activity="Sleeping" lastBuildStatus="Success" lastBuildLabel="648" lastBuildTime="2014-10-07T12:50:58" webUrl="http://host:8153/go/tab/build/detail/example-service/648/test/1/integration" />
-    <Project name="example-service :: build-artifact" activity="Sleeping" lastBuildStatus="Success" lastBuildLabel="648" lastBuildTime="2014-10-07T13:06:24" webUrl="http://host:8153/go/pipelines/example-service/648/build-artifact/1" />
-    <Project name="example-service :: build-artifact :: deploy" activity="Sleeping" lastBuildStatus="Failure" lastBuildLabel="648" lastBuildTime="2014-10-07T13:06:24" webUrl="http://host:8153/go/tab/build/detail/example-service/648/build-artifact/1/deploy">
-        <messages>
-            <message text="Jane Doe &lt;jdoe@example.com&gt;" kind="Breakers" />
-        </messages>
-    </Project>
- </Projects>
+  <Project name="example-service :: stage-1" activity="Sleeping" lastBuildStatus="Success" lastBuildLabel="648" lastBuildTime="2014-10-07T12:51:38" webUrl="http://host:8153/go/pipelines/example-service/648/stage-1/1"/>
+  <Project name="example-service :: stage-1 :: job-1" activity="Sleeping" lastBuildStatus="Success" lastBuildLabel="648" lastBuildTime="2014-10-07T12:50:12" webUrl="http://host:8153/go/tab/build/detail/example-service/648/stage-1/1/job-1"/>
+  <Project name="example-service :: stage-1 :: job-2" activity="Sleeping" lastBuildStatus="Success" lastBuildLabel="648" lastBuildTime="2014-10-07T12:51:38" webUrl="http://host:8153/go/tab/build/detail/example-service/648/stage-1/1/job-2"/>
+  <Project name="example-service :: stage-1 :: job-3" activity="Sleeping" lastBuildStatus="Success" lastBuildLabel="648" lastBuildTime="2014-10-07T12:50:58" webUrl="http://host:8153/go/tab/build/detail/example-service/648/stage-1/1/job-3"/>
+  <Project name="example-service :: stage-2" activity="Sleeping" lastBuildStatus="Success" lastBuildLabel="648" lastBuildTime="2014-10-07T13:06:24" webUrl="http://host:8153/go/pipelines/example-service/648/stage-2/1"/>
+  <Project name="example-service :: stage-2 :: job-1" activity="Sleeping" lastBuildStatus="Failure" lastBuildLabel="648" lastBuildTime="2014-10-07T13:06:24" webUrl="http://host:8153/go/tab/build/detail/example-service/648/stage-2/1/job-1">
+    <messages>
+      <message text="Jane Doe &lt;jdoe@example.com&gt;" kind="Breakers"/>
+    </messages>
+  </Project>
+</Projects>
