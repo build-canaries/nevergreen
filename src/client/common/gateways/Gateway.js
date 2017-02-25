@@ -27,5 +27,9 @@ export function get(url) {
 export function send(request) {
   return request
     .then((res) => res.body)
-    .catch((err) => ({status: err.status, message: err.response.text}))
+    .catch((err) => {
+      const status = err.status || 0
+      const message = (err.response && err.response.text) || 'timeout'
+      throw {status, message}
+    })
 }
