@@ -1,14 +1,14 @@
-@import '~bourbon-neat/app/assets/stylesheets/neat';
+@import '~bourbon-neat/core/neat';
 
 $breakpoints: (
-  mobile: new-breakpoint(min-width 0 max-width 767px, 4),
-  tablet: new-breakpoint(min-width 768px max-width 1439px, 8),
-  desktop: new-breakpoint(min-width 1440px, 12)
+  mobile: (media: '(min-width: 0) and (max-width: 767px)', columns: 4),
+  tablet: (media: '(min-width: 768px) and (max-width: 1439px)', columns: 8),
+  desktop: (media: '(min-width: 1440px)', columns: 12)
 );
 
 @mixin respond-to($medias...) {
   @each $media in $medias {
-    @include media(map-get($breakpoints, $media)) {
+    @include grid-media(map-get($breakpoints, $media)) {
       @content;
     }
   }

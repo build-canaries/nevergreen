@@ -1,18 +1,16 @@
 @import '../../common/variables';
-@import '~bourbon-neat/app/assets/stylesheets/neat';
+@import '~bourbon-neat/core/neat';
 @import '../../common/responsive';
 
 .available-project {
-  @include span-columns(4 of 4);
+  @include grid-column(4 of 4);
 
   @include respond-to(tablet) {
-    @include span-columns(4 of 8);
-    @include omega(2n);
+    @include grid-column(4 of 8);
   }
 
   @include respond-to(desktop) {
-    @include span-columns(4 of 12);
-    @include omega(3n);
+    @include grid-column(4 of 12);
   }
 
   &.removed-project span {
