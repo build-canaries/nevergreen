@@ -1,66 +1,69 @@
-import $ from 'jquery'
 import ScaleText from 'scale-text'
 
+// These should match the breakpoints in the CSS
 const tablet = 768
 const desktop = 1440
-const buildStatusPadding = 14
 
-function columns() {
-  if (window.innerWidth < tablet) {
+// 2 * 0.3em which is the margin added to the project containers via CSS
+const containerMargin = 9.6
+
+function columns(parentView) {
+  if (parentView.offsetWidth < tablet) {
     return 1
-  } else if (window.innerWidth < desktop) {
+  } else if (parentView.offsetWidth < desktop) {
     return 2
   } else {
     return 3
   }
 }
 
-function numberOfColumns(projects) {
-  return Math.min(columns(), projects.length)
+function numberOfColumns(totalNumberOfItems, parentView) {
+  return Math.min(columns(parentView), totalNumberOfItems)
 }
 
-function numberOfRows(projects) {
-  return Math.ceil(projects.length / columns())
+function numberOfRows(totalNumberOfItems, parentView) {
+  return Math.ceil(totalNumberOfItems / columns(parentView))
 }
 
-function buildStatusWidth(projects, $view) {
-  return $view.innerWidth() / numberOfColumns(projects) - buildStatusPadding
+function calculateWidth(totalNumberOfItems, parentView) {
+  const columns = numberOfColumns(totalNumberOfItems, parentView)
+  return (parentView.offsetWidth - (columns * containerMargin)) / columns
 }
 
-function buildStatusHeight(projects) {
-  return window.innerHeight / numberOfRows(projects) - buildStatusPadding
+function calculateHeight(totalNumberOfItems, parentView) {
+  const rows = numberOfRows(totalNumberOfItems, parentView)
+  return (parentView.offsetHeight - (rows * containerMargin)) / rows
 }
 
-function resizeEachContainer(projects, $containers, $view) {
-  $containers
-    .height(buildStatusHeight(projects, $view))
-    .width(buildStatusWidth(projects, $view))
-}
-
-function getProjectNames(projects) {
-  return projects.map((project) => {
-    return project.name
+function resizeEachContainer(containers, parentView) {
+  const height = calculateHeight(containers.length, parentView)
+  const width = calculateWidth(containers.length, parentView)
+  Array.from(containers).forEach((container) => {
+    container.style.height = `${height}px`
+    container.style.width = `${width}px`
   })
 }
 
-function everyPieceOfTextOnTheScreen(projects, $container) {
-  const allTheTextInContainers = []
-  $container.find('.monitor-inner-container').each((_, elem) => {
-    allTheTextInContainers.push(elem.textContent)
+function getProjectTextFromDOM(containers) {
+  return Array.from(containers).map((container) => container.querySelector('.monitor-inner-container').textContent)
+}
+
+function scaleFontToContainerSize(listOfText, containers, parentView) {
+  const height = calculateHeight(listOfText.length, parentView)
+  const width = calculateWidth(listOfText.length, parentView)
+  const fontSize = new ScaleText(listOfText, height, width).ideal()
+
+  Array.from(containers).forEach((container) => {
+    container.style['font-size'] = `${fontSize}px`
   })
-  return allTheTextInContainers.length > 0 ? allTheTextInContainers : getProjectNames(projects)
 }
 
-function scaleFontToContainerSize(projects, $containers, $view) {
-  $containers.css('font-size', new ScaleText(
-    everyPieceOfTextOnTheScreen(projects, $containers),
-    buildStatusHeight(projects, $view),
-    buildStatusWidth(projects, $view)).ideal())
+export function styleProjects(containers, parentView) {
+  resizeEachContainer(containers, parentView)
+  scaleFontToContainerSize(getProjectTextFromDOM(containers), containers, parentView)
 }
 
-export function styleProjects(projects, containers, view) {
-  const $containers = $(containers)
-  const $view = $(view)
-  resizeEachContainer(projects, $containers, $view)
-  scaleFontToContainerSize(projects, $containers, $view)
+export function styleSuccess(message, containers, parentView) {
+  resizeEachContainer(containers, parentView)
+  scaleFontToContainerSize([message], containers, parentView)
 }

@@ -1,7 +1,12 @@
 @import '../common/variables';
 
 .interesting-projects {
+  display: block;
+  height: 100%;
+
   .projects {
     list-style-type: none;
+    display: block;
+    height: 100%;
   }
 }
