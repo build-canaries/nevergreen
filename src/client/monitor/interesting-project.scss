@@ -1,9 +1,12 @@
 @import '../common/variables';
+@import '../common/layout';
 
 .interesting-project {
-  float: left;
-  margin: 0.3em;
-  border-radius: 0.5em;
+  @include fill-parent;
+
+  display: table;
+  overflow: hidden;
+  border-radius: 0.3em;
 
   &.healthy-building {
     background-color: $healthy-building;
@@ -24,12 +27,7 @@
     background-color: $mid-grey;
   }
 
-  .monitor-outer-container {
-    display: table;
-    overflow: hidden;
-  }
-
-  .monitor-inner-container {
+  .inner {
     display: table-cell;
     vertical-align: middle;
   }

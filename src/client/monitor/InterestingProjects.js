@@ -1,23 +1,13 @@
 import React, {Component, PropTypes} from 'react'
-import {styleProjects} from './Styler'
+import ScaledGrid from './ScaledGrid'
 import InterestingProject from './InterestingProject'
 import './interesting-projects.scss'
 
 class InterestingProjects extends Component {
-  componentDidMount() {
-    const node = this.node.querySelector('#interesting-projects')
-    styleProjects(node.querySelectorAll('.monitor-outer-container'), node)
-  }
-
   componentWillUnmount() {
     if (this.refs.sfx) {
       this.refs.sfx.pause()
     }
-  }
-
-  componentDidUpdate() {
-    const node = this.node.querySelector('#interesting-projects')
-    styleProjects(node.querySelectorAll('.monitor-outer-container'), node)
   }
 
   render() {
@@ -27,8 +17,8 @@ class InterestingProjects extends Component {
     const brokenSfx = playBrokenSfx ? <audio ref='sfx' src={this.props.brokenBuildFx} autoPlay/> : null
 
     return (
-      <span className='interesting-projects' data-locator='interesting-projects' ref={(node) => this.node = node}>
-        <ul id='interesting-projects' className='projects'>
+      <span className='interesting-projects' data-locator='interesting-projects'>
+        <ScaledGrid>
           {
             this.props.projects.map((project) => {
               const tray = this.props.trays.find((tray) => tray.trayId === project.trayId)
@@ -37,7 +27,7 @@ class InterestingProjects extends Component {
                                          showTrayName={this.props.showTrayName}/>
             })
           }
-        </ul>
+        </ScaledGrid>
         {brokenSfx}
       </span>
     )

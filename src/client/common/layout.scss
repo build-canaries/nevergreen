@@ -24,3 +24,9 @@
   position: absolute;
   width: 1px;
 }
+
+@mixin fill-parent {
+  display: block;
+  width: 100%;
+  height: 100%;
+}

@@ -1,0 +1,11 @@
+@import '../common/layout';
+
+.scaled-grid {
+  @include fill-parent;
+
+  list-style-type: none;
+}
+
+.scaled-grid-item {
+  float: left;
+}

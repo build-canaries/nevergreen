@@ -1,12 +1,5 @@
-@import '../common/variables';
+@import '../common/layout';
 
 .interesting-projects {
-  display: block;
-  height: 100%;
-
-  .projects {
-    list-style-type: none;
-    display: block;
-    height: 100%;
-  }
+  @include fill-parent;
 }

@@ -9,16 +9,11 @@ import Timer from '../common/Timer'
 
 class Monitor extends Component {
   componentDidMount() {
-    const resizeListener = () => this.forceUpdate()
-    this.setState({resizeListener})
-    window.addEventListener('resize', resizeListener)
-
     this.props.requestFullScreen(true)
   }
 
   componentWillUnmount() {
     this.props.requestFullScreen(false)
-    window.removeEventListener('resize', this.state.resizeListener)
   }
 
   render() {

@@ -1,7 +1,14 @@
 @import '../common/variables';
+@import '../common/layout';
 
 .success-message {
-  display: table-cell;
+  @include fill-parent;
+
+  display: table;
   overflow: hidden;
-  vertical-align: middle;
+
+  .inner {
+    display: table-cell;
+    vertical-align: middle;
+  }
 }

@@ -1,19 +1,15 @@
 import React, {Component, PropTypes} from 'react'
-import {styleSuccess} from './Styler'
+import ScaledGrid from './ScaledGrid'
 import './success-message.scss'
 
 class SuccessMessage extends Component {
-  componentDidMount() {
-    styleSuccess(this.props.message, this.node.parentNode.querySelectorAll('.success-message'), this.node.parentNode)
-  }
-
-  componentDidUpdate() {
-    styleSuccess(this.props.message, this.node.parentNode.querySelectorAll('.success-message'), this.node.parentNode)
-  }
-
   render() {
     return (
-      <div className='success-message' ref={(node) => this.node = node}>{this.props.message}</div>
+      <ScaledGrid>
+        <div className='success-message'>
+          <div className='inner'>{this.props.message}</div>
+        </div>
+      </ScaledGrid>
     )
   }
 }

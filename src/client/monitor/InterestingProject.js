@@ -14,14 +14,12 @@ class InterestingProject extends Component {
     const display = this.props.showTrayName && this.props.trayName ? `${this.props.trayName.toLowerCase()} ${displayName}` : displayName
 
     return (
-      <li className={listClasses} data-locator='interesting-project'>
-        <div className='monitor-outer-container'>
-          <div className='monitor-inner-container'>
-            <span className='monitor-project-name'>{display}</span>
-            {timeBroken}
-          </div>
+      <div className={listClasses} data-locator='interesting-project'>
+        <div className='inner'>
+          <span className='monitor-project-name'>{display}</span>
+          {timeBroken}
         </div>
-      </li>
+      </div>
     )
   }
 }
