@@ -9,17 +9,30 @@
             [functional.settings-page :as settings-page]
             [functional.backup-page :as backup-page]
             [functional.help-page :as help-page]
-            [clojure.java.io :refer [make-parents]])
+            [clojure.java.io :refer [make-parents]]
+            [environ.core :refer [env]])
   (import org.openqa.selenium.chrome.ChromeDriver
-          org.openqa.selenium.Dimension))
+          org.openqa.selenium.firefox.FirefoxDriver
+          org.openqa.selenium.Dimension
+          io.github.bonigarcia.wdm.ChromeDriverManager
+          io.github.bonigarcia.wdm.FirefoxDriverManager))
 
 (def snap-ci-xvfb-size (Dimension. 1280 1024))
 ; (def full-hd-tv-size (Dimension. 1920 1080))
 ; (def hd-tv-size (Dimension. 1280 720))
 ; (def xbox-one-size (Dimension. 1236 701))
 
+(def browser (browser-to-use))
+
+(defn create-driver []
+  (case browser
+    :firefox (do (.setup (FirefoxDriverManager/getInstance))
+                 (FirefoxDriver.))
+    (do (.setup (ChromeDriverManager/getInstance))
+        (ChromeDriver.))))
+
 (defn functional-fixture [test-fn]
-  (let [driver (ChromeDriver.)]
+  (let [driver (create-driver)]
     (.. driver (manage) (window) (setSize snap-ci-xvfb-size))
     (set-driver! (init-driver {:webdriver driver})))
 
@@ -31,8 +44,8 @@
 (defn export-details [test-fn]
   (test-fn)
   (make-parents "./target/functional/screenshot.png")
-  (take-screenshot :file "./target/functional/screenshot.png")
-  (spit "./target/functional/page-source.html" (page-source)))
+  (take-screenshot :file (str "./target/functional/" (name browser) "-screenshot.png"))
+  (spit (str "./target/functional/" (name browser) "-page-source.html") (page-source)))
 
 (use-fixtures :once functional-fixture)
 (use-fixtures :each export-details)

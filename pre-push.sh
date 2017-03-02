@@ -38,6 +38,9 @@ npm run ci-stub-server &
 echo '[Step 4 of 6] Running the functional tests...'
 ./lein.sh test functional.functional-test
 
+export BROWSER=firefox
+./lein.sh test functional.functional-test
+
 echo
 echo 'Everything completed successfully, push away!'
 echo

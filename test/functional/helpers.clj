@@ -24,6 +24,11 @@
     (println "Using tray username" username)
     username))
 
+(defn browser-to-use []
+  (let [browser (or (keyword (env :browser)) :chrome)]
+    (println "Using browser" browser)
+    browser))
+
 (defn tray-password-to-use []
   (let [password (or (env :tray-password) "p")]
     (println "Using tray password" password)
