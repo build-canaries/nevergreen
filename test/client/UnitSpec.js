@@ -18,3 +18,7 @@ global.setTimeout = sinon.stub().returns('timer-id')
 global.clearTimeout = sinon.spy()
 
 export {proxyquire}
+
+export function locator(name) {
+  return `[data-locator="${name}"]`
+}

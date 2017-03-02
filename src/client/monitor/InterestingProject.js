@@ -6,17 +6,23 @@ import './interesting-project.scss'
 
 class InterestingProject extends Component {
   render() {
-    const listClasses = classNames('interesting-project', this.props.prognosis)
+    const classes = classNames('interesting-project', this.props.prognosis)
     const isSick = this.props.prognosis === 'sick'
+
+    const trayName = this.props.showTrayName && !_.isEmpty(_.trim(this.props.trayName)) ?
+      <span data-locator='tray-name'>{this.props.trayName.toLowerCase()} </span> : null
+
+    const stage = this.props.stage ? <span data-locator='project-stage'> {this.props.stage}</span> : null
+
     const timeBrokenLabel = _.isEmpty(_.trim(this.props.lastBuildTime)) ? '??' : moment(this.props.lastBuildTime).fromNow(true)
     const timeBroken = this.props.showBrokenBuildTimers && isSick ? <span className='time-broken'> {timeBrokenLabel}</span> : null
-    const displayName = this.props.stage ? `${this.props.name} ${this.props.stage}` : this.props.name
-    const display = this.props.showTrayName && this.props.trayName ? `${this.props.trayName.toLowerCase()} ${displayName}` : displayName
 
     return (
-      <div className={listClasses} data-locator='interesting-project'>
+      <div className={classes} data-locator='interesting-project'>
         <div className='inner'>
-          <span className='monitor-project-name'>{display}</span>
+          {trayName}
+          <span data-locator='project-name'>{this.props.name}</span>
+          {stage}
           {timeBroken}
         </div>
       </div>
