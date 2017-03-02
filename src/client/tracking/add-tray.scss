@@ -7,6 +7,7 @@
   padding: 1em;
   background-color: $white;
   box-shadow: $shadow;
+  position: relative;
 
   .add {
     @include button($off-white, $blue);
@@ -18,10 +19,15 @@
 
     @include respond-to(tablet, desktop) {
       width: auto;
+      position: absolute;
+      top: 0;
+      right: 1em;
     }
+  }
 
-    @include respond-to(desktop) {
-      display: inline-block;
+  .inputs {
+    @include respond-to(tablet, desktop) {
+      margin-right: 116px;
     }
   }
 
