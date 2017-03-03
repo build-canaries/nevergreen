@@ -34,6 +34,11 @@
       border-bottom-color: $blue;
     }
 
+    &:invalid {
+      border-bottom-color: $danger;
+      box-shadow: none;
+    }
+
     @include respond-to(tablet, desktop) {
       width: auto;
       margin-top: 0;

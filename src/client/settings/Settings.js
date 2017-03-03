@@ -3,12 +3,24 @@ import Container from '../common/container/Container'
 import Messages from '../common/messages/Messages'
 import Text from '../common/forms/Text'
 import Checkbox from '../common/forms/Checkbox'
+import _ from 'lodash'
 import './settings.scss'
+
+function isBlank(s) {
+  return _.isEmpty(_.trim(s))
+}
+
+function hasScheme(url) {
+  return _.size(_.split(url, '://')) > 1
+}
 
 class AudioVisual extends Component {
   constructor(props) {
     super(props)
-    this.state = {errors: [], audio: null, soundFx: this.props.brokenBuildSoundFx, refreshTime: props.refreshTime}
+    const soundFx = isBlank(this.props.brokenBuildSoundFx) || hasScheme(this.props.brokenBuildSoundFx)
+      ? this.props.brokenBuildSoundFx
+      : `${window.location.origin}/${this.props.brokenBuildSoundFx}`
+    this.state = {errors: [], audio: null, soundFx, refreshTime: props.refreshTime}
   }
 
   componentWillUnmount() {
@@ -20,9 +32,20 @@ class AudioVisual extends Component {
   render() {
     const toggleBrokenBuilds = (newValue) => this.props.setShowBrokenBuildTime(newValue)
     const toggleTrayName = (newValue) => this.props.setShowTrayName(newValue)
-    const toggleBrokenSounds = (newValue) => this.props.setPlayBrokenBuildSoundFx(newValue)
+    const toggleBrokenSounds = (newValue) => {
+      this.props.setPlayBrokenBuildSoundFx(newValue)
+      if (!newValue) {
+        this.setState({errors: []})
+      }
+    }
     const updateSoundFx = (evt) => this.setState({soundFx: evt.target.value, errors: []})
-    const setSoundFx = () => this.props.setBrokenBuildSoundFx(this.state.soundFx)
+    const setSoundFx = (evt) => {
+      if (evt.target.validity.valid) {
+        this.props.setBrokenBuildSoundFx(this.state.soundFx)
+      } else {
+        this.setState({errors: ['Invalid broken build sound:', evt.target.validationMessage]})
+      }
+    }
     const testSoundFx = () => {
       const audio = new Audio(this.state.soundFx)
       this.setState({audio, errors: []})
@@ -33,12 +56,12 @@ class AudioVisual extends Component {
     const setRefreshTime = () => this.props.setRefreshTime(this.state.refreshTime)
 
     return (
-      <section className='audio-visual'>
+      <section className='settings'>
         <Container title='timing'>
           <label className='refresh-time'>
             <span>poll for tray changes every</span>
             <input type='number' min={this.props.minRefreshTime} step='1' value={this.state.refreshTime} onChange={updateRefreshTime}
-                   onBlur={setRefreshTime}/>
+                   onBlur={setRefreshTime} required/>
             <span>seconds</span>
           </label>
         </Container>
@@ -52,10 +75,10 @@ class AudioVisual extends Component {
                       data-locator='play-sounds'/>
             <div className='sound-fx'>
               <Text label='broken build sound' type='url' className='sound-fx-input' placeholder='audio file URL' onChange={updateSoundFx}
-                    value={this.state.soundFx} onBlur={setSoundFx}/>
+                    value={this.state.soundFx} onBlur={setSoundFx} onEnter={setSoundFx} required={this.props.playBrokenBuildSoundFx}/>
               <button className='test-sound-fx' onClick={testSoundFx}>test</button>
-              <Messages type='error' messages={this.state.errors}/>
             </div>
+            <Messages type='error' messages={this.state.errors}/>
           </fieldset>
         </Container>
       </section>

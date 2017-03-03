@@ -14,7 +14,7 @@ class InterestingProjects extends Component {
     const playBrokenSfx = this.props.playBrokenBuildSounds && this.props.projects.reduce((previous, project) => {
         return previous || project.prognosis === 'sick'
       }, false)
-    const brokenSfx = playBrokenSfx ? <audio ref='sfx' src={this.props.brokenBuildFx} autoPlay/> : null
+    const brokenSfx = playBrokenSfx && this.props.brokenBuildFx ? <audio ref='sfx' src={this.props.brokenBuildFx} autoPlay/> : null
 
     return (
       <span className='interesting-projects' data-locator='interesting-projects'>
