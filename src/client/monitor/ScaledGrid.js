@@ -1,4 +1,5 @@
 import React, {Component, PropTypes, Children} from 'react'
+import Resizable from '../common/Resizable'
 import ScaleText from 'scale-text'
 import './scaled-grid.scss'
 
@@ -57,10 +58,6 @@ class AutoGrid extends Component {
   }
 
   componentDidMount() {
-    const resizeListener = () => this.calculateChildDimensions()
-    this.setState({resizeListener})
-    window.addEventListener('resize', resizeListener)
-
     this.calculateChildDimensions()
   }
 
@@ -76,10 +73,6 @@ class AutoGrid extends Component {
     }
   }
 
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.state.resizeListener)
-  }
-
   render() {
     const style = {
       width: `${this.state.childWidth}px`,
@@ -90,6 +83,7 @@ class AutoGrid extends Component {
 
     return (
       <ul className='scaled-grid' ref={(node) => this.node = node}>
+        <Resizable onResize={() => this.calculateChildDimensions()}/>
         {
           Children.map(this.props.children, (child, index) => {
             const getTextContent = (node) => {
