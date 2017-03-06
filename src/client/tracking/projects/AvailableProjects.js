@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import AvailableProject from './AvailableProject'
 import Messages from '../../common/messages/Messages'
-import Text from '../../common/forms/Text'
+import Input from '../../common/forms/Input'
 import Shortcut from '../../common/Shortcut'
 import _ from 'lodash'
 import './available-projects.scss'
@@ -59,7 +59,9 @@ class AvailableProjects extends Component {
             </button>
           </fieldset>
           <div className='project-filter'>
-            <Text label='Filter projects' className='project-filter-input' onChange={updateFilter}/>
+            <Input className='project-filter-input' onChange={updateFilter}>
+              <span>Filter projects</span>
+            </Input>
           </div>
           <Messages type='error' messages={this.state.errors}/>
         </div>

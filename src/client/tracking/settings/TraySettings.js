@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import Text from '../../common/forms/Text'
+import Input from '../../common/forms/Input'
 import Loading from '../../common/loading/Loading'
 import nameGenerator from 'project-name-generator'
 import _ from 'lodash'
@@ -23,13 +23,19 @@ class TraySettings extends Component {
     return (
       <section className='tray-settings' data-locator='tray-settings'>
         <Loading loaded={this.props.loaded}>
-          <Text label='name' className='tray-settings-name' value={this.state.newName} onChange={nameChanged} onEnter={updateTray}
-                placeholder='e.g. project or team name' data-locator='tray-name' isPrimary={true}/>
+          <Input className='tray-settings-name' value={this.state.newName} onChange={nameChanged} onEnter={updateTray}
+                 placeholder='e.g. project or team name' data-locator='tray-name' autoFocus>
+            <span>name</span>
+          </Input>
           <button className='random' onClick={generateRandomName} data-locator='generate-random'>random</button>
-          <Text label='username' className='tray-settings-username' placeholder='not set' value={this.state.newUsername} onChange={usernameChanged}
-                onEnter={updateTray}/>
-          <Text label='password' className='tray-settings-password' placeholder={passwordPlaceholder} value={this.state.newPassword}
-                onChange={passwordChanged} onEnter={updateTray}/>
+          <Input className='tray-settings-username' placeholder='not set' value={this.state.newUsername} onChange={usernameChanged}
+                 onEnter={updateTray}>
+            <span>username</span>
+          </Input>
+          <Input className='tray-settings-password' placeholder={passwordPlaceholder} value={this.state.newPassword} onChange={passwordChanged}
+                 onEnter={updateTray}>
+            <span>password</span>
+          </Input>
           <button className='cancel' onClick={this.props.cancel}>cancel</button>
           <button className='update' onClick={updateTray} data-locator='update-tray'>update tray</button>
         </Loading>

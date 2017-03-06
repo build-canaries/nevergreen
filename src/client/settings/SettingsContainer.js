@@ -8,7 +8,7 @@ import {
   setRefreshTime,
   MIN_REFRESH_TIME
 } from '../actions/SettingsActions'
-import AudioVisual from './Settings'
+import Settings from './Settings'
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
@@ -27,4 +27,4 @@ function mapStateToProps(store) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AudioVisual)
+)(Settings)

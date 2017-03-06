@@ -7,7 +7,7 @@ import Shortcut from '../common/Shortcut'
 
 const items = [
   {id: 'monitor', iconClass: 'eye', title: 'monitor', shortcuts: ['m', '1']},
-  {id: 'tracking', iconClass: 'drawer2', title: 'tracking', shortcuts: ['t', '2']},
+  {id: 'tracking', iconClass: 'eye-plus', title: 'tracking', shortcuts: ['t', '2']},
   {id: 'success', iconClass: 'checkmark', title: 'success', shortcuts: ['s', '3']},
   {id: 'settings', iconClass: 'cog', title: 'settings', shortcuts: [',', '4']},
   {id: 'backup', iconClass: 'floppy-disk', title: 'backup', shortcuts: ['b', '5']},

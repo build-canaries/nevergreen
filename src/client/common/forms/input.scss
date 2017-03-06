@@ -2,7 +2,7 @@
 @import '../typography';
 @import '../responsive';
 
-.text-input {
+.input {
   display: block;
   width: 100%;
 
@@ -17,7 +17,7 @@
     display: inline-block;
 
     @include respond-to(tablet, desktop) {
-      margin-right: 1em;
+      margin: 0.5em 1em 0.5em 0;
     }
   }
 
@@ -31,16 +31,40 @@
 
     &:focus {
       outline: none;
-      border-bottom-color: $blue;
+
+      &:read-write {
+        border-bottom-color: $blue;
+      }
     }
 
     &:invalid {
-      border-bottom-color: $danger;
       box-shadow: none;
+      border-bottom-color: $danger;
     }
 
     @include respond-to(tablet, desktop) {
       width: auto;
+      margin-right: 1em;
+      margin-top: 0;
+    }
+  }
+
+  &.number {
+    input {
+      width: 5rem;
+      display: block;
+
+      @include respond-to(tablet, desktop) {
+        display: inline-block;
+      }
+    }
+  }
+
+  .input-validation-errors {
+    margin-top: 1em;
+
+    @include respond-to(tablet, desktop) {
+      display: inline-block;
       margin-top: 0;
     }
   }

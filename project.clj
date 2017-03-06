@@ -16,7 +16,10 @@
                  [base64-clj "0.1.1"]
                  [camel-snake-kebab "0.4.0"]
                  [http-kit "2.2.0"]
-                 [org.slf4j/slf4j-simple "1.7.24"]]
+                 [org.slf4j/slf4j-simple "1.7.24"]
+                 [org.slf4j/log4j-over-slf4j "1.7.24"]
+                 [org.slf4j/jul-to-slf4j "1.7.24"]
+                 [org.slf4j/jcl-over-slf4j "1.7.24"]]
   :plugins [[lein-ring "0.10.0"]]
   :min-lein-version "2.0.0"
   :ring {:handler nevergreen.app/all-routes :port 5000}

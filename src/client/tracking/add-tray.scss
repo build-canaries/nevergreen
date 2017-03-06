@@ -20,7 +20,7 @@
     @include respond-to(tablet, desktop) {
       width: auto;
       position: absolute;
-      top: 0;
+      top: 0.5em;
       right: 1em;
     }
   }
@@ -36,11 +36,6 @@
   .password {
     display: block;
     width: 100%;
-
-    input {
-      width: 100%;
-      padding-top: 0.5em;
-    }
 
     @include respond-to(tablet, desktop) {
       display: flex;
@@ -60,11 +55,6 @@
     @include respond-to(tablet, desktop) {
       display: inline-block;
       width: auto;
-      margin-right: 1em;
-
-      input {
-        width: auto;
-      }
     }
   }
 }

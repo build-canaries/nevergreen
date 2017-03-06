@@ -9,10 +9,11 @@ class Messages extends Component {
       return null
     }
 
+    const classes = classNames('messages', this.props.className)
     const messageClasses = classNames('message', this.props.type)
 
     return (
-      <ul className='messages'>
+      <ul className={classes}>
         {
           this.props.messages.map((msg) => {
             return <li key={msg} className={messageClasses}>{msg}</li>
@@ -25,7 +26,8 @@ class Messages extends Component {
 
 Messages.propTypes = {
   type: PropTypes.oneOf(['info', 'error']).isRequired,
-  messages: PropTypes.arrayOf(PropTypes.string)
+  messages: PropTypes.arrayOf(PropTypes.string),
+  className: PropTypes.string
 }
 
 export default Messages

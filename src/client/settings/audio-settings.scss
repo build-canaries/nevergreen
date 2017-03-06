@@ -1,0 +1,51 @@
+@import '../common/forms/button';
+@import '../common/responsive';
+
+.audio {
+  .label-checkbox {
+    display: block;
+  }
+
+  .sound-fx {
+    margin-top: 0.5em;
+
+    @include respond-to(tablet, desktop) {
+      display: flex;
+      align-items: baseline;
+
+      .sound-fx-input {
+        display: flex;
+        align-items: baseline;
+        flex-grow: 1;
+
+        input {
+          flex-grow: 1;
+          width: auto;
+        }
+      }
+    }
+  }
+
+  .test-sound-fx {
+    @include button();
+
+    margin-top: 1em;
+
+    @include respond-to(tablet, desktop) {
+      margin-top: 0;
+      margin-left: 1em;
+    }
+  }
+
+  .play {
+    @include button-icon('play3');
+  }
+
+  .stop {
+    @include button-icon('stop2');
+  }
+
+  .playback-errors {
+    margin-top: 1em;
+  }
+}
