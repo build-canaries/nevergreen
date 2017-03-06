@@ -5,9 +5,14 @@
 .site-footer {
   background-color: $off-black;
   color: $white;
-  padding: 1em 2em;
+  padding: 1em;
   border-bottom: 0.5em solid $off-black;
   display: block;
+
+  @include respond-to(tablet, desktop) {
+    padding-left: 2em;
+    padding-right: 2em;
+  }
 
   &.fullscreen {
     display: none;

@@ -6,8 +6,13 @@
 .site-header {
   background-color: $off-black;
   color: $white;
-  padding: 0.5em 2em;
+  padding: 0.5em 1em;
   display: block;
+
+  @include respond-to(tablet, desktop) {
+    padding-left: 2em;
+    padding-right: 2em;
+  }
 
   &.fullscreen {
     display: none;
