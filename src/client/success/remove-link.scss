@@ -2,6 +2,7 @@
 @import '../common/variables';
 @import '../common/forms/button';
 @import '../common/typography';
+@import '../common/responsive';
 
 .remove-link {
   @include button($white, $danger);
@@ -23,6 +24,12 @@
       color: $danger;
       text-decoration: line-through;
     }
+  }
+
+  @include respond-to(tablet, desktop) {
+    @include font-scale(-1);
+
+    width: 2.4em;
   }
 
   .label {

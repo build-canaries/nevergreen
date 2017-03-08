@@ -7,17 +7,18 @@
   display: inline-block;
   padding: 0.7em 0;
   cursor: pointer;
+  margin-left: 2em;
 
   span {
-    padding-left: 0.8em;
+    padding-left: 0.6em;
   }
 }
 
 .checkbox {
   position: relative;
-  top: -2px;
-  margin: 0 0.7em 0 0;
+  margin: 0 0.7em 0 -2em;
   cursor: pointer;
+  top: -0.3em;
 
   &::before {
     transition: transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
@@ -25,7 +26,7 @@
     content: '';
     position: absolute;
     left: 5px;
-    top: 4px;
+    top: 6px;
     z-index: 1;
     width: 11px;
     height: 6px;
@@ -37,8 +38,6 @@
   &::after {
     content: '';
     position: absolute;
-    top: -2px;
-    left: 0;
     width: 1.1em;
     height: 1.1em;
     background: #fff;

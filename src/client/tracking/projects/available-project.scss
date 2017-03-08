@@ -1,9 +1,11 @@
 @import '../../common/variables';
 @import '~bourbon-neat/core/neat';
 @import '../../common/responsive';
+@import '../../common/typography';
 
 .available-project {
   @include grid-column(4 of 4);
+  @include font-scale(1);
 
   @include respond-to(tablet) {
     @include grid-column(4 of 8);
@@ -11,6 +13,10 @@
 
   @include respond-to(desktop) {
     @include grid-column(4 of 12);
+  }
+
+  @include respond-to(tablet, desktop) {
+    @include font-scale(0);
   }
 
   &.removed-project span {
@@ -25,5 +31,9 @@
   .new-project {
     color: $new-text;
     margin-left: 0.5em;
+  }
+
+  &:last-child {
+    margin-bottom: 1em;
   }
 }

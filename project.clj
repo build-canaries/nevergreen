@@ -29,8 +29,8 @@
   :javac-options ["-Dclojure.compiler.direct-linking=true"]
   :profiles {:dev {:plugins      [[lein-midje "3.2.1"]]
                    :dependencies [[midje "1.8.3"]
-                                  [org.seleniumhq.selenium/selenium-support "3.2.0"]
-                                  [org.seleniumhq.selenium/selenium-java "3.2.0" :exclusions [org.seleniumhq.selenium/selenium-support
+                                  [org.seleniumhq.selenium/selenium-support "3.3.0"]
+                                  [org.seleniumhq.selenium/selenium-java "3.3.0" :exclusions [org.seleniumhq.selenium/selenium-support
                                                                                               org.eclipse.jetty/jetty-io
                                                                                               org.eclipse.jetty/jetty-util]]
                                   [clj-webdriver/clj-webdriver "0.7.2"]

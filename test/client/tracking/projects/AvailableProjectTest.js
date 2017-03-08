@@ -4,7 +4,6 @@ import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
 import AvailableProject from '../../../../src/client/tracking/projects/AvailableProject'
-import Checkbox from '../../../../src/client/common/forms/Checkbox'
 
 describe('<AvailableProject/>', function () {
   const DEFAULT_PROPS = {
@@ -34,6 +33,6 @@ describe('<AvailableProject/>', function () {
   it('should render the stage', function () {
     const props = Object.assign({}, DEFAULT_PROPS, {name: 'name', stage: 'stage'})
     const wrapper = shallow(<AvailableProject {...props} />)
-    expect(wrapper.find(Checkbox)).to.have.prop('label', 'name stage')
+    expect(wrapper.find('span')).to.have.text('name stage')
   })
 })

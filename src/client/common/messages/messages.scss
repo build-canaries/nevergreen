@@ -11,26 +11,29 @@
     padding: 0.5em 0.5em 0.5em 2em;
 
     &:first-child {
-      padding: 0.5em;
+      margin-left: 2em;
+      padding-left: 0;
 
       &::before {
         @extend .icon;
 
-        padding-right: 1em;
+        padding-left: 0.5em;
+        padding-right: 0.5em;
+        margin-left: -2em;
       }
     }
   }
 
-  .error {
-    &:first-child {
+  &.error {
+    .message:first-child {
       @extend .icon-notification;
     }
 
     background-color: $danger;
   }
 
-  .info {
-    &:first-child {
+  &.info {
+    .message:first-child {
       @extend .icon-checkmark;
     }
 

@@ -9,14 +9,13 @@ class Messages extends Component {
       return null
     }
 
-    const classes = classNames('messages', this.props.className)
-    const messageClasses = classNames('message', this.props.type)
+    const classes = classNames('messages', this.props.className, this.props.type)
 
     return (
       <ul className={classes}>
         {
           this.props.messages.map((msg) => {
-            return <li key={msg} className={messageClasses}>{msg}</li>
+            return <li key={msg} className='message'>{msg}</li>
           })
         }
       </ul>

@@ -14,7 +14,7 @@
 }
 
 @mixin button($color:$off-black, $background-color:$white) {
-  @include font-scale(0);
+  @include font-scale(1);
 
   display: block;
   position: relative;
@@ -51,6 +51,8 @@
   }
 
   @include respond-to(tablet, desktop) {
+    @include font-scale(0);
+
     display: inline-block;
     width: auto;
   }
