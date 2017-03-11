@@ -8,24 +8,25 @@
 
   .tray-settings-name,
   .tray-settings-username,
-  .tray-settings-password {
+  .existing-password {
     display: block;
   }
 
-  .tray-settings-name {
+  .tray-settings-name,
+  .existing-password {
     @include respond-to(tablet, desktop) {
       display: inline-block;
     }
   }
 
   .tray-settings-username,
-  .tray-settings-password {
+  .existing-password {
     padding-top: 1em;
   }
 
   .danger-zone {
     border: 1px solid $light-grey;
-    margin-top: 1em;
+    margin-top: 2em;
 
     .danger-zone-title {
       @extend .icon-notification;
@@ -51,32 +52,25 @@
     }
   }
 
-  .cancel {
-    @include button();
-    @include button-icon('arrow-left2');
-  }
-
-  .update {
-    @include button($off-white, $blue);
-    @include button-icon('arrow-right2');
-  }
-
-  .cancel,
-  .update,
   .delete,
-  .random {
+  .random,
+  .change-password-button {
     margin-top: 1em;
-  }
-
-  .cancel {
-    @include respond-to(tablet, desktop) {
-      margin-right: 1em;
-    }
   }
 
   .random {
     @include button();
     @include button-icon('dice');
+
+    @include respond-to(tablet, desktop) {
+      margin-top: 0;
+      margin-left: 1em;
+    }
+  }
+
+  .change-password-button {
+    @include button();
+    @include button-icon('unlocked');
 
     @include respond-to(tablet, desktop) {
       margin-top: 0;

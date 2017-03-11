@@ -1,9 +1,9 @@
 @font-face {
   font-family: icomoon;
   src:
-    url('common/fonts/icons/icomoon.ttf?o73omm') format('truetype'),
-    url('common/fonts/icons/icomoon.woff?o73omm') format('woff'),
-    url('common/fonts/icons/icomoon.svg?o73omm#icomoon') format('svg');
+    url('common/fonts/icons/icomoon.ttf?wgtap1') format('truetype'),
+    url('common/fonts/icons/icomoon.woff?wgtap1') format('woff'),
+    url('common/fonts/icons/icomoon.svg?wgtap1#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -105,6 +105,14 @@
   content: '\e92d';
 }
 
+.icon-lock::before {
+  content: '\e98f';
+}
+
+.icon-unlocked::before {
+  content: '\e990';
+}
+
 .icon-bin::before {
   content: '\e9ac';
 }
@@ -131,14 +139,6 @@
 
 .icon-stop2::before {
   content: '\ea1e';
-}
-
-.icon-arrow-right2::before {
-  content: '\ea3c';
-}
-
-.icon-arrow-left2::before {
-  content: '\ea40';
 }
 
 .icon-circle::before {

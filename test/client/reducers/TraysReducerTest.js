@@ -13,9 +13,10 @@ import {
   PROJECTS_FETCHED,
   PASSWORD_ENCRYPT_ERROR,
   PROJECTS_FETCH_ERROR,
-  UPDATING_TRAY,
   HIGHLIGHT_TRAY,
-  CLEAR_TRAY_HIGHLIGHT
+  CLEAR_TRAY_HIGHLIGHT,
+  SET_TRAY_USERNAME,
+  SET_TRAY_NAME
 } from '../../../src/client/actions/TrackingActions'
 import Immutable from 'immutable'
 
@@ -261,13 +262,24 @@ describe('TraysReducer', function () {
     })
   })
 
-  describe('updating tray action', function () {
+  describe('set name action', function () {
 
-    it('should merge the tray data', function () {
-      const existingState = Immutable.fromJS({trayId: {}})
-      const action = {type: UPDATING_TRAY, trayId: 'trayId', data: Immutable.Map({foo: 'bar'})}
+    it('should set the name', function () {
+      const existingState = Immutable.fromJS({trayId: {name: 'some-name'}})
+      const action = {type: SET_TRAY_NAME, trayId: 'trayId', name: 'some-new-name'}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.has.property('foo', 'bar')
+      expect(newState).to.have.property('trayId').that.has.property('name', 'some-new-name')
     })
   })
+
+  describe('set username action', function () {
+
+    it('should set the name', function () {
+      const existingState = Immutable.fromJS({trayId: {username: 'some-username'}})
+      const action = {type: SET_TRAY_USERNAME, trayId: 'trayId', username: 'some-new-username'}
+      const newState = reduce(existingState, action)
+      expect(newState).to.have.property('trayId').that.has.property('username', 'some-new-username')
+    })
+  })
+
 })

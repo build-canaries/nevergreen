@@ -11,11 +11,17 @@ function hasScheme(url) {
 }
 
 function isNotBlank(value) {
-  return _.size(value) > 0
+  return _.size(_.trim(value)) > 0
 }
 
 function generateRandomName() {
   return _.lowerCase(nameGenerator().spaced)
+}
+
+function abortPendingRequest(req) {
+  if (req) {
+    req.abort()
+  }
 }
 
 export const TRAY_ADDED = 'TRAY_ADDED'
@@ -54,9 +60,7 @@ export function passwordEncryptError(trayId, errors) {
 
 export const REMOVE_TRAY = 'REMOVE_TRAY'
 export function removeTray(trayId, pendingRequest) {
-  if (pendingRequest) {
-    pendingRequest.abort()
-  }
+  abortPendingRequest(pendingRequest)
   return {type: REMOVE_TRAY, trayId}
 }
 
@@ -75,9 +79,14 @@ export function projectsFetchError(trayId, errors) {
   return {type: PROJECTS_FETCH_ERROR, trayId, errors: Immutable.List(errors)}
 }
 
-export const UPDATING_TRAY = 'UPDATING_TRAY'
-export function updatingTray(trayId, name, url, username) {
-  return {type: UPDATING_TRAY, trayId, data: Immutable.Map({trayId, name, url, username}), timestamp: moment().format()}
+export const SET_TRAY_NAME = 'SET_TRAY_NAME'
+export function setTrayName(trayId, name) {
+  return {type: SET_TRAY_NAME, trayId, name}
+}
+
+export const SET_TRAY_USERNAME = 'SET_TRAY_USERNAME'
+export function setTrayUsername(trayId, username) {
+  return {type: SET_TRAY_USERNAME, trayId, username}
 }
 
 export const SELECT_PROJECT = 'SELECT_PROJECT'
@@ -85,20 +94,27 @@ export function selectProject(trayId, projectId, selected) {
   return {type: SELECT_PROJECT, trayId, projectId, selected}
 }
 
-export function encryptPassword(trayId, password) {
+export function encryptPassword(trayId, password, pendingRequest) {
+  abortPendingRequest(pendingRequest)
+
   return function (dispatch) {
-    const request = encrypt(password)
+    if (isNotBlank(password)) {
+      const request = encrypt(password)
 
-    dispatch(encryptingPassword(trayId, password, request))
+      dispatch(encryptingPassword(trayId, password, request))
 
-    return send(request)
-      .then((data) => {
-        dispatch(passwordEncrypted(trayId, data.password))
-        return data.password
-      }).catch((error) => dispatch(passwordEncryptError(trayId, [
-        'Unable to encrypt password because of an error:',
-        `${error.status} - ${error.message}`
-      ])))
+      return send(request)
+        .then((data) => {
+          dispatch(passwordEncrypted(trayId, data.password))
+          return data.password
+        }).catch((error) => dispatch(passwordEncryptError(trayId, [
+          'Unable to encrypt password because of an error:',
+          `${error.status} - ${error.message}`
+        ])))
+    } else {
+      dispatch(passwordEncrypted(trayId, ''))
+      return Promise.resolve('')
+    }
   }
 }
 
@@ -122,20 +138,9 @@ export function addTray(enteredUrl, username, rawPassword, existingTrays) {
   }
 }
 
-export function updateTray(trayId, name, url, username, oldPassword, newPassword) {
-  return function (dispatch) {
-    dispatch(updatingTray(trayId, name, url, username))
+export function refreshTray(tray, pendingRequest) {
+  abortPendingRequest(pendingRequest)
 
-    if (isNotBlank(newPassword)) {
-      return dispatch(encryptPassword(trayId, newPassword))
-        .then((encryptedPassword) => dispatch(refreshTray({trayId, url, username, password: encryptedPassword})))
-    } else {
-      return dispatch(refreshTray({trayId, url, username, password: oldPassword}))
-    }
-  }
-}
-
-export function refreshTray(tray) {
   return function (dispatch) {
     const trayId = tray.trayId
     const request = fetchAll([tray])

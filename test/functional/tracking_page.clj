@@ -32,6 +32,6 @@
 (defn set-name [tray name]
   (input (find-element-under tray {:css (locator "tray-name")}) name))
 
-(defn update-tray [tray]
-  (click (find-element-under tray {:css (locator "update-tray")}))
+(defn show-projects [tray]
+  (click (find-element-under tray {:css (locator "show-projects")}))
   (wait-for-projects tray))

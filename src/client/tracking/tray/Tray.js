@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import Container from '../../common/container/Container'
 import AvailableProjects from '../projects/AvailableProjects'
-import TraySettings from '../settings/TraySettings'
+import TraySettingsContainer from '../settings/TraySettingsContainer'
 import Loading from '../../common/loading/Loading'
 import Messages from '../../common/messages/Messages'
 import ProjectsSubMenu from '../projects/SubMenu'
@@ -27,20 +27,14 @@ class Tray extends Component {
   }
 
   render() {
-    const updateTray = (trayId, name, url, username, oldPassword, newPassword) => {
-      this.setState({showSettings: false})
-      this.props.updateTray(trayId, name, url, username, oldPassword, newPassword)
-    }
     const toggleSettingsView = () => this.setState({showSettings: !this.state.showSettings})
-    const refreshTray = () => this.props.refreshTray(this.props)
+    const refreshTray = () => this.props.refreshTray(this.props, this.props.pendingRequest)
 
     let subContent = null
 
     if (this.state.showSettings) {
-      subContent = <TraySettings trayId={this.props.trayId} name={this.props.name} url={this.props.url}
-                                 username={this.props.username} password={this.props.password} updateTray={updateTray}
-                                 removeTray={this.props.removeTray} cancel={toggleSettingsView} loaded={this.props.loaded}
-                                 pendingRequest={this.props.pendingRequest}/>
+      subContent = <TraySettingsContainer trayId={this.props.trayId} name={this.props.name} url={this.props.url} username={this.props.username}
+                                          password={this.props.password} pendingRequest={this.props.pendingRequest} refreshTray={refreshTray}/>
     } else {
       if (this.props.errors) {
         subContent = <Messages type='error' messages={this.props.errors}/>
@@ -59,10 +53,10 @@ class Tray extends Component {
     return (
       <Container title={title} subTitle={subTitle} className='tray' highlight={this.props.highlight}>
         <div data-locator='tray'>
-          {this.state.showSettings ?
-            <SettingsSubMenu index={this.props.index} toggleSettingsView={toggleSettingsView}/> :
-            <ProjectsSubMenu loaded={this.props.loaded} index={this.props.index} timestamp={this.props.timestamp}
-                             refreshTray={refreshTray} toggleSettingsView={toggleSettingsView}/>}
+          {this.state.showSettings
+            ? <SettingsSubMenu index={this.props.index} toggleSettingsView={toggleSettingsView}/>
+            : <ProjectsSubMenu loaded={this.props.loaded} index={this.props.index} timestamp={this.props.timestamp}
+                               refreshTray={refreshTray} toggleSettingsView={toggleSettingsView}/>}
           {subContent}
         </div>
       </Container>
@@ -82,9 +76,7 @@ Tray.propTypes = {
   projects: PropTypes.arrayOf(PropTypes.object).isRequired,
   timestamp: PropTypes.string,
   selected: PropTypes.arrayOf(PropTypes.string).isRequired,
-  removeTray: PropTypes.func.isRequired,
   refreshTray: PropTypes.func.isRequired,
-  updateTray: PropTypes.func.isRequired,
   selectProject: PropTypes.func.isRequired,
   clearTrayHighlight: PropTypes.func.isRequired,
   highlight: PropTypes.bool,

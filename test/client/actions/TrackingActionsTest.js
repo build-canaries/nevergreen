@@ -225,38 +225,39 @@ describe('TrackingActions', function () {
     })
   })
 
-  describe('updating tray', function () {
+  describe('set tray name', function () {
 
     it('should return the correct type', function () {
-      const actual = TrackingActions.updatingTray()
-      expect(actual).to.have.property('type', TrackingActions.UPDATING_TRAY)
+      const actual = TrackingActions.setTrayName()
+      expect(actual).to.have.property('type', TrackingActions.SET_TRAY_NAME)
     })
 
     it('should return the tray id', function () {
-      const actual = TrackingActions.updatingTray('some-tray-id')
+      const actual = TrackingActions.setTrayName('some-tray-id')
       expect(actual).to.have.property('trayId', 'some-tray-id')
-      expect(actual).to.have.property('data').that.includes.property('trayId', 'some-tray-id')
-    })
-
-    it('should return a timestamp', function () {
-      moment().format.returns('some-timestamp')
-      const actual = TrackingActions.updatingTray()
-      expect(actual).to.have.property('timestamp', 'some-timestamp')
     })
 
     it('should return the tray name', function () {
-      const actual = TrackingActions.updatingTray('irrelevant', 'some-name')
-      expect(actual).to.have.property('data').that.includes.property('name', 'some-name')
+      const actual = TrackingActions.setTrayName('irrelevant', 'some-name')
+      expect(actual).to.have.property('name', 'some-name')
+    })
+  })
+
+  describe('set tray username', function () {
+
+    it('should return the correct type', function () {
+      const actual = TrackingActions.setTrayUsername()
+      expect(actual).to.have.property('type', TrackingActions.SET_TRAY_USERNAME)
     })
 
-    it('should return the tray url', function () {
-      const actual = TrackingActions.updatingTray('irrelevant', 'irrelevant', 'some-url')
-      expect(actual).to.have.property('data').that.includes.property('url', 'some-url')
+    it('should return the tray id', function () {
+      const actual = TrackingActions.setTrayUsername('some-tray-id')
+      expect(actual).to.have.property('trayId', 'some-tray-id')
     })
 
     it('should return the tray username', function () {
-      const actual = TrackingActions.updatingTray('irrelevant', 'irrelevant', 'irrelevant', 'some-username')
-      expect(actual).to.have.property('data').that.includes.property('username', 'some-username')
+      const actual = TrackingActions.setTrayUsername('irrelevant', 'some-username')
+      expect(actual).to.have.property('username', 'some-username')
     })
   })
 
@@ -270,16 +271,34 @@ describe('TrackingActions', function () {
     it('should dispatch encrypting password action', function () {
       SecurityGateway.encryptPassword = sinon.stub().returns({})
       Gateway.send = sinon.stub().returns(Promise.resolve(''))
-      TrackingActions.encryptPassword()(dispatch)
+      TrackingActions.encryptPassword('irrelevant', 'irrelevant')(dispatch)
       expect(dispatch).to.have.been.calledWithMatch({type: TrackingActions.ENCRYPTING_PASSWORD})
     })
 
     it('should dispatch password encrypted action', function () {
       SecurityGateway.encryptPassword = sinon.stub().returns({})
       Gateway.send = sinon.stub().returns(Promise.resolve(''))
-      return TrackingActions.encryptPassword()(dispatch).then(() => {
+      return TrackingActions.encryptPassword('irrelevant', 'irrelevant')(dispatch).then(() => {
         expect(dispatch).to.have.been.calledWithMatch({type: TrackingActions.PASSWORD_ENCRYPTED})
       })
+    })
+
+    it('should dispatch password encrypted action if password is blank without calling the gateway', function () {
+      SecurityGateway.encryptPassword = sinon.spy()
+      Gateway.send = sinon.spy()
+      return TrackingActions.encryptPassword('irrelevant', '')(dispatch).then(() => {
+        expect(dispatch).to.have.been.calledWithMatch({type: TrackingActions.PASSWORD_ENCRYPTED})
+        expect(SecurityGateway.encryptPassword).to.not.have.been.called
+        expect(Gateway.send).to.not.have.been.called
+      })
+    })
+
+    it('should abort pending request', function () {
+      SecurityGateway.encryptPassword = sinon.stub().returns({})
+      Gateway.send = sinon.stub().returns(Promise.resolve(''))
+      const pendingRequest = {abort: sinon.spy()}
+      TrackingActions.encryptPassword('irrelevant', 'irrelevant', pendingRequest)(dispatch)
+      expect(pendingRequest.abort).to.have.been.called
     })
   })
 
@@ -329,15 +348,6 @@ describe('TrackingActions', function () {
     it('should not dispatch anything if the tray has already been added')
   })
 
-  describe('update tray', function () {
-
-    it('should dispatch updating tray action')
-
-    it('should encrypt the password if it has been updated')
-
-    it('should refresh the tray')
-  })
-
   describe('refresh tray', function () {
 
     it('should dispatch projects fetching action')
@@ -347,5 +357,7 @@ describe('TrackingActions', function () {
     it('should filter projects containing jobs')
 
     it('should dispatch projects fetch error action on failure')
+
+    it('should abort any pending request')
   })
 })

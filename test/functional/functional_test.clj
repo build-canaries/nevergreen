@@ -69,7 +69,7 @@
       (tracking-page/show-settings tray)
       (tracking-page/generate-random-name tray)
       (tracking-page/set-name tray tray-name)
-      (tracking-page/update-tray tray))
+      (tracking-page/show-projects tray))
 
     (success-page/navigate base-url)
     (success-page/add-message success-message)

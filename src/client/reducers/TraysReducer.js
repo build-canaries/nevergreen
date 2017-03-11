@@ -8,9 +8,10 @@ import {
   PROJECTS_FETCHING,
   PROJECTS_FETCH_ERROR,
   PROJECTS_FETCHED,
-  UPDATING_TRAY,
   HIGHLIGHT_TRAY,
-  CLEAR_TRAY_HIGHLIGHT
+  CLEAR_TRAY_HIGHLIGHT,
+  SET_TRAY_NAME,
+  SET_TRAY_USERNAME
 } from '../actions/TrackingActions'
 import {INITIALISED} from '../actions/NevergreenActions'
 import {IMPORTED_DATA} from '../actions/BackupActions'
@@ -59,8 +60,11 @@ export function reduce(state = DefaultState, action) {
         tray.withMutations((map) =>
           map.set('loaded', true).set('errors', action.errors).delete('pendingRequest')))
 
-    case UPDATING_TRAY:
-      return state.update(action.trayId, (tray) => tray.merge(action.data))
+    case SET_TRAY_NAME:
+      return state.update(action.trayId, (tray) => tray.set('name', action.name))
+
+    case SET_TRAY_USERNAME:
+      return state.update(action.trayId, (tray) => tray.set('username', action.username))
 
     default:
       return state
