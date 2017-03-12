@@ -8,6 +8,8 @@ checkout:
           BUILD_NUM: $CIRCLE_BUILD_NUM
           COMMIT_HASH: ${CIRCLE_SHA1:0:7}
 dependencies:
+  pre:
+    - curl -s https://raw.githubusercontent.com/chronogolf/circleci-google-chrome/master/use_chrome_stable_version.sh | bash
   override:
     - nvm install && ./ci/dependencies.sh
 compile:
