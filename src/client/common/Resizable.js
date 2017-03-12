@@ -5,6 +5,11 @@ class Resizable extends Component {
     window.addEventListener('resize', this.props.onResize)
   }
 
+  componentWillReceiveProps(nextProps) {
+    window.removeEventListener('resize', this.props.onResize)
+    window.addEventListener('resize', nextProps.onResize)
+  }
+
   componentWillUnmount() {
     window.removeEventListener('resize', this.props.onResize)
   }
