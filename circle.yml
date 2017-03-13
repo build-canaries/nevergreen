@@ -9,7 +9,7 @@ checkout:
           COMMIT_HASH: ${CIRCLE_SHA1:0:7}
 dependencies:
   pre:
-    - curl -s https://raw.githubusercontent.com/chronogolf/circleci-google-chrome/master/use_chrome_stable_version.sh | bash
+    - ./ci/update-chrome.sh
   override:
     - nvm install && ./ci/dependencies.sh
 compile:
@@ -19,10 +19,7 @@ test:
   override:
     - nvm use && ./ci/test.sh
   post:
-    - mkdir -p $CIRCLE_TEST_REPORTS/client/
-    - mv ./target/client/*.xml $CIRCLE_TEST_REPORTS/client
-    - mkdir -p $CIRCLE_TEST_REPORTS/server/
-    - mv ./target/surefire-reports/*.xml $CIRCLE_TEST_REPORTS/server
+    - ./ci/test-reports.sh
 deployment:
   staging:
     branch: master
