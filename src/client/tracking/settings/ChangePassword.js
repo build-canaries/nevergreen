@@ -19,7 +19,7 @@ class UpdatePassword extends Component {
     return (
       <section className='change-password'>
         <Input className='tray-settings-password' value={this.state.newPassword} onChange={passwordChanged} onEnter={setPassword}
-               data-locator='password' required autoFocus>
+               data-locator='password' autoFocus>
           <span>new password</span>
         </Input>
         <button className='cancel' onClick={this.props.back}>cancel</button>
