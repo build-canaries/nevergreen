@@ -3,8 +3,6 @@
 @import '../../../common/typography';
 
 .import-locally {
-  padding-bottom: 1em;
-
   .import-data {
     span {
       @include font-scale(1);

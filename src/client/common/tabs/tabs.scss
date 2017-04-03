@@ -1,0 +1,53 @@
+@import '../variables';
+@import '../responsive';
+@import '../typography';
+
+.tabs {
+  .tab-bar {
+    background: $light-grey;
+    color: $mid-grey;
+    padding: 0.5em 0.5em 0;
+  }
+
+  .tab {
+    @include font-scale(0);
+
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    user-select: none;
+    border: 1px solid $light-grey;
+    padding: 0.5em 1.5em;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    background-color: $light-grey;
+    color: $off-black;
+    cursor: pointer;
+    transition: background-color 0.1s ease-in;
+    margin-right: 0.5em;
+
+    &:hover,
+    &:focus {
+      background-color: darken($white, 4%);
+      border-radius: 0;
+    }
+
+    &.active {
+      border-top-color: $blue;
+      border-bottom-color: $white;
+      background-color: $white;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  .tab-contents {
+    padding: 1em;
+  }
+}

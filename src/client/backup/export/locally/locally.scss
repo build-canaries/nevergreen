@@ -3,8 +3,6 @@
 @import '../../../common/typography';
 
 .export-locally {
-  padding-bottom: 1em;
-
   .export-data {
     span {
       @include font-scale(1);

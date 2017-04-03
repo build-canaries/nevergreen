@@ -13,7 +13,6 @@ class Locally extends Component {
 
     return (
       <div className='import-locally'>
-        <h5>Locally</h5>
         <label className='import-data'>
           <span>configuration to import</span>
           <textarea placeholder='paste exported configuration here and press import' value={this.state.data} onChange={updateData}

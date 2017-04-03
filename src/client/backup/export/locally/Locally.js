@@ -9,7 +9,6 @@ class Locally extends Component {
 
     return (
       <div className='export-locally'>
-        <h5>Locally</h5>
         <label className='export-data'>
           <span>current configuration</span>
           <textarea value={this.props.configuration} readOnly spellCheck='false' data-locator='export-data'/>

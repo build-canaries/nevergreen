@@ -22,7 +22,6 @@ class GitHub extends Component {
 
     return (
       <div className='export-github'>
-        <h5>GitHub</h5>
         <fieldset className='gist-values'>
           <Input className='oauth-token' onChange={oauthTokenChanged} onBlur={oauthTokenChanged} value={this.state.oauthToken}>
             <span>oauth token</span>
@@ -35,7 +34,7 @@ class GitHub extends Component {
             <span>gist url</span>
           </Input>
         </fieldset>
-        <button className='upload' onClick={upload}>upload</button>
+        <button className='upload' onClick={upload}>export</button>
       </div>
     )
   }
