@@ -41,7 +41,7 @@ class Input extends Component {
         this.validate(this.props.onEnter)
       }
     }
-    const labelClasses = classNames('input', this.props.className, this.props.type)
+    const labelClasses = classNames('input', this.props.type, this.props.className)
     const inputClasses = classNames({'locked': this.props.readOnly})
     const invalid = !_.isEmpty(this.state.errors)
 

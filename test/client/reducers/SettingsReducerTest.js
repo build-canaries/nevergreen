@@ -3,7 +3,7 @@ import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {reduce} from '../../../src/client/reducers/SettingsReducer'
 import {INITIALISED} from '../../../src/client/actions/NevergreenActions'
-import {IMPORTED_DATA} from '../../../src/client/actions/BackupActions'
+import {IMPORT_SUCCESS} from '../../../src/client/actions/ImportActions'
 import {
   SHOW_BROKEN_BUILD_TIME,
   PLAY_BROKEN_BUILD_SOUND_FX,
@@ -63,28 +63,28 @@ describe('SettingsReducer', function () {
 
     it('should merge show tray name', function () {
       const existingState = Immutable.Map({showTrayName: false})
-      const action = {type: IMPORTED_DATA, data: Immutable.fromJS({audioVisual: {showTrayName: true}})}
+      const action = {type: IMPORT_SUCCESS, data: Immutable.fromJS({audioVisual: {showTrayName: true}})}
       const newState = reduce(existingState, action)
       expect(newState).to.contain.property('showTrayName', true)
     })
 
     it('should merge broken build timers enabled', function () {
       const existingState = Immutable.Map({showBrokenBuildTime: false})
-      const action = {type: IMPORTED_DATA, data: Immutable.fromJS({audioVisual: {showBrokenBuildTime: true}})}
+      const action = {type: IMPORT_SUCCESS, data: Immutable.fromJS({audioVisual: {showBrokenBuildTime: true}})}
       const newState = reduce(existingState, action)
       expect(newState).to.contain.property('showBrokenBuildTime', true)
     })
 
     it('should merge broken build sounds enabled', function () {
       const existingState = Immutable.Map({playBrokenBuildSoundFx: false})
-      const action = {type: IMPORTED_DATA, data: Immutable.fromJS({audioVisual: {playBrokenBuildSoundFx: true}})}
+      const action = {type: IMPORT_SUCCESS, data: Immutable.fromJS({audioVisual: {playBrokenBuildSoundFx: true}})}
       const newState = reduce(existingState, action)
       expect(newState).to.contain.property('playBrokenBuildSoundFx', true)
     })
 
     it('should merge broken build sound fx', function () {
       const existingState = Immutable.Map({brokenBuildSoundFx: 'some-url'})
-      const action = {type: IMPORTED_DATA, data: Immutable.fromJS({audioVisual: {brokenBuildSoundFx: 'another-url'}})}
+      const action = {type: IMPORT_SUCCESS, data: Immutable.fromJS({audioVisual: {brokenBuildSoundFx: 'another-url'}})}
       const newState = reduce(existingState, action)
       expect(newState).to.contain.property('brokenBuildSoundFx', 'another-url')
     })

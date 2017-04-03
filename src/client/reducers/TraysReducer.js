@@ -14,14 +14,14 @@ import {
   SET_TRAY_USERNAME
 } from '../actions/TrackingActions'
 import {INITIALISED} from '../actions/NevergreenActions'
-import {IMPORTED_DATA} from '../actions/BackupActions'
+import {IMPORT_SUCCESS} from '../actions/ImportActions'
 
 const DefaultState = Immutable.OrderedMap()
 
 export function reduce(state = DefaultState, action) {
   switch (action.type) {
     case INITIALISED:
-    case IMPORTED_DATA: {
+    case IMPORT_SUCCESS: {
       const trays = action.data.get('trays')
       return trays ? Immutable.Map(trays).map((tray) => tray.set('loaded', true)) : state
     }

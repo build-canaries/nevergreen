@@ -1,14 +1,14 @@
 import Immutable from 'immutable'
 import {TRAY_ADDED, REMOVE_TRAY, PROJECTS_FETCHED} from '../actions/TrackingActions'
 import {INITIALISED} from '../actions/NevergreenActions'
-import {IMPORTED_DATA} from '../actions/BackupActions'
+import {IMPORT_SUCCESS} from '../actions/ImportActions'
 
 const DefaultState = Immutable.Map()
 
 export function reduce(state = DefaultState, action) {
   switch (action.type) {
     case INITIALISED:
-    case IMPORTED_DATA: {
+    case IMPORT_SUCCESS: {
       const projects = action.data.get('projects')
       return projects ? Immutable.Map(projects) : state
     }

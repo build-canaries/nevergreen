@@ -3,7 +3,7 @@ import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {reduce} from '../../../src/client/reducers/SuccessReducer'
 import {INITIALISED} from '../../../src/client/actions/NevergreenActions'
-import {IMPORTED_DATA} from '../../../src/client/actions/BackupActions'
+import {IMPORT_SUCCESS} from '../../../src/client/actions/ImportActions'
 import {MESSAGE_ADDED, MESSAGE_REMOVED} from '../../../src/client/actions/SuccessActions'
 import Immutable from 'immutable'
 
@@ -36,7 +36,7 @@ describe('SuccessReducer', function () {
 
     it('should merge the success data', function () {
       const existingState = Immutable.OrderedSet()
-      const action = {type: IMPORTED_DATA, data: Immutable.fromJS({success: ['some-message']})}
+      const action = {type: IMPORT_SUCCESS, data: Immutable.fromJS({success: ['some-message']})}
       const newState = reduce(existingState, action)
       expect(newState).to.contain('some-message')
     })

@@ -1,0 +1,42 @@
+@import '../../../common/variables';
+@import '../../../common/forms/button';
+@import '../../../common/typography';
+@import '../../../common/responsive';
+
+.export-github {
+  .upload {
+    @include button($off-white, $blue);
+  }
+
+  .gist-values {
+    display: block;
+    padding-bottom: 1em;
+  }
+
+  .oauth-token {
+    @include respond-to(tablet, desktop) {
+      display: block;
+
+      input {
+        width: 32rem;
+      }
+    }
+  }
+
+  .description,
+  .gist-url {
+    @include respond-to(tablet, desktop) {
+      display: flex;
+
+      input {
+        flex: 1;
+        align-self: center;
+      }
+    }
+  }
+
+  .description,
+  .gist-url {
+    padding-top: 1em;
+  }
+}

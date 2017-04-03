@@ -4,7 +4,7 @@ import {expect} from 'chai'
 import {reduce} from '../../../src/client/reducers/ProjectsReducer'
 import {TRAY_ADDED, REMOVE_TRAY, PROJECTS_FETCHED} from '../../../src/client/actions/TrackingActions'
 import {INITIALISED} from '../../../src/client/actions/NevergreenActions'
-import {IMPORTED_DATA} from '../../../src/client/actions/BackupActions'
+import {IMPORT_SUCCESS} from '../../../src/client/actions/ImportActions'
 import Immutable from 'immutable'
 
 describe('ProjectsReducer', function () {
@@ -37,7 +37,7 @@ describe('ProjectsReducer', function () {
 
     it('should set the projects data', function () {
       const existingState = Immutable.Map({id: 'x'})
-      const action = {type: IMPORTED_DATA, data: Immutable.Map({projects: {foo: 'bar'}})}
+      const action = {type: IMPORT_SUCCESS, data: Immutable.Map({projects: {foo: 'bar'}})}
       const newState = reduce(existingState, action)
       expect(newState).to.not.have.property('id')
       expect(newState).to.have.property('foo', 'bar')

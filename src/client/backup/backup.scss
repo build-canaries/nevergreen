@@ -1,5 +1,10 @@
 @import '../common/layout';
+@import '../common/typography';
 
 .backup {
   @extend .main-section;
+
+  h5 {
+    @include font-scale(1);
+  }
 }

@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 import {BROKEN_BUILD_SOUND_FX, PLAY_BROKEN_BUILD_SOUND_FX, SHOW_BROKEN_BUILD_TIME, SHOW_TRAY_NAME, REFRESH_TIME} from '../actions/SettingsActions'
 import {INITIALISED} from '../actions/NevergreenActions'
-import {IMPORTED_DATA} from '../actions/BackupActions'
+import {IMPORT_SUCCESS} from '../actions/ImportActions'
 import defaultSoundFx from '../settings/pacman_death.mp3'
 
 const DefaultState = Immutable.Map({
@@ -15,7 +15,7 @@ const DefaultState = Immutable.Map({
 export function reduce(state = DefaultState, action) {
   switch (action.type) {
     case INITIALISED:
-    case IMPORTED_DATA:
+    case IMPORT_SUCCESS:
       return state.merge(action.data.get('audioVisual'))
 
     case SHOW_BROKEN_BUILD_TIME:

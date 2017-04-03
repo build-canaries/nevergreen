@@ -3,7 +3,7 @@ import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {reduce} from '../../../src/client/reducers/SelectedReducer'
 import {INITIALISED} from '../../../src/client/actions/NevergreenActions'
-import {IMPORTED_DATA} from '../../../src/client/actions/BackupActions'
+import {IMPORT_SUCCESS} from '../../../src/client/actions/ImportActions'
 import {TRAY_ADDED, REMOVE_TRAY, PROJECTS_FETCHED, SELECT_PROJECT} from '../../../src/client/actions/TrackingActions'
 import Immutable from 'immutable'
 
@@ -37,7 +37,7 @@ describe('SelectedReducer', function () {
 
     it('should set the selected data', function () {
       const existingState = Immutable.Map({oldId: ['foo']})
-      const action = {type: IMPORTED_DATA, data: Immutable.fromJS({selected: {trayId: ['bar']}})}
+      const action = {type: IMPORT_SUCCESS, data: Immutable.fromJS({selected: {trayId: ['bar']}})}
       const newState = reduce(existingState, action)
       expect(newState).to.not.have.property('oldId')
       expect(newState).to.have.property('trayId').that.is.an.instanceof(Immutable.Set).that.contains('bar')
