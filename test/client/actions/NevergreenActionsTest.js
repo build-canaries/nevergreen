@@ -38,6 +38,14 @@ describe('NevergreenActions', function () {
     })
   })
 
+  describe('navigated', function () {
+
+    it('should return the correct type', function () {
+      const actual = NevergreenActions.navigated()
+      expect(actual).to.have.property('type', NevergreenActions.NAVIGATED)
+    })
+  })
+
   describe('initalise', function () {
     let dispatch
 

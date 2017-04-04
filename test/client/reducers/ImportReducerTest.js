@@ -3,6 +3,7 @@ import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {reduce} from '../../../src/client/reducers/ImportReducer'
 import {IMPORT_ERROR, IMPORT_SUCCESS, IMPORTING} from '../../../src/client/actions/ImportActions'
+import {NAVIGATED} from '../../../src/client/actions/NevergreenActions'
 import Immutable from 'immutable'
 
 describe('ImportReducer', function () {
@@ -82,6 +83,23 @@ describe('ImportReducer', function () {
       const action = {type: IMPORT_ERROR, errors: Immutable.List(['some-error'])}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('errors').that.contains('some-error')
+    })
+  })
+
+  describe('navigated action', function () {
+
+    it('should delete the infos property', function () {
+      const existingState = Immutable.Map({infos: Immutable.Map()})
+      const action = {type: NAVIGATED}
+      const newState = reduce(existingState, action)
+      expect(newState).to.not.have.property('infos')
+    })
+
+    it('should delete the errors property', function () {
+      const existingState = Immutable.Map({errors: Immutable.Map()})
+      const action = {type: NAVIGATED}
+      const newState = reduce(existingState, action)
+      expect(newState).to.not.have.property('errors')
     })
   })
 })

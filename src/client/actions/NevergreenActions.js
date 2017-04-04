@@ -39,6 +39,11 @@ export function initalised(configuration) {
   }
 }
 
+export const NAVIGATED = 'NAVIGATED'
+export function navigated() {
+  return {type: NAVIGATED}
+}
+
 export function initalise() {
   return function (dispatch) {
     dispatch(initalising())
