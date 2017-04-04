@@ -5,7 +5,7 @@
 
 .export-github {
   .upload {
-    @include button-icon('paste');
+    @include button-icon('cloud-upload');
   }
 
   .gist-values {
