@@ -26,14 +26,14 @@ class GitHub extends Component {
       <div className='export-github'>
         <fieldset className='gist-values'>
           <Input className='oauth-token' onChange={oauthTokenChanged} onBlur={oauthTokenChanged} value={this.state.oauthToken} disabled={disabled}>
-            <span>oauth token</span>
+            <span>OAuth token</span>
           </Input>
           <Input className='description' value={this.state.description} onChange={descriptionChanged} onBlur={setDescription} disabled={disabled}>
             <span>description</span>
           </Input>
           <Input className='gist-url' value={this.state.url} type='url' onChange={urlChanged} onBlur={setUrl}
                  placeholder='leave blank to create a new gist' disabled={disabled}>
-            <span>gist url</span>
+            <span>Gist URL</span>
           </Input>
         </fieldset>
         <Button onClick={upload} disabled={disabled}><span className='upload'>export</span></Button>

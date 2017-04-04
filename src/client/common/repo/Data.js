@@ -80,6 +80,14 @@ export const SCHEMA = {
         additionalProperties: false
       },
       additionalProperties: false
+    },
+    github: {
+      type: 'object',
+      properties: {
+        url: {type: 'string'},
+        description: {type: 'string'}
+      },
+      additionalProperties: false
     }
   },
   additionalProperties: false
