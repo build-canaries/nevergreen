@@ -42,13 +42,12 @@ class Input extends Component {
       }
     }
     const labelClasses = classNames('input', this.props.type, this.props.className)
-    const inputClasses = classNames({'locked': this.props.readOnly})
     const invalid = !_.isEmpty(this.state.errors)
 
     return (
       <label className={labelClasses}>
         {this.props.children}
-        <input className={inputClasses} onKeyPress={onEnter} onBlur={onBlur} spellCheck={false} autoComplete='off' autoFocus={invalid} {...inputProps}
+        <input onKeyPress={onEnter} onBlur={onBlur} spellCheck={false} autoComplete='off' autoFocus={invalid} {...inputProps}
                ref={(node) => this.node = node}/>
         {this.props.readOnly ? <i className='locked' title='read only'/> : null}
         <Messages className='input-validation-errors' type='error' messages={this.state.errors}/>

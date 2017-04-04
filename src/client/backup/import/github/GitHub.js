@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import Input from '../../../common/forms/Input'
+import Button from '../../../common/forms/Button'
 import './github.scss'
 
 class GitHub extends Component {
@@ -17,18 +18,19 @@ class GitHub extends Component {
     const urlChanged = (evt) => this.setState({url: evt.target.value})
     const setUrl = () => this.props.gitHubSetUrl(this.state.url)
     const restore = () => this.props.restoreFromGitHub(this.state.url, this.state.oauthToken)
+    const disabled = !this.props.loaded
 
     return (
       <div className='import-github'>
         <fieldset className='gist-values'>
-          <Input className='oauth-token' onChange={oauthTokenChanged} onBlur={oauthTokenChanged} value={this.state.oauthToken}>
+          <Input className='oauth-token' onChange={oauthTokenChanged} onBlur={oauthTokenChanged} value={this.state.oauthToken} disabled={disabled}>
             <span>oauth token</span>
           </Input>
-          <Input className='gist-url' value={this.state.url} type='url' onChange={urlChanged} onBlur={setUrl}>
+          <Input className='gist-url' value={this.state.url} type='url' onChange={urlChanged} onBlur={setUrl} disabled={disabled}>
             <span>gist url</span>
           </Input>
         </fieldset>
-        <button className='restore' onClick={restore}>import</button>
+        <Button onClick={restore} disabled={disabled}><span className='restore'>import</span></Button>
       </div>
     )
   }

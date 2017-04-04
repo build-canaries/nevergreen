@@ -11,10 +11,9 @@ class Locally extends Component {
       <div className='export-locally'>
         <label className='export-data'>
           <span>current configuration</span>
-          <textarea value={this.props.configuration} readOnly spellCheck='false' data-locator='export-data'/>
+          <textarea id='export-data' value={this.props.configuration} readOnly spellCheck='false' data-locator='export-data'/>
         </label>
         <Clipboard elementSelector='#copy-to-clipboard' onSuccess={copySuccess} onError={copyError}/>
-        <textarea id='export-data' className='export-data' value={this.props.configuration} hidden readOnly/>
         <button className='copy' id='copy-to-clipboard' data-clipboard-target='#export-data'>copy to clipboard</button>
       </div>
     )

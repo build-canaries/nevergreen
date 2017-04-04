@@ -5,7 +5,7 @@
 
 .export-github {
   .upload {
-    @include button($off-white, $blue);
+    @include button-icon('paste');
   }
 
   .gist-values {

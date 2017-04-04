@@ -10,12 +10,12 @@ class Import extends Component {
   render() {
     return (
       <Container title='import' className='import'>
-        <Messages type='error' messages={this.props.errors}/>
-        <Messages type='info' messages={this.props.infos}/>
         <Tabs titles={['locally', 'GitHub']}>
           <LocallyContainer/>
           <GitHubContainer/>
         </Tabs>
+        <Messages type='error' messages={this.props.errors}/>
+        <Messages type='info' messages={this.props.infos}/>
       </Container>
     )
   }

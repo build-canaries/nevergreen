@@ -2,7 +2,9 @@ import Immutable from 'immutable'
 import {IMPORT_ERROR, IMPORT_SUCCESS, IMPORTING} from '../actions/ImportActions'
 import {NAVIGATED} from '../actions/NevergreenActions'
 
-const DefaultState = Immutable.Map()
+const DefaultState = Immutable.Map({
+  loaded: true
+})
 
 export function reduce(state = DefaultState, action) {
   switch (action.type) {

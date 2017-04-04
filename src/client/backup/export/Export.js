@@ -10,12 +10,12 @@ class Export extends Component {
   render() {
     return (
       <Container title='export' className='export'>
-        <Messages type='error' messages={this.props.errors}/>
-        <Messages type='info' messages={this.props.infos}/>
         <Tabs titles={['locally', 'GitHub']}>
           <LocallyContainer configuration={this.props.configuration}/>
           <GitHubContainer configuration={this.props.configuration}/>
         </Tabs>
+        <Messages type='error' messages={this.props.errors}/>
+        <Messages type='info' messages={this.props.infos}/>
       </Container>
     )
   }

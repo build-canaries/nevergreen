@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import Input from '../../../common/forms/Input'
+import Button from '../../../common/forms/Button'
 import './github.scss'
 
 class GitHub extends Component {
@@ -19,22 +20,23 @@ class GitHub extends Component {
     const setDescription = () => this.props.gitHubSetDescription(this.state.description)
     const setUrl = () => this.props.gitHubSetUrl(this.state.url)
     const upload = () => this.props.uploadToGitHub(this.state.url, this.state.description, this.props.configuration, this.state.oauthToken)
+    const disabled = !this.props.loaded
 
     return (
       <div className='export-github'>
         <fieldset className='gist-values'>
-          <Input className='oauth-token' onChange={oauthTokenChanged} onBlur={oauthTokenChanged} value={this.state.oauthToken}>
+          <Input className='oauth-token' onChange={oauthTokenChanged} onBlur={oauthTokenChanged} value={this.state.oauthToken} disabled={disabled}>
             <span>oauth token</span>
           </Input>
-          <Input className='description' value={this.state.description} onChange={descriptionChanged} onBlur={setDescription}>
+          <Input className='description' value={this.state.description} onChange={descriptionChanged} onBlur={setDescription} disabled={disabled}>
             <span>description</span>
           </Input>
           <Input className='gist-url' value={this.state.url} type='url' onChange={urlChanged} onBlur={setUrl}
-                 placeholder='leave blank to create a new gist'>
+                 placeholder='leave blank to create a new gist' disabled={disabled}>
             <span>gist url</span>
           </Input>
         </fieldset>
-        <button className='upload' onClick={upload}>export</button>
+        <Button onClick={upload} disabled={disabled}><span className='upload'>export</span></Button>
       </div>
     )
   }

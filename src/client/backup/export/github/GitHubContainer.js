@@ -10,6 +10,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(store, ownProps) {
   return {
+    loaded: store.getIn(['backupExport', 'loaded']),
     url: store.getIn(['github', 'url']),
     description: store.getIn(['github', 'description']),
     configuration: ownProps.configuration

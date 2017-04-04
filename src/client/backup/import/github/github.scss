@@ -5,14 +5,7 @@
 
 .import-github {
   .restore {
-    @include button($off-white, $blue);
     @include button-icon('floppy-disk');
-
-    margin-top: 1em;
-
-    @include respond-to(tablet, desktop) {
-      margin-top: 0;
-    }
   }
 
   .gist-values {

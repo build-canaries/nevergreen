@@ -7,8 +7,8 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({importData}, dispatch)
 }
 
-function mapStateToProps() {
-  return {}
+function mapStateToProps(store) {
+  return {loaded: store.getIn(['backupImport', 'loaded']),}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Locally)

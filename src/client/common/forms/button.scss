@@ -23,7 +23,7 @@
   vertical-align: middle;
   user-select: none;
   border: 0;
-  padding: 0.5em 1.5em 0.5em 1em;
+  padding: 0.5em 1em;
   border-radius: 2px;
   text-transform: uppercase;
   text-decoration: none;
@@ -56,4 +56,12 @@
     display: inline-block;
     width: auto;
   }
+}
+
+.button.white {
+  @include button($off-black, $white);
+}
+
+.button.blue {
+  @include button($off-white, $blue);
 }
