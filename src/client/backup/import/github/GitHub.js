@@ -24,7 +24,7 @@ class GitHub extends Component {
       <div className='import-github'>
         <fieldset className='gist-values'>
           <Input className='oauth-token' onChange={oauthTokenChanged} onBlur={oauthTokenChanged} value={this.state.oauthToken} disabled={disabled}>
-            <span>OAuth token</span>
+            <span>access token</span>
           </Input>
           <Input className='gist-url' value={this.state.url} type='url' onChange={urlChanged} onBlur={setUrl} disabled={disabled}>
             <span>Gist URL</span>

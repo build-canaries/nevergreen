@@ -111,6 +111,20 @@ class Help extends Component {
           </p>
         </Container>
 
+        <Container title='Backup'>
+          <span>
+            To import/export to/from GitHub you need to generate a <a
+            href='https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/' target='_blank'>personal access token</a> to allow a private Gist to be created.
+          </span>
+          <p>
+            The token <em>only</em> requires the <code>gist</code> <a href='https://developer.github.com/v3/oauth/#scopes' target='_blank'>scope</a>.
+          </p>
+          <p>
+            Access tokens are not stored locally as they allow access to all a users Gists, so they need to be manually entered every time you want to
+            import or export again.
+          </p>
+        </Container>
+
         <Container title='keyboard shortcuts' className='keyboard-shortcuts' highlight={this.props.showShortcuts}>
           <span>The following keyboard shortcuts can be used to:</span>
           <table className='help-shortcut-table'>
