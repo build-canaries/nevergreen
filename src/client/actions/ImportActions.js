@@ -1,10 +1,14 @@
 import Immutable from 'immutable'
 import _ from 'lodash'
-import {validate, filter} from '../common/repo/Data'
+import {filter, validate} from '../common/repo/Data'
 import {fromJson} from '../common/Json'
 import {migrate} from '../common/repo/Migrations'
 import {send} from '../common/gateways/Gateway'
 import {getGist} from '../common/gateways/GitHubGateway'
+
+function isBlank(s) {
+  return _.isEmpty(_.trim(s))
+}
 
 export const IMPORTING = 'IMPORTING'
 export function importing() {
@@ -51,11 +55,16 @@ export function restoreFromGitHub(location, oauthToken) {
   return function (dispatch) {
     dispatch(importing())
 
+    if (isBlank(location)) {
+      dispatch(importError(['Unable to import from GitHub because of an error:', 'gist URL is required']))
+      return
+    }
+
     return send(getGist(location, oauthToken))
-      .then((gistJson) => dispatch(importData(gistJson.files['configuration.json'].content)))
+      .then((res) => dispatch(importData(res.files['configuration.json'].content)))
       .catch((error) => {
         const message = fromJson(error.message).message
-        dispatch(importError(['Unable to restore from GitHub because of an error:', `${error.status} - ${message}`]))
+        dispatch(importError(['Unable to import from GitHub because of an error:', `${error.status} - ${message}`]))
       })
   }
 }

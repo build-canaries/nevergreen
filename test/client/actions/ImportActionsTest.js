@@ -113,5 +113,10 @@ describe('ImportActions', function () {
     })
 
     it('should dispatch import data on successful fetch of the gist')
+
+    it('should dispatch import error if gist url is blank', function () {
+      ImportActions.restoreFromGitHub(' ', 'some-oauth-token')(dispatch)
+      expect(dispatch).to.have.been.calledWithMatch({type: ImportActions.IMPORT_ERROR})
+    })
   })
 })

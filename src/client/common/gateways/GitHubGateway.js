@@ -1,4 +1,6 @@
-import {post, get, patch} from './Gateway'
+import {get, patch, post} from './Gateway'
+
+const mimeType = 'application/vnd.github.v3+json'
 
 export function createGist(description, configuration, oauthToken) {
   const data = {
@@ -11,7 +13,7 @@ export function createGist(description, configuration, oauthToken) {
     }
   }
 
-  return post('https://api.github.com/gists', data, {Authorization: `token ${oauthToken}`, Accept: 'application/vnd.github.v3+json'})
+  return post('https://api.github.com/gists', data, {Authorization: `token ${oauthToken}`, Accept: mimeType})
 }
 
 export function updateGist(url, configuration, oauthToken) {
@@ -23,9 +25,9 @@ export function updateGist(url, configuration, oauthToken) {
     }
   }
 
-  return patch(url, data, {Authorization: `token ${oauthToken}`, Accept: 'application/vnd.github.v3+json'})
+  return patch(url, data, {Authorization: `token ${oauthToken}`, Accept: mimeType})
 }
 
 export function getGist(location, oauthToken) {
-  return get(location, {Authorization: `token ${oauthToken}`})
+  return get(location, {Authorization: `token ${oauthToken}`, Accept: mimeType})
 }
