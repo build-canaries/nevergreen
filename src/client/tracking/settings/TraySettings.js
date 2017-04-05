@@ -1,6 +1,5 @@
 import React, {Component, PropTypes} from 'react'
 import Input from '../../common/forms/Input'
-import ChangePassword from './ChangePassword'
 import nameGenerator from 'project-name-generator'
 import _ from 'lodash'
 import './tray-settings.scss'
@@ -8,7 +7,7 @@ import './tray-settings.scss'
 class TraySettings extends Component {
   constructor(props) {
     super(props)
-    this.state = {newName: props.name, newUsername: props.username, updatingPassword: false}
+    this.state = {newName: props.name, newUsername: props.username, newPassword: '', updatingPassword: false}
   }
 
   componentWillUnmount() {
@@ -21,11 +20,16 @@ class TraySettings extends Component {
     const generateRandomName = () => this.setState({newName: _.lowerCase(nameGenerator().spaced)}, () => setName())
     const usernameChanged = (evt) => this.setState({newUsername: evt.target.value})
     const setUsername = () => this.props.setTrayUsername(this.props.trayId, this.state.newUsername)
-    const existingPassword = this.props.password ? 'encrypted' : ''
+    const passwordChanged = (evt) => this.setState({newPassword: evt.target.value})
+    const existingPassword = this.props.password ? '*******' : ''
+    const password = this.state.updatingPassword ? this.state.newPassword : existingPassword
     const deleteTray = () => this.props.removeTray(this.props.trayId, this.props.pendingRequest)
     const cancel = () => this.setState({updatingPassword: false})
     const changePassword = () => this.setState({updatingPassword: true})
-    const setPassword = (newPassword) => this.props.encryptPassword(this.props.trayId, newPassword, this.props.pendingRequest)
+    const setPassword = () => {
+      this.props.encryptPassword(this.props.trayId, this.state.newPassword, this.props.pendingRequest)
+      this.setState({updatingPassword: false, newPassword: ''})
+    }
 
     return (
       <section className='tray-settings' data-locator='tray-settings'>
@@ -35,23 +39,24 @@ class TraySettings extends Component {
         </Input>
         <button className='random' onClick={generateRandomName} data-locator='generate-random'>randomise</button>
         <Input className='tray-settings-username' value={this.state.newUsername} onChange={usernameChanged} onBlur={setUsername}
-               onEnter={setUsername} placeholder='not set'>
+               onEnter={setUsername}>
           <span>username</span>
         </Input>
-        {
-          this.state.updatingPassword
-            ? <ChangePassword trayId={this.props.trayId} back={cancel} setPassword={setPassword}/>
-            : <span>
-                  <Input className='existing-password' value={existingPassword} placeholder='not set' readOnly>
-                    <span>password</span>
-                  </Input>
-                  <button className='change-password-button' onClick={changePassword}>change password</button>
-                </span>
+        <Input className='existing-password' value={password} onChange={passwordChanged} onEnter={setPassword}
+               readOnly={!this.state.updatingPassword}>
+          <span>password</span>
+        </Input>
+        {this.state.updatingPassword
+          ? <span>
+              <button className='cancel' onClick={cancel}>cancel</button>
+              <button className='update' onClick={setPassword}>update</button>
+            </span>
+          : <button className='change-password-button' onClick={changePassword}>change password</button>
         }
         <div className='danger-zone'>
           <h4 className='danger-zone-title'>Danger Zone</h4>
           <div className='content'>
-            <p>Once you delete a tray, there is no going back. Please be certain.</p>
+            <span>Once you delete a tray, there is no going back. Please be certain.</span>
             <button className='delete' onClick={deleteTray}>delete this tray</button>
           </div>
         </div>

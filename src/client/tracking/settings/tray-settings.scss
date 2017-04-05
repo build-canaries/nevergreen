@@ -21,7 +21,7 @@
 
   .tray-settings-username,
   .existing-password {
-    padding-top: 1em;
+    padding-top: 1.5em;
   }
 
   .danger-zone {
@@ -45,41 +45,43 @@
     .content {
       padding: 1em;
     }
-
-    .delete {
-      @include button($white, $danger);
-      @include button-icon('bin');
-    }
   }
 
   .delete,
   .random,
-  .change-password-button {
+  .change-password-button,
+  .cancel,
+  .update {
     margin-top: 1em;
+
+    @include respond-to(tablet, desktop) {
+      margin-top: 0;
+      margin-left: 1em;
+    }
+  }
+
+  .delete {
+    @include button($white, $danger);
+    @include button-icon('bin');
   }
 
   .random {
     @include button();
     @include button-icon('dice');
-
-    @include respond-to(tablet, desktop) {
-      margin-top: 0;
-      margin-left: 1em;
-    }
   }
 
   .change-password-button {
     @include button();
     @include button-icon('unlocked');
-
-    @include respond-to(tablet, desktop) {
-      margin-top: 0;
-      margin-left: 1em;
-    }
   }
 
-  .loading {
-    padding-top: 0;
-    padding-bottom: 0;
+  .cancel {
+    @include button();
+    @include button-icon('cross');
+  }
+
+  .update {
+    @include button($off-white, $blue);
+    @include button-icon('floppy-disk');
   }
 }
