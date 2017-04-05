@@ -5,6 +5,7 @@
 
 .import-github {
   .restore {
+    @include button($off-white, $blue);
     @include button-icon('cloud-download');
   }
 

@@ -57,11 +57,3 @@
     width: auto;
   }
 }
-
-.button.white {
-  @include button($off-black, $white);
-}
-
-.button.blue {
-  @include button($off-white, $blue);
-}

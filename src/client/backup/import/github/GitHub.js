@@ -1,6 +1,5 @@
 import React, {Component, PropTypes} from 'react'
 import Input from '../../../common/forms/Input'
-import Button from '../../../common/forms/Button'
 import './github.scss'
 
 class GitHub extends Component {
@@ -30,7 +29,7 @@ class GitHub extends Component {
             <span>Gist URL</span>
           </Input>
         </fieldset>
-        <Button onClick={restore} disabled={disabled}><span className='restore'>import</span></Button>
+        <button className='restore' onClick={restore} disabled={disabled}>import</button>
       </div>
     )
   }
