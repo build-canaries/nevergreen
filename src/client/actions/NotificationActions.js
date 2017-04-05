@@ -1,5 +1,6 @@
 import {get, send} from '../common/gateways/Gateway'
 import semver from 'semver'
+import _ from 'lodash'
 
 const NEVERGREEN_IO_REGEX = /nevergreen\.io/i
 
@@ -27,6 +28,6 @@ export function checkForNewVersion(currentVersion, hostname) {
 
         dispatch(notification(`A new version ${data.tag_name} is available${additional}!`))
       }
-    })
+    }).catch(_.noop) // We don't care if checking for a new version fails
   }
 }
