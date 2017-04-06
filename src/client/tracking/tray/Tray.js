@@ -4,14 +4,12 @@ import AvailableProjects from '../projects/AvailableProjects'
 import TraySettingsContainer from '../settings/TraySettingsContainer'
 import Loading from '../../common/loading/Loading'
 import Messages from '../../common/messages/Messages'
-import ProjectsSubMenu from '../projects/SubMenu'
-import SettingsSubMenu from '../settings/SubMenu'
-import './tray.scss'
+import Tabs from '../../common/tabs/Tabs'
 
 class Tray extends Component {
   constructor(props) {
     super(props)
-    this.state = {showSettings: false, hidden: false}
+    this.state = {hidden: false}
   }
 
   componentDidMount() {
@@ -27,24 +25,19 @@ class Tray extends Component {
   }
 
   render() {
-    const toggleSettingsView = () => this.setState({showSettings: !this.state.showSettings})
     const refreshTray = () => this.props.refreshTray(this.props, this.props.pendingRequest)
 
-    let subContent = null
+    let projectsView = null
 
-    if (this.state.showSettings) {
-      subContent = <TraySettingsContainer trayId={this.props.trayId} name={this.props.name} url={this.props.url} username={this.props.username}
-                                          password={this.props.password} pendingRequest={this.props.pendingRequest} refreshTray={refreshTray}/>
+    if (this.props.errors) {
+      projectsView = <Messages type='error' messages={this.props.errors}/>
     } else {
-      if (this.props.errors) {
-        subContent = <Messages type='error' messages={this.props.errors}/>
-      } else {
-        subContent =
-          <Loading loaded={this.props.loaded}>
-            <AvailableProjects index={this.props.index} trayId={this.props.trayId} projects={this.props.projects}
-                               selected={this.props.selected} selectProject={this.props.selectProject}/>
-          </Loading>
-      }
+      projectsView =
+        <Loading loaded={this.props.loaded}>
+          <AvailableProjects index={this.props.index} trayId={this.props.trayId} projects={this.props.projects}
+                             selected={this.props.selected} selectProject={this.props.selectProject} loaded={this.props.loaded}
+                             timestamp={this.props.timestamp} refreshTray={refreshTray}/>
+        </Loading>
     }
 
     const title = this.props.name || this.props.url
@@ -53,11 +46,11 @@ class Tray extends Component {
     return (
       <Container title={title} subTitle={subTitle} className='tray' highlight={this.props.highlight}>
         <div data-locator='tray'>
-          {this.state.showSettings
-            ? <SettingsSubMenu index={this.props.index} toggleSettingsView={toggleSettingsView}/>
-            : <ProjectsSubMenu loaded={this.props.loaded} index={this.props.index} timestamp={this.props.timestamp}
-                               refreshTray={refreshTray} toggleSettingsView={toggleSettingsView}/>}
-          {subContent}
+          <Tabs titles={['projects', 'settings']}>
+            {projectsView}
+            <TraySettingsContainer trayId={this.props.trayId} name={this.props.name} url={this.props.url} username={this.props.username}
+                                   password={this.props.password} pendingRequest={this.props.pendingRequest} refreshTray={refreshTray}/>
+          </Tabs>
         </div>
       </Container>
     )

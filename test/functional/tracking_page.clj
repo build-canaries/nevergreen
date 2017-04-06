@@ -23,7 +23,7 @@
   (click (find-element-under tray {:css (locator "include-all")})))
 
 (defn show-settings [tray]
-  (click (find-element-under tray {:css (locator "show-settings")}))
+  (click (find-element-under tray {:css (locator "tab-settings")}))
   (wait-until #(present? (find-element-under tray {:css (locator "tray-settings")}))))
 
 (defn generate-random-name [tray]
@@ -33,5 +33,5 @@
   (input (find-element-under tray {:css (locator "tray-name")}) name))
 
 (defn show-projects [tray]
-  (click (find-element-under tray {:css (locator "show-projects")}))
+  (click (find-element-under tray {:css (locator "tab-projects")}))
   (wait-for-projects tray))

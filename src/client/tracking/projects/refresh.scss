@@ -1,18 +1,16 @@
 @import '../../common/forms/button';
 @import '../../common/responsive';
+@import '../../common/variables';
+@import '../../common/typography';
 
 .tray-sub-bar {
-  .show-settings {
-    @include button-icon('cog');
-  }
-
   .refresh {
     @include button-icon('loop2');
   }
 
   .show-settings,
   .refresh {
-    @include button();
+    @include button($off-white, $blue);
 
     margin-bottom: 1em;
 
@@ -23,7 +21,10 @@
   }
 
   .tray-refresh-last-fetch {
+    @include font-scale(1);
+
     display: block;
+    color: $mid-grey;
 
     @include respond-to(tablet, desktop) {
       display: inline-block;

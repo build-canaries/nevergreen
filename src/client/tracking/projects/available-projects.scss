@@ -5,18 +5,6 @@
 .available-projects {
   display: inline-block;
   width: 100%;
-  padding: 1em;
-
-  .legend {
-    color: $mid-grey;
-    padding-bottom: 1em;
-
-    @include respond-to(tablet, desktop) {
-      padding-bottom: 0;
-      padding-right: 1em;
-      float: left;
-    }
-  }
 
   .toggles {
     display: block;
@@ -40,11 +28,10 @@
   .exclude-all {
     @include button();
 
-    margin-bottom: 1em;
+    margin-top: 1em;
 
     @include respond-to(tablet, desktop) {
       margin-right: 1em;
-      margin-bottom: 0;
     }
   }
 
@@ -61,7 +48,6 @@
   .project-filter {
     display: block;
     width: 100%;
-    padding: 0.5em 0;
 
     @include respond-to(tablet, desktop) {
       display: inline-block;
@@ -70,6 +56,8 @@
   }
 
   .project-filter-input {
+    padding-top: 1em;
+
     span {
       color: $mid-grey;
     }

@@ -3,6 +3,7 @@ import AvailableProject from './AvailableProject'
 import Messages from '../../common/messages/Messages'
 import Input from '../../common/forms/Input'
 import Shortcut from '../../common/Shortcut'
+import Refresh from './Refresh'
 import _ from 'lodash'
 import './available-projects.scss'
 
@@ -46,9 +47,10 @@ class AvailableProjects extends Component {
 
     return (
       <section className='available-projects' data-locator='available-projects' ref={(node) => this.node = node}>
+        <Refresh index={this.props.index} loaded={this.props.loaded} timestamp={this.props.timestamp} refreshTray={this.props.refreshTray}/>
         <div className='controls'>
           <fieldset className='toggles'>
-            <legend className='legend'>Available projects</legend>
+            <legend className='visually-hidden'>Available projects</legend>
             <button className='include-all' onClick={includeAll} disabled={this.state.disableButtons} data-locator='include-all'>
               include all
               <Shortcut hotkeys={[`+ ${this.props.index}`, `= ${this.props.index}`]}/>
@@ -60,7 +62,7 @@ class AvailableProjects extends Component {
           </fieldset>
           <div className='project-filter'>
             <Input className='project-filter-input' onChange={updateFilter}>
-              <span>Filter projects</span>
+              <span>filter</span>
             </Input>
           </div>
           <Messages type='error' messages={this.state.errors}/>
@@ -90,7 +92,10 @@ AvailableProjects.propTypes = {
     stage: PropTypes.string
   })).isRequired,
   selected: PropTypes.arrayOf(PropTypes.string).isRequired,
-  selectProject: PropTypes.func.isRequired
+  selectProject: PropTypes.func.isRequired,
+  loaded: PropTypes.bool,
+  timestamp: PropTypes.string,
+  refreshTray: PropTypes.func.isRequired
 }
 
 export default AvailableProjects

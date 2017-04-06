@@ -17,7 +17,7 @@ class Tabs extends Component {
           {this.props.titles.map((title, i) => {
             const classes = classNames('tab', {'active': i === this.state.active})
             return (
-              <button key={title} className={classes} onClick={() => switchTabs(i)}>
+              <button key={title} className={classes} onClick={() => switchTabs(i)} data-locator={`tab-${title}`}>
                 {title}
               </button>
             )

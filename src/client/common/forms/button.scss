@@ -30,6 +30,8 @@
   background-color: $background-color;
   color: $color;
   width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
 
   &:enabled {
     cursor: pointer;

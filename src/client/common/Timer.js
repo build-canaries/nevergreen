@@ -1,4 +1,5 @@
 import {Component, PropTypes} from 'react'
+import {debug} from './Logger'
 
 class Timer extends Component {
   constructor(props) {
@@ -8,15 +9,16 @@ class Timer extends Component {
 
   componentDidMount() {
     const run = () => {
+      this.timeoutId = setTimeout(run, this.props.interval * 1000)
+      debug(`created timeout [${this.timeoutId}] to run in [${this.props.interval}s]`)
       this.props.onTrigger()
-      const id = setTimeout(run, this.props.interval * 1000)
-      this.setState({id})
     }
     run()
   }
 
   componentWillUnmount() {
-    clearTimeout(this.state.id)
+    debug(`clearing timeout [${this.timeoutId}]`)
+    clearTimeout(this.timeoutId)
   }
 
   render() {

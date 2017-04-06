@@ -1,9 +1,0 @@
-@import '../../common/forms/button';
-@import '../../common/responsive';
-
-.tray-sub-bar {
-  .show-projects {
-    @include button();
-    @include button-icon('list');
-  }
-}

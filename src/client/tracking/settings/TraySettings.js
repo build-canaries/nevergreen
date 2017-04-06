@@ -7,11 +7,13 @@ import './tray-settings.scss'
 class TraySettings extends Component {
   constructor(props) {
     super(props)
-    this.state = {newName: props.name, newUsername: props.username, newPassword: '', updatingPassword: false}
+    this.state = {newName: props.name, newUsername: props.username, newPassword: '', updatingPassword: false, credentialsChanged: false}
   }
 
   componentWillUnmount() {
-    this.props.refreshTray()
+    if (this.state.credentialsChanged) {
+      this.props.refreshTray()
+    }
   }
 
   render() {
@@ -19,7 +21,10 @@ class TraySettings extends Component {
     const setName = () => this.props.setTrayName(this.props.trayId, this.state.newName)
     const generateRandomName = () => this.setState({newName: _.lowerCase(nameGenerator().spaced)}, () => setName())
     const usernameChanged = (evt) => this.setState({newUsername: evt.target.value})
-    const setUsername = () => this.props.setTrayUsername(this.props.trayId, this.state.newUsername)
+    const setUsername = () => {
+      this.setState({credentialsChanged: this.props.username !== this.state.newUsername})
+      this.props.setTrayUsername(this.props.trayId, this.state.newUsername)
+    }
     const passwordChanged = (evt) => this.setState({newPassword: evt.target.value})
     const existingPassword = this.props.password ? '*******' : ''
     const password = this.state.updatingPassword ? this.state.newPassword : existingPassword
@@ -28,7 +33,7 @@ class TraySettings extends Component {
     const changePassword = () => this.setState({updatingPassword: true})
     const setPassword = () => {
       this.props.encryptPassword(this.props.trayId, this.state.newPassword, this.props.pendingRequest)
-      this.setState({updatingPassword: false, newPassword: ''})
+      this.setState({updatingPassword: false, newPassword: '', credentialsChanged: true})
     }
 
     return (
