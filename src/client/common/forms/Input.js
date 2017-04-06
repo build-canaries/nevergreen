@@ -54,6 +54,10 @@ class Input extends Component {
       </label>
     )
   }
+
+  focus() {
+    this.node.focus()
+  }
 }
 
 Input.defaultProps = {

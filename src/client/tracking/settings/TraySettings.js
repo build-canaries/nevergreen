@@ -16,6 +16,12 @@ class TraySettings extends Component {
     }
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (!prevState.updatingPassword && this.state.updatingPassword) {
+      this.passwordInput.focus()
+    }
+  }
+
   render() {
     const nameChanged = (evt) => this.setState({newName: evt.target.value})
     const setName = () => this.props.setTrayName(this.props.trayId, this.state.newName)
@@ -48,7 +54,7 @@ class TraySettings extends Component {
           <span>username</span>
         </Input>
         <Input className='existing-password' value={password} onChange={passwordChanged} onEnter={setPassword}
-               readOnly={!this.state.updatingPassword}>
+               readOnly={!this.state.updatingPassword} ref={(node) => this.passwordInput = node}>
           <span>password</span>
         </Input>
         {this.state.updatingPassword
