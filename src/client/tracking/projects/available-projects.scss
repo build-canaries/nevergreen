@@ -56,8 +56,14 @@
   }
 
   .project-filter-input {
+    padding-top: 1em;
+
     span {
       color: $mid-grey;
+    }
+
+    @include respond-to(tablet, desktop) {
+      padding-top: 0;
     }
   }
 
