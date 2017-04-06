@@ -64,17 +64,17 @@
   }
 
   .random {
-    @include button();
+    @include button($off-black, $white, $light-grey);
     @include button-icon('dice');
   }
 
   .change-password-button {
-    @include button();
+    @include button($off-black, $white, $light-grey);
     @include button-icon('unlocked');
   }
 
   .cancel {
-    @include button();
+    @include button($off-black, $white, $light-grey);
     @include button-icon('cross');
   }
 

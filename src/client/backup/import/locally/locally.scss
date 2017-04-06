@@ -33,7 +33,7 @@
   }
 
   .import-button {
-    @include button($off-white, $blue);
+    @include button();
     @include button-icon('floppy-disk');
   }
 }

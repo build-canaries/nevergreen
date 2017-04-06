@@ -13,7 +13,7 @@
   }
 }
 
-@mixin button($color:$off-black, $background-color:$white) {
+@mixin button($color:$off-white, $background-color:$blue, $border-color:$background-color) {
   @include font-scale(1);
 
   display: block;
@@ -22,7 +22,7 @@
   white-space: nowrap;
   vertical-align: middle;
   user-select: none;
-  border: 0;
+  border: 1px solid $border-color;
   padding: 0.5em 1em;
   border-radius: 2px;
   text-transform: uppercase;
@@ -41,6 +41,7 @@
     &:hover,
     &:focus {
       background-color: darken($background-color, 8%);
+      border-color: darken($border-color, 8%);
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.26);
       border-radius: 0;
     }

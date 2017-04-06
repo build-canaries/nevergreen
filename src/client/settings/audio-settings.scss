@@ -27,7 +27,7 @@
   }
 
   .test-sound-fx {
-    @include button();
+    @include button($off-black, $white, $light-grey);
 
     margin-top: 1em;
 

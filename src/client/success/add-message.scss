@@ -32,7 +32,7 @@
   }
 
   .add {
-    @include button($off-white, $blue);
+    @include button();
     @include button-icon('plus');
 
     margin-top: 1em;

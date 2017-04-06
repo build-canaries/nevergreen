@@ -10,7 +10,7 @@
 
   .show-settings,
   .refresh {
-    @include button($off-white, $blue);
+    @include button();
 
     margin-bottom: 1em;
 

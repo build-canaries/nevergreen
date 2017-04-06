@@ -33,7 +33,7 @@
   }
 
   .copy {
-    @include button($off-white, $blue);
+    @include button();
     @include button-icon('paste');
   }
 }
