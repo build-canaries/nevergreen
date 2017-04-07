@@ -38,7 +38,8 @@
       border-radius: 0;
     }
 
-    &.active {
+    &:disabled {
+      cursor: inherit;
       border-top-color: $blue;
       border-bottom-color: $white;
       background-color: $white;

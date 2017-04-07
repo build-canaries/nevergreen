@@ -1,5 +1,4 @@
 import React, {Children, Component, PropTypes} from 'react'
-import classNames from 'classnames'
 import './tabs.scss'
 
 class Tabs extends Component {
@@ -15,9 +14,9 @@ class Tabs extends Component {
       <div className='tabs'>
         <div className='tab-bar'>
           {this.props.titles.map((title, i) => {
-            const classes = classNames('tab', {'active': i === this.state.active})
+            const isActive = i === this.state.active
             return (
-              <button key={title} className={classes} onClick={() => switchTabs(i)} data-locator={`tab-${title}`}>
+              <button key={title} className='tab' onClick={() => switchTabs(i)} disabled={isActive} data-locator={`tab-${title}`}>
                 {title}
               </button>
             )
