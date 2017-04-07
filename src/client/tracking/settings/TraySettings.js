@@ -60,7 +60,7 @@ class TraySettings extends Component {
         {this.state.updatingPassword
           ? <span>
               <button className='cancel' onClick={cancel}>cancel</button>
-              <button className='update' onClick={setPassword}>update</button>
+              <button className='update' onClick={setPassword}>update password</button>
             </span>
           : <button className='change-password-button' onClick={changePassword}>change password</button>
         }
