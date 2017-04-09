@@ -12,9 +12,10 @@
 
 (facts "it fetches projects"
        (fact "with authentication"
-             (subject/fetch-tray {:url valid-url :username "a-user" :password "encrypted-password"}) => (contains (list (contains {:name       "project-1"
-                                                                                                                                   :prognosis  :sick
-                                                                                                                                   :project-id anything})))
+             (subject/fetch-tray {:url valid-url :username "a-user" :password "encrypted-password"}) => (contains (list (contains {:name        "project-1"
+                                                                                                                                   :prognosis   :sick
+                                                                                                                                   :project-id  anything
+                                                                                                                                   :server-type anything})))
              (provided
                (parser/get-projects ..stream.. anything) => [{:name "project-1" :web-url "project-1" :prognosis :sick}]
                (crypt/decrypt "encrypted-password") => password
@@ -22,9 +23,10 @@
                (http/http-get valid-url ..auth-header..) => ..stream..))
 
        (fact "without authentication"
-             (subject/fetch-tray {:url valid-url}) => (contains (list (contains {:name       "project-1"
-                                                                                 :prognosis  :sick
-                                                                                 :project-id anything})))
+             (subject/fetch-tray {:url valid-url}) => (contains (list (contains {:name        "project-1"
+                                                                                 :prognosis   :sick
+                                                                                 :project-id  anything
+                                                                                 :server-type anything})))
              (provided
                (parser/get-projects ..stream.. anything) => [{:name "project-1" :web-url "project-1" :prognosis :sick}]
                (http/http-get valid-url nil) => ..stream..
@@ -32,9 +34,10 @@
                (security/basic-auth-header anything anything) => anything :times 0))
 
        (fact "without authentication if blank username and password"
-             (subject/fetch-tray {:url valid-url :username "" :password ""}) => (contains (list (contains {:name       "project-1"
-                                                                                                           :prognosis  :sick
-                                                                                                           :project-id anything})))
+             (subject/fetch-tray {:url valid-url :username "" :password ""}) => (contains (list (contains {:name        "project-1"
+                                                                                                           :prognosis   :sick
+                                                                                                           :project-id  anything
+                                                                                                           :server-type anything})))
              (provided
                (parser/get-projects ..stream.. anything) => [{:name "project-1" :web-url "project-1" :prognosis :sick}]
                (http/http-get valid-url nil) => ..stream..
@@ -89,15 +92,15 @@
 
 (facts "gets the server type"
        (fact "converts known server value to a symbol"
-             (subject/get-server-type {:serverType "go"}) => :go)
+             (subject/get-server-type {:server-type "go"}) => :go)
 
        (fact "auto detects if blank"
-             (subject/get-server-type {:serverType "" :url "some-url"}) => ..server..
+             (subject/get-server-type {:server-type "" :url "some-url"}) => ..server..
              (provided
                (servers/detect-server "some-url") => ..server..))
 
        (fact "auto detects if unknown value"
-             (subject/get-server-type {:serverType "foo-bar" :url "some-url"}) => ..server..
+             (subject/get-server-type {:server-type "foo-bar" :url "some-url"}) => ..server..
              (provided
                (servers/detect-server "some-url") => ..server..)))
 

@@ -11,6 +11,7 @@ import {
   HIGHLIGHT_TRAY,
   CLEAR_TRAY_HIGHLIGHT,
   SET_TRAY_NAME,
+  SET_SERVER_TYPE,
   SET_TRAY_USERNAME
 } from '../actions/TrackingActions'
 import {INITIALISED} from '../actions/NevergreenActions'
@@ -52,7 +53,7 @@ export function reduce(state = DefaultState, action) {
     case PROJECTS_FETCHED:
       return state.update(action.trayId, (tray) =>
         tray.withMutations((map) =>
-          map.set('loaded', true).set('timestamp', action.timestamp).delete('errors').delete('pendingRequest')))
+          map.set('loaded', true).set('timestamp', action.timestamp).set('serverType', action.serverType).delete('errors').delete('pendingRequest')))
 
     case PASSWORD_ENCRYPT_ERROR:
     case PROJECTS_FETCH_ERROR:
@@ -62,6 +63,9 @@ export function reduce(state = DefaultState, action) {
 
     case SET_TRAY_NAME:
       return state.update(action.trayId, (tray) => tray.set('name', action.name))
+
+    case SET_SERVER_TYPE:
+      return state.update(action.trayId, (tray) => tray.set('serverType', action.serverType))
 
     case SET_TRAY_USERNAME:
       return state.update(action.trayId, (tray) => tray.set('username', action.username))

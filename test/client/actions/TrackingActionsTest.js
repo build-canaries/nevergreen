@@ -205,6 +205,13 @@ describe('TrackingActions', function () {
       const actual = TrackingActions.projectsFetched('irrelevant', [])
       expect(actual).to.have.property('timestamp', 'some-timestamp')
     })
+
+    it('should return the server type', function () {
+      const actual = TrackingActions.projectsFetched('irrelevant', [{
+        serverType: 'some-type'
+      }])
+      expect(actual).to.have.property('serverType', 'some-type')
+    })
   })
 
   describe('projects fetch error', function () {
@@ -240,6 +247,24 @@ describe('TrackingActions', function () {
     it('should return the tray name', function () {
       const actual = TrackingActions.setTrayName('irrelevant', 'some-name')
       expect(actual).to.have.property('name', 'some-name')
+    })
+  })
+
+  describe('set server type', function () {
+
+    it('should return the correct type', function () {
+      const actual = TrackingActions.setServerType()
+      expect(actual).to.have.property('type', TrackingActions.SET_SERVER_TYPE)
+    })
+
+    it('should return the tray id', function () {
+      const actual = TrackingActions.setServerType('some-tray-id')
+      expect(actual).to.have.property('trayId', 'some-tray-id')
+    })
+
+    it('should return the server type', function () {
+      const actual = TrackingActions.setServerType('irrelevant', 'some-type')
+      expect(actual).to.have.property('serverType', 'some-type')
     })
   })
 

@@ -5,18 +5,19 @@ import {reduce} from '../../../src/client/reducers/TraysReducer'
 import {INITIALISED} from '../../../src/client/actions/NevergreenActions'
 import {IMPORT_SUCCESS} from '../../../src/client/actions/ImportActions'
 import {
-  TRAY_ADDED,
-  REMOVE_TRAY,
-  ENCRYPTING_PASSWORD,
-  PROJECTS_FETCHING,
-  PASSWORD_ENCRYPTED,
-  PROJECTS_FETCHED,
-  PASSWORD_ENCRYPT_ERROR,
-  PROJECTS_FETCH_ERROR,
-  HIGHLIGHT_TRAY,
   CLEAR_TRAY_HIGHLIGHT,
+  ENCRYPTING_PASSWORD,
+  HIGHLIGHT_TRAY,
+  PASSWORD_ENCRYPT_ERROR,
+  PASSWORD_ENCRYPTED,
+  PROJECTS_FETCH_ERROR,
+  PROJECTS_FETCHED,
+  PROJECTS_FETCHING,
+  REMOVE_TRAY,
+  SET_SERVER_TYPE,
+  SET_TRAY_NAME,
   SET_TRAY_USERNAME,
-  SET_TRAY_NAME
+  TRAY_ADDED
 } from '../../../src/client/actions/TrackingActions'
 import Immutable from 'immutable'
 
@@ -199,6 +200,13 @@ describe('TraysReducer', function () {
       expect(newState).to.have.property('trayId').that.has.property('timestamp', 'some-timestamp')
     })
 
+    it('should set server type', function () {
+      const existingState = Immutable.fromJS({trayId: {}})
+      const action = {type: PROJECTS_FETCHED, trayId: 'trayId', serverType: 'some-type'}
+      const newState = reduce(existingState, action)
+      expect(newState).to.have.property('trayId').that.has.property('serverType', 'some-type')
+    })
+
     it('should remove any errors', function () {
       const existingState = Immutable.fromJS({trayId: {errors: ['some-error']}})
       const action = {type: PROJECTS_FETCHED, trayId: 'trayId'}
@@ -269,6 +277,16 @@ describe('TraysReducer', function () {
       const action = {type: SET_TRAY_NAME, trayId: 'trayId', name: 'some-new-name'}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('trayId').that.has.property('name', 'some-new-name')
+    })
+  })
+
+  describe('set server type', function () {
+
+    it('should set the server type', function () {
+      const existingState = Immutable.fromJS({trayId: {serverType: 'some-type'}})
+      const action = {type: SET_SERVER_TYPE, trayId: 'trayId', serverType: 'some-new-type'}
+      const newState = reduce(existingState, action)
+      expect(newState).to.have.property('trayId').that.has.property('serverType', 'some-new-type')
     })
   })
 

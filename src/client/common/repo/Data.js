@@ -36,6 +36,7 @@ export const SCHEMA = {
             trayId: {required: true, type: 'string'},
             url: {required: true, type: 'string'},
             name: {type: 'string'},
+            serverType: {type: 'string'},
             username: {type: ['string', 'null']},
             password: {type: ['string', 'null']},
             timestamp: {type: ['string', 'null']}

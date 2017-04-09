@@ -22,6 +22,9 @@
 (defn- add-project-ids [projects]
   (map #(assoc % :project-id (generate-project-id %)) projects))
 
+(defn- add-server-type [server-type projects]
+  (map #(assoc % :server-type server-type) projects))
+
 (defn filter-by-ids [ids projects]
   (filter #(in? ids (:project-id %)) projects))
 
@@ -39,11 +42,11 @@
   (if-not (or (blank? username) (blank? password))
     (security/basic-auth-header username password)))
 
-(defn get-server-type [{:keys [serverType url]}]
-  (let [server-type (keyword serverType)]
-    (if (servers/unknown-server? server-type)
+(defn get-server-type [{:keys [server-type url]}]
+  (let [server-keyword (keyword server-type)]
+    (if (servers/unknown-server? server-keyword)
       (servers/detect-server url)
-      server-type)))
+      server-keyword)))
 
 (defn- add-tray-id [tray-id projects]
   (map #(merge {:tray-id tray-id} %) projects))
@@ -56,7 +59,8 @@
       (parser/get-projects
         (http-get (:url tray) (set-auth-header (:username tray) decrypted-password))
         {:normalise true :server server-type})
-      (add-project-ids))))
+      (add-project-ids)
+      (add-server-type server-type))))
 
 (defn get-all [trays]
   (if (= (count trays) 1)

@@ -1,0 +1,46 @@
+@import '../variables';
+@import '../typography';
+@import '../responsive';
+
+.drop-down {
+  display: block;
+  width: 100%;
+
+  @include respond-to(tablet, desktop) {
+    display: inline-block;
+    width: auto;
+  }
+
+  span {
+    @include font-scale(1);
+
+    display: inline-block;
+
+    @include respond-to(tablet, desktop) {
+      margin: 0.5em 1em 0.5em 0;
+    }
+  }
+
+  select {
+    @include font-scale(1);
+
+    width: 100%;
+    margin-top: 0.5em;
+    background-color: $white;
+    border-color: $light-grey;
+    box-shadow: $shadow;
+
+    &:focus {
+      outline: none;
+
+      &:read-write {
+        border-bottom-color: $blue;
+      }
+    }
+
+    @include respond-to(tablet, desktop) {
+      width: auto;
+      margin-top: 0;
+    }
+  }
+}

@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import Input from '../../common/forms/Input'
+import DropDown from '../../common/forms/DropDown'
 import nameGenerator from 'project-name-generator'
 import _ from 'lodash'
 import './tray-settings.scss'
@@ -26,6 +27,7 @@ class TraySettings extends Component {
     const nameChanged = (evt) => this.setState({newName: evt.target.value})
     const setName = () => this.props.setTrayName(this.props.trayId, this.state.newName)
     const generateRandomName = () => this.setState({newName: _.lowerCase(nameGenerator().spaced)}, () => setName())
+    const serverTypeChange = (evt) => this.props.setServerType(this.props.trayId, evt.target.value)
     const usernameChanged = (evt) => this.setState({newUsername: evt.target.value})
     const setUsername = () => {
       this.setState({credentialsChanged: this.props.username !== this.state.newUsername})
@@ -49,6 +51,20 @@ class TraySettings extends Component {
           <span>name</span>
         </Input>
         <button className='random' onClick={generateRandomName} data-locator='generate-random'>randomise</button>
+        <DropDown className='server-type' title='server type' value={this.props.serverType} onChange={serverTypeChange}>
+          <option value=''>Auto detect</option>
+          <option value='circle'>CircleCI</option>
+          <option value='cruise-control'>CruiseControl</option>
+          <option value='cruise-control-net'>CruiseControl.net</option>
+          <option value='cruise-control-rb'>CruiseControl.rb</option>
+          <option value='go'>GoCD</option>
+          <option value='hudson'>Hudson</option>
+          <option value='jenkins'>Jenkins</option>
+          <option value='snap'>Snap CI</option>
+          <option value='solano'>Solano CI</option>
+          <option value='team-city'>TeamCity</option>
+          <option value='travis'>Travis CI</option>
+        </DropDown>
         <Input className='tray-settings-username' value={this.state.newUsername} onChange={usernameChanged} onBlur={setUsername}
                onEnter={setUsername}>
           <span>username</span>
@@ -82,8 +98,10 @@ TraySettings.propTypes = {
   url: PropTypes.string.isRequired,
   username: PropTypes.string,
   password: PropTypes.string,
+  serverType: PropTypes.string,
   removeTray: PropTypes.func.isRequired,
   setTrayName: PropTypes.func.isRequired,
+  setServerType: PropTypes.func.isRequired,
   setTrayUsername: PropTypes.func.isRequired,
   encryptPassword: PropTypes.func.isRequired,
   refreshTray: PropTypes.func.isRequired,

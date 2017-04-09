@@ -71,7 +71,9 @@ export function projectsFetching(trayId, request) {
 
 export const PROJECTS_FETCHED = 'PROJECTS_FETCHED'
 export function projectsFetched(trayId, projects) {
-  return {type: PROJECTS_FETCHED, trayId, data: Immutable.fromJS(projects), timestamp: moment().format()}
+  const data = Immutable.fromJS(projects)
+  const serverType = data.first() ? data.first().get('serverType') : ''
+  return {type: PROJECTS_FETCHED, trayId, data, serverType, timestamp: moment().format()}
 }
 
 export const PROJECTS_FETCH_ERROR = 'PROJECTS_FETCH_ERROR'
@@ -82,6 +84,11 @@ export function projectsFetchError(trayId, errors) {
 export const SET_TRAY_NAME = 'SET_TRAY_NAME'
 export function setTrayName(trayId, name) {
   return {type: SET_TRAY_NAME, trayId, name}
+}
+
+export const SET_SERVER_TYPE = 'SET_SERVER_TYPE'
+export function setServerType(trayId, serverType) {
+  return {type: SET_SERVER_TYPE, trayId, serverType}
 }
 
 export const SET_TRAY_USERNAME = 'SET_TRAY_USERNAME'

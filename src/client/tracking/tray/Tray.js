@@ -48,8 +48,9 @@ class Tray extends Component {
         <div data-locator='tray'>
           <Tabs titles={['projects', 'settings']}>
             {projectsView}
-            <TraySettingsContainer trayId={this.props.trayId} name={this.props.name} url={this.props.url} username={this.props.username}
-                                   password={this.props.password} pendingRequest={this.props.pendingRequest} refreshTray={refreshTray}/>
+            <TraySettingsContainer trayId={this.props.trayId} name={this.props.name} serverType={this.props.serverType} url={this.props.url}
+                                   username={this.props.username} password={this.props.password} pendingRequest={this.props.pendingRequest}
+                                   refreshTray={refreshTray}/>
           </Tabs>
         </div>
       </Container>
@@ -66,6 +67,7 @@ Tray.propTypes = {
   name: PropTypes.string,
   username: PropTypes.string,
   password: PropTypes.string,
+  serverType: PropTypes.string,
   projects: PropTypes.arrayOf(PropTypes.object).isRequired,
   timestamp: PropTypes.string,
   selected: PropTypes.arrayOf(PropTypes.string).isRequired,

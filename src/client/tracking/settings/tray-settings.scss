@@ -1,12 +1,14 @@
 @import '../../common/variables';
 @import '../../common/responsive';
+@import '../../common/typography';
 @import '../../common/fonts/icon-font';
 @import '../../common/forms/button';
 
 .tray-settings {
   .tray-settings-name,
   .tray-settings-username,
-  .existing-password {
+  .existing-password,
+  .server-type {
     display: block;
   }
 
@@ -18,7 +20,8 @@
   }
 
   .tray-settings-username,
-  .existing-password {
+  .existing-password,
+  .server-type {
     padding-top: 1.5em;
   }
 
