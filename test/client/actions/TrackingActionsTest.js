@@ -1,5 +1,5 @@
 import {proxyquire} from '../UnitSpec'
-import {describe, it, before, beforeEach} from 'mocha'
+import {before, beforeEach, describe, it} from 'mocha'
 import {expect} from 'chai'
 import sinon from 'sinon'
 
@@ -10,8 +10,8 @@ describe('TrackingActions', function () {
     SecurityGateway = {}
     ProjectsGateway = {}
     Gateway = {}
-    moment = sinon.stub().returns({format: sinon.stub()})
-    nameGenerator = sinon.stub().returns({spaced: ''})
+    moment = sinon.stub()
+    nameGenerator = sinon.stub()
     TrackingActions = proxyquire('../../src/client/actions/TrackingActions', {
       '../common/gateways/SecurityGateway': SecurityGateway,
       '../common/gateways/ProjectsGateway': ProjectsGateway,
@@ -22,8 +22,10 @@ describe('TrackingActions', function () {
   })
 
   beforeEach(function () {
-    moment().format.reset()
+    moment.reset()
+    moment.returns({format: sinon.stub()})
     nameGenerator.reset()
+    nameGenerator.returns({spaced: ''})
   })
 
   describe('tray added', function () {
