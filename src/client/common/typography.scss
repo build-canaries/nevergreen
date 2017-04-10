@@ -1,7 +1,9 @@
-@import '~modularscale-sass/stylesheets/modular-scale';
+@import '~modularscale-sass/stylesheets/modularscale';
 
-$ms-base: 1rem;
-$ms-ratio: $minor-third;
+$modularscale: (
+  base: 1rem,
+  ratio: $minor-third
+);
 
 @mixin font-scale($value) {
   font-size: ms($value);
