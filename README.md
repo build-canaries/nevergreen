@@ -26,9 +26,6 @@ Already using Nevergreen? Please help us out by taking this [short usage survey]
 | Client | [![Javascript Dependencies Status](https://david-dm.org/build-canaries/nevergreen.svg)](https://david-dm.org/build-canaries/nevergreen) |
 | Compliance | [![Dependency Status](https://dependencyci.com/github/build-canaries/nevergreen/badge)](https://dependencyci.com/github/build-canaries/nevergreen) |
 
-We are usually hanging out on [chat](https://gitter.im/build-canaries/nevergreen) if you have any questions or comments.
-[![Join the chat at https://gitter.im/build-canaries/nevergreen](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/build-canaries/nevergreen?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
 ## Contributing
 
 You can run nevergreen locally by just running the ```develop.sh``` script. For more info see the [Contributing](https://github.com/build-canaries/nevergreen/wiki/contributing) section of our wiki.
