@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import Schema from './Schema'
 import ImportContainer from './import/ImportContainer'
 import ExportContainer from './export/ExportContainer'

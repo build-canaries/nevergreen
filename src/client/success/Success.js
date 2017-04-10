@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import AddedMessages from './AddedMessages'
 import AddedImages from './AddedImages'
 import AddMessage from './AddMessage'

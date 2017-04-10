@@ -1,4 +1,5 @@
-import React, {Component, PropTypes, Children} from 'react'
+import React, {Component, Children} from 'react'
+import PropTypes from 'prop-types'
 import Resizable from '../common/Resizable'
 import ScaleText from 'scale-text'
 import './scaled-grid.scss'

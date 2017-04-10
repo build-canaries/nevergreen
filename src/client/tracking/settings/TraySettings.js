@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import Input from '../../common/forms/Input'
 import DropDown from '../../common/forms/DropDown'
 import nameGenerator from 'project-name-generator'

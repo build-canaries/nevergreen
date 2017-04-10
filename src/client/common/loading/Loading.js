@@ -1,4 +1,5 @@
-import React, {Component, PropTypes, Children} from 'react'
+import React, {Children, Component} from 'react'
+import PropTypes from 'prop-types'
 import './loading.scss'
 
 class Loading extends Component {

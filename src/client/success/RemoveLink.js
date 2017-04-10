@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import Shortcut from '../common/Shortcut'
 import './remove-link.scss'
 
