@@ -5,4 +5,4 @@ npm run lint
 npm test
 
 # run the server tests
-./lein.sh midje 'nevergreen.*'
+JVM_OPTS="-Dorg.slf4j.simpleLogger.defaultLogLevel=off" ./lein.sh midje 'nevergreen.*'

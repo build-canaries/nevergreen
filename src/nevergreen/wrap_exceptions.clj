@@ -20,7 +20,7 @@
     {:status (get-status data) :body (get-body data) :headers headers}))
 
 (defn handle-unknown [e]
-  (.printStackTrace e)
+  (log/error e "An unknown exception was thrown")
   {:status 500 :body (.getMessage e) :headers headers})
 
 (defn wrap-exceptions [app]
