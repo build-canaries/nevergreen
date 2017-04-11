@@ -19,6 +19,7 @@
   margin: 0 0.7em 0 -2em;
   cursor: pointer;
   top: -0.3em;
+  font-size: 100%;
 
   &::before {
     transition: transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
