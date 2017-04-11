@@ -40,8 +40,8 @@ class AvailableProjects extends Component {
       }
     }
 
-    const filteredProjects = this.props.projects.filter((value) => {
-      return this.state.filter ? value.name.match(this.state.filter) : true
+    const filteredProjects = this.props.projects.filter((project) => {
+      return this.state.filter ? `${project.name} ${project.stage || ''}`.match(this.state.filter) : true
     })
 
     const scrollToTop = () => this.node.scrollIntoView()
