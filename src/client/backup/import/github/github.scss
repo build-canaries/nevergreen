@@ -28,6 +28,10 @@
     @include respond-to(tablet, desktop) {
       display: flex;
 
+      span {
+        width: 6em;
+      }
+
       input {
         flex: 1;
         align-self: center;

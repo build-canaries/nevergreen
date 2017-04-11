@@ -10,6 +10,17 @@
   .existing-password,
   .server-type {
     display: block;
+
+    @include respond-to(tablet, desktop) {
+      span {
+        width: 5em;
+      }
+
+      input,
+      select {
+        width: 15em;
+      }
+    }
   }
 
   .tray-settings-name,

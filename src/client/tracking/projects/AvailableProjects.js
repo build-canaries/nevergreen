@@ -62,7 +62,7 @@ class AvailableProjects extends Component {
             </button>
           </fieldset>
           <div className='project-filter'>
-            <Input className='project-filter-input' onChange={updateFilter}>
+            <Input className='project-filter-input' onChange={updateFilter} placeholder='regex'>
               <span>filter</span>
             </Input>
           </div>

@@ -50,10 +50,6 @@
       margin-top: 0;
     }
 
-    &:read-only {
-      padding-right: 1em;
-    }
-
     &:disabled {
       color: $mid-grey;
       border-bottom-color: $mid-grey;

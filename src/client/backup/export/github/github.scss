@@ -40,4 +40,14 @@
   .gist-url {
     padding-top: 1.5em;
   }
+
+  .oauth-token,
+  .description,
+  .gist-url {
+    @include respond-to(tablet, desktop) {
+      span {
+        width: 6em;
+      }
+    }
+  }
 }

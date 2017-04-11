@@ -9,6 +9,7 @@
   .toggles {
     display: block;
     width: 100%;
+    padding-top: 1em;
 
     @include respond-to(tablet, desktop) {
       display: inline-block;
@@ -22,13 +23,17 @@
 
   .exclude-all {
     @include button-icon('checkbox-unchecked');
+
+    margin-top: 1em;
+
+    @include respond-to(tablet, desktop) {
+      margin-top: 0;
+    }
   }
 
   .include-all,
   .exclude-all {
     @include button($off-black, $white, $light-grey);
-
-    margin-top: 1em;
 
     @include respond-to(tablet, desktop) {
       margin-right: 1em;
