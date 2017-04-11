@@ -10,8 +10,8 @@ class Checkbox extends Component {
     const checked = this.props.enabled || false
 
     return (
-      <label className='label-checkbox'>
-        <input className='checkbox' type='checkbox' checked={checked} onChange={onChange} {...inputProps}/>
+      <label className='checkbox'>
+        <input type='checkbox' checked={checked} onChange={onChange} {...inputProps}/>
         {this.props.children}
       </label>
     )
