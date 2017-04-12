@@ -27,7 +27,6 @@ Settings.propTypes = {
   setPlayBrokenBuildSoundFx: PropTypes.func.isRequired,
   setBrokenBuildSoundFx: PropTypes.func.isRequired,
   refreshTime: PropTypes.number.isRequired,
-  minRefreshTime: PropTypes.number.isRequired,
   setRefreshTime: PropTypes.func.isRequired
 }
 

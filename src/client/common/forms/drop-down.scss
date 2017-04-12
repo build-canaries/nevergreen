@@ -27,16 +27,9 @@
     width: 100%;
     margin-top: 0.5em;
     background-color: $white;
-    border-color: $light-grey;
+    border: 1px solid $light-grey;
     box-shadow: $shadow;
-
-    &:focus {
-      outline: none;
-
-      &:read-write {
-        border-bottom-color: $blue;
-      }
-    }
+    padding: 0.1em 0.5em;
 
     @include respond-to(tablet, desktop) {
       width: auto;
