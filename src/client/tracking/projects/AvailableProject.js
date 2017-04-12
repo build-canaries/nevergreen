@@ -19,7 +19,7 @@ class AvailableProject extends Component {
 
     return (
       <li className={listClasses}>
-        <Checkbox enabled={this.props.selected} onToggle={this.props.selectProject} disabled={this.props.removed}>
+        <Checkbox checked={this.props.selected} onToggle={this.props.selectProject} disabled={this.props.removed}>
           <span>{displayName}</span>
           {info}
         </Checkbox>

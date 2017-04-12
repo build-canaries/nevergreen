@@ -61,14 +61,14 @@ class AudioSettings extends Component {
     return (
       <Container title='audio' className='audio'>
         <fieldset>
-          <Checkbox enabled={this.props.playBrokenBuildSoundFx} onToggle={toggleBrokenSounds} data-locator='play-sounds'
+          <Checkbox checked={this.props.playBrokenBuildSoundFx} onToggle={toggleBrokenSounds} data-locator='play-sounds'
                     disabled={this.state.playing}>
             <span>play a sound when a build breaks</span>
           </Checkbox>
           <div className='sound-fx'>
             <Input type='url' className='sound-fx-input' placeholder='audio file URL' onChange={updateSoundFx} value={this.state.soundFx}
                    onBlur={setSoundFx} onEnter={setSoundFx} required={this.props.playBrokenBuildSoundFx} onValidation={onValidation}
-                   readOnly={this.state.playing}>
+                   disabled={this.state.playing}>
               <span>broken build sound</span>
             </Input>
             <button className={playButtonClasses} onClick={this.state.playing ? stop : play} disabled={playingDisabled}>

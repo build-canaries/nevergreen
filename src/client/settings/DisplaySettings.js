@@ -11,10 +11,10 @@ class DisplaySettings extends Component {
 
     return (
       <Container title='display' className='display'>
-        <Checkbox enabled={this.props.showTrayName} onToggle={toggleTrayName} data-locator='show-names'>
+        <Checkbox checked={this.props.showTrayName} onToggle={toggleTrayName} data-locator='show-names'>
           <span>show tray name</span>
         </Checkbox>
-        <Checkbox enabled={this.props.showBrokenBuildTime} onToggle={toggleBrokenBuilds} data-locator='show-times'>
+        <Checkbox checked={this.props.showBrokenBuildTime} onToggle={toggleBrokenBuilds} data-locator='show-times'>
           <span>show broken build time</span>
         </Checkbox>
       </Container>

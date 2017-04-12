@@ -5,13 +5,12 @@ import './checkbox.scss'
 
 class Checkbox extends Component {
   render() {
-    const inputProps = _.omit(this.props, ['children', 'enabled', 'onToggle'])
+    const inputProps = _.omit(this.props, ['children', 'onToggle'])
     const onChange = (event) => this.props.onToggle(event.target.checked)
-    const checked = this.props.enabled || false
 
     return (
       <label className='checkbox'>
-        <input type='checkbox' checked={checked} onChange={onChange} {...inputProps}/>
+        <input type='checkbox' onChange={onChange} {...inputProps}/>
         {this.props.children}
       </label>
     )
@@ -23,7 +22,6 @@ Checkbox.propTypes = {
     PropTypes.arrayOf(PropTypes.element),
     PropTypes.element
   ]).isRequired,
-  enabled: PropTypes.bool,
   onToggle: PropTypes.func.isRequired
 }
 
