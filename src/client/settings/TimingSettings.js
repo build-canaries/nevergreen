@@ -11,15 +11,15 @@ class TimingSettings extends Component {
       <Container title='timing'>
         <DropDown title='poll for tray changes every' value={this.props.refreshTime} onChange={setRefreshTime}>
           <option value='5'>5 seconds</option>
-          <option value='11'>11 seconds</option>
-          <option value='31'>31 seconds</option>
-          <option value='61'>1 minute</option>
-          <option value='307'>5 minutes</option>
-          <option value='601'>10 minutes</option>
-          <option value='1801'>30 minutes</option>
-          <option value='3607'>1 hour</option>
-          <option value='43201'>12 hours</option>
-          <option value='86413'>24 hours</option>
+          <option value='10'>10 seconds</option>
+          <option value='30'>30 seconds</option>
+          <option value='60'>1 minute</option>
+          <option value='300'>5 minutes</option>
+          <option value='600'>10 minutes</option>
+          <option value='1800'>30 minutes</option>
+          <option value='3600'>1 hour</option>
+          <option value='43200'>12 hours</option>
+          <option value='86400'>24 hours</option>
         </DropDown>
       </Container>
     )
