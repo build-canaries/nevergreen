@@ -18,16 +18,16 @@
     margin-top: 1em;
 
     @include respond-to(tablet, desktop) {
-      width: auto;
+      width: 7em;
       position: absolute;
-      top: 0.5em;
+      top: 0;
       right: 1em;
     }
   }
 
   .inputs {
     @include respond-to(tablet, desktop) {
-      margin-right: 116px;
+      margin-right: 8em;
     }
   }
 
@@ -43,14 +43,13 @@
 
       input {
         flex-grow: 1;
-        padding-top: 0;
       }
     }
   }
 
   .username,
   .password {
-    margin-top: 1em;
+    margin-top: 1.5em;
 
     @include respond-to(tablet, desktop) {
       display: inline-block;

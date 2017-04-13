@@ -7,6 +7,16 @@
   padding: 0;
 }
 
+:focus {
+  outline: rgba($blue, 0.7) auto;
+}
+
+// removes internal dotted line on focus in Firefox
+:-moz-focusring {
+  color: transparent;
+  text-shadow: 0 0 0 #000;
+}
+
 html,
 body {
   cursor: default;

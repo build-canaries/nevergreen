@@ -31,6 +31,15 @@
     box-shadow: $shadow;
     padding: 0.1em 0.5em;
 
+    &:enabled {
+      &:hover {
+        background-color: darken($white, 8%);
+        border-color: darken($light-grey, 8%);
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.26);
+        border-radius: 0;
+      }
+    }
+
     @include respond-to(tablet, desktop) {
       width: auto;
       margin-top: 0;

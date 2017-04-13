@@ -49,7 +49,7 @@ class Input extends Component {
       <label className={labelClasses}>
         {this.props.children}
         <input onKeyPress={onEnter} onBlur={onBlur} spellCheck={false} autoComplete='off' autoFocus={invalid} {...inputProps}
-               ref={(node) => this.node = node}/>
+               ref={(node) => this.node = node} tabIndex={this.props.readOnly ? -1 : 0}/>
         {this.props.readOnly ? <i className='locked' title='read only'/> : null}
         <Messages className='input-validation-errors' type='error' messages={this.state.errors}/>
       </label>

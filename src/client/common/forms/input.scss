@@ -19,7 +19,7 @@
     display: inline-block;
 
     @include respond-to(tablet, desktop) {
-      margin: 0.5em 1em 0.5em 0;
+      margin-right: 1em;
     }
   }
 
@@ -30,10 +30,9 @@
     border-bottom: 1px solid $mid-grey;
     width: 100%;
     margin-top: 0.5em;
+    padding: 0.2em 0.2em 0.1em;
 
-    &:focus {
-      outline: none;
-
+    &:hover {
       &:read-write {
         border-bottom-color: $blue;
       }
@@ -53,17 +52,6 @@
     &:disabled {
       color: $mid-grey;
       border-bottom-color: $mid-grey;
-    }
-  }
-
-  &.number {
-    input {
-      width: 5rem;
-      display: block;
-
-      @include respond-to(tablet, desktop) {
-        display: inline-block;
-      }
     }
   }
 
