@@ -5,8 +5,8 @@
   @include fill-parent;
 
   display: table;
-  overflow: hidden;
   border-radius: 5px;
+  padding: 1em;
 
   &.healthy-building {
     background-color: $healthy-building;

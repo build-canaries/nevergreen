@@ -1,4 +1,5 @@
 @import '../common/layout';
+@import '../common/variables';
 
 .scaled-grid {
   @include fill-parent;
@@ -8,4 +9,5 @@
 
 .scaled-grid-item {
   float: left;
+  overflow: hidden;
 }

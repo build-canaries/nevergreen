@@ -1,19 +1,20 @@
-import React, {Component, Children} from 'react'
+import React, {Children, Component} from 'react'
 import PropTypes from 'prop-types'
 import Resizable from '../common/Resizable'
-import ScaleText from 'scale-text'
+import {ideal} from './ScaleText'
+import FontMetrics from './FontMetrics'
 import './scaled-grid.scss'
 
-// They need to match those in the CSS
-const tabletBreakpoint = 768
-const desktopBreakpoint = 1440
+// These need to match those in the CSS
+const TABLET_BREAKPOINT = 768
+const DESKTOP_BREAKPOINT = 1440
 
-const childMargin = 5
+const CHILD_MARGIN = 5
 
 function columns(width) {
-  if (width < tabletBreakpoint) {
+  if (width < TABLET_BREAKPOINT) {
     return 1
-  } else if (width < desktopBreakpoint) {
+  } else if (width < DESKTOP_BREAKPOINT) {
     return 2
   } else {
     return 3
@@ -28,7 +29,7 @@ function numberOfColumns(totalNumberOfItems, width) {
   return Math.min(columns(width), totalNumberOfItems)
 }
 
-class AutoGrid extends Component {
+class ScaledGrid extends Component {
   constructor(props) {
     super(props)
     this.state = {childWidth: 0, childHeight: 0, fontSize: 0}
@@ -37,12 +38,12 @@ class AutoGrid extends Component {
 
   childHeight(totalNumberOfItems, width, height) {
     const rows = numberOfRows(totalNumberOfItems, width)
-    return (height - (rows * childMargin * 2)) / rows
+    return Math.floor((height - (rows * CHILD_MARGIN * 2)) / rows)
   }
 
   childWidth(totalNumberOfItems, width) {
     const columns = numberOfColumns(totalNumberOfItems, width)
-    return (width - (columns * childMargin * 2)) / columns
+    return Math.floor((width - (columns * CHILD_MARGIN * 2)) / columns)
   }
 
   calculateChildDimensions() {
@@ -53,7 +54,10 @@ class AutoGrid extends Component {
     const childWidth = this.childWidth(totalNumberOfItems, width)
     const childHeight = this.childHeight(totalNumberOfItems, width, height)
 
-    const fontSize = new ScaleText(this.childrenText, childHeight, childWidth).ideal()
+    const heightScale = this.fontMetrics.height
+    const widthScale = this.fontMetrics.width
+
+    const fontSize = ideal(this.childrenText, childHeight, childWidth, heightScale, widthScale)
 
     this.setState({childWidth, childHeight, fontSize})
   }
@@ -79,32 +83,35 @@ class AutoGrid extends Component {
       width: `${this.state.childWidth}px`,
       height: `${this.state.childHeight}px`,
       fontSize: `${this.state.fontSize}px`,
-      margin: `${childMargin}px`
+      margin: `${CHILD_MARGIN}px`
     }
 
     return (
-      <ul className='scaled-grid' ref={(node) => this.node = node}>
+      <span>
+        <FontMetrics ref={(node) => this.fontMetrics = node}/>
         <Resizable onResize={() => this.calculateChildDimensions()}/>
-        {
-          Children.map(this.props.children, (child, index) => {
-            const getTextContent = (node) => {
-              if (node) {
-                this.childrenText[index] = node.textContent
+        <ul className='scaled-grid' ref={(node) => this.node = node}>
+          {
+            Children.map(this.props.children, (child, index) => {
+              const getTextContent = (node) => {
+                if (node) {
+                  this.childrenText[index] = node.textContent
+                }
               }
-            }
-            return <li className='scaled-grid-item' ref={getTextContent} style={style}>{child}</li>
-          })
-        }
-      </ul>
+              return <li className='scaled-grid-item' ref={getTextContent} style={style}>{child}</li>
+            })
+          }
+        </ul>
+      </span>
     )
   }
 }
 
-AutoGrid.propTypes = {
+ScaledGrid.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.element),
     PropTypes.element
   ]).isRequired
 }
 
-export default AutoGrid
+export default ScaledGrid

@@ -2,7 +2,9 @@
 
 export function debug(data) {
   if (process.env.NODE_ENV !== 'production') {
-    console.debug(data)
+    if (console.debug) {
+      console.debug(data)
+    }
   }
 }
 

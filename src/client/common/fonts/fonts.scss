@@ -25,14 +25,14 @@
 }
 
 @font-face {
-  font-family: Source Code Pro;
+  font-family: Roboto Mono;
   font-weight: 400;
   font-style: normal;
   src:
-    local('Source Code Pro'),
-    local('Source-Code-Pro-regular'),
-    url('common/fonts/Source-Code-Pro-regular/Source-Code-Pro-regular.woff2') format('woff2'),
-    url('common/fonts/Source-Code-Pro-regular/Source-Code-Pro-regular.woff') format('woff'),
-    url('common/fonts/Source-Code-Pro-regular/Source-Code-Pro-regular.ttf') format('truetype'),
-    url('common/fonts/Source-Code-Pro-regular/Source-Code-Pro-regular.svg#SourceCodePro') format('svg');
+    local('Roboto Mono'),
+    local('Roboto-Mono-regular'),
+    url('common/fonts/Roboto-Mono-regular/Roboto-Mono-regular.woff2') format('woff2'),
+    url('common/fonts/Roboto-Mono-regular/Roboto-Mono-regular.woff') format('woff'),
+    url('common/fonts/Roboto-Mono-regular/Roboto-Mono-regular.ttf') format('truetype'),
+    url('common/fonts/Roboto-Mono-regular/Roboto-Mono-regular.svg#RobotoMono') format('svg');
 }
