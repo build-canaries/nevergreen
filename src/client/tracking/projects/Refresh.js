@@ -24,26 +24,20 @@ class SubMenu extends Component {
   render() {
     const updateFetchedTime = () => this.setState({lastFetched: lastFetched(this.props.timestamp)})
 
-    const refreshButton = this.props.loaded ?
-      <button className='refresh' onClick={this.props.refreshTray}>
-        refresh
-        <Shortcut hotkeys={[`r ${this.props.index}`]}/>
-      </button> : null
-
-    const refreshLabel = this.props.loaded ? `projects last refreshed ${this.state.lastFetched} ago` : ''
-
     return (
       <div className='tray-sub-bar'>
         <Timer onTrigger={updateFetchedTime} interval={ONE_MINUTE}/>
-        {refreshButton}
-        <span className='tray-refresh-last-fetch'>{refreshLabel}</span>
+        <button className='refresh' onClick={this.props.refreshTray}>
+          refresh
+          <Shortcut hotkeys={[`r ${this.props.index}`]}/>
+        </button>
+        <span className='tray-refresh-last-fetch'>{`projects last refreshed ${this.state.lastFetched} ago`}</span>
       </div>
     )
   }
 }
 
 SubMenu.propTypes = {
-  loaded: PropTypes.bool,
   index: PropTypes.number.isRequired,
   timestamp: PropTypes.string,
   refreshTray: PropTypes.func.isRequired

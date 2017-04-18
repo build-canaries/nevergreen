@@ -8,10 +8,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(store) {
-  return {trays: store.get('trays').toList().toJS()}
+  return {trayIds: store.get('trays').keySeq().toJS()}
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Tracking)
+export default connect(mapStateToProps, mapDispatchToProps)(Tracking)

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import Container from '../../common/container/Container'
-import AvailableProjects from '../projects/AvailableProjects'
+import AvailableProjectsContainer from '../projects/AvailableProjectsContainer'
 import TraySettingsContainer from '../settings/TraySettingsContainer'
 import Loading from '../../common/loading/Loading'
 import Messages from '../../common/messages/Messages'
@@ -13,12 +13,6 @@ class Tray extends Component {
     this.state = {hidden: false}
   }
 
-  componentDidMount() {
-    if (this.props.projects.length === 0 && this.props.loaded) {
-      this.props.refreshTray(this.props)
-    }
-  }
-
   componentWillUnmount() {
     if (this.props.highlight) {
       this.props.clearTrayHighlight(this.props.trayId)
@@ -26,8 +20,6 @@ class Tray extends Component {
   }
 
   render() {
-    const refreshTray = () => this.props.refreshTray(this.props, this.props.pendingRequest)
-
     let projectsView = null
 
     if (this.props.errors) {
@@ -35,9 +27,7 @@ class Tray extends Component {
     } else {
       projectsView =
         <Loading loaded={this.props.loaded}>
-          <AvailableProjects index={this.props.index} trayId={this.props.trayId} projects={this.props.projects}
-                             selected={this.props.selected} selectProject={this.props.selectProject} loaded={this.props.loaded}
-                             timestamp={this.props.timestamp} refreshTray={refreshTray}/>
+          <AvailableProjectsContainer trayId={this.props.trayId} index={this.props.index}/>
         </Loading>
     }
 
@@ -49,9 +39,7 @@ class Tray extends Component {
         <div data-locator='tray'>
           <Tabs titles={['projects', 'settings']}>
             {projectsView}
-            <TraySettingsContainer trayId={this.props.trayId} name={this.props.name} serverType={this.props.serverType} url={this.props.url}
-                                   username={this.props.username} password={this.props.password} pendingRequest={this.props.pendingRequest}
-                                   refreshTray={refreshTray}/>
+            <TraySettingsContainer trayId={this.props.trayId}/>
           </Tabs>
         </div>
       </Container>
@@ -60,23 +48,14 @@ class Tray extends Component {
 }
 
 Tray.propTypes = {
+  trayId: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
   loaded: PropTypes.bool,
   errors: PropTypes.arrayOf(PropTypes.string),
-  index: PropTypes.number.isRequired,
-  trayId: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
   name: PropTypes.string,
-  username: PropTypes.string,
-  password: PropTypes.string,
-  serverType: PropTypes.string,
-  projects: PropTypes.arrayOf(PropTypes.object).isRequired,
-  timestamp: PropTypes.string,
-  selected: PropTypes.arrayOf(PropTypes.string).isRequired,
-  refreshTray: PropTypes.func.isRequired,
-  selectProject: PropTypes.func.isRequired,
+  url: PropTypes.string.isRequired,
   clearTrayHighlight: PropTypes.func.isRequired,
-  highlight: PropTypes.bool,
-  pendingRequest: PropTypes.object
+  highlight: PropTypes.bool
 }
 
 export default Tray

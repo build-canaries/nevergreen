@@ -11,7 +11,7 @@ class AddTray extends Component {
 
   render() {
     const addTray = () => {
-      this.props.addTray(this.state.url, this.state.username, this.state.password, this.props.existingTrays)
+      this.props.addTray(this.state.url, this.state.username, this.state.password, this.props.existingTrayIds)
       this.setState({url: '', username: '', password: ''})
     }
     const updateUrl = (evt) => this.setState({url: evt.target.value})
@@ -39,7 +39,7 @@ class AddTray extends Component {
 }
 
 AddTray.propTypes = {
-  existingTrays: PropTypes.arrayOf(PropTypes.string).isRequired,
+  existingTrayIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   addTray: PropTypes.func.isRequired
 }
 

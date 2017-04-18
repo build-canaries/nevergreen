@@ -14,7 +14,7 @@ class TraySettings extends Component {
 
   componentWillUnmount() {
     if (this.state.credentialsChanged) {
-      this.props.refreshTray()
+      this.props.refreshTray(this.props, this.props.pendingRequest)
     }
   }
 

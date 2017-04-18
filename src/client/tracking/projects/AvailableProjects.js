@@ -46,9 +46,11 @@ class AvailableProjects extends Component {
 
     const scrollToTop = () => this.node.scrollIntoView()
 
+    const refreshTray = () => this.props.refreshTray(this.props, this.props.pendingRequest)
+
     return (
       <section className='available-projects' data-locator='available-projects' ref={(node) => this.node = node}>
-        <Refresh index={this.props.index} loaded={this.props.loaded} timestamp={this.props.timestamp} refreshTray={this.props.refreshTray}/>
+        <Refresh index={this.props.index} timestamp={this.props.timestamp} refreshTray={refreshTray}/>
         <div className='controls'>
           <fieldset className='toggles'>
             <legend className='visually-hidden'>Available projects</legend>
@@ -85,8 +87,8 @@ class AvailableProjects extends Component {
 }
 
 AvailableProjects.propTypes = {
-  index: PropTypes.number.isRequired,
   trayId: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
   projects: PropTypes.arrayOf(PropTypes.shape({
     projectId: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
@@ -94,9 +96,9 @@ AvailableProjects.propTypes = {
   })).isRequired,
   selected: PropTypes.arrayOf(PropTypes.string).isRequired,
   selectProject: PropTypes.func.isRequired,
-  loaded: PropTypes.bool,
   timestamp: PropTypes.string,
-  refreshTray: PropTypes.func.isRequired
+  refreshTray: PropTypes.func.isRequired,
+  pendingRequest: PropTypes.object
 }
 
 export default AvailableProjects

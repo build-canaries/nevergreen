@@ -4,40 +4,27 @@ import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
 import Tray from '../../../../src/client/tracking/tray/Tray'
-import AvailableProjects from '../../../../src/client/tracking/projects/AvailableProjects'
+import AvailableProjectsContainer from '../../../../src/client/tracking/projects/AvailableProjectsContainer'
 import Messages from '../../../../src/client/common/messages/Messages'
 import sinon from 'sinon'
+import _ from 'lodash'
 
 describe('<Tray/>', function () {
   const DEFAULT_PROPS = {
+    trayId: '',
+    index: 1,
     loaded: null,
     errors: null,
-    index: 1,
-    trayId: '',
-    url: '',
     name: null,
-    username: null,
-    password: null,
-    projects: [],
-    timestamp: null,
-    selected: [],
+    url: '',
     highlight: null,
-    removeTray: () => {
-    },
-    refreshTray: () => {
-    },
-    updateTray: () => {
-    },
-    selectProject: () => {
-    },
-    clearTrayHighlight: () => {
-    }
+    clearTrayHighlight: _.noop
   }
 
   it('should render available projects', function () {
     const props = Object.assign({}, DEFAULT_PROPS, {})
     const wrapper = shallow(<Tray {...props} />)
-    expect(wrapper.find(AvailableProjects)).to.be.present()
+    expect(wrapper.find(AvailableProjectsContainer)).to.be.present()
   })
 
   it('should render errors', function () {
