@@ -9,6 +9,7 @@ import './scaled-grid.scss'
 const TABLET_BREAKPOINT = 768
 const DESKTOP_BREAKPOINT = 1440
 
+const MIN_CHILD_HEIGHT = 32
 const CHILD_MARGIN = 5
 
 function columns(width) {
@@ -38,7 +39,8 @@ class ScaledGrid extends Component {
 
   childHeight(totalNumberOfItems, width, height) {
     const rows = numberOfRows(totalNumberOfItems, width)
-    return Math.floor((height - (rows * CHILD_MARGIN * 2)) / rows)
+    const calculated = Math.floor((height - (rows * CHILD_MARGIN * 2)) / rows)
+    return Math.max(calculated, MIN_CHILD_HEIGHT)
   }
 
   childWidth(totalNumberOfItems, width) {
