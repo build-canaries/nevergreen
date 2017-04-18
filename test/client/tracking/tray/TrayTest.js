@@ -6,8 +6,6 @@ import {shallow} from 'enzyme'
 import Tray from '../../../../src/client/tracking/tray/Tray'
 import AvailableProjectsContainer from '../../../../src/client/tracking/projects/AvailableProjectsContainer'
 import Messages from '../../../../src/client/common/messages/Messages'
-import sinon from 'sinon'
-import _ from 'lodash'
 
 describe('<Tray/>', function () {
   const DEFAULT_PROPS = {
@@ -17,8 +15,7 @@ describe('<Tray/>', function () {
     errors: null,
     name: null,
     url: '',
-    highlight: null,
-    clearTrayHighlight: _.noop
+    highlight: null
   }
 
   it('should render available projects', function () {
@@ -31,12 +28,5 @@ describe('<Tray/>', function () {
     const props = Object.assign({}, DEFAULT_PROPS, {errors: ['some-error']})
     const wrapper = shallow(<Tray {...props} />)
     expect(wrapper.find(Messages)).to.have.prop('messages').that.contains('some-error')
-  })
-
-  it('should clear the highlight on unmount to stop it happening again if the user switches back and forth between tabs', function () {
-    const clearTrayHighlight = sinon.spy()
-    const props = Object.assign({}, DEFAULT_PROPS, {highlight: true, clearTrayHighlight})
-    new Tray(props).componentWillUnmount()
-    expect(clearTrayHighlight).to.have.been.called
   })
 })

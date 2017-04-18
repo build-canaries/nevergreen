@@ -76,19 +76,6 @@ describe('TrackingActions', function () {
     })
   })
 
-  describe('clear tray highlight', function () {
-
-    it('should return the correct type', function () {
-      const actual = TrackingActions.clearTrayHighlight()
-      expect(actual).to.have.property('type', TrackingActions.CLEAR_TRAY_HIGHLIGHT)
-    })
-
-    it('should return the tray id', function () {
-      const actual = TrackingActions.clearTrayHighlight('some-tray-id')
-      expect(actual).to.have.property('trayId', 'some-tray-id')
-    })
-  })
-
   describe('encrypting password', function () {
 
     it('should return the correct type', function () {

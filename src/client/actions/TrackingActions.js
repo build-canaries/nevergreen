@@ -38,11 +38,6 @@ export function highlightTray(trayId) {
   return {type: HIGHLIGHT_TRAY, trayId}
 }
 
-export const CLEAR_TRAY_HIGHLIGHT = 'CLEAR_TRAY_HIGHLIGHT'
-export function clearTrayHighlight(trayId) {
-  return {type: CLEAR_TRAY_HIGHLIGHT, trayId}
-}
-
 export const ENCRYPTING_PASSWORD = 'ENCRYPTING_PASSWORD'
 export function encryptingPassword(trayId, password, request) {
   return {type: ENCRYPTING_PASSWORD, trayId, password, request}

@@ -1,20 +1,19 @@
 import Immutable from 'immutable'
 import {
-  TRAY_ADDED,
-  REMOVE_TRAY,
   ENCRYPTING_PASSWORD,
-  PASSWORD_ENCRYPTED,
+  HIGHLIGHT_TRAY,
   PASSWORD_ENCRYPT_ERROR,
-  PROJECTS_FETCHING,
+  PASSWORD_ENCRYPTED,
   PROJECTS_FETCH_ERROR,
   PROJECTS_FETCHED,
-  HIGHLIGHT_TRAY,
-  CLEAR_TRAY_HIGHLIGHT,
-  SET_TRAY_NAME,
+  PROJECTS_FETCHING,
+  REMOVE_TRAY,
   SET_SERVER_TYPE,
-  SET_TRAY_USERNAME
+  SET_TRAY_NAME,
+  SET_TRAY_USERNAME,
+  TRAY_ADDED
 } from '../actions/TrackingActions'
-import {INITIALISED} from '../actions/NevergreenActions'
+import {INITIALISED, NAVIGATED} from '../actions/NevergreenActions'
 import {IMPORT_SUCCESS} from '../actions/ImportActions'
 
 const DefaultState = Immutable.OrderedMap()
@@ -33,8 +32,8 @@ export function reduce(state = DefaultState, action) {
     case HIGHLIGHT_TRAY:
       return state.update(action.trayId, (tray) => tray.set('highlight', true))
 
-    case CLEAR_TRAY_HIGHLIGHT:
-      return state.has(action.trayId) ? state.update(action.trayId, (tray) => tray.set('highlight', false)) : state
+    case NAVIGATED:
+      return state.map((tray) => tray.set('highlight', false))
 
     case REMOVE_TRAY:
       return state.delete(action.trayId)

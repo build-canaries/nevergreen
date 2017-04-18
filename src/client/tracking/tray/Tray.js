@@ -13,12 +13,6 @@ class Tray extends Component {
     this.state = {hidden: false}
   }
 
-  componentWillUnmount() {
-    if (this.props.highlight) {
-      this.props.clearTrayHighlight(this.props.trayId)
-    }
-  }
-
   render() {
     let projectsView = null
 
@@ -54,7 +48,6 @@ Tray.propTypes = {
   errors: PropTypes.arrayOf(PropTypes.string),
   name: PropTypes.string,
   url: PropTypes.string.isRequired,
-  clearTrayHighlight: PropTypes.func.isRequired,
   highlight: PropTypes.bool
 }
 

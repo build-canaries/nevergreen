@@ -2,10 +2,9 @@ import '../UnitSpec'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {reduce} from '../../../src/client/reducers/TraysReducer'
-import {INITIALISED} from '../../../src/client/actions/NevergreenActions'
+import {INITIALISED, NAVIGATED} from '../../../src/client/actions/NevergreenActions'
 import {IMPORT_SUCCESS} from '../../../src/client/actions/ImportActions'
 import {
-  CLEAR_TRAY_HIGHLIGHT,
   ENCRYPTING_PASSWORD,
   HIGHLIGHT_TRAY,
   PASSWORD_ENCRYPT_ERROR,
@@ -92,20 +91,13 @@ describe('TraysReducer', function () {
     })
   })
 
-  describe('clear tray highlight action', function () {
+  describe('navigated action', function () {
 
-    it('should set the highlight flag to false', function () {
+    it('should set the highlight flag to false for all trays', function () {
       const existingState = Immutable.fromJS({trayId: {highlight: true}})
-      const action = {type: CLEAR_TRAY_HIGHLIGHT, trayId: 'trayId'}
+      const action = {type: NAVIGATED}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('trayId').that.has.property('highlight', false)
-    })
-
-    it('should check the tray has not been removed (we clear on unmount which happens after the remove tray action)', function () {
-      const existingState = Immutable.Map()
-      const action = {type: CLEAR_TRAY_HIGHLIGHT, trayId: 'trayId'}
-      const newState = reduce(existingState, action)
-      expect(newState).to.not.have.property('trayId')
     })
   })
 
