@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import {debug, warn} from '../common/Logger'
+import {debug, warn} from '../Logger'
 
 const MIN_FONT_SIZE = 10
 const PADDING_CHARS = 2 // 1em = 2 characters

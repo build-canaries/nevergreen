@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import ScaledGrid from './ScaledGrid'
-import InterestingProject from './InterestingProject'
+import ScaledGrid from '../common/scale/ScaledGrid'
+import InterestingProject from '../common/project/InterestingProject'
 import './interesting-projects.scss'
 
 class InterestingProjects extends Component {

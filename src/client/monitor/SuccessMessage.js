@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import ScaledGrid from './ScaledGrid'
+import ScaledGrid from '../common/scale/ScaledGrid'
 import './success-message.scss'
 
 class SuccessMessage extends Component {

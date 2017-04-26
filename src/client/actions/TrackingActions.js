@@ -3,8 +3,8 @@ import {encryptPassword as encrypt} from '../common/gateways/SecurityGateway'
 import {fetchAll} from '../common/gateways/ProjectsGateway'
 import {send} from '../common/gateways/Gateway'
 import moment from 'moment'
+import {generateRandomName} from '../common/project/Name'
 import _ from 'lodash'
-import nameGenerator from 'project-name-generator'
 
 function hasScheme(url) {
   return _.size(_.split(url, '://')) > 1
@@ -12,10 +12,6 @@ function hasScheme(url) {
 
 function isNotBlank(value) {
   return _.size(_.trim(value)) > 0
-}
-
-function generateRandomName() {
-  return _.lowerCase(nameGenerator().spaced)
 }
 
 function abortPendingRequest(req) {

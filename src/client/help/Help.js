@@ -13,32 +13,6 @@ class Help extends Component {
       <section className='help'>
         <h2 className='visually-hidden'>Help</h2>
 
-        <Container title='monitor'>
-          <table className='help-tracking-table'>
-            <thead>
-            <tr>
-              <th>Colour</th>
-              <th>Meaning</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td className='healthy-building help-monitor-example-light'>Yellow</td>
-              <td>The project is currently building and was previously successful.</td>
-            </tr>
-            <tr>
-              <td className='sick help-monitor-example-dark'>Red</td>
-              <td>The project is broken!</td>
-            </tr>
-            <tr>
-              <td className='sick-building help-monitor-example-dark'>Orange</td>
-              <td>The project is currently building and was previously broken.</td>
-            </tr>
-            </tbody>
-          </table>
-          <p>If nothing is broken or building then a random success message will be shown.</p>
-        </Container>
-
         <Container title='tracking'>
           <span>To get started you need to enter the URL to your cctray xml file. Where it lives depends on your CI Server of choice:</span>
           <table className='help-tracking-table'>

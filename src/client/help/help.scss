@@ -10,21 +10,6 @@
     word-break: break-all;
   }
 
-  .healthy-building {
-    background-color: $healthy-building;
-    color: $healthy-building-text;
-  }
-
-  .sick {
-    background-color: $sick;
-    color: $off-white;
-  }
-
-  .sick-building {
-    background-color: $sick-building;
-    color: $off-black;
-  }
-
   .help-links {
     list-style: none;
   }
@@ -43,14 +28,6 @@
     tr:nth-child(even) {
       background-color: $light-grey;
     }
-  }
-
-  .help-monitor-example-dark {
-    text-align: center;
-  }
-
-  .help-monitor-example-light {
-    text-align: center;
   }
 
   .binding {

@@ -2,8 +2,6 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import Input from '../../common/forms/Input'
 import DropDown from '../../common/forms/DropDown'
-import nameGenerator from 'project-name-generator'
-import _ from 'lodash'
 import './tray-settings.scss'
 
 class TraySettings extends Component {
@@ -27,7 +25,7 @@ class TraySettings extends Component {
   render() {
     const nameChanged = (evt) => this.setState({newName: evt.target.value})
     const setName = () => this.props.setTrayName(this.props.trayId, this.state.newName)
-    const generateRandomName = () => this.setState({newName: _.lowerCase(nameGenerator().spaced)}, () => setName())
+    const generateRandomName = () => this.setState({newName: generateRandomName()}, () => setName())
     const serverTypeChange = (evt) => this.props.setServerType(this.props.trayId, evt.target.value)
     const usernameChanged = (evt) => this.setState({newUsername: evt.target.value})
     const setUsername = () => {

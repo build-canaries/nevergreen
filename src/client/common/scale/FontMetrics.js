@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import './scaled-grid.scss'
 
 const fontMeasureSize = 100
 

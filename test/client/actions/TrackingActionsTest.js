@@ -11,24 +11,26 @@ describe('TrackingActions', function () {
     ProjectsGateway = {}
     Gateway = {}
     moment = sinon.stub()
-    nameGenerator = sinon.stub()
+    nameGenerator = {}
     TrackingActions = proxyquire('../../src/client/actions/TrackingActions', {
       '../common/gateways/SecurityGateway': SecurityGateway,
       '../common/gateways/ProjectsGateway': ProjectsGateway,
       '../common/gateways/Gateway': Gateway,
       moment,
-      'project-name-generator': nameGenerator
+      '../common/project/Name': nameGenerator
     })
   })
 
   beforeEach(function () {
     moment.reset()
     moment.returns({format: sinon.stub()})
-    nameGenerator.reset()
-    nameGenerator.returns({spaced: ''})
   })
 
   describe('tray added', function () {
+
+    before(function () {
+      nameGenerator.generateRandomName = sinon.stub().returns('')
+    })
 
     it('should return the correct type', function () {
       const actual = TrackingActions.trayAdded()
@@ -51,10 +53,10 @@ describe('TrackingActions', function () {
       expect(actual).to.have.property('data').that.includes.property('username', 'some-username')
     })
 
-    it('should return a lower cased randomly generate tray name', function () {
-      nameGenerator.returns({spaced: 'GENERATED NAME'})
+    it('should return a generated tray name', function () {
+      nameGenerator.generateRandomName = sinon.stub().returns('some-generated-name')
       const actual = TrackingActions.trayAdded()
-      expect(actual).to.have.property('data').that.includes.property('name', 'generated name')
+      expect(actual).to.have.property('data').that.includes.property('name', 'some-generated-name')
     })
 
     it('should return highlight', function () {

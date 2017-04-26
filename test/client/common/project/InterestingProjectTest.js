@@ -1,9 +1,9 @@
-import {locator} from '../UnitSpec'
+import {locator} from '../../UnitSpec'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
-import InterestingProject from '../../../src/client/monitor/InterestingProject'
+import InterestingProject from '../../../../src/client/common/project/InterestingProject'
 
 describe('<InterestingProject/>', function () {
   const DEFAULT_PROPS = {

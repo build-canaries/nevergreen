@@ -1,9 +1,9 @@
-import '../UnitSpec'
+import '../../UnitSpec'
 import {describe, it, before} from 'mocha'
 import {expect} from 'chai'
 import React from 'react'
 import {mount} from 'enzyme'
-import ScaledGrid from '../../../src/client/monitor/ScaledGrid'
+import ScaledGrid from '../../../../src/client/common/scale/ScaledGrid'
 
 function setWindowSize(size) {
   // https://github.com/tmpvar/jsdom/issues/135#issuecomment-68191941

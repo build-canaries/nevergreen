@@ -1,7 +1,7 @@
-import '../UnitSpec'
+import '../../UnitSpec'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
-import {ideal} from '../../../src/client/monitor/ScaleText'
+import {ideal} from '../../../../src/client/common/scale/ScaleText'
 
 describe('ScaleText', function () {
   // Actual scale of Roboto Mono
