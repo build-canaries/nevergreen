@@ -33,22 +33,30 @@ describe('<Resizable/>', function () {
     expect(wrapper.get(0)).to.be.null
   })
 
-  it('should add event listener on mount', function () {
+  it('should add event listener on initial mount', function () {
     new Resizable(props).componentDidMount()
-    expect(global.window.addEventListener).to.have.been.calledWith('resize', props.onResize)
+    expect(global.window.addEventListener).to.have.been.calledWith('resize')
     expect(global.window.removeEventListener).to.not.have.been.called
   })
 
   it('should remove event listener on unmount', function () {
     new Resizable(props).componentWillUnmount()
-    expect(global.window.removeEventListener).to.have.been.calledWith('resize', props.onResize)
+    expect(global.window.removeEventListener).to.have.been.calledWith('resize')
     expect(global.window.addEventListener).to.not.have.been.called
   })
 
-  it('should remove old event listener on update and add the new one', function () {
-    const previousProps = {onResize: sinon.spy()}
-    new Resizable(props).componentDidUpdate(previousProps)
-    expect(global.window.removeEventListener).to.have.been.calledWith('resize', previousProps.onResize)
-    expect(global.window.addEventListener).to.have.been.calledWith('resize', props.onResize)
+  describe('updating', function () {
+    it('should remove old event listener when receiving new props', function () {
+      const newProps = {onResize: sinon.spy()}
+      new Resizable(props).componentWillReceiveProps(newProps)
+      expect(global.window.removeEventListener).to.have.been.calledWith('resize')
+      expect(global.window.addEventListener).to.have.not.been.called
+    })
+
+    it('should add new event listener on update', function () {
+      new Resizable(props).componentDidUpdate()
+      expect(global.window.addEventListener).to.have.been.calledWith('resize')
+      expect(global.window.removeEventListener).to.have.not.been.called
+    })
   })
 })

@@ -87,7 +87,6 @@ class ScaledGrid extends Component {
     return (
       <span>
         <FontMetrics ref={(node) => this.fontMetrics = node}/>
-        <Resizable onResize={() => calculateChildDimensions(this.node, this.fontMetrics, this.childrenText)}/>
         <ul className='scaled-grid' ref={(node) => this.node = node}>
           {
             Children.map(this.props.children, (child, index) => {
@@ -102,6 +101,7 @@ class ScaledGrid extends Component {
             })
           }
         </ul>
+        <Resizable onResize={() => this.setState(calculateChildDimensions(this.node, this.fontMetrics, this.childrenText))}/>
       </span>
     )
   }
