@@ -1,7 +1,10 @@
-const jsdom = require('jsdom').jsdom
+const jsdom = require('jsdom')
+const {JSDOM} = jsdom
 
-global.document = jsdom('')
-global.window = document.defaultView
+const dom = new JSDOM('')
+
+global.window = dom.window
+global.document = window.document
 Object.keys(document.defaultView).forEach((property) => {
   if (typeof global[property] === 'undefined') {
     global[property] = document.defaultView[property]
