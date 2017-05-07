@@ -6,8 +6,8 @@ import './interesting-projects.scss'
 
 class InterestingProjects extends Component {
   componentWillUnmount() {
-    if (this.refs.sfx) {
-      this.refs.sfx.pause()
+    if (this.sfx) {
+      this.sfx.pause()
     }
   }
 
@@ -15,7 +15,7 @@ class InterestingProjects extends Component {
     const playBrokenSfx = this.props.playBrokenBuildSounds && this.props.projects.reduce((previous, project) => {
         return previous || project.prognosis === 'sick'
       }, false)
-    const brokenSfx = playBrokenSfx && this.props.brokenBuildFx ? <audio ref='sfx' src={this.props.brokenBuildFx} autoPlay/> : null
+    const brokenSfx = playBrokenSfx && this.props.brokenBuildFx ? <audio ref={(node) => this.sfx = node} src={this.props.brokenBuildFx} autoPlay/> : null
 
     return (
       <span className='interesting-projects' data-locator='interesting-projects'>

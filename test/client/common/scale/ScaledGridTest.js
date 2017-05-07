@@ -1,5 +1,5 @@
 import '../../UnitSpec'
-import {describe, it, before} from 'mocha'
+import {before, describe, it} from 'mocha'
 import {expect} from 'chai'
 import React from 'react'
 import {mount} from 'enzyme'
@@ -27,7 +27,10 @@ describe('<ScaledGrid/>', function () {
       let children
 
       before(function () {
-        const wrapper = mount(<ScaledGrid children={<div>single child</div>}/>)
+        const wrapper = mount(
+          <ScaledGrid>
+            <div>single child</div>
+          </ScaledGrid>)
 
         children = wrapper.find('li')
       })
@@ -53,11 +56,12 @@ describe('<ScaledGrid/>', function () {
       let children
 
       before(function () {
-        const wrapper = mount(<ScaledGrid children={[
-          <div>first child</div>,
-          <div>second child</div>,
-          <div>third child</div>
-        ]}/>)
+        const wrapper = mount(
+          <ScaledGrid>
+            <div>first child</div>
+            <div>second child</div>
+            <div>third child</div>
+          </ScaledGrid>)
 
         children = wrapper.find('li')
       })
@@ -89,14 +93,15 @@ describe('<ScaledGrid/>', function () {
       let children
 
       before(function () {
-        const wrapper = mount(<ScaledGrid children={[
-          <div>first child</div>,
-          <div>second child</div>,
-          <div>third child</div>,
-          <div>fourth child</div>,
-          <div>fifth child</div>,
-          <div>sixth child</div>
-        ]}/>)
+        const wrapper = mount(
+          <ScaledGrid>
+            <div>first child</div>
+            <div>second child</div>
+            <div>third child</div>
+            <div>fourth child</div>
+            <div>fifth child</div>
+            <div>sixth child</div>
+          </ScaledGrid>)
 
         children = wrapper.find('li')
       })
@@ -134,7 +139,10 @@ describe('<ScaledGrid/>', function () {
       let children
 
       before(function () {
-        const wrapper = mount(<ScaledGrid children={<div>single child</div>}/>)
+        const wrapper = mount(
+          <ScaledGrid>
+            <div>single child</div>
+          </ScaledGrid>)
 
         children = wrapper.find('li')
       })
@@ -160,10 +168,11 @@ describe('<ScaledGrid/>', function () {
       let children
 
       before(function () {
-        const wrapper = mount(<ScaledGrid children={[
-          <div>first child</div>,
-          <div>second child</div>
-        ]}/>)
+        const wrapper = mount(
+          <ScaledGrid>
+            <div>first child</div>
+            <div>second child</div>
+          </ScaledGrid>)
 
         children = wrapper.find('li')
       })
@@ -195,12 +204,13 @@ describe('<ScaledGrid/>', function () {
       let children
 
       before(function () {
-        const wrapper = mount(<ScaledGrid children={[
-          <div>first child</div>,
-          <div>second child</div>,
-          <div>third child</div>,
-          <div>fourth child</div>
-        ]}/>)
+        const wrapper = mount(
+          <ScaledGrid>
+            <div>first child</div>
+            <div>second child</div>
+            <div>third child</div>
+            <div>fourth child</div>
+          </ScaledGrid>)
 
         children = wrapper.find('li')
       })
@@ -238,7 +248,10 @@ describe('<ScaledGrid/>', function () {
       let children
 
       before(function () {
-        const wrapper = mount(<ScaledGrid children={<div>single child</div>}/>)
+        const wrapper = mount(
+          <ScaledGrid>
+            <div>single child</div>
+          </ScaledGrid>)
 
         children = wrapper.find('li')
       })
@@ -264,10 +277,11 @@ describe('<ScaledGrid/>', function () {
       let children
 
       before(function () {
-        const wrapper = mount(<ScaledGrid children={[
-          <div>first child</div>,
-          <div>second child</div>
-        ]}/>)
+        const wrapper = mount(
+          <ScaledGrid>
+            <div>first child</div>
+            <div>second child</div>
+          </ScaledGrid>)
 
         children = wrapper.find('li')
       })

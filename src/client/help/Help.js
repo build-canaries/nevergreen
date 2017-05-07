@@ -81,18 +81,18 @@ class Help extends Component {
           </span>
           <p>Need some inspiration?</p>
           <p>
-            Try searching for some <a href='https://duckduckgo.com/?q=nature+1920x1080&iax=1&ia=images' target='_blank'>nice images</a> or check
-            out <a href='http://www.disapprovallook.com/' target='_blank'>ಠ_ಠ Disapproval Look</a> for some fun messages, like jelly guy! ༼つ◕_◕༽つ
+            Try searching for some <a href='https://duckduckgo.com/?q=nature+1920x1080&iax=1&ia=images' target='_blank' rel='noopener noreferrer'>nice images</a> or check
+            out <a href='http://www.disapprovallook.com/' target='_blank' rel='noopener noreferrer'>ಠ_ಠ Disapproval Look</a> for some fun messages, like jelly guy! ༼つ◕_◕༽つ
           </p>
         </Container>
 
         <Container title='Backup'>
           <span>
             To import/export to/from GitHub you need to generate a <a
-            href='https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/' target='_blank'>personal access token</a> to allow a private Gist to be created.
+            href='https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/' target='_blank' rel='noopener noreferrer'>personal access token</a> to allow a private Gist to be created.
           </span>
           <p>
-            The token <em>only</em> requires the <code>gist</code> <a href='https://developer.github.com/v3/oauth/#scopes' target='_blank'>scope</a>.
+            The token <em>only</em> requires the <code>gist</code> <a href='https://developer.github.com/v3/oauth/#scopes' target='_blank' rel='noopener noreferrer'>scope</a>.
           </p>
           <p>
             Access tokens are not stored locally as they allow access to all a users Gists, so they need to be manually entered every time you want to
@@ -195,25 +195,25 @@ class Help extends Component {
             <li>
               <span className='help-link-icon icon-github4'/>
               The full Nevergreen source is available on <a href='https://github.com/build-canaries/nevergreen'
-                                                            target='_blank'>Github</a>.
+                                                            target='_blank' rel='noopener noreferrer'>Github</a>.
             </li>
             <li>
               <span className='help-link-icon  icon-twitter3'/>
-              Follow Build Canaries on <a href='https://twitter.com/BuildCanaries' target='_blank'>Twitter</a> for
+              Follow Build Canaries on <a href='https://twitter.com/BuildCanaries' target='_blank' rel='noopener noreferrer'>Twitter</a> for
               news and updates.
             </li>
             <li>
               <span className='help-link-icon  icon-IcoMoon'/>
-              Icons from <a href='https://icomoon.io/' target='_blank'>IcoMoon</a> "custom built and crisp icon fonts,
-              done right".
+              Icons from <a href='https://icomoon.io/' target='_blank' rel='noopener noreferrer'>IcoMoon</a> &quot;custom built and crisp icon fonts,
+              done right&quot;.
             </li>
           </ul>
         </Container>
 
         <Container title='licenses'>
           <span>
-            "Pacman Death Sound" by <a href='http://www.orangefreesounds.com/pacman-death-sound/' target='_blank'>Alexander</a> is
-            licensed under <a href='https://creativecommons.org/licenses/by-nc/4.0/legalcode' target='_blank'>CC BY 4.0</a>
+            &quot;Pacman Death Sound&quot; by <a href='http://www.orangefreesounds.com/pacman-death-sound/' target='_blank' rel='noopener noreferrer'>Alexander</a> is
+            licensed under <a href='https://creativecommons.org/licenses/by-nc/4.0/legalcode' target='_blank' rel='noopener noreferrer'>CC BY 4.0</a>
           </span>
         </Container>
       </section>
