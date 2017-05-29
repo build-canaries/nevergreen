@@ -32,6 +32,15 @@ You can run nevergreen locally by just running the ```develop.sh``` script. For 
 
 If you would like to add a feature/fix a bug for us please create a pull request.
 
+## Development
+
+Run
+```
+$ npm install
+$ lein ring server-headless
+```
+to start from a Git checkout.
+
 ## License
 
 Copyright © 2017 Build Canaries
