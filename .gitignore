@@ -14,4 +14,3 @@ resources/public
 phantomjsdriver.log
 npm-debug.log
 src/.module-cache/
-/package-lock.json
