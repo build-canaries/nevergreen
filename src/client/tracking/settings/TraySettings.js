@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import Input from '../../common/forms/Input'
 import DropDown from '../../common/forms/DropDown'
+import {generateRandomName} from '../../common/project/Name'
 import './tray-settings.scss'
 
 class TraySettings extends Component {
@@ -25,7 +26,7 @@ class TraySettings extends Component {
   render() {
     const nameChanged = (evt) => this.setState({newName: evt.target.value})
     const setName = () => this.props.setTrayName(this.props.trayId, this.state.newName)
-    const generateRandomName = () => this.setState({newName: generateRandomName()}, () => setName())
+    const generateNewName = () => this.setState({newName: generateRandomName()}, () => setName())
     const serverTypeChange = (evt) => this.props.setServerType(this.props.trayId, evt.target.value)
     const usernameChanged = (evt) => this.setState({newUsername: evt.target.value})
     const setUsername = () => {
@@ -49,7 +50,7 @@ class TraySettings extends Component {
                placeholder='e.g. project or team name' data-locator='tray-name' autoFocus>
           <span>name</span>
         </Input>
-        <button className='random' onClick={generateRandomName} data-locator='generate-random'>randomise</button>
+        <button className='random' onClick={generateNewName} data-locator='generate-random'>randomise</button>
         <DropDown className='server-type' title='server type' value={this.props.serverType} onChange={serverTypeChange}>
           <option value=''>Auto detect</option>
           <option value='circle'>CircleCI</option>
