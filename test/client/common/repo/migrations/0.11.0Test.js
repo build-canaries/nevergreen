@@ -22,47 +22,47 @@ describe('0.11.0', function () {
   it('should add the version number', function () {
     p.version = 'some-version'
     const migrated = Migration.migrate({})
-    expect(migrated).to.have.deep.property('nevergreen.versionNumber', 'some-version')
+    expect(migrated).to.have.nested.property('nevergreen.versionNumber', 'some-version')
   })
 
   it('should add the version name', function () {
     p.versionName = 'some-name'
     const migrated = Migration.migrate({})
-    expect(migrated).to.have.deep.property('nevergreen.versionName', 'some-name')
+    expect(migrated).to.have.nested.property('nevergreen.versionName', 'some-name')
   })
 
   it('should add the version meta', function () {
     p.versionMeta = 'some-meta'
     const migrated = Migration.migrate({})
-    expect(migrated).to.have.deep.property('nevergreen.versionMeta', 'some-meta')
+    expect(migrated).to.have.nested.property('nevergreen.versionMeta', 'some-meta')
   })
 
   it('should add the commit hash', function () {
     p.commitHash = 'some-hash'
     const migrated = Migration.migrate({})
-    expect(migrated).to.have.deep.property('nevergreen.commitHash', 'some-hash')
+    expect(migrated).to.have.nested.property('nevergreen.commitHash', 'some-hash')
   })
 
   describe('display migration', function () {
 
     it('should migrate show tray name', function () {
       const migrated = Migration.migrate({display: {showTrayName: true}})
-      expect(migrated).to.have.deep.property('audioVisual.showTrayName', true)
+      expect(migrated).to.have.nested.property('audioVisual.showTrayName', true)
     })
 
     it('should migrate show broken build timers', function () {
       const migrated = Migration.migrate({display: {showBrokenBuildTimers: true}})
-      expect(migrated).to.have.deep.property('audioVisual.showBrokenBuildTime', true)
+      expect(migrated).to.have.nested.property('audioVisual.showBrokenBuildTime', true)
     })
 
     it('should migrate show broken build sounds', function () {
       const migrated = Migration.migrate({display: {showBrokenBuildSounds: true}})
-      expect(migrated).to.have.deep.property('audioVisual.playBrokenBuildSoundFx', true)
+      expect(migrated).to.have.nested.property('audioVisual.playBrokenBuildSoundFx', true)
     })
 
     it('should migrate broken build sound fx', function () {
       const migrated = Migration.migrate({display: {brokenBuildSoundFx: true}})
-      expect(migrated).to.have.deep.property('audioVisual.brokenBuildSoundFx', true)
+      expect(migrated).to.have.nested.property('audioVisual.brokenBuildSoundFx', true)
     })
 
     it('should delete the migrated display', function () {
@@ -75,12 +75,12 @@ describe('0.11.0', function () {
 
     it('should migrate messages', function () {
       const migrated = Migration.migrate({success: {messages: ['=(^.^)=']}})
-      expect(migrated).to.have.deep.property('success').that.contains('=(^.^)=')
+      expect(migrated).to.have.property('success').that.contains('=(^.^)=')
     })
 
     it('should delete the migrated messages', function () {
       const migrated = Migration.migrate({success: {messages: []}})
-      expect(migrated).to.not.have.deep.property('success.messages')
+      expect(migrated).to.not.have.nested.property('success.messages')
     })
   })
 
@@ -88,17 +88,17 @@ describe('0.11.0', function () {
 
     it('should use the tray url as the key', function () {
       const migrated = Migration.migrate({tray: {trays: {someId: {url: 'someUrl'}}}})
-      expect(migrated).to.have.deep.property('trays.someUrl')
+      expect(migrated).to.have.nested.property('trays.someUrl')
     })
 
     it('should update the tray id', function () {
       const migrated = Migration.migrate({tray: {trays: {someId: {url: 'someUrl', trayId: 'someId'}}}})
-      expect(migrated).to.have.deep.property('trays.someUrl').that.has.property('trayId', 'someUrl')
+      expect(migrated).to.have.nested.property('trays.someUrl').that.has.property('trayId', 'someUrl')
     })
 
     it('should delete the migrated trays', function () {
       const migrated = Migration.migrate({tray: {trays: {foo: 'bar'}}})
-      expect(migrated).to.not.have.deep.property('tray.trays')
+      expect(migrated).to.not.have.nested.property('tray.trays')
     })
 
     it('should add the projects object', function () {

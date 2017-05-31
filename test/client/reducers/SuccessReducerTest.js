@@ -65,7 +65,7 @@ describe('SuccessReducer', function () {
       const existingState = Immutable.OrderedSet(['a', 'b', 'c'])
       const action = {type: MESSAGE_REMOVED, message: 'b'}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.all('a', 'c')
+      expect(newState).to.deep.equal(Immutable.OrderedSet(['a', 'c']))
     })
   })
 })

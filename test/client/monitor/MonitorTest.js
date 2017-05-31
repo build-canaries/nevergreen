@@ -37,7 +37,7 @@ describe('<Monitor/>', function () {
     it('should render projects', function () {
       const props = Object.assign({}, DEFAULT_PROPS, {projects: [{projectId: 'some-id'}]})
       const wrapper = shallow(<Monitor {...props} />)
-      expect(wrapper.find(InterestingProjects)).to.have.prop('projects').that.contains({projectId: 'some-id'})
+      expect(wrapper.find(InterestingProjects)).to.have.prop('projects').that.deep.contains({projectId: 'some-id'})
     })
 
     it('should render success message if there are no projects', function () {
