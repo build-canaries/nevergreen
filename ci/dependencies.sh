@@ -2,8 +2,8 @@
 
 # download ui dependencies
 npm install npm@latest -g
-npm prune
-npm install --loglevel error
+npm prune --loglevel verbose
+npm install --loglevel verbose
 
 # download server dependencies
 ./lein.sh deps
