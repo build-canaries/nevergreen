@@ -10,9 +10,11 @@ checkout:
 dependencies:
   pre:
     - ./ci/update-chrome.sh
-    - rm -f package-lock.json
   override:
     - nvm install && ./ci/dependencies.sh
+  cache_directories:
+      - "~/.nvm"
+      - "~/.lein"
 compile:
   override:
     - nvm use && ./ci/compile.sh
