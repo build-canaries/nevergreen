@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 # download ui dependencies
-npm install npm@latest -g
+npm install npm@latest --no-save
 npm prune
 npm install
 
