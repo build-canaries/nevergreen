@@ -13,8 +13,7 @@ dependencies:
   override:
     - nvm install && ./ci/dependencies.sh
   cache_directories:
-      - "~/.nvm"
-      - "~/.lein"
+    - "~/.lein"
 compile:
   override:
     - nvm use && ./ci/compile.sh
