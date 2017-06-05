@@ -10,6 +10,7 @@ checkout:
 dependencies:
   pre:
     - ./ci/update-chrome.sh
+    - rm -f package-lock.json
   override:
     - nvm install && ./ci/dependencies.sh
 compile:

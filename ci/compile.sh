@@ -1,10 +1,10 @@
 #!/bin/bash -e
 
 # clean client build folders
-npm run clean --loglevel verbose
+npm run clean
 
 # build ui
-npm run build-prod --loglevel verbose
+npm run build-prod
 
 # clean server build folders
 ./lein.sh clean
