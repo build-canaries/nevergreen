@@ -7,7 +7,7 @@ import AvailableProjects from '../../../../src/client/tracking/projects/Availabl
 import Messages from '../../../../src/client/common/messages/Messages'
 import _ from 'lodash'
 
-describe('<AvailableProject/>', function () {
+describe('<AvailableProjects/>', function () {
   const DEFAULT_PROPS = {
     trayId: '',
     index: 1,

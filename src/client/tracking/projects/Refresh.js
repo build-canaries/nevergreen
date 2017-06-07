@@ -8,7 +8,7 @@ import './refresh.scss'
 const ONE_MINUTE = 60
 
 function lastFetched(timestamp) {
-  return timestamp ? moment(timestamp).fromNow(true) : '??'
+  return timestamp ? `${moment(timestamp).fromNow(true)} ago` : 'never'
 }
 
 class SubMenu extends Component {
@@ -31,7 +31,7 @@ class SubMenu extends Component {
           refresh
           <Shortcut hotkeys={[`r ${this.props.index}`]}/>
         </button>
-        <span className='tray-refresh-last-fetch'>{`projects last refreshed ${this.state.lastFetched} ago`}</span>
+        <span className='tray-refresh-last-fetch'>{`projects last refreshed ${this.state.lastFetched}`}</span>
       </div>
     )
   }
