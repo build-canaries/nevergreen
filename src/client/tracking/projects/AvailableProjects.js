@@ -11,7 +11,7 @@ import './available-projects.scss'
 class AvailableProjects extends Component {
   constructor(props) {
     super(props)
-    this.state = {filter: null, errors: null, disableButtons: false}
+    this.state = {filter: null, filterErrors: null, disableButtons: false}
   }
 
   render() {
@@ -29,13 +29,13 @@ class AvailableProjects extends Component {
 
     const updateFilter = (evt) => {
       if (_.isEmpty(_.trim(evt.target.value))) {
-        this.setState({filter: null, errors: null, disableButtons: false})
+        this.setState({filter: null, filterErrors: null, disableButtons: false})
       } else {
         try {
           const regEx = new RegExp(evt.target.value)
-          this.setState({filter: regEx, errors: null, disableButtons: true})
+          this.setState({filter: regEx, filterErrors: null, disableButtons: true})
         } catch (e) {
-          this.setState({errors: [`Project filter not applied, ${e.message}`]})
+          this.setState({filterErrors: [`Project filter not applied, ${e.message}`]})
         }
       }
     }
@@ -48,39 +48,48 @@ class AvailableProjects extends Component {
 
     const refreshTray = () => this.props.refreshTray(this.props, this.props.pendingRequest)
 
+    const controls = (
+      <div className='controls'>
+        <fieldset className='toggles'>
+          <legend className='visually-hidden'>Available projects</legend>
+          <button className='include-all' onClick={includeAll} disabled={this.state.disableButtons} data-locator='include-all'>
+            include all
+            <Shortcut hotkeys={[`+ ${this.props.index}`, `= ${this.props.index}`]}/>
+          </button>
+          <button className='exclude-all' onClick={excludeAll} disabled={this.state.disableButtons}>
+            exclude all
+            <Shortcut hotkeys={[`- ${this.props.index}`]}/>
+          </button>
+        </fieldset>
+        <div className='project-filter'>
+          <Input className='project-filter-input' onChange={updateFilter} placeholder='regex'>
+            <span>filter</span>
+          </Input>
+        </div>
+        <Messages type='error' messages={this.state.filterErrors}/>
+      </div>
+    )
+
+    const buildItems = (
+      <ol className='build-items'>
+        {
+          _.sortBy(filteredProjects, ['name', 'stage']).map((project) => {
+            const selected = this.props.selected.includes(project.projectId)
+            const selectProject = () => this.props.selectProject(this.props.trayId, project.projectId, !selected)
+
+            return <AvailableProject key={project.projectId} {...project} selected={selected} selectProject={selectProject}/>
+          })
+        }
+      </ol>
+    )
+
     return (
       <section className='available-projects' data-locator='available-projects' ref={(node) => this.node = node}>
         <Refresh index={this.props.index} timestamp={this.props.timestamp} refreshTray={refreshTray}/>
-        <div className='controls'>
-          <fieldset className='toggles'>
-            <legend className='visually-hidden'>Available projects</legend>
-            <button className='include-all' onClick={includeAll} disabled={this.state.disableButtons} data-locator='include-all'>
-              include all
-              <Shortcut hotkeys={[`+ ${this.props.index}`, `= ${this.props.index}`]}/>
-            </button>
-            <button className='exclude-all' onClick={excludeAll} disabled={this.state.disableButtons}>
-              exclude all
-              <Shortcut hotkeys={[`- ${this.props.index}`]}/>
-            </button>
-          </fieldset>
-          <div className='project-filter'>
-            <Input className='project-filter-input' onChange={updateFilter} placeholder='regex'>
-              <span>filter</span>
-            </Input>
-          </div>
-          <Messages type='error' messages={this.state.errors}/>
-        </div>
-        <ol className='build-items'>
-          {
-            _.sortBy(filteredProjects, ['name', 'stage']).map((project) => {
-              const selected = this.props.selected.includes(project.projectId)
-              const selectProject = () => this.props.selectProject(this.props.trayId, project.projectId, !selected)
-
-              return <AvailableProject key={project.projectId} {...project} selected={selected} selectProject={selectProject}/>
-            })
-          }
-        </ol>
-        <button className='back-to-top' onClick={scrollToTop}>back to top</button>
+        <Messages type='error' messages={this.props.errors}/>
+        {this.props.errors ? null : controls}
+        {this.props.errors ? null : buildItems}
+        {this.props.errors ? null : <button className='back-to-top' onClick={scrollToTop}>back to top</button>}
       </section>
     )
   }
@@ -89,6 +98,7 @@ class AvailableProjects extends Component {
 AvailableProjects.propTypes = {
   trayId: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
+  errors: PropTypes.arrayOf(PropTypes.string),
   projects: PropTypes.arrayOf(PropTypes.shape({
     projectId: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
