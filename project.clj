@@ -7,7 +7,7 @@
                  [environ "1.1.0"]
                  [cheshire "5.7.1"]
                  [clj-cctray "0.11.0"]
-                 [clj-http "3.6.0"]
+                 [clj-http "3.6.1"]
                  [ring-curl "0.3.0"]
                  [ring/ring-json "0.4.0"]
                  [ring/ring-defaults "0.3.0"]
