@@ -29,8 +29,7 @@ echo "clean"
 npm run clean
 
 echo "fetching node modules and performing first build"
-npm prune
-npm install
+./ci/dependencies.sh
 
 echo "watching the js for changes ..."
 npm run watchJs &
