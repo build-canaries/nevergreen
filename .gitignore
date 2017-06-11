@@ -14,4 +14,6 @@ resources/public
 phantomjsdriver.log
 npm-debug.log
 src/.module-cache/
+
+# TODO: [#177] remove once we figure out how to get package-lock.json working consistently
 package-lock.json
