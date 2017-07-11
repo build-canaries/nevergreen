@@ -277,6 +277,37 @@ describe('TrackingActions', function () {
     })
   })
 
+  describe('set tray url', function () {
+
+    it('should return the correct type', function () {
+      const actual = TrackingActions.setTrayUrl()
+      expect(actual).to.have.property('type', TrackingActions.SET_TRAY_URL)
+    })
+
+    it('should return the url', function () {
+      const actual = TrackingActions.setTrayUrl('irrelevant', 'some-url')
+      expect(actual).to.have.property('url', 'some-url')
+    })
+  })
+
+  describe('set tray id', function () {
+
+    it('should return the correct type', function () {
+      const actual = TrackingActions.setTrayId()
+      expect(actual).to.have.property('type', TrackingActions.SET_TRAY_ID)
+    })
+
+    it('should return the original tray id', function () {
+      const actual = TrackingActions.setTrayId('some-tray-id')
+      expect(actual).to.have.property('originalTrayId', 'some-tray-id')
+    })
+
+    it('should return the new tray id', function () {
+      const actual = TrackingActions.setTrayId('some-tray-id', 'some-url')
+      expect(actual).to.have.property('newTrayId', 'some-url')
+    })
+  })
+
   describe('encrypt password', function () {
     let dispatch
 

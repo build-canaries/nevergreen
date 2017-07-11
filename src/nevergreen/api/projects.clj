@@ -2,22 +2,19 @@
   (:require [clj-cctray.core :as parser]
             [clj-cctray.filtering :as filtering]
             [clj-cctray.util :refer [in?]]
-            [clojure.string :refer [blank? replace]]
+            [clojure.string :refer [join blank? replace]]
             [nevergreen.http :refer [http-get]]
             [nevergreen.servers :as servers]
             [nevergreen.security :as security]
             [nevergreen.crypto :as crypt])
   (:refer-clojure :exclude [replace]))
 
-(defn- replace-build-labels [webUrl]
-  (replace webUrl #"\/\d+(?:\/|$)" "/0/"))
-
 (defn invalid-scheme? [url]
   (or (blank? url)
       (not (re-find #"https?://" url))))
 
 (defn- generate-project-id [project]
-  (replace-build-labels (:web-url project)))
+  (join "/" (remove nil? (map project [:unnormalised-owner :unnormalised-name :unnormalised-stage :unnormalised-job]))))
 
 (defn- add-project-ids [projects]
   (map #(assoc % :project-id (generate-project-id %)) projects))
@@ -58,7 +55,7 @@
     (->>
       (parser/get-projects
         (http-get (:url tray) (set-auth-header (:username tray) decrypted-password))
-        {:normalise true :server server-type})
+        {:server server-type :normalise true})
       (add-project-ids)
       (add-server-type server-type))))
 

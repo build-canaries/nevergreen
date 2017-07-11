@@ -14,7 +14,9 @@ import {
   PROJECTS_FETCHING,
   REMOVE_TRAY,
   SET_SERVER_TYPE,
+  SET_TRAY_ID,
   SET_TRAY_NAME,
+  SET_TRAY_URL,
   SET_TRAY_USERNAME,
   TRAY_ADDED
 } from '../../../src/client/actions/TrackingActions'
@@ -289,6 +291,34 @@ describe('TraysReducer', function () {
       const action = {type: SET_TRAY_USERNAME, trayId: 'trayId', username: 'some-new-username'}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('trayId').that.has.property('username', 'some-new-username')
+    })
+  })
+
+  describe('set tray url action', function () {
+
+    it('should set the url', function () {
+      const existingState = Immutable.fromJS({trayId: {trayId: 'trayId', url: 'some-url'}})
+      const action = {type: SET_TRAY_URL, trayId: 'trayId', url: 'some-new-url'}
+      const newState = reduce(existingState, action)
+      expect(newState).to.have.property('trayId').that.has.property('url', 'some-new-url')
+    })
+  })
+
+  describe('set tray id action', function () {
+
+    it('should update the key in the state to the new tray id', function () {
+      const existingState = Immutable.fromJS({trayId: {trayId: 'trayId', url: 'some-url'}})
+      const action = {type: SET_TRAY_ID, originalTrayId: 'trayId', newTrayId: 'some-new-url', url: 'some-new-url'}
+      const newState = reduce(existingState, action)
+      expect(newState).to.have.property('some-new-url')
+      expect(newState).to.not.have.property('trayId')
+    })
+
+    it('should set the tray id', function () {
+      const existingState = Immutable.fromJS({trayId: {trayId: 'trayId', url: 'some-url'}})
+      const action = {type: SET_TRAY_ID, originalTrayId: 'trayId', newTrayId: 'some-new-url', url: 'some-new-url'}
+      const newState = reduce(existingState, action)
+      expect(newState).to.have.property('some-new-url').that.has.property('trayId', 'some-new-url')
     })
   })
 

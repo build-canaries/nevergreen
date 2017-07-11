@@ -6,7 +6,7 @@
                  [compojure "1.6.0"]
                  [environ "1.1.0"]
                  [cheshire "5.7.1"]
-                 [clj-cctray "0.11.0"]
+                 [clj-cctray "0.12.0"]
                  [clj-http "3.6.1"]
                  [ring-curl "0.3.0"]
                  [ring/ring-json "0.4.0"]
@@ -33,6 +33,6 @@
                                                                                               org.eclipse.jetty/jetty-io
                                                                                               org.eclipse.jetty/jetty-util]]
                                   [clj-webdriver/clj-webdriver "0.7.2"]
-                                  [io.github.bonigarcia/webdrivermanager "1.6.2" :exclusions [com.google.guava/guava
+                                  [io.github.bonigarcia/webdrivermanager "1.7.1" :exclusions [com.google.guava/guava
                                                                                               org.apache.commons/commons-lang3]]
-                                  [ring/ring-mock "0.3.0"]]}})
+                                  [ring/ring-mock "0.3.1"]]}})

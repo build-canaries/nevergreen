@@ -23,6 +23,21 @@
     }
   }
 
+  .tray-settings-url {
+    @include respond-to(tablet, desktop) {
+      display: flex;
+
+      span {
+        width: 5em;
+      }
+
+      input {
+        width: auto;
+        flex-grow: 1;
+      }
+    }
+  }
+
   .tray-settings-name,
   .existing-password {
     @include respond-to(tablet, desktop) {
@@ -30,6 +45,7 @@
     }
   }
 
+  .tray-settings-url,
   .tray-settings-username,
   .existing-password,
   .server-type {

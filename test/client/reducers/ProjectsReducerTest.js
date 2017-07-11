@@ -2,7 +2,7 @@ import '../UnitSpec'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {reduce} from '../../../src/client/reducers/ProjectsReducer'
-import {TRAY_ADDED, REMOVE_TRAY, PROJECTS_FETCHED} from '../../../src/client/actions/TrackingActions'
+import {PROJECTS_FETCHED, REMOVE_TRAY, SET_TRAY_ID, TRAY_ADDED} from '../../../src/client/actions/TrackingActions'
 import {INITIALISED} from '../../../src/client/actions/NevergreenActions'
 import {IMPORT_SUCCESS} from '../../../src/client/actions/ImportActions'
 import Immutable from 'immutable'
@@ -118,6 +118,17 @@ describe('ProjectsReducer', function () {
       }
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('trayId').that.has.property('projectId').that.has.property('removed', false)
+    })
+  })
+
+  describe('set url action', function () {
+
+    it('should update the key in the state to the new tray id', function () {
+      const existingState = Immutable.fromJS({trayId: {}})
+      const action = {type: SET_TRAY_ID, originalTrayId: 'trayId', newTrayId: 'some-new-url', url: 'some-new-url'}
+      const newState = reduce(existingState, action)
+      expect(newState).to.have.property('some-new-url')
+      expect(newState).to.not.have.property('trayId')
     })
   })
 })

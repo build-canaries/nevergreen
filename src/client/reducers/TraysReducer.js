@@ -10,8 +10,10 @@ import {
   REMOVE_TRAY,
   SET_SERVER_TYPE,
   SET_TRAY_NAME,
+  SET_TRAY_URL,
   SET_TRAY_USERNAME,
-  TRAY_ADDED
+  TRAY_ADDED,
+  SET_TRAY_ID
 } from '../actions/TrackingActions'
 import {INITIALISED, NAVIGATED} from '../actions/NevergreenActions'
 import {IMPORT_SUCCESS} from '../actions/ImportActions'
@@ -68,6 +70,13 @@ export function reduce(state = DefaultState, action) {
 
     case SET_TRAY_USERNAME:
       return state.update(action.trayId, (tray) => tray.set('username', action.username))
+
+    case SET_TRAY_URL:
+      return state.update(action.trayId, (tray) => tray.set('url', action.url))
+
+    case SET_TRAY_ID:
+      return state.update(action.originalTrayId, (tray) => tray.set('trayId', action.newTrayId))
+        .mapKeys((key) => key === action.originalTrayId ? action.newTrayId : key)
 
     default:
       return state

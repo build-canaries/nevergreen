@@ -87,9 +87,27 @@ export function setTrayUsername(trayId, username) {
   return {type: SET_TRAY_USERNAME, trayId, username}
 }
 
+export const SET_TRAY_URL = 'SET_TRAY_URL'
+export function setTrayUrl(trayId, url) {
+  return {type: SET_TRAY_URL, trayId, url}
+}
+
+export const SET_TRAY_ID = 'SET_TRAY_ID'
+export function setTrayId(originalTrayId, newTrayId) {
+  return {type: SET_TRAY_ID, originalTrayId, newTrayId}
+}
+
 export const SELECT_PROJECT = 'SELECT_PROJECT'
 export function selectProject(trayId, projectId, selected) {
   return {type: SELECT_PROJECT, trayId, projectId, selected}
+}
+
+export function updateTrayId(tray, newTrayId, pendingRequest) {
+  return function (dispatch) {
+    dispatch(setTrayId(tray.trayId, newTrayId))
+    const updatedTray = Object.assign({}, tray, {trayId: newTrayId})
+    dispatch(refreshTray(updatedTray, pendingRequest))
+  }
 }
 
 export function encryptPassword(trayId, password, pendingRequest) {

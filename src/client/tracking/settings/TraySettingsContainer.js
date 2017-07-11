@@ -1,11 +1,20 @@
 import Immutable from 'immutable'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {encryptPassword, refreshTray, removeTray, setServerType, setTrayName, setTrayUsername} from '../../actions/TrackingActions'
+import {
+  encryptPassword,
+  refreshTray,
+  removeTray,
+  setServerType,
+  updateTrayId,
+  setTrayName,
+  setTrayUrl,
+  setTrayUsername
+} from '../../actions/TrackingActions'
 import TraySettings from './TraySettings'
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({removeTray, setTrayName, setServerType, setTrayUsername, encryptPassword, refreshTray}, dispatch)
+  return bindActionCreators({removeTray, setTrayName, setServerType, setTrayUsername, encryptPassword, refreshTray, setTrayUrl, updateTrayId}, dispatch)
 }
 
 function mapStateToProps(store, ownProps) {

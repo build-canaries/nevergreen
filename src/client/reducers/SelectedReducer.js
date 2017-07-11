@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import {TRAY_ADDED, REMOVE_TRAY, PROJECTS_FETCHED, SELECT_PROJECT} from '../actions/TrackingActions'
+import {PROJECTS_FETCHED, REMOVE_TRAY, SELECT_PROJECT, SET_TRAY_ID, TRAY_ADDED} from '../actions/TrackingActions'
 import {INITIALISED} from '../actions/NevergreenActions'
 import {IMPORT_SUCCESS} from '../actions/ImportActions'
 
@@ -27,6 +27,9 @@ export function reduce(state = DefaultState, action) {
       const currentUrls = action.data.map((project) => project.get('projectId'))
       return state.update(action.trayId, (included) => included.filter((projectId) => currentUrls.includes(projectId)))
     }
+
+    case SET_TRAY_ID:
+      return state.mapKeys((key) => key === action.originalTrayId ? action.newTrayId : key)
 
     default:
       return state

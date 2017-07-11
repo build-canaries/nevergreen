@@ -8,10 +8,21 @@ import './tray-settings.scss'
 class TraySettings extends Component {
   constructor(props) {
     super(props)
-    this.state = {newName: props.name, newUsername: props.username, newPassword: '', updatingPassword: false, credentialsChanged: false}
+    this.state = {
+      newName: props.name,
+      newUsername: props.username,
+      newPassword: '',
+      updatingPassword: false,
+      credentialsChanged: false,
+      urlChanged: false,
+      newUrl: props.url
+    }
   }
 
   componentWillUnmount() {
+    if (this.state.urlChanged) {
+      this.props.updateTrayId(this.props, this.state.newUrl, this.props.pendingRequest)
+    }
     if (this.state.credentialsChanged) {
       this.props.refreshTray(this.props, this.props.pendingRequest)
     }
@@ -43,6 +54,11 @@ class TraySettings extends Component {
       this.props.encryptPassword(this.props.trayId, this.state.newPassword, this.props.pendingRequest)
       this.setState({updatingPassword: false, newPassword: '', credentialsChanged: true})
     }
+    const urlChanged = (evt) => this.setState({newUrl: evt.target.value})
+    const setUrl = () => {
+      this.setState({urlChanged: this.props.url !== this.state.newUrl})
+      this.props.setTrayUrl(this.props.trayId, this.state.newUrl)
+    }
 
     return (
       <section className='tray-settings' data-locator='tray-settings'>
@@ -51,6 +67,9 @@ class TraySettings extends Component {
           <span>name</span>
         </Input>
         <button className='random' onClick={generateNewName} data-locator='generate-random'>randomise</button>
+        <Input className='tray-settings-url' value={this.state.newUrl} onChange={urlChanged} onBlur={setUrl} onEnter={setUrl}>
+          <span>URL</span>
+        </Input>
         <DropDown className='server-type' title='server type' value={this.props.serverType} onChange={serverTypeChange}>
           <option value=''>Auto detect</option>
           <option value='circle'>CircleCI</option>
@@ -103,6 +122,8 @@ TraySettings.propTypes = {
   setTrayName: PropTypes.func.isRequired,
   setServerType: PropTypes.func.isRequired,
   setTrayUsername: PropTypes.func.isRequired,
+  setTrayUrl: PropTypes.func.isRequired,
+  updateTrayId: PropTypes.func.isRequired,
   encryptPassword: PropTypes.func.isRequired,
   refreshTray: PropTypes.func.isRequired,
   pendingRequest: PropTypes.object
