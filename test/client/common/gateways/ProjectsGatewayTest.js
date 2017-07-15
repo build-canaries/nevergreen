@@ -1,9 +1,9 @@
 import {proxyquire} from '../../UnitSpec'
-import {describe, it, before, beforeEach} from 'mocha'
+import {before, beforeEach, describe, it} from 'mocha'
 import {expect} from 'chai'
 import sinon from 'sinon'
 
-describe('projects gateway', () => {
+describe('projects gateway', function () {
 
   let ProjectsGateway, Gateway
 
@@ -16,7 +16,7 @@ describe('projects gateway', () => {
     Gateway.post = sinon.spy()
   })
 
-  describe('getting all projects', () => {
+  describe('getting all projects', function () {
     it('posts only the required data from the given trays', () => {
       const trays = [{
         url: 'url',
@@ -49,8 +49,8 @@ describe('projects gateway', () => {
     })
   })
 
-  describe('getting interesting projects', () => {
-    it('maps selected projects to the posted data', () => {
+  describe('getting interesting projects', function () {
+    it('maps selected projects to the posted data', function () {
       const selected = {'some-tray-id': ['some-project-id']}
       const trays = [{
         trayId: 'some-tray-id',
@@ -71,6 +71,16 @@ describe('projects gateway', () => {
       ProjectsGateway.interesting(trays, selected)
 
       expect(Gateway.post).to.have.been.calledWith('/api/projects/interesting', expected)
+    })
+
+    it('does not include trays with no selected projects', function () {
+      const selected = {'some-tray-id': ['some-project-id'], 'none-selected-id': []}
+      const trays = [{trayId: 'some-tray-id'}, {trayId: 'none-selected-id'}]
+      const expected = [sinon.match({trayId: 'some-tray-id'})]
+
+      ProjectsGateway.interesting(trays, selected)
+
+      expect(Gateway.post).to.have.been.calledWith('/api/projects/interesting', sinon.match(expected))
     })
   })
 })

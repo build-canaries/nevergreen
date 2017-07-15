@@ -1,4 +1,9 @@
 import {post} from './Gateway'
+import _ from 'lodash'
+
+function includesProjects(tray) {
+  return !_.isEmpty(tray.included)
+}
 
 export function fetchAll(trays) {
   const data = trays.map(({url, username, password, serverType}) => {
@@ -18,7 +23,7 @@ export function interesting(trays, selected) {
       included: selected[tray.trayId],
       serverType: tray.serverType
     }
-  })
+  }).filter(includesProjects)
 
   return post('/api/projects/interesting', data)
 }
