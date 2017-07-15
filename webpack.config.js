@@ -54,7 +54,7 @@ module.exports = {
       {
         test: /\.scss$/i,
         use: ExtractTextPlugin.extract({
-          loader: [
+          use: [
             cssLoader,
             postCssLoader,
             'resolve-url-loader',
@@ -68,7 +68,7 @@ module.exports = {
       {
         test: /\.css$/i,
         use: ExtractTextPlugin.extract({
-          loader: [
+          use: [
             cssLoader,
             postCssLoader,
             'resolve-url-loader'
