@@ -25,5 +25,5 @@ export function interesting(trays, selected) {
     }
   }).filter(includesProjects)
 
-  return post('/api/projects/interesting', data)
+  return _.isEmpty(data) ? [] : post('/api/projects/interesting', data)
 }

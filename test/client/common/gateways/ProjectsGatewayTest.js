@@ -82,5 +82,14 @@ describe('projects gateway', function () {
 
       expect(Gateway.post).to.have.been.calledWith('/api/projects/interesting', sinon.match(expected))
     })
+
+    it('does not call the server at all if no trays have selected projectd', function () {
+      const selected = {'some-tray-id': []}
+      const trays = [{trayId: 'some-tray-id'}]
+
+      ProjectsGateway.interesting(trays, selected)
+
+      expect(Gateway.post).to.not.have.been.called
+    })
   })
 })
