@@ -65,10 +65,12 @@
     (flatten (pmap fetch-tray trays))))
 
 (defn fetch-interesting [tray]
-  (->> (fetch-tray tray)
-       (filtering/interesting)
-       (filter-by-ids (:included tray))
-       (add-tray-id (:tray-id tray))))
+  (if (empty? (:included tray))
+    []
+    (->> (fetch-tray tray)
+         (filtering/interesting)
+         (filter-by-ids (:included tray))
+         (add-tray-id (:tray-id tray)))))
 
 (defn get-interesting [trays]
   (if (= (count trays) 1)

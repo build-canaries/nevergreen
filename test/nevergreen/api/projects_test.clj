@@ -64,7 +64,7 @@
 
 (facts "it gets interesting projects"
        (fact "throws exception if the url is not http[s]"
-             (subject/get-interesting [{:url "url"}]) => (throws Exception)
+             (subject/get-interesting [{:url "url" :included ["project-1"]}]) => (throws Exception)
              (provided
                (subject/invalid-scheme? "url") => true))
 
@@ -88,7 +88,12 @@
        (fact "handles no tray id being given"
              (subject/get-interesting [{:included ["project"] :url valid-url}]) => (list {:tray-id nil :project-id "project" :prognosis :sick})
              (provided
-               (subject/fetch-tray anything) => [{:project-id "project" :prognosis :sick}])))
+               (subject/fetch-tray anything) => [{:project-id "project" :prognosis :sick}]))
+
+       (fact "does not call the CI server if no projects are selected"
+             (subject/get-interesting [{:included [] :url valid-url}]) => irrelevant
+             (provided
+               (subject/fetch-tray anything) => anything :times 0)))
 
 (facts "gets the server type"
        (fact "converts known server value to a symbol"
