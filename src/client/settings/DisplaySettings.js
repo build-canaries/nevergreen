@@ -11,12 +11,16 @@ import './display-settings.scss'
 class DisplaySettings extends Component {
   constructor(props) {
     super(props)
-    this.state = {lastBuildTime: moment.utc().toISOString()}
+    this.state = {
+      lastBuildTime: moment.utc().toISOString(),
+      lastBuildLabel: '1234'
+    }
   }
 
   render() {
     const toggleBrokenBuilds = (newValue) => this.props.setShowBrokenBuildTime(newValue)
     const toggleTrayName = (newValue) => this.props.setShowTrayName(newValue)
+    const toggleBuildLabel = (newValue) => this.props.setShowBrokenBuildLabel(newValue)
 
     return (
       <Container title='display' className='display'>
@@ -26,17 +30,40 @@ class DisplaySettings extends Component {
         <Checkbox checked={this.props.showBrokenBuildTime} onToggle={toggleBrokenBuilds} data-locator='show-times'>
           <span>show broken build time</span>
         </Checkbox>
+        <Checkbox checked={this.props.showBrokenBuildLabel} onToggle={toggleBuildLabel} data-locator='show-labels'>
+          <span>show broken build label</span>
+        </Checkbox>
         <h4 className='display-preview-title'>Preview</h4>
         <div className='display-preview'>
           <ScaledGrid>
-            <InterestingProject trayName={generateRandomName()} name='sick' prognosis='sick' lastBuildTime={this.state.lastBuildTime}
-                                showBrokenBuildTimers={this.props.showBrokenBuildTime} showTrayName={this.props.showTrayName}/>
-            <InterestingProject trayName={generateRandomName()} name='sick building' prognosis='sick-building'
-                                showBrokenBuildTimers={this.props.showBrokenBuildTime} showTrayName={this.props.showTrayName}/>
-            <InterestingProject trayName={generateRandomName()} name='healthy building' prognosis='healthy-building'
-                                showBrokenBuildTimers={this.props.showBrokenBuildTime} showTrayName={this.props.showTrayName}/>
-            <InterestingProject trayName={generateRandomName()} name='unknown' prognosis='unknown'
-                                showBrokenBuildTimers={this.props.showBrokenBuildTime} showTrayName={this.props.showTrayName}/>
+            <InterestingProject trayName={generateRandomName()}
+              name='sick' prognosis='sick'
+              lastBuildTime={this.state.lastBuildTime}
+              lastBuildLabel={this.state.lastBuildLabel}
+              showBrokenBuildTimers={this.props.showBrokenBuildTime}
+              showTrayName={this.props.showTrayName}
+              showBrokenBuildLabel={this.props.showBrokenBuildLabel}/>
+            <InterestingProject trayName={generateRandomName()}
+              name='sick building'
+              prognosis='sick-building'
+              lastBuildLabel={this.state.lastBuildLabel}
+              showBrokenBuildTimers={this.props.showBrokenBuildTime}
+              showTrayName={this.props.showTrayName}
+              showBrokenBuildLabel={this.props.showBrokenBuildLabel}/>
+            <InterestingProject trayName={generateRandomName()}
+              name='healthy building'
+              prognosis='healthy-building'
+              lastBuildLabel={this.state.lastBuildLabel}
+              showBrokenBuildTimers={this.props.showBrokenBuildTime}
+              showTrayName={this.props.showTrayName}
+              showBrokenBuildLabel={this.props.showBrokenBuildLabel}/>
+            <InterestingProject trayName={generateRandomName()}
+              name='unknown'
+              prognosis='unknown'
+              lastBuildLabel={this.state.lastBuildLabel}
+              showBrokenBuildTimers={this.props.showBrokenBuildTime}
+              showTrayName={this.props.showTrayName}
+              showBrokenBuildLabel={this.props.showBrokenBuildLabel}/>
           </ScaledGrid>
         </div>
       </Container>
@@ -47,8 +74,10 @@ class DisplaySettings extends Component {
 DisplaySettings.propTypes = {
   showTrayName: PropTypes.bool.isRequired,
   showBrokenBuildTime: PropTypes.bool.isRequired,
+  showBrokenBuildLabel: PropTypes.bool.isRequired,
   setShowBrokenBuildTime: PropTypes.func.isRequired,
-  setShowTrayName: PropTypes.func.isRequired
+  setShowTrayName: PropTypes.func.isRequired,
+  setShowBrokenBuildLabel: PropTypes.func.isRequired
 }
 
 export default DisplaySettings

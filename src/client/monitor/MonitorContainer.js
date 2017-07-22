@@ -24,6 +24,7 @@ function mapStateToProps(store) {
     selected: store.get('selected'),
     showBrokenBuildTimers: audioVisual.get('showBrokenBuildTime'),
     showTrayName: audioVisual.get('showTrayName'),
+    showBrokenBuildLabel: audioVisual.get('showBrokenBuildLabel'),
     playBrokenBuildSounds: audioVisual.get('playBrokenBuildSoundFx'),
     brokenBuildFx: audioVisual.get('brokenBuildSoundFx'),
     messages: store.get('success'),

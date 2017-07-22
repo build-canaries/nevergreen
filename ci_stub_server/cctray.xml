@@ -1,7 +1,7 @@
 <Projects>
-  <Project name="success-sleeping-project" activity="Sleeping" lastBuildStatus="Success" lastBuildTime="2015-12-09T10:31:10Z" webUrl="1"/>
-  <Project name="success-building-project" activity="Building" lastBuildStatus="Success" lastBuildTime="2015-12-09T10:31:10Z" webUrl="2"/>
-  <Project name="failure_sleeping_project" activity="Sleeping" lastBuildStatus="Failure" lastBuildTime="2015-12-09T10:31:10Z" webUrl="3"/>
-  <Project name="failure_building_project" activity="Building" lastBuildStatus="Failure" lastBuildTime="2015-12-09T10:31:10Z" webUrl="4"/>
+  <Project name="success-sleeping-project" activity="Sleeping" lastBuildStatus="Success" lastBuildTime="2015-12-09T10:31:10Z" lastBuildLabel="648" webUrl="1"/>
+  <Project name="success-building-project" activity="Building" lastBuildStatus="Success" lastBuildTime="2015-12-09T10:31:10Z" lastBuildLabel="1090" webUrl="2"/>
+  <Project name="failure_sleeping_project" activity="Sleeping" lastBuildStatus="Failure" lastBuildTime="2015-12-09T10:31:10Z" lastBuildLabel="220" webUrl="3"/>
+  <Project name="failure_building_project" activity="Building" lastBuildStatus="Failure" lastBuildTime="2015-12-09T10:31:10Z" lastBuildLabel="919" webUrl="4"/>
   <random stuff="random-stuff"/>
 </Projects>

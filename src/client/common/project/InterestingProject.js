@@ -17,6 +17,7 @@ class InterestingProject extends Component {
 
     const timeBrokenLabel = _.isEmpty(_.trim(this.props.lastBuildTime)) ? '??' : moment(this.props.lastBuildTime).fromNow(true)
     const timeBroken = this.props.showBrokenBuildTimers && isSick ? <span className='time-broken'> {timeBrokenLabel}</span> : null
+    const buildLabel = this.props.showBrokenBuildLabel && !_.isEmpty(_.trim(this.props.lastBuildLabel)) ? <span className='build-label'> #{this.props.lastBuildLabel}</span> : null
 
     return (
       <div className={classes} data-locator='interesting-project'>
@@ -25,6 +26,7 @@ class InterestingProject extends Component {
           <span data-locator='project-name'>{this.props.name}</span>
           {stage}
           {timeBroken}
+          {buildLabel}
         </div>
       </div>
     )
@@ -37,8 +39,10 @@ InterestingProject.propTypes = {
   stage: PropTypes.string,
   trayName: PropTypes.string,
   lastBuildTime: PropTypes.string,
+  lastBuildLabel: PropTypes.string,
   showBrokenBuildTimers: PropTypes.bool,
-  showTrayName: PropTypes.bool
+  showTrayName: PropTypes.bool,
+  showBrokenBuildLabel: PropTypes.bool
 }
 
 export default InterestingProject
