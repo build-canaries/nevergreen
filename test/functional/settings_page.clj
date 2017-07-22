@@ -17,5 +17,11 @@
 (defn show-times [show]
   (checkbox show (locator "show-times")))
 
+(defn show-times [show]
+  (checkbox show (locator "show-times")))
+
 (defn play-sounds [play]
   (checkbox play (locator "play-sounds")))
+
+(defn show-labels [play]
+  (checkbox play (locator "show-labels")))

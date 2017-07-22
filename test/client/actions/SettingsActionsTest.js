@@ -7,11 +7,13 @@ import {
   setPlayBrokenBuildSoundFx,
   setBrokenBuildSoundFx,
   setRefreshTime,
+  setShowBrokenBuildLabel,
   SHOW_BROKEN_BUILD_TIME,
   SHOW_TRAY_NAME,
   PLAY_BROKEN_BUILD_SOUND_FX,
   BROKEN_BUILD_SOUND_FX,
-  REFRESH_TIME
+  REFRESH_TIME,
+  SHOW_BUILD_LABEL
 } from '../../../src/client/actions/SettingsActions'
 
 describe('SettingsActions', function () {
@@ -87,6 +89,18 @@ describe('SettingsActions', function () {
         const actual = setRefreshTime(value)
         expect(actual).to.have.property('value', 5)
       })
+    })
+  })
+
+  describe('setting broken build label', function() {
+    it('should return the correct type', function () {
+      const actual = setShowBrokenBuildLabel()
+      expect(actual).to.have.property('type', SHOW_BUILD_LABEL)
+    })
+
+    it('should return the given value', function () {
+      const actual = setShowTrayName(true)
+      expect(actual).to.have.property('value', true)
     })
   })
 })

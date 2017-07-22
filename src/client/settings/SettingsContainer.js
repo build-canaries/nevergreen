@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {setBrokenBuildSoundFx, setPlayBrokenBuildSoundFx, setRefreshTime, setShowBrokenBuildTime, setShowTrayName} from '../actions/SettingsActions'
+import {setBrokenBuildSoundFx, setPlayBrokenBuildSoundFx, setRefreshTime, setShowBrokenBuildTime, setShowTrayName, setShowBrokenBuildLabel} from '../actions/SettingsActions'
 import Settings from './Settings'
 
 function mapDispatchToProps(dispatch) {
@@ -9,7 +9,8 @@ function mapDispatchToProps(dispatch) {
     setPlayBrokenBuildSoundFx,
     setBrokenBuildSoundFx,
     setShowTrayName,
-    setRefreshTime
+    setRefreshTime,
+    setShowBrokenBuildLabel
   }, dispatch)
 }
 

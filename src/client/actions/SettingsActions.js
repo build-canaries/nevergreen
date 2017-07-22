@@ -27,3 +27,8 @@ export function setRefreshTime(value) {
     value: intValue >= MIN_REFRESH_TIME ? intValue : MIN_REFRESH_TIME
   }
 }
+
+export const SHOW_BUILD_LABEL = 'SHOW_BUILD_LABEL'
+export function setShowBrokenBuildLabel(value) {
+	return {type: SHOW_BUILD_LABEL, value}
+}

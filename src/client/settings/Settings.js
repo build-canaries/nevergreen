@@ -21,13 +21,15 @@ Settings.propTypes = {
   showTrayName: PropTypes.bool.isRequired,
   showBrokenBuildTime: PropTypes.bool.isRequired,
   playBrokenBuildSoundFx: PropTypes.bool.isRequired,
+  showBrokenBuildLabel: PropTypes.bool.isRequired,
   brokenBuildSoundFx: PropTypes.string,
   setShowBrokenBuildTime: PropTypes.func.isRequired,
   setShowTrayName: PropTypes.func.isRequired,
   setPlayBrokenBuildSoundFx: PropTypes.func.isRequired,
   setBrokenBuildSoundFx: PropTypes.func.isRequired,
   refreshTime: PropTypes.number.isRequired,
-  setRefreshTime: PropTypes.func.isRequired
+  setRefreshTime: PropTypes.func.isRequired,
+  setShowBrokenBuildLabel: PropTypes.func.isRequired
 }
 
 export default Settings

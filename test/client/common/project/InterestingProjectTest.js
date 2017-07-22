@@ -94,4 +94,19 @@ describe('<InterestingProject/>', function () {
       expect(wrapper.find('.time-broken')).to.have.text().match(/^ [ 0-9a-zA-Z]*$/)
     })
   })
+
+  describe('broken build label', function () {
+    it('should not be shown if disabled', function () {
+      const props = Object.assign({}, DEFAULT_PROPS, {showBrokenBuildLabel: false})
+      const wrapper = shallow(<InterestingProject {...props} />)
+      expect(wrapper.find('.build-label')).to.not.be.present()
+    })
+
+    it('should be shown if enabled and not empty', function() {
+      const props = Object.assign({}, DEFAULT_PROPS, {showBrokenBuildLabel: true, lastBuildLabel: '1234'})
+      const wrapper = shallow(<InterestingProject {...props} />)
+      expect(wrapper.find('.build-label')).to.be.present()
+      expect(wrapper.find('.build-label').text()).to.equal(' #1234')
+    })
+  })
 })
