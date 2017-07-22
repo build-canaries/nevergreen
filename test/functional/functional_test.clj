@@ -81,7 +81,8 @@
     (doseq [state [true false]]
       (do (settings-page/show-names state)
           (settings-page/show-times state)
-          (settings-page/play-sounds state)))
+          (settings-page/play-sounds state)
+          (settings-page/show-labels state)))
 
     (backup-page/navigate base-url)
     (-> (backup-page/export-data)

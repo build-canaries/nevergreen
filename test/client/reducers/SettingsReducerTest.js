@@ -57,6 +57,13 @@ describe('SettingsReducer', function () {
       const newState = reduce(existingState, action)
       expect(newState).to.contain.property('refreshTime', 10)
     })
+
+    it('should merge show build label', function () {
+      const existingState = Immutable.Map({showBrokenBuildLabel: false})
+      const action = {type: INITIALISED, data: Immutable.fromJS({audioVisual: {showBrokenBuildLabel: true}})}
+      const newState = reduce(existingState, action)
+      expect(newState).to.contain.property('showBrokenBuildLabel', true)
+    })
   })
 
   describe('imported data action', function () {
@@ -87,6 +94,13 @@ describe('SettingsReducer', function () {
       const action = {type: IMPORT_SUCCESS, data: Immutable.fromJS({audioVisual: {brokenBuildSoundFx: 'another-url'}})}
       const newState = reduce(existingState, action)
       expect(newState).to.contain.property('brokenBuildSoundFx', 'another-url')
+    })
+
+    it('should merge show build label', function () {
+      const existingState = Immutable.Map({showBrokenBuildLabel: false})
+      const action = {type: IMPORT_SUCCESS, data: Immutable.fromJS({audioVisual: {showBrokenBuildLabel: true}})}
+      const newState = reduce(existingState, action)
+      expect(newState).to.contain.property('showBrokenBuildLabel', true)
     })
   })
 
