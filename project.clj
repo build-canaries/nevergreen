@@ -10,7 +10,7 @@
                  [clj-http "3.6.1"]
                  [ring-curl "0.3.0"]
                  [ring/ring-json "0.4.0"]
-                 [ring/ring-defaults "0.3.0"]
+                 [ring/ring-defaults "0.3.1"]
                  [bk/ring-gzip "0.2.1"]
                  [ring-basic-authentication "1.0.5"]
                  [base64-clj "0.1.1"]
