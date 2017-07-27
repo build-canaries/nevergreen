@@ -59,10 +59,10 @@ describe('SettingsReducer', function () {
     })
 
     it('should merge show build label', function () {
-      const existingState = Immutable.Map({showBrokenBuildLabel: false})
-      const action = {type: INITIALISED, data: Immutable.fromJS({audioVisual: {showBrokenBuildLabel: true}})}
+      const existingState = Immutable.Map({showBuildLabel: false})
+      const action = {type: INITIALISED, data: Immutable.fromJS({audioVisual: {showBuildLabel: true}})}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('showBrokenBuildLabel', true)
+      expect(newState).to.contain.property('showBuildLabel', true)
     })
   })
 
@@ -97,10 +97,10 @@ describe('SettingsReducer', function () {
     })
 
     it('should merge show build label', function () {
-      const existingState = Immutable.Map({showBrokenBuildLabel: false})
-      const action = {type: IMPORT_SUCCESS, data: Immutable.fromJS({audioVisual: {showBrokenBuildLabel: true}})}
+      const existingState = Immutable.Map({showBuildLabel: false})
+      const action = {type: IMPORT_SUCCESS, data: Immutable.fromJS({audioVisual: {showBuildLabel: true}})}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('showBrokenBuildLabel', true)
+      expect(newState).to.contain.property('showBuildLabel', true)
     })
   })
 

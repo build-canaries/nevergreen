@@ -29,6 +29,6 @@ export function setRefreshTime(value) {
 }
 
 export const SHOW_BUILD_LABEL = 'SHOW_BUILD_LABEL'
-export function setShowBrokenBuildLabel(value) {
+export function setShowBuildLabel(value) {
 	return {type: SHOW_BUILD_LABEL, value}
 }

@@ -12,7 +12,7 @@ describe('<InterestingProject/>', function () {
     stage: null,
     trayName: null,
     lastBuildTime: null,
-    showBrokenBuildTimers: null,
+    showBuildLabel: null,
     showTrayName: null
   }
 
@@ -95,15 +95,27 @@ describe('<InterestingProject/>', function () {
     })
   })
 
-  describe('broken build label', function () {
+  describe('build label', function () {
     it('should not be shown if disabled', function () {
-      const props = Object.assign({}, DEFAULT_PROPS, {showBrokenBuildLabel: false})
+      const props = Object.assign({}, DEFAULT_PROPS, {showBuildLabel: false})
       const wrapper = shallow(<InterestingProject {...props} />)
       expect(wrapper.find('.build-label')).to.not.be.present()
     })
 
-    it('should be shown if enabled and not empty', function() {
-      const props = Object.assign({}, DEFAULT_PROPS, {showBrokenBuildLabel: true, lastBuildLabel: '1234'})
+    it('should not be shown if prognosis is not sick', function () {
+      const props = Object.assign({}, DEFAULT_PROPS, {showBuildLabel: true, lastBuildLabel: '1234', prognosis: 'healthy-building'})
+      const wrapper = shallow(<InterestingProject {...props} />)
+      expect(wrapper.find('.build-label')).to.not.be.present()
+    })
+
+    it('should not be shown if empty', function () {
+      const props = Object.assign({}, DEFAULT_PROPS, {showBuildLabel: true, lastBuildLabel: '', prognosis: 'sick'})
+      const wrapper = shallow(<InterestingProject {...props} />)
+      expect(wrapper.find('.build-label')).to.not.be.present()
+    })
+
+    it('should be shown if enabled, not empty and prognosis is sick', function() {
+      const props = Object.assign({}, DEFAULT_PROPS, {showBuildLabel: true, lastBuildLabel: '1234', prognosis: 'sick'})
       const wrapper = shallow(<InterestingProject {...props} />)
       expect(wrapper.find('.build-label')).to.be.present()
       expect(wrapper.find('.build-label').text()).to.equal(' #1234')

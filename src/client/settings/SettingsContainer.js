@@ -1,6 +1,13 @@
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {setBrokenBuildSoundFx, setPlayBrokenBuildSoundFx, setRefreshTime, setShowBrokenBuildTime, setShowTrayName, setShowBrokenBuildLabel} from '../actions/SettingsActions'
+import {
+  setBrokenBuildSoundFx,
+  setPlayBrokenBuildSoundFx,
+  setRefreshTime,
+  setShowBrokenBuildTime,
+  setShowBuildLabel,
+  setShowTrayName
+} from '../actions/SettingsActions'
 import Settings from './Settings'
 
 function mapDispatchToProps(dispatch) {
@@ -10,7 +17,7 @@ function mapDispatchToProps(dispatch) {
     setBrokenBuildSoundFx,
     setShowTrayName,
     setRefreshTime,
-    setShowBrokenBuildLabel
+    setShowBuildLabel
   }, dispatch)
 }
 
@@ -18,7 +25,4 @@ function mapStateToProps(store) {
   return store.get('audioVisual').toJS()
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Settings)
+export default connect(mapStateToProps, mapDispatchToProps)(Settings)

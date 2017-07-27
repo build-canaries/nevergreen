@@ -12,7 +12,8 @@ describe('<InterestingProjects/>', function () {
     showBrokenBuildTimers: null,
     showTrayName: null,
     playBrokenBuildSounds: null,
-    brokenBuildFx: null
+    brokenBuildFx: null,
+    showBuildLabel: null
   }
 
   it('should render broken build sound fx if its enabled and any project is broken', function () {

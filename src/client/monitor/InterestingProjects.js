@@ -13,9 +13,10 @@ class InterestingProjects extends Component {
 
   render() {
     const playBrokenSfx = this.props.playBrokenBuildSounds && this.props.projects.reduce((previous, project) => {
-        return previous || project.prognosis === 'sick'
-      }, false)
-    const brokenSfx = playBrokenSfx && this.props.brokenBuildFx ? <audio ref={(node) => this.sfx = node} src={this.props.brokenBuildFx} autoPlay/> : null
+      return previous || project.prognosis === 'sick'
+    }, false)
+    const brokenSfx = playBrokenSfx && this.props.brokenBuildFx ?
+      <audio ref={(node) => this.sfx = node} src={this.props.brokenBuildFx} autoPlay/> : null
 
     return (
       <span className='interesting-projects' data-locator='interesting-projects'>
@@ -23,10 +24,10 @@ class InterestingProjects extends Component {
           {
             this.props.projects.map((project) => {
               const tray = this.props.trays.find((tray) => tray.trayId === project.trayId)
-              return <InterestingProject {...project} trayName={tray.name} key={project.projectId}
+              return <InterestingProject {...project} trayName={tray.name} key={`${tray.trayId}#${project.projectId}`}
                                          showBrokenBuildTimers={this.props.showBrokenBuildTimers}
                                          showTrayName={this.props.showTrayName}
-                                         showBrokenBuildLabel={this.props.showBrokenBuildLabel}/>
+                                         showBuildLabel={this.props.showBuildLabel}/>
             })
           }
         </ScaledGrid>
@@ -40,12 +41,15 @@ InterestingProjects.propTypes = {
   projects: PropTypes.arrayOf(PropTypes.shape({
     projectId: PropTypes.string.isRequired
   })).isRequired,
-  trays: PropTypes.arrayOf(PropTypes.object).isRequired,
+  trays: PropTypes.arrayOf(PropTypes.shape({
+    trayId: PropTypes.string.isRequired,
+    name: PropTypes.string
+  })).isRequired,
   showBrokenBuildTimers: PropTypes.bool,
   showTrayName: PropTypes.bool,
   playBrokenBuildSounds: PropTypes.bool,
   brokenBuildFx: PropTypes.string,
-  showBrokenBuildLabel: PropTypes.bool
+  showBuildLabel: PropTypes.bool
 }
 
 export default InterestingProjects

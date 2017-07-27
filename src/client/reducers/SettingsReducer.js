@@ -1,5 +1,12 @@
 import Immutable from 'immutable'
-import {BROKEN_BUILD_SOUND_FX, PLAY_BROKEN_BUILD_SOUND_FX, SHOW_BROKEN_BUILD_TIME, SHOW_TRAY_NAME, REFRESH_TIME, SHOW_BUILD_LABEL} from '../actions/SettingsActions'
+import {
+  BROKEN_BUILD_SOUND_FX,
+  PLAY_BROKEN_BUILD_SOUND_FX,
+  REFRESH_TIME,
+  SHOW_BROKEN_BUILD_TIME,
+  SHOW_BUILD_LABEL,
+  SHOW_TRAY_NAME
+} from '../actions/SettingsActions'
 import {INITIALISED} from '../actions/NevergreenActions'
 import {IMPORT_SUCCESS} from '../actions/ImportActions'
 import defaultSoundFx from '../settings/pacman_death.mp3'
@@ -10,7 +17,7 @@ const DefaultState = Immutable.Map({
   playBrokenBuildSoundFx: false,
   brokenBuildSoundFx: defaultSoundFx,
   refreshTime: 5,
-  showBrokenBuildLabel: true
+  showBuildLabel: false
 })
 
 export function reduce(state = DefaultState, action) {
@@ -35,7 +42,7 @@ export function reduce(state = DefaultState, action) {
       return state.set('refreshTime', action.value)
 
     case SHOW_BUILD_LABEL:
-      return state.set('showBrokenBuildLabel', action.value)
+      return state.set('showBuildLabel', action.value)
 
     default:
       return state

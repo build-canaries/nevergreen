@@ -13,7 +13,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(store) {
-  const audioVisual = store.get('audioVisual')
+  const settings = store.get('audioVisual')
   const interesting = store.get('interesting')
 
   return Immutable.Map({
@@ -22,13 +22,13 @@ function mapStateToProps(store) {
     trays: store.get('trays').toList(),
     projects: interesting.get('projects'),
     selected: store.get('selected'),
-    showBrokenBuildTimers: audioVisual.get('showBrokenBuildTime'),
-    showTrayName: audioVisual.get('showTrayName'),
-    showBrokenBuildLabel: audioVisual.get('showBrokenBuildLabel'),
-    playBrokenBuildSounds: audioVisual.get('playBrokenBuildSoundFx'),
-    brokenBuildFx: audioVisual.get('brokenBuildSoundFx'),
+    showBrokenBuildTimers: settings.get('showBrokenBuildTime'),
+    showTrayName: settings.get('showTrayName'),
+    showBuildLabel: settings.get('showBuildLabel'),
+    playBrokenBuildSounds: settings.get('playBrokenBuildSoundFx'),
+    brokenBuildFx: settings.get('brokenBuildSoundFx'),
     messages: store.get('success'),
-    refreshTime: audioVisual.get('refreshTime'),
+    refreshTime: settings.get('refreshTime'),
     isFullScreen: store.getIn(['nevergreen', 'fullScreen'])
   }).toJS()
 }

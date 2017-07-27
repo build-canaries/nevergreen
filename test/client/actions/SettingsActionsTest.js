@@ -2,18 +2,18 @@ import '../UnitSpec'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {
-  setShowBrokenBuildTime,
-  setShowTrayName,
-  setPlayBrokenBuildSoundFx,
-  setBrokenBuildSoundFx,
-  setRefreshTime,
-  setShowBrokenBuildLabel,
-  SHOW_BROKEN_BUILD_TIME,
-  SHOW_TRAY_NAME,
-  PLAY_BROKEN_BUILD_SOUND_FX,
   BROKEN_BUILD_SOUND_FX,
+  PLAY_BROKEN_BUILD_SOUND_FX,
   REFRESH_TIME,
-  SHOW_BUILD_LABEL
+  setBrokenBuildSoundFx,
+  setPlayBrokenBuildSoundFx,
+  setRefreshTime,
+  setShowBrokenBuildTime,
+  setShowBuildLabel,
+  setShowTrayName,
+  SHOW_BROKEN_BUILD_TIME,
+  SHOW_BUILD_LABEL,
+  SHOW_TRAY_NAME
 } from '../../../src/client/actions/SettingsActions'
 
 describe('SettingsActions', function () {
@@ -92,9 +92,9 @@ describe('SettingsActions', function () {
     })
   })
 
-  describe('setting broken build label', function() {
+  describe('setting build label', function () {
     it('should return the correct type', function () {
-      const actual = setShowBrokenBuildLabel()
+      const actual = setShowBuildLabel()
       expect(actual).to.have.property('type', SHOW_BUILD_LABEL)
     })
 

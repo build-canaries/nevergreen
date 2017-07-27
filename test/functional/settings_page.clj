@@ -11,17 +11,14 @@
   (click (locator "menu-settings"))
   (wait-until #(= (current-url) (str base-url "/settings"))))
 
-(defn show-names [show]
-  (checkbox show (locator "show-names")))
+(defn show-tray-names [show]
+  (checkbox show (locator "show-tray-names")))
 
-(defn show-times [show]
-  (checkbox show (locator "show-times")))
+(defn show-broken-build-times [show]
+  (checkbox show (locator "show-broken-build-times")))
 
-(defn show-times [show]
-  (checkbox show (locator "show-times")))
-
-(defn play-sounds [play]
+(defn play-broken-build-sounds [play]
   (checkbox play (locator "play-sounds")))
 
-(defn show-labels [play]
-  (checkbox play (locator "show-labels")))
+(defn show-build-labels [show]
+  (checkbox show (locator "show-build-labels")))

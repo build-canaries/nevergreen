@@ -79,10 +79,10 @@
 
     (settings-page/navigate base-url)
     (doseq [state [true false]]
-      (do (settings-page/show-names state)
-          (settings-page/show-times state)
-          (settings-page/play-sounds state)
-          (settings-page/show-labels state)))
+      (do (settings-page/show-tray-names state)
+          (settings-page/show-broken-build-times state)
+          (settings-page/play-broken-build-sounds state)
+          (settings-page/show-build-labels state)))
 
     (backup-page/navigate base-url)
     (-> (backup-page/export-data)
