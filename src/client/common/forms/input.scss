@@ -33,8 +33,10 @@
     margin-top: 0.5em;
     padding: 0.5em;
 
-    &:read-write {
-      @include interactive($darken-on-focus: false);
+    &:not(:disabled) {
+      &:read-write {
+        @include interactive($darken-on-focus: false);
+      }
     }
 
     &:invalid {
