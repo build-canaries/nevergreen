@@ -1,6 +1,7 @@
 @import '../variables';
 @import '../responsive';
 @import '../typography';
+@import '../accessibility';
 
 .tabs {
   .tab-bar {
@@ -22,20 +23,17 @@
     user-select: none;
     border: 1px solid $light-grey;
     padding: 0.5em 1.5em;
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
     text-transform: uppercase;
     text-decoration: none;
     background-color: $light-grey;
     color: $off-black;
     cursor: pointer;
-    transition: background-color 0.1s ease-in;
     margin-right: 0.5em;
 
-    &:hover,
-    &:focus {
-      background-color: darken($light-grey, 8%);
-      border-radius: 0;
+    &:enabled {
+      @include interactive($off-black, $light-grey, $light-grey);
     }
 
     &:disabled {

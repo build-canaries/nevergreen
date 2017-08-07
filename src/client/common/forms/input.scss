@@ -1,6 +1,7 @@
 @import '../variables';
 @import '../typography';
 @import '../responsive';
+@import '../accessibility';
 @import '../fonts/icon-font';
 
 .input {
@@ -26,21 +27,19 @@
   input {
     @include font-scale(1);
 
-    border: none;
-    border-bottom: 1px solid $mid-grey;
+    border: 1px solid $light-grey;
+    border-radius: 2px;
     width: 100%;
     margin-top: 0.5em;
-    padding: 0.2em 0.2em 0.1em;
+    padding: 0.5em;
 
-    &:hover {
-      &:read-write {
-        border-bottom-color: $blue;
-      }
+    &:read-write {
+      @include interactive($darken-on-focus: false);
     }
 
     &:invalid {
       box-shadow: none;
-      border-bottom-color: $danger;
+      border-color: $danger;
     }
 
     @include respond-to(tablet, desktop) {
@@ -51,7 +50,7 @@
 
     &:disabled {
       color: $mid-grey;
-      border-bottom-color: $mid-grey;
+      border-color: $mid-grey;
     }
   }
 
@@ -68,13 +67,13 @@
     @extend .icon;
     @extend .icon-lock;
 
-    right: 0;
-    top: 3.7em;
+    right: 1em;
+    top: 4.4em;
     position: absolute;
 
     @include respond-to(tablet, desktop) {
-      top: 2.2em;
-      right: 1.1em;
+      top: 2.5em;
+      right: 2em;
     }
   }
 }

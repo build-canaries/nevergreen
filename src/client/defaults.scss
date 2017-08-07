@@ -1,5 +1,6 @@
 @import '~normalize.css';
 @import './common/variables';
+@import './common/accessibility';
 
 * {
   box-sizing: border-box;
@@ -29,8 +30,10 @@ a {
   color: $blue;
 
   &:visited {
-    color: darken($blue, 10%);
+    color: $off-black;
   }
+
+  @include interactive($blue, $white, $white);
 }
 
 input {

@@ -2,6 +2,7 @@
 @import '../responsive';
 @import '../fonts/icon-font';
 @import '../typography';
+@import '../accessibility';
 
 @mixin button-icon($icon) {
   @extend .icon-#{$icon};
@@ -35,15 +36,11 @@
 
   &:enabled {
     cursor: pointer;
-    transition: background-color 0.1s ease-in, box-shadow 0.1s ease-in;
+    transition: box-shadow 0.1s ease-in;
     box-shadow: $shadow;
 
-    &:hover,
-    &:focus {
-      background-color: darken($background-color, 8%);
-      border-color: darken($border-color, 8%);
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.26);
-      border-radius: 0;
+    @include interactive($color, $background-color, $border-color) {
+      box-shadow: $focus-shadow;
     }
   }
 

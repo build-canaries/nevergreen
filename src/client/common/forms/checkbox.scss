@@ -1,5 +1,6 @@
 @import '../variables';
 @import '../typography';
+@import '../accessibility';
 
 .checkbox {
   @include font-scale(1);
@@ -10,13 +11,16 @@
 
   input {
     cursor: pointer;
-    margin-left: -3em;
+    margin-left: -2.7em;
 
     &:enabled {
+      transition: background-color 0.1s ease-in;
+
       &:hover,
       &:focus {
         & + span {
-          color: $blue;
+          color: darken($off-black, $color-change-percentage);
+          background-color: darken($white, $color-change-percentage);
         }
       }
     }
@@ -35,6 +39,6 @@
 
   span {
     cursor: pointer;
-    padding-left: 1em;
+    margin-left: 1em;
   }
 }

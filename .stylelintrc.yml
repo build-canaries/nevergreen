@@ -12,3 +12,4 @@ rules:
        - mixin
        - content
        - each
+       - if

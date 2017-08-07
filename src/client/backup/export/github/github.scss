@@ -28,10 +28,10 @@
   .gist-url {
     @include respond-to(tablet, desktop) {
       display: flex;
+      align-items: center;
 
       input {
         flex: 1;
-        align-self: center;
       }
     }
   }

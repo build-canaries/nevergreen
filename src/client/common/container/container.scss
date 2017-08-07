@@ -1,6 +1,7 @@
 @import '../variables';
 @import '../fonts/icon-font';
 @import '../typography';
+@import '../accessibility';
 
 @mixin show-hide-icon($icon) {
   @extend .icon-circle-#{$icon};
@@ -31,10 +32,7 @@
     overflow: hidden;
     cursor: pointer;
 
-    &:hover,
-    &:focus {
-      color: darken($white, 10%);
-    }
+    @include interactive($white, $mid-grey, $mid-grey);
   }
 
   .section-title {

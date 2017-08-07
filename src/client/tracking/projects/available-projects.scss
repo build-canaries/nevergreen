@@ -9,7 +9,7 @@
   .toggles {
     display: block;
     width: 100%;
-    padding-top: 1em;
+    margin-top: 1em;
 
     @include respond-to(tablet, desktop) {
       display: inline-block;
@@ -48,11 +48,13 @@
     display: block;
     width: 100%;
     list-style: none;
+    overflow: hidden;
   }
 
   .project-filter {
     display: block;
     width: 100%;
+    margin-top: 1em;
 
     @include respond-to(tablet, desktop) {
       display: inline-block;
@@ -61,8 +63,6 @@
   }
 
   .project-filter-input {
-    padding-top: 1em;
-
     span {
       color: $mid-grey;
     }
@@ -78,6 +78,8 @@
 
   .back-to-top {
     @include button($off-black, $white, $light-grey);
+
+    margin-top: 1em;
 
     @include respond-to(tablet, desktop) {
       display: none;
