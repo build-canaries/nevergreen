@@ -3,6 +3,8 @@
 .display {
   .checkbox {
     display: block;
+    width: 0;
+    white-space: nowrap;
   }
 
   .display-preview-title {
