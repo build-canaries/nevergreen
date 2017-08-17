@@ -25,7 +25,7 @@
     "pa11y": "pa11y --ignore 'notice' $npm_package_config_domain"
   },
   "dependencies": {
-    "babel-polyfill": "6.23.0",
+    "babel-polyfill": "6.26.0",
     "bourbon-neat": "2.0.0",
     "classnames": "2.2.5",
     "clipboard": "1.7.1",
@@ -50,7 +50,7 @@
     "superagent": "3.5.2"
   },
   "devDependencies": {
-    "babel-core": "6.25.0",
+    "babel-core": "6.26.0",
     "babel-eslint": "7.2.3",
     "babel-loader": "7.1.1",
     "babel-preset-env": "1.6.0",
@@ -60,11 +60,11 @@
     "chai-enzyme": "0.8.0",
     "chai-immutable": "1.6.0",
     "copy-webpack-plugin": "4.0.1",
-    "css-loader": "0.28.4",
+    "css-loader": "0.28.5",
     "enzyme": "2.9.1",
     "eslint": "4.4.1",
     "eslint-plugin-babel": "4.1.2",
-    "eslint-plugin-react": "7.2.0",
+    "eslint-plugin-react": "7.2.1",
     "express": "4.15.4",
     "extract-text-webpack-plugin": "3.0.0",
     "file-loader": "0.11.2",
@@ -84,13 +84,13 @@
     "rimraf": "2.6.1",
     "sass-loader": "6.0.6",
     "sinon": "3.2.0",
-    "sinon-chai": "2.12.0",
+    "sinon-chai": "2.13.0",
     "style-loader": "0.18.2",
     "stylelint": "8.0.0",
     "stylelint-config-standard": "17.0.0",
     "url-loader": "0.5.9",
     "watch": "1.0.2",
-    "webpack": "3.5.3"
+    "webpack": "3.5.5"
   },
   "repository": {
     "type": "git",
