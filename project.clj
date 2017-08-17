@@ -15,7 +15,6 @@
                  [ring-basic-authentication "1.0.5"]
                  [base64-clj "0.1.1"]
                  [camel-snake-kebab "0.4.0"]
-                 [http-kit "2.2.0"]
                  [org.slf4j/slf4j-simple "1.7.25"]
                  [org.slf4j/log4j-over-slf4j "1.7.25"]
                  [org.slf4j/jul-to-slf4j "1.7.25"]

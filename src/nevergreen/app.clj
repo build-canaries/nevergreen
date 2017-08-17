@@ -1,7 +1,7 @@
 (ns nevergreen.app
   (import org.joda.time.DateTime)
   (:require [compojure.core :refer :all]
-            [org.httpkit.server :as http-kit]
+            [ring.adapter.jetty :refer [run-jetty]]
             [cheshire.generate :as cheshire]
             [nevergreen.config :as config]
             [nevergreen.api.routes :refer :all]
@@ -19,4 +19,4 @@
         (wrap-routes wrap-app-middleware))))
 
 (defn -main []
-  (http-kit/run-server all-routes {:ip (config/ip) :port (config/port)}))
+  (run-jetty all-routes {:host (config/ip) :port (config/port)}))
