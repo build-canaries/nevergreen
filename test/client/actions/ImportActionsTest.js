@@ -100,14 +100,14 @@ describe('ImportActions', function () {
 
     it('should dispatch importing action', function () {
       Gateway.send = () => Promise.resolve({files: {'configuration.json': {content: ''}}})
-      return ImportActions.restoreFromGitHub('some-location', 'some-oauth-token')(dispatch).then(() => {
+      return ImportActions.restoreFromGitHub('some-location')(dispatch).then(() => {
         expect(dispatch).to.have.been.calledWithMatch({type: ImportActions.IMPORTING})
       })
     })
 
     it('should dispatch import error action if the gist can not be fetched', function () {
       Gateway.send = () => Promise.reject({message: '{"message": "some-error"}'})
-      return ImportActions.restoreFromGitHub('some-location', 'some-oauth-token')(dispatch).then(() => {
+      return ImportActions.restoreFromGitHub('some-location')(dispatch).then(() => {
         expect(dispatch).to.have.been.calledWithMatch({type: ImportActions.IMPORT_ERROR})
       })
     })
@@ -115,7 +115,7 @@ describe('ImportActions', function () {
     it('should dispatch import data on successful fetch of the gist')
 
     it('should dispatch import error if gist url is blank', function () {
-      ImportActions.restoreFromGitHub(' ', 'some-oauth-token')(dispatch)
+      ImportActions.restoreFromGitHub(' ')(dispatch)
       expect(dispatch).to.have.been.calledWithMatch({type: ImportActions.IMPORT_ERROR})
     })
   })

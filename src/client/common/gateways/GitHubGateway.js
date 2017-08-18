@@ -28,6 +28,6 @@ export function updateGist(url, configuration, oauthToken) {
   return patch(url, data, {Authorization: `token ${oauthToken}`, Accept: mimeType})
 }
 
-export function getGist(location, oauthToken) {
-  return get(location, {Authorization: `token ${oauthToken}`, Accept: mimeType})
+export function getGist(location) {
+  return get(location, {Accept: mimeType})
 }

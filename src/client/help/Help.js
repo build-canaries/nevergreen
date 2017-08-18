@@ -88,15 +88,18 @@ class Help extends Component {
 
         <Container title='Backup'>
           <span>
-            To import/export to/from GitHub you need to generate a <a
-            href='https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/' target='_blank' rel='noopener noreferrer'>personal access token</a> to allow a private Gist to be created.
+            To export to GitHub you need to generate a <a href='https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/' target='_blank' rel='noopener noreferrer'>personal access token</a> to
+            allow a non-anonymous gist to be created. Creating a non-anonymous gist will allow you to delete it via the website later.
           </span>
           <p>
             The token <em>only</em> requires the <code>gist</code> <a href='https://developer.github.com/v3/oauth/#scopes' target='_blank' rel='noopener noreferrer'>scope</a>.
           </p>
           <p>
-            Access tokens are not stored locally as they allow access to all a users Gists, so they need to be manually entered every time you want to
-            import or export again.
+            Access tokens are not stored locally as they would allow editing of any of a users gists, so they need to be manually entered every time you
+            want to export.
+          </p>
+          <p>
+            Importing does not require an access token as even <a href='https://help.github.com/articles/about-gists/#secret-gists' target='_blank' rel='noopener noreferrer'>secret gists are not actually private</a>.
           </p>
         </Container>
 

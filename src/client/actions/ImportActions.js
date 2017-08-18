@@ -51,7 +51,7 @@ export function importData(jsonData) {
   }
 }
 
-export function restoreFromGitHub(location, oauthToken) {
+export function restoreFromGitHub(location) {
   return function (dispatch) {
     dispatch(importing())
 
@@ -60,7 +60,7 @@ export function restoreFromGitHub(location, oauthToken) {
       return
     }
 
-    return send(getGist(location, oauthToken))
+    return send(getGist(location))
       .then((res) => dispatch(importData(res.files['configuration.json'].content)))
       .catch((error) => {
         const message = fromJson(error.message).message

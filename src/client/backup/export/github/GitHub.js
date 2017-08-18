@@ -32,8 +32,8 @@ class GitHub extends Component {
             <span>description</span>
           </Input>
           <Input className='gist-url' value={this.state.url} type='url' onChange={urlChanged} onBlur={setUrl}
-                 placeholder='leave blank to create a new Gist' disabled={disabled}>
-            <span>Gist URL</span>
+                 placeholder='https://api.github.com/gists/:id or leave blank to create a new gist' disabled={disabled}>
+            <span>gist URL</span>
           </Input>
         </fieldset>
         <button className='upload' onClick={upload} disabled={disabled}>export</button>

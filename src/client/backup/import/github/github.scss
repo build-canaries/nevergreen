@@ -9,22 +9,9 @@
     @include button-icon('cloud-download');
   }
 
-  .gist-values {
-    display: block;
-    padding-bottom: 1em;
-  }
-
-  .oauth-token {
-    @include respond-to(tablet, desktop) {
-      display: block;
-
-      input {
-        width: 32rem;
-      }
-    }
-  }
-
   .gist-url {
+    padding-bottom: 1em;
+
     @include respond-to(tablet, desktop) {
       display: flex;
       align-items: center;
@@ -37,9 +24,5 @@
         flex: 1;
       }
     }
-  }
-
-  .gist-url {
-    padding-top: 1.5em;
   }
 }
