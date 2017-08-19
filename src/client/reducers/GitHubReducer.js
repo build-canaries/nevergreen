@@ -1,10 +1,10 @@
 import Immutable from 'immutable'
-import {GITHUB_SET_DESCRIPTION, GITHUB_SET_URL} from '../actions/GitHubActions'
+import {GITHUB_SET_DESCRIPTION, GITHUB_SET_GIST_ID} from '../actions/GitHubActions'
 import {INITIALISED} from '../actions/NevergreenActions'
 import {IMPORT_SUCCESS} from '../actions/ImportActions'
 
 const DefaultState = Immutable.Map({
-  url: '',
+  gistId: '',
   description: 'Nevergreen configuration backup'
 })
 
@@ -19,8 +19,8 @@ export function reduce(state = DefaultState, action) {
     case GITHUB_SET_DESCRIPTION:
       return state.set('description', action.description)
 
-    case GITHUB_SET_URL:
-      return state.set('url', action.url)
+    case GITHUB_SET_GIST_ID:
+      return state.set('gistId', action.gistId)
 
     default:
       return state

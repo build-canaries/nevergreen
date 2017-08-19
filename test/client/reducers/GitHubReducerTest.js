@@ -2,7 +2,7 @@ import '../UnitSpec'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {reduce} from '../../../src/client/reducers/GitHubReducer'
-import {GITHUB_SET_DESCRIPTION, GITHUB_SET_URL} from '../../../src/client/actions/GitHubActions'
+import {GITHUB_SET_DESCRIPTION, GITHUB_SET_GIST_ID} from '../../../src/client/actions/GitHubActions'
 import {INITIALISED} from '../../../src/client/actions/NevergreenActions'
 import {IMPORT_SUCCESS} from '../../../src/client/actions/ImportActions'
 import Immutable from 'immutable'
@@ -75,13 +75,13 @@ describe('GitHubReducer', function () {
     })
   })
 
-  describe('set url action', function () {
+  describe('set gist id action', function () {
 
-    it('should set the url property', function () {
+    it('should set the id property', function () {
       const existingState = Immutable.Map()
-      const action = {type: GITHUB_SET_URL, url: 'some-url'}
+      const action = {type: GITHUB_SET_GIST_ID, gistId: 'some-id'}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('url', 'some-url')
+      expect(newState).to.have.property('gistId', 'some-id')
     })
   })
 })

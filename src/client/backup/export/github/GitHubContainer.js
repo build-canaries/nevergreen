@@ -1,17 +1,17 @@
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {uploadToGitHub} from '../../../actions/ExportActions'
-import {gitHubSetUrl, gitHubSetDescription} from '../../../actions/GitHubActions'
+import {gitHubSetGistId, gitHubSetDescription} from '../../../actions/GitHubActions'
 import GitHub from './GitHub'
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({uploadToGitHub, gitHubSetUrl, gitHubSetDescription}, dispatch)
+  return bindActionCreators({uploadToGitHub, gitHubSetGistId, gitHubSetDescription}, dispatch)
 }
 
 function mapStateToProps(store, ownProps) {
   return {
     loaded: store.getIn(['backupExport', 'loaded']),
-    url: store.getIn(['github', 'url']),
+    gistId: store.getIn(['github', 'gistId']),
     description: store.getIn(['github', 'description']),
     configuration: ownProps.configuration
   }

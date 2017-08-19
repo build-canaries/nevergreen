@@ -86,7 +86,7 @@ export const SCHEMA = {
     github: {
       type: 'object',
       properties: {
-        url: {type: 'string'},
+        gistId: {type: 'string'},
         description: {type: 'string'}
       },
       additionalProperties: false

@@ -25,7 +25,7 @@
   }
 
   .description,
-  .gist-url {
+  .gist-id {
     @include respond-to(tablet, desktop) {
       display: flex;
       align-items: center;
@@ -37,13 +37,13 @@
   }
 
   .description,
-  .gist-url {
+  .gist-id {
     padding-top: 1.5em;
   }
 
   .oauth-token,
   .description,
-  .gist-url {
+  .gist-id {
     @include respond-to(tablet, desktop) {
       span {
         width: 6em;

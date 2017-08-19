@@ -51,16 +51,16 @@ export function importData(jsonData) {
   }
 }
 
-export function restoreFromGitHub(location) {
+export function restoreFromGitHub(gistId) {
   return function (dispatch) {
     dispatch(importing())
 
-    if (isBlank(location)) {
-      dispatch(importError(['Unable to import from GitHub because of an error:', 'gist URL is required']))
+    if (isBlank(gistId)) {
+      dispatch(importError(['Unable to import from GitHub because of an error:', 'gist ID is required']))
       return
     }
 
-    return send(getGist(location))
+    return send(getGist(gistId))
       .then((res) => dispatch(importData(res.files['configuration.json'].content)))
       .catch((error) => {
         const message = fromJson(error.message).message

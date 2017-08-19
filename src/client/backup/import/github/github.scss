@@ -9,7 +9,7 @@
     @include button-icon('cloud-download');
   }
 
-  .gist-url {
+  .gist-id {
     padding-bottom: 1em;
 
     @include respond-to(tablet, desktop) {

@@ -58,11 +58,11 @@ describe('ExportActions', function () {
       dispatch = sinon.spy()
       GitHubGateway.createGist = sinon.stub().returns({})
       GitHubGateway.updateGist = sinon.stub().returns({})
-      GitHubActions.gitHubSetUrl = sinon.spy()
+      GitHubActions.gitHubSetGistId = sinon.spy()
     })
 
     it('should dispatch exporting action', function () {
-      Gateway.send = () => Promise.resolve({url: 'some-url'})
+      Gateway.send = () => Promise.resolve({id: 'some-id'})
       return ExportActions.uploadToGitHub('irrelevant', 'irrelevant', 'irrelevant', 'irrelevant')(dispatch).then(() => {
         expect(dispatch).to.have.been.calledWithMatch({type: ExportActions.EXPORTING})
       })
@@ -75,41 +75,41 @@ describe('ExportActions', function () {
       })
     })
 
-    it('should create a gist if no url is given', function () {
-      Gateway.send = () => Promise.resolve({url: 'some-url'})
+    it('should create a gist if no id is given', function () {
+      Gateway.send = () => Promise.resolve({id: 'some-id'})
       return ExportActions.uploadToGitHub(null, 'irrelevant', 'irrelevant', 'irrelevant')(dispatch).then(() => {
         expect(GitHubGateway.updateGist).to.not.have.been.called
         expect(GitHubGateway.createGist).to.have.been.called
       })
     })
 
-    it('should create a gist if a blank url is given', function () {
-      Gateway.send = () => Promise.resolve({url: 'some-url'})
+    it('should create a gist if a blank id is given', function () {
+      Gateway.send = () => Promise.resolve({id: 'some-id'})
       return ExportActions.uploadToGitHub(' ', 'irrelevant', 'irrelevant', 'irrelevant')(dispatch).then(() => {
         expect(GitHubGateway.updateGist).to.not.have.been.called
         expect(GitHubGateway.createGist).to.have.been.called
       })
     })
 
-    it('should update the gist if a url is given', function () {
-      Gateway.send = () => Promise.resolve({url: 'some-url'})
-      return ExportActions.uploadToGitHub('some-url', 'irrelevant', 'irrelevant', 'irrelevant')(dispatch).then(() => {
+    it('should update the gist if an id is given', function () {
+      Gateway.send = () => Promise.resolve({id: 'some-id'})
+      return ExportActions.uploadToGitHub('some-id', 'irrelevant', 'irrelevant', 'irrelevant')(dispatch).then(() => {
         expect(GitHubGateway.updateGist).to.have.been.called
         expect(GitHubGateway.createGist).to.not.have.been.called
       })
     })
 
     it('should dispatch export success on successful create/update of the gist', function () {
-      Gateway.send = () => Promise.resolve({url: 'some-url'})
-      return ExportActions.uploadToGitHub('some-url', 'irrelevant', 'irrelevant', 'irrelevant')(dispatch).then(() => {
+      Gateway.send = () => Promise.resolve({id: 'some-id'})
+      return ExportActions.uploadToGitHub('some-id', 'irrelevant', 'irrelevant', 'irrelevant')(dispatch).then(() => {
         expect(dispatch).to.have.been.calledWithMatch({type: ExportActions.EXPORT_SUCCESS})
       })
     })
 
-    it('should dispatch GitHub set url successful create/update of the gist', function () {
-      Gateway.send = () => Promise.resolve({url: 'some-url'})
-      return ExportActions.uploadToGitHub('some-url', 'irrelevant', 'irrelevant', 'irrelevant')(dispatch).then(() => {
-        expect(GitHubActions.gitHubSetUrl).to.have.been.calledWith('some-url')
+    it('should dispatch GitHub set id successful create/update of the gist', function () {
+      Gateway.send = () => Promise.resolve({id: 'some-id'})
+      return ExportActions.uploadToGitHub('some-id', 'irrelevant', 'irrelevant', 'irrelevant')(dispatch).then(() => {
+        expect(GitHubActions.gitHubSetGistId).to.have.been.calledWith('some-id')
       })
     })
   })

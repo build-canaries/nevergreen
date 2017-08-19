@@ -6,24 +6,23 @@ import './github.scss'
 class GitHub extends Component {
   constructor(props) {
     super(props)
-    this.state = {url: props.url}
+    this.state = {gistId: props.gistId}
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({url: nextProps.url})
+    this.setState({gistId: nextProps.gistId})
   }
 
   render() {
-    const urlChanged = (evt) => this.setState({url: evt.target.value})
-    const setUrl = () => this.props.gitHubSetUrl(this.state.url)
-    const restore = () => this.props.restoreFromGitHub(this.state.url)
+    const gistIdChanged = (evt) => this.setState({gistId: evt.target.value})
+    const setGistId = () => this.props.gitHubSetGistId(this.state.gistId)
+    const restore = () => this.props.restoreFromGitHub(this.state.gistId)
     const disabled = !this.props.loaded
 
     return (
       <div className='import-github'>
-        <Input className='gist-url' value={this.state.url} type='url' onChange={urlChanged} onBlur={setUrl} disabled={disabled}
-               placeholder='https://api.github.com/gists/:id'>
-          <span>gist URL</span>
+        <Input className='gist-id' value={this.state.gistId} onChange={gistIdChanged} onBlur={setGistId} disabled={disabled}>
+          <span>gist ID</span>
         </Input>
         <button className='restore' onClick={restore} disabled={disabled}>import</button>
       </div>
@@ -34,8 +33,8 @@ class GitHub extends Component {
 GitHub.propTypes = {
   loaded: PropTypes.bool,
   restoreFromGitHub: PropTypes.func.isRequired,
-  gitHubSetUrl: PropTypes.func.isRequired,
-  url: PropTypes.string.isRequired
+  gitHubSetGistId: PropTypes.func.isRequired,
+  gistId: PropTypes.string.isRequired
 }
 
 export default GitHub

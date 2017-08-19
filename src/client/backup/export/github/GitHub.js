@@ -6,20 +6,20 @@ import './github.scss'
 class GitHub extends Component {
   constructor(props) {
     super(props)
-    this.state = {oauthToken: '', url: props.url, description: props.description}
+    this.state = {oauthToken: '', gistId: props.gistId, description: props.description}
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({url: nextProps.url, description: nextProps.description})
+    this.setState({gistId: nextProps.gistId, description: nextProps.description})
   }
 
   render() {
     const oauthTokenChanged = (evt) => this.setState({oauthToken: evt.target.value})
     const descriptionChanged = (evt) => this.setState({description: evt.target.value})
-    const urlChanged = (evt) => this.setState({url: evt.target.value})
+    const gistIdChanged = (evt) => this.setState({gistId: evt.target.value})
     const setDescription = () => this.props.gitHubSetDescription(this.state.description)
-    const setUrl = () => this.props.gitHubSetUrl(this.state.url)
-    const upload = () => this.props.uploadToGitHub(this.state.url, this.state.description, this.props.configuration, this.state.oauthToken)
+    const setGistId = () => this.props.gitHubSetGistId(this.state.gistId)
+    const upload = () => this.props.uploadToGitHub(this.state.gistId, this.state.description, this.props.configuration, this.state.oauthToken)
     const disabled = !this.props.loaded
 
     return (
@@ -31,9 +31,9 @@ class GitHub extends Component {
           <Input className='description' value={this.state.description} onChange={descriptionChanged} onBlur={setDescription} disabled={disabled}>
             <span>description</span>
           </Input>
-          <Input className='gist-url' value={this.state.url} type='url' onChange={urlChanged} onBlur={setUrl}
-                 placeholder='https://api.github.com/gists/:id or leave blank to create a new gist' disabled={disabled}>
-            <span>gist URL</span>
+          <Input className='gist-id' value={this.state.gistId} onChange={gistIdChanged} onBlur={setGistId}
+                 placeholder='leave blank to create a new gist' disabled={disabled}>
+            <span>gist ID</span>
           </Input>
         </fieldset>
         <button className='upload' onClick={upload} disabled={disabled}>export</button>
@@ -46,9 +46,9 @@ GitHub.propTypes = {
   loaded: PropTypes.bool,
   configuration: PropTypes.string.isRequired,
   uploadToGitHub: PropTypes.func.isRequired,
-  gitHubSetUrl: PropTypes.func.isRequired,
+  gitHubSetGistId: PropTypes.func.isRequired,
   gitHubSetDescription: PropTypes.func.isRequired,
-  url: PropTypes.string.isRequired,
+  gistId: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired
 }
 

@@ -1,19 +1,19 @@
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
-import {GITHUB_SET_DESCRIPTION, GITHUB_SET_URL, gitHubSetDescription, gitHubSetUrl} from '../../../src/client/actions/GitHubActions'
+import {GITHUB_SET_DESCRIPTION, GITHUB_SET_GIST_ID, gitHubSetDescription, gitHubSetGistId} from '../../../src/client/actions/GitHubActions'
 
 describe('GitHubActions', function () {
 
   describe('set url', function () {
 
     it('should return the correct type', function () {
-      const actual = gitHubSetUrl()
-      expect(actual).to.have.property('type', GITHUB_SET_URL)
+      const actual = gitHubSetGistId()
+      expect(actual).to.have.property('type', GITHUB_SET_GIST_ID)
     })
 
     it('should return the url', function () {
-      const actual = gitHubSetUrl('some-url')
-      expect(actual).to.have.property('url', 'some-url')
+      const actual = gitHubSetGistId('some-id')
+      expect(actual).to.have.property('gistId', 'some-id')
     })
   })
 
