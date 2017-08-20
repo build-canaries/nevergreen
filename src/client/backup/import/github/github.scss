@@ -13,15 +13,14 @@
     padding-bottom: 1em;
 
     @include respond-to(tablet, desktop) {
-      display: flex;
-      align-items: center;
+      display: block;
 
       span {
         width: 6em;
       }
 
       input {
-        flex: 1;
+        width: 32rem;
       }
     }
   }

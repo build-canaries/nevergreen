@@ -4,18 +4,23 @@ import {filter, validate} from '../common/repo/Data'
 import {fromJson} from '../common/Json'
 import {migrate} from '../common/repo/Migrations'
 import {send} from '../common/gateways/Gateway'
-import {getGist} from '../common/gateways/GitHubGateway'
+import {getGist, getTruncatedFile} from '../common/gateways/GitHubGateway'
+import {gitHubSetDescription} from './GitHubActions'
+
+const TEN_MEGS = 10485760
 
 function isBlank(s) {
   return _.isEmpty(_.trim(s))
 }
 
 export const IMPORTING = 'IMPORTING'
+
 export function importing() {
   return {type: IMPORTING}
 }
 
 export const IMPORT_ERROR = 'IMPORT_ERROR'
+
 export function importError(errors) {
   return {
     type: IMPORT_ERROR,
@@ -24,6 +29,7 @@ export function importError(errors) {
 }
 
 export const IMPORT_SUCCESS = 'IMPORT_SUCCESS'
+
 export function importSuccess(configuration) {
   return {
     type: IMPORT_SUCCESS,
@@ -60,11 +66,25 @@ export function restoreFromGitHub(gistId) {
       return
     }
 
-    return send(getGist(gistId))
-      .then((res) => dispatch(importData(res.files['configuration.json'].content)))
-      .catch((error) => {
-        const message = fromJson(error.message).message
-        dispatch(importError(['Unable to import from GitHub because of an error:', `${error.status} - ${message}`]))
-      })
+    return send(getGist(gistId)).then((res) => {
+      const configuration = res.files['configuration.json']
+      if (_.isNil(configuration)) {
+        throw {message: 'gist did not contain the required configuration.json file'}
+      } else if (configuration.truncated) {
+        if (configuration.size > TEN_MEGS) {
+          throw {message: `gist configuration.json file is too big to fetch without git cloning, size ${configuration.size} bytes`}
+        } else {
+          dispatch(gitHubSetDescription(res.description))
+          return send(getTruncatedFile(configuration.raw_url))
+        }
+      } else {
+        dispatch(gitHubSetDescription(res.description))
+        return configuration.content
+      }
+    }).then((content) => {
+      dispatch(importData(content))
+    }).catch((error) => {
+      dispatch(importError(['Unable to import from GitHub because of an error:', error.message]))
+    })
   }
 }

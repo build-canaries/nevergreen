@@ -114,6 +114,10 @@ describe('ImportActions', function () {
 
     it('should dispatch import data on successful fetch of the gist')
 
+    it('should dispatch import error if the gist does not contain configuration.json file')
+
+    it('should dispatch import error if the gist configuration.json is over 10mb as it can only be fetched via git cloning')
+
     it('should dispatch import error if gist id is blank', function () {
       ImportActions.restoreFromGitHub(' ')(dispatch)
       expect(dispatch).to.have.been.calledWithMatch({type: ImportActions.IMPORT_ERROR})

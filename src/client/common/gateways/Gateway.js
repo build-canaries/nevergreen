@@ -38,8 +38,9 @@ export function get(url, headers = {}) {
 
 export function send(request) {
   return request
-    .then((res) => res.body)
-    .catch((err) => {
+    .then((res) => {
+      return res.body || res.text
+    }).catch((err) => {
       const status = err.status || 0
       const message = (err.response && err.response.text) ? err.response.text : 'timeout'
       throw {status, message}

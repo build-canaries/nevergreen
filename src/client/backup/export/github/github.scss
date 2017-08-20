@@ -14,7 +14,8 @@
     padding-bottom: 1em;
   }
 
-  .oauth-token {
+  .oauth-token,
+  .gist-id {
     @include respond-to(tablet, desktop) {
       display: block;
 
@@ -24,8 +25,7 @@
     }
   }
 
-  .description,
-  .gist-id {
+  .description {
     @include respond-to(tablet, desktop) {
       display: flex;
       align-items: center;

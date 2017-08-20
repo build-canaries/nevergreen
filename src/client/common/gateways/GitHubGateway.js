@@ -17,8 +17,9 @@ export function createGist(description, configuration, oauthToken) {
   return post(gistApiUrl, data, {Authorization: `token ${oauthToken}`, Accept: mimeType})
 }
 
-export function updateGist(gistId, configuration, oauthToken) {
+export function updateGist(gistId, description, configuration, oauthToken) {
   const data = {
+    description,
     files: {
       'configuration.json': {
         content: configuration
@@ -31,4 +32,8 @@ export function updateGist(gistId, configuration, oauthToken) {
 
 export function getGist(gistId) {
   return get(`${gistApiUrl}/${gistId}`, {Accept: mimeType})
+}
+
+export function getTruncatedFile(url) {
+  return get(url, {Accept: 'text/plain; charset=utf-8'})
 }
