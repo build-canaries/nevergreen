@@ -3,14 +3,21 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import {Provider} from 'react-redux'
 import {applyMiddleware, compose, createStore} from 'redux'
-import {browserHistory, Router} from 'react-router'
+import createHistory from 'history/createBrowserHistory'
+import {Route, Router, Switch} from 'react-router-dom'
 import thunkMiddleware from 'redux-thunk'
 import Immutable from 'immutable'
-import routes from './routes'
 import LocalRespoistory from './common/repo/LocalRepository'
 import {reducer} from './reducers/Reducer'
 import {filter} from './common/repo/Data'
 import {navigated} from './actions/NevergreenActions'
+import NevergreenContainer from './NevergreenContainer'
+import MonitorContainer from './monitor/MonitorContainer'
+import TrackingContainer from './tracking/TrackingContainer'
+import SuccessContainer from './success/SuccessContainer'
+import SettingsContainer from './settings/SettingsContainer'
+import BackupContainer from './backup/BackupContainer'
+import HelpContainer from './help/HelpContainer'
 import _ from 'lodash'
 
 const ONE_SECOND = 1000
@@ -33,8 +40,24 @@ const saveDebounced = _.debounce(save, 200, {maxWait: ONE_SECOND})
 
 store.subscribe(() => saveDebounced())
 
+const history = createHistory()
+
+history.listen(() => store.dispatch(navigated()))
+
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={browserHistory} routes={routes} onUpdate={() => store.dispatch(navigated())}/>
+    <Router history={history}>
+      <NevergreenContainer>
+        <Switch>
+          <Route exact path='/monitor' component={MonitorContainer}/>
+          <Route exact path='/tracking' component={TrackingContainer}/>
+          <Route exact path='/success' component={SuccessContainer}/>
+          <Route exact path='/settings' component={SettingsContainer}/>
+          <Route exact path='/backup' component={BackupContainer}/>
+          <Route exact path='/help' component={HelpContainer}/>
+          <Route component={TrackingContainer}/>
+        </Switch>
+      </NevergreenContainer>
+    </Router>
   </Provider>,
   document.getElementById('root'))

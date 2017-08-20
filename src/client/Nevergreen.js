@@ -26,7 +26,7 @@ class Nevergreen extends Component {
     Mousetrap.bindGlobal('esc', () => document.activeElement.blur())
     Mousetrap.bind('?', () => {
       this.props.keyboardShortcut(true)
-      this.props.router.push('help')
+      this.props.history.push('help')
     })
   }
 
@@ -92,7 +92,7 @@ Nevergreen.propTypes = {
   keyboardShortcut: PropTypes.func.isRequired,
   checkForNewVersion: PropTypes.func.isRequired,
   dismiss: PropTypes.func.isRequired,
-  router: PropTypes.shape({
+  history: PropTypes.shape({
     push: PropTypes.func.isRequired
   }).isRequired,
   isFullScreen: PropTypes.bool,

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import './header.scss'
 import logo from './buildcanaries-logo.png'
-import {Link} from 'react-router'
+import {NavLink} from 'react-router-dom'
 import Shortcut from '../common/Shortcut'
 
 const items = [
@@ -35,9 +35,9 @@ class Header extends Component {
     return (
       <header role='banner' className={headerClassNames}>
         <h1 className='visually-hidden'>Nevergreen</h1>
-        <Link to='/monitor'>
+        <NavLink to='/monitor'>
           <img src={logo} className='logo' alt='Build Canaries'/>
-        </Link>
+        </NavLink>
         <nav role='navigation' className='site-menu'>
           <h2 className='visually-hidden'>Site menu</h2>
           <button className='site-menu-toggle' onClick={toggleMenu} aria-label={toggleLabel}><i className={iconClassNames}/></button>
@@ -48,11 +48,11 @@ class Header extends Component {
 
                 return (
                   <li key={item.id}>
-                    <Link to={`/${item.id}`} className='menu-item' activeClassName='active' onClick={hideMenu} data-locator={`menu-${item.id}`}>
+                    <NavLink to={`/${item.id}`} className='menu-item' activeClassName='active' onClick={hideMenu} data-locator={`menu-${item.id}`}>
                       <i className={iconClasses}/>
                       <span className='menu-title'>{item.title}</span>
                       <Shortcut hotkeys={item.shortcuts}/>
-                    </Link>
+                    </NavLink>
                   </li>
                 )
               })
