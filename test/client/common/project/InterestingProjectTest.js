@@ -114,11 +114,17 @@ describe('<InterestingProject/>', function () {
       expect(wrapper.find(locator('build-label'))).to.not.be.present()
     })
 
-    it('should be shown if enabled, not empty and prognosis is sick', function() {
+    it('should be shown if enabled, not empty and prognosis is sick', function () {
       const props = Object.assign({}, DEFAULT_PROPS, {showBuildLabel: true, lastBuildLabel: '1234', prognosis: 'sick'})
       const wrapper = shallow(<InterestingProject {...props} />)
       expect(wrapper.find(locator('build-label'))).to.be.present()
       expect(wrapper.find(locator('build-label')).text()).to.equal(' #1234')
+    })
+
+    it('should trim the build label to 10 characters', function () {
+      const props = Object.assign({}, DEFAULT_PROPS, {showBuildLabel: true, lastBuildLabel: '12345678901234567890', prognosis: 'sick'})
+      const wrapper = shallow(<InterestingProject {...props} />)
+      expect(wrapper.find(locator('build-label')).text()).to.equal(' #1234567890')
     })
   })
 })
