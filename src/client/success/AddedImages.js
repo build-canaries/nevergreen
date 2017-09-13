@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import Container from '../common/container/Container'
 import RemoveLink from './RemoveLink'
-import './added-images.scss'
+import styles from './added-images.scss'
 import _ from 'lodash'
 
 class AddedImages extends Component {
@@ -12,18 +12,18 @@ class AddedImages extends Component {
     }
 
     return (
-      <Container title='images' className='added-images'>
-        <ol className='success-images-list'>
+      <Container title='images' className={styles.container}>
+        <ol className={styles.successImages}>
           {
             this.props.urls.map((url, index) => {
               const remove = () => this.props.removeMessage(url)
 
               return (
-                <li key={`i${index}`} className='success-item image'>
-                  <div className='image-wrapper'>
-                    <img className='success-list-image' src={url} alt={url} title={url} data-locator='success-image'/>
+                <li key={`i${index}`} className={styles.imageItem}>
+                  <div className={styles.imageWrapper}>
+                    <img className={styles.image} src={url} alt={url} title={url} data-locator='success-image'/>
                   </div>
-                  <RemoveLink hotkeys={[`y i ${index}`]} removeMessage={remove} message={url}/>
+                  <RemoveLink hotkeys={[`y i ${index}`]} removeMessage={remove} message={url} className={styles.remove}/>
                 </li>
               )
             })

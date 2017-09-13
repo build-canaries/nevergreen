@@ -17,7 +17,7 @@ class Tray extends Component {
     const subTitle = this.props.name ? this.props.url : ''
 
     return (
-      <Container title={title} subTitle={subTitle} className='tray' highlight={this.props.highlight}>
+      <Container title={title} subTitle={subTitle} highlight={this.props.highlight}>
         <div data-locator='tray'>
           <Tabs titles={['projects', 'settings']}>
             <Loading loaded={this.props.loaded}>

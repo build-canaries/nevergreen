@@ -3,12 +3,12 @@ import PropTypes from 'prop-types'
 import TimingSettings from './TimingSettings'
 import DisplaySettings from './DisplaySettings'
 import AudioSettings from './AudioSettings'
-import './settings.scss'
+import styles from './settings.scss'
 
 class Settings extends Component {
   render() {
     return (
-      <section className='settings'>
+      <section className={styles.settings}>
         <TimingSettings {...this.props}/>
         <DisplaySettings {...this.props}/>
         <AudioSettings {...this.props}/>

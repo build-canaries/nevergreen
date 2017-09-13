@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import ScaledGrid from '../common/scale/ScaledGrid'
 import InterestingProject from '../common/project/InterestingProject'
-import './interesting-projects.scss'
+import styles from './interesting-projects.scss'
 
 class InterestingProjects extends Component {
   componentWillUnmount() {
@@ -19,7 +19,7 @@ class InterestingProjects extends Component {
       <audio ref={(node) => this.sfx = node} src={this.props.brokenBuildFx} autoPlay/> : null
 
     return (
-      <span className='interesting-projects' data-locator='interesting-projects'>
+      <span className={styles.interestingProjects} data-locator='interesting-projects'>
         <ScaledGrid>
           {
             this.props.projects.map((project) => {

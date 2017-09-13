@@ -1,4 +1,4 @@
-import '../../UnitSpec'
+import {locator} from '../../UnitSpec'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import React from 'react'
@@ -14,13 +14,13 @@ describe('<Loading/>', function () {
   it('should render loading if loaded is null', function () {
     const props = Object.assign({}, DEFAULT_PROPS, {loaded: null})
     const wrapper = shallow(<Loading {...props} />)
-    expect(wrapper.find('.loading')).to.be.present()
+    expect(wrapper.find(locator('loading'))).to.be.present()
   })
 
   it('should render loading if loaded is false', function () {
     const props = Object.assign({}, DEFAULT_PROPS, {loaded: false})
     const wrapper = shallow(<Loading {...props} />)
-    expect(wrapper.find('.loading')).to.be.present()
+    expect(wrapper.find(locator('loading'))).to.be.present()
   })
 
   it('should render children if loaded is true', function () {

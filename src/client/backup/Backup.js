@@ -3,13 +3,13 @@ import PropTypes from 'prop-types'
 import Schema from './Schema'
 import ImportContainer from './import/ImportContainer'
 import ExportContainer from './export/ExportContainer'
-import './backup.scss'
+import styles from './backup.scss'
 
 class Backup extends Component {
   render() {
     return (
-      <section className='backup'>
-        <h2 className='visually-hidden'>Backup</h2>
+      <section className={styles.backup}>
+        <h2 className={styles.title}>Backup</h2>
         <ImportContainer/>
         <ExportContainer/>
         <Schema schema={this.props.schema}/>

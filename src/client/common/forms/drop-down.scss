@@ -3,7 +3,7 @@
 @import '../responsive';
 @import '../accessibility';
 
-.drop-down {
+.dropDown {
   display: block;
   width: 100%;
 
@@ -11,39 +11,39 @@
     display: inline-block;
     width: auto;
   }
+}
 
-  span {
-    @include font-scale(1);
+.label {
+  @include font-scale(1);
 
-    display: inline-block;
+  display: inline-block;
 
-    @include respond-to(tablet, desktop) {
-      margin: 0.5em 1em 0.5em 0;
+  @include respond-to(tablet, desktop) {
+    margin: 0.5em 1em 0.5em 0;
+  }
+}
+
+.input {
+  @include font-scale(1);
+
+  width: 100%;
+  margin-top: 0.5em;
+  background-color: $white;
+  border: 1px solid $light-grey;
+  border-radius: 2px;
+  padding: 0.25em 0.5em;
+
+  &:enabled {
+    transition: box-shadow 0.1s ease-in;
+    box-shadow: $shadow;
+
+    @include interactive() {
+      box-shadow: $focus-shadow;
     }
   }
 
-  select {
-    @include font-scale(1);
-
-    width: 100%;
-    margin-top: 0.5em;
-    background-color: $white;
-    border: 1px solid $light-grey;
-    border-radius: 2px;
-    padding: 0.25em 0.5em;
-
-    &:enabled {
-      transition: box-shadow 0.1s ease-in;
-      box-shadow: $shadow;
-
-      @include interactive() {
-        box-shadow: $focus-shadow;
-      }
-    }
-
-    @include respond-to(tablet, desktop) {
-      width: auto;
-      margin-top: 0;
-    }
+  @include respond-to(tablet, desktop) {
+    width: auto;
+    margin-top: 0;
   }
 }

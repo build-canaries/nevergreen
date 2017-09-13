@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import Input from '../common/forms/Input'
-import './add-tray.scss'
+import styles from './add-tray.scss'
 
 class AddTray extends Component {
   constructor(props) {
@@ -19,20 +19,20 @@ class AddTray extends Component {
     const updatePassword = (evt) => this.setState({password: evt.target.value})
 
     return (
-      <div className='add-tray'>
-        <div className='inputs'>
-          <Input className='tracking-tray-url' placeholder='http(s)://host:port/cc.xml' value={this.state.url} onChange={updateUrl} onEnter={addTray}
+      <div className={styles.addTray}>
+        <div className={styles.inputs}>
+          <Input className={styles.trackingTrayUrl} placeholder='http(s)://host:port/cc.xml' value={this.state.url} onChange={updateUrl} onEnter={addTray}
                  data-locator='add-tray-url' autoFocus>
             <span>URL</span>
           </Input>
-          <Input className='username' value={this.state.username} onChange={updateUsername} onEnter={addTray} data-locator='add-tray-username'>
+          <Input className={styles.username} value={this.state.username} onChange={updateUsername} onEnter={addTray} data-locator='add-tray-username'>
             <span>username</span>
           </Input>
-          <Input className='password' value={this.state.password} onChange={updatePassword} onEnter={addTray} data-locator='add-tray-password'>
+          <Input className={styles.password} value={this.state.password} onChange={updatePassword} onEnter={addTray} data-locator='add-tray-password'>
             <span>password</span>
           </Input>
         </div>
-        <button className='add' onClick={addTray} data-locator='add-tray'>add</button>
+        <button className={styles.add} onClick={addTray} data-locator='add-tray'>add</button>
       </div>
     )
   }

@@ -3,7 +3,7 @@
 @import '../../common/responsive';
 @import '../../common/typography';
 
-.available-project {
+.availableProject {
   @include grid-column(4 of 4);
   @include font-scale(1);
 
@@ -18,18 +18,20 @@
   @include respond-to(tablet, desktop) {
     @include font-scale(0);
   }
+}
 
-  &.removed-project span {
+.removedProject {
+  span {
     text-decoration: line-through;
   }
 
-  &.removed-project sup {
+  sup {
     margin-left: 0.5em;
     color: $mid-grey;
   }
+}
 
-  .new-project {
-    color: $new-text;
-    margin-left: 0.5em;
-  }
+.newProject {
+  color: $new-text;
+  margin-left: 0.5em;
 }

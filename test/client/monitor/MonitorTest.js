@@ -7,6 +7,7 @@ import Monitor from '../../../src/client/monitor/Monitor'
 import Messages from '../../../src/client/common/messages/Messages'
 import InterestingProjects from '../../../src/client/monitor/InterestingProjects'
 import Success from '../../../src/client/monitor/Success'
+import _ from 'lodash'
 
 describe('<Monitor/>', function () {
   const DEFAULT_PROPS = {
@@ -20,10 +21,9 @@ describe('<Monitor/>', function () {
     playBrokenBuildSounds: null,
     brokenBuildFx: null,
     messages: [],
-    fetchInteresting: () => {
-    },
+    fetchInteresting: _.noop,
     refreshTime: 5,
-    requestFullScreen: () => {},
+    requestFullScreen: _.noop,
     isFullScreen: null
   }
 

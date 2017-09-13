@@ -3,26 +3,33 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import moment from 'moment'
 import _ from 'lodash'
-import './interesting-project.scss'
+import styles from './interesting-project.scss'
+
+function isBlank(s) {
+  return _.isEmpty(_.trim(s))
+}
 
 class InterestingProject extends Component {
   render() {
-    const classes = classNames('interesting-project', this.props.prognosis)
+    const classes = classNames(styles.interestingProject, styles[this.props.prognosis])
     const isSick = this.props.prognosis === 'sick'
 
-    const trayName = this.props.showTrayName && !_.isEmpty(_.trim(this.props.trayName)) ?
+    const trayName = this.props.showTrayName && !isBlank(this.props.trayName) ?
       <span data-locator='tray-name'>{this.props.trayName.toLowerCase()} </span> : null
 
     const stage = this.props.stage ? <span data-locator='project-stage'> {this.props.stage}</span> : null
 
-    const timeBrokenLabel = _.isEmpty(_.trim(this.props.lastBuildTime)) ? '??' : moment(this.props.lastBuildTime).fromNow(true)
-    const timeBroken = this.props.showBrokenBuildTimers && isSick ? <span className='time-broken'> {timeBrokenLabel}</span> : null
-    const buildLabel = this.props.showBuildLabel && isSick && !_.isEmpty(_.trim(this.props.lastBuildLabel)) ?
-      <span className='build-label'> #{this.props.lastBuildLabel}</span> : null
+    const timeBrokenLabel = isBlank(this.props.lastBuildTime) ? '??' : moment(this.props.lastBuildTime).fromNow(true)
+
+    const timeBroken = this.props.showBrokenBuildTimers && isSick ?
+      <span className={styles.timeBroken} data-locator='time-broken'> {timeBrokenLabel}</span> : null
+
+    const buildLabel = this.props.showBuildLabel && isSick && !isBlank(this.props.lastBuildLabel) ?
+      <span className={styles.buildLabel} data-locator='build-label'> #{this.props.lastBuildLabel}</span> : null
 
     return (
       <div className={classes} data-locator='interesting-project'>
-        <div className='inner'>
+        <div className={styles.inner}>
           {trayName}
           <span data-locator='project-name'>{this.props.name}</span>
           {stage}

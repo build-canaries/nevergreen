@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import _ from 'lodash'
-import './messages.scss'
+import styles from './messages.scss'
 
 class Messages extends Component {
   render() {
@@ -10,13 +10,13 @@ class Messages extends Component {
       return null
     }
 
-    const classes = classNames('messages', this.props.className, this.props.type)
+    const classes = classNames(styles.messages, styles[this.props.type], this.props.className)
 
     return (
-      <ul className={classes}>
+      <ul className={classes} data-locator='messages'>
         {
           this.props.messages.map((msg) => {
-            return <li key={msg} className='message'>{msg}</li>
+            return <li key={msg} className={styles.message}>{msg}</li>
           })
         }
       </ul>

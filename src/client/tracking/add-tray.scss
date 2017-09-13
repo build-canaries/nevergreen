@@ -2,7 +2,7 @@
 @import '../common/forms/button';
 @import '../common/responsive';
 
-.add-tray {
+.addTray {
   margin-bottom: 1em;
   padding: 1em;
   background-color: $white;
@@ -31,7 +31,7 @@
     }
   }
 
-  .tracking-tray-url,
+  .trackingTrayUrl,
   .username,
   .password {
     display: block;

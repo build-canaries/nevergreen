@@ -1,10 +1,10 @@
 @import '../common/layout';
-@import '../common/typography';
+@import '../common/accessibility';
 
 .backup {
-  @extend .main-section;
+  @extend %mainSection;
+}
 
-  h5 {
-    @include font-scale(1);
-  }
+.title {
+  @extend %visuallyHidden;
 }

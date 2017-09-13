@@ -2,68 +2,96 @@
 @import '../common/responsive';
 @import '../common/layout';
 @import '../common/typography';
+@import '../common/accessibility';
+@import '../common/fonts/icon-font';
+
+.container {
+  padding: 1em;
+}
 
 .help {
-  @extend .main-section;
-
-  .example-tray {
-    word-break: break-all;
-  }
-
-  .help-links {
-    list-style: none;
-  }
-
-  .help-link-icon {
-    @include font-scale(2);
-
-    margin-right: 0.5em;
-  }
-
-  .help-tracking-table {
-    display: block;
-    width: 100%;
-    overflow-y: scroll;
-
-    tr:nth-child(even) {
-      background-color: $light-grey;
-    }
-  }
-
-  .binding {
-    @include font-scale(-1);
-
-    font-family: $monospace;
-    color: $off-black;
-    border: $mid-grey 1px solid;
-    border-radius: 5px;
-    background-image: linear-gradient(to bottom, #eee, #f9f9f9, #eee);
-    padding: 0.1em 0.3em;
-  }
-
-  .keyboard-shortcuts {
-    display: none;
-
-    @include respond-to(tablet, desktop) {
-      display: block;
-    }
-  }
-
-  .help-shortcut-table {
-    @extend .help-tracking-table;
-
-    td {
-      padding: 0.3em 0;
-    }
-  }
-
-  .url {
-    @include font-scale(-1);
-
-    font-family: $monospace;
-  }
+  @extend %mainSection;
 
   p {
     padding-top: 1em;
   }
+}
+
+.title {
+  @extend %visuallyHidden;
+}
+
+.exampleTray {
+  word-break: break-all;
+}
+
+.helpLinks {
+  list-style: none;
+}
+
+%helpLinkIcon {
+  @include font-scale(2);
+
+  @extend .icon;
+
+  margin-right: 0.5em;
+}
+
+.github {
+  @extend %helpLinkIcon;
+  @extend .icon-github4;
+}
+
+.twitter {
+  @extend %helpLinkIcon;
+  @extend .icon-twitter3;
+}
+
+.icoMoon {
+  @extend %helpLinkIcon;
+  @extend .icon-IcoMoon;
+}
+
+.helpTrackingTable {
+  display: block;
+  width: 100%;
+  overflow-y: scroll;
+
+  tr:nth-child(even) {
+    background-color: $light-grey;
+  }
+}
+
+.binding {
+  @include font-scale(-1);
+
+  font-family: $monospace;
+  color: $off-black;
+  border: $mid-grey 1px solid;
+  border-radius: 5px;
+  background-image: linear-gradient(to bottom, #eee, #f9f9f9, #eee);
+  padding: 0.1em 0.3em;
+}
+
+.keyboardShortcuts {
+  display: none;
+  padding: 1em;
+
+  @include respond-to(tablet, desktop) {
+    display: block;
+  }
+}
+
+.helpShortcutTable {
+  @extend .helpTrackingTable;
+
+  td {
+    padding: 0.3em 0;
+  }
+}
+
+.url {
+  @include font-scale(-1);
+
+  font-family: $monospace;
 }

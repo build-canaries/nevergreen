@@ -6,10 +6,7 @@ import {requestFullScreen} from '../actions/NevergreenActions'
 import Monitor from './Monitor'
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    fetchInteresting,
-    requestFullScreen
-  }, dispatch)
+  return bindActionCreators({fetchInteresting, requestFullScreen}, dispatch)
 }
 
 function mapStateToProps(store) {

@@ -5,10 +5,10 @@
   src:
     local('Roboto'),
     local('Roboto-regular'),
-    url('common/fonts/Roboto-regular/Roboto-regular.woff2') format('woff2'),
-    url('common/fonts/Roboto-regular/Roboto-regular.woff') format('woff'),
-    url('common/fonts/Roboto-regular/Roboto-regular.ttf') format('truetype'),
-    url('common/fonts/Roboto-regular/Roboto-regular.svg#Roboto') format('svg');
+    url('./Roboto-regular/Roboto-regular.woff2') format('woff2'),
+    url('./Roboto-regular/Roboto-regular.woff') format('woff'),
+    url('./Roboto-regular/Roboto-regular.ttf') format('truetype'),
+    url('./Roboto-regular/Roboto-regular.svg#Roboto') format('svg');
 }
 
 @font-face {
@@ -18,10 +18,10 @@
   src:
     local('Roboto Bold'),
     local('Roboto-700'),
-    url('common/fonts/Roboto-700/Roboto-700.woff2') format('woff2'),
-    url('common/fonts/Roboto-700/Roboto-700.woff') format('woff'),
-    url('common/fonts/Roboto-700/Roboto-700.ttf') format('truetype'),
-    url('common/fonts/Roboto-700/Roboto-700.svg#Roboto') format('svg');
+    url('./Roboto-700/Roboto-700.woff2') format('woff2'),
+    url('./Roboto-700/Roboto-700.woff') format('woff'),
+    url('./Roboto-700/Roboto-700.ttf') format('truetype'),
+    url('./Roboto-700/Roboto-700.svg#Roboto') format('svg');
 }
 
 @font-face {
@@ -31,8 +31,8 @@
   src:
     local('Roboto Mono'),
     local('Roboto-Mono-regular'),
-    url('common/fonts/Roboto-Mono-regular/Roboto-Mono-regular.woff2') format('woff2'),
-    url('common/fonts/Roboto-Mono-regular/Roboto-Mono-regular.woff') format('woff'),
-    url('common/fonts/Roboto-Mono-regular/Roboto-Mono-regular.ttf') format('truetype'),
-    url('common/fonts/Roboto-Mono-regular/Roboto-Mono-regular.svg#RobotoMono') format('svg');
+    url('./Roboto-Mono-regular/Roboto-Mono-regular.woff2') format('woff2'),
+    url('./Roboto-Mono-regular/Roboto-Mono-regular.woff') format('woff'),
+    url('./Roboto-Mono-regular/Roboto-Mono-regular.ttf') format('truetype'),
+    url('./Roboto-Mono-regular/Roboto-Mono-regular.svg#RobotoMono') format('svg');
 }

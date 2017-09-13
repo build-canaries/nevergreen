@@ -2,17 +2,17 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import classNames from 'classnames'
-import './drop-down.scss'
+import styles from './drop-down.scss'
 
 class DropDown extends Component {
   render() {
     const inputProps = _.omit(this.props, ['children', 'title', 'className'])
-    const labelClasses = classNames('drop-down', this.props.className)
+    const labelClasses = classNames(styles.dropDown, this.props.className)
 
     return (
       <label className={labelClasses}>
-        <span>{this.props.title}</span>
-        <select {...inputProps}>
+        <span className={styles.label}>{this.props.title}</span>
+        <select className={styles.input} {...inputProps}>
           {this.props.children}
         </select>
       </label>

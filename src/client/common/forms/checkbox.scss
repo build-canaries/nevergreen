@@ -2,41 +2,36 @@
 @import '../typography';
 @import '../accessibility';
 
-.checkbox {
+.label {
   @include font-scale(1);
 
+  cursor: pointer;
   display: inline-block;
-  padding: 1em 0;
+  margin: 1em 0;
+}
 
-  input {
+.input {
+  &:enabled {
     cursor: pointer;
+    transition: background-color 0.1s ease-in;
 
-    &:enabled {
-      transition: background-color 0.1s ease-in;
-
-      &:hover,
-      &:focus {
-        & + span {
-          color: darken($off-black, $color-change-percentage);
-          background-color: darken($white, $color-change-percentage);
-        }
-      }
-    }
-
-    &:disabled {
-      & ~ span {
-        cursor: default;
-        color: $mid-grey;
-      }
-
-      & ~ sup {
-        cursor: default;
+    &:hover,
+    &:focus {
+      & + .children {
+        color: darken($off-black, $color-change-percentage);
+        background-color: darken($white, $color-change-percentage);
       }
     }
   }
 
-  span {
-    cursor: pointer;
-    margin-left: 1em;
+  &:disabled {
+    & ~ .children {
+      cursor: default;
+      color: $mid-grey;
+    }
   }
+}
+
+.children {
+  padding-left: 1em;
 }

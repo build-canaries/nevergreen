@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Input from '../../common/forms/Input'
 import DropDown from '../../common/forms/DropDown'
 import {generateRandomName} from '../../common/project/Name'
-import './tray-settings.scss'
+import styles from './tray-settings.scss'
 
 class TraySettings extends Component {
   constructor(props) {
@@ -61,16 +61,16 @@ class TraySettings extends Component {
     }
 
     return (
-      <section className='tray-settings' data-locator='tray-settings'>
-        <Input className='tray-settings-name' value={this.state.newName} onChange={nameChanged} onBlur={setName} onEnter={setName}
+      <section data-locator='tray-settings'>
+        <Input className={styles.traySettingsName} value={this.state.newName} onChange={nameChanged} onBlur={setName} onEnter={setName}
                placeholder='e.g. project or team name' data-locator='tray-name' autoFocus>
           <span>name</span>
         </Input>
-        <button className='random' onClick={generateNewName} data-locator='generate-random'>randomise</button>
-        <Input className='tray-settings-url' value={this.state.newUrl} onChange={urlChanged} onBlur={setUrl} onEnter={setUrl}>
+        <button className={styles.random} onClick={generateNewName} data-locator='generate-random'>randomise</button>
+        <Input className={styles.traySettingsUrl} value={this.state.newUrl} onChange={urlChanged} onBlur={setUrl} onEnter={setUrl}>
           <span>URL</span>
         </Input>
-        <DropDown className='server-type' title='server type' value={this.props.serverType} onChange={serverTypeChange}>
+        <DropDown className={styles.serverType} title='server type' value={this.props.serverType} onChange={serverTypeChange}>
           <option value=''>Auto detect</option>
           <option value='circle'>CircleCI</option>
           <option value='cruise-control'>CruiseControl</option>
@@ -84,26 +84,26 @@ class TraySettings extends Component {
           <option value='team-city'>TeamCity</option>
           <option value='travis'>Travis CI</option>
         </DropDown>
-        <Input className='tray-settings-username' value={this.state.newUsername} onChange={usernameChanged} onBlur={setUsername}
+        <Input className={styles.traySettingsUsername} value={this.state.newUsername} onChange={usernameChanged} onBlur={setUsername}
                onEnter={setUsername}>
           <span>username</span>
         </Input>
-        <Input className='existing-password' value={password} onChange={passwordChanged} onEnter={setPassword}
+        <Input className={styles.existingPassword} value={password} onChange={passwordChanged} onEnter={setPassword}
                readOnly={!this.state.updatingPassword} ref={(node) => this.passwordInput = node}>
           <span>password</span>
         </Input>
         {this.state.updatingPassword
           ? <span>
-              <button className='cancel' onClick={cancel}>cancel</button>
-              <button className='update' onClick={setPassword}>update password</button>
+              <button className={styles.cancel} onClick={cancel}>cancel</button>
+              <button className={styles.update} onClick={setPassword}>update password</button>
             </span>
-          : <button className='change-password-button' onClick={changePassword}>change password</button>
+          : <button className={styles.changePasswordButton} onClick={changePassword}>change password</button>
         }
-        <div className='danger-zone'>
-          <h4 className='danger-zone-title'>Danger Zone</h4>
-          <div className='content'>
+        <div className={styles.dangerZone}>
+          <h4 className={styles.dangerZoneTitle}>Danger Zone</h4>
+          <div className={styles.dangerZoneContent}>
             <span>Once you delete, there is no going back. Please be certain.</span>
-            <button className='delete' onClick={deleteTray}>delete</button>
+            <button className={styles.delete} onClick={deleteTray}>delete</button>
           </div>
         </div>
       </section>

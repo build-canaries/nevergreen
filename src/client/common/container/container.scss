@@ -24,57 +24,53 @@
   &:last-child {
     margin-bottom: 0;
   }
+}
 
-  .title-bar {
-    position: relative;
+.titleBar {
+  position: relative;
+  background: $mid-grey;
+  color: $white;
+  white-space: nowrap;
+  overflow: hidden;
+  cursor: pointer;
+
+  @include interactive($white, $mid-grey, $mid-grey);
+}
+
+.title {
+  display: inline-block;
+  font-weight: 400;
+  padding: 0.5em;
+
+  &::first-letter {
+    text-transform: uppercase;
+  }
+}
+
+.subTitle {
+  display: inline-block;
+  font-weight: normal;
+  padding-left: 1em;
+}
+
+.show {
+  @include show-hide-icon(down);
+}
+
+.hide {
+  @include show-hide-icon(up);
+}
+
+.highlight {
+  animation: highlight 2s;
+}
+
+@keyframes highlight {
+  0% {
+    background: $blue;
+  }
+
+  100% {
     background: $mid-grey;
-    color: $white;
-    white-space: nowrap;
-    overflow: hidden;
-    cursor: pointer;
-
-    @include interactive($white, $mid-grey, $mid-grey);
-  }
-
-  .section-title {
-    display: inline-block;
-    font-weight: 400;
-    padding: 0.5em;
-
-    &::first-letter {
-      text-transform: uppercase;
-    }
-  }
-
-  .section-sub-title {
-    display: inline-block;
-    font-weight: normal;
-    padding-left: 1em;
-  }
-
-  .show {
-    @include show-hide-icon(down);
-  }
-
-  .hide {
-    @include show-hide-icon(up);
-  }
-
-  .highlight {
-    animation: highlight 2s;
-  }
-
-  @keyframes highlight {
-    0% {
-      background: $blue;
-    }
-
-    100% {
-      background: $mid-grey;
-    }
-  }
-
-  .container-body {
-    padding: 1em;
   }
 }

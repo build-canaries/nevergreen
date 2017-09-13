@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import Input from '../common/forms/Input'
-import './add-message.scss'
+import styles from './add-message.scss'
 
 class AddMessage extends Component {
   constructor(props) {
@@ -17,12 +17,12 @@ class AddMessage extends Component {
     }
 
     return (
-      <div className='add-message'>
-        <Input className='add-message-input' placeholder='text or image URL' value={this.state.message} onChange={updateMessage}
+      <div className={styles.addMessage}>
+        <Input className={styles.addMessageInput} placeholder='text or image URL' value={this.state.message} onChange={updateMessage}
                onEnter={addMessage} data-locator='message' autoFocus>
           <span>message</span>
         </Input>
-        <button className='add' onClick={addMessage} data-locator='add-message'>add</button>
+        <button className={styles.add} onClick={addMessage} data-locator='add-message'>add</button>
       </div>
     )
   }

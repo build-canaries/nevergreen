@@ -2,7 +2,7 @@
 @import '../common/forms/button';
 @import '../common/responsive';
 
-.add-message {
+.addMessage {
   margin-bottom: 1em;
   padding: 1em;
   background-color: $white;
@@ -12,34 +12,34 @@
     display: flex;
     align-items: baseline;
   }
+}
 
-  .add-message-input {
-    input {
-      font-family: $monospace;
-      width: 100%;
-    }
-
-    @include respond-to(tablet, desktop) {
-      display: flex;
-      align-items: baseline;
-      flex-grow: 1;
-
-      input {
-        flex-grow: 1;
-        width: auto;
-      }
-    }
+.addMessageInput {
+  input {
+    font-family: $monospace;
+    width: 100%;
   }
 
-  .add {
-    @include button();
-    @include button-icon('plus');
+  @include respond-to(tablet, desktop) {
+    display: flex;
+    align-items: baseline;
+    flex-grow: 1;
 
-    margin-top: 1em;
-
-    @include respond-to(tablet, desktop) {
-      margin-top: 0;
-      margin-left: 1em;
+    input {
+      flex-grow: 1;
+      width: auto;
     }
+  }
+}
+
+.add {
+  @include button();
+  @include button-icon('plus');
+
+  margin-top: 1em;
+
+  @include respond-to(tablet, desktop) {
+    margin-top: 0;
+    margin-left: 1em;
   }
 }

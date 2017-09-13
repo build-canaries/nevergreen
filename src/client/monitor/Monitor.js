@@ -5,7 +5,7 @@ import InterestingProjects from './InterestingProjects'
 import Success from './Success'
 import Loading from '../common/loading/Loading'
 import Messages from '../common/messages/Messages'
-import './monitor.scss'
+import styles from './monitor.scss'
 import Timer from '../common/Timer'
 
 class Monitor extends Component {
@@ -19,7 +19,7 @@ class Monitor extends Component {
 
   render() {
     const fetch = () => this.props.fetchInteresting(this.props.trays, this.props.selected)
-    const monitorClassNames = classNames('monitor', {fullscreen: this.props.isFullScreen})
+    const monitorClassNames = classNames(styles.monitor, {[styles.fullscreen]: this.props.isFullScreen})
 
     let content
 

@@ -3,25 +3,23 @@
 @import '../../../common/typography';
 @import '../../../common/responsive';
 
-.import-github {
-  .restore {
-    @include button();
-    @include button-icon('cloud-download');
-  }
+.restore {
+  @include button();
+  @include button-icon('cloud-download');
+}
 
-  .gist-id {
-    padding-bottom: 1em;
+.gistId {
+  padding-bottom: 1em;
 
-    @include respond-to(tablet, desktop) {
-      display: block;
+  @include respond-to(tablet, desktop) {
+    display: block;
 
-      span {
-        width: 6em;
-      }
+    span {
+      width: 6em;
+    }
 
-      input {
-        width: 32rem;
-      }
+    input {
+      width: 32rem;
     }
   }
 }

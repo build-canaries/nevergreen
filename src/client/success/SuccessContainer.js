@@ -13,7 +13,4 @@ function mapStateToProps(store) {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Success)
+export default connect(mapStateToProps, mapDispatchToProps)(Success)

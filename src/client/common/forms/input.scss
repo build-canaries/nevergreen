@@ -4,7 +4,7 @@
 @import '../accessibility';
 @import '../fonts/icon-font';
 
-.input {
+.inputLabel {
   position: relative;
   display: block;
   width: 100%;
@@ -13,69 +13,69 @@
     display: inline-block;
     width: auto;
   }
+}
 
-  span {
-    @include font-scale(1);
+.label {
+  @include font-scale(1);
 
+  display: inline-block;
+
+  @include respond-to(tablet, desktop) {
+    margin-right: 1em;
+  }
+}
+
+.input {
+  @include font-scale(1);
+
+  border: 1px solid $light-grey;
+  border-radius: 2px;
+  width: 100%;
+  margin-top: 0.5em;
+  padding: 0.5em;
+
+  &:not(:disabled) {
+    &:read-write {
+      @include interactive($darken-on-focus: false);
+    }
+  }
+
+  &:invalid {
+    box-shadow: none;
+    border-color: $danger;
+  }
+
+  @include respond-to(tablet, desktop) {
+    width: auto;
+    margin-right: 1em;
+    margin-top: 0;
+  }
+
+  &:disabled {
+    color: $mid-grey;
+    border-color: $mid-grey;
+  }
+}
+
+.locked {
+  @extend .icon;
+  @extend .icon-lock;
+
+  right: 1em;
+  top: 4.4em;
+  position: absolute;
+
+  @include respond-to(tablet, desktop) {
+    top: 2.5em;
+    right: 2em;
+  }
+}
+
+.errors {
+  margin-top: 1em;
+
+  @include respond-to(tablet, desktop) {
     display: inline-block;
-
-    @include respond-to(tablet, desktop) {
-      margin-right: 1em;
-    }
-  }
-
-  input {
-    @include font-scale(1);
-
-    border: 1px solid $light-grey;
-    border-radius: 2px;
-    width: 100%;
-    margin-top: 0.5em;
-    padding: 0.5em;
-
-    &:not(:disabled) {
-      &:read-write {
-        @include interactive($darken-on-focus: false);
-      }
-    }
-
-    &:invalid {
-      box-shadow: none;
-      border-color: $danger;
-    }
-
-    @include respond-to(tablet, desktop) {
-      width: auto;
-      margin-right: 1em;
-      margin-top: 0;
-    }
-
-    &:disabled {
-      color: $mid-grey;
-      border-color: $mid-grey;
-    }
-  }
-
-  .input-validation-errors {
-    margin-top: 1em;
-
-    @include respond-to(tablet, desktop) {
-      display: inline-block;
-      margin-top: 0;
-    }
-  }
-
-  i.locked {
-    @extend .icon;
-    @extend .icon-lock;
-
-    right: 1em;
-    top: 4.4em;
-    position: absolute;
-
-    @include respond-to(tablet, desktop) {
-      top: 2.5em;
-      right: 2em;
-    }
+    margin-top: 0;
   }
 }

@@ -2,17 +2,17 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import Checkbox from '../../common/forms/Checkbox'
-import './available-project.scss'
+import styles from './available-project.scss'
 
 class AvailableProject extends Component {
   render() {
-    const listClasses = classNames('available-project', {'removed-project': this.props.removed})
+    const listClasses = classNames(styles.availableProject, {[styles.removedProject]: this.props.removed})
     let info = null
 
     if (this.props.isNew) {
-      info = <sup className='new-project'>new</sup>
+      info = <sup className={styles.newProject} data-locator='new'>new</sup>
     } else if (this.props.removed) {
-      info = <sup>removed</sup>
+      info = <sup data-locator='removed'>removed</sup>
     }
 
     const displayName = this.props.stage ? `${this.props.name} ${this.props.stage}` : this.props.name
@@ -20,7 +20,7 @@ class AvailableProject extends Component {
     return (
       <li className={listClasses}>
         <Checkbox checked={this.props.selected} onToggle={this.props.selectProject} disabled={this.props.removed}>
-          <span>{displayName}</span>
+          <span data-locator='name'>{displayName}</span>
           {info}
         </Checkbox>
       </li>

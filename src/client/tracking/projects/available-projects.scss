@@ -1,88 +1,93 @@
 @import '../../common/variables';
 @import '../../common/forms/button';
 @import '../../common/responsive';
+@import '../../common/accessibility';
 
-.available-projects {
+.availableProjects {
   display: inline-block;
   width: 100%;
+}
 
-  .toggles {
-    display: block;
-    width: 100%;
-    margin-top: 1em;
+.legend {
+  @extend %visuallyHidden;
+}
 
-    @include respond-to(tablet, desktop) {
-      display: inline-block;
-      width: auto;
-    }
+.toggles {
+  display: block;
+  width: 100%;
+  margin-top: 1em;
+
+  @include respond-to(tablet, desktop) {
+    display: inline-block;
+    width: auto;
+  }
+}
+
+.includeAll {
+  @include button-icon('checkbox-checked');
+}
+
+.excludeAll {
+  @include button-icon('checkbox-unchecked');
+
+  margin-top: 1em;
+
+  @include respond-to(tablet, desktop) {
+    margin-top: 0;
+  }
+}
+
+.includeAll,
+.excludeAll {
+  @include button($off-black, $white, $light-grey);
+
+  @include respond-to(tablet, desktop) {
+    margin-right: 1em;
+  }
+}
+
+.controls {
+  padding-bottom: 1em;
+}
+
+.buildItems {
+  display: block;
+  width: 100%;
+  list-style: none;
+  overflow: hidden;
+}
+
+.projectFilter {
+  display: block;
+  width: 100%;
+  margin-top: 1em;
+
+  @include respond-to(tablet, desktop) {
+    display: inline-block;
+    width: auto;
+  }
+}
+
+.projectFilterInput {
+  span {
+    color: $mid-grey;
   }
 
-  .include-all {
-    @include button-icon('checkbox-checked');
+  @include respond-to(tablet, desktop) {
+    padding-top: 0;
   }
+}
 
-  .exclude-all {
-    @include button-icon('checkbox-unchecked');
+.messages {
+  margin-top: 1em;
+}
 
-    margin-top: 1em;
+.backToTop {
+  @include button($off-black, $white, $light-grey);
 
-    @include respond-to(tablet, desktop) {
-      margin-top: 0;
-    }
-  }
+  margin-top: 1em;
 
-  .include-all,
-  .exclude-all {
-    @include button($off-black, $white, $light-grey);
-
-    @include respond-to(tablet, desktop) {
-      margin-right: 1em;
-    }
-  }
-
-  .controls {
-    padding-bottom: 1em;
-  }
-
-  .build-items {
-    display: block;
-    width: 100%;
-    list-style: none;
-    overflow: hidden;
-  }
-
-  .project-filter {
-    display: block;
-    width: 100%;
-    margin-top: 1em;
-
-    @include respond-to(tablet, desktop) {
-      display: inline-block;
-      width: auto;
-    }
-  }
-
-  .project-filter-input {
-    span {
-      color: $mid-grey;
-    }
-
-    @include respond-to(tablet, desktop) {
-      padding-top: 0;
-    }
-  }
-
-  .messages {
-    margin-top: 1em;
-  }
-
-  .back-to-top {
-    @include button($off-black, $white, $light-grey);
-
-    margin-top: 1em;
-
-    @include respond-to(tablet, desktop) {
-      display: none;
-    }
+  @include respond-to(tablet, desktop) {
+    display: none;
   }
 }

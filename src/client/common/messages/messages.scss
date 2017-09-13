@@ -6,37 +6,38 @@
   color: $white;
   background-color: $off-black;
   list-style: none;
+  margin-top: 1em;
+}
 
-  .message {
-    padding: 0.5em 0.5em 0.5em 2em;
-
-    &:first-child {
-      margin-left: 2em;
-      padding-left: 0;
-
-      &::before {
-        @extend .icon;
-
-        padding-left: 0.5em;
-        padding-right: 0.5em;
-        margin-left: -2em;
-      }
-    }
+.error {
+  .message:first-child {
+    @extend .icon-notification;
   }
 
-  &.error {
-    .message:first-child {
-      @extend .icon-notification;
-    }
+  background-color: $danger;
+}
 
-    background-color: $danger;
+.info {
+  .message:first-child {
+    @extend .icon-checkmark;
   }
 
-  &.info {
-    .message:first-child {
-      @extend .icon-checkmark;
-    }
+  background-color: $blue;
+}
 
-    background-color: $blue;
+.message {
+  padding: 0.5em 0.5em 0.5em 2em;
+
+  &:first-child {
+    margin-left: 2em;
+    padding-left: 0;
+
+    &::before {
+      @extend .icon;
+
+      padding-left: 0.5em;
+      padding-right: 0.5em;
+      margin-left: -2em;
+    }
   }
 }

@@ -2,37 +2,32 @@
 @import '~bourbon-neat/core/neat';
 @import '../common/responsive';
 
-.added-messages {
-  .success-text-list {
-    display: inline-block;
-    width: 100%;
-    list-style: none;
-    margin-top: -0.5em;
-    margin-bottom: -0.5em;
+.successMessages {
+  display: inline-block;
+  width: 100%;
+  list-style: none;
+  margin-top: -0.5em;
+  margin-bottom: -0.5em;
+  padding: 1em 0;
+}
+
+.successItem {
+  @include grid-column(4 of 4);
+
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+
+  @include respond-to(tablet) {
+    @include grid-column(4 of 8);
   }
 
-  .success-item {
-    @include grid-column(4 of 4);
-
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
-
-    @include respond-to(tablet) {
-      @include grid-column(4 of 8);
-    }
-
-    @include respond-to(desktop) {
-      @include grid-column(4 of 12);
-    }
-
-    .hotkey {
-      left: -0.5em;
-    }
+  @include respond-to(desktop) {
+    @include grid-column(4 of 12);
   }
+}
 
-  .message {
-    font-family: $monospace;
-    margin-left: 1em;
-    display: inline;
-  }
+.message {
+  font-family: $monospace;
+  margin-left: 1em;
+  display: inline;
 }

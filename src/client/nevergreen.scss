@@ -1,24 +1,33 @@
 @import 'defaults';
 @import 'common/typography';
+@import 'common/fonts/icon-font';
 
-.text-with-icon {
+.textWithIcon {
   margin-left: 1em;
 }
 
-.pop-up-notification {
+.popUpNotification {
   @include font-scale(0);
 
   padding: 1em;
   background-color: $blue;
   color: $white;
   display: block;
-
-  &.fullscreen {
-    display: none;
-  }
 }
 
-.pop-up-notification-dismiss {
+.fullscreen {
+  display: none;
+}
+
+.notification {
+  @extend .icon;
+  @extend .icon-notification;
+}
+
+.dismiss {
+  @extend .icon;
+  @extend .icon-cross;
+
   float: right;
   cursor: pointer;
 

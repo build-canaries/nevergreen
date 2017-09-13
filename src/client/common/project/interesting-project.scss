@@ -1,44 +1,44 @@
 @import '../variables';
 @import '../layout';
 
-.interesting-project {
-  @include fill-parent;
+.interestingProject {
+  @extend %fillParent;
 
   display: table;
   border-radius: 5px;
   padding: 1em;
+}
 
-  &.healthy-building {
-    background-color: $healthy-building;
-    color: $healthy-building-text;
-  }
+.healthy-building {
+  background-color: $healthy-building;
+  color: $healthy-building-text;
+}
 
-  &.sick {
-    background-color: $sick;
-    color: $off-white;
-  }
+.sick {
+  background-color: $sick;
+  color: $off-white;
+}
 
-  &.sick-building {
-    background-color: $sick-building;
-    color: $off-white;
-  }
+.sick-building {
+  background-color: $sick-building;
+  color: $off-white;
+}
 
-  &.unknown {
-    background-color: $mid-grey;
-    color: $off-black;
-  }
+.unknown {
+  background-color: $mid-grey;
+  color: $off-black;
+}
 
-  .inner {
-    display: table-cell;
-    vertical-align: middle;
-  }
+.inner {
+  display: table-cell;
+  vertical-align: middle;
+}
 
-  .time-broken {
-    opacity: 0.5;
-    font-style: italic;
-  }
+.timeBroken {
+  opacity: 0.5;
+  font-style: italic;
+}
 
-  .build-label {
-    opacity: 0.3;
-  }
+.buildLabel {
+  opacity: 0.3;
 }

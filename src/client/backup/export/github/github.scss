@@ -1,53 +1,49 @@
-@import '../../../common/variables';
 @import '../../../common/forms/button';
-@import '../../../common/typography';
 @import '../../../common/responsive';
 
-.export-github {
-  .upload {
-    @include button();
-    @include button-icon('cloud-upload');
-  }
+.export {
+  @include button();
+  @include button-icon('cloud-upload');
+}
 
-  .gist-values {
+.gistValues {
+  display: block;
+  padding-bottom: 1em;
+}
+
+.oauthToken,
+.gistId {
+  @include respond-to(tablet, desktop) {
     display: block;
-    padding-bottom: 1em;
-  }
 
-  .oauth-token,
-  .gist-id {
-    @include respond-to(tablet, desktop) {
-      display: block;
-
-      input {
-        width: 32rem;
-      }
+    input {
+      width: 32rem;
     }
   }
+}
 
-  .description {
-    @include respond-to(tablet, desktop) {
-      display: flex;
-      align-items: center;
+.description {
+  @include respond-to(tablet, desktop) {
+    display: flex;
+    align-items: center;
 
-      input {
-        flex: 1;
-      }
+    input {
+      flex: 1;
     }
   }
+}
 
-  .description,
-  .gist-id {
-    padding-top: 1.5em;
-  }
+.description,
+.gistId {
+  padding-top: 1.5em;
+}
 
-  .oauth-token,
-  .description,
-  .gist-id {
-    @include respond-to(tablet, desktop) {
-      span {
-        width: 6em;
-      }
+.oauthToken,
+.description,
+.gistId {
+  @include respond-to(tablet, desktop) {
+    span {
+      width: 6em;
     }
   }
 }

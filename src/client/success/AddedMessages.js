@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import Container from '../common/container/Container'
 import RemoveLink from './RemoveLink'
-import './added-messages.scss'
+import styles from './added-messages.scss'
 import _ from 'lodash'
 
 class AddedMessages extends Component {
@@ -12,16 +12,16 @@ class AddedMessages extends Component {
     }
 
     return (
-      <Container title='messages' className='added-messages'>
-        <ol className='success-text-list'>
+      <Container title='messages'>
+        <ol className={styles.successMessages}>
           {
             this.props.messages.map((message, index) => {
               const remove = () => this.props.removeMessage(message)
 
               return (
-                <li key={`m${index}`} className='success-item'>
+                <li key={`m${index}`} className={styles.successItem}>
                   <RemoveLink hotkeys={[`y m ${index}`]} removeMessage={remove} message={message}/>
-                  <span className='message' data-locator='success-message'>{message}</span>
+                  <span className={styles.message} data-locator='success-message'>{message}</span>
                 </li>
               )
             })

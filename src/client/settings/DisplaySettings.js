@@ -7,7 +7,7 @@ import InterestingProject from '../common/project/InterestingProject'
 import moment from 'moment'
 import {generateRandomName} from '../common/project/Name'
 import _ from 'lodash'
-import './display-settings.scss'
+import styles from './display-settings.scss'
 
 class DisplaySettings extends Component {
   constructor(props) {
@@ -22,18 +22,19 @@ class DisplaySettings extends Component {
     const toggleBuildLabel = (newValue) => this.props.setShowBuildLabel(newValue)
 
     return (
-      <Container title='display' className='display'>
-        <Checkbox checked={this.props.showTrayName} onToggle={toggleTrayName} data-locator='show-tray-names'>
+      <Container title='display' className={styles.container}>
+        <Checkbox className={styles.checkbox} checked={this.props.showTrayName} onToggle={toggleTrayName} data-locator='show-tray-names'>
           <span>show tray name</span>
         </Checkbox>
-        <Checkbox checked={this.props.showBrokenBuildTime} onToggle={toggleBrokenBuildTime} data-locator='show-broken-build-times'>
+        <Checkbox className={styles.checkbox} checked={this.props.showBrokenBuildTime} onToggle={toggleBrokenBuildTime}
+                  data-locator='show-broken-build-times'>
           <span>show broken build timer</span>
         </Checkbox>
-        <Checkbox checked={this.props.showBuildLabel} onToggle={toggleBuildLabel} data-locator='show-build-labels'>
+        <Checkbox className={styles.checkbox} checked={this.props.showBuildLabel} onToggle={toggleBuildLabel} data-locator='show-build-labels'>
           <span>show broken build label</span>
         </Checkbox>
-        <h4 className='display-preview-title'>Preview</h4>
-        <div className='display-preview'>
+        <h4 className={styles.title}>Preview</h4>
+        <div className={styles.displayPreview}>
           <ScaledGrid>
             <InterestingProject trayName={generateRandomName()} name='sick' prognosis='sick' lastBuildTime={this.state.lastBuildTime}
                                 lastBuildLabel={randomBuildLabel()} showBrokenBuildTimers={this.props.showBrokenBuildTime}

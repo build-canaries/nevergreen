@@ -4,7 +4,7 @@ import Resizable from '../Resizable'
 import {ideal} from './ScaleText'
 import FontMetrics from './FontMetrics'
 import _ from 'lodash'
-import './scaled-grid.scss'
+import styles from './scaled-grid.scss'
 
 // These need to match those in the CSS
 const TABLET_BREAKPOINT = 768
@@ -87,7 +87,7 @@ class ScaledGrid extends Component {
     return (
       <span>
         <FontMetrics ref={(node) => this.fontMetrics = node}/>
-        <ul className='scaled-grid' ref={(node) => this.node = node}>
+        <ul className={styles.scaledGrid} ref={(node) => this.node = node}>
           {
             Children.map(this.props.children, (child, index) => {
               const getTextContent = (node) => {
@@ -97,7 +97,7 @@ class ScaledGrid extends Component {
                   _.remove(this.childrenText, (v, i) => i === index)
                 }
               }
-              return <li className='scaled-grid-item' ref={getTextContent} style={style}>{child}</li>
+              return <li className={styles.item} ref={getTextContent} style={style}>{child}</li>
             })
           }
         </ul>

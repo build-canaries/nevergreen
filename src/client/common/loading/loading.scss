@@ -1,5 +1,6 @@
 @import '../variables';
 @import '../typography';
+@import '../fonts/icon-font';
 
 .loading {
   text-align: center;
@@ -7,39 +8,42 @@
   padding-bottom: 1em;
   height: 100%;
   width: 100%;
+}
 
-  .pulse {
-    @include font-scale(4);
+.pulse {
+  @include font-scale(4);
 
-    display: inline-block;
-    color: $mid-grey;
-    padding: 0.5rem;
-    animation: bounce 1.4s infinite ease-in-out both;
+  @extend .icon;
+  @extend .icon-circle;
 
-    &:nth-of-type(1) {
-      animation-delay: -0.32s;
+  display: inline-block;
+  color: $mid-grey;
+  padding: 0.5rem;
+  animation: bounce 1.4s infinite ease-in-out both;
+
+  &:nth-of-type(1) {
+    animation-delay: -0.32s;
+  }
+
+  &:nth-of-type(2) {
+    animation-delay: -0.16s;
+  }
+
+  @keyframes bounce {
+    0% {
+      transform: scale(0);
     }
 
-    &:nth-of-type(2) {
-      animation-delay: -0.16s;
+    40% {
+      transform: scale(1);
     }
 
-    @keyframes bounce {
-      0% {
-        transform: scale(0);
-      }
+    80% {
+      transform: scale(0);
+    }
 
-      40% {
-        transform: scale(1);
-      }
-
-      80% {
-        transform: scale(0);
-      }
-
-      100% {
-        transform: scale(0);
-      }
+    100% {
+      transform: scale(0);
     }
   }
 }

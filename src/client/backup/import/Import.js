@@ -5,12 +5,11 @@ import Messages from '../../common/messages/Messages'
 import LocallyContainer from './locally/LocallyContainer'
 import GitHubContainer from './github/GitHubContainer'
 import Tabs from '../../common/tabs/Tabs'
-import './import.scss'
 
 class Import extends Component {
   render() {
     return (
-      <Container title='import' className='import'>
+      <Container title='import'>
         <Tabs titles={['locally', 'GitHub']}>
           <LocallyContainer/>
           <GitHubContainer/>

@@ -6,7 +6,7 @@ import Input from '../common/forms/Input'
 import Checkbox from '../common/forms/Checkbox'
 import classNames from 'classnames'
 import _ from 'lodash'
-import './audio-settings.scss'
+import styles from './audio-settings.scss'
 
 function isBlank(s) {
   return _.isEmpty(_.trim(s))
@@ -53,20 +53,20 @@ class AudioSettings extends Component {
     }
     const onValidation = (valid) => this.setState({playEnabled: valid})
     const playingDisabled = isBlank(this.state.soundFx) || !this.state.playEnabled
-    const playButtonClasses = classNames('test-sound-fx', {
-      play: !this.state.playing,
-      stop: this.state.playing
+    const playButtonClasses = classNames(styles.testSoundFx, {
+      [styles.play]: !this.state.playing,
+      [styles.stop]: this.state.playing
     })
 
     return (
-      <Container title='audio' className='audio'>
+      <Container title='audio' className={styles.container}>
         <fieldset>
           <Checkbox checked={this.props.playBrokenBuildSoundFx} onToggle={toggleBrokenSounds} data-locator='play-sounds'
                     disabled={this.state.playing}>
             <span>play a sound when a build breaks</span>
           </Checkbox>
-          <div className='sound-fx'>
-            <Input type='url' className='sound-fx-input' placeholder='audio file URL' onChange={updateSoundFx} value={this.state.soundFx}
+          <div className={styles.soundFx}>
+            <Input type='url' className={styles.soundFxInput} placeholder='audio file URL' onChange={updateSoundFx} value={this.state.soundFx}
                    onBlur={setSoundFx} onEnter={setSoundFx} required={this.props.playBrokenBuildSoundFx} onValidation={onValidation}
                    disabled={this.state.playing}>
               <span>broken build sound</span>
@@ -75,7 +75,7 @@ class AudioSettings extends Component {
               {this.state.playing ? 'stop' : 'play'}
             </button>
           </div>
-          <Messages className='playback-errors' type='error' messages={this.state.errors}/>
+          <Messages className={styles.playbackErrors} type='error' messages={this.state.errors}/>
         </fieldset>
       </Container>
     )

@@ -4,112 +4,110 @@
 @import '../../common/fonts/icon-font';
 @import '../../common/forms/button';
 
-.tray-settings {
-  .tray-settings-name,
-  .tray-settings-username,
-  .existing-password,
-  .server-type {
-    display: block;
+.traySettingsName,
+.traySettingsUsername,
+.existingPassword,
+.serverType {
+  display: block;
 
-    @include respond-to(tablet, desktop) {
-      span {
-        width: 5em;
-      }
-
-      input,
-      select {
-        width: 15em;
-      }
-    }
-  }
-
-  .tray-settings-url {
-    @include respond-to(tablet, desktop) {
-      display: flex;
-
-      span {
-        width: 5em;
-      }
-
-      input {
-        width: auto;
-        flex-grow: 1;
-      }
-    }
-  }
-
-  .tray-settings-name,
-  .existing-password {
-    @include respond-to(tablet, desktop) {
-      display: inline-block;
-    }
-  }
-
-  .tray-settings-url,
-  .tray-settings-username,
-  .existing-password,
-  .server-type {
-    padding-top: 1.5em;
-  }
-
-  .danger-zone {
-    border: 1px solid $light-grey;
-    margin-top: 2em;
-
-    .danger-zone-title {
-      @extend .icon-notification;
-
-      background-color: $danger;
-      color: $white;
-      padding: 0.5em 1em;
-
-      &::before {
-        @extend .icon;
-
-        margin-right: 1em;
-      }
+  @include respond-to(tablet, desktop) {
+    span {
+      width: 5em;
     }
 
-    .content {
-      padding: 1em;
+    input,
+    select {
+      width: 15em;
     }
   }
+}
 
-  .delete,
-  .random,
-  .change-password-button,
-  .cancel,
-  .update {
-    margin-top: 1em;
+.traySettingsUrl {
+  @include respond-to(tablet, desktop) {
+    display: flex;
 
-    @include respond-to(tablet, desktop) {
-      margin-top: 0;
-      margin-left: 1em;
+    span {
+      width: 5em;
+    }
+
+    input {
+      width: auto;
+      flex-grow: 1;
     }
   }
+}
 
-  .delete {
-    @include button($white, $danger);
-    @include button-icon('bin');
+.traySettingsName,
+.existingPassword {
+  @include respond-to(tablet, desktop) {
+    display: inline-block;
   }
+}
 
-  .random {
-    @include button($off-black, $white, $light-grey);
-    @include button-icon('dice');
-  }
+.traySettingsUrl,
+.traySettingsUsername,
+.existingPassword,
+.serverType {
+  padding-top: 1.5em;
+}
 
-  .change-password-button {
-    @include button($off-black, $white, $light-grey);
-    @include button-icon('unlocked');
-  }
+.dangerZone {
+  border: 1px solid $light-grey;
+  margin-top: 2em;
+}
 
-  .cancel {
-    @include button($off-black, $white, $light-grey);
-    @include button-icon('cross');
-  }
+.dangerZoneTitle {
+  @extend .icon-notification;
 
-  .update {
-    @include button($off-white, $blue);
-    @include button-icon('floppy-disk');
+  background-color: $danger;
+  color: $white;
+  padding: 0.5em 1em;
+
+  &::before {
+    @extend .icon;
+
+    margin-right: 1em;
   }
+}
+
+.dangerZoneContent {
+  padding: 1em;
+}
+
+.delete,
+.random,
+.changePasswordButton,
+.cancel,
+.update {
+  margin-top: 1em;
+
+  @include respond-to(tablet, desktop) {
+    margin-top: 0;
+    margin-left: 1em;
+  }
+}
+
+.delete {
+  @include button($white, $danger);
+  @include button-icon('bin');
+}
+
+.random {
+  @include button($off-black, $white, $light-grey);
+  @include button-icon('dice');
+}
+
+.changePasswordButton {
+  @include button($off-black, $white, $light-grey);
+  @include button-icon('unlocked');
+}
+
+.cancel {
+  @include button($off-black, $white, $light-grey);
+  @include button-icon('cross');
+}
+
+.update {
+  @include button($off-white, $blue);
+  @include button-icon('floppy-disk');
 }

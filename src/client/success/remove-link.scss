@@ -4,7 +4,7 @@
 @import '../common/typography';
 @import '../common/responsive';
 
-.remove-link {
+.removeLink {
   @include button($white, $danger);
   @include button-icon('bin');
   @include font-scale(-1);
@@ -18,21 +18,21 @@
     margin: 0;
   }
 
-  &:focus,
-  &:hover {
-    + .message {
-      color: $danger;
-      text-decoration: line-through;
-    }
-  }
+  //&:focus,
+  //&:hover {
+  //  + .message {
+  //    color: $danger;
+  //    text-decoration: line-through;
+  //  }
+  //}
 
   @include respond-to(tablet, desktop) {
     @include font-scale(-1);
 
     width: 2.4em;
   }
+}
 
-  .label {
-    @extend .visually-hidden;
-  }
+.label {
+  @extend %visuallyHidden;
 }

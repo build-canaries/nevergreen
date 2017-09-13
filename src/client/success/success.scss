@@ -1,5 +1,10 @@
 @import '../common/layout';
+@import '../common/accessibility';
 
 .success {
-  @extend .main-section;
+  @extend %mainSection;
+}
+
+.title {
+  @extend %visuallyHidden;
 }

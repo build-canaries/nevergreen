@@ -1,14 +1,14 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import ScaledGrid from '../common/scale/ScaledGrid'
-import './success-message.scss'
+import styles from './success-message.scss'
 
 class SuccessMessage extends Component {
   render() {
     return (
       <ScaledGrid>
-        <div className='success-message'>
-          <div className='inner'>{this.props.message}</div>
+        <div className={styles.successMessage}>
+          <div className={styles.message}>{this.props.message}</div>
         </div>
       </ScaledGrid>
     )

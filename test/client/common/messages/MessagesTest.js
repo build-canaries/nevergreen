@@ -1,4 +1,4 @@
-import '../../UnitSpec'
+import {locator} from '../../UnitSpec'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import React from 'react'
@@ -26,7 +26,7 @@ describe('<Messages/>', function () {
   it('should render the messages', function () {
     const props = Object.assign({}, DEFAULT_PROPS, {messages: ['some-message', 'another-message']})
     const wrapper = shallow(<Messages {...props} />)
-    expect(wrapper.find('.messages')).to.contain.text('some-message')
-    expect(wrapper.find('.messages')).to.contain.text('another-message')
+    expect(wrapper.find(locator('messages'))).to.contain.text('some-message')
+    expect(wrapper.find(locator('messages'))).to.contain.text('another-message')
   })
 })

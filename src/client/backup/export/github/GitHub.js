@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import Input from '../../../common/forms/Input'
-import './github.scss'
+import styles from './github.scss'
 
 class GitHub extends Component {
   constructor(props) {
@@ -23,20 +23,22 @@ class GitHub extends Component {
     const disabled = !this.props.loaded
 
     return (
-      <div className='export-github'>
-        <fieldset className='gist-values'>
-          <Input className='oauth-token' onChange={oauthTokenChanged} onBlur={oauthTokenChanged} value={this.state.oauthToken} disabled={disabled}>
+      <div>
+        <fieldset className={styles.gistValues}>
+          <Input className={styles.oauthToken} onChange={oauthTokenChanged} onBlur={oauthTokenChanged} value={this.state.oauthToken}
+                 disabled={disabled}>
             <span>access token</span>
           </Input>
-          <Input className='description' value={this.state.description} onChange={descriptionChanged} onBlur={setDescription} disabled={disabled}>
+          <Input className={styles.description} value={this.state.description} onChange={descriptionChanged} onBlur={setDescription}
+                 disabled={disabled}>
             <span>description</span>
           </Input>
-          <Input className='gist-id' value={this.state.gistId} onChange={gistIdChanged} onBlur={setGistId}
+          <Input className={styles.gistId} value={this.state.gistId} onChange={gistIdChanged} onBlur={setGistId}
                  placeholder='leave blank to create a new gist' disabled={disabled}>
             <span>gist ID</span>
           </Input>
         </fieldset>
-        <button className='upload' onClick={upload} disabled={disabled}>export</button>
+        <button className={styles.export} onClick={upload} disabled={disabled}>export</button>
       </div>
     )
   }

@@ -4,10 +4,15 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var autoprefixer = require('autoprefixer')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var CopyWebpackPlugin = require('copy-webpack-plugin')
+var isProd = (process.env.NODE_ENV === 'production')
 
 var cssLoader = {
   loader: 'css-loader',
-  options: {sourceMap: true}
+  options: {
+    sourceMap: true,
+    modules: true,
+    localIdentName: isProd ? '[hash:base64:6]' : '[name]-[local]-[hash:base64:6]'
+  }
 }
 
 var postCssLoader = {

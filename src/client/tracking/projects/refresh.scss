@@ -3,31 +3,25 @@
 @import '../../common/variables';
 @import '../../common/typography';
 
-.tray-sub-bar {
-  .refresh {
-    @include button-icon('loop2');
+.refresh {
+  @include button-icon('loop2');
+  @include button();
+
+  margin-bottom: 1em;
+
+  @include respond-to(tablet, desktop) {
+    margin-right: 1em;
+    margin-bottom: 0;
   }
+}
 
-  .show-settings,
-  .refresh {
-    @include button();
+.lastFetch {
+  @include font-scale(1);
 
-    margin-bottom: 1em;
+  display: block;
+  color: $mid-grey;
 
-    @include respond-to(tablet, desktop) {
-      margin-right: 1em;
-      margin-bottom: 0;
-    }
-  }
-
-  .tray-refresh-last-fetch {
-    @include font-scale(1);
-
-    display: block;
-    color: $mid-grey;
-
-    @include respond-to(tablet, desktop) {
-      display: inline-block;
-    }
+  @include respond-to(tablet, desktop) {
+    display: inline-block;
   }
 }

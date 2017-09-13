@@ -2,9 +2,8 @@
 @import '../common/responsive';
 @import '../common/typography';
 
-.site-footer {
+.siteFooter {
   background-color: $off-black;
-  color: $white;
   padding: 1em;
   border-bottom: 0.5em solid $off-black;
   display: block;
@@ -13,43 +12,47 @@
     padding-left: 2em;
     padding-right: 2em;
   }
+}
 
-  &.fullscreen {
-    display: none;
-  }
+.fullscreen {
+  display: none;
+}
 
-  .version,
-  .commit-hash {
-    color: inherit;
+.version,
+.commitHash {
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    color: darken($white, 10%);
     background-color: inherit;
-    text-decoration: none;
-
-    &:hover,
-    &:focus {
-      color: darken($white, 10%);
-    }
   }
 
-  .version-number,
-  .version-name,
-  .commit-hash {
-    display: inline-block;
+  &:visited {
+    color: $white;
   }
+}
 
-  .version-number,
-  .commit-hash {
-    float: left;
-    clear: left;
-  }
+.versionNumber,
+.versionName,
+.commitHash {
+  color: $white;
+  display: inline-block;
+}
 
-  .version-name {
-    padding-left: 1em;
-  }
+.versionNumber,
+.commitHash {
+  float: left;
+  clear: left;
+}
 
-  .commit-hash {
-    @include font-scale(-1);
+.versionName {
+  padding-left: 1em;
+}
 
-    font-family: $monospace;
-    margin-top: 1em;
-  }
+.commitHash {
+  @include font-scale(-1);
+
+  font-family: $monospace;
+  margin-top: 1em;
 }

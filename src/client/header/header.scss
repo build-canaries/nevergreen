@@ -4,7 +4,7 @@
 @import '../common/typography';
 @import '../common/accessibility';
 
-.site-header {
+.siteHeader {
   background-color: $off-black;
   color: $white;
   padding: 0.5em 1em;
@@ -14,115 +14,164 @@
     padding-left: 2em;
     padding-right: 2em;
   }
+}
 
-  &.fullscreen {
+.fullscreen {
+  display: none;
+}
+
+.title {
+  @extend %visuallyHidden;
+}
+
+.subTitle {
+  @extend %visuallyHidden;
+}
+
+.logo {
+  height: 55px;
+  width: 55px;
+  margin-right: 1em;
+  display: none;
+
+  @include respond-to(tablet, desktop) {
+    display: block;
+    float: left;
+  }
+}
+
+.siteMenuToggle {
+  color: $white;
+  text-transform: uppercase;
+  padding: 0.5em 1em;
+  border: none;
+  background-color: transparent;
+  margin: 0;
+  cursor: pointer;
+
+  @include respond-to(tablet, desktop) {
     display: none;
   }
+}
 
-  .logo {
-    height: 55px;
-    width: 55px;
-    margin-right: 1em;
-    display: none;
+%siteMenuToggleIcon {
+  @include font-scale(3);
+
+  @extend .icon;
+
+  padding-right: 0.5em;
+}
+
+.siteMenuShow {
+  @extend %siteMenuToggleIcon;
+  @extend .icon-menu3;
+}
+
+.siteMenuHide {
+  @extend %siteMenuToggleIcon;
+  @extend .icon-menu4;
+}
+
+.siteMenu {
+  display: block;
+  vertical-align: top;
+}
+
+.menu {
+  display: none;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    display: block;
 
     @include respond-to(tablet, desktop) {
-      display: block;
-      float: left;
+      display: inline-block;
     }
   }
 
-  .site-menu-toggle {
+  @include respond-to(tablet, desktop) {
+    display: inline;
+  }
+}
+
+.open {
+  display: inline;
+}
+
+.menuTitle {
+  color: inherit;
+  background-color: inherit;
+  vertical-align: middle;
+}
+
+.menuItem {
+  color: $mid-grey;
+  display: inline-block;
+  text-transform: uppercase;
+  padding: 1em;
+  margin-right: 1em;
+  text-decoration: none;
+
+  &:not(.active) {
+    @include interactive($white, $off-black, $off-black);
+  }
+}
+
+.active {
+  color: $white;
+
+  .menuIcon {
     color: $white;
-    text-transform: uppercase;
-    padding: 0.5em 1em;
-    border: none;
-    background-color: transparent;
-    margin: 0;
-    cursor: pointer;
-
-    @include respond-to(tablet, desktop) {
-      display: none;
-    }
   }
 
-  .site-menu-toggle-icon {
-    @include font-scale(3);
+  &:hover,
+  &:focus {
+    cursor: default;
+    color: $white;
+    background-color: $off-black;
+  }
+}
 
+.menuIcon {
+  @include font-scale(3);
+
+  color: inherit;
+  background-color: inherit;
+  vertical-align: middle;
+
+  &::before {
     padding-right: 0.5em;
   }
+}
 
-  .site-menu {
-    display: block;
-    vertical-align: top;
-  }
+.monitor {
+  @extend .icon;
+  @extend .icon-eye;
+}
 
-  .menu {
-    display: none;
-    list-style: none;
-    margin: 0;
-    padding: 0;
+.tracking {
+  @extend .icon;
+  @extend .icon-eye-plus;
+}
 
-    li {
-      display: block;
+.success {
+  @extend .icon;
+  @extend .icon-checkmark;
+}
 
-      @include respond-to(tablet, desktop) {
-        display: inline-block;
-      }
-    }
+.settings {
+  @extend .icon;
+  @extend .icon-cog;
+}
 
-    &.open {
-      display: inline;
-    }
+.backup {
+  @extend .icon;
+  @extend .icon-floppy-disk;
+}
 
-    @include respond-to(tablet, desktop) {
-      display: inline;
-    }
-  }
-
-  .menu-title {
-    vertical-align: middle;
-  }
-
-  .menu-item {
-    display: inline-block;
-    color: $mid-grey;
-    text-transform: uppercase;
-    padding: 1em;
-    margin-right: 1em;
-    text-decoration: none;
-
-    &:not(.active) {
-      @include interactive($white, $off-black, $off-black) {
-        & .menu-icon {
-          color: darken($white, $color-change-percentage);
-        }
-      }
-    }
-
-    &.active {
-      color: $white;
-
-      .menu-icon {
-        color: $white;
-      }
-
-      &:hover,
-      &:focus {
-        cursor: default;
-        color: $white;
-        background-color: $off-black;
-      }
-    }
-  }
-
-  .menu-icon {
-    @include font-scale(3);
-
-    color: $mid-grey;
-    vertical-align: middle;
-
-    &::before {
-      padding-right: 0.5em;
-    }
-  }
+.help {
+  @extend .icon;
+  @extend .icon-question;
 }

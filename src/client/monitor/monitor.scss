@@ -9,23 +9,15 @@
   height: 100vh;
   cursor: inherit;
 
-  .validation-message {
-    @include font-scale(4);
-
-    div {
-      margin: 0;
-    }
-  }
-
-  .loading {
-    .pulse {
-      @include font-scale(5);
-
-      color: $off-white;
-    }
-  }
-
   &.fullscreen {
     cursor: none;
+  }
+}
+
+.validationMessage {
+  @include font-scale(4);
+
+  div {
+    margin: 0;
   }
 }

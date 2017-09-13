@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import Input from '../../../common/forms/Input'
-import './github.scss'
+import styles from './github.scss'
 
 class GitHub extends Component {
   constructor(props) {
@@ -20,11 +20,11 @@ class GitHub extends Component {
     const disabled = !this.props.loaded
 
     return (
-      <div className='import-github'>
-        <Input className='gist-id' value={this.state.gistId} onChange={gistIdChanged} onBlur={setGistId} disabled={disabled}>
+      <div>
+        <Input className={styles.gistId} value={this.state.gistId} onChange={gistIdChanged} onBlur={setGistId} disabled={disabled}>
           <span>gist ID</span>
         </Input>
-        <button className='restore' onClick={restore} disabled={disabled}>import</button>
+        <button className={styles.restore} onClick={restore} disabled={disabled}>import</button>
       </div>
     )
   }

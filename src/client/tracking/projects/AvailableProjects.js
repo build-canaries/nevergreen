@@ -6,7 +6,7 @@ import Input from '../../common/forms/Input'
 import Shortcut from '../../common/Shortcut'
 import Refresh from './Refresh'
 import _ from 'lodash'
-import './available-projects.scss'
+import styles from './available-projects.scss'
 
 class AvailableProjects extends Component {
   constructor(props) {
@@ -49,20 +49,20 @@ class AvailableProjects extends Component {
     const refreshTray = () => this.props.refreshTray(this.props, this.props.pendingRequest)
 
     const controls = (
-      <div className='controls'>
-        <fieldset className='toggles'>
-          <legend className='visually-hidden'>Available projects</legend>
-          <button className='include-all' onClick={includeAll} disabled={this.state.disableButtons} data-locator='include-all'>
+      <div className={styles.controls}>
+        <fieldset className={styles.toggles}>
+          <legend className={styles.legend}>Available projects</legend>
+          <button className={styles.includeAll} onClick={includeAll} disabled={this.state.disableButtons} data-locator='include-all'>
             include all
             <Shortcut hotkeys={[`+ ${this.props.index}`, `= ${this.props.index}`]}/>
           </button>
-          <button className='exclude-all' onClick={excludeAll} disabled={this.state.disableButtons}>
+          <button className={styles.excludeAll} onClick={excludeAll} disabled={this.state.disableButtons}>
             exclude all
             <Shortcut hotkeys={[`- ${this.props.index}`]}/>
           </button>
         </fieldset>
-        <div className='project-filter'>
-          <Input className='project-filter-input' onChange={updateFilter} placeholder='regex'>
+        <div className={styles.projectFilter}>
+          <Input className={styles.projectFilterInput} onChange={updateFilter} placeholder='regex'>
             <span>filter</span>
           </Input>
         </div>
@@ -71,7 +71,7 @@ class AvailableProjects extends Component {
     )
 
     const buildItems = (
-      <ol className='build-items'>
+      <ol className={styles.buildItems}>
         {
           _.sortBy(filteredProjects, ['name', 'stage']).map((project) => {
             const selected = this.props.selected.includes(project.projectId)
@@ -84,12 +84,12 @@ class AvailableProjects extends Component {
     )
 
     return (
-      <section className='available-projects' data-locator='available-projects' ref={(node) => this.node = node}>
+      <section className={styles.availableProjects} data-locator='available-projects' ref={(node) => this.node = node}>
         <Refresh index={this.props.index} timestamp={this.props.timestamp} refreshTray={refreshTray}/>
         <Messages type='error' messages={this.props.errors}/>
         {this.props.errors ? null : controls}
         {this.props.errors ? null : buildItems}
-        {this.props.errors ? null : <button className='back-to-top' onClick={scrollToTop}>back to top</button>}
+        {this.props.errors ? null : <button className={styles.backToTop} onClick={scrollToTop}>back to top</button>}
       </section>
     )
   }

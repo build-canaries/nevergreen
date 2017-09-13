@@ -6,7 +6,7 @@ import Footer from './footer/Footer'
 import Mousetrap from 'mousetrap'
 import 'mousetrap/plugins/global-bind/mousetrap-global-bind'
 import _ from 'lodash'
-import './nevergreen.scss'
+import styles from './nevergreen.scss'
 import Timer from './common/Timer'
 
 const ONE_SECONDS = 1000
@@ -41,21 +41,21 @@ class Nevergreen extends Component {
   }
 
   render() {
-    const notificationClassNames = classNames('pop-up-notification', {fullscreen: this.props.isFullScreen})
+    const notificationClassNames = classNames(styles.popUpNotification, {[styles.fullscreen]: this.props.isFullScreen})
     const checkVersion = () => this.props.checkForNewVersion(this.props.versionNumber, window.location.hostname)
 
     const notification = !_.isEmpty(_.trim(this.props.notification)) ?
       <div className={notificationClassNames}>
         <div>
-          <span className='icon-notification'/>
-          <span className='text-with-icon'>Notification</span>
-          <span className='icon-cross pop-up-notification-dismiss' onClick={this.props.dismiss}/>
+          <span className={styles.notification}/>
+          <span className={styles.textWithIcon}>Notification</span>
+          <span className={styles.dismiss} onClick={this.props.dismiss}/>
         </div>
         {this.props.notification}
       </div> : null
 
     return (
-      <main className='nevergreen' onMouseMove={this.disableFullScreen}>
+      <main className={styles.nevergreen} onMouseMove={this.disableFullScreen}>
         <Timer onTrigger={checkVersion} interval={TWENTY_FOUR_HOURS}/>
         <Header fullScreen={this.props.isFullScreen}/>
         {notification}

@@ -1,4 +1,4 @@
-import '../../UnitSpec'
+import {locator} from '../../UnitSpec'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import React from 'react'
@@ -19,20 +19,20 @@ describe('<AvailableProject/>', function () {
   it('should render new tag if the project is new', function () {
     const props = Object.assign({}, DEFAULT_PROPS, {isNew: true})
     const wrapper = shallow(<AvailableProject {...props} />)
-    expect(wrapper.find('.new-project')).to.be.present()
-    expect(wrapper.find('.removed-project')).to.not.be.present()
+    expect(wrapper.find(locator('new'))).to.be.present()
+    expect(wrapper.find(locator('removed'))).to.not.be.present()
   })
 
   it('should render removed tag if the project was removed', function () {
     const props = Object.assign({}, DEFAULT_PROPS, {removed: true})
     const wrapper = shallow(<AvailableProject {...props} />)
-    expect(wrapper.find('.new-project')).to.not.be.present()
-    expect(wrapper.find('.removed-project')).to.be.present()
+    expect(wrapper.find(locator('new'))).to.not.be.present()
+    expect(wrapper.find(locator('removed'))).to.be.present()
   })
 
-  it('should render the stage', function () {
+  it('should render the name and stage', function () {
     const props = Object.assign({}, DEFAULT_PROPS, {name: 'name', stage: 'stage'})
     const wrapper = shallow(<AvailableProject {...props} />)
-    expect(wrapper.find('span')).to.have.text('name stage')
+    expect(wrapper.find(locator('name'))).to.have.text('name stage')
   })
 })

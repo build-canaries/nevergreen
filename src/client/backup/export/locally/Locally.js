@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import Clipboard from './Clipboard'
-import './locally.scss'
+import styles from './locally.scss'
 
 class Locally extends Component {
   render() {
@@ -9,13 +9,13 @@ class Locally extends Component {
     const copyError = () => this.props.exportError(['Unfortunately your browser doesn\'t support automatically copying to clipboard, please manually copy'])
 
     return (
-      <div className='export-locally'>
-        <label className='export-data'>
-          <span>current configuration</span>
-          <textarea id='export-data' value={this.props.configuration} readOnly spellCheck='false' data-locator='export-data'/>
+      <div>
+        <label>
+          <span className={styles.label}>current configuration</span>
+          <textarea className={styles.data} id='export-data' value={this.props.configuration} readOnly spellCheck='false' data-locator='export-data'/>
         </label>
         <Clipboard elementSelector='#copy-to-clipboard' onSuccess={copySuccess} onError={copyError}/>
-        <button className='copy' id='copy-to-clipboard' data-clipboard-target='#export-data'>copy to clipboard</button>
+        <button className={styles.copy} id='copy-to-clipboard' data-clipboard-target='#export-data'>copy to clipboard</button>
       </div>
     )
   }

@@ -1,6 +1,6 @@
 import React, {Children, Component} from 'react'
 import PropTypes from 'prop-types'
-import './loading.scss'
+import styles from './loading.scss'
 
 class Loading extends Component {
   render() {
@@ -15,10 +15,10 @@ class Loading extends Component {
         return null
       }
     } else {
-      return <div className='loading'>
-        <span className='icon-circle pulse'/>
-        <span className='icon-circle pulse'/>
-        <span className='icon-circle pulse'/>
+      return <div className={styles.loading} data-locator='loading'>
+        <span className={styles.pulse}/>
+        <span className={styles.pulse}/>
+        <span className={styles.pulse}/>
       </div>
     }
   }

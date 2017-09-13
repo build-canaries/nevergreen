@@ -1,6 +1,6 @@
 import React, {Children, Component} from 'react'
 import PropTypes from 'prop-types'
-import './tabs.scss'
+import styles from './tabs.scss'
 
 class Tabs extends Component {
   constructor(props) {
@@ -12,18 +12,18 @@ class Tabs extends Component {
     const switchTabs = (index) => this.setState({active: index})
 
     return (
-      <div className='tabs'>
-        <div className='tab-bar'>
+      <div>
+        <div className={styles.tabs}>
           {this.props.titles.map((title, i) => {
             const isActive = i === this.state.active
             return (
-              <button key={title} className='tab' onClick={() => switchTabs(i)} disabled={isActive} data-locator={`tab-${title}`}>
+              <button key={title} className={styles.tab} onClick={() => switchTabs(i)} disabled={isActive} data-locator={`tab-${title}`}>
                 {title}
               </button>
             )
           })}
         </div>
-        <div className='tab-contents'>
+        <div className={styles.contents}>
           {Children.toArray(this.props.children)[this.state.active]}
         </div>
       </div>

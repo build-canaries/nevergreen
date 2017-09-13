@@ -1,15 +1,15 @@
-import '../UnitSpec'
+import {locator} from '../UnitSpec'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
 import AddedMessages from '../../../src/client/success/AddedMessages'
+import _ from 'lodash'
 
 describe('<AddedMessages/>', function () {
   const DEFAULT_PROPS = {
     messages: [],
-    removeMessage: () => {
-    }
+    removeMessage: _.noop
   }
 
   it('should render nothing if messages is empty', function () {
@@ -21,6 +21,6 @@ describe('<AddedMessages/>', function () {
   it('should render the messages', function () {
     const props = Object.assign({}, DEFAULT_PROPS, {messages: ['some-message']})
     const wrapper = shallow(<AddedMessages {...props} />)
-    expect(wrapper.find('.message')).to.have.text('some-message')
+    expect(wrapper.find(locator('success-message'))).to.have.text('some-message')
   })
 })

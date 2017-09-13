@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Messages from '../messages/Messages'
 import classNames from 'classnames'
 import _ from 'lodash'
-import './input.scss'
+import styles from './input.scss'
 
 class Input extends Component {
   constructor(props) {
@@ -42,16 +42,16 @@ class Input extends Component {
         this.validate(this.props.onEnter)
       }
     }
-    const labelClasses = classNames('input', this.props.type, this.props.className)
+    const labelClasses = classNames(styles.inputLabel, this.props.type, this.props.className)
     const invalid = !_.isEmpty(this.state.errors)
 
     return (
       <label className={labelClasses}>
-        {this.props.children}
-        <input onKeyPress={onEnter} onBlur={onBlur} spellCheck={false} autoComplete='off' autoFocus={invalid} {...inputProps}
+        <span className={styles.label}>{this.props.children}</span>
+        <input className={styles.input} onKeyPress={onEnter} onBlur={onBlur} spellCheck={false} autoComplete='off' autoFocus={invalid} {...inputProps}
                ref={(node) => this.node = node} tabIndex={this.props.readOnly ? -1 : 0}/>
-        {this.props.readOnly ? <i className='locked' title='read only'/> : null}
-        <Messages className='input-validation-errors' type='error' messages={this.state.errors}/>
+        {this.props.readOnly ? <i className={styles.locked} title='read only'/> : null}
+        <Messages className={styles.errors} type='error' messages={this.state.errors}/>
       </label>
     )
   }

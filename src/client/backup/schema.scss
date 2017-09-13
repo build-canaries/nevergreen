@@ -1,10 +1,11 @@
-@import '../common/variables';
 @import '../common/typography';
 
-.schema {
-  pre {
-    @include font-scale(-2);
+.container {
+  padding: 1em;
+}
 
-    overflow: auto;
-  }
+.schema {
+  @include font-scale(-2);
+
+  overflow: auto;
 }

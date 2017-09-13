@@ -1,9 +1,14 @@
 @import '../common/layout';
+@import '../common/accessibility';
 
 .tracking {
-  @extend .main-section;
-
-  .container-body {
-    padding: 0;
-  }
+  @extend %mainSection;
 }
+
+.title {
+  @extend %visuallyHidden;
+}
+
+//.containerBody {
+//  padding: 0;
+//}

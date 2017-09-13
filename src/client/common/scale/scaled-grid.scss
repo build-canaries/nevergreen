@@ -1,13 +1,12 @@
 @import '../layout';
-@import '../variables';
 
-.scaled-grid {
-  @include fill-parent;
+.scaledGrid {
+  @extend %fillParent;
 
   list-style-type: none;
 }
 
-.scaled-grid-item {
+.item {
   float: left;
   overflow: hidden;
 }

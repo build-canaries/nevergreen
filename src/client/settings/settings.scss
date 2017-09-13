@@ -1,5 +1,5 @@
 @import '../common/layout';
 
 .settings {
-  @extend .main-section;
+  @extend %mainSection;
 }

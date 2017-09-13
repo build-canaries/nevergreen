@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import './container.scss'
+import styles from './container.scss'
 
 class Container extends Component {
   constructor(props) {
@@ -25,20 +25,19 @@ class Container extends Component {
         e.preventDefault()
       }
     }
-    const sectionClasses = classNames('container', this.props.className)
-    const titleBarClasses = classNames('title-bar', {
-      highlight: this.props.highlight,
-      show: this.state.hidden,
-      hide: !this.state.hidden
+    const titleBarClasses = classNames(styles.titleBar, {
+      [styles.highlight]: this.props.highlight,
+      [styles.show]: this.state.hidden,
+      [styles.hide]: !this.state.hidden
     })
     const tooltip = this.state.hidden ? 'show pane' : 'hide pane'
-    const body = this.state.hidden ? null : <div className='container-body'>{this.props.children}</div>
+    const body = this.state.hidden ? null : <div className={this.props.className}>{this.props.children}</div>
 
     return (
-      <section className={sectionClasses} ref={(node) => this.node = node}>
+      <section className={styles.container} ref={(node) => this.node = node}>
         <div className={titleBarClasses} title={tooltip} onClick={toggleHidden} onKeyPress={keyToggle} tabIndex='0'>
-          <h3 className='section-title'>{this.props.title}</h3>
-          <h4 className='section-sub-title'>{this.props.subTitle}</h4>
+          <h3 className={styles.title}>{this.props.title}</h3>
+          <h4 className={styles.subTitle}>{this.props.subTitle}</h4>
         </div>
         {body}
       </section>

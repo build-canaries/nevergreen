@@ -1,21 +1,23 @@
 @import '../common/variables';
 
-.display {
-  .checkbox {
-    display: block;
-    width: 0;
-    white-space: nowrap;
-  }
+.container {
+  padding: 1em;
+}
 
-  .display-preview-title {
-    padding: 1em 0;
-  }
+.checkbox {
+  display: block;
+  width: 0;
+  white-space: nowrap;
+}
 
-  .display-preview {
-    background-color: $black;
-    height: 15em;
-    text-align: center;
-    font-family: $monospace;
-    border-radius: 5px;
-  }
+.title {
+  padding: 1em 0;
+}
+
+.displayPreview {
+  background-color: $black;
+  height: 15em;
+  text-align: center;
+  font-family: $monospace;
+  border-radius: 5px;
 }

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import AddedMessages from './AddedMessages'
 import AddedImages from './AddedImages'
 import AddMessage from './AddMessage'
-import './success.scss'
+import styles from './success.scss'
 
 class Success extends Component {
   render() {
@@ -11,8 +11,8 @@ class Success extends Component {
     const images = this.props.messages.filter((m) => m.startsWith('http'))
 
     return (
-      <section className='success'>
-        <h2 className='visually-hidden'>Success</h2>
+      <section className={styles.success}>
+        <h2 className={styles.title}>Success</h2>
         <AddMessage addMessage={this.props.addMessage}/>
         <AddedMessages messages={messages} removeMessage={this.props.removeMessage}/>
         <AddedImages urls={images} removeMessage={this.props.removeMessage}/>
