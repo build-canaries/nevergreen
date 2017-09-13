@@ -50,7 +50,7 @@ describe('SelectedReducer', function () {
       const existingState = Immutable.Map()
       const action = {type: TRAY_ADDED, trayId: 'trayId'}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.is.an.instanceof(Immutable.Set).that.is.empty
+      expect(newState).to.have.property('trayId').that.is.an.instanceof(Immutable.Set).that.is.empty()
     })
   })
 

@@ -29,7 +29,7 @@ describe('ProjectsReducer', function () {
       const existingState = Immutable.Map()
       const action = {type: INITIALISED, data: Immutable.Map()}
       const newState = reduce(existingState, action)
-      expect(newState).to.be.empty
+      expect(newState).to.be.empty()
     })
   })
 
@@ -50,7 +50,7 @@ describe('ProjectsReducer', function () {
       const existingState = Immutable.fromJS()
       const action = {type: TRAY_ADDED, trayId: 'trayId'}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.is.empty
+      expect(newState).to.have.property('trayId').that.is.empty()
     })
   })
 
@@ -70,7 +70,7 @@ describe('ProjectsReducer', function () {
       const existingState = Immutable.fromJS({trayId: {projectId: {removed: true}}})
       const action = {type: PROJECTS_FETCHED, trayId: 'trayId', data: Immutable.List()}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.is.empty
+      expect(newState).to.have.property('trayId').that.is.empty()
     })
 
     it('should set existing (non filtered) projects as old', function () {

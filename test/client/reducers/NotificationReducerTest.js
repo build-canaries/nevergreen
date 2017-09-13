@@ -28,7 +28,7 @@ describe('NotificationReducer', function () {
       const existingState = 'some-message'
       const action = {type: NOTIFICATION_DISMISS}
       const newState = reduce(existingState, action)
-      expect(newState).to.be.null
+      expect(newState).to.be.null()
     })
   })
 })

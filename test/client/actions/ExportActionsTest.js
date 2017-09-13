@@ -78,24 +78,24 @@ describe('ExportActions', function () {
     it('should create a gist if no id is given', function () {
       Gateway.send = () => Promise.resolve({id: 'some-id'})
       return ExportActions.uploadToGitHub(null, 'irrelevant', 'irrelevant', 'irrelevant')(dispatch).then(() => {
-        expect(GitHubGateway.updateGist).to.not.have.been.called
-        expect(GitHubGateway.createGist).to.have.been.called
+        expect(GitHubGateway.updateGist).to.not.have.been.called()
+        expect(GitHubGateway.createGist).to.have.been.called()
       })
     })
 
     it('should create a gist if a blank id is given', function () {
       Gateway.send = () => Promise.resolve({id: 'some-id'})
       return ExportActions.uploadToGitHub(' ', 'irrelevant', 'irrelevant', 'irrelevant')(dispatch).then(() => {
-        expect(GitHubGateway.updateGist).to.not.have.been.called
-        expect(GitHubGateway.createGist).to.have.been.called
+        expect(GitHubGateway.updateGist).to.not.have.been.called()
+        expect(GitHubGateway.createGist).to.have.been.called()
       })
     })
 
     it('should update the gist if an id is given', function () {
       Gateway.send = () => Promise.resolve({id: 'some-id'})
       return ExportActions.uploadToGitHub('some-id', 'irrelevant', 'irrelevant', 'irrelevant')(dispatch).then(() => {
-        expect(GitHubGateway.updateGist).to.have.been.called
-        expect(GitHubGateway.createGist).to.not.have.been.called
+        expect(GitHubGateway.updateGist).to.have.been.called()
+        expect(GitHubGateway.createGist).to.not.have.been.called()
       })
     })
 

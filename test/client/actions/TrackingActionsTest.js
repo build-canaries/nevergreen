@@ -152,7 +152,7 @@ describe('TrackingActions', function () {
     it('should abort the pending request', function () {
       const abort = sinon.spy()
       TrackingActions.removeTray('some-tray-id', {abort})
-      expect(abort).to.have.been.called
+      expect(abort).to.have.been.called()
     })
   })
 
@@ -335,8 +335,8 @@ describe('TrackingActions', function () {
       Gateway.send = sinon.spy()
       return TrackingActions.encryptPassword('irrelevant', '')(dispatch).then(() => {
         expect(dispatch).to.have.been.calledWithMatch({type: TrackingActions.PASSWORD_ENCRYPTED})
-        expect(SecurityGateway.encryptPassword).to.not.have.been.called
-        expect(Gateway.send).to.not.have.been.called
+        expect(SecurityGateway.encryptPassword).to.not.have.been.called()
+        expect(Gateway.send).to.not.have.been.called()
       })
     })
 
@@ -345,7 +345,7 @@ describe('TrackingActions', function () {
       Gateway.send = sinon.stub().returns(Promise.resolve(''))
       const pendingRequest = {abort: sinon.spy()}
       TrackingActions.encryptPassword('irrelevant', 'irrelevant', pendingRequest)(dispatch)
-      expect(pendingRequest.abort).to.have.been.called
+      expect(pendingRequest.abort).to.have.been.called()
     })
   })
 

@@ -18,7 +18,7 @@ describe('ShortcutReducer', function () {
       const existingState = true
       const action = {type: KEYBOARD_SHORTCUT, show: false}
       const newState = reduce(existingState, action)
-      expect(newState).to.be.false
+      expect(newState).to.be.false()
     })
   })
 })

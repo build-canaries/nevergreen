@@ -51,7 +51,7 @@ describe('TraysReducer', function () {
       const existingState = Immutable.Map()
       const action = {type: INITIALISED, data: Immutable.Map()}
       const newState = reduce(existingState, action)
-      expect(newState).to.be.empty
+      expect(newState).to.be.empty()
     })
   })
 

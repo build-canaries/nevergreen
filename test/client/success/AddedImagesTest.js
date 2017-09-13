@@ -15,7 +15,7 @@ describe('<AddedImages/>', function () {
   it('should render nothing if urls is empty', function () {
     const props = Object.assign({}, DEFAULT_PROPS, {urls: []})
     const wrapper = shallow(<AddedImages {...props} />)
-    expect(wrapper.get(0)).to.be.null
+    expect(wrapper.get(0)).to.be.null()
   })
 
   it('should render images', function () {

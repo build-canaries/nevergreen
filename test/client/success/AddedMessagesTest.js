@@ -15,7 +15,7 @@ describe('<AddedMessages/>', function () {
   it('should render nothing if messages is empty', function () {
     const props = Object.assign({}, DEFAULT_PROPS, {messages: []})
     const wrapper = shallow(<AddedMessages {...props} />)
-    expect(wrapper.get(0)).to.be.null
+    expect(wrapper.get(0)).to.be.null()
   })
 
   it('should render the messages', function () {

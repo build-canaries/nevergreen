@@ -89,7 +89,7 @@ describe('projects gateway', function () {
 
       ProjectsGateway.interesting(trays, selected)
 
-      expect(Gateway.post).to.not.have.been.called
+      expect(Gateway.post).to.not.have.been.called()
     })
   })
 })

@@ -14,13 +14,13 @@ describe('<Messages/>', function () {
   it('should not render anything if messages is null', function () {
     const props = Object.assign({}, DEFAULT_PROPS, {messages: null})
     const wrapper = shallow(<Messages {...props} />)
-    expect(wrapper.get(0)).to.be.null
+    expect(wrapper.get(0)).to.be.null()
   })
 
   it('should not render anything if messages is empty', function () {
     const props = Object.assign({}, DEFAULT_PROPS, {messages: []})
     const wrapper = shallow(<Messages {...props} />)
-    expect(wrapper.get(0)).to.be.null
+    expect(wrapper.get(0)).to.be.null()
   })
 
   it('should render the messages', function () {
