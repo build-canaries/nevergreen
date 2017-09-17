@@ -4,6 +4,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var autoprefixer = require('autoprefixer')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var CopyWebpackPlugin = require('copy-webpack-plugin')
+var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 var isProd = (process.env.NODE_ENV === 'production')
 
 var cssLoader = {
@@ -47,7 +48,8 @@ module.exports = {
       filename: '[hash].css',
       allChunks: true
     }),
-    new CopyWebpackPlugin([{from: './src/client/favicons'}])
+    new CopyWebpackPlugin([{from: './src/client/favicons'}]),
+    new OptimizeCssAssetsPlugin()
   ],
   module: {
     rules: [
