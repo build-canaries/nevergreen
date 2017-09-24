@@ -1,5 +1,4 @@
 @import '../common/layout';
-@import '../common/variables';
 @import '../common/forms/button';
 @import '../common/typography';
 @import '../common/responsive';
@@ -10,21 +9,13 @@
   @include font-scale(-1);
 
   display: inline;
-  width: 2.4em;
   height: 2.4em;
   padding: 0.5em;
+  width: 2.4em;
 
   &::before {
     margin: 0;
   }
-
-  //&:focus,
-  //&:hover {
-  //  + .message {
-  //    color: $danger;
-  //    text-decoration: line-through;
-  //  }
-  //}
 
   @include respond-to(tablet, desktop) {
     @include font-scale(-1);

@@ -4,9 +4,9 @@
 
 .siteFooter {
   background-color: $off-black;
-  padding: 1em;
   border-bottom: 0.5em solid $off-black;
   display: block;
+  padding: 1em;
 
   @include respond-to(tablet, desktop) {
     padding-left: 2em;
@@ -24,8 +24,8 @@
 
   &:hover,
   &:focus {
-    color: darken($white, 10%);
     background-color: inherit;
+    color: darken($white, 10%);
   }
 
   &:visited {
@@ -42,8 +42,8 @@
 
 .versionNumber,
 .commitHash {
-  float: left;
   clear: left;
+  float: left;
 }
 
 .versionName {

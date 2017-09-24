@@ -24,8 +24,8 @@
 
 .description {
   @include respond-to(tablet, desktop) {
-    display: flex;
     align-items: center;
+    display: flex;
 
     input {
       flex: 1;

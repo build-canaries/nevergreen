@@ -31,8 +31,8 @@
     }
 
     input {
-      width: auto;
       flex-grow: 1;
+      width: auto;
     }
   }
 }
@@ -82,8 +82,8 @@
   margin-top: 1em;
 
   @include respond-to(tablet, desktop) {
-    margin-top: 0;
     margin-left: 1em;
+    margin-top: 0;
   }
 }
 

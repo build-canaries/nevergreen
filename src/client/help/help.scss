@@ -54,8 +54,8 @@
 
 .helpTrackingTable {
   display: block;
-  width: 100%;
   overflow-y: scroll;
+  width: 100%;
 
   tr:nth-child(even) {
     background-color: $light-grey;
@@ -65,11 +65,11 @@
 .binding {
   @include font-scale(-1);
 
-  font-family: $monospace;
-  color: $off-black;
+  background-image: linear-gradient(to bottom, #eee, #f9f9f9, #eee);
   border: $mid-grey 1px solid;
   border-radius: 5px;
-  background-image: linear-gradient(to bottom, #eee, #f9f9f9, #eee);
+  color: $off-black;
+  font-family: $monospace;
   padding: 0.1em 0.3em;
 }
 

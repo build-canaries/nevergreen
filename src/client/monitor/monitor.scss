@@ -4,10 +4,10 @@
 .monitor {
   background-color: $black;
   color: $off-white;
-  text-align: center;
+  cursor: inherit;
   font-family: $monospace;
   height: 100vh;
-  cursor: inherit;
+  text-align: center;
 
   &.fullscreen {
     cursor: none;

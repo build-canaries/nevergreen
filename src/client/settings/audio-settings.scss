@@ -13,12 +13,12 @@
   margin-top: 0.5em;
 
   @include respond-to(tablet, desktop) {
-    display: flex;
     align-items: baseline;
+    display: flex;
 
     .soundFxInput {
-      display: flex;
       align-items: baseline;
+      display: flex;
       flex-grow: 1;
 
       input {
@@ -35,8 +35,8 @@
   margin-top: 1em;
 
   @include respond-to(tablet, desktop) {
-    margin-top: 0;
     margin-left: 1em;
+    margin-top: 0;
   }
 }
 

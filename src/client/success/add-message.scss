@@ -3,14 +3,14 @@
 @import '../common/responsive';
 
 .addMessage {
-  margin-bottom: 1em;
-  padding: 1em;
   background-color: $white;
   box-shadow: $shadow;
+  margin-bottom: 1em;
+  padding: 1em;
 
   @include respond-to(tablet, desktop) {
-    display: flex;
     align-items: baseline;
+    display: flex;
   }
 }
 
@@ -21,8 +21,8 @@
   }
 
   @include respond-to(tablet, desktop) {
-    display: flex;
     align-items: baseline;
+    display: flex;
     flex-grow: 1;
 
     input {
@@ -39,7 +39,7 @@
   margin-top: 1em;
 
   @include respond-to(tablet, desktop) {
-    margin-top: 0;
     margin-left: 1em;
+    margin-top: 0;
   }
 }

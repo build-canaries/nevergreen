@@ -14,8 +14,8 @@
 
 .toggles {
   display: block;
-  width: 100%;
   margin-top: 1em;
+  width: 100%;
 
   @include respond-to(tablet, desktop) {
     display: inline-block;
@@ -52,15 +52,15 @@
 
 .buildItems {
   display: block;
-  width: 100%;
   list-style: none;
   overflow: hidden;
+  width: 100%;
 }
 
 .projectFilter {
   display: block;
-  width: 100%;
   margin-top: 1em;
+  width: 100%;
 
   @include respond-to(tablet, desktop) {
     display: inline-block;

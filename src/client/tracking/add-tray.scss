@@ -3,10 +3,10 @@
 @import '../common/responsive';
 
 .addTray {
-  margin-bottom: 1em;
-  padding: 1em;
   background-color: $white;
   box-shadow: $shadow;
+  margin-bottom: 1em;
+  padding: 1em;
   position: relative;
 
   .add {
@@ -14,14 +14,14 @@
     @include button-icon('plus');
 
     display: block;
-    width: 100%;
     margin-top: 1em;
+    width: 100%;
 
     @include respond-to(tablet, desktop) {
-      width: 7em;
       position: absolute;
-      top: 0;
       right: 1em;
+      top: 0;
+      width: 7em;
     }
   }
 
@@ -38,8 +38,8 @@
     width: 100%;
 
     @include respond-to(tablet, desktop) {
-      display: flex;
       align-items: baseline;
+      display: flex;
 
       input {
         flex-grow: 1;

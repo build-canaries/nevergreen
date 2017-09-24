@@ -6,8 +6,8 @@
 
 .checkbox {
   display: block;
-  width: 0;
   white-space: nowrap;
+  width: 0;
 }
 
 .title {
@@ -16,8 +16,8 @@
 
 .displayPreview {
   background-color: $black;
+  border-radius: 5px;
+  font-family: $monospace;
   height: 15em;
   text-align: center;
-  font-family: $monospace;
-  border-radius: 5px;
 }

@@ -10,16 +10,16 @@
   margin-bottom: 1em;
 
   @include respond-to(tablet, desktop) {
-    margin-right: 1em;
     margin-bottom: 0;
+    margin-right: 1em;
   }
 }
 
 .lastFetch {
   @include font-scale(1);
 
-  display: block;
   color: $mid-grey;
+  display: block;
 
   @include respond-to(tablet, desktop) {
     display: inline-block;

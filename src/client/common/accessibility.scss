@@ -6,10 +6,10 @@ $color-change-percentage: 8%;
   transition: color 0.1s ease-in, background-color 0.1s ease-in, border-color 0.1s ease-in;
 
   &:hover {
-    color: darken($color, $color-change-percentage);
     background-color: darken($background-color, $color-change-percentage);
     border-color: darken($border-color, $color-change-percentage);
     border-radius: 0;
+    color: darken($color, $color-change-percentage);
 
     @content;
   }
@@ -19,8 +19,8 @@ $color-change-percentage: 8%;
     border-radius: 0;
 
     @if $darken-on-focus {
-      color: darken($color, $color-change-percentage);
       background-color: darken($background-color, $color-change-percentage);
+      color: darken($color, $color-change-percentage);
     }
 
     @content;

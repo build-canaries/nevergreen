@@ -1,5 +1,7 @@
 extends: stylelint-config-standard
 
+plugins:
+  - stylelint-order
 rules:
   string-quotes: single
   font-family-name-quotes: always-where-required
@@ -13,3 +15,4 @@ rules:
        - content
        - each
        - if
+  order/properties-alphabetical-order: true

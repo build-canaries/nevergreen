@@ -3,8 +3,8 @@
 @import '../typography';
 
 .messages {
-  color: $white;
   background-color: $off-black;
+  color: $white;
   list-style: none;
   margin-top: 1em;
 }
@@ -35,9 +35,9 @@
     &::before {
       @extend .icon;
 
+      margin-left: -2em;
       padding-left: 0.5em;
       padding-right: 0.5em;
-      margin-left: -2em;
     }
   }
 }

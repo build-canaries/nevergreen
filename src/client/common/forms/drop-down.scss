@@ -26,16 +26,16 @@
 .input {
   @include font-scale(1);
 
-  width: 100%;
-  margin-top: 0.5em;
   background-color: $white;
   border: 1px solid $light-grey;
   border-radius: 2px;
+  margin-top: 0.5em;
   padding: 0.25em 0.5em;
+  width: 100%;
 
   &:enabled {
-    transition: box-shadow 0.1s ease-in;
     box-shadow: $shadow;
+    transition: box-shadow 0.1s ease-in;
 
     @include interactive() {
       box-shadow: $focus-shadow;
@@ -43,7 +43,7 @@
   }
 
   @include respond-to(tablet, desktop) {
-    width: auto;
     margin-top: 0;
+    width: auto;
   }
 }

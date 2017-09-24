@@ -18,8 +18,8 @@
 
 .container {
   background-color: $white;
-  margin-bottom: 1em;
   box-shadow: $shadow;
+  margin-bottom: 1em;
 
   &:last-child {
     margin-bottom: 0;
@@ -27,12 +27,12 @@
 }
 
 .titleBar {
-  position: relative;
   background: $mid-grey;
   color: $white;
-  white-space: nowrap;
-  overflow: hidden;
   cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  white-space: nowrap;
 
   @include interactive($white, $mid-grey, $mid-grey);
 }

@@ -6,40 +6,40 @@
 .tabs {
   background: $light-grey;
   color: $mid-grey;
-  padding: 0.5em 0.5em 0;
   overflow: scroll;
+  padding: 0.5em 0.5em 0;
   white-space: nowrap;
 }
 
 .tab {
   @include font-scale(0);
 
-  display: inline-block;
-  position: relative;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  user-select: none;
+  background-color: $light-grey;
   border: 1px solid $light-grey;
-  padding: 0.5em 1.5em;
   border-top-left-radius: 2px;
   border-top-right-radius: 2px;
-  text-transform: uppercase;
-  text-decoration: none;
-  background-color: $light-grey;
   color: $off-black;
   cursor: pointer;
+  display: inline-block;
   margin-right: 0.5em;
+  padding: 0.5em 1.5em;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  user-select: none;
+  vertical-align: middle;
+  white-space: nowrap;
 
   &:enabled {
     @include interactive($off-black, $light-grey, $light-grey);
   }
 
   &:disabled {
-    cursor: inherit;
-    border-top-color: $blue;
-    border-bottom-color: $white;
     background-color: $white;
+    border-bottom-color: $white;
+    border-top-color: $blue;
+    cursor: inherit;
   }
 
   &:last-child {

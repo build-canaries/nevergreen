@@ -4,8 +4,8 @@
 .interestingProject {
   @extend %fillParent;
 
-  display: table;
   border-radius: 5px;
+  display: table;
   padding: 1em;
 }
 
@@ -35,8 +35,8 @@
 }
 
 .timeBroken {
-  opacity: 0.5;
   font-style: italic;
+  opacity: 0.5;
 }
 
 .buildLabel {

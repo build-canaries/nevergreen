@@ -7,8 +7,8 @@
 .siteHeader {
   background-color: $off-black;
   color: $white;
-  padding: 0.5em 1em;
   display: block;
+  padding: 0.5em 1em;
 
   @include respond-to(tablet, desktop) {
     padding-left: 2em;
@@ -29,10 +29,10 @@
 }
 
 .logo {
-  height: 55px;
-  width: 55px;
-  margin-right: 1em;
   display: none;
+  height: 55px;
+  margin-right: 1em;
+  width: 55px;
 
   @include respond-to(tablet, desktop) {
     display: block;
@@ -41,13 +41,13 @@
 }
 
 .siteMenuToggle {
-  color: $white;
-  text-transform: uppercase;
-  padding: 0.5em 1em;
-  border: none;
   background-color: transparent;
-  margin: 0;
+  border: none;
+  color: $white;
   cursor: pointer;
+  margin: 0;
+  padding: 0.5em 1em;
+  text-transform: uppercase;
 
   @include respond-to(tablet, desktop) {
     display: none;
@@ -101,18 +101,18 @@
 }
 
 .menuTitle {
-  color: inherit;
   background-color: inherit;
+  color: inherit;
   vertical-align: middle;
 }
 
 .menuItem {
   color: $mid-grey;
   display: inline-block;
-  text-transform: uppercase;
-  padding: 1em;
   margin-right: 1em;
+  padding: 1em;
   text-decoration: none;
+  text-transform: uppercase;
 
   &:not(.active) {
     @include interactive($white, $off-black, $off-black);
@@ -128,17 +128,17 @@
 
   &:hover,
   &:focus {
-    cursor: default;
-    color: $white;
     background-color: $off-black;
+    color: $white;
+    cursor: default;
   }
 }
 
 .menuIcon {
   @include font-scale(3);
 
-  color: inherit;
   background-color: inherit;
+  color: inherit;
   vertical-align: middle;
 
   &::before {

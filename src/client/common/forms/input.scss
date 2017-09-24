@@ -5,8 +5,8 @@
 @import '../fonts/icon-font';
 
 .inputLabel {
-  position: relative;
   display: block;
+  position: relative;
   width: 100%;
 
   @include respond-to(tablet, desktop) {
@@ -30,9 +30,9 @@
 
   border: 1px solid $light-grey;
   border-radius: 2px;
-  width: 100%;
   margin-top: 0.5em;
   padding: 0.5em;
+  width: 100%;
 
   &:not(:disabled) {
     &:read-write {
@@ -41,19 +41,19 @@
   }
 
   &:invalid {
-    box-shadow: none;
     border-color: $danger;
+    box-shadow: none;
   }
 
   @include respond-to(tablet, desktop) {
-    width: auto;
     margin-right: 1em;
     margin-top: 0;
+    width: auto;
   }
 
   &:disabled {
-    color: $mid-grey;
     border-color: $mid-grey;
+    color: $mid-grey;
   }
 }
 
@@ -61,13 +61,13 @@
   @extend .icon;
   @extend .icon-lock;
 
+  position: absolute;
   right: 1em;
   top: 4.4em;
-  position: absolute;
 
   @include respond-to(tablet, desktop) {
-    top: 2.5em;
     right: 2em;
+    top: 2.5em;
   }
 }
 

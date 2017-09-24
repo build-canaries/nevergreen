@@ -9,10 +9,10 @@
 .popUpNotification {
   @include font-scale(0);
 
-  padding: 1em;
   background-color: $blue;
   color: $white;
   display: block;
+  padding: 1em;
 }
 
 .fullscreen {
@@ -28,8 +28,8 @@
   @extend .icon;
   @extend .icon-cross;
 
-  float: right;
   cursor: pointer;
+  float: right;
 
   &:hover {
     color: darken($white, 10%);

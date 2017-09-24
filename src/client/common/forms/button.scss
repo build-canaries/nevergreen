@@ -17,27 +17,27 @@
 @mixin button($color:$off-white, $background-color:$blue, $border-color:$background-color) {
   @include font-scale(1);
 
+  background-color: $background-color;
+  border: 1px solid $border-color;
+  border-radius: 2px;
+  color: $color;
   display: block;
+  overflow: hidden;
+  padding: 0.5em 1em;
   position: relative;
   text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  user-select: none;
-  border: 1px solid $border-color;
-  padding: 0.5em 1em;
-  border-radius: 2px;
-  text-transform: uppercase;
   text-decoration: none;
-  background-color: $background-color;
-  color: $color;
-  width: 100%;
   text-overflow: ellipsis;
-  overflow: hidden;
+  text-transform: uppercase;
+  user-select: none;
+  vertical-align: middle;
+  white-space: nowrap;
+  width: 100%;
 
   &:enabled {
+    box-shadow: $shadow;
     cursor: pointer;
     transition: box-shadow 0.1s ease-in;
-    box-shadow: $shadow;
 
     @include interactive($color, $background-color, $border-color) {
       box-shadow: $focus-shadow;
@@ -45,9 +45,9 @@
   }
 
   &:disabled {
-    cursor: default;
-    color: $mid-grey;
     background-color: $light-grey;
+    color: $mid-grey;
+    cursor: default;
   }
 
   @include respond-to(tablet, desktop) {

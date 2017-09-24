@@ -18,16 +18,16 @@
     &:hover,
     &:focus {
       & + .children {
-        color: darken($off-black, $color-change-percentage);
         background-color: darken($white, $color-change-percentage);
+        color: darken($off-black, $color-change-percentage);
       }
     }
   }
 
   &:disabled {
     & ~ .children {
-      cursor: default;
       color: $mid-grey;
+      cursor: default;
     }
   }
 }

@@ -11,10 +11,10 @@
 
 html,
 body {
-  cursor: default;
-  color: $off-black;
-  font-family: Roboto, sans-serif;
   background: $light-grey;
+  color: $off-black;
+  cursor: default;
+  font-family: Roboto, sans-serif;
 }
 
 kbd {
@@ -23,8 +23,8 @@ kbd {
 
 fieldset {
   border: none;
-  padding: 0;
   margin: 0;
+  padding: 0;
 }
 
 a {
