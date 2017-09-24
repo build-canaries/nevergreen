@@ -5,12 +5,15 @@ import DropDown from '../common/forms/DropDown'
 import styles from './timing-settings.scss'
 
 class TimingSettings extends Component {
+  setRefreshTime = (evt) => {
+    this.props.setRefreshTime(evt.target.value)
+  }
+
   render() {
-    const setRefreshTime = (evt) => this.props.setRefreshTime(evt.target.value)
 
     return (
       <Container title='timing' className={styles.container}>
-        <DropDown title='poll for tray changes every' value={this.props.refreshTime} onChange={setRefreshTime}>
+        <DropDown title='poll for tray changes every' value={this.props.refreshTime} onChange={this.setRefreshTime}>
           <option value='5'>5 seconds</option>
           <option value='10'>10 seconds</option>
           <option value='30'>30 seconds</option>

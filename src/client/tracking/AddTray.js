@@ -9,30 +9,42 @@ class AddTray extends Component {
     this.state = {url: '', username: '', password: ''}
   }
 
+  addTray = () => {
+    this.props.addTray(this.state.url, this.state.username, this.state.password, this.props.existingTrayIds)
+    this.setState({url: '', username: '', password: ''})
+  }
+
+  updateUrl = (evt) => {
+    this.setState({url: evt.target.value})
+  }
+
+  updateUsername = (evt) => {
+    this.setState({username: evt.target.value})
+  }
+
+  updatePassword = (evt) => {
+    this.setState({password: evt.target.value})
+  }
+
   render() {
-    const addTray = () => {
-      this.props.addTray(this.state.url, this.state.username, this.state.password, this.props.existingTrayIds)
-      this.setState({url: '', username: '', password: ''})
-    }
-    const updateUrl = (evt) => this.setState({url: evt.target.value})
-    const updateUsername = (evt) => this.setState({username: evt.target.value})
-    const updatePassword = (evt) => this.setState({password: evt.target.value})
 
     return (
       <div className={styles.addTray}>
         <div className={styles.inputs}>
-          <Input className={styles.trackingTrayUrl} placeholder='http(s)://host:port/cc.xml' value={this.state.url} onChange={updateUrl} onEnter={addTray}
-                 data-locator='add-tray-url' autoFocus>
+          <Input className={styles.trackingTrayUrl} placeholder='http(s)://host:port/cc.xml' value={this.state.url} onChange={this.updateUrl}
+                 onEnter={this.addTray} data-locator='add-tray-url' autoFocus>
             <span>URL</span>
           </Input>
-          <Input className={styles.username} value={this.state.username} onChange={updateUsername} onEnter={addTray} data-locator='add-tray-username'>
+          <Input className={styles.username} value={this.state.username} onChange={this.updateUsername} onEnter={this.addTray}
+                 data-locator='add-tray-username'>
             <span>username</span>
           </Input>
-          <Input className={styles.password} value={this.state.password} onChange={updatePassword} onEnter={addTray} data-locator='add-tray-password'>
+          <Input className={styles.password} value={this.state.password} onChange={this.updatePassword} onEnter={this.addTray}
+                 data-locator='add-tray-password'>
             <span>password</span>
           </Input>
         </div>
-        <button className={styles.add} onClick={addTray} data-locator='add-tray'>add</button>
+        <button className={styles.add} onClick={this.addTray} data-locator='add-tray'>add</button>
       </div>
     )
   }

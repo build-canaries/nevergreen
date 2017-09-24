@@ -9,22 +9,31 @@ class GitHub extends Component {
     this.state = {gistId: props.gistId}
   }
 
+  gistIdChanged = (evt) => {
+    this.setState({gistId: evt.target.value})
+  }
+
+  setGistId = () => {
+    this.props.gitHubSetGistId(this.state.gistId)
+  }
+
+  restore = () => {
+    this.props.restoreFromGitHub(this.state.gistId)
+  }
+
   componentWillReceiveProps(nextProps) {
     this.setState({gistId: nextProps.gistId})
   }
 
   render() {
-    const gistIdChanged = (evt) => this.setState({gistId: evt.target.value})
-    const setGistId = () => this.props.gitHubSetGistId(this.state.gistId)
-    const restore = () => this.props.restoreFromGitHub(this.state.gistId)
     const disabled = !this.props.loaded
 
     return (
       <div>
-        <Input className={styles.gistId} value={this.state.gistId} onChange={gistIdChanged} onBlur={setGistId} disabled={disabled}>
+        <Input className={styles.gistId} value={this.state.gistId} onChange={this.gistIdChanged} onBlur={this.setGistId} disabled={disabled}>
           <span>gist ID</span>
         </Input>
-        <button className={styles.restore} onClick={restore} disabled={disabled}>import</button>
+        <button className={styles.restore} onClick={this.restore} disabled={disabled}>import</button>
       </div>
     )
   }

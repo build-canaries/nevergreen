@@ -20,6 +20,10 @@ class Nevergreen extends Component {
     this.disableFullScreen = _.throttle(this.disableFullScreen, ONE_SECONDS, {trailing: false}).bind(this)
   }
 
+  checkVersion = () => {
+    this.props.checkForNewVersion(this.props.versionNumber, window.location.hostname)
+  }
+
   componentDidMount() {
     this.props.initalise()
 
@@ -42,7 +46,6 @@ class Nevergreen extends Component {
 
   render() {
     const notificationClassNames = classNames(styles.popUpNotification, {[styles.fullscreen]: this.props.isFullScreen})
-    const checkVersion = () => this.props.checkForNewVersion(this.props.versionNumber, window.location.hostname)
 
     const notification = !_.isEmpty(_.trim(this.props.notification)) ?
       <div className={notificationClassNames}>
@@ -56,7 +59,7 @@ class Nevergreen extends Component {
 
     return (
       <main className={styles.nevergreen} onMouseMove={this.disableFullScreen}>
-        <Timer onTrigger={checkVersion} interval={TWENTY_FOUR_HOURS}/>
+        <Timer onTrigger={this.checkVersion} interval={TWENTY_FOUR_HOURS}/>
         <Header fullScreen={this.props.isFullScreen}/>
         {notification}
         {this.props.loaded ? this.props.children : null}

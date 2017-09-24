@@ -10,5 +10,8 @@
         "useBuiltIns": true
       }
     ]
+  ],
+  "plugins": [
+    "transform-class-properties"
   ]
 }

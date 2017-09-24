@@ -11,6 +11,17 @@ class Container extends Component {
     }
   }
 
+  toggleHidden = () => {
+    this.setState({hidden: !this.state.hidden})
+  }
+
+  keyToggle = (evt) => {
+    if (evt.key === 'Enter' || evt.key === ' ') {
+      this.toggleHidden()
+      evt.preventDefault()
+    }
+  }
+
   componentDidMount() {
     if (this.props.highlight) {
       this.node.scrollIntoView(true)
@@ -18,13 +29,6 @@ class Container extends Component {
   }
 
   render() {
-    const toggleHidden = () => this.setState({hidden: !this.state.hidden})
-    const keyToggle = (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        toggleHidden()
-        e.preventDefault()
-      }
-    }
     const titleBarClasses = classNames(styles.titleBar, {
       [styles.highlight]: this.props.highlight,
       [styles.show]: this.state.hidden,
@@ -35,7 +39,7 @@ class Container extends Component {
 
     return (
       <section className={styles.container} ref={(node) => this.node = node}>
-        <div className={titleBarClasses} title={tooltip} onClick={toggleHidden} onKeyPress={keyToggle} tabIndex='0'>
+        <div className={titleBarClasses} title={tooltip} onClick={this.toggleHidden} onKeyPress={this.keyToggle} tabIndex='0'>
           <h3 className={styles.title}>{this.props.title}</h3>
           <h4 className={styles.subTitle}>{this.props.subTitle}</h4>
         </div>

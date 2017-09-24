@@ -8,8 +8,11 @@ class Tabs extends Component {
     this.state = {active: 0}
   }
 
+  switchTabs = (index) => {
+    this.setState({active: index})
+  }
+
   render() {
-    const switchTabs = (index) => this.setState({active: index})
 
     return (
       <div>
@@ -17,7 +20,7 @@ class Tabs extends Component {
           {this.props.titles.map((title, i) => {
             const isActive = i === this.state.active
             return (
-              <button key={title} className={styles.tab} onClick={() => switchTabs(i)} disabled={isActive} data-locator={`tab-${title}`}>
+              <button key={title} className={styles.tab} onClick={() => this.switchTabs(i)} disabled={isActive} data-locator={`tab-${title}`}>
                 {title}
               </button>
             )

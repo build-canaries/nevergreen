@@ -19,6 +19,61 @@ class TraySettings extends Component {
     }
   }
 
+  nameChanged = (evt) => {
+    this.setState({newName: evt.target.value})
+  }
+
+  setName = () => {
+    this.props.setTrayName(this.props.trayId, this.state.newName)
+  }
+
+  generateNewName = () => {
+    this.setState({newName: generateRandomName()}, () => this.setName())
+  }
+
+  serverTypeChange = (evt) => {
+    this.props.setServerType(this.props.trayId, evt.target.value)
+  }
+
+  usernameChanged = (evt) => {
+    this.setState({newUsername: evt.target.value})
+  }
+
+  setUsername = () => {
+    this.setState({credentialsChanged: this.props.username !== this.state.newUsername})
+    this.props.setTrayUsername(this.props.trayId, this.state.newUsername)
+  }
+
+  passwordChanged = (evt) => {
+    this.setState({newPassword: evt.target.value})
+  }
+
+  deleteTray = () => {
+    this.props.removeTray(this.props.trayId, this.props.pendingRequest)
+  }
+
+  cancel = () => {
+    this.setState({updatingPassword: false})
+  }
+
+  changePassword = () => {
+    this.setState({updatingPassword: true})
+  }
+
+  setPassword = () => {
+    this.props.encryptPassword(this.props.trayId, this.state.newPassword, this.props.pendingRequest)
+    this.setState({updatingPassword: false, newPassword: '', credentialsChanged: true})
+  }
+
+  urlChanged = (evt) => {
+    this.setState({newUrl: evt.target.value})
+  }
+
+  setUrl = () => {
+    this.setState({urlChanged: this.props.url !== this.state.newUrl})
+    this.props.setTrayUrl(this.props.trayId, this.state.newUrl)
+  }
+
   componentWillUnmount() {
     if (this.state.urlChanged) {
       this.props.updateTrayId(this.props, this.state.newUrl, this.props.pendingRequest)
@@ -35,42 +90,20 @@ class TraySettings extends Component {
   }
 
   render() {
-    const nameChanged = (evt) => this.setState({newName: evt.target.value})
-    const setName = () => this.props.setTrayName(this.props.trayId, this.state.newName)
-    const generateNewName = () => this.setState({newName: generateRandomName()}, () => setName())
-    const serverTypeChange = (evt) => this.props.setServerType(this.props.trayId, evt.target.value)
-    const usernameChanged = (evt) => this.setState({newUsername: evt.target.value})
-    const setUsername = () => {
-      this.setState({credentialsChanged: this.props.username !== this.state.newUsername})
-      this.props.setTrayUsername(this.props.trayId, this.state.newUsername)
-    }
-    const passwordChanged = (evt) => this.setState({newPassword: evt.target.value})
     const existingPassword = this.props.password ? '*******' : ''
     const password = this.state.updatingPassword ? this.state.newPassword : existingPassword
-    const deleteTray = () => this.props.removeTray(this.props.trayId, this.props.pendingRequest)
-    const cancel = () => this.setState({updatingPassword: false})
-    const changePassword = () => this.setState({updatingPassword: true})
-    const setPassword = () => {
-      this.props.encryptPassword(this.props.trayId, this.state.newPassword, this.props.pendingRequest)
-      this.setState({updatingPassword: false, newPassword: '', credentialsChanged: true})
-    }
-    const urlChanged = (evt) => this.setState({newUrl: evt.target.value})
-    const setUrl = () => {
-      this.setState({urlChanged: this.props.url !== this.state.newUrl})
-      this.props.setTrayUrl(this.props.trayId, this.state.newUrl)
-    }
 
     return (
       <section data-locator='tray-settings'>
-        <Input className={styles.traySettingsName} value={this.state.newName} onChange={nameChanged} onBlur={setName} onEnter={setName}
+        <Input className={styles.traySettingsName} value={this.state.newName} onChange={this.nameChanged} onBlur={this.setName} onEnter={this.setName}
                placeholder='e.g. project or team name' data-locator='tray-name' autoFocus>
           <span>name</span>
         </Input>
-        <button className={styles.random} onClick={generateNewName} data-locator='generate-random'>randomise</button>
-        <Input className={styles.traySettingsUrl} value={this.state.newUrl} onChange={urlChanged} onBlur={setUrl} onEnter={setUrl}>
+        <button className={styles.random} onClick={this.generateNewName} data-locator='generate-random'>randomise</button>
+        <Input className={styles.traySettingsUrl} value={this.state.newUrl} onChange={this.urlChanged} onBlur={this.setUrl} onEnter={this.setUrl}>
           <span>URL</span>
         </Input>
-        <DropDown className={styles.serverType} title='server type' value={this.props.serverType} onChange={serverTypeChange}>
+        <DropDown className={styles.serverType} title='server type' value={this.props.serverType} onChange={this.serverTypeChange}>
           <option value=''>Auto detect</option>
           <option value='circle'>CircleCI</option>
           <option value='cruise-control'>CruiseControl</option>
@@ -84,26 +117,26 @@ class TraySettings extends Component {
           <option value='team-city'>TeamCity</option>
           <option value='travis'>Travis CI</option>
         </DropDown>
-        <Input className={styles.traySettingsUsername} value={this.state.newUsername} onChange={usernameChanged} onBlur={setUsername}
-               onEnter={setUsername}>
+        <Input className={styles.traySettingsUsername} value={this.state.newUsername} onChange={this.usernameChanged} onBlur={this.setUsername}
+               onEnter={this.setUsername}>
           <span>username</span>
         </Input>
-        <Input className={styles.existingPassword} value={password} onChange={passwordChanged} onEnter={setPassword}
+        <Input className={styles.existingPassword} value={password} onChange={this.passwordChanged} onEnter={this.setPassword}
                readOnly={!this.state.updatingPassword} ref={(node) => this.passwordInput = node}>
           <span>password</span>
         </Input>
         {this.state.updatingPassword
           ? <span>
-              <button className={styles.cancel} onClick={cancel}>cancel</button>
-              <button className={styles.update} onClick={setPassword}>update password</button>
+              <button className={styles.cancel} onClick={this.cancel}>cancel</button>
+              <button className={styles.update} onClick={this.setPassword}>update password</button>
             </span>
-          : <button className={styles.changePasswordButton} onClick={changePassword}>change password</button>
+          : <button className={styles.changePasswordButton} onClick={this.changePassword}>change password</button>
         }
         <div className={styles.dangerZone}>
           <h4 className={styles.dangerZoneTitle}>Danger Zone</h4>
           <div className={styles.dangerZoneContent}>
             <span>Once you delete, there is no going back. Please be certain.</span>
-            <button className={styles.delete} onClick={deleteTray}>delete</button>
+            <button className={styles.delete} onClick={this.deleteTray}>delete</button>
           </div>
         </div>
       </section>

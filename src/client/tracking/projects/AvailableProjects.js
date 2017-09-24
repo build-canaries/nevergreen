@@ -14,55 +14,59 @@ class AvailableProjects extends Component {
     this.state = {filter: null, filterErrors: null, disableButtons: false}
   }
 
-  render() {
-    const includeAll = () => {
-      this.props.projects
-        .filter((project) => !project.removed)
-        .forEach((project) => this.props.selectProject(this.props.trayId, project.projectId, true))
-    }
+  includeAll = () => {
+    this.props.projects
+      .filter((project) => !project.removed)
+      .forEach((project) => this.props.selectProject(this.props.trayId, project.projectId, true))
+  }
 
-    const excludeAll = () => {
-      this.props.projects.forEach((project) => {
-        this.props.selectProject(this.props.trayId, project.projectId, false)
-      })
-    }
+  excludeAll = () => {
+    this.props.projects.forEach((project) => {
+      this.props.selectProject(this.props.trayId, project.projectId, false)
+    })
+  }
 
-    const updateFilter = (evt) => {
-      if (_.isEmpty(_.trim(evt.target.value))) {
-        this.setState({filter: null, filterErrors: null, disableButtons: false})
-      } else {
-        try {
-          const regEx = new RegExp(evt.target.value)
-          this.setState({filter: regEx, filterErrors: null, disableButtons: true})
-        } catch (e) {
-          this.setState({filterErrors: [`Project filter not applied, ${e.message}`]})
-        }
+  updateFilter = (evt) => {
+    if (_.isEmpty(_.trim(evt.target.value))) {
+      this.setState({filter: null, filterErrors: null, disableButtons: false})
+    } else {
+      try {
+        const regEx = new RegExp(evt.target.value)
+        this.setState({filter: regEx, filterErrors: null, disableButtons: true})
+      } catch (e) {
+        this.setState({filterErrors: [`Project filter not applied, ${e.message}`]})
       }
     }
+  }
 
+  scrollToTop = () => {
+    this.node.scrollIntoView()
+  }
+
+  refreshTray = () => {
+    this.props.refreshTray(this.props, this.props.pendingRequest)
+  }
+
+  render() {
     const filteredProjects = this.props.projects.filter((project) => {
       return this.state.filter ? `${project.name} ${project.stage || ''}`.match(this.state.filter) : true
     })
-
-    const scrollToTop = () => this.node.scrollIntoView()
-
-    const refreshTray = () => this.props.refreshTray(this.props, this.props.pendingRequest)
 
     const controls = (
       <div className={styles.controls}>
         <fieldset className={styles.toggles}>
           <legend className={styles.legend}>Available projects</legend>
-          <button className={styles.includeAll} onClick={includeAll} disabled={this.state.disableButtons} data-locator='include-all'>
+          <button className={styles.includeAll} onClick={this.includeAll} disabled={this.state.disableButtons} data-locator='include-all'>
             include all
             <Shortcut hotkeys={[`+ ${this.props.index}`, `= ${this.props.index}`]}/>
           </button>
-          <button className={styles.excludeAll} onClick={excludeAll} disabled={this.state.disableButtons}>
+          <button className={styles.excludeAll} onClick={this.excludeAll} disabled={this.state.disableButtons}>
             exclude all
             <Shortcut hotkeys={[`- ${this.props.index}`]}/>
           </button>
         </fieldset>
         <div className={styles.projectFilter}>
-          <Input className={styles.projectFilterInput} onChange={updateFilter} placeholder='regex'>
+          <Input className={styles.projectFilterInput} onChange={this.updateFilter} placeholder='regex'>
             <span>filter</span>
           </Input>
         </div>
@@ -85,11 +89,11 @@ class AvailableProjects extends Component {
 
     return (
       <section className={styles.availableProjects} data-locator='available-projects' ref={(node) => this.node = node}>
-        <Refresh index={this.props.index} timestamp={this.props.timestamp} refreshTray={refreshTray}/>
+        <Refresh index={this.props.index} timestamp={this.props.timestamp} refreshTray={this.refreshTray}/>
         <Messages type='error' messages={this.props.errors}/>
         {this.props.errors ? null : controls}
         {this.props.errors ? null : buildItems}
-        {this.props.errors ? null : <button className={styles.backToTop} onClick={scrollToTop}>back to top</button>}
+        {this.props.errors ? null : <button className={styles.backToTop} onClick={this.scrollToTop}>back to top</button>}
       </section>
     )
   }

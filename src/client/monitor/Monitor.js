@@ -9,6 +9,10 @@ import styles from './monitor.scss'
 import Timer from '../common/Timer'
 
 class Monitor extends Component {
+  fetch = () => {
+    this.props.fetchInteresting(this.props.trays, this.props.selected)
+  }
+
   componentDidMount() {
     this.props.requestFullScreen(true)
   }
@@ -18,7 +22,6 @@ class Monitor extends Component {
   }
 
   render() {
-    const fetch = () => this.props.fetchInteresting(this.props.trays, this.props.selected)
     const monitorClassNames = classNames(styles.monitor, {[styles.fullscreen]: this.props.isFullScreen})
 
     let content
@@ -33,7 +36,7 @@ class Monitor extends Component {
 
     return (
       <div className={monitorClassNames}>
-        <Timer onTrigger={fetch} interval={this.props.refreshTime}/>
+        <Timer onTrigger={this.fetch} interval={this.props.refreshTime}/>
         <Loading loaded={this.props.loaded}>
           {content}
         </Loading>

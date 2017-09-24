@@ -9,28 +9,40 @@ import {generateRandomName} from '../common/project/Name'
 import _ from 'lodash'
 import styles from './display-settings.scss'
 
+function randomBuildLabel() {
+  return `${_.random(1, 999)}`
+}
+
 class DisplaySettings extends Component {
   constructor(props) {
     super(props)
     this.state = {lastBuildTime: moment.utc().toISOString()}
   }
 
+  toggleBrokenBuildTime = (newValue) => {
+    this.props.setShowBrokenBuildTime(newValue)
+  }
+
+  toggleTrayName = (newValue) => {
+    this.props.setShowTrayName(newValue)
+  }
+
+  toggleBuildLabel = (newValue) => {
+    this.props.setShowBuildLabel(newValue)
+  }
+
   render() {
-    const randomBuildLabel = () => `${_.random(1, 999)}`
-    const toggleBrokenBuildTime = (newValue) => this.props.setShowBrokenBuildTime(newValue)
-    const toggleTrayName = (newValue) => this.props.setShowTrayName(newValue)
-    const toggleBuildLabel = (newValue) => this.props.setShowBuildLabel(newValue)
 
     return (
       <Container title='display' className={styles.container}>
-        <Checkbox className={styles.checkbox} checked={this.props.showTrayName} onToggle={toggleTrayName} data-locator='show-tray-names'>
+        <Checkbox className={styles.checkbox} checked={this.props.showTrayName} onToggle={this.toggleTrayName} data-locator='show-tray-names'>
           <span>show tray name</span>
         </Checkbox>
-        <Checkbox className={styles.checkbox} checked={this.props.showBrokenBuildTime} onToggle={toggleBrokenBuildTime}
+        <Checkbox className={styles.checkbox} checked={this.props.showBrokenBuildTime} onToggle={this.toggleBrokenBuildTime}
                   data-locator='show-broken-build-times'>
           <span>show broken build timer</span>
         </Checkbox>
-        <Checkbox className={styles.checkbox} checked={this.props.showBuildLabel} onToggle={toggleBuildLabel} data-locator='show-build-labels'>
+        <Checkbox className={styles.checkbox} checked={this.props.showBuildLabel} onToggle={this.toggleBuildLabel} data-locator='show-build-labels'>
           <span>show broken build label</span>
         </Checkbox>
         <h4 className={styles.title}>Preview</h4>

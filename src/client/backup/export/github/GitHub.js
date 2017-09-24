@@ -9,36 +9,54 @@ class GitHub extends Component {
     this.state = {oauthToken: '', gistId: props.gistId, description: props.description}
   }
 
+  oauthTokenChanged = (evt) => {
+    this.setState({oauthToken: evt.target.value})
+  }
+
+  descriptionChanged = (evt) => {
+    this.setState({description: evt.target.value})
+  }
+
+  gistIdChanged = (evt) => {
+    this.setState({gistId: evt.target.value})
+  }
+
+  setDescription = () => {
+    this.props.gitHubSetDescription(this.state.description)
+  }
+
+  setGistId = () => {
+    this.props.gitHubSetGistId(this.state.gistId)
+  }
+
+  upload = () => {
+    this.props.uploadToGitHub(this.state.gistId, this.state.description, this.props.configuration, this.state.oauthToken)
+  }
+
   componentWillReceiveProps(nextProps) {
     this.setState({gistId: nextProps.gistId, description: nextProps.description})
   }
 
   render() {
-    const oauthTokenChanged = (evt) => this.setState({oauthToken: evt.target.value})
-    const descriptionChanged = (evt) => this.setState({description: evt.target.value})
-    const gistIdChanged = (evt) => this.setState({gistId: evt.target.value})
-    const setDescription = () => this.props.gitHubSetDescription(this.state.description)
-    const setGistId = () => this.props.gitHubSetGistId(this.state.gistId)
-    const upload = () => this.props.uploadToGitHub(this.state.gistId, this.state.description, this.props.configuration, this.state.oauthToken)
     const disabled = !this.props.loaded
 
     return (
       <div>
         <fieldset className={styles.gistValues}>
-          <Input className={styles.oauthToken} onChange={oauthTokenChanged} onBlur={oauthTokenChanged} value={this.state.oauthToken}
+          <Input className={styles.oauthToken} onChange={this.oauthTokenChanged} onBlur={this.oauthTokenChanged} value={this.state.oauthToken}
                  disabled={disabled}>
             <span>access token</span>
           </Input>
-          <Input className={styles.description} value={this.state.description} onChange={descriptionChanged} onBlur={setDescription}
+          <Input className={styles.description} value={this.state.description} onChange={this.descriptionChanged} onBlur={this.setDescription}
                  disabled={disabled}>
             <span>description</span>
           </Input>
-          <Input className={styles.gistId} value={this.state.gistId} onChange={gistIdChanged} onBlur={setGistId}
+          <Input className={styles.gistId} value={this.state.gistId} onChange={this.gistIdChanged} onBlur={this.setGistId}
                  placeholder='leave blank to create a new gist' disabled={disabled}>
             <span>gist ID</span>
           </Input>
         </fieldset>
-        <button className={styles.export} onClick={upload} disabled={disabled}>export</button>
+        <button className={styles.export} onClick={this.upload} disabled={disabled}>export</button>
       </div>
     )
   }

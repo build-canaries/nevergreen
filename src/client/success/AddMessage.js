@@ -9,20 +9,23 @@ class AddMessage extends Component {
     this.state = {message: ''}
   }
 
-  render() {
-    const updateMessage = (evt) => this.setState({message: evt.target.value})
-    const addMessage = () => {
-      this.props.addMessage(this.state.message)
-      this.setState({message: ''})
-    }
+  updateMessage = (evt) => {
+    this.setState({message: evt.target.value})
+  }
 
+  addMessage = () => {
+    this.props.addMessage(this.state.message)
+    this.setState({message: ''})
+  }
+
+  render() {
     return (
       <div className={styles.addMessage}>
-        <Input className={styles.addMessageInput} placeholder='text or image URL' value={this.state.message} onChange={updateMessage}
-               onEnter={addMessage} data-locator='message' autoFocus>
+        <Input className={styles.addMessageInput} placeholder='text or image URL' value={this.state.message} onChange={this.updateMessage}
+               onEnter={this.addMessage} data-locator='message' autoFocus>
           <span>message</span>
         </Input>
-        <button className={styles.add} onClick={addMessage} data-locator='add-message'>add</button>
+        <button className={styles.add} onClick={this.addMessage} data-locator='add-message'>add</button>
       </div>
     )
   }

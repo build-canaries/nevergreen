@@ -32,26 +32,43 @@ class AudioSettings extends Component {
     this.state = {errors: [], audio: null, soundFx, playEnabled: !isBlank(props.brokenBuildSoundFx), playing: false}
   }
 
+  toggleBrokenSounds = (newValue) => {
+    this.props.setPlayBrokenBuildSoundFx(newValue)
+  }
+
+  updateSoundFx = (evt) => {
+    this.setState({soundFx: evt.target.value, errors: []})
+  }
+
+  setSoundFx = () => {
+    this.props.setBrokenBuildSoundFx(this.state.soundFx)
+  }
+
+  audioStopped = () => {
+    this.setState({audio: null, playing: false})
+  }
+
+  play = () => {
+    const audio = new Audio(this.state.soundFx)
+    this.setState({audio, errors: [], playing: true})
+    audio.addEventListener('ended', this.audioStopped)
+    audio.play().catch((e) => this.setState({errors: ['Unable to play broken build sound because of an error:', e.message], playing: false}))
+  }
+
+  stop = () => {
+    pause(this.state.audio)
+    this.audioStopped()
+  }
+
+  onValidation = (valid) => {
+    this.setState({playEnabled: valid})
+  }
+
   componentWillUnmount() {
     pause(this.state.audio)
   }
 
   render() {
-    const toggleBrokenSounds = (newValue) => this.props.setPlayBrokenBuildSoundFx(newValue)
-    const updateSoundFx = (evt) => this.setState({soundFx: evt.target.value, errors: []})
-    const setSoundFx = () => this.props.setBrokenBuildSoundFx(this.state.soundFx)
-    const audioStopped = () => this.setState({audio: null, playing: false})
-    const play = () => {
-      const audio = new Audio(this.state.soundFx)
-      this.setState({audio, errors: [], playing: true})
-      audio.addEventListener('ended', audioStopped)
-      audio.play().catch((e) => this.setState({errors: ['Unable to play broken build sound because of an error:', e.message], playing: false}))
-    }
-    const stop = () => {
-      pause(this.state.audio)
-      audioStopped()
-    }
-    const onValidation = (valid) => this.setState({playEnabled: valid})
     const playingDisabled = isBlank(this.state.soundFx) || !this.state.playEnabled
     const playButtonClasses = classNames(styles.testSoundFx, {
       [styles.play]: !this.state.playing,
@@ -61,17 +78,17 @@ class AudioSettings extends Component {
     return (
       <Container title='audio' className={styles.container}>
         <fieldset>
-          <Checkbox checked={this.props.playBrokenBuildSoundFx} onToggle={toggleBrokenSounds} data-locator='play-sounds'
+          <Checkbox checked={this.props.playBrokenBuildSoundFx} onToggle={this.toggleBrokenSounds} data-locator='play-sounds'
                     disabled={this.state.playing}>
             <span>play a sound when a build breaks</span>
           </Checkbox>
           <div className={styles.soundFx}>
-            <Input type='url' className={styles.soundFxInput} placeholder='audio file URL' onChange={updateSoundFx} value={this.state.soundFx}
-                   onBlur={setSoundFx} onEnter={setSoundFx} required={this.props.playBrokenBuildSoundFx} onValidation={onValidation}
+            <Input type='url' className={styles.soundFxInput} placeholder='audio file URL' onChange={this.updateSoundFx} value={this.state.soundFx}
+                   onBlur={this.setSoundFx} onEnter={this.setSoundFx} required={this.props.playBrokenBuildSoundFx} onValidation={this.onValidation}
                    disabled={this.state.playing}>
               <span>broken build sound</span>
             </Input>
-            <button className={playButtonClasses} onClick={this.state.playing ? stop : play} disabled={playingDisabled}>
+            <button className={playButtonClasses} onClick={this.state.playing ? this.stop : this.play} disabled={playingDisabled}>
               {this.state.playing ? 'stop' : 'play'}
             </button>
           </div>

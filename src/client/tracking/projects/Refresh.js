@@ -17,16 +17,18 @@ class Refresh extends Component {
     this.state = {lastFetched: lastFetched(props.timestamp)}
   }
 
+  updateFetchedTime = () => {
+    this.setState({lastFetched: lastFetched(this.props.timestamp)})
+  }
+
   componentWillReceiveProps(nextProps) {
     this.setState({lastFetched: lastFetched(nextProps.timestamp)})
   }
 
   render() {
-    const updateFetchedTime = () => this.setState({lastFetched: lastFetched(this.props.timestamp)})
-
     return (
       <div>
-        <Timer onTrigger={updateFetchedTime} interval={ONE_MINUTE}/>
+        <Timer onTrigger={this.updateFetchedTime} interval={ONE_MINUTE}/>
         <button className={styles.refresh} onClick={this.props.refreshTray}>
           refresh
           <Shortcut hotkeys={[`r ${this.props.index}`]}/>

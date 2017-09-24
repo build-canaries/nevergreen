@@ -2,24 +2,32 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import styles from './locally.scss'
 
+const PLACEHOLDER = 'paste exported configuration here and press import'
+
 class Locally extends Component {
   constructor(props) {
     super(props)
     this.state = {data: ''}
   }
 
+  updateData = (evt) => {
+    this.setState({data: evt.target.value})
+  }
+
+  doImport = () => {
+    this.props.importData(this.state.data)
+  }
+
   render() {
-    const updateData = (event) => this.setState({data: event.target.value})
-    const doImport = () => this.props.importData(this.state.data)
 
     return (
       <div>
         <label>
           <span className={styles.label}>configuration to import</span>
-          <textarea className={styles.data} placeholder='paste exported configuration here and press import' value={this.state.data}
-                    onChange={updateData} spellCheck='false' data-locator='import-data'/>
+          <textarea className={styles.data} placeholder={PLACEHOLDER} value={this.state.data} onChange={this.updateData} spellCheck='false'
+                    data-locator='import-data'/>
         </label>
-        <button className={styles.import} onClick={doImport} data-locator='import'>import</button>
+        <button className={styles.import} onClick={this.doImport} data-locator='import'>import</button>
       </div>
     )
   }

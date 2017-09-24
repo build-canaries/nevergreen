@@ -30,7 +30,4 @@ function mapStateToProps(store) {
   }).toJS()
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Monitor)
+export default connect(mapStateToProps, mapDispatchToProps)(Monitor)
