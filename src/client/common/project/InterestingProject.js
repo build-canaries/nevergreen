@@ -2,12 +2,8 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import moment from 'moment'
-import _ from 'lodash'
 import styles from './interesting-project.scss'
-
-function isBlank(s) {
-  return _.isEmpty(_.trim(s))
-}
+import {isBlank} from '../Utils'
 
 class InterestingProject extends Component {
   render() {

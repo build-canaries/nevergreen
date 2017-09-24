@@ -7,6 +7,7 @@ import Shortcut from '../../common/Shortcut'
 import Refresh from './Refresh'
 import _ from 'lodash'
 import styles from './available-projects.scss'
+import {isBlank} from '../../common/Utils'
 
 class AvailableProjects extends Component {
   constructor(props) {
@@ -27,7 +28,7 @@ class AvailableProjects extends Component {
   }
 
   updateFilter = (evt) => {
-    if (_.isEmpty(_.trim(evt.target.value))) {
+    if (isBlank(evt.target.value)) {
       this.setState({filter: null, filterErrors: null, disableButtons: false})
     } else {
       try {

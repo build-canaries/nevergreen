@@ -6,12 +6,9 @@ import {migrate} from '../common/repo/Migrations'
 import {send} from '../common/gateways/Gateway'
 import {getGist, getTruncatedFile} from '../common/gateways/GitHubGateway'
 import {gitHubSetDescription} from './GitHubActions'
+import {isBlank} from '../common/Utils'
 
 const TEN_MEGS = 10485760
-
-function isBlank(s) {
-  return _.isEmpty(_.trim(s))
-}
 
 export const IMPORTING = 'IMPORTING'
 

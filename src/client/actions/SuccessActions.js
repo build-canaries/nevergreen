@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import {isBlank} from '../common/Utils'
 
 const SPACES = / /g
 const NON_BREAKING_SPACE = String.fromCharCode(160)
@@ -38,7 +38,7 @@ export function messageInvalid(message, errors) {
 }
 
 export function addMessage(message) {
-  if (_.isEmpty(_.trim(message))) {
+  if (isBlank(message)) {
     return messageInvalid(message, ['message can not be blank'])
   }
   return messageAdded(message)

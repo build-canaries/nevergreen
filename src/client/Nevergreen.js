@@ -8,6 +8,7 @@ import 'mousetrap/plugins/global-bind/mousetrap-global-bind'
 import _ from 'lodash'
 import styles from './nevergreen.scss'
 import Timer from './common/Timer'
+import {isBlank} from './common/Utils'
 
 const ONE_SECONDS = 1000
 const THREE_SECONDS = 3 * 1000
@@ -47,7 +48,7 @@ class Nevergreen extends Component {
   render() {
     const notificationClassNames = classNames(styles.popUpNotification, {[styles.fullscreen]: this.props.isFullScreen})
 
-    const notification = !_.isEmpty(_.trim(this.props.notification)) ?
+    const notification = !isBlank(this.props.notification) ?
       <div className={notificationClassNames}>
         <div>
           <span className={styles.notification}/>

@@ -7,10 +7,7 @@ import Checkbox from '../common/forms/Checkbox'
 import classNames from 'classnames'
 import _ from 'lodash'
 import styles from './audio-settings.scss'
-
-function isBlank(s) {
-  return _.isEmpty(_.trim(s))
-}
+import {isBlank} from '../common/Utils'
 
 function hasScheme(url) {
   return _.size(_.split(url, '://')) > 1

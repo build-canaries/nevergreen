@@ -3,11 +3,7 @@ import {createGist, updateGist} from '../common/gateways/GitHubGateway'
 import {fromJson} from '../common/Json'
 import {gitHubSetGistId} from './GitHubActions'
 import Immutable from 'immutable'
-import _ from 'lodash'
-
-function isBlank(s) {
-  return _.isEmpty(_.trim(s))
-}
+import {isBlank} from '../common/Utils'
 
 export const EXPORTING = 'EXPORTING'
 
