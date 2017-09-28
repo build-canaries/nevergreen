@@ -8,6 +8,7 @@ import _ from 'lodash'
 import styles from './nevergreen.scss'
 import Timer from './common/Timer'
 import Notification from './Notification'
+import {debug} from './common/Logger'
 
 const ONE_SECONDS = 1000
 const THREE_SECONDS = 3 * 1000
@@ -32,6 +33,14 @@ class Nevergreen extends Component {
       this.props.keyboardShortcut(true)
       this.props.history.push('help')
     })
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js').then((registration) => {
+        debug('ServiceWorker registration successful with scope: ', registration.scope)
+      }).catch((err) => {
+        debug('ServiceWorker registration failed: ', err)
+      })
+    }
   }
 
   componentWillUnmount() {

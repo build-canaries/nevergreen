@@ -5,6 +5,8 @@ var autoprefixer = require('autoprefixer')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var CopyWebpackPlugin = require('copy-webpack-plugin')
 var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+var ManifestPlugin = require('webpack-manifest-plugin')
+var SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
 var isProd = (process.env.NODE_ENV === 'production')
 
 var cssLoader = {
@@ -39,9 +41,9 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/client/index.html',
       minify: {
-        collapseWhitespace: true,
-        removeComments: true,
-        removeRedundantAttributes: true
+        collapseWhitespace: isProd,
+        removeComments: isProd,
+        removeRedundantAttributes: isProd
       }
     }),
     new ExtractTextPlugin({
@@ -49,7 +51,15 @@ module.exports = {
       allChunks: true
     }),
     new CopyWebpackPlugin([{from: './src/client/favicons'}]),
-    new OptimizeCssAssetsPlugin()
+    new OptimizeCssAssetsPlugin(),
+    new ManifestPlugin({fileName: 'asset-manifest.json'}),
+    new SWPrecacheWebpackPlugin({
+      dontCacheBustUrlsMatching: /\.\w{8}\./, // Don't cache bust URLs hashed by Webpack
+      filename: 'service-worker.js',
+      minify: isProd,
+      staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/]
+    }),
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
   ],
   module: {
     rules: [
