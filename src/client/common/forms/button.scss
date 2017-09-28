@@ -57,3 +57,24 @@
     width: auto;
   }
 }
+
+@mixin icon-only-button($icon, $color:$off-white, $background-color:$blue, $border-color:$background-color) {
+  @include button($color, $background-color, $border-color);
+  @include button-icon($icon);
+
+  height: 2.4em;
+  padding: 0.5em;
+  width: 2.4em;
+
+  &::before {
+    margin: 0;
+  }
+
+  @include respond-to(tablet, desktop) {
+    width: 2.4em;
+  }
+
+  * {
+    @extend %visuallyHidden;
+  }
+}

@@ -1,40 +1,4 @@
 @import 'defaults';
-@import 'common/typography';
-@import 'common/fonts/icon-font';
-
-.textWithIcon {
-  margin-left: 1em;
-}
-
-.popUpNotification {
-  @include font-scale(0);
-
-  background-color: $blue;
-  color: $white;
-  display: block;
-  padding: 1em;
-}
-
-.fullscreen {
-  display: none;
-}
-
-.notification {
-  @extend .icon;
-  @extend .icon-notification;
-}
-
-.dismiss {
-  @extend .icon;
-  @extend .icon-cross;
-
-  cursor: pointer;
-  float: right;
-
-  &:hover {
-    color: darken($white, 10%);
-  }
-}
 
 .nevergreen {
   display: flex;

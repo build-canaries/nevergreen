@@ -10,7 +10,7 @@ class RemoveLink extends Component {
 
     return (
       <button className={classes} onClick={this.props.removeMessage} title={`remove ${this.props.message}`}>
-        <span className={styles.label}>remove {this.props.message}</span>
+        <span>remove {this.props.message}</span>
         <Shortcut hotkeys={this.props.hotkeys}/>
       </button>
     )

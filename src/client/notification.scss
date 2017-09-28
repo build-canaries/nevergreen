@@ -1,0 +1,56 @@
+@import 'common/variables';
+@import 'common/typography';
+@import 'common/fonts/icon-font';
+@import 'common/responsive';
+@import 'common/forms/button';
+
+$color: $white;
+$background-color: $blue;
+
+.popUpNotification {
+  @include font-scale(0);
+
+  background-color: $background-color;
+  color: $color;
+  display: block;
+  padding: 1em;
+}
+
+.fullscreen {
+  display: none;
+}
+
+.titleBar {
+  margin-bottom: 1em;
+}
+
+.title {
+  @include font-scale(0);
+
+  @extend .icon-notification;
+
+  display: inline;
+  margin: 0;
+
+  &::before {
+    @extend .icon;
+
+    padding-right: 1em;
+  }
+}
+
+.dismiss {
+  @include icon-only-button('cross');
+  @include font-scale(-1);
+
+  display: inline;
+  float: right;
+
+  &:enabled {
+    box-shadow: none;
+  }
+
+  @include respond-to(tablet, desktop) {
+    @include font-scale(-1);
+  }
+}

@@ -1,29 +1,14 @@
-@import '../common/layout';
 @import '../common/forms/button';
 @import '../common/typography';
 @import '../common/responsive';
 
 .removeLink {
-  @include button($white, $danger);
-  @include button-icon('bin');
+  @include icon-only-button('bin', $white, $danger);
   @include font-scale(-1);
 
   display: inline;
-  height: 2.4em;
-  padding: 0.5em;
-  width: 2.4em;
-
-  &::before {
-    margin: 0;
-  }
 
   @include respond-to(tablet, desktop) {
     @include font-scale(-1);
-
-    width: 2.4em;
   }
-}
-
-.label {
-  @extend %visuallyHidden;
 }
