@@ -1,12 +1,12 @@
 (ns nevergreen.http-test
   (:require [nevergreen.http :as subject]
             [midje.sweet :refer :all]
-            [clj-http.client :as client])
-  (:import (java.net UnknownHostException URISyntaxException)
-           (clojure.lang ExceptionInfo)))
+            [clj-http.client :as client]
+            [nevergreen.errors :refer [create-error]])
+  (:import (java.net UnknownHostException URISyntaxException)))
 
 (facts "http"
-       (fact "adds authentication header"
+       (fact "adds additional headers"
              (subject/http-get irrelevant {"Authentication" "Basic some-password"}) => irrelevant
              (provided
                (client/get anything (contains {:headers (contains {"Authentication" "Basic some-password"})})) => {:body irrelevant}))
@@ -21,12 +21,20 @@
              (provided
                (client/get ..url.. anything) => {:body irrelevant}))
 
-       (fact "throws exception info for unknown hosts"
-             (subject/http-get irrelevant {}) => (throws ExceptionInfo "some-host is an unknown host")
+       (fact "creates an error for unknown hosts"
+             (subject/http-get irrelevant {}) => irrelevant
              (provided
-               (client/get anything anything) =throws=> (UnknownHostException. "some-host: unkown error")))
+               (client/get anything anything) =throws=> (UnknownHostException. "some-host: unkown error")
+               (create-error "some-host is an unknown host") => {}))
 
-       (fact "throws exception info for bad uri syntax"
-             (subject/http-get irrelevant {}) => (throws ExceptionInfo "Illegal character in authority at index 0: some-url")
+       (fact "creates an error for bad uri syntax"
+             (subject/http-get irrelevant {}) => irrelevant
              (provided
-               (client/get anything anything) =throws=> (URISyntaxException. "some-url" "Illegal character in authority at index 0"))))
+               (client/get anything anything) =throws=> (URISyntaxException. "some-url" "Illegal character in authority at index 0")
+               (create-error "Illegal character in authority at index 0: some-url") => {}))
+
+       (fact "creates an error when the CI server responds with an error"
+             (subject/http-get "some-url" {}) => irrelevant
+             (provided
+               (client/get anything anything) =throws=> (ex-info "irrelevant" {:status 500 :reason-phrase "some-error"})
+               (create-error "GET from [some-url] returned a status of [500 some-error]") => {})))

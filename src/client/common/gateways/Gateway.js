@@ -1,4 +1,6 @@
 import request from 'superagent'
+import * as log from '../Logger'
+import _ from 'lodash'
 
 const THIRTY_SECONDS = 1000 * 30
 const THREE_MINUTES = 1000 * 60 * 60 * 3
@@ -37,12 +39,12 @@ export function get(url, headers = {}) {
 }
 
 export function send(request) {
-  return request
-    .then((res) => {
-      return res.body || res.text
-    }).catch((err) => {
-      const status = err.status || 0
-      const message = (err.response && err.response.text) ? err.response.text : 'timeout'
-      throw {status, message}
-    })
+  return request.then((res) => {
+    return res.body || res.text
+  }).catch((err) => {
+    log.error('An unhandled exception was thrown from the server', err)
+    const status = err.status || 0
+    const message = _.get(err, 'response.body.error', 'timeout')
+    throw {status, message}
+  })
 }

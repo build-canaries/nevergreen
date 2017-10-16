@@ -5,7 +5,8 @@
             [clj-cctray.core :as parser]
             [nevergreen.servers :as servers]
             [nevergreen.security :as security]
-            [nevergreen.crypto :as crypt]))
+            [nevergreen.crypto :as crypt]
+            [nevergreen.errors :refer [create-error]]))
 
 (def valid-url "http://someserver/cc.xml")
 (def password "any-password")
@@ -45,10 +46,11 @@
                (security/basic-auth-header anything anything) => anything :times 0)))
 
 (facts "it gets all projects"
-       (fact "throws exception if the url is not valid"
-             (subject/get-all [{:url "url"}]) => (throws Exception)
+       (fact "creates an error if the url is not valid"
+             (subject/get-all [{:url "url"}]) => irrelevant
              (provided
-               (subject/invalid-scheme? "url") => true))
+               (subject/invalid-scheme? {:url "url"}) => true
+               (create-error "Only http(s) URLs are supported: url") => {}))
 
        (facts "uses pmap to parallelise the work"
               (fact "if multiple projects are given"
@@ -60,13 +62,14 @@
                     (subject/get-all [{:url "http://a"}]) => irrelevant
                     (provided
                       (pmap anything anything) => irrelevant :times 0
-                      (subject/fetch-tray anything) => irrelevant))))
+                      (subject/fetch-tray anything) => {}))))
 
 (facts "it gets interesting projects"
-       (fact "throws exception if the url is not http[s]"
-             (subject/get-interesting [{:url "url" :included ["project-1"]}]) => (throws Exception)
+       (fact "creates an error if the url is not http[s]"
+             (subject/get-interesting [{:url "url" :included ["project-1"]}]) => irrelevant
              (provided
-               (subject/invalid-scheme? "url") => true))
+               (subject/invalid-scheme? (contains {:url "url"})) => true
+               (create-error "Only http(s) URLs are supported: url") => {}))
 
        (fact "removes healthy projects"
              (subject/get-interesting [{:tray-id "a-tray" :included ["project-1"] :url valid-url}]) => (list)
@@ -110,7 +113,7 @@
                (servers/detect-server "some-url") => ..server..)))
 
 (facts "check url is invalid"
-       (fact (subject/invalid-scheme? "http://bleh") => false)
-       (fact (subject/invalid-scheme? "https://bleh") => false)
-       (fact (subject/invalid-scheme? "gopher://bleh") => true)
+       (fact (subject/invalid-scheme? {:url "http://bleh"}) => false)
+       (fact (subject/invalid-scheme? {:url "https://bleh"}) => false)
+       (fact (subject/invalid-scheme? {:url "gopher://bleh"}) => true)
        (fact (subject/invalid-scheme? nil) => true))

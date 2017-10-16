@@ -8,9 +8,11 @@
             [nevergreen.wrap-cors-headers :refer [wrap-cors-headers]]
             [nevergreen.wrap-exceptions :refer [wrap-exceptions]]
             [nevergreen.wrap-redact-sensitive :refer [wrap-redact-sensitive wrap-restore-sensitive]]
+            [nevergreen.errors :refer [error-response]]
             [ring-curl.middleware :refer [wrap-curl-logging]]
             [ring.middleware.gzip :refer :all]))
 
+(def ^:private invalid-json (error-response 400 "Malformed JSON in request body"))
 (def ^:private preflight-response {:status 200})
 
 (def api-routes
@@ -36,7 +38,7 @@
   (-> routes
       wrap-convert-keys
       wrap-logging
-      (wrap-json-body {:keywords? true})
+      (wrap-json-body {:keywords? true :malformed-response invalid-json})
       (wrap-json-response {:pretty true})
       wrap-no-cache
       wrap-cors-headers

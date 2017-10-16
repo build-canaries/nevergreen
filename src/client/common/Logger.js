@@ -20,8 +20,8 @@ export function warn(data) {
   }
 }
 
-export function error(data) {
+export function error(data, e) {
   if (process.env.NODE_ENV !== 'production') {
-    console.error(data)
+    console.error(data, e)
   }
 }

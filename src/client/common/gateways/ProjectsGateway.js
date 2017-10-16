@@ -5,12 +5,21 @@ function includesProjects(tray) {
   return !_.isEmpty(tray.included)
 }
 
+function checkForErrors(response) {
+  const errors = _.map(response.body, (project) => project.error).filter((e) => e)
+  if (_.isEmpty(errors)) {
+    return response
+  } else {
+    throw {response: {body: {error: errors[0]}}}
+  }
+}
+
 export function fetchAll(trays) {
-  const data = trays.map(({url, username, password, serverType}) => {
-    return {url, username, password, serverType}
+  const data = trays.map(({trayId, url, username, password, serverType}) => {
+    return {trayId, url, username, password, serverType}
   })
 
-  return post('/api/projects/all', data)
+  return post('/api/projects/all', data).then(checkForErrors)
 }
 
 export function interesting(trays, selected) {
@@ -25,5 +34,5 @@ export function interesting(trays, selected) {
     }
   }).filter(includesProjects)
 
-  return _.isEmpty(data) ? [] : post('/api/projects/interesting', data)
+  return _.isEmpty(data) ? [] : post('/api/projects/interesting', data).then(checkForErrors)
 }

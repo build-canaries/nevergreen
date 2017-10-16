@@ -13,18 +13,20 @@ describe('projects gateway', function () {
   })
 
   beforeEach(() => {
-    Gateway.post = sinon.spy()
+    Gateway.post = sinon.stub().returns(Promise.resolve({}))
   })
 
   describe('getting all projects', function () {
     it('posts only the required data from the given trays', () => {
       const trays = [{
+        trayId: 'url',
         url: 'url',
         username: 'uname',
         password: 'pword',
         serverType: 'GO',
         foo: 'bar'
       }, {
+        trayId: 'another-url',
         url: 'another-url',
         username: 'another-uname',
         password: 'another-pword',
@@ -32,11 +34,13 @@ describe('projects gateway', function () {
         extra: 'i-should-get-removed'
       }]
       const expected = [{
+        trayId: 'url',
         url: 'url',
         username: 'uname',
         password: 'pword',
         serverType: 'GO'
       }, {
+        trayId: 'another-url',
         url: 'another-url',
         username: 'another-uname',
         password: 'another-pword',

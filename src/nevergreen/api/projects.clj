@@ -6,10 +6,12 @@
             [nevergreen.http :refer [http-get]]
             [nevergreen.servers :as servers]
             [nevergreen.security :as security]
-            [nevergreen.crypto :as crypt])
-  (:refer-clojure :exclude [replace]))
+            [nevergreen.crypto :as crypt]
+            [nevergreen.errors :refer [create-error is-error?]])
+  (:refer-clojure :exclude [replace])
+  (:import (clojure.lang ExceptionInfo)))
 
-(defn invalid-scheme? [url]
+(defn invalid-scheme? [{:keys [url]}]
   (or (blank? url)
       (not (re-find #"https?://" url))))
 
@@ -30,11 +32,6 @@
     "URL was blank! A http(s) URL must be provided."
     (str "Only http(s) URLs are supported: " url)))
 
-(defn- ensure-url-is-valid [{:keys [url]}]
-  (if (invalid-scheme? url)
-    (let [msg (invalid-url-error-message url)]
-      (throw (ex-info msg {:status 422 :message msg :url url})))))
-
 (defn- set-auth-header [username password]
   (if-not (or (blank? username) (blank? password))
     (security/basic-auth-header username password)))
@@ -49,28 +46,36 @@
   (map #(merge {:tray-id tray-id} %) projects))
 
 (defn fetch-tray [tray]
-  (ensure-url-is-valid tray)
-  (let [server-type (get-server-type tray)
-        decrypted-password (if-not (blank? (:password tray)) (crypt/decrypt (:password tray)))]
-    (->>
-      (parser/get-projects
-        (http-get (:url tray) (set-auth-header (:username tray) decrypted-password))
-        {:server server-type :normalise true})
-      (add-project-ids)
-      (add-server-type server-type))))
+  (if (invalid-scheme? tray)
+    (create-error (invalid-url-error-message (tray :url)))
+    (let [server-type (get-server-type tray)
+          decrypted-password (if-not (blank? (:password tray)) (crypt/decrypt (:password tray)))
+          response (http-get (:url tray) (set-auth-header (:username tray) decrypted-password))]
+      (if (is-error? response)
+        [response]
+        (->>
+          (parser/get-projects response {:server server-type :normalise true})
+          (add-project-ids)
+          (add-server-type server-type))))))
 
-(defn get-all [trays]
-  (if (= (count trays) 1)
-    (fetch-tray (first trays))
-    (flatten (pmap fetch-tray trays))))
+(defn fetch-all [tray]
+  (->> (fetch-tray tray)
+       (add-tray-id (:tray-id tray))))
 
 (defn fetch-interesting [tray]
   (if (empty? (:included tray))
     []
-    (->> (fetch-tray tray)
-         (filtering/interesting)
-         (filter-by-ids (:included tray))
-         (add-tray-id (:tray-id tray)))))
+    (let [projects (fetch-tray tray)]
+      (if (every? is-error? projects)
+        (add-tray-id (:tray-id tray) projects)
+        (->> (filtering/interesting projects)
+             (filter-by-ids (:included tray))
+             (add-tray-id (:tray-id tray)))))))
+
+(defn get-all [trays]
+  (if (= (count trays) 1)
+    (fetch-all (first trays))
+    (flatten (pmap fetch-all trays))))
 
 (defn get-interesting [trays]
   (if (= (count trays) 1)
