@@ -104,6 +104,10 @@ AvailableProjects.propTypes = {
   trayId: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
   errors: PropTypes.arrayOf(PropTypes.string),
+  url: PropTypes.string.isRequired,
+  username: PropTypes.string,
+  password: PropTypes.string,
+  serverType: PropTypes.string,
   projects: PropTypes.arrayOf(PropTypes.shape({
     projectId: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,

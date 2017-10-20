@@ -1,6 +1,6 @@
-import Immutable from 'immutable'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
+import {toJS} from '../common/ImmutableToJs'
 import {fetchInteresting} from '../actions/MonitorActions'
 import {requestFullScreen} from '../actions/NevergreenActions'
 import Monitor from './Monitor'
@@ -13,7 +13,7 @@ function mapStateToProps(store) {
   const settings = store.get('audioVisual')
   const interesting = store.get('interesting')
 
-  return Immutable.Map({
+  return {
     loaded: interesting.get('loaded'),
     errors: interesting.get('errors'),
     trays: store.get('trays').toList(),
@@ -27,7 +27,7 @@ function mapStateToProps(store) {
     messages: store.get('success'),
     refreshTime: settings.get('refreshTime'),
     isFullScreen: store.getIn(['nevergreen', 'fullScreen'])
-  }).toJS()
+  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Monitor)
+export default connect(mapStateToProps, mapDispatchToProps)(toJS(Monitor))

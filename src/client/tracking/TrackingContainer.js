@@ -1,5 +1,6 @@
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
+import {toJS} from '../common/ImmutableToJs'
 import {addTray} from '../actions/TrackingActions'
 import Tracking from './Tracking'
 
@@ -8,7 +9,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(store) {
-  return {trayIds: store.get('trays').keySeq().toJS()}
+  return {trayIds: store.get('trays').keySeq()}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Tracking)
+export default connect(mapStateToProps, mapDispatchToProps)(toJS(Tracking))

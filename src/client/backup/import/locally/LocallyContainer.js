@@ -8,7 +8,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(store) {
-  return {loaded: store.getIn(['backupImport', 'loaded']),}
+  return {loaded: store.getIn(['backupImport', 'loaded'])}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Locally)

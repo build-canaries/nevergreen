@@ -1,15 +1,16 @@
-import Immutable from 'immutable'
 import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
 import Tray from './Tray'
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({}, dispatch)
-}
 
 function mapStateToProps(store, ownProps) {
   const tray = store.getIn(['trays', ownProps.trayId])
-  return Immutable.Map().merge(tray, ownProps).toJS()
+  return {
+    trayId: ownProps.trayId,
+    index: ownProps.index,
+    loaded: tray.get('loaded'),
+    name: tray.get('name'),
+    url: tray.get('url'),
+    highlight: tray.get('highlight')
+  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Tray)
+export default connect(mapStateToProps)(Tray)

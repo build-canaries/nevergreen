@@ -22,7 +22,16 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(store) {
-  return store.get('audioVisual').toJS()
+  const audioVisual = store.get('audioVisual')
+  return {
+    showTrayName: audioVisual.get('showTrayName'),
+    showBrokenBuildTime: audioVisual.get('showBrokenBuildTime'),
+    playBrokenBuildSoundFx: audioVisual.get('playBrokenBuildSoundFx'),
+    showBuildLabel: audioVisual.get('showBuildLabel'),
+    brokenBuildSoundFx: audioVisual.get('brokenBuildSoundFx'),
+    setShowTrayName: audioVisual.get('setShowTrayName'),
+    refreshTime: audioVisual.get('refreshTime')
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings)

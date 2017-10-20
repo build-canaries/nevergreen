@@ -1,6 +1,6 @@
-import Immutable from 'immutable'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
+import {toJS} from '../../common/ImmutableToJs'
 import {refreshTray, selectProject} from '../../actions/TrackingActions'
 import AvailableProjects from './AvailableProjects'
 
@@ -12,7 +12,19 @@ function mapStateToProps(store, ownProps) {
   const tray = store.getIn(['trays', ownProps.trayId])
   const projects = store.getIn(['projects', ownProps.trayId]).toList()
   const selected = store.getIn(['selected', ownProps.trayId])
-  return Immutable.Map().merge({projects, selected}, tray, ownProps).toJS()
+  return {
+    trayId: ownProps.trayId,
+    index: ownProps.index,
+    url: tray.get('url'),
+    username: tray.get('username'),
+    password: tray.get('password'),
+    serverType: tray.get('serverType'),
+    errors: tray.get('error'),
+    timestamp: tray.get('timestamp'),
+    pendingRequest: tray.get('pendingRequest'),
+    projects,
+    selected
+  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AvailableProjects)
+export default connect(mapStateToProps, mapDispatchToProps)(toJS(AvailableProjects))

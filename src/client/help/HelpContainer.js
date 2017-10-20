@@ -11,7 +11,4 @@ function mapStateToProps(store) {
   return {showShortcuts: store.get('shortcut')}
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Help)
+export default connect(mapStateToProps, mapDispatchToProps)(Help)
