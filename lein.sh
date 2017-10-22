@@ -4,17 +4,12 @@
 # somewhere on your $PATH, like ~/bin. The rest of Leiningen will be
 # installed upon first run into the ~/.lein/self-installs directory.
 
-export LEIN_VERSION="2.8.0"
+export LEIN_VERSION="2.6.1"
 
 case $LEIN_VERSION in
     *SNAPSHOT) SNAPSHOT="YES" ;;
     *) SNAPSHOT="NO" ;;
 esac
-
-if [[ "$CLASSPATH" != "" ]]; then
-    echo "WARNING: You have \$CLASSPATH set, probably by accident."
-    echo "It is strongly recommended to unset this before proceeding."
-fi
 
 if [[ "$OSTYPE" == "cygwin" ]] || [[ "$OSTYPE" == "msys" ]]; then
     delimiter=";"
@@ -29,7 +24,7 @@ else
 fi
 
 function command_not_found {
-    >&2 echo "Leiningen couldn't find $1 in your \$PATH ($PATH), which is required."
+    >&2 echo "Leiningen coundn't find $1 in your \$PATH ($PATH), which is required."
     exit 1
 }
 
@@ -88,6 +83,25 @@ function self_install {
   fi
 }
 
+function check_root {
+  local -i user_id
+  # Thank you for the complexity, Solaris
+  if [ `uname` = "SunOS" -a -x /usr/xpg4/bin/id ]; then
+    user_id=$(/usr/xpg4/bin/id -u 2>/dev/null || echo 0)
+  else
+    user_id=$(id -u 2>/dev/null || echo 0)
+  fi
+  [ $user_id -eq 0 -a "$LEIN_ROOT" = "" ] && return 0
+  return 1
+}
+
+if check_root; then
+    echo "WARNING: You're currently running as root; probably by accident."
+    echo "Press control-C to abort or Enter to continue as root."
+    echo "Set LEIN_ROOT to disable this warning."
+    read _
+fi
+
 NOT_FOUND=1
 ORIGINAL_PWD="$PWD"
 while [ ! -r "$PWD/project.clj" ] && [ "$PWD" != "/" ] && [ $NOT_FOUND -ne 0 ]
@@ -136,7 +150,7 @@ done
 
 BIN_DIR="$(dirname "$SCRIPT")"
 
-export LEIN_JVM_OPTS="${LEIN_JVM_OPTS-"-Xverify:none -XX:+TieredCompilation -XX:TieredStopAtLevel=1"}"
+export LEIN_JVM_OPTS="${LEIN_JVM_OPTS-"-XX:+TieredCompilation -XX:TieredStopAtLevel=1"}"
 
 # This needs to be defined before we call HTTP_CLIENT below
 if [ "$HTTP_CLIENT" = "" ]; then
@@ -201,9 +215,7 @@ if [ -r "$BIN_DIR/../src/leiningen/version.clj" ]; then
 else # Not running from a checkout
     add_path CLASSPATH "$LEIN_JAR"
 
-    if [ "$LEIN_USE_BOOTCLASSPATH" != "" ]; then
-        LEIN_JVM_OPTS="-Xbootclasspath/a:$LEIN_JAR $LEIN_JVM_OPTS"
-    fi
+    BOOTCLASSPATH="-Xbootclasspath/a:$LEIN_JAR"
 
     if [ ! -r "$LEIN_JAR" -a "$1" != "self-install" ]; then
         self_install
@@ -273,7 +285,7 @@ elif [ "$1" = "upgrade" ] || [ "$1" = "downgrade" ]; then
             y|Y|"")
                 echo
                 echo "Upgrading..."
-                TARGET="/tmp/lein-${$}-upgrade"
+                TARGET="/tmp/lein-$$-upgrade"
                 if $cygwin; then
                     TARGET=$(cygpath -w "$TARGET")
                 fi
@@ -334,7 +346,7 @@ else
         else
             TRAMPOLINE_FILE="/tmp/lein-trampoline-$$"
         fi
-        trap 'rm -f $TRAMPOLINE_FILE' EXIT
+        trap "rm -f $TRAMPOLINE_FILE" EXIT
     fi
 
     if $cygwin; then
@@ -349,6 +361,7 @@ else
     else
         export TRAMPOLINE_FILE
         "$LEIN_JAVA_CMD" \
+            "${BOOTCLASSPATH[@]}" \
             -Dfile.encoding=UTF-8 \
             -Dmaven.wagon.http.ssl.easy=false \
             -Dmaven.wagon.rto=10000 \
