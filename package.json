@@ -11,7 +11,7 @@
     "domain": "http://localhost:5000"
   },
   "scripts": {
-    "clean": "rimraf resources/public",
+    "clean": "rm -rf resources/public",
     "build": "NODE_ENV=dev webpack --progress",
     "build-prod": "NODE_ENV=production webpack -p",
     "test": "NODE_ENV=dev mocha --require ./test/client/CreateDom.js -R mocha-circleci-reporter --reporter-options mochaFile=./target/client/test-results.xml --compilers js:babel-core/register --recursive test/client",
@@ -85,7 +85,6 @@
     "proxyquire": "1.8.0",
     "react-addons-test-utils": "15.6.2",
     "resolve-url-loader": "2.1.0",
-    "rimraf": "2.6.2",
     "sass-loader": "6.0.6",
     "sinon": "4.0.1",
     "sinon-chai": "2.14.0",
