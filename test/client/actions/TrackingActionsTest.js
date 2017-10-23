@@ -2,6 +2,23 @@ import {proxyquire} from '../UnitSpec'
 import {before, beforeEach, describe, it} from 'mocha'
 import {expect} from 'chai'
 import sinon from 'sinon'
+import {
+  TRAY_ADDED,
+  HIGHLIGHT_TRAY,
+  ENCRYPTING_PASSWORD,
+  PASSWORD_ENCRYPTED,
+  PASSWORD_ENCRYPT_ERROR,
+  REMOVE_TRAY,
+  PROJECTS_FETCHING,
+  PROJECTS_FETCHED,
+  PROJECTS_FETCH_ERROR,
+  SELECT_PROJECT,
+  SET_TRAY_ID,
+  SET_TRAY_URL,
+  SET_TRAY_NAME,
+  SET_SERVER_TYPE,
+  SET_TRAY_USERNAME
+} from '../../../src/client/actions/Actions'
 
 describe('TrackingActions', function () {
   let TrackingActions, SecurityGateway, ProjectsGateway, Gateway, moment, nameGenerator
@@ -34,7 +51,7 @@ describe('TrackingActions', function () {
 
     it('should return the correct type', function () {
       const actual = TrackingActions.trayAdded()
-      expect(actual).to.have.property('type', TrackingActions.TRAY_ADDED)
+      expect(actual).to.have.property('type', TRAY_ADDED)
     })
 
     it('should return the tray id', function () {
@@ -69,7 +86,7 @@ describe('TrackingActions', function () {
 
     it('should return the correct type', function () {
       const actual = TrackingActions.highlightTray()
-      expect(actual).to.have.property('type', TrackingActions.HIGHLIGHT_TRAY)
+      expect(actual).to.have.property('type', HIGHLIGHT_TRAY)
     })
 
     it('should return the tray id', function () {
@@ -82,7 +99,7 @@ describe('TrackingActions', function () {
 
     it('should return the correct type', function () {
       const actual = TrackingActions.encryptingPassword()
-      expect(actual).to.have.property('type', TrackingActions.ENCRYPTING_PASSWORD)
+      expect(actual).to.have.property('type', ENCRYPTING_PASSWORD)
     })
 
     it('should return the tray id', function () {
@@ -105,7 +122,7 @@ describe('TrackingActions', function () {
 
     it('should return the correct type', function () {
       const actual = TrackingActions.passwordEncrypted()
-      expect(actual).to.have.property('type', TrackingActions.PASSWORD_ENCRYPTED)
+      expect(actual).to.have.property('type', PASSWORD_ENCRYPTED)
     })
 
     it('should return the tray id', function () {
@@ -123,7 +140,7 @@ describe('TrackingActions', function () {
 
     it('should return the correct type', function () {
       const actual = TrackingActions.passwordEncryptError()
-      expect(actual).to.have.property('type', TrackingActions.PASSWORD_ENCRYPT_ERROR)
+      expect(actual).to.have.property('type', PASSWORD_ENCRYPT_ERROR)
     })
 
     it('should return the tray id', function () {
@@ -141,7 +158,7 @@ describe('TrackingActions', function () {
 
     it('should return the correct type', function () {
       const actual = TrackingActions.removeTray()
-      expect(actual).to.have.property('type', TrackingActions.REMOVE_TRAY)
+      expect(actual).to.have.property('type', REMOVE_TRAY)
     })
 
     it('should return the tray id', function () {
@@ -160,7 +177,7 @@ describe('TrackingActions', function () {
 
     it('should return the correct type', function () {
       const actual = TrackingActions.projectsFetching()
-      expect(actual).to.have.property('type', TrackingActions.PROJECTS_FETCHING)
+      expect(actual).to.have.property('type', PROJECTS_FETCHING)
     })
 
     it('should return the tray id', function () {
@@ -178,7 +195,7 @@ describe('TrackingActions', function () {
 
     it('should return the correct type', function () {
       const actual = TrackingActions.projectsFetched('irrelevant', [])
-      expect(actual).to.have.property('type', TrackingActions.PROJECTS_FETCHED)
+      expect(actual).to.have.property('type', PROJECTS_FETCHED)
     })
 
     it('should return the tray id', function () {
@@ -209,7 +226,7 @@ describe('TrackingActions', function () {
 
     it('should return the correct type', function () {
       const actual = TrackingActions.projectsFetchError()
-      expect(actual).to.have.property('type', TrackingActions.PROJECTS_FETCH_ERROR)
+      expect(actual).to.have.property('type', PROJECTS_FETCH_ERROR)
     })
 
     it('should return the tray id', function () {
@@ -227,7 +244,7 @@ describe('TrackingActions', function () {
 
     it('should return the correct type', function () {
       const actual = TrackingActions.setTrayName()
-      expect(actual).to.have.property('type', TrackingActions.SET_TRAY_NAME)
+      expect(actual).to.have.property('type', SET_TRAY_NAME)
     })
 
     it('should return the tray id', function () {
@@ -245,7 +262,7 @@ describe('TrackingActions', function () {
 
     it('should return the correct type', function () {
       const actual = TrackingActions.setServerType()
-      expect(actual).to.have.property('type', TrackingActions.SET_SERVER_TYPE)
+      expect(actual).to.have.property('type', SET_SERVER_TYPE)
     })
 
     it('should return the tray id', function () {
@@ -263,7 +280,7 @@ describe('TrackingActions', function () {
 
     it('should return the correct type', function () {
       const actual = TrackingActions.setTrayUsername()
-      expect(actual).to.have.property('type', TrackingActions.SET_TRAY_USERNAME)
+      expect(actual).to.have.property('type', SET_TRAY_USERNAME)
     })
 
     it('should return the tray id', function () {
@@ -281,7 +298,7 @@ describe('TrackingActions', function () {
 
     it('should return the correct type', function () {
       const actual = TrackingActions.setTrayUrl()
-      expect(actual).to.have.property('type', TrackingActions.SET_TRAY_URL)
+      expect(actual).to.have.property('type', SET_TRAY_URL)
     })
 
     it('should return the url', function () {
@@ -294,7 +311,7 @@ describe('TrackingActions', function () {
 
     it('should return the correct type', function () {
       const actual = TrackingActions.setTrayId()
-      expect(actual).to.have.property('type', TrackingActions.SET_TRAY_ID)
+      expect(actual).to.have.property('type', SET_TRAY_ID)
     })
 
     it('should return the original tray id', function () {
@@ -319,14 +336,14 @@ describe('TrackingActions', function () {
       SecurityGateway.encryptPassword = sinon.stub().returns({})
       Gateway.send = sinon.stub().returns(Promise.resolve(''))
       TrackingActions.encryptPassword('irrelevant', 'irrelevant')(dispatch)
-      expect(dispatch).to.have.been.calledWithMatch({type: TrackingActions.ENCRYPTING_PASSWORD})
+      expect(dispatch).to.have.been.calledWithMatch({type: ENCRYPTING_PASSWORD})
     })
 
     it('should dispatch password encrypted action', function () {
       SecurityGateway.encryptPassword = sinon.stub().returns({})
       Gateway.send = sinon.stub().returns(Promise.resolve(''))
       return TrackingActions.encryptPassword('irrelevant', 'irrelevant')(dispatch).then(() => {
-        expect(dispatch).to.have.been.calledWithMatch({type: TrackingActions.PASSWORD_ENCRYPTED})
+        expect(dispatch).to.have.been.calledWithMatch({type: PASSWORD_ENCRYPTED})
       })
     })
 
@@ -334,7 +351,7 @@ describe('TrackingActions', function () {
       SecurityGateway.encryptPassword = sinon.spy()
       Gateway.send = sinon.spy()
       return TrackingActions.encryptPassword('irrelevant', '')(dispatch).then(() => {
-        expect(dispatch).to.have.been.calledWithMatch({type: TrackingActions.PASSWORD_ENCRYPTED})
+        expect(dispatch).to.have.been.calledWithMatch({type: PASSWORD_ENCRYPTED})
         expect(SecurityGateway.encryptPassword).to.not.have.been.called()
         expect(Gateway.send).to.not.have.been.called()
       })
@@ -353,7 +370,7 @@ describe('TrackingActions', function () {
 
     it('should return the correct type', function () {
       const actual = TrackingActions.selectProject()
-      expect(actual).to.have.property('type', TrackingActions.SELECT_PROJECT)
+      expect(actual).to.have.property('type', SELECT_PROJECT)
     })
 
     it('should return the tray id', function () {
@@ -383,7 +400,7 @@ describe('TrackingActions', function () {
       ProjectsGateway.fetchAll = sinon.stub().returns({})
       Gateway.send = sinon.stub().returns(Promise.resolve(''))
       TrackingActions.addTray()(dispatch)
-      expect(dispatch).to.have.been.calledWithMatch({type: TrackingActions.TRAY_ADDED})
+      expect(dispatch).to.have.been.calledWithMatch({type: TRAY_ADDED})
     })
 
     it('should automatically append http:// to urls missing a scheme')

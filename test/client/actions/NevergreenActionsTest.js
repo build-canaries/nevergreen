@@ -2,6 +2,13 @@ import {proxyquire} from '../UnitSpec'
 import {describe, it, before, beforeEach} from 'mocha'
 import {expect} from 'chai'
 import sinon from 'sinon'
+import {
+  INITIALISING,
+  INITIALISED,
+  NAVIGATED,
+  FULL_SCREEN,
+  REQUEST_FULL_SCREEN
+} from '../../../src/client/actions/Actions'
 
 describe('NevergreenActions', function () {
   let NevergreenActions, LocalRepository, moment, Migrations
@@ -21,7 +28,7 @@ describe('NevergreenActions', function () {
 
     it('should return the correct type', function () {
       const actual = NevergreenActions.initalising({foo: 'bar'})
-      expect(actual).to.have.property('type', NevergreenActions.INITIALISING)
+      expect(actual).to.have.property('type', INITIALISING)
     })
   })
 
@@ -29,7 +36,7 @@ describe('NevergreenActions', function () {
 
     it('should return the correct type', function () {
       const actual = NevergreenActions.initalised()
-      expect(actual).to.have.property('type', NevergreenActions.INITIALISED)
+      expect(actual).to.have.property('type', INITIALISED)
     })
 
     it('should return the configuration', function () {
@@ -42,7 +49,7 @@ describe('NevergreenActions', function () {
 
     it('should return the correct type', function () {
       const actual = NevergreenActions.navigated()
-      expect(actual).to.have.property('type', NevergreenActions.NAVIGATED)
+      expect(actual).to.have.property('type', NAVIGATED)
     })
   })
 
@@ -59,7 +66,7 @@ describe('NevergreenActions', function () {
       LocalRepository.load = sinon.stub().returns(Promise.resolve({}))
       moment.updateLocale = sinon.spy()
       NevergreenActions.initalise()(dispatch)
-      expect(dispatch).to.have.been.calledWithMatch({type: NevergreenActions.INITIALISING})
+      expect(dispatch).to.have.been.calledWithMatch({type: INITIALISING})
     })
 
     it('should update the moment locale with shorter relative time strings', function () {
@@ -83,7 +90,7 @@ describe('NevergreenActions', function () {
       LocalRepository.load = sinon.stub().returns(Promise.resolve({}))
       moment.updateLocale = sinon.spy()
       return NevergreenActions.initalise()(dispatch).then(() => {
-        expect(dispatch).to.have.been.calledWithMatch({type: NevergreenActions.INITIALISED})
+        expect(dispatch).to.have.been.calledWithMatch({type: INITIALISED})
       })
     })
   })
@@ -92,7 +99,7 @@ describe('NevergreenActions', function () {
 
     it('should return the correct type', function () {
       const actual = NevergreenActions.enableFullScreen()
-      expect(actual).to.have.property('type', NevergreenActions.FULL_SCREEN)
+      expect(actual).to.have.property('type', FULL_SCREEN)
     })
 
     it('should return the enabled flag', function () {
@@ -105,7 +112,7 @@ describe('NevergreenActions', function () {
 
     it('should return the correct type', function () {
       const actual = NevergreenActions.requestFullScreen()
-      expect(actual).to.have.property('type', NevergreenActions.REQUEST_FULL_SCREEN)
+      expect(actual).to.have.property('type', REQUEST_FULL_SCREEN)
     })
 
     it('should return the requested flag', function () {

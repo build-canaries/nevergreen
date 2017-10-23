@@ -2,6 +2,7 @@ import {proxyquire} from '../UnitSpec'
 import {describe, it, before, beforeEach} from 'mocha'
 import {expect} from 'chai'
 import sinon from 'sinon'
+import {NOTIFICATION, NOTIFICATION_DISMISS} from '../../../src/client/actions/Actions'
 
 describe('NotificationActions', function () {
   let NotificationActions, Gateway, semver
@@ -19,7 +20,7 @@ describe('NotificationActions', function () {
 
     it('should return the correct type', function () {
       const actual = NotificationActions.notification()
-      expect(actual).to.have.property('type', NotificationActions.NOTIFICATION)
+      expect(actual).to.have.property('type', NOTIFICATION)
     })
 
     it('should return the message', function () {
@@ -32,7 +33,7 @@ describe('NotificationActions', function () {
 
     it('should return the correct type', function () {
       const actual = NotificationActions.dismiss()
-      expect(actual).to.have.property('type', NotificationActions.NOTIFICATION_DISMISS)
+      expect(actual).to.have.property('type', NOTIFICATION_DISMISS)
     })
   })
 
@@ -56,7 +57,7 @@ describe('NotificationActions', function () {
       Gateway.send = sinon.stub().returns(Promise.resolve({}))
       semver.gt = sinon.stub().returns(true)
       return NotificationActions.checkForNewVersion()(dispatch).then(() => {
-        expect(dispatch).to.have.been.calledWithMatch({type: NotificationActions.NOTIFICATION})
+        expect(dispatch).to.have.been.calledWithMatch({type: NOTIFICATION})
       })
     })
   })

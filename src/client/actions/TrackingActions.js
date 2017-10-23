@@ -5,6 +5,23 @@ import {send} from '../common/gateways/Gateway'
 import moment from 'moment'
 import {generateRandomName} from '../common/project/Name'
 import _ from 'lodash'
+import {
+  ENCRYPTING_PASSWORD,
+  HIGHLIGHT_TRAY,
+  PASSWORD_ENCRYPT_ERROR,
+  PASSWORD_ENCRYPTED,
+  PROJECTS_FETCH_ERROR,
+  PROJECTS_FETCHED,
+  PROJECTS_FETCHING,
+  REMOVE_TRAY,
+  SELECT_PROJECT,
+  SET_SERVER_TYPE,
+  SET_TRAY_ID,
+  SET_TRAY_NAME,
+  SET_TRAY_URL,
+  SET_TRAY_USERNAME,
+  TRAY_ADDED
+} from './Actions'
 
 function hasScheme(url) {
   return _.size(_.split(url, '://')) > 1
@@ -20,7 +37,6 @@ function abortPendingRequest(req) {
   }
 }
 
-export const TRAY_ADDED = 'TRAY_ADDED'
 export function trayAdded(trayId, url, username) {
   return {
     type: TRAY_ADDED,
@@ -29,75 +45,61 @@ export function trayAdded(trayId, url, username) {
   }
 }
 
-export const HIGHLIGHT_TRAY = 'HIGHLIGHT_TRAY'
 export function highlightTray(trayId) {
   return {type: HIGHLIGHT_TRAY, trayId}
 }
 
-export const ENCRYPTING_PASSWORD = 'ENCRYPTING_PASSWORD'
 export function encryptingPassword(trayId, password, request) {
   return {type: ENCRYPTING_PASSWORD, trayId, password, request}
 }
 
-export const PASSWORD_ENCRYPTED = 'PASSWORD_ENCRYPTED'
 export function passwordEncrypted(trayId, password) {
   return {type: PASSWORD_ENCRYPTED, trayId, password}
 }
 
-export const PASSWORD_ENCRYPT_ERROR = 'PASSWORD_ENCRYPT_ERROR'
 export function passwordEncryptError(trayId, errors) {
   return {type: PASSWORD_ENCRYPT_ERROR, trayId, errors: Immutable.List(errors)}
 }
 
-export const REMOVE_TRAY = 'REMOVE_TRAY'
 export function removeTray(trayId, pendingRequest) {
   abortPendingRequest(pendingRequest)
   return {type: REMOVE_TRAY, trayId}
 }
 
-export const PROJECTS_FETCHING = 'PROJECTS_FETCHING'
 export function projectsFetching(trayId, request) {
   return {type: PROJECTS_FETCHING, trayId, request}
 }
 
-export const PROJECTS_FETCHED = 'PROJECTS_FETCHED'
 export function projectsFetched(trayId, projects) {
   const data = Immutable.fromJS(projects)
   const serverType = data.first() ? data.first().get('serverType') : ''
   return {type: PROJECTS_FETCHED, trayId, data, serverType, timestamp: moment().format()}
 }
 
-export const PROJECTS_FETCH_ERROR = 'PROJECTS_FETCH_ERROR'
 export function projectsFetchError(trayId, errors) {
   return {type: PROJECTS_FETCH_ERROR, trayId, errors: Immutable.List(errors)}
 }
 
-export const SET_TRAY_NAME = 'SET_TRAY_NAME'
 export function setTrayName(trayId, name) {
   return {type: SET_TRAY_NAME, trayId, name}
 }
 
-export const SET_SERVER_TYPE = 'SET_SERVER_TYPE'
 export function setServerType(trayId, serverType) {
   return {type: SET_SERVER_TYPE, trayId, serverType}
 }
 
-export const SET_TRAY_USERNAME = 'SET_TRAY_USERNAME'
 export function setTrayUsername(trayId, username) {
   return {type: SET_TRAY_USERNAME, trayId, username}
 }
 
-export const SET_TRAY_URL = 'SET_TRAY_URL'
 export function setTrayUrl(trayId, url) {
   return {type: SET_TRAY_URL, trayId, url}
 }
 
-export const SET_TRAY_ID = 'SET_TRAY_ID'
 export function setTrayId(originalTrayId, newTrayId) {
   return {type: SET_TRAY_ID, originalTrayId, newTrayId}
 }
 
-export const SELECT_PROJECT = 'SELECT_PROJECT'
 export function selectProject(trayId, projectId, selected) {
   return {type: SELECT_PROJECT, trayId, projectId, selected}
 }

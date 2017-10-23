@@ -2,7 +2,7 @@ import '../UnitSpec'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {reduce} from '../../../src/client/reducers/ShortcutReducer'
-import {KEYBOARD_SHORTCUT} from '../../../src/client/actions/ShortcutActions'
+import {KEYBOARD_SHORTCUT} from '../../../src/client/actions/Actions'
 
 describe('ShortcutReducer', function () {
 

@@ -2,19 +2,16 @@ import '../UnitSpec'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {
-  BROKEN_BUILD_SOUND_FX,
-  PLAY_BROKEN_BUILD_SOUND_FX,
-  REFRESH_TIME,
   setBrokenBuildSoundFx,
   setPlayBrokenBuildSoundFx,
   setRefreshTime,
   setShowBrokenBuildTime,
   setShowBuildLabel,
-  setShowTrayName,
-  SHOW_BROKEN_BUILD_TIME,
-  SHOW_BUILD_LABEL,
+  setShowTrayName} from '../../../src/client/actions/SettingsActions'
+import {
+  BROKEN_BUILD_SOUND_FX, PLAY_BROKEN_BUILD_SOUND_FX, REFRESH_TIME, SHOW_BROKEN_BUILD_TIME, SHOW_BUILD_LABEL,
   SHOW_TRAY_NAME
-} from '../../../src/client/actions/SettingsActions'
+} from '../../../src/client/actions/Actions'
 
 describe('SettingsActions', function () {
 

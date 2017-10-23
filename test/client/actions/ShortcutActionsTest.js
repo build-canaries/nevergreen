@@ -1,7 +1,8 @@
 import '../UnitSpec'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
-import {keyboardShortcut, KEYBOARD_SHORTCUT} from '../../../src/client/actions/ShortcutActions'
+import {keyboardShortcut} from '../../../src/client/actions/ShortcutActions'
+import {KEYBOARD_SHORTCUT} from '../../../src/client/actions/Actions'
 
 describe('ShortcutActions', function () {
 

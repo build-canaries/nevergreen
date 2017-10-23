@@ -3,6 +3,7 @@ import {describe, it, before, beforeEach} from 'mocha'
 import {expect} from 'chai'
 import sinon from 'sinon'
 import Immutable from 'immutable'
+import {INTERESTING_PROJECTS, INTERESTING_PROJECTS_ERROR} from '../../../src/client/actions/Actions'
 
 describe('MonitorActions', function () {
   let MonitorActions, ProjectsGateway, Gateway
@@ -20,7 +21,7 @@ describe('MonitorActions', function () {
 
     it('should return the correct type', function () {
       const actual = MonitorActions.interestingProjects([])
-      expect(actual).to.have.property('type', MonitorActions.INTERESTING_PROJECTS)
+      expect(actual).to.have.property('type', INTERESTING_PROJECTS)
     })
 
     it('should return the projects given', function () {
@@ -33,7 +34,7 @@ describe('MonitorActions', function () {
 
     it('should return the correct type', function () {
       const actual = MonitorActions.interestingProjectsError()
-      expect(actual).to.have.property('type', MonitorActions.INTERESTING_PROJECTS_ERROR)
+      expect(actual).to.have.property('type', INTERESTING_PROJECTS_ERROR)
     })
 
     it('should return the error given', function () {
@@ -53,7 +54,7 @@ describe('MonitorActions', function () {
       ProjectsGateway.interesting = sinon.stub().returns({})
       Gateway.send = sinon.stub().returns(Promise.resolve([]))
       return MonitorActions.fetchInteresting()(dispatch).then(() => {
-        expect(dispatch).to.have.been.calledWithMatch({type: MonitorActions.INTERESTING_PROJECTS})
+        expect(dispatch).to.have.been.calledWithMatch({type: INTERESTING_PROJECTS})
       })
     })
 
@@ -71,7 +72,7 @@ describe('MonitorActions', function () {
       ProjectsGateway.interesting = sinon.stub().returns({})
       Gateway.send = sinon.stub().returns(Promise.reject({}))
       return MonitorActions.fetchInteresting()(dispatch).then(() => {
-        expect(dispatch).to.have.been.calledWithMatch({type: MonitorActions.INTERESTING_PROJECTS_ERROR})
+        expect(dispatch).to.have.been.calledWithMatch({type: INTERESTING_PROJECTS_ERROR})
       })
     })
   })

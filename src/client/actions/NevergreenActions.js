@@ -3,6 +3,7 @@ import LocalRepository from '../common/repo/LocalRepository'
 import moment from 'moment'
 import {filter} from '../common/repo/Data'
 import {migrate} from '../common/repo/Migrations'
+import {FULL_SCREEN, INITIALISED, INITIALISING, NAVIGATED, REQUEST_FULL_SCREEN} from './Actions'
 
 function momentInit() {
   moment.updateLocale('en', {
@@ -24,14 +25,12 @@ function momentInit() {
   })
 }
 
-export const INITIALISING = 'INITIALISING'
 export function initalising() {
   return {
     type: INITIALISING
   }
 }
 
-export const INITIALISED = 'INITIALISED'
 export function initalised(configuration) {
   return {
     type: INITIALISED,
@@ -39,7 +38,6 @@ export function initalised(configuration) {
   }
 }
 
-export const NAVIGATED = 'NAVIGATED'
 export function navigated() {
   return {type: NAVIGATED}
 }
@@ -57,7 +55,6 @@ export function initalise() {
   }
 }
 
-export const FULL_SCREEN = 'FULL_SCREEN'
 export function enableFullScreen(enabled) {
   return {
     type: FULL_SCREEN,
@@ -65,7 +62,6 @@ export function enableFullScreen(enabled) {
   }
 }
 
-export const REQUEST_FULL_SCREEN = 'REQUEST_FULL_SCREEN'
 export function requestFullScreen(requested) {
   return {
     type: REQUEST_FULL_SCREEN,

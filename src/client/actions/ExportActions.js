@@ -4,14 +4,11 @@ import {fromJson} from '../common/Json'
 import {gitHubSetGistId} from './GitHubActions'
 import Immutable from 'immutable'
 import {isBlank} from '../common/Utils'
-
-export const EXPORTING = 'EXPORTING'
+import {EXPORT_ERROR, EXPORT_SUCCESS, EXPORTING} from './Actions'
 
 export function exporting() {
   return {type: EXPORTING}
 }
-
-export const EXPORT_SUCCESS = 'EXPORT_SUCCESS'
 
 export function exportSuccess(messages) {
   return {
@@ -19,8 +16,6 @@ export function exportSuccess(messages) {
     messages: Immutable.List(messages)
   }
 }
-
-export const EXPORT_ERROR = 'EXPORT_ERROR'
 
 export function exportError(errors) {
   return {

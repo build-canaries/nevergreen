@@ -1,10 +1,10 @@
 import {get, send} from '../common/gateways/Gateway'
 import semver from 'semver'
 import _ from 'lodash'
+import {NOTIFICATION, NOTIFICATION_DISMISS} from './Actions'
 
 const NEVERGREEN_IO_REGEX = /nevergreen\.io/i
 
-export const NOTIFICATION = 'NOTIFICATION'
 export function notification(message) {
   return {
     type: NOTIFICATION,
@@ -12,7 +12,6 @@ export function notification(message) {
   }
 }
 
-export const NOTIFICATION_DISMISS = 'NOTIFICATION_DISMISS'
 export function dismiss() {
   return {
     type: NOTIFICATION_DISMISS

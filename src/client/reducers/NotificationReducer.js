@@ -1,4 +1,5 @@
-import {NOTIFICATION, NOTIFICATION_DISMISS} from '../actions/NotificationActions'
+import {NOTIFICATION_DISMISS} from '../actions/Actions'
+import {NOTIFICATION} from '../actions/Actions'
 
 const DefaultState = null
 

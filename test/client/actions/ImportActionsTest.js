@@ -3,6 +3,7 @@ import {before, beforeEach, describe, it} from 'mocha'
 import {expect} from 'chai'
 import Immutable from 'immutable'
 import sinon from 'sinon'
+import {IMPORTING, IMPORT_ERROR, IMPORT_SUCCESS} from '../../../src/client/actions/Actions'
 
 describe('ImportActions', function () {
   let ImportActions, LocalRepository, Data, Migrations, Gateway, GitHubGateway
@@ -26,7 +27,7 @@ describe('ImportActions', function () {
 
     it('should return the correct type', function () {
       const actual = ImportActions.importing()
-      expect(actual).to.have.property('type', ImportActions.IMPORTING)
+      expect(actual).to.have.property('type', IMPORTING)
     })
   })
 
@@ -34,7 +35,7 @@ describe('ImportActions', function () {
 
     it('should return the correct type', function () {
       const actual = ImportActions.importError()
-      expect(actual).to.have.property('type', ImportActions.IMPORT_ERROR)
+      expect(actual).to.have.property('type', IMPORT_ERROR)
     })
 
     it('should return the errors given', function () {
@@ -47,7 +48,7 @@ describe('ImportActions', function () {
 
     it('should return the correct type', function () {
       const actual = ImportActions.importSuccess()
-      expect(actual).to.have.property('type', ImportActions.IMPORT_SUCCESS)
+      expect(actual).to.have.property('type', IMPORT_SUCCESS)
     })
 
     it('should return the configuration given', function () {
@@ -73,19 +74,19 @@ describe('ImportActions', function () {
 
     it('should dispatch import error action on json parse failure', function () {
       ImportActions.importData('{invalidJson')(dispatch)
-      expect(dispatch).to.have.been.calledWithMatch({type: ImportActions.IMPORT_ERROR})
+      expect(dispatch).to.have.been.calledWithMatch({type: IMPORT_ERROR})
     })
 
     it('should dispatch import error action on validation failure', function () {
       Data.validate = sinon.stub().returns(['some-validation-error'])
       ImportActions.importData(validJson)(dispatch)
-      expect(dispatch).to.have.been.calledWithMatch({type: ImportActions.IMPORT_ERROR})
+      expect(dispatch).to.have.been.calledWithMatch({type: IMPORT_ERROR})
     })
 
     it('should dispatch import success action on successful validation', function () {
       Data.validate = sinon.stub().returns([])
       ImportActions.importData(validJson)(dispatch)
-      expect(dispatch).to.have.been.calledWithMatch({type: ImportActions.IMPORT_SUCCESS})
+      expect(dispatch).to.have.been.calledWithMatch({type: IMPORT_SUCCESS})
     })
   })
 
@@ -101,14 +102,14 @@ describe('ImportActions', function () {
     it('should dispatch importing action', function () {
       Gateway.send = () => Promise.resolve({files: {'configuration.json': {content: ''}}})
       return ImportActions.restoreFromGitHub('some-id')(dispatch).then(() => {
-        expect(dispatch).to.have.been.calledWithMatch({type: ImportActions.IMPORTING})
+        expect(dispatch).to.have.been.calledWithMatch({type: IMPORTING})
       })
     })
 
     it('should dispatch import error action if the gist can not be fetched', function () {
       Gateway.send = () => Promise.reject({message: '{"message": "some-error"}'})
       return ImportActions.restoreFromGitHub('some-id')(dispatch).then(() => {
-        expect(dispatch).to.have.been.calledWithMatch({type: ImportActions.IMPORT_ERROR})
+        expect(dispatch).to.have.been.calledWithMatch({type: IMPORT_ERROR})
       })
     })
 
@@ -120,7 +121,7 @@ describe('ImportActions', function () {
 
     it('should dispatch import error if gist id is blank', function () {
       ImportActions.restoreFromGitHub(' ')(dispatch)
-      expect(dispatch).to.have.been.calledWithMatch({type: ImportActions.IMPORT_ERROR})
+      expect(dispatch).to.have.been.calledWithMatch({type: IMPORT_ERROR})
     })
   })
 })

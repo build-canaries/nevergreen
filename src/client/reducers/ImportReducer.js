@@ -1,6 +1,7 @@
 import Immutable from 'immutable'
-import {IMPORT_ERROR, IMPORT_SUCCESS, IMPORTING} from '../actions/ImportActions'
-import {NAVIGATED} from '../actions/NevergreenActions'
+import {IMPORT_SUCCESS} from '../actions/Actions'
+import {NAVIGATED} from '../actions/Actions'
+import {IMPORT_ERROR, IMPORTING} from '../actions/Actions'
 
 const DefaultState = Immutable.Map({
   loaded: true

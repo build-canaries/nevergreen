@@ -1,4 +1,4 @@
-import {KEYBOARD_SHORTCUT} from '../actions/ShortcutActions'
+import {KEYBOARD_SHORTCUT} from '../actions/Actions'
 
 const DefaultState = false
 

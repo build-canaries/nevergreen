@@ -2,7 +2,8 @@ import '../UnitSpec'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {reduce} from '../../../src/client/reducers/NotificationReducer'
-import {NOTIFICATION, NOTIFICATION_DISMISS} from '../../../src/client/actions/NotificationActions'
+import {NOTIFICATION_DISMISS} from '../../../src/client/actions/Actions'
+import {NOTIFICATION} from '../../../src/client/actions/Actions'
 
 describe('NotificationReducer', function () {
 

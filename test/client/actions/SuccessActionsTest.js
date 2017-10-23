@@ -5,11 +5,9 @@ import {
   messageAdded,
   messageInvalid,
   removeMessage,
-  addMessage,
-  MESSAGE_ADDED,
-  MESSAGE_REMOVED,
-  MESSAGE_INVALID
+  addMessage
 } from '../../../src/client/actions/SuccessActions'
+import {MESSAGE_ADDED, MESSAGE_INVALID, MESSAGE_REMOVED} from '../../../src/client/actions/Actions'
 
 describe('SuccessActions', function () {
 

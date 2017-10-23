@@ -7,16 +7,13 @@ import {send} from '../common/gateways/Gateway'
 import {getGist, getTruncatedFile} from '../common/gateways/GitHubGateway'
 import {gitHubSetDescription} from './GitHubActions'
 import {isBlank} from '../common/Utils'
+import {IMPORT_ERROR, IMPORT_SUCCESS, IMPORTING} from './Actions'
 
 const TEN_MEGS = 10485760
-
-export const IMPORTING = 'IMPORTING'
 
 export function importing() {
   return {type: IMPORTING}
 }
-
-export const IMPORT_ERROR = 'IMPORT_ERROR'
 
 export function importError(errors) {
   return {
@@ -24,8 +21,6 @@ export function importError(errors) {
     errors: Immutable.List(errors)
   }
 }
-
-export const IMPORT_SUCCESS = 'IMPORT_SUCCESS'
 
 export function importSuccess(configuration) {
   return {

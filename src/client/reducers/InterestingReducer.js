@@ -1,5 +1,6 @@
 import Immutable from 'immutable'
-import {INTERESTING_PROJECTS, INTERESTING_PROJECTS_ERROR} from '../actions/MonitorActions'
+import {INTERESTING_PROJECTS_ERROR} from '../actions/Actions'
+import {INTERESTING_PROJECTS} from '../actions/Actions'
 
 const DefaultState = Immutable.Map({
   projects: Immutable.List(),

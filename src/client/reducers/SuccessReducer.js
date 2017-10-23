@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
-import {MESSAGE_ADDED, MESSAGE_REMOVED} from '../actions/SuccessActions'
-import {INITIALISED} from '../actions/NevergreenActions'
-import {IMPORT_SUCCESS} from '../actions/ImportActions'
+import {MESSAGE_REMOVED} from '../actions/Actions'
+import {INITIALISED, MESSAGE_ADDED} from '../actions/Actions'
+import {IMPORT_SUCCESS} from '../actions/Actions'
 
 const DefaultState = Immutable.OrderedSet(['=(^.^)='])
 

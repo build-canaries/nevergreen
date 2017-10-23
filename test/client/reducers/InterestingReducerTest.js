@@ -2,8 +2,9 @@ import '../UnitSpec'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {reduce} from '../../../src/client/reducers/InterestingReducer'
-import {INTERESTING_PROJECTS, INTERESTING_PROJECTS_ERROR} from '../../../src/client/actions/MonitorActions'
+import {INTERESTING_PROJECTS_ERROR} from '../../../src/client/actions/Actions'
 import Immutable from 'immutable'
+import {INTERESTING_PROJECTS} from '../../../src/client/actions/Actions'
 
 describe('InterestingReducer', function () {
 

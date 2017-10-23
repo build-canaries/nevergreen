@@ -1,6 +1,7 @@
 import Immutable from 'immutable'
 import Package from '../../../package'
-import {INITIALISING, INITIALISED, FULL_SCREEN, REQUEST_FULL_SCREEN} from '../actions/NevergreenActions'
+import {REQUEST_FULL_SCREEN} from '../actions/Actions'
+import {FULL_SCREEN, INITIALISED, INITIALISING} from '../actions/Actions'
 
 const DefaultState = Immutable.Map({
   loaded: false,

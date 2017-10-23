@@ -1,22 +1,15 @@
 import Immutable from 'immutable'
 import {
-  ENCRYPTING_PASSWORD,
-  HIGHLIGHT_TRAY,
-  PASSWORD_ENCRYPT_ERROR,
-  PASSWORD_ENCRYPTED,
-  PROJECTS_FETCH_ERROR,
+  SET_TRAY_ID
+} from '../actions/Actions'
+import {
+  ENCRYPTING_PASSWORD, HIGHLIGHT_TRAY, NAVIGATED, PASSWORD_ENCRYPT_ERROR, PASSWORD_ENCRYPTED, PROJECTS_FETCH_ERROR,
   PROJECTS_FETCHED,
   PROJECTS_FETCHING,
-  REMOVE_TRAY,
-  SET_SERVER_TYPE,
-  SET_TRAY_NAME,
-  SET_TRAY_URL,
-  SET_TRAY_USERNAME,
-  TRAY_ADDED,
-  SET_TRAY_ID
-} from '../actions/TrackingActions'
-import {INITIALISED, NAVIGATED} from '../actions/NevergreenActions'
-import {IMPORT_SUCCESS} from '../actions/ImportActions'
+  REMOVE_TRAY, SET_SERVER_TYPE, SET_TRAY_NAME, SET_TRAY_URL, SET_TRAY_USERNAME,
+  TRAY_ADDED
+} from '../actions/Actions'
+import {IMPORT_SUCCESS, INITIALISED} from '../actions/Actions'
 
 const DefaultState = Immutable.OrderedMap()
 

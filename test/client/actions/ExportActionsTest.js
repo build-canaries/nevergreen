@@ -2,6 +2,7 @@ import {proxyquire} from '../UnitSpec'
 import {before, beforeEach, describe, it} from 'mocha'
 import {expect} from 'chai'
 import sinon from 'sinon'
+import {EXPORTING, EXPORT_ERROR, EXPORT_SUCCESS} from '../../../src/client/actions/Actions'
 
 describe('ExportActions', function () {
   let ExportActions, Gateway, GitHubGateway, GitHubActions
@@ -21,7 +22,7 @@ describe('ExportActions', function () {
 
     it('should return the correct type', function () {
       const actual = ExportActions.exporting()
-      expect(actual).to.have.property('type', ExportActions.EXPORTING)
+      expect(actual).to.have.property('type', EXPORTING)
     })
   })
 
@@ -29,7 +30,7 @@ describe('ExportActions', function () {
 
     it('should return the correct type', function () {
       const actual = ExportActions.exportError()
-      expect(actual).to.have.property('type', ExportActions.EXPORT_ERROR)
+      expect(actual).to.have.property('type', EXPORT_ERROR)
     })
 
     it('should return the errors given', function () {
@@ -42,7 +43,7 @@ describe('ExportActions', function () {
 
     it('should return the correct type', function () {
       const actual = ExportActions.exportSuccess()
-      expect(actual).to.have.property('type', ExportActions.EXPORT_SUCCESS)
+      expect(actual).to.have.property('type', EXPORT_SUCCESS)
     })
 
     it('should return a success message', function () {
@@ -64,14 +65,14 @@ describe('ExportActions', function () {
     it('should dispatch exporting action', function () {
       Gateway.send = () => Promise.resolve({id: 'some-id'})
       return ExportActions.uploadToGitHub('irrelevant', 'irrelevant', 'irrelevant', 'irrelevant')(dispatch).then(() => {
-        expect(dispatch).to.have.been.calledWithMatch({type: ExportActions.EXPORTING})
+        expect(dispatch).to.have.been.calledWithMatch({type: EXPORTING})
       })
     })
 
     it('should dispatch export error action if the gist can not be created', function () {
       Gateway.send = () => Promise.reject({message: '{"message": "some-error"}'})
       return ExportActions.uploadToGitHub('irrelevant', 'irrelevant', 'irrelevant', 'irrelevant')(dispatch).then(() => {
-        expect(dispatch).to.have.been.calledWithMatch({type: ExportActions.EXPORT_ERROR})
+        expect(dispatch).to.have.been.calledWithMatch({type: EXPORT_ERROR})
       })
     })
 
@@ -102,7 +103,7 @@ describe('ExportActions', function () {
     it('should dispatch export success on successful create/update of the gist', function () {
       Gateway.send = () => Promise.resolve({id: 'some-id'})
       return ExportActions.uploadToGitHub('some-id', 'irrelevant', 'irrelevant', 'irrelevant')(dispatch).then(() => {
-        expect(dispatch).to.have.been.calledWithMatch({type: ExportActions.EXPORT_SUCCESS})
+        expect(dispatch).to.have.been.calledWithMatch({type: EXPORT_SUCCESS})
       })
     })
 

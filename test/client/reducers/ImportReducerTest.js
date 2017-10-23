@@ -2,9 +2,10 @@ import '../UnitSpec'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {reduce} from '../../../src/client/reducers/ImportReducer'
-import {IMPORT_ERROR, IMPORT_SUCCESS, IMPORTING} from '../../../src/client/actions/ImportActions'
-import {NAVIGATED} from '../../../src/client/actions/NevergreenActions'
+import {IMPORT_SUCCESS} from '../../../src/client/actions/Actions'
+import {NAVIGATED} from '../../../src/client/actions/Actions'
 import Immutable from 'immutable'
+import {IMPORT_ERROR, IMPORTING} from '../../../src/client/actions/Actions'
 
 describe('ImportReducer', function () {
 

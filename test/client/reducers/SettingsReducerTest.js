@@ -2,15 +2,15 @@ import '../UnitSpec'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {reduce} from '../../../src/client/reducers/SettingsReducer'
-import {INITIALISED} from '../../../src/client/actions/NevergreenActions'
-import {IMPORT_SUCCESS} from '../../../src/client/actions/ImportActions'
 import {
-  SHOW_BROKEN_BUILD_TIME,
-  PLAY_BROKEN_BUILD_SOUND_FX,
   BROKEN_BUILD_SOUND_FX,
-  SHOW_TRAY_NAME,
+  INITIALISED, PLAY_BROKEN_BUILD_SOUND_FX, SHOW_BROKEN_BUILD_TIME,
+  SHOW_TRAY_NAME
+} from '../../../src/client/actions/Actions'
+import {IMPORT_SUCCESS} from '../../../src/client/actions/Actions'
+import {
   REFRESH_TIME
-} from '../../../src/client/actions/SettingsActions'
+} from '../../../src/client/actions/Actions'
 import Immutable from 'immutable'
 
 describe('SettingsReducer', function () {
