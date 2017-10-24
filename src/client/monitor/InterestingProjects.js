@@ -43,7 +43,9 @@ class InterestingProjects extends Component {
 
 InterestingProjects.propTypes = {
   projects: PropTypes.arrayOf(PropTypes.shape({
-    projectId: PropTypes.string.isRequired
+    projectId: PropTypes.string.isRequired,
+    trayId: PropTypes.string.isRequired,
+    prognosis: PropTypes.oneOf(['sick', 'healthy-building', 'sick-building', 'unknown']).isRequired
   })),
   trays: PropTypes.arrayOf(PropTypes.shape({
     trayId: PropTypes.string.isRequired,

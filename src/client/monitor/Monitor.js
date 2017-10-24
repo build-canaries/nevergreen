@@ -48,7 +48,7 @@ Monitor.propTypes = {
   errors: PropTypes.arrayOf(PropTypes.string),
   trays: PropTypes.arrayOf(PropTypes.object).isRequired,
   selected: PropTypes.object.isRequired,
-  projects: PropTypes.arrayOf(PropTypes.object).isRequired,
+  projects: PropTypes.arrayOf(PropTypes.object),
   showBrokenBuildTimers: PropTypes.bool,
   showTrayName: PropTypes.bool,
   showBrokenBuildLabel: PropTypes.bool,

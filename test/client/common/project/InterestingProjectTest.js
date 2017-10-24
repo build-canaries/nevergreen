@@ -7,7 +7,7 @@ import InterestingProject from '../../../../src/client/common/project/Interestin
 
 describe('<InterestingProject/>', function () {
   const DEFAULT_PROPS = {
-    prognosis: '',
+    prognosis: 'unknown',
     name: '',
     stage: null,
     trayName: null,
@@ -68,7 +68,7 @@ describe('<InterestingProject/>', function () {
     })
 
     it('should not be shown if prognosis is not sick', function () {
-      const props = Object.assign({}, DEFAULT_PROPS, {showBrokenBuildTimers: true, prognosis: 'healthy'})
+      const props = Object.assign({}, DEFAULT_PROPS, {showBrokenBuildTimers: true, prognosis: 'unknown'})
       const wrapper = shallow(<InterestingProject {...props} />)
       expect(wrapper.find(locator('time-broken'))).to.not.be.present()
     })

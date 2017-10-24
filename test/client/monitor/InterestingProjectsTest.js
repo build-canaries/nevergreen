@@ -6,7 +6,7 @@ import InterestingProjects from '../../../src/client/monitor/InterestingProjects
 
 describe('<InterestingProjects/>', function () {
   const DEFAULT_PROPS = {
-    projects: [],
+    projects: null,
     trays: [],
     showBrokenBuildTimers: null,
     showTrayName: null,
@@ -17,8 +17,8 @@ describe('<InterestingProjects/>', function () {
 
   it('should render broken build sound fx if its enabled and any project is broken', function () {
     const props = Object.assign({}, DEFAULT_PROPS, {
-      projects: [{projectId: 'someId', prognosis: 'sick', name: '', lastBuildTime: ''}],
-      trays: [{someId: {name: 'some-tray-name'}}],
+      projects: [{projectId: 'someId', prognosis: 'sick', name: '', lastBuildTime: '', trayId: 'someId'}],
+      trays: [{name: 'some-tray-name', trayId: 'someId'}],
       playBrokenBuildSounds: true,
       brokenBuildFx: 'some-sfx'
     })
@@ -28,8 +28,8 @@ describe('<InterestingProjects/>', function () {
 
   it('should not render broken build sound fx if its disabled even if any project is sick', function () {
     const props = Object.assign({}, DEFAULT_PROPS, {
-      projects: [{projectId: 'someId', prognosis: 'sick', name: '', lastBuildTime: ''}],
-      trays: [{someId: {name: 'some-tray-name'}}],
+      projects: [{projectId: 'someId', prognosis: 'sick', name: '', lastBuildTime: '', trayId: 'someId'}],
+      trays: [{name: 'some-tray-name', trayId: 'someId'}],
       playBrokenBuildSounds: false
     })
     const wrapper = shallow(<InterestingProjects {...props} />)
@@ -38,8 +38,8 @@ describe('<InterestingProjects/>', function () {
 
   it('should not render broken build sound fx if its enabled but no projects are sick', function () {
     const props = Object.assign({}, DEFAULT_PROPS, {
-      projects: [{projectId: 'someId', prognosis: 'healthy', name: '', lastBuildTime: ''}],
-      trays: [{someId: {name: 'some-tray-name'}}],
+      projects: [{projectId: 'someId', prognosis: 'unknown', name: '', lastBuildTime: '', trayId: 'someId'}],
+      trays: [{name: 'some-tray-name', trayId: 'someId'}],
       playBrokenBuildSounds: false
     })
     const wrapper = shallow(<InterestingProjects {...props} />)
@@ -48,8 +48,8 @@ describe('<InterestingProjects/>', function () {
 
   it('should not render broken build sound fx if its enabled but a sound fx has not been set', function () {
     const props = Object.assign({}, DEFAULT_PROPS, {
-      projects: [{projectId: 'someId', prognosis: 'sick', name: '', lastBuildTime: ''}],
-      trays: [{someId: {name: 'some-tray-name'}}],
+      projects: [{projectId: 'someId', prognosis: 'sick', name: '', lastBuildTime: '', trayId: 'someId'}],
+      trays: [{name: 'some-tray-name', trayId: 'someId'}],
       playBrokenBuildSounds: true,
       brokenBuildFx: null
     })

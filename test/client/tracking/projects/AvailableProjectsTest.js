@@ -16,7 +16,8 @@ describe('<AvailableProjects/>', function () {
     selectProject: _.noop,
     timestamp: null,
     refreshTray: _.noop,
-    pendingRequest: null
+    pendingRequest: null,
+    url: ''
   }
 
   it('should render errors', function () {
