@@ -50,7 +50,7 @@
              (subject/get-all [{:url "url"}]) => irrelevant
              (provided
                (subject/invalid-scheme? {:url "url"}) => true
-               (create-error "Only http(s) URLs are supported: url") => {}))
+               (create-error "Only http(s) URLs are supported: url" "url") => {}))
 
        (facts "uses pmap to parallelise the work"
               (fact "if multiple projects are given"
@@ -69,7 +69,7 @@
              (subject/get-interesting [{:url "url" :included ["project-1"]}]) => irrelevant
              (provided
                (subject/invalid-scheme? (contains {:url "url"})) => true
-               (create-error "Only http(s) URLs are supported: url") => {}))
+               (create-error "Only http(s) URLs are supported: url" "url") => {}))
 
        (fact "removes healthy projects"
              (subject/get-interesting [{:tray-id "a-tray" :included ["project-1"] :url valid-url}]) => (list)
@@ -89,7 +89,7 @@
                       (subject/fetch-interesting anything) => irrelevant)))
 
        (fact "handles no tray id being given"
-             (subject/get-interesting [{:included ["project"] :url valid-url}]) => (list {:tray-id nil :project-id "project" :prognosis :sick})
+             (subject/get-interesting [{:included ["project"] :url valid-url}]) => (list {:tray-id nil :project-id "project" :prognosis :sick :url valid-url})
              (provided
                (subject/fetch-tray anything) => [{:project-id "project" :prognosis :sick}]))
 

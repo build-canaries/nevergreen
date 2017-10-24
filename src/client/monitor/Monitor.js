@@ -4,9 +4,9 @@ import classNames from 'classnames'
 import InterestingProjects from './InterestingProjects'
 import Success from './Success'
 import Loading from '../common/loading/Loading'
-import Messages from '../common/messages/Messages'
 import styles from './monitor.scss'
 import Timer from '../common/Timer'
+import _ from 'lodash'
 
 class Monitor extends Component {
   fetch = () => {
@@ -26,12 +26,10 @@ class Monitor extends Component {
 
     let content
 
-    if (this.props.errors) {
-      content = <Messages type='error' messages={this.props.errors}/>
-    } else if (this.props.projects.length > 0) {
-      content = <InterestingProjects {...this.props}/>
-    } else {
+    if (_.isEmpty(this.props.projects) && _.isEmpty(this.props.errors)) {
       content = <Success messages={this.props.messages}/>
+    } else {
+      content = <InterestingProjects {...this.props}/>
     }
 
     return (

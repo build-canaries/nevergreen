@@ -45,9 +45,12 @@
 (defn- add-tray-id [tray-id projects]
   (map #(merge {:tray-id tray-id} %) projects))
 
+(defn- add-tray-url [url projects]
+  (map #(merge {:url url} %) projects))
+
 (defn fetch-tray [tray]
   (if (invalid-scheme? tray)
-    (create-error (invalid-url-error-message (tray :url)))
+    (create-error (invalid-url-error-message (tray :url)) (tray :url))
     (let [server-type (get-server-type tray)
           decrypted-password (if-not (blank? (:password tray)) (crypt/decrypt (:password tray)))
           response (http-get (:url tray) (set-auth-header (:username tray) decrypted-password))]
@@ -60,7 +63,8 @@
 
 (defn fetch-all [tray]
   (->> (fetch-tray tray)
-       (add-tray-id (:tray-id tray))))
+       (add-tray-id (:tray-id tray))
+       (add-tray-url (:url tray))))
 
 (defn fetch-interesting [tray]
   (if (empty? (:included tray))
@@ -70,7 +74,8 @@
         (add-tray-id (:tray-id tray) projects)
         (->> (filtering/interesting projects)
              (filter-by-ids (:included tray))
-             (add-tray-id (:tray-id tray)))))))
+             (add-tray-id (:tray-id tray))
+             (add-tray-url (:url tray)))))))
 
 (defn get-all [trays]
   (if (= (count trays) 1)

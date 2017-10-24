@@ -12,7 +12,7 @@
             [ring-curl.middleware :refer [wrap-curl-logging]]
             [ring.middleware.gzip :refer :all]))
 
-(def ^:private invalid-json (error-response 400 "Malformed JSON in request body"))
+(def ^:private invalid-json (error-response 400 "Malformed JSON in request body" ""))
 (def ^:private preflight-response {:status 200})
 
 (def api-routes

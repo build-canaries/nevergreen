@@ -1,9 +1,9 @@
 import {proxyquire} from '../UnitSpec'
-import {describe, it, before, beforeEach} from 'mocha'
+import {before, beforeEach, describe, it} from 'mocha'
 import {expect} from 'chai'
 import sinon from 'sinon'
 import Immutable from 'immutable'
-import {INTERESTING_PROJECTS, INTERESTING_PROJECTS_ERROR} from '../../../src/client/actions/Actions'
+import {INTERESTING_PROJECTS} from '../../../src/client/actions/Actions'
 
 describe('MonitorActions', function () {
   let MonitorActions, ProjectsGateway, Gateway
@@ -26,20 +26,7 @@ describe('MonitorActions', function () {
 
     it('should return the projects given', function () {
       const actual = MonitorActions.interestingProjects([{foo: 'bar', webUrl: ''}])
-      expect(actual).to.have.property('data').that.includes.deep.property('[0].foo', 'bar')
-    })
-  })
-
-  describe('interesting projects error', function () {
-
-    it('should return the correct type', function () {
-      const actual = MonitorActions.interestingProjectsError()
-      expect(actual).to.have.property('type', INTERESTING_PROJECTS_ERROR)
-    })
-
-    it('should return the error given', function () {
-      const actual = MonitorActions.interestingProjectsError(['some-error'])
-      expect(actual).to.have.property('errors').that.contains('some-error')
+      expect(actual).to.have.property('projects').that.includes.deep.property('[0].foo', 'bar')
     })
   })
 
@@ -64,7 +51,7 @@ describe('MonitorActions', function () {
       ProjectsGateway.interesting = sinon.stub().returns({})
       Gateway.send = sinon.stub().returns(Promise.resolve([projectNoJob, projectWithJob]))
       return MonitorActions.fetchInteresting()(dispatch).then(() => {
-        expect(dispatch).to.have.been.calledWithMatch({data: Immutable.fromJS([projectNoJob])})
+        expect(dispatch).to.have.been.calledWithMatch({projects: Immutable.fromJS([projectNoJob])})
       })
     })
 
@@ -72,7 +59,7 @@ describe('MonitorActions', function () {
       ProjectsGateway.interesting = sinon.stub().returns({})
       Gateway.send = sinon.stub().returns(Promise.reject({}))
       return MonitorActions.fetchInteresting()(dispatch).then(() => {
-        expect(dispatch).to.have.been.calledWithMatch({type: INTERESTING_PROJECTS_ERROR})
+        expect(dispatch).to.have.been.calledWithMatch({type: INTERESTING_PROJECTS})
       })
     })
   })

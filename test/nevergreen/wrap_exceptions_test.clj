@@ -5,6 +5,6 @@
 
 (fact "exceptions should be get a 500 status and a generic message"
       ((subject/wrap-exceptions (fn [_]
-                                  (throw (Exception. "message")))) {}) => irrelevant
+                                  (throw (Exception. "message")))) {:uri "some-url"}) => irrelevant
       (provided
-        (error-response 500 "An unhandled exception was thrown") => {}))
+        (error-response 500 "An unhandled exception was thrown" "some-url") => {}))

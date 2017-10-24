@@ -121,14 +121,10 @@ export function encryptPassword(trayId, password, pendingRequest) {
 
       dispatch(encryptingPassword(trayId, password, request))
 
-      return send(request)
-        .then((data) => {
-          dispatch(passwordEncrypted(trayId, data.password))
-          return data.password
-        }).catch((error) => dispatch(passwordEncryptError(trayId, [
-          'Unable to encrypt password because of an error:',
-          `${error.status} - ${error.message}`
-        ])))
+      return send(request).then((data) => {
+        dispatch(passwordEncrypted(trayId, data.password))
+        return data.password
+      }).catch((error) => dispatch(passwordEncryptError(trayId, [`nevergreen server ${error.status} ${error.message}`])))
     } else {
       dispatch(passwordEncrypted(trayId, ''))
       return Promise.resolve('')
@@ -165,13 +161,14 @@ export function refreshTray(tray, pendingRequest) {
 
     dispatch(projectsFetching(trayId, request))
 
-    return send(request)
-      .then((json) => {
-        const filteredProjects = json.filter((project) => !project.job)
+    return send(request).then((json) => {
+      const filteredProjects = json.filter((project) => !project.job)
+      const errors = json.filter((project) => project.error).map((project) => project.error)
+      if (_.isEmpty(errors)) {
         return dispatch(projectsFetched(trayId, filteredProjects))
-      }).catch((error) => dispatch(projectsFetchError(trayId, [
-        'Unable to fetch projects because of an error:',
-        `${error.status} - ${error.message}`
-      ])))
+      } else {
+        return dispatch(projectsFetchError(trayId, errors))
+      }
+    }).catch((error) => dispatch(projectsFetchError(trayId, [`nevergreen server ${error.status} ${error.message}`])))
   }
 }

@@ -9,6 +9,12 @@ var go = response('go_cd.xml')
 var jenkins = response('jenkins.xml')
 var snap = response('snap_ci.xml')
 
+function getRandomInt(min, max) {
+  min = Math.ceil(min)
+  max = Math.floor(max)
+  return Math.floor(Math.random() * (max - min)) + min // The maximum is exclusive and the minimum is inclusive
+}
+
 function response(file) {
   return function (req, res) {
     fs.readFile('ci_stub_server/' + file, 'utf8', function (err, contents) {
@@ -31,6 +37,14 @@ app.get('/secure/cctray.xml', basicAuth('u', 'p'), generic)
 
 app.get('/error/:code', function (req, res) {
   res.status(req.params.code).send('Oh no, an error ' + req.params.code + ' happened!')
+})
+
+app.get('/randomly-error', function (req, res) {
+  if (getRandomInt(0, 100) >= 75) {
+    res.status(req.params.code).send('Oh no, an error ' + req.params.code + ' happened!')
+  } else {
+    generic(req, res)
+  }
 })
 
 app.listen(5050)

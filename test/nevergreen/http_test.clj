@@ -22,19 +22,19 @@
                (client/get ..url.. anything) => {:body irrelevant}))
 
        (fact "creates an error for unknown hosts"
-             (subject/http-get irrelevant {}) => irrelevant
+             (subject/http-get "some-url" {}) => irrelevant
              (provided
                (client/get anything anything) =throws=> (UnknownHostException. "some-host: unkown error")
-               (create-error "some-host is an unknown host") => {}))
+               (create-error "some-host is an unknown host" "some-url") => {}))
 
        (fact "creates an error for bad uri syntax"
-             (subject/http-get irrelevant {}) => irrelevant
+             (subject/http-get "some-url" {}) => irrelevant
              (provided
                (client/get anything anything) =throws=> (URISyntaxException. "some-url" "Illegal character in authority at index 0")
-               (create-error "Illegal character in authority at index 0: some-url") => {}))
+               (create-error "Illegal character in authority at index 0: some-url" "some-url") => {}))
 
        (fact "creates an error when the CI server responds with an error"
              (subject/http-get "some-url" {}) => irrelevant
              (provided
                (client/get anything anything) =throws=> (ex-info "irrelevant" {:status 500 :reason-phrase "some-error"})
-               (create-error "GET from [some-url] returned a status of [500 some-error]") => {})))
+               (create-error "500 some-error" "some-url") => {})))

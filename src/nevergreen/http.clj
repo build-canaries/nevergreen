@@ -18,19 +18,19 @@
                                :headers               (merge {"Accept" "application/xml"} additional-headers)
                                :as                    :stream
                                :throw-entire-message? true})]
-      (log/info (str "GET from [" url "] returned a status of [" (:status res) "]"))
+      (log/info (str "GET from [" url "] returned a status of [" (:status res) " " (:reason-phrase res) "]"))
       (:body res))
     (catch UnknownHostException e
       (let [host (first (s/split (.getMessage e) #":"))
             msg (str host " is an unknown host")]
         (log/info (str "GET from [" url "] threw an UnknownHostException [" msg "]"))
-        (create-error msg)))
+        (create-error msg url)))
     (catch URISyntaxException e
       (let [msg (.getMessage e)]
         (log/info (str "GET from [" url "] threw a URISyntaxException [" msg "]"))
-        (create-error msg)))
+        (create-error msg url)))
     (catch ExceptionInfo e
       (let [data (ex-data e)
-            msg (str "GET from [" url "] returned a status of [" (:status data) " " (:reason-phrase data) "]")]
-        (log/info msg)
-        (create-error msg)))))
+            msg (str (:status data) " " (:reason-phrase data))]
+        (log/info (str "GET from [" url "] returned a status of [" msg "]"))
+        (create-error msg url)))))

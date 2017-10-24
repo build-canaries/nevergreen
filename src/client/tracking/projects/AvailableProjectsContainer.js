@@ -19,7 +19,7 @@ function mapStateToProps(store, ownProps) {
     username: tray.get('username'),
     password: tray.get('password'),
     serverType: tray.get('serverType'),
-    errors: tray.get('error'),
+    errors: tray.get('errors'),
     timestamp: tray.get('timestamp'),
     pendingRequest: tray.get('pendingRequest'),
     projects,
