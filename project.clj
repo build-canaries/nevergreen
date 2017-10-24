@@ -8,7 +8,7 @@
                  [cheshire "5.8.0"]
                  [clj-cctray "0.12.0"]
                  [clj-http "3.7.0"]
-                 [ring-curl "0.3.0"]
+                 [ring-curl "0.3.1"]
                  [ring/ring-json "0.4.0"]
                  [ring/ring-defaults "0.3.1"]
                  [bk/ring-gzip "0.2.1"]
@@ -32,6 +32,6 @@
                                                                                               org.eclipse.jetty/jetty-io
                                                                                               org.eclipse.jetty/jetty-util]]
                                   [clj-webdriver/clj-webdriver "0.7.2"]
-                                  [io.github.bonigarcia/webdrivermanager "1.7.1" :exclusions [com.google.guava/guava
+                                  [io.github.bonigarcia/webdrivermanager "1.7.2" :exclusions [com.google.guava/guava
                                                                                               org.apache.commons/commons-lang3]]
                                   [ring/ring-mock "0.3.1"]]}})
