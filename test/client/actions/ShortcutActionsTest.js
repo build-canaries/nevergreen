@@ -1,4 +1,3 @@
-import '../UnitSpec'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {keyboardShortcut} from '../../../src/client/actions/ShortcutActions'

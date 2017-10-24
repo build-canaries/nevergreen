@@ -1,10 +1,14 @@
-import '../UnitSpec'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {reduce} from '../../../src/client/reducers/ProjectsReducer'
-import {SET_TRAY_ID} from '../../../src/client/actions/Actions'
-import {INITIALISED, PROJECTS_FETCHED, REMOVE_TRAY, TRAY_ADDED} from '../../../src/client/actions/Actions'
-import {IMPORT_SUCCESS} from '../../../src/client/actions/Actions'
+import {
+  IMPORT_SUCCESS,
+  INITIALISED,
+  PROJECTS_FETCHED,
+  REMOVE_TRAY,
+  SET_TRAY_ID,
+  TRAY_ADDED
+} from '../../../src/client/actions/Actions'
 import Immutable from 'immutable'
 
 describe('ProjectsReducer', function () {

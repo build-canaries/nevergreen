@@ -1,23 +1,23 @@
-import {proxyquire} from '../UnitSpec'
+import {proxyquire} from '../TestUtils'
 import {before, beforeEach, describe, it} from 'mocha'
 import {expect} from 'chai'
 import sinon from 'sinon'
 import {
-  TRAY_ADDED,
-  HIGHLIGHT_TRAY,
   ENCRYPTING_PASSWORD,
-  PASSWORD_ENCRYPTED,
+  HIGHLIGHT_TRAY,
   PASSWORD_ENCRYPT_ERROR,
-  REMOVE_TRAY,
-  PROJECTS_FETCHING,
-  PROJECTS_FETCHED,
+  PASSWORD_ENCRYPTED,
   PROJECTS_FETCH_ERROR,
+  PROJECTS_FETCHED,
+  PROJECTS_FETCHING,
+  REMOVE_TRAY,
   SELECT_PROJECT,
-  SET_TRAY_ID,
-  SET_TRAY_URL,
-  SET_TRAY_NAME,
   SET_SERVER_TYPE,
-  SET_TRAY_USERNAME
+  SET_TRAY_ID,
+  SET_TRAY_NAME,
+  SET_TRAY_URL,
+  SET_TRAY_USERNAME,
+  TRAY_ADDED
 } from '../../../src/client/actions/Actions'
 
 describe('TrackingActions', function () {

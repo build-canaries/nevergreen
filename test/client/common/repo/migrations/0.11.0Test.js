@@ -1,5 +1,5 @@
-import {proxyquire} from '../../../UnitSpec'
-import {describe, it, before} from 'mocha'
+import {proxyquire} from '../../../TestUtils'
+import {before, describe, it} from 'mocha'
 import {expect} from 'chai'
 
 describe('0.11.0', function () {

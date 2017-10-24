@@ -1,4 +1,3 @@
-import '../UnitSpec'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {
@@ -7,9 +6,14 @@ import {
   setRefreshTime,
   setShowBrokenBuildTime,
   setShowBuildLabel,
-  setShowTrayName} from '../../../src/client/actions/SettingsActions'
+  setShowTrayName
+} from '../../../src/client/actions/SettingsActions'
 import {
-  BROKEN_BUILD_SOUND_FX, PLAY_BROKEN_BUILD_SOUND_FX, REFRESH_TIME, SHOW_BROKEN_BUILD_TIME, SHOW_BUILD_LABEL,
+  BROKEN_BUILD_SOUND_FX,
+  PLAY_BROKEN_BUILD_SOUND_FX,
+  REFRESH_TIME,
+  SHOW_BROKEN_BUILD_TIME,
+  SHOW_BUILD_LABEL,
   SHOW_TRAY_NAME
 } from '../../../src/client/actions/Actions'
 

@@ -1,12 +1,12 @@
-import {proxyquire} from '../UnitSpec'
-import {describe, it, before, beforeEach} from 'mocha'
+import {proxyquire} from '../TestUtils'
+import {before, beforeEach, describe, it} from 'mocha'
 import {expect} from 'chai'
 import sinon from 'sinon'
 import {
-  INITIALISING,
-  INITIALISED,
-  NAVIGATED,
   FULL_SCREEN,
+  INITIALISED,
+  INITIALISING,
+  NAVIGATED,
   REQUEST_FULL_SCREEN
 } from '../../../src/client/actions/Actions'
 

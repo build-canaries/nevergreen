@@ -1,12 +1,13 @@
-import '../UnitSpec'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {reduce} from '../../../src/client/reducers/GitHubReducer'
-import {GITHUB_SET_DESCRIPTION} from '../../../src/client/actions/Actions'
-import {INITIALISED} from '../../../src/client/actions/Actions'
-import {IMPORT_SUCCESS} from '../../../src/client/actions/Actions'
+import {
+  GITHUB_SET_DESCRIPTION,
+  GITHUB_SET_GIST_ID,
+  IMPORT_SUCCESS,
+  INITIALISED
+} from '../../../src/client/actions/Actions'
 import Immutable from 'immutable'
-import {GITHUB_SET_GIST_ID} from '../../../src/client/actions/Actions'
 
 describe('GitHubReducer', function () {
 

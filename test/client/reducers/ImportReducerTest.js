@@ -1,11 +1,8 @@
-import '../UnitSpec'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {reduce} from '../../../src/client/reducers/ImportReducer'
-import {IMPORT_SUCCESS} from '../../../src/client/actions/Actions'
-import {NAVIGATED} from '../../../src/client/actions/Actions'
+import {IMPORT_ERROR, IMPORT_SUCCESS, IMPORTING, NAVIGATED} from '../../../src/client/actions/Actions'
 import Immutable from 'immutable'
-import {IMPORT_ERROR, IMPORTING} from '../../../src/client/actions/Actions'
 
 describe('ImportReducer', function () {
 

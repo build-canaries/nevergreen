@@ -1,4 +1,3 @@
-import '../UnitSpec'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import React from 'react'
@@ -31,7 +30,7 @@ describe('<InterestingProjects/>', function () {
     const props = Object.assign({}, DEFAULT_PROPS, {
       projects: [{projectId: 'someId', prognosis: 'sick', name: '', lastBuildTime: ''}],
       trays: [{someId: {name: 'some-tray-name'}}],
-      playBrokenBuildSounds: false,
+      playBrokenBuildSounds: false
     })
     const wrapper = shallow(<InterestingProjects {...props} />)
     expect(wrapper.find('audio')).to.not.be.present()
@@ -41,7 +40,7 @@ describe('<InterestingProjects/>', function () {
     const props = Object.assign({}, DEFAULT_PROPS, {
       projects: [{projectId: 'someId', prognosis: 'healthy', name: '', lastBuildTime: ''}],
       trays: [{someId: {name: 'some-tray-name'}}],
-      playBrokenBuildSounds: false,
+      playBrokenBuildSounds: false
     })
     const wrapper = shallow(<InterestingProjects {...props} />)
     expect(wrapper.find('audio')).to.not.be.present()

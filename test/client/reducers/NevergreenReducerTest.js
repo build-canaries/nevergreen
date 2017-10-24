@@ -1,10 +1,8 @@
-import '../UnitSpec'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {reduce} from '../../../src/client/reducers/NevergreenReducer'
-import {REQUEST_FULL_SCREEN} from '../../../src/client/actions/Actions'
+import {FULL_SCREEN, INITIALISED, INITIALISING, REQUEST_FULL_SCREEN} from '../../../src/client/actions/Actions'
 import Immutable from 'immutable'
-import {FULL_SCREEN, INITIALISED, INITIALISING} from '../../../src/client/actions/Actions'
 
 describe('NevergreenReducer', function () {
 

@@ -1,15 +1,14 @@
-import '../UnitSpec'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {reduce} from '../../../src/client/reducers/SettingsReducer'
 import {
   BROKEN_BUILD_SOUND_FX,
-  INITIALISED, PLAY_BROKEN_BUILD_SOUND_FX, SHOW_BROKEN_BUILD_TIME,
+  IMPORT_SUCCESS,
+  INITIALISED,
+  PLAY_BROKEN_BUILD_SOUND_FX,
+  REFRESH_TIME,
+  SHOW_BROKEN_BUILD_TIME,
   SHOW_TRAY_NAME
-} from '../../../src/client/actions/Actions'
-import {IMPORT_SUCCESS} from '../../../src/client/actions/Actions'
-import {
-  REFRESH_TIME
 } from '../../../src/client/actions/Actions'
 import Immutable from 'immutable'
 

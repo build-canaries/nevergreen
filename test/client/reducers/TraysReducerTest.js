@@ -1,17 +1,25 @@
-import '../UnitSpec'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {reduce} from '../../../src/client/reducers/TraysReducer'
 import {
-  ENCRYPTING_PASSWORD, HIGHLIGHT_TRAY, NAVIGATED, PASSWORD_ENCRYPT_ERROR, PASSWORD_ENCRYPTED, PROJECTS_FETCH_ERROR,
+  ENCRYPTING_PASSWORD,
+  HIGHLIGHT_TRAY,
+  IMPORT_SUCCESS,
+  INITIALISED,
+  NAVIGATED,
+  PASSWORD_ENCRYPT_ERROR,
+  PASSWORD_ENCRYPTED,
+  PROJECTS_FETCH_ERROR,
   PROJECTS_FETCHED,
   PROJECTS_FETCHING,
-  REMOVE_TRAY, SET_SERVER_TYPE, SET_TRAY_NAME, SET_TRAY_URL, SET_TRAY_USERNAME,
+  REMOVE_TRAY,
+  SET_SERVER_TYPE,
+  SET_TRAY_ID,
+  SET_TRAY_NAME,
+  SET_TRAY_URL,
+  SET_TRAY_USERNAME,
   TRAY_ADDED
 } from '../../../src/client/actions/Actions'
-import {IMPORT_SUCCESS, INITIALISED} from '../../../src/client/actions/Actions'
-import {
-  SET_TRAY_ID} from '../../../src/client/actions/Actions'
 import Immutable from 'immutable'
 
 describe('TraysReducer', function () {

@@ -1,10 +1,7 @@
-import '../UnitSpec'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {reduce} from '../../../src/client/reducers/SuccessReducer'
-import {INITIALISED, MESSAGE_ADDED} from '../../../src/client/actions/Actions'
-import {IMPORT_SUCCESS} from '../../../src/client/actions/Actions'
-import {MESSAGE_REMOVED} from '../../../src/client/actions/Actions'
+import {IMPORT_SUCCESS, INITIALISED, MESSAGE_ADDED, MESSAGE_REMOVED} from '../../../src/client/actions/Actions'
 import Immutable from 'immutable'
 
 describe('SuccessReducer', function () {

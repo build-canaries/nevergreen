@@ -1,4 +1,4 @@
-import {locator} from '../../UnitSpec'
+import {locator} from '../../TestUtils'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import React from 'react'

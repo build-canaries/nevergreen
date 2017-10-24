@@ -1,9 +1,9 @@
-import {proxyquire} from '../UnitSpec'
+import {proxyquire} from '../TestUtils'
 import {before, beforeEach, describe, it} from 'mocha'
 import {expect} from 'chai'
 import Immutable from 'immutable'
 import sinon from 'sinon'
-import {IMPORTING, IMPORT_ERROR, IMPORT_SUCCESS} from '../../../src/client/actions/Actions'
+import {IMPORT_ERROR, IMPORT_SUCCESS, IMPORTING} from '../../../src/client/actions/Actions'
 
 describe('ImportActions', function () {
   let ImportActions, LocalRepository, Data, Migrations, Gateway, GitHubGateway

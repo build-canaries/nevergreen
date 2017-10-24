@@ -1,4 +1,4 @@
-import {locator} from '../../UnitSpec'
+import {locator} from '../../TestUtils'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import React from 'react'
@@ -103,7 +103,11 @@ describe('<InterestingProject/>', function () {
     })
 
     it('should not be shown if prognosis is not sick', function () {
-      const props = Object.assign({}, DEFAULT_PROPS, {showBuildLabel: true, lastBuildLabel: '1234', prognosis: 'healthy-building'})
+      const props = Object.assign({}, DEFAULT_PROPS, {
+        showBuildLabel: true,
+        lastBuildLabel: '1234',
+        prognosis: 'healthy-building'
+      })
       const wrapper = shallow(<InterestingProject {...props} />)
       expect(wrapper.find(locator('build-label'))).to.not.be.present()
     })
@@ -122,7 +126,11 @@ describe('<InterestingProject/>', function () {
     })
 
     it('should trim the build label to 10 characters', function () {
-      const props = Object.assign({}, DEFAULT_PROPS, {showBuildLabel: true, lastBuildLabel: '12345678901234567890', prognosis: 'sick'})
+      const props = Object.assign({}, DEFAULT_PROPS, {
+        showBuildLabel: true,
+        lastBuildLabel: '12345678901234567890',
+        prognosis: 'sick'
+      })
       const wrapper = shallow(<InterestingProject {...props} />)
       expect(wrapper.find(locator('build-label')).text()).to.equal(' #1234567890')
     })

@@ -1,8 +1,8 @@
-import {proxyquire} from '../UnitSpec'
+import {proxyquire} from '../TestUtils'
 import {before, beforeEach, describe, it} from 'mocha'
 import {expect} from 'chai'
 import sinon from 'sinon'
-import {EXPORTING, EXPORT_ERROR, EXPORT_SUCCESS} from '../../../src/client/actions/Actions'
+import {EXPORT_ERROR, EXPORT_SUCCESS, EXPORTING} from '../../../src/client/actions/Actions'
 
 describe('ExportActions', function () {
   let ExportActions, Gateway, GitHubGateway, GitHubActions

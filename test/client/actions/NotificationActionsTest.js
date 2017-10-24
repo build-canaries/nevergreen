@@ -1,5 +1,5 @@
-import {proxyquire} from '../UnitSpec'
-import {describe, it, before, beforeEach} from 'mocha'
+import {proxyquire} from '../TestUtils'
+import {before, beforeEach, describe, it} from 'mocha'
 import {expect} from 'chai'
 import sinon from 'sinon'
 import {NOTIFICATION, NOTIFICATION_DISMISS} from '../../../src/client/actions/Actions'

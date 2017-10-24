@@ -1,4 +1,3 @@
-import '../UnitSpec'
 import {after, before, beforeEach, describe, it} from 'mocha'
 import {expect} from 'chai'
 import React from 'react'

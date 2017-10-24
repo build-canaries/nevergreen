@@ -1,12 +1,6 @@
-import '../UnitSpec'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
-import {
-  messageAdded,
-  messageInvalid,
-  removeMessage,
-  addMessage
-} from '../../../src/client/actions/SuccessActions'
+import {addMessage, messageAdded, messageInvalid, removeMessage} from '../../../src/client/actions/SuccessActions'
 import {MESSAGE_ADDED, MESSAGE_INVALID, MESSAGE_REMOVED} from '../../../src/client/actions/Actions'
 
 describe('SuccessActions', function () {
