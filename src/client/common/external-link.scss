@@ -1,0 +1,5 @@
+@import 'accessibility';
+
+.newWindow {
+  @extend %visuallyHidden;
+}

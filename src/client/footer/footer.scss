@@ -18,8 +18,8 @@
   display: none;
 }
 
-.version,
-.commitHash {
+.version {
+  color: $white;
   text-decoration: none;
 
   &:hover,
@@ -33,26 +33,14 @@
   }
 }
 
-.versionNumber,
-.versionName,
-.commitHash {
+.copyright {
   color: $white;
-  display: inline-block;
-}
+  display: block;
+  padding-top: 1em;
 
-.versionNumber,
-.commitHash {
-  clear: left;
-  float: left;
-}
-
-.versionName {
-  padding-left: 1em;
-}
-
-.commitHash {
-  @include font-scale(-1);
-
-  font-family: $monospace;
-  margin-top: 1em;
+  @include respond-to(tablet, desktop) {
+    display: inline;
+    float: right;
+    padding-top: 0;
+  }
 }
