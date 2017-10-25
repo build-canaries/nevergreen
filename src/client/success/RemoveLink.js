@@ -21,7 +21,7 @@ RemoveLink.propTypes = {
   hotkeys: PropTypes.arrayOf(PropTypes.string).isRequired,
   removeMessage: PropTypes.func.isRequired,
   message: PropTypes.string.isRequired,
-  className: PropTypes.string,
+  className: PropTypes.string
 }
 
 export default RemoveLink

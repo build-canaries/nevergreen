@@ -52,9 +52,9 @@ class Input extends Component {
     return (
       <label className={labelClasses}>
         <span className={styles.label}>{this.props.children}</span>
-        <input className={styles.input} onKeyPress={this.onEnter} onBlur={this.onBlur} spellCheck={false} autoComplete='off'
-               autoFocus={invalid} {...inputProps}
-               ref={(node) => this.node = node} tabIndex={this.props.readOnly ? -1 : 0}/>
+        <input className={styles.input} onKeyPress={this.onEnter} onBlur={this.onBlur} spellCheck={false}
+               autoComplete='off' autoFocus={invalid} {...inputProps} ref={(node) => this.node = node}
+               tabIndex={this.props.readOnly ? -1 : 0}/>
         {this.props.readOnly ? <i className={styles.locked} title='read only'/> : null}
         <Messages className={styles.errors} type='error' messages={this.state.errors}/>
       </label>

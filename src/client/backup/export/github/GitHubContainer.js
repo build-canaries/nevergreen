@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {uploadToGitHub} from '../../../actions/ExportActions'
-import {gitHubSetGistId, gitHubSetDescription} from '../../../actions/GitHubActions'
+import {gitHubSetDescription, gitHubSetGistId} from '../../../actions/GitHubActions'
 import GitHub from './GitHub'
 
 function mapDispatchToProps(dispatch) {

@@ -12,13 +12,13 @@ class Footer extends Component {
 
     return (
       <footer role='contentinfo' className={footerClassNames} style={footerStyle}>
-        <a href='https://github.com/build-canaries/nevergreen/releases' target='_blank' rel='noopener noreferrer' className={styles.version}
-           title='version'>
+        <a href='https://github.com/build-canaries/nevergreen/releases' target='_blank' rel='noopener noreferrer'
+           className={styles.version} title='version'>
           <span className={styles.versionNumber}>v{this.props.versionNumber}</span>
           <span className={styles.versionName}>{this.props.versionName}</span>
         </a>
-        <a href='https://github.com/build-canaries/nevergreen/commits/master' target='_blank' rel='noopener noreferrer' title='commit hash'
-           className={styles.commitHash}>{`<${this.props.commitHash}>`}</a>
+        <a href='https://github.com/build-canaries/nevergreen/commits/master' target='_blank' rel='noopener noreferrer'
+           title='commit hash' className={styles.commitHash}>{`<${this.props.commitHash}>`}</a>
       </footer>
     )
   }

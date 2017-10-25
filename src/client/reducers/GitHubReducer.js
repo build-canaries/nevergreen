@@ -1,8 +1,5 @@
 import Immutable from 'immutable'
-import {GITHUB_SET_DESCRIPTION} from '../actions/Actions'
-import {INITIALISED} from '../actions/Actions'
-import {IMPORT_SUCCESS} from '../actions/Actions'
-import {GITHUB_SET_GIST_ID} from '../actions/Actions'
+import {GITHUB_SET_DESCRIPTION, GITHUB_SET_GIST_ID, IMPORT_SUCCESS, INITIALISED} from '../actions/Actions'
 
 const DefaultState = Immutable.Map({
   gistId: '',

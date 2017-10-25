@@ -11,7 +11,7 @@ function addVersion() {
       versionNumber: Package.version,
       versionName: Package.versionName,
       versionMeta: Package.versionMeta,
-      commitHash: Package.commitHash,
+      commitHash: Package.commitHash
     }
   }
 }

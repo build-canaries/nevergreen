@@ -23,7 +23,8 @@ class AddedImages extends Component {
                   <div className={styles.imageWrapper}>
                     <img className={styles.image} src={url} alt={url} title={url} data-locator='success-image'/>
                   </div>
-                  <RemoveLink hotkeys={[`y i ${index}`]} removeMessage={remove} message={url} className={styles.remove}/>
+                  <RemoveLink hotkeys={[`y i ${index}`]} removeMessage={remove} message={url}
+                              className={styles.remove}/>
                 </li>
               )
             })

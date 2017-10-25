@@ -39,7 +39,8 @@ class Container extends Component {
 
     return (
       <section className={styles.container} ref={(node) => this.node = node}>
-        <div className={titleBarClasses} title={tooltip} onClick={this.toggleHidden} onKeyPress={this.keyToggle} tabIndex='0'>
+        <div className={titleBarClasses} title={tooltip} onClick={this.toggleHidden} onKeyPress={this.keyToggle}
+             tabIndex='0'>
           <h3 className={styles.title}>{this.props.title}</h3>
           <h4 className={styles.subTitle}>{this.props.subTitle}</h4>
         </div>

@@ -12,7 +12,7 @@ export const SCHEMA = {
         versionNumber: {type: 'string', required: true},
         versionName: {type: 'string', required: true},
         versionMeta: {type: 'string', required: true},
-        commitHash: {type: 'string', required: true},
+        commitHash: {type: 'string', required: true}
       },
       additionalProperties: false
     },

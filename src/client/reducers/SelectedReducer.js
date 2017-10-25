@@ -1,7 +1,13 @@
 import Immutable from 'immutable'
-import {SELECT_PROJECT} from '../actions/Actions'
-import {INITIALISED, PROJECTS_FETCHED, REMOVE_TRAY, SET_TRAY_ID, TRAY_ADDED} from '../actions/Actions'
-import {IMPORT_SUCCESS} from '../actions/Actions'
+import {
+  IMPORT_SUCCESS,
+  INITIALISED,
+  PROJECTS_FETCHED,
+  REMOVE_TRAY,
+  SELECT_PROJECT,
+  SET_TRAY_ID,
+  TRAY_ADDED
+} from '../actions/Actions'
 
 const DefaultState = Immutable.Map()
 

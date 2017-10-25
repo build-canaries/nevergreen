@@ -70,7 +70,8 @@ class Help extends Component {
             </tr>
             </tbody>
           </table>
-          <p>If you are just checking us out then you can use the Apache projects cctray at: <span className={styles.exampleTray}>https://builds.apache.org/cc.xml</span>
+          <p>If you are just checking us out then you can use the Apache projects cctray at: <span
+            className={styles.exampleTray}>https://builds.apache.org/cc.xml</span>
           </p>
         </Container>
 
@@ -81,9 +82,11 @@ class Help extends Component {
           </span>
           <p>Need some inspiration?</p>
           <p>
-            Try searching for some <a href='https://duckduckgo.com/?q=nature+1920x1080&iax=1&ia=images' target='_blank' rel='noopener noreferrer'>nice
+            Try searching for some <a href='https://duckduckgo.com/?q=nature+1920x1080&iax=1&ia=images' target='_blank'
+                                      rel='noopener noreferrer'>nice
             images</a> or check
-            out <a href='http://www.disapprovallook.com/' target='_blank' rel='noopener noreferrer'>ಠ_ಠ Disapproval Look</a> for some fun messages,
+            out <a href='http://www.disapprovallook.com/' target='_blank' rel='noopener noreferrer'>ಠ_ಠ Disapproval
+            Look</a> for some fun messages,
             like jelly guy! ༼つ◕_◕༽つ
           </p>
         </Container>
@@ -91,21 +94,25 @@ class Help extends Component {
         <Container title='Backup' className={styles.container}>
           <span>
             To export to GitHub you need to generate a <a
-            href='https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/' target='_blank' rel='noopener noreferrer'>personal access token</a> to
+            href='https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/'
+            target='_blank' rel='noopener noreferrer'>personal access token</a> to
             allow a non-anonymous gist to be created. Creating a non-anonymous gist will allow you to delete it via the website later.
           </span>
           <p>
-            The token <em>only</em> requires the <code>gist</code> <a href='https://developer.github.com/v3/oauth/#scopes' target='_blank'
-                                                                      rel='noopener noreferrer'>scope</a>.
+            The token <em>only</em> requires the <code>gist</code> <a
+            href='https://developer.github.com/v3/oauth/#scopes' target='_blank'
+            rel='noopener noreferrer'>scope</a>.
           </p>
           <p>
-            Access tokens are not stored locally as they would allow editing of any of a users gists, so they need to be manually entered every time
+            Access tokens are not stored locally as they would allow editing of any of a users gists, so they need to be
+            manually entered every time
             you
             want to export.
           </p>
           <p>
-            Importing does not require an access token as even <a href='https://help.github.com/articles/about-gists/#secret-gists' target='_blank'
-                                                                  rel='noopener noreferrer'>secret gists are not actually private</a>.
+            Importing does not require an access token as even <a
+            href='https://help.github.com/articles/about-gists/#secret-gists' target='_blank'
+            rel='noopener noreferrer'>secret gists are not actually private</a>.
           </p>
         </Container>
 
@@ -184,13 +191,15 @@ class Help extends Component {
               </td>
             </tr>
             <tr>
-              <td><kbd className={styles.binding}>y</kbd><kbd className={styles.binding}>m</kbd><kbd className={styles.binding}>0..n</kbd>
+              <td><kbd className={styles.binding}>y</kbd><kbd className={styles.binding}>m</kbd><kbd
+                className={styles.binding}>0..n</kbd>
               </td>
               <td>Delete success message</td>
               <td>Deletes the message at the given index (the first message is at index 0).</td>
             </tr>
             <tr>
-              <td><kbd className={styles.binding}>y</kbd><kbd className={styles.binding}>i</kbd><kbd className={styles.binding}>0..n</kbd>
+              <td><kbd className={styles.binding}>y</kbd><kbd className={styles.binding}>i</kbd><kbd
+                className={styles.binding}>0..n</kbd>
               </td>
               <td>Delete success image</td>
               <td>Deletes the image at the given index (the first image is at index 0).</td>
@@ -208,21 +217,24 @@ class Help extends Component {
             </li>
             <li>
               <span className={styles.twitter}/>
-              Follow Build Canaries on <a href='https://twitter.com/BuildCanaries' target='_blank' rel='noopener noreferrer'>Twitter</a> for
+              Follow Build Canaries on <a href='https://twitter.com/BuildCanaries' target='_blank'
+                                          rel='noopener noreferrer'>Twitter</a> for
               news and updates.
             </li>
             <li>
-              <span className={styles.icoMoon}/>
-              Icons from <a href='https://icomoon.io/' target='_blank' rel='noopener noreferrer'>IcoMoon</a> &quot;custom built and crisp icon fonts,
-              done right&quot;.
+              <span className={styles.icoMoon}/>Icons from
+              <a href='https://icomoon.io/' target='_blank' rel='noopener noreferrer'>IcoMoon</a> &quot;custom built
+              and crisp icon fonts, done right&quot;.
             </li>
           </ul>
         </Container>
 
         <Container title='licenses' className={styles.container}>
           <span>
-            &quot;Pacman Death Sound&quot; by <a href='http://www.orangefreesounds.com/pacman-death-sound/' target='_blank' rel='noopener noreferrer'>Alexander</a> is
-            licensed under <a href='https://creativecommons.org/licenses/by-nc/4.0/legalcode' target='_blank' rel='noopener noreferrer'>CC BY 4.0</a>
+            &quot;Pacman Death Sound&quot; by <a href='http://www.orangefreesounds.com/pacman-death-sound/'
+                                                 target='_blank' rel='noopener noreferrer'>Alexander</a> is
+            licensed under <a href='https://creativecommons.org/licenses/by-nc/4.0/legalcode' target='_blank'
+                              rel='noopener noreferrer'>CC BY 4.0</a>
           </span>
         </Container>
       </section>

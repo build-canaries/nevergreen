@@ -17,10 +17,12 @@ class Locally extends Component {
       <div>
         <label>
           <span className={styles.label}>current configuration</span>
-          <textarea className={styles.data} id='export-data' value={this.props.configuration} readOnly spellCheck='false' data-locator='export-data'/>
+          <textarea className={styles.data} id='export-data' value={this.props.configuration} readOnly
+                    spellCheck='false' data-locator='export-data'/>
         </label>
         <Clipboard elementSelector='#copy-to-clipboard' onSuccess={this.copySuccess} onError={this.copyError}/>
-        <button className={styles.copy} id='copy-to-clipboard' data-clipboard-target='#export-data'>copy to clipboard</button>
+        <button className={styles.copy} id='copy-to-clipboard' data-clipboard-target='#export-data'>copy to clipboard
+        </button>
       </div>
     )
   }

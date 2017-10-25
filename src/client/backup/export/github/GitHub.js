@@ -43,16 +43,16 @@ class GitHub extends Component {
     return (
       <div>
         <fieldset className={styles.gistValues}>
-          <Input className={styles.oauthToken} onChange={this.oauthTokenChanged} onBlur={this.oauthTokenChanged} value={this.state.oauthToken}
-                 disabled={disabled}>
+          <Input className={styles.oauthToken} onChange={this.oauthTokenChanged} onBlur={this.oauthTokenChanged}
+                 value={this.state.oauthToken} disabled={disabled}>
             <span>access token</span>
           </Input>
-          <Input className={styles.description} value={this.state.description} onChange={this.descriptionChanged} onBlur={this.setDescription}
-                 disabled={disabled}>
+          <Input className={styles.description} value={this.state.description} onChange={this.descriptionChanged}
+                 onBlur={this.setDescription} disabled={disabled}>
             <span>description</span>
           </Input>
-          <Input className={styles.gistId} value={this.state.gistId} onChange={this.gistIdChanged} onBlur={this.setGistId}
-                 placeholder='leave blank to create a new gist' disabled={disabled}>
+          <Input className={styles.gistId} value={this.state.gistId} onChange={this.gistIdChanged}
+                 onBlur={this.setGistId} placeholder='leave blank to create a new gist' disabled={disabled}>
             <span>gist ID</span>
           </Input>
         </fieldset>

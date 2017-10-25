@@ -95,15 +95,19 @@ class TraySettings extends Component {
 
     return (
       <section data-locator='tray-settings'>
-        <Input className={styles.traySettingsName} value={this.state.newName} onChange={this.nameChanged} onBlur={this.setName} onEnter={this.setName}
-               placeholder='e.g. project or team name' data-locator='tray-name' autoFocus>
+        <Input className={styles.traySettingsName} value={this.state.newName} onChange={this.nameChanged}
+               onBlur={this.setName} onEnter={this.setName} placeholder='e.g. project or team name'
+               data-locator='tray-name' autoFocus>
           <span>name</span>
         </Input>
-        <button className={styles.random} onClick={this.generateNewName} data-locator='generate-random'>randomise</button>
-        <Input className={styles.traySettingsUrl} value={this.state.newUrl} onChange={this.urlChanged} onBlur={this.setUrl} onEnter={this.setUrl}>
+        <button className={styles.random} onClick={this.generateNewName} data-locator='generate-random'>randomise
+        </button>
+        <Input className={styles.traySettingsUrl} value={this.state.newUrl} onChange={this.urlChanged}
+               onBlur={this.setUrl} onEnter={this.setUrl}>
           <span>URL</span>
         </Input>
-        <DropDown className={styles.serverType} title='server type' value={this.props.serverType} onChange={this.serverTypeChange}>
+        <DropDown className={styles.serverType} title='server type' value={this.props.serverType}
+                  onChange={this.serverTypeChange}>
           <option value=''>Auto detect</option>
           <option value='circle'>CircleCI</option>
           <option value='cruise-control'>CruiseControl</option>
@@ -117,12 +121,13 @@ class TraySettings extends Component {
           <option value='team-city'>TeamCity</option>
           <option value='travis'>Travis CI</option>
         </DropDown>
-        <Input className={styles.traySettingsUsername} value={this.state.newUsername} onChange={this.usernameChanged} onBlur={this.setUsername}
-               onEnter={this.setUsername}>
+        <Input className={styles.traySettingsUsername} value={this.state.newUsername} onChange={this.usernameChanged}
+               onBlur={this.setUsername} onEnter={this.setUsername}>
           <span>username</span>
         </Input>
-        <Input className={styles.existingPassword} value={password} onChange={this.passwordChanged} onEnter={this.setPassword}
-               readOnly={!this.state.updatingPassword} ref={(node) => this.passwordInput = node}>
+        <Input className={styles.existingPassword} value={password} onChange={this.passwordChanged}
+               onEnter={this.setPassword} readOnly={!this.state.updatingPassword}
+               ref={(node) => this.passwordInput = node}>
           <span>password</span>
         </Input>
         {this.state.updatingPassword

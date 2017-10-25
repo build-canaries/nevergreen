@@ -20,7 +20,8 @@ class Tabs extends Component {
           {this.props.titles.map((title, i) => {
             const isActive = i === this.state.active
             return (
-              <button key={title} className={styles.tab} onClick={() => this.switchTabs(i)} disabled={isActive} data-locator={`tab-${title}`}>
+              <button key={title} className={styles.tab} onClick={() => this.switchTabs(i)} disabled={isActive}
+                      data-locator={`tab-${title}`}>
                 {title}
               </button>
             )

@@ -101,7 +101,8 @@ class ScaledGrid extends Component {
             })
           }
         </ul>
-        <Resizable onResize={() => this.setState(calculateChildDimensions(this.node, this.fontMetrics, this.childrenText))}/>
+        <Resizable
+          onResize={() => this.setState(calculateChildDimensions(this.node, this.fontMetrics, this.childrenText))}/>
       </span>
     )
   }

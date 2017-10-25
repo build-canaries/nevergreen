@@ -49,7 +49,10 @@ class AudioSettings extends Component {
     const audio = new Audio(this.state.soundFx)
     this.setState({audio, errors: [], playing: true})
     audio.addEventListener('ended', this.audioStopped)
-    audio.play().catch((e) => this.setState({errors: ['Unable to play broken build sound because of an error:', e.message], playing: false}))
+    audio.play().catch((e) => this.setState({
+      errors: ['Unable to play broken build sound because of an error:', e.message],
+      playing: false
+    }))
   }
 
   stop = () => {
@@ -75,17 +78,21 @@ class AudioSettings extends Component {
     return (
       <Container title='audio' className={styles.container}>
         <fieldset>
-          <Checkbox checked={this.props.playBrokenBuildSoundFx} onToggle={this.toggleBrokenSounds} data-locator='play-sounds'
+          <Checkbox checked={this.props.playBrokenBuildSoundFx} onToggle={this.toggleBrokenSounds}
+                    data-locator='play-sounds'
                     disabled={this.state.playing}>
             <span>play a sound when a build breaks</span>
           </Checkbox>
           <div className={styles.soundFx}>
-            <Input type='url' className={styles.soundFxInput} placeholder='audio file URL' onChange={this.updateSoundFx} value={this.state.soundFx}
-                   onBlur={this.setSoundFx} onEnter={this.setSoundFx} required={this.props.playBrokenBuildSoundFx} onValidation={this.onValidation}
+            <Input type='url' className={styles.soundFxInput} placeholder='audio file URL' onChange={this.updateSoundFx}
+                   value={this.state.soundFx}
+                   onBlur={this.setSoundFx} onEnter={this.setSoundFx} required={this.props.playBrokenBuildSoundFx}
+                   onValidation={this.onValidation}
                    disabled={this.state.playing}>
               <span>broken build sound</span>
             </Input>
-            <button className={playButtonClasses} onClick={this.state.playing ? this.stop : this.play} disabled={playingDisabled}>
+            <button className={playButtonClasses} onClick={this.state.playing ? this.stop : this.play}
+                    disabled={playingDisabled}>
               {this.state.playing ? 'stop' : 'play'}
             </button>
           </div>

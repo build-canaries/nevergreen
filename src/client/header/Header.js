@@ -54,8 +54,8 @@ class Header extends Component {
 
                 return (
                   <li key={item.id}>
-                    <NavLink to={`/${item.id}`} className={styles.menuItem} activeClassName={styles.active} onClick={this.hideMenu}
-                             data-locator={`menu-${item.id}`}>
+                    <NavLink to={`/${item.id}`} className={styles.menuItem} activeClassName={styles.active}
+                             onClick={this.hideMenu} data-locator={`menu-${item.id}`}>
                       <i className={iconClasses}/>
                       <span className={styles.menuTitle}>{item.title}</span>
                       <Shortcut hotkeys={item.shortcuts}/>

@@ -1,11 +1,14 @@
 import Immutable from 'immutable'
 import {
-  SHOW_BUILD_LABEL} from '../actions/Actions'
-import {
-  BROKEN_BUILD_SOUND_FX, INITIALISED, PLAY_BROKEN_BUILD_SOUND_FX, REFRESH_TIME, SHOW_BROKEN_BUILD_TIME,
+  BROKEN_BUILD_SOUND_FX,
+  IMPORT_SUCCESS,
+  INITIALISED,
+  PLAY_BROKEN_BUILD_SOUND_FX,
+  REFRESH_TIME,
+  SHOW_BROKEN_BUILD_TIME,
+  SHOW_BUILD_LABEL,
   SHOW_TRAY_NAME
 } from '../actions/Actions'
-import {IMPORT_SUCCESS} from '../actions/Actions'
 import defaultSoundFx from '../settings/pacman_death.mp3'
 
 const DefaultState = Immutable.Map({

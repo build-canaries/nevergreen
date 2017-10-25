@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {exportSuccess, exportError} from '../../../actions/ExportActions'
+import {exportError, exportSuccess} from '../../../actions/ExportActions'
 import Locally from './Locally'
 
 function mapDispatchToProps(dispatch) {

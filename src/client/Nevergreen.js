@@ -58,10 +58,12 @@ class Nevergreen extends Component {
       <main className={styles.nevergreen} onMouseMove={this.disableFullScreen}>
         <Timer onTrigger={this.checkVersion} interval={TWENTY_FOUR_HOURS}/>
         <Header fullScreen={this.props.isFullScreen}/>
-        <Notification notification={this.props.notification} dismiss={this.props.dismiss} isFullScreen={this.props.isFullScreen}/>
+        <Notification notification={this.props.notification} dismiss={this.props.dismiss}
+                      isFullScreen={this.props.isFullScreen}/>
         {this.props.loaded ? this.props.children : null}
-        <Footer versionNumber={this.props.versionNumber} versionName={this.props.versionName} versionColour={this.props.versionColour}
-                commitHash={this.props.commitHash} fullScreen={this.props.isFullScreen}/>
+        <Footer versionNumber={this.props.versionNumber} versionName={this.props.versionName}
+                versionColour={this.props.versionColour} commitHash={this.props.commitHash}
+                fullScreen={this.props.isFullScreen}/>
       </main>
     )
   }

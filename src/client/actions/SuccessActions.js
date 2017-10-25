@@ -14,25 +14,15 @@ function transformMessage(message) {
 }
 
 export function messageAdded(message) {
-  return {
-    type: MESSAGE_ADDED,
-    message: transformMessage(message)
-  }
+  return {type: MESSAGE_ADDED, message: transformMessage(message)}
 }
 
 export function removeMessage(message) {
-  return {
-    type: MESSAGE_REMOVED,
-    message: transformMessage(message)
-  }
+  return {type: MESSAGE_REMOVED, message: transformMessage(message)}
 }
 
 export function messageInvalid(message, errors) {
-  return {
-    type: MESSAGE_INVALID,
-    message,
-    errors
-  }
+  return {type: MESSAGE_INVALID, message, errors}
 }
 
 export function addMessage(message) {

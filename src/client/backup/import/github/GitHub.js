@@ -30,7 +30,8 @@ class GitHub extends Component {
 
     return (
       <div>
-        <Input className={styles.gistId} value={this.state.gistId} onChange={this.gistIdChanged} onBlur={this.setGistId} disabled={disabled}>
+        <Input className={styles.gistId} value={this.state.gistId} onChange={this.gistIdChanged} onBlur={this.setGistId}
+               disabled={disabled}>
           <span>gist ID</span>
         </Input>
         <button className={styles.restore} onClick={this.restore} disabled={disabled}>import</button>
