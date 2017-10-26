@@ -1,7 +1,7 @@
 {
 	"info": {
 		"name": "Nevergreen",
-		"_postman_id": "b87416c9-591c-6945-e7f6-3cd12255600e",
+		"_postman_id": "fc72c7bb-a4b1-fe92-f865-18dcc8adcadb",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -21,12 +21,10 @@
 					"raw": "[\n\t{\n\t\t\"trayId\":\"some-id\",\n\t\t\"url\":\"http://url-to-cc-tray.xml\",\n\t\t\"username\":\"\",\n\t\t\"password\":\"\",\n\t\t\"serverType\":\"unknown\"\n\t}\n]"
 				},
 				"url": {
-					"raw": "http://localhost:5000/api/projects/all",
-					"protocol": "http",
+					"raw": "{{nevergreen_host}}/api/projects/all",
 					"host": [
-						"localhost"
+						"{{nevergreen_host}}"
 					],
-					"port": "5000",
 					"path": [
 						"api",
 						"projects",
@@ -37,7 +35,7 @@
 			},
 			"response": [
 				{
-					"id": "2b87123d-f505-4f82-b736-b9975a75833b",
+					"id": "635dfb0d-ca08-4925-a6a2-e7111e615ff8",
 					"name": "apache commons",
 					"originalRequest": {
 						"method": "POST",
@@ -158,12 +156,10 @@
 					"raw": "[\n\t{\n\t\t\"trayId\":\"some-id\",\n\t\t\"url\":\"http://url-to-cc-tray.xml\",\n\t\t\"username\":\"\",\n\t\t\"password\":\"\",\n\t\t\"included\":[\"project-name-1\",\"project-name-2\"],\n\t\t\"serverType\":\"unknown\"\n\t}\n]"
 				},
 				"url": {
-					"raw": "http://localhost:5000/api/projects/interesting",
-					"protocol": "http",
+					"raw": "{{nevergreen_host}}/api/projects/interesting",
 					"host": [
-						"localhost"
+						"{{nevergreen_host}}"
 					],
-					"port": "5000",
 					"path": [
 						"api",
 						"projects",
@@ -174,7 +170,7 @@
 			},
 			"response": [
 				{
-					"id": "d2b08d2c-6a40-4f52-b3e7-193973a766ac",
+					"id": "5b5cf95f-af71-433e-aa48-805ea39b4c6e",
 					"name": "apache commons",
 					"originalRequest": {
 						"method": "POST",
@@ -287,12 +283,10 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://localhost:5000/api/ping",
-					"protocol": "http",
+					"raw": "{{nevergreen_host}}/api/ping",
 					"host": [
-						"localhost"
+						"{{nevergreen_host}}"
 					],
-					"port": "5000",
 					"path": [
 						"api",
 						"ping"
@@ -317,12 +311,10 @@
 					"raw": "{\"password\":\"raw-password\"}"
 				},
 				"url": {
-					"raw": "http://localhost:5000/api/encrypt",
-					"protocol": "http",
+					"raw": "{{nevergreen_host}}/api/encrypt",
 					"host": [
-						"localhost"
+						"{{nevergreen_host}}"
 					],
-					"port": "5000",
 					"path": [
 						"api",
 						"encrypt"
