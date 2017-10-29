@@ -1,7 +1,6 @@
 import {proxyquire} from '../../TestUtils'
 import {before, beforeEach, describe, it} from 'mocha'
 import {expect} from 'chai'
-import sinon from 'sinon'
 
 describe('gateway', function () {
 
