@@ -1,4 +1,4 @@
-import {post} from './Gateway'
+import {fakeResponse, post} from './Gateway'
 import _ from 'lodash'
 
 function includesProjects(tray) {
@@ -25,5 +25,5 @@ export function interesting(trays, selected) {
     }
   }).filter(includesProjects)
 
-  return _.isEmpty(data) ? [] : post('/api/projects/interesting', data)
+  return _.isEmpty(data) ? fakeResponse([]) : post('/api/projects/interesting', data)
 }

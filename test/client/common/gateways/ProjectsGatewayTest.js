@@ -13,7 +13,8 @@ describe('projects gateway', function () {
   })
 
   beforeEach(() => {
-    Gateway.post = sinon.stub().returns(Promise.resolve({}))
+    Gateway.post = sinon.stub().returns(Promise.resolve())
+    Gateway.fakeResponse = sinon.stub().returns(Promise.resolve())
   })
 
   describe('getting all projects', function () {
@@ -75,6 +76,7 @@ describe('projects gateway', function () {
       ProjectsGateway.interesting(trays, selected)
 
       expect(Gateway.post).to.have.been.calledWith('/api/projects/interesting', expected)
+      expect(Gateway.fakeResponse).to.not.have.been.called()
     })
 
     it('does not include trays with no selected projects', function () {
@@ -85,15 +87,17 @@ describe('projects gateway', function () {
       ProjectsGateway.interesting(trays, selected)
 
       expect(Gateway.post).to.have.been.calledWith('/api/projects/interesting', sinon.match(expected))
+      expect(Gateway.fakeResponse).to.not.have.been.called()
     })
 
-    it('does not call the server at all if no trays have selected projectd', function () {
+    it('does not call the server at all if no trays have selected projects', function () {
       const selected = {'some-tray-id': []}
       const trays = [{trayId: 'some-tray-id'}]
 
       ProjectsGateway.interesting(trays, selected)
 
       expect(Gateway.post).to.not.have.been.called()
+      expect(Gateway.fakeResponse).to.have.been.called()
     })
   })
 })

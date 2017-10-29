@@ -48,3 +48,7 @@ export function send(request) {
     throw {status, message}
   })
 }
+
+export function fakeResponse(body) {
+  return Promise.resolve({body})
+}
