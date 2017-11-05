@@ -9,7 +9,7 @@ import {
   setTrayUrl,
   setTrayUsername,
   updateTrayId
-} from '../../actions/TrackingActions'
+} from '../../actions/TrackingActionCreators'
 import TraySettings from './TraySettings'
 
 function mapDispatchToProps(dispatch) {

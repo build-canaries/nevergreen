@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {toJS} from '../../common/ImmutableToJs'
-import {refreshTray, selectProject} from '../../actions/TrackingActions'
+import {refreshTray, selectProject} from '../../actions/TrackingActionCreators'
 import AvailableProjects from './AvailableProjects'
 
 function mapDispatchToProps(dispatch) {

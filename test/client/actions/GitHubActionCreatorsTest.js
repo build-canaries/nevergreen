@@ -1,9 +1,9 @@
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
-import {gitHubSetDescription, gitHubSetGistId} from '../../../src/client/actions/GitHubActions'
+import {gitHubSetDescription, gitHubSetGistId} from '../../../src/client/actions/GitHubActionCreators'
 import {GITHUB_SET_DESCRIPTION, GITHUB_SET_GIST_ID} from '../../../src/client/actions/Actions'
 
-describe('GitHubActions', function () {
+describe('GitHubActionCreators', function () {
 
   describe('set url', function () {
 

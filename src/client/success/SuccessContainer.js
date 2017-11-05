@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {toJS} from '../common/ImmutableToJs'
-import {addMessage, removeMessage} from '../actions/SuccessActions'
+import {addMessage, removeMessage} from '../actions/SuccessActionCreators'
 import Success from './Success'
 
 function mapDispatchToProps(dispatch) {

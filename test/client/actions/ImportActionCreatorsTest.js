@@ -5,7 +5,7 @@ import Immutable from 'immutable'
 import sinon from 'sinon'
 import {IMPORT_ERROR, IMPORT_SUCCESS, IMPORTING} from '../../../src/client/actions/Actions'
 
-describe('ImportActions', function () {
+describe('ImportActionCreators', function () {
   let ImportActions, LocalRepository, Data, Migrations, Gateway, GitHubGateway
 
   before(function () {
@@ -14,7 +14,7 @@ describe('ImportActions', function () {
     Migrations = {}
     Gateway = {}
     GitHubGateway = {}
-    ImportActions = proxyquire('../../src/client/actions/ImportActions', {
+    ImportActions = proxyquire('../../src/client/actions/ImportActionCreators', {
       '../common/repo/LocalRepository': LocalRepository,
       '../common/repo/Data': Data,
       '../common/repo/Migrations': Migrations,

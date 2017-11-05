@@ -7,7 +7,7 @@ import {
   setShowBrokenBuildTime,
   setShowBuildLabel,
   setShowTrayName
-} from '../actions/SettingsActions'
+} from '../actions/SettingsActionCreators'
 import Settings from './Settings'
 
 function mapDispatchToProps(dispatch) {

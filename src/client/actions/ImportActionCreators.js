@@ -5,7 +5,7 @@ import {fromJson} from '../common/Json'
 import {migrate} from '../common/repo/Migrations'
 import {send} from '../common/gateways/Gateway'
 import {getGist, getTruncatedFile} from '../common/gateways/GitHubGateway'
-import {gitHubSetDescription} from './GitHubActions'
+import {gitHubSetDescription} from './GitHubActionCreators'
 import {isBlank} from '../common/Utils'
 import {IMPORT_ERROR, IMPORT_SUCCESS, IMPORTING} from './Actions'
 
@@ -16,10 +16,7 @@ export function importing() {
 }
 
 export function importError(errors) {
-  return {
-    type: IMPORT_ERROR,
-    errors: Immutable.List(errors)
-  }
+  return {type: IMPORT_ERROR, errors: Immutable.List(errors)}
 }
 
 export function importSuccess(configuration) {

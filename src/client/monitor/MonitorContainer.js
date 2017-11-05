@@ -1,8 +1,8 @@
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {toJS} from '../common/ImmutableToJs'
-import {fetchInteresting} from '../actions/MonitorActions'
-import {requestFullScreen} from '../actions/NevergreenActions'
+import {fetchInteresting} from '../actions/MonitorActionCreators'
+import {requestFullScreen} from '../actions/NevergreenActionCreators'
 import Monitor from './Monitor'
 
 function mapDispatchToProps(dispatch) {

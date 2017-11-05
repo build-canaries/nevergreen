@@ -4,17 +4,17 @@ import {expect} from 'chai'
 import sinon from 'sinon'
 import {EXPORT_ERROR, EXPORT_SUCCESS, EXPORTING} from '../../../src/client/actions/Actions'
 
-describe('ExportActions', function () {
+describe('ExportActionCreators', function () {
   let ExportActions, Gateway, GitHubGateway, GitHubActions
 
   before(function () {
     Gateway = {}
     GitHubGateway = {}
     GitHubActions = {}
-    ExportActions = proxyquire('../../src/client/actions/ExportActions', {
+    ExportActions = proxyquire('../../src/client/actions/ExportActionCreators', {
       '../common/gateways/Gateway': Gateway,
       '../common/gateways/GitHubGateway': GitHubGateway,
-      './GitHubActions': GitHubActions
+      './GitHubActionCreators': GitHubActions
     })
   })
 

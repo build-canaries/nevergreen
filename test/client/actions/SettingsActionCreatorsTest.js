@@ -7,7 +7,7 @@ import {
   setShowBrokenBuildTime,
   setShowBuildLabel,
   setShowTrayName
-} from '../../../src/client/actions/SettingsActions'
+} from '../../../src/client/actions/SettingsActionCreators'
 import {
   BROKEN_BUILD_SOUND_FX,
   PLAY_BROKEN_BUILD_SOUND_FX,
@@ -17,7 +17,7 @@ import {
   SHOW_TRAY_NAME
 } from '../../../src/client/actions/Actions'
 
-describe('SettingsActions', function () {
+describe('SettingsActionCreators', function () {
 
   describe('setting broken build timers', function () {
 

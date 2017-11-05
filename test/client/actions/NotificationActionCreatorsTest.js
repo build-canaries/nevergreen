@@ -4,13 +4,13 @@ import {expect} from 'chai'
 import sinon from 'sinon'
 import {NOTIFICATION, NOTIFICATION_DISMISS} from '../../../src/client/actions/Actions'
 
-describe('NotificationActions', function () {
+describe('NotificationActionCreators', function () {
   let NotificationActions, Gateway, semver
 
   before(function () {
     Gateway = {}
     semver = {}
-    NotificationActions = proxyquire('../../src/client/actions/NotificationActions', {
+    NotificationActions = proxyquire('../../src/client/actions/NotificationActionCreators', {
       '../common/gateways/Gateway': Gateway,
       semver
     })

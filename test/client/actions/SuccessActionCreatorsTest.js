@@ -1,9 +1,9 @@
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
-import {addMessage, messageAdded, messageInvalid, removeMessage} from '../../../src/client/actions/SuccessActions'
+import {addMessage, messageAdded, messageInvalid, removeMessage} from '../../../src/client/actions/SuccessActionCreators'
 import {MESSAGE_ADDED, MESSAGE_INVALID, MESSAGE_REMOVED} from '../../../src/client/actions/Actions'
 
-describe('SuccessActions', function () {
+describe('SuccessActionCreators', function () {
 
   describe('text added', function () {
 

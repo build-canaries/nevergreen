@@ -26,16 +26,11 @@ function momentInit() {
 }
 
 export function initalising() {
-  return {
-    type: INITIALISING
-  }
+  return {type: INITIALISING}
 }
 
 export function initalised(configuration) {
-  return {
-    type: INITIALISED,
-    data: Immutable.fromJS(configuration)
-  }
+  return {type: INITIALISED, data: Immutable.fromJS(configuration)}
 }
 
 export function navigated() {
@@ -56,15 +51,9 @@ export function initalise() {
 }
 
 export function enableFullScreen(enabled) {
-  return {
-    type: FULL_SCREEN,
-    enabled
-  }
+  return {type: FULL_SCREEN, enabled}
 }
 
 export function requestFullScreen(requested) {
-  return {
-    type: REQUEST_FULL_SCREEN,
-    requested
-  }
+  return {type: REQUEST_FULL_SCREEN, requested}
 }

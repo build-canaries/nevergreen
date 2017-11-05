@@ -6,16 +6,11 @@ import {NOTIFICATION, NOTIFICATION_DISMISS} from './Actions'
 const NEVERGREEN_IO_REGEX = /nevergreen\.io/i
 
 export function notification(message) {
-  return {
-    type: NOTIFICATION,
-    message
-  }
+  return {type: NOTIFICATION, message}
 }
 
 export function dismiss() {
-  return {
-    type: NOTIFICATION_DISMISS
-  }
+  return {type: NOTIFICATION_DISMISS}
 }
 
 export function checkForNewVersion(currentVersion, hostname) {

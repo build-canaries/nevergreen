@@ -10,14 +10,14 @@ import {
   REQUEST_FULL_SCREEN
 } from '../../../src/client/actions/Actions'
 
-describe('NevergreenActions', function () {
+describe('NevergreenActionCreators', function () {
   let NevergreenActions, LocalRepository, moment, Migrations
 
   before(function () {
     LocalRepository = {}
     moment = {}
     Migrations = {}
-    NevergreenActions = proxyquire('../../src/client/actions/NevergreenActions', {
+    NevergreenActions = proxyquire('../../src/client/actions/NevergreenActionCreators', {
       '../common/repo/LocalRepository': LocalRepository,
       moment,
       '../common/repo/Migrations': Migrations

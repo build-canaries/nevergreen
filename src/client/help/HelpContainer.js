@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import Help from './Help'
-import {keyboardShortcut} from '../actions/ShortcutActions'
+import {keyboardShortcut} from '../actions/ShortcutActionCreators'
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({keyboardShortcut}, dispatch)

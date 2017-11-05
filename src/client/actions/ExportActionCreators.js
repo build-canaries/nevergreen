@@ -1,7 +1,7 @@
 import {send} from '../common/gateways/Gateway'
 import {createGist, updateGist} from '../common/gateways/GitHubGateway'
 import {fromJson} from '../common/Json'
-import {gitHubSetGistId} from './GitHubActions'
+import {gitHubSetGistId} from './GitHubActionCreators'
 import Immutable from 'immutable'
 import {isBlank} from '../common/Utils'
 import {EXPORT_ERROR, EXPORT_SUCCESS, EXPORTING} from './Actions'
@@ -11,17 +11,11 @@ export function exporting() {
 }
 
 export function exportSuccess(messages) {
-  return {
-    type: EXPORT_SUCCESS,
-    messages: Immutable.List(messages)
-  }
+  return {type: EXPORT_SUCCESS, messages: Immutable.List(messages)}
 }
 
 export function exportError(errors) {
-  return {
-    type: EXPORT_ERROR,
-    errors: Immutable.List(errors)
-  }
+  return {type: EXPORT_ERROR, errors: Immutable.List(errors)}
 }
 
 export function uploadToGitHub(gistId, description, configuration, oauthToken) {

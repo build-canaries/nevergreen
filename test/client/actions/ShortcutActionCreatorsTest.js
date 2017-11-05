@@ -1,9 +1,9 @@
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
-import {keyboardShortcut} from '../../../src/client/actions/ShortcutActions'
+import {keyboardShortcut} from '../../../src/client/actions/ShortcutActionCreators'
 import {KEYBOARD_SHORTCUT} from '../../../src/client/actions/Actions'
 
-describe('ShortcutActions', function () {
+describe('ShortcutActionCreators', function () {
 
   describe('keyboard shortcut', function () {
 

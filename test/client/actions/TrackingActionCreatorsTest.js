@@ -20,7 +20,7 @@ import {
   TRAY_ADDED
 } from '../../../src/client/actions/Actions'
 
-describe('TrackingActions', function () {
+describe('TrackingActionCreators', function () {
   let TrackingActions, SecurityGateway, ProjectsGateway, Gateway, moment, nameGenerator
 
   before(function () {
@@ -29,7 +29,7 @@ describe('TrackingActions', function () {
     Gateway = {}
     moment = sinon.stub()
     nameGenerator = {}
-    TrackingActions = proxyquire('../../src/client/actions/TrackingActions', {
+    TrackingActions = proxyquire('../../src/client/actions/TrackingActionCreators', {
       '../common/gateways/SecurityGateway': SecurityGateway,
       '../common/gateways/ProjectsGateway': ProjectsGateway,
       '../common/gateways/Gateway': Gateway,

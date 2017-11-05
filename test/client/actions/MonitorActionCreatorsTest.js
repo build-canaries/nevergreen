@@ -5,13 +5,13 @@ import sinon from 'sinon'
 import Immutable from 'immutable'
 import {INTERESTING_PROJECTS} from '../../../src/client/actions/Actions'
 
-describe('MonitorActions', function () {
+describe('MonitorActionCreators', function () {
   let MonitorActions, ProjectsGateway, Gateway
 
   before(function () {
     ProjectsGateway = {}
     Gateway = {}
-    MonitorActions = proxyquire('../../src/client/actions/MonitorActions', {
+    MonitorActions = proxyquire('../../src/client/actions/MonitorActionCreators', {
       '../common/gateways/ProjectsGateway': ProjectsGateway,
       '../common/gateways/Gateway': Gateway
     })

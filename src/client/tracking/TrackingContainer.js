@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {toJS} from '../common/ImmutableToJs'
-import {addTray} from '../actions/TrackingActions'
+import {addTray} from '../actions/TrackingActionCreators'
 import Tracking from './Tracking'
 
 function mapDispatchToProps(dispatch) {
