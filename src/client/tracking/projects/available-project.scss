@@ -21,17 +21,30 @@
 }
 
 .removedProject {
-  span {
+  & .name {
     text-decoration: line-through;
-  }
-
-  sup {
-    color: $mid-grey;
-    margin-left: 0.5em;
   }
 }
 
-.newProject {
-  color: $blue;
-  margin-left: 0.5em;
+%info {
+  @include font-scale(-1);
+
+  border-radius: 1px;
+  margin-right: 0.5em;
+  padding: 0.2em 0.5em;
+  text-transform: uppercase;
+}
+
+.infoRemoved {
+  @extend %info;
+
+  background-color: $mid-grey;
+  color: $white;
+}
+
+.infoNew {
+  @extend %info;
+
+  background-color: $new-info;
+  color: $off-black;
 }

@@ -10,9 +10,9 @@ class AvailableProject extends Component {
     let info = null
 
     if (this.props.isNew) {
-      info = <sup className={styles.newProject} data-locator='new'>new</sup>
+      info = <span className={styles.infoNew} data-locator='new'>new</span>
     } else if (this.props.removed) {
-      info = <sup data-locator='removed'>removed</sup>
+      info = <span className={styles.infoRemoved} data-locator='removed'>removed</span>
     }
 
     const displayName = this.props.stage ? `${this.props.name} ${this.props.stage}` : this.props.name
@@ -20,8 +20,8 @@ class AvailableProject extends Component {
     return (
       <li className={listClasses}>
         <Checkbox checked={this.props.selected} onToggle={this.props.selectProject} disabled={this.props.removed}>
-          <span data-locator='name'>{displayName}</span>
           {info}
+          <span className={styles.name} data-locator='name'>{displayName}</span>
         </Checkbox>
       </li>
     )
