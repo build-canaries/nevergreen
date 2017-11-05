@@ -7,7 +7,6 @@ var app = express()
 var generic = response('cctray.xml')
 var go = response('go_cd.xml')
 var jenkins = response('jenkins.xml')
-var snap = response('snap_ci.xml')
 
 function getRandomInt(min, max) {
   min = Math.ceil(min)
@@ -24,7 +23,6 @@ function response(file) {
   }
 }
 
-app.get('/owner/repo/branch/master/cctray.xml', snap) // Snap CI
 app.get('/cc.xml', jenkins) // Jenkins, Hudson, CircleCI, CruiseControl
 app.get('/cc/uuid/cctray.xml', generic) // Solano CI
 app.get('/owner/repo/cc.xml', generic) // Travis CI

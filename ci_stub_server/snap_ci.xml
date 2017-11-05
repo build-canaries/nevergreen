@@ -1,5 +1,0 @@
-<Projects>
-  <Project name="owner/example-service (branch) :: stage-1" activity="Sleeping" lastBuildLabel="133" lastBuildStatus="Success" lastBuildTime="2014-12-21T15:28:33Z" webUrl="https://snap-ci.com/owner/example-service/branch/master/logs/defaultPipeline/133/stage-1"/>
-  <Project name="owner/example-service (branch) :: stage-2" activity="Sleeping" lastBuildLabel="133" lastBuildStatus="Success" lastBuildTime="2014-12-21T15:30:28Z" webUrl="https://snap-ci.com/owner/example-service/branch/master/logs/defaultPipeline/133/stage-2"/>
-  <Project name="owner/example-service (branch) :: stage-3" activity="Sleeping" lastBuildLabel="" lastBuildStatus="Unknown" lastBuildTime="" webUrl="https://snap-ci.com/owner/example-service/branch/master/logs/defaultPipeline/133/stage-3"/>
-</Projects>

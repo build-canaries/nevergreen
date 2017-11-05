@@ -18,9 +18,6 @@
        (fact "go"
              (subject/detect-server "http://servername:8154/go/cctray.xml") => :go)
 
-       (fact "snap"
-             (subject/detect-server "https://app.snap-ci.com/ownername/reponame/branch/master/cctray.xml") => :snap)
-
        (fact "circle ci"
              (subject/detect-server "https://circleci.com/cc.xml?circle-token=some-token") => :circle)
 
@@ -53,7 +50,6 @@
   (keyword "") true
   :unknown true
   :go false
-  :snap false
   :jenkins false
   :hudson false
   :travis false

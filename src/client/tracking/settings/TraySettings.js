@@ -116,7 +116,6 @@ class TraySettings extends Component {
           <option value='go'>GoCD</option>
           <option value='hudson'>Hudson</option>
           <option value='jenkins'>Jenkins</option>
-          <option value='snap'>Snap CI</option>
           <option value='solano'>Solano CI</option>
           <option value='team-city'>TeamCity</option>
           <option value='travis'>Travis CI</option>

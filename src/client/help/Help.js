@@ -41,11 +41,6 @@ class Help extends Component {
               <td className={styles.url}>http://&lt;servername&gt;:8154/go/cctray.xml</td>
             </tr>
             <tr>
-              <td>Snap CI</td>
-              <td className={styles.url}>https://snap-ci.com/&lt;ownername&gt;/&lt;reponame&gt;/branch/master/cctray.xml
-              </td>
-            </tr>
-            <tr>
               <td>CircleCI</td>
               <td className={styles.url}>https://circleci.com/cc.xml?circle-token=&lt;circle-token&gt;</td>
             </tr>
