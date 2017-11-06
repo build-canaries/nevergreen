@@ -4,7 +4,7 @@ import Container from '../common/container/Container'
 import Checkbox from '../common/forms/Checkbox'
 import ScaledGrid from '../common/scale/ScaledGrid'
 import InterestingProject from '../common/project/InterestingProject'
-import moment from 'moment'
+import format from 'date-fns/format'
 import {generateRandomName} from '../common/project/Name'
 import _ from 'lodash'
 import styles from './display-settings.scss'
@@ -16,7 +16,7 @@ function randomBuildLabel() {
 class DisplaySettings extends Component {
   constructor(props) {
     super(props)
-    this.state = {lastBuildTime: moment.utc().toISOString()}
+    this.state = {lastBuildTime: format(new Date())}
   }
 
   toggleBrokenBuildTime = (newValue) => {

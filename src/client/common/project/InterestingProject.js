@@ -1,9 +1,18 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import moment from 'moment'
 import styles from './interesting-project.scss'
 import {isBlank} from '../Utils'
+import distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
+
+function shorten(distance) {
+  return distance.replace('about ', '')
+    .replace(/ minutes?/, 'm')
+    .replace(/ hours?/, 'h')
+    .replace(/ days?/, 'd')
+    .replace(/ months?/, 'mo')
+    .replace(/ years?/, 'y')
+}
 
 class InterestingProject extends Component {
   render() {
@@ -15,7 +24,7 @@ class InterestingProject extends Component {
 
     const stage = this.props.stage ? <span data-locator='project-stage'> {this.props.stage}</span> : null
 
-    const timeBrokenLabel = isBlank(this.props.lastBuildTime) ? '??' : moment(this.props.lastBuildTime).fromNow(true)
+    const timeBrokenLabel = isBlank(this.props.lastBuildTime) ? '??' : shorten(distanceInWordsToNow(this.props.lastBuildTime))
 
     const timeBroken = this.props.showBrokenBuildTimers && isSick ?
       <span className={styles.timeBroken} data-locator='time-broken'> {timeBrokenLabel}</span> : null

@@ -2,7 +2,7 @@ import Immutable from 'immutable'
 import {encryptPassword as encrypt} from '../common/gateways/SecurityGateway'
 import {fetchAll} from '../common/gateways/ProjectsGateway'
 import {send} from '../common/gateways/Gateway'
-import moment from 'moment'
+import format from 'date-fns/format'
 import {generateRandomName} from '../common/project/Name'
 import _ from 'lodash'
 import {
@@ -73,7 +73,7 @@ export function projectsFetching(trayId, request) {
 export function projectsFetched(trayId, projects) {
   const data = Immutable.fromJS(projects)
   const serverType = data.first() ? data.first().get('serverType') : ''
-  return {type: PROJECTS_FETCHED, trayId, data, serverType, timestamp: moment().format()}
+  return {type: PROJECTS_FETCHED, trayId, data, serverType, timestamp: format(new Date())}
 }
 
 export function projectsFetchError(trayId, errors) {

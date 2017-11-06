@@ -21,26 +21,19 @@ import {
 } from '../../../src/client/actions/Actions'
 
 describe('TrackingActionCreators', function () {
-  let TrackingActions, SecurityGateway, ProjectsGateway, Gateway, moment, nameGenerator
+  let TrackingActions, SecurityGateway, ProjectsGateway, Gateway, nameGenerator
 
   before(function () {
     SecurityGateway = {}
     ProjectsGateway = {}
     Gateway = {}
-    moment = sinon.stub()
     nameGenerator = {}
     TrackingActions = proxyquire('../../src/client/actions/TrackingActionCreators', {
       '../common/gateways/SecurityGateway': SecurityGateway,
       '../common/gateways/ProjectsGateway': ProjectsGateway,
       '../common/gateways/Gateway': Gateway,
-      moment,
       '../common/project/Name': nameGenerator
     })
-  })
-
-  beforeEach(function () {
-    moment.reset()
-    moment.returns({format: sinon.stub()})
   })
 
   describe('tray added', function () {
@@ -209,9 +202,8 @@ describe('TrackingActionCreators', function () {
     })
 
     it('should return a timestamp', function () {
-      moment().format.returns('some-timestamp')
       const actual = TrackingActions.projectsFetched('irrelevant', [])
-      expect(actual).to.have.property('timestamp', 'some-timestamp')
+      expect(actual).to.have.property('timestamp').that.is.not.empty()
     })
 
     it('should return the server type', function () {

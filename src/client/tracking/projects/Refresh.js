@@ -1,14 +1,14 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import Shortcut from '../../common/Shortcut'
-import moment from 'moment'
+import distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
 import Timer from '../../common/Timer'
 import styles from './refresh.scss'
 
 const ONE_MINUTE = 60
 
 function lastFetched(timestamp) {
-  return timestamp ? `${moment(timestamp).fromNow(true)} ago` : 'never'
+  return timestamp ? `${distanceInWordsToNow(timestamp)} ago` : 'never'
 }
 
 class Refresh extends Component {
