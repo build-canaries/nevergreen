@@ -91,7 +91,7 @@ describe('<InterestingProject/>', function () {
       })
       const wrapper = shallow(<InterestingProject {...props} />)
       expect(wrapper.find(locator('time-broken'))).to.not.have.text(' ??')
-      expect(wrapper.find(locator('time-broken'))).to.have.text().match(/^ [ 0-9a-zA-Z]*$/)
+      expect(wrapper.find(locator('time-broken'))).to.have.text().match(/^ [ ~>0-9a-zA-Z]*$/)
     })
   })
 
