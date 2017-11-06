@@ -6,7 +6,9 @@ import {isBlank} from '../Utils'
 import distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
 
 function shorten(distance) {
-  return distance.replace('about ', '')
+  return distance
+    .replace('less than a', '<1')
+    .replace('about ', '')
     .replace(/ minutes?/, 'm')
     .replace(/ hours?/, 'h')
     .replace(/ days?/, 'd')
