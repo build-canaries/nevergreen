@@ -5,7 +5,7 @@ import {shallow} from 'enzyme'
 import Monitor from '../../../src/client/monitor/Monitor'
 import InterestingProjects from '../../../src/client/monitor/InterestingProjects'
 import Success from '../../../src/client/monitor/Success'
-import noop from 'lodash/noop'
+import _ from 'lodash'
 
 describe('<Monitor/>', function () {
   const DEFAULT_PROPS = {
@@ -19,9 +19,9 @@ describe('<Monitor/>', function () {
     playBrokenBuildSounds: null,
     brokenBuildFx: null,
     messages: [],
-    fetchInteresting: noop,
+    fetchInteresting: _.noop,
     refreshTime: 5,
-    requestFullScreen: noop,
+    requestFullScreen: _.noop,
     isFullScreen: null
   }
 

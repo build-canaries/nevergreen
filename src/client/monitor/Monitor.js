@@ -6,7 +6,7 @@ import Success from './Success'
 import Loading from '../common/loading/Loading'
 import styles from './monitor.scss'
 import Timer from '../common/Timer'
-import isEmpty from 'lodash/isEmpty'
+import _ from 'lodash'
 
 class Monitor extends Component {
   fetch = () => {
@@ -26,7 +26,7 @@ class Monitor extends Component {
 
     let content
 
-    if (isEmpty(this.props.projects) && isEmpty(this.props.errors)) {
+    if (_.isEmpty(this.props.projects) && _.isEmpty(this.props.errors)) {
       content = <Success messages={this.props.messages}/>
     } else {
       content = <InterestingProjects {...this.props}/>

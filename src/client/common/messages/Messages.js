@@ -1,12 +1,12 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import isEmpty from 'lodash/isEmpty'
+import _ from 'lodash'
 import styles from './messages.scss'
 
 class Messages extends Component {
   render() {
-    if (isEmpty(this.props.messages)) {
+    if (_.isEmpty(this.props.messages)) {
       return null
     }
 

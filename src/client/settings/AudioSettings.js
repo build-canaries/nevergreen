@@ -5,13 +5,12 @@ import Messages from '../common/messages/Messages'
 import Input from '../common/forms/Input'
 import Checkbox from '../common/forms/Checkbox'
 import classNames from 'classnames'
-import size from 'lodash/size'
-import split from 'lodash/split'
+import _ from 'lodash'
 import styles from './audio-settings.scss'
 import {isBlank} from '../common/Utils'
 
 function hasScheme(url) {
-  return size(split(url, '://')) > 1
+  return _.size(_.split(url, '://')) > 1
 }
 
 function pause(audio) {

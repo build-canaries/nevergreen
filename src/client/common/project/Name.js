@@ -1,6 +1,6 @@
-import lowerCase from 'lodash/lowerCase'
+import _ from 'lodash'
 import nameGenerator from 'project-name-generator'
 
 export function generateRandomName() {
-  return lowerCase(nameGenerator().spaced)
+  return _.lowerCase(nameGenerator().spaced)
 }

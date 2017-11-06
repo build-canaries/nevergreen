@@ -1,6 +1,5 @@
-import isEmpty from 'lodash/isEmpty'
-import trim from 'lodash/trim'
+import _ from 'lodash'
 
 export function isBlank(s) {
-  return isEmpty(trim(s))
+  return _.isEmpty(_.trim(s))
 }

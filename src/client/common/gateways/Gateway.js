@@ -1,6 +1,6 @@
 import request from 'superagent'
 import * as log from '../Logger'
-import _get from 'lodash/get'
+import _ from 'lodash'
 
 const THIRTY_SECONDS = 1000 * 30
 const THREE_MINUTES = 1000 * 60 * 60 * 3
@@ -44,7 +44,7 @@ export function send(request) {
   }).catch((err) => {
     log.error('An unhandled exception was thrown from the server', err)
     const status = err.status || 0
-    const message = _get(err, 'response.body.error', 'timeout')
+    const message = _.get(err, 'response.body.error', 'timeout')
     throw {status, message}
   })
 }

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import omit from 'lodash/omit'
+import _ from 'lodash'
 import styles from './checkbox.scss'
 
 class Checkbox extends Component {
@@ -11,7 +11,7 @@ class Checkbox extends Component {
 
   render() {
     const classes = classNames(styles.label, this.props.className)
-    const inputProps = omit(this.props, ['children', 'onToggle', 'className'])
+    const inputProps = _.omit(this.props, ['children', 'onToggle', 'className'])
 
     return (
       <label className={classes}>

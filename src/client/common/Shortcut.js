@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import Mousetrap from 'mousetrap'
-import isEqual from 'lodash/isEqual'
+import _ from 'lodash'
 
 function click(parent) {
   parent.focus()
@@ -19,7 +19,7 @@ class Shortcut extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!isEqual(this.props.hotkeys, nextProps.hotkeys)) {
+    if (!_.isEqual(this.props.hotkeys, nextProps.hotkeys)) {
       Mousetrap.unbind(this.props.hotkeys)
       Mousetrap.bind(nextProps.hotkeys, () => click(this.node.parentNode))
     }

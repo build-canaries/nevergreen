@@ -1,6 +1,5 @@
 import Immutable from 'immutable'
-import isEmpty from 'lodash/isEmpty'
-import isNil from 'lodash/isNil'
+import _ from 'lodash'
 import {filter, validate} from '../common/repo/Data'
 import {fromJson} from '../common/Json'
 import {migrate} from '../common/repo/Migrations'
@@ -36,7 +35,7 @@ export function importData(jsonData) {
       const data = filter(migrate(fromJson(jsonData)))
       const validationMessages = validate(data)
 
-      if (isEmpty(validationMessages)) {
+      if (_.isEmpty(validationMessages)) {
         dispatch(importSuccess(data))
       } else {
         dispatch(importError(validationMessages))
@@ -58,7 +57,7 @@ export function restoreFromGitHub(gistId) {
 
     return send(getGist(gistId)).then((res) => {
       const configuration = res.files['configuration.json']
-      if (isNil(configuration)) {
+      if (_.isNil(configuration)) {
         throw {message: 'gist did not contain the required configuration.json file'}
       } else if (configuration.truncated) {
         if (configuration.size > TEN_MEGS) {

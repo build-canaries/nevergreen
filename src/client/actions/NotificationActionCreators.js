@@ -1,6 +1,6 @@
 import {get, send} from '../common/gateways/Gateway'
 import semver from 'semver'
-import noop from 'lodash/noop'
+import _ from 'lodash'
 import {NOTIFICATION, NOTIFICATION_DISMISS} from './Actions'
 
 const NEVERGREEN_IO_REGEX = /nevergreen\.io/i
@@ -22,6 +22,6 @@ export function checkForNewVersion(currentVersion, hostname) {
 
         dispatch(notification(`A new version ${data.tag_name} is available${additional}!`))
       }
-    }).catch(noop) // We don't care if checking for a new version fails
+    }).catch(_.noop) // We don't care if checking for a new version fails
   }
 }

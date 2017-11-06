@@ -5,13 +5,13 @@ import {shallow} from 'enzyme'
 import Success from '../../../src/client/success/Success'
 import AddedMessages from '../../../src/client/success/AddedMessages'
 import AddedImages from '../../../src/client/success/AddedImages'
-import noop from 'lodash/noop'
+import _ from 'lodash'
 
 describe('Success <Success/>', function () {
   const DEFAULT_PROPS = {
     messages: [],
-    addMessage: noop,
-    removeMessage: noop
+    addMessage: _.noop,
+    removeMessage: _.noop
   }
 
   it('should render text messages', function () {

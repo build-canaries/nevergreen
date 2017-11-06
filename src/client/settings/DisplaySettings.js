@@ -6,11 +6,11 @@ import ScaledGrid from '../common/scale/ScaledGrid'
 import InterestingProject from '../common/project/InterestingProject'
 import format from 'date-fns/format'
 import {generateRandomName} from '../common/project/Name'
-import random from 'lodash/random'
+import _ from 'lodash'
 import styles from './display-settings.scss'
 
 function randomBuildLabel() {
-  return `${random(1, 999)}`
+  return `${_.random(1, 999)}`
 }
 
 class DisplaySettings extends Component {

@@ -2,11 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import Messages from '../messages/Messages'
 import classNames from 'classnames'
-import isFunction from 'lodash/isFunction'
-import isEqualWith from 'lodash/isEqualWith'
-import isEmpty from 'lodash/isEmpty'
-import omit from 'lodash/omit'
-import noop from 'lodash/noop'
+import _ from 'lodash'
 import styles from './input.scss'
 
 class Input extends Component {
@@ -39,19 +35,19 @@ class Input extends Component {
 
   componentDidUpdate(prevProps) {
     const omitFunctions = (objValue, othValue) => {
-      if (isFunction(objValue) && isFunction(othValue)) {
+      if (_.isFunction(objValue) && _.isFunction(othValue)) {
         return true
       }
     }
-    if (!isEqualWith(this.props, prevProps, omitFunctions)) {
+    if (!_.isEqualWith(this.props, prevProps, omitFunctions)) {
       this.validate()
     }
   }
 
   render() {
-    const inputProps = omit(this.props, ['children', 'onEnter', 'onBlur', 'onValidation', 'className'])
+    const inputProps = _.omit(this.props, ['children', 'onEnter', 'onBlur', 'onValidation', 'className'])
     const labelClasses = classNames(styles.inputLabel, this.props.type, this.props.className)
-    const invalid = !isEmpty(this.state.errors)
+    const invalid = !_.isEmpty(this.state.errors)
 
     return (
       <label className={labelClasses}>
@@ -72,8 +68,8 @@ class Input extends Component {
 
 Input.defaultProps = {
   type: 'text',
-  onValidation: noop,
-  onBlur: noop
+  onValidation: _.noop,
+  onBlur: _.noop
 }
 
 Input.propTypes = {

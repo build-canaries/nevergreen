@@ -4,10 +4,10 @@ import React from 'react'
 import {shallow} from 'enzyme'
 import sinon from 'sinon'
 import Resizable from '../../../src/client/common/Resizable'
-import noop from 'lodash/noop'
+import _ from 'lodash'
 
 describe('<Resizable/>', function () {
-  const props = {onResize: noop}
+  const props = {onResize: _.noop}
   let originalWindow
 
   before(function () {
