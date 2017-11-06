@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import Container from '../common/container/Container'
 import RemoveLink from './RemoveLink'
 import styles from './added-images.scss'
-import _ from 'lodash'
+import isEmpty from 'lodash/isEmpty'
 
 class AddedImages extends Component {
   render() {
-    if (_.isEmpty(this.props.urls)) {
+    if (isEmpty(this.props.urls)) {
       return null
     }
 

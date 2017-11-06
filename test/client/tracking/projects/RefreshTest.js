@@ -4,13 +4,13 @@ import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
 import Refresh from '../../../../src/client/tracking/projects/Refresh'
-import _ from 'lodash'
+import noop from 'lodash/noop'
 
 describe('<Refresh/>', function () {
   const DEFAULT_PROPS = {
     index: 1,
     timestamp: null,
-    refreshTray: _.noop
+    refreshTray: noop
   }
 
   it('should render projects fetched never if there is no timestamp', function () {

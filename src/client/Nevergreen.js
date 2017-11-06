@@ -4,7 +4,7 @@ import Header from './header/Header'
 import Footer from './footer/Footer'
 import Mousetrap from 'mousetrap'
 import 'mousetrap/plugins/global-bind/mousetrap-global-bind'
-import _ from 'lodash'
+import throttle from 'lodash/throttle'
 import styles from './nevergreen.scss'
 import Timer from './common/Timer'
 import Notification from './Notification'
@@ -18,7 +18,7 @@ class Nevergreen extends Component {
   constructor(props) {
     super(props)
     this.state = {}
-    this.disableFullScreen = _.throttle(this.disableFullScreen, ONE_SECONDS, {trailing: false}).bind(this)
+    this.disableFullScreen = throttle(this.disableFullScreen, ONE_SECONDS, {trailing: false}).bind(this)
   }
 
   checkVersion = () => {

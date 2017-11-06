@@ -1,8 +1,8 @@
 import {fakeResponse, post} from './Gateway'
-import _ from 'lodash'
+import isEmpty from 'lodash/isEmpty'
 
 function includesProjects(tray) {
-  return !_.isEmpty(tray.included)
+  return !isEmpty(tray.included)
 }
 
 export function fetchAll(trays) {
@@ -25,5 +25,5 @@ export function interesting(trays, selected) {
     }
   }).filter(includesProjects)
 
-  return _.isEmpty(data) ? fakeResponse([]) : post('/api/projects/interesting', data)
+  return isEmpty(data) ? fakeResponse([]) : post('/api/projects/interesting', data)
 }

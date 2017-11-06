@@ -4,7 +4,7 @@ import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
 import AvailableProject from '../../../../src/client/tracking/projects/AvailableProject'
-import _ from 'lodash'
+import noop from 'lodash/noop'
 
 describe('<AvailableProject/>', function () {
   const DEFAULT_PROPS = {
@@ -13,7 +13,7 @@ describe('<AvailableProject/>', function () {
     isNew: null,
     removed: null,
     selected: null,
-    selectProject: _.noop
+    selectProject: noop
   }
 
   it('should render new tag if the project is new', function () {

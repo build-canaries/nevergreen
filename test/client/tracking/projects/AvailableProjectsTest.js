@@ -4,7 +4,7 @@ import React from 'react'
 import {shallow} from 'enzyme'
 import AvailableProjects from '../../../../src/client/tracking/projects/AvailableProjects'
 import Messages from '../../../../src/client/common/messages/Messages'
-import _ from 'lodash'
+import noop from 'lodash/noop'
 
 describe('<AvailableProjects/>', function () {
   const DEFAULT_PROPS = {
@@ -13,9 +13,9 @@ describe('<AvailableProjects/>', function () {
     errors: null,
     projects: [],
     selected: [],
-    selectProject: _.noop,
+    selectProject: noop,
     timestamp: null,
-    refreshTray: _.noop,
+    refreshTray: noop,
     pendingRequest: null,
     url: ''
   }

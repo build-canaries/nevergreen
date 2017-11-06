@@ -18,7 +18,7 @@ import SuccessContainer from './success/SuccessContainer'
 import SettingsContainer from './settings/SettingsContainer'
 import BackupContainer from './backup/BackupContainer'
 import HelpContainer from './help/HelpContainer'
-import _ from 'lodash'
+import debounce from 'lodash/debounce'
 
 const ONE_SECOND = 1000
 
@@ -36,7 +36,7 @@ const save = () => {
     })
   }
 }
-const saveDebounced = _.debounce(save, 200, {maxWait: ONE_SECOND})
+const saveDebounced = debounce(save, 200, {maxWait: ONE_SECOND})
 
 store.subscribe(() => saveDebounced())
 

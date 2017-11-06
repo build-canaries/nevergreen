@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import Container from '../common/container/Container'
 import RemoveLink from './RemoveLink'
 import styles from './added-messages.scss'
-import _ from 'lodash'
+import isEmpty from 'lodash/isEmpty'
 
 class AddedMessages extends Component {
   render() {
-    if (_.isEmpty(this.props.messages)) {
+    if (isEmpty(this.props.messages)) {
       return null
     }
 

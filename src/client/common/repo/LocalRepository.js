@@ -1,6 +1,6 @@
 import localforage from 'localforage'
 import Promise from 'promise'
-import _ from 'lodash'
+import toPairs from 'lodash/toPairs'
 
 export default {
   init() {
@@ -9,7 +9,7 @@ export default {
   },
 
   save(data) {
-    return Promise.all(_.toPairs(data).map((pair) => {
+    return Promise.all(toPairs(data).map((pair) => {
       return localforage.setItem(pair[0], pair[1])
     }))
   },

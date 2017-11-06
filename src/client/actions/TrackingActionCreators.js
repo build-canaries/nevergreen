@@ -4,7 +4,11 @@ import {fetchAll} from '../common/gateways/ProjectsGateway'
 import {send} from '../common/gateways/Gateway'
 import format from 'date-fns/format'
 import {generateRandomName} from '../common/project/Name'
-import _ from 'lodash'
+import size from 'lodash/size'
+import split from 'lodash/split'
+import includes from 'lodash/includes'
+import isEmpty from 'lodash/isEmpty'
+import {isBlank} from '../common/Utils'
 import {
   ENCRYPTING_PASSWORD,
   HIGHLIGHT_TRAY,
@@ -24,11 +28,7 @@ import {
 } from './Actions'
 
 function hasScheme(url) {
-  return _.size(_.split(url, '://')) > 1
-}
-
-function isNotBlank(value) {
-  return _.size(_.trim(value)) > 0
+  return size(split(url, '://')) > 1
 }
 
 function abortPendingRequest(req) {
@@ -116,7 +116,7 @@ export function encryptPassword(trayId, password, pendingRequest) {
   abortPendingRequest(pendingRequest)
 
   return function (dispatch) {
-    if (isNotBlank(password)) {
+    if (!isBlank(password)) {
       const request = encrypt(password)
 
       dispatch(encryptingPassword(trayId, password, request))
@@ -137,12 +137,12 @@ export function addTray(enteredUrl, username, rawPassword, existingTrays) {
     const url = hasScheme(enteredUrl) ? enteredUrl : 'http://' + enteredUrl
     const trayId = url
 
-    if (_.includes(existingTrays, trayId)) {
+    if (includes(existingTrays, trayId)) {
       dispatch(highlightTray(trayId))
     } else {
       dispatch(trayAdded(trayId, url, username))
 
-      if (isNotBlank(rawPassword)) {
+      if (!isBlank(rawPassword)) {
         return dispatch(encryptPassword(trayId, rawPassword))
           .then((encryptedPassword) => dispatch(refreshTray({trayId, url, username, password: encryptedPassword})))
       } else {
@@ -164,7 +164,7 @@ export function refreshTray(tray, pendingRequest) {
     return send(request).then((json) => {
       const filteredProjects = json.filter((project) => !project.job)
       const errors = json.filter((project) => project.error).map((project) => project.error)
-      if (_.isEmpty(errors)) {
+      if (isEmpty(errors)) {
         return dispatch(projectsFetched(trayId, filteredProjects))
       } else {
         return dispatch(projectsFetchError(trayId, errors))

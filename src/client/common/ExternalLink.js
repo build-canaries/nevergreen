@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import _ from 'lodash'
+import omit from 'lodash/omit'
 import styles from './external-link.scss'
 
 class ExternalLink extends Component {
   render() {
-    const aProps = _.omit(this.props, ['children', 'target', 'rel'])
+    const aProps = omit(this.props, ['children', 'target', 'rel'])
 
     return (
       <a {...aProps} target='_blank' rel='noopener noreferrer'>

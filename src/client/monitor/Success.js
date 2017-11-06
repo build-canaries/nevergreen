@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import Message from './SuccessMessage'
 import Image from './SuccessImage'
-import _ from 'lodash'
+import startsWith from 'lodash/startsWith'
 
 class Success extends Component {
   constructor(props) {
@@ -13,7 +13,7 @@ class Success extends Component {
   }
 
   render() {
-    const isUrl = _.startsWith(this.state.message, 'http')
+    const isUrl = startsWith(this.state.message, 'http')
 
     if (isUrl) {
       return <Image url={this.state.message}/>

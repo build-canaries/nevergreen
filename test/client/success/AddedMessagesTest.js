@@ -4,12 +4,12 @@ import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
 import AddedMessages from '../../../src/client/success/AddedMessages'
-import _ from 'lodash'
+import noop from 'lodash/noop'
 
 describe('<AddedMessages/>', function () {
   const DEFAULT_PROPS = {
     messages: [],
-    removeMessage: _.noop
+    removeMessage: noop
   }
 
   it('should render nothing if messages is empty', function () {

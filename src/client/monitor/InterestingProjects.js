@@ -1,6 +1,9 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import _ from 'lodash'
+import reduce from 'lodash/reduce'
+import map from 'lodash/map'
+import concat from 'lodash/concat'
+import isEmpty from 'lodash/isEmpty'
 import ScaledGrid from '../common/scale/ScaledGrid'
 import InterestingProject from '../common/project/InterestingProject'
 import styles from './interesting-projects.scss'
@@ -13,18 +16,18 @@ class InterestingProjects extends Component {
   }
 
   render() {
-    const brokenProject = _.reduce(this.props.projects, (previous, project) => previous || project.prognosis === 'sick', false)
-    const playBrokenSfx = this.props.playBrokenBuildSounds && (brokenProject || !_.isEmpty(this.props.errors))
+    const brokenProject = reduce(this.props.projects, (previous, project) => previous || project.prognosis === 'sick', false)
+    const playBrokenSfx = this.props.playBrokenBuildSounds && (brokenProject || !isEmpty(this.props.errors))
     const brokenSfx = playBrokenSfx && this.props.brokenBuildFx ?
       <audio ref={(node) => this.sfx = node} src={this.props.brokenBuildFx} autoPlay/> : null
 
-    const errors = _.map(this.props.errors, (error) => {
+    const errors = map(this.props.errors, (error) => {
       return <div key={error} className={styles.error}>
         <div className={styles.inner}>{error}</div>
       </div>
     })
 
-    const projects = _.map(this.props.projects, (project) => {
+    const projects = map(this.props.projects, (project) => {
       const tray = this.props.trays.find((tray) => tray.trayId === project.trayId)
       return <InterestingProject {...project} trayName={tray.name} key={`${tray.trayId}#${project.projectId}`}
                                  showBrokenBuildTimers={this.props.showBrokenBuildTimers}
@@ -34,7 +37,7 @@ class InterestingProjects extends Component {
 
     return (
       <span className={styles.interestingProjects} data-locator='interesting-projects'>
-        <ScaledGrid>{_.concat(errors, projects)}</ScaledGrid>
+        <ScaledGrid>{concat(errors, projects)}</ScaledGrid>
         {brokenSfx}
       </span>
     )

@@ -5,7 +5,7 @@ import Messages from '../../common/messages/Messages'
 import Input from '../../common/forms/Input'
 import Shortcut from '../../common/Shortcut'
 import Refresh from './Refresh'
-import _ from 'lodash'
+import sortBy from 'lodash/sortBy'
 import styles from './available-projects.scss'
 import {isBlank} from '../../common/Utils'
 
@@ -79,7 +79,7 @@ class AvailableProjects extends Component {
     const buildItems = (
       <ol className={styles.buildItems}>
         {
-          _.sortBy(filteredProjects, ['name', 'stage']).map((project) => {
+          sortBy(filteredProjects, ['name', 'stage']).map((project) => {
             const selected = this.props.selected.includes(project.projectId)
             const selectProject = () => this.props.selectProject(this.props.trayId, project.projectId, !selected)
 

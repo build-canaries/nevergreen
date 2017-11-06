@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import Resizable from '../Resizable'
 import {ideal} from './ScaleText'
 import FontMetrics from './FontMetrics'
-import _ from 'lodash'
+import isEqual from 'lodash/isEqual'
+import remove from 'lodash/remove'
 import styles from './scaled-grid.scss'
 
 // These need to match those in the CSS
@@ -71,7 +72,7 @@ class ScaledGrid extends Component {
 
   componentDidUpdate() {
     const dimension = calculateChildDimensions(this.node, this.fontMetrics, this.childrenText)
-    if (!_.isEqual(this.state, dimension)) {
+    if (!isEqual(this.state, dimension)) {
       this.setState(dimension)
     }
   }
@@ -94,7 +95,7 @@ class ScaledGrid extends Component {
                 if (node) {
                   this.childrenText[index] = node.textContent
                 } else {
-                  _.remove(this.childrenText, (v, i) => i === index)
+                  remove(this.childrenText, (v, i) => i === index)
                 }
               }
               return <li className={styles.item} ref={getTextContent} style={style}>{child}</li>

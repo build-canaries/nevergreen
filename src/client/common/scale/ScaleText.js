@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import flatten from 'lodash/flatten'
 import {debug, warn} from '../Logger'
 
 const MIN_FONT_SIZE = 10
@@ -13,7 +13,7 @@ function longestStringInArray(words) {
 }
 
 function findLongestWord(sentences) {
-  const individualWords = _.flatten(sentences.map((sentence) => sentence.split(' ')))
+  const individualWords = flatten(sentences.map((sentence) => sentence.split(' ')))
   return longestStringInArray(individualWords)
 }
 

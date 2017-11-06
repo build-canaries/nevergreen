@@ -4,12 +4,12 @@ import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
 import AddedImages from '../../../src/client/success/AddedImages'
-import _ from 'lodash'
+import noop from 'lodash/noop'
 
 describe('<AddedImages/>', function () {
   const DEFAULT_PROPS = {
     urls: [],
-    removeMessage: _.noop
+    removeMessage: noop
   }
 
   it('should render nothing if urls is empty', function () {
