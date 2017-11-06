@@ -7,6 +7,7 @@ var CopyWebpackPlugin = require('copy-webpack-plugin')
 var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 var ManifestPlugin = require('webpack-manifest-plugin')
 var SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
+var UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 var isProd = (process.env.NODE_ENV === 'production')
 
 var cssLoader = {
@@ -38,6 +39,13 @@ module.exports = {
     publicPath: ''
   },
   plugins: [
+    new UglifyJSPlugin({
+      sourceMap: true,
+      parallel: true,
+      extractComments: isProd,
+      compress: isProd,
+      mangle: isProd
+    }),
     new HtmlWebpackPlugin({
       template: './src/client/index.html',
       minify: {
@@ -58,8 +66,7 @@ module.exports = {
       filename: 'service-worker.js',
       minify: isProd,
       staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/]
-    }),
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+    })
   ],
   module: {
     rules: [
