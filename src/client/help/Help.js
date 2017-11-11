@@ -15,55 +15,26 @@ class Help extends Component {
         <h2 className={styles.title}>Help</h2>
 
         <Container title='tracking' className={styles.container}>
-          <span>To get started you need to enter the URL to your cctray xml file. Where it lives depends on your CI Server of choice:</span>
+          <span>You can find your CCTray XML at these locations for different CI servers</span>
           <table className={styles.helpShortcutTable}>
             <thead>
-            <tr>
-              <th>CI Server</th>
-              <th>Location</th>
-            </tr>
+            <tr><th>CI Server</th><th>Location</th></tr>
             </thead>
             <tbody>
-            <tr>
-              <td>Jenkins</td>
-              <td className={styles.url}>http://jenkins.&lt;servername&gt;:8080/cc.xml</td>
-            </tr>
-            <tr>
-              <td>Hudson</td>
-              <td className={styles.url}>http://hudson.&lt;servername&gt;:8080/cc.xml</td>
-            </tr>
-            <tr>
-              <td>Travis CI</td>
-              <td className={styles.url}>http://travis-ci.org/&lt;ownername&gt;/&lt;repositoryname&gt;/cc.xml</td>
-            </tr>
-            <tr>
-              <td>GO</td>
-              <td className={styles.url}>http://&lt;servername&gt;:8154/go/cctray.xml</td>
-            </tr>
-            <tr>
-              <td>CircleCI</td>
-              <td className={styles.url}>https://circleci.com/cc.xml?circle-token=&lt;circle-token&gt;</td>
-            </tr>
-            <tr>
-              <td>TeamCity</td>
-              <td className={styles.url}>http://teamcity:8111/guestAuth/app/rest/cctray/projects.xml</td>
-            </tr>
-            <tr>
-              <td>CruiseControl.rb</td>
-              <td className={styles.url}>http://cc.rb.&lt;servername&gt;:3333/XmlStatusReport.aspx</td>
-            </tr>
-            <tr>
-              <td>CruiseControl</td>
-              <td className={styles.url}>http://cc.java.&lt;servername&gt;:8080/cctray.xml</td>
-            </tr>
-            <tr>
-              <td>CruiseControl.NET</td>
-              <td className={styles.url}>http://cc.net.&lt;servername&gt;/XmlStatusReport.aspx</td>
-            </tr>
-            <tr>
-              <td>Solano CI</td>
-              <td className={styles.url}>http://api.tddium.com/cc/&lt;long_uuid_string&gt;/cctray.xml</td>
-            </tr>
+            <tr><td>Jenkins</td><td className={styles.url}>/cc.xml</td></tr>
+            <tr><td>Hudson</td><td className={styles.url}>/cc.xml</td></tr>
+            <tr><td>Travis CI</td><td className={styles.url}>/:ownername/:repositoryname/cc.xml</td></tr>
+            <tr><td>GoCD</td><td className={styles.url}>/go/cctray.xml</td></tr>
+            <tr><td>CircleCI</td><td className={styles.url}>/cc.xml?circle-token=:token</td></tr>
+            <tr><td>TeamCity</td><td className={styles.url}>/guestAuth/app/rest/cctray/projects.xml</td></tr>
+            <tr><td>CruiseControl.rb</td><td className={styles.url}>/XmlStatusReport.aspx</td></tr>
+            <tr><td>CruiseControl</td><td className={styles.url}>/cctray.xml</td></tr>
+            <tr><td>CruiseControl.NET</td><td className={styles.url}>/XmlStatusReport.aspx</td></tr>
+            <tr><td>Solano CI</td><td className={styles.url}>/cc/:long_uuid_string/cctray.xml</td></tr>
+            <tr><td>Semaphore CI</td><td className={styles.url}>/api/v1/projects/:hash_id/cc.xml?auth_token=:auth_token&ccmenu=cc.xml</td></tr>
+            <tr><td>Buildkite</td><td className={styles.url}>/:organization-slug.xml?access_token=:token</td></tr>
+            <tr><td>Drone</td><td className={styles.url}>/api/badges/:owner/:name/cc.xml</td></tr>
+            <tr><td>Wercker</td><td className={styles.url}>/api/v2/applications/:project-id/cc/build</td></tr>
             </tbody>
           </table>
           <p>If you are just checking us out then you can use the Apache projects cctray at:</p>
@@ -176,15 +147,13 @@ class Help extends Component {
             <li>
               <span className={styles.twitter}/> Follow Build Canaries on <ExternalLink href='https://twitter.com/BuildCanaries'>Twitter</ExternalLink> for news and updates.
             </li>
-            <li>
-              <span className={styles.icoMoon}/>Icons from <ExternalLink href='https://icomoon.io/'>IcoMoon</ExternalLink> &quot;custom built and crisp icon fonts, done right&quot;.
-            </li>
           </ul>
         </Container>
 
         <Container title='licenses' className={styles.container}>
-          <span>Nevergreen is open source under the <ExternalLink href='https://spdx.org/licenses/EPL-1.0'>Eclipse Public License 1.0 (EPL-1.0)</ExternalLink>.</span>
-          <p>&quot;Pacman Death Sound&quot; by <ExternalLink href='http://www.orangefreesounds.com/pacman-death-sound/'>Alexander</ExternalLink> is licensed under <ExternalLink href='https://creativecommons.org/licenses/by-nc/4.0/legalcode'>CC BY 4.0</ExternalLink></p>
+          <span>Nevergreen is open source under the <ExternalLink href='https://spdx.org/licenses/EPL-1.0'>Eclipse Public License 1.0 (EPL-1.0)</ExternalLink> and uses <ExternalLink href='https://dependencyci.com/github/build-canaries/nevergreen'>open source software</ExternalLink>.</span>
+          <p>Icons generated using the <ExternalLink href='https://icomoon.io/'>IcoMoon App</ExternalLink> and are licensed under <ExternalLink href='https://www.gnu.org/licenses/gpl.html'>GNU General Public License (GPL)</ExternalLink> / <ExternalLink href='https://creativecommons.org/licenses/by/4.0/'>Creative Commons Attribution 4.0 International (CC BY 4.0)</ExternalLink></p>
+          <p>&quot;Pacman Death Sound&quot; by <ExternalLink href='http://www.orangefreesounds.com/pacman-death-sound/'>Alexander</ExternalLink> is licensed under <ExternalLink href='https://creativecommons.org/licenses/by-nc/4.0/'>Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)</ExternalLink></p>
         </Container>
       </section>
     )
