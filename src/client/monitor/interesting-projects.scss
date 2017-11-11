@@ -8,9 +8,9 @@
 .error {
   @extend %fillParent;
 
-  background-color: $danger;
+  background-color: $sick;
   border-radius: 5px;
-  color: $white;
+  color: $off-white;
   display: table;
   padding: 1em;
 }
