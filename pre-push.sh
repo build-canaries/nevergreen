@@ -21,8 +21,6 @@ trap 'killall' EXIT
 trap 'killall' INT
 
 echo '[Step 2 of 6] Running the ci dependencies script...'
-# remove the package-lock.json file as it wouldn't exist on the CI server, see issue #177 for more details
-rm -f package-lock.json # TODO: [#177] remove once we figure out how to get package-lock.json working consistently
 ./ci/dependencies.sh
 
 echo '[Step 3 of 6] Running the ci compile script...'
