@@ -42,8 +42,8 @@ deployment:
 #    commands:
 #      - ./ci/release.sh
 #      - sudo apt-get install jq
-#      - ./ci/create-github-release.sh
-#      - ./ci/tweet-release.sh
+#      - ./ci/release-github.sh
+#      - ./ci/release-tweet.sh
 general:
   artifacts:
     - ./target/nevergreen-standalone.jar
