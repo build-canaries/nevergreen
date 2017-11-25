@@ -14,3 +14,5 @@ resources/public
 phantomjsdriver.log
 npm-debug.log
 src/.module-cache/
+.nyc_output
+coverage
