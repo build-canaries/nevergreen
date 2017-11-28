@@ -31,6 +31,6 @@
         (create-error msg url)))
     (catch ExceptionInfo e
       (let [data (ex-data e)
-            msg (str (:status data) " " (:reason-phrase data))]
-        (log/info (str "GET from [" url "] returned a status of [" msg "]"))
+            msg (or (:reason-phrase data) "Unknown Error")]
+        (log/info (str "GET from [" url "] returned a status of [" (:status data) " " msg "]"))
         (create-error msg url)))))

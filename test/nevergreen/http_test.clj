@@ -36,5 +36,11 @@
        (fact "creates an error when the CI server responds with an error"
              (subject/http-get "some-url" {}) => irrelevant
              (provided
-               (client/get anything anything) =throws=> (ex-info "irrelevant" {:status 500 :reason-phrase "some-error"})
-               (create-error "500 some-error" "some-url") => {})))
+               (client/get anything anything) =throws=> (ex-info "irrelevant" {:reason-phrase "some-error"})
+               (create-error "some-error" "some-url") => {}))
+
+       (fact "creates an unknown error when the CI server responds with an error but no reason"
+             (subject/http-get "some-url" {}) => irrelevant
+             (provided
+               (client/get anything anything) =throws=> (ex-info "irrelevant" {})
+               (create-error "Unknown Error" "some-url") => {})))

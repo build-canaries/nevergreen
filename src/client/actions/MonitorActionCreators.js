@@ -15,12 +15,12 @@ export function fetchInteresting(trays, selected) {
       const errors = projects.filter((project) => project.error).map((project) => {
         const tray = _.head(trays.filter((tray) => tray.trayId === project.trayId))
         const identifier = _.get(tray, 'name') || _.get(tray, 'url') || project.url
-        return `${identifier} ${_.lowerCase(project.error)}`
+        return `${identifier} ${project.error}`
       })
 
       dispatch(interestingProjects(filteredProjects, errors))
     }).catch((error) => {
-      dispatch(interestingProjects([], [`nevergreen server ${error.status} ${error.message}`]))
+      dispatch(interestingProjects([], [`Nevergreen ${error.message}`]))
     })
   }
 }
