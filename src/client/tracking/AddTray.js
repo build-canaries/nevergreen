@@ -31,8 +31,9 @@ class AddTray extends Component {
     return (
       <div className={styles.addTray}>
         <div className={styles.inputs}>
-          <Input className={styles.trackingTrayUrl} placeholder='http(s)://host:port/cc.xml' value={this.state.url}
-                 onChange={this.updateUrl} onEnter={this.addTray} data-locator='add-tray-url' autoFocus>
+          <Input className={styles.trackingTrayUrl} placeholder='CCTray XML file'
+                 value={this.state.url} onChange={this.updateUrl} onEnter={this.addTray} data-locator='add-tray-url'
+                 autoFocus>
             <span>URL</span>
           </Input>
           <Input className={styles.username} value={this.state.username} onChange={this.updateUsername}

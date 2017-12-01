@@ -24,7 +24,7 @@ class InterestingProject extends Component {
     const isSick = this.props.prognosis === 'sick'
 
     const trayName = this.props.showTrayName && !isBlank(this.props.trayName) ?
-      <span data-locator='tray-name'>{this.props.trayName.toLowerCase()} </span> : null
+      <span data-locator='tray-name'>{this.props.trayName} </span> : null
 
     const stage = this.props.stage ? <span data-locator='project-stage'> {this.props.stage}</span> : null
 

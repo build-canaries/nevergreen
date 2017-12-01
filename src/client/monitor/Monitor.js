@@ -33,7 +33,7 @@ class Monitor extends Component {
     }
 
     return (
-      <div className={monitorClassNames}>
+      <div className={monitorClassNames} aria-live='polite' aria-relevant='additions removals'>
         <Timer onTrigger={this.fetch} interval={this.props.refreshTime}/>
         <Loading loaded={this.props.loaded}>
           {content}

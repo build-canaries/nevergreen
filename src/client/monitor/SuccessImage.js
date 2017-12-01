@@ -6,7 +6,7 @@ class SuccessImage extends Component {
   render() {
     return (
       <div id='success-image'>
-        <img src={this.props.url} className={styles.image} alt=''/>
+        <img src={this.props.url} className={styles.image} alt='success'/>
       </div>
     )
   }

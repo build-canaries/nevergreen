@@ -44,7 +44,8 @@ class Header extends Component {
         <img src={logo} className={styles.logo} alt='Build Canaries'/>
         <nav role='navigation' className={styles.siteMenu}>
           <h2 className={styles.subTitle}>Site menu</h2>
-          <button className={styles.siteMenuToggle} onClick={this.toggleMenu} aria-label={toggleLabel}>
+          <button className={styles.siteMenuToggle} onClick={this.toggleMenu} aria-label={toggleLabel}
+                  aria-expanded={this.state.menuVisible}>
             <i className={iconClassNames}/>
           </button>
           <ul className={menuClassNames}>

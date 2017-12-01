@@ -77,7 +77,7 @@ class AvailableProjects extends Component {
     )
 
     const buildItems = (
-      <ol className={styles.buildItems}>
+      <ol className={styles.buildItems} aria-live='polite' aria-relevant='additions'>
         {
           _.sortBy(filteredProjects, ['name', 'stage']).map((project) => {
             const selected = this.props.selected.includes(project.projectId)
