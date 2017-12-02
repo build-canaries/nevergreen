@@ -35,19 +35,19 @@ class DisplaySettings extends Component {
 
     return (
       <Container title='display' className={styles.container}>
-        <Checkbox className={styles.checkbox} checked={this.props.showTrayName} onToggle={this.toggleTrayName}
-                  data-locator='show-tray-names'>
-          <span>show tray name</span>
-        </Checkbox>
-        <Checkbox className={styles.checkbox} checked={this.props.showBrokenBuildTime}
-                  onToggle={this.toggleBrokenBuildTime}
-                  data-locator='show-broken-build-times'>
-          <span>show broken build timer</span>
-        </Checkbox>
-        <Checkbox className={styles.checkbox} checked={this.props.showBuildLabel} onToggle={this.toggleBuildLabel}
-                  data-locator='show-build-labels'>
-          <span>show broken build label</span>
-        </Checkbox>
+        <div className={styles.checkboxes}>
+          <Checkbox checked={this.props.showTrayName} onToggle={this.toggleTrayName} data-locator='show-tray-names'>
+            <span>show tray name</span>
+          </Checkbox>
+          <Checkbox checked={this.props.showBrokenBuildTime} onToggle={this.toggleBrokenBuildTime}
+                    data-locator='show-broken-build-times'>
+            <span>show broken build timer</span>
+          </Checkbox>
+          <Checkbox checked={this.props.showBuildLabel} onToggle={this.toggleBuildLabel}
+                    data-locator='show-build-labels'>
+            <span>show broken build label</span>
+          </Checkbox>
+        </div>
         <h4 className={styles.title}>Preview</h4>
         <div className={styles.displayPreview}>
           <ScaledGrid>

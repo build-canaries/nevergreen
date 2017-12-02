@@ -2,36 +2,97 @@
 @import '../typography';
 @import '../accessibility';
 
-.label {
+.checkbox {
   @include font-scale(1);
 
-  cursor: pointer;
-  display: inline-block;
-  margin: 1em 0;
+  clear: left;
+  display: block;
+  float: left;
+  margin-bottom: 1em;
+  padding: 0 0 0 38px;
+  position: relative;
 }
 
 .input {
-  &:enabled {
-    cursor: pointer;
-    transition: background-color 0.1s ease-in;
+  cursor: pointer;
+  filter: alpha(opacity=0);
+  height: 38px;
+  left: 0;
+  margin: 0;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  width: 38px;
+  z-index: 1;
+  zoom: 1;
 
-    &:hover,
-    &:focus {
-      & + .children {
-        background-color: darken($white, $color-change-percentage);
-        color: darken($off-black, $color-change-percentage);
-      }
+  &:focus + .children::before {
+    border-radius: 0;
+    box-shadow: 0 0 0 3px $outline;
+  }
+
+  &:enabled:hover {
+    & + .children {
+      @include interactive($darken-on-focus: false);
+    }
+
+    & + .children::before {
+      border: 2px solid darken($light-grey, $color-change-percentage);
+      border-radius: 0;
     }
   }
 
   &:disabled {
-    & ~ .children {
-      color: $mid-grey;
+    cursor: default;
+
+    & + .children {
       cursor: default;
+      filter: alpha(opacity=50);
+      opacity: 0.5;
+      zoom: 1;
     }
+  }
+
+  &:checked + .children::after {
+    filter: alpha(opacity=100);
+    opacity: 1;
+    zoom: 1;
   }
 }
 
 .children {
-  padding-left: 1em;
+  cursor: pointer;
+  display: block;
+  float: left;
+  padding: 8px 1em;
+  touch-action: manipulation;
+
+  &::before {
+    background: transparent;
+    border: 1px solid $light-grey;
+    border-radius: 2px;
+    content: '';
+    height: 34px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 34px;
+  }
+
+  &::after {
+    background: transparent;
+    border: solid $off-black;
+    border-top-color: transparent;
+    border-width: 0 0 5px 5px;
+    content: '';
+    filter: alpha(opacity=0);
+    height: 7px;
+    left: 8px;
+    opacity: 0;
+    position: absolute;
+    top: 10px;
+    transform: rotate(-45deg);
+    width: 17px;
+    zoom: 1;
+  }
 }

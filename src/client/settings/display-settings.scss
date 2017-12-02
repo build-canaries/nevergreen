@@ -4,14 +4,12 @@
   padding: 1em;
 }
 
-.checkbox {
-  display: block;
-  white-space: nowrap;
-  width: 0;
+.checkboxes {
+  display: inline-block;
 }
 
 .title {
-  padding: 1em 0;
+  padding-bottom: 1em;
 }
 
 .displayPreview {

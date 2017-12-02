@@ -5,15 +5,10 @@
   padding: 1em;
 }
 
-.labelCheckbox {
-  display: block;
-}
-
 .soundFx {
-  margin-top: 0.5em;
-
   @include respond-to(tablet, desktop) {
     align-items: baseline;
+    clear: both;
     display: flex;
 
     .soundFxInput {
