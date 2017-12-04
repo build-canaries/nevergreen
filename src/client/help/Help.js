@@ -15,7 +15,7 @@ class Help extends Component {
         <h2 className={styles.title}>Help</h2>
 
         <Container title='tracking' className={styles.container}>
-          <span>You can find your CCTray XML at these locations for different CI servers</span>
+          <p>You can find your CCTray XML at these locations for different CI servers</p>
           <table className={styles.helpShortcutTable}>
             <thead>
             <tr><th>CI Server</th><th>Location</th></tr>
@@ -42,20 +42,20 @@ class Help extends Component {
         </Container>
 
         <Container title='success' className={styles.container}>
-          <span>You can add text or image URLs, these will get displayed when no projects are broken or building on the monitor page. Images are previewed in a 16:9 ratio which is how they would look on a full HD TV (1920x1080).</span>
+          <p>You can add text or image URLs, these will get displayed when no projects are broken or building on the monitor page. Images are previewed in a 16:9 ratio which is how they would look on a full HD TV (1920x1080).</p>
           <p>Need some inspiration?</p>
-          <p>Try searching for some <ExternalLink href='https://duckduckgo.com/?q=nature+1920x1080&iax=1&ia=images'>nice images</ExternalLink> or checkout <ExternalLink href='http://www.disapprovallook.com/'>ಠ_ಠ Disapproval Look</ExternalLink> for some fun messages, like jelly guy! ༼つ◕_◕༽つ</p>
+          <p>Try searching for some <ExternalLink href='https://duckduckgo.com/?q=nature+1920x1080&iax=1&ia=images'>nice images</ExternalLink> or checkout <ExternalLink href='http://www.disapprovallook.com/'>Disapproval Look</ExternalLink> for some fun messages, like jelly guy! ༼ つ◕_◕ ༽つ</p>
         </Container>
 
         <Container title='Backup' className={styles.container}>
-          <span>To export to GitHub you need to generate a <ExternalLink href='https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/'>personal access token</ExternalLink> to allow a non-anonymous gist to be created. Creating a non-anonymous gist will allow you to delete it viathe website later.</span>
+          <p>To export to GitHub you need to <ExternalLink href='https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/'>generate a personal access token</ExternalLink> to allow a non-anonymous Gist to be created. Creating a non-anonymous Gist will allow you to delete it via the website later.</p>
           <p>The token <em>only</em> requires the <code>gist</code> <ExternalLink href='https://developer.github.com/v3/oauth/#scopes'>scope</ExternalLink>.</p>
-          <p>Access tokens are not stored locally as they would allow editing of any of a users gists, so they need to be manually entered every time you want to export.</p>
-          <p>Importing does not require an access token as even <ExternalLink href='https://help.github.com/articles/about-gists/#secret-gists'>secret gists are not actually private</ExternalLink>.</p>
+          <p>Access tokens are not stored locally as they would allow editing of any of a users Gists, so they need to be manually entered every time you want to export.</p>
+          <p>Importing does not require an access token as even <ExternalLink href='https://help.github.com/articles/about-gists/#secret-gists'>secret Gists are not actually private</ExternalLink>.</p>
         </Container>
 
         <Container title='keyboard shortcuts' className={styles.keyboardShortcuts} highlight={this.props.showShortcuts}>
-          <span>The following keyboard shortcuts can be used to:</span>
+          <p>The following keyboard shortcuts can be used to:</p>
           <table className={styles.helpShortcutTable}>
             <thead>
             <tr>
@@ -140,20 +140,14 @@ class Help extends Component {
         </Container>
 
         <Container title='additional links' className={styles.container}>
-          <ul className={styles.helpLinks}>
-            <li>
-              <span className={styles.github}/> The full Nevergreen source is available on <ExternalLink href='https://github.com/build-canaries/nevergreen'>Github</ExternalLink>.
-            </li>
-            <li>
-              <span className={styles.twitter}/> Follow Build Canaries on <ExternalLink href='https://twitter.com/BuildCanaries'>Twitter</ExternalLink> for news and updates.
-            </li>
-          </ul>
+          <p className={styles.github}>The full Nevergreen source is available on <ExternalLink href='https://github.com/build-canaries/nevergreen'>Github</ExternalLink>.</p>
+          <p className={styles.twitter}>Follow Build Canaries on <ExternalLink href='https://twitter.com/BuildCanaries'>Twitter</ExternalLink> for news and updates.</p>
         </Container>
 
         <Container title='licenses' className={styles.container}>
-          <span>Nevergreen is open source under the <ExternalLink href='https://spdx.org/licenses/EPL-1.0'>Eclipse Public License 1.0 (EPL-1.0)</ExternalLink> and uses <ExternalLink href='https://dependencyci.com/github/build-canaries/nevergreen'>open source software</ExternalLink>.</span>
+          <p>Nevergreen is open source under the <ExternalLink href='https://spdx.org/licenses/EPL-1.0'>Eclipse Public License 1.0 (EPL-1.0)</ExternalLink> and uses <ExternalLink href='https://dependencyci.com/github/build-canaries/nevergreen'>open source software</ExternalLink>.</p>
           <p>Icons generated using the <ExternalLink href='https://icomoon.io/'>IcoMoon App</ExternalLink> and are licensed under <ExternalLink href='https://www.gnu.org/licenses/gpl.html'>GNU General Public License (GPL)</ExternalLink> / <ExternalLink href='https://creativecommons.org/licenses/by/4.0/'>Creative Commons Attribution 4.0 International (CC BY 4.0)</ExternalLink></p>
-          <p>&quot;Pacman Death Sound&quot; by <ExternalLink href='http://www.orangefreesounds.com/pacman-death-sound/'>Alexander</ExternalLink> is licensed under <ExternalLink href='https://creativecommons.org/licenses/by-nc/4.0/'>Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)</ExternalLink></p>
+          <p><ExternalLink href='http://www.orangefreesounds.com/pacman-death-sound/'>&quot;Pacman Death Sound&quot; by Alexander</ExternalLink> is licensed under <ExternalLink href='https://creativecommons.org/licenses/by-nc/4.0/'>Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)</ExternalLink></p>
         </Container>
       </section>
     )

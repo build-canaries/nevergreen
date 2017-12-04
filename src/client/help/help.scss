@@ -6,7 +6,7 @@
 @import '../common/fonts/icon-font';
 
 .container {
-  padding: 1em;
+  padding: 0 1em 1em;
 }
 
 .help {
@@ -22,20 +22,16 @@
 }
 
 .exampleTray {
-  font-family: $monospace;
+  font-family: $monospace-font;
   word-break: break-all;
 }
 
-.helpLinks {
-  list-style: none;
-}
-
 %helpLinkIcon {
-  @include font-scale(2);
+  &::before {
+    @extend .icon;
 
-  @extend .icon;
-
-  margin-right: 0.5em;
+    margin-right: 0.5em;
+  }
 }
 
 .github {
@@ -65,7 +61,7 @@
   border: $mid-grey 1px solid;
   border-radius: 5px;
   color: $off-black;
-  font-family: $monospace;
+  font-family: $monospace-font;
   padding: 0.1em 0.3em;
 }
 
@@ -91,5 +87,5 @@
 .url {
   @include font-scale(-1);
 
-  font-family: $monospace;
+  font-family: $monospace-font;
 }

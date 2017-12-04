@@ -3,7 +3,7 @@
 @import '../common/responsive';
 
 .removeLink {
-  @include icon-only-button('bin', $white, $danger);
+  @include icon-only-button('bin', $white, $error);
   @include font-scale(-1);
 
   display: inline;

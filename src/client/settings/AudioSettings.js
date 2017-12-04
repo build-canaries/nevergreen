@@ -50,7 +50,7 @@ class AudioSettings extends Component {
     this.setState({audio, errors: [], playing: true})
     audio.addEventListener('ended', this.audioStopped)
     audio.play().catch((e) => this.setState({
-      errors: ['Unable to play broken build sound because of an error:', e.message],
+      errors: ['Unable to play broken build sound because of an error.', e.message],
       playing: false
     }))
   }
@@ -78,7 +78,7 @@ class AudioSettings extends Component {
     return (
       <Container title='audio' className={styles.container}>
         <Checkbox checked={this.props.playBrokenBuildSoundFx} onToggle={this.toggleBrokenSounds}
-                  data-locator='play-sounds' disabled={this.state.playing}>
+                  data-locator='play-sounds' disabled={this.state.playing} aria-disabled={this.state.playing}>
           <span>play a sound when a build breaks</span>
         </Checkbox>
         <div className={styles.soundFx}>
@@ -89,7 +89,7 @@ class AudioSettings extends Component {
             <span>broken build sound</span>
           </Input>
           <button className={playButtonClasses} onClick={this.state.playing ? this.stop : this.play}
-                  disabled={playingDisabled}>
+                  disabled={playingDisabled} aria-disabled={playingDisabled}>
             {this.state.playing ? 'stop' : 'play'}
           </button>
         </div>

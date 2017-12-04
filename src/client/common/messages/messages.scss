@@ -2,27 +2,28 @@
 @import '../fonts/icon-font';
 @import '../typography';
 
-.messages {
-  background-color: $off-black;
-  color: $white;
+@mixin messages($icon, $color) {
+  @include font-scale(1);
+
+  border: 3px solid $color;
   list-style: none;
   margin-top: 1em;
+
+  .message:first-child {
+    @extend .icon-#{$icon};
+
+    &::before {
+      color: $color;
+    }
+  }
 }
 
 .error {
-  .message:first-child {
-    @extend .icon-notification;
-  }
-
-  background-color: $danger;
+  @include messages('notification', $error);
 }
 
 .info {
-  .message:first-child {
-    @extend .icon-checkmark;
-  }
-
-  background-color: $blue;
+  @include messages('checkmark', $blue);
 }
 
 .message {

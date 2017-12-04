@@ -9,20 +9,20 @@
   display: block;
   float: left;
   margin-bottom: 1em;
-  padding: 0 0 0 38px;
+  padding: 0 0 0 36px;
   position: relative;
 }
 
 .input {
   cursor: pointer;
   filter: alpha(opacity=0);
-  height: 38px;
+  height: 36px;
   left: 0;
   margin: 0;
   opacity: 0;
   position: absolute;
   top: 0;
-  width: 38px;
+  width: 36px;
   z-index: 1;
   zoom: 1;
 
@@ -33,11 +33,11 @@
 
   &:enabled:hover {
     & + .children {
-      @include interactive($darken-on-focus: false);
+      @include hover();
     }
 
     & + .children::before {
-      border: 2px solid darken($light-grey, $color-change-percentage);
+      border-color: darken($light-grey, $color-change-percentage);
       border-radius: 0;
     }
   }
@@ -64,7 +64,7 @@
   cursor: pointer;
   display: block;
   float: left;
-  padding: 8px 1em;
+  padding: 7px 1em;
   touch-action: manipulation;
 
   &::before {
@@ -81,7 +81,7 @@
 
   &::after {
     background: transparent;
-    border: solid $off-black;
+    border: solid $mid-grey;
     border-top-color: transparent;
     border-width: 0 0 5px 5px;
     content: '';

@@ -58,11 +58,12 @@ class AvailableProjects extends Component {
         <fieldset className={styles.toggles}>
           <legend className={styles.legend}>Available projects</legend>
           <button className={styles.includeAll} onClick={this.includeAll} disabled={this.state.disableButtons}
-                  data-locator='include-all'>
+                  aria-disabled={this.state.disableButtons} data-locator='include-all'>
             include all
             <Shortcut hotkeys={[`+ ${this.props.index}`, `= ${this.props.index}`]}/>
           </button>
-          <button className={styles.excludeAll} onClick={this.excludeAll} disabled={this.state.disableButtons}>
+          <button className={styles.excludeAll} onClick={this.excludeAll} disabled={this.state.disableButtons}
+                  aria-disabled={this.state.disableButtons}>
             exclude all
             <Shortcut hotkeys={[`- ${this.props.index}`]}/>
           </button>

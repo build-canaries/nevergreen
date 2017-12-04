@@ -1,13 +1,17 @@
 @import 'variables';
 
+@mixin hover($color:$off-black, $background-color:$white, $border-color:$light-grey) {
+  background-color: darken($background-color, $color-change-percentage);
+  border-color: darken($border-color, $color-change-percentage);
+  border-radius: 0;
+  color: darken($color, $color-change-percentage);
+}
+
 @mixin interactive($color:$off-black, $background-color:$white, $border-color:$light-grey, $darken-on-focus:true) {
   transition: color 0.1s ease-in, background-color 0.1s ease-in, border-color 0.1s ease-in;
 
   &:hover {
-    background-color: darken($background-color, $color-change-percentage);
-    border-color: darken($border-color, $color-change-percentage);
-    border-radius: 0;
-    color: darken($color, $color-change-percentage);
+    @include hover($color, $background-color, $border-color);
 
     @content;
   }

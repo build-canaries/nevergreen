@@ -59,7 +59,7 @@
 .dangerZoneTitle {
   @extend .icon-notification;
 
-  background-color: $danger;
+  background-color: $error;
   color: $white;
   padding: 0.5em 1em;
 
@@ -88,7 +88,7 @@
 }
 
 .delete {
-  @include button($white, $danger);
+  @include button($white, $error);
   @include button-icon('bin');
 }
 

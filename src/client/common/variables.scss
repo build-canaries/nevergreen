@@ -1,15 +1,17 @@
 // Fonts
 
-$monospace: Roboto Mono, monospace;
+$normal-font: Roboto, sans-serif;
+$monospace-font: Roboto Mono, monospace;
 
 // Colours
 
 $black: black;
 $off-black: #212121;
 $blue: #03a9f4;
+$purple: #4c2c92;
 $mid-grey: #7e7e7e;
 $light-grey: #ececec;
-$white: white;
+$white: #fff;
 $off-white: #fffed7;
 $yellow: #fdc626;
 
@@ -18,7 +20,7 @@ $healthy-building-text: #4a2f27;
 $sick: #b30400;
 $sick-building: #ff6400;
 
-$danger: #de3535;
+$error: #de3535;
 $outline: #a4a4a4;
 
 // Decorations

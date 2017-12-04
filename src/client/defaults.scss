@@ -14,11 +14,11 @@ body {
   background: $light-grey;
   color: $off-black;
   cursor: default;
-  font-family: Roboto, sans-serif;
+  font-family: $normal-font;
 }
 
 kbd {
-  font-family: $monospace;
+  font-family: $monospace-font;
 }
 
 fieldset {
@@ -31,12 +31,16 @@ a {
   color: $blue;
 
   &:visited {
-    color: $off-black;
+    color: $purple;
   }
 
-  @include interactive($blue, $white, $white);
+  @include interactive($blue, transparent, transparent);
+}
+
+p {
+  max-width: 55em;
 }
 
 input {
-  font-family: Roboto, sans-serif;
+  font-family: $normal-font;
 }
