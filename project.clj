@@ -25,13 +25,13 @@
   :aot [nevergreen.app]
   :javac-options ["-Dclojure.compiler.direct-linking=true"]
   :profiles {:dev {:plugins      [[lein-midje "3.2.1"]]
-                   :dependencies [[midje "1.8.3"]
+                   :dependencies [[midje "1.9.0"]
                                   [org.seleniumhq.selenium/selenium-support "3.4.0"]
                                   [org.seleniumhq.selenium/selenium-java "3.4.0" :exclusions [org.seleniumhq.selenium/selenium-support
                                                                                               org.seleniumhq.selenium/selenium-api
                                                                                               org.eclipse.jetty/jetty-io
                                                                                               org.eclipse.jetty/jetty-util]]
                                   [clj-webdriver/clj-webdriver "0.7.2"]
-                                  [io.github.bonigarcia/webdrivermanager "1.7.2" :exclusions [com.google.guava/guava
+                                  [io.github.bonigarcia/webdrivermanager "2.0.0" :exclusions [com.google.guava/guava
                                                                                               org.apache.commons/commons-lang3]]
-                                  [ring/ring-mock "0.3.1"]]}})
+                                  [ring/ring-mock "0.3.2"]]}})
