@@ -119,6 +119,18 @@
   }
 }
 
+.menuIcon {
+  @include font-scale(3);
+
+  background-color: inherit;
+  color: inherit;
+  vertical-align: middle;
+
+  &::before {
+    padding-right: 0.5em;
+  }
+}
+
 .active {
   color: $white;
 
@@ -131,18 +143,6 @@
     background-color: $off-black;
     color: $white;
     cursor: default;
-  }
-}
-
-.menuIcon {
-  @include font-scale(3);
-
-  background-color: inherit;
-  color: inherit;
-  vertical-align: middle;
-
-  &::before {
-    padding-right: 0.5em;
   }
 }
 

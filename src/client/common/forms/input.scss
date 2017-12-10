@@ -34,26 +34,26 @@
   padding: 0.5em;
   width: 100%;
 
+  &:invalid {
+    border-color: $error;
+    box-shadow: none;
+  }
+
+  &:disabled {
+    border-color: $mid-grey;
+    color: $mid-grey;
+  }
+
   &:not(:disabled) {
     &:read-write {
       @include interactive($darken-on-focus: false);
     }
   }
 
-  &:invalid {
-    border-color: $error;
-    box-shadow: none;
-  }
-
   @include respond-to(tablet, desktop) {
     margin-right: 1em;
     margin-top: 0;
     width: auto;
-  }
-
-  &:disabled {
-    border-color: $mid-grey;
-    color: $mid-grey;
   }
 }
 
