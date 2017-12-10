@@ -6,9 +6,14 @@ const chaiImmutable = require('chai-immutable')
 const chaiEnzyme = require('chai-enzyme')
 const ignore = require('ignore-styles')
 const sinon = require('sinon')
+const Enzyme = require('enzyme')
+const Adapter = require('enzyme-adapter-react-16')
 
 // Ignore non javascript imports
 ignore.default(['.scss', '.png', '.mp3'])
+
+// Configure Enzyme to use the React 16 adapter
+Enzyme.configure({adapter: new Adapter()})
 
 // Register chai plugins, Note: the order of these matter!
 chai.use(chaiImmutable)
