@@ -60,10 +60,6 @@ class AudioSettings extends Component {
     this.audioStopped()
   }
 
-  onValidation = (valid) => {
-    this.setState({playEnabled: valid})
-  }
-
   componentWillUnmount() {
     pause(this.state.audio)
   }
@@ -84,8 +80,7 @@ class AudioSettings extends Component {
         <div className={styles.soundFx}>
           <Input type='url' className={styles.soundFxInput} placeholder='audio file URL' onChange={this.updateSoundFx}
                  value={this.state.soundFx} onBlur={this.setSoundFx} onEnter={this.setSoundFx}
-                 required={this.props.playBrokenBuildSoundFx} onValidation={this.onValidation}
-                 disabled={this.state.playing}>
+                 required={this.props.playBrokenBuildSoundFx} disabled={this.state.playing}>
             <span>broken build sound</span>
           </Input>
           <button className={playButtonClasses} onClick={this.state.playing ? this.stop : this.play}
