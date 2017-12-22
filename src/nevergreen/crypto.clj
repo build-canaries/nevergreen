@@ -1,9 +1,9 @@
 (ns nevergreen.crypto
   (:require [nevergreen.config :as config]
             [base64-clj.core :as base64])
-  (import (java.security Key)
-          (javax.crypto Cipher)
-          (javax.crypto.spec SecretKeySpec)))
+  (:import (java.security Key)
+           (javax.crypto Cipher)
+           (javax.crypto.spec SecretKeySpec)))
 
 (def ^:private transformation "AES/ECB/PKCS5Padding")
 (def ^:private charset "UTF-8")

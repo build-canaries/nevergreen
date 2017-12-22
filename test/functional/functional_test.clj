@@ -11,11 +11,11 @@
             [functional.help-page :as help-page]
             [clojure.java.io :refer [make-parents]]
             [environ.core :refer [env]])
-  (import org.openqa.selenium.chrome.ChromeDriver
-          org.openqa.selenium.firefox.FirefoxDriver
-          org.openqa.selenium.Dimension
-          io.github.bonigarcia.wdm.ChromeDriverManager
-          io.github.bonigarcia.wdm.FirefoxDriverManager))
+  (:import org.openqa.selenium.chrome.ChromeDriver
+           org.openqa.selenium.firefox.FirefoxDriver
+           org.openqa.selenium.Dimension
+           io.github.bonigarcia.wdm.ChromeDriverManager
+           io.github.bonigarcia.wdm.FirefoxDriverManager))
 
 (def snap-ci-xvfb-size (Dimension. 1280 1024))
 ; (def full-hd-tv-size (Dimension. 1920 1080))

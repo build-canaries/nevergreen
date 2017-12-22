@@ -12,4 +12,5 @@
             (assoc-in [:headers "Access-Control-Allow-Methods"] "POST, GET, OPTIONS")
             (assoc-in [:headers "Access-Control-Allow-Origin"] "*")
             (assoc-in [:headers "Access-Control-Max-Age"] twenty-four-hours)
-            (assoc-in [:headers "Access-Control-Allow-Headers"] "Cache-Control, Content-Language, Content-Type, Expires, Last-Modified, Pragma"))))))
+            (assoc-in [:headers "Access-Control-Allow-Headers"] "Cache-Control, Content-Language, Content-Type, Expires, Last-Modified, Pragma"))
+        res))))

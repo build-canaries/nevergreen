@@ -26,6 +26,7 @@
   :javac-options ["-Dclojure.compiler.direct-linking=true"]
   :profiles {:dev {:plugins      [[lein-midje "3.2.1"]]
                    :dependencies [[midje "1.9.1"]
+                                  [jonase/eastwood "0.2.5"]
                                   [org.seleniumhq.selenium/selenium-support "3.4.0"]
                                   [org.seleniumhq.selenium/selenium-java "3.4.0" :exclusions [org.seleniumhq.selenium/selenium-support
                                                                                               org.seleniumhq.selenium/selenium-api

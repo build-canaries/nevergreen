@@ -1,5 +1,5 @@
 (ns nevergreen.app
-  (import org.joda.time.DateTime)
+  (:import org.joda.time.DateTime)
   (:require [compojure.core :refer :all]
             [ring.adapter.jetty :refer [run-jetty]]
             [cheshire.generate :as cheshire]
