@@ -1,19 +1,11 @@
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {
-  setBrokenBuildSoundFx,
-  setPlayBrokenBuildSoundFx,
-  setRefreshTime,
-  setShowBrokenBuildTime,
-  setShowBuildLabel,
+  setBrokenBuildSoundFx, setPlayBrokenBuildSoundFx, setRefreshTime, setShowBrokenBuildTime, setShowBuildLabel,
   setShowTrayName
 } from '../../../src/client/actions/SettingsActionCreators'
 import {
-  BROKEN_BUILD_SOUND_FX,
-  PLAY_BROKEN_BUILD_SOUND_FX,
-  REFRESH_TIME,
-  SHOW_BROKEN_BUILD_TIME,
-  SHOW_BUILD_LABEL,
+  BROKEN_BUILD_SOUND_FX, PLAY_BROKEN_BUILD_SOUND_FX, REFRESH_TIME, SHOW_BROKEN_BUILD_TIME, SHOW_BUILD_LABEL,
   SHOW_TRAY_NAME
 } from '../../../src/client/actions/Actions'
 
@@ -78,9 +70,14 @@ describe('SettingsActionCreators', function () {
       expect(actual).to.have.property('type', REFRESH_TIME)
     })
 
-    it('should return the given value', function () {
+    it('should return the nearest valid value for an exact match', function () {
+      const actual = setRefreshTime(3600)
+      expect(actual).to.have.property('value', 3600)
+    })
+
+    it('should return the nearest valid value', function () {
       const actual = setRefreshTime(15)
-      expect(actual).to.have.property('value', 15)
+      expect(actual).to.have.property('value', 10)
     })
 
     const invalidValues = [-1, 4, 'some-string']

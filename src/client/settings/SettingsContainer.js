@@ -1,12 +1,8 @@
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {
-  setBrokenBuildSoundFx,
-  setPlayBrokenBuildSoundFx,
-  setRefreshTime,
-  setShowBrokenBuildTime,
-  setShowBuildLabel,
-  setShowTrayName
+  setBrokenBuildSoundFx, setPlayBrokenBuildSoundFx, setRefreshTime, setShowBrokenBuildTime, setShowBuildLabel,
+  setShowTrayName, VALID_REFRESH_TIMES
 } from '../actions/SettingsActionCreators'
 import Settings from './Settings'
 
@@ -30,7 +26,8 @@ function mapStateToProps(store) {
     showBuildLabel: audioVisual.get('showBuildLabel'),
     brokenBuildSoundFx: audioVisual.get('brokenBuildSoundFx'),
     setShowTrayName: audioVisual.get('setShowTrayName'),
-    refreshTime: audioVisual.get('refreshTime')
+    refreshTime: audioVisual.get('refreshTime'),
+    validRefreshTimes: VALID_REFRESH_TIMES
   }
 }
 
