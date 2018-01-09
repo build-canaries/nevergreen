@@ -14,13 +14,13 @@ describe('<Refresh/>', function () {
   }
 
   it('should render projects fetched never if there is no timestamp', function () {
-    const props = Object.assign({}, DEFAULT_PROPS, {timestamp: null})
+    const props = {...DEFAULT_PROPS, timestamp: null}
     const wrapper = shallow(<Refresh {...props} />)
     expect(wrapper.find(locator('refresh-time'))).to.include.text('never')
   })
 
   it('should render how long ago projects were refreshed if a timestamp is given', function () {
-    const props = Object.assign({}, DEFAULT_PROPS, {timestamp: '2017-06-07T21:40:00+01:00'})
+    const props = {...DEFAULT_PROPS, timestamp: '2017-06-07T21:40:00+01:00'}
     const wrapper = shallow(<Refresh {...props} />)
     expect(wrapper.find(locator('refresh-time'))).to.include.text('ago')
   })

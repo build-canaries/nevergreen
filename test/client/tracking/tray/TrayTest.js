@@ -16,7 +16,7 @@ describe('<Tray/>', function () {
   }
 
   it('should render available projects', function () {
-    const props = Object.assign({}, DEFAULT_PROPS, {})
+    const props = {...DEFAULT_PROPS}
     const wrapper = shallow(<Tray {...props} />)
     expect(wrapper.find(AvailableProjectsContainer)).to.be.present()
   })

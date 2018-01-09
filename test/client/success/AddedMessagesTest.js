@@ -13,13 +13,13 @@ describe('<AddedMessages/>', function () {
   }
 
   it('should render nothing if messages is empty', function () {
-    const props = Object.assign({}, DEFAULT_PROPS, {messages: []})
+    const props = {...DEFAULT_PROPS, messages: []}
     const wrapper = shallow(<AddedMessages {...props} />)
     expect(wrapper.get(0)).to.be.null()
   })
 
   it('should render the messages', function () {
-    const props = Object.assign({}, DEFAULT_PROPS, {messages: ['some-message']})
+    const props = {...DEFAULT_PROPS, messages: ['some-message']}
     const wrapper = shallow(<AddedMessages {...props} />)
     expect(wrapper.find(locator('success-message'))).to.have.text('some-message')
   })

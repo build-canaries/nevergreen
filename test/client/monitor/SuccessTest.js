@@ -10,13 +10,13 @@ describe('Monitor <Success/>', function () {
   const DEFAULT_PROPS = {messages: []}
 
   it('should render text messages', function () {
-    const props = Object.assign({}, DEFAULT_PROPS, {messages: ['some-message']})
+    const props = {...DEFAULT_PROPS, messages: ['some-message']}
     const wrapper = shallow(<Success {...props} />)
     expect(wrapper.find(SuccessMessage)).to.have.prop('message', 'some-message')
   })
 
   it('should render images', function () {
-    const props = Object.assign({}, DEFAULT_PROPS, {messages: ['http://some-url']})
+    const props = {...DEFAULT_PROPS, messages: ['http://some-url']}
     const wrapper = shallow(<Success {...props} />)
     expect(wrapper.find(SuccessImage)).to.have.prop('url', 'http://some-url')
   })

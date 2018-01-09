@@ -21,7 +21,7 @@ describe('<AvailableProjects/>', function () {
   }
 
   it('should render errors', function () {
-    const props = Object.assign({}, DEFAULT_PROPS, {errors: ['some-error']})
+    const props = {...DEFAULT_PROPS, errors: ['some-error']}
     const wrapper = shallow(<AvailableProjects {...props} />)
     expect(wrapper.find(Messages)).to.have.prop('messages').that.contains('some-error')
   })

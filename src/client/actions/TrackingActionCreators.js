@@ -6,21 +6,9 @@ import format from 'date-fns/format'
 import {generateRandomName} from '../common/project/Name'
 import _ from 'lodash'
 import {
-  ENCRYPTING_PASSWORD,
-  HIGHLIGHT_TRAY,
-  PASSWORD_ENCRYPT_ERROR,
-  PASSWORD_ENCRYPTED,
-  PROJECTS_FETCH_ERROR,
-  PROJECTS_FETCHED,
-  PROJECTS_FETCHING,
-  REMOVE_TRAY,
-  SELECT_PROJECT,
-  SET_SERVER_TYPE,
-  SET_TRAY_ID,
-  SET_TRAY_NAME,
-  SET_TRAY_URL,
-  SET_TRAY_USERNAME,
-  TRAY_ADDED
+  ENCRYPTING_PASSWORD, HIGHLIGHT_TRAY, PASSWORD_ENCRYPT_ERROR, PASSWORD_ENCRYPTED, PROJECTS_FETCH_ERROR,
+  PROJECTS_FETCHED, PROJECTS_FETCHING, REMOVE_TRAY, SELECT_PROJECT, SET_SERVER_TYPE, SET_TRAY_ID, SET_TRAY_NAME,
+  SET_TRAY_URL, SET_TRAY_USERNAME, TRAY_ADDED
 } from './Actions'
 
 function hasScheme(url) {
@@ -107,7 +95,7 @@ export function selectProject(trayId, projectId, selected) {
 export function updateTrayId(tray, newTrayId, pendingRequest) {
   return function (dispatch) {
     dispatch(setTrayId(tray.trayId, newTrayId))
-    const updatedTray = Object.assign({}, tray, {trayId: newTrayId})
+    const updatedTray = {...tray, trayId: newTrayId}
     dispatch(refreshTray(updatedTray, pendingRequest))
   }
 }

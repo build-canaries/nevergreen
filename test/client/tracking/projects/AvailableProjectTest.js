@@ -17,21 +17,21 @@ describe('<AvailableProject/>', function () {
   }
 
   it('should render new tag if the project is new', function () {
-    const props = Object.assign({}, DEFAULT_PROPS, {isNew: true})
+    const props = {...DEFAULT_PROPS, isNew: true}
     const wrapper = shallow(<AvailableProject {...props} />)
     expect(wrapper.find(locator('new'))).to.be.present()
     expect(wrapper.find(locator('removed'))).to.not.be.present()
   })
 
   it('should render removed tag if the project was removed', function () {
-    const props = Object.assign({}, DEFAULT_PROPS, {removed: true})
+    const props = {...DEFAULT_PROPS, removed: true}
     const wrapper = shallow(<AvailableProject {...props} />)
     expect(wrapper.find(locator('new'))).to.not.be.present()
     expect(wrapper.find(locator('removed'))).to.be.present()
   })
 
   it('should render the name and stage', function () {
-    const props = Object.assign({}, DEFAULT_PROPS, {name: 'name', stage: 'stage'})
+    const props = {...DEFAULT_PROPS, name: 'name', stage: 'stage'}
     const wrapper = shallow(<AvailableProject {...props} />)
     expect(wrapper.find(locator('name'))).to.have.text('name stage')
   })
