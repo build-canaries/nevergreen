@@ -83,11 +83,11 @@ class TraySettings extends Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (!prevState.updatingPassword && this.state.updatingPassword) {
-      this.passwordInput.focus()
-    }
-  }
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (!prevState.updatingPassword && this.state.updatingPassword) {
+  //     this.setState({focusPassword: true})
+  //   }
+  // }
 
   render() {
     const existingPassword = this.props.password ? '*******' : ''
@@ -126,7 +126,7 @@ class TraySettings extends Component {
         </Input>
         <Input className={styles.existingPassword} value={password} onChange={this.passwordChanged}
                onEnter={this.setPassword} readOnly={!this.state.updatingPassword}
-               ref={(node) => this.passwordInput = node}>
+               focus={this.state.updatingPassword}>
           <span>password</span>
         </Input>
         {this.state.updatingPassword
