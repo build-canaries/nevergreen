@@ -36,14 +36,14 @@ deployment:
             TRAY_URL: "https://drive.google.com/uc?export=download&id=0BzdMs1jfanaARkJJX1VRR2QtdTA"
       - mkdir -p $CIRCLE_ARTIFACTS/functional/
       - mv ./target/functional/* $CIRCLE_ARTIFACTS/functional
-#  production:
-#    tag: /v[0-9]+(\.[0-9]+)*/
-#    owner: build-canaries
-#    commands:
-#      - ./ci/release.sh
-#      - sudo apt-get install jq
-#      - ./ci/release-github.sh
-#      - ./ci/release-tweet.sh
+  production:
+    tag: /v[0-9]+(\.[0-9]+)*/
+    owner: build-canaries
+    commands:
+      - ./ci/release.sh
+      - sudo apt-get install jq
+      - ./ci/release-github.sh
+      - ./ci/release-tweet.sh
 general:
   artifacts:
     - ./target/nevergreen-standalone.jar
