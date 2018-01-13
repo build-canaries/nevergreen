@@ -1,4 +1,4 @@
-#!/usr/bin/env bash -e
+#!/bin/bash -e
 
 version=$(cat ./package.json | jq -r '.version')
 versionName=$(cat ./package.json | jq -r '.versionName')
