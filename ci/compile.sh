@@ -1,13 +1,13 @@
 #!/bin/bash -e
 
-# clean client build folders
+echo "cleaning client build folders"
 npm run clean
 
-# build ui
+echo "building ui"
 npm run build-prod
 
-# clean server build folders
+echo "cleaning server build folders"
 ./lein.sh clean
 
-# build the server jar
+echo "building the server jar"
 ./lein.sh uberjar

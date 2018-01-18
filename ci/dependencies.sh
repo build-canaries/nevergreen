@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
-# download ui dependencies
+echo "downloading ui dependencies"
 npm install
 
-# download server dependencies
+echo "downloading server dependencies"
 ./lein.sh deps

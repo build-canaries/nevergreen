@@ -5,7 +5,7 @@ jobs:
     working_directory: ~/nevergreen
 
     docker:
-      - image: circleci/openjdk:8
+      - image: circleci/openjdk:8-jdk
 
     steps:
       - checkout
@@ -16,23 +16,32 @@ jobs:
             - v1-nevergreen-server-{{ checksum "project.clj" }}
 
       - run:
-          environment:
-            BUILD_NUM: $CIRCLE_BUILD_NUM
-            COMMIT_HASH: ${CIRCLE_SHA1:0:7}
-          command: ./ci/update-version.sh
+          name: update version
+          command: |
+            export BUILD_NUM=$CIRCLE_BUILD_NUM
+            export COMMIT_HASH=${CIRCLE_SHA1:0:7}
+            ./ci/update-version.sh
 
       - run:
+          name: install node
+          command: ./ci/install-node.sh
+
+      - run:
+          name: build
+          environment:
+            BASH_ENV: "~/.nvm/nvm.sh"
           command: |
-            nvm install
             ./ci/dependencies.sh
             ./ci/compile.sh
-            ./ci/test.sh
+
+      - run:
+          name: test
+          command: ./ci/test.sh
 
       - save_cache:
           key: v1-nevergreen-server-{{ checksum "project.clj" }}
           paths:
             - ~/.m2
-            - ~/.lein
       - save_cache:
           key: v1-nevergreen-ui-{{ checksum "package-lock.json" }}
           paths:
@@ -63,13 +72,15 @@ jobs:
       - attach_workspace:
           path: /tmp/workspace
 
-      - run: ./ci/deploy.sh
+      - run:
+          name: deploy staging
+          command: ./ci/deploy.sh
 
   functional-tests:
     working_directory: ~/nevergreen
 
     docker:
-      - image: circleci/openjdk:8-browsers
+      - image: circleci/openjdk:8-jdk-browsers
 
     steps:
       - checkout
@@ -78,6 +89,7 @@ jobs:
           key: v1-nevergreen-clj-{{ checksum "project.clj" }}
 
       - run:
+          name: functional tests
           environment:
             FUNCTIONAL_URL: "https://staging.nevergreen.io"
             TRAY_USERNAME: ""
@@ -96,6 +108,7 @@ jobs:
           path: /tmp/workspace
 
       - run:
+          name: deploy production
           command: |
             ./ci/release.sh
             sudo apt-get install jq
