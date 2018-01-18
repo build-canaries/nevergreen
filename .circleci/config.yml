@@ -72,7 +72,7 @@ jobs:
 
     steps:
       - attach_workspace:
-          path: ~/nevergreen
+          at: ~/nevergreen
 
       - run:
           name: deploy staging
@@ -107,7 +107,7 @@ jobs:
 
     steps:
       - attach_workspace:
-          path: ~/nevergreen
+          at: ~/nevergreen
 
       - run:
           name: deploy production
