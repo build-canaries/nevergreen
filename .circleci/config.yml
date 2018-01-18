@@ -116,7 +116,7 @@ workflows:
       - hold:
         type: approval
         requires:
-         - functional-tests
+          - functional-tests
       - deploy-prod:
         requires:
           - hold
