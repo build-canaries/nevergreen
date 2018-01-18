@@ -75,6 +75,10 @@ jobs:
           at: ~/nevergreen
 
       - run:
+          name: add nevergreen.io to known hosts
+          command: ssh-keyscan nevergreen.io >> ~/.ssh/known_hosts
+
+      - run:
           name: deploy staging
           command: ./ci/deploy.sh
 
