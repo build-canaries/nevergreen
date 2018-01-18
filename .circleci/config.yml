@@ -68,7 +68,7 @@ jobs:
     working_directory: ~/nevergreen
 
     docker:
-      - image: ubuntu:14.04
+      - image: circleci/openjdk:8-jdk
 
     steps:
       - attach_workspace:
@@ -103,7 +103,7 @@ jobs:
     working_directory: ~/nevergreen
 
     docker:
-      - image: ubuntu:14.04
+      - image: circleci/openjdk:8-jdk
 
     steps:
       - attach_workspace:
