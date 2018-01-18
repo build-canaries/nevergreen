@@ -1,0 +1,122 @@
+version: 2
+
+jobs:
+  build:
+    working_directory: ~/nevergreen
+
+    docker:
+      - image: circleci/openjdk:8
+
+    steps:
+      - checkout
+
+      - restore_cache:
+        keys:
+          - v1-nevergreen-ui-{{ checksum "package-lock.json" }}
+          - v1-nevergreen-server-{{ checksum "project.clj" }}
+
+      - run:
+        environment:
+          BUILD_NUM: $CIRCLE_BUILD_NUM
+          COMMIT_HASH: ${CIRCLE_SHA1:0:7}
+        command: ./ci/update-version.sh
+
+      - run:
+        command: |
+          nvm install
+          ./ci/dependencies.sh
+          ./ci/compile.sh
+          ./ci/test.sh
+
+      - save_cache:
+        key: v1-nevergreen-server-{{ checksum "project.clj" }}
+        paths:
+          - ~/.m2
+          - ~/.lein
+      - save_cache:
+        key: v1-nevergreen-ui-{{ checksum "package-lock.json" }}
+        paths:
+          - ./node_modules
+
+      - store_test_results:
+        path: ./target
+
+      - persist_to_workspace:
+        root: /tmp/workspace
+        paths:
+          - ./package.json
+          - ./ci/*
+          - ./target/nevergreen-standalone.jar
+
+      - store_artifacts:
+        path: ./target/nevergreen-standalone.jar
+      - store_artifacts:
+        path: ./coverage
+
+  deploy-staging:
+    working_directory: ~/nevergreen
+
+    docker:
+      - image: ubuntu:14.04
+
+    steps:
+      - attach_workspace:
+        path: /tmp/workspace
+
+      - run: ./ci/deploy.sh
+
+  functional-tests:
+    working_directory: ~/nevergreen
+
+    docker:
+      - image: circleci/openjdk:8-browsers
+
+    steps:
+      - checkout
+
+      - restore_cache:
+        key: v1-nevergreen-clj-{{ checksum "project.clj" }}
+
+      - run:
+        environment:
+          FUNCTIONAL_URL: "https://staging.nevergreen.io"
+          TRAY_USERNAME: ""
+          TRAY_PASSWORD: ""
+          TRAY_URL: "https://drive.google.com/uc?export=download&id=0BzdMs1jfanaARkJJX1VRR2QtdTA"
+        command: ./ci/functional-test.sh
+
+  deploy-prod:
+    working_directory: ~/nevergreen
+
+    docker:
+      - image: ubuntu:14.04
+
+    steps:
+      - attach_workspace:
+        path: /tmp/workspace
+
+      - run:
+        command: |
+          ./ci/release.sh
+          sudo apt-get install jq
+          ./ci/release-github.sh
+          ./ci/release-tweet.sh
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build
+      - deploy-staging:
+        requires:
+          - build
+      - functional-tests:
+        requires:
+          - deploy-staging
+      - hold:
+        type: approval
+        requires:
+         - functional-tests
+      - deploy-prod:
+        requires:
+          - hold
