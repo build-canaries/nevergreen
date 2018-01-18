@@ -36,6 +36,8 @@ jobs:
 
       - run:
           name: test
+          environment:
+            BASH_ENV: "~/.nvm/nvm.sh"
           command: ./ci/test.sh
 
       - save_cache:
