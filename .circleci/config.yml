@@ -52,17 +52,18 @@ jobs:
       - store_test_results:
           path: ./target
 
+      - store_artifacts:
+          path: ./target/nevergreen-standalone.jar
+      - store_artifacts:
+          path: ./coverage
+
+      - run: mkdir -p /tmp/workspace
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
             - ./package.json
             - ./ci/*
             - ./target/nevergreen-standalone.jar
-
-      - store_artifacts:
-          path: ./target/nevergreen-standalone.jar
-      - store_artifacts:
-          path: ./coverage
 
   deploy-staging:
     working_directory: ~/nevergreen
