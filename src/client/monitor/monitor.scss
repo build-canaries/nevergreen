@@ -13,11 +13,3 @@
     cursor: none;
   }
 }
-
-.validationMessage {
-  @include font-scale(4);
-
-  div {
-    margin: 0;
-  }
-}
