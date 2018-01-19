@@ -76,7 +76,9 @@ jobs:
 
       - run:
           name: add nevergreen.io to known hosts
-          command: ssh-keyscan nevergreen.io >> ~/.ssh/known_hosts
+          command: |
+            mkdir -p ~/.ssh
+            ssh-keyscan nevergreen.io >> ~/.ssh/known_hosts
 
       - run:
           name: deploy staging
