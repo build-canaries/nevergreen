@@ -127,11 +127,19 @@ jobs:
 
       - run:
           name: deploy production
-          command: |
-            ./ci/release.sh
-            sudo apt-get install jq
-            ./ci/release-github.sh
-            ./ci/release-tweet.sh
+          command: ./ci/release.sh
+
+      - run:
+          name: install command line json parser
+          command: sudo apt-get install jq
+
+      - run:
+          name: create release on GitHub
+          command: ./ci/release-github.sh
+
+      - run:
+          name: tweet release
+          command: ./ci/release-tweet.sh
 
 workflows:
   version: 2
