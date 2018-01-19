@@ -12,7 +12,7 @@ jobs:
 
       - restore_cache:
           keys:
-            - v1-nevergreen-ui-{{ checksum ".nvmrc" }}
+            - v2-nevergreen-ui-{{ checksum ".nvmrc" }}
 
       - restore_cache:
           keys:
@@ -42,9 +42,10 @@ jobs:
           paths:
             - ~/.m2
       - save_cache:
-          key: v1-nevergreen-ui-{{ checksum ".nvmrc" }}
+          key: v2-nevergreen-ui-{{ checksum ".nvmrc" }}
           paths:
             - ./node_modules
+            - ~/.nvm
 
       - run:
           name: test
