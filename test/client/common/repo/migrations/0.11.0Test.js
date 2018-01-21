@@ -9,7 +9,7 @@ describe('0.11.0', function () {
   before(function () {
     p = {}
     Migration = proxyquire('../../src/client/common/repo/migrations/0.11.0', {
-      '../../../../../package': p
+      '../../../version': p
     })
   })
 

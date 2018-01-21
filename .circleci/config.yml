@@ -12,7 +12,8 @@ jobs:
 
       - restore_cache:
           keys:
-            - v2-nevergreen-ui-{{ checksum ".nvmrc" }}
+            - v2-nevergreen-ui-{{ checksum ".nvmrc" }}-{{ checksum "package-lock.json" }}
+            - v2-nevergreen-ui-{{ checksum ".nvmrc" }}- # fall back to any cache for the current version of node
 
       - restore_cache:
           keys:
@@ -42,7 +43,7 @@ jobs:
           paths:
             - ~/.m2
       - save_cache:
-          key: v2-nevergreen-ui-{{ checksum ".nvmrc" }}
+          key: v2-nevergreen-ui-{{ checksum ".nvmrc" }}-{{ checksum "package-lock.json" }}
           paths:
             - ./node_modules
             - ~/.nvm
@@ -64,7 +65,7 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - ./package.json
+            - ./src/client/version.json
             - ./ci/*
             - ./target/nevergreen-standalone.jar
 

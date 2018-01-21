@@ -1,7 +1,9 @@
 #!/bin/bash -e
 
-version=$(cat ./package.json | jq -r '.version')
-versionName=$(cat ./package.json | jq -r '.versionName')
+versionFile="./src/client/version.json"
+
+version=$(cat ${versionFile} | jq -r '.version')
+versionName=$(cat ${versionFile} | jq -r '.versionName')
 status="Nevergreen v${version} ${versionName} has been released! Find out more from https://github.com/build-canaries/nevergreen or try it for yourself at https://nevergreen.io"
 
 echo "${status}"

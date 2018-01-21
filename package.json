@@ -1,10 +1,6 @@
 {
   "name": "nevergreen",
-  "version": "1.0.0",
-  "versionName": "Lapis Lazuli",
-  "versionColour": "#26619C",
-  "versionMeta": "0",
-  "commitHash": "local",
+  "version": "0.0.0",
   "description": "A build monitor with attitude",
   "main": "main.js",
   "config": {

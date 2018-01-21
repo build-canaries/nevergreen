@@ -2,6 +2,7 @@
   (:require [compojure.core :refer :all]
             [nevergreen.api.projects :as projects]
             [nevergreen.api.security :as security]
+            [nevergreen.api.version :refer [version]]
             [ring.middleware.json :refer [wrap-json-body wrap-json-response]]
             [nevergreen.wrap-cache-control :refer [wrap-no-cache]]
             [nevergreen.wrap-convert-keys :refer [wrap-convert-keys]]
@@ -26,7 +27,9 @@
     (OPTIONS "/api/encrypt" [] preflight-response)
     (POST "/api/encrypt" {body :body} {:body (security/encrypt-password body)})
 
-    (GET "/api/ping" [] {:status 204})))
+    (GET "/api/ping" [] {:status 204})
+
+    (GET "/api/version" [] {:headers {"Content-Type" "text/plain"} :body (version)})))
 
 (defn- wrap-logging [handler]
   (-> handler

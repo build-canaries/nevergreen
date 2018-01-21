@@ -1,5 +1,5 @@
 import semver from 'semver'
-import Package from '../../../../../package'
+import Version from '../../../version'
 
 function currentVersion(data) {
   return data.nevergreen && data.nevergreen.versionNumber ? data.nevergreen.versionNumber : '0.0.0'
@@ -8,10 +8,10 @@ function currentVersion(data) {
 function addVersion() {
   return {
     nevergreen: {
-      versionNumber: Package.version,
-      versionName: Package.versionName,
-      versionMeta: Package.versionMeta,
-      commitHash: Package.commitHash
+      versionNumber: Version.version,
+      versionName: Version.versionName,
+      versionMeta: Version.versionMeta,
+      commitHash: Version.commitHash
     }
   }
 }

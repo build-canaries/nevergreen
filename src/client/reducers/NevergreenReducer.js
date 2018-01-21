@@ -1,14 +1,14 @@
 import Immutable from 'immutable'
-import Package from '../../../package'
+import Version from '../version'
 import {FULL_SCREEN, INITIALISED, INITIALISING, REQUEST_FULL_SCREEN} from '../actions/Actions'
 
 const DefaultState = Immutable.Map({
   loaded: false,
-  versionNumber: Package.version,
-  versionName: Package.versionName,
-  versionColour: Package.versionColour,
-  versionMeta: Package.versionMeta,
-  commitHash: Package.commitHash,
+  versionNumber: Version.version,
+  versionName: Version.versionName,
+  versionColour: Version.versionColour,
+  versionMeta: Version.versionMeta,
+  commitHash: Version.commitHash,
   fullScreen: false,
   fullScreenRequested: false
 })
