@@ -1,17 +1,37 @@
-#!/bin/bash -e
+#!/bin/bash
 
-url=$1
+host=$1
+expectedVersion=$2
 
-echo "running smoke test using url [$url]"
+url="$host/api/version"
+version='unknown'
+
+echo "running smoke test using url [$url] with expected version [$expectedVersion]"
 
 attempts=0
-until curl -f -s ${url}
-do
-  if [ ${attempts} -eq 10 ]
+while [ ${attempts} -lt 10 ]; do
+  version=$(curl -s -f -k --connect-timeout 10 -m 5 ${url})
+
+  if [ "${expectedVersion}" == "${version}" ]
   then
-    echo "smoke test failed, the server did not respond to a ping after ~10 seconds"
-    exit 1
+    echo
+    echo "smoke test success, version [${version}] was deployed"
+    exit 0
   fi
+
+  if [ "${version}" != "" ]
+  then
+    echo
+    echo "smoke test failed, got version [${version}] but was expecting [${expectedVersion}]"
+    exit 1
+  else
+    echo -ne "."
+  fi
+
   sleep 1
   attempts=$((attempts+1))
 done
+
+echo
+echo "smoke test failed, the server did not respond after ~10 seconds"
+exit 1

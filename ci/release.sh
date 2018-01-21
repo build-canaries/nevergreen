@@ -5,4 +5,4 @@ scp ./target/nevergreen-standalone.jar nevergreen@nevergreen.io:/home/nevergreen
 ssh nevergreen@nevergreen.io "sudo service nevergreen restart"
 ssh nevergreen@nevergreen.io "sudo service nevergreen-failover restart"
 
-./ci/smoke-test.sh https://nevergreen.io/api/ping
+./ci/smoke-test.sh https://nevergreen.io
