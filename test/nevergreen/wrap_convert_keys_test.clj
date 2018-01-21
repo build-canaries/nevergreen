@@ -3,12 +3,12 @@
             [nevergreen.wrap-convert-keys :as subject]))
 
 (facts "wrap convert keys"
-       (fact "converts requests from kebab-case to camelCase"
-             ((subject/wrap-convert-keys ..handler..) {:body {:someKey "some-value"}}) => irrelevant
+       (fact "converts request bodies from kebab-case to camelCase"
+             ((subject/wrap-convert-keys ..handler..) {:header {:header-key irrelevant} :body {:someKey "some-value"}}) => irrelevant
              (provided
-               (..handler.. {:body {:some-key "some-value"}}) => irrelevant))
+               (..handler.. {:header {:header-key irrelevant} :body {:some-key "some-value"}}) => {}))
 
-       (fact "converts responses from kebab-case to camelCase"
-             ((subject/wrap-convert-keys ..handler..) {:body {:some-key "some-value"}}) => {:anotherKey "another-value"}
+       (fact "converts response bodies from kebab-case to camelCase"
+             ((subject/wrap-convert-keys ..handler..) {:body {:some-key "some-value"}}) => {:headers {:header-key irrelevant} :body {:anotherKey "another-value"}}
              (provided
-               (..handler.. {:body {:some-key "some-value"}}) => {:another-key "another-value"})))
+               (..handler.. {:body {:some-key "some-value"}}) => {:headers {:header-key irrelevant} :body {:another-key "another-value"}})))

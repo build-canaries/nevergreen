@@ -6,4 +6,4 @@
   (fn [req]
     (let [transformed-req (update-in req [:body] (partial transform-keys ->kebab-case))
           res (handler transformed-req)]
-      (transform-keys ->camelCase res))))
+      (update-in res [:body] (partial transform-keys ->camelCase)))))
