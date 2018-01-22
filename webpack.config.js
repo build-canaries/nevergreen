@@ -62,6 +62,7 @@ module.exports = {
     new OptimizeCssAssetsPlugin(),
     new ManifestPlugin({fileName: 'asset-manifest.json'}),
     new SWPrecacheWebpackPlugin({
+      cacheId: 'nevergreen',
       dontCacheBustUrlsMatching: /\.\w{8}\./, // Don't cache bust URLs hashed by Webpack
       filename: 'service-worker.js',
       minify: isProd,
