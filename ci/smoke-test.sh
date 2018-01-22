@@ -32,5 +32,5 @@ while [ ${attempts} -lt 30 ]; do
 done
 
 echo
-echo "smoke test failed, the server did not respond after ~10 seconds"
+echo "smoke test failed, the server did not respond after ~30 seconds"
 exit 1
