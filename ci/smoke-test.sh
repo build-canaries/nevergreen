@@ -1,9 +1,8 @@
-#!/bin/bash
+#!/bin/bash -u
 
-host=$1
-expectedVersion=$2
+expectedVersion=${FULL_VERSION}
 
-url="$host/api/version"
+url="$HOST/api/version"
 version='unknown'
 
 echo "running smoke test using url [$url] with expected version [$expectedVersion]"

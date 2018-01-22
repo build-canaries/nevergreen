@@ -32,8 +32,6 @@ jobs:
 
       - run:
           name: build
-          environment:
-            BASH_ENV: "~/.nvm/nvm.sh"
           command: |
             ./ci/dependencies.sh
             ./ci/compile.sh
@@ -50,8 +48,6 @@ jobs:
 
       - run:
           name: test
-          environment:
-            BASH_ENV: "~/.nvm/nvm.sh"
           command: ./ci/test.sh
 
       - store_test_results:
@@ -86,8 +82,22 @@ jobs:
             ssh-keyscan nevergreen.io >> ~/.ssh/known_hosts
 
       - run:
+          name: install command line json parser
+          command: sudo apt-get install jq
+
+      - run:
+          name: export version
+          command: ./ci/export-version.sh
+
+      - run:
           name: deploy staging
           command: ./ci/deploy.sh
+
+      - run:
+          name: smoke test
+          environment:
+            HOST: "https://staging.nevergreen.io"
+          command: ./ci/smoke-test.sh
 
   functional-tests:
     working_directory: ~/nevergreen
@@ -130,12 +140,22 @@ jobs:
             ssh-keyscan nevergreen.io >> ~/.ssh/known_hosts
 
       - run:
+          name: install command line json parser
+          command: sudo apt-get install jq
+
+      - run:
+          name: export version
+          command: ./ci/export-version.sh
+
+      - run:
           name: deploy production
           command: ./ci/release.sh
 
       - run:
-          name: install command line json parser
-          command: sudo apt-get install jq
+          name: smoke test
+          environment:
+            HOST: "https://nevergreen.io"
+          command: ./ci/smoke-test.sh
 
       - run:
           name: create release on GitHub

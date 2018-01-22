@@ -33,7 +33,9 @@ echo '[Step 5 of 6] Starting the server...'
 ./lein.sh run &
 npm run ci-stub-server &
 
-./ci/smoke-test.sh "http://localhost:5000/api/ping"
+export HOST="http://localhost:5000"
+export FULL_VERSION="1.0.0+0.local"
+./ci/smoke-test.sh
 
 echo '[Step 4 of 6] Running the functional tests...'
 ./lein.sh test functional.functional-test
