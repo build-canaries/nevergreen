@@ -115,6 +115,9 @@ jobs:
       - restore_cache:
           key: v1-nevergreen-server-{{ checksum "project.clj" }}
 
+      - attach_workspace:
+          at: ~/nevergreen
+
       - run:
           name: export version
           command: ./ci/export-version.sh
