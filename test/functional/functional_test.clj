@@ -3,6 +3,7 @@
             [clj-webdriver.taxi :refer :all]
             [clj-webdriver.driver :refer [init-driver]]
             [functional.helpers :refer :all]
+            [functional.version :refer :all]
             [functional.tracking-page :as tracking-page]
             [functional.monitor-page :as monitor-page]
             [functional.success-page :as success-page]
@@ -62,6 +63,8 @@
         tray-password (tray-password-to-use)]
 
     (to (str base-url))
+
+    (is (= (expected-version) (version)))
 
     (tracking-page/navigate base-url)
     (let [tray (tracking-page/add-tray tray-url tray-username tray-password)]

@@ -8,13 +8,13 @@ class Footer extends Component {
   render() {
     const footerStyle = {borderColor: this.props.versionColour}
     const footerClassNames = classNames(styles.siteFooter, {[styles.fullscreen]: this.props.fullScreen})
-    const version = `v${this.props.versionNumber}.${this.props.commitHash} ${this.props.versionName}`
+    const version = `${this.props.versionNumber}.${this.props.commitHash}`
 
     return (
       <footer role='contentinfo' className={footerClassNames} style={footerStyle}>
         <ExternalLink href='https://github.com/build-canaries/nevergreen/releases' className={styles.version}
                       title='Nevergreen releases on Github'>
-          {version}
+          v<span data-locator='version'>{version}</span> {this.props.versionName}
         </ExternalLink>
         <span className={styles.copyright}>Copyright © 2017 Build Canaries</span>
       </footer>

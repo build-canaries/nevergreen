@@ -34,6 +34,9 @@
     (println "Using tray password" password)
     password))
 
+(defn expected-version []
+  (env :full-version))
+
 (defn input [q val]
   (clear q)
   (input-text q val))

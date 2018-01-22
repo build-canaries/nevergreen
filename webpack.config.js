@@ -142,7 +142,7 @@ module.exports = {
         }]
       },
       {
-        test: /\.(mp3|json)$/i,
+        test: /\.mp3$/i,
         use: [{
           loader: 'file-loader',
           options: {
