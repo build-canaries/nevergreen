@@ -16,4 +16,4 @@
 (defn wrap-content-security-policy [app]
   (fn [req]
     (let [res (app req)]
-      (assoc-in res [:headers "content-security-policy"] (join "; " sources)))))
+      (assoc-in res [:headers "Content-Security-Policy"] (join "; " sources)))))

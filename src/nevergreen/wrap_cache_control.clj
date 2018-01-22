@@ -5,9 +5,9 @@
 (defn wrap-no-cache [app]
   (fn [req]
     (let [res (app req)]
-      (assoc-in res [:headers "cache-control"] "private, max-age=0, no-store"))))
+      (assoc-in res [:headers "Cache-Control"] "private, max-age=0, no-store"))))
 
 (defn wrap-caching [app]
   (fn [req]
     (let [res (app req)]
-      (assoc-in res [:headers "cache-control"] "max-age=31556926"))))
+      (assoc-in res [:headers "Cache-Control"] "max-age=31556926"))))
