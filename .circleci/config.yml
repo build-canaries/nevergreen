@@ -116,6 +116,10 @@ jobs:
           key: v1-nevergreen-server-{{ checksum "project.clj" }}
 
       - run:
+          name: export version
+          command: ./ci/export-version.sh
+
+      - run:
           name: functional tests
           environment:
             FUNCTIONAL_URL: "https://staging.nevergreen.io"
