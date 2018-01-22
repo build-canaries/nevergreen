@@ -28,15 +28,15 @@ jobs:
 
       - run:
           name: install node
-          command: ./ci/install-node.sh
+          command: |
+            ./ci/install-node.sh
+            echo '. ~/.bashrc' >> BASH_ENV
 
       - run:
           name: build
-          environment:
-            BASH_ENV: "~/.nvm/nvm.sh"
           command: |
-            ./ci/dependencies.sh
-            ./ci/compile.sh
+            nvm use && ./ci/dependencies.sh
+            nvm use && ./ci/compile.sh
 
       - save_cache:
           key: v1-nevergreen-server-{{ checksum "project.clj" }}
@@ -50,9 +50,7 @@ jobs:
 
       - run:
           name: test
-          environment:
-            BASH_ENV: "~/.nvm/nvm.sh"
-          command: ./ci/test.sh
+          command: nvm use && ./ci/test.sh
 
       - store_test_results:
           path: ./target/test-reports
