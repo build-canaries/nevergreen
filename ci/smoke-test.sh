@@ -8,7 +8,7 @@ version='unknown'
 echo "running smoke test using url [$url] with expected version [$expectedVersion]"
 
 attempts=0
-while [ ${attempts} -lt 10 ]; do
+while [ ${attempts} -lt 30 ]; do
   version=$(curl -s -f -k --connect-timeout 10 -m 5 ${url})
 
   if [ "${expectedVersion}" == "${version}" ]
