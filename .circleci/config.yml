@@ -32,6 +32,8 @@ jobs:
 
       - run:
           name: build
+          environment:
+            BASH_ENV: "~/.nvm/nvm.sh"
           command: |
             ./ci/dependencies.sh
             ./ci/compile.sh
@@ -48,6 +50,8 @@ jobs:
 
       - run:
           name: test
+          environment:
+            BASH_ENV: "~/.nvm/nvm.sh"
           command: ./ci/test.sh
 
       - store_test_results:
