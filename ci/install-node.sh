@@ -8,6 +8,3 @@ echo "sourcing '$HOME/.nvm/nvm.sh'"
 
 echo "installing node"
 nvm install
-
-echo "export NVM_DIR=\"~/.nvm\"" >> $BASH_ENV
-echo "~/.nvm/nvm.sh" >> $BASH_ENV
