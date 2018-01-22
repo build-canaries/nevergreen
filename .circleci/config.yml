@@ -12,8 +12,8 @@ jobs:
 
       - restore_cache:
           keys:
-            - v3-nevergreen-ui-{{ checksum ".nvmrc" }}-{{ checksum "package-lock.json" }}
-            - v3-nevergreen-ui-{{ checksum ".nvmrc" }}- # fall back to any cache for the current version of node
+            - v4-nevergreen-ui-{{ checksum ".nvmrc" }}-{{ checksum "package-lock.json" }}
+            - v4-nevergreen-ui-{{ checksum ".nvmrc" }}- # fall back to any cache for the current version of node
 
       - restore_cache:
           keys:
@@ -32,8 +32,9 @@ jobs:
 
       - run:
           name: build
+          environment:
+            BASH_ENV: "~/.nvm/nvm.sh"
           command: |
-            ~/.nvm/nvm.sh
             ./ci/dependencies.sh
             ./ci/compile.sh
 
@@ -42,15 +43,16 @@ jobs:
           paths:
             - ~/.m2
       - save_cache:
-          key: v3-nevergreen-ui-{{ checksum ".nvmrc" }}-{{ checksum "package-lock.json" }}
+          key: v4-nevergreen-ui-{{ checksum ".nvmrc" }}-{{ checksum "package-lock.json" }}
           paths:
             - ./node_modules
+            - ~/.nvm
 
       - run:
           name: test
-          command: |
-            ~/.nvm/nvm.sh
-            ./ci/test.sh
+          environment:
+            BASH_ENV: "~/.nvm/nvm.sh"
+          command: ./ci/test.sh
 
       - store_test_results:
           path: ./target/test-reports
