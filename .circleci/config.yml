@@ -28,14 +28,11 @@ jobs:
 
       - run:
           name: install node
-          command: |
-            export PROFILE=$BASH_ENV
-            ./ci/install-node.sh
+          command: ./ci/install-node.sh
 
       - run:
           name: build
           command: |
-            nvm use
             ./ci/dependencies.sh
             ./ci/compile.sh
 
@@ -51,9 +48,7 @@ jobs:
 
       - run:
           name: test
-          command: |
-            nvm use
-            ./ci/test.sh
+          command: ./ci/test.sh
 
       - store_test_results:
           path: ./target/test-reports
