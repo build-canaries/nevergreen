@@ -83,7 +83,7 @@ jobs:
           name: add nevergreen.io to known hosts
           command: |
             mkdir -p ~/.ssh
-            ssh-keyscan nevergreen.io >> ~/.ssh/known_hosts
+            ssh-keyscan 35.176.150.70 >> ~/.ssh/known_hosts
 
       - run:
           name: install command line json parser
@@ -148,7 +148,7 @@ jobs:
           name: add nevergreen.io to known hosts
           command: |
             mkdir -p ~/.ssh
-            ssh-keyscan nevergreen.io >> ~/.ssh/known_hosts
+            ssh-keyscan 35.176.150.70 >> ~/.ssh/known_hosts
 
       - run:
           name: install command line json parser
