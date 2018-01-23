@@ -1,16 +1,16 @@
-var path = require('path')
-var webpack = require('webpack')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
-var autoprefixer = require('autoprefixer')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
-var CopyWebpackPlugin = require('copy-webpack-plugin')
-var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
-var ManifestPlugin = require('webpack-manifest-plugin')
-var SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
-var UglifyJSPlugin = require('uglifyjs-webpack-plugin')
-var isProd = (process.env.NODE_ENV === 'production')
+const webpack = require('webpack')
+const path = require('path')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const autoprefixer = require('autoprefixer')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const ManifestPlugin = require('webpack-manifest-plugin')
+const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+const isProd = (process.env.NODE_ENV === 'production')
 
-var cssLoader = {
+const cssLoader = {
   loader: 'css-loader',
   options: {
     sourceMap: true,
@@ -19,7 +19,7 @@ var cssLoader = {
   }
 }
 
-var postCssLoader = {
+const postCssLoader = {
   loader: 'postcss-loader',
   options: {
     sourceMap: true,
@@ -29,13 +29,15 @@ var postCssLoader = {
   }
 }
 
+const defaultName = '[name].[hash:8].[ext]'
+
 module.exports = {
   devtool: 'source-map',
   entry: ['./src/client/index'],
   bail: true,
   output: {
     path: path.join(__dirname, 'resources/public'),
-    filename: '[hash].js',
+    filename: '[name].[hash:8].js',
     publicPath: ''
   },
   plugins: [
@@ -55,7 +57,7 @@ module.exports = {
       }
     }),
     new ExtractTextPlugin({
-      filename: '[hash].css',
+      filename: '[name].[hash:8].css',
       allChunks: true
     }),
     new CopyWebpackPlugin([{from: './src/client/favicons'}]),
@@ -106,6 +108,7 @@ module.exports = {
           {
             loader: 'url-loader',
             options: {
+              name: defaultName,
               limit: '8192'
             }
           },
@@ -117,6 +120,7 @@ module.exports = {
         use: [{
           loader: 'url-loader',
           options: {
+            name: defaultName,
             limit: '8192',
             mimetype: 'application/font-woff'
           }
@@ -127,6 +131,7 @@ module.exports = {
         use: [{
           loader: 'url-loader',
           options: {
+            name: defaultName,
             limit: '8192',
             mimetype: 'application/octet-stream'
           }
@@ -137,6 +142,7 @@ module.exports = {
         use: [{
           loader: 'url-loader',
           options: {
+            name: defaultName,
             limit: '8192',
             mimetype: 'image/svg+xml'
           }
