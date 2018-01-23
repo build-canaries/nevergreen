@@ -79,6 +79,10 @@ jobs:
       - attach_workspace:
           at: ~/nevergreen
 
+      - add_ssh_keys:
+          fingerprints:
+            - "84:1d:85:ed:80:92:c5:21:53:15:54:b9:52:99:29:35"
+
       - run:
           name: add nevergreen.io to known hosts
           command: |
@@ -143,6 +147,10 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/nevergreen
+
+      - add_ssh_keys:
+          fingerprints:
+            - "84:1d:85:ed:80:92:c5:21:53:15:54:b9:52:99:29:35"
 
       - run:
           name: add nevergreen.io to known hosts
