@@ -17,11 +17,7 @@ class ExternalLink extends Component {
 }
 
 ExternalLink.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.element),
-    PropTypes.element,
-    PropTypes.string
-  ])
+  children: PropTypes.any.isRequired
 }
 
 export default ExternalLink
