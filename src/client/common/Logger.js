@@ -1,27 +1,27 @@
 /* eslint-disable no-console */
 
-export function debug(data) {
+export function debug(message, ...data) {
   if (process.env.NODE_ENV !== 'production') {
     if (console.debug) {
-      console.debug(data)
+      console.debug(message, data)
     }
   }
 }
 
-export function info(data) {
+export function info(message, ...data) {
   if (process.env.NODE_ENV !== 'production') {
-    console.info(data)
+    console.info(message, data)
   }
 }
 
-export function warn(data) {
+export function warn(message, ...data) {
   if (process.env.NODE_ENV !== 'production') {
-    console.warn(data)
+    console.warn(message, data)
   }
 }
 
-export function error(data, e) {
+export function error(message, e) {
   if (process.env.NODE_ENV !== 'production') {
-    console.error(data, e)
+    console.error(message, e)
   }
 }

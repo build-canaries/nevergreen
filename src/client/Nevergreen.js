@@ -8,11 +8,39 @@ import _ from 'lodash'
 import styles from './nevergreen.scss'
 import Timer from './common/Timer'
 import Notification from './Notification'
-import {debug} from './common/Logger'
+import {error, info} from './common/Logger'
 
 const ONE_SECONDS = 1000
 const THREE_SECONDS = 3 * 1000
 const TWENTY_FOUR_HOURS = 24 * 60 * 60
+
+function registerServiceWorker() {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/service-worker.js').then((registration) => {
+      registration.onupdatefound = () => {
+        const installingWorker = registration.installing
+
+        installingWorker.onstatechange = () => {
+          switch (installingWorker.state) {
+            case 'installed':
+              if (navigator.serviceWorker.controller) {
+                info('New or updated content is available')
+              } else {
+                info('Content is now available offline')
+              }
+              break
+            case 'redundant':
+              info('The installing service worker became redundant')
+              break
+          }
+        }
+      }
+      info('Service worker registration successful', registration)
+    }).catch((err) => {
+      error('Service worker registration failed', err)
+    })
+  }
+}
 
 class Nevergreen extends Component {
   constructor(props) {
@@ -34,13 +62,7 @@ class Nevergreen extends Component {
       this.props.history.push('help')
     })
 
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/service-worker.js').then((registration) => {
-        debug('ServiceWorker registration successful with scope: ', registration.scope)
-      }).catch((err) => {
-        debug('ServiceWorker registration failed: ', err)
-      })
-    }
+    registerServiceWorker()
   }
 
   componentWillUnmount() {
