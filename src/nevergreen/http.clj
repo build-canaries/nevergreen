@@ -1,8 +1,7 @@
 (ns nevergreen.http
   (:require [clj-http.client :as client]
             [clojure.tools.logging :as log]
-            [clojure.string :as s]
-            [nevergreen.errors :refer [create-error]])
+            [clojure.string :as s])
   (:import (java.net UnknownHostException URISyntaxException)
            (clojure.lang ExceptionInfo)))
 
@@ -24,13 +23,14 @@
       (let [host (first (s/split (.getMessage e) #":"))
             msg (str host " is an unknown host")]
         (log/info (str "GET from [" url "] threw an UnknownHostException [" msg "]"))
-        (create-error msg url)))
+        (throw (ex-info msg {:url url}))))
     (catch URISyntaxException e
       (let [msg (.getMessage e)]
         (log/info (str "GET from [" url "] threw a URISyntaxException [" msg "]"))
-        (create-error msg url)))
+        (throw (ex-info msg {:url url}))))
     (catch ExceptionInfo e
       (let [data (ex-data e)
-            msg (or (:reason-phrase data) "Unknown Error")]
-        (log/info (str "GET from [" url "] returned a status of [" (:status data) " " msg "]"))
-        (create-error msg url)))))
+            status (or (:status data) "unknown")
+            msg (or (:reason-phrase data) "Unknown error")]
+        (log/info (str "GET from [" url "] returned a status of [" status " : " msg "]"))
+        (throw (ex-info msg {:url url :status status}))))))

@@ -11,9 +11,15 @@
   (:refer-clojure :exclude [replace])
   (:import (clojure.lang ExceptionInfo)))
 
-(defn invalid-scheme? [{:keys [url]}]
-  (or (blank? url)
-      (not (re-find #"https?://" url))))
+(defn- invalid-url-error-message [url]
+  (if (blank? url)
+    "URL was blank! A http(s) URL must be provided."
+    (str "Only http(s) URLs are supported: " url)))
+
+(defn validate-scheme [{:keys [url]}]
+  (if (or (blank? url)
+          (not (re-find #"https?://" url)))
+    (throw (ex-info (invalid-url-error-message url) {}))))
 
 (defn- generate-project-id [project]
   (join "/" (remove nil? (map project [:unnormalised-owner :unnormalised-name :unnormalised-stage :unnormalised-job]))))
@@ -26,11 +32,6 @@
 
 (defn filter-by-ids [ids projects]
   (filter #(in? ids (:project-id %)) projects))
-
-(defn- invalid-url-error-message [url]
-  (if (blank? url)
-    "URL was blank! A http(s) URL must be provided."
-    (str "Only http(s) URLs are supported: " url)))
 
 (defn- set-auth-header [username password]
   (if-not (or (blank? username) (blank? password))
@@ -49,17 +50,17 @@
   (map #(merge {:url url} %) projects))
 
 (defn fetch-tray [tray]
-  (if (invalid-scheme? tray)
-    (create-error (invalid-url-error-message (tray :url)) (tray :url))
+  (try
+    (validate-scheme tray)
     (let [server-type (get-server-type tray)
-          decrypted-password (if-not (blank? (:password tray)) (crypt/decrypt (:password tray)))
+          decrypted-password (crypt/decrypt (:password tray))
           response (http-get (:url tray) (set-auth-header (:username tray) decrypted-password))]
-      (if (is-error? response)
-        [response]
-        (->>
-          (parser/get-projects response {:server server-type :normalise true})
-          (add-project-ids)
-          (add-server-type server-type))))))
+      (->>
+        (parser/get-projects response {:server server-type :normalise true})
+        (add-project-ids)
+        (add-server-type server-type)))
+    (catch Exception e
+      [(create-error (.getMessage e) (:url tray))])))
 
 (defn fetch-all [tray]
   (->> (fetch-tray tray)

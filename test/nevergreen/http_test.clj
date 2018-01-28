@@ -1,8 +1,7 @@
 (ns nevergreen.http-test
   (:require [nevergreen.http :as subject]
             [midje.sweet :refer :all]
-            [clj-http.client :as client]
-            [nevergreen.errors :refer [create-error]])
+            [clj-http.client :as client])
   (:import (java.net UnknownHostException URISyntaxException)))
 
 (facts "http"
@@ -21,26 +20,22 @@
              (provided
                (client/get ..url.. anything) => {:body irrelevant}))
 
-       (fact "creates an error for unknown hosts"
-             (subject/http-get "some-url" {}) => irrelevant
+       (fact "throws an error for unknown hosts"
+             (subject/http-get "some-url" {}) => (throws "some-host is an unknown host")
              (provided
-               (client/get anything anything) =throws=> (UnknownHostException. "some-host: unkown error")
-               (create-error "some-host is an unknown host" "some-url") => {}))
+               (client/get anything anything) =throws=> (UnknownHostException. "some-host: unkown error")))
 
-       (fact "creates an error for bad uri syntax"
-             (subject/http-get "some-url" {}) => irrelevant
+       (fact "throws an error for bad uri syntax"
+             (subject/http-get "some-url" {}) => (throws "Illegal character in authority at index 0: some-url")
              (provided
-               (client/get anything anything) =throws=> (URISyntaxException. "some-url" "Illegal character in authority at index 0")
-               (create-error "Illegal character in authority at index 0: some-url" "some-url") => {}))
+               (client/get anything anything) =throws=> (URISyntaxException. "some-url" "Illegal character in authority at index 0")))
 
-       (fact "creates an error when the CI server responds with an error"
-             (subject/http-get "some-url" {}) => irrelevant
+       (fact "throws an error when the CI server responds with an error"
+             (subject/http-get "some-url" {}) => (throws "some-error")
              (provided
-               (client/get anything anything) =throws=> (ex-info "irrelevant" {:reason-phrase "some-error"})
-               (create-error "some-error" "some-url") => {}))
+               (client/get anything anything) =throws=> (ex-info "irrelevant" {:reason-phrase "some-error"})))
 
-       (fact "creates an unknown error when the CI server responds with an error but no reason"
-             (subject/http-get "some-url" {}) => irrelevant
+       (fact "throws an unknown error when the CI server responds with an error but no reason"
+             (subject/http-get "some-url" {}) => (throws "Unknown error")
              (provided
-               (client/get anything anything) =throws=> (ex-info "irrelevant" {})
-               (create-error "Unknown Error" "some-url") => {})))
+               (client/get anything anything) =throws=> (ex-info "irrelevant" {}))))

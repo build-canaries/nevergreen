@@ -31,7 +31,7 @@
              (provided
                (parser/get-projects ..stream.. anything) => [{:name "project-1" :web-url "project-1" :prognosis :sick}]
                (http/http-get valid-url nil) => ..stream..
-               (crypt/decrypt anything) => anything :times 0
+               (crypt/decrypt anything) => nil
                (security/basic-auth-header anything anything) => anything :times 0))
 
        (fact "without authentication if blank username and password"
@@ -42,16 +42,18 @@
              (provided
                (parser/get-projects ..stream.. anything) => [{:name "project-1" :web-url "project-1" :prognosis :sick}]
                (http/http-get valid-url nil) => ..stream..
-               (crypt/decrypt anything) => anything :times 0
-               (security/basic-auth-header anything anything) => anything :times 0)))
+               (crypt/decrypt anything) => nil
+               (security/basic-auth-header anything anything) => anything :times 0))
+
+       (fact "creates an error if the URL is not valid"
+             (subject/fetch-tray {:url "url"}) => [{:error "Only http(s) URLs are supported: url" :url "url"}])
+
+       (fact "handles failing to decrypt the password"
+             (subject/fetch-tray {:url valid-url :username "" :password "some-encrypted-password"}) => [{:error "some-error" :url valid-url}]
+             (provided
+               (crypt/decrypt "some-encrypted-password") =throws=> (ex-info "some-error" {}))))
 
 (facts "it gets all projects"
-       (fact "creates an error if the url is not valid"
-             (subject/get-all [{:url "url"}]) => irrelevant
-             (provided
-               (subject/invalid-scheme? {:url "url"}) => true
-               (create-error "Only http(s) URLs are supported: url" "url") => {}))
-
        (facts "uses pmap to parallelise the work"
               (fact "if multiple projects are given"
                     (subject/get-all [{:url "http://a"} {:url "http://b"}]) => irrelevant
@@ -65,12 +67,6 @@
                       (subject/fetch-tray anything) => {}))))
 
 (facts "it gets interesting projects"
-       (fact "creates an error if the url is not http[s]"
-             (subject/get-interesting [{:url "url" :included ["project-1"]}]) => irrelevant
-             (provided
-               (subject/invalid-scheme? (contains {:url "url"})) => true
-               (create-error "Only http(s) URLs are supported: url" "url") => {}))
-
        (fact "removes healthy projects"
              (subject/get-interesting [{:tray-id "a-tray" :included ["project-1"] :url valid-url}]) => (list)
              (provided
@@ -112,8 +108,8 @@
              (provided
                (servers/detect-server "some-url") => ..server..)))
 
-(facts "check url is invalid"
-       (fact (subject/invalid-scheme? {:url "http://bleh"}) => false)
-       (fact (subject/invalid-scheme? {:url "https://bleh"}) => false)
-       (fact (subject/invalid-scheme? {:url "gopher://bleh"}) => true)
-       (fact (subject/invalid-scheme? nil) => true))
+(facts "validating the URL"
+       (fact (subject/validate-scheme {:url "http://bleh"}) => irrelevant)
+       (fact (subject/validate-scheme {:url "https://bleh"}) => irrelevant)
+       (fact (subject/validate-scheme {:url "gopher://bleh"}) => (throws Exception))
+       (fact (subject/validate-scheme nil) => (throws Exception)))
