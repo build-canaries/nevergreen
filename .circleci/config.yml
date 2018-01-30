@@ -110,6 +110,11 @@ jobs:
           command: ./ci/smoke-test.sh
 
       - run:
+          name: copy nevergreen into remote container
+	  command: |
+            docker cp circleci/openjdk:8-jdk:/home/circleci/nevergreen /home
+
+      - run:
           name: create release on Dockerhub
           command: ./ci/release-image.sh
 
