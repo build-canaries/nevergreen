@@ -151,6 +151,8 @@ jobs:
       - image: circleci/openjdk:8-jdk
 
     steps:
+      - setup_remote_docker
+
       - attach_workspace:
           at: ~/nevergreen
 
@@ -181,6 +183,13 @@ jobs:
           environment:
             HOST: "https://nevergreen.io"
           command: ./ci/smoke-test.sh
+
+      - run:
+          name: create docker image
+          command: |
+            docker build -t buildcanariesteam/nevergreen:latest -t buildcanariesteam/nevergreen:${VERSION} .
+            docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}
+            docker push buildcanariesteam/nevergreen:${VERSION}
 
       - run:
           name: create release on GitHub
