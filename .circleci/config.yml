@@ -1,5 +1,9 @@
 version: 2
 
+machine:
+  services:
+    - docker
+
 jobs:
   build:
     working_directory: ~/nevergreen
