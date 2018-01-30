@@ -65,7 +65,7 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - ./src/client/version.json
+            - ./resources/*.txt
             - ./ci/*
             - ./target/nevergreen-standalone.jar
             - ./Dockerfile
@@ -91,10 +91,6 @@ jobs:
           command: |
             mkdir -p ~/.ssh
             ssh-keyscan 35.176.150.70 >> ~/.ssh/known_hosts
-
-      - run:
-          name: install command line json parser
-          command: sudo apt-get install jq
 
       - run:
           name: export version

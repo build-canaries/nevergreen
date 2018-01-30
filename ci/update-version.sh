@@ -1,9 +1,6 @@
 #!/bin/bash -eu
 
-versionFile="./src/client/version.json"
+metaFile="./resources/version_meta.txt"
 
-echo "updating commit hash [$COMMIT_HASH] and meta [$BUILD_NUM] in file $versionFile ..."
-sed -i.bak "s|\"versionMeta\": \"[^\"]*\"|\"versionMeta\": \"$BUILD_NUM\"|" ${versionFile}
-sed -i.bak "s|\"commitHash\": \"[^\"]*\"|\"commitHash\": \"$COMMIT_HASH\"|" ${versionFile}
-
-find . -type f -name "*.bak" -exec rm -f {} \;
+echo "updating version meta with commit hash [$COMMIT_HASH] and build number [$BUILD_NUM] in file [$metaFile] ..."
+echo -n "$BUILD_NUM.$COMMIT_HASH" > ${metaFile}

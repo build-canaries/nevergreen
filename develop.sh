@@ -38,7 +38,6 @@ echo "starting the CI stub server ..."
 npm run ci-stub-server &
 
 echo "running the server ..."
-cp -f ./src/client/version.json ./resources/public
 ./lein.sh run &
 
 wait

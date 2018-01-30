@@ -34,7 +34,7 @@ echo '[Step 5 of 6] Starting the server...'
 npm run ci-stub-server &
 
 export HOST="http://localhost:5000"
-export FULL_VERSION="1.0.0+0.local"
+export FULL_VERSION="$(cat "./resources/version.txt")+$(cat "./resources/version_meta.txt")"
 ./ci/smoke-test.sh
 
 echo '[Step 4 of 6] Running the functional tests...'

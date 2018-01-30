@@ -156,6 +156,10 @@ module.exports = {
             name: '[name].[ext]'
           }
         }]
+      },
+      {
+        test: /\.txt$/,
+        use: 'raw-loader'
       }
     ],
     noParse: [

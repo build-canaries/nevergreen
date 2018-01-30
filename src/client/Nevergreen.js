@@ -9,6 +9,7 @@ import styles from './nevergreen.scss'
 import Timer from './common/Timer'
 import Notification from './Notification'
 import {error, info} from './common/Logger'
+import version from '../../resources/version.txt'
 
 const ONE_SECONDS = 1000
 const THREE_SECONDS = 3 * 1000
@@ -50,7 +51,7 @@ class Nevergreen extends Component {
   }
 
   checkVersion = () => {
-    this.props.checkForNewVersion(this.props.versionNumber, window.location.hostname)
+    this.props.checkForNewVersion(version, window.location.hostname)
   }
 
   componentDidMount() {
@@ -83,9 +84,7 @@ class Nevergreen extends Component {
         <Notification notification={this.props.notification} dismiss={this.props.dismiss}
                       isFullScreen={this.props.isFullScreen}/>
         {this.props.loaded ? this.props.children : null}
-        <Footer versionNumber={this.props.versionNumber} versionName={this.props.versionName}
-                versionColour={this.props.versionColour} commitHash={this.props.commitHash}
-                fullScreen={this.props.isFullScreen}/>
+        <Footer fullScreen={this.props.isFullScreen}/>
       </main>
     )
   }
@@ -107,10 +106,6 @@ Nevergreen.propTypes = {
     PropTypes.element
   ]),
   loaded: PropTypes.bool.isRequired,
-  versionNumber: PropTypes.string.isRequired,
-  versionName: PropTypes.string.isRequired,
-  versionColour: PropTypes.string.isRequired,
-  commitHash: PropTypes.string.isRequired,
   notification: PropTypes.string,
   initalise: PropTypes.func.isRequired,
   keyboardShortcut: PropTypes.func.isRequired,
