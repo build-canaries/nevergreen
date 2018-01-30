@@ -9,10 +9,10 @@
 (defn- load-meta []
   (trim (slurp (resource "version_meta.txt"))))
 
-(defn- load []
+(defn- full-version []
   (str (load-version) "+" (load-meta)))
 
 (defn version []
-  (let [version (load)]
+  (let [version (full-version)]
     (log/info version)
     version))
