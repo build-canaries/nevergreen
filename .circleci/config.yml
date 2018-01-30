@@ -107,6 +107,10 @@ jobs:
             HOST: "https://staging.nevergreen.io"
           command: ./ci/smoke-test.sh
 
+      - run:
+          name: create release on Dockerhub
+          command: ./ci/release-image.sh
+
   functional-tests:
     working_directory: ~/nevergreen
 
