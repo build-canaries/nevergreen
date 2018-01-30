@@ -72,9 +72,12 @@ jobs:
   deploy-staging:
     working_directory: ~/nevergreen
 
-    machine: true
+    docker:
+      - image: circleci/openjdk:8-jdk
 
     steps:
+      - setup_remote_docker
+
       - attach_workspace:
           at: ~/nevergreen
 
