@@ -109,11 +109,6 @@ jobs:
             HOST: "https://staging.nevergreen.io"
           command: ./ci/smoke-test.sh
 
-      - run:
-          name: create release on Dockerhub
-          command: |
-            docker build --build-arg VERSION=${VERSION} -t buildcanariesteam/nevergreen:latest -t buildcanariesteam/nevergreen:${VERSION} .
-
   functional-tests:
     working_directory: ~/nevergreen
 
