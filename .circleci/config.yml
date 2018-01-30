@@ -112,7 +112,7 @@ jobs:
       - run:
           name: copy nevergreen into remote container
           command: |
-            docker cp /home/circleci/nevergreen /home
+            docker cp localhost:/home/circleci/nevergreen /home
 
       - run:
           name: create release on Dockerhub
