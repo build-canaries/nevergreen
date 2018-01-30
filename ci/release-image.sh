@@ -7,7 +7,7 @@ docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}
 echo "Creating docker image with tag [${VERSION}]"
 
 echo "what is your context currently???????????"
-pwd
+ls
 
 docker build --build-arg VERSION=${VERSION} -t buildcanariesteam/nevergreen:latest -t buildcanariesteam/nevergreen:${VERSION} .
 

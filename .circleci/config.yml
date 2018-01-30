@@ -111,7 +111,8 @@ jobs:
 
       - run:
           name: create release on Dockerhub
-          command: ./ci/release-image.sh
+          command: |
+            docker build --build-arg VERSION=${VERSION} -t buildcanariesteam/nevergreen:latest -t buildcanariesteam/nevergreen:${VERSION} .
 
   functional-tests:
     working_directory: ~/nevergreen
