@@ -100,6 +100,10 @@ jobs:
           command: ./ci/export-version.sh
 
       - run:
+          name: create a docker image
+          command: ./ci/release-image.sh
+
+      - run:
           name: deploy staging
           command: ./ci/deploy.sh
 
