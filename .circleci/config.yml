@@ -68,6 +68,7 @@ jobs:
             - ./src/client/version.json
             - ./ci/*
             - ./target/nevergreen-standalone.jar
+            - ./Dockerfile
 
   deploy-staging:
     working_directory: ~/nevergreen
