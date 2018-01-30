@@ -111,7 +111,7 @@ jobs:
 
       - run:
           name: copy nevergreen into remote container
-	  command: |
+          command: |
             docker cp circleci/openjdk:8-jdk:/home/circleci/nevergreen /home
 
       - run:
