@@ -1,9 +1,5 @@
 version: 2
 
-machine:
-  services:
-    - docker
-
 jobs:
   build:
     working_directory: ~/nevergreen
@@ -80,6 +76,8 @@ jobs:
       - image: circleci/openjdk:8-jdk
 
     steps:
+      - setup_remote_docker
+
       - attach_workspace:
           at: ~/nevergreen
 
