@@ -106,6 +106,13 @@ jobs:
             HOST: "https://staging.nevergreen.io"
           command: ./ci/smoke-test.sh
 
+      - run:
+          name: create docker image
+          command: |
+            docker build -t buildcanariesteam/nevergreen:staging .
+            docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}
+            docker push buildcanariesteam/nevergreen:staging
+
   functional-tests:
     working_directory: ~/nevergreen
 
