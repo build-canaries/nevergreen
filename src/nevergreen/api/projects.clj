@@ -59,7 +59,7 @@
         (parser/get-projects response {:server server-type :normalise true})
         (add-project-ids)
         (add-server-type server-type)))
-    (catch Exception e
+    (catch ExceptionInfo e
       [(create-error (.getMessage e) (:url tray))])))
 
 (defn fetch-all [tray]

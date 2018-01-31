@@ -2,7 +2,7 @@
   (:require [clj-http.client :as client]
             [clojure.tools.logging :as log]
             [clojure.string :as s])
-  (:import (java.net UnknownHostException URISyntaxException)
+  (:import (java.net UnknownHostException URISyntaxException ConnectException)
            (clojure.lang ExceptionInfo)))
 
 (def ^:const ten-seconds 10000)
@@ -28,6 +28,9 @@
       (let [msg (.getMessage e)]
         (log/info (str "GET from [" url "] threw a URISyntaxException [" msg "]"))
         (throw (ex-info msg {:url url}))))
+    (catch ConnectException e
+      (log/info (str "GET from [" url "] threw a ConnectException [" (.getMessage e) "]"))
+      (throw (ex-info "Connection refused, is the URL correct?" {:url url})))
     (catch ExceptionInfo e
       (let [data (ex-data e)
             status (or (:status data) "unknown")

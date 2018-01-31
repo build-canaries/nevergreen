@@ -2,7 +2,7 @@
   (:require [nevergreen.http :as subject]
             [midje.sweet :refer :all]
             [clj-http.client :as client])
-  (:import (java.net UnknownHostException URISyntaxException)))
+  (:import (java.net UnknownHostException URISyntaxException ConnectException)))
 
 (facts "http"
        (fact "adds additional headers"
@@ -23,12 +23,17 @@
        (fact "throws an error for unknown hosts"
              (subject/http-get "some-url" {}) => (throws "some-host is an unknown host")
              (provided
-               (client/get anything anything) =throws=> (UnknownHostException. "some-host: unkown error")))
+               (client/get anything anything) =throws=> (UnknownHostException. "some-host: unknown error")))
 
        (fact "throws an error for bad uri syntax"
              (subject/http-get "some-url" {}) => (throws "Illegal character in authority at index 0: some-url")
              (provided
                (client/get anything anything) =throws=> (URISyntaxException. "some-url" "Illegal character in authority at index 0")))
+
+       (fact "throws an error for connect exception"
+             (subject/http-get "some-url" {}) => (throws "Connection refused, is the URL correct?")
+             (provided
+               (client/get anything anything) =throws=> (ConnectException. "Connection refused (Connection refused)")))
 
        (fact "throws an error when the CI server responds with an error"
              (subject/http-get "some-url" {}) => (throws "some-error")
