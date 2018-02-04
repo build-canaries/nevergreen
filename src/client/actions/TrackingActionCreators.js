@@ -2,21 +2,29 @@ import Immutable from 'immutable'
 import {encryptPassword as encrypt} from '../common/gateways/SecurityGateway'
 import {fetchAll} from '../common/gateways/ProjectsGateway'
 import {send} from '../common/gateways/Gateway'
-import format from 'date-fns/format'
+import {isBlank, now} from '../common/Utils'
 import {generateRandomName} from '../common/project/Name'
 import _ from 'lodash'
 import {
-  ENCRYPTING_PASSWORD, HIGHLIGHT_TRAY, PASSWORD_ENCRYPT_ERROR, PASSWORD_ENCRYPTED, PROJECTS_FETCH_ERROR,
-  PROJECTS_FETCHED, PROJECTS_FETCHING, REMOVE_TRAY, SELECT_PROJECT, SET_SERVER_TYPE, SET_TRAY_ID, SET_TRAY_NAME,
-  SET_TRAY_URL, SET_TRAY_USERNAME, TRAY_ADDED
+  ENCRYPTING_PASSWORD,
+  HIGHLIGHT_TRAY,
+  PASSWORD_ENCRYPT_ERROR,
+  PASSWORD_ENCRYPTED,
+  PROJECTS_FETCH_ERROR,
+  PROJECTS_FETCHED,
+  PROJECTS_FETCHING,
+  REMOVE_TRAY,
+  SELECT_PROJECT,
+  SET_SERVER_TYPE,
+  SET_TRAY_ID,
+  SET_TRAY_NAME,
+  SET_TRAY_URL,
+  SET_TRAY_USERNAME,
+  TRAY_ADDED
 } from './Actions'
 
 function hasScheme(url) {
   return _.size(_.split(url, '://')) > 1
-}
-
-function isNotBlank(value) {
-  return _.size(_.trim(value)) > 0
 }
 
 function abortPendingRequest(req) {
@@ -61,7 +69,7 @@ export function projectsFetching(trayId, request) {
 export function projectsFetched(trayId, projects) {
   const data = Immutable.fromJS(projects)
   const serverType = data.first() ? data.first().get('serverType') : ''
-  return {type: PROJECTS_FETCHED, trayId, data, serverType, timestamp: format(new Date())}
+  return {type: PROJECTS_FETCHED, trayId, data, serverType, timestamp: now()}
 }
 
 export function projectsFetchError(trayId, errors) {
@@ -104,7 +112,7 @@ export function encryptPassword(trayId, password, pendingRequest) {
   abortPendingRequest(pendingRequest)
 
   return function (dispatch) {
-    if (isNotBlank(password)) {
+    if (!isBlank(password)) {
       const request = encrypt(password)
 
       dispatch(encryptingPassword(trayId, password, request))
@@ -130,7 +138,7 @@ export function addTray(enteredUrl, username, rawPassword, existingTrays) {
     } else {
       dispatch(trayAdded(trayId, url, username))
 
-      if (isNotBlank(rawPassword)) {
+      if (!isBlank(rawPassword)) {
         return dispatch(encryptPassword(trayId, rawPassword))
           .then((encryptedPassword) => dispatch(refreshTray({trayId, url, username, password: encryptedPassword})))
       } else {

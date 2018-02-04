@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import Input from '../../../common/forms/Input'
 import styles from './github.scss'
@@ -41,7 +41,7 @@ class GitHub extends Component {
     const disabled = !this.props.loaded
 
     return (
-      <div>
+      <Fragment>
         <fieldset className={styles.gistValues}>
           <Input className={styles.oauthToken} onChange={this.oauthTokenChanged} onBlur={this.oauthTokenChanged}
                  value={this.state.oauthToken} disabled={disabled}>
@@ -57,7 +57,7 @@ class GitHub extends Component {
           </Input>
         </fieldset>
         <button className={styles.export} onClick={this.upload} disabled={disabled}>export</button>
-      </div>
+      </Fragment>
     )
   }
 }

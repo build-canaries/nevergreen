@@ -24,10 +24,7 @@ class Checkbox extends Component {
 }
 
 Checkbox.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.element),
-    PropTypes.element
-  ]).isRequired,
+  children: PropTypes.node.isRequired,
   onToggle: PropTypes.func.isRequired,
   className: PropTypes.string
 }

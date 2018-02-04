@@ -1,12 +1,12 @@
 import Immutable from 'immutable'
 import {GITHUB_SET_DESCRIPTION, GITHUB_SET_GIST_ID, IMPORT_SUCCESS, INITIALISED} from '../actions/Actions'
 
-const DefaultState = Immutable.Map({
+const DEFAULT_STATE = Immutable.Map({
   gistId: '',
   description: 'Nevergreen configuration backup'
 })
 
-export function reduce(state = DefaultState, action) {
+export function reduce(state = DEFAULT_STATE, action) {
   switch (action.type) {
     case INITIALISED:
       return state.merge(action.data.get('github'))

@@ -6,7 +6,7 @@ import {isBlank} from './common/Utils'
 
 class Notification extends Component {
   render() {
-    const notificationClassNames = classNames(styles.popUpNotification, {[styles.fullscreen]: this.props.isFullScreen})
+    const notificationClassNames = classNames(styles.popUpNotification, {[styles.fullscreen]: this.props.fullScreen})
 
     return isBlank(this.props.notification) ? null :
       <section className={notificationClassNames} aria-live='polite'>
@@ -23,7 +23,7 @@ class Notification extends Component {
 
 Notification.propTypes = {
   notification: PropTypes.string,
-  isFullScreen: PropTypes.bool,
+  fullScreen: PropTypes.bool,
   dismiss: PropTypes.func.isRequired
 }
 

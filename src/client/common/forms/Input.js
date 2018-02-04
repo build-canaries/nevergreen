@@ -28,7 +28,7 @@ class Input extends Component {
 
   render() {
     const inputProps = _.omit(this.props, ['children', 'onEnter', 'className', 'focus'])
-    const labelClasses = classNames(styles.label, this.props.type, this.props.className)
+    const labelClasses = classNames(styles.label, this.props.className)
 
     return (
       <label className={labelClasses}>
@@ -41,16 +41,8 @@ class Input extends Component {
   }
 }
 
-Input.defaultProps = {
-  type: 'text'
-}
-
 Input.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.element),
-    PropTypes.element
-  ]).isRequired,
-  type: PropTypes.string,
+  children: PropTypes.node.isRequired,
   onEnter: PropTypes.func,
   className: PropTypes.string,
   readOnly: PropTypes.bool,

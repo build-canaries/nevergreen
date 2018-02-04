@@ -1,13 +1,13 @@
 import Immutable from 'immutable'
 import {INTERESTING_PROJECTS} from '../actions/Actions'
 
-const DefaultState = Immutable.Map({
+const DEFAULT_STATE = Immutable.Map({
   projects: Immutable.List(),
   errors: Immutable.List(),
   loaded: false
 })
 
-export function reduce(state = DefaultState, action) {
+export function reduce(state = DEFAULT_STATE, action) {
   switch (action.type) {
     case INTERESTING_PROJECTS:
       return state.withMutations((map) =>

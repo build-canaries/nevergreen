@@ -8,40 +8,12 @@ import _ from 'lodash'
 import styles from './nevergreen.scss'
 import Timer from './common/Timer'
 import Notification from './Notification'
-import {error, info} from './common/Logger'
 import version from '../../resources/version.txt'
+import {registerServiceWorker} from './ServiceWorker'
 
 const ONE_SECONDS = 1000
 const THREE_SECONDS = 3 * 1000
 const TWENTY_FOUR_HOURS = 24 * 60 * 60
-
-function registerServiceWorker() {
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js').then((registration) => {
-      registration.onupdatefound = () => {
-        const installingWorker = registration.installing
-
-        installingWorker.onstatechange = () => {
-          switch (installingWorker.state) {
-            case 'installed':
-              if (navigator.serviceWorker.controller) {
-                info('New or updated content is available')
-              } else {
-                info('Content is now available offline')
-              }
-              break
-            case 'redundant':
-              info('The installing service worker became redundant')
-              break
-          }
-        }
-      }
-      info('Service worker registration successful', registration)
-    }).catch((err) => {
-      error('Service worker registration failed', err)
-    })
-  }
-}
 
 class Nevergreen extends Component {
   constructor(props) {
@@ -82,7 +54,7 @@ class Nevergreen extends Component {
         <Timer onTrigger={this.checkVersion} interval={TWENTY_FOUR_HOURS}/>
         <Header fullScreen={this.props.isFullScreen}/>
         <Notification notification={this.props.notification} dismiss={this.props.dismiss}
-                      isFullScreen={this.props.isFullScreen}/>
+                      fullScreen={this.props.isFullScreen}/>
         {this.props.loaded ? this.props.children : null}
         <Footer fullScreen={this.props.isFullScreen}/>
       </main>

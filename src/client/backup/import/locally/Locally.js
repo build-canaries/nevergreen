@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import styles from './locally.scss'
 
@@ -21,14 +21,14 @@ class Locally extends Component {
   render() {
 
     return (
-      <div>
+      <Fragment>
         <label>
           <span className={styles.label}>configuration to import</span>
           <textarea className={styles.data} placeholder={PLACEHOLDER} value={this.state.data} onChange={this.updateData}
                     spellCheck='false' data-locator='import-data'/>
         </label>
         <button className={styles.import} onClick={this.doImport} data-locator='import'>import</button>
-      </div>
+      </Fragment>
     )
   }
 }

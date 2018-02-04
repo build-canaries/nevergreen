@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import Shortcut from '../../common/Shortcut'
 import distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
@@ -27,7 +27,7 @@ class Refresh extends Component {
 
   render() {
     return (
-      <div>
+      <Fragment>
         <Timer onTrigger={this.updateFetchedTime} interval={ONE_MINUTE}/>
         <button className={styles.refresh} onClick={this.props.refreshTray}>
           refresh
@@ -35,7 +35,7 @@ class Refresh extends Component {
         </button>
         <span className={styles.lastFetch}
               data-locator='refresh-time'>{`projects last refreshed ${this.state.lastFetched}`}</span>
-      </div>
+      </Fragment>
     )
   }
 }

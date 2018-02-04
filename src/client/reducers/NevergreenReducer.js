@@ -1,16 +1,16 @@
 import Immutable from 'immutable'
 import {FULL_SCREEN, INITIALISED, INITIALISING, REQUEST_FULL_SCREEN} from '../actions/Actions'
 
-const DefaultState = Immutable.Map({
+const DEFAULT_STATE = Immutable.Map({
   loaded: false,
   fullScreen: false,
   fullScreenRequested: false
 })
 
-export function reduce(state = DefaultState, action) {
+export function reduce(state = DEFAULT_STATE, action) {
   switch (action.type) {
     case INITIALISING:
-      return DefaultState
+      return DEFAULT_STATE
 
     case INITIALISED:
       return state.set('loaded', true).merge(action.data.get('nevergreen'))

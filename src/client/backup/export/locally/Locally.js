@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import Clipboard from './Clipboard'
 import styles from './locally.scss'
@@ -14,7 +14,7 @@ class Locally extends Component {
 
   render() {
     return (
-      <div>
+      <Fragment>
         <label>
           <span className={styles.label}>current configuration</span>
           <textarea className={styles.data} id='export-data' value={this.props.configuration} readOnly
@@ -23,7 +23,7 @@ class Locally extends Component {
         <Clipboard elementSelector='#copy-to-clipboard' onSuccess={this.copySuccess} onError={this.copyError}/>
         <button className={styles.copy} id='copy-to-clipboard' data-clipboard-target='#export-data'>copy to clipboard
         </button>
-      </div>
+      </Fragment>
     )
   }
 }

@@ -1,11 +1,11 @@
 import Immutable from 'immutable'
 import {IMPORT_ERROR, IMPORT_SUCCESS, IMPORTING, NAVIGATED} from '../actions/Actions'
 
-const DefaultState = Immutable.Map({
+const DEFAULT_STATE = Immutable.Map({
   loaded: true
 })
 
-export function reduce(state = DefaultState, action) {
+export function reduce(state = DEFAULT_STATE, action) {
   switch (action.type) {
     case IMPORTING:
       return state.withMutations((map) =>

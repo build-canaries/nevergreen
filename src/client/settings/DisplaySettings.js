@@ -37,15 +37,15 @@ class DisplaySettings extends Component {
       <Container title='display' className={styles.container}>
         <div className={styles.checkboxes}>
           <Checkbox checked={this.props.showTrayName} onToggle={this.toggleTrayName} data-locator='show-tray-names'>
-            <span>show tray name</span>
+            show tray name
           </Checkbox>
           <Checkbox checked={this.props.showBrokenBuildTime} onToggle={this.toggleBrokenBuildTime}
                     data-locator='show-broken-build-times'>
-            <span>show broken build timer</span>
+            show broken build timer
           </Checkbox>
           <Checkbox checked={this.props.showBuildLabel} onToggle={this.toggleBuildLabel}
                     data-locator='show-build-labels'>
-            <span>show broken build label</span>
+            show broken build label
           </Checkbox>
         </div>
         <h4 className={styles.title}>Preview</h4>

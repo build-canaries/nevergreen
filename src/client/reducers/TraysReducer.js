@@ -19,9 +19,9 @@ import {
   TRAY_ADDED
 } from '../actions/Actions'
 
-const DefaultState = Immutable.OrderedMap()
+const DEFAULT_STATE = Immutable.OrderedMap()
 
-export function reduce(state = DefaultState, action) {
+export function reduce(state = DEFAULT_STATE, action) {
   switch (action.type) {
     case INITIALISED:
     case IMPORT_SUCCESS: {
@@ -45,23 +45,34 @@ export function reduce(state = DefaultState, action) {
     case PROJECTS_FETCHING:
       return state.update(action.trayId, (tray) =>
         tray.withMutations((map) =>
-          map.set('loaded', false).delete('errors').set('pendingRequest', action.request)))
+          map.set('loaded', false)
+            .delete('errors')
+            .set('pendingRequest', action.request)))
 
     case PASSWORD_ENCRYPTED:
       return state.update(action.trayId, (tray) =>
         tray.withMutations((map) =>
-          map.set('loaded', true).set('password', action.password).delete('errors').delete('pendingRequest')))
+          map.set('loaded', true)
+            .set('password', action.password)
+            .delete('errors')
+            .delete('pendingRequest')))
 
     case PROJECTS_FETCHED:
       return state.update(action.trayId, (tray) =>
         tray.withMutations((map) =>
-          map.set('loaded', true).set('timestamp', action.timestamp).set('serverType', action.serverType).delete('errors').delete('pendingRequest')))
+          map.set('loaded', true)
+            .set('timestamp', action.timestamp)
+            .set('serverType', action.serverType)
+            .delete('errors')
+            .delete('pendingRequest')))
 
     case PASSWORD_ENCRYPT_ERROR:
     case PROJECTS_FETCH_ERROR:
       return state.update(action.trayId, (tray) =>
         tray.withMutations((map) =>
-          map.set('loaded', true).set('errors', action.errors).delete('pendingRequest')))
+          map.set('loaded', true)
+            .set('errors', action.errors)
+            .delete('pendingRequest')))
 
     case SET_TRAY_NAME:
       return state.update(action.trayId, (tray) => tray.set('name', action.name))

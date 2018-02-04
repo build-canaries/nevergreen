@@ -1,12 +1,18 @@
 import Immutable from 'immutable'
 import {
-  BROKEN_BUILD_SOUND_FX, IMPORT_SUCCESS, INITIALISED, PLAY_BROKEN_BUILD_SOUND_FX, REFRESH_TIME,
-  SHOW_BROKEN_BUILD_TIME, SHOW_BUILD_LABEL, SHOW_TRAY_NAME
+  BROKEN_BUILD_SOUND_FX,
+  IMPORT_SUCCESS,
+  INITIALISED,
+  PLAY_BROKEN_BUILD_SOUND_FX,
+  REFRESH_TIME,
+  SHOW_BROKEN_BUILD_TIME,
+  SHOW_BUILD_LABEL,
+  SHOW_TRAY_NAME
 } from '../actions/Actions'
 import {MIN_REFRESH_TIME} from '../actions/SettingsActionCreators'
 import defaultSoundFx from '../settings/pacman_death.mp3'
 
-const DefaultState = Immutable.Map({
+const DEFAULT_STATE = Immutable.Map({
   showTrayName: false,
   showBrokenBuildTime: true,
   playBrokenBuildSoundFx: false,
@@ -15,7 +21,7 @@ const DefaultState = Immutable.Map({
   showBuildLabel: false
 })
 
-export function reduce(state = DefaultState, action) {
+export function reduce(state = DEFAULT_STATE, action) {
   switch (action.type) {
     case INITIALISED:
     case IMPORT_SUCCESS:

@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import format from 'date-fns/format'
 
 const ONE_MINUTE_IN_SECONDS = 60
 const ONE_HOUR_IN_SECONDS = 3600
@@ -21,4 +22,8 @@ export function friendlyFormatDuration(seconds) {
     const days = Math.floor(seconds / ONE_DAY_IN_SECONDS)
     return `${days} ${days === 1 ? 'day' : 'days'}`
   }
+}
+
+export function now() {
+  return format(new Date())
 }

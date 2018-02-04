@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import Input from '../../../common/forms/Input'
 import styles from './github.scss'
@@ -29,13 +29,11 @@ class GitHub extends Component {
     const disabled = !this.props.loaded
 
     return (
-      <div>
+      <Fragment>
         <Input className={styles.gistId} value={this.state.gistId} onChange={this.gistIdChanged} onBlur={this.setGistId}
-               disabled={disabled}>
-          <span>gist ID</span>
-        </Input>
+               disabled={disabled}>gist ID</Input>
         <button className={styles.restore} onClick={this.restore} disabled={disabled}>import</button>
-      </div>
+      </Fragment>
     )
   }
 }

@@ -34,27 +34,29 @@ class Container extends Component {
       [styles.show]: this.state.hidden,
       [styles.hide]: !this.state.hidden
     })
-    const label = this.state.hidden ? `show section ${this.props.title}` : `hide section ${this.props.title}`
-    const body = this.state.hidden ? null : <div className={this.props.className}>{this.props.children}</div>
+    const label = `${this.state.hidden ? 'show' : 'hide'} section ${this.props.title}`
 
     return (
       <section className={styles.container} ref={(node) => this.node = node}>
-        <div className={titleBarClasses} title={label} onClick={this.toggleHidden} onKeyPress={this.keyToggle}
-             tabIndex='0' aria-label={label} aria-expanded={!this.state.hidden} role='button'>
+        <div className={titleBarClasses}
+             title={label}
+             onClick={this.toggleHidden}
+             onKeyPress={this.keyToggle}
+             tabIndex='0'
+             aria-label={label}
+             aria-expanded={!this.state.hidden}
+             role='button'>
           <h3 className={styles.title}>{this.props.title}</h3>
-          <h4 className={styles.subTitle}>{this.props.subTitle}</h4>
+          {this.props.subTitle && <h4 className={styles.subTitle}>{this.props.subTitle}</h4>}
         </div>
-        {body}
+        {!this.state.hidden && <div className={this.props.className}>{this.props.children}</div>}
       </section>
     )
   }
 }
 
 Container.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.element),
-    PropTypes.element
-  ]),
+  children: PropTypes.node,
   title: PropTypes.string.isRequired,
   subTitle: PropTypes.string,
   className: PropTypes.string,

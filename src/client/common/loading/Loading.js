@@ -1,34 +1,30 @@
-import React, {Children, Component} from 'react'
+import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import styles from './loading.scss'
 
 class Loading extends Component {
   render() {
     if (this.props.loaded) {
-      const childrenCount = Children.count(this.props.children)
-
-      if (childrenCount > 1) {
-        return <span>{this.props.children}</span>
-      } else if (childrenCount === 1) {
-        return this.props.children
-      } else {
-        return null
-      }
+      return <Fragment>{this.props.children}</Fragment>
     } else {
-      return <div className={styles.loading} data-locator='loading'>
-        <span className={styles.pulse}/>
-        <span className={styles.pulse}/>
-        <span className={styles.pulse}/>
-      </div>
+      return (
+        <div className={styles.loading}
+             data-locator='loading'
+             role='alertdialog'
+             aria-busy='true'
+             aria-live='assertive'>
+          <span className={styles.loadingText}>loading</span>
+          <span className={styles.pulse}/>
+          <span className={styles.pulse}/>
+          <span className={styles.pulse}/>
+        </div>
+      )
     }
   }
 }
 
 Loading.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.element),
-    PropTypes.element
-  ]),
+  children: PropTypes.node,
   loaded: PropTypes.bool
 }
 

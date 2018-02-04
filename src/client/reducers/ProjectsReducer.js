@@ -1,9 +1,9 @@
 import Immutable from 'immutable'
 import {IMPORT_SUCCESS, INITIALISED, PROJECTS_FETCHED, REMOVE_TRAY, SET_TRAY_ID, TRAY_ADDED} from '../actions/Actions'
 
-const DefaultState = Immutable.Map()
+const DEFAULT_STATE = Immutable.Map()
 
-export function reduce(state = DefaultState, action) {
+export function reduce(state = DEFAULT_STATE, action) {
   switch (action.type) {
     case INITIALISED:
     case IMPORT_SUCCESS: {

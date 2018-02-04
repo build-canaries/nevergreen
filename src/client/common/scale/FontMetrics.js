@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import styles from './font-metrics.scss'
 
 const fontMeasureSize = 100
 
@@ -15,15 +16,8 @@ class FontMetrics extends Component {
   }
 
   render() {
-    const style = {
-      fontFamily: 'Roboto Mono, monospace', // Must match $monospace in CSS
-      padding: 0,
-      position: 'absolute',
-      top: '-999px',
-      fontSize: `${fontMeasureSize}px`
-    }
-
-    return <span style={style} ref={(node) => this.measure = node}>a</span>
+    const style = {fontSize: `${fontMeasureSize}px`}
+    return <span className={styles.body} style={style} ref={(node) => this.measure = node}>a</span>
   }
 }
 

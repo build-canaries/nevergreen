@@ -1,9 +1,9 @@
 import Immutable from 'immutable'
 import {IMPORT_SUCCESS, INITIALISED, MESSAGE_ADDED, MESSAGE_REMOVED} from '../actions/Actions'
 
-const DefaultState = Immutable.OrderedSet(['=(^.^)='])
+const DEFAULT_STATE = Immutable.OrderedSet(['=(^.^)='])
 
-export function reduce(state = DefaultState, action) {
+export function reduce(state = DEFAULT_STATE, action) {
   switch (action.type) {
     case INITIALISED:
     case IMPORT_SUCCESS: {

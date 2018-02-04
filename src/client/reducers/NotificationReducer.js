@@ -1,8 +1,8 @@
 import {NOTIFICATION, NOTIFICATION_DISMISS} from '../actions/Actions'
 
-const DefaultState = null
+const DEFAULT_STATE = null
 
-export function reduce(state = DefaultState, action) {
+export function reduce(state = DEFAULT_STATE, action) {
   switch (action.type) {
     case NOTIFICATION:
       return action.message

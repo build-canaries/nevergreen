@@ -1,4 +1,4 @@
-import React, {Children, Component} from 'react'
+import React, {Children, Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import styles from './tabs.scss'
 
@@ -13,9 +13,8 @@ class Tabs extends Component {
   }
 
   render() {
-
     return (
-      <div>
+      <Fragment>
         <div className={styles.tabs}>
           {this.props.titles.map((title, i) => {
             const isActive = i === this.state.active
@@ -30,7 +29,7 @@ class Tabs extends Component {
         <div className={styles.contents}>
           {Children.toArray(this.props.children)[this.state.active]}
         </div>
-      </div>
+      </Fragment>
     )
   }
 }
