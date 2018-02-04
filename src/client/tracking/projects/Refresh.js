@@ -4,11 +4,12 @@ import Shortcut from '../../common/Shortcut'
 import distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
 import Timer from '../../common/Timer'
 import styles from './refresh.scss'
+import {isBlank} from '../../common/Utils'
 
 const ONE_MINUTE = 60
 
 function lastFetched(timestamp) {
-  return timestamp ? `${distanceInWordsToNow(timestamp)} ago` : 'never'
+  return isBlank(timestamp) ? 'never' : `${distanceInWordsToNow(timestamp)} ago`
 }
 
 class Refresh extends Component {
@@ -34,7 +35,9 @@ class Refresh extends Component {
           <Shortcut hotkeys={[`r ${this.props.index}`]}/>
         </button>
         <span className={styles.lastFetch}
-              data-locator='refresh-time'>{`projects last refreshed ${this.state.lastFetched}`}</span>
+              data-locator='refresh-time'>
+          {`projects last refreshed ${this.state.lastFetched}`}
+        </span>
       </Fragment>
     )
   }

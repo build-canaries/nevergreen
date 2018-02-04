@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import Checkbox from '../../common/forms/Checkbox'
 import styles from './available-project.scss'
+import {isBlank} from '../../common/Utils'
 
 class AvailableProject extends Component {
   render() {
@@ -15,7 +16,7 @@ class AvailableProject extends Component {
       info = <span className={styles.infoRemoved} data-locator='removed'>removed</span>
     }
 
-    const displayName = this.props.stage ? `${this.props.name} ${this.props.stage}` : this.props.name
+    const displayName = isBlank(this.props.stage) ? this.props.name : `${this.props.name} ${this.props.stage}`
 
     return (
       <li className={listClasses}>

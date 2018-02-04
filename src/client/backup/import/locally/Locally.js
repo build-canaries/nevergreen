@@ -24,8 +24,12 @@ class Locally extends Component {
       <Fragment>
         <label>
           <span className={styles.label}>configuration to import</span>
-          <textarea className={styles.data} placeholder={PLACEHOLDER} value={this.state.data} onChange={this.updateData}
-                    spellCheck='false' data-locator='import-data'/>
+          <textarea className={styles.data}
+                    placeholder={PLACEHOLDER}
+                    value={this.state.data}
+                    onChange={this.updateData}
+                    spellCheck='false'
+                    data-locator='import-data'/>
         </label>
         <button className={styles.import} onClick={this.doImport} data-locator='import'>import</button>
       </Fragment>

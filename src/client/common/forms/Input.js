@@ -33,9 +33,15 @@ class Input extends Component {
     return (
       <label className={labelClasses}>
         <span className={styles.description}>{this.props.children}</span>
-        <input className={styles.input} onKeyPress={this.onEnter} spellCheck={false} autoComplete='off' {...inputProps}
-               tabIndex={this.props.readOnly ? -1 : 0} ref={(node) => this.node = node}/>
-        {this.props.readOnly ? <i className={styles.locked} title='read only'/> : null}
+        <input className={styles.input}
+               onKeyPress={this.onEnter}
+               spellCheck={false}
+               autoComplete='off'
+               {...inputProps}
+               tabIndex={this.props.readOnly ? -1 : 0}
+               aria-disabled={this.props.disabled}
+               ref={(node) => this.node = node}/>
+        {this.props.readOnly && <i className={styles.readOnly} title='read only'/>}
       </label>
     )
   }
@@ -46,7 +52,8 @@ Input.propTypes = {
   onEnter: PropTypes.func,
   className: PropTypes.string,
   readOnly: PropTypes.bool,
-  focus: PropTypes.bool
+  focus: PropTypes.bool,
+  disabled: PropTypes.bool
 }
 
 export default Input

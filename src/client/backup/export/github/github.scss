@@ -4,11 +4,8 @@
 .export {
   @include button();
   @include button-icon('cloud-upload');
-}
 
-.gistValues {
-  display: block;
-  padding-bottom: 1em;
+  margin-top: 1.5em;
 }
 
 .oauthToken,

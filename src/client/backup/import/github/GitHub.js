@@ -30,9 +30,14 @@ class GitHub extends Component {
 
     return (
       <Fragment>
-        <Input className={styles.gistId} value={this.state.gistId} onChange={this.gistIdChanged} onBlur={this.setGistId}
-               disabled={disabled}>gist ID</Input>
-        <button className={styles.restore} onClick={this.restore} disabled={disabled}>import</button>
+        <Input className={styles.gistId}
+               value={this.state.gistId}
+               onChange={this.gistIdChanged}
+               onBlur={this.setGistId}
+               disabled={disabled}>
+          gist ID
+        </Input>
+        <button className={styles.import} onClick={this.restore} disabled={disabled}>import</button>
       </Fragment>
     )
   }

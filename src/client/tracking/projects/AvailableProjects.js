@@ -57,21 +57,24 @@ class AvailableProjects extends Component {
       <div className={styles.controls}>
         <fieldset className={styles.toggles}>
           <legend className={styles.legend}>Available projects</legend>
-          <button className={styles.includeAll} onClick={this.includeAll} disabled={this.state.disableButtons}
-                  aria-disabled={this.state.disableButtons} data-locator='include-all'>
+          <button className={styles.includeAll}
+                  onClick={this.includeAll}
+                  disabled={this.state.disableButtons}
+                  aria-disabled={this.state.disableButtons}
+                  data-locator='include-all'>
             include all
             <Shortcut hotkeys={[`+ ${this.props.index}`, `= ${this.props.index}`]}/>
           </button>
-          <button className={styles.excludeAll} onClick={this.excludeAll} disabled={this.state.disableButtons}
+          <button className={styles.excludeAll}
+                  onClick={this.excludeAll}
+                  disabled={this.state.disableButtons}
                   aria-disabled={this.state.disableButtons}>
             exclude all
             <Shortcut hotkeys={[`- ${this.props.index}`]}/>
           </button>
         </fieldset>
         <div className={styles.projectFilter}>
-          <Input className={styles.projectFilterInput} onChange={this.updateFilter} placeholder='regex'>
-            <span>filter</span>
-          </Input>
+          <Input className={styles.projectFilterInput} onChange={this.updateFilter} placeholder='regex'>filter</Input>
         </div>
         <Messages type='error' messages={this.state.filterErrors}/>
       </div>
@@ -84,7 +87,9 @@ class AvailableProjects extends Component {
             const selected = this.props.selected.includes(project.projectId)
             const selectProject = () => this.props.selectProject(this.props.trayId, project.projectId, !selected)
 
-            return <AvailableProject key={project.projectId} {...project} selected={selected}
+            return <AvailableProject key={project.projectId}
+                                     {...project}
+                                     selected={selected}
                                      selectProject={selectProject}/>
           })
         }
@@ -95,10 +100,9 @@ class AvailableProjects extends Component {
       <section className={styles.availableProjects} data-locator='available-projects' ref={(node) => this.node = node}>
         <Refresh index={this.props.index} timestamp={this.props.timestamp} refreshTray={this.refreshTray}/>
         <Messages type='error' messages={this.props.errors}/>
-        {this.props.errors ? null : controls}
-        {this.props.errors ? null : buildItems}
-        {this.props.errors ? null :
-          <button className={styles.backToTop} onClick={this.scrollToTop}>back to top</button>}
+        {!this.props.errors && controls}
+        {!this.props.errors && buildItems}
+        {!this.props.errors && <button className={styles.backToTop} onClick={this.scrollToTop}>back to top</button>}
       </section>
     )
   }

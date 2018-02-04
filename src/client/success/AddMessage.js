@@ -21,8 +21,15 @@ class AddMessage extends Component {
   render() {
     return (
       <div className={styles.addMessage}>
-        <Input className={styles.addMessageInput} placeholder='text or image URL' value={this.state.message}
-               onChange={this.updateMessage} onEnter={this.addMessage} data-locator='message' autoFocus>message</Input>
+        <Input className={styles.addMessageInput}
+               placeholder='text or image URL'
+               value={this.state.message}
+               onChange={this.updateMessage}
+               onEnter={this.addMessage}
+               data-locator='message'
+               autoFocus>
+          message
+        </Input>
         <button className={styles.add} onClick={this.addMessage} data-locator='add-message'>add</button>
       </div>
     )

@@ -14,11 +14,12 @@ class Footer extends Component {
 
     return (
       <footer role='contentinfo' className={footerClassNames}>
-        <ExternalLink href='https://github.com/build-canaries/nevergreen/releases' className={styles.version}
+        <ExternalLink href='https://github.com/build-canaries/nevergreen/releases'
+                      className={styles.version}
                       title='Nevergreen releases on Github'>
           v<span data-locator='version'>{fullVersion}</span> {versionName}
         </ExternalLink>
-        <span className={styles.copyright}>Copyright © 2017 Build Canaries</span>
+        <span className={styles.copyright}>Nevergreen Copyright © 2017 Build Canaries</span>
       </footer>
     )
   }

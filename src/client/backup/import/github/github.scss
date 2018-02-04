@@ -3,14 +3,14 @@
 @import '../../../common/typography';
 @import '../../../common/responsive';
 
-.restore {
+.import {
   @include button();
   @include button-icon('cloud-download');
+
+  margin-top: 1.5em;
 }
 
 .gistId {
-  padding-bottom: 1em;
-
   @include respond-to(tablet, desktop) {
     display: block;
 

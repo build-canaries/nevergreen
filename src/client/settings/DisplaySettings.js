@@ -36,14 +36,18 @@ class DisplaySettings extends Component {
     return (
       <Container title='display' className={styles.container}>
         <div className={styles.checkboxes}>
-          <Checkbox checked={this.props.showTrayName} onToggle={this.toggleTrayName} data-locator='show-tray-names'>
+          <Checkbox checked={this.props.showTrayName}
+                    onToggle={this.toggleTrayName}
+                    data-locator='show-tray-names'>
             show tray name
           </Checkbox>
-          <Checkbox checked={this.props.showBrokenBuildTime} onToggle={this.toggleBrokenBuildTime}
+          <Checkbox checked={this.props.showBrokenBuildTime}
+                    onToggle={this.toggleBrokenBuildTime}
                     data-locator='show-broken-build-times'>
             show broken build timer
           </Checkbox>
-          <Checkbox checked={this.props.showBuildLabel} onToggle={this.toggleBuildLabel}
+          <Checkbox checked={this.props.showBuildLabel}
+                    onToggle={this.toggleBuildLabel}
                     data-locator='show-build-labels'>
             show broken build label
           </Checkbox>
@@ -51,20 +55,31 @@ class DisplaySettings extends Component {
         <h4 className={styles.title}>Preview</h4>
         <div className={styles.displayPreview}>
           <ScaledGrid>
-            <InterestingProject trayName={generateRandomName()} name='sick' prognosis='sick'
+            <InterestingProject trayName={generateRandomName()}
+                                name='sick'
+                                prognosis='sick'
                                 lastBuildTime={this.state.lastBuildTime}
                                 lastBuildLabel={randomBuildLabel()}
                                 showBrokenBuildTimers={this.props.showBrokenBuildTime}
-                                showTrayName={this.props.showTrayName} showBuildLabel={this.props.showBuildLabel}/>
-            <InterestingProject trayName={generateRandomName()} name='sick building' prognosis='sick-building'
+                                showTrayName={this.props.showTrayName}
+                                showBuildLabel={this.props.showBuildLabel}/>
+            <InterestingProject trayName={generateRandomName()}
+                                name='sick building'
+                                prognosis='sick-building'
                                 lastBuildLabel={randomBuildLabel()}
                                 showBrokenBuildTimers={this.props.showBrokenBuildTime}
-                                showTrayName={this.props.showTrayName} showBuildLabel={this.props.showBuildLabel}/>
-            <InterestingProject trayName={generateRandomName()} name='healthy building' prognosis='healthy-building'
+                                showTrayName={this.props.showTrayName}
+                                showBuildLabel={this.props.showBuildLabel}/>
+            <InterestingProject trayName={generateRandomName()}
+                                name='healthy building'
+                                prognosis='healthy-building'
                                 lastBuildLabel={randomBuildLabel()}
                                 showBrokenBuildTimers={this.props.showBrokenBuildTime}
-                                showTrayName={this.props.showTrayName} showBuildLabel={this.props.showBuildLabel}/>
-            <InterestingProject trayName={generateRandomName()} name='unknown' prognosis='unknown'
+                                showTrayName={this.props.showTrayName}
+                                showBuildLabel={this.props.showBuildLabel}/>
+            <InterestingProject trayName={generateRandomName()}
+                                name='unknown'
+                                prognosis='unknown'
                                 lastBuildLabel={randomBuildLabel()}
                                 showBrokenBuildTimers={this.props.showBrokenBuildTime}
                                 showTrayName={this.props.showTrayName}

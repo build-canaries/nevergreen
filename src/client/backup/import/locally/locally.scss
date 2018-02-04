@@ -15,7 +15,6 @@
   border: 1px solid $mid-grey;
   font-family: $monospace-font;
   height: 20em;
-  margin-bottom: 1em;
   padding: 0.5em;
   white-space: pre;
   width: 100%;
@@ -32,4 +31,6 @@
 .import {
   @include button();
   @include button-icon('floppy-disk');
+
+  margin-top: 1.5em;
 }

@@ -44,7 +44,9 @@ class Header extends Component {
         <img src={logo} className={styles.logo} alt='Build Canaries'/>
         <nav role='navigation' className={styles.siteMenu}>
           <h2 className={styles.subTitle}>Site menu</h2>
-          <button className={styles.siteMenuToggle} onClick={this.toggleMenu} aria-label={toggleLabel}
+          <button className={styles.siteMenuToggle}
+                  onClick={this.toggleMenu}
+                  aria-label={toggleLabel}
                   aria-expanded={this.state.menuVisible}>
             <i className={iconClassNames}/>
           </button>
@@ -55,8 +57,11 @@ class Header extends Component {
 
                 return (
                   <li key={item.id}>
-                    <NavLink to={`/${item.id}`} className={styles.menuItem} activeClassName={styles.active}
-                             onClick={this.hideMenu} data-locator={`menu-${item.id}`}>
+                    <NavLink to={`/${item.id}`}
+                             className={styles.menuItem}
+                             activeClassName={styles.active}
+                             onClick={this.hideMenu}
+                             data-locator={`menu-${item.id}`}>
                       <i className={iconClasses}/>
                       <span className={styles.menuTitle}>{item.title}</span>
                       <Shortcut hotkeys={item.shortcuts}/>

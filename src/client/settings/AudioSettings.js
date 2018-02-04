@@ -26,7 +26,13 @@ class AudioSettings extends Component {
     const soundFx = isBlank(props.brokenBuildSoundFx) || hasScheme(props.brokenBuildSoundFx)
       ? this.props.brokenBuildSoundFx
       : `${window.location.origin}/${props.brokenBuildSoundFx}`
-    this.state = {errors: [], audio: null, soundFx, playEnabled: !isBlank(props.brokenBuildSoundFx), playing: false}
+    this.state = {
+      errors: [],
+      audio: null,
+      soundFx,
+      playEnabled: !isBlank(props.brokenBuildSoundFx),
+      playing: false
+    }
   }
 
   toggleBrokenSounds = (newValue) => {
@@ -73,18 +79,27 @@ class AudioSettings extends Component {
 
     return (
       <Container title='audio' className={styles.container}>
-        <Checkbox checked={this.props.playBrokenBuildSoundFx} onToggle={this.toggleBrokenSounds}
-                  data-locator='play-sounds' disabled={this.state.playing} aria-disabled={this.state.playing}>
+        <Checkbox checked={this.props.playBrokenBuildSoundFx}
+                  onToggle={this.toggleBrokenSounds}
+                  data-locator='play-sounds'>
           play a sound when a build breaks
         </Checkbox>
         <div className={styles.soundFx}>
-          <Input type='url' className={styles.soundFxInput} placeholder='audio file URL' onChange={this.updateSoundFx}
-                 value={this.state.soundFx} onBlur={this.setSoundFx} onEnter={this.setSoundFx}
-                 required={this.props.playBrokenBuildSoundFx} disabled={this.state.playing}>
+          <Input type='url'
+                 className={styles.soundFxInput}
+                 placeholder='audio file URL'
+                 onChange={this.updateSoundFx}
+                 value={this.state.soundFx}
+                 onBlur={this.setSoundFx}
+                 onEnter={this.setSoundFx}
+                 required={this.props.playBrokenBuildSoundFx}
+                 disabled={this.state.playing}>
             broken build sound
           </Input>
-          <button className={playButtonClasses} onClick={this.state.playing ? this.stop : this.play}
-                  disabled={playingDisabled} aria-disabled={playingDisabled}>
+          <button className={playButtonClasses}
+                  onClick={this.state.playing ? this.stop : this.play}
+                  disabled={playingDisabled}
+                  aria-disabled={playingDisabled}>
             {this.state.playing ? 'stop' : 'play'}
           </button>
         </div>
