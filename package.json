@@ -3,9 +3,6 @@
   "version": "0.0.0",
   "description": "A build monitor with attitude",
   "main": "main.js",
-  "config": {
-    "domain": "http://localhost:5000"
-  },
   "scripts": {
     "clean": "rm -rf resources/public",
     "build": "NODE_ENV=dev webpack --progress",
@@ -18,8 +15,7 @@
     "watchJs": "watch 'npm run clean && npm run build' src/client",
     "watchTest": "watch 'npm run test' src/client test/client",
     "watchLint": "watch 'npm run lint' src/client test/client",
-    "ci-stub-server": "node ci_stub_server/server",
-    "pa11y": "pa11y --ignore 'notice' $npm_package_config_domain"
+    "ci-stub-server": "node ci_stub_server/server"
   },
   "dependencies": {
     "babel-polyfill": "6.26.0",
@@ -80,7 +76,6 @@
     "node-sass": "4.7.2",
     "nyc": "11.4.1",
     "optimize-css-assets-webpack-plugin": "3.2.0",
-    "pa11y": "4.13.2",
     "postcss-loader": "2.1.0",
     "proxyquire": "1.8.0",
     "raw-loader": "0.5.1",
