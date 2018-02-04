@@ -40,8 +40,9 @@ export FULL_VERSION="$(cat "./resources/version.txt")+$(cat "./resources/version
 echo '[Step 4 of 6] Running the functional tests...'
 ./lein.sh test functional.functional-test
 
-export BROWSER=firefox
-./lein.sh test functional.functional-test
+# uncomment to also run the functional tests in Firefox
+# export BROWSER=firefox
+# ./lein.sh test functional.functional-test
 
 echo
 echo 'Everything completed successfully, push away!'
