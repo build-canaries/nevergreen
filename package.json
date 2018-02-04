@@ -2,7 +2,17 @@
   "name": "nevergreen",
   "version": "0.0.0",
   "description": "A build monitor with attitude",
-  "main": "main.js",
+  "private": true,
+  "author": "Build Canaries",
+  "homepage": "https://nevergreen.io",
+  "license": "EPL-1.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/build-canaries/nevergreen.git"
+  },
+  "bugs": {
+    "url": "https://github.com/build-canaries/nevergreen/issues"
+  },
   "scripts": {
     "clean": "rm -rf resources/public",
     "build": "NODE_ENV=dev webpack --progress",
@@ -93,14 +103,5 @@
     "watch": "1.0.2",
     "webpack": "3.10.0",
     "webpack-manifest-plugin": "1.3.2"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/build-canaries/nevergreen.git"
-  },
-  "author": "Build Canaries",
-  "license": "EPL-1.0",
-  "bugs": {
-    "url": "https://github.com/build-canaries/nevergreen/issues"
   }
 }
