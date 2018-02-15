@@ -11,18 +11,20 @@ class AvailableProject extends Component {
     let info = null
 
     if (this.props.isNew) {
-      info = <span className={styles.infoNew} data-locator='new'>new</span>
+      info = <div className={styles.infoNew} data-locator='new'>new</div>
     } else if (this.props.removed) {
-      info = <span className={styles.infoRemoved} data-locator='removed'>removed</span>
+      info = <div className={styles.infoRemoved} data-locator='removed'>removed</div>
     }
 
     const displayName = isBlank(this.props.stage) ? this.props.name : `${this.props.name} ${this.props.stage}`
 
     return (
       <li className={listClasses}>
-        <Checkbox checked={this.props.selected} onToggle={this.props.selectProject} disabled={this.props.removed}>
+        <Checkbox checked={this.props.selected}
+                  onToggle={this.props.selectProject}
+                  disabled={this.props.removed}>
           {info}
-          <span className={styles.name} data-locator='name'>{displayName}</span>
+          <div className={styles.name} data-locator='name'>{displayName}</div>
         </Checkbox>
       </li>
     )

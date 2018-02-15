@@ -62,7 +62,11 @@ class TraySettings extends Component {
 
   setPassword = () => {
     this.props.encryptPassword(this.props.trayId, this.state.newPassword, this.props.pendingRequest)
-    this.setState({updatingPassword: false, newPassword: '', credentialsChanged: true})
+    this.setState({
+      updatingPassword: false,
+      newPassword: '',
+      credentialsChanged: true
+    })
   }
 
   urlChanged = (evt) => {
@@ -99,8 +103,10 @@ class TraySettings extends Component {
                autoFocus>
           name
         </Input>
-        <button className={styles.random} onClick={this.generateNewName} data-locator='generate-random'>
-          randomise
+        <button className={styles.random}
+                onClick={this.generateNewName}
+                data-locator='generate-random'>
+          randomise name
         </button>
         <Input className={styles.traySettingsUrl}
                value={this.state.newUrl}

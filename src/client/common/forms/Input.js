@@ -7,9 +7,15 @@ import styles from './input.scss'
 class Input extends Component {
 
   maybeFocus = () => {
-    if (this.props.focus) {
-      this.node.focus()
+    if (this.props.focus && this.inputNode) {
+      this.inputNode.focus()
     }
+  }
+
+  moveCaretToEnd = (evt) => {
+    const val = evt.target.value
+    evt.target.value = ''
+    evt.target.value = val
   }
 
   onEnter = (evt) => {
@@ -40,7 +46,8 @@ class Input extends Component {
                {...inputProps}
                tabIndex={this.props.readOnly ? -1 : 0}
                aria-disabled={this.props.disabled}
-               ref={(node) => this.node = node}/>
+               ref={(node) => this.inputNode = node}
+               onFocus={this.moveCaretToEnd}/>
         {this.props.readOnly && <i className={styles.readOnly} title='read only'/>}
       </label>
     )

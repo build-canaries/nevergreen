@@ -22,6 +22,10 @@
   }
 }
 
+.name {
+  display: inline;
+}
+
 .removedProject {
   & .name {
     text-decoration: line-through;
@@ -42,6 +46,7 @@
 
   background-color: $mid-grey;
   color: $white;
+  display: inline;
 }
 
 .infoNew {
@@ -49,4 +54,5 @@
 
   background-color: $yellow;
   color: $off-black;
+  display: inline;
 }

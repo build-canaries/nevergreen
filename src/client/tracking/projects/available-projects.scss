@@ -65,6 +65,7 @@
 
   @include respond-to(tablet, desktop) {
     display: inline-block;
+    margin-top: 0;
     width: auto;
   }
 }

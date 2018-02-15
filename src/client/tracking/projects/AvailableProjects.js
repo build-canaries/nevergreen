@@ -12,7 +12,11 @@ import {isBlank} from '../../common/Utils'
 class AvailableProjects extends Component {
   constructor(props) {
     super(props)
-    this.state = {filter: null, filterErrors: null, disableButtons: false}
+    this.state = {
+      filter: null,
+      filterErrors: null,
+      disableButtons: false
+    }
   }
 
   includeAll = () => {
@@ -41,7 +45,9 @@ class AvailableProjects extends Component {
   }
 
   scrollToTop = () => {
-    this.node.scrollIntoView()
+    if (this.node) {
+      this.node.scrollIntoView()
+    }
   }
 
   refreshTray = () => {
@@ -72,10 +78,14 @@ class AvailableProjects extends Component {
             exclude all
             <Shortcut hotkeys={[`- ${this.props.index}`]}/>
           </button>
+          <div className={styles.projectFilter}>
+            <Input className={styles.projectFilterInput}
+                   onChange={this.updateFilter}
+                   placeholder='regular expression'>
+              filter
+            </Input>
+          </div>
         </fieldset>
-        <div className={styles.projectFilter}>
-          <Input className={styles.projectFilterInput} onChange={this.updateFilter} placeholder='regex'>filter</Input>
-        </div>
         <Messages type='error' messages={this.state.filterErrors}/>
       </div>
     )
