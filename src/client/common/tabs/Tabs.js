@@ -1,5 +1,7 @@
 import React, {Children, Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
+import _ from 'lodash'
+import classNames from 'classnames'
 import styles from './tabs.scss'
 
 class Tabs extends Component {
@@ -13,25 +15,50 @@ class Tabs extends Component {
   }
 
   render() {
+    const prefix = _.uniqueId('tabs')
+
     return (
       <Fragment>
-        <div className={styles.tabs}>
-          {this.props.titles.map((title, i) => {
+        <div className={styles.tabs} role='tablist'>
+          {
+            this.props.titles.map((title, i) => {
+              const isActive = i === this.state.active
+
+              return (
+                <button key={title}
+                        className={styles.tab}
+                        onClick={() => this.switchTabs(i)}
+                        disabled={isActive}
+                        aria-selected={isActive}
+                        role='tab'
+                        data-locator={`tab-${title}`}
+                        id={`tab-${prefix}-${i}`}
+                        aria-controls={`tab-panel-${prefix}-${i}`}>
+                  {title}
+                </button>
+              )
+            })
+          }
+        </div>
+        {
+          Children.toArray(this.props.children).map((child, i) => {
             const isActive = i === this.state.active
+            const classes = classNames(styles.tabPanel, {
+              [styles.hidden]: !isActive
+            })
+
             return (
-              <button key={title}
-                      className={styles.tab}
-                      onClick={() => this.switchTabs(i)}
-                      disabled={isActive}
-                      data-locator={`tab-${title}`}>
-                {title}
-              </button>
+              <div key={`tab-panel-${prefix}-${i}`}
+                   className={classes}
+                   tabIndex='0'
+                   role='tabpanel'
+                   id={`tab-panel-${prefix}-${i}`}
+                   aria-labelledby={`tab-${prefix}-${i}`}>
+                {child}
+              </div>
             )
-          })}
-        </div>
-        <div className={styles.contents}>
-          {Children.toArray(this.props.children)[this.state.active]}
-        </div>
+          })
+        }
       </Fragment>
     )
   }
