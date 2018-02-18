@@ -30,13 +30,17 @@ class Header extends Component {
   }
 
   render() {
-    const headerClassNames = classNames(styles.siteHeader, {[styles.fullscreen]: this.props.fullScreen})
-    const menuClassNames = classNames(styles.menu, {[styles.open]: this.state.menuVisible})
-    const toggleLabel = this.state.menuVisible ? 'hide menu' : 'show menu'
+    const headerClassNames = classNames(styles.siteHeader, {
+      [styles.fullscreen]: this.props.fullScreen
+    })
+    const menuClassNames = classNames(styles.menu, {
+      [styles.open]: this.state.menuVisible
+    })
     const iconClassNames = classNames({
       [styles.siteMenuShow]: !this.state.menuVisible,
       [styles.siteMenuHide]: this.state.menuVisible
     })
+    const toggleLabel = this.state.menuVisible ? 'hide menu' : 'show menu'
 
     return (
       <header role='banner' className={headerClassNames}>

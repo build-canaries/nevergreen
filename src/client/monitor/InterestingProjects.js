@@ -8,8 +8,8 @@ import {isBlank} from '../common/Utils'
 
 class InterestingProjects extends Component {
   componentWillUnmount() {
-    if (this.sfx) {
-      this.sfx.pause()
+    if (this.sfxNode) {
+      this.sfxNode.pause()
     }
   }
 
@@ -17,7 +17,7 @@ class InterestingProjects extends Component {
     const brokenProject = _.reduce(this.props.projects, (previous, project) => previous || project.prognosis === 'sick', false)
     const playBrokenSfx = this.props.playBrokenBuildSounds && (brokenProject || !_.isEmpty(this.props.errors))
     const brokenSfx = playBrokenSfx && !isBlank(this.props.brokenBuildFx) ?
-      <audio ref={(node) => this.sfx = node} src={this.props.brokenBuildFx} autoPlay/> : null
+      <audio ref={(node) => this.sfxNode = node} src={this.props.brokenBuildFx} autoPlay/> : null
 
     const errors = _.map(this.props.errors, (error) => {
       return (

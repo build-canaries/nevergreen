@@ -7,7 +7,10 @@ import {isBlank} from '../../common/Utils'
 
 class AvailableProject extends Component {
   render() {
-    const listClasses = classNames(styles.availableProject, {[styles.removedProject]: this.props.removed})
+    const listClasses = classNames(styles.availableProject, {
+      [styles.removedProject]: this.props.removed
+    })
+
     let info = null
 
     if (this.props.isNew) {

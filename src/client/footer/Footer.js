@@ -9,7 +9,9 @@ import versionName from '../../../resources/version_name.txt'
 
 class Footer extends Component {
   render() {
-    const footerClassNames = classNames(styles.siteFooter, {[styles.fullscreen]: this.props.fullScreen})
+    const footerClassNames = classNames(styles.siteFooter, {
+      [styles.fullscreen]: this.props.fullScreen
+    })
     const fullVersion = `${version}+${versionMeta}`
 
     return (

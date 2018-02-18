@@ -9,7 +9,7 @@ class ExternalLink extends Component {
 
     return (
       <a {...aProps} target='_blank' rel='noopener noreferrer'>
-        <span className={styles.newWindow}>opens in new window</span>
+        <div className={styles.newWindow}>opens in new window</div>
         {this.props.children}
       </a>
     )

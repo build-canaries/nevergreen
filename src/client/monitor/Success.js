@@ -3,13 +3,12 @@ import PropTypes from 'prop-types'
 import Message from './SuccessMessage'
 import Image from './SuccessImage'
 import _ from 'lodash'
+import {randomFrom} from '../common/Utils'
 
 class Success extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      message: props.messages[Math.floor(Math.random() * props.messages.length)]
-    }
+    this.state = {message: randomFrom(props.messages)}
   }
 
   render() {

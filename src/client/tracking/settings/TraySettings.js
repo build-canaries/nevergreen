@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import Input from '../../common/forms/Input'
 import DropDown from '../../common/forms/DropDown'
@@ -147,10 +147,10 @@ class TraySettings extends Component {
           password
         </Input>
         {this.state.updatingPassword
-          ? <span>
+          ? <Fragment>
               <button className={styles.cancel} onClick={this.cancel}>cancel</button>
               <button className={styles.update} onClick={this.setPassword}>update password</button>
-            </span>
+            </Fragment>
           : <button className={styles.changePasswordButton} onClick={this.changePassword}>change password</button>
         }
         <div className={styles.dangerZone}>

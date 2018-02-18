@@ -34,8 +34,7 @@ class Refresh extends Component {
           refresh
           <Shortcut hotkeys={[`r ${this.props.index}`]}/>
         </button>
-        <span className={styles.lastFetch}
-              data-locator='refresh-time'>
+        <span className={styles.lastFetch} data-locator='refresh-time'>
           {`projects last refreshed ${this.state.lastFetched}`}
         </span>
       </Fragment>

@@ -3,11 +3,6 @@ import PropTypes from 'prop-types'
 import {debug} from './Logger'
 
 class Timer extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {}
-  }
-
   componentDidMount() {
     const run = () => {
       this.timeoutId = setTimeout(run, this.props.interval * 1000)

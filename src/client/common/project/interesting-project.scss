@@ -35,11 +35,19 @@
   vertical-align: middle;
 }
 
+.name,
+.stage,
+.projectName {
+  display: inline;
+}
+
 .timeBroken {
+  display: inline;
   font-style: italic;
   opacity: 0.5;
 }
 
 .buildLabel {
+  display: inline;
   opacity: 0.3;
 }

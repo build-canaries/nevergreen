@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import {debug, warn} from '../Logger'
 
-const MIN_FONT_SIZE = 10
+export const MIN_FONT_SIZE = 10
 const PADDING_CHARS = 2 // 1em = 2 characters
 
 function paddingPixels(fontSize) {
@@ -33,8 +33,6 @@ function linesRequired(sentence, widthPixels, charWidthScale, fontSize) {
     }
     currentLinePosition += wordLength(word) + spaceLength
   })
-
-  debug(`[${lineNumber}] lines for sentence [${sentence}] at fontSize [${fontSize}px] for actual width [${actualWidth}px]`)
 
   return lineNumber
 }

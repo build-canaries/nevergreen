@@ -24,24 +24,25 @@ class InterestingProject extends Component {
     const isSick = this.props.prognosis === 'sick'
 
     const trayName = this.props.showTrayName && !isBlank(this.props.trayName) ?
-      <span data-locator='tray-name'>{this.props.trayName} </span> : null
+      <div className={styles.name} data-locator='tray-name'>{this.props.trayName} </div> : null
 
-    const stage = this.props.stage ? <span data-locator='project-stage'> {this.props.stage}</span> : null
+    const stage = this.props.stage ?
+      <div className={styles.stage} data-locator='project-stage'> {this.props.stage}</div> : null
 
     const timeBrokenLabel = isBlank(this.props.lastBuildTime) ? '??' : shorten(distanceInWordsToNow(this.props.lastBuildTime))
 
     const timeBroken = this.props.showBrokenBuildTimers && isSick ?
-      <span className={styles.timeBroken} data-locator='time-broken'> {timeBrokenLabel}</span> : null
+      <div className={styles.timeBroken} data-locator='time-broken'> {timeBrokenLabel}</div> : null
 
     const buildLabel = this.props.showBuildLabel && isSick && !isBlank(this.props.lastBuildLabel) ?
-      <span className={styles.buildLabel}
-            data-locator='build-label'> #{this.props.lastBuildLabel.substr(0, 10)}</span> : null
+      <div className={styles.buildLabel}
+           data-locator='build-label'> #{this.props.lastBuildLabel.substr(0, 10)}</div> : null
 
     return (
       <div className={classes} data-locator='interesting-project'>
         <div className={styles.inner}>
           {trayName}
-          <span data-locator='project-name'>{this.props.name}</span>
+          <div className={styles.projectName} data-locator='project-name'>{this.props.name}</div>
           {stage}
           {timeBroken}
           {buildLabel}

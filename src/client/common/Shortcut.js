@@ -4,14 +4,20 @@ import Mousetrap from 'mousetrap'
 import _ from 'lodash'
 
 function click(parent) {
-  parent.focus()
-  parent.click()
+  if (parent) {
+    parent.focus()
+    parent.click()
+  }
   return false
 }
 
 class Shortcut extends Component {
+  setParentNode = (node) => {
+    this.parentNode = _.isNil(node) ? null : node
+  }
+
   componentDidMount() {
-    Mousetrap.bind(this.props.hotkeys, () => click(this.node.parentNode))
+    Mousetrap.bind(this.props.hotkeys, () => click(this.parentNode))
   }
 
   componentWillUnmount() {
@@ -21,12 +27,12 @@ class Shortcut extends Component {
   componentWillReceiveProps(nextProps) {
     if (!_.isEqual(this.props.hotkeys, nextProps.hotkeys)) {
       Mousetrap.unbind(this.props.hotkeys)
-      Mousetrap.bind(nextProps.hotkeys, () => click(this.node.parentNode))
+      Mousetrap.bind(nextProps.hotkeys, () => click(this.parentNode))
     }
   }
 
   render() {
-    return <span ref={(node) => this.node = node}/>
+    return <span ref={this.setParentNode}/>
   }
 }
 

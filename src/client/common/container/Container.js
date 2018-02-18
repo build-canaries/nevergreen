@@ -24,7 +24,7 @@ class Container extends Component {
 
   componentDidMount() {
     if (this.props.highlight) {
-      this.node.scrollIntoView(true)
+      this.containerNode.scrollIntoView(true)
     }
   }
 
@@ -37,7 +37,7 @@ class Container extends Component {
     const label = `${this.state.hidden ? 'show' : 'hide'} section ${this.props.title}`
 
     return (
-      <section className={styles.container} ref={(node) => this.node = node}>
+      <section className={styles.container} ref={(node) => this.containerNode = node}>
         <div className={titleBarClasses}
              title={label}
              onClick={this.toggleHidden}

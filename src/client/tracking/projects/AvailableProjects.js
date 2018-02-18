@@ -9,14 +9,16 @@ import _ from 'lodash'
 import styles from './available-projects.scss'
 import {isBlank} from '../../common/Utils'
 
+const DEFAULT_STATE = {
+  filter: null,
+  filterErrors: null,
+  disableButtons: false
+}
+
 class AvailableProjects extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      filter: null,
-      filterErrors: null,
-      disableButtons: false
-    }
+    this.state = {...DEFAULT_STATE}
   }
 
   includeAll = () => {
@@ -33,11 +35,15 @@ class AvailableProjects extends Component {
 
   updateFilter = (evt) => {
     if (isBlank(evt.target.value)) {
-      this.setState({filter: null, filterErrors: null, disableButtons: false})
+      this.setState({...DEFAULT_STATE})
     } else {
       try {
         const regEx = new RegExp(evt.target.value)
-        this.setState({filter: regEx, filterErrors: null, disableButtons: true})
+        this.setState({
+          filter: regEx,
+          filterErrors: null,
+          disableButtons: true
+        })
       } catch (e) {
         this.setState({filterErrors: [`Project filter not applied, ${e.message}`]})
       }

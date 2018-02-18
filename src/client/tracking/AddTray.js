@@ -3,15 +3,21 @@ import PropTypes from 'prop-types'
 import Input from '../common/forms/Input'
 import styles from './add-tray.scss'
 
+const DEFAULT_STATE = {
+  url: '',
+  username: '',
+  password: ''
+}
+
 class AddTray extends Component {
   constructor(props) {
     super(props)
-    this.state = {url: '', username: '', password: ''}
+    this.state = {...DEFAULT_STATE}
   }
 
   addTray = () => {
     this.props.addTray(this.state.url, this.state.username, this.state.password, this.props.existingTrayIds)
-    this.setState({url: '', username: '', password: ''})
+    this.setState({...DEFAULT_STATE})
   }
 
   updateUrl = (evt) => {

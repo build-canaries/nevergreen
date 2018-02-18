@@ -11,13 +11,13 @@ class FontMetrics extends Component {
   }
 
   componentDidMount() {
-    this.width = this.measure.offsetWidth / fontMeasureSize
-    this.height = this.measure.offsetHeight / fontMeasureSize
+    this.width = this.measureNode.offsetWidth / fontMeasureSize
+    this.height = this.measureNode.offsetHeight / fontMeasureSize
   }
 
   render() {
     const style = {fontSize: `${fontMeasureSize}px`}
-    return <span className={styles.body} style={style} ref={(node) => this.measure = node}>a</span>
+    return <span className={styles.body} style={style} ref={(node) => this.measureNode = node}>a</span>
   }
 }
 

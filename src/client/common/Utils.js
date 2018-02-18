@@ -27,3 +27,7 @@ export function friendlyFormatDuration(seconds) {
 export function now() {
   return format(new Date())
 }
+
+export function randomFrom(arr) {
+  return arr[Math.floor(Math.random() * arr.length)]
+}
