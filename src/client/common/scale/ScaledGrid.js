@@ -5,6 +5,7 @@ import {ideal, MIN_FONT_SIZE} from './ScaleText'
 import FontMetrics from './FontMetrics'
 import _ from 'lodash'
 import styles from './scaled-grid.scss'
+import {VISUALLY_HIDDEN_ATTRIBUTE} from '../VisuallyHidden'
 
 // These need to match those in the CSS
 const TABLET_BREAKPOINT = 768
@@ -59,6 +60,19 @@ function calculateChildDimensions(listNode, fontMetrics, childrenText) {
   return {childWidth, childHeight, fontSize}
 }
 
+function getVisibleChildren(node) {
+  if (node.hasChildNodes()) {
+    return _.flatten([...node.childNodes]
+      .filter((node) => node.nodeName === '#text' || !node.hasAttribute(VISUALLY_HIDDEN_ATTRIBUTE))
+      .map(getVisibleChildren))
+  }
+  return node
+}
+
+function getVisibleText(node) {
+  return getVisibleChildren(node).map((n) => n.textContent).join('')
+}
+
 class ScaledGrid extends Component {
   constructor(props) {
     super(props)
@@ -72,6 +86,14 @@ class ScaledGrid extends Component {
 
   calculate = () => {
     this.setState(calculateChildDimensions(this.listNode, this.fontMetrics, this.childrenText))
+  }
+
+  getTextContent = (childNode, index) => {
+    if (childNode) {
+      this.childrenText[index] = getVisibleText(childNode)
+    } else {
+      _.remove(this.childrenText, (v, i) => i === index)
+    }
   }
 
   componentDidMount() {
@@ -99,14 +121,13 @@ class ScaledGrid extends Component {
         <ul className={styles.scaledGrid} ref={(node) => this.listNode = node}>
           {
             Children.map(this.props.children, (child, index) => {
-              const getTextContent = (node) => {
-                if (node) {
-                  this.childrenText[index] = node.textContent
-                } else {
-                  _.remove(this.childrenText, (v, i) => i === index)
-                }
-              }
-              return <li className={styles.item} ref={getTextContent} style={style}>{child}</li>
+              return (
+                <li className={styles.item}
+                    ref={(node) => this.getTextContent(node, index)}
+                    style={style}>
+                  {child}
+                </li>
+              )
             })
           }
         </ul>
