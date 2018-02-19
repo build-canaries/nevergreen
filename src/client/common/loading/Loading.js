@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import styles from './loading.scss'
+import VisuallyHidden from '../VisuallyHidden'
 
 class Loading extends Component {
   render() {
@@ -13,10 +14,10 @@ class Loading extends Component {
              role='alertdialog'
              aria-busy='true'
              aria-live='assertive'>
-          <span className={styles.loadingText}>loading</span>
-          <span className={styles.pulse}/>
-          <span className={styles.pulse}/>
-          <span className={styles.pulse}/>
+          <VisuallyHidden>loading</VisuallyHidden>
+          <span className={styles.pulse} aria-hidden='true'/>
+          <span className={styles.pulse} aria-hidden='true'/>
+          <span className={styles.pulse} aria-hidden='true'/>
         </div>
       )
     }

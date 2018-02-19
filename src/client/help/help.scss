@@ -17,10 +17,6 @@
   }
 }
 
-.title {
-  @extend %visuallyHidden;
-}
-
 .exampleTray {
   font-family: $monospace-font;
   word-break: break-all;

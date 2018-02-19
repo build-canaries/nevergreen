@@ -1,4 +1,4 @@
-import {proxyquire} from '../TestUtils'
+import {withMockedImports} from '../TestUtils'
 import {before, beforeEach, describe, it} from 'mocha'
 import {expect} from 'chai'
 import sinon from 'sinon'
@@ -11,7 +11,7 @@ describe('MonitorActionCreators', function () {
   before(function () {
     ProjectsGateway = {}
     Gateway = {}
-    MonitorActions = proxyquire('../../src/client/actions/MonitorActionCreators', {
+    MonitorActions = withMockedImports('client/actions/MonitorActionCreators', {
       '../common/gateways/ProjectsGateway': ProjectsGateway,
       '../common/gateways/Gateway': Gateway
     })

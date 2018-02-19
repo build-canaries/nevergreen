@@ -1,10 +1,5 @@
 @import '../common/layout';
-@import '../common/accessibility';
 
 .tracking {
   @extend %mainSection;
-}
-
-.title {
-  @extend %visuallyHidden;
 }

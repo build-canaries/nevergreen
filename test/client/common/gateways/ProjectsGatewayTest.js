@@ -1,4 +1,4 @@
-import {proxyquire} from '../../TestUtils'
+import {withMockedImports} from '../../TestUtils'
 import {before, beforeEach, describe, it} from 'mocha'
 import {expect} from 'chai'
 import sinon from 'sinon'
@@ -9,7 +9,7 @@ describe('projects gateway', function () {
 
   before(() => {
     Gateway = {}
-    ProjectsGateway = proxyquire('../../src/client/common/gateways/ProjectsGateway', {'./Gateway': Gateway})
+    ProjectsGateway = withMockedImports('client/common/gateways/ProjectsGateway', {'./Gateway': Gateway})
   })
 
   beforeEach(() => {

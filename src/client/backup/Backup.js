@@ -4,12 +4,15 @@ import Schema from './Schema'
 import ImportContainer from './import/ImportContainer'
 import ExportContainer from './export/ExportContainer'
 import styles from './backup.scss'
+import VisuallyHidden from '../common/VisuallyHidden'
 
 class Backup extends Component {
   render() {
     return (
       <section className={styles.backup}>
-        <h2 className={styles.title}>Backup</h2>
+        <VisuallyHidden>
+          <h2>Backup</h2>
+        </VisuallyHidden>
         <ImportContainer/>
         <ExportContainer/>
         <Schema schema={this.props.schema}/>

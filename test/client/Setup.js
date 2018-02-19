@@ -5,7 +5,6 @@ const sinonChai = require('sinon-chai')
 const chaiImmutable = require('chai-immutable')
 const chaiEnzyme = require('chai-enzyme')
 const ignore = require('ignore-styles')
-const sinon = require('sinon')
 const Enzyme = require('enzyme')
 const Adapter = require('enzyme-adapter-react-16')
 
@@ -20,10 +19,6 @@ chai.use(chaiImmutable)
 chai.use(dirtyChai)
 chai.use(sinonChai)
 chai.use(chaiEnzyme())
-
-// Set up default functions for timeouts
-global.setTimeout = sinon.stub().returns('timer-id')
-global.clearTimeout = sinon.spy()
 
 // Set up an in memory DOM for React tests that need to mount
 const {JSDOM} = jsdom

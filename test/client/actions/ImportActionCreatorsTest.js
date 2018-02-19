@@ -1,4 +1,4 @@
-import {proxyquire} from '../TestUtils'
+import {withMockedImports} from '../TestUtils'
 import {before, beforeEach, describe, it} from 'mocha'
 import {expect} from 'chai'
 import Immutable from 'immutable'
@@ -14,7 +14,7 @@ describe('ImportActionCreators', function () {
     Migrations = {}
     Gateway = {}
     GitHubGateway = {}
-    ImportActions = proxyquire('../../src/client/actions/ImportActionCreators', {
+    ImportActions = withMockedImports('client/actions/ImportActionCreators', {
       '../common/repo/LocalRepository': LocalRepository,
       '../common/repo/Data': Data,
       '../common/repo/Migrations': Migrations,

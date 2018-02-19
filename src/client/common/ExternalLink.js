@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import styles from './external-link.scss'
+import VisuallyHidden from './VisuallyHidden'
 
 class ExternalLink extends Component {
   render() {
@@ -9,7 +9,7 @@ class ExternalLink extends Component {
 
     return (
       <a {...aProps} target='_blank' rel='noopener noreferrer'>
-        <div className={styles.newWindow}>opens in new window</div>
+        <VisuallyHidden>opens in new window </VisuallyHidden>
         {this.props.children}
       </a>
     )

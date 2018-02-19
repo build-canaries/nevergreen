@@ -3,7 +3,7 @@ import {encryptPassword as encrypt} from '../common/gateways/SecurityGateway'
 import {fetchAll} from '../common/gateways/ProjectsGateway'
 import {send} from '../common/gateways/Gateway'
 import {isBlank, now} from '../common/Utils'
-import {generateRandomName} from '../common/project/Name'
+import {generateRandomName} from '../domain/Tray'
 import _ from 'lodash'
 import {
   ENCRYPTING_PASSWORD,

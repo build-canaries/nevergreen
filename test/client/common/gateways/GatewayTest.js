@@ -1,5 +1,5 @@
-import {proxyquire} from '../../TestUtils'
-import {before, beforeEach, describe, it} from 'mocha'
+import {withMockedImports} from '../../TestUtils'
+import {before, describe, it} from 'mocha'
 import {expect} from 'chai'
 
 describe('gateway', function () {
@@ -8,10 +8,7 @@ describe('gateway', function () {
 
   before(() => {
     superagent = {}
-    Gateway = proxyquire('../../src/client/common/gateways/Gateway', {superagent})
-  })
-
-  beforeEach(() => {
+    Gateway = withMockedImports('client/common/gateways/Gateway', {superagent})
   })
 
   describe('fake response', function () {

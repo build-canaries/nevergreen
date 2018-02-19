@@ -1,4 +1,4 @@
-import {proxyquire} from '../TestUtils'
+import {withMockedImports} from '../TestUtils'
 import {before, beforeEach, describe, it} from 'mocha'
 import {expect} from 'chai'
 import sinon from 'sinon'
@@ -16,7 +16,7 @@ describe('NevergreenActionCreators', function () {
   before(function () {
     LocalRepository = {}
     Migrations = {}
-    NevergreenActions = proxyquire('../../src/client/actions/NevergreenActionCreators', {
+    NevergreenActions = withMockedImports('client/actions/NevergreenActionCreators', {
       '../common/repo/LocalRepository': LocalRepository,
       '../common/repo/Migrations': Migrations
     })

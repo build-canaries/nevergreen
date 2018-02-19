@@ -4,6 +4,7 @@ import AddedMessages from './AddedMessages'
 import AddedImages from './AddedImages'
 import AddMessage from './AddMessage'
 import styles from './success.scss'
+import VisuallyHidden from '../common/VisuallyHidden'
 
 class Success extends Component {
   render() {
@@ -12,7 +13,9 @@ class Success extends Component {
 
     return (
       <section className={styles.success}>
-        <h2 className={styles.title}>Success</h2>
+        <VisuallyHidden>
+          <h2>Success</h2>
+        </VisuallyHidden>
         <AddMessage addMessage={this.props.addMessage}/>
         <AddedMessages messages={messages} removeMessage={this.props.removeMessage}/>
         <AddedImages urls={images} removeMessage={this.props.removeMessage}/>

@@ -1,4 +1,4 @@
-import {proxyquire} from '../TestUtils'
+import {withMockedImports} from '../TestUtils'
 import {before, beforeEach, describe, it} from 'mocha'
 import {expect} from 'chai'
 import sinon from 'sinon'
@@ -11,7 +11,7 @@ describe('ExportActionCreators', function () {
     Gateway = {}
     GitHubGateway = {}
     GitHubActions = {}
-    ExportActions = proxyquire('../../src/client/actions/ExportActionCreators', {
+    ExportActions = withMockedImports('client/actions/ExportActionCreators', {
       '../common/gateways/Gateway': Gateway,
       '../common/gateways/GitHubGateway': GitHubGateway,
       './GitHubActionCreators': GitHubActions

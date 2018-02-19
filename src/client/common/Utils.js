@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import format from 'date-fns/format'
+import subSeconds from 'date-fns/sub_seconds'
 
 const ONE_MINUTE_IN_SECONDS = 60
 const ONE_HOUR_IN_SECONDS = 3600
@@ -26,6 +27,10 @@ export function friendlyFormatDuration(seconds) {
 
 export function now() {
   return format(new Date())
+}
+
+export function randomDateInPast(seconds = ONE_DAY_IN_SECONDS) {
+  return format(subSeconds(now(), _.random(0, seconds)))
 }
 
 export function randomFrom(arr) {

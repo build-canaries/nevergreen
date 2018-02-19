@@ -1,4 +1,4 @@
-import React, {Children, Component} from 'react'
+import React, {Children, Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import Resizable from '../Resizable'
 import {ideal, MIN_FONT_SIZE} from './ScaleText'
@@ -94,7 +94,7 @@ class ScaledGrid extends Component {
     }
 
     return (
-      <span>
+      <Fragment>
         <FontMetrics ref={(node) => this.fontMetrics = node}/>
         <ul className={styles.scaledGrid} ref={(node) => this.listNode = node}>
           {
@@ -111,7 +111,7 @@ class ScaledGrid extends Component {
           }
         </ul>
         <Resizable onResize={this.calculate}/>
-      </span>
+      </Fragment>
     )
   }
 }

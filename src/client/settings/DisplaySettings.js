@@ -4,8 +4,8 @@ import Container from '../common/container/Container'
 import Checkbox from '../common/forms/Checkbox'
 import ScaledGrid from '../common/scale/ScaledGrid'
 import InterestingProject from '../common/project/InterestingProject'
-import format from 'date-fns/format'
-import {generateRandomName} from '../common/project/Name'
+import {randomDateInPast} from '../common/Utils'
+import {generateRandomName} from '../domain/Tray'
 import _ from 'lodash'
 import styles from './display-settings.scss'
 
@@ -16,7 +16,7 @@ function randomBuildLabel() {
 class DisplaySettings extends Component {
   constructor(props) {
     super(props)
-    this.state = {lastBuildTime: format(new Date())}
+    this.state = {lastBuildTime: randomDateInPast()}
   }
 
   toggleBrokenBuildTime = (newValue) => {
@@ -52,40 +52,42 @@ class DisplaySettings extends Component {
             show broken build label
           </Checkbox>
         </div>
-        <h4 className={styles.title}>Preview</h4>
-        <div className={styles.displayPreview}>
-          <ScaledGrid>
-            <InterestingProject trayName={generateRandomName()}
-                                name='sick'
-                                prognosis='sick'
-                                lastBuildTime={this.state.lastBuildTime}
-                                lastBuildLabel={randomBuildLabel()}
-                                showBrokenBuildTimers={this.props.showBrokenBuildTime}
-                                showTrayName={this.props.showTrayName}
-                                showBuildLabel={this.props.showBuildLabel}/>
-            <InterestingProject trayName={generateRandomName()}
-                                name='sick building'
-                                prognosis='sick-building'
-                                lastBuildLabel={randomBuildLabel()}
-                                showBrokenBuildTimers={this.props.showBrokenBuildTime}
-                                showTrayName={this.props.showTrayName}
-                                showBuildLabel={this.props.showBuildLabel}/>
-            <InterestingProject trayName={generateRandomName()}
-                                name='healthy building'
-                                prognosis='healthy-building'
-                                lastBuildLabel={randomBuildLabel()}
-                                showBrokenBuildTimers={this.props.showBrokenBuildTime}
-                                showTrayName={this.props.showTrayName}
-                                showBuildLabel={this.props.showBuildLabel}/>
-            <InterestingProject trayName={generateRandomName()}
-                                name='unknown'
-                                prognosis='unknown'
-                                lastBuildLabel={randomBuildLabel()}
-                                showBrokenBuildTimers={this.props.showBrokenBuildTime}
-                                showTrayName={this.props.showTrayName}
-                                showBuildLabel={this.props.showBuildLabel}/>
-          </ScaledGrid>
-        </div>
+        <section>
+          <h4 className={styles.title}>Preview</h4>
+          <div className={styles.displayPreview}>
+            <ScaledGrid>
+              <InterestingProject trayName={generateRandomName()}
+                                  name='sick'
+                                  prognosis='sick'
+                                  lastBuildTime={this.state.lastBuildTime}
+                                  lastBuildLabel={randomBuildLabel()}
+                                  showBrokenBuildTimers={this.props.showBrokenBuildTime}
+                                  showTrayName={this.props.showTrayName}
+                                  showBuildLabel={this.props.showBuildLabel}/>
+              <InterestingProject trayName={generateRandomName()}
+                                  name='sick building'
+                                  prognosis='sick-building'
+                                  lastBuildLabel={randomBuildLabel()}
+                                  showBrokenBuildTimers={this.props.showBrokenBuildTime}
+                                  showTrayName={this.props.showTrayName}
+                                  showBuildLabel={this.props.showBuildLabel}/>
+              <InterestingProject trayName={generateRandomName()}
+                                  name='healthy building'
+                                  prognosis='healthy-building'
+                                  lastBuildLabel={randomBuildLabel()}
+                                  showBrokenBuildTimers={this.props.showBrokenBuildTime}
+                                  showTrayName={this.props.showTrayName}
+                                  showBuildLabel={this.props.showBuildLabel}/>
+              <InterestingProject trayName={generateRandomName()}
+                                  name='unknown'
+                                  prognosis='unknown'
+                                  lastBuildLabel={randomBuildLabel()}
+                                  showBrokenBuildTimers={this.props.showBrokenBuildTime}
+                                  showTrayName={this.props.showTrayName}
+                                  showBuildLabel={this.props.showBuildLabel}/>
+            </ScaledGrid>
+          </div>
+        </section>
       </Container>
     )
   }

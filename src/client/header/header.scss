@@ -20,14 +20,6 @@
   display: none;
 }
 
-.title {
-  @extend %visuallyHidden;
-}
-
-.subTitle {
-  @extend %visuallyHidden;
-}
-
 .logo {
   display: none;
   height: 55px;

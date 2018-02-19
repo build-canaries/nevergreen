@@ -5,6 +5,7 @@ import styles from './header.scss'
 import logo from './buildcanaries-logo.png'
 import {NavLink} from 'react-router-dom'
 import Shortcut from '../common/Shortcut'
+import VisuallyHidden from '../common/VisuallyHidden'
 
 const MENU_ITEMS = [
   {id: 'monitor', title: 'monitor', shortcuts: ['m', '1']},
@@ -44,10 +45,11 @@ class Header extends Component {
 
     return (
       <header role='banner' className={headerClassNames}>
-        <h1 className={styles.title}>Nevergreen</h1>
-        <img src={logo} className={styles.logo} alt='Build Canaries'/>
+        <VisuallyHidden>
+          <h1>Nevergreen</h1>
+        </VisuallyHidden>
+        <img src={logo} className={styles.logo} alt='Nevergreen' aria-hidden='true'/>
         <nav role='navigation' className={styles.siteMenu}>
-          <h2 className={styles.subTitle}>Site menu</h2>
           <button className={styles.siteMenuToggle}
                   onClick={this.toggleMenu}
                   aria-label={toggleLabel}

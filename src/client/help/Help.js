@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Container from '../common/container/Container'
 import styles from './help.scss'
 import ExternalLink from '../common/ExternalLink'
+import VisuallyHidden from '../common/VisuallyHidden'
 
 class Help extends Component {
   componentWillUnmount() {
@@ -12,7 +13,9 @@ class Help extends Component {
   render() {
     return (
       <section className={styles.help}>
-        <h2 className={styles.title}>Help</h2>
+        <VisuallyHidden>
+          <h2>Help</h2>
+        </VisuallyHidden>
 
         <Container title='tracking' className={styles.container}>
           <p>You can find your CCTray XML at these locations for different CI servers</p>

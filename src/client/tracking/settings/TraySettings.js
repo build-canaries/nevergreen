@@ -2,7 +2,7 @@ import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import Input from '../../common/forms/Input'
 import DropDown from '../../common/forms/DropDown'
-import {generateRandomName} from '../../common/project/Name'
+import {generateRandomName} from '../../domain/Tray'
 import styles from './tray-settings.scss'
 
 class TraySettings extends Component {

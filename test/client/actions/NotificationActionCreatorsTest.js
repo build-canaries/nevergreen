@@ -1,4 +1,4 @@
-import {proxyquire} from '../TestUtils'
+import {withMockedImports} from '../TestUtils'
 import {before, beforeEach, describe, it} from 'mocha'
 import {expect} from 'chai'
 import sinon from 'sinon'
@@ -10,7 +10,7 @@ describe('NotificationActionCreators', function () {
   before(function () {
     Gateway = {}
     semver = {}
-    NotificationActions = proxyquire('../../src/client/actions/NotificationActionCreators', {
+    NotificationActions = withMockedImports('client/actions/NotificationActionCreators', {
       '../common/gateways/Gateway': Gateway,
       semver
     })
