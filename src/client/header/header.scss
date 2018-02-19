@@ -106,6 +106,10 @@
   text-decoration: none;
   text-transform: uppercase;
 
+  &:visited {
+    color: $mid-grey;
+  }
+
   &:not(.active) {
     @include interactive($white, $off-black, $off-black);
   }
@@ -126,7 +130,7 @@
 .active {
   color: $white;
 
-  .menuIcon {
+  &:visited {
     color: $white;
   }
 
