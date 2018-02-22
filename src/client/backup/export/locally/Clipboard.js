@@ -25,11 +25,15 @@ class ClipboardComponent extends Component {
     if (this.state.clipboard) {
       this.state.clipboard.destroy()
     }
-    createClipboard(nextProps.elementSelector, nextProps.onSuccess, nextProps.onError)
+    this.setState({
+      clipboard: createClipboard(nextProps.elementSelector, nextProps.onSuccess, nextProps.onError)
+    })
   }
 
   componentDidMount() {
-    this.setState({clipboard: createClipboard(this.props.elementSelector, this.props.onSuccess, this.props.onError)})
+    this.setState({
+      clipboard: createClipboard(this.props.elementSelector, this.props.onSuccess, this.props.onError)
+    })
   }
 
   componentWillUnmount() {
