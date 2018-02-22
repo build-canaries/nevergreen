@@ -1,18 +1,19 @@
-import React, {Component} from 'react'
+import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import TimingSettings from './TimingSettings'
 import DisplaySettings from './DisplaySettings'
 import AudioSettings from './AudioSettings'
-import styles from './settings.scss'
+import Title from '../common/Title'
 
 class Settings extends Component {
   render() {
     return (
-      <section className={styles.settings}>
+      <Fragment>
+        <Title>Settings</Title>
         <TimingSettings {...this.props}/>
         <DisplaySettings {...this.props}/>
         <AudioSettings {...this.props}/>
-      </section>
+      </Fragment>
     )
   }
 }

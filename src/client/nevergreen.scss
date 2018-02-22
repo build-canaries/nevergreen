@@ -1,7 +1,22 @@
 @import 'defaults';
+@import './common/variables';
+@import './common/responsive';
 
 .nevergreen {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+}
+
+.main {
+  flex: 1;
+  padding: 1em;
+
+  @include respond-to(tablet, desktop) {
+    padding: 2em;
+  }
+
+  &.active {
+    display: block;
+  }
 }

@@ -57,15 +57,17 @@ class Nevergreen extends Component {
 
   render() {
     return (
-      <main className={styles.nevergreen} onMouseMove={this.disableFullScreen}>
+      <div className={styles.nevergreen}
+           onMouseMove={this.disableFullScreen}
+           aria-busy={!this.props.loaded}>
         <Timer onTrigger={this.checkVersion} interval={TWENTY_FOUR_HOURS}/>
         <Header fullScreen={this.props.isFullScreen}/>
         <Notification notification={this.props.notification}
                       dismiss={this.props.dismiss}
                       fullScreen={this.props.isFullScreen}/>
-        {this.props.loaded && this.props.children}
+        {this.props.loaded && <main className={styles.main}>{this.props.children}</main>}
         <Footer fullScreen={this.props.isFullScreen}/>
-      </main>
+      </div>
     )
   }
 

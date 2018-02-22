@@ -6,7 +6,7 @@ import styles from './schema.scss'
 class Schema extends Component {
   render() {
     return (
-      <Container title='schema' hidden={true} className={styles.container}>
+      <Container title='Schema' hidden className={styles.container}>
         <pre className={styles.schema}>{this.props.schema}</pre>
       </Container>
     )

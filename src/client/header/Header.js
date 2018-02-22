@@ -6,6 +6,7 @@ import logo from './buildcanaries-logo.png'
 import {NavLink} from 'react-router-dom'
 import Shortcut from '../common/Shortcut'
 import VisuallyHidden from '../common/VisuallyHidden'
+import Title from '../common/Title'
 
 const MENU_ITEMS = [
   {id: 'monitor', title: 'monitor', shortcuts: ['m', '1']},
@@ -45,16 +46,15 @@ class Header extends Component {
 
     return (
       <header role='banner' className={headerClassNames}>
-        <VisuallyHidden>
-          <h1>Nevergreen</h1>
-        </VisuallyHidden>
-        <img src={logo} className={styles.logo} alt='Nevergreen' aria-hidden='true'/>
+        <VisuallyHidden><h1>Nevergreen</h1></VisuallyHidden>
+        <img src={logo} className={styles.logo} alt='Nevergreen' aria-hidden/>
         <nav role='navigation' className={styles.siteMenu}>
+          <Title>Site navigation</Title>
           <button className={styles.siteMenuToggle}
                   onClick={this.toggleMenu}
                   aria-label={toggleLabel}
                   aria-expanded={this.state.menuVisible}>
-            <i className={iconClassNames}/>
+            <span className={iconClassNames}/>
           </button>
           <ul className={menuClassNames}>
             {
@@ -68,8 +68,8 @@ class Header extends Component {
                              activeClassName={styles.active}
                              onClick={this.hideMenu}
                              data-locator={`menu-${item.id}`}>
-                      <i className={iconClasses}/>
-                      <span className={styles.menuTitle}>{item.title}</span>
+                      <span className={iconClasses}/>
+                      <div className={styles.menuTitle}>{item.title}</div>
                       <Shortcut hotkeys={item.shortcuts}/>
                     </NavLink>
                   </li>

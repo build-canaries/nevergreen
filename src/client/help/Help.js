@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Container from '../common/container/Container'
 import styles from './help.scss'
 import ExternalLink from '../common/ExternalLink'
-import VisuallyHidden from '../common/VisuallyHidden'
+import Title from '../common/Title'
 
 class Help extends Component {
   componentWillUnmount() {
@@ -12,12 +12,10 @@ class Help extends Component {
 
   render() {
     return (
-      <section className={styles.help}>
-        <VisuallyHidden>
-          <h2>Help</h2>
-        </VisuallyHidden>
+      <div className={styles.help}>
+        <Title>Help</Title>
 
-        <Container title='tracking' className={styles.container}>
+        <Container title='Tracking' className={styles.container}>
           <p>You can find your CCTray XML at these locations for different CI servers</p>
           <table className={styles.helpShortcutTable}>
             <thead>
@@ -44,7 +42,7 @@ class Help extends Component {
           <p className={styles.exampleTray}>https://builds.apache.org/cc.xml</p>
         </Container>
 
-        <Container title='success' className={styles.container}>
+        <Container title='Success' className={styles.container}>
           <p>You can add text or image URLs, these will get displayed when no projects are broken or building on the monitor page. Images are previewed in a 16:9 ratio which is how they would look on a full HD TV (1920x1080).</p>
           <p>Need some inspiration?</p>
           <p>Try searching for some <ExternalLink href='https://duckduckgo.com/?q=nature+1920x1080&iax=1&ia=images'>nice images</ExternalLink> or checkout <ExternalLink href='http://www.disapprovallook.com/'>Disapproval Look</ExternalLink> for some fun messages, like jelly guy! ༼ つ◕_◕ ༽つ</p>
@@ -57,7 +55,7 @@ class Help extends Component {
           <p>Importing does not require an access token as even <ExternalLink href='https://help.github.com/articles/about-gists/#secret-gists'>secret Gists are not actually private</ExternalLink>.</p>
         </Container>
 
-        <Container title='keyboard shortcuts' className={styles.keyboardShortcuts} highlight={this.props.showShortcuts}>
+        <Container title='Keyboard shortcuts' className={styles.keyboardShortcuts} highlight={this.props.showShortcuts}>
           <p>The following keyboard shortcuts can be used to:</p>
           <table className={styles.helpShortcutTable}>
             <thead>
@@ -142,17 +140,17 @@ class Help extends Component {
           </table>
         </Container>
 
-        <Container title='additional links' className={styles.container}>
+        <Container title='Additional links' className={styles.container}>
           <p className={styles.github}>The full Nevergreen source is available on <ExternalLink href='https://github.com/build-canaries/nevergreen'>Github</ExternalLink>.</p>
           <p className={styles.twitter}>Follow Build Canaries on <ExternalLink href='https://twitter.com/BuildCanaries'>Twitter</ExternalLink> for news and updates.</p>
         </Container>
 
-        <Container title='licenses' className={styles.container}>
+        <Container title='Licenses' className={styles.container}>
           <p>Nevergreen is open source under the <ExternalLink href='https://spdx.org/licenses/EPL-1.0'>Eclipse Public License 1.0 (EPL-1.0)</ExternalLink> and uses <ExternalLink href='https://dependencyci.com/github/build-canaries/nevergreen'>open source software</ExternalLink>.</p>
           <p>Icons generated using the <ExternalLink href='https://icomoon.io/'>IcoMoon App</ExternalLink> and are licensed under <ExternalLink href='https://www.gnu.org/licenses/gpl.html'>GNU General Public License (GPL)</ExternalLink> / <ExternalLink href='https://creativecommons.org/licenses/by/4.0/'>Creative Commons Attribution 4.0 International (CC BY 4.0)</ExternalLink></p>
           <p><ExternalLink href='http://www.orangefreesounds.com/pacman-death-sound/'>&quot;Pacman Death Sound&quot; by Alexander</ExternalLink> is licensed under <ExternalLink href='https://creativecommons.org/licenses/by-nc/4.0/'>Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)</ExternalLink></p>
         </Container>
-      </section>
+      </div>
     )
   }
 }

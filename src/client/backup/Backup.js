@@ -1,22 +1,19 @@
-import React, {Component} from 'react'
+import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import Schema from './Schema'
 import ImportContainer from './import/ImportContainer'
 import ExportContainer from './export/ExportContainer'
-import styles from './backup.scss'
-import VisuallyHidden from '../common/VisuallyHidden'
+import Title from '../common/Title'
 
 class Backup extends Component {
   render() {
     return (
-      <section className={styles.backup}>
-        <VisuallyHidden>
-          <h2>Backup</h2>
-        </VisuallyHidden>
+      <Fragment>
+        <Title>Backup</Title>
         <ImportContainer/>
         <ExportContainer/>
         <Schema schema={this.props.schema}/>
-      </section>
+      </Fragment>
     )
   }
 }

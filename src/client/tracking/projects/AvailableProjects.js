@@ -8,6 +8,7 @@ import Refresh from './Refresh'
 import _ from 'lodash'
 import styles from './available-projects.scss'
 import {isBlank} from '../../common/Utils'
+import VisuallyHidden from '../../common/VisuallyHidden'
 
 const DEFAULT_STATE = {
   filter: null,
@@ -97,7 +98,7 @@ class AvailableProjects extends Component {
     )
 
     const buildItems = (
-      <ol className={styles.buildItems} aria-live='polite' aria-relevant='additions'>
+      <ol className={styles.buildItems} aria-live='assertive' aria-relevant='additions'>
         {
           _.sortBy(filteredProjects, ['name', 'stage']).map((project) => {
             const selected = this.props.selected.includes(project.projectId)
@@ -114,6 +115,7 @@ class AvailableProjects extends Component {
 
     return (
       <section className={styles.availableProjects} data-locator='available-projects' ref={(node) => this.node = node}>
+        <VisuallyHidden><h4>Available projects</h4></VisuallyHidden>
         <Refresh index={this.props.index} timestamp={this.props.timestamp} refreshTray={this.refreshTray}/>
         <Messages type='error' messages={this.props.errors}/>
         {!this.props.errors && controls}

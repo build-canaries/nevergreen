@@ -5,6 +5,13 @@ import ScaledGrid from '../common/scale/ScaledGrid'
 import InterestingProject from '../common/project/InterestingProject'
 import styles from './interesting-projects.scss'
 import {isBlank} from '../common/Utils'
+import {
+  isSick,
+  PROGNOSIS_HEALTHY_BUILDING,
+  PROGNOSIS_SICK,
+  PROGNOSIS_SICK_BUILDING,
+  PROGNOSIS_UNKNOWN
+} from '../domain/Project'
 
 class InterestingProjects extends Component {
   componentWillUnmount() {
@@ -14,10 +21,10 @@ class InterestingProjects extends Component {
   }
 
   render() {
-    const brokenProject = _.reduce(this.props.projects, (previous, project) => previous || project.prognosis === 'sick', false)
+    const brokenProject = _.reduce(this.props.projects, (previous, project) => previous || isSick(project.prognosis), false)
     const playBrokenSfx = this.props.playBrokenBuildSounds && (brokenProject || !_.isEmpty(this.props.errors))
-    const brokenSfx = playBrokenSfx && !isBlank(this.props.brokenBuildFx) ?
-      <audio ref={(node) => this.sfxNode = node} src={this.props.brokenBuildFx} autoPlay/> : null
+    const brokenSfx = playBrokenSfx && !isBlank(this.props.brokenBuildFx) &&
+      <audio ref={(node) => this.sfxNode = node} src={this.props.brokenBuildFx} autoPlay/>
 
     const errors = _.map(this.props.errors, (error) => {
       return (
@@ -38,10 +45,13 @@ class InterestingProjects extends Component {
     })
 
     return (
-      <span className={styles.interestingProjects} data-locator='interesting-projects'>
+      <div className={styles.interestingProjects}
+           data-locator='interesting-projects'
+           aria-live='assertive'
+           aria-relevant='additions removals'>
         <ScaledGrid>{_.concat(errors, projects)}</ScaledGrid>
         {brokenSfx}
-      </span>
+      </div>
     )
   }
 }
@@ -50,7 +60,12 @@ InterestingProjects.propTypes = {
   projects: PropTypes.arrayOf(PropTypes.shape({
     projectId: PropTypes.string.isRequired,
     trayId: PropTypes.string.isRequired,
-    prognosis: PropTypes.oneOf(['sick', 'healthy-building', 'sick-building', 'unknown']).isRequired
+    prognosis: PropTypes.oneOf([
+      PROGNOSIS_SICK,
+      PROGNOSIS_HEALTHY_BUILDING,
+      PROGNOSIS_SICK_BUILDING,
+      PROGNOSIS_UNKNOWN
+    ]).isRequired
   })),
   trays: PropTypes.arrayOf(PropTypes.shape({
     trayId: PropTypes.string.isRequired,

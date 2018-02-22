@@ -17,7 +17,7 @@ class FontMetrics extends Component {
 
   render() {
     const style = {fontSize: `${fontMeasureSize}px`}
-    return <span className={styles.body} style={style} ref={(node) => this.measureNode = node}>a</span>
+    return <span className={styles.body} style={style} ref={(node) => this.measureNode = node} aria-hidden>a</span>
   }
 }
 

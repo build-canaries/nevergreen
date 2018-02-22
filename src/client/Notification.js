@@ -13,7 +13,7 @@ class Notification extends Component {
     return isBlank(this.props.notification) ? null :
       <section className={notificationClassNames} aria-live='polite'>
         <div className={styles.titleBar}>
-          <h1 className={styles.title}>Notification</h1>
+          <h2 className={styles.title}>Notification</h2>
           <button className={styles.dismiss} onClick={this.props.dismiss}>
             <span>dismiss</span>
           </button>

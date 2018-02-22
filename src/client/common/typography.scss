@@ -21,6 +21,8 @@ h3 {
   @include font-scale(2);
 }
 
-h4 {
+h4,
+h5,
+h6 {
   @include font-scale(1);
 }

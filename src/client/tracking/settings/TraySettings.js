@@ -4,6 +4,7 @@ import Input from '../../common/forms/Input'
 import DropDown from '../../common/forms/DropDown'
 import {generateRandomName} from '../../domain/Tray'
 import styles from './tray-settings.scss'
+import VisuallyHidden from '../../common/VisuallyHidden'
 
 class TraySettings extends Component {
   constructor(props) {
@@ -93,6 +94,7 @@ class TraySettings extends Component {
 
     return (
       <section data-locator='tray-settings'>
+        <VisuallyHidden><h4>Settings</h4></VisuallyHidden>
         <Input className={styles.traySettingsName}
                value={this.state.newName}
                onChange={this.nameChanged}
@@ -148,13 +150,13 @@ class TraySettings extends Component {
         </Input>
         {this.state.updatingPassword
           ? <Fragment>
-              <button className={styles.cancel} onClick={this.cancel}>cancel</button>
-              <button className={styles.update} onClick={this.setPassword}>update password</button>
-            </Fragment>
+            <button className={styles.cancel} onClick={this.cancel}>cancel</button>
+            <button className={styles.update} onClick={this.setPassword}>update password</button>
+          </Fragment>
           : <button className={styles.changePasswordButton} onClick={this.changePassword}>change password</button>
         }
         <div className={styles.dangerZone}>
-          <h4 className={styles.dangerZoneTitle}>Danger Zone</h4>
+          <h5 className={styles.dangerZoneTitle}>Danger Zone</h5>
           <div className={styles.dangerZoneContent}>
             <span>Once you delete, there is no going back. Please be certain.</span>
             <button className={styles.delete} onClick={this.deleteTray}>delete</button>

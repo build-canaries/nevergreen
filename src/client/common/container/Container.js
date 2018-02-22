@@ -47,7 +47,7 @@ class Container extends Component {
              aria-expanded={!this.state.hidden}
              role='button'>
           <h3 className={styles.title}>{this.props.title}</h3>
-          {this.props.subTitle && <h4 className={styles.subTitle}>{this.props.subTitle}</h4>}
+          {this.props.subTitle && <div className={styles.subTitle}>{this.props.subTitle}</div>}
         </div>
         {!this.state.hidden && <div className={this.props.className}>{this.props.children}</div>}
       </section>

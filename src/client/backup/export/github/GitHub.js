@@ -6,7 +6,11 @@ import styles from './github.scss'
 class GitHub extends Component {
   constructor(props) {
     super(props)
-    this.state = {oauthToken: '', gistId: props.gistId, description: props.description}
+    this.state = {
+      oauthToken: '',
+      gistId: props.gistId,
+      description: props.description
+    }
   }
 
   oauthTokenChanged = (evt) => {
@@ -34,7 +38,10 @@ class GitHub extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({gistId: nextProps.gistId, description: nextProps.description})
+    this.setState({
+      gistId: nextProps.gistId,
+      description: nextProps.description
+    })
   }
 
   render() {

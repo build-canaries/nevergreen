@@ -1,10 +1,9 @@
-import React, {Component} from 'react'
+import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import AddedMessages from './AddedMessages'
 import AddedImages from './AddedImages'
 import AddMessage from './AddMessage'
-import styles from './success.scss'
-import VisuallyHidden from '../common/VisuallyHidden'
+import Title from '../common/Title'
 
 class Success extends Component {
   render() {
@@ -12,14 +11,12 @@ class Success extends Component {
     const images = this.props.messages.filter((m) => m.startsWith('http'))
 
     return (
-      <section className={styles.success}>
-        <VisuallyHidden>
-          <h2>Success</h2>
-        </VisuallyHidden>
+      <Fragment>
+        <Title>Success</Title>
         <AddMessage addMessage={this.props.addMessage}/>
         <AddedMessages messages={messages} removeMessage={this.props.removeMessage}/>
         <AddedImages urls={images} removeMessage={this.props.removeMessage}/>
-      </section>
+      </Fragment>
     )
   }
 }

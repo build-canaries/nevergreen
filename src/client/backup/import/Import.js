@@ -9,7 +9,7 @@ import Tabs from '../../common/tabs/Tabs'
 class Import extends Component {
   render() {
     return (
-      <Container title='import'>
+      <Container title='Import'>
         <Tabs titles={['locally', 'GitHub']}>
           <LocallyContainer/>
           <GitHubContainer/>

@@ -12,7 +12,7 @@ class AddedImages extends Component {
     }
 
     return (
-      <Container title='images' className={styles.container}>
+      <Container title='Images' className={styles.container}>
         <ol className={styles.successImages}>
           {
             this.props.urls.map((url, index) => {

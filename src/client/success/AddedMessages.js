@@ -12,7 +12,7 @@ class AddedMessages extends Component {
     }
 
     return (
-      <Container title='messages'>
+      <Container title='Messages'>
         <ol className={styles.successMessages}>
           {
             this.props.messages.map((message, index) => {

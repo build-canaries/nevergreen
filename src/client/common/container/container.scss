@@ -44,6 +44,8 @@
 }
 
 .subTitle {
+  @include font-scale(1);
+
   display: inline-block;
   font-weight: normal;
   padding-left: 1em;

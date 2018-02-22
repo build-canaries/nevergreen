@@ -7,6 +7,7 @@ import Loading from '../common/loading/Loading'
 import styles from './monitor.scss'
 import Timer from '../common/Timer'
 import _ from 'lodash'
+import Title from '../common/Title'
 
 class Monitor extends Component {
   fetch = () => {
@@ -22,7 +23,9 @@ class Monitor extends Component {
   }
 
   render() {
-    const monitorClassNames = classNames(styles.monitor, {[styles.fullscreen]: this.props.isFullScreen})
+    const monitorClassNames = classNames(styles.monitor, {
+      [styles.fullscreen]: this.props.isFullScreen
+    })
 
     let content
 
@@ -33,7 +36,8 @@ class Monitor extends Component {
     }
 
     return (
-      <div className={monitorClassNames} aria-live='polite' aria-relevant='additions removals'>
+      <div className={monitorClassNames}>
+        <Title>Monitor</Title>
         <Timer onTrigger={this.fetch} interval={this.props.refreshTime}/>
         <Loading loaded={this.props.loaded}>
           {content}

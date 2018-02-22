@@ -1,20 +1,17 @@
-import React, {Component} from 'react'
+import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import AddTray from './AddTray'
 import TrayContainer from './tray/TrayContainer'
-import styles from './tracking.scss'
-import VisuallyHidden from '../common/VisuallyHidden'
+import Title from '../common/Title'
 
 class Tracking extends Component {
   render() {
     return (
-      <section className={styles.tracking}>
-        <VisuallyHidden>
-          <h2>Tracking</h2>
-        </VisuallyHidden>
+      <Fragment>
+        <Title>Tracking</Title>
         <AddTray addTray={this.props.addTray} existingTrayIds={this.props.trayIds}/>
         {this.props.trayIds.map((trayId, index) => <TrayContainer key={trayId} index={index} trayId={trayId}/>)}
-      </section>
+      </Fragment>
     )
   }
 }
