@@ -6,8 +6,20 @@ const ONE_MINUTE_IN_SECONDS = 60
 const ONE_HOUR_IN_SECONDS = 3600
 const ONE_DAY_IN_SECONDS = 86400
 
+export function isNumber(val) {
+  if (_.isNumber(val)) {
+    return true
+  }
+
+  if (isBlank(val)) {
+    return false
+  }
+
+  return !_.isNaN(_.toNumber(val))
+}
+
 export function isBlank(s) {
-  return _.isEmpty(_.trim(s))
+  return _.isString(s) ? _.isEmpty(_.trim(s)) : true
 }
 
 export function friendlyFormatDuration(seconds) {

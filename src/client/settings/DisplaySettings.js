@@ -8,19 +8,29 @@ import {randomDateInPast} from '../common/Utils'
 import {generateRandomName} from '../domain/Tray'
 import _ from 'lodash'
 import styles from './display-settings.scss'
+import {PROGNOSIS_HEALTHY_BUILDING, PROGNOSIS_SICK, PROGNOSIS_SICK_BUILDING, PROGNOSIS_UNKNOWN} from '../domain/Project'
 
 function randomBuildLabel() {
-  return `${_.random(1, 999)}`
+  return `${_.random(1, 9999)}`
 }
 
 class DisplaySettings extends Component {
   constructor(props) {
     super(props)
-    this.state = {lastBuildTime: randomDateInPast()}
+    this.state = {
+      trayName: generateRandomName(),
+      lastBuildLabel: randomBuildLabel(),
+      lastBuildTime: randomDateInPast(),
+      thisBuildTime: randomDateInPast()
+    }
   }
 
   toggleBrokenBuildTime = (newValue) => {
     this.props.setShowBrokenBuildTime(newValue)
+  }
+
+  toggleBuildTime = (newValue) => {
+    this.props.setShowBuildTime(newValue)
   }
 
   toggleTrayName = (newValue) => {
@@ -41,6 +51,11 @@ class DisplaySettings extends Component {
                     data-locator='show-tray-names'>
             show tray name
           </Checkbox>
+          <Checkbox checked={this.props.showBuildTime}
+                    onToggle={this.toggleBuildTime}
+                    data-locator='show-build-times'>
+            show building timer
+          </Checkbox>
           <Checkbox checked={this.props.showBrokenBuildTime}
                     onToggle={this.toggleBrokenBuildTime}
                     data-locator='show-broken-build-times'>
@@ -56,35 +71,30 @@ class DisplaySettings extends Component {
           <h4 className={styles.title}>Preview</h4>
           <div className={styles.displayPreview}>
             <ScaledGrid>
-              <InterestingProject trayName={generateRandomName()}
+              <InterestingProject trayName={this.state.trayName}
                                   name='sick'
-                                  prognosis='sick'
+                                  prognosis={PROGNOSIS_SICK}
                                   lastBuildTime={this.state.lastBuildTime}
-                                  lastBuildLabel={randomBuildLabel()}
+                                  lastBuildLabel={this.state.lastBuildLabel}
                                   showBrokenBuildTimers={this.props.showBrokenBuildTime}
                                   showTrayName={this.props.showTrayName}
                                   showBuildLabel={this.props.showBuildLabel}/>
-              <InterestingProject trayName={generateRandomName()}
+              <InterestingProject trayName={this.state.trayName}
                                   name='sick building'
-                                  prognosis='sick-building'
-                                  lastBuildLabel={randomBuildLabel()}
-                                  showBrokenBuildTimers={this.props.showBrokenBuildTime}
-                                  showTrayName={this.props.showTrayName}
-                                  showBuildLabel={this.props.showBuildLabel}/>
-              <InterestingProject trayName={generateRandomName()}
+                                  prognosis={PROGNOSIS_SICK_BUILDING}
+                                  thisBuildTime={this.state.thisBuildTime}
+                                  showBuildTimers={this.props.showBuildTime}
+                                  showTrayName={this.props.showTrayName}/>
+              <InterestingProject trayName={this.state.trayName}
                                   name='healthy building'
-                                  prognosis='healthy-building'
-                                  lastBuildLabel={randomBuildLabel()}
-                                  showBrokenBuildTimers={this.props.showBrokenBuildTime}
-                                  showTrayName={this.props.showTrayName}
-                                  showBuildLabel={this.props.showBuildLabel}/>
-              <InterestingProject trayName={generateRandomName()}
+                                  prognosis={PROGNOSIS_HEALTHY_BUILDING}
+                                  thisBuildTime={this.state.thisBuildTime}
+                                  showBuildTimers={this.props.showBuildTime}
+                                  showTrayName={this.props.showTrayName}/>
+              <InterestingProject trayName={this.state.trayName}
                                   name='unknown'
-                                  prognosis='unknown'
-                                  lastBuildLabel={randomBuildLabel()}
-                                  showBrokenBuildTimers={this.props.showBrokenBuildTime}
-                                  showTrayName={this.props.showTrayName}
-                                  showBuildLabel={this.props.showBuildLabel}/>
+                                  prognosis={PROGNOSIS_UNKNOWN}
+                                  showTrayName={this.props.showTrayName}/>
             </ScaledGrid>
           </div>
         </section>
@@ -95,8 +105,10 @@ class DisplaySettings extends Component {
 
 DisplaySettings.propTypes = {
   showTrayName: PropTypes.bool.isRequired,
+  showBuildTime: PropTypes.bool.isRequired,
   showBrokenBuildTime: PropTypes.bool.isRequired,
   showBuildLabel: PropTypes.bool.isRequired,
+  setShowBuildTime: PropTypes.func.isRequired,
   setShowBrokenBuildTime: PropTypes.func.isRequired,
   setShowTrayName: PropTypes.func.isRequired,
   setShowBuildLabel: PropTypes.func.isRequired

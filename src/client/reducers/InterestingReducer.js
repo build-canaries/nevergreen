@@ -9,10 +9,12 @@ const DEFAULT_STATE = Immutable.Map({
 
 export function reduce(state = DEFAULT_STATE, action) {
   switch (action.type) {
-    case INTERESTING_PROJECTS:
-      return state.withMutations((map) =>
-        map.set('loaded', true).set('projects', action.projects).set('errors', action.errors))
-
+    case INTERESTING_PROJECTS: {
+      return state.withMutations((map) => map
+        .set('loaded', true)
+        .set('projects', action.projects)
+        .set('errors', action.errors))
+    }
     default:
       return state
   }

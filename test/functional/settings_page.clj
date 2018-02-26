@@ -14,6 +14,9 @@
 (defn show-tray-names [show]
   (checkbox show (locator "show-tray-names")))
 
+(defn show-build-times [show]
+  (checkbox show (locator "show-build-times")))
+
 (defn show-broken-build-times [show]
   (checkbox show (locator "show-broken-build-times")))
 

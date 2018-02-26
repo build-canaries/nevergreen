@@ -16,21 +16,28 @@ describe('InterestingReducer', function () {
 
     it('should set the loaded property', function () {
       const existingState = Immutable.Map({loaded: false})
-      const action = {type: INTERESTING_PROJECTS}
+      const action = {type: INTERESTING_PROJECTS, projects: Immutable.List()}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('loaded', true)
     })
 
     it('should set the projects property', function () {
-      const existingState = Immutable.Map()
-      const action = {type: INTERESTING_PROJECTS, projects: Immutable.List(['a-project'])}
+      const existingState = Immutable.fromJS({projects: []})
+      const newProject = {projectId: 'some-project-id'}
+      const action = {type: INTERESTING_PROJECTS, projects: Immutable.fromJS([newProject])}
+
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('projects').that.contains('a-project')
+
+      expect(newState).to.have.property('projects').that.contains(Immutable.Map(newProject))
     })
 
     it('should set the error property', function () {
       const existingState = Immutable.Map()
-      const action = {type: INTERESTING_PROJECTS, errors: Immutable.List(['some-error'])}
+      const action = {
+        type: INTERESTING_PROJECTS,
+        projects: Immutable.List(),
+        errors: Immutable.List(['some-error'])
+      }
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('errors').that.contains('some-error')
     })

@@ -4,9 +4,8 @@ import classNames from 'classnames'
 import styles from './interesting-project.scss'
 import {isBlank} from '../Utils'
 import {
-  abbreviateTimeBroken,
   formatBuildLabel,
-  formatTimeBroken,
+  isBuilding,
   isSick,
   PROGNOSIS_HEALTHY_BUILDING,
   PROGNOSIS_SICK,
@@ -14,26 +13,30 @@ import {
   PROGNOSIS_UNKNOWN
 } from '../../domain/Project'
 import VisuallyHidden from '../VisuallyHidden'
+import Duration from './Duration'
 
 class InterestingProject extends Component {
   render() {
     const classes = classNames(styles.interestingProject, styles[this.props.prognosis])
+
     const sick = isSick(this.props.prognosis)
+    const building = isBuilding(this.props.prognosis)
 
     const trayName = this.props.showTrayName && !isBlank(this.props.trayName) &&
       <div className={styles.name} data-locator='tray-name'>{this.props.trayName} </div>
 
-    const stage = this.props.stage &&
+    const stage = !isBlank(this.props.stage) &&
       <div className={styles.stage} data-locator='project-stage'> {this.props.stage}</div>
 
-    const timeBrokenLabelFull = formatTimeBroken(this.props.lastBuildTime)
-    const timeBrokenLabelShort = abbreviateTimeBroken(timeBrokenLabelFull)
-
     const timeBroken = this.props.showBrokenBuildTimers && sick &&
-      <Fragment>
-        <VisuallyHidden> time broken {timeBrokenLabelFull}</VisuallyHidden>
-        <div className={styles.timeBroken} data-locator='time-broken' aria-hidden='true'> {timeBrokenLabelShort}</div>
-      </Fragment>
+      <Duration timestamp={this.props.lastBuildTime}
+                fullDescriptionPrefix=' time broken '
+                data-locator='time-broken'/>
+
+    const timeBuilding = this.props.showBuildTimers && building &&
+      <Duration timestamp={this.props.thisBuildTime}
+                fullDescriptionPrefix=' time building '
+                data-locator='time-building'/>
 
     const buildLabel = this.props.showBuildLabel && sick && !isBlank(this.props.lastBuildLabel) &&
       <Fragment>
@@ -47,9 +50,10 @@ class InterestingProject extends Component {
         <div className={styles.inner}>
           {trayName}
           <div className={styles.projectName} data-locator='project-name'>{this.props.name}</div>
-          <VisuallyHidden> prognosis {this.props.prognosis}</VisuallyHidden>
           {stage}
+          <VisuallyHidden data-locator='prognosis'> prognosis {this.props.prognosis}</VisuallyHidden>
           {timeBroken}
+          {timeBuilding}
           {buildLabel}
         </div>
       </div>
@@ -69,6 +73,8 @@ InterestingProject.propTypes = {
   trayName: PropTypes.string,
   lastBuildTime: PropTypes.string,
   lastBuildLabel: PropTypes.string,
+  thisBuildTime: PropTypes.string,
+  showBuildTimers: PropTypes.bool,
   showBrokenBuildTimers: PropTypes.bool,
   showTrayName: PropTypes.bool,
   showBuildLabel: PropTypes.bool

@@ -4,6 +4,7 @@ import {expect} from 'chai'
 import sinon from 'sinon'
 import Immutable from 'immutable'
 import {INTERESTING_PROJECTS} from '../../../src/client/actions/Actions'
+import {PROGNOSIS_HEALTHY_BUILDING, PROGNOSIS_SICK} from '../../../src/client/domain/Project'
 
 describe('MonitorActionCreators', function () {
   let MonitorActions, ProjectsGateway, Gateway
@@ -38,9 +39,9 @@ describe('MonitorActionCreators', function () {
     })
 
     it('should dispatch interesting projects action on success', function () {
-      ProjectsGateway.interesting = sinon.stub().returns({})
-      Gateway.send = sinon.stub().returns(Promise.resolve([]))
-      return MonitorActions.fetchInteresting()(dispatch).then(() => {
+      fetchInterestingReturns()
+
+      return MonitorActions.fetchInteresting([], [], [])(dispatch).then(() => {
         expect(dispatch).to.have.been.calledWithMatch({type: INTERESTING_PROJECTS})
       })
     })
@@ -48,19 +49,84 @@ describe('MonitorActionCreators', function () {
     it('should filter projects containing jobs', function () {
       const projectNoJob = {name: 'some-name'}
       const projectWithJob = {name: 'another-name', job: 'some-job'}
-      ProjectsGateway.interesting = sinon.stub().returns({})
-      Gateway.send = sinon.stub().returns(Promise.resolve([projectNoJob, projectWithJob]))
-      return MonitorActions.fetchInteresting()(dispatch).then(() => {
+      fetchInterestingReturns(projectNoJob, projectWithJob)
+
+      return MonitorActions.fetchInteresting([], [], [])(dispatch).then(() => {
         expect(dispatch).to.have.been.calledWithMatch({projects: Immutable.fromJS([projectNoJob])})
       })
     })
 
-    it('should dispatch interesting projects error action on failure', function () {
+    it('should set the this build time to the fetched time for projects that are building and not previously fetched', function () {
+      const project = {
+        prognosis: PROGNOSIS_HEALTHY_BUILDING,
+        fetchedTime: 'some-time'
+      }
+      fetchInterestingReturns(project)
+
+      return MonitorActions.fetchInteresting([], [], [])(dispatch).then(() => {
+        expect(dispatch).to.have.been.calledWithMatch({
+          projects: Immutable.fromJS([{
+            ...project,
+            thisBuildTime: 'some-time'
+          }])
+        })
+      })
+    })
+
+    it('should unset the this build time if the project is not building', function () {
+      const project = {
+        prognosis: PROGNOSIS_SICK,
+        fetchedTime: 'some-time'
+      }
+      fetchInterestingReturns(project)
+
+      return MonitorActions.fetchInteresting([], [], [])(dispatch).then(() => {
+        expect(dispatch).to.have.been.calledWithMatch({
+          projects: Immutable.fromJS([{
+            ...project,
+            thisBuildTime: null
+          }])
+        })
+      })
+    })
+
+    it('should copy the this build time if the project was previously fetched', function () {
+      const previousProject = {
+        projectId: 'some-id',
+        thisBuildTime: 'previous-build-time'
+      }
+      const project = {
+        projectId: 'some-id',
+        prognosis: PROGNOSIS_HEALTHY_BUILDING,
+        fetchedTime: 'some-time'
+      }
+      fetchInterestingReturns(project)
+
+      return MonitorActions.fetchInteresting([], [], [previousProject])(dispatch).then(() => {
+        expect(dispatch).to.have.been.calledWithMatch({
+          projects: Immutable.fromJS([{
+            ...project,
+            thisBuildTime: 'previous-build-time'
+          }])
+        })
+      })
+    })
+
+    it('should dispatch interesting projects action on failure', function () {
       ProjectsGateway.interesting = sinon.stub().returns({})
-      Gateway.send = sinon.stub().returns(Promise.reject({}))
-      return MonitorActions.fetchInteresting()(dispatch).then(() => {
-        expect(dispatch).to.have.been.calledWithMatch({type: INTERESTING_PROJECTS})
+      Gateway.send = sinon.stub().returns(Promise.reject({message: 'some-error'}))
+
+      return MonitorActions.fetchInteresting([], [], [])(dispatch).then(() => {
+        expect(dispatch).to.have.been.calledWithMatch({
+          type: INTERESTING_PROJECTS,
+          errors: Immutable.List(['Nevergreen some-error'])
+        })
       })
     })
   })
+
+  function fetchInterestingReturns(...projects) {
+    ProjectsGateway.interesting = sinon.stub().returns({})
+    Gateway.send = sinon.stub().returns(Promise.resolve(projects))
+  }
 })

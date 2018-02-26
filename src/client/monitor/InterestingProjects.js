@@ -39,6 +39,7 @@ class InterestingProjects extends Component {
       return <InterestingProject {...project}
                                  trayName={tray.name}
                                  key={`${tray.trayId}#${project.projectId}`}
+                                 showBuildTimers={this.props.showBuildTimers}
                                  showBrokenBuildTimers={this.props.showBrokenBuildTimers}
                                  showTrayName={this.props.showTrayName}
                                  showBuildLabel={this.props.showBuildLabel}/>
@@ -71,6 +72,7 @@ InterestingProjects.propTypes = {
     trayId: PropTypes.string.isRequired,
     name: PropTypes.string
   })).isRequired,
+  showBuildTimers: PropTypes.bool,
   showBrokenBuildTimers: PropTypes.bool,
   showTrayName: PropTypes.bool,
   playBrokenBuildSounds: PropTypes.bool,

@@ -1,9 +1,34 @@
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
-import {friendlyFormatDuration, isBlank} from '../../../src/client/common/Utils'
+import {friendlyFormatDuration, isBlank, isNumber} from '../../../src/client/common/Utils'
 
 describe('Utils', function () {
+
+  describe('is number', function () {
+
+    it('should know when it sees a number', function () {
+      expect(isNumber(0)).to.be.true()
+    })
+
+    it('should treat a numeric string as a number', function () {
+      expect(isNumber('1')).to.be.true()
+    })
+
+    it('should know null is not a number', function () {
+      expect(isNumber(null)).to.be.false()
+    })
+
+    it('should know undefined is not a number', function () {
+      expect(isNumber(undefined)).to.be.false()
+    })
+
+    it('should know a blank string is not a number', function () {
+      expect(isNumber(' ')).to.be.false()
+    })
+  })
+
   describe('is blank', function () {
+
     it('should treat null as blank', function () {
       expect(isBlank(null)).to.be.true()
     })
@@ -27,9 +52,18 @@ describe('Utils', function () {
     it('should not treat a string with mixed characters as blank', function () {
       expect(isBlank(' t e s t ')).to.be.false()
     })
+
+    const nonStrings = [true, false, [], {}, 0]
+
+    nonStrings.forEach((val) => {
+      it(`should treat non string values as blank (${val})`, function () {
+        expect(isBlank(val)).to.be.true()
+      })
+    })
   })
 
   describe('friendly format duration', function () {
+
     it('should format anything less than a minute as seconds', function () {
       expect(friendlyFormatDuration(1)).to.equal('1 second')
       expect(friendlyFormatDuration(59)).to.equal('59 seconds')

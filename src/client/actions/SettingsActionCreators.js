@@ -4,6 +4,7 @@ import {
   REFRESH_TIME,
   SHOW_BROKEN_BUILD_TIME,
   SHOW_BUILD_LABEL,
+  SHOW_BUILD_TIME,
   SHOW_TRAY_NAME
 } from './Actions'
 
@@ -12,6 +13,10 @@ export const VALID_REFRESH_TIMES = [5, 10, 30, 60, 300, 600, 1800, 3600, 43200, 
 
 function absoluteClosestNumber(actual, a, b) {
   return Math.abs(b - actual) < Math.abs(a - actual) ? b : a
+}
+
+export function setShowBuildTime(value) {
+  return {type: SHOW_BUILD_TIME, value}
 }
 
 export function setShowBrokenBuildTime(value) {

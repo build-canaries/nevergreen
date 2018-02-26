@@ -7,7 +7,7 @@ import {
   INITIALISED,
   PLAY_BROKEN_BUILD_SOUND_FX,
   REFRESH_TIME,
-  SHOW_BROKEN_BUILD_TIME,
+  SHOW_BROKEN_BUILD_TIME, SHOW_BUILD_TIME,
   SHOW_TRAY_NAME
 } from '../../../src/client/actions/Actions'
 import Immutable from 'immutable'
@@ -27,6 +27,13 @@ describe('SettingsReducer', function () {
       const action = {type: INITIALISED, data: Immutable.fromJS({audioVisual: {showTrayName: true}})}
       const newState = reduce(existingState, action)
       expect(newState).to.contain.property('showTrayName', true)
+    })
+
+    it('should merge build timers enabled', function () {
+      const existingState = Immutable.Map({showBuildTime: false})
+      const action = {type: INITIALISED, data: Immutable.fromJS({audioVisual: {showBuildTime: true}})}
+      const newState = reduce(existingState, action)
+      expect(newState).to.contain.property('showBuildTime', true)
     })
 
     it('should merge broken build timers enabled', function () {
@@ -74,6 +81,13 @@ describe('SettingsReducer', function () {
       expect(newState).to.contain.property('showTrayName', true)
     })
 
+    it('should merge build timers enabled', function () {
+      const existingState = Immutable.Map({showBuildTime: false})
+      const action = {type: IMPORT_SUCCESS, data: Immutable.fromJS({audioVisual: {showBuildTime: true}})}
+      const newState = reduce(existingState, action)
+      expect(newState).to.contain.property('showBuildTime', true)
+    })
+
     it('should merge broken build timers enabled', function () {
       const existingState = Immutable.Map({showBrokenBuildTime: false})
       const action = {type: IMPORT_SUCCESS, data: Immutable.fromJS({audioVisual: {showBrokenBuildTime: true}})}
@@ -100,6 +114,16 @@ describe('SettingsReducer', function () {
       const action = {type: IMPORT_SUCCESS, data: Immutable.fromJS({audioVisual: {showBuildLabel: true}})}
       const newState = reduce(existingState, action)
       expect(newState).to.contain.property('showBuildLabel', true)
+    })
+  })
+
+  describe('build timers changed action', function () {
+
+    it('should set the broken build timer enabled property', function () {
+      const existingState = Immutable.Map({showBuildTime: false})
+      const action = {type: SHOW_BUILD_TIME, value: true}
+      const newState = reduce(existingState, action)
+      expect(newState).to.contain.property('showBuildTime', true)
     })
   })
 

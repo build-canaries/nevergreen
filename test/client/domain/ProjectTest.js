@@ -1,30 +1,30 @@
 import {expect} from 'chai'
 import {describe, it} from 'mocha'
-import {clock} from '../FakeTimers'
+import {fixTime} from '../FakeTimers'
 import {
-  abbreviateTimeBroken,
+  abbreviateDuration,
   formatBuildLabel,
-  formatTimeBroken,
+  formatDuration,
+  isBuilding,
   isSick,
   PROGNOSIS_HEALTHY_BUILDING,
   PROGNOSIS_SICK,
   PROGNOSIS_SICK_BUILDING,
   PROGNOSIS_UNKNOWN
 } from '../../../src/client/domain/Project'
+import {forUndisplayables} from '../TestUtils'
 
 describe('Project', function () {
-  describe('time broken', function () {
-    const invalidValues = [null, undefined, '']
-
-    invalidValues.forEach((value) => {
-      it(`should return "unknown" for invalid value ${value}`, function () {
-        expect(formatTimeBroken(value)).to.equal('unknown')
+  describe('duration', function () {
+    forUndisplayables((value, friendlyName) => {
+      it(`should return "unknown" for invalid value ${friendlyName}`, function () {
+        expect(formatDuration(value)).to.equal('unknown')
       })
     })
 
-    it('should return the time broken for a valid date', function () {
-      clock.setSystemTime(1518997080000) // 2018-02-18T23:38:00.000Z
-      expect(formatTimeBroken('2018-02-18T22:38:00.000Z')).to.equal('about 1 hour')
+    it('should return the duration for a valid date', function () {
+      fixTime('2018-02-18T23:38:00Z')
+      expect(formatDuration('2018-02-18T22:38:00.000Z')).to.equal('about 1 hour')
     })
 
     const abbreviatedTests = [
@@ -40,38 +40,84 @@ describe('Project', function () {
     ]
 
     abbreviatedTests.forEach((args) => {
-      it(`should return the abbreviated time broken when "${args.value}"`, function () {
-        expect(abbreviateTimeBroken(args.value)).to.equal(args.expected)
+      it(`should return the abbreviated duration when "${args.value}"`, function () {
+        expect(abbreviateDuration(args.value)).to.equal(args.expected)
+      })
+    })
+
+    forUndisplayables((value, friendlyName) => {
+      it(`should return an empty string for invalid value ${friendlyName}`, function () {
+        expect(abbreviateDuration(value)).to.equal('')
       })
     })
   })
 
-  describe('formatBuildLabel', function () {
+  describe('format build label', function () {
+    forUndisplayables((value, friendlyName) => {
+      it(`should return blank for undisplayable value ${friendlyName}`, function () {
+        expect(formatBuildLabel(value)).to.equal('')
+      })
+    })
+
     it('should add a # to numbers', function () {
       expect(formatBuildLabel('1234')).to.equal('#1234')
     })
 
-    it('should trim the build label to 10 characters', function () {
+    it('should trim the build label to given length', function () {
+      expect(formatBuildLabel('abcdefghijklmnopqrstuvwxyz', 3)).to.equal('abc')
+    })
+
+    it('should trim the build label to 10 characters by default', function () {
       expect(formatBuildLabel('abcdefghijklmnopqrstuvwxyz')).to.equal('abcdefghij')
     })
   })
 
-  describe('isSick', function () {
-    it('should be true when given the value "sick"', function () {
+  describe('is sick', function () {
+    it('should be true when sick', function () {
       expect(isSick(PROGNOSIS_SICK)).to.be.true()
     })
 
-    const invalidValues = [
-      null,
-      undefined,
-      '',
+    const otherPrognosis = [
       PROGNOSIS_UNKNOWN,
       PROGNOSIS_HEALTHY_BUILDING,
       PROGNOSIS_SICK_BUILDING
     ]
 
-    invalidValues.forEach((value) => {
+    otherPrognosis.forEach((value) => {
       it(`should be false for value ${value}`, function () {
+        expect(isSick(value)).to.be.false()
+      })
+    })
+
+    forUndisplayables((value, friendlyName) => {
+      it(`should be false for invalid value ${friendlyName}`, function () {
+        expect(isSick(value)).to.be.false()
+      })
+    })
+  })
+
+  describe('is building', function () {
+    it('should be true when healthy building', function () {
+      expect(isBuilding(PROGNOSIS_HEALTHY_BUILDING)).to.be.true()
+    })
+
+    it('should be true when sick building', function () {
+      expect(isBuilding(PROGNOSIS_SICK_BUILDING)).to.be.true()
+    })
+
+    const otherPrognosis = [
+      PROGNOSIS_UNKNOWN,
+      PROGNOSIS_SICK
+    ]
+
+    otherPrognosis.forEach((value) => {
+      it(`should be false for value ${value}`, function () {
+        expect(isBuilding(value)).to.be.false()
+      })
+    })
+
+    forUndisplayables((value, friendlyName) => {
+      it(`should be false for invalid value ${friendlyName}`, function () {
         expect(isSick(value)).to.be.false()
       })
     })

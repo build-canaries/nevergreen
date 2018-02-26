@@ -2,6 +2,7 @@
   (:require [clj-cctray.core :as parser]
             [clj-cctray.filtering :as filtering]
             [clj-cctray.util :refer [in?]]
+            [clj-time.core :as t]
             [clojure.string :refer [join blank? replace]]
             [nevergreen.http :refer [http-get]]
             [nevergreen.servers :as servers]
@@ -49,6 +50,9 @@
 (defn- add-tray-url [url projects]
   (map #(merge {:url url} %) projects))
 
+(defn- add-fetched-time [projects]
+  (map #(merge {:fetched-time (t/now)} %) projects))
+
 (defn fetch-tray [tray]
   (try
     (validate-scheme tray)
@@ -65,7 +69,8 @@
 (defn fetch-all [tray]
   (->> (fetch-tray tray)
        (add-tray-id (:tray-id tray))
-       (add-tray-url (:url tray))))
+       (add-tray-url (:url tray))
+       (add-fetched-time)))
 
 (defn fetch-interesting [tray]
   (if (empty? (:included tray))
@@ -76,7 +81,8 @@
         (->> (filtering/interesting projects)
              (filter-by-ids (:included tray))
              (add-tray-id (:tray-id tray))
-             (add-tray-url (:url tray)))))))
+             (add-tray-url (:url tray))
+             (add-fetched-time))))))
 
 (defn get-all [trays]
   (if (= (count trays) 1)

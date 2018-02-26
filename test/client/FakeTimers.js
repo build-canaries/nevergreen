@@ -1,4 +1,5 @@
 import {after, before, beforeEach} from 'mocha'
+import getTime from 'date-fns/get_time'
 import lolex from 'lolex'
 
 let clock = null
@@ -16,3 +17,7 @@ after(function () {
 })
 
 export {clock}
+
+export function fixTime(timestamp) {
+  clock.setSystemTime(getTime(timestamp))
+}

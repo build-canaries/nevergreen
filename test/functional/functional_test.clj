@@ -83,6 +83,7 @@
     (settings-page/navigate base-url)
     (doseq [state [true false]]
       (do (settings-page/show-tray-names state)
+          (settings-page/show-build-times state)
           (settings-page/show-broken-build-times state)
           (settings-page/play-broken-build-sounds state)
           (settings-page/show-build-labels state)))

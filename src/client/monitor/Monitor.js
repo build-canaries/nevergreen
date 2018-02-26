@@ -11,7 +11,7 @@ import Title from '../common/Title'
 
 class Monitor extends Component {
   fetch = () => {
-    this.props.fetchInteresting(this.props.trays, this.props.selected)
+    this.props.fetchInteresting(this.props.trays, this.props.selected, this.props.projects)
   }
 
   componentDidMount() {
@@ -53,6 +53,7 @@ Monitor.propTypes = {
   trays: PropTypes.arrayOf(PropTypes.object).isRequired,
   selected: PropTypes.object.isRequired,
   projects: PropTypes.arrayOf(PropTypes.object),
+  showBuildTimers: PropTypes.bool,
   showBrokenBuildTimers: PropTypes.bool,
   showTrayName: PropTypes.bool,
   showBrokenBuildLabel: PropTypes.bool,

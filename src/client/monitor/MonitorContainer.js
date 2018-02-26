@@ -19,6 +19,7 @@ function mapStateToProps(store) {
     trays: store.get('trays').toList(),
     projects: interesting.get('projects'),
     selected: store.get('selected'),
+    showBuildTimers: settings.get('showBuildTime'),
     showBrokenBuildTimers: settings.get('showBrokenBuildTime'),
     showTrayName: settings.get('showTrayName'),
     showBuildLabel: settings.get('showBuildLabel'),

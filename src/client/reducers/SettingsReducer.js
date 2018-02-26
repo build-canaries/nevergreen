@@ -7,6 +7,7 @@ import {
   REFRESH_TIME,
   SHOW_BROKEN_BUILD_TIME,
   SHOW_BUILD_LABEL,
+  SHOW_BUILD_TIME,
   SHOW_TRAY_NAME
 } from '../actions/Actions'
 import {MIN_REFRESH_TIME} from '../actions/SettingsActionCreators'
@@ -14,6 +15,7 @@ import defaultSoundFx from '../settings/pacman_death.mp3'
 
 const DEFAULT_STATE = Immutable.Map({
   showTrayName: false,
+  showBuildTime: true,
   showBrokenBuildTime: true,
   playBrokenBuildSoundFx: false,
   brokenBuildSoundFx: defaultSoundFx,
@@ -26,6 +28,9 @@ export function reduce(state = DEFAULT_STATE, action) {
     case INITIALISED:
     case IMPORT_SUCCESS:
       return state.merge(action.data.get('audioVisual'))
+
+    case SHOW_BUILD_TIME:
+      return state.set('showBuildTime', action.value)
 
     case SHOW_BROKEN_BUILD_TIME:
       return state.set('showBrokenBuildTime', action.value)

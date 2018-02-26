@@ -20,6 +20,7 @@ export const SCHEMA = {
       type: 'object',
       properties: {
         showTrayName: {type: 'boolean'},
+        showBuildTime: {type: 'boolean'},
         showBrokenBuildTime: {type: 'boolean'},
         showBuildLabel: {type: 'boolean'},
         playBrokenBuildSoundFx: {type: 'boolean'},

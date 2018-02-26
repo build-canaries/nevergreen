@@ -8,6 +8,7 @@ describe('<InterestingProjects/>', function () {
   const DEFAULT_PROPS = {
     projects: null,
     trays: [],
+    showBuildTimers: null,
     showBrokenBuildTimers: null,
     showTrayName: null,
     playBrokenBuildSounds: null,
