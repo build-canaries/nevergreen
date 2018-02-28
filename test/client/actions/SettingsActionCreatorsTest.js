@@ -91,6 +91,7 @@ describe('SettingsActionCreators', function () {
   })
 
   describe('setting build label', function () {
+
     it('should return the correct type', function () {
       const actual = setShowBuildLabel()
       expect(actual).to.have.property('type', SHOW_BUILD_LABEL)

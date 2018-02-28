@@ -1,6 +1,7 @@
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {friendlyFormatDuration, isBlank, isNumber} from '../../../src/client/common/Utils'
+import {forNonStrings} from '../TestUtils'
 
 describe('Utils', function () {
 
@@ -53,10 +54,8 @@ describe('Utils', function () {
       expect(isBlank(' t e s t ')).to.be.false()
     })
 
-    const nonStrings = [true, false, [], {}, 0]
-
-    nonStrings.forEach((val) => {
-      it(`should treat non string values as blank (${val})`, function () {
+    forNonStrings((val, friendlyName) => {
+      it(`should treat non string value ${friendlyName} as blank`, function () {
         expect(isBlank(val)).to.be.true()
       })
     })

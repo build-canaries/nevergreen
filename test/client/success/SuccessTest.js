@@ -8,6 +8,7 @@ import AddedImages from '../../../src/client/success/AddedImages'
 import _ from 'lodash'
 
 describe('Success <Success/>', function () {
+
   const DEFAULT_PROPS = {
     messages: [],
     addMessage: _.noop,

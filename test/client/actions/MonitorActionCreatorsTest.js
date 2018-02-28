@@ -1,21 +1,18 @@
 import {withMockedImports} from '../TestUtils'
-import {before, beforeEach, describe, it} from 'mocha'
+import {describe, it} from 'mocha'
 import {expect} from 'chai'
-import sinon from 'sinon'
+import {sandbox} from '../Sandbox'
 import Immutable from 'immutable'
 import {INTERESTING_PROJECTS} from '../../../src/client/actions/Actions'
 import {PROGNOSIS_HEALTHY_BUILDING, PROGNOSIS_SICK} from '../../../src/client/domain/Project'
 
 describe('MonitorActionCreators', function () {
-  let MonitorActions, ProjectsGateway, Gateway
 
-  before(function () {
-    ProjectsGateway = {}
-    Gateway = {}
-    MonitorActions = withMockedImports('client/actions/MonitorActionCreators', {
-      '../common/gateways/ProjectsGateway': ProjectsGateway,
-      '../common/gateways/Gateway': Gateway
-    })
+  const ProjectsGateway = {}
+  const Gateway = {}
+  const MonitorActions = withMockedImports('client/actions/MonitorActionCreators', {
+    '../common/gateways/ProjectsGateway': ProjectsGateway,
+    '../common/gateways/Gateway': Gateway
   })
 
   describe('interesting projects', function () {
@@ -32,11 +29,7 @@ describe('MonitorActionCreators', function () {
   })
 
   describe('fetching interesting', function () {
-    let dispatch
-
-    beforeEach(function () {
-      dispatch = sinon.spy()
-    })
+    const dispatch = sandbox.spy()
 
     it('should dispatch interesting projects action on success', function () {
       fetchInterestingReturns()
@@ -113,8 +106,8 @@ describe('MonitorActionCreators', function () {
     })
 
     it('should dispatch interesting projects action on failure', function () {
-      ProjectsGateway.interesting = sinon.stub().returns({})
-      Gateway.send = sinon.stub().returns(Promise.reject({message: 'some-error'}))
+      ProjectsGateway.interesting = sandbox.stub().returns({})
+      Gateway.send = sandbox.stub().returns(Promise.reject({message: 'some-error'}))
 
       return MonitorActions.fetchInteresting([], [], [])(dispatch).then(() => {
         expect(dispatch).to.have.been.calledWithMatch({
@@ -126,7 +119,7 @@ describe('MonitorActionCreators', function () {
   })
 
   function fetchInterestingReturns(...projects) {
-    ProjectsGateway.interesting = sinon.stub().returns({})
-    Gateway.send = sinon.stub().returns(Promise.resolve(projects))
+    ProjectsGateway.interesting = sandbox.stub().returns({})
+    Gateway.send = sandbox.stub().returns(Promise.resolve(projects))
   }
 })

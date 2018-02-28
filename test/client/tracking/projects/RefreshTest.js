@@ -7,6 +7,7 @@ import Refresh from '../../../../src/client/tracking/projects/Refresh'
 import _ from 'lodash'
 
 describe('<Refresh/>', function () {
+
   const DEFAULT_PROPS = {
     index: 1,
     timestamp: null,

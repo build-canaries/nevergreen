@@ -1,61 +1,58 @@
-import {after, before, beforeEach, describe, it} from 'mocha'
+import {beforeEach, describe, it} from 'mocha'
 import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
-import sinon from 'sinon'
+import {sandbox} from '../Sandbox'
 import Resizable from '../../../src/client/common/Resizable'
 import _ from 'lodash'
 
 describe('<Resizable/>', function () {
-  const props = {onResize: _.noop}
-  let originalWindow
 
-  before(function () {
-    originalWindow = global.window
-    global.window = {
-      addEventListener: sinon.spy(),
-      removeEventListener: sinon.spy()
-    }
-  })
-
-  after(function () {
-    global.window = originalWindow
-  })
+  const props = {
+    onResize: _.noop
+  }
 
   beforeEach(function () {
-    global.window.addEventListener.reset()
-    global.window.removeEventListener.reset()
+    sandbox.spy(global.window, 'addEventListener')
+    sandbox.spy(global.window, 'removeEventListener')
   })
 
-  it('should render null', function () {
+  it('should not render anything as this is only a React component for easy setup/cleanup up on [un]mount', function () {
     const wrapper = shallow(<Resizable {...props} />)
-    expect(wrapper.get(0)).to.be.null()
+    expect(wrapper).to.be.blank()
   })
 
-  it('should add event listener on initial mount', function () {
-    new Resizable(props).componentDidMount()
+  // TODO: can we [easily] verify the resize fn gets registered? It gets wrapped by a debounce call so isn't === to the prop onResize
+  it('should register resize fn on initial mount', function () {
+    shallow(<Resizable {...props} />)
     expect(global.window.addEventListener).to.have.been.calledWith('resize')
     expect(global.window.removeEventListener).to.not.have.been.called()
   })
 
-  it('should remove event listener on unmount', function () {
-    new Resizable(props).componentWillUnmount()
-    expect(global.window.removeEventListener).to.have.been.calledWith('resize')
-    expect(global.window.addEventListener).to.not.have.been.called()
+  it('should remove resize fn on unmount', function () {
+    const wrapper = shallow(<Resizable {...props} />)
+    const resizeFn = global.window.addEventListener.args[0][1] // called on mount as verified in the test above
+
+    wrapper.unmount()
+
+    expect(global.window.removeEventListener).to.have.been.calledWith('resize', resizeFn)
   })
 
-  describe('updating', function () {
-    it('should remove old event listener when receiving new props', function () {
-      const newProps = {onResize: sinon.spy()}
-      new Resizable(props).componentWillReceiveProps(newProps)
-      expect(global.window.removeEventListener).to.have.been.calledWith('resize')
-      expect(global.window.addEventListener).to.have.not.been.called()
-    })
+  it('should remove old resize fn when receiving new props and add a new one on update', function () {
+    const newProps = {onResize: sandbox.spy()}
+    const wrapper = shallow(<Resizable {...props} />)
 
-    it('should add new event listener on update', function () {
-      new Resizable(props).componentDidUpdate()
-      expect(global.window.addEventListener).to.have.been.calledWith('resize')
-      expect(global.window.removeEventListener).to.have.not.been.called()
-    })
+    const originalResizeFn = global.window.addEventListener.args[0][1]
+
+    wrapper.setProps(newProps)
+
+    expect(global.window.removeEventListener).to.have.been.calledWith('resize', originalResizeFn)
+    expect(global.window.addEventListener).to.have.been.calledTwice()
+
+    const removedResizeFn = global.window.removeEventListener.args[0][1]
+    const updatedResizeFn = global.window.addEventListener.args[1][1]
+
+    expect(removedResizeFn).to.equal(originalResizeFn)
+    expect(updatedResizeFn).to.not.equal(originalResizeFn)
   })
 })

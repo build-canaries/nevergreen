@@ -7,6 +7,7 @@ import AddedMessages from '../../../src/client/success/AddedMessages'
 import _ from 'lodash'
 
 describe('<AddedMessages/>', function () {
+
   const DEFAULT_PROPS = {
     messages: [],
     removeMessage: _.noop

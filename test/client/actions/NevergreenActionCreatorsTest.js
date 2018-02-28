@@ -1,7 +1,7 @@
 import {withMockedImports} from '../TestUtils'
-import {before, beforeEach, describe, it} from 'mocha'
+import {beforeEach, describe, it} from 'mocha'
 import {expect} from 'chai'
-import sinon from 'sinon'
+import {sandbox} from '../Sandbox'
 import {
   FULL_SCREEN,
   INITIALISED,
@@ -11,15 +11,12 @@ import {
 } from '../../../src/client/actions/Actions'
 
 describe('NevergreenActionCreators', function () {
-  let NevergreenActions, LocalRepository, Migrations
 
-  before(function () {
-    LocalRepository = {}
-    Migrations = {}
-    NevergreenActions = withMockedImports('client/actions/NevergreenActionCreators', {
-      '../common/repo/LocalRepository': LocalRepository,
-      '../common/repo/Migrations': Migrations
-    })
+  const LocalRepository = {}
+  const Migrations = {}
+  const NevergreenActions = withMockedImports('client/actions/NevergreenActionCreators', {
+    '../common/repo/LocalRepository': LocalRepository,
+    '../common/repo/Migrations': Migrations
   })
 
   describe('initalising', function () {
@@ -52,30 +49,30 @@ describe('NevergreenActionCreators', function () {
   })
 
   describe('initalise', function () {
-    let dispatch
+
+    const dispatch = sandbox.spy()
 
     beforeEach(function () {
-      dispatch = sinon.spy()
       Migrations.migrate = (data) => data
     })
 
     it('should dispatch initalising action', function () {
-      LocalRepository.init = sinon.stub().returns(Promise.resolve({}))
-      LocalRepository.load = sinon.stub().returns(Promise.resolve({}))
+      LocalRepository.init = sandbox.stub().returns(Promise.resolve({}))
+      LocalRepository.load = sandbox.stub().returns(Promise.resolve({}))
       NevergreenActions.initalise()(dispatch)
       expect(dispatch).to.have.been.calledWithMatch({type: INITIALISING})
     })
 
     it('should initalise the local repository', function () {
-      LocalRepository.init = sinon.stub().returns(Promise.resolve({}))
-      LocalRepository.load = sinon.stub().returns(Promise.resolve({}))
+      LocalRepository.init = sandbox.stub().returns(Promise.resolve({}))
+      LocalRepository.load = sandbox.stub().returns(Promise.resolve({}))
       NevergreenActions.initalise()(dispatch)
       expect(LocalRepository.init).to.have.been.called()
     })
 
     it('should dispatch initalised action once configuration is loaded', function () {
-      LocalRepository.init = sinon.stub().returns(Promise.resolve({}))
-      LocalRepository.load = sinon.stub().returns(Promise.resolve({}))
+      LocalRepository.init = sandbox.stub().returns(Promise.resolve({}))
+      LocalRepository.load = sandbox.stub().returns(Promise.resolve({}))
       return NevergreenActions.initalise()(dispatch).then(() => {
         expect(dispatch).to.have.been.calledWithMatch({type: INITIALISED})
       })

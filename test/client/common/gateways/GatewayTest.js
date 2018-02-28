@@ -1,15 +1,11 @@
 import {withMockedImports} from '../../TestUtils'
-import {before, describe, it} from 'mocha'
+import {describe, it} from 'mocha'
 import {expect} from 'chai'
 
 describe('gateway', function () {
 
-  let Gateway, superagent
-
-  before(() => {
-    superagent = {}
-    Gateway = withMockedImports('client/common/gateways/Gateway', {superagent})
-  })
+  const superagent = {}
+  const Gateway = withMockedImports('client/common/gateways/Gateway', {superagent})
 
   describe('fake response', function () {
     it('should return a resolved promise with the given body', function () {

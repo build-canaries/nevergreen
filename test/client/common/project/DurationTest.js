@@ -1,9 +1,9 @@
-import {childText, forUndisplayables, locator} from '../../TestUtils'
+import {childText, forUndisplayablesStrings, locator} from '../../TestUtils'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
-import {fixTime} from '../../FakeTimers'
+import {setSystemTime} from '../../FakeTimers'
 import VisuallyHidden from '../../../../src/client/common/VisuallyHidden'
 import Duration from '../../../../src/client/common/project/Duration'
 
@@ -12,12 +12,13 @@ import Duration from '../../../../src/client/common/project/Duration'
  * details.
  */
 describe('<Duration/>', function () {
+  
   const DEFAULT_PROPS = {
     timestamp: null,
-    fullDescription: ''
+    fullDescriptionPrefix: ''
   }
 
-  forUndisplayables((val, friendlyName) => {
+  forUndisplayablesStrings((val, friendlyName) => {
     it(`should show ?? with a space at the beginning if timestamp is ${friendlyName}`, function () {
       const props = {...DEFAULT_PROPS, show: true, timestamp: val}
       const wrapper = shallow(<Duration {...props} />)
@@ -26,7 +27,7 @@ describe('<Duration/>', function () {
   })
 
   it('should display an abbreviated duration with a space at the beginning', function () {
-    fixTime('2018-02-18T23:38:00Z')
+    setSystemTime('2018-02-18T23:38:00Z')
     const props = {...DEFAULT_PROPS, show: true, timestamp: '2000-12-01T00:00:00Z'}
     const wrapper = shallow(<Duration {...props} />)
     expect(wrapper.find(locator('duration'))).to.have.text(' 17y')
@@ -34,7 +35,7 @@ describe('<Duration/>', function () {
   })
 
   it('should include a visually hidden full description for screen readers', function () {
-    fixTime('2018-02-18T23:38:00Z')
+    setSystemTime('2018-02-18T23:38:00Z')
     const props = {...DEFAULT_PROPS, show: true, timestamp: '2000-12-01T00:00:00Z'}
     const wrapper = shallow(<Duration {...props} />)
     expect(childText(wrapper, VisuallyHidden)).to.have.text(' about 17 years.')

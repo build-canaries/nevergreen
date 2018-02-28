@@ -1,21 +1,18 @@
 import {withMockedImports} from '../TestUtils'
-import {before, beforeEach, describe, it} from 'mocha'
+import {beforeEach, describe, it} from 'mocha'
 import {expect} from 'chai'
-import sinon from 'sinon'
+import {sandbox} from '../Sandbox'
 import {EXPORT_ERROR, EXPORT_SUCCESS, EXPORTING} from '../../../src/client/actions/Actions'
 
 describe('ExportActionCreators', function () {
-  let ExportActions, Gateway, GitHubGateway, GitHubActions
 
-  before(function () {
-    Gateway = {}
-    GitHubGateway = {}
-    GitHubActions = {}
-    ExportActions = withMockedImports('client/actions/ExportActionCreators', {
-      '../common/gateways/Gateway': Gateway,
-      '../common/gateways/GitHubGateway': GitHubGateway,
-      './GitHubActionCreators': GitHubActions
-    })
+  const Gateway = {}
+  const GitHubGateway = {}
+  const GitHubActions = {}
+  const ExportActions = withMockedImports('client/actions/ExportActionCreators', {
+    '../common/gateways/Gateway': Gateway,
+    '../common/gateways/GitHubGateway': GitHubGateway,
+    './GitHubActionCreators': GitHubActions
   })
 
   describe('exporting', function () {
@@ -53,13 +50,13 @@ describe('ExportActionCreators', function () {
   })
 
   describe('upload to GitHub', function () {
-    let dispatch
+
+    const dispatch = sandbox.spy()
 
     beforeEach(function () {
-      dispatch = sinon.spy()
-      GitHubGateway.createGist = sinon.stub().returns({})
-      GitHubGateway.updateGist = sinon.stub().returns({})
-      GitHubActions.gitHubSetGistId = sinon.spy()
+      GitHubGateway.createGist = sandbox.stub().returns({})
+      GitHubGateway.updateGist = sandbox.stub().returns({})
+      GitHubActions.gitHubSetGistId = sandbox.spy()
     })
 
     it('should dispatch exporting action', function () {

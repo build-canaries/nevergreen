@@ -1,19 +1,16 @@
 import {withMockedImports} from '../TestUtils'
-import {before, beforeEach, describe, it} from 'mocha'
+import {describe, it} from 'mocha'
 import {expect} from 'chai'
-import sinon from 'sinon'
+import {sandbox} from '../Sandbox'
 import {NOTIFICATION, NOTIFICATION_DISMISS} from '../../../src/client/actions/Actions'
 
 describe('NotificationActionCreators', function () {
-  let NotificationActions, Gateway, semver
 
-  before(function () {
-    Gateway = {}
-    semver = {}
-    NotificationActions = withMockedImports('client/actions/NotificationActionCreators', {
-      '../common/gateways/Gateway': Gateway,
-      semver
-    })
+  const Gateway = {}
+  const semver = {}
+  const NotificationActions = withMockedImports('client/actions/NotificationActionCreators', {
+    '../common/gateways/Gateway': Gateway,
+    semver
   })
 
   describe('notification', function () {
@@ -38,24 +35,21 @@ describe('NotificationActionCreators', function () {
   })
 
   describe('check for new version', function () {
-    let dispatch
 
-    beforeEach(function () {
-      dispatch = sinon.spy()
-    })
+    const dispatch = sandbox.spy()
 
     it('should call the github releases api', function () {
-      Gateway.get = sinon.stub().returns({})
-      Gateway.send = sinon.stub().returns(Promise.resolve({}))
-      semver.gt = sinon.stub().returns(true)
+      Gateway.get = sandbox.stub().returns({})
+      Gateway.send = sandbox.stub().returns(Promise.resolve({}))
+      semver.gt = sandbox.stub().returns(true)
       NotificationActions.checkForNewVersion()(dispatch)
       expect(Gateway.get).to.have.been.calledWith('https://api.github.com/repos/build-canaries/nevergreen/releases/latest')
     })
 
     it('should dispatch notification if a new version is available', function () {
-      Gateway.get = sinon.stub().returns({})
-      Gateway.send = sinon.stub().returns(Promise.resolve({}))
-      semver.gt = sinon.stub().returns(true)
+      Gateway.get = sandbox.stub().returns({})
+      Gateway.send = sandbox.stub().returns(Promise.resolve({}))
+      semver.gt = sandbox.stub().returns(true)
       return NotificationActions.checkForNewVersion()(dispatch).then(() => {
         expect(dispatch).to.have.been.calledWithMatch({type: NOTIFICATION})
       })

@@ -6,6 +6,7 @@ import {shallow} from 'enzyme'
 import Loading from '../../../../src/client/common/loading/Loading'
 
 describe('<Loading/>', function () {
+
   const DEFAULT_PROPS = {
     children: null,
     loaded: null

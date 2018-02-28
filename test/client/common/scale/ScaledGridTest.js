@@ -5,7 +5,8 @@ import {mount} from 'enzyme'
 import ScaledGrid from '../../../../src/client/common/scale/ScaledGrid'
 
 function setWindowSize(size) {
-  // https://github.com/tmpvar/jsdom/issues/135#issuecomment-68191941
+  // TODO: keep an eye on https://github.com/tmpvar/jsdom/issues/135 to see if this gets fixed
+  // Fix from https://github.com/tmpvar/jsdom/issues/135#issuecomment-68191941
   Object.defineProperties(window.HTMLElement.prototype, {
     offsetHeight: {
       get: () => size
@@ -17,7 +18,9 @@ function setWindowSize(size) {
 }
 
 describe('<ScaledGrid/>', function () {
+
   describe('desktop', function () {
+
     before(function () {
       setWindowSize(1440)
     })

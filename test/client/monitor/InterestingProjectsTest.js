@@ -5,6 +5,7 @@ import {shallow} from 'enzyme'
 import InterestingProjects from '../../../src/client/monitor/InterestingProjects'
 
 describe('<InterestingProjects/>', function () {
+
   const DEFAULT_PROPS = {
     projects: null,
     trays: [],

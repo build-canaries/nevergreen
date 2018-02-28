@@ -1,7 +1,7 @@
 import {withMockedImports} from '../TestUtils'
-import {before, beforeEach, describe, it} from 'mocha'
+import {beforeEach, describe, it} from 'mocha'
 import {expect} from 'chai'
-import sinon from 'sinon'
+import {sandbox} from '../Sandbox'
 import {
   ENCRYPTING_PASSWORD,
   HIGHLIGHT_TRAY,
@@ -21,25 +21,22 @@ import {
 } from '../../../src/client/actions/Actions'
 
 describe('TrackingActionCreators', function () {
-  let TrackingActions, SecurityGateway, ProjectsGateway, Gateway, nameGenerator
 
-  before(function () {
-    SecurityGateway = {}
-    ProjectsGateway = {}
-    Gateway = {}
-    nameGenerator = {}
-    TrackingActions = withMockedImports('client/actions/TrackingActionCreators', {
-      '../common/gateways/SecurityGateway': SecurityGateway,
-      '../common/gateways/ProjectsGateway': ProjectsGateway,
-      '../common/gateways/Gateway': Gateway,
-      '../domain/Tray': nameGenerator
-    })
+  const SecurityGateway = {}
+  const ProjectsGateway = {}
+  const Gateway = {}
+  const nameGenerator = {}
+  const TrackingActions = withMockedImports('client/actions/TrackingActionCreators', {
+    '../common/gateways/SecurityGateway': SecurityGateway,
+    '../common/gateways/ProjectsGateway': ProjectsGateway,
+    '../common/gateways/Gateway': Gateway,
+    '../domain/Tray': nameGenerator
   })
 
   describe('tray added', function () {
 
-    before(function () {
-      nameGenerator.generateRandomName = sinon.stub().returns('')
+    beforeEach(function () {
+      nameGenerator.generateRandomName = sandbox.stub().returns('')
     })
 
     it('should return the correct type', function () {
@@ -64,7 +61,7 @@ describe('TrackingActionCreators', function () {
     })
 
     it('should return a generated tray name', function () {
-      nameGenerator.generateRandomName = sinon.stub().returns('some-generated-name')
+      nameGenerator.generateRandomName = sandbox.stub().returns('some-generated-name')
       const actual = TrackingActions.trayAdded()
       expect(actual).to.have.property('data').that.includes.property('name', 'some-generated-name')
     })
@@ -160,7 +157,7 @@ describe('TrackingActionCreators', function () {
     })
 
     it('should abort the pending request', function () {
-      const abort = sinon.spy()
+      const abort = sandbox.spy()
       TrackingActions.removeTray('some-tray-id', {abort})
       expect(abort).to.have.been.called()
     })
@@ -318,30 +315,26 @@ describe('TrackingActionCreators', function () {
   })
 
   describe('encrypt password', function () {
-    let dispatch
-
-    beforeEach(function () {
-      dispatch = sinon.spy()
-    })
+    const dispatch = sandbox.spy()
 
     it('should dispatch encrypting password action', function () {
-      SecurityGateway.encryptPassword = sinon.stub().returns({})
-      Gateway.send = sinon.stub().returns(Promise.resolve(''))
+      SecurityGateway.encryptPassword = sandbox.stub().returns({})
+      Gateway.send = sandbox.stub().returns(Promise.resolve(''))
       TrackingActions.encryptPassword('irrelevant', 'irrelevant')(dispatch)
       expect(dispatch).to.have.been.calledWithMatch({type: ENCRYPTING_PASSWORD})
     })
 
     it('should dispatch password encrypted action', function () {
-      SecurityGateway.encryptPassword = sinon.stub().returns({})
-      Gateway.send = sinon.stub().returns(Promise.resolve(''))
+      SecurityGateway.encryptPassword = sandbox.stub().returns({})
+      Gateway.send = sandbox.stub().returns(Promise.resolve(''))
       return TrackingActions.encryptPassword('irrelevant', 'irrelevant')(dispatch).then(() => {
         expect(dispatch).to.have.been.calledWithMatch({type: PASSWORD_ENCRYPTED})
       })
     })
 
     it('should dispatch password encrypted action if password is blank without calling the gateway', function () {
-      SecurityGateway.encryptPassword = sinon.spy()
-      Gateway.send = sinon.spy()
+      SecurityGateway.encryptPassword = sandbox.spy()
+      Gateway.send = sandbox.spy()
       return TrackingActions.encryptPassword('irrelevant', '')(dispatch).then(() => {
         expect(dispatch).to.have.been.calledWithMatch({type: PASSWORD_ENCRYPTED})
         expect(SecurityGateway.encryptPassword).to.not.have.been.called()
@@ -350,9 +343,9 @@ describe('TrackingActionCreators', function () {
     })
 
     it('should abort pending request', function () {
-      SecurityGateway.encryptPassword = sinon.stub().returns({})
-      Gateway.send = sinon.stub().returns(Promise.resolve(''))
-      const pendingRequest = {abort: sinon.spy()}
+      SecurityGateway.encryptPassword = sandbox.stub().returns({})
+      Gateway.send = sandbox.stub().returns(Promise.resolve(''))
+      const pendingRequest = {abort: sandbox.spy()}
       TrackingActions.encryptPassword('irrelevant', 'irrelevant', pendingRequest)(dispatch)
       expect(pendingRequest.abort).to.have.been.called()
     })
@@ -382,15 +375,11 @@ describe('TrackingActionCreators', function () {
   })
 
   describe('add tray', function () {
-    let dispatch
-
-    beforeEach(function () {
-      dispatch = sinon.spy()
-    })
+    const dispatch = sandbox.spy()
 
     it('should dispatch tray added action', function () {
-      ProjectsGateway.fetchAll = sinon.stub().returns({})
-      Gateway.send = sinon.stub().returns(Promise.resolve(''))
+      ProjectsGateway.fetchAll = sandbox.stub().returns({})
+      Gateway.send = sandbox.stub().returns(Promise.resolve(''))
       TrackingActions.addTray()(dispatch)
       expect(dispatch).to.have.been.calledWithMatch({type: TRAY_ADDED})
     })

@@ -8,6 +8,7 @@ import Success from '../../../src/client/monitor/Success'
 import _ from 'lodash'
 
 describe('<Monitor/>', function () {
+  
   const DEFAULT_PROPS = {
     loaded: true,
     errors: null,

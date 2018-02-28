@@ -7,6 +7,7 @@ import Messages from '../../../../src/client/common/messages/Messages'
 import _ from 'lodash'
 
 describe('<AvailableProjects/>', function () {
+
   const DEFAULT_PROPS = {
     trayId: '',
     index: 1,

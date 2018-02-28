@@ -1,20 +1,18 @@
 import {withMockedImports} from '../../TestUtils'
-import {before, beforeEach, describe, it} from 'mocha'
+import {beforeEach, describe, it} from 'mocha'
 import {expect} from 'chai'
-import sinon from 'sinon'
+import {sandbox} from '../../Sandbox'
 
 describe('projects gateway', function () {
 
-  let ProjectsGateway, Gateway
-
-  before(() => {
-    Gateway = {}
-    ProjectsGateway = withMockedImports('client/common/gateways/ProjectsGateway', {'./Gateway': Gateway})
+  const Gateway = {}
+  const ProjectsGateway = withMockedImports('client/common/gateways/ProjectsGateway', {
+    './Gateway': Gateway
   })
 
   beforeEach(() => {
-    Gateway.post = sinon.stub().returns(Promise.resolve())
-    Gateway.fakeResponse = sinon.stub().returns(Promise.resolve())
+    Gateway.post = sandbox.stub().returns(Promise.resolve())
+    Gateway.fakeResponse = sandbox.stub().returns(Promise.resolve())
   })
 
   describe('getting all projects', function () {
@@ -82,11 +80,11 @@ describe('projects gateway', function () {
     it('does not include trays with no selected projects', function () {
       const selected = {'some-tray-id': ['some-project-id'], 'none-selected-id': []}
       const trays = [{trayId: 'some-tray-id'}, {trayId: 'none-selected-id'}]
-      const expected = [sinon.match({trayId: 'some-tray-id'})]
+      const expected = [sandbox.match({trayId: 'some-tray-id'})]
 
       ProjectsGateway.interesting(trays, selected)
 
-      expect(Gateway.post).to.have.been.calledWith('/api/projects/interesting', sinon.match(expected))
+      expect(Gateway.post).to.have.been.calledWith('/api/projects/interesting', sandbox.match(expected))
       expect(Gateway.fakeResponse).to.not.have.been.called()
     })
 

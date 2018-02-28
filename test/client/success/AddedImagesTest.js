@@ -7,6 +7,7 @@ import AddedImages from '../../../src/client/success/AddedImages'
 import _ from 'lodash'
 
 describe('<AddedImages/>', function () {
+
   const DEFAULT_PROPS = {
     urls: [],
     removeMessage: _.noop

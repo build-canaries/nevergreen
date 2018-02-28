@@ -7,6 +7,7 @@ import AvailableProject from '../../../../src/client/tracking/projects/Available
 import _ from 'lodash'
 
 describe('<AvailableProject/>', function () {
+  
   const DEFAULT_PROPS = {
     name: '',
     stage: null,

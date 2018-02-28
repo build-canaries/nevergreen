@@ -1,26 +1,24 @@
 import {withMockedImports} from '../TestUtils'
-import {before, beforeEach, describe, it} from 'mocha'
+import {beforeEach, describe, it} from 'mocha'
 import {expect} from 'chai'
 import Immutable from 'immutable'
-import sinon from 'sinon'
+import {sandbox} from '../Sandbox'
+import _ from 'lodash'
 import {IMPORT_ERROR, IMPORT_SUCCESS, IMPORTING} from '../../../src/client/actions/Actions'
 
 describe('ImportActionCreators', function () {
-  let ImportActions, LocalRepository, Data, Migrations, Gateway, GitHubGateway
 
-  before(function () {
-    LocalRepository = {}
-    Data = {}
-    Migrations = {}
-    Gateway = {}
-    GitHubGateway = {}
-    ImportActions = withMockedImports('client/actions/ImportActionCreators', {
-      '../common/repo/LocalRepository': LocalRepository,
-      '../common/repo/Data': Data,
-      '../common/repo/Migrations': Migrations,
-      '../common/gateways/Gateway': Gateway,
-      '../common/gateways/GitHubGateway': GitHubGateway
-    })
+  const LocalRepository = {}
+  const Data = {}
+  const Migrations = {}
+  const Gateway = {}
+  const GitHubGateway = {}
+  const ImportActions = withMockedImports('client/actions/ImportActionCreators', {
+    '../common/repo/LocalRepository': LocalRepository,
+    '../common/repo/Data': Data,
+    '../common/repo/Migrations': Migrations,
+    '../common/gateways/Gateway': Gateway,
+    '../common/gateways/GitHubGateway': GitHubGateway
   })
 
   describe('importing', function () {
@@ -63,11 +61,12 @@ describe('ImportActionCreators', function () {
   })
 
   describe('import data', function () {
+
     const validJson = '{}'
     let dispatch
 
     beforeEach(function () {
-      dispatch = sinon.spy()
+      dispatch = sandbox.spy()
       Migrations.migrate = (data) => data
       Data.filter = (data) => data
     })
@@ -78,25 +77,24 @@ describe('ImportActionCreators', function () {
     })
 
     it('should dispatch import error action on validation failure', function () {
-      Data.validate = sinon.stub().returns(['some-validation-error'])
+      Data.validate = sandbox.stub().returns(['some-validation-error'])
       ImportActions.importData(validJson)(dispatch)
       expect(dispatch).to.have.been.calledWithMatch({type: IMPORT_ERROR})
     })
 
     it('should dispatch import success action on successful validation', function () {
-      Data.validate = sinon.stub().returns([])
+      Data.validate = sandbox.stub().returns([])
       ImportActions.importData(validJson)(dispatch)
       expect(dispatch).to.have.been.calledWithMatch({type: IMPORT_SUCCESS})
     })
   })
 
   describe('restore from GitHub', function () {
-    let dispatch
+
+    const dispatch = sandbox.spy()
 
     beforeEach(function () {
-      dispatch = sinon.spy()
-      GitHubGateway.getGist = () => {
-      }
+      GitHubGateway.getGist = _.noop
     })
 
     it('should dispatch importing action', function () {

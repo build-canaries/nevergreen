@@ -1,4 +1,4 @@
-import {after, before, beforeEach} from 'mocha'
+import {after, afterEach, before} from 'mocha'
 import getTime from 'date-fns/get_time'
 import lolex from 'lolex'
 
@@ -8,7 +8,8 @@ before(function () {
   clock = lolex.install()
 })
 
-beforeEach(function () {
+afterEach(function () {
+  // reset back to the real system time
   clock.setSystemTime()
 })
 
@@ -18,6 +19,6 @@ after(function () {
 
 export {clock}
 
-export function fixTime(timestamp) {
+export function setSystemTime(timestamp) {
   clock.setSystemTime(getTime(timestamp))
 }

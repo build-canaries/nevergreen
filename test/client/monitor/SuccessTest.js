@@ -7,7 +7,10 @@ import SuccessMessage from '../../../src/client/monitor/SuccessMessage'
 import SuccessImage from '../../../src/client/monitor/SuccessImage'
 
 describe('Monitor <Success/>', function () {
-  const DEFAULT_PROPS = {messages: []}
+
+  const DEFAULT_PROPS = {
+    messages: []
+  }
 
   it('should render text messages', function () {
     const props = {...DEFAULT_PROPS, messages: ['some-message']}

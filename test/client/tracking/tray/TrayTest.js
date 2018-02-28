@@ -6,6 +6,7 @@ import Tray from '../../../../src/client/tracking/tray/Tray'
 import AvailableProjectsContainer from '../../../../src/client/tracking/projects/AvailableProjectsContainer'
 
 describe('<Tray/>', function () {
+
   const DEFAULT_PROPS = {
     trayId: '',
     index: 1,
