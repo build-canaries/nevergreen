@@ -1,6 +1,6 @@
 import {error, info} from './common/Logger'
 
-export function registerServiceWorker() {
+export function registerServiceWorker(notify) {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/service-worker.js').then((registration) => {
       registration.onupdatefound = () => {
@@ -10,7 +10,7 @@ export function registerServiceWorker() {
           switch (installingWorker.state) {
             case 'installed':
               if (navigator.serviceWorker.controller) {
-                info('New or updated content is available')
+                notify('New content is available, refresh to update')
               } else {
                 info('Content is now available offline')
               }

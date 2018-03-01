@@ -5,7 +5,7 @@ import {NOTIFICATION, NOTIFICATION_DISMISS} from './Actions'
 
 const NEVERGREEN_IO_REGEX = /nevergreen\.io/i
 
-export function notification(message) {
+export function notify(message) {
   return {type: NOTIFICATION, message}
 }
 
@@ -20,7 +20,7 @@ export function checkForNewVersion(currentVersion, hostname) {
         const saas = NEVERGREEN_IO_REGEX.test(hostname)
         const additional = saas ? ', refresh to update' : ' to download from GitHub now'
 
-        dispatch(notification(`A new version ${data.tag_name} is available${additional}!`))
+        dispatch(notify(`A new version ${data.tag_name} is available${additional}!`))
       }
     }).catch(_.noop) // We don't care if checking for a new version fails
   }

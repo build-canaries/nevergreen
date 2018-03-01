@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import styles from './notification.scss'
-import {isBlank} from './common/Utils'
+import {isBlank} from '../common/Utils'
 
 class Notification extends Component {
   render() {
@@ -10,15 +10,14 @@ class Notification extends Component {
       [styles.fullscreen]: this.props.fullScreen
     })
 
-    return isBlank(this.props.notification) ? null :
+    return !isBlank(this.props.notification) &&
       <section className={notificationClassNames} aria-live='polite'>
-        <div className={styles.titleBar}>
-          <h2 className={styles.title}>Notification</h2>
-          <button className={styles.dismiss} onClick={this.props.dismiss}>
-            <span>dismiss</span>
-          </button>
-        </div>
-        {this.props.notification}
+        <button className={styles.dismiss}
+                onClick={this.props.dismiss}
+                data-locator='dismiss'>
+          <span>dismiss notification</span>
+        </button>
+        <div className={styles.message} data-locator='notification'>{this.props.notification}</div>
       </section>
   }
 }

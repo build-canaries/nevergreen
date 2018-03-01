@@ -1,8 +1,8 @@
-@import 'common/variables';
-@import 'common/typography';
-@import 'common/fonts/icon-font';
-@import 'common/responsive';
-@import 'common/forms/button';
+@import '../common/variables';
+@import '../common/typography';
+@import '../common/fonts/icon-font';
+@import '../common/responsive';
+@import '../common/forms/button';
 
 $color: $white;
 $background-color: $blue;
@@ -20,12 +20,8 @@ $background-color: $blue;
   display: none;
 }
 
-.titleBar {
-  margin-bottom: 1em;
-}
-
-.title {
-  @include font-scale(0);
+.message {
+  @include font-scale(1);
 
   @extend .icon-notification;
 

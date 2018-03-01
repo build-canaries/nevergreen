@@ -16,12 +16,12 @@ describe('NotificationActionCreators', function () {
   describe('notification', function () {
 
     it('should return the correct type', function () {
-      const actual = NotificationActions.notification()
+      const actual = NotificationActions.notify()
       expect(actual).to.have.property('type', NOTIFICATION)
     })
 
     it('should return the message', function () {
-      const actual = NotificationActions.notification('some-message')
+      const actual = NotificationActions.notify('some-message')
       expect(actual).to.have.property('message', 'some-message')
     })
   })
