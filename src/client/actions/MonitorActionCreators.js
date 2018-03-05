@@ -15,11 +15,15 @@ function byProjectId(existing, newProject) {
   return existing.projectId === newProject.projectId
 }
 
+function wasBuildingPreviousFetch(existingProject) {
+  return !_.isNil(existingProject) && existingProject.thisBuildTime
+}
+
 function addThisBuildTime(project, currentProjects) {
   const existingProject = currentProjects.find((existing) => byProjectId(existing, project))
 
   if (isBuilding(project.prognosis)) {
-    project.thisBuildTime = existingProject
+    project.thisBuildTime = wasBuildingPreviousFetch(existingProject)
       ? existingProject.thisBuildTime
       : project.fetchedTime
   } else {
