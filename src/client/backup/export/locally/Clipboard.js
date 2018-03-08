@@ -1,9 +1,9 @@
 import {Component} from 'react'
 import PropTypes from 'prop-types'
-import Clipboard from 'clipboard'
+import ClipboardJS from 'clipboard'
 
 function createClipboard(elementSelector, onSuccess, onError) {
-  const clipboard = new Clipboard(elementSelector)
+  const clipboard = new ClipboardJS(elementSelector)
 
   clipboard.on('error', (evt) => onError(evt))
 
