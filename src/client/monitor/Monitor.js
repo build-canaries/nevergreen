@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import InterestingProjects from './InterestingProjects'
@@ -8,8 +8,6 @@ import styles from './monitor.scss'
 import Timer from '../common/Timer'
 import _ from 'lodash'
 import Title from '../common/Title'
-
-const ONE_MINUTE = 60
 
 class Monitor extends Component {
   fetch = () => {
@@ -33,20 +31,8 @@ class Monitor extends Component {
 
     if (_.isEmpty(this.props.projects) && _.isEmpty(this.props.errors)) {
       content = <Success messages={this.props.messages}/>
-
     } else {
-      const refreshTooLong = this.props.refreshTime > ONE_MINUTE
-      const anyTimerEnabled = this.props.showBrokenBuildTimers || this.props.showBuildTimers
-      const forceUpdateTimers = refreshTooLong && anyTimerEnabled
-
-      content = (
-        <Fragment>
-          {forceUpdateTimers && <Timer onTrigger={() => this.forceUpdate()}
-                                  interval={ONE_MINUTE}
-                                  data-locator='force-update'/>}
-          <InterestingProjects {...this.props}/>
-        </Fragment>
-      )
+      content = <InterestingProjects {...this.props}/>
     }
 
     return (

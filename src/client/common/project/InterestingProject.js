@@ -13,7 +13,7 @@ import {
   PROGNOSIS_UNKNOWN
 } from '../../domain/Project'
 import VisuallyHidden from '../VisuallyHidden'
-import Duration from './Duration'
+import Duration from '../Duration'
 
 class InterestingProject extends Component {
   render() {
@@ -29,14 +29,22 @@ class InterestingProject extends Component {
       <div className={styles.stage} data-locator='project-stage'> {this.props.stage}</div>
 
     const timeBroken = this.props.showBrokenBuildTimers && sick &&
-      <Duration timestamp={this.props.lastBuildTime}
-                fullDescriptionPrefix=' time broken '
-                data-locator='time-broken'/>
+      <div className={styles.duration}>
+        {' '}
+        <Duration timestamp={this.props.lastBuildTime}
+                  fullDescriptionPrefix=' time broken '
+                  data-locator='time-broken'
+                  abbreviate/>
+      </div>
 
     const timeBuilding = this.props.showBuildTimers && building &&
-      <Duration timestamp={this.props.thisBuildTime}
-                fullDescriptionPrefix=' time building '
-                data-locator='time-building'/>
+      <div className={styles.duration}>
+        {' '}
+        <Duration timestamp={this.props.thisBuildTime}
+                  fullDescriptionPrefix=' time building '
+                  data-locator='time-building'
+                  abbreviate/>
+      </div>
 
     const buildLabel = this.props.showBuildLabel && sick && !isBlank(this.props.lastBuildLabel) &&
       <Fragment>
