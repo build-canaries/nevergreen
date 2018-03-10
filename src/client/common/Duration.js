@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import VisuallyHidden from './VisuallyHidden'
-import {abbreviateDuration, formatDuration} from '../domain/Project'
+import {abbreviateDuration, formatAsDuration} from './DateTime'
 import Timer from './Timer'
 import {isBlank} from './Utils'
 
@@ -10,11 +10,11 @@ const ONE_MINUTE = 60
 class Duration extends Component {
   constructor(props) {
     super(props)
-    this.state = {duration: formatDuration(this.props.timestamp)}
+    this.state = {duration: formatAsDuration(this.props.timestamp)}
   }
 
   updateDuration = () => {
-    this.setState({duration: formatDuration(this.props.timestamp)})
+    this.setState({duration: formatAsDuration(this.props.timestamp)})
   }
 
   formatFullDescription = () => {

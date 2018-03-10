@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Container from '../common/container/Container'
 import DropDown from '../common/forms/DropDown'
 import styles from './timing-settings.scss'
-import {friendlyFormatDuration} from '../common/Utils'
+import {secondsToString} from '../common/DateTime'
 
 class TimingSettings extends Component {
   setRefreshTime = (evt) => {
@@ -15,7 +15,7 @@ class TimingSettings extends Component {
       <Container title='timing' className={styles.container}>
         <DropDown title='poll for tray changes every' value={this.props.refreshTime} onChange={this.setRefreshTime}>
           {this.props.validRefreshTimes.map((time) => {
-            return <option key={time} value={time}>{friendlyFormatDuration(time)}</option>
+            return <option key={time} value={time}>{secondsToString(time)}</option>
           })}
         </DropDown>
       </Container>

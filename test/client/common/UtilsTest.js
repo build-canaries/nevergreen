@@ -1,6 +1,6 @@
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
-import {friendlyFormatDuration, isBlank, isNumber} from '../../../src/client/common/Utils'
+import {isBlank, isNumber} from '../../../src/client/common/Utils'
 import {forNonStrings} from '../TestUtils'
 
 describe('Utils', function () {
@@ -58,29 +58,6 @@ describe('Utils', function () {
       it(`should treat non string value ${friendlyName} as blank`, function () {
         expect(isBlank(val)).to.be.true()
       })
-    })
-  })
-
-  describe('friendly format duration', function () {
-
-    it('should format anything less than a minute as seconds', function () {
-      expect(friendlyFormatDuration(1)).to.equal('1 second')
-      expect(friendlyFormatDuration(59)).to.equal('59 seconds')
-    })
-
-    it('should format anything less than an hour as minutes', function () {
-      expect(friendlyFormatDuration(60)).to.equal('1 minute')
-      expect(friendlyFormatDuration(3599)).to.equal('59 minutes')
-    })
-
-    it('should format anything less than a day as hours', function () {
-      expect(friendlyFormatDuration(3600)).to.equal('1 hour')
-      expect(friendlyFormatDuration(86399)).to.equal('23 hours')
-    })
-
-    it('should format anything larger as days', function () {
-      expect(friendlyFormatDuration(86400)).to.equal('1 day')
-      expect(friendlyFormatDuration(216000)).to.equal('2 days')
     })
   })
 })

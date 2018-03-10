@@ -1,10 +1,7 @@
 import {expect} from 'chai'
 import {describe, it} from 'mocha'
-import {setSystemTime} from '../FakeTimers'
 import {
-  abbreviateDuration,
   formatBuildLabel,
-  formatDuration,
   isBuilding,
   isSick,
   PROGNOSIS_HEALTHY_BUILDING,
@@ -16,54 +13,8 @@ import {forNonStrings, forUndisplayablesStrings} from '../TestUtils'
 
 describe('Project', function () {
 
-  describe('format duration', function () {
-
-    forUndisplayablesStrings((value, friendlyName) => {
-      it(`should return "unknown" for undisplayble string value ${friendlyName}`, function () {
-        expect(formatDuration(value)).to.equal('unknown')
-      })
-    })
-
-    forNonStrings((value, friendlyName) => {
-      it(`should return "unknown" for non string value ${friendlyName}`, function () {
-        expect(formatDuration(value)).to.equal('unknown')
-      })
-    })
-
-    it('should return the duration for a valid date timestamp', function () {
-      setSystemTime('2018-02-18T23:38:00Z')
-      expect(formatDuration('2018-02-18T22:38:00.000Z')).to.equal('about 1 hour')
-    })
-  })
-
-  describe('abbreviate duration', function () {
-
-    const abbreviatedTests = [
-      {value: 'unknown', expected: '??'},
-      {value: 'less than a minute', expected: '<1m'},
-      {value: 'about 1 minute', expected: '1m'},
-      {value: 'almost 7 minutes', expected: '7m'},
-      {value: 'about 1 hour', expected: '1h'},
-      {value: 'over 3 hours', expected: '>3h'},
-      {value: 'almost 1 day', expected: '1d'},
-      {value: '1 month', expected: '1mo'},
-      {value: '3 years', expected: '3y'}
-    ]
-
-    abbreviatedTests.forEach((args) => {
-      it(`should return "${args.expected}" when "${args.value}"`, function () {
-        expect(abbreviateDuration(args.value)).to.equal(args.expected)
-      })
-    })
-
-    forUndisplayablesStrings((value, friendlyName) => {
-      it(`should return an empty string for invalid value ${friendlyName}`, function () {
-        expect(abbreviateDuration(value)).to.equal('')
-      })
-    })
-  })
-
   describe('format build label', function () {
+
     forUndisplayablesStrings((value, friendlyName) => {
       it(`should return empty string for undisplayable value ${friendlyName}`, function () {
         expect(formatBuildLabel(value)).to.equal('')
@@ -90,6 +41,7 @@ describe('Project', function () {
   })
 
   describe('is sick', function () {
+
     it('should be true when sick', function () {
       expect(isSick(PROGNOSIS_SICK)).to.be.true()
     })
@@ -120,6 +72,7 @@ describe('Project', function () {
   })
 
   describe('is building', function () {
+
     it('should be true when healthy building', function () {
       expect(isBuilding(PROGNOSIS_HEALTHY_BUILDING)).to.be.true()
     })
