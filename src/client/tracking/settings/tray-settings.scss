@@ -11,7 +11,7 @@
   display: block;
 
   @include respond-to(tablet, desktop) {
-    span {
+    div {
       width: 5em;
     }
 
@@ -26,7 +26,7 @@
   @include respond-to(tablet, desktop) {
     display: flex;
 
-    span {
+    div {
       width: 5em;
     }
 
@@ -82,8 +82,14 @@
   margin-top: 1em;
 
   @include respond-to(tablet, desktop) {
-    margin-left: 1em;
     margin-top: 0;
+  }
+}
+
+.delete,
+.update {
+  @include respond-to(tablet, desktop) {
+    margin-left: 1em;
   }
 }
 

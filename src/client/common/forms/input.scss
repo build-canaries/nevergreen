@@ -4,6 +4,10 @@
 @import '../accessibility';
 @import '../fonts/icon-font';
 
+$margin-top: 0.5em;
+$margin-right: 1em;
+$padding: 0.5em;
+
 .label {
   display: block;
   position: relative;
@@ -21,7 +25,7 @@
   display: inline-block;
 
   @include respond-to(tablet, desktop) {
-    margin-right: 1em;
+    margin-right: $margin-right;
   }
 }
 
@@ -30,8 +34,8 @@
 
   border: 1px solid $light-grey;
   border-radius: 2px;
-  margin-top: 0.5em;
-  padding: 0.5em;
+  margin-top: $margin-top;
+  padding: $padding;
   width: 100%;
 
   &:invalid {
@@ -55,7 +59,7 @@
   }
 
   @include respond-to(tablet, desktop) {
-    margin-right: 1em;
+    margin-right: $margin-right;
     margin-top: 0;
     width: auto;
   }
@@ -65,12 +69,14 @@
   @extend .icon;
   @extend .icon-lock;
 
+  @include font-scale(1);
+
+  margin-top: $margin-top + $padding;
   position: absolute;
-  right: 1em;
-  top: 4.4em;
+  right: $padding;
 
   @include respond-to(tablet, desktop) {
-    right: 2em;
-    top: 2.5em;
+    margin-top: $margin-top;
+    right: $margin-right+ $padding;
   }
 }

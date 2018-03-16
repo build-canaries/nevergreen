@@ -38,7 +38,7 @@ class Input extends Component {
 
     return (
       <label className={labelClasses}>
-        <span className={styles.description}>{this.props.children}</span>
+        <div className={styles.description}>{this.props.children}</div>
         <input className={styles.input}
                onKeyPress={this.onEnter}
                spellCheck={false}
