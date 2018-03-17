@@ -23,14 +23,6 @@
   text-transform: none;
 }
 
-.icon-clock::before {
-  content: '\e94e';
-}
-
-.icon-drawer2::before {
-  content: '\e95d';
-}
-
 .icon-floppy-disk::before {
   content: '\e962';
 }
@@ -39,7 +31,7 @@
   content: '\e994';
 }
 
-.icon-list::before {
+.icon-list2::before {
   content: '\e9ba';
 }
 
@@ -91,10 +83,6 @@
   content: '\eab4';
 }
 
-.icon-IcoMoon::before {
-  content: '\eaea';
-}
-
 .icon-dice::before {
   content: '\e915';
 }
@@ -131,10 +119,6 @@
   content: '\e9c3';
 }
 
-.icon-eye-plus::before {
-  content: '\e9cf';
-}
-
 .icon-plus::before {
   content: '\ea0a';
 }
@@ -145,6 +129,22 @@
 
 .icon-stop2::before {
   content: '\ea1e';
+}
+
+.icon-display::before {
+  content: '\e956';
+}
+
+.icon-list::before {
+  content: '\e9bb';
+}
+
+.icon-eye-blocked::before {
+  content: '\e9d1';
+}
+
+.icon-hipster::before {
+  content: '\e9f9';
 }
 
 .icon-circle::before {
