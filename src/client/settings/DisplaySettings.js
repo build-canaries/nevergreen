@@ -46,7 +46,8 @@ class DisplaySettings extends Component {
     return (
       <Container title='display' className={styles.container}>
         <div className={styles.checkboxes}>
-          <Checkbox checked={this.props.showTrayName}
+          <Checkbox className={styles.showTrayName}
+                    checked={this.props.showTrayName}
                     onToggle={this.toggleTrayName}
                     data-locator='show-tray-names'>
             show tray name
@@ -67,7 +68,7 @@ class DisplaySettings extends Component {
             show broken build label
           </Checkbox>
         </div>
-        <section>
+        <section className={styles.previewSection}>
           <h4 className={styles.title}>Preview</h4>
           <div className={styles.displayPreview}>
             <ScaledGrid>

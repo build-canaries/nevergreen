@@ -37,28 +37,29 @@ class AddTray extends Component {
     return (
       <div className={styles.addTray}>
         <div className={styles.inputs}>
-          <Input className={styles.trackingTrayUrl}
+          <Input className={styles.url}
                  placeholder='CCTray XML file'
                  value={this.state.url}
                  onChange={this.updateUrl}
                  onEnter={this.addTray}
                  data-locator='add-tray-url'
                  autoFocus>
-            URL
+            <div className={styles.label}>URL</div>
           </Input>
           <Input className={styles.username}
                  value={this.state.username}
                  onChange={this.updateUsername}
                  onEnter={this.addTray}
                  data-locator='add-tray-username'>
-            username
+            <div className={styles.label}>username</div>
           </Input>
-          <Input className={styles.password}
+          <Input type='password'
+                 className={styles.password}
                  value={this.state.password}
                  onChange={this.updatePassword}
                  onEnter={this.addTray}
                  data-locator='add-tray-password'>
-            password
+            <div className={styles.label}>password</div>
           </Input>
         </div>
         <button className={styles.add} onClick={this.addTray} data-locator='add-tray'>add</button>

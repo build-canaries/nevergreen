@@ -4,39 +4,58 @@
 @import '../accessibility';
 @import '../fonts/icon-font';
 
-$margin-top: 0.5em;
-$margin-right: 1em;
 $padding: 0.5em;
+$font-scale: 1;
 
 .label {
-  display: block;
-  position: relative;
+  align-content: flex-start;
+  align-items: baseline;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-top: $margin-top;
   width: 100%;
 
   @include respond-to(tablet, desktop) {
-    display: inline-block;
+    flex-direction: row;
     width: auto;
   }
 }
 
 .description {
-  @include font-scale(1);
+  @include font-scale($font-scale);
 
-  display: inline-block;
+  display: block;
 
   @include respond-to(tablet, desktop) {
+    display: inline-block;
     margin-right: $margin-right;
   }
 }
 
-.input {
-  @include font-scale(1);
-
-  border: 1px solid $light-grey;
-  border-radius: 2px;
-  margin-top: $margin-top;
-  padding: $padding;
+.wrapper {
+  align-items: normal;
+  display: flex;
+  flex-grow: 1;
+  margin-top: 0.5em;
   width: 100%;
+
+  @include respond-to(tablet, desktop) {
+    display: inline-flex;
+    margin-top: 0;
+    width: auto;
+  }
+}
+
+.input {
+  @include font-scale($font-scale);
+
+  border: $input-border;
+  border-radius: 2px;
+  flex-grow: 1;
+  padding: $padding;
+  text-overflow: ellipsis;
 
   &:invalid {
     border-color: $error;
@@ -57,26 +76,44 @@ $padding: 0.5em;
       @include interactive($darken-on-focus: false);
     }
   }
+}
 
-  @include respond-to(tablet, desktop) {
-    margin-right: $margin-right;
-    margin-top: 0;
-    width: auto;
-  }
+.password {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+
+%icon {
+  @extend .icon;
+
+  @include font-scale($font-scale);
+
+  border: $input-border;
+  border-bottom-right-radius: 2px;
+  border-left: none;
+  border-top-right-radius: 2px;
+  padding: $padding;
+}
+
+%passwordVisibility {
+  @extend %icon;
+
+  @include interactive();
+
+  cursor: pointer;
 }
 
 .readOnly {
-  @extend .icon;
   @extend .icon-lock;
+  @extend %icon;
+}
 
-  @include font-scale(1);
+.showPassword {
+  @extend .icon-eye;
+  @extend %passwordVisibility;
+}
 
-  margin-top: $margin-top + $padding;
-  position: absolute;
-  right: $padding;
-
-  @include respond-to(tablet, desktop) {
-    margin-top: $margin-top;
-    right: $margin-right+ $padding;
-  }
+.hidePassword {
+  @extend .icon-eye-blocked;
+  @extend %passwordVisibility;
 }

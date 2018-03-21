@@ -3,57 +3,56 @@
 @import '../common/responsive';
 
 .addTray {
+  align-items: start;
   background-color: $white;
   box-shadow: $shadow;
+  display: flex;
+  flex-wrap: wrap;
   margin-bottom: 1em;
   padding: 1em;
-  position: relative;
 
-  .add {
-    @include button();
-    @include button-icon('plus');
+  @include respond-to(tablet, desktop) {
+    flex-wrap: nowrap;
+  }
+}
 
-    display: block;
-    margin-top: 1em;
+.add {
+  @include button();
+  @include button-icon('plus');
+
+  margin-top: 1.5em;
+
+  @include respond-to(tablet, desktop) {
+    margin-top: 0;
+  }
+}
+
+.inputs {
+  flex-grow: 1;
+
+  @include respond-to(tablet, desktop) {
+    margin-right: 1em;
+  }
+}
+
+.label {
+  @include respond-to(tablet, desktop) {
+    width: 5em;
+  }
+}
+
+.url {
+  margin-top: 0;
+
+  @include respond-to(tablet, desktop) {
     width: 100%;
-
-    @include respond-to(tablet, desktop) {
-      position: absolute;
-      right: 1em;
-      top: 0;
-      width: 7em;
-    }
   }
+}
 
-  .inputs {
-    @include respond-to(tablet, desktop) {
-      margin-right: 7em;
-    }
-  }
-
-  .trackingTrayUrl,
-  .username,
-  .password {
-    display: block;
-    width: 100%;
-
-    @include respond-to(tablet, desktop) {
-      align-items: baseline;
-      display: flex;
-
-      input {
-        flex-grow: 1;
-      }
-    }
-  }
-
-  .username,
-  .password {
-    margin-top: 1.5em;
-
-    @include respond-to(tablet, desktop) {
-      display: inline-block;
-      width: auto;
-    }
+.username,
+.password {
+  @include respond-to(tablet, desktop) {
+    display: inline-flex;
+    margin-right: 1em;
   }
 }

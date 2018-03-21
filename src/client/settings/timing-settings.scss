@@ -1,3 +1,14 @@
+@import '../common/responsive';
+@import '../common/layout';
+
 .container {
   padding: 1em;
+}
+
+.refreshTime {
+  @extend %firstInput;
+
+  @include respond-to(tablet, desktop) {
+    width: 30em;
+  }
 }

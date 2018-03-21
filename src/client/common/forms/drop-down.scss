@@ -4,11 +4,17 @@
 @import '../accessibility';
 
 .dropDown {
-  display: block;
+  align-content: flex-start;
+  align-items: baseline;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-top: $margin-top;
   width: 100%;
 
   @include respond-to(tablet, desktop) {
-    display: inline-block;
+    flex-direction: row;
     width: auto;
   }
 }
@@ -16,10 +22,11 @@
 .label {
   @include font-scale(1);
 
-  display: inline-block;
+  display: block;
 
   @include respond-to(tablet, desktop) {
-    margin: 0.5em 1em 0.5em 0;
+    display: inline-block;
+    margin-right: $margin-right;
   }
 }
 
@@ -27,10 +34,10 @@
   @include font-scale(1);
 
   background-color: $white;
-  border: 1px solid $light-grey;
+  border: $input-border;
   border-radius: 2px;
+  flex-grow: 1;
   margin-top: 0.5em;
-  padding: 0.25em 0.5em;
   width: 100%;
 
   &:enabled {

@@ -13,7 +13,10 @@ class TimingSettings extends Component {
   render() {
     return (
       <Container title='timing' className={styles.container}>
-        <DropDown title='poll for tray changes every' value={this.props.refreshTime} onChange={this.setRefreshTime}>
+        <DropDown className={styles.refreshTime}
+                  title='poll for tray changes every'
+                  value={this.props.refreshTime}
+                  onChange={this.setRefreshTime}>
           {this.props.validRefreshTimes.map((time) => {
             return <option key={time} value={time}>{secondsToString(time)}</option>
           })}

@@ -79,14 +79,17 @@ class AudioSettings extends Component {
 
     return (
       <Container title='audio' className={styles.container}>
-        <Checkbox checked={this.props.playBrokenBuildSoundFx}
-                  onToggle={this.toggleBrokenSounds}
-                  data-locator='play-sounds'>
-          play a sound when a build breaks
-        </Checkbox>
+        <div className={styles.checkboxWrapper}>
+          <Checkbox className={styles.playSfxs}
+                    checked={this.props.playBrokenBuildSoundFx}
+                    onToggle={this.toggleBrokenSounds}
+                    data-locator='play-sounds'>
+            play a sound when a build breaks
+          </Checkbox>
+        </div>
         <div className={styles.soundFx}>
           <Input type='url'
-                 className={styles.soundFxInput}
+                 className={styles.brokenBuildSfx}
                  placeholder='audio file URL'
                  onChange={this.updateSoundFx}
                  value={this.state.soundFx}
@@ -103,7 +106,9 @@ class AudioSettings extends Component {
             {this.state.playing ? 'stop' : 'play'}
           </button>
         </div>
-        <Messages className={styles.playbackErrors} type='error' messages={this.state.errors}/>
+        <Messages className={styles.playbackErrors}
+                  type='error'
+                  messages={this.state.errors}/>
       </Container>
     )
   }

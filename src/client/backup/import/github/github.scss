@@ -2,6 +2,7 @@
 @import '../../../common/forms/button';
 @import '../../../common/typography';
 @import '../../../common/responsive';
+@import '../../../common/layout';
 
 .import {
   @include button();
@@ -11,15 +12,9 @@
 }
 
 .gistId {
+  @extend %firstInput;
+
   @include respond-to(tablet, desktop) {
-    display: block;
-
-    span {
-      width: 6em;
-    }
-
-    input {
-      width: 32rem;
-    }
+    width: 27em;
   }
 }

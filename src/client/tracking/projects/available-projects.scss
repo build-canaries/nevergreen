@@ -2,6 +2,7 @@
 @import '../../common/forms/button';
 @import '../../common/responsive';
 @import '../../common/accessibility';
+@import '../../common/layout';
 
 .availableProjects {
   display: inline-block;
@@ -46,37 +47,28 @@
   }
 }
 
-.controls {
-  padding-bottom: 1em;
-}
-
 .buildItems {
   display: block;
   list-style: none;
-  margin-bottom: -1em;
   overflow: hidden;
   width: 100%;
 }
 
 .projectFilter {
+  @extend %firstInput;
+
   display: block;
-  margin-top: 1em;
   width: 100%;
 
   @include respond-to(tablet, desktop) {
     display: inline-block;
-    margin-top: 0;
     width: auto;
   }
 }
 
 .projectFilterInput {
-  span {
-    color: $mid-grey;
-  }
-
   @include respond-to(tablet, desktop) {
-    padding-top: 0;
+    margin-top: 0;
   }
 }
 

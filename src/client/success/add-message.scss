@@ -3,32 +3,30 @@
 @import '../common/responsive';
 
 .addMessage {
+  align-items: start;
   background-color: $white;
   box-shadow: $shadow;
+  display: flex;
+  flex-wrap: wrap;
   margin-bottom: 1em;
   padding: 1em;
 
   @include respond-to(tablet, desktop) {
-    align-items: baseline;
-    display: flex;
+    flex-wrap: nowrap;
   }
 }
 
 .addMessageInput {
+  flex-grow: 1;
+  margin-top: 0;
+
   input {
     font-family: $monospace-font;
     width: 100%;
   }
 
   @include respond-to(tablet, desktop) {
-    align-items: baseline;
-    display: flex;
-    flex-grow: 1;
-
-    input {
-      flex-grow: 1;
-      width: auto;
-    }
+    margin-right: 1em;
   }
 }
 
@@ -39,7 +37,6 @@
   margin-top: 1em;
 
   @include respond-to(tablet, desktop) {
-    margin-left: 1em;
     margin-top: 0;
   }
 }

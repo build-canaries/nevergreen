@@ -3,52 +3,33 @@
 @import '../../common/typography';
 @import '../../common/fonts/icon-font';
 @import '../../common/forms/button';
+@import '../../common/layout';
 
-.traySettingsName,
-.traySettingsUsername,
-.existingPassword,
-.serverType {
-  display: block;
-
+.label {
   @include respond-to(tablet, desktop) {
-    div {
-      width: 5em;
-    }
-
-    input,
-    select {
-      width: 15em;
-    }
+    width: 5em;
   }
 }
 
-.traySettingsUrl {
+.traySettingsName {
+  @extend %firstInput;
+}
+
+.traySettingsName,
+.serverType,
+.traySettingsUsername,
+.existingPassword {
   @include respond-to(tablet, desktop) {
-    display: flex;
-
-    div {
-      width: 5em;
-    }
-
-    input {
-      flex-grow: 1;
-      width: auto;
-    }
+    width: 25em;
   }
 }
 
 .traySettingsName,
 .existingPassword {
   @include respond-to(tablet, desktop) {
-    display: inline-block;
+    display: inline-flex;
+    margin-right: 1em;
   }
-}
-
-.traySettingsUrl,
-.traySettingsUsername,
-.existingPassword,
-.serverType {
-  padding-top: 1.5em;
 }
 
 .dangerZone {

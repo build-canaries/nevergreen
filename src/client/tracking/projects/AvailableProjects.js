@@ -67,7 +67,7 @@ class AvailableProjects extends Component {
     })
 
     const controls = (
-      <div className={styles.controls}>
+      <div>
         <fieldset className={styles.toggles}>
           <legend className={styles.legend}>Available projects</legend>
           <button className={styles.includeAll}

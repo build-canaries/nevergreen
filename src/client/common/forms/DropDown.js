@@ -11,7 +11,7 @@ class DropDown extends Component {
 
     return (
       <label className={labelClasses}>
-        <span className={styles.label}>{this.props.title}</span>
+        <div className={styles.label}>{this.props.title}</div>
         <select className={styles.input} {...inputProps}>
           {this.props.children}
         </select>
@@ -21,11 +21,8 @@ class DropDown extends Component {
 }
 
 DropDown.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.element),
-    PropTypes.element
-  ]).isRequired,
-  title: PropTypes.string,
+  children: PropTypes.node.isRequired,
+  title: PropTypes.node.isRequired,
   className: PropTypes.string
 }
 

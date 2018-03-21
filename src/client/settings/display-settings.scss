@@ -1,15 +1,24 @@
 @import '../common/variables';
+@import '../common/layout';
 
 .container {
   padding: 1em;
+}
+
+.title {
+  padding-bottom: 1em;
 }
 
 .checkboxes {
   display: inline-block;
 }
 
-.title {
-  padding-bottom: 1em;
+.showTrayName {
+  @extend %firstInput;
+}
+
+.previewSection {
+  margin-top: 1em;
 }
 
 .displayPreview {

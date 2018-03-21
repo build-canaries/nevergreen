@@ -103,7 +103,7 @@ class TraySettings extends Component {
                placeholder='e.g. project or team name'
                data-locator='tray-name'
                autoFocus>
-          name
+          <div className={styles.label}>name</div>
         </Input>
         <button className={styles.random}
                 onClick={this.generateNewName}
@@ -115,7 +115,7 @@ class TraySettings extends Component {
                onChange={this.urlChanged}
                onBlur={this.setUrl}
                onEnter={this.setUrl}>
-          URL
+          <div className={styles.label}>URL</div>
         </Input>
         <DropDown className={styles.serverType}
                   title='server type'
@@ -138,15 +138,16 @@ class TraySettings extends Component {
                onChange={this.usernameChanged}
                onBlur={this.setUsername}
                onEnter={this.setUsername}>
-          username
+          <div className={styles.label}>username</div>
         </Input>
-        <Input className={styles.existingPassword}
+        <Input type='password'
+               className={styles.existingPassword}
                value={password}
                onChange={this.passwordChanged}
                onEnter={this.setPassword}
                readOnly={!this.state.updatingPassword}
                focus={this.state.updatingPassword}>
-          password
+          <div className={styles.label}>password</div>
         </Input>
         {this.state.updatingPassword
           ? <Fragment>

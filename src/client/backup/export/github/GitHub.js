@@ -49,19 +49,20 @@ class GitHub extends Component {
 
     return (
       <Fragment>
-        <Input className={styles.oauthToken}
+        <Input type='password'
+               className={styles.accessToken}
                onChange={this.oauthTokenChanged}
                onBlur={this.oauthTokenChanged}
                value={this.state.oauthToken}
                disabled={disabled}>
-          access token
+          <div className={styles.label}>access token</div>
         </Input>
-        <Input className={styles.description}
-               value={this.state.description}
+        <Input value={this.state.description}
                onChange={this.descriptionChanged}
                onBlur={this.setDescription}
-               disabled={disabled}>
-          description
+               disabled={disabled}
+               maxLength='256'>
+          <div className={styles.label}>description</div>
         </Input>
         <Input className={styles.gistId}
                value={this.state.gistId}
@@ -69,9 +70,13 @@ class GitHub extends Component {
                onBlur={this.setGistId}
                placeholder='leave blank to create a new gist'
                disabled={disabled}>
-          gist ID
+          <div className={styles.label}>gist ID</div>
         </Input>
-        <button className={styles.export} onClick={this.upload} disabled={disabled}>export</button>
+        <button className={styles.export}
+                onClick={this.upload}
+                disabled={disabled}>
+          export
+        </button>
       </Fragment>
     )
   }

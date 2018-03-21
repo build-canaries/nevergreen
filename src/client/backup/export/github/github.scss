@@ -1,5 +1,5 @@
 @import '../../../common/forms/button';
-@import '../../../common/responsive';
+@import '../../../common/layout';
 
 .export {
   @include button();
@@ -8,39 +8,20 @@
   margin-top: 1.5em;
 }
 
-.oauthToken,
-.gistId {
-  @include respond-to(tablet, desktop) {
-    display: block;
+.label {
+  width: 6em;
+}
 
-    input {
-      width: 32rem;
-    }
+.accessToken {
+  @extend %firstInput;
+
+  @include respond-to(tablet, desktop) {
+    width: 36em;
   }
 }
 
-.description {
-  @include respond-to(tablet, desktop) {
-    align-items: center;
-    display: flex;
-
-    input {
-      flex: 1;
-    }
-  }
-}
-
-.description,
-.gistId {
-  padding-top: 1.5em;
-}
-
-.oauthToken,
-.description,
 .gistId {
   @include respond-to(tablet, desktop) {
-    span {
-      width: 6em;
-    }
+    width: 31em;
   }
 }

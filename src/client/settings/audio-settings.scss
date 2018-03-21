@@ -1,26 +1,36 @@
 @import '../common/forms/button';
 @import '../common/responsive';
+@import '../common/layout';
 
 .container {
   padding: 1em;
 }
 
+.checkboxWrapper {
+  display: inline-block;
+}
+
+.playSfxs {
+  @extend %firstInput;
+}
+
 .soundFx {
+  align-items: start;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 1.5em;
+
   @include respond-to(tablet, desktop) {
-    align-items: baseline;
-    clear: both;
-    display: flex;
+    flex-wrap: nowrap;
+  }
+}
 
-    .soundFxInput {
-      align-items: baseline;
-      display: flex;
-      flex-grow: 1;
+.brokenBuildSfx {
+  flex-grow: 1;
+  margin-top: 0;
 
-      input {
-        flex-grow: 1;
-        width: auto;
-      }
-    }
+  @include respond-to(tablet, desktop) {
+    margin-right: 1em;
   }
 }
 
@@ -30,7 +40,6 @@
   margin-top: 1em;
 
   @include respond-to(tablet, desktop) {
-    margin-left: 1em;
     margin-top: 0;
   }
 }

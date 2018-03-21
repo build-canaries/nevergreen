@@ -15,4 +15,6 @@ rules:
        - content
        - each
        - if
+       - function
+       - return
   order/properties-alphabetical-order: true

@@ -30,6 +30,7 @@ $version-color: #26619c;
 $shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
 $focus-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.26);
 $color-change-percentage: 8%;
+$input-border: 1px solid $light-grey;
 
 // Bourbon Neat grid
 
@@ -40,3 +41,8 @@ $visual-grid-index: front;
 $visual-grid-color: $blue;
 $grid-unit: 1em;
 $gutter: 1em;
+
+// Margins
+
+$margin-top: 1.5em;
+$margin-right: 1em;
