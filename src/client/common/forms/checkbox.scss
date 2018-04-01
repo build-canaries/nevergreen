@@ -2,13 +2,18 @@
 @import '../typography';
 @import '../accessibility';
 
+.container {
+  display: inline-block;
+  margin: $margin-right $margin-top 0 0;
+}
+
 .checkbox {
   @include font-scale(1);
 
   clear: left;
   display: block;
   float: left;
-  margin-top: $margin-top;
+  line-height: initial;
   padding: 0 0 0 36px;
   position: relative;
 }

@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import Container from '../common/container/Container'
 import styles from './help.scss'
@@ -12,7 +12,7 @@ class Help extends Component {
 
   render() {
     return (
-      <div className={styles.help}>
+      <Fragment>
         <Title>Help</Title>
 
         <Container title='Tracking' className={styles.container}>
@@ -45,7 +45,7 @@ class Help extends Component {
         <Container title='Success' className={styles.container}>
           <p>You can add text or image URLs, these will get displayed when no projects are broken or building on the monitor page. Images are previewed in a 16:9 ratio which is how they would look on a full HD TV (1920x1080).</p>
           <p>Need some inspiration?</p>
-          <p>Try searching for some <ExternalLink href='https://duckduckgo.com/?q=nature+1920x1080&iax=1&ia=images'>nice images</ExternalLink> or checkout <ExternalLink href='http://www.disapprovallook.com/'>Disapproval Look</ExternalLink> for some fun messages, like jelly guy! ༼ つ◕_◕ ༽つ</p>
+          <p>Try searching for some <ExternalLink href='https://duckduckgo.com/?q=nature+1920x1080&iax=1&ia=images'>nice images</ExternalLink> or checkout <ExternalLink href='http://www.disapprovallook.com/'>Disapproval Look</ExternalLink> for some fun messages, like jelly guy! ༼&nbsp;つ◕_◕&nbsp;༽つ</p>
         </Container>
 
         <Container title='Backup' className={styles.container}>
@@ -150,7 +150,7 @@ class Help extends Component {
           <p>Icons generated using the <ExternalLink href='https://icomoon.io/'>IcoMoon App</ExternalLink> and are licensed under <ExternalLink href='https://www.gnu.org/licenses/gpl.html'>GNU General Public License (GPL)</ExternalLink> / <ExternalLink href='https://creativecommons.org/licenses/by/4.0/'>Creative Commons Attribution 4.0 International (CC BY 4.0)</ExternalLink></p>
           <p><ExternalLink href='http://www.orangefreesounds.com/pacman-death-sound/'>&quot;Pacman Death Sound&quot; by Alexander</ExternalLink> is licensed under <ExternalLink href='https://creativecommons.org/licenses/by-nc/4.0/'>Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)</ExternalLink></p>
         </Container>
-      </div>
+      </Fragment>
     )
   }
 }

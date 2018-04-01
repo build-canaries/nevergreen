@@ -8,21 +8,3 @@ $modularscale: (
 @mixin font-scale($value) {
   font-size: ms($value);
 }
-
-h1 {
-  @include font-scale(4);
-}
-
-h2 {
-  @include font-scale(3);
-}
-
-h3 {
-  @include font-scale(2);
-}
-
-h4,
-h5,
-h6 {
-  @include font-scale(1);
-}

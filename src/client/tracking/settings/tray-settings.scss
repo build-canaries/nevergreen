@@ -3,25 +3,22 @@
 @import '../../common/typography';
 @import '../../common/fonts/icon-font';
 @import '../../common/forms/button';
+@import '../../common/forms/forms';
 @import '../../common/layout';
 
 .label {
-  @include respond-to(tablet, desktop) {
-    width: 5em;
-  }
+  @include fixedWidth(5em);
 }
 
 .traySettingsName {
-  @extend %firstInput;
+  @extend %first;
 }
 
 .traySettingsName,
 .serverType,
 .traySettingsUsername,
 .existingPassword {
-  @include respond-to(tablet, desktop) {
-    width: 25em;
-  }
+  @include fixedWidth(25em);
 }
 
 .traySettingsName,

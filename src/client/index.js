@@ -18,6 +18,7 @@ import SuccessContainer from './success/SuccessContainer'
 import SettingsContainer from './settings/SettingsContainer'
 import BackupContainer from './backup/BackupContainer'
 import HelpContainer from './help/HelpContainer'
+import StyleGuide from './styleGuide/StyleGuide'
 import _ from 'lodash'
 
 const ONE_SECOND = 1000
@@ -55,6 +56,7 @@ ReactDOM.render(
           <Route exact path='/settings' component={SettingsContainer}/>
           <Route exact path='/backup' component={BackupContainer}/>
           <Route exact path='/help' component={HelpContainer}/>
+          <Route exact path='/style-guide' component={StyleGuide}/>
           <Route component={TrackingContainer}/>
         </Switch>
       </NevergreenContainer>

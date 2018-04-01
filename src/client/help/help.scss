@@ -6,12 +6,10 @@
 @import '../common/fonts/icon-font';
 
 .container {
-  padding: 0 1em 1em;
-}
+  padding: 1em;
 
-.help {
-  p {
-    padding-top: 1em;
+  & > *:first-child {
+    @extend %first;
   }
 }
 
@@ -38,16 +36,6 @@
   @extend .icon-twitter3;
 }
 
-.helpTrackingTable {
-  display: block;
-  overflow-y: scroll;
-  width: 100%;
-
-  tr:nth-child(even) {
-    background-color: $light-grey;
-  }
-}
-
 .binding {
   @include font-scale(-1);
 
@@ -55,13 +43,13 @@
   border: $mid-grey 1px solid;
   border-radius: 5px;
   color: $off-black;
-  font-family: $monospace-font;
   padding: 0.1em 0.3em;
 }
 
 .keyboardShortcuts {
+  @extend .container;
+
   display: none;
-  padding: 1em;
 
   @include respond-to(tablet, desktop) {
     display: block;
@@ -69,13 +57,7 @@
 }
 
 .helpShortcutTable {
-  @extend .helpTrackingTable;
-
   padding-top: 1em;
-
-  td {
-    padding: 0.3em 0;
-  }
 }
 
 .url {

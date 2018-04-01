@@ -3,15 +3,16 @@ import PropTypes from 'prop-types'
 import _ from 'lodash'
 import classNames from 'classnames'
 import styles from './drop-down.scss'
+import formStyles from './forms.scss'
 
 class DropDown extends Component {
   render() {
     const inputProps = _.omit(this.props, ['children', 'title', 'className'])
-    const labelClasses = classNames(styles.dropDown, this.props.className)
+    const labelClasses = classNames(formStyles.inputContainer, this.props.className)
 
     return (
       <label className={labelClasses}>
-        <div className={styles.label}>{this.props.title}</div>
+        <div className={formStyles.inputLabel}>{this.props.title}</div>
         <select className={styles.input} {...inputProps}>
           {this.props.children}
         </select>

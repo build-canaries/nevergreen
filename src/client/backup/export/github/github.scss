@@ -13,7 +13,7 @@
 }
 
 .accessToken {
-  @extend %firstInput;
+  @extend %first;
 
   @include respond-to(tablet, desktop) {
     width: 36em;

@@ -1,0 +1,24 @@
+@import '../common/variables';
+@import '../common/layout';
+
+.section {
+  background-color: $white;
+  margin-top: 1em;
+  padding: 1em;
+}
+
+.content {
+  margin-top: 1em;
+}
+
+.fixedWidth {
+  @include fixedWidth(35em);
+}
+
+.fixedLabel {
+  @include fixedWidth(8em);
+}
+
+.newLineCheckbox {
+  width: 100%;
+}

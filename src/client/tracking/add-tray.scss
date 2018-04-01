@@ -1,6 +1,7 @@
 @import '../common/variables';
 @import '../common/forms/button';
 @import '../common/responsive';
+@import '../common/layout';
 
 .addTray {
   align-items: start;
@@ -36,9 +37,7 @@
 }
 
 .label {
-  @include respond-to(tablet, desktop) {
-    width: 5em;
-  }
+  @include fixedWidth(5em);
 }
 
 .url {

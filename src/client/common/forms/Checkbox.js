@@ -10,19 +10,21 @@ class Checkbox extends Component {
   }
 
   render() {
-    const classes = classNames(styles.checkbox, this.props.className)
+    const classes = classNames(styles.container, this.props.className)
     const inputProps = _.omit(this.props, ['children', 'onToggle', 'className'])
     const id = _.uniqueId()
 
     return (
       <div className={classes}>
-        <input id={id}
-               className={styles.input}
-               type='checkbox'
-               onChange={this.onChange}
-               {...inputProps}
-               aria-disabled={this.props.disabled}/>
-        <label htmlFor={id} className={styles.children}>{this.props.children}</label>
+        <div className={styles.checkbox}>
+          <input id={id}
+                 className={styles.input}
+                 type='checkbox'
+                 onChange={this.onChange}
+                 {...inputProps}
+                 aria-disabled={this.props.disabled}/>
+          <label htmlFor={id} className={styles.children}>{this.props.children}</label>
+        </div>
       </div>
     )
   }

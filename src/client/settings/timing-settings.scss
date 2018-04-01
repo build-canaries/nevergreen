@@ -6,7 +6,7 @@
 }
 
 .refreshTime {
-  @extend %firstInput;
+  @extend %first;
 
   @include respond-to(tablet, desktop) {
     width: 30em;

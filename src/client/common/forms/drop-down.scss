@@ -3,33 +3,6 @@
 @import '../responsive';
 @import '../accessibility';
 
-.dropDown {
-  align-content: flex-start;
-  align-items: baseline;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  margin-top: $margin-top;
-  width: 100%;
-
-  @include respond-to(tablet, desktop) {
-    flex-direction: row;
-    width: auto;
-  }
-}
-
-.label {
-  @include font-scale(1);
-
-  display: block;
-
-  @include respond-to(tablet, desktop) {
-    display: inline-block;
-    margin-right: $margin-right;
-  }
-}
-
 .input {
   @include font-scale(1);
 

@@ -9,12 +9,13 @@
   padding-bottom: 1em;
 }
 
-.checkboxes {
-  display: inline-block;
+.checkbox {
+  width: 100%;
 }
 
 .showTrayName {
-  @extend %firstInput;
+  @extend %first;
+  @extend .checkbox;
 }
 
 .previewSection {

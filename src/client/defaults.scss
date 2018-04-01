@@ -2,6 +2,7 @@
 @import './common/fonts/fonts';
 @import './common/variables';
 @import './common/accessibility';
+@import './common/typography';
 
 * {
   box-sizing: border-box;
@@ -15,6 +16,7 @@ body {
   color: $off-black;
   cursor: default;
   font-family: $normal-font;
+  line-height: 1.5;
 }
 
 kbd {
@@ -38,9 +40,55 @@ a {
 }
 
 p {
-  max-width: 55em;
+  margin: $margin-top 0 0 0;
+  max-width: 50em;
 }
 
 input {
   font-family: $normal-font;
+}
+
+h1 {
+  @include font-scale(4);
+
+  line-height: 1.125;
+  margin: 0;
+}
+
+h2 {
+  @include font-scale(3);
+
+  line-height: 1.15;
+}
+
+h3 {
+  @include font-scale(2);
+
+  line-height: 1.2;
+}
+
+h4,
+h5,
+h6 {
+  @include font-scale(1);
+
+  line-height: 1.25;
+}
+
+pre {
+  overflow: scroll;
+}
+
+table {
+  display: block;
+  overflow-y: scroll;
+  width: 100%;
+}
+
+tr:nth-child(even) {
+  background-color: $light-grey;
+}
+
+td {
+  padding: 0.5em;
 }

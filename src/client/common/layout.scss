@@ -1,9 +1,17 @@
+@import './responsive';
+
+@mixin fixedWidth($width) {
+  @include respond-to(tablet, desktop) {
+    width: $width;
+  }
+}
+
 %fillParent {
   display: block;
   height: 100%;
   width: 100%;
 }
 
-%firstInput {
+%first {
   margin-top: 0;
 }

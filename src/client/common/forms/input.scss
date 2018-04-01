@@ -7,33 +7,6 @@
 $padding: 0.5em;
 $font-scale: 1;
 
-.label {
-  align-content: flex-start;
-  align-items: baseline;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  margin-top: $margin-top;
-  width: 100%;
-
-  @include respond-to(tablet, desktop) {
-    flex-direction: row;
-    width: auto;
-  }
-}
-
-.description {
-  @include font-scale($font-scale);
-
-  display: block;
-
-  @include respond-to(tablet, desktop) {
-    display: inline-block;
-    margin-right: $margin-right;
-  }
-}
-
 .wrapper {
   align-items: normal;
   display: flex;

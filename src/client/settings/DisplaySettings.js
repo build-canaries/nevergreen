@@ -45,29 +45,30 @@ class DisplaySettings extends Component {
 
     return (
       <Container title='display' className={styles.container}>
-        <div className={styles.checkboxes}>
-          <Checkbox className={styles.showTrayName}
-                    checked={this.props.showTrayName}
-                    onToggle={this.toggleTrayName}
-                    data-locator='show-tray-names'>
-            show tray name
-          </Checkbox>
-          <Checkbox checked={this.props.showBuildTime}
-                    onToggle={this.toggleBuildTime}
-                    data-locator='show-build-times'>
-            show building timer
-          </Checkbox>
-          <Checkbox checked={this.props.showBrokenBuildTime}
-                    onToggle={this.toggleBrokenBuildTime}
-                    data-locator='show-broken-build-times'>
-            show broken build timer
-          </Checkbox>
-          <Checkbox checked={this.props.showBuildLabel}
-                    onToggle={this.toggleBuildLabel}
-                    data-locator='show-build-labels'>
-            show broken build label
-          </Checkbox>
-        </div>
+        <Checkbox className={styles.showTrayName}
+                  checked={this.props.showTrayName}
+                  onToggle={this.toggleTrayName}
+                  data-locator='show-tray-names'>
+          show tray name
+        </Checkbox>
+        <Checkbox className={styles.checkbox}
+                  checked={this.props.showBuildTime}
+                  onToggle={this.toggleBuildTime}
+                  data-locator='show-build-times'>
+          show building timer
+        </Checkbox>
+        <Checkbox className={styles.checkbox}
+                  checked={this.props.showBrokenBuildTime}
+                  onToggle={this.toggleBrokenBuildTime}
+                  data-locator='show-broken-build-times'>
+          show broken build timer
+        </Checkbox>
+        <Checkbox className={styles.checkbox}
+                  checked={this.props.showBuildLabel}
+                  onToggle={this.toggleBuildLabel}
+                  data-locator='show-build-labels'>
+          show broken build label
+        </Checkbox>
         <section className={styles.previewSection}>
           <h4 className={styles.title}>Preview</h4>
           <div className={styles.displayPreview}>

@@ -78,3 +78,15 @@
     @extend %visuallyHidden;
   }
 }
+
+.primaryButton {
+  @include button();
+}
+
+.secondaryButton {
+  @include button($off-black, $white, $light-grey);
+}
+
+.dangerButton {
+  @include button($white, $error, $error);
+}

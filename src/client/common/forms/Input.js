@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import _ from 'lodash'
 import styles from './input.scss'
+import formStyles from './forms.scss'
 
 PasswordVisibilityToggle.propTypes = {
   id: PropTypes.string.isRequired,
@@ -65,7 +66,7 @@ class Input extends Component {
   render() {
     const id = _.uniqueId()
     const inputProps = _.omit(this.props, ['children', 'onEnter', 'className', 'focus', 'type'])
-    const labelClasses = classNames(styles.label, this.props.className)
+    const labelClasses = classNames(formStyles.inputContainer, this.props.className)
     const inputClasses = classNames(styles.input, {
       [styles.password]: this.state.isPassword
     })
@@ -73,7 +74,7 @@ class Input extends Component {
 
     return (
       <label className={labelClasses}>
-        <div className={styles.description}>{this.props.children}</div>
+        <div className={formStyles.inputLabel}>{this.props.children}</div>
         <div className={styles.wrapper}>
           <input className={inputClasses}
                  onKeyPress={this.onEnter}
