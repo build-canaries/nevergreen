@@ -7,14 +7,18 @@ import formStyles from './forms.scss'
 
 class DropDown extends Component {
   render() {
-    const inputProps = _.omit(this.props, ['children', 'title', 'className'])
+    const inputProps = _.omit(this.props, ['children', 'options', 'className'])
     const labelClasses = classNames(formStyles.inputContainer, this.props.className)
 
     return (
       <label className={labelClasses}>
-        <div className={formStyles.inputLabel}>{this.props.title}</div>
+        <div className={formStyles.inputLabel}>{this.props.children}</div>
         <select className={styles.input} {...inputProps}>
-          {this.props.children}
+          {
+            this.props.options.map((op) => {
+              return <option key={op.value} value={op.value}>{op.display}</option>
+            })
+          }
         </select>
       </label>
     )
@@ -23,7 +27,10 @@ class DropDown extends Component {
 
 DropDown.propTypes = {
   children: PropTypes.node.isRequired,
-  title: PropTypes.node.isRequired,
+  options: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.string.isRequired,
+    display: PropTypes.string.isRequired
+  })).isRequired,
   className: PropTypes.string
 }
 

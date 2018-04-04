@@ -6,6 +6,20 @@ import {generateRandomName} from '../../domain/Tray'
 import styles from './tray-settings.scss'
 import VisuallyHidden from '../../common/VisuallyHidden'
 
+const CI_OPTIONS = [
+  {value: '', display: 'Auto detect'},
+  {value: 'circle', display: 'CircleCI'},
+  {value: 'cruise-control', display: 'CruiseControl'},
+  {value: 'cruise-control-net', display: 'CruiseControl.net'},
+  {value: 'cruise-control-rb', display: 'CruiseControl.rb'},
+  {value: 'go', display: 'GoCD'},
+  {value: 'hudson', display: 'Hudson'},
+  {value: 'jenkins', display: 'Jenkins'},
+  {value: 'solano', display: 'Solano CI'},
+  {value: 'team-city', display: 'TeamCity'},
+  {value: 'travis', display: 'Travis CI'}
+]
+
 class TraySettings extends Component {
   constructor(props) {
     super(props)
@@ -110,28 +124,17 @@ class TraySettings extends Component {
                 data-locator='generate-random'>
           randomise name
         </button>
-        <Input className={styles.traySettingsUrl}
-               value={this.state.newUrl}
+        <Input value={this.state.newUrl}
                onChange={this.urlChanged}
                onBlur={this.setUrl}
                onEnter={this.setUrl}>
           <div className={styles.label}>URL</div>
         </Input>
         <DropDown className={styles.serverType}
-                  title='server type'
+                  options={CI_OPTIONS}
                   value={this.props.serverType}
                   onChange={this.serverTypeChange}>
-          <option value=''>Auto detect</option>
-          <option value='circle'>CircleCI</option>
-          <option value='cruise-control'>CruiseControl</option>
-          <option value='cruise-control-net'>CruiseControl.net</option>
-          <option value='cruise-control-rb'>CruiseControl.rb</option>
-          <option value='go'>GoCD</option>
-          <option value='hudson'>Hudson</option>
-          <option value='jenkins'>Jenkins</option>
-          <option value='solano'>Solano CI</option>
-          <option value='team-city'>TeamCity</option>
-          <option value='travis'>Travis CI</option>
+          server type
         </DropDown>
         <Input className={styles.traySettingsUsername}
                value={this.state.newUsername}

@@ -7,6 +7,12 @@ import buttonStyles from '../common/forms/button.scss'
 import styles from './style-guide.scss'
 import StyleGuideSection from './StyleGuideSection'
 
+const DROP_DOWN_OPTIONS = [
+  {value: '1', display: 'option 1'},
+  {value: '2', display: 'option 2'},
+  {value: '3', display: 'option 3'}
+]
+
 class Forms extends Component {
   render() {
     return (
@@ -41,16 +47,8 @@ class Forms extends Component {
         </StyleGuideSection>
 
         <StyleGuideSection title='Drop down'>
-          <DropDown title='drop down'>
-            <option>option 1</option>
-            <option>option 2</option>
-            <option>option 3</option>
-          </DropDown>
-          <DropDown title='fixed width' className={styles.fixedWidth}>
-            <option>option 1</option>
-            <option>option 2</option>
-            <option>option 3</option>
-          </DropDown>
+          <DropDown options={DROP_DOWN_OPTIONS}>drop down</DropDown>
+          <DropDown className={styles.fixedWidth} options={DROP_DOWN_OPTIONS}>fixed width</DropDown>
         </StyleGuideSection>
 
         <StyleGuideSection title='Buttons'>
