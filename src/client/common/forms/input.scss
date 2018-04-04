@@ -68,12 +68,16 @@ $font-scale: 1;
   padding: $padding;
 }
 
-%passwordVisibility {
+%passwordToggle {
   @extend %icon;
 
-  @include interactive();
-
   cursor: pointer;
+  margin: 0;
+  width: auto;
+
+  &:enabled {
+    box-shadow: none;
+  }
 }
 
 .readOnly {
@@ -83,10 +87,10 @@ $font-scale: 1;
 
 .showPassword {
   @extend .icon-eye;
-  @extend %passwordVisibility;
+  @extend %passwordToggle;
 }
 
 .hidePassword {
   @extend .icon-eye-blocked;
-  @extend %passwordVisibility;
+  @extend %passwordToggle;
 }

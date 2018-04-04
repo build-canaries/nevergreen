@@ -5,10 +5,10 @@
 @import '../../../common/layout';
 
 .import {
-  @include button();
   @include button-icon('cloud-download');
 
-  margin-top: 1.5em;
+  @extend .primaryButton;
+  @extend %blockMargin;
 }
 
 .gistId {

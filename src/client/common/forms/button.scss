@@ -14,26 +14,22 @@
   }
 }
 
-@mixin button($color:$off-white, $background-color:$blue, $border-color:$background-color) {
-  @include font-scale(1);
+@mixin icon-only-button($icon) {
+  @include button-icon($icon);
 
-  background-color: $background-color;
-  border: 1px solid $border-color;
-  border-radius: 2px;
-  color: $color;
-  display: block;
-  overflow: hidden;
-  padding: 0.5em 1em;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-overflow: ellipsis;
-  text-transform: uppercase;
-  user-select: none;
-  vertical-align: middle;
-  white-space: nowrap;
-  width: 100%;
+  padding: 0.5em;
+  width: auto;
 
+  &::before {
+    margin: 0;
+  }
+
+  * {
+    @extend %visuallyHidden;
+  }
+}
+
+@mixin buttonInteraction($color:$off-black, $background-color:$white, $border-color:$light-grey) {
   &:enabled {
     box-shadow: $shadow;
     cursor: pointer;
@@ -43,50 +39,20 @@
       box-shadow: $focus-shadow;
     }
   }
-
-  &:disabled {
-    background-color: $light-grey;
-    color: $mid-grey;
-    cursor: default;
-  }
-
-  @include respond-to(tablet, desktop) {
-    @include font-scale(0);
-
-    display: inline-block;
-    width: auto;
-  }
-}
-
-@mixin icon-only-button($icon, $color:$off-white, $background-color:$blue, $border-color:$background-color) {
-  @include button($color, $background-color, $border-color);
-  @include button-icon($icon);
-
-  height: 2.4em;
-  padding: 0.5em;
-  width: 2.4em;
-
-  &::before {
-    margin: 0;
-  }
-
-  @include respond-to(tablet, desktop) {
-    width: 2.4em;
-  }
-
-  * {
-    @extend %visuallyHidden;
-  }
 }
 
 .primaryButton {
-  @include button();
-}
+  @include buttonInteraction($off-white, $blue, $blue);
 
-.secondaryButton {
-  @include button($off-black, $white, $light-grey);
+  background-color: $blue;
+  border-color: $blue;
+  color: $off-white;
 }
 
 .dangerButton {
-  @include button($white, $error, $error);
+  @include buttonInteraction($white, $error, $error);
+
+  background-color: $error;
+  border-color: $error;
+  color: $white;
 }

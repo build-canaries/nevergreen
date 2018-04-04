@@ -18,14 +18,9 @@
 }
 
 .add {
-  @include button();
   @include button-icon('plus');
 
-  margin-top: 1.5em;
-
-  @include respond-to(tablet, desktop) {
-    margin-top: 0;
-  }
+  @extend .primaryButton;
 }
 
 .inputs {

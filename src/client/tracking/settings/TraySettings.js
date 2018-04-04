@@ -159,7 +159,7 @@ class TraySettings extends Component {
         <div className={styles.dangerZone}>
           <h5 className={styles.dangerZoneTitle}>Danger Zone</h5>
           <div className={styles.dangerZoneContent}>
-            <span>Once you delete, there is no going back. Please be certain.</span>
+            <div className={styles.deleteInfo}>Once you delete, there is no going back. Please be certain.</div>
             <button className={styles.delete} onClick={this.deleteTray}>delete</button>
           </div>
         </div>

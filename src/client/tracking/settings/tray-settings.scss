@@ -52,46 +52,34 @@
   padding: 1em;
 }
 
-.delete,
-.random,
-.changePasswordButton,
-.cancel,
-.update {
-  margin-top: 1em;
+.deleteInfo {
+  @extend %inlineMargin;
 
-  @include respond-to(tablet, desktop) {
-    margin-top: 0;
-  }
-}
-
-.delete,
-.update {
-  @include respond-to(tablet, desktop) {
-    margin-left: 1em;
-  }
+  display: inline-block;
 }
 
 .delete {
-  @include button($white, $error);
   @include button-icon('bin');
+
+  @extend .dangerButton;
 }
 
 .random {
-  @include button($off-black, $white, $light-grey);
   @include button-icon('dice');
 }
 
 .changePasswordButton {
-  @include button($off-black, $white, $light-grey);
   @include button-icon('unlocked');
 }
 
 .cancel {
-  @include button($off-black, $white, $light-grey);
   @include button-icon('cross');
+
+  @extend %inlineMargin;
 }
 
 .update {
-  @include button($off-white, $blue);
   @include button-icon('floppy-disk');
+
+  @extend .primaryButton;
 }

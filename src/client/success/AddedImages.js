@@ -19,11 +19,17 @@ class AddedImages extends Component {
               const remove = () => this.props.removeMessage(url)
 
               return (
-                <li key={`i${index}`} className={styles.imageItem}>
+                <li key={url} className={styles.imageItem}>
                   <div className={styles.imageWrapper}>
-                    <img className={styles.image} src={url} alt={url} title={url} data-locator='success-image'/>
+                    <img className={styles.image}
+                         src={url}
+                         alt={url}
+                         title={url}
+                         data-locator='success-image'/>
                   </div>
-                  <RemoveLink hotkeys={[`y i ${index}`]} removeMessage={remove} message={url}
+                  <RemoveLink hotkeys={[`y i ${index}`]}
+                              removeMessage={remove}
+                              message={url}
                               className={styles.remove}/>
                 </li>
               )

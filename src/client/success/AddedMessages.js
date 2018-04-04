@@ -19,9 +19,13 @@ class AddedMessages extends Component {
               const remove = () => this.props.removeMessage(message)
 
               return (
-                <li key={`m${index}`} className={styles.successItem}>
-                  <RemoveLink hotkeys={[`y m ${index}`]} removeMessage={remove} message={message}/>
-                  <span className={styles.message} data-locator='success-message'>{message}</span>
+                <li key={message} className={styles.successItem}>
+                  <RemoveLink hotkeys={[`y m ${index}`]}
+                              removeMessage={remove}
+                              message={message}/>
+                  <div className={styles.message} data-locator='success-message'>
+                    {message}
+                  </div>
                 </li>
               )
             })

@@ -19,7 +19,7 @@
   &:focus {
     border-radius: 0;
     outline: 3px solid $outline;
-    z-index: 1000; // max sure the focus outline isn't below adjacent elements
+    z-index: 1000; // make sure the focus outline isn't below adjacent elements
 
     @if $darken-on-focus {
       background-color: darken($background-color, $color-change-percentage);

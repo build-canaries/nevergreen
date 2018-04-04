@@ -2,17 +2,14 @@
 @import '../../common/responsive';
 @import '../../common/variables';
 @import '../../common/typography';
+@import '../../common/layout';
 
 .refresh {
   @include button-icon('loop2');
-  @include button();
 
-  margin-bottom: 1em;
-
-  @include respond-to(tablet, desktop) {
-    margin-bottom: 0;
-    margin-right: 1em;
-  }
+  @extend .primaryButton;
+  @extend %inlineMargin;
+  @extend %first;
 }
 
 .lastFetch {
@@ -20,8 +17,10 @@
 
   color: $mid-grey;
   display: block;
+  margin: $margin-top 0 0 0;
 
   @include respond-to(tablet, desktop) {
     display: inline-block;
+    margin: 0;
   }
 }

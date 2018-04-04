@@ -9,8 +9,10 @@ class RemoveLink extends Component {
     const classes = classNames(styles.removeLink, this.props.className)
 
     return (
-      <button className={classes} onClick={this.props.removeMessage} title={`remove ${this.props.message}`}>
-        <span>remove {this.props.message}</span>
+      <button className={classes}
+              onClick={this.props.removeMessage}
+              title={`remove ${this.props.message}`}>
+        <div>remove {this.props.message}</div>
         <Shortcut hotkeys={this.props.hotkeys}/>
       </button>
     )

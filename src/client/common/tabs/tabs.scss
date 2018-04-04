@@ -21,7 +21,7 @@
   color: $off-black;
   cursor: pointer;
   display: inline-block;
-  margin-right: 0.5em;
+  margin: 0 0.5em 0 0;
   padding: 0.5em 1.5em;
   position: relative;
   text-align: center;
@@ -30,15 +30,21 @@
   user-select: none;
   vertical-align: middle;
   white-space: nowrap;
+  width: auto;
 
   &:enabled {
-    @include interactive($off-black, $light-grey, $light-grey);
+    @include interactive($off-black, $light-grey, $light-grey) {
+      box-shadow: none;
+    }
+
+    box-shadow: none;
   }
 
   &:disabled {
     background-color: $white;
     border-bottom-color: $white;
     border-top-color: $blue;
+    color: $off-black;
     cursor: inherit;
   }
 

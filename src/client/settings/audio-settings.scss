@@ -34,16 +34,6 @@
   }
 }
 
-.testSoundFx {
-  @include button($off-black, $white, $light-grey);
-
-  margin-top: 1em;
-
-  @include respond-to(tablet, desktop) {
-    margin-top: 0;
-  }
-}
-
 .play {
   @include button-icon('play3');
 }

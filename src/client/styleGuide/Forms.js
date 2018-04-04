@@ -12,20 +12,20 @@ class Forms extends Component {
     return (
       <Fragment>
         <StyleGuideSection title='Text inputs'>
-          <Input>text input</Input>
-          <Input readOnly>read only input</Input>
-          <Input type='password'>password input</Input>
+          <Input>text</Input>
+          <Input readOnly>read only</Input>
+          <Input type='password'>password</Input>
 
-          <Input className={styles.fixedWidth}>fixed width via CSS</Input>
+          <Input className={styles.fixedWidth}>fixed width</Input>
 
           <Input>
-            <div className={styles.fixedLabel}>labels can</div>
+            <div className={styles.fixedLabel}>labels</div>
           </Input>
           <Input className={styles.fixedWidth}>
-            <div className={styles.fixedLabel}>be aligned by</div>
+            <div className={styles.fixedLabel}>can be aligned</div>
           </Input>
           <Input>
-            <div className={styles.fixedLabel}>using child CSS</div>
+            <div className={styles.fixedLabel}>to improve the visuals</div>
           </Input>
         </StyleGuideSection>
 
@@ -46,7 +46,7 @@ class Forms extends Component {
             <option>option 2</option>
             <option>option 3</option>
           </DropDown>
-          <DropDown title='fixed width via CSS' className={styles.fixedWidth}>
+          <DropDown title='fixed width' className={styles.fixedWidth}>
             <option>option 1</option>
             <option>option 2</option>
             <option>option 3</option>
@@ -55,7 +55,7 @@ class Forms extends Component {
 
         <StyleGuideSection title='Buttons'>
           <button className={buttonStyles.primaryButton}>primary button</button>
-          <button className={buttonStyles.secondaryButton}>secondary button</button>
+          <button>default button</button>
           <button className={buttonStyles.dangerButton}>danger button</button>
         </StyleGuideSection>
       </Fragment>

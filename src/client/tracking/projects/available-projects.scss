@@ -15,36 +15,25 @@
 
 .toggles {
   display: block;
-  margin-top: 1em;
   width: 100%;
 
   @include respond-to(tablet, desktop) {
     display: inline-block;
+    margin-top: $margin-top;
     width: auto;
   }
 }
 
 .includeAll {
   @include button-icon('checkbox-checked');
+
+  @extend %inlineMargin;
 }
 
 .excludeAll {
   @include button-icon('checkbox-unchecked');
 
-  margin-top: 1em;
-
-  @include respond-to(tablet, desktop) {
-    margin-top: 0;
-  }
-}
-
-.includeAll,
-.excludeAll {
-  @include button($off-black, $white, $light-grey);
-
-  @include respond-to(tablet, desktop) {
-    margin-right: 1em;
-  }
+  @extend %inlineMargin;
 }
 
 .buildItems {
@@ -73,10 +62,6 @@
 }
 
 .backToTop {
-  @include button($off-black, $white, $light-grey);
-
-  margin-top: 1em;
-
   @include respond-to(tablet, desktop) {
     display: none;
   }

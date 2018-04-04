@@ -72,7 +72,7 @@ class AudioSettings extends Component {
 
   render() {
     const playingDisabled = isBlank(this.state.soundFx) || !this.state.playEnabled
-    const playButtonClasses = classNames(styles.testSoundFx, {
+    const playButtonClasses = classNames({
       [styles.play]: !this.state.playing,
       [styles.stop]: this.state.playing
     })

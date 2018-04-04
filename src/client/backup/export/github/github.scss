@@ -2,10 +2,10 @@
 @import '../../../common/layout';
 
 .export {
-  @include button();
   @include button-icon('cloud-upload');
 
-  margin-top: 1.5em;
+  @extend .primaryButton;
+  @extend %blockMargin;
 }
 
 .label {

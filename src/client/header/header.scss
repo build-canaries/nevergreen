@@ -3,6 +3,7 @@
 @import '../common/fonts/icon-font';
 @import '../common/typography';
 @import '../common/accessibility';
+@import '../common/forms/button';
 
 .siteHeader {
   background-color: $off-black;
@@ -33,6 +34,8 @@
 }
 
 .siteMenuToggle {
+  @include buttonInteraction($white, $off-black, $off-black);
+
   background-color: transparent;
   border: none;
   color: $white;
@@ -40,6 +43,7 @@
   margin: 0;
   padding: 0.5em 1em;
   text-transform: uppercase;
+  width: auto;
 
   @include respond-to(tablet, desktop) {
     display: none;

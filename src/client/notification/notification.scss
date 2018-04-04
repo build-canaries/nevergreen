@@ -39,8 +39,11 @@ $background-color: $blue;
   @include icon-only-button('cross');
   @include font-scale(-1);
 
+  @extend .primaryButton;
+
   display: inline;
   float: right;
+  margin: 0;
 
   &:enabled {
     box-shadow: none;
