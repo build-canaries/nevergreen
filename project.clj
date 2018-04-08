@@ -33,6 +33,6 @@
                                                                                               org.eclipse.jetty/jetty-io
                                                                                               org.eclipse.jetty/jetty-util]]
                                   [clj-webdriver/clj-webdriver "0.7.2"]
-                                  [io.github.bonigarcia/webdrivermanager "2.1.0" :exclusions [com.google.guava/guava
+                                  [io.github.bonigarcia/webdrivermanager "2.2.0" :exclusions [com.google.guava/guava
                                                                                               org.apache.commons/commons-lang3]]
                                   [ring/ring-mock "0.3.2"]]}})
