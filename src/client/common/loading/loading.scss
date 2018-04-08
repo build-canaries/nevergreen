@@ -15,7 +15,6 @@
 .pulse {
   @include font-scale(4);
 
-  @extend .icon;
   @extend .icon-circle;
 
   animation: bounce 1.4s infinite ease-in-out both;

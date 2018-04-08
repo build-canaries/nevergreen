@@ -29,8 +29,6 @@ $background-color: $blue;
   margin: 0;
 
   &::before {
-    @extend .icon;
-
     padding-right: 1em;
   }
 }

@@ -8,8 +8,6 @@
   @extend .icon-#{$icon};
 
   &::before {
-    @extend .icon;
-
     margin-right: 1em;
   }
 }

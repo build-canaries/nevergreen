@@ -7,8 +7,6 @@
   @extend .icon-circle-#{$icon};
 
   &::before {
-    @extend .icon;
-
     @include font-scale(1);
 
     margin-left: 1em;

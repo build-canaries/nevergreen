@@ -53,8 +53,6 @@
 %siteMenuToggleIcon {
   @include font-scale(3);
 
-  @extend .icon;
-
   padding-right: 0.5em;
 }
 
@@ -148,31 +146,25 @@
 }
 
 .monitor {
-  @extend .icon;
   @extend .icon-display;
 }
 
 .tracking {
-  @extend .icon;
   @extend .icon-list2;
 }
 
 .success {
-  @extend .icon;
   @extend .icon-hipster;
 }
 
 .settings {
-  @extend .icon;
   @extend .icon-cog;
 }
 
 .backup {
-  @extend .icon;
   @extend .icon-floppy-disk;
 }
 
 .help {
-  @extend .icon;
   @extend .icon-question;
 }

@@ -56,9 +56,7 @@ $font-scale: 1;
   border-top-right-radius: 0;
 }
 
-%icon {
-  @extend .icon;
-
+%infoIcon {
   @include font-scale($font-scale);
 
   border: $input-border;
@@ -69,7 +67,7 @@ $font-scale: 1;
 }
 
 %passwordToggle {
-  @extend %icon;
+  @extend %infoIcon;
 
   cursor: pointer;
   margin: 0;
@@ -82,7 +80,7 @@ $font-scale: 1;
 
 .readOnly {
   @extend .icon-lock;
-  @extend %icon;
+  @extend %infoIcon;
 }
 
 .showPassword {
