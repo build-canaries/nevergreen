@@ -1,6 +1,7 @@
 /target
 /build
 .idea
+pom.xml
 pom.xml.asc
 *.iml
 *.ipr
