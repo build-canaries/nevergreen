@@ -32,7 +32,6 @@ $font-scale: 1;
 
   &:invalid {
     border-color: $error;
-    box-shadow: none;
   }
 
   &:disabled {

@@ -25,7 +25,6 @@ class Icons extends Component {
         <div className={icons['icon-github4']}>github 4</div>
         <div className={icons['icon-hipster']}>hipster</div>
         <div className={icons['icon-list']}>list</div>
-        <div className={icons['icon-list2']}>list 2</div>
         <div className={icons['icon-lock']}>lock</div>
         <div className={icons['icon-loop2']}>loop 2</div>
         <div className={icons['icon-menu3']}>menu 3</div>

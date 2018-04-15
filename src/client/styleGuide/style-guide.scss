@@ -15,8 +15,10 @@
   @include fixedWidth(35em);
 }
 
-.fixedLabel {
+.styledLabel {
   @include fixedWidth(10em);
+
+  font-weight: bold;
 }
 
 .newLineCheckbox {

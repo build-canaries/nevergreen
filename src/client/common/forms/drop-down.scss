@@ -6,24 +6,45 @@
 .input {
   @include font-scale(1);
 
+  appearance: none;
   background-color: $white;
   border: $input-border;
   border-radius: 2px;
+  cursor: pointer;
   flex-grow: 1;
   margin-top: 0.5em;
+  padding: 0.5em;
+  text-overflow: ellipsis;
   width: 100%;
 
-  &:enabled {
-    box-shadow: $shadow;
-    transition: box-shadow 0.1s ease-in;
+  &:invalid {
+    border-color: $error;
+  }
 
-    @include interactive() {
-      box-shadow: $focus-shadow;
-    }
+  &:disabled {
+    cursor: default;
+  }
+
+  &:not(:disabled) {
+    @include interactive($darken-on-focus: false);
   }
 
   @include respond-to(tablet, desktop) {
     margin-top: 0;
     width: auto;
   }
+}
+
+.arrow {
+  border-left: 0.5em solid transparent;
+  border-right: 0.5em solid transparent;
+  border-top: 0.5em solid $off-black;
+  left: -1.5em;
+  margin-right: -1em;
+  position: relative;
+  z-index: 1100; // keep it on top when select has focus
+}
+
+.disabled {
+  border-top: 0.5em solid graytext;
 }

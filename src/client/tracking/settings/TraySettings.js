@@ -134,7 +134,7 @@ class TraySettings extends Component {
                   options={CI_OPTIONS}
                   value={this.props.serverType}
                   onChange={this.serverTypeChange}>
-          server type
+          <div className={styles.label}>server type</div>
         </DropDown>
         <Input className={styles.traySettingsUsername}
                value={this.state.newUsername}

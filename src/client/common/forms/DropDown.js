@@ -20,6 +20,7 @@ class DropDown extends Component {
             })
           }
         </select>
+        <div className={classNames(styles.arrow, {[styles.disabled]: this.props.disabled})}/>
       </label>
     )
   }
@@ -31,7 +32,8 @@ DropDown.propTypes = {
     value: PropTypes.string.isRequired,
     display: PropTypes.string.isRequired
   })).isRequired,
-  className: PropTypes.string
+  className: PropTypes.string,
+  disabled: PropTypes.bool
 }
 
 export default DropDown

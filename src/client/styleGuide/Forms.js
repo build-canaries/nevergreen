@@ -21,17 +21,12 @@ class Forms extends Component {
           <Input>text</Input>
           <Input readOnly>read only</Input>
           <Input type='password'>password</Input>
+          <Input required placeholder='required'>invalid</Input>
 
           <Input className={styles.fixedWidth}>fixed width</Input>
 
           <Input>
-            <div className={styles.fixedLabel}>labels</div>
-          </Input>
-          <Input className={styles.fixedWidth}>
-            <div className={styles.fixedLabel}>can be aligned</div>
-          </Input>
-          <Input>
-            <div className={styles.fixedLabel}>to improve the visuals</div>
+            <div className={styles.styledLabel}>styled label</div>
           </Input>
         </StyleGuideSection>
 
@@ -39,16 +34,23 @@ class Forms extends Component {
           <Checkbox onToggle={_.noop}>chocolate</Checkbox>
           <Checkbox onToggle={_.noop}>bonbon</Checkbox>
           <Checkbox onToggle={_.noop}>jelly beans</Checkbox>
-          <Checkbox onToggle={_.noop}>gingerbread</Checkbox>
 
-          <Checkbox className={styles.newLineCheckbox} onToggle={_.noop}>checkboxes can</Checkbox>
-          <Checkbox className={styles.newLineCheckbox} onToggle={_.noop}>be displayed on</Checkbox>
-          <Checkbox className={styles.newLineCheckbox} onToggle={_.noop}>new lines via CSS</Checkbox>
+          <Checkbox className={styles.newLineCheckbox} onToggle={_.noop}>chupa chups</Checkbox>
+          <Checkbox className={styles.newLineCheckbox} onToggle={_.noop}>apple pie</Checkbox>
+          <Checkbox className={styles.newLineCheckbox} onToggle={_.noop}>marzipan</Checkbox>
+
+          <Checkbox onToggle={_.noop}>
+            <div className={styles.styledLabel}>styled label</div>
+          </Checkbox>
         </StyleGuideSection>
 
         <StyleGuideSection title='Drop down'>
           <DropDown options={DROP_DOWN_OPTIONS}>drop down</DropDown>
           <DropDown className={styles.fixedWidth} options={DROP_DOWN_OPTIONS}>fixed width</DropDown>
+          <DropDown disabled options={DROP_DOWN_OPTIONS}>disabled</DropDown>
+          <DropDown options={DROP_DOWN_OPTIONS}>
+            <div className={styles.styledLabel}>styled label</div>
+          </DropDown>
         </StyleGuideSection>
 
         <StyleGuideSection title='Buttons'>
