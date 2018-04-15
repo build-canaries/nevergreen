@@ -14,7 +14,7 @@ class Messages extends Component {
     const classes = classNames(styles[this.props.type], this.props.className)
 
     return (
-      <ul className={classes} data-locator='messages' aria-live={isError ? 'alert' : 'polite'}>
+      <ul className={classes} data-locator='messages' aria-live={isError ? 'assertive' : 'polite'}>
         {
           this.props.messages.map((msg) => {
             return <li key={msg} className={styles.message}>{msg}</li>
