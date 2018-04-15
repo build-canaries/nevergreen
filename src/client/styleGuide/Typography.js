@@ -2,18 +2,27 @@ import React, {Component, Fragment} from 'react'
 import StyleGuideSection from './StyleGuideSection'
 import ExternalLink from '../common/ExternalLink'
 import Element from './Element'
+import Messages from '../common/messages/Messages'
+
+const TITLE = 'Cupcake toffee jelly beans'
+
+const MESSAGES = [
+  'Chocolate bar tart jelly-o ice cream jelly pastry pastry candy pudding',
+  'Sweet roll cookie chocolate cake gingerbread marshmallow jelly beans',
+  'Sweet roll tart cake chupa chups soufflé wafer tiramisu chupa chups toffee'
+]
 
 class Typography extends Component {
   render() {
     return (
       <Fragment>
         <StyleGuideSection title='Titles'>
-          <Element type='h1'>Cupcake toffee jelly beans</Element>
-          <Element type='h2'>Cupcake toffee jelly beans</Element>
-          <Element type='h3'>Cupcake toffee jelly beans</Element>
-          <Element type='h4'>Cupcake toffee jelly beans</Element>
-          <Element type='h5'>Cupcake toffee jelly beans</Element>
-          <Element type='h6'>Cupcake toffee jelly beans</Element>
+          <Element type='h1'>{TITLE}</Element>
+          <Element type='h2'>{TITLE}</Element>
+          <Element type='h3'>{TITLE}</Element>
+          <Element type='h4'>{TITLE}</Element>
+          <Element type='h5'>{TITLE}</Element>
+          <Element type='h6'>{TITLE}</Element>
         </StyleGuideSection>
 
         <StyleGuideSection title='Paragraphs'>
@@ -61,6 +70,11 @@ class Typography extends Component {
 
         <StyleGuideSection title='Links'>
           <ExternalLink href='https://github.com/build-canaries/nevergreen'>external link</ExternalLink>
+        </StyleGuideSection>
+
+        <StyleGuideSection title='Messages'>
+          <Messages type='info' messages={['info messages', ...MESSAGES]}/>
+          <Messages type='error' messages={['error messages', ...MESSAGES]}/>
         </StyleGuideSection>
       </Fragment>
     )
