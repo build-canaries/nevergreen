@@ -10,7 +10,9 @@ import StyleGuideSection from './StyleGuideSection'
 const DROP_DOWN_OPTIONS = [
   {value: '1', display: 'option 1'},
   {value: '2', display: 'option 2'},
-  {value: '3', display: 'option 3'}
+  {value: '3', display: 'option 3'},
+  {value: '4', display: 'option 4'},
+  {value: '5', display: 'option 5'}
 ]
 
 class Forms extends Component {
@@ -18,9 +20,9 @@ class Forms extends Component {
     return (
       <Fragment>
         <StyleGuideSection title='Text inputs'>
-          <Input>text</Input>
-          <Input readOnly>read only</Input>
-          <Input type='password'>password</Input>
+          <Input placeholder='placeholder'>text</Input>
+          <Input readOnly defaultValue='in my restless dreams I see that town'>read only</Input>
+          <Input type='password' defaultValue='p4ssw0rd1'>password</Input>
           <Input required placeholder='required'>invalid</Input>
 
           <Input className={styles.fixedWidth}>fixed width</Input>

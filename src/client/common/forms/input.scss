@@ -27,6 +27,7 @@ $font-scale: 1;
   border: $input-border;
   border-radius: 2px;
   flex-grow: 1;
+  min-width: 10em;
   padding: $padding;
   text-overflow: ellipsis;
 
@@ -63,6 +64,7 @@ $font-scale: 1;
   border-left: none;
   border-top-right-radius: 2px;
   padding: $padding;
+  text-overflow: clip;
 }
 
 %passwordToggle {
