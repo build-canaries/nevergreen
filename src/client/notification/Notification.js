@@ -11,7 +11,9 @@ class Notification extends Component {
     })
 
     return !isBlank(this.props.notification) &&
-      <section className={notificationClassNames} aria-live='polite'>
+      <section className={notificationClassNames}
+               aria-live='polite'
+               role='complementary'>
         <button className={styles.dismiss}
                 onClick={this.props.dismiss}
                 data-locator='dismiss'>

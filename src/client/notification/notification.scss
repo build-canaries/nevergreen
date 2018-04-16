@@ -4,14 +4,11 @@
 @import '../common/responsive';
 @import '../common/forms/button';
 
-$color: $white;
-$background-color: $blue;
-
 .popUpNotification {
   @include font-scale(0);
 
-  background-color: $background-color;
-  color: $color;
+  background-color: $blue;
+  color: $white;
   display: block;
   padding: 1em;
 }
