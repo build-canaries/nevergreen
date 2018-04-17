@@ -13,6 +13,7 @@
             [clojure.java.io :refer [make-parents]]
             [environ.core :refer [env]])
   (:import org.openqa.selenium.chrome.ChromeDriver
+           org.openqa.selenium.chrome.ChromeOptions
            org.openqa.selenium.firefox.FirefoxDriver
            org.openqa.selenium.Dimension
            io.github.bonigarcia.wdm.ChromeDriverManager
@@ -30,7 +31,10 @@
     :firefox (do (.setup (FirefoxDriverManager/getInstance))
                  (FirefoxDriver.))
     (do (.setup (ChromeDriverManager/getInstance))
-        (ChromeDriver.))))
+        (let [options (ChromeOptions.)]
+          (do
+            (.addArguments options ["--headless" "--disable-gpu"])
+            (ChromeDriver. options))))))
 
 (defn functional-fixture [test-fn]
   (let [driver (create-driver)]
