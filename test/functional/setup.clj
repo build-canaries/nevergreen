@@ -15,7 +15,7 @@
   (case (browser-to-use)
     :firefox (do (.setup (FirefoxDriverManager/getInstance))
                  (FirefoxDriver.))
-    (do (.setup (ChromeDriverManager/getInstance))
+    (do (.. (ChromeDriverManager/getInstance) (version "2.37") (setup))
         (let [options (ChromeOptions.)
               loggingPrefs (LoggingPreferences.)]
           (do
