@@ -38,7 +38,7 @@ export FULL_VERSION="$(cat "./resources/version.txt")+$(cat "./resources/version
 ./ci/smoke-test.sh
 
 echo '[Step 4 of 6] Running the functional tests...'
-./lein.sh test functional.functional-test
+./ci/functional-test.sh
 
 # uncomment to also run the functional tests in Firefox
 # export BROWSER=firefox

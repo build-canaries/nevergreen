@@ -5,8 +5,8 @@ npm run lint
 npm run coverage
 
 echo "running the server tests"
-JVM_OPTS="-Dorg.slf4j.simpleLogger.defaultLogLevel=off" ./lein.sh eastwood # linting
-JVM_OPTS="-Dorg.slf4j.simpleLogger.defaultLogLevel=off" ./lein.sh midje 'nevergreen.*' # unit tests
+./lein.sh lint
+./lein.sh unit
 
 echo "moving test reports"
 mkdir -p ./target/test-reports/client

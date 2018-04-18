@@ -2,6 +2,7 @@
   (:require [clojure.test :refer :all]
             [clj-webdriver.taxi :refer :all]
             [clj-webdriver.driver :refer [init-driver]]
+            [functional.setup :refer [create-driver]]
             [functional.helpers :refer :all]
             [functional.version :refer :all]
             [functional.tracking-page :as tracking-page]
@@ -9,56 +10,43 @@
             [functional.success-page :as success-page]
             [functional.settings-page :as settings-page]
             [functional.backup-page :as backup-page]
-            [functional.help-page :as help-page]
-            [clojure.java.io :refer [make-parents]]
-            [environ.core :refer [env]])
-  (:import org.openqa.selenium.chrome.ChromeDriver
-           org.openqa.selenium.chrome.ChromeOptions
-           org.openqa.selenium.firefox.FirefoxDriver
-           org.openqa.selenium.Dimension
-           io.github.bonigarcia.wdm.ChromeDriverManager
-           io.github.bonigarcia.wdm.FirefoxDriverManager))
+            [functional.help-page :as help-page])
+  (:import org.openqa.selenium.Dimension
+           org.openqa.selenium.logging.LogType))
 
-(def snap-ci-xvfb-size (Dimension. 1280 1024))
-; (def full-hd-tv-size (Dimension. 1920 1080))
-; (def hd-tv-size (Dimension. 1280 720))
-; (def xbox-one-size (Dimension. 1236 701))
+(def driver-atom (atom nil))
 
-(def browser (browser-to-use))
-
-(defn create-driver []
-  (case browser
-    :firefox (do (.setup (FirefoxDriverManager/getInstance))
-                 (FirefoxDriver.))
-    (do (.setup (ChromeDriverManager/getInstance))
-        (let [options (ChromeOptions.)]
-          (do
-            (.addArguments options ["--headless" "--disable-gpu"])
-            (ChromeDriver. options))))))
+; (def ^:private full-hd-tv-size (Dimension. 1920 1080))
+(def ^:private hd-tv-size (Dimension. 1280 720))
+; (def ^:private xbox-one-size (Dimension. 1236 701))
 
 (defn functional-fixture [test-fn]
   (let [driver (create-driver)]
-    (.. driver (manage) (window) (setSize snap-ci-xvfb-size))
-    (set-driver! (init-driver {:webdriver driver})))
+    (set-driver! (init-driver {:webdriver driver}))
+    (compare-and-set! driver-atom nil driver))
 
-  (delete-all-cookies)
   (implicit-wait 1000)
+
   (test-fn)
+
   (quit))
 
-(defn export-details [test-fn]
+(defn before-after-each-fixture [test-fn]
+  (.. @driver-atom (manage) (window) (setSize hd-tv-size))
+  (delete-all-cookies)
+
   (test-fn)
-  (make-parents "./target/functional/screenshot.png")
-  (take-screenshot :file (str "./target/functional/" (name browser) "-screenshot.png"))
-  (spit (str "./target/functional/" (name browser) "-page-source.html") (page-source)))
+
+  (print-logs @driver-atom LogType/DRIVER)
+  (print-logs @driver-atom LogType/BROWSER))
 
 (use-fixtures :once functional-fixture)
-(use-fixtures :each export-details)
+(use-fixtures :each before-after-each-fixture)
 
-(def tray-name "some-tray-name")
-(def success-message "some-message")
-(def success-image "https://raw.githubusercontent.com/build-canaries/nevergreen/master/doc/screenshot.png")
-(def expected-projects ["success building project", "failure sleeping project", "failure building project"])
+(def ^:private tray-name "some-tray-name")
+(def ^:private success-message "some-message")
+(def ^:private success-image "https://raw.githubusercontent.com/build-canaries/nevergreen/master/doc/screenshot.png")
+(def ^:private expected-projects ["success building project", "failure sleeping project", "failure building project"])
 
 (deftest complete-journey
   (let [base-url (nevergreen-under-test)
@@ -70,6 +58,8 @@
 
     (is (= (expected-version) (version)))
 
+    (save-screenshot-and-source "home")
+
     (tracking-page/navigate base-url)
     (let [tray (tracking-page/add-tray tray-url tray-username tray-password)]
       (tracking-page/include-all tray)
@@ -78,11 +68,15 @@
       (tracking-page/set-name tray tray-name)
       (tracking-page/show-projects tray))
 
+    (save-screenshot-and-source "tracking")
+
     (success-page/navigate base-url)
     (success-page/add-message success-message)
     (success-page/add-message success-image)
     (is (in? (success-page/messages) success-message) "Expected success message not added")
     (is (in? (success-page/images) success-image) "Expected success image not added")
+
+    (save-screenshot-and-source "success")
 
     (settings-page/navigate base-url)
     (doseq [state [true false]]
@@ -92,12 +86,20 @@
           (settings-page/play-broken-build-sounds state)
           (settings-page/show-build-labels state)))
 
+    (save-screenshot-and-source "settings")
+
     (backup-page/navigate base-url)
     (-> (backup-page/export-data)
         (backup-page/import-data))
 
+    (save-screenshot-and-source "backup")
+
     (help-page/navigate base-url)
+
+    (save-screenshot-and-source "help")
 
     (monitor-page/navigate base-url)
     (doseq [actual-project (monitor-page/interesting-projects)]
-      (is (element-includes? expected-projects actual-project) "Expected project not displayed"))))
+      (is (element-includes? expected-projects actual-project) "Expected project not displayed"))
+
+    (save-screenshot-and-source "monitor")))
