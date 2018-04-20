@@ -3,8 +3,8 @@
   :url "https://github.com/build-canaries/nevergreen"
   :dependencies [[org.clojure/clojure "1.9.0"]
                  [ring "1.6.3" :exclusions [org.eclipse.jetty/jetty-server]]
-                 [org.eclipse.jetty/jetty-server "9.4.9.v20180320"]
-                 [compojure "1.6.0"]
+                 [org.eclipse.jetty/jetty-server "9.4.10.RC0"]
+                 [compojure "1.6.1"]
                  [environ "1.1.0"]
                  [cheshire "5.8.0"]
                  [clj-cctray "1.0.0"]
