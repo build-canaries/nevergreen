@@ -2,7 +2,7 @@
   (:require [clj-http.client :as client]
             [clojure.tools.logging :as log]
             [clojure.string :as s])
-  (:import (java.net UnknownHostException URISyntaxException ConnectException)
+  (:import (java.net UnknownHostException URISyntaxException ConnectException SocketTimeoutException)
            (clojure.lang ExceptionInfo)))
 
 (def ^:const ten-seconds 10000)
@@ -17,8 +17,11 @@
                                :headers               (merge {"Accept" "application/xml"} additional-headers)
                                :as                    :stream
                                :throw-entire-message? true})]
-      (log/info (str "GET from [" url "] returned a status of [" (:status res) " " (:reason-phrase res) "]"))
+      (log/info (str "GET from [" url "] returned a status of [" (:status res) "]"))
       (:body res))
+    (catch SocketTimeoutException e
+      (log/info (str "GET from [" url "] threw an SocketTimeoutException [" (.getMessage e) "]"))
+      (throw (ex-info "Connection timeout, is the URL correct?" {:url url})))
     (catch UnknownHostException e
       (let [host (first (s/split (.getMessage e) #":"))
             msg (str host " is an unknown host")]
