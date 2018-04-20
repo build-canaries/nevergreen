@@ -16,7 +16,8 @@
                                :conn-timeout          ten-seconds
                                :headers               (merge {"Accept" "application/xml"} additional-headers)
                                :as                    :stream
-                               :throw-entire-message? true})]
+                               :throw-entire-message? true
+                               :cookie-policy         :standard})]
       (log/info (str "GET from [" url "] returned a status of [" (:status res) "]"))
       (:body res))
     (catch SocketTimeoutException e
