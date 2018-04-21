@@ -21,7 +21,7 @@ class Footer extends Component {
                       title='Nevergreen releases on Github'>
           v<span data-locator='version'>{fullVersion}</span> {versionName}
         </ExternalLink>
-        <div className={styles.copyright}>Nevergreen Copyright © 2017 Build Canaries</div>
+        <div className={styles.about}>Nevergreen by Build Canaries</div>
       </footer>
     )
   }
