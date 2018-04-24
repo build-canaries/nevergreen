@@ -34,9 +34,6 @@ echo "fetching node modules and performing first build"
 echo "watching the js for changes ..."
 npm run watchJs &
 
-# Sleep for a bit to give the initial js compile time to finish, just to make the initial logs easier to read
-sleep 25
-
 echo "starting the CI stub server ..."
 npm run ci-stub-server &
 

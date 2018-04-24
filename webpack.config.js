@@ -1,13 +1,12 @@
 const webpack = require('webpack')
 const path = require('path')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const autoprefixer = require('autoprefixer')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const isProd = (process.env.NODE_ENV === 'production')
 
 const cssLoader = {
@@ -34,20 +33,12 @@ const defaultName = '[name].[hash:8].[ext]'
 module.exports = {
   devtool: 'source-map',
   entry: ['./src/client/index'],
-  bail: true,
   output: {
     path: path.join(__dirname, 'resources/public'),
     filename: '[name].[hash:8].js',
     publicPath: ''
   },
   plugins: [
-    new UglifyJSPlugin({
-      sourceMap: true,
-      parallel: true,
-      extractComments: isProd,
-      compress: isProd,
-      mangle: isProd
-    }),
     new HtmlWebpackPlugin({
       template: './src/client/index.html',
       minify: {
@@ -56,7 +47,7 @@ module.exports = {
         removeRedundantAttributes: isProd
       }
     }),
-    new ExtractTextPlugin({
+    new MiniCssExtractPlugin({
       filename: '[name].[hash:8].css',
       allChunks: true
     }),
@@ -80,27 +71,25 @@ module.exports = {
       },
       {
         test: /\.scss$/i,
-        use: ExtractTextPlugin.extract({
-          use: [
-            cssLoader,
-            postCssLoader,
-            'resolve-url-loader',
-            {
-              loader: 'sass-loader',
-              options: {sourceMap: true}
-            }
-          ]
-        })
+        use: [
+          MiniCssExtractPlugin.loader,
+          cssLoader,
+          postCssLoader,
+          'resolve-url-loader',
+          {
+            loader: 'sass-loader',
+            options: {sourceMap: true}
+          }
+        ]
       },
       {
         test: /\.css$/i,
-        use: ExtractTextPlugin.extract({
-          use: [
-            cssLoader,
-            postCssLoader,
-            'resolve-url-loader'
-          ]
-        })
+        use: [
+          MiniCssExtractPlugin.loader,
+          cssLoader,
+          postCssLoader,
+          'resolve-url-loader'
+        ]
       },
       {
         test: /\.(jpe?g|png|gif)$/i,
@@ -161,9 +150,6 @@ module.exports = {
         test: /\.txt$/,
         use: 'raw-loader'
       }
-    ],
-    noParse: [
-      /localforage\.js$/
     ]
   }
 }
