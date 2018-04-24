@@ -1,5 +1,6 @@
 @import '../common/variables';
 @import '../common/layout';
+@import '../common/responsive';
 
 .section {
   background-color: $white;
@@ -23,4 +24,24 @@
 
 .newLineCheckbox {
   width: 100%;
+}
+
+.icons {
+  display: inline-block;
+
+  & > span {
+    @include grid-column(4 of 4);
+
+    &::before {
+      margin-right: 1em;
+    }
+
+    @include respond-to(tablet) {
+      @include grid-column(4 of 8);
+    }
+
+    @include respond-to(desktop) {
+      @include grid-column(4 of 12);
+    }
+  }
 }
