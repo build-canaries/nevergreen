@@ -6,6 +6,22 @@ import TraySettingsContainer from '../settings/TraySettingsContainer'
 import Loading from '../../common/loading/Loading'
 import Tabs from '../../common/tabs/Tabs'
 
+const REDACTED = '*****'
+
+function redactedUrl(url) {
+  const redactedUrl = new URL(url)
+  if (redactedUrl.password) {
+    redactedUrl.password = REDACTED
+  }
+  const searchParams = redactedUrl.searchParams
+  if (searchParams) {
+    for (const key of searchParams.keys()) {
+      searchParams.set(key, REDACTED)
+    }
+  }
+  return redactedUrl.toString()
+}
+
 class Tray extends Component {
   constructor(props) {
     super(props)
@@ -13,8 +29,9 @@ class Tray extends Component {
   }
 
   render() {
-    const title = this.props.name || this.props.url
-    const subTitle = this.props.name ? this.props.url : ''
+    const url = redactedUrl(this.props.url)
+    const title = this.props.name || url
+    const subTitle = this.props.name ? url : ''
 
     return (
       <Container title={title} subTitle={subTitle} highlight={this.props.highlight}>

@@ -1,4 +1,5 @@
 const jsdom = require('jsdom')
+const URL = require('whatwg-url').URL
 const chai = require('chai')
 const dirtyChai = require('dirty-chai')
 const sinonChai = require('sinon-chai')
@@ -38,3 +39,5 @@ global.navigator = {
 
 global.HTMLElement = () => {
 }
+
+global.URL = URL
