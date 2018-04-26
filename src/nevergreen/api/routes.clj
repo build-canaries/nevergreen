@@ -8,7 +8,6 @@
             [nevergreen.wrap-convert-keys :refer [wrap-convert-keys]]
             [nevergreen.wrap-cors-headers :refer [wrap-cors-headers]]
             [nevergreen.wrap-exceptions :refer [wrap-exceptions]]
-            [nevergreen.wrap-redact-sensitive :refer [wrap-redact-sensitive wrap-restore-sensitive]]
             [nevergreen.errors :refer [error-response]]
             [ring-curl.middleware :refer [wrap-curl-logging]]
             [ring.middleware.gzip :refer :all]))
@@ -31,16 +30,10 @@
 
     (GET "/api/version" [] {:headers {"Content-Type" "text/plain"} :body (version)})))
 
-(defn- wrap-logging [handler]
-  (-> handler
-      wrap-restore-sensitive
-      (wrap-curl-logging {:level :info})
-      wrap-redact-sensitive))
-
 (defn wrap-api-middleware [routes]
   (-> routes
       wrap-convert-keys
-      wrap-logging
+      (wrap-curl-logging {:level :debug})
       (wrap-json-body {:keywords? true :malformed-response invalid-json})
       (wrap-json-response {:pretty true})
       wrap-no-cache
