@@ -54,7 +54,7 @@
     "superagent": "3.8.2"
   },
   "devDependencies": {
-    "babel-core": "6.26.0",
+    "babel-core": "6.26.2",
     "babel-eslint": "8.2.3",
     "babel-loader": "7.1.4",
     "babel-plugin-transform-class-properties": "6.24.1",
@@ -83,7 +83,7 @@
     "mini-css-extract-plugin": "0.4.0",
     "mocha": "5.1.1",
     "mocha-circleci-reporter": "0.0.2",
-    "node-sass": "4.8.3",
+    "node-sass": "4.9.0",
     "nyc": "11.7.1",
     "optimize-css-assets-webpack-plugin": "4.0.0",
     "postcss-loader": "2.1.4",
