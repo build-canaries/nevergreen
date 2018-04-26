@@ -11,7 +11,7 @@ import Title from '../common/Title'
 
 class Monitor extends Component {
   fetch = () => {
-    this.props.fetchInteresting(this.props.trays, this.props.selected, this.props.projects)
+    return this.props.fetchInteresting(this.props.trays, this.props.selected, this.props.projects)
   }
 
   componentDidMount() {
