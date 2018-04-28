@@ -1,16 +1,13 @@
 (ns nevergreen.app
-  (:import org.joda.time.DateTime
-           org.slf4j.bridge.SLF4JBridgeHandler)
+  (:import org.joda.time.DateTime)
   (:require [compojure.core :refer :all]
             [ring.adapter.jetty :refer [run-jetty]]
             [cheshire.generate :as cheshire]
             [nevergreen.config :as config]
             [nevergreen.api.routes :refer :all]
-            [nevergreen.app.routes :refer :all])
+            [nevergreen.app.routes :refer :all]
+            [nevergreen.logging :refer [configure-logging]])
   (:gen-class))
-
-(SLF4JBridgeHandler/removeHandlersForRootLogger)
-(SLF4JBridgeHandler/install)
 
 (cheshire/add-encoder DateTime (fn [date json-generator]
                                  (.writeString json-generator (.toString date))))
@@ -23,4 +20,5 @@
         (wrap-routes wrap-app-middleware))))
 
 (defn -main []
+  (configure-logging)
   (run-jetty all-routes {:host (config/ip) :port (config/port)}))
