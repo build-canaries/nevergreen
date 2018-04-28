@@ -52,4 +52,16 @@ describe('<Tray/>', function () {
     const wrapper = shallow(<Tray {...props} />)
     expect(wrapper.find(Container)).to.have.prop('title', 'https://some.url/?token=*****')
   })
+
+  it('should not error when URL is blank', function () {
+    const props = {...DEFAULT_PROPS, name: null, url: ''}
+    const wrapper = shallow(<Tray {...props} />)
+    expect(wrapper.find(Container)).to.have.prop('title', '')
+  })
+
+  it('should not error when URL is invalid', function () {
+    const props = {...DEFAULT_PROPS, name: null, url: 'invalid'}
+    const wrapper = shallow(<Tray {...props} />)
+    expect(wrapper.find(Container)).to.have.prop('title', '')
+  })
 })

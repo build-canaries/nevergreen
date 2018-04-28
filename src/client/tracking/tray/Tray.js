@@ -9,17 +9,21 @@ import Tabs from '../../common/tabs/Tabs'
 const REDACTED = '*****'
 
 function redactedUrl(url) {
-  const redactedUrl = new URL(url)
-  if (redactedUrl.password) {
-    redactedUrl.password = REDACTED
-  }
-  const searchParams = redactedUrl.searchParams
-  if (searchParams) {
-    for (const key of searchParams.keys()) {
-      searchParams.set(key, REDACTED)
+  try {
+    const redactedUrl = new URL(url)
+    if (redactedUrl.password) {
+      redactedUrl.password = REDACTED
     }
+    const searchParams = redactedUrl.searchParams
+    if (searchParams) {
+      for (const key of searchParams.keys()) {
+        searchParams.set(key, REDACTED)
+      }
+    }
+    return redactedUrl.toString()
+  } catch (e) {
+    return ''
   }
-  return redactedUrl.toString()
 }
 
 class Tray extends Component {
