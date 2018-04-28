@@ -9,8 +9,7 @@
             [nevergreen.security :as security]
             [nevergreen.crypto :as crypt]
             [nevergreen.errors :refer [create-error is-error?]])
-  (:refer-clojure :exclude [replace])
-  (:import (clojure.lang ExceptionInfo)))
+  (:refer-clojure :exclude [replace]))
 
 (defn- invalid-url-error-message [url]
   (if (blank? url)
@@ -63,8 +62,8 @@
         (parser/get-projects response {:server server-type :normalise true})
         (add-project-ids)
         (add-server-type server-type)))
-    (catch ExceptionInfo e
-      [(create-error (.getMessage e) (:url tray))])))
+    (catch Exception e
+      [(create-error e (:url tray))])))
 
 (defn fetch-all [tray]
   (->> (fetch-tray tray)

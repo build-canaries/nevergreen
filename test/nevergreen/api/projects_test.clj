@@ -5,8 +5,7 @@
             [clj-cctray.core :as parser]
             [nevergreen.servers :as servers]
             [nevergreen.security :as security]
-            [nevergreen.crypto :as crypt]
-            [nevergreen.errors :refer [create-error]]))
+            [nevergreen.crypto :as crypt]))
 
 (def valid-url "http://someserver/cc.xml")
 (def password "any-password")
@@ -59,13 +58,13 @@
                (security/basic-auth-header anything anything) => anything :times 0))
 
        (fact "creates an error if the URL is not valid"
-             (subject/fetch-tray {:url "url"}) => [{:error "Only http(s) URLs are supported: url"
+             (subject/fetch-tray {:url "url"}) => [{:error "ExceptionInfo: Only http(s) URLs are supported: url"
                                                     :url   "url"}])
 
        (fact "handles failing to decrypt the password"
              (subject/fetch-tray {:url      valid-url
                                   :username ""
-                                  :password "some-encrypted-password"}) => [{:error "some-error"
+                                  :password "some-encrypted-password"}) => [{:error "ExceptionInfo: some-error"
                                                                              :url   valid-url}]
              (provided
                (crypt/decrypt "some-encrypted-password") =throws=> (ex-info "some-error" {}))))
