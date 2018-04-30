@@ -9,7 +9,6 @@
   &::before {
     @include font-scale(1);
 
-    margin-left: 1em;
     margin-right: 0.5em;
   }
 }
@@ -29,6 +28,7 @@
   color: $white;
   cursor: pointer;
   overflow: hidden;
+  padding: 1em;
   position: relative;
   white-space: nowrap;
 
@@ -38,7 +38,6 @@
 .title {
   display: inline-block;
   font-weight: 400;
-  padding: 0.5em;
 }
 
 .subTitle {
