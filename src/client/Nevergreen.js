@@ -49,9 +49,12 @@ class Nevergreen extends Component {
     Mousetrap.unbind(['?', 'esc'])
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.fullScreenRequested !== this.props.fullScreenRequested) {
-      this.props.enableFullScreen(nextProps.fullScreenRequested)
+  componentDidUpdate(prevProps) {
+    if (prevProps.fullScreenRequested !== this.props.fullScreenRequested) {
+      this.props.enableFullScreen(this.props.fullScreenRequested)
+      if (!this.props.fullScreenRequested) {
+        clearTimeout(this.state.fullScreenTimer)
+      }
     }
   }
 
@@ -71,13 +74,17 @@ class Nevergreen extends Component {
 
   disableFullScreen() {
     clearTimeout(this.state.fullScreenTimer)
+
     if (this.props.isFullScreen) {
       this.props.enableFullScreen(false)
     }
+
     if (this.props.fullScreenRequested) {
-      this.setState({
-        fullScreenTimer: setTimeout(() => this.props.enableFullScreen(true), THREE_SECONDS)
-      })
+      const enableFullScreen = () => {
+        this.props.enableFullScreen(true)
+      }
+      const fullScreenTimer = setTimeout(enableFullScreen, THREE_SECONDS)
+      this.setState({fullScreenTimer})
     }
   }
 }
