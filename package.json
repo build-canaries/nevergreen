@@ -89,6 +89,7 @@
     "postcss-loader": "2.1.4",
     "proxyquire": "2.0.1",
     "raw-loader": "0.5.1",
+    "react-test-renderer": "16.3.2",
     "resolve-url-loader": "2.3.0",
     "sass-loader": "7.0.1",
     "sinon": "4.5.0",

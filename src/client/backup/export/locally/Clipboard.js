@@ -16,18 +16,17 @@ function createClipboard(elementSelector, onSuccess, onError) {
 }
 
 class ClipboardComponent extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {clipboard: null}
+  static getDerivedStateFromProps(nextProps) {
+    return {
+      clipboard: createClipboard(nextProps.elementSelector, nextProps.onSuccess, nextProps.onError)
+    }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.state.clipboard) {
-      this.state.clipboard.destroy()
+  constructor(props) {
+    super(props)
+    this.state = {
+      clipboard: null
     }
-    this.setState({
-      clipboard: createClipboard(nextProps.elementSelector, nextProps.onSuccess, nextProps.onError)
-    })
   }
 
   componentDidMount() {
@@ -39,6 +38,12 @@ class ClipboardComponent extends Component {
   componentWillUnmount() {
     if (this.state.clipboard) {
       this.state.clipboard.destroy()
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.clipboard) {
+      prevState.clipboard.destroy()
     }
   }
 

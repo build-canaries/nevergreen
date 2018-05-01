@@ -4,6 +4,13 @@ import Input from '../../../common/forms/Input'
 import styles from './github.scss'
 
 class GitHub extends Component {
+  static getDerivedStateFromProps(nextProps) {
+    return {
+      gistId: nextProps.gistId,
+      description: nextProps.description
+    }
+  }
+
   constructor(props) {
     super(props)
     this.state = {
@@ -35,13 +42,6 @@ class GitHub extends Component {
 
   upload = () => {
     this.props.uploadToGitHub(this.state.gistId, this.state.description, this.props.configuration, this.state.oauthToken)
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      gistId: nextProps.gistId,
-      description: nextProps.description
-    })
   }
 
   render() {

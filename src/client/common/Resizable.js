@@ -7,21 +7,25 @@ const MAX_WAIT_MS = 32
 const DEBOUNCE_OPTIONS = {leading: true, trailing: true, maxWait: MAX_WAIT_MS}
 
 class Resizable extends Component {
+  static getDerivedStateFromProps(nextProps) {
+    return {
+      onResizeDebounced: _.debounce(nextProps.onResize, WAIT_MS, DEBOUNCE_OPTIONS)
+    }
+  }
+
   constructor(props) {
     super(props)
-    this.state = {onResizeDebounced: _.debounce(props.onResize, WAIT_MS, DEBOUNCE_OPTIONS)}
+    this.state = {
+      onResizeDebounced: _.debounce(props.onResize, WAIT_MS, DEBOUNCE_OPTIONS)
+    }
   }
 
   componentDidMount() {
     window.addEventListener('resize', this.state.onResizeDebounced)
   }
 
-  componentWillReceiveProps(nextProps) {
-    window.removeEventListener('resize', this.state.onResizeDebounced)
-    this.setState({onResizeDebounced: _.debounce(nextProps.onResize, WAIT_MS, DEBOUNCE_OPTIONS)})
-  }
-
-  componentDidUpdate() {
+  componentDidUpdate(prevProps, prevState) {
+    window.removeEventListener('resize', prevState.onResizeDebounced)
     window.addEventListener('resize', this.state.onResizeDebounced)
   }
 

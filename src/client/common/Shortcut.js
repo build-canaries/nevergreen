@@ -12,10 +12,6 @@ function click(parent) {
 }
 
 class Shortcut extends Component {
-  setParentNode = (node) => {
-    this.parentNode = _.isNil(node) ? null : node
-  }
-
   componentDidMount() {
     Mousetrap.bind(this.props.hotkeys, () => click(this.parentNode))
   }
@@ -24,15 +20,15 @@ class Shortcut extends Component {
     Mousetrap.unbind(this.props.hotkeys)
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (!_.isEqual(this.props.hotkeys, nextProps.hotkeys)) {
-      Mousetrap.unbind(this.props.hotkeys)
-      Mousetrap.bind(nextProps.hotkeys, () => click(this.parentNode))
+  componentDidUpdate(prevProps) {
+    if (!_.isEqual(this.props.hotkeys, prevProps.hotkeys)) {
+      Mousetrap.unbind(prevProps.hotkeys)
+      Mousetrap.bind(this.props.hotkeys, () => click(this.parentNode))
     }
   }
 
   render() {
-    return <span ref={this.setParentNode}/>
+    return <span ref={(node) => this.parentNode = node}/>
   }
 }
 

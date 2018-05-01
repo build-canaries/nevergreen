@@ -4,9 +4,17 @@ import Input from '../../../common/forms/Input'
 import styles from './github.scss'
 
 class GitHub extends Component {
+  static getDerivedStateFromProps(nextProps) {
+    return {
+      gistId: nextProps.gistId
+    }
+  }
+
   constructor(props) {
     super(props)
-    this.state = {gistId: props.gistId}
+    this.state = {
+      gistId: props.gistId
+    }
   }
 
   gistIdChanged = (evt) => {
@@ -19,10 +27,6 @@ class GitHub extends Component {
 
   restore = () => {
     this.props.restoreFromGitHub(this.state.gistId)
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({gistId: nextProps.gistId})
   }
 
   render() {
