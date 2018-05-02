@@ -28,7 +28,28 @@ const postCssLoader = {
   }
 }
 
+const imgLoader = {
+  loader: 'img-loader',
+  options: {
+    plugins: [
+      require('imagemin-optipng')({}),
+      require('imagemin-svgo')({})
+    ]
+  }
+}
+
 const defaultName = '[name].[hash:8].[ext]'
+
+function urlLoader(mimeType) {
+  return {
+    loader: 'url-loader',
+    options: {
+      name: defaultName,
+      limit: '8192',
+      mimetype: mimeType
+    }
+  }
+}
 
 module.exports = {
   devtool: 'source-map',
@@ -92,50 +113,30 @@ module.exports = {
         ]
       },
       {
-        test: /\.(jpe?g|png|gif)$/i,
+        test: /\.png$/i,
         use: [
-          {
-            loader: 'url-loader',
-            options: {
-              name: defaultName,
-              limit: '8192'
-            }
-          },
-          'img-loader'
+          urlLoader('image/png'),
+          imgLoader
         ]
       },
       {
         test: /\.woff2?(\?.*)?$/i,
-        use: [{
-          loader: 'url-loader',
-          options: {
-            name: defaultName,
-            limit: '8192',
-            mimetype: 'application/font-woff'
-          }
-        }]
+        use: [
+          urlLoader('application/font-woff')
+        ]
       },
       {
         test: /\.ttf(\?.*)?$/i,
-        use: [{
-          loader: 'url-loader',
-          options: {
-            name: defaultName,
-            limit: '8192',
-            mimetype: 'application/octet-stream'
-          }
-        }]
+        use: [
+          urlLoader('application/octet-stream')
+        ]
       },
       {
         test: /\.svg(\?.*)?$/i,
-        use: [{
-          loader: 'url-loader',
-          options: {
-            name: defaultName,
-            limit: '8192',
-            mimetype: 'image/svg+xml'
-          }
-        }]
+        use: [
+          urlLoader('image/svg+xml'),
+          imgLoader
+        ]
       },
       {
         test: /\.mp3$/i,
