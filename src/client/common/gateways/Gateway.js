@@ -42,9 +42,12 @@ export function send(request) {
   return request.then((res) => {
     return res.body || res.text
   }).catch((err) => {
-    log.error('An unhandled exception was thrown from the server', err)
+    const url = _.get(err, 'response.req.url', 'unknown')
+
+    log.error(`An exception was thrown when calling URL '${url}'`, err)
+
     const status = err.status || 0
-    const message = _.get(err, 'response.body.error', 'timeout')
+    const message = _.get(err, 'response.body.message', 'timeout')
     throw {status, message}
   })
 }

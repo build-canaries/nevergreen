@@ -67,10 +67,16 @@ describe('ExportActionCreators', function () {
     })
 
     it('should dispatch export error action if the gist can not be created', function () {
-      Gateway.send = () => Promise.reject({message: '{"message": "some-error"}'})
+      Gateway.send = () => Promise.reject({message: 'some-error'})
       return ExportActions.uploadToGitHub('irrelevant', 'irrelevant', 'irrelevant', 'irrelevant')(dispatch).then(() => {
         expect(dispatch).to.have.been.calledWithMatch({type: EXPORT_ERROR})
       })
+    })
+
+    it('should dispatch export error action if access token is blank', function () {
+      Gateway.send = () => Promise.reject({message: 'some-error'})
+      ExportActions.uploadToGitHub('irrelevant', 'irrelevant', 'irrelevant', '')(dispatch)
+      expect(dispatch).to.have.been.calledWithMatch({type: EXPORT_ERROR})
     })
 
     it('should create a gist if no id is given', function () {

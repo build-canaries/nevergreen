@@ -1,6 +1,5 @@
 import {send} from '../common/gateways/Gateway'
 import {createGist, updateGist} from '../common/gateways/GitHubGateway'
-import {fromJson} from '../common/Json'
 import {gitHubSetGistId} from './GitHubActionCreators'
 import Immutable from 'immutable'
 import {isBlank} from '../common/Utils'
@@ -22,17 +21,24 @@ export function uploadToGitHub(gistId, description, configuration, oauthToken) {
   return function (dispatch) {
     dispatch(exporting())
 
-    const successMessage = isBlank(gistId) ? 'Successfully updated gist' : 'Successfully created gist'
+    if (isBlank(oauthToken)) {
+      return dispatch(exportError(['You must provide an access token to upload to GitHub']))
+    }
+
     const req = isBlank(gistId)
       ? createGist(description, configuration, oauthToken)
       : updateGist(gistId, description, configuration, oauthToken)
 
     return send(req).then((gistJson) => {
-      dispatch(exportSuccess([successMessage, gistJson.id]))
-      dispatch(gitHubSetGistId(gistJson.id))
+      const gistId = gistJson.id
+      const successMessage = isBlank(gistId)
+        ? `Successfully updated gist with ID ${gistId}`
+        : `Successfully created gist, ID ${gistId}`
+
+      dispatch(exportSuccess([successMessage]))
+      dispatch(gitHubSetGistId(gistId))
     }).catch((error) => {
-      const message = fromJson(error.message).message
-      dispatch(exportError(['Unable to upload to GitHub because of an error:', `${error.status} - ${message}`]))
+      dispatch(exportError([`Unable to upload to GitHub because of an error: ${error.status} - ${error.message}`]))
     })
   }
 }
