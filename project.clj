@@ -33,7 +33,7 @@
                                          [jonase/eastwood "0.2.5"]]
                           :dependencies [[midje "1.9.1"]
                                          [clj-webdriver/clj-webdriver "0.7.2" :exclusions [org.mortbay.jetty/jetty]]
-                                         [org.seleniumhq.selenium/selenium-java "3.11.0" :exclusions [org.eclipse.jetty/jetty-io
+                                         [org.seleniumhq.selenium/selenium-java "3.12.0" :exclusions [org.eclipse.jetty/jetty-io
                                                                                                       commons-logging]]
                                          [io.github.bonigarcia/webdrivermanager "2.2.1" :exclusions [org.apache.commons/commons-lang3]]
                                          [org.seleniumhq.selenium/htmlunit-driver "2.30.0" :exclusions [org.eclipse.jetty/jetty-io
