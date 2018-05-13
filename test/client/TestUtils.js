@@ -1,6 +1,7 @@
 import React from 'react'
 import proxyquire from 'proxyquire'
 import {shallow} from 'enzyme'
+import {sandbox} from './Sandbox'
 import _ from 'lodash'
 
 proxyquire.noCallThru()
@@ -41,4 +42,13 @@ const NON_STRINGS = {
 
 export function forNonStrings(fn) {
   _.forOwn(NON_STRINGS, fn)
+}
+
+export function testThunk(thunkion) {
+  const dispatch = sandbox.spy()
+  return Promise.resolve(thunkion(dispatch)).then(() => {
+    return dispatch
+  }).catch(() => {
+    return dispatch
+  })
 }

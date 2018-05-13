@@ -1,4 +1,4 @@
-import {beforeEach, describe, it} from 'mocha'
+import {after, before, describe, it} from 'mocha'
 import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
@@ -12,9 +12,13 @@ describe('<Resizable/>', function () {
     onResize: _.noop
   }
 
-  beforeEach(function () {
+  before(function () {
     sandbox.spy(global.window, 'addEventListener')
     sandbox.spy(global.window, 'removeEventListener')
+  })
+
+  after(function () {
+    sandbox.restore()
   })
 
   it('should not render anything as this is only a React component for easy setup/cleanup up on [un]mount', function () {

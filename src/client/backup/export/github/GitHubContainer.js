@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {uploadToGitHub} from '../../../actions/ExportActionCreators'
+import {uploadToGitHub} from '../../../actions/ExportThunkActionCreators'
 import {gitHubSetDescription, gitHubSetGistId} from '../../../actions/GitHubActionCreators'
 import GitHub from './GitHub'
 
