@@ -2,7 +2,7 @@ import {after, before, describe, it} from 'mocha'
 import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
-import {sandbox} from '../Sandbox'
+import {mocks} from '../Mocking'
 import Resizable from '../../../src/client/common/Resizable'
 import _ from 'lodash'
 
@@ -13,12 +13,13 @@ describe('<Resizable/>', function () {
   }
 
   before(function () {
-    sandbox.spy(global.window, 'addEventListener')
-    sandbox.spy(global.window, 'removeEventListener')
+    mocks.spy(global.window, 'addEventListener')
+    mocks.spy(global.window, 'removeEventListener')
   })
 
   after(function () {
-    sandbox.restore()
+    global.window.addEventListener.restore()
+    global.window.removeEventListener.restore()
   })
 
   it('should not render anything as this is only a React component for easy setup/cleanup up on [un]mount', function () {
@@ -43,7 +44,7 @@ describe('<Resizable/>', function () {
   })
 
   it('should remove old resize fn when receiving new props and add a new one on update', function () {
-    const newProps = {onResize: sandbox.spy()}
+    const newProps = {onResize: mocks.spy()}
     const wrapper = shallow(<Resizable {...props} />)
 
     const originalResizeFn = global.window.addEventListener.args[0][1]

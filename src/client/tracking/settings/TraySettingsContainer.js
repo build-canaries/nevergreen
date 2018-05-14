@@ -1,15 +1,7 @@
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {
-  encryptPassword,
-  refreshTray,
-  removeTray,
-  setServerType,
-  setTrayName,
-  setTrayUrl,
-  setTrayUsername,
-  updateTrayId
-} from '../../actions/TrackingActionCreators'
+import {removeTray, setServerType, setTrayName, setTrayUrl, setTrayUsername} from '../../actions/TrackingActionCreators'
+import {encryptPassword, refreshTray, updateTrayId} from '../../actions/TrackingThunkActionCreators'
 import TraySettings from './TraySettings'
 
 function mapDispatchToProps(dispatch) {

@@ -1,21 +1,19 @@
 import {withMockedImports} from '../../TestUtils'
-import {beforeEach, describe, it} from 'mocha'
+import {describe, it} from 'mocha'
 import {expect} from 'chai'
-import {sandbox} from '../../Sandbox'
+import {mocks} from '../../Mocking'
 
 describe('projects gateway', function () {
 
-  const Gateway = {}
-  const ProjectsGateway = withMockedImports('client/common/gateways/ProjectsGateway', {
-    './Gateway': Gateway
-  })
+  const post = mocks.stub()
+  const fakeResponse = mocks.stub()
 
-  beforeEach(() => {
-    Gateway.post = sandbox.stub().returns(Promise.resolve())
-    Gateway.fakeResponse = sandbox.stub().returns(Promise.resolve())
+  const {fetchAll, interesting} = withMockedImports('client/common/gateways/ProjectsGateway', {
+    './Gateway': {post, fakeResponse}
   })
 
   describe('getting all projects', function () {
+
     it('posts only the required data from the given trays', () => {
       const trays = [{
         trayId: 'url',
@@ -46,13 +44,14 @@ describe('projects gateway', function () {
         serverType: 'GO'
       }]
 
-      ProjectsGateway.fetchAll(trays)
+      fetchAll(trays)
 
-      expect(Gateway.post).to.have.been.calledWith('/api/projects/all', expected)
+      expect(post).to.have.been.calledWith('/api/projects/all', expected)
     })
   })
 
   describe('getting interesting projects', function () {
+
     it('maps selected projects to the posted data', function () {
       const selected = {'some-tray-id': ['some-project-id']}
       const trays = [{
@@ -71,31 +70,31 @@ describe('projects gateway', function () {
         serverType: 'some-server-type'
       }]
 
-      ProjectsGateway.interesting(trays, selected)
+      interesting(trays, selected)
 
-      expect(Gateway.post).to.have.been.calledWith('/api/projects/interesting', expected)
-      expect(Gateway.fakeResponse).to.not.have.been.called()
+      expect(post).to.have.been.calledWith('/api/projects/interesting', expected)
+      expect(fakeResponse).to.not.have.been.called()
     })
 
     it('does not include trays with no selected projects', function () {
       const selected = {'some-tray-id': ['some-project-id'], 'none-selected-id': []}
       const trays = [{trayId: 'some-tray-id'}, {trayId: 'none-selected-id'}]
-      const expected = [sandbox.match({trayId: 'some-tray-id'})]
+      const expected = [mocks.match({trayId: 'some-tray-id'})]
 
-      ProjectsGateway.interesting(trays, selected)
+      interesting(trays, selected)
 
-      expect(Gateway.post).to.have.been.calledWith('/api/projects/interesting', sandbox.match(expected))
-      expect(Gateway.fakeResponse).to.not.have.been.called()
+      expect(post).to.have.been.calledWithMatch('/api/projects/interesting', mocks.match(expected))
+      expect(fakeResponse).to.not.have.been.called()
     })
 
     it('does not call the server at all if no trays have selected projects', function () {
       const selected = {'some-tray-id': []}
       const trays = [{trayId: 'some-tray-id'}]
 
-      ProjectsGateway.interesting(trays, selected)
+      interesting(trays, selected)
 
-      expect(Gateway.post).to.not.have.been.called()
-      expect(Gateway.fakeResponse).to.have.been.called()
+      expect(post).to.not.have.been.called()
+      expect(fakeResponse).to.have.been.called()
     })
   })
 })

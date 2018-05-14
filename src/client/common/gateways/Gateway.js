@@ -55,3 +55,9 @@ export function send(request) {
 export function fakeResponse(body) {
   return Promise.resolve({body})
 }
+
+export function abortPendingRequest(req) {
+  if (req && _.isFunction(req.abort)) {
+    req.abort()
+  }
+}

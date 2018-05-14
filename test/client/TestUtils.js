@@ -1,7 +1,8 @@
 import React from 'react'
 import proxyquire from 'proxyquire'
 import {shallow} from 'enzyme'
-import {sandbox} from './Sandbox'
+import {expect} from 'chai'
+import {mocks} from './Mocking'
 import _ from 'lodash'
 
 proxyquire.noCallThru()
@@ -45,10 +46,14 @@ export function forNonStrings(fn) {
 }
 
 export function testThunk(thunkion) {
-  const dispatch = sandbox.spy()
-  return Promise.resolve(thunkion(dispatch)).then(() => {
-    return dispatch
+  const dispatch = mocks.spy()
+  return Promise.resolve(thunkion(dispatch)).then((result) => {
+    expect(dispatch).to.have.been.called()
+    return result
   }).catch(() => {
-    return dispatch
+    expect.fail(
+      'Unhandled rejected Promise',
+      'A catch() block',
+      'Thunks should catch() rejected Promises and dispatch error actions')
   })
 }

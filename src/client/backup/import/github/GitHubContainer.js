@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {restoreFromGitHub} from '../../../actions/ImportActionCreators'
+import {restoreFromGitHub} from '../../../actions/GithubThunkActionCreators'
 import {gitHubSetGistId} from '../../../actions/GitHubActionCreators'
 import GitHub from './GitHub'
 

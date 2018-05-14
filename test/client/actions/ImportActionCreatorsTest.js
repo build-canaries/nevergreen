@@ -1,30 +1,15 @@
-import {withMockedImports} from '../TestUtils'
-import {beforeEach, describe, it} from 'mocha'
+import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import Immutable from 'immutable'
-import {sandbox} from '../Sandbox'
-import _ from 'lodash'
 import {IMPORT_ERROR, IMPORT_SUCCESS, IMPORTING} from '../../../src/client/actions/Actions'
+import {importError, importing, importSuccess} from '../../../src/client/actions/ImportActionCreators'
 
 describe('ImportActionCreators', function () {
-
-  const LocalRepository = {}
-  const Data = {}
-  const Migrations = {}
-  const Gateway = {}
-  const GitHubGateway = {}
-  const ImportActions = withMockedImports('client/actions/ImportActionCreators', {
-    '../common/repo/LocalRepository': LocalRepository,
-    '../common/repo/Data': Data,
-    '../common/repo/Migrations': Migrations,
-    '../common/gateways/Gateway': Gateway,
-    '../common/gateways/GitHubGateway': GitHubGateway
-  })
 
   describe('importing', function () {
 
     it('should return the correct type', function () {
-      const actual = ImportActions.importing()
+      const actual = importing()
       expect(actual).to.have.property('type', IMPORTING)
     })
   })
@@ -32,12 +17,12 @@ describe('ImportActionCreators', function () {
   describe('import error', function () {
 
     it('should return the correct type', function () {
-      const actual = ImportActions.importError()
+      const actual = importError()
       expect(actual).to.have.property('type', IMPORT_ERROR)
     })
 
     it('should return the errors given', function () {
-      const actual = ImportActions.importError(['some-error'])
+      const actual = importError(['some-error'])
       expect(actual).to.have.property('errors').that.contains('some-error')
     })
   })
@@ -45,81 +30,18 @@ describe('ImportActionCreators', function () {
   describe('import success', function () {
 
     it('should return the correct type', function () {
-      const actual = ImportActions.importSuccess()
+      const actual = importSuccess()
       expect(actual).to.have.property('type', IMPORT_SUCCESS)
     })
 
     it('should return the configuration given', function () {
-      const actual = ImportActions.importSuccess({foo: 'bar'})
+      const actual = importSuccess({foo: 'bar'})
       expect(actual).to.have.property('data').that.contains.property('foo', 'bar')
     })
 
     it('should return a success message', function () {
-      const actual = ImportActions.importSuccess()
+      const actual = importSuccess()
       expect(actual).to.have.property('messages').that.is.an.instanceof(Immutable.List)
-    })
-  })
-
-  describe('import data', function () {
-
-    const validJson = '{}'
-    let dispatch
-
-    beforeEach(function () {
-      dispatch = sandbox.spy()
-      Migrations.migrate = (data) => data
-      Data.filter = (data) => data
-    })
-
-    it('should dispatch import error action on json parse failure', function () {
-      ImportActions.importData('{invalidJson')(dispatch)
-      expect(dispatch).to.have.been.calledWithMatch({type: IMPORT_ERROR})
-    })
-
-    it('should dispatch import error action on validation failure', function () {
-      Data.validate = sandbox.stub().returns(['some-validation-error'])
-      ImportActions.importData(validJson)(dispatch)
-      expect(dispatch).to.have.been.calledWithMatch({type: IMPORT_ERROR})
-    })
-
-    it('should dispatch import success action on successful validation', function () {
-      Data.validate = sandbox.stub().returns([])
-      ImportActions.importData(validJson)(dispatch)
-      expect(dispatch).to.have.been.calledWithMatch({type: IMPORT_SUCCESS})
-    })
-  })
-
-  describe('restore from GitHub', function () {
-
-    const dispatch = sandbox.spy()
-
-    beforeEach(function () {
-      GitHubGateway.getGist = _.noop
-    })
-
-    it('should dispatch importing action', function () {
-      Gateway.send = () => Promise.resolve({files: {'configuration.json': {content: ''}}})
-      return ImportActions.restoreFromGitHub('some-id')(dispatch).then(() => {
-        expect(dispatch).to.have.been.calledWithMatch({type: IMPORTING})
-      })
-    })
-
-    it('should dispatch import error action if the gist can not be fetched', function () {
-      Gateway.send = () => Promise.reject({message: '{"message": "some-error"}'})
-      return ImportActions.restoreFromGitHub('some-id')(dispatch).then(() => {
-        expect(dispatch).to.have.been.calledWithMatch({type: IMPORT_ERROR})
-      })
-    })
-
-    it('should dispatch import data on successful fetch of the gist')
-
-    it('should dispatch import error if the gist does not contain configuration.json file')
-
-    it('should dispatch import error if the gist configuration.json is over 10mb as it can only be fetched via git cloning')
-
-    it('should dispatch import error if gist id is blank', function () {
-      ImportActions.restoreFromGitHub(' ')(dispatch)
-      expect(dispatch).to.have.been.calledWithMatch({type: IMPORT_ERROR})
     })
   })
 })

@@ -4,12 +4,14 @@ import {expect} from 'chai'
 
 describe('gateway', function () {
 
-  const superagent = {}
-  const Gateway = withMockedImports('client/common/gateways/Gateway', {superagent})
+  const {fakeResponse} = withMockedImports('client/common/gateways/Gateway', {
+    superagent: {}
+  })
 
   describe('fake response', function () {
+
     it('should return a resolved promise with the given body', function () {
-      const response = Gateway.fakeResponse('whatever')
+      const response = fakeResponse('whatever')
       expect(response).to.be.a('promise')
 
       return response.then((req) => {

@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {toJS} from '../common/ImmutableToJs'
-import {fetchInteresting} from '../actions/MonitorActionCreators'
+import {fetchInteresting} from '../actions/MonitorThunkActionCreators'
 import {requestFullScreen} from '../actions/NevergreenActionCreators'
 import Monitor from './Monitor'
 
