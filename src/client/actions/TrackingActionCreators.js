@@ -2,10 +2,7 @@ import Immutable from 'immutable'
 import {now} from '../common/DateTime'
 import {generateRandomName} from '../domain/Tray'
 import {
-  ENCRYPTING_PASSWORD,
   HIGHLIGHT_TRAY,
-  PASSWORD_ENCRYPT_ERROR,
-  PASSWORD_ENCRYPTED,
   PROJECTS_FETCH_ERROR,
   PROJECTS_FETCHED,
   PROJECTS_FETCHING,
@@ -30,18 +27,6 @@ export function trayAdded(trayId, url, username) {
 
 export function highlightTray(trayId) {
   return {type: HIGHLIGHT_TRAY, trayId}
-}
-
-export function encryptingPassword(trayId, password, request) {
-  return {type: ENCRYPTING_PASSWORD, trayId, password, request}
-}
-
-export function passwordEncrypted(trayId, password) {
-  return {type: PASSWORD_ENCRYPTED, trayId, password}
-}
-
-export function passwordEncryptError(trayId, errors) {
-  return {type: PASSWORD_ENCRYPT_ERROR, trayId, errors: Immutable.List(errors)}
 }
 
 export function removeTray(trayId, pendingRequest) {

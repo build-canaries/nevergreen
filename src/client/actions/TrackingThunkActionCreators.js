@@ -1,19 +1,16 @@
-import {encryptPassword as encrypt} from '../common/gateways/SecurityGateway'
 import {fetchAll} from '../common/gateways/ProjectsGateway'
 import {abortPendingRequest, send} from '../common/gateways/Gateway'
 import {isBlank} from '../common/Utils'
 import _ from 'lodash'
 import {
-  encryptingPassword,
   highlightTray,
-  passwordEncrypted,
-  passwordEncryptError,
   projectsFetched,
   projectsFetchError,
   projectsFetching,
   setTrayId,
   trayAdded
 } from './TrackingActionCreators'
+import {encryptPassword} from './PasswordThunkActionCreators'
 
 function hasScheme(url) {
   return _.size(_.split(url, '://')) > 1
@@ -26,28 +23,6 @@ export function updateTrayId(tray, newTrayId, pendingRequest) {
     dispatch(setTrayId(tray.trayId, newTrayId))
     const updatedTray = {...tray, trayId: newTrayId}
     return dispatch(refreshTray(updatedTray, pendingRequest))
-  }
-}
-
-export function encryptPassword(trayId, password, pendingRequest) {
-  abortPendingRequest(pendingRequest)
-
-  return function (dispatch) {
-    if (!isBlank(password)) {
-      const request = encrypt(password)
-
-      dispatch(encryptingPassword(trayId, password, request))
-
-      return send(request).then((data) => {
-        dispatch(passwordEncrypted(trayId, data.password))
-        return data.password
-      }).catch((error) => {
-        dispatch(passwordEncryptError(trayId, [`Nevergreen ${error.message}`]))
-      })
-    } else {
-      dispatch(passwordEncrypted(trayId, ''))
-      return Promise.resolve('')
-    }
   }
 }
 

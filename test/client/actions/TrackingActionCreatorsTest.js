@@ -2,10 +2,7 @@ import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {mocks} from '../Mocking'
 import {
-  ENCRYPTING_PASSWORD,
   HIGHLIGHT_TRAY,
-  PASSWORD_ENCRYPT_ERROR,
-  PASSWORD_ENCRYPTED,
   PROJECTS_FETCH_ERROR,
   PROJECTS_FETCHED,
   PROJECTS_FETCHING,
@@ -19,10 +16,7 @@ import {
   TRAY_ADDED
 } from '../../../src/client/actions/Actions'
 import {
-  encryptingPassword,
   highlightTray,
-  passwordEncrypted,
-  passwordEncryptError,
   projectsFetched,
   projectsFetchError,
   projectsFetching,
@@ -38,7 +32,7 @@ import {
 
 describe('TrackingActionCreators', function () {
 
-  describe('tray added', function () {
+  describe(TRAY_ADDED, function () {
 
     it('should return the correct type', function () {
       const actual = trayAdded()
@@ -72,7 +66,7 @@ describe('TrackingActionCreators', function () {
     })
   })
 
-  describe('highlight tray', function () {
+  describe(HIGHLIGHT_TRAY, function () {
 
     it('should return the correct type', function () {
       const actual = highlightTray()
@@ -85,66 +79,7 @@ describe('TrackingActionCreators', function () {
     })
   })
 
-  describe('encrypting password', function () {
-
-    it('should return the correct type', function () {
-      const actual = encryptingPassword()
-      expect(actual).to.have.property('type', ENCRYPTING_PASSWORD)
-    })
-
-    it('should return the tray id', function () {
-      const actual = encryptingPassword('some-tray-id')
-      expect(actual).to.have.property('trayId', 'some-tray-id')
-    })
-
-    it('should return the password being encrypted', function () {
-      const actual = encryptingPassword('irrelevant', 'some-password')
-      expect(actual).to.have.property('password', 'some-password')
-    })
-
-    it('should return the request', function () {
-      const actual = encryptingPassword('irrelevant', 'irrelevant', 'some-request')
-      expect(actual).to.have.property('request', 'some-request')
-    })
-  })
-
-  describe('password encrypted', function () {
-
-    it('should return the correct type', function () {
-      const actual = passwordEncrypted()
-      expect(actual).to.have.property('type', PASSWORD_ENCRYPTED)
-    })
-
-    it('should return the tray id', function () {
-      const actual = passwordEncrypted('some-tray-id')
-      expect(actual).to.have.property('trayId', 'some-tray-id')
-    })
-
-    it('should return the encrypted password', function () {
-      const actual = passwordEncrypted('irrelevant', 'encrypted-password')
-      expect(actual).to.have.property('password', 'encrypted-password')
-    })
-  })
-
-  describe('password encrypt error', function () {
-
-    it('should return the correct type', function () {
-      const actual = passwordEncryptError()
-      expect(actual).to.have.property('type', PASSWORD_ENCRYPT_ERROR)
-    })
-
-    it('should return the tray id', function () {
-      const actual = passwordEncryptError('some-tray-id')
-      expect(actual).to.have.property('trayId', 'some-tray-id')
-    })
-
-    it('should return the errors', function () {
-      const actual = passwordEncryptError('some-tray-id', ['some-error'])
-      expect(actual).to.have.property('errors').that.includes('some-error')
-    })
-  })
-
-  describe('remove tray', function () {
+  describe(REMOVE_TRAY, function () {
 
     it('should return the correct type', function () {
       const actual = removeTray()
@@ -163,7 +98,7 @@ describe('TrackingActionCreators', function () {
     })
   })
 
-  describe('projects fetching', function () {
+  describe(PROJECTS_FETCHING, function () {
 
     it('should return the correct type', function () {
       const actual = projectsFetching()
@@ -181,7 +116,7 @@ describe('TrackingActionCreators', function () {
     })
   })
 
-  describe('projects fetched', function () {
+  describe(PROJECTS_FETCHED, function () {
 
     it('should return the correct type', function () {
       const actual = projectsFetched('irrelevant', [])
@@ -211,7 +146,7 @@ describe('TrackingActionCreators', function () {
     })
   })
 
-  describe('projects fetch error', function () {
+  describe(PROJECTS_FETCH_ERROR, function () {
 
     it('should return the correct type', function () {
       const actual = projectsFetchError()
@@ -229,7 +164,7 @@ describe('TrackingActionCreators', function () {
     })
   })
 
-  describe('set tray name', function () {
+  describe(SET_TRAY_NAME, function () {
 
     it('should return the correct type', function () {
       const actual = setTrayName()
@@ -247,7 +182,7 @@ describe('TrackingActionCreators', function () {
     })
   })
 
-  describe('set server type', function () {
+  describe(SET_SERVER_TYPE, function () {
 
     it('should return the correct type', function () {
       const actual = setServerType()
@@ -265,7 +200,7 @@ describe('TrackingActionCreators', function () {
     })
   })
 
-  describe('set tray username', function () {
+  describe(SET_TRAY_USERNAME, function () {
 
     it('should return the correct type', function () {
       const actual = setTrayUsername()
@@ -283,7 +218,7 @@ describe('TrackingActionCreators', function () {
     })
   })
 
-  describe('set tray url', function () {
+  describe(SET_TRAY_URL, function () {
 
     it('should return the correct type', function () {
       const actual = setTrayUrl()
@@ -296,7 +231,7 @@ describe('TrackingActionCreators', function () {
     })
   })
 
-  describe('set tray id', function () {
+  describe(SET_TRAY_ID, function () {
 
     it('should return the correct type', function () {
       const actual = setTrayId()
@@ -314,7 +249,7 @@ describe('TrackingActionCreators', function () {
     })
   })
 
-  describe('select project', function () {
+  describe(SELECT_PROJECT, function () {
 
     it('should return the correct type', function () {
       const actual = selectProject()
