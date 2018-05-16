@@ -46,7 +46,9 @@ export function forNonStrings(fn) {
 }
 
 export function testThunk(thunkion) {
-  const dispatch = mocks.spy()
+  const dispatch = mocks.stub()
+  dispatch.returnsArg(0)
+
   return Promise.resolve(thunkion(dispatch)).then((result) => {
     expect(dispatch).to.have.been.called()
     return result

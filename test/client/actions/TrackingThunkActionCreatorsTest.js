@@ -5,29 +5,16 @@ import {mocks} from '../Mocking'
 
 describe('TrackingThunkActionCreators', function () {
 
-  const generateRandomName = mocks.stub()
-  const send = mocks.stub()
-  const abortPendingRequest = mocks.stub()
-  const fetchAll = mocks.stub()
   const trayAdded = mocks.spy()
-  const projectsFetching = mocks.spy()
-  const projectsFetched = mocks.spy()
-  const projectsFetchError = mocks.spy()
   const setTrayId = mocks.spy()
-  const encryptPassword = mocks.spy()
+  const encryptPassword = mocks.stub()
+  const highlightTray = mocks.spy()
+  const refreshTray = mocks.spy()
 
-  const {updateTrayId, refreshTray} = withMockedImports('client/actions/TrackingThunkActionCreators', {
-    '../common/gateways/ProjectsGateway': {fetchAll},
-    '../common/gateways/Gateway': {send, abortPendingRequest},
-    '../domain/Tray': {generateRandomName},
-    './TrackingActionCreators': {
-      trayAdded,
-      projectsFetching,
-      projectsFetched,
-      projectsFetchError,
-      setTrayId
-    },
-    './PasswordThunkActionCreators': {encryptPassword}
+  const {updateTrayId, addTray} = withMockedImports('client/actions/TrackingThunkActionCreators', {
+    './TrackingActionCreators': {trayAdded, setTrayId, highlightTray},
+    './PasswordThunkActionCreators': {encryptPassword},
+    './RefreshThunkActionCreators': {refreshTray}
   })
 
   describe('updateTrayId', function () {
@@ -39,55 +26,61 @@ describe('TrackingThunkActionCreators', function () {
       })
     })
 
-    // TODO: [#195] We can't verify refresh tray gets called as its in the same module
-    it('should dispatch refresh tray')
+    it('should dispatch refresh tray', function () {
+      const tray = {trayId: 'old-tray-id'}
+      return testThunk(updateTrayId(tray, 'new-tray-id')).then(() => {
+        expect(refreshTray).to.have.been.calledWith({...tray, trayId: 'new-tray-id'})
+      })
+    })
   })
 
-  describe.skip('addTray')
+  describe('addTray', function () {
 
-  describe('refreshTray', function () {
-
-    it('should abort pending request', function () {
-      send.resolves('')
-      return testThunk(refreshTray({}, 'some-pending-request')).then(() => {
-        expect(abortPendingRequest).to.have.been.calledWith('some-pending-request')
+    it('should dispatch highlight tray action if the tray already exists', function () {
+      return testThunk(addTray('http://exists', 'irrelevant', 'irrelevant', ['http://exists'])).then(() => {
+        expect(highlightTray).to.have.been.calledWith('http://exists')
       })
     })
 
-    it('should dispatch projects fetching action', function () {
-      send.resolves('')
-      fetchAll.returns('some-fetch-all-request')
-      const tray = {trayId: 'some-tray-id'}
+    describe('tray does not exist already', function () {
 
-      return testThunk(refreshTray(tray)).then(() => {
-        expect(projectsFetching).to.have.been.calledWith('some-tray-id', 'some-fetch-all-request')
+      it('should dispatch tray added action', function () {
+        encryptPassword.resolves('irrelevant')
+
+        return testThunk(addTray('http://url', 'some-username', 'irrelevant', [])).then(() => {
+          expect(trayAdded).to.have.been.calledWith('http://url', 'http://url', 'some-username')
+        })
       })
-    })
 
-    it('should dispatch projects fetched action when no errors are returned', function () {
-      send.resolves([])
-      const tray = {trayId: 'some-tray-id'}
+      it('should dispatch encrypt password if it is not blank', function () {
+        encryptPassword.resolves('irrelevant')
 
-      return testThunk(refreshTray(tray)).then(() => {
-        expect(projectsFetched).to.have.been.calledWith('some-tray-id', [])
+        return testThunk(addTray('http://url', 'some-username', 'some-password', [])).then(() => {
+          expect(encryptPassword).to.have.been.calledWith('http://url', 'some-password')
+        })
       })
-    })
 
-    it('should dispatch projects fetch error action if an error is returned', function () {
-      send.resolves([{message: 'some-error'}])
-      const tray = {trayId: 'some-tray-id'}
+      it('should dispatch refresh tray once the password is encrypted', function () {
+        encryptPassword.resolves('encrypted-password')
 
-      return testThunk(refreshTray(tray)).then(() => {
-        expect(projectsFetchError).to.have.been.calledWith('some-tray-id', ['some-error'])
+        return testThunk(addTray('http://url', 'some-username', 'some-password', [])).then(() => {
+          expect(refreshTray).to.have.been.calledWith({
+            trayId: 'http://url',
+            url: 'http://url',
+            username: 'some-username',
+            password: 'encrypted-password'
+          })
+        })
       })
-    })
 
-    it('should dispatch projects fetch error action if the request fails', function () {
-      send.rejects({message: 'some-error'})
-      const tray = {trayId: 'some-tray-id'}
-
-      return testThunk(refreshTray(tray)).then(() => {
-        expect(projectsFetchError).to.have.been.calledWith('some-tray-id', ['Nevergreen some-error'])
+      it('should dispatch refresh tray if the password is blank', function () {
+        return testThunk(addTray('http://url', 'some-username', '', [])).then(() => {
+          expect(refreshTray).to.have.been.calledWith({
+            trayId: 'http://url',
+            url: 'http://url',
+            username: 'some-username'
+          })
+        })
       })
     })
   })

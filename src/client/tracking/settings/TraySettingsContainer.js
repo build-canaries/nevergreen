@@ -1,7 +1,8 @@
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {removeTray, setServerType, setTrayName, setTrayUrl, setTrayUsername} from '../../actions/TrackingActionCreators'
-import {refreshTray, updateTrayId} from '../../actions/TrackingThunkActionCreators'
+import {updateTrayId} from '../../actions/TrackingThunkActionCreators'
+import {refreshTray} from '../../actions/RefreshThunkActionCreators'
 import {encryptPassword} from '../../actions/PasswordThunkActionCreators'
 import TraySettings from './TraySettings'
 
