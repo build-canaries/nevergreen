@@ -28,7 +28,7 @@ describe('GitHubThunkActionCreators', function () {
     './GitHubActionCreators': {gitHubSetGistId, gitHubSetDescription}
   })
 
-  describe('restore from GitHub', function () {
+  describe('restoreFromGitHub', function () {
 
     const validResponse = {
       files: {
@@ -122,7 +122,7 @@ describe('GitHubThunkActionCreators', function () {
     })
   })
 
-  describe('upload to GitHub', function () {
+  describe('uploadToGitHub', function () {
 
     it('should dispatch exporting action', function () {
       send.resolves({id: 'some-id'})

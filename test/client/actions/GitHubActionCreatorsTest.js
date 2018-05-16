@@ -5,7 +5,7 @@ import {GITHUB_SET_DESCRIPTION, GITHUB_SET_GIST_ID} from '../../../src/client/ac
 
 describe('GitHubActionCreators', function () {
 
-  describe('set url', function () {
+  describe(GITHUB_SET_GIST_ID, function () {
 
     it('should return the correct type', function () {
       const actual = gitHubSetGistId()
@@ -18,7 +18,7 @@ describe('GitHubActionCreators', function () {
     })
   })
 
-  describe('set description', function () {
+  describe(GITHUB_SET_DESCRIPTION, function () {
 
     it('should return the correct type', function () {
       const actual = gitHubSetDescription()

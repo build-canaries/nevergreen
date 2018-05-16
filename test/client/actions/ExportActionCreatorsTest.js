@@ -5,7 +5,7 @@ import {exportError, exporting, exportSuccess} from '../../../src/client/actions
 
 describe('ExportActionCreators', function () {
 
-  describe('exporting', function () {
+  describe(EXPORTING, function () {
 
     it('should return the correct type', function () {
       const actual = exporting()
@@ -13,7 +13,7 @@ describe('ExportActionCreators', function () {
     })
   })
 
-  describe('export error', function () {
+  describe(EXPORT_ERROR, function () {
 
     it('should return the correct type', function () {
       const actual = exportError()
@@ -26,7 +26,7 @@ describe('ExportActionCreators', function () {
     })
   })
 
-  describe('export success', function () {
+  describe(EXPORT_SUCCESS, function () {
 
     it('should return the correct type', function () {
       const actual = exportSuccess()

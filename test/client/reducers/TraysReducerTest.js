@@ -30,7 +30,7 @@ describe('TraysReducer', function () {
     expect(newState).to.deep.equal(existingState)
   })
 
-  describe('initialised action', function () {
+  describe(INITIALISED, function () {
 
     it('should set the trays data', function () {
       const existingState = Immutable.Map({someId: {}})
@@ -55,7 +55,7 @@ describe('TraysReducer', function () {
     })
   })
 
-  describe('imported data action', function () {
+  describe(IMPORT_SUCCESS, function () {
 
     it('should set the trays data', function () {
       const existingState = Immutable.Map({someId: {}})
@@ -73,7 +73,7 @@ describe('TraysReducer', function () {
     })
   })
 
-  describe('tray added action', function () {
+  describe(TRAY_ADDED, function () {
 
     it('should set the tray data', function () {
       const existingState = Immutable.Map()
@@ -83,7 +83,7 @@ describe('TraysReducer', function () {
     })
   })
 
-  describe('highlight tray action', function () {
+  describe(HIGHLIGHT_TRAY, function () {
 
     it('should set the highlight flag to true', function () {
       const existingState = Immutable.fromJS({trayId: {highlight: false}})
@@ -93,7 +93,7 @@ describe('TraysReducer', function () {
     })
   })
 
-  describe('navigated action', function () {
+  describe(NAVIGATED, function () {
 
     it('should set the highlight flag to false for all trays', function () {
       const existingState = Immutable.fromJS({trayId: {highlight: true}})
@@ -103,7 +103,7 @@ describe('TraysReducer', function () {
     })
   })
 
-  describe('remove tray action', function () {
+  describe(REMOVE_TRAY, function () {
 
     it('should set the tray data', function () {
       const existingState = Immutable.Map({trayId: {}})
@@ -113,7 +113,7 @@ describe('TraysReducer', function () {
     })
   })
 
-  describe('encrypting password action', function () {
+  describe(ENCRYPTING_PASSWORD, function () {
 
     it('should set as not loaded', function () {
       const existingState = Immutable.fromJS({trayId: {loaded: true}})
@@ -123,7 +123,7 @@ describe('TraysReducer', function () {
     })
   })
 
-  describe('projects fetching action', function () {
+  describe(PROJECTS_FETCHING, function () {
 
     it('should set as not loaded', function () {
       const existingState = Immutable.fromJS({trayId: {loaded: true}})
@@ -147,7 +147,7 @@ describe('TraysReducer', function () {
     })
   })
 
-  describe('password encrypted action', function () {
+  describe(PASSWORD_ENCRYPTED, function () {
 
     it('should set the password', function () {
       const existingState = Immutable.fromJS({trayId: {}})
@@ -178,7 +178,7 @@ describe('TraysReducer', function () {
     })
   })
 
-  describe('projects fetched action', function () {
+  describe(PROJECTS_FETCHED, function () {
 
     it('should set loaded', function () {
       const existingState = Immutable.fromJS({trayId: {loaded: false}})
@@ -216,7 +216,7 @@ describe('TraysReducer', function () {
     })
   })
 
-  describe('password encrypt error action', function () {
+  describe(PASSWORD_ENCRYPT_ERROR, function () {
 
     it('should set loaded', function () {
       const existingState = Immutable.fromJS({trayId: {loaded: false}})
@@ -240,7 +240,7 @@ describe('TraysReducer', function () {
     })
   })
 
-  describe('projects fetch error action', function () {
+  describe(PROJECTS_FETCH_ERROR, function () {
 
     it('should set loaded', function () {
       const existingState = Immutable.fromJS({trayId: {loaded: false}})
@@ -264,7 +264,7 @@ describe('TraysReducer', function () {
     })
   })
 
-  describe('set name action', function () {
+  describe(SET_TRAY_NAME, function () {
 
     it('should set the name', function () {
       const existingState = Immutable.fromJS({trayId: {name: 'some-name'}})
@@ -274,7 +274,7 @@ describe('TraysReducer', function () {
     })
   })
 
-  describe('set server type', function () {
+  describe(SET_SERVER_TYPE, function () {
 
     it('should set the server type', function () {
       const existingState = Immutable.fromJS({trayId: {serverType: 'some-type'}})
@@ -284,7 +284,7 @@ describe('TraysReducer', function () {
     })
   })
 
-  describe('set username action', function () {
+  describe(SET_TRAY_USERNAME, function () {
 
     it('should set the name', function () {
       const existingState = Immutable.fromJS({trayId: {username: 'some-username'}})
@@ -294,7 +294,7 @@ describe('TraysReducer', function () {
     })
   })
 
-  describe('set tray url action', function () {
+  describe(SET_TRAY_URL, function () {
 
     it('should set the url', function () {
       const existingState = Immutable.fromJS({trayId: {trayId: 'trayId', url: 'some-url'}})
@@ -304,7 +304,7 @@ describe('TraysReducer', function () {
     })
   })
 
-  describe('set tray id action', function () {
+  describe(SET_TRAY_ID, function () {
 
     it('should update the key in the state to the new tray id', function () {
       const existingState = Immutable.fromJS({trayId: {trayId: 'trayId', url: 'some-url'}})
@@ -321,5 +321,4 @@ describe('TraysReducer', function () {
       expect(newState).to.have.property('some-new-url').that.has.property('trayId', 'some-new-url')
     })
   })
-
 })

@@ -12,7 +12,7 @@ describe('InterestingReducer', function () {
     expect(newState).to.deep.equal(existingState)
   })
 
-  describe('interesting projects action', function () {
+  describe(INTERESTING_PROJECTS, function () {
 
     it('should set the loaded property', function () {
       const existingState = Immutable.Map({loaded: false})

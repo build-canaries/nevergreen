@@ -7,7 +7,8 @@ import {
   INITIALISED,
   PLAY_BROKEN_BUILD_SOUND_FX,
   REFRESH_TIME,
-  SHOW_BROKEN_BUILD_TIME, SHOW_BUILD_TIME,
+  SHOW_BROKEN_BUILD_TIME,
+  SHOW_BUILD_TIME,
   SHOW_TRAY_NAME
 } from '../../../src/client/actions/Actions'
 import Immutable from 'immutable'
@@ -20,7 +21,7 @@ describe('SettingsReducer', function () {
     expect(newState).to.deep.equal(existingState)
   })
 
-  describe('initialised action', function () {
+  describe(INITIALISED, function () {
 
     it('should merge show tray name', function () {
       const existingState = Immutable.Map({showTrayName: false})
@@ -72,7 +73,7 @@ describe('SettingsReducer', function () {
     })
   })
 
-  describe('imported data action', function () {
+  describe(IMPORT_SUCCESS, function () {
 
     it('should merge show tray name', function () {
       const existingState = Immutable.Map({showTrayName: false})
@@ -117,7 +118,7 @@ describe('SettingsReducer', function () {
     })
   })
 
-  describe('build timers changed action', function () {
+  describe(SHOW_BUILD_TIME, function () {
 
     it('should set the broken build timer enabled property', function () {
       const existingState = Immutable.Map({showBuildTime: false})
@@ -127,7 +128,7 @@ describe('SettingsReducer', function () {
     })
   })
 
-  describe('broken build timers changed action', function () {
+  describe(SHOW_BROKEN_BUILD_TIME, function () {
 
     it('should set the broken build timer enabled property', function () {
       const existingState = Immutable.Map({showBrokenBuildTime: false})
@@ -137,7 +138,7 @@ describe('SettingsReducer', function () {
     })
   })
 
-  describe('broken build sounds enabled action', function () {
+  describe(PLAY_BROKEN_BUILD_SOUND_FX, function () {
 
     it('should set the broken build sounds enabled property', function () {
       const existingState = Immutable.Map({playBrokenBuildSoundFx: false})
@@ -147,7 +148,7 @@ describe('SettingsReducer', function () {
     })
   })
 
-  describe('broken build sound fx action', function () {
+  describe(BROKEN_BUILD_SOUND_FX, function () {
 
     it('should set the broken build sound fx property', function () {
       const existingState = Immutable.Map({brokenBuildSoundFx: 'some-url'})
@@ -157,7 +158,7 @@ describe('SettingsReducer', function () {
     })
   })
 
-  describe('tray name toggled action', function () {
+  describe(SHOW_TRAY_NAME, function () {
 
     it('should set the tray name toggled property', function () {
       const existingState = Immutable.Map({showTrayName: false})
@@ -167,7 +168,7 @@ describe('SettingsReducer', function () {
     })
   })
 
-  describe('refresh time updated', function () {
+  describe(REFRESH_TIME, function () {
 
     it('should set the refresh time property', function () {
       const existingState = Immutable.Map({refreshTime: 5})

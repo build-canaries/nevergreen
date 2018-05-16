@@ -12,7 +12,7 @@ describe('ImportReducer', function () {
     expect(newState).to.deep.equal(existingState)
   })
 
-  describe('importing action', function () {
+  describe(IMPORTING, function () {
 
     it('should set the loaded property', function () {
       const existingState = Immutable.Map({loaded: true})
@@ -36,7 +36,7 @@ describe('ImportReducer', function () {
     })
   })
 
-  describe('import success action', function () {
+  describe(IMPORT_SUCCESS, function () {
 
     it('should set the loaded property', function () {
       const existingState = Immutable.Map({loaded: false})
@@ -60,7 +60,7 @@ describe('ImportReducer', function () {
     })
   })
 
-  describe('import error action', function () {
+  describe(IMPORT_ERROR, function () {
 
     it('should set the loaded property', function () {
       const existingState = Immutable.Map({loaded: false})
@@ -84,7 +84,7 @@ describe('ImportReducer', function () {
     })
   })
 
-  describe('navigated action', function () {
+  describe(NAVIGATED, function () {
 
     it('should delete the infos property', function () {
       const existingState = Immutable.Map({infos: Immutable.Map()})

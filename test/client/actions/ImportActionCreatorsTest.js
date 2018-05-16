@@ -6,7 +6,7 @@ import {importError, importing, importSuccess} from '../../../src/client/actions
 
 describe('ImportActionCreators', function () {
 
-  describe('importing', function () {
+  describe(IMPORTING, function () {
 
     it('should return the correct type', function () {
       const actual = importing()
@@ -14,7 +14,7 @@ describe('ImportActionCreators', function () {
     })
   })
 
-  describe('import error', function () {
+  describe(IMPORT_ERROR, function () {
 
     it('should return the correct type', function () {
       const actual = importError()
@@ -27,7 +27,7 @@ describe('ImportActionCreators', function () {
     })
   })
 
-  describe('import success', function () {
+  describe(IMPORT_SUCCESS, function () {
 
     it('should return the correct type', function () {
       const actual = importSuccess()

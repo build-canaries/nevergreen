@@ -5,7 +5,7 @@ import {dismiss, notify} from '../../../src/client/actions/NotificationActionCre
 
 describe('NotificationActionCreators', function () {
 
-  describe('notification', function () {
+  describe(NOTIFICATION, function () {
 
     it('should return the correct type', function () {
       const actual = notify()
@@ -18,7 +18,7 @@ describe('NotificationActionCreators', function () {
     })
   })
 
-  describe('notification dismiss', function () {
+  describe(NOTIFICATION_DISMISS, function () {
 
     it('should return the correct type', function () {
       const actual = dismiss()

@@ -18,7 +18,7 @@ describe('MonitorThunkActionCreators', function () {
     './MonitorActionCreators': {interestingProjects}
   })
 
-  describe('fetching interesting', function () {
+  describe('fetchInteresting', function () {
 
     it('should dispatch interesting projects action on success', function () {
       send.resolves([])

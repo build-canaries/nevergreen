@@ -12,7 +12,7 @@ describe('ExportReducer', function () {
     expect(newState).to.deep.equal(existingState)
   })
 
-  describe('exporting action', function () {
+  describe(EXPORTING, function () {
 
     it('should set the loaded property', function () {
       const existingState = Immutable.Map({loaded: true})
@@ -36,7 +36,7 @@ describe('ExportReducer', function () {
     })
   })
 
-  describe('export success action', function () {
+  describe(EXPORT_SUCCESS, function () {
 
     it('should set the loaded property', function () {
       const existingState = Immutable.Map({loaded: false})
@@ -60,7 +60,7 @@ describe('ExportReducer', function () {
     })
   })
 
-  describe('export error action', function () {
+  describe(EXPORT_ERROR, function () {
 
     it('should set the loaded property', function () {
       const existingState = Immutable.Map({loaded: false})
@@ -84,7 +84,7 @@ describe('ExportReducer', function () {
     })
   })
 
-  describe('navigated action', function () {
+  describe(NAVIGATED, function () {
 
     it('should delete the infos property', function () {
       const existingState = Immutable.Map({infos: Immutable.Map()})

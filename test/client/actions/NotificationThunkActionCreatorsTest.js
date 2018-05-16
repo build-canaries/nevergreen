@@ -16,7 +16,7 @@ describe('NotificationThunkActionCreators', function () {
     './NotificationActionCreators': {notify}
   })
 
-  describe('check for new version', function () {
+  describe('checkForNewVersion', function () {
 
     it('should call the github releases api', function () {
       send.resolves({})

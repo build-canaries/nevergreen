@@ -3,7 +3,7 @@ import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {mocks} from '../../Mocking'
 
-describe('projects gateway', function () {
+describe('ProjectsGateway', function () {
 
   const post = mocks.stub()
   const fakeResponse = mocks.stub()
@@ -12,7 +12,7 @@ describe('projects gateway', function () {
     './Gateway': {post, fakeResponse}
   })
 
-  describe('getting all projects', function () {
+  describe('fetchAll', function () {
 
     it('posts only the required data from the given trays', () => {
       const trays = [{
@@ -50,7 +50,7 @@ describe('projects gateway', function () {
     })
   })
 
-  describe('getting interesting projects', function () {
+  describe('interesting', function () {
 
     it('maps selected projects to the posted data', function () {
       const selected = {'some-tray-id': ['some-project-id']}

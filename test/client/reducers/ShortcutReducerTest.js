@@ -11,7 +11,7 @@ describe('ShortcutReducer', function () {
     expect(newState).to.deep.equal(existingState)
   })
 
-  describe('keyboard shortcut action', function () {
+  describe(KEYBOARD_SHORTCUT, function () {
 
     it('should set the state', function () {
       const existingState = true

@@ -1,17 +1,25 @@
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {
-  setBrokenBuildSoundFx, setPlayBrokenBuildSoundFx, setRefreshTime, setShowBrokenBuildTime, setShowBuildLabel,
+  setBrokenBuildSoundFx,
+  setPlayBrokenBuildSoundFx,
+  setRefreshTime,
+  setShowBrokenBuildTime,
+  setShowBuildLabel,
   setShowTrayName
 } from '../../../src/client/actions/SettingsActionCreators'
 import {
-  BROKEN_BUILD_SOUND_FX, PLAY_BROKEN_BUILD_SOUND_FX, REFRESH_TIME, SHOW_BROKEN_BUILD_TIME, SHOW_BUILD_LABEL,
+  BROKEN_BUILD_SOUND_FX,
+  PLAY_BROKEN_BUILD_SOUND_FX,
+  REFRESH_TIME,
+  SHOW_BROKEN_BUILD_TIME,
+  SHOW_BUILD_LABEL,
   SHOW_TRAY_NAME
 } from '../../../src/client/actions/Actions'
 
 describe('SettingsActionCreators', function () {
 
-  describe('setting broken build timers', function () {
+  describe(SHOW_BROKEN_BUILD_TIME, function () {
 
     it('should return the correct type', function () {
       const actual = setShowBrokenBuildTime()
@@ -24,7 +32,7 @@ describe('SettingsActionCreators', function () {
     })
   })
 
-  describe('setting show tray names', function () {
+  describe(SHOW_TRAY_NAME, function () {
 
     it('should return the correct type', function () {
       const actual = setShowTrayName()
@@ -37,7 +45,7 @@ describe('SettingsActionCreators', function () {
     })
   })
 
-  describe('setting broken build sounds', function () {
+  describe(PLAY_BROKEN_BUILD_SOUND_FX, function () {
 
     it('should return the correct type', function () {
       const actual = setPlayBrokenBuildSoundFx()
@@ -50,7 +58,7 @@ describe('SettingsActionCreators', function () {
     })
   })
 
-  describe('setting broken build sound fx', function () {
+  describe(BROKEN_BUILD_SOUND_FX, function () {
 
     it('should return the correct type', function () {
       const actual = setBrokenBuildSoundFx()
@@ -63,7 +71,7 @@ describe('SettingsActionCreators', function () {
     })
   })
 
-  describe('setting refresh time', function () {
+  describe(REFRESH_TIME, function () {
 
     it('should return the correct type', function () {
       const actual = setRefreshTime()
@@ -90,7 +98,7 @@ describe('SettingsActionCreators', function () {
     })
   })
 
-  describe('setting build label', function () {
+  describe(SHOW_BUILD_LABEL, function () {
 
     it('should return the correct type', function () {
       const actual = setShowBuildLabel()

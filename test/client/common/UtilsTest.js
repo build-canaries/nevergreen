@@ -5,7 +5,7 @@ import {forNonStrings} from '../TestUtils'
 
 describe('Utils', function () {
 
-  describe('is number', function () {
+  describe('isNumber', function () {
 
     it('should know when it sees a number', function () {
       expect(isNumber(0)).to.be.true()
@@ -28,7 +28,7 @@ describe('Utils', function () {
     })
   })
 
-  describe('is blank', function () {
+  describe('isBlank', function () {
 
     it('should treat null as blank', function () {
       expect(isBlank(null)).to.be.true()

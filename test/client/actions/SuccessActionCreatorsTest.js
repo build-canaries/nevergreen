@@ -5,7 +5,7 @@ import {MESSAGE_ADDED, MESSAGE_REMOVED, NOOP} from '../../../src/client/actions/
 
 describe('SuccessActionCreators', function () {
 
-  describe('text added', function () {
+  describe(MESSAGE_ADDED, function () {
 
     it('should return the correct type', function () {
       const actual = addMessage('irrelevant')
@@ -33,7 +33,7 @@ describe('SuccessActionCreators', function () {
     })
   })
 
-  describe('remove message', function () {
+  describe(MESSAGE_REMOVED, function () {
 
     it('should return the correct type', function () {
       const actual = removeMessage('irrelevant')

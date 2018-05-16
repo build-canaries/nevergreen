@@ -12,7 +12,7 @@ describe('NevergreenReducer', function () {
     expect(newState).to.deep.equal(existingState)
   })
 
-  describe('initialising action', function () {
+  describe(INITIALISING, function () {
 
     it('should set the loaded property', function () {
       const existingState = Immutable.Map({loaded: true})
@@ -22,7 +22,7 @@ describe('NevergreenReducer', function () {
     })
   })
 
-  describe('initialised action', function () {
+  describe(INITIALISED, function () {
 
     it('should set the loaded property', function () {
       const existingState = Immutable.Map({loaded: false})
@@ -39,7 +39,7 @@ describe('NevergreenReducer', function () {
     })
   })
 
-  describe('full screen action', function () {
+  describe(FULL_SCREEN, function () {
 
     it('should set the full screen property', function () {
       const existingState = Immutable.Map({fullScreen: false})
@@ -49,7 +49,7 @@ describe('NevergreenReducer', function () {
     })
   })
 
-  describe('request full screen action', function () {
+  describe(REQUEST_FULL_SCREEN, function () {
 
     it('should set the full screen requested property', function () {
       const existingState = Immutable.Map({fullScreenRequested: false})

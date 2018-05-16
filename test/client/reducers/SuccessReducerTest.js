@@ -12,7 +12,7 @@ describe('SuccessReducer', function () {
     expect(newState).to.deep.equal(existingState)
   })
 
-  describe('initialised action', function () {
+  describe(INITIALISED, function () {
 
     it('should set the success data', function () {
       const existingState = Immutable.OrderedSet(['old-message'])
@@ -29,7 +29,7 @@ describe('SuccessReducer', function () {
     })
   })
 
-  describe('imported data action', function () {
+  describe(IMPORT_SUCCESS, function () {
 
     it('should merge the success data', function () {
       const existingState = Immutable.OrderedSet()
@@ -39,7 +39,7 @@ describe('SuccessReducer', function () {
     })
   })
 
-  describe('message added action', function () {
+  describe(MESSAGE_ADDED, function () {
 
     it('should add the given message', function () {
       const existingState = Immutable.OrderedSet()
@@ -56,7 +56,7 @@ describe('SuccessReducer', function () {
     })
   })
 
-  describe('message removed action', function () {
+  describe(MESSAGE_REMOVED, function () {
 
     it('should remove the given message', function () {
       const existingState = Immutable.OrderedSet(['a', 'b', 'c'])

@@ -11,7 +11,7 @@ describe('NotificationReducer', function () {
     expect(newState).to.deep.equal(existingState)
   })
 
-  describe('notification action', function () {
+  describe(NOTIFICATION, function () {
 
     it('should set the state', function () {
       const existingState = null
@@ -21,7 +21,7 @@ describe('NotificationReducer', function () {
     })
   })
 
-  describe('notification dismiss action', function () {
+  describe(NOTIFICATION_DISMISS, function () {
 
     it('should remove the state', function () {
       const existingState = 'some-message'

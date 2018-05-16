@@ -5,7 +5,7 @@ import {KEYBOARD_SHORTCUT} from '../../../src/client/actions/Actions'
 
 describe('ShortcutActionCreators', function () {
 
-  describe('keyboard shortcut', function () {
+  describe(KEYBOARD_SHORTCUT, function () {
 
     it('should return the correct type', function () {
       const actual = keyboardShortcut()

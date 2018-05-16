@@ -5,7 +5,7 @@ import {interestingProjects} from '../../../src/client/actions/MonitorActionCrea
 
 describe('MonitorActionCreators', function () {
 
-  describe('interesting projects', function () {
+  describe(INTERESTING_PROJECTS, function () {
 
     it('should return the correct type', function () {
       const actual = interestingProjects([])

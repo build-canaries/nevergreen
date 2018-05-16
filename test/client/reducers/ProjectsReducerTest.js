@@ -19,7 +19,7 @@ describe('ProjectsReducer', function () {
     expect(newState).to.deep.equal(existingState)
   })
 
-  describe('initialised action', function () {
+  describe(INITIALISED, function () {
 
     it('should set the projects data', function () {
       const existingState = Immutable.Map({id: 'x'})
@@ -37,7 +37,7 @@ describe('ProjectsReducer', function () {
     })
   })
 
-  describe('imported data action', function () {
+  describe(IMPORT_SUCCESS, function () {
 
     it('should set the projects data', function () {
       const existingState = Immutable.Map({id: 'x'})
@@ -48,7 +48,7 @@ describe('ProjectsReducer', function () {
     })
   })
 
-  describe('tray added action', function () {
+  describe(TRAY_ADDED, function () {
 
     it('should add a tray id property', function () {
       const existingState = Immutable.fromJS()
@@ -58,7 +58,7 @@ describe('ProjectsReducer', function () {
     })
   })
 
-  describe('removed tray action', function () {
+  describe(REMOVE_TRAY, function () {
 
     it('should delete the tray id property', function () {
       const existingState = Immutable.fromJS({trayId: {}})
@@ -68,7 +68,7 @@ describe('ProjectsReducer', function () {
     })
   })
 
-  describe('projects fetched action', function () {
+  describe(PROJECTS_FETCHED, function () {
 
     it('should filter removed projects', function () {
       const existingState = Immutable.fromJS({trayId: {projectId: {removed: true}}})
@@ -125,7 +125,7 @@ describe('ProjectsReducer', function () {
     })
   })
 
-  describe('set url action', function () {
+  describe(SET_TRAY_ID, function () {
 
     it('should update the key in the state to the new tray id', function () {
       const existingState = Immutable.fromJS({trayId: {}})

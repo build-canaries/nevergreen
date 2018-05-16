@@ -20,7 +20,7 @@ describe('SelectedReducer', function () {
     expect(newState).to.deep.equal(existingState)
   })
 
-  describe('initialised action', function () {
+  describe(INITIALISED, function () {
 
     it('should set the selected data', function () {
       const existingState = Immutable.Map({oldId: ['foo']})
@@ -38,7 +38,7 @@ describe('SelectedReducer', function () {
     })
   })
 
-  describe('imported data action', function () {
+  describe(IMPORT_SUCCESS, function () {
 
     it('should set the selected data', function () {
       const existingState = Immutable.Map({oldId: ['foo']})
@@ -49,7 +49,7 @@ describe('SelectedReducer', function () {
     })
   })
 
-  describe('tray add action', function () {
+  describe(TRAY_ADDED, function () {
 
     it('should add the tray id with an empty set of selected projects', function () {
       const existingState = Immutable.Map()
@@ -59,7 +59,7 @@ describe('SelectedReducer', function () {
     })
   })
 
-  describe('remove tray action', function () {
+  describe(REMOVE_TRAY, function () {
 
     it('should remove the tray id', function () {
       const existingState = Immutable.Map({trayId: Immutable.Set()})
@@ -69,7 +69,7 @@ describe('SelectedReducer', function () {
     })
   })
 
-  describe('select project action', function () {
+  describe(SELECT_PROJECT, function () {
 
     it('should add the project web url if selected', function () {
       const existingState = Immutable.Map({trayId: Immutable.Set('a', 'b', 'c')})
@@ -86,7 +86,7 @@ describe('SelectedReducer', function () {
     })
   })
 
-  describe('projects fetched action', function () {
+  describe(PROJECTS_FETCHED, function () {
 
     it('should remove selected projects that were not fetched', function () {
       const existingState = Immutable.Map({trayId: Immutable.Set(['a', 'b', 'c'])})
@@ -96,7 +96,7 @@ describe('SelectedReducer', function () {
     })
   })
 
-  describe('set url action', function () {
+  describe(SET_TRAY_ID, function () {
 
     it('should update the key in the state to the new tray id', function () {
       const existingState = Immutable.fromJS({trayId: Immutable.Set()})

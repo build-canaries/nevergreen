@@ -17,7 +17,7 @@ import {
 
 describe('NevergreenActionCreators', function () {
 
-  describe('initalising', function () {
+  describe(INITIALISING, function () {
 
     it('should return the correct type', function () {
       const actual = initalising({foo: 'bar'})
@@ -25,7 +25,7 @@ describe('NevergreenActionCreators', function () {
     })
   })
 
-  describe('initalised', function () {
+  describe(INITIALISED, function () {
 
     it('should return the correct type', function () {
       const actual = initalised()
@@ -38,7 +38,7 @@ describe('NevergreenActionCreators', function () {
     })
   })
 
-  describe('navigated', function () {
+  describe(NAVIGATED, function () {
 
     it('should return the correct type', function () {
       const actual = navigated()
@@ -46,7 +46,7 @@ describe('NevergreenActionCreators', function () {
     })
   })
 
-  describe('full screen', function () {
+  describe(FULL_SCREEN, function () {
 
     it('should return the correct type', function () {
       const actual = enableFullScreen()
@@ -59,7 +59,7 @@ describe('NevergreenActionCreators', function () {
     })
   })
 
-  describe('request full screen', function () {
+  describe(REQUEST_FULL_SCREEN, function () {
 
     it('should return the correct type', function () {
       const actual = requestFullScreen()

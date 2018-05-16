@@ -17,7 +17,7 @@ describe('GitHubReducer', function () {
     expect(newState).to.deep.equal(existingState)
   })
 
-  describe('initialised action', function () {
+  describe(INITIALISED, function () {
 
     it('should merge the url', function () {
       const existingState = Immutable.Map({})
@@ -42,7 +42,7 @@ describe('GitHubReducer', function () {
     })
   })
 
-  describe('import success action', function () {
+  describe(IMPORT_SUCCESS, function () {
 
     it('should not merge the url because a successful GitHub import requires it to be known already and likely does not matter if the user is using local import', function () {
       const existingState = Immutable.Map({url: 'some-url'})
@@ -67,7 +67,7 @@ describe('GitHubReducer', function () {
     })
   })
 
-  describe('set description action', function () {
+  describe(GITHUB_SET_DESCRIPTION, function () {
 
     it('should set the description property', function () {
       const existingState = Immutable.Map()
@@ -77,7 +77,7 @@ describe('GitHubReducer', function () {
     })
   })
 
-  describe('set gist id action', function () {
+  describe(GITHUB_SET_GIST_ID, function () {
 
     it('should set the id property', function () {
       const existingState = Immutable.Map()

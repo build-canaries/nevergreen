@@ -13,7 +13,7 @@ import {forNonStrings, forUndisplayablesStrings} from '../TestUtils'
 
 describe('Project', function () {
 
-  describe('format build label', function () {
+  describe('formatBuildLabel', function () {
 
     forUndisplayablesStrings((value, friendlyName) => {
       it(`should return empty string for undisplayable value ${friendlyName}`, function () {
@@ -40,7 +40,7 @@ describe('Project', function () {
     })
   })
 
-  describe('is sick', function () {
+  describe('isSick', function () {
 
     it('should be true when sick', function () {
       expect(isSick(PROGNOSIS_SICK)).to.be.true()
@@ -71,7 +71,7 @@ describe('Project', function () {
     })
   })
 
-  describe('is building', function () {
+  describe('isBuilding', function () {
 
     it('should be true when healthy building', function () {
       expect(isBuilding(PROGNOSIS_HEALTHY_BUILDING)).to.be.true()

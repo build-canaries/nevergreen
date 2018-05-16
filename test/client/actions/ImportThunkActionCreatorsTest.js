@@ -18,7 +18,7 @@ describe('ImportThunkActionCreators', function () {
     './ImportActionCreators': {importError, importSuccess, importing}
   })
 
-  describe('import data', function () {
+  describe('importData', function () {
 
     const validJson = '{}'
 
