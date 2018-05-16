@@ -3,6 +3,7 @@ import _ from 'lodash'
 import {highlightTray, setTrayId, trayAdded} from './TrackingActionCreators'
 import {encryptPassword} from './PasswordThunkActionCreators'
 import {refreshTray} from './RefreshThunkActionCreators'
+import {createId} from '../domain/Tray'
 
 function hasScheme(url) {
   return _.size(_.split(url, '://')) > 1
@@ -19,7 +20,7 @@ export function updateTrayId(tray, newTrayId, pendingRequest) {
 export function addTray(enteredUrl, username, rawPassword, existingTrays) {
   return function (dispatch) {
     const url = hasScheme(enteredUrl) ? enteredUrl : 'http://' + enteredUrl
-    const trayId = url
+    const trayId = createId(url)
 
     if (_.includes(existingTrays, trayId)) {
       return dispatch(highlightTray(trayId))
