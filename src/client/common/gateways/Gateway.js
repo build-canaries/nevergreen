@@ -9,13 +9,14 @@ const TIMEOUT = {
   deadline: THREE_MINUTES
 }
 const ACCEPT_HEADER = 'application/json; charset=utf-8'
+const CONTENT_TYPE = 'application/json; charset=utf-8'
 
 export function post(url, data, headers = {}) {
   return request
     .post(url)
     .send(data)
     .accept(ACCEPT_HEADER)
-    .type('application/json; charset=utf-8')
+    .type(CONTENT_TYPE)
     .set(headers)
     .timeout(TIMEOUT)
 }
@@ -25,7 +26,7 @@ export function patch(url, data, headers = {}) {
     .patch(url)
     .send(data)
     .accept(ACCEPT_HEADER)
-    .type('application/json; charset=utf-8')
+    .type(CONTENT_TYPE)
     .set(headers)
     .timeout(TIMEOUT)
 }
@@ -47,7 +48,10 @@ export function send(request) {
     log.error(`An exception was thrown when calling URL '${url}'`, err)
 
     const status = err.status || 0
-    const message = _.get(err, 'response.body.message', 'timeout')
+    const message = err.timeout
+      ? 'timeout'
+      : _.get(err, 'response.body.message', 'unknown')
+
     throw {status, message}
   })
 }
