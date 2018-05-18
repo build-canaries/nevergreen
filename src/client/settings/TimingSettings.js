@@ -12,7 +12,7 @@ class TimingSettings extends Component {
 
   render() {
     const options = this.props.validRefreshTimes.map((time) => {
-      return {value: time, display: secondsToString(time)}
+      return {value: time.toString(), display: secondsToString(time)}
     })
 
     return (

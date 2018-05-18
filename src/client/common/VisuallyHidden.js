@@ -7,7 +7,7 @@ export const VISUALLY_HIDDEN_ATTRIBUTE = 'data-visually-hidden'
 class VisuallyHidden extends Component {
   render() {
     const hiddenAttribute = {[VISUALLY_HIDDEN_ATTRIBUTE]: true}
-    return <div className={styles.content} {...hiddenAttribute}>{this.props.children}</div>
+    return <span className={styles.content} {...hiddenAttribute}>{this.props.children}.</span>
   }
 }
 
