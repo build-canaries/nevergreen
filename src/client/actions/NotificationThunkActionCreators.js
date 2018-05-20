@@ -12,7 +12,7 @@ export function checkForNewVersion(currentVersion, hostname) {
         const saas = NEVERGREEN_IO_REGEX.test(hostname)
         const additional = saas ? ', refresh to update' : ' to download from GitHub now'
 
-        dispatch(notify(`A new version ${data.tag_name} is available${additional}!`))
+        return dispatch(notify(`A new version ${data.tag_name} is available${additional}!`))
       }
     }).catch(_.noop) // We don't care if checking for a new version fails
   }

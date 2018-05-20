@@ -6,8 +6,8 @@ import {interestingProjects} from './MonitorActionCreators'
 
 function toErrorString(trays, project) {
   const tray = _.head(trays.filter((tray) => tray.trayId === project.trayId))
-  const identifier = _.get(tray, 'name') || _.get(tray, 'url') || project.url
-  return `${identifier} ${project.error}`
+  const identifier = _.get(tray, 'name') || _.get(tray, 'url')
+  return `${identifier} ${project.message}`
 }
 
 function byProjectId(existing, newProject) {
@@ -36,17 +36,17 @@ export function fetchInteresting(trays, selected, currentProjects) {
   return function (dispatch) {
     return send(interesting(trays, selected)).then((projects) => {
       const filteredProjects = projects
-        .filter((project) => !project.error)
+        .filter((project) => !project.message)
         .filter((project) => !project.job)
         .map((project) => addThisBuildTime(project, currentProjects))
 
       const errors = projects
-        .filter((project) => project.error)
+        .filter((project) => project.message)
         .map((project) => toErrorString(trays, project))
 
-      dispatch(interestingProjects(filteredProjects, errors))
+      return dispatch(interestingProjects(filteredProjects, errors))
     }).catch((error) => {
-      dispatch(interestingProjects([], [`Nevergreen ${error.message}`]))
+      return dispatch(interestingProjects([], [`Nevergreen ${error.message}`]))
     })
   }
 }

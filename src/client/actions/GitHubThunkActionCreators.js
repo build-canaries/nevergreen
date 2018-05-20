@@ -40,9 +40,9 @@ export function restoreFromGitHub(gistId) {
     return send(getGist(gistId)).then((res) => {
       return handleGistResponse(dispatch, res)
     }).then((content) => {
-      dispatch(importData(content))
+      return dispatch(importData(content))
     }).catch((error) => {
-      dispatch(importError(['Unable to import from GitHub because of an error:', error.message]))
+      return dispatch(importError(['Unable to import from GitHub because of an error:', error.message]))
     })
   }
 }
@@ -68,9 +68,9 @@ export function uploadToGitHub(gistId, description, configuration, oauthToken) {
         : `Successfully updated gist ${returnedGistId}`
 
       dispatch(exportSuccess([successMessage]))
-      dispatch(gitHubSetGistId(returnedGistId))
+      return dispatch(gitHubSetGistId(returnedGistId))
     }).catch((error) => {
-      dispatch(exportError([`Unable to upload to GitHub because of an error: ${error.status} - ${error.message}`]))
+      return dispatch(exportError([`Unable to upload to GitHub because of an error: ${error.status} - ${error.message}`]))
     })
   }
 }

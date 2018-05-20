@@ -13,12 +13,12 @@ export function importData(jsonData) {
       const validationMessages = validate(data)
 
       if (_.isEmpty(validationMessages)) {
-        dispatch(importSuccess(data))
+        return dispatch(importSuccess(data))
       } else {
-        dispatch(importError(validationMessages))
+        return dispatch(importError(validationMessages))
       }
     } catch (e) {
-      dispatch(importError(['Unable to import because of syntactically invalid JSON with the following errors:', e]))
+      return dispatch(importError(['Unable to import because of syntactically invalid JSON with the following errors:', e]))
     }
   }
 }

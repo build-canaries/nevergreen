@@ -16,7 +16,7 @@ export function encryptPassword(trayId, password, pendingRequest) {
         dispatch(passwordEncrypted(trayId, data.password))
         return data.password
       }).catch((error) => {
-        dispatch(passwordEncryptError(trayId, [`Nevergreen ${error.message}`]))
+        return dispatch(passwordEncryptError(trayId, [`Nevergreen ${error.message}`]))
       })
     } else {
       dispatch(passwordEncrypted(trayId, ''))

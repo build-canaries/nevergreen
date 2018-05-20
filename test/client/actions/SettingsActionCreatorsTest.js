@@ -6,6 +6,7 @@ import {
   setRefreshTime,
   setShowBrokenBuildTime,
   setShowBuildLabel,
+  setShowBuildTime,
   setShowTrayName
 } from '../../../src/client/actions/SettingsActionCreators'
 import {
@@ -14,6 +15,7 @@ import {
   REFRESH_TIME,
   SHOW_BROKEN_BUILD_TIME,
   SHOW_BUILD_LABEL,
+  SHOW_BUILD_TIME,
   SHOW_TRAY_NAME
 } from '../../../src/client/actions/Actions'
 
@@ -107,6 +109,19 @@ describe('SettingsActionCreators', function () {
 
     it('should return the given value', function () {
       const actual = setShowTrayName(true)
+      expect(actual).to.have.property('value', true)
+    })
+  })
+
+  describe(SHOW_BUILD_TIME, function () {
+
+    it('should return the correct type', function () {
+      const actual = setShowBuildTime()
+      expect(actual).to.have.property('type', SHOW_BUILD_TIME)
+    })
+
+    it('should return the given value', function () {
+      const actual = setShowBuildTime(true)
       expect(actual).to.have.property('value', true)
     })
   })

@@ -119,11 +119,32 @@ describe('MonitorThunkActionCreators', function () {
       })
     })
 
-    it('should dispatch interesting projects action on failure', function () {
+    it('should dispatch interesting projects action with a Nevergreen error if calling the service fails', function () {
       send.rejects({message: 'some-error'})
 
       return testThunk(fetchInteresting([], [], [])).then(() => {
         expect(interestingProjects).to.have.been.calledWithMatch([], ['Nevergreen some-error'])
+      })
+    })
+
+    describe('returned tray errors', function () {
+
+      it('should dispatch interesting projects with the tray name in the error if it exists', function () {
+        send.resolves([{trayId: 'some-tray-id', message: 'some-error'}])
+        const trays = [{trayId: 'some-tray-id', name: 'some-name'}]
+
+        return testThunk(fetchInteresting(trays, [], [])).then(() => {
+          expect(interestingProjects).to.have.been.calledWithMatch([], ['some-name some-error'])
+        })
+      })
+
+      it('should dispatch interesting projects with the tray url in the error if the name does not exist', function () {
+        send.resolves([{trayId: 'some-tray-id', message: 'some-error'}])
+        const trays = [{trayId: 'some-tray-id', url: 'some-url'}]
+
+        return testThunk(fetchInteresting(trays, [], [])).then(() => {
+          expect(interestingProjects).to.have.been.calledWithMatch([], ['some-url some-error'])
+        })
       })
     })
   })
