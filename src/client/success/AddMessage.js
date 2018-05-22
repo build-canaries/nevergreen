@@ -30,7 +30,9 @@ class AddMessage extends Component {
                autoFocus>
           message
         </Input>
-        <button className={styles.add} onClick={this.addMessage} data-locator='add-message'>add</button>
+        <button className={styles.add} onClick={this.addMessage} data-locator='add-message'>
+          <span aria-label='add success message'>add</span>
+        </button>
       </div>
     )
   }

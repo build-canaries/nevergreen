@@ -32,7 +32,7 @@ class Duration extends Component {
         {
           this.props.abbreviate && (
             <Fragment>
-              <VisuallyHidden>{this.formatFullDescription()}</VisuallyHidden>
+              <VisuallyHidden>{this.formatFullDescription()}.</VisuallyHidden>
               <span data-locator='duration' aria-hidden>{labelShort}</span>
             </Fragment>
           )

@@ -38,7 +38,7 @@ describe('<Duration/>', function () {
       setSystemTime('2018-02-18T23:38:00Z')
       const props = {...DEFAULT_PROPS, abbreviate: true, timestamp: '2000-12-01T00:00:00Z'}
       const wrapper = shallow(<Duration {...props} />)
-      expect(childText(wrapper, VisuallyHidden)).to.have.text('about 17 years')
+      expect(childText(wrapper, VisuallyHidden)).to.have.text('about 17 years.')
     })
   })
 

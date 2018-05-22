@@ -62,7 +62,9 @@ class AddTray extends Component {
             <div className={styles.label}>password</div>
           </Input>
         </div>
-        <button className={styles.add} onClick={this.addTray} data-locator='add-tray'>add</button>
+        <button className={styles.add} onClick={this.addTray} data-locator='add-tray'>
+          <span aria-label='add tray'>add</span>
+        </button>
       </div>
     )
   }
