@@ -22,3 +22,7 @@ export function isSick(prognosis) {
 export function isBuilding(prognosis) {
   return prognosis === PROGNOSIS_HEALTHY_BUILDING || prognosis === PROGNOSIS_SICK_BUILDING
 }
+
+export function isError(project) {
+  return project.isError === true
+}

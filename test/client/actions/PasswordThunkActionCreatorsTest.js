@@ -14,7 +14,8 @@ describe('PasswordThunkActionCreators', function () {
 
   const {encryptPassword} = withMockedImports('client/actions/PasswordThunkActionCreators', {
     '../common/gateways/SecurityGateway': {encryptPassword: encrypt},
-    '../common/gateways/Gateway': {send, abortPendingRequest},
+    '../common/gateways/Gateway': {abortPendingRequest},
+    '../common/gateways/NevergreenGateway': {send},
     './PasswordActionCreators': {encryptingPassword, passwordEncrypted, passwordEncryptError}
   })
 
@@ -74,7 +75,7 @@ describe('PasswordThunkActionCreators', function () {
     it('should dispatch password encrypt error action if the request fails', function () {
       send.rejects({message: 'some-error'})
       return testThunk(encryptPassword('some-tray-id', 'irrelevant')).then(() => {
-        expect(passwordEncryptError).to.have.been.calledWith('some-tray-id', ['Nevergreen some-error'])
+        expect(passwordEncryptError).to.have.been.calledWith('some-tray-id', ['some-error'])
       })
     })
   })

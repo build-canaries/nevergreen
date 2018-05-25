@@ -14,7 +14,8 @@ describe('RefreshThunkActionCreators', function () {
 
   const {refreshTray} = withMockedImports('client/actions/RefreshThunkActionCreators', {
     '../common/gateways/ProjectsGateway': {fetchAll},
-    '../common/gateways/Gateway': {send, abortPendingRequest},
+    '../common/gateways/Gateway': {abortPendingRequest},
+    '../common/gateways/NevergreenGateway': {send},
     './TrackingActionCreators': {projectsFetching, projectsFetched, projectsFetchError}
   })
 
@@ -47,7 +48,7 @@ describe('RefreshThunkActionCreators', function () {
     })
 
     it('should dispatch projects fetch error action if an error is returned', function () {
-      send.resolves([{message: 'some-error'}])
+      send.resolves([{isError: true, errorMessage: 'some-error'}])
       const tray = {trayId: 'some-tray-id'}
 
       return testThunk(refreshTray(tray)).then(() => {
@@ -60,7 +61,7 @@ describe('RefreshThunkActionCreators', function () {
       const tray = {trayId: 'some-tray-id'}
 
       return testThunk(refreshTray(tray)).then(() => {
-        expect(projectsFetchError).to.have.been.calledWith('some-tray-id', ['Nevergreen some-error'])
+        expect(projectsFetchError).to.have.been.calledWith('some-tray-id', ['some-error'])
       })
     })
   })

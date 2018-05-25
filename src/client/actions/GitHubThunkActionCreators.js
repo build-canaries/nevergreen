@@ -1,6 +1,5 @@
 import _ from 'lodash'
-import {send} from '../common/gateways/Gateway'
-import {createGist, getGist, getTruncatedFile, updateGist} from '../common/gateways/GitHubGateway'
+import {createGist, getGist, getTruncatedFile, send, updateGist} from '../common/gateways/GitHubGateway'
 import {gitHubSetDescription, gitHubSetGistId} from './GitHubActionCreators'
 import {isBlank} from '../common/Utils'
 import {importError, importing} from './ImportActionCreators'
@@ -42,7 +41,7 @@ export function restoreFromGitHub(gistId) {
     }).then((content) => {
       return dispatch(importData(content))
     }).catch((error) => {
-      return dispatch(importError(['Unable to import from GitHub because of an error:', error.message]))
+      return dispatch(importError([`Unable to import from GitHub because of an error: ${error.message}`]))
     })
   }
 }
@@ -70,7 +69,7 @@ export function uploadToGitHub(gistId, description, configuration, oauthToken) {
       dispatch(exportSuccess([successMessage]))
       return dispatch(gitHubSetGistId(returnedGistId))
     }).catch((error) => {
-      return dispatch(exportError([`Unable to upload to GitHub because of an error: ${error.status} - ${error.message}`]))
+      return dispatch(exportError([`Unable to upload to GitHub because of an error: ${error.message}`]))
     })
   }
 }

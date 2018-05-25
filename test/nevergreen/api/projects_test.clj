@@ -58,14 +58,16 @@
                (security/basic-auth-header anything anything) => anything :times 0))
 
        (fact "creates an error if the URL is not valid"
-             (subject/fetch-tray {:url "url"}) => [{:message "ExceptionInfo: Only http(s) URLs are supported: url"
-                                                    :url     "url"}])
+             (subject/fetch-tray {:url "url"}) => [{:error-message "ExceptionInfo: Only http(s) URLs are supported: url"
+                                                    :is-error      true
+                                                    :url           "url"}])
 
        (fact "handles failing to decrypt the password"
              (subject/fetch-tray {:url      valid-url
                                   :username ""
-                                  :password "some-encrypted-password"}) => [{:message "ExceptionInfo: some-error"
-                                                                             :url     valid-url}]
+                                  :password "some-encrypted-password"}) => [{:error-message "ExceptionInfo: some-error"
+                                                                             :is-error      true
+                                                                             :url           valid-url}]
              (provided
                (crypt/decrypt "some-encrypted-password") =throws=> (ex-info "some-error" {}))))
 

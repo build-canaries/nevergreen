@@ -1,5 +1,6 @@
 import {encryptPassword as encrypt} from '../common/gateways/SecurityGateway'
-import {abortPendingRequest, send} from '../common/gateways/Gateway'
+import {abortPendingRequest} from '../common/gateways/Gateway'
+import {send} from '../common/gateways/NevergreenGateway'
 import {isBlank} from '../common/Utils'
 import {encryptingPassword, passwordEncrypted, passwordEncryptError} from './PasswordActionCreators'
 
@@ -16,7 +17,7 @@ export function encryptPassword(trayId, password, pendingRequest) {
         dispatch(passwordEncrypted(trayId, data.password))
         return data.password
       }).catch((error) => {
-        return dispatch(passwordEncryptError(trayId, [`Nevergreen ${error.message}`]))
+        return dispatch(passwordEncryptError(trayId, [error.message]))
       })
     } else {
       dispatch(passwordEncrypted(trayId, ''))

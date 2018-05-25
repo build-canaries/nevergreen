@@ -14,7 +14,7 @@ describe('MonitorThunkActionCreators', function () {
 
   const {fetchInteresting} = withMockedImports('client/actions/MonitorThunkActionCreators', {
     '../common/gateways/ProjectsGateway': {interesting},
-    '../common/gateways/Gateway': {send},
+    '../common/gateways/NevergreenGateway': {send},
     './MonitorActionCreators': {interestingProjects}
   })
 
@@ -123,14 +123,14 @@ describe('MonitorThunkActionCreators', function () {
       send.rejects({message: 'some-error'})
 
       return testThunk(fetchInteresting([], [], [])).then(() => {
-        expect(interestingProjects).to.have.been.calledWithMatch([], ['Nevergreen some-error'])
+        expect(interestingProjects).to.have.been.calledWithMatch([], ['some-error'])
       })
     })
 
     describe('returned tray errors', function () {
 
       it('should dispatch interesting projects with the tray name in the error if it exists', function () {
-        send.resolves([{trayId: 'some-tray-id', message: 'some-error'}])
+        send.resolves([{trayId: 'some-tray-id', isError: true, errorMessage: 'some-error'}])
         const trays = [{trayId: 'some-tray-id', name: 'some-name'}]
 
         return testThunk(fetchInteresting(trays, [], [])).then(() => {
@@ -139,7 +139,7 @@ describe('MonitorThunkActionCreators', function () {
       })
 
       it('should dispatch interesting projects with the tray url in the error if the name does not exist', function () {
-        send.resolves([{trayId: 'some-tray-id', message: 'some-error'}])
+        send.resolves([{trayId: 'some-tray-id', isError: true, errorMessage: 'some-error'}])
         const trays = [{trayId: 'some-tray-id', url: 'some-url'}]
 
         return testThunk(fetchInteresting(trays, [], [])).then(() => {

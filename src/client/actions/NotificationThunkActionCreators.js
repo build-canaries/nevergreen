@@ -1,4 +1,5 @@
-import {get, send} from '../common/gateways/Gateway'
+import {get} from '../common/gateways/Gateway'
+import {send} from '../common/gateways/GitHubGateway'
 import semver from 'semver'
 import _ from 'lodash'
 import {notify} from './NotificationActionCreators'

@@ -48,11 +48,11 @@ export function send(request) {
     log.error(`An exception was thrown when calling URL '${url}'`, err)
 
     const status = err.status || 0
-    const message = err.timeout
+    const body = err.timeout
       ? 'timeout'
-      : _.get(err, 'response.body.message', 'unknown')
+      : _.get(err, 'response.body', {})
 
-    throw {status, message}
+    throw {status, body}
   })
 }
 

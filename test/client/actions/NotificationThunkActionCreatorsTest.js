@@ -11,7 +11,8 @@ describe('NotificationThunkActionCreators', function () {
   const notify = mocks.spy()
 
   const {checkForNewVersion} = withMockedImports('client/actions/NotificationThunkActionCreators', {
-    '../common/gateways/Gateway': {send, get},
+    '../common/gateways/Gateway': {get},
+    '../common/gateways/GitHubGateway': {send},
     'semver': {gt},
     './NotificationActionCreators': {notify}
   })

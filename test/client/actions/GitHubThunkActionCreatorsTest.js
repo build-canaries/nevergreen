@@ -20,8 +20,7 @@ describe('GitHubThunkActionCreators', function () {
   const exportError = mocks.spy()
 
   const {restoreFromGitHub, uploadToGitHub} = withMockedImports('client/actions/GitHubThunkActionCreators', {
-    '../common/gateways/Gateway': {send},
-    '../common/gateways/GitHubGateway': {getGist, getTruncatedFile, updateGist, createGist},
+    '../common/gateways/GitHubGateway': {send, getGist, getTruncatedFile, updateGist, createGist},
     './ImportActionCreators': {importError, importing},
     './ImportThunkActionCreators': {importData},
     './ExportActionCreators': {exporting, exportSuccess, exportError},
@@ -132,9 +131,9 @@ describe('GitHubThunkActionCreators', function () {
     })
 
     it('should dispatch export error action if the gist can not be created', function () {
-      send.rejects({status: '500', message: 'some-error'})
+      send.rejects({message: 'some-error'})
       return testThunk(uploadToGitHub('irrelevant', 'irrelevant', 'irrelevant', 'not-blank')).then(() => {
-        expect(exportError).to.have.been.calledWithMatch(containsMessage('Unable to upload to GitHub because of an error: 500 - some-error'))
+        expect(exportError).to.have.been.calledWithMatch(containsMessage('Unable to upload to GitHub because of an error: some-error'))
       })
     })
 

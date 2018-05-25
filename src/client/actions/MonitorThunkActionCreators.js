@@ -1,13 +1,14 @@
 import {interesting} from '../common/gateways/ProjectsGateway'
-import {send} from '../common/gateways/Gateway'
+import {send} from '../common/gateways/NevergreenGateway'
 import _ from 'lodash'
 import {isBuilding} from '../domain/Project'
+import {extract} from '../domain/Tray'
 import {interestingProjects} from './MonitorActionCreators'
 
 function toErrorString(trays, project) {
   const tray = _.head(trays.filter((tray) => tray.trayId === project.trayId))
   const identifier = _.get(tray, 'name') || _.get(tray, 'url')
-  return `${identifier} ${project.message}`
+  return `${identifier} ${project.errorMessage}`
 }
 
 function byProjectId(existing, newProject) {
@@ -34,19 +35,14 @@ function addThisBuildTime(project, currentProjects) {
 
 export function fetchInteresting(trays, selected, currentProjects) {
   return function (dispatch) {
-    return send(interesting(trays, selected)).then((projects) => {
-      const filteredProjects = projects
-        .filter((project) => !project.message)
-        .filter((project) => !project.job)
-        .map((project) => addThisBuildTime(project, currentProjects))
+    return send(interesting(trays, selected)).then((allProjects) => {
+      const {okProjects, errorProjects} = extract(allProjects)
+      const enrichedProjects = okProjects.map((project) => addThisBuildTime(project, currentProjects))
+      const errorMessages = errorProjects.map((project) => toErrorString(trays, project))
 
-      const errors = projects
-        .filter((project) => project.message)
-        .map((project) => toErrorString(trays, project))
-
-      return dispatch(interestingProjects(filteredProjects, errors))
+      return dispatch(interestingProjects(enrichedProjects, errorMessages))
     }).catch((error) => {
-      return dispatch(interestingProjects([], [`Nevergreen ${error.message}`]))
+      return dispatch(interestingProjects([], [error.message]))
     })
   }
 }

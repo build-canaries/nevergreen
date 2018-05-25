@@ -39,24 +39,24 @@ describe('Gateway', function () {
       })
     })
 
-    it('should throw the message on error', function () {
-      const request = Promise.reject({response: {body: {message: 'some-message'}}})
+    it('should throw the body on error', function () {
+      const request = Promise.reject({response: {body: 'some-body'}})
       return send(request).catch((actual) => {
-        expect(actual).to.have.property('message', 'some-message')
+        expect(actual).to.have.property('body', 'some-body')
       })
     })
 
-    it('should throw the message on error as unknown if no response exists', function () {
+    it('should throw the body on error as empty object if no response exists', function () {
       const request = Promise.reject({})
       return send(request).catch((actual) => {
-        expect(actual).to.have.property('message', 'unknown')
+        expect(actual).to.have.property('body').that.deep.equals({})
       })
     })
 
-    it('should throw the message on error as timeout when the request times out', function () {
+    it('should throw the body on error as timeout when the request times out', function () {
       const request = Promise.reject({timeout: true})
       return send(request).catch((actual) => {
-        expect(actual).to.have.property('message', 'timeout')
+        expect(actual).to.have.property('body', 'timeout')
       })
     })
   })

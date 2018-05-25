@@ -1,6 +1,8 @@
 import {fetchAll} from '../common/gateways/ProjectsGateway'
-import {abortPendingRequest, send} from '../common/gateways/Gateway'
+import {abortPendingRequest} from '../common/gateways/Gateway'
+import {send} from '../common/gateways/NevergreenGateway'
 import _ from 'lodash'
+import {extract} from '../domain/Tray'
 import {projectsFetched, projectsFetchError, projectsFetching} from './TrackingActionCreators'
 
 export function refreshTray(tray, pendingRequest) {
@@ -12,19 +14,17 @@ export function refreshTray(tray, pendingRequest) {
 
     dispatch(projectsFetching(trayId, request))
 
-    return send(request).then((json) => {
-      const filteredProjects = json.filter((project) => !project.job)
-      const errors = json
-        .filter((project) => project.message)
-        .map((project) => project.message)
+    return send(request).then((allProjects) => {
+      const {okProjects, errorProjects} = extract(allProjects)
+      const errorMessages = errorProjects.map((project) => project.errorMessage)
 
-      if (_.isEmpty(errors)) {
-        return dispatch(projectsFetched(trayId, filteredProjects))
+      if (_.isEmpty(errorMessages)) {
+        return dispatch(projectsFetched(trayId, okProjects))
       } else {
-        return dispatch(projectsFetchError(trayId, errors))
+        return dispatch(projectsFetchError(trayId, errorMessages))
       }
     }).catch((error) => {
-      return dispatch(projectsFetchError(trayId, [`Nevergreen ${error.message}`]))
+      return dispatch(projectsFetchError(trayId, [error.message]))
     })
   }
 }

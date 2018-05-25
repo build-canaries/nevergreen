@@ -11,7 +11,7 @@
   (create-error (str (.getSimpleName (.getClass e)) ": " (.getMessage e)) url))
 
 (defmethod create-error String [message url]
-  {:message message :url url})
+  {:error-message message :url url :is-error true})
 
 (defn error-response [status message url]
   {:status  status
