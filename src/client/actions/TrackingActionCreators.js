@@ -38,10 +38,18 @@ export function projectsFetching(trayId, request) {
   return {type: PROJECTS_FETCHING, trayId, request}
 }
 
-export function projectsFetched(trayId, projects) {
+export function projectsFetched(trayId, projects, selectAll) {
   const data = Immutable.fromJS(projects)
   const serverType = data.first() ? data.first().get('serverType') : ''
-  return {type: PROJECTS_FETCHED, trayId, data, serverType, timestamp: now()}
+
+  return {
+    type: PROJECTS_FETCHED,
+    trayId,
+    data,
+    serverType,
+    timestamp: now(),
+    selectAll
+  }
 }
 
 export function projectsFetchError(trayId, errors) {

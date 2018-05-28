@@ -94,6 +94,14 @@ describe('SelectedReducer', function () {
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('trayId').that.contains('b').and.have.size(1)
     })
+
+    it('should add all projects that were fetched if select all is true', function () {
+      const existingState = Immutable.Map({trayId: Immutable.Set([])})
+      const fetchedProjects = Immutable.fromJS([{projectId: 'a'}, {projectId: 'b'}, {projectId: 'c'}])
+      const action = {type: PROJECTS_FETCHED, trayId: 'trayId', selectAll: true, data: fetchedProjects}
+      const newState = reduce(existingState, action)
+      expect(newState).to.have.property('trayId').that.contains('a', 'b', 'c')
+    })
   })
 
   describe(SET_TRAY_ID, function () {

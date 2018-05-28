@@ -29,10 +29,12 @@ export function addTray(enteredUrl, username, rawPassword, existingTrays) {
 
       if (!isBlank(rawPassword)) {
         return dispatch(encryptPassword(trayId, rawPassword)).then((encryptedPassword) => {
-          return dispatch(refreshTray({trayId, url, username, password: encryptedPassword}))
+          const tray = {trayId, url, username, password: encryptedPassword}
+          return dispatch(refreshTray(tray, null, true))
         })
       } else {
-        return dispatch(refreshTray({trayId, url, username}))
+        const tray = {trayId, url, username}
+        return dispatch(refreshTray(tray, null, true))
       }
     }
   }

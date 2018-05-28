@@ -76,7 +76,7 @@ describe('TrackingThunkActionCreators', function () {
             url: 'http://url',
             username: 'some-username',
             password: 'encrypted-password'
-          })
+          }, null, true)
         })
       })
 
@@ -88,7 +88,7 @@ describe('TrackingThunkActionCreators', function () {
             trayId: 'some-id',
             url: 'http://url',
             username: 'some-username'
-          })
+          }, null, true)
         })
       })
     })

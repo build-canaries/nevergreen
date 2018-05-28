@@ -5,7 +5,7 @@ import _ from 'lodash'
 import {extract} from '../domain/Tray'
 import {projectsFetched, projectsFetchError, projectsFetching} from './TrackingActionCreators'
 
-export function refreshTray(tray, pendingRequest) {
+export function refreshTray(tray, pendingRequest, selectAll = false) {
   abortPendingRequest(pendingRequest)
 
   return function (dispatch) {
@@ -19,7 +19,7 @@ export function refreshTray(tray, pendingRequest) {
       const errorMessages = errorProjects.map((project) => project.errorMessage)
 
       if (_.isEmpty(errorMessages)) {
-        return dispatch(projectsFetched(trayId, okProjects))
+        return dispatch(projectsFetched(trayId, okProjects, selectAll))
       } else {
         return dispatch(projectsFetchError(trayId, errorMessages))
       }

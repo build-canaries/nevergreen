@@ -144,6 +144,11 @@ describe('TrackingActionCreators', function () {
       }])
       expect(actual).to.have.property('serverType', 'some-type')
     })
+
+    it('should return whether to select all projects or not', function () {
+      const actual = projectsFetched('irrelevant', [], true)
+      expect(actual).to.have.property('selectAll', true)
+    })
   })
 
   describe(PROJECTS_FETCH_ERROR, function () {

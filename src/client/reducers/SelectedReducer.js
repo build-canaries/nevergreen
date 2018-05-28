@@ -26,16 +26,27 @@ export function reduce(state = DEFAULT_STATE, action) {
       return state.delete(action.trayId)
 
     case SELECT_PROJECT:
-      return state.update(action.trayId, (included) =>
-        action.selected ? included.add(action.projectId) : included.delete(action.projectId))
+      return state.update(action.trayId, (includedProjectIds) =>
+        action.selected
+          ? includedProjectIds.add(action.projectId)
+          : includedProjectIds.delete(action.projectId))
 
     case PROJECTS_FETCHED: {
-      const currentUrls = action.data.map((project) => project.get('projectId'))
-      return state.update(action.trayId, (included) => included.filter((projectId) => currentUrls.includes(projectId)))
+      const currentProjectIds = action.data.map((project) => project.get('projectId'))
+
+      return state.update(action.trayId, (includedProjectIds) => {
+        const updated = action.selectAll
+          ? includedProjectIds.union(currentProjectIds)
+          : includedProjectIds
+        return updated.filter((projectId) => currentProjectIds.includes(projectId))
+      })
     }
 
     case SET_TRAY_ID:
-      return state.mapKeys((key) => key === action.originalTrayId ? action.newTrayId : key)
+      return state.mapKeys((trayId) =>
+        trayId === action.originalTrayId
+          ? action.newTrayId
+          : trayId)
 
     default:
       return state
