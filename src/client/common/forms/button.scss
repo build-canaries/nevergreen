@@ -27,7 +27,7 @@
   }
 }
 
-@mixin buttonInteraction($color:$off-black, $background-color:$white, $border-color:$light-grey) {
+@mixin buttonInteraction($color: $off-black, $background-color: $white, $border-color: $light-grey) {
   &:enabled {
     box-shadow: $shadow;
     cursor: pointer;

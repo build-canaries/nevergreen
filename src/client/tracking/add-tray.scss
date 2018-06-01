@@ -21,6 +21,8 @@
   @include button-icon('plus');
 
   @extend .primaryButton;
+
+  flex-shrink: 0;
 }
 
 .inputs {

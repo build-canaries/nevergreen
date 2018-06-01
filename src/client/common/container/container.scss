@@ -32,7 +32,7 @@
   position: relative;
   white-space: nowrap;
 
-  @include interactive($white, $mid-grey, $mid-grey);
+  @include interactive($color: $white, $background-color: $mid-grey, $border-color: $mid-grey);
 }
 
 .title {

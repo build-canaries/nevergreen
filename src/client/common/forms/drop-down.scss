@@ -26,7 +26,7 @@
   }
 
   &:not(:disabled) {
-    @include interactive($darken-on-focus: false);
+    @include interactive($focus-color-change-percentage: 0%);
   }
 
   @include respond-to(tablet, desktop) {

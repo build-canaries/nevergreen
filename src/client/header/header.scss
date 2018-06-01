@@ -9,9 +9,11 @@
   background-color: $off-black;
   color: $white;
   display: block;
-  padding: 0.5em 1em;
+  padding: 0 1em;
 
   @include respond-to(tablet, desktop) {
+    align-items: center;
+    display: flex;
     padding-left: 2em;
     padding-right: 2em;
   }
@@ -23,13 +25,12 @@
 
 .logo {
   display: none;
-  height: 55px;
-  margin-right: 1em;
-  width: 55px;
 
   @include respond-to(tablet, desktop) {
     display: block;
-    float: left;
+    height: 55px;
+    margin-right: 1em;
+    width: 55px;
   }
 }
 
@@ -38,12 +39,14 @@
 
   background-color: transparent;
   border: none;
+  box-shadow: none;
   color: $white;
   cursor: pointer;
   margin: 0;
-  padding: 0.5em 1em;
+  padding: 1em;
+  text-align: left;
   text-transform: uppercase;
-  width: auto;
+  width: 100%;
 
   @include respond-to(tablet, desktop) {
     display: none;
@@ -68,7 +71,6 @@
 
 .siteMenu {
   display: block;
-  vertical-align: top;
 }
 
 .menu {
@@ -86,7 +88,7 @@
   }
 
   @include respond-to(tablet, desktop) {
-    display: inline;
+    display: block;
   }
 }
 
@@ -102,19 +104,22 @@
 }
 
 .menuItem {
-  color: $mid-grey;
+  color: $white;
   display: inline-block;
-  margin-right: 1em;
   padding: 1em;
   text-decoration: none;
   text-transform: uppercase;
+  width: 100%;
 
   &:visited {
-    color: $mid-grey;
+    color: $white;
   }
 
   &:not(.active) {
-    @include interactive($white, $off-black, $off-black);
+    @include interactive(
+      $color: $white,
+      $background-color: $off-black,
+      $border-color: transparent);
   }
 }
 
@@ -131,16 +136,17 @@
 }
 
 .active {
-  color: $white;
+  background-color: $light-grey;
+  color: $off-black;
 
   &:visited {
-    color: $white;
+    color: $off-black;
   }
 
   &:hover,
   &:focus {
-    background-color: $off-black;
-    color: $white;
+    background-color: $light-grey;
+    color: $off-black;
     cursor: default;
   }
 }

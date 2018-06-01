@@ -33,7 +33,7 @@
   width: auto;
 
   &:enabled {
-    @include interactive($off-black, $light-grey, $light-grey) {
+    @include interactive($background-color: $light-grey) {
       box-shadow: none;
     }
 

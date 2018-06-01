@@ -32,13 +32,17 @@ fieldset {
 }
 
 a {
-  color: $blue;
+  color: $off-black;
 
   &:visited {
-    color: $purple;
+    color: $blue;
   }
 
-  @include interactive($blue, transparent, transparent);
+  @include interactive(
+    $background-color: $light-grey,
+    $border-color: transparent,
+    $hover-color-change-percentage: 0%,
+    $focus-color-change-percentage: 0%);
 }
 
 p {

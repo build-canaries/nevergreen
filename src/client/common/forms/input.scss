@@ -46,7 +46,7 @@ $font-scale: 1;
 
   &:not(:disabled) {
     &:read-write {
-      @include interactive($darken-on-focus: false);
+      @include interactive($focus-color-change-percentage: 0%);
     }
   }
 }
