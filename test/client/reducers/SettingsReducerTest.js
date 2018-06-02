@@ -6,7 +6,7 @@ import {
   IMPORT_SUCCESS,
   INITIALISED,
   PLAY_BROKEN_BUILD_SOUND_FX,
-  REFRESH_TIME,
+  REFRESH_TIME, SET_MAX_PROJECTS,
   SHOW_BROKEN_BUILD_TIME,
   SHOW_BUILD_TIME,
   SHOW_TRAY_NAME
@@ -175,6 +175,16 @@ describe('SettingsReducer', function () {
       const action = {type: REFRESH_TIME, value: 10}
       const newState = reduce(existingState, action)
       expect(newState).to.contain.property('refreshTime', 10)
+    })
+  })
+
+  describe(SET_MAX_PROJECTS, function () {
+
+    it('should set the max projects to show property', function () {
+      const existingState = Immutable.Map({maxProjectsToShow: 9})
+      const action = {type: SET_MAX_PROJECTS, value: 12}
+      const newState = reduce(existingState, action)
+      expect(newState).to.contain.property('maxProjectsToShow', 12)
     })
   })
 })

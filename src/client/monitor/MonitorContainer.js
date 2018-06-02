@@ -27,7 +27,8 @@ function mapStateToProps(store) {
     brokenBuildFx: settings.get('brokenBuildSoundFx'),
     messages: store.get('success'),
     refreshTime: settings.get('refreshTime'),
-    isFullScreen: store.getIn(['nevergreen', 'fullScreen'])
+    isFullScreen: store.getIn(['nevergreen', 'fullScreen']),
+    maxProjectsToShow: settings.get('maxProjectsToShow')
   }
 }
 

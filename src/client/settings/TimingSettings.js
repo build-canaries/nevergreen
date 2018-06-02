@@ -31,7 +31,7 @@ class TimingSettings extends Component {
 TimingSettings.propTypes = {
   refreshTime: PropTypes.number.isRequired,
   setRefreshTime: PropTypes.func.isRequired,
-  validRefreshTimes: PropTypes.arrayOf(PropTypes.number)
+  validRefreshTimes: PropTypes.arrayOf(PropTypes.number).isRequired
 }
 
 export default TimingSettings

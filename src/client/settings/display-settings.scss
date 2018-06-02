@@ -1,5 +1,6 @@
 @import '../common/variables';
 @import '../common/layout';
+@import '../common/responsive';
 
 .container {
   padding: 1em;
@@ -18,6 +19,12 @@
   @extend .checkbox;
 }
 
+.maxProjects {
+  @include respond-to(tablet, desktop) {
+    width: 40em;
+  }
+}
+
 .previewSection {
   margin-top: 1em;
 }
@@ -26,6 +33,6 @@
   background-color: $black;
   border-radius: 5px;
   font-family: $monospace-font;
-  height: 15em;
+  height: 18em;
   text-align: center;
 }

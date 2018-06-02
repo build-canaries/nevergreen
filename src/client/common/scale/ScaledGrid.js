@@ -70,7 +70,7 @@ function getVisibleChildren(node) {
 }
 
 function getVisibleText(node) {
-  return getVisibleChildren(node).map((n) => n.textContent).join('')
+  return _.join(_.map(getVisibleChildren(node), (n) => n.textContent), '')
 }
 
 class ScaledGrid extends Component {
@@ -138,10 +138,7 @@ class ScaledGrid extends Component {
 }
 
 ScaledGrid.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.element),
-    PropTypes.element
-  ]).isRequired
+  children: PropTypes.node.isRequired
 }
 
 export default ScaledGrid

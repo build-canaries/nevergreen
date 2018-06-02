@@ -11,6 +11,9 @@ const TIMEOUT = {
 const ACCEPT_HEADER = 'application/json; charset=utf-8'
 const CONTENT_TYPE = 'application/json; charset=utf-8'
 
+export const UNKNOWN_ERROR = 'unknown error'
+export const TIMEOUT_ERROR = 'timeout'
+
 export function post(url, data, headers = {}) {
   return request
     .post(url)
@@ -43,14 +46,14 @@ export function send(request) {
   return request.then((res) => {
     return res.body || res.text
   }).catch((err) => {
-    const url = _.get(err, 'response.req.url', 'unknown')
+    const url = _.get(err, 'url', 'unknown')
 
     log.error(`An exception was thrown when calling URL '${url}'`, err)
 
-    const status = err.status || 0
-    const body = err.timeout
-      ? 'timeout'
-      : _.get(err, 'response.body', {})
+    const status = _.get(err, 'status') || 0
+    const body = _.get(err, 'timeout')
+      ? TIMEOUT_ERROR
+      : _.get(err, 'response.body') || _.get(err, 'message') || UNKNOWN_ERROR
 
     throw {status, body}
   })

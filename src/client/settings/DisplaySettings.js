@@ -9,6 +9,9 @@ import {generateRandomName} from '../domain/Tray'
 import _ from 'lodash'
 import styles from './display-settings.scss'
 import {PROGNOSIS_HEALTHY_BUILDING, PROGNOSIS_SICK, PROGNOSIS_SICK_BUILDING, PROGNOSIS_UNKNOWN} from '../domain/Project'
+import DropDown from '../common/forms/DropDown'
+import ProjectSummary from '../common/project/ProjectSummary'
+import ProjectError from '../common/project/ProjectError'
 
 function randomBuildLabel() {
   return `${_.random(1, 9999)}`
@@ -21,7 +24,8 @@ class DisplaySettings extends Component {
       trayName: generateRandomName(),
       lastBuildLabel: randomBuildLabel(),
       lastBuildTime: randomDateInPast(),
-      thisBuildTime: randomDateInPast()
+      thisBuildTime: randomDateInPast(),
+      additionalProjects: _.random(1, 99)
     }
   }
 
@@ -41,7 +45,17 @@ class DisplaySettings extends Component {
     this.props.setShowBuildLabel(newValue)
   }
 
+  setMaxProjectsToShow = (evt) => {
+    this.props.setMaxProjectsToShow(evt.target.value)
+  }
+
   render() {
+    const projectsToShowOptions = this.props.validNumberOfProjectsToShow.map((value) => {
+      const display = value === Number.MAX_SAFE_INTEGER
+        ? 'all projects (not recommended)'
+        : `${value.toString()} projects`
+      return {value: value.toString(), display}
+    })
 
     return (
       <Container title='display' className={styles.container}>
@@ -69,6 +83,12 @@ class DisplaySettings extends Component {
                   data-locator='show-build-labels'>
           show broken build label
         </Checkbox>
+        <DropDown className={styles.maxProjects}
+                  options={projectsToShowOptions}
+                  value={this.props.maxProjectsToShow}
+                  onChange={this.setMaxProjectsToShow}>
+          max number of projects to show
+        </DropDown>
         <section className={styles.previewSection}>
           <h4 className={styles.title}>Preview</h4>
           <div className={styles.displayPreview}>
@@ -94,9 +114,11 @@ class DisplaySettings extends Component {
                                   showBuildTimers={this.props.showBuildTime}
                                   showTrayName={this.props.showTrayName}/>
               <InterestingProject trayName={this.state.trayName}
-                                  name='unknown'
+                                  name='unknown prognosis'
                                   prognosis={PROGNOSIS_UNKNOWN}
                                   showTrayName={this.props.showTrayName}/>
+              <ProjectError error='some tray error'/>
+              <ProjectSummary additionalProjectsCount={this.state.additionalProjects}/>
             </ScaledGrid>
           </div>
         </section>
@@ -110,10 +132,13 @@ DisplaySettings.propTypes = {
   showBuildTime: PropTypes.bool.isRequired,
   showBrokenBuildTime: PropTypes.bool.isRequired,
   showBuildLabel: PropTypes.bool.isRequired,
+  maxProjectsToShow: PropTypes.number.isRequired,
   setShowBuildTime: PropTypes.func.isRequired,
   setShowBrokenBuildTime: PropTypes.func.isRequired,
   setShowTrayName: PropTypes.func.isRequired,
-  setShowBuildLabel: PropTypes.func.isRequired
+  setShowBuildLabel: PropTypes.func.isRequired,
+  setMaxProjectsToShow: PropTypes.func.isRequired,
+  validNumberOfProjectsToShow: PropTypes.arrayOf(PropTypes.number).isRequired
 }
 
 export default DisplaySettings

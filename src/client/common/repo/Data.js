@@ -25,7 +25,8 @@ export const SCHEMA = {
         showBuildLabel: {type: 'boolean'},
         playBrokenBuildSoundFx: {type: 'boolean'},
         brokenBuildSoundFx: {type: ['string', 'null']},
-        refreshTime: {type: 'number'}
+        refreshTime: {type: 'number'},
+        maxProjectsToShow: {type: 'number'}
       },
       additionalProperties: false
     },

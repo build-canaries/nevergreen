@@ -5,12 +5,13 @@ import {
   INITIALISED,
   PLAY_BROKEN_BUILD_SOUND_FX,
   REFRESH_TIME,
+  SET_MAX_PROJECTS,
   SHOW_BROKEN_BUILD_TIME,
   SHOW_BUILD_LABEL,
   SHOW_BUILD_TIME,
   SHOW_TRAY_NAME
 } from '../actions/Actions'
-import {MIN_REFRESH_TIME} from '../actions/SettingsActionCreators'
+import {DEFAULT_PROJECTS_TO_SHOW, MIN_REFRESH_TIME} from '../actions/SettingsActionCreators'
 import defaultSoundFx from '../settings/pacman_death.mp3'
 
 const DEFAULT_STATE = Immutable.Map({
@@ -20,7 +21,8 @@ const DEFAULT_STATE = Immutable.Map({
   playBrokenBuildSoundFx: false,
   brokenBuildSoundFx: defaultSoundFx,
   refreshTime: MIN_REFRESH_TIME,
-  showBuildLabel: false
+  showBuildLabel: false,
+  maxProjectsToShow: DEFAULT_PROJECTS_TO_SHOW
 })
 
 export function reduce(state = DEFAULT_STATE, action) {
@@ -49,6 +51,9 @@ export function reduce(state = DEFAULT_STATE, action) {
 
     case SHOW_BUILD_LABEL:
       return state.set('showBuildLabel', action.value)
+
+    case SET_MAX_PROJECTS:
+      return state.set('maxProjectsToShow', action.value)
 
     default:
       return state

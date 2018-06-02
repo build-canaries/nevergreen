@@ -1,22 +1,5 @@
 @import '../common/layout';
-@import '../common/variables';
 
 .interestingProjects {
   @extend %fillParent;
-}
-
-.error {
-  @extend %fillParent;
-
-  background-color: $sick;
-  border-radius: 5px;
-  color: $off-white;
-  display: table;
-  padding: 1em;
-  text-transform: lowercase;
-}
-
-.inner {
-  display: table-cell;
-  vertical-align: middle;
 }

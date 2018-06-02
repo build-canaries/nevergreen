@@ -1,18 +1,22 @@
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {
+  MIN_REFRESH_TIME,
   setBrokenBuildSoundFx,
+  setMaxProjectsToShow,
   setPlayBrokenBuildSoundFx,
   setRefreshTime,
   setShowBrokenBuildTime,
   setShowBuildLabel,
   setShowBuildTime,
-  setShowTrayName
+  setShowTrayName,
+  VALID_PROJECTS_TO_SHOW
 } from '../../../src/client/actions/SettingsActionCreators'
 import {
   BROKEN_BUILD_SOUND_FX,
   PLAY_BROKEN_BUILD_SOUND_FX,
   REFRESH_TIME,
+  SET_MAX_PROJECTS,
   SHOW_BROKEN_BUILD_TIME,
   SHOW_BUILD_LABEL,
   SHOW_BUILD_TIME,
@@ -95,7 +99,7 @@ describe('SettingsActionCreators', function () {
     invalidValues.forEach(function (value) {
       it(`should return 5 second if the value is invalid (${value})`, function () {
         const actual = setRefreshTime(value)
-        expect(actual).to.have.property('value', 5)
+        expect(actual).to.have.property('value', MIN_REFRESH_TIME)
       })
     })
   })
@@ -123,6 +127,34 @@ describe('SettingsActionCreators', function () {
     it('should return the given value', function () {
       const actual = setShowBuildTime(true)
       expect(actual).to.have.property('value', true)
+    })
+  })
+
+  describe(SET_MAX_PROJECTS, function () {
+
+    it('should return the correct type', function () {
+      const actual = setMaxProjectsToShow()
+      expect(actual).to.have.property('type', SET_MAX_PROJECTS)
+    })
+
+
+    it('should return the nearest valid value for an exact match', function () {
+      const actual = setMaxProjectsToShow(12)
+      expect(actual).to.have.property('value', 12)
+    })
+
+    it('should return the nearest valid value', function () {
+      const actual = setMaxProjectsToShow(13)
+      expect(actual).to.have.property('value', 12)
+    })
+
+    const invalidValues = [-1, 4, 'some-string']
+
+    invalidValues.forEach(function (value) {
+      it(`should return min if the value is invalid (${value})`, function () {
+        const actual = setMaxProjectsToShow(value)
+        expect(actual).to.have.property('value', VALID_PROJECTS_TO_SHOW[0])
+      })
     })
   })
 })

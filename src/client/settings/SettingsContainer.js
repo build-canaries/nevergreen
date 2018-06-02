@@ -2,12 +2,14 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {
   setBrokenBuildSoundFx,
+  setMaxProjectsToShow,
   setPlayBrokenBuildSoundFx,
   setRefreshTime,
-  setShowBuildTime,
   setShowBrokenBuildTime,
   setShowBuildLabel,
+  setShowBuildTime,
   setShowTrayName,
+  VALID_PROJECTS_TO_SHOW,
   VALID_REFRESH_TIMES
 } from '../actions/SettingsActionCreators'
 import Settings from './Settings'
@@ -20,22 +22,25 @@ function mapDispatchToProps(dispatch) {
     setBrokenBuildSoundFx,
     setShowTrayName,
     setRefreshTime,
-    setShowBuildLabel
+    setShowBuildLabel,
+    setMaxProjectsToShow
   }, dispatch)
 }
 
 function mapStateToProps(store) {
-  const audioVisual = store.get('audioVisual')
+  const settings = store.get('audioVisual')
   return {
-    showTrayName: audioVisual.get('showTrayName'),
-    showBuildTime: audioVisual.get('showBuildTime'),
-    showBrokenBuildTime: audioVisual.get('showBrokenBuildTime'),
-    playBrokenBuildSoundFx: audioVisual.get('playBrokenBuildSoundFx'),
-    showBuildLabel: audioVisual.get('showBuildLabel'),
-    brokenBuildSoundFx: audioVisual.get('brokenBuildSoundFx'),
-    setShowTrayName: audioVisual.get('setShowTrayName'),
-    refreshTime: audioVisual.get('refreshTime'),
-    validRefreshTimes: VALID_REFRESH_TIMES
+    showTrayName: settings.get('showTrayName'),
+    showBuildTime: settings.get('showBuildTime'),
+    showBrokenBuildTime: settings.get('showBrokenBuildTime'),
+    playBrokenBuildSoundFx: settings.get('playBrokenBuildSoundFx'),
+    showBuildLabel: settings.get('showBuildLabel'),
+    brokenBuildSoundFx: settings.get('brokenBuildSoundFx'),
+    setShowTrayName: settings.get('setShowTrayName'),
+    refreshTime: settings.get('refreshTime'),
+    validRefreshTimes: VALID_REFRESH_TIMES,
+    maxProjectsToShow: settings.get('maxProjectsToShow'),
+    validNumberOfProjectsToShow: VALID_PROJECTS_TO_SHOW
   }
 }
 

@@ -2,6 +2,7 @@ import {withMockedImports} from '../../TestUtils'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {mocks} from '../../Mocking'
+import {TIMEOUT_ERROR, UNKNOWN_ERROR} from '../../../../src/client/common/gateways/Gateway'
 
 describe('Gateway', function () {
 
@@ -46,17 +47,24 @@ describe('Gateway', function () {
       })
     })
 
-    it('should throw the body on error as empty object if no response exists', function () {
+    it('should throw the message on error if no body exists', function () {
+      const request = Promise.reject({message: 'some-error'})
+      return send(request).catch((actual) => {
+        expect(actual).to.have.property('body', 'some-error')
+      })
+    })
+
+    it('should throw body as unknown if no response or message exists', function () {
       const request = Promise.reject({})
       return send(request).catch((actual) => {
-        expect(actual).to.have.property('body').that.deep.equals({})
+        expect(actual).to.have.property('body').that.equals(UNKNOWN_ERROR)
       })
     })
 
     it('should throw the body on error as timeout when the request times out', function () {
       const request = Promise.reject({timeout: true})
       return send(request).catch((actual) => {
-        expect(actual).to.have.property('body', 'timeout')
+        expect(actual).to.have.property('body', TIMEOUT_ERROR)
       })
     })
   })
