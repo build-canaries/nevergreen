@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom'
 import {Provider} from 'react-redux'
 import {applyMiddleware, compose, createStore} from 'redux'
 import createHistory from 'history/createBrowserHistory'
-import {Route, Router, Switch} from 'react-router-dom'
+import {Redirect, Route, Router, Switch} from 'react-router-dom'
 import thunkMiddleware from 'redux-thunk'
 import Immutable from 'immutable'
 import LocalRespoistory from './common/repo/LocalRepository'
@@ -57,7 +57,9 @@ ReactDOM.render(
           <Route exact path='/backup' component={BackupContainer}/>
           <Route exact path='/help' component={HelpContainer}/>
           <Route exact path='/style-guide' component={StyleGuide}/>
-          <Route component={TrackingContainer}/>
+          <Route>
+            <Redirect to='/tracking'/>
+          </Route>
         </Switch>
       </NevergreenContainer>
     </Router>
