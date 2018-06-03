@@ -93,6 +93,7 @@ class DisplaySettings extends Component {
           <h4 className={styles.title}>Preview</h4>
           <div className={styles.displayPreview}>
             <ScaledGrid>
+              <ProjectError error='some tray error'/>
               <InterestingProject trayName={this.state.trayName}
                                   name='sick'
                                   prognosis={PROGNOSIS_SICK}
@@ -117,7 +118,6 @@ class DisplaySettings extends Component {
                                   name='unknown prognosis'
                                   prognosis={PROGNOSIS_UNKNOWN}
                                   showTrayName={this.props.showTrayName}/>
-              <ProjectError error='some tray error'/>
               <ProjectSummary additionalProjectsCount={this.state.additionalProjects}/>
             </ScaledGrid>
           </div>
