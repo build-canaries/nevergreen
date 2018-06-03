@@ -11,7 +11,7 @@
                  [clj-http "3.9.0"]
                  [ring-curl "0.3.1"]
                  [ring/ring-json "0.4.0"]
-                 [ring/ring-defaults "0.3.1"]
+                 [ring/ring-defaults "0.3.2"]
                  [bk/ring-gzip "0.3.0"]
                  [ring-basic-authentication "1.0.5"]
                  [base64-clj "0.1.1"]
@@ -36,7 +36,7 @@
                                          [org.seleniumhq.selenium/selenium-java "3.12.0" :exclusions [org.eclipse.jetty/jetty-io
                                                                                                       commons-logging]]
                                          [io.github.bonigarcia/webdrivermanager "2.2.1" :exclusions [org.apache.commons/commons-lang3]]
-                                         [org.seleniumhq.selenium/htmlunit-driver "2.30.0" :exclusions [org.eclipse.jetty/jetty-io
+                                         [org.seleniumhq.selenium/htmlunit-driver "2.31.0" :exclusions [org.eclipse.jetty/jetty-io
                                                                                                         org.eclipse.jetty/jetty-http]]
                                          [ring/ring-mock "0.3.2"]]}
              :unit       {:jvm-opts ["-Dlogback.configurationFile=./test/logback-unit.xml"]}
