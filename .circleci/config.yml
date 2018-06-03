@@ -61,6 +61,8 @@ jobs:
           path: ./target/nevergreen-standalone.jar
       - store_artifacts:
           path: ./coverage
+      - store_artifacts:
+          path: ./target/security-reports
 
       - persist_to_workspace:
           root: .
