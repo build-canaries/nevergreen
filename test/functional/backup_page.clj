@@ -11,4 +11,5 @@
 
 (defn import-data [data]
   (input (locator "import-data") data)
-  (click (locator "import")))
+  (click (locator "import"))
+  (wait-until #(present? (locator "info-messages"))))

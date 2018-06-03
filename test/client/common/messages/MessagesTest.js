@@ -6,7 +6,7 @@ import {shallow} from 'enzyme'
 import Messages from '../../../../src/client/common/messages/Messages'
 
 describe('<Messages/>', function () {
-  
+
   const DEFAULT_PROPS = {
     type: 'error',
     messages: null
@@ -25,9 +25,9 @@ describe('<Messages/>', function () {
   })
 
   it('should render the messages', function () {
-    const props = {...DEFAULT_PROPS, messages: ['some-message', 'another-message']}
+    const props = {...DEFAULT_PROPS, type: 'error', messages: ['some-message', 'another-message']}
     const wrapper = shallow(<Messages {...props} />)
-    expect(wrapper.find(locator('messages'))).to.contain.text('some-message')
-    expect(wrapper.find(locator('messages'))).to.contain.text('another-message')
+    expect(wrapper.find(locator('error-messages'))).to.contain.text('some-message')
+    expect(wrapper.find(locator('error-messages'))).to.contain.text('another-message')
   })
 })

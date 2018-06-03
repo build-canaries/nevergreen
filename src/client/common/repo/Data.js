@@ -5,17 +5,6 @@ export const SCHEMA = {
   required: true,
   type: 'object',
   properties: {
-    nevergreen: {
-      required: true,
-      type: 'object',
-      properties: {
-        versionNumber: {type: 'string', required: true},
-        versionName: {type: 'string', required: true},
-        versionMeta: {type: 'string', required: true},
-        commitHash: {type: 'string', required: true}
-      },
-      additionalProperties: false
-    },
     audioVisual: {
       type: 'object',
       properties: {
