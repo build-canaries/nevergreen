@@ -1,0 +1,14 @@
+@import './common/variables';
+@import './common/forms/button';
+
+.content {
+  background-color: $white;
+  height: 100vh;
+  padding: 2em;
+}
+
+.deleteConfiguration {
+  @extend .dangerButton;
+
+  margin-top: 1.5em;
+}

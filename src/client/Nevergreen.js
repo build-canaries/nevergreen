@@ -90,10 +90,7 @@ class Nevergreen extends Component {
 }
 
 Nevergreen.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.element),
-    PropTypes.element
-  ]),
+  children: PropTypes.node.isRequired,
   loaded: PropTypes.bool.isRequired,
   initalise: PropTypes.func.isRequired,
   keyboardShortcut: PropTypes.func.isRequired,

@@ -7,7 +7,7 @@ import createHistory from 'history/createBrowserHistory'
 import {Redirect, Route, Router, Switch} from 'react-router-dom'
 import thunkMiddleware from 'redux-thunk'
 import Immutable from 'immutable'
-import LocalRespoistory from './common/repo/LocalRepository'
+import LocalRepository from './common/repo/LocalRepository'
 import {reducer} from './reducers/Reducer'
 import {filter} from './common/repo/Data'
 import {navigated} from './actions/NevergreenActionCreators'
@@ -20,6 +20,7 @@ import BackupContainer from './backup/BackupContainer'
 import HelpContainer from './help/HelpContainer'
 import StyleGuide from './styleGuide/StyleGuide'
 import _ from 'lodash'
+import UnhandledError from './UnhandledError'
 
 const ONE_SECOND = 1000
 
@@ -32,7 +33,7 @@ let store = createStore(reducer, initialState, compose(
 const save = () => {
   const state = store.getState()
   if (state.getIn(['nevergreen', 'loaded'], false)) {
-    LocalRespoistory.save(filter(state.toJS())).catch(() => {
+    LocalRepository.save(filter(state.toJS())).catch(() => {
       // TODO: handle save failure
     })
   }
@@ -46,22 +47,24 @@ const history = createHistory()
 history.listen(() => store.dispatch(navigated()))
 
 ReactDOM.render(
-  <Provider store={store}>
-    <Router history={history}>
-      <NevergreenContainer>
-        <Switch>
-          <Route exact path='/monitor' component={MonitorContainer}/>
-          <Route exact path='/tracking' component={TrackingContainer}/>
-          <Route exact path='/success' component={SuccessContainer}/>
-          <Route exact path='/settings' component={SettingsContainer}/>
-          <Route exact path='/backup' component={BackupContainer}/>
-          <Route exact path='/help' component={HelpContainer}/>
-          <Route exact path='/style-guide' component={StyleGuide}/>
-          <Route>
-            <Redirect to='/tracking'/>
-          </Route>
-        </Switch>
-      </NevergreenContainer>
-    </Router>
-  </Provider>,
+  <UnhandledError>
+    <Provider store={store}>
+      <Router history={history}>
+        <NevergreenContainer>
+          <Switch>
+            <Route exact path='/monitor' component={MonitorContainer}/>
+            <Route exact path='/tracking' component={TrackingContainer}/>
+            <Route exact path='/success' component={SuccessContainer}/>
+            <Route exact path='/settings' component={SettingsContainer}/>
+            <Route exact path='/backup' component={BackupContainer}/>
+            <Route exact path='/help' component={HelpContainer}/>
+            <Route exact path='/style-guide' component={StyleGuide}/>
+            <Route>
+              <Redirect to='/tracking'/>
+            </Route>
+          </Switch>
+        </NevergreenContainer>
+      </Router>
+    </Provider>
+  </UnhandledError>,
   document.getElementById('root'))
