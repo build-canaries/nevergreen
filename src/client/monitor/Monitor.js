@@ -8,10 +8,11 @@ import styles from './monitor.scss'
 import Timer from '../common/Timer'
 import _ from 'lodash'
 import Title from '../common/Title'
+import {abortPendingRequest} from '../common/gateways/Gateway'
 
 class Monitor extends Component {
   fetch = () => {
-    return this.props.fetchInteresting(this.props.trays, this.props.selected, this.props.projects)
+    return this.props.fetchInteresting(this.props.trays, this.props.selected, this.props.projects, this.props.pendingRequest)
   }
 
   componentDidMount() {
@@ -20,6 +21,7 @@ class Monitor extends Component {
 
   componentWillUnmount() {
     this.props.requestFullScreen(false)
+    abortPendingRequest(this.props.pendingRequest)
   }
 
   render() {
@@ -63,7 +65,8 @@ Monitor.propTypes = {
   fetchInteresting: PropTypes.func.isRequired,
   refreshTime: PropTypes.number.isRequired,
   requestFullScreen: PropTypes.func.isRequired,
-  isFullScreen: PropTypes.bool
+  isFullScreen: PropTypes.bool,
+  pendingRequest: PropTypes.object
 }
 
 export default Monitor

@@ -2,15 +2,30 @@ import {Component} from 'react'
 import PropTypes from 'prop-types'
 import {debug} from './Logger'
 
+function asMilliseconds(seconds) {
+  return seconds * 1000
+}
+
 class Timer extends Component {
+  constructor(props) {
+    super(props)
+    this.mounted = true
+  }
+
   createTimeout = () => {
-    this.timeoutId = setTimeout(this.run, this.props.interval * 1000)
+    this.timeoutId = setTimeout(this.run, asMilliseconds(this.props.interval))
     debug(`created timeout [${this.timeoutId}] to run in [${this.props.interval}s]`)
   }
 
   run = () => {
     return Promise.resolve(this.props.onTrigger())
-      .then(this.createTimeout)
+      .finally(() => {
+        if (this.mounted) {
+          this.createTimeout()
+        } else {
+          debug('Timer unmounted so not rescheduling')
+        }
+      })
   }
 
   componentDidMount() {
@@ -20,6 +35,7 @@ class Timer extends Component {
   componentWillUnmount() {
     debug(`clearing timeout [${this.timeoutId}]`)
     clearTimeout(this.timeoutId)
+    this.mounted = false
   }
 
   render() {

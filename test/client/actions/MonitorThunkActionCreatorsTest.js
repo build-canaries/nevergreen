@@ -10,15 +10,25 @@ describe('MonitorThunkActionCreators', function () {
 
   const send = mocks.stub()
   const interesting = mocks.stub()
+  const interestingProjectsFetching = mocks.spy()
   const interestingProjects = mocks.spy()
 
   const {fetchInteresting} = withMockedImports('client/actions/MonitorThunkActionCreators', {
     '../common/gateways/ProjectsGateway': {interesting},
     '../common/gateways/NevergreenGateway': {send},
-    './MonitorActionCreators': {interestingProjects}
+    './MonitorActionCreators': {interestingProjects, interestingProjectsFetching}
   })
 
   describe('fetchInteresting', function () {
+
+    it('should dispatch interesting projects fetching action', function () {
+      interesting.returns('some-request')
+      send.resolves([])
+
+      return testThunk(fetchInteresting([], [], [])).then(() => {
+        expect(interestingProjectsFetching).to.have.been.calledWith('some-request')
+      })
+    })
 
     it('should dispatch interesting projects action on success', function () {
       send.resolves([])

@@ -28,7 +28,8 @@ function mapStateToProps(store) {
     messages: store.get('success'),
     refreshTime: settings.get('refreshTime'),
     isFullScreen: store.getIn(['nevergreen', 'fullScreen']),
-    maxProjectsToShow: settings.get('maxProjectsToShow')
+    maxProjectsToShow: settings.get('maxProjectsToShow'),
+    pendingRequest: interesting.get('pendingRequest')
   }
 }
 

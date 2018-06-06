@@ -3,7 +3,8 @@ import {send} from '../common/gateways/NevergreenGateway'
 import _ from 'lodash'
 import {isBuilding} from '../domain/Project'
 import {extract} from '../domain/Tray'
-import {interestingProjects} from './MonitorActionCreators'
+import {interestingProjects, interestingProjectsFetching} from './MonitorActionCreators'
+import {abortPendingRequest} from '../common/gateways/Gateway'
 
 function toErrorString(trays, project) {
   const tray = _.head(trays.filter((tray) => tray.trayId === project.trayId))
@@ -33,9 +34,15 @@ function addThisBuildTime(project, currentProjects) {
   return project
 }
 
-export function fetchInteresting(trays, selected, currentProjects) {
+export function fetchInteresting(trays, selected, currentProjects, pendingRequest) {
+  abortPendingRequest(pendingRequest)
+
   return function (dispatch) {
-    return send(interesting(trays, selected)).then((allProjects) => {
+    const request = interesting(trays, selected)
+
+    dispatch(interestingProjectsFetching(request))
+
+    return send(request).then((allProjects) => {
       const {okProjects, errorProjects} = extract(allProjects)
       const enrichedProjects = okProjects.map((project) => addThisBuildTime(project, currentProjects))
       const errorMessages = errorProjects.map((project) => toErrorString(trays, project))

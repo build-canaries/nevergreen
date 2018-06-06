@@ -1,10 +1,11 @@
 import Immutable from 'immutable'
-import {INTERESTING_PROJECTS} from '../actions/Actions'
+import {INTERESTING_PROJECTS, INTERESTING_PROJECTS_FETCHING} from '../actions/Actions'
 
 const DEFAULT_STATE = Immutable.Map({
   projects: Immutable.List(),
   errors: Immutable.List(),
-  loaded: false
+  loaded: false,
+  pendingRequest: null
 })
 
 export function reduce(state = DEFAULT_STATE, action) {
@@ -13,8 +14,11 @@ export function reduce(state = DEFAULT_STATE, action) {
       return state.withMutations((map) => map
         .set('loaded', true)
         .set('projects', action.projects)
-        .set('errors', action.errors))
+        .set('errors', action.errors)
+        .delete('pendingRequest'))
     }
+    case INTERESTING_PROJECTS_FETCHING:
+      return state.set('pendingRequest', action.request)
     default:
       return state
   }
