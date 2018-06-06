@@ -70,6 +70,11 @@
 
     (save-screenshot-and-source "tracking")
 
+    ; test settings aren't reset when we refresh the page
+    (refresh)
+    (let [tray (tracking-page/get-tray)]
+      (tracking-page/show-projects tray))
+
     (success-page/navigate base-url)
     (success-page/add-message success-message)
     (success-page/add-message success-image)

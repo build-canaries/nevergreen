@@ -35,3 +35,6 @@
 (defn show-projects [tray]
   (click (find-element-under tray {:css (locator "tab-projects")}))
   (wait-for-projects tray))
+
+(defn get-tray []
+  (last (elements (locator "tray"))))
