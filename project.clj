@@ -3,7 +3,7 @@
   :url "https://github.com/build-canaries/nevergreen"
   :dependencies [[org.clojure/clojure "1.9.0"]
                  [ring "1.6.3" :exclusions [org.eclipse.jetty/jetty-server]]
-                 [org.eclipse.jetty/jetty-server "9.4.10.RC1"]
+                 [org.eclipse.jetty/jetty-server "9.4.11.v20180605"]
                  [compojure "1.6.1"]
                  [environ "1.1.0"]
                  [cheshire "5.8.0"]
@@ -36,7 +36,7 @@
                                          [clj-webdriver/clj-webdriver "0.7.2" :exclusions [org.mortbay.jetty/jetty]]
                                          [org.seleniumhq.selenium/selenium-java "3.12.0" :exclusions [org.eclipse.jetty/jetty-io
                                                                                                       commons-logging]]
-                                         [io.github.bonigarcia/webdrivermanager "2.2.1" :exclusions [org.apache.commons/commons-lang3]]
+                                         [io.github.bonigarcia/webdrivermanager "2.2.2" :exclusions [org.apache.commons/commons-lang3]]
                                          [org.seleniumhq.selenium/htmlunit-driver "2.31.0" :exclusions [org.eclipse.jetty/jetty-io
                                                                                                         org.eclipse.jetty/jetty-http]]
                                          [ring/ring-mock "0.3.2"]]}
