@@ -24,7 +24,8 @@ More information about how to get the CCTray XML for your CI server can be found
 
 Additional help and information can be found on the help page of Nevergreen or in the [Nevergreen wiki](https://github.com/build-canaries/nevergreen/wiki).
 
-You can also tweet to the [@BuildCanaries](https://twitter.com/BuildCanaries) on Twitter.
+You can also tweet to [@BuildCanaries](https://twitter.com/BuildCanaries) on Twitter or come chat to us in the
+[Nevergreen Slack workspace](https://join.slack.com/t/nevergreen/shared_invite/enQtMzc4MDg5MTE2MDE2LWJjYjdiNDM4Y2U1YjBjZTdkZjFhZGQyOTM5ODQ2MzEwZDY4YjNiZDFmOTFlMGUwOWEyMjczNmUzNTlkZDk4ZmQ)
 
 ## Already using Nevergreen?
 
