@@ -127,20 +127,23 @@ class TraySettings extends Component {
         <Input value={this.state.newUrl}
                onChange={this.urlChanged}
                onBlur={this.setUrl}
-               onEnter={this.setUrl}>
+               onEnter={this.setUrl}
+               data-locator='tray-url'>
           <div className={styles.label}>URL</div>
         </Input>
         <DropDown className={styles.serverType}
                   options={CI_OPTIONS}
                   value={this.props.serverType}
-                  onChange={this.serverTypeChange}>
+                  onChange={this.serverTypeChange}
+                  data-locator='tray-server-type'>
           <div className={styles.label}>server type</div>
         </DropDown>
         <Input className={styles.traySettingsUsername}
                value={this.state.newUsername}
                onChange={this.usernameChanged}
                onBlur={this.setUsername}
-               onEnter={this.setUsername}>
+               onEnter={this.setUsername}
+               data-locator='tray-username'>
           <div className={styles.label}>username</div>
         </Input>
         <Input type='password'
@@ -149,21 +152,41 @@ class TraySettings extends Component {
                onChange={this.passwordChanged}
                onEnter={this.setPassword}
                readOnly={!this.state.updatingPassword}
-               focus={this.state.updatingPassword}>
+               focus={this.state.updatingPassword}
+               data-locator='tray-password'>
           <div className={styles.label}>password</div>
         </Input>
         {this.state.updatingPassword
-          ? <Fragment>
-            <button className={styles.cancel} onClick={this.cancel}>cancel</button>
-            <button className={styles.update} onClick={this.setPassword}>update password</button>
-          </Fragment>
-          : <button className={styles.changePasswordButton} onClick={this.changePassword}>change password</button>
+          ? (
+            <Fragment>
+              <button className={styles.cancel}
+                      onClick={this.cancel}
+                      data-locator='change-password-cancel'>
+                cancel
+              </button>
+              <button className={styles.update}
+                      onClick={this.setPassword}
+                      data-locator='change-password-update'>
+                update password
+              </button>
+            </Fragment>
+          ) : (
+            <button className={styles.changePasswordButton}
+                    onClick={this.changePassword}
+                    data-locator='change-password'>
+              change password
+            </button>
+          )
         }
         <div className={styles.dangerZone}>
           <h5 className={styles.dangerZoneTitle}>Danger Zone</h5>
           <div className={styles.dangerZoneContent}>
             <div className={styles.deleteInfo}>Once you delete, there is no going back. Please be certain.</div>
-            <button className={styles.delete} onClick={this.deleteTray}>delete</button>
+            <button className={styles.delete}
+                    onClick={this.deleteTray}
+                    data-locator='delete-tray'>
+              delete
+            </button>
           </div>
         </div>
       </section>

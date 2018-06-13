@@ -15,6 +15,11 @@ export function locator(name) {
   return `[data-locator="${name}"]`
 }
 
+export function changeAndBlur(input, value) {
+  input.simulate('change', {target: {value}})
+  input.simulate('blur')
+}
+
 // TODO: keep an eye on Enzyme issue https://github.com/airbnb/enzyme/issues/692
 // to see if they add a more elegant way of getting child text for a React component
 export function childText(wrapper, selector) {
