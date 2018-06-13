@@ -1,5 +1,4 @@
-#!/bin/bash -uo pipefail
-# Don't set the e flag as we want to retry if the curl command fails
+#!/bin/bash -u
 
 expectedVersion=${FULL_VERSION}
 
@@ -7,7 +6,6 @@ url="$HOST/api/version"
 version='unknown'
 
 echo "running smoke test using url [$url] with expected version [$expectedVersion]"
-echo
 
 attempts=0
 while [ ${attempts} -lt 30 ]; do

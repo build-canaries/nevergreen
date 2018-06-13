@@ -1,4 +1,4 @@
-#!/bin/bash -euo pipefail
+#!/bin/bash -e
 
 echo "downloading ui dependencies"
 npm install

@@ -1,4 +1,4 @@
-#!/bin/bash -euo pipefail
+#!/bin/bash -eu
 
 versionFile="./resources/version.txt"
 metaFile="./resources/version_meta.txt"

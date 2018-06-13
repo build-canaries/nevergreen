@@ -1,9 +1,10 @@
-#!/bin/bash -euo pipefail
+#!/bin/bash
 
 echo "running ui dependency audit"
 mkdir -p ./target/security-reports/client
-set +e
 npm --no-color audit | tee ./target/security-reports/client/npm-audit.txt
+
+# We don't want the audit report failing the build (for now) so set error flag here
 set -e
 
 echo "running ui tests"

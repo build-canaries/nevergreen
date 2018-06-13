@@ -1,4 +1,4 @@
-#!/bin/bash -euo pipefail
+#!/bin/bash -eu
 
 status="Nevergreen v${VERSION} ${VERSION_NAME} has been released! Find out more from https://github.com/build-canaries/nevergreen or try it for yourself at https://nevergreen.io"
 

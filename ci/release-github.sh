@@ -1,4 +1,4 @@
-#!/bin/bash -euo pipefail
+#!/bin/bash -eu
 
 body="### New Features\r\n\r\n### Closed Bugs\r\n\r\n### Improvements\r\n"
 

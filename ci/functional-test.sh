@@ -1,3 +1,3 @@
-#!/bin/bash -euo pipefail
+#!/bin/bash -e
 
 ./lein.sh functional

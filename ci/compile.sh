@@ -1,4 +1,4 @@
-#!/bin/bash -euo pipefail
+#!/bin/bash -e
 
 echo "cleaning client build folders"
 npm run clean
