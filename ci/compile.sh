@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash -eu
 
 echo "cleaning client build folders"
 npm run clean

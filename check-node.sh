@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -euo pipefail
 
 if [ -f ~/.nvm/nvm.sh ]; then
     echo "nvm.sh found, ensuring the correct version of node is installed"
