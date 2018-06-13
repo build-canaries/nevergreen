@@ -1,6 +1,4 @@
-#!/bin/bash -e
-
-trap 'killall' INT
+#!/bin/bash -euo pipefail
 
 killall() {
     trap '' INT TERM
@@ -10,6 +8,10 @@ killall() {
     wait
     echo "done!"
 }
+
+# kill all background process on exit or error
+trap 'killall' EXIT
+trap 'killall' INT
 
 echo
 echo "######################################################################################"

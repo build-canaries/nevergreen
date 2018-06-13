@@ -1,4 +1,4 @@
-#!/bin/bash -eu
+#!/bin/bash -euo pipefail
 
 echo "deploying to staging"
 scp ./target/nevergreen-standalone.jar nevergreen@35.176.150.70:/home/nevergreen/deploy/staging
