@@ -22,14 +22,14 @@ echo "# Killing this script will automatically kill all the spawned processes.  
 echo "######################################################################################"
 echo
 
-./check-node.sh
+. ./check-node.sh
 
 echo "clean"
 ./lein.sh clean
 npm run clean
 
 echo "fetching node modules and performing first build"
-./ci/dependencies.sh
+. ./ci/dependencies.sh
 
 echo "watching the js for changes ..."
 npm run watchJs &

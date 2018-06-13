@@ -8,7 +8,7 @@ killall() {
     echo "Done!"
 }
 
-./check-node.sh
+. ./check-node.sh
 
 echo '[Step 1 of 6] Stopping the ./develop.sh script (if it is running)...'
 pkill -SIGINT -f ./develop.sh
@@ -21,13 +21,13 @@ trap 'killall' EXIT
 trap 'killall' INT
 
 echo '[Step 2 of 6] Running the ci dependencies script...'
-./ci/dependencies.sh
+. ./ci/dependencies.sh
 
 echo '[Step 3 of 6] Running the ci compile script...'
-./ci/compile.sh
+. ./ci/compile.sh
 
 echo '[Step 4 of 6] Running the ci test script...'
-./ci/test.sh
+. ./ci/test.sh
 
 echo '[Step 5 of 6] Starting the server...'
 ./lein.sh run &
@@ -35,10 +35,10 @@ npm run ci-stub-server &
 
 export HOST="http://localhost:5000"
 export FULL_VERSION="$(cat "./resources/version.txt")+$(cat "./resources/version_meta.txt")"
-./ci/smoke-test.sh
+. ./ci/smoke-test.sh
 
 echo '[Step 4 of 6] Running the functional tests...'
-./ci/functional-test.sh
+. ./ci/functional-test.sh
 
 # uncomment to also run the functional tests in Firefox
 # export BROWSER=firefox
