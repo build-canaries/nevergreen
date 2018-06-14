@@ -1,4 +1,4 @@
-#!/bin/bash -uo pipefail
+#!/bin/bash -u
 # Don't set the e flag as we want to retry if the curl command fails
 
 expectedVersion=${FULL_VERSION}
