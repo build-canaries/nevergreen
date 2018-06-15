@@ -31,6 +31,7 @@ class Input extends Component {
       isPassword: props.type === 'password',
       passwordHidden: props.type === 'password'
     }
+    this.inputNode = React.createRef()
   }
 
   togglePasswordVisibility = () => {
@@ -38,8 +39,8 @@ class Input extends Component {
   }
 
   maybeFocus = () => {
-    if (this.props.focus && this.inputNode) {
-      this.inputNode.focus()
+    if (this.props.focus && this.inputNode.current) {
+      this.inputNode.current.focus()
     }
   }
 
@@ -85,7 +86,7 @@ class Input extends Component {
                  id={id}
                  tabIndex={this.props.readOnly ? -1 : 0}
                  aria-disabled={this.props.disabled}
-                 ref={(node) => this.inputNode = node}
+                 ref={this.inputNode}
                  onFocus={this.moveCaretToEnd}/>
           {this.props.readOnly && <span className={styles.readOnly} title='read only'/>}
           {

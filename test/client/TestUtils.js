@@ -20,6 +20,10 @@ export function changeAndBlur(input, value) {
   input.simulate('blur')
 }
 
+export function pressKeyOn(element, key) {
+  element.simulate('keyPress', {key, preventDefault: _.noop})
+}
+
 // TODO: keep an eye on Enzyme issue https://github.com/airbnb/enzyme/issues/692
 // to see if they add a more elegant way of getting child text for a React component
 export function childText(wrapper, selector) {

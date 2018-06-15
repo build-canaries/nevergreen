@@ -8,16 +8,22 @@ class FontMetrics extends Component {
     super(props)
     this.width = 0
     this.height = 0
+    this.measureNode = React.createRef()
   }
 
   componentDidMount() {
-    this.width = this.measureNode.offsetWidth / fontMeasureSize
-    this.height = this.measureNode.offsetHeight / fontMeasureSize
+    if (this.measureNode.current) {
+      this.width = this.measureNode.current.offsetWidth / fontMeasureSize
+      this.height = this.measureNode.current.offsetHeight / fontMeasureSize
+    }
   }
 
   render() {
     const style = {fontSize: `${fontMeasureSize}px`}
-    return <span className={styles.body} style={style} ref={(node) => this.measureNode = node} aria-hidden>a</span>
+    return <span className={styles.body}
+                 style={style}
+                 ref={this.measureNode}
+                 aria-hidden>a</span>
   }
 }
 

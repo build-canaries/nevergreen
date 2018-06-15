@@ -82,10 +82,12 @@ class ScaledGrid extends Component {
       fontSize: MIN_FONT_SIZE
     }
     this.childrenText = []
+    this.fontMetrics = React.createRef()
+    this.listNode = React.createRef()
   }
 
   calculate = () => {
-    this.setState(calculateChildDimensions(this.listNode, this.fontMetrics, this.childrenText))
+    this.setState(calculateChildDimensions(this.listNode.current, this.fontMetrics.current, this.childrenText))
   }
 
   getTextContent = (childNode, index) => {
@@ -101,7 +103,7 @@ class ScaledGrid extends Component {
   }
 
   componentDidUpdate() {
-    const dimensions = calculateChildDimensions(this.listNode, this.fontMetrics, this.childrenText)
+    const dimensions = calculateChildDimensions(this.listNode.current, this.fontMetrics.current, this.childrenText)
     if (!_.isEqual(this.state, dimensions)) {
       this.setState(dimensions)
     }
@@ -117,8 +119,8 @@ class ScaledGrid extends Component {
 
     return (
       <Fragment>
-        <FontMetrics ref={(node) => this.fontMetrics = node}/>
-        <ul className={styles.scaledGrid} ref={(node) => this.listNode = node}>
+        <FontMetrics ref={this.fontMetrics}/>
+        <ul className={styles.scaledGrid} ref={this.listNode}>
           {
             Children.map(this.props.children, (child, index) => {
               return (

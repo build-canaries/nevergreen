@@ -9,6 +9,7 @@ class Container extends Component {
     this.state = {
       hidden: props.hidden || false
     }
+    this.rootNode = React.createRef()
   }
 
   toggleHidden = () => {
@@ -24,7 +25,7 @@ class Container extends Component {
 
   componentDidMount() {
     if (this.props.highlight) {
-      this.containerNode.scrollIntoView(true)
+      this.rootNode.current.scrollIntoView(true)
     }
   }
 
@@ -37,7 +38,8 @@ class Container extends Component {
     const label = `${this.state.hidden ? 'show' : 'hide'} section ${this.props.title}`
 
     return (
-      <section className={styles.container} ref={(node) => this.containerNode = node}>
+      <section className={styles.container}
+               ref={this.rootNode}>
         <div className={titleBarClasses}
              title={label}
              onClick={this.toggleHidden}
@@ -45,11 +47,26 @@ class Container extends Component {
              tabIndex='0'
              aria-label={label}
              aria-expanded={!this.state.hidden}
-             role='button'>
-          <h3 className={styles.title}>{this.props.title}</h3>
-          {this.props.subTitle && <div className={styles.subTitle}>{this.props.subTitle}</div>}
+             role='button'
+             data-locator='title-bar'>
+          <h3 className={styles.title} data-locator='title'>{this.props.title}</h3>
+          {
+            this.props.subTitle && (
+              <div className={styles.subTitle}
+                   data-locator='sub-title'>
+                {this.props.subTitle}
+              </div>
+            )
+          }
         </div>
-        {!this.state.hidden && <div className={this.props.className}>{this.props.children}</div>}
+        {
+          !this.state.hidden && (
+            <div className={this.props.className}
+                 data-locator='body'>
+              {this.props.children}
+            </div>
+          )
+        }
       </section>
     )
   }

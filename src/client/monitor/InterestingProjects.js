@@ -17,9 +17,14 @@ import ProjectError from '../common/project/ProjectError'
 
 class InterestingProjects extends Component {
 
+  constructor(props) {
+    super(props)
+    this.sfxNode = React.createRef()
+  }
+
   componentWillUnmount() {
-    if (this.sfxNode) {
-      this.sfxNode.pause()
+    if (this.sfxNode.current) {
+      this.sfxNode.current.pause()
     }
   }
 
@@ -41,7 +46,7 @@ class InterestingProjects extends Component {
     const playBrokenSfx = this.props.playBrokenBuildSounds && (brokenProject || numberOfErrors > 0)
 
     const brokenSfx = playBrokenSfx && !isBlank(this.props.brokenBuildFx) &&
-      <audio ref={(node) => this.sfxNode = node} src={this.props.brokenBuildFx} autoPlay/>
+      <audio ref={this.sfxNode} src={this.props.brokenBuildFx} autoPlay/>
 
     const errors = _.map(errorsToShow, (error) => {
       return <ProjectError key={error} error={error}/>

@@ -20,6 +20,7 @@ class AvailableProjects extends Component {
   constructor(props) {
     super(props)
     this.state = {...DEFAULT_STATE}
+    this.rootNode = React.createRef()
   }
 
   includeAll = () => {
@@ -52,8 +53,8 @@ class AvailableProjects extends Component {
   }
 
   scrollToTop = () => {
-    if (this.node) {
-      this.node.scrollIntoView()
+    if (this.rootNode.current) {
+      this.rootNode.current.scrollIntoView()
     }
   }
 
@@ -114,9 +115,13 @@ class AvailableProjects extends Component {
     )
 
     return (
-      <section className={styles.availableProjects} data-locator='available-projects' ref={(node) => this.node = node}>
+      <section className={styles.availableProjects}
+               data-locator='available-projects'
+               ref={this.rootNode}>
         <VisuallyHidden><h4>Available projects</h4></VisuallyHidden>
-        <Refresh index={this.props.index} timestamp={this.props.timestamp} refreshTray={this.refreshTray}/>
+        <Refresh index={this.props.index}
+                 timestamp={this.props.timestamp}
+                 refreshTray={this.refreshTray}/>
         <Messages type='error' messages={this.props.errors}/>
         {!this.props.errors && controls}
         {!this.props.errors && buildItems}

@@ -12,8 +12,13 @@ function click(parent) {
 }
 
 class Shortcut extends Component {
+  constructor(props) {
+    super(props)
+    this.parentNode = React.createRef()
+  }
+
   componentDidMount() {
-    Mousetrap.bind(this.props.hotkeys, () => click(this.parentNode))
+    Mousetrap.bind(this.props.hotkeys, () => click(this.parentNode.current))
   }
 
   componentWillUnmount() {
@@ -23,12 +28,12 @@ class Shortcut extends Component {
   componentDidUpdate(prevProps) {
     if (!_.isEqual(this.props.hotkeys, prevProps.hotkeys)) {
       Mousetrap.unbind(prevProps.hotkeys)
-      Mousetrap.bind(this.props.hotkeys, () => click(this.parentNode))
+      Mousetrap.bind(this.props.hotkeys, () => click(this.parentNode.current))
     }
   }
 
   render() {
-    return <span ref={(node) => this.parentNode = node}/>
+    return <span ref={this.parentNode}/>
   }
 }
 
