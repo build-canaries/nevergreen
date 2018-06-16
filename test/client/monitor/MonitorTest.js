@@ -25,7 +25,8 @@ describe('<Monitor/>', function () {
     fetchInteresting: _.noop,
     refreshTime: 5,
     requestFullScreen: _.noop,
-    isFullScreen: null
+    isFullScreen: null,
+    maxProjectsToShow: 1
   }
 
   const someProject = {projectId: 'some-id', trayId: '', prognosis: PROGNOSIS_UNKNOWN}

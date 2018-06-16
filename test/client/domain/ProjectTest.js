@@ -10,13 +10,13 @@ import {
   PROGNOSIS_SICK_BUILDING,
   PROGNOSIS_UNKNOWN
 } from '../../../src/client/domain/Project'
-import {forNonStrings, forUndisplayablesStrings} from '../TestUtils'
+import {forNonStrings, forUndisplayableStrings} from '../TestUtils'
 
 describe('Project', function () {
 
   describe('formatBuildLabel', function () {
 
-    forUndisplayablesStrings((value, friendlyName) => {
+    forUndisplayableStrings((value, friendlyName) => {
       it(`should return empty string for undisplayable value ${friendlyName}`, function () {
         expect(formatBuildLabel(value)).to.equal('')
       })
@@ -59,7 +59,7 @@ describe('Project', function () {
       })
     })
 
-    forUndisplayablesStrings((value, friendlyName) => {
+    forUndisplayableStrings((value, friendlyName) => {
       it(`should be false for invalid value ${friendlyName}`, function () {
         expect(isSick(value)).to.be.false()
       })
@@ -93,7 +93,7 @@ describe('Project', function () {
       })
     })
 
-    forUndisplayablesStrings((value, friendlyName) => {
+    forUndisplayableStrings((value, friendlyName) => {
       it(`should be false for invalid value ${friendlyName}`, function () {
         expect(isSick(value)).to.be.false()
       })

@@ -21,8 +21,7 @@ class Checkbox extends Component {
                  className={styles.input}
                  type='checkbox'
                  onChange={this.onChange}
-                 {...inputProps}
-                 aria-disabled={this.props.disabled}/>
+                 {...inputProps}/>
           <label htmlFor={id} className={styles.children}>{this.props.children}</label>
         </div>
       </div>
@@ -33,8 +32,7 @@ class Checkbox extends Component {
 Checkbox.propTypes = {
   children: PropTypes.node.isRequired,
   onToggle: PropTypes.func.isRequired,
-  className: PropTypes.string,
-  disabled: PropTypes.bool
+  className: PropTypes.string
 }
 
 export default Checkbox

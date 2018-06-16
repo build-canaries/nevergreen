@@ -1,4 +1,4 @@
-import {childText, forUndisplayablesStrings, locator} from '../../TestUtils'
+import {childText, forUndisplayableStrings, locator} from '../../TestUtils'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import React from 'react'
@@ -43,7 +43,7 @@ describe('<InterestingProject/>', function () {
       expect(wrapper.find(locator('tray-name'))).to.not.be.present()
     })
 
-    forUndisplayablesStrings((val, friendlyName) => {
+    forUndisplayableStrings((val, friendlyName) => {
       it(`should not display if enabled but value is ${friendlyName}`, function () {
         const props = {...DEFAULT_PROPS, showTrayName: true, trayName: val}
         const wrapper = shallow(<InterestingProject {...props} />)
@@ -66,7 +66,7 @@ describe('<InterestingProject/>', function () {
       expect(wrapper.find(locator('project-stage'))).to.have.text(' some-stage')
     })
 
-    forUndisplayablesStrings((val, friendlyName) => {
+    forUndisplayableStrings((val, friendlyName) => {
       it(`should not display if value is ${friendlyName}`, function () {
         const props = {...DEFAULT_PROPS, stage: val}
         const wrapper = shallow(<InterestingProject {...props} />)
@@ -148,7 +148,7 @@ describe('<InterestingProject/>', function () {
       expect(wrapper.find(locator('build-label'))).to.not.be.present()
     })
 
-    forUndisplayablesStrings((val, friendlyName) => {
+    forUndisplayableStrings((val, friendlyName) => {
       it(`should not display if ${friendlyName}, regardless of prognosis`, function () {
         const props = {...DEFAULT_PROPS, showBuildLabel: true, lastBuildLabel: val, prognosis: PROGNOSIS_SICK}
         const wrapper = shallow(<InterestingProject {...props} />)

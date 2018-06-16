@@ -85,22 +85,29 @@ class Input extends Component {
                  {...inputProps}
                  id={id}
                  tabIndex={this.props.readOnly ? -1 : 0}
-                 aria-disabled={this.props.disabled}
                  ref={this.inputNode}
                  onFocus={this.moveCaretToEnd}/>
-          {this.props.readOnly && <span className={styles.readOnly} title='read only'/>}
+          {
+            this.props.readOnly && (
+              <span className={styles.readOnly}
+                    title='read only'
+                    data-locator='read-only-icon'/>
+            )
+          }
           {
             !this.props.readOnly && this.state.isPassword && this.state.passwordHidden && (
               <PasswordVisibilityToggle id={id}
                                         show
-                                        onClick={this.togglePasswordVisibility}/>
+                                        onClick={this.togglePasswordVisibility}
+                                        data-locator='show-password'/>
             )
           }
           {
             !this.props.readOnly && this.state.isPassword && !this.state.passwordHidden && (
               <PasswordVisibilityToggle id={id}
                                         show={false}
-                                        onClick={this.togglePasswordVisibility}/>
+                                        onClick={this.togglePasswordVisibility}
+                                        data-locator='hide-password'/>
             )
           }
         </div>

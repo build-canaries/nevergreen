@@ -11,6 +11,10 @@ export function withMockedImports(fileFromSrcDir, imports) {
   return proxyquire(`../../src/${fileFromSrcDir}`, imports)
 }
 
+export function reactWithMockedImports(fileFromSrcDir, imports) {
+  return withMockedImports(fileFromSrcDir, imports).default
+}
+
 export function locator(name) {
   return `[data-locator="${name}"]`
 }
@@ -38,7 +42,7 @@ const UNDISPLAYABLE = {
   'an empty string': ''
 }
 
-export function forUndisplayablesStrings(fn) {
+export function forUndisplayableStrings(fn) {
   _.forOwn(UNDISPLAYABLE, fn)
 }
 

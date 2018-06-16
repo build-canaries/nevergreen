@@ -1,4 +1,4 @@
-import {childText, forUndisplayablesStrings, locator} from '../TestUtils'
+import {childText, forUndisplayableStrings, locator} from '../TestUtils'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import React from 'react'
@@ -18,7 +18,7 @@ describe('<Duration/>', function () {
 
   describe('abbreviated', function () {
 
-    forUndisplayablesStrings((val, friendlyName) => {
+    forUndisplayableStrings((val, friendlyName) => {
       it(`should show ?? if timestamp is ${friendlyName}`, function () {
         const props = {...DEFAULT_PROPS, abbreviate: true, timestamp: val}
         const wrapper = shallow(<Duration {...props} />)

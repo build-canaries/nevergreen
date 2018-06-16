@@ -2,13 +2,13 @@ import {expect} from 'chai'
 import {describe, it} from 'mocha'
 import {setSystemTime} from '../FakeTimers'
 import {abbreviateDuration, formatAsDuration, secondsToString} from '../../../src/client/common/DateTime'
-import {forNonStrings, forUndisplayablesStrings} from '../TestUtils'
+import {forNonStrings, forUndisplayableStrings} from '../TestUtils'
 
 describe('DateTime', function () {
 
   describe('formatAsDuration', function () {
 
-    forUndisplayablesStrings((value, friendlyName) => {
+    forUndisplayableStrings((value, friendlyName) => {
       it(`should return "unknown" for undisplayble string value ${friendlyName}`, function () {
         expect(formatAsDuration(value)).to.equal('unknown')
       })
@@ -46,7 +46,7 @@ describe('DateTime', function () {
       })
     })
 
-    forUndisplayablesStrings((value, friendlyName) => {
+    forUndisplayableStrings((value, friendlyName) => {
       it(`should return an empty string for invalid value ${friendlyName}`, function () {
         expect(abbreviateDuration(value)).to.equal('')
       })
