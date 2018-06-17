@@ -19,7 +19,9 @@ class Tabs extends Component {
 
     return (
       <Fragment>
-        <div className={styles.tabs} role='tablist'>
+        <div className={styles.tabs}
+             role='tablist'
+             data-locator='tab-bar'>
           {
             this.props.titles.map((title, i) => {
               const isActive = i === this.state.active
@@ -53,6 +55,7 @@ class Tabs extends Component {
                    tabIndex='0'
                    role='tabpanel'
                    id={`tab-panel-${prefix}-${i}`}
+                   data-locator={`tab-panel-${i}`}
                    aria-labelledby={`tab-${prefix}-${i}`}>
                 {child}
               </div>
