@@ -1,6 +1,8 @@
 import {Component} from 'react'
 import PropTypes from 'prop-types'
 import ClipboardJS from 'clipboard'
+import memoize from 'memoize-one'
+import _ from 'lodash'
 
 function createClipboard(elementSelector, onSuccess, onError) {
   const clipboard = new ClipboardJS(elementSelector)
@@ -16,35 +18,21 @@ function createClipboard(elementSelector, onSuccess, onError) {
 }
 
 class ClipboardComponent extends Component {
-  static getDerivedStateFromProps(nextProps) {
-    return {
-      clipboard: createClipboard(nextProps.elementSelector, nextProps.onSuccess, nextProps.onError)
-    }
-  }
-
-  constructor(props) {
-    super(props)
-    this.state = {
-      clipboard: null
-    }
-  }
+  clipboard = memoize(
+    ({elementSelector, onSuccess, onError}) => createClipboard(elementSelector, onSuccess, onError)
+  )
 
   componentDidMount() {
-    this.setState({
-      clipboard: createClipboard(this.props.elementSelector, this.props.onSuccess, this.props.onError)
-    })
+    this.clipboard(this.props)
   }
 
   componentWillUnmount() {
-    if (this.state.clipboard) {
-      this.state.clipboard.destroy()
-    }
+    _.invoke(this.clipboard(this.props), 'destroy')
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.clipboard) {
-      prevState.clipboard.destroy()
-    }
+  componentDidUpdate(prevProps) {
+    _.invoke(this.clipboard(prevProps), 'destroy')
+    this.clipboard(this.props)
   }
 
   render() {

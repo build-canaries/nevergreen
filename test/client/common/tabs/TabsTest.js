@@ -49,21 +49,22 @@ describe('<Tabs/>', function () {
     })
 
     describe('tab panel', function () {
+      const someChild = <div/>
 
       it('should be focusable as this is helpful if the panel contains no focusable elements', function () {
-        const props = {...DEFAULT_PROPS, children: ['some-child']}
+        const props = {...DEFAULT_PROPS, children: [someChild]}
         const wrapper = shallow(<Tabs {...props} />)
         expect(wrapper.find(locator('tab-panel-0'))).to.have.prop('tabIndex', '0')
       })
 
       it('should include the tab panel role', function () {
-        const props = {...DEFAULT_PROPS, children: ['some-child']}
+        const props = {...DEFAULT_PROPS, children: [someChild]}
         const wrapper = shallow(<Tabs {...props} />)
         expect(wrapper.find(locator('tab-panel-0'))).to.have.prop('role', 'tabpanel')
       })
 
       it('should specify which tab is in control', function () {
-        const props = {...DEFAULT_PROPS, children: ['some-child']}
+        const props = {...DEFAULT_PROPS, children: [someChild]}
         const wrapper = shallow(<Tabs {...props} />)
         expect(wrapper.find(locator('tab-panel-0'))).to.have.prop('aria-labelledby').that.match(/tab-tabs\d+-0/)
       })

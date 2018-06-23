@@ -38,6 +38,7 @@
     "is-my-json-valid": "2.17.2",
     "localforage": "1.7.1",
     "lodash": "4.17.10",
+    "memoize-one": "3.1.1",
     "modularscale-sass": "3.0.5",
     "mousetrap": "1.6.2",
     "normalize.css": "8.0.0",

@@ -8,38 +8,38 @@ import {isBlank} from './Utils'
 const ONE_MINUTE = 60
 
 class Duration extends Component {
+  static getDerivedStateFromProps(nextProps) {
+    return {
+      duration: formatAsDuration(nextProps.timestamp)
+    }
+  }
+
   constructor(props) {
     super(props)
-    this.state = {duration: formatAsDuration(this.props.timestamp)}
-  }
-
-  updateDuration = () => {
-    this.setState({duration: formatAsDuration(this.props.timestamp)})
-  }
-
-  formatFullDescription = () => {
-    return [this.props.fullDescriptionPrefix, this.state.duration, this.props.fullDescriptionSuffix]
-      .filter((text) => !isBlank(text))
-      .join(' ')
+    this.state = {}
   }
 
   render() {
-    const labelShort = abbreviateDuration(this.state.duration)
+    const fullDescription = [this.props.fullDescriptionPrefix, this.state.duration, this.props.fullDescriptionSuffix]
+      .filter((text) => !isBlank(text))
+      .join(' ')
 
     return (
       <Fragment>
-        <Timer onTrigger={this.updateDuration} interval={ONE_MINUTE}/>
+        <Timer onTrigger={() => this.forceUpdate()} interval={ONE_MINUTE}/>
         {
           this.props.abbreviate && (
             <Fragment>
-              <VisuallyHidden>{this.formatFullDescription()}.</VisuallyHidden>
-              <span data-locator='duration' aria-hidden>{labelShort}</span>
+              <VisuallyHidden>{fullDescription}.</VisuallyHidden>
+              <span data-locator='duration' aria-hidden>
+                {abbreviateDuration(this.state.duration)}
+              </span>
             </Fragment>
           )
         }
         {
           !this.props.abbreviate && (
-            <span data-locator='duration'>{this.formatFullDescription()}</span>
+            <span data-locator='duration'>{fullDescription}</span>
           )
         }
       </Fragment>
