@@ -44,7 +44,25 @@ function calculateChildHeight(totalNumberOfItems, width, height) {
   return Math.max(calculated, MIN_CHILD_HEIGHT)
 }
 
-function calculateChildDimensions(listNode, fontMetrics, childrenText) {
+function getVisibleChildren(node) {
+  if (node.hasChildNodes()) {
+    return _.flatten(Array.from(node.childNodes)
+      .filter((node) => node.nodeName === '#text' || !node.hasAttribute(VISUALLY_HIDDEN_ATTRIBUTE))
+      .map(getVisibleChildren))
+  }
+  return node
+}
+
+function getVisibleText(node) {
+  return _.join(_.map(getVisibleChildren(node), (n) => n.textContent), '')
+}
+
+function calculateChildDimensions(listNode, fontMetrics) {
+  if (_.isNil(listNode) || _.isNil(fontMetrics) || !listNode.hasChildNodes()) {
+    return {childWidth: 0, childHeight: MIN_CHILD_HEIGHT, fontSize: MIN_FONT_SIZE}
+  }
+
+  const childrenText = Array.from(listNode.childNodes).map((node) => getVisibleText(node))
   const totalNumberOfItems = childrenText.length
   const width = listNode.offsetWidth
   const height = listNode.offsetHeight
@@ -60,19 +78,6 @@ function calculateChildDimensions(listNode, fontMetrics, childrenText) {
   return {childWidth, childHeight, fontSize}
 }
 
-function getVisibleChildren(node) {
-  if (node.hasChildNodes()) {
-    return _.flatten([...node.childNodes]
-      .filter((node) => node.nodeName === '#text' || !node.hasAttribute(VISUALLY_HIDDEN_ATTRIBUTE))
-      .map(getVisibleChildren))
-  }
-  return node
-}
-
-function getVisibleText(node) {
-  return _.join(_.map(getVisibleChildren(node), (n) => n.textContent), '')
-}
-
 class ScaledGrid extends Component {
   constructor(props) {
     super(props)
@@ -81,21 +86,12 @@ class ScaledGrid extends Component {
       childHeight: MIN_CHILD_HEIGHT,
       fontSize: MIN_FONT_SIZE
     }
-    this.childrenText = []
     this.fontMetrics = React.createRef()
     this.listNode = React.createRef()
   }
 
   calculate = () => {
-    this.setState(calculateChildDimensions(this.listNode.current, this.fontMetrics.current, this.childrenText))
-  }
-
-  getTextContent = (childNode, index) => {
-    if (childNode) {
-      this.childrenText[index] = getVisibleText(childNode)
-    } else {
-      _.remove(this.childrenText, (v, i) => i === index)
-    }
+    this.setState(calculateChildDimensions(this.listNode.current, this.fontMetrics.current))
   }
 
   componentDidMount() {
@@ -103,7 +99,7 @@ class ScaledGrid extends Component {
   }
 
   componentDidUpdate() {
-    const dimensions = calculateChildDimensions(this.listNode.current, this.fontMetrics.current, this.childrenText)
+    const dimensions = calculateChildDimensions(this.listNode.current, this.fontMetrics.current)
     if (!_.isEqual(this.state, dimensions)) {
       this.setState(dimensions)
     }
@@ -122,11 +118,9 @@ class ScaledGrid extends Component {
         <FontMetrics ref={this.fontMetrics}/>
         <ul className={styles.scaledGrid} ref={this.listNode}>
           {
-            Children.map(this.props.children, (child, index) => {
+            Children.map(this.props.children, (child) => {
               return (
-                <li className={styles.item}
-                    ref={(node) => this.getTextContent(node, index)}
-                    style={style}>
+                <li className={styles.item} style={style}>
                   {child}
                 </li>
               )
