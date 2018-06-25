@@ -34,9 +34,9 @@
                                          [com.livingsocial/lein-dependency-check "1.0.2"]]
                           :dependencies [[midje "1.9.1"]
                                          [clj-webdriver/clj-webdriver "0.7.2" :exclusions [org.mortbay.jetty/jetty]]
-                                         [org.seleniumhq.selenium/selenium-java "3.12.0" :exclusions [org.eclipse.jetty/jetty-io
+                                         [org.seleniumhq.selenium/selenium-java "3.13.0" :exclusions [org.eclipse.jetty/jetty-io
                                                                                                       commons-logging]]
-                                         [io.github.bonigarcia/webdrivermanager "2.2.2" :exclusions [org.apache.commons/commons-lang3]]
+                                         [io.github.bonigarcia/webdrivermanager "2.2.3" :exclusions [org.apache.commons/commons-lang3]]
                                          [org.seleniumhq.selenium/htmlunit-driver "2.31.0" :exclusions [org.eclipse.jetty/jetty-io
                                                                                                         org.eclipse.jetty/jetty-http]]
                                          [ring/ring-mock "0.3.2"]]}
