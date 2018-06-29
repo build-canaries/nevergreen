@@ -21,7 +21,7 @@
     "coverage": "nyc --reporter=html npm test",
     "lint": "npm run lintJs && npm run lintCss",
     "lintJs": "eslint ./src/client ./test/client",
-    "lintCss": "stylelint src/client/*.scss src/client/**/*.scss src/client/**/**/*.scss src/client/**/**/**/*.scss --syntax scss",
+    "lintCss": "stylelint \"src/client/**/*.scss\" --syntax scss",
     "watchJs": "watch 'npm run clean && npm run build' src/client",
     "watchTest": "watch 'npm run test' src/client test/client",
     "watchLint": "watch 'npm run lint' src/client test/client",
