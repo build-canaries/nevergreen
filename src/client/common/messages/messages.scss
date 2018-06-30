@@ -2,7 +2,7 @@
 @import '../fonts/icon-font';
 @import '../typography';
 
-@mixin messages($icon, $color, $background-color) {
+@mixin _messages($icon, $color, $background-color) {
   @include font-scale(1);
 
   background-color: $background-color;
@@ -22,11 +22,11 @@
 }
 
 .error {
-  @include messages('notification', $white, $error);
+  @include _messages('notification', $white, $error);
 }
 
 .info {
-  @include messages('checkmark', $off-white, $blue);
+  @include _messages('checkmark', $off-white, $blue);
 }
 
 .message {

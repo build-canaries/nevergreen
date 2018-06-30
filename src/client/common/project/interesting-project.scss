@@ -2,7 +2,7 @@
 @import '../layout';
 
 .interestingProject {
-  @extend %fillParent;
+  @extend %fill-parent;
 
   border-radius: 5px;
   display: table;

@@ -3,7 +3,7 @@
 @import '../typography';
 @import '../accessibility';
 
-@mixin show-hide-icon($icon) {
+@mixin _show-hide-icon($icon) {
   @extend .icon-circle-#{$icon};
 
   &::before {
@@ -49,11 +49,11 @@
 }
 
 .show {
-  @include show-hide-icon(down);
+  @include _show-hide-icon(down);
 }
 
 .hide {
-  @include show-hide-icon(up);
+  @include _show-hide-icon(up);
 }
 
 .highlight {

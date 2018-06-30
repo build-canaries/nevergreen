@@ -10,7 +10,7 @@
 }
 
 .legend {
-  @extend %visuallyHidden;
+  @extend %visually-hidden;
 }
 
 .toggles {
@@ -27,13 +27,13 @@
 .includeAll {
   @include button-icon('checkbox-checked');
 
-  @extend %inlineMargin;
+  @extend %inline-margin;
 }
 
 .excludeAll {
   @include button-icon('checkbox-unchecked');
 
-  @extend %inlineMargin;
+  @extend %inline-margin;
 }
 
 .buildItems {

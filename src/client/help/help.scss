@@ -18,19 +18,19 @@
   word-break: break-all;
 }
 
-%helpLinkIcon {
+%help-link-icon {
   &::before {
     margin-right: 0.5em;
   }
 }
 
 .github {
-  @extend %helpLinkIcon;
+  @extend %help-link-icon;
   @extend .icon-github4;
 }
 
 .twitter {
-  @extend %helpLinkIcon;
+  @extend %help-link-icon;
   @extend .icon-twitter3;
 }
 

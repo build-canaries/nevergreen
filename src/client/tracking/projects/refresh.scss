@@ -8,7 +8,7 @@
   @include button-icon('loop2');
 
   @extend .primaryButton;
-  @extend %inlineMargin;
+  @extend %inline-margin;
   @extend %first;
 }
 

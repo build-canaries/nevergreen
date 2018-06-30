@@ -8,7 +8,7 @@
   @include button-icon('cloud-download');
 
   @extend .primaryButton;
-  @extend %blockMargin;
+  @extend %block-margin;
 }
 
 .gistId {

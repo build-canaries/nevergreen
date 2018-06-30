@@ -35,7 +35,7 @@
 }
 
 .siteMenuToggle {
-  @include buttonInteraction($white, $off-black, $off-black);
+  @include button-interaction($white, $off-black, $off-black);
 
   background-color: transparent;
   border: none;
@@ -53,19 +53,19 @@
   }
 }
 
-%siteMenuToggleIcon {
+%site-menu-toggle-icon {
   @include font-scale(3);
 
   padding-right: 0.5em;
 }
 
 .siteMenuShow {
-  @extend %siteMenuToggleIcon;
+  @extend %site-menu-toggle-icon;
   @extend .icon-menu3;
 }
 
 .siteMenuHide {
-  @extend %siteMenuToggleIcon;
+  @extend %site-menu-toggle-icon;
   @extend .icon-menu4;
 }
 

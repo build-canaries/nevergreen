@@ -34,5 +34,5 @@
   @include button-icon('floppy-disk');
 
   @extend .primaryButton;
-  @extend %blockMargin;
+  @extend %block-margin;
 }

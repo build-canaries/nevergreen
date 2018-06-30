@@ -34,7 +34,7 @@
 }
 
 .label {
-  @include fixedWidth(5em);
+  @include fixed-width(5em);
 }
 
 .url {

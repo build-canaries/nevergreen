@@ -1,7 +1,7 @@
 @import '../common/layout';
 
 .successMessage {
-  @extend %fillParent;
+  @extend %fill-parent;
 
   display: table;
   overflow: hidden;

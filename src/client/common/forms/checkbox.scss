@@ -86,7 +86,7 @@
 
   &:enabled:hover {
     & + .children {
-      @include hover();
+      @include hover;
     }
 
     & + .children::before {

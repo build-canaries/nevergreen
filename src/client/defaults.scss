@@ -100,7 +100,7 @@ td {
 }
 
 button {
-  @include buttonInteraction($off-black, $white, $light-grey);
+  @include button-interaction($off-black, $white, $light-grey);
   @include font-scale(1);
 
   background-color: $white;

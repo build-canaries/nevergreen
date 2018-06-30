@@ -23,11 +23,11 @@
   }
 
   * {
-    @extend %visuallyHidden;
+    @extend %visually-hidden;
   }
 }
 
-@mixin buttonInteraction($color: $off-black, $background-color: $white, $border-color: $light-grey) {
+@mixin button-interaction($color: $off-black, $background-color: $white, $border-color: $light-grey) {
   &:enabled {
     box-shadow: $shadow;
     cursor: pointer;
@@ -40,7 +40,7 @@
 }
 
 .primaryButton {
-  @include buttonInteraction($off-white, $blue, $blue);
+  @include button-interaction($off-white, $blue, $blue);
 
   background-color: $blue;
   border-color: $blue;
@@ -48,7 +48,7 @@
 }
 
 .dangerButton {
-  @include buttonInteraction($white, $error, $error);
+  @include button-interaction($white, $error, $error);
 
   background-color: $error;
   border-color: $error;

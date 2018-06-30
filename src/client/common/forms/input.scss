@@ -4,8 +4,8 @@
 @import '../accessibility';
 @import '../fonts/icon-font';
 
-$padding: 0.5em;
-$font-scale: 1;
+$_padding: 0.5em;
+$_font-scale: 1;
 
 .wrapper {
   align-items: normal;
@@ -22,13 +22,13 @@ $font-scale: 1;
 }
 
 .input {
-  @include font-scale($font-scale);
+  @include font-scale($_font-scale);
 
   border: $input-border;
   border-radius: 2px;
   flex-grow: 1;
   min-width: 10em;
-  padding: $padding;
+  padding: $_padding;
   text-overflow: ellipsis;
 
   &:invalid {
@@ -56,19 +56,19 @@ $font-scale: 1;
   border-top-right-radius: 0;
 }
 
-%infoIcon {
-  @include font-scale($font-scale);
+%info-icon {
+  @include font-scale($_font-scale);
 
   border: $input-border;
   border-bottom-right-radius: 2px;
   border-left: none;
   border-top-right-radius: 2px;
-  padding: $padding;
+  padding: $_padding;
   text-overflow: clip;
 }
 
-%passwordToggle {
-  @extend %infoIcon;
+%password-toggle {
+  @extend %info-icon;
 
   cursor: pointer;
   margin: 0;
@@ -81,15 +81,15 @@ $font-scale: 1;
 
 .readOnly {
   @extend .icon-lock;
-  @extend %infoIcon;
+  @extend %info-icon;
 }
 
 .showPassword {
   @extend .icon-eye;
-  @extend %passwordToggle;
+  @extend %password-toggle;
 }
 
 .hidePassword {
   @extend .icon-eye-blocked;
-  @extend %passwordToggle;
+  @extend %password-toggle;
 }

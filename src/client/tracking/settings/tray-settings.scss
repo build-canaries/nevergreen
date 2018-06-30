@@ -7,7 +7,7 @@
 @import '../../common/layout';
 
 .label {
-  @include fixedWidth(5em);
+  @include fixed-width(5em);
 }
 
 .traySettingsName {
@@ -18,7 +18,7 @@
 .serverType,
 .traySettingsUsername,
 .existingPassword {
-  @include fixedWidth(26em);
+  @include fixed-width(26em);
 }
 
 .traySettingsName,
@@ -51,7 +51,7 @@
 }
 
 .deleteInfo {
-  @extend %inlineMargin;
+  @extend %inline-margin;
 
   display: inline-block;
 }
@@ -73,7 +73,7 @@
 .cancel {
   @include button-icon('cross');
 
-  @extend %inlineMargin;
+  @extend %inline-margin;
 }
 
 .update {

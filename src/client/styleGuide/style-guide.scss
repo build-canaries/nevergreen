@@ -13,11 +13,11 @@
 }
 
 .fixedWidth {
-  @include fixedWidth(35em);
+  @include fixed-width(35em);
 }
 
 .styledLabel {
-  @include fixedWidth(10em);
+  @include fixed-width(10em);
 
   font-weight: bold;
 }

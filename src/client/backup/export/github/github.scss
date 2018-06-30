@@ -5,7 +5,7 @@
   @include button-icon('cloud-upload');
 
   @extend .primaryButton;
-  @extend %blockMargin;
+  @extend %block-margin;
 }
 
 .label {

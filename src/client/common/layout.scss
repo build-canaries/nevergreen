@@ -1,13 +1,13 @@
 @import './variables';
 @import './responsive';
 
-@mixin fixedWidth($width) {
+@mixin fixed-width($width) {
   @include respond-to(tablet, desktop) {
     width: $width;
   }
 }
 
-%fillParent {
+%fill-parent {
   display: block;
   height: 100%;
   width: 100%;
@@ -17,13 +17,13 @@
   margin-top: 0;
 }
 
-%inlineMargin {
+%inline-margin {
   @include respond-to(tablet, desktop) {
     margin: 0 $margin-right 0 0;
   }
 }
 
-%blockMargin {
+%block-margin {
   @include respond-to(tablet, desktop) {
     margin: $margin-top 0 0 0;
   }
