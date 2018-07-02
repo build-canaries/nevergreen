@@ -19,8 +19,12 @@ export function locator(name) {
   return `[data-locator="${name}"]`
 }
 
-export function changeAndBlur(input, value) {
+export function change(input, value) {
   input.simulate('change', {target: {value}})
+}
+
+export function changeAndBlur(input, value) {
+  change(input, value)
   input.simulate('blur')
 }
 
