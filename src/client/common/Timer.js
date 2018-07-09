@@ -17,15 +17,18 @@ class Timer extends Component {
     debug(`created timeout [${this.timeoutId}] to run in [${this.props.interval}s]`)
   }
 
+  checkMounted = () => {
+    if (this.mounted) {
+      this.createTimeout()
+    } else {
+      debug('Timer unmounted so not rescheduling')
+    }
+  }
+
   run = () => {
     return Promise.resolve(this.props.onTrigger())
-      .finally(() => {
-        if (this.mounted) {
-          this.createTimeout()
-        } else {
-          debug('Timer unmounted so not rescheduling')
-        }
-      })
+      .then(this.checkMounted)
+      .catch(this.checkMounted)
   }
 
   componentDidMount() {
