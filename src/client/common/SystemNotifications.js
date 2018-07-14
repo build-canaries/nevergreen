@@ -36,6 +36,8 @@ export function requestPermission() {
 
 export function sendSystemNotification({title = 'Nevergreen', body, badge = '/mstile-144x144.png', icon = '/android-chrome-192x192.png', tag}) {
   if (supported() && permissionGranted()) {
-    return new Notification(title, {body, badge, icon, tag})
+    navigator.serviceWorker.ready.then((registration) => {
+      return registration.showNotification(title, {body, badge, icon, tag})
+    })
   }
 }
