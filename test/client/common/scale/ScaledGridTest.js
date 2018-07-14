@@ -157,7 +157,7 @@ describe('<ScaledGrid/>', function () {
         expect(children.first()).to.have.style('width', '758px')
       })
 
-      it('should have the correct height (height - minus)', function () {
+      it('should have the correct height (height - margin)', function () {
         expect(children.first()).to.have.style('height', '758px')
       })
 
