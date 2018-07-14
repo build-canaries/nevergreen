@@ -2,6 +2,7 @@ import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {
   MIN_REFRESH_TIME,
+  requestingSystemNotificationPermission,
   setBrokenBuildSoundFx,
   setMaxProjectsToShow,
   setPlayBrokenBuildSoundFx,
@@ -9,18 +10,23 @@ import {
   setShowBrokenBuildTime,
   setShowBuildLabel,
   setShowBuildTime,
+  setShowSystemNotifications,
   setShowTrayName,
+  systemNotificationPermissionDenied,
   VALID_PROJECTS_TO_SHOW
 } from '../../../src/client/actions/SettingsActionCreators'
 import {
   BROKEN_BUILD_SOUND_FX,
   PLAY_BROKEN_BUILD_SOUND_FX,
   REFRESH_TIME,
+  REQUESTING_SYSTEM_NOTIFICATION_PERMISSION,
   SET_MAX_PROJECTS,
   SHOW_BROKEN_BUILD_TIME,
   SHOW_BUILD_LABEL,
   SHOW_BUILD_TIME,
-  SHOW_TRAY_NAME
+  SHOW_SYSTEM_NOTIFICATIONS,
+  SHOW_TRAY_NAME,
+  SYSTEM_NOTIFICATIONS_PERMISSION_DENIED
 } from '../../../src/client/actions/Actions'
 
 describe('SettingsActionCreators', function () {
@@ -114,6 +120,35 @@ describe('SettingsActionCreators', function () {
     it('should return the given value', function () {
       const actual = setShowTrayName(true)
       expect(actual).to.have.property('value', true)
+    })
+  })
+
+  describe(REQUESTING_SYSTEM_NOTIFICATION_PERMISSION, function () {
+
+    it('should return the correct type', function () {
+      const actual = requestingSystemNotificationPermission()
+      expect(actual).to.have.property('type', REQUESTING_SYSTEM_NOTIFICATION_PERMISSION)
+    })
+  })
+
+  describe(SHOW_SYSTEM_NOTIFICATIONS, function () {
+
+    it('should return the correct type', function () {
+      const actual = setShowSystemNotifications()
+      expect(actual).to.have.property('type', SHOW_SYSTEM_NOTIFICATIONS)
+    })
+
+    it('should return the given value', function () {
+      const actual = setShowSystemNotifications(true)
+      expect(actual).to.have.property('value', true)
+    })
+  })
+
+  describe(SYSTEM_NOTIFICATIONS_PERMISSION_DENIED, function () {
+
+    it('should return the correct type', function () {
+      const actual = systemNotificationPermissionDenied()
+      expect(actual).to.have.property('type', SYSTEM_NOTIFICATIONS_PERMISSION_DENIED)
     })
   })
 

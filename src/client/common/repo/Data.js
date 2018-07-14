@@ -12,6 +12,7 @@ export const SCHEMA = {
         showBuildTime: {type: 'boolean'},
         showBrokenBuildTime: {type: 'boolean'},
         showBuildLabel: {type: 'boolean'},
+        showSystemNotifications: {type: 'boolean'},
         playBrokenBuildSoundFx: {type: 'boolean'},
         brokenBuildSoundFx: {type: ['string', 'null']},
         refreshTime: {type: 'number'},

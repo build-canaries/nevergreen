@@ -4,6 +4,7 @@ import {toJS} from '../common/ImmutableToJs'
 import {fetchInteresting} from '../actions/MonitorThunkActionCreators'
 import {requestFullScreen} from '../actions/NevergreenActionCreators'
 import Monitor from './Monitor'
+import {triggerSystemNotifications} from '../domain/Notifications'
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({fetchInteresting, requestFullScreen}, dispatch)
@@ -29,7 +30,9 @@ function mapStateToProps(store) {
     refreshTime: settings.get('refreshTime'),
     isFullScreen: store.getIn(['nevergreen', 'fullScreen']),
     maxProjectsToShow: settings.get('maxProjectsToShow'),
-    pendingRequest: interesting.get('pendingRequest')
+    pendingRequest: interesting.get('pendingRequest'),
+    showSystemNotifications: settings.get('showSystemNotifications'),
+    triggerSystemNotifications
   }
 }
 

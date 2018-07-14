@@ -1,6 +1,7 @@
 import {expect} from 'chai'
 import {describe, it} from 'mocha'
-import {extract, getErrors, removeErrors, removeJobs} from '../../../src/client/domain/Tray'
+import {extract, getErrors, removeErrors, removeJobs, sickProjects} from '../../../src/client/domain/Tray'
+import {PROGNOSIS_HEALTHY_BUILDING, PROGNOSIS_SICK} from '../../../src/client/domain/Project'
 
 describe('Tray', function () {
 
@@ -67,6 +68,15 @@ describe('Tray', function () {
       const projects = [okProject, projectWithJob, projectWithError]
 
       expect(extract(projects)).to.deep.include({okProjects: [okProject], errorProjects: [projectWithError]})
+    })
+  })
+
+  describe('sickProjects', function () {
+
+    it('should return only sick projects', function () {
+      const healthyProject = {prognosis: PROGNOSIS_HEALTHY_BUILDING}
+      const sickProject = {prognosis: PROGNOSIS_SICK}
+      expect(sickProjects([healthyProject, sickProject])).to.deep.include(sickProject)
     })
   })
 })

@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import nameGenerator from 'project-name-generator'
-import {isError} from './Project'
+import {isError, isSick} from './Project'
 
 export function generateRandomName() {
   return _.lowerCase(nameGenerator().spaced)
@@ -30,4 +30,8 @@ export function extract(projects) {
     okProjects: removeErrors(removeJobs(projects)),
     errorProjects: getErrors(projects)
   }
+}
+
+export function sickProjects(projects) {
+  return projects.filter((project) => isSick(project.prognosis))
 }

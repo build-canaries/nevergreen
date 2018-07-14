@@ -4,6 +4,7 @@ import TimingSettings from './TimingSettings'
 import DisplaySettings from './DisplaySettings'
 import AudioSettings from './AudioSettings'
 import Title from '../common/Title'
+import NotificationSettings from './NotificationSettings'
 
 class Settings extends Component {
   render() {
@@ -12,6 +13,7 @@ class Settings extends Component {
         <Title>Settings</Title>
         <TimingSettings {...this.props}/>
         <DisplaySettings {...this.props}/>
+        <NotificationSettings {...this.props}/>
         <AudioSettings {...this.props}/>
       </Fragment>
     )
@@ -30,7 +32,10 @@ Settings.propTypes = {
   setBrokenBuildSoundFx: PropTypes.func.isRequired,
   refreshTime: PropTypes.number.isRequired,
   setRefreshTime: PropTypes.func.isRequired,
-  setShowBuildLabel: PropTypes.func.isRequired
+  setShowBuildLabel: PropTypes.func.isRequired,
+  systemNotificationsSupported: PropTypes.bool.isRequired,
+  showSystemNotifications: PropTypes.bool.isRequired,
+  setShowSystemNotifications: PropTypes.func.isRequired
 }
 
 export default Settings

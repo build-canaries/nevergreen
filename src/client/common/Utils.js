@@ -17,5 +17,13 @@ export function isBlank(s) {
 }
 
 export function randomFrom(arr) {
-  return arr[Math.floor(Math.random() * arr.length)]
+  return _.sample(arr)
+}
+
+export function notEmpty(val) {
+  return !_.isEmpty(val)
+}
+
+export function notEqual(val, other) {
+  return !_.isEqual(val, other)
 }

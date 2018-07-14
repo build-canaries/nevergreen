@@ -2,11 +2,14 @@ import {
   BROKEN_BUILD_SOUND_FX,
   PLAY_BROKEN_BUILD_SOUND_FX,
   REFRESH_TIME,
+  REQUESTING_SYSTEM_NOTIFICATION_PERMISSION,
   SET_MAX_PROJECTS,
   SHOW_BROKEN_BUILD_TIME,
   SHOW_BUILD_LABEL,
   SHOW_BUILD_TIME,
-  SHOW_TRAY_NAME
+  SHOW_SYSTEM_NOTIFICATIONS,
+  SHOW_TRAY_NAME,
+  SYSTEM_NOTIFICATIONS_PERMISSION_DENIED
 } from './Actions'
 
 export const MIN_REFRESH_TIME = 5
@@ -46,6 +49,18 @@ export function setRefreshTime(value) {
 
 export function setShowBuildLabel(value) {
   return {type: SHOW_BUILD_LABEL, value}
+}
+
+export function requestingSystemNotificationPermission() {
+  return {type: REQUESTING_SYSTEM_NOTIFICATION_PERMISSION}
+}
+
+export function setShowSystemNotifications(value) {
+  return {type: SHOW_SYSTEM_NOTIFICATIONS, value}
+}
+
+export function systemNotificationPermissionDenied() {
+  return {type: SYSTEM_NOTIFICATIONS_PERMISSION_DENIED}
 }
 
 export function setMaxProjectsToShow(value) {

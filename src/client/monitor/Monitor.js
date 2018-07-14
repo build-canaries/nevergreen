@@ -7,6 +7,7 @@ import Loading from '../common/loading/Loading'
 import styles from './monitor.scss'
 import Timer from '../common/Timer'
 import _ from 'lodash'
+import {notEqual} from '../common/Utils'
 import Title from '../common/Title'
 import {abortPendingRequest} from '../common/gateways/Gateway'
 
@@ -22,6 +23,12 @@ class Monitor extends Component {
   componentWillUnmount() {
     this.props.requestFullScreen(false)
     abortPendingRequest(this.props.pendingRequest)
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.showSystemNotifications && notEqual(this.props.projects, prevProps.projects)) {
+      this.props.triggerSystemNotifications(prevProps.projects, this.props.projects)
+    }
   }
 
   render() {
@@ -66,7 +73,9 @@ Monitor.propTypes = {
   refreshTime: PropTypes.number.isRequired,
   requestFullScreen: PropTypes.func.isRequired,
   isFullScreen: PropTypes.bool,
-  pendingRequest: PropTypes.object
+  pendingRequest: PropTypes.object,
+  showSystemNotifications: PropTypes.bool,
+  triggerSystemNotifications: PropTypes.func.isRequired
 }
 
 export default Monitor

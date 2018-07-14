@@ -6,10 +6,14 @@ import {
   IMPORT_SUCCESS,
   INITIALISED,
   PLAY_BROKEN_BUILD_SOUND_FX,
-  REFRESH_TIME, SET_MAX_PROJECTS,
+  REFRESH_TIME,
+  REQUESTING_SYSTEM_NOTIFICATION_PERMISSION,
+  SET_MAX_PROJECTS,
   SHOW_BROKEN_BUILD_TIME,
   SHOW_BUILD_TIME,
-  SHOW_TRAY_NAME
+  SHOW_SYSTEM_NOTIFICATIONS,
+  SHOW_TRAY_NAME,
+  SYSTEM_NOTIFICATIONS_PERMISSION_DENIED
 } from '../../../src/client/actions/Actions'
 import Immutable from 'immutable'
 
@@ -175,6 +179,57 @@ describe('SettingsReducer', function () {
       const action = {type: REFRESH_TIME, value: 10}
       const newState = reduce(existingState, action)
       expect(newState).to.contain.property('refreshTime', 10)
+    })
+  })
+
+  describe(REQUESTING_SYSTEM_NOTIFICATION_PERMISSION, function () {
+
+    it('should set the system notification requesting permission property', function () {
+      const existingState = Immutable.Map({systemNotificationRequestingPermission: false})
+      const action = {type: REQUESTING_SYSTEM_NOTIFICATION_PERMISSION, value: true}
+      const newState = reduce(existingState, action)
+      expect(newState).to.contain.property('systemNotificationRequestingPermission', true)
+    })
+  })
+
+  describe(SHOW_SYSTEM_NOTIFICATIONS, function () {
+
+    it('should set the show browser notifications property', function () {
+      const existingState = Immutable.Map({showSystemNotifications: false})
+      const action = {type: SHOW_SYSTEM_NOTIFICATIONS, value: true}
+      const newState = reduce(existingState, action)
+      expect(newState).to.contain.property('showSystemNotifications', true)
+    })
+
+    it('should reset the system notification permission denied property', function () {
+      const existingState = Immutable.Map({systemNotificationPermissionDenied: true})
+      const action = {type: SHOW_SYSTEM_NOTIFICATIONS, value: true}
+      const newState = reduce(existingState, action)
+      expect(newState).to.contain.property('systemNotificationPermissionDenied', false)
+    })
+
+    it('should reset the system notification requesting permission property', function () {
+      const existingState = Immutable.Map({systemNotificationRequestingPermission: true})
+      const action = {type: SHOW_SYSTEM_NOTIFICATIONS, value: true}
+      const newState = reduce(existingState, action)
+      expect(newState).to.contain.property('systemNotificationRequestingPermission', false)
+    })
+  })
+
+  describe(SYSTEM_NOTIFICATIONS_PERMISSION_DENIED, function () {
+
+    it('should set the system notification permission denied property', function () {
+      const existingState = Immutable.Map({systemNotificationPermissionDenied: false})
+      const action = {type: SYSTEM_NOTIFICATIONS_PERMISSION_DENIED}
+      const newState = reduce(existingState, action)
+      expect(newState).to.contain.property('systemNotificationPermissionDenied', true)
+    })
+
+    it('should reset the system notification requesting permission property', function () {
+      const existingState = Immutable.Map({systemNotificationRequestingPermission: true})
+      const action = {type: SYSTEM_NOTIFICATIONS_PERMISSION_DENIED}
+      const newState = reduce(existingState, action)
+      expect(newState).to.contain.property('systemNotificationRequestingPermission', false)
     })
   })
 

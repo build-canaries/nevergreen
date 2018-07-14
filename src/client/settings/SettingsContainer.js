@@ -13,6 +13,8 @@ import {
   VALID_REFRESH_TIMES
 } from '../actions/SettingsActionCreators'
 import Settings from './Settings'
+import {supported} from '../common/SystemNotifications'
+import {enableSystemNotifications} from '../actions/SettingsThunkActionCreators'
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
@@ -23,6 +25,7 @@ function mapDispatchToProps(dispatch) {
     setShowTrayName,
     setRefreshTime,
     setShowBuildLabel,
+    setShowSystemNotifications: enableSystemNotifications,
     setMaxProjectsToShow
   }, dispatch)
 }
@@ -35,6 +38,10 @@ function mapStateToProps(store) {
     showBrokenBuildTime: settings.get('showBrokenBuildTime'),
     playBrokenBuildSoundFx: settings.get('playBrokenBuildSoundFx'),
     showBuildLabel: settings.get('showBuildLabel'),
+    systemNotificationsSupported: supported(),
+    showSystemNotifications: settings.get('showSystemNotifications'),
+    systemNotificationRequestingPermission: settings.get('systemNotificationRequestingPermission'),
+    systemNotificationPermissionDenied: settings.get('systemNotificationPermissionDenied'),
     brokenBuildSoundFx: settings.get('brokenBuildSoundFx'),
     setShowTrayName: settings.get('setShowTrayName'),
     refreshTime: settings.get('refreshTime'),
