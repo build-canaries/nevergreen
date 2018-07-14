@@ -191,6 +191,7 @@ jobs:
           command: |
             docker build -t buildcanariesteam/nevergreen:latest -t buildcanariesteam/nevergreen:${VERSION} .
             docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}
+            docker push buildcanariesteam/nevergreen:latest
             docker push buildcanariesteam/nevergreen:${VERSION}
 
       - run:
