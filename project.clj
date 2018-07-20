@@ -32,11 +32,11 @@
   :profiles {:dev        {:plugins      [[lein-midje "3.2.1"]
                                          [jonase/eastwood "0.2.5"]
                                          [com.livingsocial/lein-dependency-check "1.0.2"]]
-                          :dependencies [[midje "1.9.1"]
+                          :dependencies [[midje "1.9.2"]
                                          [clj-webdriver/clj-webdriver "0.7.2" :exclusions [org.mortbay.jetty/jetty]]
                                          [org.seleniumhq.selenium/selenium-java "3.13.0" :exclusions [org.eclipse.jetty/jetty-io
                                                                                                       commons-logging]]
-                                         [io.github.bonigarcia/webdrivermanager "2.2.3" :exclusions [org.apache.commons/commons-lang3]]
+                                         [io.github.bonigarcia/webdrivermanager "2.2.4" :exclusions [org.apache.commons/commons-lang3]]
                                          [org.seleniumhq.selenium/htmlunit-driver "2.31.0" :exclusions [org.eclipse.jetty/jetty-io
                                                                                                         org.eclipse.jetty/jetty-http]]
                                          [ring/ring-mock "0.3.2"]]}
