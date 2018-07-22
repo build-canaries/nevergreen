@@ -3,7 +3,7 @@
   :url "https://github.com/build-canaries/nevergreen"
   :dependencies [[org.clojure/clojure "1.9.0"]
                  [ring "1.6.3" :exclusions [org.eclipse.jetty/jetty-server]]
-                 [org.eclipse.jetty/jetty-server "9.4.11.v20180605"]
+                 [org.eclipse.jetty/jetty-server "9.4.12.RC0"]
                  [compojure "1.6.1"]
                  [environ "1.1.0"]
                  [cheshire "5.8.0"]
@@ -30,7 +30,7 @@
             "lint"       ["with-profile" "+unit" "eastwood"]
             "functional" ["with-profile" "+functional" "test" "functional.functional-test"]}
   :profiles {:dev        {:plugins      [[lein-midje "3.2.1"]
-                                         [jonase/eastwood "0.2.5"]
+                                         [jonase/eastwood "0.2.8"]
                                          [com.livingsocial/lein-dependency-check "1.0.2"]]
                           :dependencies [[midje "1.9.2"]
                                          [clj-webdriver/clj-webdriver "0.7.2" :exclusions [org.mortbay.jetty/jetty]]
