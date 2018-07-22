@@ -12,7 +12,16 @@
        (fact "defaults to 5000"
              (subject/port) => 5000
              (provided
-                (env :port) => nil)))
+               (env :port) => nil)))
+
+(fact "allow-iframe-from"
+      (fact "defaults to 5000"
+            (subject/allow-iframe-from) => "host:port"
+            (provided
+              (env :allow-iframe-from) => "host:port"))
+
+      (fact "use default if not set in env"
+            (subject/allow-iframe-from) => "'self'"))
 
 (facts "aes encryption key"
        (fact "from env"
