@@ -48,7 +48,7 @@ class Header extends Component {
       <header role='banner' className={headerClassNames}>
         <VisuallyHidden><h1>Nevergreen</h1></VisuallyHidden>
         <img src={logo} className={styles.logo} alt='Nevergreen' aria-hidden/>
-        <nav role='navigation' className={styles.siteMenu}>
+        <nav className={styles.siteMenu}>
           <Title>Site navigation</Title>
           <button className={styles.siteMenuToggle}
                   onClick={this.toggleMenu}
