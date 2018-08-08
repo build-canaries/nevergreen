@@ -23,7 +23,7 @@ chai.use(chaiEnzyme())
 
 // Set up an in memory DOM for React tests that need to mount
 const {JSDOM} = jsdom
-const dom = new JSDOM('')
+const dom = new JSDOM('', {url: 'http://localhost'})
 
 global.window = dom.window
 global.document = window.document
