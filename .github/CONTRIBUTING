@@ -21,33 +21,12 @@ kept up to date.
 
 #### Reporting bugs
 
-* Check the bug was not already reported by searching existing [issues](https://github.com/build-canaries/nevergreen/issues).
-* If you're unable to find an open issue addressing the problem, [open a new one](https://github.com/build-canaries/nevergreen/issues/new). Please include:
-    * A clear and concise title
-    * Expected behaviour
-    * Actual behaviour
-    * Steps to reproduce
-    * How you are running Nevergreen
-    * The full version number
-    * The commit hash
-    * Which browser you are running in, including the full version number
-    * Add the `bug` label
+* Check the bug was not already reported by searching [existing issues](https://github.com/build-canaries/nevergreen/issues).
+* If you're unable to find an open issue addressing the problem, [open a new issue](https://github.com/build-canaries/nevergreen/issues/new).
 
-The version and commit hash can be found on the Nevergreen menu, some older versions will not have the commit hash.
+#### Requesting new features
 
-#### Requesting new features or improvements
-
-* Open an issue on GitHub with your idea or change, please include: 
-    * A clear and concise title
-    * A description of **what** the feature or improvement is
-    * A description of **why** you'd like this feature or improvement
-    * The correct label, either `new feature` or `improvement`
-
-Knowing **why** you'd like the feature tends to make it easier to understand and makes it easier to prioritise. It can 
-also allow us to think of alternative solutions or interim steps.
-
-Don't worry if it's not clear if it's a new feature or an improvement, just pick one and we can always change it later
-if necessary.
+* [Open an issue on GitHub](https://github.com/build-canaries/nevergreen/issues/new) with your idea or change.
 
 #### Submitting patches
 
@@ -60,7 +39,8 @@ For more specific information about building and running, see the wiki [contribu
 
 #### Questions?
 
-Feel free to ask any question in [chat](https://gitter.im/build-canaries/nevergreen).
+Feel free to ask any question in [chat](https://join.slack.com/t/nevergreen/shared_invite/enQtMzc4MDg5MTE2MDE2LWJjYjdiNDM4Y2U1YjBjZTdkZjFhZGQyOTM5ODQ2MzEwZDY4YjNiZDFmOTFlMGUwOWEyMjczNmUzNTlkZDk4ZmQ) or
+on [Twitter](https://twitter.com/BuildCanaries).
 
 Thanks!
 
