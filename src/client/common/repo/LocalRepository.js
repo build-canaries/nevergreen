@@ -1,5 +1,4 @@
 import localforage from 'localforage'
-import Promise from 'promise'
 import _ from 'lodash'
 
 export default {
