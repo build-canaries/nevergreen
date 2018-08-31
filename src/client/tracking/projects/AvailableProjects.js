@@ -12,8 +12,7 @@ import VisuallyHidden from '../../common/VisuallyHidden'
 
 const DEFAULT_STATE = {
   filter: null,
-  filterErrors: null,
-  disableButtons: false
+  filterErrors: null
 }
 
 class AvailableProjects extends Component {
@@ -23,16 +22,15 @@ class AvailableProjects extends Component {
     this.rootNode = React.createRef()
   }
 
-  includeAll = () => {
-    this.props.projects
+  includeAll = (projects) => () => {
+    projects
       .filter((project) => !project.removed)
       .forEach((project) => this.props.selectProject(this.props.trayId, project.projectId, true))
   }
 
-  excludeAll = () => {
-    this.props.projects.forEach((project) => {
-      this.props.selectProject(this.props.trayId, project.projectId, false)
-    })
+  excludeAll = (projects) => () => {
+    projects
+      .forEach((project) => this.props.selectProject(this.props.trayId, project.projectId, false))
   }
 
   updateFilter = (evt) => {
@@ -43,8 +41,7 @@ class AvailableProjects extends Component {
         const regEx = new RegExp(evt.target.value)
         this.setState({
           filter: regEx,
-          filterErrors: null,
-          disableButtons: true
+          filterErrors: null
         })
       } catch (e) {
         this.setState({filterErrors: [`Project filter not applied, ${e.message}`]})
@@ -72,17 +69,13 @@ class AvailableProjects extends Component {
         <fieldset className={styles.toggles}>
           <legend className={styles.legend}>Available projects</legend>
           <button className={styles.includeAll}
-                  onClick={this.includeAll}
-                  disabled={this.state.disableButtons}
-                  aria-disabled={this.state.disableButtons}
+                  onClick={this.includeAll(filteredProjects)}
                   data-locator='include-all'>
             include all
             <Shortcut hotkeys={[`+ ${this.props.index}`, `= ${this.props.index}`]}/>
           </button>
           <button className={styles.excludeAll}
-                  onClick={this.excludeAll}
-                  disabled={this.state.disableButtons}
-                  aria-disabled={this.state.disableButtons}>
+                  onClick={this.excludeAll(filteredProjects)}>
             exclude all
             <Shortcut hotkeys={[`- ${this.props.index}`]}/>
           </button>
