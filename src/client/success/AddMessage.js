@@ -26,8 +26,7 @@ class AddMessage extends Component {
                value={this.state.message}
                onChange={this.updateMessage}
                onEnter={this.addMessage}
-               data-locator='message'
-               autoFocus>
+               data-locator='message'>
           message
         </Input>
         <button className={styles.add} onClick={this.addMessage} data-locator='add-message'>

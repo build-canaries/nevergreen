@@ -6,7 +6,7 @@ class StyleGuideSection extends Component {
   render() {
     return (
       <section className={styles.section}>
-        <h3>{this.props.title}</h3>
+        <h2>{this.props.title}</h2>
         <div className={styles.content}>
           {this.props.children}
         </div>

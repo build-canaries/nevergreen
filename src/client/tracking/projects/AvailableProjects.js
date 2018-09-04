@@ -99,7 +99,10 @@ class AvailableProjects extends Component {
     )
 
     const buildItems = (
-      <ol className={styles.buildItems} aria-live='assertive' aria-relevant='additions'>
+      <ol className={styles.buildItems}
+          aria-live='polite'
+          aria-relevant='additions'
+          data-locator='available-projects-list'>
         {
           _.sortBy(filteredProjects, ['name', 'stage']).map((project) => {
             const selected = this.props.selected.includes(project.projectId)
@@ -118,7 +121,7 @@ class AvailableProjects extends Component {
       <section className={styles.availableProjects}
                data-locator='available-projects'
                ref={this.rootNode}>
-        <VisuallyHidden><h4>Available projects</h4></VisuallyHidden>
+        <VisuallyHidden data-locator='title'><h3>Available projects</h3></VisuallyHidden>
         <Refresh index={this.props.index}
                  timestamp={this.props.timestamp}
                  refreshTray={this.refreshTray}/>

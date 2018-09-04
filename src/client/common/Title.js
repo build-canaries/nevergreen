@@ -3,8 +3,16 @@ import PropTypes from 'prop-types'
 import VisuallyHidden from '../common/VisuallyHidden'
 
 class Title extends Component {
+  constructor(props) {
+    super(props)
+    this.titleNode = React.createRef()
+  }
+
   componentDidMount() {
     document.title = this.props.children
+    if (this.titleNode.current) {
+      this.titleNode.current.focus()
+    }
   }
 
   componentWillUnmount() {
@@ -14,7 +22,11 @@ class Title extends Component {
   render() {
     return (
       <VisuallyHidden>
-        <h2 aria-live='assertive'>{this.props.children}</h2>
+        <h1 ref={this.titleNode}
+            tabIndex='-1'
+            data-locator='title'>
+          {this.props.children}
+        </h1>
       </VisuallyHidden>
     )
   }

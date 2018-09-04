@@ -108,7 +108,7 @@ class TraySettings extends Component {
 
     return (
       <section data-locator='tray-settings'>
-        <VisuallyHidden><h4>Settings</h4></VisuallyHidden>
+        <VisuallyHidden><h3>Settings</h3></VisuallyHidden>
         <Input className={styles.traySettingsName}
                value={this.state.newName}
                onChange={this.nameChanged}
@@ -179,7 +179,7 @@ class TraySettings extends Component {
           )
         }
         <div className={styles.dangerZone}>
-          <h5 className={styles.dangerZoneTitle}>Danger Zone</h5>
+          <h4 className={styles.dangerZoneTitle}>Danger Zone</h4>
           <div className={styles.dangerZoneContent}>
             <div className={styles.deleteInfo}>Once you delete, there is no going back. Please be certain.</div>
             <button className={styles.delete}

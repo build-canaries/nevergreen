@@ -90,7 +90,7 @@ class DisplaySettings extends Component {
           max number of projects to show
         </DropDown>
         <section className={styles.previewSection}>
-          <h4 className={styles.title}>Preview</h4>
+          <h3 className={styles.title}>Preview</h3>
           <div className={styles.displayPreview}>
             <ScaledGrid>
               <ProjectError error='some tray error'/>

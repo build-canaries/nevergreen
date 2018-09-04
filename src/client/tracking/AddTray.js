@@ -42,8 +42,7 @@ class AddTray extends Component {
                  value={this.state.url}
                  onChange={this.updateUrl}
                  onEnter={this.addTray}
-                 data-locator='add-tray-url'
-                 autoFocus>
+                 data-locator='add-tray-url'>
             <div className={styles.label}>URL</div>
           </Input>
           <Input className={styles.username}

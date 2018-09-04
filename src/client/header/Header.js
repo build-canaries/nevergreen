@@ -5,7 +5,6 @@ import styles from './header.scss'
 import logo from './buildcanaries-logo.png'
 import {NavLink} from 'react-router-dom'
 import Shortcut from '../common/Shortcut'
-import VisuallyHidden from '../common/VisuallyHidden'
 import Title from '../common/Title'
 
 const MENU_ITEMS = [
@@ -46,7 +45,6 @@ class Header extends Component {
 
     return (
       <header role='banner' className={headerClassNames}>
-        <VisuallyHidden><h1>Nevergreen</h1></VisuallyHidden>
         <img src={logo} className={styles.logo} alt='Nevergreen' aria-hidden/>
         <nav className={styles.siteMenu}>
           <Title>Site navigation</Title>
