@@ -4,4 +4,4 @@
 (defn wrap-referrer-policy [app]
   (fn [req]
     (let [res (app req)]
-      (assoc-in res [:headers "Referrer-Policy"] "origin-when-cross-origin, strict-origin-when-cross-origin"))))
+      (assoc-in res [:headers "Referrer-Policy"] "strict-origin-when-cross-origin"))))
