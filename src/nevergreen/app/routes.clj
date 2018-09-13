@@ -3,6 +3,7 @@
             [nevergreen.wrap-exceptions :refer [wrap-exceptions]]
             [nevergreen.wrap-cache-control :refer [wrap-cache-control]]
             [nevergreen.wrap-content-security-policy :refer [wrap-content-security-policy]]
+            [nevergreen.wrap-feature_policy :refer [wrap-feature-policy]]
             [nevergreen.wrap-referrer-policy :refer [wrap-referrer-policy]]
             [ring.middleware.defaults :refer :all]
             [ring.util.response :refer :all]
@@ -16,6 +17,7 @@
   (-> (wrap-defaults routes (assoc site-defaults :session false))
       wrap-cache-control
       wrap-content-security-policy
+      wrap-feature-policy
       wrap-referrer-policy
       wrap-exceptions
       wrap-gzip))
