@@ -25,7 +25,8 @@
     "watchJs": "watch 'npm run clean && npm run build' src/client",
     "watchTest": "watch 'npm run test' src/client test/client",
     "watchLint": "watch 'npm run lint' src/client test/client",
-    "ci-stub-server": "node ci_stub_server/server"
+    "ci-stub-server": "node ci_stub_server/server",
+    "generate-schema-validator": "ajv compile -s src/client/common/repo/schema.json -o src/client/common/repo/ValidateSchema.js --remove-additional --all-errors"
   },
   "dependencies": {
     "@babel/polyfill": "7.0.0",
@@ -62,6 +63,7 @@
     "@babel/preset-env": "7.0.0",
     "@babel/preset-react": "7.0.0",
     "@babel/register": "7.0.0",
+    "ajv-cli": "3.0.0",
     "autoprefixer": "9.1.3",
     "babel-eslint": "9.0.0",
     "babel-loader": "8.0.0",

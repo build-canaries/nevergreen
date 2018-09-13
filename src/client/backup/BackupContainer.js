@@ -1,10 +1,10 @@
 import {connect} from 'react-redux'
 import Backup from './Backup'
-import {SCHEMA} from '../common/repo/Data'
+import {schema} from '../common/repo/Data'
 import {toJson} from '../common/Json'
 
 function mapStateToProps() {
-  return {schema: toJson(SCHEMA)}
+  return {schema: toJson(schema)}
 }
 
 export default connect(mapStateToProps)(Backup)

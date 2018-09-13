@@ -70,7 +70,10 @@ module.exports = {
       filename: '[name].[hash:8].css',
       allChunks: true
     }),
-    new CopyWebpackPlugin([{from: './src/client/favicons'}]),
+    new CopyWebpackPlugin([
+      './src/client/favicons',
+      './src/client/common/repo/schema.json'
+    ]),
     new OptimizeCssAssetsPlugin(),
     new ManifestPlugin({fileName: 'asset-manifest.json'}),
     new SWPrecacheWebpackPlugin({

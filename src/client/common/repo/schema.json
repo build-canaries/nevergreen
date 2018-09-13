@@ -1,0 +1,162 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://nevergreen.io/schema.json",
+  "title": "Nevergreen",
+  "description": "Nevergreen settings",
+  "required": [],
+  "type": "object",
+  "properties": {
+    "audioVisual": {
+      "type": "object",
+      "properties": {
+        "showTrayName": {
+          "type": "boolean"
+        },
+        "showBuildTime": {
+          "type": "boolean"
+        },
+        "showBrokenBuildTime": {
+          "type": "boolean"
+        },
+        "showBuildLabel": {
+          "type": "boolean"
+        },
+        "showSystemNotifications": {
+          "type": "boolean"
+        },
+        "playBrokenBuildSoundFx": {
+          "type": "boolean"
+        },
+        "brokenBuildSoundFx": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "refreshTime": {
+          "type": "number"
+        },
+        "maxProjectsToShow": {
+          "type": "number"
+        }
+      },
+      "additionalProperties": false
+    },
+    "trays": {
+      "type": "object",
+      "patternProperties": {
+        ".*": {
+          "type": "object",
+          "properties": {
+            "trayId": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "serverType": {
+              "type": "string"
+            },
+            "username": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "password": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "timestamp": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "trayId",
+            "url"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "projects": {
+      "type": "object",
+      "patternProperties": {
+        ".*": {
+          "type": "object",
+          "patternProperties": {
+            ".*": {
+              "type": "object",
+              "properties": {
+                "projectId": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "stage": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "removed": {
+                  "type": "boolean"
+                },
+                "isNew": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "projectId",
+                "name"
+              ],
+              "additionalProperties": false
+            }
+          }
+        }
+      }
+    },
+    "success": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "additionalProperties": false
+    },
+    "selected": {
+      "type": "object",
+      "patternProperties": {
+        ".*": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "additionalProperties": false
+    },
+    "github": {
+      "type": "object",
+      "properties": {
+        "gistId": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

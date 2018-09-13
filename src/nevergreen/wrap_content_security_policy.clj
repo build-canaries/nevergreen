@@ -5,7 +5,7 @@
 
 (defn- csp-headers []
   ["default-src 'self'"
-   "script-src 'self' 'unsafe-eval'"
+   "script-src 'self'"
    "worker-src 'self'"
    "style-src 'self' 'unsafe-inline'"
    "img-src * data:"
