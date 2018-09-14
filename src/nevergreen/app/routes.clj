@@ -9,9 +9,8 @@
             [ring.util.response :refer :all]
             [ring.middleware.gzip :refer :all]))
 
-(def app-routes
-  (routes
-    (GET "*" [] (clojure.java.io/resource "public/index.html"))))
+(defroutes app-routes
+           (GET "*" [] (clojure.java.io/resource "public/index.html")))
 
 (defn wrap-app-middleware [routes]
   (-> (wrap-defaults routes (assoc site-defaults :session false))

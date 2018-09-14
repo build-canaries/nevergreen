@@ -71,6 +71,7 @@ module.exports = {
       allChunks: true
     }),
     new CopyWebpackPlugin([
+      './src/client/robots.txt',
       './src/client/favicons',
       './src/client/common/repo/schema.json'
     ]),

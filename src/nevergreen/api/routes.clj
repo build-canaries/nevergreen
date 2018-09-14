@@ -15,20 +15,20 @@
 (def ^:private invalid-json (error-response 400 "Malformed JSON in request body" ""))
 (def ^:private preflight-response {:status 200})
 
-(def api-routes
-  (routes
-    (OPTIONS "/api/projects/all" [] preflight-response)
-    (POST "/api/projects/all" {body :body} {:body (projects/get-all body)})
+(defroutes api-routes
+           (context "/api" []
+             (OPTIONS "/projects/all" [] preflight-response)
+             (POST "/projects/all" {body :body} {:body (projects/get-all body)})
 
-    (OPTIONS "/api/projects/interesting" [] preflight-response)
-    (POST "/api/projects/interesting" {body :body} {:body (projects/get-interesting body)})
+             (OPTIONS "/projects/interesting" [] preflight-response)
+             (POST "/projects/interesting" {body :body} {:body (projects/get-interesting body)})
 
-    (OPTIONS "/api/encrypt" [] preflight-response)
-    (POST "/api/encrypt" {body :body} {:body (security/encrypt-password body)})
+             (OPTIONS "/encrypt" [] preflight-response)
+             (POST "/encrypt" {body :body} {:body (security/encrypt-password body)})
 
-    (GET "/api/ping" [] {:status 204})
+             (GET "/ping" [] {:status 204})
 
-    (GET "/api/version" [] {:headers {"Content-Type" "text/plain"} :body (version)})))
+             (GET "/version" [] {:headers {"Content-Type" "text/plain"} :body (version)})))
 
 (defn wrap-api-middleware [routes]
   (-> routes
