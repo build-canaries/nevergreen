@@ -8,14 +8,13 @@
            org.openqa.selenium.remote.CapabilityType
            org.openqa.selenium.logging.LogType
            org.openqa.selenium.logging.LoggingPreferences
-           io.github.bonigarcia.wdm.ChromeDriverManager
-           io.github.bonigarcia.wdm.FirefoxDriverManager))
+           io.github.bonigarcia.wdm.WebDriverManager))
 
 (defn create-driver []
   (case (browser-to-use)
-    :firefox (do (.setup (FirefoxDriverManager/getInstance))
+    :firefox (do (.setup (WebDriverManager/firefoxdriver))
                  (FirefoxDriver.))
-    (do (.. (ChromeDriverManager/getInstance) (version "2.37") (setup))
+    (do (.. (WebDriverManager/chromedriver) (version "2.37") (setup))
         (let [options (ChromeOptions.)
               loggingPrefs (LoggingPreferences.)]
           (do
