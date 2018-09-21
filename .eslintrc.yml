@@ -20,5 +20,5 @@ rules:
   generator-star-spacing: ['error']
   object-shorthand: ['error']
   arrow-parens: ['error']
-  babel/new-cap: ['error', {capIsNewExceptions: ['Immutable.Map', 'Immutable.List', 'Immutable.Set', 'Immutable.OrderedSet', 'Immutable.OrderedMap']}]
+  babel/new-cap: ['error', {capIsNewExceptions: ['Map', 'List', 'Set', 'OrderedSet', 'OrderedMap']}]
   mocha/no-exclusive-tests: 'error'

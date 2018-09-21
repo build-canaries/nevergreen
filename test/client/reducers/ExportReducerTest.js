@@ -2,7 +2,7 @@ import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {reduce} from '../../../src/client/reducers/ExportReducer'
 import {EXPORT_ERROR, EXPORT_SUCCESS, EXPORTING, NAVIGATED} from '../../../src/client/actions/Actions'
-import Immutable from 'immutable'
+import {List, Map} from 'immutable'
 
 describe('ExportReducer', function () {
 
@@ -15,21 +15,21 @@ describe('ExportReducer', function () {
   describe(EXPORTING, function () {
 
     it('should set the loaded property', function () {
-      const existingState = Immutable.Map({loaded: true})
+      const existingState = Map({loaded: true})
       const action = {type: EXPORTING}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('loaded', false)
     })
 
     it('should delete the infos property', function () {
-      const existingState = Immutable.Map({infos: Immutable.Map()})
+      const existingState = Map({infos: Map()})
       const action = {type: EXPORTING}
       const newState = reduce(existingState, action)
       expect(newState).to.not.have.property('infos')
     })
 
     it('should delete the errors property', function () {
-      const existingState = Immutable.Map({errors: Immutable.Map()})
+      const existingState = Map({errors: Map()})
       const action = {type: EXPORTING}
       const newState = reduce(existingState, action)
       expect(newState).to.not.have.property('errors')
@@ -39,21 +39,21 @@ describe('ExportReducer', function () {
   describe(EXPORT_SUCCESS, function () {
 
     it('should set the loaded property', function () {
-      const existingState = Immutable.Map({loaded: false})
-      const action = {type: EXPORT_SUCCESS, messages: Immutable.List()}
+      const existingState = Map({loaded: false})
+      const action = {type: EXPORT_SUCCESS, messages: List()}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('loaded', true)
     })
 
     it('should set the infos property', function () {
-      const existingState = Immutable.Map()
-      const action = {type: EXPORT_SUCCESS, messages: Immutable.List(['some-message'])}
+      const existingState = Map()
+      const action = {type: EXPORT_SUCCESS, messages: List(['some-message'])}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('infos').that.contains('some-message')
     })
 
     it('should delete the errors property', function () {
-      const existingState = Immutable.Map({errors: Immutable.Map()})
+      const existingState = Map({errors: Map()})
       const action = {type: EXPORT_SUCCESS}
       const newState = reduce(existingState, action)
       expect(newState).to.not.have.property('errors')
@@ -63,22 +63,22 @@ describe('ExportReducer', function () {
   describe(EXPORT_ERROR, function () {
 
     it('should set the loaded property', function () {
-      const existingState = Immutable.Map({loaded: false})
+      const existingState = Map({loaded: false})
       const action = {type: EXPORT_ERROR}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('loaded', true)
     })
 
     it('should delete the infos property', function () {
-      const existingState = Immutable.Map({infos: Immutable.Map()})
+      const existingState = Map({infos: Map()})
       const action = {type: EXPORT_ERROR}
       const newState = reduce(existingState, action)
       expect(newState).to.not.have.property('infos')
     })
 
     it('should set the errors property', function () {
-      const existingState = Immutable.Map()
-      const action = {type: EXPORT_ERROR, errors: Immutable.List(['some-error'])}
+      const existingState = Map()
+      const action = {type: EXPORT_ERROR, errors: List(['some-error'])}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('errors').that.contains('some-error')
     })
@@ -87,14 +87,14 @@ describe('ExportReducer', function () {
   describe(NAVIGATED, function () {
 
     it('should delete the infos property', function () {
-      const existingState = Immutable.Map({infos: Immutable.Map()})
+      const existingState = Map({infos: Map()})
       const action = {type: NAVIGATED}
       const newState = reduce(existingState, action)
       expect(newState).to.not.have.property('infos')
     })
 
     it('should delete the errors property', function () {
-      const existingState = Immutable.Map({errors: Immutable.Map()})
+      const existingState = Map({errors: Map()})
       const action = {type: NAVIGATED}
       const newState = reduce(existingState, action)
       expect(newState).to.not.have.property('errors')

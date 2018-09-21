@@ -1,6 +1,6 @@
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
-import Immutable from 'immutable'
+import {List} from 'immutable'
 import {IMPORT_ERROR, IMPORT_SUCCESS, IMPORTING} from '../../../src/client/actions/Actions'
 import {importError, importing, importSuccess} from '../../../src/client/actions/ImportActionCreators'
 
@@ -41,7 +41,7 @@ describe('ImportActionCreators', function () {
 
     it('should return a success message', function () {
       const actual = importSuccess()
-      expect(actual).to.have.property('messages').that.is.an.instanceof(Immutable.List)
+      expect(actual).to.have.property('messages').that.is.an.instanceof(List)
     })
   })
 })

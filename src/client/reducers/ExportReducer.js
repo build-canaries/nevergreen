@@ -1,7 +1,7 @@
-import Immutable from 'immutable'
+import {fromJS} from 'immutable'
 import {EXPORT_ERROR, EXPORT_SUCCESS, EXPORTING, NAVIGATED} from '../actions/Actions'
 
-const DEFAULT_STATE = Immutable.Map({
+const DEFAULT_STATE = fromJS({
   loaded: true
 })
 

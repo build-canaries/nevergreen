@@ -1,4 +1,4 @@
-import Immutable from 'immutable'
+import {fromJS, List} from 'immutable'
 import {INTERESTING_PROJECTS, INTERESTING_PROJECTS_FETCHING} from './Actions'
 
 export function interestingProjectsFetching(request) {
@@ -11,7 +11,7 @@ export function interestingProjectsFetching(request) {
 export function interestingProjects(projects, errors) {
   return {
     type: INTERESTING_PROJECTS,
-    projects: Immutable.fromJS(projects),
-    errors: Immutable.List(errors)
+    projects: fromJS(projects),
+    errors: List(errors)
   }
 }

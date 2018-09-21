@@ -1,7 +1,7 @@
-import Immutable from 'immutable'
+import {fromJS} from 'immutable'
 import {GITHUB_SET_DESCRIPTION, GITHUB_SET_GIST_ID, IMPORT_SUCCESS, INITIALISED} from '../actions/Actions'
 
-const DEFAULT_STATE = Immutable.Map({
+const DEFAULT_STATE = fromJS({
   gistId: '',
   description: 'Nevergreen configuration backup'
 })

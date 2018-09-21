@@ -1,4 +1,4 @@
-import Immutable from 'immutable'
+import {fromJS, List} from 'immutable'
 import {IMPORT_ERROR, IMPORT_SUCCESS, IMPORTING} from './Actions'
 
 export function importing() {
@@ -6,13 +6,13 @@ export function importing() {
 }
 
 export function importError(errors) {
-  return {type: IMPORT_ERROR, errors: Immutable.List(errors)}
+  return {type: IMPORT_ERROR, errors: List(errors)}
 }
 
 export function importSuccess(configuration) {
   return {
     type: IMPORT_SUCCESS,
-    data: Immutable.fromJS(configuration),
-    messages: Immutable.List(['Successfully imported'])
+    data: fromJS(configuration),
+    messages: List(['Successfully imported'])
   }
 }

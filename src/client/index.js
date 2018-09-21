@@ -6,7 +6,7 @@ import {applyMiddleware, compose, createStore} from 'redux'
 import createHistory from 'history/createBrowserHistory'
 import {Redirect, Route, Router, Switch} from 'react-router-dom'
 import thunkMiddleware from 'redux-thunk'
-import Immutable from 'immutable'
+import {Map} from 'immutable'
 import LocalRepository from './common/repo/LocalRepository'
 import {reducer} from './reducers/Reducer'
 import {filter} from './common/repo/Data'
@@ -24,7 +24,7 @@ import UnhandledError from './UnhandledError'
 
 const ONE_SECOND = 1000
 
-const initialState = Immutable.Map()
+const initialState = Map()
 let store = createStore(reducer, initialState, compose(
   applyMiddleware(thunkMiddleware),
   window.devToolsExtension ? window.devToolsExtension() : (f) => f

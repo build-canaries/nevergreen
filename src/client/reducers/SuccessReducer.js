@@ -1,14 +1,14 @@
-import Immutable from 'immutable'
+import {OrderedSet} from 'immutable'
 import {IMPORT_SUCCESS, INITIALISED, MESSAGE_ADDED, MESSAGE_REMOVED} from '../actions/Actions'
 
-const DEFAULT_STATE = Immutable.OrderedSet(['=(^.^)='])
+const DEFAULT_STATE = OrderedSet(['=(^.^)='])
 
 export function reduce(state = DEFAULT_STATE, action) {
   switch (action.type) {
     case INITIALISED:
     case IMPORT_SUCCESS: {
       const success = action.data.get('success')
-      return success ? Immutable.OrderedSet(success) : state
+      return success ? OrderedSet(success) : state
     }
 
     case MESSAGE_ADDED:

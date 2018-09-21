@@ -2,7 +2,7 @@ import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {reduce} from '../../../src/client/reducers/SuccessReducer'
 import {IMPORT_SUCCESS, INITIALISED, MESSAGE_ADDED, MESSAGE_REMOVED} from '../../../src/client/actions/Actions'
-import Immutable from 'immutable'
+import {fromJS, Map, OrderedSet} from 'immutable'
 
 describe('SuccessReducer', function () {
 
@@ -15,15 +15,15 @@ describe('SuccessReducer', function () {
   describe(INITIALISED, function () {
 
     it('should set the success data', function () {
-      const existingState = Immutable.OrderedSet(['old-message'])
-      const action = {type: INITIALISED, data: Immutable.fromJS({success: ['some-message']})}
+      const existingState = OrderedSet(['old-message'])
+      const action = {type: INITIALISED, data: fromJS({success: ['some-message']})}
       const newState = reduce(existingState, action)
       expect(newState).to.contain('some-message')
     })
 
     it('should handle no success data', function () {
-      const existingState = Immutable.OrderedSet()
-      const action = {type: INITIALISED, data: Immutable.Map()}
+      const existingState = OrderedSet()
+      const action = {type: INITIALISED, data: Map()}
       const newState = reduce(existingState, action)
       expect(newState).to.be.empty()
     })
@@ -32,8 +32,8 @@ describe('SuccessReducer', function () {
   describe(IMPORT_SUCCESS, function () {
 
     it('should merge the success data', function () {
-      const existingState = Immutable.OrderedSet()
-      const action = {type: IMPORT_SUCCESS, data: Immutable.fromJS({success: ['some-message']})}
+      const existingState = OrderedSet()
+      const action = {type: IMPORT_SUCCESS, data: fromJS({success: ['some-message']})}
       const newState = reduce(existingState, action)
       expect(newState).to.contain('some-message')
     })
@@ -42,14 +42,14 @@ describe('SuccessReducer', function () {
   describe(MESSAGE_ADDED, function () {
 
     it('should add the given message', function () {
-      const existingState = Immutable.OrderedSet()
+      const existingState = OrderedSet()
       const action = {type: MESSAGE_ADDED, message: 'some-message'}
       const newState = reduce(existingState, action)
       expect(newState).to.contain('some-message')
     })
 
     it('should not add the same message multiple times', function () {
-      const existingState = Immutable.OrderedSet(['some-message'])
+      const existingState = OrderedSet(['some-message'])
       const action = {type: MESSAGE_ADDED, message: 'some-message'}
       const newState = reduce(existingState, action)
       expect(newState).to.have.size(1)
@@ -59,10 +59,10 @@ describe('SuccessReducer', function () {
   describe(MESSAGE_REMOVED, function () {
 
     it('should remove the given message', function () {
-      const existingState = Immutable.OrderedSet(['a', 'b', 'c'])
+      const existingState = OrderedSet(['a', 'b', 'c'])
       const action = {type: MESSAGE_REMOVED, message: 'b'}
       const newState = reduce(existingState, action)
-      expect(newState).to.deep.equal(Immutable.OrderedSet(['a', 'c']))
+      expect(newState).to.deep.equal(OrderedSet(['a', 'c']))
     })
   })
 })

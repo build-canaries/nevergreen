@@ -1,4 +1,4 @@
-import Immutable from 'immutable'
+import {fromJS} from 'immutable'
 import {FULL_SCREEN, INITIALISED, INITIALISING, NAVIGATED, REQUEST_FULL_SCREEN} from './Actions'
 
 export function initalising() {
@@ -6,7 +6,7 @@ export function initalising() {
 }
 
 export function initalised(configuration) {
-  return {type: INITIALISED, data: Immutable.fromJS(configuration)}
+  return {type: INITIALISED, data: fromJS(configuration)}
 }
 
 export function navigated() {

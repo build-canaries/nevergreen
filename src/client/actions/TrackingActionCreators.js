@@ -1,4 +1,4 @@
-import Immutable from 'immutable'
+import {fromJS, List, Map} from 'immutable'
 import {now} from '../common/DateTime'
 import {generateRandomName} from '../domain/Tray'
 import {
@@ -21,7 +21,13 @@ export function trayAdded(trayId, url, username) {
   return {
     type: TRAY_ADDED,
     trayId,
-    data: Immutable.Map({trayId, url, username, name: generateRandomName(), highlight: true})
+    data: Map({
+      trayId,
+      url,
+      username,
+      name: generateRandomName(),
+      highlight: true
+    })
   }
 }
 
@@ -39,7 +45,7 @@ export function projectsFetching(trayId, request) {
 }
 
 export function projectsFetched(trayId, projects, selectAll) {
-  const data = Immutable.fromJS(projects)
+  const data = fromJS(projects)
   const serverType = data.first() ? data.first().get('serverType') : ''
 
   return {
@@ -53,7 +59,7 @@ export function projectsFetched(trayId, projects, selectAll) {
 }
 
 export function projectsFetchError(trayId, errors) {
-  return {type: PROJECTS_FETCH_ERROR, trayId, errors: Immutable.List(errors)}
+  return {type: PROJECTS_FETCH_ERROR, trayId, errors: List(errors)}
 }
 
 export function setTrayName(trayId, name) {

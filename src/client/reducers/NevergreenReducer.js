@@ -1,7 +1,7 @@
-import Immutable from 'immutable'
+import {fromJS} from 'immutable'
 import {FULL_SCREEN, INITIALISED, INITIALISING, REQUEST_FULL_SCREEN} from '../actions/Actions'
 
-const DEFAULT_STATE = Immutable.Map({
+const DEFAULT_STATE = fromJS({
   loaded: false,
   fullScreen: false,
   fullScreenRequested: false

@@ -10,7 +10,7 @@ import {
   SET_TRAY_ID,
   TRAY_ADDED
 } from '../../../src/client/actions/Actions'
-import Immutable from 'immutable'
+import {fromJS, Map, Set} from 'immutable'
 
 describe('SelectedReducer', function () {
 
@@ -23,16 +23,16 @@ describe('SelectedReducer', function () {
   describe(INITIALISED, function () {
 
     it('should set the selected data', function () {
-      const existingState = Immutable.Map({oldId: ['foo']})
-      const action = {type: INITIALISED, data: Immutable.fromJS({selected: {trayId: ['bar']}})}
+      const existingState = Map({oldId: ['foo']})
+      const action = {type: INITIALISED, data: fromJS({selected: {trayId: ['bar']}})}
       const newState = reduce(existingState, action)
       expect(newState).to.not.have.property('oldId')
-      expect(newState).to.have.property('trayId').that.is.an.instanceof(Immutable.Set).that.contains('bar')
+      expect(newState).to.have.property('trayId').that.is.an.instanceof(Set).that.contains('bar')
     })
 
     it('should handle no selected data', function () {
-      const existingState = Immutable.Map({oldId: ['foo']})
-      const action = {type: INITIALISED, data: Immutable.Map()}
+      const existingState = Map({oldId: ['foo']})
+      const action = {type: INITIALISED, data: Map()}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('oldId')
     })
@@ -41,28 +41,28 @@ describe('SelectedReducer', function () {
   describe(IMPORT_SUCCESS, function () {
 
     it('should set the selected data', function () {
-      const existingState = Immutable.Map({oldId: ['foo']})
-      const action = {type: IMPORT_SUCCESS, data: Immutable.fromJS({selected: {trayId: ['bar']}})}
+      const existingState = Map({oldId: ['foo']})
+      const action = {type: IMPORT_SUCCESS, data: fromJS({selected: {trayId: ['bar']}})}
       const newState = reduce(existingState, action)
       expect(newState).to.not.have.property('oldId')
-      expect(newState).to.have.property('trayId').that.is.an.instanceof(Immutable.Set).that.contains('bar')
+      expect(newState).to.have.property('trayId').that.is.an.instanceof(Set).that.contains('bar')
     })
   })
 
   describe(TRAY_ADDED, function () {
 
     it('should add the tray id with an empty set of selected projects', function () {
-      const existingState = Immutable.Map()
+      const existingState = Map()
       const action = {type: TRAY_ADDED, trayId: 'trayId'}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.is.an.instanceof(Immutable.Set).that.is.empty()
+      expect(newState).to.have.property('trayId').that.is.an.instanceof(Set).that.is.empty()
     })
   })
 
   describe(REMOVE_TRAY, function () {
 
     it('should remove the tray id', function () {
-      const existingState = Immutable.Map({trayId: Immutable.Set()})
+      const existingState = Map({trayId: Set()})
       const action = {type: REMOVE_TRAY, trayId: 'trayId'}
       const newState = reduce(existingState, action)
       expect(newState).to.not.have.property('trayId')
@@ -72,14 +72,14 @@ describe('SelectedReducer', function () {
   describe(SELECT_PROJECT, function () {
 
     it('should add the project web url if selected', function () {
-      const existingState = Immutable.Map({trayId: Immutable.Set('a', 'b', 'c')})
+      const existingState = Map({trayId: Set('a', 'b', 'c')})
       const action = {type: SELECT_PROJECT, trayId: 'trayId', projectId: 'd', selected: true}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('trayId').that.contains('d')
     })
 
     it('should remove the project web url if not selected', function () {
-      const existingState = Immutable.Map({trayId: Immutable.Set(['a', 'b', 'c'])})
+      const existingState = Map({trayId: Set(['a', 'b', 'c'])})
       const action = {type: SELECT_PROJECT, trayId: 'trayId', projectId: 'b', selected: false}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('trayId').that.not.contains('b')
@@ -89,15 +89,15 @@ describe('SelectedReducer', function () {
   describe(PROJECTS_FETCHED, function () {
 
     it('should remove selected projects that were not fetched', function () {
-      const existingState = Immutable.Map({trayId: Immutable.Set(['a', 'b', 'c'])})
-      const action = {type: PROJECTS_FETCHED, trayId: 'trayId', data: Immutable.fromJS([{projectId: 'b'}])}
+      const existingState = Map({trayId: Set(['a', 'b', 'c'])})
+      const action = {type: PROJECTS_FETCHED, trayId: 'trayId', data: fromJS([{projectId: 'b'}])}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('trayId').that.contains('b').and.have.size(1)
     })
 
     it('should add all projects that were fetched if select all is true', function () {
-      const existingState = Immutable.Map({trayId: Immutable.Set([])})
-      const fetchedProjects = Immutable.fromJS([{projectId: 'a'}, {projectId: 'b'}, {projectId: 'c'}])
+      const existingState = Map({trayId: Set([])})
+      const fetchedProjects = fromJS([{projectId: 'a'}, {projectId: 'b'}, {projectId: 'c'}])
       const action = {type: PROJECTS_FETCHED, trayId: 'trayId', selectAll: true, data: fetchedProjects}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('trayId').that.contains('a', 'b', 'c')
@@ -107,7 +107,7 @@ describe('SelectedReducer', function () {
   describe(SET_TRAY_ID, function () {
 
     it('should update the key in the state to the new tray id', function () {
-      const existingState = Immutable.fromJS({trayId: Immutable.Set()})
+      const existingState = fromJS({trayId: Set()})
       const action = {type: SET_TRAY_ID, originalTrayId: 'trayId', newTrayId: 'some-new-url', url: 'some-new-url'}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('some-new-url')

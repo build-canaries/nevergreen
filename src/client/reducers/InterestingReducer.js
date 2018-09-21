@@ -1,9 +1,9 @@
-import Immutable from 'immutable'
+import {fromJS} from 'immutable'
 import {INTERESTING_PROJECTS, INTERESTING_PROJECTS_FETCHING} from '../actions/Actions'
 
-const DEFAULT_STATE = Immutable.Map({
-  projects: Immutable.List(),
-  errors: Immutable.List(),
+const DEFAULT_STATE = fromJS({
+  projects: [],
+  errors: [],
   loaded: false,
   pendingRequest: null
 })

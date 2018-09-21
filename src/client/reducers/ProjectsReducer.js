@@ -1,18 +1,18 @@
-import Immutable from 'immutable'
+import {Map} from 'immutable'
 import {IMPORT_SUCCESS, INITIALISED, PROJECTS_FETCHED, REMOVE_TRAY, SET_TRAY_ID, TRAY_ADDED} from '../actions/Actions'
 
-const DEFAULT_STATE = Immutable.Map()
+const DEFAULT_STATE = Map()
 
 export function reduce(state = DEFAULT_STATE, action) {
   switch (action.type) {
     case INITIALISED:
     case IMPORT_SUCCESS: {
       const projects = action.data.get('projects')
-      return projects ? Immutable.Map(projects) : state
+      return projects ? Map(projects) : state
     }
 
     case TRAY_ADDED:
-      return state.set(action.trayId, Immutable.Map())
+      return state.set(action.trayId, Map())
 
     case REMOVE_TRAY:
       return state.delete(action.trayId)

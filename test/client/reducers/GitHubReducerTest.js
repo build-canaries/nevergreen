@@ -7,7 +7,7 @@ import {
   IMPORT_SUCCESS,
   INITIALISED
 } from '../../../src/client/actions/Actions'
-import Immutable from 'immutable'
+import {fromJS, Map} from 'immutable'
 
 describe('GitHubReducer', function () {
 
@@ -20,22 +20,22 @@ describe('GitHubReducer', function () {
   describe(INITIALISED, function () {
 
     it('should merge the url', function () {
-      const existingState = Immutable.Map({})
-      const action = {type: INITIALISED, data: Immutable.fromJS({github: {url: 'some-url'}})}
+      const existingState = Map({})
+      const action = {type: INITIALISED, data: fromJS({github: {url: 'some-url'}})}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('url', 'some-url')
     })
 
     it('should merge the description', function () {
-      const existingState = Immutable.Map({})
-      const action = {type: INITIALISED, data: Immutable.fromJS({github: {description: 'some-description'}})}
+      const existingState = Map({})
+      const action = {type: INITIALISED, data: fromJS({github: {description: 'some-description'}})}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('description', 'some-description')
     })
 
     it('should handle no github data', function () {
-      const existingState = Immutable.Map({url: 'some-url', description: 'some-description'})
-      const action = {type: INITIALISED, data: Immutable.Map()}
+      const existingState = Map({url: 'some-url', description: 'some-description'})
+      const action = {type: INITIALISED, data: Map()}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('url', 'some-url')
       expect(newState).to.have.property('description', 'some-description')
@@ -45,22 +45,22 @@ describe('GitHubReducer', function () {
   describe(IMPORT_SUCCESS, function () {
 
     it('should not merge the url because a successful GitHub import requires it to be known already and likely does not matter if the user is using local import', function () {
-      const existingState = Immutable.Map({url: 'some-url'})
-      const action = {type: IMPORT_SUCCESS, data: Immutable.fromJS({github: {url: ''}})}
+      const existingState = Map({url: 'some-url'})
+      const action = {type: IMPORT_SUCCESS, data: fromJS({github: {url: ''}})}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('url', 'some-url')
     })
 
     it('should merge the description', function () {
-      const existingState = Immutable.Map({})
-      const action = {type: IMPORT_SUCCESS, data: Immutable.fromJS({github: {description: 'some-description'}})}
+      const existingState = Map({})
+      const action = {type: IMPORT_SUCCESS, data: fromJS({github: {description: 'some-description'}})}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('description', 'some-description')
     })
 
     it('should handle no github data', function () {
-      const existingState = Immutable.Map({url: 'some-url', description: 'some-description'})
-      const action = {type: IMPORT_SUCCESS, data: Immutable.Map()}
+      const existingState = Map({url: 'some-url', description: 'some-description'})
+      const action = {type: IMPORT_SUCCESS, data: Map()}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('url', 'some-url')
       expect(newState).to.have.property('description', 'some-description')
@@ -70,7 +70,7 @@ describe('GitHubReducer', function () {
   describe(GITHUB_SET_DESCRIPTION, function () {
 
     it('should set the description property', function () {
-      const existingState = Immutable.Map()
+      const existingState = Map()
       const action = {type: GITHUB_SET_DESCRIPTION, description: 'some-description'}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('description', 'some-description')
@@ -80,7 +80,7 @@ describe('GitHubReducer', function () {
   describe(GITHUB_SET_GIST_ID, function () {
 
     it('should set the id property', function () {
-      const existingState = Immutable.Map()
+      const existingState = Map()
       const action = {type: GITHUB_SET_GIST_ID, gistId: 'some-id'}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('gistId', 'some-id')

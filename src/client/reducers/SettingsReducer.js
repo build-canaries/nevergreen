@@ -1,4 +1,4 @@
-import Immutable from 'immutable'
+import {fromJS} from 'immutable'
 import {
   BROKEN_BUILD_SOUND_FX,
   IMPORT_SUCCESS,
@@ -17,7 +17,7 @@ import {
 import {DEFAULT_PROJECTS_TO_SHOW, MIN_REFRESH_TIME} from '../actions/SettingsActionCreators'
 import defaultSoundFx from '../settings/pacman_death.mp3'
 
-const DEFAULT_STATE = Immutable.Map({
+const DEFAULT_STATE = fromJS({
   showTrayName: false,
   showBuildTime: true,
   showBrokenBuildTime: true,
