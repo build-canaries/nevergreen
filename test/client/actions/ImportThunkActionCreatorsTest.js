@@ -22,31 +22,27 @@ describe('ImportThunkActionCreators', function () {
 
     const validJson = '{}'
 
-    it('should dispatch importing', function () {
-      return testThunk(importData(validJson)).then(() => {
-        expect(importing).to.have.been.called()
-      })
+    it('should dispatch importing', async function () {
+      await testThunk(importData(validJson))
+      expect(importing).to.have.been.called()
     })
 
-    it('should dispatch import error action on json parse failure', function () {
-      return testThunk(importData('{invalidJson')).then(() => {
-        expect(importError).to.have.been.called()
-      })
+    it('should dispatch import error action on json parse failure', async function () {
+      await testThunk(importData('{invalidJson'))
+      expect(importError).to.have.been.called()
     })
 
-    it('should dispatch import error action on validation failure', function () {
+    it('should dispatch import error action on validation failure', async function () {
       validate.returns(['some-validation-error'])
-      return testThunk(importData(validJson)).then(() => {
-        expect(importError).to.have.been.calledWith(['some-validation-error'])
-      })
+      await testThunk(importData(validJson))
+      expect(importError).to.have.been.calledWith(['some-validation-error'])
     })
 
-    it('should dispatch import success action on successful validation', function () {
+    it('should dispatch import success action on successful validation', async function () {
       filter.returns('some-data')
       validate.returns([])
-      return testThunk(importData(validJson)).then(() => {
-        expect(importSuccess).to.have.been.calledWith('some-data')
-      })
+      await testThunk(importData(validJson))
+      expect(importSuccess).to.have.been.calledWith('some-data')
     })
   })
 })

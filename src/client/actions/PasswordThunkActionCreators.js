@@ -7,21 +7,22 @@ import {encryptingPassword, passwordEncrypted, passwordEncryptError} from './Pas
 export function encryptPassword(trayId, password, pendingRequest) {
   abortPendingRequest(pendingRequest)
 
-  return function (dispatch) {
+  return async (dispatch) => {
     if (!isBlank(password)) {
       const request = encrypt(password)
 
       dispatch(encryptingPassword(trayId, password, request))
 
-      return send(request).then((data) => {
+      try {
+        const data = await send(request)
         dispatch(passwordEncrypted(trayId, data.password))
         return data.password
-      }).catch((error) => {
+      } catch (error) {
         return dispatch(passwordEncryptError(trayId, [error.message]))
-      })
+      }
     } else {
       dispatch(passwordEncrypted(trayId, ''))
-      return Promise.resolve('')
+      return ''
     }
   }
 }

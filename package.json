@@ -17,7 +17,7 @@
     "clean": "rm -rf resources/public",
     "build": "webpack --progress --mode=development",
     "build-prod": "webpack --mode=production",
-    "test": "NODE_ENV=dev mocha --require ./test/client/Setup.js --require @babel/register -R mocha-circleci-reporter --reporter-options mochaFile=./target/client/test-results.xml --recursive test/client",
+    "test": "NODE_ENV=dev mocha --require @babel/polyfill --require ./test/client/Setup.js --require @babel/register -R mocha-circleci-reporter --reporter-options mochaFile=./target/client/test-results.xml --recursive test/client",
     "coverage": "nyc --reporter=html npm test",
     "lint": "npm run lintJs && npm run lintCss",
     "lintJs": "eslint ./src/client ./test/client",

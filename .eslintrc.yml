@@ -10,6 +10,7 @@ env:
   node: true
 
 parserOptions:
+  ecmaVersion: 8
   ecmaFeatures:
     modules: true
     jsx: true

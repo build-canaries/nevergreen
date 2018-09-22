@@ -1,18 +1,15 @@
-import LocalRepository from '../common/repo/LocalRepository'
+import {init, load} from '../common/repo/LocalRepository'
 import {filter} from '../common/repo/Data'
 import {migrate} from '../common/repo/Migrations'
 import {initalised, initalising} from './NevergreenActionCreators'
 
 export function initalise() {
-  return function (dispatch) {
+  return async (dispatch) => {
     dispatch(initalising())
 
-    return LocalRepository.init()
-      .then(LocalRepository.load)
-      .then((configuration) => {
-        return dispatch(initalised(filter(migrate(configuration))))
-      }).catch(() => {
-        // TODO: handle loading configuration failure
-      })
+    await init()
+    const configuration = await load()
+    return dispatch(initalised(filter(migrate(configuration))))
+    // TODO: handle loading configuration failure
   }
 }

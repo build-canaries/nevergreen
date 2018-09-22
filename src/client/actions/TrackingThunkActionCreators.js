@@ -10,7 +10,7 @@ function hasScheme(url) {
 }
 
 export function updateTrayId(tray, newTrayId, pendingRequest) {
-  return function (dispatch) {
+  return (dispatch) => {
     dispatch(setTrayId(tray.trayId, newTrayId))
     const updatedTray = {...tray, trayId: newTrayId}
     return dispatch(refreshTray(updatedTray, pendingRequest))
@@ -18,7 +18,7 @@ export function updateTrayId(tray, newTrayId, pendingRequest) {
 }
 
 export function addTray(enteredUrl, username, rawPassword, existingTrays) {
-  return function (dispatch) {
+  return async (dispatch) => {
     const url = hasScheme(enteredUrl) ? enteredUrl : 'http://' + enteredUrl
     const trayId = createId(url)
 
@@ -28,10 +28,9 @@ export function addTray(enteredUrl, username, rawPassword, existingTrays) {
       dispatch(trayAdded(trayId, url, username))
 
       if (!isBlank(rawPassword)) {
-        return dispatch(encryptPassword(trayId, rawPassword)).then((encryptedPassword) => {
-          const tray = {trayId, url, username, password: encryptedPassword}
-          return dispatch(refreshTray(tray, null, true))
-        })
+        const encryptedPassword = await dispatch(encryptPassword(trayId, rawPassword))
+        const tray = {trayId, url, username, password: encryptedPassword}
+        return dispatch(refreshTray(tray, null, true))
       } else {
         const tray = {trayId, url, username}
         return dispatch(refreshTray(tray, null, true))

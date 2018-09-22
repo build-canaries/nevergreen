@@ -25,10 +25,9 @@ class Timer extends Component {
     }
   }
 
-  run = () => {
-    return Promise.resolve(this.props.onTrigger())
-      .then(this.checkMounted)
-      .catch(this.checkMounted)
+  run = async () => {
+    await this.props.onTrigger()
+    this.checkMounted()
   }
 
   componentDidMount() {

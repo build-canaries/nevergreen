@@ -71,25 +71,31 @@ describe('GitHubGateway', function () {
 
   describe('send', function () {
 
-    it('should return the message from the body including the status on error', function () {
+    it('should return the message from the body including the status on error', async function () {
       gatewaySend.rejects({status: 500, body: {message: 'some-error'}})
-      return send().catch((actual) => {
-        expect(actual).to.have.property('message', '500 - some-error')
-      })
+      try {
+        await send()
+      } catch (err) {
+        expect(err).to.have.property('message', '500 - some-error')
+      }
     })
 
-    it('should return the body if it does not contain a message on error', function () {
+    it('should return the body if it does not contain a message on error', async function () {
       gatewaySend.rejects({status: 0, body: 'timeout'})
-      return send().catch((actual) => {
-        expect(actual).to.have.property('message', '0 - timeout')
-      })
+      try {
+        await send()
+      } catch (err) {
+        expect(err).to.have.property('message', '0 - timeout')
+      }
     })
 
-    it('should return the given status on error', function () {
+    it('should return the given status on error', async function () {
       gatewaySend.rejects({status: 500})
-      return send().catch((actual) => {
-        expect(actual).to.have.property('status', 500)
-      })
+      try {
+        await send()
+      } catch (err) {
+        expect(err).to.have.property('status', 500)
+      }
     })
   })
 })

@@ -29,25 +29,25 @@ function handleGistResponse(dispatch, res) {
 }
 
 export function restoreFromGitHub(gistId) {
-  return function (dispatch) {
+  return async (dispatch) => {
     dispatch(importing())
 
     if (isBlank(gistId)) {
       return dispatch(importError(['You must provide a gist ID to import from GitHub']))
     }
 
-    return send(getGist(gistId)).then((res) => {
-      return handleGistResponse(dispatch, res)
-    }).then((content) => {
+    try {
+      const res = await send(getGist(gistId))
+      const content = await handleGistResponse(dispatch, res)
       return dispatch(importData(content))
-    }).catch((error) => {
+    } catch (error) {
       return dispatch(importError([`Unable to import from GitHub because of an error: ${error.message}`]))
-    })
+    }
   }
 }
 
 export function uploadToGitHub(gistId, description, configuration, oauthToken) {
-  return function (dispatch) {
+  return async (dispatch) => {
     dispatch(exporting())
 
     if (isBlank(oauthToken)) {
@@ -60,7 +60,8 @@ export function uploadToGitHub(gistId, description, configuration, oauthToken) {
       ? createGist(description, configuration, oauthToken)
       : updateGist(gistId, description, configuration, oauthToken)
 
-    return send(req).then((gistJson) => {
+    try {
+      const gistJson = await send(req)
       const returnedGistId = gistJson.id
       const successMessage = createNewGist
         ? `Successfully created gist ${returnedGistId}`
@@ -68,8 +69,8 @@ export function uploadToGitHub(gistId, description, configuration, oauthToken) {
 
       dispatch(exportSuccess([successMessage]))
       return dispatch(gitHubSetGistId(returnedGistId))
-    }).catch((error) => {
+    } catch (error) {
       return dispatch(exportError([`Unable to upload to GitHub because of an error: ${error.message}`]))
-    })
+    }
   }
 }

@@ -42,10 +42,11 @@ export function get(url, headers = {}) {
     .timeout(TIMEOUT)
 }
 
-export function send(request) {
-  return request.then((res) => {
+export async function send(request) {
+  try {
+    const res = await request
     return res.body || res.text
-  }).catch((err) => {
+  } catch (err) {
     const url = _.get(err, 'url', 'unknown')
 
     log.error(`An exception was thrown when calling URL '${url}'`, err)
@@ -56,11 +57,11 @@ export function send(request) {
       : _.get(err, 'response.body') || _.get(err, 'message') || UNKNOWN_ERROR
 
     throw {status, body}
-  })
+  }
 }
 
-export function fakeResponse(body) {
-  return Promise.resolve({body})
+export async function fakeResponse(body) {
+  return {body}
 }
 
 export function abortPendingRequest(req) {

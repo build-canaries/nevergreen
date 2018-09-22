@@ -51,14 +51,18 @@ class AudioSettings extends Component {
     this.setState({audio: null, playing: false})
   }
 
-  play = () => {
+  play = async () => {
     const audio = new Audio(this.state.soundFx)
     this.setState({audio, errors: [], playing: true})
     audio.addEventListener('ended', this.audioStopped)
-    audio.play().catch((e) => this.setState({
-      errors: ['Unable to play broken build sound because of an error.', e.message],
-      playing: false
-    }))
+    try {
+      await audio.play()
+    } catch (e) {
+      this.setState({
+        errors: ['Unable to play broken build sound because of an error.', e.message],
+        playing: false
+      })
+    }
   }
 
   stop = () => {

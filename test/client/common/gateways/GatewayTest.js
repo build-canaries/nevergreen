@@ -12,72 +12,78 @@ describe('Gateway', function () {
 
   describe('send', function () {
 
-    it('should return the response body', function () {
+    it('should return the response body', async function () {
       const request = Promise.resolve({body: 'some-body'})
-      return send(request).then((actual) => {
-        expect(actual).to.equal('some-body')
-      })
+      const actual = await send(request)
+      expect(actual).to.equal('some-body')
     })
 
-    it('should return the response text if no body exists (this will be the case for plain/text)', function () {
+    it('should return the response text if no body exists (this will be the case for plain/text)', async function () {
       const request = Promise.resolve({text: 'some-text'})
-      return send(request).then((actual) => {
-        expect(actual).to.equal('some-text')
-      })
+      const actual = await send(request)
+      expect(actual).to.equal('some-text')
     })
 
-    it('should throw the status on error', function () {
+    it('should throw the status on error', async function () {
       const request = Promise.reject({status: 500})
-      return send(request).catch((actual) => {
-        expect(actual).to.have.property('status', 500)
-      })
+      try {
+        await send(request)
+      } catch (err) {
+        expect(err).to.have.property('status', 500)
+      }
     })
 
-    it('should throw the status on error set to 0 if it does not exist in the response', function () {
+    it('should throw the status on error set to 0 if it does not exist in the response', async function () {
       const request = Promise.reject({})
-      return send(request).catch((actual) => {
-        expect(actual).to.have.property('status', 0)
-      })
+      try {
+        await send(request)
+      } catch (err) {
+        expect(err).to.have.property('status', 0)
+      }
     })
 
-    it('should throw the body on error', function () {
+    it('should throw the body on error', async function () {
       const request = Promise.reject({response: {body: 'some-body'}})
-      return send(request).catch((actual) => {
-        expect(actual).to.have.property('body', 'some-body')
-      })
+      try {
+        await send(request)
+      } catch (err) {
+        expect(err).to.have.property('body', 'some-body')
+      }
     })
 
-    it('should throw the message on error if no body exists', function () {
+    it('should throw the message on error if no body exists', async function () {
       const request = Promise.reject({message: 'some-error'})
-      return send(request).catch((actual) => {
-        expect(actual).to.have.property('body', 'some-error')
-      })
+      try {
+        await send(request)
+      } catch (err) {
+        expect(err).to.have.property('body', 'some-error')
+      }
     })
 
-    it('should throw body as unknown if no response or message exists', function () {
+    it('should throw body as unknown if no response or message exists', async function () {
       const request = Promise.reject({})
-      return send(request).catch((actual) => {
-        expect(actual).to.have.property('body').that.equals(UNKNOWN_ERROR)
-      })
+      try {
+        await send(request)
+      } catch (err) {
+        expect(err).to.have.property('body').that.equals(UNKNOWN_ERROR)
+      }
     })
 
-    it('should throw the body on error as timeout when the request times out', function () {
+    it('should throw the body on error as timeout when the request times out', async function () {
       const request = Promise.reject({timeout: true})
-      return send(request).catch((actual) => {
-        expect(actual).to.have.property('body', TIMEOUT_ERROR)
-      })
+      try {
+        await send(request)
+      } catch (err) {
+        expect(err).to.have.property('body', TIMEOUT_ERROR)
+      }
     })
   })
 
   describe('fakeResponse', function () {
 
-    it('should return a resolved promise with the given body', function () {
-      const response = fakeResponse('whatever')
-      expect(response).to.be.a('promise')
-
-      return response.then((req) => {
-        expect(req).to.include({body: 'whatever'})
-      })
+    it('should return the given body', async function () {
+      const response = await fakeResponse('whatever')
+      expect(response).to.include({body: 'whatever'})
     })
   })
 

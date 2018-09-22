@@ -23,41 +23,36 @@ describe('SettingsThunkActionCreators', function () {
 
   describe('enableSystemNotifications', function () {
 
-    it('should just set show browser notifications to false when given false', function () {
-      return testThunk(enableSystemNotifications(false)).then(() => {
-        expect(setShowSystemNotifications).to.have.been.calledWith(false)
-      })
+    it('should just set show browser notifications to false when given false', async function () {
+      await testThunk(enableSystemNotifications(false))
+      expect(setShowSystemNotifications).to.have.been.calledWith(false)
     })
 
-    it('should dispatch system notification permission denied when permission is denied', function () {
+    it('should dispatch system notification permission denied when permission is denied', async function () {
       requestPermission.resolves('irrelevant')
       permissionGranted.returns(false)
-      return testThunk(enableSystemNotifications(true)).then(() => {
-        expect(systemNotificationPermissionDenied).to.have.been.called()
-      })
+      await testThunk(enableSystemNotifications(true))
+      expect(systemNotificationPermissionDenied).to.have.been.called()
     })
 
-    it('should dispatching requesting permission', function () {
+    it('should dispatching requesting permission', async function () {
       requestPermission.resolves('irrelevant')
-      return testThunk(enableSystemNotifications(true)).then(() => {
-        expect(requestingSystemNotificationPermission).to.have.been.called()
-      })
+      await testThunk(enableSystemNotifications(true))
+      expect(requestingSystemNotificationPermission).to.have.been.called()
     })
 
-    it('should set show browser notifications if permission is given', function () {
+    it('should set show browser notifications if permission is given', async function () {
       requestPermission.resolves('irrelevant')
       permissionGranted.returns(true)
-      return testThunk(enableSystemNotifications(true)).then(() => {
-        expect(setShowSystemNotifications).to.have.been.calledWith(true)
-      })
+      await testThunk(enableSystemNotifications(true))
+      expect(setShowSystemNotifications).to.have.been.calledWith(true)
     })
 
-    it('should show a browser notification when they are enabled', function () {
+    it('should show a browser notification when they are enabled', async function () {
       requestPermission.resolves('irrelevant')
       permissionGranted.returns(true)
-      return testThunk(enableSystemNotifications(true)).then(() => {
-        expect(sendSystemNotification).to.have.been.called()
-      })
+      await testThunk(enableSystemNotifications(true))
+      expect(sendSystemNotification).to.have.been.called()
     })
   })
 })

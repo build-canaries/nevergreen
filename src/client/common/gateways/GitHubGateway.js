@@ -39,13 +39,15 @@ export function getTruncatedFile(url) {
   return get(url, {Accept: 'text/plain; charset=utf-8'})
 }
 
-export function send(request) {
-  return gatewaySend(request).catch((err) => {
+export async function send(request) {
+  try {
+    return await gatewaySend(request)
+  } catch (err) {
     // GitHub errors look like this {"message": "", "documentation_url": ""}
     const status = err.status
     const serverMessage = _.get(err, 'body.message', err.body)
     const message = `${status} - ${serverMessage}`
 
     throw {status, message}
-  })
+  }
 }

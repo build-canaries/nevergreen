@@ -19,20 +19,18 @@ describe('NotificationThunkActionCreators', function () {
 
   describe('checkForNewVersion', function () {
 
-    it('should call the github releases api', function () {
+    it('should call the github releases api', async function () {
       send.resolves({})
       gt.returns(true)
-      return testThunk(checkForNewVersion()).then(() => {
-        expect(get).to.have.been.calledWith('https://api.github.com/repos/build-canaries/nevergreen/releases/latest')
-      })
+      await testThunk(checkForNewVersion())
+      expect(get).to.have.been.calledWith('https://api.github.com/repos/build-canaries/nevergreen/releases/latest')
     })
 
-    it('should dispatch notification if a new version is available', function () {
+    it('should dispatch notification if a new version is available', async function () {
       send.resolves({})
       gt.returns(true)
-      return testThunk(checkForNewVersion()).then(() => {
-        expect(notify).to.have.been.called()
-      })
+      await testThunk(checkForNewVersion())
+      expect(notify).to.have.been.called()
     })
   })
 })

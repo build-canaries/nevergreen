@@ -21,62 +21,54 @@ describe('PasswordThunkActionCreators', function () {
 
   describe('encryptPassword', function () {
 
-    it('should abort pending request', function () {
+    it('should abort pending request', async function () {
       send.resolves('')
-      return testThunk(encryptPassword('irrelevant', 'irrelevant', 'some-pending-request')).then(() => {
-        expect(abortPendingRequest).to.have.been.calledWith('some-pending-request')
-      })
+      await testThunk(encryptPassword('irrelevant', 'irrelevant', 'some-pending-request'))
+      expect(abortPendingRequest).to.have.been.calledWith('some-pending-request')
     })
 
-    it('should dispatch encrypting password action', function () {
+    it('should dispatch encrypting password action', async function () {
       encrypt.returns({})
       send.resolves('')
       encrypt.returns('encryption-request')
 
-      return testThunk(encryptPassword('some-tray-id', 'some-password')).then(() => {
-        expect(encryptingPassword).to.have.been.calledWith('some-tray-id', 'some-password', 'encryption-request')
-      })
+      await testThunk(encryptPassword('some-tray-id', 'some-password'))
+      expect(encryptingPassword).to.have.been.calledWith('some-tray-id', 'some-password', 'encryption-request')
     })
 
-    it('should dispatch password encrypted action', function () {
+    it('should dispatch password encrypted action', async function () {
       send.resolves({password: 'some-encrypted-password'})
-      return testThunk(encryptPassword('some-tray-id', 'irrelevant')).then(() => {
-        expect(passwordEncrypted).to.have.been.calledWith('some-tray-id', 'some-encrypted-password')
-      })
+      await testThunk(encryptPassword('some-tray-id', 'irrelevant'))
+      expect(passwordEncrypted).to.have.been.calledWith('some-tray-id', 'some-encrypted-password')
     })
 
-    it('should dispatch password encrypted action on success', function () {
+    it('should dispatch password encrypted action on success', async function () {
       send.resolves({password: 'some-encrypted-password'})
-      return testThunk(encryptPassword('some-tray-id', 'irrelevant')).then(() => {
-        expect(passwordEncrypted).to.have.been.calledWith('some-tray-id', 'some-encrypted-password')
-      })
+      await testThunk(encryptPassword('some-tray-id', 'irrelevant'))
+      expect(passwordEncrypted).to.have.been.calledWith('some-tray-id', 'some-encrypted-password')
     })
 
-    it('should return the encrypted password on success because add tray needs to use it', function () {
+    it('should return the encrypted password on success because add tray needs to use it', async function () {
       send.resolves({password: 'some-encrypted-password'})
-      return testThunk(encryptPassword('some-tray-id', 'irrelevant')).then((actual) => {
-        expect(actual).to.equal('some-encrypted-password')
-      })
+      const actual = await testThunk(encryptPassword('some-tray-id', 'irrelevant'))
+      expect(actual).to.equal('some-encrypted-password')
     })
 
-    it('should dispatch password encrypted action if password is blank without calling the gateway', function () {
-      return testThunk(encryptPassword('some-tray-id', '')).then(() => {
-        expect(passwordEncrypted).to.have.been.calledWith('some-tray-id', '')
-        expect(send).to.not.have.been.called()
-      })
+    it('should dispatch password encrypted action if password is blank without calling the gateway', async function () {
+      await testThunk(encryptPassword('some-tray-id', ''))
+      expect(passwordEncrypted).to.have.been.calledWith('some-tray-id', '')
+      expect(send).to.not.have.been.called()
     })
 
-    it('should return a blank string if password is blank because add tray needs to use it', function () {
-      return testThunk(encryptPassword('some-tray-id', '')).then((actual) => {
-        expect(actual).to.equal('')
-      })
+    it('should return a blank string if password is blank because add tray needs to use it', async function () {
+      const actual = await testThunk(encryptPassword('some-tray-id', ''))
+      expect(actual).to.equal('')
     })
 
-    it('should dispatch password encrypt error action if the request fails', function () {
+    it('should dispatch password encrypt error action if the request fails', async function () {
       send.rejects({message: 'some-error'})
-      return testThunk(encryptPassword('some-tray-id', 'irrelevant')).then(() => {
-        expect(passwordEncryptError).to.have.been.calledWith('some-tray-id', ['some-error'])
-      })
+      await testThunk(encryptPassword('some-tray-id', 'irrelevant'))
+      expect(passwordEncryptError).to.have.been.calledWith('some-tray-id', ['some-error'])
     })
   })
 })

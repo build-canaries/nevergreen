@@ -41,40 +41,35 @@ describe('GitHubThunkActionCreators', function () {
       description: 'some-description'
     }
 
-    it('should dispatch importing', function () {
+    it('should dispatch importing', async function () {
       send.resolves(validResponse)
-      return testThunk(restoreFromGitHub('irrelevant')).then(() => {
-        expect(importing).to.have.been.called()
-      })
+      await testThunk(restoreFromGitHub('irrelevant'))
+      expect(importing).to.have.been.called()
     })
 
-    it('should dispatch import error if gist ID is null', function () {
-      return testThunk(restoreFromGitHub(null)).then(() => {
-        expect(importError).to.have.been.calledWithMatch(containsOnlyMessage('You must provide a gist ID to import from GitHub'))
-      })
+    it('should dispatch import error if gist ID is null', async function () {
+      await testThunk(restoreFromGitHub(null))
+      expect(importError).to.have.been.calledWithMatch(containsOnlyMessage('You must provide a gist ID to import from GitHub'))
     })
 
-    it('should dispatch import error if gist ID is blank', function () {
-      return testThunk(restoreFromGitHub(' ')).then(() => {
-        expect(importError).to.have.been.calledWithMatch(containsOnlyMessage('You must provide a gist ID to import from GitHub'))
-      })
+    it('should dispatch import error if gist ID is blank', async function () {
+      await testThunk(restoreFromGitHub(' '))
+      expect(importError).to.have.been.calledWithMatch(containsOnlyMessage('You must provide a gist ID to import from GitHub'))
     })
 
-    it('should dispatch import error if the gist can not be fetched', function () {
+    it('should dispatch import error if the gist can not be fetched', async function () {
       send.rejects({message: '{"message": "some-error"}'})
-      return testThunk(restoreFromGitHub('some-id')).then(() => {
-        expect(importError).to.have.been.calledWithMatch(containsMessage('some-error'))
-      })
+      await testThunk(restoreFromGitHub('some-id'))
+      expect(importError).to.have.been.calledWithMatch(containsMessage('some-error'))
     })
 
-    it('should dispatch import error if the gist does not contain a configuration.json file', function () {
+    it('should dispatch import error if the gist does not contain a configuration.json file', async function () {
       send.resolves({files: {}})
-      return testThunk(restoreFromGitHub('some-id')).then(() => {
-        expect(importError).to.have.been.calledWithMatch(containsMessage('gist does not contain the required configuration.json file'))
-      })
+      await testThunk(restoreFromGitHub('some-id'))
+      expect(importError).to.have.been.calledWithMatch(containsMessage('gist does not contain the required configuration.json file'))
     })
 
-    it('should dispatch import error if the gist configuration.json is over 10mb as it can only be fetched via git cloning', function () {
+    it('should dispatch import error if the gist configuration.json is over 10mb as it can only be fetched via git cloning', async function () {
       send.resolves({
         files: {
           'configuration.json': {
@@ -84,12 +79,11 @@ describe('GitHubThunkActionCreators', function () {
           }
         }
       })
-      return testThunk(restoreFromGitHub('some-id')).then(() => {
-        expect(importError).to.have.been.calledWithMatch(containsMessage('gist configuration.json file is too big to fetch without git cloning, size 10485761 bytes'))
-      })
+      await testThunk(restoreFromGitHub('some-id'))
+      expect(importError).to.have.been.calledWithMatch(containsMessage('gist configuration.json file is too big to fetch without git cloning, size 10485761 bytes'))
     })
 
-    it('should fetch the gist configuration.json if it is truncated but under 10mb', function () {
+    it('should fetch the gist configuration.json if it is truncated but under 10mb', async function () {
       send.onFirstCall().resolves({
         files: {
           'configuration.json': {
@@ -104,88 +98,77 @@ describe('GitHubThunkActionCreators', function () {
       getTruncatedFile.returns('some-request')
       send.onSecondCall().resolves('some-raw-file-content')
 
-      return testThunk(restoreFromGitHub('some-id')).then(() => {
-        expect(gitHubSetDescription).to.have.been.calledWith('some-description')
-        expect(getTruncatedFile).to.have.been.calledWith('some-raw-url')
-        expect(send).to.have.been.calledWith('some-request')
-        expect(importData).to.have.been.calledWith('some-raw-file-content')
-      })
+      await testThunk(restoreFromGitHub('some-id'))
+      expect(gitHubSetDescription).to.have.been.calledWith('some-description')
+      expect(getTruncatedFile).to.have.been.calledWith('some-raw-url')
+      expect(send).to.have.been.calledWith('some-request')
+      expect(importData).to.have.been.calledWith('some-raw-file-content')
     })
 
-    it('should dispatch import data on successful fetch of the gist', function () {
+    it('should dispatch import data on successful fetch of the gist', async function () {
       send.resolves(validResponse)
-      return testThunk(restoreFromGitHub('irrelevant')).then(() => {
-        expect(gitHubSetDescription).to.have.been.calledWith('some-description')
-        expect(importData).to.have.been.calledWith('some-content')
-      })
+      await testThunk(restoreFromGitHub('irrelevant'))
+      expect(gitHubSetDescription).to.have.been.calledWith('some-description')
+      expect(importData).to.have.been.calledWith('some-content')
     })
   })
 
   describe('uploadToGitHub', function () {
 
-    it('should dispatch exporting action', function () {
+    it('should dispatch exporting action', async function () {
       send.resolves({id: 'some-id'})
-      return testThunk(uploadToGitHub('irrelevant', 'irrelevant', 'irrelevant', 'irrelevant')).then(() => {
-        expect(exporting).to.have.been.called()
-      })
+      await testThunk(uploadToGitHub('irrelevant', 'irrelevant', 'irrelevant', 'irrelevant'))
+      expect(exporting).to.have.been.called()
     })
 
-    it('should dispatch export error action if the gist can not be created', function () {
+    it('should dispatch export error action if the gist can not be created', async function () {
       send.rejects({message: 'some-error'})
-      return testThunk(uploadToGitHub('irrelevant', 'irrelevant', 'irrelevant', 'not-blank')).then(() => {
-        expect(exportError).to.have.been.calledWithMatch(containsMessage('Unable to upload to GitHub because of an error: some-error'))
-      })
+      await testThunk(uploadToGitHub('irrelevant', 'irrelevant', 'irrelevant', 'not-blank'))
+      expect(exportError).to.have.been.calledWithMatch(containsMessage('Unable to upload to GitHub because of an error: some-error'))
     })
 
-    it('should dispatch export error action if access token is blank', function () {
-      return testThunk(uploadToGitHub('irrelevant', 'irrelevant', 'irrelevant', '')).then(() => {
-        expect(exportError).to.have.been.calledWithMatch(containsOnlyMessage('You must provide an access token to upload to GitHub'))
-      })
+    it('should dispatch export error action if access token is blank', async function () {
+      await testThunk(uploadToGitHub('irrelevant', 'irrelevant', 'irrelevant', ''))
+      expect(exportError).to.have.been.calledWithMatch(containsOnlyMessage('You must provide an access token to upload to GitHub'))
     })
 
-    it('should create a gist if no ID is given', function () {
+    it('should create a gist if no ID is given', async function () {
       send.resolves({id: 'irrelevant'})
-      return testThunk(uploadToGitHub(null, 'some-description', 'some-config', 'some-token')).then(() => {
-        expect(updateGist).to.not.have.been.called()
-        expect(createGist).to.have.been.called('some-description', 'some-config', 'some-token')
-      })
+      await testThunk(uploadToGitHub(null, 'some-description', 'some-config', 'some-token'))
+      expect(updateGist).to.not.have.been.called()
+      expect(createGist).to.have.been.called('some-description', 'some-config', 'some-token')
     })
 
-    it('should create a gist if a blank ID is given', function () {
+    it('should create a gist if a blank ID is given', async function () {
       send.resolves({id: 'irrelevant'})
-      return testThunk(uploadToGitHub(' ', 'some-description', 'some-config', 'some-token')).then(() => {
-        expect(updateGist).to.not.have.been.called()
-        expect(createGist).to.have.been.called('some-description', 'some-config', 'some-token')
-      })
+      await testThunk(uploadToGitHub(' ', 'some-description', 'some-config', 'some-token'))
+      expect(updateGist).to.not.have.been.called()
+      expect(createGist).to.have.been.called('some-description', 'some-config', 'some-token')
     })
 
-    it('should update the gist if an id is given', function () {
+    it('should update the gist if an id is given', async function () {
       send.resolves({id: 'irrelevant'})
-      return testThunk(uploadToGitHub('some-id', 'some-description', 'some-config', 'some-token')).then(() => {
-        expect(updateGist).to.have.been.called('some-id', 'some-description', 'some-config', 'some-token')
-        expect(createGist).to.not.have.been.called()
-      })
+      await testThunk(uploadToGitHub('some-id', 'some-description', 'some-config', 'some-token'))
+      expect(updateGist).to.have.been.called('some-id', 'some-description', 'some-config', 'some-token')
+      expect(createGist).to.not.have.been.called()
     })
 
-    it('should dispatch export success on successful create of the gist', function () {
+    it('should dispatch export success on successful create of the gist', async function () {
       send.resolves({id: 'some-id'})
-      return testThunk(uploadToGitHub(null, 'irrelevant', 'irrelevant', 'not-blank')).then(() => {
-        expect(exportSuccess).to.have.been.calledWithMatch(containsOnlyMessage('created gist some-id'))
-      })
+      await testThunk(uploadToGitHub(null, 'irrelevant', 'irrelevant', 'not-blank'))
+      expect(exportSuccess).to.have.been.calledWithMatch(containsOnlyMessage('created gist some-id'))
     })
 
-    it('should dispatch export success on successful update of the gist', function () {
+    it('should dispatch export success on successful update of the gist', async function () {
       send.resolves({id: 'some-id'})
-      return testThunk(uploadToGitHub('irrelevant', 'irrelevant', 'irrelevant', 'not-blank')).then(() => {
-        expect(exportSuccess).to.have.been.calledWithMatch(containsOnlyMessage('updated gist some-id'))
-      })
+      await testThunk(uploadToGitHub('irrelevant', 'irrelevant', 'irrelevant', 'not-blank'))
+      expect(exportSuccess).to.have.been.calledWithMatch(containsOnlyMessage('updated gist some-id'))
     })
 
-    it('should dispatch GitHub set ID with the response ID on successful create/update of the gist', function () {
+    it('should dispatch GitHub set ID with the response ID on successful create/update of the gist', async function () {
       send.resolves({id: 'some-id'})
-      return testThunk(uploadToGitHub('irrelevant', 'irrelevant', 'irrelevant', 'not-blank')).then(() => {
-        expect(gitHubSetGistId).to.have.been.calledWith('some-id')
-      })
+      await testThunk(uploadToGitHub('irrelevant', 'irrelevant', 'irrelevant', 'not-blank'))
+      expect(gitHubSetGistId).to.have.been.calledWith('some-id')
     })
   })
 })

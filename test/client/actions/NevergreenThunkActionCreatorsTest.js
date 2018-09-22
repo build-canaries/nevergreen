@@ -20,28 +20,25 @@ describe('NevergreenThunkActionCreators', function () {
 
   describe('initalise', function () {
 
-    it('should dispatch initalising action', function () {
+    it('should dispatch initalising action', async function () {
       init.resolves({})
       load.resolves({})
-      return testThunk(initalise()).then(() => {
-        expect(initalising).to.have.been.called()
-      })
+      await testThunk(initalise())
+      expect(initalising).to.have.been.called()
     })
 
-    it('should initalise the local repository', function () {
+    it('should initalise the local repository', async function () {
       init.resolves({})
       load.resolves({})
-      return testThunk(initalise()).then(() => {
-        expect(init).to.have.been.called()
-      })
+      await testThunk(initalise())
+      expect(init).to.have.been.called()
     })
 
-    it('should dispatch initalised action once configuration is loaded', function () {
+    it('should dispatch initalised action once configuration is loaded', async function () {
       init.resolves({})
       load.resolves({})
-      return testThunk(initalise()).then(() => {
-        expect(initalised).to.have.been.called()
-      })
+      await testThunk(initalise())
+      expect(initalised).to.have.been.called()
     })
   })
 })

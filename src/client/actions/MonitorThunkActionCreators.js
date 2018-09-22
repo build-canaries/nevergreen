@@ -37,19 +37,19 @@ function addThisBuildTime(project, currentProjects) {
 export function fetchInteresting(trays, selected, currentProjects, pendingRequest) {
   abortPendingRequest(pendingRequest)
 
-  return function (dispatch) {
+  return async (dispatch) => {
     const request = interesting(trays, selected)
 
     dispatch(interestingProjectsFetching(request))
-
-    return send(request).then((allProjects) => {
+    try {
+      const allProjects = await send(request)
       const {okProjects, errorProjects} = extract(allProjects)
       const enrichedProjects = okProjects.map((project) => addThisBuildTime(project, currentProjects))
       const errorMessages = errorProjects.map((project) => toErrorString(trays, project))
 
       return dispatch(interestingProjects(enrichedProjects, errorMessages))
-    }).catch((error) => {
+    } catch (error) {
       return dispatch(interestingProjects([], [error.message]))
-    })
+    }
   }
 }

@@ -17,27 +17,25 @@ export function permissionGranted(result) {
   }
 }
 
-export function requestPermission() {
+export async function requestPermission() {
   if (permissionGranted()) {
     info('Notification API permission already granted')
-    return Promise.resolve(NOTIFICATION_PERMISSION_GRANTED)
+    return NOTIFICATION_PERMISSION_GRANTED
   }
 
   if (supported()) {
-    return Notification.requestPermission().then((result) => {
-      info('Notification API permission request result', result)
-      return result
-    })
+    const result = await Notification.requestPermission()
+    info('Notification API permission request result', result)
+    return result
   }
 
   info('Notification API not supported')
-  return Promise.resolve(NOTIFICATION_PERMISSION_DENIED)
+  return NOTIFICATION_PERMISSION_DENIED
 }
 
-export function sendSystemNotification({title = 'Nevergreen', body, badge = '/mstile-144x144.png', icon = '/android-chrome-192x192.png', tag}) {
+export async function sendSystemNotification({title = 'Nevergreen', body, badge = '/mstile-144x144.png', icon = '/android-chrome-192x192.png', tag}) {
   if (supported() && permissionGranted()) {
-    navigator.serviceWorker.ready.then((registration) => {
-      return registration.showNotification(title, {body, badge, icon, tag})
-    })
+    const registration = await navigator.serviceWorker.ready
+    return registration.showNotification(title, {body, badge, icon, tag})
   }
 }

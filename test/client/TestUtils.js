@@ -62,17 +62,18 @@ export function forNonStrings(fn) {
   _.forOwn(NON_STRINGS, fn)
 }
 
-export function testThunk(thunkion) {
+export async function testThunk(thunkion) {
   const dispatch = mocks.stub()
   dispatch.returnsArg(0)
 
-  return Promise.resolve(thunkion(dispatch)).then((result) => {
+  try {
+    const result = await thunkion(dispatch)
     expect(dispatch).to.have.been.called()
     return result
-  }).catch(() => {
+  } catch (e) {
     expect.fail(
       'Unhandled rejected Promise',
       'A catch() block',
       'Thunks should catch() rejected Promises and dispatch error actions')
-  })
+  }
 }

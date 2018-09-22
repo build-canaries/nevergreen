@@ -7,7 +7,7 @@ import createHistory from 'history/createBrowserHistory'
 import {Redirect, Route, Router, Switch} from 'react-router-dom'
 import thunkMiddleware from 'redux-thunk'
 import {Map} from 'immutable'
-import LocalRepository from './common/repo/LocalRepository'
+import {save as repositorySave} from './common/repo/LocalRepository'
 import {reducer} from './reducers/Reducer'
 import {filter} from './common/repo/Data'
 import {navigated} from './actions/NevergreenActionCreators'
@@ -30,12 +30,10 @@ let store = createStore(reducer, initialState, compose(
   window.devToolsExtension ? window.devToolsExtension() : (f) => f
 ))
 
-const save = () => {
+const save = async () => {
   const state = store.getState()
   if (state.getIn(['nevergreen', 'loaded'], false)) {
-    LocalRepository.save(filter(state.toJS())).catch(() => {
-      // TODO: handle save failure
-    })
+    await repositorySave(filter(state.toJS()))
   }
 }
 const saveDebounced = _.debounce(save, 200, {maxWait: ONE_SECOND})

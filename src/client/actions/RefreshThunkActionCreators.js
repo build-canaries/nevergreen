@@ -8,13 +8,14 @@ import {projectsFetched, projectsFetchError, projectsFetching} from './TrackingA
 export function refreshTray(tray, pendingRequest, selectAll = false) {
   abortPendingRequest(pendingRequest)
 
-  return function (dispatch) {
+  return async (dispatch) => {
     const trayId = tray.trayId
     const request = fetchAll([tray])
 
     dispatch(projectsFetching(trayId, request))
 
-    return send(request).then((allProjects) => {
+    try {
+      const allProjects = await send(request)
       const {okProjects, errorProjects} = extract(allProjects)
       const errorMessages = errorProjects.map((project) => project.errorMessage)
 
@@ -23,8 +24,8 @@ export function refreshTray(tray, pendingRequest, selectAll = false) {
       } else {
         return dispatch(projectsFetchError(trayId, errorMessages))
       }
-    }).catch((error) => {
+    } catch (error) {
       return dispatch(projectsFetchError(trayId, [error.message]))
-    })
+    }
   }
 }

@@ -21,75 +21,68 @@ describe('TrackingThunkActionCreators', function () {
 
   describe('updateTrayId', function () {
 
-    it('should dispatch set tray id', function () {
+    it('should dispatch set tray id', async function () {
       const tray = {trayId: 'old-tray-id'}
-      return testThunk(updateTrayId(tray, 'new-tray-id')).then(() => {
-        expect(setTrayId).to.have.been.calledWith('old-tray-id', 'new-tray-id')
-      })
+      await testThunk(updateTrayId(tray, 'new-tray-id'))
+      expect(setTrayId).to.have.been.calledWith('old-tray-id', 'new-tray-id')
     })
 
-    it('should dispatch refresh tray', function () {
+    it('should dispatch refresh tray', async function () {
       const tray = {trayId: 'old-tray-id'}
-      return testThunk(updateTrayId(tray, 'new-tray-id')).then(() => {
-        expect(refreshTray).to.have.been.calledWith({...tray, trayId: 'new-tray-id'})
-      })
+      await testThunk(updateTrayId(tray, 'new-tray-id'))
+      expect(refreshTray).to.have.been.calledWith({...tray, trayId: 'new-tray-id'})
     })
   })
 
   describe('addTray', function () {
 
-    it('should dispatch highlight tray action if the tray already exists', function () {
+    it('should dispatch highlight tray action if the tray already exists', async function () {
       createId.withArgs('http://url').returns('some-id')
 
-      return testThunk(addTray('http://url', 'irrelevant', 'irrelevant', ['some-id'])).then(() => {
-        expect(highlightTray).to.have.been.calledWith('some-id')
-      })
+      await testThunk(addTray('http://url', 'irrelevant', 'irrelevant', ['some-id']))
+      expect(highlightTray).to.have.been.calledWith('some-id')
     })
 
     describe('tray does not exist already', function () {
 
-      it('should dispatch tray added action', function () {
+      it('should dispatch tray added action', async function () {
         createId.withArgs('http://url').returns('some-id')
         encryptPassword.resolves('irrelevant')
 
-        return testThunk(addTray('http://url', 'some-username', 'irrelevant', [])).then(() => {
-          expect(trayAdded).to.have.been.calledWith('some-id', 'http://url', 'some-username')
-        })
+        await testThunk(addTray('http://url', 'some-username', 'irrelevant', []))
+        expect(trayAdded).to.have.been.calledWith('some-id', 'http://url', 'some-username')
       })
 
-      it('should dispatch encrypt password if the password given is not blank', function () {
+      it('should dispatch encrypt password if the password given is not blank', async function () {
         createId.withArgs('http://url').returns('some-id')
         encryptPassword.resolves('irrelevant')
 
-        return testThunk(addTray('http://url', 'some-username', 'some-password', [])).then(() => {
-          expect(encryptPassword).to.have.been.calledWith('some-id', 'some-password')
-        })
+        await testThunk(addTray('http://url', 'some-username', 'some-password', []))
+        expect(encryptPassword).to.have.been.calledWith('some-id', 'some-password')
       })
 
-      it('should dispatch refresh tray once the password is encrypted', function () {
+      it('should dispatch refresh tray once the password is encrypted', async function () {
         createId.withArgs('http://url').returns('some-id')
         encryptPassword.resolves('encrypted-password')
 
-        return testThunk(addTray('http://url', 'some-username', 'some-password', [])).then(() => {
-          expect(refreshTray).to.have.been.calledWith({
-            trayId: 'some-id',
-            url: 'http://url',
-            username: 'some-username',
-            password: 'encrypted-password'
-          }, null, true)
-        })
+        await testThunk(addTray('http://url', 'some-username', 'some-password', []))
+        expect(refreshTray).to.have.been.calledWith({
+          trayId: 'some-id',
+          url: 'http://url',
+          username: 'some-username',
+          password: 'encrypted-password'
+        }, null, true)
       })
 
-      it('should dispatch refresh tray if the password is blank', function () {
+      it('should dispatch refresh tray if the password is blank', async function () {
         createId.withArgs('http://url').returns('some-id')
 
-        return testThunk(addTray('http://url', 'some-username', '', [])).then(() => {
-          expect(refreshTray).to.have.been.calledWith({
-            trayId: 'some-id',
-            url: 'http://url',
-            username: 'some-username'
-          }, null, true)
-        })
+        await testThunk(addTray('http://url', 'some-username', '', []))
+        expect(refreshTray).to.have.been.calledWith({
+          trayId: 'some-id',
+          url: 'http://url',
+          username: 'some-username'
+        }, null, true)
       })
     })
   })

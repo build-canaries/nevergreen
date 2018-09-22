@@ -1,8 +1,9 @@
 import {error, info} from './common/Logger'
 
-export function registerServiceWorker(notify) {
+export async function registerServiceWorker(notify) {
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js').then((registration) => {
+    try {
+      const registration = await navigator.serviceWorker.register('/service-worker.js')
       registration.onupdatefound = () => {
         const installingWorker = registration.installing
 
@@ -22,8 +23,8 @@ export function registerServiceWorker(notify) {
         }
       }
       info('Service worker registration successful', registration)
-    }).catch((err) => {
+    } catch (err) {
       error('Service worker registration failed', err)
-    })
+    }
   }
 }
