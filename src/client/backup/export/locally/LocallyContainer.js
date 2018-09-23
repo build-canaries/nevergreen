@@ -7,8 +7,10 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({exportSuccess, exportError}, dispatch)
 }
 
-function mapStateToProps(store, ownProps) {
-  return {configuration: ownProps.configuration}
+function mapStateToProps(state, ownProps) {
+  return {
+    configuration: ownProps.configuration
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Locally)

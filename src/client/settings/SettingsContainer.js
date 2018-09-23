@@ -15,6 +15,19 @@ import {
 import Settings from './Settings'
 import {supported} from '../common/SystemNotifications'
 import {enableSystemNotifications} from '../actions/SettingsThunkActionCreators'
+import {
+  brokenBuildSoundFx,
+  maxProjectsToShow,
+  playBrokenBuildSoundFx,
+  refreshTime,
+  showBrokenBuildTime,
+  showBuildLabel,
+  showBuildTime,
+  showSystemNotifications,
+  showTrayName,
+  systemNotificationPermissionDenied,
+  systemNotificationRequestingPermission
+} from '../Selectors'
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
@@ -30,23 +43,21 @@ function mapDispatchToProps(dispatch) {
   }, dispatch)
 }
 
-function mapStateToProps(store) {
-  const settings = store.get('audioVisual')
+function mapStateToProps(state) {
   return {
-    showTrayName: settings.get('showTrayName'),
-    showBuildTime: settings.get('showBuildTime'),
-    showBrokenBuildTime: settings.get('showBrokenBuildTime'),
-    playBrokenBuildSoundFx: settings.get('playBrokenBuildSoundFx'),
-    showBuildLabel: settings.get('showBuildLabel'),
+    showTrayName: showTrayName(state),
+    showBuildTime: showBuildTime(state),
+    showBrokenBuildTime: showBrokenBuildTime(state),
+    playBrokenBuildSoundFx: playBrokenBuildSoundFx(state),
+    showBuildLabel: showBuildLabel(state),
     systemNotificationsSupported: supported(),
-    showSystemNotifications: settings.get('showSystemNotifications'),
-    systemNotificationRequestingPermission: settings.get('systemNotificationRequestingPermission'),
-    systemNotificationPermissionDenied: settings.get('systemNotificationPermissionDenied'),
-    brokenBuildSoundFx: settings.get('brokenBuildSoundFx'),
-    setShowTrayName: settings.get('setShowTrayName'),
-    refreshTime: settings.get('refreshTime'),
+    showSystemNotifications: showSystemNotifications(state),
+    systemNotificationRequestingPermission: systemNotificationRequestingPermission(state),
+    systemNotificationPermissionDenied: systemNotificationPermissionDenied(state),
+    brokenBuildSoundFx: brokenBuildSoundFx(state),
+    refreshTime: refreshTime(state),
     validRefreshTimes: VALID_REFRESH_TIMES,
-    maxProjectsToShow: settings.get('maxProjectsToShow'),
+    maxProjectsToShow: maxProjectsToShow(state),
     validNumberOfProjectsToShow: VALID_PROJECTS_TO_SHOW
   }
 }

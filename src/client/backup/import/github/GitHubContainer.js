@@ -3,15 +3,16 @@ import {bindActionCreators} from 'redux'
 import {restoreFromGitHub} from '../../../actions/GitHubThunkActionCreators'
 import {gitHubSetGistId} from '../../../actions/GitHubActionCreators'
 import GitHub from './GitHub'
+import {gistId, importLoaded} from '../../../Selectors'
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({restoreFromGitHub, gitHubSetGistId}, dispatch)
 }
 
-function mapStateToProps(store) {
+function mapStateToProps(state) {
   return {
-    loaded: store.getIn(['backupImport', 'loaded']),
-    gistId: store.getIn(['github', 'gistId'])
+    loaded: importLoaded(state),
+    gistId: gistId(state)
   }
 }
 

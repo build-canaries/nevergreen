@@ -4,27 +4,33 @@ import {toJS} from '../../common/ImmutableToJs'
 import {selectProject} from '../../actions/TrackingActionCreators'
 import {refreshTray} from '../../actions/RefreshThunkActionCreators'
 import AvailableProjects from './AvailableProjects'
+import {
+  projects,
+  selectedProjects,
+  trayErrors,
+  trayPassword,
+  trayPendingRequest,
+  trayServerType,
+  trayTimestamp,
+  trayUrl,
+  trayUsername
+} from '../../Selectors'
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({refreshTray, selectProject}, dispatch)
 }
 
-function mapStateToProps(store, ownProps) {
-  const tray = store.getIn(['trays', ownProps.trayId])
-  const projects = store.getIn(['projects', ownProps.trayId]).toList()
-  const selected = store.getIn(['selected', ownProps.trayId])
+function mapStateToProps(state, {trayId}) {
   return {
-    trayId: ownProps.trayId,
-    index: ownProps.index,
-    url: tray.get('url'),
-    username: tray.get('username'),
-    password: tray.get('password'),
-    serverType: tray.get('serverType'),
-    errors: tray.get('errors'),
-    timestamp: tray.get('timestamp'),
-    pendingRequest: tray.get('pendingRequest'),
-    projects,
-    selected
+    url: trayUrl(state, trayId),
+    username: trayUsername(state, trayId),
+    password: trayPassword(state, trayId),
+    serverType: trayServerType(state, trayId),
+    errors: trayErrors(state, trayId),
+    timestamp: trayTimestamp(state, trayId),
+    pendingRequest: trayPendingRequest(state, trayId),
+    projects: projects(state, trayId),
+    selected: selectedProjects(state, trayId)
   }
 }
 

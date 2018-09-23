@@ -3,17 +3,18 @@ import Export from './Export'
 import {filter} from '../../common/repo/Data'
 import {toJson} from '../../common/Json'
 import {toJS} from '../../common/ImmutableToJs'
+import {exportErrors, exportInfos, exportLoaded} from '../../Selectors'
 
 function mapDispatchToProps() {
   return {}
 }
 
-function mapStateToProps(store) {
+function mapStateToProps(state) {
   return {
-    loaded: store.getIn(['backupExport', 'loaded']),
-    errors: store.getIn(['backupExport', 'errors']),
-    infos: store.getIn(['backupExport', 'infos']),
-    configuration: toJson(filter(store.toJS()))
+    loaded: exportLoaded(state),
+    errors: exportErrors(state),
+    infos: exportInfos(state),
+    configuration: toJson(filter(state.toJS()))
   }
 }
 

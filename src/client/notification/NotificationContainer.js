@@ -3,15 +3,16 @@ import {bindActionCreators} from 'redux'
 import {dismiss} from '../actions/NotificationActionCreators'
 import Notification from './Notification'
 import {withRouter} from 'react-router-dom'
+import {fullScreen, notification} from '../Selectors'
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({dismiss}, dispatch)
 }
 
-function mapStateToProps(store) {
+function mapStateToProps(state) {
   return {
-    notification: store.get('notification'),
-    fullScreen: store.getIn(['nevergreen', 'fullScreen'])
+    notification: notification(state),
+    fullScreen: fullScreen(state)
   }
 }
 

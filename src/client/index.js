@@ -21,6 +21,7 @@ import HelpContainer from './help/HelpContainer'
 import StyleGuide from './styleGuide/StyleGuide'
 import _ from 'lodash'
 import UnhandledError from './UnhandledError'
+import {loaded} from './Selectors'
 
 const ONE_SECOND = 1000
 
@@ -32,7 +33,7 @@ let store = createStore(reducer, initialState, compose(
 
 const save = async () => {
   const state = store.getState()
-  if (state.getIn(['nevergreen', 'loaded'], false)) {
+  if (loaded(state) === true) {
     await repositorySave(filter(state.toJS()))
   }
 }

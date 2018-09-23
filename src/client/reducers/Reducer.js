@@ -12,17 +12,18 @@ import {reduce as selected} from './SelectedReducer'
 import {reduce as shortcut} from './ShortcutReducer'
 import {reduce as notification} from './NotificationReducer'
 
+/* keep these in alphabetical order as it makes debugging in redux dev tools easier */
 export const reducer = combineReducers({
-  nevergreen,
   audioVisual,
-  trays,
-  projects,
-  success,
-  interesting,
-  github,
-  selected,
-  shortcut,
-  notification,
   backupExport,
-  backupImport
+  backupImport,
+  github,
+  interesting,
+  nevergreen,
+  notification,
+  projects,
+  selected,
+  success,
+  shortcut,
+  trays
 })

@@ -1,12 +1,13 @@
 import {connect} from 'react-redux'
 import {toJS} from '../../common/ImmutableToJs'
 import Import from './Import'
+import {importErrors, importInfos, importLoaded} from '../../Selectors'
 
-function mapStateToProps(store) {
+function mapStateToProps(state) {
   return {
-    loaded: store.getIn(['backupImport', 'loaded']),
-    errors: store.getIn(['backupImport', 'errors']),
-    infos: store.getIn(['backupImport', 'infos'])
+    loaded: importLoaded(state),
+    errors: importErrors(state),
+    infos: importInfos(state)
   }
 }
 
