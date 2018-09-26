@@ -5,7 +5,7 @@ import {migrate} from '../common/repo/Migrations'
 import {importError, importing, importSuccess} from './ImportActionCreators'
 
 export function importData(jsonData) {
-  return function (dispatch) {
+  return (dispatch) => {
     dispatch(importing())
 
     try {
@@ -13,12 +13,12 @@ export function importData(jsonData) {
       const validationMessages = validate(data)
 
       if (_.isEmpty(validationMessages)) {
-        return dispatch(importSuccess(data))
+        dispatch(importSuccess(data))
       } else {
-        return dispatch(importError(validationMessages))
+        dispatch(importError(validationMessages))
       }
     } catch (e) {
-      return dispatch(importError(['Unable to import because of syntactically invalid JSON with the following errors:', e]))
+      dispatch(importError(['Unable to import because of syntactically invalid JSON with the following errors:', e]))
     }
   }
 }

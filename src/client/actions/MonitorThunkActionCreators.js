@@ -5,19 +5,25 @@ import {isBuilding} from '../domain/Project'
 import {extract} from '../domain/Tray'
 import {interestingProjects, interestingProjectsFetching} from './MonitorActionCreators'
 import {abortPendingRequest} from '../common/gateways/Gateway'
+import {
+  interestingPendingRequest,
+  interestingProjects as selectInterestingProjects,
+  selectedProjects,
+  trays
+} from '../Selectors'
 
 function toErrorString(trays, project) {
-  const tray = _.head(trays.filter((tray) => tray.trayId === project.trayId))
-  const identifier = _.get(tray, 'name') || _.get(tray, 'url')
+  const tray = trays.find((tray) => tray.get('trayId') === project.trayId)
+  const identifier = tray.get('name') || tray.get('url')
   return `${identifier} ${project.errorMessage}`
 }
 
 function byProjectId(existing, newProject) {
-  return existing.projectId === newProject.projectId
+  return existing.get('projectId') === newProject.projectId
 }
 
 function wasBuildingPreviousFetch(existingProject) {
-  return !_.isNil(existingProject) && existingProject.thisBuildTime
+  return !_.isNil(existingProject) && existingProject.get('thisBuildTime')
 }
 
 function addThisBuildTime(project, currentProjects) {
@@ -25,7 +31,7 @@ function addThisBuildTime(project, currentProjects) {
 
   if (isBuilding(project.prognosis)) {
     project.thisBuildTime = wasBuildingPreviousFetch(existingProject)
-      ? existingProject.thisBuildTime
+      ? existingProject.get('thisBuildTime')
       : project.fetchedTime
   } else {
     project.thisBuildTime = null
@@ -34,22 +40,26 @@ function addThisBuildTime(project, currentProjects) {
   return project
 }
 
-export function fetchInteresting(trays, selected, currentProjects, pendingRequest) {
-  abortPendingRequest(pendingRequest)
+export function fetchInteresting() {
+  return async (dispatch, getState) => {
+    abortPendingRequest(interestingPendingRequest(getState()))
 
-  return async (dispatch) => {
-    const request = interesting(trays, selected)
+    const currentProjects = selectInterestingProjects(getState())
+    const selected = selectedProjects(getState())
+    const allTrays = trays(getState())
 
+    const request = interesting(allTrays, selected)
     dispatch(interestingProjectsFetching(request))
+
     try {
       const allProjects = await send(request)
       const {okProjects, errorProjects} = extract(allProjects)
       const enrichedProjects = okProjects.map((project) => addThisBuildTime(project, currentProjects))
-      const errorMessages = errorProjects.map((project) => toErrorString(trays, project))
+      const errorMessages = errorProjects.map((project) => toErrorString(allTrays, project))
 
-      return dispatch(interestingProjects(enrichedProjects, errorMessages))
+      dispatch(interestingProjects(enrichedProjects, errorMessages))
     } catch (error) {
-      return dispatch(interestingProjects([], [error.message]))
+      dispatch(interestingProjects([], [error.message]))
     }
   }
 }

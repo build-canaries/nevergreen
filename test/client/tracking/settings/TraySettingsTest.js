@@ -5,7 +5,7 @@ import {shallow} from 'enzyme'
 import _ from 'lodash'
 import {mocks} from '../../Mocking'
 import TraySettings from '../../../../src/client/tracking/settings/TraySettings'
-import {locator, changeAndBlur} from '../../TestUtils'
+import {changeAndBlur, locator} from '../../TestUtils'
 
 describe('<TraySettings/>', function () {
 
@@ -23,8 +23,7 @@ describe('<TraySettings/>', function () {
     setTrayUrl: _.noop,
     updateTrayId: _.noop,
     encryptPassword: _.noop,
-    refreshTray: _.noop,
-    pendingRequest: null
+    refreshTray: _.noop
   }
 
   it('should set the tray name on blur', function () {
@@ -140,15 +139,14 @@ describe('<TraySettings/>', function () {
 
       it('should encrypt the password when updated', function () {
         const encryptPassword = mocks.spy()
-        const pendingRequest = {}
-        const props = {...DEFAULT_PROPS, encryptPassword, trayId: 'some-tray-id', pendingRequest}
+        const props = {...DEFAULT_PROPS, encryptPassword, trayId: 'some-tray-id'}
 
         const wrapper = shallow(<TraySettings {...props} />)
         clickChangePassword(wrapper)
         changeAndBlur(wrapper.find(locator('tray-password')), 'some-new-password')
         clickUpdatePassword(wrapper)
 
-        expect(encryptPassword).to.have.been.calledWith('some-tray-id', 'some-new-password', pendingRequest)
+        expect(encryptPassword).to.have.been.calledWith('some-tray-id', 'some-new-password')
       })
 
       it('should not encrypt the password when cancelled', function () {
@@ -166,37 +164,36 @@ describe('<TraySettings/>', function () {
 
   it('should remove the tray when clicking the delete button', function () {
     const removeTray = mocks.spy()
-    const pendingRequest = {}
-    const props = {...DEFAULT_PROPS, removeTray, trayId: 'some-tray-id', pendingRequest}
+    const props = {...DEFAULT_PROPS, removeTray, trayId: 'some-tray-id'}
 
     const wrapper = shallow(<TraySettings {...props} />)
     wrapper.find(locator('delete-tray')).simulate('click')
 
-    expect(removeTray).to.have.been.calledWith('some-tray-id', pendingRequest)
+    expect(removeTray).to.have.been.calledWith('some-tray-id')
   })
 
   describe('navigating away from settings', function () {
 
     it('should update the tray ID if the URL has changed, as the ID is based on the URL', function () {
       const updateTrayId = mocks.spy()
-      const props = {...DEFAULT_PROPS, updateTrayId}
+      const props = {...DEFAULT_PROPS, updateTrayId, trayId: 'some-tray-id'}
 
       const wrapper = shallow(<TraySettings {...props} />)
-      changeAndBlur(wrapper.find(locator('tray-url')), 'some-url')
+      changeAndBlur(wrapper.find(locator('tray-url')), 'some-new-url')
       wrapper.unmount()
 
-      expect(updateTrayId).to.have.been.called()
+      expect(updateTrayId).to.have.been.calledWith('some-tray-id', 'some-new-url')
     })
 
     it('should refresh the tray if the username is changed', function () {
       const refreshTray = mocks.spy()
-      const props = {...DEFAULT_PROPS, refreshTray}
+      const props = {...DEFAULT_PROPS, refreshTray, trayId: 'some-tray-id'}
 
       const wrapper = shallow(<TraySettings {...props} />)
       changeAndBlur(wrapper.find(locator('tray-username')), 'some-username')
       wrapper.unmount()
 
-      expect(refreshTray).to.have.been.called()
+      expect(refreshTray).to.have.been.calledWith('some-tray-id')
     })
 
     it('should refresh the tray if the password is changed', function () {

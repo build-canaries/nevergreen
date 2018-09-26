@@ -2,6 +2,7 @@ import {withMockedImports} from '../../TestUtils'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {mocks} from '../../Mocking'
+import {fromJS} from 'immutable'
 
 describe('ProjectsGateway', function () {
 
@@ -15,7 +16,7 @@ describe('ProjectsGateway', function () {
   describe('fetchAll', function () {
 
     it('posts only the required data from the given trays', () => {
-      const trays = [{
+      const trays = fromJS([{
         trayId: 'url',
         url: 'url',
         username: 'uname',
@@ -29,7 +30,7 @@ describe('ProjectsGateway', function () {
         password: 'another-pword',
         serverType: 'GO',
         extra: 'i-should-get-removed'
-      }]
+      }])
       const expected = [{
         trayId: 'url',
         url: 'url',
@@ -53,14 +54,16 @@ describe('ProjectsGateway', function () {
   describe('interesting', function () {
 
     it('maps selected projects to the posted data', function () {
-      const selected = {'some-tray-id': ['some-project-id']}
-      const trays = [{
+      const selected = fromJS({
+        'some-tray-id': ['some-project-id']
+      })
+      const trays = fromJS([{
         trayId: 'some-tray-id',
         url: 'some-url',
         username: 'some-uname',
         password: 'some-pword',
         serverType: 'some-server-type'
-      }]
+      }])
       const expected = [{
         trayId: 'some-tray-id',
         url: 'some-url',
@@ -77,8 +80,14 @@ describe('ProjectsGateway', function () {
     })
 
     it('does not include trays with no selected projects', function () {
-      const selected = {'some-tray-id': ['some-project-id'], 'none-selected-id': []}
-      const trays = [{trayId: 'some-tray-id'}, {trayId: 'none-selected-id'}]
+      const selected = fromJS({
+        'some-tray-id': ['some-project-id'],
+        'none-selected-id': []
+      })
+      const trays = fromJS([
+        {trayId: 'some-tray-id'},
+        {trayId: 'none-selected-id'}
+      ])
       const expected = [mocks.match({trayId: 'some-tray-id'})]
 
       interesting(trays, selected)
@@ -88,8 +97,8 @@ describe('ProjectsGateway', function () {
     })
 
     it('does not call the server at all if no trays have selected projects', function () {
-      const selected = {'some-tray-id': []}
-      const trays = [{trayId: 'some-tray-id'}]
+      const selected = fromJS({'some-tray-id': []})
+      const trays = fromJS([{trayId: 'some-tray-id'}])
 
       interesting(trays, selected)
 

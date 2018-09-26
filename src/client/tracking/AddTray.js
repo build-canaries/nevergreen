@@ -16,7 +16,7 @@ class AddTray extends Component {
   }
 
   addTray = () => {
-    this.props.addTray(this.state.url, this.state.username, this.state.password, this.props.existingTrayIds)
+    this.props.addTray(this.state.url, this.state.username, this.state.password)
     this.setState({...DEFAULT_STATE})
   }
 
@@ -70,7 +70,6 @@ class AddTray extends Component {
 }
 
 AddTray.propTypes = {
-  existingTrayIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   addTray: PropTypes.func.isRequired
 }
 

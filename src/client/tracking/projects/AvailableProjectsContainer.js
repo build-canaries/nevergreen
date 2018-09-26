@@ -9,7 +9,6 @@ import {
   selectedProjects,
   trayErrors,
   trayPassword,
-  trayPendingRequest,
   trayServerType,
   trayTimestamp,
   trayUrl,
@@ -28,7 +27,6 @@ function mapStateToProps(state, {trayId}) {
     serverType: trayServerType(state, trayId),
     errors: trayErrors(state, trayId),
     timestamp: trayTimestamp(state, trayId),
-    pendingRequest: trayPendingRequest(state, trayId),
     projects: projects(state, trayId),
     selected: selectedProjects(state, trayId)
   }

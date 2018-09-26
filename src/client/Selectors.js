@@ -94,6 +94,10 @@ export function trays(state) {
   return state.get('trays').toList()
 }
 
+export function tray(state, trayId) {
+  return state.getIn(['trays', trayId])
+}
+
 export function trayIds(state) {
   return state.get('trays').keySeq()
 }

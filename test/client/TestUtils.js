@@ -4,6 +4,7 @@ import {shallow} from 'enzyme'
 import {expect} from 'chai'
 import {mocks} from './Mocking'
 import _ from 'lodash'
+import {Iterable, Map} from 'immutable'
 
 proxyquire.noCallThru()
 
@@ -62,18 +63,17 @@ export function forNonStrings(fn) {
   _.forOwn(NON_STRINGS, fn)
 }
 
-export async function testThunk(thunkion) {
+export async function testThunk(thunkion, state = Map()) {
+  if (!Iterable.isIterable(state)) {
+    throw 'state must be immutable'
+  }
+
   const dispatch = mocks.stub()
   dispatch.returnsArg(0)
 
-  try {
-    const result = await thunkion(dispatch)
-    expect(dispatch).to.have.been.called()
-    return result
-  } catch (e) {
-    expect.fail(
-      'Unhandled rejected Promise',
-      'A catch() block',
-      'Thunks should catch() rejected Promises and dispatch error actions')
-  }
+  const getState = () => state
+
+  const result = await thunkion(dispatch, getState)
+  expect(dispatch).to.have.been.called()
+  return result
 }

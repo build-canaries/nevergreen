@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import {Set} from 'immutable'
 
 export function isNumber(val) {
   if (_.isNumber(val)) {
@@ -26,4 +27,11 @@ export function notEmpty(val) {
 
 export function notEqual(val, other) {
   return !_.isEqual(val, other)
+}
+
+export function keyIn(...keys) {
+  const keySet = Set(keys)
+  return function (v, k) {
+    return keySet.has(k)
+  }
 }

@@ -5,7 +5,7 @@ import {updateTrayId} from '../../actions/TrackingThunkActionCreators'
 import {refreshTray} from '../../actions/RefreshThunkActionCreators'
 import {encryptPassword} from '../../actions/PasswordThunkActionCreators'
 import TraySettings from './TraySettings'
-import {trayName, trayPassword, trayPendingRequest, trayServerType, trayUrl, trayUsername} from '../../Selectors'
+import {trayName, trayPassword, trayServerType, trayUrl, trayUsername} from '../../Selectors'
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
@@ -26,8 +26,7 @@ function mapStateToProps(state, {trayId}) {
     url: trayUrl(state, trayId),
     username: trayUsername(state, trayId),
     password: trayPassword(state, trayId),
-    serverType: trayServerType(state, trayId),
-    pendingRequest: trayPendingRequest(state, trayId)
+    serverType: trayServerType(state, trayId)
   }
 }
 

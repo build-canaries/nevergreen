@@ -33,15 +33,15 @@ export function restoreFromGitHub(gistId) {
     dispatch(importing())
 
     if (isBlank(gistId)) {
-      return dispatch(importError(['You must provide a gist ID to import from GitHub']))
-    }
-
-    try {
-      const res = await send(getGist(gistId))
-      const content = await handleGistResponse(dispatch, res)
-      return dispatch(importData(content))
-    } catch (error) {
-      return dispatch(importError([`Unable to import from GitHub because of an error: ${error.message}`]))
+      dispatch(importError(['You must provide a gist ID to import from GitHub']))
+    } else {
+      try {
+        const res = await send(getGist(gistId))
+        const content = await handleGistResponse(dispatch, res)
+        dispatch(importData(content))
+      } catch (error) {
+        dispatch(importError([`Unable to import from GitHub because of an error: ${error.message}`]))
+      }
     }
   }
 }
@@ -51,26 +51,26 @@ export function uploadToGitHub(gistId, description, configuration, oauthToken) {
     dispatch(exporting())
 
     if (isBlank(oauthToken)) {
-      return dispatch(exportError(['You must provide an access token to upload to GitHub']))
-    }
+      dispatch(exportError(['You must provide an access token to upload to GitHub']))
+    } else {
+      const createNewGist = isBlank(gistId)
 
-    const createNewGist = isBlank(gistId)
+      const req = createNewGist
+        ? createGist(description, configuration, oauthToken)
+        : updateGist(gistId, description, configuration, oauthToken)
 
-    const req = createNewGist
-      ? createGist(description, configuration, oauthToken)
-      : updateGist(gistId, description, configuration, oauthToken)
+      try {
+        const gistJson = await send(req)
+        const returnedGistId = gistJson.id
+        const successMessage = createNewGist
+          ? `Successfully created gist ${returnedGistId}`
+          : `Successfully updated gist ${returnedGistId}`
 
-    try {
-      const gistJson = await send(req)
-      const returnedGistId = gistJson.id
-      const successMessage = createNewGist
-        ? `Successfully created gist ${returnedGistId}`
-        : `Successfully updated gist ${returnedGistId}`
-
-      dispatch(exportSuccess([successMessage]))
-      return dispatch(gitHubSetGistId(returnedGistId))
-    } catch (error) {
-      return dispatch(exportError([`Unable to upload to GitHub because of an error: ${error.message}`]))
+        dispatch(exportSuccess([successMessage]))
+        dispatch(gitHubSetGistId(returnedGistId))
+      } catch (error) {
+        dispatch(exportError([`Unable to upload to GitHub because of an error: ${error.message}`]))
+      }
     }
   }
 }

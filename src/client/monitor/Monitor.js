@@ -12,10 +12,6 @@ import Title from '../common/Title'
 import {abortPendingRequest} from '../common/gateways/Gateway'
 
 class Monitor extends Component {
-  fetch = () => {
-    return this.props.fetchInteresting(this.props.trays, this.props.selected, this.props.projects, this.props.pendingRequest)
-  }
-
   componentDidMount() {
     this.props.requestFullScreen(true)
   }
@@ -47,7 +43,7 @@ class Monitor extends Component {
     return (
       <div className={monitorClassNames}>
         <Title>Monitor</Title>
-        <Timer onTrigger={this.fetch} interval={this.props.refreshTime}/>
+        <Timer onTrigger={this.props.fetchInteresting} interval={this.props.refreshTime}/>
         <Loading loaded={this.props.loaded}>
           {content}
         </Loading>
@@ -60,7 +56,6 @@ Monitor.propTypes = {
   loaded: PropTypes.bool.isRequired,
   errors: PropTypes.arrayOf(PropTypes.string),
   trays: PropTypes.arrayOf(PropTypes.object).isRequired,
-  selected: PropTypes.object.isRequired,
   projects: PropTypes.arrayOf(PropTypes.object),
   showBuildTimers: PropTypes.bool,
   showBrokenBuildTimers: PropTypes.bool,

@@ -64,7 +64,7 @@ class TraySettings extends Component {
   }
 
   deleteTray = () => {
-    this.props.removeTray(this.props.trayId, this.props.pendingRequest)
+    this.props.removeTray(this.props.trayId)
   }
 
   cancel = () => {
@@ -76,7 +76,7 @@ class TraySettings extends Component {
   }
 
   setPassword = () => {
-    this.props.encryptPassword(this.props.trayId, this.state.newPassword, this.props.pendingRequest)
+    this.props.encryptPassword(this.props.trayId, this.state.newPassword)
     this.setState({
       updatingPassword: false,
       newPassword: '',
@@ -95,10 +95,10 @@ class TraySettings extends Component {
 
   componentWillUnmount() {
     if (this.state.urlChanged) {
-      this.props.updateTrayId(this.props, this.state.newUrl, this.props.pendingRequest)
+      this.props.updateTrayId(this.props.trayId, this.state.newUrl)
     }
     if (this.state.credentialsChanged) {
-      this.props.refreshTray(this.props, this.props.pendingRequest)
+      this.props.refreshTray(this.props.trayId)
     }
   }
 
@@ -208,8 +208,7 @@ TraySettings.propTypes = {
   setTrayUrl: PropTypes.func.isRequired,
   updateTrayId: PropTypes.func.isRequired,
   encryptPassword: PropTypes.func.isRequired,
-  refreshTray: PropTypes.func.isRequired,
-  pendingRequest: PropTypes.object
+  refreshTray: PropTypes.func.isRequired
 }
 
 export default TraySettings

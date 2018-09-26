@@ -4,37 +4,36 @@ import {highlightTray, setTrayId, trayAdded} from './TrackingActionCreators'
 import {encryptPassword} from './PasswordThunkActionCreators'
 import {refreshTray} from './RefreshThunkActionCreators'
 import {createId} from '../domain/Tray'
+import {trayIds} from '../Selectors'
 
 function hasScheme(url) {
   return _.size(_.split(url, '://')) > 1
 }
 
-export function updateTrayId(tray, newTrayId, pendingRequest) {
+export function updateTrayId(originalTrayId, newTrayId) {
   return (dispatch) => {
-    dispatch(setTrayId(tray.trayId, newTrayId))
-    const updatedTray = {...tray, trayId: newTrayId}
-    return dispatch(refreshTray(updatedTray, pendingRequest))
+    dispatch(setTrayId(originalTrayId, newTrayId))
+    dispatch(refreshTray(newTrayId))
   }
 }
 
-export function addTray(enteredUrl, username, rawPassword, existingTrays) {
-  return async (dispatch) => {
-    const url = hasScheme(enteredUrl) ? enteredUrl : 'http://' + enteredUrl
+export function addTray(enteredUrl, username, rawPassword) {
+  return async (dispatch, getState) => {
+    const existingTrays = trayIds(getState())
+
+    const url = hasScheme(enteredUrl) ? enteredUrl : `http://${enteredUrl}`
     const trayId = createId(url)
 
-    if (_.includes(existingTrays, trayId)) {
-      return dispatch(highlightTray(trayId))
+    if (existingTrays.includes(trayId)) {
+      dispatch(highlightTray(trayId))
     } else {
       dispatch(trayAdded(trayId, url, username))
 
       if (!isBlank(rawPassword)) {
-        const encryptedPassword = await dispatch(encryptPassword(trayId, rawPassword))
-        const tray = {trayId, url, username, password: encryptedPassword}
-        return dispatch(refreshTray(tray, null, true))
-      } else {
-        const tray = {trayId, url, username}
-        return dispatch(refreshTray(tray, null, true))
+        await dispatch(encryptPassword(trayId, rawPassword))
       }
+
+      dispatch(refreshTray(trayId, true))
     }
   }
 }

@@ -9,7 +9,7 @@ class Tracking extends Component {
     return (
       <Fragment>
         <Title>Tracking</Title>
-        <AddTray addTray={this.props.addTray} existingTrayIds={this.props.trayIds}/>
+        <AddTray addTray={this.props.addTray}/>
         {this.props.trayIds.map((trayId, index) => <TrayContainer key={trayId} index={index} trayId={trayId}/>)}
       </Fragment>
     )

@@ -10,7 +10,6 @@ import {mocks} from '../Mocking'
 describe('<AddTray/>', function () {
 
   const DEFAULT_PROPS = {
-    existingTrayIds: [],
     addTray: _.noop
   }
 
@@ -37,10 +36,9 @@ describe('<AddTray/>', function () {
 
   describe('add tray', function () {
 
-    it('should pass the entered details and all existing trays', function () {
-      const existingTrayIds = ['some-tray-id']
+    it('should pass the entered details', function () {
       const addTray = mocks.spy()
-      const props = {...DEFAULT_PROPS, addTray, existingTrayIds}
+      const props = {...DEFAULT_PROPS, addTray}
 
       const wrapper = shallow(<AddTray {...props} />)
       change(wrapper.find(locator('add-tray-url')), 'some-new-url')
@@ -48,7 +46,7 @@ describe('<AddTray/>', function () {
       change(wrapper.find(locator('add-tray-password')), 'some-new-password')
       wrapper.find(locator('add-tray')).simulate('click')
 
-      expect(addTray).to.have.been.calledWith('some-new-url', 'some-new-username', 'some-new-password', existingTrayIds)
+      expect(addTray).to.have.been.calledWith('some-new-url', 'some-new-username', 'some-new-password')
     })
 
     it('should clear the entered url', function () {

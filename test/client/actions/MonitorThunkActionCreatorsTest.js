@@ -2,6 +2,7 @@ import {testThunk, withMockedImports} from '../TestUtils'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {mocks} from '../Mocking'
+import {fromJS} from 'immutable'
 import {PROGNOSIS_HEALTHY_BUILDING, PROGNOSIS_SICK, PROGNOSIS_SICK_BUILDING} from '../../../src/client/domain/Project'
 
 describe('MonitorThunkActionCreators', function () {
@@ -12,6 +13,14 @@ describe('MonitorThunkActionCreators', function () {
   const interesting = mocks.stub()
   const interestingProjectsFetching = mocks.spy()
   const interestingProjects = mocks.spy()
+
+  const requiredState = fromJS({
+    interesting: {
+      projects: []
+    },
+    selected: {},
+    trays: {}
+  })
 
   const {fetchInteresting} = withMockedImports('client/actions/MonitorThunkActionCreators', {
     '../common/gateways/ProjectsGateway': {interesting},
@@ -25,14 +34,15 @@ describe('MonitorThunkActionCreators', function () {
       interesting.returns('some-request')
       send.resolves([])
 
-      await testThunk(fetchInteresting([], [], []))
+      await testThunk(fetchInteresting(), requiredState)
+
       expect(interestingProjectsFetching).to.have.been.calledWith('some-request')
     })
 
     it('should dispatch interesting projects action on success', async function () {
       send.resolves([])
 
-      await testThunk(fetchInteresting([], [], []))
+      await testThunk(fetchInteresting(), requiredState)
       expect(interestingProjects).to.have.been.called()
     })
 
@@ -47,7 +57,7 @@ describe('MonitorThunkActionCreators', function () {
       const projectWithJob = {name: 'another-name', job: 'some-job'}
       send.resolves([projectNoJob, projectWithJob])
 
-      await testThunk(fetchInteresting([], [], []))
+      await testThunk(fetchInteresting(), requiredState)
       expect(interestingProjects).to.have.been.calledWithMatch([projectNoJob], NO_ERRORS)
     })
 
@@ -60,7 +70,7 @@ describe('MonitorThunkActionCreators', function () {
         }
         send.resolves([project])
 
-        await testThunk(fetchInteresting([], [], []))
+        await testThunk(fetchInteresting(), requiredState)
         expect(interestingProjects).to.have.been.calledWithMatch([{
           ...project,
           thisBuildTime: 'some-time'
@@ -74,7 +84,8 @@ describe('MonitorThunkActionCreators', function () {
         }
         send.resolves([project])
 
-        await testThunk(fetchInteresting([], [], []))
+        await testThunk(fetchInteresting(), requiredState)
+
         expect(interestingProjects).to.have.been.calledWithMatch([{
           ...project,
           thisBuildTime: null
@@ -93,8 +104,10 @@ describe('MonitorThunkActionCreators', function () {
           fetchedTime: 'some-time'
         }
         send.resolves([project])
+        const state = requiredState.setIn(['interesting', 'projects'], fromJS([previousProject]))
 
-        await testThunk(fetchInteresting([], [], [previousProject]))
+        await testThunk(fetchInteresting(), state)
+
         expect(interestingProjects).to.have.been.calledWithMatch([{
           ...project,
           thisBuildTime: 'previous-build-time'
@@ -113,8 +126,10 @@ describe('MonitorThunkActionCreators', function () {
           fetchedTime: 'some-time'
         }
         send.resolves([project])
+        const state = requiredState.setIn(['interesting', 'projects'], fromJS([previousProject]))
 
-        await testThunk(fetchInteresting([], [], [previousProject]))
+        await testThunk(fetchInteresting(), state)
+
         expect(interestingProjects).to.have.been.calledWithMatch([{
           ...project,
           thisBuildTime: 'some-time'
@@ -125,7 +140,7 @@ describe('MonitorThunkActionCreators', function () {
     it('should dispatch interesting projects action with a Nevergreen error if calling the service fails', async function () {
       send.rejects({message: 'some-error'})
 
-      await testThunk(fetchInteresting([], [], []))
+      await testThunk(fetchInteresting(), requiredState)
       expect(interestingProjects).to.have.been.calledWithMatch([], ['some-error'])
     })
 
@@ -133,17 +148,19 @@ describe('MonitorThunkActionCreators', function () {
 
       it('should dispatch interesting projects with the tray name in the error if it exists', async function () {
         send.resolves([{trayId: 'some-tray-id', isError: true, errorMessage: 'some-error'}])
-        const trays = [{trayId: 'some-tray-id', name: 'some-name'}]
+        const trays = fromJS([{trayId: 'some-tray-id', name: 'some-name'}])
+        const state = requiredState.set('trays', trays)
 
-        await testThunk(fetchInteresting(trays, [], []))
+        await testThunk(fetchInteresting(), state)
         expect(interestingProjects).to.have.been.calledWithMatch([], ['some-name some-error'])
       })
 
       it('should dispatch interesting projects with the tray url in the error if the name does not exist', async function () {
         send.resolves([{trayId: 'some-tray-id', isError: true, errorMessage: 'some-error'}])
-        const trays = [{trayId: 'some-tray-id', url: 'some-url'}]
+        const trays = fromJS([{trayId: 'some-tray-id', url: 'some-url'}])
+        const state = requiredState.set('trays', trays)
 
-        await testThunk(fetchInteresting(trays, [], []))
+        await testThunk(fetchInteresting(), state)
         expect(interestingProjects).to.have.been.calledWithMatch([], ['some-url some-error'])
       })
     })

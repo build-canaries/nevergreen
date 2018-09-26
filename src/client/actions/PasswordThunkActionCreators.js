@@ -3,11 +3,13 @@ import {abortPendingRequest} from '../common/gateways/Gateway'
 import {send} from '../common/gateways/NevergreenGateway'
 import {isBlank} from '../common/Utils'
 import {encryptingPassword, passwordEncrypted, passwordEncryptError} from './PasswordActionCreators'
+import {trayPendingRequest} from '../Selectors'
 
-export function encryptPassword(trayId, password, pendingRequest) {
-  abortPendingRequest(pendingRequest)
+export function encryptPassword(trayId, password) {
 
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    abortPendingRequest(trayPendingRequest(getState(), trayId))
+
     if (!isBlank(password)) {
       const request = encrypt(password)
 
@@ -16,13 +18,11 @@ export function encryptPassword(trayId, password, pendingRequest) {
       try {
         const data = await send(request)
         dispatch(passwordEncrypted(trayId, data.password))
-        return data.password
       } catch (error) {
-        return dispatch(passwordEncryptError(trayId, [error.message]))
+        dispatch(passwordEncryptError(trayId, [error.message]))
       }
     } else {
       dispatch(passwordEncrypted(trayId, ''))
-      return ''
     }
   }
 }

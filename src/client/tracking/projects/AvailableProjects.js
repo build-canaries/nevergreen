@@ -59,7 +59,7 @@ class AvailableProjects extends Component {
   }
 
   refreshTray = () => {
-    this.props.refreshTray(this.props, this.props.pendingRequest)
+    this.props.refreshTray(this.props.trayId)
   }
 
   render() {
@@ -150,8 +150,7 @@ AvailableProjects.propTypes = {
   selected: PropTypes.arrayOf(PropTypes.string).isRequired,
   selectProject: PropTypes.func.isRequired,
   timestamp: PropTypes.string,
-  refreshTray: PropTypes.func.isRequired,
-  pendingRequest: PropTypes.object
+  refreshTray: PropTypes.func.isRequired
 }
 
 export default AvailableProjects

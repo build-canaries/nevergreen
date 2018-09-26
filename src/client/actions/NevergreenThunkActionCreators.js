@@ -9,7 +9,7 @@ export function initalise() {
 
     await init()
     const configuration = await load()
-    return dispatch(initalised(filter(migrate(configuration))))
+    dispatch(initalised(filter(migrate(configuration))))
     // TODO: handle loading configuration failure
   }
 }

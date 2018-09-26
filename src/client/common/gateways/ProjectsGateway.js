@@ -1,31 +1,25 @@
 import {fakeResponse, post} from './Gateway'
-import _ from 'lodash'
+import {keyIn} from '../Utils'
 
-function includesProjects(tray) {
-  return !_.isEmpty(tray.included)
+function hasIncludedProjects(tray) {
+  return tray.get('included').count() > 0
 }
 
 export function fetchAll(trays) {
-  const data = trays.map(({trayId, url, username, password, serverType}) => {
-    return {trayId, url, username, password, serverType}
-  })
+  const data = trays.map((tray) =>
+    tray.filter(keyIn('trayId', 'url', 'username', 'password', 'serverType')))
 
-  return post('/api/projects/all', data)
+  return post('/api/projects/all', data.toJS())
 }
 
 export function interesting(trays, selected) {
-  const data = trays.map((tray) => {
-    return {
-      trayId: tray.trayId,
-      url: tray.url,
-      username: tray.username,
-      password: tray.password,
-      included: selected[tray.trayId],
-      serverType: tray.serverType
-    }
-  }).filter(includesProjects)
+  const data = trays
+    .map((tray) => tray
+      .filter(keyIn('trayId', 'url', 'username', 'password', 'serverType'))
+      .set('included', selected.get(tray.get('trayId'))))
+    .filter(hasIncludedProjects)
 
-  return _.isEmpty(data)
+  return data.count() === 0
     ? fakeResponse([])
-    : post('/api/projects/interesting', data)
+    : post('/api/projects/interesting', data.toJS())
 }

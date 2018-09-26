@@ -2,6 +2,7 @@ import {testThunk, withMockedImports} from '../TestUtils'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {mocks} from '../Mocking'
+import {fromJS} from 'immutable'
 
 describe('PasswordThunkActionCreators', function () {
 
@@ -23,7 +24,14 @@ describe('PasswordThunkActionCreators', function () {
 
     it('should abort pending request', async function () {
       send.resolves('')
-      await testThunk(encryptPassword('irrelevant', 'irrelevant', 'some-pending-request'))
+      const state = fromJS({
+        trays: {
+          'some-tray-id': {
+            pendingRequest: 'some-pending-request'
+          }
+        }
+      })
+      await testThunk(encryptPassword('some-tray-id', 'irrelevant'), state)
       expect(abortPendingRequest).to.have.been.calledWith('some-pending-request')
     })
 
@@ -48,12 +56,6 @@ describe('PasswordThunkActionCreators', function () {
       expect(passwordEncrypted).to.have.been.calledWith('some-tray-id', 'some-encrypted-password')
     })
 
-    it('should return the encrypted password on success because add tray needs to use it', async function () {
-      send.resolves({password: 'some-encrypted-password'})
-      const actual = await testThunk(encryptPassword('some-tray-id', 'irrelevant'))
-      expect(actual).to.equal('some-encrypted-password')
-    })
-
     it('should dispatch password encrypted action if password is blank without calling the gateway', async function () {
       await testThunk(encryptPassword('some-tray-id', ''))
       expect(passwordEncrypted).to.have.been.calledWith('some-tray-id', '')
@@ -61,8 +63,8 @@ describe('PasswordThunkActionCreators', function () {
     })
 
     it('should return a blank string if password is blank because add tray needs to use it', async function () {
-      const actual = await testThunk(encryptPassword('some-tray-id', ''))
-      expect(actual).to.equal('')
+      await testThunk(encryptPassword('some-tray-id', ''))
+      expect(passwordEncrypted).to.have.been.calledWith('some-tray-id', '')
     })
 
     it('should dispatch password encrypt error action if the request fails', async function () {
