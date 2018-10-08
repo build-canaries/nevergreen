@@ -2,24 +2,31 @@ import {testThunk, withMockedImports} from '../TestUtils'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {mocks} from '../Mocking'
-import {fromJS} from 'immutable'
-import {PROGNOSIS_HEALTHY_BUILDING, PROGNOSIS_SICK, PROGNOSIS_SICK_BUILDING} from '../../../src/client/domain/Project'
+import {fromJS, List, Map} from 'immutable'
+import {
+  PROGNOSIS_HEALTHY_BUILDING,
+  PROGNOSIS_SICK,
+  PROGNOSIS_SICK_BUILDING,
+  Project
+} from '../../../src/client/domain/Project'
+import {Tray} from '../../../src/client/domain/Tray'
+import {NevergreenError} from '../../../src/client/common/gateways/NevergreenGateway'
 
 describe('MonitorThunkActionCreators', function () {
 
-  const NO_ERRORS = []
+  const NO_ERRORS = List()
 
   const send = mocks.stub()
   const interesting = mocks.stub()
   const interestingProjectsFetching = mocks.spy()
   const interestingProjects = mocks.spy()
 
-  const requiredState = fromJS({
-    interesting: {
-      projects: []
-    },
-    selected: {},
-    trays: {}
+  const requiredState = Map({
+    interesting: Map({
+      projects: List()
+    }),
+    selected: Map(),
+    trays: Map()
   })
 
   const {fetchInteresting} = withMockedImports('client/actions/MonitorThunkActionCreators', {
@@ -32,7 +39,7 @@ describe('MonitorThunkActionCreators', function () {
 
     it('should dispatch interesting projects fetching action', async function () {
       interesting.returns('some-request')
-      send.resolves([])
+      send.resolves(List())
 
       await testThunk(fetchInteresting(), requiredState)
 
@@ -40,7 +47,7 @@ describe('MonitorThunkActionCreators', function () {
     })
 
     it('should dispatch interesting projects action on success', async function () {
-      send.resolves([])
+      send.resolves(List())
 
       await testThunk(fetchInteresting(), requiredState)
       expect(interestingProjects).to.have.been.called()
@@ -53,12 +60,24 @@ describe('MonitorThunkActionCreators', function () {
      * just knowing a stage had broken was good enough.
      */
     it('should filter projects containing jobs', async function () {
-      const projectNoJob = {name: 'some-name'}
-      const projectWithJob = {name: 'another-name', job: 'some-job'}
-      send.resolves([projectNoJob, projectWithJob])
+      const projectNoJob = {
+        projectId: 'some-name/some-stage',
+        name: 'some-name',
+        stage: 'some-stage',
+        job: null
+      }
+      const projectWithJob = {
+        projectId: 'some-name/some-stage/some-job',
+        name: 'some-name',
+        stage: 'some-stage',
+        job: 'some-job'
+      }
+      const expectedProject = new Project(projectNoJob)
+      send.resolves(fromJS([projectNoJob, projectWithJob]))
 
       await testThunk(fetchInteresting(), requiredState)
-      expect(interestingProjects).to.have.been.calledWithMatch([projectNoJob], NO_ERRORS)
+      expect(interestingProjects.getCall(0).args[0]).to.equal(List.of(expectedProject))
+      expect(interestingProjects.getCall(0).args[1]).to.equal(NO_ERRORS)
     })
 
     describe('setting the this build time so building timers work correctly', function () {
@@ -68,13 +87,14 @@ describe('MonitorThunkActionCreators', function () {
           prognosis: PROGNOSIS_HEALTHY_BUILDING,
           fetchedTime: 'some-time'
         }
-        send.resolves([project])
+        send.resolves(fromJS([project]))
 
         await testThunk(fetchInteresting(), requiredState)
-        expect(interestingProjects).to.have.been.calledWithMatch([{
-          ...project,
-          thisBuildTime: 'some-time'
-        }], NO_ERRORS)
+
+        expect(interestingProjects.getCall(0).args[0]).to.equal(List.of(
+          new Project({...project, thisBuildTime: 'some-time'})
+        ))
+        expect(interestingProjects.getCall(0).args[1]).to.equal(NO_ERRORS)
       })
 
       it('should unset if the project is not building', async function () {
@@ -82,86 +102,88 @@ describe('MonitorThunkActionCreators', function () {
           prognosis: PROGNOSIS_SICK,
           fetchedTime: 'some-time'
         }
-        send.resolves([project])
+        send.resolves(fromJS([project]))
 
         await testThunk(fetchInteresting(), requiredState)
 
-        expect(interestingProjects).to.have.been.calledWithMatch([{
-          ...project,
-          thisBuildTime: null
-        }], NO_ERRORS)
+        expect(interestingProjects.getCall(0).args[0]).to.equal(List.of(
+          new Project({...project, thisBuildTime: null})
+        ))
+        expect(interestingProjects.getCall(0).args[1]).to.equal(NO_ERRORS)
       })
 
       it('should use the previous this build time if the project was previously fetched and building', async function () {
-        const previousProject = {
+        const previousProject = new Project({
           projectId: 'some-id',
           prognosis: PROGNOSIS_HEALTHY_BUILDING,
           thisBuildTime: 'previous-build-time'
-        }
+        })
         const project = {
           projectId: 'some-id',
           prognosis: PROGNOSIS_HEALTHY_BUILDING,
           fetchedTime: 'some-time'
         }
-        send.resolves([project])
-        const state = requiredState.setIn(['interesting', 'projects'], fromJS([previousProject]))
+        send.resolves(fromJS([project]))
+        const state = requiredState.setIn(['interesting', 'projects'], List.of(previousProject))
 
         await testThunk(fetchInteresting(), state)
 
-        expect(interestingProjects).to.have.been.calledWithMatch([{
-          ...project,
-          thisBuildTime: 'previous-build-time'
-        }], NO_ERRORS)
+        expect(interestingProjects.getCall(0).args[0]).to.equal(List.of(
+          new Project({...project, thisBuildTime: 'previous-build-time'})
+        ))
+        expect(interestingProjects.getCall(0).args[1]).to.equal(NO_ERRORS)
       })
 
       it('should use the fetched time if the project was previously fetched but was not building', async function () {
-        const previousProject = {
+        const previousProject = new Project({
           projectId: 'some-id',
           prognosis: PROGNOSIS_SICK,
           thisBuildTime: null
-        }
+        })
         const project = {
           projectId: 'some-id',
           prognosis: PROGNOSIS_SICK_BUILDING,
-          fetchedTime: 'some-time'
+          fetchedTime: 'fetched-time'
         }
-        send.resolves([project])
-        const state = requiredState.setIn(['interesting', 'projects'], fromJS([previousProject]))
+        send.resolves(fromJS([project]))
+        const state = requiredState.setIn(['interesting', 'projects'], List.of(previousProject))
 
         await testThunk(fetchInteresting(), state)
 
-        expect(interestingProjects).to.have.been.calledWithMatch([{
-          ...project,
-          thisBuildTime: 'some-time'
-        }], NO_ERRORS)
+        expect(interestingProjects.getCall(0).args[0]).to.equal(List.of(
+          new Project({...project, thisBuildTime: 'fetched-time'})
+        ))
+        expect(interestingProjects.getCall(0).args[1]).to.equal(NO_ERRORS)
       })
     })
 
     it('should dispatch interesting projects action with a Nevergreen error if calling the service fails', async function () {
-      send.rejects({message: 'some-error'})
+      send.rejects(new NevergreenError({message: 'some-error'}))
 
       await testThunk(fetchInteresting(), requiredState)
-      expect(interestingProjects).to.have.been.calledWithMatch([], ['some-error'])
+      expect(interestingProjects).to.have.been.calledWith(List(), List.of('some-error'))
     })
 
     describe('returned tray errors', function () {
 
       it('should dispatch interesting projects with the tray name in the error if it exists', async function () {
-        send.resolves([{trayId: 'some-tray-id', isError: true, errorMessage: 'some-error'}])
-        const trays = fromJS([{trayId: 'some-tray-id', name: 'some-name'}])
+        send.resolves(fromJS([{trayId: 'some-tray-id', isError: true, errorMessage: 'some-error'}]))
+        const trays = List([new Tray({trayId: 'some-tray-id', name: 'some-name'})])
         const state = requiredState.set('trays', trays)
 
         await testThunk(fetchInteresting(), state)
-        expect(interestingProjects).to.have.been.calledWithMatch([], ['some-name some-error'])
+        expect(interestingProjects.getCall(0).args[0]).to.equal(List())
+        expect(interestingProjects.getCall(0).args[1]).to.equal(List.of('some-name some-error'))
       })
 
       it('should dispatch interesting projects with the tray url in the error if the name does not exist', async function () {
-        send.resolves([{trayId: 'some-tray-id', isError: true, errorMessage: 'some-error'}])
-        const trays = fromJS([{trayId: 'some-tray-id', url: 'some-url'}])
+        send.resolves(fromJS([{trayId: 'some-tray-id', isError: true, errorMessage: 'some-error'}]))
+        const trays = fromJS([new Tray({trayId: 'some-tray-id', url: 'some-url'})])
         const state = requiredState.set('trays', trays)
 
         await testThunk(fetchInteresting(), state)
-        expect(interestingProjects).to.have.been.calledWithMatch([], ['some-url some-error'])
+        expect(interestingProjects.getCall(0).args[0]).to.equal(List())
+        expect(interestingProjects.getCall(0).args[1]).to.equal(List.of('some-url some-error'))
       })
     })
   })

@@ -19,12 +19,12 @@ export function updateTrayId(originalTrayId, newTrayId) {
 
 export function addTray(enteredUrl, username, rawPassword) {
   return async (dispatch, getState) => {
-    const existingTrays = trayIds(getState())
+    const existingTrayIds = trayIds(getState())
 
     const url = hasScheme(enteredUrl) ? enteredUrl : `http://${enteredUrl}`
     const trayId = createId(url)
 
-    if (existingTrays.includes(trayId)) {
+    if (existingTrayIds.includes(trayId)) {
       dispatch(highlightTray(trayId))
     } else {
       dispatch(trayAdded(trayId, url, username))

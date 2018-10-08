@@ -31,7 +31,7 @@ export function notEqual(val, other) {
 
 export function keyIn(...keys) {
   const keySet = Set(keys)
-  return function (v, k) {
+  return (v, k) => {
     return keySet.has(k)
   }
 }

@@ -1,6 +1,6 @@
-import {fromJS, List, Map} from 'immutable'
+import {List} from 'immutable'
 import {now} from '../common/DateTime'
-import {generateRandomName} from '../domain/Tray'
+import {generateRandomName, Tray} from '../domain/Tray'
 import {
   HIGHLIGHT_TRAY,
   PROJECTS_FETCH_ERROR,
@@ -21,7 +21,7 @@ export function trayAdded(trayId, url, username) {
   return {
     type: TRAY_ADDED,
     trayId,
-    data: Map({
+    data: new Tray({
       trayId,
       url,
       username,
@@ -45,13 +45,12 @@ export function projectsFetching(trayId, request) {
 }
 
 export function projectsFetched(trayId, projects, selectAll) {
-  const data = fromJS(projects)
-  const serverType = data.first() ? data.first().get('serverType') : ''
+  const serverType = projects.first() ? projects.first().serverType : ''
 
   return {
     type: PROJECTS_FETCHED,
     trayId,
-    data,
+    data: projects,
     serverType,
     timestamp: now(),
     selectAll

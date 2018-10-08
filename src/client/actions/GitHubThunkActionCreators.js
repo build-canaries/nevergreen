@@ -5,26 +5,28 @@ import {isBlank} from '../common/Utils'
 import {importError, importing} from './ImportActionCreators'
 import {importData} from './ImportThunkActionCreators'
 import {exportError, exporting, exportSuccess} from './ExportActionCreators'
+import {NevergreenError} from '../common/gateways/NevergreenGateway'
 
 const TEN_MEGS = 10485760 // bytes
 
 function handleGistResponse(dispatch, res) {
-  const configuration = res.files['configuration.json']
+  const configuration = res.getIn(['files', 'configuration.json'])
 
   if (_.isNil(configuration)) {
-    throw {message: 'gist does not contain the required configuration.json file'}
+    throw new NevergreenError({message: 'gist does not contain the required configuration.json file'})
 
-  } else if (configuration.truncated) {
-    if (configuration.size > TEN_MEGS) {
-      throw {message: `gist configuration.json file is too big to fetch without git cloning, size ${configuration.size} bytes`}
+  } else if (configuration.get('truncated')) {
+    const size = configuration.get('size')
+    if (size > TEN_MEGS) {
+      throw new NevergreenError({message: `gist configuration.json file is too big to fetch without git cloning, size ${size} bytes`})
     } else {
-      dispatch(gitHubSetDescription(res.description))
-      return send(getTruncatedFile(configuration.raw_url))
+      dispatch(gitHubSetDescription(res.get('description')))
+      return send(getTruncatedFile(configuration.get('raw_url')))
     }
 
   } else {
-    dispatch(gitHubSetDescription(res.description))
-    return configuration.content
+    dispatch(gitHubSetDescription(res.get('description')))
+    return configuration.get('content')
   }
 }
 
@@ -40,7 +42,7 @@ export function restoreFromGitHub(gistId) {
         const content = await handleGistResponse(dispatch, res)
         dispatch(importData(content))
       } catch (error) {
-        dispatch(importError([`Unable to import from GitHub because of an error: ${error.message}`]))
+        dispatch(importError([`Unable to import from GitHub because of an error: ${error.get('message')}`]))
       }
     }
   }
@@ -61,7 +63,7 @@ export function uploadToGitHub(gistId, description, configuration, oauthToken) {
 
       try {
         const gistJson = await send(req)
-        const returnedGistId = gistJson.id
+        const returnedGistId = gistJson.get('id')
         const successMessage = createNewGist
           ? `Successfully created gist ${returnedGistId}`
           : `Successfully updated gist ${returnedGistId}`

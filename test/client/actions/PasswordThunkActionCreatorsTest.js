@@ -2,7 +2,8 @@ import {testThunk, withMockedImports} from '../TestUtils'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {mocks} from '../Mocking'
-import {fromJS} from 'immutable'
+import {fromJS, List} from 'immutable'
+import {NevergreenError} from '../../../src/client/common/gateways/NevergreenGateway'
 
 describe('PasswordThunkActionCreators', function () {
 
@@ -23,7 +24,7 @@ describe('PasswordThunkActionCreators', function () {
   describe('encryptPassword', function () {
 
     it('should abort pending request', async function () {
-      send.resolves('')
+      send.resolves(fromJS({password: ''}))
       const state = fromJS({
         trays: {
           'some-tray-id': {
@@ -37,7 +38,7 @@ describe('PasswordThunkActionCreators', function () {
 
     it('should dispatch encrypting password action', async function () {
       encrypt.returns({})
-      send.resolves('')
+      send.resolves(fromJS({password: ''}))
       encrypt.returns('encryption-request')
 
       await testThunk(encryptPassword('some-tray-id', 'some-password'))
@@ -45,13 +46,13 @@ describe('PasswordThunkActionCreators', function () {
     })
 
     it('should dispatch password encrypted action', async function () {
-      send.resolves({password: 'some-encrypted-password'})
+      send.resolves(fromJS({password: 'some-encrypted-password'}))
       await testThunk(encryptPassword('some-tray-id', 'irrelevant'))
       expect(passwordEncrypted).to.have.been.calledWith('some-tray-id', 'some-encrypted-password')
     })
 
     it('should dispatch password encrypted action on success', async function () {
-      send.resolves({password: 'some-encrypted-password'})
+      send.resolves(fromJS({password: 'some-encrypted-password'}))
       await testThunk(encryptPassword('some-tray-id', 'irrelevant'))
       expect(passwordEncrypted).to.have.been.calledWith('some-tray-id', 'some-encrypted-password')
     })
@@ -68,9 +69,9 @@ describe('PasswordThunkActionCreators', function () {
     })
 
     it('should dispatch password encrypt error action if the request fails', async function () {
-      send.rejects({message: 'some-error'})
+      send.rejects(new NevergreenError({message: 'some-error'}))
       await testThunk(encryptPassword('some-tray-id', 'irrelevant'))
-      expect(passwordEncryptError).to.have.been.calledWith('some-tray-id', ['some-error'])
+      expect(passwordEncryptError).to.have.been.calledWith('some-tray-id', List.of('some-error'))
     })
   })
 })

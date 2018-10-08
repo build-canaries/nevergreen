@@ -2,7 +2,9 @@ import {testThunk, withMockedImports} from '../TestUtils'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {mocks} from '../Mocking'
-import {fromJS} from 'immutable'
+import {fromJS, List, Map} from 'immutable'
+import {Tray} from '../../../src/client/domain/Tray'
+import {NevergreenError} from '../../../src/client/common/gateways/NevergreenGateway'
 
 describe('RefreshThunkActionCreators', function () {
 
@@ -22,22 +24,30 @@ describe('RefreshThunkActionCreators', function () {
 
   describe('refreshTray', function () {
 
-    const requiredState = fromJS({
-      trays: {
-        'some-tray-id': {
-          pendingRequest: 'some-pending-request'
-        }
-      }
+    const tray = new Tray({
+      pendingRequest: 'some-pending-request'
+    })
+
+    const requiredState = Map({
+      trays: Map({
+        'some-tray-id': tray
+      })
     })
 
     it('should abort pending request', async function () {
-      send.resolves('')
+      send.resolves(List())
       await testThunk(refreshTray('some-tray-id'), requiredState)
       expect(abortPendingRequest).to.have.been.calledWith('some-pending-request')
     })
 
+    it('should create a fetch all request with the tray', async function () {
+      send.resolves(List())
+      await testThunk(refreshTray('some-tray-id'), requiredState)
+      expect(fetchAll).to.have.been.calledWith(List.of(tray))
+    })
+
     it('should dispatch projects fetching action', async function () {
-      send.resolves('')
+      send.resolves(List())
       fetchAll.returns('some-fetch-all-request')
 
       await testThunk(refreshTray('some-tray-id'), requiredState)
@@ -45,21 +55,22 @@ describe('RefreshThunkActionCreators', function () {
     })
 
     it('should dispatch projects fetched action when no errors are returned', async function () {
-      send.resolves([])
+      send.resolves(List())
       await testThunk(refreshTray('some-tray-id'), requiredState)
-      expect(projectsFetched).to.have.been.calledWith('some-tray-id', [])
+      expect(projectsFetched).to.have.been.calledWith('some-tray-id', List())
     })
 
     it('should dispatch projects fetch error action if an error is returned', async function () {
-      send.resolves([{isError: true, errorMessage: 'some-error'}])
+      send.resolves(fromJS([{isError: true, errorMessage: 'some-error'}]))
       await testThunk(refreshTray('some-tray-id'), requiredState)
-      expect(projectsFetchError).to.have.been.calledWith('some-tray-id', ['some-error'])
+      expect(projectsFetchError.getCall(0).args[0]).to.equal('some-tray-id')
+      expect(projectsFetchError.getCall(0).args[1]).to.equal(List.of('some-error'))
     })
 
     it('should dispatch projects fetch error action if the request fails', async function () {
-      send.rejects({message: 'some-error'})
+      send.rejects(new NevergreenError({message: 'some-error'}))
       await testThunk(refreshTray('some-tray-id'), requiredState)
-      expect(projectsFetchError).to.have.been.calledWith('some-tray-id', ['some-error'])
+      expect(projectsFetchError).to.have.been.calledWith('some-tray-id', List.of('some-error'))
     })
   })
 })

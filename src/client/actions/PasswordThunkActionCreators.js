@@ -4,22 +4,23 @@ import {send} from '../common/gateways/NevergreenGateway'
 import {isBlank} from '../common/Utils'
 import {encryptingPassword, passwordEncrypted, passwordEncryptError} from './PasswordActionCreators'
 import {trayPendingRequest} from '../Selectors'
+import {List} from 'immutable'
 
-export function encryptPassword(trayId, password) {
+export function encryptPassword(trayId, rawPassword) {
 
   return async (dispatch, getState) => {
     abortPendingRequest(trayPendingRequest(getState(), trayId))
 
-    if (!isBlank(password)) {
-      const request = encrypt(password)
+    if (!isBlank(rawPassword)) {
+      const request = encrypt(rawPassword)
 
-      dispatch(encryptingPassword(trayId, password, request))
+      dispatch(encryptingPassword(trayId, rawPassword, request))
 
       try {
         const data = await send(request)
-        dispatch(passwordEncrypted(trayId, data.password))
+        dispatch(passwordEncrypted(trayId, data.get('password')))
       } catch (error) {
-        dispatch(passwordEncryptError(trayId, [error.message]))
+        dispatch(passwordEncryptError(trayId, List.of(error.message)))
       }
     } else {
       dispatch(passwordEncrypted(trayId, ''))

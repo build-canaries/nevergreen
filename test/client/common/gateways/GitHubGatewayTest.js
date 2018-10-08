@@ -2,6 +2,7 @@ import {withMockedImports} from '../../TestUtils'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {mocks} from '../../Mocking'
+import {GatewayError} from '../../../../src/client/common/gateways/Gateway'
 
 describe('GitHubGateway', function () {
 
@@ -72,7 +73,7 @@ describe('GitHubGateway', function () {
   describe('send', function () {
 
     it('should return the message from the body including the status on error', async function () {
-      gatewaySend.rejects({status: 500, body: {message: 'some-error'}})
+      gatewaySend.rejects(new GatewayError({status: 500, body: {message: 'some-error'}}))
       try {
         await send()
       } catch (err) {
@@ -81,7 +82,7 @@ describe('GitHubGateway', function () {
     })
 
     it('should return the body if it does not contain a message on error', async function () {
-      gatewaySend.rejects({status: 0, body: 'timeout'})
+      gatewaySend.rejects(new GatewayError({status: 0, body: 'timeout'}))
       try {
         await send()
       } catch (err) {
@@ -90,7 +91,7 @@ describe('GitHubGateway', function () {
     })
 
     it('should return the given status on error', async function () {
-      gatewaySend.rejects({status: 500})
+      gatewaySend.rejects(new GatewayError({status: 500}))
       try {
         await send()
       } catch (err) {

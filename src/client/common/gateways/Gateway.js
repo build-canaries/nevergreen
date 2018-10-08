@@ -1,6 +1,7 @@
 import request from 'superagent'
 import * as log from '../Logger'
 import _ from 'lodash'
+import {fromJS, isImmutable, Record} from 'immutable'
 
 const THIRTY_SECONDS = 1000 * 30
 const THREE_MINUTES = 1000 * 60 * 60 * 3
@@ -17,7 +18,7 @@ export const TIMEOUT_ERROR = 'timeout'
 export function post(url, data, headers = {}) {
   return request
     .post(url)
-    .send(data)
+    .send(isImmutable(data) ? data.toJS() : data)
     .accept(ACCEPT_HEADER)
     .type(CONTENT_TYPE)
     .set(headers)
@@ -27,7 +28,7 @@ export function post(url, data, headers = {}) {
 export function patch(url, data, headers = {}) {
   return request
     .patch(url)
-    .send(data)
+    .send(isImmutable(data) ? data.toJS() : data)
     .accept(ACCEPT_HEADER)
     .type(CONTENT_TYPE)
     .set(headers)
@@ -45,7 +46,7 @@ export function get(url, headers = {}) {
 export async function send(request) {
   try {
     const res = await request
-    return res.body || res.text
+    return fromJS(res.body) || res.text
   } catch (err) {
     const url = _.get(err, 'url', 'unknown')
 
@@ -56,16 +57,22 @@ export async function send(request) {
       ? TIMEOUT_ERROR
       : _.get(err, 'response.body') || _.get(err, 'message') || UNKNOWN_ERROR
 
-    throw {status, body}
+    throw new GatewayError({status, body: fromJS(body)})
   }
 }
 
 export async function fakeResponse(body) {
-  return {body}
+  return fromJS({body})
 }
 
 export function abortPendingRequest(req) {
   if (req && _.isFunction(req.abort)) {
     req.abort()
   }
+}
+
+export class GatewayError extends Record({
+  status: 0,
+  body: null
+}) {
 }

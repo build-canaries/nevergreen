@@ -1,5 +1,5 @@
 import {get, patch, post, send as gatewaySend} from './Gateway'
-import _ from 'lodash'
+import {NevergreenError} from './NevergreenGateway'
 
 const GIST_URL = 'https://api.github.com/gists'
 const MIME_TYPE = 'application/vnd.github.v3+json'
@@ -45,9 +45,9 @@ export async function send(request) {
   } catch (err) {
     // GitHub errors look like this {"message": "", "documentation_url": ""}
     const status = err.status
-    const serverMessage = _.get(err, 'body.message', err.body)
+    const serverMessage = err.getIn(['body', 'message'], err.body)
     const message = `${status} - ${serverMessage}`
 
-    throw {status, message}
+    throw new NevergreenError({status, message})
   }
 }

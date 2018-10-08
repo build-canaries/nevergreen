@@ -3,6 +3,7 @@ import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {mocks} from '../../Mocking'
 import {TIMEOUT_ERROR, UNKNOWN_ERROR} from '../../../../src/client/common/gateways/Gateway'
+import {Map} from 'immutable'
 
 describe('Gateway', function () {
 
@@ -12,10 +13,10 @@ describe('Gateway', function () {
 
   describe('send', function () {
 
-    it('should return the response body', async function () {
-      const request = Promise.resolve({body: 'some-body'})
+    it('should return the response body as an immutable object', async function () {
+      const request = Promise.resolve({body: {foo: 'bar'}})
       const actual = await send(request)
-      expect(actual).to.equal('some-body')
+      expect(actual).to.equal(Map({foo: 'bar'}))
     })
 
     it('should return the response text if no body exists (this will be the case for plain/text)', async function () {
@@ -83,7 +84,7 @@ describe('Gateway', function () {
 
     it('should return the given body', async function () {
       const response = await fakeResponse('whatever')
-      expect(response).to.include({body: 'whatever'})
+      expect(response).to.have.property('body', 'whatever')
     })
   })
 

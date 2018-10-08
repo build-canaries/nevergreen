@@ -1,0 +1,14 @@
+[ignore]
+.*/node_modules/.*/test/.*
+
+[include]
+/src/client/**/*.js
+/test/client/**/*.js
+
+[libs]
+
+[lints]
+
+[options]
+
+[strict]

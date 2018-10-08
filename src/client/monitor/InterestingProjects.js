@@ -54,13 +54,18 @@ class InterestingProjects extends Component {
 
     const projects = _.map(projectsToShow, (project) => {
       const tray = this.props.trays.find((tray) => tray.trayId === project.trayId)
-      return <InterestingProject {...project}
-                                 trayName={tray.name}
+      return <InterestingProject trayName={tray.name}
                                  key={`${tray.trayId}#${project.projectId}`}
                                  showBuildTimers={this.props.showBuildTimers}
                                  showBrokenBuildTimers={this.props.showBrokenBuildTimers}
                                  showTrayName={this.props.showTrayName}
-                                 showBuildLabel={this.props.showBuildLabel}/>
+                                 showBuildLabel={this.props.showBuildLabel}
+                                 prognosis={project.prognosis}
+                                 name={project.name}
+                                 stage={project.stage}
+                                 lastBuildTime={project.lastBuildTime}
+                                 lastBuildLabel={project.lastBuildLabel}
+                                 thisBuildTime={project.thisBuildTime}/>
     })
 
     const summary = showSummary ? ([
@@ -83,6 +88,11 @@ InterestingProjects.propTypes = {
   projects: PropTypes.arrayOf(PropTypes.shape({
     projectId: PropTypes.string.isRequired,
     trayId: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    stage: PropTypes.string,
+    lastBuildTime: PropTypes.string,
+    lastBuildLabel: PropTypes.string,
+    thisBuildTime: PropTypes.string,
     prognosis: PropTypes.oneOf([
       PROGNOSIS_SICK,
       PROGNOSIS_HEALTHY_BUILDING,

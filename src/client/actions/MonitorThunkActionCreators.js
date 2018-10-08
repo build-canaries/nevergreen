@@ -1,8 +1,5 @@
 import {interesting} from '../common/gateways/ProjectsGateway'
 import {send} from '../common/gateways/NevergreenGateway'
-import _ from 'lodash'
-import {isBuilding} from '../domain/Project'
-import {extract} from '../domain/Tray'
 import {interestingProjects, interestingProjectsFetching} from './MonitorActionCreators'
 import {abortPendingRequest} from '../common/gateways/Gateway'
 import {
@@ -11,55 +8,49 @@ import {
   selectedProjects,
   trays
 } from '../Selectors'
+import {wrapProjectErrors, wrapProjects} from '../domain/Project'
+import {List} from 'immutable'
 
-function toErrorString(trays, project) {
-  const tray = trays.find((tray) => tray.get('trayId') === project.trayId)
-  const identifier = tray.get('name') || tray.get('url')
-  return `${identifier} ${project.errorMessage}`
+function toErrorString(trays, projectError) {
+  const tray = trays.find((tray) => tray.trayId === projectError.trayId)
+  const identifier = tray.name || tray.url
+  return `${identifier} ${projectError.errorMessage}`
 }
 
-function byProjectId(existing, newProject) {
-  return existing.get('projectId') === newProject.projectId
-}
-
-function wasBuildingPreviousFetch(existingProject) {
-  return !_.isNil(existingProject) && existingProject.get('thisBuildTime')
-}
-
-function addThisBuildTime(project, currentProjects) {
-  const existingProject = currentProjects.find((existing) => byProjectId(existing, project))
-
-  if (isBuilding(project.prognosis)) {
-    project.thisBuildTime = wasBuildingPreviousFetch(existingProject)
-      ? existingProject.get('thisBuildTime')
+function addThisBuildTime(project, previouslyFetchedProjects) {
+  if (project.isBuilding()) {
+    const previousProject = previouslyFetchedProjects.find((previous) => project.equals(previous))
+    const thisBuildTime = previousProject && previousProject.isBuilding()
+      ? previousProject.thisBuildTime
       : project.fetchedTime
+    return project.set('thisBuildTime', thisBuildTime)
   } else {
-    project.thisBuildTime = null
+    return project.delete('thisBuildTime')
   }
-
-  return project
 }
 
 export function fetchInteresting() {
   return async (dispatch, getState) => {
     abortPendingRequest(interestingPendingRequest(getState()))
 
-    const currentProjects = selectInterestingProjects(getState())
     const selected = selectedProjects(getState())
     const allTrays = trays(getState())
+    const previouslyFetchedProjects = selectInterestingProjects(getState())
 
     const request = interesting(allTrays, selected)
     dispatch(interestingProjectsFetching(request))
 
     try {
-      const allProjects = await send(request)
-      const {okProjects, errorProjects} = extract(allProjects)
-      const enrichedProjects = okProjects.map((project) => addThisBuildTime(project, currentProjects))
-      const errorMessages = errorProjects.map((project) => toErrorString(allTrays, project))
+      const rawProjects = await send(request)
+      const fetchedProjects = wrapProjects(rawProjects)
+      const enrichedProjects = fetchedProjects
+        .map((project) => addThisBuildTime(project, previouslyFetchedProjects))
+      const errorMessages = wrapProjectErrors(rawProjects)
+        .map((projectError) => toErrorString(allTrays, projectError))
 
       dispatch(interestingProjects(enrichedProjects, errorMessages))
     } catch (error) {
-      dispatch(interestingProjects([], [error.message]))
+      dispatch(interestingProjects(List(), List.of(error.message)))
     }
   }
 }

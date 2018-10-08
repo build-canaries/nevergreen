@@ -29,6 +29,8 @@ import {
   setTrayUsername,
   trayAdded
 } from '../../../src/client/actions/TrackingActionCreators'
+import {List} from 'immutable'
+import {Project} from '../../../src/client/domain/Project'
 
 describe('TrackingActionCreators', function () {
 
@@ -119,34 +121,36 @@ describe('TrackingActionCreators', function () {
   describe(PROJECTS_FETCHED, function () {
 
     it('should return the correct type', function () {
-      const actual = projectsFetched('irrelevant', [])
+      const actual = projectsFetched('irrelevant', List())
       expect(actual).to.have.property('type', PROJECTS_FETCHED)
     })
 
     it('should return the tray id', function () {
-      const actual = projectsFetched('some-tray-id', [])
+      const actual = projectsFetched('some-tray-id', List())
       expect(actual).to.have.property('trayId', 'some-tray-id')
     })
 
     it('should return the projects', function () {
-      const actual = projectsFetched('irrelevant', [{foo: 'bar', webUrl: ''}])
-      expect(actual).to.have.property('data').that.includes.deep.property('[0].foo', 'bar')
+      const actual = projectsFetched('irrelevant', List.of(
+        new Project({webUrl: 'bar'})
+      ))
+      expect(actual).to.have.property('data').that.includes.deep.property('[0].webUrl', 'bar')
     })
 
     it('should return a timestamp', function () {
-      const actual = projectsFetched('irrelevant', [])
+      const actual = projectsFetched('irrelevant', List())
       expect(actual).to.have.property('timestamp').that.is.not.empty()
     })
 
     it('should return the server type', function () {
-      const actual = projectsFetched('irrelevant', [{
-        serverType: 'some-type'
-      }])
+      const actual = projectsFetched('irrelevant', List.of(
+        new Project({serverType: 'some-type'})
+      ))
       expect(actual).to.have.property('serverType', 'some-type')
     })
 
     it('should return whether to select all projects or not', function () {
-      const actual = projectsFetched('irrelevant', [], true)
+      const actual = projectsFetched('irrelevant', List(), true)
       expect(actual).to.have.property('selectAll', true)
     })
   })
@@ -164,7 +168,7 @@ describe('TrackingActionCreators', function () {
     })
 
     it('should return the errors', function () {
-      const actual = projectsFetchError('some-tray-id', ['some-error'])
+      const actual = projectsFetchError('some-tray-id', List.of('some-error'))
       expect(actual).to.have.property('errors').that.includes('some-error')
     })
   })

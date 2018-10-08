@@ -2,7 +2,8 @@ import {withMockedImports} from '../../TestUtils'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {mocks} from '../../Mocking'
-import {fromJS} from 'immutable'
+import {fromJS, List, Map} from 'immutable'
+import {Tray} from '../../../../src/client/domain/Tray'
 
 describe('ProjectsGateway', function () {
 
@@ -16,38 +17,32 @@ describe('ProjectsGateway', function () {
   describe('fetchAll', function () {
 
     it('posts only the required data from the given trays', () => {
-      const trays = fromJS([{
-        trayId: 'url',
-        url: 'url',
-        username: 'uname',
-        password: 'pword',
-        serverType: 'GO',
-        foo: 'bar'
-      }, {
-        trayId: 'another-url',
-        url: 'another-url',
-        username: 'another-uname',
-        password: 'another-pword',
-        serverType: 'GO',
-        extra: 'i-should-get-removed'
-      }])
-      const expected = [{
-        trayId: 'url',
-        url: 'url',
-        username: 'uname',
-        password: 'pword',
-        serverType: 'GO'
-      }, {
-        trayId: 'another-url',
-        url: 'another-url',
-        username: 'another-uname',
-        password: 'another-pword',
-        serverType: 'GO'
-      }]
+      const trays = List([
+        new Tray({
+          trayId: 'url',
+          url: 'url',
+          username: 'uname',
+          password: 'pword',
+          serverType: 'GO',
+          timestamp: 'some-time-stamp',
+          loaded: false,
+          highlight: false
+        })
+      ])
+      const expected = List([
+        Map({
+          url: 'url',
+          trayId: 'url',
+          username: 'uname',
+          password: 'pword',
+          serverType: 'GO'
+        })
+      ])
 
       fetchAll(trays)
 
-      expect(post).to.have.been.calledWith('/api/projects/all', expected)
+      expect(post.getCall(0).args[0]).to.equal('/api/projects/all')
+      expect(post.getCall(0).args[1]).to.equal(expected)
     })
   })
 
@@ -57,25 +52,30 @@ describe('ProjectsGateway', function () {
       const selected = fromJS({
         'some-tray-id': ['some-project-id']
       })
-      const trays = fromJS([{
-        trayId: 'some-tray-id',
-        url: 'some-url',
-        username: 'some-uname',
-        password: 'some-pword',
-        serverType: 'some-server-type'
-      }])
-      const expected = [{
-        trayId: 'some-tray-id',
-        url: 'some-url',
-        username: 'some-uname',
-        password: 'some-pword',
-        included: ['some-project-id'],
-        serverType: 'some-server-type'
-      }]
+      const trays = List([
+        new Tray({
+          trayId: 'some-tray-id',
+          url: 'some-url',
+          username: 'some-uname',
+          password: 'some-pword',
+          serverType: 'some-server-type'
+        })
+      ])
+      const expected = List([
+        Map({
+          url: 'some-url',
+          trayId: 'some-tray-id',
+          username: 'some-uname',
+          password: 'some-pword',
+          serverType: 'some-server-type',
+          included: List(['some-project-id'])
+        })
+      ])
 
       interesting(trays, selected)
 
-      expect(post).to.have.been.calledWith('/api/projects/interesting', expected)
+      expect(post.getCall(0).args[0]).to.equal('/api/projects/interesting')
+      expect(post.getCall(0).args[1]).to.equal(expected)
       expect(fakeResponse).to.not.have.been.called()
     })
 
@@ -84,26 +84,26 @@ describe('ProjectsGateway', function () {
         'some-tray-id': ['some-project-id'],
         'none-selected-id': []
       })
-      const trays = fromJS([
-        {trayId: 'some-tray-id'},
-        {trayId: 'none-selected-id'}
+      const trays = List([
+        new Tray({trayId: 'some-tray-id'}),
+        new Tray({trayId: 'none-selected-id'})
       ])
-      const expected = [mocks.match({trayId: 'some-tray-id'})]
 
       interesting(trays, selected)
 
-      expect(post).to.have.been.calledWithMatch('/api/projects/interesting', mocks.match(expected))
+      expect(post.getCall(0).args[1]).to.have.size(1)
+      expect(post.getCall(0).args[1].first()).to.have.property('trayId', 'some-tray-id')
       expect(fakeResponse).to.not.have.been.called()
     })
 
     it('does not call the server at all if no trays have selected projects', function () {
       const selected = fromJS({'some-tray-id': []})
-      const trays = fromJS([{trayId: 'some-tray-id'}])
+      const trays = List([new Tray({trayId: 'some-tray-id'})])
 
       interesting(trays, selected)
 
       expect(post).to.not.have.been.called()
-      expect(fakeResponse).to.have.been.called()
+      expect(fakeResponse).to.have.been.calledWith(List())
     })
   })
 })

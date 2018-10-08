@@ -2,6 +2,8 @@ import {testThunk, withMockedImports} from '../TestUtils'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {containsMessage, containsOnlyMessage, mocks} from '../Mocking'
+import {fromJS} from 'immutable'
+import {NevergreenError} from '../../../src/client/common/gateways/NevergreenGateway'
 
 describe('GitHubThunkActionCreators', function () {
 
@@ -29,7 +31,7 @@ describe('GitHubThunkActionCreators', function () {
 
   describe('restoreFromGitHub', function () {
 
-    const validResponse = {
+    const validResponse = fromJS({
       files: {
         'configuration.json': {
           content: 'some-content',
@@ -39,7 +41,7 @@ describe('GitHubThunkActionCreators', function () {
         }
       },
       description: 'some-description'
-    }
+    })
 
     it('should dispatch importing', async function () {
       send.resolves(validResponse)
@@ -58,19 +60,19 @@ describe('GitHubThunkActionCreators', function () {
     })
 
     it('should dispatch import error if the gist can not be fetched', async function () {
-      send.rejects({message: '{"message": "some-error"}'})
+      send.rejects(new NevergreenError({message: '{"message": "some-error"}'}))
       await testThunk(restoreFromGitHub('some-id'))
       expect(importError).to.have.been.calledWithMatch(containsMessage('some-error'))
     })
 
     it('should dispatch import error if the gist does not contain a configuration.json file', async function () {
-      send.resolves({files: {}})
+      send.resolves(fromJS({files: {}}))
       await testThunk(restoreFromGitHub('some-id'))
       expect(importError).to.have.been.calledWithMatch(containsMessage('gist does not contain the required configuration.json file'))
     })
 
     it('should dispatch import error if the gist configuration.json is over 10mb as it can only be fetched via git cloning', async function () {
-      send.resolves({
+      send.resolves(fromJS({
         files: {
           'configuration.json': {
             content: '{}',
@@ -78,13 +80,13 @@ describe('GitHubThunkActionCreators', function () {
             size: 10485761
           }
         }
-      })
+      }))
       await testThunk(restoreFromGitHub('some-id'))
       expect(importError).to.have.been.calledWithMatch(containsMessage('gist configuration.json file is too big to fetch without git cloning, size 10485761 bytes'))
     })
 
     it('should fetch the gist configuration.json if it is truncated but under 10mb', async function () {
-      send.onFirstCall().resolves({
+      send.onFirstCall().resolves(fromJS({
         files: {
           'configuration.json': {
             content: 'truncated-content',
@@ -94,7 +96,7 @@ describe('GitHubThunkActionCreators', function () {
           }
         },
         description: 'some-description'
-      })
+      }))
       getTruncatedFile.returns('some-request')
       send.onSecondCall().resolves('some-raw-file-content')
 
@@ -116,13 +118,13 @@ describe('GitHubThunkActionCreators', function () {
   describe('uploadToGitHub', function () {
 
     it('should dispatch exporting action', async function () {
-      send.resolves({id: 'some-id'})
+      send.resolves(fromJS({id: 'some-id'}))
       await testThunk(uploadToGitHub('irrelevant', 'irrelevant', 'irrelevant', 'irrelevant'))
       expect(exporting).to.have.been.called()
     })
 
     it('should dispatch export error action if the gist can not be created', async function () {
-      send.rejects({message: 'some-error'})
+      send.rejects(new NevergreenError({message: 'some-error'}))
       await testThunk(uploadToGitHub('irrelevant', 'irrelevant', 'irrelevant', 'not-blank'))
       expect(exportError).to.have.been.calledWithMatch(containsMessage('Unable to upload to GitHub because of an error: some-error'))
     })
@@ -133,40 +135,40 @@ describe('GitHubThunkActionCreators', function () {
     })
 
     it('should create a gist if no ID is given', async function () {
-      send.resolves({id: 'irrelevant'})
+      send.resolves(fromJS({id: 'irrelevant'}))
       await testThunk(uploadToGitHub(null, 'some-description', 'some-config', 'some-token'))
       expect(updateGist).to.not.have.been.called()
       expect(createGist).to.have.been.called('some-description', 'some-config', 'some-token')
     })
 
     it('should create a gist if a blank ID is given', async function () {
-      send.resolves({id: 'irrelevant'})
+      send.resolves(fromJS({id: 'irrelevant'}))
       await testThunk(uploadToGitHub(' ', 'some-description', 'some-config', 'some-token'))
       expect(updateGist).to.not.have.been.called()
       expect(createGist).to.have.been.called('some-description', 'some-config', 'some-token')
     })
 
     it('should update the gist if an id is given', async function () {
-      send.resolves({id: 'irrelevant'})
+      send.resolves(fromJS({id: 'irrelevant'}))
       await testThunk(uploadToGitHub('some-id', 'some-description', 'some-config', 'some-token'))
       expect(updateGist).to.have.been.called('some-id', 'some-description', 'some-config', 'some-token')
       expect(createGist).to.not.have.been.called()
     })
 
     it('should dispatch export success on successful create of the gist', async function () {
-      send.resolves({id: 'some-id'})
+      send.resolves(fromJS({id: 'some-id'}))
       await testThunk(uploadToGitHub(null, 'irrelevant', 'irrelevant', 'not-blank'))
       expect(exportSuccess).to.have.been.calledWithMatch(containsOnlyMessage('created gist some-id'))
     })
 
     it('should dispatch export success on successful update of the gist', async function () {
-      send.resolves({id: 'some-id'})
+      send.resolves(fromJS({id: 'some-id'}))
       await testThunk(uploadToGitHub('irrelevant', 'irrelevant', 'irrelevant', 'not-blank'))
       expect(exportSuccess).to.have.been.calledWithMatch(containsOnlyMessage('updated gist some-id'))
     })
 
     it('should dispatch GitHub set ID with the response ID on successful create/update of the gist', async function () {
-      send.resolves({id: 'some-id'})
+      send.resolves(fromJS({id: 'some-id'}))
       await testThunk(uploadToGitHub('irrelevant', 'irrelevant', 'irrelevant', 'not-blank'))
       expect(gitHubSetGistId).to.have.been.calledWith('some-id')
     })

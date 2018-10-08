@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import nameGenerator from 'project-name-generator'
-import {isError, isSick} from './Project'
+import {hash, Record} from 'immutable'
+import {isSick} from './Project'
 
 export function generateRandomName() {
   return _.lowerCase(nameGenerator().spaced)
@@ -10,28 +11,29 @@ export function createId(url) {
   return url
 }
 
-export function getErrors(projects) {
-  return projects
-    .filter((project) => isError(project))
-}
-
-export function removeErrors(projects) {
-  return projects
-    .filter((project) => !isError(project))
-}
-
-export function removeJobs(projects) {
-  return projects
-    .filter((project) => !project.job)
-}
-
-export function extract(projects) {
-  return {
-    okProjects: removeErrors(removeJobs(projects)),
-    errorProjects: getErrors(projects)
-  }
-}
-
 export function sickProjects(projects) {
   return projects.filter((project) => isSick(project.prognosis))
+}
+
+export class Tray extends Record({
+  trayId: '',
+  name: '',
+  url: '',
+  username: '',
+  password: '',
+  serverType: '',
+  timestamp: null,
+  loaded: false,
+  highlight: false,
+  pendingRequest: null,
+  errors: null
+}, 'Tray') {
+
+  equals(other) {
+    return other && other.trayId === this.trayId
+  }
+
+  hashCode() {
+    return hash(this.trayId)
+  }
 }

@@ -4,7 +4,7 @@ import {shallow} from 'enzyme'
 import {expect} from 'chai'
 import {mocks} from './Mocking'
 import _ from 'lodash'
-import {Iterable, Map} from 'immutable'
+import {isImmutable, Map} from 'immutable'
 
 proxyquire.noCallThru()
 
@@ -64,8 +64,8 @@ export function forNonStrings(fn) {
 }
 
 export async function testThunk(thunkion, state = Map()) {
-  if (!Iterable.isIterable(state)) {
-    throw 'state must be immutable'
+  if (!isImmutable(state)) {
+    throw 'state must be an immutable object'
   }
 
   const dispatch = mocks.stub()

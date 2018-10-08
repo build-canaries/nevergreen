@@ -1,4 +1,5 @@
 import {isBlank, isNumber} from '../common/Utils'
+import {hash, Record} from 'immutable'
 
 export const PROGNOSIS_SICK = 'sick'
 export const PROGNOSIS_HEALTHY_BUILDING = 'healthy-building'
@@ -26,3 +27,60 @@ export function isBuilding(prognosis) {
 export function isError(project) {
   return project.isError === true
 }
+
+export function wrapProjects(rawProjects) {
+  return rawProjects
+    .filterNot((rawProject) => rawProject.get('isError'))
+    .filterNot((rawProject) => rawProject.get('job'))
+    .map((rawProject) => new Project(rawProject))
+}
+
+export function wrapProjectErrors(rawProjects) {
+  return rawProjects
+    .filter((rawProject) => rawProject.get('isError'))
+    .map(wrapProjectError)
+}
+
+export class Project extends Record({
+  projectId: '',
+  removed: false,
+  prognosis: PROGNOSIS_UNKNOWN,
+  lastBuildTime: '',
+  fetchedTime: '',
+  lastBuildStatus: '',
+  name: '',
+  url: '',
+  activity: '',
+  trayId: '',
+  owner: '',
+  isNew: false,
+  webUrl: '',
+  lastBuildLabel: '',
+  serverType: '',
+  stage: '',
+  thisBuildTime: ''
+}, 'Project') {
+
+  isSick() {
+    return isSick(this.prognosis)
+  }
+
+  isBuilding() {
+    return isBuilding(this.prognosis)
+  }
+
+  equals(other) {
+    return other && other.projectId === this.projectId
+  }
+
+  hashCode() {
+    return hash(this.projectId)
+  }
+}
+
+export const wrapProjectError = Record({
+  trayId: '',
+  url: '',
+  fetchedTime: '',
+  errorMessage: ''
+}, 'ProjectError')
