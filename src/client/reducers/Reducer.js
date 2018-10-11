@@ -1,29 +1,30 @@
 import {combineReducers} from 'redux-immutable'
-import {reduce as nevergreen} from './NevergreenReducer'
-import {reduce as audioVisual} from './SettingsReducer'
-import {reduce as trays} from './TraysReducer'
-import {reduce as projects} from './ProjectsReducer'
-import {reduce as success} from './SuccessReducer'
-import {reduce as interesting} from './InterestingReducer'
-import {reduce as github} from './GitHubReducer'
-import {reduce as backupExport} from './ExportReducer'
-import {reduce as backupImport} from './ImportReducer'
-import {reduce as selected} from './SelectedReducer'
-import {reduce as shortcut} from './ShortcutReducer'
-import {reduce as notification} from './NotificationReducer'
+import {NEVERGREEN_ROOT, reduce as nevergreen} from './NevergreenReducer'
+import {reduce as audioVisual, SETTINGS_ROOT} from './SettingsReducer'
+import {reduce as trays, TRAYS_ROOT} from './TraysReducer'
+import {PROJECTS_ROOT, reduce as projects} from './ProjectsReducer'
+import {reduce as success, SUCCESS_ROOT} from './SuccessReducer'
+import {INTERESTING_ROOT, reduce as interesting} from './InterestingReducer'
+import {GITHUB_ROOT, reduce as github} from './GitHubReducer'
+import {EXPORT_ROOT, reduce as backupExport} from './ExportReducer'
+import {IMPORT_ROOT, reduce as backupImport} from './ImportReducer'
+import {reduce as selected, SELECTED_ROOT} from './SelectedReducer'
+import {reduce as shortcut, SHORTCUT_ROOT} from './ShortcutReducer'
+import {NOTIFICATION_ROOT, reduce as notification} from './NotificationReducer'
+import {PENDING_REQUESTS_ROOT, reduce as pendingRequests} from './PendingRequestsReducer'
 
-/* keep these in alphabetical order as it makes debugging in redux dev tools easier */
 export const reducer = combineReducers({
-  audioVisual,
-  backupExport,
-  backupImport,
-  github,
-  interesting,
-  nevergreen,
-  notification,
-  projects,
-  selected,
-  success,
-  shortcut,
-  trays
+  [SETTINGS_ROOT]: audioVisual,
+  [EXPORT_ROOT]: backupExport,
+  [IMPORT_ROOT]: backupImport,
+  [GITHUB_ROOT]: github,
+  [INTERESTING_ROOT]: interesting,
+  [NEVERGREEN_ROOT]: nevergreen,
+  [NOTIFICATION_ROOT]: notification,
+  [PENDING_REQUESTS_ROOT]: pendingRequests,
+  [PROJECTS_ROOT]: projects,
+  [SELECTED_ROOT]: selected,
+  [SUCCESS_ROOT]: success,
+  [SHORTCUT_ROOT]: shortcut,
+  [TRAYS_ROOT]: trays
 })

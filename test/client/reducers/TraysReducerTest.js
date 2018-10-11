@@ -138,13 +138,6 @@ describe('TraysReducer', function () {
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('trayId').that.not.has.property('errors')
     })
-
-    it('should set the pending request', function () {
-      const existingState = fromJS({trayId: {}})
-      const action = {type: PROJECTS_FETCHING, trayId: 'trayId', request: 'some-request'}
-      const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.has.property('pendingRequest', 'some-request')
-    })
   })
 
   describe(PASSWORD_ENCRYPTED, function () {
@@ -168,13 +161,6 @@ describe('TraysReducer', function () {
       const action = {type: PASSWORD_ENCRYPTED, trayId: 'trayId', password: 'some-password'}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('trayId').that.not.has.property('errors')
-    })
-
-    it('should remove the request', function () {
-      const existingState = fromJS({trayId: {pendingRequest: 'some-request'}})
-      const action = {type: PASSWORD_ENCRYPTED, trayId: 'trayId', errors: List(['some-error'])}
-      const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.not.has.property('pendingRequest')
     })
   })
 
@@ -207,13 +193,6 @@ describe('TraysReducer', function () {
       const newState = reduce(existingState, action)
       expect(newState).to.not.have.property('errors')
     })
-
-    it('should remove the request', function () {
-      const existingState = fromJS({trayId: {pendingRequest: 'some-request'}})
-      const action = {type: PROJECTS_FETCHED, trayId: 'trayId'}
-      const newState = reduce(existingState, action)
-      expect(newState).to.not.have.property('pendingRequest')
-    })
   })
 
   describe(PASSWORD_ENCRYPT_ERROR, function () {
@@ -231,13 +210,6 @@ describe('TraysReducer', function () {
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('trayId').that.has.property('errors').that.contains('some-error')
     })
-
-    it('should remove the request', function () {
-      const existingState = fromJS({trayId: {pendingRequest: 'some-request'}})
-      const action = {type: PASSWORD_ENCRYPT_ERROR, trayId: 'trayId', errors: List(['some-error'])}
-      const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.not.has.property('pendingRequest')
-    })
   })
 
   describe(PROJECTS_FETCH_ERROR, function () {
@@ -254,13 +226,6 @@ describe('TraysReducer', function () {
       const action = {type: PROJECTS_FETCH_ERROR, trayId: 'trayId', errors: List(['some-error'])}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('trayId').that.has.property('errors').that.contains('some-error')
-    })
-
-    it('should remove the request', function () {
-      const existingState = fromJS({trayId: {pendingRequest: 'some-request'}})
-      const action = {type: PROJECTS_FETCH_ERROR, trayId: 'trayId', errors: List(['some-error'])}
-      const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.not.has.property('pendingRequest')
     })
   })
 

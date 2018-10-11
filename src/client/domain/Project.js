@@ -24,10 +24,6 @@ export function isBuilding(prognosis) {
   return prognosis === PROGNOSIS_HEALTHY_BUILDING || prognosis === PROGNOSIS_SICK_BUILDING
 }
 
-export function isError(project) {
-  return project.isError === true
-}
-
 export function wrapProjects(rawProjects) {
   return rawProjects
     .filterNot((rawProject) => rawProject.get('isError'))

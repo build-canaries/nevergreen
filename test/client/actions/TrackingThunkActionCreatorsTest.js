@@ -3,6 +3,7 @@ import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {mocks} from '../Mocking'
 import {fromJS} from 'immutable'
+import {TRAYS_ROOT} from '../../../src/client/reducers/TraysReducer'
 
 describe('TrackingThunkActionCreators', function () {
 
@@ -36,11 +37,11 @@ describe('TrackingThunkActionCreators', function () {
   describe('addTray', function () {
 
     const requiredState = fromJS({
-      trays: {}
+      [TRAYS_ROOT]: {}
     })
 
     it('should dispatch highlight tray action if the tray already exists', async function () {
-      const state = requiredState.set('trays', fromJS({'some-tray-id': {}}))
+      const state = requiredState.set(TRAYS_ROOT, fromJS({'some-tray-id': {}}))
       createId.withArgs('http://url').returns('some-tray-id')
 
       await testThunk(addTray('http://url', 'irrelevant', 'irrelevant'), state)

@@ -17,6 +17,8 @@ import {
 import {DEFAULT_PROJECTS_TO_SHOW, MIN_REFRESH_TIME} from '../actions/SettingsActionCreators'
 import defaultSoundFx from '../settings/pacman_death.mp3'
 
+export const SETTINGS_ROOT = 'audioVisual'
+
 const DEFAULT_STATE = fromJS({
   showTrayName: false,
   showBuildTime: true,

@@ -1,7 +1,7 @@
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {reduce} from '../../../src/client/reducers/InterestingReducer'
-import {INTERESTING_PROJECTS, INTERESTING_PROJECTS_FETCHING} from '../../../src/client/actions/Actions'
+import {INTERESTING_PROJECTS} from '../../../src/client/actions/Actions'
 import {fromJS, List, Map} from 'immutable'
 
 describe('InterestingReducer', function () {
@@ -40,30 +40,6 @@ describe('InterestingReducer', function () {
       }
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('errors').that.contains('some-error')
-    })
-
-    it('should remove any pending property', function () {
-      const existingState = Map({pendingRequest: 'some-request'})
-      const action = {
-        type: INTERESTING_PROJECTS,
-        projects: List(),
-        errors: List(['some-error'])
-      }
-      const newState = reduce(existingState, action)
-      expect(newState).to.not.have.property('pendingRequest')
-    })
-  })
-
-  describe(INTERESTING_PROJECTS_FETCHING, function () {
-
-    it('should set the pending request', function () {
-      const existingState = Map()
-      const action = {
-        type: INTERESTING_PROJECTS_FETCHING,
-        request: 'some-request'
-      }
-      const newState = reduce(existingState, action)
-      expect(newState).to.have.property('pendingRequest', 'some-request')
     })
   })
 })

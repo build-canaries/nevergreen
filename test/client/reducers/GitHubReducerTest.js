@@ -12,7 +12,7 @@ import {fromJS, Map} from 'immutable'
 describe('GitHubReducer', function () {
 
   it('should return the state unmodified for an unknown action', function () {
-    const existingState = {foo: 'bar'}
+    const existingState = Map({foo: 'bar'})
     const newState = reduce(existingState, {type: 'not-a-real-action'})
     expect(newState).to.deep.equal(existingState)
   })

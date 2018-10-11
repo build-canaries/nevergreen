@@ -1,6 +1,8 @@
 import {fromJS} from 'immutable'
 import {IMPORT_ERROR, IMPORT_SUCCESS, IMPORTING, NAVIGATED} from '../actions/Actions'
 
+export const IMPORT_ROOT = 'backupImport'
+
 const DEFAULT_STATE = fromJS({
   loaded: true
 })

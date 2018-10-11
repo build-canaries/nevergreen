@@ -1,6 +1,8 @@
 import {OrderedSet} from 'immutable'
 import {IMPORT_SUCCESS, INITIALISED, MESSAGE_ADDED, MESSAGE_REMOVED} from '../actions/Actions'
 
+export const SUCCESS_ROOT = 'success'
+
 const DEFAULT_STATE = OrderedSet(['=(^.^)='])
 
 export function reduce(state = DEFAULT_STATE, action) {

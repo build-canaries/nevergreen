@@ -25,7 +25,6 @@ export class Tray extends Record({
   timestamp: null,
   loaded: false,
   highlight: false,
-  pendingRequest: null,
   errors: null
 }, 'Tray') {
 

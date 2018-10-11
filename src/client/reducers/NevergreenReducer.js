@@ -1,6 +1,8 @@
 import {fromJS} from 'immutable'
 import {FULL_SCREEN, INITIALISED, INITIALISING, REQUEST_FULL_SCREEN} from '../actions/Actions'
 
+export const NEVERGREEN_ROOT = 'nevergreen'
+
 const DEFAULT_STATE = fromJS({
   loaded: false,
   fullScreen: false,

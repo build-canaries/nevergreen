@@ -9,6 +9,8 @@ import {
   TRAY_ADDED
 } from '../actions/Actions'
 
+export const SELECTED_ROOT = 'selected'
+
 const DEFAULT_STATE = Map()
 
 export function reduce(state = DEFAULT_STATE, action) {

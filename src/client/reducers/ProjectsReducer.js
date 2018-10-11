@@ -1,6 +1,8 @@
 import {Map} from 'immutable'
 import {IMPORT_SUCCESS, INITIALISED, PROJECTS_FETCHED, REMOVE_TRAY, SET_TRAY_ID, TRAY_ADDED} from '../actions/Actions'
 
+export const PROJECTS_ROOT = 'projects'
+
 const DEFAULT_STATE = Map()
 
 export function reduce(state = DEFAULT_STATE, action) {

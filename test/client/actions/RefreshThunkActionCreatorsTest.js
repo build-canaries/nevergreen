@@ -5,6 +5,8 @@ import {mocks} from '../Mocking'
 import {fromJS, List, Map} from 'immutable'
 import {Tray} from '../../../src/client/domain/Tray'
 import {NevergreenError} from '../../../src/client/common/gateways/NevergreenGateway'
+import {TRAYS_ROOT} from '../../../src/client/reducers/TraysReducer'
+import {PENDING_REQUESTS_ROOT} from '../../../src/client/reducers/PendingRequestsReducer'
 
 describe('RefreshThunkActionCreators', function () {
 
@@ -24,13 +26,14 @@ describe('RefreshThunkActionCreators', function () {
 
   describe('refreshTray', function () {
 
-    const tray = new Tray({
-      pendingRequest: 'some-pending-request'
-    })
+    const tray = new Tray()
 
     const requiredState = Map({
-      trays: Map({
+      [TRAYS_ROOT]: Map({
         'some-tray-id': tray
+      }),
+      [PENDING_REQUESTS_ROOT]: Map({
+        'some-tray-id': 'some-pending-request'
       })
     })
 

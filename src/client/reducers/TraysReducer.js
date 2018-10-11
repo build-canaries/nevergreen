@@ -19,6 +19,8 @@ import {
   TRAY_ADDED
 } from '../actions/Actions'
 
+export const TRAYS_ROOT = 'trays'
+
 const DEFAULT_STATE = OrderedMap()
 
 export function reduce(state = DEFAULT_STATE, action) {
@@ -48,16 +50,14 @@ export function reduce(state = DEFAULT_STATE, action) {
       return state.update(action.trayId, (tray) =>
         tray.withMutations((map) =>
           map.set('loaded', false)
-            .delete('errors')
-            .set('pendingRequest', action.request)))
+            .delete('errors')))
 
     case PASSWORD_ENCRYPTED:
       return state.update(action.trayId, (tray) =>
         tray.withMutations((map) =>
           map.set('loaded', true)
             .set('password', action.password)
-            .delete('errors')
-            .delete('pendingRequest')))
+            .delete('errors')))
 
     case PROJECTS_FETCHED:
       return state.update(action.trayId, (tray) =>
@@ -65,16 +65,14 @@ export function reduce(state = DEFAULT_STATE, action) {
           map.set('loaded', true)
             .set('timestamp', action.timestamp)
             .set('serverType', action.serverType)
-            .delete('errors')
-            .delete('pendingRequest')))
+            .delete('errors')))
 
     case PASSWORD_ENCRYPT_ERROR:
     case PROJECTS_FETCH_ERROR:
       return state.update(action.trayId, (tray) =>
         tray.withMutations((map) =>
           map.set('loaded', true)
-            .set('errors', action.errors)
-            .delete('pendingRequest')))
+            .set('errors', action.errors)))
 
     case SET_TRAY_NAME:
       return state.update(action.trayId, (tray) => tray.set('name', action.name))

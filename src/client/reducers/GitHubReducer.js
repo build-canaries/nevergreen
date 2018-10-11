@@ -1,6 +1,8 @@
 import {fromJS} from 'immutable'
 import {GITHUB_SET_DESCRIPTION, GITHUB_SET_GIST_ID, IMPORT_SUCCESS, INITIALISED} from '../actions/Actions'
 
+export const GITHUB_ROOT = 'github'
+
 const DEFAULT_STATE = fromJS({
   gistId: '',
   description: 'Nevergreen configuration backup'

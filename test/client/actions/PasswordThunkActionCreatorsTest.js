@@ -4,6 +4,7 @@ import {expect} from 'chai'
 import {mocks} from '../Mocking'
 import {fromJS, List} from 'immutable'
 import {NevergreenError} from '../../../src/client/common/gateways/NevergreenGateway'
+import {PENDING_REQUESTS_ROOT} from '../../../src/client/reducers/PendingRequestsReducer'
 
 describe('PasswordThunkActionCreators', function () {
 
@@ -26,10 +27,8 @@ describe('PasswordThunkActionCreators', function () {
     it('should abort pending request', async function () {
       send.resolves(fromJS({password: ''}))
       const state = fromJS({
-        trays: {
-          'some-tray-id': {
-            pendingRequest: 'some-pending-request'
-          }
+        [PENDING_REQUESTS_ROOT]: {
+          'some-tray-id': 'some-pending-request'
         }
       })
       await testThunk(encryptPassword('some-tray-id', 'irrelevant'), state)

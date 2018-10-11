@@ -3,7 +3,6 @@ import {describe, it} from 'mocha'
 import {
   formatBuildLabel,
   isBuilding,
-  isError,
   isSick,
   PROGNOSIS_HEALTHY_BUILDING,
   PROGNOSIS_SICK,
@@ -103,17 +102,6 @@ describe('Project', function () {
       it(`should be false for invalid value ${friendlyName}`, function () {
         expect(isSick(value)).to.be.false()
       })
-    })
-  })
-
-  describe('isError', function () {
-
-    it('should be true if the project is in error', function () {
-      expect(isError({isError: true})).to.be.true()
-    })
-
-    it('should be false if the project is not in error', function () {
-      expect(isError({})).to.be.false()
     })
   })
 })
