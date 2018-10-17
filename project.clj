@@ -6,7 +6,7 @@
                  [org.eclipse.jetty/jetty-server "9.4.12.RC2"]
                  [compojure "1.6.1"]
                  [environ "1.1.0"]
-                 [cheshire "5.8.0"]
+                 [cheshire "5.8.1"]
                  [clj-cctray "1.0.2"]
                  [clj-http "3.9.1"]
                  [ring-curl "1.0.1"]
@@ -32,12 +32,12 @@
   :profiles {:dev        {:plugins      [[lein-midje "3.2.1"]
                                          [jonase/eastwood "0.2.8"]
                                          [com.livingsocial/lein-dependency-check "1.0.2"]]
-                          :dependencies [[midje "1.9.2"]
+                          :dependencies [[midje "1.9.3"]
                                          [clj-webdriver/clj-webdriver "0.7.2" :exclusions [org.mortbay.jetty/jetty]]
                                          [org.seleniumhq.selenium/selenium-java "3.14.0" :exclusions [org.eclipse.jetty/jetty-io
                                                                                                       commons-logging]]
                                          [io.github.bonigarcia/webdrivermanager "3.0.0" :exclusions [org.apache.commons/commons-lang3]]
-                                         [org.seleniumhq.selenium/htmlunit-driver "2.32.1" :exclusions [org.eclipse.jetty/jetty-io
+                                         [org.seleniumhq.selenium/htmlunit-driver "2.33.0" :exclusions [org.eclipse.jetty/jetty-io
                                                                                                         org.eclipse.jetty/jetty-http]]
                                          [ring/ring-mock "0.3.2"]]}
              :unit       {:jvm-opts ["-Dlogback.configurationFile=./test/logback-unit.xml"]}
