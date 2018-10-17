@@ -9,8 +9,9 @@ function hasIncludedProjects(tray) {
 }
 
 export function fetchAll(trays) {
-  const data = trays.map((tray) =>
-    Map(tray).filter(KEYS_TO_SEND))
+  const data = trays
+    .map((tray) => Map(tray)
+      .filter(KEYS_TO_SEND))
 
   return post('/api/projects/all', data)
 }

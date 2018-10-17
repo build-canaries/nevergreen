@@ -4,7 +4,6 @@ import {expect} from 'chai'
 import {mocks} from '../Mocking'
 import {fromJS, List, Map} from 'immutable'
 import {Tray} from '../../../src/client/domain/Tray'
-import {NevergreenError} from '../../../src/client/common/gateways/NevergreenGateway'
 import {TRAYS_ROOT} from '../../../src/client/reducers/TraysReducer'
 import {PENDING_REQUESTS_ROOT} from '../../../src/client/reducers/PendingRequestsReducer'
 
@@ -71,7 +70,7 @@ describe('RefreshThunkActionCreators', function () {
     })
 
     it('should dispatch projects fetch error action if the request fails', async function () {
-      send.rejects(new NevergreenError({message: 'some-error'}))
+      send.rejects(new Error('some-error'))
       await testThunk(refreshTray('some-tray-id'), requiredState)
       expect(projectsFetchError).to.have.been.calledWith('some-tray-id', List.of('some-error'))
     })

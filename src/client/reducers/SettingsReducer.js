@@ -1,4 +1,4 @@
-import {fromJS} from 'immutable'
+import {Map} from 'immutable'
 import {
   BROKEN_BUILD_SOUND_FX,
   IMPORT_SUCCESS,
@@ -19,7 +19,7 @@ import defaultSoundFx from '../settings/pacman_death.mp3'
 
 export const SETTINGS_ROOT = 'audioVisual'
 
-const DEFAULT_STATE = fromJS({
+const DEFAULT_STATE = Map({
   showTrayName: false,
   showBuildTime: true,
   showBrokenBuildTime: true,
@@ -37,7 +37,7 @@ export function reduce(state = DEFAULT_STATE, action) {
   switch (action.type) {
     case INITIALISED:
     case IMPORT_SUCCESS:
-      return state.merge(action.data.get('audioVisual'))
+      return state.merge(action.data.get(SETTINGS_ROOT))
 
     case SHOW_BUILD_TIME:
       return state.set('showBuildTime', action.value)

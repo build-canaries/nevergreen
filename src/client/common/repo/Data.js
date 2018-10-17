@@ -1,5 +1,7 @@
 import validateSchema from './ValidateSchema'
 import _ from 'lodash'
+import {fromJson} from '../Json'
+import {migrate} from './Migrations'
 
 export const schema = validateSchema.schema
 
@@ -9,8 +11,8 @@ export const schema = validateSchema.schema
  * validate function for safety.
  */
 
-export function validate(data) {
-  const filteredData = _.cloneDeep(data)
+export function validate(configuration) {
+  const filteredData = _.cloneDeep(configuration)
   if (validateSchema(filteredData)) {
     return []
   } else {
@@ -22,4 +24,12 @@ export function filter(data) {
   const filteredData = _.cloneDeep(data)
   validateSchema(filteredData)
   return filteredData
+}
+
+export function wrapConfiguration(data) {
+  const configuration = _.isString(data)
+    ? fromJson(data)
+    : data
+
+  return filter(migrate(configuration))
 }

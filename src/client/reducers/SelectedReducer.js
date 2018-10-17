@@ -17,7 +17,7 @@ export function reduce(state = DEFAULT_STATE, action) {
   switch (action.type) {
     case INITIALISED:
     case IMPORT_SUCCESS: {
-      const selected = action.data.get('selected')
+      const selected = action.data.get(SELECTED_ROOT)
       return selected ? Map(selected).map((included) => included.toSet()) : state
     }
 

@@ -1,15 +1,18 @@
 import {init, load} from '../common/repo/LocalRepository'
-import {filter} from '../common/repo/Data'
-import {migrate} from '../common/repo/Migrations'
+import {wrapConfiguration} from '../common/repo/Data'
 import {initalised, initalising} from './NevergreenActionCreators'
 
 export function initalise() {
   return async (dispatch) => {
     dispatch(initalising())
 
-    await init()
-    const configuration = await load()
-    dispatch(initalised(filter(migrate(configuration))))
-    // TODO: handle loading configuration failure
+    try {
+      await init()
+      const data = await load()
+
+      dispatch(initalised(wrapConfiguration(data)))
+    } catch (e) {
+      // TODO: handle loading configuration failure
+    }
   }
 }

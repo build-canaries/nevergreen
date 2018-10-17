@@ -1,29 +1,36 @@
-import {fromJS} from 'immutable'
+import {Map} from 'immutable'
 import {IMPORT_ERROR, IMPORT_SUCCESS, IMPORTING, NAVIGATED} from '../actions/Actions'
 
 export const IMPORT_ROOT = 'backupImport'
 
-const DEFAULT_STATE = fromJS({
+const DEFAULT_STATE = Map({
   loaded: true
 })
 
 export function reduce(state = DEFAULT_STATE, action) {
   switch (action.type) {
     case IMPORTING:
-      return state.withMutations((map) =>
-        map.set('loaded', false).delete('infos').delete('errors'))
+      return state.withMutations((map) => map
+        .set('loaded', false)
+        .delete('infos')
+        .delete('errors'))
 
     case IMPORT_SUCCESS:
-      return state.withMutations((map) =>
-        map.set('loaded', true).set('infos', action.messages).delete('errors'))
+      return state.withMutations((map) => map
+        .set('loaded', true)
+        .set('infos', action.messages)
+        .delete('errors'))
 
     case IMPORT_ERROR:
-      return state.withMutations((map) =>
-        map.set('loaded', true).delete('infos').set('errors', action.errors))
+      return state.withMutations((map) => map
+        .set('loaded', true)
+        .delete('infos')
+        .set('errors', action.errors))
 
     case NAVIGATED:
-      return state.withMutations((map) =>
-        map.delete('infos').delete('errors'))
+      return state.withMutations((map) => map
+        .delete('infos')
+        .delete('errors'))
 
     default:
       return state

@@ -11,21 +11,6 @@ describe('Data', function () {
       expect(validate(data)).to.be.empty()
     })
 
-    it('rejects null', function () {
-      const data = null
-      expect(validate(data)).to.not.be.empty()
-    })
-
-    it('rejects undefined', function () {
-      const data = undefined
-      expect(validate(data)).to.not.be.empty()
-    })
-
-    it('rejects an empty string', function () {
-      const data = ''
-      expect(validate(data)).to.not.be.empty()
-    })
-
     it('rejects a tray with a missing ID, as this is required to match projects to the owning tray', function () {
       const data = {
         trays: {

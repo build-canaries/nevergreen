@@ -1,9 +1,9 @@
-import {fromJS} from 'immutable'
+import {Map} from 'immutable'
 import {GITHUB_SET_DESCRIPTION, GITHUB_SET_GIST_ID, IMPORT_SUCCESS, INITIALISED} from '../actions/Actions'
 
 export const GITHUB_ROOT = 'github'
 
-const DEFAULT_STATE = fromJS({
+const DEFAULT_STATE = Map({
   gistId: '',
   description: 'Nevergreen configuration backup'
 })
@@ -11,7 +11,7 @@ const DEFAULT_STATE = fromJS({
 export function reduce(state = DEFAULT_STATE, action) {
   switch (action.type) {
     case INITIALISED:
-      return state.merge(action.data.get('github'))
+      return state.merge(action.data.get(GITHUB_ROOT))
 
     case IMPORT_SUCCESS:
       return state.set('description', action.data.getIn(['github', 'description'], state.get('description')))

@@ -3,13 +3,13 @@ import {IMPORT_SUCCESS, INITIALISED, MESSAGE_ADDED, MESSAGE_REMOVED} from '../ac
 
 export const SUCCESS_ROOT = 'success'
 
-const DEFAULT_STATE = OrderedSet(['=(^.^)='])
+const DEFAULT_STATE = OrderedSet.of('=(^.^)=')
 
 export function reduce(state = DEFAULT_STATE, action) {
   switch (action.type) {
     case INITIALISED:
     case IMPORT_SUCCESS: {
-      const success = action.data.get('success')
+      const success = action.data.get(SUCCESS_ROOT)
       return success ? OrderedSet(success) : state
     }
 

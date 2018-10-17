@@ -5,16 +5,15 @@ import {mocks} from '../Mocking'
 
 describe('NevergreenThunkActionCreators', function () {
 
-  const migrate = mocks.stub()
-  const filter = mocks.stub()
   const init = mocks.stub()
   const load = mocks.stub()
+  const wrapConfiguration = mocks.stub()
   const initalised = mocks.spy()
   const initalising = mocks.spy()
 
   const {initalise} = withMockedImports('client/actions/NevergreenThunkActionCreators', {
     '../common/repo/LocalRepository': {init, load},
-    '../common/repo/Migrations': {migrate, filter},
+    '../common/repo/Data': {wrapConfiguration},
     './NevergreenActionCreators': {initalised, initalising}
   })
 

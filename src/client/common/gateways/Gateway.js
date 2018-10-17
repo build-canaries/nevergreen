@@ -1,7 +1,7 @@
 import request from 'superagent'
 import * as log from '../Logger'
 import _ from 'lodash'
-import {fromJS, isImmutable, Record} from 'immutable'
+import {fromJS, isImmutable} from 'immutable'
 
 const THIRTY_SECONDS = 1000 * 30
 const THREE_MINUTES = 1000 * 60 * 60 * 3
@@ -47,17 +47,17 @@ export async function send(request) {
   try {
     const res = await request
     return fromJS(res.body) || res.text
-  } catch (err) {
-    const url = _.get(err, 'url', 'unknown')
+  } catch (error) {
+    const url = error.url || 'unknown'
 
-    log.error(`An exception was thrown when calling URL '${url}'`, err)
+    log.error(`An exception was thrown when calling URL '${url}'`, error)
 
-    const status = _.get(err, 'status') || 0
-    const body = _.get(err, 'timeout')
+    const status = error.status || 0
+    const body = error.timeout
       ? TIMEOUT_ERROR
-      : _.get(err, 'response.body') || _.get(err, 'message') || UNKNOWN_ERROR
+      : _.get(error, 'response.body') || error.message || UNKNOWN_ERROR
 
-    throw new GatewayError({status, body: fromJS(body)})
+    throw new GatewayError(error.message, status, body)
   }
 }
 
@@ -71,8 +71,11 @@ export function abortPendingRequest(req) {
   }
 }
 
-export class GatewayError extends Record({
-  status: 0,
-  body: null
-}) {
+export class GatewayError extends Error {
+  constructor(message, status, body) {
+    super(message)
+    this.name = 'GatewayError'
+    this.status = status
+    this.body = fromJS(body)
+  }
 }

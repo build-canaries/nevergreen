@@ -1,24 +1,22 @@
-import _ from 'lodash'
-import {filter, validate} from '../common/repo/Data'
-import {fromJson} from '../common/Json'
-import {migrate} from '../common/repo/Migrations'
+import {validate, wrapConfiguration} from '../common/repo/Data'
 import {importError, importing, importSuccess} from './ImportActionCreators'
+import _ from 'lodash'
 
-export function importData(jsonData) {
+export function importData(data) {
   return (dispatch) => {
     dispatch(importing())
 
     try {
-      const data = filter(migrate(fromJson(jsonData)))
-      const validationMessages = validate(data)
+      const configuration = wrapConfiguration(data)
+      const validationMessages = validate(configuration)
 
       if (_.isEmpty(validationMessages)) {
-        dispatch(importSuccess(data))
+        dispatch(importSuccess(configuration))
       } else {
         dispatch(importError(validationMessages))
       }
-    } catch (e) {
-      dispatch(importError(['Unable to import because of syntactically invalid JSON with the following errors:', e]))
+    } catch (error) {
+      dispatch(importError(['Unable to import because of syntactically invalid JSON with the following errors:', error.message]))
     }
   }
 }

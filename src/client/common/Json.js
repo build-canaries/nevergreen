@@ -3,9 +3,5 @@ export function toJson(o) {
 }
 
 export function fromJson(s) {
-  try {
-    return JSON.parse(s)
-  } catch (e) {
-    throw e.message
-  }
+  return JSON.parse(s)
 }

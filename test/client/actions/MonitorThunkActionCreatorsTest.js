@@ -10,7 +10,6 @@ import {
   Project
 } from '../../../src/client/domain/Project'
 import {Tray} from '../../../src/client/domain/Tray'
-import {NevergreenError} from '../../../src/client/common/gateways/NevergreenGateway'
 import {INTERESTING_ROOT} from '../../../src/client/reducers/InterestingReducer'
 import {SELECTED_ROOT} from '../../../src/client/reducers/SelectedReducer'
 import {TRAYS_ROOT} from '../../../src/client/reducers/TraysReducer'
@@ -161,8 +160,7 @@ describe('MonitorThunkActionCreators', function () {
     })
 
     it('should dispatch interesting projects action with a Nevergreen error if calling the service fails', async function () {
-      send.rejects(new NevergreenError({message: 'some-error'}))
-
+      send.rejects(new Error('some-error'))
       await testThunk(fetchInteresting(), requiredState)
       expect(interestingProjects).to.have.been.calledWith(List(), List.of('some-error'))
     })

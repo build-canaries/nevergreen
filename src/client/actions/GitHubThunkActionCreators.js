@@ -5,7 +5,6 @@ import {isBlank} from '../common/Utils'
 import {importError, importing} from './ImportActionCreators'
 import {importData} from './ImportThunkActionCreators'
 import {exportError, exporting, exportSuccess} from './ExportActionCreators'
-import {NevergreenError} from '../common/gateways/NevergreenGateway'
 
 const TEN_MEGS = 10485760 // bytes
 
@@ -13,12 +12,12 @@ function handleGistResponse(dispatch, res) {
   const configuration = res.getIn(['files', 'configuration.json'])
 
   if (_.isNil(configuration)) {
-    throw new NevergreenError({message: 'gist does not contain the required configuration.json file'})
+    throw new Error('gist does not contain the required configuration.json file')
 
   } else if (configuration.get('truncated')) {
     const size = configuration.get('size')
     if (size > TEN_MEGS) {
-      throw new NevergreenError({message: `gist configuration.json file is too big to fetch without git cloning, size ${size} bytes`})
+      throw new Error(`gist configuration.json file is too big to fetch without git cloning, size ${size} bytes`)
     } else {
       dispatch(gitHubSetDescription(res.get('description')))
       return send(getTruncatedFile(configuration.get('raw_url')))
@@ -42,7 +41,7 @@ export function restoreFromGitHub(gistId) {
         const content = await handleGistResponse(dispatch, res)
         dispatch(importData(content))
       } catch (error) {
-        dispatch(importError([`Unable to import from GitHub because of an error: ${error.get('message')}`]))
+        dispatch(importError([`Unable to import from GitHub because of an error: ${error.message}`]))
       }
     }
   }

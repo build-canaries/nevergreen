@@ -15,7 +15,7 @@ describe('NevergreenGateway', function () {
   describe('send', function () {
 
     it('should return the error message from the body on error', async function () {
-      gatewaySend.rejects(new GatewayError({body: {errorMessage: 'some-error'}}))
+      gatewaySend.rejects(new GatewayError('', 0, {errorMessage: 'some-error'}))
       try {
         await send()
       } catch (err) {
@@ -24,20 +24,11 @@ describe('NevergreenGateway', function () {
     })
 
     it('should return the body if it does not contain an error message on error', async function () {
-      gatewaySend.rejects(new GatewayError({body: 'timeout'}))
+      gatewaySend.rejects(new GatewayError('', 0, 'timeout'))
       try {
         await send()
       } catch (err) {
         expect(err).to.have.property('message', 'timeout')
-      }
-    })
-
-    it('should return the given status on error', async function () {
-      gatewaySend.rejects(new GatewayError({status: 500}))
-      try {
-        await send()
-      } catch (err) {
-        expect(err).to.have.property('status', 500)
       }
     })
   })

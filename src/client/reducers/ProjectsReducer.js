@@ -9,8 +9,10 @@ export function reduce(state = DEFAULT_STATE, action) {
   switch (action.type) {
     case INITIALISED:
     case IMPORT_SUCCESS: {
-      const projects = action.data.get('projects')
-      return projects ? Map(projects) : state
+      const projects = action.data.get(PROJECTS_ROOT)
+      return projects
+        ? Map(projects)
+        : state
     }
 
     case TRAY_ADDED:

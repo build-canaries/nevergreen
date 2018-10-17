@@ -1,19 +1,13 @@
 import {send as gatewaySend} from './Gateway'
-import {Record} from 'immutable'
+import {isImmutable} from 'immutable'
 
 export async function send(request) {
   try {
     return await gatewaySend(request)
-  } catch (err) {
-    const status = err.status
-    const message = err.getIn(['body', 'errorMessage'], err.body)
-
-    throw new NevergreenError({status, message})
+  } catch (error) {
+    const message = isImmutable(error.body)
+      ? error.body.get('errorMessage')
+      : error.body
+    throw new Error(message)
   }
-}
-
-export class NevergreenError extends Record({
-  status: 0,
-  message: 'Unknown error'
-}) {
 }

@@ -1,5 +1,5 @@
 import {get, patch, post, send as gatewaySend} from './Gateway'
-import {NevergreenError} from './NevergreenGateway'
+import {isImmutable} from 'immutable'
 
 const GIST_URL = 'https://api.github.com/gists'
 const MIME_TYPE = 'application/vnd.github.v3+json'
@@ -42,12 +42,13 @@ export function getTruncatedFile(url) {
 export async function send(request) {
   try {
     return await gatewaySend(request)
-  } catch (err) {
+  } catch (error) {
     // GitHub errors look like this {"message": "", "documentation_url": ""}
-    const status = err.status
-    const serverMessage = err.getIn(['body', 'message'], err.body)
-    const message = `${status} - ${serverMessage}`
+    const serverMessage = isImmutable(error.body)
+      ? error.body.get('message')
+      : error.body
+    const message = `${error.status} - ${serverMessage}`
 
-    throw new NevergreenError({status, message})
+    throw new Error(message)
   }
 }

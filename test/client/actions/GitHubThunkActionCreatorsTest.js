@@ -3,7 +3,6 @@ import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {containsMessage, containsOnlyMessage, mocks} from '../Mocking'
 import {fromJS} from 'immutable'
-import {NevergreenError} from '../../../src/client/common/gateways/NevergreenGateway'
 
 describe('GitHubThunkActionCreators', function () {
 
@@ -60,7 +59,7 @@ describe('GitHubThunkActionCreators', function () {
     })
 
     it('should dispatch import error if the gist can not be fetched', async function () {
-      send.rejects(new NevergreenError({message: '{"message": "some-error"}'}))
+      send.rejects(new Error('some-error'))
       await testThunk(restoreFromGitHub('some-id'))
       expect(importError).to.have.been.calledWithMatch(containsMessage('some-error'))
     })
@@ -124,7 +123,7 @@ describe('GitHubThunkActionCreators', function () {
     })
 
     it('should dispatch export error action if the gist can not be created', async function () {
-      send.rejects(new NevergreenError({message: 'some-error'}))
+      send.rejects(new Error('some-error'))
       await testThunk(uploadToGitHub('irrelevant', 'irrelevant', 'irrelevant', 'not-blank'))
       expect(exportError).to.have.been.calledWithMatch(containsMessage('Unable to upload to GitHub because of an error: some-error'))
     })

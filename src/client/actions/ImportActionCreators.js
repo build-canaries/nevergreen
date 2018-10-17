@@ -13,6 +13,6 @@ export function importSuccess(configuration) {
   return {
     type: IMPORT_SUCCESS,
     data: fromJS(configuration),
-    messages: List(['Successfully imported'])
+    messages: List.of('Successfully imported')
   }
 }

@@ -5,44 +5,42 @@ import {mocks} from '../Mocking'
 
 describe('ImportThunkActionCreators', function () {
 
-  const migrate = mocks.stub()
-  const filter = mocks.stub()
+  const wrapConfiguration = mocks.stub()
   const validate = mocks.stub()
   const importError = mocks.spy()
   const importSuccess = mocks.spy()
   const importing = mocks.spy()
 
   const {importData} = withMockedImports('client/actions/ImportThunkActionCreators', {
-    '../common/repo/Data': {filter, validate},
-    '../common/repo/Migrations': {migrate},
+    '../common/repo/Data': {wrapConfiguration, validate},
     './ImportActionCreators': {importError, importSuccess, importing}
   })
 
   describe('importData', function () {
 
-    const validJson = '{}'
-
     it('should dispatch importing', async function () {
-      await testThunk(importData(validJson))
+      await testThunk(importData(''))
       expect(importing).to.have.been.called()
     })
 
-    it('should dispatch import error action on json parse failure', async function () {
-      await testThunk(importData('{invalidJson'))
+    it('should dispatch import error action if wrap configuration throws an error', async function () {
+      wrapConfiguration.throws(new Error('some-error'))
+      await testThunk(importData(''))
       expect(importError).to.have.been.called()
     })
 
     it('should dispatch import error action on validation failure', async function () {
       validate.returns(['some-validation-error'])
-      await testThunk(importData(validJson))
+      await testThunk(importData(''))
       expect(importError).to.have.been.calledWith(['some-validation-error'])
     })
 
     it('should dispatch import success action on successful validation', async function () {
-      filter.returns('some-data')
+      const configuration = {}
+      wrapConfiguration.returns(configuration)
       validate.returns([])
-      await testThunk(importData(validJson))
-      expect(importSuccess).to.have.been.calledWith('some-data')
+      await testThunk(importData(''))
+      expect(importSuccess).to.have.been.calledWith(configuration)
     })
   })
 })

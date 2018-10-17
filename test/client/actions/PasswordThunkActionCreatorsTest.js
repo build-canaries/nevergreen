@@ -3,7 +3,6 @@ import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {mocks} from '../Mocking'
 import {fromJS, List} from 'immutable'
-import {NevergreenError} from '../../../src/client/common/gateways/NevergreenGateway'
 import {PENDING_REQUESTS_ROOT} from '../../../src/client/reducers/PendingRequestsReducer'
 
 describe('PasswordThunkActionCreators', function () {
@@ -68,7 +67,7 @@ describe('PasswordThunkActionCreators', function () {
     })
 
     it('should dispatch password encrypt error action if the request fails', async function () {
-      send.rejects(new NevergreenError({message: 'some-error'}))
+      send.rejects(new Error('some-error'))
       await testThunk(encryptPassword('some-tray-id', 'irrelevant'))
       expect(passwordEncryptError).to.have.been.calledWith('some-tray-id', List.of('some-error'))
     })
