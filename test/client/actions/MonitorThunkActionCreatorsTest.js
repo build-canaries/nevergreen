@@ -22,6 +22,7 @@ describe('MonitorThunkActionCreators', function () {
   const interesting = mocks.stub()
   const interestingProjectsFetching = mocks.spy()
   const interestingProjects = mocks.spy()
+  const projectNotifications = mocks.spy()
 
   const requiredState = Map({
     [INTERESTING_ROOT]: Map({
@@ -34,7 +35,8 @@ describe('MonitorThunkActionCreators', function () {
   const {fetchInteresting} = withMockedImports('client/actions/MonitorThunkActionCreators', {
     '../common/gateways/ProjectsGateway': {interesting},
     '../common/gateways/NevergreenGateway': {send},
-    './MonitorActionCreators': {interestingProjects, interestingProjectsFetching}
+    './MonitorActionCreators': {interestingProjects, interestingProjectsFetching},
+    './NotificationThunkActionCreators': {projectNotifications}
   })
 
   describe('fetchInteresting', function () {
@@ -186,6 +188,17 @@ describe('MonitorThunkActionCreators', function () {
         expect(interestingProjects.getCall(0).args[0]).to.equal(List())
         expect(interestingProjects.getCall(0).args[1]).to.equal(List.of('some-url some-error'))
       })
+    })
+
+    it('should dispatch project notifications on success', async function () {
+      interesting.returns('some-request')
+      send.resolves(List())
+      const previousProjects = List.of(new Project())
+      const state = requiredState.setIn([INTERESTING_ROOT, 'projects'], previousProjects)
+
+      await testThunk(fetchInteresting(), state)
+
+      expect(projectNotifications).to.have.been.calledWith(previousProjects)
     })
   })
 })

@@ -1,7 +1,6 @@
 import React from 'react'
 import proxyquire from 'proxyquire'
 import {shallow} from 'enzyme'
-import {expect} from 'chai'
 import {mocks} from './Mocking'
 import _ from 'lodash'
 import {isImmutable, Map} from 'immutable'
@@ -73,7 +72,7 @@ export async function testThunk(thunkion, state = Map()) {
 
   const getState = () => state
 
-  const result = await thunkion(dispatch, getState)
-  expect(dispatch).to.have.been.called()
-  return result
+  await thunkion(dispatch, getState)
+
+  return dispatch
 }

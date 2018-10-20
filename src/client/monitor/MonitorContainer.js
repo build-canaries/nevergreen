@@ -4,7 +4,6 @@ import {toJS} from '../common/ImmutableToJs'
 import {fetchInteresting} from '../actions/MonitorThunkActionCreators'
 import {requestFullScreen} from '../actions/NevergreenActionCreators'
 import Monitor from './Monitor'
-import {triggerSystemNotifications} from '../domain/Notifications'
 import {
   brokenBuildSoundFx,
   fullScreen,
@@ -19,7 +18,6 @@ import {
   showBrokenBuildTime,
   showBuildLabel,
   showBuildTime,
-  showSystemNotifications,
   showTrayName,
   successMessages,
   trays
@@ -46,9 +44,7 @@ function mapStateToProps(state) {
     refreshTime: refreshTime(state),
     isFullScreen: fullScreen(state),
     maxProjectsToShow: maxProjectsToShow(state),
-    pendingRequest: interestingPendingRequest(state),
-    showSystemNotifications: showSystemNotifications(state),
-    triggerSystemNotifications
+    pendingRequest: interestingPendingRequest(state)
   }
 }
 

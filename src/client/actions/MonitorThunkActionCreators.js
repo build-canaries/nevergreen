@@ -10,6 +10,7 @@ import {
 } from '../Selectors'
 import {wrapProjectErrors, wrapProjects} from '../domain/Project'
 import {List} from 'immutable'
+import {projectNotifications} from './NotificationThunkActionCreators'
 
 function toErrorString(trays, projectError) {
   const tray = trays.find((tray) => tray.trayId === projectError.trayId)
@@ -49,6 +50,7 @@ export function fetchInteresting() {
         .map((projectError) => toErrorString(allTrays, projectError))
 
       dispatch(interestingProjects(enrichedProjects, errorMessages))
+      dispatch(projectNotifications(previouslyFetchedProjects))
     } catch (error) {
       dispatch(interestingProjects(List(), List.of(error.message)))
     }

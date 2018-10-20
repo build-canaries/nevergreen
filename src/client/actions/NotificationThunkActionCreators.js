@@ -2,6 +2,9 @@ import {get} from '../common/gateways/Gateway'
 import {send} from '../common/gateways/GitHubGateway'
 import semver from 'semver'
 import {notify} from './NotificationActionCreators'
+import {interestingProjects, showSystemNotifications} from '../Selectors'
+import {sendSystemNotification} from '../common/SystemNotifications'
+import * as log from '../common/Logger'
 
 const NEVERGREEN_IO_REGEX = /nevergreen\.io/i
 
@@ -19,6 +22,58 @@ export function checkForNewVersion(currentVersion, hostname) {
       }
     } catch (e) {
       // We don't care if checking for a new version fails
+    }
+  }
+}
+
+function body(projects) {
+  return projects
+    .map((project) => project.name)
+    .join(', ')
+}
+
+function newlySickTitle(total) {
+  return total === 1
+    ? 'project is sick!'
+    : `${total} projects are sick!`
+}
+
+function noLongerSickTitle(total) {
+  return total === 1
+    ? 'project is no longer sick!'
+    : `${total} projects are no longer sick!`
+}
+
+export function projectNotifications(previouslyProjects) {
+  return async (dispatch, getState) => {
+    const showNotifications = showSystemNotifications(getState())
+
+    if (showNotifications) {
+      const currentProjects = interestingProjects(getState())
+
+      const previouslySick = previouslyProjects
+        .filter((project) => project.isSick())
+        .toOrderedSet()
+      const currentlySick = currentProjects
+        .filter((project) => project.isSick())
+        .toOrderedSet()
+
+      const newlySick = currentlySick.subtract(previouslySick)
+      const noLongerSick = previouslySick.subtract(currentlySick)
+
+      const newlySickTotal = newlySick.count()
+      const noLongerSickTotal = noLongerSick.count()
+
+      try {
+        if (newlySickTotal > 0) {
+          await sendSystemNotification({title: newlySickTitle(newlySickTotal), body: body(newlySick)})
+        }
+        if (noLongerSickTotal > 0) {
+          await sendSystemNotification({title: noLongerSickTitle(noLongerSickTotal), body: body(noLongerSick)})
+        }
+      } catch (err) {
+        log.error('Sending system notification failed', err)
+      }
     }
   }
 }
