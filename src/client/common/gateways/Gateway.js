@@ -62,7 +62,7 @@ export async function send(request) {
 }
 
 export async function fakeResponse(body) {
-  return fromJS({body})
+  return {body}
 }
 
 export function abortPendingRequest(req) {

@@ -82,6 +82,11 @@ describe('Gateway', function () {
 
   describe('fakeResponse', function () {
 
+    it('should return a plain JS object as this is what superagent returns', async function () {
+      const response = await fakeResponse('whatever')
+      expect(response).to.be.instanceOf(Object)
+    })
+
     it('should return the given body', async function () {
       const response = await fakeResponse('whatever')
       expect(response).to.have.property('body', 'whatever')
