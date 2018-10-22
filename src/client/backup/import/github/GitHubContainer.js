@@ -2,7 +2,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {restoreFromGitHub} from '../../../actions/GitHubThunkActionCreators'
 import {gitHubSetGistId} from '../../../actions/GitHubActionCreators'
-import GitHub from './GitHub'
+import {GitHub} from './GitHub'
 import {gistId, importLoaded} from '../../../Selectors'
 
 function mapDispatchToProps(dispatch) {

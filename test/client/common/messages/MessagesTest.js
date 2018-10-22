@@ -3,7 +3,7 @@ import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
-import Messages from '../../../../src/client/common/messages/Messages'
+import {Messages} from '../../../../src/client/common/messages/Messages'
 
 describe('<Messages/>', function () {
 

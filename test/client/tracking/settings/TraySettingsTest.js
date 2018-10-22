@@ -4,7 +4,7 @@ import React from 'react'
 import {shallow} from 'enzyme'
 import _ from 'lodash'
 import {mocks} from '../../Mocking'
-import TraySettings from '../../../../src/client/tracking/settings/TraySettings'
+import {TraySettings} from '../../../../src/client/tracking/settings/TraySettings'
 import {changeAndBlur, locator} from '../../TestUtils'
 
 describe('<TraySettings/>', function () {

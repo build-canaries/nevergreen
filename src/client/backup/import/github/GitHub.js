@@ -1,9 +1,10 @@
 import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
-import Input from '../../../common/forms/Input'
+import {Input} from '../../../common/forms/Input'
 import styles from './github.scss'
 
-class GitHub extends Component {
+export class GitHub extends Component {
+
   static getDerivedStateFromProps(nextProps) {
     return {
       gistId: nextProps.gistId
@@ -53,5 +54,3 @@ GitHub.propTypes = {
   gitHubSetGistId: PropTypes.func.isRequired,
   gistId: PropTypes.string.isRequired
 }
-
-export default GitHub

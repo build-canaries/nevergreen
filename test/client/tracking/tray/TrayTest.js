@@ -2,9 +2,9 @@ import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
-import Tray from '../../../../src/client/tracking/tray/Tray'
+import {Tray} from '../../../../src/client/tracking/tray/Tray'
 import AvailableProjectsContainer from '../../../../src/client/tracking/projects/AvailableProjectsContainer'
-import Container from '../../../../src/client/common/container/Container'
+import {Container} from '../../../../src/client/common/container/Container'
 
 describe('<Tray/>', function () {
 

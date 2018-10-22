@@ -3,7 +3,7 @@ import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
-import AvailableProject from '../../../../src/client/tracking/projects/AvailableProject'
+import {AvailableProject} from '../../../../src/client/tracking/projects/AvailableProject'
 import _ from 'lodash'
 
 describe('<AvailableProject/>', function () {

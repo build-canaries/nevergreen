@@ -3,7 +3,8 @@ import styles from './font-metrics.scss'
 
 const FONT_MEASURE_SIZE = 100 // px
 
-class FontMetrics extends Component {
+export class FontMetrics extends Component {
+
   constructor(props) {
     super(props)
     this.width = 0
@@ -24,5 +25,3 @@ class FontMetrics extends Component {
                  aria-hidden>a</span>
   }
 }
-
-export default FontMetrics

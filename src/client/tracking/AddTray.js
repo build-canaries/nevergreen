@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import Input from '../common/forms/Input'
+import {Input} from '../common/forms/Input'
 import styles from './add-tray.scss'
 
 const DEFAULT_STATE = {
@@ -9,7 +9,8 @@ const DEFAULT_STATE = {
   password: ''
 }
 
-class AddTray extends Component {
+export class AddTray extends Component {
+
   constructor(props) {
     super(props)
     this.state = {...DEFAULT_STATE}
@@ -33,20 +34,21 @@ class AddTray extends Component {
   }
 
   render() {
+    const {url, username, password} = this.state
 
     return (
       <div className={styles.addTray}>
         <div className={styles.inputs}>
           <Input className={styles.url}
                  placeholder='CCTray XML file'
-                 value={this.state.url}
+                 value={url}
                  onChange={this.updateUrl}
                  onEnter={this.addTray}
                  data-locator='add-tray-url'>
             <div className={styles.label}>URL</div>
           </Input>
           <Input className={styles.username}
-                 value={this.state.username}
+                 value={username}
                  onChange={this.updateUsername}
                  onEnter={this.addTray}
                  data-locator='add-tray-username'>
@@ -54,7 +56,7 @@ class AddTray extends Component {
           </Input>
           <Input type='password'
                  className={styles.password}
-                 value={this.state.password}
+                 value={password}
                  onChange={this.updatePassword}
                  onEnter={this.addTray}
                  data-locator='add-tray-password'>
@@ -72,5 +74,3 @@ class AddTray extends Component {
 AddTray.propTypes = {
   addTray: PropTypes.func.isRequired
 }
-
-export default AddTray

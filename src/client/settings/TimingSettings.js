@@ -1,17 +1,19 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import Container from '../common/container/Container'
-import DropDown from '../common/forms/DropDown'
-import styles from './timing-settings.scss'
 import {secondsToString} from '../common/DateTime'
+import {Container} from '../common/container/Container'
+import {DropDown} from '../common/forms/DropDown'
+import styles from './timing-settings.scss'
 
-class TimingSettings extends Component {
+export class TimingSettings extends Component {
   setRefreshTime = (evt) => {
     this.props.setRefreshTime(evt.target.value)
   }
 
   render() {
-    const options = this.props.validRefreshTimes.map((time) => {
+    const {validRefreshTimes, refreshTime} = this.props
+
+    const options = validRefreshTimes.map((time) => {
       return {value: time.toString(), display: secondsToString(time)}
     })
 
@@ -19,7 +21,7 @@ class TimingSettings extends Component {
       <Container title='timing' className={styles.container}>
         <DropDown className={styles.refreshTime}
                   options={options}
-                  value={this.props.refreshTime}
+                  value={refreshTime}
                   onChange={this.setRefreshTime}>
           poll for tray changes every
         </DropDown>
@@ -33,5 +35,3 @@ TimingSettings.propTypes = {
   setRefreshTime: PropTypes.func.isRequired,
   validRefreshTimes: PropTypes.arrayOf(PropTypes.number).isRequired
 }
-
-export default TimingSettings

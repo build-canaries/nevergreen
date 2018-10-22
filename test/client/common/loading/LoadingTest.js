@@ -3,7 +3,7 @@ import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
-import Loading from '../../../../src/client/common/loading/Loading'
+import {Loading} from '../../../../src/client/common/loading/Loading'
 
 describe('<Loading/>', function () {
 

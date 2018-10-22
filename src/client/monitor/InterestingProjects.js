@@ -1,9 +1,8 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import ScaledGrid from '../common/scale/ScaledGrid'
-import InterestingProject from '../common/project/InterestingProject'
-import styles from './interesting-projects.scss'
+import {ScaledGrid} from '../common/scale/ScaledGrid'
+import {InterestingProject} from '../common/project/InterestingProject'
 import {isBlank} from '../common/Utils'
 import {
   isSick,
@@ -12,10 +11,11 @@ import {
   PROGNOSIS_SICK_BUILDING,
   PROGNOSIS_UNKNOWN
 } from '../domain/Project'
-import ProjectSummary from '../common/project/ProjectSummary'
-import ProjectError from '../common/project/ProjectError'
+import {ProjectSummary} from '../common/project/ProjectSummary'
+import {ProjectError} from '../common/project/ProjectError'
+import styles from './interesting-projects.scss'
 
-class InterestingProjects extends Component {
+export class InterestingProjects extends Component {
 
   constructor(props) {
     super(props)
@@ -29,31 +29,33 @@ class InterestingProjects extends Component {
   }
 
   render() {
-    const numberOfErrors = _.size(this.props.errors)
-    const totalItems = numberOfErrors + _.size(this.props.projects)
-    const showSummary = totalItems > this.props.maxProjectsToShow
-    const maxProjectsToShow = _.clamp(this.props.maxProjectsToShow - numberOfErrors, 1, this.props.maxProjectsToShow) - 1
+    const {errors, projects, maxProjectsToShow, playBrokenBuildSounds, brokenBuildFx, trays} = this.props
+
+    const numberOfErrors = _.size(errors)
+    const totalItems = numberOfErrors + _.size(projects)
+    const showSummary = totalItems > maxProjectsToShow
+    const maxProjectsToShowClamped = _.clamp(maxProjectsToShow - numberOfErrors, 1, maxProjectsToShow) - 1
 
     const errorsToShow = showSummary
-      ? _.take(this.props.errors, this.props.maxProjectsToShow - 1)
-      : this.props.errors
+      ? _.take(errors, maxProjectsToShow - 1)
+      : errors
 
     const projectsToShow = showSummary
-      ? _.take(this.props.projects, maxProjectsToShow)
-      : this.props.projects
+      ? _.take(projects, maxProjectsToShowClamped)
+      : projects
 
-    const brokenProject = _.reduce(this.props.projects, (previous, project) => previous || isSick(project.prognosis), false)
-    const playBrokenSfx = this.props.playBrokenBuildSounds && (brokenProject || numberOfErrors > 0)
+    const projectIsBroken = _.reduce(projects, (previous, project) => previous || isSick(project.prognosis), false)
+    const playBrokenSfx = playBrokenBuildSounds && (projectIsBroken || numberOfErrors > 0)
 
-    const brokenSfx = playBrokenSfx && !isBlank(this.props.brokenBuildFx) &&
-      <audio ref={this.sfxNode} src={this.props.brokenBuildFx} autoPlay/>
+    const brokenSfx = playBrokenSfx && !isBlank(brokenBuildFx) &&
+      <audio ref={this.sfxNode} src={brokenBuildFx} autoPlay/>
 
-    const errors = _.map(errorsToShow, (error) => {
+    const errorComponents = _.map(errorsToShow, (error) => {
       return <ProjectError key={error} error={error}/>
     })
 
-    const projects = _.map(projectsToShow, (project) => {
-      const tray = this.props.trays.find((tray) => tray.trayId === project.trayId)
+    const projectComponents = _.map(projectsToShow, (project) => {
+      const tray = trays.find((tray) => tray.trayId === project.trayId)
       return <InterestingProject trayName={tray.name}
                                  key={`${tray.trayId}#${project.projectId}`}
                                  showBuildTimers={this.props.showBuildTimers}
@@ -69,7 +71,7 @@ class InterestingProjects extends Component {
     })
 
     const summary = showSummary ? ([
-      <ProjectSummary key='summary' additionalProjectsCount={totalItems - maxProjectsToShow}/>
+      <ProjectSummary key='summary' additionalProjectsCount={totalItems - maxProjectsToShowClamped}/>
     ]) : []
 
     return (
@@ -77,7 +79,7 @@ class InterestingProjects extends Component {
            data-locator='interesting-projects'
            aria-live='assertive'
            aria-relevant='additions removals'>
-        <ScaledGrid>{_.concat(errors, projects, summary)}</ScaledGrid>
+        <ScaledGrid>{_.concat(errorComponents, projectComponents, summary)}</ScaledGrid>
         {brokenSfx}
       </div>
     )
@@ -113,5 +115,3 @@ InterestingProjects.propTypes = {
   errors: PropTypes.arrayOf(PropTypes.string),
   maxProjectsToShow: PropTypes.number.isRequired
 }
-
-export default InterestingProjects

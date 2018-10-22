@@ -2,7 +2,7 @@ import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
-import InterestingProjects from '../../../src/client/monitor/InterestingProjects'
+import {InterestingProjects} from '../../../src/client/monitor/InterestingProjects'
 
 describe('<InterestingProjects/>', function () {
 

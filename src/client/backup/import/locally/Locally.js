@@ -4,7 +4,8 @@ import styles from './locally.scss'
 
 const PLACEHOLDER = 'paste exported configuration here and press import'
 
-class Locally extends Component {
+export class Locally extends Component {
+
   constructor(props) {
     super(props)
     this.state = {data: ''}
@@ -41,5 +42,3 @@ Locally.propTypes = {
   loaded: PropTypes.bool,
   importData: PropTypes.func.isRequired
 }
-
-export default Locally

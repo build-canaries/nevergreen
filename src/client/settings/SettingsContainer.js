@@ -12,7 +12,7 @@ import {
   VALID_PROJECTS_TO_SHOW,
   VALID_REFRESH_TIMES
 } from '../actions/SettingsActionCreators'
-import Settings from './Settings'
+import {Settings} from './Settings'
 import {supported} from '../common/SystemNotifications'
 import {enableSystemNotifications} from '../actions/SettingsThunkActionCreators'
 import {

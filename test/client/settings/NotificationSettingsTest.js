@@ -2,9 +2,9 @@ import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
-import NotificationSettings from '../../../src/client/settings/NotificationSettings'
-import Messages from '../../../src/client/common/messages/Messages'
 import _ from 'lodash'
+import {NotificationSettings} from '../../../src/client/settings/NotificationSettings'
+import {Messages} from '../../../src/client/common/messages/Messages'
 import {locator} from '../TestUtils'
 
 describe('<NotificationSettings/>', function () {

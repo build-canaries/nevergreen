@@ -3,7 +3,7 @@ import {bindActionCreators} from 'redux'
 import {toJS} from '../common/ImmutableToJs'
 import {fetchInteresting} from '../actions/MonitorThunkActionCreators'
 import {requestFullScreen} from '../actions/NevergreenActionCreators'
-import Monitor from './Monitor'
+import {Monitor} from './Monitor'
 import {
   brokenBuildSoundFx,
   fullScreen,

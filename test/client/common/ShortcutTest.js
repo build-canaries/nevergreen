@@ -1,4 +1,4 @@
-import {reactWithMockedImports} from '../TestUtils'
+import {withMockedImports} from '../TestUtils'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import React from 'react'
@@ -14,7 +14,7 @@ describe('<Shortcut/>', function () {
   const bind = mocks.spy()
   const unbind = mocks.spy()
 
-  const Shortcut = reactWithMockedImports('client/common/Shortcut', {
+  const {Shortcut} = withMockedImports('client/common/Shortcut', {
     'mousetrap': {bind, unbind}
   })
 

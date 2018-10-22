@@ -1,30 +1,28 @@
-import React, {Component, Fragment} from 'react'
+import React, {Fragment} from 'react'
 import PropTypes from 'prop-types'
-import Shortcut from '../../common/Shortcut'
+import {Shortcut} from '../../common/Shortcut'
+import {Duration} from '../../common/Duration'
 import styles from './refresh.scss'
-import Duration from '../../common/Duration'
 
-class Refresh extends Component {
-  render() {
-    return (
-      <Fragment>
-        <button className={styles.refresh} onClick={this.props.refreshTray}>
-          refresh
-          <Shortcut hotkeys={[`r ${this.props.index}`]}/>
-        </button>
-        <div className={styles.lastFetch} data-locator='refresh-time'>
-          {
-            this.props.timestamp && <Duration fullDescriptionPrefix='projects last refreshed'
-                                              fullDescriptionSuffix='ago'
-                                              timestamp={this.props.timestamp}/>
-          }
-          {
-            !this.props.timestamp && 'projects last refreshed never'
-          }
-        </div>
-      </Fragment>
-    )
-  }
+export function Refresh({index, timestamp, refreshTray}) {
+  return (
+    <Fragment>
+      <button className={styles.refresh} onClick={refreshTray}>
+        refresh
+        <Shortcut hotkeys={[`r ${index}`]}/>
+      </button>
+      <div className={styles.lastFetch} data-locator='refresh-time'>
+        {
+          timestamp && <Duration fullDescriptionPrefix='projects last refreshed'
+                                 fullDescriptionSuffix='ago'
+                                 timestamp={timestamp}/>
+        }
+        {
+          !timestamp && 'projects last refreshed never'
+        }
+      </div>
+    </Fragment>
+  )
 }
 
 Refresh.propTypes = {
@@ -32,5 +30,3 @@ Refresh.propTypes = {
   timestamp: PropTypes.string,
   refreshTray: PropTypes.func.isRequired
 }
-
-export default Refresh

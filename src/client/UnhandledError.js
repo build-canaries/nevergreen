@@ -1,13 +1,14 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import LocalRepository from './common/repo/LocalRepository'
+import {clear} from './common/repo/LocalRepository'
 import styles from './unhandled-error.scss'
-import ExternalLink from './common/ExternalLink'
+import {ExternalLink} from './common/ExternalLink'
 
 const DEVELOPER_TOOLS_LINK = 'https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_are_browser_developer_tools#Find_out_more_2'
 const ISSUE_LINK = 'https://github.com/build-canaries/nevergreen/issues'
 
-class UnhandledError extends Component {
+export class UnhandledError extends Component {
+
   constructor(props) {
     super(props)
     this.state = {hasError: false}
@@ -35,7 +36,7 @@ class UnhandledError extends Component {
             configuration. <strong>Please note, deleting your configuration can not be undone!</strong>
           </p>
           <button className={styles.deleteConfiguration}
-                  onClick={LocalRepository.clear}>
+                  onClick={clear}>
             delete configuration
           </button>
         </div>

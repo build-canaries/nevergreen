@@ -1,9 +1,10 @@
 import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
-import Input from '../../../common/forms/Input'
+import {Input} from '../../../common/forms/Input'
 import styles from './github.scss'
 
-class GitHub extends Component {
+export class GitHub extends Component {
+
   static getDerivedStateFromProps(nextProps) {
     return {
       gistId: nextProps.gistId,
@@ -41,11 +42,14 @@ class GitHub extends Component {
   }
 
   upload = () => {
-    this.props.uploadToGitHub(this.state.gistId, this.state.description, this.props.configuration, this.state.oauthToken)
+    const {oauthToken, description, configuration, gistId} = this.state
+    this.props.uploadToGitHub(gistId, description, configuration, oauthToken)
   }
 
   render() {
-    const disabled = !this.props.loaded
+    const {loaded} = this.props
+    const {oauthToken, description, gistId} = this.state
+    const disabled = !loaded
 
     return (
       <Fragment>
@@ -53,11 +57,11 @@ class GitHub extends Component {
                className={styles.accessToken}
                onChange={this.oauthTokenChanged}
                onBlur={this.oauthTokenChanged}
-               value={this.state.oauthToken}
+               value={oauthToken}
                disabled={disabled}>
           <div className={styles.label}>access token</div>
         </Input>
-        <Input value={this.state.description}
+        <Input value={description}
                onChange={this.descriptionChanged}
                onBlur={this.setDescription}
                disabled={disabled}
@@ -65,7 +69,7 @@ class GitHub extends Component {
           <div className={styles.label}>description</div>
         </Input>
         <Input className={styles.gistId}
-               value={this.state.gistId}
+               value={gistId}
                onChange={this.gistIdChanged}
                onBlur={this.setGistId}
                placeholder='leave blank to create a new gist'
@@ -91,5 +95,3 @@ GitHub.propTypes = {
   gistId: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired
 }
-
-export default GitHub

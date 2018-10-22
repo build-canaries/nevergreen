@@ -17,7 +17,7 @@ function createClipboard(elementSelector, onSuccess, onError) {
   return clipboard
 }
 
-class ClipboardComponent extends Component {
+export class ClipboardComponent extends Component {
   clipboard = memoize(
     ({elementSelector, onSuccess, onError}) => createClipboard(elementSelector, onSuccess, onError)
   )
@@ -45,5 +45,3 @@ ClipboardComponent.propTypes = {
   onSuccess: PropTypes.func.isRequired,
   onError: PropTypes.func.isRequired
 }
-
-export default ClipboardComponent

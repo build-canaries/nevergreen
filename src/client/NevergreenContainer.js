@@ -5,7 +5,7 @@ import {initalise} from './actions/NevergreenThunkActionCreators'
 import {notify} from './actions/NotificationActionCreators'
 import {checkForNewVersion} from './actions/NotificationThunkActionCreators'
 import {keyboardShortcut} from './actions/ShortcutActionCreators'
-import Nevergreen from './Nevergreen'
+import {Nevergreen} from './Nevergreen'
 import {withRouter} from 'react-router-dom'
 import {fullScreen, fullScreenRequested, loaded} from './Selectors'
 

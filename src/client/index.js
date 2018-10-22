@@ -20,7 +20,7 @@ import BackupContainer from './backup/BackupContainer'
 import HelpContainer from './help/HelpContainer'
 import StyleGuide from './styleGuide/StyleGuide'
 import _ from 'lodash'
-import UnhandledError from './UnhandledError'
+import {UnhandledError} from './UnhandledError'
 import {loaded} from './Selectors'
 
 const ONE_SECOND = 1000

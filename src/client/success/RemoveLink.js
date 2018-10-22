@@ -1,22 +1,20 @@
-import React, {Component} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import Shortcut from '../common/Shortcut'
 import classNames from 'classnames'
+import {Shortcut} from '../common/Shortcut'
 import styles from './remove-link.scss'
 
-class RemoveLink extends Component {
-  render() {
-    const classes = classNames(styles.removeLink, this.props.className)
+export function RemoveLink({hotkeys, removeMessage, message, className}) {
+  const classes = classNames(styles.removeLink, className)
 
-    return (
-      <button className={classes}
-              onClick={this.props.removeMessage}
-              title={`remove ${this.props.message}`}>
-        <div>remove {this.props.message}</div>
-        <Shortcut hotkeys={this.props.hotkeys}/>
-      </button>
-    )
-  }
+  return (
+    <button className={classes}
+            onClick={removeMessage}
+            title={`remove ${message}`}>
+      <div>remove {message}</div>
+      <Shortcut hotkeys={hotkeys}/>
+    </button>
+  )
 }
 
 RemoveLink.propTypes = {
@@ -25,5 +23,3 @@ RemoveLink.propTypes = {
   message: PropTypes.string.isRequired,
   className: PropTypes.string
 }
-
-export default RemoveLink

@@ -2,7 +2,7 @@ import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
-import Input from '../../../../src/client/common/forms/Input'
+import {Input} from '../../../../src/client/common/forms/Input'
 import {locator} from '../../TestUtils'
 
 describe('<Input/>', function () {
@@ -13,7 +13,6 @@ describe('<Input/>', function () {
     className: null,
     readOnly: null,
     focus: null,
-    disabled: null,
     type: null
   }
 

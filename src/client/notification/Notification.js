@@ -1,27 +1,25 @@
-import React, {Component} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
+import {isBlank} from '../common/Utils'
 import classNames from 'classnames'
 import styles from './notification.scss'
-import {isBlank} from '../common/Utils'
 
-class Notification extends Component {
-  render() {
-    const notificationClassNames = classNames(styles.popUpNotification, {
-      [styles.fullscreen]: this.props.fullScreen
-    })
+export function Notification({fullScreen, notification, dismiss}) {
+  const notificationClassNames = classNames(styles.popUpNotification, {
+    [styles.fullscreen]: fullScreen
+  })
 
-    return !isBlank(this.props.notification) &&
-      <section className={notificationClassNames}
-               aria-live='polite'
-               role='complementary'>
-        <button className={styles.dismiss}
-                onClick={this.props.dismiss}
-                data-locator='dismiss'>
-          <span>dismiss notification</span>
-        </button>
-        <div className={styles.message} data-locator='notification'>{this.props.notification}</div>
-      </section>
-  }
+  return !isBlank(notification) &&
+    <section className={notificationClassNames}
+             aria-live='polite'
+             role='complementary'>
+      <button className={styles.dismiss}
+              onClick={dismiss}
+              data-locator='dismiss'>
+        <span>dismiss notification</span>
+      </button>
+      <div className={styles.message} data-locator='notification'>{notification}</div>
+    </section>
 }
 
 Notification.propTypes = {
@@ -29,5 +27,3 @@ Notification.propTypes = {
   fullScreen: PropTypes.bool,
   dismiss: PropTypes.func.isRequired
 }
-
-export default Notification

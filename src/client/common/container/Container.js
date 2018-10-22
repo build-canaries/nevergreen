@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import styles from './container.scss'
 
-class Container extends Component {
+export class Container extends Component {
+
   constructor(props) {
     super(props)
     this.state = {
@@ -80,5 +81,3 @@ Container.propTypes = {
   hidden: PropTypes.bool,
   highlight: PropTypes.bool
 }
-
-export default Container

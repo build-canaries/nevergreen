@@ -2,15 +2,21 @@ import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
-import Success from '../../../src/client/monitor/Success'
-import SuccessMessage from '../../../src/client/monitor/SuccessMessage'
-import SuccessImage from '../../../src/client/monitor/SuccessImage'
+import {Success} from '../../../src/client/monitor/Success'
+import {SuccessMessage} from '../../../src/client/monitor/SuccessMessage'
+import {SuccessImage} from '../../../src/client/monitor/SuccessImage'
 
 describe('Monitor <Success/>', function () {
 
   const DEFAULT_PROPS = {
     messages: []
   }
+
+  it('should pick a message when constructed to stop it changing after every successful refresh', function () {
+    const props = {...DEFAULT_PROPS, messages: ['a', 'b', 'c']}
+    const wrapper = shallow(<Success {...props} />)
+    expect(wrapper.state('message')).to.exist()
+  })
 
   it('should render text messages', function () {
     const props = {...DEFAULT_PROPS, messages: ['some-message']}

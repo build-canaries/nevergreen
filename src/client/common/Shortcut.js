@@ -11,7 +11,8 @@ function click(parent) {
   return false
 }
 
-class Shortcut extends Component {
+export class Shortcut extends Component {
+
   constructor(props) {
     super(props)
     this.parentNode = React.createRef()
@@ -40,5 +41,3 @@ class Shortcut extends Component {
 Shortcut.propTypes = {
   hotkeys: PropTypes.arrayOf(PropTypes.string).isRequired
 }
-
-export default Shortcut

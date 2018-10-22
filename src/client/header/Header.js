@@ -4,8 +4,8 @@ import classNames from 'classnames'
 import styles from './header.scss'
 import logo from './buildcanaries-logo.png'
 import {NavLink} from 'react-router-dom'
-import Shortcut from '../common/Shortcut'
-import Title from '../common/Title'
+import {Shortcut} from '../common/Shortcut'
+import {Title} from '../common/Title'
 
 const MENU_ITEMS = [
   {id: 'monitor', title: 'monitor', shortcuts: ['m', '1']},
@@ -16,7 +16,8 @@ const MENU_ITEMS = [
   {id: 'help', title: 'help', shortcuts: ['h', '6']}
 ]
 
-class Header extends Component {
+export class Header extends Component {
+
   constructor(props) {
     super(props)
     this.state = {menuVisible: false}
@@ -31,17 +32,20 @@ class Header extends Component {
   }
 
   render() {
+    const {fullScreen} = this.props
+    const {menuVisible} = this.state
+
     const headerClassNames = classNames(styles.siteHeader, {
-      [styles.fullscreen]: this.props.fullScreen
+      [styles.fullscreen]: fullScreen
     })
     const menuClassNames = classNames(styles.menu, {
-      [styles.open]: this.state.menuVisible
+      [styles.open]: menuVisible
     })
     const iconClassNames = classNames({
-      [styles.siteMenuShow]: !this.state.menuVisible,
-      [styles.siteMenuHide]: this.state.menuVisible
+      [styles.siteMenuShow]: !menuVisible,
+      [styles.siteMenuHide]: menuVisible
     })
-    const toggleLabel = this.state.menuVisible ? 'hide menu' : 'show menu'
+    const toggleLabel = menuVisible ? 'hide menu' : 'show menu'
 
     return (
       <header role='banner' className={headerClassNames}>
@@ -51,7 +55,7 @@ class Header extends Component {
           <button className={styles.siteMenuToggle}
                   onClick={this.toggleMenu}
                   aria-label={toggleLabel}
-                  aria-expanded={this.state.menuVisible}>
+                  aria-expanded={menuVisible}>
             <span className={iconClassNames}/>
           </button>
           <ul className={menuClassNames}>
@@ -84,5 +88,3 @@ class Header extends Component {
 Header.propTypes = {
   fullScreen: PropTypes.bool
 }
-
-export default Header

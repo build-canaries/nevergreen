@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {dismiss} from '../actions/NotificationActionCreators'
-import Notification from './Notification'
+import {Notification} from './Notification'
 import {withRouter} from 'react-router-dom'
 import {fullScreen, notification} from '../Selectors'
 

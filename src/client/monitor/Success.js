@@ -1,23 +1,26 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import Message from './SuccessMessage'
-import Image from './SuccessImage'
+import {SuccessMessage} from './SuccessMessage'
+import {SuccessImage} from './SuccessImage'
 import _ from 'lodash'
 import {randomFrom} from '../common/Utils'
 
-class Success extends Component {
+export class Success extends Component {
+
   constructor(props) {
     super(props)
-    this.state = {message: randomFrom(props.messages)}
+    const message = randomFrom(props.messages)
+    const isUrl = _.startsWith(message, 'http')
+    this.state = {message, isUrl}
   }
 
   render() {
-    const isUrl = _.startsWith(this.state.message, 'http')
+    const {isUrl, message} = this.state
 
     if (isUrl) {
-      return <Image url={this.state.message}/>
+      return <SuccessImage url={message}/>
     } else {
-      return <Message message={this.state.message}/>
+      return <SuccessMessage message={message}/>
     }
   }
 }
@@ -25,5 +28,3 @@ class Success extends Component {
 Success.propTypes = {
   messages: PropTypes.arrayOf(PropTypes.string).isRequired
 }
-
-export default Success

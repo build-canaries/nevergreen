@@ -2,7 +2,7 @@ import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
-import DropDown from '../../../../src/client/common/forms/DropDown'
+import {DropDown} from '../../../../src/client/common/forms/DropDown'
 
 describe('<DropDown/>', function () {
 
@@ -19,7 +19,7 @@ describe('<DropDown/>', function () {
       {value: 'c', display: 'C'}
     ]
     const props = {...DEFAULT_PROPS, options}
-    const wrapper = shallow(<DropDown {...props} />)
+    const wrapper = shallow(<DropDown {...props}>child</DropDown>)
     expect(wrapper.find('option[value="a"]')).to.have.text('A')
     expect(wrapper.find('option[value="b"]')).to.have.text('B')
     expect(wrapper.find('option[value="c"]')).to.have.text('C')
@@ -34,7 +34,7 @@ describe('<DropDown/>', function () {
   // imported styles are ignored in tests, so we can only test it has the custom class
   it('should add class name to the label allow default styles to be overridden', function () {
     const props = {...DEFAULT_PROPS, className: 'someCustomClass'}
-    const wrapper = shallow(<DropDown {...props}/>)
+    const wrapper = shallow(<DropDown {...props}>child</DropDown>)
     expect(wrapper.find('label')).to.have.prop('className', 'someCustomClass')
   })
 })

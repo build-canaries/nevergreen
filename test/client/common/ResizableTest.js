@@ -3,7 +3,7 @@ import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
 import {mocks} from '../Mocking'
-import Resizable from '../../../src/client/common/Resizable'
+import {Resizable} from '../../../src/client/common/Resizable'
 import _ from 'lodash'
 
 describe('<Resizable/>', function () {

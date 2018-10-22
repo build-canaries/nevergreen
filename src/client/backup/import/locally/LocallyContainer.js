@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {importData} from '../../../actions/ImportThunkActionCreators'
-import Locally from './Locally'
+import {Locally} from './Locally'
 import {importLoaded} from '../../../Selectors'
 
 function mapDispatchToProps(dispatch) {

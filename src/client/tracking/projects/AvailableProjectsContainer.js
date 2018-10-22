@@ -3,7 +3,7 @@ import {bindActionCreators} from 'redux'
 import {toJS} from '../../common/ImmutableToJs'
 import {selectProject} from '../../actions/TrackingActionCreators'
 import {refreshTray} from '../../actions/RefreshThunkActionCreators'
-import AvailableProjects from './AvailableProjects'
+import {AvailableProjects} from './AvailableProjects'
 import {
   projects,
   selectedProjects,

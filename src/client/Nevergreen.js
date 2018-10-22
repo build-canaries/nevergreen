@@ -1,15 +1,15 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import Header from './header/Header'
-import Footer from './footer/Footer'
 import Mousetrap from 'mousetrap'
 import 'mousetrap/plugins/global-bind/mousetrap-global-bind'
 import _ from 'lodash'
-import styles from './nevergreen.scss'
-import Timer from './common/Timer'
+import {registerServiceWorker} from './ServiceWorker'
+import {Header} from './header/Header'
+import {Footer} from './footer/Footer'
+import {Timer} from './common/Timer'
 import NotificationContainer from './notification/NotificationContainer'
 import version from '../../resources/version.txt'
-import {registerServiceWorker} from './ServiceWorker'
+import styles from './nevergreen.scss'
 
 const ONE_SECONDS = 1000
 const THREE_SECONDS = 3 * 1000
@@ -22,7 +22,8 @@ function blurActive() {
   }
 }
 
-class Nevergreen extends Component {
+export class Nevergreen extends Component {
+
   constructor(props) {
     super(props)
     this.state = {fullScreenTimer: null}
@@ -59,15 +60,17 @@ class Nevergreen extends Component {
   }
 
   render() {
+    const {loaded, isFullScreen, children} = this.props
+
     return (
       <div className={styles.nevergreen}
            onMouseMove={this.disableFullScreen}
-           aria-busy={!this.props.loaded}>
+           aria-busy={!loaded}>
         <Timer onTrigger={this.checkVersion} interval={TWENTY_FOUR_HOURS}/>
-        <Header fullScreen={this.props.isFullScreen}/>
+        <Header fullScreen={isFullScreen}/>
         <NotificationContainer/>
-        {this.props.loaded && <main role='main' className={styles.main}>{this.props.children}</main>}
-        <Footer fullScreen={this.props.isFullScreen}/>
+        {loaded && <main role='main' className={styles.main}>{children}</main>}
+        <Footer fullScreen={isFullScreen}/>
       </div>
     )
   }

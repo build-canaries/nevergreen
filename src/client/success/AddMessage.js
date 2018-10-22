@@ -1,9 +1,10 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import Input from '../common/forms/Input'
+import {Input} from '../common/forms/Input'
 import styles from './add-message.scss'
 
-class AddMessage extends Component {
+export class AddMessage extends Component {
+
   constructor(props) {
     super(props)
     this.state = {message: ''}
@@ -19,11 +20,13 @@ class AddMessage extends Component {
   }
 
   render() {
+    const {message} = this.state
+
     return (
       <div className={styles.addMessage}>
         <Input className={styles.addMessageInput}
                placeholder='text or image URL'
-               value={this.state.message}
+               value={message}
                onChange={this.updateMessage}
                onEnter={this.addMessage}
                data-locator='message'>
@@ -40,5 +43,3 @@ class AddMessage extends Component {
 AddMessage.propTypes = {
   addMessage: PropTypes.func.isRequired
 }
-
-export default AddMessage

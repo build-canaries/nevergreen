@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import Help from './Help'
+import {Help} from './Help'
 import {keyboardShortcut} from '../actions/ShortcutActionCreators'
 import {shortcut} from '../Selectors'
 

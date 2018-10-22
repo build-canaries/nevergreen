@@ -1,21 +1,22 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import AvailableProject from './AvailableProject'
-import Messages from '../../common/messages/Messages'
-import Input from '../../common/forms/Input'
-import Shortcut from '../../common/Shortcut'
-import Refresh from './Refresh'
 import _ from 'lodash'
-import styles from './available-projects.scss'
+import {AvailableProject} from './AvailableProject'
+import {Messages} from '../../common/messages/Messages'
+import {Input} from '../../common/forms/Input'
+import {Shortcut} from '../../common/Shortcut'
+import {Refresh} from './Refresh'
 import {isBlank} from '../../common/Utils'
-import VisuallyHidden from '../../common/VisuallyHidden'
+import {VisuallyHidden} from '../../common/VisuallyHidden'
+import styles from './available-projects.scss'
 
 const DEFAULT_STATE = {
   filter: null,
   filterErrors: null
 }
 
-class AvailableProjects extends Component {
+export class AvailableProjects extends Component {
+
   constructor(props) {
     super(props)
     this.state = {...DEFAULT_STATE}
@@ -60,8 +61,11 @@ class AvailableProjects extends Component {
   }
 
   render() {
-    const filteredProjects = this.props.projects.filter((project) => {
-      return this.state.filter ? `${project.name} ${project.stage || ''}`.match(this.state.filter) : true
+    const {projects, index, selected, trayId, timestamp, errors} = this.props
+    const {filter, filterErrors} = this.state
+
+    const filteredProjects = projects.filter((project) => {
+      return filter ? `${project.name} ${project.stage || ''}`.match(filter) : true
     })
 
     const controls = (
@@ -72,12 +76,12 @@ class AvailableProjects extends Component {
                   onClick={this.includeAll(filteredProjects)}
                   data-locator='include-all'>
             include all
-            <Shortcut hotkeys={[`+ ${this.props.index}`, `= ${this.props.index}`]}/>
+            <Shortcut hotkeys={[`+ ${index}`, `= ${index}`]}/>
           </button>
           <button className={styles.excludeAll}
                   onClick={this.excludeAll(filteredProjects)}>
             exclude all
-            <Shortcut hotkeys={[`- ${this.props.index}`]}/>
+            <Shortcut hotkeys={[`- ${index}`]}/>
           </button>
           <div className={styles.projectFilter}>
             <Input className={styles.projectFilterInput}
@@ -87,7 +91,7 @@ class AvailableProjects extends Component {
             </Input>
           </div>
         </fieldset>
-        <Messages type='error' messages={this.state.filterErrors}/>
+        <Messages type='error' messages={filterErrors}/>
       </div>
     )
 
@@ -98,12 +102,12 @@ class AvailableProjects extends Component {
           data-locator='available-projects-list'>
         {
           _.sortBy(filteredProjects, ['name', 'stage']).map((project) => {
-            const selected = this.props.selected.includes(project.projectId)
-            const selectProject = () => this.props.selectProject(this.props.trayId, project.projectId, !selected)
+            const isSelected = selected.includes(project.projectId)
+            const selectProject = () => this.props.selectProject(trayId, project.projectId, !isSelected)
 
             return <AvailableProject key={project.projectId}
                                      {...project}
-                                     selected={selected}
+                                     selected={isSelected}
                                      selectProject={selectProject}/>
           })
         }
@@ -115,13 +119,13 @@ class AvailableProjects extends Component {
                data-locator='available-projects'
                ref={this.rootNode}>
         <VisuallyHidden data-locator='title'><h3>Available projects</h3></VisuallyHidden>
-        <Refresh index={this.props.index}
-                 timestamp={this.props.timestamp}
+        <Refresh index={index}
+                 timestamp={timestamp}
                  refreshTray={this.refreshTray}/>
-        <Messages type='error' messages={this.props.errors}/>
-        {!this.props.errors && controls}
-        {!this.props.errors && buildItems}
-        {!this.props.errors && <button className={styles.backToTop} onClick={this.scrollToTop}>back to top</button>}
+        <Messages type='error' messages={errors}/>
+        {!errors && controls}
+        {!errors && buildItems}
+        {!errors && <button className={styles.backToTop} onClick={this.scrollToTop}>back to top</button>}
       </section>
     )
   }
@@ -145,5 +149,3 @@ AvailableProjects.propTypes = {
   timestamp: PropTypes.string,
   refreshTray: PropTypes.func.isRequired
 }
-
-export default AvailableProjects

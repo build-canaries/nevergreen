@@ -2,9 +2,9 @@ import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
-import Success from '../../../src/client/success/Success'
-import AddedMessages from '../../../src/client/success/AddedMessages'
-import AddedImages from '../../../src/client/success/AddedImages'
+import {Success} from '../../../src/client/success/Success'
+import {AddedMessages} from '../../../src/client/success/AddedMessages'
+import {AddedImages} from '../../../src/client/success/AddedImages'
 import _ from 'lodash'
 
 describe('Success <Success/>', function () {

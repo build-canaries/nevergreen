@@ -3,7 +3,7 @@ import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
-import AddedMessages from '../../../src/client/success/AddedMessages'
+import {AddedMessages} from '../../../src/client/success/AddedMessages'
 import _ from 'lodash'
 
 describe('<AddedMessages/>', function () {

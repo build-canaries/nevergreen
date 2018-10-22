@@ -2,8 +2,8 @@ import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
-import Checkbox from '../../../../src/client/common/forms/Checkbox'
 import _ from 'lodash'
+import {Checkbox} from '../../../../src/client/common/forms/Checkbox'
 import {mocks} from '../../Mocking'
 
 describe('<Checkbox/>', function () {

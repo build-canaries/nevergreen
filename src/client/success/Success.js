@@ -1,24 +1,22 @@
-import React, {Component, Fragment} from 'react'
+import React, {Fragment} from 'react'
 import PropTypes from 'prop-types'
-import AddedMessages from './AddedMessages'
-import AddedImages from './AddedImages'
-import AddMessage from './AddMessage'
-import Title from '../common/Title'
+import {AddedMessages} from './AddedMessages'
+import {AddedImages} from './AddedImages'
+import {AddMessage} from './AddMessage'
+import {Title} from '../common/Title'
 
-class Success extends Component {
-  render() {
-    const messages = this.props.messages.filter((m) => !m.startsWith('http'))
-    const images = this.props.messages.filter((m) => m.startsWith('http'))
+export function Success({messages, addMessage, removeMessage}) {
+  const textMessages = messages.filter((m) => !m.startsWith('http'))
+  const images = messages.filter((m) => m.startsWith('http'))
 
-    return (
-      <Fragment>
-        <Title>Success</Title>
-        <AddMessage addMessage={this.props.addMessage}/>
-        <AddedMessages messages={messages} removeMessage={this.props.removeMessage}/>
-        <AddedImages urls={images} removeMessage={this.props.removeMessage}/>
-      </Fragment>
-    )
-  }
+  return (
+    <Fragment>
+      <Title>Success</Title>
+      <AddMessage addMessage={addMessage}/>
+      <AddedMessages messages={textMessages} removeMessage={removeMessage}/>
+      <AddedImages urls={images} removeMessage={removeMessage}/>
+    </Fragment>
+  )
 }
 
 Success.propTypes = {
@@ -26,5 +24,3 @@ Success.propTypes = {
   addMessage: PropTypes.func.isRequired,
   removeMessage: PropTypes.func.isRequired
 }
-
-export default Success

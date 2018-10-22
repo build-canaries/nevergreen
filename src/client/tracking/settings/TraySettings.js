@@ -1,10 +1,10 @@
 import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
-import Input from '../../common/forms/Input'
-import DropDown from '../../common/forms/DropDown'
+import {Input} from '../../common/forms/Input'
+import {DropDown} from '../../common/forms/DropDown'
 import {generateRandomName} from '../../domain/Tray'
 import styles from './tray-settings.scss'
-import VisuallyHidden from '../../common/VisuallyHidden'
+import {VisuallyHidden} from '../../common/VisuallyHidden'
 
 const CI_OPTIONS = [
   {value: '', display: 'Auto detect'},
@@ -20,7 +20,8 @@ const CI_OPTIONS = [
   {value: 'travis', display: 'Travis CI'}
 ]
 
-class TraySettings extends Component {
+export class TraySettings extends Component {
+
   constructor(props) {
     super(props)
     this.state = {
@@ -103,14 +104,17 @@ class TraySettings extends Component {
   }
 
   render() {
-    const existingPassword = this.props.password ? '*******' : ''
-    const password = this.state.updatingPassword ? this.state.newPassword : existingPassword
+    const {password, serverType} = this.props
+    const {updatingPassword, newPassword, newName, newUrl, newUsername} = this.state
+
+    const existingPassword = password ? '*******' : ''
+    const passwordValue = updatingPassword ? newPassword : existingPassword
 
     return (
       <section data-locator='tray-settings'>
         <VisuallyHidden><h3>Settings</h3></VisuallyHidden>
         <Input className={styles.traySettingsName}
-               value={this.state.newName}
+               value={newName}
                onChange={this.nameChanged}
                onBlur={this.setName}
                onEnter={this.setName}
@@ -124,7 +128,7 @@ class TraySettings extends Component {
                 data-locator='generate-random'>
           randomise name
         </button>
-        <Input value={this.state.newUrl}
+        <Input value={newUrl}
                onChange={this.urlChanged}
                onBlur={this.setUrl}
                onEnter={this.setUrl}
@@ -133,13 +137,13 @@ class TraySettings extends Component {
         </Input>
         <DropDown className={styles.serverType}
                   options={CI_OPTIONS}
-                  value={this.props.serverType}
+                  value={serverType}
                   onChange={this.serverTypeChange}
                   data-locator='tray-server-type'>
           <div className={styles.label}>server type</div>
         </DropDown>
         <Input className={styles.traySettingsUsername}
-               value={this.state.newUsername}
+               value={newUsername}
                onChange={this.usernameChanged}
                onBlur={this.setUsername}
                onEnter={this.setUsername}
@@ -148,15 +152,15 @@ class TraySettings extends Component {
         </Input>
         <Input type='password'
                className={styles.existingPassword}
-               value={password}
+               value={passwordValue}
                onChange={this.passwordChanged}
                onEnter={this.setPassword}
-               readOnly={!this.state.updatingPassword}
-               focus={this.state.updatingPassword}
+               readOnly={!updatingPassword}
+               focus={updatingPassword}
                data-locator='tray-password'>
           <div className={styles.label}>password</div>
         </Input>
-        {this.state.updatingPassword
+        {updatingPassword
           ? (
             <Fragment>
               <button className={styles.cancel}
@@ -210,5 +214,3 @@ TraySettings.propTypes = {
   encryptPassword: PropTypes.func.isRequired,
   refreshTray: PropTypes.func.isRequired
 }
-
-export default TraySettings

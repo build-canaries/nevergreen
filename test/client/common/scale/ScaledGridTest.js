@@ -2,7 +2,7 @@ import {before, describe, it} from 'mocha'
 import {expect} from 'chai'
 import React from 'react'
 import {mount} from 'enzyme'
-import ScaledGrid from '../../../../src/client/common/scale/ScaledGrid'
+import {ScaledGrid} from '../../../../src/client/common/scale/ScaledGrid'
 
 function setWindowSize(size) {
   // TODO: keep an eye on https://github.com/tmpvar/jsdom/issues/135 to see if this gets fixed

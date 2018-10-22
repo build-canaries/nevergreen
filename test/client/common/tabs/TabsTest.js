@@ -2,7 +2,7 @@ import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
-import Tabs from '../../../../src/client/common/tabs/Tabs'
+import {Tabs} from '../../../../src/client/common/tabs/Tabs'
 import {locator} from '../../TestUtils'
 
 describe('<Tabs/>', function () {

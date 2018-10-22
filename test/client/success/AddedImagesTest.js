@@ -3,7 +3,7 @@ import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
-import AddedImages from '../../../src/client/success/AddedImages'
+import {AddedImages} from '../../../src/client/success/AddedImages'
 import _ from 'lodash'
 
 describe('<AddedImages/>', function () {

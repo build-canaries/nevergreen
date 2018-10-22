@@ -1,23 +1,21 @@
-import React, {Component, Fragment} from 'react'
+import React, {Fragment} from 'react'
 import PropTypes from 'prop-types'
-import TimingSettings from './TimingSettings'
-import DisplaySettings from './DisplaySettings'
-import AudioSettings from './AudioSettings'
-import Title from '../common/Title'
-import NotificationSettings from './NotificationSettings'
+import {TimingSettings} from './TimingSettings'
+import {DisplaySettings} from './DisplaySettings'
+import {AudioSettings} from './AudioSettings'
+import {Title} from '../common/Title'
+import {NotificationSettings} from './NotificationSettings'
 
-class Settings extends Component {
-  render() {
-    return (
-      <Fragment>
-        <Title>Settings</Title>
-        <TimingSettings {...this.props}/>
-        <DisplaySettings {...this.props}/>
-        <NotificationSettings {...this.props}/>
-        <AudioSettings {...this.props}/>
-      </Fragment>
-    )
-  }
+export function Settings(props) {
+  return (
+    <Fragment>
+      <Title>Settings</Title>
+      <TimingSettings {...props}/>
+      <DisplaySettings {...props}/>
+      <NotificationSettings {...props}/>
+      <AudioSettings {...props}/>
+    </Fragment>
+  )
 }
 
 Settings.propTypes = {
@@ -37,5 +35,3 @@ Settings.propTypes = {
   showSystemNotifications: PropTypes.bool.isRequired,
   setShowSystemNotifications: PropTypes.func.isRequired
 }
-
-export default Settings

@@ -1,9 +1,9 @@
 import {connect} from 'react-redux'
-import Export from './Export'
+import {Export} from './Export'
 import {filter} from '../../common/repo/Data'
 import {toJson} from '../../common/Json'
 import {toJS} from '../../common/ImmutableToJs'
-import {exportErrors, exportInfos, exportLoaded} from '../../Selectors'
+import {exportErrors, exportInfos} from '../../Selectors'
 
 function mapDispatchToProps() {
   return {}
@@ -11,7 +11,6 @@ function mapDispatchToProps() {
 
 function mapStateToProps(state) {
   return {
-    loaded: exportLoaded(state),
     errors: exportErrors(state),
     infos: exportInfos(state),
     configuration: toJson(filter(state.toJS()))

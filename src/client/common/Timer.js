@@ -6,7 +6,8 @@ function asMilliseconds(seconds) {
   return seconds * 1000
 }
 
-class Timer extends Component {
+export class Timer extends Component {
+
   constructor(props) {
     super(props)
     this.mounted = true
@@ -49,5 +50,3 @@ Timer.propTypes = {
   onTrigger: PropTypes.func.isRequired,
   interval: PropTypes.number.isRequired
 }
-
-export default Timer

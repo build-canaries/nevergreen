@@ -1,32 +1,25 @@
-import React, {Component} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import _ from 'lodash'
 import styles from './checkbox.scss'
 
-class Checkbox extends Component {
-  onChange = (evt) => {
-    this.props.onToggle(evt.target.checked)
-  }
+export function Checkbox({children, onToggle, className, ...inputProps}) {
+  const classes = classNames(styles.container, className)
+  const id = _.uniqueId()
 
-  render() {
-    const classes = classNames(styles.container, this.props.className)
-    const inputProps = _.omit(this.props, ['children', 'onToggle', 'className'])
-    const id = _.uniqueId()
-
-    return (
-      <div className={classes}>
-        <div className={styles.checkbox}>
-          <input id={id}
-                 className={styles.input}
-                 type='checkbox'
-                 onChange={this.onChange}
-                 {...inputProps}/>
-          <label htmlFor={id} className={styles.children}>{this.props.children}</label>
-        </div>
+  return (
+    <div className={classes}>
+      <div className={styles.checkbox}>
+        <input id={id}
+               className={styles.input}
+               type='checkbox'
+               onChange={(evt) => onToggle(evt.target.checked)}
+               {...inputProps}/>
+        <label htmlFor={id} className={styles.children}>{children}</label>
       </div>
-    )
-  }
+    </div>
+  )
 }
 
 Checkbox.propTypes = {
@@ -34,5 +27,3 @@ Checkbox.propTypes = {
   onToggle: PropTypes.func.isRequired,
   className: PropTypes.string
 }
-
-export default Checkbox

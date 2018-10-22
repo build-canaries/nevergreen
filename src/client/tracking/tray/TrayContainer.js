@@ -1,5 +1,5 @@
 import {connect} from 'react-redux'
-import Tray from './Tray'
+import {Tray} from './Tray'
 import {trayHighlight, trayLoaded, trayName, trayUrl} from '../../Selectors'
 
 function mapStateToProps(state, {trayId}) {

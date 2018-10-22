@@ -3,7 +3,7 @@ import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
-import InterestingProject from '../../../../src/client/common/project/InterestingProject'
+import {InterestingProject} from '../../../../src/client/common/project/InterestingProject'
 import {PROGNOSIS_HEALTHY_BUILDING, PROGNOSIS_SICK, PROGNOSIS_UNKNOWN} from '../../../../src/client/domain/Project'
 
 /*

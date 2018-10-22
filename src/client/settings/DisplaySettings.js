@@ -1,23 +1,24 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import Container from '../common/container/Container'
-import Checkbox from '../common/forms/Checkbox'
-import ScaledGrid from '../common/scale/ScaledGrid'
-import InterestingProject from '../common/project/InterestingProject'
+import _ from 'lodash'
+import {PROGNOSIS_HEALTHY_BUILDING, PROGNOSIS_SICK, PROGNOSIS_SICK_BUILDING, PROGNOSIS_UNKNOWN} from '../domain/Project'
+import {Container} from '../common/container/Container'
+import {Checkbox} from '../common/forms/Checkbox'
+import {ScaledGrid} from '../common/scale/ScaledGrid'
+import {InterestingProject} from '../common/project/InterestingProject'
 import {randomDateInPast} from '../common/DateTime'
 import {generateRandomName} from '../domain/Tray'
-import _ from 'lodash'
+import {DropDown} from '../common/forms/DropDown'
+import {ProjectSummary} from '../common/project/ProjectSummary'
+import {ProjectError} from '../common/project/ProjectError'
 import styles from './display-settings.scss'
-import {PROGNOSIS_HEALTHY_BUILDING, PROGNOSIS_SICK, PROGNOSIS_SICK_BUILDING, PROGNOSIS_UNKNOWN} from '../domain/Project'
-import DropDown from '../common/forms/DropDown'
-import ProjectSummary from '../common/project/ProjectSummary'
-import ProjectError from '../common/project/ProjectError'
 
 function randomBuildLabel() {
   return `${_.random(1, 9999)}`
 }
 
-class DisplaySettings extends Component {
+export class DisplaySettings extends Component {
+
   constructor(props) {
     super(props)
     this.state = {
@@ -50,7 +51,17 @@ class DisplaySettings extends Component {
   }
 
   render() {
-    const projectsToShowOptions = this.props.validNumberOfProjectsToShow.map((value) => {
+    const {
+      validNumberOfProjectsToShow,
+      showTrayName,
+      showBuildTime,
+      showBrokenBuildTime,
+      showBuildLabel,
+      maxProjectsToShow
+    } = this.props
+    const {trayName, lastBuildTime, lastBuildLabel, thisBuildTime, additionalProjects} = this.state
+
+    const projectsToShowOptions = validNumberOfProjectsToShow.map((value) => {
       const display = value === Number.MAX_SAFE_INTEGER
         ? 'all projects (not recommended)'
         : `${value.toString()} projects`
@@ -60,32 +71,32 @@ class DisplaySettings extends Component {
     return (
       <Container title='display' className={styles.container}>
         <Checkbox className={styles.showTrayName}
-                  checked={this.props.showTrayName}
+                  checked={showTrayName}
                   onToggle={this.toggleTrayName}
                   data-locator='show-tray-names'>
           show tray name
         </Checkbox>
         <Checkbox className={styles.checkbox}
-                  checked={this.props.showBuildTime}
+                  checked={showBuildTime}
                   onToggle={this.toggleBuildTime}
                   data-locator='show-build-times'>
           show building timer
         </Checkbox>
         <Checkbox className={styles.checkbox}
-                  checked={this.props.showBrokenBuildTime}
+                  checked={showBrokenBuildTime}
                   onToggle={this.toggleBrokenBuildTime}
                   data-locator='show-broken-build-times'>
           show broken build timer
         </Checkbox>
         <Checkbox className={styles.checkbox}
-                  checked={this.props.showBuildLabel}
+                  checked={showBuildLabel}
                   onToggle={this.toggleBuildLabel}
                   data-locator='show-build-labels'>
           show broken build label
         </Checkbox>
         <DropDown className={styles.maxProjects}
                   options={projectsToShowOptions}
-                  value={this.props.maxProjectsToShow}
+                  value={maxProjectsToShow}
                   onChange={this.setMaxProjectsToShow}>
           max number of projects to show
         </DropDown>
@@ -94,31 +105,31 @@ class DisplaySettings extends Component {
           <div className={styles.displayPreview}>
             <ScaledGrid>
               <ProjectError error='some tray error'/>
-              <InterestingProject trayName={this.state.trayName}
+              <InterestingProject trayName={trayName}
                                   name='sick'
                                   prognosis={PROGNOSIS_SICK}
-                                  lastBuildTime={this.state.lastBuildTime}
-                                  lastBuildLabel={this.state.lastBuildLabel}
-                                  showBrokenBuildTimers={this.props.showBrokenBuildTime}
-                                  showTrayName={this.props.showTrayName}
-                                  showBuildLabel={this.props.showBuildLabel}/>
-              <InterestingProject trayName={this.state.trayName}
+                                  lastBuildTime={lastBuildTime}
+                                  lastBuildLabel={lastBuildLabel}
+                                  showBrokenBuildTimers={showBrokenBuildTime}
+                                  showTrayName={showTrayName}
+                                  showBuildLabel={showBuildLabel}/>
+              <InterestingProject trayName={trayName}
                                   name='sick building'
                                   prognosis={PROGNOSIS_SICK_BUILDING}
-                                  thisBuildTime={this.state.thisBuildTime}
-                                  showBuildTimers={this.props.showBuildTime}
-                                  showTrayName={this.props.showTrayName}/>
-              <InterestingProject trayName={this.state.trayName}
+                                  thisBuildTime={thisBuildTime}
+                                  showBuildTimers={showBuildTime}
+                                  showTrayName={showTrayName}/>
+              <InterestingProject trayName={trayName}
                                   name='healthy building'
                                   prognosis={PROGNOSIS_HEALTHY_BUILDING}
-                                  thisBuildTime={this.state.thisBuildTime}
-                                  showBuildTimers={this.props.showBuildTime}
-                                  showTrayName={this.props.showTrayName}/>
-              <InterestingProject trayName={this.state.trayName}
+                                  thisBuildTime={thisBuildTime}
+                                  showBuildTimers={showBuildTime}
+                                  showTrayName={showTrayName}/>
+              <InterestingProject trayName={trayName}
                                   name='unknown prognosis'
                                   prognosis={PROGNOSIS_UNKNOWN}
-                                  showTrayName={this.props.showTrayName}/>
-              <ProjectSummary additionalProjectsCount={this.state.additionalProjects}/>
+                                  showTrayName={showTrayName}/>
+              <ProjectSummary additionalProjectsCount={additionalProjects}/>
             </ScaledGrid>
           </div>
         </section>
@@ -140,5 +151,3 @@ DisplaySettings.propTypes = {
   setMaxProjectsToShow: PropTypes.func.isRequired,
   validNumberOfProjectsToShow: PropTypes.arrayOf(PropTypes.number).isRequired
 }
-
-export default DisplaySettings

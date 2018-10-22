@@ -1,10 +1,10 @@
-import React, {Component} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import Container from '../../common/container/Container'
+import {Container} from '../../common/container/Container'
 import AvailableProjectsContainer from '../projects/AvailableProjectsContainer'
 import TraySettingsContainer from '../settings/TraySettingsContainer'
-import Loading from '../../common/loading/Loading'
-import Tabs from '../../common/tabs/Tabs'
+import {Loading} from '../../common/loading/Loading'
+import {Tabs} from '../../common/tabs/Tabs'
 
 const REDACTED = '*****'
 
@@ -26,30 +26,23 @@ function redactedUrl(url) {
   }
 }
 
-class Tray extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {hidden: false}
-  }
+export function Tray({url, name, highlight, loaded, trayId, index}) {
+  const urlToShow = redactedUrl(url)
+  const title = name || urlToShow
+  const subTitle = name ? urlToShow : ''
 
-  render() {
-    const url = redactedUrl(this.props.url)
-    const title = this.props.name || url
-    const subTitle = this.props.name ? url : ''
-
-    return (
-      <Container title={title} subTitle={subTitle} highlight={this.props.highlight}>
-        <div data-locator='tray'>
-          <Tabs titles={['projects', 'settings']}>
-            <Loading loaded={this.props.loaded}>
-              <AvailableProjectsContainer trayId={this.props.trayId} index={this.props.index}/>
-            </Loading>
-            <TraySettingsContainer trayId={this.props.trayId}/>
-          </Tabs>
-        </div>
-      </Container>
-    )
-  }
+  return (
+    <Container title={title} subTitle={subTitle} highlight={highlight}>
+      <div data-locator='tray'>
+        <Tabs titles={['projects', 'settings']}>
+          <Loading loaded={loaded}>
+            <AvailableProjectsContainer trayId={trayId} index={index}/>
+          </Loading>
+          <TraySettingsContainer trayId={trayId}/>
+        </Tabs>
+      </div>
+    </Container>
+  )
 }
 
 Tray.propTypes = {
@@ -60,5 +53,3 @@ Tray.propTypes = {
   url: PropTypes.string.isRequired,
   highlight: PropTypes.bool
 }
-
-export default Tray

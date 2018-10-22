@@ -7,7 +7,8 @@ const WAIT_MS = 16
 const MAX_WAIT_MS = 32
 const DEBOUNCE_OPTIONS = {leading: true, trailing: true, maxWait: MAX_WAIT_MS}
 
-class Resizable extends Component {
+export class Resizable extends Component {
+
   onResizeDebounced = memoize(
     (onResize) => _.debounce(onResize, WAIT_MS, DEBOUNCE_OPTIONS)
   )
@@ -33,5 +34,3 @@ class Resizable extends Component {
 Resizable.propTypes = {
   onResize: PropTypes.func.isRequired
 }
-
-export default Resizable

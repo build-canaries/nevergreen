@@ -23,7 +23,7 @@ function PasswordVisibilityToggle({id, show, onClick}) {
   )
 }
 
-class Input extends Component {
+export class Input extends Component {
 
   constructor(props) {
     super(props)
@@ -50,9 +50,9 @@ class Input extends Component {
     evt.target.value = val
   }
 
-  onEnter = (evt) => {
-    if (evt.key === 'Enter' && this.props.onEnter) {
-      this.props.onEnter(evt)
+  onKeyPress = (evt, onEnter) => {
+    if (evt.key === 'Enter' && onEnter) {
+      onEnter(evt)
     }
   }
 
@@ -65,37 +65,40 @@ class Input extends Component {
   }
 
   render() {
+    // eslint-disable-next-line no-unused-vars
+    const {children, onEnter, className, readOnly, focus, type, ...inputProps} = this.props
+    const {isPassword, passwordHidden} = this.state
+
     const id = _.uniqueId()
-    const inputProps = _.omit(this.props, ['children', 'onEnter', 'className', 'focus', 'type'])
-    const labelClasses = classNames(formStyles.inputContainer, this.props.className)
+    const labelClasses = classNames(formStyles.inputContainer, className)
     const inputClasses = classNames(styles.input, {
-      [styles.password]: this.state.isPassword
+      [styles.password]: isPassword
     })
-    const type = this.state.isPassword && !this.state.passwordHidden ? 'text' : this.props.type
+    const actualType = isPassword && !passwordHidden ? 'text' : type
 
     return (
       <label className={labelClasses}>
-        <div className={formStyles.inputLabel}>{this.props.children}</div>
+        <div className={formStyles.inputLabel}>{children}</div>
         <div className={styles.wrapper}>
           <input className={inputClasses}
-                 onKeyPress={this.onEnter}
+                 onKeyPress={(evt) => this.onKeyPress(evt, onEnter)}
                  spellCheck={false}
                  autoComplete='off'
-                 type={type}
+                 type={actualType}
                  {...inputProps}
                  id={id}
-                 tabIndex={this.props.readOnly ? -1 : 0}
+                 tabIndex={readOnly ? -1 : 0}
                  ref={this.inputNode}
                  onFocus={this.moveCaretToEnd}/>
           {
-            this.props.readOnly && (
+            readOnly && (
               <span className={styles.readOnly}
                     title='read only'
                     data-locator='read-only-icon'/>
             )
           }
           {
-            !this.props.readOnly && this.state.isPassword && this.state.passwordHidden && (
+            !readOnly && isPassword && passwordHidden && (
               <PasswordVisibilityToggle id={id}
                                         show
                                         onClick={this.togglePasswordVisibility}
@@ -103,7 +106,7 @@ class Input extends Component {
             )
           }
           {
-            !this.props.readOnly && this.state.isPassword && !this.state.passwordHidden && (
+            !readOnly && isPassword && !passwordHidden && (
               <PasswordVisibilityToggle id={id}
                                         show={false}
                                         onClick={this.togglePasswordVisibility}
@@ -122,8 +125,5 @@ Input.propTypes = {
   className: PropTypes.string,
   readOnly: PropTypes.bool,
   focus: PropTypes.bool,
-  disabled: PropTypes.bool,
   type: PropTypes.string
 }
-
-export default Input

@@ -4,7 +4,8 @@ import _ from 'lodash'
 import classNames from 'classnames'
 import styles from './tabs.scss'
 
-class Tabs extends Component {
+export class Tabs extends Component {
+
   constructor(props) {
     super(props)
     this.state = {active: 0}
@@ -71,5 +72,3 @@ Tabs.propTypes = {
   children: PropTypes.arrayOf(PropTypes.element).isRequired,
   titles: PropTypes.arrayOf(PropTypes.string).isRequired
 }
-
-export default Tabs

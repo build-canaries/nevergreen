@@ -1,11 +1,12 @@
 import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
-import Container from '../common/container/Container'
+import {Container} from '../common/container/Container'
+import {ExternalLink} from '../common/ExternalLink'
+import {Title} from '../common/Title'
 import styles from './help.scss'
-import ExternalLink from '../common/ExternalLink'
-import Title from '../common/Title'
 
-class Help extends Component {
+export class Help extends Component {
+
   componentWillUnmount() {
     this.props.keyboardShortcut(false)
   }
@@ -159,5 +160,3 @@ Help.propTypes = {
   keyboardShortcut: PropTypes.func.isRequired,
   showShortcuts: PropTypes.bool
 }
-
-export default Help
