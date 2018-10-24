@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
 import {Tray} from './Tray'
-import {trayHighlight, trayLoaded, trayName, trayUrl} from '../../Selectors'
+import {trayHighlight, trayLoaded, trayName, trayUrl} from '../../reducers/Selectors'
 
 function mapStateToProps(state, {trayId}) {
   return {

@@ -4,7 +4,7 @@ import {highlightTray, setTrayId, trayAdded} from './TrackingActionCreators'
 import {encryptPassword} from './PasswordThunkActionCreators'
 import {refreshTray} from './RefreshThunkActionCreators'
 import {createId} from '../domain/Tray'
-import {trayIds} from '../Selectors'
+import {trayIds} from '../reducers/Selectors'
 
 function hasScheme(url) {
   return _.size(_.split(url, '://')) > 1

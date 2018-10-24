@@ -3,7 +3,7 @@ import {Export} from './Export'
 import {filter} from '../../common/repo/Data'
 import {toJson} from '../../common/Json'
 import {toJS} from '../../common/ImmutableToJs'
-import {exportErrors, exportInfos} from '../../Selectors'
+import {exportErrors, exportInfos} from '../../reducers/Selectors'
 
 function mapDispatchToProps() {
   return {}

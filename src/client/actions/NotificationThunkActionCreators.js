@@ -2,7 +2,7 @@ import {get} from '../common/gateways/Gateway'
 import {send} from '../common/gateways/GitHubGateway'
 import semver from 'semver'
 import {notify} from './NotificationActionCreators'
-import {interestingProjects, showSystemNotifications} from '../Selectors'
+import {interestingProjects, showSystemNotifications} from '../reducers/Selectors'
 import {sendSystemNotification} from '../common/SystemNotifications'
 import * as log from '../common/Logger'
 

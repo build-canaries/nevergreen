@@ -7,7 +7,7 @@ import {checkForNewVersion} from './actions/NotificationThunkActionCreators'
 import {keyboardShortcut} from './actions/ShortcutActionCreators'
 import {Nevergreen} from './Nevergreen'
 import {withRouter} from 'react-router-dom'
-import {fullScreen, fullScreenRequested, loaded} from './Selectors'
+import {fullScreen, fullScreenRequested, loaded} from './reducers/Selectors'
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({

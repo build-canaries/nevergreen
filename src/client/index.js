@@ -21,7 +21,7 @@ import HelpContainer from './help/HelpContainer'
 import StyleGuide from './styleGuide/StyleGuide'
 import _ from 'lodash'
 import {UnhandledError} from './UnhandledError'
-import {loaded} from './Selectors'
+import {loaded} from './reducers/Selectors'
 
 const ONE_SECOND = 1000
 

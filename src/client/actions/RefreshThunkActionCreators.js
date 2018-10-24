@@ -2,7 +2,7 @@ import {fetchAll} from '../common/gateways/ProjectsGateway'
 import {abortPendingRequest} from '../common/gateways/Gateway'
 import {send} from '../common/gateways/NevergreenGateway'
 import {projectsFetched, projectsFetchError, projectsFetching} from './TrackingActionCreators'
-import {pendingRequest, tray as selectTray} from '../Selectors'
+import {pendingRequest, tray as selectTray} from '../reducers/Selectors'
 import {List} from 'immutable'
 import {wrapProjectErrors, wrapProjects} from '../domain/Project'
 

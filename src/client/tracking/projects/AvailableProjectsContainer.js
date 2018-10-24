@@ -13,7 +13,7 @@ import {
   trayTimestamp,
   trayUrl,
   trayUsername
-} from '../../Selectors'
+} from '../../reducers/Selectors'
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({refreshTray, selectProject}, dispatch)

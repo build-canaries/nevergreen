@@ -3,7 +3,7 @@ import {bindActionCreators} from 'redux'
 import {dismiss} from '../actions/NotificationActionCreators'
 import {Notification} from './Notification'
 import {withRouter} from 'react-router-dom'
-import {fullScreen, notification} from '../Selectors'
+import {fullScreen, notification} from '../reducers/Selectors'
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({dismiss}, dispatch)

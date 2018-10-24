@@ -21,7 +21,7 @@ import {
   showTrayName,
   successMessages,
   trays
-} from '../Selectors'
+} from '../reducers/Selectors'
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({fetchInteresting, requestFullScreen}, dispatch)

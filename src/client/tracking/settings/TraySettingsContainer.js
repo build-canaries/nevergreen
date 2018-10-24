@@ -5,7 +5,7 @@ import {updateTrayId} from '../../actions/TrackingThunkActionCreators'
 import {refreshTray} from '../../actions/RefreshThunkActionCreators'
 import {encryptPassword} from '../../actions/PasswordThunkActionCreators'
 import {TraySettings} from './TraySettings'
-import {trayName, trayPassword, trayServerType, trayUrl, trayUsername} from '../../Selectors'
+import {trayName, trayPassword, trayServerType, trayUrl, trayUsername} from '../../reducers/Selectors'
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({

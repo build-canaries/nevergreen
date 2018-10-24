@@ -27,7 +27,7 @@ import {
   showTrayName,
   systemNotificationPermissionDenied,
   systemNotificationRequestingPermission
-} from '../Selectors'
+} from '../reducers/Selectors'
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({

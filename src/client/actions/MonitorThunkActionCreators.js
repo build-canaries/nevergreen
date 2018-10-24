@@ -7,7 +7,7 @@ import {
   interestingProjects as selectInterestingProjects,
   selectedProjects,
   trays
-} from '../Selectors'
+} from '../reducers/Selectors'
 import {wrapProjectErrors, wrapProjects} from '../domain/Project'
 import {List} from 'immutable'
 import {projectNotifications} from './NotificationThunkActionCreators'

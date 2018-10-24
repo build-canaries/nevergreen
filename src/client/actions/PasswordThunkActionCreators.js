@@ -3,7 +3,7 @@ import {abortPendingRequest} from '../common/gateways/Gateway'
 import {send} from '../common/gateways/NevergreenGateway'
 import {isBlank} from '../common/Utils'
 import {encryptingPassword, passwordEncrypted, passwordEncryptError} from './PasswordActionCreators'
-import {pendingRequest} from '../Selectors'
+import {pendingRequest} from '../reducers/Selectors'
 import {List} from 'immutable'
 
 export function encryptPassword(trayId, rawPassword) {

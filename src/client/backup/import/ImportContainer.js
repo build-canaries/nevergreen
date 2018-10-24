@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
 import {toJS} from '../../common/ImmutableToJs'
 import {Import} from './Import'
-import {importErrors, importInfos, importLoaded} from '../../Selectors'
+import {importErrors, importInfos, importLoaded} from '../../reducers/Selectors'
 
 function mapStateToProps(state) {
   return {
