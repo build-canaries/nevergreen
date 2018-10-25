@@ -1,5 +1,5 @@
-import {init, load} from '../common/repo/LocalRepository'
-import {wrapConfiguration} from '../common/repo/Data'
+import {init, load} from '../common/LocalRepository'
+import {wrapConfiguration} from '../reducers/Configuration'
 import {initalised, initalising} from './NevergreenActionCreators'
 
 export function initalise() {

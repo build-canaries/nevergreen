@@ -1,4 +1,4 @@
-import {validate, wrapConfiguration} from '../common/repo/Data'
+import {validate, wrapConfiguration} from '../reducers/Configuration'
 import {importError, importing, importSuccess} from './ImportActionCreators'
 import _ from 'lodash'
 

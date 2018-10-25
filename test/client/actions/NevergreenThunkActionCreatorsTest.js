@@ -12,8 +12,8 @@ describe('NevergreenThunkActionCreators', function () {
   const initalising = mocks.spy()
 
   const {initalise} = withMockedImports('client/actions/NevergreenThunkActionCreators', {
-    '../common/repo/LocalRepository': {init, load},
-    '../common/repo/Data': {wrapConfiguration},
+    '../common/LocalRepository': {init, load},
+    '../reducers/Configuration': {wrapConfiguration},
     './NevergreenActionCreators': {initalised, initalising}
   })
 

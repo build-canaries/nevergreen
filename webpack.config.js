@@ -73,7 +73,7 @@ module.exports = {
     new CopyWebpackPlugin([
       './src/client/robots.txt',
       './src/client/favicons',
-      './src/client/common/repo/schema.json'
+      './src/client/reducers/schema.json'
     ]),
     new OptimizeCssAssetsPlugin(),
     new ManifestPlugin({fileName: 'asset-manifest.json'}),

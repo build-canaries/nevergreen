@@ -26,7 +26,7 @@
     "watchTest": "watch 'npm run test' src/client test/client",
     "watchLint": "watch 'npm run lint' src/client test/client",
     "ci-stub-server": "node ci_stub_server/server",
-    "generate-schema-validator": "ajv compile -s src/client/common/repo/schema.json -o src/client/common/repo/ValidateSchema.js --remove-additional --all-errors"
+    "generate-schema-validator": "ajv compile -s src/client/reducers/schema.json -o src/client/reducers/ValidateConfiguration.js --remove-additional --all-errors"
   },
   "dependencies": {
     "@babel/polyfill": "7.0.0",

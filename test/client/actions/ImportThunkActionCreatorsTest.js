@@ -12,7 +12,7 @@ describe('ImportThunkActionCreators', function () {
   const importing = mocks.spy()
 
   const {importData} = withMockedImports('client/actions/ImportThunkActionCreators', {
-    '../common/repo/Data': {wrapConfiguration, validate},
+    '../reducers/Configuration': {wrapConfiguration, validate},
     './ImportActionCreators': {importError, importSuccess, importing}
   })
 

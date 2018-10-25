@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {clear} from './common/repo/LocalRepository'
+import {clear} from './common/LocalRepository'
 import styles from './unhandled-error.scss'
 import {ExternalLink} from './common/ExternalLink'
 

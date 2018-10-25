@@ -14,7 +14,7 @@ export function reduce(state = DEFAULT_STATE, action) {
       return state.merge(action.data.get(GITHUB_ROOT))
 
     case IMPORT_SUCCESS:
-      return state.set('description', action.data.getIn(['github', 'description'], state.get('description')))
+      return state.set('description', action.data.getIn([GITHUB_ROOT, 'description'], state.get('description')))
 
     case GITHUB_SET_DESCRIPTION:
       return state.set('description', action.description)

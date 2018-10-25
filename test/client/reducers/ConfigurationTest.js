@@ -1,6 +1,6 @@
 import {expect} from 'chai'
 import {describe, it} from 'mocha'
-import {filter, validate} from '../../../../src/client/common/repo/Data'
+import {filter, validate} from '../../../src/client/reducers/Configuration'
 
 describe('Data', function () {
 

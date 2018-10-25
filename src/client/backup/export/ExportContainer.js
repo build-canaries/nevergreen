@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
 import {Export} from './Export'
-import {filter} from '../../common/repo/Data'
+import {filter} from '../../reducers/Configuration'
 import {toJson} from '../../common/Json'
 import {toJS} from '../../common/ImmutableToJs'
 import {exportErrors, exportInfos} from '../../reducers/Selectors'
