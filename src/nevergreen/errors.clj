@@ -2,7 +2,7 @@
   (:require [cheshire.core :as json]))
 
 (defn is-error? [o]
-  (and (map? o) (contains? o :error)))
+  (and (map? o) (:is-error o)))
 
 (defmulti create-error
           (fn [error url] (class error)))

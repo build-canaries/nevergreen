@@ -5,7 +5,8 @@
             [clj-cctray.core :as parser]
             [nevergreen.servers :as servers]
             [nevergreen.security :as security]
-            [nevergreen.crypto :as crypt]))
+            [nevergreen.crypto :as crypt]
+            [nevergreen.errors :refer [create-error]]))
 
 (def valid-url "http://someserver/cc.xml")
 (def password "any-password")
@@ -93,6 +94,16 @@
              (provided
                (subject/fetch-tray anything) => {:project-id "project-1"
                                                  :prognosis  :healthy}))
+
+       (fact "without filtering out tray errors"
+             (subject/get-interesting [{:tray-id  "a-tray"
+                                        :included ["project-1"]
+                                        :url      valid-url}]) => [{:error-message "some-error"
+                                                                    :is-error      true
+                                                                    :tray-id       "a-tray"
+                                                                    :url           valid-url}]
+             (provided
+               (subject/fetch-tray anything) => [(create-error "some-error" valid-url)]))
 
        (facts "uses pmap to parallelise the work"
               (fact "if multiple projects are given"
