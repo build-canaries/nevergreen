@@ -8,7 +8,11 @@
           (fn [error url] (class error)))
 
 (defmethod create-error Exception [e url]
-  (create-error (str (.getSimpleName (.getClass e)) ": " (.getMessage e)) url))
+  (create-error (str
+                  (or
+                    (.getMessage e)
+                    (.getSimpleName (.getClass e))))
+                url))
 
 (defmethod create-error String [message url]
   {:error-message message :url url :is-error true})

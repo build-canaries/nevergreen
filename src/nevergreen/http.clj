@@ -7,7 +7,7 @@
            (clojure.lang ExceptionInfo)))
 
 (def ^:const ten-seconds 10000)
-(def ^:const thirty-seconds 30000)
+(def ^:const twenty-five-seconds 25000) ; this should be lower than the client timeout in Gateway.js
 (def ^:const redacted "REDACTED")
 
 (defn- update-values [m f & args]
@@ -24,7 +24,7 @@
   (log/info (str "GETing from [" (redacted-url url) "]..."))
   (try
     (let [res (client/get url {:insecure?             true
-                               :socket-timeout        thirty-seconds
+                               :socket-timeout        twenty-five-seconds
                                :conn-timeout          ten-seconds
                                :headers               (merge {"Accept" "application/xml"} additional-headers)
                                :as                    :stream

@@ -59,18 +59,17 @@
                (security/basic-auth-header anything anything) => anything :times 0))
 
        (fact "creates an error if the URL is not valid"
-             (subject/fetch-tray {:url "url"}) => [{:error-message "ExceptionInfo: Only http(s) URLs are supported: url"
+             (subject/fetch-tray {:url "url"}) => [{:error-message "Only http(s) URLs are supported: url"
                                                     :is-error      true
                                                     :url           "url"}])
 
        (fact "handles failing to decrypt the password"
-             (subject/fetch-tray {:url      valid-url
-                                  :username ""
-                                  :password "some-encrypted-password"}) => [{:error-message "ExceptionInfo: some-error"
-                                                                             :is-error      true
-                                                                             :url           valid-url}]
-             (provided
-               (crypt/decrypt "some-encrypted-password") =throws=> (ex-info "some-error" {}))))
+             (let [error (ex-info "some-error" {})]
+               (subject/fetch-tray {:url      valid-url
+                                    :username ""
+                                    :password "some-encrypted-password"}) => [(create-error error valid-url)]
+               (provided
+                 (crypt/decrypt "some-encrypted-password") =throws=> error))))
 
 (facts "it gets all projects"
        (facts "uses pmap to parallelise the work"

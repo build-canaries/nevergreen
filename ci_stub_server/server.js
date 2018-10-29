@@ -37,12 +37,23 @@ app.get('/error/:code', function (req, res) {
   res.status(req.params.code).send('Oh no, an error ' + req.params.code + ' happened!')
 })
 
+app.get('/timeout', function () {
+  /* never respond */
+})
+
 app.get('/randomly-error', function (req, res) {
   if (getRandomInt(0, 100) >= 75) {
-    res.status(req.params.code).send('Oh no, an error ' + req.params.code + ' happened!')
+    res.status(500).send('Oh no, an error 500 happened!')
   } else {
     generic(req, res)
   }
+})
+
+app.get('/randomly-timeout', function (req, res) {
+  if (getRandomInt(0, 100) < 75) {
+    generic(req, res)
+  }
+  /* else never respond */
 })
 
 app.listen(5050)
