@@ -1,6 +1,6 @@
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
-import {reduce} from '../../../src/client/reducers/ProjectsReducer'
+import {PROJECTS_ROOT, reduce} from '../../../src/client/reducers/ProjectsReducer'
 import {
   IMPORT_SUCCESS,
   INITIALISED,
@@ -10,6 +10,7 @@ import {
   TRAY_ADDED
 } from '../../../src/client/actions/Actions'
 import {fromJS, List, Map} from 'immutable'
+import {Project} from '../../../src/client/domain/Project'
 
 describe('ProjectsReducer', function () {
 
@@ -23,10 +24,10 @@ describe('ProjectsReducer', function () {
 
     it('should set the projects data', function () {
       const existingState = Map({id: 'x'})
-      const action = {type: INITIALISED, data: Map({projects: {foo: 'bar'}})}
+      const action = {type: INITIALISED, data: fromJS({[PROJECTS_ROOT]: {trayId: {projectId: {}}}})}
       const newState = reduce(existingState, action)
       expect(newState).to.not.have.property('id')
-      expect(newState).to.have.property('foo', 'bar')
+      expect(newState).to.have.property('trayId').that.has.property('projectId').that.is.instanceof(Project)
     })
 
     it('should handle no projects data', function () {
@@ -41,10 +42,10 @@ describe('ProjectsReducer', function () {
 
     it('should set the projects data', function () {
       const existingState = Map({id: 'x'})
-      const action = {type: IMPORT_SUCCESS, data: Map({projects: {foo: 'bar'}})}
+      const action = {type: IMPORT_SUCCESS, data: fromJS({[PROJECTS_ROOT]: {trayId: {projectId: {}}}})}
       const newState = reduce(existingState, action)
       expect(newState).to.not.have.property('id')
-      expect(newState).to.have.property('foo', 'bar')
+      expect(newState).to.have.property('trayId')
     })
   })
 

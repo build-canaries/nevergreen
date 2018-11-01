@@ -1,4 +1,4 @@
-import {Map, OrderedMap} from 'immutable'
+import {OrderedMap} from 'immutable'
 import {
   ENCRYPTING_PASSWORD,
   HIGHLIGHT_TRAY,
@@ -18,6 +18,7 @@ import {
   SET_TRAY_USERNAME,
   TRAY_ADDED
 } from '../actions/Actions'
+import {Tray} from '../domain/Tray'
 
 export const TRAYS_ROOT = 'trays'
 
@@ -29,7 +30,7 @@ export function reduce(state = DEFAULT_STATE, action) {
     case IMPORT_SUCCESS: {
       const trays = action.data.get(TRAYS_ROOT)
       return trays
-        ? Map(trays).map((tray) => tray.set('loaded', true))
+        ? OrderedMap(trays).map((tray) => new Tray(tray).set('loaded', true))
         : state
     }
 

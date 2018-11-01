@@ -1,5 +1,6 @@
 import {Map} from 'immutable'
 import {IMPORT_SUCCESS, INITIALISED, PROJECTS_FETCHED, REMOVE_TRAY, SET_TRAY_ID, TRAY_ADDED} from '../actions/Actions'
+import {Project} from '../domain/Project'
 
 export const PROJECTS_ROOT = 'projects'
 
@@ -9,9 +10,9 @@ export function reduce(state = DEFAULT_STATE, action) {
   switch (action.type) {
     case INITIALISED:
     case IMPORT_SUCCESS: {
-      const projects = action.data.get(PROJECTS_ROOT)
-      return projects
-        ? Map(projects)
+      const data = action.data.get(PROJECTS_ROOT)
+      return data
+        ? Map(data).map((projects) => projects.map((project) => new Project(project)))
         : state
     }
 

@@ -1,6 +1,6 @@
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
-import {reduce} from '../../../src/client/reducers/TraysReducer'
+import {reduce, TRAYS_ROOT} from '../../../src/client/reducers/TraysReducer'
 import {
   ENCRYPTING_PASSWORD,
   HIGHLIGHT_TRAY,
@@ -21,6 +21,7 @@ import {
   TRAY_ADDED
 } from '../../../src/client/actions/Actions'
 import {fromJS, List, Map} from 'immutable'
+import {Tray} from '../../../src/client/domain/Tray'
 
 describe('TraysReducer', function () {
 
@@ -34,15 +35,15 @@ describe('TraysReducer', function () {
 
     it('should set the trays data', function () {
       const existingState = Map({someId: {}})
-      const action = {type: INITIALISED, data: fromJS({trays: {trayId: {}}})}
+      const action = {type: INITIALISED, data: fromJS({[TRAYS_ROOT]: {trayId: {}}})}
       const newState = reduce(existingState, action)
       expect(newState).to.not.have.property('someId')
-      expect(newState).to.have.property('trayId').that.is.instanceof(Map)
+      expect(newState).to.have.property('trayId').that.is.instanceof(Tray)
     })
 
     it('should set the loaded property on added trays', function () {
       const existingState = Map()
-      const action = {type: INITIALISED, data: fromJS({trays: {trayId: {}}})}
+      const action = {type: INITIALISED, data: fromJS({[TRAYS_ROOT]: {trayId: {}}})}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('trayId').that.has.property('loaded', true)
     })
@@ -59,15 +60,15 @@ describe('TraysReducer', function () {
 
     it('should set the trays data', function () {
       const existingState = Map({someId: {}})
-      const action = {type: IMPORT_SUCCESS, data: fromJS({trays: {trayId: {}}})}
+      const action = {type: IMPORT_SUCCESS, data: fromJS({[TRAYS_ROOT]: {trayId: {}}})}
       const newState = reduce(existingState, action)
       expect(newState).to.not.have.property('someId')
-      expect(newState).to.have.property('trayId').that.is.instanceof(Map)
+      expect(newState).to.have.property('trayId').that.is.instanceof(Tray)
     })
 
     it('should set the loaded property on added trays', function () {
       const existingState = Map()
-      const action = {type: IMPORT_SUCCESS, data: fromJS({trays: {trayId: {}}})}
+      const action = {type: IMPORT_SUCCESS, data: fromJS({[TRAYS_ROOT]: {trayId: {}}})}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('trayId').that.has.property('loaded', true)
     })
