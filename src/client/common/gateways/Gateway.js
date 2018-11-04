@@ -9,6 +9,7 @@ const TIMEOUT = {
   response: THIRTY_SECONDS,
   deadline: ONE_MINUTES
 }
+const RETRIES = 1
 const ACCEPT_HEADER = 'application/json; charset=utf-8'
 const CONTENT_TYPE = 'application/json; charset=utf-8'
 
@@ -23,6 +24,7 @@ export function post(url, data, headers = {}) {
     .type(CONTENT_TYPE)
     .set(headers)
     .timeout(TIMEOUT)
+    .retry(RETRIES)
 }
 
 export function patch(url, data, headers = {}) {
@@ -33,6 +35,7 @@ export function patch(url, data, headers = {}) {
     .type(CONTENT_TYPE)
     .set(headers)
     .timeout(TIMEOUT)
+    .retry(RETRIES)
 }
 
 export function get(url, headers = {}) {
@@ -41,6 +44,7 @@ export function get(url, headers = {}) {
     .accept(ACCEPT_HEADER)
     .set(headers)
     .timeout(TIMEOUT)
+    .retry(RETRIES)
 }
 
 export async function send(request) {
