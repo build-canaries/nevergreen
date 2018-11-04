@@ -9,16 +9,17 @@
             [nevergreen.security :as security]
             [nevergreen.crypto :as crypt]
             [nevergreen.errors :refer [create-error is-error?]])
-  (:refer-clojure :exclude [replace]))
+  (:refer-clojure :exclude [replace])
+  (:import (org.xml.sax SAXParseException)))
 
 (defn- invalid-url-error-message [url]
   (if (blank? url)
-    "URL was blank! A http(s) URL must be provided."
-    (str "Only http(s) URLs are supported: " url)))
+    "URL is blank, a http(s) URL must be provided"
+    (str "URL is invalid, only http(s) URLs are supported")))
 
 (defn validate-scheme [{:keys [url]}]
   (if (or (blank? url)
-          (not (re-find #"https?://" url)))
+          (not (re-find #"^https?://" url)))
     (throw (ex-info (invalid-url-error-message url) {}))))
 
 (defn- generate-project-id [project]
@@ -52,18 +53,28 @@
 (defn- add-fetched-time [projects]
   (map #(merge {:fetched-time (t/now)} %) projects))
 
+(defn- handle-parsing-exception [e]
+  (let [exceptionMessage (.getMessage e)]
+    (if (instance? SAXParseException e)
+      (if (= exceptionMessage "Content is not allowed in prolog.")
+        "Response is not XML, is the URL pointing to the CCTray XML?"
+        (str "XML is invalid. " exceptionMessage))
+      e)))
+
 (defn fetch-tray [tray]
   (try
     (validate-scheme tray)
     (let [server-type (get-server-type tray)
-          decrypted-password (crypt/decrypt (:password tray))
-          response (http-get (:url tray) (set-auth-header (:username tray) decrypted-password))]
-      (->>
-        (parser/get-projects response {:server server-type :normalise true})
-        (add-project-ids)
-        (add-server-type server-type)))
+          decrypted-password (crypt/decrypt (:password tray))]
+      (with-open [response (http-get (:url tray)
+                                     (set-auth-header (:username tray)
+                                                      decrypted-password))]
+        (->>
+          (parser/get-projects response {:server server-type :normalise true})
+          (add-project-ids)
+          (add-server-type server-type))))
     (catch Exception e
-      [(create-error e (:url tray))])))
+      [(create-error (handle-parsing-exception e) (:url tray))])))
 
 (defn fetch-all [tray]
   (->> (fetch-tray tray)

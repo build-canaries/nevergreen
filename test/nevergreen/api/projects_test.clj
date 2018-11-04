@@ -6,7 +6,8 @@
             [nevergreen.servers :as servers]
             [nevergreen.security :as security]
             [nevergreen.crypto :as crypt]
-            [nevergreen.errors :refer [create-error]]))
+            [nevergreen.errors :refer [create-error]])
+  (:import (java.io StringReader)))
 
 (def valid-url "http://someserver/cc.xml")
 (def password "any-password")
@@ -21,12 +22,12 @@
                                         :project-id  anything
                                         :server-type anything})))
              (provided
-               (parser/get-projects ..stream.. anything) => [{:name      "project-1"
-                                                              :web-url   "project-1"
-                                                              :prognosis :sick}]
+               (parser/get-projects anything anything) => [{:name      "project-1"
+                                                            :web-url   "project-1"
+                                                            :prognosis :sick}]
                (crypt/decrypt "encrypted-password") => password
                (security/basic-auth-header "a-user" password) => ..auth-header..
-               (http/http-get valid-url ..auth-header..) => ..stream..))
+               (http/http-get valid-url ..auth-header..) => (StringReader. "")))
 
        (fact "without authentication"
              (subject/fetch-tray {:url valid-url}) =>
@@ -35,10 +36,10 @@
                                         :project-id  anything
                                         :server-type anything})))
              (provided
-               (parser/get-projects ..stream.. anything) => [{:name      "project-1"
-                                                              :web-url   "project-1"
-                                                              :prognosis :sick}]
-               (http/http-get valid-url nil) => ..stream..
+               (parser/get-projects anything anything) => [{:name      "project-1"
+                                                            :web-url   "project-1"
+                                                            :prognosis :sick}]
+               (http/http-get valid-url nil) => (StringReader. "")
                (crypt/decrypt anything) => nil
                (security/basic-auth-header anything anything) => anything :times 0))
 
@@ -51,15 +52,15 @@
                                         :project-id  anything
                                         :server-type anything})))
              (provided
-               (parser/get-projects ..stream.. anything) => [{:name      "project-1"
-                                                              :web-url   "project-1"
-                                                              :prognosis :sick}]
-               (http/http-get valid-url nil) => ..stream..
+               (parser/get-projects anything anything) => [{:name      "project-1"
+                                                            :web-url   "project-1"
+                                                            :prognosis :sick}]
+               (http/http-get valid-url nil) => (StringReader. "")
                (crypt/decrypt anything) => nil
                (security/basic-auth-header anything anything) => anything :times 0))
 
        (fact "creates an error if the URL is not valid"
-             (subject/fetch-tray {:url "url"}) => [{:error-message "Only http(s) URLs are supported: url"
+             (subject/fetch-tray {:url "url"}) => [{:error-message "URL is invalid, only http(s) URLs are supported"
                                                     :is-error      true
                                                     :url           "url"}])
 

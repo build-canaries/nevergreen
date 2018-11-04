@@ -4,16 +4,16 @@ import _ from 'lodash'
 import {fromJS, isImmutable} from 'immutable'
 
 const THIRTY_SECONDS = 1000 * 30
-const THREE_MINUTES = 1000 * 60 * 60 * 3
+const ONE_MINUTES = 1000 * 60 * 60
 const TIMEOUT = {
   response: THIRTY_SECONDS,
-  deadline: THREE_MINUTES
+  deadline: ONE_MINUTES
 }
 const ACCEPT_HEADER = 'application/json; charset=utf-8'
 const CONTENT_TYPE = 'application/json; charset=utf-8'
 
-export const UNKNOWN_ERROR = 'unknown error'
-export const TIMEOUT_ERROR = 'timeout'
+export const UNKNOWN_ERROR = 'Unknown error'
+export const TIMEOUT_ERROR = 'Connection timeout calling the Nevergreen server'
 
 export function post(url, data, headers = {}) {
   return request
