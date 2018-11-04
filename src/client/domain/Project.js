@@ -66,11 +66,11 @@ export class Project extends Record({
   }
 
   equals(other) {
-    return other && other.projectId === this.projectId
+    return other && other.trayId === this.trayId && other.projectId === this.projectId
   }
 
   hashCode() {
-    return hash(this.projectId)
+    return hash(`${this.trayId}${this.projectId}`)
   }
 }
 
