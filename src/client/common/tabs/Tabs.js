@@ -12,7 +12,10 @@ export class Tabs extends Component {
   }
 
   switchTabs = (index) => {
-    this.setState({active: index})
+    if (index !== this.state.active) {
+      const onSwitch = () => this.props.onSwitch && this.props.onSwitch()
+      this.setState({active: index}, onSwitch)
+    }
   }
 
   render() {
@@ -70,5 +73,6 @@ export class Tabs extends Component {
 
 Tabs.propTypes = {
   children: PropTypes.arrayOf(PropTypes.element).isRequired,
-  titles: PropTypes.arrayOf(PropTypes.string).isRequired
+  titles: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onSwitch: PropTypes.func
 }

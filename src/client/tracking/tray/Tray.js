@@ -26,7 +26,7 @@ function redactedUrl(url) {
   }
 }
 
-export function Tray({url, name, highlight, loaded, trayId, index}) {
+export function Tray({url, name, highlight, loaded, trayId, index, checkRefresh}) {
   const urlToShow = redactedUrl(url)
   const title = name || urlToShow
   const subTitle = name ? urlToShow : ''
@@ -34,7 +34,7 @@ export function Tray({url, name, highlight, loaded, trayId, index}) {
   return (
     <Container title={title} subTitle={subTitle} highlight={highlight}>
       <div data-locator='tray'>
-        <Tabs titles={['projects', 'settings']}>
+        <Tabs titles={['projects', 'settings']} onSwitch={() => checkRefresh(trayId)}>
           <Loading loaded={loaded}>
             <AvailableProjectsContainer trayId={trayId} index={index}/>
           </Loading>
@@ -51,5 +51,6 @@ Tray.propTypes = {
   loaded: PropTypes.bool,
   name: PropTypes.string,
   url: PropTypes.string.isRequired,
-  highlight: PropTypes.bool
+  highlight: PropTypes.bool,
+  checkRefresh: PropTypes.func.isRequired
 }

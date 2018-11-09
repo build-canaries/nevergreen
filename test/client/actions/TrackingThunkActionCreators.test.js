@@ -15,7 +15,7 @@ describe('TrackingThunkActionCreators', function () {
   const refreshTray = mocks.spy()
   const createId = mocks.stub()
 
-  const {addTray} = withMockedImports('client/actions/TrackingThunkActionCreators', {
+  const {addTray, checkRefresh} = withMockedImports('client/actions/TrackingThunkActionCreators', {
     './TrackingActionCreators': {trayAdded, setTrayId, highlightTray},
     './PasswordThunkActionCreators': {encryptPassword},
     './RefreshThunkActionCreators': {refreshTray},
@@ -67,6 +67,26 @@ describe('TrackingThunkActionCreators', function () {
         await testThunk(addTray('http://url', 'some-username', ''), requiredState)
         expect(refreshTray).to.have.been.calledWith('some-tray-id', true)
       })
+    })
+  })
+
+  describe('checkRefresh', function () {
+
+    const requiredState = fromJS({
+      [TRAYS_ROOT]: {
+        'some-tray-id': new Tray()
+      }
+    })
+
+    it('should do nothing if the tray does not require a refresh', async function () {
+      await testThunk(checkRefresh('some-tray-id'), requiredState)
+      expect(refreshTray).to.have.not.been.called()
+    })
+
+    it('should refresh the tray if one is required', async function () {
+      const state = requiredState.updateIn([TRAYS_ROOT, 'some-tray-id'], (tray) => tray.set('requiresRefresh', true))
+      await testThunk(checkRefresh('some-tray-id'), state)
+      expect(refreshTray).to.have.been.calledWith('some-tray-id')
     })
   })
 })

@@ -23,15 +23,73 @@ export const TRAYS_ROOT = 'trays'
 
 const DEFAULT_STATE = OrderedMap()
 
+function updateState(action, state) {
+  const trays = action.data.get(TRAYS_ROOT)
+  return trays
+    ? OrderedMap(trays).map((tray) => new Tray(tray).set('loaded', true))
+    : state
+}
+
+function updateRequired(state, action, prop) {
+  return state.getIn([action.trayId, prop]) !== action[prop]
+}
+
+function updateUsername(state, action) {
+  if (updateRequired(state, action, 'username')) {
+    return state.update(action.trayId, (tray) => tray
+      .set('username', action.username)
+      .set('requiresRefresh', true))
+  }
+  return state
+}
+
+function updateUrl(state, action) {
+  if (updateRequired(state, action, 'url')) {
+    return state.update(action.trayId, (tray) => tray
+      .set('url', action.url)
+      .set('requiresRefresh', true))
+  }
+  return state
+}
+
+function updateFetching(state, action) {
+  return state.update(action.trayId, (tray) => tray
+    .withMutations((map) => map
+      .set('loaded', false)
+      .set('requiresRefresh', false)
+      .delete('errors')))
+}
+
+function updatePassword(state, action) {
+  return state.update(action.trayId, (tray) => tray
+    .withMutations((map) => map
+      .set('loaded', true)
+      .set('password', action.password)
+      .set('requiresRefresh', true)
+      .delete('errors')))
+}
+
+function updateProjects(state, action) {
+  return state.update(action.trayId, (tray) => tray
+    .withMutations((map) => map
+      .set('loaded', true)
+      .set('timestamp', action.timestamp)
+      .set('serverType', action.serverType)
+      .delete('errors')))
+}
+
+function updateErrors(state, action) {
+  return state.update(action.trayId, (tray) => tray
+    .withMutations((map) => map
+      .set('loaded', true)
+      .set('errors', action.errors)))
+}
+
 export function reduce(state = DEFAULT_STATE, action) {
   switch (action.type) {
     case INITIALISED:
-    case IMPORT_SUCCESS: {
-      const trays = action.data.get(TRAYS_ROOT)
-      return trays
-        ? OrderedMap(trays).map((tray) => new Tray(tray).set('loaded', true))
-        : state
-    }
+    case IMPORT_SUCCESS:
+      return updateState(action, state)
 
     case TRAY_ADDED:
       return state.set(action.trayId, action.data)
@@ -49,32 +107,17 @@ export function reduce(state = DEFAULT_STATE, action) {
 
     case ENCRYPTING_PASSWORD:
     case PROJECTS_FETCHING:
-      return state.update(action.trayId, (tray) => tray
-        .withMutations((map) => map
-          .set('loaded', false)
-          .delete('errors')))
+      return updateFetching(state, action)
 
     case PASSWORD_ENCRYPTED:
-      return state.update(action.trayId, (tray) => tray
-        .withMutations((map) => map
-          .set('loaded', true)
-          .set('password', action.password)
-          .delete('errors')))
+      return updatePassword(state, action)
 
     case PROJECTS_FETCHED:
-      return state.update(action.trayId, (tray) => tray
-        .withMutations((map) => map
-          .set('loaded', true)
-          .set('timestamp', action.timestamp)
-          .set('serverType', action.serverType)
-          .delete('errors')))
+      return updateProjects(state, action)
 
     case PASSWORD_ENCRYPT_ERROR:
     case PROJECTS_FETCH_ERROR:
-      return state.update(action.trayId, (tray) => tray
-        .withMutations((map) => map
-          .set('loaded', true)
-          .set('errors', action.errors)))
+      return updateErrors(state, action)
 
     case SET_TRAY_NAME:
       return state.update(action.trayId, (tray) => tray
@@ -85,12 +128,10 @@ export function reduce(state = DEFAULT_STATE, action) {
         .set('serverType', action.serverType))
 
     case SET_TRAY_USERNAME:
-      return state.update(action.trayId, (tray) => tray
-        .set('username', action.username))
+      return updateUsername(state, action)
 
     case SET_TRAY_URL:
-      return state.update(action.trayId, (tray) => tray
-        .set('url', action.url))
+      return updateUrl(state, action)
 
     default:
       return state

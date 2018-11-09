@@ -4,12 +4,14 @@ import React from 'react'
 import {shallow} from 'enzyme'
 import {Tabs} from '../../../../src/client/common/tabs/Tabs'
 import {locator} from '../../TestUtils'
+import {mocks} from '../../Mocking'
 
 describe('<Tabs/>', function () {
 
   const DEFAULT_PROPS = {
     children: [],
-    titles: []
+    titles: [],
+    onSwitch: null
   }
 
   it('should switch tabs', function () {
@@ -17,6 +19,14 @@ describe('<Tabs/>', function () {
     const wrapper = shallow(<Tabs {...props} />)
     wrapper.find(locator('tab-b')).simulate('click')
     expect(wrapper).to.have.state('active', 1)
+  })
+
+  it('should call onSwitch after switching tabs', function () {
+    const onSwitch = mocks.spy()
+    const props = {...DEFAULT_PROPS, titles: ['a', 'b'], onSwitch}
+    const wrapper = shallow(<Tabs {...props} />)
+    wrapper.find(locator('tab-b')).simulate('click')
+    expect(onSwitch).to.have.been.called()
   })
 
   describe('accessibility', function () {

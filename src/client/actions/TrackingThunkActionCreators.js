@@ -3,7 +3,7 @@ import {highlightTray, trayAdded} from './TrackingActionCreators'
 import {encryptPassword} from './PasswordThunkActionCreators'
 import {refreshTray} from './RefreshThunkActionCreators'
 import {createId} from '../domain/Tray'
-import {trays} from '../reducers/Selectors'
+import {tray, trays} from '../reducers/Selectors'
 import {ensureHasScheme, removeScheme} from '../domain/Url'
 
 function urlMatches(tray, url) {
@@ -34,6 +34,14 @@ export function addTray(enteredUrl, username, rawPassword) {
       }
 
       dispatch(refreshTray(trayId, true))
+    }
+  }
+}
+
+export function checkRefresh(trayId) {
+  return (dispatch, getState) => {
+    if (tray(getState(), trayId).requiresRefresh) {
+      dispatch(refreshTray(trayId))
     }
   }
 }

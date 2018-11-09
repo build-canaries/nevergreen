@@ -26,7 +26,8 @@ export class Tray extends Record({
   timestamp: null,
   loaded: false,
   highlight: false,
-  errors: null
+  errors: null,
+  requiresRefresh: false
 }, 'Tray') {
 
   equals(other) {

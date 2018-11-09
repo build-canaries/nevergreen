@@ -1,6 +1,14 @@
 import {connect} from 'react-redux'
 import {Tray} from './Tray'
 import {trayHighlight, trayLoaded, trayName, trayUrl} from '../../reducers/Selectors'
+import {bindActionCreators} from 'redux'
+import {checkRefresh} from '../../actions/TrackingThunkActionCreators'
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    checkRefresh
+  }, dispatch)
+}
 
 function mapStateToProps(state, {trayId}) {
   return {
@@ -11,4 +19,4 @@ function mapStateToProps(state, {trayId}) {
   }
 }
 
-export default connect(mapStateToProps)(Tray)
+export default connect(mapStateToProps, mapDispatchToProps)(Tray)
