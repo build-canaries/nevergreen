@@ -44,14 +44,16 @@ export class AddTray extends Component {
                  value={url}
                  onChange={this.updateUrl}
                  onEnter={this.addTray}
-                 data-locator='add-tray-url'>
+                 data-locator='add-tray-url'
+                 autoComplete='url'>
             <div className={styles.label}>URL</div>
           </Input>
           <Input className={styles.username}
                  value={username}
                  onChange={this.updateUsername}
                  onEnter={this.addTray}
-                 data-locator='add-tray-username'>
+                 data-locator='add-tray-username'
+                 autoComplete='username'>
             <div className={styles.label}>username</div>
           </Input>
           <Input type='password'
@@ -59,7 +61,8 @@ export class AddTray extends Component {
                  value={password}
                  onChange={this.updatePassword}
                  onEnter={this.addTray}
-                 data-locator='add-tray-password'>
+                 data-locator='add-tray-password'
+                 autoComplete='new-password'>
             <div className={styles.label}>password</div>
           </Input>
         </div>

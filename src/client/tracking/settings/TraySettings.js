@@ -115,7 +115,8 @@ export class TraySettings extends Component {
                onChange={this.urlChanged}
                onBlur={this.setUrl}
                onEnter={this.setUrl}
-               data-locator='tray-url'>
+               data-locator='tray-url'
+               autoComplete='url'>
           <div className={styles.label}>URL</div>
         </Input>
         <DropDown className={styles.serverType}
@@ -140,7 +141,8 @@ export class TraySettings extends Component {
                onEnter={this.setPassword}
                readOnly={!updatingPassword}
                focus={updatingPassword}
-               data-locator='tray-password'>
+               data-locator='tray-password'
+               autoComplete={updatingPassword ? 'new-password' : 'current-password'}>
           <div className={styles.label}>password</div>
         </Input>
         {updatingPassword
