@@ -38,25 +38,25 @@ describe('TrackingThunkActionCreators', function () {
     describe('tray does not exist already', function () {
 
       it('should dispatch tray added action without the password, as that needs to be encrypted', async function () {
-        createId.withArgs('http://url').returns('some-tray-id')
+        createId.returns('some-tray-id')
         await testThunk(addTray('http://url', 'some-username', 'some-password'), requiredState)
         expect(trayAdded).to.have.been.calledWith('some-tray-id', 'http://url', 'some-username')
       })
 
       it('should dispatch encrypt password if the password given is not blank', async function () {
-        createId.withArgs('http://url').returns('some-tray-id')
+        createId.returns('some-tray-id')
         await testThunk(addTray('http://url', 'some-username', 'some-password'), requiredState)
         expect(encryptPassword).to.have.been.calledWith('some-tray-id', 'some-password')
       })
 
       it('should not dispatch encrypt password if the password given is blank', async function () {
-        createId.withArgs('http://url').returns('some-tray-id')
+        createId.returns('some-tray-id')
         await testThunk(addTray('http://url', 'irrelevant', ''), requiredState)
         expect(encryptPassword).not.to.have.been.called()
       })
 
       it('should dispatch refresh tray, with the select all projects flag as true', async function () {
-        createId.withArgs('http://url').returns('some-tray-id')
+        createId.returns('some-tray-id')
         await testThunk(addTray('http://url', 'some-username', ''), requiredState)
         expect(refreshTray).to.have.been.calledWith('some-tray-id', true)
       })

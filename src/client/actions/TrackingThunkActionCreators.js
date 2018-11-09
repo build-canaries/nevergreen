@@ -21,7 +21,7 @@ export function addTray(enteredUrl, username, rawPassword) {
       dispatch(highlightTray(existingTray.trayId))
 
     } else {
-      const trayId = createId(url)
+      const trayId = createId()
 
       dispatch(trayAdded(trayId, url, username))
 

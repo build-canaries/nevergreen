@@ -54,7 +54,8 @@
     "redux-thunk": "2.3.0",
     "regenerator-runtime": "0.12.1",
     "semver": "5.6.0",
-    "superagent": "3.8.3"
+    "superagent": "3.8.3",
+    "uuid": "3.3.2"
   },
   "devDependencies": {
     "@babel/core": "7.1.2",
