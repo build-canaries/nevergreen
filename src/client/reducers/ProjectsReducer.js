@@ -1,5 +1,5 @@
 import {Map} from 'immutable'
-import {IMPORT_SUCCESS, INITIALISED, PROJECTS_FETCHED, REMOVE_TRAY, SET_TRAY_ID, TRAY_ADDED} from '../actions/Actions'
+import {IMPORT_SUCCESS, INITIALISED, PROJECTS_FETCHED, REMOVE_TRAY, TRAY_ADDED} from '../actions/Actions'
 import {Project} from '../domain/Project'
 
 export const PROJECTS_ROOT = 'projects'
@@ -37,9 +37,6 @@ export function reduce(state = DEFAULT_STATE, action) {
           }, fetched)
       })
     }
-
-    case SET_TRAY_ID:
-      return state.mapKeys((key) => key === action.originalTrayId ? action.newTrayId : key)
 
     default:
       return state

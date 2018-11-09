@@ -7,7 +7,6 @@ import {
   PROJECTS_FETCHED,
   REMOVE_TRAY,
   SELECT_PROJECT,
-  SET_TRAY_ID,
   TRAY_ADDED
 } from '../../../src/client/actions/Actions'
 import {fromJS, Map, Set} from 'immutable'
@@ -101,17 +100,6 @@ describe('SelectedReducer', function () {
       const action = {type: PROJECTS_FETCHED, trayId: 'trayId', selectAll: true, data: fetchedProjects}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('trayId').that.contains('a', 'b', 'c')
-    })
-  })
-
-  describe(SET_TRAY_ID, function () {
-
-    it('should update the key in the state to the new tray id', function () {
-      const existingState = fromJS({trayId: Set()})
-      const action = {type: SET_TRAY_ID, originalTrayId: 'trayId', newTrayId: 'some-new-url', url: 'some-new-url'}
-      const newState = reduce(existingState, action)
-      expect(newState).to.have.property('some-new-url')
-      expect(newState).to.not.have.property('trayId')
     })
   })
 })

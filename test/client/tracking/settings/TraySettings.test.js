@@ -20,10 +20,8 @@ describe('<TraySettings/>', function () {
     setTrayName: _.noop,
     setServerType: _.noop,
     setTrayUsername: _.noop,
-    setTrayUrl: _.noop,
-    updateTrayId: _.noop,
     encryptPassword: _.noop,
-    refreshTray: _.noop
+    setTrayUrl: _.noop
   }
 
   it('should set the tray name on blur', function () {
@@ -170,44 +168,6 @@ describe('<TraySettings/>', function () {
     wrapper.find(locator('delete-tray')).simulate('click')
 
     expect(removeTray).to.have.been.calledWith('some-tray-id')
-  })
-
-  describe('navigating away from settings', function () {
-
-    it('should update the tray ID if the URL has changed, as the ID is based on the URL', function () {
-      const updateTrayId = mocks.spy()
-      const props = {...DEFAULT_PROPS, updateTrayId, trayId: 'some-tray-id'}
-
-      const wrapper = shallow(<TraySettings {...props} />)
-      changeAndBlur(wrapper.find(locator('tray-url')), 'some-new-url')
-      wrapper.unmount()
-
-      expect(updateTrayId).to.have.been.calledWith('some-tray-id', 'some-new-url')
-    })
-
-    it('should refresh the tray if the username is changed', function () {
-      const refreshTray = mocks.spy()
-      const props = {...DEFAULT_PROPS, refreshTray, trayId: 'some-tray-id'}
-
-      const wrapper = shallow(<TraySettings {...props} />)
-      changeAndBlur(wrapper.find(locator('tray-username')), 'some-username')
-      wrapper.unmount()
-
-      expect(refreshTray).to.have.been.calledWith('some-tray-id')
-    })
-
-    it('should refresh the tray if the password is changed', function () {
-      const refreshTray = mocks.spy()
-      const props = {...DEFAULT_PROPS, refreshTray}
-
-      const wrapper = shallow(<TraySettings {...props} />)
-      clickChangePassword(wrapper)
-      changeAndBlur(wrapper.find(locator('tray-password')), 'some-new-password')
-      clickUpdatePassword(wrapper)
-      wrapper.unmount()
-
-      expect(refreshTray).to.have.been.called()
-    })
   })
 })
 

@@ -4,6 +4,7 @@ import {expect} from 'chai'
 import {mocks} from '../Mocking'
 import {fromJS} from 'immutable'
 import {TRAYS_ROOT} from '../../../src/client/reducers/TraysReducer'
+import {Tray} from '../../../src/client/domain/Tray'
 
 describe('TrackingThunkActionCreators', function () {
 
@@ -14,24 +15,11 @@ describe('TrackingThunkActionCreators', function () {
   const refreshTray = mocks.spy()
   const createId = mocks.stub()
 
-  const {updateTrayId, addTray} = withMockedImports('client/actions/TrackingThunkActionCreators', {
+  const {addTray} = withMockedImports('client/actions/TrackingThunkActionCreators', {
     './TrackingActionCreators': {trayAdded, setTrayId, highlightTray},
     './PasswordThunkActionCreators': {encryptPassword},
     './RefreshThunkActionCreators': {refreshTray},
     '../domain/Tray': {createId}
-  })
-
-  describe('updateTrayId', function () {
-
-    it('should dispatch set tray id', async function () {
-      await testThunk(updateTrayId('old-tray-id', 'new-tray-id'))
-      expect(setTrayId).to.have.been.calledWith('old-tray-id', 'new-tray-id')
-    })
-
-    it('should dispatch refresh tray', async function () {
-      await testThunk(updateTrayId('old-tray-id', 'new-tray-id'))
-      expect(refreshTray).to.have.been.calledWith('new-tray-id')
-    })
   })
 
   describe('addTray', function () {
@@ -41,11 +29,9 @@ describe('TrackingThunkActionCreators', function () {
     })
 
     it('should dispatch highlight tray action if the tray already exists', async function () {
-      const state = requiredState.set(TRAYS_ROOT, fromJS({'some-tray-id': {}}))
-      createId.withArgs('http://url').returns('some-tray-id')
-
+      const tray = new Tray({trayId: 'some-tray-id', url: 'http://url'})
+      const state = requiredState.set(TRAYS_ROOT, fromJS({'some-tray-id': tray}))
       await testThunk(addTray('http://url', 'irrelevant', 'irrelevant'), state)
-
       expect(highlightTray).to.have.been.calledWith('some-tray-id')
     })
 

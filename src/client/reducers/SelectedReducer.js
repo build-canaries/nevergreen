@@ -5,7 +5,6 @@ import {
   PROJECTS_FETCHED,
   REMOVE_TRAY,
   SELECT_PROJECT,
-  SET_TRAY_ID,
   TRAY_ADDED
 } from '../actions/Actions'
 
@@ -43,12 +42,6 @@ export function reduce(state = DEFAULT_STATE, action) {
         return updated.filter((projectId) => currentProjectIds.includes(projectId))
       })
     }
-
-    case SET_TRAY_ID:
-      return state.mapKeys((trayId) =>
-        trayId === action.originalTrayId
-          ? action.newTrayId
-          : trayId)
 
     default:
       return state

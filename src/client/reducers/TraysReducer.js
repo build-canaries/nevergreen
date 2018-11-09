@@ -12,7 +12,6 @@ import {
   PROJECTS_FETCHING,
   REMOVE_TRAY,
   SET_SERVER_TYPE,
-  SET_TRAY_ID,
   SET_TRAY_NAME,
   SET_TRAY_URL,
   SET_TRAY_USERNAME,
@@ -92,11 +91,6 @@ export function reduce(state = DEFAULT_STATE, action) {
     case SET_TRAY_URL:
       return state.update(action.trayId, (tray) => tray
         .set('url', action.url))
-
-    case SET_TRAY_ID:
-      return state.update(action.originalTrayId, (tray) => tray
-        .set('trayId', action.newTrayId))
-        .mapKeys((key) => key === action.originalTrayId ? action.newTrayId : key)
 
     default:
       return state

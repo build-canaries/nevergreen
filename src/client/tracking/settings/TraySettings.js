@@ -26,12 +26,10 @@ export class TraySettings extends Component {
     super(props)
     this.state = {
       newName: props.name,
+      newUrl: props.url,
       newUsername: props.username,
       newPassword: '',
-      updatingPassword: false,
-      credentialsChanged: false,
-      urlChanged: false,
-      newUrl: props.url
+      updatingPassword: false
     }
   }
 
@@ -56,7 +54,6 @@ export class TraySettings extends Component {
   }
 
   setUsername = () => {
-    this.setState({credentialsChanged: this.props.username !== this.state.newUsername})
     this.props.setTrayUsername(this.props.trayId, this.state.newUsername)
   }
 
@@ -78,11 +75,7 @@ export class TraySettings extends Component {
 
   setPassword = () => {
     this.props.encryptPassword(this.props.trayId, this.state.newPassword)
-    this.setState({
-      updatingPassword: false,
-      newPassword: '',
-      credentialsChanged: true
-    })
+    this.setState({updatingPassword: false, newPassword: ''})
   }
 
   urlChanged = (evt) => {
@@ -90,17 +83,7 @@ export class TraySettings extends Component {
   }
 
   setUrl = () => {
-    this.setState({urlChanged: this.props.url !== this.state.newUrl})
     this.props.setTrayUrl(this.props.trayId, this.state.newUrl)
-  }
-
-  componentWillUnmount() {
-    if (this.state.urlChanged) {
-      this.props.updateTrayId(this.props.trayId, this.state.newUrl)
-    }
-    if (this.state.credentialsChanged) {
-      this.props.refreshTray(this.props.trayId)
-    }
   }
 
   render() {
@@ -209,8 +192,6 @@ TraySettings.propTypes = {
   setTrayName: PropTypes.func.isRequired,
   setServerType: PropTypes.func.isRequired,
   setTrayUsername: PropTypes.func.isRequired,
-  setTrayUrl: PropTypes.func.isRequired,
-  updateTrayId: PropTypes.func.isRequired,
   encryptPassword: PropTypes.func.isRequired,
-  refreshTray: PropTypes.func.isRequired
+  setTrayUrl: PropTypes.func.isRequired
 }

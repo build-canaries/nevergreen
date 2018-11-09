@@ -9,7 +9,6 @@ import {
   REMOVE_TRAY,
   SELECT_PROJECT,
   SET_SERVER_TYPE,
-  SET_TRAY_ID,
   SET_TRAY_NAME,
   SET_TRAY_URL,
   SET_TRAY_USERNAME,
@@ -23,7 +22,6 @@ import {
   removeTray,
   selectProject,
   setServerType,
-  setTrayId,
   setTrayName,
   setTrayUrl,
   setTrayUsername,
@@ -237,24 +235,6 @@ describe('TrackingActionCreators', function () {
     it('should return the url', function () {
       const actual = setTrayUrl('irrelevant', 'some-url')
       expect(actual).to.have.property('url', 'some-url')
-    })
-  })
-
-  describe(SET_TRAY_ID, function () {
-
-    it('should return the correct type', function () {
-      const actual = setTrayId()
-      expect(actual).to.have.property('type', SET_TRAY_ID)
-    })
-
-    it('should return the original tray id', function () {
-      const actual = setTrayId('some-tray-id')
-      expect(actual).to.have.property('originalTrayId', 'some-tray-id')
-    })
-
-    it('should return the new tray id', function () {
-      const actual = setTrayId('some-tray-id', 'some-url')
-      expect(actual).to.have.property('newTrayId', 'some-url')
     })
   })
 

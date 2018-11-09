@@ -9,7 +9,6 @@ import {
   REMOVE_TRAY,
   SELECT_PROJECT,
   SET_SERVER_TYPE,
-  SET_TRAY_ID,
   SET_TRAY_NAME,
   SET_TRAY_URL,
   SET_TRAY_USERNAME,
@@ -75,10 +74,6 @@ export function setTrayUsername(trayId, username) {
 
 export function setTrayUrl(trayId, url) {
   return {type: SET_TRAY_URL, trayId, url}
-}
-
-export function setTrayId(originalTrayId, newTrayId) {
-  return {type: SET_TRAY_ID, originalTrayId, newTrayId}
 }
 
 export function selectProject(trayId, projectId, selected) {
