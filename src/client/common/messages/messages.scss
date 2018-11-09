@@ -25,6 +25,10 @@
   @include _messages('notification', $white, $error);
 }
 
+.warning {
+  @include _messages('notification', $off-black, $yellow);
+}
+
 .info {
   @include _messages('checkmark', $off-white, $blue);
 }

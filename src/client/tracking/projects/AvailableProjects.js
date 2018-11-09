@@ -6,9 +6,10 @@ import {Messages} from '../../common/messages/Messages'
 import {Input} from '../../common/forms/Input'
 import {Shortcut} from '../../common/Shortcut'
 import {Refresh} from './Refresh'
-import {isBlank} from '../../common/Utils'
+import {isBlank, notEmpty} from '../../common/Utils'
 import {VisuallyHidden} from '../../common/VisuallyHidden'
 import styles from './available-projects.scss'
+import memoize from 'memoize-one'
 
 const DEFAULT_STATE = {
   filter: null,
@@ -60,13 +61,24 @@ export class AvailableProjects extends Component {
     this.props.refreshTray(this.props.trayId)
   }
 
+  filteredProjects = memoize(
+    (projects, filter) => {
+      return projects.filter((project) => {
+        return filter
+          ? `${project.name} ${project.stage || ''}`.match(filter)
+          : true
+      })
+    }
+  )
+
   render() {
     const {projects, index, selected, trayId, timestamp, errors} = this.props
     const {filter, filterErrors} = this.state
 
-    const filteredProjects = projects.filter((project) => {
-      return filter ? `${project.name} ${project.stage || ''}`.match(filter) : true
-    })
+    const filteredProjects = this.filteredProjects(projects, filter)
+
+    const hasProjects = notEmpty(projects)
+    const hasProjectsFiltered = notEmpty(filteredProjects)
 
     const controls = (
       <div>
@@ -86,12 +98,13 @@ export class AvailableProjects extends Component {
           <div className={styles.projectFilter}>
             <Input className={styles.projectFilterInput}
                    onChange={this.updateFilter}
-                   placeholder='regular expression'>
+                   placeholder='regular expression'
+                   data-locator='filter'>
               filter
             </Input>
           </div>
         </fieldset>
-        <Messages type='error' messages={filterErrors}/>
+        <Messages type='error' messages={filterErrors} data-locator='invalid-filter'/>
       </div>
     )
 
@@ -114,6 +127,20 @@ export class AvailableProjects extends Component {
       </ol>
     )
 
+    const noProjectsWarning = (
+      <Messages type='warning'
+                messages={['No projects fetched, please refresh']}
+                data-locator='no-projects-warning'/>
+    )
+
+    const noPrjectsMatchFilterWarning = (
+      <Messages type='warning'
+                messages={['No matching projects, please update your filter']}
+                data-locator='filter-warning'/>
+    )
+
+    const backToTop = <button className={styles.backToTop} onClick={this.scrollToTop}>back to top</button>
+
     return (
       <section className={styles.availableProjects}
                data-locator='available-projects'
@@ -122,10 +149,12 @@ export class AvailableProjects extends Component {
         <Refresh index={index}
                  timestamp={timestamp}
                  refreshTray={this.refreshTray}/>
-        <Messages type='error' messages={errors}/>
-        {!errors && controls}
-        {!errors && buildItems}
-        {!errors && <button className={styles.backToTop} onClick={this.scrollToTop}>back to top</button>}
+        <Messages type='error' messages={errors} data-locator='errors'/>
+        {!errors && hasProjects && controls}
+        {!errors && hasProjectsFiltered && buildItems}
+        {!errors && !hasProjects && noProjectsWarning}
+        {!errors && hasProjects && !hasProjectsFiltered && noPrjectsMatchFilterWarning}
+        {!errors && hasProjectsFiltered && backToTop}
       </section>
     )
   }

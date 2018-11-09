@@ -26,7 +26,7 @@ export function Messages({messages, type, className}) {
 }
 
 Messages.propTypes = {
-  type: PropTypes.oneOf(['info', 'error']).isRequired,
+  type: PropTypes.oneOf(['info', 'warning', 'error']).isRequired,
   messages: PropTypes.arrayOf(PropTypes.string),
   className: PropTypes.string
 }

@@ -3,9 +3,8 @@ import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
 import {AvailableProjects} from '../../../../src/client/tracking/projects/AvailableProjects'
-import {Messages} from '../../../../src/client/common/messages/Messages'
 import _ from 'lodash'
-import {childText, locator} from '../../TestUtils'
+import {change, childText, locator} from '../../TestUtils'
 
 describe('<AvailableProjects/>', function () {
 
@@ -21,10 +20,30 @@ describe('<AvailableProjects/>', function () {
     url: ''
   }
 
-  it('should render errors', function () {
+  it('should show tray errors', function () {
     const props = {...DEFAULT_PROPS, errors: ['some-error']}
     const wrapper = shallow(<AvailableProjects {...props} />)
-    expect(wrapper.find(Messages)).to.have.prop('messages').that.contains('some-error')
+    expect(wrapper.find(locator('errors'))).to.have.prop('messages').that.contains('some-error')
+  })
+
+  it('should show a warning if there are no projects', function () {
+    const props = {...DEFAULT_PROPS, projects: []}
+    const wrapper = shallow(<AvailableProjects {...props} />)
+    expect(wrapper.find(locator('no-projects-warning'))).to.be.present()
+  })
+
+  it('should show a warning if no projects match the filter', function () {
+    const props = {...DEFAULT_PROPS, projects: [{projectId: '1', name: 'foo'}]}
+    const wrapper = shallow(<AvailableProjects {...props} />)
+    change(wrapper.find(locator('filter')), 'bar')
+    expect(wrapper.find(locator('filter-warning'))).to.be.present()
+  })
+
+  it('should show an error if the filter is invalid', function () {
+    const props = {...DEFAULT_PROPS, projects: [{projectId: '1', name: 'foo'}]}
+    const wrapper = shallow(<AvailableProjects {...props} />)
+    change(wrapper.find(locator('filter')), '?')
+    expect(wrapper.find(locator('invalid-filter'))).to.be.present()
   })
 
   describe('accessibility', function () {
