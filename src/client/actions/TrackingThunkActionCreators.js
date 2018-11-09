@@ -4,7 +4,7 @@ import {encryptPassword} from './PasswordThunkActionCreators'
 import {refreshTray} from './RefreshThunkActionCreators'
 import {createId} from '../domain/Tray'
 import {trays} from '../reducers/Selectors'
-import {hasScheme, removeScheme} from '../domain/Url'
+import {ensureHasScheme, removeScheme} from '../domain/Url'
 
 function urlMatches(tray, url) {
   return removeScheme(url) === removeScheme(tray.url)
@@ -12,9 +12,13 @@ function urlMatches(tray, url) {
 
 export function addTray(enteredUrl, username, rawPassword) {
   return async (dispatch, getState) => {
+    if (isBlank(enteredUrl)) {
+      return
+    }
+
     const existingTrays = trays(getState())
 
-    const url = hasScheme(enteredUrl) ? enteredUrl : `http://${enteredUrl}`
+    const url = ensureHasScheme(enteredUrl)
     const existingTray = existingTrays.find((tray) => urlMatches(tray, url))
 
     if (existingTray) {

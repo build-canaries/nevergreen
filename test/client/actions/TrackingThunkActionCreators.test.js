@@ -28,6 +28,13 @@ describe('TrackingThunkActionCreators', function () {
       [TRAYS_ROOT]: {}
     })
 
+    it('should do nothing if the entered URL is blank', async function () {
+      await testThunk(addTray('', 'irrelevant', 'irrelevant'), requiredState)
+      expect(highlightTray).to.have.not.been.called()
+      expect(encryptPassword).to.have.not.been.called()
+      expect(refreshTray).to.have.not.been.called()
+    })
+
     it('should dispatch highlight tray action if the tray already exists', async function () {
       const tray = new Tray({trayId: 'some-tray-id', url: 'http://url'})
       const state = requiredState.set(TRAYS_ROOT, fromJS({'some-tray-id': tray}))
