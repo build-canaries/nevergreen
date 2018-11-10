@@ -29,4 +29,10 @@ describe('Monitor <Success/>', function () {
     const wrapper = shallow(<Success {...props} />)
     expect(wrapper.find(SuccessImage)).to.have.prop('url', 'http://some-url')
   })
+
+  it('should render nothing if there are no success messages', function () {
+    const props = {...DEFAULT_PROPS, messages: []}
+    const wrapper = shallow(<Success {...props} />)
+    expect(wrapper).to.be.blank()
+  })
 })
