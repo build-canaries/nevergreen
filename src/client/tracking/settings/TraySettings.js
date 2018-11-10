@@ -131,7 +131,8 @@ export class TraySettings extends Component {
                onChange={this.usernameChanged}
                onBlur={this.setUsername}
                onEnter={this.setUsername}
-               data-locator='tray-username'>
+               data-locator='tray-username'
+               autoComplete='username'>
           <div className={styles.label}>username</div>
         </Input>
         <Input type='password'
