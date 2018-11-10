@@ -1,51 +1,24 @@
-import React, {Component, Fragment} from 'react'
+import React, {Fragment} from 'react'
 import PropTypes from 'prop-types'
-import {Input} from '../../../common/forms/Input'
 import styles from './github.scss'
+import {GistIdInput} from '../../GistIdInput'
 
-export class GitHub extends Component {
+export function GitHub({gistId, gitHubSetGistId, loaded, restoreFromGitHub}) {
+  const disabled = !loaded
 
-  static getDerivedStateFromProps(nextProps) {
-    return {
-      gistId: nextProps.gistId
-    }
-  }
-
-  constructor(props) {
-    super(props)
-    this.state = {
-      gistId: props.gistId
-    }
-  }
-
-  gistIdChanged = (evt) => {
-    this.setState({gistId: evt.target.value})
-  }
-
-  setGistId = () => {
-    this.props.gitHubSetGistId(this.state.gistId)
-  }
-
-  restore = () => {
-    this.props.restoreFromGitHub(this.state.gistId)
-  }
-
-  render() {
-    const disabled = !this.props.loaded
-
-    return (
-      <Fragment>
-        <Input className={styles.gistId}
-               value={this.state.gistId}
-               onChange={this.gistIdChanged}
-               onBlur={this.setGistId}
-               disabled={disabled}>
-          gist ID
-        </Input>
-        <button className={styles.import} onClick={this.restore} disabled={disabled}>import</button>
-      </Fragment>
-    )
-  }
+  return (
+    <Fragment>
+      <GistIdInput key={gistId}
+                   gistId={gistId}
+                   setGistId={gitHubSetGistId}
+                   disabled={disabled}/>
+      <button className={styles.import}
+              onClick={restoreFromGitHub}
+              disabled={disabled}>
+        import
+      </button>
+    </Fragment>
+  )
 }
 
 GitHub.propTypes = {

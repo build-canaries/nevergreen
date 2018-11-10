@@ -1,0 +1,15 @@
+@import '../common/forms/button';
+@import '../common/layout';
+@import './export/github/github';
+
+.label {
+  width: $label-size;
+}
+
+.gistId {
+  @extend %first;
+
+  @include respond-to(tablet, desktop) {
+    width: 31em;
+  }
+}

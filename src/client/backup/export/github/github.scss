@@ -1,6 +1,8 @@
 @import '../../../common/forms/button';
 @import '../../../common/layout';
 
+$label-size: 6em;
+
 .export {
   @include button-icon('cloud-upload');
 
@@ -9,19 +11,11 @@
 }
 
 .label {
-  width: 6em;
+  width: $label-size;
 }
 
 .accessToken {
-  @extend %first;
-
   @include respond-to(tablet, desktop) {
     width: 36em;
-  }
-}
-
-.gistId {
-  @include respond-to(tablet, desktop) {
-    width: 31em;
   }
 }

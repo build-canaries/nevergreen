@@ -2,22 +2,15 @@ import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import {Input} from '../../../common/forms/Input'
 import styles from './github.scss'
+import {GistIdInput} from '../../GistIdInput'
 
 export class GitHub extends Component {
-
-  static getDerivedStateFromProps(nextProps) {
-    return {
-      gistId: nextProps.gistId,
-      description: nextProps.description
-    }
-  }
 
   constructor(props) {
     super(props)
     this.state = {
       oauthToken: '',
-      gistId: props.gistId,
-      description: props.description
+      newDescription: props.description
     }
   }
 
@@ -26,33 +19,36 @@ export class GitHub extends Component {
   }
 
   descriptionChanged = (evt) => {
-    this.setState({description: evt.target.value})
-  }
-
-  gistIdChanged = (evt) => {
-    this.setState({gistId: evt.target.value})
+    this.setState({newDescription: evt.target.value})
   }
 
   setDescription = () => {
-    this.props.gitHubSetDescription(this.state.description)
-  }
-
-  setGistId = () => {
-    this.props.gitHubSetGistId(this.state.gistId)
+    this.props.gitHubSetDescription(this.state.newDescription)
   }
 
   upload = () => {
-    const {oauthToken, description, configuration, gistId} = this.state
-    this.props.uploadToGitHub(gistId, description, configuration, oauthToken)
+    const {oauthToken} = this.state
+    this.props.uploadToGitHub(oauthToken)
   }
 
   render() {
-    const {loaded} = this.props
-    const {oauthToken, description, gistId} = this.state
+    const {loaded, gistId, gitHubSetGistId} = this.props
+    const {oauthToken, newDescription} = this.state
     const disabled = !loaded
 
     return (
       <Fragment>
+        <GistIdInput key={gistId}
+                     gistId={gistId}
+                     setGistId={gitHubSetGistId}
+                     disabled={disabled}/>
+        <Input value={newDescription}
+               onChange={this.descriptionChanged}
+               onBlur={this.setDescription}
+               disabled={disabled}
+               maxLength='256'>
+          <div className={styles.label}>description</div>
+        </Input>
         <Input type='password'
                className={styles.accessToken}
                onChange={this.oauthTokenChanged}
@@ -60,21 +56,6 @@ export class GitHub extends Component {
                value={oauthToken}
                disabled={disabled}>
           <div className={styles.label}>access token</div>
-        </Input>
-        <Input value={description}
-               onChange={this.descriptionChanged}
-               onBlur={this.setDescription}
-               disabled={disabled}
-               maxLength='256'>
-          <div className={styles.label}>description</div>
-        </Input>
-        <Input className={styles.gistId}
-               value={gistId}
-               onChange={this.gistIdChanged}
-               onBlur={this.setGistId}
-               placeholder='leave blank to create a new gist'
-               disabled={disabled}>
-          <div className={styles.label}>gist ID</div>
         </Input>
         <button className={styles.export}
                 onClick={this.upload}
@@ -88,7 +69,6 @@ export class GitHub extends Component {
 
 GitHub.propTypes = {
   loaded: PropTypes.bool,
-  configuration: PropTypes.string.isRequired,
   uploadToGitHub: PropTypes.func.isRequired,
   gitHubSetGistId: PropTypes.func.isRequired,
   gitHubSetDescription: PropTypes.func.isRequired,

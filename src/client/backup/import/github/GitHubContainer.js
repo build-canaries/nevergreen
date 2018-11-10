@@ -6,7 +6,10 @@ import {GitHub} from './GitHub'
 import {gistId, importLoaded} from '../../../reducers/Selectors'
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({restoreFromGitHub, gitHubSetGistId}, dispatch)
+  return bindActionCreators({
+    restoreFromGitHub,
+    gitHubSetGistId
+  }, dispatch)
 }
 
 function mapStateToProps(state) {

@@ -5,6 +5,9 @@ import {isBlank} from '../common/Utils'
 import {importError, importing} from './ImportActionCreators'
 import {importData} from './ImportThunkActionCreators'
 import {exportError, exporting, exportSuccess} from './ExportActionCreators'
+import {gistDescription, gistId} from '../reducers/Selectors'
+import {toJson} from '../common/Json'
+import {filter} from '../reducers/Configuration'
 
 const TEN_MEGS = 10485760 // bytes
 
@@ -29,15 +32,17 @@ function handleGistResponse(dispatch, res) {
   }
 }
 
-export function restoreFromGitHub(gistId) {
-  return async (dispatch) => {
+export function restoreFromGitHub() {
+  return async (dispatch, getState) => {
     dispatch(importing())
 
-    if (isBlank(gistId)) {
+    const id = gistId(getState())
+
+    if (isBlank(id)) {
       dispatch(importError(['You must provide a gist ID to import from GitHub']))
     } else {
       try {
-        const res = await send(getGist(gistId))
+        const res = await send(getGist(id))
         const content = await handleGistResponse(dispatch, res)
         dispatch(importData(content))
       } catch (error) {
@@ -47,18 +52,22 @@ export function restoreFromGitHub(gistId) {
   }
 }
 
-export function uploadToGitHub(gistId, description, configuration, oauthToken) {
-  return async (dispatch) => {
+export function uploadToGitHub(oauthToken) {
+  return async (dispatch, getState) => {
     dispatch(exporting())
+
+    const id = gistId(getState())
+    const description = gistDescription(getState())
+    const configuration = toJson(filter(getState().toJS()))
 
     if (isBlank(oauthToken)) {
       dispatch(exportError(['You must provide an access token to upload to GitHub']))
     } else {
-      const createNewGist = isBlank(gistId)
+      const createNewGist = isBlank(id)
 
       const req = createNewGist
         ? createGist(description, configuration, oauthToken)
-        : updateGist(gistId, description, configuration, oauthToken)
+        : updateGist(id, description, configuration, oauthToken)
 
       try {
         const gistJson = await send(req)

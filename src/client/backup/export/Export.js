@@ -11,7 +11,7 @@ export function Export({configuration, infos, errors}) {
     <Container title='Export'>
       <Tabs titles={['locally', 'GitHub']}>
         <LocallyContainer configuration={configuration}/>
-        <GitHubContainer configuration={configuration}/>
+        <GitHubContainer/>
       </Tabs>
       <Messages type='error' messages={errors}/>
       <Messages type='info' messages={infos}/>

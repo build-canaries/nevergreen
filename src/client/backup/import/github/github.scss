@@ -1,7 +1,4 @@
-@import '../../../common/variables';
 @import '../../../common/forms/button';
-@import '../../../common/typography';
-@import '../../../common/responsive';
 @import '../../../common/layout';
 
 .import {
@@ -9,12 +6,4 @@
 
   @extend .primaryButton;
   @extend %block-margin;
-}
-
-.gistId {
-  @extend %first;
-
-  @include respond-to(tablet, desktop) {
-    width: 27em;
-  }
 }
