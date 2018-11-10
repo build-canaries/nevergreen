@@ -14,7 +14,7 @@ export function Footer({fullScreen}) {
   const fullVersion = `${version}+${versionMeta}`
 
   return (
-    <footer role='contentinfo' className={footerClassNames}>
+    <footer className={footerClassNames}>
       <ExternalLink href='https://github.com/build-canaries/nevergreen/releases'
                     className={styles.version}
                     title='Nevergreen releases on Github'>

@@ -69,7 +69,7 @@ export class Nevergreen extends Component {
         <Timer onTrigger={this.checkVersion} interval={TWENTY_FOUR_HOURS}/>
         <Header fullScreen={isFullScreen}/>
         <NotificationContainer/>
-        {loaded && <main role='main' className={styles.main}>{children}</main>}
+        {loaded && <main className={styles.main}>{children}</main>}
         <Footer fullScreen={isFullScreen}/>
       </div>
     )

@@ -48,7 +48,7 @@ export class Header extends Component {
     const toggleLabel = menuVisible ? 'hide menu' : 'show menu'
 
     return (
-      <header role='banner' className={headerClassNames}>
+      <header className={headerClassNames}>
         <img src={logo} className={styles.logo} alt='Nevergreen' aria-hidden/>
         <nav className={styles.siteMenu}>
           <Title>Site navigation</Title>
