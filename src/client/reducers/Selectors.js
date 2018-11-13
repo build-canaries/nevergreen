@@ -68,6 +68,10 @@ export function maxProjectsToShow(state) {
   return state.getIn([SETTINGS_ROOT, 'maxProjectsToShow'])
 }
 
+export function getClickToShowMenu(state) {
+  return state.getIn([SETTINGS_ROOT, 'clickToShowMenu'])
+}
+
 export function importLoaded(state) {
   return state.getIn([IMPORT_ROOT, 'loaded'])
 }

@@ -3,6 +3,7 @@ import {expect} from 'chai'
 import {reduce} from '../../../src/client/reducers/SettingsReducer'
 import {
   BROKEN_BUILD_SOUND_FX,
+  CLICK_TO_SHOW_MENU,
   IMPORT_SUCCESS,
   INITIALISED,
   PLAY_BROKEN_BUILD_SOUND_FX,
@@ -240,6 +241,16 @@ describe('SettingsReducer', function () {
       const action = {type: SET_MAX_PROJECTS, value: 12}
       const newState = reduce(existingState, action)
       expect(newState).to.contain.property('maxProjectsToShow', 12)
+    })
+  })
+
+  describe(CLICK_TO_SHOW_MENU, function () {
+
+    it('should set the click to show menu property', function () {
+      const existingState = Map({clickToShowMenu: false})
+      const action = {type: CLICK_TO_SHOW_MENU, value: true}
+      const newState = reduce(existingState, action)
+      expect(newState).to.contain.property('clickToShowMenu', true)
     })
   })
 })

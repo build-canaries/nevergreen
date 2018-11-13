@@ -2,6 +2,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {
   setBrokenBuildSoundFx,
+  setClickToShowMenu,
   setMaxProjectsToShow,
   setPlayBrokenBuildSoundFx,
   setRefreshTime,
@@ -17,6 +18,7 @@ import {supported} from '../common/SystemNotifications'
 import {enableSystemNotifications} from '../actions/SettingsThunkActionCreators'
 import {
   brokenBuildSoundFx,
+  getClickToShowMenu,
   maxProjectsToShow,
   playBrokenBuildSoundFx,
   refreshTime,
@@ -39,7 +41,8 @@ function mapDispatchToProps(dispatch) {
     setRefreshTime,
     setShowBuildLabel,
     setShowSystemNotifications: enableSystemNotifications,
-    setMaxProjectsToShow
+    setMaxProjectsToShow,
+    setClickToShowMenu
   }, dispatch)
 }
 
@@ -58,7 +61,8 @@ function mapStateToProps(state) {
     refreshTime: refreshTime(state),
     validRefreshTimes: VALID_REFRESH_TIMES,
     maxProjectsToShow: maxProjectsToShow(state),
-    validNumberOfProjectsToShow: VALID_PROJECTS_TO_SHOW
+    validNumberOfProjectsToShow: VALID_PROJECTS_TO_SHOW,
+    clickToShowMenu: getClickToShowMenu(state)
   }
 }
 

@@ -38,6 +38,9 @@
         },
         "maxProjectsToShow": {
           "type": "number"
+        },
+        "clickToShowMenu": {
+          "type": "boolean"
         }
       },
       "additionalProperties": false

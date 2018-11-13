@@ -1,5 +1,6 @@
 import {
   BROKEN_BUILD_SOUND_FX,
+  CLICK_TO_SHOW_MENU,
   PLAY_BROKEN_BUILD_SOUND_FX,
   REFRESH_TIME,
   REQUESTING_SYSTEM_NOTIFICATION_PERMISSION,
@@ -67,4 +68,8 @@ export function setMaxProjectsToShow(value) {
   const intValue = parseInt(value)
   const closestMatch = VALID_PROJECTS_TO_SHOW.reduce((prev, curr) => absoluteClosestNumber(intValue, prev, curr))
   return {type: SET_MAX_PROJECTS, value: closestMatch}
+}
+
+export function setClickToShowMenu(value) {
+  return {type: CLICK_TO_SHOW_MENU, value}
 }

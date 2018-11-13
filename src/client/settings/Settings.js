@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react'
 import PropTypes from 'prop-types'
-import {TimingSettings} from './TimingSettings'
+import {GeneralSettings} from './GeneralSettings'
 import {DisplaySettings} from './DisplaySettings'
 import {AudioSettings} from './AudioSettings'
 import {Title} from '../common/Title'
@@ -10,7 +10,7 @@ export function Settings(props) {
   return (
     <Fragment>
       <Title>Settings</Title>
-      <TimingSettings {...props}/>
+      <GeneralSettings {...props}/>
       <DisplaySettings {...props}/>
       <NotificationSettings {...props}/>
       <AudioSettings {...props}/>
@@ -33,5 +33,7 @@ Settings.propTypes = {
   setShowBuildLabel: PropTypes.func.isRequired,
   systemNotificationsSupported: PropTypes.bool.isRequired,
   showSystemNotifications: PropTypes.bool.isRequired,
-  setShowSystemNotifications: PropTypes.func.isRequired
+  setShowSystemNotifications: PropTypes.func.isRequired,
+  clickToShowMenu: PropTypes.bool.isRequired,
+  setClickToShowMenu: PropTypes.func.isRequired
 }

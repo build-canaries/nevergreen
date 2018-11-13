@@ -25,3 +25,6 @@
 
 (defn show-build-labels [show]
   (checkbox show (locator "show-build-labels")))
+
+(defn click-to-show-menu [show]
+  (checkbox show (locator "click-to-show-menu")))

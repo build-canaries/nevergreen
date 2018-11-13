@@ -7,7 +7,7 @@ import {checkForNewVersion} from './actions/NotificationThunkActionCreators'
 import {keyboardShortcut} from './actions/ShortcutActionCreators'
 import {Nevergreen} from './Nevergreen'
 import {withRouter} from 'react-router-dom'
-import {fullScreen, fullScreenRequested, loaded} from './reducers/Selectors'
+import {fullScreen, fullScreenRequested, getClickToShowMenu, loaded} from './reducers/Selectors'
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
@@ -23,7 +23,8 @@ function mapStateToProps(state) {
   return {
     loaded: loaded(state),
     isFullScreen: fullScreen(state),
-    fullScreenRequested: fullScreenRequested(state)
+    fullScreenRequested: fullScreenRequested(state),
+    clickToShowMenu: getClickToShowMenu(state)
   }
 }
 

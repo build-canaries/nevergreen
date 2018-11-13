@@ -4,6 +4,7 @@ import {
   MIN_REFRESH_TIME,
   requestingSystemNotificationPermission,
   setBrokenBuildSoundFx,
+  setClickToShowMenu,
   setMaxProjectsToShow,
   setPlayBrokenBuildSoundFx,
   setRefreshTime,
@@ -17,6 +18,7 @@ import {
 } from '../../../src/client/actions/SettingsActionCreators'
 import {
   BROKEN_BUILD_SOUND_FX,
+  CLICK_TO_SHOW_MENU,
   PLAY_BROKEN_BUILD_SOUND_FX,
   REFRESH_TIME,
   REQUESTING_SYSTEM_NOTIFICATION_PERMISSION,
@@ -190,6 +192,19 @@ describe('SettingsActionCreators', function () {
         const actual = setMaxProjectsToShow(value)
         expect(actual).to.have.property('value', VALID_PROJECTS_TO_SHOW[0])
       })
+    })
+  })
+
+  describe(CLICK_TO_SHOW_MENU, function () {
+
+    it('should return the correct type', function () {
+      const actual = setClickToShowMenu()
+      expect(actual).to.have.property('type', CLICK_TO_SHOW_MENU)
+    })
+
+    it('should return the given value', function () {
+      const actual = setClickToShowMenu(true)
+      expect(actual).to.have.property('value', true)
     })
   })
 })

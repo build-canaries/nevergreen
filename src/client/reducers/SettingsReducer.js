@@ -1,6 +1,6 @@
 import {Map} from 'immutable'
 import {
-  BROKEN_BUILD_SOUND_FX,
+  BROKEN_BUILD_SOUND_FX, CLICK_TO_SHOW_MENU,
   IMPORT_SUCCESS,
   INITIALISED,
   PLAY_BROKEN_BUILD_SOUND_FX,
@@ -30,7 +30,8 @@ const DEFAULT_STATE = Map({
   showSystemNotifications: false,
   systemNotificationRequestingPermission: false,
   systemNotificationPermissionDenied: false,
-  maxProjectsToShow: DEFAULT_PROJECTS_TO_SHOW
+  maxProjectsToShow: DEFAULT_PROJECTS_TO_SHOW,
+  clickToShowMenu: false
 })
 
 export function reduce(state = DEFAULT_STATE, action) {
@@ -76,6 +77,9 @@ export function reduce(state = DEFAULT_STATE, action) {
 
     case SET_MAX_PROJECTS:
       return state.set('maxProjectsToShow', action.value)
+
+    case CLICK_TO_SHOW_MENU:
+      return state.set('clickToShowMenu', action.value)
 
     default:
       return state

@@ -191,6 +191,24 @@ var validate = (function() {
             }
             var valid2 = errors === errs_2;
           }
+          if (data1.clickToShowMenu !== undefined) {
+            var errs_2 = errors;
+            if (typeof data1.clickToShowMenu !== "boolean") {
+              var err = {
+                keyword: 'type',
+                dataPath: (dataPath || '') + '.audioVisual.clickToShowMenu',
+                schemaPath: '#/properties/audioVisual/properties/clickToShowMenu/type',
+                params: {
+                  type: 'boolean'
+                },
+                message: 'should be boolean'
+              };
+              if (vErrors === null) vErrors = [err];
+              else vErrors.push(err);
+              errors++;
+            }
+            var valid2 = errors === errs_2;
+          }
         } else {
           var err = {
             keyword: 'type',
@@ -871,6 +889,9 @@ validate.schema = {
         },
         "maxProjectsToShow": {
           "type": "number"
+        },
+        "clickToShowMenu": {
+          "type": "boolean"
         }
       },
       "additionalProperties": false

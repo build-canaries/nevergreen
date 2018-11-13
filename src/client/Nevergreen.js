@@ -35,15 +35,17 @@ export class Nevergreen extends Component {
   }
 
   componentDidMount() {
-    this.props.initalise()
+    const {initalise, keyboardShortcut, history, notify} = this.props
+
+    initalise()
 
     Mousetrap.bindGlobal('esc', blurActive)
     Mousetrap.bind('?', () => {
-      this.props.keyboardShortcut(true)
-      this.props.history.push('help')
+      keyboardShortcut(true)
+      history.push('help')
     })
 
-    registerServiceWorker(this.props.notify)
+    registerServiceWorker(notify)
   }
 
   componentWillUnmount() {
@@ -51,21 +53,27 @@ export class Nevergreen extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.fullScreenRequested !== this.props.fullScreenRequested) {
-      this.props.enableFullScreen(this.props.fullScreenRequested)
-      if (!this.props.fullScreenRequested) {
+    const {fullScreenRequested, enableFullScreen} = this.props
+
+    if (prevProps.fullScreenRequested !== fullScreenRequested) {
+      enableFullScreen(fullScreenRequested)
+      if (!fullScreenRequested) {
         clearTimeout(this.state.fullScreenTimer)
       }
     }
   }
 
   render() {
-    const {loaded, isFullScreen, children} = this.props
+    const {loaded, isFullScreen, children, clickToShowMenu} = this.props
+
+    const disableFullScreenOn = clickToShowMenu
+      ? {onClick: this.disableFullScreen}
+      : {onMouseMove: this.disableFullScreen}
 
     return (
       <div className={styles.nevergreen}
-           onMouseMove={this.disableFullScreen}
-           aria-busy={!loaded}>
+           aria-busy={!loaded}
+           {...disableFullScreenOn}>
         <Timer onTrigger={this.checkVersion} interval={TWENTY_FOUR_HOURS}/>
         <Header fullScreen={isFullScreen}/>
         <NotificationContainer/>
@@ -76,17 +84,19 @@ export class Nevergreen extends Component {
   }
 
   disableFullScreen() {
+    const {isFullScreen, enableFullScreen, fullScreenRequested} = this.props
+
     clearTimeout(this.state.fullScreenTimer)
 
-    if (this.props.isFullScreen) {
-      this.props.enableFullScreen(false)
+    if (isFullScreen) {
+      enableFullScreen(false)
     }
 
-    if (this.props.fullScreenRequested) {
-      const enableFullScreen = () => {
-        this.props.enableFullScreen(true)
+    if (fullScreenRequested) {
+      const doEnableFullScreen = () => {
+        enableFullScreen(true)
       }
-      const fullScreenTimer = setTimeout(enableFullScreen, THREE_SECONDS)
+      const fullScreenTimer = setTimeout(doEnableFullScreen, THREE_SECONDS)
       this.setState({fullScreenTimer})
     }
   }
@@ -104,7 +114,8 @@ Nevergreen.propTypes = {
   isFullScreen: PropTypes.bool,
   fullScreenRequested: PropTypes.bool,
   enableFullScreen: PropTypes.func.isRequired,
-  notify: PropTypes.func.isRequired
+  notify: PropTypes.func.isRequired,
+  clickToShowMenu: PropTypes.bool
 }
 
 export default Nevergreen

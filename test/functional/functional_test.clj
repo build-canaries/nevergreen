@@ -89,7 +89,8 @@
           (settings-page/show-build-times state)
           (settings-page/show-broken-build-times state)
           (settings-page/play-broken-build-sounds state)
-          (settings-page/show-build-labels state)))
+          (settings-page/show-build-labels state)
+          (settings-page/click-to-show-menu state)))
 
     (save-screenshot-and-source "settings")
 
