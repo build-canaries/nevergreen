@@ -111,12 +111,12 @@
     "stylelint-config-standard": "18.2.0",
     "stylelint-order": "1.0.0",
     "stylelint-scss": "3.4.0",
-    "sw-precache-webpack-plugin": "0.11.5",
     "url-loader": "1.1.2",
     "watch": "1.0.2",
     "webpack": "4.25.1",
     "webpack-cli": "3.1.2",
     "webpack-manifest-plugin": "2.0.4",
-    "whatwg-url": "7.0.0"
+    "whatwg-url": "7.0.0",
+    "workbox-webpack-plugin": "3.6.3"
   }
 }

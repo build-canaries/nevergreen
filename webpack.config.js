@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
-const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
+const {GenerateSW} = require('workbox-webpack-plugin')
 const isProd = (process.env.NODE_ENV === 'production')
 
 const cssLoader = {
@@ -77,12 +77,14 @@ module.exports = {
     ]),
     new OptimizeCssAssetsPlugin(),
     new ManifestPlugin({fileName: 'asset-manifest.json'}),
-    new SWPrecacheWebpackPlugin({
+    new GenerateSW({
+      swDest: 'service-worker.js',
       cacheId: 'nevergreen',
       dontCacheBustUrlsMatching: /\.\w{8}\./, // Don't cache bust URLs hashed by Webpack
-      filename: 'service-worker.js',
-      minify: isProd,
-      staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/]
+      exclude: [/\.map$/, /asset-manifest\.json$/],
+      importWorkboxFrom: 'local',
+      clientsClaim: true,
+      skipWaiting: true
     })
   ],
   module: {
