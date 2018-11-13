@@ -1,7 +1,5 @@
-import React, {Component} from 'react'
+import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
-import Mousetrap from 'mousetrap'
-import 'mousetrap/plugins/global-bind/mousetrap-global-bind'
 import _ from 'lodash'
 import {registerServiceWorker} from './ServiceWorker'
 import {Header} from './header/Header'
@@ -10,17 +8,11 @@ import {Timer} from './common/Timer'
 import NotificationContainer from './notification/NotificationContainer'
 import version from '../../resources/version.txt'
 import styles from './nevergreen.scss'
+import GlobalShortcuts from './GlobalShortcuts'
 
 const ONE_SECONDS = 1000
 const THREE_SECONDS = 3 * 1000
 const TWENTY_FOUR_HOURS = 24 * 60 * 60
-
-function blurActive() {
-  const active = document.activeElement
-  if (active) {
-    active.blur()
-  }
-}
 
 export class Nevergreen extends Component {
 
@@ -35,21 +27,10 @@ export class Nevergreen extends Component {
   }
 
   componentDidMount() {
-    const {initalise, keyboardShortcut, history, notify} = this.props
+    const {initalise, notify} = this.props
 
     initalise()
-
-    Mousetrap.bindGlobal('esc', blurActive)
-    Mousetrap.bind('?', () => {
-      keyboardShortcut(true)
-      history.push('help')
-    })
-
     registerServiceWorker(notify)
-  }
-
-  componentWillUnmount() {
-    Mousetrap.unbind(['?', 'esc'])
   }
 
   componentDidUpdate(prevProps) {
@@ -64,22 +45,26 @@ export class Nevergreen extends Component {
   }
 
   render() {
-    const {loaded, isFullScreen, children, clickToShowMenu} = this.props
+    const {loaded, isFullScreen, children, clickToShowMenu, keyboardShortcut, history} = this.props
 
     const disableFullScreenOn = clickToShowMenu
       ? {onClick: this.disableFullScreen}
       : {onMouseMove: this.disableFullScreen}
 
     return (
-      <div className={styles.nevergreen}
-           aria-busy={!loaded}
-           {...disableFullScreenOn}>
-        <Timer onTrigger={this.checkVersion} interval={TWENTY_FOUR_HOURS}/>
-        <Header fullScreen={isFullScreen}/>
-        <NotificationContainer/>
-        {loaded && <main className={styles.main}>{children}</main>}
-        <Footer fullScreen={isFullScreen}/>
-      </div>
+      <Fragment>
+        {loaded && <GlobalShortcuts keyboardShortcut={keyboardShortcut} history={history}/>}
+        {loaded && <Timer onTrigger={this.checkVersion} interval={TWENTY_FOUR_HOURS}/>}
+
+        <div className={styles.nevergreen}
+             aria-busy={!loaded}
+             {...disableFullScreenOn}>
+          <Header fullScreen={isFullScreen}/>
+          <NotificationContainer/>
+          {loaded && <main className={styles.main}>{children}</main>}
+          <Footer fullScreen={isFullScreen}/>
+        </div>
+      </Fragment>
     )
   }
 
@@ -108,9 +93,7 @@ Nevergreen.propTypes = {
   initalise: PropTypes.func.isRequired,
   keyboardShortcut: PropTypes.func.isRequired,
   checkForNewVersion: PropTypes.func.isRequired,
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired
-  }).isRequired,
+  history: PropTypes.object.isRequired,
   isFullScreen: PropTypes.bool,
   fullScreenRequested: PropTypes.bool,
   enableFullScreen: PropTypes.func.isRequired,
