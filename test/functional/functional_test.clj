@@ -56,9 +56,9 @@
 
     (to (str base-url))
 
-    (is (= (expected-version) (version)))
-
     (save-screenshot-and-source "home")
+
+    (is (= (expected-version) (version)))
 
     (tracking-page/navigate base-url)
     (let [tray (tracking-page/add-tray tray-url tray-username tray-password)]
@@ -78,10 +78,11 @@
     (success-page/navigate base-url)
     (success-page/add-message success-message)
     (success-page/add-message success-image)
-    (is (in? (success-page/messages) success-message) "Expected success message not added")
-    (is (in? (success-page/images) success-image) "Expected success image not added")
 
     (save-screenshot-and-source "success")
+
+    (is (in? (success-page/messages) success-message) "Expected success message not added")
+    (is (in? (success-page/images) success-image) "Expected success image not added")
 
     (settings-page/navigate base-url)
     (doseq [state [true false]]
@@ -105,7 +106,8 @@
     (save-screenshot-and-source "help")
 
     (monitor-page/navigate base-url)
-    (doseq [actual-project (monitor-page/interesting-projects)]
-      (is (element-includes? expected-projects actual-project) "Expected project not displayed"))
 
-    (save-screenshot-and-source "monitor")))
+    (save-screenshot-and-source "monitor")
+
+    (doseq [actual-project (monitor-page/interesting-projects)]
+      (is (element-includes? expected-projects actual-project) "Expected project not displayed"))))
