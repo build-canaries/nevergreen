@@ -84,7 +84,8 @@ module.exports = {
       exclude: [/\.map$/, /asset-manifest\.json$/],
       importWorkboxFrom: 'local',
       clientsClaim: true,
-      skipWaiting: true
+      skipWaiting: true,
+      navigateFallback: '/'
     })
   ],
   module: {
