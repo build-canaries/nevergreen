@@ -14,7 +14,7 @@
   (case (browser-to-use)
     :firefox (do (.setup (WebDriverManager/firefoxdriver))
                  (FirefoxDriver.))
-    (do (.. (WebDriverManager/chromedriver) (version "2.37") (setup))
+    (do (.. (WebDriverManager/chromedriver) (version "2.43") (setup))
         (let [options (ChromeOptions.)
               loggingPrefs (LoggingPreferences.)]
           (do
