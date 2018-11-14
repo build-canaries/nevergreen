@@ -3,7 +3,7 @@
   :url "https://github.com/build-canaries/nevergreen"
   :dependencies [[org.clojure/clojure "1.9.0"]
                  [ring "1.7.1" :exclusions [org.eclipse.jetty/jetty-server]]
-                 [org.eclipse.jetty/jetty-server "9.4.12.v20180830"]
+                 [org.eclipse.jetty/jetty-server "9.4.13.v20181111"]
                  [compojure "1.6.1"]
                  [environ "1.1.0"]
                  [cheshire "5.8.1"]
@@ -34,10 +34,10 @@
                                          [com.livingsocial/lein-dependency-check "1.0.2"]]
                           :dependencies [[midje "1.9.4"]
                                          [clj-webdriver/clj-webdriver "0.7.2" :exclusions [org.mortbay.jetty/jetty]]
-                                         [org.seleniumhq.selenium/selenium-java "3.141.5" :exclusions [org.eclipse.jetty/jetty-io
+                                         [org.seleniumhq.selenium/selenium-java "3.141.59" :exclusions [org.eclipse.jetty/jetty-io
                                                                                                        commons-logging]]
                                          [io.github.bonigarcia/webdrivermanager "3.0.0" :exclusions [org.apache.commons/commons-lang3]]
-                                         [org.seleniumhq.selenium/htmlunit-driver "2.33.1" :exclusions [org.eclipse.jetty/jetty-io
+                                         [org.seleniumhq.selenium/htmlunit-driver "2.33.2" :exclusions [org.eclipse.jetty/jetty-io
                                                                                                         org.eclipse.jetty/jetty-http]]
                                          [ring/ring-mock "0.3.2"]]}
              :unit       {:jvm-opts ["-Dlogback.configurationFile=./test/logback-unit.xml"]}
