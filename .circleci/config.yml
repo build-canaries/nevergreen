@@ -141,7 +141,9 @@ jobs:
             TRAY_USERNAME: ""
             TRAY_PASSWORD: ""
             TRAY_URL: "https://drive.google.com/uc?export=download&id=0BzdMs1jfanaARkJJX1VRR2QtdTA"
-          command: ./ci/functional-test.sh
+          command: |
+            google-chrome --version
+            ./ci/functional-test.sh
 
       - store_artifacts:
           path: ./target/functional
