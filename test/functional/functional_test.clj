@@ -25,7 +25,7 @@
     (set-driver! (init-driver {:webdriver driver}))
     (compare-and-set! driver-atom nil driver))
 
-  (implicit-wait 1000)
+  (implicit-wait 2000)
 
   (test-fn)
 
