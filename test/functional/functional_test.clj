@@ -71,7 +71,7 @@
     (save-screenshot-and-source "tracking")
 
     ; test settings aren't reset when we refresh the page
-    (refresh)
+    ;(refresh)
     (let [tray (tracking-page/get-tray)]
       (tracking-page/show-projects tray))
 
@@ -98,8 +98,8 @@
     (save-screenshot-and-source "settings")
 
     (backup-page/navigate base-url)
-    ;(-> (backup-page/export-data)
-    ;    (backup-page/import-data))
+    (-> (backup-page/export-data)
+        (backup-page/import-data))
 
     (save-screenshot-and-source "backup")
 
