@@ -75,6 +75,8 @@
     (let [tray (tracking-page/get-tray)]
       (tracking-page/show-projects tray))
 
+    (save-screenshot-and-source "tracking-refresh")
+
     (success-page/navigate base-url)
     (success-page/add-message success-message)
     (success-page/add-message success-image)
@@ -97,7 +99,7 @@
 
     (backup-page/navigate base-url)
     (-> (backup-page/export-data)
-        (backup-page/import-data))
+        #_(backup-page/import-data))
 
     (save-screenshot-and-source "backup")
 
