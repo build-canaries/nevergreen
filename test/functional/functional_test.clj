@@ -98,8 +98,8 @@
     (save-screenshot-and-source "settings")
 
     (backup-page/navigate base-url)
-    (-> (backup-page/export-data)
-        #_(backup-page/import-data))
+    ;(-> (backup-page/export-data)
+    ;    (backup-page/import-data))
 
     (save-screenshot-and-source "backup")
 
