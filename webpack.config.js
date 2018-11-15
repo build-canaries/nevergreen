@@ -80,12 +80,14 @@ module.exports = {
     new GenerateSW({
       swDest: 'service-worker.js',
       cacheId: 'nevergreen',
-      dontCacheBustUrlsMatching: /\.\w{8}\./, // Don't cache bust URLs hashed by Webpack
       exclude: [/\.map$/, /asset-manifest\.json$/],
       importWorkboxFrom: 'local',
       clientsClaim: true,
       skipWaiting: true,
-      navigateFallback: '/'
+      navigateFallback: '/index.html',
+      navigateFallbackBlacklist: [
+        new RegExp('/[^/]+\\.[^/]+$') // Exclude URLs containing a dot, as they're likely a resource in public
+      ]
     })
   ],
   module: {
