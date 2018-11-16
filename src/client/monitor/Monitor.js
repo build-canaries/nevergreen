@@ -3,12 +3,17 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import {InterestingProjects} from './InterestingProjects'
 import {Success} from './Success'
+import {SuccessMessage} from './SuccessMessage'
 import {Loading} from '../common/loading/Loading'
 import styles from './monitor.scss'
 import {Timer} from '../common/Timer'
 import _ from 'lodash'
 import {Title} from '../common/Title'
 import {abortPendingRequest} from '../common/gateways/Gateway'
+
+export function GettingStartedHelp() {
+  return <SuccessMessage message='Add a CI server via the tracking page to start monitoring'/>
+}
 
 export class Monitor extends Component {
 
@@ -22,8 +27,9 @@ export class Monitor extends Component {
   }
 
   render() {
-    const {isFullScreen, projects, errors, messages, fetchInteresting, refreshTime, loaded} = this.props
+    const {isFullScreen, projects, errors, messages, fetchInteresting, refreshTime, loaded, trays} = this.props
 
+    const traysAdded = !_.isEmpty(trays)
     const noProjects = _.isEmpty(projects)
     const noErrors = _.isEmpty(errors)
     const success = noProjects && noErrors
@@ -32,16 +38,14 @@ export class Monitor extends Component {
       [styles.fullscreen]: isFullScreen
     })
 
-    const content = success
-      ? <Success messages={messages}/>
-      : <InterestingProjects {...this.props}/>
-
     return (
       <div className={monitorClassNames}>
         <Title>Monitor</Title>
         <Timer onTrigger={fetchInteresting} interval={refreshTime}/>
         <Loading loaded={loaded}>
-          {content}
+          {!traysAdded && <GettingStartedHelp/>}
+          {traysAdded && success && <Success messages={messages}/>}
+          {traysAdded && !success && <InterestingProjects {...this.props}/>}
         </Loading>
       </div>
     )
