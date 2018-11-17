@@ -9,6 +9,8 @@
   padding: 1em;
 
   @include respond-to(tablet, desktop) {
+    display: flex;
+    justify-content: space-between;
     padding-left: 2em;
     padding-right: 2em;
   }
@@ -18,8 +20,18 @@
   display: none;
 }
 
-.version {
+.submitAnIssue {
+  margin-top: 0.5em;
+
+  @include respond-to(tablet, desktop) {
+    margin-top: 0;
+  }
+}
+
+.version,
+.submitAnIssue {
   color: $white;
+  display: block;
   text-decoration: none;
 
   &:hover,
@@ -36,11 +48,9 @@
 .about {
   color: $white;
   display: block;
-  padding-top: 1em;
+  margin-top: 0.5em;
 
   @include respond-to(tablet, desktop) {
-    display: inline;
-    float: right;
-    padding-top: 0;
+    margin-top: 0;
   }
 }

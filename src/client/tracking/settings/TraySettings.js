@@ -2,23 +2,9 @@ import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import {Input} from '../../common/forms/Input'
 import {DropDown} from '../../common/forms/DropDown'
-import {generateRandomName} from '../../domain/Tray'
+import {CI_OPTIONS, generateRandomName} from '../../domain/Tray'
 import styles from './tray-settings.scss'
 import {VisuallyHidden} from '../../common/VisuallyHidden'
-
-const CI_OPTIONS = [
-  {value: '', display: 'Auto detect'},
-  {value: 'circle', display: 'CircleCI'},
-  {value: 'cruise-control', display: 'CruiseControl'},
-  {value: 'cruise-control-net', display: 'CruiseControl.net'},
-  {value: 'cruise-control-rb', display: 'CruiseControl.rb'},
-  {value: 'go', display: 'GoCD'},
-  {value: 'hudson', display: 'Hudson'},
-  {value: 'jenkins', display: 'Jenkins'},
-  {value: 'solano', display: 'Solano CI'},
-  {value: 'team-city', display: 'TeamCity'},
-  {value: 'travis', display: 'Travis CI'}
-]
 
 export class TraySettings extends Component {
 
