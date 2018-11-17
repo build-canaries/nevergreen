@@ -1,3 +1,10 @@
+---
+name: Feature request
+about: Request a new feature or improvement
+labels: new feature
+
+---
+
 ## Feature Request
 
 **What would you like to be able to do?**
