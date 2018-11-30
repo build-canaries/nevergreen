@@ -40,7 +40,7 @@ export class AddTray extends Component {
       <div className={styles.addTray}>
         <div className={styles.inputs}>
           <Input className={styles.url}
-                 placeholder='CCTray XML file'
+                 placeholder='CCTray XML file e.g. https://my-jenkins-host/cc.xml'
                  value={url}
                  onChange={this.updateUrl}
                  onEnter={this.addTray}
