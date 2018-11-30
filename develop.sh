@@ -40,7 +40,7 @@ echo "starting the CI stub server ..."
 npm run ci-stub-server &
 
 echo "running the server ..."
-./lein.sh run &
+# ./lein.sh run &
 
 wait
 
