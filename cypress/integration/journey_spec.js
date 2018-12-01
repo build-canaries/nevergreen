@@ -26,8 +26,6 @@ describe('Journey', function () {
 
     cy.visit('/')
 
-    cy.get(locate('version')).contains(Cypress.env('FULL_VERSION'))
-
     cy.location('pathname').should('include', 'tracking')
 
     cy.get(locate('add-tray-url')).type(Cypress.env('TRAY_URL'))
