@@ -252,6 +252,7 @@ workflows:
           requires:
             - deploy-staging
       - cypress/run:
+          start: './ci/export-functional-test-variables.sh'
           requires:
             - deploy-staging
       - hold:
