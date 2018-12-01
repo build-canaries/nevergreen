@@ -29,9 +29,12 @@
   display: block;
   margin-top: 0.5em;
   padding: 0;
+  text-align: start;
   text-transform: none;
 
   &:enabled {
+    box-shadow: none;
+
     &:hover,
     &:focus {
       background-color: inherit;
