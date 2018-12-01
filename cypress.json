@@ -1,5 +1,6 @@
 {
   "baseUrl": "http://localhost:5000",
+  "projectId": "oc7zg3",
   "env": {
     "TRAY_URL": "http://localhost:5050/secure/cctray.xml",
     "TRAY_USERNAME": "u",

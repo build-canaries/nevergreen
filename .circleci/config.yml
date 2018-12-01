@@ -115,39 +115,6 @@ jobs:
             docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}
             docker push buildcanariesteam/nevergreen:staging
 
-  functional-tests-old:
-    working_directory: ~/nevergreen
-
-    docker:
-    - image: circleci/openjdk:8-jdk-browsers
-
-    steps:
-    - checkout
-
-    - restore_cache:
-        key: v1-nevergreen-server-{{ checksum "project.clj" }}
-
-    - attach_workspace:
-        at: ~/nevergreen
-
-    - run:
-        name: export version
-        command: ./ci/export-version.sh
-
-    - run:
-        name: functional tests
-        environment:
-          FUNCTIONAL_URL: "https://staging.nevergreen.io"
-          TRAY_USERNAME: ""
-          TRAY_PASSWORD: ""
-          TRAY_URL: "https://drive.google.com/uc?export=download&id=0BzdMs1jfanaARkJJX1VRR2QtdTA"
-        command: |
-          google-chrome --version
-          ./lein.sh functional
-
-    - store_artifacts:
-        path: ./target/functional
-
   deploy-prod:
     working_directory: ~/nevergreen
 
@@ -212,11 +179,9 @@ workflows:
       - deploy-staging:
           requires:
             - build
-      - functional-tests-old:
-          requires:
-            - deploy-staging
       - cypress/run:
           start: './ci/functional-test-staging-variables.sh'
+          record: true
           requires:
             - deploy-staging
       - hold:
