@@ -24,10 +24,7 @@ jobs:
 
       - run:
           name: update version
-          command: |
-            export BUILD_NUM=$CIRCLE_BUILD_NUM
-            export COMMIT_HASH=${CIRCLE_SHA1:0:7}
-            ./ci/update-version.sh
+          command: ./ci/update-version.sh
 
       - run:
           name: install node
