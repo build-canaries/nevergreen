@@ -135,8 +135,13 @@ jobs:
           command: ./ci/export-version.sh
 
       - run:
+          name: install node
+          command: ./ci/install-node.sh
+
+      - run:
           name: functional tests
           environment:
+            BASH_ENV: "~/.nvm/nvm.sh"
             FUNCTIONAL_URL: "https://staging.nevergreen.io"
             TRAY_USERNAME: ""
             TRAY_PASSWORD: ""
