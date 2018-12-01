@@ -241,7 +241,7 @@ jobs:
           command: ./ci/release-tweet.sh
 
 workflows:
-  version: 2.1
+  version: 2
   build-deploy:
     jobs:
       - build
