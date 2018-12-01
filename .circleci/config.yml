@@ -182,6 +182,7 @@ workflows:
       - cypress/run:
           start: './ci/functional-test-staging-variables.sh'
           record: true
+          parallel: false
           requires:
             - deploy-staging
       - hold:
