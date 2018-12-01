@@ -34,8 +34,7 @@ describe('Journey', function () {
     cy.get(locate('add-tray')).click()
 
     cy.get(locate('tray'))
-      .get(locate('container-sub-title'))
-      .contains('http://localhost:5050/secure/cctray.xml')
+      .get(locate('container-sub-title')).contains(Cypress.env('TRAY_URL'))
       .get(locate('exclude-all')).click()
       .get(locate('include-all')).click()
       .get(locate('tab-settings')).click()
