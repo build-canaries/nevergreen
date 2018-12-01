@@ -1,4 +1,7 @@
-version: 2
+version: 2.1
+
+orbs:
+  cypress: cypress-io/cypress@1.1.0
 
 jobs:
   build:
@@ -115,11 +118,44 @@ jobs:
             docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}
             docker push buildcanariesteam/nevergreen:staging
 
+  functional-tests-old:
+    working_directory: ~/nevergreen
+
+    docker:
+    - image: circleci/openjdk:8-jdk-browsers
+
+    steps:
+    - checkout
+
+    - restore_cache:
+        key: v1-nevergreen-server-{{ checksum "project.clj" }}
+
+    - attach_workspace:
+        at: ~/nevergreen
+
+    - run:
+        name: export version
+        command: ./ci/export-version.sh
+
+    - run:
+        name: functional tests
+        environment:
+          FUNCTIONAL_URL: "https://staging.nevergreen.io"
+          TRAY_USERNAME: ""
+          TRAY_PASSWORD: ""
+          TRAY_URL: "https://drive.google.com/uc?export=download&id=0BzdMs1jfanaARkJJX1VRR2QtdTA"
+        command: |
+          google-chrome --version
+          ./lein.sh functional
+
+    - store_artifacts:
+        path: ./target/functional
+
   functional-tests:
     working_directory: ~/nevergreen
 
     docker:
-      - image: circleci/openjdk:8-jdk-browsers
+      - image: circleci/node:10.9.0
 
     steps:
       - checkout
@@ -135,27 +171,18 @@ jobs:
           command: ./ci/export-version.sh
 
       - run:
-          name: install node
-          command: ./ci/install-node.sh
-
-      - run:
           name: functional tests
           environment:
-            BASH_ENV: "~/.nvm/nvm.sh"
-            FUNCTIONAL_URL: "https://staging.nevergreen.io"
-            TRAY_USERNAME: ""
-            TRAY_PASSWORD: ""
-            TRAY_URL: "https://drive.google.com/uc?export=download&id=0BzdMs1jfanaARkJJX1VRR2QtdTA"
             CYPRESS_BASE_URL: "https://staging.nevergreen.io"
             CYPRESS_TRAY_USERNAME: ""
             CYPRESS_TRAY_PASSWORD: ""
             CYPRESS_TRAY_URL: "https://drive.google.com/uc?export=download&id=0BzdMs1jfanaARkJJX1VRR2QtdTA"
           command: |
-            google-chrome --version
-            ./ci/functional-test.sh
+            npm install
+            npm run cypress
 
       - store_artifacts:
-          path: ./target/functional
+          path: ./cypress
 
   deploy-prod:
     working_directory: ~/nevergreen
@@ -214,20 +241,23 @@ jobs:
           command: ./ci/release-tweet.sh
 
 workflows:
-  version: 2
+  version: 2.1
   build-deploy:
     jobs:
       - build
       - deploy-staging:
           requires:
             - build
-      - functional-tests:
+      - functional-tests-old:
+          requires:
+            - deploy-staging
+      - cypress/run:
           requires:
             - deploy-staging
       - hold:
           type: approval
           requires:
-            - functional-tests
+            - cypress/run
       - deploy-prod:
           requires:
             - hold

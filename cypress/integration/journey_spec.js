@@ -1,3 +1,5 @@
+/*global describe,beforeEach,it,cy,Cypress */
+
 describe('Journey', function () {
 
   beforeEach(() => {
@@ -18,7 +20,7 @@ describe('Journey', function () {
   }
 
   it('do', function () {
-    Cypress.on('window:before:load', win => {
+    Cypress.on('window:before:load', (win) => {
       win.indexedDB.deleteDatabase('nevergreen')
     })
 
