@@ -18,3 +18,4 @@ src/.module-cache/
 .nyc_output
 coverage
 cypress/videos/
+cypress/screenshots/

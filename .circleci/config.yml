@@ -141,6 +141,10 @@ jobs:
             TRAY_USERNAME: ""
             TRAY_PASSWORD: ""
             TRAY_URL: "https://drive.google.com/uc?export=download&id=0BzdMs1jfanaARkJJX1VRR2QtdTA"
+            CYPRESS_BASE_URL: "https://staging.nevergreen.io"
+            CYPRESS_TRAY_USERNAME: ""
+            CYPRESS_TRAY_PASSWORD: ""
+            CYPRESS_TRAY_URL: "https://drive.google.com/uc?export=download&id=0BzdMs1jfanaARkJJX1VRR2QtdTA"
           command: |
             google-chrome --version
             ./ci/functional-test.sh
