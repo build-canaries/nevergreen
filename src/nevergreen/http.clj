@@ -41,7 +41,8 @@
 (defn- handle-exception-info [url redacted-url e]
   (let [data (ex-data e)
         status (or (:status data) "unknown")
-        msg (str "CI server returned a " (or (:reason-phrase data) "Unknown Error"))]
+        phrase (if (s/blank? (:reason-phrase data)) nil (:reason-phrase data))
+        msg (str "CI server returned a " (or phrase (:status data) "Unknown Error"))]
     (log/info (str "GET from [" redacted-url "] returned a status of [" status "]"))
     (throw (ex-info msg {:url url :status status}))))
 

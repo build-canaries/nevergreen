@@ -1,8 +1,8 @@
 (ns nevergreen.http-test
-  (:require [nevergreen.http :as subject]
-            [midje.sweet :refer :all]
-            [clj-http.client :as client])
-  (:import (java.net UnknownHostException URISyntaxException ConnectException)))
+    (:require [nevergreen.http :as subject]
+      [midje.sweet :refer :all]
+      [clj-http.client :as client])
+    (:import (java.net UnknownHostException URISyntaxException ConnectException)))
 
 (facts "http"
        (fact "adds additional headers"
@@ -34,6 +34,11 @@
              (subject/http-get "http://some-url" {}) => (throws "Connection refused, is the URL correct?")
              (provided
                (client/get anything anything) =throws=> (ConnectException. "Connection refused (Connection refused)")))
+
+       (fact "throws an error when the CI server responds with an error but blank reason phrase"
+             (subject/http-get "http://some-url" {}) => (throws "CI server returned a 404")
+             (provided
+               (client/get anything anything) =throws=> (ex-info "irrelevant" {:reason-phrase "" :status 404})))
 
        (fact "throws an error when the CI server responds with an error"
              (subject/http-get "http://some-url" {}) => (throws "CI server returned a some-error")
