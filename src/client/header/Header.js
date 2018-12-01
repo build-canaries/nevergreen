@@ -12,8 +12,7 @@ const MENU_ITEMS = [
   {id: 'tracking', title: 'tracking', shortcuts: ['t', '2']},
   {id: 'success', title: 'success', shortcuts: ['s', '3']},
   {id: 'settings', title: 'settings', shortcuts: [',', '4']},
-  {id: 'backup', title: 'backup', shortcuts: ['b', '5']},
-  {id: 'help', title: 'help', shortcuts: ['h', '6']}
+  {id: 'backup', title: 'backup', shortcuts: ['b', '5']}
 ]
 
 export class Header extends Component {

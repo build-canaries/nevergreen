@@ -17,11 +17,11 @@ import TrackingContainer from './tracking/TrackingContainer'
 import SuccessContainer from './success/SuccessContainer'
 import SettingsContainer from './settings/SettingsContainer'
 import BackupContainer from './backup/BackupContainer'
-import HelpContainer from './help/HelpContainer'
 import StyleGuide from './styleGuide/StyleGuide'
 import _ from 'lodash'
 import {UnhandledError} from './UnhandledError'
 import {loaded} from './reducers/Selectors'
+import Modal from 'react-modal'
 
 const ONE_SECOND = 1000
 
@@ -45,6 +45,8 @@ const history = createHistory()
 
 history.listen(() => store.dispatch(navigated()))
 
+Modal.setAppElement('#root')
+
 ReactDOM.render(
   <UnhandledError>
     <Provider store={store}>
@@ -56,7 +58,6 @@ ReactDOM.render(
             <Route exact path='/success' component={SuccessContainer}/>
             <Route exact path='/settings' component={SettingsContainer}/>
             <Route exact path='/backup' component={BackupContainer}/>
-            <Route exact path='/help' component={HelpContainer}/>
             <Route exact path='/style-guide' component={StyleGuide}/>
             <Route>
               <Redirect to='/tracking'/>

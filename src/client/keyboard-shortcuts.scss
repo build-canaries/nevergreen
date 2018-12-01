@@ -1,0 +1,12 @@
+@import './common/variables';
+@import './common/typography';
+
+.binding {
+  @include font-scale(-1);
+
+  background-image: linear-gradient(to bottom, #eee, #f9f9f9, #eee);
+  border: $mid-grey 1px solid;
+  border-radius: 5px;
+  color: $off-black;
+  padding: 0.1em 0.3em;
+}

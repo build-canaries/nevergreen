@@ -9,7 +9,6 @@ import {SELECTED_ROOT} from './SelectedReducer'
 import {SETTINGS_ROOT} from './SettingsReducer'
 import {INTERESTING_ROOT} from './InterestingReducer'
 import {SUCCESS_ROOT} from './SuccessReducer'
-import {SHORTCUT_ROOT} from './ShortcutReducer'
 import {TRAYS_ROOT} from './TraysReducer'
 
 export function loaded(state) {
@@ -184,10 +183,6 @@ export function selectedProjects(state, trayId) {
 
 export function projects(state, trayId) {
   return state.getIn([PROJECTS_ROOT, trayId]).toList()
-}
-
-export function shortcut(state) {
-  return state.get(SHORTCUT_ROOT)
 }
 
 export function pendingRequest(state, id) {

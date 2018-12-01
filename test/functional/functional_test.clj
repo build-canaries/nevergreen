@@ -9,8 +9,7 @@
             [functional.monitor-page :as monitor-page]
             [functional.success-page :as success-page]
             [functional.settings-page :as settings-page]
-            [functional.backup-page :as backup-page]
-            [functional.help-page :as help-page])
+            [functional.backup-page :as backup-page])
   (:import org.openqa.selenium.Dimension
            org.openqa.selenium.logging.LogType))
 
@@ -102,10 +101,6 @@
         (backup-page/import-data))
 
     (save-screenshot-and-source "backup")
-
-    (help-page/navigate base-url)
-
-    (save-screenshot-and-source "help")
 
     (monitor-page/navigate base-url)
 

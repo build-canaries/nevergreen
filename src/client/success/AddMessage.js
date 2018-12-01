@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Input} from '../common/forms/Input'
+import {ContextualHelp, InlineHelp} from '../common/ContextualHelp'
+import {SuccessHelp} from './SuccessHelp'
 import styles from './add-message.scss'
 
 export class AddMessage extends Component {
@@ -24,14 +26,19 @@ export class AddMessage extends Component {
 
     return (
       <div className={styles.addMessage}>
-        <Input className={styles.addMessageInput}
-               placeholder='text or image URL'
-               value={message}
-               onChange={this.updateMessage}
-               onEnter={this.addMessage}
-               data-locator='message'>
-          message
-        </Input>
+        <InlineHelp>
+          <Input className={styles.addMessageInput}
+                 placeholder='text or image URL'
+                 value={message}
+                 onChange={this.updateMessage}
+                 onEnter={this.addMessage}
+                 data-locator='message'>
+            message
+          </Input>
+          <ContextualHelp title='Success'
+                          help={<SuccessHelp/>}
+                          className={styles.help}/>
+        </InlineHelp>
         <button className={styles.add} onClick={this.addMessage} data-locator='add-message'>
           <span aria-label='add success message'>add</span>
         </button>

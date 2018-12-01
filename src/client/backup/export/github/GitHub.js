@@ -1,8 +1,10 @@
 import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import {Input} from '../../../common/forms/Input'
-import styles from './github.scss'
 import {GistIdInput} from '../../GistIdInput'
+import {ContextualHelp, InlineHelp} from '../../../common/ContextualHelp'
+import {GitHubHelp} from './GitHubHelp'
+import styles from './github.scss'
 
 export class GitHub extends Component {
 
@@ -38,10 +40,14 @@ export class GitHub extends Component {
 
     return (
       <Fragment>
-        <GistIdInput key={gistId}
-                     gistId={gistId}
-                     setGistId={gitHubSetGistId}
-                     disabled={disabled}/>
+        <InlineHelp>
+          <GistIdInput key={gistId}
+                       gistId={gistId}
+                       setGistId={gitHubSetGistId}
+                       disabled={disabled}/>
+          <ContextualHelp title='Export to GitHub'
+                          help={<GitHubHelp/>}/>
+        </InlineHelp>
         <Input value={newDescription}
                onChange={this.descriptionChanged}
                onBlur={this.setDescription}

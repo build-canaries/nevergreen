@@ -1,0 +1,20 @@
+@import './typography';
+
+$icon-button-size: 43px;
+
+.button {
+  @include font-scale(0);
+
+  height: $icon-button-size;
+  margin: 0;
+  min-height: $icon-button-size;
+  min-width: $icon-button-size;
+  padding: 0.5em;
+  width: $icon-button-size;
+
+  &:enabled {
+    border: none;
+    box-shadow: none;
+    transition: none;
+  }
+}

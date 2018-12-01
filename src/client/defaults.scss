@@ -86,7 +86,10 @@ pre {
 }
 
 table {
+  @include font-scale(0);
+
   display: block;
+  margin: $margin-top 0 0 0;
   overflow-y: scroll;
   width: 100%;
 }

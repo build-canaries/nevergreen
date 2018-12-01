@@ -1,17 +1,23 @@
 import React, {Fragment} from 'react'
 import PropTypes from 'prop-types'
-import styles from './github.scss'
 import {GistIdInput} from '../../GistIdInput'
+import {GitHubHelp} from './GitHubHelp'
+import {ContextualHelp, InlineHelp} from '../../../common/ContextualHelp'
+import styles from './github.scss'
 
 export function GitHub({gistId, gitHubSetGistId, loaded, restoreFromGitHub}) {
   const disabled = !loaded
 
   return (
     <Fragment>
-      <GistIdInput key={gistId}
-                   gistId={gistId}
-                   setGistId={gitHubSetGistId}
-                   disabled={disabled}/>
+      <InlineHelp>
+        <GistIdInput key={gistId}
+                     gistId={gistId}
+                     setGistId={gitHubSetGistId}
+                     disabled={disabled}/>
+        <ContextualHelp title='Import from GitHub'
+                        help={<GitHubHelp/>}/>
+      </InlineHelp>
       <button className={styles.import}
               onClick={restoreFromGitHub}
               disabled={disabled}>

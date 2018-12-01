@@ -1,9 +1,14 @@
 @import '../../../common/forms/button';
 @import '../../../common/layout';
+@import '../../../common/responsive';
 
 .import {
   @include button-icon('cloud-download');
 
   @extend .primaryButton;
   @extend %block-margin;
+
+  @include respond-to(tablet, desktop) {
+    display: block;
+  }
 }

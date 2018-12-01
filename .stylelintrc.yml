@@ -8,6 +8,9 @@ rules:
   font-family-name-quotes: always-where-required
   function-url-quotes: always
   at-rule-no-unknown: null
+  selector-pseudo-class-no-unknown:
+    - true
+    - ignorePseudoClasses: global
   scss/at-rule-no-unknown: true
   scss/at-function-pattern: ^_{0,1}[a-z\-]+$
   scss/at-mixin-pattern: ^_{0,1}[a-z\-]+$

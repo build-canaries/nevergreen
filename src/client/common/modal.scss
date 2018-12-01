@@ -1,0 +1,59 @@
+@import '../common/variables';
+@import '../common/typography';
+@import '../common/responsive';
+@import '../common/layout';
+@import '../common/forms/button';
+@import '../common/fonts/icon-font';
+@import '../common/icon-button';
+
+.modal {
+  @include font-scale(2);
+
+  background-color: $white;
+  border: 1px solid $light-grey;
+  box-shadow: $shadow;
+  color: $off-black;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 2em);
+  margin: 1em;
+  max-width: 50em;
+  overflow: scroll;
+  padding: 1em;
+  position: relative;
+  width: calc(100vw - 2em);
+  z-index: 9001;
+
+  @include respond-to(tablet, desktop) {
+    margin: 1em auto;
+  }
+}
+
+.header {
+  display: block;
+}
+
+.content {
+  flex-grow: 1;
+}
+
+.title {
+  @extend .icon-question;
+
+  @include font-scale(3);
+
+  display: inline-block;
+  width: calc(100% - #{$icon-button-size});
+
+  &::before {
+    margin-right: 0.5em;
+  }
+}
+
+.close {
+  float: right;
+}
+
+.modelOpen {
+  overflow: hidden;
+}

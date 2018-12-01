@@ -18,15 +18,11 @@
 
 .addMessageInput {
   flex-grow: 1;
-  margin-top: 0;
+  margin: 0 $margin-right 0 0;
 
   input {
     font-family: $monospace-font;
     width: 100%;
-  }
-
-  @include respond-to(tablet, desktop) {
-    margin-right: 1em;
   }
 }
 
@@ -34,4 +30,10 @@
   @include button-icon('plus');
 
   @extend .primaryButton;
+}
+
+.help {
+  @include respond-to(tablet, desktop) {
+    margin: 0 $margin-right 0 0;
+  }
 }

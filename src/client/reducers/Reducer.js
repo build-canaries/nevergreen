@@ -9,7 +9,6 @@ import {GITHUB_ROOT, reduce as github} from './GitHubReducer'
 import {EXPORT_ROOT, reduce as backupExport} from './ExportReducer'
 import {IMPORT_ROOT, reduce as backupImport} from './ImportReducer'
 import {reduce as selected, SELECTED_ROOT} from './SelectedReducer'
-import {reduce as shortcut, SHORTCUT_ROOT} from './ShortcutReducer'
 import {NOTIFICATION_ROOT, reduce as notification} from './NotificationReducer'
 import {PENDING_REQUESTS_ROOT, reduce as pendingRequests} from './PendingRequestsReducer'
 
@@ -25,6 +24,5 @@ export const reducer = combineReducers({
   [PROJECTS_ROOT]: projects,
   [SELECTED_ROOT]: selected,
   [SUCCESS_ROOT]: success,
-  [SHORTCUT_ROOT]: shortcut,
   [TRAYS_ROOT]: trays
 })

@@ -3,6 +3,12 @@
 @import '../common/responsive';
 @import '../common/layout';
 
+.help {
+  @include respond-to(tablet, desktop) {
+    margin: 0 $margin-right 0 0;
+  }
+}
+
 .addTray {
   align-items: start;
   background-color: $white;
@@ -27,10 +33,7 @@
 
 .inputs {
   flex-grow: 1;
-
-  @include respond-to(tablet, desktop) {
-    margin-right: 1em;
-  }
+  margin: 0 $margin-right 0 0;
 }
 
 .label {
@@ -49,6 +52,6 @@
 .password {
   @include respond-to(tablet, desktop) {
     display: inline-flex;
-    margin-right: 1em;
+    margin-right: $margin-right;
   }
 }

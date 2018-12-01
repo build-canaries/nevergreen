@@ -8,7 +8,7 @@ import {Timer} from './common/Timer'
 import NotificationContainer from './notification/NotificationContainer'
 import version from '../../resources/version.txt'
 import styles from './nevergreen.scss'
-import GlobalShortcuts from './GlobalShortcuts'
+import KeyboardShortcuts from './KeyboardShortcuts'
 
 const ONE_SECONDS = 1000
 const THREE_SECONDS = 3 * 1000
@@ -45,7 +45,7 @@ export class Nevergreen extends Component {
   }
 
   render() {
-    const {loaded, isFullScreen, children, clickToShowMenu, keyboardShortcut, history} = this.props
+    const {loaded, isFullScreen, children, clickToShowMenu} = this.props
 
     const disableFullScreenOn = clickToShowMenu
       ? {onClick: this.disableFullScreen}
@@ -53,7 +53,7 @@ export class Nevergreen extends Component {
 
     return (
       <Fragment>
-        {loaded && <GlobalShortcuts keyboardShortcut={keyboardShortcut} history={history}/>}
+        {loaded && <KeyboardShortcuts/>}
         {loaded && <Timer onTrigger={this.checkVersion} interval={TWENTY_FOUR_HOURS}/>}
 
         <div className={styles.nevergreen}
@@ -91,9 +91,7 @@ Nevergreen.propTypes = {
   children: PropTypes.node.isRequired,
   loaded: PropTypes.bool.isRequired,
   initalise: PropTypes.func.isRequired,
-  keyboardShortcut: PropTypes.func.isRequired,
   checkForNewVersion: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired,
   isFullScreen: PropTypes.bool,
   fullScreenRequested: PropTypes.bool,
   enableFullScreen: PropTypes.func.isRequired,

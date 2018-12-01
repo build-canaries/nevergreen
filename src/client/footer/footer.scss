@@ -20,6 +20,30 @@
   display: none;
 }
 
+.about {
+  @include font-scale(0);
+
+  background: none;
+  border: none;
+  color: $white;
+  display: block;
+  margin-top: 0.5em;
+  padding: 0;
+  text-transform: none;
+
+  &:enabled {
+    &:hover,
+    &:focus {
+      background-color: inherit;
+      color: darken($white, 10%);
+    }
+  }
+
+  @include respond-to(tablet, desktop) {
+    margin-top: 0;
+  }
+}
+
 .submitAnIssue {
   margin-top: 0.5em;
 
@@ -42,15 +66,5 @@
 
   &:visited {
     color: $white;
-  }
-}
-
-.about {
-  color: $white;
-  display: block;
-  margin-top: 0.5em;
-
-  @include respond-to(tablet, desktop) {
-    margin-top: 0;
   }
 }
