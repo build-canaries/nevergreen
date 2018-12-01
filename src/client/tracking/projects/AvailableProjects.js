@@ -91,7 +91,8 @@ export class AvailableProjects extends Component {
             <Shortcut hotkeys={[`+ ${index}`, `= ${index}`]}/>
           </button>
           <button className={styles.excludeAll}
-                  onClick={this.excludeAll(filteredProjects)}>
+                  onClick={this.excludeAll(filteredProjects)}
+                  data-locator='exclude-all'>
             exclude all
             <Shortcut hotkeys={[`- ${index}`]}/>
           </button>

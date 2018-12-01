@@ -19,19 +19,19 @@ describe('<Container/>', function () {
   it('should include the given title', function () {
     const props = {...DEFAULT_PROPS, title: 'some-title'}
     const wrapper = shallow(<Container {...props} />)
-    expect(wrapper.find(locator('title'))).to.have.text('some-title')
+    expect(wrapper.find(locator('container-title'))).to.have.text('some-title')
   })
 
   it('should include the given sub title', function () {
     const props = {...DEFAULT_PROPS, subTitle: 'some-sub-title'}
     const wrapper = shallow(<Container {...props} />)
-    expect(wrapper.find(locator('sub-title'))).to.have.text('some-sub-title')
+    expect(wrapper.find(locator('container-sub-title'))).to.have.text('some-sub-title')
   })
 
   it('should not include a sub title if one is not given', function () {
     const props = {...DEFAULT_PROPS, subTitle: null}
     const wrapper = shallow(<Container {...props} />)
-    expect(wrapper.find(locator('sub-title'))).to.not.be.present()
+    expect(wrapper.find(locator('container-sub-title'))).to.not.be.present()
   })
 
   it('should show the body when not hidden', function () {

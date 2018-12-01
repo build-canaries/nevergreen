@@ -53,7 +53,8 @@ export class GeneralSettings extends Component {
         <DropDown className={styles.refreshTime}
                   options={options}
                   value={refreshTime}
-                  onChange={this.setRefreshTime}>
+                  onChange={this.setRefreshTime}
+                  data-locator='refresh-time'>
           poll for CI changes every
         </DropDown>
         <Checkbox checked={clickToShowMenu}

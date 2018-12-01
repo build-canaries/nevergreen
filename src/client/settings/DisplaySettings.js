@@ -97,7 +97,8 @@ export class DisplaySettings extends Component {
         <DropDown className={styles.maxProjects}
                   options={projectsToShowOptions}
                   value={maxProjectsToShow}
-                  onChange={this.setMaxProjectsToShow}>
+                  onChange={this.setMaxProjectsToShow}
+                  data-locator='max-projects-to-show'>
           max number of projects to show
         </DropDown>
         <section className={styles.previewSection}>

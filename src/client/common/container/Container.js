@@ -50,11 +50,11 @@ export class Container extends Component {
              aria-expanded={!this.state.hidden}
              role='button'
              data-locator='title-bar'>
-          <h2 className={styles.title} data-locator='title'>{this.props.title}</h2>
+          <h2 className={styles.title} data-locator='container-title'>{this.props.title}</h2>
           {
             this.props.subTitle && (
               <div className={styles.subTitle}
-                   data-locator='sub-title'>
+                   data-locator='container-sub-title'>
                 {this.props.subTitle}
               </div>
             )
