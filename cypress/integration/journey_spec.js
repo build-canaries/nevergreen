@@ -29,8 +29,12 @@ describe('Journey', function () {
     cy.location('pathname').should('include', 'tracking')
 
     cy.get(locate('add-tray-url')).type(Cypress.env('TRAY_URL'))
-    cy.get(locate('add-tray-username')).type(Cypress.env('TRAY_USERNAME'))
-    cy.get(locate('add-tray-password')).type(Cypress.env('TRAY_PASSWORD'))
+
+    if(Cypress.env('TRAY_USERNAME') && Cypress.env('TRAY_PASSWORD')) {
+      cy.get(locate('add-tray-username')).type(Cypress.env('TRAY_USERNAME'))
+      cy.get(locate('add-tray-password')).type(Cypress.env('TRAY_PASSWORD'))
+    }
+
     cy.get(locate('add-tray')).click()
 
     cy.get(locate('tray'))
