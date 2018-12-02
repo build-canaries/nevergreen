@@ -71,6 +71,26 @@ jobs:
             - ./ci/*
             - ./target/nevergreen-standalone.jar
             - ./Dockerfile
+ 
+  functional-tests-new:
+    working_directory: ~/nevergreen
+
+    docker:
+    - image: cypress/base:10
+
+    steps:
+    - checkout
+
+    - attach_workspace:
+        at: ~/nevergreen
+
+    - run:
+        name: functional tests
+        command: |
+          './ci/functional-test-staging-variables.sh'
+          npm run cypress
+    - store_artifacts:
+        path: ./cypress/videos
 
   deploy-staging:
     working_directory: ~/nevergreen
@@ -179,6 +199,9 @@ workflows:
       - deploy-staging:
           requires:
             - build
+      - functional-tests-new:
+          requires:
+            - deploy-staging
       - cypress/run:
           start: './ci/functional-test-staging-variables.sh'
           requires:
