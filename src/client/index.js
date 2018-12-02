@@ -2,7 +2,8 @@ import '@babel/polyfill'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {Provider} from 'react-redux'
-import {applyMiddleware, compose, createStore} from 'redux'
+import {applyMiddleware, createStore} from 'redux'
+import {composeWithDevTools} from 'redux-devtools-extension/logOnlyInProduction'
 import createHistory from 'history/createBrowserHistory'
 import {Redirect, Route, Router, Switch} from 'react-router-dom'
 import thunkMiddleware from 'redux-thunk'
@@ -26,9 +27,8 @@ import Modal from 'react-modal'
 const ONE_SECOND = 1000
 
 const initialState = Map()
-let store = createStore(reducer, initialState, compose(
-  applyMiddleware(thunkMiddleware),
-  window.devToolsExtension ? window.devToolsExtension() : (f) => f
+let store = createStore(reducer, initialState, composeWithDevTools(
+  applyMiddleware(thunkMiddleware)
 ))
 
 const save = async () => {
