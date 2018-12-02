@@ -13,13 +13,18 @@
   @extend %visually-hidden;
 }
 
+.controls {
+  @include respond-to(very-small) {
+    overflow: scroll;
+  }
+}
+
 .toggles {
   display: block;
   width: 100%;
 
   @include respond-to(tablet, desktop) {
     display: inline-block;
-    margin-top: $margin-top;
     width: auto;
   }
 }
@@ -27,30 +32,36 @@
 .includeAll {
   @include button-icon('checkbox-checked');
 
-  @extend %inline-margin;
+  @include respond-to(tablet, desktop) {
+    margin: $margin-top $margin-right 0 0;
+  }
 }
 
 .excludeAll {
   @include button-icon('checkbox-unchecked');
 
-  @extend %inline-margin;
+  @include respond-to(tablet, desktop) {
+    margin: $margin-top $margin-right 0 0;
+  }
 }
 
 .buildItems {
   display: block;
   list-style: none;
-  overflow: hidden;
   width: 100%;
+
+  @include respond-to(very-small) {
+    overflow: scroll;
+  }
 }
 
 .projectFilter {
-  @extend %first;
-
   display: block;
   width: 100%;
 
   @include respond-to(tablet, desktop) {
     display: inline-block;
+    margin: $margin-top 0 0 0;
     width: auto;
   }
 }

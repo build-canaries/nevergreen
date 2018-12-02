@@ -1,6 +1,7 @@
 @import '~bourbon-neat/core/neat';
 
 $breakpoints: (
+  very-small: (media: '(min-width: 0) and (max-width: 320px)', columns: 1),
   mobile: (media: '(min-width: 0) and (max-width: 767px)', columns: 4),
   tablet: (media: '(min-width: 768px) and (max-width: 1439px)', columns: 8),
   desktop: (media: '(min-width: 1440px)', columns: 12)

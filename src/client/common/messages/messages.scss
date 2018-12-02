@@ -1,6 +1,7 @@
 @import '../variables';
 @import '../fonts/icon-font';
 @import '../typography';
+@import '../responsive';
 
 @mixin _messages($icon, $color, $background-color) {
   @include font-scale(1);
@@ -9,6 +10,10 @@
   color: $color;
   list-style: none;
   margin-top: 1em;
+
+  @include respond-to(very-small) {
+    overflow: scroll;
+  }
 
   .message:first-child {
     @extend .icon-#{$icon};

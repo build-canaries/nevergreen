@@ -41,42 +41,42 @@ export class AddTray extends Component {
 
     return (
       <div className={styles.addTray}>
+        <div className={styles.inputs}>
+          <Input className={styles.url}
+                 placeholder='CCTray XML file'
+                 value={url}
+                 onChange={this.updateUrl}
+                 onEnter={this.addTrayAndClearInput}
+                 data-locator='add-tray-url'
+                 autoComplete='url'>
+            <div className={styles.label}>URL</div>
+          </Input>
+          <Input className={styles.username}
+                 value={username}
+                 onChange={this.updateUsername}
+                 onEnter={this.addTrayAndClearInput}
+                 data-locator='add-tray-username'
+                 autoComplete='username'>
+            <div className={styles.label}>username</div>
+          </Input>
+          <Input type='password'
+                 className={styles.password}
+                 value={password}
+                 onChange={this.updatePassword}
+                 onEnter={this.addTrayAndClearInput}
+                 data-locator='add-tray-password'
+                 autoComplete='new-password'>
+            <div className={styles.label}>password</div>
+          </Input>
+        </div>
         <InlineHelp>
-          <div className={styles.inputs}>
-            <Input className={styles.url}
-                   placeholder='CCTray XML file'
-                   value={url}
-                   onChange={this.updateUrl}
-                   onEnter={this.addTrayAndClearInput}
-                   data-locator='add-tray-url'
-                   autoComplete='url'>
-              <div className={styles.label}>URL</div>
-            </Input>
-            <Input className={styles.username}
-                   value={username}
-                   onChange={this.updateUsername}
-                   onEnter={this.addTrayAndClearInput}
-                   data-locator='add-tray-username'
-                   autoComplete='username'>
-              <div className={styles.label}>username</div>
-            </Input>
-            <Input type='password'
-                   className={styles.password}
-                   value={password}
-                   onChange={this.updatePassword}
-                   onEnter={this.addTrayAndClearInput}
-                   data-locator='add-tray-password'
-                   autoComplete='new-password'>
-              <div className={styles.label}>password</div>
-            </Input>
-          </div>
+          <button className={styles.add} onClick={this.addTrayAndClearInput} data-locator='add-tray'>
+            <span aria-label='add tray'>add</span>
+          </button>
           <ContextualHelp title='Add tray'
                           help={<TrackingHelp addTray={addTray}/>}
                           className={styles.help}/>
         </InlineHelp>
-        <button className={styles.add} onClick={this.addTrayAndClearInput} data-locator='add-tray'>
-          <span aria-label='add tray'>add</span>
-        </button>
       </div>
     )
   }

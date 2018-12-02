@@ -26,22 +26,23 @@ export class AddMessage extends Component {
 
     return (
       <div className={styles.addMessage}>
+        <Input className={styles.addMessageInput}
+               placeholder='text or image URL'
+               value={message}
+               onChange={this.updateMessage}
+               onEnter={this.addMessage}
+               data-locator='message'>
+          message
+        </Input>
         <InlineHelp>
-          <Input className={styles.addMessageInput}
-                 placeholder='text or image URL'
-                 value={message}
-                 onChange={this.updateMessage}
-                 onEnter={this.addMessage}
-                 data-locator='message'>
-            message
-          </Input>
+          <button className={styles.add} onClick={this.addMessage} data-locator='add-message'>
+            <span aria-label='add success message'>add</span>
+          </button>
+
           <ContextualHelp title='Success'
                           help={<SuccessHelp/>}
                           className={styles.help}/>
         </InlineHelp>
-        <button className={styles.add} onClick={this.addMessage} data-locator='add-message'>
-          <span aria-label='add success message'>add</span>
-        </button>
       </div>
     )
   }

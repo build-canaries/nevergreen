@@ -19,5 +19,6 @@
 
   @include respond-to(tablet, desktop) {
     align-items: start;
+    flex-grow: 0;
   }
 }

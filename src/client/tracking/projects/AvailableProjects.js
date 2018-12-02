@@ -81,7 +81,7 @@ export class AvailableProjects extends Component {
     const hasProjectsFiltered = notEmpty(filteredProjects)
 
     const controls = (
-      <div>
+      <div className={styles.controls}>
         <fieldset className={styles.toggles}>
           <legend className={styles.legend}>Available projects</legend>
           <button className={styles.includeAll}

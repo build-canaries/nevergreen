@@ -11,6 +11,10 @@
   margin-bottom: 1em;
   padding: 1em;
 
+  @include respond-to(very-small) {
+    overflow: scroll;
+  }
+
   @include respond-to(tablet, desktop) {
     flex-wrap: nowrap;
   }
@@ -18,10 +22,11 @@
 
 .addMessageInput {
   flex-grow: 1;
-  margin: 0 $margin-right 0 0;
+  margin: 0;
 
   input {
     font-family: $monospace-font;
+    margin: 0 $margin-right 0 0;
     width: 100%;
   }
 }
@@ -30,10 +35,18 @@
   @include button-icon('plus');
 
   @extend .primaryButton;
+
+  margin: $margin-top $margin-right 0 0;
+
+  @include respond-to(tablet, desktop) {
+    margin: 0 $margin-right 0 0;
+  }
 }
 
 .help {
+  margin: $margin-top 0 0 0;
+
   @include respond-to(tablet, desktop) {
-    margin: 0 $margin-right 0 0;
+    margin: 0;
   }
 }

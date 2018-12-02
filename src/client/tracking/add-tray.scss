@@ -4,21 +4,29 @@
 @import '../common/layout';
 
 .help {
+  margin: $margin-top 0 0 0;
+
   @include respond-to(tablet, desktop) {
-    margin: 0 $margin-right 0 0;
+    margin: 0;
   }
 }
 
 .addTray {
-  align-items: start;
+  align-items: stretch;
   background-color: $white;
   box-shadow: $shadow;
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   margin-bottom: 1em;
   padding: 1em;
 
+  @include respond-to(very-small) {
+    overflow: scroll;
+  }
+
   @include respond-to(tablet, desktop) {
+    flex-direction: row;
     flex-wrap: nowrap;
   }
 }
@@ -28,12 +36,20 @@
 
   @extend .primaryButton;
 
-  flex-shrink: 0;
+  margin: $margin-top $margin-right 0 0;
+
+  @include respond-to(tablet, desktop) {
+    margin: 0 $margin-right 0 0;
+  }
 }
 
 .inputs {
   flex-grow: 1;
-  margin: 0 $margin-right 0 0;
+  margin: 0;
+
+  @include respond-to(tablet, desktop) {
+    margin: 0 $margin-right 0 0;
+  }
 }
 
 .label {
