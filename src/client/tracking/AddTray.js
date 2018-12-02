@@ -18,7 +18,7 @@ export class AddTray extends Component {
     this.state = {...DEFAULT_STATE}
   }
 
-  addTray = () => {
+  addTrayAndClearInput = () => {
     this.props.addTray(this.state.url, this.state.username, this.state.password)
     this.setState({...DEFAULT_STATE})
   }
@@ -37,6 +37,7 @@ export class AddTray extends Component {
 
   render() {
     const {url, username, password} = this.state
+    const {addTray} = this.props
 
     return (
       <div className={styles.addTray}>
@@ -46,7 +47,7 @@ export class AddTray extends Component {
                    placeholder='CCTray XML file'
                    value={url}
                    onChange={this.updateUrl}
-                   onEnter={this.addTray}
+                   onEnter={this.addTrayAndClearInput}
                    data-locator='add-tray-url'
                    autoComplete='url'>
               <div className={styles.label}>URL</div>
@@ -54,7 +55,7 @@ export class AddTray extends Component {
             <Input className={styles.username}
                    value={username}
                    onChange={this.updateUsername}
-                   onEnter={this.addTray}
+                   onEnter={this.addTrayAndClearInput}
                    data-locator='add-tray-username'
                    autoComplete='username'>
               <div className={styles.label}>username</div>
@@ -63,17 +64,17 @@ export class AddTray extends Component {
                    className={styles.password}
                    value={password}
                    onChange={this.updatePassword}
-                   onEnter={this.addTray}
+                   onEnter={this.addTrayAndClearInput}
                    data-locator='add-tray-password'
                    autoComplete='new-password'>
               <div className={styles.label}>password</div>
             </Input>
           </div>
           <ContextualHelp title='Add tray'
-                          help={<TrackingHelp/>}
+                          help={<TrackingHelp addTray={addTray}/>}
                           className={styles.help}/>
         </InlineHelp>
-        <button className={styles.add} onClick={this.addTray} data-locator='add-tray'>
+        <button className={styles.add} onClick={this.addTrayAndClearInput} data-locator='add-tray'>
           <span aria-label='add tray'>add</span>
         </button>
       </div>

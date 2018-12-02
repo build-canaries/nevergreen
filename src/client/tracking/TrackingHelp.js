@@ -1,7 +1,9 @@
 import React, {Fragment} from 'react'
 import {ExternalLink} from '../common/ExternalLink'
+import PropTypes from 'prop-types'
+import styles from './tracking-help.scss'
 
-export function TrackingHelp() {
+export function TrackingHelp({addTray}) {
   return (
     <Fragment>
       <p>
@@ -85,7 +87,7 @@ export function TrackingHelp() {
       <p>
         If you would like to try Nevergreen you can use the public Apache projects CCTray at:
       </p>
-      <p>
+      <div className={styles.exampleUrl}>
         <code>https:
           <wbr/>
           &#x2F;/builds
@@ -95,7 +97,16 @@ export function TrackingHelp() {
           .org
           <wbr/>
           /cc.xml</code>
-      </p>
+      </div>
+      <button className={styles.addExampleTray}
+              onClick={() => addTray('http://localhost:5050/cc.xml')}
+              data-locator='add-example-tray'>
+        Try it now!
+      </button>
     </Fragment>
   )
+}
+
+TrackingHelp.propTypes = {
+  addTray: PropTypes.func.isRequired
 }

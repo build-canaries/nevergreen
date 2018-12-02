@@ -1,0 +1,16 @@
+@import '../common/variables';
+@import '../common/responsive';
+@import '../common/forms/button';
+
+.addExampleTray {
+  @extend .primaryButton;
+}
+
+.exampleUrl {
+  display: inline-block;
+  margin: $margin-top 0 0 0;
+
+  @include respond-to(tablet, desktop) {
+    margin: $margin-top $margin-right 0 0;
+  }
+}
