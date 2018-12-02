@@ -34,7 +34,6 @@ npm run ci-stub-server &
 
 export HOST="http://localhost:5000"
 export FULL_VERSION="$(cat "./resources/version.txt")+$(cat "./resources/version_meta.txt")"
-export CYPRESS_FULL_VERSION="$(cat "./resources/version.txt")+$(cat "./resources/version_meta.txt")"
 ./ci/smoke-test.sh # Don't source as the script calls exit
 
 echo '[Step 6 of 6] Running the functional tests...'
