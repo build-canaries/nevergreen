@@ -52,7 +52,7 @@ export class ContextualHelp extends Component {
 
 ContextualHelp.propTypes = {
   title: PropTypes.string.isRequired,
-  help: PropTypes.node.isRequired,
+  help: PropTypes.element.isRequired,
   className: PropTypes.string
 }
 
