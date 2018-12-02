@@ -1,9 +1,10 @@
-import React, {Component, Fragment} from 'react'
+import React, {Component, Fragment, cloneElement} from 'react'
 import PropTypes from 'prop-types'
 import {Modal} from './Modal'
 import {IconButton} from './IconButton'
 import cn from 'classnames'
 import styles from './contextual-help.scss'
+
 
 export class ContextualHelp extends Component {
 
@@ -26,12 +27,13 @@ export class ContextualHelp extends Component {
     const {help, title, className} = this.props
     const {show} = this.state
     const fullTitle = `${title} help`
+    const clonedHelp = cloneElement(help, {close: this.closeHelp})
 
     const helpContainer = (
       <Modal title={fullTitle}
              show={show}
              close={this.closeHelp}>
-        {help}
+        {clonedHelp}
       </Modal>
     )
 

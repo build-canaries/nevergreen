@@ -3,7 +3,12 @@ import {ExternalLink} from '../common/ExternalLink'
 import PropTypes from 'prop-types'
 import styles from './tracking-help.scss'
 
-export function TrackingHelp({addTray}) {
+export function TrackingHelp({addTray, close}) {
+  const addExampleTray = () => {
+    addTray('https://builds.apache.org/cc.xml')
+    close && close()
+  }
+
   return (
     <Fragment>
       <p>
@@ -99,7 +104,7 @@ export function TrackingHelp({addTray}) {
           /cc.xml</code>
       </div>
       <button className={styles.addExampleTray}
-              onClick={() => addTray('https://builds.apache.org/cc.xml')}
+              onClick={addExampleTray}
               data-locator='add-example-tray'>
         Try it now!
       </button>
@@ -108,5 +113,6 @@ export function TrackingHelp({addTray}) {
 }
 
 TrackingHelp.propTypes = {
-  addTray: PropTypes.func.isRequired
+  addTray: PropTypes.func.isRequired,
+  close: PropTypes.func
 }
