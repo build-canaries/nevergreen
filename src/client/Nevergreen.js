@@ -30,7 +30,9 @@ export class Nevergreen extends Component {
     const {initalise, notify} = this.props
 
     initalise()
-    registerServiceWorker(notify)
+    if (process.env.NODE_ENV === 'production') {
+      registerServiceWorker(notify)
+    }
   }
 
   componentDidUpdate(prevProps) {

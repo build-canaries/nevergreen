@@ -2,19 +2,15 @@ const webpack = require('webpack')
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const autoprefixer = require('autoprefixer')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
-const {GenerateSW} = require('workbox-webpack-plugin')
-const isProd = (process.env.NODE_ENV === 'production')
 
 const cssLoader = {
   loader: 'css-loader',
   options: {
     sourceMap: true,
     modules: true,
-    localIdentName: isProd ? '[hash:base64:6]' : '[name]-[local]-[hash:base64:6]'
+    localIdentName: '[name]-[local]-[hash:base64:6]'
   }
 }
 
@@ -53,19 +49,11 @@ module.exports = {
   devtool: 'source-map',
   entry: ['./src/client/index'],
   output: {
-    path: path.join(__dirname, 'resources/public'),
+    path: path.join(__dirname, '../resources/public'),
     filename: '[name].[hash:8].js',
     publicPath: ''
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: './src/client/index.html',
-      minify: {
-        collapseWhitespace: isProd,
-        removeComments: isProd,
-        removeRedundantAttributes: isProd
-      }
-    }),
     new MiniCssExtractPlugin({
       filename: '[name].[hash:8].css',
       allChunks: true
@@ -75,27 +63,14 @@ module.exports = {
       './src/client/favicons',
       './src/client/reducers/schema.json'
     ]),
-    new OptimizeCssAssetsPlugin(),
-    new ManifestPlugin({fileName: 'asset-manifest.json'}),
-    new GenerateSW({
-      swDest: 'service-worker.js',
-      cacheId: 'nevergreen',
-      exclude: [/\.map$/, /asset-manifest\.json$/],
-      importWorkboxFrom: 'local',
-      clientsClaim: true,
-      skipWaiting: true,
-      navigateFallback: '/index.html',
-      navigateFallbackBlacklist: [
-        new RegExp('/[^/]+\\.[^/]+$') // Exclude URLs containing a dot, as they're likely a resource in public
-      ]
-    })
+    new ManifestPlugin({ fileName: 'asset-manifest.json' })
   ],
   module: {
     rules: [
       {
         test: /\.js$/i,
         use: 'babel-loader',
-        include: path.join(__dirname, 'src/client')
+        include: path.join(__dirname, '../src/client')
       },
       {
         test: /\.scss$/i,
@@ -106,7 +81,7 @@ module.exports = {
           'resolve-url-loader',
           {
             loader: 'sass-loader',
-            options: {sourceMap: true}
+            options: { sourceMap: true }
           }
         ]
       },
@@ -159,5 +134,6 @@ module.exports = {
         use: 'raw-loader'
       }
     ]
-  }
+  },
+  stats: 'minimal'
 }
