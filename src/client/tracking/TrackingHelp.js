@@ -99,7 +99,7 @@ export function TrackingHelp({addTray}) {
           /cc.xml</code>
       </div>
       <button className={styles.addExampleTray}
-              onClick={() => addTray('http://localhost:5050/cc.xml')}
+              onClick={() => addTray('https://builds.apache.org/cc.xml')}
               data-locator='add-example-tray'>
         Try it now!
       </button>
