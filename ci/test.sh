@@ -8,7 +8,7 @@ set -e
 
 echo "running ui tests"
 npm run lint
-npm run coverage
+npm run test:coverage
 
 echo "running the server tests"
 ./lein.sh lint

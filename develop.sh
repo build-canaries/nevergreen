@@ -34,10 +34,10 @@ echo "fetching node modules and performing first build"
 . ./ci/dependencies.sh
 
 echo "watching the js for changes ..."
-npm run watchJs &
+npm run watch:js &
 
 echo "starting the CI stub server ..."
-npm run ci-stub-server &
+npm run start:ci-stub-server &
 
 echo "running the server ..."
 ./lein.sh run &

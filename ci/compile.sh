@@ -4,7 +4,7 @@ echo "cleaning client build folders"
 npm run clean
 
 echo "building ui"
-npm run build-prod
+npm run build:prod
 
 echo "cleaning server build folders"
 ./lein.sh clean
