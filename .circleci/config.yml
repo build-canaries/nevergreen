@@ -211,7 +211,7 @@ workflows:
       - hold:
           type: approval
           requires:
-            - cypress/run
+            - functional-tests-cypress
       - deploy-prod:
           requires:
             - hold
