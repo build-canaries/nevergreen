@@ -84,6 +84,11 @@ jobs:
     - attach_workspace:
         at: ~/nevergreen
 
+    - restore_cache:
+          keys:
+            - v4-nevergreen-ui-{{ checksum ".nvmrc" }}-{{ checksum "package-lock.json" }}
+            - v4-nevergreen-ui-{{ checksum ".nvmrc" }}- # fall back to any cache for the current version of node
+
     - run:
         name: functional tests
         environment:
@@ -93,7 +98,7 @@ jobs:
             CYPRESS_TRAY_PASSWORD: ""
         command: |
           npm install
-          npm run cypress
+          npm run cypress --record
 
     - store_artifacts:
         path: ./cypress/videos
