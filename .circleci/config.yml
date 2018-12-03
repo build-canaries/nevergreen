@@ -96,7 +96,7 @@ jobs:
             CYPRESS_TRAY_PASSWORD: ""
         command: |
           npm install
-          "npm run cypress --record"
+          npm run cypress
 
     - store_artifacts:
         path: ./cypress/videos
