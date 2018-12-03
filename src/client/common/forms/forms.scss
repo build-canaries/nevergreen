@@ -9,6 +9,7 @@
   flex-wrap: wrap;
   justify-content: flex-start;
   margin-top: $margin-top;
+  min-width: 1em;
   width: 100%;
 
   @include respond-to(tablet, desktop) {

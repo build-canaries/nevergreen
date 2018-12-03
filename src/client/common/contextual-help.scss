@@ -16,9 +16,11 @@
   display: inline-flex;
   flex-grow: 1;
   flex-wrap: nowrap;
+  width: 100%;
 
   @include respond-to(tablet, desktop) {
     align-items: start;
     flex-grow: 0;
+    width: auto;
   }
 }
