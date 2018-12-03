@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
+import cn from 'classnames'
 import styles from './container.scss'
 
 export class Container extends Component {
@@ -25,18 +25,24 @@ export class Container extends Component {
   }
 
   componentDidMount() {
-    if (this.props.highlight) {
+    if (this.props.highlight && this.rootNode.current) {
       this.rootNode.current.scrollIntoView(true)
     }
   }
 
   render() {
-    const titleBarClasses = classNames(styles.titleBar, {
-      [styles.highlight]: this.props.highlight,
-      [styles.show]: this.state.hidden,
-      [styles.hide]: !this.state.hidden
+    const {highlight, className, title, subTitle, children} = this.props
+    const {hidden} = this.state
+
+    const titleBarClasses = cn(styles.titleBar, {
+      [styles.highlight]: highlight,
+      [styles.show]: hidden,
+      [styles.hide]: !hidden
     })
-    const label = `${this.state.hidden ? 'show' : 'hide'} section ${this.props.title}`
+    const bodyClasses = cn(styles.body, className, {
+      [styles.hidden]: hidden
+    })
+    const label = `${hidden ? 'show' : 'hide'} section ${title}`
 
     return (
       <section className={styles.container}
@@ -47,27 +53,22 @@ export class Container extends Component {
              onKeyPress={this.keyToggle}
              tabIndex='0'
              aria-label={label}
-             aria-expanded={!this.state.hidden}
+             aria-expanded={!hidden}
              role='button'
              data-locator='title-bar'>
-          <h2 className={styles.title} data-locator='container-title'>{this.props.title}</h2>
+          <h2 className={styles.title} data-locator='container-title'>{title}</h2>
           {
-            this.props.subTitle && (
+            subTitle && (
               <div className={styles.subTitle}
                    data-locator='container-sub-title'>
-                {this.props.subTitle}
+                {subTitle}
               </div>
             )
           }
         </div>
-        {
-          !this.state.hidden && (
-            <div className={this.props.className}
-                 data-locator='body'>
-              {this.props.children}
-            </div>
-          )
-        }
+        <div className={bodyClasses} data-locator='body'>
+          {children}
+        </div>
       </section>
     )
   }

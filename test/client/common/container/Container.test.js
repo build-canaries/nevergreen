@@ -40,10 +40,10 @@ describe('<Container/>', function () {
     expect(wrapper.find(locator('body'))).to.be.present()
   })
 
-  it('should not show the body when hidden', function () {
+  it('should render the body when hidden as it is hidden via css', function () {
     const props = {...DEFAULT_PROPS, hidden: true}
     const wrapper = shallow(<Container {...props} />)
-    expect(wrapper.find(locator('body'))).to.not.be.present()
+    expect(wrapper.find(locator('body'))).to.be.present()
   })
 
   it('should toggle visibility when clicking the title bar', function () {

@@ -2,6 +2,7 @@
 @import '../fonts/icon-font';
 @import '../typography';
 @import '../accessibility';
+@import '../responsive';
 
 @mixin _show-hide-icon($icon) {
   @extend .icon-circle-#{$icon};
@@ -21,6 +22,16 @@
   &:last-child {
     margin-bottom: 0;
   }
+}
+
+.body {
+  @include respond-to(very-small) {
+    overflow: scroll;
+  }
+}
+
+.hidden {
+  display: none;
 }
 
 .titleBar {
