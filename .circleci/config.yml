@@ -44,8 +44,6 @@ jobs:
           paths:
             - ./node_modules
             - ~/.nvm
-            - ~/.npm
-            - ~/.cache
 
       - run:
           name: test
@@ -84,9 +82,8 @@ jobs:
         at: ~/nevergreen
 
     - restore_cache:
-          keys:
-            - v4-nevergreen-ui-{{ checksum ".nvmrc" }}-{{ checksum "package-lock.json" }}
-            - v4-nevergreen-ui-{{ checksum ".nvmrc" }}- # fall back to any cache for the current version of node
+        keys:
+          - v4-nevergreen-cypress-{{ checksum "package.json" }}
 
     - run:
         name: functional tests
@@ -98,6 +95,14 @@ jobs:
         command: |
           npm install
           npm run cypress
+
+    - save_cache:
+        key: v4-nevergreen-cypress-{{ checksum "package.json" }}
+        paths:
+          - ./node_modules
+          - ~/.nvm
+          - ~/.npm
+          - ~/.cache
 
     - store_artifacts:
         path: ./cypress/videos
