@@ -1,8 +1,5 @@
 version: 2.1
 
-orbs:
-  cypress: cypress-io/cypress@1.1.0
-
 jobs:
   build:
     working_directory: ~/nevergreen
@@ -47,6 +44,7 @@ jobs:
           paths:
             - ./node_modules
             - ~/.nvm
+            - ~/.npm
 
       - run:
           name: test
@@ -71,6 +69,37 @@ jobs:
             - ./ci/*
             - ./target/nevergreen-standalone.jar
             - ./Dockerfile
+ 
+  functional-tests-cypress:
+    working_directory: ~/nevergreen
+
+    docker:
+    - image: cypress/base:10
+
+    steps:
+    - checkout
+
+    - attach_workspace:
+        at: ~/nevergreen
+
+    - restore_cache:
+          keys:
+            - v4-nevergreen-ui-{{ checksum ".nvmrc" }}-{{ checksum "package-lock.json" }}
+            - v4-nevergreen-ui-{{ checksum ".nvmrc" }}- # fall back to any cache for the current version of node
+
+    - run:
+        name: functional tests
+        environment:
+            CYPRESS_BASE_URL: "https://staging.nevergreen.io"
+            CYPRESS_TRAY_URL: "https://raw.githubusercontent.com/build-canaries/nevergreen/master/ci_stub_server/cctray.xml"
+            CYPRESS_TRAY_USERNAME: ""
+            CYPRESS_TRAY_PASSWORD: ""
+        command: |
+          npm install
+          npm run cypress
+
+    - store_artifacts:
+        path: ./cypress/videos
 
   deploy-staging:
     working_directory: ~/nevergreen
@@ -179,14 +208,13 @@ workflows:
       - deploy-staging:
           requires:
             - build
-      - cypress/run:
-          start: './ci/functional-test-staging-variables.sh'
+      - functional-tests-cypress:
           requires:
             - deploy-staging
       - hold:
           type: approval
           requires:
-            - cypress/run
+            - functional-tests-cypress
       - deploy-prod:
           requires:
             - hold
