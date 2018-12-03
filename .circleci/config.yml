@@ -45,6 +45,7 @@ jobs:
             - ./node_modules
             - ~/.nvm
             - ~/.npm
+            - ~/.cache
 
       - run:
           name: test
