@@ -34,7 +34,7 @@
 .add {
   @include button-icon('plus');
 
-  @extend .primaryButton;
+  @extend %primary-button;
 
   margin: $margin-top $margin-right 0 0;
 

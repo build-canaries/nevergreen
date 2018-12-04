@@ -1,6 +1,7 @@
 @import '../common/variables';
 @import '../common/layout';
 @import '../common/responsive';
+@import '../common/forms/button';
 
 .section {
   background-color: $white;
@@ -44,4 +45,12 @@
       @include grid-column(4 of 12);
     }
   }
+}
+
+.primaryButton {
+  @extend %primary-button;
+}
+
+.dangerButton {
+  @extend %danger-button;
 }

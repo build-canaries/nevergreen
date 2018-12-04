@@ -7,7 +7,7 @@
 .refresh {
   @include button-icon('loop2');
 
-  @extend .primaryButton;
+  @extend %primary-button;
   @extend %inline-margin;
   @extend %first;
 }

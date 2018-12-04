@@ -33,6 +33,6 @@
 .copy {
   @include button-icon('paste');
 
-  @extend .primaryButton;
+  @extend %primary-button;
   @extend %block-margin;
 }

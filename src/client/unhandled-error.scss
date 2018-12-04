@@ -8,7 +8,7 @@
 }
 
 .deleteConfiguration {
-  @extend .dangerButton;
+  @extend %danger-button;
 
   margin-top: 1.5em;
 }

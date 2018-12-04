@@ -4,7 +4,7 @@
 @import '../common/responsive';
 
 .removeLink {
-  @extend .dangerButton;
+  @extend %danger-button;
 
   display: inline;
   margin: 0 $margin-right 0 0;

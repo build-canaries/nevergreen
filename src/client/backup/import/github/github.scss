@@ -5,7 +5,7 @@
 .import {
   @include button-icon('cloud-download');
 
-  @extend .primaryButton;
+  @extend %primary-button;
   @extend %block-margin;
 
   @include respond-to(tablet, desktop) {

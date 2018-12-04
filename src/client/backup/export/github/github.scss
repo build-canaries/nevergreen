@@ -6,7 +6,7 @@ $label-size: 6em;
 .export {
   @include button-icon('cloud-upload');
 
-  @extend .primaryButton;
+  @extend %primary-button;
   @extend %block-margin;
 }
 

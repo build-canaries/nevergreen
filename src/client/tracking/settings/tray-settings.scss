@@ -59,7 +59,7 @@
 .delete {
   @include button-icon('bin');
 
-  @extend .dangerButton;
+  @extend %danger-button;
 }
 
 .random {
@@ -79,5 +79,5 @@
 .update {
   @include button-icon('floppy-disk');
 
-  @extend .primaryButton;
+  @extend %primary-button;
 }

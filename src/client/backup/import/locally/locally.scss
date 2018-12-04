@@ -33,6 +33,6 @@
 .import {
   @include button-icon('floppy-disk');
 
-  @extend .primaryButton;
+  @extend %primary-button;
   @extend %block-margin;
 }

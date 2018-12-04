@@ -3,7 +3,7 @@
 @import '../common/forms/button';
 
 .addExampleTray {
-  @extend .primaryButton;
+  @extend %primary-button;
 }
 
 .exampleUrl {

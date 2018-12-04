@@ -1,7 +1,6 @@
 @import '../common/variables';
 @import '../common/typography';
 @import '../common/fonts/icon-font';
-@import '../common/responsive';
 @import '../common/forms/button';
 
 .popUpNotification {
@@ -30,7 +29,7 @@
 }
 
 .dismiss {
-  @extend .primaryButton;
+  @extend %primary-button;
 
   align-self: flex-start;
 }

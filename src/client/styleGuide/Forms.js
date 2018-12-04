@@ -4,7 +4,6 @@ import _ from 'lodash'
 import {Checkbox} from '../common/forms/Checkbox'
 import {DropDown} from '../common/forms/DropDown'
 import {StyleGuideSection} from './StyleGuideSection'
-import buttonStyles from '../common/forms/button.scss'
 import styles from './style-guide.scss'
 
 const DROP_DOWN_OPTIONS = [
@@ -55,9 +54,9 @@ export function Forms() {
       </StyleGuideSection>
 
       <StyleGuideSection title='Buttons'>
-        <button className={buttonStyles.primaryButton}>primary button</button>
+        <button className={styles.primaryButton}>primary button</button>
         <button>default button</button>
-        <button className={buttonStyles.dangerButton}>danger button</button>
+        <button className={styles.dangerButton}>danger button</button>
       </StyleGuideSection>
     </Fragment>
   )

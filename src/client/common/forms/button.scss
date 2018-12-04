@@ -1,7 +1,5 @@
 @import '../variables';
-@import '../responsive';
 @import '../fonts/icon-font';
-@import '../typography';
 @import '../accessibility';
 
 @mixin button-icon($icon) {
@@ -24,7 +22,7 @@
   }
 }
 
-.primaryButton {
+%primary-button {
   @include button-interaction($off-white, $blue, $blue);
 
   background-color: $blue;
@@ -32,7 +30,7 @@
   color: $off-white;
 }
 
-.dangerButton {
+%danger-button {
   @include button-interaction($white, $error, $error);
 
   background-color: $error;
