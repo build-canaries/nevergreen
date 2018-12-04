@@ -27,18 +27,10 @@
   :aot [nevergreen.app]
   :javac-options ["-Dclojure.compiler.direct-linking=true"]
   :aliases {"unit"       ["with-profile" "+unit" "midje" "nevergreen.*"]
-            "lint"       ["with-profile" "+unit" "eastwood"]
-            "functional" ["with-profile" "+functional" "test" "functional.functional-test"]}
+            "lint"       ["with-profile" "+unit" "eastwood"]}
   :profiles {:dev        {:plugins      [[lein-midje "3.2.1"]
                                          [jonase/eastwood "0.2.8"]
                                          [com.livingsocial/lein-dependency-check "1.0.2"]]
                           :dependencies [[midje "1.9.4"]
-                                         [clj-webdriver/clj-webdriver "0.7.2" :exclusions [org.mortbay.jetty/jetty]]
-                                         [org.seleniumhq.selenium/selenium-java "3.141.59" :exclusions [org.eclipse.jetty/jetty-io
-                                                                                                       commons-logging]]
-                                         [io.github.bonigarcia/webdrivermanager "3.0.0" :exclusions [org.apache.commons/commons-lang3]]
-                                         [org.seleniumhq.selenium/htmlunit-driver "2.33.2" :exclusions [org.eclipse.jetty/jetty-io
-                                                                                                        org.eclipse.jetty/jetty-http]]
                                          [ring/ring-mock "0.3.2"]]}
-             :unit       {:jvm-opts ["-Dlogback.configurationFile=./test/logback-unit.xml"]}
-             :functional {:jvm-opts ["-Dlogback.configurationFile=./test/logback-functional.xml"]}})
+             :unit       {:jvm-opts ["-Dlogback.configurationFile=./test/logback-unit.xml"]}})
