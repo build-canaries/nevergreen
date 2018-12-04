@@ -2,6 +2,7 @@ import React, {Fragment} from 'react'
 import {ExternalLink} from '../common/ExternalLink'
 import PropTypes from 'prop-types'
 import styles from './tracking-help.scss'
+import {URL} from '../common/URL'
 
 export function TrackingHelp({addTray, close}) {
   const addExampleTray = () => {
@@ -32,60 +33,52 @@ export function TrackingHelp({addTray, close}) {
         </thead>
         <tbody>
         <tr>
-          <td>Jenkins</td>
-          <td><code>/cc.xml</code></td>
+          <td>Jenkins / Hudson</td>
+          <td><URL url='/cc.xml'/></td>
         </tr>
         <tr>
           <td>Travis CI</td>
-          <td><code>/:ownername/:repositoryname/cc.xml</code></td>
+          <td><URL url='/:ownername/:repositoryname/cc.xml'/></td>
         </tr>
         <tr>
           <td>GoCD</td>
-          <td><code>/go/cctray.xml</code></td>
+          <td><URL url='/go/cctray.xml'/></td>
         </tr>
         <tr>
           <td>CircleCI</td>
-          <td><code>/cc.xml?circle-token=:token</code></td>
+          <td><URL url='/cc.xml?circle-token=:token'/></td>
         </tr>
         <tr>
           <td>TeamCity</td>
-          <td><code>/guestAuth/app/rest/cctray/projects.xml</code></td>
-        </tr>
-        <tr>
-          <td>Hudson</td>
-          <td><code>/cc.xml</code></td>
-        </tr>
-        <tr>
-          <td>CruiseControl.rb</td>
-          <td><code>/XmlStatusReport.aspx</code></td>
+          <td><URL url='/guestAuth/app/rest/cctray/projects.xml'/></td>
         </tr>
         <tr>
           <td>CruiseControl</td>
-          <td><code>/cctray.xml</code></td>
+          <td><URL url='/cctray.xml'/></td>
         </tr>
         <tr>
-          <td>CruiseControl.NET</td>
-          <td><code>/XmlStatusReport.aspx</code></td>
+          <td>CruiseControl.NET / CruiseControl.rb</td>
+          <td><URL url='/XmlStatusReport.aspx'/></td>
         </tr>
         <tr>
           <td>Solano CI</td>
-          <td><code>/cc/:long_uuid_string/cctray.xml</code></td>
+          <td><URL url='/cc/:long_uuid_string/cctray.xml'/></td>
         </tr>
         <tr>
           <td>Semaphore CI</td>
-          <td><code>/api/v1/projects/:hash_id/cc.xml?auth_token=:auth_token&ccmenu=cc.xml</code></td>
+          <td><URL url='/api/v1/projects/:hash_id/cc.xml?auth_token=:auth_token&ccmenu=cc.xml'/></td>
         </tr>
         <tr>
           <td>Buildkite</td>
-          <td><code>/:organization-slug.xml?access_token=:token</code></td>
+          <td><URL url='/:organization-slug.xml?access_token=:token'/></td>
         </tr>
         <tr>
           <td>Drone</td>
-          <td><code>/api/badges/:owner/:name/cc.xml</code></td>
+          <td><URL url='/api/badges/:owner/:name/cc.xml'/></td>
         </tr>
         <tr>
           <td>Wercker</td>
-          <td><code>/api/v2/applications/:project-id/cc/build</code></td>
+          <td><URL url='/api/v2/applications/:project-id/cc/build'/></td>
         </tr>
         </tbody>
       </table>
@@ -93,15 +86,7 @@ export function TrackingHelp({addTray, close}) {
         If you would like to try Nevergreen you can use the public Apache projects CCTray at:
       </p>
       <div className={styles.exampleUrl}>
-        <code>https:
-          <wbr/>
-          &#x2F;/builds
-          <wbr/>
-          .apache
-          <wbr/>
-          .org
-          <wbr/>
-          /cc.xml</code>
+        <URL url='https://builds.apache.org/cc.xml'/>
       </div>
       <button className={styles.addExampleTray}
               onClick={addExampleTray}

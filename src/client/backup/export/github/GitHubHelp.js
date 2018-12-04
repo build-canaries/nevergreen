@@ -1,22 +1,13 @@
 import React, {Fragment} from 'react'
 import {ExternalLink} from '../../../common/ExternalLink'
+import {URL} from '../../../common/URL'
 
 export function GitHubHelp() {
   return (
     <Fragment>
       <p>
         Add a <strong>gist ID</strong> to update an existing Gist or leave blank to create a new Gist. You can get
-        a Gist ID from the Gist URL, <code>https:
-        <wbr/>
-        &#x2F;/gist
-        <wbr/>
-        .github
-        <wbr/>
-        .com
-        <wbr/>
-        /:username
-        <wbr/>
-        /:gistId</code>.
+        a Gist ID from the Gist URL, <URL url='https://gist.github.com/:username/:gistId'/>.
       </p>
       <p>
         You need to <ExternalLink

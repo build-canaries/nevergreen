@@ -1,22 +1,13 @@
 import React, {Fragment} from 'react'
 import {ExternalLink} from '../../../common/ExternalLink'
+import {URL} from '../../../common/URL'
 
 export function GitHubHelp() {
   return (
     <Fragment>
       <p>
         Set the <strong>gist ID</strong> to the ID of an existing Gist to import from. You can get a Gist ID from the
-        Gist URL, <code>https:
-        <wbr/>
-        &#x2F;/gist
-        <wbr/>
-        .github
-        <wbr/>
-        .com
-        <wbr/>
-        /:username
-        <wbr/>
-        /:gistId</code>.
+        Gist URL, <URL url='https://gist.github.com/:username/:gistId'/>.
       </p>
       <p>
         If you export from this instance of Nevergreen the gist ID will automatically be filled.
@@ -27,5 +18,5 @@ export function GitHubHelp() {
         private</ExternalLink>.
       </p>
     </Fragment>
-  )
+)
 }

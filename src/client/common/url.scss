@@ -1,0 +1,8 @@
+@import './typography';
+@import './variables';
+
+.url {
+  @include font-scale(0);
+
+  font-family: $monospace-font;
+}
