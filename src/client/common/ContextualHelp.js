@@ -1,4 +1,4 @@
-import React, {Component, Fragment, cloneElement} from 'react'
+import React, {cloneElement, Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import {Modal} from './Modal'
 import {IconButton} from './IconButton'
@@ -43,7 +43,8 @@ export class ContextualHelp extends Component {
                     label={`${title} help`}
                     className={cn(styles.helpButton, className)}
                     onClick={this.toggleHelp}
-                    aria-expanded={show}/>
+                    aria-expanded={show}
+                    data-locator='help-button'/>
         {helpContainer}
       </Fragment>
     )
