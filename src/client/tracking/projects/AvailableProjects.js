@@ -72,7 +72,7 @@ export class AvailableProjects extends Component {
   )
 
   render() {
-    const {projects, index, selected, trayId, timestamp, errors} = this.props
+    const {projects, index, selected, trayId, timestamp, errors, selectProject} = this.props
     const {filter, filterErrors} = this.state
 
     const filteredProjects = this.filteredProjects(projects, filter)
@@ -117,12 +117,11 @@ export class AvailableProjects extends Component {
         {
           _.sortBy(filteredProjects, ['name', 'stage']).map((project) => {
             const isSelected = selected.includes(project.projectId)
-            const selectProject = () => this.props.selectProject(trayId, project.projectId, !isSelected)
 
             return <AvailableProject key={project.projectId}
                                      {...project}
                                      selected={isSelected}
-                                     selectProject={selectProject}/>
+                                     selectProject={() => selectProject(trayId, project.projectId, !isSelected)}/>
           })
         }
       </ol>
@@ -134,7 +133,7 @@ export class AvailableProjects extends Component {
                 data-locator='no-projects-warning'/>
     )
 
-    const noPrjectsMatchFilterWarning = (
+    const noProjectsMatchFilterWarning = (
       <Messages type='warning'
                 messages={['No matching projects, please update your filter']}
                 data-locator='filter-warning'/>
@@ -154,7 +153,7 @@ export class AvailableProjects extends Component {
         {!errors && hasProjects && controls}
         {!errors && hasProjectsFiltered && buildItems}
         {!errors && !hasProjects && noProjectsWarning}
-        {!errors && hasProjects && !hasProjectsFiltered && noPrjectsMatchFilterWarning}
+        {!errors && hasProjects && !hasProjectsFiltered && noProjectsMatchFilterWarning}
         {!errors && hasProjectsFiltered && backToTop}
       </section>
     )

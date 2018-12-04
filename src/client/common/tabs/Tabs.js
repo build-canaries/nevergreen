@@ -19,6 +19,8 @@ export class Tabs extends Component {
   }
 
   render() {
+    const {titles, children} = this.props
+    const {active} = this.state
     const prefix = _.uniqueId('tabs')
 
     return (
@@ -27,8 +29,8 @@ export class Tabs extends Component {
              role='tablist'
              data-locator='tab-bar'>
           {
-            this.props.titles.map((title, i) => {
-              const isActive = i === this.state.active
+            titles.map((title, i) => {
+              const isActive = i === active
 
               return (
                 <button key={title}
@@ -47,8 +49,8 @@ export class Tabs extends Component {
           }
         </div>
         {
-          Children.toArray(this.props.children).map((child, i) => {
-            const isActive = i === this.state.active
+          Children.toArray(children).map((child, i) => {
+            const isActive = i === active
             const classes = classNames(styles.tabPanel, {
               [styles.hidden]: !isActive
             })

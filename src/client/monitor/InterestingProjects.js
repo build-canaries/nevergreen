@@ -29,7 +29,18 @@ export class InterestingProjects extends Component {
   }
 
   render() {
-    const {errors, projects, maxProjectsToShow, playBrokenBuildSounds, brokenBuildFx, trays} = this.props
+    const {
+      errors,
+      projects,
+      maxProjectsToShow,
+      playBrokenBuildSounds,
+      brokenBuildFx,
+      trays,
+      showBuildTimers,
+      showBrokenBuildTimers,
+      showTrayName,
+      showBuildLabel
+    } = this.props
 
     const numberOfErrors = _.size(errors)
     const totalItems = numberOfErrors + _.size(projects)
@@ -58,10 +69,10 @@ export class InterestingProjects extends Component {
       const tray = trays.find((tray) => tray.trayId === project.trayId)
       return <InterestingProject trayName={tray.name}
                                  key={`${tray.trayId}#${project.projectId}`}
-                                 showBuildTimers={this.props.showBuildTimers}
-                                 showBrokenBuildTimers={this.props.showBrokenBuildTimers}
-                                 showTrayName={this.props.showTrayName}
-                                 showBuildLabel={this.props.showBuildLabel}
+                                 showBuildTimers={showBuildTimers}
+                                 showBrokenBuildTimers={showBrokenBuildTimers}
+                                 showTrayName={showTrayName}
+                                 showBuildLabel={showBuildLabel}
                                  prognosis={project.prognosis}
                                  name={project.name}
                                  stage={project.stage}
