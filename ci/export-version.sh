@@ -12,4 +12,3 @@ echo "export VERSION=\"$version\"" >> $BASH_ENV
 echo "export VERSION_META=\"$versionMeta\"" >> $BASH_ENV
 echo "export VERSION_NAME=\"$versionName\"" >> $BASH_ENV
 echo "export FULL_VERSION=\"$version+$versionMeta\"" >> $BASH_ENV
-echo "export CYPRESS_FULL_VERSION=\"$version+$versionMeta\"" >> $BASH_ENV
