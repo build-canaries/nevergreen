@@ -13,6 +13,8 @@ describe('Journey', function () {
     shouldBeAbleToAddTrays(Cypress.env('TRAY_URL'), Cypress.env('TRAY_USERNAME'), Cypress.env('TRAY_PASSWORD'))
     shouldBeAbleToChangeMessages()
     shouldBeAbleToChangeSettings()
+    shouldBeAbleToExportAndImportConfig()
+    shouldMonitor()
   })
 
   function shouldBeAbleToAddTrays(trayUrl, username, password) {
@@ -79,5 +81,31 @@ describe('Journey', function () {
     cy.locate('build-label').should('not.exist')
     cy.locate('tray-name').should('not.exist')
     cy.locate('duration').should('not.exist')
+  }
+
+  function shouldBeAbleToExportAndImportConfig() {
+    cy.locate('menu-backup').click()
+    cy.location('pathname').should('include', 'backup')
+    
+    cy.locate('import-data').type('something invalid')
+    cy.locate('import').click()
+    cy.locate('error-messages').should('exist')
+
+    cy.get('#export-data').then((textarea) => {
+      cy.locate('import-data').invoke('val', textarea.val()) // not using type() for speed reasons
+      cy.locate('import-data').type(' ') // trigger react updates
+      cy.locate('import').click()
+    })
+    cy.locate('info-messages').should('exist')
+  }
+
+  function shouldMonitor() {
+    cy.locate('menu-monitor').click()
+    cy.location('pathname').should('include', 'monitor')
+    
+    cy.locate('interesting-project').contains('success building project').should('exist')
+    cy.locate('interesting-project').contains('failure sleeping project').should('exist')
+    cy.locate('interesting-project').contains('failure building project').should('exist')
+    cy.locate('interesting-project').contains('success-sleeping-project').should('not.exist')
   }
 })  
