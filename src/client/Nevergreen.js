@@ -60,6 +60,7 @@ export class Nevergreen extends Component {
 
         <div className={styles.nevergreen}
              aria-busy={!loaded}
+             tabIndex='-1'
              {...disableFullScreenOn}>
           <Header fullScreen={isFullScreen}/>
           <NotificationContainer/>
