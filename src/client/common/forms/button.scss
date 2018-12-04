@@ -12,21 +12,6 @@
   }
 }
 
-@mixin icon-only-button($icon) {
-  @include button-icon($icon);
-
-  padding: 0.5em;
-  width: auto;
-
-  &::before {
-    margin: 0;
-  }
-
-  * {
-    @extend %visually-hidden;
-  }
-}
-
 @mixin button-interaction($color: $off-black, $background-color: $white, $border-color: $light-grey) {
   &:enabled {
     box-shadow: $shadow;

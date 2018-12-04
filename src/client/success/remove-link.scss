@@ -4,17 +4,12 @@
 @import '../common/responsive';
 
 .removeLink {
-  @include icon-only-button('bin');
-  @include font-scale(-1);
-
   @extend .dangerButton;
 
   display: inline;
   margin: 0 $margin-right 0 0;
 
   @include respond-to(tablet, desktop) {
-    @include font-scale(-1);
-
     margin: 0 $margin-right 0 0;
   }
 }

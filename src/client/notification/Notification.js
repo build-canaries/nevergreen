@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {isBlank} from '../common/Utils'
 import classNames from 'classnames'
+import {IconButton} from '../common/IconButton'
 import styles from './notification.scss'
 
 export function Notification({fullScreen, notification, dismiss}) {
@@ -13,12 +14,15 @@ export function Notification({fullScreen, notification, dismiss}) {
     <section className={notificationClassNames}
              aria-live='polite'
              role='complementary'>
-      <button className={styles.dismiss}
-              onClick={dismiss}
-              data-locator='dismiss'>
-        <span>dismiss notification</span>
-      </button>
-      <div className={styles.message} data-locator='notification'>{notification}</div>
+      <div className={styles.message}
+           data-locator='notification'>
+        {notification}
+      </div>
+      <IconButton icon='cross'
+                  label='dismiss'
+                  className={styles.dismiss}
+                  onClick={dismiss}
+                  data-locator='dismiss'/>
     </section>
 }
 

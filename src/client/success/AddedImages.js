@@ -14,7 +14,7 @@ export function AddedImages({urls, removeMessage}) {
     <Container title='Images' className={styles.container}>
       <ol className={styles.successImages}>
         {
-          urls.map((url, index) => {
+          urls.map((url) => {
             const remove = () => removeMessage(url)
 
             return (
@@ -26,8 +26,7 @@ export function AddedImages({urls, removeMessage}) {
                        title={url}
                        data-locator='success-image'/>
                 </div>
-                <RemoveLink hotkeys={[`y i ${index}`]}
-                            removeMessage={remove}
+                <RemoveLink removeMessage={remove}
                             message={url}
                             className={styles.remove}/>
               </li>

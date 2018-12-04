@@ -110,21 +110,6 @@ export class KeyboardShortcuts extends Component {
             <td>Toggle project and settings views for the tray with the given index (the first tray is at index 0).
             </td>
           </tr>
-          <tr>
-            <td colSpan={3}>Success</td>
-          </tr>
-          <tr>
-            <td><kbd className={styles.binding}>y</kbd><kbd className={styles.binding}>m</kbd><kbd
-              className={styles.binding}>0..n</kbd></td>
-            <td>Delete success message</td>
-            <td>Deletes the message at the given index (the first message is at index 0).</td>
-          </tr>
-          <tr>
-            <td><kbd className={styles.binding}>y</kbd><kbd className={styles.binding}>i</kbd><kbd
-              className={styles.binding}>0..n</kbd></td>
-            <td>Delete success image</td>
-            <td>Deletes the image at the given index (the first image is at index 0).</td>
-          </tr>
           </tbody>
         </table>
       </Modal>

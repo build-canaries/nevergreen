@@ -7,14 +7,10 @@ $icon-button-size: 43px;
 
   height: $icon-button-size;
   margin: 0;
+  max-height: $icon-button-size;
+  max-width: $icon-button-size;
   min-height: $icon-button-size;
   min-width: $icon-button-size;
   padding: 0.5em;
   width: $icon-button-size;
-
-  &:enabled {
-    border: none;
-    box-shadow: none;
-    transition: none;
-  }
 }

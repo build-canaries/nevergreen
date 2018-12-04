@@ -5,11 +5,9 @@
 @import '../common/forms/button';
 
 .popUpNotification {
-  @include font-scale(0);
-
   background-color: $blue;
   color: $white;
-  display: block;
+  display: flex;
   padding: 1em;
 }
 
@@ -18,12 +16,13 @@
 }
 
 .message {
-  @include font-scale(1);
+  @include font-scale(2);
 
   @extend .icon-notification;
 
-  display: inline;
-  margin: 0;
+  align-self: center;
+  flex-grow: 1;
+  margin: 0 $margin-right 0 0;
 
   &::before {
     padding-right: 1em;
@@ -31,20 +30,7 @@
 }
 
 .dismiss {
-  @include icon-only-button('cross');
-  @include font-scale(-1);
-
   @extend .primaryButton;
 
-  display: inline;
-  float: right;
-  margin: 0;
-
-  &:enabled {
-    box-shadow: none;
-  }
-
-  @include respond-to(tablet, desktop) {
-    @include font-scale(-1);
-  }
+  align-self: flex-start;
 }

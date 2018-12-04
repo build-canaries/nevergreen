@@ -8,6 +8,7 @@ import iconStyles from './fonts/icon-font.scss'
 export function IconButton({icon, label, className, ...buttonProps}) {
   return (
     <button className={cn(iconStyles[`icon-${icon}`], styles.button, className)}
+            title={label}
             {...buttonProps}>
       <VisuallyHidden>{label}</VisuallyHidden>
     </button>
