@@ -12,6 +12,11 @@
   padding: 0;
 }
 
+html {
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
 html,
 body {
   background: $light-grey;
