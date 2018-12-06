@@ -57,7 +57,7 @@ $_font-scale: 1;
 }
 
 %info-icon {
-  @include font-scale($_font-scale);
+  @include font-scale(0);
 
   border: $input-border;
   border-bottom-right-radius: 2px;
