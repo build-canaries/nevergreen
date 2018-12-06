@@ -85,6 +85,7 @@ export class Input extends Component {
                  spellCheck={false}
                  autoComplete='off'
                  type={actualType}
+                 readOnly={readOnly}
                  {...inputProps}
                  id={id}
                  tabIndex={readOnly ? -1 : 0}

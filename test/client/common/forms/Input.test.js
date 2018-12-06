@@ -18,6 +18,12 @@ describe('<Input/>', function () {
 
   describe('read only', function () {
 
+    it('should apply the read only attribute', function () {
+      const props = {...DEFAULT_PROPS, readOnly: true}
+      const wrapper = shallow(<Input {...props} />)
+      expect(wrapper.find('input')).to.have.prop('readOnly', true)
+    })
+
     it('should not allow keyboard focus', function () {
       const props = {...DEFAULT_PROPS, readOnly: true}
       const wrapper = shallow(<Input {...props} />)
