@@ -27,10 +27,11 @@
   border: none;
   color: $white;
   display: block;
-  margin-top: 0.5em;
+  margin: 0;
   padding: 0;
   text-align: start;
   text-transform: none;
+  white-space: normal;
 
   &:enabled {
     box-shadow: none;
@@ -41,25 +42,14 @@
       color: darken($white, 10%);
     }
   }
-
-  @include respond-to(tablet, desktop) {
-    margin-top: 0;
-  }
 }
 
-.submitAnIssue {
-  margin-top: 0.5em;
-
-  @include respond-to(tablet, desktop) {
-    margin-top: 0;
-  }
-}
-
-.version,
 .submitAnIssue {
   color: $white;
   display: block;
+  margin: $margin-top 0 0 0;
   text-decoration: none;
+  text-transform: uppercase;
 
   &:hover,
   &:focus {
@@ -69,5 +59,9 @@
 
   &:visited {
     color: $white;
+  }
+
+  @include respond-to(tablet, desktop) {
+    margin: 0;
   }
 }
