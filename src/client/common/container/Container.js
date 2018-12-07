@@ -14,7 +14,9 @@ export class Container extends Component {
   }
 
   toggleHidden = () => {
-    this.setState({hidden: !this.state.hidden})
+    this.setState(({hidden}) => {
+      return {hidden: !hidden}
+    })
   }
 
   keyToggle = (evt) => {

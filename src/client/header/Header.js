@@ -23,7 +23,9 @@ export class Header extends Component {
   }
 
   toggleMenu = () => {
-    this.setState({menuVisible: !this.state.menuVisible})
+    this.setState(({menuVisible}) => {
+      return {menuVisible: !menuVisible}
+    })
   }
 
   hideMenu = () => {

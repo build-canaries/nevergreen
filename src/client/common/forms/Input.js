@@ -35,7 +35,9 @@ export class Input extends Component {
   }
 
   togglePasswordVisibility = () => {
-    this.setState({passwordHidden: !this.state.passwordHidden})
+    this.setState(({passwordHidden}) => {
+      return {passwordHidden: !passwordHidden}
+    })
   }
 
   maybeFocus = () => {

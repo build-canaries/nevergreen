@@ -16,7 +16,9 @@ export class ContextualHelp extends Component {
   }
 
   toggleHelp = () => {
-    this.setState({show: !this.state.show})
+    this.setState(({show}) => {
+      return {show: !show}
+    })
   }
 
   closeHelp = () => {
