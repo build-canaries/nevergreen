@@ -1,76 +1,39 @@
-import React, {Children, Component, Fragment} from 'react'
+import React, {Children} from 'react'
 import PropTypes from 'prop-types'
-import _ from 'lodash'
-import classNames from 'classnames'
+import {Tab, TabList, TabPanel, Tabs as ReactTabs} from 'react-tabs'
 import styles from './tabs.scss'
 
-export class Tabs extends Component {
-
-  constructor(props) {
-    super(props)
-    this.state = {active: 0}
-  }
-
-  switchTabs = (index) => {
-    if (index !== this.state.active) {
-      const onSwitch = () => this.props.onSwitch && this.props.onSwitch()
-      this.setState({active: index}, onSwitch)
-    }
-  }
-
-  render() {
-    const {titles, children} = this.props
-    const {active} = this.state
-    const prefix = _.uniqueId('tabs')
-
-    return (
-      <Fragment>
-        <div className={styles.tabs}
-             role='tablist'
-             data-locator='tab-bar'>
-          {
-            titles.map((title, i) => {
-              const isActive = i === active
-
-              return (
-                <button key={title}
-                        className={styles.tab}
-                        onClick={() => this.switchTabs(i)}
-                        disabled={isActive}
-                        aria-selected={isActive}
-                        role='tab'
-                        data-locator={`tab-${title}`}
-                        id={`tab-${prefix}-${i}`}
-                        aria-controls={`tab-panel-${prefix}-${i}`}>
-                  {title}
-                </button>
-              )
-            })
-          }
-        </div>
+export function Tabs({titles, children, onSwitch}) {
+  return (
+    <ReactTabs onSelect={() => onSwitch && onSwitch()}
+               forceRenderTabPanel>
+      <TabList className={styles.tabs}>
         {
-          Children.toArray(children).map((child, i) => {
-            const isActive = i === active
-            const classes = classNames(styles.tabPanel, {
-              [styles.hidden]: !isActive
-            })
-
+          titles.map((title) => {
             return (
-              <div key={`tab-panel-${prefix}-${i}`}
-                   className={classes}
-                   tabIndex='0'
-                   role='tabpanel'
-                   id={`tab-panel-${prefix}-${i}`}
-                   data-locator={`tab-panel-${i}`}
-                   aria-labelledby={`tab-${prefix}-${i}`}>
-                {child}
-              </div>
+              <Tab key={title}
+                   className={styles.tab}
+                   selectedClassName={styles.tabSelected}
+                   data-locator={`tab-${title}`}>
+                {title}
+              </Tab>
             )
           })
         }
-      </Fragment>
-    )
-  }
+      </TabList>
+      {
+        Children.toArray(children).map((child, i) => {
+          return (
+            <TabPanel key={i}
+                      className={styles.tabPanel}
+                      selectedClassName={styles.tabPanelSelected}>
+              {child}
+            </TabPanel>
+          )
+        })
+      }
+    </ReactTabs>
+  )
 }
 
 Tabs.propTypes = {

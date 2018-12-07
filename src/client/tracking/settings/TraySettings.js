@@ -88,8 +88,7 @@ export class TraySettings extends Component {
                onBlur={this.setName}
                onEnter={this.setName}
                placeholder='e.g. project or team name'
-               data-locator='tray-name'
-               autoFocus>
+               data-locator='tray-name'>
           <div className={styles.label}>name</div>
         </Input>
         <button className={styles.random}

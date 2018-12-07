@@ -17,12 +17,19 @@
 .tab {
   @include font-scale(0);
 
+  &:not(.tabSelected) {
+    @include interactive($background-color: $light-grey) {
+      box-shadow: none;
+    }
+
+    cursor: pointer;
+  }
+
   background-color: $light-grey;
   border: 1px solid $light-grey;
   border-top-left-radius: 2px;
   border-top-right-radius: 2px;
   color: $off-black;
-  cursor: pointer;
   display: inline-block;
   margin: 0 0.5em 0 0;
   padding: 0.5em 1.5em;
@@ -35,31 +42,27 @@
   white-space: nowrap;
   width: auto;
 
-  &:enabled {
-    @include interactive($background-color: $light-grey) {
-      box-shadow: none;
-    }
-
-    box-shadow: none;
-  }
-
-  &:disabled {
-    background-color: $white;
-    border-bottom-color: $white;
-    border-top-color: $blue;
-    color: $off-black;
-    cursor: inherit;
-  }
-
   &:last-child {
     margin-right: 0;
   }
 }
 
+.tabSelected {
+  background-color: $white;
+  border-bottom-color: $white;
+  border-top-color: $blue;
+  color: $off-black;
+
+  &:focus {
+    border-top-color: $white;
+  }
+}
+
 .tabPanel {
+  display: none;
   padding: 1em;
 }
 
-.hidden {
-  display: none;
+.tabPanelSelected {
+  display: block;
 }
