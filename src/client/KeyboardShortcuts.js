@@ -34,84 +34,89 @@ export class KeyboardShortcuts extends Component {
       <Modal show={show}
              close={this.close}
              title='Keyboard shortcuts'>
-        <p>The following keyboard shortcuts can be used to:</p>
-        <table>
-          <thead>
-          <tr>
-            <th>Shortcut Key</th>
-            <th>Definition</th>
-            <th>Action</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td colSpan={3}>General</td>
-          </tr>
-          <tr>
-            <td><kbd className={styles.binding}>?</kbd></td>
-            <td>Keyboard shortcuts</td>
-            <td>Shows keyboard shortcuts (this).</td>
-          </tr>
-          <tr>
-            <td><kbd className={styles.binding}>esc</kbd></td>
-            <td>Close</td>
-            <td>Closes contextual help (such as this).</td>
-          </tr>
-          <tr>
-            <td colSpan={3}>Navigation</td>
-          </tr>
-          <tr>
-            <td><kbd className={styles.binding}>m</kbd> or <kbd className={styles.binding}>1</kbd></td>
-            <td>Go to Monitor</td>
-            <td>Navigate to the monitor page.</td>
-          </tr>
-          <tr>
-            <td><kbd className={styles.binding}>t</kbd> or <kbd className={styles.binding}>2</kbd></td>
-            <td>Go to Tracking</td>
-            <td>Navigate to the tracking page.</td>
-          </tr>
-          <tr>
-            <td><kbd className={styles.binding}>s</kbd> or <kbd className={styles.binding}>3</kbd></td>
-            <td>Go to Success</td>
-            <td>Navigate to the success page.</td>
-          </tr>
-          <tr>
-            <td><kbd className={styles.binding}>v</kbd> or <kbd className={styles.binding}>4</kbd></td>
-            <td>Go to Settings</td>
-            <td>Navigate to the settings page.</td>
-          </tr>
-          <tr>
-            <td><kbd className={styles.binding}>b</kbd> or <kbd className={styles.binding}>5</kbd></td>
-            <td>Go to Backup</td>
-            <td>Navigate to the backup page.</td>
-          </tr>
-          <tr>
-            <td colSpan={3}>Tracking</td>
-          </tr>
-          <tr>
-            <td><kbd className={styles.binding}>+</kbd><kbd className={styles.binding}>0..n</kbd> or <kbd
-              className={styles.binding}>&#61;</kbd><kbd className={styles.binding}>0..n</kbd></td>
-            <td>Include all</td>
-            <td>Includes all projects for the tray with the given index (the first tray is at index 0).</td>
-          </tr>
-          <tr>
-            <td><kbd className={styles.binding}>-</kbd><kbd className={styles.binding}>0..n</kbd></td>
-            <td>Exclude all</td>
-            <td>Excludes all projects for the tray with the given index (the first tray is at index 0).</td>
-          </tr>
-          <tr>
-            <td><kbd className={styles.binding}>r</kbd><kbd className={styles.binding}>0..n</kbd></td>
-            <td>Refresh tray</td>
-            <td>Refresh the tray with the given index (the first tray is at index 0).</td>
-          </tr>
-          <tr>
-            <td><kbd className={styles.binding}>p</kbd><kbd className={styles.binding}>0..n</kbd></td>
-            <td>Toggle project view</td>
-            <td>Toggle project and settings views for the tray with the given index (the first tray is at index 0).
-            </td>
-          </tr>
-          </tbody>
-        </table>
+
+        <h3 className={styles.header}>Basics</h3>
+        <ul className={styles.shortcuts}>
+          <li className={styles.shortcut}>
+            <div>Shows keyboard shortcuts (this)</div>
+            <kbd className={styles.binding}>?</kbd>
+          </li>
+          <li className={styles.shortcut}>
+            <div>Dismiss dialogs (such as this)</div>
+            <kbd className={styles.binding}>esc</kbd>
+          </li>
+        </ul>
+
+        <h3 className={styles.header}>Navigation</h3>
+        <ul className={styles.shortcuts}>
+          <li className={styles.shortcut}>
+            <div>Move focus to the next element</div>
+            <kbd className={styles.binding}>tab</kbd>
+          </li>
+          <li className={styles.shortcut}>
+            <div>Move focus to the previous element</div>
+            <span className={styles.multipleShortcuts}>
+              <kbd className={styles.binding}>shift</kbd><kbd className={styles.binding}>tab</kbd>
+            </span>
+          </li>
+          <li className={styles.shortcut}>
+            <div>Take action or &quot;click&quot; the selected element</div>
+            <kbd className={styles.binding}>enter</kbd>
+          </li>
+          <li className={styles.shortcut}>
+            <div>Go to the Monitor page</div>
+            <span className={styles.multipleShortcuts}>
+              <kbd className={styles.binding}>m</kbd> or <kbd className={styles.binding}>1</kbd>
+            </span>
+          </li>
+          <li className={styles.shortcut}>
+            <div>Go to the Tracking page</div>
+            <span className={styles.multipleShortcuts}>
+              <kbd className={styles.binding}>t</kbd> or <kbd className={styles.binding}>2</kbd>
+            </span>
+          </li>
+          <li className={styles.shortcut}>
+            <div>Go to the Success page</div>
+            <span className={styles.multipleShortcuts}>
+              <kbd className={styles.binding}>s</kbd> or <kbd className={styles.binding}>3</kbd>
+            </span>
+          </li>
+          <li className={styles.shortcut}>
+            <div>Go to the Settings page</div>
+            <span className={styles.multipleShortcuts}>
+              <kbd className={styles.binding}>v</kbd> or <kbd className={styles.binding}>4</kbd>
+            </span>
+          </li>
+          <li className={styles.shortcut}>
+            <div>Go to the Backup page</div>
+            <span className={styles.multipleShortcuts}>
+              <kbd className={styles.binding}>b</kbd> or <kbd className={styles.binding}>5</kbd>
+            </span>
+          </li>
+        </ul>
+
+        <h3 className={styles.header}>Tracking</h3>
+        <ul className={styles.shortcuts}>
+          <li className={styles.shortcut}>
+            <div>Includes all projects for the tray with the given index (the first tray is at index 0)</div>
+            <span className={styles.multipleShortcuts}>
+              <kbd className={styles.binding}>+</kbd><kbd className={styles.binding}>0..n</kbd> or <kbd
+              className={styles.binding}>&#61;</kbd><kbd className={styles.binding}>0..n</kbd>
+            </span>
+          </li>
+          <li className={styles.shortcut}>
+            <div>Excludes all projects for the tray with the given index (the first tray is at index 0)</div>
+            <span className={styles.multipleShortcuts}>
+              <kbd className={styles.binding}>-</kbd><kbd className={styles.binding}>0..n</kbd>
+            </span>
+          </li>
+          <li className={styles.shortcut}>
+            <div>Refresh the tray with the given index (the first tray is at index 0)</div>
+            <span className={styles.multipleShortcuts}>
+              <kbd className={styles.binding}>r</kbd><kbd className={styles.binding}>0..n</kbd>
+            </span>
+          </li>
+        </ul>
       </Modal>
     )
   }

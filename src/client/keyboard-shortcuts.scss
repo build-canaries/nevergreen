@@ -1,12 +1,33 @@
 @import './common/variables';
-@import './common/typography';
+
+.header {
+  margin: $margin-top 0 0 0;
+}
+
+.shortcuts {
+  list-style: none;
+}
+
+.shortcut {
+  align-items: center;
+  border-top: 1px solid $light-grey;
+  display: flex;
+  justify-content: space-between;
+  margin: 0.5em 0 0 0;
+  padding: 0.5em;
+}
+
+.multipleShortcuts {
+  white-space: nowrap;
+}
 
 .binding {
-  @include font-scale(-1);
-
   background-image: linear-gradient(to bottom, #eee, #f9f9f9, #eee);
   border: $mid-grey 1px solid;
   border-radius: 5px;
+  box-shadow: 0 1px 0 #919193;
   color: $off-black;
+  font-family: $monospace-font;
+  margin: 0.1em;
   padding: 0.1em 0.3em;
 }

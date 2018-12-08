@@ -6,8 +6,6 @@
 @import '../common/fonts/icon-font';
 
 .modal {
-  @include font-scale(2);
-
   background-color: $white;
   border: 1px solid $light-grey;
   box-shadow: $shadow;
