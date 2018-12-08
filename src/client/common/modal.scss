@@ -27,7 +27,7 @@
 }
 
 .header {
-  align-items: center;
+  align-items: flex-start;
   display: flex;
   flex-shrink: 0;
   flex-wrap: nowrap;
@@ -42,6 +42,8 @@
   @extend .icon-question;
 
   @include font-scale(3);
+
+  margin: 0 1em 0 0;
 
   &::before {
     margin-right: 0.5em;
