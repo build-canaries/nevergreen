@@ -1,6 +1,8 @@
 @import '../variables';
 @import '../fonts/icon-font';
+@import '../forms/forms';
 @import '../accessibility';
+@import '../typography';
 
 @mixin button-icon($icon) {
   @extend .icon-#{$icon};
@@ -22,7 +24,43 @@
   }
 }
 
+%button {
+  @include button-interaction($off-black, $white, $light-grey);
+  @include font-scale(1);
+
+  @extend %standard-input-dimensions;
+
+  background-color: $white;
+  border: 1px solid $light-grey;
+  border-radius: 2px;
+  color: $off-black;
+  display: block;
+  margin: $margin-top 0 0 0;
+  overflow: hidden;
+  padding: 0.5em 1em;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  user-select: none;
+  white-space: nowrap;
+  width: 100%;
+
+  &:disabled {
+    background-color: $light-grey;
+    color: $mid-grey;
+    cursor: default;
+  }
+
+  @include respond-to(tablet, desktop) {
+    display: inline-block;
+    margin: 0;
+    width: auto;
+  }
+}
+
 %primary-button {
+  @extend %button;
+
   @include button-interaction($off-white, $blue, $blue);
 
   background-color: $blue;
@@ -30,7 +68,13 @@
   color: $off-white;
 }
 
+%secondary-button {
+  @extend %button;
+}
+
 %danger-button {
+  @extend %button;
+
   @include button-interaction($white, $error, $error);
 
   background-color: $error;

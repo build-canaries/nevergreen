@@ -2,6 +2,11 @@
 @import '../typography';
 @import '../responsive';
 
+%standard-input-dimensions {
+  height: $input-height;
+  min-height: $input-height;
+}
+
 .inputContainer {
   align-content: flex-start;
   align-items: baseline;

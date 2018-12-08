@@ -7,8 +7,6 @@
   @include grid-column(4 of 4);
   @include font-scale(1);
 
-  padding-top: 3px;
-
   @include respond-to(tablet) {
     @include grid-column(4 of 8);
   }

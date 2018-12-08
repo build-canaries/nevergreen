@@ -8,8 +8,5 @@
 
   display: inline;
   margin: 0 $margin-right 0 0;
-
-  @include respond-to(tablet, desktop) {
-    margin: 0 $margin-right 0 0;
-  }
+  padding: 0;
 }

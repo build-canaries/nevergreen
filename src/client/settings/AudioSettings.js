@@ -87,14 +87,12 @@ export class AudioSettings extends Component {
 
     return (
       <Container title='audio' className={styles.container}>
-        <div className={styles.checkboxWrapper}>
-          <Checkbox className={styles.playSfxs}
-                    checked={playBrokenBuildSoundFx}
-                    onToggle={this.toggleBrokenSounds}
-                    data-locator='play-sounds'>
-            play a sound when a build breaks
-          </Checkbox>
-        </div>
+        <Checkbox className={styles.playSfxs}
+                  checked={playBrokenBuildSoundFx}
+                  onToggle={this.toggleBrokenSounds}
+                  data-locator='play-sounds'>
+          play a sound when a build breaks
+        </Checkbox>
         <div className={styles.soundFx}>
           <Input type='url'
                  className={styles.brokenBuildSfx}

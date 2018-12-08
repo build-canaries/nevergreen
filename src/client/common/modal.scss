@@ -4,7 +4,6 @@
 @import '../common/layout';
 @import '../common/forms/button';
 @import '../common/fonts/icon-font';
-@import '../common/icon-button';
 
 .modal {
   @include font-scale(2);
@@ -43,7 +42,7 @@
   @include font-scale(3);
 
   display: inline-block;
-  width: calc(100% - #{$icon-button-size});
+  width: calc(100% - #{$input-height});
 
   &::before {
     margin-right: 0.5em;

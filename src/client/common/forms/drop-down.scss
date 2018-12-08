@@ -1,3 +1,4 @@
+@import './forms';
 @import '../variables';
 @import '../typography';
 @import '../responsive';
@@ -5,6 +6,8 @@
 
 .input {
   @include font-scale(1);
+
+  @extend %standard-input-dimensions;
 
   appearance: none;
   background-color: $white;

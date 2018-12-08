@@ -1,6 +1,7 @@
 @import '~normalize.css';
 @import './common/fonts/fonts';
 @import './common/forms/button';
+@import './common/forms/forms';
 @import './common/variables';
 @import './common/accessibility';
 @import './common/typography';
@@ -108,33 +109,5 @@ td {
 }
 
 button {
-  @include button-interaction($off-black, $white, $light-grey);
-  @include font-scale(1);
-
-  background-color: $white;
-  border: 1px solid $light-grey;
-  border-radius: 2px;
-  color: $off-black;
-  display: block;
-  margin: $margin-top 0 0 0;
-  overflow: hidden;
-  padding: 0.5em 1em;
-  text-decoration: none;
-  text-overflow: ellipsis;
-  text-transform: uppercase;
-  user-select: none;
-  white-space: nowrap;
-  width: 100%;
-
-  &:disabled {
-    background-color: $light-grey;
-    color: $mid-grey;
-    cursor: default;
-  }
-
-  @include respond-to(tablet, desktop) {
-    display: inline-block;
-    margin: 0;
-    width: auto;
-  }
+  @extend %secondary-button;
 }

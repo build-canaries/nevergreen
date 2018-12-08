@@ -1,16 +1,15 @@
+@import './forms/forms';
 @import './typography';
-
-$icon-button-size: 43px;
+@import './variables';
 
 .button {
   @include font-scale(0);
 
-  height: $icon-button-size;
+  @extend %standard-input-dimensions;
+
   margin: 0;
-  max-height: $icon-button-size;
-  max-width: $icon-button-size;
-  min-height: $icon-button-size;
-  min-width: $icon-button-size;
+  max-width: $input-height;
+  min-width: $input-height;
   padding: 0.5em;
-  width: $icon-button-size;
+  width: $input-height;
 }
