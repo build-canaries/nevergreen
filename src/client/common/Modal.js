@@ -14,8 +14,7 @@ export function Modal({children, title, show, close, className}) {
                 onRequestClose={close}>
       <div className={styles.header}>
         <h2 className={styles.title}>{title}</h2>
-        <IconButton className={styles.close}
-                    onClick={close}
+        <IconButton onClick={close}
                     icon='cross'
                     label='close'/>
       </div>

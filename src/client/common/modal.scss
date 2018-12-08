@@ -29,7 +29,11 @@
 }
 
 .header {
-  display: block;
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: nowrap;
+  justify-content: space-between;
 }
 
 .content {
@@ -41,16 +45,9 @@
 
   @include font-scale(3);
 
-  display: inline-block;
-  width: calc(100% - #{$input-height});
-
   &::before {
     margin-right: 0.5em;
   }
-}
-
-.close {
-  float: right;
 }
 
 .modelOpen {
