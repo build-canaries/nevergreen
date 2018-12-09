@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react'
-import {Tabs} from '../common/tabs/Tabs'
+import {Tabs} from '../common/Tabs'
 import {Container} from '../common/container/Container'
 import {StyleGuideSection} from './StyleGuideSection'
 

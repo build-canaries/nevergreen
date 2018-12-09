@@ -6,7 +6,7 @@ import _ from 'lodash'
 import {mocks} from '../../Mocking'
 import {Tray} from '../../../../src/client/tracking/tray/Tray'
 import AvailableProjectsContainer from '../../../../src/client/tracking/projects/AvailableProjectsContainer'
-import {Tabs} from '../../../../src/client/common/tabs/Tabs'
+import {Tabs} from '../../../../src/client/common/Tabs'
 import {Container} from '../../../../src/client/common/container/Container'
 
 describe('<Tray/>', function () {

@@ -4,7 +4,7 @@ import {Container} from '../../common/container/Container'
 import {Messages} from '../../common/messages/Messages'
 import LocallyContainer from './locally/LocallyContainer'
 import GitHubContainer from './github/GitHubContainer'
-import {Tabs} from '../../common/tabs/Tabs'
+import {Tabs} from '../../common/Tabs'
 
 export function Export({configuration, infos, errors}) {
   return (

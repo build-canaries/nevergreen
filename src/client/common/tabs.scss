@@ -1,7 +1,7 @@
-@import '../variables';
-@import '../responsive';
-@import '../typography';
-@import '../accessibility';
+@import 'variables';
+@import 'responsive';
+@import 'typography';
+@import 'accessibility';
 
 .tabs {
   background: $light-grey;

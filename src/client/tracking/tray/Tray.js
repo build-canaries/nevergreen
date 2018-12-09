@@ -4,7 +4,7 @@ import {Container} from '../../common/container/Container'
 import AvailableProjectsContainer from '../projects/AvailableProjectsContainer'
 import TraySettingsContainer from '../settings/TraySettingsContainer'
 import {Loading} from '../../common/loading/Loading'
-import {Tabs} from '../../common/tabs/Tabs'
+import {Tabs} from '../../common/Tabs'
 
 const REDACTED = '*****'
 

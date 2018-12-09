@@ -3,8 +3,8 @@ import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
 import {Tab, TabPanel, Tabs as ReactTabs} from 'react-tabs'
-import {Tabs} from '../../../../src/client/common/tabs/Tabs'
-import {mocks} from '../../Mocking'
+import {Tabs} from '../../../src/client/common/Tabs'
+import {mocks} from '../Mocking'
 
 describe('<Tabs/>', function () {
 
