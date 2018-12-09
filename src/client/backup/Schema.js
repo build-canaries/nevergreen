@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Container} from '../common/container/Container'
+import {Container} from '../common/Container'
 import styles from './schema.scss'
 
 export function Schema({schema}) {

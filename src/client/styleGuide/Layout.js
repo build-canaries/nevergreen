@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react'
 import {Tabs} from '../common/Tabs'
-import {Container} from '../common/container/Container'
+import {Container} from '../common/Container'
 import {StyleGuideSection} from './StyleGuideSection'
 
 export function Layout() {

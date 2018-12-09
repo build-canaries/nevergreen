@@ -7,7 +7,7 @@ import {mocks} from '../../Mocking'
 import {Tray} from '../../../../src/client/tracking/tray/Tray'
 import AvailableProjectsContainer from '../../../../src/client/tracking/projects/AvailableProjectsContainer'
 import {Tabs} from '../../../../src/client/common/Tabs'
-import {Container} from '../../../../src/client/common/container/Container'
+import {Container} from '../../../../src/client/common/Container'
 
 describe('<Tray/>', function () {
 

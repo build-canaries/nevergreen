@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import {secondsToString} from '../common/DateTime'
-import {Container} from '../common/container/Container'
+import {Container} from '../common/Container'
 import {DropDown} from '../common/forms/DropDown'
 import styles from './general-settings.scss'
 import {Checkbox} from '../common/forms/Checkbox'

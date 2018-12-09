@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import {Container} from '../common/container/Container'
+import {Container} from '../common/Container'
 import {RemoveLink} from './RemoveLink'
 import styles from './added-messages.scss'
 

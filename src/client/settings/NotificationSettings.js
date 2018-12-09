@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Container} from '../common/container/Container'
+import {Container} from '../common/Container'
 import {Checkbox} from '../common/forms/Checkbox'
 import {Messages} from '../common/messages/Messages'
 import styles from './notification-settings.scss'
