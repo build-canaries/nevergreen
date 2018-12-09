@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {Container} from '../../common/Container'
 import AvailableProjectsContainer from '../projects/AvailableProjectsContainer'
 import TraySettingsContainer from '../settings/TraySettingsContainer'
-import {Loading} from '../../common/loading/Loading'
+import {Loading} from '../../common/Loading'
 import {Tabs} from '../../common/Tabs'
 
 const REDACTED = '*****'

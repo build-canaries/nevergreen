@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react'
 import PropTypes from 'prop-types'
 import styles from './loading.scss'
-import {VisuallyHidden} from '../VisuallyHidden'
+import {VisuallyHidden} from './VisuallyHidden'
 
 export function Loading({loaded, children}) {
   if (loaded) {
