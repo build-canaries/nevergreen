@@ -2,6 +2,7 @@
 @import '../../../common/forms/button';
 @import '../../../common/typography';
 @import '../../../common/layout';
+@import '../../../common/accessibility';
 
 .label {
   @include font-scale(1);
@@ -21,11 +22,15 @@
   white-space: pre;
   width: 100%;
 
-  &:focus {
-    outline: none;
-
+  &:not(:disabled) {
     &:read-write {
-      border-color: $blue;
+      @include interactive($focus-color-change-percentage: 0%);
+    }
+
+    &:read-only {
+      &:focus {
+        @include focus($focus-color-change-percentage: 0%);
+      }
     }
   }
 }

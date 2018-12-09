@@ -51,6 +51,12 @@ $_font-scale: 1;
     &:read-write {
       @include interactive($focus-color-change-percentage: 0%);
     }
+
+    &:read-only {
+      &:focus {
+        @include focus($focus-color-change-percentage: 0%);
+      }
+    }
   }
 }
 
