@@ -78,7 +78,7 @@ describe('<InterestingProject/>', function () {
   it('should add a visually hidden prognosis for screen readers', function () {
     const props = {...DEFAULT_PROPS, prognosis: PROGNOSIS_HEALTHY_BUILDING}
     const wrapper = shallow(<InterestingProject {...props} />)
-    expect(childText(wrapper, locator('prognosis'))).to.have.text(' prognosis healthy-building')
+    expect(childText(wrapper, locator('prognosis'))).to.equal(' prognosis healthy-building')
   })
 
   describe('broken build timer', function () {

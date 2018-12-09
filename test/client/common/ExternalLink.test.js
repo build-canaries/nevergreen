@@ -30,7 +30,7 @@ describe('<ExternalLink/>', function () {
     it('should indicate it opens in a new window', function () {
       const props = {...DEFAULT_PROPS}
       const wrapper = shallow(<ExternalLink {...props}>child</ExternalLink>)
-      expect(childText(wrapper, VisuallyHidden)).to.have.text(' (opens in a new window)')
+      expect(childText(wrapper, VisuallyHidden)).to.equal(' (opens in a new window)')
     })
   })
 })

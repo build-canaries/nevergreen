@@ -51,7 +51,7 @@ describe('<AvailableProjects/>', function () {
     it('should have a visually hidden title', function () {
       const props = {...DEFAULT_PROPS}
       const wrapper = shallow(<AvailableProjects {...props} />)
-      expect(childText(wrapper, locator('title'))).to.have.text('Available projects')
+      expect(childText(wrapper, locator('title'))).to.equal('Available projects')
     })
 
     it('should announce projects if a user refreshes', function () {

@@ -1,6 +1,4 @@
-import React from 'react'
 import proxyquire from 'proxyquire'
-import {shallow} from 'enzyme'
 import {mocks} from './Mocking'
 import _ from 'lodash'
 import {isImmutable, Map} from 'immutable'
@@ -28,11 +26,8 @@ export function pressKeyOn(element, key) {
   element.simulate('keyPress', {key, preventDefault: _.noop})
 }
 
-// TODO: keep an eye on Enzyme issue https://github.com/airbnb/enzyme/issues/692
-// to see if they add a more elegant way of getting child text for a React component
 export function childText(wrapper, selector) {
-  const children = wrapper.find(selector).prop('children')
-  return shallow(<div>{children}</div>)
+  return wrapper.find(selector).shallow().text()
 }
 
 const UNDISPLAYABLE = {

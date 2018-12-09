@@ -29,7 +29,7 @@ describe('<Title/>', function () {
   it('should have a visually hidden title for accessibility', function () {
     const props = {...DEFAULT_PROPS, children: 'some-title'}
     const wrapper = shallow(<Title {...props} />)
-    expect(childText(wrapper, VisuallyHidden)).to.have.text('some-title')
+    expect(childText(wrapper, VisuallyHidden)).to.equal('some-title')
   })
 
   it('should focus on mount so keyboard users can start tabbing directly into the page and it also makes screen readers announce the title', function () {
