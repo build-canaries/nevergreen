@@ -1,13 +1,13 @@
-import {withMockedImports} from '../../TestUtils'
+import {withMockedImports} from '../TestUtils'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
-import {mocks} from '../../Mocking'
+import {mocks} from '../Mocking'
 
 describe('SecurityGateway', function () {
 
   const post = mocks.stub()
 
-  const {encryptPassword} = withMockedImports('client/common/gateways/SecurityGateway', {
+  const {encryptPassword} = withMockedImports('client/gateways/SecurityGateway', {
     './Gateway': {post}
   })
 

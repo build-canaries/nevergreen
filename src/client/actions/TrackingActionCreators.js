@@ -14,7 +14,7 @@ import {
   SET_TRAY_USERNAME,
   TRAY_ADDED
 } from './Actions'
-import {abortPendingRequest} from '../common/gateways/Gateway'
+import {abortPendingRequest} from '../gateways/Gateway'
 
 export function trayAdded(trayId, url, username) {
   return {

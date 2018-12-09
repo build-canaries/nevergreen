@@ -1,8 +1,8 @@
-import {withMockedImports} from '../../TestUtils'
+import {withMockedImports} from '../TestUtils'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
-import {mocks} from '../../Mocking'
-import {GatewayError} from '../../../../src/client/common/gateways/Gateway'
+import {mocks} from '../Mocking'
+import {GatewayError} from '../../../src/client/gateways/Gateway'
 
 describe('GitHubGateway', function () {
 
@@ -13,7 +13,7 @@ describe('GitHubGateway', function () {
   const post = mocks.stub()
   const gatewaySend = mocks.stub()
 
-  const {createGist, updateGist, getGist, getTruncatedFile, send} = withMockedImports('client/common/gateways/GitHubGateway', {
+  const {createGist, updateGist, getGist, getTruncatedFile, send} = withMockedImports('client/gateways/GitHubGateway', {
     './Gateway': {send: gatewaySend, get, patch, post}
   })
 

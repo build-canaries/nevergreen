@@ -1,16 +1,16 @@
-import {withMockedImports} from '../../TestUtils'
+import {withMockedImports} from '../TestUtils'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
-import {mocks} from '../../Mocking'
+import {mocks} from '../Mocking'
 import {fromJS, List, Map} from 'immutable'
-import {Tray} from '../../../../src/client/domain/Tray'
+import {Tray} from '../../../src/client/domain/Tray'
 
 describe('ProjectsGateway', function () {
 
   const post = mocks.stub()
   const fakeResponse = mocks.stub()
 
-  const {fetchAll, interesting} = withMockedImports('client/common/gateways/ProjectsGateway', {
+  const {fetchAll, interesting} = withMockedImports('client/gateways/ProjectsGateway', {
     './Gateway': {post, fakeResponse}
   })
 

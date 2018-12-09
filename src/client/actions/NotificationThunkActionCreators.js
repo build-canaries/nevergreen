@@ -1,5 +1,5 @@
-import {get} from '../common/gateways/Gateway'
-import {send} from '../common/gateways/GitHubGateway'
+import {get} from '../gateways/Gateway'
+import {send} from '../gateways/GitHubGateway'
 import semver from 'semver'
 import {notify} from './NotificationActionCreators'
 import {interestingProjects, showSystemNotifications} from '../reducers/Selectors'

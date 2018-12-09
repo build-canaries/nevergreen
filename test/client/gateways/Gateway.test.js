@@ -1,13 +1,13 @@
-import {withMockedImports} from '../../TestUtils'
+import {withMockedImports} from '../TestUtils'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
-import {mocks} from '../../Mocking'
-import {TIMEOUT_ERROR, UNKNOWN_ERROR} from '../../../../src/client/common/gateways/Gateway'
+import {mocks} from '../Mocking'
+import {TIMEOUT_ERROR, UNKNOWN_ERROR} from '../../../src/client/gateways/Gateway'
 import {Map} from 'immutable'
 
 describe('Gateway', function () {
 
-  const {send, fakeResponse, abortPendingRequest} = withMockedImports('client/common/gateways/Gateway', {
+  const {send, fakeResponse, abortPendingRequest} = withMockedImports('client/gateways/Gateway', {
     superagent: {}
   })
 

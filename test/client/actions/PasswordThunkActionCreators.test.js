@@ -15,9 +15,9 @@ describe('PasswordThunkActionCreators', function () {
   const passwordEncryptError = mocks.spy()
 
   const {encryptPassword} = withMockedImports('client/actions/PasswordThunkActionCreators', {
-    '../common/gateways/SecurityGateway': {encryptPassword: encrypt},
-    '../common/gateways/Gateway': {abortPendingRequest},
-    '../common/gateways/NevergreenGateway': {send},
+    '../gateways/SecurityGateway': {encryptPassword: encrypt},
+    '../gateways/Gateway': {abortPendingRequest},
+    '../gateways/NevergreenGateway': {send},
     './PasswordActionCreators': {encryptingPassword, passwordEncrypted, passwordEncryptError}
   })
 

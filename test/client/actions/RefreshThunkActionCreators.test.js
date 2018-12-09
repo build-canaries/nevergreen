@@ -17,9 +17,9 @@ describe('RefreshThunkActionCreators', function () {
   const projectsFetchError = mocks.spy()
 
   const {refreshTray} = withMockedImports('client/actions/RefreshThunkActionCreators', {
-    '../common/gateways/ProjectsGateway': {fetchAll},
-    '../common/gateways/Gateway': {abortPendingRequest},
-    '../common/gateways/NevergreenGateway': {send},
+    '../gateways/ProjectsGateway': {fetchAll},
+    '../gateways/Gateway': {abortPendingRequest},
+    '../gateways/NevergreenGateway': {send},
     './TrackingActionCreators': {projectsFetching, projectsFetched, projectsFetchError}
   })
 

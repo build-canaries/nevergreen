@@ -33,8 +33,8 @@ describe('MonitorThunkActionCreators', function () {
   })
 
   const {fetchInteresting} = withMockedImports('client/actions/MonitorThunkActionCreators', {
-    '../common/gateways/ProjectsGateway': {interesting},
-    '../common/gateways/NevergreenGateway': {send},
+    '../gateways/ProjectsGateway': {interesting},
+    '../gateways/NevergreenGateway': {send},
     './MonitorActionCreators': {interestingProjects, interestingProjectsFetching},
     './NotificationThunkActionCreators': {projectNotifications}
   })

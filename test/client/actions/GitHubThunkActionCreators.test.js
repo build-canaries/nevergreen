@@ -24,7 +24,7 @@ describe('GitHubThunkActionCreators', function () {
   const filter = mocks.stub()
 
   const {restoreFromGitHub, uploadToGitHub} = withMockedImports('client/actions/GitHubThunkActionCreators', {
-    '../common/gateways/GitHubGateway': {send, getGist, getTruncatedFile, updateGist, createGist},
+    '../gateways/GitHubGateway': {send, getGist, getTruncatedFile, updateGist, createGist},
     './ImportActionCreators': {importError, importing},
     './ImportThunkActionCreators': {importData},
     './ExportActionCreators': {exporting, exportSuccess, exportError},

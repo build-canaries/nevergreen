@@ -1,5 +1,5 @@
 import {fakeResponse, post} from './Gateway'
-import {keyIn} from '../Utils'
+import {keyIn} from '../common/Utils'
 import {List, Map} from 'immutable'
 
 const KEYS_TO_SEND = keyIn('trayId', 'url', 'username', 'password', 'serverType')

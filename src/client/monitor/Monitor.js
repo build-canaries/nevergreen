@@ -9,7 +9,7 @@ import styles from './monitor.scss'
 import {Timer} from '../common/Timer'
 import _ from 'lodash'
 import {Title} from '../common/Title'
-import {abortPendingRequest} from '../common/gateways/Gateway'
+import {abortPendingRequest} from '../gateways/Gateway'
 
 export function GettingStartedHelp() {
   return <SuccessMessage message='Add a CI server via the tracking page to start monitoring'/>
@@ -23,6 +23,7 @@ export class Monitor extends Component {
 
   componentWillUnmount() {
     this.props.requestFullScreen(false)
+    // TODO: this shouldn't be done here
     abortPendingRequest(this.props.pendingRequest)
   }
 

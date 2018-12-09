@@ -1,5 +1,5 @@
 import request from 'superagent'
-import * as log from '../Logger'
+import * as log from '../common/Logger'
 import _ from 'lodash'
 import {fromJS, isImmutable} from 'immutable'
 

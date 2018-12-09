@@ -1,7 +1,7 @@
-import {interesting} from '../common/gateways/ProjectsGateway'
-import {send} from '../common/gateways/NevergreenGateway'
+import {interesting} from '../gateways/ProjectsGateway'
+import {send} from '../gateways/NevergreenGateway'
 import {interestingProjects, interestingProjectsFetching} from './MonitorActionCreators'
-import {abortPendingRequest} from '../common/gateways/Gateway'
+import {abortPendingRequest} from '../gateways/Gateway'
 import {
   interestingPendingRequest,
   interestingProjects as selectInterestingProjects,

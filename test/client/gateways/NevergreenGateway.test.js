@@ -1,14 +1,14 @@
-import {withMockedImports} from '../../TestUtils'
+import {withMockedImports} from '../TestUtils'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
-import {mocks} from '../../Mocking'
-import {GatewayError} from '../../../../src/client/common/gateways/Gateway'
+import {mocks} from '../Mocking'
+import {GatewayError} from '../../../src/client/gateways/Gateway'
 
 describe('NevergreenGateway', function () {
 
   const gatewaySend = mocks.stub()
 
-  const {send} = withMockedImports('client/common/gateways/NevergreenGateway', {
+  const {send} = withMockedImports('client/gateways/NevergreenGateway', {
     './Gateway': {send: gatewaySend}
   })
 

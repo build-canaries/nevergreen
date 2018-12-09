@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import {createGist, getGist, getTruncatedFile, send, updateGist} from '../common/gateways/GitHubGateway'
+import {createGist, getGist, getTruncatedFile, send, updateGist} from '../gateways/GitHubGateway'
 import {gitHubSetDescription, gitHubSetGistId} from './GitHubActionCreators'
 import {isBlank} from '../common/Utils'
 import {importError, importing} from './ImportActionCreators'
