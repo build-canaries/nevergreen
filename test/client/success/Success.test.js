@@ -6,7 +6,7 @@ import _ from 'lodash'
 import {Success} from '../../../src/client/success/Success'
 import {AddedMessages} from '../../../src/client/success/AddedMessages'
 import {AddedImages} from '../../../src/client/success/AddedImages'
-import {Messages} from '../../../src/client/common/messages/Messages'
+import {Messages} from '../../../src/client/common/Messages'
 
 describe('Success <Success/>', function () {
 

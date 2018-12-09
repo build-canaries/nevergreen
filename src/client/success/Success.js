@@ -4,7 +4,7 @@ import {AddedMessages} from './AddedMessages'
 import {AddedImages} from './AddedImages'
 import {AddMessage} from './AddMessage'
 import {Title} from '../common/Title'
-import {Messages} from '../common/messages/Messages'
+import {Messages} from '../common/Messages'
 import {notEmpty} from '../common/Utils'
 import {hasScheme} from '../domain/Url'
 

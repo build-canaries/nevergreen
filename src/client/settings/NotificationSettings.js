@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {Container} from '../common/Container'
 import {Checkbox} from '../common/forms/Checkbox'
-import {Messages} from '../common/messages/Messages'
+import {Messages} from '../common/Messages'
 import styles from './notification-settings.scss'
 
 const PERMISSION_DENIED_MESSAGE = 'System notifications permission denied, unable to show system notifications.'

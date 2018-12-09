@@ -2,7 +2,7 @@ import React, {Fragment} from 'react'
 import {StyleGuideSection} from './StyleGuideSection'
 import {ExternalLink} from '../common/ExternalLink'
 import {Element} from './Element'
-import {Messages} from '../common/messages/Messages'
+import {Messages} from '../common/Messages'
 
 const TITLE = 'Cupcake toffee jelly beans'
 

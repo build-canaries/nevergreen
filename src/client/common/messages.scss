@@ -1,7 +1,7 @@
-@import '../variables';
-@import '../fonts/icon-font';
-@import '../typography';
-@import '../responsive';
+@import 'variables';
+@import 'fonts/icon-font';
+@import 'typography';
+@import 'responsive';
 
 @mixin _messages($icon, $color, $background-color) {
   @include font-scale(1);

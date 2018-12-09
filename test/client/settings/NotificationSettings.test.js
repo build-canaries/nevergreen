@@ -4,7 +4,7 @@ import React from 'react'
 import {shallow} from 'enzyme'
 import _ from 'lodash'
 import {NotificationSettings} from '../../../src/client/settings/NotificationSettings'
-import {Messages} from '../../../src/client/common/messages/Messages'
+import {Messages} from '../../../src/client/common/Messages'
 import {locator} from '../TestUtils'
 
 describe('<NotificationSettings/>', function () {
