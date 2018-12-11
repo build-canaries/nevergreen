@@ -3,14 +3,17 @@ import PropTypes from 'prop-types'
 import {Shortcut} from '../../common/Shortcut'
 import {Duration} from '../../common/Duration'
 import styles from './refresh.scss'
+import {PrimaryButton} from '../../common/forms/Button'
 
 export function Refresh({index, timestamp, refreshTray}) {
   return (
     <Fragment>
-      <button className={styles.refresh} onClick={refreshTray}>
+      <PrimaryButton className={styles.refresh}
+                     onClick={refreshTray}
+                     icon='loop2'>
         refresh
         <Shortcut hotkeys={[`r ${index}`]}/>
-      </button>
+      </PrimaryButton>
       <div className={styles.lastFetch} data-locator='refresh-time'>
         {
           timestamp && <Duration fullDescriptionPrefix='projects last refreshed'

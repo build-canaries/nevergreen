@@ -1,7 +1,5 @@
 @import '~normalize.css';
 @import './common/fonts/fonts';
-@import './common/forms/button';
-@import './common/forms/forms';
 @import './common/variables';
 @import './common/accessibility';
 @import './common/typography';
@@ -106,8 +104,4 @@ tr:nth-child(even) {
 
 td {
   padding: 0.5em;
-}
-
-button {
-  @extend %secondary-button;
 }

@@ -4,6 +4,7 @@ import {Input} from '../common/forms/Input'
 import {ContextualHelp, InlineHelp} from '../common/ContextualHelp'
 import {SuccessHelp} from './SuccessHelp'
 import styles from './add-message.scss'
+import {PrimaryButton} from '../common/forms/Button'
 
 export class AddMessage extends Component {
 
@@ -35,9 +36,12 @@ export class AddMessage extends Component {
           message
         </Input>
         <InlineHelp>
-          <button className={styles.add} onClick={this.addMessage} data-locator='add-message'>
+          <PrimaryButton className={styles.add}
+                         onClick={this.addMessage}
+                         data-locator='add-message'
+                         icon='plus'>
             <span aria-label='add success message'>add</span>
-          </button>
+          </PrimaryButton>
 
           <ContextualHelp title='Success'
                           help={<SuccessHelp/>}

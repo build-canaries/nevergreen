@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
 import _ from 'lodash'
 import {isBlank} from '../common/Utils'
 import {Container} from '../common/Container'
@@ -8,6 +7,7 @@ import {Messages} from '../common/Messages'
 import {Input} from '../common/forms/Input'
 import {Checkbox} from '../common/forms/Checkbox'
 import styles from './audio-settings.scss'
+import {SecondaryButton} from '../common/forms/Button'
 
 function hasScheme(url) {
   return _.size(_.split(url, '://')) > 1
@@ -80,10 +80,6 @@ export class AudioSettings extends Component {
     const {soundFx, playEnabled, playing, errors} = this.state
 
     const playingDisabled = isBlank(soundFx) || !playEnabled
-    const playButtonClasses = classNames({
-      [styles.play]: !playing,
-      [styles.stop]: playing
-    })
 
     return (
       <Container title='audio' className={styles.container}>
@@ -105,12 +101,12 @@ export class AudioSettings extends Component {
                  disabled={playing}>
             broken build sound
           </Input>
-          <button className={playButtonClasses}
-                  onClick={playing ? this.stop : this.play}
-                  disabled={playingDisabled}
-                  aria-disabled={playingDisabled}>
+          <SecondaryButton onClick={playing ? this.stop : this.play}
+                           disabled={playingDisabled}
+                           aria-disabled={playingDisabled}
+                           icon={playing ? 'stop2' : 'play3'}>
             {playing ? 'stop' : 'play'}
-          </button>
+          </SecondaryButton>
         </div>
         <Messages className={styles.playbackErrors}
                   type='error'

@@ -1,10 +1,5 @@
 @import '../common/variables';
 @import '../common/responsive';
-@import '../common/forms/button';
-
-.addExampleTray {
-  @extend %primary-button;
-}
 
 .exampleUrl {
   display: inline-block;

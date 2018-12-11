@@ -36,7 +36,7 @@
   white-space: normal;
 
   &:enabled {
-    box-shadow: none;
+    cursor: pointer;
 
     &:hover,
     &:focus {

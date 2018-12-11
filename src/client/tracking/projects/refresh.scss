@@ -1,13 +1,9 @@
-@import '../../common/forms/button';
 @import '../../common/responsive';
 @import '../../common/variables';
 @import '../../common/typography';
 @import '../../common/layout';
 
 .refresh {
-  @include button-icon('loop2');
-
-  @extend %primary-button;
   @extend %inline-margin;
   @extend %first;
 }

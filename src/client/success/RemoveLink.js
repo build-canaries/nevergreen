@@ -1,17 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import {IconButton} from '../common/IconButton'
+import {DangerButton} from '../common/forms/Button'
 import styles from './remove-link.scss'
 
 export function RemoveLink({removeMessage, message, className}) {
   const classes = classNames(styles.removeLink, className)
 
   return (
-    <IconButton icon='bin'
-                label={`remove ${message}`}
-                className={classes}
-                onClick={removeMessage}/>
+    <DangerButton icon='bin'
+                  iconOnly
+                  type='danger'
+                  className={classes}
+                  onClick={removeMessage}>
+      remove success message
+    </DangerButton>
   )
 }
 

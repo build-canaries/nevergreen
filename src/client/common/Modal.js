@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import ReactModal from 'react-modal'
 import cn from 'classnames'
-import {IconButton} from './IconButton'
 import styles from './modal.scss'
+import {SecondaryButton} from './forms/Button'
 
 export function Modal({children, title, show, close, className}) {
   return (
@@ -14,9 +14,11 @@ export function Modal({children, title, show, close, className}) {
                 onRequestClose={close}>
       <div className={styles.header}>
         <h2 className={styles.title}>{title}</h2>
-        <IconButton onClick={close}
-                    icon='cross'
-                    label='close'/>
+        <SecondaryButton onClick={close}
+                         icon='cross'
+                         iconOnly>
+          close
+        </SecondaryButton>
       </div>
       <div className={styles.content}
            data-locator='modal'>

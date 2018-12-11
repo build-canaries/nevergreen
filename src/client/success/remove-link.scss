@@ -1,11 +1,6 @@
-@import '../common/forms/button';
 @import '../common/variables';
-@import '../common/typography';
-@import '../common/responsive';
 
 .removeLink {
-  @extend %danger-button;
-
   display: inline;
   margin: 0 $margin-right 0 0;
   padding: 0;

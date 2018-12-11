@@ -1,5 +1,5 @@
 @import './common/variables';
-@import './common/forms/button';
+@import './common/layout';
 
 .content {
   background-color: $white;
@@ -8,7 +8,5 @@
 }
 
 .deleteConfiguration {
-  @extend %danger-button;
-
-  margin-top: 1.5em;
+  @extend %block-margin;
 }

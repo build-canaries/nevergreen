@@ -1,9 +1,8 @@
 @import '../../common/variables';
 @import '../../common/responsive';
 @import '../../common/typography';
-@import '../../common/fonts/icon-font';
-@import '../../common/forms/button';
 @import '../../common/forms/forms';
+@import '../../common/fonts/icon-font';
 @import '../../common/layout';
 
 .label {
@@ -56,28 +55,6 @@
   display: inline-block;
 }
 
-.delete {
-  @include button-icon('bin');
-
-  @extend %danger-button;
-}
-
-.random {
-  @include button-icon('dice');
-}
-
-.changePasswordButton {
-  @include button-icon('unlocked');
-}
-
 .cancel {
-  @include button-icon('cross');
-
   @extend %inline-margin;
-}
-
-.update {
-  @include button-icon('floppy-disk');
-
-  @extend %primary-button;
 }

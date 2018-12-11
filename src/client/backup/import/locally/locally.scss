@@ -1,5 +1,4 @@
 @import '../../../common/variables';
-@import '../../../common/forms/button';
 @import '../../../common/typography';
 @import '../../../common/layout';
 @import '../../../common/accessibility';
@@ -30,8 +29,5 @@
 }
 
 .import {
-  @include button-icon('floppy-disk');
-
-  @extend %primary-button;
   @extend %block-margin;
 }

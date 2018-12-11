@@ -2,6 +2,7 @@ import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import {ClipboardComponent} from './Clipboard'
 import styles from './locally.scss'
+import {PrimaryButton} from '../../../common/forms/Button'
 
 export class Locally extends Component {
 
@@ -30,11 +31,12 @@ export class Locally extends Component {
         <ClipboardComponent elementSelector='#copy-to-clipboard'
                             onSuccess={this.copySuccess}
                             onError={this.copyError}/>
-        <button className={styles.copy}
-                id='copy-to-clipboard'
-                data-clipboard-target='#export-data'>
+        <PrimaryButton className={styles.copy}
+                       id='copy-to-clipboard'
+                       data-clipboard-target='#export-data'
+                       icon='paste'>
           copy to clipboard
-        </button>
+        </PrimaryButton>
       </Fragment>
     )
   }

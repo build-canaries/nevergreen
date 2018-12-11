@@ -1,5 +1,4 @@
 @import '../../../common/variables';
-@import '../../../common/forms/button';
 @import '../../../common/typography';
 @import '../../../common/layout';
 @import '../../../common/accessibility';
@@ -36,8 +35,5 @@
 }
 
 .copy {
-  @include button-icon('paste');
-
-  @extend %primary-button;
   @extend %block-margin;
 }

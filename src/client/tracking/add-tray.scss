@@ -1,5 +1,4 @@
 @import '../common/variables';
-@import '../common/forms/button';
 @import '../common/responsive';
 @import '../common/layout';
 
@@ -32,10 +31,6 @@
 }
 
 .add {
-  @include button-icon('plus');
-
-  @extend %primary-button;
-
   margin: $margin-top $margin-right 0 0;
 
   @include respond-to(tablet, desktop) {

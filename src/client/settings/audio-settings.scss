@@ -30,14 +30,6 @@
   }
 }
 
-.play {
-  @include button-icon('play3');
-}
-
-.stop {
-  @include button-icon('stop2');
-}
-
 .playbackErrors {
   margin-top: 1em;
 }

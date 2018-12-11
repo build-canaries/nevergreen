@@ -5,6 +5,7 @@ import {DropDown} from '../../common/forms/DropDown'
 import {CI_OPTIONS, generateRandomName} from '../../domain/Tray'
 import styles from './tray-settings.scss'
 import {VisuallyHidden} from '../../common/VisuallyHidden'
+import {DangerButton, PrimaryButton, SecondaryButton} from '../../common/forms/Button'
 
 export class TraySettings extends Component {
 
@@ -91,11 +92,11 @@ export class TraySettings extends Component {
                data-locator='tray-name'>
           <div className={styles.label}>name</div>
         </Input>
-        <button className={styles.random}
-                onClick={this.generateNewName}
-                data-locator='generate-random'>
+        <SecondaryButton icon='dice'
+                         onClick={this.generateNewName}
+                         data-locator='generate-random'>
           randomise name
-        </button>
+        </SecondaryButton>
         <Input value={newUrl}
                onChange={this.urlChanged}
                onBlur={this.setUrl}
@@ -134,34 +135,35 @@ export class TraySettings extends Component {
         {updatingPassword
           ? (
             <Fragment>
-              <button className={styles.cancel}
-                      onClick={this.cancel}
-                      data-locator='change-password-cancel'>
+              <SecondaryButton className={styles.cancel}
+                               icon='cross'
+                               onClick={this.cancel}
+                               data-locator='change-password-cancel'>
                 cancel
-              </button>
-              <button className={styles.update}
-                      onClick={this.setPassword}
-                      data-locator='change-password-update'>
+              </SecondaryButton>
+              <PrimaryButton icon='floppy-disk'
+                             onClick={this.setPassword}
+                             data-locator='change-password-update'>
                 update password
-              </button>
+              </PrimaryButton>
             </Fragment>
           ) : (
-            <button className={styles.changePasswordButton}
-                    onClick={this.changePassword}
-                    data-locator='change-password'>
+            <SecondaryButton icon='unlocked'
+                             onClick={this.changePassword}
+                             data-locator='change-password'>
               change password
-            </button>
+            </SecondaryButton>
           )
         }
         <div className={styles.dangerZone}>
           <h4 className={styles.dangerZoneTitle}>Danger Zone</h4>
           <div className={styles.dangerZoneContent}>
             <div className={styles.deleteInfo}>Once you delete, there is no going back. Please be certain.</div>
-            <button className={styles.delete}
-                    onClick={this.deleteTray}
-                    data-locator='delete-tray'>
+            <DangerButton icon='bin'
+                          onClick={this.deleteTray}
+                          data-locator='delete-tray'>
               delete
-            </button>
+            </DangerButton>
           </div>
         </div>
       </section>

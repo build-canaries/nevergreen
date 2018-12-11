@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import styles from './locally.scss'
+import {PrimaryButton} from '../../../common/forms/Button'
 
 const PLACEHOLDER = 'paste exported configuration here and press import'
 
@@ -32,7 +33,12 @@ export class Locally extends Component {
                     spellCheck='false'
                     data-locator='import-data'/>
         </label>
-        <button className={styles.import} onClick={this.doImport} data-locator='import'>import</button>
+        <PrimaryButton className={styles.import}
+                       onClick={this.doImport}
+                       data-locator='import'
+                       icon='floppy-disk'>
+          import
+        </PrimaryButton>
       </Fragment>
     )
   }

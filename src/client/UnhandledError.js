@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {clear} from './common/LocalRepository'
 import styles from './unhandled-error.scss'
 import {ExternalLink} from './common/ExternalLink'
+import {DangerButton} from './common/forms/Button'
 
 const DEVELOPER_TOOLS_LINK = 'https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_are_browser_developer_tools#Find_out_more_2'
 const ISSUE_LINK = 'https://github.com/build-canaries/nevergreen/issues'
@@ -35,10 +36,10 @@ export class UnhandledError extends Component {
             If you continue to see this page after refreshing, you may need to delete your Nevergreen
             configuration. <strong>Please note, deleting your configuration can not be undone!</strong>
           </p>
-          <button className={styles.deleteConfiguration}
-                  onClick={clear}>
+          <DangerButton className={styles.deleteConfiguration}
+                        onClick={clear}>
             delete configuration
-          </button>
+          </DangerButton>
         </div>
       )
     }

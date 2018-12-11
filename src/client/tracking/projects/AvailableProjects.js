@@ -10,6 +10,7 @@ import {isBlank, notEmpty} from '../../common/Utils'
 import {VisuallyHidden} from '../../common/VisuallyHidden'
 import styles from './available-projects.scss'
 import memoize from 'memoize-one'
+import {SecondaryButton} from '../../common/forms/Button'
 
 const DEFAULT_STATE = {
   filter: null,
@@ -84,18 +85,20 @@ export class AvailableProjects extends Component {
       <div className={styles.controls}>
         <fieldset className={styles.toggles}>
           <legend className={styles.legend}>Available projects</legend>
-          <button className={styles.includeAll}
-                  onClick={this.includeAll(filteredProjects)}
-                  data-locator='include-all'>
+          <SecondaryButton className={styles.includeAll}
+                           onClick={this.includeAll(filteredProjects)}
+                           data-locator='include-all'
+                           icon='checkbox-checked'>
             include all
             <Shortcut hotkeys={[`+ ${index}`, `= ${index}`]}/>
-          </button>
-          <button className={styles.excludeAll}
-                  onClick={this.excludeAll(filteredProjects)}
-                  data-locator='exclude-all'>
+          </SecondaryButton>
+          <SecondaryButton className={styles.excludeAll}
+                           onClick={this.excludeAll(filteredProjects)}
+                           data-locator='exclude-all'
+                           icon='checkbox-unchecked'>
             exclude all
             <Shortcut hotkeys={[`- ${index}`]}/>
-          </button>
+          </SecondaryButton>
           <div className={styles.projectFilter}>
             <Input className={styles.projectFilterInput}
                    onChange={this.updateFilter}
@@ -139,7 +142,12 @@ export class AvailableProjects extends Component {
                 data-locator='filter-warning'/>
     )
 
-    const backToTop = <button className={styles.backToTop} onClick={this.scrollToTop}>back to top</button>
+    const backToTop = (
+      <SecondaryButton className={styles.backToTop}
+                       onClick={this.scrollToTop}>
+        back to top
+      </SecondaryButton>
+    )
 
     return (
       <section className={styles.availableProjects}

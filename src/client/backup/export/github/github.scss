@@ -1,12 +1,9 @@
-@import '../../../common/forms/button';
+@import '../../../common/variables';
 @import '../../../common/layout';
 
 $label-size: 6em;
 
 .export {
-  @include button-icon('cloud-upload');
-
-  @extend %primary-button;
   @extend %block-margin;
 }
 

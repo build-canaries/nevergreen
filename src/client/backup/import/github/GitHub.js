@@ -4,6 +4,7 @@ import {GistIdInput} from '../../GistIdInput'
 import {GitHubHelp} from './GitHubHelp'
 import {ContextualHelp, InlineHelp} from '../../../common/ContextualHelp'
 import styles from './github.scss'
+import {PrimaryButton} from '../../../common/forms/Button'
 
 export function GitHub({gistId, gitHubSetGistId, loaded, restoreFromGitHub}) {
   const disabled = !loaded
@@ -18,11 +19,12 @@ export function GitHub({gistId, gitHubSetGistId, loaded, restoreFromGitHub}) {
         <ContextualHelp title='Import from GitHub'
                         help={<GitHubHelp/>}/>
       </InlineHelp>
-      <button className={styles.import}
-              onClick={restoreFromGitHub}
-              disabled={disabled}>
+      <PrimaryButton className={styles.import}
+                     onClick={restoreFromGitHub}
+                     disabled={disabled}
+                     icon='cloud-download'>
         import
-      </button>
+      </PrimaryButton>
     </Fragment>
   )
 }

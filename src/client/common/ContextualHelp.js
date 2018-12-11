@@ -1,9 +1,9 @@
 import React, {cloneElement, Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import {Modal} from './Modal'
-import {IconButton} from './IconButton'
 import cn from 'classnames'
 import styles from './contextual-help.scss'
+import {SecondaryButton} from './forms/Button'
 
 
 export class ContextualHelp extends Component {
@@ -41,12 +41,14 @@ export class ContextualHelp extends Component {
 
     return (
       <Fragment>
-        <IconButton icon='question'
-                    label={`${title} help`}
-                    className={cn(styles.helpButton, className)}
-                    onClick={this.toggleHelp}
-                    aria-expanded={show}
-                    data-locator='help-button'/>
+        <SecondaryButton icon='question'
+                         iconOnly
+                         className={cn(styles.helpButton, className)}
+                         onClick={this.toggleHelp}
+                         aria-expanded={show}
+                         data-locator='help-button'>
+          show help
+        </SecondaryButton>
         {helpContainer}
       </Fragment>
     )

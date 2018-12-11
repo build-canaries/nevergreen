@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {isBlank} from '../common/Utils'
 import classNames from 'classnames'
-import {IconButton} from '../common/IconButton'
 import styles from './notification.scss'
+import {PrimaryButton} from '../common/forms/Button'
 
 export function Notification({fullScreen, notification, dismiss}) {
   const notificationClassNames = classNames(styles.popUpNotification, {
@@ -18,11 +18,13 @@ export function Notification({fullScreen, notification, dismiss}) {
            data-locator='notification'>
         {notification}
       </div>
-      <IconButton icon='cross'
-                  label='dismiss'
-                  className={styles.dismiss}
-                  onClick={dismiss}
-                  data-locator='dismiss'/>
+      <PrimaryButton icon='cross'
+                     iconOnly
+                     className={styles.dismiss}
+                     onClick={dismiss}
+                     data-locator='dismiss'>
+        dismiss
+      </PrimaryButton>
     </section>
 }
 

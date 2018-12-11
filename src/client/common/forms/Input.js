@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import _ from 'lodash'
 import styles from './input.scss'
 import formStyles from './forms.scss'
+import {SecondaryButton} from './Button'
 
 PasswordVisibilityToggle.propTypes = {
   id: PropTypes.string.isRequired,
@@ -15,11 +16,15 @@ function PasswordVisibilityToggle({id, show, onClick}) {
   const label = show ? 'show password' : 'hide password'
   const className = show ? styles.showPassword : styles.hidePassword
   return (
-    <button className={className}
-            onClick={onClick}
-            title={label}
-            aria-label={label}
-            aria-controls={id}/>
+    <SecondaryButton className={className}
+                     onClick={onClick}
+                     title={label}
+                     aria-label={label}
+                     aria-controls={id}
+                     icon={show ? 'eye' : 'eye-blocked'}
+                     iconOnly>
+      {label}
+    </SecondaryButton>
   )
 }
 

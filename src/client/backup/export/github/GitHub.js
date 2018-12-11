@@ -4,6 +4,7 @@ import {Input} from '../../../common/forms/Input'
 import {GistIdInput} from '../../GistIdInput'
 import {ContextualHelp, InlineHelp} from '../../../common/ContextualHelp'
 import {GitHubHelp} from './GitHubHelp'
+import {PrimaryButton} from '../../../common/forms/Button'
 import styles from './github.scss'
 
 export class GitHub extends Component {
@@ -63,11 +64,12 @@ export class GitHub extends Component {
                disabled={disabled}>
           <div className={styles.label}>access token</div>
         </Input>
-        <button className={styles.export}
-                onClick={this.upload}
-                disabled={disabled}>
+        <PrimaryButton className={styles.export}
+                       onClick={this.upload}
+                       disabled={disabled}
+                       icon='cloud-upload'>
           export
-        </button>
+        </PrimaryButton>
       </Fragment>
     )
   }

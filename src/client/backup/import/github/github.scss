@@ -3,12 +3,5 @@
 @import '../../../common/responsive';
 
 .import {
-  @include button-icon('cloud-download');
-
-  @extend %primary-button;
   @extend %block-margin;
-
-  @include respond-to(tablet, desktop) {
-    display: block;
-  }
 }

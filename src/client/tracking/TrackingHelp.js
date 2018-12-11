@@ -3,6 +3,7 @@ import {ExternalLink} from '../common/ExternalLink'
 import PropTypes from 'prop-types'
 import styles from './tracking-help.scss'
 import {URL} from '../common/URL'
+import {PrimaryButton} from '../common/forms/Button'
 
 export function TrackingHelp({addTray, close}) {
   const addExampleTray = () => {
@@ -88,11 +89,10 @@ export function TrackingHelp({addTray, close}) {
       <div className={styles.exampleUrl}>
         <URL url='https://builds.apache.org/cc.xml'/>
       </div>
-      <button className={styles.addExampleTray}
-              onClick={addExampleTray}
-              data-locator='add-example-tray'>
+      <PrimaryButton onClick={addExampleTray}
+                     data-locator='add-example-tray'>
         Try it now!
-      </button>
+      </PrimaryButton>
     </Fragment>
   )
 }

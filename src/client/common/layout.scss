@@ -19,12 +19,14 @@
 
 %inline-margin {
   @include respond-to(tablet, desktop) {
+    display: inline-block;
     margin: 0 $margin-right 0 0;
   }
 }
 
 %block-margin {
   @include respond-to(tablet, desktop) {
+    display: block;
     margin: $margin-top 0 0 0;
   }
 }

@@ -4,6 +4,7 @@ import {Input} from '../common/forms/Input'
 import {ContextualHelp, InlineHelp} from '../common/ContextualHelp'
 import {TrackingHelp} from './TrackingHelp'
 import styles from './add-tray.scss'
+import {PrimaryButton} from '../common/forms/Button'
 
 const DEFAULT_STATE = {
   url: '',
@@ -70,9 +71,12 @@ export class AddTray extends Component {
           </Input>
         </div>
         <InlineHelp>
-          <button className={styles.add} onClick={this.addTrayAndClearInput} data-locator='add-tray'>
+          <PrimaryButton className={styles.add}
+                         onClick={this.addTrayAndClearInput}
+                         data-locator='add-tray'
+                         icon='plus'>
             <span aria-label='add tray'>add</span>
-          </button>
+          </PrimaryButton>
           <ContextualHelp title='Add tray'
                           help={<TrackingHelp addTray={addTray}/>}
                           className={styles.help}/>

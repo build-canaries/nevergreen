@@ -5,6 +5,7 @@ import {Checkbox} from '../common/forms/Checkbox'
 import {DropDown} from '../common/forms/DropDown'
 import {StyleGuideSection} from './StyleGuideSection'
 import styles from './style-guide.scss'
+import {DangerButton, PrimaryButton, SecondaryButton} from '../common/forms/Button'
 
 const DROP_DOWN_OPTIONS = [
   {value: '1', display: 'option 1'},
@@ -54,9 +55,15 @@ export function Forms() {
       </StyleGuideSection>
 
       <StyleGuideSection title='Buttons'>
-        <button className={styles.primaryButton}>primary button</button>
-        <button>default button</button>
-        <button className={styles.dangerButton}>danger button</button>
+        <PrimaryButton>primary button</PrimaryButton>
+        <PrimaryButton icon='floppy-disk'>primary button with icon</PrimaryButton>
+        <PrimaryButton icon='floppy-disk' iconOnly>primary button icon only</PrimaryButton>
+        <SecondaryButton>secondary button</SecondaryButton>
+        <SecondaryButton icon='floppy-disk'>secondary button with icon</SecondaryButton>
+        <SecondaryButton icon='floppy-disk' iconOnly>secondary button icon only</SecondaryButton>
+        <DangerButton>danger button</DangerButton>
+        <DangerButton icon='floppy-disk'>danger button with icon</DangerButton>
+        <DangerButton icon='floppy-disk' iconOnly>danger button icon only</DangerButton>
       </StyleGuideSection>
     </Fragment>
   )

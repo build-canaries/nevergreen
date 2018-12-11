@@ -96,11 +96,9 @@ $_font-scale: 1;
 }
 
 .showPassword {
-  @extend .icon-eye;
   @extend %password-toggle;
 }
 
 .hidePassword {
-  @extend .icon-eye-blocked;
   @extend %password-toggle;
 }

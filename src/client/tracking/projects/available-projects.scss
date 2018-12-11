@@ -1,5 +1,4 @@
 @import '../../common/variables';
-@import '../../common/forms/button';
 @import '../../common/responsive';
 @import '../../common/accessibility';
 @import '../../common/layout';
@@ -30,16 +29,12 @@
 }
 
 .includeAll {
-  @include button-icon('checkbox-checked');
-
   @include respond-to(tablet, desktop) {
     margin: $margin-top $margin-right 0 0;
   }
 }
 
 .excludeAll {
-  @include button-icon('checkbox-unchecked');
-
   @include respond-to(tablet, desktop) {
     margin: $margin-top $margin-right 0 0;
   }
