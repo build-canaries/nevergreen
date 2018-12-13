@@ -4,7 +4,7 @@
 @import '../../common/layout';
 
 .refresh {
-  @extend %inline-margin;
+  @extend %inline;
   @extend %first;
 }
 

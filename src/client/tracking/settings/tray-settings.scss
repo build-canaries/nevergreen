@@ -50,11 +50,9 @@
 }
 
 .deleteInfo {
-  @extend %inline-margin;
-
-  display: inline-block;
+  @extend %inline;
 }
 
 .cancel {
-  @extend %inline-margin;
+  @extend %inline;
 }

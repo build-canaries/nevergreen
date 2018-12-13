@@ -1,9 +1,8 @@
 @import '~normalize.css';
 @import './common/fonts/fonts';
 @import './common/variables';
-@import './common/accessibility';
 @import './common/typography';
-@import './common/responsive';
+@import './common/links';
 
 * {
   box-sizing: border-box;
@@ -36,17 +35,7 @@ fieldset {
 }
 
 a {
-  color: $off-black;
-
-  &:visited {
-    color: $blue;
-  }
-
-  @include interactive(
-    $background-color: $light-grey,
-    $border-color: transparent,
-    $hover-color-change-percentage: 0%,
-    $focus-color-change-percentage: 0%);
+  @include link();
 }
 
 p {

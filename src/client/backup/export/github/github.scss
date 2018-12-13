@@ -4,7 +4,7 @@
 $label-size: 6em;
 
 .export {
-  @extend %block-margin;
+  @extend %blocking;
 }
 
 .label {

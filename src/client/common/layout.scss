@@ -17,14 +17,14 @@
   margin-top: 0;
 }
 
-%inline-margin {
+%inline {
   @include respond-to(tablet, desktop) {
     display: inline-block;
     margin: 0 $margin-right 0 0;
   }
 }
 
-%block-margin {
+%blocking {
   @include respond-to(tablet, desktop) {
     display: block;
     margin: $margin-top 0 0 0;

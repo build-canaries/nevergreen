@@ -20,8 +20,7 @@ export function AddedMessages({messages, removeMessage}) {
             return (
               <li key={message}
                   className={styles.successItem}>
-                <RemoveLink removeMessage={remove}
-                            message={message}/>
+                <RemoveLink removeMessage={remove}/>
                 <div className={styles.message}
                      data-locator='success-message'>
                   {message}

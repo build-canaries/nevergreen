@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import {DangerButton} from '../common/forms/Button'
 import styles from './remove-link.scss'
 
-export function RemoveLink({removeMessage, message, className}) {
+export function RemoveLink({removeMessage, className}) {
   const classes = classNames(styles.removeLink, className)
 
   return (
@@ -20,6 +20,5 @@ export function RemoveLink({removeMessage, message, className}) {
 
 RemoveLink.propTypes = {
   removeMessage: PropTypes.func.isRequired,
-  message: PropTypes.string.isRequired,
   className: PropTypes.string
 }

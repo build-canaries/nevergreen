@@ -1,6 +1,7 @@
 @import '../common/variables';
 @import '../common/responsive';
 @import '../common/typography';
+@import '../common/links';
 
 .siteFooter {
   background-color: $off-black;
@@ -21,47 +22,17 @@
 }
 
 .about {
-  @include font-scale(0);
+  @include link($white, $white, $black);
 
-  background: none;
-  border: none;
-  color: $white;
-  display: block;
-  height: auto;
-  margin: 0;
-  min-height: auto;
-  padding: 0;
-  text-align: start;
-  text-transform: none;
-  white-space: normal;
-
-  &:enabled {
-    cursor: pointer;
-
-    &:hover,
-    &:focus {
-      background-color: inherit;
-      color: darken($white, 10%);
-    }
-  }
+  text-decoration: none;
 }
 
 .submitAnIssue {
-  color: $white;
+  @include link($white, $white, $black);
+
   display: block;
   margin: $margin-top 0 0 0;
-  text-decoration: none;
   text-transform: uppercase;
-
-  &:hover,
-  &:focus {
-    background-color: inherit;
-    color: darken($white, 10%);
-  }
-
-  &:visited {
-    color: $white;
-  }
 
   @include respond-to(tablet, desktop) {
     margin: 0;

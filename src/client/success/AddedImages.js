@@ -27,7 +27,6 @@ export function AddedImages({urls, removeMessage}) {
                        data-locator='success-image'/>
                 </div>
                 <RemoveLink removeMessage={remove}
-                            message={url}
                             className={styles.remove}/>
               </li>
             )
