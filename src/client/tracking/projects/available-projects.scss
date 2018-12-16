@@ -43,6 +43,7 @@
 .buildItems {
   display: block;
   list-style: none;
+  overflow: hidden; // required to give this element a height as its items are floating
   width: 100%;
 
   @include respond-to(very-small) {
