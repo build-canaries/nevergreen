@@ -4,6 +4,7 @@ import ReactModal from 'react-modal'
 import cn from 'classnames'
 import styles from './modal.scss'
 import {SecondaryButton} from './forms/Button'
+import {iCross} from './fonts/Icons'
 
 export function Modal({children, title, show, close, className}) {
   return (
@@ -15,7 +16,7 @@ export function Modal({children, title, show, close, className}) {
       <div className={styles.header}>
         <h2 className={styles.title}>{title}</h2>
         <SecondaryButton onClick={close}
-                         icon='cross'
+                         icon={iCross}
                          iconOnly>
           close
         </SecondaryButton>

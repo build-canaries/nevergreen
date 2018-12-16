@@ -5,6 +5,7 @@ import _ from 'lodash'
 import styles from './input.scss'
 import formStyles from './forms.scss'
 import {SecondaryButton} from './Button'
+import {iEye, iEyeBlocked} from '../fonts/Icons'
 
 PasswordVisibilityToggle.propTypes = {
   id: PropTypes.string.isRequired,
@@ -21,7 +22,7 @@ function PasswordVisibilityToggle({id, show, onClick}) {
                      title={label}
                      aria-label={label}
                      aria-controls={id}
-                     icon={show ? 'eye' : 'eye-blocked'}
+                     icon={show ? iEye : iEyeBlocked}
                      iconOnly>
       {label}
     </SecondaryButton>

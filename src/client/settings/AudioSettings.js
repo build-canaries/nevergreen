@@ -8,6 +8,7 @@ import {Input} from '../common/forms/Input'
 import {Checkbox} from '../common/forms/Checkbox'
 import styles from './audio-settings.scss'
 import {SecondaryButton} from '../common/forms/Button'
+import {iPlay, iStop} from '../common/fonts/Icons'
 
 function hasScheme(url) {
   return _.size(_.split(url, '://')) > 1
@@ -104,7 +105,7 @@ export class AudioSettings extends Component {
           <SecondaryButton onClick={playing ? this.stop : this.play}
                            disabled={playingDisabled}
                            aria-disabled={playingDisabled}
-                           icon={playing ? 'stop2' : 'play3'}>
+                           icon={playing ? iStop : iPlay}>
             {playing ? 'stop' : 'play'}
           </SecondaryButton>
         </div>

@@ -2,6 +2,7 @@ import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import styles from './locally.scss'
 import {PrimaryButton} from '../../../common/forms/Button'
+import {iFloppyDisk} from '../../../common/fonts/Icons'
 
 const PLACEHOLDER = 'paste exported configuration here and press import'
 
@@ -36,7 +37,7 @@ export class Locally extends Component {
         <PrimaryButton className={styles.import}
                        onClick={this.doImport}
                        data-locator='import'
-                       icon='floppy-disk'>
+                       icon={iFloppyDisk}>
           import
         </PrimaryButton>
       </Fragment>

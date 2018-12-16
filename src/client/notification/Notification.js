@@ -4,6 +4,7 @@ import {isBlank} from '../common/Utils'
 import classNames from 'classnames'
 import styles from './notification.scss'
 import {PrimaryButton} from '../common/forms/Button'
+import {iCross} from '../common/fonts/Icons'
 
 export function Notification({fullScreen, notification, dismiss}) {
   const notificationClassNames = classNames(styles.popUpNotification, {
@@ -18,7 +19,7 @@ export function Notification({fullScreen, notification, dismiss}) {
            data-locator='notification'>
         {notification}
       </div>
-      <PrimaryButton icon='cross'
+      <PrimaryButton icon={iCross}
                      iconOnly
                      className={styles.dismiss}
                      onClick={dismiss}

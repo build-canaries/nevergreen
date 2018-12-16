@@ -4,6 +4,7 @@ import {Modal} from './Modal'
 import cn from 'classnames'
 import styles from './contextual-help.scss'
 import {SecondaryButton} from './forms/Button'
+import {iQuestion} from './fonts/Icons'
 
 
 export class ContextualHelp extends Component {
@@ -41,7 +42,7 @@ export class ContextualHelp extends Component {
 
     return (
       <Fragment>
-        <SecondaryButton icon='question'
+        <SecondaryButton icon={iQuestion}
                          iconOnly
                          className={cn(styles.helpButton, className)}
                          onClick={this.toggleHelp}

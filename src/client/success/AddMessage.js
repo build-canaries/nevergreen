@@ -5,6 +5,7 @@ import {ContextualHelp, InlineHelp} from '../common/ContextualHelp'
 import {SuccessHelp} from './SuccessHelp'
 import styles from './add-message.scss'
 import {PrimaryButton} from '../common/forms/Button'
+import {iPlus} from '../common/fonts/Icons'
 
 export class AddMessage extends Component {
 
@@ -39,7 +40,7 @@ export class AddMessage extends Component {
           <PrimaryButton className={styles.add}
                          onClick={this.addMessage}
                          data-locator='add-message'
-                         icon='plus'>
+                         icon={iPlus}>
             <span aria-label='add success message'>add</span>
           </PrimaryButton>
 

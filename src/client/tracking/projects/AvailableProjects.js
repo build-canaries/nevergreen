@@ -11,6 +11,7 @@ import {VisuallyHidden} from '../../common/VisuallyHidden'
 import styles from './available-projects.scss'
 import memoize from 'memoize-one'
 import {SecondaryButton} from '../../common/forms/Button'
+import {iCheckboxChecked, iCheckboxUnchecked} from '../../common/fonts/Icons'
 
 const DEFAULT_STATE = {
   filter: null,
@@ -88,14 +89,14 @@ export class AvailableProjects extends Component {
           <SecondaryButton className={styles.includeAll}
                            onClick={this.includeAll(filteredProjects)}
                            data-locator='include-all'
-                           icon='checkbox-checked'>
+                           icon={iCheckboxChecked}>
             include all
             <Shortcut hotkeys={[`+ ${index}`, `= ${index}`]}/>
           </SecondaryButton>
           <SecondaryButton className={styles.excludeAll}
                            onClick={this.excludeAll(filteredProjects)}
                            data-locator='exclude-all'
-                           icon='checkbox-unchecked'>
+                           icon={iCheckboxUnchecked}>
             exclude all
             <Shortcut hotkeys={[`- ${index}`]}/>
           </SecondaryButton>

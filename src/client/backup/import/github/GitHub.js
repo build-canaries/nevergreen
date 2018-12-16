@@ -5,6 +5,7 @@ import {GitHubHelp} from './GitHubHelp'
 import {ContextualHelp, InlineHelp} from '../../../common/ContextualHelp'
 import styles from './github.scss'
 import {PrimaryButton} from '../../../common/forms/Button'
+import {iCloudDownload} from '../../../common/fonts/Icons'
 
 export function GitHub({gistId, gitHubSetGistId, loaded, restoreFromGitHub}) {
   const disabled = !loaded
@@ -22,7 +23,7 @@ export function GitHub({gistId, gitHubSetGistId, loaded, restoreFromGitHub}) {
       <PrimaryButton className={styles.import}
                      onClick={restoreFromGitHub}
                      disabled={disabled}
-                     icon='cloud-download'>
+                     icon={iCloudDownload}>
         import
       </PrimaryButton>
     </Fragment>

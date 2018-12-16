@@ -6,6 +6,7 @@ import {ContextualHelp, InlineHelp} from '../../../common/ContextualHelp'
 import {GitHubHelp} from './GitHubHelp'
 import {PrimaryButton} from '../../../common/forms/Button'
 import styles from './github.scss'
+import {iCloudUpload} from '../../../common/fonts/Icons'
 
 export class GitHub extends Component {
 
@@ -67,7 +68,7 @@ export class GitHub extends Component {
         <PrimaryButton className={styles.export}
                        onClick={this.upload}
                        disabled={disabled}
-                       icon='cloud-upload'>
+                       icon={iCloudUpload}>
           export
         </PrimaryButton>
       </Fragment>

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {ClipboardComponent} from './Clipboard'
 import styles from './locally.scss'
 import {PrimaryButton} from '../../../common/forms/Button'
+import {iPaste} from '../../../common/fonts/Icons'
 
 export class Locally extends Component {
 
@@ -34,7 +35,7 @@ export class Locally extends Component {
         <PrimaryButton className={styles.copy}
                        id='copy-to-clipboard'
                        data-clipboard-target='#export-data'
-                       icon='paste'>
+                       icon={iPaste}>
           copy to clipboard
         </PrimaryButton>
       </Fragment>

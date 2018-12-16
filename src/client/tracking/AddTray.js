@@ -5,6 +5,7 @@ import {ContextualHelp, InlineHelp} from '../common/ContextualHelp'
 import {TrackingHelp} from './TrackingHelp'
 import styles from './add-tray.scss'
 import {PrimaryButton} from '../common/forms/Button'
+import {iPlus} from '../common/fonts/Icons'
 
 const DEFAULT_STATE = {
   url: '',
@@ -74,7 +75,7 @@ export class AddTray extends Component {
           <PrimaryButton className={styles.add}
                          onClick={this.addTrayAndClearInput}
                          data-locator='add-tray'
-                         icon='plus'>
+                         icon={iPlus}>
             <span aria-label='add tray'>add</span>
           </PrimaryButton>
           <ContextualHelp title='Add tray'

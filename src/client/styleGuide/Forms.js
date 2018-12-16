@@ -6,6 +6,7 @@ import {DropDown} from '../common/forms/DropDown'
 import {StyleGuideSection} from './StyleGuideSection'
 import styles from './style-guide.scss'
 import {DangerButton, PrimaryButton, SecondaryButton} from '../common/forms/Button'
+import {iFloppyDisk} from '../common/fonts/Icons'
 
 const DROP_DOWN_OPTIONS = [
   {value: '1', display: 'option 1'},
@@ -56,14 +57,14 @@ export function Forms() {
 
       <StyleGuideSection title='Buttons'>
         <PrimaryButton>primary button</PrimaryButton>
-        <PrimaryButton icon='floppy-disk'>primary button with icon</PrimaryButton>
-        <PrimaryButton icon='floppy-disk' iconOnly>primary button icon only</PrimaryButton>
+        <PrimaryButton icon={iFloppyDisk}>primary button with icon</PrimaryButton>
+        <PrimaryButton icon={iFloppyDisk} iconOnly>primary button icon only</PrimaryButton>
         <SecondaryButton>secondary button</SecondaryButton>
-        <SecondaryButton icon='floppy-disk'>secondary button with icon</SecondaryButton>
-        <SecondaryButton icon='floppy-disk' iconOnly>secondary button icon only</SecondaryButton>
+        <SecondaryButton icon={iFloppyDisk}>secondary button with icon</SecondaryButton>
+        <SecondaryButton icon={iFloppyDisk} iconOnly>secondary button icon only</SecondaryButton>
         <DangerButton>danger button</DangerButton>
-        <DangerButton icon='floppy-disk'>danger button with icon</DangerButton>
-        <DangerButton icon='floppy-disk' iconOnly>danger button icon only</DangerButton>
+        <DangerButton icon={iFloppyDisk}>danger button with icon</DangerButton>
+        <DangerButton icon={iFloppyDisk} iconOnly>danger button icon only</DangerButton>
       </StyleGuideSection>
     </Fragment>
   )

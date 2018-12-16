@@ -3,12 +3,13 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import {DangerButton} from '../common/forms/Button'
 import styles from './remove-link.scss'
+import {iBin} from '../common/fonts/Icons'
 
 export function RemoveLink({removeMessage, className}) {
   const classes = classNames(styles.removeLink, className)
 
   return (
-    <DangerButton icon='bin'
+    <DangerButton icon={iBin}
                   iconOnly
                   type='danger'
                   className={classes}

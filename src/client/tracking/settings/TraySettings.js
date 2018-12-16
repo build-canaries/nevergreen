@@ -6,6 +6,7 @@ import {CI_OPTIONS, generateRandomName} from '../../domain/Tray'
 import styles from './tray-settings.scss'
 import {VisuallyHidden} from '../../common/VisuallyHidden'
 import {DangerButton, PrimaryButton, SecondaryButton} from '../../common/forms/Button'
+import {iBin, iCross, iDice, iFloppyDisk, iUnlocked} from '../../common/fonts/Icons'
 
 export class TraySettings extends Component {
 
@@ -92,7 +93,7 @@ export class TraySettings extends Component {
                data-locator='tray-name'>
           <div className={styles.label}>name</div>
         </Input>
-        <SecondaryButton icon='dice'
+        <SecondaryButton icon={iDice}
                          onClick={this.generateNewName}
                          data-locator='generate-random'>
           randomise name
@@ -136,19 +137,19 @@ export class TraySettings extends Component {
           ? (
             <Fragment>
               <SecondaryButton className={styles.cancel}
-                               icon='cross'
+                               icon={iCross}
                                onClick={this.cancel}
                                data-locator='change-password-cancel'>
                 cancel
               </SecondaryButton>
-              <PrimaryButton icon='floppy-disk'
+              <PrimaryButton icon={iFloppyDisk}
                              onClick={this.setPassword}
                              data-locator='change-password-update'>
                 update password
               </PrimaryButton>
             </Fragment>
           ) : (
-            <SecondaryButton icon='unlocked'
+            <SecondaryButton icon={iUnlocked}
                              onClick={this.changePassword}
                              data-locator='change-password'>
               change password
@@ -159,7 +160,7 @@ export class TraySettings extends Component {
           <h4 className={styles.dangerZoneTitle}>Danger Zone</h4>
           <div className={styles.dangerZoneContent}>
             <div className={styles.deleteInfo}>Once you delete, there is no going back. Please be certain.</div>
-            <DangerButton icon='bin'
+            <DangerButton icon={iBin}
                           onClick={this.deleteTray}
                           data-locator='delete-tray'>
               delete

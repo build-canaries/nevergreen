@@ -4,13 +4,14 @@ import {Shortcut} from '../../common/Shortcut'
 import {Duration} from '../../common/Duration'
 import styles from './refresh.scss'
 import {PrimaryButton} from '../../common/forms/Button'
+import {iRefresh} from '../../common/fonts/Icons'
 
 export function Refresh({index, timestamp, refreshTray}) {
   return (
     <Fragment>
       <PrimaryButton className={styles.refresh}
                      onClick={refreshTray}
-                     icon='loop2'>
+                     icon={iRefresh}>
         refresh
         <Shortcut hotkeys={[`r ${index}`]}/>
       </PrimaryButton>
