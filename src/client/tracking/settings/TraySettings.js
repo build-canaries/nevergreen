@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import {Input} from '../../common/forms/Input'
 import {DropDown} from '../../common/forms/DropDown'
 import {CI_OPTIONS, generateRandomName} from '../../domain/Tray'
-import styles from './tray-settings.scss'
 import {VisuallyHidden} from '../../common/VisuallyHidden'
 import {DangerButton, PrimaryButton, SecondaryButton} from '../../common/forms/Button'
 import {iBin, iCross, iDice, iFloppyDisk, iUnlocked} from '../../common/fonts/Icons'
+import styles from './tray-settings.scss'
 
 export class TraySettings extends Component {
 
@@ -95,8 +95,9 @@ export class TraySettings extends Component {
         </Input>
         <SecondaryButton icon={iDice}
                          onClick={this.generateNewName}
-                         data-locator='generate-random'>
-          randomise name
+                         data-locator='generate-random'
+                         aria-label='randomise name'>
+          randomise
         </SecondaryButton>
         <Input value={newUrl}
                onChange={this.urlChanged}
@@ -136,20 +137,22 @@ export class TraySettings extends Component {
         {updatingPassword
           ? (
             <Fragment>
-              <SecondaryButton className={styles.cancel}
+              <SecondaryButton className={styles.changePasswordButtons}
                                icon={iCross}
                                onClick={this.cancel}
                                data-locator='change-password-cancel'>
-                cancel
+                discard changes
               </SecondaryButton>
-              <PrimaryButton icon={iFloppyDisk}
+              <PrimaryButton className={styles.changePasswordButtons}
+                             icon={iFloppyDisk}
                              onClick={this.setPassword}
                              data-locator='change-password-update'>
-                update password
+                save changes
               </PrimaryButton>
             </Fragment>
           ) : (
-            <SecondaryButton icon={iUnlocked}
+            <SecondaryButton className={styles.changePasswordButtons}
+                             icon={iUnlocked}
                              onClick={this.changePassword}
                              data-locator='change-password'>
               change password

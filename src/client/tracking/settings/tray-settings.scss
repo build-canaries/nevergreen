@@ -30,7 +30,7 @@
 
 .dangerZone {
   border: 1px solid $light-grey;
-  margin-top: 2em;
+  margin-top: $margin-top;
 }
 
 .dangerZoneTitle {
@@ -53,6 +53,9 @@
   @extend %inline;
 }
 
-.cancel {
-  @extend %inline;
+.changePasswordButtons {
+  @include respond-to(tablet, desktop) {
+    display: inline-block;
+    margin: $margin-top $margin-right 0 0;
+  }
 }
