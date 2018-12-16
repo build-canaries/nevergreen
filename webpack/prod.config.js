@@ -2,7 +2,7 @@ const webpack = require('webpack')
 const merge = require('webpack-merge')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
-const { GenerateSW } = require('workbox-webpack-plugin')
+const {GenerateSW} = require('workbox-webpack-plugin')
 
 const baseConfig = require('./base.config.js')
 
@@ -30,5 +30,10 @@ module.exports = merge(baseConfig, {
         new RegExp('/[^/]+\\.[^/]+$') // Exclude URLs containing a dot, as they're likely a resource in public
       ]
     })
-  ]
+  ],
+  optimization: {
+    splitChunks: {
+      chunks: 'all'
+    }
+  }
 })
