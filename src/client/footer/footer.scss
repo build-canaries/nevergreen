@@ -24,6 +24,7 @@
 .about {
   @include link($white, $white, $black);
 
+  text-align: left;
   text-decoration: none;
 }
 
