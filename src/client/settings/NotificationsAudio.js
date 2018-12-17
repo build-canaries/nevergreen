@@ -1,18 +1,12 @@
-import React, {Component} from 'react'
+import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
-import _ from 'lodash'
 import {isBlank} from '../common/Utils'
-import {Container} from '../common/Container'
 import {Messages} from '../common/Messages'
 import {Input} from '../common/forms/Input'
 import {Checkbox} from '../common/forms/Checkbox'
-import styles from './audio-settings.scss'
 import {SecondaryButton} from '../common/forms/Button'
 import {iPlay, iStop} from '../common/fonts/Icons'
-
-function hasScheme(url) {
-  return _.size(_.split(url, '://')) > 1
-}
+import styles from './notifications-audio.scss'
 
 function pause(audio) {
   if (audio) {
@@ -21,17 +15,14 @@ function pause(audio) {
   }
 }
 
-export class AudioSettings extends Component {
+export class NotificationsAudio extends Component {
 
   constructor(props) {
     super(props)
-    const soundFx = isBlank(props.brokenBuildSoundFx) || hasScheme(props.brokenBuildSoundFx)
-      ? this.props.brokenBuildSoundFx
-      : `${window.location.origin}/${props.brokenBuildSoundFx}`
     this.state = {
       errors: [],
       audio: null,
-      soundFx,
+      soundFx: props.brokenBuildSoundFx,
       playEnabled: !isBlank(props.brokenBuildSoundFx),
       playing: false
     }
@@ -53,18 +44,20 @@ export class AudioSettings extends Component {
     this.setState({audio: null, playing: false})
   }
 
-  play = async () => {
+  play = () => {
     const audio = new Audio(this.state.soundFx)
-    this.setState({audio, errors: [], playing: true})
     audio.addEventListener('ended', this.audioStopped)
-    try {
-      await audio.play()
-    } catch (e) {
-      this.setState({
-        errors: ['Unable to play broken build sound because of an error.', e.message],
-        playing: false
-      })
-    }
+
+    this.setState({audio, errors: [], playing: true}, async () => {
+      try {
+        await audio.play()
+      } catch (e) {
+        this.setState({
+          errors: ['Unable to play broken build sound because of an error.', e.message],
+          playing: false
+        })
+      }
+    })
   }
 
   stop = () => {
@@ -83,16 +76,15 @@ export class AudioSettings extends Component {
     const playingDisabled = isBlank(soundFx) || !playEnabled
 
     return (
-      <Container title='audio' className={styles.container}>
+      <Fragment>
         <Checkbox className={styles.playSfxs}
                   checked={playBrokenBuildSoundFx}
                   onToggle={this.toggleBrokenSounds}
                   data-locator='play-sounds'>
-          play a sound when a build breaks
+          play audio notifications
         </Checkbox>
         <div className={styles.soundFx}>
-          <Input type='url'
-                 className={styles.brokenBuildSfx}
+          <Input className={styles.brokenBuildSfx}
                  placeholder='audio file URL'
                  onChange={this.updateSoundFx}
                  value={soundFx}
@@ -112,12 +104,12 @@ export class AudioSettings extends Component {
         <Messages className={styles.playbackErrors}
                   type='error'
                   messages={errors}/>
-      </Container>
+      </Fragment>
     )
   }
 }
 
-AudioSettings.propTypes = {
+NotificationsAudio.propTypes = {
   playBrokenBuildSoundFx: PropTypes.bool.isRequired,
   brokenBuildSoundFx: PropTypes.string,
   setPlayBrokenBuildSoundFx: PropTypes.func.isRequired,

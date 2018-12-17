@@ -2,12 +2,8 @@
 @import '../common/responsive';
 @import '../common/layout';
 
-.container {
-  padding: 1em;
-}
-
 .playSfxs {
-  @extend %first;
+  width: 100%;
 }
 
 .soundFx {

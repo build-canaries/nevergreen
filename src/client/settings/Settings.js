@@ -2,7 +2,6 @@ import React, {Fragment} from 'react'
 import PropTypes from 'prop-types'
 import {GeneralSettings} from './GeneralSettings'
 import {DisplaySettings} from './DisplaySettings'
-import {AudioSettings} from './AudioSettings'
 import {Title} from '../common/Title'
 import {NotificationSettings} from './NotificationSettings'
 
@@ -13,7 +12,6 @@ export function Settings(props) {
       <GeneralSettings {...props}/>
       <DisplaySettings {...props}/>
       <NotificationSettings {...props}/>
-      <AudioSettings {...props}/>
     </Fragment>
   )
 }
