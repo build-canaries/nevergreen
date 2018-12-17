@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Input} from '../common/forms/Input'
-import {ContextualHelp, InlineHelp} from '../common/ContextualHelp'
+import {WithHelp} from '../common/ContextualHelp'
 import {TrackingHelp} from './TrackingHelp'
 import styles from './add-tray.scss'
 import {PrimaryButton} from '../common/forms/Button'
@@ -45,7 +45,7 @@ export class AddTray extends Component {
       <div className={styles.addTray}>
         <div className={styles.inputs}>
           <Input className={styles.url}
-                 placeholder='CCTray XML file'
+                 placeholder='CCTray XML feed'
                  value={url}
                  onChange={this.updateUrl}
                  onEnter={this.addTrayAndClearInput}
@@ -71,17 +71,16 @@ export class AddTray extends Component {
             <div className={styles.label}>password</div>
           </Input>
         </div>
-        <InlineHelp>
+        <WithHelp title='Add tray'
+                  help={<TrackingHelp addTray={addTray}/>}
+                  className={styles.help}>
           <PrimaryButton className={styles.add}
                          onClick={this.addTrayAndClearInput}
                          data-locator='add-tray'
                          icon={iPlus}>
             <span aria-label='add tray'>add</span>
           </PrimaryButton>
-          <ContextualHelp title='Add tray'
-                          help={<TrackingHelp addTray={addTray}/>}
-                          className={styles.help}/>
-        </InlineHelp>
+        </WithHelp>
       </div>
     )
   }

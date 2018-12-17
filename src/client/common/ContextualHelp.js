@@ -6,7 +6,6 @@ import styles from './contextual-help.scss'
 import {SecondaryButton} from './forms/Button'
 import {iQuestion} from './fonts/Icons'
 
-
 export class ContextualHelp extends Component {
 
   constructor(props) {
@@ -29,7 +28,7 @@ export class ContextualHelp extends Component {
   render() {
     const {help, title, className} = this.props
     const {show} = this.state
-    const fullTitle = `${title} help`
+    const fullTitle = `Help - ${title}`
     const clonedHelp = cloneElement(help, {close: this.closeHelp})
 
     const helpContainer = (
@@ -62,12 +61,18 @@ ContextualHelp.propTypes = {
   className: PropTypes.string
 }
 
-export function InlineHelp({children}) {
+export function WithHelp({help, title, className, children}) {
   return (
-    <div className={styles.inline}>{children}</div>
+    <div className={styles.inline}>
+      {children}
+      <ContextualHelp title={title} help={help} className={className}/>
+    </div>
   )
 }
 
-InlineHelp.propTypes = {
+WithHelp.propTypes = {
+  title: PropTypes.string.isRequired,
+  help: PropTypes.element.isRequired,
+  className: PropTypes.string,
   children: PropTypes.node.isRequired
 }

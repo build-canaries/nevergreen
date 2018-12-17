@@ -2,7 +2,7 @@ import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import {Input} from '../../../common/forms/Input'
 import {GistIdInput} from '../../GistIdInput'
-import {ContextualHelp, InlineHelp} from '../../../common/ContextualHelp'
+import {WithHelp} from '../../../common/ContextualHelp'
 import {GitHubHelp} from './GitHubHelp'
 import {PrimaryButton} from '../../../common/forms/Button'
 import styles from './github.scss'
@@ -42,14 +42,13 @@ export class GitHub extends Component {
 
     return (
       <Fragment>
-        <InlineHelp>
+        <WithHelp title='Export to GitHub'
+                  help={<GitHubHelp/>}>
           <GistIdInput key={gistId}
                        gistId={gistId}
                        setGistId={gitHubSetGistId}
                        disabled={disabled}/>
-          <ContextualHelp title='Export to GitHub'
-                          help={<GitHubHelp/>}/>
-        </InlineHelp>
+        </WithHelp>
         <Input value={newDescription}
                onChange={this.descriptionChanged}
                onBlur={this.setDescription}

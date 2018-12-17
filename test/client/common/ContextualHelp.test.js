@@ -14,10 +14,10 @@ describe('ContextualHelp', function () {
     className: null
   }
 
-  it('should set the title suffixing with "help"', function () {
+  it('should set the title prefixing with "Help"', function () {
     const props = {...DEFAULT_PROPS, title: 'some-title'}
     const wrapper = shallow(<ContextualHelp {...props}>child</ContextualHelp>)
-    expect(wrapper.find(Modal)).to.have.prop('title', 'some-title help')
+    expect(wrapper.find(Modal)).to.have.prop('title', 'Help - some-title')
   })
 
   it('should show the help when the button is clicked', function () {

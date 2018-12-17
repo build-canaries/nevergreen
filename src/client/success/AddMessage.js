@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Input} from '../common/forms/Input'
-import {ContextualHelp, InlineHelp} from '../common/ContextualHelp'
+import {WithHelp} from '../common/ContextualHelp'
 import {SuccessHelp} from './SuccessHelp'
 import styles from './add-message.scss'
 import {PrimaryButton} from '../common/forms/Button'
@@ -36,18 +36,16 @@ export class AddMessage extends Component {
                data-locator='message'>
           message
         </Input>
-        <InlineHelp>
+        <WithHelp title='Success'
+                  help={<SuccessHelp/>}
+                  className={styles.help}>
           <PrimaryButton className={styles.add}
                          onClick={this.addMessage}
                          data-locator='add-message'
                          icon={iPlus}>
             <span aria-label='add success message'>add</span>
           </PrimaryButton>
-
-          <ContextualHelp title='Success'
-                          help={<SuccessHelp/>}
-                          className={styles.help}/>
-        </InlineHelp>
+        </WithHelp>
       </div>
     )
   }

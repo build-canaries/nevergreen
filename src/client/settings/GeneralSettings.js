@@ -5,7 +5,7 @@ import {Container} from '../common/Container'
 import {DropDown} from '../common/forms/DropDown'
 import styles from './general-settings.scss'
 import {Checkbox} from '../common/forms/Checkbox'
-import {ContextualHelp, InlineHelp} from '../common/ContextualHelp'
+import {WithHelp} from '../common/ContextualHelp'
 
 function ClickToShowMenuHelp({enabled}) {
   return (
@@ -57,17 +57,16 @@ export class GeneralSettings extends Component {
                   data-locator='refresh-time'>
           poll for CI changes every
         </DropDown>
-        <InlineHelp>
+        <WithHelp title='Click to show menu'
+                  help={<ClickToShowMenuHelp enabled={clickToShowMenu}/>}
+                  className={styles.clickToShowHelp}>
           <Checkbox checked={clickToShowMenu}
                     onToggle={this.toggleClickToShowMenu}
                     className={styles.clickToShow}
                     data-locator='click-to-show-menu'>
             click to show menu
           </Checkbox>
-          <ContextualHelp title='Click to show menu'
-                          help={<ClickToShowMenuHelp enabled={clickToShowMenu}/>}
-                          className={styles.clickToShowHelp}/>
-        </InlineHelp>
+        </WithHelp>
       </Container>
     )
   }

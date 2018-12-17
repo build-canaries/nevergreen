@@ -2,7 +2,7 @@ import React, {Fragment} from 'react'
 import PropTypes from 'prop-types'
 import {GistIdInput} from '../../GistIdInput'
 import {GitHubHelp} from './GitHubHelp'
-import {ContextualHelp, InlineHelp} from '../../../common/ContextualHelp'
+import {WithHelp} from '../../../common/ContextualHelp'
 import styles from './github.scss'
 import {PrimaryButton} from '../../../common/forms/Button'
 import {iCloudDownload} from '../../../common/fonts/Icons'
@@ -12,14 +12,13 @@ export function GitHub({gistId, gitHubSetGistId, loaded, restoreFromGitHub}) {
 
   return (
     <Fragment>
-      <InlineHelp>
+      <WithHelp title='Import from GitHub'
+                help={<GitHubHelp/>}>
         <GistIdInput key={gistId}
                      gistId={gistId}
                      setGistId={gitHubSetGistId}
                      disabled={disabled}/>
-        <ContextualHelp title='Import from GitHub'
-                        help={<GitHubHelp/>}/>
-      </InlineHelp>
+      </WithHelp>
       <PrimaryButton className={styles.import}
                      onClick={restoreFromGitHub}
                      disabled={disabled}
