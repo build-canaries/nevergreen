@@ -5,8 +5,9 @@ import {GistIdInput} from '../../GistIdInput'
 import {WithHelp} from '../../../common/ContextualHelp'
 import {GitHubHelp} from './GitHubHelp'
 import {PrimaryButton} from '../../../common/forms/Button'
-import styles from './github.scss'
 import {iCloudUpload} from '../../../common/fonts/Icons'
+import {Password} from '../../../common/forms/Password'
+import styles from './github.scss'
 
 export class GitHub extends Component {
 
@@ -56,14 +57,13 @@ export class GitHub extends Component {
                maxLength='256'>
           <div className={styles.label}>description</div>
         </Input>
-        <Input type='password'
-               className={styles.accessToken}
-               onChange={this.oauthTokenChanged}
-               onBlur={this.oauthTokenChanged}
-               value={oauthToken}
-               disabled={disabled}>
+        <Password className={styles.accessToken}
+                  onChange={this.oauthTokenChanged}
+                  onBlur={this.oauthTokenChanged}
+                  value={oauthToken}
+                  disabled={disabled}>
           <div className={styles.label}>access token</div>
-        </Input>
+        </Password>
         <PrimaryButton className={styles.export}
                        onClick={this.upload}
                        disabled={disabled}

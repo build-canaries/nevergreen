@@ -40,7 +40,7 @@ describe('<TraySettings/>', function () {
     const props = {...DEFAULT_PROPS, setTrayName, trayId: 'some-tray-id'}
 
     const wrapper = shallow(<TraySettings {...props} />)
-    wrapper.find(locator('generate-random')).simulate('click')
+    shallow(wrapper.find(locator('tray-name')).prop('button')).simulate('click')
 
     expect(setTrayName).to.have.been.calledWith('some-tray-id', mocks.match.string)
   })

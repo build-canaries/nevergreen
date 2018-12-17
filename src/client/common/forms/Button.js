@@ -41,3 +41,7 @@ export function SecondaryButton(props) {
 export function DangerButton(props) {
   return <BaseButton style='danger' {...props}/>
 }
+
+export function InputButton(props) {
+  return <SecondaryButton iconOnly className={styles.inputButton} {...props}/>
+}

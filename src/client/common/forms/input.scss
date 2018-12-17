@@ -3,10 +3,6 @@
 @import '../typography';
 @import '../responsive';
 @import '../accessibility';
-@import '../fonts/icon-font';
-
-$_padding: 0.5em;
-$_font-scale: 1;
 
 .wrapper {
   align-items: normal;
@@ -23,15 +19,15 @@ $_font-scale: 1;
 }
 
 .input {
-  @include font-scale($_font-scale);
+  @include font-scale(1);
 
   @extend %standard-input-dimensions;
 
   border: $input-border;
-  border-radius: 2px;
+  border-radius: $border-radius;
   flex-grow: 1;
   min-width: 1em;
-  padding: $_padding;
+  padding: 0.5em;
   text-overflow: ellipsis;
 
   &:invalid {
@@ -60,45 +56,7 @@ $_font-scale: 1;
   }
 }
 
-.password {
+.hasButton {
   border-bottom-right-radius: 0;
   border-top-right-radius: 0;
-}
-
-%info-icon {
-  @include font-scale(0);
-
-  border: $input-border;
-  border-bottom-right-radius: 2px;
-  border-left: none;
-  border-top-right-radius: 2px;
-  padding: $_padding;
-  text-align: center;
-  width: $input-height;
-}
-
-%password-toggle {
-  @extend %info-icon;
-
-  border-bottom-left-radius: 0;
-  border-top-left-radius: 0;
-  cursor: pointer;
-  margin: 0;
-
-  &:enabled {
-    box-shadow: none;
-  }
-}
-
-.readOnly {
-  @extend .icon-lock;
-  @extend %info-icon;
-}
-
-.showPassword {
-  @extend %password-toggle;
-}
-
-.hidePassword {
-  @extend %password-toggle;
 }

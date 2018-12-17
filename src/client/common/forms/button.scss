@@ -24,7 +24,7 @@
 
   background-color: $background-color;
   border: 1px solid $border-color;
-  border-radius: 2px;
+  border-radius: $border-radius;
   color: $color;
   display: block;
   margin: $margin-top 0 0 0;
@@ -78,4 +78,16 @@
   min-width: $input-height;
   padding: 0.5em;
   width: $input-height;
+}
+
+.inputButton {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: $border-radius;
+  border-left: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: $border-radius;
+
+  &:enabled {
+    box-shadow: none;
+  }
 }

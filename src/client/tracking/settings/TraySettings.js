@@ -4,9 +4,10 @@ import {Input} from '../../common/forms/Input'
 import {DropDown} from '../../common/forms/DropDown'
 import {CI_OPTIONS, generateRandomName} from '../../domain/Tray'
 import {VisuallyHidden} from '../../common/VisuallyHidden'
-import {DangerButton, PrimaryButton, SecondaryButton} from '../../common/forms/Button'
+import {DangerButton, InputButton, PrimaryButton, SecondaryButton} from '../../common/forms/Button'
 import {iBin, iCross, iDice, iFloppyDisk, iUnlocked} from '../../common/fonts/Icons'
 import styles from './tray-settings.scss'
+import {Password} from '../../common/forms/Password'
 
 export class TraySettings extends Component {
 
@@ -81,6 +82,14 @@ export class TraySettings extends Component {
     const existingPassword = password ? '*******' : ''
     const passwordValue = updatingPassword ? newPassword : existingPassword
 
+    const randomNameButton = (
+      <InputButton icon={iDice}
+                   onClick={this.generateNewName}
+                   data-locator='generate-random'>
+        randomise name
+      </InputButton>
+    )
+
     return (
       <section data-locator='tray-settings'>
         <VisuallyHidden><h3>Settings</h3></VisuallyHidden>
@@ -90,15 +99,10 @@ export class TraySettings extends Component {
                onBlur={this.setName}
                onEnter={this.setName}
                placeholder='e.g. project or team name'
-               data-locator='tray-name'>
+               data-locator='tray-name'
+               button={randomNameButton}>
           <div className={styles.label}>name</div>
         </Input>
-        <SecondaryButton icon={iDice}
-                         onClick={this.generateNewName}
-                         data-locator='generate-random'
-                         aria-label='randomise name'>
-          randomise
-        </SecondaryButton>
         <Input value={newUrl}
                onChange={this.urlChanged}
                onBlur={this.setUrl}
@@ -123,17 +127,15 @@ export class TraySettings extends Component {
                autoComplete='username'>
           <div className={styles.label}>username</div>
         </Input>
-        <Input type='password'
-               className={styles.existingPassword}
-               value={passwordValue}
-               onChange={this.passwordChanged}
-               onEnter={this.setPassword}
-               readOnly={!updatingPassword}
-               focus={updatingPassword}
-               data-locator='tray-password'
-               autoComplete={updatingPassword ? 'new-password' : 'current-password'}>
+        <Password className={styles.existingPassword}
+                  value={passwordValue}
+                  onChange={this.passwordChanged}
+                  onEnter={this.setPassword}
+                  readOnly={!updatingPassword}
+                  focus={updatingPassword}
+                  data-locator='tray-password'>
           <div className={styles.label}>password</div>
-        </Input>
+        </Password>
         {updatingPassword
           ? (
             <Fragment>

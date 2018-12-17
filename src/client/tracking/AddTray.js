@@ -6,6 +6,7 @@ import {TrackingHelp} from './TrackingHelp'
 import styles from './add-tray.scss'
 import {PrimaryButton} from '../common/forms/Button'
 import {iPlus} from '../common/fonts/Icons'
+import {Password} from '../common/forms/Password'
 
 const DEFAULT_STATE = {
   url: '',
@@ -61,15 +62,13 @@ export class AddTray extends Component {
                  autoComplete='username'>
             <div className={styles.label}>username</div>
           </Input>
-          <Input type='password'
-                 className={styles.password}
-                 value={password}
-                 onChange={this.updatePassword}
-                 onEnter={this.addTrayAndClearInput}
-                 data-locator='add-tray-password'
-                 autoComplete='new-password'>
+          <Password className={styles.password}
+                    value={password}
+                    onChange={this.updatePassword}
+                    onEnter={this.addTrayAndClearInput}
+                    data-locator='add-tray-password'>
             <div className={styles.label}>password</div>
-          </Input>
+          </Password>
         </div>
         <WithHelp title='Add tray'
                   help={<TrackingHelp addTray={addTray}/>}
