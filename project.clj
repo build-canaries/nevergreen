@@ -1,7 +1,7 @@
 (defproject nevergreen "0.0.0"
   :description "A build monitor with attitude"
   :url "https://github.com/build-canaries/nevergreen"
-  :dependencies [[org.clojure/clojure "1.9.0"]
+  :dependencies [[org.clojure/clojure "1.10.0"]
                  [ring "1.7.1" :exclusions [org.eclipse.jetty/jetty-server]]
                  [org.eclipse.jetty/jetty-server "9.4.14.v20181114"]
                  [compojure "1.6.1"]
