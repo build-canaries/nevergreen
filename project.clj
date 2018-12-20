@@ -29,8 +29,8 @@
   :aliases {"unit"       ["with-profile" "+unit" "midje" "nevergreen.*"]
             "lint"       ["with-profile" "+unit" "eastwood"]}
   :profiles {:dev        {:plugins      [[lein-midje "3.2.1"]
-                                         [jonase/eastwood "0.2.8"]
-                                         [com.livingsocial/lein-dependency-check "1.0.2"]]
+                                         [jonase/eastwood "0.3.4"]
+                                         [com.livingsocial/lein-dependency-check "1.0.4"]]
                           :dependencies [[midje "1.9.4"]
                                          [ring/ring-mock "0.3.2"]]}
              :unit       {:jvm-opts ["-Dlogback.configurationFile=./test/logback-unit.xml"]}})

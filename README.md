@@ -44,7 +44,7 @@ Please help us out by submitting a PR with any changes. We also keep a list of b
 |   | Status |
 |---|---|
 | CI     | [![CircleCI](https://circleci.com/gh/build-canaries/nevergreen.svg?style=shield)](https://circleci.com/gh/build-canaries/nevergreen) |
-| Server | [![Clojure Dependencies Status](http://jarkeeper.com/build-canaries/nevergreen/status.svg)](http://jarkeeper.com/build-canaries/nevergreen) |
+| Server | [![Clojure Dependencies Status](https://jarkeeper.com/build-canaries/nevergreen/status.svg)](http://jarkeeper.com/build-canaries/nevergreen) |
 | Client | [![Javascript Dependencies Status](https://david-dm.org/build-canaries/nevergreen.svg)](https://david-dm.org/build-canaries/nevergreen) |
 
 ## License
