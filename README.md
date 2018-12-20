@@ -2,8 +2,8 @@
 
 Nevergreen is a build monitor with attitude. It has two distinct features that set it apart:
 
-* Your builds should always be green. Nevergreen understands this and only shows you jobs that have failed or are building.
-* Nevergreen uses HTML local storage, so config is stored in your web browser. You only need to run it once to host hundreds of different build monitors.
+- Your builds should always be green. Nevergreen understands this and only shows you projects that have failed or are building.
+- Nevergreen uses your local browser to store configuration. You only need to run it once to host hundreds of different build monitors.
 
 ![Example of Nevergreen on Apache builds](doc/screenshot.png)
 
@@ -12,20 +12,23 @@ Nevergreen is a build monitor with attitude. It has two distinct features that s
 You can [try hosted Nevergreen](https://nevergreen.io) at `nevergreen.io` and if you like what you see we'd recommend 
 [running it locally](https://github.com/build-canaries/nevergreen/wiki/running-locally).
 
-Once loaded add the URL of your CCTray XML on the tracking page, select which projects you'd like to track then head to 
-the monitor page to see their current status!
+Once loaded:
 
-### How can I find my CCTray XML URL?
+1. Add the URL of your CCTray XML feed on the Tracking page
+2. Select which projects you'd like to track
+3. Head to the Monitor page to see their current status!
 
-More information about how to get the CCTray XML for your CI server can be found on the 
+### How can I find my CCTray XML feed URL?
+
+More information about how to get the CCTray XML feed for your CI server can be found on the 
 [Nevergreen wiki finding your CCTray XML](https://github.com/build-canaries/nevergreen/wiki/find-cctray) page.
 
 ### How can I get more help?
 
-Additional help and information can be found on the help page of Nevergreen or in the [Nevergreen wiki](https://github.com/build-canaries/nevergreen/wiki).
-
-You can also tweet to [@BuildCanaries](https://twitter.com/BuildCanaries) on Twitter or come chat to us in the
-[Nevergreen Slack workspace](https://join.slack.com/t/nevergreen/shared_invite/enQtMzc4MDg5MTE2MDE2LWJjYjdiNDM4Y2U1YjBjZTdkZjFhZGQyOTM5ODQ2MzEwZDY4YjNiZDFmOTFlMGUwOWEyMjczNmUzNTlkZDk4ZmQ)
+- Nevergreen has contextual help, just look for the question mark icon
+- [The Nevergreen wiki](https://github.com/build-canaries/nevergreen/wiki)
+- [Tweet to @BuildCanaries](https://twitter.com/BuildCanaries) on Twitter
+- [Come chat to us on Slack](https://join.slack.com/t/nevergreen/shared_invite/enQtMzc4MDg5MTE2MDE2LWJjYjdiNDM4Y2U1YjBjZTdkZjFhZGQyOTM5ODQ2MzEwZDY4YjNiZDFmOTFlMGUwOWEyMjczNmUzNTlkZDk4ZmQ)
 
 ## Already using Nevergreen?
 
@@ -38,14 +41,6 @@ source please see the [contributing section of the wiki](https://github.com/buil
 
 Please help us out by submitting a PR with any changes. We also keep a list of bugs / improvements / features using
 [GitHub issues](https://github.com/build-canaries/nevergreen/issues), if you're looking for some inspiration.
-
-## Build status
-
-|   | Status |
-|---|---|
-| CI     | [![CircleCI](https://circleci.com/gh/build-canaries/nevergreen.svg?style=shield)](https://circleci.com/gh/build-canaries/nevergreen) |
-| Server | [![Clojure Dependencies Status](https://jarkeeper.com/build-canaries/nevergreen/status.svg)](http://jarkeeper.com/build-canaries/nevergreen) |
-| Client | [![Javascript Dependencies Status](https://david-dm.org/build-canaries/nevergreen.svg)](https://david-dm.org/build-canaries/nevergreen) |
 
 ## License
 
