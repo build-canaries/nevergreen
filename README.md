@@ -1,9 +1,11 @@
 # Nevergreen
 
-Nevergreen is a build monitor with attitude. It has two distinct features that set it apart:
+Nevergreen is a build monitor with attitude. Continually deliver via fast clear feedback.
 
-- Your builds should always be green. Nevergreen understands this and only shows you projects that have failed or are building.
-- Nevergreen uses your local browser to store configuration. You only need to run it once to host hundreds of different build monitors.
+- Your builds should always be green. Nevergreen understands this and only shows you projects that have failed or are building
+- Nevergreen uses your local browser to store configuration. You only need to run it once to host hundreds of different build monitors
+- Nevergreen is fully responsive, it'll look just as good full screen or sharing the space with other dashboards
+- You can track as many CI servers as you like, allowing you to easily track dependent builds from other teams
 
 ![Example Monitor page](doc/screenshot_monitor.png)
 
