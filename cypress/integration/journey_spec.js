@@ -51,7 +51,7 @@ describe('Journey', function () {
     cy.locate('success-message').contains('some message')
 
     cy.locate('message')
-      .type('https://raw.githubusercontent.com/build-canaries/nevergreen/master/doc/screenshot.png')
+      .type('https://raw.githubusercontent.com/build-canaries/nevergreen/master/doc/screenshot_monitor.png')
     cy.locate('add-message').click()
     cy.locate('success-image').should('be.visible')
   }

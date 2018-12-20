@@ -5,7 +5,9 @@ Nevergreen is a build monitor with attitude. It has two distinct features that s
 - Your builds should always be green. Nevergreen understands this and only shows you projects that have failed or are building.
 - Nevergreen uses your local browser to store configuration. You only need to run it once to host hundreds of different build monitors.
 
-![Example of Nevergreen on Apache builds](doc/screenshot.png)
+![Example Monitor page](doc/screenshot_monitor.png)
+
+![Example Tracking page](doc/screenshot_tracking.png)
 
 ## How do I start monitoring my builds?
 
