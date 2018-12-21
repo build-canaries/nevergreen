@@ -141,6 +141,9 @@
       "@babel/plugin-proposal-object-rest-spread"
     ]
   },
+  "browserslist": [
+    "last 2 versions"
+  ],
   "eslintConfig": {
     "extends": [
       "eslint:recommended",
