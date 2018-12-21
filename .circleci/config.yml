@@ -21,19 +21,19 @@ jobs:
 
       - run:
           name: update version
-          command: ./ci/update-version.sh
+          command: ./.circleci/update-version.sh
 
       - run:
           name: install node
-          command: ./ci/install-node.sh
+          command: ./.circleci/install-node.sh
 
       - run:
           name: build
           environment:
             BASH_ENV: "~/.nvm/nvm.sh"
           command: |
-            ./ci/dependencies.sh
-            ./ci/compile.sh
+            ./.circleci/dependencies.sh
+            ./.circleci/compile.sh
 
       - save_cache:
           key: v1-nevergreen-server-{{ checksum "project.clj" }}
@@ -49,7 +49,7 @@ jobs:
           name: test
           environment:
             BASH_ENV: "~/.nvm/nvm.sh"
-          command: ./ci/test.sh
+          command: ./.circleci/test.sh
 
       - store_test_results:
           path: ./target/test-reports
@@ -65,11 +65,11 @@ jobs:
           root: .
           paths:
             - ./resources/*.txt
-            - ./ci/*
+            - ./.circleci/*
             - ./target/nevergreen-standalone.jar
             - ./Dockerfile
  
-  functional-tests-cypress:
+  journey-tests:
     working_directory: ~/nevergreen
 
     docker:
@@ -94,7 +94,7 @@ jobs:
             CYPRESS_TRAY_PASSWORD: ""
         command: |
           npm install
-          npm run cypress
+          npm run test:journey
 
     - save_cache:
         key: v4-nevergreen-cypress-{{ checksum "package.json" }}
@@ -131,17 +131,17 @@ jobs:
 
       - run:
           name: export version
-          command: ./ci/export-version.sh
+          command: ./.circleci/export-version.sh
 
       - run:
           name: deploy staging
-          command: ./ci/deploy.sh
+          command: ./.circleci/deploy.sh
 
       - run:
           name: smoke test
           environment:
             HOST: "https://staging.nevergreen.io"
-          command: ./ci/smoke-test.sh
+          command: ./.circleci/smoke-test.sh
 
       - run:
           name: create docker image
@@ -178,17 +178,17 @@ jobs:
 
       - run:
           name: export version
-          command: ./ci/export-version.sh
+          command: ./.circleci/export-version.sh
 
       - run:
           name: deploy production
-          command: ./ci/release.sh
+          command: ./.circleci/release.sh
 
       - run:
           name: smoke test
           environment:
             HOST: "https://nevergreen.io"
-          command: ./ci/smoke-test.sh
+          command: ./.circleci/smoke-test.sh
 
       - run:
           name: create docker image
@@ -200,11 +200,11 @@ jobs:
 
       - run:
           name: create release on GitHub
-          command: ./ci/release-github.sh
+          command: ./.circleci/release-github.sh
 
       - run:
           name: tweet release
-          command: ./ci/release-tweet.sh
+          command: ./.circleci/release-tweet.sh
 
 workflows:
   version: 2
@@ -214,13 +214,13 @@ workflows:
       - deploy-staging:
           requires:
             - build
-      - functional-tests-cypress:
+      - journey-tests:
           requires:
             - deploy-staging
       - hold:
           type: approval
           requires:
-            - functional-tests-cypress
+            - journey-tests
       - deploy-prod:
           requires:
             - hold

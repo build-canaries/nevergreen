@@ -31,7 +31,7 @@ echo "clean"
 npm run clean
 
 echo "fetching node modules and performing first build"
-. ./ci/dependencies.sh
+. ./.circleci/dependencies.sh
 
 echo "watching the js for changes ..."
 npm run watch:js &

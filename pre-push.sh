@@ -20,13 +20,13 @@ pkill -SIGINT -f ./develop.sh
 set -e
 
 echo '[Step 2 of 6] Running the ci dependencies script...'
-. ./ci/dependencies.sh
+. ./.circleci/dependencies.sh
 
 echo '[Step 3 of 6] Running the ci compile script...'
-. ./ci/compile.sh
+. ./.circleci/compile.sh
 
 echo '[Step 4 of 6] Running the ci test script...'
-. ./ci/test.sh
+. ./.circleci/test.sh
 
 echo '[Step 5 of 6] Starting the server...'
 ./lein.sh run &
@@ -34,14 +34,10 @@ npm run start:ci-stub-server &
 
 export HOST="http://localhost:5000"
 export FULL_VERSION="$(cat "./resources/version.txt")+$(cat "./resources/version_meta.txt")"
-./ci/smoke-test.sh # Don't source as the script calls exit
+./.circleci/smoke-test.sh # Don't source as the script calls exit
 
-echo '[Step 6 of 6] Running the functional tests...'
-. ./ci/functional-test.sh
-
-# uncomment to also run the functional tests in Firefox
-# export BROWSER=firefox
-# ./lein.sh test functional.functional-test
+echo '[Step 6 of 6] Running the journey tests...'
+npm run test:journey
 
 echo
 echo 'Everything completed successfully, push away!'
