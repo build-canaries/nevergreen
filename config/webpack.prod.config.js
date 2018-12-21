@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const {GenerateSW} = require('workbox-webpack-plugin')
 
-const baseConfig = require('./base.config.js')
+const baseConfig = require('./webpack.base.config.js')
 
 module.exports = merge(baseConfig, {
   mode: 'production',
