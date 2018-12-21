@@ -24,7 +24,7 @@
     "test:coverage": "nyc --reporter=html npm test",
     "test:journey": "npm run cypress",
     "lint": "npm run lint:js && npm run lint:css",
-    "lint:js": "eslint --config ./config/.eslintrc.yml --ignore-path ./config/.eslintignore ./src/client ./test/client",
+    "lint:js": "eslint ./src/client ./test/client",
     "lint:css": "stylelint \"src/client/**/*.scss\" --syntax scss",
     "watch:js": "npm run clean && webpack --watch --config config/webpack.dev.config.js",
     "watch:test": "watch 'npm run test' src/client test/client",
@@ -126,6 +126,65 @@
     "whatwg-url": "7.0.0",
     "workbox-webpack-plugin": "3.6.3"
   },
+  "eslintConfig": {
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended"
+    ],
+    "plugins": [
+      "babel",
+      "react",
+      "mocha"
+    ],
+    "parser": "babel-eslint",
+    "settings": {
+      "react": {
+        "version": "16.0"
+      }
+    },
+    "env": {
+      "es6": true,
+      "browser": true,
+      "node": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 8,
+      "ecmaFeatures": {
+        "modules": true,
+        "jsx": true
+      }
+    },
+    "rules": {
+      "quotes": [
+        "error",
+        "single"
+      ],
+      "semi": [
+        "error",
+        "never"
+      ],
+      "generator-star-spacing": "error",
+      "object-shorthand": "error",
+      "arrow-parens": "error",
+      "babel/new-cap": [
+        "error",
+        {
+          "capIsNewExceptions": [
+            "Map",
+            "List",
+            "Set",
+            "OrderedSet",
+            "OrderedMap",
+            "Record"
+          ]
+        }
+      ],
+      "mocha/no-exclusive-tests": "error"
+    }
+  },
+  "eslintIgnore": [
+    "src/client/reducers/ValidateConfiguration.js"
+  ],
   "stylelint": {
     "extends": "stylelint-config-standard",
     "plugins": [
@@ -140,7 +199,9 @@
       "selector-pseudo-class-no-unknown": [
         true,
         {
-          "ignorePseudoClasses": ["global"]
+          "ignorePseudoClasses": [
+            "global"
+          ]
         }
       ],
       "scss/at-rule-no-unknown": true,
