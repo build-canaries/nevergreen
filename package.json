@@ -24,7 +24,7 @@
     "test:coverage": "nyc --reporter=html npm test",
     "test:journey": "npm run cypress",
     "lint": "npm run lint:js && npm run lint:css",
-    "lint:js": "eslint ./src/client ./test/client",
+    "lint:js": "eslint --config ./config/.eslintrc.yml --ignore-path ./config/.eslintignore ./src/client ./test/client",
     "lint:css": "stylelint \"src/client/**/*.scss\" --syntax scss",
     "watch:js": "npm run clean && webpack --watch --config config/webpack.dev.config.js",
     "watch:test": "watch 'npm run test' src/client test/client",
