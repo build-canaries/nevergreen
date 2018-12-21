@@ -126,6 +126,21 @@
     "whatwg-url": "7.0.0",
     "workbox-webpack-plugin": "3.6.3"
   },
+  "babel": {
+    "presets": [
+      "@babel/preset-react",
+      [
+        "@babel/preset-env",
+        {
+          "useBuiltIns": "entry"
+        }
+      ]
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-class-properties",
+      "@babel/plugin-proposal-object-rest-spread"
+    ]
+  },
   "eslintConfig": {
     "extends": [
       "eslint:recommended",
