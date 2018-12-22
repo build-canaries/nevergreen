@@ -26,7 +26,7 @@
   :main nevergreen.app
   :aot [nevergreen.app]
   :javac-options ["-Dclojure.compiler.direct-linking=true"]
-  :aliases {"unit"       ["with-profile" "+unit" "midje" "nevergreen.*"]
+  :aliases {"unit"       ["with-profile" "+unit" "midje" ":config" "./config/.midje.clj"]
             "lint"       ["with-profile" "+unit" "eastwood"]}
   :profiles {:dev        {:plugins      [[lein-midje "3.2.1"]
                                          [jonase/eastwood "0.3.4"]
