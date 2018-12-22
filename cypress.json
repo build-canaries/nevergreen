@@ -1,6 +1,10 @@
 {
   "baseUrl": "http://localhost:5000",
   "projectId": "oc7zg3",
+  "reporter": "junit",
+  "reporterOptions": {
+    "mochaFile": "./target/test-reports/journey/test-results.xml"
+  },
   "env": {
     "TRAY_URL": "http://localhost:5050/secure/cctray.xml",
     "TRAY_USERNAME": "u",

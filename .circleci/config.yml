@@ -104,6 +104,9 @@ jobs:
           - ~/.npm
           - ~/.cache
 
+    - store_test_results:
+        path: ./target/test-reports
+
     - store_artifacts:
         path: ./cypress/videos
 
