@@ -5,6 +5,10 @@
   "reporterOptions": {
     "mochaFile": "./target/test-reports/journey/test-results.xml"
   },
+  "fixturesFolder": false,
+  "pluginsFile": false,
+  "videosFolder": "./target/test-reports/journey/",
+  "screenshotsFolder": "./target/test-reports/journey/",
   "env": {
     "TRAY_URL": "http://localhost:5050/secure/cctray.xml",
     "TRAY_USERNAME": "u",

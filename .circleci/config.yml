@@ -108,7 +108,7 @@ jobs:
         path: ./target/test-reports
 
     - store_artifacts:
-        path: ./cypress/videos
+        path: ./target/test-reports/journey
 
   deploy-staging:
     working_directory: ~/nevergreen

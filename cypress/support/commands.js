@@ -1,6 +1,6 @@
 /*global cy,Cypress */
 
-// Enable looking up elements by the 'data-locater' attribute without in a concise way
+// enable looking up elements by the 'data-locator' attribute in a concise way
 Cypress.Commands.add('locate', (thing) => {
   cy.get(`[data-locator=${thing}]`)
 })
@@ -15,7 +15,9 @@ Cypress.Commands.add('clearIndexDb', () => {
 Cypress.Commands.add('unregisterServiceWorkers', () => {
   if (window.navigator && navigator.serviceWorker) {
     navigator.serviceWorker.getRegistrations().then((registrations) => {
-      registrations.forEach((registration) => { registration.unregister() })
+      registrations.forEach((registration) => {
+        registration.unregister()
+      })
     })
   }
 })
