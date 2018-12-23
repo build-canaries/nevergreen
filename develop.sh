@@ -37,7 +37,10 @@ echo "watching the js for changes ..."
 npm run watch:js &
 
 echo "starting the CI stub server ..."
-npm run start:ci-stub-server &
+cd cctray_xml_feed_mock
+npm install
+npm start &
+cd ..
 
 echo "running the server ..."
 ./lein.sh run &

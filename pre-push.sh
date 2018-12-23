@@ -30,7 +30,10 @@ echo '[Step 4 of 6] Running the ci test script...'
 
 echo '[Step 5 of 6] Starting the server...'
 ./lein.sh run &
-npm run start:ci-stub-server &
+cd cctray_xml_feed_mock
+npm install
+npm start &
+cd ..
 
 export HOST="http://localhost:5000"
 export FULL_VERSION="$(cat "./resources/version.txt")+$(cat "./resources/version_meta.txt")"

@@ -1,0 +1,24 @@
+{
+  "name": "cctray-xml-feed-mock",
+  "version": "0.1.0",
+  "description": "A server that mocks out a CCTray XML feed for testing",
+  "private": true,
+  "author": "Build Canaries",
+  "homepage": "https://github.com/build-canaries/nevergreen",
+  "license": "EPL-1.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/build-canaries/nevergreen.git"
+  },
+  "bugs": {
+    "url": "https://github.com/build-canaries/nevergreen/issues"
+  },
+  "scripts": {
+    "start": "node src/server"
+  },
+  "dependencies": {
+    "basic-auth-connect": "1.0.0",
+    "express": "4.16.4"
+  },
+  "devDependencies": {}
+}

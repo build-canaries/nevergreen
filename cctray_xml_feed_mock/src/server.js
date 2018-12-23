@@ -1,12 +1,12 @@
-var express = require('express')
-var basicAuth = require('basic-auth-connect')
-var fs = require('fs')
+const express = require('express')
+const basicAuth = require('basic-auth-connect')
+const fs = require('fs')
 
-var app = express()
+const app = express()
 
-var generic = response('cctray.xml')
-var go = response('go_cd.xml')
-var jenkins = response('jenkins.xml')
+const generic = response('cctray.xml')
+const go = response('go_cd.xml')
+const jenkins = response('jenkins.xml')
 
 function getRandomInt(min, max) {
   min = Math.ceil(min)
@@ -16,7 +16,7 @@ function getRandomInt(min, max) {
 
 function response(file) {
   return function (req, res) {
-    fs.readFile('ci_stub_server/' + file, 'utf8', function (err, contents) {
+    fs.readFile('resources/' + file, 'utf8', function (err, contents) {
       res.setHeader('Content-Type', 'application/xml; charset=utf-8')
       res.send(contents)
     })
