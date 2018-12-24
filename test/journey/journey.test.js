@@ -1,4 +1,4 @@
-/*global describe,before,it,cy,Cypress */
+/*global describe,before,beforeEach,it,cy,Cypress */
 
 describe('Journey', function () {
 
@@ -7,18 +7,21 @@ describe('Journey', function () {
     cy.unregisterServiceWorkers()
   })
 
-  it('should all work fine', function () {
+  beforeEach(function () {
     cy.visit('/')
+    cy.injectAxe()
+  })
 
+  it('should all work fine', function () {
     shouldBeAbleToAddTrays(Cypress.env('TRAY_URL'), Cypress.env('TRAY_USERNAME'), Cypress.env('TRAY_PASSWORD'))
-    shouldBeAbleToChangeMessages()
+    shouldBeAbleToChangeSuccessMessages()
     shouldBeAbleToChangeSettings()
     shouldBeAbleToExportAndImportConfig()
-    shouldMonitor()
+    shouldDisplayInterestingProjects()
   })
 
   function shouldBeAbleToAddTrays(trayUrl, username, password) {
-    cy.location('pathname').should('include', 'tracking')
+    cy.visitPage('tracking')
 
     cy.locate('add-tray-url').type(trayUrl)
     if (username && password) {
@@ -31,36 +34,48 @@ describe('Journey', function () {
     cy.locate('container-sub-title').should('have.text', trayUrl)
     cy.locate('exclude-all').click()
     cy.locate('include-all').click()
+
+    cy.locate('available-projects-list')
+      .should('contain', 'failure building project')
+      .should('contain', 'failure sleeping project')
+      .should('contain', 'success building project')
+      .should('contain', 'success sleeping project')
+
+    cy.checkA11y()
+
+    shouldBeAbleToChangeTraySettings()
+  }
+
+  function shouldBeAbleToChangeTraySettings() {
     cy.locate('tab-settings').click()
     cy.locate('generate-random').click()
     cy.locate('tray-name').clear().type('renamed tray').blur()
     cy.locate('container-title').should('have.text', 'renamed tray')
-    cy.locate('tab-projects').click()
-    cy.locate('available-projects-list').contains('failure building project')
-    cy.locate('available-projects-list').contains('failure sleeping project')
-    cy.locate('available-projects-list').contains('success building project')
-    cy.locate('available-projects-list').contains('success sleeping project')
+
+    cy.checkA11y()
   }
 
-  function shouldBeAbleToChangeMessages() {
-    cy.locate('menu-success').click()
-    cy.location('pathname').should('include', 'success')
-    cy.locate('message').type('some message')
-    cy.locate('add-message').click()
-    cy.locate('success-message').contains('=(^.^)=')
-    cy.locate('success-message').contains('some message')
+  function shouldBeAbleToChangeSuccessMessages() {
+    cy.visitPage('success')
 
-    cy.locate('message')
-      .type('https://raw.githubusercontent.com/build-canaries/nevergreen/master/doc/screenshot_monitor.png')
-    cy.locate('add-message').click()
+    cy.locate('success-message').should('contain', '=(^.^)=').should('have.length', 1)
+
+    cy.addSuccessMessage('some message')
+    cy.locate('success-message')
+      .should('contain', '=(^.^)=')
+      .should('contain', 'some message')
+
+    cy.addSuccessMessage('https://raw.githubusercontent.com/build-canaries/nevergreen/master/doc/screenshot_monitor.png')
     cy.locate('success-image').should('be.visible')
+
+    cy.checkA11y()
   }
 
   function shouldBeAbleToChangeSettings() {
-    cy.locate('menu-settings').click()
-    cy.location('pathname').should('include', 'settings')
+    cy.visitPage('settings')
 
     cy.locate('play-sounds').click()
+    cy.locate('play-sounds').uncheck() // force them to be disabled so they don't play when the test gets to the Monitor page
     cy.locate('refresh-time').select('60')
     cy.locate('click-to-show-menu').click()
 
@@ -68,7 +83,7 @@ describe('Journey', function () {
     cy.locate('show-build-times').check()
     cy.locate('show-broken-build-times').check()
     cy.locate('show-build-labels').check()
-    cy.locate('max-projects-to-show').select('6')
+    cy.locate('max-projects-to-show').select('30')
     cy.locate('build-label').should('exist')
     cy.locate('tray-name').should('exist')
     cy.locate('duration').should('exist') // TODO: building vs broken time
@@ -77,16 +92,17 @@ describe('Journey', function () {
     cy.locate('show-build-times').uncheck()
     cy.locate('show-broken-build-times').uncheck()
     cy.locate('show-build-labels').uncheck()
-    cy.locate('max-projects-to-show').select('30')
     cy.locate('build-label').should('not.exist')
     cy.locate('tray-name').should('not.exist')
     cy.locate('duration').should('not.exist')
+
+    // TODO: [#211] Ideally we'd run this with all options enabled, but we have colour contrast issues on the build label/times
+    cy.checkA11y()
   }
 
   function shouldBeAbleToExportAndImportConfig() {
-    cy.locate('menu-backup').click()
-    cy.location('pathname').should('include', 'backup')
-    
+    cy.visitPage('backup')
+
     cy.locate('import-data').type('something invalid')
     cy.locate('import').click()
     cy.locate('error-messages').should('exist')
@@ -97,15 +113,19 @@ describe('Journey', function () {
       cy.locate('import').click()
     })
     cy.locate('info-messages').should('exist')
+
+    cy.checkA11y()
   }
 
-  function shouldMonitor() {
-    cy.locate('menu-monitor').click()
-    cy.location('pathname').should('include', 'monitor')
-    
-    cy.locate('interesting-project').contains('success building project').should('exist')
-    cy.locate('interesting-project').contains('failure sleeping project').should('exist')
-    cy.locate('interesting-project').contains('failure building project').should('exist')
-    cy.locate('interesting-project').contains('success-sleeping-project').should('not.exist')
+  function shouldDisplayInterestingProjects() {
+    cy.visitPage('monitor')
+
+    cy.locate('interesting-project')
+      .should('contain', 'failure building project')
+      .should('contain', 'failure sleeping project')
+      .should('contain', 'success building project')
+      .should('not.contain', 'success sleeping project')
+
+    cy.checkA11y()
   }
 })  

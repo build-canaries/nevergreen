@@ -11,6 +11,8 @@
   "supportFile": "./test/journey/support.js",
   "videosFolder": "./target/test-reports/journey/",
   "screenshotsFolder": "./target/test-reports/journey/",
+  "viewportWidth": 1920,
+  "viewportHeight": 1080,
   "env": {
     "TRAY_URL": "http://localhost:5050/secure/cctray.xml",
     "TRAY_USERNAME": "u",
