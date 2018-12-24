@@ -13,9 +13,9 @@ export function AvailableProject({removed, isNew, stage, name, selected, selectP
   let info = null
 
   if (isNew) {
-    info = <div className={styles.infoNew} data-locator='new'>new</div>
+    info = <span className={styles.infoNew} data-locator='new'>new</span>
   } else if (removed) {
-    info = <div className={styles.infoRemoved} data-locator='removed'>removed</div>
+    info = <span className={styles.infoRemoved} data-locator='removed'>removed</span>
   }
 
   const displayName = isBlank(stage) ? name : `${name} ${stage}`
@@ -26,7 +26,7 @@ export function AvailableProject({removed, isNew, stage, name, selected, selectP
                 onToggle={selectProject}
                 disabled={removed}>
         {info}
-        <div className={styles.name} data-locator='name'>{displayName}</div>
+        <span className={styles.name} data-locator='name'>{displayName}</span>
       </Checkbox>
     </li>
   )

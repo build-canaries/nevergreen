@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import _ from 'lodash'
 import styles from './input.scss'
 import formStyles from './forms.scss'
 import {InputButton} from './Button'
@@ -41,22 +42,26 @@ export class Input extends Component {
 
   render() {
     // eslint-disable-next-line no-unused-vars
-    const {children, onEnter, className, readOnly, focus, button, ...inputProps} = this.props
+    const {children, onEnter, className, readOnly, focus, button, id, ...inputProps} = this.props
 
     const labelClasses = classNames(formStyles.inputContainer, className)
     const inputClasses = classNames(styles.input, {
       [styles.hasButton]: button
     })
 
+    const actualId = id ? id : _.uniqueId('i')
+
     return (
-      <label className={labelClasses}>
-        <div className={formStyles.inputLabel}>{children}</div>
-        <div className={styles.wrapper}>
+      <label className={labelClasses} htmlFor={actualId}>
+        <span className={formStyles.inputLabel}>{children}</span>
+        <span className={styles.wrapper}>
           <input className={inputClasses}
                  onKeyPress={(evt) => this.onKeyPress(evt, onEnter)}
                  spellCheck={false}
                  autoComplete='off'
                  readOnly={readOnly}
+                 type='text'
+                 id={actualId}
                  {...inputProps}
                  ref={this.inputNode}
                  onFocus={this.moveCaretToEnd}/>
@@ -72,7 +77,7 @@ export class Input extends Component {
           {
             !readOnly && button
           }
-        </div>
+        </span>
       </label>
     )
   }

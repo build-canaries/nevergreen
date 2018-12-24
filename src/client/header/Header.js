@@ -56,8 +56,9 @@ export class Header extends Component {
           <button className={styles.siteMenuToggle}
                   onClick={this.toggleMenu}
                   aria-label={toggleLabel}
-                  aria-expanded={menuVisible}>
-            <span className={iconClassNames}/>
+                  aria-expanded={menuVisible}
+                  type='button'>
+            <span className={iconClassNames} aria-hidden/>
           </button>
           <ul className={menuClassNames}>
             {
@@ -71,7 +72,7 @@ export class Header extends Component {
                              activeClassName={styles.active}
                              onClick={this.hideMenu}
                              data-locator={`menu-${item.id}`}>
-                      <span className={iconClasses}/>
+                      <span className={iconClasses} aria-hidden/>
                       <div className={styles.menuTitle}>{item.title}</div>
                       <Shortcut hotkeys={item.shortcuts}/>
                     </NavLink>

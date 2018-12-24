@@ -29,4 +29,23 @@ describe('<Input/>', function () {
       expect(wrapper.find(locator('read-only-icon'))).to.be.present()
     })
   })
+
+  describe('accessibility', function () {
+
+    // https://ffoodd.github.io/a11y.css/errors.html#namespace
+    it('should generate an id (that does not start with a number) to associate the label and input correctly', function () {
+      const props = {...DEFAULT_PROPS}
+      const wrapper = shallow(<Input {...props} />)
+      const label = wrapper.find('label')
+      expect(label).to.have.prop('htmlFor').that.matches(/i[0-9]/)
+      expect(wrapper.find('input')).to.have.prop('id', label.prop('htmlFor'))
+    })
+
+    it('should use the id provided', function () {
+      const props = {...DEFAULT_PROPS, id: 'some-id'}
+      const wrapper = shallow(<Input {...props} />)
+      expect(wrapper.find('label')).to.have.prop('htmlFor', 'some-id')
+      expect(wrapper.find('input')).to.have.prop('id', 'some-id')
+    })
+  })
 })

@@ -5,7 +5,7 @@ import styles from './button.scss'
 import iconStyles from '../fonts/icon-font.scss'
 import {VisuallyHidden} from '../VisuallyHidden'
 
-function BaseButton({style, className, icon, iconOnly, children, ...additionalProps}) {
+export function BaseButton({style, className, icon, iconOnly, children, ...additionalProps}) {
   const classes = cn(styles[style], className, {
     [iconStyles[`icon-${icon}`]]: icon,
     [styles.withIcon]: icon && !iconOnly,
@@ -15,6 +15,7 @@ function BaseButton({style, className, icon, iconOnly, children, ...additionalPr
   return (
     <button className={classes}
             title={iconOnly ? children : null}
+            type='button'
             {...additionalProps}>
       {iconOnly && <VisuallyHidden>{children}</VisuallyHidden>}
       {!iconOnly && children}

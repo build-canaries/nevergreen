@@ -59,4 +59,17 @@ describe('<Shortcut/>', function () {
     expect(unbind).to.not.have.been.called()
     expect(bind).to.not.have.been.calledTwice() // it gets called once on mount
   })
+
+  describe('accessibility', function () {
+
+    // we only add the span to get a ref
+    it('should hide the empty span', function () {
+      const hotkeys = ['a']
+      const props = {...DEFAULT_PROPS, hotkeys}
+
+      const wrapper = shallow(<Shortcut {...props} />)
+
+      expect(wrapper.find('span')).to.have.prop('aria-hidden', true)
+    })
+  })
 })

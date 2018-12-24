@@ -22,7 +22,7 @@ export class Password extends Component {
   render() {
     const {passwordHidden} = this.state
 
-    const id = _.uniqueId()
+    const id = _.uniqueId('i')
     const type = passwordHidden ? 'password' : 'text'
 
     const showPassword = (

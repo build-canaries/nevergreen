@@ -40,7 +40,8 @@ export class Footer extends Component {
                close={this.closeAbout}/>
         <footer className={footerClassNames}>
           <button className={styles.about}
-                  onClick={this.showAbout}>
+                  onClick={this.showAbout}
+                  type='button'>
             Nevergreen v{fullVersion} {versionName} by Build Canaries
           </button>
           <SubmitAnIssueContainer version={versionWithName} className={styles.submitAnIssue}/>

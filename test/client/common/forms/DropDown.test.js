@@ -37,4 +37,16 @@ describe('<DropDown/>', function () {
     const wrapper = shallow(<DropDown {...props}>child</DropDown>)
     expect(wrapper.find('label')).to.have.prop('className', 'someCustomClass')
   })
+
+  describe('accessibility', function () {
+
+    // https://ffoodd.github.io/a11y.css/errors.html#namespace
+    it('should generate an id (that does not start with a number) to associate the label and select correctly', function () {
+      const props = {...DEFAULT_PROPS}
+      const wrapper = shallow(<DropDown {...props} />)
+      const label = wrapper.find('label')
+      expect(label).to.have.prop('htmlFor').that.matches(/i[0-9]/)
+      expect(wrapper.find('select')).to.have.prop('id', label.prop('htmlFor'))
+    })
+  })
 })

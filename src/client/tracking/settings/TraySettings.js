@@ -101,7 +101,7 @@ export class TraySettings extends Component {
                placeholder='e.g. project or team name'
                data-locator='tray-name'
                button={randomNameButton}>
-          <div className={styles.label}>name</div>
+          <span className={styles.label}>name</span>
         </Input>
         <Input value={newUrl}
                onChange={this.urlChanged}
@@ -109,14 +109,14 @@ export class TraySettings extends Component {
                onEnter={this.setUrl}
                data-locator='tray-url'
                autoComplete='url'>
-          <div className={styles.label}>URL</div>
+          <span className={styles.label}>URL</span>
         </Input>
         <DropDown className={styles.serverType}
                   options={CI_OPTIONS}
                   value={serverType}
                   onChange={this.serverTypeChange}
                   data-locator='tray-server-type'>
-          <div className={styles.label}>server type</div>
+          <span className={styles.label}>server type</span>
         </DropDown>
         <Input className={styles.traySettingsUsername}
                value={newUsername}
@@ -125,7 +125,7 @@ export class TraySettings extends Component {
                onEnter={this.setUsername}
                data-locator='tray-username'
                autoComplete='username'>
-          <div className={styles.label}>username</div>
+          <span className={styles.label}>username</span>
         </Input>
         <Password className={styles.existingPassword}
                   value={passwordValue}
@@ -134,7 +134,7 @@ export class TraySettings extends Component {
                   readOnly={!updatingPassword}
                   focus={updatingPassword}
                   data-locator='tray-password'>
-          <div className={styles.label}>password</div>
+          <span className={styles.label}>password</span>
         </Password>
         {updatingPassword
           ? (

@@ -34,7 +34,7 @@ export class Shortcut extends Component {
   }
 
   render() {
-    return <span ref={this.parentNode}/>
+    return <span ref={this.parentNode} aria-hidden/>
   }
 }
 
