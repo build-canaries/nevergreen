@@ -25,7 +25,7 @@
       :else (invalid-key aes-key))))
 
 (defn port []
-  (Integer. (str (or (env :port) default-port))))
+  (Integer/valueOf (str (or (env :port) default-port))))
 
 (defn ip []
   (or (env :ip) default-ip))
