@@ -1,34 +1,45 @@
 #!/bin/bash -euo pipefail
 
-killall() {
-    echo 'shutting down...'
-    trap '' INT TERM
-    kill -TERM 0
-    wait
-    echo "done!"
+kill_all() {
+  echo 'shutting down background processes...'
+  trap '' INT TERM
+  kill -TERM 0
+  wait
+  echo 'processes killed'
 }
 
-# kill all background process on exit or error
-trap 'killall' EXIT
-trap 'killall' INT
+current_step=1
+total_steps=8
 
-. ./check-node.sh
+print_step() {
+  echo
+  echo -e "\x1B[34m[Step $current_step of $total_steps]\x1B[0m $1..."
+  echo
+  current_step=$((current_step + 1))
+}
 
-echo '[Step 1 of 6] Stopping the ./develop.sh script (if it is running)...'
+print_step 'Checking prerequisites'
+. ./config/check-prerequisites.sh
+
+print_step 'Stopping the ./develop.sh script (if it is running)'
 set +e
 pkill -SIGINT -f ./develop.sh
 set -e
 
-echo '[Step 2 of 6] Running the ci dependencies script...'
+print_step 'Running the CI dependencies script'
 . ./.circleci/dependencies.sh
 
-echo '[Step 3 of 6] Running the ci compile script...'
+print_step 'Running the CI compile script'
 . ./.circleci/compile.sh
 
-echo '[Step 4 of 6] Running the ci test script...'
+print_step 'Running the CI test script'
 . ./.circleci/test.sh
 
-echo '[Step 5 of 6] Starting the server...'
+print_step 'Starting the server'
+
+# kill background processes on interrupt, terminate and abort
+trap 'kill_all' INT TERM ABRT
+
 ./lein.sh run &
 cd cctray_xml_feed_mock
 npm install
@@ -39,10 +50,13 @@ export HOST="http://localhost:5000"
 export FULL_VERSION="$(cat "./resources/version.txt")+$(cat "./resources/version_meta.txt")"
 ./.circleci/smoke-test.sh # Don't source as the script calls exit
 
-echo '[Step 6 of 6] Running the journey tests...'
+print_step 'Running the journey tests'
 npm run test:journey
 
+print_step 'Stopping the server'
+kill_all
+
 echo
-echo 'Everything completed successfully, push away!'
+echo -e "\x1B[32mEverything completed successfully, push away!\x1B[0m"
 echo
 echo 'You will need to manually restart the ./develop script, to continue development...'

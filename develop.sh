@@ -1,17 +1,16 @@
 #!/bin/bash -euo pipefail
 
-killall() {
-    trap '' INT TERM
-    echo
-    echo "shutting down..."
-    kill -TERM 0
-    wait
-    echo "done!"
+kill_all() {
+  echo
+  echo 'shutting down background processes...'
+  trap '' INT TERM
+  kill -TERM 0
+  wait
+  echo 'processes killed'
 }
 
-# kill all background process on exit or error
-trap 'killall' EXIT
-trap 'killall' INT
+# kill all background process on interrupt or terminate
+trap 'kill_all' INT TERM
 
 echo
 echo "######################################################################################"
@@ -24,7 +23,7 @@ echo "# Killing this script will automatically kill all the spawned processes.  
 echo "######################################################################################"
 echo
 
-. ./check-node.sh
+. ./config/check-prerequisites.sh
 
 echo "clean"
 ./lein.sh clean
