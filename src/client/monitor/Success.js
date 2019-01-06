@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {SuccessMessage} from './SuccessMessage'
+import {SuccessMessage} from '../common/SuccessMessage'
 import {SuccessImage} from './SuccessImage'
 import {isBlank, randomFrom} from '../common/Utils'
 import {hasScheme} from '../domain/Url'

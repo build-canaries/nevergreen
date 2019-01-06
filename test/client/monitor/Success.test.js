@@ -3,7 +3,7 @@ import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
 import {Success} from '../../../src/client/monitor/Success'
-import {SuccessMessage} from '../../../src/client/monitor/SuccessMessage'
+import {SuccessMessage} from '../../../src/client/common/SuccessMessage'
 import {SuccessImage} from '../../../src/client/monitor/SuccessImage'
 
 describe('Monitor <Success/>', function () {

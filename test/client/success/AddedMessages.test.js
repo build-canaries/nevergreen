@@ -3,8 +3,9 @@ import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
-import {AddedMessages} from '../../../src/client/success/AddedMessages'
 import _ from 'lodash'
+import {AddedMessages} from '../../../src/client/success/AddedMessages'
+import {SuccessMessage} from '../../../src/client/common/SuccessMessage'
 
 describe('<AddedMessages/>', function () {
 
@@ -19,9 +20,15 @@ describe('<AddedMessages/>', function () {
     expect(wrapper.get(0)).to.be.null()
   })
 
-  it('should render the messages', function () {
+  it('should render text messages', function () {
     const props = {...DEFAULT_PROPS, messages: ['some-message']}
     const wrapper = shallow(<AddedMessages {...props} />)
-    expect(wrapper.find(locator('success-message'))).to.have.text('some-message')
+    expect(wrapper.find(SuccessMessage)).to.have.prop('message', 'some-message')
+  })
+
+  it('should render images', function () {
+    const props = {...DEFAULT_PROPS, messages: ['https://some-url']}
+    const wrapper = shallow(<AddedMessages {...props} />)
+    expect(wrapper.find(locator('success-image'))).to.have.prop('src', 'https://some-url')
   })
 })

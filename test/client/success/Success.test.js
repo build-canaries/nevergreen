@@ -5,7 +5,6 @@ import {shallow} from 'enzyme'
 import _ from 'lodash'
 import {Success} from '../../../src/client/success/Success'
 import {AddedMessages} from '../../../src/client/success/AddedMessages'
-import {AddedImages} from '../../../src/client/success/AddedImages'
 import {Messages} from '../../../src/client/common/Messages'
 
 describe('Success <Success/>', function () {
@@ -16,16 +15,11 @@ describe('Success <Success/>', function () {
     removeMessage: _.noop
   }
 
-  it('should show success text messages', function () {
-    const props = {...DEFAULT_PROPS, messages: ['some-message', 'http://some-url']}
+  it('should show success messages', function () {
+    const messages = ['some-message', 'http://some-url']
+    const props = {...DEFAULT_PROPS, messages}
     const wrapper = shallow(<Success {...props} />)
-    expect(wrapper.find(AddedMessages)).to.have.prop('messages').that.contains('some-message')
-  })
-
-  it('should show success images', function () {
-    const props = {...DEFAULT_PROPS, messages: ['some-message', 'http://some-url']}
-    const wrapper = shallow(<Success {...props} />)
-    expect(wrapper.find(AddedImages)).to.have.prop('urls').that.contains('http://some-url')
+    expect(wrapper.find(AddedMessages)).to.have.prop('messages').that.deep.equals(messages)
   })
 
   it('should show a warning if all success messages are removed', function () {

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {ScaledGrid} from '../common/scale/ScaledGrid'
+import {ScaledGrid} from './scale/ScaledGrid'
 import styles from './success-message.scss'
 
 export function SuccessMessage({message}) {

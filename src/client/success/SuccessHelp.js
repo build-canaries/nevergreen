@@ -7,8 +7,11 @@ export function SuccessHelp() {
       <p>
         You can add text messages or any <ExternalLink
         href='https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#Supported_image_formats'>valid image
-        URLs</ExternalLink>, these will get displayed when no projects are broken or building on the monitor
-        page. Images are previewed in a 16:9 ratio which is how they would look on a full HD TV (1920x1080).
+        URLs</ExternalLink>, one of these will get randomly displayed when no projects are broken or building on the
+        Monitor page.
+      </p>
+      <p>
+        Messages are previewed in a 16:9 ratio which is how they would look on a full HD TV (1920x1080).
       </p>
       <p>Need some inspiration?</p>
       <p>
