@@ -7,6 +7,8 @@
 
 .label {
   @include fixed-width(5em);
+
+  display: inline-block;
 }
 
 .traySettingsName {
