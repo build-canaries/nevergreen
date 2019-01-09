@@ -1,0 +1,13 @@
+@import '../../../common/forms/button';
+@import '../../../common/layout';
+@import '../../../common/responsive';
+
+$label-size: 6em;
+
+.import {
+  @extend %blocking;
+}
+
+.label {
+  width: $label-size;
+}

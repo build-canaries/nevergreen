@@ -27,6 +27,17 @@ export function post(url, data, headers = {}) {
     .retry(RETRIES)
 }
 
+export function put(url, data, headers = {}) {
+  return request
+    .put(url)
+    .send(isImmutable(data) ? data.toJS() : data)
+    .accept(ACCEPT_HEADER)
+    .type(CONTENT_TYPE)
+    .set(headers)
+    .timeout(TIMEOUT)
+    .retry(RETRIES)
+}
+
 export function patch(url, data, headers = {}) {
   return request
     .patch(url)

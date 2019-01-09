@@ -1,6 +1,7 @@
 import {PENDING_REQUESTS_ROOT} from './PendingRequestsReducer'
 import {EXPORT_ROOT} from './ExportReducer'
 import {GITHUB_ROOT} from './GitHubReducer'
+import {GITLAB_ROOT} from './GitLabReducer'
 import {IMPORT_ROOT} from './ImportReducer'
 import {NEVERGREEN_ROOT} from './NevergreenReducer'
 import {NOTIFICATION_ROOT} from './NotificationReducer'
@@ -89,6 +90,18 @@ export function gistId(state) {
 
 export function gistDescription(state) {
   return state.getIn([GITHUB_ROOT, 'description'])
+}
+
+export function gitLabUrl(state) {
+  return state.getIn([GITLAB_ROOT, 'url'])
+}
+
+export function gitLabSnippetId(state) {
+  return state.getIn([GITLAB_ROOT, 'snippetId'])
+}
+
+export function gitLabTitle(state) {
+  return state.getIn([GITLAB_ROOT, 'title'])
 }
 
 export function exportLoaded(state) {

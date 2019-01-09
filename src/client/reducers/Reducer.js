@@ -6,6 +6,7 @@ import {PROJECTS_ROOT, reduce as projects} from './ProjectsReducer'
 import {reduce as success, SUCCESS_ROOT} from './SuccessReducer'
 import {INTERESTING_ROOT, reduce as interesting} from './InterestingReducer'
 import {GITHUB_ROOT, reduce as github} from './GitHubReducer'
+import {GITLAB_ROOT, reduce as gitlab} from './GitLabReducer'
 import {EXPORT_ROOT, reduce as backupExport} from './ExportReducer'
 import {IMPORT_ROOT, reduce as backupImport} from './ImportReducer'
 import {reduce as selected, SELECTED_ROOT} from './SelectedReducer'
@@ -17,6 +18,7 @@ export const reducer = combineReducers({
   [EXPORT_ROOT]: backupExport,
   [IMPORT_ROOT]: backupImport,
   [GITHUB_ROOT]: github,
+  [GITLAB_ROOT]: gitlab,
   [INTERESTING_ROOT]: interesting,
   [NEVERGREEN_ROOT]: nevergreen,
   [NOTIFICATION_ROOT]: notification,

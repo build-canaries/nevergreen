@@ -1,0 +1,22 @@
+@import '../../../common/variables';
+@import '../../../common/layout';
+
+$label-size: 6em;
+
+.export {
+  @extend %blocking;
+}
+
+.label {
+  width: $label-size;
+}
+
+.accessToken {
+  @include respond-to(tablet, desktop) {
+    width: 36em;
+  }
+}
+
+.help {
+  margin: 0 $margin-right 0 0;
+}
