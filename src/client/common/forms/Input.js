@@ -85,6 +85,7 @@ export class Input extends Component {
 
 Input.propTypes = {
   children: PropTypes.node.isRequired,
+  id: PropTypes.string,
   onEnter: PropTypes.func,
   className: PropTypes.string,
   readOnly: PropTypes.bool,
