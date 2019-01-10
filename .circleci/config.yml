@@ -118,8 +118,6 @@ jobs:
       - image: circleci/openjdk:8-jdk
 
     steps:
-      - setup_remote_docker
-
       - attach_workspace:
           at: ~/nevergreen
 
@@ -147,6 +145,9 @@ jobs:
             HOST: "https://staging.nevergreen.io"
           command: ./.circleci/smoke-test.sh
 
+      - setup_remote_docker
+          docker_layer_caching: true
+
       - run:
           name: create docker image
           command: |
@@ -161,8 +162,6 @@ jobs:
       - image: circleci/openjdk:8-jdk
 
     steps:
-      - setup_remote_docker
-
       - attach_workspace:
           at: ~/nevergreen
 
@@ -193,6 +192,9 @@ jobs:
           environment:
             HOST: "https://nevergreen.io"
           command: ./.circleci/smoke-test.sh
+
+      - setup_remote_docker
+          docker_layer_caching: true
 
       - run:
           name: create docker image
