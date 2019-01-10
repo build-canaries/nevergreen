@@ -9,7 +9,7 @@ kill_all() {
 }
 
 current_step=1
-total_steps=8
+total_steps=9
 
 print_step() {
   echo
@@ -25,6 +25,9 @@ print_step 'Stopping the ./develop.sh script (if it is running)'
 set +e
 pkill -SIGINT -f ./develop.sh
 set -e
+
+print_step 'Validating CI configuration (if the CircleCI CLI is installed)'
+hash circleci 2>/dev/null && circleci config validate
 
 print_step 'Running the CI dependencies script'
 . ./.circleci/dependencies.sh

@@ -24,8 +24,12 @@ else
 fi
 
 hash java 2>/dev/null || {
-    echo >&2 "java command not found, you need to install Java. See wiki/contributing for more details.."
+    echo >&2 "java command not found, you need to install Java. See wiki/contributing for more details."
     exit 1
 }
 
 java -version
+
+hash circleci 2>/dev/null || {
+    echo "circleci command not found, it's recommended to install. See wiki/contributing for more details."
+}
