@@ -145,7 +145,7 @@ jobs:
             HOST: "https://staging.nevergreen.io"
           command: ./.circleci/smoke-test.sh
 
-      - setup_remote_docker
+      - setup_remote_docker:
           docker_layer_caching: true
 
       - run:
@@ -193,7 +193,7 @@ jobs:
             HOST: "https://nevergreen.io"
           command: ./.circleci/smoke-test.sh
 
-      - setup_remote_docker
+      - setup_remote_docker:
           docker_layer_caching: true
 
       - run:
