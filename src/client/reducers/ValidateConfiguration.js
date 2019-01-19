@@ -11,7 +11,7 @@ var validate = (function() {
       var errs__0 = errors;
       var valid1 = true;
       for (var key0 in data) {
-        var isAdditional0 = !(false || key0 == 'audioVisual' || key0 == 'trays' || key0 == 'projects' || key0 == 'success' || key0 == 'selected' || key0 == 'github');
+        var isAdditional0 = !(false || key0 == 'audioVisual' || key0 == 'trays' || key0 == 'projects' || key0 == 'success' || key0 == 'selected' || key0 == 'github' || key0 == 'gitlab');
         if (isAdditional0) {
           delete data[key0];
         }
@@ -834,6 +834,88 @@ var validate = (function() {
         }
         var valid1 = errors === errs_1;
       }
+      var data1 = data.gitlab;
+      if (data1 !== undefined) {
+        var errs_1 = errors;
+        if ((data1 && typeof data1 === "object" && !Array.isArray(data1))) {
+          var errs__1 = errors;
+          var valid2 = true;
+          for (var key1 in data1) {
+            var isAdditional1 = !(false || key1 == 'url' || key1 == 'snippetId' || key1 == 'title');
+            if (isAdditional1) {
+              delete data1[key1];
+            }
+          }
+          if (data1.url !== undefined) {
+            var errs_2 = errors;
+            if (typeof data1.url !== "string") {
+              var err = {
+                keyword: 'type',
+                dataPath: (dataPath || '') + '.gitlab.url',
+                schemaPath: '#/properties/gitlab/properties/url/type',
+                params: {
+                  type: 'string'
+                },
+                message: 'should be string'
+              };
+              if (vErrors === null) vErrors = [err];
+              else vErrors.push(err);
+              errors++;
+            }
+            var valid2 = errors === errs_2;
+          }
+          if (data1.snippetId !== undefined) {
+            var errs_2 = errors;
+            if (typeof data1.snippetId !== "string") {
+              var err = {
+                keyword: 'type',
+                dataPath: (dataPath || '') + '.gitlab.snippetId',
+                schemaPath: '#/properties/gitlab/properties/snippetId/type',
+                params: {
+                  type: 'string'
+                },
+                message: 'should be string'
+              };
+              if (vErrors === null) vErrors = [err];
+              else vErrors.push(err);
+              errors++;
+            }
+            var valid2 = errors === errs_2;
+          }
+          if (data1.title !== undefined) {
+            var errs_2 = errors;
+            if (typeof data1.title !== "string") {
+              var err = {
+                keyword: 'type',
+                dataPath: (dataPath || '') + '.gitlab.title',
+                schemaPath: '#/properties/gitlab/properties/title/type',
+                params: {
+                  type: 'string'
+                },
+                message: 'should be string'
+              };
+              if (vErrors === null) vErrors = [err];
+              else vErrors.push(err);
+              errors++;
+            }
+            var valid2 = errors === errs_2;
+          }
+        } else {
+          var err = {
+            keyword: 'type',
+            dataPath: (dataPath || '') + '.gitlab',
+            schemaPath: '#/properties/gitlab/type',
+            params: {
+              type: 'object'
+            },
+            message: 'should be object'
+          };
+          if (vErrors === null) vErrors = [err];
+          else vErrors.push(err);
+          errors++;
+        }
+        var valid1 = errors === errs_1;
+      }
     } else {
       var err = {
         keyword: 'type',
@@ -988,6 +1070,21 @@ validate.schema = {
           "type": "string"
         },
         "description": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "gitlab": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string"
+        },
+        "snippetId": {
+          "type": "string"
+        },
+        "title": {
           "type": "string"
         }
       },

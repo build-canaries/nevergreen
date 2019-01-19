@@ -159,6 +159,21 @@
         }
       },
       "additionalProperties": false
+    },
+    "gitlab": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string"
+        },
+        "snippetId": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
     }
   },
   "additionalProperties": false
