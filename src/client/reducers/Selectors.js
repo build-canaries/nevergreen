@@ -100,10 +100,6 @@ export function gitLabSnippetId(state) {
   return state.getIn([GITLAB_ROOT, 'snippetId'])
 }
 
-export function gitLabTitle(state) {
-  return state.getIn([GITLAB_ROOT, 'title'])
-}
-
 export function exportLoaded(state) {
   return state.getIn([EXPORT_ROOT, 'loaded'])
 }

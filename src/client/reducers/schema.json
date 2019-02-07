@@ -168,9 +168,6 @@
         },
         "snippetId": {
           "type": "string"
-        },
-        "title": {
-          "type": "string"
         }
       },
       "additionalProperties": false

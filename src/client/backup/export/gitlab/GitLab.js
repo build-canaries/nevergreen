@@ -1,6 +1,5 @@
 import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
-import {Input} from '../../../common/forms/Input'
 import {GitLabSnippetInput} from '../../GitLabSnippetInput'
 import {GitLabUrlInput} from '../../GitLabUrlInput'
 import {PrimaryButton} from '../../../common/forms/Button'
@@ -13,21 +12,12 @@ export class GitLab extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      accessToken: '',
-      newTitle: props.title
+      accessToken: ''
     }
   }
 
   accessTokenChanged = (evt) => {
     this.setState({accessToken: evt.target.value})
-  }
-
-  titleChanged = (evt) => {
-    this.setState({newTitle: evt.target.value})
-  }
-
-  setTitle = () => {
-    this.props.gitLabSetTitle(this.state.newTitle)
   }
 
   upload = () => {
@@ -37,7 +27,7 @@ export class GitLab extends Component {
 
   render() {
     const {loaded, snippetId, url, gitLabSetSnippetId, gitLabSetUrl} = this.props
-    const {accessToken, newTitle} = this.state
+    const {accessToken} = this.state
     const disabled = !loaded
 
     return (
@@ -51,13 +41,6 @@ export class GitLab extends Component {
                     snippetId={snippetId}
                     setSnippetId={gitLabSetSnippetId}
                     disabled={disabled}/>
-        <Input value={newTitle}
-               onChange={this.titleChanged}
-               onBlur={this.setTitle}
-               disabled={disabled}
-               maxLength='256'>
-          <div className={styles.label}>title</div>
-        </Input>
         <Password className={styles.accessToken}
                   onChange={this.accessTokenChanged}
                   onBlur={this.accessTokenChanged}
@@ -80,9 +63,7 @@ GitLab.propTypes = {
   loaded: PropTypes.bool,
   uploadToGitLab: PropTypes.func.isRequired,
   gitLabSetSnippetId: PropTypes.func.isRequired,
-  gitLabSetTitle: PropTypes.func.isRequired,
   gitLabSetUrl:PropTypes.func.isRequired,
   snippetId: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired
+  url: PropTypes.string.isRequired
 }

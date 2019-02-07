@@ -1,8 +1,8 @@
 import {get, post, put, send as gatewaySend} from './Gateway'
 
-export function createSnippet(url, title, configuration, accessToken) {
+export function createSnippet(url, configuration, accessToken) {
   const data = {
-    title,
+    title: 'Nevergreen configuration backup',
     visibility: 'public',
     file_name: 'configuration.json',  
     content: configuration
@@ -11,9 +11,8 @@ export function createSnippet(url, title, configuration, accessToken) {
   return post(`${url}/api/v4/snippets?private_token=${accessToken}`, data)
 }
 
-export function updateSnippet(url, snippetId, title, configuration, accessToken) {
+export function updateSnippet(url, snippetId, configuration, accessToken) {
   const data = {
-    title,
     file_name: 'configuration.json',  
     content: configuration
   }

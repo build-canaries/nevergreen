@@ -841,7 +841,7 @@ var validate = (function() {
           var errs__1 = errors;
           var valid2 = true;
           for (var key1 in data1) {
-            var isAdditional1 = !(false || key1 == 'url' || key1 == 'snippetId' || key1 == 'title');
+            var isAdditional1 = !(false || key1 == 'url' || key1 == 'snippetId');
             if (isAdditional1) {
               delete data1[key1];
             }
@@ -871,24 +871,6 @@ var validate = (function() {
                 keyword: 'type',
                 dataPath: (dataPath || '') + '.gitlab.snippetId',
                 schemaPath: '#/properties/gitlab/properties/snippetId/type',
-                params: {
-                  type: 'string'
-                },
-                message: 'should be string'
-              };
-              if (vErrors === null) vErrors = [err];
-              else vErrors.push(err);
-              errors++;
-            }
-            var valid2 = errors === errs_2;
-          }
-          if (data1.title !== undefined) {
-            var errs_2 = errors;
-            if (typeof data1.title !== "string") {
-              var err = {
-                keyword: 'type',
-                dataPath: (dataPath || '') + '.gitlab.title',
-                schemaPath: '#/properties/gitlab/properties/title/type',
                 params: {
                   type: 'string'
                 },
@@ -1082,9 +1064,6 @@ validate.schema = {
           "type": "string"
         },
         "snippetId": {
-          "type": "string"
-        },
-        "title": {
           "type": "string"
         }
       },

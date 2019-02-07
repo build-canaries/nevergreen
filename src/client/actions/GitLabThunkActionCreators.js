@@ -1,10 +1,10 @@
 import {exportError, exporting, exportSuccess} from './ExportActionCreators'
 import {importError, importing} from './ImportActionCreators'
-import {gitLabUrl, gitLabSnippetId, gitLabTitle} from '../reducers/Selectors'
+import {gitLabUrl, gitLabSnippetId} from '../reducers/Selectors'
 import {toJson} from '../common/Json'
 import {filter} from '../reducers/Configuration'
 import {isBlank} from '../common/Utils'
-import {gitLabSetSnippetId, gitLabSetTitle} from './GitLabActionCreators'
+import {gitLabSetSnippetId} from './GitLabActionCreators'
 import {createSnippet, updateSnippet, getSnippetMeta, getSnippetContent, send} from '../gateways/GitLabGateway'
 import {importData} from './ImportThunkActionCreators'
 
@@ -20,7 +20,7 @@ export function restoreFromGitLab(accessToken) {
     } else {
       try {
         const resMeta = await send(getSnippetMeta(url, snippetId, accessToken))
-        await handleSnippetResponse(dispatch, resMeta)
+        handleSnippetResponse(resMeta)
 
         const content = await send(getSnippetContent(url, snippetId, accessToken))
         dispatch(importData(content))
@@ -31,14 +31,12 @@ export function restoreFromGitLab(accessToken) {
   }
 }
 
-function handleSnippetResponse(dispatch, res) {
+function handleSnippetResponse(res) {
   const configuration = res.get('file_name')
 
   if (configuration !== 'configuration.json') {
     throw new Error('snippet does not contain the required configuration.json file')
-  } else {
-    dispatch(gitLabSetTitle(res.get('title')))
-  }
+  } 
 }
 
 export function uploadToGitLab(accessToken) {
@@ -47,7 +45,6 @@ export function uploadToGitLab(accessToken) {
   
       const url = gitLabUrl(getState())
       const id = gitLabSnippetId(getState())
-      const title = gitLabTitle(getState())
       const configuration = toJson(filter(getState().toJS()))
   
       if (isBlank(accessToken)) {
@@ -56,8 +53,8 @@ export function uploadToGitLab(accessToken) {
         const createNewSnippet = isBlank(id)
   
         const req = createNewSnippet
-          ? createSnippet(url, title, configuration, accessToken)
-          : updateSnippet(url, id, title, configuration, accessToken)
+          ? createSnippet(url, configuration, accessToken)
+          : updateSnippet(url, id, configuration, accessToken)
   
         try {
           const snippetJson = await send(req)
