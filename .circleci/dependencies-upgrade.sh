@@ -14,8 +14,10 @@ if [[ `git status --porcelain` ]]; then
   TYPE_OF_RUN=${1:-testing} 
   if [ $TYPE_OF_RUN == 'push' ]; then
     echo "pushing changes"
-    git add -a .
+    git add --all
     git commit -m 'Updating dependencies'
     git push
   fi
+else
+  echo "Everything already up to date"
 fi

@@ -29,6 +29,7 @@
   :aliases {"unit"       ["with-profile" "+unit" "midje" ":config" "./config/.midje.clj"]
             "lint"       ["with-profile" "+unit" "eastwood"]}
   :profiles {:dev        {:plugins      [[lein-midje "3.2.1"]
+                                         [lein-ancient "0.6.15"]
                                          [jonase/eastwood "0.3.4"]
                                          [com.livingsocial/lein-dependency-check "1.0.4"]]
                           :dependencies [[midje "1.9.6"]
