@@ -212,6 +212,14 @@ jobs:
           name: tweet release
           command: ./.circleci/release-tweet.sh
 
+  update-dependecies:
+    docker:
+      - image: circleci/node:10.3.0
+    steps:
+      - run:
+          name: update version
+          command: ./.circleci/dependencies-upgrade.sh
+
 workflows:
   version: 2
   build-deploy:
@@ -230,3 +238,13 @@ workflows:
       - deploy-prod:
           requires:
             - hold
+  nightly:
+    triggers:
+      - schedule:
+          cron: "45 23 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - update-dependecies
