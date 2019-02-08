@@ -239,15 +239,9 @@ jobs:
           command: ./.circleci/install-node.sh
 
       - run:
-          name: build
+          name: update clojure and node dependency versions
           environment:
             BASH_ENV: "~/.nvm/nvm.sh"
-          command: |
-            ./.circleci/dependencies.sh
-            ./.circleci/compile.sh
-
-      - run:
-          name: update clojure and node dependency versions
           command: ./.circleci/dependencies-upgrade.sh
 
 workflows:
@@ -268,10 +262,11 @@ workflows:
       - deploy-prod:
           requires:
             - hold
-  nightly:
+  sunday-dependency-rejuvenation:
     triggers:
       - schedule:
-          cron: "51 23 * * *"
+          cron: "56 23 * * *"
+        #   cron: "0 8 * * 0"
           filters:
             branches:
               only:
