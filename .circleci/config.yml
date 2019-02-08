@@ -213,11 +213,41 @@ jobs:
           command: ./.circleci/release-tweet.sh
 
   update-dependecies:
+    working_directory: ~/nevergreen
+
     docker:
-      - image: circleci/node:10.3.0
+      - image: circleci/openjdk:8-jdk
+
     steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - v4-nevergreen-ui-{{ checksum ".nvmrc" }}-{{ checksum "package-lock.json" }}
+            - v4-nevergreen-ui-{{ checksum ".nvmrc" }}- # fall back to any cache for the current version of node
+
+      - restore_cache:
+          keys:
+            - v1-nevergreen-server-{{ checksum "project.clj" }}
+
       - run:
           name: update version
+          command: ./.circleci/update-version.sh
+
+      - run:
+          name: install node
+          command: ./.circleci/install-node.sh
+
+      - run:
+          name: build
+          environment:
+            BASH_ENV: "~/.nvm/nvm.sh"
+          command: |
+            ./.circleci/dependencies.sh
+            ./.circleci/compile.sh
+
+      - run:
+          name: update clojure and node dependency versions
           command: ./.circleci/dependencies-upgrade.sh
 
 workflows:
@@ -241,7 +271,7 @@ workflows:
   nightly:
     triggers:
       - schedule:
-          cron: "45 23 * * *"
+          cron: "51 23 * * *"
           filters:
             branches:
               only:
