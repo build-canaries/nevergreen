@@ -1,4 +1,6 @@
 import {get, post, put, send as gatewaySend} from './Gateway'
+import {isImmutable} from 'immutable'
+import _ from 'lodash'
 
 export function createSnippet(url, configuration, accessToken) {
   const data = {
@@ -32,7 +34,16 @@ export async function send(request) {
   try {
     return await gatewaySend(request)
   } catch (error) {
-    // TODO: Check if GitLab gives helpful error messages when things go wrong
-    throw error
+    // GitHub errors look like this {"message": ""  } or {"error": ""  }
+    if(isImmutable(error.body)) {
+      const serverMessage = error.body.get('message')
+      const serverError = error.body.get('error')
+      const displayMessage = _.compact([serverMessage, serverError]).join('')
+      const message = `${error.status} - ${displayMessage}`
+      throw new Error(message)
+    }
+
+    const message = `${error.status} - ${error.body}`
+    throw new Error(message)
   }
 }
