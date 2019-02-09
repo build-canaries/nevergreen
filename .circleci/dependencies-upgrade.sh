@@ -1,4 +1,5 @@
-#!/bin/bash -eu
+#!/usr/bin/env bash
+set -euo pipefail
 
 echo "updating server dependencies"
 ./lein.sh ancient upgrade

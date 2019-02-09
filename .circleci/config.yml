@@ -265,7 +265,7 @@ workflows:
   sunday-dependency-rejuvenation:
     triggers:
       - schedule:
-          cron: "56 23 * * *"
+          cron: "04 0 * * *"
         #   cron: "0 8 * * 0"
           filters:
             branches:
