@@ -262,14 +262,14 @@ workflows:
       - deploy-prod:
           requires:
             - hold
-  sunday-dependency-rejuvenation:
-    triggers:
-      - schedule:
-          cron: "04 0 * * *"
-        #   cron: "0 8 * * 0"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - update-dependecies
+#   sunday-dependency-rejuvenation:
+#     triggers:
+#       - schedule:
+#           cron: "04 0 * * *"
+#         #   cron: "0 8 * * 0"
+#           filters:
+#             branches:
+#               only:
+#                 - master
+#     jobs:
+#       - update-dependecies
