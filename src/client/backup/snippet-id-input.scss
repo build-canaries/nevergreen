@@ -1,17 +1,5 @@
-@import '../common/forms/button';
-@import '../common/layout';
-@import './export/github/github';
+@import './export/gitlab/gitlab';
 
 .label {
   width: $label-size;
-}
-
-.gistId {
-  @extend %first;
-
-  margin: 0 $margin-right 0 0;
-
-  @include respond-to(tablet, desktop) {
-    width: 31em;
-  }
 }

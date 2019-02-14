@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react'
+import React, {useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import {isBlank} from '../common/Utils'
 import {Messages} from '../common/Messages'
@@ -15,98 +15,86 @@ function pause(audio) {
   }
 }
 
-export class NotificationsAudio extends Component {
+export function NotificationsAudio({brokenBuildSoundFx, setPlayBrokenBuildSoundFx, setBrokenBuildSoundFx, playBrokenBuildSoundFx}) {
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      errors: [],
-      audio: null,
-      soundFx: props.brokenBuildSoundFx,
-      playEnabled: !isBlank(props.brokenBuildSoundFx),
-      playing: false
+  const [errors, setErrors] = useState([])
+  const [audio, setAudio] = useState(null)
+  const [soundFx, setSoundFx] = useState(brokenBuildSoundFx)
+  const [playEnabled] = useState(!isBlank(brokenBuildSoundFx))
+  const [playing, setPlaying] = useState(false)
+
+  const updateSoundFx = ({target}) => {
+    setSoundFx(target.value)
+    setErrors([])
+  }
+
+  const setSoundFxX = () => setBrokenBuildSoundFx(soundFx)
+
+  const audioStopped = () => {
+    setAudio(null)
+    setPlaying(false)
+  }
+
+  const play = async () => {
+    const audio = new Audio(soundFx)
+    audio.addEventListener('ended', audioStopped)
+
+    setAudio(audio)
+    setErrors([])
+    setPlaying(true)
+
+    try {
+      await audio.play()
+    } catch (e) {
+      setPlaying(false)
+      setErrors(['Unable to play broken build sound because of an error.', e.message])
     }
   }
 
-  toggleBrokenSounds = (newValue) => {
-    this.props.setPlayBrokenBuildSoundFx(newValue)
+  const stop = () => {
+    pause(audio)
+    audioStopped()
   }
 
-  updateSoundFx = (evt) => {
-    this.setState({soundFx: evt.target.value, errors: []})
-  }
+  useEffect(() => {
+    return () => {
+      pause(audio)
+    }
+  }, [])
 
-  setSoundFx = () => {
-    this.props.setBrokenBuildSoundFx(this.state.soundFx)
-  }
+  const playingDisabled = isBlank(soundFx) || !playEnabled
 
-  audioStopped = () => {
-    this.setState({audio: null, playing: false})
-  }
-
-  play = () => {
-    const audio = new Audio(this.state.soundFx)
-    audio.addEventListener('ended', this.audioStopped)
-
-    this.setState({audio, errors: [], playing: true}, async () => {
-      try {
-        await audio.play()
-      } catch (e) {
-        this.setState({
-          errors: ['Unable to play broken build sound because of an error.', e.message],
-          playing: false
-        })
-      }
-    })
-  }
-
-  stop = () => {
-    pause(this.state.audio)
-    this.audioStopped()
-  }
-
-  componentWillUnmount() {
-    pause(this.state.audio)
-  }
-
-  render() {
-    const {playBrokenBuildSoundFx} = this.props
-    const {soundFx, playEnabled, playing, errors} = this.state
-
-    const playingDisabled = isBlank(soundFx) || !playEnabled
-
-    return (
-      <Fragment>
-        <Checkbox className={styles.playSfxs}
-                  checked={playBrokenBuildSoundFx}
-                  onToggle={this.toggleBrokenSounds}
-                  data-locator='play-sounds'>
-          play audio notifications
-        </Checkbox>
-        <div className={styles.soundFx}>
-          <Input className={styles.brokenBuildSfx}
-                 placeholder='audio file URL'
-                 onChange={this.updateSoundFx}
-                 value={soundFx}
-                 onBlur={this.setSoundFx}
-                 onEnter={this.setSoundFx}
-                 required={playBrokenBuildSoundFx}
-                 disabled={playing}>
-            broken build sound
-          </Input>
-          <SecondaryButton onClick={playing ? this.stop : this.play}
-                           disabled={playingDisabled}
-                           aria-disabled={playingDisabled}
-                           icon={playing ? iStop : iPlay}>
-            {playing ? 'stop' : 'play'}
-          </SecondaryButton>
-        </div>
-        <Messages className={styles.playbackErrors}
-                  type='error'
-                  messages={errors}/>
-      </Fragment>
-    )
-  }
+  return (
+    <>
+      <Checkbox className={styles.playSfxs}
+                checked={playBrokenBuildSoundFx}
+                onToggle={(newValue) => setPlayBrokenBuildSoundFx(newValue)}
+                data-locator='play-sounds'>
+        play audio notifications
+      </Checkbox>
+      <div className={styles.soundFx}>
+        <Input className={styles.brokenBuildSfx}
+               placeholder='audio file URL'
+               onChange={updateSoundFx}
+               value={soundFx}
+               onBlur={setSoundFxX}
+               onEnter={setSoundFxX}
+               required={playBrokenBuildSoundFx}
+               disabled={playing}>
+          broken build sound
+        </Input>
+        <SecondaryButton onClick={playing ? stop : play}
+                         disabled={playingDisabled}
+                         aria-disabled={playingDisabled}
+                         icon={playing ? iStop : iPlay}>
+          {playing ? 'stop' : 'play'}
+        </SecondaryButton>
+      </div>
+      <Messages className={styles.playbackErrors}
+                type='error'
+                messages={errors}/>
+    </>
+  )
 }
 
 NotificationsAudio.propTypes = {

@@ -2,7 +2,7 @@ import {withMockedImports} from '../TestUtils'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import React from 'react'
-import {shallow} from 'enzyme'
+import {mount} from 'enzyme'
 import {mocks} from '../Mocking'
 
 describe('<Shortcut/>', function () {
@@ -22,7 +22,7 @@ describe('<Shortcut/>', function () {
     const hotkeys = ['a']
     const props = {...DEFAULT_PROPS, hotkeys}
 
-    shallow(<Shortcut {...props} />)
+    mount(<Shortcut {...props} />)
 
     expect(bind).to.have.been.calledWith(hotkeys)
   })
@@ -31,7 +31,7 @@ describe('<Shortcut/>', function () {
     const hotkeys = ['a']
     const props = {...DEFAULT_PROPS, hotkeys}
 
-    const wrapper = shallow(<Shortcut {...props} />)
+    const wrapper = mount(<Shortcut {...props} />)
     wrapper.unmount()
 
     expect(unbind).to.have.been.calledWith(hotkeys)
@@ -42,7 +42,7 @@ describe('<Shortcut/>', function () {
     const newHotkeys = ['b']
     const props = {...DEFAULT_PROPS, hotkeys: originalHotkeys}
 
-    const wrapper = shallow(<Shortcut {...props} />)
+    const wrapper = mount(<Shortcut {...props} />)
     wrapper.setProps({hotkeys: newHotkeys})
 
     expect(unbind).to.have.been.calledWith(originalHotkeys)
@@ -53,7 +53,7 @@ describe('<Shortcut/>', function () {
     const hotkeys = ['a']
     const props = {...DEFAULT_PROPS, hotkeys}
 
-    const wrapper = shallow(<Shortcut {...props} />)
+    const wrapper = mount(<Shortcut {...props} />)
     wrapper.setProps({hotkeys})
 
     expect(unbind).to.not.have.been.called()
@@ -67,7 +67,7 @@ describe('<Shortcut/>', function () {
       const hotkeys = ['a']
       const props = {...DEFAULT_PROPS, hotkeys}
 
-      const wrapper = shallow(<Shortcut {...props} />)
+      const wrapper = mount(<Shortcut {...props} />)
 
       expect(wrapper.find('span')).to.have.prop('aria-hidden', true)
     })

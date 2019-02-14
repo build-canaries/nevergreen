@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react'
+import React, {Fragment, useState} from 'react'
 import PropTypes from 'prop-types'
 import {Input} from '../../../common/forms/Input'
 import {GistIdInput} from '../../GistIdInput'
@@ -9,70 +9,44 @@ import {iCloudUpload} from '../../../common/fonts/Icons'
 import {Password} from '../../../common/forms/Password'
 import styles from './github.scss'
 
-export class GitHub extends Component {
+export function GitHub({description, loaded, gistId, gitHubSetGistId, gitHubSetDescription, uploadToGitHub}) {
+  const [oauthToken, setOauthToken] = useState('')
+  const [newDescription, setNewDescription] = useState(description)
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      oauthToken: '',
-      newDescription: props.description
-    }
-  }
+  const disabled = !loaded
+  const oauthTokenChanged = ({target}) => setOauthToken(target.value)
 
-  oauthTokenChanged = (evt) => {
-    this.setState({oauthToken: evt.target.value})
-  }
-
-  descriptionChanged = (evt) => {
-    this.setState({newDescription: evt.target.value})
-  }
-
-  setDescription = () => {
-    this.props.gitHubSetDescription(this.state.newDescription)
-  }
-
-  upload = () => {
-    const {oauthToken} = this.state
-    this.props.uploadToGitHub(oauthToken)
-  }
-
-  render() {
-    const {loaded, gistId, gitHubSetGistId} = this.props
-    const {oauthToken, newDescription} = this.state
-    const disabled = !loaded
-
-    return (
-      <Fragment>
-        <WithHelp title='Export to GitHub'
-                  help={<GitHubHelp/>}>
-          <GistIdInput key={gistId}
-                       gistId={gistId}
-                       setGistId={gitHubSetGistId}
-                       disabled={disabled}/>
-        </WithHelp>
-        <Input value={newDescription}
-               onChange={this.descriptionChanged}
-               onBlur={this.setDescription}
-               disabled={disabled}
-               maxLength='256'>
-          <div className={styles.label}>description</div>
-        </Input>
-        <Password className={styles.accessToken}
-                  onChange={this.oauthTokenChanged}
-                  onBlur={this.oauthTokenChanged}
-                  value={oauthToken}
-                  disabled={disabled}>
-          <div className={styles.label}>access token</div>
-        </Password>
-        <PrimaryButton className={styles.export}
-                       onClick={this.upload}
-                       disabled={disabled}
-                       icon={iCloudUpload}>
-          export
-        </PrimaryButton>
-      </Fragment>
-    )
-  }
+  return (
+    <Fragment>
+      <WithHelp title='Export to GitHub'
+                help={<GitHubHelp/>}>
+        <GistIdInput key={gistId}
+                     gistId={gistId}
+                     setGistId={gitHubSetGistId}
+                     disabled={disabled}/>
+      </WithHelp>
+      <Input value={newDescription}
+             onChange={({target}) => setNewDescription(target.value)}
+             onBlur={() => gitHubSetDescription(newDescription)}
+             disabled={disabled}
+             maxLength='256'>
+        <div className={styles.label}>description</div>
+      </Input>
+      <Password className={styles.accessToken}
+                onChange={oauthTokenChanged}
+                onBlur={oauthTokenChanged}
+                value={oauthToken}
+                disabled={disabled}>
+        <div className={styles.label}>access token</div>
+      </Password>
+      <PrimaryButton className={styles.export}
+                     onClick={() => uploadToGitHub(oauthToken)}
+                     disabled={disabled}
+                     icon={iCloudUpload}>
+        export
+      </PrimaryButton>
+    </Fragment>
+  )
 }
 
 GitHub.propTypes = {

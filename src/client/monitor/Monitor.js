@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {useEffect} from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import {InterestingProjects} from './InterestingProjects'
@@ -15,42 +15,43 @@ export function GettingStartedHelp() {
   return <SuccessMessage message='Add a CI server via the tracking page to start monitoring'/>
 }
 
-export class Monitor extends Component {
+export function Monitor(props) {
+  const {isFullScreen, projects, errors, messages, fetchInteresting, refreshTime, loaded, trays, requestFullScreen, pendingRequest} = props
 
-  componentDidMount() {
-    this.props.requestFullScreen(true)
-  }
+  useEffect(() => {
+    requestFullScreen(true)
+    return () => {
+      requestFullScreen(false)
+    }
+  }, [])
 
-  componentWillUnmount() {
-    this.props.requestFullScreen(false)
-    // TODO: this shouldn't be done here
-    abortPendingRequest(this.props.pendingRequest)
-  }
+  // TODO: this shouldn't be done here
+  useEffect(() => {
+    return () => {
+      abortPendingRequest(pendingRequest)
+    }
+  }, [])
 
-  render() {
-    const {isFullScreen, projects, errors, messages, fetchInteresting, refreshTime, loaded, trays} = this.props
+  const traysAdded = !_.isEmpty(trays)
+  const noProjects = _.isEmpty(projects)
+  const noErrors = _.isEmpty(errors)
+  const success = noProjects && noErrors
 
-    const traysAdded = !_.isEmpty(trays)
-    const noProjects = _.isEmpty(projects)
-    const noErrors = _.isEmpty(errors)
-    const success = noProjects && noErrors
+  const monitorClassNames = classNames(styles.monitor, {
+    [styles.fullscreen]: isFullScreen
+  })
 
-    const monitorClassNames = classNames(styles.monitor, {
-      [styles.fullscreen]: isFullScreen
-    })
-
-    return (
-      <div className={monitorClassNames}>
-        <Title>Monitor</Title>
-        <Timer onTrigger={fetchInteresting} interval={refreshTime}/>
-        <Loading loaded={loaded}>
-          {!traysAdded && <GettingStartedHelp/>}
-          {traysAdded && success && <Success messages={messages}/>}
-          {traysAdded && !success && <InterestingProjects {...this.props}/>}
-        </Loading>
-      </div>
-    )
-  }
+  return (
+    <div className={monitorClassNames}>
+      <Title>Monitor</Title>
+      <Timer onTrigger={fetchInteresting} interval={refreshTime}/>
+      <Loading loaded={loaded}>
+        {!traysAdded && <GettingStartedHelp/>}
+        {traysAdded && success && <Success messages={messages}/>}
+        {traysAdded && !success && <InterestingProjects {...props}/>}
+      </Loading>
+    </div>
+  )
 }
 
 Monitor.propTypes = {

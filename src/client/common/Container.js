@@ -1,79 +1,63 @@
-import React, {Component} from 'react'
+import React, {useLayoutEffect, useRef, useState} from 'react'
 import PropTypes from 'prop-types'
 import cn from 'classnames'
 import styles from './container.scss'
 
-export class Container extends Component {
-
-  constructor(props) {
-    super(props)
-    this.state = {
-      hidden: props.hidden || false
+export function Container({initiallyHidden, highlight, className, title, subTitle, children}) {
+  const rootNode = useRef(null)
+  useLayoutEffect(() => {
+    if (highlight && rootNode.current) {
+      rootNode.current.scrollIntoView(true)
     }
-    this.rootNode = React.createRef()
-  }
+  })
 
-  toggleHidden = () => {
-    this.setState(({hidden}) => {
-      return {hidden: !hidden}
-    })
-  }
+  const [hidden, setHidden] = useState(initiallyHidden)
 
-  keyToggle = (evt) => {
+  const toggleHidden = () => setHidden(!hidden)
+  const keyToggle = (evt) => {
     if (evt.key === 'Enter' || evt.key === ' ') {
-      this.toggleHidden()
+      toggleHidden()
       evt.preventDefault()
     }
   }
 
-  componentDidMount() {
-    if (this.props.highlight && this.rootNode.current) {
-      this.rootNode.current.scrollIntoView(true)
-    }
-  }
+  const titleBarClasses = cn(styles.titleBar, {
+    [styles.highlight]: highlight,
+    [styles.show]: hidden,
+    [styles.hide]: !hidden
+  })
+  const bodyClasses = cn(styles.body, className, {
+    [styles.hidden]: hidden
+  })
+  const label = `${hidden ? 'show' : 'hide'} section ${title}`
 
-  render() {
-    const {highlight, className, title, subTitle, children} = this.props
-    const {hidden} = this.state
-
-    const titleBarClasses = cn(styles.titleBar, {
-      [styles.highlight]: highlight,
-      [styles.show]: hidden,
-      [styles.hide]: !hidden
-    })
-    const bodyClasses = cn(styles.body, className, {
-      [styles.hidden]: hidden
-    })
-    const label = `${hidden ? 'show' : 'hide'} section ${title}`
-
-    return (
-      <section className={styles.container}
-               ref={this.rootNode}>
-        <div className={titleBarClasses}
-             title={label}
-             onClick={this.toggleHidden}
-             onKeyPress={this.keyToggle}
-             tabIndex='0'
-             aria-label={label}
-             aria-expanded={!hidden}
-             role='button'
-             data-locator='title-bar'>
-          <h2 className={styles.title} data-locator='container-title'>{title}</h2>
-          {
-            subTitle && (
-              <div className={styles.subTitle}
-                   data-locator='container-sub-title'>
-                {subTitle}
-              </div>
-            )
-          }
-        </div>
-        <div className={bodyClasses} data-locator='body'>
-          {children}
-        </div>
-      </section>
-    )
-  }
+  return (
+    <section className={styles.container}
+             ref={rootNode}>
+      <div className={titleBarClasses}
+           title={label}
+           onClick={toggleHidden}
+           onKeyPress={keyToggle}
+           tabIndex='0'
+           aria-label={label}
+           aria-expanded={!hidden}
+           role='button'
+           data-locator='title-bar'>
+        <h2 className={styles.title} data-locator='container-title'>{title}</h2>
+        {
+          subTitle && (
+            <div className={styles.subTitle}
+                 data-locator='container-sub-title'>
+              {subTitle}
+            </div>
+          )
+        }
+      </div>
+      <div className={bodyClasses} data-locator='body'>
+        {children}
+      </div>
+    </section>
+  )
 }
 
 Container.propTypes = {
@@ -81,6 +65,6 @@ Container.propTypes = {
   title: PropTypes.string.isRequired,
   subTitle: PropTypes.string,
   className: PropTypes.string,
-  hidden: PropTypes.bool,
+  initiallyHidden: PropTypes.bool,
   highlight: PropTypes.bool
 }

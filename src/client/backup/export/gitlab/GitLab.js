@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react'
+import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import {GitLabSnippetInput} from '../../GitLabSnippetInput'
 import {GitLabUrlInput} from '../../GitLabUrlInput'
@@ -7,63 +7,45 @@ import {iCloudUpload} from '../../../common/fonts/Icons'
 import {Password} from '../../../common/forms/Password'
 import styles from './gitlab.scss'
 
-export class GitLab extends Component {
+export function GitLab({loaded, snippetId, url, gitLabSetSnippetId, gitLabSetUrl, uploadToGitLab}) {
+  const [accessToken, setAccessToken] = useState('')
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      accessToken: ''
-    }
-  }
+  const accessTokenChanged = ({target}) => setAccessToken(target.value)
 
-  accessTokenChanged = (evt) => {
-    this.setState({accessToken: evt.target.value})
-  }
+  const disabled = !loaded
 
-  upload = () => {
-    const {accessToken} = this.state
-    this.props.uploadToGitLab(accessToken)
-  }
-
-  render() {
-    const {loaded, snippetId, url, gitLabSetSnippetId, gitLabSetUrl} = this.props
-    const {accessToken} = this.state
-    const disabled = !loaded
-
-    return (
-      <Fragment>
-        <GitLabUrlInput key={url}
-                    url={url}
-                    setUrl={gitLabSetUrl}
-                    disabled={disabled}>
-        </GitLabUrlInput>
-        <GitLabSnippetInput key={snippetId}
-                    snippetId={snippetId}
-                    setSnippetId={gitLabSetSnippetId}
-                    disabled={disabled}/>
-        <Password className={styles.accessToken}
-                  onChange={this.accessTokenChanged}
-                  onBlur={this.accessTokenChanged}
-                  value={accessToken}
-                  disabled={disabled}>
-          <div className={styles.label}>access token</div>
-        </Password>
-        <PrimaryButton className={styles.export}
-                       onClick={this.upload}
-                       disabled={disabled}
-                       icon={iCloudUpload}>
-          export
-        </PrimaryButton>
-      </Fragment>
-    )
-  }
+  return (
+    <>
+      <GitLabUrlInput key={url}
+                      url={url}
+                      setUrl={gitLabSetUrl}
+                      disabled={disabled}/>
+      <GitLabSnippetInput key={snippetId}
+                          snippetId={snippetId}
+                          setSnippetId={gitLabSetSnippetId}
+                          disabled={disabled}/>
+      <Password className={styles.accessToken}
+                onChange={accessTokenChanged}
+                onBlur={accessTokenChanged}
+                value={accessToken}
+                disabled={disabled}>
+        <div className={styles.label}>access token</div>
+      </Password>
+      <PrimaryButton className={styles.export}
+                     onClick={() => uploadToGitLab(accessToken)}
+                     disabled={disabled}
+                     icon={iCloudUpload}>
+        export
+      </PrimaryButton>
+    </>
+  )
 }
 
 GitLab.propTypes = {
   loaded: PropTypes.bool,
   uploadToGitLab: PropTypes.func.isRequired,
   gitLabSetSnippetId: PropTypes.func.isRequired,
-  gitLabSetUrl:PropTypes.func.isRequired,
+  gitLabSetUrl: PropTypes.func.isRequired,
   snippetId: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired
 }

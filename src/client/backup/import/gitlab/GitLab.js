@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react'
+import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import {GitLabSnippetInput} from '../../GitLabSnippetInput'
 import {GitLabUrlInput} from '../../GitLabUrlInput'
@@ -7,56 +7,37 @@ import {PrimaryButton} from '../../../common/forms/Button'
 import {iCloudDownload} from '../../../common/fonts/Icons'
 import {Password} from '../../../common/forms/Password'
 
-export class GitLab extends Component {
+export function GitLab({snippetId, gitLabSetSnippetId, url, gitLabSetUrl, loaded, restoreFromGitLab}) {
+  const [accessToken, setAccessToken] = useState('')
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      accessToken: ''
-    }
-  }
+  const accessTokenChanged = ({target}) => setAccessToken(target.value)
 
-  accessTokenChanged = (evt) => {
-    this.setState({accessToken: evt.target.value})
-  }
+  const disabled = !loaded
 
-  import = () => {
-    const {accessToken} = this.state
-    this.props.restoreFromGitLab(accessToken)
-  }
-
-  render() {
-      const {snippetId, gitLabSetSnippetId, url, gitLabSetUrl, loaded} = this.props
-      const {accessToken} = this.state
-      const disabled = !loaded
-    
-      return (
-        <Fragment>
-          <GitLabUrlInput key={url}
-                    url={url}
-                    setUrl={gitLabSetUrl}
-                    disabled={disabled}>
-          </GitLabUrlInput>
-          <GitLabSnippetInput key={snippetId}
-                        snippetId={snippetId}
-                        setSnippetId={gitLabSetSnippetId}
-                        disabled={disabled}/>
-          <Password className={styles.accessToken}
-                  onChange={this.accessTokenChanged}
-                  onBlur={this.accessTokenChanged}
-                  value={accessToken}
-                  disabled={disabled}>
-            <div className={styles.label}>access token</div>
-        </Password>
-          <PrimaryButton className={styles.import}
-                         onClick={this.import}
-                         disabled={disabled}
-                         icon={iCloudDownload}>
-            import
-          </PrimaryButton>
-        </Fragment>
-      )
-  }
+  return (
+    <>
+      <GitLabUrlInput key={url}
+                      url={url}
+                      setUrl={gitLabSetUrl}
+                      disabled={disabled}/>
+      <GitLabSnippetInput key={snippetId}
+                          snippetId={snippetId}
+                          setSnippetId={gitLabSetSnippetId}
+                          disabled={disabled}/>
+      <Password onChange={accessTokenChanged}
+                onBlur={accessTokenChanged}
+                value={accessToken}
+                disabled={disabled}>
+        <div className={styles.label}>access token</div>
+      </Password>
+      <PrimaryButton className={styles.import}
+                     onClick={() => restoreFromGitLab(accessToken)}
+                     disabled={disabled}
+                     icon={iCloudDownload}>
+        import
+      </PrimaryButton>
+    </>
+  )
 }
 
 GitLab.propTypes = {

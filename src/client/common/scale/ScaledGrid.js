@@ -1,4 +1,4 @@
-import React, {Children, Component, Fragment} from 'react'
+import React, {Children, useLayoutEffect, useRef, useState} from 'react'
 import PropTypes from 'prop-types'
 import {Resizable} from '../Resizable'
 import {ideal, MIN_FONT_SIZE} from './ScaleText'
@@ -14,6 +14,8 @@ const DESKTOP_BREAKPOINT = 1440
 // px
 const MIN_CHILD_HEIGHT = 32
 const CHILD_MARGIN = 5
+
+const DEFAULT_STATE = {childWidth: 0, childHeight: MIN_CHILD_HEIGHT, fontSize: MIN_FONT_SIZE}
 
 function columns(width) {
   if (width < TABLET_BREAKPOINT) {
@@ -59,7 +61,7 @@ function getVisibleText(node) {
 
 function calculateChildDimensions(listNode, fontMetrics) {
   if (_.isNil(listNode) || _.isNil(fontMetrics) || !listNode.hasChildNodes()) {
-    return {childWidth: 0, childHeight: MIN_CHILD_HEIGHT, fontSize: MIN_FONT_SIZE}
+    return DEFAULT_STATE
   }
 
   const childrenText = Array.from(listNode.childNodes).map((node) => getVisibleText(node))
@@ -78,60 +80,44 @@ function calculateChildDimensions(listNode, fontMetrics) {
   return {childWidth, childHeight, fontSize}
 }
 
-export class ScaledGrid extends Component {
+export function ScaledGrid({children}) {
+  const [dimensions, setDimensions] = useState(DEFAULT_STATE)
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      childWidth: 0,
-      childHeight: MIN_CHILD_HEIGHT,
-      fontSize: MIN_FONT_SIZE
-    }
-    this.fontMetrics = React.createRef()
-    this.listNode = React.createRef()
+  const fontMetrics = useRef()
+  const listNode = useRef()
+
+  const calculate = () => {
+    setDimensions(calculateChildDimensions(listNode.current, fontMetrics.current))
   }
 
-  calculate = () => {
-    this.setState(calculateChildDimensions(this.listNode.current, this.fontMetrics.current))
+  useLayoutEffect(() => {
+    calculate()
+  }, [children])
+
+  const style = {
+    width: `${dimensions.childWidth}px`,
+    height: `${dimensions.childHeight}px`,
+    fontSize: `${dimensions.fontSize}px`,
+    margin: `${CHILD_MARGIN}px`
   }
 
-  componentDidMount() {
-    this.calculate()
-  }
-
-  componentDidUpdate() {
-    const dimensions = calculateChildDimensions(this.listNode.current, this.fontMetrics.current)
-    if (!_.isEqual(this.state, dimensions)) {
-      this.setState(dimensions)
-    }
-  }
-
-  render() {
-    const style = {
-      width: `${this.state.childWidth}px`,
-      height: `${this.state.childHeight}px`,
-      fontSize: `${this.state.fontSize}px`,
-      margin: `${CHILD_MARGIN}px`
-    }
-
-    return (
-      <Fragment>
-        <FontMetrics ref={this.fontMetrics}/>
-        <ul className={styles.scaledGrid} ref={this.listNode}>
-          {
-            Children.map(this.props.children, (child) => {
-              return (
-                <li className={styles.item} style={style}>
-                  {child}
-                </li>
-              )
-            })
-          }
-        </ul>
-        <Resizable onResize={this.calculate}/>
-      </Fragment>
-    )
-  }
+  return (
+    <>
+      <FontMetrics ref={fontMetrics}/>
+      <ul className={styles.scaledGrid} ref={listNode}>
+        {
+          Children.map(children, (child) => {
+            return (
+              <li className={styles.item} style={style}>
+                {child}
+              </li>
+            )
+          })
+        }
+      </ul>
+      <Resizable onResize={calculate}/>
+    </>
+  )
 }
 
 ScaledGrid.propTypes = {

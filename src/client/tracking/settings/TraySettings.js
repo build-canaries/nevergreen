@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Input} from '../../common/forms/Input'
 import {DropDown} from '../../common/forms/DropDown'
@@ -138,7 +138,7 @@ export class TraySettings extends Component {
         </Password>
         {updatingPassword
           ? (
-            <Fragment>
+            <>
               <SecondaryButton className={styles.changePasswordButtons}
                                icon={iCross}
                                onClick={this.cancel}
@@ -151,7 +151,7 @@ export class TraySettings extends Component {
                              data-locator='change-password-update'>
                 save changes
               </PrimaryButton>
-            </Fragment>
+            </>
           ) : (
             <SecondaryButton className={styles.changePasswordButtons}
                              icon={iUnlocked}

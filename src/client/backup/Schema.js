@@ -5,7 +5,7 @@ import styles from './schema.scss'
 
 export function Schema({schema}) {
   return (
-    <Container title='Schema' hidden className={styles.container}>
+    <Container title='Schema' initiallyHidden className={styles.container}>
       <pre className={styles.schema}>{schema}</pre>
     </Container>
   )

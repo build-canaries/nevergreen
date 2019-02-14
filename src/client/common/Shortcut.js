@@ -1,7 +1,6 @@
-import React, {Component} from 'react'
+import React, {useLayoutEffect, useRef} from 'react'
 import PropTypes from 'prop-types'
 import Mousetrap from 'mousetrap'
-import _ from 'lodash'
 
 function click(parent) {
   if (parent) {
@@ -11,31 +10,17 @@ function click(parent) {
   return false
 }
 
-export class Shortcut extends Component {
+export function Shortcut({hotkeys}) {
+  const parentNode = useRef()
 
-  constructor(props) {
-    super(props)
-    this.parentNode = React.createRef()
-  }
-
-  componentDidMount() {
-    Mousetrap.bind(this.props.hotkeys, () => click(this.parentNode.current))
-  }
-
-  componentWillUnmount() {
-    Mousetrap.unbind(this.props.hotkeys)
-  }
-
-  componentDidUpdate(prevProps) {
-    if (!_.isEqual(this.props.hotkeys, prevProps.hotkeys)) {
-      Mousetrap.unbind(prevProps.hotkeys)
-      Mousetrap.bind(this.props.hotkeys, () => click(this.parentNode.current))
+  useLayoutEffect(() => {
+    Mousetrap.bind(hotkeys, () => click(parentNode.current))
+    return () => {
+      Mousetrap.unbind(hotkeys)
     }
-  }
+  }, [hotkeys])
 
-  render() {
-    return <span ref={this.parentNode} aria-hidden/>
-  }
+  return <span ref={parentNode} aria-hidden/>
 }
 
 Shortcut.propTypes = {

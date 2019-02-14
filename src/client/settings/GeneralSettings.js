@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import {secondsToString} from '../common/DateTime'
 import {Container} from '../common/Container'
@@ -9,7 +9,7 @@ import {WithHelp} from '../common/ContextualHelp'
 
 function ClickToShowMenuHelp({enabled}) {
   return (
-    <Fragment>
+    <>
       <p>
         While <strong>disabled</strong> (the default{!enabled && ', currently selected'}) moving the mouse on the
         Monitor page will show the menu.
@@ -23,7 +23,7 @@ function ClickToShowMenuHelp({enabled}) {
         the browser rotates to the Nevergreen tab, a mouse move will be triggered and the menu will be shown.
       </p>
       <p>Regardless of whether this is enabled keyboard shortcuts can be used to navigate between all pages.</p>
-    </Fragment>
+    </>
   )
 }
 
@@ -31,45 +31,33 @@ ClickToShowMenuHelp.propTypes = {
   enabled: PropTypes.bool.isRequired
 }
 
-export class GeneralSettings extends Component {
+export function GeneralSettings({refreshTime, setRefreshTime, validRefreshTimes, clickToShowMenu, setClickToShowMenu}) {
 
-  setRefreshTime = (evt) => {
-    this.props.setRefreshTime(evt.target.value)
-  }
+  const options = validRefreshTimes.map((time) => {
+    return {value: time.toString(), display: secondsToString(time)}
+  })
 
-  toggleClickToShowMenu = (newValue) => {
-    this.props.setClickToShowMenu(newValue)
-  }
-
-  render() {
-    const {validRefreshTimes, refreshTime, clickToShowMenu} = this.props
-
-    const options = validRefreshTimes.map((time) => {
-      return {value: time.toString(), display: secondsToString(time)}
-    })
-
-    return (
-      <Container title='general' className={styles.container}>
-        <DropDown className={styles.refreshTime}
-                  options={options}
-                  value={refreshTime}
-                  onChange={this.setRefreshTime}
-                  data-locator='refresh-time'>
-          poll for CI changes every
-        </DropDown>
-        <WithHelp title='Click to show menu'
-                  help={<ClickToShowMenuHelp enabled={clickToShowMenu}/>}
-                  className={styles.clickToShowHelp}>
-          <Checkbox checked={clickToShowMenu}
-                    onToggle={this.toggleClickToShowMenu}
-                    className={styles.clickToShow}
-                    data-locator='click-to-show-menu'>
-            click to show menu
-          </Checkbox>
-        </WithHelp>
-      </Container>
-    )
-  }
+  return (
+    <Container title='general' className={styles.container}>
+      <DropDown className={styles.refreshTime}
+                options={options}
+                value={refreshTime}
+                onChange={({target}) => setRefreshTime(target.value)}
+                data-locator='refresh-time'>
+        poll for CI changes every
+      </DropDown>
+      <WithHelp title='Click to show menu'
+                help={<ClickToShowMenuHelp enabled={clickToShowMenu}/>}
+                className={styles.clickToShowHelp}>
+        <Checkbox checked={clickToShowMenu}
+                  onToggle={(newValue) => setClickToShowMenu(newValue)}
+                  className={styles.clickToShow}
+                  data-locator='click-to-show-menu'>
+          click to show menu
+        </Checkbox>
+      </WithHelp>
+    </Container>
+  )
 }
 
 GeneralSettings.propTypes = {

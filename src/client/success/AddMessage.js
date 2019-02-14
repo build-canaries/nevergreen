@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import {Input} from '../common/forms/Input'
 import {WithHelp} from '../common/ContextualHelp'
@@ -7,48 +7,35 @@ import styles from './add-message.scss'
 import {PrimaryButton} from '../common/forms/Button'
 import {iPlus} from '../common/fonts/Icons'
 
-export class AddMessage extends Component {
-
-  constructor(props) {
-    super(props)
-    this.state = {message: ''}
+export function AddMessage({addMessage}) {
+  const [message, setMessage] = useState('')
+  const triggerAddMessage = () => {
+    addMessage(message)
+    setMessage('')
   }
 
-  updateMessage = (evt) => {
-    this.setState({message: evt.target.value})
-  }
-
-  addMessage = () => {
-    this.props.addMessage(this.state.message)
-    this.setState({message: ''})
-  }
-
-  render() {
-    const {message} = this.state
-
-    return (
-      <div className={styles.addMessage}>
-        <Input className={styles.addMessageInput}
-               placeholder='text or image URL'
-               value={message}
-               onChange={this.updateMessage}
-               onEnter={this.addMessage}
-               data-locator='message'>
-          message
-        </Input>
-        <WithHelp title='Success'
-                  help={<SuccessHelp/>}
-                  className={styles.help}>
-          <PrimaryButton className={styles.add}
-                         onClick={this.addMessage}
-                         data-locator='add-message'
-                         icon={iPlus}>
-            <span aria-label='add success message'>add</span>
-          </PrimaryButton>
-        </WithHelp>
-      </div>
-    )
-  }
+  return (
+    <div className={styles.addMessage}>
+      <Input className={styles.addMessageInput}
+             placeholder='text or image URL'
+             value={message}
+             onChange={({target}) => setMessage(target.value)}
+             onEnter={triggerAddMessage}
+             data-locator='message'>
+        message
+      </Input>
+      <WithHelp title='Success'
+                help={<SuccessHelp/>}
+                className={styles.help}>
+        <PrimaryButton className={styles.add}
+                       onClick={triggerAddMessage}
+                       data-locator='add-message'
+                       icon={iPlus}>
+          <span aria-label='add success message'>add</span>
+        </PrimaryButton>
+      </WithHelp>
+    </div>
+  )
 }
 
 AddMessage.propTypes = {

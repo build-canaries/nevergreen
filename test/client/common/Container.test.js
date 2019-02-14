@@ -82,13 +82,13 @@ describe('<Container/>', function () {
     })
 
     it('should have a label describing what action click will perform', function () {
-      const props = {...DEFAULT_PROPS, title: 'some-title', hidden: false}
+      const props = {...DEFAULT_PROPS, title: 'some-title', initiallyHidden: false}
       const wrapper = shallow(<Container {...props} />)
       expect(wrapper.find(locator('title-bar'))).to.have.prop('aria-label', 'hide section some-title')
     })
 
     it('should have a label describing what action click will perform (when hidden)', function () {
-      const props = {...DEFAULT_PROPS, title: 'some-title', hidden: true}
+      const props = {...DEFAULT_PROPS, title: 'some-title', initiallyHidden: true}
       const wrapper = shallow(<Container {...props} />)
       expect(wrapper.find(locator('title-bar'))).to.have.prop('aria-label', 'show section some-title')
     })

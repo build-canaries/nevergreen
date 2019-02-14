@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import styles from './header.scss'
@@ -15,76 +15,57 @@ const MENU_ITEMS = [
   {id: 'backup', title: 'backup', shortcuts: ['b', '5']}
 ]
 
-export class Header extends Component {
+export function Header({fullScreen}) {
+  const [menuVisible, setMenuVisible] = useState(false)
 
-  constructor(props) {
-    super(props)
-    this.state = {menuVisible: false}
-  }
+  const headerClassNames = classNames(styles.siteHeader, {
+    [styles.fullscreen]: fullScreen
+  })
+  const menuClassNames = classNames(styles.menu, {
+    [styles.open]: menuVisible
+  })
+  const iconClassNames = classNames({
+    [styles.siteMenuShow]: !menuVisible,
+    [styles.siteMenuHide]: menuVisible
+  })
+  const toggleLabel = menuVisible ? 'hide menu' : 'show menu'
 
-  toggleMenu = () => {
-    this.setState(({menuVisible}) => {
-      return {menuVisible: !menuVisible}
-    })
-  }
+  return (
+    <header className={headerClassNames}>
+      <img src={logo} className={styles.logo} alt='Nevergreen' aria-hidden/>
+      <nav className={styles.siteMenu}>
+        <Title>Site navigation</Title>
+        <button className={styles.siteMenuToggle}
+                onClick={() => setMenuVisible(!menuVisible)}
+                aria-label={toggleLabel}
+                aria-expanded={menuVisible}
+                type='button'>
+          <span className={iconClassNames} aria-hidden/>
+        </button>
+        <ul className={menuClassNames}>
+          {
+            MENU_ITEMS.map((item) => {
+              const iconClasses = classNames(styles.menuIcon, styles[item.id])
 
-  hideMenu = () => {
-    this.setState({menuVisible: false})
-  }
-
-  render() {
-    const {fullScreen} = this.props
-    const {menuVisible} = this.state
-
-    const headerClassNames = classNames(styles.siteHeader, {
-      [styles.fullscreen]: fullScreen
-    })
-    const menuClassNames = classNames(styles.menu, {
-      [styles.open]: menuVisible
-    })
-    const iconClassNames = classNames({
-      [styles.siteMenuShow]: !menuVisible,
-      [styles.siteMenuHide]: menuVisible
-    })
-    const toggleLabel = menuVisible ? 'hide menu' : 'show menu'
-
-    return (
-      <header className={headerClassNames}>
-        <img src={logo} className={styles.logo} alt='Nevergreen' aria-hidden/>
-        <nav className={styles.siteMenu}>
-          <Title>Site navigation</Title>
-          <button className={styles.siteMenuToggle}
-                  onClick={this.toggleMenu}
-                  aria-label={toggleLabel}
-                  aria-expanded={menuVisible}
-                  type='button'>
-            <span className={iconClassNames} aria-hidden/>
-          </button>
-          <ul className={menuClassNames}>
-            {
-              MENU_ITEMS.map((item) => {
-                const iconClasses = classNames(styles.menuIcon, styles[item.id])
-
-                return (
-                  <li key={item.id}>
-                    <NavLink to={`/${item.id}`}
-                             className={styles.menuItem}
-                             activeClassName={styles.active}
-                             onClick={this.hideMenu}
-                             data-locator={`menu-${item.id}`}>
-                      <span className={iconClasses} aria-hidden/>
-                      <div className={styles.menuTitle}>{item.title}</div>
-                      <Shortcut hotkeys={item.shortcuts}/>
-                    </NavLink>
-                  </li>
-                )
-              })
-            }
-          </ul>
-        </nav>
-      </header>
-    )
-  }
+              return (
+                <li key={item.id}>
+                  <NavLink to={`/${item.id}`}
+                           className={styles.menuItem}
+                           activeClassName={styles.active}
+                           onClick={() => setMenuVisible(false)}
+                           data-locator={`menu-${item.id}`}>
+                    <span className={iconClasses} aria-hidden/>
+                    <div className={styles.menuTitle}>{item.title}</div>
+                    <Shortcut hotkeys={item.shortcuts}/>
+                  </NavLink>
+                </li>
+              )
+            })
+          }
+        </ul>
+      </nav>
+    </header>
+  )
 }
 
 Header.propTypes = {

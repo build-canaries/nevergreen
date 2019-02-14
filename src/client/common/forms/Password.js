@@ -1,52 +1,35 @@
-import React, {Component} from 'react'
+import React, {useState} from 'react'
 import _ from 'lodash'
 import {InputButton} from './Button'
 import {iEye, iEyeBlocked} from '../fonts/Icons'
 import {Input} from './Input'
 
-export class Password extends Component {
+export function Password(props) {
+  const [type, setType] = useState('password')
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      passwordHidden: true
-    }
-  }
+  const id = _.uniqueId('i')
 
-  togglePasswordVisibility = () => {
-    this.setState(({passwordHidden}) => {
-      return {passwordHidden: !passwordHidden}
-    })
-  }
+  const showPassword = (
+    <InputButton aria-controls={id}
+                 icon={iEye}
+                 onClick={() => setType('text')}>
+      show password
+    </InputButton>
+  )
 
-  render() {
-    const {passwordHidden} = this.state
+  const hidePassword = (
+    <InputButton aria-controls={id}
+                 icon={iEyeBlocked}
+                 onClick={() => setType('password')}>
+      hide password
+    </InputButton>
+  )
 
-    const id = _.uniqueId('i')
-    const type = passwordHidden ? 'password' : 'text'
-
-    const showPassword = (
-      <InputButton aria-controls={id}
-                   icon={iEye}
-                   onClick={this.togglePasswordVisibility}>
-        show password
-      </InputButton>
-    )
-
-    const hidePassword = (
-      <InputButton aria-controls={id}
-                   icon={iEyeBlocked}
-                   onClick={this.togglePasswordVisibility}>
-        hide password
-      </InputButton>
-    )
-
-    return (
-      <Input id={id}
-             type={type}
-             button={passwordHidden ? showPassword : hidePassword}
-             autoComplete='new-password'
-             {...this.props}/>
-    )
-  }
+  return (
+    <Input id={id}
+           type={type}
+           button={type === 'password' ? showPassword : hidePassword}
+           autoComplete='new-password'
+           {...props}/>
+  )
 }

@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {useLayoutEffect, useRef} from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import _ from 'lodash'
@@ -7,80 +7,63 @@ import formStyles from './forms.scss'
 import {InputButton} from './Button'
 import {iLock} from '../fonts/Icons'
 
-export class Input extends Component {
+export function Input({children, onEnter, className, readOnly, focus, button, id, ...inputProps}) {
+  const inputNode = useRef()
 
-  constructor(props) {
-    super(props)
-    this.inputNode = React.createRef()
-  }
-
-  maybeFocus = () => {
-    if (this.props.focus && this.inputNode.current) {
-      this.inputNode.current.focus()
+  useLayoutEffect(() => {
+    if (focus && inputNode.current) {
+      inputNode.current.focus()
     }
-  }
+  }, [focus])
 
-  moveCaretToEnd = (evt) => {
+  const moveCaretToEnd = (evt) => {
     const val = evt.target.value
     evt.target.value = ''
     evt.target.value = val
   }
 
-  onKeyPress = (evt, onEnter) => {
+  const onKeyPress = (evt) => {
     if (evt.key === 'Enter' && onEnter) {
       onEnter(evt)
     }
   }
 
-  componentDidMount() {
-    this.maybeFocus()
-  }
+  const labelClasses = classNames(formStyles.inputContainer, className)
+  const inputClasses = classNames(styles.input, {
+    [styles.hasButton]: button
+  })
 
-  componentDidUpdate() {
-    this.maybeFocus()
-  }
+  const actualId = id ? id : _.uniqueId('i')
 
-  render() {
-    // eslint-disable-next-line no-unused-vars
-    const {children, onEnter, className, readOnly, focus, button, id, ...inputProps} = this.props
-
-    const labelClasses = classNames(formStyles.inputContainer, className)
-    const inputClasses = classNames(styles.input, {
-      [styles.hasButton]: button
-    })
-
-    const actualId = id ? id : _.uniqueId('i')
-
-    return (
-      <label className={labelClasses} htmlFor={actualId}>
-        <span className={formStyles.inputLabel}>{children}</span>
-        <span className={styles.wrapper}>
+  return (
+    <label className={labelClasses} htmlFor={actualId}>
+      <span className={formStyles.inputLabel}>{children}</span>
+      <span className={styles.wrapper}>
           <input className={inputClasses}
-                 onKeyPress={(evt) => this.onKeyPress(evt, onEnter)}
+                 onKeyPress={(evt) => onKeyPress(evt)}
                  spellCheck={false}
                  autoComplete='off'
                  readOnly={readOnly}
                  type='text'
                  id={actualId}
                  {...inputProps}
-                 ref={this.inputNode}
-                 onFocus={this.moveCaretToEnd}/>
-          {
-            readOnly && (
-              <InputButton disabled
-                           icon={iLock}
-                           data-locator='read-only-icon'>
-                read only
-              </InputButton>
-            )
-          }
-          {
-            !readOnly && button
-          }
+                 ref={inputNode}
+                 onFocus={moveCaretToEnd}/>
+        {
+          readOnly && (
+            <InputButton disabled
+                         icon={iLock}
+                         data-locator='read-only-icon'>
+              read only
+            </InputButton>
+          )
+        }
+        {
+          !readOnly && button
+        }
         </span>
-      </label>
-    )
-  }
+    </label>
+  )
 }
 
 Input.propTypes = {
