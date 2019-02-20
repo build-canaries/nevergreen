@@ -1,5 +1,16 @@
+@import '../common/layout';
 @import './export/gitlab/gitlab';
 
 .label {
   width: $label-size;
+}
+
+.url {
+  @extend %first;
+}
+
+.snippet {
+  @include respond-to(tablet, desktop) {
+    width: 36em;
+  }
 }

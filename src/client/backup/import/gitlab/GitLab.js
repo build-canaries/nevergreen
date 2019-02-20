@@ -24,7 +24,8 @@ export function GitLab({snippetId, gitLabSetSnippetId, url, gitLabSetUrl, loaded
                           snippetId={snippetId}
                           setSnippetId={gitLabSetSnippetId}
                           disabled={disabled}/>
-      <Password onChange={accessTokenChanged}
+      <Password className={styles.accessToken}
+                onChange={accessTokenChanged}
                 onBlur={accessTokenChanged}
                 value={accessToken}
                 disabled={disabled}>

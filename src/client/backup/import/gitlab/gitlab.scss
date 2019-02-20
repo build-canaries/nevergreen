@@ -11,3 +11,9 @@ $label-size: 6em;
 .label {
   width: $label-size;
 }
+
+.accessToken {
+  @include respond-to(tablet, desktop) {
+    width: 36em;
+  }
+}

@@ -10,7 +10,8 @@ export function GitLabSnippetInput({snippetId, setSnippetId, disabled}) {
     <Input value={newSnippetId}
            onChange={({target}) => setNewSnippetId(target.value)}
            onBlur={() => setSnippetId(newSnippetId)}
-           disabled={disabled}>
+           disabled={disabled}
+           className={styles.snippet}>
       <div className={styles.label}>snippet ID</div>
     </Input>
   )

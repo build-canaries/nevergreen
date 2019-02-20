@@ -11,8 +11,9 @@ export function GitLabUrlInput({url, setUrl, disabled}) {
     <Input value={newUrl}
            onChange={({target}) => setNewUrl(target.value)}
            onBlur={() => setUrl(newUrl)}
-           disabled={disabled}>
-      <div className={styles.label}>url</div>
+           disabled={disabled}
+           className={styles.url}>
+      <div className={styles.label}>URL</div>
     </Input>
   )
 }
