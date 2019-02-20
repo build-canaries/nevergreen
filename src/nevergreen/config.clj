@@ -35,3 +35,6 @@
 
 (defn allow-iframe-from []
   (or (env :allow-iframe-from) default-csp-frame-ancestors))
+
+(defn allow-gitlab-snippets-from []
+  (env :allow-gitlab-snippets-from))

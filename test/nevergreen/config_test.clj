@@ -23,6 +23,15 @@
       (fact "defaults to 'self'"
             (subject/allow-iframe-from) => "'self'"))
 
+(fact "allow GitLab snippets from"
+      (fact "from env"
+            (subject/allow-gitlab-snippets-from) => "host:port"
+            (provided
+              (env :allow-gitlab-snippets-from) => "host:port"))
+
+      (fact "defaults to nil"
+            (subject/allow-gitlab-snippets-from) => nil))            
+
 (facts "aes encryption key"
        (fact "from env"
              (subject/aes-key) => "key-thats-valid!"

@@ -11,7 +11,7 @@
    "img-src * data:"
    "font-src 'self' data:"
    "media-src *"
-   "connect-src 'self' https://api.github.com https://gist.githubusercontent.com https://gitlab.com"
+   (clojure.string/join " " (remove nil? ["connect-src 'self' https://api.github.com https://gist.githubusercontent.com https://gitlab.com" (config/allow-gitlab-snippets-from)]))
    "object-src 'none'"
    (str "frame-ancestors " (config/allow-iframe-from))])
 
