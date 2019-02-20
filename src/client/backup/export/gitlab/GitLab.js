@@ -5,6 +5,8 @@ import {GitLabUrlInput} from '../../GitLabUrlInput'
 import {PrimaryButton} from '../../../common/forms/Button'
 import {iCloudUpload} from '../../../common/fonts/Icons'
 import {Password} from '../../../common/forms/Password'
+import {WithHelp} from '../../../common/ContextualHelp'
+import {GitLabHelp} from './GitLabHelp'
 import styles from './gitlab.scss'
 
 export function GitLab({loaded, snippetId, url, gitLabSetSnippetId, gitLabSetUrl, uploadToGitLab}) {
@@ -16,10 +18,13 @@ export function GitLab({loaded, snippetId, url, gitLabSetSnippetId, gitLabSetUrl
 
   return (
     <>
-      <GitLabUrlInput key={url}
-                      url={url}
-                      setUrl={gitLabSetUrl}
-                      disabled={disabled}/>
+      <WithHelp title='Export to GitLab'
+                help={<GitLabHelp/>}>
+        <GitLabUrlInput key={url}
+                        url={url}
+                        setUrl={gitLabSetUrl}
+                        disabled={disabled}/>
+      </WithHelp>
       <GitLabSnippetInput key={snippetId}
                           snippetId={snippetId}
                           setSnippetId={gitLabSetSnippetId}

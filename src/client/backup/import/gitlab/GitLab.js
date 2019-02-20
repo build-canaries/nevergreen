@@ -6,6 +6,8 @@ import styles from './gitlab.scss'
 import {PrimaryButton} from '../../../common/forms/Button'
 import {iCloudDownload} from '../../../common/fonts/Icons'
 import {Password} from '../../../common/forms/Password'
+import {WithHelp} from '../../../common/ContextualHelp'
+import {GitLabHelp} from './GitLabHelp'
 
 export function GitLab({snippetId, gitLabSetSnippetId, url, gitLabSetUrl, loaded, restoreFromGitLab}) {
   const [accessToken, setAccessToken] = useState('')
@@ -16,10 +18,13 @@ export function GitLab({snippetId, gitLabSetSnippetId, url, gitLabSetUrl, loaded
 
   return (
     <>
-      <GitLabUrlInput key={url}
-                      url={url}
-                      setUrl={gitLabSetUrl}
-                      disabled={disabled}/>
+      <WithHelp title='Import from GitLab'
+                help={<GitLabHelp/>}>
+        <GitLabUrlInput key={url}
+                        url={url}
+                        setUrl={gitLabSetUrl}
+                        disabled={disabled}/>
+      </WithHelp>
       <GitLabSnippetInput key={snippetId}
                           snippetId={snippetId}
                           setSnippetId={gitLabSetSnippetId}
