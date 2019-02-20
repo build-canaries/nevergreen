@@ -15,7 +15,7 @@ export function GitLabHelp() {
         snippet URL, <URL url='https://gitlab.com/snippets/:snippetId'/>.
       </p>
       <p>
-        If you export from this instance of Nevergreen the gist ID will automatically be filled.
+        If you export from this instance of Nevergreen the snippet ID will automatically be filled.
       </p>
       <p>
         You need to <ExternalLink
