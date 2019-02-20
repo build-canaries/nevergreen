@@ -3,7 +3,7 @@
   :url "https://github.com/build-canaries/nevergreen"
   :dependencies [[org.clojure/clojure "1.10.0"]
                  [ring "1.7.1" :exclusions [org.eclipse.jetty/jetty-server]]
-                 [org.eclipse.jetty/jetty-server "9.4.14.v20181114"]
+                 [org.eclipse.jetty/jetty-server "9.4.15.v20190215"]
                  [compojure "1.6.1"]
                  [environ "1.1.0"]
                  [cheshire "5.8.1"]
@@ -18,9 +18,9 @@
                  [camel-snake-kebab "0.4.0"]
                  [com.cemerick/url "0.1.1"]
                  [ch.qos.logback/logback-classic "1.2.3"]
-                 [org.slf4j/log4j-over-slf4j "1.7.25"]
-                 [org.slf4j/jul-to-slf4j "1.7.25"]
-                 [org.slf4j/jcl-over-slf4j "1.7.25"]]
+                 [org.slf4j/log4j-over-slf4j "1.7.26"]
+                 [org.slf4j/jul-to-slf4j "1.7.26"]
+                 [org.slf4j/jcl-over-slf4j "1.7.26"]]
   :min-lein-version "2.0.0"
   :uberjar-name "nevergreen-standalone.jar"
   :main nevergreen.app
