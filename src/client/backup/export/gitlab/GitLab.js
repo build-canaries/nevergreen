@@ -19,6 +19,7 @@ export function GitLab({loaded, snippetId, url, gitLabSetSnippetId, gitLabSetUrl
   return (
     <>
       <WithHelp title='Export to GitLab'
+                containerClassName={styles.helpContainer}
                 help={<GitLabHelp/>}>
         <GitLabUrlInput key={url}
                         url={url}

@@ -37,9 +37,9 @@ ContextualHelp.propTypes = {
   className: PropTypes.string
 }
 
-export function WithHelp({help, title, className, children}) {
+export function WithHelp({help, title, containerClassName, className, children}) {
   return (
-    <div className={styles.inline}>
+    <div className={cn(styles.inline, containerClassName)}>
       {children}
       <ContextualHelp title={title} help={help} className={className}/>
     </div>
@@ -49,6 +49,7 @@ export function WithHelp({help, title, className, children}) {
 WithHelp.propTypes = {
   title: PropTypes.string.isRequired,
   help: PropTypes.element.isRequired,
+  containerClassName: PropTypes.string,
   className: PropTypes.string,
   children: PropTypes.node.isRequired
 }
