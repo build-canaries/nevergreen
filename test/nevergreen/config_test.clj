@@ -1,60 +1,52 @@
 (ns nevergreen.config-test
-  (:require [nevergreen.config :as subject]
-            [environ.core :refer [env]]
-            [midje.sweet :refer :all]))
+  (:require [clojure.test :refer :all]
+            [nevergreen.config :as subject]))
 
-(facts "port"
-       (fact "from env"
-             (subject/port) => 1337
-             (provided
-               (env :port) => "1337"))
+(deftest port
+  (testing "from env"
+    (binding [subject/env (constantly "1337")]
+      (is (= 1337 (subject/port)))))
 
-       (fact "defaults to 5000"
-             (subject/port) => 5000
-             (provided
-               (env :port) => nil)))
+  (testing "defaults to 5000"
+    (binding [subject/env (constantly nil)]
+      (is (= 5000 (subject/port))))))
 
-(fact "allow iframe from"
-      (fact "from env"
-            (subject/allow-iframe-from) => "host:port"
-            (provided
-              (env :allow-iframe-from) => "host:port"))
+(deftest allow-iframe-from
+  (testing "from env"
+    (binding [subject/env (constantly "host:port")]
+      (is (= "host:port" (subject/allow-iframe-from)))))
 
-      (fact "defaults to 'self'"
-            (subject/allow-iframe-from) => "'self'"))
+  (testing "defaults to 'self'"
+    (binding [subject/env (constantly "'self'")]
+      (is (= "'self'" (subject/allow-iframe-from))))))
 
-(fact "allow GitLab snippets from"
-      (fact "from env"
-            (subject/allow-gitlab-snippets-from) => "host:port"
-            (provided
-              (env :allow-gitlab-snippets-from) => "host:port"))
+(deftest allow-gitLab-snippets-from
+  (testing "from env"
+    (binding [subject/env (constantly "host:port")]
+      (is (= "host:port" (subject/allow-gitlab-snippets-from)))))
 
-      (fact "defaults to nil"
-            (subject/allow-gitlab-snippets-from) => nil))            
+  (testing "defaults to nil"
+    (binding [subject/env (constantly nil)]
+      (is (nil? (subject/allow-gitlab-snippets-from))))))
 
-(facts "aes encryption key"
-       (fact "from env"
-             (subject/aes-key) => "key-thats-valid!"
-             (provided
-               (env :aes-key) => "key-thats-valid!"))
+(deftest aes-encryption-key
+  (testing "from env"
+    (binding [subject/env (constantly "key-thats-valid!")]
+      (is (= "key-thats-valid!" (subject/aes-key)))))
 
-       (fact "uses the default if no key is set in the environment"
-             (subject/aes-key) => subject/default-aes-key
-             (provided
-               (env :aes-key) => nil))
+  (testing "uses the default if no key is set in the environment"
+    (binding [subject/env (constantly nil)]
+      (is (= subject/default-aes-key (subject/aes-key)))))
 
-       (fact "throws an exception if an invalid key is provided"
-             (subject/aes-key) => (throws RuntimeException)
-             (provided
-               (env :aes-key) => "not-long-enough")))
+  (testing "throws an exception if an invalid key is provided"
+    (binding [subject/env (constantly "not-long-enough")]
+      (is (thrown? IllegalArgumentException (subject/aes-key))))))
 
-(facts "ip"
-       (fact "from env"
-             (subject/ip) => "localhost"
-             (provided
-               (env :ip) => "localhost"))
+(deftest ip
+  (testing "from env"
+    (binding [subject/env (constantly "localhost")]
+      (is (= "localhost" (subject/ip)))))
 
-       (fact "defaults to 0.0.0.0"
-             (subject/ip) => "0.0.0.0"
-             (provided
-               (env :ip) => nil)))
+  (testing "defaults to 0.0.0.0"
+    (binding [subject/env (constantly nil)]
+      (is (= "0.0.0.0" (subject/ip))))))

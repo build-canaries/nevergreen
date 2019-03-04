@@ -9,6 +9,9 @@
 (def ^:const ten-seconds 10000)
 (def ^:const redacted "REDACTED")
 
+(defn ^:dynamic client-get [url data]
+  (client/get url data))
+
 (defn- update-values [m f & args]
   (reduce (fn [r [k v]] (assoc r k (apply f v args))) {} m))
 
@@ -50,7 +53,7 @@
   (let [redacted-url (redact-url url)]
     (log/info (str "GETing from [" redacted-url "]..."))
     (try
-      (let [res (client/get url {:insecure?             true
+      (let [res (client-get url {:insecure?             true
                                  :socket-timeout        ten-seconds
                                  :conn-timeout          ten-seconds
                                  :headers               (merge {"Accept" "application/xml"} additional-headers)

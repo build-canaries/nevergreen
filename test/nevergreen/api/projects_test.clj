@@ -1,163 +1,67 @@
 (ns nevergreen.api.projects-test
-  (:require [midje.sweet :refer :all]
+  (:require [clojure.test :refer :all]
             [nevergreen.api.projects :as subject]
-            [nevergreen.http :as http]
-            [clj-cctray.core :as parser]
-            [nevergreen.servers :as servers]
-            [nevergreen.security :as security]
-            [nevergreen.crypto :as crypt]
-            [nevergreen.errors :refer [create-error]])
-  (:import (java.io StringReader)))
+            [nevergreen.errors :as err])
+  (:import (java.io StringReader)
+           (org.xml.sax SAXParseException)))
 
-(def valid-url "http://someserver/cc.xml")
-(def password "any-password")
+(def tray-id "some-id")
+(def tray-url "some-url")
+(def example-tray {:tray-id tray-id :url tray-url})
 
-(facts "it fetches projects"
-       (fact "with authentication"
-             (subject/fetch-tray {:url      valid-url
-                                  :username "a-user"
-                                  :password "encrypted-password"}) =>
-             (contains (list (contains {:name        "project-1"
-                                        :prognosis   :sick
-                                        :project-id  anything
-                                        :server-type anything})))
-             (provided
-               (parser/get-projects anything anything) => [{:name      "project-1"
-                                                            :web-url   "project-1"
-                                                            :prognosis :sick}]
-               (crypt/decrypt "encrypted-password") => password
-               (security/basic-auth-header "a-user" password) => ..auth-header..
-               (http/http-get valid-url ..auth-header..) => (StringReader. "")))
+(def project-prognosis :sick)
+(def example-project {:project-id "some-id" :prognosis project-prognosis})
 
-       (fact "without authentication"
-             (subject/fetch-tray {:url valid-url}) =>
-             (contains (list (contains {:name        "project-1"
-                                        :prognosis   :sick
-                                        :project-id  anything
-                                        :server-type anything})))
-             (provided
-               (parser/get-projects anything anything) => [{:name      "project-1"
-                                                            :web-url   "project-1"
-                                                            :prognosis :sick}]
-               (http/http-get valid-url nil) => (StringReader. "")
-               (crypt/decrypt anything) => nil
-               (security/basic-auth-header anything anything) => anything :times 0))
+(defn expected-error
+  ([msg] (expected-error msg tray-id))
+  ([msg id]
+   (assoc (err/create-error msg tray-url) :tray-id id)))
 
-       (fact "without authentication if blank username and password"
-             (subject/fetch-tray {:url      valid-url
-                                  :username ""
-                                  :password ""}) =>
-             (contains (list (contains {:name        "project-1"
-                                        :prognosis   :sick
-                                        :project-id  anything
-                                        :server-type anything})))
-             (provided
-               (parser/get-projects anything anything) => [{:name      "project-1"
-                                                            :web-url   "project-1"
-                                                            :prognosis :sick}]
-               (http/http-get valid-url nil) => (StringReader. "")
-               (crypt/decrypt anything) => nil
-               (security/basic-auth-header anything anything) => anything :times 0))
+(deftest get-projects
 
-       (fact "creates an error if the URL is not valid"
-             (subject/fetch-tray {:url "url"}) => [{:error-message "URL is invalid, only http(s) URLs are supported"
-                                                    :is-error      true
-                                                    :url           "url"}])
+  ; mock-fetch needs to return something with a close method as we use (with-open)
+  (binding [subject/fetch (constantly (StringReader. "some-xml-response"))
+            subject/parse (constantly [example-project])
+            subject/enrich (constantly [example-project])]
 
-       (fact "handles failing to decrypt the password"
-             (let [error (ex-info "some-error" {})]
-               (subject/fetch-tray {:url      valid-url
-                                    :username ""
-                                    :password "some-encrypted-password"}) => [(create-error error valid-url)]
-               (provided
-                 (crypt/decrypt "some-encrypted-password") =throws=> error))))
+    (testing "works when given a single tray"
+      (is (= [example-project] (subject/get-projects [example-tray] [project-prognosis]))))
 
-(facts "it gets all projects"
-       (facts "uses pmap to parallelise the work"
-              (fact "if multiple projects are given"
-                    (subject/get-all [{:url "http://a"}
-                                      {:url "http://b"}]) => irrelevant
-                    (provided
-                      (pmap anything anything) => irrelevant))
+    (testing "filters out any projects with prognosis not in the given list"
+      (is (= [] (subject/get-projects [example-tray] [:healthy]))))
 
-              (fact "unless only one project is given"
-                    (subject/get-all [{:url "http://a"}]) => irrelevant
-                    (provided
-                      (pmap anything anything) => irrelevant :times 0
-                      (subject/fetch-tray anything) => {}))))
+    (testing "works when given multiple trays"
+      (is (= [example-project example-project]
+             (subject/get-projects [example-tray example-tray] [project-prognosis]))))
 
-(facts "it gets interesting projects"
-       (fact "removes healthy projects"
-             (subject/get-interesting [{:tray-id  "a-tray"
-                                        :included ["project-1"]
-                                        :url      valid-url}]) => (list)
-             (provided
-               (subject/fetch-tray anything) => {:project-id "project-1"
-                                                 :prognosis  :healthy}))
+    (testing "returns an empty array when no projects are included"
+      (is (= [] (subject/get-projects [{:included []}] [project-prognosis]))))
 
-       (fact "without filtering out tray errors"
-             (subject/get-interesting [{:tray-id  "a-tray"
-                                        :included ["project-1"]
-                                        :url      valid-url}]) => [{:error-message "some-error"
-                                                                    :is-error      true
-                                                                    :tray-id       "a-tray"
-                                                                    :url           valid-url}]
-             (provided
-               (subject/fetch-tray anything) => [(create-error "some-error" valid-url)]))
+    (testing "error handling"
 
-       (facts "uses pmap to parallelise the work"
-              (fact "if multiple projects are given"
-                    (subject/get-interesting [{:url "http://a"}
-                                              {:url "http://b"}]) => irrelevant
-                    (provided
-                      (pmap anything anything) => irrelevant))
+      (testing "returns the error message when fetching fails"
+        (binding [subject/fetch (fn [_] (throw (ex-info "some-error" {})))]
+          (is (= [(expected-error "some-error")]
+                 (subject/get-projects [example-tray] [project-prognosis])))))
 
-              (fact "unless only one project is given"
-                    (subject/get-interesting [{:url "http://a"}]) => irrelevant
-                    (provided
-                      (pmap anything anything) => irrelevant :times 0
-                      (subject/fetch-interesting anything) => irrelevant)))
+      (testing "returns the error message when parsing fails with a generic exception"
+        (binding [subject/parse (fn [_ _] (throw (ex-info "some-error" {})))]
+          (is (= [(expected-error "some-error")]
+                 (subject/get-projects [example-tray] [project-prognosis])))))
 
-       (fact "handles no tray id being given"
-             (subject/get-interesting [{:included ["project"]
-                                        :url      valid-url}]) =>
-             (contains (list (contains {:tray-id nil})))
-             (provided
-               (subject/fetch-tray anything) => [{:project-id "project"
-                                                  :prognosis  :sick}]))
+      (testing "returns a more friendly error message when parsing fails because the response is not XML at all"
+        (binding [subject/parse (fn [_ _] (throw (SAXParseException. "Content is not allowed in prolog." nil)))]
+          (is (= [(expected-error "Response is not XML, is the URL pointing to the CCTray XML feed?")]
+                 (subject/get-projects [example-tray] [project-prognosis])))))
 
-       (fact "adds fetched time"
-             (subject/get-interesting [{:included ["project"]
-                                        :url      valid-url}]) =>
-             (contains (list (contains {:fetched-time anything})))
-             (provided
-               (subject/fetch-tray anything) => [{:project-id "project"
-                                                  :prognosis  :sick}]))
+      (testing "returns a prefixed error message when parsing fails because the XML is invalid"
+        (binding [subject/parse (fn [_ _] (throw (SAXParseException. "some-error" nil)))]
+          (is (= [(expected-error "XML is invalid. some-error")]
+                 (subject/get-projects [example-tray] [project-prognosis])))))
 
-       (fact "does not call the CI server if no projects are selected"
-             (subject/get-interesting [{:included []
-                                        :url      valid-url}]) => irrelevant
-             (provided
-               (subject/fetch-tray anything) => anything :times 0)))
-
-(facts "gets the server type"
-       (fact "converts known server value to a symbol"
-             (subject/get-server-type {:server-type "go"}) => :go)
-
-       (fact "auto detects if blank"
-             (subject/get-server-type {:server-type ""
-                                       :url         "some-url"}) => ..server..
-             (provided
-               (servers/detect-server "some-url") => ..server..))
-
-       (fact "auto detects if unknown value"
-             (subject/get-server-type {:server-type "foo-bar"
-                                       :url         "some-url"}) => ..server..
-             (provided
-               (servers/detect-server "some-url") => ..server..)))
-
-(facts "validating the URL"
-       (fact (subject/validate-scheme {:url "http://bleh"}) => irrelevant)
-       (fact (subject/validate-scheme {:url "https://bleh"}) => irrelevant)
-       (fact (subject/validate-scheme {:url "gopher://bleh"}) => (throws Exception))
-       (fact (subject/validate-scheme nil) => (throws Exception)))
+      (testing "returns errors and projects if only one tray fails for any reason"
+        (binding [subject/fetch (fn [{:keys [tray-id]}] (if (= "fail-id" tray-id)
+                                                          (throw (ex-info "some-error" {}))
+                                                          (StringReader. "some-xml-response")))]
+          (is (= [example-project (expected-error "some-error" "fail-id")]
+                 (subject/get-projects [example-tray {:tray-id "fail-id" :url tray-url}] [project-prognosis]))))))))

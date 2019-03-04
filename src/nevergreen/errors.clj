@@ -6,7 +6,7 @@
   (and (map? o) (:is-error o)))
 
 (defmulti create-error
-          (fn [error url] (class error)))
+          (fn [error _] (class error)))
 
 (defmethod create-error Exception [e url]
   (create-error (or

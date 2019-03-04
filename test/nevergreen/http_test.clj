@@ -1,51 +1,57 @@
 (ns nevergreen.http-test
-    (:require [nevergreen.http :as subject]
-      [midje.sweet :refer :all]
-      [clj-http.client :as client])
-    (:import (java.net UnknownHostException URISyntaxException ConnectException)))
+  (:require [clojure.test :refer :all]
+            [nevergreen.http :as subject])
+  (:import (java.net UnknownHostException URISyntaxException ConnectException)))
 
-(facts "http"
-       (fact "adds additional headers"
-             (subject/http-get "http://some-url" {"Authentication" "Basic some-password"}) => irrelevant
-             (provided
-               (client/get anything (contains {:headers (contains {"Authentication" "Basic some-password"})})) => {:body irrelevant}))
+(deftest http-get
+  (testing "adds additional headers"
+    (binding [subject/client-get (fn [_ data]
+                                   (is (contains? data :headers))
+                                   (is (contains? (:headers data) "Authentication"))
+                                   (is (= "Basic some-password" (get (:headers data) "Authentication"))))]
+      (subject/http-get "http://some-url" {"Authentication" "Basic some-password"})))
 
-       (fact "returns the body"
-             (subject/http-get "http://some-url" {}) => ..some-body..
-             (provided
-               (client/get anything anything) => {:body ..some-body..}))
+  (testing "returns the body"
+    (binding [subject/client-get (constantly {:status 200 :body "some-body"})]
+      (is (= "some-body" (subject/http-get "http://some-url" {})))))
 
-       (fact "uses the given url"
-             (subject/http-get "http://some-url" {}) => irrelevant
-             (provided
-               (client/get "http://some-url" anything) => {:body irrelevant}))
+  (testing "uses the given url"
+    (binding [subject/client-get (fn [url _]
+                                   (is (= "http://some-url" url)))]
+      (subject/http-get "http://some-url" {})))
 
-       (fact "throws an error for unknown hosts"
-             (subject/http-get "http://some-url" {}) => (throws "some-host is an unknown host, is the URL correct?")
-             (provided
-               (client/get anything anything) =throws=> (UnknownHostException. "some-host: unknown error")))
+  (testing "throws an error for unknown hosts"
+    (binding [subject/client-get (fn [_ _] (throw (UnknownHostException. "some-host: unknown error")))]
+      (is (thrown-with-msg? Exception
+                            #"some-host is an unknown host, is the URL correct?"
+                            (subject/http-get "http://some-host" {})))))
 
-       (fact "throws an error for bad uri syntax"
-             (subject/http-get "http://some-url" {}) => (throws "URL is invalid. Illegal character in authority at index 0: some-url")
-             (provided
-               (client/get anything anything) =throws=> (URISyntaxException. "some-url" "Illegal character in authority at index 0")))
+  (testing "throws an error for bad uri syntax"
+    (binding [subject/client-get (fn [_ _] (throw (URISyntaxException. "some-url" "Illegal character in authority at index 0")))]
+      (is (thrown-with-msg? Exception
+                            #"URL is invalid. Illegal character in authority at index 0: some-url"
+                            (subject/http-get "http://some-url" {})))))
 
-       (fact "throws an error for connect exception"
-             (subject/http-get "http://some-url" {}) => (throws "Connection refused, is the URL correct?")
-             (provided
-               (client/get anything anything) =throws=> (ConnectException. "Connection refused (Connection refused)")))
+  (testing "throws an error for connect exception"
+    (binding [subject/client-get (fn [_ _] (throw (ConnectException. "Connection refused (Connection refused)")))]
+      (is (thrown-with-msg? Exception
+                            #"Connection refused, is the URL correct?"
+                            (subject/http-get "http://some-url" {})))))
 
-       (fact "throws an error when the CI server responds with an error but blank reason phrase"
-             (subject/http-get "http://some-url" {}) => (throws "CI server returned a 404")
-             (provided
-               (client/get anything anything) =throws=> (ex-info "irrelevant" {:reason-phrase "" :status 404})))
+  (testing "throws an error when the CI server responds with an error but blank reason phrase"
+    (binding [subject/client-get (fn [_ _] (throw (ex-info "irrelevant" {:reason-phrase "" :status 404})))]
+      (is (thrown-with-msg? Exception
+                            #"CI server returned a 404"
+                            (subject/http-get "http://some-url" {})))))
 
-       (fact "throws an error when the CI server responds with an error"
-             (subject/http-get "http://some-url" {}) => (throws "CI server returned a some-error")
-             (provided
-               (client/get anything anything) =throws=> (ex-info "irrelevant" {:reason-phrase "some-error"})))
+  (testing "throws an error when the CI server responds with an error"
+    (binding [subject/client-get (fn [_ _] (throw (ex-info "irrelevant" {:reason-phrase "some-error"})))]
+      (is (thrown-with-msg? Exception
+                            #"CI server returned a some-error"
+                            (subject/http-get "http://some-url" {})))))
 
-       (fact "throws an unknown error when the CI server responds with an error but no reason"
-             (subject/http-get "http://some-url" {}) => (throws "CI server returned a Unknown Error")
-             (provided
-               (client/get anything anything) =throws=> (ex-info "irrelevant" {}))))
+  (testing "throws an unknown error when the CI server responds with an error but no reason"
+    (binding [subject/client-get (fn [_ _] (throw (ex-info "irrelevant" {})))]
+      (is (thrown-with-msg? Exception
+                            #"CI server returned a Unknown Error"
+                            (subject/http-get "http://some-url" {}))))))

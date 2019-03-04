@@ -1,7 +1,6 @@
 (ns nevergreen.wrap-content-security-policy
-  (:require [clojure.string :refer [starts-with? join]]
-            [nevergreen.config :as config]
-            [ring.util.response :refer [get-header]]))
+  (:require [clojure.string :as s]
+            [nevergreen.config :as config]))
 
 (defn- csp-headers []
   ["default-src 'self'"
@@ -11,7 +10,7 @@
    "img-src * data:"
    "font-src 'self' data:"
    "media-src *"
-   (clojure.string/join " " (remove nil? ["connect-src 'self' https://api.github.com https://gist.githubusercontent.com https://gitlab.com" (config/allow-gitlab-snippets-from)]))
+   (s/join " " (remove nil? ["connect-src 'self' https://api.github.com https://gist.githubusercontent.com https://gitlab.com" (config/allow-gitlab-snippets-from)]))
    "object-src 'none'"
    (str "frame-ancestors " (config/allow-iframe-from))])
 
@@ -20,4 +19,4 @@
     (let [res (app req)]
       (-> res
           (assoc-in [:headers "X-Frame-Options"] nil)
-          (assoc-in [:headers "Content-Security-Policy"] (join "; " (csp-headers)))))))
+          (assoc-in [:headers "Content-Security-Policy"] (s/join "; " (csp-headers)))))))

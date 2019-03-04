@@ -1,14 +1,24 @@
 (ns nevergreen.wrap-convert-keys-test
-  (:require [midje.sweet :refer :all]
+  (:require [clojure.test :refer :all]
             [nevergreen.wrap-convert-keys :as subject]))
 
-(facts "wrap convert keys"
-       (fact "converts request bodies from kebab-case to camelCase"
-             ((subject/wrap-convert-keys ..handler..) {:header {:header-key irrelevant} :body {:someKey "some-value"}}) => irrelevant
-             (provided
-               (..handler.. {:header {:header-key irrelevant} :body {:some-key "some-value"}}) => {}))
+(deftest wrap-convert-keys
 
-       (fact "converts response bodies from kebab-case to camelCase"
-             ((subject/wrap-convert-keys ..handler..) {:body {:some-key "some-value"}}) => {:headers {:header-key irrelevant} :body {:anotherKey "another-value"}}
-             (provided
-               (..handler.. {:body {:some-key "some-value"}}) => {:headers {:header-key irrelevant} :body {:another-key "another-value"}})))
+  (testing "converts request bodies from camelCase to kebab-case"
+    (let [app (fn [req]
+                (is (= {:header {:header-key "my key should not get converted"}
+                        :body   {:some-key "some-value"}}
+                       req))
+                {})
+          req {:header {:header-key "my key should not get converted"}
+               :body   {:someKey "some-value"}}]
+      ((subject/wrap-convert-keys app) req)))
+
+  (testing "converts response bodies from kebab-case to camelCase"
+    (let [app (constantly {:headers {:header-key "my key should not get converted"}
+                           :body    {:another-key "another-value"}})
+          req {:body {:someKey "some-value"}}
+          res ((subject/wrap-convert-keys app) req)]
+      (is (= {:headers {:header-key "my key should not get converted"}
+              :body    {:anotherKey "another-value"}}
+             res)))))

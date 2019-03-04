@@ -1,20 +1,24 @@
 (ns nevergreen.crypto-test
-  (:require [midje.sweet :refer :all]
-            [nevergreen.crypto :as subject]
-            [nevergreen.config :as config]))
+  (:require [clojure.test :refer :all]
+            [nevergreen.crypto :as subject]))
 
-(fact "encrypts and decrypts a string"
-      (subject/decrypt (subject/encrypt "some-text")) => "some-text"
-      (provided
-        (config/aes-key) => "abcdefghijklmnop"))
+(def aes-key "abcdefghijklmnop")
 
-(fact "just returns nil if trying to decrypt nil"
-      (subject/decrypt nil) => nil)
+(deftest encrypt-decrypt
 
-(fact "just returns nil if trying to decrypt an empty string"
-      (subject/decrypt "") => nil)
+  (testing "encrypts and decrypts a string"
+    (is (= "some-text" (subject/decrypt (subject/encrypt "some-text" aes-key) aes-key))))
 
-(fact "throws a more sensible error caused by changing the AES_KEY"
-      (subject/decrypt (subject/encrypt "some-text")) => (throws "Unable to decrypt password as the Nevergreen server's AES_KEY has changed")
-      (provided
-        (config/aes-key)  =streams=> ["aaaaaaaaaaaaaaaa" "bbbbbbbbbbbbbbbb"]))
+  (testing "just returns nil if trying to decrypt nil"
+    (is (nil? (subject/decrypt nil aes-key))))
+
+  (testing "just returns nil if trying to decrypt an empty string"
+    (is (nil? (subject/decrypt "" aes-key))))
+
+  (testing "throws a more sensible error caused by changing the AES_KEY"
+    (let [original-aes-key "aaaaaaaaaaaaaaaa"
+          new-aes-key "bbbbbbbbbbbbbbbb"
+          encrypted-value (subject/encrypt "some-text" original-aes-key)]
+      (is (thrown-with-msg? Exception
+                            #"Unable to decrypt password as the Nevergreen server's AES_KEY has changed"
+                            (subject/decrypt encrypted-value new-aes-key))))))

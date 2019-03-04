@@ -1,21 +1,26 @@
 (ns nevergreen.errors-test
-  (:require [midje.sweet :refer :all]
+  (:require [clojure.test :refer :all]
             [nevergreen.errors :as subject]))
 
-(fact "is-error returns true when the given thing is an error"
-      (subject/is-error? (subject/create-error "some-text" "some-url")) => true)
+(deftest is-error?
+  (testing "is-error returns true when the given thing is an error"
+    (is (true? (subject/is-error? (subject/create-error "some-text" "some-url"))))))
 
-(fact "create-error can be created with a message"
-      (subject/create-error "some-text" "some-url") => {:error-message "some-text"
-                                                        :url           "some-url"
-                                                        :is-error      true})
+(deftest create-error
+  (testing "create-error can be created with a message"
+    (is (= {:error-message "some-text"
+            :url           "some-url"
+            :is-error      true}
+           (subject/create-error "some-text" "some-url"))))
 
-(fact "create-error can be created with an exception"
-      (subject/create-error (ex-info "some-message" {}) "some-url") => {:error-message "some-message"
-                                                                        :url           "some-url"
-                                                                        :is-error      true})
+  (testing "create-error can be created with an exception"
+    (is (= {:error-message "some-message"
+            :url           "some-url"
+            :is-error      true}
+           (subject/create-error (ex-info "some-message" {}) "some-url"))))
 
-(fact "create-error will use the exception class name if it has no message"
-      (subject/create-error (ex-info nil {}) "some-url") => {:error-message "ExceptionInfo"
-                                                             :url           "some-url"
-                                                             :is-error      true})
+  (testing "create-error will use the exception class name if it has no message"
+    (is (= {:error-message "ExceptionInfo"
+            :url           "some-url"
+            :is-error      true}
+           (subject/create-error (ex-info nil {}) "some-url")))))
