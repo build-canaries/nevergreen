@@ -1,21 +1,33 @@
 #!/bin/bash -eu
 
-echo "running ui dependency audit"
+echo "running security audits"
 mkdir -p ./target/security-reports/client
 set +e
 npm --no-color audit | tee ./target/security-reports/client/npm-audit.txt
 set -e
 
-echo "running ui tests"
+echo "running linting"
 npm run lint
+./lein.sh lint
+
+echo "running unit tests"
+mkdir -p ./target/test-reports/client
+mkdir -p ./target/test-reports/server
+
 npm run test:coverage
 
-echo "running the server tests"
-./lein.sh lint
-./lein.sh unit
+# We use cloverage to create the coverage report, but it can also create a junit XML report for us.
+# So we want to stop test failures from exiting the script immediately so we can move the junit report to the correct
+# folder
 
-echo "moving test reports"
-mkdir -p ./target/test-reports/client
-mv ./target/client/*.xml ./target/test-reports/client
-mkdir -p ./target/test-reports/server
-mv ./target/test-reports/server/xml/*.xml ./target/test-reports/server
+EXIT_STATUS=0
+
+./lein.sh coverage || EXIT_STATUS=$?
+
+if [ -f ./target/coverage-reports/server/junit.xml ]; then
+  mv ./target/coverage-reports/server/junit.xml ./target/test-reports/server/test-results.xml
+fi
+
+if [ $EXIT_STATUS -ne 0 ]; then
+  exit ${EXIT_STATUS}
+fi

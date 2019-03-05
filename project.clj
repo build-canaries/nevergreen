@@ -26,12 +26,13 @@
   :main nevergreen.app
   :aot [nevergreen.app]
   :javac-options ["-Dclojure.compiler.direct-linking=true"]
-  :aliases {"unit" ["with-profile" "+test" "test2junit"]
-            "lint" ["with-profile" "+test" "eastwood"]}
-  :profiles {:dev  {:plugins      [[test2junit "1.4.2"]
-                                   [lein-ancient "0.6.15"]
+  :aliases {"lint"     ["with-profile" "+test" "eastwood"]
+            "coverage" ["with-profile" "+test" "cloverage"]}
+  :profiles {:dev  {:plugins      [[lein-ancient "0.6.15"]
                                    [jonase/eastwood "0.3.4"]
+                                   [lein-cloverage "1.1.0"]
                                    [com.livingsocial/lein-dependency-check "1.0.4"]]
                     :dependencies [[ring/ring-mock "0.3.2"]]}
-             :test {:jvm-opts              ["-Dlogback.configurationFile=./test/logback-unit.xml"]
-                    :test2junit-output-dir "target/test-reports/server"}})
+             :test {:jvm-opts ["-Dlogback.configurationFile=./test/logback-unit.xml"]}}
+  :cloverage {:output "target/coverage-reports/server"
+              :junit? true})

@@ -57,7 +57,7 @@ jobs:
       - store_artifacts:
           path: ./target/nevergreen-standalone.jar
       - store_artifacts:
-          path: ./coverage
+          path: ./target/coverage-reports
       - store_artifacts:
           path: ./target/security-reports
 
@@ -68,7 +68,7 @@ jobs:
             - ./.circleci/*
             - ./target/nevergreen-standalone.jar
             - ./Dockerfile
- 
+
   journey-tests:
     working_directory: ~/nevergreen
 
@@ -89,10 +89,10 @@ jobs:
       - run:
           name: functional tests
           environment:
-              CYPRESS_BASE_URL: "https://staging.nevergreen.io"
-              CYPRESS_TRAY_URL: "https://raw.githubusercontent.com/build-canaries/nevergreen/master/cctray_xml_feed_mock/resources/cctray.xml"
-              CYPRESS_TRAY_USERNAME: ""
-              CYPRESS_TRAY_PASSWORD: ""
+            CYPRESS_BASE_URL: "https://staging.nevergreen.io"
+            CYPRESS_TRAY_URL: "https://raw.githubusercontent.com/build-canaries/nevergreen/master/cctray_xml_feed_mock/resources/cctray.xml"
+            CYPRESS_TRAY_USERNAME: ""
+            CYPRESS_TRAY_PASSWORD: ""
           command: |
             npm install
             npm run test:journey
