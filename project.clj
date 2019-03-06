@@ -37,4 +37,6 @@
               :junit?           true
               :ns-exclude-regex [#"nevergreen\.logging"]}
   :dependency-check {:output-directory "target/security-reports/server"
-                     :suppression-file "config/nvd-suppressions.xml"})
+                     :suppression-file "config/nvd-suppressions.xml"
+                     :log              true
+                     :throw            true})
