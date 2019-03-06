@@ -141,6 +141,8 @@ jobs:
                   - ./package-lock.json
                   - ./.nvmrc
                   - ./project.clj
+                  - ./cypress.json
+                  - ./test/journey/*
 
   journey-tests:
     docker:
