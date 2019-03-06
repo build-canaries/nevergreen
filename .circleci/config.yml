@@ -30,8 +30,8 @@ commands:
 
       - restore_cache:
           keys:
-            - v5-nevergreen-ui-{{ checksum ".nvmrc" }}-{{ checksum "package-lock.json" }}
-            - v5-nevergreen-ui-{{ checksum ".nvmrc" }}- # fall back to any cache for the current version of node
+            - v6-nevergreen-ui-{{ checksum ".nvmrc" }}-{{ checksum "package-lock.json" }}
+            - v6-nevergreen-ui-{{ checksum ".nvmrc" }}- # fall back to any cache for the current version of node
 
       - restore_cache:
           keys:
@@ -108,9 +108,8 @@ jobs:
                 paths:
                   - ~/.m2
             - save_cache:
-                key: v5-nevergreen-ui-{{ checksum ".nvmrc" }}-{{ checksum "package-lock.json" }}
+                key: v6-nevergreen-ui-{{ checksum ".nvmrc" }}-{{ checksum "package-lock.json" }}
                 paths:
-                  - ./node_modules
                   - ~/.nvm
                   - ~/.npm
                   - ~/.cache
@@ -161,7 +160,9 @@ jobs:
                   CYPRESS_TRAY_URL: "https://raw.githubusercontent.com/build-canaries/nevergreen/master/cctray_xml_feed_mock/resources/cctray.xml"
                   CYPRESS_TRAY_USERNAME: ""
                   CYPRESS_TRAY_PASSWORD: ""
-                command: npm run test:journey
+                command: |
+                  npm ci
+                  npm run test:journey
 
             - store_test_results:
                 path: ./target/test-reports

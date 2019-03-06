@@ -1,7 +1,7 @@
 #!/bin/bash -eu
 
 echo "downloading ui dependencies"
-npm install
+npm ci
 
 echo "downloading server dependencies"
 ./lein.sh deps
