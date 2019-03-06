@@ -144,7 +144,11 @@ jobs:
                   - ./project.clj
 
   journey-tests:
-    executor: clojure
+    docker:
+      - image: cypress/base:10
+
+    working_directory: ~/nevergreen
+
     steps:
       - init:
           checkout: false
