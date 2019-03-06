@@ -1,287 +1,238 @@
 version: 2.1
 
+executors:
+  clojure:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    working_directory: ~/nevergreen
+
+commands:
+  init:
+    parameters:
+      checkout:
+        description: "true to checkout Nevergreen from source control, false to attach the workspace"
+        type: boolean
+        default: true
+      after:
+        description: "Steps to execute after the environment has been initialised"
+        type: steps
+    steps:
+      - when:
+          condition: << parameters.checkout >>
+          steps:
+            - checkout
+
+      - unless:
+          condition: << parameters.checkout >>
+          steps:
+            - attach_workspace:
+                at: ~/nevergreen
+
+      - restore_cache:
+          keys:
+            - v5-nevergreen-ui-{{ checksum ".nvmrc" }}-{{ checksum "package-lock.json" }}
+            - v5-nevergreen-ui-{{ checksum ".nvmrc" }}- # fall back to any cache for the current version of node
+
+      - restore_cache:
+          keys:
+            - v1-nevergreen-server-{{ checksum "project.clj" }}
+
+      - run:
+          name: install node
+          command: ./.circleci/install-node.sh
+
+      - steps: << parameters.after >>
+
+  deploy-nevergreen:
+    parameters:
+      host:
+        description: "The host being deployed to"
+        type: string
+      deploy:
+        description: "The steps to run to actually deploy"
+        type: steps
+      after-deployment:
+        description: "The steps to run after successfully deploying"
+        type: steps
+    steps:
+      - attach_workspace:
+          at: ~/nevergreen
+
+      - add_ssh_keys:
+          fingerprints:
+            - "84:1d:85:ed:80:92:c5:21:53:15:54:b9:52:99:29:35"
+
+      - run:
+          name: add nevergreen.io to known hosts
+          command: |
+            mkdir -p ~/.ssh
+            ssh-keyscan 35.176.150.70 >> ~/.ssh/known_hosts
+
+      - run:
+          name: export version
+          command: ./.circleci/export-version.sh
+
+      - steps: << parameters.deploy >>
+
+      - run:
+          name: smoke test
+          environment:
+            HOST: << parameters.host >>
+          command: ./.circleci/smoke-test.sh
+
+      - setup_remote_docker:
+          docker_layer_caching: true
+
+      - steps: << parameters.after-deployment >>
+
 jobs:
   build:
-    working_directory: ~/nevergreen
-
-    docker:
-      - image: circleci/openjdk:8-jdk
-
+    executor: clojure
     steps:
-      - checkout
+      - init:
+          after:
+            - run:
+                name: update version
+                command: ./.circleci/update-version.sh
 
-      - restore_cache:
-          keys:
-            - v4-nevergreen-ui-{{ checksum ".nvmrc" }}-{{ checksum "package-lock.json" }}
-            - v4-nevergreen-ui-{{ checksum ".nvmrc" }}- # fall back to any cache for the current version of node
+            - run:
+                name: build
+                environment:
+                  BASH_ENV: "~/.nvm/nvm.sh"
+                command: |
+                  ./.circleci/dependencies.sh
+                  ./.circleci/compile.sh
 
-      - restore_cache:
-          keys:
-            - v1-nevergreen-server-{{ checksum "project.clj" }}
+            - save_cache:
+                key: v1-nevergreen-server-{{ checksum "project.clj" }}
+                paths:
+                  - ~/.m2
+            - save_cache:
+                key: v5-nevergreen-ui-{{ checksum ".nvmrc" }}-{{ checksum "package-lock.json" }}
+                paths:
+                  - ./node_modules
+                  - ~/.nvm
+                  - ~/.npm
+                  - ~/.cache
 
-      - run:
-          name: update version
-          command: ./.circleci/update-version.sh
+            - run:
+                name: test
+                environment:
+                  BASH_ENV: "~/.nvm/nvm.sh"
+                command: ./.circleci/test.sh
 
-      - run:
-          name: install node
-          command: ./.circleci/install-node.sh
+            - store_test_results:
+                path: ./target/test-reports
 
-      - run:
-          name: build
-          environment:
-            BASH_ENV: "~/.nvm/nvm.sh"
-          command: |
-            ./.circleci/dependencies.sh
-            ./.circleci/compile.sh
+            - store_artifacts:
+                path: ./target/nevergreen-standalone.jar
+            - store_artifacts:
+                path: ./target/coverage-reports
+            - store_artifacts:
+                path: ./target/security-reports
 
-      - save_cache:
-          key: v1-nevergreen-server-{{ checksum "project.clj" }}
-          paths:
-            - ~/.m2
-      - save_cache:
-          key: v4-nevergreen-ui-{{ checksum ".nvmrc" }}-{{ checksum "package-lock.json" }}
-          paths:
-            - ./node_modules
-            - ~/.nvm
-
-      - run:
-          name: test
-          environment:
-            BASH_ENV: "~/.nvm/nvm.sh"
-          command: ./.circleci/test.sh
-
-      - store_test_results:
-          path: ./target/test-reports
-
-      - store_artifacts:
-          path: ./target/nevergreen-standalone.jar
-      - store_artifacts:
-          path: ./target/coverage-reports
-      - store_artifacts:
-          path: ./target/security-reports
-
-      - persist_to_workspace:
-          root: .
-          paths:
-            - ./resources/*.txt
-            - ./.circleci/*
-            - ./target/nevergreen-standalone.jar
-            - ./Dockerfile
+            - persist_to_workspace:
+                root: .
+                paths:
+                  - ./resources/*.txt
+                  - ./.circleci/*
+                  - ./target/nevergreen-standalone.jar
+                  - ./Dockerfile
+                  - ./package.json
 
   journey-tests:
-    working_directory: ~/nevergreen
-
-    docker:
-      - image: cypress/base:10
-
+    executor: clojure
     steps:
-      - checkout
+      - init:
+          checkout: false
+          after:
+            - run:
+                name: functional tests
+                environment:
+                  CYPRESS_BASE_URL: "https://staging.nevergreen.io"
+                  CYPRESS_TRAY_URL: "https://raw.githubusercontent.com/build-canaries/nevergreen/master/cctray_xml_feed_mock/resources/cctray.xml"
+                  CYPRESS_TRAY_USERNAME: ""
+                  CYPRESS_TRAY_PASSWORD: ""
+                command: npm run test:journey
 
-      - attach_workspace:
-          at: ~/nevergreen
+            - store_test_results:
+                path: ./target/test-reports
 
-      - restore_cache:
-          keys:
-            - v5-nevergreen-cypress-{{ checksum ".nvmrc" }}-{{ checksum "package-lock.json" }}
-            - v5-nevergreen-cypress-{{ checksum ".nvmrc" }}- # fall back to any cache for the current version of node
-
-      - run:
-          name: functional tests
-          environment:
-            CYPRESS_BASE_URL: "https://staging.nevergreen.io"
-            CYPRESS_TRAY_URL: "https://raw.githubusercontent.com/build-canaries/nevergreen/master/cctray_xml_feed_mock/resources/cctray.xml"
-            CYPRESS_TRAY_USERNAME: ""
-            CYPRESS_TRAY_PASSWORD: ""
-          command: |
-            npm install
-            npm run test:journey
-
-      - save_cache:
-          key: v5-nevergreen-cypress-{{ checksum ".nvmrc" }}-{{ checksum "package-lock.json" }}
-          paths:
-            - ./node_modules
-            - ~/.nvm
-            - ~/.npm
-            - ~/.cache
-
-      - store_test_results:
-          path: ./target/test-reports
-
-      - store_artifacts:
-          path: ./target/test-reports/journey
+            - store_artifacts:
+                path: ./target/test-reports/journey
 
   deploy-staging:
-    working_directory: ~/nevergreen
-
-    docker:
-      - image: circleci/openjdk:8-jdk
-
+    executor: clojure
     steps:
-      - attach_workspace:
-          at: ~/nevergreen
-
-      - add_ssh_keys:
-          fingerprints:
-            - "84:1d:85:ed:80:92:c5:21:53:15:54:b9:52:99:29:35"
-
-      - run:
-          name: add nevergreen.io to known hosts
-          command: |
-            mkdir -p ~/.ssh
-            ssh-keyscan 35.176.150.70 >> ~/.ssh/known_hosts
-
-      - run:
-          name: export version
-          command: ./.circleci/export-version.sh
-
-      - run:
-          name: deploy staging
-          command: ./.circleci/deploy.sh
-
-      - run:
-          name: smoke test
-          environment:
-            HOST: "https://staging.nevergreen.io"
-          command: ./.circleci/smoke-test.sh
-
-      - setup_remote_docker:
-          docker_layer_caching: true
-
-      - run:
-          name: create docker image
-          command: |
-            docker build -t buildcanariesteam/nevergreen:staging .
-            docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}
-            docker push buildcanariesteam/nevergreen:staging
+      - deploy-nevergreen:
+          host: "https://staging.nevergreen.io"
+          deploy:
+            - run: ./.circleci/deploy.sh
+          after-deployment:
+            - run:
+                name: create docker image
+                command: |
+                  docker build -t buildcanariesteam/nevergreen:staging .
+                  docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}
+                  docker push buildcanariesteam/nevergreen:staging
 
   deploy-prod:
-    working_directory: ~/nevergreen
-
-    docker:
-      - image: circleci/openjdk:8-jdk
-
+    executor: clojure
     steps:
-      - attach_workspace:
-          at: ~/nevergreen
+      - deploy-nevergreen:
+          host: "https://nevergreen.io"
+          deploy:
+            - run: ./.circleci/release.sh
+          after-deployment:
+            - run:
+                name: create docker image
+                command: |
+                  docker build -t buildcanariesteam/nevergreen:latest -t buildcanariesteam/nevergreen:${VERSION} .
+                  docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}
+                  docker push buildcanariesteam/nevergreen:latest
+                  docker push buildcanariesteam/nevergreen:${VERSION}
 
-      - add_ssh_keys:
-          fingerprints:
-            - "84:1d:85:ed:80:92:c5:21:53:15:54:b9:52:99:29:35"
+            - run:
+                name: install command line json parser
+                command: sudo apt-get install jq
 
-      - run:
-          name: add nevergreen.io to known hosts
-          command: |
-            mkdir -p ~/.ssh
-            ssh-keyscan 35.176.150.70 >> ~/.ssh/known_hosts
+            - run:
+                name: create release on GitHub
+                command: ./.circleci/release-github.sh
 
-      - run:
-          name: install command line json parser
-          command: sudo apt-get install jq
-
-      - run:
-          name: export version
-          command: ./.circleci/export-version.sh
-
-      - run:
-          name: deploy production
-          command: ./.circleci/release.sh
-
-      - run:
-          name: smoke test
-          environment:
-            HOST: "https://nevergreen.io"
-          command: ./.circleci/smoke-test.sh
-
-      - setup_remote_docker:
-          docker_layer_caching: true
-
-      - run:
-          name: create docker image
-          command: |
-            docker build -t buildcanariesteam/nevergreen:latest -t buildcanariesteam/nevergreen:${VERSION} .
-            docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}
-            docker push buildcanariesteam/nevergreen:latest
-            docker push buildcanariesteam/nevergreen:${VERSION}
-
-      - run:
-          name: create release on GitHub
-          command: ./.circleci/release-github.sh
-
-      - run:
-          name: tweet release
-          command: ./.circleci/release-tweet.sh
+            - run:
+                name: tweet release
+                command: ./.circleci/release-tweet.sh
 
   security-audits:
-    working_directory: ~/nevergreen
-
-    docker:
-      - image: circleci/openjdk:8-jdk
-
+    executor: clojure
     steps:
-      - checkout
+      - init:
+          after:
+            - run:
+                name: check client dependencies
+                environment:
+                  BASH_ENV: "~/.nvm/nvm.sh"
+                command: npm --no-color audit | tee ./target/security-reports/client/npm-audit.txt
 
-      - restore_cache:
-          keys:
-            - v4-nevergreen-ui-{{ checksum ".nvmrc" }}-{{ checksum "package-lock.json" }}
-            - v4-nevergreen-ui-{{ checksum ".nvmrc" }}- # fall back to any cache for the current version of node
+            - run:
+                name: check server dependencies
+                when: always
+                command: ./lein.sh dependency-check
 
-      - restore_cache:
-          keys:
-            - v1-nevergreen-server-{{ checksum "project.clj" }}
-      - run:
-          name: update version
-          command: ./.circleci/update-version.sh
+            - store_artifacts:
+                path: ./target/security-reports
 
-      - run:
-          name: install node
-          command: ./.circleci/install-node.sh
-
-      - run:
-          name: check client dependencies
-          environment:
-            BASH_ENV: "~/.nvm/nvm.sh"
-          command: npm audit
-
-      - run:
-          name: check server dependencies
-          when: always
-          command: ./lein.sh dependency-check
-
-      - store_artifacts:
-          path: ./target/security-reports
-
-  update-dependecies:
-    working_directory: ~/nevergreen
-
-    docker:
-      - image: circleci/openjdk:8-jdk
-
+  update-dependencies:
+    executor: clojure
     steps:
-      - checkout
-
-      - restore_cache:
-          keys:
-            - v4-nevergreen-ui-{{ checksum ".nvmrc" }}-{{ checksum "package-lock.json" }}
-            - v4-nevergreen-ui-{{ checksum ".nvmrc" }}- # fall back to any cache for the current version of node
-
-      - restore_cache:
-          keys:
-            - v1-nevergreen-server-{{ checksum "project.clj" }}
-
-      - run:
-          name: update version
-          command: ./.circleci/update-version.sh
-
-      - run:
-          name: install node
-          command: ./.circleci/install-node.sh
-
-      - run:
-          name: update clojure and node dependency versions
-          environment:
-            BASH_ENV: "~/.nvm/nvm.sh"
-          command: ./.circleci/dependencies-upgrade.sh
+      - init:
+          after:
+            - run:
+                name: update clojure and node dependency versions
+                environment:
+                  BASH_ENV: "~/.nvm/nvm.sh"
+                command: ./.circleci/dependencies-upgrade.sh
 
 workflows:
   version: 2
@@ -304,7 +255,7 @@ workflows:
   security-audits-workflow:
     triggers:
       - schedule:
-          cron: "27 21 * * *"
+          cron: "17 20 * * *"
           filters:
             branches:
               only:
@@ -321,4 +272,4 @@ workflows:
 #               only:
 #                 - master
 #     jobs:
-#       - update-dependecies
+#       - update-dependencies
