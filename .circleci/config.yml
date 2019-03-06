@@ -139,6 +139,9 @@ jobs:
                   - ./target/nevergreen-standalone.jar
                   - ./Dockerfile
                   - ./package.json
+                  - ./package-lock.json
+                  - ./.nvmrc
+                  - ./project.clj
 
   journey-tests:
     executor: clojure
