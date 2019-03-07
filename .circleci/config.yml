@@ -229,6 +229,8 @@ jobs:
             - run:
                 name: check server dependencies
                 when: always
+                environment:
+                  JAVA_TOOL_OPTIONS: "-Xmx2G"
                 command: ./lein.sh dependency-check
 
             - store_artifacts:
