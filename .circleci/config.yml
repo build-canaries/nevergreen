@@ -127,8 +127,6 @@ jobs:
                 path: ./target/nevergreen-standalone.jar
             - store_artifacts:
                 path: ./target/coverage-reports
-            - store_artifacts:
-                path: ./target/security-reports
 
             - persist_to_workspace:
                 root: .
@@ -224,7 +222,9 @@ jobs:
                 name: check client dependencies
                 environment:
                   BASH_ENV: "~/.nvm/nvm.sh"
-                command: npm --no-color audit | tee ./target/security-reports/client/npm-audit.txt
+                command: |
+                  mkdir -p ./target/security-reports/client
+                  npm --no-color audit | tee ./target/security-reports/client/npm-audit.txt
 
             - run:
                 name: check server dependencies

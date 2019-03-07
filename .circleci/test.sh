@@ -1,11 +1,5 @@
 #!/bin/bash -eu
 
-echo "running security audits"
-mkdir -p ./target/security-reports/client
-set +e
-npm --no-color audit | tee ./target/security-reports/client/npm-audit.txt
-set -e
-
 echo "running linting"
 npm run lint
 ./lein.sh lint
