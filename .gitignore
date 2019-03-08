@@ -24,6 +24,9 @@ pom.xml.asc
 .nrepl-port
 .cpcache/
 
+# linting
+.eastwood
+
 ########
 # Node #
 ########
