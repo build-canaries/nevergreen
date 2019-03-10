@@ -5,11 +5,12 @@ import {abortPendingRequest} from '../gateways/Gateway'
 import {
   interestingPendingRequest,
   interestingProjects as selectInterestingProjects,
+  seenProjects,
   selectedProjects,
   trays
 } from '../reducers/Selectors'
 import {wrapProjectErrors, wrapProjects} from '../domain/Project'
-import {List} from 'immutable'
+import {List, Map} from 'immutable'
 import {projectNotifications} from './NotificationThunkActionCreators'
 
 function toErrorString(trays, projectError) {
@@ -30,6 +31,10 @@ function addThisBuildTime(project, previouslyFetchedProjects) {
   }
 }
 
+function seenProjectsPerTray(state, trays) {
+  return trays.reduce((acc, tray) => acc.set(tray.get('trayId'), seenProjects(state, tray.get('trayId'))), Map())
+}
+
 export function fetchInteresting() {
   return async (dispatch, getState) => {
     abortPendingRequest(interestingPendingRequest(getState()))
@@ -37,8 +42,9 @@ export function fetchInteresting() {
     const selected = selectedProjects(getState())
     const allTrays = trays(getState())
     const previouslyFetchedProjects = selectInterestingProjects(getState())
+    const seen = seenProjectsPerTray(getState(), allTrays)
 
-    const request = interesting(allTrays, selected)
+    const request = interesting(allTrays, selected, seen)
     dispatch(interestingProjectsFetching(request))
 
     try {

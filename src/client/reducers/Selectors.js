@@ -152,6 +152,10 @@ export function trayServerType(state, trayId) {
   return state.getIn([TRAYS_ROOT, trayId, 'serverType'])
 }
 
+export function getTrayIncludeNew(state, trayId) {
+  return state.getIn([TRAYS_ROOT, trayId, 'includeNew'])
+}
+
 export function trayHighlight(state, trayId) {
   return state.getIn([TRAYS_ROOT, trayId, 'highlight'])
 }
@@ -192,6 +196,10 @@ export function selectedProjects(state, trayId) {
 
 export function projects(state, trayId) {
   return state.getIn([PROJECTS_ROOT, trayId]).toList()
+}
+
+export function seenProjects(state, trayId) {
+  return projects(state, trayId).map((project) => project.get('projectId'))
 }
 
 export function pendingRequest(state, id) {

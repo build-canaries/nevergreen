@@ -17,9 +17,10 @@ describe('ProjectsGateway', function () {
   describe('fetchAll', function () {
 
     it('posts only the required data from the given trays', () => {
+      const seen = fromJS({'some-tray-id': []})
       const trays = List([
         new Tray({
-          trayId: 'url',
+          trayId: 'some-tray-id',
           url: 'url',
           username: 'uname',
           password: 'pword',
@@ -32,14 +33,16 @@ describe('ProjectsGateway', function () {
       const expected = List([
         Map({
           url: 'url',
-          trayId: 'url',
+          trayId: 'some-tray-id',
           username: 'uname',
           password: 'pword',
-          serverType: 'GO'
+          serverType: 'GO',
+          includeNew: true,
+          seen: List([])
         })
       ])
 
-      fetchAll(trays)
+      fetchAll(trays, seen)
 
       expect(post.getCall(0).args[0]).to.equal('/api/projects/all')
       expect(post.getCall(0).args[1]).to.equal(expected)
@@ -49,6 +52,7 @@ describe('ProjectsGateway', function () {
   describe('interesting', function () {
 
     it('maps selected projects to the posted data', function () {
+      const seen = fromJS({'some-tray-id': []})
       const selected = fromJS({
         'some-tray-id': ['some-project-id']
       })
@@ -66,41 +70,48 @@ describe('ProjectsGateway', function () {
           url: 'some-url',
           trayId: 'some-tray-id',
           username: 'some-uname',
+          includeNew: true,
           password: 'some-pword',
           serverType: 'some-server-type',
-          included: List(['some-project-id'])
+          included: List(['some-project-id']),
+          seen: List([])
         })
       ])
 
-      interesting(trays, selected)
+      interesting(trays, selected, seen)
 
       expect(post.getCall(0).args[0]).to.equal('/api/projects/interesting')
       expect(post.getCall(0).args[1]).to.equal(expected)
       expect(fakeResponse).to.not.have.been.called()
     })
 
-    it('does not include trays with no selected projects', function () {
+    it('does not include trays with no selected projects and not including new', function () {
+      const seen = fromJS({'some-tray-id': []})
       const selected = fromJS({
         'some-tray-id': ['some-project-id'],
-        'none-selected-id': []
+        'none-selected-id': [],
+        'none-selected-but-includes-new-id': []
       })
       const trays = List([
-        new Tray({trayId: 'some-tray-id'}),
-        new Tray({trayId: 'none-selected-id'})
+        new Tray({trayId: 'some-tray-id', includeNew: false}),
+        new Tray({trayId: 'none-selected-id', includeNew: false}),
+        new Tray({trayId: 'none-selected-but-includes-new-id', includeNew: true})
       ])
 
-      interesting(trays, selected)
+      interesting(trays, selected, seen)
 
-      expect(post.getCall(0).args[1]).to.have.size(1)
+      expect(post.getCall(0).args[1]).to.have.size(2)
       expect(post.getCall(0).args[1].first()).to.have.property('trayId', 'some-tray-id')
+      expect(post.getCall(0).args[1].get(1)).to.have.property('trayId', 'none-selected-but-includes-new-id')
       expect(fakeResponse).to.not.have.been.called()
     })
 
-    it('does not call the server at all if no trays have selected projects', function () {
+    it('does not call the server at all if no trays have selected projects and new projects are not included', function () {
+      const seen = fromJS({'some-tray-id': []})
       const selected = fromJS({'some-tray-id': []})
-      const trays = List([new Tray({trayId: 'some-tray-id'})])
+      const trays = List([new Tray({trayId: 'some-tray-id', includeNew: false})])
 
-      interesting(trays, selected)
+      interesting(trays, selected, seen)
 
       expect(post).to.not.have.been.called()
       expect(fakeResponse).to.have.been.calledWith(List())

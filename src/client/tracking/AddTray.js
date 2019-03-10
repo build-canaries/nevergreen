@@ -70,7 +70,7 @@ export class AddTray extends Component {
             <span className={styles.label}>password</span>
           </Password>
         </div>
-        <WithHelp title='Add tray'
+        <WithHelp title='Tracking'
                   help={<TrackingHelp addTray={addTray}/>}
                   className={styles.help}>
           <PrimaryButton className={styles.add}

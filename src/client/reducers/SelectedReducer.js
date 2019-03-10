@@ -33,13 +33,17 @@ export function reduce(state = DEFAULT_STATE, action) {
           : includedProjectIds.delete(action.projectId))
 
     case PROJECTS_FETCHED: {
-      const currentProjectIds = action.data.map((project) => project.get('projectId'))
+      const fetchedProjectIds = action.data
+        .map((project) => project.get('projectId'))
+
+      const newProjectIds = action.data
+        .filter((project) => project.get('isNew'))
+        .map((project) => project.get('projectId'))
 
       return state.update(action.trayId, (includedProjectIds) => {
-        const updated = action.selectAll
-          ? includedProjectIds.union(currentProjectIds)
-          : includedProjectIds
-        return updated.filter((projectId) => currentProjectIds.includes(projectId))
+        return includedProjectIds
+          .filter((projectId) => fetchedProjectIds.includes(projectId))
+          .update((ids) => action.includeNew ? ids.union(newProjectIds) : ids)
       })
     }
 

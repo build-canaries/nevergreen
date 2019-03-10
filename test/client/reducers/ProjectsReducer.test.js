@@ -71,54 +71,25 @@ describe('ProjectsReducer', function () {
   describe(PROJECTS_FETCHED, function () {
 
     it('should filter removed projects', function () {
-      const existingState = fromJS({trayId: {projectId: {removed: true}}})
+      const existingState = fromJS({trayId: {projectId: new Project({removed: true})}})
       const action = {type: PROJECTS_FETCHED, trayId: 'trayId', data: List()}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('trayId').that.is.empty()
     })
 
-    it('should set existing (non filtered) projects as old', function () {
-      const existingState = fromJS({trayId: {projectId: {isNew: true}}})
-      const action = {type: PROJECTS_FETCHED, trayId: 'trayId', data: List()}
-      const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.has.property('projectId').that.has.property('isNew', false)
-    })
-
     it('should set existing (non filtered) projects as removed if they haven\'t been fetched again', function () {
-      const existingState = fromJS({trayId: {projectId: {removed: false}}})
+      const existingState = fromJS({trayId: {projectId: new Project({removed: false})}})
       const action = {type: PROJECTS_FETCHED, trayId: 'trayId', data: List()}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('trayId').that.has.property('projectId').that.has.property('removed', true)
     })
 
-    it('should add newly fetched projects with the is new property', function () {
-      const existingState = fromJS({trayId: {}})
-      const action = {
-        type: PROJECTS_FETCHED,
-        trayId: 'trayId',
-        data: fromJS([{projectId: 'projectId'}])
-      }
-      const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.has.property('projectId').that.has.property('isNew', true)
-    })
-
-    it('should mark existing projects that have been fetched again as old', function () {
-      const existingState = fromJS({trayId: {projectId: {}}})
-      const action = {
-        type: PROJECTS_FETCHED,
-        trayId: 'trayId',
-        data: fromJS([{projectId: 'projectId'}])
-      }
-      const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.has.property('projectId').that.has.property('isNew', false)
-    })
-
     it('should mark existing projects that have been fetched again as not removed', function () {
-      const existingState = fromJS({trayId: {projectId: {}}})
+      const existingState = fromJS({trayId: {projectId: new Project()}})
       const action = {
         type: PROJECTS_FETCHED,
         trayId: 'trayId',
-        data: fromJS([{projectId: 'projectId'}])
+        data: fromJS([new Project({projectId: 'projectId'})])
       }
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('trayId').that.has.property('projectId').that.has.property('removed', false)

@@ -2,10 +2,12 @@ import {testThunk, withMockedImports} from '../TestUtils'
 import {describe, it} from 'mocha'
 import {expect} from 'chai'
 import {mocks} from '../Mocking'
-import {fromJS, List, Map} from 'immutable'
+import {fromJS, List} from 'immutable'
 import {Tray} from '../../../src/client/domain/Tray'
+import {Project} from '../../../src/client/domain/Project'
 import {TRAYS_ROOT} from '../../../src/client/reducers/TraysReducer'
 import {PENDING_REQUESTS_ROOT} from '../../../src/client/reducers/PendingRequestsReducer'
+import {PROJECTS_ROOT} from '../../../src/client/reducers/ProjectsReducer'
 
 describe('RefreshThunkActionCreators', function () {
 
@@ -25,15 +27,23 @@ describe('RefreshThunkActionCreators', function () {
 
   describe('refreshTray', function () {
 
-    const tray = new Tray()
+    const tray = new Tray({
+      trayId: 'some-tray-id',
+      includeNew: true
+    })
 
-    const requiredState = Map({
-      [TRAYS_ROOT]: Map({
+    const requiredState = fromJS({
+      [TRAYS_ROOT]: {
         'some-tray-id': tray
-      }),
-      [PENDING_REQUESTS_ROOT]: Map({
+      },
+      [PENDING_REQUESTS_ROOT]: {
         'some-tray-id': 'some-pending-request'
-      })
+      },
+      [PROJECTS_ROOT]: {
+        'some-tray-id': [
+          new Project({projectId: 'some-project-id'})
+        ]
+      }
     })
 
     it('should abort pending request', async function () {
@@ -45,7 +55,8 @@ describe('RefreshThunkActionCreators', function () {
     it('should create a fetch all request with the tray', async function () {
       send.resolves(List())
       await testThunk(refreshTray('some-tray-id'), requiredState)
-      expect(fetchAll).to.have.been.calledWith(List.of(tray))
+      expect(fetchAll.getCall(0).args[0]).to.equal(List.of(tray))
+      expect(fetchAll.getCall(0).args[1]).to.equal(fromJS({'some-tray-id': ['some-project-id']}))
     })
 
     it('should dispatch projects fetching action', async function () {
@@ -59,7 +70,7 @@ describe('RefreshThunkActionCreators', function () {
     it('should dispatch projects fetched action when no errors are returned', async function () {
       send.resolves(List())
       await testThunk(refreshTray('some-tray-id'), requiredState)
-      expect(projectsFetched).to.have.been.calledWith('some-tray-id', List())
+      expect(projectsFetched).to.have.been.calledWith('some-tray-id', List(), true)
     })
 
     it('should dispatch projects fetch error action if an error is returned', async function () {

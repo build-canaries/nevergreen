@@ -8,6 +8,7 @@ import {
   PROJECTS_FETCHING,
   REMOVE_TRAY,
   SELECT_PROJECT,
+  SET_INCLUDE_NEW,
   SET_SERVER_TYPE,
   SET_TRAY_NAME,
   SET_TRAY_URL,
@@ -43,7 +44,7 @@ export function projectsFetching(trayId, request) {
   return {type: PROJECTS_FETCHING, trayId, request}
 }
 
-export function projectsFetched(trayId, projects, selectAll) {
+export function projectsFetched(trayId, projects, includeNew) {
   const serverType = projects.first() ? projects.first().serverType : ''
 
   return {
@@ -52,7 +53,7 @@ export function projectsFetched(trayId, projects, selectAll) {
     data: projects,
     serverType,
     timestamp: now(),
-    selectAll
+    includeNew
   }
 }
 
@@ -78,4 +79,8 @@ export function setTrayUrl(trayId, url) {
 
 export function selectProject(trayId, projectId, selected) {
   return {type: SELECT_PROJECT, trayId, projectId, selected}
+}
+
+export function setIncludeNew(trayId, value) {
+  return {type: SET_INCLUDE_NEW, trayId, value}
 }

@@ -1,9 +1,16 @@
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {removeTray, setServerType, setTrayName, setTrayUrl, setTrayUsername} from '../../actions/TrackingActionCreators'
+import {
+  removeTray,
+  setIncludeNew,
+  setServerType,
+  setTrayName,
+  setTrayUrl,
+  setTrayUsername
+} from '../../actions/TrackingActionCreators'
 import {encryptPassword} from '../../actions/PasswordThunkActionCreators'
 import {TraySettings} from './TraySettings'
-import {trayName, trayPassword, trayServerType, trayUrl, trayUsername} from '../../reducers/Selectors'
+import {getTrayIncludeNew, trayName, trayPassword, trayServerType, trayUrl, trayUsername} from '../../reducers/Selectors'
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
@@ -12,7 +19,8 @@ function mapDispatchToProps(dispatch) {
     setServerType,
     setTrayUsername,
     encryptPassword,
-    setTrayUrl
+    setTrayUrl,
+    setIncludeNew
   }, dispatch)
 }
 
@@ -22,7 +30,8 @@ function mapStateToProps(state, {trayId}) {
     url: trayUrl(state, trayId),
     username: trayUsername(state, trayId),
     password: trayPassword(state, trayId),
-    serverType: trayServerType(state, trayId)
+    serverType: trayServerType(state, trayId),
+    includeNew: getTrayIncludeNew(state, trayId)
   }
 }
 

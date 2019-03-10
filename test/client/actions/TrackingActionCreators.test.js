@@ -8,6 +8,7 @@ import {
   PROJECTS_FETCHING,
   REMOVE_TRAY,
   SELECT_PROJECT,
+  SET_INCLUDE_NEW,
   SET_SERVER_TYPE,
   SET_TRAY_NAME,
   SET_TRAY_URL,
@@ -21,6 +22,7 @@ import {
   projectsFetching,
   removeTray,
   selectProject,
+  setIncludeNew,
   setServerType,
   setTrayName,
   setTrayUrl,
@@ -147,9 +149,9 @@ describe('TrackingActionCreators', function () {
       expect(actual).to.have.property('serverType', 'some-type')
     })
 
-    it('should return whether to select all projects or not', function () {
+    it('should return whether to include new projects or not', function () {
       const actual = projectsFetched('irrelevant', List(), true)
-      expect(actual).to.have.property('selectAll', true)
+      expect(actual).to.have.property('includeNew', true)
     })
   })
 
@@ -258,6 +260,24 @@ describe('TrackingActionCreators', function () {
     it('should return if the project was selected', function () {
       const actual = selectProject('irrelevant', 'irrelevant', true)
       expect(actual).to.have.property('selected', true)
+    })
+  })
+
+  describe(SET_INCLUDE_NEW, function () {
+
+    it('should return the correct type', function () {
+      const actual = setIncludeNew()
+      expect(actual).to.have.property('type', SET_INCLUDE_NEW)
+    })
+
+    it('should return the value', function () {
+      const actual = setIncludeNew('some-tray-id')
+      expect(actual).to.have.property('trayId', 'some-tray-id')
+    })
+
+    it('should return the value', function () {
+      const actual = setIncludeNew('irrelevant', true)
+      expect(actual).to.have.property('value', true)
     })
   })
 })

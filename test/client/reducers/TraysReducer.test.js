@@ -13,6 +13,7 @@ import {
   PROJECTS_FETCHED,
   PROJECTS_FETCHING,
   REMOVE_TRAY,
+  SET_INCLUDE_NEW,
   SET_SERVER_TYPE,
   SET_TRAY_NAME,
   SET_TRAY_URL,
@@ -320,6 +321,16 @@ describe('TraysReducer', function () {
       const action = {type: SET_TRAY_URL, trayId: 'trayId', url: 'some-url'}
       const newState = reduce(existingState, action)
       expect(newState).to.have.property('trayId').that.has.property('requiresRefresh', false)
+    })
+  })
+
+  describe(SET_INCLUDE_NEW, function () {
+
+    it('should set include new', function () {
+      const existingState = Map({trayId: new Tray({trayId: 'trayId', includeNew: false})})
+      const action = {type: SET_INCLUDE_NEW, trayId: 'trayId', value: true}
+      const newState = reduce(existingState, action)
+      expect(newState).to.have.property('trayId').that.has.property('includeNew', true)
     })
   })
 })

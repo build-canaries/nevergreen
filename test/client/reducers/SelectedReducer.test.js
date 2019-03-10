@@ -94,12 +94,12 @@ describe('SelectedReducer', function () {
       expect(newState).to.have.property('trayId').that.contains('b').and.have.size(1)
     })
 
-    it('should add all projects that were fetched if select all is true', function () {
-      const existingState = Map({trayId: Set([])})
-      const fetchedProjects = fromJS([{projectId: 'a'}, {projectId: 'b'}, {projectId: 'c'}])
-      const action = {type: PROJECTS_FETCHED, trayId: 'trayId', selectAll: true, data: fetchedProjects}
+    it('should add new projects if select new is true', function () {
+      const existingState = Map({trayId: Set()})
+      const fetchedProjects = fromJS([{projectId: 'a', isNew: true}, {projectId: 'b'}, {projectId: 'c'}])
+      const action = {type: PROJECTS_FETCHED, trayId: 'trayId', includeNew: true, data: fetchedProjects}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.contains('a', 'b', 'c')
+      expect(newState).to.have.property('trayId').that.contains('a')
     })
   })
 })

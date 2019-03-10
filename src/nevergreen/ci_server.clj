@@ -1,5 +1,6 @@
 (ns nevergreen.ci-server
   (:require [clojure.test :refer :all]
+            [clojure.set :refer [difference]]
             [clj-time.core :as clock]
             [clojure.string :as s]
             [clojure.string :refer [includes?]]
@@ -18,13 +19,17 @@
   (map #(assoc % :server-type server-type) projects))
 
 (defn- add-tray-id [tray-id projects]
-  (map #(merge {:tray-id tray-id} %) projects))
+  (map #(assoc % :tray-id tray-id) projects))
 
 (defn- add-url [url projects]
-  (map #(merge {:url url} %) projects))
+  (map #(assoc % :url url) projects))
 
 (defn- add-fetched-time [projects]
-  (map #(merge {:fetched-time (now)} %) projects))
+  (map #(assoc % :fetched-time (now)) projects))
+
+(defn- add-is-new [seen projects]
+  (let [new-project-ids (difference (set (map :project-id projects)) (set seen))]
+    (map #(assoc % :is-new (or (in? new-project-ids (:project-id %)) false)) projects)))
 
 (defn- detect-server [url]
   (cond
@@ -54,13 +59,14 @@
              :cruise-control-net
              :solano] server-type)))
 
-(defn enrich-projects [{:keys [server-type tray-id url]} projects]
+(defn enrich-projects [{:keys [server-type tray-id url seen]} projects]
   (->>
     (add-project-ids projects)
     (add-server-type server-type)
     (add-tray-id tray-id)
     (add-url url)
-    (add-fetched-time)))
+    (add-fetched-time)
+    (add-is-new seen)))
 
 (defn get-server-type [{:keys [server-type url]}]
   (let [server-keyword (keyword server-type)]

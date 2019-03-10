@@ -8,6 +8,7 @@ import {DangerButton, InputButton, PrimaryButton, SecondaryButton} from '../../c
 import {iBin, iCross, iDice, iFloppyDisk, iUnlocked} from '../../common/fonts/Icons'
 import styles from './tray-settings.scss'
 import {Password} from '../../common/forms/Password'
+import {Checkbox} from '../../common/forms/Checkbox'
 
 export class TraySettings extends Component {
 
@@ -75,8 +76,12 @@ export class TraySettings extends Component {
     this.props.setTrayUrl(this.props.trayId, this.state.newUrl)
   }
 
+  setIncludeNew = (value) => {
+    this.props.setIncludeNew(this.props.trayId, value)
+  }
+
   render() {
-    const {password, serverType} = this.props
+    const {password, serverType, includeNew} = this.props
     const {updatingPassword, newPassword, newName, newUrl, newUsername} = this.state
 
     const existingPassword = password ? '*******' : ''
@@ -161,6 +166,12 @@ export class TraySettings extends Component {
             </SecondaryButton>
           )
         }
+        <Checkbox checked={includeNew}
+                  onToggle={(newValue) => this.setIncludeNew(newValue)}
+                  className={styles.includeNew}
+                  data-locator='include-new'>
+          automatically include new projects
+        </Checkbox>
         <div className={styles.dangerZone}>
           <h4 className={styles.dangerZoneTitle}>Danger Zone</h4>
           <div className={styles.dangerZoneContent}>
@@ -189,5 +200,7 @@ TraySettings.propTypes = {
   setServerType: PropTypes.func.isRequired,
   setTrayUsername: PropTypes.func.isRequired,
   encryptPassword: PropTypes.func.isRequired,
-  setTrayUrl: PropTypes.func.isRequired
+  setTrayUrl: PropTypes.func.isRequired,
+  includeNew: PropTypes.bool,
+  setIncludeNew: PropTypes.func.isRequired
 }

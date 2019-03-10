@@ -1,6 +1,19 @@
 @import '../common/variables';
 @import '../common/responsive';
 
+.title {
+  margin: $margin-top 0 0 0;
+}
+
+.settings {
+  margin: 1em 0 0 0;
+
+  dt {
+    font-weight: bold;
+    margin: 0.5em 0 0 0;
+  }
+}
+
 .exampleUrl {
   display: inline-block;
   margin: $margin-top 0 0 0;

@@ -13,6 +13,7 @@ import {Tray} from '../../../src/client/domain/Tray'
 import {INTERESTING_ROOT} from '../../../src/client/reducers/InterestingReducer'
 import {SELECTED_ROOT} from '../../../src/client/reducers/SelectedReducer'
 import {TRAYS_ROOT} from '../../../src/client/reducers/TraysReducer'
+import {PROJECTS_ROOT} from '../../../src/client/reducers/ProjectsReducer'
 
 describe('MonitorThunkActionCreators', function () {
 
@@ -29,7 +30,8 @@ describe('MonitorThunkActionCreators', function () {
       projects: List()
     }),
     [SELECTED_ROOT]: Map(),
-    [TRAYS_ROOT]: Map()
+    [TRAYS_ROOT]: Map(),
+    [PROJECTS_ROOT]: Map()
   })
 
   const {fetchInteresting} = withMockedImports('client/actions/MonitorThunkActionCreators', {
@@ -172,7 +174,11 @@ describe('MonitorThunkActionCreators', function () {
       it('should dispatch interesting projects with the tray name in the error if it exists', async function () {
         send.resolves(fromJS([{trayId: 'some-tray-id', isError: true, errorMessage: 'some-error'}]))
         const trays = List([new Tray({trayId: 'some-tray-id', name: 'some-name'})])
-        const state = requiredState.set(TRAYS_ROOT, trays)
+        const state = requiredState
+          .set(TRAYS_ROOT, trays)
+          .set(PROJECTS_ROOT, fromJS({
+            'some-tray-id': []
+          }))
 
         await testThunk(fetchInteresting(), state)
         expect(interestingProjects.getCall(0).args[0]).to.equal(List())
@@ -182,7 +188,11 @@ describe('MonitorThunkActionCreators', function () {
       it('should dispatch interesting projects with the tray url in the error if the name does not exist', async function () {
         send.resolves(fromJS([{trayId: 'some-tray-id', isError: true, errorMessage: 'some-error'}]))
         const trays = fromJS([new Tray({trayId: 'some-tray-id', url: 'some-url'})])
-        const state = requiredState.set(TRAYS_ROOT, trays)
+        const state = requiredState
+          .set(TRAYS_ROOT, trays)
+          .set(PROJECTS_ROOT, fromJS({
+            'some-tray-id': []
+          }))
 
         await testThunk(fetchInteresting(), state)
         expect(interestingProjects.getCall(0).args[0]).to.equal(List())

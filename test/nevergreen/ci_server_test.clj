@@ -3,28 +3,33 @@
             [nevergreen.ci-server :as subject]))
 
 (def tray {:server-type :go
-           :tray-id     "some-id"
-           :url         "some-url"})
+           :tray-id     "some-tray-id"
+           :url         "some-url"
+           :seen        ["project-name"]})
 
-(def project {})
+(def project {:unnormalised-name "project-name"})
 
 (deftest enrich-projects
 
   (testing "creates a project id as the CCTray XML format doesn't include one"
-    (is (contains? (first (subject/enrich-projects tray [project])) :project-id)))
+    (is (= "project-name" (:project-id (first (subject/enrich-projects tray [project]))))))
 
   (testing "adds the tray server type"
     (is (= :go (:server-type (first (subject/enrich-projects tray [project]))))))
 
   (testing "adds the tray id"
-    (is (= "some-id" (:tray-id (first (subject/enrich-projects tray [project]))))))
+    (is (= "some-tray-id" (:tray-id (first (subject/enrich-projects tray [project]))))))
 
   (testing "adds the tray url"
     (is (= "some-url" (:url (first (subject/enrich-projects tray [project]))))))
 
   (testing "adds the fetched time"
     (binding [subject/now (constantly "some-time")]
-      (is (= "some-time" (:fetched-time (first (subject/enrich-projects tray [project]))))))))
+      (is (= "some-time" (:fetched-time (first (subject/enrich-projects tray [project])))))))
+
+  (testing "adds the is new flag"
+    (is (false? (:is-new (first (subject/enrich-projects tray [project])))))
+    (is (true? (:is-new (first (subject/enrich-projects tray [{:project-id "some-new-project-id"}])))))))
 
 (deftest get-server-type
 

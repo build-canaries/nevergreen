@@ -23,18 +23,17 @@ export function reduce(state = DEFAULT_STATE, action) {
       return state.delete(action.trayId)
 
     case PROJECTS_FETCHED: {
+      // convert to a map with the projectId as the key
       const fetched = action.data.reduce((reduction, project) => {
-        reduction[project.get('projectId')] = project.merge({isNew: true, removed: false})
+        reduction[project.get('projectId')] = project.set('removed', false)
         return reduction
       }, {})
 
       return state.update(action.trayId, (projects) => {
         return projects
           .filterNot((project) => project.get('removed'))
-          .map((project) => project.merge({isNew: false, removed: true}))
-          .mergeWith((previous, next) => {
-            return previous.merge(next, {isNew: false, removed: false})
-          }, fetched)
+          .map((project) => project.set('removed', true))
+          .merge(fetched)
       })
     }
 

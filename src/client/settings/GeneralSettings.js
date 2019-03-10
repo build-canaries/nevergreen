@@ -11,11 +11,11 @@ function ClickToShowMenuHelp({enabled}) {
   return (
     <>
       <p>
-        While <strong>disabled</strong> (the default{!enabled && ', currently selected'}) moving the mouse on the
+        While <em>disabled</em> (the default{!enabled && ', currently selected'}) moving the mouse on the
         Monitor page will show the menu.
       </p>
       <p>
-        While <strong>enabled</strong> {enabled && '(currently selected)'} you will need to click while on the Monitor
+        While <em>enabled</em> {enabled && '(currently selected)'} you will need to click while on the Monitor
         page to show the menu.
       </p>
       <p>

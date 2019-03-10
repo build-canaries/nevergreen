@@ -11,6 +11,7 @@ import {
   PROJECTS_FETCHED,
   PROJECTS_FETCHING,
   REMOVE_TRAY,
+  SET_INCLUDE_NEW,
   SET_SERVER_TYPE,
   SET_TRAY_NAME,
   SET_TRAY_URL,
@@ -132,6 +133,10 @@ export function reduce(state = DEFAULT_STATE, action) {
 
     case SET_TRAY_URL:
       return updateUrl(state, action)
+
+    case SET_INCLUDE_NEW:
+      return state.update(action.trayId, (tray) => tray
+        .set('includeNew', action.value))
 
     default:
       return state

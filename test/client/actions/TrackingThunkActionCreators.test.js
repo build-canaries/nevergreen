@@ -62,10 +62,10 @@ describe('TrackingThunkActionCreators', function () {
         expect(encryptPassword).not.to.have.been.called()
       })
 
-      it('should dispatch refresh tray, with the select all projects flag as true', async function () {
+      it('should dispatch refresh tray to fetch projects', async function () {
         createId.returns('some-tray-id')
         await testThunk(addTray('http://url', 'some-username', ''), requiredState)
-        expect(refreshTray).to.have.been.calledWith('some-tray-id', true)
+        expect(refreshTray).to.have.been.calledWith('some-tray-id')
       })
     })
   })

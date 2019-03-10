@@ -21,7 +21,9 @@ describe('<TraySettings/>', function () {
     setServerType: _.noop,
     setTrayUsername: _.noop,
     encryptPassword: _.noop,
-    setTrayUrl: _.noop
+    setTrayUrl: _.noop,
+    includeNew: null,
+    setIncludeNew: _.noop
   }
 
   it('should set the tray name on blur', function () {
@@ -158,6 +160,16 @@ describe('<TraySettings/>', function () {
         expect(encryptPassword).to.not.have.been.called()
       })
     })
+  })
+
+  it('should set the include new setting on click', function () {
+    const setIncludeNew = mocks.spy()
+    const props = {...DEFAULT_PROPS, setIncludeNew, trayId: 'some-tray-id'}
+
+    const wrapper = shallow(<TraySettings {...props} />)
+    wrapper.find(locator('include-new')).prop('onToggle')(true)
+
+    expect(setIncludeNew).to.have.been.calledWith('some-tray-id', true)
   })
 
   it('should remove the tray when clicking the delete button', function () {

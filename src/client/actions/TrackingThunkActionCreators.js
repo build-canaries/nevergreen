@@ -33,7 +33,7 @@ export function addTray(enteredUrl, username, rawPassword) {
         await dispatch(encryptPassword(trayId, rawPassword))
       }
 
-      dispatch(refreshTray(trayId, true))
+      dispatch(refreshTray(trayId))
     }
   }
 }
