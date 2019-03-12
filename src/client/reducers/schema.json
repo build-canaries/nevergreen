@@ -80,6 +80,9 @@
                 "string",
                 "null"
               ]
+            },
+            "includeNew": {
+              "type": "boolean"
             }
           },
           "required": [

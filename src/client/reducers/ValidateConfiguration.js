@@ -242,7 +242,7 @@ var validate = (function() {
                 var errs__2 = errors;
                 var valid3 = true;
                 for (var key2 in data2) {
-                  var isAdditional2 = !(false || key2 == 'trayId' || key2 == 'url' || key2 == 'name' || key2 == 'serverType' || key2 == 'username' || key2 == 'password' || key2 == 'timestamp');
+                  var isAdditional2 = !(false || key2 == 'trayId' || key2 == 'url' || key2 == 'name' || key2 == 'serverType' || key2 == 'username' || key2 == 'password' || key2 == 'timestamp' || key2 == 'includeNew');
                   if (isAdditional2) {
                     delete data2[key2];
                   }
@@ -397,6 +397,24 @@ var validate = (function() {
                         type: 'string,null'
                       },
                       message: 'should be string,null'
+                    };
+                    if (vErrors === null) vErrors = [err];
+                    else vErrors.push(err);
+                    errors++;
+                  }
+                  var valid3 = errors === errs_3;
+                }
+                if (data2.includeNew !== undefined) {
+                  var errs_3 = errors;
+                  if (typeof data2.includeNew !== "boolean") {
+                    var err = {
+                      keyword: 'type',
+                      dataPath: (dataPath || '') + '.trays[\'' + key1 + '\'].includeNew',
+                      schemaPath: '#/properties/trays/patternProperties/.*/properties/includeNew/type',
+                      params: {
+                        type: 'boolean'
+                      },
+                      message: 'should be boolean'
                     };
                     if (vErrors === null) vErrors = [err];
                     else vErrors.push(err);
@@ -986,6 +1004,9 @@ validate.schema = {
             },
             "timestamp": {
               "type": ["string", "null"]
+            },
+            "includeNew": {
+              "type": "boolean"
             }
           },
           "required": ["trayId", "url"],
