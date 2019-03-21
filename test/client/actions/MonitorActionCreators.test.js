@@ -27,7 +27,7 @@ describe('MonitorActionCreators', function () {
 
     it('should return the projects given', function () {
       const actual = interestingProjects([{foo: 'bar', webUrl: ''}])
-      expect(actual).to.have.property('projects').that.includes.deep.property('[0].foo', 'bar')
+      expect(actual).to.have.property('projects').that.includes.nested.property('[0].foo', 'bar')
     })
   })
 })

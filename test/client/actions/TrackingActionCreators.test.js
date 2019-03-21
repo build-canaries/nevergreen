@@ -134,7 +134,7 @@ describe('TrackingActionCreators', function () {
       const actual = projectsFetched('irrelevant', List.of(
         new Project({webUrl: 'bar'})
       ))
-      expect(actual).to.have.property('data').that.includes.deep.property('[0].webUrl', 'bar')
+      expect(actual).to.have.property('data').that.includes.nested.property('[0].webUrl', 'bar')
     })
 
     it('should return a timestamp', function () {
