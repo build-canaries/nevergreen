@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom'
 import {Provider} from 'react-redux'
 import {applyMiddleware, createStore} from 'redux'
 import {composeWithDevTools} from 'redux-devtools-extension/logOnlyInProduction'
-import createHistory from 'history/createBrowserHistory'
+import {createBrowserHistory} from 'history'
 import {Redirect, Route, Router, Switch} from 'react-router-dom'
 import thunkMiddleware from 'redux-thunk'
 import {Map} from 'immutable'
@@ -42,7 +42,7 @@ const saveDebounced = _.debounce(save, 200, {maxWait: ONE_SECOND})
 
 store.subscribe(() => saveDebounced())
 
-const history = createHistory()
+const history = createBrowserHistory()
 
 history.listen(() => store.dispatch(navigated()))
 
