@@ -1,13 +1,13 @@
 (ns nevergreen.ci-server
   (:require [clojure.test :refer :all]
             [clojure.set :refer [difference]]
-            [clj-time.core :as clock]
             [clojure.string :as s]
             [clojure.string :refer [includes?]]
-            [clj-cctray.util :refer [in?]]))
+            [clj-cctray.util :refer [in?]])
+  (:import (java.time Clock)))
 
 (defn ^:dynamic now []
-  (clock/now))
+  (.instant (Clock/systemUTC)))
 
 (defn- generate-project-id [project]
   (s/join "/" (remove nil? (map project [:unnormalised-owner :unnormalised-name :unnormalised-stage :unnormalised-job]))))

@@ -1,6 +1,7 @@
 (ns nevergreen.app
-  (:import (org.joda.time DateTime)
-           (com.fasterxml.jackson.core JsonGenerator))
+  (:import (com.fasterxml.jackson.core JsonGenerator)
+           (java.time Instant)
+           (java.time.format DateTimeFormatter))
   (:require [compojure.core :refer :all]
             [ring.adapter.jetty :refer [run-jetty]]
             [cheshire.generate :as cheshire]
@@ -10,8 +11,8 @@
             [nevergreen.logging :refer [configure-logging]])
   (:gen-class))
 
-(cheshire/add-encoder DateTime (fn [^DateTime date ^JsonGenerator json-generator]
-                                 (.writeString json-generator (.toString date))))
+(cheshire/add-encoder Instant (fn [^Instant date ^JsonGenerator json-generator]
+                                (.writeString json-generator (.format DateTimeFormatter/ISO_INSTANT date))))
 
 (def ^:private all-routes
   (routes

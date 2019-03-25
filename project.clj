@@ -7,7 +7,7 @@
                  [compojure "1.6.1" :exclusions [ring/ring-codec]]
                  [environ "1.1.0"]
                  [cheshire "5.8.1"]
-                 [clj-cctray "1.0.2"]
+                 [clj-cctray "2.0.0"]
                  [clj-http "3.9.1"]
                  [ring-curl "1.0.1"]
                  [ring/ring-json "0.4.0"]
