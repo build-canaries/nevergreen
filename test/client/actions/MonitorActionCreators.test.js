@@ -1,33 +1,31 @@
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
 import {INTERESTING_PROJECTS, INTERESTING_PROJECTS_FETCHING} from '../../../src/client/actions/Actions'
 import {interestingProjects, interestingProjectsFetching} from '../../../src/client/actions/MonitorActionCreators'
 
-describe('MonitorActionCreators', function () {
+describe('MonitorActionCreators', () => {
 
-  describe(INTERESTING_PROJECTS_FETCHING, function () {
+  describe(INTERESTING_PROJECTS_FETCHING, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = interestingProjectsFetching()
-      expect(actual).to.have.property('type', INTERESTING_PROJECTS_FETCHING)
+      expect(actual).toHaveProperty('type', INTERESTING_PROJECTS_FETCHING)
     })
 
-    it('should return the request given', function () {
+    test('should return the request given', () => {
       const actual = interestingProjectsFetching('some-request')
-      expect(actual).to.have.property('request', 'some-request')
+      expect(actual).toHaveProperty('request', 'some-request')
     })
   })
 
-  describe(INTERESTING_PROJECTS, function () {
+  describe(INTERESTING_PROJECTS, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = interestingProjects([])
-      expect(actual).to.have.property('type', INTERESTING_PROJECTS)
+      expect(actual).toHaveProperty('type', INTERESTING_PROJECTS)
     })
 
-    it('should return the projects given', function () {
+    test('should return the projects given', () => {
       const actual = interestingProjects([{foo: 'bar', webUrl: ''}])
-      expect(actual).to.have.property('projects').that.includes.nested.property('[0].foo', 'bar')
+      expect(actual.projects.getIn(['0', 'foo'])).toEqual('bar')
     })
   })
 })

@@ -1,13 +1,5 @@
-import proxyquire from 'proxyquire'
-import {mocks} from './Mocking'
 import _ from 'lodash'
 import {isImmutable, Map} from 'immutable'
-
-proxyquire.noCallThru()
-
-export function withMockedImports(fileFromSrcDir, imports) {
-  return proxyquire(`../../src/${fileFromSrcDir}`, imports)
-}
 
 export function locator(name) {
   return `[data-locator="${name}"]`
@@ -58,8 +50,7 @@ export async function testThunk(thunkion, state = Map()) {
     throw 'state must be an immutable object'
   }
 
-  const dispatch = mocks.stub()
-  dispatch.returnsArg(0)
+  const dispatch = jest.fn()
 
   const getState = () => state
 

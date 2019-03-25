@@ -1,5 +1,3 @@
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
 import {
   MIN_REFRESH_TIME,
   requestingSystemNotificationPermission,
@@ -31,180 +29,180 @@ import {
   SYSTEM_NOTIFICATIONS_PERMISSION_DENIED
 } from '../../../src/client/actions/Actions'
 
-describe('SettingsActionCreators', function () {
+describe('SettingsActionCreators', () => {
 
-  describe(SHOW_BROKEN_BUILD_TIME, function () {
+  describe(SHOW_BROKEN_BUILD_TIME, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = setShowBrokenBuildTime()
-      expect(actual).to.have.property('type', SHOW_BROKEN_BUILD_TIME)
+      expect(actual).toHaveProperty('type', SHOW_BROKEN_BUILD_TIME)
     })
 
-    it('should return the given value', function () {
+    test('should return the given value', () => {
       const actual = setShowBrokenBuildTime(true)
-      expect(actual).to.have.property('value', true)
+      expect(actual).toHaveProperty('value', true)
     })
   })
 
-  describe(SHOW_TRAY_NAME, function () {
+  describe(SHOW_TRAY_NAME, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = setShowTrayName()
-      expect(actual).to.have.property('type', SHOW_TRAY_NAME)
+      expect(actual).toHaveProperty('type', SHOW_TRAY_NAME)
     })
 
-    it('should return the given value', function () {
+    test('should return the given value', () => {
       const actual = setShowTrayName(true)
-      expect(actual).to.have.property('value', true)
+      expect(actual).toHaveProperty('value', true)
     })
   })
 
-  describe(PLAY_BROKEN_BUILD_SOUND_FX, function () {
+  describe(PLAY_BROKEN_BUILD_SOUND_FX, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = setPlayBrokenBuildSoundFx()
-      expect(actual).to.have.property('type', PLAY_BROKEN_BUILD_SOUND_FX)
+      expect(actual).toHaveProperty('type', PLAY_BROKEN_BUILD_SOUND_FX)
     })
 
-    it('should return the given value', function () {
+    test('should return the given value', () => {
       const actual = setPlayBrokenBuildSoundFx(true)
-      expect(actual).to.have.property('value', true)
+      expect(actual).toHaveProperty('value', true)
     })
   })
 
-  describe(BROKEN_BUILD_SOUND_FX, function () {
+  describe(BROKEN_BUILD_SOUND_FX, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = setBrokenBuildSoundFx()
-      expect(actual).to.have.property('type', BROKEN_BUILD_SOUND_FX)
+      expect(actual).toHaveProperty('type', BROKEN_BUILD_SOUND_FX)
     })
 
-    it('should return the given value', function () {
+    test('should return the given value', () => {
       const actual = setBrokenBuildSoundFx('some-url')
-      expect(actual).to.have.property('value', 'some-url')
+      expect(actual).toHaveProperty('value', 'some-url')
     })
   })
 
-  describe(REFRESH_TIME, function () {
+  describe(REFRESH_TIME, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = setRefreshTime()
-      expect(actual).to.have.property('type', REFRESH_TIME)
+      expect(actual).toHaveProperty('type', REFRESH_TIME)
     })
 
-    it('should return the nearest valid value for an exact match', function () {
+    test('should return the nearest valid value for an exact match', () => {
       const actual = setRefreshTime(3600)
-      expect(actual).to.have.property('value', 3600)
+      expect(actual).toHaveProperty('value', 3600)
     })
 
-    it('should return the nearest valid value', function () {
+    test('should return the nearest valid value', () => {
       const actual = setRefreshTime(15)
-      expect(actual).to.have.property('value', 10)
+      expect(actual).toHaveProperty('value', 10)
     })
 
     const invalidValues = [-1, 4, 'some-string']
 
     invalidValues.forEach(function (value) {
-      it(`should return 5 second if the value is invalid (${value})`, function () {
+      test(`should return 5 second if the value is invalid (${value})`, () => {
         const actual = setRefreshTime(value)
-        expect(actual).to.have.property('value', MIN_REFRESH_TIME)
+        expect(actual).toHaveProperty('value', MIN_REFRESH_TIME)
       })
     })
   })
 
-  describe(SHOW_BUILD_LABEL, function () {
+  describe(SHOW_BUILD_LABEL, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = setShowBuildLabel()
-      expect(actual).to.have.property('type', SHOW_BUILD_LABEL)
+      expect(actual).toHaveProperty('type', SHOW_BUILD_LABEL)
     })
 
-    it('should return the given value', function () {
+    test('should return the given value', () => {
       const actual = setShowTrayName(true)
-      expect(actual).to.have.property('value', true)
+      expect(actual).toHaveProperty('value', true)
     })
   })
 
-  describe(REQUESTING_SYSTEM_NOTIFICATION_PERMISSION, function () {
+  describe(REQUESTING_SYSTEM_NOTIFICATION_PERMISSION, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = requestingSystemNotificationPermission()
-      expect(actual).to.have.property('type', REQUESTING_SYSTEM_NOTIFICATION_PERMISSION)
+      expect(actual).toHaveProperty('type', REQUESTING_SYSTEM_NOTIFICATION_PERMISSION)
     })
   })
 
-  describe(SHOW_SYSTEM_NOTIFICATIONS, function () {
+  describe(SHOW_SYSTEM_NOTIFICATIONS, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = setShowSystemNotifications()
-      expect(actual).to.have.property('type', SHOW_SYSTEM_NOTIFICATIONS)
+      expect(actual).toHaveProperty('type', SHOW_SYSTEM_NOTIFICATIONS)
     })
 
-    it('should return the given value', function () {
+    test('should return the given value', () => {
       const actual = setShowSystemNotifications(true)
-      expect(actual).to.have.property('value', true)
+      expect(actual).toHaveProperty('value', true)
     })
   })
 
-  describe(SYSTEM_NOTIFICATIONS_PERMISSION_DENIED, function () {
+  describe(SYSTEM_NOTIFICATIONS_PERMISSION_DENIED, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = systemNotificationPermissionDenied()
-      expect(actual).to.have.property('type', SYSTEM_NOTIFICATIONS_PERMISSION_DENIED)
+      expect(actual).toHaveProperty('type', SYSTEM_NOTIFICATIONS_PERMISSION_DENIED)
     })
   })
 
-  describe(SHOW_BUILD_TIME, function () {
+  describe(SHOW_BUILD_TIME, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = setShowBuildTime()
-      expect(actual).to.have.property('type', SHOW_BUILD_TIME)
+      expect(actual).toHaveProperty('type', SHOW_BUILD_TIME)
     })
 
-    it('should return the given value', function () {
+    test('should return the given value', () => {
       const actual = setShowBuildTime(true)
-      expect(actual).to.have.property('value', true)
+      expect(actual).toHaveProperty('value', true)
     })
   })
 
-  describe(SET_MAX_PROJECTS, function () {
+  describe(SET_MAX_PROJECTS, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = setMaxProjectsToShow()
-      expect(actual).to.have.property('type', SET_MAX_PROJECTS)
+      expect(actual).toHaveProperty('type', SET_MAX_PROJECTS)
     })
 
 
-    it('should return the nearest valid value for an exact match', function () {
+    test('should return the nearest valid value for an exact match', () => {
       const actual = setMaxProjectsToShow(12)
-      expect(actual).to.have.property('value', 12)
+      expect(actual).toHaveProperty('value', 12)
     })
 
-    it('should return the nearest valid value', function () {
+    test('should return the nearest valid value', () => {
       const actual = setMaxProjectsToShow(13)
-      expect(actual).to.have.property('value', 12)
+      expect(actual).toHaveProperty('value', 12)
     })
 
     const invalidValues = [-1, 4, 'some-string']
 
     invalidValues.forEach(function (value) {
-      it(`should return min if the value is invalid (${value})`, function () {
+      test(`should return min if the value is invalid (${value})`, () => {
         const actual = setMaxProjectsToShow(value)
-        expect(actual).to.have.property('value', VALID_PROJECTS_TO_SHOW[0])
+        expect(actual).toHaveProperty('value', VALID_PROJECTS_TO_SHOW[0])
       })
     })
   })
 
-  describe(CLICK_TO_SHOW_MENU, function () {
+  describe(CLICK_TO_SHOW_MENU, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = setClickToShowMenu()
-      expect(actual).to.have.property('type', CLICK_TO_SHOW_MENU)
+      expect(actual).toHaveProperty('type', CLICK_TO_SHOW_MENU)
     })
 
-    it('should return the given value', function () {
+    test('should return the given value', () => {
       const actual = setClickToShowMenu(true)
-      expect(actual).to.have.property('value', true)
+      expect(actual).toHaveProperty('value', true)
     })
   })
 })

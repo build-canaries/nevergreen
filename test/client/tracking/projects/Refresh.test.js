@@ -1,6 +1,4 @@
-import {locator} from '../../TestUtils'
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
+import {locator} from '../../testHelpers'
 import React from 'react'
 import {shallow} from 'enzyme'
 import {Refresh} from '../../../../src/client/tracking/projects/Refresh'
@@ -18,12 +16,12 @@ describe('<Refresh/>', function () {
   it('should render projects fetched never if there is no timestamp', function () {
     const props = {...DEFAULT_PROPS, timestamp: null}
     const wrapper = shallow(<Refresh {...props} />)
-    expect(wrapper.find(locator('refresh-time'))).to.have.text('projects last refreshed never')
+    expect(wrapper.find(locator('refresh-time')).text()).toEqual('projects last refreshed never')
   })
 
   it('should render how long ago projects were refreshed if a timestamp is given', function () {
     const props = {...DEFAULT_PROPS, timestamp: '2017-06-07T21:40:00+01:00'}
     const wrapper = shallow(<Refresh {...props} />)
-    expect(wrapper.find(Duration)).to.be.present()
+    expect(wrapper.find(Duration).exists()).toBeTruthy()
   })
 })

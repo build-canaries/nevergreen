@@ -1,75 +1,74 @@
-import {testThunk, withMockedImports} from '../TestUtils'
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
-import {mocks} from '../Mocking'
+import {testThunk} from '../testHelpers'
 import {fromJS, List} from 'immutable'
 import {PENDING_REQUESTS_ROOT} from '../../../src/client/reducers/PendingRequestsReducer'
+import {encryptPassword} from '../../../src/client/actions/PasswordThunkActionCreators'
+import * as securityGateway from '../../../src/client/gateways/SecurityGateway'
+import * as gateway from '../../../src/client/gateways/Gateway'
+import * as nevergreenGateway from '../../../src/client/gateways/NevergreenGateway'
+import * as passwordActionCreators from '../../../src/client/actions/PasswordActionCreators'
 
-describe('PasswordThunkActionCreators', function () {
+describe('PasswordThunkActionCreators', () => {
 
-  const encrypt = mocks.stub()
-  const send = mocks.stub()
-  const abortPendingRequest = mocks.stub()
-  const encryptingPassword = mocks.spy()
-  const passwordEncrypted = mocks.spy()
-  const passwordEncryptError = mocks.spy()
+  securityGateway.encryptPassword = jest.fn()
+  nevergreenGateway.send = jest.fn()
+  gateway.abortPendingRequest = jest.fn()
+  passwordActionCreators.encryptingPassword = jest.fn()
+  passwordActionCreators.passwordEncrypted = jest.fn()
+  passwordActionCreators.passwordEncryptError = jest.fn()
 
-  const {encryptPassword} = withMockedImports('client/actions/PasswordThunkActionCreators', {
-    '../gateways/SecurityGateway': {encryptPassword: encrypt},
-    '../gateways/Gateway': {abortPendingRequest},
-    '../gateways/NevergreenGateway': {send},
-    './PasswordActionCreators': {encryptingPassword, passwordEncrypted, passwordEncryptError}
-  })
+  describe('encryptPassword', () => {
 
-  describe('encryptPassword', function () {
-
-    it('should abort pending request', async function () {
-      send.resolves(fromJS({password: ''}))
+    test('should abort pending request', async () => {
+      nevergreenGateway.send.mockResolvedValue(fromJS({password: ''}))
       const state = fromJS({
         [PENDING_REQUESTS_ROOT]: {
           'some-tray-id': 'some-pending-request'
         }
       })
       await testThunk(encryptPassword('some-tray-id', 'irrelevant'), state)
-      expect(abortPendingRequest).to.have.been.calledWith('some-pending-request')
+      expect(gateway.abortPendingRequest).toBeCalledWith('some-pending-request')
     })
 
-    it('should dispatch encrypting password action', async function () {
-      encrypt.returns({})
-      send.resolves(fromJS({password: ''}))
-      encrypt.returns('encryption-request')
+    test('should dispatch encrypting password action', async () => {
+      securityGateway.encryptPassword.mockReturnValue({})
+      nevergreenGateway.send.mockResolvedValue(fromJS({password: ''}))
+      securityGateway.encryptPassword.mockReturnValue('encryption-request')
 
       await testThunk(encryptPassword('some-tray-id', 'some-password'))
-      expect(encryptingPassword).to.have.been.calledWith('some-tray-id', 'some-password', 'encryption-request')
+      expect(passwordActionCreators.encryptingPassword).toBeCalledWith('some-tray-id', 'some-password', 'encryption-request')
     })
 
-    it('should dispatch password encrypted action', async function () {
-      send.resolves(fromJS({password: 'some-encrypted-password'}))
+    test('should dispatch password encrypted action', async () => {
+      nevergreenGateway.send.mockResolvedValue(fromJS({password: 'some-encrypted-password'}))
       await testThunk(encryptPassword('some-tray-id', 'irrelevant'))
-      expect(passwordEncrypted).to.have.been.calledWith('some-tray-id', 'some-encrypted-password')
+      expect(passwordActionCreators.passwordEncrypted).toBeCalledWith('some-tray-id', 'some-encrypted-password')
     })
 
-    it('should dispatch password encrypted action on success', async function () {
-      send.resolves(fromJS({password: 'some-encrypted-password'}))
-      await testThunk(encryptPassword('some-tray-id', 'irrelevant'))
-      expect(passwordEncrypted).to.have.been.calledWith('some-tray-id', 'some-encrypted-password')
-    })
+    test('should dispatch password encrypted action on success', async () => {
+        nevergreenGateway.send.mockResolvedValue(fromJS({password: 'some-encrypted-password'}))
+        await testThunk(encryptPassword('some-tray-id', 'irrelevant'))
+        expect(passwordActionCreators.passwordEncrypted).toBeCalledWith('some-tray-id', 'some-encrypted-password')
+      }
+    )
 
-    it('should dispatch password encrypted action if password is blank without calling the gateway', async function () {
-      await testThunk(encryptPassword('some-tray-id', ''))
-      expect(passwordEncrypted).to.have.been.calledWith('some-tray-id', '')
-      expect(send).to.not.have.been.called()
-    })
+    test('should dispatch password encrypted action if password is blank without calling the gateway', async () => {
+        await testThunk(encryptPassword('some-tray-id', ''))
+        expect(passwordActionCreators.passwordEncrypted).toBeCalledWith('some-tray-id', '')
+        expect(nevergreenGateway.send).not.toBeCalled()
+      }
+    )
 
-    it('should return a blank string if password is blank because add tray needs to use it', async function () {
-      await testThunk(encryptPassword('some-tray-id', ''))
-      expect(passwordEncrypted).to.have.been.calledWith('some-tray-id', '')
-    })
+    test('should return a blank string if password is blank because add tray needs to use it', async () => {
+        await testThunk(encryptPassword('some-tray-id', ''))
+        expect(passwordActionCreators.passwordEncrypted).toBeCalledWith('some-tray-id', '')
+      }
+    )
 
-    it('should dispatch password encrypt error action if the request fails', async function () {
-      send.rejects(new Error('some-error'))
-      await testThunk(encryptPassword('some-tray-id', 'irrelevant'))
-      expect(passwordEncryptError).to.have.been.calledWith('some-tray-id', List.of('some-error'))
-    })
+    test('should dispatch password encrypt error action if the request fails', async () => {
+        nevergreenGateway.send.mockRejectedValue(new Error('some-error'))
+        await testThunk(encryptPassword('some-tray-id', 'irrelevant'))
+        expect(passwordActionCreators.passwordEncryptError).toBeCalledWith('some-tray-id', List.of('some-error'))
+      }
+    )
   })
 })

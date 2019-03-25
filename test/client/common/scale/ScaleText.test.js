@@ -1,8 +1,6 @@
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
 import {ideal} from '../../../../src/client/common/scale/ScaleText'
 
-describe('ScaleText', function () {
+describe('ScaleText', () => {
 
   // actual scale of Roboto Mono
   const heightScale = 1.15
@@ -27,10 +25,10 @@ describe('ScaleText', function () {
     }
   ]
 
-  tests.forEach(function (test) {
-    it(`should calculate the ideal size for sentences [${test.sentences}] at size [${test.width}, ${test.height}]`, function () {
+  tests.forEach((test) => {
+    it(`should calculate the ideal size for sentences [${test.sentences}] at size [${test.width}, ${test.height}]`, () => {
       const actual = ideal(test.sentences, test.height, test.width, heightScale, widthScale)
-      expect(actual).to.equal(test.expected)
+      expect(actual).toEqual(test.expected)
     })
   })
 })

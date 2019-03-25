@@ -1,22 +1,16 @@
-import {withMockedImports} from '../TestUtils'
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
-import {mocks} from '../Mocking'
 import {fromJS, List, Map} from 'immutable'
 import {Tray} from '../../../src/client/domain/Tray'
+import {fetchAll, interesting} from '../../../src/client/gateways/ProjectsGateway'
+import * as gateway from '../../../src/client/gateways/Gateway'
 
-describe('ProjectsGateway', function () {
+describe('ProjectsGateway', () => {
 
-  const post = mocks.stub()
-  const fakeResponse = mocks.stub()
+  gateway.post = jest.fn()
+  gateway.fakeResponse = jest.fn()
 
-  const {fetchAll, interesting} = withMockedImports('client/gateways/ProjectsGateway', {
-    './Gateway': {post, fakeResponse}
-  })
+  describe('fetchAll', () => {
 
-  describe('fetchAll', function () {
-
-    it('posts only the required data from the given trays', () => {
+    test('posts only the required data from the given trays', () => {
       const seen = fromJS({'some-tray-id': []})
       const trays = List([
         new Tray({
@@ -44,14 +38,14 @@ describe('ProjectsGateway', function () {
 
       fetchAll(trays, seen)
 
-      expect(post.getCall(0).args[0]).to.equal('/api/projects/all')
-      expect(post.getCall(0).args[1]).to.equal(expected)
+      expect(gateway.post.mock.calls[0][0]).toEqual('/api/projects/all')
+      expect(gateway.post.mock.calls[0][1]).toEqual(expected)
     })
   })
 
-  describe('interesting', function () {
+  describe('interesting', () => {
 
-    it('maps selected projects to the posted data', function () {
+    test('maps selected projects to the posted data', () => {
       const seen = fromJS({'some-tray-id': []})
       const selected = fromJS({
         'some-tray-id': ['some-project-id']
@@ -80,12 +74,12 @@ describe('ProjectsGateway', function () {
 
       interesting(trays, selected, seen)
 
-      expect(post.getCall(0).args[0]).to.equal('/api/projects/interesting')
-      expect(post.getCall(0).args[1]).to.equal(expected)
-      expect(fakeResponse).to.not.have.been.called()
+      expect(gateway.post.mock.calls[0][0]).toEqual('/api/projects/interesting')
+      expect(gateway.post.mock.calls[0][1]).toEqual(expected)
+      expect(gateway.fakeResponse).not.toBeCalled()
     })
 
-    it('does not include trays with no selected projects and not including new', function () {
+    test('does not include trays with no selected projects and not including new', () => {
       const seen = fromJS({'some-tray-id': []})
       const selected = fromJS({
         'some-tray-id': ['some-project-id'],
@@ -100,21 +94,21 @@ describe('ProjectsGateway', function () {
 
       interesting(trays, selected, seen)
 
-      expect(post.getCall(0).args[1]).to.have.size(2)
-      expect(post.getCall(0).args[1].first()).to.have.property('trayId', 'some-tray-id')
-      expect(post.getCall(0).args[1].get(1)).to.have.property('trayId', 'none-selected-but-includes-new-id')
-      expect(fakeResponse).to.not.have.been.called()
+      expect(gateway.post.mock.calls[0][1].toJS()).toHaveLength(2)
+      expect(gateway.post.mock.calls[0][1].first().toJS()).toHaveProperty('trayId', 'some-tray-id')
+      expect(gateway.post.mock.calls[0][1].get(1).toJS()).toHaveProperty('trayId', 'none-selected-but-includes-new-id')
+      expect(gateway.fakeResponse).not.toBeCalled()
     })
 
-    it('does not call the server at all if no trays have selected projects and new projects are not included', function () {
+    test('does not call the server at all if no trays have selected projects and new projects are not included', () => {
       const seen = fromJS({'some-tray-id': []})
       const selected = fromJS({'some-tray-id': []})
       const trays = List([new Tray({trayId: 'some-tray-id', includeNew: false})])
 
       interesting(trays, selected, seen)
 
-      expect(post).to.not.have.been.called()
-      expect(fakeResponse).to.have.been.calledWith(List())
+      expect(gateway.post).not.toBeCalled()
+      expect(gateway.fakeResponse).toBeCalledWith(List())
     })
   })
 })

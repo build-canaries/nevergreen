@@ -20,14 +20,14 @@
     "build": "webpack --progress --config config/webpack.dev.config.js",
     "build:prod": "webpack --config config/webpack.prod.config.js",
     "build:schema-validator": "ajv compile -s src/client/reducers/schema.json -o src/client/reducers/ValidateConfiguration.js --remove-additional --all-errors",
-    "test": "NODE_ENV=dev mocha --require core-js/stable --require regenerator-runtime/runtime --require @babel/register --require ./test/client/Setup.js -R mocha-circleci-reporter --reporter-options mochaFile=./target/test-reports/client/test-results.xml --recursive test/client",
-    "test:coverage": "nyc --reporter=html --report-dir ./target/coverage-reports/client npm test",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
     "test:journey": "npm run cypress",
     "lint": "npm run lint:js && npm run lint:css",
     "lint:js": "eslint ./src/client ./test/client",
     "lint:css": "stylelint \"src/client/**/*.scss\" --syntax scss",
     "watch:js": "npm run clean && webpack --watch --config config/webpack.dev.config.js",
-    "watch:test": "watch 'npm run test' src/client test/client",
+    "watch:test": "jest --watch",
     "watch:lint": "watch 'npm run lint' src/client test/client"
   },
   "dependencies": {
@@ -75,14 +75,10 @@
     "babel-eslint": "10.0.1",
     "babel-loader": "8.0.5",
     "browserslist": "4.5.2",
-    "chai": "4.2.0",
-    "chai-enzyme": "1.0.0-beta.1",
-    "chai-immutable": "2.0.0",
     "copy-webpack-plugin": "5.0.2",
     "css-loader": "2.1.1",
     "cypress": "3.2.0",
     "cypress-axe": "0.4.0",
-    "dirty-chai": "2.0.1",
     "enzyme": "3.9.0",
     "enzyme-adapter-react-16": "1.11.2",
     "eslint": "5.15.3",
@@ -92,27 +88,22 @@
     "eslint-plugin-react-hooks": "1.6.0",
     "file-loader": "3.0.1",
     "html-webpack-plugin": "3.2.0",
-    "ignore-styles": "5.0.1",
+    "identity-obj-proxy": "3.0.0",
     "imagemin": "6.1.0",
     "imagemin-optipng": "6.0.0",
     "imagemin-svgo": "7.0.0",
     "img-loader": "3.0.1",
-    "jsdom": "14.0.0",
+    "jest": "24.5.0",
+    "jest-junit": "6.3.0",
     "lolex": "3.1.0",
     "mini-css-extract-plugin": "0.5.0",
-    "mocha": "6.0.2",
-    "mocha-circleci-reporter": "0.0.3",
     "node-sass": "4.11.0",
-    "nyc": "13.3.0",
     "optimize-css-assets-webpack-plugin": "5.0.1",
     "postcss-loader": "3.0.0",
-    "proxyquire": "2.1.0",
     "raw-loader": "2.0.0",
     "react-test-renderer": "16.8.5",
     "resolve-url-loader": "3.0.1",
     "sass-loader": "7.1.0",
-    "sinon": "7.3.0",
-    "sinon-chai": "3.3.0",
     "style-loader": "0.23.1",
     "stylelint": "9.10.1",
     "stylelint-config-standard": "18.2.0",
@@ -124,7 +115,6 @@
     "webpack-cli": "3.3.0",
     "webpack-manifest-plugin": "2.0.4",
     "webpack-merge": "4.2.1",
-    "whatwg-url": "7.0.0",
     "workbox-webpack-plugin": "4.1.1"
   },
   "babel": {
@@ -169,7 +159,8 @@
     "env": {
       "es6": true,
       "browser": true,
-      "node": true
+      "node": true,
+      "jest": true
     },
     "parserOptions": {
       "ecmaVersion": 8,
@@ -240,5 +231,30 @@
       "scss/dollar-variable-colon-space-after": "always",
       "order/properties-alphabetical-order": true
     }
+  },
+  "jest": {
+    "roots": [
+      "<rootDir>/test/client"
+    ],
+    "reporters": [
+      "default",
+      "jest-junit"
+    ],
+    "coverageDirectory": "./target/coverage-reports/client",
+    "setupFilesAfterEnv": [
+      "<rootDir>/test/client/setupTestEnv.js"
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|svg|ttf|woff|woff2|mp3)$": "<rootDir>/test/client/fileMock.js",
+      "\\.(css|scss)$": "identity-obj-proxy"
+    },
+    "clearMocks": true,
+    "resetMocks": true,
+    "restoreMocks": true
+  },
+  "jest-junit": {
+    "suiteName": "client tests",
+    "outputDirectory": "./target/test-reports/client",
+    "outputName": "test-results.xml"
   }
 }

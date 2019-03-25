@@ -1,6 +1,4 @@
-import {childText, forUndisplayableStrings, locator} from '../../TestUtils'
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
+import {childText, forUndisplayableStrings, locator} from '../../testHelpers'
 import React from 'react'
 import {shallow} from 'enzyme'
 import {InterestingProject} from '../../../../src/client/common/project/InterestingProject'
@@ -13,7 +11,7 @@ import {PROGNOSIS_HEALTHY_BUILDING, PROGNOSIS_SICK, PROGNOSIS_UNKNOWN} from '../
  * This does introduce coupling between the different elements as they need to know whether to add a space before
  * and/or after.
  */
-describe('<InterestingProject/>', function () {
+describe('<InterestingProject/>', () => {
 
   const DEFAULT_PROPS = {
     prognosis: PROGNOSIS_UNKNOWN,
@@ -29,106 +27,106 @@ describe('<InterestingProject/>', function () {
     showBrokenBuildTimers: null
   }
 
-  describe('tray name', function () {
+  describe('tray name', () => {
 
-    it('should display with a space at the end if enabled and exists', function () {
+    it('should display with a space at the end if enabled and exists', () => {
       const props = {...DEFAULT_PROPS, showTrayName: true, trayName: 'some-tray-name'}
       const wrapper = shallow(<InterestingProject {...props} />)
-      expect(wrapper.find(locator('tray-name'))).to.have.text('some-tray-name ')
+      expect(wrapper.find(locator('tray-name')).text()).toEqual('some-tray-name ')
     })
 
-    it('should not display if disabled', function () {
+    it('should not display if disabled', () => {
       const props = {...DEFAULT_PROPS, showTrayName: false, trayName: 'some-tray-name'}
       const wrapper = shallow(<InterestingProject {...props} />)
-      expect(wrapper.find(locator('tray-name'))).to.not.be.present()
+      expect(wrapper.find(locator('tray-name')).exists()).toBeFalsy()
     })
 
     forUndisplayableStrings((val, friendlyName) => {
-      it(`should not display if enabled but value is ${friendlyName}`, function () {
+      it(`should not display if enabled but value is ${friendlyName}`, () => {
         const props = {...DEFAULT_PROPS, showTrayName: true, trayName: val}
         const wrapper = shallow(<InterestingProject {...props} />)
-        expect(wrapper.find(locator('tray-name'))).to.not.be.present()
+        expect(wrapper.find(locator('tray-name')).exists()).toBeFalsy()
       })
     })
   })
 
-  it('should display the project name with no added spaces', function () {
+  it('should display the project name with no added spaces', () => {
     const props = {...DEFAULT_PROPS, name: 'some-name'}
     const wrapper = shallow(<InterestingProject {...props} />)
-    expect(wrapper.find(locator('project-name'))).to.have.text('some-name')
+    expect(wrapper.find(locator('project-name')).text()).toEqual('some-name')
   })
 
-  describe('stage', function () {
+  describe('stage', () => {
 
-    it('should display with a space at the beginning if it exists', function () {
+    it('should display with a space at the beginning if it exists', () => {
       const props = {...DEFAULT_PROPS, stage: 'some-stage'}
       const wrapper = shallow(<InterestingProject {...props} />)
-      expect(wrapper.find(locator('project-stage'))).to.have.text(' some-stage')
+      expect(wrapper.find(locator('project-stage')).text()).toEqual(' some-stage')
     })
 
     forUndisplayableStrings((val, friendlyName) => {
-      it(`should not display if value is ${friendlyName}`, function () {
+      it(`should not display if value is ${friendlyName}`, () => {
         const props = {...DEFAULT_PROPS, stage: val}
         const wrapper = shallow(<InterestingProject {...props} />)
-        expect(wrapper.find(locator('project-stage'))).to.not.be.present()
+        expect(wrapper.find(locator('project-stage')).exists()).toBeFalsy()
       })
     })
   })
 
-  it('should add a visually hidden prognosis for screen readers', function () {
+  it('should add a visually hidden prognosis for screen readers', () => {
     const props = {...DEFAULT_PROPS, prognosis: PROGNOSIS_HEALTHY_BUILDING}
     const wrapper = shallow(<InterestingProject {...props} />)
-    expect(childText(wrapper, locator('prognosis'))).to.equal(' prognosis healthy-building')
+    expect(childText(wrapper, locator('prognosis'))).toEqual(' prognosis healthy-building')
   })
 
-  describe('broken build timer', function () {
+  describe('broken build timer', () => {
 
-    it('should not display if disabled', function () {
+    it('should not display if disabled', () => {
       const props = {...DEFAULT_PROPS, showBrokenBuildTimers: false}
       const wrapper = shallow(<InterestingProject {...props} />)
-      expect(wrapper.find(locator('time-broken'))).to.not.be.present()
+      expect(wrapper.find(locator('time-broken')).exists()).toBeFalsy()
     })
 
-    it('should not display if prognosis is not sick', function () {
+    it('should not display if prognosis is not sick', () => {
       const props = {...DEFAULT_PROPS, showBrokenBuildTimers: true, prognosis: PROGNOSIS_UNKNOWN}
       const wrapper = shallow(<InterestingProject {...props} />)
-      expect(wrapper.find(locator('time-broken'))).to.not.be.present()
+      expect(wrapper.find(locator('time-broken')).exists()).toBeFalsy()
     })
 
-    it('should display if prognosis is sick and its enabled', function () {
+    it('should display if prognosis is sick and its enabled', () => {
       const props = {...DEFAULT_PROPS, showBrokenBuildTimers: true, prognosis: PROGNOSIS_SICK}
       const wrapper = shallow(<InterestingProject {...props} />)
-      expect(wrapper.find(locator('time-broken'))).to.be.present()
+      expect(wrapper.find(locator('time-broken')).exists()).toBeTruthy()
     })
   })
 
-  describe('build timer', function () {
+  describe('build timer', () => {
 
-    it('should not display if disabled', function () {
+    it('should not display if disabled', () => {
       const props = {...DEFAULT_PROPS, showBuildTimers: false}
       const wrapper = shallow(<InterestingProject {...props} />)
-      expect(wrapper.find(locator('time-building'))).to.not.be.present()
+      expect(wrapper.find(locator('time-building')).exists()).toBeFalsy()
     })
 
-    it('should not display if prognosis is not building', function () {
+    it('should not display if prognosis is not building', () => {
       const props = {...DEFAULT_PROPS, showBuildTimers: true, prognosis: PROGNOSIS_UNKNOWN}
       const wrapper = shallow(<InterestingProject {...props} />)
-      expect(wrapper.find(locator('time-building'))).to.not.be.present()
+      expect(wrapper.find(locator('time-building')).exists()).toBeFalsy()
     })
 
-    it('should display if prognosis is building and its enabled', function () {
+    it('should display if prognosis is building and its enabled', () => {
       const props = {...DEFAULT_PROPS, showBuildTimers: true, prognosis: PROGNOSIS_HEALTHY_BUILDING}
       const wrapper = shallow(<InterestingProject {...props} />)
-      expect(wrapper.find(locator('time-building'))).to.be.present()
+      expect(wrapper.find(locator('time-building')).exists()).toBeTruthy()
     })
   })
 
-  describe('build label', function () {
+  describe('build label', () => {
 
-    it('should not display if disabled', function () {
+    it('should not display if disabled', () => {
       const props = {...DEFAULT_PROPS, showBuildLabel: false}
       const wrapper = shallow(<InterestingProject {...props} />)
-      expect(wrapper.find(locator('build-label'))).to.not.be.present()
+      expect(wrapper.find(locator('build-label')).exists()).toBeFalsy()
     })
 
     /*
@@ -137,7 +135,7 @@ describe('<InterestingProject/>', function () {
      * label for sick projects. It's also possible to change the build label in some CI servers (e.g. GoCD) so we
      * can't assume it's a number and increment by one for display purposes on non broken builds.
      */
-    it('should not display if prognosis is not sick', function () {
+    it('should not display if prognosis is not sick', () => {
       const props = {
         ...DEFAULT_PROPS,
         showBuildLabel: true,
@@ -145,22 +143,21 @@ describe('<InterestingProject/>', function () {
         prognosis: PROGNOSIS_HEALTHY_BUILDING
       }
       const wrapper = shallow(<InterestingProject {...props} />)
-      expect(wrapper.find(locator('build-label'))).to.not.be.present()
+      expect(wrapper.find(locator('build-label')).exists()).toBeFalsy()
     })
 
     forUndisplayableStrings((val, friendlyName) => {
-      it(`should not display if ${friendlyName}, regardless of prognosis`, function () {
+      it(`should not display if ${friendlyName}, regardless of prognosis`, () => {
         const props = {...DEFAULT_PROPS, showBuildLabel: true, lastBuildLabel: val, prognosis: PROGNOSIS_SICK}
         const wrapper = shallow(<InterestingProject {...props} />)
-        expect(wrapper.find(locator('build-label'))).to.not.be.present()
+        expect(wrapper.find(locator('build-label')).exists()).toBeFalsy()
       })
     })
 
-    it('should display with a space before if enabled, exists and prognosis is sick', function () {
+    it('should display with a space before if enabled, exists and prognosis is sick', () => {
       const props = {...DEFAULT_PROPS, showBuildLabel: true, lastBuildLabel: '1234', prognosis: PROGNOSIS_SICK}
       const wrapper = shallow(<InterestingProject {...props} />)
-      expect(wrapper.find(locator('build-label'))).to.be.present()
-      expect(wrapper.find(locator('build-label')).text()).to.equal(' #1234')
+      expect(wrapper.find(locator('build-label')).text()).toEqual(' #1234')
     })
   })
 })

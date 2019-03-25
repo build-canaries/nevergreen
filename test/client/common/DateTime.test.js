@@ -1,32 +1,32 @@
-import {expect} from 'chai'
-import {describe, it} from 'mocha'
-import {setSystemTime} from '../FakeTimers'
+import {setSystemTime} from '../clock'
 import {abbreviateDuration, formatAsDuration, secondsToString} from '../../../src/client/common/DateTime'
-import {forNonStrings, forUndisplayableStrings} from '../TestUtils'
+import {forNonStrings, forUndisplayableStrings} from '../testHelpers'
 
-describe('DateTime', function () {
+describe('DateTime', () => {
 
-  describe('formatAsDuration', function () {
+  describe('formatAsDuration', () => {
 
     forUndisplayableStrings((value, friendlyName) => {
-      it(`should return "unknown" for undisplayble string value ${friendlyName}`, function () {
-        expect(formatAsDuration(value)).to.equal('unknown')
-      })
+      test(`should return "unknown" for undisplayble string value ${friendlyName}`, () => {
+          expect(formatAsDuration(value)).toBe('unknown')
+        }
+      )
     })
 
     forNonStrings((value, friendlyName) => {
-      it(`should return "unknown" for non string value ${friendlyName}`, function () {
-        expect(formatAsDuration(value)).to.equal('unknown')
-      })
+      test(`should return "unknown" for non string value ${friendlyName}`, () => {
+          expect(formatAsDuration(value)).toBe('unknown')
+        }
+      )
     })
 
-    it('should return the duration for a valid date timestamp', function () {
+    test('should return the duration for a valid date timestamp', () => {
       setSystemTime('2018-02-18T23:38:00Z')
-      expect(formatAsDuration('2018-02-18T22:38:00.000Z')).to.equal('about 1 hour')
+      expect(formatAsDuration('2018-02-18T22:38:00.000Z')).toBe('about 1 hour')
     })
   })
 
-  describe('abbreviateDuration', function () {
+  describe('abbreviateDuration', () => {
 
     const abbreviatedTests = [
       {value: 'unknown', expected: '??'},
@@ -41,38 +41,41 @@ describe('DateTime', function () {
     ]
 
     abbreviatedTests.forEach((args) => {
-      it(`should return "${args.expected}" when "${args.value}"`, function () {
-        expect(abbreviateDuration(args.value)).to.equal(args.expected)
+      test(`should return "${args.expected}" when "${args.value}"`, () => {
+        expect(abbreviateDuration(args.value)).toBe(args.expected)
       })
     })
 
     forUndisplayableStrings((value, friendlyName) => {
-      it(`should return an empty string for invalid value ${friendlyName}`, function () {
-        expect(abbreviateDuration(value)).to.equal('')
-      })
+      test(
+        `should return an empty string for invalid value ${friendlyName}`,
+        () => {
+          expect(abbreviateDuration(value)).toBe('')
+        }
+      )
     })
   })
 
-  describe('secondsToString', function () {
+  describe('secondsToString', () => {
 
-    it('should format anything less than a minute as seconds', function () {
-      expect(secondsToString(1)).to.equal('1 second')
-      expect(secondsToString(59)).to.equal('59 seconds')
+    test('should format anything less than a minute as seconds', () => {
+      expect(secondsToString(1)).toBe('1 second')
+      expect(secondsToString(59)).toBe('59 seconds')
     })
 
-    it('should format anything less than an hour as minutes', function () {
-      expect(secondsToString(60)).to.equal('1 minute')
-      expect(secondsToString(3599)).to.equal('59 minutes')
+    test('should format anything less than an hour as minutes', () => {
+      expect(secondsToString(60)).toBe('1 minute')
+      expect(secondsToString(3599)).toBe('59 minutes')
     })
 
-    it('should format anything less than a day as hours', function () {
-      expect(secondsToString(3600)).to.equal('1 hour')
-      expect(secondsToString(86399)).to.equal('23 hours')
+    test('should format anything less than a day as hours', () => {
+      expect(secondsToString(3600)).toBe('1 hour')
+      expect(secondsToString(86399)).toBe('23 hours')
     })
 
-    it('should format anything larger as days', function () {
-      expect(secondsToString(86400)).to.equal('1 day')
-      expect(secondsToString(216000)).to.equal('2 days')
+    test('should format anything larger as days', () => {
+      expect(secondsToString(86400)).toBe('1 day')
+      expect(secondsToString(216000)).toBe('2 days')
     })
   })
 })

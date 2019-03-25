@@ -1,110 +1,110 @@
-import {withMockedImports} from '../TestUtils'
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
-import {mocks} from '../Mocking'
-import {TIMEOUT_ERROR, UNKNOWN_ERROR} from '../../../src/client/gateways/Gateway'
+import {
+  abortPendingRequest,
+  fakeResponse,
+  send,
+  TIMEOUT_ERROR,
+  UNKNOWN_ERROR
+} from '../../../src/client/gateways/Gateway'
 import {Map} from 'immutable'
 
-describe('Gateway', function () {
+describe('Gateway', () => {
 
-  const {send, fakeResponse, abortPendingRequest} = withMockedImports('client/gateways/Gateway', {
-    superagent: {}
-  })
+  describe('send', () => {
 
-  describe('send', function () {
-
-    it('should return the response body as an immutable object', async function () {
+    test('should return the response body as an immutable object', async () => {
       const request = Promise.resolve({body: {foo: 'bar'}})
       const actual = await send(request)
-      expect(actual).to.equal(Map({foo: 'bar'}))
+      expect(actual).toEqual(Map({foo: 'bar'}))
     })
 
-    it('should return the response text if no body exists (this will be the case for plain/text)', async function () {
+    test('should return the response text if no body exists (this will be the case for plain/text)', async () => {
       const request = Promise.resolve({text: 'some-text'})
       const actual = await send(request)
-      expect(actual).to.equal('some-text')
+      expect(actual).toEqual('some-text')
     })
 
-    it('should throw the status on error', async function () {
+    test('should throw the status on error', async () => {
       const request = Promise.reject({status: 500})
       try {
         await send(request)
       } catch (err) {
-        expect(err).to.have.property('status', 500)
+        expect(err).toHaveProperty('status', 500)
       }
     })
 
-    it('should throw the status on error set to 0 if it does not exist in the response', async function () {
+    test('should throw the status on error set to 0 if it does not exist in the response', async () => {
       const request = Promise.reject({})
       try {
         await send(request)
       } catch (err) {
-        expect(err).to.have.property('status', 0)
+        expect(err).toHaveProperty('status', 0)
       }
     })
 
-    it('should throw the body on error', async function () {
+    test('should throw the body on error', async () => {
       const request = Promise.reject({response: {body: 'some-body'}})
       try {
         await send(request)
       } catch (err) {
-        expect(err).to.have.property('body', 'some-body')
+        expect(err).toHaveProperty('body', 'some-body')
       }
     })
 
-    it('should throw the message on error if no body exists', async function () {
+    test('should throw the message on error if no body exists', async () => {
       const request = Promise.reject({message: 'some-error'})
       try {
         await send(request)
       } catch (err) {
-        expect(err).to.have.property('body', 'some-error')
+        expect(err).toHaveProperty('body', 'some-error')
       }
     })
 
-    it('should throw body as unknown if no response or message exists', async function () {
+    test('should throw body as unknown if no response or message exists', async () => {
       const request = Promise.reject({})
       try {
         await send(request)
       } catch (err) {
-        expect(err).to.have.property('body').that.equals(UNKNOWN_ERROR)
+        expect(err.body).toEqual(UNKNOWN_ERROR)
       }
     })
 
-    it('should throw the body on error as timeout when the request times out', async function () {
+    test('should throw the body on error as timeout when the request times out', async () => {
       const request = Promise.reject({timeout: true})
       try {
         await send(request)
       } catch (err) {
-        expect(err).to.have.property('body', TIMEOUT_ERROR)
+        expect(err).toHaveProperty('body', TIMEOUT_ERROR)
       }
     })
   })
 
-  describe('fakeResponse', function () {
+  describe('fakeResponse', () => {
 
-    it('should return a plain JS object as this is what superagent returns', async function () {
-      const response = await fakeResponse('whatever')
-      expect(response).to.be.instanceOf(Object)
-    })
+    test('should return a plain JS object as this is what superagent returns', async () => {
+        const response = await fakeResponse('whatever')
+        expect(response).toBeInstanceOf(Object)
+      }
+    )
 
-    it('should return the given body', async function () {
+    test('should return the given body', async () => {
       const response = await fakeResponse('whatever')
-      expect(response).to.have.property('body', 'whatever')
+      expect(response).toHaveProperty('body', 'whatever')
     })
   })
 
-  describe('abortPendingRequest', function () {
+  describe('abortPendingRequest', () => {
 
-    it('should abort a superagent request', function () {
-      const abort = mocks.spy()
+    test('should abort a superagent request', () => {
+      const abort = jest.fn()
       abortPendingRequest({abort})
-      expect(abort).to.have.been.called()
+      expect(abort).toBeCalled()
     })
 
-    it('should not error if given something that is not a superagent request', function () {
-      [null, undefined, 'a-string', {}, true, false].forEach((val) => {
-        abortPendingRequest(val)
-      })
-    })
+    test('should not error if given something that is not a superagent request', () => {
+        [null, undefined, 'a-string', {}, true, false].forEach((val) => {
+          abortPendingRequest(val)
+        })
+      }
+    )
   })
 })

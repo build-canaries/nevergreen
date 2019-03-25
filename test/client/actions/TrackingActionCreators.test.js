@@ -1,6 +1,3 @@
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
-import {mocks} from '../Mocking'
 import {
   HIGHLIGHT_TRAY,
   PROJECTS_FETCH_ERROR,
@@ -32,252 +29,252 @@ import {
 import {List} from 'immutable'
 import {Project} from '../../../src/client/domain/Project'
 
-describe('TrackingActionCreators', function () {
+describe('TrackingActionCreators', () => {
 
-  describe(TRAY_ADDED, function () {
+  describe(TRAY_ADDED, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = trayAdded()
-      expect(actual).to.have.property('type', TRAY_ADDED)
+      expect(actual).toHaveProperty('type', TRAY_ADDED)
     })
 
-    it('should return the tray id', function () {
+    test('should return the tray id', () => {
       const actual = trayAdded('some-tray-id')
-      expect(actual).to.have.property('trayId', 'some-tray-id')
-      expect(actual).to.have.property('data').that.includes.property('trayId', 'some-tray-id')
+      expect(actual).toHaveProperty('trayId', 'some-tray-id')
+      expect(actual.data.toJS()).toHaveProperty('trayId', 'some-tray-id')
     })
 
-    it('should return the tray url', function () {
+    test('should return the tray url', () => {
       const actual = trayAdded('irrelevant', 'some-url')
-      expect(actual).to.have.property('data').that.includes.property('url', 'some-url')
+      expect(actual.data.toJS()).toHaveProperty('url', 'some-url')
     })
 
-    it('should return the tray username', function () {
+    test('should return the tray username', () => {
       const actual = trayAdded('irrelevant', 'irrelevant', 'some-username')
-      expect(actual).to.have.property('data').that.includes.property('username', 'some-username')
+      expect(actual.data.toJS()).toHaveProperty('username', 'some-username')
     })
 
-    it('should return a generated tray name', function () {
+    test('should return a generated tray name', () => {
       const actual = trayAdded()
-      expect(actual).to.have.property('data').that.includes.property('name').that.is.not.null()
+      expect(actual.data.toJS().name).not.toBeNull()
     })
 
-    it('should return highlight', function () {
+    test('should return highlight', () => {
       const actual = trayAdded('irrelevant', 'irrelevant', 'some-username')
-      expect(actual).to.have.property('data').that.includes.property('highlight', true)
+      expect(actual.data.toJS()).toHaveProperty('highlight', true)
     })
   })
 
-  describe(HIGHLIGHT_TRAY, function () {
+  describe(HIGHLIGHT_TRAY, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = highlightTray()
-      expect(actual).to.have.property('type', HIGHLIGHT_TRAY)
+      expect(actual).toHaveProperty('type', HIGHLIGHT_TRAY)
     })
 
-    it('should return the tray id', function () {
+    test('should return the tray id', () => {
       const actual = highlightTray('some-tray-id')
-      expect(actual).to.have.property('trayId', 'some-tray-id')
+      expect(actual).toHaveProperty('trayId', 'some-tray-id')
     })
   })
 
-  describe(REMOVE_TRAY, function () {
+  describe(REMOVE_TRAY, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = removeTray()
-      expect(actual).to.have.property('type', REMOVE_TRAY)
+      expect(actual).toHaveProperty('type', REMOVE_TRAY)
     })
 
-    it('should return the tray id', function () {
+    test('should return the tray id', () => {
       const actual = removeTray('some-tray-id')
-      expect(actual).to.have.property('trayId', 'some-tray-id')
+      expect(actual).toHaveProperty('trayId', 'some-tray-id')
     })
 
-    it('should abort the pending request', function () {
-      const abort = mocks.spy()
+    test('should abort the pending request', () => {
+      const abort = jest.fn()
       removeTray('some-tray-id', {abort})
-      expect(abort).to.have.been.called()
+      expect(abort).toBeCalled()
     })
   })
 
-  describe(PROJECTS_FETCHING, function () {
+  describe(PROJECTS_FETCHING, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = projectsFetching()
-      expect(actual).to.have.property('type', PROJECTS_FETCHING)
+      expect(actual).toHaveProperty('type', PROJECTS_FETCHING)
     })
 
-    it('should return the tray id', function () {
+    test('should return the tray id', () => {
       const actual = projectsFetching('some-tray-id')
-      expect(actual).to.have.property('trayId', 'some-tray-id')
+      expect(actual).toHaveProperty('trayId', 'some-tray-id')
     })
 
-    it('should return the request', function () {
+    test('should return the request', () => {
       const actual = projectsFetching('irrelevant', 'some-request')
-      expect(actual).to.have.property('request', 'some-request')
+      expect(actual).toHaveProperty('request', 'some-request')
     })
   })
 
-  describe(PROJECTS_FETCHED, function () {
+  describe(PROJECTS_FETCHED, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = projectsFetched('irrelevant', List())
-      expect(actual).to.have.property('type', PROJECTS_FETCHED)
+      expect(actual).toHaveProperty('type', PROJECTS_FETCHED)
     })
 
-    it('should return the tray id', function () {
+    test('should return the tray id', () => {
       const actual = projectsFetched('some-tray-id', List())
-      expect(actual).to.have.property('trayId', 'some-tray-id')
+      expect(actual).toHaveProperty('trayId', 'some-tray-id')
     })
 
-    it('should return the projects', function () {
+    test('should return the projects', () => {
       const actual = projectsFetched('irrelevant', List.of(
         new Project({webUrl: 'bar'})
       ))
-      expect(actual).to.have.property('data').that.includes.nested.property('[0].webUrl', 'bar')
+      expect(actual.data.toJS()[0]).toHaveProperty('webUrl', 'bar')
     })
 
-    it('should return a timestamp', function () {
+    test('should return a timestamp', () => {
       const actual = projectsFetched('irrelevant', List())
-      expect(actual).to.have.property('timestamp').that.is.not.empty()
+      expect(actual).toHaveProperty('timestamp')
     })
 
-    it('should return the server type', function () {
+    test('should return the server type', () => {
       const actual = projectsFetched('irrelevant', List.of(
         new Project({serverType: 'some-type'})
       ))
-      expect(actual).to.have.property('serverType', 'some-type')
+      expect(actual).toHaveProperty('serverType', 'some-type')
     })
 
-    it('should return whether to include new projects or not', function () {
+    test('should return whether to include new projects or not', () => {
       const actual = projectsFetched('irrelevant', List(), true)
-      expect(actual).to.have.property('includeNew', true)
+      expect(actual).toHaveProperty('includeNew', true)
     })
   })
 
-  describe(PROJECTS_FETCH_ERROR, function () {
+  describe(PROJECTS_FETCH_ERROR, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = projectsFetchError()
-      expect(actual).to.have.property('type', PROJECTS_FETCH_ERROR)
+      expect(actual).toHaveProperty('type', PROJECTS_FETCH_ERROR)
     })
 
-    it('should return the tray id', function () {
+    test('should return the tray id', () => {
       const actual = projectsFetchError('some-tray-id')
-      expect(actual).to.have.property('trayId', 'some-tray-id')
+      expect(actual).toHaveProperty('trayId', 'some-tray-id')
     })
 
-    it('should return the errors', function () {
+    test('should return the errors', () => {
       const actual = projectsFetchError('some-tray-id', List.of('some-error'))
-      expect(actual).to.have.property('errors').that.includes('some-error')
+      expect(actual.errors.toJS()).toEqual(['some-error'])
     })
   })
 
-  describe(SET_TRAY_NAME, function () {
+  describe(SET_TRAY_NAME, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = setTrayName()
-      expect(actual).to.have.property('type', SET_TRAY_NAME)
+      expect(actual).toHaveProperty('type', SET_TRAY_NAME)
     })
 
-    it('should return the tray id', function () {
+    test('should return the tray id', () => {
       const actual = setTrayName('some-tray-id')
-      expect(actual).to.have.property('trayId', 'some-tray-id')
+      expect(actual).toHaveProperty('trayId', 'some-tray-id')
     })
 
-    it('should return the tray name', function () {
+    test('should return the tray name', () => {
       const actual = setTrayName('irrelevant', 'some-name')
-      expect(actual).to.have.property('name', 'some-name')
+      expect(actual).toHaveProperty('name', 'some-name')
     })
   })
 
-  describe(SET_SERVER_TYPE, function () {
+  describe(SET_SERVER_TYPE, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = setServerType()
-      expect(actual).to.have.property('type', SET_SERVER_TYPE)
+      expect(actual).toHaveProperty('type', SET_SERVER_TYPE)
     })
 
-    it('should return the tray id', function () {
+    test('should return the tray id', () => {
       const actual = setServerType('some-tray-id')
-      expect(actual).to.have.property('trayId', 'some-tray-id')
+      expect(actual).toHaveProperty('trayId', 'some-tray-id')
     })
 
-    it('should return the server type', function () {
+    test('should return the server type', () => {
       const actual = setServerType('irrelevant', 'some-type')
-      expect(actual).to.have.property('serverType', 'some-type')
+      expect(actual).toHaveProperty('serverType', 'some-type')
     })
   })
 
-  describe(SET_TRAY_USERNAME, function () {
+  describe(SET_TRAY_USERNAME, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = setTrayUsername()
-      expect(actual).to.have.property('type', SET_TRAY_USERNAME)
+      expect(actual).toHaveProperty('type', SET_TRAY_USERNAME)
     })
 
-    it('should return the tray id', function () {
+    test('should return the tray id', () => {
       const actual = setTrayUsername('some-tray-id')
-      expect(actual).to.have.property('trayId', 'some-tray-id')
+      expect(actual).toHaveProperty('trayId', 'some-tray-id')
     })
 
-    it('should return the tray username', function () {
+    test('should return the tray username', () => {
       const actual = setTrayUsername('irrelevant', 'some-username')
-      expect(actual).to.have.property('username', 'some-username')
+      expect(actual).toHaveProperty('username', 'some-username')
     })
   })
 
-  describe(SET_TRAY_URL, function () {
+  describe(SET_TRAY_URL, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = setTrayUrl()
-      expect(actual).to.have.property('type', SET_TRAY_URL)
+      expect(actual).toHaveProperty('type', SET_TRAY_URL)
     })
 
-    it('should return the url', function () {
+    test('should return the url', () => {
       const actual = setTrayUrl('irrelevant', 'some-url')
-      expect(actual).to.have.property('url', 'some-url')
+      expect(actual).toHaveProperty('url', 'some-url')
     })
   })
 
-  describe(SELECT_PROJECT, function () {
+  describe(SELECT_PROJECT, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = selectProject()
-      expect(actual).to.have.property('type', SELECT_PROJECT)
+      expect(actual).toHaveProperty('type', SELECT_PROJECT)
     })
 
-    it('should return the tray id', function () {
+    test('should return the tray id', () => {
       const actual = selectProject('some-tray-id')
-      expect(actual).to.have.property('trayId', 'some-tray-id')
+      expect(actual).toHaveProperty('trayId', 'some-tray-id')
     })
 
-    it('should return the web url', function () {
+    test('should return the web url', () => {
       const actual = selectProject('irrelevant', 'some-project-url')
-      expect(actual).to.have.property('projectId', 'some-project-url')
+      expect(actual).toHaveProperty('projectId', 'some-project-url')
     })
 
-    it('should return if the project was selected', function () {
+    test('should return if the project was selected', () => {
       const actual = selectProject('irrelevant', 'irrelevant', true)
-      expect(actual).to.have.property('selected', true)
+      expect(actual).toHaveProperty('selected', true)
     })
   })
 
-  describe(SET_INCLUDE_NEW, function () {
+  describe(SET_INCLUDE_NEW, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = setIncludeNew()
-      expect(actual).to.have.property('type', SET_INCLUDE_NEW)
+      expect(actual).toHaveProperty('type', SET_INCLUDE_NEW)
     })
 
-    it('should return the value', function () {
+    test('should return the value', () => {
       const actual = setIncludeNew('some-tray-id')
-      expect(actual).to.have.property('trayId', 'some-tray-id')
+      expect(actual).toHaveProperty('trayId', 'some-tray-id')
     })
 
-    it('should return the value', function () {
+    test('should return the value', () => {
       const actual = setIncludeNew('irrelevant', true)
-      expect(actual).to.have.property('value', true)
+      expect(actual).toHaveProperty('value', true)
     })
   })
 })

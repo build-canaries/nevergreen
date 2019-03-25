@@ -1,25 +1,19 @@
-import {withMockedImports} from '../TestUtils'
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
-import {mocks} from '../Mocking'
+import * as gateway from '../../../src/client/gateways/Gateway'
 import {GatewayError} from '../../../src/client/gateways/Gateway'
+import {createGist, getGist, getTruncatedFile, send, updateGist} from '../../../src/client/gateways/GitHubGateway'
 
-describe('GitHubGateway', function () {
+describe('GitHubGateway', () => {
 
   const EXPECTED_ACCEPT_HEADER = {Accept: 'application/vnd.github.v3+json'}
 
-  const get = mocks.stub()
-  const patch = mocks.stub()
-  const post = mocks.stub()
-  const gatewaySend = mocks.stub()
+  gateway.get = jest.fn()
+  gateway.patch = jest.fn()
+  gateway.post = jest.fn()
+  gateway.send = jest.fn()
 
-  const {createGist, updateGist, getGist, getTruncatedFile, send} = withMockedImports('client/gateways/GitHubGateway', {
-    './Gateway': {send: gatewaySend, get, patch, post}
-  })
+  describe('createGist', () => {
 
-  describe('createGist', function () {
-
-    it('should call with the gist URL, updated gist data and the correct headers', function () {
+    test('should call with the gist URL, updated gist data and the correct headers', () => {
       const expectedData = {
         description: 'some-description',
         public: false,
@@ -32,13 +26,13 @@ describe('GitHubGateway', function () {
 
       createGist('some-description', 'some-configuration', 'some-oauth-token')
 
-      expect(post).to.have.been.calledWith('https://api.github.com/gists', expectedData, expectedHeaders)
+      expect(gateway.post).toBeCalledWith('https://api.github.com/gists', expectedData, expectedHeaders)
     })
   })
 
-  describe('updateGist', function () {
+  describe('updateGist', () => {
 
-    it('should call with the gist URL, updated gist data and the correct headers', function () {
+    test('should call with the gist URL, updated gist data and the correct headers', () => {
       const expectedData = {
         description: 'some-description',
         files: {'configuration.json': {content: 'some-configuration'}}
@@ -50,43 +44,43 @@ describe('GitHubGateway', function () {
 
       updateGist('some-gist-id', 'some-description', 'some-configuration', 'some-oauth-token')
 
-      expect(patch).to.have.been.calledWith('https://api.github.com/gists/some-gist-id', expectedData, expectedHeaders)
+      expect(gateway.patch).toBeCalledWith('https://api.github.com/gists/some-gist-id', expectedData, expectedHeaders)
     })
   })
 
-  describe('getGist', function () {
+  describe('getGist', () => {
 
-    it('should call with the gist URL and the correct accept header', function () {
+    test('should call with the gist URL and the correct accept header', () => {
       getGist('some-gist-id')
-      expect(get).to.have.been.calledWith('https://api.github.com/gists/some-gist-id', EXPECTED_ACCEPT_HEADER)
+      expect(gateway.get).toBeCalledWith('https://api.github.com/gists/some-gist-id', EXPECTED_ACCEPT_HEADER)
     })
   })
 
-  describe('getTruncatedFile', function () {
+  describe('getTruncatedFile', () => {
 
-    it('should call with the given URL and the correct accept header', function () {
+    test('should call with the given URL and the correct accept header', () => {
       getTruncatedFile('some-url')
-      expect(get).to.have.been.calledWith('some-url', {Accept: 'text/plain; charset=utf-8'})
+      expect(gateway.get).toBeCalledWith('some-url', {Accept: 'text/plain; charset=utf-8'})
     })
   })
 
-  describe('send', function () {
+  describe('send', () => {
 
-    it('should return the message from the body including the status on error', async function () {
-      gatewaySend.rejects(new GatewayError('', 500, {message: 'some-error'}))
+    test('should return the message from the body including the status on error', async () => {
+      gateway.send.mockRejectedValue(new GatewayError('', 500, {message: 'some-error'}))
       try {
         await send()
       } catch (err) {
-        expect(err).to.have.property('message', '500 - some-error')
+        expect(err).toHaveProperty('message', '500 - some-error')
       }
     })
 
-    it('should return the body if it does not contain a message on error', async function () {
-      gatewaySend.rejects(new GatewayError('', 0, 'timeout'))
+    test('should return the body if it does not contain a message on error', async () => {
+      gateway.send.mockRejectedValue(new GatewayError('', 0, 'timeout'))
       try {
         await send()
       } catch (err) {
-        expect(err).to.have.property('message', '0 - timeout')
+        expect(err).toHaveProperty('message', '0 - timeout')
       }
     })
   })

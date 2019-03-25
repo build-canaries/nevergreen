@@ -1,45 +1,40 @@
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
 import React from 'react'
-import {shallow, mount} from 'enzyme'
+import {mount, shallow} from 'enzyme'
 import {VisuallyHidden} from '../../../src/client/common/VisuallyHidden'
-import {childText, locator, withMockedImports} from '../TestUtils'
-import {mocks} from '../Mocking'
+import {childText, locator} from '../testHelpers'
+import {Title} from '../../../src/client/common/Title'
+import * as ForceFocusHook from '../../../src/client/common/ForceFocusHook'
 
-describe('<Title/>', function () {
+describe('<Title/>', () => {
 
-  const useForceFocus = mocks.spy()
+  ForceFocusHook.useForceFocus = jest.fn()
 
-  const {Title} = withMockedImports('client/common/Title', {
-    './ForceFocusHook': {useForceFocus}
-  })
-
-  it('should set the document title on mount', function () {
+  test('should set the document title on mount', () => {
     mount(<Title>some-title</Title>)
-    expect(global.document).to.have.property('title', 'some-title')
+    expect(global.document).toHaveProperty('title', 'some-title')
   })
 
-  it('should set the document title back to default on unmount', function () {
+  test('should set the document title back to default on unmount', () => {
     const wrapper = mount(<Title>some-title</Title>)
     wrapper.unmount()
-    expect(global.document).to.have.property('title', 'Nevergreen')
+    expect(global.document).toHaveProperty('title', 'Nevergreen')
   })
 
-  it('should focus on mount so keyboard users can start tabbing directly into the page and it also makes screen readers announce the title', function () {
+  test('should focus on mount so keyboard users can start tabbing directly into the page and it also makes screen readers announce the title', () => {
     shallow(<Title>some-title</Title>)
-    expect(useForceFocus).to.have.been.called()
+    expect(ForceFocusHook.useForceFocus).toBeCalled()
   })
 
-  it('should not be part of the normal tab flow', function () {
+  test('should not be part of the normal tab flow', () => {
     const wrapper = shallow(<Title>some-title</Title>)
-    expect(wrapper.find(locator('title'))).to.have.prop('tabIndex', '-1')
+    expect(wrapper.find(locator('title')).prop('tabIndex')).toEqual('-1')
   })
 
-  describe('accessibility', function () {
+  describe('accessibility', () => {
 
-    it('should have a visually hidden title so screen readers still announce it', function () {
+    test('should have a visually hidden title so screen readers still announce it', () => {
       const wrapper = shallow(<Title>some-title</Title>)
-      expect(childText(wrapper, VisuallyHidden)).to.equal('some-title')
+      expect(childText(wrapper, VisuallyHidden)).toBe('some-title')
     })
   })
 })

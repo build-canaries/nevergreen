@@ -1,47 +1,45 @@
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
 import {List} from 'immutable'
 import {IMPORT_ERROR, IMPORT_SUCCESS, IMPORTING} from '../../../src/client/actions/Actions'
 import {importError, importing, importSuccess} from '../../../src/client/actions/ImportActionCreators'
 
-describe('ImportActionCreators', function () {
+describe('ImportActionCreators', () => {
 
-  describe(IMPORTING, function () {
+  describe(IMPORTING, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = importing()
-      expect(actual).to.have.property('type', IMPORTING)
+      expect(actual).toHaveProperty('type', IMPORTING)
     })
   })
 
-  describe(IMPORT_ERROR, function () {
+  describe(IMPORT_ERROR, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = importError()
-      expect(actual).to.have.property('type', IMPORT_ERROR)
+      expect(actual).toHaveProperty('type', IMPORT_ERROR)
     })
 
-    it('should return the errors given', function () {
+    test('should return the errors given', () => {
       const actual = importError(['some-error'])
-      expect(actual).to.have.property('errors').that.contains('some-error')
+      expect(actual.errors.toJS()).toEqual(expect.arrayContaining(['some-error']))
     })
   })
 
-  describe(IMPORT_SUCCESS, function () {
+  describe(IMPORT_SUCCESS, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = importSuccess()
-      expect(actual).to.have.property('type', IMPORT_SUCCESS)
+      expect(actual).toHaveProperty('type', IMPORT_SUCCESS)
     })
 
-    it('should return the configuration given', function () {
+    test('should return the configuration given', () => {
       const actual = importSuccess({foo: 'bar'})
-      expect(actual).to.have.property('data').that.contains.property('foo', 'bar')
+      expect(actual.data.toJS()).toHaveProperty('foo', 'bar')
     })
 
-    it('should return a success message', function () {
+    test('should return a success message', () => {
       const actual = importSuccess()
-      expect(actual).to.have.property('messages').that.is.an.instanceof(List)
+      expect(actual.messages).toBeInstanceOf(List)
     })
   })
 })

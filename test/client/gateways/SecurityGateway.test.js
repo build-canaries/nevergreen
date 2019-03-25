@@ -1,22 +1,15 @@
-import {withMockedImports} from '../TestUtils'
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
-import {mocks} from '../Mocking'
+import {encryptPassword} from '../../../src/client/gateways/SecurityGateway'
+import * as gateway from '../../../src/client/gateways/Gateway'
 
-describe('SecurityGateway', function () {
+describe('SecurityGateway', () => {
 
-  const post = mocks.stub()
+  gateway.post = jest.fn()
 
-  const {encryptPassword} = withMockedImports('client/gateways/SecurityGateway', {
-    './Gateway': {post}
-  })
+  describe('encryptPassword', () => {
 
-  describe('encryptPassword', function () {
-
-    it('should call the encrypt URL', function () {
+    test('should call the encrypt URL', () => {
       encryptPassword('some-password')
-
-      expect(post).to.have.been.calledWith('/api/encrypt', {password: 'some-password'})
+      expect(gateway.post).toBeCalledWith('/api/encrypt', {password: 'some-password'})
     })
   })
 })

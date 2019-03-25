@@ -1,5 +1,3 @@
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
 import {reduce} from '../../../src/client/reducers/SettingsReducer'
 import {
   BROKEN_BUILD_SOUND_FX,
@@ -18,239 +16,239 @@ import {
 } from '../../../src/client/actions/Actions'
 import {fromJS, Map} from 'immutable'
 
-describe('SettingsReducer', function () {
+describe('SettingsReducer', () => {
 
-  it('should return the state unmodified for an unknown action', function () {
+  test('should return the state unmodified for an unknown action', () => {
     const existingState = {foo: 'bar'}
     const newState = reduce(existingState, {type: 'not-a-real-action'})
-    expect(newState).to.deep.equal(existingState)
+    expect(newState).toEqual(existingState)
   })
 
-  describe(INITIALISED, function () {
+  describe(INITIALISED, () => {
 
-    it('should merge show tray name', function () {
+    test('should merge show tray name', () => {
       const existingState = Map({showTrayName: false})
       const action = {type: INITIALISED, data: fromJS({audioVisual: {showTrayName: true}})}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('showTrayName', true)
+      expect(newState.toJS()).toHaveProperty('showTrayName', true)
     })
 
-    it('should merge build timers enabled', function () {
+    test('should merge build timers enabled', () => {
       const existingState = Map({showBuildTime: false})
       const action = {type: INITIALISED, data: fromJS({audioVisual: {showBuildTime: true}})}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('showBuildTime', true)
+      expect(newState.toJS()).toHaveProperty('showBuildTime', true)
     })
 
-    it('should merge broken build timers enabled', function () {
+    test('should merge broken build timers enabled', () => {
       const existingState = Map({showBrokenBuildTime: false})
       const action = {type: INITIALISED, data: fromJS({audioVisual: {showBrokenBuildTime: true}})}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('showBrokenBuildTime', true)
+      expect(newState.toJS()).toHaveProperty('showBrokenBuildTime', true)
     })
 
-    it('should merge broken build sounds enabled', function () {
+    test('should merge broken build sounds enabled', () => {
       const existingState = Map({playBrokenBuildSoundFx: false})
       const action = {type: INITIALISED, data: fromJS({audioVisual: {playBrokenBuildSoundFx: true}})}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('playBrokenBuildSoundFx', true)
+      expect(newState.toJS()).toHaveProperty('playBrokenBuildSoundFx', true)
     })
 
-    it('should merge broken build sound fx', function () {
+    test('should merge broken build sound fx', () => {
       const existingState = Map({brokenBuildSoundFx: 'some-url'})
       const action = {type: INITIALISED, data: fromJS({audioVisual: {brokenBuildSoundFx: 'another-url'}})}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('brokenBuildSoundFx', 'another-url')
+      expect(newState.toJS()).toHaveProperty('brokenBuildSoundFx', 'another-url')
     })
 
-    it('should merge refresh time', function () {
+    test('should merge refresh time', () => {
       const existingState = Map({refreshTime: 5})
       const action = {type: INITIALISED, data: fromJS({audioVisual: {refreshTime: 10}})}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('refreshTime', 10)
+      expect(newState.toJS()).toHaveProperty('refreshTime', 10)
     })
 
-    it('should merge show build label', function () {
+    test('should merge show build label', () => {
       const existingState = Map({showBuildLabel: false})
       const action = {type: INITIALISED, data: fromJS({audioVisual: {showBuildLabel: true}})}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('showBuildLabel', true)
+      expect(newState.toJS()).toHaveProperty('showBuildLabel', true)
     })
   })
 
-  describe(IMPORT_SUCCESS, function () {
+  describe(IMPORT_SUCCESS, () => {
 
-    it('should merge show tray name', function () {
+    test('should merge show tray name', () => {
       const existingState = Map({showTrayName: false})
       const action = {type: IMPORT_SUCCESS, data: fromJS({audioVisual: {showTrayName: true}})}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('showTrayName', true)
+      expect(newState.toJS()).toHaveProperty('showTrayName', true)
     })
 
-    it('should merge build timers enabled', function () {
+    test('should merge build timers enabled', () => {
       const existingState = Map({showBuildTime: false})
       const action = {type: IMPORT_SUCCESS, data: fromJS({audioVisual: {showBuildTime: true}})}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('showBuildTime', true)
+      expect(newState.toJS()).toHaveProperty('showBuildTime', true)
     })
 
-    it('should merge broken build timers enabled', function () {
+    test('should merge broken build timers enabled', () => {
       const existingState = Map({showBrokenBuildTime: false})
       const action = {type: IMPORT_SUCCESS, data: fromJS({audioVisual: {showBrokenBuildTime: true}})}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('showBrokenBuildTime', true)
+      expect(newState.toJS()).toHaveProperty('showBrokenBuildTime', true)
     })
 
-    it('should merge broken build sounds enabled', function () {
+    test('should merge broken build sounds enabled', () => {
       const existingState = Map({playBrokenBuildSoundFx: false})
       const action = {type: IMPORT_SUCCESS, data: fromJS({audioVisual: {playBrokenBuildSoundFx: true}})}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('playBrokenBuildSoundFx', true)
+      expect(newState.toJS()).toHaveProperty('playBrokenBuildSoundFx', true)
     })
 
-    it('should merge broken build sound fx', function () {
+    test('should merge broken build sound fx', () => {
       const existingState = Map({brokenBuildSoundFx: 'some-url'})
       const action = {type: IMPORT_SUCCESS, data: fromJS({audioVisual: {brokenBuildSoundFx: 'another-url'}})}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('brokenBuildSoundFx', 'another-url')
+      expect(newState.toJS()).toHaveProperty('brokenBuildSoundFx', 'another-url')
     })
 
-    it('should merge show build label', function () {
+    test('should merge show build label', () => {
       const existingState = Map({showBuildLabel: false})
       const action = {type: IMPORT_SUCCESS, data: fromJS({audioVisual: {showBuildLabel: true}})}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('showBuildLabel', true)
+      expect(newState.toJS()).toHaveProperty('showBuildLabel', true)
     })
   })
 
-  describe(SHOW_BUILD_TIME, function () {
+  describe(SHOW_BUILD_TIME, () => {
 
-    it('should set the broken build timer enabled property', function () {
+    test('should set the broken build timer enabled property', () => {
       const existingState = Map({showBuildTime: false})
       const action = {type: SHOW_BUILD_TIME, value: true}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('showBuildTime', true)
+      expect(newState.toJS()).toHaveProperty('showBuildTime', true)
     })
   })
 
-  describe(SHOW_BROKEN_BUILD_TIME, function () {
+  describe(SHOW_BROKEN_BUILD_TIME, () => {
 
-    it('should set the broken build timer enabled property', function () {
+    test('should set the broken build timer enabled property', () => {
       const existingState = Map({showBrokenBuildTime: false})
       const action = {type: SHOW_BROKEN_BUILD_TIME, value: true}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('showBrokenBuildTime', true)
+      expect(newState.toJS()).toHaveProperty('showBrokenBuildTime', true)
     })
   })
 
-  describe(PLAY_BROKEN_BUILD_SOUND_FX, function () {
+  describe(PLAY_BROKEN_BUILD_SOUND_FX, () => {
 
-    it('should set the broken build sounds enabled property', function () {
+    test('should set the broken build sounds enabled property', () => {
       const existingState = Map({playBrokenBuildSoundFx: false})
       const action = {type: PLAY_BROKEN_BUILD_SOUND_FX, value: true}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('playBrokenBuildSoundFx', true)
+      expect(newState.toJS()).toHaveProperty('playBrokenBuildSoundFx', true)
     })
   })
 
-  describe(BROKEN_BUILD_SOUND_FX, function () {
+  describe(BROKEN_BUILD_SOUND_FX, () => {
 
-    it('should set the broken build sound fx property', function () {
+    test('should set the broken build sound fx property', () => {
       const existingState = Map({brokenBuildSoundFx: 'some-url'})
       const action = {type: BROKEN_BUILD_SOUND_FX, value: 'another-url'}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('brokenBuildSoundFx', 'another-url')
+      expect(newState.toJS()).toHaveProperty('brokenBuildSoundFx', 'another-url')
     })
   })
 
-  describe(SHOW_TRAY_NAME, function () {
+  describe(SHOW_TRAY_NAME, () => {
 
-    it('should set the tray name toggled property', function () {
+    test('should set the tray name toggled property', () => {
       const existingState = Map({showTrayName: false})
       const action = {type: SHOW_TRAY_NAME, value: true}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('showTrayName', true)
+      expect(newState.toJS()).toHaveProperty('showTrayName', true)
     })
   })
 
-  describe(REFRESH_TIME, function () {
+  describe(REFRESH_TIME, () => {
 
-    it('should set the refresh time property', function () {
+    test('should set the refresh time property', () => {
       const existingState = Map({refreshTime: 5})
       const action = {type: REFRESH_TIME, value: 10}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('refreshTime', 10)
+      expect(newState.toJS()).toHaveProperty('refreshTime', 10)
     })
   })
 
-  describe(REQUESTING_SYSTEM_NOTIFICATION_PERMISSION, function () {
+  describe(REQUESTING_SYSTEM_NOTIFICATION_PERMISSION, () => {
 
-    it('should set the system notification requesting permission property', function () {
+    test('should set the system notification requesting permission property', () => {
       const existingState = Map({systemNotificationRequestingPermission: false})
       const action = {type: REQUESTING_SYSTEM_NOTIFICATION_PERMISSION, value: true}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('systemNotificationRequestingPermission', true)
+      expect(newState.toJS()).toHaveProperty('systemNotificationRequestingPermission', true)
     })
   })
 
-  describe(SHOW_SYSTEM_NOTIFICATIONS, function () {
+  describe(SHOW_SYSTEM_NOTIFICATIONS, () => {
 
-    it('should set the show browser notifications property', function () {
+    test('should set the show browser notifications property', () => {
       const existingState = Map({showSystemNotifications: false})
       const action = {type: SHOW_SYSTEM_NOTIFICATIONS, value: true}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('showSystemNotifications', true)
+      expect(newState.toJS()).toHaveProperty('showSystemNotifications', true)
     })
 
-    it('should reset the system notification permission denied property', function () {
+    test('should reset the system notification permission denied property', () => {
       const existingState = Map({systemNotificationPermissionDenied: true})
       const action = {type: SHOW_SYSTEM_NOTIFICATIONS, value: true}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('systemNotificationPermissionDenied', false)
+      expect(newState.toJS()).toHaveProperty('systemNotificationPermissionDenied', false)
     })
 
-    it('should reset the system notification requesting permission property', function () {
+    test('should reset the system notification requesting permission property', () => {
       const existingState = Map({systemNotificationRequestingPermission: true})
       const action = {type: SHOW_SYSTEM_NOTIFICATIONS, value: true}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('systemNotificationRequestingPermission', false)
+      expect(newState.toJS()).toHaveProperty('systemNotificationRequestingPermission', false)
     })
   })
 
-  describe(SYSTEM_NOTIFICATIONS_PERMISSION_DENIED, function () {
+  describe(SYSTEM_NOTIFICATIONS_PERMISSION_DENIED, () => {
 
-    it('should set the system notification permission denied property', function () {
+    test('should set the system notification permission denied property', () => {
       const existingState = Map({systemNotificationPermissionDenied: false})
       const action = {type: SYSTEM_NOTIFICATIONS_PERMISSION_DENIED}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('systemNotificationPermissionDenied', true)
+      expect(newState.toJS()).toHaveProperty('systemNotificationPermissionDenied', true)
     })
 
-    it('should reset the system notification requesting permission property', function () {
+    test('should reset the system notification requesting permission property', () => {
       const existingState = Map({systemNotificationRequestingPermission: true})
       const action = {type: SYSTEM_NOTIFICATIONS_PERMISSION_DENIED}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('systemNotificationRequestingPermission', false)
+      expect(newState.toJS()).toHaveProperty('systemNotificationRequestingPermission', false)
     })
   })
 
-  describe(SET_MAX_PROJECTS, function () {
+  describe(SET_MAX_PROJECTS, () => {
 
-    it('should set the max projects to show property', function () {
+    test('should set the max projects to show property', () => {
       const existingState = Map({maxProjectsToShow: 9})
       const action = {type: SET_MAX_PROJECTS, value: 12}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('maxProjectsToShow', 12)
+      expect(newState.toJS()).toHaveProperty('maxProjectsToShow', 12)
     })
   })
 
-  describe(CLICK_TO_SHOW_MENU, function () {
+  describe(CLICK_TO_SHOW_MENU, () => {
 
-    it('should set the click to show menu property', function () {
+    test('should set the click to show menu property', () => {
       const existingState = Map({clickToShowMenu: false})
       const action = {type: CLICK_TO_SHOW_MENU, value: true}
       const newState = reduce(existingState, action)
-      expect(newState).to.contain.property('clickToShowMenu', true)
+      expect(newState.toJS()).toHaveProperty('clickToShowMenu', true)
     })
   })
 })

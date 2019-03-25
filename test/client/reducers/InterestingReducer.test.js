@@ -1,37 +1,35 @@
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
 import {reduce} from '../../../src/client/reducers/InterestingReducer'
 import {INTERESTING_PROJECTS} from '../../../src/client/actions/Actions'
 import {fromJS, List, Map} from 'immutable'
 
-describe('InterestingReducer', function () {
+describe('InterestingReducer', () => {
 
-  it('should return the state unmodified for an unknown action', function () {
+  test('should return the state unmodified for an unknown action', () => {
     const existingState = {foo: 'bar'}
     const newState = reduce(existingState, {type: 'not-a-real-action'})
-    expect(newState).to.deep.equal(existingState)
+    expect(newState).toEqual(existingState)
   })
 
-  describe(INTERESTING_PROJECTS, function () {
+  describe(INTERESTING_PROJECTS, () => {
 
-    it('should set the loaded property', function () {
+    test('should set the loaded property', () => {
       const existingState = Map({loaded: false})
       const action = {type: INTERESTING_PROJECTS, projects: List()}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('loaded', true)
+      expect(newState.toJS()).toHaveProperty('loaded', true)
     })
 
-    it('should set the projects property', function () {
+    test('should set the projects property', () => {
       const existingState = fromJS({projects: []})
       const newProject = {projectId: 'some-project-id'}
       const action = {type: INTERESTING_PROJECTS, projects: fromJS([newProject])}
 
       const newState = reduce(existingState, action)
 
-      expect(newState).to.have.property('projects').that.contains(Map(newProject))
+      expect(newState.toJS().projects).toEqual(expect.arrayContaining([newProject]))
     })
 
-    it('should set the error property', function () {
+    test('should set the error property', () => {
       const existingState = Map()
       const action = {
         type: INTERESTING_PROJECTS,
@@ -39,7 +37,7 @@ describe('InterestingReducer', function () {
         errors: List(['some-error'])
       }
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('errors').that.contains('some-error')
+      expect(newState.toJS().errors).toEqual(expect.arrayContaining(['some-error']))
     })
   })
 })

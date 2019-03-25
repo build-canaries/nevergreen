@@ -1,41 +1,39 @@
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
 import {EXPORT_ERROR, EXPORT_SUCCESS, EXPORTING} from '../../../src/client/actions/Actions'
 import {exportError, exporting, exportSuccess} from '../../../src/client/actions/ExportActionCreators'
 
-describe('ExportActionCreators', function () {
+describe('ExportActionCreators', () => {
 
-  describe(EXPORTING, function () {
+  describe(EXPORTING, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = exporting()
-      expect(actual).to.have.property('type', EXPORTING)
+      expect(actual).toHaveProperty('type', EXPORTING)
     })
   })
 
-  describe(EXPORT_ERROR, function () {
+  describe(EXPORT_ERROR, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = exportError()
-      expect(actual).to.have.property('type', EXPORT_ERROR)
+      expect(actual).toHaveProperty('type', EXPORT_ERROR)
     })
 
-    it('should return the errors given', function () {
+    test('should return the errors given', () => {
       const actual = exportError(['some-error'])
-      expect(actual).to.have.property('errors').that.contains('some-error')
+      expect(actual.errors.toJS()).toEqual(expect.arrayContaining(['some-error']))
     })
   })
 
-  describe(EXPORT_SUCCESS, function () {
+  describe(EXPORT_SUCCESS, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = exportSuccess()
-      expect(actual).to.have.property('type', EXPORT_SUCCESS)
+      expect(actual).toHaveProperty('type', EXPORT_SUCCESS)
     })
 
-    it('should return a success message', function () {
+    test('should return a success message', () => {
       const actual = exportSuccess(['some-message'])
-      expect(actual).to.have.property('messages').that.contains('some-message')
+      expect(actual.messages.toJS()).toEqual(expect.arrayContaining(['some-message']))
     })
   })
 })

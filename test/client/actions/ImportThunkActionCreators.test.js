@@ -1,46 +1,43 @@
-import {testThunk, withMockedImports} from '../TestUtils'
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
-import {mocks} from '../Mocking'
+import {testThunk} from '../testHelpers'
+import {importData} from '../../../src/client/actions/ImportThunkActionCreators'
+import * as configuration from '../../../src/client/reducers/Configuration'
+import * as importActionCreators from '../../../src/client/actions/ImportActionCreators'
 
-describe('ImportThunkActionCreators', function () {
+describe('ImportThunkActionCreators', () => {
 
-  const wrapConfiguration = mocks.stub()
-  const validate = mocks.stub()
-  const importError = mocks.spy()
-  const importSuccess = mocks.spy()
-  const importing = mocks.spy()
+  configuration.wrapConfiguration = jest.fn()
+  configuration.validate = jest.fn()
+  importActionCreators.importError = jest.fn()
+  importActionCreators.importSuccess = jest.fn()
+  importActionCreators.importing = jest.fn()
 
-  const {importData} = withMockedImports('client/actions/ImportThunkActionCreators', {
-    '../reducers/Configuration': {wrapConfiguration, validate},
-    './ImportActionCreators': {importError, importSuccess, importing}
-  })
+  describe('importData', () => {
 
-  describe('importData', function () {
-
-    it('should dispatch importing', async function () {
+    test('should dispatch importing', async () => {
       await testThunk(importData(''))
-      expect(importing).to.have.been.called()
+      expect(importActionCreators.importing).toBeCalled()
     })
 
-    it('should dispatch import error action if wrap configuration throws an error', async function () {
-      wrapConfiguration.throws(new Error('some-error'))
+    test('should dispatch import error action if wrap configuration throws an error', async () => {
+      configuration.wrapConfiguration.mockImplementation(() => {
+        throw new Error('some-error')
+      })
       await testThunk(importData(''))
-      expect(importError).to.have.been.called()
+      expect(importActionCreators.importError).toBeCalled()
     })
 
-    it('should dispatch import error action on validation failure', async function () {
-      validate.returns(['some-validation-error'])
+    test('should dispatch import error action on validation failure', async () => {
+      configuration.validate.mockReturnValue(['some-validation-error'])
       await testThunk(importData(''))
-      expect(importError).to.have.been.calledWith(['some-validation-error'])
+      expect(importActionCreators.importError).toBeCalledWith(['some-validation-error'])
     })
 
-    it('should dispatch import success action on successful validation', async function () {
-      const configuration = {}
-      wrapConfiguration.returns(configuration)
-      validate.returns([])
+    test('should dispatch import success action on successful validation', async () => {
+      const config = {}
+      configuration.wrapConfiguration.mockReturnValue(config)
+      configuration.validate.mockReturnValue([])
       await testThunk(importData(''))
-      expect(importSuccess).to.have.been.calledWith(configuration)
+      expect(importActionCreators.importSuccess).toBeCalledWith(config)
     })
   })
 })

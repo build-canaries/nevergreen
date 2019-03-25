@@ -1,7 +1,4 @@
-import {testThunk, withMockedImports} from '../TestUtils'
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
-import {mocks} from '../Mocking'
+import {testThunk} from '../testHelpers'
 import {fromJS, List, Map} from 'immutable'
 import {
   PROGNOSIS_HEALTHY_BUILDING,
@@ -14,16 +11,21 @@ import {INTERESTING_ROOT} from '../../../src/client/reducers/InterestingReducer'
 import {SELECTED_ROOT} from '../../../src/client/reducers/SelectedReducer'
 import {TRAYS_ROOT} from '../../../src/client/reducers/TraysReducer'
 import {PROJECTS_ROOT} from '../../../src/client/reducers/ProjectsReducer'
+import {fetchInteresting} from '../../../src/client/actions/MonitorThunkActionCreators'
+import * as projectsGateway from '../../../src/client/gateways/ProjectsGateway'
+import * as nevergreenGateway from '../../../src/client/gateways/NevergreenGateway'
+import * as monitorActionCreators from '../../../src/client/actions/MonitorActionCreators'
+import * as notificationThunkActionCreators from '../../../src/client/actions/NotificationThunkActionCreators'
 
-describe('MonitorThunkActionCreators', function () {
+describe('MonitorThunkActionCreators', () => {
 
   const NO_ERRORS = List()
 
-  const send = mocks.stub()
-  const interesting = mocks.stub()
-  const interestingProjectsFetching = mocks.spy()
-  const interestingProjects = mocks.spy()
-  const projectNotifications = mocks.spy()
+  nevergreenGateway.send = jest.fn()
+  projectsGateway.interesting = jest.fn()
+  monitorActionCreators.interestingProjectsFetching = jest.fn()
+  monitorActionCreators.interestingProjects = jest.fn()
+  notificationThunkActionCreators.projectNotifications = jest.fn()
 
   const requiredState = Map({
     [INTERESTING_ROOT]: Map({
@@ -34,29 +36,22 @@ describe('MonitorThunkActionCreators', function () {
     [PROJECTS_ROOT]: Map()
   })
 
-  const {fetchInteresting} = withMockedImports('client/actions/MonitorThunkActionCreators', {
-    '../gateways/ProjectsGateway': {interesting},
-    '../gateways/NevergreenGateway': {send},
-    './MonitorActionCreators': {interestingProjects, interestingProjectsFetching},
-    './NotificationThunkActionCreators': {projectNotifications}
-  })
+  describe('fetchInteresting', () => {
 
-  describe('fetchInteresting', function () {
-
-    it('should dispatch interesting projects fetching action', async function () {
-      interesting.returns('some-request')
-      send.resolves(List())
+    test('should dispatch interesting projects fetching action', async () => {
+      projectsGateway.interesting.mockReturnValue('some-request')
+      nevergreenGateway.send.mockResolvedValue(List())
 
       await testThunk(fetchInteresting(), requiredState)
 
-      expect(interestingProjectsFetching).to.have.been.calledWith('some-request')
+      expect(monitorActionCreators.interestingProjectsFetching).toBeCalledWith('some-request')
     })
 
-    it('should dispatch interesting projects action on success', async function () {
-      send.resolves(List())
+    test('should dispatch interesting projects action on success', async () => {
+      nevergreenGateway.send.mockResolvedValue(List())
 
       await testThunk(fetchInteresting(), requiredState)
-      expect(interestingProjects).to.have.been.called()
+      expect(monitorActionCreators.interestingProjects).toBeCalled()
     })
 
     /*
@@ -65,7 +60,7 @@ describe('MonitorThunkActionCreators', function () {
      * broken. This all makes sense but the Nevergreen team felt it created too much noise on the monitor and generally
      * just knowing a stage had broken was good enough.
      */
-    it('should filter projects containing jobs', async function () {
+    test('should filter projects containing jobs', async () => {
       const projectNoJob = {
         projectId: 'some-name/some-stage',
         name: 'some-name',
@@ -79,46 +74,46 @@ describe('MonitorThunkActionCreators', function () {
         job: 'some-job'
       }
       const expectedProject = new Project(projectNoJob)
-      send.resolves(fromJS([projectNoJob, projectWithJob]))
+      nevergreenGateway.send.mockResolvedValue(fromJS([projectNoJob, projectWithJob]))
 
       await testThunk(fetchInteresting(), requiredState)
-      expect(interestingProjects.getCall(0).args[0]).to.equal(List.of(expectedProject))
-      expect(interestingProjects.getCall(0).args[1]).to.equal(NO_ERRORS)
+      expect(monitorActionCreators.interestingProjects.mock.calls[0][0]).toEqual(List.of(expectedProject))
+      expect(monitorActionCreators.interestingProjects.mock.calls[0][1]).toEqual(NO_ERRORS)
     })
 
-    describe('setting the this build time so building timers work correctly', function () {
+    describe('setting the this build time so building timers work correctly', () => {
 
-      it('should set to the fetched time for projects that are building and not previously fetched', async function () {
+      test('should set to the fetched time for projects that are building and not previously fetched', async () => {
         const project = {
           prognosis: PROGNOSIS_HEALTHY_BUILDING,
           fetchedTime: 'some-time'
         }
-        send.resolves(fromJS([project]))
+        nevergreenGateway.send.mockResolvedValue(fromJS([project]))
 
         await testThunk(fetchInteresting(), requiredState)
 
-        expect(interestingProjects.getCall(0).args[0]).to.equal(List.of(
+        expect(monitorActionCreators.interestingProjects.mock.calls[0][0]).toEqual(List.of(
           new Project({...project, thisBuildTime: 'some-time'})
         ))
-        expect(interestingProjects.getCall(0).args[1]).to.equal(NO_ERRORS)
+        expect(monitorActionCreators.interestingProjects.mock.calls[0][1]).toEqual(NO_ERRORS)
       })
 
-      it('should unset if the project is not building', async function () {
+      test('should unset if the project is not building', async () => {
         const project = {
           prognosis: PROGNOSIS_SICK,
           fetchedTime: 'some-time'
         }
-        send.resolves(fromJS([project]))
+        nevergreenGateway.send.mockResolvedValue(fromJS([project]))
 
         await testThunk(fetchInteresting(), requiredState)
 
-        expect(interestingProjects.getCall(0).args[0]).to.equal(List.of(
-          new Project({...project, thisBuildTime: null})
+        expect(monitorActionCreators.interestingProjects.mock.calls[0][0]).toEqual(List.of(
+          new Project({...project, thisBuildTime: ''})
         ))
-        expect(interestingProjects.getCall(0).args[1]).to.equal(NO_ERRORS)
+        expect(monitorActionCreators.interestingProjects.mock.calls[0][1]).toEqual(NO_ERRORS)
       })
 
-      it('should use the previous this build time if the project was previously fetched and building', async function () {
+      test('should use the previous this build time if the project was previously fetched and building', async () => {
         const previousProject = new Project({
           projectId: 'some-id',
           prognosis: PROGNOSIS_HEALTHY_BUILDING,
@@ -129,18 +124,18 @@ describe('MonitorThunkActionCreators', function () {
           prognosis: PROGNOSIS_HEALTHY_BUILDING,
           fetchedTime: 'some-time'
         }
-        send.resolves(fromJS([project]))
+        nevergreenGateway.send.mockResolvedValue(fromJS([project]))
         const state = requiredState.setIn([INTERESTING_ROOT, 'projects'], List.of(previousProject))
 
         await testThunk(fetchInteresting(), state)
 
-        expect(interestingProjects.getCall(0).args[0]).to.equal(List.of(
+        expect(monitorActionCreators.interestingProjects.mock.calls[0][0]).toEqual(List.of(
           new Project({...project, thisBuildTime: 'previous-build-time'})
         ))
-        expect(interestingProjects.getCall(0).args[1]).to.equal(NO_ERRORS)
+        expect(monitorActionCreators.interestingProjects.mock.calls[0][1]).toEqual(NO_ERRORS)
       })
 
-      it('should use the fetched time if the project was previously fetched but was not building', async function () {
+      test('should use the fetched time if the project was previously fetched but was not building', async () => {
         const previousProject = new Project({
           projectId: 'some-id',
           prognosis: PROGNOSIS_SICK,
@@ -151,28 +146,32 @@ describe('MonitorThunkActionCreators', function () {
           prognosis: PROGNOSIS_SICK_BUILDING,
           fetchedTime: 'fetched-time'
         }
-        send.resolves(fromJS([project]))
+        nevergreenGateway.send.mockResolvedValue(fromJS([project]))
         const state = requiredState.setIn([INTERESTING_ROOT, 'projects'], List.of(previousProject))
 
         await testThunk(fetchInteresting(), state)
 
-        expect(interestingProjects.getCall(0).args[0]).to.equal(List.of(
+        expect(monitorActionCreators.interestingProjects.mock.calls[0][0]).toEqual(List.of(
           new Project({...project, thisBuildTime: 'fetched-time'})
         ))
-        expect(interestingProjects.getCall(0).args[1]).to.equal(NO_ERRORS)
+        expect(monitorActionCreators.interestingProjects.mock.calls[0][1]).toEqual(NO_ERRORS)
       })
     })
 
-    it('should dispatch interesting projects action with a Nevergreen error if calling the service fails', async function () {
-      send.rejects(new Error('some-error'))
+    test('should dispatch interesting projects action with a Nevergreen error if calling the service fails', async () => {
+      nevergreenGateway.send.mockRejectedValue(new Error('some-error'))
       await testThunk(fetchInteresting(), requiredState)
-      expect(interestingProjects).to.have.been.calledWith(List(), List.of('some-error'))
+      expect(monitorActionCreators.interestingProjects).toBeCalledWith(List(), List.of('some-error'))
     })
 
-    describe('returned tray errors', function () {
+    describe('returned tray errors', () => {
 
-      it('should dispatch interesting projects with the tray name in the error if it exists', async function () {
-        send.resolves(fromJS([{trayId: 'some-tray-id', isError: true, errorMessage: 'some-error'}]))
+      test('should dispatch interesting projects with the tray name in the error if it exists', async () => {
+        nevergreenGateway.send.mockResolvedValue(fromJS([{
+          trayId: 'some-tray-id',
+          isError: true,
+          errorMessage: 'some-error'
+        }]))
         const trays = List([new Tray({trayId: 'some-tray-id', name: 'some-name'})])
         const state = requiredState
           .set(TRAYS_ROOT, trays)
@@ -181,12 +180,16 @@ describe('MonitorThunkActionCreators', function () {
           }))
 
         await testThunk(fetchInteresting(), state)
-        expect(interestingProjects.getCall(0).args[0]).to.equal(List())
-        expect(interestingProjects.getCall(0).args[1]).to.equal(List.of('some-name some-error'))
+        expect(monitorActionCreators.interestingProjects.mock.calls[0][0]).toEqual(List())
+        expect(monitorActionCreators.interestingProjects.mock.calls[0][1]).toEqual(List.of('some-name some-error'))
       })
 
-      it('should dispatch interesting projects with the tray url in the error if the name does not exist', async function () {
-        send.resolves(fromJS([{trayId: 'some-tray-id', isError: true, errorMessage: 'some-error'}]))
+      test('should dispatch interesting projects with the tray url in the error if the name does not exist', async () => {
+        nevergreenGateway.send.mockResolvedValue(fromJS([{
+          trayId: 'some-tray-id',
+          isError: true,
+          errorMessage: 'some-error'
+        }]))
         const trays = fromJS([new Tray({trayId: 'some-tray-id', url: 'some-url'})])
         const state = requiredState
           .set(TRAYS_ROOT, trays)
@@ -195,20 +198,20 @@ describe('MonitorThunkActionCreators', function () {
           }))
 
         await testThunk(fetchInteresting(), state)
-        expect(interestingProjects.getCall(0).args[0]).to.equal(List())
-        expect(interestingProjects.getCall(0).args[1]).to.equal(List.of('some-url some-error'))
+        expect(monitorActionCreators.interestingProjects.mock.calls[0][0]).toEqual(List())
+        expect(monitorActionCreators.interestingProjects.mock.calls[0][1]).toEqual(List.of('some-url some-error'))
       })
     })
 
-    it('should dispatch project notifications on success', async function () {
-      interesting.returns('some-request')
-      send.resolves(List())
+    test('should dispatch project notifications on success', async () => {
+      projectsGateway.interesting.mockReturnValue('some-request')
+      nevergreenGateway.send.mockResolvedValue(List())
       const previousProjects = List.of(new Project())
       const state = requiredState.setIn([INTERESTING_ROOT, 'projects'], previousProjects)
 
       await testThunk(fetchInteresting(), state)
 
-      expect(projectNotifications).to.have.been.calledWith(previousProjects)
+      expect(notificationThunkActionCreators.projectNotifications).toBeCalledWith(previousProjects)
     })
   })
 })

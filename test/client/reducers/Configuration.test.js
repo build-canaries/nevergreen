@@ -1,17 +1,15 @@
-import {expect} from 'chai'
-import {describe, it} from 'mocha'
 import {filter, validate} from '../../../src/client/reducers/Configuration'
 
-describe('Data', function () {
+describe('Data', () => {
 
-  describe('validate', function () {
+  describe('validate', () => {
 
-    it('allows an empty object as any data not provided gets defaulted', function () {
+    test('allows an empty object as any data not provided gets defaulted', () => {
       const data = {}
-      expect(validate(data)).to.be.empty()
+      expect(validate(data)).toHaveLength(0)
     })
 
-    it('rejects a tray with a missing ID, as this is required to match projects to the owning tray', function () {
+    test('rejects a tray with a missing ID, as this is required to match projects to the owning tray', () => {
       const data = {
         trays: {
           'some-key': {
@@ -19,10 +17,10 @@ describe('Data', function () {
           }
         }
       }
-      expect(validate(data)).to.not.be.empty()
+      expect(validate(data)).not.toHaveLength(0)
     })
 
-    it('rejects a tray with a missing URL, as this is required to actually contact the CI server', function () {
+    test('rejects a tray with a missing URL, as this is required to actually contact the CI server', () => {
       const data = {
         trays: {
           'some-key': {
@@ -30,10 +28,10 @@ describe('Data', function () {
           }
         }
       }
-      expect(validate(data)).to.not.be.empty()
+      expect(validate(data)).not.toHaveLength(0)
     })
 
-    it('rejects a project with a missing ID, as this is required to select projects', function () {
+    test('rejects a project with a missing ID, as this is required to select projects', () => {
       const data = {
         projects: {
           'some-key': {
@@ -41,10 +39,10 @@ describe('Data', function () {
           }
         }
       }
-      expect(validate(data)).to.not.be.empty()
+      expect(validate(data)).not.toHaveLength(0)
     })
 
-    it('rejects a project with a missing name, as this is required to display projects on the UI', function () {
+    test('rejects a project with a missing name, as this is required to display projects on the UI', () => {
       const data = {
         projects: {
           'some-key': {
@@ -52,20 +50,20 @@ describe('Data', function () {
           }
         }
       }
-      expect(validate(data)).to.not.be.empty()
+      expect(validate(data)).not.toHaveLength(0)
     })
   })
 
-  describe('filter', function () {
+  describe('filter', () => {
 
-    it('removes unknown properties', function () {
+    test('removes unknown properties', () => {
       const data = {foo: 'bar'}
-      expect(filter(data)).to.deep.equal({})
+      expect(filter(data)).toEqual({})
     })
 
-    it('keeps known properties', function () {
+    test('keeps known properties', () => {
       const data = {trays: {}}
-      expect(filter(data)).to.deep.equal({trays: {}})
+      expect(filter(data)).toEqual({trays: {}})
     })
   })
 })

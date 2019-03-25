@@ -1,46 +1,41 @@
-import {testThunk, withMockedImports} from '../TestUtils'
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
-import {mocks} from '../Mocking'
+import {testThunk} from '../testHelpers'
 import {fromJS, List} from 'immutable'
 import {SETTINGS_ROOT} from '../../../src/client/reducers/SettingsReducer'
 import {INTERESTING_ROOT} from '../../../src/client/reducers/InterestingReducer'
 import {PROGNOSIS_SICK, Project} from '../../../src/client/domain/Project'
+import {checkForNewVersion, projectNotifications} from '../../../src/client/actions/NotificationThunkActionCreators'
+import * as gateway from '../../../src/client/gateways/Gateway'
+import * as  gitHubGateway from '../../../src/client/gateways/GitHubGateway'
+import semver from 'semver'
+import * as notificationActionCreators from '../../../src/client/actions/NotificationActionCreators'
+import * as systemNotifications from '../../../src/client/common/SystemNotifications'
 
-describe('NotificationThunkActionCreators', function () {
+describe('NotificationThunkActionCreators', () => {
 
-  const send = mocks.stub()
-  const get = mocks.stub()
-  const gt = mocks.stub()
-  const notify = mocks.spy()
-  const sendSystemNotification = mocks.spy()
+  gitHubGateway.send = jest.fn()
+  gateway.get = jest.fn()
+  semver.gt = jest.fn()
+  notificationActionCreators.notify = jest.fn()
+  systemNotifications.sendSystemNotification = jest.fn()
 
-  const {checkForNewVersion, projectNotifications} = withMockedImports('client/actions/NotificationThunkActionCreators', {
-    '../gateways/Gateway': {get},
-    '../gateways/GitHubGateway': {send},
-    'semver': {gt},
-    './NotificationActionCreators': {notify},
-    '../common/SystemNotifications': {sendSystemNotification}
-  })
+  describe('checkForNewVersion', () => {
 
-  describe('checkForNewVersion', function () {
-
-    it('should call the github releases api', async function () {
-      send.resolves(fromJS({}))
-      gt.returns(true)
+    test('should call the github releases api', async () => {
+      gitHubGateway.send.mockResolvedValue(fromJS({}))
+      semver.gt.mockReturnValue(true)
       await testThunk(checkForNewVersion())
-      expect(get).to.have.been.calledWith('https://api.github.com/repos/build-canaries/nevergreen/releases/latest')
+      expect(gateway.get).toBeCalledWith('https://api.github.com/repos/build-canaries/nevergreen/releases/latest')
     })
 
-    it('should dispatch notification if a new version is available', async function () {
-      send.resolves(fromJS({}))
-      gt.returns(true)
+    test('should dispatch notification if a new version is available', async () => {
+      gitHubGateway.send.mockResolvedValue(fromJS({}))
+      semver.gt.mockReturnValue(true)
       await testThunk(checkForNewVersion())
-      expect(notify).to.have.been.called()
+      expect(notificationActionCreators.notify).toBeCalled()
     })
   })
 
-  describe('projectNotifications', function () {
+  describe('projectNotifications', () => {
 
     const requiredState = fromJS({
       [SETTINGS_ROOT]: {
@@ -53,30 +48,33 @@ describe('NotificationThunkActionCreators', function () {
 
     const sickProject = new Project({name: 'some-name', prognosis: PROGNOSIS_SICK})
 
-    it('should not send updates if nothing has changed', async function () {
+    test('should not send updates if nothing has changed', async () => {
       const previousProjects = List()
       await testThunk(projectNotifications(previousProjects), requiredState)
-      expect(sendSystemNotification).to.not.have.been.called()
+      expect(systemNotifications.sendSystemNotification).not.toBeCalled()
     })
 
-    it('should send sick notification when project becomes sick', async function () {
+    test('should send sick notification when project becomes sick', async () => {
       const previousProjects = List()
       const state = requiredState.setIn([INTERESTING_ROOT, 'projects', 0], sickProject)
       await testThunk(projectNotifications(previousProjects), state)
-      expect(sendSystemNotification).to.have.been.calledWith({title: 'project is sick!', body: 'some-name'})
+      expect(systemNotifications.sendSystemNotification).toBeCalledWith({title: 'project is sick!', body: 'some-name'})
     })
 
-    it('should send not sick notification when project is no longer interesting', async function () {
+    test('should send not sick notification when project is no longer interesting', async () => {
       const previousProjects = List.of(sickProject)
       await testThunk(projectNotifications(previousProjects), requiredState)
-      expect(sendSystemNotification).to.have.been.calledWith({title: 'project is no longer sick!', body: 'some-name'})
+      expect(systemNotifications.sendSystemNotification).toBeCalledWith({
+        title: 'project is no longer sick!',
+        body: 'some-name'
+      })
     })
 
-    it('should not send sick notifications when project is still sick', async function () {
+    test('should not send sick notifications when project is still sick', async () => {
       const previousProjects = List.of(sickProject)
       const state = requiredState.setIn([INTERESTING_ROOT, 'projects', 0], sickProject)
       await testThunk(projectNotifications(previousProjects), state)
-      expect(sendSystemNotification).to.not.have.been.called()
+      expect(systemNotifications.sendSystemNotification).not.toBeCalled()
     })
   })
 })

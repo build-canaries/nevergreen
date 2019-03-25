@@ -1,5 +1,3 @@
-import {expect} from 'chai'
-import {describe, it} from 'mocha'
 import {
   formatBuildLabel,
   isBuilding,
@@ -9,41 +7,47 @@ import {
   PROGNOSIS_SICK_BUILDING,
   PROGNOSIS_UNKNOWN
 } from '../../../src/client/domain/Project'
-import {forNonStrings, forUndisplayableStrings} from '../TestUtils'
+import {forNonStrings, forUndisplayableStrings} from '../testHelpers'
 
-describe('Project', function () {
+describe('Project', () => {
 
-  describe('formatBuildLabel', function () {
+  describe('formatBuildLabel', () => {
 
     forUndisplayableStrings((value, friendlyName) => {
-      it(`should return empty string for undisplayable value ${friendlyName}`, function () {
-        expect(formatBuildLabel(value)).to.equal('')
-      })
+      test(
+        `should return empty string for undisplayable value ${friendlyName}`,
+        () => {
+          expect(formatBuildLabel(value)).toBe('')
+        }
+      )
     })
 
     forNonStrings((value, friendlyName) => {
-      it(`should return empty string for invalid value ${friendlyName}`, function () {
-        expect(formatBuildLabel(value)).to.equal('')
-      })
+      test(
+        `should return empty string for invalid value ${friendlyName}`,
+        () => {
+          expect(formatBuildLabel(value)).toBe('')
+        }
+      )
     })
 
-    it('should add a # to numbers', function () {
-      expect(formatBuildLabel('1234')).to.equal('#1234')
+    test('should add a # to numbers', () => {
+      expect(formatBuildLabel('1234')).toBe('#1234')
     })
 
-    it('should trim the build label to given length', function () {
-      expect(formatBuildLabel('abcdefghijklmnopqrstuvwxyz', 3)).to.equal('abc')
+    test('should trim the build label to given length', () => {
+      expect(formatBuildLabel('abcdefghijklmnopqrstuvwxyz', 3)).toBe('abc')
     })
 
-    it('should trim the build label to 10 characters by default', function () {
-      expect(formatBuildLabel('abcdefghijklmnopqrstuvwxyz')).to.equal('abcdefghij')
+    test('should trim the build label to 10 characters by default', () => {
+      expect(formatBuildLabel('abcdefghijklmnopqrstuvwxyz')).toBe('abcdefghij')
     })
   })
 
-  describe('isSick', function () {
+  describe('isSick', () => {
 
-    it('should be true when sick', function () {
-      expect(isSick(PROGNOSIS_SICK)).to.be.true()
+    test('should be true when sick', () => {
+      expect(isSick(PROGNOSIS_SICK)).toBe(true)
     })
 
     const otherPrognosis = [
@@ -53,32 +57,32 @@ describe('Project', function () {
     ]
 
     otherPrognosis.forEach((value) => {
-      it(`should be false for value ${value}`, function () {
-        expect(isSick(value)).to.be.false()
+      test(`should be false for value ${value}`, () => {
+        expect(isSick(value)).toBe(false)
       })
     })
 
     forUndisplayableStrings((value, friendlyName) => {
-      it(`should be false for invalid value ${friendlyName}`, function () {
-        expect(isSick(value)).to.be.false()
+      test(`should be false for invalid value ${friendlyName}`, () => {
+        expect(isSick(value)).toBe(false)
       })
     })
 
     forNonStrings((value, friendlyName) => {
-      it(`should be false for invalid value ${friendlyName}`, function () {
-        expect(isSick(value)).to.be.false()
+      test(`should be false for invalid value ${friendlyName}`, () => {
+        expect(isSick(value)).toBe(false)
       })
     })
   })
 
-  describe('isBuilding', function () {
+  describe('isBuilding', () => {
 
-    it('should be true when healthy building', function () {
-      expect(isBuilding(PROGNOSIS_HEALTHY_BUILDING)).to.be.true()
+    test('should be true when healthy building', () => {
+      expect(isBuilding(PROGNOSIS_HEALTHY_BUILDING)).toBe(true)
     })
 
-    it('should be true when sick building', function () {
-      expect(isBuilding(PROGNOSIS_SICK_BUILDING)).to.be.true()
+    test('should be true when sick building', () => {
+      expect(isBuilding(PROGNOSIS_SICK_BUILDING)).toBe(true)
     })
 
     const otherPrognosis = [
@@ -87,20 +91,20 @@ describe('Project', function () {
     ]
 
     otherPrognosis.forEach((value) => {
-      it(`should be false for value ${value}`, function () {
-        expect(isBuilding(value)).to.be.false()
+      test(`should be false for value ${value}`, () => {
+        expect(isBuilding(value)).toBe(false)
       })
     })
 
     forUndisplayableStrings((value, friendlyName) => {
-      it(`should be false for invalid value ${friendlyName}`, function () {
-        expect(isSick(value)).to.be.false()
+      test(`should be false for invalid value ${friendlyName}`, () => {
+        expect(isSick(value)).toBe(false)
       })
     })
 
     forNonStrings((value, friendlyName) => {
-      it(`should be false for invalid value ${friendlyName}`, function () {
-        expect(isSick(value)).to.be.false()
+      test(`should be false for invalid value ${friendlyName}`, () => {
+        expect(isSick(value)).toBe(false)
       })
     })
   })

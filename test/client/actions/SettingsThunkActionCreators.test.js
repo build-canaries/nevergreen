@@ -1,58 +1,49 @@
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
-import {testThunk, withMockedImports} from '../TestUtils'
-import {mocks} from '../Mocking'
+import {testThunk} from '../testHelpers'
+import {enableSystemNotifications} from '../../../src/client/actions/SettingsThunkActionCreators'
+import * as settingsActionCreators from '../../../src/client/actions/SettingsActionCreators'
+import * as systemNotifications from '../../../src/client/common/SystemNotifications'
 
-describe('SettingsThunkActionCreators', function () {
+describe('SettingsThunkActionCreators', () => {
 
-  const requestingSystemNotificationPermission = mocks.spy()
-  const setShowSystemNotifications = mocks.spy()
-  const systemNotificationPermissionDenied = mocks.spy()
-  const requestPermission = mocks.stub()
-  const permissionGranted = mocks.stub()
-  const sendSystemNotification = mocks.stub()
+  settingsActionCreators.requestingSystemNotificationPermission = jest.fn()
+  settingsActionCreators.setShowSystemNotifications = jest.fn()
+  settingsActionCreators.systemNotificationPermissionDenied = jest.fn()
+  systemNotifications.requestPermission = jest.fn()
+  systemNotifications.permissionGranted = jest.fn()
+  systemNotifications.sendSystemNotification = jest.fn()
 
-  const {enableSystemNotifications} = withMockedImports('client/actions/SettingsThunkActionCreators', {
-    './SettingsActionCreators': {
-      requestingSystemNotificationPermission,
-      setShowSystemNotifications,
-      systemNotificationPermissionDenied
-    },
-    '../common/SystemNotifications': {requestPermission, permissionGranted, sendSystemNotification}
-  })
+  describe('enableSystemNotifications', () => {
 
-  describe('enableSystemNotifications', function () {
-
-    it('should just set show browser notifications to false when given false', async function () {
+    test('should just set show browser notifications to false when given false', async () => {
       await testThunk(enableSystemNotifications(false))
-      expect(setShowSystemNotifications).to.have.been.calledWith(false)
+      expect(settingsActionCreators.setShowSystemNotifications).toBeCalledWith(false)
     })
 
-    it('should dispatch system notification permission denied when permission is denied', async function () {
-      requestPermission.resolves('irrelevant')
-      permissionGranted.returns(false)
+    test('should dispatch system notification permission denied when permission is denied', async () => {
+      systemNotifications.requestPermission.mockResolvedValue('irrelevant')
+      systemNotifications.permissionGranted.mockReturnValue(false)
       await testThunk(enableSystemNotifications(true))
-      expect(systemNotificationPermissionDenied).to.have.been.called()
+      expect(settingsActionCreators.systemNotificationPermissionDenied).toBeCalled()
     })
 
-    it('should dispatching requesting permission', async function () {
-      requestPermission.resolves('irrelevant')
+    test('should dispatching requesting permission', async () => {
+      systemNotifications.requestPermission.mockResolvedValue('irrelevant')
       await testThunk(enableSystemNotifications(true))
-      expect(requestingSystemNotificationPermission).to.have.been.called()
+      expect(settingsActionCreators.requestingSystemNotificationPermission).toBeCalled()
     })
 
-    it('should set show browser notifications if permission is given', async function () {
-      requestPermission.resolves('irrelevant')
-      permissionGranted.returns(true)
+    test('should set show browser notifications if permission is given', async () => {
+      systemNotifications.requestPermission.mockResolvedValue('irrelevant')
+      systemNotifications.permissionGranted.mockReturnValue(true)
       await testThunk(enableSystemNotifications(true))
-      expect(setShowSystemNotifications).to.have.been.calledWith(true)
+      expect(settingsActionCreators.setShowSystemNotifications).toBeCalledWith(true)
     })
 
-    it('should show a browser notification when they are enabled', async function () {
-      requestPermission.resolves('irrelevant')
-      permissionGranted.returns(true)
+    test('should show a browser notification when they are enabled', async () => {
+      systemNotifications.requestPermission.mockResolvedValue('irrelevant')
+      systemNotifications.permissionGranted.mockReturnValue(true)
       await testThunk(enableSystemNotifications(true))
-      expect(sendSystemNotification).to.have.been.called()
+      expect(systemNotifications.sendSystemNotification).toBeCalled()
     })
   })
 })

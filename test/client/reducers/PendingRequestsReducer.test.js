@@ -1,5 +1,3 @@
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
 import {reduce} from '../../../src/client/reducers/PendingRequestsReducer'
 import {
   ENCRYPTING_PASSWORD,
@@ -14,31 +12,31 @@ import {
 } from '../../../src/client/actions/Actions'
 import {Map} from 'immutable'
 
-describe('PendingRequestsReducer', function () {
+describe('PendingRequestsReducer', () => {
 
-  it('should return the state unmodified for an unknown action', function () {
+  test('should return the state unmodified for an unknown action', () => {
     const existingState = Map({foo: 'bar'})
     const newState = reduce(existingState, {type: 'not-a-real-action'})
-    expect(newState).to.deep.equal(existingState)
+    expect(newState).toEqual(existingState)
   })
 
-  describe(INTERESTING_PROJECTS_FETCHING, function () {
+  describe(INTERESTING_PROJECTS_FETCHING, () => {
 
-    it('should set the pending request', function () {
+    test('should set the pending request', () => {
       const existingState = Map()
       const action = {type: INTERESTING_PROJECTS_FETCHING, request: 'some-pending-request'}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('interesting', 'some-pending-request')
+      expect(newState.toJS()).toHaveProperty('interesting', 'some-pending-request')
     })
   })
 
-  describe(INTERESTING_PROJECTS, function () {
+  describe(INTERESTING_PROJECTS, () => {
 
-    it('should remove the pending request', function () {
+    test('should remove the pending request', () => {
       const existingState = Map({trayId: 'some-pending-request'})
       const action = {type: INTERESTING_PROJECTS}
       const newState = reduce(existingState, action)
-      expect(newState).to.not.have.property('interesting')
+      expect(newState.toJS()).not.toHaveProperty('interesting')
     })
   })
 
@@ -48,14 +46,14 @@ describe('PendingRequestsReducer', function () {
   ]
   trayActionsThatStartRequests.forEach((actionType) => {
 
-    describe(actionType, function () {
+    describe(actionType, () => {
 
-      it('should set the pending request', function () {
+      test('should set the pending request', () => {
 
         const existingState = Map()
         const action = {type: actionType, trayId: 'trayId', request: 'some-pending-request'}
         const newState = reduce(existingState, action)
-        expect(newState).to.have.property('trayId', 'some-pending-request')
+        expect(newState.toJS()).toHaveProperty('trayId', 'some-pending-request')
       })
     })
   })
@@ -69,13 +67,13 @@ describe('PendingRequestsReducer', function () {
   ]
   trayActionsThatRemoveRequests.forEach((actionType) => {
 
-    describe(actionType, function () {
+    describe(actionType, () => {
 
-      it('should remove the pending request', function () {
+      test('should remove the pending request', () => {
         const existingState = Map({trayId: 'some-pending-request'})
         const action = {type: actionType, trayId: 'trayId'}
         const newState = reduce(existingState, action)
-        expect(newState).to.not.have.property('trayId')
+        expect(newState.toJS()).not.toHaveProperty('trayId')
       })
     })
   })

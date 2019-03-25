@@ -1,36 +1,34 @@
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
 import {ExternalLink} from '../../../src/client/common/ExternalLink'
 import {VisuallyHidden} from '../../../src/client/common/VisuallyHidden'
-import {childText} from '../TestUtils'
+import {childText} from '../testHelpers'
 
-describe('<ExternalLink/>', function () {
+describe('<ExternalLink/>', () => {
 
   const DEFAULT_PROPS = {
     children: ''
   }
 
-  it('should have the correct target', function () {
+  test('should have the correct target', () => {
     const props = {...DEFAULT_PROPS}
     const wrapper = shallow(<ExternalLink {...props}>child</ExternalLink>)
-    expect(wrapper.find('a')).to.have.prop('target', '_blank')
+    expect(wrapper.find('a').prop('target')).toEqual( '_blank')
   })
 
   // https://mathiasbynens.github.io/rel-noopener/
-  it('should defend against "reverse tabnabbing"', function () {
+  test('should defend against "reverse tabnabbing"', () => {
     const props = {...DEFAULT_PROPS}
     const wrapper = shallow(<ExternalLink {...props}>child</ExternalLink>)
-    expect(wrapper.find('a')).to.have.prop('rel', 'noopener noreferrer')
+    expect(wrapper.find('a').prop('rel')).toEqual( 'noopener noreferrer')
   })
 
-  describe('accessibility', function () {
+  describe('accessibility', () => {
 
-    it('should indicate it opens in a new window', function () {
+    test('should indicate it opens in a new window', () => {
       const props = {...DEFAULT_PROPS}
       const wrapper = shallow(<ExternalLink {...props}>child</ExternalLink>)
-      expect(childText(wrapper, VisuallyHidden)).to.equal(' (opens in a new window)')
+      expect(childText(wrapper, VisuallyHidden)).toBe(' (opens in a new window)')
     })
   })
 })

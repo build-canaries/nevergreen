@@ -1,33 +1,31 @@
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
 import {gitHubSetDescription, gitHubSetGistId} from '../../../src/client/actions/GitHubActionCreators'
 import {GITHUB_SET_DESCRIPTION, GITHUB_SET_GIST_ID} from '../../../src/client/actions/Actions'
 
-describe('GitHubActionCreators', function () {
+describe('GitHubActionCreators', () => {
 
-  describe(GITHUB_SET_GIST_ID, function () {
+  describe(GITHUB_SET_GIST_ID, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = gitHubSetGistId()
-      expect(actual).to.have.property('type', GITHUB_SET_GIST_ID)
+      expect(actual).toHaveProperty('type', GITHUB_SET_GIST_ID)
     })
 
-    it('should return the url', function () {
+    test('should return the url', () => {
       const actual = gitHubSetGistId('some-id')
-      expect(actual).to.have.property('gistId', 'some-id')
+      expect(actual).toHaveProperty('gistId', 'some-id')
     })
   })
 
-  describe(GITHUB_SET_DESCRIPTION, function () {
+  describe(GITHUB_SET_DESCRIPTION, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = gitHubSetDescription()
-      expect(actual).to.have.property('type', GITHUB_SET_DESCRIPTION)
+      expect(actual).toHaveProperty('type', GITHUB_SET_DESCRIPTION)
     })
 
-    it('should return the description', function () {
+    test('should return the description', () => {
       const actual = gitHubSetDescription('some-description')
-      expect(actual).to.have.property('description', 'some-description')
+      expect(actual).toHaveProperty('description', 'some-description')
     })
   })
 })

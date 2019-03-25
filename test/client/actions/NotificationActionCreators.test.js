@@ -1,28 +1,26 @@
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
 import {NOTIFICATION, NOTIFICATION_DISMISS} from '../../../src/client/actions/Actions'
 import {dismiss, notify} from '../../../src/client/actions/NotificationActionCreators'
 
-describe('NotificationActionCreators', function () {
+describe('NotificationActionCreators', () => {
 
-  describe(NOTIFICATION, function () {
+  describe(NOTIFICATION, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = notify()
-      expect(actual).to.have.property('type', NOTIFICATION)
+      expect(actual).toHaveProperty('type', NOTIFICATION)
     })
 
-    it('should return the message', function () {
+    test('should return the message', () => {
       const actual = notify('some-message')
-      expect(actual).to.have.property('message', 'some-message')
+      expect(actual).toHaveProperty('message', 'some-message')
     })
   })
 
-  describe(NOTIFICATION_DISMISS, function () {
+  describe(NOTIFICATION_DISMISS, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = dismiss()
-      expect(actual).to.have.property('type', NOTIFICATION_DISMISS)
+      expect(actual).toHaveProperty('type', NOTIFICATION_DISMISS)
     })
   })
 })

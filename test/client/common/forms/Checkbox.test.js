@@ -1,10 +1,7 @@
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
 import _ from 'lodash'
 import {Checkbox} from '../../../../src/client/common/forms/Checkbox'
-import {mocks} from '../../Mocking'
 
 describe('<Checkbox/>', function () {
 
@@ -17,16 +14,16 @@ describe('<Checkbox/>', function () {
   it('should render an input of type checkbox', function () {
     const props = {...DEFAULT_PROPS}
     const wrapper = shallow(<Checkbox {...props} />)
-    expect(wrapper.find('input')).to.have.prop('type', 'checkbox')
+    expect(wrapper.find('input').prop('type')).toEqual('checkbox')
   })
 
   it('should call onToggle on change', function () {
-    const onToggle = mocks.spy()
+    const onToggle = jest.fn()
     const props = {...DEFAULT_PROPS, onToggle}
 
     const wrapper = shallow(<Checkbox {...props} />)
     wrapper.find('input').simulate('change', {target: {checked: true}})
 
-    expect(onToggle).to.have.been.calledWith(true)
+    expect(onToggle).toBeCalledWith(true)
   })
 })

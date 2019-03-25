@@ -1,43 +1,40 @@
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
 import {AddTray} from '../../../src/client/tracking/AddTray'
 import _ from 'lodash'
-import {change, locator} from '../TestUtils'
-import {mocks} from '../Mocking'
+import {change, locator} from '../testHelpers'
 
-describe('<AddTray/>', function () {
+describe('<AddTray/>', () => {
 
   const DEFAULT_PROPS = {
     addTray: _.noop
   }
 
-  it('should update the url', function () {
+  test('should update the url', () => {
     const props = {...DEFAULT_PROPS}
     const wrapper = shallow(<AddTray {...props} />)
     change(wrapper.find(locator('add-tray-url')), 'some-new-url')
-    expect(wrapper).to.have.state('url', 'some-new-url')
+    expect(wrapper.state('url')).toEqual('some-new-url')
   })
 
-  it('should update the username', function () {
+  test('should update the username', () => {
     const props = {...DEFAULT_PROPS}
     const wrapper = shallow(<AddTray {...props} />)
     change(wrapper.find(locator('add-tray-username')), 'some-new-username')
-    expect(wrapper).to.have.state('username', 'some-new-username')
+    expect(wrapper.state('username')).toEqual('some-new-username')
   })
 
-  it('should update the password', function () {
+  test('should update the password', () => {
     const props = {...DEFAULT_PROPS}
     const wrapper = shallow(<AddTray {...props} />)
     change(wrapper.find(locator('add-tray-password')), 'some-new-password')
-    expect(wrapper).to.have.state('password', 'some-new-password')
+    expect(wrapper.state('password')).toEqual('some-new-password')
   })
 
-  describe('add tray', function () {
+  describe('add tray', () => {
 
-    it('should pass the entered details', function () {
-      const addTray = mocks.spy()
+    test('should pass the entered details', () => {
+      const addTray = jest.fn()
       const props = {...DEFAULT_PROPS, addTray}
 
       const wrapper = shallow(<AddTray {...props} />)
@@ -46,37 +43,37 @@ describe('<AddTray/>', function () {
       change(wrapper.find(locator('add-tray-password')), 'some-new-password')
       wrapper.find(locator('add-tray')).simulate('click')
 
-      expect(addTray).to.have.been.calledWith('some-new-url', 'some-new-username', 'some-new-password')
+      expect(addTray).toBeCalledWith('some-new-url', 'some-new-username', 'some-new-password')
     })
 
-    it('should clear the entered url', function () {
+    test('should clear the entered url', () => {
       const props = {...DEFAULT_PROPS}
 
       const wrapper = shallow(<AddTray {...props} />)
       change(wrapper.find(locator('add-tray-url')), 'some-new-url')
       wrapper.find(locator('add-tray')).simulate('click')
 
-      expect(wrapper).to.have.state('url', '')
+      expect(wrapper.state('url')).toEqual('')
     })
 
-    it('should clear the entered username', function () {
+    test('should clear the entered username', () => {
       const props = {...DEFAULT_PROPS}
 
       const wrapper = shallow(<AddTray {...props} />)
       change(wrapper.find(locator('add-tray-username')), 'some-new-username')
       wrapper.find(locator('add-tray')).simulate('click')
 
-      expect(wrapper).to.have.state('username', '')
+      expect(wrapper.state('username')).toEqual('')
     })
 
-    it('should clear the entered password', function () {
+    test('should clear the entered password', () => {
       const props = {...DEFAULT_PROPS}
 
       const wrapper = shallow(<AddTray {...props} />)
       change(wrapper.find(locator('add-tray-password')), 'some-new-password')
       wrapper.find(locator('add-tray')).simulate('click')
 
-      expect(wrapper).to.have.state('password', '')
+      expect(wrapper.state('password')).toEqual('')
     })
   })
 })

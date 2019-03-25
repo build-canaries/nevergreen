@@ -1,63 +1,55 @@
-import {after, before, describe, it} from 'mocha'
-import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
-import {mocks} from '../Mocking'
 import {Resizable} from '../../../src/client/common/Resizable'
 import _ from 'lodash'
 
-describe('<Resizable/>', function () {
+describe('<Resizable/>', () => {
+
+  window.addEventListener = jest.fn()
+  window.removeEventListener = jest.fn()
 
   const props = {
     onResize: _.noop
   }
 
-  before(function () {
-    mocks.spy(global.window, 'addEventListener')
-    mocks.spy(global.window, 'removeEventListener')
-  })
-
-  after(function () {
-    global.window.addEventListener.restore()
-    global.window.removeEventListener.restore()
-  })
-
-  it('should not render anything as this is only a React component for easy setup/cleanup up on [un]mount', function () {
-    const wrapper = shallow(<Resizable {...props} />)
-    expect(wrapper).to.be.blank()
-  })
+  test('should not render anything as this is only a React component for easy setup/cleanup up on [un]mount', () => {
+      const wrapper = shallow(<Resizable {...props} />)
+      expect(wrapper.isEmptyRender()).toBeTruthy()
+    }
+  )
 
   // TODO: can we [easily] verify the resize fn gets registered? It gets wrapped by a debounce call so isn't === to the prop onResize
-  it('should register resize fn on initial mount', function () {
+  test('should register resize fn on initial mount', () => {
     shallow(<Resizable {...props} />)
-    expect(global.window.addEventListener).to.have.been.calledWith('resize')
-    expect(global.window.removeEventListener).to.not.have.been.called()
+    expect(window.addEventListener).toBeCalledWith('resize', expect.any(Function))
+    expect(window.removeEventListener).not.toBeCalled()
   })
 
-  it('should remove resize fn on unmount', function () {
+  test('should remove resize fn on unmount', () => {
     const wrapper = shallow(<Resizable {...props} />)
-    const resizeFn = global.window.addEventListener.args[0][1] // called on mount as verified in the test above
+    const resizeFn = window.addEventListener.mock.calls[0][1] // called on mount as verified in the test above
 
     wrapper.unmount()
 
-    expect(global.window.removeEventListener).to.have.been.calledWith('resize', resizeFn)
+    expect(window.removeEventListener).toBeCalledWith('resize', resizeFn)
   })
 
-  it('should remove old resize fn when receiving new props and add a new one on update', function () {
-    const newProps = {onResize: mocks.spy()}
-    const wrapper = shallow(<Resizable {...props} />)
+  test('should remove old resize fn when receiving new props and add a new one on update', () => {
+      const newProps = {onResize: jest.fn()}
+      const wrapper = shallow(<Resizable {...props} />)
 
-    const originalResizeFn = global.window.addEventListener.args[0][1]
+      const originalResizeFn = window.addEventListener.mock.calls[0][1]
 
-    wrapper.setProps(newProps)
+      wrapper.setProps(newProps)
 
-    expect(global.window.removeEventListener).to.have.been.calledWith('resize', originalResizeFn)
-    expect(global.window.addEventListener).to.have.been.calledTwice()
+      expect(window.removeEventListener).toBeCalledWith('resize', originalResizeFn)
+      expect(window.addEventListener.mock.calls).toHaveLength(2)
 
-    const removedResizeFn = global.window.removeEventListener.args[0][1]
-    const updatedResizeFn = global.window.addEventListener.args[1][1]
+      const removedResizeFn = window.removeEventListener.mock.calls[0][1]
+      const updatedResizeFn = window.addEventListener.mock.calls[1][1]
 
-    expect(removedResizeFn).to.equal(originalResizeFn)
-    expect(updatedResizeFn).to.not.equal(originalResizeFn)
-  })
+      expect(removedResizeFn).toBe(originalResizeFn)
+      expect(updatedResizeFn).not.toBe(originalResizeFn)
+    }
+  )
 })

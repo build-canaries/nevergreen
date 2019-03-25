@@ -1,5 +1,3 @@
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
 import {
   FULL_SCREEN,
   INITIALISED,
@@ -15,60 +13,60 @@ import {
   requestFullScreen
 } from '../../../src/client/actions/NevergreenActionCreators'
 
-describe('NevergreenActionCreators', function () {
+describe('NevergreenActionCreators', () => {
 
-  describe(INITIALISING, function () {
+  describe(INITIALISING, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = initalising({foo: 'bar'})
-      expect(actual).to.have.property('type', INITIALISING)
+      expect(actual).toHaveProperty('type', INITIALISING)
     })
   })
 
-  describe(INITIALISED, function () {
+  describe(INITIALISED, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = initalised()
-      expect(actual).to.have.property('type', INITIALISED)
+      expect(actual).toHaveProperty('type', INITIALISED)
     })
 
-    it('should return the configuration', function () {
+    test('should return the configuration', () => {
       const actual = initalised({foo: 'bar'})
-      expect(actual).to.have.property('data').that.contains.property('foo', 'bar')
+      expect(actual.data.get('foo')).toEqual('bar')
     })
   })
 
-  describe(NAVIGATED, function () {
+  describe(NAVIGATED, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = navigated()
-      expect(actual).to.have.property('type', NAVIGATED)
+      expect(actual).toHaveProperty('type', NAVIGATED)
     })
   })
 
-  describe(FULL_SCREEN, function () {
+  describe(FULL_SCREEN, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = enableFullScreen()
-      expect(actual).to.have.property('type', FULL_SCREEN)
+      expect(actual).toHaveProperty('type', FULL_SCREEN)
     })
 
-    it('should return the enabled flag', function () {
+    test('should return the enabled flag', () => {
       const actual = enableFullScreen(true)
-      expect(actual).to.have.property('enabled', true)
+      expect(actual).toHaveProperty('enabled', true)
     })
   })
 
-  describe(REQUEST_FULL_SCREEN, function () {
+  describe(REQUEST_FULL_SCREEN, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = requestFullScreen()
-      expect(actual).to.have.property('type', REQUEST_FULL_SCREEN)
+      expect(actual).toHaveProperty('type', REQUEST_FULL_SCREEN)
     })
 
-    it('should return the requested flag', function () {
+    test('should return the requested flag', () => {
       const actual = requestFullScreen(true)
-      expect(actual).to.have.property('requested', true)
+      expect(actual).toHaveProperty('requested', true)
     })
   })
 })

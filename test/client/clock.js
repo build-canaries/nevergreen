@@ -1,20 +1,15 @@
-import {after, afterEach, before} from 'mocha'
 import getTime from 'date-fns/get_time'
 import lolex from 'lolex'
 
-let clock = null
+const clock = lolex.install()
 
-before(function () {
-  clock = lolex.install()
-})
-
-afterEach(function () {
+afterEach(() => {
   // reset back to the real system time
   clock.setSystemTime()
 })
 
-after(function () {
-  clock && clock.uninstall()
+afterAll(() => {
+  clock.uninstall()
 })
 
 export {clock}

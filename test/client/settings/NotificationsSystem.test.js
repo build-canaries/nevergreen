@@ -1,13 +1,11 @@
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
 import _ from 'lodash'
 import {NotificationsSystem} from '../../../src/client/settings/NotificationsSystem'
 import {Messages} from '../../../src/client/common/Messages'
-import {locator} from '../TestUtils'
+import {locator} from '../testHelpers'
 
-describe('<NotificationsSystem/>', function () {
+describe('<NotificationsSystem/>', () => {
 
   const DEFAULT_PROPS = {
     systemNotificationsSupported: true,
@@ -17,39 +15,39 @@ describe('<NotificationsSystem/>', function () {
     setShowSystemNotifications: _.noop
   }
 
-  it('should give the option to show browser notifications if they are supported', function () {
+  test('should give the option to show browser notifications if they are supported', () => {
     const props = {...DEFAULT_PROPS, systemNotificationsSupported: true}
     const wrapper = shallow(<NotificationsSystem {...props} />)
-    expect(wrapper.find(locator('show-system-notifications'))).to.be.present()
+    expect(wrapper.find(locator('show-system-notifications')).exists()).toBeTruthy()
   })
 
-  it('should not show the not supported message if browser notifications are supported', function () {
+  test('should not show the not supported message if browser notifications are supported', () => {
     const props = {...DEFAULT_PROPS, systemNotificationsSupported: true}
     const wrapper = shallow(<NotificationsSystem {...props} />)
-    expect(wrapper.find(locator('not-supported'))).to.not.be.present()
+    expect(wrapper.find(locator('not-supported')).exists()).toBeFalsy()
   })
 
-  it('should show the not supported message if browser notifications are not supported', function () {
+  test('should show the not supported message if browser notifications are not supported', () => {
     const props = {...DEFAULT_PROPS, systemNotificationsSupported: false}
     const wrapper = shallow(<NotificationsSystem {...props} />)
-    expect(wrapper.find(locator('not-supported'))).to.be.present()
+    expect(wrapper.find(locator('not-supported')).exists()).toBeTruthy()
   })
 
-  it('should not give the option to show browser notifications if they are not supported', function () {
+  test('should not give the option to show browser notifications if they are not supported', () => {
     const props = {...DEFAULT_PROPS, systemNotificationsSupported: false}
     const wrapper = shallow(<NotificationsSystem {...props} />)
-    expect(wrapper.find(locator('show-system-notifications'))).to.not.be.present()
+    expect(wrapper.find(locator('show-system-notifications')).exists()).toBeFalsy()
   })
 
-  it('should show a message if notifications are supported but permission is denied', function () {
+  test('should show a message if notifications are supported but permission is denied', () => {
     const props = {...DEFAULT_PROPS, systemNotificationsSupported: true, systemNotificationPermissionDenied: true}
     const wrapper = shallow(<NotificationsSystem {...props} />)
-    expect(wrapper.find(Messages)).to.be.present()
+    expect(wrapper.find(Messages).exists()).toBeTruthy()
   })
 
-  it('should disable the checkbox if permission is being requested', function () {
+  test('should disable the checkbox if permission is being requested', () => {
     const props = {...DEFAULT_PROPS, systemNotificationsSupported: true, systemNotificationRequestingPermission: true}
     const wrapper = shallow(<NotificationsSystem {...props} />)
-    expect(wrapper.find(locator('show-system-notifications'))).to.have.prop('disabled', true)
+    expect(wrapper.find(locator('show-system-notifications')).prop('disabled')).toEqual(true)
   })
 })

@@ -1,33 +1,31 @@
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
 import {gitLabSetUrl, gitLabSetSnippetId} from '../../../src/client/actions/GitLabActionCreators'
 import {GITLAB_SET_URL, GITLAB_SET_SNIPPET_ID} from '../../../src/client/actions/Actions'
 
-describe('GitLabActionCreators', function () {
+describe('GitLabActionCreators', () => {
 
-  describe(GITLAB_SET_SNIPPET_ID, function () {
+  describe(GITLAB_SET_SNIPPET_ID, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = gitLabSetSnippetId()
-      expect(actual).to.have.property('type', GITLAB_SET_SNIPPET_ID)
+      expect(actual).toHaveProperty('type', GITLAB_SET_SNIPPET_ID)
     })
 
-    it('should return the url', function () {
+    test('should return the url', () => {
       const actual = gitLabSetSnippetId('some-id')
-      expect(actual).to.have.property('snippetId', 'some-id')
+      expect(actual).toHaveProperty('snippetId', 'some-id')
     })
   })
 
-  describe(GITLAB_SET_URL, function () {
+  describe(GITLAB_SET_URL, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = gitLabSetUrl()
-      expect(actual).to.have.property('type', GITLAB_SET_URL)
+      expect(actual).toHaveProperty('type', GITLAB_SET_URL)
     })
 
-    it('should return the url', function () {
+    test('should return the url', () => {
       const actual = gitLabSetUrl('some-url')
-      expect(actual).to.have.property('url', 'some-url')
+      expect(actual).toHaveProperty('url', 'some-url')
     })
   })
 })

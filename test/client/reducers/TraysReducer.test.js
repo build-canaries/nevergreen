@@ -1,5 +1,3 @@
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
 import {reduce, TRAYS_ROOT} from '../../../src/client/reducers/TraysReducer'
 import {
   ENCRYPTING_PASSWORD,
@@ -23,257 +21,257 @@ import {
 import {fromJS, List, Map} from 'immutable'
 import {Tray} from '../../../src/client/domain/Tray'
 
-describe('TraysReducer', function () {
+describe('TraysReducer', () => {
 
-  it('should return the state unmodified for an unknown action', function () {
+  test('should return the state unmodified for an unknown action', () => {
     const existingState = {foo: 'bar'}
     const newState = reduce(existingState, {type: 'not-a-real-action'})
-    expect(newState).to.deep.equal(existingState)
+    expect(newState).toEqual(existingState)
   })
 
-  describe(INITIALISED, function () {
+  describe(INITIALISED, () => {
 
-    it('should set the trays data', function () {
+    test('should set the trays data', () => {
       const existingState = Map({someId: {}})
       const action = {type: INITIALISED, data: fromJS({[TRAYS_ROOT]: {trayId: {}}})}
       const newState = reduce(existingState, action)
-      expect(newState).to.not.have.property('someId')
-      expect(newState).to.have.property('trayId').that.is.instanceof(Tray)
+      expect(newState).not.toHaveProperty('someId')
+      expect(newState.get('trayId')).toBeInstanceOf(Tray)
     })
 
-    it('should set the loaded property on added trays', function () {
+    test('should set the loaded property on added trays', () => {
       const existingState = Map()
       const action = {type: INITIALISED, data: fromJS({[TRAYS_ROOT]: {trayId: {}}})}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.has.property('loaded', true)
+      expect(newState.get('trayId')).toHaveProperty('loaded', true)
     })
 
-    it('should handle no trays data', function () {
+    test('should handle no trays data', () => {
       const existingState = Map()
       const action = {type: INITIALISED, data: Map()}
       const newState = reduce(existingState, action)
-      expect(newState).to.be.empty()
+      expect(newState.toJS()).toEqual({})
     })
   })
 
-  describe(IMPORT_SUCCESS, function () {
+  describe(IMPORT_SUCCESS, () => {
 
-    it('should set the trays data', function () {
+    test('should set the trays data', () => {
       const existingState = Map({someId: {}})
       const action = {type: IMPORT_SUCCESS, data: fromJS({[TRAYS_ROOT]: {trayId: {}}})}
       const newState = reduce(existingState, action)
-      expect(newState).to.not.have.property('someId')
-      expect(newState).to.have.property('trayId').that.is.instanceof(Tray)
+      expect(newState.toJS()).not.toHaveProperty('someId')
+      expect(newState.toJS()).toHaveProperty('trayId')
     })
 
-    it('should set the loaded property on added trays', function () {
+    test('should set the loaded property on added trays', () => {
       const existingState = Map()
       const action = {type: IMPORT_SUCCESS, data: fromJS({[TRAYS_ROOT]: {trayId: {}}})}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.has.property('loaded', true)
+      expect(newState.toJS()).toHaveProperty('trayId.loaded', true)
     })
   })
 
-  describe(TRAY_ADDED, function () {
+  describe(TRAY_ADDED, () => {
 
-    it('should set the tray data', function () {
+    test('should set the tray data', () => {
       const existingState = Map()
       const action = {type: TRAY_ADDED, trayId: 'trayId', data: fromJS({foo: 'bar'})}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.has.property('foo', 'bar')
+      expect(newState.toJS()).toHaveProperty('trayId.foo', 'bar')
     })
   })
 
-  describe(HIGHLIGHT_TRAY, function () {
+  describe(HIGHLIGHT_TRAY, () => {
 
-    it('should set the highlight flag to true', function () {
+    test('should set the highlight flag to true', () => {
       const existingState = fromJS({trayId: new Tray({highlight: false})})
       const action = {type: HIGHLIGHT_TRAY, trayId: 'trayId'}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.has.property('highlight', true)
+      expect(newState.toJS()).toHaveProperty('trayId.highlight', true)
     })
   })
 
-  describe(NAVIGATED, function () {
+  describe(NAVIGATED, () => {
 
-    it('should set the highlight flag to false for all trays', function () {
+    test('should set the highlight flag to false for all trays', () => {
       const existingState = fromJS({trayId: new Tray({highlight: true})})
       const action = {type: NAVIGATED}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.has.property('highlight', false)
+      expect(newState.toJS()).toHaveProperty('trayId.highlight', false)
     })
   })
 
-  describe(REMOVE_TRAY, function () {
+  describe(REMOVE_TRAY, () => {
 
-    it('should set the tray data', function () {
+    test('should set the tray data', () => {
       const existingState = Map({trayId: new Tray()})
       const action = {type: REMOVE_TRAY, trayId: 'trayId'}
       const newState = reduce(existingState, action)
-      expect(newState).to.not.have.property('trayId')
+      expect(newState.toJS()).not.toHaveProperty('trayId')
     })
   })
 
-  describe(ENCRYPTING_PASSWORD, function () {
+  describe(ENCRYPTING_PASSWORD, () => {
 
-    it('should set as not loaded', function () {
+    test('should set as not loaded', () => {
       const existingState = fromJS({trayId: {loaded: true}})
       const action = {type: ENCRYPTING_PASSWORD, trayId: 'trayId'}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.has.property('loaded', false)
+      expect(newState.toJS()).toHaveProperty('trayId.loaded', false)
     })
   })
 
-  describe(PROJECTS_FETCHING, function () {
+  describe(PROJECTS_FETCHING, () => {
 
-    it('should set as not loaded', function () {
+    test('should set as not loaded', () => {
       const existingState = fromJS({trayId: new Tray({loaded: true})})
       const action = {type: PROJECTS_FETCHING, trayId: 'trayId'}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.has.property('loaded', false)
+      expect(newState.toJS()).toHaveProperty('trayId.loaded', false)
     })
 
-    it('should remove any errors', function () {
+    test('should remove any errors', () => {
       const existingState = fromJS({trayId: new Tray({errors: 'some-error'})})
       const action = {type: PROJECTS_FETCHING, trayId: 'trayId'}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.has.property('errors', null)
+      expect(newState.toJS()).toHaveProperty('trayId.errors', null)
     })
 
-    it('should unset requires refresh', function () {
+    test('should unset requires refresh', () => {
       const existingState = fromJS({trayId: new Tray({requiresRefresh: true})})
       const action = {type: PROJECTS_FETCHING, trayId: 'trayId'}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.has.property('requiresRefresh', false)
+      expect(newState.toJS()).toHaveProperty('trayId.requiresRefresh', false)
     })
   })
 
-  describe(PASSWORD_ENCRYPTED, function () {
+  describe(PASSWORD_ENCRYPTED, () => {
 
-    it('should set the password', function () {
+    test('should set the password', () => {
       const existingState = Map({trayId: new Tray()})
       const action = {type: PASSWORD_ENCRYPTED, trayId: 'trayId', password: 'some-password'}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.has.property('password', 'some-password')
+      expect(newState.toJS()).toHaveProperty('trayId.password', 'some-password')
     })
 
-    it('should set loaded', function () {
+    test('should set loaded', () => {
       const existingState = Map({trayId: new Tray({loaded: false})})
       const action = {type: PASSWORD_ENCRYPTED, trayId: 'trayId', password: 'some-password'}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.has.property('loaded', true)
+      expect(newState.toJS()).toHaveProperty('trayId.loaded', true)
     })
 
-    it('should remove any errors', function () {
+    test('should remove any errors', () => {
       const existingState = Map({trayId: new Tray({errors: List.of('some-error')})})
       const action = {type: PASSWORD_ENCRYPTED, trayId: 'trayId', password: 'some-password'}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.has.property('errors', null)
+      expect(newState.toJS()).toHaveProperty('trayId.errors', null)
     })
 
-    it('should set requires refresh', function () {
+    test('should set requires refresh', () => {
       const existingState = Map({trayId: new Tray({requiresRefresh: false})})
       const action = {type: PASSWORD_ENCRYPTED, trayId: 'trayId'}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.has.property('requiresRefresh', true)
+      expect(newState.toJS()).toHaveProperty('trayId.requiresRefresh', true)
     })
   })
 
-  describe(PROJECTS_FETCHED, function () {
+  describe(PROJECTS_FETCHED, () => {
 
-    it('should set loaded', function () {
+    test('should set loaded', () => {
       const existingState = Map({trayId: new Tray({loaded: false})})
       const action = {type: PROJECTS_FETCHED, trayId: 'trayId'}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.has.property('loaded', true)
+      expect(newState.toJS()).toHaveProperty('trayId.loaded', true)
     })
 
-    it('should set timestamp', function () {
+    test('should set timestamp', () => {
       const existingState = Map({trayId: new Tray()})
       const action = {type: PROJECTS_FETCHED, trayId: 'trayId', timestamp: 'some-timestamp'}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.has.property('timestamp', 'some-timestamp')
+      expect(newState.toJS()).toHaveProperty('trayId.timestamp', 'some-timestamp')
     })
 
-    it('should set server type', function () {
+    test('should set server type', () => {
       const existingState = Map({trayId: new Tray()})
       const action = {type: PROJECTS_FETCHED, trayId: 'trayId', serverType: 'some-type'}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.has.property('serverType', 'some-type')
+      expect(newState.toJS()).toHaveProperty('trayId.serverType', 'some-type')
     })
 
-    it('should remove any errors', function () {
+    test('should remove any errors', () => {
       const existingState = Map({trayId: new Tray({errors: List.of('some-error')})})
       const action = {type: PROJECTS_FETCHED, trayId: 'trayId'}
       const newState = reduce(existingState, action)
-      expect(newState).to.not.have.property('errors')
+      expect(newState.toJS()).not.toHaveProperty('errors')
     })
   })
 
-  describe(PASSWORD_ENCRYPT_ERROR, function () {
+  describe(PASSWORD_ENCRYPT_ERROR, () => {
 
-    it('should set loaded', function () {
+    test('should set loaded', () => {
       const existingState = Map({trayId: new Tray({loaded: false})})
       const action = {type: PASSWORD_ENCRYPT_ERROR, trayId: 'trayId'}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.has.property('loaded', true)
+      expect(newState.toJS()).toHaveProperty('trayId.loaded', true)
     })
 
-    it('should set errors', function () {
+    test('should set errors', () => {
       const existingState = Map({trayId: new Tray()})
       const action = {type: PASSWORD_ENCRYPT_ERROR, trayId: 'trayId', errors: List(['some-error'])}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.has.property('errors').that.contains('some-error')
+      expect(newState.toJS()).toHaveProperty('trayId.errors', ['some-error'])
     })
   })
 
-  describe(PROJECTS_FETCH_ERROR, function () {
+  describe(PROJECTS_FETCH_ERROR, () => {
 
-    it('should set loaded', function () {
+    test('should set loaded', () => {
       const existingState = Map({trayId: new Tray({loaded: false})})
       const action = {type: PROJECTS_FETCH_ERROR, trayId: 'trayId'}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.has.property('loaded', true)
+      expect(newState.toJS()).toHaveProperty('trayId.loaded', true)
     })
 
-    it('should set errors', function () {
+    test('should set errors', () => {
       const existingState = Map({trayId: new Tray()})
       const action = {type: PROJECTS_FETCH_ERROR, trayId: 'trayId', errors: List(['some-error'])}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.has.property('errors').that.contains('some-error')
+      expect(newState.toJS()).toHaveProperty('trayId.errors', ['some-error'])
     })
   })
 
-  describe(SET_TRAY_NAME, function () {
+  describe(SET_TRAY_NAME, () => {
 
-    it('should set the name', function () {
+    test('should set the name', () => {
       const existingState = Map({trayId: new Tray({name: 'some-name'})})
       const action = {type: SET_TRAY_NAME, trayId: 'trayId', name: 'some-new-name'}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.has.property('name', 'some-new-name')
+      expect(newState.toJS()).toHaveProperty('trayId.name', 'some-new-name')
     })
   })
 
-  describe(SET_SERVER_TYPE, function () {
+  describe(SET_SERVER_TYPE, () => {
 
-    it('should set the server type', function () {
+    test('should set the server type', () => {
       const existingState = Map({trayId: new Tray({serverType: 'some-type'})})
       const action = {type: SET_SERVER_TYPE, trayId: 'trayId', serverType: 'some-new-type'}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.has.property('serverType', 'some-new-type')
+      expect(newState.toJS()).toHaveProperty('trayId.serverType', 'some-new-type')
     })
   })
 
-  describe(SET_TRAY_USERNAME, function () {
+  describe(SET_TRAY_USERNAME, () => {
 
-    it('should set the username if its different', function () {
+    test('should set the username if its different', () => {
       const existingState = Map({trayId: new Tray({username: 'some-username'})})
       const action = {type: SET_TRAY_USERNAME, trayId: 'trayId', username: 'some-new-username'}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.has.property('username', 'some-new-username')
+      expect(newState.toJS()).toHaveProperty('trayId.username', 'some-new-username')
     })
 
-    it('should set requires refresh if the username is different', function () {
+    test('should set requires refresh if the username is different', () => {
       const existingState = Map({
         trayId: new Tray({
           trayId: 'trayId',
@@ -283,10 +281,10 @@ describe('TraysReducer', function () {
       })
       const action = {type: SET_TRAY_USERNAME, trayId: 'trayId', username: 'some-new-username'}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.has.property('requiresRefresh', true)
+      expect(newState.toJS()).toHaveProperty('trayId.requiresRefresh', true)
     })
 
-    it('should not set requires refresh if the username is the same', function () {
+    test('should not set requires refresh if the username is the same', () => {
       const existingState = Map({
         trayId: new Tray({
           trayId: 'trayId',
@@ -296,41 +294,41 @@ describe('TraysReducer', function () {
       })
       const action = {type: SET_TRAY_USERNAME, trayId: 'trayId', username: 'some-username'}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.has.property('requiresRefresh', false)
+      expect(newState.toJS()).toHaveProperty('trayId.requiresRefresh', false)
     })
   })
 
-  describe(SET_TRAY_URL, function () {
+  describe(SET_TRAY_URL, () => {
 
-    it('should set the url if its different', function () {
+    test('should set the url if its different', () => {
       const existingState = Map({trayId: new Tray({trayId: 'trayId', url: 'some-url'})})
       const action = {type: SET_TRAY_URL, trayId: 'trayId', url: 'some-new-url'}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.has.property('url', 'some-new-url')
+      expect(newState.toJS()).toHaveProperty('trayId.url', 'some-new-url')
     })
 
-    it('should set requires refresh if the URL is different', function () {
+    test('should set requires refresh if the URL is different', () => {
       const existingState = Map({trayId: new Tray({trayId: 'trayId', url: 'some-url', requiresRefresh: false})})
       const action = {type: SET_TRAY_URL, trayId: 'trayId', url: 'some-new-url'}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.has.property('requiresRefresh', true)
+      expect(newState.toJS()).toHaveProperty('trayId.requiresRefresh', true)
     })
 
-    it('should not set requires refresh if the URL is the same', function () {
+    test('should not set requires refresh if the URL is the same', () => {
       const existingState = Map({trayId: new Tray({trayId: 'trayId', url: 'some-url', requiresRefresh: false})})
       const action = {type: SET_TRAY_URL, trayId: 'trayId', url: 'some-url'}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.has.property('requiresRefresh', false)
+      expect(newState.toJS()).toHaveProperty('trayId.requiresRefresh', false)
     })
   })
 
-  describe(SET_INCLUDE_NEW, function () {
+  describe(SET_INCLUDE_NEW, () => {
 
-    it('should set include new', function () {
+    test('should set include new', () => {
       const existingState = Map({trayId: new Tray({trayId: 'trayId', includeNew: false})})
       const action = {type: SET_INCLUDE_NEW, trayId: 'trayId', value: true}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.has.property('includeNew', true)
+      expect(newState.toJS()).toHaveProperty('trayId.includeNew', true)
     })
   })
 })

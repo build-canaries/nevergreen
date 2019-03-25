@@ -19,6 +19,8 @@ print_step() {
   current_step=$((current_step + 1))
 }
 
+export CI=true
+
 print_step 'Checking prerequisites'
 . ./config/check-prerequisites.sh
 

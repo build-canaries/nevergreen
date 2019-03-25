@@ -1,34 +1,32 @@
-import {locator} from '../TestUtils'
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
+import {locator} from '../testHelpers'
 import React from 'react'
 import {shallow} from 'enzyme'
 import _ from 'lodash'
 import {AddedMessages} from '../../../src/client/success/AddedMessages'
 import {SuccessMessage} from '../../../src/client/common/SuccessMessage'
 
-describe('<AddedMessages/>', function () {
+describe('<AddedMessages/>', () => {
 
   const DEFAULT_PROPS = {
     messages: [],
     removeMessage: _.noop
   }
 
-  it('should render nothing if messages is empty', function () {
+  test('should render nothing if messages is empty', () => {
     const props = {...DEFAULT_PROPS, messages: []}
     const wrapper = shallow(<AddedMessages {...props} />)
-    expect(wrapper.get(0)).to.be.null()
+    expect(wrapper.get(0)).toBeNull()
   })
 
-  it('should render text messages', function () {
+  test('should render text messages', () => {
     const props = {...DEFAULT_PROPS, messages: ['some-message']}
     const wrapper = shallow(<AddedMessages {...props} />)
-    expect(wrapper.find(SuccessMessage)).to.have.prop('message', 'some-message')
+    expect(wrapper.find(SuccessMessage).prop('message')).toEqual( 'some-message')
   })
 
-  it('should render images', function () {
+  test('should render images', () => {
     const props = {...DEFAULT_PROPS, messages: ['https://some-url']}
     const wrapper = shallow(<AddedMessages {...props} />)
-    expect(wrapper.find(locator('success-image'))).to.have.prop('src', 'https://some-url')
+    expect(wrapper.find(locator('success-image')).prop('src')).toEqual( 'https://some-url')
   })
 })

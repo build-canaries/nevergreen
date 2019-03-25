@@ -1,5 +1,3 @@
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
 import {reduce} from '../../../src/client/reducers/SelectedReducer'
 import {
   IMPORT_SUCCESS,
@@ -11,95 +9,95 @@ import {
 } from '../../../src/client/actions/Actions'
 import {fromJS, Map, Set} from 'immutable'
 
-describe('SelectedReducer', function () {
+describe('SelectedReducer', () => {
 
-  it('should return the state unmodified for an unknown action', function () {
+  test('should return the state unmodified for an unknown action', () => {
     const existingState = {foo: 'bar'}
     const newState = reduce(existingState, {type: 'not-a-real-action'})
-    expect(newState).to.deep.equal(existingState)
+    expect(newState).toEqual(existingState)
   })
 
-  describe(INITIALISED, function () {
+  describe(INITIALISED, () => {
 
-    it('should set the selected data', function () {
+    test('should set the selected data', () => {
       const existingState = Map({oldId: ['foo']})
       const action = {type: INITIALISED, data: fromJS({selected: {trayId: ['bar']}})}
       const newState = reduce(existingState, action)
-      expect(newState).to.not.have.property('oldId')
-      expect(newState).to.have.property('trayId').that.is.an.instanceof(Set).that.contains('bar')
+      expect(newState.toJS()).not.toHaveProperty('oldId')
+      expect(newState.toJS()).toHaveProperty('trayId', ['bar'])
     })
 
-    it('should handle no selected data', function () {
+    test('should handle no selected data', () => {
       const existingState = Map({oldId: ['foo']})
       const action = {type: INITIALISED, data: Map()}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('oldId')
+      expect(newState.toJS()).toHaveProperty('oldId')
     })
   })
 
-  describe(IMPORT_SUCCESS, function () {
+  describe(IMPORT_SUCCESS, () => {
 
-    it('should set the selected data', function () {
+    test('should set the selected data', () => {
       const existingState = Map({oldId: ['foo']})
       const action = {type: IMPORT_SUCCESS, data: fromJS({selected: {trayId: ['bar']}})}
       const newState = reduce(existingState, action)
-      expect(newState).to.not.have.property('oldId')
-      expect(newState).to.have.property('trayId').that.is.an.instanceof(Set).that.contains('bar')
+      expect(newState.toJS()).not.toHaveProperty('oldId')
+      expect(newState.toJS()).toHaveProperty('trayId', ['bar'])
     })
   })
 
-  describe(TRAY_ADDED, function () {
+  describe(TRAY_ADDED, () => {
 
-    it('should add the tray id with an empty set of selected projects', function () {
+    test('should add the tray id with an empty set of selected projects', () => {
       const existingState = Map()
       const action = {type: TRAY_ADDED, trayId: 'trayId'}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.is.an.instanceof(Set).that.is.empty()
+      expect(newState.toJS()).toHaveProperty('trayId')
     })
   })
 
-  describe(REMOVE_TRAY, function () {
+  describe(REMOVE_TRAY, () => {
 
-    it('should remove the tray id', function () {
+    test('should remove the tray id', () => {
       const existingState = Map({trayId: Set()})
       const action = {type: REMOVE_TRAY, trayId: 'trayId'}
       const newState = reduce(existingState, action)
-      expect(newState).to.not.have.property('trayId')
+      expect(newState.toJS()).not.toHaveProperty('trayId')
     })
   })
 
-  describe(SELECT_PROJECT, function () {
+  describe(SELECT_PROJECT, () => {
 
-    it('should add the project web url if selected', function () {
-      const existingState = Map({trayId: Set('a', 'b', 'c')})
+    test('should add the project web url if selected', () => {
+      const existingState = Map({trayId: Set.of('a', 'b', 'c')})
       const action = {type: SELECT_PROJECT, trayId: 'trayId', projectId: 'd', selected: true}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.contains('d')
+      expect(newState.toJS()).toHaveProperty('trayId', ['a', 'b', 'c', 'd'])
     })
 
-    it('should remove the project web url if not selected', function () {
-      const existingState = Map({trayId: Set(['a', 'b', 'c'])})
+    test('should remove the project web url if not selected', () => {
+      const existingState = Map({trayId: Set.of('a', 'b', 'c')})
       const action = {type: SELECT_PROJECT, trayId: 'trayId', projectId: 'b', selected: false}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.not.contains('b')
+      expect(newState.toJS()).toHaveProperty('trayId', ['a', 'c'])
     })
   })
 
-  describe(PROJECTS_FETCHED, function () {
+  describe(PROJECTS_FETCHED, () => {
 
-    it('should remove selected projects that were not fetched', function () {
-      const existingState = Map({trayId: Set(['a', 'b', 'c'])})
+    test('should remove selected projects that were not fetched', () => {
+      const existingState = Map({trayId: Set.of('a', 'b', 'c')})
       const action = {type: PROJECTS_FETCHED, trayId: 'trayId', data: fromJS([{projectId: 'b'}])}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.contains('b').and.have.size(1)
+      expect(newState.toJS()).toHaveProperty('trayId', ['b'])
     })
 
-    it('should add new projects if select new is true', function () {
+    test('should add new projects if select new is true', () => {
       const existingState = Map({trayId: Set()})
       const fetchedProjects = fromJS([{projectId: 'a', isNew: true}, {projectId: 'b'}, {projectId: 'c'}])
       const action = {type: PROJECTS_FETCHED, trayId: 'trayId', includeNew: true, data: fetchedProjects}
       const newState = reduce(existingState, action)
-      expect(newState).to.have.property('trayId').that.contains('a')
+      expect(newState.toJS()).toHaveProperty('trayId', ['a'])
     })
   })
 })

@@ -1,51 +1,52 @@
-import {expect} from 'chai'
-import {describe, it} from 'mocha'
 import {ensureHasScheme, hasScheme, removeScheme} from '../../../src/client/domain/Url'
 
-describe('Url', function () {
+describe('Url', () => {
 
-  describe('hasScheme', function () {
+  describe('hasScheme', () => {
 
-    it('should return true when there is a scheme', function () {
-      expect(hasScheme('http://some-url')).to.be.true()
+    test('should return true when there is a scheme', () => {
+      expect(hasScheme('http://some-url')).toBe(true)
     })
 
-    it('should return false when there is no scheme', function () {
-      expect(hasScheme('some-thing')).to.be.false()
+    test('should return false when there is no scheme', () => {
+      expect(hasScheme('some-thing')).toBe(false)
     })
 
-    it('should handle null', function () {
-      expect(hasScheme(null)).to.be.false()
-    })
-  })
-
-  describe('removeScheme', function () {
-
-    it('should remove the scheme', function () {
-      expect(removeScheme('http://some-url')).to.equal('//some-url')
-    })
-
-    it('should do nothing if there is no scheme', function () {
-      expect(removeScheme('some-thing')).to.equal('some-thing')
-    })
-
-    it('should handle null', function () {
-      expect(removeScheme(null)).to.be.null()
+    test('should handle null', () => {
+      expect(hasScheme(null)).toBe(false)
     })
   })
 
-  describe('ensureHasScheme', function () {
+  describe('removeScheme', () => {
 
-    it('should do nothing if the url already has a scheme', function () {
-      expect(ensureHasScheme('ftp://some-url')).to.equal('ftp://some-url')
+    test('should remove the scheme', () => {
+      expect(removeScheme('http://some-url')).toBe('//some-url')
     })
 
-    it('should add the default scheme if it is missing', function () {
-      expect(ensureHasScheme('some-url')).to.equal('http://some-url')
+    test('should do nothing if there is no scheme', () => {
+      expect(removeScheme('some-thing')).toBe('some-thing')
     })
 
-    it('should add the default scheme if it is missing and the user added started slashes', function () {
-      expect(ensureHasScheme('//some-url')).to.equal('http://some-url')
+    test('should handle null', () => {
+      expect(removeScheme(null)).toBeNull()
     })
+  })
+
+  describe('ensureHasScheme', () => {
+
+    test('should do nothing if the url already has a scheme', () => {
+      expect(ensureHasScheme('ftp://some-url')).toBe('ftp://some-url')
+    })
+
+    test('should add the default scheme if it is missing', () => {
+      expect(ensureHasScheme('some-url')).toBe('http://some-url')
+    })
+
+    test(
+      'should add the default scheme if it is missing and the user added started slashes',
+      () => {
+        expect(ensureHasScheme('//some-url')).toBe('http://some-url')
+      }
+    )
   })
 })

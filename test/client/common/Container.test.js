@@ -1,11 +1,9 @@
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
 import {Container} from '../../../src/client/common/Container'
-import {locator, pressKeyOn} from '../TestUtils'
+import {locator, pressKeyOn} from '../testHelpers'
 
-describe('<Container/>', function () {
+describe('<Container/>', () => {
 
   const DEFAULT_PROPS = {
     children: null,
@@ -16,81 +14,96 @@ describe('<Container/>', function () {
     highlight: null
   }
 
-  it('should include the given title', function () {
+  test('should include the given title', () => {
     const props = {...DEFAULT_PROPS, title: 'some-title'}
     const wrapper = shallow(<Container {...props} />)
-    expect(wrapper.find(locator('container-title'))).to.have.text('some-title')
+    expect(wrapper.find(locator('container-title')).text()).toEqual('some-title')
   })
 
-  it('should include the given sub title', function () {
+  test('should include the given sub title', () => {
     const props = {...DEFAULT_PROPS, subTitle: 'some-sub-title'}
     const wrapper = shallow(<Container {...props} />)
-    expect(wrapper.find(locator('container-sub-title'))).to.have.text('some-sub-title')
+    expect(wrapper.find(locator('container-sub-title')).text()).toEqual('some-sub-title')
   })
 
-  it('should not include a sub title if one is not given', function () {
+  test('should not include a sub title if one is not given', () => {
     const props = {...DEFAULT_PROPS, subTitle: null}
     const wrapper = shallow(<Container {...props} />)
-    expect(wrapper.find(locator('container-sub-title'))).to.not.be.present()
+    expect(wrapper.find(locator('container-sub-title')).exists()).toBeFalsy()
   })
 
-  it('should show the body when not hidden', function () {
+  test('should show the body when not hidden', () => {
     const props = {...DEFAULT_PROPS, hidden: false}
     const wrapper = shallow(<Container {...props} />)
-    expect(wrapper.find(locator('body'))).to.be.present()
+    expect(wrapper.find(locator('body')).exists()).toBeTruthy()
   })
 
-  it('should render the body when hidden as it is hidden via css', function () {
-    const props = {...DEFAULT_PROPS, hidden: true}
-    const wrapper = shallow(<Container {...props} />)
-    expect(wrapper.find(locator('body'))).to.be.present()
-  })
+  test(
+    'should render the body when hidden as it is hidden via css',
+    () => {
+      const props = {...DEFAULT_PROPS, hidden: true}
+      const wrapper = shallow(<Container {...props} />)
+      expect(wrapper.find(locator('body')).exists()).toBeTruthy()
+    }
+  )
 
-  it('should toggle visibility when clicking the title bar', function () {
+  test('should toggle visibility when clicking the title bar', () => {
     const props = {...DEFAULT_PROPS, hidden: true}
     const wrapper = shallow(<Container {...props} />)
     wrapper.find(locator('title-bar')).simulate('click')
-    expect(wrapper.find(locator('body'))).to.be.present()
+    expect(wrapper.find(locator('body')).exists()).toBeTruthy()
   })
 
-  it('should toggle visibility when pressing the enter key when the title bar has focus', function () {
-    const props = {...DEFAULT_PROPS, hidden: true}
-    const wrapper = shallow(<Container {...props} />)
-    pressKeyOn(wrapper.find(locator('title-bar')), 'Enter')
-    expect(wrapper.find(locator('body'))).to.be.present()
-  })
+  test(
+    'should toggle visibility when pressing the enter key when the title bar has focus',
+    () => {
+      const props = {...DEFAULT_PROPS, hidden: true}
+      const wrapper = shallow(<Container {...props} />)
+      pressKeyOn(wrapper.find(locator('title-bar')), 'Enter')
+      expect(wrapper.find(locator('body')).exists()).toBeTruthy()
+    }
+  )
 
-  it('should toggle visibility when pressing the space key when the title bar has focus', function () {
-    const props = {...DEFAULT_PROPS, hidden: true}
-    const wrapper = shallow(<Container {...props} />)
-    pressKeyOn(wrapper.find(locator('title-bar')), ' ')
-    expect(wrapper.find(locator('body'))).to.be.present()
-  })
+  test(
+    'should toggle visibility when pressing the space key when the title bar has focus',
+    () => {
+      const props = {...DEFAULT_PROPS, hidden: true}
+      const wrapper = shallow(<Container {...props} />)
+      pressKeyOn(wrapper.find(locator('title-bar')), ' ')
+      expect(wrapper.find(locator('body')).exists()).toBeTruthy()
+    }
+  )
 
-  describe('accessibility', function () {
+  describe('accessibility', () => {
 
-    it('should have a focusable title bar', function () {
+    test('should have a focusable title bar', () => {
       const props = {...DEFAULT_PROPS}
       const wrapper = shallow(<Container {...props} />)
-      expect(wrapper.find(locator('title-bar'))).to.have.prop('tabIndex', '0')
+      expect(wrapper.find(locator('title-bar')).prop('tabIndex')).toEqual('0')
     })
 
-    it('should have the button role', function () {
+    test('should have the button role', () => {
       const props = {...DEFAULT_PROPS}
       const wrapper = shallow(<Container {...props} />)
-      expect(wrapper.find(locator('title-bar'))).to.have.prop('role', 'button')
+      expect(wrapper.find(locator('title-bar')).prop('role')).toEqual('button')
     })
 
-    it('should have a label describing what action click will perform', function () {
-      const props = {...DEFAULT_PROPS, title: 'some-title', initiallyHidden: false}
-      const wrapper = shallow(<Container {...props} />)
-      expect(wrapper.find(locator('title-bar'))).to.have.prop('aria-label', 'hide section some-title')
-    })
+    test(
+      'should have a label describing what action click will perform',
+      () => {
+        const props = {...DEFAULT_PROPS, title: 'some-title', initiallyHidden: false}
+        const wrapper = shallow(<Container {...props} />)
+        expect(wrapper.find(locator('title-bar')).prop('aria-label')).toEqual('hide section some-title')
+      }
+    )
 
-    it('should have a label describing what action click will perform (when hidden)', function () {
-      const props = {...DEFAULT_PROPS, title: 'some-title', initiallyHidden: true}
-      const wrapper = shallow(<Container {...props} />)
-      expect(wrapper.find(locator('title-bar'))).to.have.prop('aria-label', 'show section some-title')
-    })
+    test(
+      'should have a label describing what action click will perform (when hidden)',
+      () => {
+        const props = {...DEFAULT_PROPS, title: 'some-title', initiallyHidden: true}
+        const wrapper = shallow(<Container {...props} />)
+        expect(wrapper.find(locator('title-bar')).prop('aria-label')).toEqual('show section some-title')
+      }
+    )
   })
 })

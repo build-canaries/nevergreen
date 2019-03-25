@@ -1,13 +1,11 @@
-import {locator} from '../../TestUtils'
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
+import {locator} from '../../testHelpers'
 import React from 'react'
 import {shallow} from 'enzyme'
 import {AvailableProject} from '../../../../src/client/tracking/projects/AvailableProject'
 import _ from 'lodash'
 
 describe('<AvailableProject/>', function () {
-  
+
   const DEFAULT_PROPS = {
     name: '',
     stage: null,
@@ -20,20 +18,20 @@ describe('<AvailableProject/>', function () {
   it('should render new tag if the project is new', function () {
     const props = {...DEFAULT_PROPS, isNew: true}
     const wrapper = shallow(<AvailableProject {...props} />)
-    expect(wrapper.find(locator('new'))).to.be.present()
-    expect(wrapper.find(locator('removed'))).to.not.be.present()
+    expect(wrapper.find(locator('new')).exists()).toBeTruthy()
+    expect(wrapper.find(locator('removed')).exists()).toBeFalsy()
   })
 
   it('should render removed tag if the project was removed', function () {
     const props = {...DEFAULT_PROPS, removed: true}
     const wrapper = shallow(<AvailableProject {...props} />)
-    expect(wrapper.find(locator('new'))).to.not.be.present()
-    expect(wrapper.find(locator('removed'))).to.be.present()
+    expect(wrapper.find(locator('new')).exists()).toBeFalsy()
+    expect(wrapper.find(locator('removed')).exists()).toBeTruthy()
   })
 
   it('should render the name and stage', function () {
     const props = {...DEFAULT_PROPS, name: 'name', stage: 'stage'}
     const wrapper = shallow(<AvailableProject {...props} />)
-    expect(wrapper.find(locator('name'))).to.have.text('name stage')
+    expect(wrapper.find(locator('name')).text()).toEqual('name stage')
   })
 })

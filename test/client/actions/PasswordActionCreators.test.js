@@ -1,5 +1,3 @@
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
 import {ENCRYPTING_PASSWORD, PASSWORD_ENCRYPT_ERROR, PASSWORD_ENCRYPTED} from '../../../src/client/actions/Actions'
 import {
   encryptingPassword,
@@ -7,64 +5,64 @@ import {
   passwordEncryptError
 } from '../../../src/client/actions/PasswordActionCreators'
 
-describe('PasswordActionCreators', function () {
+describe('PasswordActionCreators', () => {
 
-  describe(ENCRYPTING_PASSWORD, function () {
+  describe(ENCRYPTING_PASSWORD, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = encryptingPassword()
-      expect(actual).to.have.property('type', ENCRYPTING_PASSWORD)
+      expect(actual).toHaveProperty('type', ENCRYPTING_PASSWORD)
     })
 
-    it('should return the tray id', function () {
+    test('should return the tray id', () => {
       const actual = encryptingPassword('some-tray-id')
-      expect(actual).to.have.property('trayId', 'some-tray-id')
+      expect(actual).toHaveProperty('trayId', 'some-tray-id')
     })
 
-    it('should return the password being encrypted', function () {
+    test('should return the password being encrypted', () => {
       const actual = encryptingPassword('irrelevant', 'some-password')
-      expect(actual).to.have.property('password', 'some-password')
+      expect(actual).toHaveProperty('password', 'some-password')
     })
 
-    it('should return the request', function () {
+    test('should return the request', () => {
       const actual = encryptingPassword('irrelevant', 'irrelevant', 'some-request')
-      expect(actual).to.have.property('request', 'some-request')
+      expect(actual).toHaveProperty('request', 'some-request')
     })
   })
 
-  describe(PASSWORD_ENCRYPTED, function () {
+  describe(PASSWORD_ENCRYPTED, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = passwordEncrypted()
-      expect(actual).to.have.property('type', PASSWORD_ENCRYPTED)
+      expect(actual).toHaveProperty('type', PASSWORD_ENCRYPTED)
     })
 
-    it('should return the tray id', function () {
+    test('should return the tray id', () => {
       const actual = passwordEncrypted('some-tray-id')
-      expect(actual).to.have.property('trayId', 'some-tray-id')
+      expect(actual).toHaveProperty('trayId', 'some-tray-id')
     })
 
-    it('should return the encrypted password', function () {
+    test('should return the encrypted password', () => {
       const actual = passwordEncrypted('irrelevant', 'encrypted-password')
-      expect(actual).to.have.property('password', 'encrypted-password')
+      expect(actual).toHaveProperty('password', 'encrypted-password')
     })
   })
 
-  describe(PASSWORD_ENCRYPT_ERROR, function () {
+  describe(PASSWORD_ENCRYPT_ERROR, () => {
 
-    it('should return the correct type', function () {
+    test('should return the correct type', () => {
       const actual = passwordEncryptError()
-      expect(actual).to.have.property('type', PASSWORD_ENCRYPT_ERROR)
+      expect(actual).toHaveProperty('type', PASSWORD_ENCRYPT_ERROR)
     })
 
-    it('should return the tray id', function () {
+    test('should return the tray id', () => {
       const actual = passwordEncryptError('some-tray-id')
-      expect(actual).to.have.property('trayId', 'some-tray-id')
+      expect(actual).toHaveProperty('trayId', 'some-tray-id')
     })
 
-    it('should return the errors', function () {
+    test('should return the errors', () => {
       const actual = passwordEncryptError('some-tray-id', ['some-error'])
-      expect(actual).to.have.property('errors').that.includes('some-error')
+      expect(actual.errors.toJS()).toEqual(expect.arrayContaining(['some-error']))
     })
   })
 })

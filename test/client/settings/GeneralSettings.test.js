@@ -1,13 +1,10 @@
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
 import React from 'react'
 import {shallow} from 'enzyme'
 import _ from 'lodash'
-import {mocks} from '../Mocking'
 import {GeneralSettings} from '../../../src/client/settings/GeneralSettings'
-import {locator} from '../TestUtils'
+import {locator} from '../testHelpers'
 
-describe('<GeneralSettings/>', function () {
+describe('<GeneralSettings/>', () => {
 
   const DEFAULT_PROPS = {
     refreshTime: 0,
@@ -17,13 +14,13 @@ describe('<GeneralSettings/>', function () {
     setClickToShowMenu: _.noop
   }
 
-  it('should set the click to show menu setting on click', function () {
-    const setClickToShowMenu = mocks.spy()
+  test('should set the click to show menu setting on click', () => {
+    const setClickToShowMenu = jest.fn()
     const props = {...DEFAULT_PROPS, setClickToShowMenu}
 
     const wrapper = shallow(<GeneralSettings {...props} />)
     wrapper.find(locator('click-to-show-menu')).prop('onToggle')(true)
 
-    expect(setClickToShowMenu).to.have.been.calledWith(true)
+    expect(setClickToShowMenu).toBeCalledWith(true)
   })
 })

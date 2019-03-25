@@ -1,43 +1,38 @@
-import {testThunk, withMockedImports} from '../TestUtils'
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
-import {mocks} from '../Mocking'
+import {testThunk} from '../testHelpers'
+import {initalise} from '../../../src/client/actions/NevergreenThunkActionCreators'
+import * as localRepository from '../../../src/client/common/LocalRepository'
+import * as configuration from '../../../src/client/reducers/Configuration'
+import * as nevergreenActionCreators from '../../../src/client/actions/NevergreenActionCreators'
 
-describe('NevergreenThunkActionCreators', function () {
+describe('NevergreenThunkActionCreators', () => {
 
-  const init = mocks.stub()
-  const load = mocks.stub()
-  const wrapConfiguration = mocks.stub()
-  const initalised = mocks.spy()
-  const initalising = mocks.spy()
+  localRepository.init = jest.fn()
+  localRepository.load = jest.fn()
+  configuration.wrapConfiguration = jest.fn()
+  nevergreenActionCreators.initalised = jest.fn()
+  nevergreenActionCreators.initalising = jest.fn()
 
-  const {initalise} = withMockedImports('client/actions/NevergreenThunkActionCreators', {
-    '../common/LocalRepository': {init, load},
-    '../reducers/Configuration': {wrapConfiguration},
-    './NevergreenActionCreators': {initalised, initalising}
-  })
+  describe('initalise', () => {
 
-  describe('initalise', function () {
-
-    it('should dispatch initalising action', async function () {
-      init.resolves({})
-      load.resolves({})
+    test('should dispatch initalising action', async () => {
+      localRepository.init.mockResolvedValue({})
+      localRepository.load.mockResolvedValue({})
       await testThunk(initalise())
-      expect(initalising).to.have.been.called()
+      expect(nevergreenActionCreators.initalising).toBeCalled()
     })
 
-    it('should initalise the local repository', async function () {
-      init.resolves({})
-      load.resolves({})
+    test('should initalise the local repository', async () => {
+      localRepository.init.mockResolvedValue({})
+      localRepository.load.mockResolvedValue({})
       await testThunk(initalise())
-      expect(init).to.have.been.called()
+      expect(localRepository.init).toBeCalled()
     })
 
-    it('should dispatch initalised action once configuration is loaded', async function () {
-      init.resolves({})
-      load.resolves({})
+    test('should dispatch initalised action once configuration is loaded', async () => {
+      localRepository.init.mockResolvedValue({})
+      localRepository.load.mockResolvedValue({})
       await testThunk(initalise())
-      expect(initalised).to.have.been.called()
+      expect(nevergreenActionCreators.initalised).toBeCalled()
     })
   })
 })

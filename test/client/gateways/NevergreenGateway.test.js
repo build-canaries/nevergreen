@@ -1,34 +1,28 @@
-import {withMockedImports} from '../TestUtils'
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
-import {mocks} from '../Mocking'
+import * as gateway from '../../../src/client/gateways/Gateway'
 import {GatewayError} from '../../../src/client/gateways/Gateway'
+import {send} from '../../../src/client/gateways/NevergreenGateway'
 
-describe('NevergreenGateway', function () {
+describe('NevergreenGateway', () => {
 
-  const gatewaySend = mocks.stub()
+  gateway.send = jest.fn()
 
-  const {send} = withMockedImports('client/gateways/NevergreenGateway', {
-    './Gateway': {send: gatewaySend}
-  })
+  describe('send', () => {
 
-  describe('send', function () {
-
-    it('should return the error message from the body on error', async function () {
-      gatewaySend.rejects(new GatewayError('', 0, {errorMessage: 'some-error'}))
+    test('should return the error message from the body on error', async () => {
+      gateway.send.mockRejectedValue(new GatewayError('', 0, {errorMessage: 'some-error'}))
       try {
         await send()
       } catch (err) {
-        expect(err).to.have.property('message', 'some-error')
+        expect(err).toHaveProperty('message', 'some-error')
       }
     })
 
-    it('should return the body if it does not contain an error message on error', async function () {
-      gatewaySend.rejects(new GatewayError('', 0, 'timeout'))
+    test('should return the body if it does not contain an error message on error', async () => {
+      gateway.send.mockRejectedValue(new GatewayError('', 0, 'timeout'))
       try {
         await send()
       } catch (err) {
-        expect(err).to.have.property('message', 'timeout')
+        expect(err).toHaveProperty('message', 'timeout')
       }
     })
   })

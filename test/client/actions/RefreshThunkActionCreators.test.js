@@ -1,31 +1,26 @@
-import {testThunk, withMockedImports} from '../TestUtils'
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
-import {mocks} from '../Mocking'
+import {testThunk} from '../testHelpers'
 import {fromJS, List} from 'immutable'
 import {Tray} from '../../../src/client/domain/Tray'
 import {Project} from '../../../src/client/domain/Project'
 import {TRAYS_ROOT} from '../../../src/client/reducers/TraysReducer'
 import {PENDING_REQUESTS_ROOT} from '../../../src/client/reducers/PendingRequestsReducer'
 import {PROJECTS_ROOT} from '../../../src/client/reducers/ProjectsReducer'
+import {refreshTray} from '../../../src/client/actions/RefreshThunkActionCreators'
+import * as projectsGateway from '../../../src/client/gateways/ProjectsGateway'
+import * as gateway from '../../../src/client/gateways/Gateway'
+import * as nevergreenGateway from '../../../src/client/gateways/NevergreenGateway'
+import * as trackingActionCreators from '../../../src/client/actions/TrackingActionCreators'
 
-describe('RefreshThunkActionCreators', function () {
+describe('RefreshThunkActionCreators', () => {
 
-  const send = mocks.stub()
-  const abortPendingRequest = mocks.stub()
-  const fetchAll = mocks.stub()
-  const projectsFetching = mocks.spy()
-  const projectsFetched = mocks.spy()
-  const projectsFetchError = mocks.spy()
+  nevergreenGateway.send = jest.fn()
+  gateway.abortPendingRequest = jest.fn()
+  projectsGateway.fetchAll = jest.fn()
+  trackingActionCreators.projectsFetching = jest.fn()
+  trackingActionCreators.projectsFetched = jest.fn()
+  trackingActionCreators.projectsFetchError = jest.fn()
 
-  const {refreshTray} = withMockedImports('client/actions/RefreshThunkActionCreators', {
-    '../gateways/ProjectsGateway': {fetchAll},
-    '../gateways/Gateway': {abortPendingRequest},
-    '../gateways/NevergreenGateway': {send},
-    './TrackingActionCreators': {projectsFetching, projectsFetched, projectsFetchError}
-  })
-
-  describe('refreshTray', function () {
+  describe('refreshTray', () => {
 
     const tray = new Tray({
       trayId: 'some-tray-id',
@@ -46,44 +41,44 @@ describe('RefreshThunkActionCreators', function () {
       }
     })
 
-    it('should abort pending request', async function () {
-      send.resolves(List())
+    test('should abort pending request', async () => {
+      nevergreenGateway.send.mockResolvedValue(List())
       await testThunk(refreshTray('some-tray-id'), requiredState)
-      expect(abortPendingRequest).to.have.been.calledWith('some-pending-request')
+      expect(gateway.abortPendingRequest).toBeCalledWith('some-pending-request')
     })
 
-    it('should create a fetch all request with the tray', async function () {
-      send.resolves(List())
+    test('should create a fetch all request with the tray', async () => {
+      nevergreenGateway.send.mockResolvedValue(List())
       await testThunk(refreshTray('some-tray-id'), requiredState)
-      expect(fetchAll.getCall(0).args[0]).to.equal(List.of(tray))
-      expect(fetchAll.getCall(0).args[1]).to.equal(fromJS({'some-tray-id': ['some-project-id']}))
+      expect(projectsGateway.fetchAll.mock.calls[0][0]).toEqual(List.of(tray))
+      expect(projectsGateway.fetchAll.mock.calls[0][1]).toEqual(fromJS({'some-tray-id': ['some-project-id']}))
     })
 
-    it('should dispatch projects fetching action', async function () {
-      send.resolves(List())
-      fetchAll.returns('some-fetch-all-request')
+    test('should dispatch projects fetching action', async () => {
+      nevergreenGateway.send.mockResolvedValue(List())
+      projectsGateway.fetchAll.mockReturnValue('some-fetch-all-request')
 
       await testThunk(refreshTray('some-tray-id'), requiredState)
-      expect(projectsFetching).to.have.been.calledWith('some-tray-id', 'some-fetch-all-request')
+      expect(trackingActionCreators.projectsFetching).toBeCalledWith('some-tray-id', 'some-fetch-all-request')
     })
 
-    it('should dispatch projects fetched action when no errors are returned', async function () {
-      send.resolves(List())
+    test('should dispatch projects fetched action when no errors are returned', async () => {
+      nevergreenGateway.send.mockResolvedValue(List())
       await testThunk(refreshTray('some-tray-id'), requiredState)
-      expect(projectsFetched).to.have.been.calledWith('some-tray-id', List(), true)
+      expect(trackingActionCreators.projectsFetched).toBeCalledWith('some-tray-id', List(), true)
     })
 
-    it('should dispatch projects fetch error action if an error is returned', async function () {
-      send.resolves(fromJS([{isError: true, errorMessage: 'some-error'}]))
+    test('should dispatch projects fetch error action if an error is returned', async () => {
+      nevergreenGateway.send.mockResolvedValue(fromJS([{isError: true, errorMessage: 'some-error'}]))
       await testThunk(refreshTray('some-tray-id'), requiredState)
-      expect(projectsFetchError.getCall(0).args[0]).to.equal('some-tray-id')
-      expect(projectsFetchError.getCall(0).args[1]).to.equal(List.of('some-error'))
+      expect(trackingActionCreators.projectsFetchError.mock.calls[0][0]).toEqual('some-tray-id')
+      expect(trackingActionCreators.projectsFetchError.mock.calls[0][1]).toEqual(List.of('some-error'))
     })
 
-    it('should dispatch projects fetch error action if the request fails', async function () {
-      send.rejects(new Error('some-error'))
+    test('should dispatch projects fetch error action if the request fails', async () => {
+      nevergreenGateway.send.mockRejectedValue(new Error('some-error'))
       await testThunk(refreshTray('some-tray-id'), requiredState)
-      expect(projectsFetchError).to.have.been.calledWith('some-tray-id', List.of('some-error'))
+      expect(trackingActionCreators.projectsFetchError).toBeCalledWith('some-tray-id', List.of('some-error'))
     })
   })
 })

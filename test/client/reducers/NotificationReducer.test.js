@@ -1,33 +1,31 @@
-import {describe, it} from 'mocha'
-import {expect} from 'chai'
 import {reduce} from '../../../src/client/reducers/NotificationReducer'
 import {NOTIFICATION, NOTIFICATION_DISMISS} from '../../../src/client/actions/Actions'
 
-describe('NotificationReducer', function () {
+describe('NotificationReducer', () => {
 
-  it('should return the state unmodified for an unknown action', function () {
+  test('should return the state unmodified for an unknown action', () => {
     const existingState = {foo: 'bar'}
     const newState = reduce(existingState, {type: 'not-a-real-action'})
-    expect(newState).to.deep.equal(existingState)
+    expect(newState).toEqual(existingState)
   })
 
-  describe(NOTIFICATION, function () {
+  describe(NOTIFICATION, () => {
 
-    it('should set the state', function () {
+    test('should set the state', () => {
       const existingState = null
       const action = {type: NOTIFICATION, message: 'some-message'}
       const newState = reduce(existingState, action)
-      expect(newState).to.equal('some-message')
+      expect(newState).toBe('some-message')
     })
   })
 
-  describe(NOTIFICATION_DISMISS, function () {
+  describe(NOTIFICATION_DISMISS, () => {
 
-    it('should remove the state', function () {
+    test('should remove the state', () => {
       const existingState = 'some-message'
       const action = {type: NOTIFICATION_DISMISS}
       const newState = reduce(existingState, action)
-      expect(newState).to.be.null()
+      expect(newState).toBeNull()
     })
   })
 })
