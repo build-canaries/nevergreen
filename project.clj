@@ -26,11 +26,12 @@
   :main nevergreen.app
   :aot [nevergreen.app]
   :javac-options ["-Dclojure.compiler.direct-linking=true"]
-  :aliases {"lint"     ["with-profile" "+test" "eastwood"]
-            "coverage" ["with-profile" "+test" "cloverage"]}
+  :aliases {"lint"          ["with-profile" "+test" "eastwood"]
+            "coverage"      ["with-profile" "+test" "cloverage"]
+            "check-updates" ["ancient" ":all"]}
   :profiles {:dev  {:plugins [[lein-ancient "0.6.15"]
                               [jonase/eastwood "0.3.5"]
-                              [lein-cloverage "1.1.0"]
+                              [lein-cloverage "1.1.1"]
                               [com.livingsocial/lein-dependency-check "1.1.2"]]}
              :test {:jvm-opts ["-Dlogback.configurationFile=./test/logback-unit.xml"]}}
   :cloverage {:output           "target/coverage-reports/server"
