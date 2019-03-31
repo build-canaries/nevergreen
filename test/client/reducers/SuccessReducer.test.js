@@ -1,66 +1,79 @@
-import {reduce} from '../../../src/client/reducers/SuccessReducer'
+import {reduce, SUCCESS_ROOT} from '../../../src/client/reducers/SuccessReducer'
 import {IMPORT_SUCCESS, INITIALISED, MESSAGE_ADDED, MESSAGE_REMOVED} from '../../../src/client/actions/Actions'
-import {fromJS, Map, OrderedSet} from 'immutable'
+import {Map, OrderedSet} from 'immutable'
+import {combineReducers} from 'redux-immutable'
+import {getSuccessMessages} from '../../../src/client/reducers/Selectors'
+import {initalised} from '../../../src/client/actions/NevergreenActionCreators'
+import {importSuccess} from '../../../src/client/actions/ImportActionCreators'
+import {addMessage, removeMessage} from '../../../src/client/actions/SuccessActionCreators'
 
 describe('SuccessReducer', () => {
 
+  const reducer = combineReducers({
+    [SUCCESS_ROOT]: reduce
+  })
+
+  function state(existing) {
+    return Map({[SUCCESS_ROOT]: OrderedSet(existing)})
+  }
+
   test('should return the state unmodified for an unknown action', () => {
-    const existingState = {foo: 'bar'}
-    const newState = reduce(existingState, {type: 'not-a-real-action'})
+    const existingState = state(['some-state'])
+    const newState = reducer(existingState, {type: 'not-a-real-action'})
     expect(newState).toEqual(existingState)
   })
 
   describe(INITIALISED, () => {
 
     test('should set the success data', () => {
-      const existingState = OrderedSet(['old-message'])
-      const action = {type: INITIALISED, data: fromJS({success: ['some-message']})}
-      const newState = reduce(existingState, action)
-      expect(newState.toJS()).toEqual(expect.arrayContaining(['some-message']))
+      const existingState = state(['old-message'])
+      const action = initalised({[SUCCESS_ROOT]: ['some-message']})
+      const newState = reducer(existingState, action)
+      expect(getSuccessMessages(newState).toJS()).toEqual(['some-message'])
     })
 
     test('should handle no success data', () => {
-      const existingState = OrderedSet()
-      const action = {type: INITIALISED, data: Map()}
-      const newState = reduce(existingState, action)
-      expect(newState.toJS()).toHaveLength(0)
+      const existingState = state([])
+      const action = initalised({})
+      const newState = reducer(existingState, action)
+      expect(getSuccessMessages(newState).toJS()).toHaveLength(0)
     })
   })
 
   describe(IMPORT_SUCCESS, () => {
 
     test('should merge the success data', () => {
-      const existingState = OrderedSet()
-      const action = {type: IMPORT_SUCCESS, data: fromJS({success: ['some-message']})}
-      const newState = reduce(existingState, action)
-      expect(newState.toJS()).toEqual(expect.arrayContaining(['some-message']))
+      const existingState = state([])
+      const action = importSuccess({success: ['some-message']})
+      const newState = reducer(existingState, action)
+      expect(getSuccessMessages(newState).toJS()).toEqual(['some-message'])
     })
   })
 
   describe(MESSAGE_ADDED, () => {
 
     test('should add the given message', () => {
-      const existingState = OrderedSet()
-      const action = {type: MESSAGE_ADDED, message: 'some-message'}
-      const newState = reduce(existingState, action)
-      expect(newState.toJS()).toEqual(expect.arrayContaining(['some-message']))
+      const existingState = state([])
+      const action = addMessage('some-message')
+      const newState = reducer(existingState, action)
+      expect(getSuccessMessages(newState).toJS()).toEqual(['some-message'])
     })
 
     test('should not add the same message multiple times', () => {
-      const existingState = OrderedSet(['some-message'])
-      const action = {type: MESSAGE_ADDED, message: 'some-message'}
-      const newState = reduce(existingState, action)
-      expect(newState.toJS()).toHaveLength(1)
+      const existingState = state(['some-message'])
+      const action = addMessage('some-message')
+      const newState = reducer(existingState, action)
+      expect(getSuccessMessages(newState).toJS()).toHaveLength(1)
     })
   })
 
   describe(MESSAGE_REMOVED, () => {
 
     test('should remove the given message', () => {
-      const existingState = OrderedSet(['a', 'b', 'c'])
-      const action = {type: MESSAGE_REMOVED, message: 'b'}
-      const newState = reduce(existingState, action)
-      expect(newState).toEqual(OrderedSet(['a', 'c']))
+      const existingState = state(['a', 'b', 'c'])
+      const action = removeMessage('b')
+      const newState = reducer(existingState, action)
+      expect(getSuccessMessages(newState).toJS()).toEqual(['a', 'c'])
     })
   })
 })

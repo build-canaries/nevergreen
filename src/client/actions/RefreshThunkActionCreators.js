@@ -2,7 +2,7 @@ import {fetchAll} from '../gateways/ProjectsGateway'
 import {abortPendingRequest} from '../gateways/Gateway'
 import {send} from '../gateways/NevergreenGateway'
 import {projectsFetched, projectsFetchError, projectsFetching} from './TrackingActionCreators'
-import {pendingRequest, seenProjects, tray as selectTray} from '../reducers/Selectors'
+import {getPendingRequest, getSeenProjects, getTray as selectTray} from '../reducers/Selectors'
 import {fromJS, List} from 'immutable'
 import {wrapProjectErrors, wrapProjects} from '../domain/Project'
 
@@ -10,9 +10,9 @@ export function refreshTray(trayId) {
 
   return async (dispatch, getState) => {
     const tray = selectTray(getState(), trayId)
-    const seen = fromJS({[trayId]: seenProjects(getState(), trayId)})
+    const seen = fromJS({[trayId]: getSeenProjects(getState(), trayId)})
 
-    abortPendingRequest(pendingRequest(getState(), trayId))
+    abortPendingRequest(getPendingRequest(getState(), trayId))
 
     const request = fetchAll(List.of(tray), seen)
 

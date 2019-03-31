@@ -1,90 +1,100 @@
-import {reduce} from '../../../src/client/reducers/GitHubReducer'
+import {GITHUB_ROOT, reduce} from '../../../src/client/reducers/GitHubReducer'
 import {
   GITHUB_SET_DESCRIPTION,
   GITHUB_SET_GIST_ID,
   IMPORT_SUCCESS,
   INITIALISED
 } from '../../../src/client/actions/Actions'
-import {fromJS, Map} from 'immutable'
+import {fromJS} from 'immutable'
+import {combineReducers} from 'redux-immutable'
+import {getGistDescription, getGistId} from '../../../src/client/reducers/Selectors'
+import {initalised} from '../../../src/client/actions/NevergreenActionCreators'
+import {importSuccess} from '../../../src/client/actions/ImportActionCreators'
+import {gitHubSetDescription, gitHubSetGistId} from '../../../src/client/actions/GitHubActionCreators'
 
 describe('GitHubReducer', () => {
 
+  const reducer = combineReducers({
+    [GITHUB_ROOT]: reduce
+  })
+
+  function state(existing) {
+    return fromJS({[GITHUB_ROOT]: existing})
+  }
+
   test('should return the state unmodified for an unknown action', () => {
-    const existingState = Map({foo: 'bar'})
-    const newState = reduce(existingState, {type: 'not-a-real-action'})
+    const existingState = state({foo: 'bar'})
+    const newState = reducer(existingState, {type: 'not-a-real-action'})
     expect(newState).toEqual(existingState)
   })
 
   describe(INITIALISED, () => {
 
-    test('should merge the url', () => {
-      const existingState = Map({})
-      const action = {type: INITIALISED, data: fromJS({github: {url: 'some-url'}})}
-      const newState = reduce(existingState, action)
-      expect(newState.toJS()).toHaveProperty('url', 'some-url')
+    test('should merge the gistId', () => {
+      const existingState = state({})
+      const action = initalised({github: {gistId: 'some-id'}})
+      const newState = reducer(existingState, action)
+      expect(getGistId(newState)).toEqual('some-id')
     })
 
     test('should merge the description', () => {
-      const existingState = Map({})
-      const action = {type: INITIALISED, data: fromJS({github: {description: 'some-description'}})}
-      const newState = reduce(existingState, action)
-      expect(newState.toJS()).toHaveProperty('description', 'some-description')
+      const existingState = state({})
+      const action = initalised({github: {description: 'some-description'}})
+      const newState = reducer(existingState, action)
+      expect(getGistDescription(newState)).toEqual('some-description')
     })
 
     test('should handle no github data', () => {
-      const existingState = Map({url: 'some-url', description: 'some-description'})
-      const action = {type: INITIALISED, data: Map()}
-      const newState = reduce(existingState, action)
-      expect(newState.toJS()).toHaveProperty('url', 'some-url')
-      expect(newState.toJS()).toHaveProperty('description', 'some-description')
+      const existingState = state({gistId: 'some-id', description: 'some-description'})
+      const action = initalised({})
+      const newState = reducer(existingState, action)
+      expect(getGistId(newState)).toEqual('some-id')
+      expect(getGistDescription(newState)).toEqual('some-description')
     })
   })
 
   describe(IMPORT_SUCCESS, () => {
 
-    test(
-      'should not merge the url because a successful GitHub import requires it to be known already and likely does not matter if the user is using local import',
-      () => {
-        const existingState = Map({url: 'some-url'})
-        const action = {type: IMPORT_SUCCESS, data: fromJS({github: {url: ''}})}
-        const newState = reduce(existingState, action)
-        expect(newState.toJS()).toHaveProperty('url', 'some-url')
-      }
-    )
+    test('should not merge the gist id because a successful GitHub import requires it to be known already and likely does not matter if the user is using local import', () => {
+      const existingState = state({gistId: 'some-id'})
+      const action = importSuccess({github: {gistId: ''}})
+      const newState = reducer(existingState, action)
+      expect(getGistId(newState)).toEqual('some-id')
+    })
 
     test('should merge the description', () => {
-      const existingState = Map({})
-      const action = {type: IMPORT_SUCCESS, data: fromJS({github: {description: 'some-description'}})}
-      const newState = reduce(existingState, action)
-      expect(newState.toJS()).toHaveProperty('description', 'some-description')
+      const existingState = state({})
+      const action = importSuccess({github: {description: 'some-description'}})
+      const newState = reducer(existingState, action)
+      expect(getGistDescription(newState)).toEqual('some-description')
     })
 
     test('should handle no github data', () => {
-      const existingState = Map({url: 'some-url', description: 'some-description'})
-      const action = {type: IMPORT_SUCCESS, data: Map()}
-      const newState = reduce(existingState, action)
-      expect(newState.toJS()).toHaveProperty('url', 'some-url')
-      expect(newState.toJS()).toHaveProperty('description', 'some-description')
+      const existingState = state({gistId: 'some-id', description: 'some-description'})
+      const action = importSuccess({})
+      const newState = reducer(existingState, action)
+      expect(getGistId(newState)).toEqual('some-id')
+      expect(getGistDescription(newState)).toEqual('some-description')
     })
   })
 
   describe(GITHUB_SET_DESCRIPTION, () => {
 
     test('should set the description property', () => {
-      const existingState = Map()
-      const action = {type: GITHUB_SET_DESCRIPTION, description: 'some-description'}
-      const newState = reduce(existingState, action)
-      expect(newState.toJS()).toHaveProperty('description', 'some-description')
+      const existingState = state({})
+      const action = gitHubSetDescription('some-description')
+      const newState = reducer(existingState, action)
+      expect(getGistDescription(newState)).toEqual('some-description')
     })
   })
 
   describe(GITHUB_SET_GIST_ID, () => {
 
     test('should set the id property', () => {
-      const existingState = Map()
-      const action = {type: GITHUB_SET_GIST_ID, gistId: 'some-id'}
-      const newState = reduce(existingState, action)
-      expect(newState.toJS()).toHaveProperty('gistId', 'some-id')
+      const existingState = state({})
+      const action = gitHubSetGistId('some-id')
+      const newState = reducer(existingState, action)
+      expect(getGistId(newState)).toEqual('some-id')
     })
   })
 })

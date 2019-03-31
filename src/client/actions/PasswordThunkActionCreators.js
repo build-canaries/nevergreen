@@ -3,13 +3,13 @@ import {abortPendingRequest} from '../gateways/Gateway'
 import {send} from '../gateways/NevergreenGateway'
 import {isBlank} from '../common/Utils'
 import {encryptingPassword, passwordEncrypted, passwordEncryptError} from './PasswordActionCreators'
-import {pendingRequest} from '../reducers/Selectors'
+import {getPendingRequest} from '../reducers/Selectors'
 import {List} from 'immutable'
 
 export function encryptPassword(trayId, rawPassword) {
 
   return async (dispatch, getState) => {
-    abortPendingRequest(pendingRequest(getState(), trayId))
+    abortPendingRequest(getPendingRequest(getState(), trayId))
 
     if (!isBlank(rawPassword)) {
       const request = encrypt(rawPassword)

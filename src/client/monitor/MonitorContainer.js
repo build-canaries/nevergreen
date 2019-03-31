@@ -5,22 +5,22 @@ import {fetchInteresting} from '../actions/MonitorThunkActionCreators'
 import {requestFullScreen} from '../actions/NevergreenActionCreators'
 import {Monitor} from './Monitor'
 import {
-  brokenBuildSoundFx,
-  fullScreen,
-  interestingErrors,
-  interestingLoaded,
-  interestingPendingRequest,
-  interestingProjects,
-  maxProjectsToShow,
-  playBrokenBuildSoundFx,
-  refreshTime,
-  selectedProjects,
-  showBrokenBuildTime,
-  showBuildLabel,
-  showBuildTime,
-  showTrayName,
-  successMessages,
-  trays
+  getBrokenBuildSoundFx,
+  getFullScreen,
+  getInterestingErrors,
+  getInterestingLoaded,
+  getInterestingPendingRequest,
+  getInterestingProjects,
+  getMaxProjectsToShow,
+  getPlayBrokenBuildSoundFx,
+  getRefreshTime,
+  getSelectedProjects,
+  getShowBrokenBuildTime,
+  getShowBuildLabel,
+  getShowBuildTime,
+  getShowTrayName,
+  getSuccessMessages,
+  getTrays
 } from '../reducers/Selectors'
 
 function mapDispatchToProps(dispatch) {
@@ -29,22 +29,22 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
-    loaded: interestingLoaded(state),
-    errors: interestingErrors(state),
-    trays: trays(state),
-    projects: interestingProjects(state),
-    selected: selectedProjects(state),
-    showBuildTimers: showBuildTime(state),
-    showBrokenBuildTimers: showBrokenBuildTime(state),
-    showTrayName: showTrayName(state),
-    showBuildLabel: showBuildLabel(state),
-    playBrokenBuildSounds: playBrokenBuildSoundFx(state),
-    brokenBuildFx: brokenBuildSoundFx(state),
-    messages: successMessages(state),
-    refreshTime: refreshTime(state),
-    isFullScreen: fullScreen(state),
-    maxProjectsToShow: maxProjectsToShow(state),
-    pendingRequest: interestingPendingRequest(state)
+    loaded: getInterestingLoaded(state),
+    errors: getInterestingErrors(state),
+    trays: getTrays(state),
+    projects: getInterestingProjects(state),
+    selected: getSelectedProjects(state),
+    showBuildTimers: getShowBuildTime(state),
+    showBrokenBuildTimers: getShowBrokenBuildTime(state),
+    showTrayName: getShowTrayName(state),
+    showBuildLabel: getShowBuildLabel(state),
+    playBrokenBuildSounds: getPlayBrokenBuildSoundFx(state),
+    brokenBuildFx: getBrokenBuildSoundFx(state),
+    messages: getSuccessMessages(state),
+    refreshTime: getRefreshTime(state),
+    isFullScreen: getFullScreen(state),
+    maxProjectsToShow: getMaxProjectsToShow(state),
+    pendingRequest: getInterestingPendingRequest(state)
   }
 }
 

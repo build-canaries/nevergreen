@@ -5,14 +5,14 @@ import {selectProject} from '../../actions/TrackingActionCreators'
 import {refreshTray} from '../../actions/RefreshThunkActionCreators'
 import {AvailableProjects} from './AvailableProjects'
 import {
-  projects,
-  selectedProjects,
-  trayErrors,
-  trayPassword,
-  trayServerType,
-  trayTimestamp,
-  trayUrl,
-  trayUsername
+  getProjects,
+  getSelectedProjects,
+  getTrayErrors,
+  getTrayPassword,
+  getTrayServerType,
+  getTrayTimestamp,
+  getTrayUrl,
+  getTrayUsername
 } from '../../reducers/Selectors'
 
 function mapDispatchToProps(dispatch) {
@@ -21,14 +21,14 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state, {trayId}) {
   return {
-    url: trayUrl(state, trayId),
-    username: trayUsername(state, trayId),
-    password: trayPassword(state, trayId),
-    serverType: trayServerType(state, trayId),
-    errors: trayErrors(state, trayId),
-    timestamp: trayTimestamp(state, trayId),
-    projects: projects(state, trayId),
-    selected: selectedProjects(state, trayId)
+    url: getTrayUrl(state, trayId),
+    username: getTrayUsername(state, trayId),
+    password: getTrayPassword(state, trayId),
+    serverType: getTrayServerType(state, trayId),
+    errors: getTrayErrors(state, trayId),
+    timestamp: getTrayTimestamp(state, trayId),
+    projects: getProjects(state, trayId),
+    selected: getSelectedProjects(state, trayId)
   }
 }
 

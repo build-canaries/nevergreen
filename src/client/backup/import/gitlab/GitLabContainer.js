@@ -3,7 +3,7 @@ import {bindActionCreators} from 'redux'
 import {GitLab} from './GitLab'
 import {restoreFromGitLab} from '../../../actions/GitLabThunkActionCreators'
 import {gitLabSetUrl, gitLabSetSnippetId} from '../../../actions/GitLabActionCreators'
-import {gitLabUrl, gitLabSnippetId, importLoaded} from '../../../reducers/Selectors'
+import {getGitLabUrl, getGitLabSnippetId, getImportLoaded} from '../../../reducers/Selectors'
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
@@ -15,9 +15,9 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
-    loaded: importLoaded(state),
-    url: gitLabUrl(state),
-    snippetId: gitLabSnippetId(state)
+    loaded: getImportLoaded(state),
+    url: getGitLabUrl(state),
+    snippetId: getGitLabSnippetId(state)
   }
 }
 

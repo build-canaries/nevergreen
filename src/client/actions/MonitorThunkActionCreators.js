@@ -3,11 +3,11 @@ import {send} from '../gateways/NevergreenGateway'
 import {interestingProjects, interestingProjectsFetching} from './MonitorActionCreators'
 import {abortPendingRequest} from '../gateways/Gateway'
 import {
-  interestingPendingRequest,
-  interestingProjects as selectInterestingProjects,
-  seenProjects,
-  selectedProjects,
-  trays
+  getInterestingPendingRequest,
+  getInterestingProjects,
+  getSeenProjects,
+  getSelectedProjects,
+  getTrays
 } from '../reducers/Selectors'
 import {wrapProjectErrors, wrapProjects} from '../domain/Project'
 import {List, Map} from 'immutable'
@@ -32,16 +32,16 @@ function addThisBuildTime(project, previouslyFetchedProjects) {
 }
 
 function seenProjectsPerTray(state, trays) {
-  return trays.reduce((acc, tray) => acc.set(tray.get('trayId'), seenProjects(state, tray.get('trayId'))), Map())
+  return trays.reduce((acc, tray) => acc.set(tray.get('trayId'), getSeenProjects(state, tray.get('trayId'))), Map())
 }
 
 export function fetchInteresting() {
   return async (dispatch, getState) => {
-    abortPendingRequest(interestingPendingRequest(getState()))
+    abortPendingRequest(getInterestingPendingRequest(getState()))
 
-    const selected = selectedProjects(getState())
-    const allTrays = trays(getState())
-    const previouslyFetchedProjects = selectInterestingProjects(getState())
+    const selected = getSelectedProjects(getState())
+    const allTrays = getTrays(getState())
+    const previouslyFetchedProjects = getInterestingProjects(getState())
     const seen = seenProjectsPerTray(getState(), allTrays)
 
     const request = interesting(allTrays, selected, seen)

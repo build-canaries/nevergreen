@@ -3,7 +3,7 @@ import {bindActionCreators} from 'redux'
 import {toJS} from '../common/ImmutableToJs'
 import {addMessage, removeMessage} from '../actions/SuccessActionCreators'
 import {Success} from './Success'
-import {successMessages} from '../reducers/Selectors'
+import {getSuccessMessages} from '../reducers/Selectors'
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({addMessage, removeMessage}, dispatch)
@@ -11,7 +11,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
-    messages: successMessages(state)
+    messages: getSuccessMessages(state)
   }
 }
 

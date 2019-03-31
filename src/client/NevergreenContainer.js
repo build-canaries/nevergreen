@@ -6,7 +6,7 @@ import {notify} from './actions/NotificationActionCreators'
 import {checkForNewVersion} from './actions/NotificationThunkActionCreators'
 import {Nevergreen} from './Nevergreen'
 import {withRouter} from 'react-router-dom'
-import {fullScreen, fullScreenRequested, getClickToShowMenu, loaded} from './reducers/Selectors'
+import {getFullScreen, getFullScreenRequested, getClickToShowMenu, getLoaded} from './reducers/Selectors'
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
@@ -19,9 +19,9 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
-    loaded: loaded(state),
-    isFullScreen: fullScreen(state),
-    fullScreenRequested: fullScreenRequested(state),
+    loaded: getLoaded(state),
+    isFullScreen: getFullScreen(state),
+    fullScreenRequested: getFullScreenRequested(state),
     clickToShowMenu: getClickToShowMenu(state)
   }
 }

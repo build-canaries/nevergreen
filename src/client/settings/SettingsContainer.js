@@ -17,18 +17,18 @@ import {Settings} from './Settings'
 import {supported} from '../common/SystemNotifications'
 import {enableSystemNotifications} from '../actions/SettingsThunkActionCreators'
 import {
-  brokenBuildSoundFx,
+  getBrokenBuildSoundFx,
   getClickToShowMenu,
-  maxProjectsToShow,
-  playBrokenBuildSoundFx,
-  refreshTime,
-  showBrokenBuildTime,
-  showBuildLabel,
-  showBuildTime,
-  showSystemNotifications,
-  showTrayName,
-  systemNotificationPermissionDenied,
-  systemNotificationRequestingPermission
+  getMaxProjectsToShow,
+  getPlayBrokenBuildSoundFx,
+  getRefreshTime,
+  getShowBrokenBuildTime,
+  getShowBuildLabel,
+  getShowBuildTime,
+  getShowSystemNotifications,
+  getShowTrayName,
+  getSystemNotificationPermissionDenied,
+  getSystemNotificationRequestingPermission
 } from '../reducers/Selectors'
 
 function mapDispatchToProps(dispatch) {
@@ -48,19 +48,19 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
-    showTrayName: showTrayName(state),
-    showBuildTime: showBuildTime(state),
-    showBrokenBuildTime: showBrokenBuildTime(state),
-    playBrokenBuildSoundFx: playBrokenBuildSoundFx(state),
-    showBuildLabel: showBuildLabel(state),
+    showTrayName: getShowTrayName(state),
+    showBuildTime: getShowBuildTime(state),
+    showBrokenBuildTime: getShowBrokenBuildTime(state),
+    playBrokenBuildSoundFx: getPlayBrokenBuildSoundFx(state),
+    showBuildLabel: getShowBuildLabel(state),
     systemNotificationsSupported: supported(),
-    showSystemNotifications: showSystemNotifications(state),
-    systemNotificationRequestingPermission: systemNotificationRequestingPermission(state),
-    systemNotificationPermissionDenied: systemNotificationPermissionDenied(state),
-    brokenBuildSoundFx: brokenBuildSoundFx(state),
-    refreshTime: refreshTime(state),
+    showSystemNotifications: getShowSystemNotifications(state),
+    systemNotificationRequestingPermission: getSystemNotificationRequestingPermission(state),
+    systemNotificationPermissionDenied: getSystemNotificationPermissionDenied(state),
+    brokenBuildSoundFx: getBrokenBuildSoundFx(state),
+    refreshTime: getRefreshTime(state),
     validRefreshTimes: VALID_REFRESH_TIMES,
-    maxProjectsToShow: maxProjectsToShow(state),
+    maxProjectsToShow: getMaxProjectsToShow(state),
     validNumberOfProjectsToShow: VALID_PROJECTS_TO_SHOW,
     clickToShowMenu: getClickToShowMenu(state)
   }

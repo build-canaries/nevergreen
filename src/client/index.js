@@ -22,7 +22,7 @@ import BackupContainer from './backup/BackupContainer'
 import {StyleGuide} from './styleGuide/StyleGuide'
 import _ from 'lodash'
 import {UnhandledError} from './UnhandledError'
-import {loaded} from './reducers/Selectors'
+import {getLoaded} from './reducers/Selectors'
 import Modal from 'react-modal'
 
 const ONE_SECOND = 1000
@@ -34,7 +34,7 @@ let store = createStore(reducer, initialState, composeWithDevTools(
 
 const save = async () => {
   const state = store.getState()
-  if (loaded(state) === true) {
+  if (getLoaded(state) === true) {
     await repositorySave(filter(state.toJS()))
   }
 }

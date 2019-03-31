@@ -3,7 +3,7 @@ import {bindActionCreators} from 'redux'
 import {restoreFromGitHub} from '../../../actions/GitHubThunkActionCreators'
 import {gitHubSetGistId} from '../../../actions/GitHubActionCreators'
 import {GitHub} from './GitHub'
-import {gistId, importLoaded} from '../../../reducers/Selectors'
+import {getGistId, getImportLoaded} from '../../../reducers/Selectors'
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
@@ -14,8 +14,8 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
-    loaded: importLoaded(state),
-    gistId: gistId(state)
+    loaded: getImportLoaded(state),
+    gistId: getGistId(state)
   }
 }
 

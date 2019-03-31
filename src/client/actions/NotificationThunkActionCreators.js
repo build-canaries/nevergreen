@@ -2,7 +2,7 @@ import {get} from '../gateways/Gateway'
 import {send} from '../gateways/GitHubGateway'
 import semver from 'semver'
 import {notify} from './NotificationActionCreators'
-import {interestingProjects, showSystemNotifications} from '../reducers/Selectors'
+import {getInterestingProjects, getShowSystemNotifications} from '../reducers/Selectors'
 import {sendSystemNotification} from '../common/SystemNotifications'
 import * as log from '../common/Logger'
 
@@ -46,10 +46,10 @@ function noLongerSickTitle(total) {
 
 export function projectNotifications(previouslyProjects) {
   return async (dispatch, getState) => {
-    const showNotifications = showSystemNotifications(getState())
+    const showNotifications = getShowSystemNotifications(getState())
 
     if (showNotifications) {
-      const currentProjects = interestingProjects(getState())
+      const currentProjects = getInterestingProjects(getState())
 
       const previouslySick = previouslyProjects
         .filter((project) => project.isSick())

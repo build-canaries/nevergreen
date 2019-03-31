@@ -5,7 +5,7 @@ import {isBlank} from '../common/Utils'
 import {importError, importing} from './ImportActionCreators'
 import {importData} from './ImportThunkActionCreators'
 import {exportError, exporting, exportSuccess} from './ExportActionCreators'
-import {gistDescription, gistId} from '../reducers/Selectors'
+import {getGistDescription, getGistId} from '../reducers/Selectors'
 import {toJson} from '../common/Json'
 import {filter} from '../reducers/Configuration'
 
@@ -36,7 +36,7 @@ export function restoreFromGitHub() {
   return async (dispatch, getState) => {
     dispatch(importing())
 
-    const id = gistId(getState())
+    const id = getGistId(getState())
 
     if (isBlank(id)) {
       dispatch(importError(['You must provide a gist ID to import from GitHub']))
@@ -56,8 +56,8 @@ export function uploadToGitHub(oauthToken) {
   return async (dispatch, getState) => {
     dispatch(exporting())
 
-    const id = gistId(getState())
-    const description = gistDescription(getState())
+    const id = getGistId(getState())
+    const description = getGistDescription(getState())
     const configuration = toJson(filter(getState().toJS()))
 
     if (isBlank(oauthToken)) {

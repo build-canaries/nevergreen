@@ -1,6 +1,6 @@
 import {exportError, exporting, exportSuccess} from './ExportActionCreators'
 import {importError, importing} from './ImportActionCreators'
-import {gitLabUrl, gitLabSnippetId} from '../reducers/Selectors'
+import {getGitLabUrl, getGitLabSnippetId} from '../reducers/Selectors'
 import {toJson} from '../common/Json'
 import {filter} from '../reducers/Configuration'
 import {isBlank} from '../common/Utils'
@@ -12,8 +12,8 @@ export function restoreFromGitLab(accessToken) {
   return async (dispatch, getState) => {
     dispatch(importing())
 
-    const url = gitLabUrl(getState())
-    const snippetId = gitLabSnippetId(getState())
+    const url = getGitLabUrl(getState())
+    const snippetId = getGitLabSnippetId(getState())
 
     if (isBlank(snippetId)) {
       dispatch(importError(['You must provide a snippet ID to import from GitLab']))
@@ -43,8 +43,8 @@ export function uploadToGitLab(accessToken) {
     return async (dispatch, getState) => {
       dispatch(exporting())
   
-      const url = gitLabUrl(getState())
-      const id = gitLabSnippetId(getState())
+      const url = getGitLabUrl(getState())
+      const id = getGitLabSnippetId(getState())
       const configuration = toJson(filter(getState().toJS()))
   
       if (isBlank(accessToken)) {

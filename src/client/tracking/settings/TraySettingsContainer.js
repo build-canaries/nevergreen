@@ -10,7 +10,7 @@ import {
 } from '../../actions/TrackingActionCreators'
 import {encryptPassword} from '../../actions/PasswordThunkActionCreators'
 import {TraySettings} from './TraySettings'
-import {getTrayIncludeNew, trayName, trayPassword, trayServerType, trayUrl, trayUsername} from '../../reducers/Selectors'
+import {getTrayIncludeNew, getTrayName, getTrayPassword, getTrayServerType, getTrayUrl, getTrayUsername} from '../../reducers/Selectors'
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
@@ -26,11 +26,11 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state, {trayId}) {
   return {
-    name: trayName(state, trayId),
-    url: trayUrl(state, trayId),
-    username: trayUsername(state, trayId),
-    password: trayPassword(state, trayId),
-    serverType: trayServerType(state, trayId),
+    name: getTrayName(state, trayId),
+    url: getTrayUrl(state, trayId),
+    username: getTrayUsername(state, trayId),
+    password: getTrayPassword(state, trayId),
+    serverType: getTrayServerType(state, trayId),
     includeNew: getTrayIncludeNew(state, trayId)
   }
 }

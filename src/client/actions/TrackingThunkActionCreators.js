@@ -3,7 +3,7 @@ import {highlightTray, trayAdded} from './TrackingActionCreators'
 import {encryptPassword} from './PasswordThunkActionCreators'
 import {refreshTray} from './RefreshThunkActionCreators'
 import {createId} from '../domain/Tray'
-import {tray, trays} from '../reducers/Selectors'
+import {getTrayRequiresRefresh, getTrays} from '../reducers/Selectors'
 import {ensureHasScheme, removeScheme} from '../domain/Url'
 
 function urlMatches(tray, url) {
@@ -16,7 +16,7 @@ export function addTray(enteredUrl, username, rawPassword) {
       return
     }
 
-    const existingTrays = trays(getState())
+    const existingTrays = getTrays(getState())
 
     const url = ensureHasScheme(enteredUrl)
     const existingTray = existingTrays.find((tray) => urlMatches(tray, url))
@@ -40,7 +40,7 @@ export function addTray(enteredUrl, username, rawPassword) {
 
 export function checkRefresh(trayId) {
   return (dispatch, getState) => {
-    if (tray(getState(), trayId).requiresRefresh) {
+    if (getTrayRequiresRefresh(getState(), trayId)) {
       dispatch(refreshTray(trayId))
     }
   }

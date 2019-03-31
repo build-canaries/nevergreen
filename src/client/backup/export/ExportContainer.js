@@ -3,7 +3,7 @@ import {Export} from './Export'
 import {filter} from '../../reducers/Configuration'
 import {toJson} from '../../common/Json'
 import {toJS} from '../../common/ImmutableToJs'
-import {exportErrors, exportInfos} from '../../reducers/Selectors'
+import {getExportErrors, getExportInfos} from '../../reducers/Selectors'
 
 function mapDispatchToProps() {
   return {}
@@ -11,8 +11,8 @@ function mapDispatchToProps() {
 
 function mapStateToProps(state) {
   return {
-    errors: exportErrors(state),
-    infos: exportInfos(state),
+    errors: getExportErrors(state),
+    infos: getExportInfos(state),
     configuration: toJson(filter(state.toJS()))
   }
 }
