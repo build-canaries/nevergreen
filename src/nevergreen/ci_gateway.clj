@@ -28,4 +28,6 @@
 (defn fetch-cctray [{:keys [url username password]}]
   (validate-scheme url)
   (let [decrypted-password (decrypt password (config/aes-key))]
-    (http-get url (set-auth-header username decrypted-password))))
+    (http-get url {:headers (set-auth-header username decrypted-password)
+                   :accept  "application/xml"
+                   :as      :stream})))

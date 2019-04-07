@@ -16,14 +16,14 @@
                           (subject/fetch-cctray {:url "ftp://some-url"}))))
 
   (testing "sets the auth header if a username and password are given"
-    (binding [subject/http-get (fn [_ additional-headers]
+    (binding [subject/http-get (fn [_ data]
                                  (is (= {"Authorization" "Basic c29tZS11c2VybmFtZTpzb21lLWRlY3J5cHRlZC1wYXNzd29yZA=="}
-                                        additional-headers)))
+                                        (:headers data))))
               subject/decrypt (constantly "some-decrypted-password")]
       (subject/fetch-cctray {:url "http://some-url" :username "some-username" :password "some-encrypted-password"})))
 
   (testing "doesn't set the auth header if no username or password is given"
-    (binding [subject/http-get (fn [_ additional-headers]
-                                 (is (nil? additional-headers)))
+    (binding [subject/http-get (fn [_ data]
+                                 (is (nil? (:headers data))))
               subject/decrypt (constantly "some-decrypted-password")]
       (subject/fetch-cctray {:url "http://some-url"}))))

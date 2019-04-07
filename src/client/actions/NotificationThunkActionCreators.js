@@ -1,5 +1,4 @@
-import {get} from '../gateways/Gateway'
-import {send} from '../gateways/GitHubGateway'
+import {get, send} from '../gateways/Gateway'
 import semver from 'semver'
 import {notify} from './NotificationActionCreators'
 import {getInterestingProjects, getShowSystemNotifications} from '../reducers/Selectors'

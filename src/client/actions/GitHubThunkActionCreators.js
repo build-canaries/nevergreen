@@ -1,5 +1,4 @@
-import _ from 'lodash'
-import {createGist, getGist, getTruncatedFile, send, updateGist} from '../gateways/GitHubGateway'
+import {send} from '../gateways/NevergreenGateway'
 import {gitHubSetDescription, gitHubSetGistId} from './GitHubActionCreators'
 import {isBlank} from '../common/Utils'
 import {importError, importing} from './ImportActionCreators'
@@ -8,29 +7,7 @@ import {exportError, exporting, exportSuccess} from './ExportActionCreators'
 import {getGistDescription, getGistId} from '../reducers/Selectors'
 import {toJson} from '../common/Json'
 import {filter} from '../reducers/Configuration'
-
-const TEN_MEGS = 10485760 // bytes
-
-function handleGistResponse(dispatch, res) {
-  const configuration = res.getIn(['files', 'configuration.json'])
-
-  if (_.isNil(configuration)) {
-    throw new Error('gist does not contain the required configuration.json file')
-
-  } else if (configuration.get('truncated')) {
-    const size = configuration.get('size')
-    if (size > TEN_MEGS) {
-      throw new Error(`gist configuration.json file is too big to fetch without git cloning, size ${size} bytes`)
-    } else {
-      dispatch(gitHubSetDescription(res.get('description')))
-      return send(getTruncatedFile(configuration.get('raw_url')))
-    }
-
-  } else {
-    dispatch(gitHubSetDescription(res.get('description')))
-    return configuration.get('content')
-  }
-}
+import {exportConfiguration, importConfiguration} from '../gateways/BackupGateway'
 
 export function restoreFromGitHub() {
   return async (dispatch, getState) => {
@@ -42,9 +19,9 @@ export function restoreFromGitHub() {
       dispatch(importError(['You must provide a gist ID to import from GitHub']))
     } else {
       try {
-        const res = await send(getGist(id))
-        const content = await handleGistResponse(dispatch, res)
-        dispatch(importData(content))
+        const res = await send(importConfiguration('github', id))
+        dispatch(importData(res.get('configuration')))
+        dispatch(gitHubSetDescription(res.get('description')))
       } catch (error) {
         dispatch(importError([`Unable to import from GitHub because of an error: ${error.message}`]))
       }
@@ -65,13 +42,9 @@ export function uploadToGitHub(oauthToken) {
     } else {
       const createNewGist = isBlank(id)
 
-      const req = createNewGist
-        ? createGist(description, configuration, oauthToken)
-        : updateGist(id, description, configuration, oauthToken)
-
       try {
-        const gistJson = await send(req)
-        const returnedGistId = gistJson.get('id')
+        const res = await send(exportConfiguration('github', id, description, configuration, oauthToken))
+        const returnedGistId = res.get('id')
         const successMessage = createNewGist
           ? `Successfully created gist ${returnedGistId}`
           : `Successfully updated gist ${returnedGistId}`

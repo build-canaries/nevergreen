@@ -2,6 +2,8 @@
   (:require [compojure.core :refer :all]
             [nevergreen.api.projects :as projects]
             [nevergreen.api.security :as security]
+            [nevergreen.api.export :refer [export-config]]
+            [nevergreen.api.import :refer [import-config]]
             [nevergreen.api.version :refer [version]]
             [ring.middleware.json :refer [wrap-json-body wrap-json-response]]
             [nevergreen.wrap-cache-control :refer [wrap-no-cache]]
@@ -18,13 +20,19 @@
 (defroutes api-routes
            (context "/api" []
              (OPTIONS "/projects/all" [] preflight-response)
-             (POST "/projects/all" {body :body} {:body (projects/get-all body)})
+             (POST "/projects/all" {data :body} {:body (projects/get-all data)})
 
              (OPTIONS "/projects/interesting" [] preflight-response)
-             (POST "/projects/interesting" {body :body} {:body (projects/get-interesting body)})
+             (POST "/projects/interesting" {data :body} {:body (projects/get-interesting data)})
 
              (OPTIONS "/encrypt" [] preflight-response)
-             (POST "/encrypt" {body :body} {:body (security/encrypt-password body)})
+             (POST "/encrypt" {data :body} {:body (security/encrypt-password data)})
+
+             (OPTIONS "/export" [] preflight-response)
+             (POST "/export" {data :body} {:body (export-config data)})
+
+             (OPTIONS "/import" [] preflight-response)
+             (POST "/import" {data :body} {:body (import-config data)})
 
              (GET "/ping" [] {:status 204})
 

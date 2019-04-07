@@ -5,14 +5,13 @@ import {INTERESTING_ROOT} from '../../../src/client/reducers/InterestingReducer'
 import {PROGNOSIS_SICK, Project} from '../../../src/client/domain/Project'
 import {checkForNewVersion, projectNotifications} from '../../../src/client/actions/NotificationThunkActionCreators'
 import * as gateway from '../../../src/client/gateways/Gateway'
-import * as  gitHubGateway from '../../../src/client/gateways/GitHubGateway'
 import semver from 'semver'
 import * as notificationActionCreators from '../../../src/client/actions/NotificationActionCreators'
 import * as systemNotifications from '../../../src/client/common/SystemNotifications'
 
 describe('NotificationThunkActionCreators', () => {
 
-  gitHubGateway.send = jest.fn()
+  gateway.send = jest.fn()
   gateway.get = jest.fn()
   semver.gt = jest.fn()
   notificationActionCreators.notify = jest.fn()
@@ -21,14 +20,14 @@ describe('NotificationThunkActionCreators', () => {
   describe('checkForNewVersion', () => {
 
     test('should call the github releases api', async () => {
-      gitHubGateway.send.mockResolvedValue(fromJS({}))
+      gateway.send.mockResolvedValue(fromJS({}))
       semver.gt.mockReturnValue(true)
       await testThunk(checkForNewVersion())
       expect(gateway.get).toBeCalledWith('https://api.github.com/repos/build-canaries/nevergreen/releases/latest')
     })
 
     test('should dispatch notification if a new version is available', async () => {
-      gitHubGateway.send.mockResolvedValue(fromJS({}))
+      gateway.send.mockResolvedValue(fromJS({}))
       semver.gt.mockReturnValue(true)
       await testThunk(checkForNewVersion())
       expect(notificationActionCreators.notify).toBeCalled()

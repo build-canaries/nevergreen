@@ -4,12 +4,12 @@
   (:import (java.net UnknownHostException URISyntaxException ConnectException)))
 
 (deftest http-get
-  (testing "adds additional headers"
+  (testing "adds additional data"
     (binding [subject/client-get (fn [_ data]
                                    (is (contains? data :headers))
                                    (is (contains? (:headers data) "Authentication"))
                                    (is (= "Basic some-password" (get (:headers data) "Authentication"))))]
-      (subject/http-get "http://some-url" {"Authentication" "Basic some-password"})))
+      (subject/http-get "http://some-url" {:headers {"Authentication" "Basic some-password"}})))
 
   (testing "returns the body"
     (binding [subject/client-get (constantly {:status 200 :body "some-body"})]
@@ -41,17 +41,17 @@
   (testing "throws an error when the CI server responds with an error but blank reason phrase"
     (binding [subject/client-get (fn [_ _] (throw (ex-info "irrelevant" {:reason-phrase "" :status 404})))]
       (is (thrown-with-msg? Exception
-                            #"CI server returned a 404"
+                            #"Server returned a 404"
                             (subject/http-get "http://some-url" {})))))
 
   (testing "throws an error when the CI server responds with an error"
     (binding [subject/client-get (fn [_ _] (throw (ex-info "irrelevant" {:reason-phrase "some-error"})))]
       (is (thrown-with-msg? Exception
-                            #"CI server returned a some-error"
+                            #"Server returned a some-error"
                             (subject/http-get "http://some-url" {})))))
 
   (testing "throws an unknown error when the CI server responds with an error but no reason"
     (binding [subject/client-get (fn [_ _] (throw (ex-info "irrelevant" {})))]
       (is (thrown-with-msg? Exception
-                            #"CI server returned a Unknown Error"
+                            #"Server returned a Unknown error"
                             (subject/http-get "http://some-url" {}))))))
