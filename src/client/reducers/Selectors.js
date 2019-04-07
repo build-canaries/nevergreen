@@ -92,6 +92,10 @@ export function getGistDescription(state) {
   return state.getIn([GITHUB_ROOT, 'description'])
 }
 
+export function getGitHubUrl(state) {
+  return state.getIn([GITHUB_ROOT, 'url'])
+}
+
 export function getGitLabUrl(state) {
   return state.getIn([GITLAB_ROOT, 'url'])
 }

@@ -1,15 +1,14 @@
 import * as gateway from '../../../src/client/gateways/Gateway'
-import {GatewayError} from '../../../src/client/gateways/Gateway'
 import {
   createSnippet,
   getSnippetContent,
   getSnippetMeta,
-  send,
   updateSnippet
 } from '../../../src/client/gateways/GitLabGateway'
 
 describe('GitLabGateway', () => {
 
+  gateway.send = jest.fn()
   gateway.get = jest.fn()
   gateway.put = jest.fn()
   gateway.post = jest.fn()
@@ -56,36 +55,6 @@ describe('GitLabGateway', () => {
     test('should call with the snippet URL for contents', () => {
       getSnippetContent('some-url', 'some-snippet-id', 'some-token')
       expect(gateway.get).toBeCalledWith('some-url/api/v4/snippets/some-snippet-id/raw?private_token=some-token')
-    })
-  })
-
-  describe('send', () => {
-
-    test('should return the message from the body including the status on error', async () => {
-      gateway.send.mockRejectedValue(new GatewayError('', 500, {message: 'some-message'}))
-      try {
-        await send()
-      } catch (err) {
-        expect(err).toHaveProperty('message', '500 - some-message')
-      }
-    })
-
-    test('should return the message from the body including the status on alternative error', async () => {
-      gateway.send.mockRejectedValue(new GatewayError('', 500, {error: 'some-error'}))
-      try {
-        await send()
-      } catch (err) {
-        expect(err).toHaveProperty('message', '500 - some-error')
-      }
-    })
-
-    test('should return the body if it does not contain a message on error', async () => {
-      gateway.send.mockRejectedValue(new GatewayError('', 0, 'timeout'))
-      try {
-        await send()
-      } catch (err) {
-        expect(err).toHaveProperty('message', '0 - timeout')
-      }
     })
   })
 })

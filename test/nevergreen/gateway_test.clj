@@ -1,6 +1,6 @@
-(ns nevergreen.http-test
+(ns nevergreen.gateway-test
   (:require [clojure.test :refer :all]
-            [nevergreen.http :as subject])
+            [nevergreen.gateway :as subject])
   (:import (java.net UnknownHostException URISyntaxException ConnectException)))
 
 (deftest http-get

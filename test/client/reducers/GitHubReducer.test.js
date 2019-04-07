@@ -2,15 +2,16 @@ import {GITHUB_ROOT, reduce} from '../../../src/client/reducers/GitHubReducer'
 import {
   GITHUB_SET_DESCRIPTION,
   GITHUB_SET_GIST_ID,
+  GITHUB_SET_URL,
   IMPORT_SUCCESS,
   INITIALISED
 } from '../../../src/client/actions/Actions'
 import {fromJS} from 'immutable'
 import {combineReducers} from 'redux-immutable'
-import {getGistDescription, getGistId} from '../../../src/client/reducers/Selectors'
+import {getGistDescription, getGistId, getGitHubUrl} from '../../../src/client/reducers/Selectors'
 import {initalised} from '../../../src/client/actions/NevergreenActionCreators'
 import {importSuccess} from '../../../src/client/actions/ImportActionCreators'
-import {gitHubSetDescription, gitHubSetGistId} from '../../../src/client/actions/GitHubActionCreators'
+import {gitHubSetDescription, gitHubSetGistId, gitHubSetUrl} from '../../../src/client/actions/GitHubActionCreators'
 
 describe('GitHubReducer', () => {
 
@@ -95,6 +96,16 @@ describe('GitHubReducer', () => {
       const action = gitHubSetGistId('some-id')
       const newState = reducer(existingState, action)
       expect(getGistId(newState)).toEqual('some-id')
+    })
+  })
+
+  describe(GITHUB_SET_URL, () => {
+
+    test('should set the id property', () => {
+      const existingState = state({url: ''})
+      const action = gitHubSetUrl('some-url')
+      const newState = reducer(existingState, action)
+      expect(getGitHubUrl(newState)).toEqual('some-url')
     })
   })
 })

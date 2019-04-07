@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import {GitLabSnippetInput} from '../../GitLabSnippetInput'
-import {GitLabUrlInput} from '../../GitLabUrlInput'
+import {UrlInput} from '../../UrlInput'
 import styles from './gitlab.scss'
 import {PrimaryButton} from '../../../common/forms/Button'
 import {iCloudDownload} from '../../../common/fonts/Icons'
@@ -21,10 +21,10 @@ export function GitLab({snippetId, gitLabSetSnippetId, url, gitLabSetUrl, loaded
       <WithHelp title='Import from GitLab'
                 containerClassName={styles.help}
                 help={<GitLabHelp/>}>
-        <GitLabUrlInput key={url}
-                        url={url}
-                        setUrl={gitLabSetUrl}
-                        disabled={disabled}/>
+        <UrlInput key={url}
+                  url={url}
+                  setUrl={gitLabSetUrl}
+                  disabled={disabled}/>
       </WithHelp>
       <GitLabSnippetInput key={snippetId}
                           snippetId={snippetId}

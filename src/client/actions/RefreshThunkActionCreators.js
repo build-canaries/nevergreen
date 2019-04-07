@@ -1,6 +1,5 @@
 import {fetchAll} from '../gateways/ProjectsGateway'
-import {abortPendingRequest} from '../gateways/Gateway'
-import {send} from '../gateways/NevergreenGateway'
+import {abortPendingRequest, send} from '../gateways/Gateway'
 import {projectsFetched, projectsFetchError, projectsFetching} from './TrackingActionCreators'
 import {getPendingRequest, getSeenProjects, getTray as selectTray} from '../reducers/Selectors'
 import {fromJS, List} from 'immutable'

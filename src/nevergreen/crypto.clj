@@ -32,4 +32,4 @@
       (let [cipher (cipher Cipher/DECRYPT_MODE aes-key)]
         (String. (.doFinal cipher (base64->bytes base64-encoded)) charset))
       (catch BadPaddingException e
-        (throw (ex-info "Unable to decrypt password as the Nevergreen server's AES_KEY has changed" {}))))))
+        (throw (ex-info "Unable to decrypt password as the Nevergreen server's AES_KEY has changed" {:status 500}))))))

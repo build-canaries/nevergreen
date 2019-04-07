@@ -1,10 +1,10 @@
-import {send} from '../gateways/NevergreenGateway'
+import {send} from '../gateways/Gateway'
 import {gitHubSetDescription, gitHubSetGistId} from './GitHubActionCreators'
 import {isBlank} from '../common/Utils'
 import {importError, importing} from './ImportActionCreators'
 import {importData} from './ImportThunkActionCreators'
 import {exportError, exporting, exportSuccess} from './ExportActionCreators'
-import {getGistDescription, getGistId} from '../reducers/Selectors'
+import {getGistDescription, getGistId, getGitHubUrl} from '../reducers/Selectors'
 import {toJson} from '../common/Json'
 import {filter} from '../reducers/Configuration'
 import {exportConfiguration, importConfiguration} from '../gateways/BackupGateway'
@@ -14,12 +14,13 @@ export function restoreFromGitHub() {
     dispatch(importing())
 
     const id = getGistId(getState())
+    const url = getGitHubUrl(getState())
 
     if (isBlank(id)) {
       dispatch(importError(['You must provide a gist ID to import from GitHub']))
     } else {
       try {
-        const res = await send(importConfiguration('github', id))
+        const res = await send(importConfiguration('github', id, null, url))
         dispatch(importData(res.get('configuration')))
         dispatch(gitHubSetDescription(res.get('description')))
       } catch (error) {
@@ -36,6 +37,7 @@ export function uploadToGitHub(oauthToken) {
     const id = getGistId(getState())
     const description = getGistDescription(getState())
     const configuration = toJson(filter(getState().toJS()))
+    const url = getGitHubUrl(getState())
 
     if (isBlank(oauthToken)) {
       dispatch(exportError(['You must provide an access token to upload to GitHub']))
@@ -43,7 +45,7 @@ export function uploadToGitHub(oauthToken) {
       const createNewGist = isBlank(id)
 
       try {
-        const res = await send(exportConfiguration('github', id, description, configuration, oauthToken))
+        const res = await send(exportConfiguration('github', id, description, configuration, oauthToken, url))
         const returnedGistId = res.get('id')
         const successMessage = createNewGist
           ? `Successfully created gist ${returnedGistId}`

@@ -9,11 +9,11 @@ import * as exportActionCreators from '../../../src/client/actions/ExportActionC
 import * as json from '../../../src/client/common/Json'
 import * as configuration from '../../../src/client/reducers/Configuration'
 import * as backupGateway from '../../../src/client/gateways/BackupGateway'
-import * as nevergreenGateway from '../../../src/client/gateways/NevergreenGateway'
+import * as gateway from '../../../src/client/gateways/Gateway'
 
 describe('GitHubThunkActionCreators', () => {
 
-  nevergreenGateway.send = jest.fn()
+  gateway.send = jest.fn()
   importActionCreators.importError = jest.fn()
   importActionCreators.importing = jest.fn()
   importThunkActionCreators.importData = jest.fn()
@@ -37,7 +37,7 @@ describe('GitHubThunkActionCreators', () => {
     })
 
     test('should dispatch importing', async () => {
-      nevergreenGateway.send.mockResolvedValue(validResponse)
+      gateway.send.mockResolvedValue(validResponse)
       const state = fromJS({[GITHUB_ROOT]: {gistId: 'irrelevant'}})
       await testThunk(restoreFromGitHub(), state)
       expect(importActionCreators.importing).toBeCalled()
@@ -56,16 +56,25 @@ describe('GitHubThunkActionCreators', () => {
     })
 
     test('should dispatch import error if the gist can not be fetched', async () => {
-      nevergreenGateway.send.mockRejectedValue(new Error('some-error'))
+      gateway.send.mockRejectedValue(new Error('some-error'))
       const state = fromJS({[GITHUB_ROOT]: {gistId: 'some-id'}})
       await testThunk(restoreFromGitHub(), state)
       expect(importActionCreators.importError).toBeCalledWith(['Unable to import from GitHub because of an error: some-error'])
     })
 
-    test('should dispatch import data on successful fetch of the gist', async () => {
-      nevergreenGateway.send.mockResolvedValue(validResponse)
-      const state = fromJS({[GITHUB_ROOT]: {gistId: 'irrelevant'}})
+    test('should call import configuration', async () => {
+      gateway.send.mockResolvedValue(validResponse)
+      const state = fromJS({[GITHUB_ROOT]: {gistId: 'some-id', url: 'some-url'}})
       await testThunk(restoreFromGitHub('irrelevant'), state)
+      expect(backupGateway.importConfiguration).toBeCalledWith('github', 'some-id', null, 'some-url')
+    })
+
+    test('should dispatch import data on successful fetch of the gist', async () => {
+      gateway.send.mockResolvedValue(validResponse)
+      const state = fromJS({[GITHUB_ROOT]: {gistId: 'some-id', url: 'some-url'}})
+
+      await testThunk(restoreFromGitHub('irrelevant'), state)
+
       expect(gitHubActionCreators.gitHubSetDescription).toBeCalledWith('some-description')
       expect(importThunkActionCreators.importData).toBeCalledWith('some-configuration')
     })
@@ -74,7 +83,7 @@ describe('GitHubThunkActionCreators', () => {
   describe('uploadToGitHub', () => {
 
     test('should dispatch exporting action', async () => {
-      nevergreenGateway.send.mockResolvedValue(fromJS({id: 'some-id'}))
+      gateway.send.mockResolvedValue(fromJS({id: 'some-id'}))
       const state = fromJS({[GITHUB_ROOT]: {gistId: 'irrelevant', description: 'irrelevant'}})
 
       await testThunk(uploadToGitHub('irrelevant'), state)
@@ -83,7 +92,7 @@ describe('GitHubThunkActionCreators', () => {
     })
 
     test('should dispatch export error action if the gist can not be created', async () => {
-      nevergreenGateway.send.mockRejectedValue(new Error('some-error'))
+      gateway.send.mockRejectedValue(new Error('some-error'))
       const state = fromJS({[GITHUB_ROOT]: {gistId: 'irrelevant', description: 'irrelevant'}})
 
       await testThunk(uploadToGitHub('not-blank'), state)
@@ -98,18 +107,18 @@ describe('GitHubThunkActionCreators', () => {
     })
 
     test('should call export configuration', async () => {
-      nevergreenGateway.send.mockResolvedValue(fromJS({id: 'irrelevant'}))
+      gateway.send.mockResolvedValue(fromJS({id: 'irrelevant'}))
       json.toJson.mockImplementation((arg) => arg)
       configuration.filter.mockImplementation((arg) => arg)
-      const state = fromJS({[GITHUB_ROOT]: {gistId: null, description: 'some-description'}})
+      const state = fromJS({[GITHUB_ROOT]: {gistId: null, description: 'some-description', url: 'some-url'}})
 
       await testThunk(uploadToGitHub('some-token'), state)
 
-      expect(backupGateway.exportConfiguration).toBeCalledWith('github', null, 'some-description', state.toJS(), 'some-token')
+      expect(backupGateway.exportConfiguration).toBeCalledWith('github', null, 'some-description', state.toJS(), 'some-token', 'some-url')
     })
 
-    test('should dispatch export success on successful create of the gist', async () => {
-      nevergreenGateway.send.mockResolvedValue(fromJS({id: 'some-id'}))
+    test('should dispatch export success on success', async () => {
+      gateway.send.mockResolvedValue(fromJS({id: 'some-id'}))
       const state = fromJS({[GITHUB_ROOT]: {gistId: null, description: 'irrelevant'}})
 
       await testThunk(uploadToGitHub('not-blank'), state)
@@ -117,17 +126,8 @@ describe('GitHubThunkActionCreators', () => {
       expect(exportActionCreators.exportSuccess).toBeCalledWith(['Successfully created gist some-id'])
     })
 
-    test('should dispatch export success on successful update of the gist', async () => {
-      nevergreenGateway.send.mockResolvedValue(fromJS({id: 'some-id'}))
-      const state = fromJS({[GITHUB_ROOT]: {gistId: 'irrelevant', description: 'irrelevant'}})
-
-      await testThunk(uploadToGitHub('not-blank'), state)
-
-      expect(exportActionCreators.exportSuccess).toBeCalledWith(['Successfully updated gist some-id'])
-    })
-
     test('should dispatch GitHub set ID with the response ID on successful create/update of the gist', async () => {
-      nevergreenGateway.send.mockResolvedValue(fromJS({id: 'some-id'}))
+      gateway.send.mockResolvedValue(fromJS({id: 'some-id'}))
       const state = fromJS({[GITHUB_ROOT]: {gistId: 'irrelevant', description: 'irrelevant'}})
 
       await testThunk(uploadToGitHub('not-blank'), state)

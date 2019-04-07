@@ -23,30 +23,12 @@ describe('Gateway', () => {
       expect(actual).toEqual('some-text')
     })
 
-    test('should throw the status on error', async () => {
-      const request = Promise.reject({status: 500})
-      try {
-        await send(request)
-      } catch (err) {
-        expect(err).toHaveProperty('status', 500)
-      }
-    })
-
-    test('should throw the status on error set to 0 if it does not exist in the response', async () => {
-      const request = Promise.reject({})
-      try {
-        await send(request)
-      } catch (err) {
-        expect(err).toHaveProperty('status', 0)
-      }
-    })
-
     test('should throw the body on error', async () => {
-      const request = Promise.reject({response: {body: 'some-body'}})
+      const request = Promise.reject({response: {body: {errorMessage: 'some-error'}}})
       try {
         await send(request)
       } catch (err) {
-        expect(err).toHaveProperty('body', 'some-body')
+        expect(err).toHaveProperty('message', 'some-error')
       }
     })
 
@@ -55,7 +37,7 @@ describe('Gateway', () => {
       try {
         await send(request)
       } catch (err) {
-        expect(err).toHaveProperty('body', 'some-error')
+        expect(err).toHaveProperty('message', 'some-error')
       }
     })
 
@@ -64,7 +46,7 @@ describe('Gateway', () => {
       try {
         await send(request)
       } catch (err) {
-        expect(err.body).toEqual(UNKNOWN_ERROR)
+        expect(err).toHaveProperty('message', UNKNOWN_ERROR)
       }
     })
 
@@ -73,7 +55,7 @@ describe('Gateway', () => {
       try {
         await send(request)
       } catch (err) {
-        expect(err).toHaveProperty('body', TIMEOUT_ERROR)
+        expect(err).toHaveProperty('message', TIMEOUT_ERROR)
       }
     })
   })

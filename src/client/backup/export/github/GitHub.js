@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react'
+import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import {Input} from '../../../common/forms/Input'
 import {GistIdInput} from '../../GistIdInput'
@@ -8,8 +8,9 @@ import {PrimaryButton} from '../../../common/forms/Button'
 import {iCloudUpload} from '../../../common/fonts/Icons'
 import {Password} from '../../../common/forms/Password'
 import styles from './github.scss'
+import {UrlInput} from '../../UrlInput'
 
-export function GitHub({description, loaded, gistId, gitHubSetGistId, gitHubSetDescription, uploadToGitHub}) {
+export function GitHub({description, loaded, gistId, url, gitHubSetGistId, gitHubSetDescription, uploadToGitHub, gitHubSetUrl}) {
   const [oauthToken, setOauthToken] = useState('')
   const [newDescription, setNewDescription] = useState(description)
 
@@ -17,14 +18,19 @@ export function GitHub({description, loaded, gistId, gitHubSetGistId, gitHubSetD
   const oauthTokenChanged = ({target}) => setOauthToken(target.value)
 
   return (
-    <Fragment>
+    <>
       <WithHelp title='Export to GitHub'
+                containerClassName={styles.helpContainer}
                 help={<GitHubHelp/>}>
-        <GistIdInput key={gistId}
-                     gistId={gistId}
-                     setGistId={gitHubSetGistId}
-                     disabled={disabled}/>
+        <UrlInput key={url}
+                  url={url}
+                  setUrl={gitHubSetUrl}
+                  disabled={disabled}/>
       </WithHelp>
+      <GistIdInput key={gistId}
+                   gistId={gistId}
+                   setGistId={gitHubSetGistId}
+                   disabled={disabled}/>
       <Input value={newDescription}
              onChange={({target}) => setNewDescription(target.value)}
              onBlur={() => gitHubSetDescription(newDescription)}
@@ -45,7 +51,7 @@ export function GitHub({description, loaded, gistId, gitHubSetGistId, gitHubSetD
                      icon={iCloudUpload}>
         export
       </PrimaryButton>
-    </Fragment>
+    </>
   )
 }
 
@@ -54,6 +60,8 @@ GitHub.propTypes = {
   uploadToGitHub: PropTypes.func.isRequired,
   gitHubSetGistId: PropTypes.func.isRequired,
   gitHubSetDescription: PropTypes.func.isRequired,
+  gitHubSetUrl: PropTypes.func.isRequired,
   gistId: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired
+  description: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired
 }

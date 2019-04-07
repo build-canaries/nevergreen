@@ -20,3 +20,7 @@ $label-size: 6em;
 .help {
   margin: 0 $margin-right 0 0;
 }
+
+.helpContainer {
+  display: flex;
+}

@@ -1,9 +1,9 @@
-(ns nevergreen.http
+(ns nevergreen.gateway
   (:require [clj-http.client :as client]
             [clojure.tools.logging :as log]
             [clojure.string :as s]
             [cemerick.url :as u])
-  (:import (java.net UnknownHostException URISyntaxException ConnectException SocketTimeoutException MalformedURLException)
+  (:import (java.net UnknownHostException URISyntaxException ConnectException SocketTimeoutException)
            (clojure.lang ExceptionInfo)))
 
 (def ^:const ten-seconds 10000)
@@ -30,26 +30,26 @@
 
 (defn- handle-timeout [url redacted-url e]
   (log/info (str "[" redacted-url "] threw a SocketTimeoutException [" (.getMessage e) "]"))
-  (throw (ex-info "Connection timeout" {:url url})))
+  (throw (ex-info "Connection timeout" {:url url :status 504})))
 
 (defn- handle-unknown-host [url redacted-url e]
   (let [host (first (s/split (.getMessage e) #":"))
         msg (str host " is an unknown host, is the URL correct?")]
     (log/info (str "[" redacted-url "] threw an UnknownHostException [" msg "]"))
-    (throw (ex-info msg {:url url}))))
+    (throw (ex-info msg {:url url :status 400}))))
 
 (defn- handle-invalid-url [url redacted-url e]
   (let [msg (str "URL is invalid. " (.getMessage e))]
     (log/info (str "[" redacted-url "] threw a " (.getSimpleName (.getClass e)) " [" msg "]"))
-    (throw (ex-info msg {:url url}))))
+    (throw (ex-info msg {:url url :status 400}))))
 
 (defn- handle-connection-refused [url redacted-url e]
   (log/info (str "[" redacted-url "] threw a ConnectException [" (.getMessage e) "]"))
-  (throw (ex-info "Connection refused, is the URL correct?" {:url url})))
+  (throw (ex-info "Connection refused, is the URL correct?" {:url url :status 502})))
 
 (defn- handle-exception-info [url redacted-url e]
   (let [data (ex-data e)
-        status (or (:status data) "unknown")
+        status (or (:status data) 502)
         phrase (if (s/blank? (:reason-phrase data)) nil (:reason-phrase data))
         msg (str "Server returned a " (or phrase (:status data) "Unknown") " error")]
     (log/info (str "[" redacted-url "] returned a status of [" status "]"))

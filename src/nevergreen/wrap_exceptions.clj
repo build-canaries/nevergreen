@@ -11,4 +11,6 @@
     (try
       (app req)
       (catch Exception e
-        (handle-exception e (:uri req))))))
+        (if-let [data (ex-data e)]
+          (error-response (or (:status data) 500) (.getMessage e) (:uri req))
+          (handle-exception e (:uri req)))))))

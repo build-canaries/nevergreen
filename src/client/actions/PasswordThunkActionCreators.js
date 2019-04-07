@@ -1,6 +1,5 @@
 import {encryptPassword as encrypt} from '../gateways/SecurityGateway'
-import {abortPendingRequest} from '../gateways/Gateway'
-import {send} from '../gateways/NevergreenGateway'
+import {abortPendingRequest, send} from '../gateways/Gateway'
 import {isBlank} from '../common/Utils'
 import {encryptingPassword, passwordEncrypted, passwordEncryptError} from './PasswordActionCreators'
 import {getPendingRequest} from '../reducers/Selectors'

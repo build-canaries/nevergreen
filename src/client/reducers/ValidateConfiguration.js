@@ -795,7 +795,7 @@ var validate = (function() {
           var errs__1 = errors;
           var valid2 = true;
           for (var key1 in data1) {
-            var isAdditional1 = !(false || key1 == 'gistId' || key1 == 'description');
+            var isAdditional1 = !(false || key1 == 'gistId' || key1 == 'description' || key1 == 'url');
             if (isAdditional1) {
               delete data1[key1];
             }
@@ -825,6 +825,24 @@ var validate = (function() {
                 keyword: 'type',
                 dataPath: (dataPath || '') + '.github.description',
                 schemaPath: '#/properties/github/properties/description/type',
+                params: {
+                  type: 'string'
+                },
+                message: 'should be string'
+              };
+              if (vErrors === null) vErrors = [err];
+              else vErrors.push(err);
+              errors++;
+            }
+            var valid2 = errors === errs_2;
+          }
+          if (data1.url !== undefined) {
+            var errs_2 = errors;
+            if (typeof data1.url !== "string") {
+              var err = {
+                keyword: 'type',
+                dataPath: (dataPath || '') + '.github.url',
+                schemaPath: '#/properties/github/properties/url/type',
                 params: {
                   type: 'string'
                 },
@@ -1073,6 +1091,9 @@ validate.schema = {
           "type": "string"
         },
         "description": {
+          "type": "string"
+        },
+        "url": {
           "type": "string"
         }
       },

@@ -67,12 +67,11 @@ export async function send(request) {
 
     log.error(`An exception was thrown when calling URL '${url}'`, error)
 
-    const status = error.status || 0
-    const body = error.timeout
+    const message = error.timeout
       ? TIMEOUT_ERROR
-      : _.get(error, 'response.body') || error.message || UNKNOWN_ERROR
+      : _.get(error, 'response.body.errorMessage') || error.message || UNKNOWN_ERROR
 
-    throw new GatewayError(error.message, status, body)
+    throw new Error(message)
   }
 }
 
@@ -83,14 +82,5 @@ export async function fakeResponse(body) {
 export function abortPendingRequest(req) {
   if (req && _.isFunction(req.abort)) {
     req.abort()
-  }
-}
-
-export class GatewayError extends Error {
-  constructor(message, status, body) {
-    super(message)
-    this.name = 'GatewayError'
-    this.status = status
-    this.body = fromJS(body)
   }
 }

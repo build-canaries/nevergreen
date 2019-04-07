@@ -13,7 +13,7 @@ import {TRAYS_ROOT} from '../../../src/client/reducers/TraysReducer'
 import {PROJECTS_ROOT} from '../../../src/client/reducers/ProjectsReducer'
 import {fetchInteresting} from '../../../src/client/actions/MonitorThunkActionCreators'
 import * as projectsGateway from '../../../src/client/gateways/ProjectsGateway'
-import * as nevergreenGateway from '../../../src/client/gateways/NevergreenGateway'
+import * as gateway from '../../../src/client/gateways/Gateway'
 import * as monitorActionCreators from '../../../src/client/actions/MonitorActionCreators'
 import * as notificationThunkActionCreators from '../../../src/client/actions/NotificationThunkActionCreators'
 
@@ -21,7 +21,7 @@ describe('MonitorThunkActionCreators', () => {
 
   const NO_ERRORS = List()
 
-  nevergreenGateway.send = jest.fn()
+  gateway.send = jest.fn()
   projectsGateway.interesting = jest.fn()
   monitorActionCreators.interestingProjectsFetching = jest.fn()
   monitorActionCreators.interestingProjects = jest.fn()
@@ -40,7 +40,7 @@ describe('MonitorThunkActionCreators', () => {
 
     test('should dispatch interesting projects fetching action', async () => {
       projectsGateway.interesting.mockReturnValue('some-request')
-      nevergreenGateway.send.mockResolvedValue(List())
+      gateway.send.mockResolvedValue(List())
 
       await testThunk(fetchInteresting(), requiredState)
 
@@ -48,7 +48,7 @@ describe('MonitorThunkActionCreators', () => {
     })
 
     test('should dispatch interesting projects action on success', async () => {
-      nevergreenGateway.send.mockResolvedValue(List())
+      gateway.send.mockResolvedValue(List())
 
       await testThunk(fetchInteresting(), requiredState)
       expect(monitorActionCreators.interestingProjects).toBeCalled()
@@ -74,7 +74,7 @@ describe('MonitorThunkActionCreators', () => {
         job: 'some-job'
       }
       const expectedProject = new Project(projectNoJob)
-      nevergreenGateway.send.mockResolvedValue(fromJS([projectNoJob, projectWithJob]))
+      gateway.send.mockResolvedValue(fromJS([projectNoJob, projectWithJob]))
 
       await testThunk(fetchInteresting(), requiredState)
       expect(monitorActionCreators.interestingProjects.mock.calls[0][0]).toEqual(List.of(expectedProject))
@@ -88,7 +88,7 @@ describe('MonitorThunkActionCreators', () => {
           prognosis: PROGNOSIS_HEALTHY_BUILDING,
           fetchedTime: 'some-time'
         }
-        nevergreenGateway.send.mockResolvedValue(fromJS([project]))
+        gateway.send.mockResolvedValue(fromJS([project]))
 
         await testThunk(fetchInteresting(), requiredState)
 
@@ -103,7 +103,7 @@ describe('MonitorThunkActionCreators', () => {
           prognosis: PROGNOSIS_SICK,
           fetchedTime: 'some-time'
         }
-        nevergreenGateway.send.mockResolvedValue(fromJS([project]))
+        gateway.send.mockResolvedValue(fromJS([project]))
 
         await testThunk(fetchInteresting(), requiredState)
 
@@ -124,7 +124,7 @@ describe('MonitorThunkActionCreators', () => {
           prognosis: PROGNOSIS_HEALTHY_BUILDING,
           fetchedTime: 'some-time'
         }
-        nevergreenGateway.send.mockResolvedValue(fromJS([project]))
+        gateway.send.mockResolvedValue(fromJS([project]))
         const state = requiredState.setIn([INTERESTING_ROOT, 'projects'], List.of(previousProject))
 
         await testThunk(fetchInteresting(), state)
@@ -146,7 +146,7 @@ describe('MonitorThunkActionCreators', () => {
           prognosis: PROGNOSIS_SICK_BUILDING,
           fetchedTime: 'fetched-time'
         }
-        nevergreenGateway.send.mockResolvedValue(fromJS([project]))
+        gateway.send.mockResolvedValue(fromJS([project]))
         const state = requiredState.setIn([INTERESTING_ROOT, 'projects'], List.of(previousProject))
 
         await testThunk(fetchInteresting(), state)
@@ -159,7 +159,7 @@ describe('MonitorThunkActionCreators', () => {
     })
 
     test('should dispatch interesting projects action with a Nevergreen error if calling the service fails', async () => {
-      nevergreenGateway.send.mockRejectedValue(new Error('some-error'))
+      gateway.send.mockRejectedValue(new Error('some-error'))
       await testThunk(fetchInteresting(), requiredState)
       expect(monitorActionCreators.interestingProjects).toBeCalledWith(List(), List.of('some-error'))
     })
@@ -167,7 +167,7 @@ describe('MonitorThunkActionCreators', () => {
     describe('returned tray errors', () => {
 
       test('should dispatch interesting projects with the tray name in the error if it exists', async () => {
-        nevergreenGateway.send.mockResolvedValue(fromJS([{
+        gateway.send.mockResolvedValue(fromJS([{
           trayId: 'some-tray-id',
           isError: true,
           errorMessage: 'some-error'
@@ -185,7 +185,7 @@ describe('MonitorThunkActionCreators', () => {
       })
 
       test('should dispatch interesting projects with the tray url in the error if the name does not exist', async () => {
-        nevergreenGateway.send.mockResolvedValue(fromJS([{
+        gateway.send.mockResolvedValue(fromJS([{
           trayId: 'some-tray-id',
           isError: true,
           errorMessage: 'some-error'
@@ -205,7 +205,7 @@ describe('MonitorThunkActionCreators', () => {
 
     test('should dispatch project notifications on success', async () => {
       projectsGateway.interesting.mockReturnValue('some-request')
-      nevergreenGateway.send.mockResolvedValue(List())
+      gateway.send.mockResolvedValue(List())
       const previousProjects = List.of(new Project())
       const state = requiredState.setIn([INTERESTING_ROOT, 'projects'], previousProjects)
 
