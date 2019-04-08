@@ -1,5 +1,6 @@
 (ns nevergreen.api.import
-  (:require [nevergreen.github-gateway :as github]))
+  (:require [nevergreen.github-gateway :as github]
+            [nevergreen.gitlab-gateway :as gitlab]))
 
 (def ^:private ten-megs 10485760)
 
@@ -8,6 +9,12 @@
 
 (defn ^:dynamic get-truncated-file [url]
   (github/get-truncated-file url))
+
+(defn ^:dynamic get-snippet-meta [data]
+  (gitlab/get-snippet-meta data))
+
+(defn ^:dynamic get-snippet-content [data]
+  (gitlab/get-snippet-content data))
 
 (defn- from-github [{:keys [id, url]}]
   (let [{:keys [files, description]} (get-gist id url)
@@ -24,6 +31,17 @@
          :where         "github"
          :configuration configuration}))))
 
+(defn- from-gitlab [{:keys [id] :as data}]
+  (let [{:keys [file_name title]} (get-snippet-meta data)]
+    (if (not (= "configuration.json" file_name))
+      (throw (ex-info "snippet does not contain the required configuration.json file" {:id id :status 422}))
+      (let [snippet (get-snippet-content data)]
+        {:id            id
+         :description   title
+         :where         "gitlab"
+         :configuration snippet}))))
+
 (defn import-config [{:keys [from] :as data}]
   (case from
-    "github" (from-github data)))
+    "github" (from-github data)
+    "gitlab" (from-gitlab data)))

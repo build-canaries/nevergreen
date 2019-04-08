@@ -18,6 +18,9 @@
 (defn ^:dynamic client-patch [url data]
   (client/patch url data))
 
+(defn ^:dynamic client-put [url data]
+  (client/put url data))
+
 (defn- update-values [m f & args]
   (reduce (fn [r [k v]] (assoc r k (apply f v args))) {} m))
 
@@ -86,3 +89,6 @@
 
 (defn http-patch [url data]
   (http url data client-patch))
+
+(defn http-put [url data]
+  (http url data client-put))
