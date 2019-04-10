@@ -26,4 +26,12 @@
     (testing "updates a snippet if an id is provided"
       (binding [subject/update-snippet (constantly {:id "some-id"})]
         (is (= {:id "some-id"}
-               (subject/export-config {:where "gitlab" :id "some-id"})))))))
+               (subject/export-config {:where "gitlab" :id "some-id"}))))))
+
+  (testing "trying to export to an unknown location throws an exception with a bad request status"
+    (try
+      (subject/export-config {:where "unknown"})
+      (assert false "expected exception not thrown")
+      (catch Exception e
+        (is (= "exporting to \"unknown\" is not supported" (.getMessage e)))
+        (is (= {:status 400} (ex-data e)))))))

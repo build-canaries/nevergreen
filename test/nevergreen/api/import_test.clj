@@ -1,7 +1,6 @@
 (ns nevergreen.api.import-test
   (:require [clojure.test :refer :all]
-            [nevergreen.api.import :as subject])
-  (:import (clojure.lang ExceptionInfo)))
+            [nevergreen.api.import :as subject]))
 
 (defn- gist [truncated size]
   {:files       {:configuration.json {:truncated truncated
@@ -38,15 +37,21 @@
 
     (testing "throws an error if the gist does not contain the configuration.json file"
       (binding [subject/get-gist (constantly {})]
-        (is (thrown-with-msg? ExceptionInfo
-                              #"gist does not contain the required configuration.json file"
-                              (subject/import-config {:from "github" :id "some-id"})))))
+        (try
+          (subject/import-config {:from "github" :id "some-id"})
+          (assert false "expected exception not thrown")
+          (catch Exception e
+            (is (= "gist does not contain the required configuration.json file" (.getMessage e)))
+            (is (= {:id "some-id" :status 422} (ex-data e)))))))
 
     (testing "throws an error if the configuration is too large to fetch without git cloning (> 10MB)"
       (binding [subject/get-gist (constantly (gist true 10485761))]
-        (is (thrown-with-msg? ExceptionInfo
-                              #"gist configuration.json file is too big to fetch without git cloning, size 10485761 bytes"
-                              (subject/import-config {:from "github" :id "some-id"}))))))
+        (try
+          (subject/import-config {:from "github" :id "some-id"})
+          (assert false "expected exception not thrown")
+          (catch Exception e
+            (is (= "gist configuration.json file is too big to fetch without git cloning, size 10485761 bytes" (.getMessage e)))
+            (is (= {:id "some-id" :status 422} (ex-data e))))))))
 
   (testing "gitlab"
 
@@ -61,6 +66,17 @@
 
     (testing "throws an error if the snippet does not contain the configuration.json file"
       (binding [subject/get-snippet-meta (constantly {})]
-        (is (thrown-with-msg? ExceptionInfo
-                              #"snippet does not contain the required configuration.json file"
-                              (subject/import-config {:from "gitlab" :id "some-id"})))))))
+        (try
+          (subject/import-config {:from "gitlab" :id "some-id"})
+          (assert false "expected exception not thrown")
+          (catch Exception e
+            (is (= "snippet does not contain the required configuration.json file" (.getMessage e)))
+            (is (= {:id "some-id" :status 422} (ex-data e))))))))
+
+  (testing "trying to import from an unknown location throws an exception with a bad request status"
+    (try
+      (subject/import-config {:from "unknown"})
+      (assert false "expected exception not thrown")
+      (catch Exception e
+        (is (= "importing from \"unknown\" is not supported" (.getMessage e)))
+        (is (= {:status 400} (ex-data e)))))))

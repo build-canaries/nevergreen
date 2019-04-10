@@ -44,4 +44,5 @@
 (defn import-config [{:keys [from] :as data}]
   (case from
     "github" (from-github data)
-    "gitlab" (from-gitlab data)))
+    "gitlab" (from-gitlab data)
+    (throw (ex-info (str "importing from \"" from "\" is not supported") {:status 400}))))
