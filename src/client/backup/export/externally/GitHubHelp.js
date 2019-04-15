@@ -6,7 +6,7 @@ export function GitHubHelp() {
   return (
     <Fragment>
       <p>
-        Add a <strong>gist ID</strong> to update an existing Gist or leave blank to create a new Gist. You can get
+        Add a gist <strong>ID</strong> to update an existing Gist or leave blank to create a new Gist. You can get
         a Gist ID from the Gist URL, <URL url='https://gist.github.com/:username/:gistId'/>.
       </p>
       <p>

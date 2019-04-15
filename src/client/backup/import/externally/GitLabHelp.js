@@ -6,12 +6,7 @@ export function GitLabHelp() {
   return (
     <>
       <p>
-        You can use Nevergreen with the official <ExternalLink href='https://gitlab.com'>GitLab</ExternalLink> without any additional configuration.
-        If you want to use a self-hosted GitLab you&apos;ll need to <ExternalLink href='https://github.com/build-canaries/nevergreen/wiki/running-locally#allow_gitlab_snippets_from'>set an environment variable</ExternalLink> on your Nevergreen instance to allow connections.
-        This allows you to specify the <strong>URL</strong> for where your GitLab is available.
-      </p>
-      <p>
-        Set the <strong>snippet ID</strong> to the ID of an existing snippet to import from. You can get a snippet ID from the
+        Set the snippet <strong>ID</strong> to the ID of an existing snippet to import from. You can get a snippet ID from the
         snippet URL, <URL url='https://gitlab.com/snippets/:snippetId'/>.
       </p>
       <p>

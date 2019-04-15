@@ -6,7 +6,7 @@ export function GitHubHelp() {
   return (
     <Fragment>
       <p>
-        Set the <strong>gist ID</strong> to the ID of an existing Gist to import from. You can get a Gist ID from the
+        Set the gist <strong>ID</strong> to the ID of an existing Gist to import from. You can get a Gist ID from the
         Gist URL, <URL url='https://gist.github.com/:username/:gistId'/>.
       </p>
       <p>
