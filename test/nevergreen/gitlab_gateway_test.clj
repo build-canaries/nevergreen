@@ -98,4 +98,9 @@
   (testing "sets the correct mime type"
     (binding [subject/http-get (fn [_ data]
                                  (is (= "application/json" (:accept data))))]
+      (subject/get-snippet-content {:id "some-id"})))
+
+  (testing "gets the response as a string as the server shouldn't know what format the data is"
+    (binding [subject/http-get (fn [_ data]
+                                 (is (nil? (:as data))))]
       (subject/get-snippet-content {:id "some-id"}))))

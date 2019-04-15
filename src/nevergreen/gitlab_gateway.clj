@@ -52,5 +52,4 @@
 
 (defn get-snippet-content [{:keys [token, id url]}]
   (http-get (snippet-url url id "/raw") {:accept       mime-type
-                                         :query-params {"private_token" token}
-                                         :as           :json}))
+                                         :query-params {"private_token" token}}))

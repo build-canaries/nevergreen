@@ -97,4 +97,9 @@
     (binding [subject/http-get (fn [_ data]
                                  (is (= "text/plain; charset=utf-8"
                                         (:accept data))))]
+      (subject/get-truncated-file "some-url")))
+
+  (testing "gets the response as a string as the server shouldn't know what format the data is"
+    (binding [subject/http-get (fn [_ data]
+                                 (is (nil? (:as data))))]
       (subject/get-truncated-file "some-url"))))
