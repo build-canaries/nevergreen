@@ -10,7 +10,7 @@
    "img-src * data:"
    "font-src 'self' data:"
    "media-src *"
-   (s/join " " (remove nil? ["connect-src 'self' https://api.github.com https://gist.githubusercontent.com https://gitlab.com" (config/allow-gitlab-snippets-from)]))
+   "connect-src 'self' https://api.github.com"
    "object-src 'none'"
    (str "frame-ancestors " (config/allow-iframe-from))])
 

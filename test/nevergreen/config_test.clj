@@ -20,15 +20,6 @@
     (binding [subject/env (constantly "'self'")]
       (is (= "'self'" (subject/allow-iframe-from))))))
 
-(deftest allow-gitLab-snippets-from
-  (testing "from env"
-    (binding [subject/env (constantly "host:port")]
-      (is (= "host:port" (subject/allow-gitlab-snippets-from)))))
-
-  (testing "defaults to nil"
-    (binding [subject/env (constantly nil)]
-      (is (nil? (subject/allow-gitlab-snippets-from))))))
-
 (deftest aes-encryption-key
   (testing "from env"
     (binding [subject/env (constantly "key-thats-valid!")]
