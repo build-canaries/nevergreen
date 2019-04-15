@@ -151,32 +151,31 @@
       },
       "additionalProperties": false
     },
-    "github": {
+    "backup": {
       "type": "object",
-      "properties": {
-        "gistId": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        },
-        "url": {
-          "type": "string"
+      "patternProperties": {
+        ".*": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "description": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "url": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
         }
-      },
-      "additionalProperties": false
-    },
-    "gitlab": {
-      "type": "object",
-      "properties": {
-        "url": {
-          "type": "string"
-        },
-        "snippetId": {
-          "type": "string"
-        }
-      },
-      "additionalProperties": false
+      }
     }
   },
   "additionalProperties": false

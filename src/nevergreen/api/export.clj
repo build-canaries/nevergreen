@@ -19,7 +19,7 @@
   (let [res (if (blank? id)
               (do-create data)
               (do-update data))]
-    {:id (:id res)}))
+    {:id (str (:id res))}))
 
 (defn- to-github [data]
   (to-hosted data create-gist update-gist))

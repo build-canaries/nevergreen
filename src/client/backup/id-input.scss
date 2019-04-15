@@ -1,13 +1,12 @@
 @import '../common/forms/button';
 @import '../common/layout';
-@import './export/github/github';
 
 .label {
-  width: $label-size;
+  width: 6em;
 }
 
-.gistId {
+.input {
   @include respond-to(tablet, desktop) {
-    width: 31em;
+    width: 38em;
   }
 }

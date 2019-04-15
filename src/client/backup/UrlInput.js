@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import {Input} from '../common/forms/Input'
-import styles from './snippet-id-input.scss'
+import styles from './url-input.scss'
 
 export function UrlInput({url, setUrl, disabled}) {
 

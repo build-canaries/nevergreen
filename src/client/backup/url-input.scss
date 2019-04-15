@@ -1,0 +1,12 @@
+@import '../common/layout';
+
+.label {
+  width: 6em;
+}
+
+.url {
+  @extend %first;
+
+  flex-grow: 1;
+  margin: 0 1em 0 0;
+}

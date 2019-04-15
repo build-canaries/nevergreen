@@ -11,7 +11,7 @@ var validate = (function() {
       var errs__0 = errors;
       var valid1 = true;
       for (var key0 in data) {
-        var isAdditional0 = !(false || key0 == 'audioVisual' || key0 == 'trays' || key0 == 'projects' || key0 == 'success' || key0 == 'selected' || key0 == 'github' || key0 == 'gitlab');
+        var isAdditional0 = !(false || key0 == 'audioVisual' || key0 == 'trays' || key0 == 'projects' || key0 == 'success' || key0 == 'selected' || key0 == 'backup');
         if (isAdditional0) {
           delete data[key0];
         }
@@ -788,141 +788,106 @@ var validate = (function() {
         }
         var valid1 = errors === errs_1;
       }
-      var data1 = data.github;
+      var data1 = data.backup;
       if (data1 !== undefined) {
         var errs_1 = errors;
         if ((data1 && typeof data1 === "object" && !Array.isArray(data1))) {
           var errs__1 = errors;
           var valid2 = true;
           for (var key1 in data1) {
-            var isAdditional1 = !(false || key1 == 'gistId' || key1 == 'description' || key1 == 'url');
-            if (isAdditional1) {
-              delete data1[key1];
-            }
+            var isAdditional1 = !(false || pattern0.test(key1));
           }
-          if (data1.gistId !== undefined) {
-            var errs_2 = errors;
-            if (typeof data1.gistId !== "string") {
-              var err = {
-                keyword: 'type',
-                dataPath: (dataPath || '') + '.github.gistId',
-                schemaPath: '#/properties/github/properties/gistId/type',
-                params: {
-                  type: 'string'
-                },
-                message: 'should be string'
-              };
-              if (vErrors === null) vErrors = [err];
-              else vErrors.push(err);
-              errors++;
-            }
-            var valid2 = errors === errs_2;
-          }
-          if (data1.description !== undefined) {
-            var errs_2 = errors;
-            if (typeof data1.description !== "string") {
-              var err = {
-                keyword: 'type',
-                dataPath: (dataPath || '') + '.github.description',
-                schemaPath: '#/properties/github/properties/description/type',
-                params: {
-                  type: 'string'
-                },
-                message: 'should be string'
-              };
-              if (vErrors === null) vErrors = [err];
-              else vErrors.push(err);
-              errors++;
-            }
-            var valid2 = errors === errs_2;
-          }
-          if (data1.url !== undefined) {
-            var errs_2 = errors;
-            if (typeof data1.url !== "string") {
-              var err = {
-                keyword: 'type',
-                dataPath: (dataPath || '') + '.github.url',
-                schemaPath: '#/properties/github/properties/url/type',
-                params: {
-                  type: 'string'
-                },
-                message: 'should be string'
-              };
-              if (vErrors === null) vErrors = [err];
-              else vErrors.push(err);
-              errors++;
-            }
-            var valid2 = errors === errs_2;
-          }
-        } else {
-          var err = {
-            keyword: 'type',
-            dataPath: (dataPath || '') + '.github',
-            schemaPath: '#/properties/github/type',
-            params: {
-              type: 'object'
-            },
-            message: 'should be object'
-          };
-          if (vErrors === null) vErrors = [err];
-          else vErrors.push(err);
-          errors++;
-        }
-        var valid1 = errors === errs_1;
-      }
-      var data1 = data.gitlab;
-      if (data1 !== undefined) {
-        var errs_1 = errors;
-        if ((data1 && typeof data1 === "object" && !Array.isArray(data1))) {
-          var errs__1 = errors;
-          var valid2 = true;
           for (var key1 in data1) {
-            var isAdditional1 = !(false || key1 == 'url' || key1 == 'snippetId');
-            if (isAdditional1) {
-              delete data1[key1];
+            if (pattern0.test(key1)) {
+              var data2 = data1[key1];
+              var errs_2 = errors;
+              if ((data2 && typeof data2 === "object" && !Array.isArray(data2))) {
+                var errs__2 = errors;
+                var valid3 = true;
+                for (var key2 in data2) {
+                  var isAdditional2 = !(false || key2 == 'id' || key2 == 'description' || key2 == 'url');
+                  if (isAdditional2) {
+                    delete data2[key2];
+                  }
+                }
+                var data3 = data2.id;
+                if (data3 !== undefined) {
+                  var errs_3 = errors;
+                  if (typeof data3 !== "string" && data3 !== null) {
+                    var err = {
+                      keyword: 'type',
+                      dataPath: (dataPath || '') + '.backup[\'' + key1 + '\'].id',
+                      schemaPath: '#/properties/backup/patternProperties/.*/properties/id/type',
+                      params: {
+                        type: 'string,null'
+                      },
+                      message: 'should be string,null'
+                    };
+                    if (vErrors === null) vErrors = [err];
+                    else vErrors.push(err);
+                    errors++;
+                  }
+                  var valid3 = errors === errs_3;
+                }
+                var data3 = data2.description;
+                if (data3 !== undefined) {
+                  var errs_3 = errors;
+                  if (typeof data3 !== "string" && data3 !== null) {
+                    var err = {
+                      keyword: 'type',
+                      dataPath: (dataPath || '') + '.backup[\'' + key1 + '\'].description',
+                      schemaPath: '#/properties/backup/patternProperties/.*/properties/description/type',
+                      params: {
+                        type: 'string,null'
+                      },
+                      message: 'should be string,null'
+                    };
+                    if (vErrors === null) vErrors = [err];
+                    else vErrors.push(err);
+                    errors++;
+                  }
+                  var valid3 = errors === errs_3;
+                }
+                if (data2.url !== undefined) {
+                  var errs_3 = errors;
+                  if (typeof data2.url !== "string") {
+                    var err = {
+                      keyword: 'type',
+                      dataPath: (dataPath || '') + '.backup[\'' + key1 + '\'].url',
+                      schemaPath: '#/properties/backup/patternProperties/.*/properties/url/type',
+                      params: {
+                        type: 'string'
+                      },
+                      message: 'should be string'
+                    };
+                    if (vErrors === null) vErrors = [err];
+                    else vErrors.push(err);
+                    errors++;
+                  }
+                  var valid3 = errors === errs_3;
+                }
+              } else {
+                var err = {
+                  keyword: 'type',
+                  dataPath: (dataPath || '') + '.backup[\'' + key1 + '\']',
+                  schemaPath: '#/properties/backup/patternProperties/.*/type',
+                  params: {
+                    type: 'object'
+                  },
+                  message: 'should be object'
+                };
+                if (vErrors === null) vErrors = [err];
+                else vErrors.push(err);
+                errors++;
+              }
+              var valid2 = errors === errs_2;
             }
-          }
-          if (data1.url !== undefined) {
-            var errs_2 = errors;
-            if (typeof data1.url !== "string") {
-              var err = {
-                keyword: 'type',
-                dataPath: (dataPath || '') + '.gitlab.url',
-                schemaPath: '#/properties/gitlab/properties/url/type',
-                params: {
-                  type: 'string'
-                },
-                message: 'should be string'
-              };
-              if (vErrors === null) vErrors = [err];
-              else vErrors.push(err);
-              errors++;
-            }
-            var valid2 = errors === errs_2;
-          }
-          if (data1.snippetId !== undefined) {
-            var errs_2 = errors;
-            if (typeof data1.snippetId !== "string") {
-              var err = {
-                keyword: 'type',
-                dataPath: (dataPath || '') + '.gitlab.snippetId',
-                schemaPath: '#/properties/gitlab/properties/snippetId/type',
-                params: {
-                  type: 'string'
-                },
-                message: 'should be string'
-              };
-              if (vErrors === null) vErrors = [err];
-              else vErrors.push(err);
-              errors++;
-            }
-            var valid2 = errors === errs_2;
           }
         } else {
           var err = {
             keyword: 'type',
-            dataPath: (dataPath || '') + '.gitlab',
-            schemaPath: '#/properties/gitlab/type',
+            dataPath: (dataPath || '') + '.backup',
+            schemaPath: '#/properties/backup/type',
             params: {
               type: 'object'
             },
@@ -1084,32 +1049,25 @@ validate.schema = {
       },
       "additionalProperties": false
     },
-    "github": {
+    "backup": {
       "type": "object",
-      "properties": {
-        "gistId": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        },
-        "url": {
-          "type": "string"
+      "patternProperties": {
+        ".*": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": ["string", "null"]
+            },
+            "description": {
+              "type": ["string", "null"]
+            },
+            "url": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
         }
-      },
-      "additionalProperties": false
-    },
-    "gitlab": {
-      "type": "object",
-      "properties": {
-        "url": {
-          "type": "string"
-        },
-        "snippetId": {
-          "type": "string"
-        }
-      },
-      "additionalProperties": false
+      }
     }
   },
   "additionalProperties": false

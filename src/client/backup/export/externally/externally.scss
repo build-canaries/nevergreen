@@ -1,23 +1,24 @@
-@import '../../../common/forms/button';
+@import '../../../common/variables';
 @import '../../../common/layout';
-@import '../../../common/responsive';
 
-$label-size: 6em;
-
-.import {
+.export {
   @extend %blocking;
 }
 
 .label {
-  width: $label-size;
+  width: 6em;
 }
 
 .accessToken {
   @include respond-to(tablet, desktop) {
-    width: 36em;
+    width: 38em;
   }
 }
 
 .help {
+  margin: 0 $margin-right 0 0;
+}
+
+.helpContainer {
   display: flex;
 }

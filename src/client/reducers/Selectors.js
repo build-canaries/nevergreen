@@ -1,7 +1,5 @@
 import {PENDING_REQUESTS_ROOT} from './PendingRequestsReducer'
 import {EXPORT_ROOT} from './ExportReducer'
-import {GITHUB_ROOT} from './GitHubReducer'
-import {GITLAB_ROOT} from './GitLabReducer'
 import {IMPORT_ROOT} from './ImportReducer'
 import {NEVERGREEN_ROOT} from './NevergreenReducer'
 import {NOTIFICATION_ROOT} from './NotificationReducer'
@@ -11,6 +9,7 @@ import {SETTINGS_ROOT} from './SettingsReducer'
 import {INTERESTING_ROOT} from './InterestingReducer'
 import {SUCCESS_ROOT} from './SuccessReducer'
 import {TRAYS_ROOT} from './TraysReducer'
+import {BACKUP_ROOT} from './BackupReducer'
 
 export function getLoaded(state) {
   return state.getIn([NEVERGREEN_ROOT, 'loaded'])
@@ -84,24 +83,16 @@ export function getImportInfos(state) {
   return state.getIn([IMPORT_ROOT, 'infos'])
 }
 
-export function getGistId(state) {
-  return state.getIn([GITHUB_ROOT, 'gistId'])
+export function getBackupId(location, state) {
+  return state.getIn([BACKUP_ROOT, location, 'id'])
 }
 
-export function getGistDescription(state) {
-  return state.getIn([GITHUB_ROOT, 'description'])
+export function getBackupUrl(location, state) {
+  return state.getIn([BACKUP_ROOT, location, 'url'])
 }
 
-export function getGitHubUrl(state) {
-  return state.getIn([GITHUB_ROOT, 'url'])
-}
-
-export function getGitLabUrl(state) {
-  return state.getIn([GITLAB_ROOT, 'url'])
-}
-
-export function getGitLabSnippetId(state) {
-  return state.getIn([GITLAB_ROOT, 'snippetId'])
+export function getBackupDescription(location, state) {
+  return state.getIn([BACKUP_ROOT, location, 'description'])
 }
 
 export function getExportLoaded(state) {

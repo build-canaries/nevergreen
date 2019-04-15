@@ -9,3 +9,13 @@
 .helpContainer {
   display: flex;
 }
+
+.label {
+  width: 6em;
+}
+
+.accessToken {
+  @include respond-to(tablet, desktop) {
+    width: 38em;
+  }
+}

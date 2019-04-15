@@ -19,8 +19,8 @@
   (testing "gitlab"
 
     (testing "creates a snippet if no id is provided"
-      (binding [subject/create-snippet (constantly {:id "some-id"})]
-        (is (= {:id "some-id"}
+      (binding [subject/create-snippet (constantly {:id 123456})]
+        (is (= {:id "123456"}
                (subject/export-config {:where "gitlab"})))))
 
     (testing "updates a snippet if an id is provided"
