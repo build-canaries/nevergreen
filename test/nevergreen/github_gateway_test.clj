@@ -6,13 +6,13 @@
 
   (testing "allows the URL to be set to support GitHub Enterprise"
     (binding [subject/http-post (fn [url _]
-                                  (is (= "https://some-host/gists/" url)))]
+                                  (is (= "https://some-host/gists" url)))]
       (subject/create-gist {:description "" :configuration "" :token "" :url "https://some-host"})
       (subject/create-gist {:description "" :configuration "" :token "" :url "https://some-host/"})))
 
   (testing "uses the default GitHub API URL if none provided"
     (binding [subject/http-post (fn [url _]
-                                  (is (= "https://api.github.com/gists/" url)))]
+                                  (is (= "https://api.github.com/gists" url)))]
       (subject/create-gist {:description "" :configuration "" :token "" :url nil})
       (subject/create-gist {:description "" :configuration "" :token "" :url ""})))
 

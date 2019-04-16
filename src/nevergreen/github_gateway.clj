@@ -22,7 +22,9 @@
 (defn- gist-url
   ([url] (gist-url url nil))
   ([url id]
-   (str (host url) "/gists/" id)))
+   (if (nil? id)
+     (str (host url) "/gists")
+     (str (host url) "/gists/" id))))
 
 (defn- auth-header [token]
   {"Authorization" (str "token " token)})
