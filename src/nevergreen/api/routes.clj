@@ -36,7 +36,9 @@
 
              (GET "/ping" [] {:status 204})
 
-             (GET "/version" [] {:headers {"Content-Type" "text/plain"} :body (version)})))
+             (GET "/version" [] {:headers {"Content-Type" "text/plain"} :body (version)})
+
+             (GET "*" [] {:status 404})))
 
 (defn wrap-api-middleware [routes]
   (-> routes
