@@ -74,7 +74,7 @@
     "axe-core": "3.2.2",
     "babel-eslint": "10.0.1",
     "babel-loader": "8.0.5",
-    "browserslist": "4.5.4",
+    "browserslist": "4.5.5",
     "copy-webpack-plugin": "5.0.2",
     "css-loader": "2.1.1",
     "cypress": "3.2.0",
@@ -95,7 +95,7 @@
     "img-loader": "3.0.1",
     "jest": "24.7.1",
     "jest-junit": "6.3.0",
-    "lolex": "3.1.0",
+    "lolex": "4.0.1",
     "mini-css-extract-plugin": "0.6.0",
     "node-sass": "4.11.0",
     "optimize-css-assets-webpack-plugin": "5.0.1",
@@ -105,17 +105,17 @@
     "resolve-url-loader": "3.1.0",
     "sass-loader": "7.1.0",
     "style-loader": "0.23.1",
-    "stylelint": "10.0.0",
+    "stylelint": "10.0.1",
     "stylelint-config-standard": "18.3.0",
     "stylelint-order": "2.2.1",
-    "stylelint-scss": "3.5.4",
+    "stylelint-scss": "3.6.0",
     "url-loader": "1.1.2",
     "watch": "1.0.2",
     "webpack": "4.30.0",
     "webpack-cli": "3.3.0",
     "webpack-manifest-plugin": "2.0.4",
     "webpack-merge": "4.2.1",
-    "workbox-webpack-plugin": "4.2.0"
+    "workbox-webpack-plugin": "4.3.0"
   },
   "babel": {
     "presets": [
