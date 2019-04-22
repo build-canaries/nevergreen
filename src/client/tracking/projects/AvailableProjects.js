@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {useMemo, useRef, useState} from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import {AvailableProject} from './AvailableProject'
@@ -9,164 +9,139 @@ import {Refresh} from './Refresh'
 import {isBlank, notEmpty} from '../../common/Utils'
 import {VisuallyHidden} from '../../common/VisuallyHidden'
 import styles from './available-projects.scss'
-import memoize from 'memoize-one'
 import {SecondaryButton} from '../../common/forms/Button'
 import {iCheckboxChecked, iCheckboxUnchecked} from '../../common/fonts/Icons'
 
-const DEFAULT_STATE = {
-  filter: null,
-  filterErrors: null
-}
+export function AvailableProjects({projects, index, selected, trayId, timestamp, errors, selectProject, refreshTray}) {
+  const [filter, setFilter] = useState(null)
+  const [filterErrors, setFilterErrors] = useState(null)
+  const rootNode = useRef(null)
 
-export class AvailableProjects extends Component {
-
-  constructor(props) {
-    super(props)
-    this.state = {...DEFAULT_STATE}
-    this.rootNode = React.createRef()
-  }
-
-  includeAll = (projects) => () => {
+  const includeAll = (projects) => () => {
     projects
       .filter((project) => !project.removed)
-      .forEach((project) => this.props.selectProject(this.props.trayId, project.projectId, true))
+      .forEach((project) => selectProject(trayId, project.projectId, true))
   }
 
-  excludeAll = (projects) => () => {
-    projects
-      .forEach((project) => this.props.selectProject(this.props.trayId, project.projectId, false))
+  const excludeAll = (projects) => () => {
+    projects.forEach((project) => selectProject(trayId, project.projectId, false))
   }
 
-  updateFilter = (evt) => {
+  const updateFilter = (evt) => {
     if (isBlank(evt.target.value)) {
-      this.setState({...DEFAULT_STATE})
+      setFilter(null)
+      setFilterErrors(null)
     } else {
       try {
         const regEx = new RegExp(evt.target.value)
-        this.setState({
-          filter: regEx,
-          filterErrors: null
-        })
+        setFilter(regEx)
+        setFilterErrors(null)
       } catch (e) {
-        this.setState({filterErrors: [`Project filter not applied, ${e.message}`]})
+        setFilterErrors([`Project filter not applied, ${e.message}`])
       }
     }
   }
 
-  scrollToTop = () => {
-    if (this.rootNode.current) {
-      this.rootNode.current.scrollIntoView()
+  const scrollToTop = () => {
+    if (rootNode.current) {
+      rootNode.current.scrollIntoView()
     }
   }
 
-  refreshTray = () => {
-    this.props.refreshTray(this.props.trayId)
-  }
-
-  filteredProjects = memoize(
-    (projects, filter) => {
-      return projects.filter((project) => {
-        return filter
-          ? `${project.name} ${project.stage || ''}`.match(filter)
-          : true
-      })
+  const filteredProjects = useMemo(() => {
+    if (filter) {
+      return projects.filter((project) => `${project.name} ${project.stage || ''}`.match(filter))
     }
+    return projects
+  }, [projects, filter])
+
+  const hasProjects = notEmpty(projects)
+  const hasProjectsFiltered = notEmpty(filteredProjects)
+
+  const controls = (
+    <div className={styles.controls}>
+      <fieldset className={styles.toggles}>
+        <legend className={styles.legend}>Available projects</legend>
+        <SecondaryButton className={styles.includeAll}
+                         onClick={includeAll(filteredProjects)}
+                         data-locator='include-all'
+                         icon={iCheckboxChecked}>
+          include all
+          <Shortcut hotkeys={[`+ ${index}`, `= ${index}`]}/>
+        </SecondaryButton>
+        <SecondaryButton className={styles.excludeAll}
+                         onClick={excludeAll(filteredProjects)}
+                         data-locator='exclude-all'
+                         icon={iCheckboxUnchecked}>
+          exclude all
+          <Shortcut hotkeys={[`- ${index}`]}/>
+        </SecondaryButton>
+        <div className={styles.projectFilter}>
+          <Input className={styles.projectFilterInput}
+                 onChange={updateFilter}
+                 placeholder='regular expression'
+                 data-locator='filter'>
+            filter
+          </Input>
+        </div>
+      </fieldset>
+      <Messages type='error' messages={filterErrors} data-locator='invalid-filter'/>
+    </div>
   )
 
-  render() {
-    const {projects, index, selected, trayId, timestamp, errors, selectProject} = this.props
-    const {filter, filterErrors} = this.state
+  const buildItems = (
+    <ol className={styles.buildItems}
+        aria-live='polite'
+        aria-relevant='additions'
+        data-locator='available-projects-list'>
+      {
+        _.sortBy(filteredProjects, ['name', 'stage']).map((project) => {
+          const isSelected = selected.includes(project.projectId)
 
-    const filteredProjects = this.filteredProjects(projects, filter)
+          return <AvailableProject key={project.projectId}
+                                   {...project}
+                                   selected={isSelected}
+                                   selectProject={() => selectProject(trayId, project.projectId, !isSelected)}/>
+        })
+      }
+    </ol>
+  )
 
-    const hasProjects = notEmpty(projects)
-    const hasProjectsFiltered = notEmpty(filteredProjects)
+  const noProjectsWarning = (
+    <Messages type='warning'
+              messages={['No projects fetched, please refresh']}
+              data-locator='no-projects-warning'/>
+  )
 
-    const controls = (
-      <div className={styles.controls}>
-        <fieldset className={styles.toggles}>
-          <legend className={styles.legend}>Available projects</legend>
-          <SecondaryButton className={styles.includeAll}
-                           onClick={this.includeAll(filteredProjects)}
-                           data-locator='include-all'
-                           icon={iCheckboxChecked}>
-            include all
-            <Shortcut hotkeys={[`+ ${index}`, `= ${index}`]}/>
-          </SecondaryButton>
-          <SecondaryButton className={styles.excludeAll}
-                           onClick={this.excludeAll(filteredProjects)}
-                           data-locator='exclude-all'
-                           icon={iCheckboxUnchecked}>
-            exclude all
-            <Shortcut hotkeys={[`- ${index}`]}/>
-          </SecondaryButton>
-          <div className={styles.projectFilter}>
-            <Input className={styles.projectFilterInput}
-                   onChange={this.updateFilter}
-                   placeholder='regular expression'
-                   data-locator='filter'>
-              filter
-            </Input>
-          </div>
-        </fieldset>
-        <Messages type='error' messages={filterErrors} data-locator='invalid-filter'/>
-      </div>
-    )
+  const noProjectsMatchFilterWarning = (
+    <Messages type='warning'
+              messages={['No matching projects, please update your filter']}
+              data-locator='filter-warning'/>
+  )
 
-    const buildItems = (
-      <ol className={styles.buildItems}
-          aria-live='polite'
-          aria-relevant='additions'
-          data-locator='available-projects-list'>
-        {
-          _.sortBy(filteredProjects, ['name', 'stage']).map((project) => {
-            const isSelected = selected.includes(project.projectId)
+  const backToTop = (
+    <SecondaryButton className={styles.backToTop}
+                     onClick={scrollToTop}>
+      back to top
+    </SecondaryButton>
+  )
 
-            return <AvailableProject key={project.projectId}
-                                     {...project}
-                                     selected={isSelected}
-                                     selectProject={() => selectProject(trayId, project.projectId, !isSelected)}/>
-          })
-        }
-      </ol>
-    )
-
-    const noProjectsWarning = (
-      <Messages type='warning'
-                messages={['No projects fetched, please refresh']}
-                data-locator='no-projects-warning'/>
-    )
-
-    const noProjectsMatchFilterWarning = (
-      <Messages type='warning'
-                messages={['No matching projects, please update your filter']}
-                data-locator='filter-warning'/>
-    )
-
-    const backToTop = (
-      <SecondaryButton className={styles.backToTop}
-                       onClick={this.scrollToTop}>
-        back to top
-      </SecondaryButton>
-    )
-
-    return (
-      <section className={styles.availableProjects}
-               data-locator='available-projects'
-               ref={this.rootNode}>
-        <VisuallyHidden data-locator='title'><h3>Available projects</h3></VisuallyHidden>
-        <Refresh index={index}
-                 timestamp={timestamp}
-                 refreshTray={this.refreshTray}/>
-        <Messages type='error' messages={errors} data-locator='errors'/>
-        {!errors && hasProjects && controls}
-        {!errors && hasProjectsFiltered && buildItems}
-        {!errors && !hasProjects && noProjectsWarning}
-        {!errors && hasProjects && !hasProjectsFiltered && noProjectsMatchFilterWarning}
-        {!errors && hasProjectsFiltered && backToTop}
-      </section>
-    )
-  }
+  return (
+    <section className={styles.availableProjects}
+             data-locator='available-projects'
+             ref={rootNode}>
+      <VisuallyHidden data-locator='title'><h3>Available projects</h3></VisuallyHidden>
+      <Refresh index={index}
+               timestamp={timestamp}
+               refreshTray={() => refreshTray(trayId)}/>
+      <Messages type='error' messages={errors} data-locator='errors'/>
+      {!errors && hasProjects && controls}
+      {!errors && hasProjectsFiltered && buildItems}
+      {!errors && !hasProjects && noProjectsWarning}
+      {!errors && hasProjects && !hasProjectsFiltered && noProjectsMatchFilterWarning}
+      {!errors && hasProjectsFiltered && backToTop}
+    </section>
+  )
 }
 
 AvailableProjects.propTypes = {

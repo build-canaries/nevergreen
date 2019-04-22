@@ -6,10 +6,10 @@ import {Success} from './Success'
 import {SuccessMessage} from '../common/SuccessMessage'
 import {Loading} from '../common/Loading'
 import styles from './monitor.scss'
-import {Timer} from '../common/Timer'
 import _ from 'lodash'
 import {Title} from '../common/Title'
 import {abortPendingRequest} from '../gateways/Gateway'
+import {useTimer} from '../common/TimerHook'
 
 export function GettingStartedHelp() {
   return <SuccessMessage message='Add a CI server via the tracking page to start monitoring'/>
@@ -32,6 +32,8 @@ export function Monitor(props) {
     }
   }, [])
 
+  useTimer(fetchInteresting, refreshTime)
+
   const traysAdded = !_.isEmpty(trays)
   const noProjects = _.isEmpty(projects)
   const noErrors = _.isEmpty(errors)
@@ -44,7 +46,6 @@ export function Monitor(props) {
   return (
     <div className={monitorClassNames}>
       <Title>Monitor</Title>
-      <Timer onTrigger={fetchInteresting} interval={refreshTime}/>
       <Loading loaded={loaded}>
         {!traysAdded && <GettingStartedHelp/>}
         {traysAdded && success && <Success messages={messages}/>}

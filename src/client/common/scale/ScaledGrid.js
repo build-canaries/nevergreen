@@ -1,11 +1,11 @@
 import React, {Children, useLayoutEffect, useRef, useState} from 'react'
 import PropTypes from 'prop-types'
-import {Resizable} from '../Resizable'
 import {ideal, MIN_FONT_SIZE} from './ScaleText'
 import {FontMetrics} from './FontMetrics'
 import _ from 'lodash'
 import styles from './scaled-grid.scss'
 import {VISUALLY_HIDDEN_ATTRIBUTE} from '../VisuallyHidden'
+import {useResizable} from '../ResizableHook'
 
 // These need to match those in the CSS
 const TABLET_BREAKPOINT = 768
@@ -82,17 +82,13 @@ function calculateChildDimensions(listNode, fontMetrics) {
 
 export function ScaledGrid({children}) {
   const [dimensions, setDimensions] = useState(DEFAULT_STATE)
-
   const fontMetrics = useRef()
   const listNode = useRef()
 
-  const calculate = () => {
-    setDimensions(calculateChildDimensions(listNode.current, fontMetrics.current))
-  }
+  const calculate = () => setDimensions(calculateChildDimensions(listNode.current, fontMetrics.current))
 
-  useLayoutEffect(() => {
-    calculate()
-  }, [children])
+  useLayoutEffect(() => calculate(), [children])
+  useResizable(calculate)
 
   const style = {
     width: `${dimensions.childWidth}px`,
@@ -115,7 +111,6 @@ export function ScaledGrid({children}) {
           })
         }
       </ul>
-      <Resizable onResize={calculate}/>
     </>
   )
 }

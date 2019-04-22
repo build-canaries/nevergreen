@@ -103,5 +103,3 @@ export function KeyboardShortcuts() {
     </Modal>
   )
 }
-
-export default KeyboardShortcuts

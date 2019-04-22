@@ -10,12 +10,14 @@ describe('Monitor <Success/>', () => {
     messages: []
   }
 
-  test(
-    'should pick a message when constructed to stop it changing after every successful refresh',
-    () => {
+  test('should pick a message when first rendered to stop it changing after every successful refresh', () => {
       const props = {...DEFAULT_PROPS, messages: ['a', 'b', 'c']}
       const wrapper = shallow(<Success {...props} />)
-      expect(wrapper.state('message')).toBeDefined()
+      const message = wrapper.find(SuccessMessage).prop('message')
+      wrapper.rerender()
+      expect(wrapper.find(SuccessMessage).prop('message')).toEqual(message)
+      wrapper.rerender()
+      expect(wrapper.find(SuccessMessage).prop('message')).toEqual(message)
     }
   )
 

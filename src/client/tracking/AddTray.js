@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import {Input} from '../common/forms/Input'
 import {WithHelp} from '../common/ContextualHelp'
@@ -8,81 +8,58 @@ import {PrimaryButton} from '../common/forms/Button'
 import {iPlus} from '../common/fonts/Icons'
 import {Password} from '../common/forms/Password'
 
-const DEFAULT_STATE = {
-  url: '',
-  username: '',
-  password: ''
-}
+export function AddTray({addTray}) {
+  const [url, setUrl] = useState('')
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
-export class AddTray extends Component {
-
-  constructor(props) {
-    super(props)
-    this.state = {...DEFAULT_STATE}
+  const addTrayAndClearInput = () => {
+    addTray(url, username, password)
+    setUrl('')
+    setUsername('')
+    setPassword('')
   }
 
-  addTrayAndClearInput = () => {
-    this.props.addTray(this.state.url, this.state.username, this.state.password)
-    this.setState({...DEFAULT_STATE})
-  }
-
-  updateUrl = (evt) => {
-    this.setState({url: evt.target.value})
-  }
-
-  updateUsername = (evt) => {
-    this.setState({username: evt.target.value})
-  }
-
-  updatePassword = (evt) => {
-    this.setState({password: evt.target.value})
-  }
-
-  render() {
-    const {url, username, password} = this.state
-    const {addTray} = this.props
-
-    return (
-      <div className={styles.addTray}>
-        <div className={styles.inputs}>
-          <Input className={styles.url}
-                 placeholder='CCTray XML feed'
-                 value={url}
-                 onChange={this.updateUrl}
-                 onEnter={this.addTrayAndClearInput}
-                 data-locator='add-tray-url'
-                 autoComplete='url'>
-            <span className={styles.label}>URL</span>
-          </Input>
-          <Input className={styles.username}
-                 value={username}
-                 onChange={this.updateUsername}
-                 onEnter={this.addTrayAndClearInput}
-                 data-locator='add-tray-username'
-                 autoComplete='username'>
-            <span className={styles.label}>username</span>
-          </Input>
-          <Password className={styles.password}
-                    value={password}
-                    onChange={this.updatePassword}
-                    onEnter={this.addTrayAndClearInput}
-                    data-locator='add-tray-password'>
-            <span className={styles.label}>password</span>
-          </Password>
-        </div>
-        <WithHelp title='Tracking'
-                  help={<TrackingHelp addTray={addTray}/>}
-                  className={styles.help}>
-          <PrimaryButton className={styles.add}
-                         onClick={this.addTrayAndClearInput}
-                         data-locator='add-tray'
-                         icon={iPlus}>
-            <span aria-label='add tray'>add</span>
-          </PrimaryButton>
-        </WithHelp>
+  return (
+    <div className={styles.addTray}>
+      <div className={styles.inputs}>
+        <Input className={styles.url}
+               placeholder='CCTray XML feed'
+               value={url}
+               onChange={({target}) => setUrl(target.value)}
+               onEnter={addTrayAndClearInput}
+               data-locator='add-tray-url'
+               autoComplete='url'>
+          <span className={styles.label}>URL</span>
+        </Input>
+        <Input className={styles.username}
+               value={username}
+               onChange={({target}) => setUsername(target.value)}
+               onEnter={addTrayAndClearInput}
+               data-locator='add-tray-username'
+               autoComplete='username'>
+          <span className={styles.label}>username</span>
+        </Input>
+        <Password className={styles.password}
+                  value={password}
+                  onChange={({target}) => setPassword(target.value)}
+                  onEnter={addTrayAndClearInput}
+                  data-locator='add-tray-password'>
+          <span className={styles.label}>password</span>
+        </Password>
       </div>
-    )
-  }
+      <WithHelp title='Tracking'
+                help={<TrackingHelp addTray={addTray}/>}
+                className={styles.help}>
+        <PrimaryButton className={styles.add}
+                       onClick={addTrayAndClearInput}
+                       data-locator='add-tray'
+                       icon={iPlus}>
+          <span aria-label='add tray'>add</span>
+        </PrimaryButton>
+      </WithHelp>
+    </div>
+  )
 }
 
 AddTray.propTypes = {

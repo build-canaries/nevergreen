@@ -1,93 +1,67 @@
-import React, {Component, Fragment} from 'react'
+import React, {useEffect, useLayoutEffect, useMemo, useRef} from 'react'
 import PropTypes from 'prop-types'
-import _ from 'lodash'
-import {registerServiceWorker} from './ServiceWorker'
+import {throttle} from 'lodash'
 import {Header} from './header/Header'
 import {Footer} from './footer/Footer'
-import {Timer} from './common/Timer'
 import NotificationContainer from './notification/NotificationContainer'
 import version from '../../resources/version.txt'
 import styles from './nevergreen.scss'
-import KeyboardShortcuts from './KeyboardShortcuts'
+import {KeyboardShortcuts} from './KeyboardShortcuts'
+import {useTimer} from './common/TimerHook'
 
-const ONE_SECONDS = 1000
+const ONE_SECOND = 1000
 const THREE_SECONDS = 3 * 1000
 const TWENTY_FOUR_HOURS = 24 * 60 * 60
 
-export class Nevergreen extends Component {
+export function Nevergreen({initalise, loaded, isFullScreen, children, clickToShowMenu, fullScreenRequested, enableFullScreen, checkForNewVersion}) {
+  const fullScreenTimer = useRef()
 
-  constructor(props) {
-    super(props)
-    this.state = {fullScreenTimer: null}
-    this.disableFullScreen = _.throttle(this.disableFullScreen, ONE_SECONDS, {trailing: false}).bind(this)
-  }
-
-  checkVersion = () => {
-    this.props.checkForNewVersion(version, window.location.hostname)
-  }
-
-  componentDidMount() {
-    const {initalise, notify} = this.props
-
-    initalise()
-    if (process.env.NODE_ENV === 'production') {
-      registerServiceWorker(notify)
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    const {fullScreenRequested, enableFullScreen} = this.props
-
-    if (prevProps.fullScreenRequested !== fullScreenRequested) {
-      enableFullScreen(fullScreenRequested)
-      if (!fullScreenRequested) {
-        clearTimeout(this.state.fullScreenTimer)
-      }
-    }
-  }
-
-  render() {
-    const {loaded, isFullScreen, children, clickToShowMenu} = this.props
-
-    const disableFullScreenOn = clickToShowMenu
-      ? {onClick: this.disableFullScreen}
-      : {onMouseMove: this.disableFullScreen}
-
-    return (
-      <Fragment>
-        {loaded && <KeyboardShortcuts/>}
-        {loaded && <Timer onTrigger={this.checkVersion} interval={TWENTY_FOUR_HOURS}/>}
-
-        <div className={styles.nevergreen}
-             aria-busy={!loaded}
-             tabIndex='-1'
-             {...disableFullScreenOn}>
-          <Header fullScreen={isFullScreen}/>
-          <NotificationContainer/>
-          {loaded && <main className={styles.main}>{children}</main>}
-          <Footer fullScreen={isFullScreen}/>
-        </div>
-      </Fragment>
-    )
-  }
-
-  disableFullScreen() {
-    const {isFullScreen, enableFullScreen, fullScreenRequested} = this.props
-
-    clearTimeout(this.state.fullScreenTimer)
+  const disableFullScreen = throttle(() => {
+    clearTimeout(fullScreenTimer.current)
 
     if (isFullScreen) {
       enableFullScreen(false)
     }
 
     if (fullScreenRequested) {
-      const doEnableFullScreen = () => {
-        enableFullScreen(true)
-      }
-      const fullScreenTimer = setTimeout(doEnableFullScreen, THREE_SECONDS)
-      this.setState({fullScreenTimer})
+      fullScreenTimer.current = setTimeout(() => enableFullScreen(true), THREE_SECONDS)
     }
-  }
+  }, ONE_SECOND, {trailing: false})
+
+  const checkVersion = useMemo(() => () => loaded && checkForNewVersion(version, window.location.hostname), [loaded])
+
+  useEffect(() => {
+    initalise()
+  }, [])
+
+  useLayoutEffect(() => {
+    enableFullScreen(fullScreenRequested)
+    if (!fullScreenRequested) {
+      clearTimeout(fullScreenTimer.current)
+    }
+  }, [fullScreenRequested])
+
+  useTimer(checkVersion, TWENTY_FOUR_HOURS)
+
+  const disableFullScreenOn = clickToShowMenu
+    ? {onClick: disableFullScreen}
+    : {onMouseMove: disableFullScreen}
+
+  return (
+    <>
+      {loaded && <KeyboardShortcuts/>}
+
+      <div className={styles.nevergreen}
+           aria-busy={!loaded}
+           tabIndex='-1'
+           {...disableFullScreenOn}>
+        <Header fullScreen={isFullScreen}/>
+        <NotificationContainer/>
+        {loaded && <main className={styles.main}>{children}</main>}
+        <Footer fullScreen={isFullScreen}/>
+      </div>
+    </>
+  )
 }
 
 Nevergreen.propTypes = {
@@ -98,8 +72,5 @@ Nevergreen.propTypes = {
   isFullScreen: PropTypes.bool,
   fullScreenRequested: PropTypes.bool,
   enableFullScreen: PropTypes.func.isRequired,
-  notify: PropTypes.func.isRequired,
   clickToShowMenu: PropTypes.bool
 }
-
-export default Nevergreen

@@ -14,21 +14,21 @@ describe('<AddTray/>', () => {
     const props = {...DEFAULT_PROPS}
     const wrapper = shallow(<AddTray {...props} />)
     change(wrapper.find(locator('add-tray-url')), 'some-new-url')
-    expect(wrapper.state('url')).toEqual('some-new-url')
+    expect(wrapper.find(locator('add-tray-url')).prop('value')).toEqual('some-new-url')
   })
 
   test('should update the username', () => {
     const props = {...DEFAULT_PROPS}
     const wrapper = shallow(<AddTray {...props} />)
     change(wrapper.find(locator('add-tray-username')), 'some-new-username')
-    expect(wrapper.state('username')).toEqual('some-new-username')
+    expect(wrapper.find(locator('add-tray-username')).prop('value')).toEqual('some-new-username')
   })
 
   test('should update the password', () => {
     const props = {...DEFAULT_PROPS}
     const wrapper = shallow(<AddTray {...props} />)
     change(wrapper.find(locator('add-tray-password')), 'some-new-password')
-    expect(wrapper.state('password')).toEqual('some-new-password')
+    expect(wrapper.find(locator('add-tray-password')).prop('value')).toEqual('some-new-password')
   })
 
   describe('add tray', () => {
@@ -53,7 +53,7 @@ describe('<AddTray/>', () => {
       change(wrapper.find(locator('add-tray-url')), 'some-new-url')
       wrapper.find(locator('add-tray')).simulate('click')
 
-      expect(wrapper.state('url')).toEqual('')
+      expect(wrapper.find(locator('add-tray-url')).prop('value')).toEqual('')
     })
 
     test('should clear the entered username', () => {
@@ -63,7 +63,7 @@ describe('<AddTray/>', () => {
       change(wrapper.find(locator('add-tray-username')), 'some-new-username')
       wrapper.find(locator('add-tray')).simulate('click')
 
-      expect(wrapper.state('username')).toEqual('')
+      expect(wrapper.find(locator('add-tray-username')).prop('value')).toEqual('')
     })
 
     test('should clear the entered password', () => {
@@ -73,7 +73,7 @@ describe('<AddTray/>', () => {
       change(wrapper.find(locator('add-tray-password')), 'some-new-password')
       wrapper.find(locator('add-tray')).simulate('click')
 
-      expect(wrapper.state('password')).toEqual('')
+      expect(wrapper.find(locator('add-tray-password')).prop('value')).toEqual('')
     })
   })
 })
