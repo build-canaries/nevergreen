@@ -40,7 +40,6 @@
     "immutable": "4.0.0-rc.12",
     "localforage": "1.7.3",
     "lodash": "4.17.11",
-    "memoize-one": "5.0.4",
     "modularscale-sass": "3.0.8",
     "mousetrap": "1.6.3",
     "normalize.css": "8.0.1",
