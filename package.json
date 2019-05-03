@@ -65,7 +65,6 @@
     "@babel/plugin-proposal-object-rest-spread": "7.4.4",
     "@babel/preset-env": "7.4.4",
     "@babel/preset-react": "7.0.0",
-    "@babel/register": "7.4.4",
     "ajv": "6.10.0",
     "ajv-cli": "3.0.0",
     "autoprefixer": "9.5.1",
