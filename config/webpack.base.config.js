@@ -65,10 +65,13 @@ module.exports = {
     ]),
     new ManifestPlugin({ fileName: 'asset-manifest.json' })
   ],
+  resolve: {
+    extensions: ['.js', '.tsx', '.ts']
+  },
   module: {
     rules: [
       {
-        test: /\.js$/i,
+        test: /\.(js|ts|tsx)$/,
         use: 'babel-loader',
         include: path.join(__dirname, '../src/client')
       },

@@ -1,0 +1,5 @@
+declare module '*.scss'
+declare module '*.txt'
+declare module '*.png'
+declare module '*.mp3'
+declare module 'project-name-generator'

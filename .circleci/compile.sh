@@ -4,6 +4,7 @@ echo "cleaning client build folders"
 npm run clean
 
 echo "building ui"
+npm run check-types
 npm run build:prod
 
 echo "cleaning server build folders"
