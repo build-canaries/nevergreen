@@ -2,7 +2,7 @@ import {connect} from 'react-redux'
 import {Export} from './Export'
 import {filter} from '../../reducers/Configuration'
 import {toJson} from '../../common/Json'
-import {getExportErrors, getExportInfos} from '../../reducers/Selectors'
+import {getExportErrors, getExportInfos} from '../../reducers/ExportReducer'
 import {State} from '../../reducers/Reducer'
 
 function mapDispatchToProps() {

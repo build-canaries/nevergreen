@@ -1,11 +1,12 @@
 import {connect} from 'react-redux'
 import {Externally} from './Externally'
-import {getBackupId, getBackupUrl, getImportLoaded} from '../../../reducers/Selectors'
 import {restore} from '../../../actions/BackupThunkActionCreators'
 import {BackupLocation, backupSetId, backupSetUrl} from '../../../actions/BackupActionCreators'
 import {State} from '../../../reducers/Reducer'
 import {AnyAction} from 'redux'
 import {ThunkDispatch} from 'redux-thunk'
+import {getImportLoaded} from '../../../reducers/ImportReducer'
+import {getBackupId, getBackupUrl} from '../../../reducers/BackupReducer'
 
 interface ExternallyContainerProps {
   location: BackupLocation;

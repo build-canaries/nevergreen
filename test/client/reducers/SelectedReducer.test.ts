@@ -1,9 +1,8 @@
-import {reduce, SELECTED_ROOT, SelectedState} from '../../../src/client/reducers/SelectedReducer'
+import {getSelectedProjects, reduce, SELECTED_ROOT, SelectedState} from '../../../src/client/reducers/SelectedReducer'
 import {Actions} from '../../../src/client/actions/Actions'
 import {initalised} from '../../../src/client/actions/NevergreenActionCreators'
 import {importSuccess} from '../../../src/client/actions/ImportActionCreators'
 import {projectsFetched, removeTray, selectProject, trayAdded} from '../../../src/client/actions/TrackingActionCreators'
-import {getSelectedProjects} from '../../../src/client/reducers/Selectors'
 import {buildProject, buildState, testReducer} from '../testHelpers'
 import {RecursivePartial} from '../../../src/client/common/Types'
 

@@ -2,7 +2,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators, Dispatch} from 'redux'
 import {addMessage, removeMessage} from '../actions/SuccessActionCreators'
 import {Success} from './Success'
-import {getSuccessMessages} from '../reducers/Selectors'
+import {getSuccessMessages} from '../reducers/SuccessReducer'
 import {State} from '../reducers/Reducer'
 
 function mapDispatchToProps(dispatch: Dispatch) {

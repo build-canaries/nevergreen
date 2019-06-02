@@ -1,7 +1,11 @@
-import {NOTIFICATION_ROOT, NotificationState, reduce} from '../../../src/client/reducers/NotificationReducer'
+import {
+  getNotification,
+  NOTIFICATION_ROOT,
+  NotificationState,
+  reduce
+} from '../../../src/client/reducers/NotificationReducer'
 import {Actions} from '../../../src/client/actions/Actions'
 import {dismiss, notify} from '../../../src/client/actions/NotificationActionCreators'
-import {getNotification} from '../../../src/client/reducers/Selectors'
 import {RecursivePartial} from '../../../src/client/common/Types'
 import {buildState, testReducer} from '../testHelpers'
 

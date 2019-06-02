@@ -1,6 +1,8 @@
 import {Actions} from '../actions/Actions'
-import {ActionInterestingProjects} from '../actions/MonitorActionCreators'
 import {Project} from '../domain/Project'
+import {createReducer, createSelector} from 'redux-starter-kit'
+import {ActionInterestingProjects} from '../actions/MonitorActionCreators'
+import {State} from './Reducer'
 
 export interface InterestingState {
   readonly loaded: boolean;
@@ -16,15 +18,14 @@ const DEFAULT_STATE: InterestingState = {
   loaded: false
 }
 
-export function reduce(state = DEFAULT_STATE, action: ActionInterestingProjects): InterestingState {
-  switch (action.type) {
-    case Actions.INTERESTING_PROJECTS:
-      return {
-        loaded: true,
-        errors: action.errors,
-        projects: action.projects
-      }
-    default:
-      return state
+export const reduce = createReducer<InterestingState>(DEFAULT_STATE, {
+  [Actions.INTERESTING_PROJECTS]: (draft, action: ActionInterestingProjects) => {
+    draft.loaded = true
+    draft.errors = action.errors
+    draft.projects = action.projects
   }
-}
+})
+
+export const getInterestingLoaded = createSelector<State, boolean>([[INTERESTING_ROOT, 'loaded']])
+export const getInterestingErrors = createSelector<State, string[]>([[INTERESTING_ROOT, 'errors']])
+export const getInterestingProjects = createSelector<State, Project[]>([[INTERESTING_ROOT, 'projects']])

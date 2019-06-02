@@ -1,6 +1,12 @@
-import {IMPORT_ROOT, ImportState, reduce} from '../../../src/client/reducers/ImportReducer'
+import {
+  getImportErrors,
+  getImportInfos,
+  getImportLoaded,
+  IMPORT_ROOT,
+  ImportState,
+  reduce
+} from '../../../src/client/reducers/ImportReducer'
 import {Actions} from '../../../src/client/actions/Actions'
-import {getImportErrors, getImportInfos, getImportLoaded} from '../../../src/client/reducers/Selectors'
 import {importError, importing, importSuccess} from '../../../src/client/actions/ImportActionCreators'
 import {navigated} from '../../../src/client/actions/NevergreenActionCreators'
 import {buildState, testReducer} from '../testHelpers'

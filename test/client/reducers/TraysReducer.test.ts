@@ -1,7 +1,3 @@
-import {reduce, TRAYS_ROOT, TraysState} from '../../../src/client/reducers/TraysReducer'
-import {Actions} from '../../../src/client/actions/Actions'
-import {initalised, navigated} from '../../../src/client/actions/NevergreenActionCreators'
-import {importSuccess} from '../../../src/client/actions/ImportActionCreators'
 import {
   getTray,
   getTrayErrors,
@@ -14,8 +10,14 @@ import {
   getTrayServerType,
   getTrayTimestamp,
   getTrayUrl,
-  getTrayUsername
-} from '../../../src/client/reducers/Selectors'
+  getTrayUsername,
+  reduce,
+  TRAYS_ROOT,
+  TraysState
+} from '../../../src/client/reducers/TraysReducer'
+import {Actions} from '../../../src/client/actions/Actions'
+import {initalised, navigated} from '../../../src/client/actions/NevergreenActionCreators'
+import {importSuccess} from '../../../src/client/actions/ImportActionCreators'
 import {
   highlightTray,
   projectsFetched,

@@ -4,16 +4,16 @@ import {selectProject} from '../../actions/TrackingActionCreators'
 import {refreshTray} from '../../actions/RefreshThunkActionCreators'
 import {AvailableProjects} from './AvailableProjects'
 import {
-  getProjects,
-  getSelectedProjects,
   getTrayErrors,
   getTrayPassword,
   getTrayServerType,
   getTrayTimestamp,
   getTrayUrl,
   getTrayUsername
-} from '../../reducers/Selectors'
+} from '../../reducers/TraysReducer'
 import {State} from '../../reducers/Reducer'
+import {getSelectedProjects} from '../../reducers/SelectedReducer'
+import {getProjects} from '../../reducers/ProjectsReducer'
 
 interface AvailableProjectsContainerProps {
   trayId: string;

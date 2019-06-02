@@ -29,7 +29,7 @@ import {
   getShowTrayName,
   getSystemNotificationPermissionDenied,
   getSystemNotificationRequestingPermission
-} from '../reducers/Selectors'
+} from '../reducers/SettingsReducer'
 import {State} from '../reducers/Reducer'
 
 function mapDispatchToProps(dispatch: Dispatch) {

@@ -1,6 +1,3 @@
-import {reduce, SETTINGS_ROOT, SettingsState} from '../../../src/client/reducers/SettingsReducer'
-import {Actions} from '../../../src/client/actions/Actions'
-import {initalised} from '../../../src/client/actions/NevergreenActionCreators'
 import {
   getBrokenBuildSoundFx,
   getClickToShowMenu,
@@ -13,8 +10,13 @@ import {
   getShowSystemNotifications,
   getShowTrayName,
   getSystemNotificationPermissionDenied,
-  getSystemNotificationRequestingPermission
-} from '../../../src/client/reducers/Selectors'
+  getSystemNotificationRequestingPermission,
+  reduce,
+  SETTINGS_ROOT,
+  SettingsState
+} from '../../../src/client/reducers/SettingsReducer'
+import {Actions} from '../../../src/client/actions/Actions'
+import {initalised} from '../../../src/client/actions/NevergreenActionCreators'
 import {importSuccess} from '../../../src/client/actions/ImportActionCreators'
 import {
   requestingSystemNotificationPermission,

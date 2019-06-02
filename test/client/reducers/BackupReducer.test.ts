@@ -1,6 +1,12 @@
-import {BACKUP_ROOT, BackupState, reduce} from '../../../src/client/reducers/BackupReducer'
+import {
+  BACKUP_ROOT,
+  BackupState,
+  getBackupDescription,
+  getBackupId,
+  getBackupUrl,
+  reduce
+} from '../../../src/client/reducers/BackupReducer'
 import {Actions} from '../../../src/client/actions/Actions'
-import {getBackupDescription, getBackupId, getBackupUrl} from '../../../src/client/reducers/Selectors'
 import {initalised} from '../../../src/client/actions/NevergreenActionCreators'
 import {
   BackupLocation,

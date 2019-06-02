@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
 import {Tray} from './Tray'
-import {getTrayHighlight, getTrayLoaded, getTrayName, getTrayUrl} from '../../reducers/Selectors'
+import {getTrayHighlight, getTrayLoaded, getTrayName, getTrayUrl} from '../../reducers/TraysReducer'
 import {bindActionCreators, Dispatch} from 'redux'
 import {checkRefresh} from '../../actions/TrackingThunkActionCreators'
 import {State} from '../../reducers/Reducer'

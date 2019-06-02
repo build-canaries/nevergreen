@@ -1,6 +1,6 @@
 import {Actions} from '../actions/Actions'
 import {Tray} from '../domain/Tray'
-import {ActionInitalised, ActionNavigated} from '../actions/NevergreenActionCreators'
+import {ActionInitalised} from '../actions/NevergreenActionCreators'
 import {ActionImportSuccess} from '../actions/ImportActionCreators'
 import {
   ActionHighlightTray,
@@ -15,169 +15,143 @@ import {
   ActionSetTrayUsername,
   ActionTrayAdded
 } from '../actions/TrackingActionCreators'
-import {
-  ActionEncryptingPassword,
-  ActionPasswordEncryptError,
-  ActionPasswordEncryted
-} from '../actions/PasswordActionCreators'
-import {omit} from 'lodash'
+import {ActionEncryptingPassword, ActionPasswordEncryptError} from '../actions/PasswordActionCreators'
+import {createReducer, createSelector} from 'redux-starter-kit'
+import {Draft} from 'immer'
+import {State} from './Reducer'
+import {get} from 'lodash'
 
 export interface TraysState {
   readonly [trayId: string]: Tray;
 }
 
-type SupportedActions = ActionInitalised
-  | ActionImportSuccess
-  | ActionTrayAdded
-  | ActionHighlightTray
-  | ActionNavigated
-  | ActionRemoveTray
-  | ActionEncryptingPassword
-  | ActionProjectsFetching
-  | ActionPasswordEncryted
-  | ActionProjectsFetched
-  | ActionPasswordEncryptError
-  | ActionProjectsFetchError
-  | ActionSetTrayName
-  | ActionSetServerType
-  | ActionSetTrayUsername
-  | ActionSetTrayUrl
-  | ActionSetIncludeNew
-
 export const TRAYS_ROOT = 'trays'
 
 const DEFAULT_STATE: TraysState = {}
 
-export function reduce(state = DEFAULT_STATE, action: SupportedActions): TraysState {
-  switch (action.type) {
-    case Actions.INITIALISED:
-    case Actions.IMPORT_SUCCESS:
-      return action.data[TRAYS_ROOT]
-        ? Object.values(action.data[TRAYS_ROOT] as TraysState).reduce((acc, tray) => {
-          // @ts-ignore
-          acc[tray.trayId] = {...tray, loaded: true}
-          return acc
-        }, {})
-        : state
+function setConfiguration(draft: Draft<TraysState>, action: ActionInitalised | ActionImportSuccess) {
+  const newState: Draft<TraysState> = {}
+  const data = action.data[TRAYS_ROOT] as TraysState || draft
+  Object.keys(data).forEach((trayId) => {
+    newState[trayId] = data[trayId]
+    newState[trayId].loaded = true
+  })
+  return newState
+}
 
-    case Actions.TRAY_ADDED:
-      return {...state, [action.trayId]: action.data}
-
-    case Actions.HIGHLIGHT_TRAY:
-      return {
-        ...state,
-        [action.trayId]: {
-          ...state[action.trayId],
-          highlight: true
-        }
-      }
-
-    case Actions.NAVIGATED: {
-      const newState: { [trayId: string]: Tray } = {}
-      return Object.keys(state).reduce((acc, trayId) => {
-        acc[trayId] = {...state[trayId], highlight: false}
-        return acc
-      }, newState)
-    }
-
-    case Actions.REMOVE_TRAY:
-      return omit(state, action.trayId)
-
-    case Actions.ENCRYPTING_PASSWORD:
-    case Actions.PROJECTS_FETCHING:
-      return {
-        ...state,
-        [action.trayId]: {
-          ...state[action.trayId],
-          loaded: false,
-          requiresRefresh: false,
-          errors: []
-        }
-      }
-
-    case Actions.PASSWORD_ENCRYPTED:
-      return {
-        ...state,
-        [action.trayId]: {
-          ...state[action.trayId],
-          loaded: true,
-          password: action.password,
-          requiresRefresh: true,
-          errors: []
-        }
-      }
-
-    case Actions.PROJECTS_FETCHED:
-      return {
-        ...state,
-        [action.trayId]: {
-          ...state[action.trayId],
-          loaded: true,
-          timestamp: action.timestamp,
-          serverType: action.serverType,
-          errors: []
-        }
-      }
-
-    case Actions.PASSWORD_ENCRYPT_ERROR:
-    case Actions.PROJECTS_FETCH_ERROR:
-      return {
-        ...state,
-        [action.trayId]: {
-          ...state[action.trayId],
-          loaded: true,
-          errors: action.errors
-        }
-      }
-
-    case Actions.SET_TRAY_NAME:
-      return {
-        ...state,
-        [action.trayId]: {
-          ...state[action.trayId],
-          name: action.name
-        }
-      }
-
-    case Actions.SET_SERVER_TYPE :
-      return {
-        ...state,
-        [action.trayId]: {
-          ...state[action.trayId],
-          serverType: action.serverType
-        }
-      }
-
-    case Actions.SET_TRAY_USERNAME :
-      return {
-        ...state,
-        [action.trayId]: {
-          ...state[action.trayId],
-          username: action.username,
-          requiresRefresh: state[action.trayId].username !== action.username
-        }
-      }
-
-    case Actions.SET_TRAY_URL :
-      return {
-        ...state,
-        [action.trayId]: {
-          ...state[action.trayId],
-          url: action.url,
-          requiresRefresh: state[action.trayId].url !== action.url
-        }
-      }
-
-    case Actions.SET_INCLUDE_NEW :
-      return {
-        ...state,
-        [action.trayId]: {
-          ...state[action.trayId],
-          includeNew: action.value
-        }
-      }
-
-    default:
-      return state
+export const reduce = createReducer<TraysState>(DEFAULT_STATE, {
+  [Actions.INITIALISED]: setConfiguration,
+  [Actions.IMPORT_SUCCESS]: setConfiguration,
+  [Actions.TRAY_ADDED]: (draft, action: ActionTrayAdded) => {
+    draft[action.trayId] = action.data
+  },
+  [Actions.HIGHLIGHT_TRAY]: (draft, action: ActionHighlightTray) => {
+    draft[action.trayId].highlight = true
+  },
+  [Actions.NAVIGATED]: (draft) => {
+    Object.keys(draft).forEach((trayId) => {
+      draft[trayId].highlight = false
+    })
+  },
+  [Actions.REMOVE_TRAY]: (draft, action: ActionRemoveTray) => {
+    delete draft[action.trayId]
+  },
+  [Actions.ENCRYPTING_PASSWORD]: (draft, action: ActionEncryptingPassword) => {
+    draft[action.trayId].loaded = false
+    draft[action.trayId].requiresRefresh = false
+    draft[action.trayId].errors = []
+  },
+  [Actions.PASSWORD_ENCRYPTED]: (draft, action: ActionEncryptingPassword) => {
+    draft[action.trayId].loaded = true
+    draft[action.trayId].password = action.password
+    draft[action.trayId].requiresRefresh = true
+    draft[action.trayId].errors = []
+  },
+  [Actions.PASSWORD_ENCRYPT_ERROR]: (draft, action: ActionPasswordEncryptError) => {
+    draft[action.trayId].loaded = true
+    draft[action.trayId].errors = action.errors
+  },
+  [Actions.PROJECTS_FETCHING]: (draft, action: ActionProjectsFetching) => {
+    draft[action.trayId].loaded = false
+    draft[action.trayId].requiresRefresh = false
+    draft[action.trayId].errors = []
+  },
+  [Actions.PROJECTS_FETCHED]: (draft, action: ActionProjectsFetched) => {
+    draft[action.trayId].loaded = true
+    draft[action.trayId].timestamp = action.timestamp
+    draft[action.trayId].serverType = action.serverType
+    draft[action.trayId].errors = []
+  },
+  [Actions.PROJECTS_FETCH_ERROR]: (draft, action: ActionProjectsFetchError) => {
+    draft[action.trayId].loaded = true
+    draft[action.trayId].errors = action.errors
+  },
+  [Actions.SET_TRAY_NAME]: (draft, action: ActionSetTrayName) => {
+    draft[action.trayId].name = action.name
+  },
+  [Actions.SET_SERVER_TYPE]: (draft, action: ActionSetServerType) => {
+    draft[action.trayId].serverType = action.serverType
+  },
+  [Actions.SET_TRAY_USERNAME]: (draft, action: ActionSetTrayUsername) => {
+    draft[action.trayId].requiresRefresh = draft[action.trayId].username !== action.username
+    draft[action.trayId].username = action.username
+  },
+  [Actions.SET_TRAY_URL]: (draft, action: ActionSetTrayUrl) => {
+    draft[action.trayId].requiresRefresh = draft[action.trayId].url !== action.url
+    draft[action.trayId].url = action.url
+  },
+  [Actions.SET_INCLUDE_NEW]: (draft, action: ActionSetIncludeNew) => {
+    draft[action.trayId].includeNew = action.value
   }
+})
+
+export const getTrays = createSelector<State, Tray[]>([TRAYS_ROOT], (trays) => Object.values(trays))
+export const getTrayIds = createSelector<State, string[]>([TRAYS_ROOT], (trays) => Object.keys(trays))
+
+export function getTray(state: State, trayId: string): Tray {
+  return get(state, [TRAYS_ROOT, trayId])
+}
+
+export function getTrayLoaded(state: State, trayId: string): boolean {
+  return get(state, [TRAYS_ROOT, trayId, 'loaded'])
+}
+
+export function getTrayName(state: State, trayId: string): string {
+  return get(state, [TRAYS_ROOT, trayId, 'name'])
+}
+
+export function getTrayUrl(state: State, trayId: string): string {
+  return get(state, [TRAYS_ROOT, trayId, 'url'])
+}
+
+export function getTrayUsername(state: State, trayId: string): string {
+  return get(state, [TRAYS_ROOT, trayId, 'username'])
+}
+
+export function getTrayPassword(state: State, trayId: string): string {
+  return get(state, [TRAYS_ROOT, trayId, 'password'])
+}
+
+export function getTrayServerType(state: State, trayId: string): string {
+  return get(state, [TRAYS_ROOT, trayId, 'serverType'])
+}
+
+export function getTrayIncludeNew(state: State, trayId: string): boolean {
+  return get(state, [TRAYS_ROOT, trayId, 'includeNew'])
+}
+
+export function getTrayHighlight(state: State, trayId: string): boolean {
+  return get(state, [TRAYS_ROOT, trayId, 'highlight'])
+}
+
+export function getTrayErrors(state: State, trayId: string): string[] {
+  return get(state, [TRAYS_ROOT, trayId, 'errors'])
+}
+
+export function getTrayTimestamp(state: State, trayId: string): string {
+  return get(state, [TRAYS_ROOT, trayId, 'timestamp'])
+}
+
+export function getTrayRequiresRefresh(state: State, trayId: string): boolean {
+  return get(state, [TRAYS_ROOT, trayId, 'requiresRefresh'])
 }

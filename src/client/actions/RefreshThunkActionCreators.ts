@@ -1,18 +1,19 @@
 import {fetchAll, ProjectsResponse} from '../gateways/ProjectsGateway'
 import {send} from '../gateways/Gateway'
 import {projectsFetched, projectsFetchError, projectsFetching} from './TrackingActionCreators'
-import {getProjects, getTray as selectTray} from '../reducers/Selectors'
 import {wrapProjectErrors, wrapProjects} from '../domain/Project'
 import {AnyAction} from 'redux'
 import {State} from '../reducers/Reducer'
 import {abortPendingRequest} from './NevergreenThunkActionCreators'
 import {ThunkDispatch} from 'redux-thunk'
+import {getProjects} from '../reducers/ProjectsReducer'
+import {getTray} from '../reducers/TraysReducer'
 
 export function refreshTray(trayId: string) {
   return async (dispatch: ThunkDispatch<State, {}, AnyAction>, getState: () => State) => {
     dispatch(abortPendingRequest(trayId))
 
-    const tray = selectTray(getState(), trayId)
+    const tray = getTray(getState(), trayId)
     const seen = getProjects(getState())
     const request = fetchAll([tray], seen)
 

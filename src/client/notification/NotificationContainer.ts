@@ -2,8 +2,9 @@ import {connect} from 'react-redux'
 import {bindActionCreators, Dispatch} from 'redux'
 import {dismiss} from '../actions/NotificationActionCreators'
 import {Notification} from './Notification'
-import {getFullScreen, getNotification} from '../reducers/Selectors'
 import {State} from '../reducers/Reducer'
+import {getFullScreen} from '../reducers/NevergreenReducer'
+import {getNotification} from '../reducers/NotificationReducer'
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return bindActionCreators({dismiss}, dispatch)

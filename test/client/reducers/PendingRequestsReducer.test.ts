@@ -1,7 +1,11 @@
-import {PENDING_REQUESTS_ROOT, PendingRequestsState, reduce} from '../../../src/client/reducers/PendingRequestsReducer'
+import {
+  getPendingRequest,
+  PENDING_REQUESTS_ROOT,
+  PendingRequestsState,
+  reduce
+} from '../../../src/client/reducers/PendingRequestsReducer'
 import {Actions} from '../../../src/client/actions/Actions'
 import {INTERESTING_ROOT} from '../../../src/client/reducers/InterestingReducer'
-import {getPendingRequest} from '../../../src/client/reducers/Selectors'
 import {interestingProjects, interestingProjectsFetching} from '../../../src/client/actions/MonitorActionCreators'
 import {buildState, testReducer} from '../testHelpers'
 import {RecursivePartial} from '../../../src/client/common/Types'

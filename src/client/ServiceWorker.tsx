@@ -1,6 +1,6 @@
 import {error, info} from './common/Logger'
 
-export async function registerServiceWorker(notify: (message: string) => void) {
+export async function registerServiceWorker(notify: (message: string) => void): Promise<void> {
   if ('serviceWorker' in navigator) {
     try {
       const registration = await navigator.serviceWorker.register('/service-worker.js')

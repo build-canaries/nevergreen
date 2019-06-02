@@ -1,7 +1,6 @@
 import {interesting, ProjectsResponse} from '../gateways/ProjectsGateway'
 import {send} from '../gateways/Gateway'
 import {interestingProjects, interestingProjectsFetching} from './MonitorActionCreators'
-import {getInterestingProjects, getProjects, getSelectedProjects, getTrays} from '../reducers/Selectors'
 import {isBuilding, Project, ProjectError, wrapProjectErrors, wrapProjects} from '../domain/Project'
 import {projectNotifications} from './NotificationThunkActionCreators'
 import {Tray} from '../domain/Tray'
@@ -10,7 +9,10 @@ import {omit} from 'lodash'
 import {AnyAction} from 'redux'
 import {ThunkDispatch} from 'redux-thunk'
 import {abortPendingRequest} from './NevergreenThunkActionCreators'
-import {INTERESTING_ROOT} from '../reducers/InterestingReducer'
+import {getInterestingProjects, INTERESTING_ROOT} from '../reducers/InterestingReducer'
+import {getTrays} from '../reducers/TraysReducer'
+import {getSelectedProjects} from '../reducers/SelectedReducer'
+import {getProjects} from '../reducers/ProjectsReducer'
 
 function toErrorString(trays: Tray[], projectError: ProjectError) {
   const tray = trays.find((tray) => tray.trayId === projectError.trayId)

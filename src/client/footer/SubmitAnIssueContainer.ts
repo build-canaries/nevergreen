@@ -1,5 +1,5 @@
 import {connect} from 'react-redux'
-import {getTrays} from '../reducers/Selectors'
+import {getTrays} from '../reducers/TraysReducer'
 import {SubmitAnIssue} from './SubmitAnIssue'
 import {State} from '../reducers/Reducer'
 

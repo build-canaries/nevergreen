@@ -45,11 +45,13 @@ export function Nevergreen({initalise, loaded, isFullScreen, children, clickToSh
   }, [])
 
   useLayoutEffect(() => {
-    enableFullScreen(fullScreenRequested)
-    if (!fullScreenRequested) {
-      clearTimeout(fullScreenTimer.current)
+    if (loaded) {
+      enableFullScreen(fullScreenRequested)
+      if (!fullScreenRequested) {
+        clearTimeout(fullScreenTimer.current)
+      }
     }
-  }, [fullScreenRequested])
+  }, [loaded, fullScreenRequested])
 
   useTimer(checkVersion, TWENTY_FOUR_HOURS)
 

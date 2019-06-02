@@ -1,23 +1,21 @@
 import {Actions} from '../actions/Actions'
-import {ActionNotification, ActionNotificationDismiss} from '../actions/NotificationActionCreators'
+import {ActionNotification} from '../actions/NotificationActionCreators'
+import {createReducer, createSelector} from 'redux-starter-kit'
+import {State} from './Reducer'
 
 export type NotificationState = string
-
-type SupportedActions = ActionNotification | ActionNotificationDismiss
 
 export const NOTIFICATION_ROOT = 'notification'
 
 const DEFAULT_STATE: NotificationState = ''
 
-export function reduce(state = DEFAULT_STATE, action: SupportedActions): NotificationState {
-  switch (action.type) {
-    case Actions.NOTIFICATION:
-      return action.message
-
-    case Actions.NOTIFICATION_DISMISS:
-      return ''
-
-    default:
-      return state
+export const reduce = createReducer<NotificationState>(DEFAULT_STATE, {
+  [Actions.NOTIFICATION]: (draft, action: ActionNotification) => {
+    return action.message
+  },
+  [Actions.NOTIFICATION_DISMISS]: () => {
+    return ''
   }
-}
+})
+
+export const getNotification = createSelector<State, string>([NOTIFICATION_ROOT])

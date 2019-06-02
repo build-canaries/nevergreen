@@ -1,10 +1,12 @@
-import {INTERESTING_ROOT, InterestingState, reduce} from '../../../src/client/reducers/InterestingReducer'
-import {Actions} from '../../../src/client/actions/Actions'
 import {
   getInterestingErrors,
   getInterestingLoaded,
-  getInterestingProjects
-} from '../../../src/client/reducers/Selectors'
+  getInterestingProjects,
+  INTERESTING_ROOT,
+  InterestingState,
+  reduce
+} from '../../../src/client/reducers/InterestingReducer'
+import {Actions} from '../../../src/client/actions/Actions'
 import {interestingProjects} from '../../../src/client/actions/MonitorActionCreators'
 import {buildProject, buildState, testReducer} from '../testHelpers'
 import {RecursivePartial} from '../../../src/client/common/Types'

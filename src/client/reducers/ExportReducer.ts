@@ -1,14 +1,14 @@
 import {Actions} from '../actions/Actions'
-import {ActionExportErrors, ActionExporting, ActionExportSuccess} from '../actions/ExportActionCreators'
-import {ActionNavigated} from '../actions/NevergreenActionCreators'
+import {createReducer, createSelector} from 'redux-starter-kit'
+import {ActionImportErrors} from '../actions/ImportActionCreators'
+import {ActionExportSuccess} from '../actions/ExportActionCreators'
+import {State} from './Reducer'
 
 export interface ExportState {
   readonly loaded: boolean;
   readonly infos: string[];
   readonly errors: string[];
 }
-
-type SupportedActions = ActionExporting | ActionExportSuccess | ActionExportErrors | ActionNavigated
 
 export const EXPORT_ROOT = 'backupExport'
 
@@ -18,37 +18,28 @@ const DEFAULT_STATE: ExportState = {
   errors: []
 }
 
-export function reduce(state = DEFAULT_STATE, action: SupportedActions): ExportState {
-  switch (action.type) {
-    case Actions.EXPORTING:
-      return {
-        loaded: false,
-        infos: [],
-        errors: []
-      }
-
-    case Actions.EXPORT_SUCCESS:
-      return {
-        loaded: true,
-        infos: action.messages,
-        errors: []
-      }
-
-    case Actions.EXPORT_ERROR:
-      return {
-        loaded: true,
-        infos: [],
-        errors: action.errors
-      }
-
-    case Actions.NAVIGATED:
-      return {
-        ...state,
-        infos: [],
-        errors: []
-      }
-
-    default:
-      return state
+export const reduce = createReducer<ExportState>(DEFAULT_STATE, {
+  [Actions.EXPORTING]: (draft) => {
+    draft.loaded = false
+    draft.infos = []
+    draft.errors = []
+  },
+  [Actions.EXPORT_SUCCESS]: (draft, action: ActionExportSuccess) => {
+    draft.loaded = true
+    draft.infos = action.messages
+    draft.errors = []
+  },
+  [Actions.EXPORT_ERROR]: (draft, action: ActionImportErrors) => {
+    draft.loaded = true
+    draft.infos = []
+    draft.errors = action.errors
+  },
+  [Actions.NAVIGATED]: (draft) => {
+    draft.infos = []
+    draft.errors = []
   }
-}
+})
+
+export const getExportLoaded = createSelector<State, boolean>([[EXPORT_ROOT, 'loaded']])
+export const getExportErrors = createSelector<State, string[]>([[EXPORT_ROOT, 'errors']])
+export const getExportInfos = createSelector<State, string[]>([[EXPORT_ROOT, 'infos']])

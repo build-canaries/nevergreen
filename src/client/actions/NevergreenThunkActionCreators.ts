@@ -5,8 +5,8 @@ import {registerServiceWorker} from '../ServiceWorker'
 import {notify} from './NotificationActionCreators'
 import {Dispatch} from 'redux'
 import {State} from '../reducers/Reducer'
-import {getPendingRequest} from '../reducers/Selectors'
 import {Actions} from './Actions'
+import {getPendingRequest} from '../reducers/PendingRequestsReducer'
 
 export function initalise() {
   return async (dispatch: Dispatch) => {

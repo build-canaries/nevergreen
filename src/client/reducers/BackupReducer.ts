@@ -8,6 +8,8 @@ import {
 } from '../actions/BackupActionCreators'
 import {ActionInitalised} from '../actions/NevergreenActionCreators'
 import {get} from 'lodash'
+import {createReducer, createSelector} from 'redux-starter-kit'
+import {State} from './Reducer'
 
 export interface BackupLocationState {
   readonly id: string;
@@ -21,8 +23,6 @@ export type BackupState = {
 
 export const BACKUP_ROOT = 'backup'
 
-type SupportedActions = ActionInitalised | ActionBackupSetUrl | ActionBackupSetDescription | ActionBackupSetId
-
 const DEFAULT_GITHUB_STATE: BackupLocationState = {
   id: '',
   description: 'Nevergreen configuration backup',
@@ -35,24 +35,49 @@ const DEFAULT_GITLAB_STATE: BackupLocationState = {
   url: 'https://gitlab.com'
 }
 
-export function createReducer(location: BackupLocation, defaultState: BackupLocationState) {
-  return function reduceLocation(state = defaultState, action: SupportedActions) {
-    switch (action.type) {
-      case Actions.INITIALISED:
-        return {...state, ...get(action.data, [BACKUP_ROOT, location])}
-      case Actions.BACKUP_SET_DESCRIPTION:
-        return {...state, description: action.description}
-      case Actions.BACKUP_SET_ID:
-        return {...state, id: action.id}
-      case Actions.BACKUP_SET_URL:
-        return {...state, url: action.url}
-      default:
-        return state
+export function createBackupReducer(location: BackupLocation, defaultState: BackupLocationState) {
+  return createReducer<BackupLocationState>(defaultState, {
+    [Actions.INITIALISED]: (draft, action: ActionInitalised) => {
+      return {...draft, ...get(action.data, [BACKUP_ROOT, location])}
+    },
+    [Actions.BACKUP_SET_DESCRIPTION]: (draft, action: ActionBackupSetDescription) => {
+      draft.description = action.description
+    },
+    [Actions.BACKUP_SET_ID]: (draft, action: ActionBackupSetId) => {
+      draft.id = action.id
+    },
+    [Actions.BACKUP_SET_URL]: (draft, action: ActionBackupSetUrl) => {
+      draft.url = action.url
     }
-  }
+  })
 }
 
 export const reduce = combineReducers<BackupState>({
-  [BackupLocation.GITHUB]: createReducer(BackupLocation.GITHUB, DEFAULT_GITHUB_STATE),
-  [BackupLocation.GITLAB]: createReducer(BackupLocation.GITLAB, DEFAULT_GITLAB_STATE)
+  [BackupLocation.GITHUB]: createBackupReducer(BackupLocation.GITHUB, DEFAULT_GITHUB_STATE),
+  [BackupLocation.GITLAB]: createBackupReducer(BackupLocation.GITLAB, DEFAULT_GITLAB_STATE)
 })
+
+export const getGistId = createSelector<State, string>([[BACKUP_ROOT, BackupLocation.GITHUB, 'id']])
+export const getGistDescription = createSelector<State, string>([[BACKUP_ROOT, BackupLocation.GITHUB, 'description']])
+export const getGitHubUrl = createSelector<State, string>([[BACKUP_ROOT, BackupLocation.GITHUB, 'url']])
+export const getSnippetId = createSelector<State, string>([[BACKUP_ROOT, BackupLocation.GITLAB, 'id']])
+export const getSnippetDescription = createSelector<State, string>([[BACKUP_ROOT, BackupLocation.GITLAB, 'description']])
+export const getGitlabUrl = createSelector<State, string>([[BACKUP_ROOT, BackupLocation.GITLAB, 'url']])
+
+export function getBackupId(location: BackupLocation, state: State) {
+  return location === BackupLocation.GITHUB
+    ? getGistId(state)
+    : getSnippetId(state)
+}
+
+export function getBackupUrl(location: BackupLocation, state: State) {
+  return location === BackupLocation.GITHUB
+    ? getGitHubUrl(state)
+    : getGitlabUrl(state)
+}
+
+export function getBackupDescription(location: BackupLocation, state: State) {
+  return location === BackupLocation.GITHUB
+    ? getGistDescription(state)
+    : getSnippetDescription(state)
+}

@@ -3,7 +3,6 @@ import {isBlank} from '../common/Utils'
 import {importError, importing} from './ImportActionCreators'
 import {importData} from './ImportThunkActionCreators'
 import {exportError, exporting, exportSuccess} from './ExportActionCreators'
-import {getBackupDescription, getBackupId, getBackupUrl} from '../reducers/Selectors'
 import {toJson} from '../common/Json'
 import {filter} from '../reducers/Configuration'
 import {exportConfiguration, ExportResponse, importConfiguration, ImportResponse} from '../gateways/BackupGateway'
@@ -11,6 +10,7 @@ import {BackupLocation, backupSetDescription, backupSetId} from './BackupActionC
 import {AnyAction, Dispatch} from 'redux'
 import {State} from '../reducers/Reducer'
 import {ThunkDispatch} from 'redux-thunk'
+import {getBackupDescription, getBackupId, getBackupUrl} from '../reducers/BackupReducer'
 
 export function restore(from: BackupLocation, accessToken: string) {
   return async (dispatch: ThunkDispatch<State, {}, AnyAction>, getState: () => State) => {

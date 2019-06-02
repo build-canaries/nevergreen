@@ -16,7 +16,7 @@ import {
   getTrayServerType,
   getTrayUrl,
   getTrayUsername
-} from '../../reducers/Selectors'
+} from '../../reducers/TraysReducer'
 import {State} from '../../reducers/Reducer'
 import {removeTrayThunk} from '../../actions/TrackingThunkActionCreators'
 

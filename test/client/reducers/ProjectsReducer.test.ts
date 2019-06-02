@@ -1,7 +1,6 @@
-import {PROJECTS_ROOT, ProjectsState, reduce} from '../../../src/client/reducers/ProjectsReducer'
+import {getProjects, PROJECTS_ROOT, ProjectsState, reduce} from '../../../src/client/reducers/ProjectsReducer'
 import {Actions} from '../../../src/client/actions/Actions'
 import {initalised} from '../../../src/client/actions/NevergreenActionCreators'
-import {getProjects} from '../../../src/client/reducers/Selectors'
 import {importSuccess} from '../../../src/client/actions/ImportActionCreators'
 import {projectsFetched, removeTray, trayAdded} from '../../../src/client/actions/TrackingActionCreators'
 import {buildProject, buildState, testReducer} from '../testHelpers'

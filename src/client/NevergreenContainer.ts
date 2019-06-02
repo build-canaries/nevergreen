@@ -4,8 +4,9 @@ import {enableFullScreen} from './actions/NevergreenActionCreators'
 import {initalise} from './actions/NevergreenThunkActionCreators'
 import {checkForNewVersion} from './actions/NotificationThunkActionCreators'
 import {Nevergreen} from './Nevergreen'
-import {getClickToShowMenu, getFullScreen, getFullScreenRequested, getLoaded} from './reducers/Selectors'
 import {State} from './reducers/Reducer'
+import {getFullScreen, getFullScreenRequested, getLoaded} from './reducers/NevergreenReducer'
+import {getClickToShowMenu} from './reducers/SettingsReducer'
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return bindActionCreators({

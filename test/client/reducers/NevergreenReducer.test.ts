@@ -1,6 +1,12 @@
-import {NEVERGREEN_ROOT, NevergreenState, reduce} from '../../../src/client/reducers/NevergreenReducer'
+import {
+  getFullScreen,
+  getFullScreenRequested,
+  getLoaded,
+  NEVERGREEN_ROOT,
+  NevergreenState,
+  reduce
+} from '../../../src/client/reducers/NevergreenReducer'
 import {Actions} from '../../../src/client/actions/Actions'
-import {getFullScreen, getFullScreenRequested, getLoaded} from '../../../src/client/reducers/Selectors'
 import {initalised, initalising} from '../../../src/client/actions/NevergreenActionCreators'
 import {buildState, testReducer} from '../testHelpers'
 import {RecursivePartial} from '../../../src/client/common/Types'
@@ -38,13 +44,6 @@ describe('NevergreenReducer', () => {
       const action = initalised({})
       const newState = reducer(existingState, action)
       expect(getLoaded(newState)).toBeTruthy()
-    })
-
-    test('should merge the nevergreen data', () => {
-      const existingState = state({fullScreen: false})
-      const action = initalised({[NEVERGREEN_ROOT]: {fullScreen: true}})
-      const newState = reducer(existingState, action)
-      expect(getFullScreen(newState)).toBeTruthy()
     })
   })
 

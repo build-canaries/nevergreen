@@ -1,6 +1,5 @@
-import {reduce, SUCCESS_ROOT, SuccessState} from '../../../src/client/reducers/SuccessReducer'
+import {getSuccessMessages, reduce, SUCCESS_ROOT, SuccessState} from '../../../src/client/reducers/SuccessReducer'
 import {Actions} from '../../../src/client/actions/Actions'
-import {getSuccessMessages} from '../../../src/client/reducers/Selectors'
 import {initalised} from '../../../src/client/actions/NevergreenActionCreators'
 import {importSuccess} from '../../../src/client/actions/ImportActionCreators'
 import {addMessage, removeMessage} from '../../../src/client/actions/SuccessActionCreators'

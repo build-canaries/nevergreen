@@ -18,9 +18,9 @@ import BackupContainer from './backup/BackupContainer'
 import {StyleGuide} from './styleGuide/StyleGuide'
 import {debounce} from 'lodash'
 import {UnhandledError} from './UnhandledError'
-import {getLoaded} from './reducers/Selectors'
 import Modal from 'react-modal'
 import {configureStore} from 'redux-starter-kit'
+import {getLoaded} from './reducers/NevergreenReducer'
 
 const ONE_SECOND = 1000
 

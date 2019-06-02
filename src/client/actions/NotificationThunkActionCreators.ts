@@ -1,12 +1,13 @@
 import {get, send} from '../gateways/Gateway'
 import semver from 'semver'
 import {notify} from './NotificationActionCreators'
-import {getInterestingProjects, getShowSystemNotifications} from '../reducers/Selectors'
 import {sendSystemNotification} from '../common/SystemNotifications'
 import * as log from '../common/Logger'
 import {Dispatch} from 'redux'
 import {isSick, Project} from '../domain/Project'
 import {State} from '../reducers/Reducer'
+import {getShowSystemNotifications} from '../reducers/SettingsReducer'
+import {getInterestingProjects} from '../reducers/InterestingReducer'
 
 const NEVERGREEN_IO_REGEX = /nevergreen\.io/i
 

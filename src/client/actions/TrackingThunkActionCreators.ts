@@ -3,12 +3,12 @@ import {highlightTray, removeTray, trayAdded} from './TrackingActionCreators'
 import {encryptPassword} from './PasswordThunkActionCreators'
 import {refreshTray} from './RefreshThunkActionCreators'
 import {createId, Tray} from '../domain/Tray'
-import {getTrayRequiresRefresh, getTrays} from '../reducers/Selectors'
 import {ensureHasScheme, removeScheme} from '../domain/Url'
 import {State} from '../reducers/Reducer'
 import {AnyAction} from 'redux'
 import {ThunkDispatch} from 'redux-thunk'
 import {abortPendingRequest} from './NevergreenThunkActionCreators'
+import {getTrayRequiresRefresh, getTrays} from '../reducers/TraysReducer'
 
 function urlMatches(tray: Tray, url: string) {
   return removeScheme(url) === removeScheme(tray.url)
