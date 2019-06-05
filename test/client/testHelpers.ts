@@ -2,7 +2,6 @@ import {forOwn, merge, noop} from 'lodash'
 import {CommonWrapper, EnzymeSelector, ShallowWrapper} from 'enzyme'
 import {State} from '../../src/client/reducers/Reducer'
 import {SETTINGS_ROOT} from '../../src/client/reducers/SettingsReducer'
-import {EXPORT_ROOT} from '../../src/client/reducers/ExportReducer'
 import {IMPORT_ROOT} from '../../src/client/reducers/ImportReducer'
 import {BACKUP_ROOT} from '../../src/client/reducers/BackupReducer'
 import {INTERESTING_ROOT} from '../../src/client/reducers/InterestingReducer'
@@ -30,7 +29,7 @@ export function change(input: CommonWrapper, value: string) {
 
 export function changeAndBlur(input: CommonWrapper, value: string) {
   change(input, value)
-  input.simulate('blur')
+  input.simulate('blur', {target: {value}})
 }
 
 export function pressKeyOn(element: CommonWrapper, key: string) {
@@ -68,11 +67,6 @@ export function buildState(subState?: RecursivePartial<State>): State {
       showTrayName: false,
       systemNotificationPermissionDenied: false,
       systemNotificationRequestingPermission: false
-    },
-    [EXPORT_ROOT]: {
-      errors: [],
-      infos: [],
-      loaded: false
     },
     [IMPORT_ROOT]: {
       errors: [],
@@ -180,7 +174,6 @@ export async function testThunk<R>(thunkion: ThunkAction<R, State, undefined, An
 export function testReducer(reducer: Partial<Reducer<State>>) {
   return combineReducers<State>(merge({
     [SETTINGS_ROOT]: (state: any = null) => state,
-    [EXPORT_ROOT]: (state: any = null) => state,
     [IMPORT_ROOT]: (state: any = null) => state,
     [BACKUP_ROOT]: (state: any = null) => state,
     [INTERESTING_ROOT]: (state: any = null) => state,

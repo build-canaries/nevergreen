@@ -7,26 +7,50 @@ import {iCloudUpload} from '../../../common/fonts/Icons'
 import {Password} from '../../../common/forms/Password'
 import styles from './externally.scss'
 import {UrlInput} from '../../UrlInput'
+import {Messages} from '../../../common/Messages'
+import {BackupLocation} from '../../../actions/BackupActionCreators'
+import {exportConfiguration, ExportResponse} from '../../../gateways/BackupGateway'
+import {isBlank} from '../../../common/Utils'
+import {send} from '../../../gateways/Gateway'
 
 interface ExternallyProps {
-  location: string;
-  upload: (token: string) => void;
-  backupSetId: (id: string) => void;
-  backupSetDescription: (description: string) => void;
-  backupSetUrl: (url: string) => void;
+  location: BackupLocation;
+  backupSetId: (location: BackupLocation, id: string) => void;
+  backupSetDescription: (location: BackupLocation, description: string) => void;
+  backupSetUrl: (location: BackupLocation, url: string) => void;
   id: string;
   description: string;
   url: string;
   help: ReactElement;
-  loaded?: boolean;
+  configuration: string;
 }
 
-export function Externally({location, description, loaded, id, url, backupSetId, backupSetDescription, upload, backupSetUrl, help}: ExternallyProps) {
+export function Externally({location, description, id, url, backupSetId, backupSetDescription, backupSetUrl, configuration, help}: ExternallyProps) {
   const [accessToken, setAccessToken] = useState('')
   const [newDescription, setNewDescription] = useState(description)
+  const [loaded, setLoaded] = useState(true)
+  const [errors, setErrors] = useState<string[]>([])
+  const [infos, setInfos] = useState<string[]>([])
 
   const disabled = !loaded
   const accessTokenChanged = ({target}: ChangeEvent<HTMLInputElement>) => setAccessToken(target.value)
+
+  const upload = async () => {
+    if (isBlank(accessToken)) {
+      setErrors(['You must provide an access token to upload'])
+    } else {
+      setLoaded(false)
+      setErrors([])
+      try {
+        const res = await send<ExportResponse>(exportConfiguration(location, id, description, configuration, accessToken, url))
+        setInfos(['Successfully exported configuration'])
+        backupSetId(location, res.id)
+      } catch (error) {
+        setErrors([`Unable to upload to ${location} because of an error: ${error.message}`])
+      }
+      setLoaded(true)
+    }
+  }
 
   return (
     <>
@@ -35,33 +59,37 @@ export function Externally({location, description, loaded, id, url, backupSetId,
                 help={help}>
         <UrlInput key={url}
                   url={url}
-                  setUrl={backupSetUrl}
+                  setUrl={(value) => backupSetUrl(location, value)}
                   disabled={disabled}/>
       </WithHelp>
       <IdInput key={id}
                id={id}
-               setId={backupSetId}
+               setId={(value) => backupSetId(location, value)}
                disabled={disabled}/>
       <Password className={styles.accessToken}
                 onChange={accessTokenChanged}
                 onBlur={accessTokenChanged}
                 value={accessToken}
-                disabled={disabled}>
+                disabled={disabled}
+                data-locator='access-token'>
         <div className={styles.label}>access token</div>
       </Password>
       <Input value={newDescription}
              onChange={({target}) => setNewDescription(target.value)}
-             onBlur={() => backupSetDescription(newDescription)}
+             onBlur={() => backupSetDescription(location, newDescription)}
              disabled={disabled}
              maxLength={256}>
         <div className={styles.label}>description</div>
       </Input>
       <PrimaryButton className={styles.export}
-                     onClick={() => upload(accessToken)}
+                     onClick={upload}
                      disabled={disabled}
-                     icon={iCloudUpload}>
+                     icon={iCloudUpload}
+                     data-locator='export'>
         export
       </PrimaryButton>
+      <Messages type='error' messages={errors}/>
+      <Messages type='info' messages={infos}/>
     </>
   )
 }

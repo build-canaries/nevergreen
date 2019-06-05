@@ -1,11 +1,10 @@
 import {buildState, testThunk} from '../testHelpers'
 import {BACKUP_ROOT, BackupState} from '../../../src/client/reducers/BackupReducer'
-import {restore, upload} from '../../../src/client/actions/BackupThunkActionCreators'
+import {restore} from '../../../src/client/actions/BackupThunkActionCreators'
 import * as backupActionCreators from '../../../src/client/actions/BackupActionCreators'
 import {BackupLocation} from '../../../src/client/actions/BackupActionCreators'
 import * as importActionCreators from '../../../src/client/actions/ImportActionCreators'
 import * as importThunkActionCreators from '../../../src/client/actions/ImportThunkActionCreators'
-import * as exportActionCreators from '../../../src/client/actions/ExportActionCreators'
 import * as backupGateway from '../../../src/client/gateways/BackupGateway'
 import * as gateway from '../../../src/client/gateways/Gateway'
 import {RecursivePartial} from '../../../src/client/common/Types'
@@ -76,63 +75,4 @@ describe('BackupThunkActionCreators', () => {
     })
   })
 
-  describe('upload', () => {
-
-    test('should dispatch exporting action', async () => {
-      jest.spyOn(gateway, 'send').mockResolvedValue({id: 'some-id'})
-      jest.spyOn(exportActionCreators, 'exporting')
-      const state = backupState()
-
-      await testThunk(upload(BackupLocation.GITHUB, 'irrelevant'), state)
-
-      expect(exportActionCreators.exporting).toBeCalled()
-    })
-
-    test('should dispatch export error action for API errors', async () => {
-      jest.spyOn(gateway, 'send').mockRejectedValue(new Error('some-error'))
-      jest.spyOn(exportActionCreators, 'exportError')
-      const state = backupState()
-
-      await testThunk(upload(BackupLocation.GITHUB, 'not-blank'), state)
-
-      expect(exportActionCreators.exportError).toBeCalledWith(['Unable to upload to github because of an error: some-error'])
-    })
-
-    test('should dispatch export error action if access token is blank', async () => {
-      jest.spyOn(exportActionCreators, 'exportError')
-      const state = backupState()
-      await testThunk(upload(BackupLocation.GITHUB, ''), state)
-      expect(exportActionCreators.exportError).toBeCalledWith(['You must provide an access token to upload'])
-    })
-
-    test('should call export configuration', async () => {
-      jest.spyOn(gateway, 'send').mockResolvedValue({id: 'irrelevant'})
-      jest.spyOn(backupGateway, 'exportConfiguration')
-      const state = backupState({github: {id: '', description: 'some-description', url: 'some-url'}})
-
-      await testThunk(upload(BackupLocation.GITHUB, 'some-token'), state)
-
-      expect(backupGateway.exportConfiguration).toBeCalledWith('github', '', 'some-description', expect.any(String), 'some-token', 'some-url')
-    })
-
-    test('should dispatch export success on success', async () => {
-      jest.spyOn(gateway, 'send').mockResolvedValue({id: 'some-id'})
-      jest.spyOn(exportActionCreators, 'exportSuccess')
-      const state = backupState({github: {id: '', description: 'irrelevant', url: ''}})
-
-      await testThunk(upload(BackupLocation.GITHUB, 'not-blank'), state)
-
-      expect(exportActionCreators.exportSuccess).toBeCalledWith(['Successfully exported configuration'])
-    })
-
-    test('should dispatch set ID with the response ID on successful create/update', async () => {
-      jest.spyOn(gateway, 'send').mockResolvedValue({id: 'some-id'})
-      jest.spyOn(backupActionCreators, 'backupSetId')
-      const state = backupState({github: {id: 'irrelevant', description: 'irrelevant', url: ''}})
-
-      await testThunk(upload(BackupLocation.GITHUB, 'not-blank'), state)
-
-      expect(backupActionCreators.backupSetId).toBeCalledWith('github', 'some-id')
-    })
-  })
 })

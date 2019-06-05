@@ -1,29 +1,25 @@
 import {connect} from 'react-redux'
 import {Externally} from './Externally'
-import {upload} from '../../../actions/BackupThunkActionCreators'
 import {BackupLocation, backupSetDescription, backupSetId, backupSetUrl} from '../../../actions/BackupActionCreators'
 import {State} from '../../../reducers/Reducer'
 import {ThunkDispatch} from 'redux-thunk'
-import {AnyAction} from 'redux'
-import {getExportLoaded} from '../../../reducers/ExportReducer'
+import {AnyAction, bindActionCreators} from 'redux'
 import {getBackupDescription, getBackupId, getBackupUrl} from '../../../reducers/BackupReducer'
 
 interface ExternallyContainerProps {
   location: BackupLocation;
 }
 
-function mapDispatchToProps(dispatch: ThunkDispatch<State, {}, AnyAction>, {location}: ExternallyContainerProps) {
-  return {
-    upload: (accessToken: string) => dispatch(upload(location, accessToken)),
-    backupSetId: (id: string) => dispatch(backupSetId(location, id)),
-    backupSetDescription: (description: string) => dispatch(backupSetDescription(location, description)),
-    backupSetUrl: (url: string) => dispatch(backupSetUrl(location, url))
-  }
+function mapDispatchToProps(dispatch: ThunkDispatch<State, {}, AnyAction>) {
+  return bindActionCreators({
+    backupSetId,
+    backupSetDescription,
+    backupSetUrl
+  }, dispatch)
 }
 
 function mapStateToProps(state: State, {location}: ExternallyContainerProps) {
   return {
-    loaded: getExportLoaded(state),
     id: getBackupId(location, state),
     description: getBackupDescription(location, state),
     url: getBackupUrl(location, state)

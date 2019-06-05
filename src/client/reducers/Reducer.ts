@@ -5,7 +5,6 @@ import {reduce as trays, TRAYS_ROOT, TraysState} from './TraysReducer'
 import {PROJECTS_ROOT, ProjectsState, reduce as projects} from './ProjectsReducer'
 import {reduce as success, SUCCESS_ROOT, SuccessState} from './SuccessReducer'
 import {INTERESTING_ROOT, InterestingState, reduce as interesting} from './InterestingReducer'
-import {EXPORT_ROOT, ExportState, reduce as backupExport} from './ExportReducer'
 import {IMPORT_ROOT, ImportState, reduce as backupImport} from './ImportReducer'
 import {reduce as selected, SELECTED_ROOT, SelectedState} from './SelectedReducer'
 import {NOTIFICATION_ROOT, NotificationState, reduce as notification} from './NotificationReducer'
@@ -14,7 +13,6 @@ import {BACKUP_ROOT, BackupState, reduce as backup} from './BackupReducer'
 
 export interface State {
   [SETTINGS_ROOT]: SettingsState;
-  [EXPORT_ROOT]: ExportState;
   [IMPORT_ROOT]: ImportState;
   [BACKUP_ROOT]: BackupState;
   [INTERESTING_ROOT]: InterestingState;
@@ -29,7 +27,6 @@ export interface State {
 
 export const reducer = combineReducers<State>({
   [SETTINGS_ROOT]: settings,
-  [EXPORT_ROOT]: backupExport,
   [IMPORT_ROOT]: backupImport,
   [BACKUP_ROOT]: backup,
   [INTERESTING_ROOT]: interesting,

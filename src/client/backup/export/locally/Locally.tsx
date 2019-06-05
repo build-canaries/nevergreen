@@ -1,19 +1,26 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styles from './locally.scss'
 import {PrimaryButton} from '../../../common/forms/Button'
 import {iPaste} from '../../../common/fonts/Icons'
 import {useClipboard} from './ClipboardHook'
+import {Messages} from '../../../common/Messages'
 
 interface LocallyProps {
   configuration: string;
-  exportSuccess: (messages: string[]) => void;
-  exportError: (messages: string[]) => void;
 }
 
-export function Locally({configuration, exportSuccess, exportError}: LocallyProps) {
+export function Locally({configuration}: LocallyProps) {
+  const [errors, setErrors] = useState<string[]>([])
+  const [infos, setInfos] = useState<string[]>([])
 
-  const copySuccess = () => exportSuccess(['Successfully copied to clipboard'])
-  const copyError = () => exportError(['Unfortunately your browser doesn\'t support automatically copying to clipboard, please manually copy'])
+  const copySuccess = () => {
+    setErrors([])
+    setInfos(['Successfully copied to clipboard'])
+  }
+  const copyError = () => {
+    setInfos([])
+    setErrors(['Unfortunately your browser doesn\'t support automatically copying to clipboard, please manually copy'])
+  }
 
   useClipboard('#copy-to-clipboard', copySuccess, copyError)
 
@@ -34,6 +41,8 @@ export function Locally({configuration, exportSuccess, exportError}: LocallyProp
                      icon={iPaste}>
         copy to clipboard
       </PrimaryButton>
+      <Messages type='error' messages={errors}/>
+      <Messages type='info' messages={infos}/>
     </>
   )
 }
