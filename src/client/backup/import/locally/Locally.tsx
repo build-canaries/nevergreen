@@ -2,15 +2,45 @@ import React, {useState} from 'react'
 import styles from './locally.scss'
 import {PrimaryButton} from '../../../common/forms/Button'
 import {iFloppyDisk} from '../../../common/fonts/Icons'
+import {Configuration, toConfiguration} from '../../../reducers/Configuration'
+import {isEmpty} from 'lodash'
+import {Messages, MessagesType} from '../../../common/Messages'
+import {isBlank} from '../../../common/Utils'
 
 interface LocallyProps {
-  importData: (data: string) => void;
+  setConfiguration: (configuration: Configuration) => void;
 }
 
 const PLACEHOLDER = 'paste exported configuration here and press import'
 
-export function Locally({importData}: LocallyProps) {
+export function Locally({setConfiguration}: LocallyProps) {
+  const [messages, setMessages] = useState<string[]>([])
+  const [messageType, setMessageType] = useState(MessagesType.INFO)
   const [data, setData] = useState('')
+
+  const setErrors = (errors: string[]) => {
+    setMessageType(MessagesType.ERROR)
+    setMessages(errors)
+  }
+
+  const setInfos = (infos: string[]) => {
+    setMessageType(MessagesType.INFO)
+    setMessages(infos)
+  }
+
+  const doImport = () => {
+    if (isBlank(data)) {
+      setErrors(['Please enter the configuration to import'])
+    } else {
+      const [dataErrors, configuration] = toConfiguration(data)
+      if (isEmpty(dataErrors)) {
+        setInfos(['Successfully imported configuration'])
+        setConfiguration(configuration as Configuration)
+      } else {
+        setErrors(dataErrors)
+      }
+    }
+  }
 
   return (
     <>
@@ -24,11 +54,14 @@ export function Locally({importData}: LocallyProps) {
                   data-locator='import-data'/>
       </label>
       <PrimaryButton className={styles.import}
-                     onClick={() => importData(data)}
+                     onClick={doImport}
                      data-locator='import'
                      icon={iFloppyDisk}>
         import
       </PrimaryButton>
+      <Messages type={messageType}
+                messages={messages}
+                data-locator='messages'/>
     </>
   )
 }

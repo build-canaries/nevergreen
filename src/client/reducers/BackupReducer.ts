@@ -5,7 +5,7 @@ import {
   ActionBackupSetUrl,
   BackupLocation
 } from '../actions/BackupActionCreators'
-import {ActionInitalised} from '../actions/NevergreenActionCreators'
+import {ActionSetConfiguration} from '../actions/NevergreenActionCreators'
 import {get} from 'lodash'
 import {createReducer} from 'redux-starter-kit'
 import {State} from './Reducer'
@@ -36,8 +36,8 @@ const DEFAULT_STATE: BackupState = {
 }
 
 export const reduce = createReducer<BackupState>(DEFAULT_STATE, {
-  [Actions.INITIALISED]: (draft, action: ActionInitalised) => {
-    return {...draft, ...get(action.data, [BACKUP_ROOT]) as BackupState}
+  [Actions.SET_CONFIGURATION]: (draft, action: ActionSetConfiguration) => {
+    return {...draft, ...get(action.configuration, [BACKUP_ROOT]) as BackupState}
   },
   [Actions.BACKUP_SET_DESCRIPTION]: (draft, action: ActionBackupSetDescription) => {
     draft[action.location].description = action.description

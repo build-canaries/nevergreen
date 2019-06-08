@@ -1,10 +1,9 @@
 import {Actions} from '../actions/Actions'
 import {Project} from '../domain/Project'
 import {get, merge} from 'lodash'
-import {ActionImportSuccess} from '../actions/ImportActionCreators'
 import {ActionProjectsFetched, ActionRemoveTray, ActionTrayAdded} from '../actions/TrackingActionCreators'
 import {createReducer} from 'redux-starter-kit'
-import {ActionInitalised} from '../actions/NevergreenActionCreators'
+import {ActionSetConfiguration} from '../actions/NevergreenActionCreators'
 import {State} from './Reducer'
 
 interface ProjectByIdState {
@@ -25,14 +24,9 @@ export const PROJECTS_ROOT = 'projects'
 const DEFAULT_STATE: ProjectsState = {}
 
 export const reduce = createReducer<ProjectsState>(DEFAULT_STATE, {
-  [Actions.INITIALISED]: (draft, action: ActionInitalised) => {
-    return action.data[PROJECTS_ROOT]
-      ? action.data[PROJECTS_ROOT] as ProjectsState
-      : draft
-  },
-  [Actions.IMPORT_SUCCESS]: (draft, action: ActionImportSuccess) => {
-    return action.data[PROJECTS_ROOT]
-      ? action.data[PROJECTS_ROOT] as ProjectsState
+  [Actions.SET_CONFIGURATION]: (draft, action: ActionSetConfiguration) => {
+    return action.configuration[PROJECTS_ROOT]
+      ? action.configuration[PROJECTS_ROOT] as ProjectsState
       : draft
   },
   [Actions.TRAY_ADDED]: (draft, action: ActionTrayAdded) => {

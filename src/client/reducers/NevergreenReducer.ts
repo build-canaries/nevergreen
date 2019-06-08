@@ -21,7 +21,7 @@ export const reduce = createReducer<NevergreenState>(DEFAULT_STATE, {
   [Actions.INITIALISING]: () => {
     return DEFAULT_STATE
   },
-  [Actions.INITIALISED]: (draft) => {
+  [Actions.SET_CONFIGURATION]: (draft) => {
     draft.loaded = true
   },
   [Actions.FULL_SCREEN]: (draft, action: ActionFullScreen) => {

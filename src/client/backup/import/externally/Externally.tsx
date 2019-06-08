@@ -6,24 +6,80 @@ import {PrimaryButton} from '../../../common/forms/Button'
 import {iCloudDownload} from '../../../common/fonts/Icons'
 import {UrlInput} from '../../UrlInput'
 import {Password} from '../../../common/forms/Password'
+import {Messages, MessagesType} from '../../../common/Messages'
+import {isBlank} from '../../../common/Utils'
+import {send} from '../../../gateways/Gateway'
+import {importConfiguration, ImportResponse} from '../../../gateways/BackupGateway'
+import {Configuration, toConfiguration} from '../../../reducers/Configuration'
+import {isEmpty} from 'lodash'
 
 interface ExternallyProps {
   location: string;
-  restore: (token: string) => void;
   backupSetId: (id: string) => void;
   backupSetUrl: (url: string) => void;
   id: string;
   url: string;
   help: ReactElement;
-  loaded?: boolean;
   accessTokenRequired?: boolean;
+  setConfiguration: (configuration: Configuration) => void;
 }
 
-export function Externally({location, id, url, backupSetId, loaded, restore, backupSetUrl, help, accessTokenRequired}: ExternallyProps) {
+function validate(id: string, url: string, accessToken: string, accessTokenRequired?: boolean): string[] {
+  const errors = []
+  if (isBlank(id)) {
+    errors.push('You must provide an ID to import')
+  }
+  if (isBlank(url)) {
+    errors.push('You must provide a URL to import from')
+  }
+  if (accessTokenRequired && isBlank(accessToken)) {
+    errors.push('You must provide an access token to import')
+  }
+  return errors
+}
+
+export function Externally({location, id, url, backupSetId, backupSetUrl, help, accessTokenRequired, setConfiguration}: ExternallyProps) {
   const [accessToken, setAccessToken] = useState('')
+  const [loaded, setLoaded] = useState(true)
+  const [messages, setMessages] = useState<string[]>([])
+  const [messageType, setMessageType] = useState(MessagesType.INFO)
 
   const disabled = !loaded
   const accessTokenChanged = ({target}: ChangeEvent<HTMLInputElement>) => setAccessToken(target.value)
+
+  const setErrors = (errors: string[]) => {
+    setMessageType(MessagesType.ERROR)
+    setMessages(errors)
+  }
+
+  const setInfos = (infos: string[]) => {
+    setMessageType(MessagesType.INFO)
+    setMessages(infos)
+  }
+
+  const restore = async () => {
+    const validationErrors = validate(id, url, accessToken, accessTokenRequired)
+
+    if (isEmpty(validationErrors)) {
+      setLoaded(false)
+      setMessages([])
+      try {
+        const res = await send<ImportResponse>(importConfiguration(location, id, accessToken, url))
+        const [dataErrors, configuration] = toConfiguration(res.configuration)
+        if (isEmpty(dataErrors)) {
+          setInfos(['Successfully imported configuration'])
+          setConfiguration(configuration as Configuration)
+        } else {
+          setErrors(dataErrors)
+        }
+      } catch (error) {
+        setErrors([error.message])
+      }
+      setLoaded(true)
+    } else {
+      setErrors(validationErrors)
+    }
+  }
 
   return (
     <>
@@ -49,11 +105,15 @@ export function Externally({location, id, url, backupSetId, loaded, restore, bac
         </Password>
       )}
       <PrimaryButton className={styles.import}
-                     onClick={() => restore(accessToken)}
+                     onClick={restore}
                      disabled={disabled}
-                     icon={iCloudDownload}>
+                     icon={iCloudDownload}
+                     data-locator='import-externally'>
         import
       </PrimaryButton>
+      <Messages type={messageType}
+                messages={messages}
+                data-locator='messages'/>
     </>
   )
 }

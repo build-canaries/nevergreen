@@ -16,8 +16,7 @@ import {
   SettingsState
 } from '../../../src/client/reducers/SettingsReducer'
 import {Actions} from '../../../src/client/actions/Actions'
-import {initalised} from '../../../src/client/actions/NevergreenActionCreators'
-import {importSuccess} from '../../../src/client/actions/ImportActionCreators'
+import {setConfiguration} from '../../../src/client/actions/NevergreenActionCreators'
 import {
   requestingSystemNotificationPermission,
   setBrokenBuildSoundFx,
@@ -50,98 +49,46 @@ describe('SettingsReducer', () => {
     expect(newState).toEqual(existingState)
   })
 
-  describe(Actions.INITIALISED, () => {
+  describe(Actions.SET_CONFIGURATION, () => {
 
     test('should merge show tray name', () => {
       const existingState = state({showTrayName: false})
-      const action = initalised({[SETTINGS_ROOT]: {showTrayName: true}})
+      const action = setConfiguration({[SETTINGS_ROOT]: {showTrayName: true}})
       const newState = reducer(existingState, action)
       expect(getShowTrayName(newState)).toBeTruthy()
     })
 
     test('should merge build timers enabled', () => {
       const existingState = state({showBuildTime: false})
-      const action = initalised({[SETTINGS_ROOT]: {showBuildTime: true}})
+      const action = setConfiguration({[SETTINGS_ROOT]: {showBuildTime: true}})
       const newState = reducer(existingState, action)
       expect(getShowBuildTime(newState)).toBeTruthy()
     })
 
     test('should merge broken build timers enabled', () => {
       const existingState = state({showBrokenBuildTime: false})
-      const action = initalised({[SETTINGS_ROOT]: {showBrokenBuildTime: true}})
+      const action = setConfiguration({[SETTINGS_ROOT]: {showBrokenBuildTime: true}})
       const newState = reducer(existingState, action)
       expect(getShowBrokenBuildTime(newState)).toBeTruthy()
     })
 
     test('should merge broken build sounds enabled', () => {
       const existingState = state({playBrokenBuildSoundFx: false})
-      const action = initalised({[SETTINGS_ROOT]: {playBrokenBuildSoundFx: true}})
+      const action = setConfiguration({[SETTINGS_ROOT]: {playBrokenBuildSoundFx: true}})
       const newState = reducer(existingState, action)
       expect(getPlayBrokenBuildSoundFx(newState)).toBeTruthy()
     })
 
     test('should merge broken build sound fx', () => {
       const existingState = state({brokenBuildSoundFx: 'some-url'})
-      const action = initalised({[SETTINGS_ROOT]: {brokenBuildSoundFx: 'another-url'}})
-      const newState = reducer(existingState, action)
-      expect(getBrokenBuildSoundFx(newState)).toEqual('another-url')
-    })
-
-    test('should merge refresh time', () => {
-      const existingState = state({refreshTime: 5})
-      const action = initalised({[SETTINGS_ROOT]: {refreshTime: 10}})
-      const newState = reducer(existingState, action)
-      expect(getRefreshTime(newState)).toEqual(10)
-    })
-
-    test('should merge show build label', () => {
-      const existingState = state({showBuildLabel: false})
-      const action = initalised({[SETTINGS_ROOT]: {showBuildLabel: true}})
-      const newState = reducer(existingState, action)
-      expect(getShowBuildLabel(newState)).toBeTruthy()
-    })
-  })
-
-  describe(Actions.IMPORT_SUCCESS, () => {
-
-    test('should merge show tray name', () => {
-      const existingState = state({showTrayName: false})
-      const action = importSuccess({[SETTINGS_ROOT]: {showTrayName: true}})
-      const newState = reducer(existingState, action)
-      expect(getShowTrayName(newState)).toBeTruthy()
-    })
-
-    test('should merge build timers enabled', () => {
-      const existingState = state({showBuildTime: false})
-      const action = importSuccess({[SETTINGS_ROOT]: {showBuildTime: true}})
-      const newState = reducer(existingState, action)
-      expect(getShowBuildTime(newState)).toBeTruthy()
-    })
-
-    test('should merge broken build timers enabled', () => {
-      const existingState = state({showBrokenBuildTime: false})
-      const action = importSuccess({[SETTINGS_ROOT]: {showBrokenBuildTime: true}})
-      const newState = reducer(existingState, action)
-      expect(getShowBrokenBuildTime(newState)).toBeTruthy()
-    })
-
-    test('should merge broken build sounds enabled', () => {
-      const existingState = state({playBrokenBuildSoundFx: false})
-      const action = importSuccess({[SETTINGS_ROOT]: {playBrokenBuildSoundFx: true}})
-      const newState = reducer(existingState, action)
-      expect(getPlayBrokenBuildSoundFx(newState)).toBeTruthy()
-    })
-
-    test('should merge broken build sound fx', () => {
-      const existingState = state({brokenBuildSoundFx: 'some-url'})
-      const action = importSuccess({[SETTINGS_ROOT]: {brokenBuildSoundFx: 'another-url'}})
+      const action = setConfiguration({[SETTINGS_ROOT]: {brokenBuildSoundFx: 'another-url'}})
       const newState = reducer(existingState, action)
       expect(getBrokenBuildSoundFx(newState)).toEqual('another-url')
     })
 
     test('should merge show build label', () => {
       const existingState = state({showBuildLabel: false})
-      const action = importSuccess({[SETTINGS_ROOT]: {showBuildLabel: true}})
+      const action = setConfiguration({[SETTINGS_ROOT]: {showBuildLabel: true}})
       const newState = reducer(existingState, action)
       expect(getShowBuildLabel(newState)).toBeTruthy()
     })

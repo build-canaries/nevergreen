@@ -14,10 +14,8 @@ import {
   MIN_REFRESH_TIME
 } from '../actions/SettingsActionCreators'
 import defaultSoundFx from '../settings/pacman_death.mp3'
-import {ActionInitalised} from '../actions/NevergreenActionCreators'
-import {ActionImportSuccess} from '../actions/ImportActionCreators'
+import {ActionSetConfiguration} from '../actions/NevergreenActionCreators'
 import {createReducer, createSelector} from 'redux-starter-kit'
-import {Draft} from 'immer'
 import {State} from './Reducer'
 
 export interface SettingsState {
@@ -52,13 +50,10 @@ const DEFAULT_STATE: SettingsState = {
   clickToShowMenu: false
 }
 
-function setConfiguration(draft: Draft<SettingsState>, action: ActionInitalised | ActionImportSuccess) {
-  return {...draft, ...action.data[SETTINGS_ROOT]}
-}
-
 export const reduce = createReducer<SettingsState>(DEFAULT_STATE, {
-  [Actions.INITIALISED]: setConfiguration,
-  [Actions.IMPORT_SUCCESS]: setConfiguration,
+  [Actions.SET_CONFIGURATION]: (draft, action: ActionSetConfiguration) => {
+    return {...draft, ...action.configuration[SETTINGS_ROOT]}
+  },
   [Actions.SHOW_BUILD_TIME]: (draft, action: ActionShowBuildTime) => {
     draft.showBuildTime = action.value
   },

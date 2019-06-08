@@ -3,8 +3,14 @@ import cn from 'classnames'
 import {isEmpty} from 'lodash'
 import styles from './messages.scss'
 
+export enum MessagesType {
+  INFO = 'info',
+  WARNING = 'warning',
+  ERROR = 'error'
+}
+
 export interface MessagesProps {
-  type: 'info' | 'warning' | 'error';
+  type: MessagesType;
   messages: string[];
   className?: string;
 }
@@ -14,7 +20,7 @@ export function Messages({messages, type, className}: MessagesProps) {
     return null
   }
 
-  const isError = type === 'error'
+  const isError = type === MessagesType.ERROR
   const classes = cn(styles[type], className)
 
   return (

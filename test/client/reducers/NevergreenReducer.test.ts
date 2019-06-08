@@ -7,7 +7,7 @@ import {
   reduce
 } from '../../../src/client/reducers/NevergreenReducer'
 import {Actions} from '../../../src/client/actions/Actions'
-import {initalised, initalising} from '../../../src/client/actions/NevergreenActionCreators'
+import {initalising, setConfiguration} from '../../../src/client/actions/NevergreenActionCreators'
 import {buildState, testReducer} from '../testHelpers'
 import {RecursivePartial} from '../../../src/client/common/Types'
 
@@ -37,11 +37,11 @@ describe('NevergreenReducer', () => {
     })
   })
 
-  describe(Actions.INITIALISED, () => {
+  describe(Actions.SET_CONFIGURATION, () => {
 
     test('should set the loaded property', () => {
       const existingState = state({loaded: false})
-      const action = initalised({})
+      const action = setConfiguration({})
       const newState = reducer(existingState, action)
       expect(getLoaded(newState)).toBeTruthy()
     })

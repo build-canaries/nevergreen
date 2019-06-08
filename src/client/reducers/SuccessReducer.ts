@@ -1,7 +1,6 @@
 import {Actions} from '../actions/Actions'
 import {remove, uniq} from 'lodash'
-import {ActionInitalised} from '../actions/NevergreenActionCreators'
-import {ActionImportSuccess} from '../actions/ImportActionCreators'
+import {ActionSetConfiguration} from '../actions/NevergreenActionCreators'
 import {ActionMessageAdded, ActionMessageRemoved} from '../actions/SuccessActionCreators'
 import {createReducer, createSelector} from 'redux-starter-kit'
 import {Draft} from 'immer'
@@ -13,16 +12,13 @@ export const SUCCESS_ROOT = 'success'
 
 const DEFAULT_STATE: SuccessState = ['=(^.^)=']
 
-function setConfiguration(draft: Draft<SuccessState>, action: ActionInitalised | ActionImportSuccess) {
-  if (action.data[SUCCESS_ROOT]) {
-    return uniq(action.data[SUCCESS_ROOT]) as Draft<SuccessState>
-  }
-  return draft
-}
-
 export const reduce = createReducer<SuccessState>(DEFAULT_STATE, {
-  [Actions.INITIALISED]: setConfiguration,
-  [Actions.IMPORT_SUCCESS]: setConfiguration,
+  [Actions.SET_CONFIGURATION]: (draft: Draft<SuccessState>, action: ActionSetConfiguration) => {
+    if (action.configuration[SUCCESS_ROOT]) {
+      return uniq(action.configuration[SUCCESS_ROOT]) as Draft<SuccessState>
+    }
+    return draft
+  },
   [Actions.MESSAGE_ADDED]: (draft, action: ActionMessageAdded) => {
     return uniq(draft.concat(action.message))
   },

@@ -26,10 +26,20 @@ export function validate(configuration: Configuration): string[] {
   }
 }
 
-export function filter(configuration: string | object): Configuration {
-  const filteredConfiguration = isString(configuration)
-    ? fromJson(configuration)
-    : cloneDeep(configuration)
+export function filter(data: string | object): Configuration {
+  const filteredConfiguration = isString(data)
+    ? fromJson(data)
+    : cloneDeep(data)
   validateConfiguration(filteredConfiguration)
   return filteredConfiguration
+}
+
+export function toConfiguration(data: string | object): [string[], Configuration | undefined] {
+  try {
+    const configuration = filter(data)
+    const validationMessages = validate(configuration)
+    return [validationMessages, configuration]
+  } catch (error) {
+    return [[error.message], undefined]
+  }
 }

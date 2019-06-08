@@ -25,9 +25,9 @@ describe('NevergreenThunkActionCreators', () => {
     test('should dispatch initalised action once configuration is loaded', async () => {
       jest.spyOn(localRepository, 'init').mockResolvedValue()
       jest.spyOn(localRepository, 'load').mockResolvedValue(buildState())
-      jest.spyOn(nevergreenActionCreators, 'initalised')
+      jest.spyOn(nevergreenActionCreators, 'setConfiguration')
       await testThunk(initalise())
-      expect(nevergreenActionCreators.initalised).toBeCalled()
+      expect(nevergreenActionCreators.setConfiguration).toBeCalled()
     })
   })
 })

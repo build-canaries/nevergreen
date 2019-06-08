@@ -1,7 +1,6 @@
 import {getSelectedProjects, reduce, SELECTED_ROOT, SelectedState} from '../../../src/client/reducers/SelectedReducer'
 import {Actions} from '../../../src/client/actions/Actions'
-import {initalised} from '../../../src/client/actions/NevergreenActionCreators'
-import {importSuccess} from '../../../src/client/actions/ImportActionCreators'
+import {setConfiguration} from '../../../src/client/actions/NevergreenActionCreators'
 import {projectsFetched, removeTray, selectProject, trayAdded} from '../../../src/client/actions/TrackingActionCreators'
 import {buildProject, buildState, testReducer} from '../testHelpers'
 import {RecursivePartial} from '../../../src/client/common/Types'
@@ -22,11 +21,11 @@ describe('SelectedReducer', () => {
     expect(newState).toEqual(existingState)
   })
 
-  describe(Actions.INITIALISED, () => {
+  describe(Actions.SET_CONFIGURATION, () => {
 
     test('should set the selected data', () => {
       const existingState = state({oldId: ['foo']})
-      const action = initalised({[SELECTED_ROOT]: {trayId: ['bar']}})
+      const action = setConfiguration({selected: {trayId: ['bar']}})
       const newState = reducer(existingState, action)
       expect(getSelectedProjects(newState, 'oldId')).toBeUndefined()
       expect(getSelectedProjects(newState, 'trayId')).toEqual(['bar'])
@@ -34,20 +33,9 @@ describe('SelectedReducer', () => {
 
     test('should handle no selected data', () => {
       const existingState = state({oldId: ['foo']})
-      const action = initalised({})
+      const action = setConfiguration({})
       const newState = reducer(existingState, action)
       expect(getSelectedProjects(newState, 'oldId')).toEqual(['foo'])
-    })
-  })
-
-  describe(Actions.IMPORT_SUCCESS, () => {
-
-    test('should set the selected data', () => {
-      const existingState = state({oldId: ['foo']})
-      const action = importSuccess({selected: {trayId: ['bar']}})
-      const newState = reducer(existingState, action)
-      expect(getSelectedProjects(newState, 'oldId')).toBeUndefined()
-      expect(getSelectedProjects(newState, 'trayId')).toEqual(['bar'])
     })
   })
 

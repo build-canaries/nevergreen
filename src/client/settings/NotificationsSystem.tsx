@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react'
 import {Checkbox} from '../common/forms/Checkbox'
-import {Messages} from '../common/Messages'
+import {Messages, MessagesType} from '../common/Messages'
 import styles from './notification-system.scss'
 
 export interface NotificationsSystemProps {
@@ -34,7 +34,7 @@ export function NotificationsSystem({
       }
       {
         systemNotificationsSupported && systemNotificationPermissionDenied &&
-        <Messages type='error' messages={[PERMISSION_DENIED_MESSAGE]}/>
+        <Messages type={MessagesType.ERROR} messages={[PERMISSION_DENIED_MESSAGE]}/>
       }
       {
         !systemNotificationsSupported &&

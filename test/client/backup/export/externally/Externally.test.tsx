@@ -7,7 +7,7 @@ import {noop} from 'lodash'
 import * as gateway from '../../../../../src/client/gateways/Gateway'
 import * as backupGateway from '../../../../../src/client/gateways/BackupGateway'
 
-describe('<Externally/>', () => {
+describe('export <Externally/>', () => {
 
   const DEFAULT_PROPS = {
     location: BackupLocation.GITHUB,
@@ -21,29 +21,31 @@ describe('<Externally/>', () => {
     configuration: ''
   }
 
-  describe('exporting', () => {
-    beforeEach(() => {
-      jest.spyOn(backupGateway, 'exportConfiguration')
-      jest.spyOn(gateway, 'send').mockResolvedValue({id: 'some-id'})
-    })
+  beforeEach(() => {
+    jest.spyOn(backupGateway, 'exportConfiguration')
+    jest.spyOn(gateway, 'send').mockResolvedValue({id: 'some-id'})
+  })
 
-    test('should export if an access token was entered', async () => {
-      const props = {...DEFAULT_PROPS}
+  test('should export if an access token was entered', async () => {
+    const props = {...DEFAULT_PROPS}
 
-      const wrapper = shallow(<Externally {...props} />)
-      changeAndBlur(wrapper.find(locator('access-token')), 'some-access-token')
-      await wrapper.find(locator('export')).simulate('click')
+    const wrapper = shallow(<Externally {...props} />)
+    changeAndBlur(wrapper.find(locator('access-token')), 'some-access-token')
+    // @ts-ignore
+    await wrapper.find(locator('export')).prop('onClick')()
 
-      expect(gateway.send).toHaveBeenCalled()
-    })
+    expect(wrapper.find(locator('messages')).prop('messages')).toContain('Successfully exported configuration')
+    expect(gateway.send).toHaveBeenCalled()
+  })
 
-    test('should not try and export if no access token was entered', async () => {
-      const props = {...DEFAULT_PROPS}
+  test('should not try and export if no access token was entered', async () => {
+    const props = {...DEFAULT_PROPS}
 
-      const wrapper = shallow(<Externally {...props} />)
-      await wrapper.find(locator('export')).simulate('click')
+    const wrapper = shallow(<Externally {...props} />)
+    // @ts-ignore
+    await wrapper.find(locator('export')).prop('onClick')()
 
-      expect(gateway.send).not.toHaveBeenCalled()
-    })
+    expect(wrapper.find(locator('messages')).prop('messages')).toContain('You must provide an access token to export')
+    expect(gateway.send).not.toHaveBeenCalled()
   })
 })

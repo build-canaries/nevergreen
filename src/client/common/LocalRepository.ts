@@ -13,7 +13,7 @@ export async function save(data: Configuration) {
   }))
 }
 
-export async function load(): Promise<Configuration> {
+export async function load(): Promise<object> {
   let configuration = {}
   await localforage.iterate((value, key) => {
     // @ts-ignore

@@ -1,7 +1,7 @@
 import React, {ChangeEvent, useMemo, useRef, useState} from 'react'
-import {sortBy, isEmpty} from 'lodash'
+import {isEmpty, sortBy} from 'lodash'
 import {AvailableProject} from './AvailableProject'
-import {Messages} from '../../common/Messages'
+import {Messages, MessagesType} from '../../common/Messages'
 import {Input} from '../../common/forms/Input'
 import {Shortcut} from '../../common/Shortcut'
 import {Refresh} from './Refresh'
@@ -101,7 +101,9 @@ export function AvailableProjects({projects, index, selected, trayId, timestamp,
           </Input>
         </div>
       </fieldset>
-      <Messages type='error' messages={filterErrors} data-locator='invalid-filter'/>
+      <Messages type={MessagesType.ERROR}
+                messages={filterErrors}
+                data-locator='invalid-filter'/>
     </div>
   )
 
@@ -124,13 +126,13 @@ export function AvailableProjects({projects, index, selected, trayId, timestamp,
   )
 
   const noProjectsWarning = (
-    <Messages type='warning'
+    <Messages type={MessagesType.WARNING}
               messages={['No projects fetched, please refresh']}
               data-locator='no-projects-warning'/>
   )
 
   const noProjectsMatchFilterWarning = (
-    <Messages type='warning'
+    <Messages type={MessagesType.WARNING}
               messages={['No matching projects, please update your filter']}
               data-locator='filter-warning'/>
   )
@@ -150,7 +152,10 @@ export function AvailableProjects({projects, index, selected, trayId, timestamp,
       <Refresh index={index}
                timestamp={timestamp}
                refreshTray={() => refreshTray(trayId)}/>
-      <Messages type='error' messages={errors} data-locator='errors'/>
+      <Messages type={MessagesType.ERROR}
+                messages={errors}
+                data-locator='errors'/>
+
       {!hasErrors && hasProjects && controls}
       {!hasErrors && hasProjectsFiltered && buildItems}
       {!hasErrors && !hasProjects && noProjectsWarning}

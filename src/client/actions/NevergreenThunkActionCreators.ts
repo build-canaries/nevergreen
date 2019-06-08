@@ -1,12 +1,13 @@
 import {init, load} from '../common/LocalRepository'
-import {filter} from '../reducers/Configuration'
-import {initalised, initalising} from './NevergreenActionCreators'
+import {Configuration, toConfiguration} from '../reducers/Configuration'
+import {initalising, setConfiguration} from './NevergreenActionCreators'
 import {registerServiceWorker} from '../ServiceWorker'
 import {notify} from './NotificationActionCreators'
 import {Dispatch} from 'redux'
 import {State} from '../reducers/Reducer'
 import {Actions} from './Actions'
 import {getPendingRequest} from '../reducers/PendingRequestsReducer'
+import {isEmpty} from 'lodash'
 
 export function initalise() {
   return async (dispatch: Dispatch) => {
@@ -19,10 +20,15 @@ export function initalise() {
     try {
       await init()
       const data = await load()
+      const [errors, configuration] = toConfiguration(data)
 
-      dispatch(initalised(filter(data)))
+      if (isEmpty(errors)) {
+        dispatch(setConfiguration(configuration as Configuration))
+      } else {
+        // TODO: handle invalid data
+      }
     } catch (e) {
-      // TODO: handle loading configuration failure
+      // TODO: handle loading data failure
     }
   }
 }

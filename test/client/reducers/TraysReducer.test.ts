@@ -16,8 +16,7 @@ import {
   TraysState
 } from '../../../src/client/reducers/TraysReducer'
 import {Actions} from '../../../src/client/actions/Actions'
-import {initalised, navigated} from '../../../src/client/actions/NevergreenActionCreators'
-import {importSuccess} from '../../../src/client/actions/ImportActionCreators'
+import {navigated, setConfiguration} from '../../../src/client/actions/NevergreenActionCreators'
 import {
   highlightTray,
   projectsFetched,
@@ -57,12 +56,12 @@ describe('TraysReducer', () => {
     expect(newState).toEqual(existingState)
   })
 
-  describe(Actions.INITIALISED, () => {
+  describe(Actions.SET_CONFIGURATION, () => {
 
     test('should set the trays data, setting loaded to true on each tray', () => {
       const tray = buildTray({trayId: 'trayId'})
       const existingState = state({someId: {}})
-      const action = initalised({[TRAYS_ROOT]: {trayId: tray}})
+      const action = setConfiguration({[TRAYS_ROOT]: {trayId: tray}})
       const newState = reducer(existingState, action)
       expect(getTray(newState, 'someId')).toBeUndefined()
       expect(getTray(newState, 'trayId')).toEqual({...tray, loaded: true})
@@ -70,26 +69,7 @@ describe('TraysReducer', () => {
 
     test('should handle no trays data', () => {
       const existingState = state({})
-      const action = initalised({})
-      const newState = reducer(existingState, action)
-      expect(newState).toEqual(existingState)
-    })
-  })
-
-  describe(Actions.IMPORT_SUCCESS, () => {
-
-    test('should set the trays data, setting loaded to true on each tray', () => {
-      const tray = buildTray({trayId: 'trayId'})
-      const existingState = state({someId: {}})
-      const action = importSuccess({[TRAYS_ROOT]: {trayId: tray}})
-      const newState = reducer(existingState, action)
-      expect(getTray(newState, 'someId')).toBeUndefined()
-      expect(getTray(newState, 'trayId')).toEqual({...tray, loaded: true})
-    })
-
-    test('should handle no trays data', () => {
-      const existingState = state({})
-      const action = importSuccess({})
+      const action = setConfiguration({})
       const newState = reducer(existingState, action)
       expect(newState).toEqual(existingState)
     })

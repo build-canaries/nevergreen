@@ -1,7 +1,6 @@
 import {Actions} from '../actions/Actions'
 import {Tray} from '../domain/Tray'
-import {ActionInitalised} from '../actions/NevergreenActionCreators'
-import {ActionImportSuccess} from '../actions/ImportActionCreators'
+import {ActionSetConfiguration} from '../actions/NevergreenActionCreators'
 import {
   ActionHighlightTray,
   ActionProjectsFetched,
@@ -29,19 +28,16 @@ export const TRAYS_ROOT = 'trays'
 
 const DEFAULT_STATE: TraysState = {}
 
-function setConfiguration(draft: Draft<TraysState>, action: ActionInitalised | ActionImportSuccess) {
-  const newState: Draft<TraysState> = {}
-  const data = action.data[TRAYS_ROOT] as TraysState || draft
-  Object.keys(data).forEach((trayId) => {
-    newState[trayId] = data[trayId]
-    newState[trayId].loaded = true
-  })
-  return newState
-}
-
 export const reduce = createReducer<TraysState>(DEFAULT_STATE, {
-  [Actions.INITIALISED]: setConfiguration,
-  [Actions.IMPORT_SUCCESS]: setConfiguration,
+  [Actions.SET_CONFIGURATION]: (draft: Draft<TraysState>, action: ActionSetConfiguration) => {
+    const newState: Draft<TraysState> = {}
+    const data = action.configuration[TRAYS_ROOT] as TraysState || draft
+    Object.keys(data).forEach((trayId) => {
+      newState[trayId] = data[trayId]
+      newState[trayId].loaded = true
+    })
+    return newState
+  },
   [Actions.TRAY_ADDED]: (draft, action: ActionTrayAdded) => {
     draft[action.trayId] = action.data
   },

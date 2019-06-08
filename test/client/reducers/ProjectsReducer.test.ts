@@ -1,7 +1,6 @@
 import {getProjects, PROJECTS_ROOT, ProjectsState, reduce} from '../../../src/client/reducers/ProjectsReducer'
 import {Actions} from '../../../src/client/actions/Actions'
-import {initalised} from '../../../src/client/actions/NevergreenActionCreators'
-import {importSuccess} from '../../../src/client/actions/ImportActionCreators'
+import {setConfiguration} from '../../../src/client/actions/NevergreenActionCreators'
 import {projectsFetched, removeTray, trayAdded} from '../../../src/client/actions/TrackingActionCreators'
 import {buildProject, buildState, testReducer} from '../testHelpers'
 import {RecursivePartial} from '../../../src/client/common/Types'
@@ -22,12 +21,12 @@ describe('ProjectsReducer', () => {
     expect(newState).toEqual(existingState)
   })
 
-  describe(Actions.INITIALISED, () => {
+  describe(Actions.SET_CONFIGURATION, () => {
 
     test('should overwrite any existing data with the action data', () => {
       const newProject = buildProject({projectId: 'projectId'})
       const existingState = state({oldTrayId: {oldProjectId: buildProject({projectId: 'oldProjectId'})}})
-      const action = initalised({[PROJECTS_ROOT]: {trayId: {projectId: newProject}}})
+      const action = setConfiguration({[PROJECTS_ROOT]: {trayId: {projectId: newProject}}})
       const newState = reducer(existingState, action)
       expect(getProjects(newState, 'oldTrayId')).toEqual([])
       expect(getProjects(newState, 'trayId')).toEqual([newProject])
@@ -36,27 +35,7 @@ describe('ProjectsReducer', () => {
     test('should handle no projects data', () => {
       const project = buildProject({projectId: 'projectId'})
       const existingState = state({trayId: {projectId: project}})
-      const action = initalised({})
-      const newState = reducer(existingState, action)
-      expect(getProjects(newState, 'trayId')).toEqual([project])
-    })
-  })
-
-  describe(Actions.IMPORT_SUCCESS, () => {
-
-    test('should overwrite any existing data with the action data', () => {
-      const newProject = buildProject({projectId: 'projectId'})
-      const existingState = state({oldTrayId: {oldProjectId: buildProject({projectId: 'oldProjectId'})}})
-      const action = importSuccess({[PROJECTS_ROOT]: {trayId: {projectId: newProject}}})
-      const newState = reducer(existingState, action)
-      expect(getProjects(newState, 'oldTrayId')).toEqual([])
-      expect(getProjects(newState, 'trayId')).toEqual([newProject])
-    })
-
-    test('should handle no projects data', () => {
-      const project = buildProject({projectId: 'projectId'})
-      const existingState = state({trayId: {projectId: project}})
-      const action = importSuccess({})
+      const action = setConfiguration({})
       const newState = reducer(existingState, action)
       expect(getProjects(newState, 'trayId')).toEqual([project])
     })

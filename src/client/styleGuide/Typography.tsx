@@ -2,7 +2,7 @@ import React from 'react'
 import {StyleGuideSection} from './StyleGuideSection'
 import {ExternalLink} from '../common/ExternalLink'
 import {Element} from './Element'
-import {Messages} from '../common/Messages'
+import {Messages, MessagesType} from '../common/Messages'
 
 const TITLE = 'Cupcake toffee jelly beans'
 
@@ -72,8 +72,9 @@ export function Typography() {
       </StyleGuideSection>
 
       <StyleGuideSection title='Messages'>
-        <Messages type='info' messages={['info messages', ...MESSAGES]}/>
-        <Messages type='error' messages={['error messages', ...MESSAGES]}/>
+        <Messages type={MessagesType.INFO} messages={['info messages', ...MESSAGES]}/>
+        <Messages type={MessagesType.ERROR} messages={['error messages', ...MESSAGES]}/>
+        <Messages type={MessagesType.WARNING} messages={['warning messages', ...MESSAGES]}/>
       </StyleGuideSection>
     </>
   )

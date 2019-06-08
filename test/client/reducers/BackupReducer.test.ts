@@ -7,7 +7,7 @@ import {
   reduce
 } from '../../../src/client/reducers/BackupReducer'
 import {Actions} from '../../../src/client/actions/Actions'
-import {initalised} from '../../../src/client/actions/NevergreenActionCreators'
+import {setConfiguration} from '../../../src/client/actions/NevergreenActionCreators'
 import {
   BackupLocation,
   backupSetDescription,
@@ -34,25 +34,25 @@ describe('BackupReducer', () => {
     expect(newState).toEqual(existingState)
   })
 
-  describe(Actions.INITIALISED, () => {
+  describe(Actions.SET_CONFIGURATION, () => {
 
     test('should merge the id', () => {
       const existingState = state()
-      const action = initalised({[BACKUP_ROOT]: {github: {id: 'some-id'}}})
+      const action = setConfiguration({[BACKUP_ROOT]: {github: {id: 'some-id'}}})
       const newState = reducer(existingState, action)
       expect(getBackupId(BackupLocation.GITHUB, newState)).toEqual('some-id')
     })
 
     test('should merge the description', () => {
       const existingState = state()
-      const action = initalised({[BACKUP_ROOT]: {github: {description: 'some-description'}}})
+      const action = setConfiguration({[BACKUP_ROOT]: {github: {description: 'some-description'}}})
       const newState = reducer(existingState, action)
       expect(getBackupDescription(BackupLocation.GITHUB, newState)).toEqual('some-description')
     })
 
     test('should handle no github data', () => {
       const existingState = state({github: {id: 'some-id', description: 'some-description'}})
-      const action = initalised({})
+      const action = setConfiguration({})
       const newState = reducer(existingState, action)
       expect(getBackupId(BackupLocation.GITHUB, newState)).toEqual('some-id')
       expect(getBackupDescription(BackupLocation.GITHUB, newState)).toEqual('some-description')
@@ -60,7 +60,7 @@ describe('BackupReducer', () => {
 
     test('should only merge for the correct backup location', () => {
       const existingState = state({github: {id: 'some-id'}})
-      const action = initalised({[BACKUP_ROOT]: {github: {id: 'some-id'}}})
+      const action = setConfiguration({[BACKUP_ROOT]: {github: {id: 'some-id'}}})
       const newState = reducer(existingState, action)
       expect(getBackupId(BackupLocation.GITLAB, newState)).toEqual('')
     })

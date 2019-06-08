@@ -7,7 +7,7 @@ import {iCloudUpload} from '../../../common/fonts/Icons'
 import {Password} from '../../../common/forms/Password'
 import styles from './externally.scss'
 import {UrlInput} from '../../UrlInput'
-import {Messages} from '../../../common/Messages'
+import {Messages, MessagesType} from '../../../common/Messages'
 import {BackupLocation} from '../../../actions/BackupActionCreators'
 import {exportConfiguration, ExportResponse} from '../../../gateways/BackupGateway'
 import {isBlank} from '../../../common/Utils'
@@ -29,24 +29,34 @@ export function Externally({location, description, id, url, backupSetId, backupS
   const [accessToken, setAccessToken] = useState('')
   const [newDescription, setNewDescription] = useState(description)
   const [loaded, setLoaded] = useState(true)
-  const [errors, setErrors] = useState<string[]>([])
-  const [infos, setInfos] = useState<string[]>([])
+  const [messages, setMessages] = useState<string[]>([])
+  const [messageType, setMessageType] = useState(MessagesType.INFO)
 
   const disabled = !loaded
   const accessTokenChanged = ({target}: ChangeEvent<HTMLInputElement>) => setAccessToken(target.value)
 
+  const setErrors = (errors: string[]) => {
+    setMessageType(MessagesType.ERROR)
+    setMessages(errors)
+  }
+
+  const setInfos = (infos: string[]) => {
+    setMessageType(MessagesType.INFO)
+    setMessages(infos)
+  }
+
   const upload = async () => {
     if (isBlank(accessToken)) {
-      setErrors(['You must provide an access token to upload'])
+      setErrors(['You must provide an access token to export'])
     } else {
       setLoaded(false)
-      setErrors([])
+      setMessages([])
       try {
         const res = await send<ExportResponse>(exportConfiguration(location, id, description, configuration, accessToken, url))
         setInfos(['Successfully exported configuration'])
         backupSetId(location, res.id)
       } catch (error) {
-        setErrors([`Unable to upload to ${location} because of an error: ${error.message}`])
+        setErrors([`Unable to export to ${location} because of an error`, error.message])
       }
       setLoaded(true)
     }
@@ -88,8 +98,9 @@ export function Externally({location, description, id, url, backupSetId, backupS
                      data-locator='export'>
         export
       </PrimaryButton>
-      <Messages type='error' messages={errors}/>
-      <Messages type='info' messages={infos}/>
+      <Messages type={messageType}
+                messages={messages}
+                data-locator='messages'/>
     </>
   )
 }

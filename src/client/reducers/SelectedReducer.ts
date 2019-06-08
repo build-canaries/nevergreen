@@ -1,5 +1,4 @@
 import {Actions} from '../actions/Actions'
-import {ActionImportSuccess} from '../actions/ImportActionCreators'
 import {
   ActionProjectsFetched,
   ActionRemoveTray,
@@ -7,7 +6,7 @@ import {
   ActionTrayAdded
 } from '../actions/TrackingActionCreators'
 import {createReducer} from 'redux-starter-kit'
-import {ActionInitalised} from '../actions/NevergreenActionCreators'
+import {ActionSetConfiguration} from '../actions/NevergreenActionCreators'
 import {get, remove} from 'lodash'
 import {State} from './Reducer'
 
@@ -20,14 +19,9 @@ export const SELECTED_ROOT = 'selected'
 const DEFAULT_STATE: SelectedState = {}
 
 export const reduce = createReducer<SelectedState>(DEFAULT_STATE, {
-  [Actions.INITIALISED]: (draft, action: ActionInitalised) => {
-    return action.data[SELECTED_ROOT]
-      ? action.data[SELECTED_ROOT] as SelectedState
-      : draft
-  },
-  [Actions.IMPORT_SUCCESS]: (draft, action: ActionImportSuccess) => {
-    return action.data[SELECTED_ROOT]
-      ? action.data[SELECTED_ROOT] as SelectedState
+  [Actions.SET_CONFIGURATION]: (draft, action: ActionSetConfiguration) => {
+    return action.configuration[SELECTED_ROOT]
+      ? action.configuration[SELECTED_ROOT] as SelectedState
       : draft
   },
   [Actions.TRAY_ADDED]: (draft, action: ActionTrayAdded) => {

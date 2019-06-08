@@ -1,10 +1,10 @@
 import {connect} from 'react-redux'
 import {bindActionCreators, Dispatch} from 'redux'
-import {importData} from '../../../actions/ImportThunkActionCreators'
 import {Locally} from './Locally'
+import {setConfiguration} from '../../../actions/NevergreenActionCreators'
 
 function mapDispatchToProps(dispatch: Dispatch) {
-  return bindActionCreators({importData}, dispatch)
+  return bindActionCreators({setConfiguration}, dispatch)
 }
 
 function mapStateToProps() {

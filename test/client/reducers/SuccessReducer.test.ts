@@ -1,7 +1,6 @@
 import {getSuccessMessages, reduce, SUCCESS_ROOT, SuccessState} from '../../../src/client/reducers/SuccessReducer'
 import {Actions} from '../../../src/client/actions/Actions'
-import {initalised} from '../../../src/client/actions/NevergreenActionCreators'
-import {importSuccess} from '../../../src/client/actions/ImportActionCreators'
+import {setConfiguration} from '../../../src/client/actions/NevergreenActionCreators'
 import {addMessage, removeMessage} from '../../../src/client/actions/SuccessActionCreators'
 import {buildState, testReducer} from '../testHelpers'
 
@@ -21,30 +20,20 @@ describe('SuccessReducer', () => {
     expect(newState).toEqual(existingState)
   })
 
-  describe(Actions.INITIALISED, () => {
+  describe(Actions.SET_CONFIGURATION, () => {
 
-    test('should set the success data', () => {
-      const existingState = state(['old-message'])
-      const action = initalised({[SUCCESS_ROOT]: ['some-message']})
+    test('should merge the success data', () => {
+      const existingState = state([])
+      const action = setConfiguration({success: ['some-message']})
       const newState = reducer(existingState, action)
       expect(getSuccessMessages(newState)).toEqual(['some-message'])
     })
 
     test('should handle no success data', () => {
       const existingState = state([])
-      const action = initalised({})
+      const action = setConfiguration({})
       const newState = reducer(existingState, action)
       expect(getSuccessMessages(newState)).toHaveLength(0)
-    })
-  })
-
-  describe(Actions.IMPORT_SUCCESS, () => {
-
-    test('should merge the success data', () => {
-      const existingState = state([])
-      const action = importSuccess({success: ['some-message']})
-      const newState = reducer(existingState, action)
-      expect(getSuccessMessages(newState)).toEqual(['some-message'])
     })
   })
 
