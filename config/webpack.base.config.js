@@ -39,7 +39,7 @@ function urlLoader(mimeType) {
     loader: 'url-loader',
     options: {
       name: defaultName,
-      limit: '8192',
+      limit: 8192,
       mimetype: mimeType
     }
   }
