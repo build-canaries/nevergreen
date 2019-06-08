@@ -1,10 +1,10 @@
-import React, {Fragment} from 'react'
+import React from 'react'
 import {ExternalLink} from '../../../common/ExternalLink'
 import {URL} from '../../../common/URL'
 
 export function GitHubHelp() {
   return (
-    <Fragment>
+    <>
       <p>
         Add a gist <strong>ID</strong> to update an existing Gist or leave blank to create a new Gist. You can get
         a Gist ID from the Gist URL, <URL url='https://gist.github.com/:username/:gistId'/>.
@@ -20,6 +20,6 @@ export function GitHubHelp() {
         Access tokens are not stored locally as they would allow editing of any of a users Gists, so they need to be
         manually entered every time you want to export.
       </p>
-    </Fragment>
+    </>
   )
 }

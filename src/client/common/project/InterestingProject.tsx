@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react'
+import React from 'react'
 import cn from 'classnames'
 import styles from './interesting-project.scss'
 import {isBlank} from '../Utils'
@@ -65,11 +65,11 @@ export function InterestingProject(
     </div>
 
   const buildLabel = showBuildLabel && sick && !isBlank(lastBuildLabel) &&
-    <Fragment>
+    <>
       <VisuallyHidden> build label</VisuallyHidden>
       <div className={styles.buildLabel}
            data-locator='build-label'> {formatBuildLabel(lastBuildLabel)}</div>
-    </Fragment>
+    </>
 
   return (
     <div className={classes} data-locator='interesting-project'>

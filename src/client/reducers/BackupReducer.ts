@@ -10,14 +10,12 @@ import {get} from 'lodash'
 import {createReducer} from 'redux-starter-kit'
 import {State} from './Reducer'
 
-export interface BackupLocationState {
-  readonly id: string;
-  readonly description: string;
-  readonly url: string;
-}
-
 export type BackupState = {
-  readonly [key in BackupLocation]: BackupLocationState;
+  readonly [key in BackupLocation]: {
+    readonly id: string;
+    readonly description: string;
+    readonly url: string;
+  };
 }
 
 export const BACKUP_ROOT = 'backup'

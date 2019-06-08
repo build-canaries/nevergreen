@@ -1,4 +1,4 @@
-import React, {Fragment, ReactNode} from 'react'
+import React, {ReactNode} from 'react'
 
 interface ElementProps {
   type: string;
@@ -7,8 +7,8 @@ interface ElementProps {
 
 export function Element({type, children}: ElementProps) {
   return React.createElement(type, {},
-    <Fragment>
+    <>
       &lt;{type}&gt;{children}&lt;/{type}&gt;
-    </Fragment>
+    </>
   )
 }

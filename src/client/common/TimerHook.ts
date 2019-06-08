@@ -1,4 +1,4 @@
-import {useEffect, useRef} from 'react'
+import {useEffect} from 'react'
 import {debug} from './Logger'
 
 function asMilliseconds(seconds: number) {
@@ -6,26 +6,27 @@ function asMilliseconds(seconds: number) {
 }
 
 export const useTimer = (onTrigger: () => void, intervalInSeconds: number) => {
-  const cancelled = useRef(false)
-  const timeoutId = useRef(0)
-
-  const run = async () => {
-    await onTrigger()
-    if (cancelled.current) {
-      debug('cancelled so not rescheduling')
-    } else {
-      timeoutId.current = window.setTimeout(run, asMilliseconds(intervalInSeconds))
-      debug(`created timeout [${timeoutId.current}] to run in [${intervalInSeconds}s]`)
-    }
-  }
-
   useEffect(() => {
-    cancelled.current = false
+    let cancelled = false
+    let timeoutId = 0
+
+    const run = async () => {
+      await onTrigger()
+
+      if (cancelled) {
+        debug('cancelled so not rescheduling')
+      } else {
+        timeoutId = window.setTimeout(run, asMilliseconds(intervalInSeconds))
+        debug(`created timeout [${timeoutId}] to run in [${intervalInSeconds}s]`)
+      }
+    }
+
     run()
+
     return () => {
-      debug(`clearing timeout [${timeoutId.current}]`)
-      window.clearTimeout(timeoutId.current)
-      cancelled.current = true
+      debug(`clearing timeout [${timeoutId}]`)
+      window.clearTimeout(timeoutId)
+      cancelled = true
     }
   }, [onTrigger, intervalInSeconds])
 }

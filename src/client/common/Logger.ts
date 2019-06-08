@@ -28,3 +28,5 @@ export function error(message: string, e: Error) {
     console.error(message, e)
   }
 }
+
+/* eslint-enable no-console */

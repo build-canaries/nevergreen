@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react'
+import React from 'react'
 import {Checkbox} from '../common/forms/Checkbox'
 import {Messages, MessagesType} from '../common/Messages'
 import styles from './notification-system.scss'
@@ -13,15 +13,9 @@ export interface NotificationsSystemProps {
 
 const PERMISSION_DENIED_MESSAGE = 'System notifications permission denied, unable to show system notifications.'
 
-export function NotificationsSystem({
-                                      systemNotificationsSupported,
-                                      showSystemNotifications,
-                                      setShowSystemNotifications,
-                                      systemNotificationRequestingPermission,
-                                      systemNotificationPermissionDenied
-                                    }: NotificationsSystemProps) {
+export function NotificationsSystem({systemNotificationsSupported, showSystemNotifications, setShowSystemNotifications, systemNotificationRequestingPermission, systemNotificationPermissionDenied}: NotificationsSystemProps) {
   return (
-    <Fragment>
+    <>
       {
         systemNotificationsSupported &&
         <Checkbox className={styles.checkbox}
@@ -40,6 +34,6 @@ export function NotificationsSystem({
         !systemNotificationsSupported &&
         <div data-locator='not-supported'>Unfortunately your browser doesn&#39;t support notifications.</div>
       }
-    </Fragment>
+    </>
   )
 }
