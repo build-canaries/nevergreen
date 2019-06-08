@@ -1,14 +1,14 @@
 (defproject nevergreen "0.0.0"
   :description "A build monitor with attitude"
   :url "https://github.com/build-canaries/nevergreen"
-  :dependencies [[org.clojure/clojure "1.10.0"]
+  :dependencies [[org.clojure/clojure "1.10.1"]
                  [ring "1.7.1" :exclusions [org.eclipse.jetty/jetty-server]]
-                 [org.eclipse.jetty/jetty-server "9.4.17.v20190418"]
+                 [org.eclipse.jetty/jetty-server "9.4.18.v20190429"]
                  [compojure "1.6.1" :exclusions [ring/ring-codec]]
                  [environ "1.1.0"]
                  [cheshire "5.8.1"]
                  [clj-cctray "2.0.0"]
-                 [clj-http "3.9.1"]
+                 [clj-http "3.10.0"]
                  [ring-curl "1.0.1"]
                  [ring/ring-json "0.4.0"]
                  [ring/ring-defaults "0.3.2"]
