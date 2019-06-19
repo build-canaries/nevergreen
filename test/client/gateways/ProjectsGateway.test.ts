@@ -1,6 +1,7 @@
 import {fetchAll, interesting} from '../../../src/client/gateways/ProjectsGateway'
 import * as gateway from '../../../src/client/gateways/Gateway'
-import {buildTray} from '../testHelpers'
+import {buildProject, buildTray} from '../testHelpers'
+import {Prognosis, Project} from '../../../src/client/domain/Project'
 
 describe('ProjectsGateway', () => {
 
@@ -9,7 +10,7 @@ describe('ProjectsGateway', () => {
     test('posts only the required data from the given trays', () => {
       jest.spyOn(gateway, 'post')
       jest.spyOn(gateway, 'fakeRequest')
-      const seen = {'some-tray-id': {}}
+      const seen: Project[] = [buildProject({trayId: 'some-tray-id', projectId: 'some-project-id'})]
       const trays = [
         buildTray({
           includeNew: true,
@@ -24,7 +25,7 @@ describe('ProjectsGateway', () => {
         {
           includeNew: true,
           password: 'pword',
-          seen: [],
+          seen: ['some-project-id'],
           serverType: 'GO',
           trayId: 'some-tray-id',
           url: 'url',
@@ -34,7 +35,7 @@ describe('ProjectsGateway', () => {
 
       fetchAll(trays, seen)
 
-      expect(gateway.post).toBeCalledWith('/api/projects/all', expected)
+      expect(gateway.post).toBeCalledWith('/api/projects', expected)
     })
   })
 
@@ -43,7 +44,7 @@ describe('ProjectsGateway', () => {
     test('maps selected projects to the posted data', () => {
       jest.spyOn(gateway, 'post')
       jest.spyOn(gateway, 'fakeRequest')
-      const seen = {'some-tray-id': {}}
+      const seen: Project[] = []
       const selected = {'some-tray-id': ['some-project-id']}
       const trays = [
         buildTray({
@@ -64,24 +65,26 @@ describe('ProjectsGateway', () => {
           serverType: 'some-server-type',
           trayId: 'some-tray-id',
           url: 'some-url',
-          username: 'some-uname'
+          username: 'some-uname',
+          prognosis: [
+            Prognosis.healthyBuilding,
+            Prognosis.sick,
+            Prognosis.sickBuilding,
+            Prognosis.unknown
+          ]
         }
       ]
 
-      interesting(trays, selected, seen)
+      interesting(trays, seen, selected)
 
-      expect(gateway.post).toBeCalledWith('/api/projects/interesting', expected)
+      expect(gateway.post).toBeCalledWith('/api/projects', expected)
       expect(gateway.fakeRequest).not.toBeCalled()
     })
 
     test('does not include trays with no selected projects and not including new', () => {
       jest.spyOn(gateway, 'post')
       jest.spyOn(gateway, 'fakeRequest')
-      const seen = {
-        'some-tray-id': {},
-        'none-selected-id': {},
-        'none-selected-but-includes-new-id': {}
-      }
+      const seen: Project[] = []
       const selected = {
         'some-tray-id': ['some-project-id'],
         'none-selected-id': [],
@@ -93,7 +96,7 @@ describe('ProjectsGateway', () => {
         buildTray({trayId: 'none-selected-but-includes-new-id', includeNew: true})
       ]
 
-      interesting(trays, selected, seen)
+      interesting(trays, seen, selected)
 
       expect(gateway.post).toBeCalledWith(expect.anything(), expect.arrayContaining([
         expect.objectContaining({trayId: 'some-tray-id'}),
@@ -105,11 +108,11 @@ describe('ProjectsGateway', () => {
     test('does not call the server at all if no trays have selected projects and new projects are not included', () => {
       jest.spyOn(gateway, 'post')
       jest.spyOn(gateway, 'fakeRequest')
-      const seen = {'some-tray-id': {}}
+      const seen: Project[] = []
       const selected = {'some-tray-id': []}
       const trays = [buildTray({trayId: 'some-tray-id', includeNew: false})]
 
-      interesting(trays, selected, seen)
+      interesting(trays, seen, selected)
 
       expect(gateway.post).not.toBeCalled()
       expect(gateway.fakeRequest).toBeCalledWith([])

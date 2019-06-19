@@ -2,6 +2,7 @@ import {isBlank, isNumber} from '../common/Utils'
 import {ApiProject} from '../gateways/ProjectsGateway'
 
 export enum Prognosis {
+  healthy = 'healthy',
   sick = 'sick',
   healthyBuilding = 'healthy-building',
   sickBuilding = 'sick-building',

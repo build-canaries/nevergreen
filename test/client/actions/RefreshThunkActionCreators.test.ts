@@ -47,7 +47,7 @@ describe('RefreshThunkActionCreators', () => {
       jest.spyOn(gateway, 'send').mockResolvedValue([])
       jest.spyOn(projectsGateway, 'fetchAll')
       await testThunk(refreshTray('some-tray-id'), requiredState)
-      expect(projectsGateway.fetchAll).toBeCalledWith([tray], {'some-tray-id': {'some-project-id': project}})
+      expect(projectsGateway.fetchAll).toBeCalledWith([tray], [project])
     })
 
     test('should dispatch projects fetching action', async () => {

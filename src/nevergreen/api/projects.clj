@@ -22,6 +22,11 @@
     projects
     (filter #(in? ids (:project-id %)) projects)))
 
+(defn- filter-by-prognosis [prognosis projects]
+  (if (nil? prognosis)
+    projects
+    (filtering/by-prognosis (map keyword prognosis) projects)))
+
 (defn- handle-parsing-exception [e]
   (let [exceptionMessage (.getMessage e)]
     (if (instance? SAXParseException e)
@@ -39,13 +44,14 @@
          (err/create-error (handle-parsing-exception e) url)
          :tray-id tray-id)])))
 
-(defn- to-projects-filtered [{:keys [included include-new seen] :as tray} prognosis]
+(defn- to-projects-filtered [{:keys [included include-new seen prognosis] :as tray}]
   (if (and (not (nil? included)) (empty? included) (false? include-new))
     []
     (let [projects (to-projects tray)]
       (if (every? err/is-error? projects)
         projects
-        (let [enriched-projects (enrich tray (filtering/by-prognosis prognosis projects))
+        (let [filtered-projects (filter-by-prognosis prognosis projects)
+              enriched-projects (enrich tray filtered-projects)
               returned-project-ids (map :project-id enriched-projects)
               new-project-ids (difference (set returned-project-ids) (set seen))
               include-project-ids (if (true? include-new)
@@ -53,13 +59,7 @@
                                     included)]
           (filter-by-ids included include-project-ids enriched-projects))))))
 
-(defn get-projects [trays prognosis]
+(defn get-projects [trays]
   (if (= (count trays) 1)
-    (to-projects-filtered (first trays) prognosis)
-    (flatten (pmap #(to-projects-filtered % prognosis) trays))))
-
-(defn get-all [trays]
-  (get-projects trays [:healthy :sick :healthy-building :sick-building :unknown]))
-
-(defn get-interesting [trays]
-  (get-projects trays [:sick :healthy-building :sick-building :unknown]))
+    (to-projects-filtered (first trays))
+    (flatten (pmap #(to-projects-filtered %) trays))))

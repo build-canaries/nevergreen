@@ -19,11 +19,8 @@
 
 (defroutes api-routes
            (context "/api" []
-             (OPTIONS "/projects/all" [] preflight-response)
-             (POST "/projects/all" {data :body} {:body (projects/get-all data)})
-
-             (OPTIONS "/projects/interesting" [] preflight-response)
-             (POST "/projects/interesting" {data :body} {:body (projects/get-interesting data)})
+             (OPTIONS "/projects" [] preflight-response)
+             (POST "/projects" {data :body} {:body (projects/get-projects data)})
 
              (OPTIONS "/encrypt" [] preflight-response)
              (POST "/encrypt" {data :body} {:body (security/encrypt-password data)})

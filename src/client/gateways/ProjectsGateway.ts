@@ -1,6 +1,5 @@
 import {fakeRequest, post} from './Gateway'
-import {Prognosis} from '../domain/Project'
-import {ProjectsState} from '../reducers/ProjectsReducer'
+import {Prognosis, Project} from '../domain/Project'
 import {SelectedState} from '../reducers/SelectedReducer'
 import {size} from 'lodash'
 import {Tray} from '../domain/Tray'
@@ -32,10 +31,11 @@ export interface ApiProject {
 
 export type ProjectsResponse = ApiProject[]
 
-interface TrayRequest {
+interface ProjectsRequest {
   readonly included?: string[];
   readonly includeNew: boolean;
   readonly password?: string;
+  readonly prognosis?: Prognosis[];
   readonly seen: string[];
   readonly serverType?: string;
   readonly trayId: string;
@@ -43,11 +43,14 @@ interface TrayRequest {
   readonly username?: string;
 }
 
-function toTrayRequest(tray: Tray, projectsPerTray: ProjectsState, selectedPerTray?: SelectedState): TrayRequest {
-  const projects = Object.values(projectsPerTray[tray.trayId])
-  const seen = projects.map((project) => project.projectId)
+function toProjectsRequest(tray: Tray, projects: Project[], selectedPerTray?: SelectedState): ProjectsRequest {
+  const seen = projects
+    .filter((project) => project.trayId === tray.trayId)
+    .map((project) => project.projectId)
 
-  const included = selectedPerTray ? selectedPerTray[tray.trayId] : undefined
+  const included = selectedPerTray
+    ? selectedPerTray[tray.trayId]
+    : undefined
 
   return {
     trayId: tray.trayId,
@@ -61,23 +64,32 @@ function toTrayRequest(tray: Tray, projectsPerTray: ProjectsState, selectedPerTr
   }
 }
 
-function hasIncludedProjects(trayRequest: TrayRequest) {
-  return trayRequest.includeNew || size(trayRequest.included) > 0
+function hasIncludedProjects(projectsRequest: ProjectsRequest) {
+  return projectsRequest.includeNew || size(projectsRequest.included) > 0
 }
 
-export function fetchAll(trays: Tray[], projects: ProjectsState) {
+export function fetchAll(trays: Tray[], projects: Project[]) {
   const data = trays
-    .map((tray) => toTrayRequest(tray, projects))
+    .map((tray) => toProjectsRequest(tray, projects))
 
-  return post('/api/projects/all', data)
+  return post('/api/projects', data)
 }
 
-export function interesting(trays: Tray[], selectedPerTray: SelectedState, projectsPerTray: ProjectsState) {
+export function interesting(trays: Tray[], projects: Project[], selectedPerTray: SelectedState) {
   const data = trays
-    .map((tray) => toTrayRequest(tray, projectsPerTray, selectedPerTray))
+    .map((tray) => toProjectsRequest(tray, projects, selectedPerTray))
+    .map((req) => ({
+      ...req,
+      prognosis: [
+        Prognosis.healthyBuilding,
+        Prognosis.sick,
+        Prognosis.sickBuilding,
+        Prognosis.unknown
+      ]
+    }))
     .filter(hasIncludedProjects)
 
   return size(data) === 0
     ? fakeRequest([])
-    : post('/api/projects/interesting', data)
+    : post('/api/projects', data)
 }

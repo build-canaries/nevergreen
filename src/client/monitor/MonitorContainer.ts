@@ -19,7 +19,6 @@ import {
 import {getFullScreen} from '../reducers/NevergreenReducer'
 import {getSuccessMessages} from '../reducers/SuccessReducer'
 import {getTrays} from '../reducers/TraysReducer'
-import {getSelectedProjects} from '../reducers/SelectedReducer'
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return bindActionCreators({fetchInteresting, requestFullScreen, abortPendingRequest}, dispatch)
@@ -31,7 +30,6 @@ function mapStateToProps(state: State) {
     errors: getInterestingErrors(state),
     trays: getTrays(state),
     projects: getInterestingProjects(state),
-    selected: getSelectedProjects(state),
     showBuildTimers: getShowBuildTime(state),
     showBrokenBuildTimers: getShowBrokenBuildTime(state),
     showTrayName: getShowTrayName(state),

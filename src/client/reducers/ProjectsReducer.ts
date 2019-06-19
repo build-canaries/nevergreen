@@ -46,10 +46,9 @@ export const reduce = createReducer<ProjectsState>(DEFAULT_STATE, {
   }
 })
 
-export function getProjects(state: State): ProjectsState
-export function getProjects(state: State, trayId: string): Project[]
-export function getProjects(state: State, trayId?: string): Project[] | ProjectsState {
+export function getProjects(state: State, trayId?: string): Project[] {
   return trayId
     ? Object.values<Project>(get(state, [PROJECTS_ROOT, trayId], {}))
-    : get(state, [PROJECTS_ROOT])
+    : Object.values(get(state, [PROJECTS_ROOT], {}))
+      .flatMap((projectsById) => Object.values(projectsById))
 }

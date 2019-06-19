@@ -41,7 +41,7 @@ export function fetchInteresting() {
     const previouslyFetchedProjects = getInterestingProjects(getState())
     const projects = getProjects(getState())
 
-    const request = interesting(allTrays, selected, projects)
+    const request = interesting(allTrays, projects, selected)
     dispatch(interestingProjectsFetching(request))
 
     try {
