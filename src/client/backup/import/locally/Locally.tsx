@@ -36,6 +36,7 @@ export function Locally({setConfiguration}: LocallyProps) {
       if (isEmpty(dataErrors)) {
         setInfos(['Successfully imported configuration'])
         setConfiguration(configuration as Configuration)
+        setData('')
       } else {
         setErrors(dataErrors)
       }

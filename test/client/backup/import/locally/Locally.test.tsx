@@ -19,6 +19,7 @@ describe('import <Locally/>', () => {
     await wrapper.find(locator('import')).simulate('click')
 
     expect(wrapper.find(locator('messages')).prop('messages')).toContain('Successfully imported configuration')
+    expect(wrapper.find(locator('import-data')).prop('value')).toEqual('')
     expect(setConfiguration).toHaveBeenCalledWith({})
   })
 
@@ -34,26 +35,30 @@ describe('import <Locally/>', () => {
   })
 
   test('should show an error if the data is syntactically invalid (bad json)', async () => {
+    const invalidJson = '{'
     const setConfiguration = jest.fn()
     const props = {...DEFAULT_PROPS, setConfiguration}
 
     const wrapper = shallow(<Locally {...props} />)
-    changeAndBlur(wrapper.find(locator('import-data')), '{')
+    changeAndBlur(wrapper.find(locator('import-data')), invalidJson)
     await wrapper.find(locator('import')).simulate('click')
 
     expect(wrapper.find(locator('messages')).prop('messages')).toContain('Unexpected end of JSON input')
+    expect(wrapper.find(locator('import-data')).prop('value')).toEqual(invalidJson)
     expect(setConfiguration).not.toHaveBeenCalled()
   })
 
   test('should show an error if the data is semantically invalid (missing required attributes)', async () => {
+    const invalidJson = '{"trays":{"some-id":{}}}'
     const setConfiguration = jest.fn()
     const props = {...DEFAULT_PROPS, setConfiguration}
 
     const wrapper = shallow(<Locally {...props} />)
-    changeAndBlur(wrapper.find(locator('import-data')), '{"trays":{"some-id":{}}}')
+    changeAndBlur(wrapper.find(locator('import-data')), invalidJson)
     await wrapper.find(locator('import')).simulate('click')
 
     expect(wrapper.find(locator('messages')).prop('messages')).toContain('.trays[\'some-id\'] should have required property \'trayId\'')
+    expect(wrapper.find(locator('import-data')).prop('value')).toEqual(invalidJson)
     expect(setConfiguration).not.toHaveBeenCalled()
   })
 })
