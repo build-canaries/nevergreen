@@ -3,11 +3,12 @@ import semver from 'semver'
 import {notify} from './NotificationActionCreators'
 import {sendSystemNotification} from '../common/SystemNotifications'
 import * as log from '../common/Logger'
-import {Dispatch} from 'redux'
+import {AnyAction} from 'redux'
 import {isSick, Project} from '../domain/Project'
 import {State} from '../reducers/Reducer'
 import {getShowSystemNotifications} from '../reducers/SettingsReducer'
 import {getInterestingProjects} from '../reducers/InterestingReducer'
+import {ThunkAction} from 'redux-thunk'
 
 const NEVERGREEN_IO_REGEX = /nevergreen\.io/i
 
@@ -15,8 +16,8 @@ interface GitHubResponse {
   tag_name: string;
 }
 
-export function checkForNewVersion(currentVersion: string, hostname: string) {
-  return async (dispatch: Dispatch) => {
+export function checkForNewVersion(currentVersion: string, hostname: string): ThunkAction<Promise<void>, State, undefined, AnyAction> {
+  return async (dispatch) => {
     try {
       const data = await send<GitHubResponse>(get('https://api.github.com/repos/build-canaries/nevergreen/releases/latest'))
       const latestVersion = data.tag_name
@@ -33,26 +34,26 @@ export function checkForNewVersion(currentVersion: string, hostname: string) {
   }
 }
 
-function body(projects: Project[]) {
+function body(projects: Project[]): string {
   return projects
     .map((project) => project.name)
     .join(', ')
 }
 
-function newlySickTitle(total: number) {
+function newlySickTitle(total: number): string {
   return total === 1
     ? 'project is sick!'
     : `${total} projects are sick!`
 }
 
-function noLongerSickTitle(total: number) {
+function noLongerSickTitle(total: number): string {
   return total === 1
     ? 'project is no longer sick!'
     : `${total} projects are no longer sick!`
 }
 
-export function projectNotifications(previousProjects: Project[]) {
-  return async (dispatch: Dispatch, getState: () => State) => {
+export function projectNotifications(previousProjects: Project[]): ThunkAction<Promise<void>, State, undefined, AnyAction> {
+  return async (dispatch, getState) => {
     const showNotifications = getShowSystemNotifications(getState())
 
     if (showNotifications) {

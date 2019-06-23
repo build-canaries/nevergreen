@@ -6,16 +6,16 @@ import {createId, Tray} from '../domain/Tray'
 import {ensureHasScheme, removeScheme} from '../domain/Url'
 import {State} from '../reducers/Reducer'
 import {AnyAction} from 'redux'
-import {ThunkDispatch} from 'redux-thunk'
+import {ThunkAction} from 'redux-thunk'
 import {abortPendingRequest} from './NevergreenThunkActionCreators'
 import {getTrayRequiresRefresh, getTrays} from '../reducers/TraysReducer'
 
-function urlMatches(tray: Tray, url: string) {
+function urlMatches(tray: Tray, url: string): boolean {
   return removeScheme(url) === removeScheme(tray.url)
 }
 
-export function addTray(enteredUrl: string, username?: string, rawPassword?: string) {
-  return async (dispatch: ThunkDispatch<State, {}, AnyAction>, getState: () => State) => {
+export function addTray(enteredUrl: string, username?: string, rawPassword?: string): ThunkAction<Promise<void>, State, undefined, AnyAction> {
+  return async (dispatch, getState) => {
     if (isBlank(enteredUrl)) {
       return
     }
@@ -42,15 +42,15 @@ export function addTray(enteredUrl: string, username?: string, rawPassword?: str
   }
 }
 
-export function removeTrayThunk(trayId: string) {
-  return (dispatch: ThunkDispatch<State, {}, AnyAction>) => {
+export function removeTrayThunk(trayId: string): ThunkAction<void, State, undefined, AnyAction> {
+  return (dispatch) => {
     dispatch(abortPendingRequest(trayId))
     dispatch(removeTray(trayId))
   }
 }
 
-export function checkRefresh(trayId: string) {
-  return (dispatch: ThunkDispatch<State, {}, AnyAction>, getState: () => State) => {
+export function checkRefresh(trayId: string): ThunkAction<void, State, undefined, AnyAction> {
+  return (dispatch, getState) => {
     if (getTrayRequiresRefresh(getState(), trayId)) {
       dispatch(refreshTray(trayId))
     }

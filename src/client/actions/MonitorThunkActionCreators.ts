@@ -7,7 +7,7 @@ import {Tray} from '../domain/Tray'
 import {State} from '../reducers/Reducer'
 import {omit} from 'lodash'
 import {AnyAction} from 'redux'
-import {ThunkDispatch} from 'redux-thunk'
+import {ThunkAction} from 'redux-thunk'
 import {abortPendingRequest} from './NevergreenThunkActionCreators'
 import {getInterestingProjects, INTERESTING_ROOT} from '../reducers/InterestingReducer'
 import {getTrays} from '../reducers/TraysReducer'
@@ -15,13 +15,13 @@ import {getSelectedProjects} from '../reducers/SelectedReducer'
 import {getProjects} from '../reducers/ProjectsReducer'
 import {getShowPrognosis} from '../reducers/SettingsReducer'
 
-function toErrorString(trays: Tray[], projectError: ProjectError) {
+function toErrorString(trays: Tray[], projectError: ProjectError): string {
   const tray = trays.find((tray) => tray.trayId === projectError.trayId)
   const identifier = tray ? `${tray.name || tray.url} ` : ''
   return `${identifier}${projectError.errorMessage}`
 }
 
-function addThisBuildTime(project: Project, previouslyFetchedProjects: Project[]) {
+function addThisBuildTime(project: Project, previouslyFetchedProjects: Project[]): Project {
   if (isBuilding(project.prognosis)) {
     const previousProject = previouslyFetchedProjects.find((previous) => project.projectId === previous.projectId)
     const thisBuildTime = previousProject && isBuilding(previousProject.prognosis)
@@ -33,8 +33,8 @@ function addThisBuildTime(project: Project, previouslyFetchedProjects: Project[]
   }
 }
 
-export function fetchInteresting() {
-  return async (dispatch: ThunkDispatch<State, {}, AnyAction>, getState: () => State) => {
+export function fetchInteresting(): ThunkAction<Promise<void>, State, undefined, AnyAction> {
+  return async (dispatch, getState) => {
     dispatch(abortPendingRequest(INTERESTING_ROOT))
 
     const selected = getSelectedProjects(getState())

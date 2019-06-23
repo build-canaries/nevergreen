@@ -5,12 +5,12 @@ import {wrapProjectErrors, wrapProjects} from '../domain/Project'
 import {AnyAction} from 'redux'
 import {State} from '../reducers/Reducer'
 import {abortPendingRequest} from './NevergreenThunkActionCreators'
-import {ThunkDispatch} from 'redux-thunk'
+import {ThunkAction} from 'redux-thunk'
 import {getProjects} from '../reducers/ProjectsReducer'
 import {getTray} from '../reducers/TraysReducer'
 
-export function refreshTray(trayId: string) {
-  return async (dispatch: ThunkDispatch<State, {}, AnyAction>, getState: () => State) => {
+export function refreshTray(trayId: string): ThunkAction<Promise<void>, State, undefined, AnyAction> {
+  return async (dispatch, getState) => {
     dispatch(abortPendingRequest(trayId))
 
     const tray = getTray(getState(), trayId)

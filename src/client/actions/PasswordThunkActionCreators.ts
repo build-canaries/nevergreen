@@ -5,10 +5,10 @@ import {encryptingPassword, passwordEncrypted, passwordEncryptError} from './Pas
 import {AnyAction} from 'redux'
 import {State} from '../reducers/Reducer'
 import {abortPendingRequest} from './NevergreenThunkActionCreators'
-import {ThunkDispatch} from 'redux-thunk'
+import {ThunkAction} from 'redux-thunk'
 
-export function encryptPassword(trayId: string, rawPassword: string) {
-  return async (dispatch: ThunkDispatch<State, {}, AnyAction>) => {
+export function encryptPassword(trayId: string, rawPassword: string): ThunkAction<Promise<void>, State, undefined, AnyAction> {
+  return async (dispatch) => {
     dispatch(abortPendingRequest(trayId))
 
     if (!isBlank(rawPassword)) {

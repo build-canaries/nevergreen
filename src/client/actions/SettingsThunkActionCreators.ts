@@ -4,12 +4,14 @@ import {
   systemNotificationPermissionDenied
 } from './SettingsActionCreators'
 import * as systemNotifications from '../common/SystemNotifications'
-import {Dispatch} from 'redux'
+import {AnyAction} from 'redux'
+import {State} from '../reducers/Reducer'
+import {ThunkAction} from 'redux-thunk'
 
 const NOTIFICATIONS_ENABLED_NOTIFICATION = {body: 'System notifications are now enabled!'}
 
-export function enableSystemNotifications(show: boolean) {
-  return async (dispatch: Dispatch) => {
+export function enableSystemNotifications(show: boolean): ThunkAction<Promise<void>, State, undefined, AnyAction> {
+  return async (dispatch) => {
     if (show) {
       dispatch(requestingSystemNotificationPermission())
 
