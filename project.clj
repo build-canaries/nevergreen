@@ -32,12 +32,10 @@
   :profiles {:dev  {:plugins [[lein-ancient "0.6.15"]
                               [jonase/eastwood "0.3.5"]
                               [lein-cloverage "1.1.1"]
-                              [com.livingsocial/lein-dependency-check "1.1.2"]]}
+                              [lein-nvd "1.1.1"]]}
              :test {:jvm-opts ["-Dlogback.configurationFile=./test/logback-unit.xml"]}}
   :cloverage {:output           "target/coverage-reports/server"
               :junit?           true
               :ns-exclude-regex [#"nevergreen\.logging"]}
-  :dependency-check {:output-directory "target/security-reports/server"
-                     :suppression-file "config/nvd-suppressions.xml"
-                     :log              true
-                     :throw            true})
+  :nvd {:output-dir       "target/security-reports/server"
+        :suppression-file "config/nvd-suppressions.xml"})
