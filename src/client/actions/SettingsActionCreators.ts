@@ -1,5 +1,6 @@
 import {Actions} from './Actions'
 import {Action} from 'redux'
+import {Prognosis} from '../domain/Project'
 
 export interface ActionShowBuildTime extends Action<Actions.SHOW_BUILD_TIME> {
   readonly value: boolean;
@@ -45,6 +46,11 @@ export interface ActionSetMaxProjects extends Action<Actions.SET_MAX_PROJECTS> {
 
 export interface ActionClickToShowMenu extends Action<Actions.CLICK_TO_SHOW_MENU> {
   readonly value: boolean;
+}
+
+export interface ActionShowPrognosis extends Action<Actions.SHOW_PROGNOSIS> {
+  readonly prognosis: Prognosis;
+  readonly show: boolean;
 }
 
 export const MIN_REFRESH_TIME = 5
@@ -106,4 +112,8 @@ export function setMaxProjectsToShow(value: string): ActionSetMaxProjects {
 
 export function setClickToShowMenu(value: boolean): ActionClickToShowMenu {
   return {type: Actions.CLICK_TO_SHOW_MENU, value}
+}
+
+export function setShowPrognosis(prognosis: Prognosis, show: boolean): ActionShowPrognosis {
+  return {type: Actions.SHOW_PROGNOSIS, prognosis, show}
 }

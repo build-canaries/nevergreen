@@ -41,6 +41,12 @@
         },
         "clickToShowMenu": {
           "type": "boolean"
+        },
+        "showPrognosis": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       },
       "additionalProperties": false

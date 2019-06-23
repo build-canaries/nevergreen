@@ -209,6 +209,46 @@ var validate = (function() {
             }
             var valid2 = errors === errs_2;
           }
+          var data2 = data1.showPrognosis;
+          if (data2 !== undefined) {
+            var errs_2 = errors;
+            if (Array.isArray(data2)) {
+              var errs__2 = errors;
+              var valid2;
+              for (var i2 = 0; i2 < data2.length; i2++) {
+                var errs_3 = errors;
+                if (typeof data2[i2] !== "string") {
+                  var err = {
+                    keyword: 'type',
+                    dataPath: (dataPath || '') + '.audioVisual.showPrognosis[' + i2 + ']',
+                    schemaPath: '#/properties/audioVisual/properties/showPrognosis/items/type',
+                    params: {
+                      type: 'string'
+                    },
+                    message: 'should be string'
+                  };
+                  if (vErrors === null) vErrors = [err];
+                  else vErrors.push(err);
+                  errors++;
+                }
+                var valid3 = errors === errs_3;
+              }
+            } else {
+              var err = {
+                keyword: 'type',
+                dataPath: (dataPath || '') + '.audioVisual.showPrognosis',
+                schemaPath: '#/properties/audioVisual/properties/showPrognosis/type',
+                params: {
+                  type: 'array'
+                },
+                message: 'should be array'
+              };
+              if (vErrors === null) vErrors = [err];
+              else vErrors.push(err);
+              errors++;
+            }
+            var valid2 = errors === errs_2;
+          }
         } else {
           var err = {
             keyword: 'type',
@@ -957,6 +997,12 @@ validate.schema = {
         },
         "clickToShowMenu": {
           "type": "boolean"
+        },
+        "showPrognosis": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       },
       "additionalProperties": false

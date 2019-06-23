@@ -13,6 +13,7 @@ import {getInterestingProjects, INTERESTING_ROOT} from '../reducers/InterestingR
 import {getTrays} from '../reducers/TraysReducer'
 import {getSelectedProjects} from '../reducers/SelectedReducer'
 import {getProjects} from '../reducers/ProjectsReducer'
+import {getShowPrognosis} from '../reducers/SettingsReducer'
 
 function toErrorString(trays: Tray[], projectError: ProjectError) {
   const tray = trays.find((tray) => tray.trayId === projectError.trayId)
@@ -40,8 +41,9 @@ export function fetchInteresting() {
     const allTrays = getTrays(getState())
     const previouslyFetchedProjects = getInterestingProjects(getState())
     const projects = getProjects(getState())
+    const prognosis = getShowPrognosis(getState())
 
-    const request = interesting(allTrays, projects, selected)
+    const request = interesting(allTrays, projects, selected, prognosis)
     dispatch(interestingProjectsFetching(request))
 
     try {

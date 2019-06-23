@@ -75,18 +75,10 @@ export function fetchAll(trays: Tray[], projects: Project[]) {
   return post('/api/projects', data)
 }
 
-export function interesting(trays: Tray[], projects: Project[], selectedPerTray: SelectedState) {
+export function interesting(trays: Tray[], projects: Project[], selectedPerTray: SelectedState, prognosis: Prognosis[]) {
   const data = trays
     .map((tray) => toProjectsRequest(tray, projects, selectedPerTray))
-    .map((req) => ({
-      ...req,
-      prognosis: [
-        Prognosis.healthyBuilding,
-        Prognosis.sick,
-        Prognosis.sickBuilding,
-        Prognosis.unknown
-      ]
-    }))
+    .map((req) => ({...req, prognosis}))
     .filter(hasIncludedProjects)
 
   return size(data) === 0

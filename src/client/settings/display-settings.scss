@@ -6,10 +6,6 @@
   padding: 1em;
 }
 
-.title {
-  padding-bottom: 1em;
-}
-
 .checkbox {
   width: 100%;
 }
@@ -23,16 +19,4 @@
   @include respond-to(tablet, desktop) {
     width: 40em;
   }
-}
-
-.previewSection {
-  margin-top: 1em;
-}
-
-.displayPreview {
-  background-color: $black;
-  border-radius: 5px;
-  font-family: $monospace-font;
-  height: 18em;
-  text-align: center;
 }

@@ -1,18 +1,12 @@
-import React, {useState} from 'react'
-import _ from 'lodash'
-import {Prognosis} from '../domain/Project'
+import React from 'react'
 import {Container} from '../common/Container'
 import {Checkbox} from '../common/forms/Checkbox'
-import {ScaledGrid} from '../common/scale/ScaledGrid'
-import {InterestingProject} from '../common/project/InterestingProject'
-import {randomDateInPast} from '../common/DateTime'
-import {generateRandomName} from '../domain/Tray'
 import {DropDown} from '../common/forms/DropDown'
-import {ProjectSummary} from '../common/project/ProjectSummary'
-import {ProjectError} from '../common/project/ProjectError'
 import styles from './display-settings.scss'
+import {DisplayPreview} from './DisplayPreview'
+import {DisplayPrognosisSelection, DisplayPrognosisSelectionProps} from './DisplayPrognosisSelection'
 
-export interface DisplaySettingsProps {
+export type DisplaySettingsProps = {
   showTrayName: boolean;
   showBuildTime: boolean;
   showBrokenBuildTime: boolean;
@@ -24,11 +18,7 @@ export interface DisplaySettingsProps {
   setShowBuildLabel: (show: boolean) => void;
   setMaxProjectsToShow: (show: string) => void;
   validNumberOfProjectsToShow: number[];
-}
-
-function randomBuildLabel() {
-  return `${_.random(1, 9999)}`
-}
+} & DisplayPrognosisSelectionProps
 
 export function DisplaySettings({
                                   validNumberOfProjectsToShow,
@@ -41,14 +31,10 @@ export function DisplaySettings({
                                   setShowBuildTime,
                                   setShowTrayName,
                                   setShowBuildLabel,
-                                  setMaxProjectsToShow
+                                  setMaxProjectsToShow,
+                                  showPrognosis,
+                                  setShowPrognosis
                                 }: DisplaySettingsProps) {
-
-  const [trayName] = useState(generateRandomName())
-  const [lastBuildLabel] = useState(randomBuildLabel())
-  const [lastBuildTime] = useState(randomDateInPast())
-  const [thisBuildTime] = useState(randomDateInPast())
-  const [additionalProjects] = useState(_.random(1, 99))
 
   const projectsToShowOptions = validNumberOfProjectsToShow.map((value) => {
     const display = value === Number.MAX_SAFE_INTEGER
@@ -83,6 +69,10 @@ export function DisplaySettings({
                 data-locator='show-build-labels'>
         show broken build label
       </Checkbox>
+
+      <DisplayPrognosisSelection showPrognosis={showPrognosis}
+                                 setShowPrognosis={setShowPrognosis}/>
+
       <DropDown className={styles.maxProjects}
                 options={projectsToShowOptions}
                 value={maxProjectsToShow}
@@ -90,39 +80,12 @@ export function DisplaySettings({
                 data-locator='max-projects-to-show'>
         max number of projects to show
       </DropDown>
-      <section className={styles.previewSection}>
-        <h3 className={styles.title}>Preview</h3>
-        <div className={styles.displayPreview}>
-          <ScaledGrid>
-            <ProjectError error='some tray error'/>
-            <InterestingProject trayName={trayName}
-                                name='sick'
-                                prognosis={Prognosis.sick}
-                                lastBuildTime={lastBuildTime}
-                                lastBuildLabel={lastBuildLabel}
-                                showBrokenBuildTimers={showBrokenBuildTime}
-                                showTrayName={showTrayName}
-                                showBuildLabel={showBuildLabel}/>
-            <InterestingProject trayName={trayName}
-                                name='sick building'
-                                prognosis={Prognosis.sickBuilding}
-                                thisBuildTime={thisBuildTime}
-                                showBuildTimers={showBuildTime}
-                                showTrayName={showTrayName}/>
-            <InterestingProject trayName={trayName}
-                                name='healthy building'
-                                prognosis={Prognosis.healthyBuilding}
-                                thisBuildTime={thisBuildTime}
-                                showBuildTimers={showBuildTime}
-                                showTrayName={showTrayName}/>
-            <InterestingProject trayName={trayName}
-                                name='unknown prognosis'
-                                prognosis={Prognosis.unknown}
-                                showTrayName={showTrayName}/>
-            <ProjectSummary additionalProjectsCount={additionalProjects}/>
-          </ScaledGrid>
-        </div>
-      </section>
+
+      <DisplayPreview showBrokenBuildTime={showBrokenBuildTime}
+                      showBuildLabel={showBuildLabel}
+                      showBuildTime={showBuildTime}
+                      showTrayName={showTrayName}
+                      showPrognosis={showPrognosis}/>
     </Container>
   )
 }

@@ -1,0 +1,16 @@
+@import '../common/variables';
+
+.title {
+  padding-bottom: 1em;
+}
+
+.previewSection {
+  margin-top: $margin-top;
+}
+
+.displayPreview {
+  background-color: $black;
+  font-family: $monospace-font;
+  height: 20em;
+  text-align: center;
+}

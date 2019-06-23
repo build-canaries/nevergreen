@@ -65,7 +65,8 @@ export function buildState(subState?: RecursivePartial<State>): State {
       showSystemNotifications: false,
       showTrayName: false,
       systemNotificationPermissionDenied: false,
-      systemNotificationRequestingPermission: false
+      systemNotificationRequestingPermission: false,
+      showPrognosis: []
     },
     [BACKUP_ROOT]: {
       github: {

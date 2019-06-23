@@ -9,6 +9,7 @@ import {
   setShowBrokenBuildTime,
   setShowBuildLabel,
   setShowBuildTime,
+  setShowPrognosis,
   setShowTrayName,
   VALID_PROJECTS_TO_SHOW,
   VALID_REFRESH_TIMES
@@ -25,6 +26,7 @@ import {
   getShowBrokenBuildTime,
   getShowBuildLabel,
   getShowBuildTime,
+  getShowPrognosis,
   getShowSystemNotifications,
   getShowTrayName,
   getSystemNotificationPermissionDenied,
@@ -43,7 +45,8 @@ function mapDispatchToProps(dispatch: Dispatch) {
     setShowBuildLabel,
     setShowSystemNotifications: enableSystemNotifications,
     setMaxProjectsToShow,
-    setClickToShowMenu
+    setClickToShowMenu,
+    setShowPrognosis
   }, dispatch)
 }
 
@@ -63,7 +66,8 @@ function mapStateToProps(state: State) {
     validRefreshTimes: VALID_REFRESH_TIMES,
     maxProjectsToShow: getMaxProjectsToShow(state),
     validNumberOfProjectsToShow: VALID_PROJECTS_TO_SHOW,
-    clickToShowMenu: getClickToShowMenu(state)
+    clickToShowMenu: getClickToShowMenu(state),
+    showPrognosis: getShowPrognosis(state)
   }
 }
 

@@ -1,0 +1,23 @@
+@import '../common/typography';
+@import '../common/responsive';
+@import '../common/variables';
+
+.container {
+  margin-top: $margin-top;
+}
+
+.legend {
+  @include font-scale(1);
+}
+
+.checkbox {
+  @include grid-column(4 of 4);
+
+  @include respond-to(tablet) {
+    @include grid-column(4 of 8);
+  }
+
+  @include respond-to(desktop) {
+    @include grid-column(4 of 12);
+  }
+}

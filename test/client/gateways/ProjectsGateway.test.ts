@@ -67,15 +67,12 @@ describe('ProjectsGateway', () => {
           url: 'some-url',
           username: 'some-uname',
           prognosis: [
-            Prognosis.healthyBuilding,
             Prognosis.sick,
-            Prognosis.sickBuilding,
-            Prognosis.unknown
           ]
         }
       ]
 
-      interesting(trays, seen, selected)
+      interesting(trays, seen, selected, [Prognosis.sick])
 
       expect(gateway.post).toBeCalledWith('/api/projects', expected)
       expect(gateway.fakeRequest).not.toBeCalled()
@@ -96,7 +93,7 @@ describe('ProjectsGateway', () => {
         buildTray({trayId: 'none-selected-but-includes-new-id', includeNew: true})
       ]
 
-      interesting(trays, seen, selected)
+      interesting(trays, seen, selected, [])
 
       expect(gateway.post).toBeCalledWith(expect.anything(), expect.arrayContaining([
         expect.objectContaining({trayId: 'some-tray-id'}),
@@ -112,7 +109,7 @@ describe('ProjectsGateway', () => {
       const selected = {'some-tray-id': []}
       const trays = [buildTray({trayId: 'some-tray-id', includeNew: false})]
 
-      interesting(trays, seen, selected)
+      interesting(trays, seen, selected, [])
 
       expect(gateway.post).not.toBeCalled()
       expect(gateway.fakeRequest).toBeCalledWith([])

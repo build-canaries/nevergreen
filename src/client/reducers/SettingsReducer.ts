@@ -8,6 +8,7 @@ import {
   ActionShowBrokenBuildTime,
   ActionShowBuildLabel,
   ActionShowBuildTime,
+  ActionShowPrognosis,
   ActionShowSystemNotifications,
   ActionShowTrayName,
   DEFAULT_PROJECTS_TO_SHOW,
@@ -17,6 +18,8 @@ import defaultSoundFx from '../settings/pacman_death.mp3'
 import {ActionSetConfiguration} from '../actions/NevergreenActionCreators'
 import {createReducer, createSelector} from 'redux-starter-kit'
 import {State} from './Reducer'
+import {Prognosis} from '../domain/Project'
+import {uniq} from 'lodash'
 
 export interface SettingsState {
   readonly showTrayName: boolean;
@@ -31,6 +34,7 @@ export interface SettingsState {
   readonly systemNotificationPermissionDenied: boolean;
   readonly maxProjectsToShow: number;
   readonly clickToShowMenu: boolean;
+  readonly showPrognosis: Prognosis[];
 }
 
 export const SETTINGS_ROOT = 'audioVisual'
@@ -47,7 +51,13 @@ const DEFAULT_STATE: SettingsState = {
   systemNotificationRequestingPermission: false,
   systemNotificationPermissionDenied: false,
   maxProjectsToShow: DEFAULT_PROJECTS_TO_SHOW,
-  clickToShowMenu: false
+  clickToShowMenu: false,
+  showPrognosis: [
+    Prognosis.sick,
+    Prognosis.sickBuilding,
+    Prognosis.healthyBuilding,
+    Prognosis.unknown
+  ]
 }
 
 export const reduce = createReducer<SettingsState>(DEFAULT_STATE, {
@@ -92,6 +102,11 @@ export const reduce = createReducer<SettingsState>(DEFAULT_STATE, {
   },
   [Actions.CLICK_TO_SHOW_MENU]: (draft, action: ActionClickToShowMenu) => {
     draft.clickToShowMenu = action.value
+  },
+  [Actions.SHOW_PROGNOSIS]: (draft, action: ActionShowPrognosis) => {
+    draft.showPrognosis = action.show
+      ? uniq(draft.showPrognosis.concat(action.prognosis))
+      : draft.showPrognosis.filter((prognosis) => prognosis !== action.prognosis)
   }
 })
 
@@ -107,3 +122,4 @@ export const getBrokenBuildSoundFx = createSelector<State, string>([[SETTINGS_RO
 export const getRefreshTime = createSelector<State, number>([[SETTINGS_ROOT, 'refreshTime']])
 export const getMaxProjectsToShow = createSelector<State, number>([[SETTINGS_ROOT, 'maxProjectsToShow']])
 export const getClickToShowMenu = createSelector<State, boolean>([[SETTINGS_ROOT, 'clickToShowMenu']])
+export const getShowPrognosis = createSelector<State, Prognosis[]>([[SETTINGS_ROOT, 'showPrognosis']])

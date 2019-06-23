@@ -7,6 +7,7 @@ import {
   getShowBrokenBuildTime,
   getShowBuildLabel,
   getShowBuildTime,
+  getShowPrognosis,
   getShowSystemNotifications,
   getShowTrayName,
   getSystemNotificationPermissionDenied,
@@ -26,12 +27,14 @@ import {
   setRefreshTime,
   setShowBrokenBuildTime,
   setShowBuildTime,
+  setShowPrognosis,
   setShowSystemNotifications,
   setShowTrayName,
   systemNotificationPermissionDenied
 } from '../../../src/client/actions/SettingsActionCreators'
 import {buildState, testReducer} from '../testHelpers'
 import {RecursivePartial} from '../../../src/client/common/Types'
+import {Prognosis} from '../../../src/client/domain/Project'
 
 describe('SettingsReducer', () => {
 
@@ -222,6 +225,23 @@ describe('SettingsReducer', () => {
       const action = setClickToShowMenu(true)
       const newState = reducer(existingState, action)
       expect(getClickToShowMenu(newState)).toBeTruthy()
+    })
+  })
+
+  describe(Actions.SHOW_PROGNOSIS, () => {
+
+    test('should add the prognosis to show', () => {
+      const existingState = state({showPrognosis: []})
+      const action = setShowPrognosis(Prognosis.sick, true)
+      const newState = reducer(existingState, action)
+      expect(getShowPrognosis(newState)).toEqual([Prognosis.sick])
+    })
+
+    test('should remove the prognosis to hide', () => {
+      const existingState = state({showPrognosis: [Prognosis.sick, Prognosis.sickBuilding]})
+      const action = setShowPrognosis(Prognosis.sick, false)
+      const newState = reducer(existingState, action)
+      expect(getShowPrognosis(newState)).toEqual([Prognosis.sickBuilding])
     })
   })
 })

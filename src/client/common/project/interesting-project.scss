@@ -10,6 +10,11 @@
   text-transform: lowercase;
 }
 
+.healthy {
+  background-color: $healthy;
+  color: $white;
+}
+
 .healthy-building {
   background-color: $healthy-building;
   color: $healthy-building-text;
