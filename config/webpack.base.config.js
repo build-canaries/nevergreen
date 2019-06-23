@@ -9,8 +9,9 @@ const cssLoader = {
   loader: 'css-loader',
   options: {
     sourceMap: true,
-    modules: true,
-    localIdentName: '[name]-[local]-[hash:base64:6]'
+    modules: {
+      localIdentName: '[name]-[local]-[hash:base64:6]'
+    }
   }
 }
 
@@ -63,7 +64,7 @@ module.exports = {
       './src/client/favicons',
       './src/client/reducers/schema.json'
     ]),
-    new ManifestPlugin({ fileName: 'asset-manifest.json' })
+    new ManifestPlugin({fileName: 'asset-manifest.json'})
   ],
   resolve: {
     extensions: ['.js', '.tsx', '.ts']
@@ -84,7 +85,7 @@ module.exports = {
           'resolve-url-loader',
           {
             loader: 'sass-loader',
-            options: { sourceMap: true }
+            options: {sourceMap: true}
           }
         ]
       },
