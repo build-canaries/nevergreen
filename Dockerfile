@@ -1,6 +1,6 @@
-FROM openjdk:8-jre-alpine
+FROM azul/zulu-openjdk-alpine:12
 
-MAINTAINER Manasi Kulkarni <mkulkarn@thoughtworks.com>, Stephen Cowley <ste@thoughtworks.com>, Joe Wright <joe@joejag.com>, Christopher Martin
+MAINTAINER Build Canaries <team@nevergreen.io>
 
 RUN adduser -D -g '' nevergreenuser
 
@@ -14,7 +14,4 @@ EXPOSE 5000
 
 CMD java \
     -Duser.timezone="UTC" \
-    -XX:+UnlockExperimentalVMOptions \
-    -XX:+UseCGroupMemoryLimitForHeap \
-    -XX:MaxRAMFraction=1 \
     -jar "nevergreen-standalone.jar"
