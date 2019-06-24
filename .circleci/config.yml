@@ -1,9 +1,14 @@
 version: 2.1
 
+orbs:
+  build-tools: circleci/build-tools@2.6.0
+  jq: circleci/jq@1.9.0
+  docker: circleci/docker@0.5.1
+
 executors:
   clojure:
     docker:
-      - image: circleci/openjdk:8-jdk
+      - image: azul/zulu-openjdk:12
     working_directory: ~/nevergreen
 
 commands:
@@ -20,6 +25,7 @@ commands:
       - when:
           condition: << parameters.checkout >>
           steps:
+            - build-tools/install-ci-tools
             - checkout
 
       - unless:
@@ -48,13 +54,21 @@ commands:
       host:
         description: "The host being deployed to"
         type: string
+      docker-tag:
+        description: "The Docker tag to push"
+        type: string
       deploy:
         description: "The steps to run to actually deploy"
         type: steps
       after-deployment:
         description: "The steps to run after successfully deploying"
         type: steps
+        default: []
     steps:
+      - build-tools/install-ci-tools
+      - jq/install
+      - docker/install-docker
+
       - attach_workspace:
           at: ~/nevergreen
 
@@ -82,6 +96,16 @@ commands:
 
       - setup_remote_docker:
           docker_layer_caching: true
+
+      - docker/check
+
+      - docker/build:
+          image: buildcanariesteam/nevergreen
+          tag: << parameters.docker-tag >>
+
+      - docker/push:
+          image: buildcanariesteam/nevergreen
+          tag: << parameters.docker-tag >>
 
       - steps: << parameters.after-deployment >>
 
@@ -175,42 +199,33 @@ jobs:
     steps:
       - deploy-nevergreen:
           host: "https://staging.nevergreen.io"
+          docker-tag: staging
           deploy:
             - run: ./.circleci/deploy.sh
-          after-deployment:
-            - run:
-                name: create docker image
-                command: |
-                  docker build -t buildcanariesteam/nevergreen:staging .
-                  docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}
-                  docker push buildcanariesteam/nevergreen:staging
 
   deploy-prod:
     executor: clojure
     steps:
       - deploy-nevergreen:
           host: "https://nevergreen.io"
+          docker-tag: ${VERSION}
           deploy:
             - run: ./.circleci/release.sh
           after-deployment:
             - run:
-                name: create docker image
-                command: |
-                  docker build -t buildcanariesteam/nevergreen:latest -t buildcanariesteam/nevergreen:${VERSION} .
-                  docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}
-                  docker push buildcanariesteam/nevergreen:latest
-                  docker push buildcanariesteam/nevergreen:${VERSION}
+                name: tag Docker image as latest
+                command: docker tag buildcanariesteam/nevergreen:${VERSION} buildcanariesteam/nevergreen:latest
 
-            - run:
-                name: install command line json parser
-                command: sudo apt-get install jq
+            - docker/push:
+                image: buildcanariesteam/nevergreen
+                tag: latest
 
             - run:
                 name: create release on GitHub
                 command: ./.circleci/release-github.sh
 
             - run:
-                name: tweet release
+                name: create release tweet
                 command: ./.circleci/release-tweet.sh
 
   security-audits:
