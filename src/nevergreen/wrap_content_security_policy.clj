@@ -2,6 +2,9 @@
   (:require [clojure.string :as s]
             [nevergreen.config :as config]))
 
+(defn ^:dynamic allow-iframe-from []
+  (config/allow-iframe-from))
+
 (defn- csp-headers []
   ["default-src 'self'"
    "script-src 'self'"
@@ -12,11 +15,12 @@
    "media-src *"
    "connect-src 'self' https://api.github.com"
    "object-src 'none'"
-   (str "frame-ancestors " (config/allow-iframe-from))])
+   (str "frame-ancestors " (allow-iframe-from))])
 
 (defn wrap-content-security-policy [app]
   (fn [req]
     (let [res (app req)]
-      (-> res
-          (assoc-in [:headers "X-Frame-Options"] nil)
+      (-> (if (= (allow-iframe-from) config/default-csp-frame-ancestors)
+            (assoc-in res [:headers "X-Frame-Options"] config/default-x-frame-option)
+            (assoc-in res [:headers "X-Frame-Options"] nil))
           (assoc-in [:headers "Content-Security-Policy"] (s/join "; " (csp-headers)))))))

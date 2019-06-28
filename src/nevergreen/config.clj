@@ -7,7 +7,8 @@
 (def default-aes-key "abcdefghijklmnop")
 (def default-ip "0.0.0.0")
 (def default-port 5000)
-(def default-csp-frame-ancestors "'self'")
+(def default-csp-frame-ancestors "'none'")
+(def default-x-frame-option "DENY")
 
 (def ^:private use-default-key
   (delay
