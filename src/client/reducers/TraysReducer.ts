@@ -113,7 +113,7 @@ export function getTrayLoaded(state: State, trayId: string): boolean {
 }
 
 export function getTrayName(state: State, trayId: string): string {
-  return get(state, [TRAYS_ROOT, trayId, 'name'])
+  return get(state, [TRAYS_ROOT, trayId, 'name']) || ''
 }
 
 export function getTrayUrl(state: State, trayId: string): string {
@@ -121,11 +121,11 @@ export function getTrayUrl(state: State, trayId: string): string {
 }
 
 export function getTrayUsername(state: State, trayId: string): string {
-  return get(state, [TRAYS_ROOT, trayId, 'username'])
+  return get(state, [TRAYS_ROOT, trayId, 'username']) || ''
 }
 
 export function getTrayPassword(state: State, trayId: string): string {
-  return get(state, [TRAYS_ROOT, trayId, 'password'])
+  return get(state, [TRAYS_ROOT, trayId, 'password']) || ''
 }
 
 export function getTrayServerType(state: State, trayId: string): string {
@@ -145,7 +145,7 @@ export function getTrayErrors(state: State, trayId: string): string[] {
 }
 
 export function getTrayTimestamp(state: State, trayId: string): string {
-  return get(state, [TRAYS_ROOT, trayId, 'timestamp'])
+  return get(state, [TRAYS_ROOT, trayId, 'timestamp']) || ''
 }
 
 export function getTrayRequiresRefresh(state: State, trayId: string): boolean {
