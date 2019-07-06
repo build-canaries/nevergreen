@@ -19,6 +19,12 @@
 
 (defroutes api-routes
            (context "/api" []
+             ; deprecated in 3.5.0 by /projects, to be removed in 5.0.0
+             (OPTIONS "/projects/all" [] preflight-response)
+             (POST "/projects/all" {data :body} {:body (projects/get-projects data)})
+             (OPTIONS "/projects/interesting" [] preflight-response)
+             (POST "/projects/interesting" {data :body} {:body (projects/get-projects (map #(assoc % :prognosis [:sick :sick-building :healthy-building :unknown]) data))})
+
              (OPTIONS "/projects" [] preflight-response)
              (POST "/projects" {data :body} {:body (projects/get-projects data)})
 

@@ -1,8 +1,7 @@
 {
 	"info": {
-		"name": "Nevergreen",
 		"_postman_id": "fc72c7bb-a4b1-fe92-f865-18dcc8adcadb",
-		"description": "",
+		"name": "Nevergreen",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -18,7 +17,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "[\n\t{\n\t\t\"trayId\":\"some-id\",\n\t\t\"url\":\"http://url-to-cc-tray.xml\",\n\t\t\"username\":\"\",\n\t\t\"password\":\"\",\n\t\t\"serverType\":\"unknown\"\n\t}\n]"
+					"raw": "[\n    {\n        \"trayId\": \"some-id\",\n        \"url\": \"http://url-to-cc-tray.xml\",\n        \"username\": \"\",\n        \"password\": \"\",\n        \"serverType\": \"unknown\"\n    }\n]"
 				},
 				"url": {
 					"raw": "{{nevergreen_host}}/api/projects/all",
@@ -35,7 +34,6 @@
 			},
 			"response": [
 				{
-					"id": "635dfb0d-ca08-4925-a6a2-e7111e615ff8",
 					"name": "apache commons",
 					"originalRequest": {
 						"method": "POST",
@@ -66,7 +64,6 @@
 					"status": "OK",
 					"code": 200,
 					"_postman_previewlanguage": "json",
-					"_postman_previewtype": "text",
 					"header": [
 						{
 							"key": "Access-Control-Allow-Headers",
@@ -136,7 +133,6 @@
 						}
 					],
 					"cookie": [],
-					"responseTime": 164,
 					"body": "[ {\n  \"lastBuildTime\" : \"2017-10-16T19:17:04.000Z\",\n  \"unnormalisedName\" : \"streams-project-pullrequests\",\n  \"nextBuildTime\" : null,\n  \"stage\" : null,\n  \"name\" : \"streams project pullrequests\",\n  \"lastBuildStatus\" : \"success\",\n  \"unnormalisedOwner\" : null,\n  \"activity\" : \"sleeping\",\n  \"messages\" : [ ],\n  \"lastBuildLabel\" : \"37\",\n  \"serverType\" : \"unknown\",\n  \"webUrl\" : \"https://builds.apache.org/job/streams-project-pullrequests/\",\n  \"unnormalisedStage\" : null,\n  \"projectId\" : \"streams-project-pullrequests\",\n  \"trayId\" : null,\n  \"prognosis\" : \"healthy\",\n  \"owner\" : null,\n  \"unnormalisedJob\" : null,\n  \"job\" : null\n}, {\n  \"lastBuildTime\" : \"2017-10-16T19:23:02.000Z\",\n  \"unnormalisedName\" : \"Knox-master-patch-scan\",\n  \"nextBuildTime\" : null,\n  \"stage\" : null,\n  \"name\" : \"knox master patch scan\",\n  \"lastBuildStatus\" : \"success\",\n  \"unnormalisedOwner\" : null,\n  \"activity\" : \"sleeping\",\n  \"messages\" : [ ],\n  \"lastBuildLabel\" : \"59314\",\n  \"serverType\" : \"unknown\",\n  \"webUrl\" : \"https://builds.apache.org/job/Knox-master-patch-scan/\",\n  \"unnormalisedStage\" : null,\n  \"projectId\" : \"Knox-master-patch-scan\",\n  \"trayId\" : null,\n  \"prognosis\" : \"healthy\",\n  \"owner\" : null,\n  \"unnormalisedJob\" : null,\n  \"job\" : null\n}, {\n  \"lastBuildTime\" : \"2017-10-16T19:13:00.000Z\",\n  \"unnormalisedName\" : \"HBase-Find-Flaky-Tests\",\n  \"nextBuildTime\" : null,\n  \"stage\" : null,\n  \"name\" : \"hbase find flaky tests\",\n  \"lastBuildStatus\" : \"success\",\n  \"unnormalisedOwner\" : null,\n  \"activity\" : \"sleeping\",\n  \"messages\" : [ ],\n  \"lastBuildLabel\" : \"11737\",\n  \"serverType\" : \"unknown\",\n  \"webUrl\" : \"https://builds.apache.org/job/HBase-Find-Flaky-Tests/\",\n  \"unnormalisedStage\" : null,\n  \"projectId\" : \"HBase-Find-Flaky-Tests\",\n  \"trayId\" : null,\n  \"prognosis\" : \"healthy\",\n  \"owner\" : null,\n  \"unnormalisedJob\" : null,\n  \"job\" : null\n}, {\n  \"lastBuildTime\" : \"2017-10-16T17:33:41.000Z\",\n  \"unnormalisedName\" : \"beam_PreCommit_Java_MavenInstall\",\n  \"nextBuildTime\" : null,\n  \"stage\" : null,\n  \"name\" : \"beam pre commit java maven install\",\n  \"lastBuildStatus\" : \"success\",\n  \"unnormalisedOwner\" : null,\n  \"activity\" : \"sleeping\",\n  \"messages\" : [ ],\n  \"lastBuildLabel\" : \"15096\",\n  \"serverType\" : \"unknown\",\n  \"webUrl\" : \"https://builds.apache.org/job/beam_PreCommit_Java_MavenInstall/\",\n  \"unnormalisedStage\" : null,\n  \"projectId\" : \"beam_PreCommit_Java_MavenInstall\",\n  \"trayId\" : null,\n  \"prognosis\" : \"healthy\",\n  \"owner\" : null,\n  \"unnormalisedJob\" : null,\n  \"job\" : null\n}, {\n  \"lastBuildTime\" : \"2017-10-16T19:02:58.000Z\",\n  \"unnormalisedName\" : \"Log4jWindows\",\n  \"nextBuildTime\" : null,\n  \"stage\" : null,\n  \"name\" : \"log4j windows\",\n  \"lastBuildStatus\" : \"failure\",\n  \"unnormalisedOwner\" : null,\n  \"activity\" : \"sleeping\",\n  \"messages\" : [ ],\n  \"lastBuildLabel\" : \"493\",\n  \"serverType\" : \"unknown\",\n  \"webUrl\" : \"https://builds.apache.org/job/Log4jWindows/\",\n  \"unnormalisedStage\" : null,\n  \"projectId\" : \"Log4jWindows\",\n  \"trayId\" : null,\n  \"prognosis\" : \"sick\",\n  \"owner\" : null,\n  \"unnormalisedJob\" : null,\n  \"job\" : null\n}, {\n  \"lastBuildTime\" : \"2017-10-16T17:38:14.000Z\",\n  \"unnormalisedName\" : \"beam_PostCommit_Java_MavenInstall\",\n  \"nextBuildTime\" : null,\n  \"stage\" : null,\n  \"name\" : \"beam post commit java maven install\",\n  \"lastBuildStatus\" : \"failure\",\n  \"unnormalisedOwner\" : null,\n  \"activity\" : \"building\",\n  \"messages\" : [ ],\n  \"lastBuildLabel\" : \"5037\",\n  \"serverType\" : \"unknown\",\n  \"webUrl\" : \"https://builds.apache.org/job/beam_PostCommit_Java_MavenInstall/\",\n  \"unnormalisedStage\" : null,\n  \"projectId\" : \"beam_PostCommit_Java_MavenInstall\",\n  \"trayId\" : null,\n  \"prognosis\" : \"sick-building\",\n  \"owner\" : null,\n  \"unnormalisedJob\" : null,\n  \"job\" : null\n}, {\n  \"lastBuildTime\" : \"2017-10-16T18:43:40.000Z\",\n  \"unnormalisedName\" : \"kafka-pr-jdk9-scala2.12\",\n  \"nextBuildTime\" : null,\n  \"stage\" : null,\n  \"name\" : \"kafka pr jdk9 scala2.12\",\n  \"lastBuildStatus\" : \"failure\",\n  \"unnormalisedOwner\" : null,\n  \"activity\" : \"sleeping\",\n  \"messages\" : [ ],\n  \"lastBuildLabel\" : \"2063\",\n  \"serverType\" : \"unknown\",\n  \"webUrl\" : \"https://builds.apache.org/job/kafka-pr-jdk9-scala2.12/\",\n  \"unnormalisedStage\" : null,\n  \"projectId\" : \"kafka-pr-jdk9-scala2.12\",\n  \"trayId\" : null,\n  \"prognosis\" : \"sick\",\n  \"owner\" : null,\n  \"unnormalisedJob\" : null,\n  \"job\" : null\n}, {\n  \"lastBuildTime\" : \"2017-10-16T18:43:30.000Z\",\n  \"unnormalisedName\" : \"kafka-pr-jdk7-scala2.11\",\n  \"nextBuildTime\" : null,\n  \"stage\" : null,\n  \"name\" : \"kafka pr jdk7 scala2.11\",\n  \"lastBuildStatus\" : \"failure\",\n  \"unnormalisedOwner\" : null,\n  \"activity\" : \"sleeping\",\n  \"messages\" : [ ],\n  \"lastBuildLabel\" : \"8924\",\n  \"serverType\" : \"unknown\",\n  \"webUrl\" : \"https://builds.apache.org/job/kafka-pr-jdk7-scala2.11/\",\n  \"unnormalisedStage\" : null,\n  \"projectId\" : \"kafka-pr-jdk7-scala2.11\",\n  \"trayId\" : null,\n  \"prognosis\" : \"sick\",\n  \"owner\" : null,\n  \"unnormalisedJob\" : null,\n  \"job\" : null\n}, {\n  \"lastBuildTime\" : \"2017-10-16T18:43:35.000Z\",\n  \"unnormalisedName\" : \"kafka-pr-jdk8-scala2.12\",\n  \"nextBuildTime\" : null,\n  \"stage\" : null,\n  \"name\" : \"kafka pr jdk8 scala2.12\",\n  \"lastBuildStatus\" : \"failure\",\n  \"unnormalisedOwner\" : null,\n  \"activity\" : \"sleeping\",\n  \"messages\" : [ ],\n  \"lastBuildLabel\" : \"8912\",\n  \"serverType\" : \"unknown\",\n  \"webUrl\" : \"https://builds.apache.org/job/kafka-pr-jdk8-scala2.12/\",\n  \"unnormalisedStage\" : null,\n  \"projectId\" : \"kafka-pr-jdk8-scala2.12\",\n  \"trayId\" : null,\n  \"prognosis\" : \"sick\",\n  \"owner\" : null,\n  \"unnormalisedJob\" : null,\n  \"job\" : null\n}, {\n  \"lastBuildTime\" : \"2017-10-16T18:39:00.000Z\",\n  \"unnormalisedName\" : \"Solr-reference-guide-7.1\",\n  \"nextBuildTime\" : null,\n  \"stage\" : null,\n  \"name\" : \"solr reference guide 7.1\",\n  \"lastBuildStatus\" : \"success\",\n  \"unnormalisedOwner\" : null,\n  \"activity\" : \"sleeping\",\n  \"messages\" : [ ],\n  \"lastBuildLabel\" : \"125\",\n  \"serverType\" : \"unknown\",\n  \"webUrl\" : \"https://builds.apache.org/job/Solr-reference-guide-7.1/\",\n  \"unnormalisedStage\" : null,\n  \"projectId\" : \"Solr-reference-guide-7.1\",\n  \"trayId\" : null,\n  \"prognosis\" : \"healthy\",\n  \"owner\" : null,\n  \"unnormalisedJob\" : null,\n  \"job\" : null\n}, {\n  \"lastBuildTime\" : \"2017-10-16T18:06:09.000Z\",\n  \"unnormalisedName\" : \"zeppelin-pull-request\",\n  \"nextBuildTime\" : null,\n  \"stage\" : null,\n  \"name\" : \"zeppelin pull request\",\n  \"lastBuildStatus\" : \"failure\",\n  \"unnormalisedOwner\" : null,\n  \"activity\" : \"sleeping\",\n  \"messages\" : [ ],\n  \"lastBuildLabel\" : \"3074\",\n  \"serverType\" : \"unknown\",\n  \"webUrl\" : \"https://builds.apache.org/job/zeppelin-pull-request/\",\n  \"unnormalisedStage\" : null,\n  \"projectId\" : \"zeppelin-pull-request\",\n  \"trayId\" : null,\n  \"prognosis\" : \"sick\",\n  \"owner\" : null,\n  \"unnormalisedJob\" : null,\n  \"job\" : null\n}, {\n  \"lastBuildTime\" : \"2017-10-16T17:14:09.000Z\",\n  \"unnormalisedName\" : \"Ambari-branch-2.6\",\n  \"nextBuildTime\" : null,\n  \"stage\" : null,\n  \"name\" : \"ambari branch 2.6\",\n  \"lastBuildStatus\" : \"success\",\n  \"unnormalisedOwner\" : null,\n  \"activity\" : \"building\",\n  \"messages\" : [ ],\n  \"lastBuildLabel\" : \"392\",\n  \"serverType\" : \"unknown\",\n  \"webUrl\" : \"https://builds.apache.org/job/Ambari-branch-2.6/\",\n  \"unnormalisedStage\" : null,\n  \"projectId\" : \"Ambari-branch-2.6\",\n  \"trayId\" : null,\n  \"prognosis\" : \"healthy-building\",\n  \"owner\" : null,\n  \"unnormalisedJob\" : null,\n  \"job\" : null\n}, {\n  \"lastBuildTime\" : \"2017-10-16T13:07:01.000Z\",\n  \"unnormalisedName\" : \"Hadoop-branch2.7-nightly\",\n  \"nextBuildTime\" : null,\n  \"stage\" : null,\n  \"name\" : \"hadoop branch2.7 nightly\",\n  \"lastBuildStatus\" : \"failure\",\n  \"unnormalisedOwner\" : null,\n  \"activity\" : \"sleeping\",\n  \"messages\" : [ ],\n  \"lastBuildLabel\" : \"165\",\n  \"serverType\" : \"unknown\",\n  \"webUrl\" : \"https://builds.apache.org/job/Hadoop-branch2.7-nightly/\",\n  \"unnormalisedStage\" : null,\n  \"projectId\" : \"Hadoop-branch2.7-nightly\",\n  \"trayId\" : null,\n  \"prognosis\" : \"sick\",\n  \"owner\" : null,\n  \"unnormalisedJob\" : null,\n  \"job\" : null\n}, {\n  \"lastBuildTime\" : \"2017-10-16T07:22:25.000Z\",\n  \"unnormalisedName\" : \"hadoop-qbt-trunk-java8-linux-x86\",\n  \"nextBuildTime\" : null,\n  \"stage\" : null,\n  \"name\" : \"hadoop qbt trunk java8 linux x86\",\n  \"lastBuildStatus\" : \"failure\",\n  \"unnormalisedOwner\" : null,\n  \"activity\" : \"sleeping\",\n  \"messages\" : [ ],\n  \"lastBuildLabel\" : \"559\",\n  \"serverType\" : \"unknown\",\n  \"webUrl\" : \"https://builds.apache.org/job/hadoop-qbt-trunk-java8-linux-x86/\",\n  \"unnormalisedStage\" : null,\n  \"projectId\" : \"hadoop-qbt-trunk-java8-linux-x86\",\n  \"trayId\" : null,\n  \"prognosis\" : \"sick\",\n  \"owner\" : null,\n  \"unnormalisedJob\" : null,\n  \"job\" : null\n}, {\n  \"lastBuildTime\" : \"2017-10-16T17:07:51.000Z\",\n  \"unnormalisedName\" : \"incubator-trafficcontrol-docs\",\n  \"nextBuildTime\" : null,\n  \"stage\" : null,\n  \"name\" : \"incubator trafficcontrol docs\",\n  \"lastBuildStatus\" : \"success\",\n  \"unnormalisedOwner\" : null,\n  \"activity\" : \"sleeping\",\n  \"messages\" : [ ],\n  \"lastBuildLabel\" : \"281\",\n  \"serverType\" : \"unknown\",\n  \"webUrl\" : \"https://builds.apache.org/job/incubator-trafficcontrol-docs/\",\n  \"unnormalisedStage\" : null,\n  \"projectId\" : \"incubator-trafficcontrol-docs\",\n  \"trayId\" : null,\n  \"prognosis\" : \"healthy\",\n  \"owner\" : null,\n  \"unnormalisedJob\" : null,\n  \"job\" : null\n}, {\n  \"lastBuildTime\" : \"2017-10-16T13:26:29.000Z\",\n  \"unnormalisedName\" : \"Geode-nightly-flaky\",\n  \"nextBuildTime\" : null,\n  \"stage\" : null,\n  \"name\" : \"geode nightly flaky\",\n  \"lastBuildStatus\" : \"failure\",\n  \"unnormalisedOwner\" : null,\n  \"activity\" : \"sleeping\",\n  \"messages\" : [ ],\n  \"lastBuildLabel\" : \"151\",\n  \"serverType\" : \"unknown\",\n  \"webUrl\" : \"https://builds.apache.org/job/Geode-nightly-flaky/\",\n  \"unnormalisedStage\" : null,\n  \"projectId\" : \"Geode-nightly-flaky\",\n  \"trayId\" : null,\n  \"prognosis\" : \"sick\",\n  \"owner\" : null,\n  \"unnormalisedJob\" : null,\n  \"job\" : null\n}, {\n  \"lastBuildTime\" : \"2017-10-16T14:37:58.000Z\",\n  \"unnormalisedName\" : \"unomi-master\",\n  \"nextBuildTime\" : null,\n  \"stage\" : null,\n  \"name\" : \"unomi master\",\n  \"lastBuildStatus\" : \"success\",\n  \"unnormalisedOwner\" : null,\n  \"activity\" : \"sleeping\",\n  \"messages\" : [ ],\n  \"lastBuildLabel\" : \"239\",\n  \"serverType\" : \"unknown\",\n  \"webUrl\" : \"https://builds.apache.org/job/unomi-master/\",\n  \"unnormalisedStage\" : null,\n  \"projectId\" : \"unomi-master\",\n  \"trayId\" : null,\n  \"prognosis\" : \"healthy\",\n  \"owner\" : null,\n  \"unnormalisedJob\" : null,\n  \"job\" : null\n}, {\n  \"lastBuildTime\" : \"2017-10-16T14:18:12.000Z\",\n  \"unnormalisedName\" : \"Hadoop-YARN-5734\",\n  \"nextBuildTime\" : null,\n  \"stage\" : null,\n  \"name\" : \"hadoop yarn 5734\",\n  \"lastBuildStatus\" : \"failure\",\n  \"unnormalisedOwner\" : null,\n  \"activity\" : \"sleeping\",\n  \"messages\" : [ ],\n  \"lastBuildLabel\" : \"245\",\n  \"serverType\" : \"unknown\",\n  \"webUrl\" : \"https://builds.apache.org/job/Hadoop-YARN-5734/\",\n  \"unnormalisedStage\" : null,\n  \"projectId\" : \"Hadoop-YARN-5734\",\n  \"trayId\" : null,\n  \"prognosis\" : \"sick\",\n  \"owner\" : null,\n  \"unnormalisedJob\" : null,\n  \"job\" : null\n}, {\n  \"lastBuildTime\" : \"2017-10-16T14:15:16.000Z\",\n  \"unnormalisedName\" : \"Tamaya-Site-Master\",\n  \"nextBuildTime\" : null,\n  \"stage\" : null,\n  \"name\" : \"tamaya site master\",\n  \"lastBuildStatus\" : \"success\",\n  \"unnormalisedOwner\" : null,\n  \"activity\" : \"sleeping\",\n  \"messages\" : [ ],\n  \"lastBuildLabel\" : \"647\",\n  \"serverType\" : \"unknown\",\n  \"webUrl\" : \"https://builds.apache.org/job/Tamaya-Site-Master/\",\n  \"unnormalisedStage\" : null,\n  \"projectId\" : \"Tamaya-Site-Master\",\n  \"trayId\" : null,\n  \"prognosis\" : \"healthy\",\n  \"owner\" : null,\n  \"unnormalisedJob\" : null,\n  \"job\" : null\n} ]"
 				}
 			]
@@ -153,7 +149,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "[\n\t{\n\t\t\"trayId\":\"some-id\",\n\t\t\"url\":\"http://url-to-cc-tray.xml\",\n\t\t\"username\":\"\",\n\t\t\"password\":\"\",\n\t\t\"included\":[\"project-name-1\",\"project-name-2\"],\n\t\t\"serverType\":\"unknown\"\n\t}\n]"
+					"raw": "[\n    {\n        \"trayId\": \"some-id\",\n        \"url\": \"http://url-to-cc-tray.xml\",\n        \"username\": \"\",\n        \"password\": \"\",\n        \"included\": [\n            \"project-name-1\",\n            \"project-name-2\"\n        ],\n        \"serverType\": \"unknown\",\n        \"includeNew\": true\n    }\n]"
 				},
 				"url": {
 					"raw": "{{nevergreen_host}}/api/projects/interesting",
@@ -170,7 +166,6 @@
 			},
 			"response": [
 				{
-					"id": "5b5cf95f-af71-433e-aa48-805ea39b4c6e",
 					"name": "apache commons",
 					"originalRequest": {
 						"method": "POST",
@@ -201,7 +196,6 @@
 					"status": "OK",
 					"code": 200,
 					"_postman_previewlanguage": "json",
-					"_postman_previewtype": "text",
 					"header": [
 						{
 							"key": "Access-Control-Allow-Headers",
@@ -271,17 +265,43 @@
 						}
 					],
 					"cookie": [],
-					"responseTime": 160,
 					"body": "[ {\n  \"lastBuildTime\" : \"2017-10-16T18:00:05.000Z\",\n  \"unnormalisedName\" : \"beam_PostCommit_Java_MavenInstall\",\n  \"nextBuildTime\" : null,\n  \"stage\" : null,\n  \"name\" : \"beam post commit java maven install\",\n  \"lastBuildStatus\" : \"failure\",\n  \"unnormalisedOwner\" : null,\n  \"activity\" : \"building\",\n  \"messages\" : [ ],\n  \"lastBuildLabel\" : \"5038\",\n  \"serverType\" : \"unknown\",\n  \"webUrl\" : \"https://builds.apache.org/job/beam_PostCommit_Java_MavenInstall/\",\n  \"unnormalisedStage\" : null,\n  \"projectId\" : \"beam_PostCommit_Java_MavenInstall\",\n  \"trayId\" : \"https://builds.apache.org/cc.xml\",\n  \"prognosis\" : \"sick-building\",\n  \"owner\" : null,\n  \"unnormalisedJob\" : null,\n  \"job\" : null\n}, {\n  \"lastBuildTime\" : \"2017-10-16T18:43:40.000Z\",\n  \"unnormalisedName\" : \"kafka-pr-jdk9-scala2.12\",\n  \"nextBuildTime\" : null,\n  \"stage\" : null,\n  \"name\" : \"kafka pr jdk9 scala2.12\",\n  \"lastBuildStatus\" : \"failure\",\n  \"unnormalisedOwner\" : null,\n  \"activity\" : \"sleeping\",\n  \"messages\" : [ ],\n  \"lastBuildLabel\" : \"2063\",\n  \"serverType\" : \"unknown\",\n  \"webUrl\" : \"https://builds.apache.org/job/kafka-pr-jdk9-scala2.12/\",\n  \"unnormalisedStage\" : null,\n  \"projectId\" : \"kafka-pr-jdk9-scala2.12\",\n  \"trayId\" : \"https://builds.apache.org/cc.xml\",\n  \"prognosis\" : \"sick\",\n  \"owner\" : null,\n  \"unnormalisedJob\" : null,\n  \"job\" : null\n}, {\n  \"lastBuildTime\" : \"2017-10-16T18:43:30.000Z\",\n  \"unnormalisedName\" : \"kafka-pr-jdk7-scala2.11\",\n  \"nextBuildTime\" : null,\n  \"stage\" : null,\n  \"name\" : \"kafka pr jdk7 scala2.11\",\n  \"lastBuildStatus\" : \"failure\",\n  \"unnormalisedOwner\" : null,\n  \"activity\" : \"sleeping\",\n  \"messages\" : [ ],\n  \"lastBuildLabel\" : \"8924\",\n  \"serverType\" : \"unknown\",\n  \"webUrl\" : \"https://builds.apache.org/job/kafka-pr-jdk7-scala2.11/\",\n  \"unnormalisedStage\" : null,\n  \"projectId\" : \"kafka-pr-jdk7-scala2.11\",\n  \"trayId\" : \"https://builds.apache.org/cc.xml\",\n  \"prognosis\" : \"sick\",\n  \"owner\" : null,\n  \"unnormalisedJob\" : null,\n  \"job\" : null\n}, {\n  \"lastBuildTime\" : \"2017-10-16T18:43:35.000Z\",\n  \"unnormalisedName\" : \"kafka-pr-jdk8-scala2.12\",\n  \"nextBuildTime\" : null,\n  \"stage\" : null,\n  \"name\" : \"kafka pr jdk8 scala2.12\",\n  \"lastBuildStatus\" : \"failure\",\n  \"unnormalisedOwner\" : null,\n  \"activity\" : \"sleeping\",\n  \"messages\" : [ ],\n  \"lastBuildLabel\" : \"8912\",\n  \"serverType\" : \"unknown\",\n  \"webUrl\" : \"https://builds.apache.org/job/kafka-pr-jdk8-scala2.12/\",\n  \"unnormalisedStage\" : null,\n  \"projectId\" : \"kafka-pr-jdk8-scala2.12\",\n  \"trayId\" : \"https://builds.apache.org/cc.xml\",\n  \"prognosis\" : \"sick\",\n  \"owner\" : null,\n  \"unnormalisedJob\" : null,\n  \"job\" : null\n}, {\n  \"lastBuildTime\" : \"2017-10-16T18:06:09.000Z\",\n  \"unnormalisedName\" : \"zeppelin-pull-request\",\n  \"nextBuildTime\" : null,\n  \"stage\" : null,\n  \"name\" : \"zeppelin pull request\",\n  \"lastBuildStatus\" : \"failure\",\n  \"unnormalisedOwner\" : null,\n  \"activity\" : \"sleeping\",\n  \"messages\" : [ ],\n  \"lastBuildLabel\" : \"3074\",\n  \"serverType\" : \"unknown\",\n  \"webUrl\" : \"https://builds.apache.org/job/zeppelin-pull-request/\",\n  \"unnormalisedStage\" : null,\n  \"projectId\" : \"zeppelin-pull-request\",\n  \"trayId\" : \"https://builds.apache.org/cc.xml\",\n  \"prognosis\" : \"sick\",\n  \"owner\" : null,\n  \"unnormalisedJob\" : null,\n  \"job\" : null\n}, {\n  \"lastBuildTime\" : \"2017-10-16T17:14:09.000Z\",\n  \"unnormalisedName\" : \"Ambari-branch-2.6\",\n  \"nextBuildTime\" : null,\n  \"stage\" : null,\n  \"name\" : \"ambari branch 2.6\",\n  \"lastBuildStatus\" : \"success\",\n  \"unnormalisedOwner\" : null,\n  \"activity\" : \"building\",\n  \"messages\" : [ ],\n  \"lastBuildLabel\" : \"392\",\n  \"serverType\" : \"unknown\",\n  \"webUrl\" : \"https://builds.apache.org/job/Ambari-branch-2.6/\",\n  \"unnormalisedStage\" : null,\n  \"projectId\" : \"Ambari-branch-2.6\",\n  \"trayId\" : \"https://builds.apache.org/cc.xml\",\n  \"prognosis\" : \"healthy-building\",\n  \"owner\" : null,\n  \"unnormalisedJob\" : null,\n  \"job\" : null\n}, {\n  \"lastBuildTime\" : \"2017-10-16T13:26:29.000Z\",\n  \"unnormalisedName\" : \"Geode-nightly-flaky\",\n  \"nextBuildTime\" : null,\n  \"stage\" : null,\n  \"name\" : \"geode nightly flaky\",\n  \"lastBuildStatus\" : \"failure\",\n  \"unnormalisedOwner\" : null,\n  \"activity\" : \"sleeping\",\n  \"messages\" : [ ],\n  \"lastBuildLabel\" : \"151\",\n  \"serverType\" : \"unknown\",\n  \"webUrl\" : \"https://builds.apache.org/job/Geode-nightly-flaky/\",\n  \"unnormalisedStage\" : null,\n  \"projectId\" : \"Geode-nightly-flaky\",\n  \"trayId\" : \"https://builds.apache.org/cc.xml\",\n  \"prognosis\" : \"sick\",\n  \"owner\" : null,\n  \"unnormalisedJob\" : null,\n  \"job\" : null\n}, {\n  \"lastBuildTime\" : \"2017-10-16T14:18:12.000Z\",\n  \"unnormalisedName\" : \"Hadoop-YARN-5734\",\n  \"nextBuildTime\" : null,\n  \"stage\" : null,\n  \"name\" : \"hadoop yarn 5734\",\n  \"lastBuildStatus\" : \"failure\",\n  \"unnormalisedOwner\" : null,\n  \"activity\" : \"sleeping\",\n  \"messages\" : [ ],\n  \"lastBuildLabel\" : \"245\",\n  \"serverType\" : \"unknown\",\n  \"webUrl\" : \"https://builds.apache.org/job/Hadoop-YARN-5734/\",\n  \"unnormalisedStage\" : null,\n  \"projectId\" : \"Hadoop-YARN-5734\",\n  \"trayId\" : \"https://builds.apache.org/cc.xml\",\n  \"prognosis\" : \"sick\",\n  \"owner\" : null,\n  \"unnormalisedJob\" : null,\n  \"job\" : null\n} ]"
 				}
 			]
+		},
+		{
+			"name": "projects",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n        \"trayId\": \"some-id\",\n        \"url\": \"http://url-to-cc-tray.xml\",\n        \"username\": \"\",\n        \"password\": \"\",\n        \"included\": [\n            \"project-name-1\",\n            \"project-name-2\"\n        ],\n        \"serverType\": \"unknown\",\n        \"includeNew\": true,\n        \"prognosis\": [\n            \"healthy\",\n            \"healthy-building\",\n            \"sick\",\n            \"sick-building\",\n            \"unknown\"\n        ]\n    }\n]"
+				},
+				"url": {
+					"raw": "{{nevergreen_host}}/api/projects",
+					"host": [
+						"{{nevergreen_host}}"
+					],
+					"path": [
+						"api",
+						"projects"
+					]
+				},
+				"description": "Fetches projects for 1 or more trays."
+			},
+			"response": []
 		},
 		{
 			"name": "ping",
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {},
 				"url": {
 					"raw": "{{nevergreen_host}}/api/ping",
 					"host": [
@@ -308,7 +328,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"password\":\"raw-password\"}"
+					"raw": "{\n    \"password\": \"raw-password\"\n}"
 				},
 				"url": {
 					"raw": "{{nevergreen_host}}/api/encrypt",
@@ -321,6 +341,62 @@
 					]
 				},
 				"description": "Encrypts raw passwords so they don't get saved in plain text in the browsers local storage."
+			},
+			"response": []
+		},
+		{
+			"name": "export",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"disabled": false
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": null,\n    \"token\": \"\",\n    \"description\": \"some-description\",\n    \"where\": \"gitlab\",\n    \"configuration\": \"{\\r\\n        \\\"success\\\": [\\r\\n            \\\"=(^.^)=\\\",\\r\\n            \\\"https://wallpapercave.com/wp/ixmt8JQ.jpg\\\",\\r\\n            \\\"https://cdn.wallpapersafari.com/75/58/FfrRTe.jpg\\\",\\r\\n            \\\"https://cdn.wallpapersafari.com/72/13/EwI2Tc.jpg\\\",\\r\\n            \\\"(◕‿◕✿)\\\",\\r\\n            \\\"(◍•ᴗ•◍)❤\\\",\\r\\n            \\\"༼つ◕_◕༽つ\\\"\\r\\n        ],\\r\\n        \\\"github\\\": {\\r\\n            \\\"gistId\\\": \\\"9bb6e39eba974f535236bcf9f1b4da50\\\",\\r\\n            \\\"description\\\": \\\"Nevergreen configuration backup\\\"\\r\\n        },\\r\\n        \\\"audioVisual\\\": {\\r\\n            \\\"showBuildLabel\\\": true,\\r\\n            \\\"refreshTime\\\": 10,\\r\\n            \\\"brokenBuildSoundFx\\\": \\\"pacman_death.mp3\\\",\\r\\n            \\\"showBrokenBuildTime\\\": true,\\r\\n            \\\"maxProjectsToShow\\\": 12,\\r\\n            \\\"showSystemNotifications\\\": true,\\r\\n            \\\"playBrokenBuildSoundFx\\\": true,\\r\\n            \\\"showTrayName\\\": false,\\r\\n            \\\"showBuildTime\\\": true,\\r\\n            \\\"clickToShowMenu\\\": false\\r\\n        },\\r\\n        \\\"projects\\\": {\\r\\n            \\\"8c134c3d-0701-4ee0-a7d2-e4af5b7faac5\\\": {\\r\\n                \\\"example-service-1\\\": {\\r\\n                    \\\"projectId\\\": \\\"example-service-1\\\",\\r\\n                    \\\"removed\\\": false,\\r\\n                    \\\"name\\\": \\\"example service 1\\\",\\r\\n                    \\\"isNew\\\": false,\\r\\n                    \\\"stage\\\": \\\"\\\"\\r\\n                },\\r\\n                \\\"example-service-2\\\": {\\r\\n                    \\\"projectId\\\": \\\"example-service-2\\\",\\r\\n                    \\\"removed\\\": false,\\r\\n                    \\\"name\\\": \\\"example service 2\\\",\\r\\n                    \\\"isNew\\\": false,\\r\\n                    \\\"stage\\\": \\\"\\\"\\r\\n                },\\r\\n                \\\"example-service-3\\\": {\\r\\n                    \\\"projectId\\\": \\\"example-service-3\\\",\\r\\n                    \\\"removed\\\": false,\\r\\n                    \\\"name\\\": \\\"example service 3\\\",\\r\\n                    \\\"isNew\\\": false,\\r\\n                    \\\"stage\\\": \\\"\\\"\\r\\n                }\\r\\n            },\\r\\n            \\\"4f7573db-e995-4470-8799-3aac0d9a2642\\\": {\\r\\n                \\\"ZooKeeper_UT_Stress\\\": {\\r\\n                    \\\"projectId\\\": \\\"ZooKeeper_UT_Stress\\\",\\r\\n                    \\\"removed\\\": false,\\r\\n                    \\\"name\\\": \\\"zoo keeper ut stress\\\",\\r\\n                    \\\"isNew\\\": false,\\r\\n                    \\\"stage\\\": \\\"\\\"\\r\\n                },\\r\\n                \\\"CXF-Master-JDK11\\\": {\\r\\n                    \\\"projectId\\\": \\\"CXF-Master-JDK11\\\",\\r\\n                    \\\"removed\\\": true,\\r\\n                    \\\"name\\\": \\\"cxf master jdk11\\\",\\r\\n                    \\\"isNew\\\": false,\\r\\n                    \\\"stage\\\": \\\"\\\"\\r\\n                },\\r\\n                \\\"apache-heron-github-docker-image-debian\\\": {\\r\\n                    \\\"projectId\\\": \\\"apache-heron-github-docker-image-debian\\\",\\r\\n                    \\\"removed\\\": true,\\r\\n                    \\\"name\\\": \\\"apache heron github docker image debian\\\",\\r\\n                    \\\"isNew\\\": true,\\r\\n                    \\\"stage\\\": \\\"\\\"\\r\\n                },\\r\\n                \\\"CXF-Master-JDK12\\\": {\\r\\n                    \\\"projectId\\\": \\\"CXF-Master-JDK12\\\",\\r\\n                    \\\"removed\\\": true,\\r\\n                    \\\"name\\\": \\\"cxf master jdk12\\\",\\r\\n                    \\\"isNew\\\": false,\\r\\n                    \\\"stage\\\": \\\"\\\"\\r\\n                },\\r\\n                \\\"Shiro-1.2.x\\\": {\\r\\n                    \\\"projectId\\\": \\\"Shiro-1.2.x\\\",\\r\\n                    \\\"removed\\\": false,\\r\\n                    \\\"name\\\": \\\"shiro 1.2.x\\\",\\r\\n                    \\\"isNew\\\": false,\\r\\n                    \\\"stage\\\": \\\"\\\"\\r\\n                },\\r\\n                \\\"CXF-Master-JDK13\\\": {\\r\\n                    \\\"projectId\\\": \\\"CXF-Master-JDK13\\\",\\r\\n                    \\\"removed\\\": true,\\r\\n                    \\\"name\\\": \\\"cxf master jdk13\\\",\\r\\n                    \\\"isNew\\\": false,\\r\\n                    \\\"stage\\\": \\\"\\\"\\r\\n                },\\r\\n                \\\"Apache Flex SDK\\\": {\\r\\n                    \\\"projectId\\\": \\\"Apache Flex SDK\\\",\\r\\n                    \\\"removed\\\": false,\\r\\n                    \\\"name\\\": \\\"apache flex sdk\\\",\\r\\n                    \\\"isNew\\\": true,\\r\\n                    \\\"stage\\\": \\\"\\\"\\r\\n                },\\r\\n                \\\"CXF-3.2.x\\\": {\\r\\n                    \\\"projectId\\\": \\\"CXF-3.2.x\\\",\\r\\n                    \\\"removed\\\": true,\\r\\n                    \\\"name\\\": \\\"cxf 3.2.x\\\",\\r\\n                    \\\"isNew\\\": false,\\r\\n                    \\\"stage\\\": \\\"\\\"\\r\\n                },\\r\\n                \\\"Mesos-Reviewbot-Linux\\\": {\\r\\n                    \\\"projectId\\\": \\\"Mesos-Reviewbot-Linux\\\",\\r\\n                    \\\"removed\\\": false,\\r\\n                    \\\"name\\\": \\\"mesos reviewbot linux\\\",\\r\\n                    \\\"isNew\\\": false,\\r\\n                    \\\"stage\\\": \\\"\\\"\\r\\n                },\\r\\n                \\\"hadoop-ozone-trunk-qbt-java8-linux-x86\\\": {\\r\\n                    \\\"projectId\\\": \\\"hadoop-ozone-trunk-qbt-java8-linux-x86\\\",\\r\\n                    \\\"removed\\\": false,\\r\\n                    \\\"name\\\": \\\"hadoop ozone trunk qbt java8 linux x86\\\",\\r\\n                    \\\"isNew\\\": false,\\r\\n                    \\\"stage\\\": \\\"\\\"\\r\\n                },\\r\\n                \\\"Derby-trunk\\\": {\\r\\n                    \\\"projectId\\\": \\\"Derby-trunk\\\",\\r\\n                    \\\"removed\\\": false,\\r\\n                    \\\"name\\\": \\\"derby trunk\\\",\\r\\n                    \\\"isNew\\\": true,\\r\\n                    \\\"stage\\\": \\\"\\\"\\r\\n                },\\r\\n                \\\"incubator-taverna-workbench-common-activities\\\": {\\r\\n                    \\\"projectId\\\": \\\"incubator-taverna-workbench-common-activities\\\",\\r\\n                    \\\"removed\\\": true,\\r\\n                    \\\"name\\\": \\\"incubator taverna workbench common activities\\\",\\r\\n                    \\\"isNew\\\": true,\\r\\n                    \\\"stage\\\": \\\"\\\"\\r\\n                },\\r\\n                \\\"PreCommit-KYLIN-Build\\\": {\\r\\n                    \\\"projectId\\\": \\\"PreCommit-KYLIN-Build\\\",\\r\\n                    \\\"removed\\\": false,\\r\\n                    \\\"name\\\": \\\"pre commit kylin build\\\",\\r\\n                    \\\"isNew\\\": true,\\r\\n                    \\\"stage\\\": \\\"\\\"\\r\\n                },\\r\\n                \\\"kafka-trunk-jdk11\\\": {\\r\\n                    \\\"projectId\\\": \\\"kafka-trunk-jdk11\\\",\\r\\n                    \\\"removed\\\": true,\\r\\n                    \\\"name\\\": \\\"kafka trunk jdk11\\\",\\r\\n                    \\\"isNew\\\": false,\\r\\n                    \\\"stage\\\": \\\"\\\"\\r\\n                },\\r\\n                \\\"PreCommit-ZOOKEEPER-github-pr-build\\\": {\\r\\n                    \\\"projectId\\\": \\\"PreCommit-ZOOKEEPER-github-pr-build\\\",\\r\\n                    \\\"removed\\\": true,\\r\\n                    \\\"name\\\": \\\"pre commit zookeeper github pr build\\\",\\r\\n                    \\\"isNew\\\": false,\\r\\n                    \\\"stage\\\": \\\"\\\"\\r\\n                },\\r\\n                \\\"ranger-master-snapshot-publish\\\": {\\r\\n                    \\\"projectId\\\": \\\"ranger-master-snapshot-publish\\\",\\r\\n                    \\\"removed\\\": false,\\r\\n                    \\\"name\\\": \\\"ranger master snapshot publish\\\",\\r\\n                    \\\"isNew\\\": true,\\r\\n                    \\\"stage\\\": \\\"\\\"\\r\\n                },\\r\\n                \\\"hadoop-qbt-trunk-java8-linux-x86\\\": {\\r\\n                    \\\"projectId\\\": \\\"hadoop-qbt-trunk-java8-linux-x86\\\",\\r\\n                    \\\"removed\\\": false,\\r\\n                    \\\"name\\\": \\\"hadoop qbt trunk java8 linux x86\\\",\\r\\n                    \\\"isNew\\\": false,\\r\\n                    \\\"stage\\\": \\\"\\\"\\r\\n                },\\r\\n                \\\"beam_SeedJob\\\": {\\r\\n                    \\\"projectId\\\": \\\"beam_SeedJob\\\",\\r\\n                    \\\"removed\\\": false,\\r\\n                    \\\"name\\\": \\\"beam seed job\\\",\\r\\n                    \\\"isNew\\\": true,\\r\\n                    \\\"stage\\\": \\\"\\\"\\r\\n                },\\r\\n                \\\"zeppelin-pull-request\\\": {\\r\\n                    \\\"projectId\\\": \\\"zeppelin-pull-request\\\",\\r\\n                    \\\"removed\\\": false,\\r\\n                    \\\"name\\\": \\\"zeppelin pull request\\\",\\r\\n                    \\\"isNew\\\": true,\\r\\n                    \\\"stage\\\": \\\"\\\"\\r\\n                },\\r\\n                \\\"PreCommit-HDDS-Build\\\": {\\r\\n                    \\\"projectId\\\": \\\"PreCommit-HDDS-Build\\\",\\r\\n                    \\\"removed\\\": false,\\r\\n                    \\\"name\\\": \\\"pre commit hdds build\\\",\\r\\n                    \\\"isNew\\\": false,\\r\\n                    \\\"stage\\\": \\\"\\\"\\r\\n                }\\r\\n            }\\r\\n        },\\r\\n        \\\"gitlab\\\": {\\r\\n            \\\"url\\\": \\\"https://gitlab.com\\\",\\r\\n            \\\"snippetId\\\": \\\"\\\"\\r\\n        },\\r\\n        \\\"selected\\\": {\\r\\n            \\\"8c134c3d-0701-4ee0-a7d2-e4af5b7faac5\\\": [\\r\\n                \\\"example-service-1\\\",\\r\\n                \\\"example-service-2\\\",\\r\\n                \\\"example-service-3\\\"\\r\\n            ],\\r\\n            \\\"4f7573db-e995-4470-8799-3aac0d9a2642\\\": [\\r\\n                \\\"ZooKeeper_UT_Stress\\\",\\r\\n                \\\"Shiro-1.2.x\\\",\\r\\n                \\\"Apache Flex SDK\\\",\\r\\n                \\\"Mesos-Reviewbot-Linux\\\",\\r\\n                \\\"hadoop-ozone-trunk-qbt-java8-linux-x86\\\",\\r\\n                \\\"Derby-trunk\\\",\\r\\n                \\\"PreCommit-KYLIN-Build\\\",\\r\\n                \\\"ranger-master-snapshot-publish\\\",\\r\\n                \\\"hadoop-qbt-trunk-java8-linux-x86\\\",\\r\\n                \\\"beam_SeedJob\\\",\\r\\n                \\\"zeppelin-pull-request\\\",\\r\\n                \\\"PreCommit-HDDS-Build\\\"\\r\\n            ]\\r\\n        },\\r\\n        \\\"trays\\\": {\\r\\n            \\\"8c134c3d-0701-4ee0-a7d2-e4af5b7faac5\\\": {\\r\\n                \\\"trayId\\\": \\\"8c134c3d-0701-4ee0-a7d2-e4af5b7faac5\\\",\\r\\n                \\\"name\\\": \\\"quizzical stew\\\",\\r\\n                \\\"url\\\": \\\"http://localhost:5050/cc.xml\\\",\\r\\n                \\\"username\\\": \\\"\\\",\\r\\n                \\\"password\\\": \\\"\\\",\\r\\n                \\\"serverType\\\": \\\"unknown\\\",\\r\\n                \\\"timestamp\\\": \\\"2019-04-01T00:01:25.494+01:00\\\",\\r\\n                \\\"includeNew\\\": false\\r\\n            },\\r\\n            \\\"4f7573db-e995-4470-8799-3aac0d9a2642\\\": {\\r\\n                \\\"trayId\\\": \\\"4f7573db-e995-4470-8799-3aac0d9a2642\\\",\\r\\n                \\\"name\\\": \\\"homely soda\\\",\\r\\n                \\\"url\\\": \\\"https://builds.apache.org/cc.xml\\\",\\r\\n                \\\"username\\\": \\\"\\\",\\r\\n                \\\"password\\\": \\\"\\\",\\r\\n                \\\"serverType\\\": \\\"\\\",\\r\\n                \\\"timestamp\\\": \\\"2019-04-01T00:01:29.047+01:00\\\",\\r\\n                \\\"includeNew\\\": true\\r\\n            }\\r\\n        }\\r\\n    }\"\n}"
+				},
+				"url": {
+					"raw": "{{nevergreen_host}}/api/export",
+					"host": [
+						"{{nevergreen_host}}"
+					],
+					"path": [
+						"api",
+						"export"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "import",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"disabled": false
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"1846757\",\n    \"token\": \"\",\n    \"from\": \"gitlab\"\n}"
+				},
+				"url": {
+					"raw": "{{nevergreen_host}}/api/import",
+					"host": [
+						"{{nevergreen_host}}"
+					],
+					"path": [
+						"api",
+						"import"
+					]
+				}
 			},
 			"response": []
 		}
