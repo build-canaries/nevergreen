@@ -134,6 +134,7 @@ export function buildApiProject(apiProject?: Partial<ApiProject>): ApiProject {
     activity: '',
     fetchedTime: '',
     isError: false,
+    isNew: false,
     job: null,
     lastBuildLabel: '',
     lastBuildStatus: '',

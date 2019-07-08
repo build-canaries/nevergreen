@@ -1,4 +1,5 @@
-import {formatBuildLabel, isBuilding, isSick, Prognosis} from '../../../src/client/domain/Project'
+import {formatBuildLabel, isBuilding, isSick, Prognosis, wrapProjects} from '../../../src/client/domain/Project'
+import {buildApiProject} from '../testHelpers'
 
 describe('Project', () => {
 
@@ -59,6 +60,24 @@ describe('Project', () => {
       test(`should be false for value ${value}`, () => {
         expect(isBuilding(value)).toBe(false)
       })
+    })
+  })
+
+  describe('wrapProjects', () => {
+
+    test('should remove errors', () => {
+      const result = wrapProjects([buildApiProject({isError: true})])
+      expect(result).toEqual([])
+    })
+
+    test('should filter jobs', () => {
+      const result = wrapProjects([buildApiProject({job: 'some-job'})])
+      expect(result).toEqual([])
+    })
+
+    test('should copy whether the project is new or not', () => {
+      const result = wrapProjects([buildApiProject({isNew: true})])
+      expect(result).toEqual(expect.arrayContaining([expect.objectContaining({isNew: true})]))
     })
   })
 })

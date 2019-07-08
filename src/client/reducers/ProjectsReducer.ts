@@ -40,7 +40,7 @@ export const reduce = createReducer<ProjectsState>(DEFAULT_STATE, {
 
     draft[action.trayId] = merge(Object.values(draft[action.trayId])
         .filter((project) => !project.removed)
-        .map((project) => ({...project, removed: true}))
+        .map((project) => ({...project, removed: true, isNew: false}))
         .reduce(byProjectId, {}),
       fetched)
   }

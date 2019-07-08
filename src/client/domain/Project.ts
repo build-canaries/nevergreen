@@ -58,7 +58,7 @@ export function wrapProjects(apiProjects: ApiProject[]): Project[] {
     .map((apiProject) => {
       return {
         fetchedTime: apiProject.fetchedTime,
-        isNew: false,
+        isNew: apiProject.isNew,
         lastBuildLabel: apiProject.lastBuildLabel,
         lastBuildStatus: apiProject.lastBuildStatus,
         lastBuildTime: apiProject.lastBuildTime,

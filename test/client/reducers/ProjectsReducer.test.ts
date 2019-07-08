@@ -77,6 +77,13 @@ describe('ProjectsReducer', () => {
       expect(getProjects(newState, 'trayId')).toEqual([expect.objectContaining({removed: true})])
     })
 
+    test('should set existing (non filtered) projects as not new', () => {
+      const existingState = state({trayId: {projectId: buildProject({projectId: 'projectId', isNew: true})}})
+      const action = projectsFetched('trayId', [], false)
+      const newState = reducer(existingState, action)
+      expect(getProjects(newState, 'trayId')).toEqual([expect.objectContaining({isNew: false})])
+    })
+
     test('should mark existing projects that have been fetched again as not removed', () => {
       const existingState = state({trayId: {projectId: buildProject({projectId: 'projectId'})}})
       const action = projectsFetched('trayId', [buildProject({projectId: 'projectId'})], false)

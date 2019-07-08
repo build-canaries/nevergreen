@@ -9,6 +9,7 @@ export interface ApiProject {
   readonly errorMessage?: string;
   readonly fetchedTime: string;
   readonly isError: boolean;
+  readonly isNew: boolean;
   readonly job: string | null;
   readonly lastBuildLabel: string;
   readonly lastBuildStatus: string;
