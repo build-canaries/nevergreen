@@ -16,18 +16,24 @@
     "URL is blank, a http(s) URL must be provided"
     (str "URL is invalid, only http(s) URLs are supported")))
 
-(defn- set-auth-header [username password]
+(defn- auth-using-credentials [username password]
   (if-not (or (s/blank? username) (s/blank? password))
-    {"Authorization" (str "Basic " (base64/encode (s/join ":" [username password])))}))
+    (let [decrypted-password (decrypt password (config/aes-key))]
+      (str "Basic " (base64/encode (s/join ":" [username decrypted-password]))))))
+
+(defn- auth-using-token [access-token]
+  (str "Bearer " (decrypt access-token (config/aes-key))))
+
+(defn- get-headers [username password access-token]
+  {"Authorization" (if (nil? access-token) (auth-using-credentials username password) (auth-using-token access-token))})
 
 (defn- validate-scheme [url]
   (if (or (s/blank? url)
           (not (re-find #"^https?://" url)))
     (throw (ex-info (invalid-url-error-message url) {:status 400}))))
 
-(defn fetch-cctray [{:keys [url username password]}]
+(defn fetch-cctray [{:keys [url username password access-token]}]
   (validate-scheme url)
-  (let [decrypted-password (decrypt password (config/aes-key))]
-    (http-get url {:headers (set-auth-header username decrypted-password)
-                   :accept  "application/xml"
-                   :as      :stream})))
+  (http-get url {:headers (get-headers username password access-token)
+                 :accept  "application/xml"
+                 :as      :stream}))

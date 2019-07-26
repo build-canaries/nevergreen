@@ -29,7 +29,7 @@
              (POST "/projects" {data :body} {:body (projects/get-projects data)})
 
              (OPTIONS "/encrypt" [] preflight-response)
-             (POST "/encrypt" {data :body} {:body (security/encrypt-password data)})
+             (POST "/encrypt" {data :body} {:body (security/encrypt-data data)})
 
              (OPTIONS "/export" [] preflight-response)
              (POST "/export" {data :body} {:body (export-config data)})
