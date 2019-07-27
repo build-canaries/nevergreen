@@ -8,6 +8,7 @@ import {iBin, iCross, iDice, iFloppyDisk, iUnlocked} from '../../common/fonts/Ic
 import styles from './tray-settings.scss'
 import {Password} from '../../common/forms/Password'
 import {Checkbox} from '../../common/forms/Checkbox'
+import {isBlank} from "../../common/Utils";
 
 interface TraySettingsProps {
   trayId: string;
@@ -15,6 +16,7 @@ interface TraySettingsProps {
   url: string;
   username: string;
   password: string;
+  accessToken: string;
   serverType: string;
   removeTray: (trayId: string) => void;
   setTrayName: (trayId: string, name: string) => void;
@@ -26,7 +28,7 @@ interface TraySettingsProps {
   setIncludeNew: (trayId: string, includeNew: boolean) => void;
 }
 
-export function TraySettings({trayId, name, url, username, password, serverType, includeNew, removeTray, setTrayName, setTrayUrl, setServerType, setTrayUsername, encryptPassword, setIncludeNew}: TraySettingsProps) {
+export function TraySettings({trayId, name, url, username, password, accessToken, serverType, includeNew, removeTray, setTrayName, setTrayUrl, setServerType, setTrayUsername, encryptPassword, setIncludeNew}: TraySettingsProps) {
   const [newName, setNewName] = useState(name)
   const [newUrl, setNewUrl] = useState(url)
   const [newUsername, setNewUsername] = useState(username)
@@ -80,48 +82,53 @@ export function TraySettings({trayId, name, url, username, password, serverType,
                 data-locator='tray-server-type'>
         <span className={styles.label}>server type</span>
       </DropDown>
-      <Input className={styles.traySettingsUsername}
-             value={newUsername}
-             onChange={({target}) => setNewUsername(target.value)}
-             onBlur={() => setTrayUsername(trayId, newUsername)}
-             onEnter={() => setTrayUsername(trayId, newUsername)}
-             data-locator='tray-username'
-             autoComplete='username'>
-        <span className={styles.label}>username</span>
-      </Input>
-      <Password className={styles.existingPassword}
-                value={passwordValue}
-                onChange={({target}) => setNewPassword(target.value)}
-                onEnter={setPassword}
-                readOnly={!updatingPassword}
-                focus={updatingPassword}
-                data-locator='tray-password'>
-        <span className={styles.label}>password</span>
-      </Password>
-      {updatingPassword
-        ? (
-          <>
-            <SecondaryButton className={styles.changePasswordButtons}
-                             icon={iCross}
-                             onClick={() => setUpdatingPassword(false)}
-                             data-locator='change-password-cancel'>
-              discard changes
-            </SecondaryButton>
-            <PrimaryButton className={styles.changePasswordButtons}
-                           icon={iFloppyDisk}
-                           onClick={setPassword}
-                           data-locator='change-password-update'>
-              save changes
-            </PrimaryButton>
-          </>
-        ) : (
-          <SecondaryButton className={styles.changePasswordButtons}
-                           icon={iUnlocked}
-                           onClick={() => setUpdatingPassword(true)}
-                           data-locator='change-password'>
-            change password
-          </SecondaryButton>
-        )
+
+      {isBlank(accessToken) &&
+        <div>
+          <Input className={styles.traySettingsUsername}
+                 value={newUsername}
+                 onChange={({target}) => setNewUsername(target.value)}
+                 onBlur={() => setTrayUsername(trayId, newUsername)}
+                 onEnter={() => setTrayUsername(trayId, newUsername)}
+                 data-locator='tray-username'
+                 autoComplete='username'>
+            <span className={styles.label}>username</span>
+          </Input>
+          <Password className={styles.existingPassword}
+                    value={passwordValue}
+                    onChange={({target}) => setNewPassword(target.value)}
+                    onEnter={setPassword}
+                    readOnly={!updatingPassword}
+                    focus={updatingPassword}
+                    data-locator='tray-password'>
+            <span className={styles.label}>password</span>
+          </Password>
+          {updatingPassword
+            ? (
+              <>
+                <SecondaryButton className={styles.changePasswordButtons}
+                                 icon={iCross}
+                                 onClick={() => setUpdatingPassword(false)}
+                                 data-locator='change-password-cancel'>
+                  discard changes
+                </SecondaryButton>
+                <PrimaryButton className={styles.changePasswordButtons}
+                               icon={iFloppyDisk}
+                               onClick={setPassword}
+                               data-locator='change-password-update'>
+                  save changes
+                </PrimaryButton>
+              </>
+            ) : (
+              <SecondaryButton className={styles.changePasswordButtons}
+                               icon={iUnlocked}
+                               onClick={() => setUpdatingPassword(true)}
+                               data-locator='change-password'>
+                change password
+              </SecondaryButton>
+            )
+          }
+        </div>
       }
       <Checkbox checked={includeNew}
                 onToggle={(newValue) => setIncludeNew(trayId, newValue)}
