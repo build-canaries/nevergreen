@@ -282,7 +282,7 @@ var validate = (function() {
                 var errs__2 = errors;
                 var valid3 = true;
                 for (var key2 in data2) {
-                  var isAdditional2 = !(false || key2 == 'trayId' || key2 == 'url' || key2 == 'name' || key2 == 'serverType' || key2 == 'username' || key2 == 'password' || key2 == 'timestamp' || key2 == 'includeNew');
+                  var isAdditional2 = !(false || key2 == 'trayId' || key2 == 'url' || key2 == 'name' || key2 == 'serverType' || key2 == 'username' || key2 == 'password' || key2 == 'timestamp' || key2 == 'includeNew' || key2 == 'accessToken');
                   if (isAdditional2) {
                     delete data2[key2];
                   }
