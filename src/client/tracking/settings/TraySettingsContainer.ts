@@ -7,7 +7,7 @@ import {
   setTrayUrl,
   setTrayUsername
 } from '../../actions/TrackingActionCreators'
-import {encryptPassword} from '../../actions/PasswordThunkActionCreators'
+import {encryptPassword} from '../../actions/AuthenticationThunkActionCreators'
 import {TraySettings} from './TraySettings'
 import {
   getTrayIncludeNew,

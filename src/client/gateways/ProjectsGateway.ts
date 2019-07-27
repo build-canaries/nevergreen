@@ -36,6 +36,7 @@ interface ProjectsRequest {
   readonly included?: string[];
   readonly includeNew: boolean;
   readonly password?: string;
+  readonly accessToken?: string;
   readonly prognosis?: Prognosis[];
   readonly seen: string[];
   readonly serverType?: string;
@@ -58,6 +59,7 @@ function toProjectsRequest(tray: Tray, projects: Project[], selectedPerTray?: Se
     url: tray.url,
     username: tray.username,
     password: tray.password,
+    accessToken: tray.accessToken,
     serverType: tray.serverType,
     includeNew: tray.includeNew,
     included,

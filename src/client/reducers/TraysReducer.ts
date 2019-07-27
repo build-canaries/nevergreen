@@ -14,7 +14,15 @@ import {
   ActionSetTrayUsername,
   ActionTrayAdded
 } from '../actions/TrackingActionCreators'
-import {ActionEncryptingPassword, ActionPasswordEncryptError} from '../actions/PasswordActionCreators'
+import {
+  ActionEncryptingPassword,
+  ActionPasswordEncryptError
+} from '../actions/PasswordActionCreators'
+import {
+  ActionEncryptingToken,
+  ActionTokenEncrypted,
+  ActionTokenEncryptError
+} from '../actions/AccessTokenActionCreators'
 import {createReducer, createSelector} from 'redux-starter-kit'
 import {Draft} from 'immer'
 import {State} from './Reducer'
@@ -64,6 +72,21 @@ export const reduce = createReducer<TraysState>(DEFAULT_STATE, {
     draft[action.trayId].errors = []
   },
   [Actions.PASSWORD_ENCRYPT_ERROR]: (draft, action: ActionPasswordEncryptError) => {
+    draft[action.trayId].loaded = true
+    draft[action.trayId].errors = action.errors
+  },
+  [Actions.ENCRYPTING_TOKEN]: (draft, action: ActionEncryptingToken) => {
+    draft[action.trayId].loaded = false
+    draft[action.trayId].requiresRefresh = false
+    draft[action.trayId].errors = []
+  },
+  [Actions.TOKEN_ENCRYPTED]: (draft, action: ActionTokenEncrypted) => {
+    draft[action.trayId].loaded = true
+    draft[action.trayId].accessToken = action.accessToken
+    draft[action.trayId].requiresRefresh = true
+    draft[action.trayId].errors = []
+  },
+  [Actions.TOKEN_ENCRYPT_ERROR]: (draft, action: ActionTokenEncryptError) => {
     draft[action.trayId].loaded = true
     draft[action.trayId].errors = action.errors
   },
@@ -126,6 +149,10 @@ export function getTrayUsername(state: State, trayId: string): string {
 
 export function getTrayPassword(state: State, trayId: string): string {
   return get(state, [TRAYS_ROOT, trayId, 'password']) || ''
+}
+
+export function getTrayAccessToken(state: State, trayId: string): string {
+  return get(state, [TRAYS_ROOT, trayId, 'accessToken']) || ''
 }
 
 export function getTrayServerType(state: State, trayId: string): string {
