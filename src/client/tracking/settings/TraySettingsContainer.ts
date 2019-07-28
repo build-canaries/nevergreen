@@ -7,9 +7,10 @@ import {
   setTrayUrl,
   setTrayUsername
 } from '../../actions/TrackingActionCreators'
-import {encryptPassword} from '../../actions/PasswordThunkActionCreators'
+import {encryptPassword} from '../../actions/AuthenticationThunkActionCreators'
 import {TraySettings} from './TraySettings'
 import {
+  getTrayAccessToken,
   getTrayIncludeNew,
   getTrayName,
   getTrayPassword,
@@ -42,6 +43,7 @@ function mapStateToProps(state: State, {trayId}: TraySettingsContainerProps) {
     url: getTrayUrl(state, trayId),
     username: getTrayUsername(state, trayId),
     password: getTrayPassword(state, trayId),
+    accessToken: getTrayAccessToken(state, trayId),
     serverType: getTrayServerType(state, trayId),
     includeNew: getTrayIncludeNew(state, trayId)
   }

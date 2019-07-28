@@ -20,6 +20,7 @@ describe('<TraySettings/>', () => {
     name: '',
     username: '',
     password: '',
+    accessToken: '',
     serverType: '',
     removeTray: noop,
     setTrayName: noop,
@@ -60,6 +61,15 @@ describe('<TraySettings/>', () => {
     changeAndBlur(input, 'some-url')
 
     expect(setTrayUrl).toBeCalledWith('some-tray-id', 'some-url')
+  })
+
+  it('should not render username/passwords when tray is configured with access token', () => {
+    const props = {...DEFAULT_PROPS, accessToken: 'some-dummy-token'}
+
+    const wrapper = shallow(<TraySettings {...props} />)
+
+    expect(wrapper.find(locator('tray-username')).exists()).toBeFalsy()
+    expect(wrapper.find(locator('tray-password')).exists()).toBeFalsy()
   })
 
   it('should set the tray server type on change', () => {

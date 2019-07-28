@@ -37,6 +37,35 @@ describe('ProjectsGateway', () => {
 
       expect(gateway.post).toBeCalledWith('/api/projects', expected)
     })
+
+    test('posts with access token from the given trays', () => {
+      jest.spyOn(gateway, 'post')
+      jest.spyOn(gateway, 'fakeRequest')
+      const seen: Project[] = [buildProject({trayId: 'some-tray-id', projectId: 'some-project-id'})]
+      const trays = [
+        buildTray({
+          includeNew: true,
+          serverType: 'GO',
+          trayId: 'some-tray-id',
+          url: 'url',
+          accessToken: 'some-dummy-token'
+        })
+      ]
+      const expected = [
+        {
+          includeNew: true,
+          seen: ['some-project-id'],
+          serverType: 'GO',
+          trayId: 'some-tray-id',
+          url: 'url',
+          accessToken: 'some-dummy-token'
+        }
+      ]
+
+      fetchAll(trays, seen)
+
+      expect(gateway.post).toBeCalledWith('/api/projects', expected)
+    })
   })
 
   describe('interesting', () => {

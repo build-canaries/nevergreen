@@ -7,7 +7,8 @@ import {change, locator} from '../testHelpers'
 describe('<AddTray/>', () => {
 
   const DEFAULT_PROPS = {
-    addTray: noop
+    addTray: noop,
+    addTrayUsingToken: noop
   }
 
   test('should update the url', () => {
@@ -31,6 +32,17 @@ describe('<AddTray/>', () => {
     expect(wrapper.find(locator('add-tray-password')).prop('value')).toEqual('some-new-password')
   })
 
+  test('should update the access token', () => {
+    const props = {...DEFAULT_PROPS}
+    const wrapper = shallow(<AddTray {...props} />)
+    // wrapper.find('input').simulate('click')
+    // @ts-ignore
+    wrapper.find('input[id="access_token"]').props().onChange({target: {value: "access_token"}})
+
+    change(wrapper.find(locator('add-tray-access-token')), 'some-dummy-token')
+    expect(wrapper.find(locator('add-tray-access-token')).prop('value')).toEqual('some-dummy-token')
+  })
+
   describe('add tray', () => {
 
     test('should pass the entered details', () => {
@@ -44,6 +56,21 @@ describe('<AddTray/>', () => {
       wrapper.find(locator('add-tray')).simulate('click')
 
       expect(addTray).toBeCalledWith('some-new-url', 'some-new-username', 'some-new-password')
+    })
+
+    test('should pass the access token with url', () => {
+      const addTrayUsingToken = jest.fn()
+      const props = {...DEFAULT_PROPS, addTrayUsingToken}
+
+      const wrapper = shallow(<AddTray {...props} />)
+      change(wrapper.find(locator('add-tray-url')), 'some-new-url')
+      // @ts-ignore
+      wrapper.find('input[id="access_token"]').props().onChange({target: {value: "access_token"}})
+      change(wrapper.find(locator('add-tray-access-token')), 'some-dummy-token')
+
+      wrapper.find(locator('add-tray')).simulate('click')
+
+      expect(addTrayUsingToken).toBeCalledWith('some-new-url', 'some-dummy-token')
     })
 
     test('should clear the entered url', () => {

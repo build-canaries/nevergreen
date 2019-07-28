@@ -53,6 +53,13 @@
   display: inline-block;
 }
 
+.authTypes {
+  padding-top: 1.5em;
+  & label {
+    margin-right: 0.5em;
+  }
+}
+
 .url {
   margin-top: 0;
 
@@ -62,8 +69,10 @@
 }
 
 .username,
-.password {
+.password,
+.authToken {
   @include respond-to(tablet, desktop) {
+    margin-top: 0.5em;
     display: inline-flex;
     margin-right: $margin-right;
   }

@@ -2,5 +2,9 @@
   (:require [nevergreen.crypto :as crypt]
             [nevergreen.config :as config]))
 
-(defn encrypt-password [{:keys [password]}]
-  {:password (crypt/encrypt password (config/aes-key))})
+(defn encrypt-data [data]
+  (let [keys (keys data)]
+    (reduce
+      (fn [acc key]
+        (assoc acc key (crypt/encrypt (get data key) (config/aes-key))))
+      {} keys)))
