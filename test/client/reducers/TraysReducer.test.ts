@@ -1,5 +1,5 @@
 import {
-  getTray,
+  getTray, getTrayAccessToken,
   getTrayErrors,
   getTrayHighlight,
   getTrayIncludeNew,
@@ -35,6 +35,10 @@ import {
   passwordEncrypted,
   passwordEncryptError
 } from '../../../src/client/actions/PasswordActionCreators'
+import {
+  encryptingToken,
+  tokenEncrypted, tokenEncryptError
+} from '../../../src/client/actions/AccessTokenActionCreators'
 import * as DateTime from '../../../src/client/common/DateTime'
 import {buildProject, buildState, buildTray, testReducer} from '../testHelpers'
 import {RecursivePartial} from '../../../src/client/common/Types'
@@ -125,6 +129,16 @@ describe('TraysReducer', () => {
     })
   })
 
+  describe(Actions.ENCRYPTING_TOKEN, () => {
+
+    test('should set as not loaded', () => {
+      const existingState = state({trayId: {loaded: true}})
+      const action = encryptingToken('trayId', '', fakeRequest('irrelevant'))
+      const newState = reducer(existingState, action)
+      expect(getTrayLoaded(newState, 'trayId')).toBeFalsy()
+    })
+  })
+
   describe(Actions.PROJECTS_FETCHING, () => {
 
     test('should set as not loaded', () => {
@@ -180,6 +194,37 @@ describe('TraysReducer', () => {
     })
   })
 
+  describe(Actions.TOKEN_ENCRYPTED, () => {
+
+    test('should set the accessToken', () => {
+      const existingState = state({trayId: buildTray()})
+      const action = tokenEncrypted('trayId', 'some-dummy-token')
+      const newState = reducer(existingState, action)
+      expect(getTrayAccessToken(newState, 'trayId')).toEqual('some-dummy-token')
+    })
+
+    test('should set loaded', () => {
+      const existingState = state({trayId: buildTray({loaded: false})})
+      const action = tokenEncrypted('trayId', 'some-password')
+      const newState = reducer(existingState, action)
+      expect(getTrayLoaded(newState, 'trayId')).toBeTruthy()
+    })
+
+    test('should remove any errors', () => {
+      const existingState = state({trayId: buildTray({errors: ['some-error']})})
+      const action = tokenEncrypted('trayId', 'some-password')
+      const newState = reducer(existingState, action)
+      expect(getTrayErrors(newState, 'trayId')).toEqual([])
+    })
+
+    test('should set requires refresh', () => {
+      const existingState = state({trayId: buildTray({requiresRefresh: false})})
+      const action = tokenEncrypted('trayId', '')
+      const newState = reducer(existingState, action)
+      expect(getTrayRequiresRefresh(newState, 'trayId')).toBeTruthy()
+    })
+  })
+
   describe(Actions.PROJECTS_FETCHED, () => {
 
     test('should set loaded', () => {
@@ -224,6 +269,23 @@ describe('TraysReducer', () => {
     test('should set errors', () => {
       const existingState = state({trayId: buildTray()})
       const action = passwordEncryptError('trayId', ['some-error'])
+      const newState = reducer(existingState, action)
+      expect(getTrayErrors(newState, 'trayId')).toEqual(['some-error'])
+    })
+  })
+
+  describe(Actions.TOKEN_ENCRYPT_ERROR, () => {
+
+    test('should set loaded', () => {
+      const existingState = state({trayId: buildTray({loaded: false})})
+      const action = tokenEncryptError('trayId', ['some-error'])
+      const newState = reducer(existingState, action)
+      expect(getTrayLoaded(newState, 'trayId')).toBeTruthy()
+    })
+
+    test('should set errors', () => {
+      const existingState = state({trayId: buildTray()})
+      const action = tokenEncryptError('trayId', ['some-error'])
       const newState = reducer(existingState, action)
       expect(getTrayErrors(newState, 'trayId')).toEqual(['some-error'])
     })
