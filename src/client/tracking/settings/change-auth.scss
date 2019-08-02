@@ -1,0 +1,23 @@
+@import '../../common/variables';
+@import '../../common/responsive';
+
+.content {
+  display: flex;
+  flex-direction: column;
+  margin-top: $margin-top;
+
+  @include respond-to(tablet, desktop) {
+    height: 20em;
+  }
+}
+
+.auth {
+  flex-grow: 1;
+}
+
+.changePasswordButtons {
+  @include respond-to(tablet, desktop) {
+    display: inline-block;
+    margin: 0 $margin-right 0 0;
+  }
+}

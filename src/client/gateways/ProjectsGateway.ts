@@ -2,7 +2,7 @@ import {fakeRequest, post} from './Gateway'
 import {Prognosis, Project} from '../domain/Project'
 import {SelectedState} from '../reducers/SelectedReducer'
 import {size} from 'lodash'
-import {Tray} from '../domain/Tray'
+import {AuthTypes, Tray} from '../domain/Tray'
 
 export interface ApiProject {
   readonly activity: string;
@@ -35,6 +35,7 @@ export type ProjectsResponse = ApiProject[]
 interface ProjectsRequest {
   readonly included?: string[];
   readonly includeNew: boolean;
+  readonly authType: AuthTypes;
   readonly password?: string;
   readonly accessToken?: string;
   readonly prognosis?: Prognosis[];
@@ -57,6 +58,7 @@ function toProjectsRequest(tray: Tray, projects: Project[], selectedPerTray?: Se
   return {
     trayId: tray.trayId,
     url: tray.url,
+    authType: tray.authType,
     username: tray.username,
     password: tray.password,
     accessToken: tray.accessToken,

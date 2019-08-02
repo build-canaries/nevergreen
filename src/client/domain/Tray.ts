@@ -3,7 +3,31 @@ import uuid from 'uuid/v4'
 import {isSick, Project} from './Project'
 import {lowerCase} from 'lodash'
 
+export enum AuthTypes {
+  none = 'none',
+  basic = 'basic',
+  token = 'token'
+}
+
+interface NoAuth {
+  type: AuthTypes.none;
+}
+
+interface BasicAuth {
+  type: AuthTypes.basic;
+  username: string;
+  password: string;
+}
+
+interface TokenAuth {
+  type: AuthTypes.token;
+  accessToken: string;
+}
+
+export type AuthDetails = NoAuth | BasicAuth | TokenAuth
+
 export interface Tray {
+  readonly authType: AuthTypes;
   readonly errors: string[];
   readonly highlight: boolean;
   readonly includeNew: boolean;

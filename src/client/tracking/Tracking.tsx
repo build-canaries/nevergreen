@@ -2,18 +2,18 @@ import React from 'react'
 import {AddTray} from './AddTray'
 import TrayContainer from './tray/TrayContainer'
 import {Title} from '../common/Title'
+import {AuthDetails} from '../domain/Tray'
 
 interface TrackingProps {
   trayIds: string[];
-  addTray: (url: string, username?: string, password?: string) => void;
-  addTrayUsingToken: (url: string, authToken?: string) => void;
+  addTray: (url: string, auth: AuthDetails) => void;
 }
 
-export function Tracking({trayIds, addTray, addTrayUsingToken}: TrackingProps) {
+export function Tracking({trayIds, addTray}: TrackingProps) {
   return (
     <>
       <Title>Tracking</Title>
-      <AddTray addTray={addTray} addTrayUsingToken={addTrayUsingToken}/>
+      <AddTray addTray={addTray}/>
       {trayIds.map((trayId, index) => <TrayContainer key={trayId} index={index} trayId={trayId}/>)}
     </>
   )

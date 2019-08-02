@@ -14,8 +14,9 @@ function shouldBeAbleToAddTrays(trayUrl, username, password) {
 
   cy.locate('add-tray-url').type(trayUrl)
   if (username && password) {
-    cy.locate('add-tray-username').type(username)
-    cy.locate('add-tray-password').type(password)
+    cy.locate('auth-basic').click()
+    cy.locate('auth-username').type(username)
+    cy.locate('auth-password').type(password)
   }
   cy.locate('add-tray').click()
 
@@ -149,4 +150,4 @@ describe('Journey', function () {
     shouldBeAbleToExportAndImportConfig()
     shouldMonitorSelectedProjects()
   })
-})  
+})

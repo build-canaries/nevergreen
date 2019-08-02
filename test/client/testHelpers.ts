@@ -12,7 +12,7 @@ import {SELECTED_ROOT} from '../../src/client/reducers/SelectedReducer'
 import {SUCCESS_ROOT} from '../../src/client/reducers/SuccessReducer'
 import {TRAYS_ROOT} from '../../src/client/reducers/TraysReducer'
 import {Prognosis, Project} from '../../src/client/domain/Project'
-import {Tray} from '../../src/client/domain/Tray'
+import {AuthTypes, Tray} from '../../src/client/domain/Tray'
 import {AnyAction, combineReducers, Reducer} from 'redux'
 import {RecursivePartial} from '../../src/client/common/Types'
 import {ApiProject} from '../../src/client/gateways/ProjectsGateway'
@@ -102,6 +102,7 @@ export function buildState(subState?: RecursivePartial<State>): State {
 export function buildTray(tray?: Partial<Tray>): Tray {
   return merge({
     errors: [],
+    authType: AuthTypes.none,
     highlight: false,
     includeNew: false,
     loaded: false,

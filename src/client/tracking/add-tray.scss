@@ -53,27 +53,10 @@
   display: inline-block;
 }
 
-.authTypes {
-  padding-top: 1.5em;
-  & label {
-    margin-right: 0.5em;
-  }
-}
-
 .url {
   margin-top: 0;
 
   @include respond-to(tablet, desktop) {
     width: 100%;
-  }
-}
-
-.username,
-.password,
-.authToken {
-  @include respond-to(tablet, desktop) {
-    margin-top: 0.5em;
-    display: inline-flex;
-    margin-right: $margin-right;
   }
 }

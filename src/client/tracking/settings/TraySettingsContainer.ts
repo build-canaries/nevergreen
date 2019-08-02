@@ -1,19 +1,12 @@
 import {connect} from 'react-redux'
 import {bindActionCreators, Dispatch} from 'redux'
-import {
-  setIncludeNew,
-  setServerType,
-  setTrayName,
-  setTrayUrl,
-  setTrayUsername
-} from '../../actions/TrackingActionCreators'
-import {encryptPassword} from '../../actions/AuthenticationThunkActionCreators'
+import {setIncludeNew, setServerType, setTrayName, setTrayUrl} from '../../actions/TrackingActionCreators'
+import {setAuth} from '../../actions/AuthenticationThunkActionCreators'
 import {TraySettings} from './TraySettings'
 import {
-  getTrayAccessToken,
+  getTrayAuthType,
   getTrayIncludeNew,
   getTrayName,
-  getTrayPassword,
   getTrayServerType,
   getTrayUrl,
   getTrayUsername
@@ -30,10 +23,9 @@ function mapDispatchToProps(dispatch: Dispatch) {
     removeTray: removeTrayThunk,
     setTrayName,
     setServerType,
-    setTrayUsername,
-    encryptPassword,
     setTrayUrl,
-    setIncludeNew
+    setIncludeNew,
+    setAuth
   }, dispatch)
 }
 
@@ -41,9 +33,8 @@ function mapStateToProps(state: State, {trayId}: TraySettingsContainerProps) {
   return {
     name: getTrayName(state, trayId),
     url: getTrayUrl(state, trayId),
+    authType: getTrayAuthType(state, trayId),
     username: getTrayUsername(state, trayId),
-    password: getTrayPassword(state, trayId),
-    accessToken: getTrayAccessToken(state, trayId),
     serverType: getTrayServerType(state, trayId),
     includeNew: getTrayIncludeNew(state, trayId)
   }

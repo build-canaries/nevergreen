@@ -17,6 +17,7 @@ export function Modal({children, title, show, close, className}: ModalProps) {
   return (
     <ReactModal className={cn(styles.modal, className)}
                 bodyOpenClassName={styles.modelOpen}
+                overlayClassName={styles.overlay}
                 contentLabel={title}
                 isOpen={show}
                 onRequestClose={close}>

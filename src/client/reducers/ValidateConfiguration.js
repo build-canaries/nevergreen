@@ -282,7 +282,7 @@ var validate = (function() {
                 var errs__2 = errors;
                 var valid3 = true;
                 for (var key2 in data2) {
-                  var isAdditional2 = !(false || key2 == 'trayId' || key2 == 'url' || key2 == 'name' || key2 == 'serverType' || key2 == 'username' || key2 == 'password' || key2 == 'timestamp' || key2 == 'includeNew' || key2 == 'accessToken');
+                  var isAdditional2 = !(false || validate.schema.properties.trays.patternProperties['.*'].properties.hasOwnProperty(key2));
                   if (isAdditional2) {
                     delete data2[key2];
                   }
@@ -387,6 +387,24 @@ var validate = (function() {
                   }
                   var valid3 = errors === errs_3;
                 }
+                if (data2.authType !== undefined) {
+                  var errs_3 = errors;
+                  if (typeof data2.authType !== "string") {
+                    var err = {
+                      keyword: 'type',
+                      dataPath: (dataPath || '') + '.trays[\'' + key1 + '\'].authType',
+                      schemaPath: '#/properties/trays/patternProperties/.*/properties/authType/type',
+                      params: {
+                        type: 'string'
+                      },
+                      message: 'should be string'
+                    };
+                    if (vErrors === null) vErrors = [err];
+                    else vErrors.push(err);
+                    errors++;
+                  }
+                  var valid3 = errors === errs_3;
+                }
                 var data3 = data2.username;
                 if (data3 !== undefined) {
                   var errs_3 = errors;
@@ -414,6 +432,25 @@ var validate = (function() {
                       keyword: 'type',
                       dataPath: (dataPath || '') + '.trays[\'' + key1 + '\'].password',
                       schemaPath: '#/properties/trays/patternProperties/.*/properties/password/type',
+                      params: {
+                        type: 'string,null'
+                      },
+                      message: 'should be string,null'
+                    };
+                    if (vErrors === null) vErrors = [err];
+                    else vErrors.push(err);
+                    errors++;
+                  }
+                  var valid3 = errors === errs_3;
+                }
+                var data3 = data2.accessToken;
+                if (data3 !== undefined) {
+                  var errs_3 = errors;
+                  if (typeof data3 !== "string" && data3 !== null) {
+                    var err = {
+                      keyword: 'type',
+                      dataPath: (dataPath || '') + '.trays[\'' + key1 + '\'].accessToken',
+                      schemaPath: '#/properties/trays/patternProperties/.*/properties/accessToken/type',
                       params: {
                         type: 'string,null'
                       },
@@ -1025,10 +1062,16 @@ validate.schema = {
             "serverType": {
               "type": "string"
             },
+            "authType": {
+              "type": "string"
+            },
             "username": {
               "type": ["string", "null"]
             },
             "password": {
+              "type": ["string", "null"]
+            },
+            "accessToken": {
               "type": ["string", "null"]
             },
             "timestamp": {

@@ -1,5 +1,5 @@
 import {Actions} from '../actions/Actions'
-import {Tray} from '../domain/Tray'
+import {AuthTypes, Tray} from '../domain/Tray'
 import {ActionSetConfiguration} from '../actions/NevergreenActionCreators'
 import {
   ActionHighlightTray,
@@ -9,15 +9,13 @@ import {
   ActionRemoveTray,
   ActionSetIncludeNew,
   ActionSetServerType,
+  ActionSetTrayAuthType,
   ActionSetTrayName,
   ActionSetTrayUrl,
   ActionSetTrayUsername,
   ActionTrayAdded
 } from '../actions/TrackingActionCreators'
-import {
-  ActionEncryptingPassword,
-  ActionPasswordEncryptError
-} from '../actions/PasswordActionCreators'
+import {ActionEncryptingPassword, ActionPasswordEncryptError} from '../actions/PasswordActionCreators'
 import {
   ActionEncryptingToken,
   ActionTokenEncrypted,
@@ -27,6 +25,7 @@ import {createReducer, createSelector} from 'redux-starter-kit'
 import {Draft} from 'immer'
 import {State} from './Reducer'
 import {get} from 'lodash'
+import {isBlank} from '../common/Utils'
 
 export interface TraysState {
   readonly [trayId: string]: Tray;
@@ -111,6 +110,10 @@ export const reduce = createReducer<TraysState>(DEFAULT_STATE, {
   [Actions.SET_SERVER_TYPE]: (draft, action: ActionSetServerType) => {
     draft[action.trayId].serverType = action.serverType
   },
+  [Actions.SET_TRAY_AUTH_TYPE]: (draft, action: ActionSetTrayAuthType) => {
+    draft[action.trayId].requiresRefresh = draft[action.trayId].authType !== action.authType
+    draft[action.trayId].authType = action.authType
+  },
   [Actions.SET_TRAY_USERNAME]: (draft, action: ActionSetTrayUsername) => {
     draft[action.trayId].requiresRefresh = draft[action.trayId].username !== action.username
     draft[action.trayId].username = action.username
@@ -149,6 +152,17 @@ export function getTrayUsername(state: State, trayId: string): string {
 
 export function getTrayPassword(state: State, trayId: string): string {
   return get(state, [TRAYS_ROOT, trayId, 'password']) || ''
+}
+
+export function getTrayAuthType(state: State, trayId: string): AuthTypes {
+  // TODO: This should be moved to a data migration
+  const username = getTrayUsername(state, trayId)
+  const password = getTrayPassword(state, trayId)
+  const defaultAuthType = !isBlank(username) || !isBlank(password)
+    ? AuthTypes.basic
+    : AuthTypes.none
+
+  return get(state, [TRAYS_ROOT, trayId, 'authType']) || defaultAuthType
 }
 
 export function getTrayAccessToken(state: State, trayId: string): string {

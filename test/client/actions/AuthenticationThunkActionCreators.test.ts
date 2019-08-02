@@ -1,12 +1,13 @@
 import {testThunk} from '../testHelpers'
-import {encryptPassword, encryptToken} from '../../../src/client/actions/AuthenticationThunkActionCreators'
+import {encryptPassword, encryptToken, setAuth} from '../../../src/client/actions/AuthenticationThunkActionCreators'
 import * as securityGateway from '../../../src/client/gateways/SecurityGateway'
 import * as gateway from '../../../src/client/gateways/Gateway'
 import * as passwordActionCreators from '../../../src/client/actions/PasswordActionCreators'
 import * as accessTokenActionCreators from '../../../src/client/actions/AccessTokenActionCreators'
 import * as nevergreenThunkActionCreators from '../../../src/client/actions/NevergreenThunkActionCreators'
+import * as trackingActionCreators from '../../../src/client/actions/TrackingActionCreators'
 import {SuperAgentRequest} from 'superagent'
-import {encryptingToken} from "../../../src/client/actions/AccessTokenActionCreators";
+import {AuthTypes} from '../../../src/client/domain/Tray'
 
 describe('AuthenticationThunkActionCreators', () => {
 
@@ -119,6 +120,36 @@ describe('AuthenticationThunkActionCreators', () => {
       jest.spyOn(accessTokenActionCreators, 'tokenEncryptError')
       await testThunk(encryptToken('some-tray-id', 'irrelevant'))
       expect(accessTokenActionCreators.tokenEncryptError).toBeCalledWith('some-tray-id', ['some-error'])
+    })
+  })
+
+  describe('setAuth', () => {
+
+    test('should set the auth type', async () => {
+      jest.spyOn(trackingActionCreators, 'setAuthType')
+      await testThunk(setAuth('some-tray-id', {type: AuthTypes.none}))
+      expect(trackingActionCreators.setAuthType).toHaveBeenCalledWith('some-tray-id', AuthTypes.none)
+    })
+
+    describe('no auth', () => {
+
+      test('should clear any previously set password', async () => {
+        jest.spyOn(passwordActionCreators, 'passwordEncrypted')
+        await testThunk(setAuth('some-tray-id', {type: AuthTypes.none}))
+        expect(passwordActionCreators.passwordEncrypted).toHaveBeenCalledWith('some-tray-id', '')
+      })
+
+      test('should clear any previously set access token', async () => {
+        jest.spyOn(accessTokenActionCreators, 'tokenEncrypted')
+        await testThunk(setAuth('some-tray-id', {type: AuthTypes.none}))
+        expect(accessTokenActionCreators.tokenEncrypted).toHaveBeenCalledWith('some-tray-id', '')
+      })
+
+      test('should clear any previously set username', async () => {
+        jest.spyOn(trackingActionCreators, 'setTrayUsername')
+        await testThunk(setAuth('some-tray-id', {type: AuthTypes.none}))
+        expect(trackingActionCreators.setTrayUsername).toHaveBeenCalledWith('some-tray-id', '')
+      })
     })
   })
 })

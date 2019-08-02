@@ -6,6 +6,7 @@ import {
   projectsFetching,
   removeTray,
   selectProject,
+  setAuthType,
   setIncludeNew,
   setServerType,
   setTrayName,
@@ -15,39 +16,43 @@ import {
 } from '../../../src/client/actions/TrackingActionCreators'
 import {fakeRequest} from '../../../src/client/gateways/Gateway'
 import {buildProject} from '../testHelpers'
+import {AuthTypes} from '../../../src/client/domain/Tray'
 
 describe('TrackingActionCreators', () => {
 
   describe(Actions.TRAY_ADDED, () => {
 
     test('should return the correct type', () => {
-      const actual = trayAdded('irrelevant', 'irrelevant', 'irrelevant')
+      const actual = trayAdded('irrelevant', 'irrelevant', {type: AuthTypes.none})
       expect(actual).toHaveProperty('type', Actions.TRAY_ADDED)
     })
 
     test('should return the tray id', () => {
-      const actual = trayAdded('some-tray-id', 'irrelevant', 'irrelevant')
+      const actual = trayAdded('some-tray-id', 'irrelevant', {type: AuthTypes.none})
       expect(actual).toHaveProperty('trayId', 'some-tray-id')
       expect(actual.data).toHaveProperty('trayId', 'some-tray-id')
     })
 
     test('should return the tray url', () => {
-      const actual = trayAdded('irrelevant', 'some-url', 'irrelevant')
+      const actual = trayAdded('irrelevant', 'some-url', {type: AuthTypes.none})
       expect(actual.data).toHaveProperty('url', 'some-url')
     })
 
     test('should return the tray username', () => {
-      const actual = trayAdded('irrelevant', 'irrelevant', 'some-username')
+      const username = 'some-username'
+      const password = 'irrelevant'
+      const auth = {type: AuthTypes.basic as AuthTypes.basic, username, password}
+      const actual = trayAdded('irrelevant', 'irrelevant', auth)
       expect(actual.data).toHaveProperty('username', 'some-username')
     })
 
     test('should return a generated tray name', () => {
-      const actual = trayAdded('irrelevant', 'irrelevant', 'irrelevant')
+      const actual = trayAdded('irrelevant', 'irrelevant', {type: AuthTypes.none})
       expect(actual.data.name).not.toBeNull()
     })
 
     test('should return highlight', () => {
-      const actual = trayAdded('irrelevant', 'irrelevant', 'some-username')
+      const actual = trayAdded('irrelevant', 'irrelevant', {type: AuthTypes.none})
       expect(actual.data).toHaveProperty('highlight', true)
     })
   })
@@ -181,6 +186,24 @@ describe('TrackingActionCreators', () => {
     test('should return the server type', () => {
       const actual = setServerType('irrelevant', 'some-type')
       expect(actual).toHaveProperty('serverType', 'some-type')
+    })
+  })
+
+  describe(Actions.SET_TRAY_AUTH_TYPE, () => {
+
+    test('should return the correct type', () => {
+      const actual = setAuthType('irrelevant', AuthTypes.basic)
+      expect(actual).toHaveProperty('type', Actions.SET_TRAY_AUTH_TYPE)
+    })
+
+    test('should return the tray id', () => {
+      const actual = setAuthType('some-tray-id', AuthTypes.basic)
+      expect(actual).toHaveProperty('trayId', 'some-tray-id')
+    })
+
+    test('should return the auth type', () => {
+      const actual = setAuthType('irrelevant', AuthTypes.basic)
+      expect(actual).toHaveProperty('authType', AuthTypes.basic)
     })
   })
 

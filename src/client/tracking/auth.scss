@@ -1,0 +1,36 @@
+@import '../common/accessibility';
+@import '../common/responsive';
+@import '../common/variables';
+@import '../common/layout';
+@import '../common/typography';
+
+.authType {
+  margin: 0;
+  width: 100%;
+
+  @include respond-to(tablet, desktop) {
+    margin-right: $margin-right;
+    width: auto;
+  }
+}
+
+.legend {
+  @extend %visually-hidden;
+}
+
+.inputs {
+  margin: $margin-top 0 0 0;
+}
+
+.label {
+  @include fixed-width(5em);
+  @include font-scale(1);
+
+  display: inline-block;
+}
+
+.username,
+.password,
+.authToken {
+  @include fixed-width(30em);
+}

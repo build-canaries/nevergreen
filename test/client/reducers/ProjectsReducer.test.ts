@@ -4,6 +4,7 @@ import {setConfiguration} from '../../../src/client/actions/NevergreenActionCrea
 import {projectsFetched, removeTray, trayAdded} from '../../../src/client/actions/TrackingActionCreators'
 import {buildProject, buildState, testReducer} from '../testHelpers'
 import {RecursivePartial} from '../../../src/client/common/Types'
+import {AuthTypes} from '../../../src/client/domain/Tray'
 
 describe('ProjectsReducer', () => {
 
@@ -45,7 +46,7 @@ describe('ProjectsReducer', () => {
 
     test('should add a tray id property', () => {
       const existingState = state({})
-      const action = trayAdded('trayId', '', '')
+      const action = trayAdded('trayId', '', {type: AuthTypes.none})
       const newState = reducer(existingState, action)
       expect(getProjects(newState, 'trayId')).toEqual([])
     })

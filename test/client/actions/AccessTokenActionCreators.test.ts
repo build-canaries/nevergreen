@@ -1,10 +1,6 @@
 import {Actions} from '../../../src/client/actions/Actions'
 import {fakeRequest} from '../../../src/client/gateways/Gateway'
-import {
-  encryptingToken,
-  tokenEncrypted,
-  tokenEncryptError
-} from "../../../src/client/actions/AccessTokenActionCreators";
+import {encryptingToken, tokenEncrypted, tokenEncryptError} from '../../../src/client/actions/AccessTokenActionCreators'
 
 describe('PasswordActionCreators', () => {
 

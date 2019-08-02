@@ -1,0 +1,102 @@
+@import '../variables';
+@import '../typography';
+@import '../accessibility';
+@import './forms';
+
+.container {
+  @extend %standard-input-dimensions;
+
+  display: inline-block;
+  margin-top: $margin-top;
+}
+
+.radio {
+  @include font-scale(1);
+
+  clear: left;
+  display: block;
+  float: left;
+  line-height: initial;
+  padding: 0 0 0 $input-height;
+  position: relative;
+}
+
+.children {
+  cursor: pointer;
+  display: block;
+  float: left;
+  padding: 10.5px 1em;
+  touch-action: manipulation;
+
+  &::before {
+    background: transparent;
+    border: $input-border;
+    border-radius: 34px;
+    content: '';
+    height: 34px;
+    left: 4px;
+    position: absolute;
+    top: 4px;
+    width: 34px;
+  }
+
+  &::after {
+    background: transparent;
+    border: 8px solid $mid-grey;
+    border-radius: 34px;
+    content: '';
+    filter: alpha(opacity=0);
+    height: 0;
+    left: 14px;
+    opacity: 0;
+    position: absolute;
+    top: 14px;
+    width: 0;
+    zoom: 1;
+  }
+}
+
+.input {
+  cursor: pointer;
+  filter: alpha(opacity=0);
+  height: $input-height;
+  left: 0;
+  margin: 0;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  width: $input-height;
+  z-index: 1;
+  zoom: 1;
+
+  &:disabled {
+    cursor: default;
+
+    & + .children {
+      cursor: default;
+      filter: alpha(opacity=50);
+      opacity: 0.5;
+      zoom: 1;
+    }
+  }
+
+  &:focus + .children::before {
+    box-shadow: 0 0 0 3px $outline;
+  }
+
+  &:enabled:hover {
+    & + .children {
+      @include hover;
+    }
+
+    & + .children::before {
+      border-color: darken($light-grey, $color-change-percentage);
+    }
+  }
+
+  &:checked + .children::after {
+    filter: alpha(opacity=100);
+    opacity: 1;
+    zoom: 1;
+  }
+}

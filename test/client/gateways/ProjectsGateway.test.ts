@@ -2,6 +2,7 @@ import {fetchAll, interesting} from '../../../src/client/gateways/ProjectsGatewa
 import * as gateway from '../../../src/client/gateways/Gateway'
 import {buildProject, buildTray} from '../testHelpers'
 import {Prognosis, Project} from '../../../src/client/domain/Project'
+import {AuthTypes} from '../../../src/client/domain/Tray'
 
 describe('ProjectsGateway', () => {
 
@@ -18,7 +19,8 @@ describe('ProjectsGateway', () => {
           serverType: 'GO',
           trayId: 'some-tray-id',
           url: 'url',
-          username: 'uname'
+          username: 'uname',
+          authType: AuthTypes.basic
         })
       ]
       const expected = [
@@ -29,7 +31,8 @@ describe('ProjectsGateway', () => {
           serverType: 'GO',
           trayId: 'some-tray-id',
           url: 'url',
-          username: 'uname'
+          username: 'uname',
+          authType: AuthTypes.basic
         }
       ]
 
@@ -48,7 +51,8 @@ describe('ProjectsGateway', () => {
           serverType: 'GO',
           trayId: 'some-tray-id',
           url: 'url',
-          accessToken: 'some-dummy-token'
+          accessToken: 'some-dummy-token',
+          authType: AuthTypes.token
         })
       ]
       const expected = [
@@ -58,7 +62,8 @@ describe('ProjectsGateway', () => {
           serverType: 'GO',
           trayId: 'some-tray-id',
           url: 'url',
-          accessToken: 'some-dummy-token'
+          accessToken: 'some-dummy-token',
+          authType: AuthTypes.token
         }
       ]
 
@@ -82,7 +87,8 @@ describe('ProjectsGateway', () => {
           serverType: 'some-server-type',
           trayId: 'some-tray-id',
           url: 'some-url',
-          username: 'some-uname'
+          username: 'some-uname',
+          authType: AuthTypes.basic
         })
       ]
       const expected = [
@@ -95,8 +101,9 @@ describe('ProjectsGateway', () => {
           trayId: 'some-tray-id',
           url: 'some-url',
           username: 'some-uname',
+          authType: AuthTypes.basic,
           prognosis: [
-            Prognosis.sick,
+            Prognosis.sick
           ]
         }
       ]

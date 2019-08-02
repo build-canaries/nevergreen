@@ -17,13 +17,12 @@
 
 .traySettingsName,
 .serverType,
-.traySettingsUsername,
-.existingPassword {
+.authType {
   @include fixed-width(26em);
 }
 
 .traySettingsName,
-.existingPassword {
+.authType {
   @include respond-to(tablet, desktop) {
     display: inline-flex;
     margin-right: 1em;
@@ -55,10 +54,9 @@
   @extend %inline;
 }
 
-.changePasswordButtons {
+.changeAuth {
   @include respond-to(tablet, desktop) {
     display: inline-block;
-    margin: $margin-top $margin-right 0 0;
   }
 }
 

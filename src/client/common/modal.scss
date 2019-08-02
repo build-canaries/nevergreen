@@ -1,29 +1,32 @@
 @import '../common/variables';
 @import '../common/typography';
-@import '../common/responsive';
 @import '../common/layout';
 @import '../common/forms/button';
-@import '../common/fonts/icon-font';
+
+.overlay {
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.75);
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+}
 
 .modal {
-  background-color: $white;
-  border: 1px solid $light-grey;
-  box-shadow: $shadow;
-  color: $off-black;
+  background-color: #fff;
+  border: 1px solid #ececec;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
+  color: #212121;
+  display: -webkit-box;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 2em);
-  margin: 1em;
+  max-height: calc(100vh - 2em);
   max-width: 40em;
   overflow: scroll;
   padding: 1em;
-  position: relative;
-  width: calc(100vw - 2em);
-  z-index: 9001;
-
-  @include respond-to(tablet, desktop) {
-    margin: 1em auto;
-  }
 }
 
 .header {
@@ -39,8 +42,6 @@
 }
 
 .title {
-  @extend .icon-question;
-
   @include font-scale(3);
 
   margin: 0 1em 0 0;

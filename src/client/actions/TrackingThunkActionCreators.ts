@@ -2,7 +2,7 @@ import {isBlank} from '../common/Utils'
 import {highlightTray, removeTray, trayAdded} from './TrackingActionCreators'
 import {encryptPassword, encryptToken} from './AuthenticationThunkActionCreators'
 import {refreshTray} from './RefreshThunkActionCreators'
-import {createId, Tray} from '../domain/Tray'
+import {AuthDetails, AuthTypes, createId, Tray} from '../domain/Tray'
 import {ensureHasScheme, removeScheme} from '../domain/Url'
 import {State} from '../reducers/Reducer'
 import {AnyAction} from 'redux'
@@ -14,7 +14,7 @@ function urlMatches(tray: Tray, url: string): boolean {
   return removeScheme(url) === removeScheme(tray.url)
 }
 
-export function addTray(enteredUrl: string, username?: string, rawPassword?: string): ThunkAction<Promise<void>, State, undefined, AnyAction> {
+export function addTray(enteredUrl: string, auth: AuthDetails): ThunkAction<Promise<void>, State, undefined, AnyAction> {
   return async (dispatch, getState) => {
     if (isBlank(enteredUrl)) {
       return
@@ -31,38 +31,14 @@ export function addTray(enteredUrl: string, username?: string, rawPassword?: str
     } else {
       const trayId = createId()
 
-      dispatch(trayAdded(trayId, url, username))
+      dispatch(trayAdded(trayId, url, auth))
 
-      if (rawPassword && !isBlank(rawPassword)) {
-        await dispatch(encryptPassword(trayId, rawPassword))
+      if (auth.type === AuthTypes.basic && !isBlank(auth.password)) {
+        await dispatch(encryptPassword(trayId, auth.password))
       }
 
-      dispatch(refreshTray(trayId))
-    }
-  }
-}
-
-export function addTrayUsingToken(enteredUrl: string, accessToken?: string): ThunkAction<Promise<void>, State, undefined, AnyAction> {
-  return async (dispatch, getState) => {
-    if (isBlank(enteredUrl)) {
-      return
-    }
-
-    const existingTrays = getTrays(getState())
-
-    const url = ensureHasScheme(enteredUrl)
-    const existingTray = existingTrays.find((tray: Tray) => urlMatches(tray, url))
-
-    if (existingTray) {
-      dispatch(highlightTray(existingTray.trayId))
-
-    } else {
-      const trayId = createId()
-
-      dispatch(trayAdded(trayId, url, undefined))
-
-      if (accessToken && !isBlank(accessToken)) {
-        await dispatch(encryptToken(trayId, accessToken))
+      if (auth.type === AuthTypes.token && !isBlank(auth.accessToken)) {
+        await dispatch(encryptToken(trayId, auth.accessToken))
       }
 
       dispatch(refreshTray(trayId))

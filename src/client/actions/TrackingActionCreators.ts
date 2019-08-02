@@ -1,5 +1,5 @@
 import {now} from '../common/DateTime'
-import {generateRandomName, Tray} from '../domain/Tray'
+import {AuthDetails, AuthTypes, generateRandomName, Tray} from '../domain/Tray'
 import {Actions} from './Actions'
 import {Request} from 'superagent'
 import {Project} from '../domain/Project'
@@ -46,6 +46,11 @@ export interface ActionSetServerType extends Action<Actions.SET_SERVER_TYPE> {
   readonly serverType: string;
 }
 
+export interface ActionSetTrayAuthType extends Action<Actions.SET_TRAY_AUTH_TYPE> {
+  readonly trayId: string;
+  readonly authType: AuthTypes;
+}
+
 export interface ActionSetTrayUsername extends Action<Actions.SET_TRAY_USERNAME> {
   readonly trayId: string;
   readonly username: string;
@@ -67,13 +72,18 @@ export interface ActionSetIncludeNew extends Action<Actions.SET_INCLUDE_NEW> {
   readonly value: boolean;
 }
 
-export function trayAdded(trayId: string, url: string, username?: string): ActionTrayAdded {
+export function trayAdded(trayId: string, url: string, auth: AuthDetails): ActionTrayAdded {
+  const username = auth.type === AuthTypes.basic
+    ? auth.username
+    : ''
+
   return {
     type: Actions.TRAY_ADDED,
     trayId,
     data: {
       trayId,
       url,
+      authType: auth.type,
       username,
       name: generateRandomName(),
       highlight: true,
@@ -122,6 +132,10 @@ export function setTrayName(trayId: string, name: string): ActionSetTrayName {
 
 export function setServerType(trayId: string, serverType: string): ActionSetServerType {
   return {type: Actions.SET_SERVER_TYPE, trayId, serverType}
+}
+
+export function setAuthType(trayId: string, authType: AuthTypes): ActionSetTrayAuthType {
+  return {type: Actions.SET_TRAY_AUTH_TYPE, trayId, authType}
 }
 
 export function setTrayUsername(trayId: string, username: string): ActionSetTrayUsername {

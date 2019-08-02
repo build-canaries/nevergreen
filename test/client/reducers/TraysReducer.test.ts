@@ -1,5 +1,7 @@
 import {
-  getTray, getTrayAccessToken,
+  getTray,
+  getTrayAccessToken,
+  getTrayAuthType,
   getTrayErrors,
   getTrayHighlight,
   getTrayIncludeNew,
@@ -23,6 +25,7 @@ import {
   projectsFetchError,
   projectsFetching,
   removeTray,
+  setAuthType,
   setIncludeNew,
   setServerType,
   setTrayName,
@@ -35,14 +38,12 @@ import {
   passwordEncrypted,
   passwordEncryptError
 } from '../../../src/client/actions/PasswordActionCreators'
-import {
-  encryptingToken,
-  tokenEncrypted, tokenEncryptError
-} from '../../../src/client/actions/AccessTokenActionCreators'
+import {encryptingToken, tokenEncrypted, tokenEncryptError} from '../../../src/client/actions/AccessTokenActionCreators'
 import * as DateTime from '../../../src/client/common/DateTime'
 import {buildProject, buildState, buildTray, testReducer} from '../testHelpers'
 import {RecursivePartial} from '../../../src/client/common/Types'
 import {fakeRequest} from '../../../src/client/gateways/Gateway'
+import {AuthTypes} from '../../../src/client/domain/Tray'
 
 describe('TraysReducer', () => {
 
@@ -83,7 +84,7 @@ describe('TraysReducer', () => {
 
     test('should set the tray data', () => {
       const existingState = state({})
-      const action = trayAdded('trayId', '', '')
+      const action = trayAdded('trayId', '', {type: AuthTypes.none})
       const newState = reducer(existingState, action)
       expect(getTray(newState, 'trayId')).toHaveProperty('trayId', 'trayId')
     })
@@ -325,6 +326,23 @@ describe('TraysReducer', () => {
       const action = setServerType('trayId', 'some-new-type')
       const newState = reducer(existingState, action)
       expect(getTrayServerType(newState, 'trayId')).toEqual('some-new-type')
+    })
+  })
+
+  describe(Actions.SET_TRAY_AUTH_TYPE, () => {
+
+    test('should set the auth type', () => {
+      const existingState = state({trayId: buildTray({authType: AuthTypes.none})})
+      const action = setAuthType('trayId', AuthTypes.basic)
+      const newState = reducer(existingState, action)
+      expect(getTrayAuthType(newState, 'trayId')).toEqual(AuthTypes.basic)
+    })
+
+    test('should set requires refresh if the auth type is different', () => {
+      const existingState = state({trayId: buildTray({authType: AuthTypes.none})})
+      const action = setAuthType('trayId', AuthTypes.basic)
+      const newState = reducer(existingState, action)
+      expect(getTrayRequiresRefresh(newState, 'trayId')).toBeTruthy()
     })
   })
 

@@ -69,6 +69,9 @@
             "serverType": {
               "type": "string"
             },
+            "authType": {
+              "type": "string"
+            },
             "username": {
               "type": [
                 "string",
@@ -76,6 +79,12 @@
               ]
             },
             "password": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "accessToken": {
               "type": [
                 "string",
                 "null"

@@ -1,49 +1,41 @@
 import React, {useLayoutEffect, useState} from 'react'
 import {Input} from '../../common/forms/Input'
 import {DropDown} from '../../common/forms/DropDown'
-import {CI_OPTIONS, generateRandomName} from '../../domain/Tray'
+import {AuthDetails, AuthTypes, CI_OPTIONS, generateRandomName} from '../../domain/Tray'
 import {VisuallyHidden} from '../../common/VisuallyHidden'
-import {DangerButton, InputButton, PrimaryButton, SecondaryButton} from '../../common/forms/Button'
-import {iBin, iCross, iDice, iFloppyDisk, iUnlocked} from '../../common/fonts/Icons'
+import {DangerButton, InputButton, SecondaryButton} from '../../common/forms/Button'
+import {iBin, iDice, iUnlocked} from '../../common/fonts/Icons'
 import styles from './tray-settings.scss'
-import {Password} from '../../common/forms/Password'
 import {Checkbox} from '../../common/forms/Checkbox'
-import {isBlank} from "../../common/Utils";
+import {ChangeAuth} from './ChangeAuth'
 
 interface TraySettingsProps {
   trayId: string;
   name: string;
   url: string;
+  authType: AuthTypes;
   username: string;
-  password: string;
-  accessToken: string;
   serverType: string;
   removeTray: (trayId: string) => void;
   setTrayName: (trayId: string, name: string) => void;
   setServerType: (trayId: string, serverType: string) => void;
-  setTrayUsername: (trayId: string, username: string) => void;
-  encryptPassword: (trayId: string, password: string) => void;
   setTrayUrl: (trayId: string, url: string) => void;
   includeNew?: boolean;
   setIncludeNew: (trayId: string, includeNew: boolean) => void;
+  setAuth: (trayId: string, auth: AuthDetails) => void;
 }
 
-export function TraySettings({trayId, name, url, username, password, accessToken, serverType, includeNew, removeTray, setTrayName, setTrayUrl, setServerType, setTrayUsername, encryptPassword, setIncludeNew}: TraySettingsProps) {
+export function TraySettings({trayId, name, url, authType, username, serverType, includeNew, removeTray, setTrayName, setTrayUrl, setServerType, setIncludeNew, setAuth}: TraySettingsProps) {
   const [newName, setNewName] = useState(name)
   const [newUrl, setNewUrl] = useState(url)
-  const [newUsername, setNewUsername] = useState(username)
-  const [newPassword, setNewPassword] = useState('')
-  const [updatingPassword, setUpdatingPassword] = useState(false)
+  const [updatingAuth, setUpdatingAuth] = useState(false)
 
   useLayoutEffect(() => setNewName(name), [name])
+  useLayoutEffect(() => setNewUrl(url), [url])
 
-  const existingPassword = password ? '*******' : ''
-  const passwordValue = updatingPassword ? newPassword : existingPassword
-
-  const setPassword = () => {
-    encryptPassword(trayId, newPassword)
-    setUpdatingPassword(false)
-    setNewPassword('')
+  const updateAuth = (auth: AuthDetails) => {
+    setAuth(trayId, auth)
+    setUpdatingAuth(false)
   }
 
   const randomNameButton = (
@@ -83,53 +75,24 @@ export function TraySettings({trayId, name, url, username, password, accessToken
         <span className={styles.label}>server type</span>
       </DropDown>
 
-      {isBlank(accessToken) &&
-        <div>
-          <Input className={styles.traySettingsUsername}
-                 value={newUsername}
-                 onChange={({target}) => setNewUsername(target.value)}
-                 onBlur={() => setTrayUsername(trayId, newUsername)}
-                 onEnter={() => setTrayUsername(trayId, newUsername)}
-                 data-locator='tray-username'
-                 autoComplete='username'>
-            <span className={styles.label}>username</span>
-          </Input>
-          <Password className={styles.existingPassword}
-                    value={passwordValue}
-                    onChange={({target}) => setNewPassword(target.value)}
-                    onEnter={setPassword}
-                    readOnly={!updatingPassword}
-                    focus={updatingPassword}
-                    data-locator='tray-password'>
-            <span className={styles.label}>password</span>
-          </Password>
-          {updatingPassword
-            ? (
-              <>
-                <SecondaryButton className={styles.changePasswordButtons}
-                                 icon={iCross}
-                                 onClick={() => setUpdatingPassword(false)}
-                                 data-locator='change-password-cancel'>
-                  discard changes
-                </SecondaryButton>
-                <PrimaryButton className={styles.changePasswordButtons}
-                               icon={iFloppyDisk}
-                               onClick={setPassword}
-                               data-locator='change-password-update'>
-                  save changes
-                </PrimaryButton>
-              </>
-            ) : (
-              <SecondaryButton className={styles.changePasswordButtons}
-                               icon={iUnlocked}
-                               onClick={() => setUpdatingPassword(true)}
-                               data-locator='change-password'>
-                change password
-              </SecondaryButton>
-            )
-          }
-        </div>
-      }
+      <ChangeAuth show={updatingAuth}
+                  cancel={() => setUpdatingAuth(false)}
+                  save={updateAuth}
+                  authType={authType}
+                  username={username}/>
+
+      <Input readOnly
+             value={authType}
+             className={styles.authType}>
+        <span className={styles.label}>auth</span>
+      </Input>
+      <SecondaryButton className={styles.changeAuth}
+                       icon={iUnlocked}
+                       onClick={() => setUpdatingAuth(true)}
+                       data-locator='change-password'>
+        change auth
+      </SecondaryButton>
+
       <Checkbox checked={includeNew}
                 onToggle={(newValue) => setIncludeNew(trayId, newValue)}
                 className={styles.includeNew}

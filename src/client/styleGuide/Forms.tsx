@@ -7,6 +7,7 @@ import {StyleGuideSection} from './StyleGuideSection'
 import styles from './style-guide.scss'
 import {DangerButton, PrimaryButton, SecondaryButton} from '../common/forms/Button'
 import {iFloppyDisk} from '../common/fonts/Icons'
+import {Radio} from '../common/forms/Radio'
 
 const DROP_DOWN_OPTIONS = [
   {value: '1', display: 'option 1'},
@@ -44,6 +45,20 @@ export function Forms() {
         <Checkbox onToggle={_.noop}>
           <div className={styles.styledLabel}>styled label</div>
         </Checkbox>
+      </StyleGuideSection>
+
+      <StyleGuideSection title='Radio'>
+        <Radio onChange={_.noop} name='sweets'>chocolate</Radio>
+        <Radio onChange={_.noop} name='sweets'>bonbon</Radio>
+        <Radio onChange={_.noop} name='sweets'>jelly beans</Radio>
+
+        <Radio className={styles.newLineCheckbox} onChange={_.noop} name='sweets2'>chupa chups</Radio>
+        <Radio className={styles.newLineCheckbox} onChange={_.noop} name='sweets2'>apple pie</Radio>
+        <Radio className={styles.newLineCheckbox} onChange={_.noop} name='sweets2'>marzipan</Radio>
+
+        <Radio onChange={_.noop}>
+          <div className={styles.styledLabel}>styled label</div>
+        </Radio>
       </StyleGuideSection>
 
       <StyleGuideSection title='Drop down'>

@@ -4,6 +4,7 @@ import {setConfiguration} from '../../../src/client/actions/NevergreenActionCrea
 import {projectsFetched, removeTray, selectProject, trayAdded} from '../../../src/client/actions/TrackingActionCreators'
 import {buildProject, buildState, testReducer} from '../testHelpers'
 import {RecursivePartial} from '../../../src/client/common/Types'
+import {AuthTypes} from '../../../src/client/domain/Tray'
 
 describe('SelectedReducer', () => {
 
@@ -43,7 +44,7 @@ describe('SelectedReducer', () => {
 
     test('should add the tray id with an empty set of selected projects', () => {
       const existingState = state({})
-      const action = trayAdded('trayId', '', '')
+      const action = trayAdded('trayId', '', {type: AuthTypes.none})
       const newState = reducer(existingState, action)
       expect(getSelectedProjects(newState, 'trayId')).toHaveLength(0)
     })
