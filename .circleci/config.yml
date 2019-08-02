@@ -246,7 +246,7 @@ jobs:
                 when: always
                 environment:
                   JAVA_TOOL_OPTIONS: "-Xmx2G"
-                command: ./lein.sh nvd check
+                command: ./lein.sh audit
 
             - store_artifacts:
                 path: ./target/security-reports

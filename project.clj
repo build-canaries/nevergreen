@@ -28,11 +28,12 @@
   :javac-options ["-Dclojure.compiler.direct-linking=true"]
   :aliases {"lint"          ["with-profile" "+test" "eastwood"]
             "coverage"      ["with-profile" "+test" "cloverage"]
-            "check-updates" ["ancient" ":all"]}
+            "check-updates" ["ancient" ":all"]
+            "audit"         ["nvd" "check"]}
   :profiles {:dev  {:plugins [[lein-ancient "0.6.15"]
                               [jonase/eastwood "0.3.6"]
                               [lein-cloverage "1.1.1"]
-                              [lein-nvd "1.1.1"]]}
+                              [lein-nvd "1.2.0"]]}
              :test {:jvm-opts ["-Dlogback.configurationFile=./test/logback-unit.xml"]}}
   :cloverage {:output           "target/coverage-reports/server"
               :junit?           true
