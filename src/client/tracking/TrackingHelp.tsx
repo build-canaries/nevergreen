@@ -21,7 +21,8 @@ export function TrackingHelp({addTray, close}: TrackingHelpProps) {
       <h3 className={styles.title}>Adding</h3>
       <p>
         To start tracking your CI server set the <strong>URL</strong> to point at the CCTray XML feed. You can also
-        add a <strong>username</strong> and <strong>password</strong> if your CI server is protected by basic auth.
+        add a <strong>username</strong> and <strong>password</strong> or an <strong>access token</strong> if your CI
+        server is protected by auth.
       </p>
       <p>
         Multiple CI servers can be tracked, <ExternalLink
