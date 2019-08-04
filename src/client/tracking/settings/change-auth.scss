@@ -4,10 +4,11 @@
 .content {
   display: flex;
   flex-direction: column;
+  height: 40em;
   margin-top: $margin-top;
 
   @include respond-to(tablet, desktop) {
-    height: 20em;
+    height: 21em;
   }
 }
 
