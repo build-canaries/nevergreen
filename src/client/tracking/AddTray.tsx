@@ -22,6 +22,7 @@ export function AddTray({addTray}: AddTrayProps) {
   const addTrayAndClearInput = () => {
     addTray(url, {type: authType, username, password, accessToken})
     setUrl('')
+    setAuthType(AuthTypes.none)
     setUsername('')
     setPassword('')
     setAccessToken('')

@@ -1,9 +1,9 @@
 import React from 'react'
-import {shallow} from 'enzyme'
 import {AddTray} from '../../../src/client/tracking/AddTray'
 import {noop} from 'lodash'
-import {change, locator} from '../testHelpers'
 import {AuthTypes} from '../../../src/client/domain/Tray'
+import {render} from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
 describe('<AddTray/>', () => {
 
@@ -11,39 +11,69 @@ describe('<AddTray/>', () => {
     addTray: noop
   }
 
-  test('should update the url', () => {
-    const props = {...DEFAULT_PROPS}
-    const wrapper = shallow(<AddTray {...props} />)
-    change(wrapper.find(locator('add-tray-url')), 'some-new-url')
-    expect(wrapper.find(locator('add-tray-url')).prop('value')).toEqual('some-new-url')
+  test('should allow adding trays without auth', async () => {
+    const addTray = jest.fn()
+    const props = {...DEFAULT_PROPS, addTray}
+
+    const {getByText, getByLabelText} = render(<AddTray {...props} />)
+    await userEvent.type(getByLabelText('URL'), 'some-new-url')
+    userEvent.click(getByText('add'))
+
+    expect(addTray).toBeCalledWith('some-new-url', {
+      type: AuthTypes.none,
+      username: '',
+      password: '',
+      accessToken: ''
+    })
   })
 
-  describe('add tray', () => {
+  test('should allow adding trays with basic auth', async () => {
+    const addTray = jest.fn()
+    const props = {...DEFAULT_PROPS, addTray}
 
-    test('should pass the entered details', () => {
-      const addTray = jest.fn()
-      const props = {...DEFAULT_PROPS, addTray}
+    const {getByTestId, getByText, getByLabelText} = render(<AddTray {...props} />)
+    userEvent.click(getByLabelText('basic auth'))
+    await userEvent.type(getByLabelText('username'), 'some-username')
+    await userEvent.type(getByTestId('auth-password'), 'some-password')
+    userEvent.click(getByText('add'))
 
-      const wrapper = shallow(<AddTray {...props} />)
-      change(wrapper.find(locator('add-tray-url')), 'some-new-url')
-      wrapper.find(locator('add-tray')).simulate('click')
-
-      expect(addTray).toBeCalledWith('some-new-url', {
-        type: AuthTypes.none,
-        username: '',
-        password: '',
-        accessToken: ''
-      })
+    expect(addTray).toBeCalledWith(expect.anything(), {
+      type: AuthTypes.basic,
+      username: 'some-username',
+      password: 'some-password',
+      accessToken: ''
     })
+  })
 
-    test('should clear the entered url', () => {
-      const props = {...DEFAULT_PROPS}
+  test('should allow adding trays with an access token', async () => {
+    const addTray = jest.fn()
+    const props = {...DEFAULT_PROPS, addTray}
 
-      const wrapper = shallow(<AddTray {...props} />)
-      change(wrapper.find(locator('add-tray-url')), 'some-new-url')
-      wrapper.find(locator('add-tray')).simulate('click')
+    const {getByTestId, getByText, getByLabelText} = render(<AddTray {...props} />)
+    userEvent.click(getByLabelText('access token'))
+    await userEvent.type(getByTestId('auth-access-token'), 'some-token')
+    userEvent.click(getByText('add'))
 
-      expect(wrapper.find(locator('add-tray-url')).prop('value')).toEqual('')
+    expect(addTray).toBeCalledWith(expect.anything(), {
+      type: AuthTypes.token,
+      username: '',
+      password: '',
+      accessToken: 'some-token'
     })
+  })
+
+  test('should reset the form after adding a tray', async () => {
+    const props = {...DEFAULT_PROPS}
+
+    const {getByTestId, queryByTestId, getByText, getByLabelText, queryByLabelText} = render(<AddTray {...props} />)
+    await userEvent.type(getByLabelText('URL'), 'some-new-url')
+    userEvent.click(getByLabelText('access token'))
+    await userEvent.type(getByTestId('auth-access-token'), 'some-token')
+    userEvent.click(getByText('add'))
+
+    expect(getByLabelText('URL')).toHaveValue('')
+    expect(queryByTestId('auth-access-token')).not.toBeInTheDocument()
+    expect(queryByLabelText('username')).not.toBeInTheDocument()
+    expect(queryByTestId('auth-password')).not.toBeInTheDocument()
   })
 })

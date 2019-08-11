@@ -39,7 +39,7 @@ export function Auth({authType, setAuthType, username, setUsername, password, se
                onChange={() => setAuthType(AuthTypes.basic)}
                className={styles.authType}
                data-locator='auth-basic'>
-          password
+          basic auth
         </Radio>
         <Radio name={groupName}
                value={AuthTypes.token}
