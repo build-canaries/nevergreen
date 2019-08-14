@@ -23,8 +23,8 @@ describe('AuthenticationThunkActionCreators', () => {
     test('should dispatch encrypting password action', async () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const request = {} as any as SuperAgentRequest
-      jest.spyOn(securityGateway, 'encryptPassword').mockReturnValue(request)
-      jest.spyOn(gateway, 'send').mockResolvedValue({password: ''})
+      jest.spyOn(securityGateway, 'encrypt').mockReturnValue(request)
+      jest.spyOn(gateway, 'send').mockResolvedValue('')
       jest.spyOn(passwordActionCreators, 'encryptingPassword')
 
       await testThunk(encryptPassword('some-tray-id', 'some-password'))
@@ -32,14 +32,14 @@ describe('AuthenticationThunkActionCreators', () => {
     })
 
     test('should dispatch password encrypted action', async () => {
-      jest.spyOn(gateway, 'send').mockResolvedValue({password: 'some-encrypted-password'})
+      jest.spyOn(gateway, 'send').mockResolvedValue('some-encrypted-password')
       jest.spyOn(passwordActionCreators, 'passwordEncrypted')
       await testThunk(encryptPassword('some-tray-id', 'irrelevant'))
       expect(passwordActionCreators.passwordEncrypted).toBeCalledWith('some-tray-id', 'some-encrypted-password')
     })
 
     test('should dispatch password encrypted action on success', async () => {
-      jest.spyOn(gateway, 'send').mockResolvedValue({password: 'some-encrypted-password'})
+      jest.spyOn(gateway, 'send').mockResolvedValue('some-encrypted-password')
       jest.spyOn(passwordActionCreators, 'passwordEncrypted')
       await testThunk(encryptPassword('some-tray-id', 'irrelevant'))
       expect(passwordActionCreators.passwordEncrypted).toBeCalledWith('some-tray-id', 'some-encrypted-password')
@@ -79,8 +79,8 @@ describe('AuthenticationThunkActionCreators', () => {
     test('should dispatch encrypting token action', async () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const request = {} as any as SuperAgentRequest
-      jest.spyOn(securityGateway, 'encryptAccessToken').mockReturnValue(request)
-      jest.spyOn(gateway, 'send').mockResolvedValue({accessToken: ''})
+      jest.spyOn(securityGateway, 'encrypt').mockReturnValue(request)
+      jest.spyOn(gateway, 'send').mockResolvedValue('')
       jest.spyOn(accessTokenActionCreators, 'encryptingToken')
 
       await testThunk(encryptToken('some-tray-id', 'some-dummy-token'))
@@ -88,14 +88,14 @@ describe('AuthenticationThunkActionCreators', () => {
     })
 
     test('should dispatch token encrypted action', async () => {
-      jest.spyOn(gateway, 'send').mockResolvedValue({accessToken: 'some-dummy-token'})
+      jest.spyOn(gateway, 'send').mockResolvedValue('some-dummy-token')
       jest.spyOn(accessTokenActionCreators, 'tokenEncrypted')
       await testThunk(encryptToken('some-tray-id', 'irrelevant'))
       expect(accessTokenActionCreators.tokenEncrypted).toBeCalledWith('some-tray-id', 'some-dummy-token')
     })
 
     test('should dispatch password encrypted action on success', async () => {
-      jest.spyOn(gateway, 'send').mockResolvedValue({accessToken: 'some-dummy-token'})
+      jest.spyOn(gateway, 'send').mockResolvedValue('some-dummy-token')
       jest.spyOn(accessTokenActionCreators, 'tokenEncrypted')
       await testThunk(encryptToken('some-tray-id', 'irrelevant'))
       expect(accessTokenActionCreators.tokenEncrypted).toBeCalledWith('some-tray-id', 'some-dummy-token')

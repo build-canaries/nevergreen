@@ -1,9 +1,4 @@
-import {
-  encryptAccessToken,
-  encryptPassword as encrypt,
-  EncryptResponse,
-  EncryptTokenResponse
-} from '../gateways/SecurityGateway'
+import {encrypt, EncryptResponse} from '../gateways/SecurityGateway'
 import {send} from '../gateways/Gateway'
 import {isBlank} from '../common/Utils'
 import {encryptingPassword, passwordEncrypted, passwordEncryptError} from './PasswordActionCreators'
@@ -25,8 +20,8 @@ export function encryptPassword(trayId: string, rawPassword: string): ThunkActio
       dispatch(encryptingPassword(trayId, rawPassword, request))
 
       try {
-        const data = await send<EncryptResponse>(request)
-        dispatch(passwordEncrypted(trayId, data.password))
+        const encryptedPassword = await send<EncryptResponse>(request)
+        dispatch(passwordEncrypted(trayId, encryptedPassword))
       } catch (error) {
         dispatch(passwordEncryptError(trayId, [error.message]))
       }
@@ -41,13 +36,13 @@ export function encryptToken(trayId: string, accessToken: string): ThunkAction<P
     dispatch(abortPendingRequest(trayId))
 
     if (!isBlank(accessToken)) {
-      const request = encryptAccessToken(accessToken)
+      const request = encrypt(accessToken)
 
       dispatch(encryptingToken(trayId, accessToken, request))
 
       try {
-        const data = await send<EncryptTokenResponse>(request)
-        dispatch(tokenEncrypted(trayId, data.accessToken))
+        const encryptedToken = await send<EncryptResponse>(request)
+        dispatch(tokenEncrypted(trayId, encryptedToken))
       } catch (error) {
         dispatch(tokenEncryptError(trayId, [error.message]))
       }

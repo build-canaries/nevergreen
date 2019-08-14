@@ -29,7 +29,8 @@
              (POST "/projects" {data :body} {:body (projects/get-projects data)})
 
              (OPTIONS "/encrypt" [] preflight-response)
-             (POST "/encrypt" {data :body} {:body (security/encrypt-data data)})
+             (POST "/encrypt" {data :body} {:headers {"Content-Type" "text/plain; charset=utf-8"}
+                                            :body    (security/encrypt-data (slurp data))})
 
              (OPTIONS "/export" [] preflight-response)
              (POST "/export" {data :body} {:body (export-config data)})
@@ -39,7 +40,8 @@
 
              (GET "/ping" [] {:status 204})
 
-             (GET "/version" [] {:headers {"Content-Type" "text/plain"} :body (version)})
+             (GET "/version" [] {:headers {"Content-Type" "text/plain; charset=utf-8"}
+                                 :body    (version)})
 
              (GET "*" [] {:status 404})))
 

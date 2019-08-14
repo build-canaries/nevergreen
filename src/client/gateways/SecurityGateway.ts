@@ -1,17 +1,7 @@
 import {post} from './Gateway'
 
-export interface EncryptResponse {
-  password: string;
-}
+export type EncryptResponse = string;
 
-export interface EncryptTokenResponse {
-  accessToken: string;
-}
-
-export function encryptPassword(password: string) {
-  return post('/api/encrypt', {password})
-}
-
-export function encryptAccessToken(accessToken: string) {
-  return post('/api/encrypt', {accessToken})
+export function encrypt(value: string) {
+  return post('/api/encrypt', value, {'Content-Type': 'text/plain'})
 }
