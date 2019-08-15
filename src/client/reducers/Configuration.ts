@@ -7,7 +7,6 @@ import {fromJson} from '../common/Json'
 export interface Configuration extends RecursivePartial<State> {
 }
 
-// @ts-ignore
 export const schema: object = validateConfiguration.schema
 
 /*
@@ -21,7 +20,6 @@ export function validate(configuration: Configuration): string[] {
   if (validateConfiguration(filteredData)) {
     return []
   } else {
-    // @ts-ignore
     return validateConfiguration.errors.map((error) => `${error.dataPath} ${error.message}`)
   }
 }

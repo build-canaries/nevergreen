@@ -31,6 +31,7 @@ describe('export <Externally/>', () => {
 
     const wrapper = shallow(<Externally {...props} />)
     changeAndBlur(wrapper.find(locator('access-token')), 'some-access-token')
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     await wrapper.find(locator('export')).prop('onClick')()
 
@@ -42,6 +43,7 @@ describe('export <Externally/>', () => {
     const props = {...DEFAULT_PROPS}
 
     const wrapper = shallow(<Externally {...props} />)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     await wrapper.find(locator('export')).prop('onClick')()
 

@@ -5,6 +5,7 @@ import {ScaledGrid} from '../../../../src/client/common/scale/ScaledGrid'
 function setWindowSize(size: number) {
   // TODO: keep an eye on https://github.com/tmpvar/jsdom/issues/135 to see if this gets fixed
   // Fix from https://github.com/tmpvar/jsdom/issues/135#issuecomment-68191941
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
   // @ts-ignore
   Object.defineProperties(window.HTMLElement.prototype, {
     offsetHeight: {

@@ -36,6 +36,7 @@ export function pressKeyOn(element: CommonWrapper, key: string) {
 }
 
 export function childText(wrapper: ShallowWrapper, selector: EnzymeSelector) {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
   // @ts-ignore
   return wrapper.find(selector).shallow().text()
 }

@@ -4,6 +4,12 @@ import styles from './button.scss'
 import iconStyles from '../fonts/icon-font.scss'
 import {VisuallyHidden} from '../VisuallyHidden'
 
+export enum ButtonTheme {
+  primary = 'primary',
+  secondary = 'secondary',
+  danger = 'danger'
+}
+
 type ButtonProps = {
   children: ReactNode;
   className?: string;
@@ -12,7 +18,7 @@ type ButtonProps = {
 } & DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
 
 type BaseButtonProps = {
-  theme: 'primary' | 'secondary' | 'danger';
+  theme: ButtonTheme;
 } & ButtonProps
 
 export function BaseButton({theme, className, icon, iconOnly, children, ...additionalProps}: BaseButtonProps) {
@@ -34,15 +40,15 @@ export function BaseButton({theme, className, icon, iconOnly, children, ...addit
 }
 
 export function PrimaryButton(props: ButtonProps) {
-  return <BaseButton theme='primary' {...props}/>
+  return <BaseButton theme={ButtonTheme.primary} {...props}/>
 }
 
 export function SecondaryButton(props: ButtonProps) {
-  return <BaseButton theme='secondary' {...props}/>
+  return <BaseButton theme={ButtonTheme.secondary} {...props}/>
 }
 
 export function DangerButton(props: ButtonProps) {
-  return <BaseButton theme='danger' {...props}/>
+  return <BaseButton theme={ButtonTheme.danger} {...props}/>
 }
 
 export function InputButton(props: ButtonProps) {

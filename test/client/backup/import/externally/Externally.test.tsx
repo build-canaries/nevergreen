@@ -37,6 +37,7 @@ describe('import <Externally/>', () => {
     }
 
     const wrapper = shallow(<Externally {...props} />)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     await wrapper.find(locator('import-externally')).prop('onClick')()
 
@@ -57,6 +58,7 @@ describe('import <Externally/>', () => {
     }
 
     const wrapper = shallow(<Externally {...props} />)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     await wrapper.find(locator('import-externally')).prop('onClick')()
 
@@ -77,6 +79,7 @@ describe('import <Externally/>', () => {
     }
 
     const wrapper = shallow(<Externally {...props} />)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     await wrapper.find(locator('import-externally')).prop('onClick')()
 
@@ -97,6 +100,7 @@ describe('import <Externally/>', () => {
     }
 
     const wrapper = shallow(<Externally {...props} />)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     await wrapper.find(locator('import-externally')).prop('onClick')()
 
@@ -119,6 +123,7 @@ describe('import <Externally/>', () => {
     }
 
     const wrapper = shallow(<Externally {...props} />)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     await wrapper.find(locator('import-externally')).prop('onClick')()
 
@@ -139,6 +144,7 @@ describe('import <Externally/>', () => {
     }
 
     const wrapper = shallow(<Externally {...props} />)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     await wrapper.find(locator('import-externally')).prop('onClick')()
 

@@ -1,6 +1,5 @@
 import 'core-js/stable'
 import 'regenerator-runtime/runtime'
-import '@testing-library/react/cleanup-after-each'
 import '@testing-library/jest-dom/extend-expect'
 import {configure} from '@testing-library/react'
 import Enzyme from 'enzyme'

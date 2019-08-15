@@ -14,9 +14,8 @@ export async function save(data: Configuration) {
 }
 
 export async function load(): Promise<object> {
-  let configuration = {}
+  const configuration: {[key: string]: unknown} = {}
   await localforage.iterate((value, key) => {
-    // @ts-ignore
     configuration[key] = value
   })
   return configuration
