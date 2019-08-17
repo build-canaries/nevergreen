@@ -4,10 +4,6 @@ const fs = require('fs')
 
 const app = express()
 
-const generic = response('cctray.xml')
-const go = response('go_cd.xml')
-const jenkins = response('jenkins.xml')
-
 function getRandomInt(min, max) {
   min = Math.ceil(min)
   max = Math.floor(max)
@@ -23,6 +19,10 @@ function response(file) {
   }
 }
 
+const generic = response('cctray.xml')
+const go = response('go_cd.xml')
+const jenkins = response('jenkins.xml')
+
 app.get('/cc.xml', jenkins) // Jenkins, Hudson, CircleCI, CruiseControl
 app.get('/cc/uuid/cctray.xml', generic) // Solano CI
 app.get('/owner/repo/cc.xml', generic) // Travis CI
@@ -32,6 +32,14 @@ app.get('/XmlStatusReport.aspx', generic) // CruiseControl.rb, CruiseControl.NET
 
 app.get('/cctray.xml', generic)
 app.get('/secure/cctray.xml', basicAuth('u', 'p'), generic)
+
+app.get('/token/cctray.xml', function (req, res) {
+  if (req.headers.authorization === 'Bearer abc123') {
+    generic(req, res)
+  } else {
+    res.status(401).send('Go away! I need a token')
+  }
+})
 
 app.get('/error/:code', function (req, res) {
   res.status(req.params.code).send('Oh no, an error ' + req.params.code + ' happened!')
