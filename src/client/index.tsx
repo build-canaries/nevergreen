@@ -12,7 +12,7 @@ import {navigated} from './actions/NevergreenActionCreators'
 import NevergreenContainer from './NevergreenContainer'
 import MonitorContainer from './monitor/MonitorContainer'
 import TrackingContainer from './tracking/TrackingContainer'
-import SuccessContainer from './success/SuccessContainer'
+import {Success} from './success/Success'
 import SettingsContainer from './settings/SettingsContainer'
 import BackupContainer from './backup/BackupContainer'
 import {StyleGuide} from './styleGuide/StyleGuide'
@@ -50,7 +50,7 @@ ReactDOM.render(
           <Switch>
             <Route exact path='/monitor' component={MonitorContainer}/>
             <Route exact path='/tracking' component={TrackingContainer}/>
-            <Route exact path='/success' component={SuccessContainer}/>
+            <Route exact path='/success' component={Success}/>
             <Route exact path='/settings' component={SettingsContainer}/>
             <Route exact path='/backup' component={BackupContainer}/>
             <Route exact path='/style-guide' component={StyleGuide}/>

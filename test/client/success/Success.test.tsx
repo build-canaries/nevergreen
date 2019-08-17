@@ -1,34 +1,49 @@
 import React from 'react'
-import {shallow} from 'enzyme'
-import {noop} from 'lodash'
-import {Success} from '../../../src/client/success/Success'
-import {AddedMessages} from '../../../src/client/success/AddedMessages'
-import {Messages} from '../../../src/client/common/Messages'
+import {NO_MESSAGES_WARNING, Success} from '../../../src/client/success/Success'
+import {render} from '../testHelpers'
+import userEvent from '@testing-library/user-event'
+import {SUCCESS_ROOT} from '../../../src/client/reducers/SuccessReducer'
 
 describe('Success <Success/>', () => {
 
-  const DEFAULT_PROPS = {
-    messages: [],
-    addMessage: noop,
-    removeMessage: noop
-  }
-
   test('should show success messages', () => {
-    const messages = ['some-message', 'http://some-url']
-    const props = {...DEFAULT_PROPS, messages}
-    const wrapper = shallow(<Success {...props} />)
-    expect(wrapper.find(AddedMessages).prop('messages')).toEqual(messages)
+    const state = {[SUCCESS_ROOT]: ['some-message', 'http://some-url']}
+    const {queryByText} = render(<Success/>, state)
+    expect(queryByText('some-message')).toBeInTheDocument()
+  })
+
+  test('should show success images', () => {
+    const state = {[SUCCESS_ROOT]: ['some-message', 'http://some-url']}
+    const {getByTestId} = render(<Success/>, state)
+    expect(getByTestId('success-image')).toHaveAttribute('src', 'http://some-url')
+  })
+
+  test('should allow success messages to be added', async () => {
+    const state = {[SUCCESS_ROOT]: []}
+    const {getByText, getByLabelText, queryByText} = render(<Success/>, state)
+    await userEvent.type(getByLabelText('message'), 'some-message')
+    userEvent.click(getByText('add'))
+    expect(queryByText('some-message')).toBeInTheDocument()
+  })
+
+  test('should allow success messages to be removed', () => {
+    const state = {[SUCCESS_ROOT]: ['some-message']}
+    const {getByText, queryByText} = render(<Success/>, state)
+    userEvent.click(getByText('remove success message'))
+    expect(queryByText('some-message')).not.toBeInTheDocument()
   })
 
   test('should show a warning if all success messages are removed', () => {
-    const props = {...DEFAULT_PROPS, messages: []}
-    const wrapper = shallow(<Success {...props} />)
-    expect(wrapper.find(Messages).prop('messages')).not.toBeNull()
+    const state = {[SUCCESS_ROOT]: []}
+    const {queryByText, queryByTestId} = render(<Success/>, state)
+    expect(queryByText(NO_MESSAGES_WARNING)).toBeInTheDocument()
+    expect(queryByTestId('success-message')).not.toBeInTheDocument()
+    expect(queryByTestId('success-image')).not.toBeInTheDocument()
   })
 
   test('should not show a warning if at least one success messages exists', () => {
-    const props = {...DEFAULT_PROPS, messages: ['some-message']}
-    const wrapper = shallow(<Success {...props} />)
-    expect(wrapper.find(Messages).prop('messages')).toEqual([])
+    const state = {[SUCCESS_ROOT]: ['some-message']}
+    const {queryByText} = render(<Success/>, state)
+    expect(queryByText(NO_MESSAGES_WARNING)).not.toBeInTheDocument()
   })
 })
