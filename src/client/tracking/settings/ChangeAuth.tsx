@@ -46,7 +46,8 @@ export function ChangeAuth({show, cancel, save, authType, username}: ChangeAuthP
     <Modal title='Change authentication'
            show={show}
            close={discardChanges}>
-      <div className={styles.content}>
+      <div className={styles.content}
+           data-locator='change-authentication'>
         <div className={styles.auth}>
           <Auth authType={newAuthType}
                 setAuthType={setAuthType}

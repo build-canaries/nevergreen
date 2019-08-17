@@ -6,6 +6,16 @@ function shouldBeAbleToChangeTraySettings() {
   cy.locate('tray-name').clear().type('renamed tray').blur()
   cy.locate('container-title').should('have.text', 'renamed tray')
 
+  if (Cypress.env('TRAY_URL_TOKEN')) {
+    cy.locate('tray-url').clear().type(Cypress.env('TRAY_URL_TOKEN')).blur()
+    cy.locate('change-password').click()
+    cy.locate('change-authentication').within(() => {
+      cy.locate('auth-token').click()
+      cy.locate('auth-access-token').type(Cypress.env('TRAY_TOKEN')).blur()
+      cy.locate('change-password-update').click()
+    })
+  }
+
   cy.checkA11y()
 }
 
