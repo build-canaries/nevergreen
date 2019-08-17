@@ -7,7 +7,7 @@ export function useForceFocus<T extends HTMLElement>(): Ref<T> {
     if (el.current) {
       el.current.focus()
     }
-  }, [el.current])
+  }, [])
 
   return el
 }
