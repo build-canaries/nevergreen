@@ -5,7 +5,7 @@ import {Tabs} from '../../common/Tabs'
 import ExternallyContainer from './externally/ExternallyContainer'
 import {GitHubHelp} from './externally/GitHubHelp'
 import {GitLabHelp} from './externally/GitLabHelp'
-import {BackupLocation} from '../../actions/BackupActionCreators'
+import {BackupLocation} from '../BackupActionCreators'
 
 interface ExportProps {
   configuration: string;

@@ -8,8 +8,8 @@ import styles from './monitor.scss'
 import {isEmpty} from 'lodash'
 import {Title} from '../common/Title'
 import {useTimer} from '../common/TimerHook'
-import {abortPendingRequest} from '../actions/NevergreenThunkActionCreators'
-import {INTERESTING_ROOT} from '../reducers/InterestingReducer'
+import {abortPendingRequest} from '../NevergreenThunkActionCreators'
+import {INTERESTING_ROOT} from './InterestingReducer'
 
 type MonitorProps = {
   loaded: boolean;

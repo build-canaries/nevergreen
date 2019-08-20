@@ -1,9 +1,9 @@
 import {connect} from 'react-redux'
 import {Tray} from './Tray'
-import {getTrayHighlight, getTrayLoaded, getTrayName, getTrayUrl} from '../../reducers/TraysReducer'
+import {getTrayHighlight, getTrayLoaded, getTrayName, getTrayUrl} from '../TraysReducer'
 import {bindActionCreators, Dispatch} from 'redux'
-import {checkRefresh} from '../../actions/TrackingThunkActionCreators'
-import {State} from '../../reducers/Reducer'
+import {checkRefresh} from '../TrackingThunkActionCreators'
+import {State} from '../../Reducer'
 
 interface TrayContainerProps {
   trayId: string;

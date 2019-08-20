@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
-import {getTrays} from '../reducers/TraysReducer'
+import {getTrays} from '../tracking/TraysReducer'
 import {SubmitAnIssue} from './SubmitAnIssue'
-import {State} from '../reducers/Reducer'
+import {State} from '../Reducer'
 
 function mapStateToProps(state: State) {
   return {

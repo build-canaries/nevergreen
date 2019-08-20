@@ -1,9 +1,9 @@
 import {connect} from 'react-redux'
 import {bindActionCreators, Dispatch} from 'redux'
-import {addMessage, removeMessage} from '../actions/SuccessActionCreators'
+import {addMessage, removeMessage} from './SuccessActionCreators'
 import {Success} from './Success'
-import {getSuccessMessages} from '../reducers/SuccessReducer'
-import {State} from '../reducers/Reducer'
+import {getSuccessMessages} from './SuccessReducer'
+import {State} from '../Reducer'
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return bindActionCreators({addMessage, removeMessage}, dispatch)

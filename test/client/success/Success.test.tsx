@@ -2,7 +2,7 @@ import React from 'react'
 import {NO_MESSAGES_WARNING, Success} from '../../../src/client/success/Success'
 import {render} from '../testHelpers'
 import userEvent from '@testing-library/user-event'
-import {SUCCESS_ROOT} from '../../../src/client/reducers/SuccessReducer'
+import {SUCCESS_ROOT} from '../../../src/client/success/SuccessReducer'
 
 describe('Success <Success/>', () => {
 

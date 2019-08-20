@@ -1,6 +1,6 @@
-import {BackupLocation} from '../actions/BackupActionCreators'
+import {BackupLocation} from '../backup/BackupActionCreators'
 import {post} from './Gateway'
-import {Configuration} from '../reducers/Configuration'
+import {Configuration} from '../configuration/Configuration'
 
 export interface ExportResponse {
   id: string;

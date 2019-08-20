@@ -62,7 +62,7 @@ module.exports = {
     new CopyWebpackPlugin([
       './src/client/robots.txt',
       './src/client/favicons',
-      './src/client/reducers/schema.json'
+      './src/client/configuration/schema.json'
     ]),
     new ManifestPlugin({fileName: 'asset-manifest.json'})
   ],

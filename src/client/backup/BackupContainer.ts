@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
 import {Backup} from './Backup'
-import {schema} from '../reducers/Configuration'
+import {schema} from '../configuration/Configuration'
 import {toJson} from '../common/Json'
 
 function mapStateToProps() {

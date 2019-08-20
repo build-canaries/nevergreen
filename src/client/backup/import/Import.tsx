@@ -5,7 +5,7 @@ import {Tabs} from '../../common/Tabs'
 import Externally from './externally/ExternallyContainer'
 import {GitHubHelp} from './externally/GitHubHelp'
 import {GitLabHelp} from './externally/GitLabHelp'
-import {BackupLocation} from '../../actions/BackupActionCreators'
+import {BackupLocation} from '../BackupActionCreators'
 
 export function Import() {
   return (

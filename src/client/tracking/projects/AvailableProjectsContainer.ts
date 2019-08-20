@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
 import {bindActionCreators, Dispatch} from 'redux'
-import {selectProject} from '../../actions/TrackingActionCreators'
-import {refreshTray} from '../../actions/RefreshThunkActionCreators'
+import {selectProject} from '../TrackingActionCreators'
+import {refreshTray} from '../RefreshThunkActionCreators'
 import {AvailableProjects} from './AvailableProjects'
 import {
   getTrayErrors,
@@ -10,10 +10,10 @@ import {
   getTrayTimestamp,
   getTrayUrl,
   getTrayUsername
-} from '../../reducers/TraysReducer'
-import {State} from '../../reducers/Reducer'
-import {getSelectedProjects} from '../../reducers/SelectedReducer'
-import {getProjects} from '../../reducers/ProjectsReducer'
+} from '../TraysReducer'
+import {State} from '../../Reducer'
+import {getSelectedProjects} from '../SelectedReducer'
+import {getProjects} from '../ProjectsReducer'
 
 interface AvailableProjectsContainerProps {
   trayId: string;

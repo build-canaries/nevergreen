@@ -1,5 +1,5 @@
 import React, {Component, ReactNode} from 'react'
-import {clear} from './common/LocalRepository'
+import {clear} from './configuration/LocalRepository'
 import styles from './unhandled-error.scss'
 import {ExternalLink} from './common/ExternalLink'
 import {DangerButton} from './common/forms/Button'

@@ -1,12 +1,12 @@
 import {connect} from 'react-redux'
 import {bindActionCreators, Dispatch} from 'redux'
-import {enableFullScreen} from './actions/NevergreenActionCreators'
-import {initalise} from './actions/NevergreenThunkActionCreators'
-import {checkForNewVersion} from './actions/NotificationThunkActionCreators'
+import {enableFullScreen} from './NevergreenActionCreators'
+import {initalise} from './NevergreenThunkActionCreators'
+import {checkForNewVersion} from './notification/NotificationThunkActionCreators'
 import {Nevergreen} from './Nevergreen'
-import {State} from './reducers/Reducer'
-import {getFullScreen, getFullScreenRequested, getLoaded} from './reducers/NevergreenReducer'
-import {getClickToShowMenu} from './reducers/SettingsReducer'
+import {State} from './Reducer'
+import {getFullScreen, getFullScreenRequested, getLoaded} from './NevergreenReducer'
+import {getClickToShowMenu} from './settings/SettingsReducer'
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return bindActionCreators({

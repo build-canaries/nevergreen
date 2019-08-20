@@ -10,7 +10,7 @@ import {Messages, MessagesType} from '../../../common/Messages'
 import {isBlank} from '../../../common/Utils'
 import {send} from '../../../gateways/Gateway'
 import {importConfiguration, ImportResponse} from '../../../gateways/BackupGateway'
-import {Configuration, toConfiguration} from '../../../reducers/Configuration'
+import {Configuration, toConfiguration} from '../../../configuration/Configuration'
 import {isEmpty} from 'lodash'
 
 interface ExternallyProps {

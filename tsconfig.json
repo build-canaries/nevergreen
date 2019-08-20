@@ -15,6 +15,6 @@
     "./test/client"
   ],
   "exclude": [
-    "./src/client/reducers/ValidateConfiguration.js"
+    "./src/client/configuration/ValidateConfiguration.js"
   ]
 }

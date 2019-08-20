@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
 import {bindActionCreators, Dispatch} from 'redux'
 import {Locally} from './Locally'
-import {setConfiguration} from '../../../actions/NevergreenActionCreators'
+import {setConfiguration} from '../../../NevergreenActionCreators'
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return bindActionCreators({setConfiguration}, dispatch)

@@ -1,12 +1,12 @@
 import {connect} from 'react-redux'
 import {Externally} from './Externally'
-import {BackupLocation, backupSetId, backupSetUrl} from '../../../actions/BackupActionCreators'
-import {State} from '../../../reducers/Reducer'
+import {BackupLocation, backupSetId, backupSetUrl} from '../../BackupActionCreators'
+import {State} from '../../../Reducer'
 import {AnyAction} from 'redux'
 import {ThunkDispatch} from 'redux-thunk'
-import {getBackupId, getBackupUrl} from '../../../reducers/BackupReducer'
-import {Configuration} from '../../../reducers/Configuration'
-import {setConfiguration} from '../../../actions/NevergreenActionCreators'
+import {getBackupId, getBackupUrl} from '../../BackupReducer'
+import {Configuration} from '../../../configuration/Configuration'
+import {setConfiguration} from '../../../NevergreenActionCreators'
 
 interface ExternallyContainerProps {
   location: BackupLocation;

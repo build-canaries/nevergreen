@@ -13,10 +13,10 @@ import {
   setShowTrayName,
   VALID_PROJECTS_TO_SHOW,
   VALID_REFRESH_TIMES
-} from '../actions/SettingsActionCreators'
+} from './SettingsActionCreators'
 import {Settings} from './Settings'
 import {supported} from '../common/SystemNotifications'
-import {enableSystemNotifications} from '../actions/SettingsThunkActionCreators'
+import {enableSystemNotifications} from './SettingsThunkActionCreators'
 import {
   getBrokenBuildSoundFx,
   getClickToShowMenu,
@@ -31,8 +31,8 @@ import {
   getShowTrayName,
   getSystemNotificationPermissionDenied,
   getSystemNotificationRequestingPermission
-} from '../reducers/SettingsReducer'
-import {State} from '../reducers/Reducer'
+} from './SettingsReducer'
+import {State} from '../Reducer'
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return bindActionCreators({

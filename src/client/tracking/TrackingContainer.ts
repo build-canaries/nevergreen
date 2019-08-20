@@ -1,9 +1,9 @@
-import {addTray} from '../actions/TrackingThunkActionCreators'
+import {addTray} from './TrackingThunkActionCreators'
 import {bindActionCreators, Dispatch} from 'redux'
 import {connect} from 'react-redux'
 import {Tracking} from './Tracking'
-import {State} from '../reducers/Reducer'
-import {getTrayIds} from '../reducers/TraysReducer'
+import {State} from '../Reducer'
+import {getTrayIds} from './TraysReducer'
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return bindActionCreators({addTray}, dispatch)

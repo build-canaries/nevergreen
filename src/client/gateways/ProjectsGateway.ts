@@ -1,6 +1,6 @@
 import {fakeRequest, post} from './Gateway'
 import {Prognosis, Project} from '../domain/Project'
-import {SelectedState} from '../reducers/SelectedReducer'
+import {SelectedState} from '../tracking/SelectedReducer'
 import {size} from 'lodash'
 import {AuthTypes, Tray} from '../domain/Tray'
 

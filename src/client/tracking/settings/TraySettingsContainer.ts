@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
 import {bindActionCreators, Dispatch} from 'redux'
-import {setIncludeNew, setServerType, setTrayName, setTrayUrl} from '../../actions/TrackingActionCreators'
-import {setAuth} from '../../actions/AuthenticationThunkActionCreators'
+import {setIncludeNew, setServerType, setTrayName, setTrayUrl} from '../TrackingActionCreators'
+import {setAuth} from '../AuthenticationThunkActionCreators'
 import {TraySettings} from './TraySettings'
 import {
   getTrayAuthType,
@@ -10,9 +10,9 @@ import {
   getTrayServerType,
   getTrayUrl,
   getTrayUsername
-} from '../../reducers/TraysReducer'
-import {State} from '../../reducers/Reducer'
-import {removeTrayThunk} from '../../actions/TrackingThunkActionCreators'
+} from '../TraysReducer'
+import {State} from '../../Reducer'
+import {removeTrayThunk} from '../TrackingThunkActionCreators'
 
 interface TraySettingsContainerProps {
   trayId: string;

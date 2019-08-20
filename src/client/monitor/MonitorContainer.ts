@@ -1,11 +1,11 @@
 import {connect} from 'react-redux'
 import {bindActionCreators, Dispatch} from 'redux'
-import {fetchInteresting} from '../actions/MonitorThunkActionCreators'
-import {requestFullScreen} from '../actions/NevergreenActionCreators'
+import {fetchInteresting} from './MonitorThunkActionCreators'
+import {requestFullScreen} from '../NevergreenActionCreators'
 import {Monitor} from './Monitor'
-import {State} from '../reducers/Reducer'
-import {abortPendingRequest} from '../actions/NevergreenThunkActionCreators'
-import {getInterestingErrors, getInterestingLoaded, getInterestingProjects} from '../reducers/InterestingReducer'
+import {State} from '../Reducer'
+import {abortPendingRequest} from '../NevergreenThunkActionCreators'
+import {getInterestingErrors, getInterestingLoaded, getInterestingProjects} from './InterestingReducer'
 import {
   getBrokenBuildSoundFx,
   getMaxProjectsToShow,
@@ -15,10 +15,10 @@ import {
   getShowBuildLabel,
   getShowBuildTime,
   getShowTrayName
-} from '../reducers/SettingsReducer'
-import {getFullScreen} from '../reducers/NevergreenReducer'
-import {getSuccessMessages} from '../reducers/SuccessReducer'
-import {getTrays} from '../reducers/TraysReducer'
+} from '../settings/SettingsReducer'
+import {getFullScreen} from '../NevergreenReducer'
+import {getSuccessMessages} from '../success/SuccessReducer'
+import {getTrays} from '../tracking/TraysReducer'
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return bindActionCreators({fetchInteresting, requestFullScreen, abortPendingRequest}, dispatch)
