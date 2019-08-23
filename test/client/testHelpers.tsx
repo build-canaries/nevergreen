@@ -21,6 +21,7 @@ import {ThunkAction} from 'redux-thunk'
 import {render as testRender} from '@testing-library/react'
 import {Provider} from 'react-redux'
 import {configureStore} from 'redux-starter-kit'
+import {HashRouter} from 'react-router-dom'
 
 export function locator(name: string) {
   return `[data-locator="${name}"]`
@@ -106,7 +107,13 @@ export function buildState(subState?: RecursivePartial<State>): State {
 
 export function render(component: ReactNode, state?: RecursivePartial<State>) {
   const store = configureStore({reducer, preloadedState: buildState(state)})
-  return testRender(<Provider store={store}>{component}</Provider>)
+  return testRender(
+    <Provider store={store}>
+      <HashRouter>
+        {component}
+      </HashRouter>
+    </Provider>
+  )
 }
 
 export function buildTray(tray?: Partial<Tray>): Tray {

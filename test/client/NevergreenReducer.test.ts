@@ -1,13 +1,11 @@
 import {
   getFullScreen,
   getFullScreenRequested,
-  getLoaded,
   NEVERGREEN_ROOT,
   NevergreenState,
   reduce
 } from '../../src/client/NevergreenReducer'
 import {Actions} from '../../src/client/Actions'
-import {initalising, setConfiguration} from '../../src/client/NevergreenActionCreators'
 import {buildState, testReducer} from './testHelpers'
 import {RecursivePartial} from '../../src/client/common/Types'
 
@@ -25,26 +23,6 @@ describe('NevergreenReducer', () => {
     const existingState = state()
     const newState = reducer(existingState, {type: 'not-a-real-action'})
     expect(newState).toEqual(existingState)
-  })
-
-  describe(Actions.INITIALISING, () => {
-
-    test('should set the loaded property', () => {
-      const existingState = state({loaded: true})
-      const action = initalising()
-      const newState = reducer(existingState, action)
-      expect(getLoaded(newState)).toBeFalsy()
-    })
-  })
-
-  describe(Actions.SET_CONFIGURATION, () => {
-
-    test('should set the loaded property', () => {
-      const existingState = state({loaded: false})
-      const action = setConfiguration({})
-      const newState = reducer(existingState, action)
-      expect(getLoaded(newState)).toBeTruthy()
-    })
   })
 
   describe(Actions.FULL_SCREEN, () => {

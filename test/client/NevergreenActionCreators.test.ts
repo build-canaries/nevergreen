@@ -1,7 +1,6 @@
 import {Actions} from '../../src/client/Actions'
 import {
   enableFullScreen,
-  initalising,
   navigated,
   requestFullScreen,
   setConfiguration
@@ -10,14 +9,6 @@ import {buildState} from './testHelpers'
 import {SUCCESS_ROOT} from '../../src/client/success/SuccessReducer'
 
 describe('NevergreenActionCreators', () => {
-
-  describe(Actions.INITIALISING, () => {
-
-    test('should return the correct type', () => {
-      const actual = initalising()
-      expect(actual).toHaveProperty('type', Actions.INITIALISING)
-    })
-  })
 
   describe(Actions.SET_CONFIGURATION, () => {
 

@@ -2,9 +2,6 @@ import {Actions} from './Actions'
 import {Action} from 'redux'
 import {Configuration} from './configuration/Configuration'
 
-export interface ActionInitalising extends Action<Actions.INITIALISING> {
-}
-
 export interface ActionNavigated extends Action<Actions.NAVIGATED> {
 }
 
@@ -22,10 +19,6 @@ export interface ActionAbortPendingRequest extends Action<Actions.ABORT_PENDING_
 
 export interface ActionSetConfiguration extends Action<Actions.SET_CONFIGURATION> {
   readonly configuration: Configuration;
-}
-
-export function initalising(): ActionInitalising {
-  return {type: Actions.INITIALISING}
 }
 
 export function navigated(): ActionNavigated {

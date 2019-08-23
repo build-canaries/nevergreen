@@ -9,7 +9,7 @@ import {save as repositorySave} from './configuration/LocalRepository'
 import {reducer} from './Reducer'
 import {filter} from './configuration/Configuration'
 import {navigated} from './NevergreenActionCreators'
-import NevergreenContainer from './NevergreenContainer'
+import {Nevergreen} from './Nevergreen'
 import MonitorContainer from './monitor/MonitorContainer'
 import TrackingContainer from './tracking/TrackingContainer'
 import {Success} from './success/Success'
@@ -20,7 +20,6 @@ import {debounce} from 'lodash'
 import {UnhandledError} from './UnhandledError'
 import Modal from 'react-modal'
 import {configureStore} from 'redux-starter-kit'
-import {getLoaded} from './NevergreenReducer'
 
 const ONE_SECOND = 1000
 
@@ -28,9 +27,7 @@ const store = configureStore({reducer})
 
 const save = async () => {
   const state = store.getState()
-  if (getLoaded(state)) {
-    await repositorySave(filter(state))
-  }
+  await repositorySave(filter(state))
 }
 const saveDebounced = debounce(save, 200, {maxWait: ONE_SECOND})
 
@@ -46,7 +43,7 @@ ReactDOM.render(
   <UnhandledError>
     <Provider store={store}>
       <Router history={history}>
-        <NevergreenContainer>
+        <Nevergreen>
           <Switch>
             <Route exact path='/monitor' component={MonitorContainer}/>
             <Route exact path='/tracking' component={TrackingContainer}/>
@@ -58,7 +55,7 @@ ReactDOM.render(
               <Redirect to='/tracking'/>
             </Route>
           </Switch>
-        </NevergreenContainer>
+        </Nevergreen>
       </Router>
     </Provider>
   </UnhandledError>,

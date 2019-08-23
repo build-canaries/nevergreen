@@ -246,7 +246,7 @@
       "<rootDir>/test/client/setupTestEnv.js"
     ],
     "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|svg|ttf|woff|woff2|mp3)$": "<rootDir>/test/client/fileMock.js",
+      "\\.(jpg|jpeg|png|gif|eot|svg|ttf|woff|woff2|mp3|txt)$": "<rootDir>/test/client/fileMock.js",
       "\\.(css|scss)$": "identity-obj-proxy"
     },
     "clearMocks": true,

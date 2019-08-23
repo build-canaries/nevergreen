@@ -1,59 +1,27 @@
-import React, {ReactNode, useEffect, useLayoutEffect, useMemo, useRef} from 'react'
-import {throttle} from 'lodash'
+import React, {ReactNode} from 'react'
 import {Header} from './header/Header'
 import {Footer} from './footer/Footer'
 import NotificationContainer from './notification/NotificationContainer'
-import version from '../../resources/version.txt'
 import styles from './nevergreen.scss'
 import {KeyboardShortcuts} from './KeyboardShortcuts'
-import {useTimer} from './common/TimerHook'
+import {useConfiguration} from './configuration/ConfigurationHook'
+import {useServiceWorker} from './ServiceWorkerHook'
+import {useFullScreen} from './FullScreenHook'
+import {useSelector} from 'react-redux'
+import {getClickToShowMenu} from './settings/SettingsReducer'
+import {useCheckForNewVersion} from './CheckForNewVersionHook'
 
 interface NevergreenProps {
   children: ReactNode;
-  loaded: boolean;
-  initalise: () => void;
-  checkForNewVersion: (version: string, hostname: string) => void;
-  isFullScreen: boolean;
-  fullScreenRequested: boolean;
-  enableFullScreen: (enable: boolean) => void;
-  clickToShowMenu: boolean;
 }
 
-const ONE_SECOND = 1000
-const THREE_SECONDS = 3 * 1000
-const TWENTY_FOUR_HOURS = 24 * 60 * 60
+export function Nevergreen({children}: NevergreenProps) {
+  useServiceWorker()
+  const loading = useConfiguration()
+  const disableFullScreen = useFullScreen(loading)
+  useCheckForNewVersion(loading)
 
-export function Nevergreen({initalise, loaded, isFullScreen, children, clickToShowMenu, fullScreenRequested, enableFullScreen, checkForNewVersion}: NevergreenProps) {
-  const fullScreenTimer = useRef(0)
-
-  const disableFullScreen = throttle(() => {
-    clearTimeout(fullScreenTimer.current)
-
-    if (isFullScreen) {
-      enableFullScreen(false)
-    }
-
-    if (fullScreenRequested) {
-      fullScreenTimer.current = window.setTimeout(() => enableFullScreen(true), THREE_SECONDS)
-    }
-  }, ONE_SECOND, {trailing: false})
-
-  const checkVersion = useMemo(() => () => loaded && checkForNewVersion(version, window.location.hostname), [loaded])
-
-  useEffect(() => {
-    initalise()
-  }, [])
-
-  useLayoutEffect(() => {
-    if (loaded) {
-      enableFullScreen(fullScreenRequested)
-      if (!fullScreenRequested) {
-        clearTimeout(fullScreenTimer.current)
-      }
-    }
-  }, [loaded, fullScreenRequested])
-
-  useTimer(checkVersion, TWENTY_FOUR_HOURS)
+  const clickToShowMenu = useSelector(getClickToShowMenu)
 
   const disableFullScreenOn = clickToShowMenu
     ? {onClick: disableFullScreen}
@@ -61,16 +29,16 @@ export function Nevergreen({initalise, loaded, isFullScreen, children, clickToSh
 
   return (
     <>
-      {loaded && <KeyboardShortcuts/>}
+      {!loading && <KeyboardShortcuts/>}
 
       <div className={styles.nevergreen}
-           aria-busy={!loaded}
+           aria-busy={loading}
            tabIndex={-1}
            {...disableFullScreenOn}>
-        <Header fullScreen={isFullScreen}/>
+        <Header/>
         <NotificationContainer/>
-        {loaded && <main className={styles.main}>{children}</main>}
-        <Footer fullScreen={isFullScreen}/>
+        {!loading && <main className={styles.main}>{children}</main>}
+        <Footer/>
       </div>
     </>
   )

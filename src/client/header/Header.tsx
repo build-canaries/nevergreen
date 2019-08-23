@@ -5,10 +5,8 @@ import logo from './buildcanaries-logo.png'
 import {NavLink} from 'react-router-dom'
 import {Shortcut} from '../common/Shortcut'
 import {Title} from '../common/Title'
-
-interface HeaderProps {
-  fullScreen?: boolean;
-}
+import {useSelector} from 'react-redux'
+import {getFullScreen} from '../NevergreenReducer'
 
 const MENU_ITEMS = [
   {id: 'monitor', title: 'monitor', shortcuts: ['m', '1']},
@@ -18,7 +16,8 @@ const MENU_ITEMS = [
   {id: 'backup', title: 'backup', shortcuts: ['b', '5']}
 ]
 
-export function Header({fullScreen}: HeaderProps) {
+export function Header() {
+  const fullScreen = useSelector(getFullScreen)
   const [menuVisible, setMenuVisible] = useState(false)
 
   const headerClassNames = classNames(styles.siteHeader, {
