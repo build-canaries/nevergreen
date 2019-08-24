@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
 import {random} from 'lodash'
-import {Prognosis} from '../domain/Project'
 import {ScaledGrid} from '../common/scale/ScaledGrid'
 import {InterestingProject} from '../common/project/InterestingProject'
 import {randomDateInPast} from '../common/DateTime'
@@ -8,20 +7,26 @@ import {generateRandomName} from '../domain/Tray'
 import {ProjectSummary} from '../common/project/ProjectSummary'
 import {ProjectError} from '../common/project/ProjectError'
 import styles from './display-preview.scss'
-
-export interface DisplayPreviewProps {
-  showTrayName: boolean;
-  showBuildTime: boolean;
-  showBrokenBuildTime: boolean;
-  showBuildLabel: boolean;
-  showPrognosis: Prognosis[];
-}
+import {useSelector} from 'react-redux'
+import {
+  getShowBrokenBuildTime,
+  getShowBuildLabel,
+  getShowBuildTime,
+  getShowPrognosis,
+  getShowTrayName
+} from './SettingsReducer'
 
 function randomBuildLabel() {
   return `${random(1, 9999)}`
 }
 
-export function DisplayPreview({showTrayName, showBuildTime, showBrokenBuildTime, showBuildLabel, showPrognosis}: DisplayPreviewProps) {
+export function DisplayPreview() {
+  const showTrayName = useSelector(getShowTrayName)
+  const showBuildTime = useSelector(getShowBuildTime)
+  const showBrokenBuildTime = useSelector(getShowBrokenBuildTime)
+  const showBuildLabel = useSelector(getShowBuildLabel)
+  const showPrognosis = useSelector(getShowPrognosis)
+
   const [trayName] = useState(generateRandomName())
   const [lastBuildLabel] = useState(randomBuildLabel())
   const [lastBuildTime] = useState(randomDateInPast())

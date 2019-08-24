@@ -3,12 +3,11 @@ import {SuccessMessage} from '../common/SuccessMessage'
 import {SuccessImage} from './SuccessImage'
 import {isBlank, randomFrom} from '../common/Utils'
 import {hasScheme} from '../domain/Url'
+import {useSelector} from 'react-redux'
+import {getSuccessMessages} from '../success/SuccessReducer'
 
-export interface SuccessProps {
-  messages: string[];
-}
-
-export function Success({messages}: SuccessProps) {
+export function Success() {
+  const messages = useSelector(getSuccessMessages)
   const [message] = useState(randomFrom(messages))
 
   if (isBlank(message)) {

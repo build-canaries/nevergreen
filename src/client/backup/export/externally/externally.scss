@@ -9,6 +9,19 @@
   width: 6em;
 }
 
+.url {
+  @extend %first;
+
+  flex-grow: 1;
+  margin: 0 1em 0 0;
+}
+
+.id {
+  @include respond-to(tablet, desktop) {
+    width: 38em;
+  }
+}
+
 .accessToken {
   @include respond-to(tablet, desktop) {
     width: 38em;

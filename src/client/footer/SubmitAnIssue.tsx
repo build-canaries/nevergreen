@@ -2,11 +2,12 @@ import React from 'react'
 import {ExternalLink} from '../common/ExternalLink'
 import {CI_OPTIONS, Tray} from '../domain/Tray'
 import {isBlank} from '../common/Utils'
+import {useSelector} from 'react-redux'
+import {getTrays} from '../tracking/TraysReducer'
 
 interface SubmitAnIssueProps {
   version: string;
   className?: string;
-  trays: Tray[];
 }
 
 function display(serverType: string) {
@@ -56,7 +57,9 @@ ${knownServerTypes(trays)}
 
 const ISSUE_URL = 'https://github.com/build-canaries/nevergreen/issues/new'
 
-export function SubmitAnIssue({version, className, trays}: SubmitAnIssueProps) {
+export function SubmitAnIssue({version, className}: SubmitAnIssueProps) {
+  const trays = useSelector(getTrays)
+
   return (
     <ExternalLink href={`${ISSUE_URL}?body=${bugReport(version, trays)}`}
                   className={className}

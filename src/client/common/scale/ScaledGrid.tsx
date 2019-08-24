@@ -1,4 +1,4 @@
-import React, {Children, ReactNode, useLayoutEffect, useRef, useState} from 'react'
+import React, {Children, ReactNode, useCallback, useLayoutEffect, useRef, useState} from 'react'
 import {ideal, MIN_FONT_SIZE} from './ScaleText'
 import {FontMetrics, Measurable} from './FontMetrics'
 import _ from 'lodash'
@@ -88,13 +88,13 @@ export function ScaledGrid({children}: ScaledGridProps) {
   const fontMetrics = useRef<Measurable>(null)
   const listNode = useRef<HTMLUListElement>(null)
 
-  const calculate = () => {
+  const calculate = useCallback(() => {
     if (listNode.current && fontMetrics.current) {
       setDimensions(calculateChildDimensions(listNode.current, fontMetrics.current))
     }
-  }
+  }, [listNode.current, fontMetrics.current])
 
-  useLayoutEffect(() => calculate(), [children])
+  useLayoutEffect(calculate, [children])
   useResizable(calculate)
 
   const style = {

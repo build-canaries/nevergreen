@@ -5,7 +5,6 @@
 @import '../common/typography';
 
 .authType {
-  margin: 0;
   width: 100%;
 
   @include respond-to(tablet, desktop) {

@@ -3,27 +3,36 @@ import {clamp, concat, map, reduce, size, take} from 'lodash'
 import {ScaledGrid} from '../common/scale/ScaledGrid'
 import {InterestingProject} from '../common/project/InterestingProject'
 import {isBlank} from '../common/Utils'
-import {isSick, Project} from '../domain/Project'
+import {isSick} from '../domain/Project'
 import {ProjectSummary} from '../common/project/ProjectSummary'
 import {ProjectError} from '../common/project/ProjectError'
 import styles from './interesting-projects.scss'
 import {Tray} from '../domain/Tray'
+import {useSelector} from 'react-redux'
+import {getInterestingErrors, getInterestingProjects} from './InterestingReducer'
+import {getTrays} from '../tracking/TraysReducer'
+import {
+  getBrokenBuildSoundFx,
+  getMaxProjectsToShow,
+  getPlayBrokenBuildSoundFx,
+  getShowBrokenBuildTime,
+  getShowBuildLabel,
+  getShowBuildTime,
+  getShowTrayName
+} from '../settings/SettingsReducer'
 
-export interface InterestingProjectsProps {
-  projects?: Project[];
-  trays: Tray[];
-  showBuildTimers?: boolean;
-  showBrokenBuildTimers?: boolean;
-  showTrayName?: boolean;
-  playBrokenBuildSounds?: boolean;
-  brokenBuildFx?: string;
-  showBuildLabel?: boolean;
-  errors?: string[];
-  maxProjectsToShow: number;
-}
-
-export function InterestingProjects({errors, projects, maxProjectsToShow, playBrokenBuildSounds, brokenBuildFx, trays, showBuildTimers, showBrokenBuildTimers, showTrayName, showBuildLabel}: InterestingProjectsProps) {
+export function InterestingProjects() {
   const sfxNode = useRef<HTMLAudioElement>(null)
+  const projects = useSelector(getInterestingProjects)
+  const errors = useSelector(getInterestingErrors)
+  const trays = useSelector(getTrays)
+  const maxProjectsToShow = useSelector(getMaxProjectsToShow)
+  const playBrokenBuildSounds = useSelector(getPlayBrokenBuildSoundFx)
+  const brokenBuildFx = useSelector(getBrokenBuildSoundFx)
+  const showBuildTimers = useSelector(getShowBuildTime)
+  const showBrokenBuildTimers = useSelector(getShowBrokenBuildTime)
+  const showTrayName = useSelector(getShowTrayName)
+  const showBuildLabel = useSelector(getShowBuildLabel)
 
   useEffect(() => {
     return () => {
@@ -31,7 +40,7 @@ export function InterestingProjects({errors, projects, maxProjectsToShow, playBr
         sfxNode.current.pause()
       }
     }
-  })
+  }, [])
 
   const numberOfErrors = size(errors)
   const totalItems = numberOfErrors + size(projects)
@@ -49,8 +58,12 @@ export function InterestingProjects({errors, projects, maxProjectsToShow, playBr
   const projectIsBroken = reduce(projects, (previous, project) => previous || isSick(project.prognosis), false)
   const playBrokenSfx = playBrokenBuildSounds && (projectIsBroken || numberOfErrors > 0)
 
-  const brokenSfx = playBrokenSfx && !isBlank(brokenBuildFx) &&
-    <audio ref={sfxNode} src={brokenBuildFx} autoPlay/>
+  const brokenSfx = playBrokenSfx && !isBlank(brokenBuildFx) && (
+    <audio ref={sfxNode}
+           src={brokenBuildFx}
+           autoPlay
+           data-locator='broken-build-sound'/>
+  )
 
   const errorComponents = map(errorsToShow, (error) => {
     return <ProjectError key={error} error={error}/>
@@ -73,7 +86,7 @@ export function InterestingProjects({errors, projects, maxProjectsToShow, playBr
   })
 
   const summary = showSummary ? ([
-    <ProjectSummary key='summary' additionalProjectsCount={totalItems - maxProjectsToShowClamped}/>
+    <ProjectSummary key='summary' additionalProjectsCount={totalItems - (maxProjectsToShow - 1)}/>
   ]) : []
 
   return (

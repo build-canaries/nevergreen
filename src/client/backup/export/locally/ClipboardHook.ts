@@ -15,5 +15,5 @@ export function useClipboard(elementSelector: string, onSuccess: (evt: Event) =>
     return () => {
       clipboard.destroy()
     }
-  }, [elementSelector])
+  }, [elementSelector, onSuccess, onError])
 }

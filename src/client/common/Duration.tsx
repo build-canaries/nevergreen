@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react'
+import React, {useCallback, useState} from 'react'
 import {VisuallyHidden} from './VisuallyHidden'
 import {abbreviateDuration, formatAsDuration} from './DateTime'
 import {useTimer} from './TimerHook'
@@ -16,7 +16,7 @@ const ONE_MINUTE = 60
 export function Duration({timestamp, fullDescriptionPrefix, fullDescriptionSuffix, abbreviate}: DurationProps) {
   const [duration, setDuration] = useState(formatAsDuration(timestamp))
 
-  const update = useMemo(() => () => setDuration(formatAsDuration(timestamp)), [timestamp])
+  const update = useCallback(() => setDuration(formatAsDuration(timestamp)), [timestamp])
 
   useTimer(update, ONE_MINUTE)
 

@@ -1,18 +1,16 @@
 import React from 'react'
-import {GeneralSettings, GeneralSettingsProps} from './GeneralSettings'
-import {DisplaySettings, DisplaySettingsProps} from './DisplaySettings'
+import {GeneralSettings} from './GeneralSettings'
+import {DisplaySettings} from './DisplaySettings'
 import {Title} from '../common/Title'
-import {NotificationSettings, NotificationSettingsProps} from './NotificationSettings'
+import {NotificationSettings} from './NotificationSettings'
 
-type SettingsProps = GeneralSettingsProps & DisplaySettingsProps & NotificationSettingsProps
-
-export function Settings(props: SettingsProps) {
+export function Settings() {
   return (
     <>
       <Title>Settings</Title>
-      <GeneralSettings {...props}/>
-      <DisplaySettings {...props}/>
-      <NotificationSettings {...props}/>
+      <GeneralSettings/>
+      <DisplaySettings/>
+      <NotificationSettings/>
     </>
   )
 }

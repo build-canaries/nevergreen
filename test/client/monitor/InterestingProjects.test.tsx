@@ -1,130 +1,202 @@
 import React from 'react'
-import {shallow} from 'enzyme'
+import {noop} from 'lodash'
 import {InterestingProjects} from '../../../src/client/monitor/InterestingProjects'
-import {buildProject, buildTray} from '../testHelpers'
+import {buildProject, buildTray, render} from '../testHelpers'
 import {Prognosis} from '../../../src/client/domain/Project'
+import {TRAYS_ROOT} from '../../../src/client/tracking/TraysReducer'
+import {SETTINGS_ROOT} from '../../../src/client/settings/SettingsReducer'
+import {INTERESTING_ROOT} from '../../../src/client/monitor/InterestingReducer'
 
 describe('<InterestingProjects/>', () => {
 
-  const DEFAULT_PROPS = {
-    trays: [],
-    maxProjectsToShow: 1
-  }
+  const trayId = 'some-tray-id'
 
-  const PROJECT = buildProject({
-    projectId: '',
-    prognosis: Prognosis.unknown,
-    name: '',
-    lastBuildTime: '',
-    trayId: 'someId'
+  beforeAll(() => {
+    // not implemented in jsdom, this stops errors being printed during tests
+    HTMLMediaElement.prototype.pause = noop
   })
 
   describe('broken build sfx', () => {
 
-    test('should render if its enabled and any project is broken', () => {
-      const props = {
-        ...DEFAULT_PROPS,
-        projects: [buildProject({...PROJECT, prognosis: Prognosis.sick})],
-        trays: [buildTray({name: 'some-tray-name', trayId: 'someId'})],
-        playBrokenBuildSounds: true,
-        brokenBuildFx: 'some-sfx'
+    test('should play if its enabled and any project is broken', () => {
+      const state = {
+        [INTERESTING_ROOT]: {
+          projects: [
+            buildProject({trayId, prognosis: Prognosis.sick})
+          ]
+        },
+        [TRAYS_ROOT]: {
+          [trayId]: buildTray({trayId})
+        },
+        [SETTINGS_ROOT]: {
+          playBrokenBuildSoundFx: true,
+          brokenBuildSoundFx: 'some-sfx'
+        }
       }
-      const wrapper = shallow(<InterestingProjects {...props} />)
-      expect(wrapper.find('audio').prop('src')).toEqual('some-sfx')
+      const {getByTestId} = render(<InterestingProjects/>, state)
+      expect(getByTestId('broken-build-sound')).toHaveAttribute('src', 'some-sfx')
     })
 
-    test('should not render if its disabled even if any project is sick', () => {
-      const props = {
-        ...DEFAULT_PROPS,
-        projects: [buildProject({...PROJECT, prognosis: Prognosis.sick})],
-        trays: [buildTray({name: 'some-tray-name', trayId: 'someId'})],
-        playBrokenBuildSounds: false
+    test('should not play if its disabled even if any project is sick', () => {
+      const state = {
+        [INTERESTING_ROOT]: {
+          projects: [
+            buildProject({trayId, prognosis: Prognosis.sick})
+          ]
+        },
+        [TRAYS_ROOT]: {
+          [trayId]: buildTray({trayId})
+        },
+        [SETTINGS_ROOT]: {
+          playBrokenBuildSoundFx: false
+        }
       }
-      const wrapper = shallow(<InterestingProjects {...props} />)
-      expect(wrapper.find('audio').exists()).toBeFalsy()
+      const {queryByTestId} = render(<InterestingProjects/>, state)
+      expect(queryByTestId('broken-build-sound')).not.toBeInTheDocument()
     })
 
-    test('should not render if its enabled but no projects are sick', () => {
-      const props = {
-        ...DEFAULT_PROPS,
-        projects: [buildProject({...PROJECT, prognosis: Prognosis.unknown})],
-        trays: [buildTray({name: 'some-tray-name', trayId: 'someId'})],
-        playBrokenBuildSounds: false
+    test('should not play if its enabled but no projects are sick', () => {
+      const state = {
+        [INTERESTING_ROOT]: {
+          projects: [
+            buildProject({trayId, prognosis: Prognosis.unknown})
+          ]
+        },
+        [TRAYS_ROOT]: {
+          [trayId]: buildTray({trayId})
+        },
+        [SETTINGS_ROOT]: {
+          playBrokenBuildSoundFx: true
+        }
       }
-      const wrapper = shallow(<InterestingProjects {...props} />)
-      expect(wrapper.find('audio').exists()).toBeFalsy()
+      const {queryByTestId} = render(<InterestingProjects/>, state)
+      expect(queryByTestId('broken-build-sound')).not.toBeInTheDocument()
     })
 
-    test('should not render if its enabled but a sound fx has not been set', () => {
-      const props = {
-        ...DEFAULT_PROPS,
-        projects: [buildProject({...PROJECT, prognosis: Prognosis.sick})],
-        trays: [buildTray({name: 'some-tray-name', trayId: 'someId'})],
-        playBrokenBuildSounds: true,
-        brokenBuildFx: undefined
+    test('should not play if its enabled but a sound fx has not been set', () => {
+      const state = {
+        [INTERESTING_ROOT]: {
+          projects: [
+            buildProject({trayId, prognosis: Prognosis.sick})
+          ]
+        },
+        [TRAYS_ROOT]: {
+          [trayId]: buildTray({trayId})
+        },
+        [SETTINGS_ROOT]: {
+          playBrokenBuildSoundFx: true,
+          brokenBuildFx: ''
+        }
       }
-      const wrapper = shallow(<InterestingProjects {...props} />)
-      expect(wrapper.find('audio').exists()).toBeFalsy()
+      const {queryByTestId} = render(<InterestingProjects/>, state)
+      expect(queryByTestId('broken-build-sound')).not.toBeInTheDocument()
     })
   })
 
   describe('limiting the projects displayed', () => {
 
-    test('should not render a summary if the number of projects is less than the max', () => {
-      const props = {
-        ...DEFAULT_PROPS,
-        maxProjectsToShow: 3,
-        projects: [PROJECT],
-        trays: [buildTray({name: 'some-tray-name', trayId: 'someId'})]
+    test('should not display a summary if the number of projects is less than the max', () => {
+      const state = {
+        [INTERESTING_ROOT]: {
+          projects: [
+            buildProject({trayId, prognosis: Prognosis.sick})
+          ]
+        },
+        [TRAYS_ROOT]: {
+          [trayId]: buildTray({trayId})
+        },
+        [SETTINGS_ROOT]: {
+          maxProjectsToShow: 6
+        }
       }
-      const wrapper = shallow(<InterestingProjects {...props} />)
-      expect(wrapper.find('ProjectSummary').exists()).toBeFalsy()
+      const {queryByText} = render(<InterestingProjects/>, state)
+      expect(queryByText(/\+\d+ additional projects/)).not.toBeInTheDocument()
     })
 
-    test('should not render a summary if the number of projects is equal to the max', () => {
-      const props = {
-        ...DEFAULT_PROPS,
-        maxProjectsToShow: 3,
-        projects: [PROJECT, PROJECT, PROJECT],
-        trays: [buildTray({name: 'some-tray-name', trayId: 'someId'})]
+    test('should not display a summary if the number of projects is equal to the max', () => {
+      const state = {
+        [INTERESTING_ROOT]: {
+          projects: [
+            buildProject({projectId: '1', trayId}),
+            buildProject({projectId: '2', trayId}),
+            buildProject({projectId: '3', trayId}),
+            buildProject({projectId: '4', trayId}),
+            buildProject({projectId: '5', trayId}),
+            buildProject({projectId: '6', trayId})
+          ]
+        },
+        [TRAYS_ROOT]: {
+          [trayId]: buildTray({trayId})
+        },
+        [SETTINGS_ROOT]: {
+          maxProjectsToShow: 6
+        }
       }
-      const wrapper = shallow(<InterestingProjects {...props} />)
-      expect(wrapper.find('ProjectSummary').exists()).toBeFalsy()
+      const {queryByText} = render(<InterestingProjects/>, state)
+      expect(queryByText(/\+\d+ additional projects/)).not.toBeInTheDocument()
     })
 
-    test('should render a summary if the number of projects is more than the max', () => {
-      const props = {
-        ...DEFAULT_PROPS,
-        maxProjectsToShow: 1,
-        projects: [PROJECT, PROJECT],
-        trays: [buildTray({name: 'some-tray-name', trayId: 'someId'})]
+    test('should display a summary if the number of projects is more than the max', () => {
+      const state = {
+        [INTERESTING_ROOT]: {
+          projects: [
+            buildProject({projectId: '1', trayId}),
+            buildProject({projectId: '2', trayId}),
+            buildProject({projectId: '3', trayId}),
+            buildProject({projectId: '4', trayId}),
+            buildProject({projectId: '5', trayId}),
+            buildProject({projectId: '6', trayId}),
+            buildProject({projectId: '7', trayId}),
+            buildProject({projectId: '8', trayId})
+          ]
+        },
+        [TRAYS_ROOT]: {
+          [trayId]: buildTray({trayId})
+        },
+        [SETTINGS_ROOT]: {
+          maxProjectsToShow: 6
+        }
       }
-      const wrapper = shallow(<InterestingProjects {...props} />)
-      expect(wrapper.find('ProjectSummary').exists()).toBeTruthy()
+      const {queryByText} = render(<InterestingProjects/>, state)
+      expect(queryByText('+3 additional projects')).toBeInTheDocument()
     })
 
-    test('should render a summary if the number of errors is more than the max', () => {
-      const props = {
-        ...DEFAULT_PROPS,
-        maxProjectsToShow: 1,
-        errors: ['foo', 'bar'],
-        projects: [],
-        trays: [buildTray({name: 'some-tray-name', trayId: 'someId'})]
+    test('should display a summary if the number of errors is more than the max', () => {
+      const state = {
+        [INTERESTING_ROOT]: {
+          projects: [],
+          errors: ['1', '2', '3', '4', '5', '6', '7']
+        },
+        [TRAYS_ROOT]: {
+          [trayId]: buildTray({trayId})
+        },
+        [SETTINGS_ROOT]: {
+          maxProjectsToShow: 6
+        }
       }
-      const wrapper = shallow(<InterestingProjects {...props} />)
-      expect(wrapper.find('ProjectSummary').exists()).toBeTruthy()
+      const {queryByText} = render(<InterestingProjects/>, state)
+      expect(queryByText('+2 additional projects')).toBeInTheDocument()
     })
 
-    test('should render a summary if the number of errors and projects is more than the max', () => {
-      const props = {
-        ...DEFAULT_PROPS,
-        maxProjectsToShow: 2,
-        errors: ['foo'],
-        projects: [PROJECT, PROJECT],
-        trays: [buildTray({name: 'some-tray-name', trayId: 'someId'})]
+    test('should display a summary if the number of errors and projects is more than the max', () => {
+      const state = {
+        [INTERESTING_ROOT]: {
+          projects: [
+            buildProject({projectId: '1', trayId}),
+            buildProject({projectId: '2', trayId}),
+            buildProject({projectId: '3', trayId})
+          ],
+          errors: ['1', '2', '3', '4']
+        },
+        [TRAYS_ROOT]: {
+          [trayId]: buildTray({trayId})
+        },
+        [SETTINGS_ROOT]: {
+          maxProjectsToShow: 6
+        }
       }
-      const wrapper = shallow(<InterestingProjects {...props} />)
-      expect(wrapper.find('ProjectSummary').exists()).toBeTruthy()
+      const {queryByText} = render(<InterestingProjects/>, state)
+      expect(queryByText('+2 additional projects')).toBeInTheDocument()
     })
   })
 })

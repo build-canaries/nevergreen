@@ -1,46 +1,56 @@
-import React, {useEffect} from 'react'
+import React, {useCallback, useEffect} from 'react'
 import cn from 'classnames'
-import {InterestingProjects, InterestingProjectsProps} from './InterestingProjects'
-import {Success, SuccessProps} from './Success'
+import {InterestingProjects} from './InterestingProjects'
+import {Success} from './Success'
 import {SuccessMessage} from '../common/SuccessMessage'
 import {Loading} from '../common/Loading'
 import styles from './monitor.scss'
 import {isEmpty} from 'lodash'
 import {Title} from '../common/Title'
 import {useTimer} from '../common/TimerHook'
+import {useDispatch, useSelector} from 'react-redux'
+import {getFullScreen} from '../NevergreenReducer'
+import {requestFullScreen} from '../NevergreenActionCreators'
+import {getRefreshTime} from '../settings/SettingsReducer'
+import {getTrays} from '../tracking/TraysReducer'
 import {abortPendingRequest} from '../NevergreenThunkActionCreators'
-import {INTERESTING_ROOT} from './InterestingReducer'
-
-type MonitorProps = {
-  loaded: boolean;
-  fetchInteresting: () => void;
-  refreshTime: number;
-  requestFullScreen: (enabled: boolean) => void;
-  isFullScreen: boolean;
-  abortPendingRequest: (id: string) => void;
-} & InterestingProjectsProps & SuccessProps
+import {
+  getInterestingErrors,
+  getInterestingLoaded,
+  getInterestingProjects,
+  INTERESTING_ROOT
+} from './InterestingReducer'
+import {fetchInteresting} from './MonitorThunkActionCreators'
 
 export function GettingStartedHelp() {
   return <SuccessMessage message='Add a CI server via the tracking page to start monitoring'/>
 }
 
-export function Monitor(props: MonitorProps) {
-  const {isFullScreen, projects, errors, messages, fetchInteresting, refreshTime, loaded, trays, requestFullScreen} = props
+export function Monitor() {
+  const dispatch = useDispatch()
+  const isFullScreen = useSelector(getFullScreen)
+  const refreshTime = useSelector(getRefreshTime)
+  const trays = useSelector(getTrays)
+  const projects = useSelector(getInterestingProjects)
+  const errors = useSelector(getInterestingErrors)
+  const loaded = useSelector(getInterestingLoaded)
 
   useEffect(() => {
-    requestFullScreen(true)
+    dispatch(requestFullScreen(true))
     return () => {
-      requestFullScreen(false)
+      dispatch(requestFullScreen(false))
     }
   }, [])
 
   useEffect(() => {
     return () => {
-      abortPendingRequest(INTERESTING_ROOT)
+      dispatch(abortPendingRequest(INTERESTING_ROOT))
     }
   }, [])
 
-  useTimer(fetchInteresting, refreshTime)
+  const onTrigger = useCallback(() => dispatch(fetchInteresting()), [])
+
+  useTimer(onTrigger, refreshTime)
 
   const traysAdded = !isEmpty(trays)
   const noProjects = isEmpty(projects)
@@ -56,8 +66,8 @@ export function Monitor(props: MonitorProps) {
       <Title>Monitor</Title>
       <Loading loaded={loaded}>
         {!traysAdded && <GettingStartedHelp/>}
-        {traysAdded && success && <Success messages={messages}/>}
-        {traysAdded && !success && <InterestingProjects {...props}/>}
+        {traysAdded && success && <Success/>}
+        {traysAdded && !success && <InterestingProjects/>}
       </Loading>
     </div>
   )

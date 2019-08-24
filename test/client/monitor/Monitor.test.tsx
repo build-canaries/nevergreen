@@ -1,59 +1,56 @@
 import React from 'react'
-import {shallow} from 'enzyme'
-import {GettingStartedHelp, Monitor} from '../../../src/client/monitor/Monitor'
-import {InterestingProjects} from '../../../src/client/monitor/InterestingProjects'
-import {Success} from '../../../src/client/monitor/Success'
 import {noop} from 'lodash'
-import {Prognosis} from '../../../src/client/domain/Project'
-import {buildProject, buildTray} from '../testHelpers'
+import {Monitor} from '../../../src/client/monitor/Monitor'
+import {buildTray, render} from '../testHelpers'
+import {INTERESTING_ROOT} from '../../../src/client/monitor/InterestingReducer'
+import {TRAYS_ROOT} from '../../../src/client/tracking/TraysReducer'
+import {SUCCESS_ROOT} from '../../../src/client/success/SuccessReducer'
+import * as TimerHook from '../../../src/client/common/TimerHook'
 
 describe('<Monitor/>', () => {
 
-  const DEFAULT_PROPS = {
-    loaded: true,
-    errors: [],
-    trays: [],
-    selected: {},
-    projects: [],
-    messages: [],
-    fetchInteresting: noop,
-    refreshTime: 5,
-    isFullScreen: false,
-    requestFullScreen: noop,
-    maxProjectsToShow: 1,
-    abortPendingRequest: noop
-  }
+  const trayId = 'some-tray-id'
 
-  const someTray = buildTray({trayId: 'some-tray-id'})
-  const someProject = buildProject({projectId: 'some-id', trayId: '', name: '', prognosis: Prognosis.unknown})
-
-  test('should render projects', () => {
-    const props = {...DEFAULT_PROPS, projects: [someProject], trays: [someTray]}
-
-    const wrapper = shallow(<Monitor {...props} />)
-
-    expect(wrapper.find(InterestingProjects).prop('projects')).toEqual([someProject])
-    expect(wrapper.find(Success).exists()).toBeFalsy()
-    expect(wrapper.find(GettingStartedHelp).exists()).toBeFalsy()
+  beforeEach(() => {
+    jest.spyOn(TimerHook, 'useTimer').mockImplementation(noop)
   })
 
-  test('should render success message if there are no projects', () => {
-    const props = {...DEFAULT_PROPS, projects: [], messages: ['some-message'], trays: [someTray]}
-
-    const wrapper = shallow(<Monitor {...props} />)
-
-    expect(wrapper.find(Success).prop('messages')).toEqual(['some-message'])
-    expect(wrapper.find(InterestingProjects).exists()).toBeFalsy()
-    expect(wrapper.find(GettingStartedHelp).exists()).toBeFalsy()
+  test('should show a loading screen when first switching to the page', () => {
+    const state = {
+      [INTERESTING_ROOT]: {
+        loaded: false
+      },
+      [TRAYS_ROOT]: {
+        [trayId]: buildTray({trayId})
+      }
+    }
+    const {queryByTestId} = render(<Monitor/>, state)
+    expect(queryByTestId('loading')).toBeInTheDocument()
   })
 
-  test('should render a helpful message if no trays are added', () => {
-    const props = {...DEFAULT_PROPS, trays: []}
+  test('should show a success message if there are no projects', () => {
+    const state = {
+      [INTERESTING_ROOT]: {
+        projects: [],
+        loaded: true
+      },
+      [TRAYS_ROOT]: {
+        [trayId]: buildTray({trayId})
+      },
+      [SUCCESS_ROOT]: ['some-success-message']
+    }
+    const {queryByText} = render(<Monitor/>, state)
+    expect(queryByText('some-success-message')).toBeInTheDocument()
+  })
 
-    const wrapper = shallow(<Monitor {...props} />)
-
-    expect(wrapper.find(GettingStartedHelp).exists()).toBeTruthy()
-    expect(wrapper.find(Success).exists()).toBeFalsy()
-    expect(wrapper.find(InterestingProjects).exists()).toBeFalsy()
+  test('should show a helpful message if no trays are added', () => {
+    const state = {
+      [INTERESTING_ROOT]: {
+        loaded: true
+      },
+      [TRAYS_ROOT]: {}
+    }
+    const {queryByText} = render(<Monitor/>, state)
+    expect(queryByText('Add a CI server via the tracking page to start monitoring')).toBeInTheDocument()
   })
 })

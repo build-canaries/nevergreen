@@ -1,26 +1,26 @@
-import React, {useState} from 'react'
+import React, {useCallback, useState} from 'react'
 import styles from './locally.scss'
 import {PrimaryButton} from '../../../common/forms/Button'
 import {iPaste} from '../../../common/fonts/Icons'
 import {useClipboard} from './ClipboardHook'
 import {Messages, MessagesType} from '../../../common/Messages'
+import {useSelector} from 'react-redux'
+import {getConfiguration} from '../../../configuration/Configuration'
 
-interface LocallyProps {
-  configuration: string;
-}
+export function Locally() {
+  const configuration = useSelector(getConfiguration)
 
-export function Locally({configuration}: LocallyProps) {
   const [messages, setMessages] = useState<string[]>([])
   const [messageType, setMessageType] = useState(MessagesType.INFO)
 
-  const copySuccess = () => {
+  const copySuccess = useCallback(() => {
     setMessageType(MessagesType.INFO)
     setMessages(['Successfully copied to clipboard'])
-  }
-  const copyError = () => {
+  }, [])
+  const copyError = useCallback(() => {
     setMessageType(MessagesType.ERROR)
     setMessages(['Unfortunately your browser doesn\'t support automatically copying to clipboard, please manually copy'])
-  }
+  }, [])
 
   useClipboard('#copy-to-clipboard', copySuccess, copyError)
 

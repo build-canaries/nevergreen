@@ -2,22 +2,18 @@ import React from 'react'
 import {Container} from '../../common/Container'
 import {Locally} from './locally/Locally'
 import {Tabs} from '../../common/Tabs'
-import ExternallyContainer from './externally/ExternallyContainer'
+import {Externally} from './externally/Externally'
 import {GitHubHelp} from './externally/GitHubHelp'
 import {GitLabHelp} from './externally/GitLabHelp'
 import {BackupLocation} from '../BackupActionCreators'
 
-interface ExportProps {
-  configuration: string;
-}
-
-export function Export({configuration}: ExportProps) {
+export function Export() {
   return (
     <Container title='Export'>
       <Tabs titles={['locally', 'GitHub', 'GitLab']}>
-        <Locally configuration={configuration}/>
-        <ExternallyContainer configuration={configuration} location={BackupLocation.GITHUB} help={<GitHubHelp/>}/>
-        <ExternallyContainer configuration={configuration} location={BackupLocation.GITLAB} help={<GitLabHelp/>}/>
+        <Locally/>
+        <Externally location={BackupLocation.GITHUB} help={<GitHubHelp/>}/>
+        <Externally location={BackupLocation.GITLAB} help={<GitLabHelp/>}/>
       </Tabs>
     </Container>
   )

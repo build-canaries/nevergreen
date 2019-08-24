@@ -2,28 +2,35 @@ import React from 'react'
 import {Checkbox} from '../common/forms/Checkbox'
 import {Messages, MessagesType} from '../common/Messages'
 import styles from './notification-system.scss'
+import {useDispatch, useSelector} from 'react-redux'
+import {
+  getShowSystemNotifications,
+  getSystemNotificationPermissionDenied,
+  getSystemNotificationRequestingPermission
+} from './SettingsReducer'
+import {setShowSystemNotifications} from './SettingsActionCreators'
+import {supported} from '../common/SystemNotifications'
 
-export interface NotificationsSystemProps {
-  systemNotificationsSupported: boolean;
-  showSystemNotifications: boolean;
-  systemNotificationPermissionDenied: boolean;
-  systemNotificationRequestingPermission: boolean;
-  setShowSystemNotifications: (show: boolean) => void;
-}
+export const NOT_SUPPORTED_MESSAGE = 'Unfortunately your browser doesn\'t support notifications.'
+export const PERMISSION_DENIED_MESSAGE = 'System notifications permission denied, unable to show system notifications.'
 
-const PERMISSION_DENIED_MESSAGE = 'System notifications permission denied, unable to show system notifications.'
+export function NotificationsSystem() {
+  const dispatch = useDispatch()
+  const showSystemNotifications = useSelector(getShowSystemNotifications)
+  const systemNotificationRequestingPermission = useSelector(getSystemNotificationRequestingPermission)
+  const systemNotificationPermissionDenied = useSelector(getSystemNotificationPermissionDenied)
+  const systemNotificationsSupported = supported()
 
-export function NotificationsSystem({systemNotificationsSupported, showSystemNotifications, setShowSystemNotifications, systemNotificationRequestingPermission, systemNotificationPermissionDenied}: NotificationsSystemProps) {
   return (
     <>
       {
         systemNotificationsSupported &&
         <Checkbox className={styles.checkbox}
                   checked={showSystemNotifications}
-                  onToggle={setShowSystemNotifications}
+                  onToggle={(val) => dispatch(setShowSystemNotifications(val))}
                   data-locator='show-system-notifications'
                   disabled={systemNotificationRequestingPermission}>
-          show system notifications
+            show system notifications
         </Checkbox>
       }
       {
@@ -32,7 +39,7 @@ export function NotificationsSystem({systemNotificationsSupported, showSystemNot
       }
       {
         !systemNotificationsSupported &&
-        <div data-locator='not-supported'>Unfortunately your browser doesn&#39;t support notifications.</div>
+        <Messages type={MessagesType.WARNING} messages={[NOT_SUPPORTED_MESSAGE]}/>
       }
     </>
   )

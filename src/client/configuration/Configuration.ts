@@ -2,7 +2,7 @@ import validateConfiguration from './ValidateConfiguration'
 import {cloneDeep, isString} from 'lodash'
 import {RecursivePartial} from '../common/Types'
 import {State} from '../Reducer'
-import {fromJson} from '../common/Json'
+import {fromJson, toJson} from '../common/Json'
 
 export interface Configuration extends RecursivePartial<State> {
 }
@@ -40,4 +40,8 @@ export function toConfiguration(data: string | object): [string[], Configuration
   } catch (error) {
     return [[error.message], undefined]
   }
+}
+
+export function getConfiguration(state: State): string {
+  return toJson(filter(state))
 }

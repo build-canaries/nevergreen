@@ -4,14 +4,16 @@ import cn from 'classnames'
 import styles from './notification.scss'
 import {PrimaryButton} from '../common/forms/Button'
 import {iCross} from '../common/fonts/Icons'
+import {useDispatch, useSelector} from 'react-redux'
+import {getNotification} from './NotificationReducer'
+import {getFullScreen} from '../NevergreenReducer'
+import {dismiss} from './NotificationActionCreators'
 
-interface NotificationProps {
-  notification: string;
-  fullScreen: boolean;
-  dismiss: () => void;
-}
+export function Notification() {
+  const dispatch = useDispatch()
+  const fullScreen = useSelector(getFullScreen)
+  const notification = useSelector(getNotification)
 
-export function Notification({fullScreen, notification, dismiss}: NotificationProps) {
   if (isBlank(notification)) {
     return null
   }
@@ -24,15 +26,13 @@ export function Notification({fullScreen, notification, dismiss}: NotificationPr
     <section className={notificationClassNames}
              aria-live='polite'
              role='complementary'>
-      <div className={styles.message}
-           data-locator='notification'>
+      <div className={styles.message}>
         {notification}
       </div>
       <PrimaryButton icon={iCross}
                      iconOnly
                      className={styles.dismiss}
-                     onClick={dismiss}
-                     data-locator='dismiss'>
+                     onClick={() => dispatch(dismiss())}>
         dismiss
       </PrimaryButton>
     </section>

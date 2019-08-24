@@ -1,7 +1,7 @@
 import React from 'react'
 import {Modal} from '../common/Modal'
 import {ExternalLink} from '../common/ExternalLink'
-import SubmitAnIssueContainer from './SubmitAnIssueContainer'
+import {SubmitAnIssue} from './SubmitAnIssue'
 import styles from './about.scss'
 
 interface AboutProps {
@@ -27,7 +27,7 @@ export function About({show, close, version}: AboutProps) {
           GitHub</ExternalLink>.
       </p>
       <p>
-        Found a problem? <SubmitAnIssueContainer version={version}/> on GitHub to help us!
+        Found a problem? <SubmitAnIssue version={version}/> on GitHub to help us!
       </p>
       <h3 className={styles.title}>Licences</h3>
       <p>

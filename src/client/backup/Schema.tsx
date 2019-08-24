@@ -1,15 +1,13 @@
 import React from 'react'
 import {Container} from '../common/Container'
 import styles from './schema.scss'
+import {toJson} from '../common/Json'
+import {schema} from '../configuration/Configuration'
 
-interface SchemaProps {
-  schema: string;
-}
-
-export function Schema({schema}: SchemaProps) {
+export function Schema() {
   return (
     <Container title='Schema' initiallyHidden className={styles.container}>
-      <pre className={styles.schema}>{schema}</pre>
+      <pre className={styles.schema}>{toJson(schema)}</pre>
     </Container>
   )
 }

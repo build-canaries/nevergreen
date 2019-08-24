@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect, useState} from 'react'
+import React, {ChangeEvent, useEffect, useLayoutEffect, useState} from 'react'
 import {isBlank} from '../common/Utils'
 import {Messages, MessagesType} from '../common/Messages'
 import {Input} from '../common/forms/Input'
@@ -6,13 +6,9 @@ import {Checkbox} from '../common/forms/Checkbox'
 import {SecondaryButton} from '../common/forms/Button'
 import {iPlay, iStop} from '../common/fonts/Icons'
 import styles from './notifications-audio.scss'
-
-export interface NotificationsAudioProps {
-  playBrokenBuildSoundFx: boolean;
-  brokenBuildSoundFx: string;
-  setPlayBrokenBuildSoundFx: (play: boolean) => void;
-  setBrokenBuildSoundFx: (sfx: string) => void;
-}
+import {useDispatch, useSelector} from 'react-redux'
+import {getBrokenBuildSoundFx, getPlayBrokenBuildSoundFx} from './SettingsReducer'
+import {setBrokenBuildSoundFx, setPlayBrokenBuildSoundFx} from './SettingsActionCreators'
 
 function pause(audio?: HTMLAudioElement) {
   if (audio) {
@@ -21,20 +17,28 @@ function pause(audio?: HTMLAudioElement) {
   }
 }
 
-export function NotificationsAudio({brokenBuildSoundFx, setPlayBrokenBuildSoundFx, setBrokenBuildSoundFx, playBrokenBuildSoundFx}: NotificationsAudioProps) {
+export function NotificationsAudio() {
+  const dispatch = useDispatch()
+  const brokenBuildSoundFx = useSelector(getBrokenBuildSoundFx)
+  const playBrokenBuildSoundFx = useSelector(getPlayBrokenBuildSoundFx)
 
   const [errors, setErrors] = useState<string[]>([])
   const [audio, setAudio] = useState<HTMLAudioElement>()
   const [soundFx, setSoundFx] = useState(brokenBuildSoundFx)
-  const [playEnabled] = useState(!isBlank(brokenBuildSoundFx))
+  const [playEnabled, setPlayEnabled] = useState(!isBlank(brokenBuildSoundFx))
   const [playing, setPlaying] = useState(false)
+
+  useLayoutEffect(() => {
+    setSoundFx(brokenBuildSoundFx)
+    setPlayEnabled(!isBlank(brokenBuildSoundFx))
+  }, [brokenBuildSoundFx])
 
   const updateSoundFx = ({target}: ChangeEvent<HTMLInputElement>) => {
     setSoundFx(target.value)
     setErrors([])
   }
 
-  const setSoundFxX = () => setBrokenBuildSoundFx(soundFx)
+  const setSoundFxX = () => dispatch(setBrokenBuildSoundFx(soundFx))
 
   const audioStopped = () => {
     setAudio(undefined)
@@ -66,7 +70,7 @@ export function NotificationsAudio({brokenBuildSoundFx, setPlayBrokenBuildSoundF
     return () => {
       pause(audio)
     }
-  }, [])
+  }, [audio])
 
   const playingDisabled = isBlank(soundFx) || !playEnabled
 
@@ -74,7 +78,7 @@ export function NotificationsAudio({brokenBuildSoundFx, setPlayBrokenBuildSoundF
     <>
       <Checkbox className={styles.playSfxs}
                 checked={playBrokenBuildSoundFx}
-                onToggle={(newValue) => setPlayBrokenBuildSoundFx(newValue)}
+                onToggle={(newValue) => dispatch(setPlayBrokenBuildSoundFx(newValue))}
                 data-locator='play-sounds'>
         play audio notifications
       </Checkbox>

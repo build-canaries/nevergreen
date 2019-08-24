@@ -11,23 +11,26 @@ import styles from './available-projects.scss'
 import {SecondaryButton} from '../../common/forms/Button'
 import {iCheckboxChecked, iCheckboxUnchecked} from '../../common/fonts/Icons'
 import {Project} from '../../domain/Project'
+import {getTrayErrors, getTrayTimestamp} from '../TraysReducer'
+import {getProjects} from '../ProjectsReducer'
+import {getSelectedProjects} from '../SelectedReducer'
+import {useDispatch, useSelector} from 'react-redux'
+import {State} from '../../Reducer'
+import {selectProject} from '../TrackingActionCreators'
+import {refreshTray} from '../RefreshThunkActionCreators'
 
 interface AvailableProjectsProps {
   trayId: string;
   index: number;
-  errors: string[];
-  url: string;
-  username?: string;
-  password?: string;
-  serverType?: string;
-  projects: Project[];
-  selected: string[];
-  selectProject: (trayId: string, projectId: string, include: boolean) => void;
-  timestamp?: string;
-  refreshTray: (trayId: string) => void;
 }
 
-export function AvailableProjects({projects, index, selected, trayId, timestamp, errors, selectProject, refreshTray}: AvailableProjectsProps) {
+export function AvailableProjects({index, trayId}: AvailableProjectsProps) {
+  const dispatch = useDispatch()
+  const errors = useSelector<State, string[]>((state) => getTrayErrors(state, trayId))
+  const timestamp = useSelector<State, string>((state) => getTrayTimestamp(state, trayId))
+  const projects = useSelector<State, Project[]>((state) => getProjects(state, trayId))
+  const selected = useSelector<State, string[]>((state) => getSelectedProjects(state, trayId))
+
   const [filter, setFilter] = useState()
   const [filterErrors, setFilterErrors] = useState<string[]>([])
   const rootNode = useRef<HTMLDivElement>(null)
@@ -35,11 +38,11 @@ export function AvailableProjects({projects, index, selected, trayId, timestamp,
   const includeAll = (projects: Project[]) => () => {
     projects
       .filter((project) => !project.removed)
-      .forEach((project) => selectProject(trayId, project.projectId, true))
+      .forEach((project) => dispatch(selectProject(trayId, project.projectId, true)))
   }
 
   const excludeAll = (projects: Project[]) => () => {
-    projects.forEach((project) => selectProject(trayId, project.projectId, false))
+    projects.forEach((project) => dispatch(selectProject(trayId, project.projectId, false)))
   }
 
   const updateFilter = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -95,15 +98,13 @@ export function AvailableProjects({projects, index, selected, trayId, timestamp,
         <div className={styles.projectFilter}>
           <Input className={styles.projectFilterInput}
                  onChange={updateFilter}
-                 placeholder='regular expression'
-                 data-locator='filter'>
+                 placeholder='regular expression'>
             filter
           </Input>
         </div>
       </fieldset>
       <Messages type={MessagesType.ERROR}
-                messages={filterErrors}
-                data-locator='invalid-filter'/>
+                messages={filterErrors}/>
     </div>
   )
 
@@ -148,10 +149,10 @@ export function AvailableProjects({projects, index, selected, trayId, timestamp,
     <section className={styles.availableProjects}
              data-locator='available-projects'
              ref={rootNode}>
-      <VisuallyHidden data-locator='title'><h3>Available projects</h3></VisuallyHidden>
+      <VisuallyHidden><h3>Available projects</h3></VisuallyHidden>
       <Refresh index={index}
                timestamp={timestamp}
-               refreshTray={() => refreshTray(trayId)}/>
+               refreshTray={() => dispatch(refreshTray(trayId))}/>
       <Messages type={MessagesType.ERROR}
                 messages={errors}
                 data-locator='errors'/>

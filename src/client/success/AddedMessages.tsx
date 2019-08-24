@@ -33,8 +33,7 @@ export function AddedMessages({messages, removeMessage}: AddedMessagesProps) {
                          title={msg}
                          data-locator='success-image'/>
                   ) : (
-                    <div className={styles.message}
-                         data-locator='success-message'>
+                    <div className={styles.message}>
                       <SuccessMessage message={msg}/>
                     </div>
                   )}

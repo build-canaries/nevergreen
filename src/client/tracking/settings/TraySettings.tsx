@@ -8,24 +8,32 @@ import {iBin, iDice, iUnlocked} from '../../common/fonts/Icons'
 import styles from './tray-settings.scss'
 import {Checkbox} from '../../common/forms/Checkbox'
 import {ChangeAuth} from './ChangeAuth'
+import {
+  getTrayAuthType,
+  getTrayIncludeNew,
+  getTrayName,
+  getTrayServerType,
+  getTrayUrl,
+  getTrayUsername
+} from '../TraysReducer'
+import {useDispatch, useSelector} from 'react-redux'
+import {State} from '../../Reducer'
+import {setAuth} from '../AuthenticationThunkActionCreators'
+import {removeTray, setIncludeNew, setServerType, setTrayName, setTrayUrl} from '../TrackingActionCreators'
 
 interface TraySettingsProps {
   trayId: string;
-  name: string;
-  url: string;
-  authType: AuthTypes;
-  username: string;
-  serverType: string;
-  removeTray: (trayId: string) => void;
-  setTrayName: (trayId: string, name: string) => void;
-  setServerType: (trayId: string, serverType: string) => void;
-  setTrayUrl: (trayId: string, url: string) => void;
-  includeNew?: boolean;
-  setIncludeNew: (trayId: string, includeNew: boolean) => void;
-  setAuth: (trayId: string, auth: AuthDetails) => void;
 }
 
-export function TraySettings({trayId, name, url, authType, username, serverType, includeNew, removeTray, setTrayName, setTrayUrl, setServerType, setIncludeNew, setAuth}: TraySettingsProps) {
+export function TraySettings({trayId}: TraySettingsProps) {
+  const dispatch = useDispatch()
+  const name = useSelector<State, string>((state) => getTrayName(state, trayId))
+  const url = useSelector<State, string>((state) => getTrayUrl(state, trayId))
+  const authType = useSelector<State, AuthTypes>((state) => getTrayAuthType(state, trayId))
+  const username = useSelector<State, string>((state) => getTrayUsername(state, trayId))
+  const serverType = useSelector<State, string>((state) => getTrayServerType(state, trayId))
+  const includeNew = useSelector<State, boolean>((state) => getTrayIncludeNew(state, trayId))
+
   const [newName, setNewName] = useState(name)
   const [newUrl, setNewUrl] = useState(url)
   const [updatingAuth, setUpdatingAuth] = useState(false)
@@ -34,13 +42,13 @@ export function TraySettings({trayId, name, url, authType, username, serverType,
   useLayoutEffect(() => setNewUrl(url), [url])
 
   const updateAuth = (auth: AuthDetails) => {
-    setAuth(trayId, auth)
+    dispatch(setAuth(trayId, auth))
     setUpdatingAuth(false)
   }
 
   const randomNameButton = (
     <InputButton icon={iDice}
-                 onClick={() => setTrayName(trayId, generateRandomName())}
+                 onClick={() => dispatch(setTrayName(trayId, generateRandomName()))}
                  data-locator='generate-random'>
       randomise name
     </InputButton>
@@ -52,8 +60,8 @@ export function TraySettings({trayId, name, url, authType, username, serverType,
       <Input className={styles.traySettingsName}
              value={newName}
              onChange={({target}) => setNewName(target.value)}
-             onBlur={() => setTrayName(trayId, newName)}
-             onEnter={() => setTrayName(trayId, newName)}
+             onBlur={() => dispatch(setTrayName(trayId, newName))}
+             onEnter={() => dispatch(setTrayName(trayId, newName))}
              placeholder='e.g. project or team name'
              data-locator='tray-name'
              button={randomNameButton}>
@@ -61,8 +69,8 @@ export function TraySettings({trayId, name, url, authType, username, serverType,
       </Input>
       <Input value={newUrl}
              onChange={({target}) => setNewUrl(target.value)}
-             onBlur={() => setTrayUrl(trayId, newUrl)}
-             onEnter={() => setTrayUrl(trayId, newUrl)}
+             onBlur={() => dispatch(setTrayUrl(trayId, newUrl))}
+             onEnter={() => dispatch(setTrayUrl(trayId, newUrl))}
              data-locator='tray-url'
              autoComplete='url'>
         <span className={styles.label}>URL</span>
@@ -70,7 +78,7 @@ export function TraySettings({trayId, name, url, authType, username, serverType,
       <DropDown className={styles.serverType}
                 options={CI_OPTIONS}
                 value={serverType}
-                onChange={({target}) => setServerType(trayId, target.value)}
+                onChange={({target}) => dispatch(setServerType(trayId, target.value))}
                 data-locator='tray-server-type'>
         <span className={styles.label}>server type</span>
       </DropDown>
@@ -94,7 +102,7 @@ export function TraySettings({trayId, name, url, authType, username, serverType,
       </SecondaryButton>
 
       <Checkbox checked={includeNew}
-                onToggle={(newValue) => setIncludeNew(trayId, newValue)}
+                onToggle={(newValue) => dispatch(setIncludeNew(trayId, newValue))}
                 className={styles.includeNew}
                 data-locator='include-new'>
         automatically include new projects
@@ -104,7 +112,7 @@ export function TraySettings({trayId, name, url, authType, username, serverType,
         <div className={styles.dangerZoneContent}>
           <div className={styles.deleteInfo}>Once you delete, there is no going back. Please be certain.</div>
           <DangerButton icon={iBin}
-                        onClick={() => removeTray(trayId)}
+                        onClick={() => dispatch(removeTray(trayId))}
                         data-locator='delete-tray'>
             delete
           </DangerButton>

@@ -4,7 +4,7 @@ import {noop} from 'lodash'
 import {AuthTypes} from '../../../../src/client/domain/Tray'
 import {render} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import Modal from 'react-modal'
+import {setupReactModal} from '../../testHelpers'
 
 describe('<ChangeAuth/>', () => {
 
@@ -16,12 +16,7 @@ describe('<ChangeAuth/>', () => {
     username: ''
   }
 
-  beforeEach(() => {
-    const appElement = document.createElement('div')
-    appElement.setAttribute('id', 'app-element')
-    document.body.append(appElement)
-    Modal.setAppElement('#app-element')
-  })
+  beforeEach(setupReactModal)
 
   test('should be able to change the auth to none', async () => {
     const save = jest.fn()

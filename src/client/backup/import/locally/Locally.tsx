@@ -6,14 +6,13 @@ import {Configuration, toConfiguration} from '../../../configuration/Configurati
 import {isEmpty} from 'lodash'
 import {Messages, MessagesType} from '../../../common/Messages'
 import {isBlank} from '../../../common/Utils'
-
-interface LocallyProps {
-  setConfiguration: (configuration: Configuration) => void;
-}
+import {useDispatch} from 'react-redux'
+import {setConfiguration} from '../../../NevergreenActionCreators'
 
 const PLACEHOLDER = 'paste exported configuration here and press import'
 
-export function Locally({setConfiguration}: LocallyProps) {
+export function Locally() {
+  const dispatch = useDispatch()
   const [messages, setMessages] = useState<string[]>([])
   const [messageType, setMessageType] = useState(MessagesType.INFO)
   const [data, setData] = useState('')
@@ -35,7 +34,7 @@ export function Locally({setConfiguration}: LocallyProps) {
       const [dataErrors, configuration] = toConfiguration(data)
       if (isEmpty(dataErrors)) {
         setInfos(['Successfully imported configuration'])
-        setConfiguration(configuration as Configuration)
+        dispatch(setConfiguration(configuration as Configuration))
         setData('')
       } else {
         setErrors(dataErrors)

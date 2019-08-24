@@ -1,64 +1,39 @@
 import React from 'react'
-import {shallow} from 'enzyme'
+import userEvent from '@testing-library/user-event'
 import {Locally} from '../../../../../src/client/backup/import/locally/Locally'
-import {changeAndBlur, locator} from '../../../testHelpers'
-import {noop} from 'lodash'
+import {render} from '../../../testHelpers'
 
 describe('import <Locally/>', () => {
 
-  const DEFAULT_PROPS = {
-    setConfiguration: noop
-  }
-
   test('should import valid data after filtering and parsing', async () => {
-    const setConfiguration = jest.fn()
-    const props = {...DEFAULT_PROPS, setConfiguration}
-
-    const wrapper = shallow(<Locally {...props} />)
-    changeAndBlur(wrapper.find(locator('import-data')), '{}')
-    await wrapper.find(locator('import')).simulate('click')
-
-    expect(wrapper.find(locator('messages')).prop('messages')).toContain('Successfully imported configuration')
-    expect(wrapper.find(locator('import-data')).prop('value')).toEqual('')
-    expect(setConfiguration).toHaveBeenCalledWith({})
+    const {getByLabelText, getByText} = render(<Locally/>)
+    await userEvent.type(getByLabelText('configuration to import'), '{}', {allAtOnce: true})
+    userEvent.click(getByText('import'))
+    expect(getByText('Successfully imported configuration')).toBeInTheDocument()
+    expect(getByLabelText('configuration to import')).toHaveValue('')
   })
 
   test('should show an error if no data has been entered', async () => {
-    const setConfiguration = jest.fn()
-    const props = {...DEFAULT_PROPS, setConfiguration}
-
-    const wrapper = shallow(<Locally {...props} />)
-    await wrapper.find(locator('import')).simulate('click')
-
-    expect(wrapper.find(locator('messages')).prop('messages')).toContain('Please enter the configuration to import')
-    expect(setConfiguration).not.toHaveBeenCalled()
+    const {getByText} = render(<Locally/>)
+    userEvent.click(getByText('import'))
+    expect(getByText('Please enter the configuration to import')).toBeInTheDocument()
   })
 
   test('should show an error if the data is syntactically invalid (bad json)', async () => {
-    const invalidJson = '{'
-    const setConfiguration = jest.fn()
-    const props = {...DEFAULT_PROPS, setConfiguration}
-
-    const wrapper = shallow(<Locally {...props} />)
-    changeAndBlur(wrapper.find(locator('import-data')), invalidJson)
-    await wrapper.find(locator('import')).simulate('click')
-
-    expect(wrapper.find(locator('messages')).prop('messages')).toContain('Unexpected end of JSON input')
-    expect(wrapper.find(locator('import-data')).prop('value')).toEqual(invalidJson)
-    expect(setConfiguration).not.toHaveBeenCalled()
+    const invalidConfiguration = '{'
+    const {getByLabelText, getByText, getByDisplayValue} = render(<Locally/>)
+    await userEvent.type(getByLabelText('configuration to import'), invalidConfiguration, {allAtOnce: true})
+    userEvent.click(getByText('import'))
+    expect(getByText('Unexpected end of JSON input')).toBeInTheDocument()
+    expect(getByDisplayValue(invalidConfiguration)).toBeInTheDocument()
   })
 
   test('should show an error if the data is semantically invalid (missing required attributes)', async () => {
-    const invalidJson = '{"trays":{"some-id":{}}}'
-    const setConfiguration = jest.fn()
-    const props = {...DEFAULT_PROPS, setConfiguration}
-
-    const wrapper = shallow(<Locally {...props} />)
-    changeAndBlur(wrapper.find(locator('import-data')), invalidJson)
-    await wrapper.find(locator('import')).simulate('click')
-
-    expect(wrapper.find(locator('messages')).prop('messages')).toContain('.trays[\'some-id\'] should have required property \'trayId\'')
-    expect(wrapper.find(locator('import-data')).prop('value')).toEqual(invalidJson)
-    expect(setConfiguration).not.toHaveBeenCalled()
+    const invalidConfiguration = '{"trays":{"some-id":{}}}'
+    const {getByLabelText, getByText, getByDisplayValue} = render(<Locally/>)
+    await userEvent.type(getByLabelText('configuration to import'), invalidConfiguration, {allAtOnce: true})
+    userEvent.click(getByText('import'))
+    expect(getByText('.trays[\'some-id\'] should have required property \'trayId\'')).toBeInTheDocument()
+    expect(getByDisplayValue(invalidConfiguration)).toBeInTheDocument()
   })
 })

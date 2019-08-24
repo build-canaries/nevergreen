@@ -5,17 +5,12 @@ import {DropDown} from '../common/forms/DropDown'
 import styles from './general-settings.scss'
 import {Checkbox} from '../common/forms/Checkbox'
 import {WithHelp} from '../common/ContextualHelp'
+import {useDispatch, useSelector} from 'react-redux'
+import {getClickToShowMenu, getRefreshTime} from './SettingsReducer'
+import {setClickToShowMenu, setRefreshTime, VALID_REFRESH_TIMES} from './SettingsActionCreators'
 
 interface ClickToShowMenuHelpProps {
   enabled: boolean;
-}
-
-export interface GeneralSettingsProps {
-  refreshTime: number;
-  setRefreshTime: (time: string) => void;
-  validRefreshTimes: number[];
-  clickToShowMenu: boolean;
-  setClickToShowMenu: (clickToShow: boolean) => void;
 }
 
 function ClickToShowMenuHelp({enabled}: ClickToShowMenuHelpProps) {
@@ -38,9 +33,12 @@ function ClickToShowMenuHelp({enabled}: ClickToShowMenuHelpProps) {
   )
 }
 
-export function GeneralSettings({refreshTime, setRefreshTime, validRefreshTimes, clickToShowMenu, setClickToShowMenu}: GeneralSettingsProps) {
+export function GeneralSettings() {
+  const dispatch = useDispatch()
+  const refreshTime = useSelector(getRefreshTime)
+  const clickToShowMenu = useSelector(getClickToShowMenu)
 
-  const options = validRefreshTimes.map((time) => {
+  const options = VALID_REFRESH_TIMES.map((time) => {
     return {value: time.toString(), display: secondsToString(time)}
   })
 
@@ -49,7 +47,7 @@ export function GeneralSettings({refreshTime, setRefreshTime, validRefreshTimes,
       <DropDown className={styles.refreshTime}
                 options={options}
                 value={refreshTime}
-                onChange={({target}) => setRefreshTime(target.value)}
+                onChange={({target}) => dispatch(setRefreshTime(target.value))}
                 data-locator='refresh-time'>
         poll for CI changes every
       </DropDown>
@@ -57,7 +55,7 @@ export function GeneralSettings({refreshTime, setRefreshTime, validRefreshTimes,
                 help={<ClickToShowMenuHelp enabled={clickToShowMenu}/>}
                 className={styles.clickToShowHelp}>
         <Checkbox checked={clickToShowMenu}
-                  onToggle={(newValue) => setClickToShowMenu(newValue)}
+                  onToggle={(newValue) => dispatch(setClickToShowMenu(newValue))}
                   className={styles.clickToShow}
                   data-locator='click-to-show-menu'>
           click to show menu

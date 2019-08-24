@@ -1,27 +1,21 @@
 import React from 'react'
-import {shallow} from 'enzyme'
-import {noop} from 'lodash'
 import {GeneralSettings} from '../../../src/client/settings/GeneralSettings'
-import {locator} from '../testHelpers'
+import {render} from '../testHelpers'
+import userEvent from '@testing-library/user-event'
+import {getClickToShowMenu, SETTINGS_ROOT} from '../../../src/client/settings/SettingsReducer'
 
 describe('<GeneralSettings/>', () => {
 
-  const DEFAULT_PROPS = {
-    refreshTime: 0,
-    setRefreshTime: noop,
-    validRefreshTimes: [0],
-    clickToShowMenu: false,
-    setClickToShowMenu: noop
-  }
+  test('should set the click to show menu setting', () => {
+    const state = {
+      [SETTINGS_ROOT]: {
+        clickToShowMenu: false
+      }
+    }
 
-  test('should set the click to show menu setting on click', () => {
-    const setClickToShowMenu = jest.fn()
-    const props = {...DEFAULT_PROPS, setClickToShowMenu}
+    const {store, getByLabelText} = render(<GeneralSettings/>, state)
+    userEvent.click(getByLabelText('click to show menu'))
 
-    const wrapper = shallow(<GeneralSettings {...props} />)
-    const onToggle: (show: boolean) => void = wrapper.find(locator('click-to-show-menu')).prop('onToggle')
-    onToggle && onToggle(true)
-
-    expect(setClickToShowMenu).toBeCalledWith(true)
+    expect(getClickToShowMenu(store.getState())).toBeTruthy()
   })
 })

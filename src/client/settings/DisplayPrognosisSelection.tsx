@@ -2,13 +2,14 @@ import React from 'react'
 import {Prognosis} from '../domain/Project'
 import {Checkbox} from '../common/forms/Checkbox'
 import styles from './display-prognosis-selection.scss'
+import {useDispatch, useSelector} from 'react-redux'
+import {getShowPrognosis} from './SettingsReducer'
+import {setShowPrognosis} from './SettingsActionCreators'
 
-export interface DisplayPrognosisSelectionProps {
-  showPrognosis: Prognosis[];
-  setShowPrognosis: (prognosis: Prognosis, show: boolean) => void;
-}
+export function DisplayPrognosisSelection() {
+  const dispatch = useDispatch()
+  const showPrognosis = useSelector(getShowPrognosis)
 
-export function DisplayPrognosisSelection({showPrognosis, setShowPrognosis}: DisplayPrognosisSelectionProps) {
   return (
     <fieldset className={styles.container}>
       <legend className={styles.legend}>show prognoses</legend>
@@ -19,7 +20,7 @@ export function DisplayPrognosisSelection({showPrognosis, setShowPrognosis}: Dis
               <Checkbox key={prognosis}
                         className={styles.checkbox}
                         checked={showPrognosis.includes(prognosis)}
-                        onToggle={(newValue) => setShowPrognosis(prognosis, newValue)}
+                        onToggle={(newValue) => dispatch(setShowPrognosis(prognosis, newValue))}
                         data-locator='show-prognosis'>
                 {prognosis.replace('-', ' ')}
               </Checkbox>

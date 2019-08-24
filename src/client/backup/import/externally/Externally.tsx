@@ -1,10 +1,8 @@
-import React, {ChangeEvent, ReactElement, useState} from 'react'
-import {IdInput} from '../../IdInput'
+import React, {ChangeEvent, ReactElement, useLayoutEffect, useState} from 'react'
 import {WithHelp} from '../../../common/ContextualHelp'
 import styles from './externally.scss'
 import {PrimaryButton} from '../../../common/forms/Button'
 import {iCloudDownload} from '../../../common/fonts/Icons'
-import {UrlInput} from '../../UrlInput'
 import {Password} from '../../../common/forms/Password'
 import {Messages, MessagesType} from '../../../common/Messages'
 import {isBlank} from '../../../common/Utils'
@@ -12,16 +10,17 @@ import {send} from '../../../gateways/Gateway'
 import {importConfiguration, ImportResponse} from '../../../gateways/BackupGateway'
 import {Configuration, toConfiguration} from '../../../configuration/Configuration'
 import {isEmpty} from 'lodash'
+import {useDispatch, useSelector} from 'react-redux'
+import {State} from '../../../Reducer'
+import {getBackupId, getBackupUrl} from '../../BackupReducer'
+import {BackupLocation, backupSetId, backupSetUrl} from '../../BackupActionCreators'
+import {setConfiguration} from '../../../NevergreenActionCreators'
+import {Input} from '../../../common/forms/Input'
 
 interface ExternallyProps {
-  location: string;
-  backupSetId: (id: string) => void;
-  backupSetUrl: (url: string) => void;
-  id: string;
-  url: string;
+  location: BackupLocation;
   help: ReactElement;
   accessTokenRequired?: boolean;
-  setConfiguration: (configuration: Configuration) => void;
 }
 
 function validate(id: string, url: string, accessToken: string, accessTokenRequired?: boolean): string[] {
@@ -38,7 +37,17 @@ function validate(id: string, url: string, accessToken: string, accessTokenRequi
   return errors
 }
 
-export function Externally({location, id, url, backupSetId, backupSetUrl, help, accessTokenRequired, setConfiguration}: ExternallyProps) {
+export function Externally({location, help, accessTokenRequired}: ExternallyProps) {
+  const dispatch = useDispatch()
+  const id = useSelector<State, string>((state) => getBackupId(location, state))
+  const url = useSelector<State, string>((state) => getBackupUrl(location, state))
+
+  const [newUrl, setNewUrl] = useState(url)
+  const [newId, setNewId] = useState(id)
+
+  useLayoutEffect(() => setNewUrl(url), [url])
+  useLayoutEffect(() => setNewId(id), [id])
+
   const [accessToken, setAccessToken] = useState('')
   const [loaded, setLoaded] = useState(true)
   const [messages, setMessages] = useState<string[]>([])
@@ -58,17 +67,17 @@ export function Externally({location, id, url, backupSetId, backupSetUrl, help, 
   }
 
   const restore = async () => {
-    const validationErrors = validate(id, url, accessToken, accessTokenRequired)
+    const validationErrors = validate(newId, newUrl, accessToken, accessTokenRequired)
 
     if (isEmpty(validationErrors)) {
       setLoaded(false)
       setMessages([])
       try {
-        const res = await send<ImportResponse>(importConfiguration(location, id, accessToken, url))
+        const res = await send<ImportResponse>(importConfiguration(location, newId, accessToken, newUrl))
         const [dataErrors, configuration] = toConfiguration(res.configuration)
         if (isEmpty(dataErrors)) {
           setInfos(['Successfully imported configuration'])
-          setConfiguration(configuration as Configuration)
+          dispatch(setConfiguration(configuration as Configuration))
         } else {
           setErrors(dataErrors)
         }
@@ -86,15 +95,21 @@ export function Externally({location, id, url, backupSetId, backupSetUrl, help, 
       <WithHelp title={`Import from ${location}`}
                 containerClassName={styles.helpContainer}
                 help={help}>
-        <UrlInput key={url}
-                  url={url}
-                  setUrl={backupSetUrl}
-                  disabled={disabled}/>
+        <Input value={newUrl}
+               onChange={({target}) => setNewUrl(target.value)}
+               onBlur={() => dispatch(backupSetUrl(location, newUrl))}
+               disabled={disabled}
+               className={styles.url}>
+          <div className={styles.label}>URL</div>
+        </Input>
       </WithHelp>
-      <IdInput key={id}
-               id={id}
-               setId={backupSetId}
-               disabled={disabled}/>
+      <Input className={styles.id}
+             value={newId}
+             onChange={({target}) => setNewId(target.value)}
+             onBlur={() => dispatch(backupSetId(location, newId))}
+             disabled={disabled}>
+        <div className={styles.label}>ID</div>
+      </Input>
       {accessTokenRequired && (
         <Password className={styles.accessToken}
                   onChange={accessTokenChanged}

@@ -1,38 +1,41 @@
 import React from 'react'
-import {shallow} from 'enzyme'
+import userEvent from '@testing-library/user-event'
 import {Notification} from '../../../src/client/notification/Notification'
-import {noop} from 'lodash'
-import {locator} from '../testHelpers'
+import {render} from '../testHelpers'
+import {getNotification, NOTIFICATION_ROOT} from '../../../src/client/notification/NotificationReducer'
 
 describe('<Notification/>', () => {
 
-  const DEFAULT_PROPS = {
-    dismiss: noop,
-    notification: '',
-    fullScreen: false
-  }
-
   test('should not render anything if notification is empty', () => {
-    const props = {...DEFAULT_PROPS, notification: ''}
-    const wrapper = shallow(<Notification {...props} />)
-    expect(wrapper.isEmptyRender()).toBeTruthy()
+    const state = {
+      [NOTIFICATION_ROOT]: ''
+    }
+    const {container} = render(<Notification/>, state)
+    expect(container.firstChild).toBeNull()
   })
 
   test('should not render anything if notification is blank', () => {
-    const props = {...DEFAULT_PROPS, notification: '      '}
-    const wrapper = shallow(<Notification {...props} />)
-    expect(wrapper.isEmptyRender()).toBeTruthy()
+    const state = {
+      [NOTIFICATION_ROOT]: '     '
+    }
+    const {container} = render(<Notification/>, state)
+    expect(container.firstChild).toBeNull()
   })
 
   test('should render the notification', () => {
-    const props = {...DEFAULT_PROPS, notification: 'some-notification'}
-    const wrapper = shallow(<Notification {...props} />)
-    expect(wrapper.find(locator('notification')).text()).toEqual('some-notification')
+    const state = {
+      [NOTIFICATION_ROOT]: 'some notification'
+    }
+    const {queryByText} = render(<Notification/>, state)
+    expect(queryByText('some notification')).toBeInTheDocument()
   })
 
-  test('should render a dismiss button', () => {
-    const props = {...DEFAULT_PROPS, notification: 'some-notification'}
-    const wrapper = shallow(<Notification {...props} />)
-    expect(wrapper.find(locator('dismiss')).exists()).toBeTruthy()
+  test('should be able to dismiss notifications', () => {
+    const state = {
+      [NOTIFICATION_ROOT]: 'some notification'
+    }
+    const {store, getByText} = render(<Notification/>, state)
+    userEvent.click(getByText('dismiss'))
+    expect(getNotification(store.getState())).toEqual('')
   })
 })

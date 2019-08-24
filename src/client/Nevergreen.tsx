@@ -1,7 +1,7 @@
 import React, {ReactNode} from 'react'
 import {Header} from './header/Header'
 import {Footer} from './footer/Footer'
-import NotificationContainer from './notification/NotificationContainer'
+import {Notification} from './notification/Notification'
 import styles from './nevergreen.scss'
 import {KeyboardShortcuts} from './KeyboardShortcuts'
 import {useConfiguration} from './configuration/ConfigurationHook'
@@ -36,7 +36,7 @@ export function Nevergreen({children}: NevergreenProps) {
            tabIndex={-1}
            {...disableFullScreenOn}>
         <Header/>
-        <NotificationContainer/>
+        <Notification/>
         {!loading && <main className={styles.main}>{children}</main>}
         <Footer/>
       </div>

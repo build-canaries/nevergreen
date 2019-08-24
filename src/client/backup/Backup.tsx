@@ -1,20 +1,16 @@
 import React from 'react'
 import {Schema} from './Schema'
 import {Import} from './import/Import'
-import ExportContainer from './export/ExportContainer'
+import {Export} from './export/Export'
 import {Title} from '../common/Title'
 
-interface BackupProps {
-  schema: string;
-}
-
-export function Backup({schema}: BackupProps) {
+export function Backup() {
   return (
     <>
       <Title>Backup</Title>
       <Import/>
-      <ExportContainer/>
-      <Schema schema={schema}/>
+      <Export/>
+      <Schema/>
     </>
   )
 }

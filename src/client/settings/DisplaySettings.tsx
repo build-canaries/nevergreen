@@ -4,39 +4,33 @@ import {Checkbox} from '../common/forms/Checkbox'
 import {DropDown} from '../common/forms/DropDown'
 import styles from './display-settings.scss'
 import {DisplayPreview} from './DisplayPreview'
-import {DisplayPrognosisSelection, DisplayPrognosisSelectionProps} from './DisplayPrognosisSelection'
+import {DisplayPrognosisSelection} from './DisplayPrognosisSelection'
+import {useDispatch, useSelector} from 'react-redux'
+import {
+  setMaxProjectsToShow,
+  setShowBrokenBuildTime,
+  setShowBuildLabel,
+  setShowBuildTime,
+  setShowTrayName,
+  VALID_PROJECTS_TO_SHOW
+} from './SettingsActionCreators'
+import {
+  getMaxProjectsToShow,
+  getShowBrokenBuildTime,
+  getShowBuildLabel,
+  getShowBuildTime,
+  getShowTrayName
+} from './SettingsReducer'
 
-export type DisplaySettingsProps = {
-  showTrayName: boolean;
-  showBuildTime: boolean;
-  showBrokenBuildTime: boolean;
-  showBuildLabel: boolean;
-  maxProjectsToShow: number;
-  setShowBuildTime: (show: boolean) => void;
-  setShowBrokenBuildTime: (show: boolean) => void;
-  setShowTrayName: (show: boolean) => void;
-  setShowBuildLabel: (show: boolean) => void;
-  setMaxProjectsToShow: (show: string) => void;
-  validNumberOfProjectsToShow: number[];
-} & DisplayPrognosisSelectionProps
+export function DisplaySettings() {
+  const dispatch = useDispatch()
+  const showTrayName = useSelector(getShowTrayName)
+  const showBuildTime = useSelector(getShowBuildTime)
+  const showBrokenBuildTime = useSelector(getShowBrokenBuildTime)
+  const showBuildLabel = useSelector(getShowBuildLabel)
+  const maxProjectsToShow = useSelector(getMaxProjectsToShow)
 
-export function DisplaySettings({
-                                  validNumberOfProjectsToShow,
-                                  showTrayName,
-                                  showBuildTime,
-                                  showBrokenBuildTime,
-                                  showBuildLabel,
-                                  maxProjectsToShow,
-                                  setShowBrokenBuildTime,
-                                  setShowBuildTime,
-                                  setShowTrayName,
-                                  setShowBuildLabel,
-                                  setMaxProjectsToShow,
-                                  showPrognosis,
-                                  setShowPrognosis
-                                }: DisplaySettingsProps) {
-
-  const projectsToShowOptions = validNumberOfProjectsToShow.map((value) => {
+  const projectsToShowOptions = VALID_PROJECTS_TO_SHOW.map((value) => {
     const display = value === Number.MAX_SAFE_INTEGER
       ? 'all projects (not recommended)'
       : `${value.toString()} projects`
@@ -47,45 +41,40 @@ export function DisplaySettings({
     <Container title='display' className={styles.container}>
       <Checkbox className={styles.showTrayName}
                 checked={showTrayName}
-                onToggle={(newValue) => setShowTrayName(newValue)}
+                onToggle={(newValue) => dispatch(setShowTrayName(newValue))}
                 data-locator='show-tray-names'>
         show tray name
       </Checkbox>
       <Checkbox className={styles.checkbox}
                 checked={showBuildTime}
-                onToggle={(newValue) => setShowBuildTime(newValue)}
+                onToggle={(newValue) => dispatch(setShowBuildTime(newValue))}
                 data-locator='show-build-times'>
         show building timer
       </Checkbox>
       <Checkbox className={styles.checkbox}
                 checked={showBrokenBuildTime}
-                onToggle={(newValue) => setShowBrokenBuildTime(newValue)}
+                onToggle={(newValue) => dispatch(setShowBrokenBuildTime(newValue))}
                 data-locator='show-broken-build-times'>
         show broken build timer
       </Checkbox>
       <Checkbox className={styles.checkbox}
                 checked={showBuildLabel}
-                onToggle={(newValue) => setShowBuildLabel(newValue)}
+                onToggle={(newValue) => dispatch(setShowBuildLabel(newValue))}
                 data-locator='show-build-labels'>
         show broken build label
       </Checkbox>
 
-      <DisplayPrognosisSelection showPrognosis={showPrognosis}
-                                 setShowPrognosis={setShowPrognosis}/>
+      <DisplayPrognosisSelection/>
 
       <DropDown className={styles.maxProjects}
                 options={projectsToShowOptions}
                 value={maxProjectsToShow}
-                onChange={({target}) => setMaxProjectsToShow(target.value)}
+                onChange={({target}) => dispatch(setMaxProjectsToShow(target.value))}
                 data-locator='max-projects-to-show'>
         max number of projects to show
       </DropDown>
 
-      <DisplayPreview showBrokenBuildTime={showBrokenBuildTime}
-                      showBuildLabel={showBuildLabel}
-                      showBuildTime={showBuildTime}
-                      showTrayName={showTrayName}
-                      showPrognosis={showPrognosis}/>
+      <DisplayPreview/>
     </Container>
   )
 }

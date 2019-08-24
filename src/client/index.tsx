@@ -10,16 +10,16 @@ import {reducer} from './Reducer'
 import {filter} from './configuration/Configuration'
 import {navigated} from './NevergreenActionCreators'
 import {Nevergreen} from './Nevergreen'
-import MonitorContainer from './monitor/MonitorContainer'
-import TrackingContainer from './tracking/TrackingContainer'
+import {Monitor} from './monitor/Monitor'
 import {Success} from './success/Success'
-import SettingsContainer from './settings/SettingsContainer'
-import BackupContainer from './backup/BackupContainer'
+import {Settings} from './settings/Settings'
+import {Backup} from './backup/Backup'
 import {StyleGuide} from './styleGuide/StyleGuide'
 import {debounce} from 'lodash'
 import {UnhandledError} from './UnhandledError'
 import Modal from 'react-modal'
 import {configureStore} from 'redux-starter-kit'
+import {Tracking} from './tracking/Tracking'
 
 const ONE_SECOND = 1000
 
@@ -45,11 +45,11 @@ ReactDOM.render(
       <Router history={history}>
         <Nevergreen>
           <Switch>
-            <Route exact path='/monitor' component={MonitorContainer}/>
-            <Route exact path='/tracking' component={TrackingContainer}/>
+            <Route exact path='/monitor' component={Monitor}/>
+            <Route exact path='/tracking' component={Tracking}/>
             <Route exact path='/success' component={Success}/>
-            <Route exact path='/settings' component={SettingsContainer}/>
-            <Route exact path='/backup' component={BackupContainer}/>
+            <Route exact path='/settings' component={Settings}/>
+            <Route exact path='/backup' component={Backup}/>
             <Route exact path='/style-guide' component={StyleGuide}/>
             <Route>
               <Redirect to='/tracking'/>

@@ -1,53 +1,48 @@
 import React from 'react'
-import {shallow} from 'enzyme'
+import userEvent from '@testing-library/user-event'
+import {waitForDomChange} from '@testing-library/react'
 import {Externally} from '../../../../../src/client/backup/export/externally/Externally'
-import {changeAndBlur, locator} from '../../../testHelpers'
+import {render} from '../../../testHelpers'
 import {BackupLocation} from '../../../../../src/client/backup/BackupActionCreators'
-import {noop} from 'lodash'
-import * as gateway from '../../../../../src/client/gateways/Gateway'
+import {fakeRequest} from '../../../../../src/client/gateways/Gateway'
 import * as backupGateway from '../../../../../src/client/gateways/BackupGateway'
 
 describe('export <Externally/>', () => {
 
   const DEFAULT_PROPS = {
     location: BackupLocation.GITHUB,
-    backupSetId: noop,
-    backupSetDescription: noop,
-    backupSetUrl: noop,
-    id: '',
-    description: '',
-    url: '',
-    help: <div/>,
-    configuration: ''
+    help: <div/>
   }
 
   beforeEach(() => {
-    jest.spyOn(backupGateway, 'exportConfiguration')
-    jest.spyOn(gateway, 'send').mockResolvedValue({id: 'some-id'})
+    jest.spyOn(backupGateway, 'exportConfiguration').mockReturnValue(fakeRequest({id: 'some-id'}))
   })
 
   test('should export if an access token was entered', async () => {
-    const props = {...DEFAULT_PROPS}
+    const {getByTestId, getByText, getByLabelText, queryByText} = render(<Externally {...DEFAULT_PROPS} />)
+    await userEvent.type(getByLabelText('URL'), 'some-url')
+    await userEvent.type(getByLabelText('ID'), 'some-id')
+    await userEvent.type(getByTestId('access-token'), 'some-access-token')
+    await userEvent.type(getByLabelText('description'), 'some-description')
+    userEvent.click(getByText('export'))
 
-    const wrapper = shallow(<Externally {...props} />)
-    changeAndBlur(wrapper.find(locator('access-token')), 'some-access-token')
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
-    await wrapper.find(locator('export')).prop('onClick')()
+    await waitForDomChange()
 
-    expect(wrapper.find(locator('messages')).prop('messages')).toContain('Successfully exported configuration')
-    expect(gateway.send).toHaveBeenCalled()
+    expect(backupGateway.exportConfiguration).toHaveBeenCalledWith(
+      BackupLocation.GITHUB,
+      'some-id',
+      'some-description',
+      expect.any(String),
+      'some-access-token',
+      'some-url'
+    )
+    expect(queryByText('Successfully exported configuration')).toBeInTheDocument()
   })
 
   test('should not try and export if no access token was entered', async () => {
-    const props = {...DEFAULT_PROPS}
-
-    const wrapper = shallow(<Externally {...props} />)
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
-    await wrapper.find(locator('export')).prop('onClick')()
-
-    expect(wrapper.find(locator('messages')).prop('messages')).toContain('You must provide an access token to export')
-    expect(gateway.send).not.toHaveBeenCalled()
+    const {getByText, queryByText} = render(<Externally {...DEFAULT_PROPS} />)
+    userEvent.click(getByText('export'))
+    expect(backupGateway.exportConfiguration).not.toHaveBeenCalled()
+    expect(queryByText('You must provide an access token to export')).toBeInTheDocument()
   })
 })

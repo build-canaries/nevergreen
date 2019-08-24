@@ -17,7 +17,7 @@ const CONTENT_TYPE = 'application/json; charset=utf-8'
 export const UNKNOWN_ERROR = 'Unknown error'
 export const TIMEOUT_ERROR = 'Connection timeout calling the Nevergreen server'
 
-export function post(url: string, data: ApiData, headers = {}) {
+export function post(url: string, data: ApiData, headers = {}): Request {
   return request
     .post(url)
     .send(data)
@@ -28,7 +28,7 @@ export function post(url: string, data: ApiData, headers = {}) {
     .retry(RETRIES)
 }
 
-export function put(url: string, data: ApiData, headers = {}) {
+export function put(url: string, data: ApiData, headers = {}): Request {
   return request
     .put(url)
     .send(data)
@@ -39,7 +39,7 @@ export function put(url: string, data: ApiData, headers = {}) {
     .retry(RETRIES)
 }
 
-export function patch(url: string, data: ApiData, headers = {}) {
+export function patch(url: string, data: ApiData, headers = {}): Request {
   return request
     .patch(url)
     .send(data)
@@ -50,7 +50,7 @@ export function patch(url: string, data: ApiData, headers = {}) {
     .retry(RETRIES)
 }
 
-export function get(url: string, headers = {}) {
+export function get(url: string, headers = {}): Request {
   return request
     .get(url)
     .accept(ACCEPT_HEADER)
@@ -76,7 +76,7 @@ export async function send<T>(request: Request): Promise<T> {
   }
 }
 
-export function fakeRequest(body: string | object) {
+export function fakeRequest(body: string | object): Request {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return {body, abort: _.noop} as any as Request
 }

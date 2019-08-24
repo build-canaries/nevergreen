@@ -1,20 +1,24 @@
 import React from 'react'
 import {AddTray} from './AddTray'
-import TrayContainer from './tray/TrayContainer'
+import {Tray} from './tray/Tray'
 import {Title} from '../common/Title'
-import {AuthDetails} from '../domain/Tray'
+import {useDispatch, useSelector} from 'react-redux'
+import {getTrayIds} from './TraysReducer'
+import {addTray} from './TrackingThunkActionCreators'
 
-interface TrackingProps {
-  trayIds: string[];
-  addTray: (url: string, auth: AuthDetails) => void;
-}
+export function Tracking() {
+  const dispatch = useDispatch()
+  const trayIds = useSelector(getTrayIds)
 
-export function Tracking({trayIds, addTray}: TrackingProps) {
   return (
     <>
       <Title>Tracking</Title>
-      <AddTray addTray={addTray}/>
-      {trayIds.map((trayId, index) => <TrayContainer key={trayId} index={index} trayId={trayId}/>)}
+      <AddTray addTray={(enteredUrl, auth) => dispatch(addTray(enteredUrl, auth))}/>
+      {
+        trayIds.map((trayId, index) => <Tray key={trayId}
+                                             index={index}
+                                             trayId={trayId}/>)
+      }
     </>
   )
 }

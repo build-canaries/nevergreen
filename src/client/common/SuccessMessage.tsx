@@ -11,7 +11,7 @@ export function SuccessMessage({message}: SuccessMessageProps) {
   return (
     <ScaledGrid>
       <div className={styles.successMessage}>
-        <div className={styles.message}>{message}</div>
+        <div className={styles.message} data-locator='success-message'>{message}</div>
       </div>
     </ScaledGrid>
   )

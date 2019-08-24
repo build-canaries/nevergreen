@@ -22,6 +22,8 @@ import {render as testRender} from '@testing-library/react'
 import {Provider} from 'react-redux'
 import {configureStore} from 'redux-starter-kit'
 import {HashRouter} from 'react-router-dom'
+import Modal from 'react-modal'
+import {DEFAULT_PROJECTS_TO_SHOW, MIN_REFRESH_TIME} from '../../src/client/settings/SettingsActionCreators'
 
 export function locator(name: string) {
   return `[data-locator="${name}"]`
@@ -62,9 +64,9 @@ export function buildState(subState?: RecursivePartial<State>): State {
     [SETTINGS_ROOT]: {
       brokenBuildSoundFx: '',
       clickToShowMenu: false,
-      maxProjectsToShow: 0,
+      maxProjectsToShow: DEFAULT_PROJECTS_TO_SHOW,
       playBrokenBuildSoundFx: false,
-      refreshTime: 0,
+      refreshTime: MIN_REFRESH_TIME,
       showBrokenBuildTime: false,
       showBuildLabel: false,
       showBuildTime: false,
@@ -105,15 +107,29 @@ export function buildState(subState?: RecursivePartial<State>): State {
   }, subState)
 }
 
+export function setupReactModal() {
+  const appElement = document.createElement('div')
+  appElement.setAttribute('id', 'app-element')
+  document.body.append(appElement)
+  Modal.setAppElement('#app-element')
+}
+
 export function render(component: ReactNode, state?: RecursivePartial<State>) {
   const store = configureStore({reducer, preloadedState: buildState(state)})
-  return testRender(
+
+  const wrapWithStoreAndRouter = (c: ReactNode) => (
     <Provider store={store}>
-      <HashRouter>
-        {component}
-      </HashRouter>
+      <HashRouter>{c}</HashRouter>
     </Provider>
   )
+
+  const fns = testRender(wrapWithStoreAndRouter(component))
+
+  return {
+    ...fns,
+    rerender: (c: ReactNode) => fns.rerender(wrapWithStoreAndRouter(c)),
+    store
+  }
 }
 
 export function buildTray(tray?: Partial<Tray>): Tray {

@@ -3,7 +3,7 @@ import cn from 'classnames'
 import version from '../../../resources/version.txt'
 import versionMeta from '../../../resources/version_meta.txt'
 import versionName from '../../../resources/version_name.txt'
-import SubmitAnIssueContainer from './SubmitAnIssueContainer'
+import {SubmitAnIssue} from './SubmitAnIssue'
 import {About} from './About'
 import styles from './footer.scss'
 import {useSelector} from 'react-redux'
@@ -30,7 +30,7 @@ export function Footer() {
                 type='button'>
           Nevergreen v{fullVersion} {versionName} by Build Canaries
         </button>
-        <SubmitAnIssueContainer version={versionWithName} className={styles.submitAnIssue}/>
+        <SubmitAnIssue version={versionWithName} className={styles.submitAnIssue}/>
       </footer>
     </>
   )

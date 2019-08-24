@@ -1,33 +1,41 @@
-import React, {ChangeEvent, ReactElement, useState} from 'react'
+import React, {ChangeEvent, ReactElement, useLayoutEffect, useState} from 'react'
 import {Input} from '../../../common/forms/Input'
-import {IdInput} from '../../IdInput'
 import {WithHelp} from '../../../common/ContextualHelp'
 import {PrimaryButton} from '../../../common/forms/Button'
 import {iCloudUpload} from '../../../common/fonts/Icons'
 import {Password} from '../../../common/forms/Password'
 import styles from './externally.scss'
-import {UrlInput} from '../../UrlInput'
 import {Messages, MessagesType} from '../../../common/Messages'
-import {BackupLocation} from '../../BackupActionCreators'
+import {BackupLocation, backupSetDescription, backupSetId, backupSetUrl} from '../../BackupActionCreators'
 import {exportConfiguration, ExportResponse} from '../../../gateways/BackupGateway'
 import {isBlank} from '../../../common/Utils'
 import {send} from '../../../gateways/Gateway'
+import {useDispatch, useSelector} from 'react-redux'
+import {getConfiguration} from '../../../configuration/Configuration'
+import {getBackupDescription, getBackupId, getBackupUrl} from '../../BackupReducer'
+import {State} from '../../../Reducer'
 
 interface ExternallyProps {
   location: BackupLocation;
-  backupSetId: (location: BackupLocation, id: string) => void;
-  backupSetDescription: (location: BackupLocation, description: string) => void;
-  backupSetUrl: (location: BackupLocation, url: string) => void;
-  id: string;
-  description: string;
-  url: string;
   help: ReactElement;
-  configuration: string;
 }
 
-export function Externally({location, description, id, url, backupSetId, backupSetDescription, backupSetUrl, configuration, help}: ExternallyProps) {
-  const [accessToken, setAccessToken] = useState('')
+export function Externally({location, help}: ExternallyProps) {
+  const dispatch = useDispatch()
+  const configuration = useSelector(getConfiguration)
+  const url = useSelector<State, string>((state) => getBackupUrl(location, state))
+  const id = useSelector<State, string>((state) => getBackupId(location, state))
+  const description = useSelector<State, string>((state) => getBackupDescription(location, state))
+
+  const [newUrl, setNewUrl] = useState(url)
+  const [newId, setNewId] = useState(id)
   const [newDescription, setNewDescription] = useState(description)
+
+  useLayoutEffect(() => setNewUrl(url), [url])
+  useLayoutEffect(() => setNewId(id), [id])
+  useLayoutEffect(() => setNewDescription(description), [description])
+
+  const [accessToken, setAccessToken] = useState('')
   const [loaded, setLoaded] = useState(true)
   const [messages, setMessages] = useState<string[]>([])
   const [messageType, setMessageType] = useState(MessagesType.INFO)
@@ -52,9 +60,9 @@ export function Externally({location, description, id, url, backupSetId, backupS
       setLoaded(false)
       setMessages([])
       try {
-        const res = await send<ExportResponse>(exportConfiguration(location, id, description, configuration, accessToken, url))
+        const res = await send<ExportResponse>(exportConfiguration(location, newId, newDescription, configuration, accessToken, newUrl))
         setInfos(['Successfully exported configuration'])
-        backupSetId(location, res.id)
+        dispatch(backupSetId(location, res.id))
       } catch (error) {
         setErrors([`Unable to export to ${location} because of an error`, error.message])
       }
@@ -67,15 +75,21 @@ export function Externally({location, description, id, url, backupSetId, backupS
       <WithHelp title={`Export to ${location}`}
                 containerClassName={styles.helpContainer}
                 help={help}>
-        <UrlInput key={url}
-                  url={url}
-                  setUrl={(value) => backupSetUrl(location, value)}
-                  disabled={disabled}/>
+        <Input value={newUrl}
+               onChange={({target}) => setNewUrl(target.value)}
+               onBlur={() => dispatch(backupSetUrl(location, newUrl))}
+               disabled={disabled}
+               className={styles.url}>
+          <div className={styles.label}>URL</div>
+        </Input>
       </WithHelp>
-      <IdInput key={id}
-               id={id}
-               setId={(value) => backupSetId(location, value)}
-               disabled={disabled}/>
+      <Input className={styles.id}
+             value={newId}
+             onChange={({target}) => setNewId(target.value)}
+             onBlur={() => dispatch(backupSetId(location, newId))}
+             disabled={disabled}>
+        <div className={styles.label}>ID</div>
+      </Input>
       <Password className={styles.accessToken}
                 onChange={accessTokenChanged}
                 onBlur={accessTokenChanged}
@@ -86,7 +100,7 @@ export function Externally({location, description, id, url, backupSetId, backupS
       </Password>
       <Input value={newDescription}
              onChange={({target}) => setNewDescription(target.value)}
-             onBlur={() => backupSetDescription(location, newDescription)}
+             onBlur={() => dispatch(backupSetDescription(location, newDescription))}
              disabled={disabled}
              maxLength={256}>
         <div className={styles.label}>description</div>

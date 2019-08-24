@@ -1,4 +1,4 @@
-import {useMemo} from 'react'
+import {useCallback} from 'react'
 import version from '../../resources/version.txt'
 import {useTimer} from './common/TimerHook'
 import {useDispatch} from 'react-redux'
@@ -9,7 +9,7 @@ const TWENTY_FOUR_HOURS = 24 * 60 * 60
 export function useCheckForNewVersion(loading: boolean) {
   const dispatch = useDispatch()
 
-  const checkVersion = useMemo(() => () => {
+  const checkVersion = useCallback(() => {
     !loading && dispatch(checkForNewVersion(version, window.location.hostname))
   }, [loading])
 

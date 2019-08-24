@@ -1,41 +1,36 @@
 import React from 'react'
-import {shallow} from 'enzyme'
 import {Success} from '../../../src/client/monitor/Success'
-import {SuccessMessage} from '../../../src/client/common/SuccessMessage'
-import {SuccessImage} from '../../../src/client/monitor/SuccessImage'
+import {render} from '../testHelpers'
+import {SUCCESS_ROOT} from '../../../src/client/success/SuccessReducer'
 
 describe('Monitor <Success/>', () => {
 
-  const DEFAULT_PROPS = {
-    messages: []
-  }
-
   test('should pick a message when first rendered to stop it changing after every successful refresh', () => {
-      const props = {...DEFAULT_PROPS, messages: ['a', 'b', 'c']}
-      const wrapper = shallow(<Success {...props} />)
-      const message = wrapper.find(SuccessMessage).prop('message')
-      wrapper.update()
-      expect(wrapper.find(SuccessMessage).prop('message')).toEqual(message)
-      wrapper.update()
-      expect(wrapper.find(SuccessMessage).prop('message')).toEqual(message)
+      const state = {[SUCCESS_ROOT]: ['foo', 'bar', 'baz']}
+      const {rerender, getByTestId, queryByText} = render(<Success/>, state)
+      const message = getByTestId('success-message').textContent as string
+      rerender(<Success/>)
+      expect(queryByText(message)).toBeInTheDocument()
+      rerender(<Success/>)
+      expect(queryByText(message)).toBeInTheDocument()
     }
   )
 
   test('should render text messages', () => {
-    const props = {...DEFAULT_PROPS, messages: ['some-message']}
-    const wrapper = shallow(<Success {...props} />)
-    expect(wrapper.find(SuccessMessage).prop('message')).toEqual('some-message')
+    const state = {[SUCCESS_ROOT]: ['some-message']}
+    const {getByText} = render(<Success/>, state)
+    expect(getByText('some-message')).toBeInTheDocument()
   })
 
   test('should render images', () => {
-    const props = {...DEFAULT_PROPS, messages: ['http://some-url']}
-    const wrapper = shallow(<Success {...props} />)
-    expect(wrapper.find(SuccessImage).prop('url')).toEqual('http://some-url')
+    const state = {[SUCCESS_ROOT]: ['http://some-url']}
+    const {getByRole} = render(<Success/>, state)
+    expect(getByRole('img')).toHaveAttribute('src', 'http://some-url')
   })
 
   test('should render nothing if there are no success messages', () => {
-    const props = {...DEFAULT_PROPS, messages: []}
-    const wrapper = shallow(<Success {...props} />)
-    expect(wrapper.isEmptyRender()).toBeTruthy()
+    const state = {[SUCCESS_ROOT]: []}
+    const {container} = render(<Success/>, state)
+    expect(container.firstChild).toBeNull()
   })
 })
