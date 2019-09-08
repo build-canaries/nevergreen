@@ -1,14 +1,15 @@
 import {random} from 'lodash'
+import parseISO from 'date-fns/parseISO'
 import format from 'date-fns/format'
-import subSeconds from 'date-fns/sub_seconds'
+import subSeconds from 'date-fns/subSeconds'
 import {isBlank} from './Utils'
-import distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
+import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 
 const ONE_MINUTE_IN_SECONDS = 60
 const ONE_HOUR_IN_SECONDS = 3600
 const ONE_DAY_IN_SECONDS = 86400
 
-export function secondsToString(seconds: number) {
+export function secondsToString(seconds: number): string {
   if (seconds < ONE_MINUTE_IN_SECONDS) {
     return `${seconds} ${seconds === 1 ? 'second' : 'seconds'}`
   } else if (seconds < ONE_HOUR_IN_SECONDS) {
@@ -23,17 +24,17 @@ export function secondsToString(seconds: number) {
   }
 }
 
-export function now() {
-  return format(new Date())
+export function now(): string {
+  return format(new Date(), 'yyyy-MM-dd\'T\'HH:mm:ss.SSS')
 }
 
-export function randomDateInPast(seconds = ONE_DAY_IN_SECONDS) {
-  return format(subSeconds(now(), random(0, seconds)))
+export function randomDateInPast(seconds = ONE_DAY_IN_SECONDS): string {
+  return format(subSeconds(new Date(), random(0, seconds)), 'yyyy-MM-dd\'T\'HH:mm:ss.SSS')
 }
 
 export function formatAsDuration(timestamp?: string | null): string {
   return timestamp && !isBlank(timestamp)
-    ? distanceInWordsToNow(timestamp)
+    ? formatDistanceToNow(parseISO(timestamp))
     : 'unknown'
 }
 

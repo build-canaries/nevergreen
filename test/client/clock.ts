@@ -1,4 +1,5 @@
-import getTime from 'date-fns/get_time'
+import getTime from 'date-fns/getTime'
+import parseISO from 'date-fns/parseISO'
 import lolex from 'lolex'
 
 const clock = lolex.install()
@@ -15,5 +16,5 @@ afterAll(() => {
 export {clock}
 
 export function setSystemTime(timestamp: string) {
-  clock.setSystemTime(getTime(timestamp))
+  clock.setSystemTime(getTime(parseISO(timestamp)))
 }
