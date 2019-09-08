@@ -23,16 +23,16 @@ const DEFAULT_STATE: PendingRequestsState = {}
 
 export const reduce = createReducer<PendingRequestsState>(DEFAULT_STATE, {
   [Actions.INTERESTING_PROJECTS_FETCHING]: (draft, action: ActionInterestingProjectsFetching) => {
-    draft[INTERESTING_ROOT] = action.request.abort
+    draft[INTERESTING_ROOT] = action.request.abort.bind(action.request)
   },
   [Actions.INTERESTING_PROJECTS]: (draft) => {
     delete draft[INTERESTING_ROOT]
   },
   [Actions.ENCRYPTING_PASSWORD]: (draft, action: ActionEncryptingPassword) => {
-    draft[action.trayId] = action.request.abort
+    draft[action.trayId] = action.request.abort.bind(action.request)
   },
   [Actions.PROJECTS_FETCHING]: (draft, action: ActionProjectsFetching) => {
-    draft[action.trayId] = action.request.abort
+    draft[action.trayId] = action.request.abort.bind(action.request)
   },
   [Actions.REMOVE_TRAY]: (draft, action: ActionRemoveTray) => {
     delete draft[action.trayId]
@@ -54,6 +54,6 @@ export const reduce = createReducer<PendingRequestsState>(DEFAULT_STATE, {
   }
 })
 
-export function getPendingRequest(state: State, id: string): () => void {
+export function getPendingRequest(state: State, id: string): () => void | undefined {
   return get(state, [PENDING_REQUESTS_ROOT, id])
 }

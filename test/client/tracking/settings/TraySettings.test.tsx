@@ -112,7 +112,7 @@ describe('<TraySettings/>', () => {
   })
 
   it('should be able to change the auth to basic', async () => {
-    jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValue(fakeRequest('some-encrypted-password'))
+    jest.spyOn(SecurityGateway, 'encrypt').mockReturnValue(fakeRequest('some-encrypted-password'))
     const state = {
       [TRAYS_ROOT]: {
         trayId: {

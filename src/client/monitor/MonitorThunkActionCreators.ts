@@ -56,8 +56,9 @@ export function fetchInteresting(): ThunkAction<Promise<void>, State, undefined,
 
       dispatch(interestingProjects(enrichedProjects, errorMessages))
       dispatch(projectNotifications(previouslyFetchedProjects))
-    } catch (error) {
-      dispatch(interestingProjects([], [error.message]))
+    } catch (e) {
+      const errors = e.message === 'Aborted' ? [] : [e.message]
+      dispatch(interestingProjects([], errors))
     }
   }
 }

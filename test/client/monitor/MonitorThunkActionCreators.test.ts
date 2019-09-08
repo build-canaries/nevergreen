@@ -169,6 +169,24 @@ describe('MonitorThunkActionCreators', () => {
     describe('returned tray errors', () => {
 
       test('should dispatch interesting projects with the tray name in the error if it exists', async () => {
+        jest.spyOn(gateway, 'send').mockImplementation(() => {
+          throw new Error('Aborted')
+        })
+        jest.spyOn(monitorActionCreators, 'interestingProjects')
+        const state = buildState({
+          [TRAYS_ROOT]: {
+            'some-tray-id': buildTray({trayId: 'some-tray-id', name: 'some-name'})
+          },
+          [PROJECTS_ROOT]: {
+            'some-tray-id': {}
+          }
+        })
+
+        await testThunk(fetchInteresting(), state)
+        expect(monitorActionCreators.interestingProjects).toHaveBeenCalledWith([], [])
+      })
+
+      test('should dispatch interesting projects with the tray name in the error if it exists', async () => {
         jest.spyOn(gateway, 'send').mockResolvedValue([{
           trayId: 'some-tray-id',
           isError: true,

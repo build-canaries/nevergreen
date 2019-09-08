@@ -61,7 +61,7 @@ describe('PendingRequestsReducer', () => {
         const existingState = state({})
         const action = {type: actionType, trayId: 'trayId', request: {abort}}
         const newState = reducer(existingState, action)
-        expect(getPendingRequest(newState, 'trayId')).toEqual(abort)
+        expect(getPendingRequest(newState, 'trayId')).toBeDefined()
       })
     })
   })
