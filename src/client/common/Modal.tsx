@@ -6,11 +6,11 @@ import {SecondaryButton} from './forms/Button'
 import {iCross} from './fonts/Icons'
 
 interface ModalProps {
-  title: string;
-  show: boolean;
-  children: ReactNode;
-  close: () => void;
-  className?: string;
+  readonly title: string;
+  readonly show: boolean;
+  readonly children: ReactNode;
+  readonly close: () => void;
+  readonly className?: string;
 }
 
 export function Modal({children, title, show, close, className}: ModalProps) {

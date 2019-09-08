@@ -10,7 +10,7 @@ import {getConfiguration} from '../../../configuration/Configuration'
 export function Locally() {
   const configuration = useSelector(getConfiguration)
 
-  const [messages, setMessages] = useState<string[]>([])
+  const [messages, setMessages] = useState<ReadonlyArray<string>>([])
   const [messageType, setMessageType] = useState(MessagesType.INFO)
 
   const copySuccess = useCallback(() => {

@@ -7,8 +7,8 @@ import {hasScheme} from '../domain/Url'
 import {SuccessMessage} from '../common/SuccessMessage'
 
 interface AddedMessagesProps {
-  messages: string[];
-  removeMessage: (message: string) => void;
+  readonly messages: ReadonlyArray<string>;
+  readonly removeMessage: (message: string) => void;
 }
 
 export function AddedMessages({messages, removeMessage}: AddedMessagesProps) {

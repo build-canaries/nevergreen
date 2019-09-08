@@ -22,7 +22,7 @@ export function NotificationsAudio() {
   const brokenBuildSoundFx = useSelector(getBrokenBuildSoundFx)
   const playBrokenBuildSoundFx = useSelector(getPlayBrokenBuildSoundFx)
 
-  const [errors, setErrors] = useState<string[]>([])
+  const [errors, setErrors] = useState<ReadonlyArray<string>>([])
   const [audio, setAudio] = useState<HTMLAudioElement>()
   const [soundFx, setSoundFx] = useState(brokenBuildSoundFx)
   const [playEnabled, setPlayEnabled] = useState(!isBlank(brokenBuildSoundFx))

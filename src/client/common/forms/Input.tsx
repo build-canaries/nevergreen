@@ -16,13 +16,13 @@ import {InputButton} from './Button'
 import {iLock} from '../fonts/Icons'
 
 export type InputProps = {
-  children: ReactNode;
-  id?: string;
-  onEnter?: (evt: KeyboardEvent<HTMLInputElement>) => void;
-  className?: string;
-  readOnly?: boolean;
-  focus?: boolean;
-  button?: ReactElement;
+  readonly children: ReactNode;
+  readonly id?: string;
+  readonly onEnter?: (evt: KeyboardEvent<HTMLInputElement>) => void;
+  readonly className?: string;
+  readonly readOnly?: boolean;
+  readonly focus?: boolean;
+  readonly button?: ReactElement;
 } & DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
 
 export function Input({children, onEnter, className, readOnly, focus, button, id, ...inputProps}: InputProps) {

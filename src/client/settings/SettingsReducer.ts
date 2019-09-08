@@ -20,6 +20,7 @@ import {createReducer, createSelector} from 'redux-starter-kit'
 import {State} from '../Reducer'
 import {Prognosis} from '../domain/Project'
 import {uniq} from 'lodash'
+import {Draft} from 'immer'
 
 export interface SettingsState {
   readonly showTrayName: boolean;
@@ -34,7 +35,7 @@ export interface SettingsState {
   readonly systemNotificationPermissionDenied: boolean;
   readonly maxProjectsToShow: number;
   readonly clickToShowMenu: boolean;
-  readonly showPrognosis: Prognosis[];
+  readonly showPrognosis: ReadonlyArray<Prognosis>;
 }
 
 export const SETTINGS_ROOT = 'audioVisual'
@@ -61,8 +62,8 @@ const DEFAULT_STATE: SettingsState = {
 }
 
 export const reduce = createReducer<SettingsState>(DEFAULT_STATE, {
-  [Actions.SET_CONFIGURATION]: (draft, action: ActionSetConfiguration) => {
-    return {...draft, ...action.configuration[SETTINGS_ROOT]}
+  [Actions.SET_CONFIGURATION]: (draft: Draft<SettingsState>, action: ActionSetConfiguration) => {
+    return {...draft, ...action.configuration[SETTINGS_ROOT]} as Draft<SettingsState>
   },
   [Actions.SHOW_BUILD_TIME]: (draft, action: ActionShowBuildTime) => {
     draft.showBuildTime = action.value

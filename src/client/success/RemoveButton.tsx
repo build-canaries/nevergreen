@@ -4,7 +4,7 @@ import styles from './remove-button.scss'
 import {iBin} from '../common/fonts/Icons'
 
 interface RemoveButtonProps {
-  removeMessage: () => void;
+  readonly removeMessage: () => void;
 }
 
 export function RemoveButton({removeMessage}: RemoveButtonProps) {

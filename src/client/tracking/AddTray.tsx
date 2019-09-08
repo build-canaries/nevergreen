@@ -9,7 +9,7 @@ import {Auth} from './Auth'
 import {AuthDetails, AuthTypes} from '../domain/Tray'
 
 interface AddTrayProps {
-  addTray: (url: string, auth: AuthDetails) => void;
+  readonly addTray: (url: string, auth: AuthDetails) => void;
 }
 
 export function AddTray({addTray}: AddTrayProps) {

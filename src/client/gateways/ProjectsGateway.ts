@@ -14,7 +14,7 @@ export interface ApiProject {
   readonly lastBuildLabel: string;
   readonly lastBuildStatus: string;
   readonly lastBuildTime: string | null;
-  readonly messages: [];
+  readonly messages: ReadonlyArray<string>;
   readonly name: string;
   readonly nextBuildTime: string;
   readonly owner: string | null;
@@ -33,20 +33,20 @@ export interface ApiProject {
 export type ProjectsResponse = ApiProject[]
 
 interface ProjectsRequest {
-  readonly included?: string[];
+  readonly included?: ReadonlyArray<string>;
   readonly includeNew: boolean;
   readonly authType: AuthTypes;
   readonly password?: string;
   readonly accessToken?: string;
-  readonly prognosis?: Prognosis[];
-  readonly seen: string[];
+  readonly prognosis?: ReadonlyArray<Prognosis>;
+  readonly seen: ReadonlyArray<string>;
   readonly serverType?: string;
   readonly trayId: string;
   readonly url: string;
   readonly username?: string;
 }
 
-function toProjectsRequest(tray: Tray, projects: Project[], selectedPerTray?: SelectedState): ProjectsRequest {
+function toProjectsRequest(tray: Tray, projects: ReadonlyArray<Project>, selectedPerTray?: SelectedState): ProjectsRequest {
   const seen = projects
     .filter((project) => project.trayId === tray.trayId)
     .map((project) => project.projectId)
@@ -73,14 +73,14 @@ function hasIncludedProjects(projectsRequest: ProjectsRequest) {
   return projectsRequest.includeNew || size(projectsRequest.included) > 0
 }
 
-export function fetchAll(trays: Tray[], projects: Project[]) {
+export function fetchAll(trays: ReadonlyArray<Tray>, projects: ReadonlyArray<Project>) {
   const data = trays
     .map((tray) => toProjectsRequest(tray, projects))
 
   return post('/api/projects', data)
 }
 
-export function interesting(trays: Tray[], projects: Project[], selectedPerTray: SelectedState, prognosis: Prognosis[]) {
+export function interesting(trays: ReadonlyArray<Tray>, projects: ReadonlyArray<Project>, selectedPerTray: SelectedState, prognosis: ReadonlyArray<Prognosis>) {
   const data = trays
     .map((tray) => toProjectsRequest(tray, projects, selectedPerTray))
     .map((req) => ({...req, prognosis}))

@@ -4,9 +4,9 @@ import {uniqueId} from 'lodash'
 import styles from './checkbox.scss'
 
 type CheckboxProps = {
-  children: ReactNode;
-  onToggle: (checked: boolean) => void;
-  className?: string;
+  readonly children: ReactNode;
+  readonly onToggle: (checked: boolean) => void;
+  readonly className?: string;
 } & DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
 
 export function Checkbox({children, onToggle, className, ...inputProps}: CheckboxProps) {

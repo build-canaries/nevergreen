@@ -3,14 +3,14 @@ import {post} from './Gateway'
 import {Configuration} from '../configuration/Configuration'
 
 export interface ExportResponse {
-  id: string;
+  readonly id: string;
 }
 
 export interface ImportResponse {
-  configuration: Configuration;
-  description: string;
-  id: string;
-  where: BackupLocation;
+  readonly configuration: Configuration;
+  readonly description: string;
+  readonly id: string;
+  readonly where: BackupLocation;
 }
 
 export function exportConfiguration(where: string, id: string, description: string, configuration: string, token: string, url: string) {

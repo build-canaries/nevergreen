@@ -5,9 +5,9 @@ import {SubmitAnIssue} from './SubmitAnIssue'
 import styles from './about.scss'
 
 interface AboutProps {
-  show: boolean;
-  close: () => void;
-  version: string;
+  readonly show: boolean;
+  readonly close: () => void;
+  readonly version: string;
 }
 
 export function About({show, close, version}: AboutProps) {

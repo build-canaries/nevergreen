@@ -3,7 +3,7 @@ import {VisuallyHidden} from './VisuallyHidden'
 import {useForceFocus} from './ForceFocusHook'
 
 interface TitleProps {
-  children: string;
+  readonly children: string;
 }
 
 export function Title({children}: TitleProps) {

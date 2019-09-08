@@ -40,13 +40,13 @@ export const reduce = createReducer<TraysState>(DEFAULT_STATE, {
     const newState: Draft<TraysState> = {}
     const data = action.configuration[TRAYS_ROOT] as TraysState || draft
     Object.keys(data).forEach((trayId) => {
-      newState[trayId] = data[trayId]
+      newState[trayId] = data[trayId] as Draft<Tray>
       newState[trayId].loaded = true
     })
     return newState
   },
   [Actions.TRAY_ADDED]: (draft, action: ActionTrayAdded) => {
-    draft[action.trayId] = action.data
+    draft[action.trayId] = action.data as Draft<Tray>
   },
   [Actions.HIGHLIGHT_TRAY]: (draft, action: ActionHighlightTray) => {
     draft[action.trayId].highlight = true
@@ -72,7 +72,7 @@ export const reduce = createReducer<TraysState>(DEFAULT_STATE, {
   },
   [Actions.PASSWORD_ENCRYPT_ERROR]: (draft, action: ActionPasswordEncryptError) => {
     draft[action.trayId].loaded = true
-    draft[action.trayId].errors = action.errors
+    draft[action.trayId].errors = action.errors as string[]
   },
   [Actions.ENCRYPTING_TOKEN]: (draft, action: ActionEncryptingToken) => {
     draft[action.trayId].loaded = false
@@ -87,7 +87,7 @@ export const reduce = createReducer<TraysState>(DEFAULT_STATE, {
   },
   [Actions.TOKEN_ENCRYPT_ERROR]: (draft, action: ActionTokenEncryptError) => {
     draft[action.trayId].loaded = true
-    draft[action.trayId].errors = action.errors
+    draft[action.trayId].errors = action.errors as string[]
   },
   [Actions.PROJECTS_FETCHING]: (draft, action: ActionProjectsFetching) => {
     draft[action.trayId].loaded = false
@@ -102,7 +102,7 @@ export const reduce = createReducer<TraysState>(DEFAULT_STATE, {
   },
   [Actions.PROJECTS_FETCH_ERROR]: (draft, action: ActionProjectsFetchError) => {
     draft[action.trayId].loaded = true
-    draft[action.trayId].errors = action.errors
+    draft[action.trayId].errors = action.errors as string[]
   },
   [Actions.SET_TRAY_NAME]: (draft, action: ActionSetTrayName) => {
     draft[action.trayId].name = action.name
@@ -127,8 +127,8 @@ export const reduce = createReducer<TraysState>(DEFAULT_STATE, {
   }
 })
 
-export const getTrays = createSelector<State, Tray[]>([TRAYS_ROOT], (trays) => Object.values(trays))
-export const getTrayIds = createSelector<State, string[]>([TRAYS_ROOT], (trays) => Object.keys(trays))
+export const getTrays = createSelector<State, ReadonlyArray<Tray>>([TRAYS_ROOT], (trays) => Object.values(trays))
+export const getTrayIds = createSelector<State, ReadonlyArray<string>>([TRAYS_ROOT], (trays) => Object.keys(trays))
 
 export function getTray(state: State, trayId: string): Tray {
   return get(state, [TRAYS_ROOT, trayId])
@@ -181,7 +181,7 @@ export function getTrayHighlight(state: State, trayId: string): boolean {
   return get(state, [TRAYS_ROOT, trayId, 'highlight'])
 }
 
-export function getTrayErrors(state: State, trayId: string): string[] {
+export function getTrayErrors(state: State, trayId: string): ReadonlyArray<string> {
   return get(state, [TRAYS_ROOT, trayId, 'errors'])
 }
 

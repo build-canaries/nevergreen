@@ -15,7 +15,7 @@ export interface ActionTokenEncrypted extends Action<Actions.TOKEN_ENCRYPTED> {
 
 export interface ActionTokenEncryptError extends Action<Actions.TOKEN_ENCRYPT_ERROR> {
   readonly trayId: string;
-  readonly errors: string[];
+  readonly errors: ReadonlyArray<string>;
 }
 
 export function encryptingToken(trayId: string, accessToken: string, request: Request): ActionEncryptingToken {

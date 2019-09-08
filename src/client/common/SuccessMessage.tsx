@@ -3,7 +3,7 @@ import {ScaledGrid} from './scale/ScaledGrid'
 import styles from './success-message.scss'
 
 interface SuccessMessageProps {
-  message: string;
+  readonly message: string;
 }
 
 

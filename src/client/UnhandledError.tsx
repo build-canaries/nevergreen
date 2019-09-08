@@ -5,11 +5,11 @@ import {ExternalLink} from './common/ExternalLink'
 import {DangerButton} from './common/forms/Button'
 
 interface UnhandledErrorProps {
-  children: ReactNode;
+  readonly children: ReactNode;
 }
 
 interface UnhandledErrorState {
-  hasError: boolean;
+  readonly hasError: boolean;
 }
 
 const DEVELOPER_TOOLS_LINK = 'https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_are_browser_developer_tools#Find_out_more_2'

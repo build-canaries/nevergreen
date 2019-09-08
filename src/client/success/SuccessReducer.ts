@@ -6,7 +6,7 @@ import {createReducer, createSelector} from 'redux-starter-kit'
 import {Draft} from 'immer'
 import {State} from '../Reducer'
 
-export type SuccessState = string[]
+export type SuccessState = ReadonlyArray<string>
 
 export const SUCCESS_ROOT = 'success'
 
@@ -27,4 +27,4 @@ export const reduce = createReducer<SuccessState>(DEFAULT_STATE, {
   }
 })
 
-export const getSuccessMessages = createSelector<State, string[]>([SUCCESS_ROOT])
+export const getSuccessMessages = createSelector<State, ReadonlyArray<string>>([SUCCESS_ROOT])

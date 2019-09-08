@@ -7,7 +7,7 @@ import {PrimaryButton} from '../common/forms/Button'
 import {iPlus} from '../common/fonts/Icons'
 
 interface AddMessageProps {
-  addMessage: (message: string) => void;
+  readonly addMessage: (message: string) => void;
 }
 
 export function AddMessage({addMessage}: AddMessageProps) {

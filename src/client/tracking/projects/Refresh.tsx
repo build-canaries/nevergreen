@@ -6,9 +6,9 @@ import {PrimaryButton} from '../../common/forms/Button'
 import {iRefresh} from '../../common/fonts/Icons'
 
 interface RefreshProps {
-  index: number;
-  timestamp?: string;
-  refreshTray: () => void;
+  readonly index: number;
+  readonly timestamp?: string;
+  readonly refreshTray: () => void;
 }
 
 export function Refresh({index, timestamp, refreshTray}: RefreshProps) {

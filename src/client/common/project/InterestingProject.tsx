@@ -7,17 +7,17 @@ import {VisuallyHidden} from '../VisuallyHidden'
 import {Duration} from '../Duration'
 
 interface InterestingProjectProps {
-  prognosis: Prognosis;
-  name: string;
-  stage?: string | null;
-  trayName?: string;
-  lastBuildTime?: string | null;
-  lastBuildLabel?: string;
-  thisBuildTime?: string;
-  showBuildTimers?: boolean;
-  showBrokenBuildTimers?: boolean;
-  showTrayName?: boolean;
-  showBuildLabel?: boolean;
+  readonly prognosis: Prognosis;
+  readonly name: string;
+  readonly stage?: string | null;
+  readonly trayName?: string;
+  readonly lastBuildTime?: string | null;
+  readonly lastBuildLabel?: string;
+  readonly thisBuildTime?: string;
+  readonly showBuildTimers?: boolean;
+  readonly showBrokenBuildTimers?: boolean;
+  readonly showTrayName?: boolean;
+  readonly showBuildLabel?: boolean;
 }
 
 export function InterestingProject(

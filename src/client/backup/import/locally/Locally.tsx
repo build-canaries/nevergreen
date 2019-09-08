@@ -13,16 +13,16 @@ const PLACEHOLDER = 'paste exported configuration here and press import'
 
 export function Locally() {
   const dispatch = useDispatch()
-  const [messages, setMessages] = useState<string[]>([])
+  const [messages, setMessages] = useState<ReadonlyArray<string>>([])
   const [messageType, setMessageType] = useState(MessagesType.INFO)
   const [data, setData] = useState('')
 
-  const setErrors = (errors: string[]) => {
+  const setErrors = (errors: ReadonlyArray<string>) => {
     setMessageType(MessagesType.ERROR)
     setMessages(errors)
   }
 
-  const setInfos = (infos: string[]) => {
+  const setInfos = (infos: ReadonlyArray<string>) => {
     setMessageType(MessagesType.INFO)
     setMessages(infos)
   }

@@ -11,10 +11,10 @@ export enum ButtonTheme {
 }
 
 type ButtonProps = {
-  children: ReactNode;
-  className?: string;
-  icon?: string;
-  iconOnly?: boolean;
+  readonly children: ReactNode;
+  readonly className?: string;
+  readonly icon?: string;
+  readonly iconOnly?: boolean;
 } & DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
 
 type BaseButtonProps = {

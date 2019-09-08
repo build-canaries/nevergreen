@@ -4,7 +4,7 @@ import interestingProjectStyles from './interesting-project.scss'
 import classNames from 'classnames'
 
 interface ProjectSummaryProps {
-  additionalProjectsCount: number;
+  readonly additionalProjectsCount: number;
 }
 
 export function ProjectSummary({additionalProjectsCount}: ProjectSummaryProps) {

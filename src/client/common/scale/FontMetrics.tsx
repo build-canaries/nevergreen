@@ -2,8 +2,8 @@ import React, {forwardRef, Ref, useImperativeHandle, useRef} from 'react'
 import styles from './font-metrics.scss'
 
 export interface Measurable {
-  width: number;
-  height: number;
+  readonly width: number;
+  readonly height: number;
 }
 
 const FONT_MEASURE_SIZE = 100 // px

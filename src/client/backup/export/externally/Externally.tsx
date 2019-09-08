@@ -16,8 +16,8 @@ import {getBackupDescription, getBackupId, getBackupUrl} from '../../BackupReduc
 import {State} from '../../../Reducer'
 
 interface ExternallyProps {
-  location: BackupLocation;
-  help: ReactElement;
+  readonly location: BackupLocation;
+  readonly help: ReactElement;
 }
 
 export function Externally({location, help}: ExternallyProps) {
@@ -37,18 +37,18 @@ export function Externally({location, help}: ExternallyProps) {
 
   const [accessToken, setAccessToken] = useState('')
   const [loaded, setLoaded] = useState(true)
-  const [messages, setMessages] = useState<string[]>([])
+  const [messages, setMessages] = useState<ReadonlyArray<string>>([])
   const [messageType, setMessageType] = useState(MessagesType.INFO)
 
   const disabled = !loaded
   const accessTokenChanged = ({target}: ChangeEvent<HTMLInputElement>) => setAccessToken(target.value)
 
-  const setErrors = (errors: string[]) => {
+  const setErrors = (errors: ReadonlyArray<string>) => {
     setMessageType(MessagesType.ERROR)
     setMessages(errors)
   }
 
-  const setInfos = (infos: string[]) => {
+  const setInfos = (infos: ReadonlyArray<string>) => {
     setMessageType(MessagesType.INFO)
     setMessages(infos)
   }

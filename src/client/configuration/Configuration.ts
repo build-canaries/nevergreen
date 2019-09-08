@@ -15,7 +15,7 @@ export const schema: object = validateConfiguration.schema
  * the validate function for safety.
  */
 
-export function validate(configuration: Configuration): string[] {
+export function validate(configuration: Configuration): ReadonlyArray<string> {
   const filteredData = cloneDeep(configuration)
   if (validateConfiguration(filteredData)) {
     return []
@@ -32,7 +32,7 @@ export function filter(data: string | object): Configuration {
   return filteredConfiguration
 }
 
-export function toConfiguration(data: string | object): [string[], Configuration | undefined] {
+export function toConfiguration(data: string | object): [ReadonlyArray<string>, Configuration | undefined] {
   try {
     const configuration = filter(data)
     const validationMessages = validate(configuration)

@@ -10,8 +10,8 @@ import {AvailableProjects} from '../projects/AvailableProjects'
 import {TraySettings} from '../settings/TraySettings'
 
 interface TrayProps {
-  trayId: string;
-  index: number;
+  readonly trayId: string;
+  readonly index: number;
 }
 
 const REDACTED = '*****'

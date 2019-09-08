@@ -10,25 +10,25 @@ export enum AuthTypes {
 }
 
 interface NoAuth {
-  type: AuthTypes.none;
+  readonly type: AuthTypes.none;
 }
 
 interface BasicAuth {
-  type: AuthTypes.basic;
-  username: string;
-  password: string;
+  readonly type: AuthTypes.basic;
+  readonly username: string;
+  readonly password: string;
 }
 
 interface TokenAuth {
-  type: AuthTypes.token;
-  accessToken: string;
+  readonly type: AuthTypes.token;
+  readonly accessToken: string;
 }
 
 export type AuthDetails = NoAuth | BasicAuth | TokenAuth
 
 export interface Tray {
   readonly authType: AuthTypes;
-  readonly errors: string[];
+  readonly errors: ReadonlyArray<string>;
   readonly highlight: boolean;
   readonly includeNew: boolean;
   readonly loaded: boolean;
@@ -65,6 +65,6 @@ export function createId() {
   return uuid()
 }
 
-export function sickProjects(projects: Project[]) {
+export function sickProjects(projects: ReadonlyArray<Project>) {
   return projects.filter((project) => isSick(project.prognosis))
 }

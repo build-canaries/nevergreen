@@ -5,12 +5,12 @@ import styles from './available-project.scss'
 import {isBlank} from '../../common/Utils'
 
 interface AvailableProjectProps {
-  name: string;
-  stage?: string | null;
-  isNew?: boolean;
-  removed?: boolean;
-  selected?: boolean;
-  selectProject: (select: boolean) => void;
+  readonly name: string;
+  readonly stage?: string | null;
+  readonly isNew?: boolean;
+  readonly removed?: boolean;
+  readonly selected?: boolean;
+  readonly selectProject: (select: boolean) => void;
 }
 
 export function AvailableProject({removed, isNew, stage, name, selected, selectProject}: AvailableProjectProps) {

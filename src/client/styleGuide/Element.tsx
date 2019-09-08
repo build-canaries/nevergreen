@@ -1,8 +1,8 @@
 import React, {ReactNode} from 'react'
 
 interface ElementProps {
-  type: string;
-  children: ReactNode;
+  readonly type: string;
+  readonly children: ReactNode;
 }
 
 export function Element({type, children}: ElementProps) {

@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './success-image.scss'
 
 interface SuccessImageProps {
-  url: string;
+  readonly url: string;
 }
 
 export function SuccessImage({url}: SuccessImageProps) {

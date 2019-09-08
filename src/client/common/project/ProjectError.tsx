@@ -4,7 +4,7 @@ import interestingProjectStyles from './interesting-project.scss'
 import cn from 'classnames'
 
 interface ProjectErrorProps {
-  error: string;
+  readonly error: string;
 }
 
 export function ProjectError({error}: ProjectErrorProps) {

@@ -10,9 +10,9 @@ export enum MessagesType {
 }
 
 export interface MessagesProps {
-  type: MessagesType;
-  messages: string[];
-  className?: string;
+  readonly type: MessagesType;
+  readonly messages: ReadonlyArray<string>;
+  readonly className?: string;
 }
 
 export function Messages({messages, type, className}: MessagesProps) {

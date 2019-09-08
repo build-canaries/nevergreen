@@ -6,8 +6,8 @@ import {useSelector} from 'react-redux'
 import {getTrays} from '../tracking/TraysReducer'
 
 interface SubmitAnIssueProps {
-  version: string;
-  className?: string;
+  readonly version: string;
+  readonly className?: string;
 }
 
 function display(serverType: string) {
@@ -15,7 +15,7 @@ function display(serverType: string) {
   return ciOption && ciOption.display
 }
 
-function knownServerTypes(trays: Tray[]) {
+function knownServerTypes(trays: ReadonlyArray<Tray>) {
   const servers = trays
     .map((tray) => tray.serverType)
     .filter((serverType) => serverType !== '')
@@ -27,7 +27,7 @@ function knownServerTypes(trays: Tray[]) {
     : servers
 }
 
-function bugReport(version: string, trays: Tray[]) {
+function bugReport(version: string, trays: ReadonlyArray<Tray>) {
   return encodeURIComponent(`## Bug report
 
 **How are you running?**

@@ -12,7 +12,7 @@ import {getClickToShowMenu} from './settings/SettingsReducer'
 import {useCheckForNewVersion} from './CheckForNewVersionHook'
 
 interface NevergreenProps {
-  children: ReactNode;
+  readonly children: ReactNode;
 }
 
 export function Nevergreen({children}: NevergreenProps) {

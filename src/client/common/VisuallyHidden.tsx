@@ -2,7 +2,7 @@ import React, {ReactNode} from 'react'
 import styles from './visually-hidden.scss'
 
 interface VisuallyHiddenProps {
-  children: ReactNode;
+  readonly children: ReactNode;
 }
 
 export const VISUALLY_HIDDEN_ATTRIBUTE = 'data-visually-hidden'

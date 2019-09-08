@@ -2,7 +2,7 @@ import React, {useLayoutEffect, useRef} from 'react'
 import Mousetrap from 'mousetrap'
 
 interface ShortcutProps {
-  hotkeys: string[];
+  readonly hotkeys: string[];
 }
 
 function click(parent: HTMLSpanElement | null): boolean {

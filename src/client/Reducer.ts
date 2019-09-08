@@ -11,16 +11,16 @@ import {PENDING_REQUESTS_ROOT, PendingRequestsState, reduce as pendingRequests} 
 import {BACKUP_ROOT, BackupState, reduce as backup} from './backup/BackupReducer'
 
 export interface State {
-  [SETTINGS_ROOT]: SettingsState;
-  [BACKUP_ROOT]: BackupState;
-  [INTERESTING_ROOT]: InterestingState;
-  [NEVERGREEN_ROOT]: NevergreenState;
-  [NOTIFICATION_ROOT]: NotificationState;
-  [PENDING_REQUESTS_ROOT]: PendingRequestsState;
-  [PROJECTS_ROOT]: ProjectsState;
-  [SELECTED_ROOT]: SelectedState;
-  [SUCCESS_ROOT]: SuccessState;
-  [TRAYS_ROOT]: TraysState;
+  readonly [SETTINGS_ROOT]: SettingsState;
+  readonly [BACKUP_ROOT]: BackupState;
+  readonly [INTERESTING_ROOT]: InterestingState;
+  readonly [NEVERGREEN_ROOT]: NevergreenState;
+  readonly [NOTIFICATION_ROOT]: NotificationState;
+  readonly [PENDING_REQUESTS_ROOT]: PendingRequestsState;
+  readonly [PROJECTS_ROOT]: ProjectsState;
+  readonly [SELECTED_ROOT]: SelectedState;
+  readonly [SUCCESS_ROOT]: SuccessState;
+  readonly [TRAYS_ROOT]: TraysState;
 }
 
 export const reducer = combineReducers<State>({

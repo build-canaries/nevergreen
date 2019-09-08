@@ -3,9 +3,9 @@ import {Tab, TabList, TabPanel, Tabs as ReactTabs} from 'react-tabs'
 import styles from './tabs.scss'
 
 interface TabsProps {
-  children: ReactElement[];
-  titles: string[];
-  onSwitch?: () => void;
+  readonly children: ReactElement[];
+  readonly titles: ReadonlyArray<string>;
+  readonly onSwitch?: () => void;
 }
 
 export function Tabs({titles, children, onSwitch}: TabsProps) {

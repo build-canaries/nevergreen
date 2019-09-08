@@ -13,7 +13,7 @@ import {ThunkAction} from 'redux-thunk'
 const NEVERGREEN_IO_REGEX = /nevergreen\.io/i
 
 interface GitHubResponse {
-  tag_name: string;
+  readonly tag_name: string;
 }
 
 export function checkForNewVersion(currentVersion: string, hostname: string): ThunkAction<Promise<void>, State, undefined, AnyAction> {
@@ -52,7 +52,7 @@ function noLongerSickTitle(total: number): string {
     : `${total} projects are no longer sick!`
 }
 
-export function projectNotifications(previousProjects: Project[]): ThunkAction<Promise<void>, State, undefined, AnyAction> {
+export function projectNotifications(previousProjects: ReadonlyArray<Project>): ThunkAction<Promise<void>, State, undefined, AnyAction> {
   return async (dispatch, getState) => {
     const showNotifications = getShowSystemNotifications(getState())
 

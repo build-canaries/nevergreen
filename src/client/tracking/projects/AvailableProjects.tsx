@@ -20,28 +20,28 @@ import {selectProject} from '../TrackingActionCreators'
 import {refreshTray} from '../RefreshThunkActionCreators'
 
 interface AvailableProjectsProps {
-  trayId: string;
-  index: number;
+  readonly trayId: string;
+  readonly index: number;
 }
 
 export function AvailableProjects({index, trayId}: AvailableProjectsProps) {
   const dispatch = useDispatch()
-  const errors = useSelector<State, string[]>((state) => getTrayErrors(state, trayId))
+  const errors = useSelector<State, ReadonlyArray<string>>((state) => getTrayErrors(state, trayId))
   const timestamp = useSelector<State, string>((state) => getTrayTimestamp(state, trayId))
-  const projects = useSelector<State, Project[]>((state) => getProjects(state, trayId))
-  const selected = useSelector<State, string[]>((state) => getSelectedProjects(state, trayId))
+  const projects = useSelector<State, ReadonlyArray<Project>>((state) => getProjects(state, trayId))
+  const selected = useSelector<State, ReadonlyArray<string>>((state) => getSelectedProjects(state, trayId))
 
   const [filter, setFilter] = useState()
-  const [filterErrors, setFilterErrors] = useState<string[]>([])
+  const [filterErrors, setFilterErrors] = useState<ReadonlyArray<string>>([])
   const rootNode = useRef<HTMLDivElement>(null)
 
-  const includeAll = (projects: Project[]) => () => {
+  const includeAll = (projects: ReadonlyArray<Project>) => () => {
     projects
       .filter((project) => !project.removed)
       .forEach((project) => dispatch(selectProject(trayId, project.projectId, true)))
   }
 
-  const excludeAll = (projects: Project[]) => () => {
+  const excludeAll = (projects: ReadonlyArray<Project>) => () => {
     projects.forEach((project) => dispatch(selectProject(trayId, project.projectId, false)))
   }
 

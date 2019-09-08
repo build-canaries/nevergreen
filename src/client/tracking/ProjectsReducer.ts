@@ -46,7 +46,7 @@ export const reduce = createReducer<ProjectsState>(DEFAULT_STATE, {
   }
 })
 
-export function getProjects(state: State, trayId?: string): Project[] {
+export function getProjects(state: State, trayId?: string): ReadonlyArray<Project> {
   return trayId
     ? Object.values<Project>(get(state, [PROJECTS_ROOT, trayId], {}))
     : Object.values(get(state, [PROJECTS_ROOT], {}))

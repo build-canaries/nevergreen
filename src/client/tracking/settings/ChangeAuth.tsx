@@ -7,11 +7,11 @@ import {AuthDetails, AuthTypes} from '../../domain/Tray'
 import styles from './change-auth.scss'
 
 interface ChangeAuthProps {
-  show: boolean;
-  cancel: () => void;
-  save: (auth: AuthDetails) => void;
-  authType: AuthTypes;
-  username: string;
+  readonly show: boolean;
+  readonly cancel: () => void;
+  readonly save: (auth: AuthDetails) => void;
+  readonly authType: AuthTypes;
+  readonly username: string;
 }
 
 export function ChangeAuth({show, cancel, save, authType, username}: ChangeAuthProps) {

@@ -34,11 +34,11 @@ export async function requestPermission(): Promise<string> {
 }
 
 interface Notification {
-  title?: string;
-  body: string;
-  badge?: string;
-  icon?: string;
-  tag?: string;
+  readonly title?: string;
+  readonly body: string;
+  readonly badge?: string;
+  readonly icon?: string;
+  readonly tag?: string;
 }
 
 export async function sendSystemNotification({title = 'Nevergreen', body, badge = '/mstile-144x144.png', icon = '/android-chrome-192x192.png', tag}: Notification) {

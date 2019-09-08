@@ -18,7 +18,7 @@ export function isNumber(val: any) {
   return !isNaN(toNumber(val))
 }
 
-export function randomFrom<T>(arr: T[]): T {
+export function randomFrom<T>(arr: T[] | ReadonlyArray<T>): T {
   return sample(arr) as T
 }
 

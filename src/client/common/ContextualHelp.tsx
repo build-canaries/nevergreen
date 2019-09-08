@@ -6,9 +6,9 @@ import {SecondaryButton} from './forms/Button'
 import {iQuestion} from './fonts/Icons'
 
 interface ContextualHelpProps {
-  title: string;
-  help: ReactElement;
-  className?: string;
+  readonly title: string;
+  readonly help: ReactElement;
+  readonly className?: string;
 }
 
 export function ContextualHelp({help, title, className}: ContextualHelpProps) {

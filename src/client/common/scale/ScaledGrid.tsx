@@ -7,7 +7,7 @@ import {VISUALLY_HIDDEN_ATTRIBUTE} from '../VisuallyHidden'
 import {useResizable} from '../ResizableHook'
 
 interface ScaledGridProps {
-  children: ReactNode;
+  readonly children: ReactNode;
 }
 
 // These need to match those in the CSS
@@ -49,7 +49,7 @@ function calculateChildHeight(totalNumberOfItems: number, width: number, height:
   return Math.max(calculated, MIN_CHILD_HEIGHT)
 }
 
-function getVisibleChildren(node: Node): Node[] {
+function getVisibleChildren(node: Node): ReadonlyArray<Node> {
   if (node.hasChildNodes()) {
     return _.flatten((Array.from(node.childNodes) as Element[])
       .filter((node) => node.nodeName === '#text' || !node.hasAttribute(VISUALLY_HIDDEN_ATTRIBUTE))

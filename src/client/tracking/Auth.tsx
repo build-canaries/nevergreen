@@ -7,15 +7,15 @@ import {Radio} from '../common/forms/Radio'
 import {uniqueId} from 'lodash'
 
 interface AuthProps {
-  authType: AuthTypes;
-  setAuthType: (type: AuthTypes) => void;
-  username: string;
-  setUsername: (username: string) => void;
-  password: string;
-  setPassword: (password: string) => void;
-  accessToken: string;
-  setAccessToken: (accessToken: string) => void;
-  onEnter: () => void;
+  readonly authType: AuthTypes;
+  readonly setAuthType: (type: AuthTypes) => void;
+  readonly username: string;
+  readonly setUsername: (username: string) => void;
+  readonly password: string;
+  readonly setPassword: (password: string) => void;
+  readonly accessToken: string;
+  readonly setAccessToken: (accessToken: string) => void;
+  readonly onEnter: () => void;
 }
 
 export function Auth({authType, setAuthType, username, setUsername, password, setPassword, accessToken, setAccessToken, onEnter}: AuthProps) {

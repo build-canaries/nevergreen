@@ -3,8 +3,8 @@ import styles from './loading.scss'
 import {VisuallyHidden} from './VisuallyHidden'
 
 interface LoadingProps {
-  children?: ReactNode;
-  loaded?: boolean;
+  readonly children?: ReactNode;
+  readonly loaded?: boolean;
 }
 
 export function Loading({loaded, children}: LoadingProps) {

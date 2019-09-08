@@ -8,8 +8,8 @@ export interface ActionInterestingProjectsFetching extends Action<Actions.INTERE
 }
 
 export interface ActionInterestingProjects extends Action<Actions.INTERESTING_PROJECTS> {
-  readonly projects: Project[];
-  readonly errors: string[];
+  readonly projects: ReadonlyArray<Project>;
+  readonly errors: ReadonlyArray<string>;
 }
 
 export function interestingProjectsFetching(request: Request): ActionInterestingProjectsFetching {

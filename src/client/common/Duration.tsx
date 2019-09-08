@@ -5,10 +5,10 @@ import {useTimer} from './TimerHook'
 import {isBlank} from './Utils'
 
 interface DurationProps {
-  abbreviate?: boolean;
-  timestamp?: string | null;
-  fullDescriptionPrefix?: string;
-  fullDescriptionSuffix?: string;
+  readonly abbreviate?: boolean;
+  readonly timestamp?: string | null;
+  readonly fullDescriptionPrefix?: string;
+  readonly fullDescriptionSuffix?: string;
 }
 
 const ONE_MINUTE = 60

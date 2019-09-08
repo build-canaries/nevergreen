@@ -3,12 +3,12 @@ import cn from 'classnames'
 import styles from './container.scss'
 
 interface ContainerProps {
-  children?: ReactNode;
-  title: string;
-  subTitle?: string;
-  className?: string;
-  initiallyHidden?: boolean;
-  highlight?: boolean;
+  readonly children?: ReactNode;
+  readonly title: string;
+  readonly subTitle?: string;
+  readonly className?: string;
+  readonly initiallyHidden?: boolean;
+  readonly highlight?: boolean;
 }
 
 export function Container({initiallyHidden, highlight, className, title, subTitle, children}: ContainerProps) {

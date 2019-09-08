@@ -15,13 +15,13 @@ import {getSelectedProjects} from '../tracking/SelectedReducer'
 import {getProjects} from '../tracking/ProjectsReducer'
 import {getShowPrognosis} from '../settings/SettingsReducer'
 
-function toErrorString(trays: Tray[], projectError: ProjectError): string {
+function toErrorString(trays: ReadonlyArray<Tray>, projectError: ProjectError): string {
   const tray = trays.find((tray) => tray.trayId === projectError.trayId)
   const identifier = tray ? `${tray.name || tray.url} ` : ''
   return `${identifier}${projectError.errorMessage}`
 }
 
-function addThisBuildTime(project: Project, previouslyFetchedProjects: Project[]): Project {
+function addThisBuildTime(project: Project, previouslyFetchedProjects: ReadonlyArray<Project>): Project {
   if (isBuilding(project.prognosis)) {
     const previousProject = previouslyFetchedProjects.find((previous) => project.projectId === previous.projectId)
     const thisBuildTime = previousProject && isBuilding(previousProject.prognosis)

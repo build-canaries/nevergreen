@@ -2,7 +2,7 @@ import React, {Fragment} from 'react'
 import styles from './url.scss'
 
 interface URLProps {
-  url: string;
+  readonly url: string;
 }
 
 function notPartOfScheme(i: number, arr: string[]) {

@@ -2,8 +2,8 @@ import React, {ReactNode} from 'react'
 import styles from './style-guide.scss'
 
 interface StyleGuideSectionProps {
-  title: string;
-  children: ReactNode;
+  readonly title: string;
+  readonly children: ReactNode;
 }
 
 export function StyleGuideSection({title, children}: StyleGuideSectionProps) {

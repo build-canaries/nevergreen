@@ -18,12 +18,12 @@ import {setConfiguration} from '../../../NevergreenActionCreators'
 import {Input} from '../../../common/forms/Input'
 
 interface ExternallyProps {
-  location: BackupLocation;
-  help: ReactElement;
-  accessTokenRequired?: boolean;
+  readonly location: BackupLocation;
+  readonly help: ReactElement;
+  readonly accessTokenRequired?: boolean;
 }
 
-function validate(id: string, url: string, accessToken: string, accessTokenRequired?: boolean): string[] {
+function validate(id: string, url: string, accessToken: string, accessTokenRequired?: boolean): ReadonlyArray<string> {
   const errors = []
   if (isBlank(id)) {
     errors.push('You must provide an ID to import')
@@ -50,18 +50,18 @@ export function Externally({location, help, accessTokenRequired}: ExternallyProp
 
   const [accessToken, setAccessToken] = useState('')
   const [loaded, setLoaded] = useState(true)
-  const [messages, setMessages] = useState<string[]>([])
+  const [messages, setMessages] = useState<ReadonlyArray<string>>([])
   const [messageType, setMessageType] = useState(MessagesType.INFO)
 
   const disabled = !loaded
   const accessTokenChanged = ({target}: ChangeEvent<HTMLInputElement>) => setAccessToken(target.value)
 
-  const setErrors = (errors: string[]) => {
+  const setErrors = (errors: ReadonlyArray<string>) => {
     setMessageType(MessagesType.ERROR)
     setMessages(errors)
   }
 
-  const setInfos = (infos: string[]) => {
+  const setInfos = (infos: ReadonlyArray<string>) => {
     setMessageType(MessagesType.INFO)
     setMessages(infos)
   }

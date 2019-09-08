@@ -5,13 +5,13 @@ import styles from './drop-down.scss'
 import formStyles from './forms.scss'
 
 type DropDownProps = {
-  children: ReactNode;
-  options: {
+  readonly children: ReactNode;
+  readonly options: ReadonlyArray<{
     value: string;
     display: string;
-  }[];
-  className?: string;
-  disabled?: boolean;
+  }>;
+  readonly className?: string;
+  readonly disabled?: boolean;
 } & DetailedHTMLProps<SelectHTMLAttributes<HTMLSelectElement>, HTMLSelectElement>
 
 export function DropDown({className, children, options, disabled, ...inputProps}: DropDownProps) {

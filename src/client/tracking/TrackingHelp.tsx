@@ -6,8 +6,8 @@ import {PrimaryButton} from '../common/forms/Button'
 import {AuthDetails, AuthTypes} from '../domain/Tray'
 
 interface TrackingHelpProps {
-  addTray: (url: string, auth: AuthDetails) => void;
-  close?: () => void;
+  readonly addTray: (url: string, auth: AuthDetails) => void;
+  readonly close?: () => void;
 }
 
 export function TrackingHelp({addTray, close}: TrackingHelpProps) {

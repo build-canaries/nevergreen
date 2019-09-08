@@ -25,7 +25,7 @@ export interface ActionProjectsFetching extends Action<Actions.PROJECTS_FETCHING
 
 export interface ActionProjectsFetched extends Action<Actions.PROJECTS_FETCHED> {
   readonly trayId: string;
-  readonly data: Project[];
+  readonly data: ReadonlyArray<Project>;
   readonly serverType: string;
   readonly timestamp: string;
   readonly includeNew: boolean;
@@ -33,7 +33,7 @@ export interface ActionProjectsFetched extends Action<Actions.PROJECTS_FETCHED> 
 
 export interface ActionProjectsFetchError extends Action<Actions.PROJECTS_FETCH_ERROR> {
   readonly trayId: string;
-  readonly errors: string[];
+  readonly errors: ReadonlyArray<string>;
 }
 
 export interface ActionSetTrayName extends Action<Actions.SET_TRAY_NAME> {
@@ -108,7 +108,7 @@ export function projectsFetching(trayId: string, request: Request): ActionProjec
   return {type: Actions.PROJECTS_FETCHING, trayId, request}
 }
 
-export function projectsFetched(trayId: string, projects: Project[], includeNew: boolean): ActionProjectsFetched {
+export function projectsFetched(trayId: string, projects: ReadonlyArray<Project>, includeNew: boolean): ActionProjectsFetched {
   const first = projects[0]
   const serverType = first ? first.serverType : ''
 
@@ -122,7 +122,7 @@ export function projectsFetched(trayId: string, projects: Project[], includeNew:
   }
 }
 
-export function projectsFetchError(trayId: string, errors: string[]): ActionProjectsFetchError {
+export function projectsFetchError(trayId: string, errors: ReadonlyArray<string>): ActionProjectsFetchError {
   return {type: Actions.PROJECTS_FETCH_ERROR, trayId, errors}
 }
 

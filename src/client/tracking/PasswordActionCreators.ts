@@ -14,8 +14,8 @@ export interface ActionPasswordEncryted extends Action<Actions.PASSWORD_ENCRYPTE
 }
 
 export interface ActionPasswordEncryptError extends Action<Actions.PASSWORD_ENCRYPT_ERROR> {
-  trayId: string;
-  errors: string[];
+  readonly trayId: string;
+  readonly errors: ReadonlyArray<string>;
 }
 
 export function encryptingPassword(trayId: string, password: string, request: Request): ActionEncryptingPassword {

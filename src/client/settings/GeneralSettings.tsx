@@ -10,7 +10,7 @@ import {getClickToShowMenu, getRefreshTime} from './SettingsReducer'
 import {setClickToShowMenu, setRefreshTime, VALID_REFRESH_TIMES} from './SettingsActionCreators'
 
 interface ClickToShowMenuHelpProps {
-  enabled: boolean;
+  readonly enabled: boolean;
 }
 
 function ClickToShowMenuHelp({enabled}: ClickToShowMenuHelpProps) {
