@@ -1,6 +1,6 @@
 import {Actions} from '../Actions'
 import {Project} from '../domain/Project'
-import {createReducer, createSelector} from 'redux-starter-kit'
+import {createReducer} from 'redux-starter-kit'
 import {ActionInterestingProjects} from './MonitorActionCreators'
 import {State} from '../Reducer'
 
@@ -26,6 +26,6 @@ export const reduce = createReducer<InterestingState>(DEFAULT_STATE, {
   }
 })
 
-export const getInterestingLoaded = createSelector<State, boolean>([[INTERESTING_ROOT, 'loaded']])
-export const getInterestingErrors = createSelector<State, ReadonlyArray<string>>([[INTERESTING_ROOT, 'errors']])
-export const getInterestingProjects = createSelector<State, ReadonlyArray<Project>>([[INTERESTING_ROOT, 'projects']])
+export const getInterestingLoaded = (state: State) => state[INTERESTING_ROOT].loaded
+export const getInterestingErrors = (state: State) => state[INTERESTING_ROOT].errors
+export const getInterestingProjects = (state: State) => state[INTERESTING_ROOT].projects

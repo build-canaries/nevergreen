@@ -33,11 +33,6 @@ export function change(input: CommonWrapper, value: string) {
   input.simulate('change', {target: {value}})
 }
 
-export function changeAndBlur(input: CommonWrapper, value: string) {
-  change(input, value)
-  input.simulate('blur', {target: {value}})
-}
-
 export function pressKeyOn(element: CommonWrapper, key: string) {
   element.simulate('keyPress', {key, preventDefault: noop})
 }

@@ -3,7 +3,6 @@ import {Container} from '../../common/Container'
 import {Loading} from '../../common/Loading'
 import {Tabs} from '../../common/Tabs'
 import {useDispatch, useSelector} from 'react-redux'
-import {State} from '../../Reducer'
 import {getTrayHighlight, getTrayLoaded, getTrayName, getTrayUrl} from '../TraysReducer'
 import {checkRefresh} from '../TrackingThunkActionCreators'
 import {AvailableProjects} from '../projects/AvailableProjects'
@@ -36,10 +35,10 @@ function redactedUrl(url: string) {
 
 export function Tray({trayId, index}: TrayProps) {
   const dispatch = useDispatch()
-  const loaded = useSelector<State, boolean>((state) => getTrayLoaded(state, trayId))
-  const name = useSelector<State, string>((state) => getTrayName(state, trayId))
-  const url = useSelector<State, string>((state) => getTrayUrl(state, trayId))
-  const highlight = useSelector<State, boolean>((state) => getTrayHighlight(state, trayId))
+  const loaded = useSelector(getTrayLoaded(trayId))
+  const name = useSelector(getTrayName(trayId))
+  const url = useSelector(getTrayUrl(trayId))
+  const highlight = useSelector(getTrayHighlight(trayId))
 
   const urlToShow = redactedUrl(url)
   const title = name || urlToShow

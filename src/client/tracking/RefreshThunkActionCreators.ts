@@ -13,7 +13,7 @@ export function refreshTray(trayId: string): ThunkAction<Promise<void>, State, u
   return async (dispatch, getState) => {
     dispatch(abortPendingRequest(trayId))
 
-    const tray = getTray(getState(), trayId)
+    const tray = getTray(trayId)(getState())
     const seen = getProjects(getState())
     const request = fetchAll([tray], seen)
 

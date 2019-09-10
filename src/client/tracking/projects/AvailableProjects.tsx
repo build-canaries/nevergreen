@@ -26,8 +26,8 @@ interface AvailableProjectsProps {
 
 export function AvailableProjects({index, trayId}: AvailableProjectsProps) {
   const dispatch = useDispatch()
-  const errors = useSelector<State, ReadonlyArray<string>>((state) => getTrayErrors(state, trayId))
-  const timestamp = useSelector<State, string>((state) => getTrayTimestamp(state, trayId))
+  const errors = useSelector(getTrayErrors(trayId))
+  const timestamp = useSelector(getTrayTimestamp(trayId))
   const projects = useSelector<State, ReadonlyArray<Project>>((state) => getProjects(state, trayId))
   const selected = useSelector<State, ReadonlyArray<string>>((state) => getSelectedProjects(state, trayId))
 

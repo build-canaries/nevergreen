@@ -1,6 +1,6 @@
 import {Actions} from '../Actions'
 import {ActionNotification} from './NotificationActionCreators'
-import {createReducer, createSelector} from 'redux-starter-kit'
+import {createReducer} from 'redux-starter-kit'
 import {State} from '../Reducer'
 
 export type NotificationState = string
@@ -18,4 +18,4 @@ export const reduce = createReducer<NotificationState>(DEFAULT_STATE, {
   }
 })
 
-export const getNotification = createSelector<State, string>([NOTIFICATION_ROOT])
+export const getNotification = (state: State) => state[NOTIFICATION_ROOT]

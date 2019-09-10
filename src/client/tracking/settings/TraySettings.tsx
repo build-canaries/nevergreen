@@ -1,7 +1,7 @@
 import React, {useLayoutEffect, useState} from 'react'
 import {Input} from '../../common/forms/Input'
 import {DropDown} from '../../common/forms/DropDown'
-import {AuthDetails, AuthTypes, CI_OPTIONS, generateRandomName} from '../../domain/Tray'
+import {AuthDetails, CI_OPTIONS, generateRandomName} from '../../domain/Tray'
 import {VisuallyHidden} from '../../common/VisuallyHidden'
 import {DangerButton, InputButton, SecondaryButton} from '../../common/forms/Button'
 import {iBin, iDice, iUnlocked} from '../../common/fonts/Icons'
@@ -17,7 +17,6 @@ import {
   getTrayUsername
 } from '../TraysReducer'
 import {useDispatch, useSelector} from 'react-redux'
-import {State} from '../../Reducer'
 import {setAuth} from '../AuthenticationThunkActionCreators'
 import {removeTray, setIncludeNew, setServerType, setTrayName, setTrayUrl} from '../TrackingActionCreators'
 
@@ -27,12 +26,12 @@ interface TraySettingsProps {
 
 export function TraySettings({trayId}: TraySettingsProps) {
   const dispatch = useDispatch()
-  const name = useSelector<State, string>((state) => getTrayName(state, trayId))
-  const url = useSelector<State, string>((state) => getTrayUrl(state, trayId))
-  const authType = useSelector<State, AuthTypes>((state) => getTrayAuthType(state, trayId))
-  const username = useSelector<State, string>((state) => getTrayUsername(state, trayId))
-  const serverType = useSelector<State, string>((state) => getTrayServerType(state, trayId))
-  const includeNew = useSelector<State, boolean>((state) => getTrayIncludeNew(state, trayId))
+  const name = useSelector(getTrayName(trayId))
+  const url = useSelector(getTrayUrl(trayId))
+  const authType = useSelector(getTrayAuthType(trayId))
+  const username = useSelector(getTrayUsername(trayId))
+  const serverType = useSelector(getTrayServerType(trayId))
+  const includeNew = useSelector(getTrayIncludeNew(trayId))
 
   const [newName, setNewName] = useState(name)
   const [newUrl, setNewUrl] = useState(url)

@@ -1,6 +1,6 @@
-import React from 'react'
+import React, {ReactNode} from 'react'
 import {TraySettings} from '../../../../src/client/tracking/settings/TraySettings'
-import {render, setupReactModal} from '../../testHelpers'
+import {buildTray, render, setupReactModal} from '../../testHelpers'
 import {
   getTray,
   getTrayAuthType,
@@ -17,6 +17,16 @@ import {wait} from '@testing-library/react'
 import {AuthTypes} from '../../../../src/client/domain/Tray'
 import * as SecurityGateway from '../../../../src/client/gateways/SecurityGateway'
 import {fakeRequest} from '../../../../src/client/gateways/Gateway'
+import {useSelector} from 'react-redux'
+
+const FakePage = ({trayId, children}: { trayId: string; children: ReactNode }) => {
+  const tray = useSelector(getTray(trayId))
+  return (
+    <div>
+      {tray && children}
+    </div>
+  )
+}
 
 describe('<TraySettings/>', () => {
 
@@ -29,44 +39,44 @@ describe('<TraySettings/>', () => {
   it('should set the tray name on blur', async () => {
     const state = {
       [TRAYS_ROOT]: {
-        trayId: {
+        trayId: buildTray({
           name: 'some-name'
-        }
+        })
       }
     }
     const {getByTestId, store} = render(<TraySettings {...DEFAULT_PROPS} />, state)
     userEvent.click(getByTestId('tray-name'))
     await userEvent.type(getByTestId('tray-name'), 'some-new-name')
     getByTestId('tray-name').blur()
-    expect(getTrayName(store.getState(), 'trayId')).toEqual('some-new-name')
+    expect(getTrayName('trayId')(store.getState())).toEqual('some-new-name')
   })
 
   it('should generate a new random name', () => {
     const state = {
       [TRAYS_ROOT]: {
-        trayId: {
+        trayId: buildTray({
           name: 'some-name'
-        }
+        })
       }
     }
     const {getByTestId, store} = render(<TraySettings {...DEFAULT_PROPS} />, state)
     userEvent.click(getByTestId('generate-random'))
-    expect(getTrayName(store.getState(), 'trayId')).not.toEqual('some-name')
+    expect(getTrayName('trayId')(store.getState())).not.toEqual('some-name')
   })
 
   it('should set the tray URL on blur', async () => {
     const state = {
       [TRAYS_ROOT]: {
-        trayId: {
+        trayId: buildTray({
           url: 'http://some-url'
-        }
+        })
       }
     }
     const {getByLabelText, store} = render(<TraySettings {...DEFAULT_PROPS} />, state)
     userEvent.click(getByLabelText('URL'))
     await userEvent.type(getByLabelText('URL'), 'http://some-new-url')
     getByLabelText('URL').blur()
-    expect(getTrayUrl(store.getState(), 'trayId')).toEqual('http://some-new-url')
+    expect(getTrayUrl('trayId')(store.getState())).toEqual('http://some-new-url')
   })
 
   // TODO: figure out why this fails
@@ -75,49 +85,54 @@ describe('<TraySettings/>', () => {
   it.skip('should set the tray server type on change', async () => {
     const state = {
       [TRAYS_ROOT]: {
-        trayId: {
+        trayId: buildTray({
           serverType: 'go'
-        }
+        })
       }
     }
     const {getByTestId, store} = render(<TraySettings {...DEFAULT_PROPS} />, state)
     userEvent.selectOptions(getByTestId('tray-server-type'), 'jenkins')
     await wait(() => {
-      expect(getTrayServerType(store.getState(), 'trayId')).toEqual('jenkins')
+      expect(getTrayServerType('trayId')(store.getState())).toEqual('jenkins')
     })
   })
 
   it('should set the include new setting on click', () => {
     const state = {
       [TRAYS_ROOT]: {
-        trayId: {
+        trayId: buildTray({
           includeNew: false
-        }
+        })
       }
     }
     const {getByLabelText, store} = render(<TraySettings {...DEFAULT_PROPS} />, state)
     userEvent.click(getByLabelText('automatically include new projects'))
-    expect(getTrayIncludeNew(store.getState(), 'trayId')).toBeTruthy()
+    expect(getTrayIncludeNew('trayId')(store.getState())).toBeTruthy()
   })
 
   it('should remove the tray when clicking the delete button', () => {
     const state = {
       [TRAYS_ROOT]: {
-        trayId: {}
+        trayId: buildTray()
       }
     }
-    const {getByText, store} = render(<TraySettings {...DEFAULT_PROPS} />, state)
+    const {getByText, store} = render(
+      <FakePage trayId='trayId'>
+        <TraySettings {...DEFAULT_PROPS} />
+      </FakePage>,
+      state
+    )
     userEvent.click(getByText('delete'))
-    expect(getTray(store.getState(), 'trayId')).toBeUndefined()
+    expect(getTray('trayId')(store.getState())).toBeUndefined()
   })
 
   it('should be able to change the auth to basic', async () => {
     jest.spyOn(SecurityGateway, 'encrypt').mockReturnValue(fakeRequest('some-encrypted-password'))
     const state = {
       [TRAYS_ROOT]: {
-        trayId: {
+        trayId: buildTray({
           authType: AuthTypes.none
-        }
+        })
       }
     }
     const {getByText, getByLabelText, getByTestId, store} = render(<TraySettings {...DEFAULT_PROPS} />, state)
@@ -128,9 +143,9 @@ describe('<TraySettings/>', () => {
     userEvent.click(getByText('save changes'))
 
     await wait(() => {
-      expect(getTrayAuthType(store.getState(), 'trayId')).toEqual(AuthTypes.basic)
-      expect(getTrayUsername(store.getState(), 'trayId')).toEqual('some-username')
-      expect(getTrayPassword(store.getState(), 'trayId')).toEqual('some-encrypted-password')
+      expect(getTrayAuthType('trayId')(store.getState())).toEqual(AuthTypes.basic)
+      expect(getTrayUsername('trayId')(store.getState())).toEqual('some-username')
+      expect(getTrayPassword('trayId')(store.getState())).toEqual('some-encrypted-password')
     })
   })
 })

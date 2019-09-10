@@ -38,7 +38,11 @@ import {
   passwordEncrypted,
   passwordEncryptError
 } from '../../../src/client/tracking/PasswordActionCreators'
-import {encryptingToken, tokenEncrypted, tokenEncryptError} from '../../../src/client/tracking/AccessTokenActionCreators'
+import {
+  encryptingToken,
+  tokenEncrypted,
+  tokenEncryptError
+} from '../../../src/client/tracking/AccessTokenActionCreators'
 import * as DateTime from '../../../src/client/common/DateTime'
 import {buildProject, buildState, buildTray, testReducer} from '../testHelpers'
 import {RecursivePartial} from '../../../src/client/common/Types'
@@ -68,8 +72,8 @@ describe('TraysReducer', () => {
       const existingState = state({someId: {}})
       const action = setConfiguration({[TRAYS_ROOT]: {trayId: tray}})
       const newState = reducer(existingState, action)
-      expect(getTray(newState, 'someId')).toBeUndefined()
-      expect(getTray(newState, 'trayId')).toEqual({...tray, loaded: true})
+      expect(getTray('someId')(newState)).toBeUndefined()
+      expect(getTray('trayId')(newState)).toEqual({...tray, loaded: true})
     })
 
     test('should handle no trays data', () => {
@@ -86,7 +90,7 @@ describe('TraysReducer', () => {
       const existingState = state({})
       const action = trayAdded('trayId', '', {type: AuthTypes.none})
       const newState = reducer(existingState, action)
-      expect(getTray(newState, 'trayId')).toHaveProperty('trayId', 'trayId')
+      expect(getTray('trayId')(newState)).toHaveProperty('trayId', 'trayId')
     })
   })
 
@@ -96,7 +100,7 @@ describe('TraysReducer', () => {
       const existingState = state({trayId: buildTray({highlight: false})})
       const action = highlightTray('trayId')
       const newState = reducer(existingState, action)
-      expect(getTrayHighlight(newState, 'trayId')).toBeTruthy()
+      expect(getTrayHighlight('trayId')(newState)).toBeTruthy()
     })
   })
 
@@ -106,7 +110,7 @@ describe('TraysReducer', () => {
       const existingState = state({trayId: buildTray({highlight: true})})
       const action = navigated()
       const newState = reducer(existingState, action)
-      expect(getTrayHighlight(newState, 'trayId')).toBeFalsy()
+      expect(getTrayHighlight('trayId')(newState)).toBeFalsy()
     })
   })
 
@@ -116,7 +120,7 @@ describe('TraysReducer', () => {
       const existingState = state({trayId: buildTray()})
       const action = removeTray('trayId')
       const newState = reducer(existingState, action)
-      expect(getTray(newState, 'trayId')).toBeUndefined()
+      expect(getTray('trayId')(newState)).toBeUndefined()
     })
   })
 
@@ -126,7 +130,7 @@ describe('TraysReducer', () => {
       const existingState = state({trayId: {loaded: true}})
       const action = encryptingPassword('trayId', '', fakeRequest('irrelevant'))
       const newState = reducer(existingState, action)
-      expect(getTrayLoaded(newState, 'trayId')).toBeFalsy()
+      expect(getTrayLoaded('trayId')(newState)).toBeFalsy()
     })
   })
 
@@ -136,7 +140,7 @@ describe('TraysReducer', () => {
       const existingState = state({trayId: {loaded: true}})
       const action = encryptingToken('trayId', '', fakeRequest('irrelevant'))
       const newState = reducer(existingState, action)
-      expect(getTrayLoaded(newState, 'trayId')).toBeFalsy()
+      expect(getTrayLoaded('trayId')(newState)).toBeFalsy()
     })
   })
 
@@ -146,21 +150,21 @@ describe('TraysReducer', () => {
       const existingState = state({trayId: buildTray({loaded: true})})
       const action = projectsFetching('trayId', fakeRequest('irrelevant'))
       const newState = reducer(existingState, action)
-      expect(getTrayLoaded(newState, 'trayId')).toBeFalsy()
+      expect(getTrayLoaded('trayId')(newState)).toBeFalsy()
     })
 
     test('should remove any errors', () => {
       const existingState = state({trayId: buildTray({errors: ['some-error']})})
       const action = projectsFetching('trayId', fakeRequest('irrelevant'))
       const newState = reducer(existingState, action)
-      expect(getTrayErrors(newState, 'trayId')).toEqual([])
+      expect(getTrayErrors('trayId')(newState)).toEqual([])
     })
 
     test('should unset requires refresh', () => {
       const existingState = state({trayId: buildTray({requiresRefresh: true})})
       const action = projectsFetching('trayId', fakeRequest('irrelevant'))
       const newState = reducer(existingState, action)
-      expect(getTrayRequiresRefresh(newState, 'trayId')).toBeFalsy()
+      expect(getTrayRequiresRefresh('trayId')(newState)).toBeFalsy()
     })
   })
 
@@ -170,28 +174,28 @@ describe('TraysReducer', () => {
       const existingState = state({trayId: buildTray()})
       const action = passwordEncrypted('trayId', 'some-password')
       const newState = reducer(existingState, action)
-      expect(getTrayPassword(newState, 'trayId')).toEqual('some-password')
+      expect(getTrayPassword('trayId')(newState)).toEqual('some-password')
     })
 
     test('should set loaded', () => {
       const existingState = state({trayId: buildTray({loaded: false})})
       const action = passwordEncrypted('trayId', 'some-password')
       const newState = reducer(existingState, action)
-      expect(getTrayLoaded(newState, 'trayId')).toBeTruthy()
+      expect(getTrayLoaded('trayId')(newState)).toBeTruthy()
     })
 
     test('should remove any errors', () => {
       const existingState = state({trayId: buildTray({errors: ['some-error']})})
       const action = passwordEncrypted('trayId', 'some-password')
       const newState = reducer(existingState, action)
-      expect(getTrayErrors(newState, 'trayId')).toEqual([])
+      expect(getTrayErrors('trayId')(newState)).toEqual([])
     })
 
     test('should set requires refresh', () => {
       const existingState = state({trayId: buildTray({requiresRefresh: false})})
       const action = passwordEncrypted('trayId', '')
       const newState = reducer(existingState, action)
-      expect(getTrayRequiresRefresh(newState, 'trayId')).toBeTruthy()
+      expect(getTrayRequiresRefresh('trayId')(newState)).toBeTruthy()
     })
   })
 
@@ -201,28 +205,28 @@ describe('TraysReducer', () => {
       const existingState = state({trayId: buildTray()})
       const action = tokenEncrypted('trayId', 'some-dummy-token')
       const newState = reducer(existingState, action)
-      expect(getTrayAccessToken(newState, 'trayId')).toEqual('some-dummy-token')
+      expect(getTrayAccessToken('trayId')(newState)).toEqual('some-dummy-token')
     })
 
     test('should set loaded', () => {
       const existingState = state({trayId: buildTray({loaded: false})})
       const action = tokenEncrypted('trayId', 'some-password')
       const newState = reducer(existingState, action)
-      expect(getTrayLoaded(newState, 'trayId')).toBeTruthy()
+      expect(getTrayLoaded('trayId')(newState)).toBeTruthy()
     })
 
     test('should remove any errors', () => {
       const existingState = state({trayId: buildTray({errors: ['some-error']})})
       const action = tokenEncrypted('trayId', 'some-password')
       const newState = reducer(existingState, action)
-      expect(getTrayErrors(newState, 'trayId')).toEqual([])
+      expect(getTrayErrors('trayId')(newState)).toEqual([])
     })
 
     test('should set requires refresh', () => {
       const existingState = state({trayId: buildTray({requiresRefresh: false})})
       const action = tokenEncrypted('trayId', '')
       const newState = reducer(existingState, action)
-      expect(getTrayRequiresRefresh(newState, 'trayId')).toBeTruthy()
+      expect(getTrayRequiresRefresh('trayId')(newState)).toBeTruthy()
     })
   })
 
@@ -232,7 +236,7 @@ describe('TraysReducer', () => {
       const existingState = state({trayId: buildTray({loaded: false})})
       const action = projectsFetched('trayId', [], false)
       const newState = reducer(existingState, action)
-      expect(getTrayLoaded(newState, 'trayId')).toBeTruthy()
+      expect(getTrayLoaded('trayId')(newState)).toBeTruthy()
     })
 
     test('should set timestamp', () => {
@@ -240,21 +244,21 @@ describe('TraysReducer', () => {
       const existingState = state({trayId: buildTray()})
       const action = projectsFetched('trayId', [], false)
       const newState = reducer(existingState, action)
-      expect(getTrayTimestamp(newState, 'trayId')).toEqual('some-timestamp')
+      expect(getTrayTimestamp('trayId')(newState)).toEqual('some-timestamp')
     })
 
     test('should set server type', () => {
       const existingState = state({trayId: buildTray()})
       const action = projectsFetched('trayId', [buildProject({serverType: 'some-type'})], false)
       const newState = reducer(existingState, action)
-      expect(getTrayServerType(newState, 'trayId')).toEqual('some-type')
+      expect(getTrayServerType('trayId')(newState)).toEqual('some-type')
     })
 
     test('should remove any errors', () => {
       const existingState = state({trayId: buildTray({errors: ['some-error']})})
       const action = projectsFetched('trayId', [], false)
       const newState = reducer(existingState, action)
-      expect(getTrayErrors(newState, 'trayId')).toEqual([])
+      expect(getTrayErrors('trayId')(newState)).toEqual([])
     })
   })
 
@@ -264,14 +268,14 @@ describe('TraysReducer', () => {
       const existingState = state({trayId: buildTray({loaded: false})})
       const action = passwordEncryptError('trayId', ['some-error'])
       const newState = reducer(existingState, action)
-      expect(getTrayLoaded(newState, 'trayId')).toBeTruthy()
+      expect(getTrayLoaded('trayId')(newState)).toBeTruthy()
     })
 
     test('should set errors', () => {
       const existingState = state({trayId: buildTray()})
       const action = passwordEncryptError('trayId', ['some-error'])
       const newState = reducer(existingState, action)
-      expect(getTrayErrors(newState, 'trayId')).toEqual(['some-error'])
+      expect(getTrayErrors('trayId')(newState)).toEqual(['some-error'])
     })
   })
 
@@ -281,14 +285,14 @@ describe('TraysReducer', () => {
       const existingState = state({trayId: buildTray({loaded: false})})
       const action = tokenEncryptError('trayId', ['some-error'])
       const newState = reducer(existingState, action)
-      expect(getTrayLoaded(newState, 'trayId')).toBeTruthy()
+      expect(getTrayLoaded('trayId')(newState)).toBeTruthy()
     })
 
     test('should set errors', () => {
       const existingState = state({trayId: buildTray()})
       const action = tokenEncryptError('trayId', ['some-error'])
       const newState = reducer(existingState, action)
-      expect(getTrayErrors(newState, 'trayId')).toEqual(['some-error'])
+      expect(getTrayErrors('trayId')(newState)).toEqual(['some-error'])
     })
   })
 
@@ -298,14 +302,14 @@ describe('TraysReducer', () => {
       const existingState = state({trayId: buildTray({loaded: false})})
       const action = projectsFetchError('trayId', [])
       const newState = reducer(existingState, action)
-      expect(getTrayLoaded(newState, 'trayId')).toBeTruthy()
+      expect(getTrayLoaded('trayId')(newState)).toBeTruthy()
     })
 
     test('should set errors', () => {
       const existingState = state({trayId: buildTray()})
       const action = projectsFetchError('trayId', ['some-error'])
       const newState = reducer(existingState, action)
-      expect(getTrayErrors(newState, 'trayId')).toEqual(['some-error'])
+      expect(getTrayErrors('trayId')(newState)).toEqual(['some-error'])
     })
   })
 
@@ -315,7 +319,7 @@ describe('TraysReducer', () => {
       const existingState = state({trayId: buildTray({name: 'some-name'})})
       const action = setTrayName('trayId', 'some-new-name')
       const newState = reducer(existingState, action)
-      expect(getTrayName(newState, 'trayId')).toEqual('some-new-name')
+      expect(getTrayName('trayId')(newState)).toEqual('some-new-name')
     })
   })
 
@@ -325,7 +329,7 @@ describe('TraysReducer', () => {
       const existingState = state({trayId: buildTray({serverType: 'some-type'})})
       const action = setServerType('trayId', 'some-new-type')
       const newState = reducer(existingState, action)
-      expect(getTrayServerType(newState, 'trayId')).toEqual('some-new-type')
+      expect(getTrayServerType('trayId')(newState)).toEqual('some-new-type')
     })
   })
 
@@ -335,14 +339,14 @@ describe('TraysReducer', () => {
       const existingState = state({trayId: buildTray({authType: AuthTypes.none})})
       const action = setAuthType('trayId', AuthTypes.basic)
       const newState = reducer(existingState, action)
-      expect(getTrayAuthType(newState, 'trayId')).toEqual(AuthTypes.basic)
+      expect(getTrayAuthType('trayId')(newState)).toEqual(AuthTypes.basic)
     })
 
     test('should set requires refresh if the auth type is different', () => {
       const existingState = state({trayId: buildTray({authType: AuthTypes.none})})
       const action = setAuthType('trayId', AuthTypes.basic)
       const newState = reducer(existingState, action)
-      expect(getTrayRequiresRefresh(newState, 'trayId')).toBeTruthy()
+      expect(getTrayRequiresRefresh('trayId')(newState)).toBeTruthy()
     })
   })
 
@@ -352,7 +356,7 @@ describe('TraysReducer', () => {
       const existingState = state({trayId: buildTray({username: 'some-username'})})
       const action = setTrayUsername('trayId', 'some-new-username')
       const newState = reducer(existingState, action)
-      expect(getTrayUsername(newState, 'trayId')).toEqual('some-new-username')
+      expect(getTrayUsername('trayId')(newState)).toEqual('some-new-username')
     })
 
     test('should set requires refresh if the username is different', () => {
@@ -365,7 +369,7 @@ describe('TraysReducer', () => {
       })
       const action = setTrayUsername('trayId', 'some-new-username')
       const newState = reducer(existingState, action)
-      expect(getTrayRequiresRefresh(newState, 'trayId')).toBeTruthy()
+      expect(getTrayRequiresRefresh('trayId')(newState)).toBeTruthy()
     })
 
     test('should not set requires refresh if the username is the same', () => {
@@ -378,7 +382,7 @@ describe('TraysReducer', () => {
       })
       const action = setTrayUsername('trayId', 'some-username')
       const newState = reducer(existingState, action)
-      expect(getTrayRequiresRefresh(newState, 'trayId')).toBeFalsy()
+      expect(getTrayRequiresRefresh('trayId')(newState)).toBeFalsy()
     })
   })
 
@@ -388,21 +392,21 @@ describe('TraysReducer', () => {
       const existingState = state({trayId: buildTray({trayId: 'trayId', url: 'some-url'})})
       const action = setTrayUrl('trayId', 'some-new-url')
       const newState = reducer(existingState, action)
-      expect(getTrayUrl(newState, 'trayId')).toEqual('some-new-url')
+      expect(getTrayUrl('trayId')(newState)).toEqual('some-new-url')
     })
 
     test('should set requires refresh if the URL is different', () => {
       const existingState = state({trayId: buildTray({trayId: 'trayId', url: 'some-url', requiresRefresh: false})})
       const action = setTrayUrl('trayId', 'some-new-url')
       const newState = reducer(existingState, action)
-      expect(getTrayRequiresRefresh(newState, 'trayId')).toBeTruthy()
+      expect(getTrayRequiresRefresh('trayId')(newState)).toBeTruthy()
     })
 
     test('should not set requires refresh if the URL is the same', () => {
       const existingState = state({trayId: buildTray({trayId: 'trayId', url: 'some-url', requiresRefresh: false})})
       const action = setTrayUrl('trayId', 'some-url')
       const newState = reducer(existingState, action)
-      expect(getTrayRequiresRefresh(newState, 'trayId')).toBeFalsy()
+      expect(getTrayRequiresRefresh('trayId')(newState)).toBeFalsy()
     })
   })
 
@@ -412,7 +416,7 @@ describe('TraysReducer', () => {
       const existingState = state({trayId: buildTray({trayId: 'trayId', includeNew: false})})
       const action = setIncludeNew('trayId', true)
       const newState = reducer(existingState, action)
-      expect(getTrayIncludeNew(newState, 'trayId')).toBeTruthy()
+      expect(getTrayIncludeNew('trayId')(newState)).toBeTruthy()
     })
   })
 })

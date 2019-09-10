@@ -16,11 +16,7 @@ import {
   ActionTrayAdded
 } from './TrackingActionCreators'
 import {ActionEncryptingPassword, ActionPasswordEncryptError} from './PasswordActionCreators'
-import {
-  ActionEncryptingToken,
-  ActionTokenEncrypted,
-  ActionTokenEncryptError
-} from './AccessTokenActionCreators'
+import {ActionEncryptingToken, ActionTokenEncrypted, ActionTokenEncryptError} from './AccessTokenActionCreators'
 import {createReducer, createSelector} from 'redux-starter-kit'
 import {Draft} from 'immer'
 import {State} from '../Reducer'
@@ -127,68 +123,30 @@ export const reduce = createReducer<TraysState>(DEFAULT_STATE, {
   }
 })
 
-export const getTrays = createSelector<State, ReadonlyArray<Tray>>([TRAYS_ROOT], (trays) => Object.values(trays))
-export const getTrayIds = createSelector<State, ReadonlyArray<string>>([TRAYS_ROOT], (trays) => Object.keys(trays))
+const getTracking = (state: State) => state[TRAYS_ROOT]
+export const getTrays = createSelector(getTracking, (trays) => Object.values(trays))
+export const getTrayIds = createSelector(getTracking, (trays) => Object.keys(trays))
+export const getTray = (trayId: string) => createSelector(getTracking, (trays) => trays[trayId])
+export const getTrayLoaded = (trayId: string) => createSelector(getTray(trayId), (tray) => tray.loaded)
+export const getTrayName = (trayId: string) => createSelector(getTray(trayId), (tray) => tray.name || '')
+export const getTrayUrl = (trayId: string) => createSelector(getTray(trayId), (tray) => tray.url)
+export const getTrayUsername = (trayId: string) => createSelector(getTray(trayId), (tray) => tray.username || '')
+export const getTrayPassword = (trayId: string) => createSelector(getTray(trayId), (tray) => tray.password || '')
+export const getTrayAccessToken = (trayId: string) => createSelector(getTray(trayId), (tray) => tray.accessToken || '')
+export const getTrayServerType = (trayId: string) => createSelector(getTray(trayId), (tray) => tray.serverType)
+export const getTrayIncludeNew = (trayId: string) => createSelector(getTray(trayId), (tray) => tray.includeNew)
+export const getTrayHighlight = (trayId: string) => createSelector(getTray(trayId), (tray) => tray.highlight)
+export const getTrayErrors = (trayId: string) => createSelector(getTray(trayId), (tray) => tray.errors)
+export const getTrayTimestamp = (trayId: string) => createSelector(getTray(trayId), (tray) => tray.timestamp || '')
+export const getTrayRequiresRefresh = (trayId: string) => createSelector(getTray(trayId), (tray) => tray.requiresRefresh)
 
-export function getTray(state: State, trayId: string): Tray {
-  return get(state, [TRAYS_ROOT, trayId])
-}
-
-export function getTrayLoaded(state: State, trayId: string): boolean {
-  return get(state, [TRAYS_ROOT, trayId, 'loaded'])
-}
-
-export function getTrayName(state: State, trayId: string): string {
-  return get(state, [TRAYS_ROOT, trayId, 'name']) || ''
-}
-
-export function getTrayUrl(state: State, trayId: string): string {
-  return get(state, [TRAYS_ROOT, trayId, 'url'])
-}
-
-export function getTrayUsername(state: State, trayId: string): string {
-  return get(state, [TRAYS_ROOT, trayId, 'username']) || ''
-}
-
-export function getTrayPassword(state: State, trayId: string): string {
-  return get(state, [TRAYS_ROOT, trayId, 'password']) || ''
-}
-
-export function getTrayAuthType(state: State, trayId: string): AuthTypes {
+export const getTrayAuthType = (trayId: string) => (state: State) => {
   // TODO: This should be moved to a data migration
-  const username = getTrayUsername(state, trayId)
-  const password = getTrayPassword(state, trayId)
+  const username = getTrayUsername(trayId)(state)
+  const password = getTrayPassword(trayId)(state)
   const defaultAuthType = !isBlank(username) || !isBlank(password)
     ? AuthTypes.basic
     : AuthTypes.none
 
   return get(state, [TRAYS_ROOT, trayId, 'authType']) || defaultAuthType
-}
-
-export function getTrayAccessToken(state: State, trayId: string): string {
-  return get(state, [TRAYS_ROOT, trayId, 'accessToken']) || ''
-}
-
-export function getTrayServerType(state: State, trayId: string): string {
-  return get(state, [TRAYS_ROOT, trayId, 'serverType'])
-}
-
-export function getTrayIncludeNew(state: State, trayId: string): boolean {
-  return get(state, [TRAYS_ROOT, trayId, 'includeNew'])
-}
-
-export function getTrayHighlight(state: State, trayId: string): boolean {
-  return get(state, [TRAYS_ROOT, trayId, 'highlight'])
-}
-
-export function getTrayErrors(state: State, trayId: string): ReadonlyArray<string> {
-  return get(state, [TRAYS_ROOT, trayId, 'errors'])
-}
-
-export function getTrayTimestamp(state: State, trayId: string): string {
-  return get(state, [TRAYS_ROOT, trayId, 'timestamp']) || ''
-}
-
-export function getTrayRequiresRefresh(state: State, trayId: string): boolean {
-  return get(state, [TRAYS_ROOT, trayId, 'requiresRefresh'])
 }

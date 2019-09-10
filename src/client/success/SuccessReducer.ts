@@ -2,7 +2,7 @@ import {Actions} from '../Actions'
 import {remove, uniq} from 'lodash'
 import {ActionSetConfiguration} from '../NevergreenActionCreators'
 import {ActionMessageAdded, ActionMessageRemoved} from './SuccessActionCreators'
-import {createReducer, createSelector} from 'redux-starter-kit'
+import {createReducer} from 'redux-starter-kit'
 import {Draft} from 'immer'
 import {State} from '../Reducer'
 
@@ -27,4 +27,4 @@ export const reduce = createReducer<SuccessState>(DEFAULT_STATE, {
   }
 })
 
-export const getSuccessMessages = createSelector<State, ReadonlyArray<string>>([SUCCESS_ROOT])
+export const getSuccessMessages = (state: State) => state[SUCCESS_ROOT]

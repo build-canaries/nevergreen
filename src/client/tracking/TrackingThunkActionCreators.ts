@@ -55,7 +55,7 @@ export function removeTrayThunk(trayId: string): ThunkAction<void, State, undefi
 
 export function checkRefresh(trayId: string): ThunkAction<void, State, undefined, AnyAction> {
   return (dispatch, getState) => {
-    if (getTrayRequiresRefresh(getState(), trayId)) {
+    if (getTrayRequiresRefresh(trayId)(getState())) {
       dispatch(refreshTray(trayId))
     }
   }

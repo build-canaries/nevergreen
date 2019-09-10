@@ -24,5 +24,6 @@ export const reduce = createReducer<NevergreenState>(DEFAULT_STATE, {
   }
 })
 
-export const getFullScreen = createSelector<State, boolean>([[NEVERGREEN_ROOT, 'fullScreen']])
-export const getFullScreenRequested = createSelector<State, boolean>([[NEVERGREEN_ROOT, 'fullScreenRequested']])
+const getNevergreen = (state: State) => state[NEVERGREEN_ROOT]
+export const getFullScreen = createSelector(getNevergreen, (state) => state.fullScreen)
+export const getFullScreenRequested = createSelector(getNevergreen, (state) => state.fullScreenRequested)
