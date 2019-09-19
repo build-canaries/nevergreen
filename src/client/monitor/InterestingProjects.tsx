@@ -3,13 +3,12 @@ import {clamp, concat, map, reduce, size, take} from 'lodash'
 import {ScaledGrid} from '../common/scale/ScaledGrid'
 import {InterestingProject} from '../common/project/InterestingProject'
 import {isBlank} from '../common/Utils'
-import {isSick} from '../domain/Project'
+import {isSick, Project} from '../domain/Project'
 import {ProjectSummary} from '../common/project/ProjectSummary'
 import {ProjectError} from '../common/project/ProjectError'
 import styles from './interesting-projects.scss'
 import {Tray} from '../domain/Tray'
 import {useSelector} from 'react-redux'
-import {getInterestingErrors, getInterestingProjects} from './InterestingReducer'
 import {getTrays} from '../tracking/TraysReducer'
 import {
   getBrokenBuildSoundFx,
@@ -21,10 +20,13 @@ import {
   getShowTrayName
 } from '../settings/SettingsReducer'
 
-export function InterestingProjects() {
+interface InterestingProjectsProps {
+  readonly projects: ReadonlyArray<Project>;
+  readonly errors: ReadonlyArray<string>;
+}
+
+export function InterestingProjects({projects, errors}: InterestingProjectsProps) {
   const sfxNode = useRef<HTMLAudioElement>(null)
-  const projects = useSelector(getInterestingProjects)
-  const errors = useSelector(getInterestingErrors)
   const trays = useSelector(getTrays)
   const maxProjectsToShow = useSelector(getMaxProjectsToShow)
   const playBrokenBuildSounds = useSelector(getPlayBrokenBuildSoundFx)
@@ -35,9 +37,10 @@ export function InterestingProjects() {
   const showBuildLabel = useSelector(getShowBuildLabel)
 
   useEffect(() => {
+    const sfx = sfxNode.current
     return () => {
-      if (sfxNode.current) {
-        sfxNode.current.pause()
+      if (sfx) {
+        sfx.pause()
       }
     }
   }, [])

@@ -4,7 +4,6 @@ import {CommonWrapper, EnzymeSelector, ShallowWrapper} from 'enzyme'
 import {reducer, State} from '../../src/client/Reducer'
 import {SETTINGS_ROOT} from '../../src/client/settings/SettingsReducer'
 import {BACKUP_ROOT} from '../../src/client/backup/BackupReducer'
-import {INTERESTING_ROOT} from '../../src/client/monitor/InterestingReducer'
 import {NEVERGREEN_ROOT} from '../../src/client/NevergreenReducer'
 import {NOTIFICATION_ROOT} from '../../src/client/notification/NotificationReducer'
 import {PENDING_REQUESTS_ROOT} from '../../src/client/PendingRequestsReducer'
@@ -82,11 +81,6 @@ export function buildState(subState?: RecursivePartial<State>): State {
         id: '',
         url: ''
       }
-    },
-    [INTERESTING_ROOT]: {
-      loaded: false,
-      projects: [],
-      errors: []
     },
     [NEVERGREEN_ROOT]: {
       loaded: false,
@@ -200,7 +194,6 @@ export function testReducer(reducer: Partial<Reducer<State>>) {
   return combineReducers<State>(merge({
     [SETTINGS_ROOT]: (state: any = null) => state,
     [BACKUP_ROOT]: (state: any = null) => state,
-    [INTERESTING_ROOT]: (state: any = null) => state,
     [NEVERGREEN_ROOT]: (state: any = null) => state,
     [NOTIFICATION_ROOT]: (state: any = null) => state,
     [PENDING_REQUESTS_ROOT]: (state: any = null) => state,

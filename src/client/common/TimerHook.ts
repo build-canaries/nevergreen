@@ -1,17 +1,21 @@
 import {useEffect} from 'react'
 import {debug} from './Logger'
 
+type Cancel = () => void
+type OnTrigger = () => (Cancel | void | Promise<Cancel> | Promise<void>)
+
 function asMilliseconds(seconds: number) {
   return seconds * 1000
 }
 
-export const useTimer = (onTrigger: () => void, intervalInSeconds: number) => {
+export const useTimer = (onTrigger: OnTrigger, intervalInSeconds: number) => {
   useEffect(() => {
     let cancelled = false
     let timeoutId = 0
+    let cancel: Cancel | void
 
     const run = async () => {
-      await onTrigger()
+      cancel = await onTrigger()
 
       if (cancelled) {
         debug('cancelled so not rescheduling')
@@ -27,6 +31,9 @@ export const useTimer = (onTrigger: () => void, intervalInSeconds: number) => {
       debug(`clearing timeout [${timeoutId}]`)
       window.clearTimeout(timeoutId)
       cancelled = true
+      if (cancel) {
+        cancel()
+      }
     }
   }, [onTrigger, intervalInSeconds])
 }

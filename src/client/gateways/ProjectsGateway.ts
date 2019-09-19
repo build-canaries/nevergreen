@@ -80,7 +80,12 @@ export function fetchAll(trays: ReadonlyArray<Tray>, projects: ReadonlyArray<Pro
   return post('/api/projects', data)
 }
 
-export function interesting(trays: ReadonlyArray<Tray>, projects: ReadonlyArray<Project>, selectedPerTray: SelectedState, prognosis: ReadonlyArray<Prognosis>) {
+export function interesting(
+  trays: ReadonlyArray<Tray>,
+  projects: ReadonlyArray<Project>,
+  selectedPerTray: SelectedState,
+  prognosis: ReadonlyArray<Prognosis>
+) {
   const data = trays
     .map((tray) => toProjectsRequest(tray, projects, selectedPerTray))
     .map((req) => ({...req, prognosis}))

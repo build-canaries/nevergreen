@@ -51,7 +51,7 @@ export function isBuilding(prognosis: Prognosis) {
   return prognosis === Prognosis.healthyBuilding || prognosis === Prognosis.sickBuilding
 }
 
-export function wrapProjects(apiProjects: ApiProject[]): Project[] {
+export function wrapProjects(apiProjects: ReadonlyArray<ApiProject>): ReadonlyArray<Project> {
   return apiProjects
     .filter((apiProject) => !apiProject.isError)
     .filter((apiProject) => !apiProject.job)
@@ -75,7 +75,7 @@ export function wrapProjects(apiProjects: ApiProject[]): Project[] {
     })
 }
 
-export function wrapProjectErrors(apiProjects: ApiProject[]): ProjectError[] {
+export function wrapProjectErrors(apiProjects: ReadonlyArray<ApiProject>): ReadonlyArray<ProjectError> {
   return apiProjects
     .filter((apiProject) => apiProject.isError)
     .map((apiProject) => {

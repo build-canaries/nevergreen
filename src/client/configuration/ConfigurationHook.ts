@@ -25,7 +25,7 @@ export function useConfiguration(): boolean {
     }
 
     loadData()
-  }, [])
+  }, [dispatch])
 
   return loading
 }

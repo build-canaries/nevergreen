@@ -11,7 +11,7 @@ export function useCheckForNewVersion(loading: boolean) {
 
   const checkVersion = useCallback(() => {
     !loading && dispatch(checkForNewVersion(version, window.location.hostname))
-  }, [loading])
+  }, [loading, dispatch])
 
   useTimer(checkVersion, TWENTY_FOUR_HOURS)
 }

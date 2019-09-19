@@ -6,7 +6,7 @@ import {AnyAction} from 'redux'
 import {State} from '../Reducer'
 import {abortPendingRequest} from '../NevergreenThunkActionCreators'
 import {ThunkAction} from 'redux-thunk'
-import {getProjects} from './ProjectsReducer'
+import {getProjectsAll} from './ProjectsReducer'
 import {getTray} from './TraysReducer'
 
 export function refreshTray(trayId: string): ThunkAction<Promise<void>, State, undefined, AnyAction> {
@@ -14,7 +14,7 @@ export function refreshTray(trayId: string): ThunkAction<Promise<void>, State, u
     dispatch(abortPendingRequest(trayId))
 
     const tray = getTray(trayId)(getState())
-    const seen = getProjects(getState())
+    const seen = getProjectsAll(getState())
     const request = fetchAll([tray], seen)
 
     dispatch(projectsFetching(trayId, request))

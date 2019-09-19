@@ -10,5 +10,5 @@ export function useServiceWorker(): void {
     if (process.env.NODE_ENV === 'production') {
       registerServiceWorker((message) => dispatch(notify(message)))
     }
-  }, [])
+  }, [dispatch])
 }

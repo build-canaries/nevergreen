@@ -36,7 +36,7 @@ export function useFullScreen(loading: boolean): DisabledFullScreen {
         clearTimeout(fullScreenTimer.current)
       }
     }
-  }, [loading, fullScreenRequested])
+  }, [loading, fullScreenRequested, dispatch])
 
   return disableFullScreen
 }

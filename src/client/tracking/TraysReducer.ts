@@ -20,7 +20,6 @@ import {ActionEncryptingToken, ActionTokenEncrypted, ActionTokenEncryptError} fr
 import {createReducer, createSelector} from 'redux-starter-kit'
 import {Draft} from 'immer'
 import {State} from '../Reducer'
-import {get} from 'lodash'
 import {isBlank} from '../common/Utils'
 
 export interface TraysState {
@@ -139,14 +138,13 @@ export const getTrayHighlight = (trayId: string) => createSelector(getTray(trayI
 export const getTrayErrors = (trayId: string) => createSelector(getTray(trayId), (tray) => tray.errors)
 export const getTrayTimestamp = (trayId: string) => createSelector(getTray(trayId), (tray) => tray.timestamp || '')
 export const getTrayRequiresRefresh = (trayId: string) => createSelector(getTray(trayId), (tray) => tray.requiresRefresh)
-
-export const getTrayAuthType = (trayId: string) => (state: State) => {
+export const getTrayAuthType = (trayId: string) => createSelector(getTray(trayId), (tray) => {
   // TODO: This should be moved to a data migration
-  const username = getTrayUsername(trayId)(state)
-  const password = getTrayPassword(trayId)(state)
+  const username = tray.username
+  const password = tray.password
   const defaultAuthType = !isBlank(username) || !isBlank(password)
     ? AuthTypes.basic
     : AuthTypes.none
 
-  return get(state, [TRAYS_ROOT, trayId, 'authType']) || defaultAuthType
-}
+  return tray.authType || defaultAuthType
+})

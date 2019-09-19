@@ -4,7 +4,6 @@ import {reduce as settings, SETTINGS_ROOT, SettingsState} from './settings/Setti
 import {reduce as trays, TRAYS_ROOT, TraysState} from './tracking/TraysReducer'
 import {PROJECTS_ROOT, ProjectsState, reduce as projects} from './tracking/ProjectsReducer'
 import {reduce as success, SUCCESS_ROOT, SuccessState} from './success/SuccessReducer'
-import {INTERESTING_ROOT, InterestingState, reduce as interesting} from './monitor/InterestingReducer'
 import {reduce as selected, SELECTED_ROOT, SelectedState} from './tracking/SelectedReducer'
 import {NOTIFICATION_ROOT, NotificationState, reduce as notification} from './notification/NotificationReducer'
 import {PENDING_REQUESTS_ROOT, PendingRequestsState, reduce as pendingRequests} from './PendingRequestsReducer'
@@ -13,7 +12,6 @@ import {BACKUP_ROOT, BackupState, reduce as backup} from './backup/BackupReducer
 export interface State {
   readonly [SETTINGS_ROOT]: SettingsState;
   readonly [BACKUP_ROOT]: BackupState;
-  readonly [INTERESTING_ROOT]: InterestingState;
   readonly [NEVERGREEN_ROOT]: NevergreenState;
   readonly [NOTIFICATION_ROOT]: NotificationState;
   readonly [PENDING_REQUESTS_ROOT]: PendingRequestsState;
@@ -26,7 +24,6 @@ export interface State {
 export const reducer = combineReducers<State>({
   [SETTINGS_ROOT]: settings,
   [BACKUP_ROOT]: backup,
-  [INTERESTING_ROOT]: interesting,
   [NEVERGREEN_ROOT]: nevergreen,
   [NOTIFICATION_ROOT]: notification,
   [PENDING_REQUESTS_ROOT]: pendingRequests,

@@ -1,8 +1,8 @@
 import {Actions} from '../Actions'
 import {ActionProjectsFetched, ActionRemoveTray, ActionSelectProject, ActionTrayAdded} from './TrackingActionCreators'
-import {createReducer} from 'redux-starter-kit'
+import {createReducer, createSelector} from 'redux-starter-kit'
 import {ActionSetConfiguration} from '../NevergreenActionCreators'
-import {get, remove} from 'lodash'
+import {remove} from 'lodash'
 import {State} from '../Reducer'
 
 export interface SelectedState {
@@ -47,10 +47,5 @@ export const reduce = createReducer<SelectedState>(DEFAULT_STATE, {
   }
 })
 
-export function getSelectedProjects(state: State): SelectedState
-export function getSelectedProjects(state: State, trayId: string): ReadonlyArray<string>
-export function getSelectedProjects(state: State, trayId?: string): ReadonlyArray<string> | SelectedState {
-  return trayId
-    ? get(state, [SELECTED_ROOT, trayId])
-    : get(state, SELECTED_ROOT)
-}
+export const getSelectedProjects = (state: State) => state[SELECTED_ROOT]
+export const getSelectedProjectsForTray = (trayId: string) => createSelector(getSelectedProjects, (selected) => selected[trayId])

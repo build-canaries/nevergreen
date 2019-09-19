@@ -92,7 +92,7 @@ export function ScaledGrid({children}: ScaledGridProps) {
     if (listNode.current && fontMetrics.current) {
       setDimensions(calculateChildDimensions(listNode.current, fontMetrics.current))
     }
-  }, [listNode.current, fontMetrics.current])
+  }, [])
 
   useLayoutEffect(calculate, [children])
   useResizable(calculate)

@@ -1,4 +1,4 @@
-import {getProjects, PROJECTS_ROOT, ProjectsState, reduce} from '../../../src/client/tracking/ProjectsReducer'
+import {getProjectsForTray, PROJECTS_ROOT, ProjectsState, reduce} from '../../../src/client/tracking/ProjectsReducer'
 import {Actions} from '../../../src/client/Actions'
 import {setConfiguration} from '../../../src/client/NevergreenActionCreators'
 import {projectsFetched, removeTray, trayAdded} from '../../../src/client/tracking/TrackingActionCreators'
@@ -29,8 +29,8 @@ describe('ProjectsReducer', () => {
       const existingState = state({oldTrayId: {oldProjectId: buildProject({projectId: 'oldProjectId'})}})
       const action = setConfiguration({[PROJECTS_ROOT]: {trayId: {projectId: newProject}}})
       const newState = reducer(existingState, action)
-      expect(getProjects(newState, 'oldTrayId')).toEqual([])
-      expect(getProjects(newState, 'trayId')).toEqual([newProject])
+      expect(getProjectsForTray('oldTrayId')(newState)).toEqual([])
+      expect(getProjectsForTray('trayId')(newState)).toEqual([newProject])
     })
 
     test('should handle no projects data', () => {
@@ -38,7 +38,7 @@ describe('ProjectsReducer', () => {
       const existingState = state({trayId: {projectId: project}})
       const action = setConfiguration({})
       const newState = reducer(existingState, action)
-      expect(getProjects(newState, 'trayId')).toEqual([project])
+      expect(getProjectsForTray('trayId')(newState)).toEqual([project])
     })
   })
 
@@ -48,7 +48,7 @@ describe('ProjectsReducer', () => {
       const existingState = state({})
       const action = trayAdded('trayId', '', {type: AuthTypes.none})
       const newState = reducer(existingState, action)
-      expect(getProjects(newState, 'trayId')).toEqual([])
+      expect(getProjectsForTray('trayId')(newState)).toEqual([])
     })
   })
 
@@ -58,7 +58,7 @@ describe('ProjectsReducer', () => {
       const existingState = state({trayId: {projectId: buildProject()}})
       const action = removeTray('trayId')
       const newState = reducer(existingState, action)
-      expect(getProjects(newState, 'trayId')).toEqual([])
+      expect(getProjectsForTray('trayId')(newState)).toEqual([])
     })
   })
 
@@ -68,28 +68,28 @@ describe('ProjectsReducer', () => {
       const existingState = state({trayId: {projectId: buildProject({projectId: 'projectId', removed: true})}})
       const action = projectsFetched('trayId', [], false)
       const newState = reducer(existingState, action)
-      expect(getProjects(newState, 'trayId')).toEqual([])
+      expect(getProjectsForTray('trayId')(newState)).toEqual([])
     })
 
     test('should set existing (non filtered) projects as removed if they haven\'t been fetched again', () => {
       const existingState = state({trayId: {projectId: buildProject({projectId: 'projectId', removed: false})}})
       const action = projectsFetched('trayId', [], false)
       const newState = reducer(existingState, action)
-      expect(getProjects(newState, 'trayId')).toEqual([expect.objectContaining({removed: true})])
+      expect(getProjectsForTray('trayId')(newState)).toEqual([expect.objectContaining({removed: true})])
     })
 
     test('should set existing (non filtered) projects as not new', () => {
       const existingState = state({trayId: {projectId: buildProject({projectId: 'projectId', isNew: true})}})
       const action = projectsFetched('trayId', [], false)
       const newState = reducer(existingState, action)
-      expect(getProjects(newState, 'trayId')).toEqual([expect.objectContaining({isNew: false})])
+      expect(getProjectsForTray('trayId')(newState)).toEqual([expect.objectContaining({isNew: false})])
     })
 
     test('should mark existing projects that have been fetched again as not removed', () => {
       const existingState = state({trayId: {projectId: buildProject({projectId: 'projectId'})}})
       const action = projectsFetched('trayId', [buildProject({projectId: 'projectId'})], false)
       const newState = reducer(existingState, action)
-      expect(getProjects(newState, 'trayId')).toEqual([expect.objectContaining({removed: false})])
+      expect(getProjectsForTray('trayId')(newState)).toEqual([expect.objectContaining({removed: false})])
     })
   })
 })

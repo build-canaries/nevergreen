@@ -5,8 +5,6 @@ import {
   reduce
 } from '../../src/client/PendingRequestsReducer'
 import {Actions} from '../../src/client/Actions'
-import {INTERESTING_ROOT} from '../../src/client/monitor/InterestingReducer'
-import {interestingProjects, interestingProjectsFetching} from '../../src/client/monitor/MonitorActionCreators'
 import {buildState, testReducer} from './testHelpers'
 import {RecursivePartial} from '../../src/client/common/Types'
 import {fakeRequest} from '../../src/client/gateways/Gateway'
@@ -25,27 +23,6 @@ describe('PendingRequestsReducer', () => {
     const existingState = state()
     const newState = reducer(existingState, {type: 'not-a-real-action'})
     expect(newState).toEqual(existingState)
-  })
-
-  describe(Actions.INTERESTING_PROJECTS_FETCHING, () => {
-
-    test('should set the pending request', () => {
-      const request = fakeRequest('irrelevant')
-      const existingState = state({})
-      const action = interestingProjectsFetching(request)
-      const newState = reducer(existingState, action)
-      expect(getPendingRequest(newState, INTERESTING_ROOT)).toBeDefined()
-    })
-  })
-
-  describe(Actions.INTERESTING_PROJECTS, () => {
-
-    test('should remove the pending request', () => {
-      const existingState = state({[INTERESTING_ROOT]: fakeRequest('irrelevant')})
-      const action = interestingProjects([], [])
-      const newState = reducer(existingState, action)
-      expect(getPendingRequest(newState, INTERESTING_ROOT)).toBeUndefined()
-    })
   })
 
   const trayActionsThatStartRequests = [

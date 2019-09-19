@@ -1,7 +1,5 @@
 import {Actions} from './Actions'
-import {INTERESTING_ROOT} from './monitor/InterestingReducer'
 import {get} from 'lodash'
-import {ActionInterestingProjectsFetching} from './monitor/MonitorActionCreators'
 import {ActionEncryptingPassword, ActionPasswordEncryted} from './tracking/PasswordActionCreators'
 import {
   ActionProjectsFetched,
@@ -22,12 +20,6 @@ export const PENDING_REQUESTS_ROOT = 'pendingRequests'
 const DEFAULT_STATE: PendingRequestsState = {}
 
 export const reduce = createReducer<PendingRequestsState>(DEFAULT_STATE, {
-  [Actions.INTERESTING_PROJECTS_FETCHING]: (draft, action: ActionInterestingProjectsFetching) => {
-    draft[INTERESTING_ROOT] = action.request.abort.bind(action.request)
-  },
-  [Actions.INTERESTING_PROJECTS]: (draft) => {
-    delete draft[INTERESTING_ROOT]
-  },
   [Actions.ENCRYPTING_PASSWORD]: (draft, action: ActionEncryptingPassword) => {
     draft[action.trayId] = action.request.abort.bind(action.request)
   },

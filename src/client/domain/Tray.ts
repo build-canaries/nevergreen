@@ -65,6 +65,6 @@ export function createId() {
   return uuid()
 }
 
-export function sickProjects(projects: ReadonlyArray<Project>) {
+export function sickProjects(projects: ReadonlyArray<Project>): ReadonlyArray<Project> {
   return projects.filter((project) => isSick(project.prognosis))
 }

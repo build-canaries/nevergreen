@@ -12,10 +12,9 @@ import {SecondaryButton} from '../../common/forms/Button'
 import {iCheckboxChecked, iCheckboxUnchecked} from '../../common/fonts/Icons'
 import {Project} from '../../domain/Project'
 import {getTrayErrors, getTrayTimestamp} from '../TraysReducer'
-import {getProjects} from '../ProjectsReducer'
-import {getSelectedProjects} from '../SelectedReducer'
+import {getProjectsForTray} from '../ProjectsReducer'
+import {getSelectedProjectsForTray} from '../SelectedReducer'
 import {useDispatch, useSelector} from 'react-redux'
-import {State} from '../../Reducer'
 import {selectProject} from '../TrackingActionCreators'
 import {refreshTray} from '../RefreshThunkActionCreators'
 
@@ -28,8 +27,8 @@ export function AvailableProjects({index, trayId}: AvailableProjectsProps) {
   const dispatch = useDispatch()
   const errors = useSelector(getTrayErrors(trayId))
   const timestamp = useSelector(getTrayTimestamp(trayId))
-  const projects = useSelector<State, ReadonlyArray<Project>>((state) => getProjects(state, trayId))
-  const selected = useSelector<State, ReadonlyArray<string>>((state) => getSelectedProjects(state, trayId))
+  const projects = useSelector(getProjectsForTray(trayId))
+  const selected = useSelector(getSelectedProjectsForTray(trayId))
 
   const [filter, setFilter] = useState()
   const [filterErrors, setFilterErrors] = useState<ReadonlyArray<string>>([])

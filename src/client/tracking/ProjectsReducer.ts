@@ -1,8 +1,8 @@
 import {Actions} from '../Actions'
 import {Project} from '../domain/Project'
-import {get, merge} from 'lodash'
+import {merge} from 'lodash'
 import {ActionProjectsFetched, ActionRemoveTray, ActionTrayAdded} from './TrackingActionCreators'
-import {createReducer} from 'redux-starter-kit'
+import {createReducer, createSelector} from 'redux-starter-kit'
 import {ActionSetConfiguration} from '../NevergreenActionCreators'
 import {State} from '../Reducer'
 
@@ -46,9 +46,10 @@ export const reduce = createReducer<ProjectsState>(DEFAULT_STATE, {
   }
 })
 
-export function getProjects(state: State, trayId?: string): ReadonlyArray<Project> {
-  return trayId
-    ? Object.values<Project>(get(state, [PROJECTS_ROOT, trayId], {}))
-    : Object.values(get(state, [PROJECTS_ROOT], {}))
-      .flatMap((projectsById) => Object.values(projectsById))
-}
+const getProjects = (state: State) => state[PROJECTS_ROOT]
+export const getProjectsForTray = (trayId: string) => createSelector(getProjects, (projects) => {
+  return Object.values(projects[trayId] || {})
+})
+export const getProjectsAll = createSelector(getProjects, (projects) => {
+  return Object.values(projects).flatMap((projectsById) => Object.values(projectsById))
+})
