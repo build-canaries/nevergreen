@@ -96,6 +96,35 @@ export function trayAdded(trayId: string, url: string, auth: AuthDetails): Actio
   }
 }
 
+export function trayAddedWithAuth(
+  trayId: string,
+  url: string,
+  authType: AuthTypes,
+  username: string,
+  password: string,
+  accessToken: string
+): ActionTrayAdded {
+  return {
+    type: Actions.TRAY_ADDED,
+    trayId,
+    data: {
+      trayId,
+      url,
+      authType,
+      username,
+      password,
+      accessToken,
+      name: generateRandomName(),
+      highlight: true,
+      errors: [],
+      includeNew: true,
+      loaded: false,
+      requiresRefresh: false,
+      serverType: ''
+    }
+  }
+}
+
 export function highlightTray(trayId: string): ActionHighlightTray {
   return {type: Actions.HIGHLIGHT_TRAY, trayId}
 }

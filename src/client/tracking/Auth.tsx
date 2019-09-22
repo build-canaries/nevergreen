@@ -16,9 +16,23 @@ interface AuthProps {
   readonly accessToken: string;
   readonly setAccessToken: (accessToken: string) => void;
   readonly onEnter: () => void;
+  readonly disabled?: boolean;
 }
 
-export function Auth({authType, setAuthType, username, setUsername, password, setPassword, accessToken, setAccessToken, onEnter}: AuthProps) {
+export function Auth(
+  {
+    authType,
+    setAuthType,
+    username,
+    setUsername,
+    password,
+    setPassword,
+    accessToken,
+    setAccessToken,
+    onEnter,
+    disabled
+  }: AuthProps
+) {
   const groupName = uniqueId('auth')
 
   return (
@@ -30,6 +44,7 @@ export function Auth({authType, setAuthType, username, setUsername, password, se
                checked={authType === AuthTypes.none}
                onChange={() => setAuthType(AuthTypes.none)}
                className={styles.authType}
+               disabled={disabled}
                data-locator='auth-none'>
           no auth
         </Radio>
@@ -38,6 +53,7 @@ export function Auth({authType, setAuthType, username, setUsername, password, se
                checked={authType === AuthTypes.basic}
                onChange={() => setAuthType(AuthTypes.basic)}
                className={styles.authType}
+               disabled={disabled}
                data-locator='auth-basic'>
           basic auth
         </Radio>
@@ -46,6 +62,7 @@ export function Auth({authType, setAuthType, username, setUsername, password, se
                checked={authType === AuthTypes.token}
                onChange={() => setAuthType(AuthTypes.token)}
                className={styles.authType}
+               disabled={disabled}
                data-locator='auth-token'>
           access token
         </Radio>
@@ -56,6 +73,7 @@ export function Auth({authType, setAuthType, username, setUsername, password, se
                  value={username}
                  onChange={({target}) => setUsername(target.value)}
                  onEnter={onEnter}
+                 disabled={disabled}
                  data-locator='auth-username'
                  autoComplete='username'>
             <span className={styles.label}>username</span>
@@ -64,6 +82,7 @@ export function Auth({authType, setAuthType, username, setUsername, password, se
                     value={password}
                     onChange={({target}) => setPassword(target.value)}
                     onEnter={onEnter}
+                    disabled={disabled}
                     data-locator='auth-password'>
             <span className={styles.label}>password</span>
           </Password>
@@ -75,6 +94,7 @@ export function Auth({authType, setAuthType, username, setUsername, password, se
                     value={accessToken}
                     onChange={({target}) => setAccessToken(target.value)}
                     onEnter={onEnter}
+                    disabled={disabled}
                     data-locator='auth-access-token'
                     autoComplete='token'>
             <span className={styles.label}>token</span>

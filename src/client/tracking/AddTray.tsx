@@ -6,26 +6,76 @@ import styles from './add-tray.scss'
 import {PrimaryButton} from '../common/forms/Button'
 import {iPlus} from '../common/fonts/Icons'
 import {Auth} from './Auth'
-import {AuthDetails, AuthTypes} from '../domain/Tray'
+import {AuthTypes, createId, Tray} from '../domain/Tray'
+import {isBlank} from '../common/Utils'
+import {getTrays} from './TraysReducer'
+import {ensureHasScheme, removeScheme} from '../domain/Url'
+import {highlightTray, trayAddedWithAuth} from './TrackingActionCreators'
+import {refreshTray} from './RefreshThunkActionCreators'
+import {useDispatch, useSelector} from 'react-redux'
+import {send} from '../gateways/Gateway'
+import {encrypt, EncryptResponse} from '../gateways/SecurityGateway'
+import {Messages, MessagesType} from '../common/Messages'
 
-interface AddTrayProps {
-  readonly addTray: (url: string, auth: AuthDetails) => void;
+function urlMatches(tray: Tray, url: string): boolean {
+  return removeScheme(url) === removeScheme(tray.url)
 }
 
-export function AddTray({addTray}: AddTrayProps) {
+export function AddTray() {
+  const dispatch = useDispatch()
+  const existingTrays = useSelector(getTrays)
+
   const [url, setUrl] = useState('')
   const [authType, setAuthType] = useState(AuthTypes.none)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [accessToken, setAccessToken] = useState('')
+  const [errors, setErrors] = useState<ReadonlyArray<string>>([])
+  const [adding, setAdding] = useState(false)
 
-  const addTrayAndClearInput = () => {
-    addTray(url, {type: authType, username, password, accessToken})
+  const resetForm = () => {
     setUrl('')
     setAuthType(AuthTypes.none)
     setUsername('')
     setPassword('')
     setAccessToken('')
+  }
+
+  const addTray = async () => {
+    if (isBlank(url)) {
+      setErrors(['Please enter the URL to the CCTray XML feed'])
+      return
+    }
+
+    setAdding(true)
+
+    const updatedUrl = ensureHasScheme(url)
+    const existingTray = existingTrays.find((tray: Tray) => urlMatches(tray, updatedUrl))
+
+    if (existingTray) {
+      dispatch(highlightTray(existingTray.trayId))
+      resetForm()
+    } else {
+      const trayId = createId()
+
+      let encryptedPassword = ''
+      let encryptedAccessToken = ''
+
+      try {
+        if (authType === AuthTypes.basic && !isBlank(password)) {
+          encryptedPassword = await send<EncryptResponse>(encrypt(password))
+        } else if (authType === AuthTypes.token && !isBlank(accessToken)) {
+          encryptedAccessToken = await send<EncryptResponse>(encrypt(accessToken))
+        }
+        dispatch(trayAddedWithAuth(trayId, updatedUrl, authType, username, encryptedPassword, encryptedAccessToken))
+        dispatch(refreshTray(trayId))
+        resetForm()
+      } catch (error) {
+        setErrors([error.message])
+      }
+    }
+
+    setAdding(false)
   }
 
   return (
@@ -34,10 +84,14 @@ export function AddTray({addTray}: AddTrayProps) {
         <Input className={styles.url}
                placeholder='CCTray XML feed'
                value={url}
-               onChange={({target}) => setUrl(target.value)}
-               onEnter={addTrayAndClearInput}
+               onChange={({target}) => {
+                 setErrors([])
+                 setUrl(target.value)
+               }}
+               onEnter={addTray}
                data-locator='add-tray-url'
-               autoComplete='url'>
+               autoComplete='url'
+               disabled={adding}>
           <span className={styles.label}>URL</span>
         </Input>
         <Auth authType={authType}
@@ -48,15 +102,20 @@ export function AddTray({addTray}: AddTrayProps) {
               setPassword={setPassword}
               accessToken={accessToken}
               setAccessToken={setAccessToken}
-              onEnter={addTrayAndClearInput}/>
+              onEnter={addTray}/>
+        <Messages type={MessagesType.ERROR} messages={errors}/>
       </div>
       <WithHelp title='Tracking'
-                help={<TrackingHelp addTray={addTray}/>}
+                help={<TrackingHelp addTray={(url) => {
+                  setUrl(url)
+                  addTray()
+                }}/>}
                 className={styles.help}>
         <PrimaryButton className={styles.add}
-                       onClick={addTrayAndClearInput}
+                       onClick={addTray}
                        data-locator='add-tray'
-                       icon={iPlus}>
+                       icon={iPlus}
+                       disabled={adding}>
           <span aria-label='add tray'>add</span>
         </PrimaryButton>
       </WithHelp>

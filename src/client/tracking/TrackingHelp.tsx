@@ -3,16 +3,15 @@ import {ExternalLink} from '../common/ExternalLink'
 import styles from './tracking-help.scss'
 import {URL} from '../common/URL'
 import {PrimaryButton} from '../common/forms/Button'
-import {AuthDetails, AuthTypes} from '../domain/Tray'
 
 interface TrackingHelpProps {
-  readonly addTray: (url: string, auth: AuthDetails) => void;
+  readonly addTray: (url: string) => void;
   readonly close?: () => void;
 }
 
 export function TrackingHelp({addTray, close}: TrackingHelpProps) {
   const addExampleTray = () => {
-    addTray('https://builds.apache.org/cc.xml', {type: AuthTypes.none})
+    addTray('https://builds.apache.org/cc.xml')
     close && close()
   }
 
