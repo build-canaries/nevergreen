@@ -6,7 +6,6 @@ import {SETTINGS_ROOT} from '../../src/client/settings/SettingsReducer'
 import {BACKUP_ROOT} from '../../src/client/backup/BackupReducer'
 import {NEVERGREEN_ROOT} from '../../src/client/NevergreenReducer'
 import {NOTIFICATION_ROOT} from '../../src/client/notification/NotificationReducer'
-import {PENDING_REQUESTS_ROOT} from '../../src/client/PendingRequestsReducer'
 import {PROJECTS_ROOT} from '../../src/client/tracking/ProjectsReducer'
 import {SELECTED_ROOT} from '../../src/client/tracking/SelectedReducer'
 import {SUCCESS_ROOT} from '../../src/client/success/SuccessReducer'
@@ -88,7 +87,6 @@ export function buildState(subState?: RecursivePartial<State>): State {
       fullScreenRequested: false
     },
     [NOTIFICATION_ROOT]: '',
-    [PENDING_REQUESTS_ROOT]: {},
     [PROJECTS_ROOT]: {},
     [SELECTED_ROOT]: {},
     [SUCCESS_ROOT]: [],
@@ -123,11 +121,9 @@ export function render(component: ReactNode, state?: RecursivePartial<State>) {
 
 export function buildTray(tray?: Partial<Tray>): Tray {
   return merge({
-    errors: [],
     authType: AuthTypes.none,
     highlight: false,
     includeNew: false,
-    loaded: false,
     requiresRefresh: false,
     serverType: '',
     trayId: '',
@@ -196,7 +192,6 @@ export function testReducer(reducer: Partial<Reducer<State>>) {
     [BACKUP_ROOT]: (state: any = null) => state,
     [NEVERGREEN_ROOT]: (state: any = null) => state,
     [NOTIFICATION_ROOT]: (state: any = null) => state,
-    [PENDING_REQUESTS_ROOT]: (state: any = null) => state,
     [PROJECTS_ROOT]: (state: any = null) => state,
     [SELECTED_ROOT]: (state: any = null) => state,
     [SUCCESS_ROOT]: (state: any = null) => state,

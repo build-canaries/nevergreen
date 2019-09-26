@@ -1,15 +1,20 @@
-import React, {useLayoutEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {PrimaryButton, SecondaryButton} from '../../common/forms/Button'
 import {iCross, iFloppyDisk} from '../../common/fonts/Icons'
 import {Modal} from '../../common/Modal'
 import {Auth} from '../Auth'
-import {AuthDetails, AuthTypes} from '../../domain/Tray'
+import {AuthTypes} from '../../domain/Tray'
 import styles from './change-auth.scss'
+import {isBlank} from '../../common/Utils'
+import {send} from '../../gateways/Gateway'
+import {encrypt, EncryptResponse} from '../../gateways/SecurityGateway'
+import {Messages, MessagesType} from '../../common/Messages'
+import {Request} from 'superagent'
 
 interface ChangeAuthProps {
   readonly show: boolean;
   readonly cancel: () => void;
-  readonly save: (auth: AuthDetails) => void;
+  readonly save: (auth: AuthTypes, username: string, password: string, accessToken: string) => void;
   readonly authType: AuthTypes;
   readonly username: string;
 }
@@ -19,28 +24,57 @@ export function ChangeAuth({show, cancel, save, authType, username}: ChangeAuthP
   const [newUsername, setUsername] = useState(username)
   const [newPassword, setPassword] = useState('')
   const [newAccessToken, setAccessToken] = useState('')
+  const [encryptionError, setEncryptionError] = useState<ReadonlyArray<string>>([])
+  const [encrypting, setEncrypting] = useState(false)
+  const pendingRequest = useRef<Request>()
 
-  const saveChanges = () => {
-    save({
-      type: newAuthType,
-      username: newUsername,
-      password: newPassword,
-      accessToken: newAccessToken
-    })
+  useEffect(() => setAuthType(authType), [authType])
+  useEffect(() => setUsername(username), [username])
+
+  const resetForm = () => {
+    setEncryptionError([])
     setPassword('')
     setAccessToken('')
+  }
+
+  const saveChanges = async () => {
+    setEncrypting(true)
+
+    try {
+      if (newAuthType === AuthTypes.basic && !isBlank(newPassword)) {
+        pendingRequest.current = encrypt(newPassword)
+        const encryptedPassword = await send<EncryptResponse>(pendingRequest.current)
+        save(newAuthType, newUsername, encryptedPassword, '')
+      } else if (newAuthType === AuthTypes.token && !isBlank(newAccessToken)) {
+        pendingRequest.current = encrypt(newAccessToken)
+        const encryptedAccessToken = await send<EncryptResponse>(pendingRequest.current)
+        save(newAuthType, '', '', encryptedAccessToken)
+      } else {
+        save(newAuthType, '', '', '')
+      }
+      resetForm()
+    } catch (error) {
+      setEncryptionError([error.message])
+    }
+    // eslint-disable-next-line require-atomic-updates
+    pendingRequest.current = undefined
+    setEncrypting(false)
   }
 
   const discardChanges = () => {
     setUsername(username)
     setAuthType(authType)
-    setPassword('')
-    setAccessToken('')
+    resetForm()
     cancel()
   }
 
-  useLayoutEffect(() => setAuthType(authType), [authType])
-  useLayoutEffect(() => setUsername(username), [username])
+  useEffect(() => {
+    return () => {
+      if (pendingRequest.current) {
+        pendingRequest.current.abort()
+      }
+    }
+  }, [])
 
   return (
     <Modal title='Change authentication'
@@ -57,7 +91,8 @@ export function ChangeAuth({show, cancel, save, authType, username}: ChangeAuthP
                 setPassword={setPassword}
                 accessToken={newAccessToken}
                 setAccessToken={setAccessToken}
-                onEnter={saveChanges}/>
+                onEnter={saveChanges}
+                disabled={encrypting}/>
         </div>
         <div>
           <SecondaryButton className={styles.changePasswordButtons}
@@ -69,10 +104,12 @@ export function ChangeAuth({show, cancel, save, authType, username}: ChangeAuthP
           <PrimaryButton className={styles.changePasswordButtons}
                          icon={iFloppyDisk}
                          onClick={saveChanges}
+                         disabled={encrypting}
                          data-locator='change-password-update'>
             save changes
           </PrimaryButton>
         </div>
+        <Messages type={MessagesType.ERROR} messages={encryptionError}/>
       </div>
     </Modal>
   )

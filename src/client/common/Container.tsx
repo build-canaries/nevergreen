@@ -18,7 +18,7 @@ export function Container({initiallyHidden, highlight, className, title, subTitl
     if (highlight && rootNode.current) {
       rootNode.current.scrollIntoView(true)
     }
-  })
+  }, [highlight])
 
   const [hidden, setHidden] = useState(initiallyHidden)
 

@@ -1,7 +1,7 @@
 import {getProjectsForTray, PROJECTS_ROOT, ProjectsState, reduce} from '../../../src/client/tracking/ProjectsReducer'
 import {Actions} from '../../../src/client/Actions'
 import {setConfiguration} from '../../../src/client/NevergreenActionCreators'
-import {projectsFetched, removeTray, trayAdded} from '../../../src/client/tracking/TrackingActionCreators'
+import {projectsFetched, trayRemoved, trayAdded} from '../../../src/client/tracking/TrackingActionCreators'
 import {buildProject, buildState, testReducer} from '../testHelpers'
 import {RecursivePartial} from '../../../src/client/common/Types'
 import {AuthTypes} from '../../../src/client/domain/Tray'
@@ -46,17 +46,17 @@ describe('ProjectsReducer', () => {
 
     test('should add a tray id property', () => {
       const existingState = state({})
-      const action = trayAdded('trayId', '', {type: AuthTypes.none})
+      const action = trayAdded('trayId', '', AuthTypes.none, '', '', '')
       const newState = reducer(existingState, action)
       expect(getProjectsForTray('trayId')(newState)).toEqual([])
     })
   })
 
-  describe(Actions.REMOVE_TRAY, () => {
+  describe(Actions.TRAY_REMOVED, () => {
 
     test('should delete the tray id property', () => {
       const existingState = state({trayId: {projectId: buildProject()}})
-      const action = removeTray('trayId')
+      const action = trayRemoved('trayId')
       const newState = reducer(existingState, action)
       expect(getProjectsForTray('trayId')(newState)).toEqual([])
     })

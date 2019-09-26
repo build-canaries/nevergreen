@@ -1,4 +1,4 @@
-/*global describe,before,beforeEach,it,cy,Cypress */
+/*global cy,Cypress,before */
 
 function shouldBeAbleToChangeTraySettings() {
   cy.locate('tab-settings').click()
@@ -14,6 +14,9 @@ function shouldBeAbleToChangeTraySettings() {
       cy.locate('auth-access-token').type(Cypress.env('TRAY_TOKEN')).blur()
       cy.locate('change-password-update').click()
     })
+
+    // TODO: [#291] wait for the model to close otherwise the a11y check fails (but only when running headless!)
+    cy.locate('change-authentication').should('not.be.visible')
   }
 
   cy.checkA11y()
@@ -141,20 +144,24 @@ function shouldMonitorSelectedProjects() {
   cy.checkA11y()
 }
 
-describe('Journey', function () {
+describe('Journey', () => {
 
-  before(function () {
+  before(() => {
     cy.clearIndexDb()
     cy.unregisterServiceWorkers()
   })
 
-  beforeEach(function () {
+  beforeEach(() => {
     cy.visit('/')
     cy.injectAxe()
   })
 
-  it('should all work fine', function () {
-    shouldBeAbleToAddTrays(Cypress.env('TRAY_URL'), Cypress.env('TRAY_USERNAME'), Cypress.env('TRAY_PASSWORD'))
+  it('should all work fine', () => {
+    shouldBeAbleToAddTrays(
+      Cypress.env('TRAY_URL'),
+      Cypress.env('TRAY_USERNAME'),
+      Cypress.env('TRAY_PASSWORD')
+    )
     shouldBeAbleToChangeSuccessMessages()
     shouldBeAbleToChangeSettings()
     shouldBeAbleToExportAndImportConfig()

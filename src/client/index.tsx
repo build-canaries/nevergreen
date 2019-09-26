@@ -3,12 +3,10 @@ import 'regenerator-runtime/runtime'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {Provider} from 'react-redux'
-import {createBrowserHistory} from 'history'
-import {Redirect, Route, Router, Switch} from 'react-router-dom'
+import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom'
 import {save as repositorySave} from './configuration/LocalRepository'
 import {reducer} from './Reducer'
 import {filter} from './configuration/Configuration'
-import {navigated} from './NevergreenActionCreators'
 import {Nevergreen} from './Nevergreen'
 import {Monitor} from './monitor/Monitor'
 import {Success} from './success/Success'
@@ -33,16 +31,12 @@ const saveDebounced = debounce(save, 200, {maxWait: ONE_SECOND})
 
 store.subscribe(() => saveDebounced())
 
-const history = createBrowserHistory()
-
-history.listen(() => store.dispatch(navigated()))
-
 Modal.setAppElement('#root')
 
 ReactDOM.render(
   <UnhandledError>
     <Provider store={store}>
-      <Router history={history}>
+      <Router>
         <Nevergreen>
           <Switch>
             <Route exact path='/monitor' component={Monitor}/>

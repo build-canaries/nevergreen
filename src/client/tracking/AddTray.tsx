@@ -10,18 +10,22 @@ import {AuthTypes, createId, Tray} from '../domain/Tray'
 import {isBlank} from '../common/Utils'
 import {getTrays} from './TraysReducer'
 import {ensureHasScheme, removeScheme} from '../domain/Url'
-import {highlightTray, trayAddedWithAuth} from './TrackingActionCreators'
-import {refreshTray} from './RefreshThunkActionCreators'
+import {trayAdded} from './TrackingActionCreators'
 import {useDispatch, useSelector} from 'react-redux'
 import {send} from '../gateways/Gateway'
 import {encrypt, EncryptResponse} from '../gateways/SecurityGateway'
 import {Messages, MessagesType} from '../common/Messages'
 
+interface AddTrayProps {
+  readonly setHighlightTray: (trayId: string) => void;
+  readonly setRefreshTray: (trayId: string) => void;
+}
+
 function urlMatches(tray: Tray, url: string): boolean {
   return removeScheme(url) === removeScheme(tray.url)
 }
 
-export function AddTray() {
+export function AddTray({setHighlightTray, setRefreshTray}: AddTrayProps) {
   const dispatch = useDispatch()
   const existingTrays = useSelector(getTrays)
 
@@ -39,21 +43,22 @@ export function AddTray() {
     setUsername('')
     setPassword('')
     setAccessToken('')
+    setErrors([])
   }
 
-  const addTray = async () => {
-    if (isBlank(url)) {
+  const addTray = async (enteredUrl: string) => {
+    if (isBlank(enteredUrl)) {
       setErrors(['Please enter the URL to the CCTray XML feed'])
       return
     }
 
     setAdding(true)
 
-    const updatedUrl = ensureHasScheme(url)
+    const updatedUrl = ensureHasScheme(enteredUrl)
     const existingTray = existingTrays.find((tray: Tray) => urlMatches(tray, updatedUrl))
 
     if (existingTray) {
-      dispatch(highlightTray(existingTray.trayId))
+      setHighlightTray(existingTray.trayId)
       resetForm()
     } else {
       const trayId = createId()
@@ -67,8 +72,9 @@ export function AddTray() {
         } else if (authType === AuthTypes.token && !isBlank(accessToken)) {
           encryptedAccessToken = await send<EncryptResponse>(encrypt(accessToken))
         }
-        dispatch(trayAddedWithAuth(trayId, updatedUrl, authType, username, encryptedPassword, encryptedAccessToken))
-        dispatch(refreshTray(trayId))
+        dispatch(trayAdded(trayId, updatedUrl, authType, username, encryptedPassword, encryptedAccessToken))
+        setRefreshTray(trayId)
+        setHighlightTray(trayId)
         resetForm()
       } catch (error) {
         setErrors([error.message])
@@ -88,7 +94,7 @@ export function AddTray() {
                  setErrors([])
                  setUrl(target.value)
                }}
-               onEnter={addTray}
+               onEnter={() => addTray(url)}
                data-locator='add-tray-url'
                autoComplete='url'
                disabled={adding}>
@@ -102,17 +108,17 @@ export function AddTray() {
               setPassword={setPassword}
               accessToken={accessToken}
               setAccessToken={setAccessToken}
-              onEnter={addTray}/>
+              onEnter={() => addTray(url)}/>
         <Messages type={MessagesType.ERROR} messages={errors}/>
       </div>
       <WithHelp title='Tracking'
-                help={<TrackingHelp addTray={(url) => {
-                  setUrl(url)
-                  addTray()
+                help={<TrackingHelp addTray={(enteredUrl) => {
+                  addTray(enteredUrl)
+                  resetForm()
                 }}/>}
                 className={styles.help}>
         <PrimaryButton className={styles.add}
-                       onClick={addTray}
+                       onClick={() => addTray(url)}
                        data-locator='add-tray'
                        icon={iPlus}
                        disabled={adding}>

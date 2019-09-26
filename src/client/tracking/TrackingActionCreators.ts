@@ -1,7 +1,6 @@
 import {now} from '../common/DateTime'
-import {AuthDetails, AuthTypes, generateRandomName, Tray} from '../domain/Tray'
+import {AuthTypes, generateRandomName, Tray} from '../domain/Tray'
 import {Actions} from '../Actions'
-import {Request} from 'superagent'
 import {Project} from '../domain/Project'
 import {Action} from 'redux'
 
@@ -10,17 +9,13 @@ export interface ActionTrayAdded extends Action<Actions.TRAY_ADDED> {
   readonly data: Tray;
 }
 
-export interface ActionHighlightTray extends Action<Actions.HIGHLIGHT_TRAY> {
+export interface ActionTrayUpdate extends Action<Actions.TRAY_UPDATED> {
   readonly trayId: string;
+  readonly data: Partial<Tray>;
 }
 
-export interface ActionRemoveTray extends Action<Actions.REMOVE_TRAY> {
+export interface ActionRemoveTray extends Action<Actions.TRAY_REMOVED> {
   readonly trayId: string;
-}
-
-export interface ActionProjectsFetching extends Action<Actions.PROJECTS_FETCHING> {
-  readonly trayId: string;
-  readonly request: Request;
 }
 
 export interface ActionProjectsFetched extends Action<Actions.PROJECTS_FETCHED> {
@@ -31,72 +26,13 @@ export interface ActionProjectsFetched extends Action<Actions.PROJECTS_FETCHED> 
   readonly includeNew: boolean;
 }
 
-export interface ActionProjectsFetchError extends Action<Actions.PROJECTS_FETCH_ERROR> {
-  readonly trayId: string;
-  readonly errors: ReadonlyArray<string>;
-}
-
-export interface ActionSetTrayName extends Action<Actions.SET_TRAY_NAME> {
-  readonly trayId: string;
-  readonly name: string;
-}
-
-export interface ActionSetServerType extends Action<Actions.SET_SERVER_TYPE> {
-  readonly trayId: string;
-  readonly serverType: string;
-}
-
-export interface ActionSetTrayAuthType extends Action<Actions.SET_TRAY_AUTH_TYPE> {
-  readonly trayId: string;
-  readonly authType: AuthTypes;
-}
-
-export interface ActionSetTrayUsername extends Action<Actions.SET_TRAY_USERNAME> {
-  readonly trayId: string;
-  readonly username: string;
-}
-
-export interface ActionSetTrayUrl extends Action<Actions.SET_TRAY_URL> {
-  readonly trayId: string;
-  readonly url: string;
-}
-
-export interface ActionSelectProject extends Action<Actions.SELECT_PROJECT> {
+export interface ActionSelectProject extends Action<Actions.PROJECT_SELECTED> {
   readonly trayId: string;
   readonly projectId: string;
   readonly selected: boolean;
 }
 
-export interface ActionSetIncludeNew extends Action<Actions.SET_INCLUDE_NEW> {
-  readonly trayId: string;
-  readonly value: boolean;
-}
-
-export function trayAdded(trayId: string, url: string, auth: AuthDetails): ActionTrayAdded {
-  const username = auth.type === AuthTypes.basic
-    ? auth.username
-    : ''
-
-  return {
-    type: Actions.TRAY_ADDED,
-    trayId,
-    data: {
-      trayId,
-      url,
-      authType: auth.type,
-      username,
-      name: generateRandomName(),
-      highlight: true,
-      errors: [],
-      includeNew: true,
-      loaded: false,
-      requiresRefresh: false,
-      serverType: ''
-    }
-  }
-}
-
-export function trayAddedWithAuth(
+export function trayAdded(
   trayId: string,
   url: string,
   authType: AuthTypes,
@@ -115,26 +51,18 @@ export function trayAddedWithAuth(
       password,
       accessToken,
       name: generateRandomName(),
-      highlight: true,
-      errors: [],
       includeNew: true,
-      loaded: false,
-      requiresRefresh: false,
       serverType: ''
     }
   }
 }
 
-export function highlightTray(trayId: string): ActionHighlightTray {
-  return {type: Actions.HIGHLIGHT_TRAY, trayId}
+export function trayUpdated(trayId: string, data: Partial<Tray>): ActionTrayUpdate {
+  return {type: Actions.TRAY_UPDATED, trayId, data}
 }
 
-export function removeTray(trayId: string): ActionRemoveTray {
-  return {type: Actions.REMOVE_TRAY, trayId}
-}
-
-export function projectsFetching(trayId: string, request: Request): ActionProjectsFetching {
-  return {type: Actions.PROJECTS_FETCHING, trayId, request}
+export function trayRemoved(trayId: string): ActionRemoveTray {
+  return {type: Actions.TRAY_REMOVED, trayId}
 }
 
 export function projectsFetched(trayId: string, projects: ReadonlyArray<Project>, includeNew: boolean): ActionProjectsFetched {
@@ -151,34 +79,6 @@ export function projectsFetched(trayId: string, projects: ReadonlyArray<Project>
   }
 }
 
-export function projectsFetchError(trayId: string, errors: ReadonlyArray<string>): ActionProjectsFetchError {
-  return {type: Actions.PROJECTS_FETCH_ERROR, trayId, errors}
-}
-
-export function setTrayName(trayId: string, name: string): ActionSetTrayName {
-  return {type: Actions.SET_TRAY_NAME, trayId, name}
-}
-
-export function setServerType(trayId: string, serverType: string): ActionSetServerType {
-  return {type: Actions.SET_SERVER_TYPE, trayId, serverType}
-}
-
-export function setAuthType(trayId: string, authType: AuthTypes): ActionSetTrayAuthType {
-  return {type: Actions.SET_TRAY_AUTH_TYPE, trayId, authType}
-}
-
-export function setTrayUsername(trayId: string, username: string): ActionSetTrayUsername {
-  return {type: Actions.SET_TRAY_USERNAME, trayId, username}
-}
-
-export function setTrayUrl(trayId: string, url: string): ActionSetTrayUrl {
-  return {type: Actions.SET_TRAY_URL, trayId, url}
-}
-
-export function selectProject(trayId: string, projectId: string, selected: boolean): ActionSelectProject {
-  return {type: Actions.SELECT_PROJECT, trayId, projectId, selected}
-}
-
-export function setIncludeNew(trayId: string, value: boolean): ActionSetIncludeNew {
-  return {type: Actions.SET_INCLUDE_NEW, trayId, value}
+export function projectSelected(trayId: string, projectId: string, selected: boolean): ActionSelectProject {
+  return {type: Actions.PROJECT_SELECTED, trayId, projectId, selected}
 }

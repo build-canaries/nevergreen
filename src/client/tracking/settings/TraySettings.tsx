@@ -1,53 +1,49 @@
-import React, {useLayoutEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Input} from '../../common/forms/Input'
 import {DropDown} from '../../common/forms/DropDown'
-import {AuthDetails, CI_OPTIONS, generateRandomName} from '../../domain/Tray'
+import {AuthTypes, CI_OPTIONS, generateRandomName, Tray} from '../../domain/Tray'
 import {VisuallyHidden} from '../../common/VisuallyHidden'
 import {DangerButton, InputButton, SecondaryButton} from '../../common/forms/Button'
 import {iBin, iDice, iUnlocked} from '../../common/fonts/Icons'
 import styles from './tray-settings.scss'
 import {Checkbox} from '../../common/forms/Checkbox'
 import {ChangeAuth} from './ChangeAuth'
-import {
-  getTrayAuthType,
-  getTrayIncludeNew,
-  getTrayName,
-  getTrayServerType,
-  getTrayUrl,
-  getTrayUsername
-} from '../TraysReducer'
-import {useDispatch, useSelector} from 'react-redux'
-import {setAuth} from '../AuthenticationThunkActionCreators'
-import {removeTray, setIncludeNew, setServerType, setTrayName, setTrayUrl} from '../TrackingActionCreators'
+import {useDispatch} from 'react-redux'
+import {trayRemoved, trayUpdated} from '../TrackingActionCreators'
 
 interface TraySettingsProps {
-  trayId: string;
+  readonly tray: Tray;
+  readonly setRequiresRefresh: (required: boolean) => void;
 }
 
-export function TraySettings({trayId}: TraySettingsProps) {
+export function TraySettings({tray, setRequiresRefresh}: TraySettingsProps) {
   const dispatch = useDispatch()
-  const name = useSelector(getTrayName(trayId))
-  const url = useSelector(getTrayUrl(trayId))
-  const authType = useSelector(getTrayAuthType(trayId))
-  const username = useSelector(getTrayUsername(trayId))
-  const serverType = useSelector(getTrayServerType(trayId))
-  const includeNew = useSelector(getTrayIncludeNew(trayId))
 
-  const [newName, setNewName] = useState(name)
+  const {trayId, name, url, authType, username, serverType, includeNew} = tray
+
+  const [newName, setNewName] = useState(name || '')
   const [newUrl, setNewUrl] = useState(url)
   const [updatingAuth, setUpdatingAuth] = useState(false)
 
-  useLayoutEffect(() => setNewName(name), [name])
-  useLayoutEffect(() => setNewUrl(url), [url])
+  useEffect(() => setNewName(name || ''), [name])
+  useEffect(() => setNewUrl(url), [url])
 
-  const updateAuth = (auth: AuthDetails) => {
-    dispatch(setAuth(trayId, auth))
+  const updateUrl = () => {
+    if (newUrl !== url) {
+      dispatch(trayUpdated(trayId, {url: newUrl}))
+      setRequiresRefresh(true)
+    }
+  }
+
+  const updateAuth = (authType: AuthTypes, username: string, password: string, accessToken: string) => {
+    dispatch(trayUpdated(trayId, {authType, username, password, accessToken}))
     setUpdatingAuth(false)
+    setRequiresRefresh(true)
   }
 
   const randomNameButton = (
     <InputButton icon={iDice}
-                 onClick={() => dispatch(setTrayName(trayId, generateRandomName()))}
+                 onClick={() => dispatch(trayUpdated(trayId, {name: generateRandomName()}))}
                  data-locator='generate-random'>
       randomise name
     </InputButton>
@@ -59,8 +55,8 @@ export function TraySettings({trayId}: TraySettingsProps) {
       <Input className={styles.traySettingsName}
              value={newName}
              onChange={({target}) => setNewName(target.value)}
-             onBlur={() => dispatch(setTrayName(trayId, newName))}
-             onEnter={() => dispatch(setTrayName(trayId, newName))}
+             onBlur={() => dispatch(trayUpdated(trayId, {name: newName}))}
+             onEnter={() => dispatch(trayUpdated(trayId, {name: newName}))}
              placeholder='e.g. project or team name'
              data-locator='tray-name'
              button={randomNameButton}>
@@ -68,8 +64,8 @@ export function TraySettings({trayId}: TraySettingsProps) {
       </Input>
       <Input value={newUrl}
              onChange={({target}) => setNewUrl(target.value)}
-             onBlur={() => dispatch(setTrayUrl(trayId, newUrl))}
-             onEnter={() => dispatch(setTrayUrl(trayId, newUrl))}
+             onBlur={updateUrl}
+             onEnter={updateUrl}
              data-locator='tray-url'
              autoComplete='url'>
         <span className={styles.label}>URL</span>
@@ -77,7 +73,10 @@ export function TraySettings({trayId}: TraySettingsProps) {
       <DropDown className={styles.serverType}
                 options={CI_OPTIONS}
                 value={serverType}
-                onChange={({target}) => dispatch(setServerType(trayId, target.value))}
+                onChange={({target}) => {
+                  dispatch(trayUpdated(trayId, {serverType: target.value}))
+                  setRequiresRefresh(true)
+                }}
                 data-locator='tray-server-type'>
         <span className={styles.label}>server type</span>
       </DropDown>
@@ -86,7 +85,7 @@ export function TraySettings({trayId}: TraySettingsProps) {
                   cancel={() => setUpdatingAuth(false)}
                   save={updateAuth}
                   authType={authType}
-                  username={username}/>
+                  username={username || ''}/>
 
       <Input readOnly
              value={authType}
@@ -101,7 +100,7 @@ export function TraySettings({trayId}: TraySettingsProps) {
       </SecondaryButton>
 
       <Checkbox checked={includeNew}
-                onToggle={(newValue) => dispatch(setIncludeNew(trayId, newValue))}
+                onToggle={(newValue) => dispatch(trayUpdated(trayId, {includeNew: newValue}))}
                 className={styles.includeNew}
                 data-locator='include-new'>
         automatically include new projects
@@ -111,7 +110,7 @@ export function TraySettings({trayId}: TraySettingsProps) {
         <div className={styles.dangerZoneContent}>
           <div className={styles.deleteInfo}>Once you delete, there is no going back. Please be certain.</div>
           <DangerButton icon={iBin}
-                        onClick={() => dispatch(removeTray(trayId))}
+                        onClick={() => dispatch(trayRemoved(trayId))}
                         data-locator='delete-tray'>
             delete
           </DangerButton>

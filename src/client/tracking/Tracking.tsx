@@ -1,21 +1,26 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {AddTray} from './AddTray'
-import {Tray} from './tray/Tray'
+import {Tray} from './Tray'
 import {Title} from '../common/Title'
 import {useSelector} from 'react-redux'
-import {getTrayIds} from './TraysReducer'
+import {getTrays} from './TraysReducer'
 
 export function Tracking() {
-  const trayIds = useSelector(getTrayIds)
+  const trays = useSelector(getTrays)
+  const [highlightTray, setHighlightTray] = useState('')
+  const [refreshTray, setRefreshTray] = useState('')
 
   return (
     <>
       <Title>Tracking</Title>
-      <AddTray/>
+      <AddTray setHighlightTray={setHighlightTray}
+               setRefreshTray={setRefreshTray}/>
       {
-        trayIds.map((trayId, index) => <Tray key={trayId}
-                                             index={index}
-                                             trayId={trayId}/>)
+        trays.map((tray, index) => <Tray key={tray.trayId}
+                                         index={index}
+                                         tray={tray}
+                                         highlightTray={highlightTray}
+                                         refreshTray={refreshTray}/>)
       }
     </>
   )

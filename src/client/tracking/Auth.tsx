@@ -74,8 +74,8 @@ export function Auth(
                  onChange={({target}) => setUsername(target.value)}
                  onEnter={onEnter}
                  disabled={disabled}
-                 data-locator='auth-username'
-                 autoComplete='username'>
+                 autoComplete='username'
+                 data-locator='auth-username'>
             <span className={styles.label}>username</span>
           </Input>
           <Password className={styles.password}
@@ -83,6 +83,7 @@ export function Auth(
                     onChange={({target}) => setPassword(target.value)}
                     onEnter={onEnter}
                     disabled={disabled}
+                    autoComplete='new-password'
                     data-locator='auth-password'>
             <span className={styles.label}>password</span>
           </Password>
@@ -95,8 +96,8 @@ export function Auth(
                     onChange={({target}) => setAccessToken(target.value)}
                     onEnter={onEnter}
                     disabled={disabled}
-                    data-locator='auth-access-token'
-                    autoComplete='token'>
+                    autoComplete='new-password'
+                    data-locator='auth-access-token'>
             <span className={styles.label}>token</span>
           </Password>
         </div>

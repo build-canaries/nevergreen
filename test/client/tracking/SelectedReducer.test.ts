@@ -8,8 +8,8 @@ import {Actions} from '../../../src/client/Actions'
 import {setConfiguration} from '../../../src/client/NevergreenActionCreators'
 import {
   projectsFetched,
-  removeTray,
-  selectProject,
+  trayRemoved,
+  projectSelected,
   trayAdded
 } from '../../../src/client/tracking/TrackingActionCreators'
 import {buildProject, buildState, testReducer} from '../testHelpers'
@@ -54,34 +54,34 @@ describe('SelectedReducer', () => {
 
     test('should add the tray id with an empty set of selected projects', () => {
       const existingState = state({})
-      const action = trayAdded('trayId', '', {type: AuthTypes.none})
+      const action = trayAdded('trayId', '', AuthTypes.none, '', '', '')
       const newState = reducer(existingState, action)
       expect(getSelectedProjectsForTray('trayId')(newState)).toHaveLength(0)
     })
   })
 
-  describe(Actions.REMOVE_TRAY, () => {
+  describe(Actions.TRAY_REMOVED, () => {
 
     test('should remove the tray id', () => {
       const existingState = state({trayId: []})
-      const action = removeTray('trayId')
+      const action = trayRemoved('trayId')
       const newState = reducer(existingState, action)
       expect(getSelectedProjectsForTray('trayId')(newState)).toBeUndefined()
     })
   })
 
-  describe(Actions.SELECT_PROJECT, () => {
+  describe(Actions.PROJECT_SELECTED, () => {
 
     test('should add the project if selected', () => {
       const existingState = state({trayId: ['a', 'b', 'c']})
-      const action = selectProject('trayId', 'd', true)
+      const action = projectSelected('trayId', 'd', true)
       const newState = reducer(existingState, action)
       expect(getSelectedProjectsForTray('trayId')(newState)).toEqual(['a', 'b', 'c', 'd'])
     })
 
     test('should remove the project if not selected', () => {
       const existingState = state({trayId: ['a', 'b', 'c']})
-      const action = selectProject('trayId', 'b', false)
+      const action = projectSelected('trayId', 'b', false)
       const newState = reducer(existingState, action)
       expect(getSelectedProjectsForTray('trayId')(newState)).toEqual(['a', 'c'])
     })

@@ -32,7 +32,7 @@ export const reduce = createReducer<ProjectsState>(DEFAULT_STATE, {
   [Actions.TRAY_ADDED]: (draft, action: ActionTrayAdded) => {
     draft[action.trayId] = {}
   },
-  [Actions.REMOVE_TRAY]: (draft, action: ActionRemoveTray) => {
+  [Actions.TRAY_REMOVED]: (draft, action: ActionRemoveTray) => {
     delete draft[action.trayId]
   },
   [Actions.PROJECTS_FETCHED]: (draft, action: ActionProjectsFetched) => {

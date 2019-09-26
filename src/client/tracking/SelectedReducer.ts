@@ -22,10 +22,10 @@ export const reduce = createReducer<SelectedState>(DEFAULT_STATE, {
   [Actions.TRAY_ADDED]: (draft, action: ActionTrayAdded) => {
     draft[action.trayId] = []
   },
-  [Actions.REMOVE_TRAY]: (draft, action: ActionRemoveTray) => {
+  [Actions.TRAY_REMOVED]: (draft, action: ActionRemoveTray) => {
     delete draft[action.trayId]
   },
-  [Actions.SELECT_PROJECT]: (draft, action: ActionSelectProject) => {
+  [Actions.PROJECT_SELECTED]: (draft, action: ActionSelectProject) => {
     action.selected
       ? draft[action.trayId].push(action.projectId)
       : remove(draft[action.trayId], (id) => id === action.projectId)

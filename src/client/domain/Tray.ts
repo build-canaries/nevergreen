@@ -28,14 +28,10 @@ export type AuthDetails = NoAuth | BasicAuth | TokenAuth
 
 export interface Tray {
   readonly authType: AuthTypes;
-  readonly errors: ReadonlyArray<string>;
-  readonly highlight: boolean;
   readonly includeNew: boolean;
-  readonly loaded: boolean;
   readonly name?: string;
   readonly password?: string;
   readonly accessToken?: string;
-  readonly requiresRefresh: boolean;
   readonly serverType: string;
   readonly timestamp?: string;
   readonly trayId: string;

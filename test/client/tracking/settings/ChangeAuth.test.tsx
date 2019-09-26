@@ -1,10 +1,12 @@
 import React from 'react'
 import {ChangeAuth} from '../../../../src/client/tracking/settings/ChangeAuth'
+import * as SecurityGateway from '../../../../src/client/gateways/SecurityGateway'
 import {noop} from 'lodash'
 import {AuthTypes} from '../../../../src/client/domain/Tray'
-import {render} from '@testing-library/react'
+import {render, waitForDomChange} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import {setupReactModal} from '../../testHelpers'
+import {fakeRequest} from '../../../../src/client/gateways/Gateway'
 
 describe('<ChangeAuth/>', () => {
 
@@ -18,6 +20,10 @@ describe('<ChangeAuth/>', () => {
 
   beforeEach(setupReactModal)
 
+  beforeEach(() => {
+    jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValue(fakeRequest(''))
+  })
+
   test('should be able to change the auth to none', async () => {
     const save = jest.fn()
     const props = {...DEFAULT_PROPS, show: true, authType: AuthTypes.basic, save}
@@ -26,15 +32,11 @@ describe('<ChangeAuth/>', () => {
     userEvent.click(getByLabelText('no auth'))
     userEvent.click(getByText('save changes'))
 
-    expect(save).toBeCalledWith({
-      type: AuthTypes.none,
-      username: '',
-      password: '',
-      accessToken: ''
-    })
+    expect(save).toBeCalledWith(AuthTypes.none, '', '', '')
   })
 
   test('should be able to change the auth to basic', async () => {
+    jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValue(fakeRequest('some-encrypted-password'))
     const save = jest.fn()
     const props = {...DEFAULT_PROPS, show: true, save}
 
@@ -44,15 +46,13 @@ describe('<ChangeAuth/>', () => {
     await userEvent.type(getByTestId('auth-password'), 'some-password')
     userEvent.click(getByText('save changes'))
 
-    expect(save).toBeCalledWith({
-      type: AuthTypes.basic,
-      username: 'some-username',
-      password: 'some-password',
-      accessToken: ''
-    })
+    await waitForDomChange()
+
+    expect(save).toBeCalledWith(AuthTypes.basic, 'some-username', 'some-encrypted-password', '')
   })
 
   test('should be able to change the auth to access token', async () => {
+    jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValue(fakeRequest('some-encrypted-token'))
     const save = jest.fn()
     const props = {...DEFAULT_PROPS, show: true, save}
 
@@ -61,12 +61,9 @@ describe('<ChangeAuth/>', () => {
     await userEvent.type(getByTestId('auth-access-token'), 'some-token')
     userEvent.click(getByText('save changes'))
 
-    expect(save).toBeCalledWith({
-      type: AuthTypes.token,
-      username: '',
-      password: '',
-      accessToken: 'some-token'
-    })
+    await waitForDomChange()
+
+    expect(save).toBeCalledWith(AuthTypes.token, '', '', 'some-encrypted-token')
   })
 
   test('should be able to discard making changes', async () => {

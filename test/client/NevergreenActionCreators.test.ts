@@ -1,10 +1,5 @@
 import {Actions} from '../../src/client/Actions'
-import {
-  enableFullScreen,
-  navigated,
-  requestFullScreen,
-  setConfiguration
-} from '../../src/client/NevergreenActionCreators'
+import {enableFullScreen, requestFullScreen, setConfiguration} from '../../src/client/NevergreenActionCreators'
 import {buildState} from './testHelpers'
 import {SUCCESS_ROOT} from '../../src/client/success/SuccessReducer'
 
@@ -20,14 +15,6 @@ describe('NevergreenActionCreators', () => {
     test('should return the configuration', () => {
       const actual = setConfiguration(buildState({[SUCCESS_ROOT]: ['bar']}))
       expect(actual.configuration).toHaveProperty(SUCCESS_ROOT, ['bar'])
-    })
-  })
-
-  describe(Actions.NAVIGATED, () => {
-
-    test('should return the correct type', () => {
-      const actual = navigated()
-      expect(actual).toHaveProperty('type', Actions.NAVIGATED)
     })
   })
 

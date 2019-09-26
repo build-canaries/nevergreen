@@ -3,24 +3,26 @@ import {noop} from 'lodash'
 import {AddTray} from '../../../src/client/tracking/AddTray'
 import userEvent from '@testing-library/user-event'
 import {waitForDomChange} from '@testing-library/react'
-import * as RefreshThunkActionCreators from '../../../src/client/tracking/RefreshThunkActionCreators'
 import * as SecurityGateway from '../../../src/client/gateways/SecurityGateway'
 import {getTrays, TRAYS_ROOT} from '../../../src/client/tracking/TraysReducer'
-import {render} from '../testHelpers'
+import {buildTray, render} from '../testHelpers'
 import {fakeRequest} from '../../../src/client/gateways/Gateway'
 
 describe('<AddTray/>', () => {
 
+  const DEFAULT_PROPS = {
+    setHighlightTray: noop,
+    setRefreshTray: noop
+  }
+
   beforeEach(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    jest.spyOn(RefreshThunkActionCreators, 'refreshTray').mockReturnValue(noop as any)
     jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValue(fakeRequest(''))
   })
 
   test('should display an error if no URL is entered', async () => {
-    const {getByText} = render(<AddTray/>)
+    const {queryByText, getByText} = render(<AddTray {...DEFAULT_PROPS}/>)
     userEvent.click(getByText('add'))
-    expect(getByText('Please enter the URL to the CCTray XML feed')).toBeInTheDocument()
+    expect(queryByText('Please enter the URL to the CCTray XML feed')).toBeInTheDocument()
   })
 
   test('should allow adding trays without auth', async () => {
@@ -28,7 +30,7 @@ describe('<AddTray/>', () => {
       [TRAYS_ROOT]: {}
     }
 
-    const {getByText, getByLabelText, store} = render(<AddTray/>, state)
+    const {getByText, getByLabelText, store} = render(<AddTray {...DEFAULT_PROPS}/>, state)
     await userEvent.type(getByLabelText('URL'), 'some-new-url')
     userEvent.click(getByText('add'))
 
@@ -45,7 +47,7 @@ describe('<AddTray/>', () => {
       [TRAYS_ROOT]: {}
     }
 
-    const {getByTestId, getByText, getByLabelText, store} = render(<AddTray/>, state)
+    const {getByTestId, getByText, getByLabelText, store} = render(<AddTray {...DEFAULT_PROPS}/>, state)
     await userEvent.type(getByLabelText('URL'), 'some-new-url')
     userEvent.click(getByLabelText('basic auth'))
     await userEvent.type(getByLabelText('username'), 'some-username')
@@ -68,7 +70,7 @@ describe('<AddTray/>', () => {
       [TRAYS_ROOT]: {}
     }
 
-    const {getByTestId, getByText, getByLabelText, store} = render(<AddTray/>, state)
+    const {getByTestId, getByText, getByLabelText, store} = render(<AddTray {...DEFAULT_PROPS}/>, state)
     await userEvent.type(getByLabelText('URL'), 'some-new-url')
     userEvent.click(getByLabelText('access token'))
     await userEvent.type(getByTestId('auth-access-token'), 'some-token')
@@ -85,7 +87,9 @@ describe('<AddTray/>', () => {
   })
 
   test('should reset the form after adding a tray', async () => {
-    const {getByTestId, queryByTestId, getByText, getByLabelText, queryByLabelText} = render(<AddTray/>)
+    const {getByTestId, queryByTestId, getByText, getByLabelText, queryByLabelText, queryByText} = render(
+      <AddTray {...DEFAULT_PROPS}/>
+    )
     await userEvent.type(getByLabelText('URL'), 'some-new-url')
     userEvent.click(getByLabelText('access token'))
     await userEvent.type(getByTestId('auth-access-token'), 'some-token')
@@ -97,5 +101,27 @@ describe('<AddTray/>', () => {
     expect(queryByTestId('auth-access-token')).not.toBeInTheDocument()
     expect(queryByLabelText('username')).not.toBeInTheDocument()
     expect(queryByTestId('auth-password')).not.toBeInTheDocument()
+    expect(queryByText('Please enter the URL to the CCTray XML feed')).not.toBeInTheDocument()
+  })
+
+  test('should not add an existing tray again', async () => {
+    const setHighlightTray = jest.fn()
+    const state = {
+      [TRAYS_ROOT]: {
+        trayId: buildTray({
+          trayId: 'trayId',
+          url: 'https://some-url'
+        })
+      }
+    }
+
+    const {getByText, getByLabelText} = render(
+      <AddTray {...DEFAULT_PROPS} setHighlightTray={setHighlightTray}/>,
+      state
+    )
+    await userEvent.type(getByLabelText('URL'), 'http://some-url')
+    userEvent.click(getByText('add'))
+
+    expect(setHighlightTray).toHaveBeenCalledWith('trayId')
   })
 })
