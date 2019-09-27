@@ -1,7 +1,7 @@
-import React, {ReactNode} from 'react'
+import React, {ReactNode, useState} from 'react'
 import {Header} from './header/Header'
 import {Footer} from './footer/Footer'
-import {Notification} from './notification/Notification'
+import {Notification} from './Notification'
 import styles from './nevergreen.scss'
 import {KeyboardShortcuts} from './KeyboardShortcuts'
 import {useConfiguration} from './configuration/ConfigurationHook'
@@ -16,10 +16,12 @@ interface NevergreenProps {
 }
 
 export function Nevergreen({children}: NevergreenProps) {
-  useServiceWorker()
+  const [notification, setNotification] = useState('')
   const loading = useConfiguration()
   const disableFullScreen = useFullScreen(loading)
-  useCheckForNewVersion(loading)
+
+  useServiceWorker(setNotification)
+  useCheckForNewVersion(loading, setNotification)
 
   const clickToShowMenu = useSelector(getClickToShowMenu)
 
@@ -36,7 +38,8 @@ export function Nevergreen({children}: NevergreenProps) {
            tabIndex={-1}
            {...disableFullScreenOn}>
         <Header/>
-        <Notification/>
+        <Notification notification={notification}
+                      dismiss={() => setNotification('')}/>
         {!loading && <main className={styles.main}>{children}</main>}
         <Footer/>
       </div>

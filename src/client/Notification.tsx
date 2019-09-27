@@ -1,18 +1,19 @@
 import React from 'react'
-import {isBlank} from '../common/Utils'
+import {isBlank} from './common/Utils'
 import cn from 'classnames'
 import styles from './notification.scss'
-import {PrimaryButton} from '../common/forms/Button'
-import {iCross} from '../common/fonts/Icons'
-import {useDispatch, useSelector} from 'react-redux'
-import {getNotification} from './NotificationReducer'
-import {getFullScreen} from '../NevergreenReducer'
-import {dismiss} from './NotificationActionCreators'
+import {PrimaryButton} from './common/forms/Button'
+import {iCross} from './common/fonts/Icons'
+import {useSelector} from 'react-redux'
+import {getFullScreen} from './NevergreenReducer'
 
-export function Notification() {
-  const dispatch = useDispatch()
+interface NotificationProps {
+  readonly notification: string;
+  readonly dismiss: () => void;
+}
+
+export function Notification({notification, dismiss}: NotificationProps) {
   const fullScreen = useSelector(getFullScreen)
-  const notification = useSelector(getNotification)
 
   if (isBlank(notification)) {
     return null
@@ -32,7 +33,7 @@ export function Notification() {
       <PrimaryButton icon={iCross}
                      iconOnly
                      className={styles.dismiss}
-                     onClick={() => dispatch(dismiss())}>
+                     onClick={dismiss}>
         dismiss
       </PrimaryButton>
     </section>

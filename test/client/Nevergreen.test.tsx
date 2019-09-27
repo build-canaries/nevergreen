@@ -8,7 +8,7 @@ import * as CheckForNewVersionHook from '../../src/client/CheckForNewVersionHook
 describe('<Nevergreen/>', () => {
 
   beforeEach(() => {
-    jest.spyOn(CheckForNewVersionHook, 'useCheckForNewVersion')
+    jest.spyOn(CheckForNewVersionHook, 'useCheckForNewVersion').mockReturnValue()
     jest.spyOn(LocalConfiguration, 'init').mockResolvedValue()
     jest.spyOn(LocalConfiguration, 'load').mockResolvedValue(buildState())
   })

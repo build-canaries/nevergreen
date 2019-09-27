@@ -5,17 +5,15 @@ import {reducer, State} from '../../src/client/Reducer'
 import {SETTINGS_ROOT} from '../../src/client/settings/SettingsReducer'
 import {BACKUP_ROOT} from '../../src/client/backup/BackupReducer'
 import {NEVERGREEN_ROOT} from '../../src/client/NevergreenReducer'
-import {NOTIFICATION_ROOT} from '../../src/client/notification/NotificationReducer'
 import {PROJECTS_ROOT} from '../../src/client/tracking/ProjectsReducer'
 import {SELECTED_ROOT} from '../../src/client/tracking/SelectedReducer'
 import {SUCCESS_ROOT} from '../../src/client/success/SuccessReducer'
 import {TRAYS_ROOT} from '../../src/client/tracking/TraysReducer'
 import {Prognosis, Project} from '../../src/client/domain/Project'
 import {AuthTypes, Tray} from '../../src/client/domain/Tray'
-import {AnyAction, combineReducers, Reducer} from 'redux'
+import {combineReducers, Reducer} from 'redux'
 import {RecursivePartial} from '../../src/client/common/Types'
 import {ApiProject} from '../../src/client/gateways/ProjectsGateway'
-import {ThunkAction} from 'redux-thunk'
 import {render as testRender} from '@testing-library/react'
 import {Provider} from 'react-redux'
 import {configureStore} from 'redux-starter-kit'
@@ -86,7 +84,6 @@ export function buildState(subState?: RecursivePartial<State>): State {
       fullScreen: false,
       fullScreenRequested: false
     },
-    [NOTIFICATION_ROOT]: '',
     [PROJECTS_ROOT]: {},
     [SELECTED_ROOT]: {},
     [SUCCESS_ROOT]: [],
@@ -175,23 +172,12 @@ export function buildApiProject(apiProject?: Partial<ApiProject>): ApiProject {
   }, apiProject)
 }
 
-export async function testThunk<R>(thunkion: ThunkAction<R, State, undefined, AnyAction>, state = buildState()) {
-  const dispatch = jest.fn()
-
-  const getState = () => state
-
-  await thunkion(dispatch, getState, undefined)
-
-  return dispatch
-}
-
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export function testReducer(reducer: Partial<Reducer<State>>) {
   return combineReducers<State>(merge({
     [SETTINGS_ROOT]: (state: any = null) => state,
     [BACKUP_ROOT]: (state: any = null) => state,
     [NEVERGREEN_ROOT]: (state: any = null) => state,
-    [NOTIFICATION_ROOT]: (state: any = null) => state,
     [PROJECTS_ROOT]: (state: any = null) => state,
     [SELECTED_ROOT]: (state: any = null) => state,
     [SUCCESS_ROOT]: (state: any = null) => state,
