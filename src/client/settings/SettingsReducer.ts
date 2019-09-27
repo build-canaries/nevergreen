@@ -31,8 +31,6 @@ export interface SettingsState {
   readonly refreshTime: number;
   readonly showBuildLabel: boolean;
   readonly showSystemNotifications: boolean;
-  readonly systemNotificationRequestingPermission: boolean;
-  readonly systemNotificationPermissionDenied: boolean;
   readonly maxProjectsToShow: number;
   readonly clickToShowMenu: boolean;
   readonly showPrognosis: ReadonlyArray<Prognosis>;
@@ -49,8 +47,6 @@ const DEFAULT_STATE: SettingsState = {
   refreshTime: MIN_REFRESH_TIME,
   showBuildLabel: false,
   showSystemNotifications: false,
-  systemNotificationRequestingPermission: false,
-  systemNotificationPermissionDenied: false,
   maxProjectsToShow: DEFAULT_PROJECTS_TO_SHOW,
   clickToShowMenu: false,
   showPrognosis: [
@@ -88,15 +84,6 @@ export const reduce = createReducer<SettingsState>(DEFAULT_STATE, {
   },
   [Actions.SHOW_SYSTEM_NOTIFICATIONS]: (draft, action: ActionShowSystemNotifications) => {
     draft.showSystemNotifications = action.value
-    draft.systemNotificationPermissionDenied = false
-    draft.systemNotificationRequestingPermission = false
-  },
-  [Actions.REQUESTING_SYSTEM_NOTIFICATION_PERMISSION]: (draft) => {
-    draft.systemNotificationRequestingPermission = true
-  },
-  [Actions.SYSTEM_NOTIFICATIONS_PERMISSION_DENIED]: (draft) => {
-    draft.systemNotificationPermissionDenied = true
-    draft.systemNotificationRequestingPermission = false
   },
   [Actions.SET_MAX_PROJECTS]: (draft, action: ActionSetMaxProjects) => {
     draft.maxProjectsToShow = action.value
@@ -118,8 +105,6 @@ export const getShowBrokenBuildTime = createSelector(getSettings, (settings) => 
 export const getPlayBrokenBuildSoundFx = createSelector(getSettings, (settings) => settings.playBrokenBuildSoundFx)
 export const getShowBuildLabel = createSelector(getSettings, (settings) => settings.showBuildLabel)
 export const getShowSystemNotifications = createSelector(getSettings, (settings) => settings.showSystemNotifications)
-export const getSystemNotificationRequestingPermission = createSelector(getSettings, (settings) => settings.systemNotificationRequestingPermission)
-export const getSystemNotificationPermissionDenied = createSelector(getSettings, (settings) => settings.systemNotificationPermissionDenied)
 export const getBrokenBuildSoundFx = createSelector(getSettings, (settings) => settings.brokenBuildSoundFx)
 export const getRefreshTime = createSelector(getSettings, (settings) => settings.refreshTime)
 export const getMaxProjectsToShow = createSelector(getSettings, (settings) => settings.maxProjectsToShow)

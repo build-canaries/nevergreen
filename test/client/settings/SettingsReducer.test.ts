@@ -10,8 +10,6 @@ import {
   getShowPrognosis,
   getShowSystemNotifications,
   getShowTrayName,
-  getSystemNotificationPermissionDenied,
-  getSystemNotificationRequestingPermission,
   reduce,
   SETTINGS_ROOT,
   SettingsState
@@ -19,7 +17,6 @@ import {
 import {Actions} from '../../../src/client/Actions'
 import {setConfiguration} from '../../../src/client/NevergreenActionCreators'
 import {
-  requestingSystemNotificationPermission,
   setBrokenBuildSoundFx,
   setClickToShowMenu,
   setMaxProjectsToShow,
@@ -29,8 +26,7 @@ import {
   setShowBuildTime,
   setShowPrognosis,
   setShowSystemNotifications,
-  setShowTrayName,
-  systemNotificationPermissionDenied
+  setShowTrayName
 } from '../../../src/client/settings/SettingsActionCreators'
 import {buildState, testReducer} from '../testHelpers'
 import {RecursivePartial} from '../../../src/client/common/Types'
@@ -157,16 +153,6 @@ describe('SettingsReducer', () => {
     })
   })
 
-  describe(Actions.REQUESTING_SYSTEM_NOTIFICATION_PERMISSION, () => {
-
-    test('should set the system notification requesting permission property', () => {
-      const existingState = state({systemNotificationRequestingPermission: false})
-      const action = requestingSystemNotificationPermission()
-      const newState = reducer(existingState, action)
-      expect(getSystemNotificationRequestingPermission(newState)).toBeTruthy()
-    })
-  })
-
   describe(Actions.SHOW_SYSTEM_NOTIFICATIONS, () => {
 
     test('should set the show browser notifications property', () => {
@@ -174,37 +160,6 @@ describe('SettingsReducer', () => {
       const action = setShowSystemNotifications(true)
       const newState = reducer(existingState, action)
       expect(getShowSystemNotifications(newState)).toBeTruthy()
-    })
-
-    test('should reset the system notification permission denied property', () => {
-      const existingState = state({systemNotificationPermissionDenied: true})
-      const action = setShowSystemNotifications(true)
-      const newState = reducer(existingState, action)
-      expect(getSystemNotificationPermissionDenied(newState)).toBeFalsy()
-    })
-
-    test('should reset the system notification requesting permission property', () => {
-      const existingState = state({systemNotificationRequestingPermission: true})
-      const action = setShowSystemNotifications(true)
-      const newState = reducer(existingState, action)
-      expect(getSystemNotificationRequestingPermission(newState)).toBeFalsy()
-    })
-  })
-
-  describe(Actions.SYSTEM_NOTIFICATIONS_PERMISSION_DENIED, () => {
-
-    test('should set the system notification permission denied property', () => {
-      const existingState = state({systemNotificationPermissionDenied: false})
-      const action = systemNotificationPermissionDenied()
-      const newState = reducer(existingState, action)
-      expect(getSystemNotificationPermissionDenied(newState)).toBeTruthy()
-    })
-
-    test('should reset the system notification requesting permission property', () => {
-      const existingState = state({systemNotificationRequestingPermission: true})
-      const action = systemNotificationPermissionDenied()
-      const newState = reducer(existingState, action)
-      expect(getSystemNotificationRequestingPermission(newState)).toBeFalsy()
     })
   })
 

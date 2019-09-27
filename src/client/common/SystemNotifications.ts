@@ -43,7 +43,13 @@ interface Notification {
 
 export async function sendSystemNotification({title = 'Nevergreen', body, badge = '/mstile-144x144.png', icon = '/android-chrome-192x192.png', tag}: Notification) {
   if (supported() && permissionGranted()) {
-    const registration = await navigator.serviceWorker.ready
-    return registration.showNotification(title, {body, badge, icon, tag})
+    if (process.env.NODE_ENV === 'production') {
+      const registration = await navigator.serviceWorker.ready
+      return registration.showNotification(title, {body, badge, icon, tag})
+    } else {
+      // We don't register the service worker in dev as the caching is annoying, so log to the console instead
+      console.log('System notification sent', {title, body, badge, icon, tag})
+      return
+    }
   }
 }

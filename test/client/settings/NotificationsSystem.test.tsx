@@ -1,7 +1,9 @@
 import React from 'react'
 import userEvent from '@testing-library/user-event'
+import {waitForDomChange} from '@testing-library/react'
 import {
   NOT_SUPPORTED_MESSAGE,
+  NOTIFICATIONS_ENABLED_NOTIFICATION,
   NotificationsSystem,
   PERMISSION_DENIED_MESSAGE
 } from '../../../src/client/settings/NotificationsSystem'
@@ -11,17 +13,29 @@ import * as SystemNotifications from '../../../src/client/common/SystemNotificat
 
 describe('<NotificationsSystem/>', () => {
 
-  test('should give the option to show browser notifications if they are supported', () => {
+  beforeEach(() => {
+    jest.spyOn(SystemNotifications, 'requestPermission').mockResolvedValue('')
+    jest.spyOn(SystemNotifications, 'sendSystemNotification').mockResolvedValue()
+  })
+
+  test('should allow system notifications to be enabled', async () => {
     jest.spyOn(SystemNotifications, 'supported').mockReturnValue(true)
+    jest.spyOn(SystemNotifications, 'permissionGranted').mockReturnValue(true)
     const state = {
       [SETTINGS_ROOT]: {
-        systemNotificationPermissionDenied: false,
         showSystemNotifications: false
       }
     }
     const {store, getByLabelText} = render(<NotificationsSystem/>, state)
     userEvent.click(getByLabelText('show system notifications'))
+
+    expect(getByLabelText('show system notifications')).toHaveAttribute('disabled')
+
+    await waitForDomChange()
+
     expect(getShowSystemNotifications(store.getState())).toBeTruthy()
+    expect(getByLabelText('show system notifications')).not.toHaveAttribute('disabled')
+    expect(SystemNotifications.sendSystemNotification).toHaveBeenCalledWith(NOTIFICATIONS_ENABLED_NOTIFICATION)
   })
 
   test('should not show the not supported message if browser notifications are supported', () => {
@@ -42,27 +56,15 @@ describe('<NotificationsSystem/>', () => {
     expect(queryByLabelText('show system notifications')).not.toBeInTheDocument()
   })
 
-  test('should show a message if notifications are supported but permission is denied', () => {
+  test('should show a message if notifications are supported but permission is denied', async () => {
     jest.spyOn(SystemNotifications, 'supported').mockReturnValue(true)
-    const state = {
-      [SETTINGS_ROOT]: {
-        systemNotificationPermissionDenied: true
-      }
-    }
-    const {queryByText} = render(<NotificationsSystem/>, state)
-    expect(queryByText(PERMISSION_DENIED_MESSAGE)).toBeInTheDocument()
-  })
+    jest.spyOn(SystemNotifications, 'permissionGranted').mockReturnValue(false)
 
-  test('should disable the checkbox if permission is being requested', () => {
-    jest.spyOn(SystemNotifications, 'supported').mockReturnValue(true)
-    const state = {
-      [SETTINGS_ROOT]: {
-        systemNotificationPermissionDenied: false,
-        systemNotificationRequestingPermission: true
-      }
-    }
-    const {getByLabelText} = render(<NotificationsSystem/>, state)
+    const {queryByText, getByLabelText} = render(<NotificationsSystem/>)
     userEvent.click(getByLabelText('show system notifications'))
-    expect(getByLabelText('show system notifications')).toHaveAttribute('disabled')
+
+    await waitForDomChange()
+
+    expect(queryByText(PERMISSION_DENIED_MESSAGE)).toBeInTheDocument()
   })
 })

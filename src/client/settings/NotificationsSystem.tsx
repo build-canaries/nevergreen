@@ -1,25 +1,40 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {Checkbox} from '../common/forms/Checkbox'
 import {Messages, MessagesType} from '../common/Messages'
 import styles from './notification-system.scss'
 import {useDispatch, useSelector} from 'react-redux'
-import {
-  getShowSystemNotifications,
-  getSystemNotificationPermissionDenied,
-  getSystemNotificationRequestingPermission
-} from './SettingsReducer'
+import {getShowSystemNotifications} from './SettingsReducer'
+import {permissionGranted, requestPermission, sendSystemNotification, supported} from '../common/SystemNotifications'
 import {setShowSystemNotifications} from './SettingsActionCreators'
-import {supported} from '../common/SystemNotifications'
 
 export const NOT_SUPPORTED_MESSAGE = 'Unfortunately your browser doesn\'t support notifications.'
 export const PERMISSION_DENIED_MESSAGE = 'System notifications permission denied, unable to show system notifications.'
+export const NOTIFICATIONS_ENABLED_NOTIFICATION = {body: 'System notifications are now enabled!'}
 
 export function NotificationsSystem() {
   const dispatch = useDispatch()
   const showSystemNotifications = useSelector(getShowSystemNotifications)
-  const systemNotificationRequestingPermission = useSelector(getSystemNotificationRequestingPermission)
-  const systemNotificationPermissionDenied = useSelector(getSystemNotificationPermissionDenied)
   const systemNotificationsSupported = supported()
+  const [requestingPermission, setRequestingPermission] = useState(false)
+  const [permissionDenied, setPermissionDenied] = useState()
+
+  const toggleShowSystemNotifications = async (show: boolean) => {
+    if (show) {
+      setRequestingPermission(true)
+
+      const result = await requestPermission()
+      if (permissionGranted(result)) {
+        setPermissionDenied(false)
+        dispatch(setShowSystemNotifications(true))
+        sendSystemNotification(NOTIFICATIONS_ENABLED_NOTIFICATION)
+      } else {
+        setPermissionDenied(true)
+      }
+      setRequestingPermission(false)
+    } else {
+      dispatch(setShowSystemNotifications(false))
+    }
+  }
 
   return (
     <>
@@ -27,14 +42,14 @@ export function NotificationsSystem() {
         systemNotificationsSupported &&
         <Checkbox className={styles.checkbox}
                   checked={showSystemNotifications}
-                  onToggle={(val) => dispatch(setShowSystemNotifications(val))}
+                  onToggle={toggleShowSystemNotifications}
                   data-locator='show-system-notifications'
-                  disabled={systemNotificationRequestingPermission}>
+                  disabled={requestingPermission}>
             show system notifications
         </Checkbox>
       }
       {
-        systemNotificationsSupported && systemNotificationPermissionDenied &&
+        systemNotificationsSupported && permissionDenied &&
         <Messages type={MessagesType.ERROR} messages={[PERMISSION_DENIED_MESSAGE]}/>
       }
       {

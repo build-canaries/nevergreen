@@ -30,14 +30,8 @@ export interface ActionShowBuildLabel extends Action<Actions.SHOW_BUILD_LABEL> {
   readonly value: boolean;
 }
 
-export interface ActionRequestingSystemNotificationPermission extends Action<Actions.REQUESTING_SYSTEM_NOTIFICATION_PERMISSION> {
-}
-
 export interface ActionShowSystemNotifications extends Action<Actions.SHOW_SYSTEM_NOTIFICATIONS> {
   readonly value: boolean;
-}
-
-export interface ActionSystemNotificationsPermissionDenied extends Action<Actions.SYSTEM_NOTIFICATIONS_PERMISSION_DENIED> {
 }
 
 export interface ActionSetMaxProjects extends Action<Actions.SET_MAX_PROJECTS> {
@@ -92,16 +86,8 @@ export function setShowBuildLabel(value: boolean): ActionShowBuildLabel {
   return {type: Actions.SHOW_BUILD_LABEL, value}
 }
 
-export function requestingSystemNotificationPermission(): ActionRequestingSystemNotificationPermission {
-  return {type: Actions.REQUESTING_SYSTEM_NOTIFICATION_PERMISSION}
-}
-
 export function setShowSystemNotifications(value: boolean): ActionShowSystemNotifications {
   return {type: Actions.SHOW_SYSTEM_NOTIFICATIONS, value}
-}
-
-export function systemNotificationPermissionDenied(): ActionSystemNotificationsPermissionDenied {
-  return {type: Actions.SYSTEM_NOTIFICATIONS_PERMISSION_DENIED}
 }
 
 export function setMaxProjectsToShow(value: string): ActionSetMaxProjects {

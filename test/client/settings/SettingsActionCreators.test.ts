@@ -1,6 +1,5 @@
 import {
   MIN_REFRESH_TIME,
-  requestingSystemNotificationPermission,
   setBrokenBuildSoundFx,
   setClickToShowMenu,
   setMaxProjectsToShow,
@@ -11,7 +10,6 @@ import {
   setShowBuildTime,
   setShowSystemNotifications,
   setShowTrayName,
-  systemNotificationPermissionDenied,
   VALID_PROJECTS_TO_SHOW
 } from '../../../src/client/settings/SettingsActionCreators'
 import {Actions} from '../../../src/client/Actions'
@@ -110,14 +108,6 @@ describe('SettingsActionCreators', () => {
     })
   })
 
-  describe(Actions.REQUESTING_SYSTEM_NOTIFICATION_PERMISSION, () => {
-
-    test('should return the correct type', () => {
-      const actual = requestingSystemNotificationPermission()
-      expect(actual).toHaveProperty('type', Actions.REQUESTING_SYSTEM_NOTIFICATION_PERMISSION)
-    })
-  })
-
   describe(Actions.SHOW_SYSTEM_NOTIFICATIONS, () => {
 
     test('should return the correct type', () => {
@@ -128,14 +118,6 @@ describe('SettingsActionCreators', () => {
     test('should return the given value', () => {
       const actual = setShowSystemNotifications(true)
       expect(actual).toHaveProperty('value', true)
-    })
-  })
-
-  describe(Actions.SYSTEM_NOTIFICATIONS_PERMISSION_DENIED, () => {
-
-    test('should return the correct type', () => {
-      const actual = systemNotificationPermissionDenied()
-      expect(actual).toHaveProperty('type', Actions.SYSTEM_NOTIFICATIONS_PERMISSION_DENIED)
     })
   })
 
