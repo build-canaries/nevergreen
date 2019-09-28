@@ -1,4 +1,4 @@
-import React, {ReactNode, useState} from 'react'
+import React, {useState} from 'react'
 import {Header} from './header/Header'
 import {Footer} from './footer/Footer'
 import {Notification} from './Notification'
@@ -10,15 +10,19 @@ import {useFullScreen} from './FullScreenHook'
 import {useSelector} from 'react-redux'
 import {getClickToShowMenu} from './settings/SettingsReducer'
 import {useCheckForNewVersion} from './CheckForNewVersionHook'
+import {Redirect, Route, Switch} from 'react-router'
+import {Monitor} from './monitor/Monitor'
+import {Tracking} from './tracking/Tracking'
+import {Success} from './success/Success'
+import {Settings} from './settings/Settings'
+import {Backup} from './backup/Backup'
+import {StyleGuide} from './styleGuide/StyleGuide'
 
-interface NevergreenProps {
-  readonly children: ReactNode;
-}
-
-export function Nevergreen({children}: NevergreenProps) {
+export function Nevergreen() {
   const [notification, setNotification] = useState('')
+
   const loading = useConfiguration()
-  const disableFullScreen = useFullScreen(loading)
+  const [fullScreen, requestFullScreen, disableFullScreen] = useFullScreen(loading)
 
   useServiceWorker(setNotification)
   useCheckForNewVersion(loading, setNotification)
@@ -37,11 +41,29 @@ export function Nevergreen({children}: NevergreenProps) {
            aria-busy={loading}
            tabIndex={-1}
            {...disableFullScreenOn}>
-        <Header/>
+        <Header fullScreen={fullScreen}/>
         <Notification notification={notification}
-                      dismiss={() => setNotification('')}/>
-        {!loading && <main className={styles.main}>{children}</main>}
-        <Footer/>
+                      dismiss={() => setNotification('')}
+                      fullScreen={fullScreen}/>
+        {!loading && (
+          <main className={styles.main}>
+            <Switch>
+              <Route exact path='/monitor'>
+                <Monitor fullScreen={fullScreen}
+                         requestFullScreen={requestFullScreen}/>
+              </Route>
+              <Route exact path='/tracking' component={Tracking}/>
+              <Route exact path='/success' component={Success}/>
+              <Route exact path='/settings' component={Settings}/>
+              <Route exact path='/backup' component={Backup}/>
+              <Route exact path='/style-guide' component={StyleGuide}/>
+              <Route>
+                <Redirect to='/tracking'/>
+              </Route>
+            </Switch>
+          </main>
+        )}
+        <Footer fullScreen={fullScreen}/>
       </div>
     </>
   )

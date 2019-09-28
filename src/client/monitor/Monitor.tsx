@@ -8,9 +8,7 @@ import styles from './monitor.scss'
 import {isEmpty, omit} from 'lodash'
 import {Title} from '../common/Title'
 import {useTimer} from '../common/TimerHook'
-import {useDispatch, useSelector} from 'react-redux'
-import {getFullScreen} from '../NevergreenReducer'
-import {requestFullScreen} from '../NevergreenActionCreators'
+import {useSelector} from 'react-redux'
 import {getRefreshTime, getShowPrognosis} from '../settings/SettingsReducer'
 import {getTrays} from '../tracking/TraysReducer'
 import {getSelectedProjects} from '../tracking/SelectedReducer'
@@ -20,6 +18,11 @@ import {send} from '../gateways/Gateway'
 import {isBuilding, Project, ProjectError, wrapProjectErrors, wrapProjects} from '../domain/Project'
 import {Tray} from '../domain/Tray'
 import {useProjectNotifications} from './ProjectNotificationsHook'
+
+interface MonitorProps {
+  readonly fullScreen: boolean;
+  readonly requestFullScreen: (fullScreen: boolean) => void;
+}
 
 function toErrorString(trays: ReadonlyArray<Tray>, projectError: ProjectError): string {
   const tray = trays.find((tray) => tray.trayId === projectError.trayId)
@@ -39,9 +42,7 @@ function addThisBuildTime(project: Project, previouslyFetchedProjects: ReadonlyA
   }
 }
 
-export function Monitor() {
-  const dispatch = useDispatch()
-  const isFullScreen = useSelector(getFullScreen)
+export function Monitor({fullScreen, requestFullScreen}: MonitorProps) {
   const refreshTime = useSelector(getRefreshTime)
   const trays = useSelector(getTrays)
   const selected = useSelector(getSelectedProjects)
@@ -53,11 +54,11 @@ export function Monitor() {
   const [errors, setErrors] = useState<ReadonlyArray<string>>([])
 
   useEffect(() => {
-    dispatch(requestFullScreen(true))
+    requestFullScreen(true)
     return () => {
-      dispatch(requestFullScreen(false))
+      requestFullScreen(false)
     }
-  }, [dispatch])
+  }, [requestFullScreen])
 
   useProjectNotifications(projects)
 
@@ -91,7 +92,7 @@ export function Monitor() {
   const success = isEmpty(projects) && isEmpty(errors)
 
   const monitorClassNames = cn(styles.monitor, {
-    [styles.fullscreen]: isFullScreen
+    [styles.fullscreen]: fullScreen
   })
 
   return (

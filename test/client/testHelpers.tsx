@@ -4,7 +4,6 @@ import {CommonWrapper, EnzymeSelector, ShallowWrapper} from 'enzyme'
 import {reducer, State} from '../../src/client/Reducer'
 import {SETTINGS_ROOT} from '../../src/client/settings/SettingsReducer'
 import {BACKUP_ROOT} from '../../src/client/backup/BackupReducer'
-import {NEVERGREEN_ROOT} from '../../src/client/NevergreenReducer'
 import {PROJECTS_ROOT} from '../../src/client/tracking/ProjectsReducer'
 import {SELECTED_ROOT} from '../../src/client/tracking/SelectedReducer'
 import {SUCCESS_ROOT} from '../../src/client/success/SuccessReducer'
@@ -78,11 +77,6 @@ export function buildState(subState?: RecursivePartial<State>): State {
         id: '',
         url: ''
       }
-    },
-    [NEVERGREEN_ROOT]: {
-      loaded: false,
-      fullScreen: false,
-      fullScreenRequested: false
     },
     [PROJECTS_ROOT]: {},
     [SELECTED_ROOT]: {},
@@ -177,7 +171,6 @@ export function testReducer(reducer: Partial<Reducer<State>>) {
   return combineReducers<State>(merge({
     [SETTINGS_ROOT]: (state: any = null) => state,
     [BACKUP_ROOT]: (state: any = null) => state,
-    [NEVERGREEN_ROOT]: (state: any = null) => state,
     [PROJECTS_ROOT]: (state: any = null) => state,
     [SELECTED_ROOT]: (state: any = null) => state,
     [SUCCESS_ROOT]: (state: any = null) => state,

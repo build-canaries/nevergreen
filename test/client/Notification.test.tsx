@@ -6,25 +6,37 @@ import {noop} from 'lodash'
 
 describe('<Notification/>', () => {
 
-  test('should not render anything if notification is empty', () => {
-    const {container} = render(<Notification notification='' dismiss={noop}/>)
+  const DEFAULT_PROPS = {
+    notification: '',
+    dismiss: noop,
+    fullScreen: false
+  }
+
+  it('should not render anything if notification is empty', () => {
+    const props = {...DEFAULT_PROPS, notification: ''}
+    const {container} = render(<Notification {...props}/>)
     expect(container.firstChild).toBeNull()
   })
 
-  test('should not render anything if notification is blank', () => {
-    const {container} = render(<Notification notification='      ' dismiss={noop}/>)
+  it('should not render anything if notification is blank', () => {
+    const props = {...DEFAULT_PROPS, notification: '          '}
+    const {container} = render(<Notification {...props}/>)
     expect(container.firstChild).toBeNull()
   })
 
-  test('should render the notification', () => {
-    const {queryByText} = render(<Notification notification='some notification' dismiss={noop}/>)
+  it('should show the notification', () => {
+    const props = {...DEFAULT_PROPS, notification: 'some notification'}
+    const {queryByText} = render(<Notification {...props}/>)
     expect(queryByText('some notification')).toBeInTheDocument()
   })
 
-  test('should be able to dismiss notifications', () => {
+  it('should be able to dismiss notifications', () => {
     const dismiss = jest.fn()
-    const {getByText} = render(<Notification notification='some notification' dismiss={dismiss}/>)
+    const props = {...DEFAULT_PROPS, notification: 'some notification', dismiss}
+
+    const {getByText} = render(<Notification {...props}/>)
     userEvent.click(getByText('dismiss'))
+
     expect(dismiss).toHaveBeenCalled()
   })
 })

@@ -6,11 +6,12 @@ import versionName from '../../../resources/version_name.txt'
 import {SubmitAnIssue} from './SubmitAnIssue'
 import {About} from './About'
 import styles from './footer.scss'
-import {useSelector} from 'react-redux'
-import {getFullScreen} from '../NevergreenReducer'
 
-export function Footer() {
-  const fullScreen = useSelector(getFullScreen)
+interface FooterProps {
+  readonly fullScreen: boolean;
+}
+
+export function Footer({fullScreen}: FooterProps) {
   const [showAbout, setShowAbout] = useState(false)
 
   const footerClassNames = cn(styles.siteFooter, {

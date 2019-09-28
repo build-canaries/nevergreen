@@ -1,9 +1,10 @@
 import React from 'react'
 import {Nevergreen} from '../../src/client/Nevergreen'
 import {buildState, render} from './testHelpers'
-import {waitForDomChange, waitForElement} from '@testing-library/react'
+import {waitForDomChange} from '@testing-library/react'
 import * as LocalConfiguration from '../../src/client/configuration/LocalRepository'
 import * as CheckForNewVersionHook from '../../src/client/CheckForNewVersionHook'
+import * as ServiceWorkerHook from '../../src/client/ServiceWorkerHook'
 
 describe('<Nevergreen/>', () => {
 
@@ -13,20 +14,20 @@ describe('<Nevergreen/>', () => {
     jest.spyOn(LocalConfiguration, 'load').mockResolvedValue(buildState())
   })
 
-  test('should load configuration', async () => {
-    render(<Nevergreen>child</Nevergreen>)
+  it('should load configuration', async () => {
+    render(<Nevergreen/>)
     await waitForDomChange()
     expect(LocalConfiguration.load).toHaveBeenCalled()
   })
 
-  test('should check for new versions', async () => {
-    render(<Nevergreen>child</Nevergreen>)
-    await waitForDomChange()
+  it('should check for new versions', () => {
+    render(<Nevergreen/>)
     expect(CheckForNewVersionHook.useCheckForNewVersion).toHaveBeenCalled()
   })
 
-  test('should show children once configuration is loaded', async () => {
-    const {getByText} = render(<Nevergreen>child</Nevergreen>)
-    await waitForElement(() => getByText('child'))
+  it('should register the service worker on mount', () => {
+    jest.spyOn(ServiceWorkerHook, 'useServiceWorker').mockReturnValue()
+    render(<Nevergreen/>)
+    expect(ServiceWorkerHook.useServiceWorker).toHaveBeenCalled()
   })
 })

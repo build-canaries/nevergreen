@@ -4,17 +4,14 @@ import cn from 'classnames'
 import styles from './notification.scss'
 import {PrimaryButton} from './common/forms/Button'
 import {iCross} from './common/fonts/Icons'
-import {useSelector} from 'react-redux'
-import {getFullScreen} from './NevergreenReducer'
 
 interface NotificationProps {
   readonly notification: string;
   readonly dismiss: () => void;
+  readonly fullScreen: boolean;
 }
 
-export function Notification({notification, dismiss}: NotificationProps) {
-  const fullScreen = useSelector(getFullScreen)
-
+export function Notification({notification, dismiss, fullScreen}: NotificationProps) {
   if (isBlank(notification)) {
     return null
   }

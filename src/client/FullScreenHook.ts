@@ -1,42 +1,43 @@
-import {useLayoutEffect, useRef} from 'react'
+import {useCallback, useLayoutEffect, useRef, useState} from 'react'
 import {throttle} from 'lodash'
-import {useDispatch, useSelector} from 'react-redux'
-import {getFullScreen, getFullScreenRequested} from './NevergreenReducer'
-import {enableFullScreen} from './NevergreenActionCreators'
 
-type DisabledFullScreen = () => void
+type FullScreen = [
+  boolean,
+  (fullScreen: boolean) => void,
+  () => void
+]
 
 const ONE_SECOND = 1000
 const THREE_SECONDS = 3 * 1000
 
-export function useFullScreen(loading: boolean): DisabledFullScreen {
-  const dispatch = useDispatch()
+export function useFullScreen(loading: boolean): FullScreen {
   const fullScreenTimer = useRef(0)
-  const fullScreen = useSelector(getFullScreen)
-  const fullScreenRequested = useSelector(getFullScreenRequested)
+  const [fullScreen, setFullScreen] = useState(false)
+  const [fullScreenRequested, setFullScreenRequested] = useState(false)
 
-  const disableFullScreen = throttle(() => {
-    clearTimeout(fullScreenTimer.current)
+  const disableFullScreen = useCallback(throttle(() => {
+      clearTimeout(fullScreenTimer.current)
 
-    if (fullScreen) {
-      dispatch(enableFullScreen(false))
-    }
+      if (fullScreen) {
+        setFullScreen(false)
+      }
 
-    if (fullScreenRequested) {
-      fullScreenTimer.current = window.setTimeout(
-        () => dispatch(enableFullScreen(true)),
-        THREE_SECONDS)
-    }
-  }, ONE_SECOND, {trailing: false})
+      if (fullScreenRequested) {
+        fullScreenTimer.current = window.setTimeout(
+          () => setFullScreen(true),
+          THREE_SECONDS)
+      }
+    }, ONE_SECOND, {trailing: false}),
+    [fullScreen, fullScreenRequested])
 
   useLayoutEffect(() => {
     if (!loading) {
-      dispatch(enableFullScreen(fullScreenRequested))
+      setFullScreen(fullScreenRequested)
       if (!fullScreenRequested) {
         clearTimeout(fullScreenTimer.current)
       }
     }
-  }, [loading, fullScreenRequested, dispatch])
+  }, [loading, fullScreenRequested])
 
-  return disableFullScreen
+  return [fullScreen, setFullScreenRequested, disableFullScreen]
 }

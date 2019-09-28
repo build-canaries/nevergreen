@@ -11,31 +11,51 @@ import {fakeRequest} from '../../../src/client/gateways/Gateway'
 
 describe('<Monitor/>', () => {
 
+  const DEFAULT_PROPS = {
+    fullScreen: false,
+    requestFullScreen: noop
+  }
+
   const trayId = 'some-tray-id'
 
   beforeEach(() => {
     jest.spyOn(TimerHook, 'useTimer').mockImplementation(noop)
   })
 
-  test('should show a helpful message if no trays are added', () => {
+  it('should request fullscreen on mount', () => {
+    const requestFullScreen = jest.fn()
+    const props = {...DEFAULT_PROPS, requestFullScreen}
+    render(<Monitor {...props}/>)
+    expect(requestFullScreen).toHaveBeenCalledWith(true)
+  })
+
+  it('should cancel fullscreen on unmount', () => {
+    const requestFullScreen = jest.fn()
+    const props = {...DEFAULT_PROPS, requestFullScreen}
+    const {unmount} = render(<Monitor {...props}/>)
+    unmount()
+    expect(requestFullScreen).toHaveBeenCalledWith(false)
+  })
+
+  it('should show a helpful message if no trays are added', () => {
     const state = {
       [TRAYS_ROOT]: {}
     }
-    const {queryByText} = render(<Monitor/>, state)
+    const {queryByText} = render(<Monitor {...DEFAULT_PROPS}/>, state)
     expect(queryByText('Add a CI server via the tracking page to start monitoring')).toBeInTheDocument()
   })
 
-  test('should show a loading screen when first switching to the page', () => {
+  it('should show a loading screen when first switching to the page', () => {
     const state = {
       [TRAYS_ROOT]: {
         [trayId]: buildTray({trayId})
       }
     }
-    const {queryByTestId} = render(<Monitor/>, state)
+    const {queryByTestId} = render(<Monitor {...DEFAULT_PROPS}/>, state)
     expect(queryByTestId('loading')).toBeInTheDocument()
   })
 
-  test('should show a success message if there are no projects', async () => {
+  it('should show a success message if there are no projects', async () => {
     jest.spyOn(TimerHook, 'useTimer').mockImplementationOnce((onTrigger) => onTrigger())
     jest.spyOn(ProjectsGateway, 'interesting').mockReturnValue(fakeRequest([]))
     const state = {
@@ -44,7 +64,7 @@ describe('<Monitor/>', () => {
       },
       [SUCCESS_ROOT]: ['some-success-message']
     }
-    const {queryByText} = render(<Monitor/>, state)
+    const {queryByText} = render(<Monitor {...DEFAULT_PROPS}/>, state)
     await waitForDomChange()
     expect(queryByText('some-success-message')).toBeInTheDocument()
   })
