@@ -1,4 +1,5 @@
-#!/bin/bash -euo pipefail
+#!/bin/bash
+set -euo pipefail
 
 if [ -f ~/.nvm/nvm.sh ]; then
     echo "nvm.sh found, using to set the correct version of Node"
@@ -6,7 +7,7 @@ if [ -f ~/.nvm/nvm.sh ]; then
     nvm install
     nvm use
 else
-    echo "~/.nvm/nvm.sh file not found, you will need to manually install the correct version of Node. See wiki/contributing for more details."
+    echo "$HOME/.nvm/nvm.sh file not found, you will need to manually install the correct version of Node. See wiki/contributing for more details."
 fi
 
 hash node 2>/dev/null || {

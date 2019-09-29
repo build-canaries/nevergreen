@@ -53,7 +53,8 @@ npm start &
 cd ..
 
 export HOST="http://localhost:5000"
-export FULL_VERSION="$(cat "./resources/version.txt")+$(cat "./resources/version_meta.txt")"
+FULL_VERSION="$(cat "./resources/version.txt")+$(cat "./resources/version_meta.txt")"
+export FULL_VERSION
 ./.circleci/smoke-test.sh # Don't source as the script calls exit
 
 print_step 'Running the journey tests'
