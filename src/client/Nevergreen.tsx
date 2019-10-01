@@ -4,7 +4,6 @@ import {Footer} from './footer/Footer'
 import {Notification} from './Notification'
 import styles from './nevergreen.scss'
 import {KeyboardShortcuts} from './KeyboardShortcuts'
-import {useConfiguration} from './configuration/ConfigurationHook'
 import {useServiceWorker} from './ServiceWorkerHook'
 import {useFullScreen} from './FullScreenHook'
 import {useSelector} from 'react-redux'
@@ -21,11 +20,10 @@ import {StyleGuide} from './styleGuide/StyleGuide'
 export function Nevergreen() {
   const [notification, setNotification] = useState('')
 
-  const loading = useConfiguration()
-  const [fullScreen, requestFullScreen, disableFullScreen] = useFullScreen(loading)
+  const [fullScreen, requestFullScreen, disableFullScreen] = useFullScreen()
 
   useServiceWorker(setNotification)
-  useCheckForNewVersion(loading, setNotification)
+  useCheckForNewVersion(setNotification)
 
   const clickToShowMenu = useSelector(getClickToShowMenu)
 
@@ -35,34 +33,30 @@ export function Nevergreen() {
 
   return (
     <>
-      {!loading && <KeyboardShortcuts/>}
-
+      <KeyboardShortcuts/>
       <div className={styles.nevergreen}
-           aria-busy={loading}
            tabIndex={-1}
            {...disableFullScreenOn}>
         <Header fullScreen={fullScreen}/>
         <Notification notification={notification}
                       dismiss={() => setNotification('')}
                       fullScreen={fullScreen}/>
-        {!loading && (
-          <main className={styles.main}>
-            <Switch>
-              <Route exact path='/monitor'>
-                <Monitor fullScreen={fullScreen}
-                         requestFullScreen={requestFullScreen}/>
-              </Route>
-              <Route exact path='/tracking' component={Tracking}/>
-              <Route exact path='/success' component={Success}/>
-              <Route exact path='/settings' component={Settings}/>
-              <Route exact path='/backup' component={Backup}/>
-              <Route exact path='/style-guide' component={StyleGuide}/>
-              <Route>
-                <Redirect to='/tracking'/>
-              </Route>
-            </Switch>
-          </main>
-        )}
+        <main className={styles.main}>
+          <Switch>
+            <Route exact path='/monitor'>
+              <Monitor fullScreen={fullScreen}
+                       requestFullScreen={requestFullScreen}/>
+            </Route>
+            <Route exact path='/tracking' component={Tracking}/>
+            <Route exact path='/success' component={Success}/>
+            <Route exact path='/settings' component={Settings}/>
+            <Route exact path='/backup' component={Backup}/>
+            <Route exact path='/style-guide' component={StyleGuide}/>
+            <Route>
+              <Redirect to='/tracking'/>
+            </Route>
+          </Switch>
+        </main>
         <Footer fullScreen={fullScreen}/>
       </div>
     </>

@@ -10,7 +10,7 @@ type FullScreen = [
 const ONE_SECOND = 1000
 const THREE_SECONDS = 3 * 1000
 
-export function useFullScreen(loading: boolean): FullScreen {
+export function useFullScreen(): FullScreen {
   const fullScreenTimer = useRef(0)
   const [fullScreen, setFullScreen] = useState(false)
   const [fullScreenRequested, setFullScreenRequested] = useState(false)
@@ -31,13 +31,11 @@ export function useFullScreen(loading: boolean): FullScreen {
     [fullScreen, fullScreenRequested])
 
   useLayoutEffect(() => {
-    if (!loading) {
-      setFullScreen(fullScreenRequested)
-      if (!fullScreenRequested) {
-        clearTimeout(fullScreenTimer.current)
-      }
+    setFullScreen(fullScreenRequested)
+    if (!fullScreenRequested) {
+      clearTimeout(fullScreenTimer.current)
     }
-  }, [loading, fullScreenRequested])
+  }, [fullScreenRequested])
 
   return [fullScreen, setFullScreenRequested, disableFullScreen]
 }

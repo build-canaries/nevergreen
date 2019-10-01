@@ -1,38 +1,68 @@
 import 'core-js/stable'
 import 'regenerator-runtime/runtime'
-import React from 'react'
+import React, {useEffect} from 'react'
 import ReactDOM from 'react-dom'
 import {Provider} from 'react-redux'
 import {BrowserRouter as Router} from 'react-router-dom'
-import {save as repositorySave} from './configuration/LocalRepository'
+import {init, load, save as repositorySave} from './configuration/LocalRepository'
 import {reducer} from './Reducer'
-import {filter} from './configuration/Configuration'
+import {filter, toConfiguration} from './configuration/Configuration'
 import {Nevergreen} from './Nevergreen'
-import {debounce} from 'lodash'
+import {debounce, join} from 'lodash'
 import {UnhandledError} from './UnhandledError'
 import Modal from 'react-modal'
 import {configureStore} from 'redux-starter-kit'
+import {Loading} from './common/Loading'
+import {isBlank} from './common/Utils'
 
 const ONE_SECOND = 1000
 
-const store = configureStore({reducer})
+async function initialiseNevergreen() {
+  await init()
+  const [errors, preloadedState] = toConfiguration(await load())
 
-const save = async () => {
-  const state = store.getState()
-  await repositorySave(filter(state))
+  console.log(preloadedState)
+
+  if (!isBlank(errors)) {
+    throw new Error(`Unable to initalise Nevergreen because of configuration loadings errors [${join(errors, ', ')}]`)
+  }
+
+  const store = configureStore({
+    reducer,
+    preloadedState
+  })
+
+  const save = async () => {
+    const state = store.getState()
+    await repositorySave(filter(state))
+  }
+  const saveDebounced = debounce(save, 200, {maxWait: ONE_SECOND})
+
+  store.subscribe(() => saveDebounced())
+
+  Modal.setAppElement('#root')
+
+  ReactDOM.render(
+    <UnhandledError>
+      <Provider store={store}>
+        <Router>
+          <Nevergreen/>
+        </Router>
+      </Provider>
+    </UnhandledError>,
+    document.getElementById('root'))
 }
-const saveDebounced = debounce(save, 200, {maxWait: ONE_SECOND})
 
-store.subscribe(() => saveDebounced())
+const Index = () => {
+  useEffect(() => {
+    initialiseNevergreen()
+  }, [])
 
-Modal.setAppElement('#root')
+  return (
+    <UnhandledError>
+      <Loading loaded={false}/>
+    </UnhandledError>
+  )
+}
 
-ReactDOM.render(
-  <UnhandledError>
-    <Provider store={store}>
-      <Router>
-        <Nevergreen/>
-      </Router>
-    </Provider>
-  </UnhandledError>,
-  document.getElementById('root'))
+ReactDOM.render(<Index/>, document.getElementById('root'))
