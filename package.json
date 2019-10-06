@@ -37,6 +37,7 @@
     "clipboard": "2.0.4",
     "core-js": "3.2.1",
     "date-fns": "2.4.0",
+    "fp-ts": "2.1.0",
     "localforage": "1.7.3",
     "lodash": "4.17.15",
     "modularscale-sass": "3.0.10",

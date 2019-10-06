@@ -3,45 +3,38 @@ import {cloneDeep, isString} from 'lodash'
 import {RecursivePartial} from '../common/Types'
 import {State} from '../Reducer'
 import {fromJson, toJson} from '../common/Json'
+import {migrate} from './Migrate'
+import {UntrustedData} from './LocalRepository'
+import {Either, left, right} from 'fp-ts/lib/Either'
 
 export interface Configuration extends RecursivePartial<State> {
 }
 
-export const schema: object = validateConfiguration.schema
+export const schema: Readonly<object> = validateConfiguration.schema
 
-/*
- * ValidateConfiguration is generated using ajv-pack, the main export is a validate function which mutates the given
- * data structure (to remove additional properties). Because of this we deep clone the given object before passing to
- * the validate function for safety.
- */
-
-export function validate(configuration: Configuration): ReadonlyArray<string> {
-  const filteredData = cloneDeep(configuration)
-  if (validateConfiguration(filteredData)) {
-    return []
+// ValidateConfiguration is generated using ajv-pack which is why it has a strange signature
+function validateAndFilter(data: UntrustedData): Either<ReadonlyArray<string>, Configuration> {
+  // Mutates the given object to filter unknown properties, and returns a boolean whether valid or not
+  if (validateConfiguration(data)) {
+    return right(data)
   } else {
-    return validateConfiguration.errors.map((error) => `${error.dataPath} ${error.message}`)
+    // If not valid, sets an errors property (even functions are objects in JS...)
+    return left(validateConfiguration.errors.map((error) => `${error.dataPath} ${error.message}`))
   }
 }
 
-export function filter(data: string | object): Configuration {
-  const filteredConfiguration = isString(data)
-    ? fromJson(data)
-    : cloneDeep(data)
-  validateConfiguration(filteredConfiguration)
-  return filteredConfiguration
-}
-
-export function toConfiguration(data: string | object): [ReadonlyArray<string>, Configuration | undefined] {
+export function toConfiguration(raw: string | Readonly<UntrustedData>): Either<ReadonlyArray<string>, Configuration> {
   try {
-    const configuration = filter(data)
-    const validationMessages = validate(configuration)
-    return [validationMessages, configuration]
+    const data = isString(raw)
+      ? fromJson(raw)
+      : cloneDeep(raw)
+    migrate(data)
+    return validateAndFilter(data)
   } catch (error) {
-    return [[error.message], undefined]
+    return left([error.message])
   }
 }
 
 export function getConfiguration(state: State): string {
-  return toJson(filter(state))
+  return toJson(state)
 }

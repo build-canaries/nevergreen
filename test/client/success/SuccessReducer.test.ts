@@ -1,8 +1,8 @@
 import {getSuccessMessages, reduce, SUCCESS_ROOT, SuccessState} from '../../../src/client/success/SuccessReducer'
 import {Actions} from '../../../src/client/Actions'
-import {setConfiguration} from '../../../src/client/NevergreenActionCreators'
 import {addMessage, removeMessage} from '../../../src/client/success/SuccessActionCreators'
 import {buildState, testReducer} from '../testHelpers'
+import {configurationImported} from '../../../src/client/backup/BackupActionCreators'
 
 describe('SuccessReducer', () => {
 
@@ -20,18 +20,18 @@ describe('SuccessReducer', () => {
     expect(newState).toEqual(existingState)
   })
 
-  describe(Actions.SET_CONFIGURATION, () => {
+  describe(Actions.CONFIGURATION_IMPORTED, () => {
 
     test('should merge the success data', () => {
       const existingState = state([])
-      const action = setConfiguration({success: ['some-message']})
+      const action = configurationImported({success: ['some-message']})
       const newState = reducer(existingState, action)
       expect(getSuccessMessages(newState)).toEqual(['some-message'])
     })
 
     test('should handle no success data', () => {
       const existingState = state([])
-      const action = setConfiguration({})
+      const action = configurationImported({})
       const newState = reducer(existingState, action)
       expect(getSuccessMessages(newState)).toHaveLength(0)
     })

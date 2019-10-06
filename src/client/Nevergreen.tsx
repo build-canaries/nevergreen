@@ -16,8 +16,12 @@ import {Success} from './success/Success'
 import {Settings} from './settings/Settings'
 import {Backup} from './backup/Backup'
 import {StyleGuide} from './styleGuide/StyleGuide'
+import {Loading} from './common/Loading'
+import {useLocalConfiguration} from './configuration/ConfigurationHook'
 
 export function Nevergreen() {
+  const loaded = useLocalConfiguration()
+
   const [notification, setNotification] = useState('')
 
   const [fullScreen, requestFullScreen, disableFullScreen] = useFullScreen()
@@ -32,7 +36,7 @@ export function Nevergreen() {
     : {onMouseMove: disableFullScreen}
 
   return (
-    <>
+    <Loading loaded={loaded}>
       <KeyboardShortcuts/>
       <div className={styles.nevergreen}
            tabIndex={-1}
@@ -59,6 +63,6 @@ export function Nevergreen() {
         </main>
         <Footer fullScreen={fullScreen}/>
       </div>
-    </>
+    </Loading>
   )
 }

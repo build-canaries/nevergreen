@@ -8,31 +8,32 @@ describe('ProjectsGateway', () => {
 
   describe('fetchAll', () => {
 
-    test('posts only the required data from the given trays', () => {
+    it('posts only the required data from the given trays', () => {
       jest.spyOn(gateway, 'post')
       jest.spyOn(gateway, 'fakeRequest')
       const seen: Project[] = [buildProject({trayId: 'some-tray-id', projectId: 'some-project-id'})]
       const trays = [
         buildTray({
+          authType: AuthTypes.basic,
           includeNew: true,
           password: 'pword',
           serverType: 'GO',
           trayId: 'some-tray-id',
           url: 'url',
-          username: 'uname',
-          authType: AuthTypes.basic
+          username: 'uname'
         })
       ]
       const expected = [
         {
+          accessToken: '',
+          authType: AuthTypes.basic,
           includeNew: true,
           password: 'pword',
           seen: ['some-project-id'],
           serverType: 'GO',
           trayId: 'some-tray-id',
           url: 'url',
-          username: 'uname',
-          authType: AuthTypes.basic
+          username: 'uname'
         }
       ]
 
@@ -41,29 +42,31 @@ describe('ProjectsGateway', () => {
       expect(gateway.post).toBeCalledWith('/api/projects', expected)
     })
 
-    test('posts with access token from the given trays', () => {
+    it('posts with access token from the given trays', () => {
       jest.spyOn(gateway, 'post')
       jest.spyOn(gateway, 'fakeRequest')
       const seen: Project[] = [buildProject({trayId: 'some-tray-id', projectId: 'some-project-id'})]
       const trays = [
         buildTray({
+          accessToken: 'some-dummy-token',
+          authType: AuthTypes.token,
           includeNew: true,
           serverType: 'GO',
           trayId: 'some-tray-id',
-          url: 'url',
-          accessToken: 'some-dummy-token',
-          authType: AuthTypes.token
+          url: 'url'
         })
       ]
       const expected = [
         {
+          accessToken: 'some-dummy-token',
+          authType: AuthTypes.token,
           includeNew: true,
+          password: '',
           seen: ['some-project-id'],
           serverType: 'GO',
           trayId: 'some-tray-id',
           url: 'url',
-          accessToken: 'some-dummy-token',
-          authType: AuthTypes.token
+          username: ''
         }
       ]
 
@@ -75,36 +78,35 @@ describe('ProjectsGateway', () => {
 
   describe('interesting', () => {
 
-    test('maps selected projects to the posted data', () => {
+    it('maps selected projects to the posted data', () => {
       jest.spyOn(gateway, 'post')
       jest.spyOn(gateway, 'fakeRequest')
       const seen: Project[] = []
       const selected = {'some-tray-id': ['some-project-id']}
       const trays = [
         buildTray({
+          authType: AuthTypes.basic,
           includeNew: true,
           password: 'some-pword',
           serverType: 'some-server-type',
           trayId: 'some-tray-id',
           url: 'some-url',
-          username: 'some-uname',
-          authType: AuthTypes.basic
+          username: 'some-uname'
         })
       ]
       const expected = [
         {
+          accessToken: '',
+          authType: AuthTypes.basic,
           included: ['some-project-id'],
           includeNew: true,
           password: 'some-pword',
+          prognosis: [Prognosis.sick],
           seen: [],
           serverType: 'some-server-type',
           trayId: 'some-tray-id',
           url: 'some-url',
-          username: 'some-uname',
-          authType: AuthTypes.basic,
-          prognosis: [
-            Prognosis.sick
-          ]
+          username: 'some-uname'
         }
       ]
 
@@ -114,7 +116,7 @@ describe('ProjectsGateway', () => {
       expect(gateway.fakeRequest).not.toBeCalled()
     })
 
-    test('does not include trays with no selected projects and not including new', () => {
+    it('does not include trays with no selected projects and not including new', () => {
       jest.spyOn(gateway, 'post')
       jest.spyOn(gateway, 'fakeRequest')
       const seen: Project[] = []
@@ -138,7 +140,7 @@ describe('ProjectsGateway', () => {
       expect(gateway.fakeRequest).not.toBeCalled()
     })
 
-    test('does not call the server at all if no trays have selected projects and new projects are not included', () => {
+    it('does not call the server at all if no trays have selected projects and new projects are not included', () => {
       jest.spyOn(gateway, 'post')
       jest.spyOn(gateway, 'fakeRequest')
       const seen: Project[] = []

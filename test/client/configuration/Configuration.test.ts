@@ -1,69 +1,80 @@
-import {filter, validate} from '../../../src/client/configuration/Configuration'
+import {toConfiguration} from '../../../src/client/configuration/Configuration'
+import {isLeft, isRight} from 'fp-ts/lib/Either'
 
-describe('Data', () => {
-
-  describe('validate', () => {
-
-    test('allows an empty object as any data not provided gets defaulted', () => {
-      const data = {}
-      expect(validate(data)).toHaveLength(0)
-    })
-
-    test('rejects a tray with a missing ID, as this is required to match projects to the owning tray', () => {
-      const data = {
-        trays: {
-          'some-key': {
-            url: 'some-url'
-          }
-        }
+it('rejects a tray with a missing ID, as this is required to match projects to the owning tray', () => {
+  const data = {
+    trays: {
+      'some-key': {
+        url: 'some-url'
       }
-      expect(validate(data)).not.toHaveLength(0)
-    })
+    }
+  }
+  const result = toConfiguration(data)
+  expect(isLeft(result)).toBeTruthy()
+  if (isLeft(result)) {
+    expect(result.left).not.toHaveLength(0)
+  }
+})
 
-    test('rejects a tray with a missing URL, as this is required to actually contact the CI server', () => {
-      const data = {
-        trays: {
-          'some-id': {
-            trayId: 'some-id'
-          }
-        }
+it('rejects a tray with a missing URL, as this is required to actually contact the CI server', () => {
+  const data = {
+    trays: {
+      'some-id': {
+        trayId: 'some-id'
       }
-      expect(validate(data)).not.toHaveLength(0)
-    })
+    }
+  }
+  const result = toConfiguration(data)
+  expect(isLeft(result)).toBeTruthy()
+  if (isLeft(result)) {
+    expect(result.left).not.toHaveLength(0)
+  }
+})
 
-    test('rejects a project with a missing ID, as this is required to select projects', () => {
-      const data = {
-        projects: {
-          'some-tray-id': {
-            'some-project-id': {name: 'some-name'}
-          }
-        }
+it('rejects a project with a missing ID, as this is required to select projects', () => {
+  const data = {
+    projects: {
+      'some-tray-id': {
+        'some-project-id': {name: 'some-name'}
       }
-      expect(validate(data)).not.toHaveLength(0)
-    })
+    }
+  }
+  const result = toConfiguration(data)
+  expect(isLeft(result)).toBeTruthy()
+  if (isLeft(result)) {
+    expect(result.left).not.toHaveLength(0)
+  }
+})
 
-    test('rejects a project with a missing name, as this is required to display projects on the UI', () => {
-      const data = {
-        projects: {
-          'some-tray-id': {
-            'some-project-id': {projectId: 'some-id'}
-          }
-        }
+it('rejects a project with a missing name, as this is required to display projects on the UI', () => {
+  const data = {
+    projects: {
+      'some-tray-id': {
+        'some-project-id': {projectId: 'some-id'}
       }
-      expect(validate(data)).not.toHaveLength(0)
-    })
-  })
+    }
+  }
+  const result = toConfiguration(data)
+  expect(isLeft(result)).toBeTruthy()
+  if (isLeft(result)) {
+    expect(result.left).not.toHaveLength(0)
+  }
+})
 
-  describe('filter', () => {
+it('removes unknown properties', () => {
+  const data = {foo: 'bar'}
+  const result = toConfiguration(data)
+  expect(isRight(result)).toBeTruthy()
+  if (isRight(result)) {
+    expect(result.right).not.toHaveProperty('foo')
+  }
+})
 
-    test('removes unknown properties', () => {
-      const data = {foo: 'bar'}
-      expect(filter(data)).toEqual({})
-    })
-
-    test('keeps known properties', () => {
-      const data = {trays: {}}
-      expect(filter(data)).toEqual({trays: {}})
-    })
-  })
+it('keeps known properties', () => {
+  const data = {trays: {}}
+  const result = toConfiguration(data)
+  expect(isRight(result)).toBeTruthy()
+  if (isRight(result)) {
+    expect(result.right).toEqual(expect.objectContaining({trays: {}}))
+  }
 })

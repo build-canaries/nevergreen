@@ -1,4 +1,4 @@
-import {exportConfiguration, importConfiguration} from '../../../src/client/gateways/BackupGateway'
+import {exportConfiguration, fetchConfiguration} from '../../../src/client/gateways/BackupGateway'
 import * as gateway from '../../../src/client/gateways/Gateway'
 
 describe('BackupGateway', () => {
@@ -18,7 +18,7 @@ describe('BackupGateway', () => {
     })
   })
 
-  describe('importConfiguration', () => {
+  describe('fetchConfiguration', () => {
 
     test('should call the import URL', () => {
       jest.spyOn(gateway, 'post')
@@ -26,7 +26,7 @@ describe('BackupGateway', () => {
       const id = 'some-id'
       const token = 'some-token'
       const url = 'some-url'
-      importConfiguration(from, id, token, url)
+      fetchConfiguration(from, id, token, url)
       expect(gateway.post).toBeCalledWith('/api/import', {from, id, token, url})
     })
   })

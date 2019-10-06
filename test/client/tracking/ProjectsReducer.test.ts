@@ -1,10 +1,10 @@
 import {getProjectsForTray, PROJECTS_ROOT, ProjectsState, reduce} from '../../../src/client/tracking/ProjectsReducer'
 import {Actions} from '../../../src/client/Actions'
-import {setConfiguration} from '../../../src/client/NevergreenActionCreators'
-import {projectsFetched, trayRemoved, trayAdded} from '../../../src/client/tracking/TrackingActionCreators'
+import {projectsFetched, trayAdded, trayRemoved} from '../../../src/client/tracking/TrackingActionCreators'
 import {buildProject, buildState, testReducer} from '../testHelpers'
 import {RecursivePartial} from '../../../src/client/common/Types'
 import {AuthTypes} from '../../../src/client/domain/Tray'
+import {configurationImported} from '../../../src/client/backup/BackupActionCreators'
 
 describe('ProjectsReducer', () => {
 
@@ -22,12 +22,12 @@ describe('ProjectsReducer', () => {
     expect(newState).toEqual(existingState)
   })
 
-  describe(Actions.SET_CONFIGURATION, () => {
+  describe(Actions.CONFIGURATION_IMPORTED, () => {
 
     test('should overwrite any existing data with the action data', () => {
       const newProject = buildProject({projectId: 'projectId'})
       const existingState = state({oldTrayId: {oldProjectId: buildProject({projectId: 'oldProjectId'})}})
-      const action = setConfiguration({[PROJECTS_ROOT]: {trayId: {projectId: newProject}}})
+      const action = configurationImported({[PROJECTS_ROOT]: {trayId: {projectId: newProject}}})
       const newState = reducer(existingState, action)
       expect(getProjectsForTray('oldTrayId')(newState)).toEqual([])
       expect(getProjectsForTray('trayId')(newState)).toEqual([newProject])
@@ -36,7 +36,7 @@ describe('ProjectsReducer', () => {
     test('should handle no projects data', () => {
       const project = buildProject({projectId: 'projectId'})
       const existingState = state({trayId: {projectId: project}})
-      const action = setConfiguration({})
+      const action = configurationImported({})
       const newState = reducer(existingState, action)
       expect(getProjectsForTray('trayId')(newState)).toEqual([project])
     })

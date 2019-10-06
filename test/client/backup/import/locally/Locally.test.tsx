@@ -1,14 +1,16 @@
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import {Locally} from '../../../../../src/client/backup/import/locally/Locally'
-import {render} from '../../../testHelpers'
+import {buildState, render} from '../../../testHelpers'
+import {toJson} from '../../../../../src/client/common/Json'
 
 describe('import <Locally/>', () => {
 
   test('should import valid data after filtering and parsing', async () => {
     const {getByLabelText, getByText} = render(<Locally/>)
-    await userEvent.type(getByLabelText('configuration to import'), '{}', {allAtOnce: true})
+    await userEvent.type(getByLabelText('configuration to import'), toJson(buildState()), {allAtOnce: true})
     userEvent.click(getByText('import'))
+
     expect(getByText('Successfully imported configuration')).toBeInTheDocument()
     expect(getByLabelText('configuration to import')).toHaveValue('')
   })
@@ -24,6 +26,7 @@ describe('import <Locally/>', () => {
     const {getByLabelText, getByText, getByDisplayValue} = render(<Locally/>)
     await userEvent.type(getByLabelText('configuration to import'), invalidConfiguration, {allAtOnce: true})
     userEvent.click(getByText('import'))
+
     expect(getByText('Unexpected end of JSON input')).toBeInTheDocument()
     expect(getByDisplayValue(invalidConfiguration)).toBeInTheDocument()
   })
@@ -33,6 +36,7 @@ describe('import <Locally/>', () => {
     const {getByLabelText, getByText, getByDisplayValue} = render(<Locally/>)
     await userEvent.type(getByLabelText('configuration to import'), invalidConfiguration, {allAtOnce: true})
     userEvent.click(getByText('import'))
+
     expect(getByText('.trays[\'some-id\'] should have required property \'trayId\'')).toBeInTheDocument()
     expect(getByDisplayValue(invalidConfiguration)).toBeInTheDocument()
   })

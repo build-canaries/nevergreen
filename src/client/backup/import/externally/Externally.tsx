@@ -7,15 +7,15 @@ import {Password} from '../../../common/forms/Password'
 import {Messages, MessagesType} from '../../../common/Messages'
 import {isBlank} from '../../../common/Utils'
 import {send} from '../../../gateways/Gateway'
-import {importConfiguration, ImportResponse} from '../../../gateways/BackupGateway'
-import {Configuration, toConfiguration} from '../../../configuration/Configuration'
+import {fetchConfiguration, ImportResponse} from '../../../gateways/BackupGateway'
+import {toConfiguration} from '../../../configuration/Configuration'
 import {isEmpty} from 'lodash'
 import {useDispatch, useSelector} from 'react-redux'
 import {State} from '../../../Reducer'
 import {getBackupId, getBackupUrl} from '../../BackupReducer'
-import {BackupLocation, backupSetId, backupSetUrl} from '../../BackupActionCreators'
-import {setConfiguration} from '../../../NevergreenActionCreators'
+import {BackupLocation, backupSetId, backupSetUrl, configurationImported} from '../../BackupActionCreators'
 import {Input} from '../../../common/forms/Input'
+import {isRight} from 'fp-ts/lib/Either'
 
 interface ExternallyProps {
   readonly location: BackupLocation;
@@ -73,13 +73,13 @@ export function Externally({location, help, accessTokenRequired}: ExternallyProp
       setLoaded(false)
       setMessages([])
       try {
-        const res = await send<ImportResponse>(importConfiguration(location, newId, accessToken, newUrl))
-        const [dataErrors, configuration] = toConfiguration(res.configuration)
-        if (isEmpty(dataErrors)) {
+        const res = await send<ImportResponse>(fetchConfiguration(location, newId, accessToken, newUrl))
+        const result = toConfiguration(res.configuration)
+        if (isRight(result)) {
           setInfos(['Successfully imported configuration'])
-          dispatch(setConfiguration(configuration as Configuration))
+          dispatch(configurationImported(result.right))
         } else {
-          setErrors(dataErrors)
+          setErrors(result.left)
         }
       } catch (error) {
         setErrors([error.message])

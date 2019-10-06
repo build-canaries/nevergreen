@@ -15,12 +15,11 @@ import {
   MIN_REFRESH_TIME
 } from './SettingsActionCreators'
 import defaultSoundFx from './pacman_death.mp3'
-import {ActionSetConfiguration} from '../NevergreenActionCreators'
 import {createReducer, createSelector} from 'redux-starter-kit'
 import {State} from '../Reducer'
 import {Prognosis} from '../domain/Project'
-import {uniq} from 'lodash'
-import {Draft} from 'immer'
+import {get, uniq} from 'lodash'
+import {ActionConfigurationImported} from '../backup/BackupActionCreators'
 
 export interface SettingsState {
   readonly showTrayName: boolean;
@@ -36,7 +35,7 @@ export interface SettingsState {
   readonly showPrognosis: ReadonlyArray<Prognosis>;
 }
 
-export const SETTINGS_ROOT = 'audioVisual'
+export const SETTINGS_ROOT = 'settings'
 
 const DEFAULT_STATE: SettingsState = {
   showTrayName: false,
@@ -58,8 +57,9 @@ const DEFAULT_STATE: SettingsState = {
 }
 
 export const reduce = createReducer<SettingsState>(DEFAULT_STATE, {
-  [Actions.SET_CONFIGURATION]: (draft: Draft<SettingsState>, action: ActionSetConfiguration) => {
-    return {...draft, ...action.configuration[SETTINGS_ROOT]} as Draft<SettingsState>
+  [Actions.CONFIGURATION_IMPORTED]: (draft, action: ActionConfigurationImported) => {
+    const importedState = get(action.configuration, SETTINGS_ROOT, {}) as SettingsState
+    return {...draft, ...importedState}
   },
   [Actions.SHOW_BUILD_TIME]: (draft, action: ActionShowBuildTime) => {
     draft.showBuildTime = action.value

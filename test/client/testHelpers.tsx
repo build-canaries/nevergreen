@@ -8,8 +8,8 @@ import {PROJECTS_ROOT} from '../../src/client/tracking/ProjectsReducer'
 import {SELECTED_ROOT} from '../../src/client/tracking/SelectedReducer'
 import {SUCCESS_ROOT} from '../../src/client/success/SuccessReducer'
 import {TRAYS_ROOT} from '../../src/client/tracking/TraysReducer'
-import {Prognosis, Project} from '../../src/client/domain/Project'
-import {AuthTypes, Tray} from '../../src/client/domain/Tray'
+import {createProject, Prognosis, Project} from '../../src/client/domain/Project'
+import {createTray, Tray} from '../../src/client/domain/Tray'
 import {combineReducers, Reducer} from 'redux'
 import {RecursivePartial} from '../../src/client/common/Types'
 import {ApiProject} from '../../src/client/gateways/ProjectsGateway'
@@ -19,6 +19,7 @@ import {configureStore} from 'redux-starter-kit'
 import {HashRouter} from 'react-router-dom'
 import Modal from 'react-modal'
 import {DEFAULT_PROJECTS_TO_SHOW, MIN_REFRESH_TIME} from '../../src/client/settings/SettingsActionCreators'
+import {APPLIED_MIGRATIONS_ROOT} from '../../src/client/configuration/MigrationsReducer'
 
 export function locator(name: string) {
   return `[data-locator="${name}"]`
@@ -81,7 +82,8 @@ export function buildState(subState?: RecursivePartial<State>): State {
     [PROJECTS_ROOT]: {},
     [SELECTED_ROOT]: {},
     [SUCCESS_ROOT]: [],
-    [TRAYS_ROOT]: {}
+    [TRAYS_ROOT]: {},
+    [APPLIED_MIGRATIONS_ROOT]: []
   }, subState)
 }
 
@@ -111,32 +113,11 @@ export function render(component: ReactNode, state?: RecursivePartial<State>) {
 }
 
 export function buildTray(tray?: Partial<Tray>): Tray {
-  return merge({
-    authType: AuthTypes.none,
-    highlight: false,
-    includeNew: false,
-    requiresRefresh: false,
-    serverType: '',
-    trayId: '',
-    url: ''
-  }, tray)
+  return createTray('some-tray-id', 'some-url', tray)
 }
 
 export function buildProject(project?: Partial<Project>): Project {
-  return merge({
-    fetchedTime: '',
-    isNew: false,
-    lastBuildLabel: '',
-    lastBuildTime: '',
-    lastBuildStatus: '',
-    name: '',
-    removed: false,
-    projectId: '',
-    url: '',
-    trayId: '',
-    prognosis: Prognosis.unknown,
-    serverType: ''
-  }, project)
+  return createProject('some-project-id', 'some-name', project)
 }
 
 export function buildApiProject(apiProject?: Partial<ApiProject>): ApiProject {
@@ -174,7 +155,8 @@ export function testReducer(reducer: Partial<Reducer<State>>) {
     [PROJECTS_ROOT]: (state: any = null) => state,
     [SELECTED_ROOT]: (state: any = null) => state,
     [SUCCESS_ROOT]: (state: any = null) => state,
-    [TRAYS_ROOT]: (state: any = null) => state
+    [TRAYS_ROOT]: (state: any = null) => state,
+    [APPLIED_MIGRATIONS_ROOT]: (state: any = null) => state
   }, reducer))
 }
 

@@ -11,19 +11,19 @@ var validate = (function() {
       var errs__0 = errors;
       var valid1 = true;
       for (var key0 in data) {
-        var isAdditional0 = !(false || key0 == 'audioVisual' || key0 == 'trays' || key0 == 'projects' || key0 == 'success' || key0 == 'selected' || key0 == 'backup');
+        var isAdditional0 = !(false || key0 == 'settings' || key0 == 'trays' || key0 == 'projects' || key0 == 'success' || key0 == 'selected' || key0 == 'backup' || key0 == 'appliedMigrations');
         if (isAdditional0) {
           delete data[key0];
         }
       }
-      var data1 = data.audioVisual;
+      var data1 = data.settings;
       if (data1 !== undefined) {
         var errs_1 = errors;
         if ((data1 && typeof data1 === "object" && !Array.isArray(data1))) {
           var errs__1 = errors;
           var valid2 = true;
           for (var key1 in data1) {
-            var isAdditional1 = !(false || validate.schema.properties.audioVisual.properties.hasOwnProperty(key1));
+            var isAdditional1 = !(false || validate.schema.properties.settings.properties.hasOwnProperty(key1));
             if (isAdditional1) {
               delete data1[key1];
             }
@@ -33,8 +33,8 @@ var validate = (function() {
             if (typeof data1.showTrayName !== "boolean") {
               var err = {
                 keyword: 'type',
-                dataPath: (dataPath || '') + '.audioVisual.showTrayName',
-                schemaPath: '#/properties/audioVisual/properties/showTrayName/type',
+                dataPath: (dataPath || '') + '.settings.showTrayName',
+                schemaPath: '#/properties/settings/properties/showTrayName/type',
                 params: {
                   type: 'boolean'
                 },
@@ -51,8 +51,8 @@ var validate = (function() {
             if (typeof data1.showBuildTime !== "boolean") {
               var err = {
                 keyword: 'type',
-                dataPath: (dataPath || '') + '.audioVisual.showBuildTime',
-                schemaPath: '#/properties/audioVisual/properties/showBuildTime/type',
+                dataPath: (dataPath || '') + '.settings.showBuildTime',
+                schemaPath: '#/properties/settings/properties/showBuildTime/type',
                 params: {
                   type: 'boolean'
                 },
@@ -69,8 +69,8 @@ var validate = (function() {
             if (typeof data1.showBrokenBuildTime !== "boolean") {
               var err = {
                 keyword: 'type',
-                dataPath: (dataPath || '') + '.audioVisual.showBrokenBuildTime',
-                schemaPath: '#/properties/audioVisual/properties/showBrokenBuildTime/type',
+                dataPath: (dataPath || '') + '.settings.showBrokenBuildTime',
+                schemaPath: '#/properties/settings/properties/showBrokenBuildTime/type',
                 params: {
                   type: 'boolean'
                 },
@@ -87,8 +87,8 @@ var validate = (function() {
             if (typeof data1.showBuildLabel !== "boolean") {
               var err = {
                 keyword: 'type',
-                dataPath: (dataPath || '') + '.audioVisual.showBuildLabel',
-                schemaPath: '#/properties/audioVisual/properties/showBuildLabel/type',
+                dataPath: (dataPath || '') + '.settings.showBuildLabel',
+                schemaPath: '#/properties/settings/properties/showBuildLabel/type',
                 params: {
                   type: 'boolean'
                 },
@@ -105,8 +105,8 @@ var validate = (function() {
             if (typeof data1.showSystemNotifications !== "boolean") {
               var err = {
                 keyword: 'type',
-                dataPath: (dataPath || '') + '.audioVisual.showSystemNotifications',
-                schemaPath: '#/properties/audioVisual/properties/showSystemNotifications/type',
+                dataPath: (dataPath || '') + '.settings.showSystemNotifications',
+                schemaPath: '#/properties/settings/properties/showSystemNotifications/type',
                 params: {
                   type: 'boolean'
                 },
@@ -123,8 +123,8 @@ var validate = (function() {
             if (typeof data1.playBrokenBuildSoundFx !== "boolean") {
               var err = {
                 keyword: 'type',
-                dataPath: (dataPath || '') + '.audioVisual.playBrokenBuildSoundFx',
-                schemaPath: '#/properties/audioVisual/properties/playBrokenBuildSoundFx/type',
+                dataPath: (dataPath || '') + '.settings.playBrokenBuildSoundFx',
+                schemaPath: '#/properties/settings/properties/playBrokenBuildSoundFx/type',
                 params: {
                   type: 'boolean'
                 },
@@ -142,8 +142,8 @@ var validate = (function() {
             if (typeof data2 !== "string" && data2 !== null) {
               var err = {
                 keyword: 'type',
-                dataPath: (dataPath || '') + '.audioVisual.brokenBuildSoundFx',
-                schemaPath: '#/properties/audioVisual/properties/brokenBuildSoundFx/type',
+                dataPath: (dataPath || '') + '.settings.brokenBuildSoundFx',
+                schemaPath: '#/properties/settings/properties/brokenBuildSoundFx/type',
                 params: {
                   type: 'string,null'
                 },
@@ -160,8 +160,8 @@ var validate = (function() {
             if (typeof data1.refreshTime !== "number") {
               var err = {
                 keyword: 'type',
-                dataPath: (dataPath || '') + '.audioVisual.refreshTime',
-                schemaPath: '#/properties/audioVisual/properties/refreshTime/type',
+                dataPath: (dataPath || '') + '.settings.refreshTime',
+                schemaPath: '#/properties/settings/properties/refreshTime/type',
                 params: {
                   type: 'number'
                 },
@@ -178,8 +178,8 @@ var validate = (function() {
             if (typeof data1.maxProjectsToShow !== "number") {
               var err = {
                 keyword: 'type',
-                dataPath: (dataPath || '') + '.audioVisual.maxProjectsToShow',
-                schemaPath: '#/properties/audioVisual/properties/maxProjectsToShow/type',
+                dataPath: (dataPath || '') + '.settings.maxProjectsToShow',
+                schemaPath: '#/properties/settings/properties/maxProjectsToShow/type',
                 params: {
                   type: 'number'
                 },
@@ -196,8 +196,8 @@ var validate = (function() {
             if (typeof data1.clickToShowMenu !== "boolean") {
               var err = {
                 keyword: 'type',
-                dataPath: (dataPath || '') + '.audioVisual.clickToShowMenu',
-                schemaPath: '#/properties/audioVisual/properties/clickToShowMenu/type',
+                dataPath: (dataPath || '') + '.settings.clickToShowMenu',
+                schemaPath: '#/properties/settings/properties/clickToShowMenu/type',
                 params: {
                   type: 'boolean'
                 },
@@ -220,8 +220,8 @@ var validate = (function() {
                 if (typeof data2[i2] !== "string") {
                   var err = {
                     keyword: 'type',
-                    dataPath: (dataPath || '') + '.audioVisual.showPrognosis[' + i2 + ']',
-                    schemaPath: '#/properties/audioVisual/properties/showPrognosis/items/type',
+                    dataPath: (dataPath || '') + '.settings.showPrognosis[' + i2 + ']',
+                    schemaPath: '#/properties/settings/properties/showPrognosis/items/type',
                     params: {
                       type: 'string'
                     },
@@ -236,8 +236,8 @@ var validate = (function() {
             } else {
               var err = {
                 keyword: 'type',
-                dataPath: (dataPath || '') + '.audioVisual.showPrognosis',
-                schemaPath: '#/properties/audioVisual/properties/showPrognosis/type',
+                dataPath: (dataPath || '') + '.settings.showPrognosis',
+                schemaPath: '#/properties/settings/properties/showPrognosis/type',
                 params: {
                   type: 'array'
                 },
@@ -252,8 +252,8 @@ var validate = (function() {
         } else {
           var err = {
             keyword: 'type',
-            dataPath: (dataPath || '') + '.audioVisual',
-            schemaPath: '#/properties/audioVisual/type',
+            dataPath: (dataPath || '') + '.settings',
+            schemaPath: '#/properties/settings/type',
             params: {
               type: 'object'
             },
@@ -888,7 +888,21 @@ var validate = (function() {
                   }
                 }
                 var data3 = data2.id;
-                if (data3 !== undefined) {
+                if (data3 === undefined) {
+                  valid3 = false;
+                  var err = {
+                    keyword: 'required',
+                    dataPath: (dataPath || '') + '.backup[\'' + key1 + '\']',
+                    schemaPath: '#/properties/backup/patternProperties/.*/required',
+                    params: {
+                      missingProperty: 'id'
+                    },
+                    message: 'should have required property \'id\''
+                  };
+                  if (vErrors === null) vErrors = [err];
+                  else vErrors.push(err);
+                  errors++;
+                } else {
                   var errs_3 = errors;
                   if (typeof data3 !== "string" && data3 !== null) {
                     var err = {
@@ -925,7 +939,21 @@ var validate = (function() {
                   }
                   var valid3 = errors === errs_3;
                 }
-                if (data2.url !== undefined) {
+                if (data2.url === undefined) {
+                  valid3 = false;
+                  var err = {
+                    keyword: 'required',
+                    dataPath: (dataPath || '') + '.backup[\'' + key1 + '\']',
+                    schemaPath: '#/properties/backup/patternProperties/.*/required',
+                    params: {
+                      missingProperty: 'url'
+                    },
+                    message: 'should have required property \'url\''
+                  };
+                  if (vErrors === null) vErrors = [err];
+                  else vErrors.push(err);
+                  errors++;
+                } else {
                   var errs_3 = errors;
                   if (typeof data2.url !== "string") {
                     var err = {
@@ -976,6 +1004,117 @@ var validate = (function() {
         }
         var valid1 = errors === errs_1;
       }
+      var data1 = data.appliedMigrations;
+      if (data1 !== undefined) {
+        var errs_1 = errors;
+        if (Array.isArray(data1)) {
+          var errs__1 = errors;
+          var valid1;
+          for (var i1 = 0; i1 < data1.length; i1++) {
+            var data2 = data1[i1];
+            var errs_2 = errors;
+            if ((data2 && typeof data2 === "object" && !Array.isArray(data2))) {
+              var errs__2 = errors;
+              var valid3 = true;
+              for (var key2 in data2) {
+                var isAdditional2 = !(false || key2 == 'id' || key2 == 'timestamp');
+              }
+              if (data2.id === undefined) {
+                valid3 = false;
+                var err = {
+                  keyword: 'required',
+                  dataPath: (dataPath || '') + '.appliedMigrations[' + i1 + ']',
+                  schemaPath: '#/properties/appliedMigrations/items/required',
+                  params: {
+                    missingProperty: 'id'
+                  },
+                  message: 'should have required property \'id\''
+                };
+                if (vErrors === null) vErrors = [err];
+                else vErrors.push(err);
+                errors++;
+              } else {
+                var errs_3 = errors;
+                if (typeof data2.id !== "string") {
+                  var err = {
+                    keyword: 'type',
+                    dataPath: (dataPath || '') + '.appliedMigrations[' + i1 + '].id',
+                    schemaPath: '#/properties/appliedMigrations/items/properties/id/type',
+                    params: {
+                      type: 'string'
+                    },
+                    message: 'should be string'
+                  };
+                  if (vErrors === null) vErrors = [err];
+                  else vErrors.push(err);
+                  errors++;
+                }
+                var valid3 = errors === errs_3;
+              }
+              if (data2.timestamp === undefined) {
+                valid3 = false;
+                var err = {
+                  keyword: 'required',
+                  dataPath: (dataPath || '') + '.appliedMigrations[' + i1 + ']',
+                  schemaPath: '#/properties/appliedMigrations/items/required',
+                  params: {
+                    missingProperty: 'timestamp'
+                  },
+                  message: 'should have required property \'timestamp\''
+                };
+                if (vErrors === null) vErrors = [err];
+                else vErrors.push(err);
+                errors++;
+              } else {
+                var errs_3 = errors;
+                if (typeof data2.timestamp !== "string") {
+                  var err = {
+                    keyword: 'type',
+                    dataPath: (dataPath || '') + '.appliedMigrations[' + i1 + '].timestamp',
+                    schemaPath: '#/properties/appliedMigrations/items/properties/timestamp/type',
+                    params: {
+                      type: 'string'
+                    },
+                    message: 'should be string'
+                  };
+                  if (vErrors === null) vErrors = [err];
+                  else vErrors.push(err);
+                  errors++;
+                }
+                var valid3 = errors === errs_3;
+              }
+            } else {
+              var err = {
+                keyword: 'type',
+                dataPath: (dataPath || '') + '.appliedMigrations[' + i1 + ']',
+                schemaPath: '#/properties/appliedMigrations/items/type',
+                params: {
+                  type: 'object'
+                },
+                message: 'should be object'
+              };
+              if (vErrors === null) vErrors = [err];
+              else vErrors.push(err);
+              errors++;
+            }
+            var valid2 = errors === errs_2;
+          }
+        } else {
+          var err = {
+            keyword: 'type',
+            dataPath: (dataPath || '') + '.appliedMigrations',
+            schemaPath: '#/properties/appliedMigrations/type',
+            params: {
+              type: 'array'
+            },
+            message: 'should be array'
+          };
+          if (vErrors === null) vErrors = [err];
+          else vErrors.push(err);
+          errors++;
+        }
+        var valid1 = errors === errs_1;
+      }
     } else {
       var err = {
         keyword: 'type',
@@ -999,10 +1138,9 @@ validate.schema = {
   "$id": "https://nevergreen.io/schema.json",
   "title": "Nevergreen",
   "description": "Nevergreen settings",
-  "required": [],
   "type": "object",
   "properties": {
-    "audioVisual": {
+    "settings": {
       "type": "object",
       "properties": {
         "showTrayName": {
@@ -1154,8 +1292,25 @@ validate.schema = {
               "type": "string"
             }
           },
+          "required": ["id", "url"],
           "additionalProperties": false
         }
+      }
+    },
+    "appliedMigrations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string"
+          }
+        },
+        "required": ["id", "timestamp"],
+        "additionalItems": false
       }
     }
   },

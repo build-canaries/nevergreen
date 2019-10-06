@@ -3,10 +3,9 @@
   "$id": "https://nevergreen.io/schema.json",
   "title": "Nevergreen",
   "description": "Nevergreen settings",
-  "required": [],
   "type": "object",
   "properties": {
-    "audioVisual": {
+    "settings": {
       "type": "object",
       "properties": {
         "showTrayName": {
@@ -188,8 +187,31 @@
               "type": "string"
             }
           },
+          "required": [
+            "id",
+            "url"
+          ],
           "additionalProperties": false
         }
+      }
+    },
+    "appliedMigrations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "timestamp"
+        ],
+        "additionalItems": false
       }
     }
   },

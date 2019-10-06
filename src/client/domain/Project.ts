@@ -51,28 +51,31 @@ export function isBuilding(prognosis: Prognosis) {
   return prognosis === Prognosis.healthyBuilding || prognosis === Prognosis.sickBuilding
 }
 
+export function createProject(projectId: string, name: string, additional: Partial<Project> = {}): Project {
+  return {
+    fetchedTime: '',
+    isNew: true,
+    lastBuildLabel: '',
+    lastBuildStatus: '',
+    lastBuildTime: '',
+    name,
+    prognosis: Prognosis.unknown,
+    projectId,
+    removed: false,
+    serverType: '',
+    stage: '',
+    thisBuildTime: undefined,
+    trayId: '',
+    url: '',
+    ...additional
+  }
+}
+
 export function wrapProjects(apiProjects: ReadonlyArray<ApiProject>): ReadonlyArray<Project> {
   return apiProjects
     .filter((apiProject) => !apiProject.isError)
     .filter((apiProject) => !apiProject.job)
-    .map((apiProject) => {
-      return {
-        fetchedTime: apiProject.fetchedTime,
-        isNew: apiProject.isNew,
-        lastBuildLabel: apiProject.lastBuildLabel,
-        lastBuildStatus: apiProject.lastBuildStatus,
-        lastBuildTime: apiProject.lastBuildTime,
-        name: apiProject.name,
-        prognosis: apiProject.prognosis,
-        projectId: apiProject.projectId,
-        removed: false,
-        serverType: apiProject.serverType,
-        stage: apiProject.stage,
-        thisBuildTime: undefined,
-        trayId: apiProject.trayId,
-        url: apiProject.webUrl
-      }
-    })
+    .map((apiProject) => createProject(apiProject.projectId, apiProject.name, apiProject))
 }
 
 export function wrapProjectErrors(apiProjects: ReadonlyArray<ApiProject>): ReadonlyArray<ProjectError> {

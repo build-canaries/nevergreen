@@ -7,12 +7,12 @@ import {
   reduce
 } from '../../../src/client/backup/BackupReducer'
 import {Actions} from '../../../src/client/Actions'
-import {setConfiguration} from '../../../src/client/NevergreenActionCreators'
 import {
   BackupLocation,
   backupSetDescription,
   backupSetId,
-  backupSetUrl
+  backupSetUrl,
+  configurationImported
 } from '../../../src/client/backup/BackupActionCreators'
 import {buildState, testReducer} from '../testHelpers'
 import {State} from '../../../src/client/Reducer'
@@ -34,25 +34,25 @@ describe('BackupReducer', () => {
     expect(newState).toEqual(existingState)
   })
 
-  describe(Actions.SET_CONFIGURATION, () => {
+  describe(Actions.CONFIGURATION_IMPORTED, () => {
 
     test('should merge the id', () => {
       const existingState = state()
-      const action = setConfiguration({[BACKUP_ROOT]: {github: {id: 'some-id'}}})
+      const action = configurationImported({[BACKUP_ROOT]: {github: {id: 'some-id'}}})
       const newState = reducer(existingState, action)
       expect(getBackupId(BackupLocation.GITHUB, newState)).toEqual('some-id')
     })
 
     test('should merge the description', () => {
       const existingState = state()
-      const action = setConfiguration({[BACKUP_ROOT]: {github: {description: 'some-description'}}})
+      const action = configurationImported({[BACKUP_ROOT]: {github: {description: 'some-description'}}})
       const newState = reducer(existingState, action)
       expect(getBackupDescription(BackupLocation.GITHUB, newState)).toEqual('some-description')
     })
 
     test('should handle no github data', () => {
       const existingState = state({github: {id: 'some-id', description: 'some-description'}})
-      const action = setConfiguration({})
+      const action = configurationImported({})
       const newState = reducer(existingState, action)
       expect(getBackupId(BackupLocation.GITHUB, newState)).toEqual('some-id')
       expect(getBackupDescription(BackupLocation.GITHUB, newState)).toEqual('some-description')
@@ -60,7 +60,7 @@ describe('BackupReducer', () => {
 
     test('should only merge for the correct backup location', () => {
       const existingState = state({github: {id: 'some-id'}})
-      const action = setConfiguration({[BACKUP_ROOT]: {github: {id: 'some-id'}}})
+      const action = configurationImported({[BACKUP_ROOT]: {github: {id: 'some-id'}}})
       const newState = reducer(existingState, action)
       expect(getBackupId(BackupLocation.GITLAB, newState)).toEqual('')
     })

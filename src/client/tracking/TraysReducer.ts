@@ -1,10 +1,11 @@
 import {Actions} from '../Actions'
-import {Tray} from '../domain/Tray'
-import {ActionSetConfiguration} from '../NevergreenActionCreators'
+import {createTray, Tray} from '../domain/Tray'
 import {ActionProjectsFetched, ActionRemoveTray, ActionTrayAdded, ActionTrayUpdate} from './TrackingActionCreators'
 import {createReducer, createSelector} from 'redux-starter-kit'
 import {Draft} from 'immer'
 import {State} from '../Reducer'
+import {ActionConfigurationImported} from '../backup/BackupActionCreators'
+import {isNil} from 'lodash'
 
 export interface TraysState {
   readonly [trayId: string]: Tray;
@@ -14,17 +15,26 @@ export const TRAYS_ROOT = 'trays'
 
 const DEFAULT_STATE: TraysState = {}
 
+function handleImportedConfiguration(draft: TraysState, action: ActionConfigurationImported) {
+  if (isNil(action.configuration[TRAYS_ROOT])) {
+    return draft
+  }
+
+  const importedTrays = action.configuration[TRAYS_ROOT] as TraysState
+  const newState: Draft<TraysState> = {}
+
+  Object.keys(importedTrays).forEach((trayId) => {
+    const partialTray = importedTrays[trayId] as Tray
+    newState[trayId] = createTray(trayId, partialTray.url, partialTray)
+  })
+
+  return newState
+}
+
 export const reduce = createReducer<TraysState>(DEFAULT_STATE, {
-  [Actions.SET_CONFIGURATION]: (draft: Draft<TraysState>, action: ActionSetConfiguration) => {
-    const newState: Draft<TraysState> = {}
-    const data = action.configuration[TRAYS_ROOT] as TraysState || draft
-    Object.keys(data).forEach((trayId) => {
-      newState[trayId] = data[trayId] as Draft<Tray>
-    })
-    return newState
-  },
+  [Actions.CONFIGURATION_IMPORTED]: handleImportedConfiguration,
   [Actions.TRAY_ADDED]: (draft, action: ActionTrayAdded) => {
-    draft[action.trayId] = action.data as Draft<Tray>
+    draft[action.trayId] = action.data
   },
   [Actions.TRAY_UPDATED]: (draft, action: ActionTrayUpdate) => {
     Object.assign(draft[action.trayId], action.data)

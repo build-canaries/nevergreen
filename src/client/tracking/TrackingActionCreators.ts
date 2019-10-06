@@ -1,5 +1,5 @@
 import {now} from '../common/DateTime'
-import {AuthTypes, generateRandomName, Tray} from '../domain/Tray'
+import {AuthTypes, createTray, Tray} from '../domain/Tray'
 import {Actions} from '../Actions'
 import {Project} from '../domain/Project'
 import {Action} from 'redux'
@@ -43,17 +43,12 @@ export function trayAdded(
   return {
     type: Actions.TRAY_ADDED,
     trayId,
-    data: {
-      trayId,
-      url,
+    data: createTray(trayId, url, {
       authType,
       username,
       password,
-      accessToken,
-      name: generateRandomName(),
-      includeNew: true,
-      serverType: ''
-    }
+      accessToken
+    })
   }
 }
 

@@ -2,12 +2,12 @@ import React, {useState} from 'react'
 import styles from './locally.scss'
 import {PrimaryButton} from '../../../common/forms/Button'
 import {iFloppyDisk} from '../../../common/fonts/Icons'
-import {Configuration, toConfiguration} from '../../../configuration/Configuration'
-import {isEmpty} from 'lodash'
+import {toConfiguration} from '../../../configuration/Configuration'
 import {Messages, MessagesType} from '../../../common/Messages'
 import {isBlank} from '../../../common/Utils'
 import {useDispatch} from 'react-redux'
-import {setConfiguration} from '../../../NevergreenActionCreators'
+import {configurationImported} from '../../BackupActionCreators'
+import {isRight} from 'fp-ts/lib/Either'
 
 const PLACEHOLDER = 'paste exported configuration here and press import'
 
@@ -27,17 +27,17 @@ export function Locally() {
     setMessages(infos)
   }
 
-  const doImport = () => {
+  const doImport = async () => {
     if (isBlank(data)) {
       setErrors(['Please enter the configuration to import'])
     } else {
-      const [dataErrors, configuration] = toConfiguration(data)
-      if (isEmpty(dataErrors)) {
+      const result = toConfiguration(data)
+      if (isRight(result)) {
         setInfos(['Successfully imported configuration'])
-        dispatch(setConfiguration(configuration as Configuration))
+        dispatch(configurationImported(result.right))
         setData('')
       } else {
-        setErrors(dataErrors)
+        setErrors(result.left)
       }
     }
   }

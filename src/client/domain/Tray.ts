@@ -9,23 +9,6 @@ export enum AuthTypes {
   token = 'token'
 }
 
-interface NoAuth {
-  readonly type: AuthTypes.none;
-}
-
-interface BasicAuth {
-  readonly type: AuthTypes.basic;
-  readonly username: string;
-  readonly password: string;
-}
-
-interface TokenAuth {
-  readonly type: AuthTypes.token;
-  readonly accessToken: string;
-}
-
-export type AuthDetails = NoAuth | BasicAuth | TokenAuth
-
 export interface Tray {
   readonly authType: AuthTypes;
   readonly includeNew: boolean;
@@ -59,6 +42,21 @@ export function generateRandomName() {
 
 export function createId() {
   return uuid()
+}
+
+export function createTray(trayId: string, url: string, additional: Partial<Tray> = {}) {
+  return {
+    accessToken: '',
+    authType: AuthTypes.none,
+    includeNew: true,
+    name: generateRandomName(),
+    password: '',
+    serverType: '',
+    trayId,
+    url,
+    username: '',
+    ...additional
+  }
 }
 
 export function sickProjects(projects: ReadonlyArray<Project>): ReadonlyArray<Project> {
