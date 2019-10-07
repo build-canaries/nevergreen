@@ -23,10 +23,20 @@ const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitT
 
 function delayedResponse(file) {
   return async function (req, res) {
-    await sleep(req.query.delay || 0)
-    fs.readFile('resources/' + file, 'utf8', function (err, contents) {
+    req.connection.on('close',function(){
+      console.log("Connection closed by client")
+    });
+
+    fs.readFile('resources/' + file, 'utf8', async function (err, contents) {
+      const lines = contents.split("\n")
+      const sleepTime = Math.ceil((req.query.delay || 0) / lines.length)
       res.setHeader('Content-Type', 'application/xml; charset=utf-8')
-      res.send(contents)
+      for (let i = 0 ; i < lines.length; i++) {
+        const line = lines[i];
+        await sleep(sleepTime)
+        res.write(line)
+      }
+      res.end('')
     })
   }
 }
