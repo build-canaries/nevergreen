@@ -4,9 +4,10 @@ import _ from 'lodash'
 
 type ApiData = object | string
 
-const ONE_MINUTES = 1000 * 60
+const THIRTY_SECONDS = 1000 * 30
+const ONE_MINUTES = 1000 * 60 * 60
 const TIMEOUT = {
-  response: ONE_MINUTES,
+  response: THIRTY_SECONDS,
   deadline: ONE_MINUTES
 }
 const RETRIES = 1

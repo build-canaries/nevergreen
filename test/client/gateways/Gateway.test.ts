@@ -1,55 +1,7 @@
-import {
-  fakeRequest,
-  get,
-  patch,
-  post,
-  put,
-  send,
-  TIMEOUT_ERROR,
-  UNKNOWN_ERROR
-} from '../../../src/client/gateways/Gateway'
-import {Request, SuperAgentRequest} from 'superagent'
+import {fakeRequest, send, TIMEOUT_ERROR, UNKNOWN_ERROR} from '../../../src/client/gateways/Gateway'
+import {Request} from 'superagent'
 
 describe('Gateway', () => {
-  const url = 'http://dummy-server.com/order'
-  const body = {orderId: 1}
-
-  describe('request types', () => {
-    describe('post', () => {
-      const request = post(url, body) as SuperAgentRequest
-
-      expect(request.url).toEqual(url)
-      expect(request.method).toEqual('POST')
-      expect(request.get('Accept')).toEqual('application/json; charset=utf-8')
-      expect(request.get('Content-Type')).toEqual('application/json; charset=utf-8')
-    })
-
-    describe('put', () => {
-      const request = put(url, body) as SuperAgentRequest
-
-      expect(request.url).toEqual(url)
-      expect(request.method).toEqual('PUT')
-      expect(request.get('Accept')).toEqual('application/json; charset=utf-8')
-      expect(request.get('Content-Type')).toEqual('application/json; charset=utf-8')
-    })
-
-    describe('patch', () => {
-      const request = patch(url, body) as SuperAgentRequest
-
-      expect(request.url).toEqual(url)
-      expect(request.method).toEqual('PATCH')
-      expect(request.get('Accept')).toEqual('application/json; charset=utf-8')
-      expect(request.get('Content-Type')).toEqual('application/json; charset=utf-8')
-    })
-
-    describe('get', () => {
-      const request = get(url, body) as SuperAgentRequest
-
-      expect(request.url).toEqual(url)
-      expect(request.method).toEqual('GET')
-      expect(request.get('Accept')).toEqual('application/json; charset=utf-8')
-    })
-  })
 
   describe('send', () => {
 
