@@ -134,7 +134,7 @@ export function buildApiProject(apiProject?: Partial<ApiProject>): ApiProject {
     name: '',
     nextBuildTime: '',
     owner: null,
-    prognosis: Prognosis,
+    prognosis: Prognosis.unknown,
     projectId: '',
     serverType: '',
     stage: null,

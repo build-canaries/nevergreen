@@ -1,5 +1,5 @@
 import React, {ChangeEvent, useCallback, useEffect, useMemo, useRef, useState} from 'react'
-import {isEmpty, sortBy} from 'lodash'
+import {sortBy} from 'lodash'
 import {AvailableProject} from './AvailableProject'
 import {Messages, MessagesType} from '../../common/Messages'
 import {Input} from '../../common/forms/Input'
@@ -14,7 +14,7 @@ import {Project, wrapProjectErrors, wrapProjects} from '../../domain/Project'
 import {getProjectsForTray} from '../ProjectsReducer'
 import {getSelectedProjectsForTray} from '../SelectedReducer'
 import {useDispatch, useSelector} from 'react-redux'
-import {projectsFetched, projectSelected} from '../TrackingActionCreators'
+import {projectSelected, projectsFetched} from '../TrackingActionCreators'
 import {fetchAll, ProjectsResponse} from '../../gateways/ProjectsGateway'
 import {send} from '../../gateways/Gateway'
 import {Loading} from '../../common/Loading'
@@ -42,6 +42,7 @@ export function AvailableProjects({index, tray, requiresRefresh, setRequiresRefr
 
   const refreshTray = useCallback(async () => {
     setLoaded(false)
+    setErrors([])
     pendingRequest.current = fetchAll([tray], projects)
     try {
       const apiProjects = await send<ProjectsResponse>(pendingRequest.current)
@@ -55,6 +56,7 @@ export function AvailableProjects({index, tray, requiresRefresh, setRequiresRefr
         setErrors(errorMessages)
       }
     } catch (error) {
+      console.log(error)
       setErrors([error.message])
     }
     // eslint-disable-next-line require-atomic-updates
@@ -117,7 +119,7 @@ export function AvailableProjects({index, tray, requiresRefresh, setRequiresRefr
 
   const hasProjects = notEmpty(projects)
   const hasProjectsFiltered = notEmpty(filteredProjects)
-  const hasErrors = !isEmpty(errors)
+  const hasErrors = notEmpty(errors)
 
   const controls = (
     <div className={styles.controls}>
