@@ -74,7 +74,7 @@
                                      :async                 true}
                                     data))]
       (try
-        (let [res (.get future 1 TimeUnit/MINUTES)]
+        (let [res (.get future 50 TimeUnit/SECONDS)]
           (log/info (str "[" redacted-url "] returned a status of [" (.getStatusCode (.getStatusLine res)) "]"))
           (.getContent (.getEntity res)))
         (catch ExecutionException e

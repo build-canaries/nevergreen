@@ -1,62 +1,45 @@
 import {fakeRequest, send, TIMEOUT_ERROR, UNKNOWN_ERROR,
   post, put, patch, get} from '../../../src/client/gateways/Gateway'
-import {Request} from 'superagent'
+import {Request, SuperAgentRequest} from 'superagent'
 
 describe('Gateway', () => {
   const url = "http://dummy-server.com/order";
   const body = {orderId: 1};
-  const responseTimeOut = 30000;
-  const timeOut = 60000;
 
   describe('request types', () => {
     describe('post', () => {
-      const request = post(url, body) as any;
+      const request = post(url, body) as SuperAgentRequest;
 
       expect(request.url).toEqual(url)
       expect(request.method).toEqual("POST")
-      expect(request._data).toEqual(body)
-      expect(request.header['Accept']).toEqual("application/json; charset=utf-8")
-      expect(request.header['Content-Type']).toEqual("application/json; charset=utf-8")
-      expect(request._responseTimeout).toEqual(responseTimeOut)
-      expect(request._timeout).toEqual(timeOut)
-      expect(request._maxRetries).toEqual(1)
+      expect(request.get('Accept')).toEqual("application/json; charset=utf-8")
+      expect(request.get('Content-Type')).toEqual("application/json; charset=utf-8")
     });
 
     describe('put', () => {
-      const request = put(url, body) as any;
+      const request = put(url, body) as SuperAgentRequest;
 
       expect(request.url).toEqual(url)
       expect(request.method).toEqual("PUT")
-      expect(request._data).toEqual(body)
-      expect(request.header['Accept']).toEqual("application/json; charset=utf-8")
-      expect(request.header['Content-Type']).toEqual("application/json; charset=utf-8")
-      expect(request._responseTimeout).toEqual(responseTimeOut)
-      expect(request._timeout).toEqual(timeOut)
-      expect(request._maxRetries).toEqual(1)
+      expect(request.get('Accept')).toEqual("application/json; charset=utf-8")
+      expect(request.get('Content-Type')).toEqual("application/json; charset=utf-8")
     });
 
     describe('patch', () => {
-      const request = patch(url, body) as any;
+      const request = patch(url, body) as SuperAgentRequest;
 
       expect(request.url).toEqual(url)
       expect(request.method).toEqual("PATCH")
-      expect(request._data).toEqual(body)
-      expect(request.header['Accept']).toEqual("application/json; charset=utf-8")
-      expect(request.header['Content-Type']).toEqual("application/json; charset=utf-8")
-      expect(request._responseTimeout).toEqual(responseTimeOut)
-      expect(request._timeout).toEqual(timeOut)
-      expect(request._maxRetries).toEqual(1)
+      expect(request.get('Accept')).toEqual("application/json; charset=utf-8")
+      expect(request.get('Content-Type')).toEqual("application/json; charset=utf-8")
     });
 
     describe('get', () => {
-      const request = get(url, body) as any;
+      const request = get(url, body) as SuperAgentRequest;
 
       expect(request.url).toEqual(url)
       expect(request.method).toEqual("GET")
-      expect(request.header['Accept']).toEqual("application/json; charset=utf-8")
-      expect(request._responseTimeout).toEqual(responseTimeOut)
-      expect(request._timeout).toEqual(timeOut)
-      expect(request._maxRetries).toEqual(1)
+      expect(request.get('Accept')).toEqual("application/json; charset=utf-8")
     });
   })
 

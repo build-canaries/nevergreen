@@ -95,8 +95,8 @@
     (let [call-count (atom 0)
           timeout-future (proxy [Future] []
                    (get [timeout unit]
-                     (is (= 1 timeout))
-                     (is (= unit TimeUnit/MINUTES))
+                     (is (= 50 timeout))
+                     (is (= unit TimeUnit/SECONDS))
                      (throw (TimeoutException.)))
                    (cancel [interrupt]
                      (is (= true interrupt))
