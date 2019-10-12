@@ -19,20 +19,20 @@ function response(file) {
   }
 }
 
-const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
+const sleep = (waitTimeInMs) => new Promise((resolve) => setTimeout(resolve, waitTimeInMs))
 
 function delayedResponse(file) {
   return async function (req, res) {
-    req.connection.on('close',function(){
-      console.log("Connection closed by client")
-    });
+    req.connection.on('close', function () {
+      console.log('Connection closed by client')
+    })
 
     fs.readFile('resources/' + file, 'utf8', async function (err, contents) {
-      const lines = contents.split("\n")
+      const lines = contents.split('\n')
       const sleepTime = Math.ceil((req.query.delay || 0) / lines.length)
       res.setHeader('Content-Type', 'application/xml; charset=utf-8')
-      for (let i = 0 ; i < lines.length; i++) {
-        const line = lines[i];
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i]
         await sleep(sleepTime)
         res.write(line)
       }
