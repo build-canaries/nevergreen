@@ -19,6 +19,28 @@ function response(file) {
   }
 }
 
+const sleep = (waitTimeInMs) => new Promise((resolve) => setTimeout(resolve, waitTimeInMs))
+
+function delayedResponse(file) {
+  return async function (req, res) {
+    req.connection.on('close', function () {
+      console.log('Connection closed by client')
+    })
+
+    fs.readFile('resources/' + file, 'utf8', async function (err, contents) {
+      const lines = contents.split('\n')
+      const sleepTime = Math.ceil((req.query.delay || 0) / lines.length)
+      res.setHeader('Content-Type', 'application/xml; charset=utf-8')
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i]
+        await sleep(sleepTime)
+        res.write(line)
+      }
+      res.end('')
+    })
+  }
+}
+
 const generic = response('cctray.xml')
 const go = response('go_cd.xml')
 const jenkins = response('jenkins.xml')
@@ -27,6 +49,7 @@ app.get('/cc.xml', jenkins) // Jenkins, Hudson, CircleCI, CruiseControl
 app.get('/cc/uuid/cctray.xml', generic) // Solano CI
 app.get('/owner/repo/cc.xml', generic) // Travis CI
 app.get('/go/cctray.xml', go) // GO CD
+app.get('/slow/go/cctray.xml', delayedResponse('go_cd.xml')) // GO CD
 app.get('/guestAuth/app/rest/cctray/projects.xml', generic) // TeamCity
 app.get('/XmlStatusReport.aspx', generic) // CruiseControl.rb, CruiseControl.NET
 
