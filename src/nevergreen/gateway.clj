@@ -5,22 +5,31 @@
             [cemerick.url :as u])
   (:import (java.net UnknownHostException URISyntaxException ConnectException SocketTimeoutException)
            (clojure.lang ExceptionInfo)
-           (java.util.concurrent TimeUnit TimeoutException ExecutionException)))
+           (java.time Duration)))
 
 (def ^:const ten-seconds 10000)
 (def ^:const redacted "REDACTED")
 
-(defn ^:dynamic client-get [url data]
-  (client/get url data (fn [_]) (fn [_])))
+(defn on-respond [promise]
+  (fn [response] (deliver promise (:body response))))
 
-(defn ^:dynamic client-post [url data]
-  (client/post url data (fn [_]) (fn [_])))
+(defn on-raise [promise]
+  (fn [exception] (deliver promise exception)))
 
-(defn ^:dynamic client-patch [url data]
-  (client/patch url data (fn [_]) (fn [_])))
+(defn get-result [promise timeout-ms timeout-val]
+  (deref promise timeout-ms timeout-val))
 
-(defn ^:dynamic client-put [url data]
-  (client/put url data (fn [_]) (fn [_])))
+(defn ^:dynamic client-get [url data promise]
+  (client/get url data (on-respond promise) (on-raise promise)))
+
+(defn ^:dynamic client-post [url data promise]
+  (client/post url data (on-respond promise) (on-raise promise)))
+
+(defn ^:dynamic client-patch [url data promise]
+  (client/patch url data (on-respond promise) (on-raise promise)))
+
+(defn ^:dynamic client-put [url data promise]
+  (client/put url data (on-respond promise) (on-raise promise)))
 
 (defn- update-values [m f & args]
   (reduce (fn [r [k v]] (assoc r k (apply f v args))) {} m))
@@ -36,7 +45,7 @@
   (log/info (str "[" redacted-url "] threw a SocketTimeoutException [" (.getMessage e) "]"))
   (throw (ex-info "Connection timeout" {:url url :status 504})))
 
-(defn- handle-client-timeout [url redacted-url e]
+(defn- handle-client-timeout [url redacted-url]
   (log/info (str "[" redacted-url "] couldn't produce response within given time. Explicitly closing connection"))
   (throw (ex-info "Deadline timeout" {:url url :status 504})))
 
@@ -66,28 +75,25 @@
 (defn- http [url data method]
   (let [redacted-url (redact-url url)]
     (log/info (str "Calling [" redacted-url "]..."))
-    (let [future (method url (merge {:insecure?             true
+    (let [promise (promise)
+          future (method url (merge {:insecure?             true
                                      :socket-timeout        ten-seconds
                                      :conn-timeout          ten-seconds
                                      :throw-entire-message? true
                                      :cookie-policy         :standard
                                      :async                 true}
-                                    data))]
-      (try
-        (let [res (.get future 50 TimeUnit/SECONDS)]
-          (log/info (str "[" redacted-url "] returned a status of [" (.getStatusCode (.getStatusLine res)) "]"))
-          (.getContent (.getEntity res)))
-        (catch ExecutionException e
-          (let [original-exception (.getCause e)]
-            (condp instance? original-exception
-              UnknownHostException (handle-unknown-host url redacted-url original-exception)
-              URISyntaxException (handle-invalid-url url redacted-url original-exception)
-              ConnectException (handle-connection-refused url redacted-url original-exception)
-              ExceptionInfo (handle-exception-info url redacted-url original-exception)
-              SocketTimeoutException (handle-timeout url redacted-url original-exception))))
-        (catch TimeoutException e
-          (.cancel future true)
-          (handle-client-timeout url redacted-url e))))))
+                                    data) promise)
+          result (get-result promise (.toMillis (Duration/ofSeconds 50)) :deadline-timeout)]
+      (when (= result :deadline-timeout)
+        (.cancel future true)
+        (handle-client-timeout url redacted-url))
+      (condp instance? result
+        UnknownHostException (handle-unknown-host url redacted-url result)
+        URISyntaxException (handle-invalid-url url redacted-url result)
+        ConnectException (handle-connection-refused url redacted-url result)
+        ExceptionInfo (handle-exception-info url redacted-url result)
+        SocketTimeoutException (handle-timeout url redacted-url result)
+        result))))
 
 (defn http-get [url data]
   (http url data client-get))
