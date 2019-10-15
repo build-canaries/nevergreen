@@ -112,10 +112,7 @@ export function AddTray({setHighlightTray, setRefreshTray}: AddTrayProps) {
         <Messages type={MessagesType.ERROR} messages={errors}/>
       </div>
       <WithHelp title='Tracking'
-                help={<TrackingHelp addTray={(enteredUrl) => {
-                  addTray(enteredUrl)
-                  resetForm()
-                }}/>}
+                help={<TrackingHelp/>}
                 className={styles.help}>
         <PrimaryButton className={styles.add}
                        onClick={() => addTray(url)}
