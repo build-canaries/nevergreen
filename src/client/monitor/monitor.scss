@@ -1,5 +1,4 @@
 @import '../common/variables';
-@import '../common/responsive';
 
 .monitor {
   background-color: $black;
@@ -7,12 +6,7 @@
   cursor: inherit;
   font-family: $monospace-font;
   height: 100vh;
-  margin: -1em;
   text-align: center;
-
-  @include respond-to(tablet, desktop) {
-    margin: -2em;
-  }
 }
 
 .fullscreen {

@@ -14,13 +14,16 @@
 
 .main {
   flex: 1;
+
+  &.active {
+    display: block;
+  }
+}
+
+.settings {
   padding: 1em;
 
   @include respond-to(tablet, desktop) {
     padding: 2em;
-  }
-
-  &.active {
-    display: block;
   }
 }

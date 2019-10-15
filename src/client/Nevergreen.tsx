@@ -51,13 +51,19 @@ export function Nevergreen() {
               <Monitor fullScreen={fullScreen}
                        requestFullScreen={requestFullScreen}/>
             </Route>
-            <Route exact path='/tracking' component={Tracking}/>
-            <Route exact path='/success' component={Success}/>
-            <Route exact path='/settings' component={Settings}/>
-            <Route exact path='/backup' component={Backup}/>
-            <Route exact path='/style-guide' component={StyleGuide}/>
             <Route>
-              <Redirect to='/tracking'/>
+              <div className={styles.settings}>
+                <Switch>
+                  <Route exact path='/tracking' component={Tracking}/>
+                  <Route exact path='/success' component={Success}/>
+                  <Route exact path='/settings' component={Settings}/>
+                  <Route exact path='/backup' component={Backup}/>
+                  <Route exact path='/style-guide' component={StyleGuide}/>
+                  <Route>
+                    <Redirect to='/tracking'/>
+                  </Route>
+                </Switch>
+              </div>
             </Route>
           </Switch>
         </main>
