@@ -5,6 +5,7 @@ import {UntrustedData} from './LocalRepository'
 import {get, has, isNil, set, unset} from 'lodash'
 import {APPLIED_MIGRATIONS_ROOT, AppliedMigration} from './MigrationsReducer'
 
+type PropertyPath = string | ReadonlyArray<string>
 export type Migration = (data: UntrustedData) => void
 
 export function migrate(data: UntrustedData): void {
@@ -38,7 +39,7 @@ export function migrate(data: UntrustedData): void {
     })
 }
 
-export function moveData(untrustedData: UntrustedData, fromPath: string, toPath: string): UntrustedData {
+export function moveData(untrustedData: UntrustedData, fromPath: PropertyPath, toPath: PropertyPath): UntrustedData {
   if (has(untrustedData, fromPath)) {
     const dataToMove = get(untrustedData, fromPath)
     set(untrustedData, toPath, dataToMove)

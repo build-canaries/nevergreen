@@ -173,7 +173,7 @@ describe('<TraySettings/>', () => {
       expect(setRequiresRefresh).toHaveBeenCalledWith(true)
       expect(getTrays(store.getState())[0].authType).toEqual(AuthTypes.basic)
       expect(getTrays(store.getState())[0].username).toEqual('some-username')
-      expect(getTrays(store.getState())[0].password).toEqual('some-encrypted-password')
+      expect(getTrays(store.getState())[0].encryptedPassword).toEqual('some-encrypted-password')
     })
   })
 })

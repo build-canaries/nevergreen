@@ -424,14 +424,14 @@ var validate = (function() {
                   }
                   var valid3 = errors === errs_3;
                 }
-                var data3 = data2.password;
+                var data3 = data2.encryptedPassword;
                 if (data3 !== undefined) {
                   var errs_3 = errors;
                   if (typeof data3 !== "string" && data3 !== null) {
                     var err = {
                       keyword: 'type',
-                      dataPath: (dataPath || '') + '.trays[\'' + key1 + '\'].password',
-                      schemaPath: '#/properties/trays/patternProperties/.*/properties/password/type',
+                      dataPath: (dataPath || '') + '.trays[\'' + key1 + '\'].encryptedPassword',
+                      schemaPath: '#/properties/trays/patternProperties/.*/properties/encryptedPassword/type',
                       params: {
                         type: 'string,null'
                       },
@@ -443,14 +443,14 @@ var validate = (function() {
                   }
                   var valid3 = errors === errs_3;
                 }
-                var data3 = data2.accessToken;
+                var data3 = data2.encryptedAccessToken;
                 if (data3 !== undefined) {
                   var errs_3 = errors;
                   if (typeof data3 !== "string" && data3 !== null) {
                     var err = {
                       keyword: 'type',
-                      dataPath: (dataPath || '') + '.trays[\'' + key1 + '\'].accessToken',
-                      schemaPath: '#/properties/trays/patternProperties/.*/properties/accessToken/type',
+                      dataPath: (dataPath || '') + '.trays[\'' + key1 + '\'].encryptedAccessToken',
+                      schemaPath: '#/properties/trays/patternProperties/.*/properties/encryptedAccessToken/type',
                       params: {
                         type: 'string,null'
                       },
@@ -1206,10 +1206,10 @@ validate.schema = {
             "username": {
               "type": ["string", "null"]
             },
-            "password": {
+            "encryptedPassword": {
               "type": ["string", "null"]
             },
-            "accessToken": {
+            "encryptedAccessToken": {
               "type": ["string", "null"]
             },
             "timestamp": {

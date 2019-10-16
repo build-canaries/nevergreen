@@ -77,13 +77,13 @@
                 "null"
               ]
             },
-            "password": {
+            "encryptedPassword": {
               "type": [
                 "string",
                 "null"
               ]
             },
-            "accessToken": {
+            "encryptedAccessToken": {
               "type": [
                 "string",
                 "null"

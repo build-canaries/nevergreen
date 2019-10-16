@@ -11,10 +11,10 @@ export enum AuthTypes {
 
 export interface Tray {
   readonly authType: AuthTypes;
+  readonly encryptedAccessToken?: string;
+  readonly encryptedPassword?: string;
   readonly includeNew: boolean;
   readonly name?: string;
-  readonly password?: string;
-  readonly accessToken?: string;
   readonly serverType: string;
   readonly timestamp?: string;
   readonly trayId: string;
@@ -46,11 +46,11 @@ export function createId() {
 
 export function createTray(trayId: string, url: string, additional: Partial<Tray> = {}) {
   return {
-    accessToken: '',
     authType: AuthTypes.none,
+    encryptedAccessToken: '',
+    encryptedPassword: '',
     includeNew: true,
     name: generateRandomName(),
-    password: '',
     serverType: '',
     trayId,
     url,

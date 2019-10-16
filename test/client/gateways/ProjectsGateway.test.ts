@@ -16,7 +16,7 @@ describe('ProjectsGateway', () => {
         buildTray({
           authType: AuthTypes.basic,
           includeNew: true,
-          password: 'pword',
+          encryptedPassword: 'pword',
           serverType: 'GO',
           trayId: 'some-tray-id',
           url: 'url',
@@ -48,7 +48,7 @@ describe('ProjectsGateway', () => {
       const seen: Project[] = [buildProject({trayId: 'some-tray-id', projectId: 'some-project-id'})]
       const trays = [
         buildTray({
-          accessToken: 'some-dummy-token',
+          encryptedAccessToken: 'some-dummy-token',
           authType: AuthTypes.token,
           includeNew: true,
           serverType: 'GO',
@@ -87,7 +87,7 @@ describe('ProjectsGateway', () => {
         buildTray({
           authType: AuthTypes.basic,
           includeNew: true,
-          password: 'some-pword',
+          encryptedPassword: 'some-pword',
           serverType: 'some-server-type',
           trayId: 'some-tray-id',
           url: 'some-url',

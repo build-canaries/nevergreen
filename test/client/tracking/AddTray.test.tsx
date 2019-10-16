@@ -59,7 +59,7 @@ describe('<AddTray/>', () => {
     expect(SecurityGateway.encrypt).toHaveBeenCalledWith('some-password')
     expect(getTrays(store.getState())).toEqual(expect.arrayContaining([
       expect.objectContaining({
-        password: 'encrypted-password'
+        encryptedPassword: 'encrypted-password'
       })
     ]))
   })
@@ -81,7 +81,7 @@ describe('<AddTray/>', () => {
     expect(SecurityGateway.encrypt).toHaveBeenCalledWith('some-token')
     expect(getTrays(store.getState())).toEqual(expect.arrayContaining([
       expect.objectContaining({
-        accessToken: 'encrypted-token'
+        encryptedAccessToken: 'encrypted-token'
       })
     ]))
   })

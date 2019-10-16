@@ -35,8 +35,8 @@ export function TraySettings({tray, setRequiresRefresh}: TraySettingsProps) {
     }
   }
 
-  const updateAuth = (authType: AuthTypes, username: string, password: string, accessToken: string) => {
-    dispatch(trayUpdated(trayId, {authType, username, password, accessToken}))
+  const updateAuth = (authType: AuthTypes, username: string, encryptedPassword: string, encryptedAccessToken: string) => {
+    dispatch(trayUpdated(trayId, {authType, username, encryptedPassword, encryptedAccessToken}))
     setUpdatingAuth(false)
     setRequiresRefresh(true)
   }

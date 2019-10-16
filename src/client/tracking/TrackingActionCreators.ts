@@ -37,8 +37,8 @@ export function trayAdded(
   url: string,
   authType: AuthTypes,
   username: string,
-  password: string,
-  accessToken: string
+  encryptedPassword: string,
+  encryptedAccessToken: string
 ): ActionTrayAdded {
   return {
     type: Actions.TRAY_ADDED,
@@ -46,8 +46,8 @@ export function trayAdded(
     data: createTray(trayId, url, {
       authType,
       username,
-      password,
-      accessToken
+      encryptedPassword,
+      encryptedAccessToken
     })
   }
 }
