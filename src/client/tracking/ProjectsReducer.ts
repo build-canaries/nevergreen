@@ -1,22 +1,13 @@
 import {Actions} from '../Actions'
 import {Project} from '../domain/Project'
-import {merge} from 'lodash'
+import {unionWith} from 'lodash'
 import {ActionProjectsFetched, ActionRemoveTray, ActionTrayAdded} from './TrackingActionCreators'
 import {createReducer, createSelector} from 'redux-starter-kit'
 import {State} from '../Reducer'
 import {ActionConfigurationImported} from '../backup/BackupActionCreators'
 
-interface ProjectByIdState {
-  [projectId: string]: Project;
-}
-
 export interface ProjectsState {
-  readonly [trayId: string]: ProjectByIdState;
-}
-
-function byProjectId(acc: ProjectByIdState, current: Project) {
-  acc[current.projectId] = current
-  return acc
+  readonly [trayId: string]: ReadonlyArray<Project>;
 }
 
 export const PROJECTS_ROOT = 'projects'
@@ -30,26 +21,25 @@ export const reduce = createReducer<ProjectsState>(DEFAULT_STATE, {
       : draft
   },
   [Actions.TRAY_ADDED]: (draft, action: ActionTrayAdded) => {
-    draft[action.trayId] = {}
+    draft[action.trayId] = []
   },
   [Actions.TRAY_REMOVED]: (draft, action: ActionRemoveTray) => {
     delete draft[action.trayId]
   },
   [Actions.PROJECTS_FETCHED]: (draft, action: ActionProjectsFetched) => {
-    const fetched = action.data.reduce(byProjectId, {})
+    const existingProjects = draft[action.trayId]
 
-    draft[action.trayId] = merge(Object.values(draft[action.trayId])
+    draft[action.trayId] = unionWith(
+      action.data,
+      existingProjects
         .filter((project) => !project.removed)
-        .map((project) => ({...project, removed: true, isNew: false}))
-        .reduce(byProjectId, {}),
-      fetched)
+        .map((project) => ({...project, removed: true, isNew: false})),
+      (fetched, existing) => fetched.projectId === existing.projectId)
   }
 })
 
 const getProjects = (state: State) => state[PROJECTS_ROOT]
-export const getProjectsForTray = (trayId: string) => createSelector(getProjects, (projects) => {
-  return Object.values(projects[trayId] || {})
-})
+export const getProjectsForTray = (trayId: string) => createSelector(getProjects, (projects) => projects[trayId])
 export const getProjectsAll = createSelector(getProjects, (projects) => {
-  return Object.values(projects).flatMap((projectsById) => Object.values(projectsById))
+  return Object.values(projects).flatMap((projectsPerTray) => projectsPerTray)
 })

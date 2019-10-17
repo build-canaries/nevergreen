@@ -35,7 +35,7 @@ it('should correctly show and remove errors returned while refreshing', async ()
       trayId: tray
     },
     [PROJECTS_ROOT]: {
-      trayId: {}
+      trayId: []
     },
     [SELECTED_ROOT]: {
       trayId: []
@@ -63,7 +63,7 @@ it('should show a warning if there are no projects', () => {
       trayId: tray
     },
     [PROJECTS_ROOT]: {
-      trayId: {}
+      trayId: []
     },
     [SELECTED_ROOT]: {
       trayId: []
@@ -80,12 +80,12 @@ it('should show a warning if no projects match the filter', async () => {
       trayId: tray
     },
     [PROJECTS_ROOT]: {
-      trayId: {
-        projectId: buildProject({
+      trayId: [
+        buildProject({
           projectId: 'projectId',
           name: 'foo'
         })
-      }
+      ]
     },
     [SELECTED_ROOT]: {
       trayId: []
@@ -105,11 +105,11 @@ it('should show an error if the filter is invalid', async () => {
       trayId: tray
     },
     [PROJECTS_ROOT]: {
-      trayId: {
-        projectId: buildProject({
+      trayId: [
+        buildProject({
           projectId: 'projectId'
         })
-      }
+      ]
     },
     [SELECTED_ROOT]: {
       trayId: []
@@ -129,11 +129,11 @@ describe('accessibility', () => {
         trayId: tray
       },
       [PROJECTS_ROOT]: {
-        trayId: {
-          projectId: buildProject({
+        trayId: [
+          buildProject({
             projectId: 'projectId'
           })
-        }
+        ]
       },
       [SELECTED_ROOT]: {
         trayId: []
@@ -153,11 +153,11 @@ describe('accessibility', () => {
         trayId: tray
       },
       [PROJECTS_ROOT]: {
-        trayId: {
-          projectId: buildProject({
+        trayId: [
+          buildProject({
             projectId: 'projectId'
           })
-        }
+        ]
       },
       [SELECTED_ROOT]: {
         trayId: []

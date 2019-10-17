@@ -111,36 +111,34 @@
       "type": "object",
       "patternProperties": {
         ".*": {
-          "type": "object",
-          "patternProperties": {
-            ".*": {
-              "type": "object",
-              "properties": {
-                "projectId": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "stage": {
-                  "type": [
-                    "string",
-                    "null"
-                  ]
-                },
-                "removed": {
-                  "type": "boolean"
-                },
-                "isNew": {
-                  "type": "boolean"
-                }
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string"
               },
-              "required": [
-                "projectId",
-                "name"
-              ],
-              "additionalProperties": false
-            }
+              "name": {
+                "type": "string"
+              },
+              "stage": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "removed": {
+                "type": "boolean"
+              },
+              "isNew": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "projectId",
+              "name"
+            ],
+            "additionalProperties": false
           }
         }
       }

@@ -2,7 +2,7 @@ import {getMigrations} from './migrations'
 import format from 'date-fns/format'
 import {info} from '../common/Logger'
 import {UntrustedData} from './LocalRepository'
-import {get, has, isNil, set, unset} from 'lodash'
+import {get, has, isNil, isObject, set, unset} from 'lodash'
 import {APPLIED_MIGRATIONS_ROOT, AppliedMigration} from './MigrationsReducer'
 
 type PropertyPath = string | ReadonlyArray<string>
@@ -46,4 +46,8 @@ export function moveData(untrustedData: UntrustedData, fromPath: PropertyPath, t
     unset(untrustedData, fromPath)
   }
   return untrustedData
+}
+
+export function hasObject(untrustedData: UntrustedData, atPath: PropertyPath) {
+  return has(untrustedData, atPath) && isObject(get(untrustedData, atPath))
 }

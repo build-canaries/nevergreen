@@ -545,160 +545,155 @@ var validate = (function() {
             if (pattern0.test(key1)) {
               var data2 = data1[key1];
               var errs_2 = errors;
-              if ((data2 && typeof data2 === "object" && !Array.isArray(data2))) {
+              if (Array.isArray(data2)) {
                 var errs__2 = errors;
-                var valid3 = true;
-                for (var key2 in data2) {
-                  var isAdditional2 = !(false || pattern0.test(key2));
-                }
-                for (var key2 in data2) {
-                  if (pattern0.test(key2)) {
-                    var data3 = data2[key2];
-                    var errs_3 = errors;
-                    if ((data3 && typeof data3 === "object" && !Array.isArray(data3))) {
-                      var errs__3 = errors;
-                      var valid4 = true;
-                      for (var key3 in data3) {
-                        var isAdditional3 = !(false || key3 == 'projectId' || key3 == 'name' || key3 == 'stage' || key3 == 'removed' || key3 == 'isNew');
-                        if (isAdditional3) {
-                          delete data3[key3];
-                        }
+                var valid2;
+                for (var i2 = 0; i2 < data2.length; i2++) {
+                  var data3 = data2[i2];
+                  var errs_3 = errors;
+                  if ((data3 && typeof data3 === "object" && !Array.isArray(data3))) {
+                    var errs__3 = errors;
+                    var valid4 = true;
+                    for (var key3 in data3) {
+                      var isAdditional3 = !(false || key3 == 'projectId' || key3 == 'name' || key3 == 'stage' || key3 == 'removed' || key3 == 'isNew');
+                      if (isAdditional3) {
+                        delete data3[key3];
                       }
-                      if (data3.projectId === undefined) {
-                        valid4 = false;
-                        var err = {
-                          keyword: 'required',
-                          dataPath: (dataPath || '') + '.projects[\'' + key1 + '\'][\'' + key2 + '\']',
-                          schemaPath: '#/properties/projects/patternProperties/.*/patternProperties/.*/required',
-                          params: {
-                            missingProperty: 'projectId'
-                          },
-                          message: 'should have required property \'projectId\''
-                        };
-                        if (vErrors === null) vErrors = [err];
-                        else vErrors.push(err);
-                        errors++;
-                      } else {
-                        var errs_4 = errors;
-                        if (typeof data3.projectId !== "string") {
-                          var err = {
-                            keyword: 'type',
-                            dataPath: (dataPath || '') + '.projects[\'' + key1 + '\'][\'' + key2 + '\'].projectId',
-                            schemaPath: '#/properties/projects/patternProperties/.*/patternProperties/.*/properties/projectId/type',
-                            params: {
-                              type: 'string'
-                            },
-                            message: 'should be string'
-                          };
-                          if (vErrors === null) vErrors = [err];
-                          else vErrors.push(err);
-                          errors++;
-                        }
-                        var valid4 = errors === errs_4;
-                      }
-                      if (data3.name === undefined) {
-                        valid4 = false;
-                        var err = {
-                          keyword: 'required',
-                          dataPath: (dataPath || '') + '.projects[\'' + key1 + '\'][\'' + key2 + '\']',
-                          schemaPath: '#/properties/projects/patternProperties/.*/patternProperties/.*/required',
-                          params: {
-                            missingProperty: 'name'
-                          },
-                          message: 'should have required property \'name\''
-                        };
-                        if (vErrors === null) vErrors = [err];
-                        else vErrors.push(err);
-                        errors++;
-                      } else {
-                        var errs_4 = errors;
-                        if (typeof data3.name !== "string") {
-                          var err = {
-                            keyword: 'type',
-                            dataPath: (dataPath || '') + '.projects[\'' + key1 + '\'][\'' + key2 + '\'].name',
-                            schemaPath: '#/properties/projects/patternProperties/.*/patternProperties/.*/properties/name/type',
-                            params: {
-                              type: 'string'
-                            },
-                            message: 'should be string'
-                          };
-                          if (vErrors === null) vErrors = [err];
-                          else vErrors.push(err);
-                          errors++;
-                        }
-                        var valid4 = errors === errs_4;
-                      }
-                      var data4 = data3.stage;
-                      if (data4 !== undefined) {
-                        var errs_4 = errors;
-                        if (typeof data4 !== "string" && data4 !== null) {
-                          var err = {
-                            keyword: 'type',
-                            dataPath: (dataPath || '') + '.projects[\'' + key1 + '\'][\'' + key2 + '\'].stage',
-                            schemaPath: '#/properties/projects/patternProperties/.*/patternProperties/.*/properties/stage/type',
-                            params: {
-                              type: 'string,null'
-                            },
-                            message: 'should be string,null'
-                          };
-                          if (vErrors === null) vErrors = [err];
-                          else vErrors.push(err);
-                          errors++;
-                        }
-                        var valid4 = errors === errs_4;
-                      }
-                      if (data3.removed !== undefined) {
-                        var errs_4 = errors;
-                        if (typeof data3.removed !== "boolean") {
-                          var err = {
-                            keyword: 'type',
-                            dataPath: (dataPath || '') + '.projects[\'' + key1 + '\'][\'' + key2 + '\'].removed',
-                            schemaPath: '#/properties/projects/patternProperties/.*/patternProperties/.*/properties/removed/type',
-                            params: {
-                              type: 'boolean'
-                            },
-                            message: 'should be boolean'
-                          };
-                          if (vErrors === null) vErrors = [err];
-                          else vErrors.push(err);
-                          errors++;
-                        }
-                        var valid4 = errors === errs_4;
-                      }
-                      if (data3.isNew !== undefined) {
-                        var errs_4 = errors;
-                        if (typeof data3.isNew !== "boolean") {
-                          var err = {
-                            keyword: 'type',
-                            dataPath: (dataPath || '') + '.projects[\'' + key1 + '\'][\'' + key2 + '\'].isNew',
-                            schemaPath: '#/properties/projects/patternProperties/.*/patternProperties/.*/properties/isNew/type',
-                            params: {
-                              type: 'boolean'
-                            },
-                            message: 'should be boolean'
-                          };
-                          if (vErrors === null) vErrors = [err];
-                          else vErrors.push(err);
-                          errors++;
-                        }
-                        var valid4 = errors === errs_4;
-                      }
-                    } else {
+                    }
+                    if (data3.projectId === undefined) {
+                      valid4 = false;
                       var err = {
-                        keyword: 'type',
-                        dataPath: (dataPath || '') + '.projects[\'' + key1 + '\'][\'' + key2 + '\']',
-                        schemaPath: '#/properties/projects/patternProperties/.*/patternProperties/.*/type',
+                        keyword: 'required',
+                        dataPath: (dataPath || '') + '.projects[\'' + key1 + '\'][' + i2 + ']',
+                        schemaPath: '#/properties/projects/patternProperties/.*/items/required',
                         params: {
-                          type: 'object'
+                          missingProperty: 'projectId'
                         },
-                        message: 'should be object'
+                        message: 'should have required property \'projectId\''
                       };
                       if (vErrors === null) vErrors = [err];
                       else vErrors.push(err);
                       errors++;
+                    } else {
+                      var errs_4 = errors;
+                      if (typeof data3.projectId !== "string") {
+                        var err = {
+                          keyword: 'type',
+                          dataPath: (dataPath || '') + '.projects[\'' + key1 + '\'][' + i2 + '].projectId',
+                          schemaPath: '#/properties/projects/patternProperties/.*/items/properties/projectId/type',
+                          params: {
+                            type: 'string'
+                          },
+                          message: 'should be string'
+                        };
+                        if (vErrors === null) vErrors = [err];
+                        else vErrors.push(err);
+                        errors++;
+                      }
+                      var valid4 = errors === errs_4;
                     }
-                    var valid3 = errors === errs_3;
+                    if (data3.name === undefined) {
+                      valid4 = false;
+                      var err = {
+                        keyword: 'required',
+                        dataPath: (dataPath || '') + '.projects[\'' + key1 + '\'][' + i2 + ']',
+                        schemaPath: '#/properties/projects/patternProperties/.*/items/required',
+                        params: {
+                          missingProperty: 'name'
+                        },
+                        message: 'should have required property \'name\''
+                      };
+                      if (vErrors === null) vErrors = [err];
+                      else vErrors.push(err);
+                      errors++;
+                    } else {
+                      var errs_4 = errors;
+                      if (typeof data3.name !== "string") {
+                        var err = {
+                          keyword: 'type',
+                          dataPath: (dataPath || '') + '.projects[\'' + key1 + '\'][' + i2 + '].name',
+                          schemaPath: '#/properties/projects/patternProperties/.*/items/properties/name/type',
+                          params: {
+                            type: 'string'
+                          },
+                          message: 'should be string'
+                        };
+                        if (vErrors === null) vErrors = [err];
+                        else vErrors.push(err);
+                        errors++;
+                      }
+                      var valid4 = errors === errs_4;
+                    }
+                    var data4 = data3.stage;
+                    if (data4 !== undefined) {
+                      var errs_4 = errors;
+                      if (typeof data4 !== "string" && data4 !== null) {
+                        var err = {
+                          keyword: 'type',
+                          dataPath: (dataPath || '') + '.projects[\'' + key1 + '\'][' + i2 + '].stage',
+                          schemaPath: '#/properties/projects/patternProperties/.*/items/properties/stage/type',
+                          params: {
+                            type: 'string,null'
+                          },
+                          message: 'should be string,null'
+                        };
+                        if (vErrors === null) vErrors = [err];
+                        else vErrors.push(err);
+                        errors++;
+                      }
+                      var valid4 = errors === errs_4;
+                    }
+                    if (data3.removed !== undefined) {
+                      var errs_4 = errors;
+                      if (typeof data3.removed !== "boolean") {
+                        var err = {
+                          keyword: 'type',
+                          dataPath: (dataPath || '') + '.projects[\'' + key1 + '\'][' + i2 + '].removed',
+                          schemaPath: '#/properties/projects/patternProperties/.*/items/properties/removed/type',
+                          params: {
+                            type: 'boolean'
+                          },
+                          message: 'should be boolean'
+                        };
+                        if (vErrors === null) vErrors = [err];
+                        else vErrors.push(err);
+                        errors++;
+                      }
+                      var valid4 = errors === errs_4;
+                    }
+                    if (data3.isNew !== undefined) {
+                      var errs_4 = errors;
+                      if (typeof data3.isNew !== "boolean") {
+                        var err = {
+                          keyword: 'type',
+                          dataPath: (dataPath || '') + '.projects[\'' + key1 + '\'][' + i2 + '].isNew',
+                          schemaPath: '#/properties/projects/patternProperties/.*/items/properties/isNew/type',
+                          params: {
+                            type: 'boolean'
+                          },
+                          message: 'should be boolean'
+                        };
+                        if (vErrors === null) vErrors = [err];
+                        else vErrors.push(err);
+                        errors++;
+                      }
+                      var valid4 = errors === errs_4;
+                    }
+                  } else {
+                    var err = {
+                      keyword: 'type',
+                      dataPath: (dataPath || '') + '.projects[\'' + key1 + '\'][' + i2 + ']',
+                      schemaPath: '#/properties/projects/patternProperties/.*/items/type',
+                      params: {
+                        type: 'object'
+                      },
+                      message: 'should be object'
+                    };
+                    if (vErrors === null) vErrors = [err];
+                    else vErrors.push(err);
+                    errors++;
                   }
+                  var valid3 = errors === errs_3;
                 }
               } else {
                 var err = {
@@ -706,9 +701,9 @@ var validate = (function() {
                   dataPath: (dataPath || '') + '.projects[\'' + key1 + '\']',
                   schemaPath: '#/properties/projects/patternProperties/.*/type',
                   params: {
-                    type: 'object'
+                    type: 'array'
                   },
-                  message: 'should be object'
+                  message: 'should be array'
                 };
                 if (vErrors === null) vErrors = [err];
                 else vErrors.push(err);
@@ -1228,30 +1223,28 @@ validate.schema = {
       "type": "object",
       "patternProperties": {
         ".*": {
-          "type": "object",
-          "patternProperties": {
-            ".*": {
-              "type": "object",
-              "properties": {
-                "projectId": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "stage": {
-                  "type": ["string", "null"]
-                },
-                "removed": {
-                  "type": "boolean"
-                },
-                "isNew": {
-                  "type": "boolean"
-                }
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string"
               },
-              "required": ["projectId", "name"],
-              "additionalProperties": false
-            }
+              "name": {
+                "type": "string"
+              },
+              "stage": {
+                "type": ["string", "null"]
+              },
+              "removed": {
+                "type": "boolean"
+              },
+              "isNew": {
+                "type": "boolean"
+              }
+            },
+            "required": ["projectId", "name"],
+            "additionalProperties": false
           }
         }
       }
