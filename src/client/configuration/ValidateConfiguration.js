@@ -555,7 +555,7 @@ var validate = (function() {
                     var errs__3 = errors;
                     var valid4 = true;
                     for (var key3 in data3) {
-                      var isAdditional3 = !(false || key3 == 'projectId' || key3 == 'name' || key3 == 'stage' || key3 == 'removed' || key3 == 'isNew');
+                      var isAdditional3 = !(false || key3 == 'projectId' || key3 == 'name' || key3 == 'stage' || key3 == 'removed' || key3 == 'isNew' || key3 == 'trayId');
                       if (isAdditional3) {
                         delete data3[key3];
                       }
@@ -672,6 +672,38 @@ var validate = (function() {
                             type: 'boolean'
                           },
                           message: 'should be boolean'
+                        };
+                        if (vErrors === null) vErrors = [err];
+                        else vErrors.push(err);
+                        errors++;
+                      }
+                      var valid4 = errors === errs_4;
+                    }
+                    if (data3.trayId === undefined) {
+                      valid4 = false;
+                      var err = {
+                        keyword: 'required',
+                        dataPath: (dataPath || '') + '.projects[\'' + key1 + '\'][' + i2 + ']',
+                        schemaPath: '#/properties/projects/patternProperties/.*/items/required',
+                        params: {
+                          missingProperty: 'trayId'
+                        },
+                        message: 'should have required property \'trayId\''
+                      };
+                      if (vErrors === null) vErrors = [err];
+                      else vErrors.push(err);
+                      errors++;
+                    } else {
+                      var errs_4 = errors;
+                      if (typeof data3.trayId !== "string") {
+                        var err = {
+                          keyword: 'type',
+                          dataPath: (dataPath || '') + '.projects[\'' + key1 + '\'][' + i2 + '].trayId',
+                          schemaPath: '#/properties/projects/patternProperties/.*/items/properties/trayId/type',
+                          params: {
+                            type: 'string'
+                          },
+                          message: 'should be string'
                         };
                         if (vErrors === null) vErrors = [err];
                         else vErrors.push(err);
@@ -1241,9 +1273,12 @@ validate.schema = {
               },
               "isNew": {
                 "type": "boolean"
+              },
+              "trayId": {
+                "type": "string"
               }
             },
-            "required": ["projectId", "name"],
+            "required": ["projectId", "name", "trayId"],
             "additionalProperties": false
           }
         }

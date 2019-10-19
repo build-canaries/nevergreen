@@ -132,11 +132,15 @@
               },
               "isNew": {
                 "type": "boolean"
+              },
+              "trayId": {
+                "type": "string"
               }
             },
             "required": [
               "projectId",
-              "name"
+              "name",
+              "trayId"
             ],
             "additionalProperties": false
           }
