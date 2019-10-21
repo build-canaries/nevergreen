@@ -2,7 +2,7 @@ import {getMigrations} from './migrations'
 import format from 'date-fns/format'
 import {info} from '../common/Logger'
 import {UntrustedData} from './LocalRepository'
-import {get, has, isNil, isObject, set, unset} from 'lodash'
+import {get, has, isArray, isNil, isObject, set, unset} from 'lodash'
 import {APPLIED_MIGRATIONS_ROOT, AppliedMigration} from './MigrationsReducer'
 
 type PropertyPath = string | ReadonlyArray<string>
@@ -39,15 +39,35 @@ export function migrate(data: UntrustedData): void {
     })
 }
 
-export function moveData(untrustedData: UntrustedData, fromPath: PropertyPath, toPath: PropertyPath): UntrustedData {
+export function moveData(untrustedData: UntrustedData, fromPath: PropertyPath, toPath: PropertyPath): void {
   if (has(untrustedData, fromPath)) {
     const dataToMove = get(untrustedData, fromPath)
     set(untrustedData, toPath, dataToMove)
     unset(untrustedData, fromPath)
   }
-  return untrustedData
 }
 
-export function hasObject(untrustedData: UntrustedData, atPath: PropertyPath) {
-  return has(untrustedData, atPath) && isObject(get(untrustedData, atPath))
+function forEachAt(untrustedData: UntrustedData, atPath: PropertyPath, callback: (value: UntrustedData, key: string) => void): void {
+  const o = get(untrustedData, atPath)
+  if (isObject(o)) {
+    Object.entries(o).forEach(([key, value]) => {
+      callback(value as UntrustedData, key)
+    })
+  }
+}
+
+export function forEachObjectAt(untrustedData: UntrustedData, atPath: PropertyPath, callback: (value: UntrustedData, key: string) => void): void {
+  forEachAt(untrustedData, atPath, (value, key) => {
+    if (isObject(value)) {
+      callback(value, key)
+    }
+  })
+}
+
+export function forEachArrayAt(untrustedData: UntrustedData, atPath: PropertyPath, callback: (value: UntrustedData[], key: string) => void): void {
+  forEachAt(untrustedData, atPath, (value, key) => {
+    if (isArray(value)) {
+      callback(value, key)
+    }
+  })
 }

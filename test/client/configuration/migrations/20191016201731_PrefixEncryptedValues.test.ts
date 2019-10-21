@@ -13,6 +13,12 @@ it('should not modify the given data if it contains the trays key but it is not 
   expect(data).toEqual({[TRAYS_ROOT]: 'invalid'})
 })
 
+it('should not modify the given data if it contains the trays and tray id keys but it is not an object', () => {
+  const data = {[TRAYS_ROOT]: {trayId: 'invalid'}}
+  migrate(data)
+  expect(data).toEqual({[TRAYS_ROOT]: {trayId: 'invalid'}})
+})
+
 it('should move password to encryptedPassword', () => {
   const trayId = 'trayId'
   const data = {
