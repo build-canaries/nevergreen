@@ -18,7 +18,7 @@ import {Provider} from 'react-redux'
 import {configureStore} from 'redux-starter-kit'
 import {HashRouter} from 'react-router-dom'
 import Modal from 'react-modal'
-import {DEFAULT_PROJECTS_TO_SHOW, MIN_REFRESH_TIME} from '../../src/client/settings/SettingsActionCreators'
+import {DEFAULT_PROJECTS_TO_SHOW, DEFAULT_REFRESH_TIME} from '../../src/client/settings/SettingsActionCreators'
 import {APPLIED_MIGRATIONS_ROOT} from '../../src/client/configuration/MigrationsReducer'
 
 export function locator(name: string) {
@@ -57,7 +57,7 @@ export function buildState(subState?: RecursivePartial<State>): State {
       clickToShowMenu: false,
       maxProjectsToShow: DEFAULT_PROJECTS_TO_SHOW,
       playBrokenBuildSoundFx: false,
-      refreshTime: MIN_REFRESH_TIME,
+      refreshTime: DEFAULT_REFRESH_TIME,
       showBrokenBuildTime: false,
       showBuildLabel: false,
       showBuildTime: false,

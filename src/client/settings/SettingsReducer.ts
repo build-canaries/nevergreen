@@ -12,7 +12,7 @@ import {
   ActionShowSystemNotifications,
   ActionShowTrayName,
   DEFAULT_PROJECTS_TO_SHOW,
-  MIN_REFRESH_TIME
+  DEFAULT_REFRESH_TIME
 } from './SettingsActionCreators'
 import defaultSoundFx from './pacman_death.mp3'
 import {createReducer, createSelector} from 'redux-starter-kit'
@@ -43,7 +43,7 @@ const DEFAULT_STATE: SettingsState = {
   showBrokenBuildTime: true,
   playBrokenBuildSoundFx: false,
   brokenBuildSoundFx: defaultSoundFx,
-  refreshTime: MIN_REFRESH_TIME,
+  refreshTime: DEFAULT_REFRESH_TIME,
   showBuildLabel: false,
   showSystemNotifications: false,
   maxProjectsToShow: DEFAULT_PROJECTS_TO_SHOW,
