@@ -20,14 +20,16 @@ describe('<Nevergreen/>', () => {
     expect(LocalConfiguration.load).toHaveBeenCalled()
   })
 
-  it('should check for new versions', () => {
+  it('should check for new versions', async () => {
     render(<Nevergreen/>)
+    await waitForDomChange()
     expect(CheckForNewVersionHook.useCheckForNewVersion).toHaveBeenCalled()
   })
 
-  it('should register the service worker on mount', () => {
+  it('should register the service worker on mount', async () => {
     jest.spyOn(ServiceWorkerHook, 'useServiceWorker').mockReturnValue()
     render(<Nevergreen/>)
+    await waitForDomChange()
     expect(ServiceWorkerHook.useServiceWorker).toHaveBeenCalled()
   })
 })
