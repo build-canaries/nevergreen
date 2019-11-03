@@ -1,0 +1,111 @@
+{
+  "success": [
+    "=(^.^)=",
+    "https://octodex.github.com/images/class-act.png"
+  ],
+  "github": {
+    "gistId": "",
+    "description": "Nevergreen configuration backup"
+  },
+  "audioVisual": {
+    "showTrayName": true,
+    "showBrokenBuildTime": true,
+    "playBrokenBuildSoundFx": true,
+    "brokenBuildSoundFx": "pacman_death.mp3",
+    "refreshTime": 5,
+    "showBuildLabel": true
+  },
+  "nevergreen": {
+    "versionNumber": "1.0.0",
+    "versionName": "Lapis Lazuli",
+    "versionMeta": "588",
+    "commitHash": "d7c07c1"
+  },
+  "projects": {
+    "http://localhost:5050/cc.xml": {
+      "example-service-1": {
+        "removed": false,
+        "name": "example service 1",
+        "projectId": "example-service-1",
+        "isNew": true,
+        "stage": null
+      },
+      "example-service-2": {
+        "removed": false,
+        "name": "example service 2",
+        "projectId": "example-service-2",
+        "isNew": true,
+        "stage": null
+      },
+      "example-service-3": {
+        "removed": false,
+        "name": "example service 3",
+        "projectId": "example-service-3",
+        "isNew": true,
+        "stage": null
+      }
+    },
+    "http://localhost:5050/secure/cctray.xml": {
+      "success-sleeping-project": {
+        "removed": false,
+        "name": "success sleeping project",
+        "projectId": "success-sleeping-project",
+        "isNew": true,
+        "stage": null
+      },
+      "success-building-project": {
+        "removed": false,
+        "name": "success building project",
+        "projectId": "success-building-project",
+        "isNew": true,
+        "stage": null
+      },
+      "failure_sleeping_project": {
+        "removed": false,
+        "name": "failure sleeping project",
+        "projectId": "failure_sleeping_project",
+        "isNew": true,
+        "stage": null
+      },
+      "failure_building_project": {
+        "removed": false,
+        "name": "failure building project",
+        "projectId": "failure_building_project",
+        "isNew": true,
+        "stage": null
+      }
+    }
+  },
+  "selected": {
+    "http://localhost:5050/cc.xml": [
+      "example-service-1",
+      "example-service-2",
+      "example-service-3"
+    ],
+    "http://localhost:5050/secure/cctray.xml": [
+      "success-sleeping-project",
+      "success-building-project",
+      "failure_sleeping_project",
+      "failure_building_project"
+    ]
+  },
+  "trays": {
+    "http://localhost:5050/cc.xml": {
+      "name": "plastic toe",
+      "url": "http://localhost:5050/cc.xml",
+      "trayId": "http://localhost:5050/cc.xml",
+      "username": "",
+      "timestamp": "2019-11-02T18:39:06.993+00:00",
+      "serverType": "unknown"
+    },
+    "http://localhost:5050/secure/cctray.xml": {
+      "name": "ratty heat",
+      "url": "http://localhost:5050/secure/cctray.xml",
+      "trayId": "http://localhost:5050/secure/cctray.xml",
+      "username": "u",
+      "timestamp": "2019-11-02T18:39:44.183+00:00",
+      "password": "m8cWhDVxiQxSnm4ssJrecw==",
+      "serverType": "unknown"
+    }
+  }
+}

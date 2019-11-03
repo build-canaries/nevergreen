@@ -1,0 +1,114 @@
+{
+  "success": [
+    "=(^.^)=",
+    "https://octodex.github.com/images/class-act.png"
+  ],
+  "github": {
+    "gistId": "",
+    "description": "Nevergreen configuration backup"
+  },
+  "audioVisual": {
+    "showBuildLabel": true,
+    "refreshTime": 5,
+    "brokenBuildSoundFx": "pacman_death.mp3",
+    "showBrokenBuildTime": true,
+    "maxProjectsToShow": 12,
+    "showSystemNotifications": true,
+    "playBrokenBuildSoundFx": true,
+    "showTrayName": true,
+    "showBuildTime": true,
+    "clickToShowMenu": false
+  },
+  "projects": {
+    "313e235f-58e7-40c4-be54-32110cd7ab2c": {
+      "example-service-1": {
+        "projectId": "example-service-1",
+        "removed": false,
+        "name": "example service 1",
+        "isNew": true,
+        "stage": null
+      },
+      "example-service-2": {
+        "projectId": "example-service-2",
+        "removed": false,
+        "name": "example service 2",
+        "isNew": true,
+        "stage": null
+      },
+      "example-service-3": {
+        "projectId": "example-service-3",
+        "removed": false,
+        "name": "example service 3",
+        "isNew": true,
+        "stage": null
+      }
+    },
+    "fc88b00f-d40b-4294-9efd-7cf06c5245ce": {
+      "success-sleeping-project": {
+        "projectId": "success-sleeping-project",
+        "removed": false,
+        "name": "success sleeping project",
+        "isNew": true,
+        "stage": null
+      },
+      "success-building-project": {
+        "projectId": "success-building-project",
+        "removed": false,
+        "name": "success building project",
+        "isNew": true,
+        "stage": null
+      },
+      "failure_sleeping_project": {
+        "projectId": "failure_sleeping_project",
+        "removed": false,
+        "name": "failure sleeping project",
+        "isNew": true,
+        "stage": null
+      },
+      "failure_building_project": {
+        "projectId": "failure_building_project",
+        "removed": false,
+        "name": "failure building project",
+        "isNew": true,
+        "stage": null
+      }
+    }
+  },
+  "gitlab": {
+    "url": "https://gitlab.com",
+    "snippetId": ""
+  },
+  "selected": {
+    "313e235f-58e7-40c4-be54-32110cd7ab2c": [
+      "example-service-1",
+      "example-service-2",
+      "example-service-3"
+    ],
+    "fc88b00f-d40b-4294-9efd-7cf06c5245ce": [
+      "success-sleeping-project",
+      "success-building-project",
+      "failure_sleeping_project",
+      "failure_building_project"
+    ]
+  },
+  "trays": {
+    "313e235f-58e7-40c4-be54-32110cd7ab2c": {
+      "trayId": "313e235f-58e7-40c4-be54-32110cd7ab2c",
+      "name": "overjoyed cream",
+      "url": "http://localhost:5050/cc.xml",
+      "username": "",
+      "password": "",
+      "serverType": "unknown",
+      "timestamp": "2019-11-02T18:46:30.888+00:00"
+    },
+    "fc88b00f-d40b-4294-9efd-7cf06c5245ce": {
+      "trayId": "fc88b00f-d40b-4294-9efd-7cf06c5245ce",
+      "name": "strange chicken",
+      "url": "http://localhost:5050/secure/cctray.xml",
+      "username": "u",
+      "password": "m8cWhDVxiQxSnm4ssJrecw==",
+      "serverType": "unknown",
+      "timestamp": "2019-11-02T18:46:44.915+00:00"
+    }
+  }
+}

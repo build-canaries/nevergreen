@@ -1,0 +1,163 @@
+{
+  "audioVisual": {
+    "showTrayName": true,
+    "showBuildTime": true,
+    "showBrokenBuildTime": true,
+    "playBrokenBuildSoundFx": true,
+    "brokenBuildSoundFx": "pacman_death.mp3",
+    "refreshTime": 5,
+    "showBuildLabel": true,
+    "showSystemNotifications": true,
+    "maxProjectsToShow": 12,
+    "clickToShowMenu": true,
+    "showPrognosis": [
+      "sick",
+      "sick-building",
+      "healthy-building",
+      "unknown"
+    ]
+  },
+  "backup": {
+    "github": {
+      "id": "",
+      "description": "Nevergreen configuration backup",
+      "url": "https://api.github.com"
+    },
+    "gitlab": {
+      "id": "",
+      "description": "Nevergreen configuration backup",
+      "url": "https://gitlab.com"
+    }
+  },
+  "projects": {
+    "4c3325b7-21cd-4bab-bbbf-33eec3e70623": {
+      "example-service-1": {
+        "isNew": true,
+        "name": "example service 1",
+        "projectId": "example-service-1",
+        "removed": false
+      },
+      "example-service-2": {
+        "isNew": true,
+        "name": "example service 2",
+        "projectId": "example-service-2",
+        "removed": false
+      },
+      "example-service-3": {
+        "isNew": true,
+        "name": "example service 3",
+        "projectId": "example-service-3",
+        "removed": false
+      }
+    },
+    "d1469697-0e0e-4504-9921-8d1f820c43f3": {
+      "success-sleeping-project": {
+        "isNew": true,
+        "name": "success sleeping project",
+        "projectId": "success-sleeping-project",
+        "removed": false
+      },
+      "success-building-project": {
+        "isNew": true,
+        "name": "success building project",
+        "projectId": "success-building-project",
+        "removed": false
+      },
+      "failure_sleeping_project": {
+        "isNew": true,
+        "name": "failure sleeping project",
+        "projectId": "failure_sleeping_project",
+        "removed": false
+      },
+      "failure_building_project": {
+        "isNew": true,
+        "name": "failure building project",
+        "projectId": "failure_building_project",
+        "removed": false
+      }
+    },
+    "bde6335b-220f-4213-9268-ae5a561768f3": {
+      "success-sleeping-project": {
+        "isNew": true,
+        "name": "success sleeping project",
+        "projectId": "success-sleeping-project",
+        "removed": false
+      },
+      "success-building-project": {
+        "isNew": true,
+        "name": "success building project",
+        "projectId": "success-building-project",
+        "removed": false
+      },
+      "failure_sleeping_project": {
+        "isNew": true,
+        "name": "failure sleeping project",
+        "projectId": "failure_sleeping_project",
+        "removed": false
+      },
+      "failure_building_project": {
+        "isNew": true,
+        "name": "failure building project",
+        "projectId": "failure_building_project",
+        "removed": false
+      }
+    }
+  },
+  "selected": {
+    "4c3325b7-21cd-4bab-bbbf-33eec3e70623": [
+      "example-service-1",
+      "example-service-2",
+      "example-service-3"
+    ],
+    "d1469697-0e0e-4504-9921-8d1f820c43f3": [
+      "success-sleeping-project",
+      "success-building-project",
+      "failure_sleeping_project",
+      "failure_building_project"
+    ],
+    "bde6335b-220f-4213-9268-ae5a561768f3": [
+      "success-sleeping-project",
+      "success-building-project",
+      "failure_sleeping_project",
+      "failure_building_project"
+    ]
+  },
+  "success": [
+    "=(^.^)=",
+    "https://octodex.github.com/images/class-act.png"
+  ],
+  "trays": {
+    "4c3325b7-21cd-4bab-bbbf-33eec3e70623": {
+      "trayId": "4c3325b7-21cd-4bab-bbbf-33eec3e70623",
+      "url": "http://localhost:5050/cc.xml",
+      "authType": "none",
+      "username": "",
+      "name": "axiomatic scissors",
+      "includeNew": true,
+      "serverType": "",
+      "timestamp": "2019-11-02T18:48:18.799+00:00"
+    },
+    "d1469697-0e0e-4504-9921-8d1f820c43f3": {
+      "trayId": "d1469697-0e0e-4504-9921-8d1f820c43f3",
+      "url": "http://localhost:5050/secure/cctray.xml",
+      "authType": "basic",
+      "username": "u",
+      "name": "obeisant pear",
+      "includeNew": true,
+      "serverType": "",
+      "password": "m8cWhDVxiQxSnm4ssJrecw==",
+      "timestamp": "2019-11-02T18:48:32.262+00:00"
+    },
+    "bde6335b-220f-4213-9268-ae5a561768f3": {
+      "trayId": "bde6335b-220f-4213-9268-ae5a561768f3",
+      "url": "http://localhost:5050/token/cctray.xml",
+      "authType": "token",
+      "username": "",
+      "name": "abundant branch",
+      "includeNew": true,
+      "serverType": "",
+      "accessToken": "68DZCuzVB6PHO7f3iMhZ8Q==",
+      "timestamp": "2019-11-02T18:48:50.531+00:00"
+    }
+  }
+}
