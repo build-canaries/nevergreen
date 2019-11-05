@@ -1,6 +1,5 @@
 import React from 'react'
 import userEvent from '@testing-library/user-event'
-import { waitForDomChange } from '@testing-library/dom'
 import {Reset} from '../../../../src/client/backup/reset/Reset'
 import {render} from '../../testHelpers'
 
