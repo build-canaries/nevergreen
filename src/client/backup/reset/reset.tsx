@@ -12,7 +12,6 @@ export function Reset() {
         window.location.reload()
     }
     return(
-        <>
         <Container title={'Reset Configuration'}>
         <span className={styles.label}>Reset your Nevergreen configuration back to defaults. Please note, resetting your configuration can not be undone!</span>
         <PrimaryButton className={styles.reset}
@@ -23,6 +22,5 @@ export function Reset() {
         reset configuration
       </PrimaryButton>
       </Container>
-    </>
     )
 }
