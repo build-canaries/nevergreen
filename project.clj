@@ -25,7 +25,9 @@
   :uberjar-name "nevergreen-standalone.jar"
   :main nevergreen.app
   :aot [nevergreen.app]
-  :javac-options ["-Dclojure.compiler.direct-linking=true"]
+  :jvm-opts ["-Dclojure.compiler.direct-linking=true"
+             "-Dclojure.compiler.elide-meta=[:doc :file :line :added]"
+             "--illegal-access=deny"]
   :aliases {"lint"          ["with-profile" "+test" "eastwood"]
             "coverage"      ["with-profile" "+test" "cloverage"]
             "check-updates" ["ancient" ":all"]
