@@ -47,6 +47,7 @@ export interface ActionShowPrognosis extends Action<Actions.SHOW_PROGNOSIS> {
   readonly show: boolean;
 }
 
+export const DEFAULT_REFRESH_TIME = 10
 export const MIN_REFRESH_TIME = 5
 export const VALID_REFRESH_TIMES = [5, 10, 30, 60, 300, 600, 1800, 3600, 43200, 86400]
 export const DEFAULT_PROJECTS_TO_SHOW = 12

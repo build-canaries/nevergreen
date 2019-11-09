@@ -88,7 +88,7 @@ describe('SettingsActionCreators', () => {
     const invalidValues = ['-1', '4', 'some-string']
 
     invalidValues.forEach(function (value) {
-      test(`should return 5 second if the value is invalid (${value})`, () => {
+      test(`should return the minimum if the value is invalid (${value})`, () => {
         const actual = setRefreshTime(value)
         expect(actual).toHaveProperty('value', MIN_REFRESH_TIME)
       })

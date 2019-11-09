@@ -13,5 +13,6 @@ COPY target/nevergreen-standalone.jar nevergreen-standalone.jar
 EXPOSE 5000
 
 CMD java \
+    --illegal-access=deny \
     -Duser.timezone="UTC" \
     -jar "nevergreen-standalone.jar"

@@ -11,6 +11,7 @@ export function Backup() {
       <Title>Backup</Title>
       <Import/>
       <Export/>
+      <Reset/>
       <Schema/>
       <Reset/>
     </>

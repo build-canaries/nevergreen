@@ -88,6 +88,7 @@ app.get('/randomly-timeout', function (req, res) {
 })
 
 app.get('/invalid-xml', function (req, res) {
+  res.setHeader('Content-Type', 'application/xml; charset=utf-8')
   // duplicate attributes are invalid in XML
   res.send('<Projects><Project name="name" name="name"/></Projects>')
 })
