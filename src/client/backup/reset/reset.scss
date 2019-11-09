@@ -1,13 +1,11 @@
 @import '../../common/layout.scss';
-@import '../../common/typography';
-@import '../../common/variables.scss';
-@import '../../common/accessibility';
 
-.label {
-  @include font-scale(1);
+.container {
+  padding: 1em;
+}
 
-  display: block;
-  margin: 0.5em 1em 0.5em 0;
+.warning {
+  margin: 0;
 }
 
 .reset {
