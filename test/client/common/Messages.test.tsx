@@ -1,19 +1,15 @@
-import {locator} from '../testHelpers'
+import {render} from '../testHelpers'
 import React from 'react'
-import {shallow} from 'enzyme'
-import {Messages, MessagesProps, MessagesType} from '../../../src/client/common/Messages'
+import {Messages, MessagesType} from '../../../src/client/common/Messages'
 
-describe('<Messages/>', () => {
+it('should not render anything if messages is empty', () => {
+  const props = {type: MessagesType.ERROR, messages: []}
+  const {container} = render(<Messages {...props} />)
+  expect(container.firstChild).toBeNull()
+})
 
-  test('should not render anything if messages is empty', () => {
-    const props: MessagesProps = {type: MessagesType.ERROR, messages: []}
-    const wrapper = shallow(<Messages {...props} />)
-    expect(wrapper.isEmptyRender()).toBeTruthy()
-  })
-
-  test('should render the messages', () => {
-    const props: MessagesProps = {type: MessagesType.ERROR, messages: ['some-message', 'another-message']}
-    const wrapper = shallow(<Messages {...props} />)
-    expect(wrapper.find(locator('error-messages')).text()).toEqual('some-messageanother-message')
-  })
+it('should render the messages', () => {
+  const props = {type: MessagesType.ERROR, messages: ['some-message', 'another-message']}
+  const {getByTestId} = render(<Messages {...props} />)
+  expect(getByTestId('error-messages')).toHaveTextContent('some-messageanother-message')
 })

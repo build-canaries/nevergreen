@@ -4,18 +4,15 @@ import {render} from '../testHelpers'
 import userEvent from '@testing-library/user-event'
 import {getClickToShowMenu, SETTINGS_ROOT} from '../../../src/client/settings/SettingsReducer'
 
-describe('<GeneralSettings/>', () => {
-
-  test('should set the click to show menu setting', () => {
-    const state = {
-      [SETTINGS_ROOT]: {
-        clickToShowMenu: false
-      }
+it('should set the click to show menu setting', () => {
+  const state = {
+    [SETTINGS_ROOT]: {
+      clickToShowMenu: false
     }
+  }
 
-    const {store, getByLabelText} = render(<GeneralSettings/>, state)
-    userEvent.click(getByLabelText('click to show menu'))
+  const {store, getByLabelText} = render(<GeneralSettings/>, state)
+  userEvent.click(getByLabelText('click to show menu'))
 
-    expect(getClickToShowMenu(store.getState())).toBeTruthy()
-  })
+  expect(getClickToShowMenu(store.getState())).toBeTruthy()
 })

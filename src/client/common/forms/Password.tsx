@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import _ from 'lodash'
+import {uniqueId} from 'lodash'
 import {InputButton} from './Button'
 import {iEye, iEyeBlocked} from '../fonts/Icons'
 import {Input, InputProps} from './Input'
@@ -7,7 +7,7 @@ import {Input, InputProps} from './Input'
 export function Password(props: InputProps) {
   const [type, setType] = useState('password')
 
-  const id = _.uniqueId('i')
+  const id = uniqueId('p')
 
   const showPassword = (
     <InputButton aria-controls={id}

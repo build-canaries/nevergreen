@@ -1,30 +1,23 @@
-import {locator} from '../testHelpers'
+import {render} from '../testHelpers'
 import React from 'react'
-import {shallow} from 'enzyme'
 import {Loading} from '../../../src/client/common/Loading'
 
-describe('<Loading/>', () => {
+it('should render loading if loaded is not given', () => {
+  const {queryByTestId} = render(<Loading loaded={undefined}/>)
+  expect(queryByTestId('loading')).toBeInTheDocument()
+})
 
-  const DEFAULT_PROPS = {
-    children: null,
-    loaded: null
-  }
+it('should render loading if loaded is false', () => {
+  const {queryByTestId} = render(<Loading loaded={false}/>)
+  expect(queryByTestId('loading')).toBeInTheDocument()
+})
 
-  test('should render loading if loaded is not given', () => {
-    const props = {...DEFAULT_PROPS, loaded: undefined}
-    const wrapper = shallow(<Loading {...props} />)
-    expect(wrapper.find(locator('loading')).exists()).toBeTruthy()
-  })
-
-  test('should render loading if loaded is false', () => {
-    const props = {...DEFAULT_PROPS, loaded: false}
-    const wrapper = shallow(<Loading {...props} />)
-    expect(wrapper.find(locator('loading')).exists()).toBeTruthy()
-  })
-
-  test('should render children if loaded is true', () => {
-    const props = {...DEFAULT_PROPS, loaded: true, children: <div className='child'/>}
-    const wrapper = shallow(<Loading {...props} />)
-    expect(wrapper.find('.child').exists()).toBeTruthy()
-  })
+it('should render children if loaded is true', () => {
+  const {queryByTestId} = render(
+    <Loading loaded={true}>
+      <div data-locator='child'/>
+    </Loading>
+  )
+  expect(queryByTestId('child')).toBeInTheDocument()
+  expect(queryByTestId('loading')).not.toBeInTheDocument()
 })

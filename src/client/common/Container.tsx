@@ -1,9 +1,9 @@
-import React, {KeyboardEvent, ReactNode, useLayoutEffect, useRef, useState} from 'react'
+import React, {KeyboardEvent, ReactNode, useEffect, useLayoutEffect, useRef, useState} from 'react'
 import cn from 'classnames'
 import styles from './container.scss'
 
 interface ContainerProps {
-  readonly children?: ReactNode;
+  readonly children: ReactNode;
   readonly title: string;
   readonly subTitle?: string;
   readonly className?: string;
@@ -21,6 +21,7 @@ export function Container({initiallyHidden, highlight, className, title, subTitl
   }, [highlight])
 
   const [hidden, setHidden] = useState(initiallyHidden)
+  useEffect(() => setHidden(initiallyHidden), [initiallyHidden])
 
   const toggleHidden = () => setHidden(!hidden)
 

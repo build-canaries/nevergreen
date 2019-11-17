@@ -1,6 +1,5 @@
 import React, {ReactNode} from 'react'
-import {forOwn, merge, noop} from 'lodash'
-import {CommonWrapper, EnzymeSelector, ShallowWrapper} from 'enzyme'
+import {merge} from 'lodash'
 import {reducer, State} from '../../src/client/Reducer'
 import {SETTINGS_ROOT} from '../../src/client/settings/SettingsReducer'
 import {BACKUP_ROOT} from '../../src/client/backup/BackupReducer'
@@ -20,35 +19,6 @@ import {HashRouter} from 'react-router-dom'
 import Modal from 'react-modal'
 import {DEFAULT_PROJECTS_TO_SHOW, DEFAULT_REFRESH_TIME} from '../../src/client/settings/SettingsActionCreators'
 import {APPLIED_MIGRATIONS_ROOT} from '../../src/client/configuration/MigrationsReducer'
-
-export function locator(name: string) {
-  return `[data-locator="${name}"]`
-}
-
-export function change(input: CommonWrapper, value: string) {
-  input.simulate('change', {target: {value}})
-}
-
-export function pressKeyOn(element: CommonWrapper, key: string) {
-  element.simulate('keyPress', {key, preventDefault: noop})
-}
-
-export function childText(wrapper: ShallowWrapper, selector: EnzymeSelector) {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
-  return wrapper.find(selector).shallow().text()
-}
-
-const UNDISPLAYABLE = {
-  'null': null,
-  undefined,
-  'a blank string': ' ',
-  'an empty string': ''
-}
-
-export function forUndisplayableStrings(fn: (value: string | null | undefined, friendlyName: string) => void) {
-  forOwn(UNDISPLAYABLE, fn)
-}
 
 export function buildState(subState?: RecursivePartial<State>): State {
   return merge({

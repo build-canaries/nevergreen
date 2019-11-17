@@ -5,13 +5,11 @@ import styles from './tabs.scss'
 interface TabsProps {
   readonly children: ReactElement[];
   readonly titles: ReadonlyArray<string>;
-  readonly onSwitch?: (index: number, last: number) => void;
 }
 
-export function Tabs({titles, children, onSwitch}: TabsProps) {
+export function Tabs({titles, children}: TabsProps) {
   return (
-    <ReactTabs onSelect={(index: number, last: number) => onSwitch && onSwitch(index, last)}
-               forceRenderTabPanel>
+    <ReactTabs forceRenderTabPanel>
       <TabList className={styles.tabs}>
         {
           titles.map((title) => {

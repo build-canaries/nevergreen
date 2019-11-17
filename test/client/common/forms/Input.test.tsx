@@ -1,45 +1,20 @@
 import React from 'react'
-import {shallow} from 'enzyme'
 import {Input} from '../../../../src/client/common/forms/Input'
-import {locator} from '../../testHelpers'
+import {render} from '../../testHelpers'
 
-describe('<Input/>', () => {
+it('should apply the read only attribute and display an icon', () => {
+  const props = {readOnly: true}
+  const {container, queryByText} = render(<Input {...props}>label</Input>)
+  expect(container.querySelector('input')).toHaveAttribute('readOnly')
+  expect(queryByText('read only')).toBeInTheDocument()
+})
 
-  const DEFAULT_PROPS = {
-    children: ''
-  }
-
-  describe('read only', () => {
-
-    it('should apply the read only attribute', () => {
-      const props = {...DEFAULT_PROPS, readOnly: true}
-      const wrapper = shallow(<Input {...props} />)
-      expect(wrapper.find('input').prop('readOnly')).toBeTruthy()
-    })
-
-    it('should render the read only icon', () => {
-      const props = {...DEFAULT_PROPS, readOnly: true}
-      const wrapper = shallow(<Input {...props} />)
-      expect(wrapper.find(locator('read-only-icon')).exists()).toBeTruthy()
-    })
-  })
-
-  describe('accessibility', () => {
-
-    // https://ffoodd.github.io/a11y.css/errors.html#namespace
-    it('should generate an id (that does not start with a number) to associate the label and input correctly', () => {
-      const props = {...DEFAULT_PROPS}
-      const wrapper = shallow(<Input {...props} />)
-      const label = wrapper.find('label')
-      expect(label.prop('htmlFor')).toMatch(/i[0-9]/)
-      expect(wrapper.find('input').prop('id')).toEqual(label.prop('htmlFor'))
-    })
-
-    it('should use the id provided', () => {
-      const props = {...DEFAULT_PROPS, id: 'some-id'}
-      const wrapper = shallow(<Input {...props} />)
-      expect(wrapper.find('label').prop('htmlFor')).toEqual('some-id')
-      expect(wrapper.find('input').prop('id')).toEqual('some-id')
-    })
-  })
+// https://ffoodd.github.io/a11y.css/errors.html#namespace
+it('should generate an id (that does not start with a number) to associate the label and input correctly', () => {
+  const {container} = render(<Input>label</Input>)
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // @ts-ignore
+  const labelId = container.querySelector('label').htmlFor
+  expect(labelId).toMatch(/i[0-9]/)
+  expect(container.querySelector('input')).toHaveAttribute('id', labelId)
 })

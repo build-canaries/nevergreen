@@ -28,7 +28,7 @@ export function Duration({timestamp, fullDescriptionPrefix, fullDescriptionSuffi
     <>
       {abbreviate && (
         <>
-          <VisuallyHidden>{fullDescription}.</VisuallyHidden>
+          <VisuallyHidden>{fullDescription} </VisuallyHidden>
           <span data-locator='duration' aria-hidden>
             {abbreviateDuration(duration)}
           </span>

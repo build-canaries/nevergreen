@@ -9,7 +9,7 @@ import React, {
   useRef
 } from 'react'
 import classNames from 'classnames'
-import _ from 'lodash'
+import {uniqueId} from 'lodash'
 import styles from './input.scss'
 import formStyles from './forms.scss'
 import {InputButton} from './Button'
@@ -17,7 +17,6 @@ import {iLock} from '../fonts/Icons'
 
 export type InputProps = {
   readonly children: ReactNode;
-  readonly id?: string;
   readonly onEnter?: (evt: KeyboardEvent<HTMLInputElement>) => void;
   readonly className?: string;
   readonly readOnly?: boolean;
@@ -25,7 +24,7 @@ export type InputProps = {
   readonly button?: ReactElement;
 } & DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
 
-export function Input({children, onEnter, className, readOnly, focus, button, id, ...inputProps}: InputProps) {
+export function Input({children, onEnter, className, readOnly, focus, button, ...inputProps}: InputProps) {
   const inputNode = useRef<HTMLInputElement>(null)
 
   useLayoutEffect(() => {
@@ -51,10 +50,10 @@ export function Input({children, onEnter, className, readOnly, focus, button, id
     [styles.hasButton]: button
   })
 
-  const actualId = id ? id : _.uniqueId('i')
+  const id = uniqueId('i')
 
   return (
-    <label className={labelClasses} htmlFor={actualId}>
+    <label className={labelClasses} htmlFor={id}>
       <span className={formStyles.inputLabel}>{children}</span>
       <span className={styles.wrapper}>
           <input className={inputClasses}
@@ -63,15 +62,14 @@ export function Input({children, onEnter, className, readOnly, focus, button, id
                  autoComplete='off'
                  readOnly={readOnly}
                  type='text'
-                 id={actualId}
+                 id={id}
                  {...inputProps}
                  ref={inputNode}
                  onFocus={moveCaretToEnd}/>
         {
           readOnly && (
             <InputButton disabled
-                         icon={iLock}
-                         data-locator='read-only-icon'>
+                         icon={iLock}>
               read only
             </InputButton>
           )

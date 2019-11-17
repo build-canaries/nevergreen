@@ -1,104 +1,70 @@
 import React from 'react'
-import {shallow} from 'enzyme'
 import {Container} from '../../../src/client/common/Container'
-import {locator, pressKeyOn} from '../testHelpers'
+import {render} from '../testHelpers'
+import userEvent from '@testing-library/user-event'
+import {fireEvent} from '@testing-library/react'
 
-describe('<Container/>', () => {
+const DEFAULT_PROPS = {
+  title: ''
+}
 
-  const DEFAULT_PROPS = {
-    title: ''
-  }
+it('should include the given titles', () => {
+  const props = {...DEFAULT_PROPS, title: 'some-title', subTitle: 'some-sub-title'}
+  const {getByTestId} = render(
+    <Container {...props} >
+      <div/>
+    </Container>
+  )
+  expect(getByTestId('container-title')).toHaveTextContent('some-title')
+  expect(getByTestId('container-sub-title')).toHaveTextContent('some-sub-title')
+})
 
-  test('should include the given title', () => {
-    const props = {...DEFAULT_PROPS, title: 'some-title'}
-    const wrapper = shallow(<Container {...props} />)
-    expect(wrapper.find(locator('container-title')).text()).toEqual('some-title')
-  })
+it('should not include a sub title if one is not given', () => {
+  const props = {...DEFAULT_PROPS, subTitle: undefined}
+  const {queryByTestId} = render(
+    <Container {...props} >
+      <div/>
+    </Container>
+  )
+  expect(queryByTestId('container-sub-title')).not.toBeInTheDocument()
+})
 
-  test('should include the given sub title', () => {
-    const props = {...DEFAULT_PROPS, subTitle: 'some-sub-title'}
-    const wrapper = shallow(<Container {...props} />)
-    expect(wrapper.find(locator('container-sub-title')).text()).toEqual('some-sub-title')
-  })
+it('should initially show the body based on the prop and toggle on title bar click', () => {
+  const props = {...DEFAULT_PROPS, initiallyHidden: false}
+  const {getByTestId} = render(
+    <Container {...props} >
+      <div/>
+    </Container>
+  )
+  expect(getByTestId('body')).not.toHaveClass('hidden')
+  userEvent.click(getByTestId('title-bar'))
+  expect(getByTestId('body')).toHaveClass('hidden')
+})
 
-  test('should not include a sub title if one is not given', () => {
-    const props = {...DEFAULT_PROPS, subTitle: undefined}
-    const wrapper = shallow(<Container {...props} />)
-    expect(wrapper.find(locator('container-sub-title')).exists()).toBeFalsy()
-  })
+it('should allow toggling body visibility with the keyboard when the title bar has focus', () => {
+  const props = {...DEFAULT_PROPS, title: 'some-title', initiallyHidden: true}
 
-  test('should show the body when not hidden', () => {
-    const props = {...DEFAULT_PROPS, hidden: false}
-    const wrapper = shallow(<Container {...props} />)
-    expect(wrapper.find(locator('body')).exists()).toBeTruthy()
-  })
-
-  test(
-    'should render the body when hidden as it is hidden via css',
-    () => {
-      const props = {...DEFAULT_PROPS, hidden: true}
-      const wrapper = shallow(<Container {...props} />)
-      expect(wrapper.find(locator('body')).exists()).toBeTruthy()
-    }
+  const {getByTestId} = render(
+    <Container {...props} >
+      <div/>
+    </Container>
   )
 
-  test('should toggle visibility when clicking the title bar', () => {
-    const props = {...DEFAULT_PROPS, hidden: true}
-    const wrapper = shallow(<Container {...props} />)
-    wrapper.find(locator('title-bar')).simulate('click')
-    expect(wrapper.find(locator('body')).exists()).toBeTruthy()
-  })
+  expect(getByTestId('title-bar')).toHaveAttribute('tabIndex', '0')
+  expect(getByTestId('body')).toHaveClass('hidden')
 
-  test(
-    'should toggle visibility when pressing the enter key when the title bar has focus',
-    () => {
-      const props = {...DEFAULT_PROPS, hidden: true}
-      const wrapper = shallow(<Container {...props} />)
-      pressKeyOn(wrapper.find(locator('title-bar')), 'Enter')
-      expect(wrapper.find(locator('body')).exists()).toBeTruthy()
-    }
-  )
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // @ts-ignore
+  userEvent.tab()
+  expect(getByTestId('title-bar')).toBe(document.activeElement)
+  expect(getByTestId('title-bar')).toHaveAttribute('role', 'button')
+  expect(getByTestId('title-bar')).toHaveAttribute('aria-label', 'show section some-title')
 
-  test(
-    'should toggle visibility when pressing the space key when the title bar has focus',
-    () => {
-      const props = {...DEFAULT_PROPS, hidden: true}
-      const wrapper = shallow(<Container {...props} />)
-      pressKeyOn(wrapper.find(locator('title-bar')), ' ')
-      expect(wrapper.find(locator('body')).exists()).toBeTruthy()
-    }
-  )
+  fireEvent.keyPress(document.activeElement as Element, {key: 'Enter', charCode: 13})
+  expect(getByTestId('body')).not.toHaveClass('hidden')
+  expect(getByTestId('title-bar')).toHaveAttribute('aria-label', 'hide section some-title')
 
-  describe('accessibility', () => {
-
-    test('should have a focusable title bar', () => {
-      const props = {...DEFAULT_PROPS}
-      const wrapper = shallow(<Container {...props} />)
-      expect(wrapper.find(locator('title-bar')).prop('tabIndex')).toEqual(0)
-    })
-
-    test('should have the button role', () => {
-      const props = {...DEFAULT_PROPS}
-      const wrapper = shallow(<Container {...props} />)
-      expect(wrapper.find(locator('title-bar')).prop('role')).toEqual('button')
-    })
-
-    test(
-      'should have a label describing what action click will perform',
-      () => {
-        const props = {...DEFAULT_PROPS, title: 'some-title', initiallyHidden: false}
-        const wrapper = shallow(<Container {...props} />)
-        expect(wrapper.find(locator('title-bar')).prop('aria-label')).toEqual('hide section some-title')
-      }
-    )
-
-    test(
-      'should have a label describing what action click will perform (when hidden)',
-      () => {
-        const props = {...DEFAULT_PROPS, title: 'some-title', initiallyHidden: true}
-        const wrapper = shallow(<Container {...props} />)
-        expect(wrapper.find(locator('title-bar')).prop('aria-label')).toEqual('show section some-title')
-      }
-    )
-  })
+  fireEvent.keyPress(document.activeElement as Element, {key: ' ', charCode: 32})
+  expect(getByTestId('body')).toHaveClass('hidden')
+  expect(getByTestId('title-bar')).toHaveAttribute('aria-label', 'show section some-title')
 })

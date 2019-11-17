@@ -11,7 +11,7 @@ type CheckboxProps = {
 
 export function Checkbox({children, onToggle, className, ...inputProps}: CheckboxProps) {
   const classes = classNames(styles.container, className)
-  const id = uniqueId()
+  const id = uniqueId('c')
 
   return (
     <div className={classes}>

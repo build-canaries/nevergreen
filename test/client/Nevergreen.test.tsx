@@ -6,30 +6,17 @@ import * as LocalConfiguration from '../../src/client/configuration/LocalReposit
 import * as CheckForNewVersionHook from '../../src/client/CheckForNewVersionHook'
 import * as ServiceWorkerHook from '../../src/client/ServiceWorkerHook'
 
-describe('<Nevergreen/>', () => {
+it('should load configuration, register service worker and check for a new version', async () => {
+  jest.spyOn(CheckForNewVersionHook, 'useCheckForNewVersion').mockReturnValue()
+  jest.spyOn(LocalConfiguration, 'init').mockResolvedValue()
+  jest.spyOn(LocalConfiguration, 'load').mockResolvedValue({})
+  jest.spyOn(ServiceWorkerHook, 'useServiceWorker').mockReturnValue()
 
-  beforeEach(() => {
-    jest.spyOn(CheckForNewVersionHook, 'useCheckForNewVersion').mockReturnValue()
-    jest.spyOn(LocalConfiguration, 'init').mockResolvedValue()
-    jest.spyOn(LocalConfiguration, 'load').mockResolvedValue({})
-  })
+  render(<Nevergreen/>)
 
-  it('should load configuration', async () => {
-    render(<Nevergreen/>)
-    await waitForDomChange()
-    expect(LocalConfiguration.load).toHaveBeenCalled()
-  })
+  await waitForDomChange()
 
-  it('should check for new versions', async () => {
-    render(<Nevergreen/>)
-    await waitForDomChange()
-    expect(CheckForNewVersionHook.useCheckForNewVersion).toHaveBeenCalled()
-  })
-
-  it('should register the service worker on mount', async () => {
-    jest.spyOn(ServiceWorkerHook, 'useServiceWorker').mockReturnValue()
-    render(<Nevergreen/>)
-    await waitForDomChange()
-    expect(ServiceWorkerHook.useServiceWorker).toHaveBeenCalled()
-  })
+  expect(LocalConfiguration.load).toHaveBeenCalled()
+  expect(CheckForNewVersionHook.useCheckForNewVersion).toHaveBeenCalled()
+  expect(ServiceWorkerHook.useServiceWorker).toHaveBeenCalled()
 })

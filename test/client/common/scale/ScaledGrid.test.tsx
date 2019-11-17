@@ -1,6 +1,6 @@
 import React from 'react'
-import {mount, ReactWrapper} from 'enzyme'
 import {ScaledGrid} from '../../../../src/client/common/scale/ScaledGrid'
+import {render} from '../../testHelpers'
 
 function setWindowSize(size: number) {
   // TODO: keep an eye on https://github.com/tmpvar/jsdom/issues/135 to see if this gets fixed
@@ -17,297 +17,294 @@ function setWindowSize(size: number) {
   })
 }
 
-describe('<ScaledGrid/>', () => {
+describe('desktop', () => {
 
-  describe('desktop', () => {
+  beforeEach(() => {
+    setWindowSize(1440)
+  })
+
+  describe('single child', () => {
+    let children: NodeList
 
     beforeEach(() => {
-      setWindowSize(1440)
+      const {container} = render(
+        <ScaledGrid>
+          <div>single child</div>
+        </ScaledGrid>)
+
+      children = container.querySelectorAll('li')
     })
 
-    describe('single child', () => {
-      let children: ReactWrapper
-
-      beforeEach(() => {
-        const wrapper = mount(
-          <ScaledGrid>
-            <div>single child</div>
-          </ScaledGrid>)
-
-        children = wrapper.find('li')
-      })
-
-      it('should render only one child', () => {
-        expect(children).toHaveLength(1)
-      })
-
-      it('should have the correct width (width - margin)', () => {
-        expect(children.first().prop('style')).toHaveProperty('width', '1430px')
-      })
-
-      it('should have the correct height (height - minus)', () => {
-        expect(children.first().prop('style')).toHaveProperty('height', '1430px')
-      })
-
-      it('should set the font size', () => {
-        expect(children.first().prop('style')).toHaveProperty('fontSize')
-      })
+    it('should render only one child', () => {
+      expect(children).toHaveLength(1)
     })
 
-    describe('multiple children (1 row)', () => {
-      let children: ReactWrapper
+    it('should have the correct width (width - margin)', () => {
+      expect(children[0]).toHaveStyle('width: 1430px')
+    })
 
-      beforeEach(() => {
-        const wrapper = mount(
-          <ScaledGrid>
-            <div>first child</div>
-            <div>second child</div>
-            <div>third child</div>
-          </ScaledGrid>)
+    it('should have the correct height (height - minus)', () => {
+      expect(children[0]).toHaveStyle('height: 1430px')
+    })
 
-        children = wrapper.find('li')
-      })
+    it('should set the font size', () => {
+      expect(children[0]).toHaveStyle('fontSize:')
+    })
+  })
 
-      it('should render all children', () => {
-        expect(children).toHaveLength(3)
-      })
+  describe('multiple children (1 row)', () => {
+    let children: NodeList
 
-      it('should have the correct width ((width - (columns * margin)) / columns)', () => {
-        children.forEach((child) => {
-          expect(child.prop('style')).toHaveProperty('width', '470px')
-        })
-      })
+    beforeEach(() => {
+      const {container} = render(
+        <ScaledGrid>
+          <div>first child</div>
+          <div>second child</div>
+          <div>third child</div>
+        </ScaledGrid>)
 
-      it('should have the correct height (height)', () => {
-        children.forEach((child) => {
-          expect(child.prop('style')).toHaveProperty('height', '1430px')
-        })
-      })
+      children = container.querySelectorAll('li')
+    })
 
-      it('should set the font size', () => {
-        children.forEach((child) => {
-          expect(child.prop('style')).toHaveProperty('fontSize')
-        })
+    it('should render all children', () => {
+      expect(children).toHaveLength(3)
+    })
+
+    it('should have the correct width ((width - (columns * margin)) / columns)', () => {
+      children.forEach((child) => {
+        expect(child).toHaveStyle('width: 470px')
       })
     })
 
-    describe('multiple children (multiple rows)', () => {
-      let children: ReactWrapper
-
-      beforeEach(() => {
-        const wrapper = mount(
-          <ScaledGrid>
-            <div>first child</div>
-            <div>second child</div>
-            <div>third child</div>
-            <div>fourth child</div>
-            <div>fifth child</div>
-            <div>sixth child</div>
-          </ScaledGrid>)
-
-        children = wrapper.find('li')
+    it('should have the correct height (height)', () => {
+      children.forEach((child) => {
+        expect(child).toHaveStyle('height: 1430px')
       })
+    })
 
-      it('should render all children', () => {
-        expect(children).toHaveLength(6)
-      })
-
-      it('should have the correct width ((width - (columns * margin)) / columns)', () => {
-        children.forEach((child) => {
-          expect(child.prop('style')).toHaveProperty('width', '470px')
-        })
-      })
-
-      it('should have the correct height ((height - (rows * margin)) / rows)', () => {
-        children.forEach((child) => {
-          expect(child.prop('style')).toHaveProperty('height', '710px')
-        })
-      })
-
-      it('should set the font size', () => {
-        children.forEach((child) => {
-          expect(child.prop('style')).toHaveProperty('fontSize')
-        })
+    it('should set the font size', () => {
+      children.forEach((child) => {
+        expect(child).toHaveStyle('fontSize:')
       })
     })
   })
 
-  describe('tablet', () => {
+  describe('multiple children (multiple rows)', () => {
+    let children: NodeList
+
     beforeEach(() => {
-      setWindowSize(768)
+      const {container} = render(
+        <ScaledGrid>
+          <div>first child</div>
+          <div>second child</div>
+          <div>third child</div>
+          <div>fourth child</div>
+          <div>fifth child</div>
+          <div>sixth child</div>
+        </ScaledGrid>)
+
+      children = container.querySelectorAll('li')
     })
 
-    describe('single child', () => {
-      let children: ReactWrapper
+    it('should render all children', () => {
+      expect(children).toHaveLength(6)
+    })
 
-      beforeEach(() => {
-        const wrapper = mount(
-          <ScaledGrid>
-            <div>single child</div>
-          </ScaledGrid>)
-
-        children = wrapper.find('li')
-      })
-
-      it('should render only one child', () => {
-        expect(children).toHaveLength(1)
-      })
-
-      it('should have the correct width (width - margin)', () => {
-        expect(children.first().prop('style')).toHaveProperty('width', '758px')
-      })
-
-      it('should have the correct height (height - margin)', () => {
-        expect(children.first().prop('style')).toHaveProperty('height', '758px')
-      })
-
-      it('should set the font size', () => {
-        expect(children.first().prop('style')).toHaveProperty('fontSize')
+    it('should have the correct width ((width - (columns * margin)) / columns)', () => {
+      children.forEach((child) => {
+        expect(child).toHaveStyle('width: 470px')
       })
     })
 
-    describe('multiple children (1 row)', () => {
-      let children: ReactWrapper
-
-      beforeEach(() => {
-        const wrapper = mount(
-          <ScaledGrid>
-            <div>first child</div>
-            <div>second child</div>
-          </ScaledGrid>)
-
-        children = wrapper.find('li')
-      })
-
-      it('should render all children', () => {
-        expect(children).toHaveLength(2)
-      })
-
-      it('should have the correct width ((width - (columns * margin)) / columns)', () => {
-        children.forEach((child) => {
-          expect(child.prop('style')).toHaveProperty('width', '374px')
-        })
-      })
-
-      it('should have the correct height (height)', () => {
-        children.forEach((child) => {
-          expect(child.prop('style')).toHaveProperty('height', '758px')
-        })
-      })
-
-      it('should set the font size', () => {
-        children.forEach((child) => {
-          expect(child.prop('style')).toHaveProperty('fontSize')
-        })
+    it('should have the correct height ((height - (rows * margin)) / rows)', () => {
+      children.forEach((child) => {
+        expect(child).toHaveStyle('height: 710px')
       })
     })
 
-    describe('multiple children (multiple rows)', () => {
-      let children: ReactWrapper
-
-      beforeEach(() => {
-        const wrapper = mount(
-          <ScaledGrid>
-            <div>first child</div>
-            <div>second child</div>
-            <div>third child</div>
-            <div>fourth child</div>
-          </ScaledGrid>)
-
-        children = wrapper.find('li')
+    it('should set the font size', () => {
+      children.forEach((child) => {
+        expect(child).toHaveStyle('fontSize:')
       })
+    })
+  })
+})
 
-      it('should render all children', () => {
-        expect(children).toHaveLength(4)
+describe('tablet', () => {
+  beforeEach(() => {
+    setWindowSize(768)
+  })
+
+  describe('single child', () => {
+    let children: NodeList
+
+    beforeEach(() => {
+      const {container} = render(
+        <ScaledGrid>
+          <div>single child</div>
+        </ScaledGrid>)
+
+      children = container.querySelectorAll('li')
+    })
+
+    it('should render only one child', () => {
+      expect(children).toHaveLength(1)
+    })
+
+    it('should have the correct width (width - margin)', () => {
+      expect(children[0]).toHaveStyle('width: 758px')
+    })
+
+    it('should have the correct height (height - margin)', () => {
+      expect(children[0]).toHaveStyle('height: 758px')
+    })
+
+    it('should set the font size', () => {
+      expect(children[0]).toHaveStyle('fontSize:')
+    })
+  })
+
+  describe('multiple children (1 row)', () => {
+    let children: NodeList
+
+    beforeEach(() => {
+      const {container} = render(
+        <ScaledGrid>
+          <div>first child</div>
+          <div>second child</div>
+        </ScaledGrid>)
+
+      children = container.querySelectorAll('li')
+    })
+
+    it('should render all children', () => {
+      expect(children).toHaveLength(2)
+    })
+
+    it('should have the correct width ((width - (columns * margin)) / columns)', () => {
+      children.forEach((child) => {
+        expect(child).toHaveStyle('width: 374px')
       })
+    })
 
-      it('should have the correct width ((width - (columns * margin)) / columns)', () => {
-        children.forEach((child) => {
-          expect(child.prop('style')).toHaveProperty('width', '374px')
-        })
+    it('should have the correct height (height)', () => {
+      children.forEach((child) => {
+        expect(child).toHaveStyle('height: 758px')
       })
+    })
 
-      it('should have the correct height ((height - (rows * margin)) / rows)', () => {
-        children.forEach((child) => {
-          expect(child.prop('style')).toHaveProperty('height', '374px')
-        })
-      })
-
-      it('should set the font size', () => {
-        children.forEach((child) => {
-          expect(child.prop('style')).toHaveProperty('fontSize')
-        })
+    it('should set the font size', () => {
+      children.forEach((child) => {
+        expect(child).toHaveStyle('fontSize:')
       })
     })
   })
 
-  describe('mobile', () => {
+  describe('multiple children (multiple rows)', () => {
+    let children: NodeList
+
     beforeEach(() => {
-      setWindowSize(320)
+      const {container} = render(
+        <ScaledGrid>
+          <div>first child</div>
+          <div>second child</div>
+          <div>third child</div>
+          <div>fourth child</div>
+        </ScaledGrid>)
+
+      children = container.querySelectorAll('li')
     })
 
-    describe('single child', () => {
-      let children: ReactWrapper
+    it('should render all children', () => {
+      expect(children).toHaveLength(4)
+    })
 
-      beforeEach(() => {
-        const wrapper = mount(
-          <ScaledGrid>
-            <div>single child</div>
-          </ScaledGrid>)
-
-        children = wrapper.find('li')
-      })
-
-      it('should render only one child', () => {
-        expect(children).toHaveLength(1)
-      })
-
-      it('should have the correct width (width - margin)', () => {
-        expect(children.first().prop('style')).toHaveProperty('width', '310px')
-      })
-
-      it('should have the correct height (height - minus)', () => {
-        expect(children.first().prop('style')).toHaveProperty('height', '310px')
-      })
-
-      it('should set the font size', () => {
-        expect(children.first().prop('style')).toHaveProperty('fontSize')
+    it('should have the correct width ((width - (columns * margin)) / columns)', () => {
+      children.forEach((child) => {
+        expect(child).toHaveStyle('width: 374px')
       })
     })
 
-    describe('multiple children (multiple rows)', () => {
-      let children: ReactWrapper
-
-      beforeEach(() => {
-        const wrapper = mount(
-          <ScaledGrid>
-            <div>first child</div>
-            <div>second child</div>
-          </ScaledGrid>)
-
-        children = wrapper.find('li')
+    it('should have the correct height ((height - (rows * margin)) / rows)', () => {
+      children.forEach((child) => {
+        expect(child).toHaveStyle('height: 374px')
       })
+    })
 
-      it('should render all children', () => {
-        expect(children).toHaveLength(2)
+    it('should set the font size', () => {
+      children.forEach((child) => {
+        expect(child).toHaveStyle('fontSize:')
       })
+    })
+  })
+})
 
-      it('should have the correct width ((width - (columns * margin)) / columns)', () => {
-        children.forEach((child) => {
-          expect(child.prop('style')).toHaveProperty('width', '310px')
-        })
+describe('mobile', () => {
+  beforeEach(() => {
+    setWindowSize(320)
+  })
+
+  describe('single child', () => {
+    let children: NodeList
+
+    beforeEach(() => {
+      const {container} = render(
+        <ScaledGrid>
+          <div>single child</div>
+        </ScaledGrid>)
+
+      children = container.querySelectorAll('li')
+    })
+
+    it('should render only one child', () => {
+      expect(children).toHaveLength(1)
+    })
+
+    it('should have the correct width (width - margin)', () => {
+      expect(children[0]).toHaveStyle('width: 310px')
+    })
+
+    it('should have the correct height (height - minus)', () => {
+      expect(children[0]).toHaveStyle('height: 310px')
+    })
+
+    it('should set the font size', () => {
+      expect(children[0]).toHaveStyle('fontSize:')
+    })
+  })
+
+  describe('multiple children (multiple rows)', () => {
+    let children: NodeList
+
+    beforeEach(() => {
+      const {container} = render(
+        <ScaledGrid>
+          <div>first child</div>
+          <div>second child</div>
+        </ScaledGrid>)
+
+      children = container.querySelectorAll('li')
+    })
+
+    it('should render all children', () => {
+      expect(children).toHaveLength(2)
+    })
+
+    it('should have the correct width ((width - (columns * margin)) / columns)', () => {
+      children.forEach((child) => {
+        expect(child).toHaveStyle('width: 310px')
       })
+    })
 
-      it('should have the correct height ((height - (rows * margin)) / rows)', () => {
-        children.forEach((child) => {
-          expect(child.prop('style')).toHaveProperty('height', '150px')
-        })
+    it('should have the correct height ((height - (rows * margin)) / rows)', () => {
+      children.forEach((child) => {
+        expect(child).toHaveStyle('height: 150px')
       })
+    })
 
-      it('should set the font size', () => {
-        children.forEach((child) => {
-          expect(child.prop('style')).toHaveProperty('fontSize')
-        })
+    it('should set the font size', () => {
+      children.forEach((child) => {
+        expect(child).toHaveStyle('fontSize:')
       })
     })
   })
