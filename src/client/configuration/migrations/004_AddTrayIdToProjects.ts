@@ -1,11 +1,12 @@
-import {forEachArrayAt, Migration} from '../Migrate'
+import {forEachArrayAt} from '../Migrate'
+import {Migrate} from './index'
 import {PROJECTS_ROOT} from '../../tracking/ProjectsReducer'
 import {isObject} from 'lodash'
 import {UntrustedData} from '../LocalRepository'
 
-export const id = '20191017183324_AddTrayIdToProjects'
+export const id = '004_AddTrayIdToProjects'
 
-export const migrate: Migration = (data) => {
+export const migrate: Migrate = (data) => {
   forEachArrayAt(data, PROJECTS_ROOT, (projects, trayId) => {
     projects.forEach((project) => {
       if (isObject(project)) {

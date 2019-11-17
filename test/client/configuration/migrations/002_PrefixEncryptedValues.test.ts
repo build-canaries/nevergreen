@@ -1,4 +1,4 @@
-import {migrate} from '../../../../src/client/configuration/migrations/20191016201731_PrefixEncryptedValues'
+import {migrate} from '../../../../src/client/configuration/migrations/002_PrefixEncryptedValues'
 import {TRAYS_ROOT} from '../../../../src/client/tracking/TraysReducer'
 
 it('should not modify the given data if it does not contain trays', () => {

@@ -6,9 +6,9 @@ const isoDateTime = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/
 
 it('should migrate the given data by mutating it, including adding any applied migrations', () => {
   const migrationId = '20191004195445_A'
-  jest.spyOn(migrations, 'getMigrations').mockReturnValue({
-    [migrationId]: (data) => moveData(data, 'foo', 'baz')
-  })
+  jest.spyOn(migrations, 'getOrderedMigrations').mockReturnValue([
+    {id: migrationId, migrate: (data) => moveData(data, 'foo', 'baz')}
+  ])
   const data = {foo: 'bar'}
 
   migrate(data)
@@ -21,12 +21,12 @@ it('should migrate the given data by mutating it, including adding any applied m
   expect(data).not.toHaveProperty('foo')
 })
 
-it('should apply migrations in ordered by ID, so migrations can build on previous migrations', () => {
-  jest.spyOn(migrations, 'getMigrations').mockReturnValue({
-    '20191005125402_B': (data) => moveData(data, 'baz', 'bux'),
-    '20191004195445_A': (data) => moveData(data, 'foo', 'baz'),
-    '20191006120427_C': (data) => moveData(data, 'bux', 'fiz')
-  })
+it('should apply migrations in the order they are returned', () => {
+  jest.spyOn(migrations, 'getOrderedMigrations').mockReturnValue([
+    {id: '20191004195445_A', migrate: (data) => moveData(data, 'foo', 'baz')},
+    {id: '20191005125402_B', migrate: (data) => moveData(data, 'baz', 'bux')},
+    {id: '20191006120427_C', migrate: (data) => moveData(data, 'bux', 'fiz')}
+  ])
   const data = {foo: 'bar'}
 
   migrate(data)
@@ -37,9 +37,9 @@ it('should apply migrations in ordered by ID, so migrations can build on previou
 it('should not apply already applied migrations', () => {
   const migrationId = '20191004195445_A'
   const migration = jest.fn()
-  jest.spyOn(migrations, 'getMigrations').mockReturnValue({
-    [migrationId]: migration
-  })
+  jest.spyOn(migrations, 'getOrderedMigrations').mockReturnValue([
+    {id: migrationId, migrate: migration}
+  ])
   const data = {
     [APPLIED_MIGRATIONS_ROOT]: [
       {

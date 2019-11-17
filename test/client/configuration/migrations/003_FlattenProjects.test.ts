@@ -1,4 +1,4 @@
-import {migrate} from '../../../../src/client/configuration/migrations/20191017123204_FlattenProjects'
+import {migrate} from '../../../../src/client/configuration/migrations/003_FlattenProjects'
 import {PROJECTS_ROOT} from '../../../../src/client/tracking/ProjectsReducer'
 
 it('should not modify the given data if it does not contain projects', () => {

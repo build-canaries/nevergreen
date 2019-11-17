@@ -1,4 +1,4 @@
-import {migrate} from '../../../../src/client/configuration/migrations/20191019115701_SetAuthType'
+import {migrate} from '../../../../src/client/configuration/migrations/005_SetAuthType'
 import {TRAYS_ROOT} from '../../../../src/client/tracking/TraysReducer'
 import {AuthTypes} from '../../../../src/client/domain/Tray'
 

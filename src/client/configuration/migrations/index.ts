@@ -1,20 +1,23 @@
-import {Migration} from '../Migrate'
-import * as m01 from './20191002205123_MoveAudioVisualToSettings'
-import * as m02 from './20191016201731_PrefixEncryptedValues'
-import * as m03 from './20191017123204_FlattenProjects'
-import * as m04 from './20191017183324_AddTrayIdToProjects'
-import * as m05 from './20191019115701_SetAuthType'
+import {UntrustedData} from './../LocalRepository'
+import * as MoveAudioVisualToSettings from './001_MoveAudioVisualToSettings'
+import * as PrefixEncryptedValues from './002_PrefixEncryptedValues'
+import * as FlattenProjects from './003_FlattenProjects'
+import * as AddTrayIdToProjects from './004_AddTrayIdToProjects'
+import * as SetAuthType from './005_SetAuthType'
 
-interface Migrations {
-  readonly [id: string]: Migration;
+export type Migrate = (data: UntrustedData) => void
+
+interface Migration {
+  id: string;
+  migrate: Migrate;
 }
 
-export function getMigrations(): Migrations {
-  return {
-    [m01.id]: m01.migrate,
-    [m02.id]: m02.migrate,
-    [m03.id]: m03.migrate,
-    [m04.id]: m04.migrate,
-    [m05.id]: m05.migrate
-  }
+export function getOrderedMigrations(): ReadonlyArray<Migration> { 
+  return [
+    MoveAudioVisualToSettings,
+    PrefixEncryptedValues,
+    FlattenProjects,
+    AddTrayIdToProjects,
+    SetAuthType
+  ]
 }

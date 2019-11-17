@@ -1,4 +1,4 @@
-import {migrate} from '../../../../src/client/configuration/migrations/20191017183324_AddTrayIdToProjects'
+import {migrate} from '../../../../src/client/configuration/migrations/004_AddTrayIdToProjects'
 import {PROJECTS_ROOT} from '../../../../src/client/tracking/ProjectsReducer'
 
 it('should not modify the given data if it does not contain projects', () => {

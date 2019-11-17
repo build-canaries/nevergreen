@@ -1,4 +1,4 @@
-import {migrate} from '../../../../src/client/configuration/migrations/20191002205123_MoveAudioVisualToSettings'
+import {migrate} from '../../../../src/client/configuration/migrations/001_MoveAudioVisualToSettings'
 import {SETTINGS_ROOT} from '../../../../src/client/settings/SettingsReducer'
 
 it('should return the given data if it does not contain audioVisual', () => {

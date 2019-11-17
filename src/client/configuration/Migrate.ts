@@ -1,12 +1,11 @@
-import {getMigrations} from './migrations'
 import format from 'date-fns/format'
 import {info} from '../common/Logger'
 import {UntrustedData} from './LocalRepository'
 import {get, has, isArray, isNil, isObject, set, unset} from 'lodash'
 import {APPLIED_MIGRATIONS_ROOT, AppliedMigration} from './MigrationsReducer'
+import {getOrderedMigrations} from './migrations'
 
 type PropertyPath = string | ReadonlyArray<string>
-export type Migration = (data: UntrustedData) => void
 
 export function migrate(data: UntrustedData): void {
   if (!has(data, APPLIED_MIGRATIONS_ROOT)) {
@@ -15,28 +14,24 @@ export function migrate(data: UntrustedData): void {
 
   const appliedMigrations = data[APPLIED_MIGRATIONS_ROOT] as AppliedMigration[]
 
-  const migrations = getMigrations()
+  getOrderedMigrations().forEach((migration) => {
+    info(`Checking if migration [${migration.id}] has been applied...`)
 
-  Object.keys(migrations)
-    .sort((a, b) => a.localeCompare(b))
-    .forEach((id) => {
-      info(`Checking if migration [${id}] has been applied...`)
+    const appliedMigration = appliedMigrations.find((m) => m.id === migration.id)
 
-      const appliedMigration = appliedMigrations.find((m) => m.id === id)
+    if (isNil(appliedMigration)) {
+      info(`Migration [${migration.id}] not yet applied!`)
 
-      if (isNil(appliedMigration)) {
-        info(`Migration [${id}] not yet applied!`)
+      migration.migrate(data)
 
-        migrations[id](data)
+      const timestamp = format(new Date(), 'yyyy-MM-dd\'T\'HH:mm:ss.SSSXXX')
+      appliedMigrations.push({id: migration.id, timestamp})
 
-        const timestamp = format(new Date(), 'yyyy-MM-dd\'T\'HH:mm:ss.SSSXXX')
-        appliedMigrations.push({id, timestamp})
-
-        info(`Migration [${id}] successfully applied at ${timestamp}`)
-      } else {
-        info(`Migration [${id}] already applied on ${appliedMigration.timestamp}`)
-      }
-    })
+      info(`Migration [${migration.id}] successfully applied at ${timestamp}`)
+    } else {
+      info(`Migration [${migration.id}] already applied on ${appliedMigration.timestamp}`)
+    }
+  })
 }
 
 export function moveData(untrustedData: UntrustedData, fromPath: PropertyPath, toPath: PropertyPath): void {
