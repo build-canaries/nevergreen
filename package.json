@@ -240,6 +240,11 @@
       "jest-junit"
     ],
     "coverageDirectory": "./target/coverage-reports/client",
+    "collectCoverageFrom": [
+      "<rootDir>/src/client/**/*.{js,ts,tsx}",
+      "!<rootDir>/src/client/styleGuide/**",
+      "!<rootDir>/src/client/configuration/ValidateConfiguration.js"
+    ],
     "setupFilesAfterEnv": [
       "<rootDir>/test/client/setupTestEnv.js"
     ],
