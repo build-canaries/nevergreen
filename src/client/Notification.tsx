@@ -24,7 +24,8 @@ export function Notification({notification, dismiss, fullScreen}: NotificationPr
     <section className={notificationClassNames}
              aria-live='polite'
              role='complementary'>
-      <div className={styles.message}>
+      <div className={styles.message}
+           data-locator='notification'>
         {notification}
       </div>
       <PrimaryButton icon={iCross}

@@ -3,20 +3,25 @@ import {Nevergreen} from '../../src/client/Nevergreen'
 import {render} from './testHelpers'
 import {waitForDomChange} from '@testing-library/react'
 import * as LocalConfiguration from '../../src/client/configuration/LocalRepository'
-import * as CheckForNewVersionHook from '../../src/client/CheckForNewVersionHook'
 import * as ServiceWorkerHook from '../../src/client/ServiceWorkerHook'
+import * as Gateway from '../../src/client/gateways/Gateway'
+import {fakeRequest} from '../../src/client/gateways/Gateway'
 
 it('should load configuration, register service worker and check for a new version', async () => {
-  jest.spyOn(CheckForNewVersionHook, 'useCheckForNewVersion').mockReturnValue()
+  jest.spyOn(Gateway, 'get').mockReturnValue(fakeRequest({
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    tag_name: '9999.0.0' // this needs to be greater than the actual version in resources/version.txt
+  }))
   jest.spyOn(LocalConfiguration, 'init').mockResolvedValue()
   jest.spyOn(LocalConfiguration, 'load').mockResolvedValue({})
   jest.spyOn(ServiceWorkerHook, 'useServiceWorker').mockReturnValue()
 
-  render(<Nevergreen/>)
+  const {getByTestId} = render(<Nevergreen/>)
 
   await waitForDomChange()
 
   expect(LocalConfiguration.load).toHaveBeenCalled()
-  expect(CheckForNewVersionHook.useCheckForNewVersion).toHaveBeenCalled()
+  expect(Gateway.get).toHaveBeenCalledWith('https://api.github.com/repos/build-canaries/nevergreen/releases/latest')
   expect(ServiceWorkerHook.useServiceWorker).toHaveBeenCalled()
+  expect(getByTestId('notification')).toHaveTextContent(/^A new version [0-9.]* is available to download from GitHub now!$/)
 })
