@@ -1,6 +1,5 @@
 import {exportConfiguration, fetchConfiguration} from '../../../src/client/gateways/BackupGateway'
 import * as gateway from '../../../src/client/gateways/Gateway'
-import {fakeRequest} from '../../../src/client/gateways/Gateway'
 
 describe('exportConfiguration', () => {
 
