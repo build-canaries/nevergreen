@@ -22,6 +22,7 @@ import {
   setPlayBrokenBuildSoundFx,
   setRefreshTime,
   setShowBrokenBuildTime,
+  setShowBuildLabel,
   setShowBuildTime,
   setShowPrognosis,
   setShowSystemNotifications,
@@ -148,6 +149,16 @@ describe(Actions.REFRESH_TIME, () => {
     const action = setRefreshTime('10')
     const newState = reducer(existingState, action)
     expect(getRefreshTime(newState)).toEqual(10)
+  })
+})
+
+describe(Actions.SHOW_BUILD_LABEL, () => {
+
+  it('should set the show build label property', () => {
+    const existingState = state({showBuildLabel: false})
+    const action = setShowBuildLabel(true)
+    const newState = reducer(existingState, action)
+    expect(getShowBuildLabel(newState)).toBeTruthy()
   })
 })
 

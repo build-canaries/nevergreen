@@ -243,6 +243,7 @@
     "collectCoverageFrom": [
       "<rootDir>/src/client/**/*.{js,ts,tsx}",
       "!<rootDir>/src/client/styleGuide/**",
+      "!<rootDir>/src/client/common/Logger.ts",
       "!<rootDir>/src/client/configuration/ValidateConfiguration.js"
     ],
     "setupFilesAfterEnv": [
