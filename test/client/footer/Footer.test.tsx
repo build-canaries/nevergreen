@@ -13,7 +13,7 @@ it('should have "about" information', () => {
     }
   })
   const {getByText, queryByText} = render(<Footer fullScreen={false}/>, state)
-  userEvent.click(getByText(/Nevergreen v[\d.]+\+0.local [a-zA-Z ]+ by Build Canaries/))
+  userEvent.click(getByText(/Nevergreen v[\d.]+\+[\d]+\.[a-zA-Z0-9]+ [a-zA-Z ]+ by Build Canaries/))
 
   expect(queryByText('Eclipse Public Licence 1.0 (EPL-1.0)')).toBeInTheDocument()
   userEvent.click(getByText('close'))
