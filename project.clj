@@ -15,7 +15,7 @@
                  [bk/ring-gzip "0.3.0"]
                  [ring-basic-authentication "1.0.5"]
                  [base64-clj "0.1.1"]
-                 [camel-snake-kebab "0.4.0"]
+                 [camel-snake-kebab "0.4.1"]
                  [com.cemerick/url "0.1.1" :exclusions [com.cemerick/clojurescript.test]]
                  [ch.qos.logback/logback-classic "1.2.3" :exclusions [org.slf4j/slf4j-api]]
                  [org.slf4j/log4j-over-slf4j "1.7.29"]
@@ -35,7 +35,7 @@
   :profiles {:dev  {:plugins [[lein-ancient "0.6.15"]
                               [jonase/eastwood "0.3.6"]
                               [lein-cloverage "1.1.2"]
-                              [lein-nvd "1.3.0"]]}
+                              [lein-nvd "1.3.1"]]}
              :test {:jvm-opts ["-Dlogback.configurationFile=./test/logback-unit.xml"]}}
   :cloverage {:output           "target/coverage-reports/server"
               :junit?           true
