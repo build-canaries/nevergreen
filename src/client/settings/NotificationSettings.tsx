@@ -6,7 +6,7 @@ import styles from './notification-settings.scss'
 
 export function NotificationSettings() {
   return (
-    <Container title='notifications' className={styles.container}>
+    <Container title='Notifications' className={styles.container}>
       <NotificationsSystem/>
       <NotificationsAudio/>
     </Container>

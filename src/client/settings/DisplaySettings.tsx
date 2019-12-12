@@ -38,7 +38,7 @@ export function DisplaySettings() {
   })
 
   return (
-    <Container title='display' className={styles.container}>
+    <Container title='Display' className={styles.container}>
       <Checkbox className={styles.showTrayName}
                 checked={showTrayName}
                 onToggle={(newValue) => dispatch(setShowTrayName(newValue))}

@@ -43,7 +43,7 @@ export function GeneralSettings() {
   })
 
   return (
-    <Container title='general' className={styles.container}>
+    <Container title='General' className={styles.container}>
       <DropDown className={styles.refreshTime}
                 options={options}
                 value={refreshTime}
