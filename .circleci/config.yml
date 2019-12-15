@@ -41,7 +41,7 @@ commands:
 
       - restore_cache:
           keys:
-            - v2-nevergreen-server-{{ checksum "project.clj" }}
+            - v3-nevergreen-server-{{ checksum "project.clj" }}
 
       - run:
           name: install node
@@ -128,9 +128,10 @@ jobs:
                   ./.circleci/compile.sh
 
             - save_cache:
-                key: v2-nevergreen-server-{{ checksum "project.clj" }}
+                key: v3-nevergreen-server-{{ checksum "project.clj" }}
                 paths:
                   - ~/.m2
+                  - ~/.lein
             - save_cache:
                 key: v7-nevergreen-ui-{{ checksum ".nvmrc" }}-{{ checksum "package-lock.json" }}
                 paths:
@@ -252,11 +253,6 @@ jobs:
 
             - store_artifacts:
                 path: ./target/security-reports
-
-            - save_cache:
-                key: v2-nevergreen-server-{{ checksum "project.clj" }}
-                paths:
-                  - ~/.m2
 
   update-dependencies:
     executor: clojure
