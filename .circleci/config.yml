@@ -254,17 +254,6 @@ jobs:
             - store_artifacts:
                 path: ./target/security-reports
 
-  update-dependencies:
-    executor: clojure
-    steps:
-      - init:
-          after:
-            - run:
-                name: update clojure and node dependency versions
-                environment:
-                  BASH_ENV: "~/.nvm/nvm.sh"
-                command: ./.circleci/dependencies-upgrade.sh
-
 workflows:
   version: 2
   build-deploy:
@@ -293,14 +282,3 @@ workflows:
                 - master
     jobs:
       - security-audits
-#   sunday-dependency-rejuvenation:
-#     triggers:
-#       - schedule:
-#           cron: "04 0 * * *"
-#         #   cron: "0 8 * * 0"
-#           filters:
-#             branches:
-#               only:
-#                 - master
-#     jobs:
-#       - update-dependencies
