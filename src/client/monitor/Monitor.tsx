@@ -75,13 +75,14 @@ export function Monitor({fullScreen, requestFullScreen}: MonitorProps) {
       const errorMessages = wrapProjectErrors(rawProjects)
         .map((projectError) => toErrorString(trays, projectError))
       setErrors(errorMessages)
+      setLoaded(true)
     } catch (e) {
-      const returnedErrors = e.message === 'Aborted' ? [] : [e.message]
-      setErrors(returnedErrors)
-      setProjects([])
+      if (e.message !== 'Aborted') {
+        setErrors([e.message])
+        setProjects([])
+        setLoaded(true)
+      }
     }
-
-    setLoaded(true)
 
     return request.abort.bind(request)
   }, [trays, allProjects, selected, prognosis])

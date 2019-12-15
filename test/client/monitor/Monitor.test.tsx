@@ -7,6 +7,7 @@ import {TRAYS_ROOT} from '../../../src/client/tracking/TraysReducer'
 import {SUCCESS_ROOT} from '../../../src/client/success/SuccessReducer'
 import * as TimerHook from '../../../src/client/common/TimerHook'
 import * as ProjectsGateway from '../../../src/client/gateways/ProjectsGateway'
+import * as Gateway from '../../../src/client/gateways/Gateway'
 import {fakeRequest} from '../../../src/client/gateways/Gateway'
 
 const DEFAULT_PROPS = {
@@ -65,4 +66,20 @@ it('should show a success message if there are no projects', async () => {
   const {queryByText} = render(<Monitor {...DEFAULT_PROPS}/>, state)
   await waitForDomChange()
   expect(queryByText('some-success-message')).toBeInTheDocument()
+})
+
+it('should not try updating after the user has navigated away from the page', async () => {
+  jest.spyOn(TimerHook, 'useTimer').mockImplementationOnce((onTrigger) => onTrigger())
+  jest.spyOn(ProjectsGateway, 'interesting').mockReturnValue(fakeRequest([]))
+  jest.spyOn(Gateway, 'send').mockRejectedValue(new Error('Aborted'))
+  const state = {
+    [TRAYS_ROOT]: {
+      [trayId]: buildTray({trayId})
+    },
+    [SUCCESS_ROOT]: ['some-success-message']
+  }
+  const {queryByText, unmount} = render(<Monitor {...DEFAULT_PROPS}/>, state)
+  unmount()
+  // we can't assert on React internals logging warnings, if this is broken you'll see
+  // a log about "Warning: Can't perform a React state update on an unmounted component."
 })
