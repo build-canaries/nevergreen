@@ -35,38 +35,11 @@
 
   (testing "when server type is not already known"
 
-    (testing "jenkins"
-      (is (= :jenkins (subject/get-server-type {:url "http://jenkins.servername:8080/cc.xml"}))))
-
-    (testing "hosted jenkins"
-      (is (= :jenkins (subject/get-server-type {:url "https://instance.ci.cloudbees.com/cc.xml"}))))
-
-    (testing "hudson"
-      (is (= :hudson (subject/get-server-type {:url "http://hudson.servername:8080/cc.xml"}))))
-
-    (testing "travis ci"
-      (is (= :travis (subject/get-server-type {:url "http://travis-ci.org/ownername/repositoryname/cc.xml"}))))
-
     (testing "go"
       (is (= :go (subject/get-server-type {:url "http://servername:8154/go/cctray.xml"}))))
 
     (testing "circle ci"
       (is (= :circle (subject/get-server-type {:url "https://circleci.com/cc.xml?circle-token=some-token"}))))
-
-    (testing "team city"
-      (is (= :team-city (subject/get-server-type {:url "http://teamcity:8111/guestAuth/app/rest/cctray/projects.xml"}))))
-
-    (testing "cruise control rb"
-      (is (= :cruise-control-rb (subject/get-server-type {:url "http://cc.rb.servername:3333/XmlStatusReport.aspx"}))))
-
-    (testing "cruise control"
-      (is (= :cruise-control (subject/get-server-type {:url "http://cc.java.servername:8080/cctray.xml"}))))
-
-    (testing "cruise control .net"
-      (is (= :cruise-control-net (subject/get-server-type {:url "http://cc.net.servername/XmlStatusReport.aspx"}))))
-
-    (testing "solano ci"
-      (is (= :solano (subject/get-server-type {:url "http://api.tddium.com/cc/long_uuid_string/cctray.xml"}))))
 
     (testing "any other url"
       (is (= :unknown (subject/get-server-type {:url "http://something/cctray.xml"}))))
@@ -75,7 +48,7 @@
       (is (nil? (subject/get-server-type nil))))
 
     (testing "if server type is set explicitly to unknown it tries to parse the URL"
-      (is (= :jenkins (subject/get-server-type {:server-type :unknown :url "http://jenkins.servername:8080/cc.xml"})))))
+      (is (= :go (subject/get-server-type {:server-type :unknown :url "http://servername:8154/go/cctray.xml"})))))
 
   (testing "server type is already known"
-    (is (= :jenkins (subject/get-server-type {:server-type :jenkins})))))
+    (is (= :go (subject/get-server-type {:server-type :go})))))

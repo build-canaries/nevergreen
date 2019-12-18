@@ -107,10 +107,10 @@ it('should set the tray server type on change', async () => {
   const props = {...DEFAULT_PROPS, tray, setRequiresRefresh}
 
   const {getByTestId, store} = render(<TraySettings {...props} />, state)
-  userEvent.selectOptions(getByTestId('tray-server-type'), 'jenkins')
+  userEvent.selectOptions(getByTestId('tray-server-type'), 'circle')
 
   expect(setRequiresRefresh).toHaveBeenCalledWith(true)
-  expect(getTrays(store.getState())[0].serverType).toEqual('jenkins')
+  expect(getTrays(store.getState())[0].serverType).toEqual('circle')
 })
 
 it('should set the include new setting on click without refreshing the tray', () => {
