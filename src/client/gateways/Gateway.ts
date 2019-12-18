@@ -1,6 +1,6 @@
 import request, {Request} from 'superagent'
 import * as log from '../common/Logger'
-import _ from 'lodash'
+import {get as _get, noop} from 'lodash'
 
 type ApiData = object | string
 
@@ -69,7 +69,7 @@ export async function send<T>(request: Request): Promise<T> {
 
     const message = error.timeout
       ? TIMEOUT_ERROR
-      : _.get(error, 'response.body.errorMessage') || error.message || UNKNOWN_ERROR
+      : _get(error, 'response.body.errorMessage') || error.message || UNKNOWN_ERROR
 
     throw new Error(message)
   }
@@ -77,5 +77,5 @@ export async function send<T>(request: Request): Promise<T> {
 
 export function fakeRequest(body: string | object): Request {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return {body, abort: _.noop} as any as Request
+  return {body, abort: noop} as any as Request
 }

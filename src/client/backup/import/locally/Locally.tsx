@@ -27,7 +27,7 @@ export function Locally() {
     setMessages(infos)
   }
 
-  const doImport = async () => {
+  const doImport = () => {
     if (isBlank(data)) {
       setErrors(['Please enter the configuration to import'])
     } else {

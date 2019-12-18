@@ -55,7 +55,9 @@ it('should show a loading screen when first switching to the page', () => {
 })
 
 it('should show a success message if there are no projects', async () => {
-  jest.spyOn(TimerHook, 'useTimer').mockImplementationOnce((onTrigger) => onTrigger())
+  jest.spyOn(TimerHook, 'useTimer').mockImplementationOnce((onTrigger) => {
+    onTrigger()
+  })
   jest.spyOn(ProjectsGateway, 'interesting').mockReturnValue(fakeRequest([]))
   const state = {
     [TRAYS_ROOT]: {
@@ -68,8 +70,10 @@ it('should show a success message if there are no projects', async () => {
   expect(queryByText('some-success-message')).toBeInTheDocument()
 })
 
-it('should not try updating after the user has navigated away from the page', async () => {
-  jest.spyOn(TimerHook, 'useTimer').mockImplementationOnce((onTrigger) => onTrigger())
+it('should not try updating after the user has navigated away from the page', () => {
+  jest.spyOn(TimerHook, 'useTimer').mockImplementationOnce((onTrigger) => {
+    onTrigger()
+  })
   jest.spyOn(ProjectsGateway, 'interesting').mockReturnValue(fakeRequest([]))
   jest.spyOn(Gateway, 'send').mockRejectedValue(new Error('Aborted'))
   const state = {
@@ -78,7 +82,7 @@ it('should not try updating after the user has navigated away from the page', as
     },
     [SUCCESS_ROOT]: ['some-success-message']
   }
-  const {queryByText, unmount} = render(<Monitor {...DEFAULT_PROPS}/>, state)
+  const {unmount} = render(<Monitor {...DEFAULT_PROPS}/>, state)
   unmount()
   // we can't assert on React internals logging warnings, if this is broken you'll see
   // a log about "Warning: Can't perform a React state update on an unmounted component."

@@ -20,7 +20,9 @@ export const useTimer = (onTrigger: OnTrigger, intervalInSeconds: number) => {
       if (cancelled) {
         debug('cancelled so not rescheduling')
       } else {
-        timeoutId = window.setTimeout(run, asMilliseconds(intervalInSeconds))
+        timeoutId = window.setTimeout(() => {
+          run()
+        }, asMilliseconds(intervalInSeconds))
         debug(`created timeout [${timeoutId}] to run in [${intervalInSeconds}s]`)
       }
     }

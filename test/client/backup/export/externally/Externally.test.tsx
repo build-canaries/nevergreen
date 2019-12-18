@@ -37,7 +37,7 @@ it('should export if an access token was entered', async () => {
   expect(queryByText('Successfully exported configuration')).toBeInTheDocument()
 })
 
-it('should not try and export if no access token was entered', async () => {
+it('should not try and export if no access token was entered', () => {
   const {getByText, queryByText} = render(<Externally {...DEFAULT_PROPS} />)
   userEvent.click(getByText('export'))
   expect(backupGateway.exportConfiguration).not.toHaveBeenCalled()

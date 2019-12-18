@@ -6,13 +6,14 @@ import {render} from '../testHelpers'
 it('should bind the hot keys', () => {
   jest.spyOn(Mousetrap, 'bind')
   jest.spyOn(Mousetrap, 'unbind')
+  const {bind, unbind} = Mousetrap
   const hotkeys = ['a']
 
   const {unmount} = render(<Shortcut hotkeys={hotkeys}/>)
 
-  expect(Mousetrap.bind).toBeCalledWith(hotkeys, expect.any(Function))
+  expect(bind).toBeCalledWith(hotkeys, expect.any(Function))
 
   unmount()
 
-  expect(Mousetrap.unbind).toBeCalledWith(hotkeys)
+  expect(unbind).toBeCalledWith(hotkeys)
 })

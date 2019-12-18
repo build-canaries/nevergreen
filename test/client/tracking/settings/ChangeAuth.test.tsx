@@ -22,7 +22,7 @@ beforeEach(() => {
   jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValue(fakeRequest(''))
 })
 
-it('should be able to change the auth to none', async () => {
+it('should be able to change the auth to none', () => {
   const save = jest.fn()
   const props = {...DEFAULT_PROPS, show: true, authType: AuthTypes.basic, save}
 
@@ -64,7 +64,7 @@ it('should be able to change the auth to access token', async () => {
   expect(save).toBeCalledWith(AuthTypes.token, '', '', 'some-encrypted-token')
 })
 
-it('should be able to discard making changes', async () => {
+it('should be able to discard making changes', () => {
   const save = jest.fn()
   const cancel = jest.fn()
   const props = {...DEFAULT_PROPS, show: true, save, cancel}

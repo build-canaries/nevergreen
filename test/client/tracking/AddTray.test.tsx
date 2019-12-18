@@ -17,7 +17,7 @@ beforeEach(() => {
   jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValue(fakeRequest(''))
 })
 
-it('should display an error if no URL is entered', async () => {
+it('should display an error if no URL is entered', () => {
   const {queryByText, getByText} = render(<AddTray {...DEFAULT_PROPS}/>)
   userEvent.click(getByText('add'))
   expect(queryByText('Please enter the URL to the CCTray XML feed')).toBeInTheDocument()

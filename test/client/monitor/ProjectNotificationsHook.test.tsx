@@ -14,7 +14,7 @@ beforeEach(() => {
   jest.spyOn(SystemNotifications, 'sendSystemNotification').mockResolvedValue()
 })
 
-it('should not send updates if nothing has changed', async () => {
+it('should not send updates if nothing has changed', () => {
   const state = {
     [SETTINGS_ROOT]: {
       showSystemNotifications: true
@@ -29,7 +29,7 @@ it('should not send updates if nothing has changed', async () => {
   expect(SystemNotifications.sendSystemNotification).not.toBeCalled()
 })
 
-it('should send sick notification when project becomes sick', async () => {
+it('should send sick notification when project becomes sick', () => {
   const state = {
     [SETTINGS_ROOT]: {
       showSystemNotifications: true
@@ -47,7 +47,7 @@ it('should send sick notification when project becomes sick', async () => {
   expect(SystemNotifications.sendSystemNotification).toBeCalledWith({title: 'project is sick!', body: 'some-name'})
 })
 
-it('should send not sick notification when project is no longer sick', async () => {
+it('should send not sick notification when project is no longer sick', () => {
   const state = {
     [SETTINGS_ROOT]: {
       showSystemNotifications: true
@@ -68,7 +68,7 @@ it('should send not sick notification when project is no longer sick', async () 
   })
 })
 
-it('should not send sick notifications when project is still sick', async () => {
+it('should not send sick notifications when project is still sick', () => {
   const state = {
     [SETTINGS_ROOT]: {
       showSystemNotifications: true

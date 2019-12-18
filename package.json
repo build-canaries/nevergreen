@@ -153,7 +153,9 @@
     "extends": [
       "eslint:recommended",
       "plugin:react/recommended",
-      "plugin:@typescript-eslint/recommended"
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:@typescript-eslint/recommended-requiring-type-checking"
     ],
     "plugins": [
       "react",
@@ -176,7 +178,10 @@
       "ecmaFeatures": {
         "modules": true,
         "jsx": true
-      }
+      },
+      "project": [
+        "./tsconfig.json"
+      ]
     },
     "rules": {
       "quotes": [
@@ -192,6 +197,7 @@
       "arrow-parens": "error",
       "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": "error",
+      "@typescript-eslint/no-unused-vars": "error",
       "@typescript-eslint/indent": "off",
       "@typescript-eslint/explicit-function-return-type": "off",
       "@typescript-eslint/no-empty-interface": "off"

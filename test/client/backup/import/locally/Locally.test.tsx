@@ -13,7 +13,7 @@ it('should import valid data after filtering and parsing', async () => {
   expect(getByLabelText('configuration to import')).toHaveValue('')
 })
 
-test('should show an error if no data has been entered', async () => {
+test('should show an error if no data has been entered', () => {
   const {getByText} = render(<Locally/>)
   userEvent.click(getByText('import'))
   expect(getByText('Please enter the configuration to import')).toBeInTheDocument()

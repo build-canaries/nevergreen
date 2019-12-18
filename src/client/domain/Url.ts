@@ -3,7 +3,7 @@ import {isBlank, notEmpty} from '../common/Utils'
 const SCHEME_REGEX = /^[a-z0-9+.-]+:/i
 
 export function hasScheme(url: string) {
-  return !isBlank(url) && notEmpty(url.match(SCHEME_REGEX))
+  return !isBlank(url) && notEmpty(SCHEME_REGEX.exec(url))
 }
 
 export function removeScheme(url: string) {

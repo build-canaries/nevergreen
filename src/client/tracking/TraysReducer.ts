@@ -24,7 +24,7 @@ function handleImportedConfiguration(draft: TraysState, action: ActionConfigurat
   const newState: Draft<TraysState> = {}
 
   Object.keys(importedTrays).forEach((trayId) => {
-    const partialTray = importedTrays[trayId] as Tray
+    const partialTray = importedTrays[trayId]
     newState[trayId] = createTray(trayId, partialTray.url, partialTray)
   })
 

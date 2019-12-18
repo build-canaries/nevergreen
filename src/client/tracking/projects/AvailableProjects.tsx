@@ -33,7 +33,7 @@ export function AvailableProjects({index, tray, requiresRefresh, setRequiresRefr
   const projects = useSelector(getProjectsForTray(tray.trayId))
   const selected = useSelector(getSelectedProjectsForTray(tray.trayId))
 
-  const [filter, setFilter] = useState()
+  const [filter, setFilter] = useState<RegExp | undefined>()
   const [errors, setErrors] = useState<ReadonlyArray<string>>([])
   const [loaded, setLoaded] = useState(true)
   const pendingRequest = useRef<Request>()
@@ -91,7 +91,7 @@ export function AvailableProjects({index, tray, requiresRefresh, setRequiresRefr
 
   const updateFilter = (evt: ChangeEvent<HTMLInputElement>) => {
     if (isBlank(evt.target.value)) {
-      setFilter(null)
+      setFilter(undefined)
       setFilterErrors([])
     } else {
       try {
@@ -112,7 +112,7 @@ export function AvailableProjects({index, tray, requiresRefresh, setRequiresRefr
 
   const filteredProjects = useMemo(() => {
     if (filter) {
-      return projects.filter((project) => `${project.name} ${project.stage || ''}`.match(filter))
+      return projects.filter((project) => filter.exec(`${project.name} ${project.stage || ''}`))
     }
     return projects
   }, [projects, filter])

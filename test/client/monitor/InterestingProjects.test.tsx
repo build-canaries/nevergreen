@@ -10,7 +10,8 @@ const trayId = 'some-tray-id'
 
 beforeAll(() => {
   // not implemented in jsdom, this stops errors being printed during tests
-  HTMLMediaElement.prototype.pause = noop
+  // eslint-disable-next-line @typescript-eslint/unbound-method
+  window.HTMLMediaElement.prototype.pause = noop
 })
 
 describe('broken build sfx', () => {

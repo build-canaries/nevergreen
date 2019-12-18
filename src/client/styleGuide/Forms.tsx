@@ -1,6 +1,6 @@
 import React from 'react'
 import {Input} from '../common/forms/Input'
-import _ from 'lodash'
+import {noop} from 'lodash'
 import {Checkbox} from '../common/forms/Checkbox'
 import {DropDown} from '../common/forms/DropDown'
 import {StyleGuideSection} from './StyleGuideSection'
@@ -34,29 +34,29 @@ export function Forms() {
       </StyleGuideSection>
 
       <StyleGuideSection title='Checkboxes'>
-        <Checkbox onToggle={_.noop}>chocolate</Checkbox>
-        <Checkbox onToggle={_.noop}>bonbon</Checkbox>
-        <Checkbox onToggle={_.noop}>jelly beans</Checkbox>
+        <Checkbox onToggle={noop}>chocolate</Checkbox>
+        <Checkbox onToggle={noop}>bonbon</Checkbox>
+        <Checkbox onToggle={noop}>jelly beans</Checkbox>
 
-        <Checkbox className={styles.newLineCheckbox} onToggle={_.noop}>chupa chups</Checkbox>
-        <Checkbox className={styles.newLineCheckbox} onToggle={_.noop}>apple pie</Checkbox>
-        <Checkbox className={styles.newLineCheckbox} onToggle={_.noop}>marzipan</Checkbox>
+        <Checkbox className={styles.newLineCheckbox} onToggle={noop}>chupa chups</Checkbox>
+        <Checkbox className={styles.newLineCheckbox} onToggle={noop}>apple pie</Checkbox>
+        <Checkbox className={styles.newLineCheckbox} onToggle={noop}>marzipan</Checkbox>
 
-        <Checkbox onToggle={_.noop}>
+        <Checkbox onToggle={noop}>
           <div className={styles.styledLabel}>styled label</div>
         </Checkbox>
       </StyleGuideSection>
 
       <StyleGuideSection title='Radio'>
-        <Radio onChange={_.noop} name='sweets'>chocolate</Radio>
-        <Radio onChange={_.noop} name='sweets'>bonbon</Radio>
-        <Radio onChange={_.noop} name='sweets'>jelly beans</Radio>
+        <Radio onChange={noop} name='sweets'>chocolate</Radio>
+        <Radio onChange={noop} name='sweets'>bonbon</Radio>
+        <Radio onChange={noop} name='sweets'>jelly beans</Radio>
 
-        <Radio className={styles.newLineCheckbox} onChange={_.noop} name='sweets2'>chupa chups</Radio>
-        <Radio className={styles.newLineCheckbox} onChange={_.noop} name='sweets2'>apple pie</Radio>
-        <Radio className={styles.newLineCheckbox} onChange={_.noop} name='sweets2'>marzipan</Radio>
+        <Radio className={styles.newLineCheckbox} onChange={noop} name='sweets2'>chupa chups</Radio>
+        <Radio className={styles.newLineCheckbox} onChange={noop} name='sweets2'>apple pie</Radio>
+        <Radio className={styles.newLineCheckbox} onChange={noop} name='sweets2'>marzipan</Radio>
 
-        <Radio onChange={_.noop}>
+        <Radio onChange={noop}>
           <div className={styles.styledLabel}>styled label</div>
         </Radio>
       </StyleGuideSection>

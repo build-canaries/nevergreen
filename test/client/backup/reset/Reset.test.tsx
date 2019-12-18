@@ -7,6 +7,7 @@ import {render} from '../../testHelpers'
 
 beforeEach(() => {
   jest.spyOn(LocalConfiguration, 'clear').mockResolvedValue()
+  // eslint-disable-next-line @typescript-eslint/unbound-method
   window.location.reload = jest.fn()
 })
 
@@ -15,6 +16,7 @@ it('should reset configuration and reload', async () => {
   userEvent.click(getByText('reset configuration'))
   await wait(() => {
     expect(LocalConfiguration.clear).toHaveBeenCalled()
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     expect(window.location.reload).toHaveBeenCalled()
   })
 })

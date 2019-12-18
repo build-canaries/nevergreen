@@ -95,7 +95,7 @@ it('should not call requires refresh if the URL is the same', async () => {
   expect(setRequiresRefresh).not.toHaveBeenCalled()
 })
 
-it('should set the tray server type on change', async () => {
+it('should set the tray server type on change', () => {
   const setRequiresRefresh = jest.fn()
   const tray = buildTray({
     trayId: 'trayId',
