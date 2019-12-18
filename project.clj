@@ -18,9 +18,9 @@
                  [camel-snake-kebab "0.4.1"]
                  [com.cemerick/url "0.1.1" :exclusions [com.cemerick/clojurescript.test]]
                  [ch.qos.logback/logback-classic "1.2.3" :exclusions [org.slf4j/slf4j-api]]
-                 [org.slf4j/log4j-over-slf4j "1.7.29"]
-                 [org.slf4j/jul-to-slf4j "1.7.29"]
-                 [org.slf4j/jcl-over-slf4j "1.7.29"]]
+                 [org.slf4j/log4j-over-slf4j "1.7.30"]
+                 [org.slf4j/jul-to-slf4j "1.7.30"]
+                 [org.slf4j/jcl-over-slf4j "1.7.30"]]
   :min-lein-version "2.0.0"
   :uberjar-name "nevergreen-standalone.jar"
   :main nevergreen.app
