@@ -53,8 +53,6 @@ it('should allow toggling body visibility with the keyboard when the title bar h
   expect(getByTestId('title-bar')).toHaveAttribute('tabIndex', '0')
   expect(getByTestId('body')).toHaveClass('hidden')
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
   userEvent.tab()
   expect(getByTestId('title-bar')).toBe(document.activeElement)
   expect(getByTestId('title-bar')).toHaveAttribute('role', 'button')
