@@ -18,6 +18,7 @@ import {Backup} from './backup/Backup'
 import {StyleGuide} from './styleGuide/StyleGuide'
 import {Loading} from './common/Loading'
 import {useLocalConfiguration} from './configuration/ConfigurationHook'
+import {Help} from './help/Help'
 
 export function Nevergreen() {
   const loaded = useLocalConfiguration()
@@ -38,6 +39,7 @@ export function Nevergreen() {
   return (
     <Loading loaded={loaded}>
       <KeyboardShortcuts/>
+      <Help/>
       <div className={styles.nevergreen}
            tabIndex={-1}
            {...disableFullScreenOn}>

@@ -3,8 +3,6 @@ import {Container} from '../../common/Container'
 import {Locally} from './locally/Locally'
 import {Tabs} from '../../common/Tabs'
 import {Externally} from './externally/Externally'
-import {GitHubHelp} from './externally/GitHubHelp'
-import {GitLabHelp} from './externally/GitLabHelp'
 import {BackupLocation} from '../BackupActionCreators'
 
 export function Import() {
@@ -12,8 +10,8 @@ export function Import() {
     <Container title='Import'>
       <Tabs titles={['locally', 'GitHub', 'GitLab']}>
         <Locally/>
-        <Externally location={BackupLocation.GITHUB} help={<GitHubHelp/>}/>
-        <Externally location={BackupLocation.GITLAB} help={<GitLabHelp/>} accessTokenRequired/>
+        <Externally location={BackupLocation.GITHUB}/>
+        <Externally location={BackupLocation.GITLAB} accessTokenRequired/>
       </Tabs>
     </Container>
   )

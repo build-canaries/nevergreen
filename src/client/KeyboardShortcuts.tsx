@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import Mousetrap from 'mousetrap'
 import {Modal} from './common/Modal'
 import styles from './keyboard-shortcuts.scss'
+import {SHOW_HELP_SHORTCUT} from './help/Help'
 
 export function KeyboardShortcuts() {
   const [show, setShow] = useState(false)
@@ -23,6 +24,10 @@ export function KeyboardShortcuts() {
         <li className={styles.shortcut}>
           <div>Shows keyboard shortcuts (this)</div>
           <kbd className={styles.binding}>?</kbd>
+        </li>
+        <li className={styles.shortcut}>
+          <div>Shows help</div>
+          <kbd className={styles.binding}>{SHOW_HELP_SHORTCUT}</kbd>
         </li>
         <li className={styles.shortcut}>
           <div>Dismiss dialogs (such as this)</div>

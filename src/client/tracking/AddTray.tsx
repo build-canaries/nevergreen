@@ -1,7 +1,5 @@
 import React, {useState} from 'react'
 import {Input} from '../common/forms/Input'
-import {WithHelp} from '../common/ContextualHelp'
-import {TrackingHelp} from './TrackingHelp'
 import styles from './add-tray.scss'
 import {PrimaryButton} from '../common/forms/Button'
 import {iPlus} from '../common/fonts/Icons'
@@ -111,17 +109,13 @@ export function AddTray({setHighlightTray, setRefreshTray}: AddTrayProps) {
               onEnter={() => addTray(url)}/>
         <Messages type={MessagesType.ERROR} messages={errors}/>
       </div>
-      <WithHelp title='Tracking'
-                help={<TrackingHelp/>}
-                className={styles.help}>
-        <PrimaryButton className={styles.add}
-                       onClick={() => addTray(url)}
-                       data-locator='add-tray'
-                       icon={iPlus}
-                       disabled={adding}>
-          <span aria-label='add tray'>add</span>
-        </PrimaryButton>
-      </WithHelp>
+      <PrimaryButton className={styles.add}
+                     onClick={() => addTray(url)}
+                     data-locator='add-tray'
+                     icon={iPlus}
+                     disabled={adding}>
+        <span aria-label='add tray'>add</span>
+      </PrimaryButton>
     </div>
   )
 }

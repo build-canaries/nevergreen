@@ -1,0 +1,38 @@
+@import '../common/variables';
+
+.help {
+  border: 1px solid #ececec;
+  padding: 1em;
+}
+
+.article {
+  margin: $margin-top 0;
+}
+
+.keywords {
+  list-style: none;
+}
+
+.keyword {
+  color: $mid-grey;
+  display: inline-block;
+  margin: 0 0.5em;
+}
+
+.keywordMatched {
+  color: $off-black;
+  font-weight: bold;
+}
+
+.helpSettings {
+  margin: 1em 0 0 0;
+
+  > dt {
+    font-weight: bold;
+    margin: 0.5em 0 0 0;
+  }
+
+  > dd {
+    margin-left: $margin-right;
+  }
+}

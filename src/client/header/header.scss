@@ -124,6 +124,16 @@
   }
 }
 
+.helpButton {
+  @extend .menuItem;
+
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  height: 73px;
+  text-align: left;
+}
+
 .menuIcon {
   @include font-scale(3);
 

@@ -1,10 +1,12 @@
 import React, {useState} from 'react'
-import classNames from 'classnames'
+import cn from 'classnames'
 import styles from './header.scss'
 import logo from './buildcanaries-logo.png'
 import {NavLink} from 'react-router-dom'
 import {Shortcut} from '../common/Shortcut'
 import {Title} from '../common/Title'
+import Mousetrap from 'mousetrap'
+import {SHOW_HELP_SHORTCUT} from '../help/Help'
 
 interface HeaderProps {
   readonly fullScreen: boolean;
@@ -21,13 +23,13 @@ const MENU_ITEMS = [
 export function Header({fullScreen}: HeaderProps) {
   const [menuVisible, setMenuVisible] = useState(false)
 
-  const headerClassNames = classNames(styles.siteHeader, {
+  const headerClassNames = cn(styles.siteHeader, {
     [styles.fullscreen]: fullScreen
   })
-  const menuClassNames = classNames(styles.menu, {
+  const menuClassNames = cn(styles.menu, {
     [styles.open]: menuVisible
   })
-  const iconClassNames = classNames({
+  const iconClassNames = cn({
     [styles.siteMenuShow]: !menuVisible,
     [styles.siteMenuHide]: menuVisible
   })
@@ -48,7 +50,7 @@ export function Header({fullScreen}: HeaderProps) {
         <ul className={menuClassNames}>
           {
             MENU_ITEMS.map((item) => {
-              const iconClasses = classNames(styles.menuIcon, styles[item.id])
+              const iconClasses = cn(styles.menuIcon, styles[item.id])
 
               return (
                 <li key={item.id}>
@@ -65,6 +67,13 @@ export function Header({fullScreen}: HeaderProps) {
               )
             })
           }
+          <li>
+            <button className={styles.helpButton}
+                    onClick={() => Mousetrap.trigger(SHOW_HELP_SHORTCUT)}>
+              <span className={cn(styles.menuIcon, styles.help)} aria-hidden/>
+              <div className={styles.menuTitle}>Help</div>
+            </button>
+          </li>
         </ul>
       </nav>
     </header>

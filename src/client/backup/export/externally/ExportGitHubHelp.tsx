@@ -1,10 +1,22 @@
 import React from 'react'
 import {ExternalLink} from '../../../common/ExternalLink'
 import {URL} from '../../../common/URL'
+import {HelpArticle, HelpProps} from '../../../help/HelpArticle'
 
-export function GitHubHelp() {
+const KEYWORDS = [
+  'backup',
+  'export',
+  'github',
+  'gist',
+  'access token'
+]
+
+export function ExportGitHubHelp({searchQuery}: HelpProps) {
   return (
-    <>
+    <HelpArticle keywords={KEYWORDS}
+                 searchQuery={searchQuery}
+                 title='Export to GitHub'
+                 page='/backup'>
       <p>
         Add a gist <strong>ID</strong> to update an existing Gist or leave blank to create a new Gist. You can get
         a Gist ID from the Gist URL, <URL url='https://gist.github.com/:username/:gistId'/>.
@@ -20,6 +32,6 @@ export function GitHubHelp() {
         Access tokens are not stored locally as they would allow editing of any of a users Gists, so they need to be
         manually entered every time you want to export.
       </p>
-    </>
+    </HelpArticle>
   )
 }

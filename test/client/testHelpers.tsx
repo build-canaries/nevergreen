@@ -15,7 +15,7 @@ import {ApiProject} from '../../src/client/gateways/ProjectsGateway'
 import {render as testRender} from '@testing-library/react'
 import {Provider} from 'react-redux'
 import {configureStore} from 'redux-starter-kit'
-import {HashRouter} from 'react-router-dom'
+import {MemoryRouter} from 'react-router-dom'
 import Modal from 'react-modal'
 import {DEFAULT_PROJECTS_TO_SHOW, DEFAULT_REFRESH_TIME} from '../../src/client/settings/SettingsActionCreators'
 import {APPLIED_MIGRATIONS_ROOT} from '../../src/client/configuration/MigrationsReducer'
@@ -64,12 +64,12 @@ export function setupReactModal() {
   Modal.setAppElement('#app-element')
 }
 
-export function render(component: ReactNode, state?: RecursivePartial<State>) {
+export function render(component: ReactNode, state?: RecursivePartial<State>, location = '/') {
   const store = configureStore({reducer, preloadedState: buildState(state)})
 
   const wrapWithStoreAndRouter = (c: ReactNode) => (
     <Provider store={store}>
-      <HashRouter>{c}</HashRouter>
+      <MemoryRouter initialEntries={[location]}>{c}</MemoryRouter>
     </Provider>
   )
 

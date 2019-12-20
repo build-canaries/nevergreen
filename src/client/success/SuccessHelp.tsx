@@ -1,9 +1,24 @@
 import React from 'react'
 import {ExternalLink} from '../common/ExternalLink'
+import {HelpArticle, HelpProps} from '../help/HelpArticle'
 
-export function SuccessHelp() {
+const KEYWORDS = [
+  'success',
+  'messages',
+  'images',
+  'add',
+  'url',
+  'jpeg',
+  'gif',
+  'png'
+]
+
+export function SuccessHelp({searchQuery}: HelpProps) {
   return (
-    <>
+    <HelpArticle keywords={KEYWORDS}
+                 searchQuery={searchQuery}
+                 title='Success'
+                 page='/success'>
       <p>
         You can add text messages or any <ExternalLink
         href='https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#Supported_image_formats'>valid image
@@ -19,6 +34,6 @@ export function SuccessHelp() {
         images</ExternalLink> or checkout <ExternalLink href='http://www.disapprovallook.com/'>Disapproval
         Look</ExternalLink> for some fun messages, like jelly guy! <span style={{whiteSpace: 'nowrap'}}>༼ つ◕_◕ ༽つ</span>
       </p>
-    </>
+    </HelpArticle>
   )
 }

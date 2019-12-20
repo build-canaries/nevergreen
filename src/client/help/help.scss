@@ -1,0 +1,20 @@
+@import '../common/variables';
+
+.modal {
+  align-self: normal;
+  margin: $margin-top 0;
+  width: 40em;
+}
+
+.articles {
+  list-style: none;
+  margin: $margin-top 0 0 0;
+
+  > li {
+    margin: 0 0 $margin-top 0;
+  }
+
+  > li:last-child {
+    margin: 0;
+  }
+}

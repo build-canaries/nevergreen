@@ -1,6 +1,5 @@
-import React, {ChangeEvent, ReactElement, useLayoutEffect, useState} from 'react'
+import React, {ChangeEvent, useLayoutEffect, useState} from 'react'
 import {Input} from '../../../common/forms/Input'
-import {WithHelp} from '../../../common/ContextualHelp'
 import {PrimaryButton} from '../../../common/forms/Button'
 import {iCloudUpload} from '../../../common/fonts/Icons'
 import {Password} from '../../../common/forms/Password'
@@ -17,10 +16,9 @@ import {State} from '../../../Reducer'
 
 interface ExternallyProps {
   readonly location: BackupLocation;
-  readonly help: ReactElement;
 }
 
-export function Externally({location, help}: ExternallyProps) {
+export function Externally({location}: ExternallyProps) {
   const dispatch = useDispatch()
   const configuration = useSelector(getConfiguration)
   const url = useSelector<State, string>((state) => getBackupUrl(location, state))
@@ -72,17 +70,13 @@ export function Externally({location, help}: ExternallyProps) {
 
   return (
     <>
-      <WithHelp title={`Export to ${location}`}
-                containerClassName={styles.helpContainer}
-                help={help}>
-        <Input value={newUrl}
-               onChange={({target}) => setNewUrl(target.value)}
-               onBlur={() => dispatch(backupSetUrl(location, newUrl))}
-               disabled={disabled}
-               className={styles.url}>
-          <div className={styles.label}>URL</div>
-        </Input>
-      </WithHelp>
+      <Input value={newUrl}
+             onChange={({target}) => setNewUrl(target.value)}
+             onBlur={() => dispatch(backupSetUrl(location, newUrl))}
+             disabled={disabled}
+             className={styles.url}>
+        <div className={styles.label}>URL</div>
+      </Input>
       <Input className={styles.id}
              value={newId}
              onChange={({target}) => setNewId(target.value)}

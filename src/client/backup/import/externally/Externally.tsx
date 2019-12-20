@@ -1,5 +1,4 @@
-import React, {ChangeEvent, ReactElement, useLayoutEffect, useState} from 'react'
-import {WithHelp} from '../../../common/ContextualHelp'
+import React, {ChangeEvent, useLayoutEffect, useState} from 'react'
 import styles from './externally.scss'
 import {PrimaryButton} from '../../../common/forms/Button'
 import {iCloudDownload} from '../../../common/fonts/Icons'
@@ -19,7 +18,6 @@ import {isRight} from 'fp-ts/lib/Either'
 
 interface ExternallyProps {
   readonly location: BackupLocation;
-  readonly help: ReactElement;
   readonly accessTokenRequired?: boolean;
 }
 
@@ -37,7 +35,7 @@ function validate(id: string, url: string, accessToken: string, accessTokenRequi
   return errors
 }
 
-export function Externally({location, help, accessTokenRequired}: ExternallyProps) {
+export function Externally({location, accessTokenRequired}: ExternallyProps) {
   const dispatch = useDispatch()
   const id = useSelector<State, string>((state) => getBackupId(location, state))
   const url = useSelector<State, string>((state) => getBackupUrl(location, state))
@@ -92,17 +90,13 @@ export function Externally({location, help, accessTokenRequired}: ExternallyProp
 
   return (
     <>
-      <WithHelp title={`Import from ${location}`}
-                containerClassName={styles.helpContainer}
-                help={help}>
-        <Input value={newUrl}
-               onChange={({target}) => setNewUrl(target.value)}
-               onBlur={() => dispatch(backupSetUrl(location, newUrl))}
-               disabled={disabled}
-               className={styles.url}>
-          <div className={styles.label}>URL</div>
-        </Input>
-      </WithHelp>
+      <Input value={newUrl}
+             onChange={({target}) => setNewUrl(target.value)}
+             onBlur={() => dispatch(backupSetUrl(location, newUrl))}
+             disabled={disabled}
+             className={styles.url}>
+        <div className={styles.label}>URL</div>
+      </Input>
       <Input className={styles.id}
              value={newId}
              onChange={({target}) => setNewId(target.value)}
