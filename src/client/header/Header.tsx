@@ -69,7 +69,10 @@ export function Header({fullScreen}: HeaderProps) {
           }
           <li>
             <button className={styles.helpButton}
-                    onClick={() => Mousetrap.trigger(SHOW_HELP_SHORTCUT)}>
+                    onClick={() => {
+                      Mousetrap.trigger(SHOW_HELP_SHORTCUT)
+                      setMenuVisible(false)
+                    }}>
               <span className={cn(styles.menuIcon, styles.help)} aria-hidden/>
               <div className={styles.menuTitle}>Help</div>
             </button>
