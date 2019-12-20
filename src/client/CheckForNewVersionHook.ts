@@ -1,7 +1,7 @@
 import {useCallback} from 'react'
 import {useTimer} from './common/TimerHook'
 import {get, send} from './gateways/Gateway'
-import semver from 'semver'
+import greaterThan from 'semver/functions/gt'
 import version from '../../resources/version.txt'
 
 interface GitHubResponse {
@@ -18,7 +18,7 @@ export function useCheckForNewVersion(setNotification: (notification: string) =>
         const data = await send<GitHubResponse>(get('https://api.github.com/repos/build-canaries/nevergreen/releases/latest'))
         const latestVersion = data.tag_name
 
-        if (semver.gt(latestVersion, version)) {
+        if (greaterThan(latestVersion, version)) {
           const saas = NEVERGREEN_IO_REGEX.test(window.location.hostname)
           const additional = saas ? ', refresh to update' : ' to download from GitHub now'
 
