@@ -164,7 +164,7 @@ export function AvailableProjects({index, tray, requiresRefresh, setRequiresRefr
           return <AvailableProject key={project.projectId}
                                    {...project}
                                    selected={isSelected}
-                                   selectProject={(select) => projectSelected(tray.trayId, project.projectId, select)}/>
+                                   selectProject={(select) => dispatch(projectSelected(tray.trayId, project.projectId, select))}/>
         })
       }
     </ol>

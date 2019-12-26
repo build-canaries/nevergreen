@@ -21,6 +21,30 @@ beforeEach(() => {
   jest.spyOn(ProjectsGateway, 'fetchAll').mockResolvedValue(fakeRequest([]))
 })
 
+it('should be able to select projects', () => {
+  const tray = buildTray({trayId: 'trayId'})
+  const project = buildProject({trayId: 'trayId', projectId: 'projectId', name: 'some project'})
+  const state = {
+    [TRAYS_ROOT]: {
+      trayId: tray
+    },
+    [PROJECTS_ROOT]: {
+      trayId: [project]
+    },
+    [SELECTED_ROOT]: {
+      trayId: []
+    }
+  }
+
+  const {container} = render(<AvailableProjects {...DEFAULT_PROPS} tray={tray}/>, state)
+  const selectInput = container.querySelector('input[type="checkbox"]')
+
+  expect(selectInput).not.toBeChecked()
+
+  userEvent.click(selectInput as Element)
+  expect(selectInput).toBeChecked()
+})
+
 it('should correctly show and remove errors returned while refreshing', async () => {
   jest.spyOn(ProjectsGateway, 'fetchAll')
     .mockResolvedValueOnce(fakeRequest([
