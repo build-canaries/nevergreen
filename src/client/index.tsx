@@ -10,7 +10,7 @@ import {Nevergreen} from './Nevergreen'
 import {debounce} from 'lodash'
 import {UnhandledError} from './UnhandledError'
 import Modal from 'react-modal'
-import {configureStore} from 'redux-starter-kit'
+import {configureStore} from '@reduxjs/toolkit'
 
 const ONE_SECOND = 1000
 

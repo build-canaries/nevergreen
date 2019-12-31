@@ -1,4 +1,4 @@
-import {createReducer} from 'redux-starter-kit'
+import {createReducer} from '@reduxjs/toolkit'
 import {Actions} from '../Actions'
 import {ActionConfigurationImported} from '../backup/BackupActionCreators'
 

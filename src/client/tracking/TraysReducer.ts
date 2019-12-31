@@ -1,7 +1,7 @@
 import {Actions} from '../Actions'
 import {createTray, Tray} from '../domain/Tray'
 import {ActionProjectsFetched, ActionRemoveTray, ActionTrayAdded, ActionTrayUpdate} from './TrackingActionCreators'
-import {createReducer, createSelector} from 'redux-starter-kit'
+import {createReducer, createSelector} from '@reduxjs/toolkit'
 import {Draft} from 'immer'
 import {State} from '../Reducer'
 import {ActionConfigurationImported} from '../backup/BackupActionCreators'

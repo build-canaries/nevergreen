@@ -15,7 +15,7 @@ import {
   DEFAULT_REFRESH_TIME
 } from './SettingsActionCreators'
 import defaultSoundFx from './pacman_death.mp3'
-import {createReducer, createSelector} from 'redux-starter-kit'
+import {createReducer, createSelector} from '@reduxjs/toolkit'
 import {State} from '../Reducer'
 import {Prognosis} from '../domain/Project'
 import {get, uniq} from 'lodash'

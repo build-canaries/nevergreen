@@ -7,7 +7,7 @@ import {
   BackupLocation
 } from './BackupActionCreators'
 import {get, merge} from 'lodash'
-import {createReducer} from 'redux-starter-kit'
+import {createReducer} from '@reduxjs/toolkit'
 import {State} from '../Reducer'
 
 export type BackupState = {
