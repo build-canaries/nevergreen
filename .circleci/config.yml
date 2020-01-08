@@ -8,7 +8,7 @@ orbs:
 executors:
   clojure:
     docker:
-      - image: azul/zulu-openjdk:12
+      - image: azul/zulu-openjdk:13
     working_directory: ~/nevergreen
 
 commands:
