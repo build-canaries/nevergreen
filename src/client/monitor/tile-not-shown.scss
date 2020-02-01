@@ -1,6 +1,7 @@
-@import '../variables';
+@import '../common/variables';
 
 .summary {
   background-color: $blue;
   color: $off-white;
+  text-align: center;
 }

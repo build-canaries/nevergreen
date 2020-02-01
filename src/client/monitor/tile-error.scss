@@ -1,6 +1,7 @@
-@import '../variables';
+@import '../common/variables';
 
 .error {
   background-color: $sick;
   color: $off-white;
+  text-align: center;
 }

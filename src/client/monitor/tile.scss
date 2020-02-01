@@ -1,0 +1,59 @@
+@import '../common/variables';
+@import '../common/layout';
+@import '../common/typography';
+
+.tile {
+  @extend %fill-parent;
+
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  font-family: $monospace-font;
+  min-height: 120px;
+  text-transform: lowercase;
+}
+
+.header {
+  @include font-scale(-1);
+
+  @include respond-to(tablet) {
+    @include font-scale(0);
+  }
+
+  @include respond-to(desktop) {
+    @include font-scale(1);
+  }
+
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  overflow: hidden;
+  padding: 0 1em;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.body {
+  align-items: center;
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  margin: 0.5em;
+  overflow: hidden;
+}
+
+.footer {
+  @include font-scale(-1);
+
+  @include respond-to(tablet) {
+    @include font-scale(0);
+  }
+
+  @include respond-to(desktop) {
+    @include font-scale(1);
+  }
+
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  overflow: hidden;
+  white-space: nowrap;
+}

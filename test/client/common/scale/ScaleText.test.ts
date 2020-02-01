@@ -11,17 +11,17 @@ describe('ScaleText', () => {
       sentences: ['beam post commit java validates runner dataflow'],
       height: 100,
       width: 652,
-      expected: 23
+      expected: 30
     }, {
       sentences: ['dir kerby openjdk 2h', 'beam release nightly snapshot 3h'],
       height: 761,
       width: 652,
-      expected: 95
+      expected: 112
     }, {
       sentences: ['dir kerby openjdk 2h', 'beam release nightly snapshot 3h', 'pre commit zookeeper github pr build 3h'],
       height: 616,
       width: 630,
-      expected: 78
+      expected: 90
     }
   ]
 

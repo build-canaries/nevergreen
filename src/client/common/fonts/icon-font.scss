@@ -184,6 +184,12 @@
   content: '\ea1e';
 }
 
+.icon-clock::before {
+  @extend .icon;
+
+  content: '\e94e';
+}
+
 .icon-display::before {
   @extend .icon;
 

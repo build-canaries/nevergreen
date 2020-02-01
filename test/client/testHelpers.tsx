@@ -7,7 +7,7 @@ import {PROJECTS_ROOT} from '../../src/client/tracking/ProjectsReducer'
 import {SELECTED_ROOT} from '../../src/client/tracking/SelectedReducer'
 import {SUCCESS_ROOT} from '../../src/client/success/SuccessReducer'
 import {TRAYS_ROOT} from '../../src/client/tracking/TraysReducer'
-import {createProject, Prognosis, Project} from '../../src/client/domain/Project'
+import {createProject, createProjectError, Prognosis, Project, ProjectError} from '../../src/client/domain/Project'
 import {createTray, Tray} from '../../src/client/domain/Tray'
 import {combineReducers, Reducer} from 'redux'
 import {RecursivePartial} from '../../src/client/common/Types'
@@ -88,6 +88,10 @@ export function buildTray(tray?: Partial<Tray>): Tray {
 
 export function buildProject(project?: Partial<Project>): Project {
   return createProject('some-project-id', 'some-name', project)
+}
+
+export function buildProjectError(projectError?: Partial<ProjectError>): ProjectError {
+  return createProjectError('some-error', projectError)
 }
 
 export function buildApiProject(apiProject?: Partial<ApiProject>): ApiProject {

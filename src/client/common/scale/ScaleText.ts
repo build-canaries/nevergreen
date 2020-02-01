@@ -1,8 +1,8 @@
-import _ from 'lodash'
+import {flatten} from 'lodash'
 import {debug, warn} from '../Logger'
 
 export const MIN_FONT_SIZE = 10
-const PADDING_CHARS = 2 // 1em = 2 characters
+const PADDING_CHARS = 1 // scaled area has 0.5em of padding
 
 function paddingPixels(fontSize: number) {
   return PADDING_CHARS * fontSize
@@ -13,7 +13,7 @@ function longestStringInArray(words: string[]) {
 }
 
 function findLongestWord(sentences: string[]) {
-  const individualWords = _.flatten(sentences.map((sentence) => sentence.split(' ')))
+  const individualWords = flatten(sentences.map((sentence) => sentence.split(' ')))
   return longestStringInArray(individualWords)
 }
 
@@ -49,6 +49,7 @@ function maximumPossibleFontSize(sentences: string[], widthPixels: number, charW
 
 export function ideal(sentences: string[], heightPixels: number, widthPixels: number, charHeightScale: number, charWidthScale: number) {
   if (heightPixels <= 0 || widthPixels <= 0) {
+    warn(`unable to calculate ideal fontSize for width [${widthPixels}px] height [${heightPixels}px] heightScale [${charHeightScale}px] widthScale [${charWidthScale}px]`)
     return MIN_FONT_SIZE
   }
 

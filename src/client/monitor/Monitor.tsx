@@ -15,19 +15,13 @@ import {getSelectedProjects} from '../tracking/SelectedReducer'
 import {getProjectsAll} from '../tracking/ProjectsReducer'
 import {interesting, ProjectsResponse} from '../gateways/ProjectsGateway'
 import {send} from '../gateways/Gateway'
-import {isBuilding, Project, ProjectError, wrapProjectErrors, wrapProjects} from '../domain/Project'
-import {Tray} from '../domain/Tray'
+import {createProjectError, isBuilding, Project, ProjectError, wrapProjectErrors, wrapProjects} from '../domain/Project'
 import {useProjectNotifications} from './ProjectNotificationsHook'
+import {now} from '../common/DateTime'
 
 interface MonitorProps {
   readonly fullScreen: boolean;
   readonly requestFullScreen: (fullScreen: boolean) => void;
-}
-
-function toErrorString(trays: ReadonlyArray<Tray>, projectError: ProjectError): string {
-  const tray = trays.find((tray) => tray.trayId === projectError.trayId)
-  const identifier = tray ? `${tray.name || tray.url} ` : ''
-  return `${identifier}${projectError.errorMessage}`
 }
 
 function addThisBuildTime(project: Project, previouslyFetchedProjects: ReadonlyArray<Project>): Project {
@@ -51,7 +45,7 @@ export function Monitor({fullScreen, requestFullScreen}: MonitorProps) {
 
   const [loaded, setLoaded] = useState(false)
   const [projects, setProjects] = useState<ReadonlyArray<Project>>([])
-  const [errors, setErrors] = useState<ReadonlyArray<string>>([])
+  const [errors, setErrors] = useState<ReadonlyArray<ProjectError>>([])
 
   useEffect(() => {
     requestFullScreen(true)
@@ -73,12 +67,12 @@ export function Monitor({fullScreen, requestFullScreen}: MonitorProps) {
         .map((project) => addThisBuildTime(project, previous)))
 
       const errorMessages = wrapProjectErrors(rawProjects)
-        .map((projectError) => toErrorString(trays, projectError))
+
       setErrors(errorMessages)
       setLoaded(true)
     } catch (e) {
       if (e.message !== 'Aborted') {
-        setErrors([e.message])
+        setErrors([createProjectError(e.message, {fetchedTime: now()})])
         setProjects([])
         setLoaded(true)
       }

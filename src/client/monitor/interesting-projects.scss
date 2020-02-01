@@ -2,4 +2,6 @@
 
 .interestingProjects {
   @extend %fill-parent;
+
+  overflow: scroll;
 }

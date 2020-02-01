@@ -37,21 +37,3 @@ export function formatAsDuration(timestamp?: string | null): string {
     ? formatDistanceToNow(parseISO(timestamp))
     : 'unknown'
 }
-
-export function abbreviateDuration(duration?: string | null): string {
-  if (duration && !isBlank(duration)) {
-    return duration
-      .replace('unknown', '??')
-      .replace('less than a', '<1')
-      .replace('about ', '')
-      .replace('almost ', '')
-      .replace('over ', '>')
-      .replace(/ minutes?/, 'm')
-      .replace(/ hours?/, 'h')
-      .replace(/ days?/, 'd')
-      .replace(/ months?/, 'mo')
-      .replace(/ years?/, 'y')
-  }
-
-  return ''
-}

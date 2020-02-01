@@ -87,3 +87,19 @@ it('should not try updating after the user has navigated away from the page', ()
   // we can't assert on React internals logging warnings, if this is broken you'll see
   // a log about "Warning: Can't perform a React state update on an unmounted component."
 })
+
+it('should display an error if the Nevergreen server is having issues', async () => {
+  jest.spyOn(TimerHook, 'useTimer').mockImplementationOnce((onTrigger) => {
+    onTrigger()
+  })
+  jest.spyOn(Gateway, 'send').mockRejectedValue(new Error('some-error'))
+  const state = {
+    [TRAYS_ROOT]: {
+      [trayId]: buildTray({trayId})
+    }
+  }
+  const {queryByText} = render(<Monitor {...DEFAULT_PROPS}/>, state)
+  await waitForDomChange()
+  expect(queryByText('Nevergreen')).toBeInTheDocument()
+  expect(queryByText('some-error')).toBeInTheDocument()
+})

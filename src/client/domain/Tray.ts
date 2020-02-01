@@ -2,6 +2,7 @@ import nameGenerator from 'project-name-generator'
 import uuid from 'uuid/v4'
 import {isSick, Project} from './Project'
 import {lowerCase} from 'lodash'
+import {isBlank} from '../common/Utils'
 
 export enum AuthTypes {
   none = 'none',
@@ -52,5 +53,9 @@ export function createTray(trayId: string, url: string, additional: Partial<Tray
 }
 
 export function sickProjects(projects: ReadonlyArray<Project>): ReadonlyArray<Project> {
-  return projects.filter((project) => isSick(project.prognosis))
+  return projects.filter(({prognosis}) => isSick(prognosis))
+}
+
+export function getIdentifier({name, url}: Tray) {
+  return isBlank(name) ? url : name
 }

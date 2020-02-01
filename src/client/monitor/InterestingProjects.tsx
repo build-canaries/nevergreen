@@ -1,11 +1,11 @@
 import React, {useEffect, useRef} from 'react'
-import {clamp, concat, map, reduce, size, take} from 'lodash'
+import {clamp, map, reduce, size, take} from 'lodash'
 import {ScaledGrid} from '../common/scale/ScaledGrid'
-import {InterestingProject} from '../common/project/InterestingProject'
 import {isBlank} from '../common/Utils'
-import {isSick, Project} from '../domain/Project'
-import {ProjectSummary} from '../common/project/ProjectSummary'
-import {ProjectError} from '../common/project/ProjectError'
+import {isSick, Project, ProjectError} from '../domain/Project'
+import {TileProject} from './TileProject'
+import {TileNotShown} from './TileNotShown'
+import {TileError} from './TileError'
 import styles from './interesting-projects.scss'
 import {Tray} from '../domain/Tray'
 import {useSelector} from 'react-redux'
@@ -22,7 +22,7 @@ import {
 
 interface InterestingProjectsProps {
   readonly projects: ReadonlyArray<Project>;
-  readonly errors: ReadonlyArray<string>;
+  readonly errors: ReadonlyArray<ProjectError>;
 }
 
 export function InterestingProjects({projects, errors}: InterestingProjectsProps) {
@@ -58,7 +58,7 @@ export function InterestingProjects({projects, errors}: InterestingProjectsProps
     ? take(projects, maxProjectsToShowClamped)
     : projects
 
-  const projectIsBroken = reduce(projects, (previous, project) => previous || isSick(project.prognosis), false)
+  const projectIsBroken = reduce(projects, (previous, {prognosis}) => previous || isSick(prognosis), false)
   const playBrokenSfx = playBrokenBuildSounds && (projectIsBroken || numberOfErrors > 0)
 
   const brokenSfx = playBrokenSfx && !isBlank(brokenBuildFx) && (
@@ -69,35 +69,37 @@ export function InterestingProjects({projects, errors}: InterestingProjectsProps
   )
 
   const errorComponents = map(errorsToShow, (error) => {
-    return <ProjectError key={error} error={error}/>
+    const tray = trays.find(({trayId}) => trayId === error.trayId)
+    return <TileError key={`${tray ? tray.trayId : 'Nevergreen'}#${error.errorMessage}`}
+                      error={error}
+                      tray={tray}/>
   })
 
   const projectComponents = map(projectsToShow, (project) => {
     const tray = trays.find((tray) => tray.trayId === project.trayId) as Tray
-    return <InterestingProject trayName={tray.name}
-                               key={`${tray.trayId}#${project.projectId}`}
-                               showBuildTimers={showBuildTimers}
-                               showBrokenBuildTimers={showBrokenBuildTimers}
-                               showTrayName={showTrayName}
-                               showBuildLabel={showBuildLabel}
-                               prognosis={project.prognosis}
-                               name={project.name}
-                               stage={project.stage}
-                               lastBuildTime={project.lastBuildTime}
-                               lastBuildLabel={project.lastBuildLabel}
-                               thisBuildTime={project.thisBuildTime}/>
+    return <TileProject key={`${tray.trayId}#${project.projectId}`}
+                        showBuildTimers={showBuildTimers}
+                        showBrokenBuildTimers={showBrokenBuildTimers}
+                        showTrayName={showTrayName}
+                        showBuildLabel={showBuildLabel}
+                        project={project}
+                        tray={tray}/>
   })
 
-  const summary = showSummary ? ([
-    <ProjectSummary key='summary' additionalProjectsCount={totalItems - (maxProjectsToShow - 1)}/>
-  ]) : []
+  const summary = showSummary && (
+    <TileNotShown key='summary' count={totalItems - (maxProjectsToShow - 1)}/>
+  )
 
   return (
     <div className={styles.interestingProjects}
          data-locator='interesting-projects'
          aria-live='assertive'
          aria-relevant='all'>
-      <ScaledGrid>{concat(errorComponents, projectComponents, summary)}</ScaledGrid>
+      <ScaledGrid>
+        {errorComponents}
+        {projectComponents}
+        {summary}
+      </ScaledGrid>
       {brokenSfx}
     </div>
   )

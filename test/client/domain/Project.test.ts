@@ -10,14 +10,6 @@ describe('formatBuildLabel', () => {
   it('should add a # to numbers', () => {
     expect(formatBuildLabel('1234')).toBe('#1234')
   })
-
-  it('should trim the build label to given length', () => {
-    expect(formatBuildLabel('abcdefghijklmnopqrstuvwxyz', 3)).toBe('abc')
-  })
-
-  it('should trim the build label to 10 characters by default', () => {
-    expect(formatBuildLabel('abcdefghijklmnopqrstuvwxyz')).toBe('abcdefghij')
-  })
 })
 
 describe('isSick', () => {

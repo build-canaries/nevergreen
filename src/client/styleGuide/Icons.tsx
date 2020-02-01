@@ -36,6 +36,7 @@ export function Icons() {
         <span className={icons['icon-plus']}>plus</span>
         <span className={icons['icon-question']}>question</span>
         <span className={icons['icon-stop2']}>stop 2</span>
+        <span className={icons['icon-stopwatch']}>stopwatch</span>
         <span className={icons['icon-twitter3']}>twitter 3</span>
         <span className={icons['icon-unlocked']}>unlocked</span>
       </div>

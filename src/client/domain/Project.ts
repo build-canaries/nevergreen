@@ -33,11 +33,11 @@ export interface ProjectError {
   readonly url: string;
 }
 
-export function formatBuildLabel(buildLabel?: string, maxLength = 10) {
+export function formatBuildLabel(buildLabel?: string) {
   if (buildLabel && !isBlank(buildLabel)) {
     return isNumber(buildLabel)
       ? `#${buildLabel}`
-      : buildLabel.substr(0, maxLength)
+      : buildLabel
   }
 
   return ''
@@ -71,6 +71,16 @@ export function createProject(projectId: string, name: string, additional: Parti
   }
 }
 
+export function createProjectError(errorMessage: string, additional: Partial<ProjectError> = {}): ProjectError {
+  return {
+    errorMessage,
+    fetchedTime: '',
+    trayId: '',
+    url: '',
+    ...additional
+  }
+}
+
 export function wrapProjects(apiProjects: ReadonlyArray<ApiProject>): ReadonlyArray<Project> {
   return apiProjects
     .filter((apiProject) => !apiProject.isError)
@@ -82,11 +92,10 @@ export function wrapProjectErrors(apiProjects: ReadonlyArray<ApiProject>): Reado
   return apiProjects
     .filter((apiProject) => apiProject.isError)
     .map((apiProject) => {
-      return {
-        errorMessage: apiProject.errorMessage || 'unknown',
+      return createProjectError(apiProject.errorMessage || 'unknown', {
         fetchedTime: apiProject.fetchedTime,
         trayId: apiProject.trayId,
         url: apiProject.webUrl
-      }
+      })
     })
 }

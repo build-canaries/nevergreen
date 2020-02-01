@@ -30,7 +30,7 @@ export interface ApiProject {
   readonly webUrl: string;
 }
 
-export type ProjectsResponse = ApiProject[]
+export type ProjectsResponse = ReadonlyArray<ApiProject>
 
 interface ProjectsRequest {
   readonly included?: ReadonlyArray<string>;

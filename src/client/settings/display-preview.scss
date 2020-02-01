@@ -10,7 +10,6 @@
 
 .displayPreview {
   background-color: $black;
-  font-family: $monospace-font;
-  height: 20em;
-  text-align: center;
+  height: 30em;
+  overflow: scroll;
 }

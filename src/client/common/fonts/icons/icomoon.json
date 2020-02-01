@@ -824,6 +824,33 @@
     {
       "icon": {
         "paths": [
+          "M658.744 749.256l-210.744-210.746v-282.51h128v229.49l173.256 173.254zM512 0c-282.77 0-512 229.23-512 512s229.23 512 512 512 512-229.23 512-512-229.23-512-512-512zM512 896c-212.078 0-384-171.922-384-384s171.922-384 384-384c212.078 0 384 171.922 384 384s-171.922 384-384 384z"
+        ],
+        "tags": [
+          "clock",
+          "time",
+          "schedule"
+        ],
+        "defaultCode": 59726,
+        "grid": 16,
+        "attrs": []
+      },
+      "attrs": [],
+      "properties": {
+        "ligatures": "clock, time2",
+        "name": "clock",
+        "order": 34,
+        "id": 79,
+        "prevSize": 32,
+        "code": 59726
+      },
+      "setIdx": 3,
+      "setId": 1,
+      "iconIdx": 78
+    },
+    {
+      "icon": {
+        "paths": [
           "M0 64v640h1024v-640h-1024zM960 640h-896v-512h896v512zM672 768h-320l-32 128-64 64h512l-64-64z"
         ],
         "tags": [
@@ -850,35 +877,6 @@
       "setIdx": 3,
       "setId": 1,
       "iconIdx": 86
-    },
-    {
-      "icon": {
-        "paths": [
-          "M0 0h256v256h-256zM384 64h640v128h-640zM0 384h256v256h-256zM384 448h640v128h-640zM0 768h256v256h-256zM384 832h640v128h-640z"
-        ],
-        "tags": [
-          "list",
-          "todo",
-          "bullet",
-          "menu",
-          "options"
-        ],
-        "defaultCode": 59834,
-        "grid": 16,
-        "attrs": []
-      },
-      "attrs": [],
-      "properties": {
-        "ligatures": "list, todo",
-        "name": "list",
-        "order": 3,
-        "id": 187,
-        "prevSize": 32,
-        "code": 59835
-      },
-      "setIdx": 3,
-      "setId": 1,
-      "iconIdx": 186
     },
     {
       "icon": {

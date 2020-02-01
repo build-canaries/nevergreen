@@ -135,7 +135,7 @@ function shouldBeAbleToExportAndImportConfig() {
 function shouldMonitorSelectedProjects() {
   cy.visitPage('monitor')
 
-  cy.locate('interesting-project')
+  cy.locate('tile')
     .should('contain', 'failure building project')
     .should('contain', 'failure sleeping project')
     .should('contain', 'success building project')

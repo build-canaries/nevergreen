@@ -22,8 +22,8 @@ export function Refresh({index, timestamp, refreshTray}: RefreshProps) {
       </PrimaryButton>
       <div className={styles.lastFetch} data-locator='refresh-time'>
         {
-          timestamp && <Duration fullDescriptionPrefix='projects last refreshed'
-                                 fullDescriptionSuffix='ago'
+          timestamp && <Duration prefix='projects last refreshed'
+                                 suffix='ago'
                                  timestamp={timestamp}/>
         }
         {

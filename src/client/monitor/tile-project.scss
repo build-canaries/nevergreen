@@ -1,0 +1,71 @@
+@import '../common/variables';
+@import '../common/layout';
+@import '../common/fonts/icon-font';
+@import '../common/typography';
+
+@mixin prognosis($color, $background-color, $percentage: 3%) {
+  background-color: $background-color;
+  color: $color;
+
+  & .identifier {
+    background: linear-gradient(to right, $background-color, darken($background-color, $percentage), $background-color);
+  }
+
+  & .additionalInfo {
+    background: linear-gradient(to right, darken($background-color, $percentage), $background-color, darken($background-color, $percentage));
+  }
+}
+
+.identifier {
+  @extend %fill-parent;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.additionalInfo {
+  @extend %fill-parent;
+
+  align-items: baseline;
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: 0 1em;
+  text-overflow: ellipsis;
+}
+
+.healthy {
+  @include prognosis($white, $healthy);
+}
+
+.healthy-building {
+  @include prognosis($healthy-building-text, $healthy-building, 7%);
+}
+
+.sick {
+  @include prognosis($off-white, $sick);
+}
+
+.sick-building {
+  @include prognosis($white, $sick-building);
+}
+
+.unknown {
+  @include prognosis($off-black, $light-grey);
+}
+
+.time {
+  @extend .icon-clock;
+
+  &::before {
+    font-size: 0.9em;
+    padding-right: 0.5em;
+  }
+}
+
+.buildLabel {
+  font-size: 0.9em;
+  overflow: hidden;
+  padding-left: 1em;
+  text-overflow: ellipsis;
+}
