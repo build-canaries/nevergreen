@@ -1,35 +1,13 @@
 @import '../layout';
-@import '../responsive';
 
 .scaledGrid {
   @extend %fill-parent;
 
-  display: grid;
-  grid-auto-rows: 1fr;
-  grid-template-columns: repeat(1, 100%);
   list-style-type: none;
-
-  @include respond-to(tablet) {
-    grid-template-columns: repeat(2, 50%);
-  }
-
-  @include respond-to(desktop) {
-    grid-template-columns: repeat(3, calc(100% / 3));
-  }
 }
 
 .item {
+  display: inline-block;
+  float: left;
   padding: 5px;
-}
-
-.oneChild {
-  @include respond-to(tablet, desktop) {
-    grid-template-columns: repeat(1, 100%);
-  }
-}
-
-.twoChildren {
-  @include respond-to(tablet, desktop) {
-    grid-template-columns: repeat(2, 50%);
-  }
 }

@@ -9,7 +9,6 @@
   display: flex;
   flex-direction: column;
   font-family: $monospace-font;
-  min-height: 120px;
   text-transform: lowercase;
 }
 
@@ -38,6 +37,7 @@
   flex-grow: 1;
   justify-content: center;
   overflow: hidden;
+  text-align: center;
 }
 
 .footer {

@@ -1,11 +1,10 @@
 import React, {Children, ReactNode, useCallback, useLayoutEffect, useRef} from 'react'
-import {ideal} from './ScaleText'
+import {ideal, MIN_FONT_SIZE} from './ScaleText'
 import {FontMetrics, Measurable} from './FontMetrics'
-import _ from 'lodash'
+import {flatten, isNil, join, map, trim} from 'lodash'
 import styles from './scaled-grid.scss'
 import {VISUALLY_HIDDEN_ATTRIBUTE} from '../VisuallyHidden'
 import {useResizable} from '../ResizableHook'
-import cn from 'classnames'
 
 interface ScaledGridProps {
   readonly children: ReactNode;
@@ -14,17 +13,85 @@ interface ScaledGridProps {
 export const SCALE_ATTRIBUTE = 'data-scale'
 const PADDING = 0.5 // em
 
-function getVisibleChildren(node: Node): ReadonlyArray<Node> {
+// These need to match those in the CSS
+const TABLET_BREAKPOINT = 768 // px
+const DESKTOP_BREAKPOINT = 1440 // px
+
+function columns(width: number) {
+  if (width < TABLET_BREAKPOINT) {
+    return 1
+  } else if (width < DESKTOP_BREAKPOINT) {
+    return 2
+  } else {
+    return 3
+  }
+}
+
+function numberOfRows(totalNumberOfItems: number, width: number) {
+  return Math.ceil(totalNumberOfItems / columns(width))
+}
+
+function numberOfColumns(totalNumberOfItems: number, width: number) {
+  return Math.min(columns(width), totalNumberOfItems)
+}
+
+function calculateChildWidth(totalNumberOfItems: number, width: number) {
+  const columns = numberOfColumns(totalNumberOfItems, width)
+  return Math.floor(width / columns)
+}
+
+function calculateChildHeight(totalNumberOfItems: number, width: number, height: number) {
+  const rows = numberOfRows(totalNumberOfItems, width)
+  const calculated = Math.floor(height / rows)
+  return Math.max(calculated, MIN_FONT_SIZE)
+}
+
+function setChildSizes(parent: Element) {
+  const children = Array.from(parent.childNodes) as Element[]
+  const childWidth = calculateChildWidth(children.length, parent.clientWidth)
+  const childHeight = calculateChildHeight(children.length, parent.clientWidth, parent.clientHeight)
+
+  children.forEach((e) => {
+    e.setAttribute('style', `width: ${childWidth}px; height: ${childHeight}px`)
+  })
+}
+
+function getVisibleChildren(node: Element): ReadonlyArray<Element> {
   if (node.hasChildNodes()) {
-    return _.flatten((Array.from(node.childNodes) as Element[])
+    return flatten((Array.from(node.childNodes) as Element[])
       .filter((node) => node.nodeName === '#text' || !node.hasAttribute(VISUALLY_HIDDEN_ATTRIBUTE))
       .map(getVisibleChildren))
   }
   return [node]
 }
 
-function getVisibleText(node: Node) {
-  return _.join(_.map(getVisibleChildren(node), (n) => _.trim(n.textContent as string)), '')
+function getVisibleText(node: Element) {
+  return join(map(getVisibleChildren(node), (n) => trim(n.textContent as string)), '')
+}
+
+function setChildFontSizes(fontMetrics: Measurable, parent: Element) {
+  const children = Array.from(parent.querySelectorAll(`[${SCALE_ATTRIBUTE}]`))
+
+  const {width, height} = children.reduce((previous, node) => {
+    return {
+      width: node.clientWidth < previous.width ? node.clientWidth : previous.width,
+      height: node.clientHeight < previous.height ? node.clientHeight : previous.height
+    }
+  }, {width: window.innerWidth, height: window.innerHeight})
+
+  const sentences = children.map((node) => getVisibleText(node))
+
+  const fontSize = ideal(
+    sentences,
+    height,
+    width,
+    fontMetrics.height,
+    fontMetrics.width,
+    PADDING)
+
+  children.forEach((e) => {
+    e.setAttribute('style', `font-size: ${fontSize}px; padding: ${PADDING}em`)
+  })
 }
 
 export function ScaledGrid({children}: ScaledGridProps) {
@@ -33,28 +100,8 @@ export function ScaledGrid({children}: ScaledGridProps) {
 
   const calculate = useCallback(() => {
     if (fontMetrics.current && listNode.current) {
-      const scaledNodes = Array.from(listNode.current.querySelectorAll(`[${SCALE_ATTRIBUTE}]`))
-
-      const {width, height} = scaledNodes.reduce((previous, node) => {
-        return {
-          width: node.clientWidth < previous.width ? node.clientWidth : previous.width,
-          height: node.clientHeight < previous.height ? node.clientHeight : previous.height
-        }
-      }, {width: window.innerWidth, height: window.innerHeight})
-
-      const sentences = scaledNodes.map((node) => getVisibleText(node))
-
-      const fontSize = ideal(
-        sentences,
-        height,
-        width,
-        fontMetrics.current.height,
-        fontMetrics.current.width,
-        PADDING)
-
-      scaledNodes.forEach((e) => {
-        e.setAttribute('style', `font-size: ${fontSize}px; padding: ${PADDING}em`)
-      })
+      setChildSizes(listNode.current)
+      setChildFontSizes(fontMetrics.current, listNode.current)
     }
   }, [])
 
@@ -62,17 +109,12 @@ export function ScaledGrid({children}: ScaledGridProps) {
   useResizable(calculate)
 
   const childrenToShow = Children.toArray(children)
-    .filter((child) => !_.isNil(child))
-
-  const listClasses = cn(styles.scaledGrid, {
-    [styles.oneChild]: childrenToShow.length === 1,
-    [styles.twoChildren]: childrenToShow.length === 2
-  })
+    .filter((child) => !isNil(child))
 
   return (
     <>
       <FontMetrics ref={fontMetrics}/>
-      <ul className={listClasses}
+      <ul className={styles.scaledGrid}
           ref={listNode}>
         {
           childrenToShow.map((child, index) => {
