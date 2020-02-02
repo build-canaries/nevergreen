@@ -4,7 +4,6 @@ import {
   getMaxProjectsToShow,
   getPlayBrokenBuildSoundFx,
   getRefreshTime,
-  getShowBrokenBuildTime,
   getShowBuildLabel,
   getShowBuildTime,
   getShowPrognosis,
@@ -21,7 +20,6 @@ import {
   setMaxProjectsToShow,
   setPlayBrokenBuildSoundFx,
   setRefreshTime,
-  setShowBrokenBuildTime,
   setShowBuildLabel,
   setShowBuildTime,
   setShowPrognosis,
@@ -63,13 +61,6 @@ describe(Actions.CONFIGURATION_IMPORTED, () => {
     expect(getShowBuildTime(newState)).toBeTruthy()
   })
 
-  it('should merge broken build timers enabled', () => {
-    const existingState = state({showBrokenBuildTime: false})
-    const action = configurationImported({[SETTINGS_ROOT]: {showBrokenBuildTime: true}})
-    const newState = reducer(existingState, action)
-    expect(getShowBrokenBuildTime(newState)).toBeTruthy()
-  })
-
   it('should merge broken build sounds enabled', () => {
     const existingState = state({playBrokenBuildSoundFx: false})
     const action = configurationImported({[SETTINGS_ROOT]: {playBrokenBuildSoundFx: true}})
@@ -99,16 +90,6 @@ describe(Actions.SHOW_BUILD_TIME, () => {
     const action = setShowBuildTime(true)
     const newState = reducer(existingState, action)
     expect(getShowBuildTime(newState)).toBeTruthy()
-  })
-})
-
-describe(Actions.SHOW_BROKEN_BUILD_TIME, () => {
-
-  it('should set the broken build timer enabled property', () => {
-    const existingState = state({showBrokenBuildTime: false})
-    const action = setShowBrokenBuildTime(true)
-    const newState = reducer(existingState, action)
-    expect(getShowBrokenBuildTime(newState)).toBeTruthy()
   })
 })
 

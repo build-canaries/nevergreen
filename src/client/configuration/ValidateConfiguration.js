@@ -64,24 +64,6 @@ var validate = (function() {
             }
             var valid2 = errors === errs_2;
           }
-          if (data1.showBrokenBuildTime !== undefined) {
-            var errs_2 = errors;
-            if (typeof data1.showBrokenBuildTime !== "boolean") {
-              var err = {
-                keyword: 'type',
-                dataPath: (dataPath || '') + '.settings.showBrokenBuildTime',
-                schemaPath: '#/properties/settings/properties/showBrokenBuildTime/type',
-                params: {
-                  type: 'boolean'
-                },
-                message: 'should be boolean'
-              };
-              if (vErrors === null) vErrors = [err];
-              else vErrors.push(err);
-              errors++;
-            }
-            var valid2 = errors === errs_2;
-          }
           if (data1.showBuildLabel !== undefined) {
             var errs_2 = errors;
             if (typeof data1.showBuildLabel !== "boolean") {
@@ -1174,9 +1156,6 @@ validate.schema = {
           "type": "boolean"
         },
         "showBuildTime": {
-          "type": "boolean"
-        },
-        "showBrokenBuildTime": {
           "type": "boolean"
         },
         "showBuildLabel": {

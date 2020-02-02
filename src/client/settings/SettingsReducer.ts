@@ -5,7 +5,6 @@ import {
   ActionPlayBrokenBuildSoundFx,
   ActionRefreshTime,
   ActionSetMaxProjects,
-  ActionShowBrokenBuildTime,
   ActionShowBuildLabel,
   ActionShowBuildTime,
   ActionShowPrognosis,
@@ -24,7 +23,6 @@ import {ActionConfigurationImported} from '../backup/BackupActionCreators'
 export interface SettingsState {
   readonly showTrayName: boolean;
   readonly showBuildTime: boolean;
-  readonly showBrokenBuildTime: boolean;
   readonly playBrokenBuildSoundFx: boolean;
   readonly brokenBuildSoundFx: string;
   readonly refreshTime: number;
@@ -40,7 +38,6 @@ export const SETTINGS_ROOT = 'settings'
 const DEFAULT_STATE: SettingsState = {
   showTrayName: false,
   showBuildTime: true,
-  showBrokenBuildTime: true,
   playBrokenBuildSoundFx: false,
   brokenBuildSoundFx: defaultSoundFx,
   refreshTime: DEFAULT_REFRESH_TIME,
@@ -63,9 +60,6 @@ export const reduce = createReducer<SettingsState>(DEFAULT_STATE, {
   },
   [Actions.SHOW_BUILD_TIME]: (draft, action: ActionShowBuildTime) => {
     draft.showBuildTime = action.value
-  },
-  [Actions.SHOW_BROKEN_BUILD_TIME]: (draft, action: ActionShowBrokenBuildTime) => {
-    draft.showBrokenBuildTime = action.value
   },
   [Actions.PLAY_BROKEN_BUILD_SOUND_FX]: (draft, action: ActionPlayBrokenBuildSoundFx) => {
     draft.playBrokenBuildSoundFx = action.value
@@ -101,7 +95,6 @@ export const reduce = createReducer<SettingsState>(DEFAULT_STATE, {
 const getSettings = (state: State) => state[SETTINGS_ROOT]
 export const getShowTrayName = createSelector(getSettings, (settings) => settings.showTrayName)
 export const getShowBuildTime = createSelector(getSettings, (settings) => settings.showBuildTime)
-export const getShowBrokenBuildTime = createSelector(getSettings, (settings) => settings.showBrokenBuildTime)
 export const getPlayBrokenBuildSoundFx = createSelector(getSettings, (settings) => settings.playBrokenBuildSoundFx)
 export const getShowBuildLabel = createSelector(getSettings, (settings) => settings.showBuildLabel)
 export const getShowSystemNotifications = createSelector(getSettings, (settings) => settings.showSystemNotifications)

@@ -28,7 +28,6 @@ export function buildState(subState?: RecursivePartial<State>): State {
       maxProjectsToShow: DEFAULT_PROJECTS_TO_SHOW,
       playBrokenBuildSoundFx: false,
       refreshTime: DEFAULT_REFRESH_TIME,
-      showBrokenBuildTime: false,
       showBuildLabel: false,
       showBuildTime: false,
       showSystemNotifications: false,

@@ -6,10 +6,6 @@ export interface ActionShowBuildTime extends Action<Actions.SHOW_BUILD_TIME> {
   readonly value: boolean;
 }
 
-export interface ActionShowBrokenBuildTime extends Action<Actions.SHOW_BROKEN_BUILD_TIME> {
-  readonly value: boolean;
-}
-
 export interface ActionShowTrayName extends Action<Actions.SHOW_TRAY_NAME> {
   readonly value: boolean;
 }
@@ -59,10 +55,6 @@ function absoluteClosestNumber(actual: number, a: number, b: number): number {
 
 export function setShowBuildTime(value: boolean): ActionShowBuildTime {
   return {type: Actions.SHOW_BUILD_TIME, value}
-}
-
-export function setShowBrokenBuildTime(value: boolean): ActionShowBrokenBuildTime {
-  return {type: Actions.SHOW_BROKEN_BUILD_TIME, value}
 }
 
 export function setShowTrayName(value: boolean): ActionShowTrayName {

@@ -10,7 +10,6 @@ import styles from './display-preview.scss'
 import {useSelector} from 'react-redux'
 import {
   getMaxProjectsToShow,
-  getShowBrokenBuildTime,
   getShowBuildLabel,
   getShowBuildTime,
   getShowPrognosis,
@@ -25,7 +24,6 @@ function randomBuildLabel() {
 export function DisplayPreview() {
   const showTrayName = useSelector(getShowTrayName)
   const showBuildTime = useSelector(getShowBuildTime)
-  const showBrokenBuildTime = useSelector(getShowBrokenBuildTime)
   const showBuildLabel = useSelector(getShowBuildLabel)
   const showPrognosis = useSelector(getShowPrognosis)
   const maxProjectsToShow = useSelector(getMaxProjectsToShow)
@@ -73,10 +71,9 @@ export function DisplayPreview() {
     .map((project) => {
       return (
         <TileProject key={project.projectId}
-                     showBrokenBuildTimers={showBrokenBuildTime}
                      showTrayName={showTrayName}
                      showBuildLabel={showBuildLabel}
-                     showBuildTimers={showBuildTime}
+                     showBuildTime={showBuildTime}
                      project={project}
                      tray={tray}/>
       )

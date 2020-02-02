@@ -73,7 +73,6 @@ function shouldBeAbleToChangeSettingsGeneral() {
 function shouldBeAbleToChangeSettingsDisplay() {
   cy.locate('show-tray-names').check()
   cy.locate('show-build-times').check()
-  cy.locate('show-broken-build-times').check()
   cy.locate('show-build-labels').check()
 
   cy.locate('build-label').should('exist')
@@ -82,7 +81,6 @@ function shouldBeAbleToChangeSettingsDisplay() {
 
   cy.locate('show-tray-names').uncheck()
   cy.locate('show-build-times').uncheck()
-  cy.locate('show-broken-build-times').uncheck()
   cy.locate('show-build-labels').uncheck()
 
   cy.locate('build-label').should('not.exist')

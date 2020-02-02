@@ -14,7 +14,6 @@ import {
   getBrokenBuildSoundFx,
   getMaxProjectsToShow,
   getPlayBrokenBuildSoundFx,
-  getShowBrokenBuildTime,
   getShowBuildLabel,
   getShowBuildTime,
   getShowTrayName
@@ -31,8 +30,7 @@ export function InterestingProjects({projects, errors}: InterestingProjectsProps
   const maxProjectsToShow = useSelector(getMaxProjectsToShow)
   const playBrokenBuildSounds = useSelector(getPlayBrokenBuildSoundFx)
   const brokenBuildFx = useSelector(getBrokenBuildSoundFx)
-  const showBuildTimers = useSelector(getShowBuildTime)
-  const showBrokenBuildTimers = useSelector(getShowBrokenBuildTime)
+  const showBuildTime = useSelector(getShowBuildTime)
   const showTrayName = useSelector(getShowTrayName)
   const showBuildLabel = useSelector(getShowBuildLabel)
 
@@ -78,8 +76,7 @@ export function InterestingProjects({projects, errors}: InterestingProjectsProps
   const projectComponents = map(projectsToShow, (project) => {
     const tray = trays.find((tray) => tray.trayId === project.trayId) as Tray
     return <TileProject key={`${tray.trayId}#${project.projectId}`}
-                        showBuildTimers={showBuildTimers}
-                        showBrokenBuildTimers={showBrokenBuildTimers}
+                        showBuildTime={showBuildTime}
                         showTrayName={showTrayName}
                         showBuildLabel={showBuildLabel}
                         project={project}

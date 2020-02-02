@@ -5,7 +5,6 @@ import {
   setMaxProjectsToShow,
   setPlayBrokenBuildSoundFx,
   setRefreshTime,
-  setShowBrokenBuildTime,
   setShowBuildLabel,
   setShowBuildTime,
   setShowSystemNotifications,
@@ -13,19 +12,6 @@ import {
   VALID_PROJECTS_TO_SHOW
 } from '../../../src/client/settings/SettingsActionCreators'
 import {Actions} from '../../../src/client/Actions'
-
-describe(Actions.SHOW_BROKEN_BUILD_TIME, () => {
-
-  it('should return the correct type', () => {
-    const actual = setShowBrokenBuildTime(false)
-    expect(actual).toHaveProperty('type', Actions.SHOW_BROKEN_BUILD_TIME)
-  })
-
-  it('should return the given value', () => {
-    const actual = setShowBrokenBuildTime(true)
-    expect(actual).toHaveProperty('value', true)
-  })
-})
 
 describe(Actions.SHOW_TRAY_NAME, () => {
 

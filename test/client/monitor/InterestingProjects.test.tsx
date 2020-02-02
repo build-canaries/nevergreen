@@ -108,7 +108,7 @@ describe('displaying project information', () => {
       },
       [SETTINGS_ROOT]: {
         showTrayName: true,
-        showBrokenBuildTime: true,
+        showBuildTime: true,
         showBuildLabel: true
       }
     }
@@ -141,7 +141,7 @@ describe('displaying project information', () => {
       },
       [SETTINGS_ROOT]: {
         showTrayName: true,
-        showBrokenBuildTime: true,
+        showBuildTime: true,
         showBuildLabel: true
       }
     }
@@ -209,7 +209,7 @@ describe('displaying project information', () => {
       },
       [SETTINGS_ROOT]: {
         showTrayName: false,
-        showBrokenBuildTime: false,
+        showBuildTime: false,
         showBuildLabel: false
       }
     }

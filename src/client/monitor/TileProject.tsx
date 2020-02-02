@@ -10,8 +10,7 @@ import {getIdentifier, Tray} from '../domain/Tray'
 interface TileProjectProps {
   readonly project: Project;
   readonly tray: Tray;
-  readonly showBuildTimers?: boolean;
-  readonly showBrokenBuildTimers?: boolean;
+  readonly showBuildTime?: boolean;
   readonly showTrayName?: boolean;
   readonly showBuildLabel?: boolean;
 }
@@ -21,8 +20,7 @@ export function TileProject(
     project: {name, stage, prognosis, lastBuildTime, thisBuildTime, lastBuildLabel},
     tray,
     showTrayName,
-    showBrokenBuildTimers,
-    showBuildTimers,
+    showBuildTime,
     showBuildLabel
   }: TileProjectProps
 ) {
@@ -35,17 +33,10 @@ export function TileProject(
     </span>
   )
 
-  const timeBroken = showBrokenBuildTimers && !building &&
+  const time = showBuildTime &&
     <span className={styles.time}>
-      <Duration timestamp={lastBuildTime}/>
+      <Duration timestamp={building ? thisBuildTime : lastBuildTime}/>
     </span>
-
-  const timeBuilding = showBuildTimers && building &&
-    <span className={styles.time}>
-      <Duration timestamp={thisBuildTime}/>
-    </span>
-
-  const time = timeBroken || timeBuilding
 
   const buildLabel = showBuildLabel && !building && !isBlank(lastBuildLabel) && (
     <div className={styles.buildLabel}
@@ -55,7 +46,7 @@ export function TileProject(
     </div>
   )
 
-  const showAdditionalInfo = showBuildTimers || showBrokenBuildTimers || showBuildLabel
+  const showAdditionalInfo = showBuildTime || showBuildLabel
 
   const additional = showAdditionalInfo && (
     <span className={styles.additionalInfo}>

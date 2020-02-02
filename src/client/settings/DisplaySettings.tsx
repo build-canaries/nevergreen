@@ -8,25 +8,17 @@ import {DisplayPrognosisSelection} from './DisplayPrognosisSelection'
 import {useDispatch, useSelector} from 'react-redux'
 import {
   setMaxProjectsToShow,
-  setShowBrokenBuildTime,
   setShowBuildLabel,
   setShowBuildTime,
   setShowTrayName,
   VALID_PROJECTS_TO_SHOW
 } from './SettingsActionCreators'
-import {
-  getMaxProjectsToShow,
-  getShowBrokenBuildTime,
-  getShowBuildLabel,
-  getShowBuildTime,
-  getShowTrayName
-} from './SettingsReducer'
+import {getMaxProjectsToShow, getShowBuildLabel, getShowBuildTime, getShowTrayName} from './SettingsReducer'
 
 export function DisplaySettings() {
   const dispatch = useDispatch()
   const showTrayName = useSelector(getShowTrayName)
   const showBuildTime = useSelector(getShowBuildTime)
-  const showBrokenBuildTime = useSelector(getShowBrokenBuildTime)
   const showBuildLabel = useSelector(getShowBuildLabel)
   const maxProjectsToShow = useSelector(getMaxProjectsToShow)
 
@@ -49,13 +41,7 @@ export function DisplaySettings() {
                 checked={showBuildTime}
                 onToggle={(newValue) => dispatch(setShowBuildTime(newValue))}
                 data-locator='show-build-times'>
-        show building timer
-      </Checkbox>
-      <Checkbox className={styles.checkbox}
-                checked={showBrokenBuildTime}
-                onToggle={(newValue) => dispatch(setShowBrokenBuildTime(newValue))}
-                data-locator='show-broken-build-times'>
-        show last build time
+        show build time
       </Checkbox>
       <Checkbox className={styles.checkbox}
                 checked={showBuildLabel}

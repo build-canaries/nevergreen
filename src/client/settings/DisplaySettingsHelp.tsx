@@ -6,8 +6,7 @@ const KEYWORDS = [
   'settings',
   'display',
   'show tray name',
-  'show building timer',
-  'show last build time',
+  'show build time',
   'show build label',
   'show prognoses',
   'sick',
@@ -27,19 +26,14 @@ export function DisplaySettingsHelp({searchQuery}: HelpProps) {
       <dl className={styles.helpSettings}>
         <dt>show tray name</dt>
         <dd>When <em>enabled</em> the CI server name (see name) will be displayed on the Monitor page.</dd>
-        <dt>show building timer</dt>
+        <dt>show build time</dt>
         <dd>
-          When <em>enabled</em> (the default) the amount of time a project has been building will be displayed on the
-          Monitor page.
+          When <em>enabled</em> (the default) the amount of time since a project was last built or the amount of time
+          it has been building will be displayed on the Monitor page.
           <p>
-            Please note this time is <strong>not</strong> provided by the CCTray XML feed and is manually calculated by
-            Nevergreen, this means it may not be entirely accurate.
+            Please note the building time is <strong>not</strong> provided by the CCTray XML feed and is manually
+            calculated by Nevergreen, this means it may not be entirely accurate.
           </p>
-        </dd>
-        <dt>show last build time</dt>
-        <dd>
-          When <em>enabled</em> (the default) the amount of time since a project was last built will be displayed on the
-          Monitor page.
         </dd>
         <dt>show build label</dt>
         <dd>
