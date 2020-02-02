@@ -5,10 +5,17 @@ import * as LocalConfiguration from '../../../../src/client/configuration/LocalR
 import {Reset} from '../../../../src/client/backup/reset/Reset'
 import {render} from '../../testHelpers'
 
+const {location} = window
+
 beforeEach(() => {
   jest.spyOn(LocalConfiguration, 'clear').mockResolvedValue()
-  // eslint-disable-next-line @typescript-eslint/unbound-method
-  window.location.reload = jest.fn()
+  delete window.location
+  // eslint-disable-next-line @typescript-eslint/unbound-method,@typescript-eslint/no-explicit-any
+  window.location = {reload: jest.fn()} as any as Location
+})
+
+afterEach(() => {
+  window.location = location
 })
 
 it('should reset configuration and reload', async () => {

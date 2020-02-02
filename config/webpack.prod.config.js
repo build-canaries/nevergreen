@@ -22,11 +22,10 @@ module.exports = merge(baseConfig, {
       swDest: 'service-worker.js',
       cacheId: 'nevergreen',
       exclude: [/\.map$/, /asset-manifest\.json$/],
-      importWorkboxFrom: 'local',
       clientsClaim: true,
       skipWaiting: true,
       navigateFallback: '/index.html',
-      navigateFallbackBlacklist: [
+      navigateFallbackDenylist: [
         new RegExp('/[^/]+\\.[^/]+$') // Exclude URLs containing a dot, as they're likely a resource in public
       ]
     })
