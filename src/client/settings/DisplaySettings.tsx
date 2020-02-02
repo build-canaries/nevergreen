@@ -55,13 +55,13 @@ export function DisplaySettings() {
                 checked={showBrokenBuildTime}
                 onToggle={(newValue) => dispatch(setShowBrokenBuildTime(newValue))}
                 data-locator='show-broken-build-times'>
-        show broken build timer
+        show last build time
       </Checkbox>
       <Checkbox className={styles.checkbox}
                 checked={showBuildLabel}
                 onToggle={(newValue) => dispatch(setShowBuildLabel(newValue))}
                 data-locator='show-build-labels'>
-        show broken build label
+        show build label
       </Checkbox>
 
       <DisplayPrognosisSelection/>

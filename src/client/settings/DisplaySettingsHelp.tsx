@@ -7,8 +7,8 @@ const KEYWORDS = [
   'display',
   'show tray name',
   'show building timer',
-  'show broken build timer',
-  'show broken build label',
+  'show last build time',
+  'show build label',
   'show prognoses',
   'sick',
   'sick building',
@@ -36,16 +36,16 @@ export function DisplaySettingsHelp({searchQuery}: HelpProps) {
             Nevergreen, this means it may not be entirely accurate.
           </p>
         </dd>
-        <dt>show broken build timer</dt>
+        <dt>show last build time</dt>
         <dd>
-          When <em>enabled</em> (the default) the amount of time a project has been broken will be displayed on the
+          When <em>enabled</em> (the default) the amount of time since a project was last built will be displayed on the
           Monitor page.
         </dd>
-        <dt>show broken build label</dt>
+        <dt>show build label</dt>
         <dd>
-          When <em>enabled</em> the build label, for broken builds only, will be displayed on the Monitor page.
+          When <em>enabled</em> the build label, for projects not building, will be displayed on the Monitor page.
           <p>
-            The reason this is only shown for broken builds is because the CCTray XML is only updated after a project
+            The reason this is only shown for non building projects is because the CCTray XML is only updated after a project
             has finished building, meaning the value Nevergreen gets is always out of date for building projects.
           </p>
         </dd>

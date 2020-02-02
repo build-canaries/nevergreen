@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './tile-project.scss'
 import {isBlank} from '../common/Utils'
-import {formatBuildLabel, isBuilding, isSick, Project} from '../domain/Project'
+import {formatBuildLabel, isBuilding, Project} from '../domain/Project'
 import {VisuallyHidden} from '../common/VisuallyHidden'
 import {Duration} from '../common/Duration'
 import {Tile} from './Tile'
@@ -26,7 +26,6 @@ export function TileProject(
     showBuildLabel
   }: TileProjectProps
 ) {
-  const sick = isSick(prognosis)
   const building = isBuilding(prognosis)
 
   const identifier = showTrayName && (
@@ -36,7 +35,7 @@ export function TileProject(
     </span>
   )
 
-  const timeBroken = showBrokenBuildTimers && sick &&
+  const timeBroken = showBrokenBuildTimers && !building &&
     <span className={styles.time}>
       <Duration timestamp={lastBuildTime}/>
     </span>
@@ -48,7 +47,7 @@ export function TileProject(
 
   const time = timeBroken || timeBuilding
 
-  const buildLabel = showBuildLabel && sick && !isBlank(lastBuildLabel) && (
+  const buildLabel = showBuildLabel && !building && !isBlank(lastBuildLabel) && (
     <div className={styles.buildLabel}
          data-locator='build-label'
          aria-label={`build label ${lastBuildLabel}`}>

@@ -98,7 +98,9 @@ describe('broken build sfx', () => {
 
 describe('displaying project information', () => {
 
-  it('should show the identifier, time and label for sick projects', () => {
+  it.each([
+    Prognosis.sick, Prognosis.healthy, Prognosis.unknown
+  ])('should show the identifier, time and label for %s projects', (prognosis) => {
     setSystemTime('2020-01-25T20:23:00Z')
     const state = {
       [TRAYS_ROOT]: {
@@ -115,7 +117,7 @@ describe('displaying project information', () => {
         buildProject({
           trayId,
           name: 'some-project-name',
-          prognosis: Prognosis.sick,
+          prognosis,
           lastBuildLabel: '1234',
           lastBuildTime: '2020-01-25T19:23:00Z'
         })
@@ -129,6 +131,39 @@ describe('displaying project information', () => {
     expect(queryByText('some-project-name')).toBeInTheDocument()
     expect(queryByText('#1234')).toBeInTheDocument()
     expect(queryByText('about 1 hour')).toBeInTheDocument()
+  })
+
+  it('should show the identifier, even when time and label is unavailable for unknown projects', () => {
+    setSystemTime('2020-01-25T20:23:00Z')
+    const state = {
+      [TRAYS_ROOT]: {
+        [trayId]: buildTray({trayId, name: 'some-tray-name'})
+      },
+      [SETTINGS_ROOT]: {
+        showTrayName: true,
+        showBrokenBuildTime: true,
+        showBuildLabel: true
+      }
+    }
+    const props = {
+      projects: [
+        buildProject({
+          trayId,
+          name: 'some-project-name',
+          prognosis: Prognosis.unknown,
+          lastBuildLabel: '',
+          lastBuildTime: ''
+        })
+      ],
+      errors: []
+    }
+
+    const {queryByText, queryByTestId} = render(<InterestingProjects {...props}/>, state)
+
+    expect(queryByText('some-tray-name')).toBeInTheDocument()
+    expect(queryByText('some-project-name')).toBeInTheDocument()
+    expect(queryByTestId('build-label')).not.toBeInTheDocument()
+    expect(queryByText('unknown')).toBeInTheDocument()
   })
 
   // labels can not be shown for building projects as they are not updated until after the project has finished building
