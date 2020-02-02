@@ -82,7 +82,7 @@ export function DisplayPreview() {
   return (
     <section className={styles.previewSection}>
       <h3 className={styles.title}>Preview</h3>
-      <div className={styles.displayPreview}>
+      <div className={styles.displayPreview} tabIndex={0}>
         <ScaledGrid>
           <TileError error={projectError} tray={tray}/>
           {children}
