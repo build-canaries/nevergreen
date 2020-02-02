@@ -12,6 +12,7 @@ interface ScaledGridProps {
 }
 
 export const SCALE_ATTRIBUTE = 'data-scale'
+const PADDING = 0.5 // em
 
 function getVisibleChildren(node: Node): ReadonlyArray<Node> {
   if (node.hasChildNodes()) {
@@ -48,10 +49,11 @@ export function ScaledGrid({children}: ScaledGridProps) {
         height,
         width,
         fontMetrics.current.height,
-        fontMetrics.current.width)
+        fontMetrics.current.width,
+        PADDING)
 
       scaledNodes.forEach((e) => {
-        e.setAttribute('style', `font-size: ${fontSize}px;`)
+        e.setAttribute('style', `font-size: ${fontSize}px; padding: ${PADDING}em`)
       })
     }
   }, [])
