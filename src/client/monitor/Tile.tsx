@@ -1,7 +1,7 @@
 import React, {ReactNode} from 'react'
 import styles from './tile.scss'
 import cn from 'classnames'
-import {SCALE_ATTRIBUTE} from '../common/scale/ScaledGrid'
+import {SCALE_ATTRIBUTE} from './ScaledGrid'
 
 interface TileProps {
   readonly className?: string;

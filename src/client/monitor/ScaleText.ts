@@ -1,9 +1,9 @@
 import {flatten} from 'lodash'
-import {debug, warn} from '../Logger'
+import {debug, warn} from '../common/Logger'
 
-export const MIN_FONT_SIZE = 10
+export const MIN_FONT_SIZE = 10 // px
 
-function paddingPixels(fontSize: number, padding: number) {
+function totalPaddingPixels(fontSize: number, padding: number) {
   return (padding * 2) * fontSize
 }
 
@@ -16,8 +16,8 @@ function findLongestWord(sentences: ReadonlyArray<string>) {
   return longestStringInArray(individualWords)
 }
 
-function linesRequired(sentence: string, widthPixels: number, charWidthScale: number, fontSize: number, padding: number) {
-  const actualWidth = widthPixels - paddingPixels(fontSize, padding)
+function linesRequired(sentence: string, widthPixels: number, charWidthScale: number, fontSize: number, paddingEm: number) {
+  const actualWidth = widthPixels - totalPaddingPixels(fontSize, paddingEm)
   let lineNumber = 1
   let currentLinePosition = 0
 
@@ -39,7 +39,7 @@ function linesRequired(sentence: string, widthPixels: number, charWidthScale: nu
 function maximumPossibleFontSize(sentences: ReadonlyArray<string>, widthPixels: number, charWidthScale: number, padding: number) {
   const longestWordCharacters = findLongestWord(sentences)
   const longestWordPixels = charWidthScale * longestWordCharacters
-  const fontSize = Math.floor(widthPixels / (longestWordPixels + paddingPixels(1, padding)))
+  const fontSize = Math.floor(widthPixels / (longestWordPixels + totalPaddingPixels(1, padding)))
 
   debug(`maximum possible fontSize [${fontSize}px] for width [${widthPixels}px] and sentences [${sentences}]`)
 
@@ -52,20 +52,20 @@ export function ideal(
   widthPixels: number,
   charHeightScale: number,
   charWidthScale: number,
-  padding: number
+  paddingEm: number
 ) {
   if (heightPixels <= 0 || widthPixels <= 0) {
     warn(`unable to calculate ideal fontSize for width [${widthPixels}px] height [${heightPixels}px] heightScale [${charHeightScale}px] widthScale [${charWidthScale}px]`)
     return MIN_FONT_SIZE
   }
 
-  let fontSize = maximumPossibleFontSize(sentences, widthPixels, charWidthScale, padding)
+  let fontSize = maximumPossibleFontSize(sentences, widthPixels, charWidthScale, paddingEm)
 
   while (fontSize > MIN_FONT_SIZE) {
-    const numberOfLines = sentences.map((sentence: string) => linesRequired(sentence, widthPixels, charWidthScale, fontSize, padding))
+    const numberOfLines = sentences.map((sentence: string) => linesRequired(sentence, widthPixels, charWidthScale, fontSize, paddingEm))
     const largestNumberOfLines = Math.max(...numberOfLines)
     const heightRequired = largestNumberOfLines * (charHeightScale * fontSize)
-    const actualHeight = heightPixels - paddingPixels(fontSize, padding)
+    const actualHeight = heightPixels - totalPaddingPixels(fontSize, paddingEm)
     if (heightRequired > actualHeight) {
       fontSize--
     } else {

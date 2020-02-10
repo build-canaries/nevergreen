@@ -1,4 +1,4 @@
-import {ideal} from '../../../../src/client/common/scale/ScaleText'
+import {ideal} from '../../../src/client/monitor/ScaleText'
 
 // actual scale of Roboto Mono
 const heightScale = 1.15

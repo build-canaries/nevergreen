@@ -1,10 +1,10 @@
 import React, {Children, ReactNode, useCallback, useLayoutEffect, useRef} from 'react'
-import {ideal, MIN_FONT_SIZE} from './ScaleText'
+import {ideal} from './ScaleText'
 import {FontMetrics, Measurable} from './FontMetrics'
 import {flatten, isNil, join, map, trim} from 'lodash'
 import styles from './scaled-grid.scss'
-import {VISUALLY_HIDDEN_ATTRIBUTE} from '../VisuallyHidden'
-import {useResizable} from '../ResizableHook'
+import {VISUALLY_HIDDEN_ATTRIBUTE} from '../common/VisuallyHidden'
+import {useResizable} from '../common/ResizableHook'
 
 interface ScaledGridProps {
   readonly children: ReactNode;
@@ -12,6 +12,7 @@ interface ScaledGridProps {
 
 export const SCALE_ATTRIBUTE = 'data-scale'
 const PADDING = 0.5 // em
+const MIN_CHILD_HEIGHT = 55 // px
 
 // These need to match those in the CSS
 const TABLET_BREAKPOINT = 768 // px
@@ -43,7 +44,7 @@ function calculateChildWidth(totalNumberOfItems: number, width: number) {
 function calculateChildHeight(totalNumberOfItems: number, width: number, height: number) {
   const rows = numberOfRows(totalNumberOfItems, width)
   const calculated = Math.floor(height / rows)
-  return Math.max(calculated, MIN_FONT_SIZE)
+  return Math.max(calculated, MIN_CHILD_HEIGHT)
 }
 
 function setChildSizes(parent: Element) {

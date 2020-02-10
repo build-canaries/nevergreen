@@ -1,6 +1,6 @@
 import React, {useEffect, useRef} from 'react'
 import {clamp, map, reduce, size, take} from 'lodash'
-import {ScaledGrid} from '../common/scale/ScaledGrid'
+import {ScaledGrid} from './ScaledGrid'
 import {isBlank} from '../common/Utils'
 import {isSick, Project, ProjectError} from '../domain/Project'
 import {TileProject} from './TileProject'

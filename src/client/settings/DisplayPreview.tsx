@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {random} from 'lodash'
-import {ScaledGrid} from '../common/scale/ScaledGrid'
+import {ScaledGrid} from '../monitor/ScaledGrid'
 import {TileProject} from '../monitor/TileProject'
 import {randomDateInPast} from '../common/DateTime'
 import {createTray} from '../domain/Tray'

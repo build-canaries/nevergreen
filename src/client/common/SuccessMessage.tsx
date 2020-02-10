@@ -1,5 +1,5 @@
 import React from 'react'
-import {ScaledGrid} from './scale/ScaledGrid'
+import {ScaledGrid} from '../monitor/ScaledGrid'
 import {Tile} from '../monitor/Tile'
 
 interface SuccessMessageProps {
