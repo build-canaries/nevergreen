@@ -1,8 +1,8 @@
 import getTime from 'date-fns/getTime'
 import parseISO from 'date-fns/parseISO'
-import lolex from 'lolex'
+import FakeTimers from '@sinonjs/fake-timers'
 
-const clock = lolex.install()
+const clock = FakeTimers.install()
 
 afterEach(() => {
   // reset back to the real system time
