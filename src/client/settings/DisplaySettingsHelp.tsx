@@ -5,7 +5,7 @@ import styles from '../help/help-article.scss'
 const KEYWORDS = [
   'settings',
   'display',
-  'show tray name',
+  'show feed identifier',
   'show build time',
   'show build label',
   'show prognoses',
@@ -24,8 +24,8 @@ export function DisplaySettingsHelp({searchQuery}: HelpProps) {
                  title='Display settings'
                  page='/settings'>
       <dl className={styles.helpSettings}>
-        <dt>show tray name</dt>
-        <dd>When <em>enabled</em> the CI server name (see name) will be displayed on the Monitor page.</dd>
+        <dt>show feed identifier</dt>
+        <dd>When <em>enabled</em> the CI server name (see name) or URL will be displayed on the Monitor page.</dd>
         <dt>show build time</dt>
         <dd>
           When <em>enabled</em> (the default) the amount of time since a project was last built or the amount of time
@@ -39,8 +39,9 @@ export function DisplaySettingsHelp({searchQuery}: HelpProps) {
         <dd>
           When <em>enabled</em> the build label, for projects not building, will be displayed on the Monitor page.
           <p>
-            The reason this is only shown for non building projects is because the CCTray XML is only updated after a project
-            has finished building, meaning the value Nevergreen gets is always out of date for building projects.
+            The reason this is only shown for non building projects is because the CCTray XML is only updated after a
+            project has finished building, meaning the value Nevergreen gets is always out of date for building
+            projects.
           </p>
         </dd>
         <dt>show prognoses</dt>

@@ -35,7 +35,7 @@ export function DisplaySettings() {
                 checked={showTrayName}
                 onToggle={(newValue) => dispatch(setShowTrayName(newValue))}
                 data-locator='show-tray-names'>
-        show tray name
+        show feed identifier
       </Checkbox>
       <Checkbox className={styles.checkbox}
                 checked={showBuildTime}
