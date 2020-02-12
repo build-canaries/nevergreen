@@ -1,7 +1,7 @@
 import {flatten} from 'lodash'
 import {debug, warn} from '../common/Logger'
 
-export const MIN_FONT_SIZE = 10 // px
+export const MIN_FONT_SIZE = 10.0 // px
 
 function totalPaddingPixels(fontSize: number, padding: number) {
   return (padding * 2) * fontSize
@@ -36,10 +36,10 @@ function linesRequired(sentence: string, widthPixels: number, charWidthScale: nu
   return lineNumber
 }
 
-function maximumPossibleFontSize(sentences: ReadonlyArray<string>, widthPixels: number, charWidthScale: number, padding: number) {
+function maximumPossibleFontSize(sentences: ReadonlyArray<string>, widthPixels: number, charWidthScale: number, paddingEm: number) {
   const longestWordCharacters = findLongestWord(sentences)
   const longestWordPixels = charWidthScale * longestWordCharacters
-  const fontSize = Math.floor(widthPixels / (longestWordPixels + totalPaddingPixels(1, padding)))
+  const fontSize = widthPixels / (longestWordPixels + totalPaddingPixels(charWidthScale, paddingEm))
 
   debug(`maximum possible fontSize [${fontSize}px] for width [${widthPixels}px] and sentences [${sentences}]`)
 
