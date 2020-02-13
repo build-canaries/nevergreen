@@ -4,7 +4,6 @@ import styles from './header.scss'
 import logo from './buildcanaries-logo.png'
 import {NavLink} from 'react-router-dom'
 import {Shortcut} from '../common/Shortcut'
-import {Title} from '../common/Title'
 import Mousetrap from 'mousetrap'
 import {SHOW_HELP_SHORTCUT} from '../help/Help'
 
@@ -39,7 +38,6 @@ export function Header({fullScreen}: HeaderProps) {
     <header className={headerClassNames}>
       <img src={logo} className={styles.logo} alt='Nevergreen' aria-hidden/>
       <nav className={styles.siteMenu}>
-        <Title>Site navigation</Title>
         <button className={styles.siteMenuToggle}
                 onClick={() => setMenuVisible(!menuVisible)}
                 aria-label={toggleLabel}
