@@ -29,6 +29,10 @@
   padding: 0 1em;
   text-align: center;
   white-space: nowrap;
+
+  &.small {
+    @include font-scale(-2);
+  }
 }
 
 .body {
@@ -55,4 +59,8 @@
   border-bottom-right-radius: 5px;
   overflow: hidden;
   white-space: nowrap;
+
+  &.small {
+    @include font-scale(-2);
+  }
 }

@@ -3,11 +3,12 @@
 .scaledGrid {
   @extend %fill-parent;
 
+  display: flex;
+  flex-wrap: wrap;
   list-style-type: none;
 }
 
 .item {
   display: inline-block;
-  float: left;
   padding: 5px;
 }

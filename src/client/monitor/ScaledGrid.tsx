@@ -11,8 +11,8 @@ interface ScaledGridProps {
 }
 
 export const SCALE_ATTRIBUTE = 'data-scale'
+
 const PADDING = 0.5 // em
-const MIN_CHILD_HEIGHT = 55 // px
 
 // These need to match those in the CSS
 const TABLET_BREAKPOINT = 768 // px
@@ -44,16 +44,17 @@ function calculateChildWidth(totalNumberOfItems: number, width: number) {
 function calculateChildHeight(totalNumberOfItems: number, width: number, height: number) {
   const rows = numberOfRows(totalNumberOfItems, width)
   const calculated = Math.floor(height / rows)
-  return Math.max(calculated, MIN_CHILD_HEIGHT)
+  return Math.max(calculated, 1)
 }
 
-function setChildSizes(parent: Element) {
+function updateChildSizes(parent: Element) {
   const children = Array.from(parent.childNodes) as Element[]
-  const childWidth = calculateChildWidth(children.length, parent.clientWidth)
-  const childHeight = calculateChildHeight(children.length, parent.clientWidth, parent.clientHeight)
+  const widthPx = calculateChildWidth(children.length, parent.clientWidth)
+  const heightPx = calculateChildHeight(children.length, parent.clientWidth, parent.clientHeight)
 
+  // the size needs to be set before we try and calculate the font size
   children.forEach((e) => {
-    e.setAttribute('style', `width: ${childWidth}px; height: ${childHeight}px`)
+    e.setAttribute('style', `width: ${widthPx}px; min-height: ${heightPx}px`)
   })
 }
 
@@ -70,7 +71,7 @@ function getVisibleText(node: Element) {
   return join(map(getVisibleChildren(node), (n) => trim(n.textContent as string)), '')
 }
 
-function setChildFontSizes(fontMetrics: Measurable, parent: Element) {
+function updateChildFontSize(fontMetrics: Measurable, parent: Element) {
   const children = Array.from(parent.querySelectorAll(`[${SCALE_ATTRIBUTE}]`))
 
   const {width, height} = children.reduce((previous, node) => {
@@ -101,8 +102,8 @@ export function ScaledGrid({children}: ScaledGridProps) {
 
   const calculate = useCallback(() => {
     if (fontMetrics.current && listNode.current) {
-      setChildSizes(listNode.current)
-      setChildFontSizes(fontMetrics.current, listNode.current)
+      updateChildSizes(listNode.current)
+      updateChildFontSize(fontMetrics.current, listNode.current)
     }
   }, [])
 
