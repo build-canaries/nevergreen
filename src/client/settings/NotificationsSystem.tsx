@@ -16,7 +16,7 @@ export function NotificationsSystem() {
   const showSystemNotifications = useSelector(getShowSystemNotifications)
   const systemNotificationsSupported = supported()
   const [requestingPermission, setRequestingPermission] = useState(false)
-  const [permissionDenied, setPermissionDenied] = useState()
+  const [permissionDenied, setPermissionDenied] = useState(false)
 
   const toggleShowSystemNotifications = async (show: boolean) => {
     if (show) {

@@ -1,4 +1,5 @@
 import React, {ReactNode} from 'react'
+import {fireEvent} from '@testing-library/react'
 import {TraySettings} from '../../../../src/client/tracking/settings/TraySettings'
 import {buildTray, render, setupReactModal} from '../../testHelpers'
 import {getTrays, TRAYS_ROOT} from '../../../../src/client/tracking/TraysReducer'
@@ -35,6 +36,10 @@ it('should set the tray name on blur', async () => {
     [TRAYS_ROOT]: {trayId: tray}
   }
   const {getByTestId, store} = render(<TraySettings {...DEFAULT_PROPS} tray={tray}/>, state)
+
+  // clear the input before typing
+  fireEvent.change(getByTestId('tray-name'), { target: { value: '' } })
+
   userEvent.click(getByTestId('tray-name'))
   await userEvent.type(getByTestId('tray-name'), 'some-new-name')
   getByTestId('tray-name').blur()
@@ -68,6 +73,10 @@ it('should set the tray URL on blur if it is different', async () => {
   const props = {...DEFAULT_PROPS, tray, setRequiresRefresh}
 
   const {getByLabelText, store} = render(<TraySettings {...props}/>, state)
+
+  // clear the input before typing
+  fireEvent.change(getByLabelText('URL'), { target: { value: '' } })
+
   userEvent.click(getByLabelText('URL'))
   await userEvent.type(getByLabelText('URL'), 'http://some-new-url')
   getByLabelText('URL').blur()
@@ -88,6 +97,10 @@ it('should not call requires refresh if the URL is the same', async () => {
   const props = {...DEFAULT_PROPS, tray, setRequiresRefresh}
 
   const {getByLabelText} = render(<TraySettings {...props}/>, state)
+
+  // clear the input before typing
+  fireEvent.change(getByLabelText('URL'), { target: { value: '' } })
+
   userEvent.click(getByLabelText('URL'))
   await userEvent.type(getByLabelText('URL'), 'http://some-url')
   getByLabelText('URL').blur()

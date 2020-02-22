@@ -20,7 +20,7 @@ import Modal from 'react-modal'
 import {DEFAULT_PROJECTS_TO_SHOW, DEFAULT_REFRESH_TIME} from '../../src/client/settings/SettingsActionCreators'
 import {APPLIED_MIGRATIONS_ROOT} from '../../src/client/configuration/MigrationsReducer'
 
-export function buildState(subState?: RecursivePartial<State>): State {
+export function buildState(subState: RecursivePartial<State> = {}): State {
   return merge({
     [SETTINGS_ROOT]: {
       brokenBuildSoundFx: '',
@@ -63,7 +63,7 @@ export function setupReactModal() {
   Modal.setAppElement('#app-element')
 }
 
-export function render(component: ReactNode, state?: RecursivePartial<State>, location = '/') {
+export function render(component: ReactNode, state: RecursivePartial<State> = {}, location = '/') {
   const store = configureStore({reducer, preloadedState: buildState(state)})
 
   const wrapWithStoreAndRouter = (c: ReactNode) => (
@@ -81,19 +81,19 @@ export function render(component: ReactNode, state?: RecursivePartial<State>, lo
   }
 }
 
-export function buildTray(tray?: Partial<Tray>): Tray {
+export function buildTray(tray: Partial<Tray> = {}): Tray {
   return createTray('some-tray-id', 'some-url', tray)
 }
 
-export function buildProject(project?: Partial<Project>): Project {
+export function buildProject(project: Partial<Project> = {}): Project {
   return createProject('some-project-id', 'some-name', project)
 }
 
-export function buildProjectError(projectError?: Partial<ProjectError>): ProjectError {
+export function buildProjectError(projectError: Partial<ProjectError> = {}): ProjectError {
   return createProjectError('some-error', projectError)
 }
 
-export function buildApiProject(apiProject?: Partial<ApiProject>): ApiProject {
+export function buildApiProject(apiProject: Partial<ApiProject> = {}): ApiProject {
   return merge({
     activity: '',
     fetchedTime: '',

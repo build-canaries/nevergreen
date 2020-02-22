@@ -15,6 +15,9 @@ it('should show help articles based on location or search query', async () => {
   await userEvent.type(getByLabelText('search'), 'not-a-valid-keyword')
   expect(queryByText('Adding a CI server')).not.toBeInTheDocument()
 
+  // clear the input before typing
+  fireEvent.change(getByLabelText('search'), { target: { value: '' } })
+
   await userEvent.type(getByLabelText('search'), 'adding')
   expect(queryByText('Adding a CI server')).toBeInTheDocument()
 
