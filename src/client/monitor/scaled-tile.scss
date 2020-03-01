@@ -15,12 +15,8 @@
 .header {
   @include font-scale(-1);
 
-  @include respond-to(tablet) {
+  @include respond-to(tablet, desktop) {
     @include font-scale(0);
-  }
-
-  @include respond-to(desktop) {
-    @include font-scale(1);
   }
 
   border-top-left-radius: 5px;
@@ -31,7 +27,7 @@
   white-space: nowrap;
 
   &.small {
-    @include font-scale(-2);
+    display: none;
   }
 }
 
@@ -61,6 +57,6 @@
   white-space: nowrap;
 
   &.small {
-    @include font-scale(-2);
+    display: none;
   }
 }

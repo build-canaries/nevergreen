@@ -1,7 +1,21 @@
 @import '../common/variables';
+@import '../common/layout';
+
+$background: darken($sick, 15%);
 
 .error {
-  background-color: $sick;
+  background-color: $background;
   color: $off-white;
-  text-align: center;
+}
+
+.body {
+  @extend %fill-parent;
+
+  align-items: center;
+  display: flex;
+  justify-items: center;
+}
+
+.identifier {
+  background: linear-gradient(to right, $background, darken($background, 3%), $background);
 }

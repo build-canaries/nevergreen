@@ -1,5 +1,12 @@
-import {formatBuildLabel, isBuilding, isSick, Prognosis, wrapProjects} from '../../../src/client/domain/Project'
-import {buildApiProject} from '../testHelpers'
+import {
+  formatBuildLabel,
+  isBuilding,
+  isSick,
+  Prognosis,
+  projectDescription,
+  wrapProjects
+} from '../../../src/client/domain/Project'
+import {buildApiProject, buildProject} from '../testHelpers'
 
 describe('formatBuildLabel', () => {
 
@@ -9,6 +16,17 @@ describe('formatBuildLabel', () => {
 
   it('should add a # to numbers', () => {
     expect(formatBuildLabel('1234')).toBe('#1234')
+  })
+})
+
+describe('projectDescription', () => {
+
+  it('should return the name if stage is blank', () => {
+    expect(projectDescription(buildProject({name: 'some-name', stage: ''}))).toBe('some-name')
+  })
+
+  it('should include the stage if it is not blank', () => {
+    expect(projectDescription(buildProject({name: 'some-name', stage: 'some-stage'}))).toBe('some-name some-stage')
   })
 })
 

@@ -3,11 +3,7 @@
 .successMessage {
   @extend %fill-parent;
 
-  display: table;
-  overflow: hidden;
-}
-
-.message {
-  display: table-cell;
-  vertical-align: middle;
+  align-items: center;
+  display: flex;
+  justify-content: center;
 }

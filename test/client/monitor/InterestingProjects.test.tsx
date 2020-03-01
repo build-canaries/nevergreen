@@ -303,7 +303,7 @@ describe('limiting the projects displayed', () => {
       errors: []
     }
     const {queryByText} = render(<InterestingProjects {...props}/>, state)
-    expect(queryByText('+3 not shown')).toBeInTheDocument()
+    expect(queryByText('+3 projects not shown')).toBeInTheDocument()
   })
 
   it('should display a summary if the number of errors is more than the max', () => {
@@ -328,7 +328,7 @@ describe('limiting the projects displayed', () => {
       ]
     }
     const {queryByText} = render(<InterestingProjects {...props}/>, state)
-    expect(queryByText('+2 not shown')).toBeInTheDocument()
+    expect(queryByText('+2 projects not shown')).toBeInTheDocument()
   })
 
   it('should display a summary if the number of errors and projects is more than the max', () => {
@@ -354,6 +354,6 @@ describe('limiting the projects displayed', () => {
       ]
     }
     const {queryByText} = render(<InterestingProjects {...props}/>, state)
-    expect(queryByText('+2 not shown')).toBeInTheDocument()
+    expect(queryByText('+2 projects not shown')).toBeInTheDocument()
   })
 })

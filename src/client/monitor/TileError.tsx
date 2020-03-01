@@ -1,20 +1,30 @@
 import React from 'react'
 import styles from './tile-error.scss'
-import {Tile} from './Tile'
 import {ProjectError} from '../domain/Project'
-import {getIdentifier, Tray} from '../domain/Tray'
+import {trayIdentifier} from '../domain/Tray'
+import {useSelector} from 'react-redux'
+import {getTrays} from '../tracking/TraysReducer'
+import {ScaledTile} from './ScaledTile'
 
 interface TileError {
   readonly error: ProjectError;
-  readonly tray?: Tray;
 }
 
-export function TileError({error: {errorMessage}, tray}: TileError) {
-  const identifier = tray ? getIdentifier(tray) : 'Nevergreen'
+export function TileError({error}: TileError) {
+  const trays = useSelector(getTrays)
+  const myTray = trays.find(({trayId}) => trayId === error.trayId)
+
+  const header = (
+    <div className={styles.identifier}>
+      {trayIdentifier(myTray)}
+    </div>
+  )
+
   return (
-    <Tile className={styles.error}
-          header={identifier}>
-      {errorMessage}
-    </Tile>
+    <ScaledTile className={styles.error}
+                header={header}
+                sentences={[error.errorMessage]}>
+      {error.errorMessage}
+    </ScaledTile>
   )
 }

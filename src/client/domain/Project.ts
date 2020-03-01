@@ -43,6 +43,14 @@ export function formatBuildLabel(buildLabel?: string) {
   return ''
 }
 
+export function projectDescription({name, stage}: Project) {
+  if (isBlank(stage)) {
+    return name
+  } else {
+    return `${name} ${stage}`
+  }
+}
+
 export function isSick(prognosis: Prognosis) {
   return prognosis === Prognosis.sick
 }

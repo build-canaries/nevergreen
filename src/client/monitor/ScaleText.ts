@@ -1,5 +1,5 @@
 import {flatten} from 'lodash'
-import {debug, warn} from '../common/Logger'
+import {debug} from '../common/Logger'
 
 export const MIN_FONT_SIZE = 10.0 // px
 
@@ -41,39 +41,39 @@ function maximumPossibleFontSize(sentences: ReadonlyArray<string>, widthPixels: 
   const longestWordPixels = charWidthScale * longestWordCharacters
   const fontSize = widthPixels / (longestWordPixels + totalPaddingPixels(charWidthScale, paddingEm))
 
-  debug(`maximum possible fontSize [${fontSize}px] for width [${widthPixels}px] and sentences [${sentences}]`)
+  debug(`maximum possible fontSize [${fontSize}px] for width [${widthPixels}px] as longest word is [${longestWordCharacters}]`)
 
-  return fontSize
+  return Math.floor(fontSize)
 }
 
 export function ideal(
   sentences: ReadonlyArray<string>,
-  heightPixels: number,
-  widthPixels: number,
+  elementHeightPx: number,
+  elementWidthPx: number,
   charHeightScale: number,
   charWidthScale: number,
   paddingEm: number
 ) {
-  if (heightPixels <= 0 || widthPixels <= 0) {
-    warn(`unable to calculate ideal fontSize for width [${widthPixels}px] height [${heightPixels}px] heightScale [${charHeightScale}px] widthScale [${charWidthScale}px]`)
+  if (elementHeightPx <= 0 || elementWidthPx <= 0 || charHeightScale <= 0 || charWidthScale <= 0) {
+    debug(`unable to calculate ideal fontSize for width [${elementWidthPx}px] height [${elementHeightPx}px] heightScale [${charHeightScale}px] widthScale [${charWidthScale}px]`)
     return MIN_FONT_SIZE
   }
 
-  let fontSize = maximumPossibleFontSize(sentences, widthPixels, charWidthScale, paddingEm)
+  let fontSize = maximumPossibleFontSize(sentences, elementWidthPx, charWidthScale, paddingEm)
 
   while (fontSize > MIN_FONT_SIZE) {
-    const numberOfLines = sentences.map((sentence: string) => linesRequired(sentence, widthPixels, charWidthScale, fontSize, paddingEm))
+    const numberOfLines = sentences.map((sentence: string) => linesRequired(sentence, elementWidthPx, charWidthScale, fontSize, paddingEm))
     const largestNumberOfLines = Math.max(...numberOfLines)
     const heightRequired = largestNumberOfLines * (charHeightScale * fontSize)
-    const actualHeight = heightPixels - totalPaddingPixels(fontSize, paddingEm)
+    const actualHeight = elementHeightPx - totalPaddingPixels(fontSize, paddingEm)
     if (heightRequired > actualHeight) {
       fontSize--
     } else {
-      debug(`calculated fontSize [${fontSize}px] for width [${widthPixels}px] height [${heightPixels}px] heightScale [${charHeightScale}px] widthScale [${charWidthScale}px]`)
+      debug(`calculated fontSize [${fontSize}px] for width [${elementWidthPx}px] height [${elementHeightPx}px] charHeightScale [${charHeightScale}px] charWidthScale [${charWidthScale}px]`, sentences)
       return fontSize
     }
   }
 
-  warn(`unable to calculate ideal fontSize for width [${widthPixels}px] height [${heightPixels}px] heightScale [${charHeightScale}px] widthScale [${charWidthScale}px]`)
+  debug(`unable to calculate ideal fontSize for width [${elementWidthPx}px] height [${elementHeightPx}px] charHeightScale [${charHeightScale}px] charWidthScale [${charWidthScale}px]`)
   return MIN_FONT_SIZE
 }

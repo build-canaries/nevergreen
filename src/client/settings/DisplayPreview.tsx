@@ -3,18 +3,11 @@ import {random} from 'lodash'
 import {ScaledGrid} from '../monitor/ScaledGrid'
 import {TileProject} from '../monitor/TileProject'
 import {randomDateInPast} from '../common/DateTime'
-import {createTray} from '../domain/Tray'
-import {TileNotShown} from '../monitor/TileNotShown'
+import {TileProjectsNotShown} from '../monitor/TileProjectsNotShown'
 import {TileError} from '../monitor/TileError'
 import styles from './display-preview.scss'
 import {useSelector} from 'react-redux'
-import {
-  getMaxProjectsToShow,
-  getShowBuildLabel,
-  getShowBuildTime,
-  getShowPrognosis,
-  getShowTrayName
-} from './SettingsReducer'
+import {getMaxProjectsToShow, getShowPrognosis} from './SettingsReducer'
 import {createProject, createProjectError, Prognosis} from '../domain/Project'
 
 function randomBuildLabel() {
@@ -22,17 +15,10 @@ function randomBuildLabel() {
 }
 
 export function DisplayPreview() {
-  const showTrayName = useSelector(getShowTrayName)
-  const showBuildTime = useSelector(getShowBuildTime)
-  const showBuildLabel = useSelector(getShowBuildLabel)
   const showPrognosis = useSelector(getShowPrognosis)
   const maxProjectsToShow = useSelector(getMaxProjectsToShow)
 
   const [notShown] = useState(random(1, 99))
-
-  const tray = createTray('tray-id', 'https://nevergreen.io/cc.xml', {
-    name: 'feed identifier'
-  })
 
   const projects = [
     createProject('0', 'unknown', {
@@ -71,11 +57,8 @@ export function DisplayPreview() {
     .map((project) => {
       return (
         <TileProject key={project.projectId}
-                     showTrayName={showTrayName}
-                     showBuildLabel={showBuildLabel}
-                     showBuildTime={showBuildTime}
                      project={project}
-                     tray={tray}/>
+                     visibleProjects={projects}/>
       )
     })
 
@@ -84,10 +67,10 @@ export function DisplayPreview() {
       <h3 className={styles.title}>Preview</h3>
       <div className={styles.displayPreview} tabIndex={0}>
         <ScaledGrid>
-          <TileError error={projectError} tray={tray}/>
+          <TileError error={projectError}/>
           {children}
           {maxProjectsToShow !== Number.MAX_SAFE_INTEGER && (
-            <TileNotShown count={notShown}/>
+            <TileProjectsNotShown count={notShown}/>
           )}
         </ScaledGrid>
       </div>

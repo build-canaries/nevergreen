@@ -1,23 +1,14 @@
-import React, {useEffect, useRef} from 'react'
-import {clamp, map, reduce, size, take} from 'lodash'
+import React from 'react'
+import {clamp, map, size, take} from 'lodash'
 import {ScaledGrid} from './ScaledGrid'
-import {isBlank} from '../common/Utils'
-import {isSick, Project, ProjectError} from '../domain/Project'
+import {Project, ProjectError} from '../domain/Project'
 import {TileProject} from './TileProject'
-import {TileNotShown} from './TileNotShown'
+import {TileProjectsNotShown} from './TileProjectsNotShown'
 import {TileError} from './TileError'
 import styles from './interesting-projects.scss'
-import {Tray} from '../domain/Tray'
 import {useSelector} from 'react-redux'
-import {getTrays} from '../tracking/TraysReducer'
-import {
-  getBrokenBuildSoundFx,
-  getMaxProjectsToShow,
-  getPlayBrokenBuildSoundFx,
-  getShowBuildLabel,
-  getShowBuildTime,
-  getShowTrayName
-} from '../settings/SettingsReducer'
+import {getMaxProjectsToShow} from '../settings/SettingsReducer'
+import {BrokenBuildSfx} from './BrokenBuildSfx'
 
 interface InterestingProjectsProps {
   readonly projects: ReadonlyArray<Project>;
@@ -25,23 +16,7 @@ interface InterestingProjectsProps {
 }
 
 export function InterestingProjects({projects, errors}: InterestingProjectsProps) {
-  const sfxNode = useRef<HTMLAudioElement>(null)
-  const trays = useSelector(getTrays)
   const maxProjectsToShow = useSelector(getMaxProjectsToShow)
-  const playBrokenBuildSounds = useSelector(getPlayBrokenBuildSoundFx)
-  const brokenBuildFx = useSelector(getBrokenBuildSoundFx)
-  const showBuildTime = useSelector(getShowBuildTime)
-  const showTrayName = useSelector(getShowTrayName)
-  const showBuildLabel = useSelector(getShowBuildLabel)
-
-  useEffect(() => {
-    const sfx = sfxNode.current
-    return () => {
-      if (sfx) {
-        sfx.pause()
-      }
-    }
-  }, [])
 
   const numberOfErrors = size(errors)
   const totalItems = numberOfErrors + size(projects)
@@ -56,35 +31,19 @@ export function InterestingProjects({projects, errors}: InterestingProjectsProps
     ? take(projects, maxProjectsToShowClamped)
     : projects
 
-  const projectIsBroken = reduce(projects, (previous, {prognosis}) => previous || isSick(prognosis), false)
-  const playBrokenSfx = playBrokenBuildSounds && (projectIsBroken || numberOfErrors > 0)
-
-  const brokenSfx = playBrokenSfx && !isBlank(brokenBuildFx) && (
-    <audio ref={sfxNode}
-           src={brokenBuildFx}
-           autoPlay
-           data-locator='broken-build-sound'/>
-  )
-
   const errorComponents = map(errorsToShow, (error) => {
-    const tray = trays.find(({trayId}) => trayId === error.trayId)
-    return <TileError key={`${tray ? tray.trayId : 'Nevergreen'}#${error.errorMessage}`}
-                      error={error}
-                      tray={tray}/>
+    return <TileError key={`${error.trayId}#${error.errorMessage}`}
+                      error={error}/>
   })
 
   const projectComponents = map(projectsToShow, (project) => {
-    const tray = trays.find((tray) => tray.trayId === project.trayId) as Tray
-    return <TileProject key={`${tray.trayId}#${project.projectId}`}
-                        showBuildTime={showBuildTime}
-                        showTrayName={showTrayName}
-                        showBuildLabel={showBuildLabel}
+    return <TileProject key={`${project.trayId}#${project.projectId}`}
                         project={project}
-                        tray={tray}/>
+                        visibleProjects={projectsToShow}/>
   })
 
   const summary = showSummary && (
-    <TileNotShown key='summary' count={totalItems - (maxProjectsToShow - 1)}/>
+    <TileProjectsNotShown key='summary' count={totalItems - (maxProjectsToShow - 1)}/>
   )
 
   return (
@@ -98,7 +57,7 @@ export function InterestingProjects({projects, errors}: InterestingProjectsProps
         {projectComponents}
         {summary}
       </ScaledGrid>
-      {brokenSfx}
+      <BrokenBuildSfx projects={projects} errors={errors}/>
     </div>
   )
 }

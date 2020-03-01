@@ -1,18 +1,11 @@
-import React, {Children, ReactNode, useCallback, useLayoutEffect, useRef} from 'react'
-import {ideal} from './ScaleText'
-import {FontMetrics, Measurable} from './FontMetrics'
-import {flatten, isNil, join, map, trim} from 'lodash'
+import React, {Children, ReactNode, useCallback, useLayoutEffect, useRef, useState} from 'react'
+import {isNil} from 'lodash'
 import styles from './scaled-grid.scss'
-import {VISUALLY_HIDDEN_ATTRIBUTE} from '../common/VisuallyHidden'
 import {useResizable} from '../common/ResizableHook'
 
 interface ScaledGridProps {
   readonly children: ReactNode;
 }
-
-export const SCALE_ATTRIBUTE = 'data-scale'
-
-const PADDING = 0.5 // em
 
 // These need to match those in the CSS
 const TABLET_BREAKPOINT = 768 // px
@@ -38,7 +31,8 @@ function numberOfColumns(totalNumberOfItems: number, width: number) {
 
 function calculateChildWidth(totalNumberOfItems: number, width: number) {
   const columns = numberOfColumns(totalNumberOfItems, width)
-  return Math.floor(width / columns)
+  const calculated = Math.floor(width / columns)
+  return Math.max(calculated, 1)
 }
 
 function calculateChildHeight(totalNumberOfItems: number, width: number, height: number) {
@@ -52,58 +46,19 @@ function updateChildSizes(parent: Element) {
   const widthPx = calculateChildWidth(children.length, parent.clientWidth)
   const heightPx = calculateChildHeight(children.length, parent.clientWidth, parent.clientHeight)
 
-  // the size needs to be set before we try and calculate the font size
-  children.forEach((e) => {
-    e.setAttribute('style', `width: ${widthPx}px; min-height: ${heightPx}px`)
-  })
-}
-
-function getVisibleChildren(node: Element): ReadonlyArray<Element> {
-  if (node.hasChildNodes()) {
-    return flatten((Array.from(node.childNodes) as Element[])
-      .filter((node) => node.nodeName === '#text' || !node.hasAttribute(VISUALLY_HIDDEN_ATTRIBUTE))
-      .map(getVisibleChildren))
-  }
-  return [node]
-}
-
-function getVisibleText(node: Element) {
-  return join(map(getVisibleChildren(node), (n) => trim(n.textContent as string)), '')
-}
-
-function updateChildFontSize(fontMetrics: Measurable, parent: Element) {
-  const children = Array.from(parent.querySelectorAll(`[${SCALE_ATTRIBUTE}]`))
-
-  const {width, height} = children.reduce((previous, node) => {
-    return {
-      width: node.clientWidth < previous.width ? node.clientWidth : previous.width,
-      height: node.clientHeight < previous.height ? node.clientHeight : previous.height
-    }
-  }, {width: window.innerWidth, height: window.innerHeight})
-
-  const sentences = children.map((node) => getVisibleText(node))
-
-  const fontSize = ideal(
-    sentences,
-    height,
-    width,
-    fontMetrics.height,
-    fontMetrics.width,
-    PADDING)
-
-  children.forEach((e) => {
-    e.setAttribute('style', `font-size: ${fontSize}px; padding: ${PADDING}em`)
-  })
+  return {widthPx, heightPx}
 }
 
 export function ScaledGrid({children}: ScaledGridProps) {
-  const fontMetrics = useRef<Measurable>(null)
-  const listNode = useRef<HTMLUListElement>(null)
+  const listRef = useRef<HTMLUListElement>(null)
+  const [childHeight, setChildHeight] = useState(1)
+  const [childWidth, setChildWidth] = useState(1)
 
   const calculate = useCallback(() => {
-    if (fontMetrics.current && listNode.current) {
-      updateChildSizes(listNode.current)
-      updateChildFontSize(fontMetrics.current, listNode.current)
+    if (listRef.current) {
+      const {heightPx, widthPx} = updateChildSizes(listRef.current)
+      setChildHeight(heightPx)
+      setChildWidth(widthPx)
     }
   }, [])
 
@@ -113,15 +68,18 @@ export function ScaledGrid({children}: ScaledGridProps) {
   const childrenToShow = Children.toArray(children)
     .filter((child) => !isNil(child))
 
+  const childStyle = {width: `${childWidth}px`, height: `${childHeight}px`}
+
   return (
     <>
-      <FontMetrics ref={fontMetrics}/>
       <ul className={styles.scaledGrid}
-          ref={listNode}>
+          ref={listRef}>
         {
           childrenToShow.map((child, index) => {
             return (
-              <li key={index} className={styles.item}>
+              <li key={index}
+                  className={styles.item}
+                  style={childStyle}>
                 {child}
               </li>
             )
