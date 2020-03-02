@@ -3,7 +3,7 @@
   :url "https://github.com/build-canaries/nevergreen"
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [ring "1.8.0" :exclusions [org.eclipse.jetty/jetty-server]]
-                 [org.eclipse.jetty/jetty-server "9.4.26.v20200117"]
+                 [org.eclipse.jetty/jetty-server "9.4.27.v20200227"]
                  [compojure "1.6.1" :exclusions [ring/ring-codec]]
                  [environ "1.1.0"]
                  [cheshire "5.10.0"]
@@ -33,7 +33,7 @@
             "check-updates" ["ancient" ":all"]
             "audit"         ["nvd" "check"]}
   :profiles {:dev  {:plugins [[lein-ancient "0.6.15"]
-                              [jonase/eastwood "0.3.7"]
+                              [jonase/eastwood "0.3.10"]
                               [lein-cloverage "1.1.2"]
                               [lein-nvd "1.3.1"]]}
              :test {:jvm-opts ["-Dlogback.configurationFile=./test/logback-unit.xml"]}}
