@@ -1,19 +1,10 @@
 @import '../common/variables';
-@import '../common/layout';
 
 $background: darken($sick, 15%);
 
 .error {
   background-color: $background;
   color: $off-white;
-}
-
-.body {
-  @extend %fill-parent;
-
-  align-items: center;
-  display: flex;
-  justify-items: center;
 }
 
 .identifier {

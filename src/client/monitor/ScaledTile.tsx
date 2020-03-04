@@ -1,8 +1,8 @@
 import React, {ReactNode, useCallback, useRef, useState} from 'react'
 import styles from './scaled-tile.scss'
 import cn from 'classnames'
-import {useIdealFontSize} from './ScaleTextHook'
 import {useElementResized} from '../common/ResizableHook'
+import {ScaleText} from '../common/ScaleText'
 
 interface TileProps {
   readonly className?: string;
@@ -14,7 +14,6 @@ interface TileProps {
 
 export function ScaledTile({header, footer, children, className, sentences}: TileProps) {
   const tileRef = useRef<HTMLDivElement>(null)
-  const bodyRef = useRef<HTMLDivElement>(null)
 
   const [small, setSmall] = useState(false)
   const smallClass = {[styles.small]: small}
@@ -26,8 +25,6 @@ export function ScaledTile({header, footer, children, className, sentences}: Til
 
   useElementResized(tileRef, checkSize)
 
-  const idealFontStyle = useIdealFontSize(bodyRef, sentences)
-
   return (
     <div className={cn(styles.tile, className)}
          ref={tileRef}
@@ -35,10 +32,8 @@ export function ScaledTile({header, footer, children, className, sentences}: Til
       {header && (
         <div className={cn(styles.header, smallClass)}>{header}</div>
       )}
-      <div className={styles.body}
-           style={idealFontStyle}
-           ref={bodyRef}>
-        {children}
+      <div className={styles.body}>
+        <ScaleText sentences={sentences}>{children}</ScaleText>
       </div>
       {footer && (
         <div className={cn(styles.footer, smallClass)}>{footer}</div>
