@@ -31,7 +31,7 @@ function cancel(requestId: number) {
   }
 }
 
-export const useResizable = (onResize: () => void) => {
+export const useWindowResized = (onResize: () => void) => {
   useEffect(() => {
     let requestId = 0
     const onResizeThrottled = () => {
@@ -60,7 +60,6 @@ export const useElementResized = (elementRef: RefObject<Element>, onResize: (siz
       cancel(requestId)
       requestId = requestAnimationFrame(() => {
         entries.forEach((entry) => {
-          debug('element resized', entry)
           onResize(entry.contentRect)
         })
       })

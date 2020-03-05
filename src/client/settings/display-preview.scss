@@ -1,4 +1,5 @@
 @import '../common/variables';
+@import '../common/responsive';
 
 .title {
   padding-bottom: 1em;
@@ -10,6 +11,16 @@
 
 .displayPreview {
   background-color: $black;
-  height: 30em;
+  height: 550px;
+  min-height: 250px;
   overflow: scroll;
+  resize: vertical;
+
+  @include respond-to(tablet) {
+    height: 450px;
+  }
+
+  @include respond-to(desktop) {
+    height: 350px;
+  }
 }

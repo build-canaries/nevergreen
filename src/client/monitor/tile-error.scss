@@ -1,12 +1,11 @@
 @import '../common/variables';
 
-$background: darken($sick, 15%);
-
-.error {
-  background-color: $background;
-  color: $off-white;
+.identifier {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.identifier {
-  background: linear-gradient(to right, $background, darken($background, 3%), $background);
+.error {
+  background-color: darken($sick, 15%);
+  color: $off-white;
 }

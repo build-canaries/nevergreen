@@ -3,17 +3,9 @@
 @import '../common/fonts/icon-font';
 @import '../common/typography';
 
-@mixin prognosis($color, $background-color, $percentage: 3%) {
+@mixin prognosis($color, $background-color) {
   background-color: $background-color;
   color: $color;
-
-  & .identifier {
-    background: linear-gradient(to right, $background-color, darken($background-color, $percentage), $background-color);
-  }
-
-  & .additionalInfo {
-    background: linear-gradient(to right, darken($background-color, $percentage), $background-color, darken($background-color, $percentage));
-  }
 }
 
 .identifier {
@@ -39,7 +31,7 @@
 }
 
 .healthy-building {
-  @include prognosis($healthy-building-text, $healthy-building, 7%);
+  @include prognosis($healthy-building-text, $healthy-building);
 }
 
 .sick {

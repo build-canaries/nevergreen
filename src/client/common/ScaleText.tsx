@@ -5,7 +5,7 @@ import {FontMetricsContext} from '../FontMetrics'
 import {useElementResized} from './ResizableHook'
 import styles from './scaled-text.scss'
 
-export const MIN_FONT_SIZE = 10.0 // px
+export const MIN_FONT_SIZE = 10 // px
 
 function totalPaddingPixels(fontSize: number, padding: number) {
   return (padding * 2) * fontSize
@@ -43,11 +43,11 @@ function linesRequired(sentence: string, widthPixels: number, charWidthScale: nu
 function maximumPossibleFontSize(sentences: ReadonlyArray<string>, widthPixels: number, charWidthScale: number, paddingEm: number) {
   const longestWordCharacters = findLongestWord(sentences)
   const longestWordPixels = charWidthScale * longestWordCharacters
-  const fontSize = widthPixels / (longestWordPixels + totalPaddingPixels(charWidthScale, paddingEm))
+  const fontSize = Math.floor(widthPixels / (longestWordPixels + totalPaddingPixels(charWidthScale, paddingEm)))
 
   debug(`maximum possible fontSize [${fontSize}px] for width [${widthPixels}px] as longest word is [${longestWordCharacters}]`)
 
-  return Math.floor(fontSize)
+  return fontSize
 }
 
 export function ideal(

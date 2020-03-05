@@ -2,10 +2,12 @@
 @import '../common/layout';
 @import '../common/typography';
 
+$border-radius: 5px;
+
 .tile {
   @extend %fill-parent;
 
-  border-radius: 5px;
+  border-radius: $border-radius;
   display: flex;
   flex-direction: column;
   font-family: $monospace-font;
@@ -19,8 +21,8 @@
     @include font-scale(0);
   }
 
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
+  border-top-left-radius: $border-radius;
+  border-top-right-radius: $border-radius;
   overflow: hidden;
   padding: 0 1em;
   text-align: center;
@@ -34,6 +36,7 @@
 .body {
   flex-grow: 1;
   overflow: hidden;
+  text-align: center;
 }
 
 .footer {
@@ -47,8 +50,8 @@
     @include font-scale(1);
   }
 
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: $border-radius;
+  border-bottom-right-radius: $border-radius;
   overflow: hidden;
   white-space: nowrap;
 

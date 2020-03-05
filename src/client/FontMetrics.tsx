@@ -1,5 +1,5 @@
 import React, {createContext, forwardRef, Ref, useImperativeHandle, useRef} from 'react'
-import styles from './monitor/font-metrics.scss'
+import styles from './font-metrics.scss'
 
 export interface Measurable {
   readonly width: number;
