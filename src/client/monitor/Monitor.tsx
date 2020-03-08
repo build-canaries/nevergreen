@@ -25,9 +25,9 @@ interface MonitorProps {
 }
 
 function addThisBuildTime(project: Project, previouslyFetchedProjects: ReadonlyArray<Project>): Project {
-  if (isBuilding(project.prognosis)) {
+  if (isBuilding(project)) {
     const previousProject = previouslyFetchedProjects.find((previous) => project.projectId === previous.projectId)
-    const thisBuildTime = previousProject && isBuilding(previousProject.prognosis)
+    const thisBuildTime = previousProject && isBuilding(previousProject)
       ? previousProject.thisBuildTime
       : project.fetchedTime
     return {...project, thisBuildTime}

@@ -33,7 +33,7 @@ export interface ProjectError {
   readonly url: string;
 }
 
-export function formatBuildLabel(buildLabel?: string) {
+function formatBuildLabel(buildLabel?: string) {
   if (buildLabel && !isBlank(buildLabel)) {
     return isNumber(buildLabel)
       ? `#${buildLabel}`
@@ -51,12 +51,20 @@ export function projectDescription({name, stage}: Project) {
   }
 }
 
-export function isSick(prognosis: Prognosis) {
+export function isSick({prognosis}: Project) {
   return prognosis === Prognosis.sick
 }
 
-export function isBuilding(prognosis: Prognosis) {
+export function isBuilding({prognosis}: Project) {
   return prognosis === Prognosis.healthyBuilding || prognosis === Prognosis.sickBuilding
+}
+
+export function projectTimestamp(project: Project) {
+  return isBuilding(project) ? project.thisBuildTime : project.lastBuildTime
+}
+
+export function projectBuildLabel(project: Project) {
+  return isBuilding(project) ? '' : formatBuildLabel(project.lastBuildLabel)
 }
 
 export function createProject(projectId: string, name: string, additional: Partial<Project> = {}): Project {

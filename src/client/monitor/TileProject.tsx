@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './tile-project.scss'
 import {isBlank} from '../common/Utils'
-import {formatBuildLabel, isBuilding, Project, projectDescription} from '../domain/Project'
+import {Project, projectBuildLabel, projectDescription, projectTimestamp} from '../domain/Project'
 import {VisuallyHidden} from '../common/VisuallyHidden'
 import {Duration} from '../common/Duration'
 import {ScaledTile} from './ScaledTile'
@@ -24,7 +24,6 @@ export function TileProject({project, visibleProjects}: TileProjectProps) {
   const sentences = visibleProjects.map(projectDescription)
 
   const myTray = trays.find((tray) => tray.trayId === project.trayId)
-  const building = isBuilding(project.prognosis)
 
   const identifier = showTrayName && (
     <span className={styles.identifier}
@@ -35,14 +34,16 @@ export function TileProject({project, visibleProjects}: TileProjectProps) {
 
   const time = showBuildTime &&
     <span className={styles.time}>
-      <Duration timestamp={building ? project.thisBuildTime : project.lastBuildTime}/>
+      <VisuallyHidden>time </VisuallyHidden>
+      <Duration timestamp={projectTimestamp(project)}/>
     </span>
 
-  const buildLabel = showBuildLabel && !building && !isBlank(project.lastBuildLabel) && (
+  const buildLabel = projectBuildLabel(project)
+  const buildLabelComponent = showBuildLabel && !isBlank(buildLabel) && (
     <div className={styles.buildLabel}
-         data-locator='build-label'
-         aria-label={`build label ${project.lastBuildLabel}`}>
-      {formatBuildLabel(project.lastBuildLabel)}
+         data-locator='build-label'>
+      <VisuallyHidden>build label </VisuallyHidden>
+      {buildLabel}
     </div>
   )
 
@@ -51,8 +52,8 @@ export function TileProject({project, visibleProjects}: TileProjectProps) {
   const additional = showAdditionalInfo && (
     <span className={styles.additionalInfo}>
       <VisuallyHidden>prognosis {project.prognosis}</VisuallyHidden>
-      {time || <div aria-hidden={true}>&nbsp;</div>}
-      {buildLabel}
+      {time}
+      {buildLabelComponent}
     </span>
   )
 

@@ -25,7 +25,7 @@ export function BrokenBuildSfx({projects, errors}: BrokenBuildSfxProps) {
   }, [])
 
   const numberOfErrors = size(errors)
-  const projectIsBroken = reduce(projects, (previous, {prognosis}) => previous || isSick(prognosis), false)
+  const projectIsBroken = reduce(projects, (previous, project) => previous || isSick(project), false)
   const playBrokenSfx = playBrokenBuildSounds && !isBlank(brokenBuildFx) && (projectIsBroken || numberOfErrors > 0)
 
   if (!playBrokenSfx) {

@@ -1,23 +1,13 @@
 import {
-  formatBuildLabel,
   isBuilding,
   isSick,
   Prognosis,
+  projectBuildLabel,
   projectDescription,
+  projectTimestamp,
   wrapProjects
 } from '../../../src/client/domain/Project'
 import {buildApiProject, buildProject} from '../testHelpers'
-
-describe('formatBuildLabel', () => {
-
-  it('should return empty string for blank value', () => {
-    expect(formatBuildLabel(' ')).toBe('')
-  })
-
-  it('should add a # to numbers', () => {
-    expect(formatBuildLabel('1234')).toBe('#1234')
-  })
-})
 
 describe('projectDescription', () => {
 
@@ -33,41 +23,90 @@ describe('projectDescription', () => {
 describe('isSick', () => {
 
   it('should be true when sick', () => {
-    expect(isSick(Prognosis.sick)).toBe(true)
+    expect(isSick(buildProject({prognosis: Prognosis.sick}))).toBe(true)
   })
 
-  const otherPrognosis = [
+  it.each([
     Prognosis.unknown,
     Prognosis.healthyBuilding,
     Prognosis.sickBuilding
-  ]
-
-  otherPrognosis.forEach((value) => {
-    it(`should be false for value ${value}`, () => {
-      expect(isSick(value)).toBe(false)
-    })
+  ])('should be false for value %s', (prognosis) => {
+    expect(isSick(buildProject({prognosis}))).toBe(false)
   })
 })
 
 describe('isBuilding', () => {
 
   it('should be true when healthy building', () => {
-    expect(isBuilding(Prognosis.healthyBuilding)).toBe(true)
+    expect(isBuilding(buildProject({prognosis: Prognosis.healthyBuilding}))).toBe(true)
   })
 
   it('should be true when sick building', () => {
-    expect(isBuilding(Prognosis.sickBuilding)).toBe(true)
+    expect(isBuilding(buildProject({prognosis: Prognosis.sickBuilding}))).toBe(true)
   })
 
-  const otherPrognosis = [
+  it.each([
     Prognosis.unknown,
     Prognosis.sick
-  ]
+  ])('should be false for value %s', (prognosis) => {
+    expect(isBuilding(buildProject({prognosis}))).toBe(false)
+  })
+})
 
-  otherPrognosis.forEach((value) => {
-    it(`should be false for value ${value}`, () => {
-      expect(isBuilding(value)).toBe(false)
+describe('projectTimestamp', () => {
+
+  it.each([
+    Prognosis.healthyBuilding,
+    Prognosis.sickBuilding
+  ])('should return the building time if the project is %s', (prognosis) => {
+    const project = buildProject({
+      prognosis,
+      thisBuildTime: 'build-time',
+      lastBuildTime: 'last-build'
     })
+    expect(projectTimestamp(project)).toBe('build-time')
+  })
+
+  it.each([
+    Prognosis.sick,
+    Prognosis.unknown,
+    Prognosis.healthy
+  ])('should return the last fetched time if the project is %s', (prognosis) => {
+    const project = buildProject({
+      prognosis,
+      thisBuildTime: 'build-time',
+      lastBuildTime: 'last-build'
+    })
+    expect(projectTimestamp(project)).toBe('last-build')
+  })
+})
+
+describe('projectBuildLabel', () => {
+
+  it.each([
+    Prognosis.healthyBuilding,
+    Prognosis.sickBuilding
+  ])('should return an empty string if the project is %s because the label is only updated AFTER the project has finished building', (prognosis) => {
+    const project = buildProject({prognosis, lastBuildLabel: 'some-label'})
+    expect(projectBuildLabel(project)).toBe('')
+  })
+
+  it.each([
+    Prognosis.sick,
+    Prognosis.unknown,
+    Prognosis.healthy
+  ])('should return the last build label if the project is %s', (prognosis) => {
+    const project = buildProject({prognosis, lastBuildLabel: 'some-label'})
+    expect(projectBuildLabel(project)).toBe('some-label')
+  })
+
+  it.each([
+    Prognosis.sick,
+    Prognosis.unknown,
+    Prognosis.healthy
+  ])('should add a # to the last build label if the project is %s and the label is numeric', (prognosis) => {
+    const project = buildProject({prognosis, lastBuildLabel: '1234'})
+    expect(projectBuildLabel(project)).toBe('#1234')
   })
 })
 

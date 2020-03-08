@@ -31,10 +31,8 @@ export function useProjectNotifications(projects: ReadonlyArray<Project>) {
     if (showNotifications) {
       const previousProjects = previousProjectsRef.current
 
-      const previouslySick = previousProjects
-        .filter((project) => isSick(project.prognosis))
-      const currentlySick = projects
-        .filter((project: Project) => isSick(project.prognosis))
+      const previouslySick = previousProjects.filter(isSick)
+      const currentlySick = projects.filter(isSick)
 
       const previousIds = previouslySick.map((project) => project.projectId)
       const currentIds = currentlySick.map((project) => project.projectId)
