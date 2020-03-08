@@ -59,6 +59,13 @@ export function DisplaySettingsHelp({searchQuery}: HelpProps) {
           </p>
         </dd>
       </dl>
+      <p>
+        Please note the feed identifier, build time and build labels will automatically be hidden, regardless of whether
+        they are enabled, if the Monitor page becomes &quot;too crowded&quot;. This can happen if many projects are being
+        shown on a small screen. This is done to make the project name larger and more visible, because this is the most
+        important information to display. Reducing the number of projects shown (see max number of projects to show) or
+        increasing the size of the browser window can mitigate this.
+      </p>
     </HelpArticle>
   )
 }
