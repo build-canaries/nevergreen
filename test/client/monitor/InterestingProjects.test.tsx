@@ -248,7 +248,7 @@ describe('displaying project information', () => {
           trayId,
           name: 'some-project-name',
           prognosis: Prognosis.sickBuilding,
-          url: 'some-url'
+          webUrl: 'some-url'
         })
       ],
       errors: []

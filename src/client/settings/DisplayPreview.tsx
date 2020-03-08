@@ -25,33 +25,33 @@ export function DisplayPreview() {
       prognosis: Prognosis.unknown,
       lastBuildTime: randomDateInPast(),
       lastBuildLabel: randomBuildLabel(),
-      url: 'https://cctray.org/v1/'
+      webUrl: 'https://cctray.org/v1/'
     }),
     createProject('1', 'healthy', {
       prognosis: Prognosis.healthy,
       lastBuildTime: randomDateInPast(),
       lastBuildLabel: randomBuildLabel(),
-      url: 'https://nevergreen.io'
+      webUrl: 'https://nevergreen.io'
     }),
     createProject('2', 'healthy building', {
       prognosis: Prognosis.healthyBuilding,
       lastBuildTime: randomDateInPast(),
       thisBuildTime: randomDateInPast(),
       lastBuildLabel: randomBuildLabel(),
-      url: 'https://github.com/build-canaries/nevergreen'
+      webUrl: 'https://github.com/build-canaries/nevergreen'
     }),
     createProject('3', 'sick building', {
       prognosis: Prognosis.sickBuilding,
       lastBuildTime: randomDateInPast(),
       thisBuildTime: randomDateInPast(),
       lastBuildLabel: randomBuildLabel(),
-      url: 'https://twitter.com/BuildCanaries'
+      webUrl: 'https://twitter.com/BuildCanaries'
     }),
     createProject('4', 'sick', {
       prognosis: Prognosis.sick,
       lastBuildTime: randomDateInPast(),
       lastBuildLabel: randomBuildLabel(),
-      url: 'http://build-canaries.github.io/'
+      webUrl: 'http://build-canaries.github.io/'
     })
   ]
 

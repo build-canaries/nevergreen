@@ -63,7 +63,7 @@ export function TileProject({project, visibleProjects}: TileProjectProps) {
                 footer={additional}
                 className={styles[project.prognosis]}
                 sentences={sentences}>
-      <ExternalLink href={project.url}
+      <ExternalLink href={project.webUrl}
                     className={styles.link}>
         {projectDescription(project)}
       </ExternalLink>

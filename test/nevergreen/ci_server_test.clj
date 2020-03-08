@@ -20,9 +20,6 @@
   (testing "adds the tray id"
     (is (= "some-tray-id" (:tray-id (first (subject/enrich-projects tray [project]))))))
 
-  (testing "adds the tray url"
-    (is (= "some-url" (:url (first (subject/enrich-projects tray [project]))))))
-
   (testing "adds the fetched time"
     (binding [subject/now (constantly "some-time")]
       (is (= "some-time" (:fetched-time (first (subject/enrich-projects tray [project])))))))

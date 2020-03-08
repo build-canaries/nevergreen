@@ -21,9 +21,6 @@
 (defn- add-tray-id [tray-id projects]
   (map #(assoc % :tray-id tray-id) projects))
 
-(defn- add-url [url projects]
-  (map #(assoc % :url url) projects))
-
 (defn- add-fetched-time [projects]
   (map #(assoc % :fetched-time (now)) projects))
 
@@ -46,7 +43,6 @@
     (add-project-ids projects)
     (add-server-type server-type)
     (add-tray-id tray-id)
-    (add-url url)
     (add-fetched-time)
     (add-is-new seen)))
 

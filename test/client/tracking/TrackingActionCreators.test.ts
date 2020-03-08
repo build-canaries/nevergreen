@@ -79,8 +79,8 @@ describe(Actions.PROJECTS_FETCHED, () => {
   })
 
   it('should return the projects', () => {
-    const actual = projectsFetched('irrelevant', [buildProject({url: 'bar'})], false)
-    expect(actual.data[0]).toHaveProperty('url', 'bar')
+    const actual = projectsFetched('irrelevant', [buildProject({webUrl: 'bar'})], false)
+    expect(actual.data[0]).toHaveProperty('webUrl', 'bar')
   })
 
   it('should return a timestamp', () => {

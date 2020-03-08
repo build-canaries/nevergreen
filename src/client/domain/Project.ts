@@ -24,14 +24,13 @@ export interface Project {
   readonly stage?: string | null;
   readonly thisBuildTime?: string;
   readonly trayId: string;
-  readonly url: string;
+  readonly webUrl: string;
 }
 
 export interface ProjectError {
   readonly errorMessage: string;
   readonly fetchedTime: string;
   readonly trayId: string;
-  readonly url: string;
 }
 
 function formatBuildLabel(buildLabel?: string) {
@@ -83,7 +82,7 @@ export function createProject(projectId: string, name: string, additional: Parti
     stage: '',
     thisBuildTime: undefined,
     trayId: '',
-    url: '',
+    webUrl: '',
     ...additional
   }
 }
@@ -93,7 +92,6 @@ export function createProjectError(errorMessage: string, additional: Partial<Pro
     errorMessage,
     fetchedTime: '',
     trayId: '',
-    url: '',
     ...additional
   }
 }
@@ -128,8 +126,7 @@ export function wrapProjectErrors(apiProjects: ReadonlyArray<ApiProject>): Reado
     .map((apiProject) => {
       return createProjectError(apiProject.errorMessage || 'unknown', {
         fetchedTime: apiProject.fetchedTime,
-        trayId: apiProject.trayId,
-        url: apiProject.webUrl
+        trayId: apiProject.trayId
       })
     })
 }
