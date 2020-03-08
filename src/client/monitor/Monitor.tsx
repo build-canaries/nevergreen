@@ -5,7 +5,7 @@ import {Success} from './Success'
 import {SuccessMessage} from '../common/SuccessMessage'
 import {Loading} from '../common/Loading'
 import styles from './monitor.scss'
-import {isEmpty, omit} from 'lodash'
+import {isEmpty} from 'lodash'
 import {Title} from '../common/Title'
 import {useTimer} from '../common/TimerHook'
 import {useSelector} from 'react-redux'
@@ -15,25 +15,13 @@ import {getSelectedProjects} from '../tracking/SelectedReducer'
 import {getProjectsAll} from '../tracking/ProjectsReducer'
 import {interesting, ProjectsResponse} from '../gateways/ProjectsGateway'
 import {send} from '../gateways/Gateway'
-import {createProjectError, isBuilding, Project, ProjectError, wrapProjectErrors, wrapProjects} from '../domain/Project'
+import {createProjectError, Project, ProjectError, wrapProjectErrors, wrapProjects} from '../domain/Project'
 import {useProjectNotifications} from './ProjectNotificationsHook'
 import {now} from '../common/DateTime'
 
 interface MonitorProps {
   readonly fullScreen: boolean;
   readonly requestFullScreen: (fullScreen: boolean) => void;
-}
-
-function addThisBuildTime(project: Project, previouslyFetchedProjects: ReadonlyArray<Project>): Project {
-  if (isBuilding(project)) {
-    const previousProject = previouslyFetchedProjects.find((previous) => project.projectId === previous.projectId)
-    const thisBuildTime = previousProject && isBuilding(previousProject)
-      ? previousProject.thisBuildTime
-      : project.fetchedTime
-    return {...project, thisBuildTime}
-  } else {
-    return omit(project, 'thisBuildTime')
-  }
 }
 
 export function Monitor({fullScreen, requestFullScreen}: MonitorProps) {
@@ -60,15 +48,10 @@ export function Monitor({fullScreen, requestFullScreen}: MonitorProps) {
     const request = interesting(trays, allProjects, selected, prognosis)
 
     try {
-      const rawProjects = await send<ProjectsResponse>(request)
-      const fetchedProjects = wrapProjects(rawProjects)
+      const response = await send<ProjectsResponse>(request)
 
-      setProjects((previous) => fetchedProjects
-        .map((project) => addThisBuildTime(project, previous)))
-
-      const errorMessages = wrapProjectErrors(rawProjects)
-
-      setErrors(errorMessages)
+      setProjects((previouslyFetchedProjects) => wrapProjects(response, previouslyFetchedProjects))
+      setErrors(wrapProjectErrors(response))
       setLoaded(true)
     } catch (e) {
       if (e.message !== 'Aborted') {

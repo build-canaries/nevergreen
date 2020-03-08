@@ -113,17 +113,69 @@ describe('projectBuildLabel', () => {
 describe('wrapProjects', () => {
 
   it('should remove errors', () => {
-    const result = wrapProjects([buildApiProject({isError: true})])
+    const apiProjects = [buildApiProject({isError: true})]
+    const result = wrapProjects(apiProjects, [])
     expect(result).toEqual([])
   })
 
-  it('should filter jobs', () => {
-    const result = wrapProjects([buildApiProject({job: 'some-job'})])
+  it('should filter jobs as these are GoCD specific and add a lot of noise to the Monitor page', () => {
+    const apiProjects = [buildApiProject({job: 'some-job'})]
+    const result = wrapProjects(apiProjects, [])
     expect(result).toEqual([])
   })
 
   it('should copy whether the project is new or not', () => {
-    const result = wrapProjects([buildApiProject({isNew: true})])
+    const apiProjects = [buildApiProject({isNew: true})]
+    const result = wrapProjects(apiProjects, [])
     expect(result).toEqual(expect.arrayContaining([expect.objectContaining({isNew: true})]))
+  })
+
+  it.each([
+    Prognosis.healthy,
+    Prognosis.sick,
+    Prognosis.unknown
+  ])('should not include how long a %s project has been building', (prognosis) => {
+    const apiProjects = [buildApiProject({prognosis, fetchedTime: 'fetched-time'})]
+    const result = wrapProjects(apiProjects, [])
+    expect(result).toEqual(expect.arrayContaining([expect.not.objectContaining({thisBuildTime: expect.any(String)})]))
+  })
+
+  it.each([
+    Prognosis.healthyBuilding,
+    Prognosis.sickBuilding
+  ])('should add how long a %s project has been building', (prognosis) => {
+    const apiProjects = [buildApiProject({prognosis, fetchedTime: 'fetched-time'})]
+    const result = wrapProjects(apiProjects, [])
+    expect(result).toEqual(expect.arrayContaining([expect.objectContaining({thisBuildTime: 'fetched-time'})]))
+  })
+
+  it.each([
+    Prognosis.healthyBuilding,
+    Prognosis.sickBuilding
+  ])('should calculate how long a %s project has been building across multiple fetches', (prognosis) => {
+    const apiProjects = [buildApiProject({projectId: 'some-id', prognosis, fetchedTime: 'updated-fetched-time'})]
+    const previous = [buildProject({projectId: 'some-id', prognosis, thisBuildTime: 'original-fetched-time'})]
+    const result = wrapProjects(apiProjects, previous)
+    expect(result).toEqual(expect.arrayContaining([expect.objectContaining({thisBuildTime: 'original-fetched-time'})]))
+  })
+
+  it.each([
+    Prognosis.healthyBuilding,
+    Prognosis.sickBuilding
+  ])('should reset how long a %s project has been building if a new build was triggered between polling intervals', (prognosis) => {
+    const apiProjects = [buildApiProject({
+      projectId: 'some-id',
+      prognosis,
+      lastBuildLabel: '2',
+      fetchedTime: 'updated-fetched-time'
+    })]
+    const previous = [buildProject({
+      projectId: 'some-id',
+      prognosis,
+      lastBuildLabel: '1',
+      thisBuildTime: 'original-fetched-time'
+    })]
+    const result = wrapProjects(apiProjects, previous)
+    expect(result).toEqual(expect.arrayContaining([expect.objectContaining({thisBuildTime: 'updated-fetched-time'})]))
   })
 })

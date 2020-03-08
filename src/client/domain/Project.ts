@@ -1,5 +1,6 @@
 import {isBlank, isNumber} from '../common/Utils'
 import {ApiProject} from '../gateways/ProjectsGateway'
+import {omit} from 'lodash'
 
 export enum Prognosis {
   healthy = 'healthy',
@@ -97,11 +98,28 @@ export function createProjectError(errorMessage: string, additional: Partial<Pro
   }
 }
 
-export function wrapProjects(apiProjects: ReadonlyArray<ApiProject>): ReadonlyArray<Project> {
+function sameBuild(previousProject: Project, currentProject: Project) {
+  return previousProject.lastBuildLabel === currentProject.lastBuildLabel
+}
+
+function addThisBuildTime(project: Project, previouslyFetchedProjects: ReadonlyArray<Project>): Project {
+  if (isBuilding(project)) {
+    const previousProject = previouslyFetchedProjects.find((previous) => project.projectId === previous.projectId)
+    const thisBuildTime = previousProject && isBuilding(previousProject) && sameBuild(previousProject, project)
+      ? previousProject.thisBuildTime
+      : project.fetchedTime
+    return {...project, thisBuildTime}
+  } else {
+    return omit(project, 'thisBuildTime')
+  }
+}
+
+export function wrapProjects(apiProjects: ReadonlyArray<ApiProject>, previouslyFetchedProjects: ReadonlyArray<Project>): ReadonlyArray<Project> {
   return apiProjects
     .filter((apiProject) => !apiProject.isError)
     .filter((apiProject) => !apiProject.job)
     .map((apiProject) => createProject(apiProject.projectId, apiProject.name, apiProject))
+    .map((project) => addThisBuildTime(project, previouslyFetchedProjects))
 }
 
 export function wrapProjectErrors(apiProjects: ReadonlyArray<ApiProject>): ReadonlyArray<ProjectError> {

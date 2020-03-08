@@ -46,7 +46,7 @@ export function AvailableProjects({index, tray, requiresRefresh, setRequiresRefr
     pendingRequest.current = fetchAll([tray], projects)
     try {
       const apiProjects = await send<ProjectsResponse>(pendingRequest.current)
-      const fetchedProjects = wrapProjects(apiProjects)
+      const fetchedProjects = wrapProjects(apiProjects, [])
       const projectErrors = wrapProjectErrors(apiProjects)
 
       if (projectErrors.length === 0) {
