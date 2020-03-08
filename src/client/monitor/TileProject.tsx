@@ -50,10 +50,12 @@ export function TileProject({project, visibleProjects}: TileProjectProps) {
 
   const showAdditionalInfo = showBuildTime || showBuildLabel
 
+  const spacer = <div>&nbsp;</div>
+
   const additional = showAdditionalInfo && (
     <span className={styles.additionalInfo}>
       <VisuallyHidden>prognosis {project.prognosis}</VisuallyHidden>
-      {time}
+      {time || spacer}
       {buildLabelComponent}
     </span>
   )
