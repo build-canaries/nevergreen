@@ -8,6 +8,7 @@
   border-bottom: 0.5em solid $version-color;
   display: block;
   padding: 1em;
+  z-index: 100;
 
   @include respond-to(tablet, desktop) {
     display: flex;

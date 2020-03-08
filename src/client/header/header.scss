@@ -10,6 +10,7 @@
   color: $white;
   display: block;
   padding: 0 1em;
+  z-index: 100;
 
   @include respond-to(tablet, desktop) {
     align-items: center;

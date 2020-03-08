@@ -6,6 +6,9 @@
   cursor: inherit;
   font-family: $monospace-font;
   height: 100vh;
+  position: fixed;
+  top: 0;
+  width: 100vw;
 }
 
 .fullscreen {
