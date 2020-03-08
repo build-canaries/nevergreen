@@ -30,7 +30,7 @@ export function KeyboardShortcuts() {
           <kbd className={styles.binding}>{SHOW_HELP_SHORTCUT}</kbd>
         </li>
         <li className={styles.shortcut}>
-          <div>Dismiss dialogs (such as this)</div>
+          <div>Dismiss dialogs (such as this) or blurs the focused element (expect text inputs)</div>
           <kbd className={styles.binding}>esc</kbd>
         </li>
       </ul>
