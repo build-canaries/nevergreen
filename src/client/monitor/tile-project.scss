@@ -2,6 +2,7 @@
 @import '../common/layout';
 @import '../common/fonts/icon-font';
 @import '../common/typography';
+@import '../common/links';
 
 @mixin prognosis($color, $background-color) {
   background-color: $background-color;
@@ -27,24 +28,52 @@
   text-overflow: ellipsis;
 }
 
+.link {
+  text-decoration-line: none;
+
+  &:hover {
+    text-decoration-line: underline;
+  }
+}
+
 .healthy {
   @include prognosis($white, $healthy);
+
+  .link {
+    @include link($white, $white, $healthy);
+  }
 }
 
 .healthy-building {
   @include prognosis($healthy-building-text, $healthy-building);
+
+  .link {
+    @include link($healthy-building-text, $healthy-building-text, $healthy-building);
+  }
 }
 
 .sick {
   @include prognosis($off-white, $sick);
+
+  .link {
+    @include link($off-white, $off-white, $sick);
+  }
 }
 
 .sick-building {
   @include prognosis($white, $sick-building);
+
+  .link {
+    @include link($white, $white, $sick-building);
+  }
 }
 
 .unknown {
   @include prognosis($off-black, $light-grey);
+
+  .link {
+    @include link($off-black, $off-black, $light-grey);
+  }
 }
 
 .time {

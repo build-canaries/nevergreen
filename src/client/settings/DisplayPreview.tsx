@@ -24,29 +24,34 @@ export function DisplayPreview() {
     createProject('0', 'unknown', {
       prognosis: Prognosis.unknown,
       lastBuildTime: randomDateInPast(),
-      lastBuildLabel: randomBuildLabel()
+      lastBuildLabel: randomBuildLabel(),
+      url: 'https://cctray.org/v1/'
     }),
     createProject('1', 'healthy', {
       prognosis: Prognosis.healthy,
       lastBuildTime: randomDateInPast(),
-      lastBuildLabel: randomBuildLabel()
+      lastBuildLabel: randomBuildLabel(),
+      url: 'https://nevergreen.io'
     }),
     createProject('2', 'healthy building', {
       prognosis: Prognosis.healthyBuilding,
       lastBuildTime: randomDateInPast(),
       thisBuildTime: randomDateInPast(),
-      lastBuildLabel: randomBuildLabel()
+      lastBuildLabel: randomBuildLabel(),
+      url: 'https://github.com/build-canaries/nevergreen'
     }),
     createProject('3', 'sick building', {
       prognosis: Prognosis.sickBuilding,
       lastBuildTime: randomDateInPast(),
       thisBuildTime: randomDateInPast(),
-      lastBuildLabel: randomBuildLabel()
+      lastBuildLabel: randomBuildLabel(),
+      url: 'https://twitter.com/BuildCanaries'
     }),
     createProject('4', 'sick', {
       prognosis: Prognosis.sick,
       lastBuildTime: randomDateInPast(),
-      lastBuildLabel: randomBuildLabel()
+      lastBuildLabel: randomBuildLabel(),
+      url: 'http://build-canaries.github.io/'
     })
   ]
 
@@ -65,7 +70,7 @@ export function DisplayPreview() {
   return (
     <section className={styles.previewSection}>
       <h3 className={styles.title}>Preview</h3>
-      <div className={styles.displayPreview} tabIndex={0}>
+      <div className={styles.displayPreview}>
         <ScaledGrid>
           <TileError error={projectError}/>
           {children}

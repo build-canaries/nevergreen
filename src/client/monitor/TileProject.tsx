@@ -9,6 +9,7 @@ import {trayIdentifier} from '../domain/Tray'
 import {useSelector} from 'react-redux'
 import {getTrays} from '../tracking/TraysReducer'
 import {getShowBuildLabel, getShowBuildTime, getShowTrayName} from '../settings/SettingsReducer'
+import {ExternalLink} from '../common/ExternalLink'
 
 interface TileProjectProps {
   readonly project: Project;
@@ -62,7 +63,10 @@ export function TileProject({project, visibleProjects}: TileProjectProps) {
                 footer={additional}
                 className={styles[project.prognosis]}
                 sentences={sentences}>
-      {projectDescription(project)}
+      <ExternalLink href={project.url}
+                    className={styles.link}>
+        {projectDescription(project)}
+      </ExternalLink>
     </ScaledTile>
   )
 }

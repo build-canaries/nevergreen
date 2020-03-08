@@ -99,7 +99,9 @@ describe('broken build sfx', () => {
 describe('displaying project information', () => {
 
   it.each([
-    Prognosis.sick, Prognosis.healthy, Prognosis.unknown
+    Prognosis.sick,
+    Prognosis.healthy,
+    Prognosis.unknown
   ])('should show the identifier, time and label for %s projects', (prognosis) => {
     setSystemTime('2020-01-25T20:23:00Z')
     const state = {
@@ -232,6 +234,29 @@ describe('displaying project information', () => {
     expect(queryByText('some-project-name')).toBeInTheDocument()
     expect(queryByText('#1234')).not.toBeInTheDocument()
     expect(queryByText('about 1 hour')).not.toBeInTheDocument()
+  })
+
+  it('should add an external link to the project on the CI server', () => {
+    const state = {
+      [TRAYS_ROOT]: {
+        [trayId]: buildTray({trayId})
+      }
+    }
+    const props = {
+      projects: [
+        buildProject({
+          trayId,
+          name: 'some-project-name',
+          prognosis: Prognosis.sickBuilding,
+          url: 'some-url'
+        })
+      ],
+      errors: []
+    }
+
+    const {queryByText} = render(<InterestingProjects {...props}/>, state)
+
+    expect(queryByText('some-project-name')).toHaveAttribute('href', 'some-url')
   })
 })
 

@@ -50,8 +50,7 @@ export function InterestingProjects({projects, errors}: InterestingProjectsProps
     <div className={styles.interestingProjects}
          data-locator='interesting-projects'
          aria-live='assertive'
-         aria-relevant='all'
-         tabIndex={0}>
+         aria-relevant='all'>
       <ScaledGrid>
         {errorComponents}
         {projectComponents}
