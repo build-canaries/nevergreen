@@ -32,9 +32,8 @@ jobs:
       - name: Run Clojure tests
         run: |
           lein deps
-          lein test
+          lein coverage
           lein lint
-          lein clean
         
       - name: Setup Node
         uses: actions/setup-node@v1
@@ -46,7 +45,7 @@ jobs:
           npm ci
           npm run check-types
           npm run build:prod
-          npm test
+          npm run test:coverage
           npm run lint
 
       - name: Package
@@ -67,9 +66,17 @@ jobs:
           start: java -jar target/nevergreen-standalone.jar
           wait-on: http://localhost:5000
 
-      - name: Store artifacts
+      - name: Store Cypress artifacts
         uses: actions/upload-artifact@v1
         if: always()
         with:
-          name: test-output
-          path: target
+          name: cypress-video
+          path: target/test-reports/journey/journey.test.js.mp4
+
+      - name: Store Nevergreen artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: nevergreen-jar
+          path: target/nevergreen-standalone.jar
+
+          
