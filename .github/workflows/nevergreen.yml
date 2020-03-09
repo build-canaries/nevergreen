@@ -66,6 +66,7 @@ jobs:
         with:
           start: java -jar target/nevergreen-standalone.jar
           wait-on: http://localhost:5000
+          record: true
 
       - name: Cypress artifacts
         uses: actions/upload-artifact@v1
