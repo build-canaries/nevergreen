@@ -54,7 +54,7 @@ jobs:
           npm run build:prod
           lein uberjar
         
-      - name: Cypress run
+      - name: Run Cypress
         uses: cypress-io/github-action@v1
         env:
           CYPRESS_BASE_URL: "http://localhost:5000"
@@ -64,5 +64,12 @@ jobs:
           CYPRESS_TRAY_USERNAME: ""
           CYPRESS_TRAY_PASSWORD: ""
         with:
-          start: java target/nevergreen-standalone.jar
+          start: java -jar target/nevergreen-standalone.jar
           wait-on: http://localhost:5000
+
+      - name: Cypress artifacts
+        uses: actions/upload-artifact@v1
+        if: always()
+        with:
+          name: cypress-videos
+          path: cypress/videos
