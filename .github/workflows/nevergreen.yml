@@ -22,21 +22,24 @@ jobs:
         with:
           java-version: 11
      
-      - name: Clojure tests
-        uses: DeLaGuardo/setup-clojure@2.0
-        with:
-          tools-deps: latest
-          lein: latest
+      - name: Run Clojure tests
         run: |
-          lein deps
-          lein test
+          ./lein.sh deps
+          ./lein.sh test
+          ./lein.sh lint
+          ./lein.sh clean
+          ./lein.sh uberjar
         
-      - name: Node tests
+      - name: Setup Node
         uses: actions/setup-node@v1
         with:
           node-version: 12
+
+      - name: Run Node tests
         run: |
           npm ci
-          npm run build --if-present
+          npm run check-types
+          npm run build:prod
           npm test
+          npm run lint
         
