@@ -21,14 +21,21 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
+
+
+      - name: Install clojure tools-deps
+        uses: DeLaGuardo/setup-clojure@master
+        with:
+          tools-deps: latest
+          lein: latest
      
       - name: Run Clojure tests
         run: |
-          ./lein.sh deps
-          ./lein.sh test
-          ./lein.sh lint
-          ./lein.sh clean
-          ./lein.sh uberjar
+          lein deps
+          lein test
+          lein lint
+          lein clean
+          lein uberjar
         
       - name: Setup Node
         uses: actions/setup-node@v1
