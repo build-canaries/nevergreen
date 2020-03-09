@@ -35,7 +35,6 @@ jobs:
           lein test
           lein lint
           lein clean
-          lein uberjar
         
       - name: Setup Node
         uses: actions/setup-node@v1
@@ -49,4 +48,21 @@ jobs:
           npm run build:prod
           npm test
           npm run lint
+
+      - name: Package
+        run: |
+          npm run build:prod
+          lein uberjar
         
+      - name: Cypress run
+        uses: cypress-io/github-action@v1
+        env:
+          CYPRESS_BASE_URL: "http://localhost:5000"
+          CYPRESS_TRAY_URL: "https://raw.githubusercontent.com/build-canaries/nevergreen/master/cctray_xml_feed_mock/resources/cctray.xml"
+          CYPRESS_TRAY_URL_TOKEN: ""
+          CYPRESS_TRAY_TOKEN: ""
+          CYPRESS_TRAY_USERNAME: ""
+          CYPRESS_TRAY_PASSWORD: ""
+        with:
+          start: java target/nevergreen-standalone.jar
+          wait-on: http://localhost:5000
