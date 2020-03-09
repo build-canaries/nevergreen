@@ -1,0 +1,42 @@
+name: Nevergreen CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    env:
+      CI: true
+
+    name: Build
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+     
+      - name: Clojure tests
+        uses: DeLaGuardo/setup-clojure@2.0
+        with:
+          tools-deps: latest
+          lein: latest
+        run: |
+          lein deps
+          lein test
+        
+      - name: Node tests
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+        run: |
+          npm ci
+          npm run build --if-present
+          npm test
+        
