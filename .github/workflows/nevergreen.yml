@@ -22,16 +22,17 @@ jobs:
         with:
           java-version: 11
 
-
       - name: Install clojure tools-deps
         uses: DeLaGuardo/setup-clojure@master
         with:
           tools-deps: latest
           lein: latest
      
-      - name: Run Clojure tests
+      - name: Clojure - dependencies
+        run: lein deps
+          
+      - name: Clojure - tests
         run: |
-          lein deps
           lein coverage
           lein lint
         
@@ -40,11 +41,12 @@ jobs:
         with:
           node-version: 12
 
-      - name: Run Node tests
+      - name: node - dependencies
+        run: npm ci
+          
+      - name: node - tests
         run: |
-          npm ci
           npm run check-types
-          npm run build:prod
           npm run test:coverage
           npm run lint
 
