@@ -19,6 +19,14 @@ it('should allow success messages to be added', async () => {
   expect(queryByText('some-message')).toBeInTheDocument()
 })
 
+it('should not allow a blank success messages to be added', async () => {
+  const state = {[SUCCESS_ROOT]: []}
+  const {getByText, getByLabelText, queryByText} = render(<Success/>, state)
+  await userEvent.type(getByLabelText('message'), '')
+  userEvent.click(getByText('add'))
+  expect(queryByText(NO_MESSAGES_WARNING)).toBeInTheDocument()
+})
+
 it('should allow success messages to be removed', () => {
   const state = {[SUCCESS_ROOT]: ['some-message']}
   const {getByText, queryByText} = render(<Success/>, state)

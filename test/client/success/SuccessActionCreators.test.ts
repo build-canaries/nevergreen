@@ -22,11 +22,6 @@ describe(Actions.MESSAGE_ADDED, () => {
     const actual = addMessage('nevergreen is awesome')
     expect(actual).toHaveProperty('message', 'nevergreen is awesome')
   })
-
-  it('should return a no op action if message is blank', () => {
-    const actual = addMessage('')
-    expect(actual).toHaveProperty('type', Actions.NOOP)
-  })
 })
 
 describe(Actions.MESSAGE_REMOVED, () => {

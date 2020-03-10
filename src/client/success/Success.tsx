@@ -2,7 +2,7 @@ import React from 'react'
 import {AddMessage} from './AddMessage'
 import {Title} from '../common/Title'
 import {Messages, MessagesType} from '../common/Messages'
-import {notEmpty} from '../common/Utils'
+import {isBlank, notEmpty} from '../common/Utils'
 import {AddedMessages} from './AddedMessages'
 import {useDispatch, useSelector} from 'react-redux'
 import {getSuccessMessages} from './SuccessReducer'
@@ -18,10 +18,16 @@ export function Success() {
     ? []
     : [NO_MESSAGES_WARNING]
 
+  const add = (message: string) => {
+    if (!isBlank(message)) {
+      dispatch(addMessage(message))
+    }
+  }
+
   return (
     <>
       <Title>Success</Title>
-      <AddMessage addMessage={(message) => dispatch(addMessage(message))}/>
+      <AddMessage addMessage={add}/>
       <AddedMessages messages={messages}
                      removeMessage={(message) => dispatch(removeMessage(message))}/>
       <Messages type={MessagesType.WARNING}

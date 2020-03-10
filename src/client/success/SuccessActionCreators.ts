@@ -1,9 +1,5 @@
 import {Actions} from '../Actions'
-import {isBlank} from '../common/Utils'
 import {Action} from 'redux'
-
-export interface ActionNoop extends Action<Actions.NOOP> {
-}
 
 export interface ActionMessageAdded extends Action<Actions.MESSAGE_ADDED> {
   readonly message: string;
@@ -25,12 +21,8 @@ function transformMessage(message: string): string {
   return isSentenceLike(message) ? message : message.replace(SPACES, NON_BREAKING_SPACE)
 }
 
-export function addMessage(message: string): ActionMessageAdded | ActionNoop {
-  if (isBlank(message)) {
-    return {type: Actions.NOOP}
-  } else {
-    return {type: Actions.MESSAGE_ADDED, message: transformMessage(message)}
-  }
+export function addMessage(message: string): ActionMessageAdded {
+  return {type: Actions.MESSAGE_ADDED, message: transformMessage(message)}
 }
 
 export function removeMessage(message: string): ActionMessageRemoved {
