@@ -1,7 +1,37 @@
 @import '../common/variables';
 
 .summary {
-  background-color: $blue;
+  background-color: $off-black;
   color: $off-white;
   text-align: center;
+}
+
+.footer {
+  display: flex;
+  flex-wrap: nowrap;
+  font-size: 0.25em;
+}
+
+.errors {
+  background-color: $error;
+}
+
+.healthy {
+  background-color: $healthy;
+}
+
+.healthy-building {
+  background-color: $healthy-building;
+}
+
+.sick {
+  background-color: $sick;
+}
+
+.sick-building {
+  background-color: $sick-building;
+}
+
+.unknown {
+  background-color: $light-grey;
 }

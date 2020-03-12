@@ -1,5 +1,5 @@
 import React from 'react'
-import {clamp, map, size, take} from 'lodash'
+import {clamp, map, size, take, difference} from 'lodash'
 import {ScaledGrid} from './ScaledGrid'
 import {Project, ProjectError} from '../domain/Project'
 import {TileProject} from './TileProject'
@@ -31,6 +31,9 @@ export function InterestingProjects({projects, errors}: InterestingProjectsProps
     ? take(projects, maxProjectsToShowClamped)
     : projects
 
+  const projectsNotShown = difference(projects, projectsToShow)
+  const errorsNotShown = difference(errors, errorsToShow)
+
   const errorComponents = map(errorsToShow, (error) => {
     return <TileError key={`${error.trayId}#${error.errorMessage}`}
                       error={error}/>
@@ -43,7 +46,9 @@ export function InterestingProjects({projects, errors}: InterestingProjectsProps
   })
 
   const summary = showSummary && (
-    <TileProjectsNotShown key='summary' count={totalItems - (maxProjectsToShow - 1)}/>
+    <TileProjectsNotShown key='summary'
+                          projectsNotShown={projectsNotShown}
+                          errorsNotShown={errorsNotShown}/>
   )
 
   return (

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useMemo} from 'react'
 import {random} from 'lodash'
 import {ScaledGrid} from '../monitor/ScaledGrid'
 import {TileProject} from '../monitor/TileProject'
@@ -9,6 +9,7 @@ import styles from './display-preview.scss'
 import {useSelector} from 'react-redux'
 import {getMaxProjectsToShow, getShowPrognosis} from './SettingsReducer'
 import {createProject, createProjectError, Prognosis} from '../domain/Project'
+import {randomFrom} from '../common/Utils'
 
 function randomBuildLabel() {
   return `${random(1, 9999)}`
@@ -18,7 +19,11 @@ export function DisplayPreview() {
   const showPrognosis = useSelector(getShowPrognosis)
   const maxProjectsToShow = useSelector(getMaxProjectsToShow)
 
-  const [notShown] = useState(random(1, 99))
+  const prognosisToShow = Object.values(Prognosis).filter((prognosis) => showPrognosis.includes(prognosis))
+
+  const projectsNotShown = useMemo(() => Array.from({length: random(1, 99)}, (v, i) => {
+    return createProject(i.toString(), i.toString(), {prognosis: randomFrom(prognosisToShow)})
+  }), [prognosisToShow])
 
   const projects = [
     createProject('0', 'unknown', {
@@ -67,6 +72,8 @@ export function DisplayPreview() {
       )
     })
 
+  const showSummary = maxProjectsToShow !== Number.MAX_SAFE_INTEGER && prognosisToShow.length !== 0
+
   return (
     <section className={styles.previewSection}>
       <h3 className={styles.title}>Preview</h3>
@@ -74,8 +81,9 @@ export function DisplayPreview() {
         <ScaledGrid>
           <TileError error={projectError}/>
           {children}
-          {maxProjectsToShow !== Number.MAX_SAFE_INTEGER && (
-            <TileProjectsNotShown count={notShown}/>
+          {showSummary && (
+            <TileProjectsNotShown projectsNotShown={projectsNotShown}
+                                  errorsNotShown={[projectError]}/>
           )}
         </ScaledGrid>
       </div>

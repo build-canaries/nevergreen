@@ -328,7 +328,7 @@ describe('limiting the projects displayed', () => {
       errors: []
     }
     const {queryByText} = render(<InterestingProjects {...props}/>, state)
-    expect(queryByText('+3 projects not shown')).toBeInTheDocument()
+    expect(queryByText('+3 not shown')).toBeInTheDocument()
   })
 
   it('should display a summary if the number of errors is more than the max', () => {
@@ -353,7 +353,8 @@ describe('limiting the projects displayed', () => {
       ]
     }
     const {queryByText} = render(<InterestingProjects {...props}/>, state)
-    expect(queryByText('+2 projects not shown')).toBeInTheDocument()
+    expect(queryByText('+2 not shown')).toBeInTheDocument()
+    expect(queryByText('+2 errors')).toBeInTheDocument()
   })
 
   it('should display a summary if the number of errors and projects is more than the max', () => {
@@ -368,8 +369,8 @@ describe('limiting the projects displayed', () => {
     const props = {
       projects: [
         buildProject({projectId: '1', trayId}),
-        buildProject({projectId: '2', trayId}),
-        buildProject({projectId: '3', trayId})
+        buildProject({projectId: '2', trayId, prognosis: Prognosis.sick}),
+        buildProject({projectId: '3', trayId, prognosis: Prognosis.healthyBuilding})
       ],
       errors: [
         buildProjectError({trayId, errorMessage: 'error 1'}),
@@ -379,6 +380,7 @@ describe('limiting the projects displayed', () => {
       ]
     }
     const {queryByText} = render(<InterestingProjects {...props}/>, state)
-    expect(queryByText('+2 projects not shown')).toBeInTheDocument()
+    expect(queryByText('+2 not shown')).toBeInTheDocument()
+    expect(queryByText('+1 sick, +1 healthy building')).toBeInTheDocument()
   })
 })
