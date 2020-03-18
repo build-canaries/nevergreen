@@ -1,7 +1,7 @@
 import React from 'react'
 import {Nevergreen} from '../../src/client/Nevergreen'
 import {render} from './testHelpers'
-import {waitForDomChange} from '@testing-library/react'
+import {wait} from '@testing-library/react'
 import * as LocalConfiguration from '../../src/client/configuration/LocalRepository'
 import * as ServiceWorkerHook from '../../src/client/ServiceWorkerHook'
 import * as Gateway from '../../src/client/gateways/Gateway'
@@ -18,10 +18,10 @@ it('should load configuration, register service worker and check for a new versi
 
   const {getByTestId} = render(<Nevergreen/>)
 
-  await waitForDomChange()
-
-  expect(LocalConfiguration.load).toHaveBeenCalled()
-  expect(Gateway.get).toHaveBeenCalledWith('https://api.github.com/repos/build-canaries/nevergreen/releases/latest')
-  expect(ServiceWorkerHook.useServiceWorker).toHaveBeenCalled()
-  expect(getByTestId('notification')).toHaveTextContent(/^A new version [0-9.]* is available to download from GitHub now!$/)
+  await wait(() => {
+    expect(LocalConfiguration.load).toHaveBeenCalled()
+    expect(Gateway.get).toHaveBeenCalledWith('https://api.github.com/repos/build-canaries/nevergreen/releases/latest')
+    expect(ServiceWorkerHook.useServiceWorker).toHaveBeenCalled()
+    expect(getByTestId('notification')).toHaveTextContent(/^A new version [0-9.]* is available to download from GitHub now!$/)
+  })
 })

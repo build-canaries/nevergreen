@@ -1,6 +1,6 @@
 import React from 'react'
 import userEvent from '@testing-library/user-event'
-import {waitForDomChange} from '@testing-library/react'
+import {wait} from '@testing-library/react'
 import {Externally} from '../../../../../src/client/backup/import/externally/Externally'
 import {buildState, render} from '../../../testHelpers'
 import {BackupLocation} from '../../../../../src/client/backup/BackupActionCreators'
@@ -29,10 +29,10 @@ it('should import configuration when an ID and URL are given', async () => {
   await userEvent.type(getByLabelText('URL'), 'some-url')
   userEvent.click(getByText('import'))
 
-  await waitForDomChange()
-
-  expect(BackupGateway.fetchConfiguration).toHaveBeenCalledWith(BackupLocation.GITHUB, 'some-id', '', 'some-url')
-  expect(queryByText('Successfully imported configuration')).toBeInTheDocument()
+  await wait(() => {
+    expect(BackupGateway.fetchConfiguration).toHaveBeenCalledWith(BackupLocation.GITHUB, 'some-id', '', 'some-url')
+    expect(queryByText('Successfully imported configuration')).toBeInTheDocument()
+  })
 })
 
 it('should not import configuration when access token is required but not provided', async () => {
@@ -87,9 +87,9 @@ it('should display an message if an error occurs while importing', async () => {
   await userEvent.type(getByLabelText('URL'), 'some-url')
   userEvent.click(getByText('import'))
 
-  await waitForDomChange()
-
-  expect(queryByText('some remote error')).toBeInTheDocument()
+  await wait(() => {
+    expect(queryByText('some remote error')).toBeInTheDocument()
+  })
 })
 
 it('should display an message if the imported configuration is invalid', async () => {
@@ -104,7 +104,7 @@ it('should display an message if the imported configuration is invalid', async (
   await userEvent.type(getByLabelText('URL'), 'some-url')
   userEvent.click(getByText('import'))
 
-  await waitForDomChange()
-
-  expect(queryByText('Unexpected end of JSON input')).toBeInTheDocument()
+  await wait(() => {
+    expect(queryByText('Unexpected end of JSON input')).toBeInTheDocument()
+  })
 })

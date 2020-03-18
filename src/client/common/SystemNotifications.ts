@@ -48,7 +48,7 @@ export async function sendSystemNotification({title = 'Nevergreen', body, badge 
       return registration.showNotification(title, {body, badge, icon, tag})
     } else {
       // We don't register the service worker in dev as the caching is annoying, so log to the console instead
-      console.log('System notification sent', {title, body, badge, icon, tag})
+      info('System notification sent', {title, body, badge, icon, tag})
       return
     }
   }

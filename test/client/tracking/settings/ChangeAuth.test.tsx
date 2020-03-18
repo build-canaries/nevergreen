@@ -3,7 +3,7 @@ import {ChangeAuth} from '../../../../src/client/tracking/settings/ChangeAuth'
 import * as SecurityGateway from '../../../../src/client/gateways/SecurityGateway'
 import {noop} from 'lodash'
 import {AuthTypes} from '../../../../src/client/domain/Tray'
-import {render, waitForDomChange} from '@testing-library/react'
+import {render, wait} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import {setupReactModal} from '../../testHelpers'
 import {fakeRequest} from '../../../../src/client/gateways/Gateway'
@@ -44,9 +44,9 @@ it('should be able to change the auth to basic', async () => {
   await userEvent.type(getByTestId('auth-password'), 'some-password')
   userEvent.click(getByText('save changes'))
 
-  await waitForDomChange()
-
-  expect(save).toBeCalledWith(AuthTypes.basic, 'some-username', 'some-encrypted-password', '')
+  await wait(() => {
+    expect(save).toBeCalledWith(AuthTypes.basic, 'some-username', 'some-encrypted-password', '')
+  })
 })
 
 it('should be able to change the auth to access token', async () => {
@@ -59,9 +59,9 @@ it('should be able to change the auth to access token', async () => {
   await userEvent.type(getByTestId('auth-access-token'), 'some-token')
   userEvent.click(getByText('save changes'))
 
-  await waitForDomChange()
-
-  expect(save).toBeCalledWith(AuthTypes.token, '', '', 'some-encrypted-token')
+  await wait(() => {
+    expect(save).toBeCalledWith(AuthTypes.token, '', '', 'some-encrypted-token')
+  })
 })
 
 it('should be able to discard making changes', () => {

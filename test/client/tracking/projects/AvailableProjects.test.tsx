@@ -1,7 +1,7 @@
 import React from 'react'
 import {noop} from 'lodash'
 import userEvent from '@testing-library/user-event'
-import {waitForDomChange} from '@testing-library/react'
+import {wait} from '@testing-library/react'
 import {buildApiProject, buildProject, buildTray, render} from '../../testHelpers'
 import {fakeRequest} from '../../../../src/client/gateways/Gateway'
 import {AvailableProjects} from '../../../../src/client/tracking/projects/AvailableProjects'
@@ -69,15 +69,15 @@ it('should correctly show and remove errors returned while refreshing', async ()
   const {queryByTestId, getByText} = render(<AvailableProjects {...DEFAULT_PROPS} tray={tray}/>, state)
   userEvent.click(getByText('refresh'))
 
-  await waitForDomChange()
-
-  expect(queryByTestId('error-messages')).toBeInTheDocument()
+  await wait(() => {
+    expect(queryByTestId('error-messages')).toBeInTheDocument()
+  })
 
   userEvent.click(getByText('refresh'))
 
-  await waitForDomChange()
-
-  expect(queryByTestId('error-messages')).not.toBeInTheDocument()
+  await wait(() => {
+    expect(queryByTestId('error-messages')).not.toBeInTheDocument()
+  })
 })
 
 it('should show a warning if there are no projects', () => {

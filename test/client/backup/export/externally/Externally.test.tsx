@@ -1,6 +1,6 @@
 import React from 'react'
 import userEvent from '@testing-library/user-event'
-import {waitForDomChange} from '@testing-library/react'
+import {wait} from '@testing-library/react'
 import {Externally} from '../../../../../src/client/backup/export/externally/Externally'
 import {render} from '../../../testHelpers'
 import {BackupLocation} from '../../../../../src/client/backup/BackupActionCreators'
@@ -24,17 +24,17 @@ it('should export if an access token was entered', async () => {
   await userEvent.type(getByLabelText('description'), 'some-description')
   userEvent.click(getByText('export'))
 
-  await waitForDomChange()
-
-  expect(backupGateway.exportConfiguration).toHaveBeenCalledWith(
-    BackupLocation.GITHUB,
-    'some-id',
-    'some-description',
-    expect.any(String),
-    'some-access-token',
-    'some-url'
-  )
-  expect(queryByText('Successfully exported configuration')).toBeInTheDocument()
+  await wait(() => {
+    expect(backupGateway.exportConfiguration).toHaveBeenCalledWith(
+      BackupLocation.GITHUB,
+      'some-id',
+      'some-description',
+      expect.any(String),
+      'some-access-token',
+      'some-url'
+    )
+    expect(queryByText('Successfully exported configuration')).toBeInTheDocument()
+  })
 })
 
 it('should not try and export if no access token was entered', () => {

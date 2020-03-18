@@ -56,7 +56,6 @@ export function AvailableProjects({index, tray, requiresRefresh, setRequiresRefr
         setErrors(errorMessages)
       }
     } catch (error) {
-      console.log(error)
       setErrors([error.message])
     }
     // eslint-disable-next-line require-atomic-updates

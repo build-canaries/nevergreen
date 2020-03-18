@@ -1,5 +1,5 @@
 import React from 'react'
-import {waitForDomChange} from '@testing-library/react'
+import {wait} from '@testing-library/react'
 import {noop} from 'lodash'
 import {Monitor} from '../../../src/client/monitor/Monitor'
 import {buildTray, render} from '../testHelpers'
@@ -66,8 +66,9 @@ it('should show a success message if there are no projects', async () => {
     [SUCCESS_ROOT]: ['some-success-message']
   }
   const {queryByText} = render(<Monitor {...DEFAULT_PROPS}/>, state)
-  await waitForDomChange()
-  expect(queryByText('some-success-message')).toBeInTheDocument()
+  await wait(() => {
+    expect(queryByText('some-success-message')).toBeInTheDocument()
+  })
 })
 
 it('should not try updating after the user has navigated away from the page', () => {
@@ -99,7 +100,8 @@ it('should display an error if the Nevergreen server is having issues', async ()
     }
   }
   const {queryByText} = render(<Monitor {...DEFAULT_PROPS}/>, state)
-  await waitForDomChange()
-  expect(queryByText('Nevergreen')).toBeInTheDocument()
-  expect(queryByText('some-error')).toBeInTheDocument()
+  await wait(() => {
+    expect(queryByText('Nevergreen')).toBeInTheDocument()
+    expect(queryByText('some-error')).toBeInTheDocument()
+  })
 })
