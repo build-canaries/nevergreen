@@ -33,7 +33,7 @@
             "check-updates" ["ancient" ":all"]
             "audit"         ["nvd" "check"]}
   :profiles {:dev  {:plugins [[lein-ancient "0.6.15"]
-                              [jonase/eastwood "0.3.10"]
+                              [jonase/eastwood "0.3.11"]
                               [lein-cloverage "1.1.2"]
                               [lein-nvd "1.3.1"]]}
              :test {:jvm-opts ["-Dlogback.configurationFile=./test/logback-unit.xml"]}}
