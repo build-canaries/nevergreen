@@ -20,30 +20,30 @@ jobs:
       - name: Setup JDK
         uses: actions/setup-java@v1
         with:
-          java-version: 11
+          java-version: 13
 
       - name: Install clojure tools-deps
         uses: DeLaGuardo/setup-clojure@master
         with:
           tools-deps: latest
           lein: latest
-     
+
       - name: Clojure - dependencies
         run: lein deps
-          
+
       - name: Clojure - tests
         run: |
           lein coverage
           lein lint
-        
+
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: 13.11.0
 
       - name: node - dependencies
         run: npm ci
-          
+
       - name: node - tests
         run: |
           npm run check-types
@@ -54,7 +54,7 @@ jobs:
         run: |
           npm run build:prod
           lein uberjar
-        
+
       - name: Run Cypress
         uses: cypress-io/github-action@v1
         env:
@@ -81,4 +81,4 @@ jobs:
           name: nevergreen-jar
           path: target/nevergreen-standalone.jar
 
-          
+
