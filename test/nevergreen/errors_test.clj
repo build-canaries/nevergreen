@@ -7,20 +7,26 @@
     (is (true? (subject/is-error? (subject/create-error "some-text" "some-url"))))))
 
 (deftest create-error
-  (testing "create-error can be created with a message"
-    (is (= {:error-message "some-text"
-            :url           "some-url"
-            :is-error      true}
-           (subject/create-error "some-text" "some-url"))))
 
-  (testing "create-error can be created with an exception"
-    (is (= {:error-message "some-message"
-            :url           "some-url"
-            :is-error      true}
-           (subject/create-error (ex-info "some-message" {}) "some-url"))))
+  (binding [subject/now (constantly "some-time")]
 
-  (testing "create-error will use the exception class name if it has no message"
-    (is (= {:error-message "ExceptionInfo"
-            :url           "some-url"
-            :is-error      true}
-           (subject/create-error (ex-info nil {}) "some-url")))))
+    (testing "create-error can be created with a message"
+      (is (= {:description "some-text"
+              :web-url     "some-url"
+              :timestamp   "some-time"
+              :prognosis   :error}
+             (subject/create-error "some-text" "some-url"))))
+
+    (testing "create-error can be created with an exception"
+      (is (= {:description "some-message"
+              :web-url     "some-url"
+              :timestamp   "some-time"
+              :prognosis   :error}
+             (subject/create-error (ex-info "some-message" {}) "some-url"))))
+
+    (testing "create-error will use the exception class name if it has no message"
+      (is (= {:description "ExceptionInfo"
+              :web-url     "some-url"
+              :timestamp   "some-time"
+              :prognosis   :error}
+             (subject/create-error (ex-info nil {}) "some-url"))))))

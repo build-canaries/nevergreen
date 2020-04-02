@@ -2,18 +2,16 @@ import React from 'react'
 import classNames from 'classnames'
 import {Checkbox} from '../../common/forms/Checkbox'
 import styles from './available-project.scss'
-import {isBlank} from '../../common/Utils'
 
 interface AvailableProjectProps {
-  readonly name: string;
-  readonly stage?: string | null;
+  readonly description: string;
   readonly isNew?: boolean;
   readonly removed?: boolean;
   readonly selected?: boolean;
   readonly selectProject: (select: boolean) => void;
 }
 
-export function AvailableProject({removed, isNew, stage, name, selected, selectProject}: AvailableProjectProps) {
+export function AvailableProject({removed, isNew, description, selected, selectProject}: AvailableProjectProps) {
   const listClasses = classNames(styles.availableProject, {
     [styles.removedProject]: removed
   })
@@ -26,15 +24,13 @@ export function AvailableProject({removed, isNew, stage, name, selected, selectP
     info = <span className={styles.infoRemoved} data-locator='removed'>removed</span>
   }
 
-  const displayName = isBlank(stage) ? name : `${name} ${stage}`
-
   return (
     <li className={listClasses}>
       <Checkbox checked={selected}
                 onToggle={selectProject}
                 disabled={removed}>
         {info}
-        <span className={styles.name} data-locator='name'>{displayName}</span>
+        <span className={styles.name} data-locator='name'>{description}</span>
       </Checkbox>
     </li>
   )

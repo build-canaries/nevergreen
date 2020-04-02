@@ -118,10 +118,10 @@ describe('displaying project information', () => {
       projects: [
         buildProject({
           trayId,
-          name: 'some-project-name',
+          description: 'some-project-name',
           prognosis,
           lastBuildLabel: '1234',
-          lastBuildTime: '2020-01-25T19:23:00Z'
+          timestamp: '2020-01-25T19:23:00Z'
         })
       ],
       errors: []
@@ -151,10 +151,10 @@ describe('displaying project information', () => {
       projects: [
         buildProject({
           trayId,
-          name: 'some-project-name',
+          description: 'some-project-name',
           prognosis: Prognosis.unknown,
           lastBuildLabel: '',
-          lastBuildTime: ''
+          timestamp: ''
         })
       ],
       errors: []
@@ -185,11 +185,10 @@ describe('displaying project information', () => {
       projects: [
         buildProject({
           trayId,
-          name: 'some-project-name',
+          description: 'some-project-name',
           prognosis: Prognosis.sickBuilding,
           lastBuildLabel: '1234',
-          lastBuildTime: '2020-01-25T19:23:00Z',
-          thisBuildTime: '2020-01-25T20:53:00Z'
+          timestamp: '2020-01-25T19:53:00Z'
         })
       ],
       errors: []
@@ -219,10 +218,10 @@ describe('displaying project information', () => {
       projects: [
         buildProject({
           trayId,
-          name: 'some-project-name',
+          description: 'some-project-name',
           prognosis: Prognosis.sick,
           lastBuildLabel: '1234',
-          lastBuildTime: '2020-01-25T19:23:00Z'
+          timestamp: '2020-01-25T19:23:00Z'
         })
       ],
       errors: []
@@ -246,7 +245,7 @@ describe('displaying project information', () => {
       projects: [
         buildProject({
           trayId,
-          name: 'some-project-name',
+          description: 'some-project-name',
           prognosis: Prognosis.sickBuilding,
           webUrl: 'some-url'
         })
@@ -343,13 +342,13 @@ describe('limiting the projects displayed', () => {
     const props = {
       projects: [],
       errors: [
-        buildProjectError({trayId, errorMessage: 'error 1'}),
-        buildProjectError({trayId, errorMessage: 'error 2'}),
-        buildProjectError({trayId, errorMessage: 'error 3'}),
-        buildProjectError({trayId, errorMessage: 'error 4'}),
-        buildProjectError({trayId, errorMessage: 'error 5'}),
-        buildProjectError({trayId, errorMessage: 'error 6'}),
-        buildProjectError({trayId, errorMessage: 'error 7'})
+        buildProjectError({trayId, description: 'error 1'}),
+        buildProjectError({trayId, description: 'error 2'}),
+        buildProjectError({trayId, description: 'error 3'}),
+        buildProjectError({trayId, description: 'error 4'}),
+        buildProjectError({trayId, description: 'error 5'}),
+        buildProjectError({trayId, description: 'error 6'}),
+        buildProjectError({trayId, description: 'error 7'})
       ]
     }
     const {queryByText} = render(<InterestingProjects {...props}/>, state)
@@ -373,10 +372,10 @@ describe('limiting the projects displayed', () => {
         buildProject({projectId: '3', trayId, prognosis: Prognosis.healthyBuilding})
       ],
       errors: [
-        buildProjectError({trayId, errorMessage: 'error 1'}),
-        buildProjectError({trayId, errorMessage: 'error 2'}),
-        buildProjectError({trayId, errorMessage: 'error 3'}),
-        buildProjectError({trayId, errorMessage: 'error 4'})
+        buildProjectError({trayId, description: 'error 1'}),
+        buildProjectError({trayId, description: 'error 2'}),
+        buildProjectError({trayId, description: 'error 3'}),
+        buildProjectError({trayId, description: 'error 4'})
       ]
     }
     const {queryByText} = render(<InterestingProjects {...props}/>, state)

@@ -5,8 +5,19 @@
             [nevergreen.errors :as err]
             [nevergreen.ci-gateway :as ci-gateway]
             [nevergreen.ci-server :as ci-server]
+            [clojure.string :as s]
             [clojure.set :refer [difference]])
   (:import (org.xml.sax SAXParseException)))
+
+(def ^:private ui-required-keys [:description
+                                 :is-new
+                                 :last-build-Label
+                                 :prognosis
+                                 :project-id
+                                 :server-type
+                                 :timestamp
+                                 :tray-id
+                                 :web-url])
 
 (defn ^:dynamic fetch [tray]
   (ci-gateway/fetch-cctray tray))
@@ -22,10 +33,14 @@
     projects
     (filter #(in? ids (:project-id %)) projects)))
 
-(defn- filter-by-prognosis [prognosis projects]
+(defn- filter-jobs [projects]
+  (filter #(s/blank? (:job %)) projects))
+
+(defn- filter-projects [prognosis projects]
   (if (nil? prognosis)
-    projects
-    (filtering/by-prognosis (map keyword prognosis) projects)))
+    (filter-jobs projects)
+    (filtering/by-prognosis (map keyword prognosis)
+                            (filter-jobs projects))))
 
 (defn- handle-parsing-exception [e]
   (let [exceptionMessage (.getMessage e)]
@@ -50,14 +65,15 @@
     (let [projects (to-projects tray)]
       (if (every? err/is-error? projects)
         projects
-        (let [filtered-projects (filter-by-prognosis prognosis projects)
+        (let [filtered-projects (filter-projects prognosis projects)
               enriched-projects (enrich tray filtered-projects)
               returned-project-ids (map :project-id enriched-projects)
               new-project-ids (difference (set returned-project-ids) (set seen))
               include-project-ids (if (true? include-new)
                                     (concat included new-project-ids)
-                                    included)]
-          (filter-by-ids included include-project-ids enriched-projects))))))
+                                    included)
+              projects-to-return (filter-by-ids included include-project-ids enriched-projects)]
+          (map #(select-keys % ui-required-keys) projects-to-return))))))
 
 (defn get-projects [trays]
   (if (= (count trays) 1)

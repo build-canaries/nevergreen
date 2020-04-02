@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './tile-project.scss'
 import {isBlank} from '../common/Utils'
-import {Project, projectBuildLabel, projectDescription, projectTimestamp} from '../domain/Project'
+import {Project, projectBuildLabel} from '../domain/Project'
 import {VisuallyHidden} from '../common/VisuallyHidden'
 import {Duration} from '../common/Duration'
 import {ScaledTile} from './ScaledTile'
@@ -22,7 +22,7 @@ export function TileProject({project, visibleProjects}: TileProjectProps) {
   const showTrayName = useSelector(getShowTrayName)
   const showBuildLabel = useSelector(getShowBuildLabel)
 
-  const sentences = visibleProjects.map(projectDescription)
+  const sentences = visibleProjects.map((p) => p.description)
 
   const myTray = trays.find((tray) => tray.trayId === project.trayId)
 
@@ -36,7 +36,7 @@ export function TileProject({project, visibleProjects}: TileProjectProps) {
   const time = showBuildTime &&
     <span className={styles.time}>
       <VisuallyHidden>time </VisuallyHidden>
-      <Duration timestamp={projectTimestamp(project)}/>
+      <Duration timestamp={project.timestamp}/>
     </span>
 
   const buildLabel = projectBuildLabel(project)
@@ -67,7 +67,7 @@ export function TileProject({project, visibleProjects}: TileProjectProps) {
                 sentences={sentences}>
       <ExternalLink href={project.webUrl}
                     className={styles.link}>
-        {projectDescription(project)}
+        {project.description}
       </ExternalLink>
     </ScaledTile>
   )

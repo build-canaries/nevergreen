@@ -35,7 +35,7 @@ export function InterestingProjects({projects, errors}: InterestingProjectsProps
   const errorsNotShown = difference(errors, errorsToShow)
 
   const errorComponents = map(errorsToShow, (error) => {
-    return <TileError key={`${error.trayId}#${error.errorMessage}`}
+    return <TileError key={`${error.trayId}#${error.description}`}
                       error={error}/>
   })
 

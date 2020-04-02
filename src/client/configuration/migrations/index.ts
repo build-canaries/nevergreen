@@ -5,6 +5,7 @@ import * as FlattenProjects from './003_FlattenProjects'
 import * as AddTrayIdToProjects from './004_AddTrayIdToProjects'
 import * as SetAuthType from './005_SetAuthType'
 import * as RemoveShowBrokenBuildTime from './006_RemoveShowBrokenBuildTime'
+import * as SetProjectDescription from './007_SetProjectDescription'
 
 export type Migrate = (data: UntrustedData) => void
 
@@ -20,6 +21,7 @@ export function getOrderedMigrations(): ReadonlyArray<Migration> {
     FlattenProjects,
     AddTrayIdToProjects,
     SetAuthType,
-    RemoveShowBrokenBuildTime
+    RemoveShowBrokenBuildTime,
+    SetProjectDescription
   ]
 }

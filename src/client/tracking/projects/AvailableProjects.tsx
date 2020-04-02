@@ -52,7 +52,7 @@ export function AvailableProjects({index, tray, requiresRefresh, setRequiresRefr
       if (projectErrors.length === 0) {
         dispatch(projectsFetched(tray.trayId, fetchedProjects, tray.includeNew))
       } else {
-        const errorMessages = projectErrors.map((projectError) => projectError.errorMessage)
+        const errorMessages = projectErrors.map((projectError) => projectError.description)
         setErrors(errorMessages)
       }
     } catch (error) {
@@ -111,7 +111,7 @@ export function AvailableProjects({index, tray, requiresRefresh, setRequiresRefr
 
   const filteredProjects = useMemo(() => {
     if (filter) {
-      return projects.filter((project) => filter.exec(`${project.name} ${project.stage || ''}`))
+      return projects.filter((project) => filter.exec(project.description))
     }
     return projects
   }, [projects, filter])

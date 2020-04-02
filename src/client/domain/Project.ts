@@ -1,35 +1,31 @@
 import {isBlank, isNumber} from '../common/Utils'
-import {ApiProject} from '../gateways/ProjectsGateway'
-import {omit} from 'lodash'
+import {ApiError, ApiProject, isApiError, isApiProject, ProjectsResponse} from '../gateways/ProjectsGateway'
 
 export enum Prognosis {
   healthy = 'healthy',
   sick = 'sick',
   healthyBuilding = 'healthy-building',
   sickBuilding = 'sick-building',
-  unknown = 'unknown'
+  unknown = 'unknown',
+  error = 'error'
 }
 
 export interface Project {
-  readonly fetchedTime: string;
+  readonly description: string;
   readonly isNew: boolean;
   readonly lastBuildLabel: string;
-  readonly lastBuildStatus: string;
-  readonly lastBuildTime?: string | null;
-  readonly name: string;
   readonly prognosis: Prognosis;
   readonly projectId: string;
   readonly removed: boolean;
   readonly serverType: string;
-  readonly stage?: string | null;
-  readonly thisBuildTime?: string;
+  readonly timestamp: string;
   readonly trayId: string;
   readonly webUrl: string;
 }
 
 export interface ProjectError {
-  readonly errorMessage: string;
-  readonly fetchedTime: string;
+  readonly description: string;
+  readonly timestamp: string;
   readonly trayId: string;
 }
 
@@ -43,56 +39,38 @@ function formatBuildLabel(buildLabel?: string) {
   return ''
 }
 
-export function projectDescription({name, stage}: Project) {
-  if (isBlank(stage)) {
-    return name
-  } else {
-    return `${name} ${stage}`
-  }
-}
-
 export function isSick({prognosis}: Project) {
   return prognosis === Prognosis.sick
 }
 
-export function isBuilding({prognosis}: Project) {
+export function isBuilding({prognosis}: Project | ApiProject) {
   return prognosis === Prognosis.healthyBuilding || prognosis === Prognosis.sickBuilding
-}
-
-export function projectTimestamp(project: Project) {
-  return isBuilding(project) ? project.thisBuildTime : project.lastBuildTime
 }
 
 export function projectBuildLabel(project: Project) {
   return isBuilding(project) ? '' : formatBuildLabel(project.lastBuildLabel)
 }
 
-export function createProject(projectId: string, name: string, additional: Partial<Project> = {}): Project {
+export function createProject(apiProject: ApiProject): Project {
   return {
-    fetchedTime: '',
-    isNew: true,
-    lastBuildLabel: '',
-    lastBuildStatus: '',
-    lastBuildTime: '',
-    name,
-    prognosis: Prognosis.unknown,
-    projectId,
+    isNew: apiProject.isNew,
+    lastBuildLabel: apiProject.lastBuildLabel,
+    description: apiProject.description,
+    prognosis: apiProject.prognosis || Prognosis.unknown,
+    projectId: apiProject.projectId,
     removed: false,
-    serverType: '',
-    stage: '',
-    thisBuildTime: undefined,
-    trayId: '',
-    webUrl: '',
-    ...additional
+    serverType: apiProject.serverType,
+    timestamp: apiProject.timestamp,
+    trayId: apiProject.trayId,
+    webUrl: apiProject.webUrl
   }
 }
 
-export function createProjectError(errorMessage: string, additional: Partial<ProjectError> = {}): ProjectError {
+export function createProjectError(apiProject: ApiError): ProjectError {
   return {
-    errorMessage,
-    fetchedTime: '',
-    trayId: '',
-    ...additional
+    description: apiProject.description,
+    timestamp: apiProject.timestamp,
+    trayId: apiProject.trayId || ''
   }
 }
 
@@ -100,33 +78,25 @@ function sameBuild(previousProject: Project, currentProject: Project) {
   return previousProject.lastBuildLabel === currentProject.lastBuildLabel
 }
 
-function addThisBuildTime(project: Project, previouslyFetchedProjects: ReadonlyArray<Project>): Project {
+function updateTimestamp(project: Project, previouslyFetchedProjects: ReadonlyArray<Project>): Project {
   if (isBuilding(project)) {
     const previousProject = previouslyFetchedProjects.find((previous) => project.projectId === previous.projectId)
-    const thisBuildTime = previousProject && isBuilding(previousProject) && sameBuild(previousProject, project)
-      ? previousProject.thisBuildTime
-      : project.fetchedTime
-    return {...project, thisBuildTime}
-  } else {
-    return omit(project, 'thisBuildTime')
+    if (previousProject && isBuilding(previousProject) && sameBuild(previousProject, project)) {
+      return {...project, timestamp: previousProject.timestamp}
+    }
   }
+  return project
 }
 
-export function wrapProjects(apiProjects: ReadonlyArray<ApiProject>, previouslyFetchedProjects: ReadonlyArray<Project>): ReadonlyArray<Project> {
+export function wrapProjects(apiProjects: ProjectsResponse, previouslyFetchedProjects: ReadonlyArray<Project>): ReadonlyArray<Project> {
   return apiProjects
-    .filter((apiProject) => !apiProject.isError)
-    .filter((apiProject) => !apiProject.job)
-    .map((apiProject) => createProject(apiProject.projectId, apiProject.name, apiProject))
-    .map((project) => addThisBuildTime(project, previouslyFetchedProjects))
+    .filter(isApiProject)
+    .map(createProject)
+    .map((project) => updateTimestamp(project, previouslyFetchedProjects))
 }
 
-export function wrapProjectErrors(apiProjects: ReadonlyArray<ApiProject>): ReadonlyArray<ProjectError> {
+export function wrapProjectErrors(apiProjects: ProjectsResponse): ReadonlyArray<ProjectError> {
   return apiProjects
-    .filter((apiProject) => apiProject.isError)
-    .map((apiProject) => {
-      return createProjectError(apiProject.errorMessage || 'unknown', {
-        fetchedTime: apiProject.fetchedTime,
-        trayId: apiProject.trayId
-      })
-    })
+    .filter(isApiError)
+    .map(createProjectError)
 }

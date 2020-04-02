@@ -6,30 +6,8 @@
            (org.apache.http.message BasicHttpResponse BasicStatusLine)
            (org.apache.http HttpVersion)
            (org.apache.http.entity StringEntity)
-           (java.util.concurrent TimeoutException TimeUnit Future)
+           (java.util.concurrent Future)
            (java.io ByteArrayInputStream)))
-
-
-(defn- completed-future [result]
-  (let [future-call-back (reify FutureCallback
-                           (completed [_ _])
-                           (failed [_ _])
-                           (cancelled [_]))
-        basic-future (BasicFuture. future-call-back)
-        status-line (BasicStatusLine. HttpVersion/HTTP_0_9 200 "OK")
-        response (BasicHttpResponse. status-line)]
-    (.setEntity response (StringEntity. result))
-    (.completed basic-future response)
-    basic-future))
-
-(defn- failed-future [exception]
-  (let [future-call-back (reify FutureCallback
-                           (completed [_ _])
-                           (failed [_ _])
-                           (cancelled [_]))
-        basic-future (BasicFuture. future-call-back)]
-    (.failed basic-future exception)
-    basic-future))
 
 (defn string->stream
   ([s] (string->stream s "UTF-8"))
@@ -63,7 +41,7 @@
                             #"some-host is an unknown host, is the URL correct?"
                             (subject/http-get "http://some-host" {})))))
 
-  (testing "throws an error for bad uri syntax"
+  (testing "throws an error for bad URI syntax"
     (binding [subject/client-get (fn [_ _ promise] (deliver promise (URISyntaxException. "some-url" "Illegal character in authority at index 0")))]
       (is (thrown-with-msg? Exception
                             #"URL is invalid. Illegal character in authority at index 0: some-url"

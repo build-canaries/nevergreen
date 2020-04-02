@@ -1,24 +1,5 @@
-import {
-  isBuilding,
-  isSick,
-  Prognosis,
-  projectBuildLabel,
-  projectDescription,
-  projectTimestamp,
-  wrapProjects
-} from '../../../src/client/domain/Project'
-import {buildApiProject, buildProject} from '../testHelpers'
-
-describe('projectDescription', () => {
-
-  it('should return the name if stage is blank', () => {
-    expect(projectDescription(buildProject({name: 'some-name', stage: ''}))).toBe('some-name')
-  })
-
-  it('should include the stage if it is not blank', () => {
-    expect(projectDescription(buildProject({name: 'some-name', stage: 'some-stage'}))).toBe('some-name some-stage')
-  })
-})
+import {isBuilding, isSick, Prognosis, projectBuildLabel, wrapProjects} from '../../../src/client/domain/Project'
+import {buildApiError, buildApiProject, buildProject} from '../testHelpers'
 
 describe('isSick', () => {
 
@@ -50,34 +31,6 @@ describe('isBuilding', () => {
     Prognosis.sick
   ])('should be false for value %s', (prognosis) => {
     expect(isBuilding(buildProject({prognosis}))).toBe(false)
-  })
-})
-
-describe('projectTimestamp', () => {
-
-  it.each([
-    Prognosis.healthyBuilding,
-    Prognosis.sickBuilding
-  ])('should return the building time if the project is %s', (prognosis) => {
-    const project = buildProject({
-      prognosis,
-      thisBuildTime: 'build-time',
-      lastBuildTime: 'last-build'
-    })
-    expect(projectTimestamp(project)).toBe('build-time')
-  })
-
-  it.each([
-    Prognosis.sick,
-    Prognosis.unknown,
-    Prognosis.healthy
-  ])('should return the last fetched time if the project is %s', (prognosis) => {
-    const project = buildProject({
-      prognosis,
-      thisBuildTime: 'build-time',
-      lastBuildTime: 'last-build'
-    })
-    expect(projectTimestamp(project)).toBe('last-build')
   })
 })
 
@@ -113,69 +66,69 @@ describe('projectBuildLabel', () => {
 describe('wrapProjects', () => {
 
   it('should remove errors', () => {
-    const apiProjects = [buildApiProject({isError: true})]
-    const result = wrapProjects(apiProjects, [])
-    expect(result).toEqual([])
-  })
-
-  it('should filter jobs as these are GoCD specific and add a lot of noise to the Monitor page', () => {
-    const apiProjects = [buildApiProject({job: 'some-job'})]
-    const result = wrapProjects(apiProjects, [])
+    const fetched = [buildApiError()]
+    const result = wrapProjects(fetched, [])
     expect(result).toEqual([])
   })
 
   it('should copy whether the project is new or not', () => {
-    const apiProjects = [buildApiProject({isNew: true})]
-    const result = wrapProjects(apiProjects, [])
-    expect(result).toEqual(expect.arrayContaining([expect.objectContaining({isNew: true})]))
-  })
-
-  it.each([
-    Prognosis.healthy,
-    Prognosis.sick,
-    Prognosis.unknown
-  ])('should not include how long a %s project has been building', (prognosis) => {
-    const apiProjects = [buildApiProject({prognosis, fetchedTime: 'fetched-time'})]
-    const result = wrapProjects(apiProjects, [])
-    expect(result).toEqual(expect.arrayContaining([expect.not.objectContaining({thisBuildTime: expect.any(String)})]))
+    const fetched = [
+      buildApiProject({projectId: '1', isNew: false}),
+      buildApiProject({projectId: '2', isNew: true})
+    ]
+    const result = wrapProjects(fetched, [])
+    expect(result).toEqual(expect.arrayContaining([
+      expect.objectContaining({projectId: '1', isNew: false}),
+      expect.objectContaining({projectId: '2', isNew: true})
+    ]))
   })
 
   it.each([
     Prognosis.healthyBuilding,
     Prognosis.sickBuilding
   ])('should add how long a %s project has been building', (prognosis) => {
-    const apiProjects = [buildApiProject({prognosis, fetchedTime: 'fetched-time'})]
-    const result = wrapProjects(apiProjects, [])
-    expect(result).toEqual(expect.arrayContaining([expect.objectContaining({thisBuildTime: 'fetched-time'})]))
+    const fetched = [buildApiProject({prognosis, timestamp: 'fetched-time'})]
+    const result = wrapProjects(fetched, [])
+    expect(result).toEqual(expect.arrayContaining([expect.objectContaining({timestamp: 'fetched-time'})]))
   })
 
   it.each([
     Prognosis.healthyBuilding,
     Prognosis.sickBuilding
   ])('should calculate how long a %s project has been building across multiple fetches', (prognosis) => {
-    const apiProjects = [buildApiProject({projectId: 'some-id', prognosis, fetchedTime: 'updated-fetched-time'})]
-    const previous = [buildProject({projectId: 'some-id', prognosis, thisBuildTime: 'original-fetched-time'})]
-    const result = wrapProjects(apiProjects, previous)
-    expect(result).toEqual(expect.arrayContaining([expect.objectContaining({thisBuildTime: 'original-fetched-time'})]))
+    const fetched = [buildApiProject({
+      projectId: 'some-id',
+      prognosis,
+      lastBuildLabel: '1',
+      timestamp: 'updated-fetched-time'
+    })]
+    const previous = [buildProject({
+      projectId: 'some-id',
+      prognosis,
+      lastBuildLabel: '1',
+      timestamp: 'original-fetched-time'
+    })]
+    const result = wrapProjects(fetched, previous)
+    expect(result).toEqual(expect.arrayContaining([expect.objectContaining({timestamp: 'original-fetched-time'})]))
   })
 
   it.each([
     Prognosis.healthyBuilding,
     Prognosis.sickBuilding
   ])('should reset how long a %s project has been building if a new build was triggered between polling intervals', (prognosis) => {
-    const apiProjects = [buildApiProject({
+    const fetched = [buildApiProject({
       projectId: 'some-id',
       prognosis,
       lastBuildLabel: '2',
-      fetchedTime: 'updated-fetched-time'
+      timestamp: 'updated-fetched-time'
     })]
     const previous = [buildProject({
       projectId: 'some-id',
       prognosis,
       lastBuildLabel: '1',
-      thisBuildTime: 'original-fetched-time'
+      timestamp: 'original-fetched-time'
     })]
-    const result = wrapProjects(apiProjects, previous)
-    expect(result).toEqual(expect.arrayContaining([expect.objectContaining({thisBuildTime: 'updated-fetched-time'})]))
+    const result = wrapProjects(fetched, previous)
+    expect(result).toEqual(expect.arrayContaining([expect.objectContaining({timestamp: 'updated-fetched-time'})]))
   })
 })

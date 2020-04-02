@@ -36,10 +36,10 @@ it('should send sick notification when project becomes sick', () => {
     }
   }
   const projects1 = [
-    buildProject({projectId: 'some-id', name: 'some-name', prognosis: Prognosis.healthyBuilding})
+    buildProject({projectId: 'some-id', description: 'some-name', prognosis: Prognosis.healthyBuilding})
   ]
   const projects2 = [
-    buildProject({projectId: 'some-id', name: 'some-name', prognosis: Prognosis.sick})
+    buildProject({projectId: 'some-id', description: 'some-name', prognosis: Prognosis.sick})
   ]
   const {rerender} = render(<HookWrapper projects={projects1}/>, state)
   rerender(<HookWrapper projects={projects2}/>)
@@ -54,10 +54,10 @@ it('should send not sick notification when project is no longer sick', () => {
     }
   }
   const projects1 = [
-    buildProject({projectId: 'some-id', name: 'some-name', prognosis: Prognosis.sick})
+    buildProject({projectId: 'some-id', description: 'some-name', prognosis: Prognosis.sick})
   ]
   const projects2 = [
-    buildProject({projectId: 'some-id', name: 'some-name', prognosis: Prognosis.sickBuilding})
+    buildProject({projectId: 'some-id', description: 'some-name', prognosis: Prognosis.sickBuilding})
   ]
   const {rerender} = render(<HookWrapper projects={projects1}/>, state)
   rerender(<HookWrapper projects={projects2}/>)
@@ -75,7 +75,7 @@ it('should not send sick notifications when project is still sick', () => {
     }
   }
   const projects = [
-    buildProject({projectId: 'some-id', name: 'some-name', prognosis: Prognosis.sick})
+    buildProject({projectId: 'some-id', description: 'some-name', prognosis: Prognosis.sick})
   ]
   const {rerender} = render(<HookWrapper projects={projects}/>, state)
   rerender(<HookWrapper projects={projects}/>)

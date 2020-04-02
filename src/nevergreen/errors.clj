@@ -1,8 +1,12 @@
 (ns nevergreen.errors
-  (:require [clojure.tools.logging :as log]))
+  (:require [clojure.tools.logging :as log])
+  (:import (java.time Clock)))
+
+(defn ^:dynamic now []
+  (.instant (Clock/systemUTC)))
 
 (defn is-error? [o]
-  (and (map? o) (:is-error o)))
+  (and (map? o) (= (:prognosis o) :error)))
 
 (defmulti create-error
           (fn [error _] (class error)))
@@ -15,7 +19,10 @@
 
 (defmethod create-error String [message url]
   (log/info (str "Creating error response for [" url "] with message [" message "]"))
-  {:error-message message :url url :is-error true})
+  {:description message
+   :timestamp   (now)
+   :web-url     url
+   :prognosis   :error})
 
 (defn error-response [status message url]
   {:status  status

@@ -10,9 +10,25 @@ import {useSelector} from 'react-redux'
 import {getMaxProjectsToShow, getShowPrognosis} from './SettingsReducer'
 import {createProject, createProjectError, Prognosis} from '../domain/Project'
 import {randomFrom} from '../common/Utils'
+import {ApiProject} from '../gateways/ProjectsGateway'
 
 function randomBuildLabel() {
   return `${random(1, 9999)}`
+}
+
+function apiProject(apiProject: Partial<ApiProject>): ApiProject {
+  return {
+    description: '',
+    isNew: false,
+    lastBuildLabel: '',
+    timestamp: '',
+    prognosis: Prognosis.unknown,
+    projectId: '',
+    serverType: '',
+    trayId: '',
+    webUrl: '',
+    ...apiProject
+  }
 }
 
 export function DisplayPreview() {
@@ -22,45 +38,63 @@ export function DisplayPreview() {
   const prognosisToShow = Object.values(Prognosis).filter((prognosis) => showPrognosis.includes(prognosis))
 
   const projectsNotShown = useMemo(() => Array.from({length: random(1, 99)}, (v, i) => {
-    return createProject(i.toString(), i.toString(), {prognosis: randomFrom(prognosisToShow)})
+    return createProject(apiProject({
+      projectId: i.toString(),
+      description: i.toString(),
+      prognosis: randomFrom(prognosisToShow)
+    }))
   }), [prognosisToShow])
 
   const projects = [
-    createProject('0', 'unknown', {
+    createProject(apiProject({
+      projectId: 'unknown',
+      description: 'unknown',
       prognosis: Prognosis.unknown,
-      lastBuildTime: randomDateInPast(),
+      timestamp: randomDateInPast(),
       lastBuildLabel: randomBuildLabel(),
       webUrl: 'https://cctray.org/v1/'
-    }),
-    createProject('1', 'healthy', {
+    })),
+    createProject(apiProject({
+      projectId: 'healthy',
+      description: 'healthy',
       prognosis: Prognosis.healthy,
-      lastBuildTime: randomDateInPast(),
+      timestamp: randomDateInPast(),
       lastBuildLabel: randomBuildLabel(),
       webUrl: 'https://nevergreen.io'
-    }),
-    createProject('2', 'healthy building', {
+    })),
+    createProject(apiProject({
+      projectId: 'healthy-building',
+      description: 'healthy building',
       prognosis: Prognosis.healthyBuilding,
-      lastBuildTime: randomDateInPast(),
-      thisBuildTime: randomDateInPast(),
+      timestamp: randomDateInPast(),
       lastBuildLabel: randomBuildLabel(),
       webUrl: 'https://github.com/build-canaries/nevergreen'
-    }),
-    createProject('3', 'sick building', {
+    })),
+    createProject(apiProject({
+      projectId: 'sick-building',
+      description: 'sick building',
       prognosis: Prognosis.sickBuilding,
-      lastBuildTime: randomDateInPast(),
-      thisBuildTime: randomDateInPast(),
+      timestamp: randomDateInPast(),
       lastBuildLabel: randomBuildLabel(),
       webUrl: 'https://twitter.com/BuildCanaries'
-    }),
-    createProject('4', 'sick', {
+    })),
+    createProject(apiProject({
+      projectId: 'sick',
+      description: 'sick',
       prognosis: Prognosis.sick,
-      lastBuildTime: randomDateInPast(),
+      timestamp: randomDateInPast(),
       lastBuildLabel: randomBuildLabel(),
       webUrl: 'http://build-canaries.github.io/'
-    })
+    }))
   ]
 
-  const projectError = createProjectError('some error happened!')
+  const projectError = createProjectError({
+    description: 'some error happened!',
+    prognosis: Prognosis.error,
+    timestamp: '',
+    trayId: '',
+    webUrl: ''
+  })
 
   const children = projects
     .filter((project) => showPrognosis.includes(project.prognosis))

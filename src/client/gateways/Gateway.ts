@@ -69,7 +69,7 @@ export async function send<T>(request: Request): Promise<T> {
 
     const message = error.timeout
       ? TIMEOUT_ERROR
-      : _get(error, 'response.body.errorMessage') || error.message || UNKNOWN_ERROR
+      : _get(error, 'response.body.description') || error.message || UNKNOWN_ERROR
 
     throw new Error(message)
   }

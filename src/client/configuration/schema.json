@@ -115,14 +115,8 @@
               "projectId": {
                 "type": "string"
               },
-              "name": {
+              "description": {
                 "type": "string"
-              },
-              "stage": {
-                "type": [
-                  "string",
-                  "null"
-                ]
               },
               "removed": {
                 "type": "boolean"
@@ -136,7 +130,7 @@
             },
             "required": [
               "projectId",
-              "name",
+              "description",
               "trayId"
             ],
             "additionalProperties": false

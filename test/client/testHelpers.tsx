@@ -7,11 +7,11 @@ import {PROJECTS_ROOT} from '../../src/client/tracking/ProjectsReducer'
 import {SELECTED_ROOT} from '../../src/client/tracking/SelectedReducer'
 import {SUCCESS_ROOT} from '../../src/client/success/SuccessReducer'
 import {TRAYS_ROOT} from '../../src/client/tracking/TraysReducer'
-import {createProject, createProjectError, Prognosis, Project, ProjectError} from '../../src/client/domain/Project'
+import {Prognosis, Project, ProjectError} from '../../src/client/domain/Project'
 import {createTray, Tray} from '../../src/client/domain/Tray'
 import {combineReducers, Reducer} from 'redux'
 import {RecursivePartial} from '../../src/client/common/Types'
-import {ApiProject} from '../../src/client/gateways/ProjectsGateway'
+import {ApiError, ApiProject} from '../../src/client/gateways/ProjectsGateway'
 import {render as testRender} from '@testing-library/react'
 import {Provider} from 'react-redux'
 import {configureStore} from '@reduxjs/toolkit'
@@ -86,38 +86,54 @@ export function buildTray(tray: Partial<Tray> = {}): Tray {
 }
 
 export function buildProject(project: Partial<Project> = {}): Project {
-  return createProject('some-project-id', 'some-name', project)
+  const defaultProject: Project = {
+    isNew: true,
+    lastBuildLabel: '',
+    description: 'some-name',
+    prognosis: Prognosis.unknown,
+    projectId: 'some-project-id',
+    removed: false,
+    serverType: '',
+    timestamp: '',
+    trayId: '',
+    webUrl: ''
+  }
+  return merge(defaultProject, project)
 }
 
 export function buildProjectError(projectError: Partial<ProjectError> = {}): ProjectError {
-  return createProjectError('some-error', projectError)
+  const defaultProjectError: ProjectError = {
+    description: 'some-error',
+    timestamp: '',
+    trayId: ''
+  }
+  return merge(defaultProjectError, projectError)
 }
 
 export function buildApiProject(apiProject: Partial<ApiProject> = {}): ApiProject {
-  return merge({
-    activity: '',
-    fetchedTime: '',
-    isError: false,
+  const defaultApiProject: ApiProject = {
+    description: '',
     isNew: false,
-    job: null,
     lastBuildLabel: '',
-    lastBuildStatus: '',
-    lastBuildTime: null,
-    messages: [],
-    name: '',
-    nextBuildTime: '',
-    owner: null,
     prognosis: Prognosis.unknown,
     projectId: '',
     serverType: '',
-    stage: null,
+    timestamp: '',
     trayId: '',
-    unnormalisedJob: null,
-    unnormalisedName: null,
-    unnormalisedOwner: null,
-    unnormalisedStage: null,
     webUrl: ''
-  }, apiProject)
+  }
+  return merge(defaultApiProject, apiProject)
+}
+
+export function buildApiError(apiProject: Partial<ApiError> = {}): ApiError {
+  const defaultApiError: ApiError = {
+    description: '',
+    prognosis: Prognosis.error,
+    timestamp: '',
+    trayId: '',
+    webUrl: ''
+  }
+  return merge(defaultApiError, apiProject)
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any */

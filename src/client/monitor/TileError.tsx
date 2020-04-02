@@ -23,8 +23,8 @@ export function TileError({error}: TileError) {
   return (
     <ScaledTile className={styles.error}
                 header={header}
-                sentences={[error.errorMessage]}>
-      {error.errorMessage}
+                sentences={[error.description]}>
+      {error.description}
     </ScaledTile>
   )
 }

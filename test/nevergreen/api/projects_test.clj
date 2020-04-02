@@ -30,7 +30,8 @@
   ; fetch needs to return something with a close method as we use (with-open)
   (binding [subject/fetch (constantly (StringReader. "some-xml-response"))
             subject/parse (constantly [example-project])
-            subject/enrich (fn [_ projects] projects)]
+            subject/enrich (fn [_ projects] projects)
+            err/now (constantly "some-time")]
 
     (testing "works when given a single tray"
       (is (= [example-project]
@@ -45,6 +46,11 @@
     (testing "doesn't filter out any projects when prognosis is not given"
       (is (= [example-project]
              (subject/get-projects [(merge example-tray {:prognosis nil})]))))
+
+    (testing "filters out any projects that are jobs (these are currently exclusive to GoCD and add too much noise to the UI)"
+      (binding [subject/parse (constantly [(merge example-project {:job "some-job"})])]
+        (is (= []
+               (subject/get-projects [(merge example-tray {:prognosis nil})])))))
 
     (testing "works when given multiple trays"
       (is (= [example-project example-project]
@@ -67,6 +73,38 @@
     (testing "includes everything if included is nil"
       (is (= [example-project]
              (subject/get-projects [(merge example-tray {:included nil})]))))
+
+    (testing "removes keys not required by the UI"
+      (binding [subject/parse (constantly [{:activity           "sleeping"
+                                            :job                ""
+                                            :last-build-Label   "83"
+                                            :last-build-status  "success"
+                                            :last-build-time    "2019-11-28T21:53:00.410Z"
+                                            :messages           []
+                                            :name               "clj cctray"
+                                            :next-build-time    nil
+                                            :owner              "build canaries"
+                                            :prognosis          project-prognosis
+                                            :stage              ""
+                                            :unnormalised-name  "clj-cctray"
+                                            :unnormalised-owner "build-canaries"
+                                            :web-url            "some-url"}])
+                subject/enrich (fn [_ projects] (map #(merge % {:description "clj cctray"
+                                                                :timestamp   "2020-03-24T20:23:42.707190Z"
+                                                                :is-new      false
+                                                                :project-id  project-id
+                                                                :server-type ""
+                                                                :tray-id     tray-id}) projects))]
+        (is (= [{:description      "clj cctray"
+                 :timestamp        "2020-03-24T20:23:42.707190Z"
+                 :is-new           false
+                 :last-build-Label "83"
+                 :prognosis        project-prognosis
+                 :project-id       project-id
+                 :server-type      ""
+                 :tray-id          tray-id
+                 :web-url          "some-url"}]
+               (subject/get-projects [example-tray])))))
 
     (testing "error handling"
 

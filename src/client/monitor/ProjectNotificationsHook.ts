@@ -7,7 +7,7 @@ import {useEffect, useRef} from 'react'
 
 function body(projects: Project[]): string {
   return projects
-    .map((project) => project.name)
+    .map((project) => project.description)
     .join(', ')
 }
 

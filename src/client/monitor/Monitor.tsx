@@ -12,10 +12,10 @@ import {useSelector} from 'react-redux'
 import {getRefreshTime, getShowPrognosis} from '../settings/SettingsReducer'
 import {getTrays} from '../tracking/TraysReducer'
 import {getSelectedProjects} from '../tracking/SelectedReducer'
-import {getProjectsAll} from '../tracking/ProjectsReducer'
+import {getKnownProjects} from '../tracking/ProjectsReducer'
 import {interesting, ProjectsResponse} from '../gateways/ProjectsGateway'
 import {send} from '../gateways/Gateway'
-import {createProjectError, Project, ProjectError, wrapProjectErrors, wrapProjects} from '../domain/Project'
+import {Project, ProjectError, wrapProjectErrors, wrapProjects} from '../domain/Project'
 import {useProjectNotifications} from './ProjectNotificationsHook'
 import {now} from '../common/DateTime'
 
@@ -28,7 +28,7 @@ export function Monitor({fullScreen, requestFullScreen}: MonitorProps) {
   const refreshTime = useSelector(getRefreshTime)
   const trays = useSelector(getTrays)
   const selected = useSelector(getSelectedProjects)
-  const allProjects = useSelector(getProjectsAll)
+  const knownProjects = useSelector(getKnownProjects)
   const prognosis = useSelector(getShowPrognosis)
 
   const [loaded, setLoaded] = useState(false)
@@ -45,7 +45,7 @@ export function Monitor({fullScreen, requestFullScreen}: MonitorProps) {
   useProjectNotifications(projects)
 
   const onTrigger = useCallback(async () => {
-    const request = interesting(trays, allProjects, selected, prognosis)
+    const request = interesting(trays, knownProjects, selected, prognosis)
 
     try {
       const response = await send<ProjectsResponse>(request)
@@ -55,14 +55,18 @@ export function Monitor({fullScreen, requestFullScreen}: MonitorProps) {
       setLoaded(true)
     } catch (e) {
       if (e.message !== 'Aborted') {
-        setErrors([createProjectError(e.message, {fetchedTime: now()})])
+        setErrors([{
+          description: e.message,
+          timestamp: now(),
+          trayId: 'Nevergreen'
+        }])
         setProjects([])
         setLoaded(true)
       }
     }
 
     return request.abort.bind(request)
-  }, [trays, allProjects, selected, prognosis])
+  }, [trays, knownProjects, selected, prognosis])
 
   useTimer(onTrigger, refreshTime)
 

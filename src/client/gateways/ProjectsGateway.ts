@@ -4,40 +4,34 @@ import {SelectedState} from '../tracking/SelectedReducer'
 import {size} from 'lodash'
 import {AuthTypes, Tray} from '../domain/Tray'
 
-export interface ApiProject {
-  readonly activity: string;
-  readonly errorMessage?: string;
-  readonly fetchedTime: string;
-  readonly isError: boolean;
-  readonly isNew: boolean;
-  readonly job: string | null;
-  readonly lastBuildLabel: string;
-  readonly lastBuildStatus: string;
-  readonly lastBuildTime: string | null;
-  readonly messages: ReadonlyArray<string>;
-  readonly name: string;
-  readonly nextBuildTime: string;
-  readonly owner: string | null;
-  readonly prognosis: Prognosis;
-  readonly projectId: string;
-  readonly serverType: string;
-  readonly stage: string | null;
-  readonly trayId: string;
-  readonly unnormalisedJob: string | null;
-  readonly unnormalisedName: string | null;
-  readonly unnormalisedOwner: string | null;
-  readonly unnormalisedStage: string | null;
+export interface ApiError {
+  readonly description: string;
+  readonly prognosis: Prognosis.error;
+  readonly timestamp: string;
+  readonly trayId?: string;
   readonly webUrl: string;
 }
 
-export type ProjectsResponse = ReadonlyArray<ApiProject>
+export interface ApiProject {
+  readonly description: string;
+  readonly isNew: boolean;
+  readonly lastBuildLabel: string;
+  readonly prognosis: Prognosis;
+  readonly projectId: string;
+  readonly serverType: string;
+  readonly timestamp: string;
+  readonly trayId: string;
+  readonly webUrl: string;
+}
+
+export type ProjectsResponse = ReadonlyArray<ApiProject | ApiError>
 
 interface ProjectsRequest {
+  readonly accessToken?: string;
+  readonly authType: AuthTypes;
   readonly included?: ReadonlyArray<string>;
   readonly includeNew: boolean;
-  readonly authType: AuthTypes;
   readonly password?: string;
-  readonly accessToken?: string;
   readonly prognosis?: ReadonlyArray<Prognosis>;
   readonly seen: ReadonlyArray<string>;
   readonly serverType?: string;
@@ -46,8 +40,16 @@ interface ProjectsRequest {
   readonly username?: string;
 }
 
-function toProjectsRequest(tray: Tray, projects: ReadonlyArray<Project>, selectedPerTray?: SelectedState): ProjectsRequest {
-  const seen = projects
+export function isApiError(data: ApiError | ApiProject): data is ApiError {
+  return data.prognosis === Prognosis.error
+}
+
+export function isApiProject(data: ApiError | ApiProject): data is ApiProject {
+  return data.prognosis !== Prognosis.error
+}
+
+function toProjectsRequest(tray: Tray, knownProjects: ReadonlyArray<Project>, selectedPerTray?: SelectedState): ProjectsRequest {
+  const seen = knownProjects
     .filter((project) => project.trayId === tray.trayId)
     .map((project) => project.projectId)
 
@@ -73,21 +75,21 @@ function hasIncludedProjects(projectsRequest: ProjectsRequest) {
   return projectsRequest.includeNew || size(projectsRequest.included) > 0
 }
 
-export function fetchAll(trays: ReadonlyArray<Tray>, projects: ReadonlyArray<Project>) {
+export function fetchAll(trays: ReadonlyArray<Tray>, knownProjects: ReadonlyArray<Project>) {
   const data = trays
-    .map((tray) => toProjectsRequest(tray, projects))
+    .map((tray) => toProjectsRequest(tray, knownProjects))
 
   return post('/api/projects', data)
 }
 
 export function interesting(
   trays: ReadonlyArray<Tray>,
-  projects: ReadonlyArray<Project>,
+  knownProjects: ReadonlyArray<Project>,
   selectedPerTray: SelectedState,
   prognosis: ReadonlyArray<Prognosis>
 ) {
   const data = trays
-    .map((tray) => toProjectsRequest(tray, projects, selectedPerTray))
+    .map((tray) => toProjectsRequest(tray, knownProjects, selectedPerTray))
     .map((req) => ({...req, prognosis}))
     .filter(hasIncludedProjects)
 

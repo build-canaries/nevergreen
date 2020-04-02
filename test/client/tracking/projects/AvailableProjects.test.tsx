@@ -2,7 +2,7 @@ import React from 'react'
 import {noop} from 'lodash'
 import userEvent from '@testing-library/user-event'
 import {wait} from '@testing-library/react'
-import {buildApiProject, buildProject, buildTray, render} from '../../testHelpers'
+import {buildApiError, buildApiProject, buildProject, buildTray, render} from '../../testHelpers'
 import {fakeRequest} from '../../../../src/client/gateways/Gateway'
 import {AvailableProjects} from '../../../../src/client/tracking/projects/AvailableProjects'
 import {TRAYS_ROOT} from '../../../../src/client/tracking/TraysReducer'
@@ -23,7 +23,7 @@ beforeEach(() => {
 
 it('should be able to select projects', () => {
   const tray = buildTray({trayId: 'trayId'})
-  const project = buildProject({trayId: 'trayId', projectId: 'projectId', name: 'some project'})
+  const project = buildProject({trayId: 'trayId', projectId: 'projectId', description: 'some project'})
   const state = {
     [TRAYS_ROOT]: {
       trayId: tray
@@ -48,10 +48,10 @@ it('should be able to select projects', () => {
 it('should correctly show and remove errors returned while refreshing', async () => {
   jest.spyOn(ProjectsGateway, 'fetchAll')
     .mockResolvedValueOnce(fakeRequest([
-      buildApiProject({isError: true, errorMessage: 'some-error'})
+      buildApiError({description: 'some-error'})
     ]))
     .mockResolvedValueOnce(fakeRequest([
-      buildApiProject({isError: false})
+      buildApiProject()
     ]))
   const tray = buildTray({trayId: 'trayId'})
   const state = {
@@ -107,7 +107,7 @@ it('should show a warning if no projects match the filter', async () => {
       trayId: [
         buildProject({
           projectId: 'projectId',
-          name: 'foo'
+          description: 'foo'
         })
       ]
     },

@@ -66,7 +66,7 @@ describe('send', () => {
   })
 
   it('should throw the body on error', async () => {
-    const request = Promise.reject({response: {body: {errorMessage: 'some-error'}}}) as Request
+    const request = Promise.reject({response: {body: {description: 'some-error'}}}) as Request
     try {
       await send(request)
     } catch (err) {
