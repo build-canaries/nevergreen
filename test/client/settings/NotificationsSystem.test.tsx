@@ -1,6 +1,6 @@
 import React from 'react'
 import userEvent from '@testing-library/user-event'
-import {wait} from '@testing-library/react'
+import {waitFor} from '@testing-library/react'
 import {
   NOT_SUPPORTED_MESSAGE,
   NOTIFICATIONS_ENABLED_NOTIFICATION,
@@ -29,7 +29,7 @@ it('should allow system notifications to be enabled', async () => {
 
   expect(getByLabelText('show system notifications')).toHaveAttribute('disabled')
 
-  await wait(() => {
+  await waitFor(() => {
     expect(getShowSystemNotifications(store.getState())).toBeTruthy()
     expect(getByLabelText('show system notifications')).not.toHaveAttribute('disabled')
     expect(SystemNotifications.sendSystemNotification).toHaveBeenCalledWith(NOTIFICATIONS_ENABLED_NOTIFICATION)
@@ -61,7 +61,7 @@ it('should show a message if notifications are supported but permission is denie
   const {queryByText, getByLabelText} = render(<NotificationsSystem/>)
   userEvent.click(getByLabelText('show system notifications'))
 
-  await wait(() => {
+  await waitFor(() => {
     expect(queryByText(PERMISSION_DENIED_MESSAGE)).toBeInTheDocument()
   })
 })

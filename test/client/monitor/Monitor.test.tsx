@@ -1,5 +1,5 @@
 import React from 'react'
-import {wait} from '@testing-library/react'
+import {waitFor} from '@testing-library/react'
 import {noop} from 'lodash'
 import {Monitor} from '../../../src/client/monitor/Monitor'
 import {buildTray, render} from '../testHelpers'
@@ -66,7 +66,7 @@ it('should show a success message if there are no projects', async () => {
     [SUCCESS_ROOT]: ['some-success-message']
   }
   const {queryByText} = render(<Monitor {...DEFAULT_PROPS}/>, state)
-  await wait(() => {
+  await waitFor(() => {
     expect(queryByText('some-success-message')).toBeInTheDocument()
   })
 })
@@ -100,7 +100,7 @@ it('should display an error if the Nevergreen server is having issues', async ()
     }
   }
   const {queryByText} = render(<Monitor {...DEFAULT_PROPS}/>, state)
-  await wait(() => {
+  await waitFor(() => {
     expect(queryByText('Nevergreen')).toBeInTheDocument()
     expect(queryByText('some-error')).toBeInTheDocument()
   })

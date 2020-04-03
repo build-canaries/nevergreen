@@ -1,6 +1,6 @@
 import React from 'react'
 import userEvent from '@testing-library/user-event'
-import {wait} from '@testing-library/react'
+import {waitFor} from '@testing-library/react'
 import {Externally} from '../../../../../src/client/backup/export/externally/Externally'
 import {render} from '../../../testHelpers'
 import {BackupLocation} from '../../../../../src/client/backup/BackupActionCreators'
@@ -24,7 +24,7 @@ it('should export if an access token was entered', async () => {
   await userEvent.type(getByLabelText('description'), 'some-description')
   userEvent.click(getByText('export'))
 
-  await wait(() => {
+  await waitFor(() => {
     expect(backupGateway.exportConfiguration).toHaveBeenCalledWith(
       BackupLocation.GITHUB,
       'some-id',

@@ -1,7 +1,7 @@
 import React from 'react'
 import {Nevergreen} from '../../src/client/Nevergreen'
 import {render} from './testHelpers'
-import {wait} from '@testing-library/react'
+import {waitFor} from '@testing-library/react'
 import * as LocalConfiguration from '../../src/client/configuration/LocalRepository'
 import * as ServiceWorkerHook from '../../src/client/ServiceWorkerHook'
 import * as Gateway from '../../src/client/gateways/Gateway'
@@ -18,7 +18,7 @@ it('should load configuration, register service worker and check for a new versi
 
   const {getByTestId} = render(<Nevergreen/>)
 
-  await wait(() => {
+  await waitFor(() => {
     expect(LocalConfiguration.load).toHaveBeenCalled()
     expect(Gateway.get).toHaveBeenCalledWith('https://api.github.com/repos/build-canaries/nevergreen/releases/latest')
     expect(ServiceWorkerHook.useServiceWorker).toHaveBeenCalled()

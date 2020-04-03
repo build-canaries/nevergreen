@@ -4,7 +4,7 @@ import {TraySettings} from '../../../../src/client/tracking/settings/TraySetting
 import {buildTray, render, setupReactModal} from '../../testHelpers'
 import {getTrays, TRAYS_ROOT} from '../../../../src/client/tracking/TraysReducer'
 import userEvent from '@testing-library/user-event'
-import {wait} from '@testing-library/react'
+import {waitFor} from '@testing-library/react'
 import {AuthTypes} from '../../../../src/client/domain/Tray'
 import * as SecurityGateway from '../../../../src/client/gateways/SecurityGateway'
 import {fakeRequest} from '../../../../src/client/gateways/Gateway'
@@ -182,7 +182,7 @@ it('should be able to change the auth to basic', async () => {
   await userEvent.type(getByTestId('auth-password'), 'some-password')
   userEvent.click(getByText('save changes'))
 
-  await wait(() => {
+  await waitFor(() => {
     expect(setRequiresRefresh).toHaveBeenCalledWith(true)
     expect(getTrays(store.getState())[0].authType).toEqual(AuthTypes.basic)
     expect(getTrays(store.getState())[0].username).toEqual('some-username')

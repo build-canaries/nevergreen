@@ -2,7 +2,7 @@ import React from 'react'
 import {noop} from 'lodash'
 import {AddTray} from '../../../src/client/tracking/AddTray'
 import userEvent from '@testing-library/user-event'
-import {wait} from '@testing-library/react'
+import {waitFor} from '@testing-library/react'
 import * as SecurityGateway from '../../../src/client/gateways/SecurityGateway'
 import {getTrays, TRAYS_ROOT} from '../../../src/client/tracking/TraysReducer'
 import {buildTray, render} from '../testHelpers'
@@ -52,7 +52,7 @@ it('should allow adding trays with basic auth', async () => {
   await userEvent.type(getByTestId('auth-password'), 'some-password')
   userEvent.click(getByText('add'))
 
-  await wait(() => {
+  await waitFor(() => {
     expect(SecurityGateway.encrypt).toHaveBeenCalledWith('some-password')
     expect(getTrays(store.getState())).toEqual(expect.arrayContaining([
       expect.objectContaining({
@@ -74,7 +74,7 @@ it('should allow adding trays with an access token', async () => {
   await userEvent.type(getByTestId('auth-access-token'), 'some-token')
   userEvent.click(getByText('add'))
 
-  await wait(() => {
+  await waitFor(() => {
     expect(SecurityGateway.encrypt).toHaveBeenCalledWith('some-token')
     expect(getTrays(store.getState())).toEqual(expect.arrayContaining([
       expect.objectContaining({
@@ -93,7 +93,7 @@ it('should reset the form after adding a tray', async () => {
   await userEvent.type(getByTestId('auth-access-token'), 'some-token')
   userEvent.click(getByText('add'))
 
-  await wait(() => {
+  await waitFor(() => {
     expect(getByLabelText('URL')).toHaveValue('')
     expect(queryByTestId('auth-access-token')).not.toBeInTheDocument()
     expect(queryByLabelText('username')).not.toBeInTheDocument()

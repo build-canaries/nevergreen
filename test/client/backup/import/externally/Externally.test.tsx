@@ -1,6 +1,6 @@
 import React from 'react'
 import userEvent from '@testing-library/user-event'
-import {wait} from '@testing-library/react'
+import {waitFor} from '@testing-library/react'
 import {Externally} from '../../../../../src/client/backup/import/externally/Externally'
 import {buildState, render} from '../../../testHelpers'
 import {BackupLocation} from '../../../../../src/client/backup/BackupActionCreators'
@@ -29,7 +29,7 @@ it('should import configuration when an ID and URL are given', async () => {
   await userEvent.type(getByLabelText('URL'), 'some-url')
   userEvent.click(getByText('import'))
 
-  await wait(() => {
+  await waitFor(() => {
     expect(BackupGateway.fetchConfiguration).toHaveBeenCalledWith(BackupLocation.GITHUB, 'some-id', '', 'some-url')
     expect(queryByText('Successfully imported configuration')).toBeInTheDocument()
   })
@@ -87,7 +87,7 @@ it('should display an message if an error occurs while importing', async () => {
   await userEvent.type(getByLabelText('URL'), 'some-url')
   userEvent.click(getByText('import'))
 
-  await wait(() => {
+  await waitFor(() => {
     expect(queryByText('some remote error')).toBeInTheDocument()
   })
 })
@@ -104,7 +104,7 @@ it('should display an message if the imported configuration is invalid', async (
   await userEvent.type(getByLabelText('URL'), 'some-url')
   userEvent.click(getByText('import'))
 
-  await wait(() => {
+  await waitFor(() => {
     expect(queryByText('Unexpected end of JSON input')).toBeInTheDocument()
   })
 })

@@ -1,7 +1,7 @@
 import React from 'react'
 import {noop} from 'lodash'
 import userEvent from '@testing-library/user-event'
-import {wait} from '@testing-library/react'
+import {waitFor} from '@testing-library/react'
 import {buildApiError, buildApiProject, buildProject, buildTray, render} from '../../testHelpers'
 import {fakeRequest} from '../../../../src/client/gateways/Gateway'
 import {AvailableProjects} from '../../../../src/client/tracking/projects/AvailableProjects'
@@ -69,13 +69,13 @@ it('should correctly show and remove errors returned while refreshing', async ()
   const {queryByTestId, getByText} = render(<AvailableProjects {...DEFAULT_PROPS} tray={tray}/>, state)
   userEvent.click(getByText('refresh'))
 
-  await wait(() => {
+  await waitFor(() => {
     expect(queryByTestId('error-messages')).toBeInTheDocument()
   })
 
   userEvent.click(getByText('refresh'))
 
-  await wait(() => {
+  await waitFor(() => {
     expect(queryByTestId('error-messages')).not.toBeInTheDocument()
   })
 })
