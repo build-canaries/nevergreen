@@ -3,7 +3,7 @@
   :url "https://github.com/build-canaries/nevergreen"
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [ring "1.8.0" :exclusions [org.eclipse.jetty/jetty-server]]
-                 [org.eclipse.jetty/jetty-server "9.4.27.v20200227"]
+                 [org.eclipse.jetty/jetty-server "9.4.28.v20200408"]
                  [compojure "1.6.1" :exclusions [ring/ring-codec]]
                  [environ "1.1.0"]
                  [cheshire "5.10.0"]
