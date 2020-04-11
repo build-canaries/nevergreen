@@ -13,9 +13,9 @@ import {getRefreshTime, getShowPrognosis} from '../settings/SettingsReducer'
 import {getTrays} from '../tracking/TraysReducer'
 import {getSelectedProjects} from '../tracking/SelectedReducer'
 import {getKnownProjects} from '../tracking/ProjectsReducer'
-import {interesting, ProjectsResponse} from '../gateways/ProjectsGateway'
-import {send} from '../gateways/Gateway'
-import {Project, ProjectError, wrapProjectErrors, wrapProjects} from '../domain/Project'
+import {interesting} from '../gateways/ProjectsGateway'
+import {isAbortedRequest, send} from '../gateways/Gateway'
+import {Prognosis, Projects, updateProjects} from '../domain/Project'
 import {useProjectNotifications} from './ProjectNotificationsHook'
 import {now} from '../common/DateTime'
 
@@ -32,8 +32,7 @@ export function Monitor({fullScreen, requestFullScreen}: MonitorProps) {
   const prognosis = useSelector(getShowPrognosis)
 
   const [loaded, setLoaded] = useState(false)
-  const [projects, setProjects] = useState<ReadonlyArray<Project>>([])
-  const [errors, setErrors] = useState<ReadonlyArray<ProjectError>>([])
+  const [projects, setProjects] = useState<Projects>([])
 
   useEffect(() => {
     requestFullScreen(true)
@@ -48,19 +47,17 @@ export function Monitor({fullScreen, requestFullScreen}: MonitorProps) {
     const request = interesting(trays, knownProjects, selected, prognosis)
 
     try {
-      const response = await send<ProjectsResponse>(request)
-
-      setProjects((previouslyFetchedProjects) => wrapProjects(response, previouslyFetchedProjects))
-      setErrors(wrapProjectErrors(response))
+      const response = await send<Projects>(request)
+      setProjects((previouslyFetchedProjects) => updateProjects(response, previouslyFetchedProjects))
       setLoaded(true)
     } catch (e) {
-      if (e.message !== 'Aborted') {
-        setErrors([{
+      if (!isAbortedRequest(e)) {
+        setProjects([{
           description: e.message,
+          prognosis: Prognosis.error,
           timestamp: now(),
-          trayId: 'Nevergreen'
+          webUrl: ''
         }])
-        setProjects([])
         setLoaded(true)
       }
     }
@@ -71,7 +68,7 @@ export function Monitor({fullScreen, requestFullScreen}: MonitorProps) {
   useTimer(onTrigger, refreshTime)
 
   const traysAdded = !isEmpty(trays)
-  const success = isEmpty(projects) && isEmpty(errors)
+  const success = isEmpty(projects)
 
   const monitorClassNames = cn(styles.monitor, {
     [styles.fullscreen]: fullScreen
@@ -86,7 +83,7 @@ export function Monitor({fullScreen, requestFullScreen}: MonitorProps) {
       {traysAdded && (
         <Loading loaded={loaded}>
           {success && <Success/>}
-          {!success && <InterestingProjects projects={projects} errors={errors}/>}
+          {!success && <InterestingProjects projects={projects}/>}
         </Loading>
       )}
     </div>

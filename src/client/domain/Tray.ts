@@ -1,6 +1,5 @@
 import nameGenerator from 'project-name-generator'
 import {v4 as uuid} from 'uuid'
-import {isSick, Project} from './Project'
 import {isNil, lowerCase} from 'lodash'
 import {isBlank} from '../common/Utils'
 
@@ -37,7 +36,7 @@ export function createId() {
   return uuid()
 }
 
-export function createTray(trayId: string, url: string, additional: Partial<Tray> = {}) {
+export function createTray(trayId: string, url: string, additional: Partial<Tray> = {}): Tray {
   return {
     authType: AuthTypes.none,
     encryptedAccessToken: '',
@@ -50,10 +49,6 @@ export function createTray(trayId: string, url: string, additional: Partial<Tray
     username: '',
     ...additional
   }
-}
-
-export function sickProjects(projects: ReadonlyArray<Project>): ReadonlyArray<Project> {
-  return projects.filter((project) => isSick(project))
 }
 
 export function trayIdentifier(tray?: Tray | null) {

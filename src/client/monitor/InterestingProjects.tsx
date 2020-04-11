@@ -1,54 +1,38 @@
 import React from 'react'
-import {clamp, map, size, take, difference} from 'lodash'
+import {clamp, difference, isEmpty, map, size, take} from 'lodash'
 import {ScaledGrid} from './ScaledGrid'
-import {Project, ProjectError} from '../domain/Project'
+import {projectIdentifier, Projects} from '../domain/Project'
 import {TileProject} from './TileProject'
 import {TileProjectsNotShown} from './TileProjectsNotShown'
-import {TileError} from './TileError'
 import styles from './interesting-projects.scss'
 import {useSelector} from 'react-redux'
 import {getMaxProjectsToShow} from '../settings/SettingsReducer'
 import {BrokenBuildSfx} from './BrokenBuildSfx'
 
 interface InterestingProjectsProps {
-  readonly projects: ReadonlyArray<Project>;
-  readonly errors: ReadonlyArray<ProjectError>;
+  readonly projects: Projects;
 }
 
-export function InterestingProjects({projects, errors}: InterestingProjectsProps) {
+export function InterestingProjects({projects}: InterestingProjectsProps) {
   const maxProjectsToShow = useSelector(getMaxProjectsToShow)
 
-  const numberOfErrors = size(errors)
-  const totalItems = numberOfErrors + size(projects)
-  const showSummary = totalItems > maxProjectsToShow
-  const maxProjectsToShowClamped = clamp(maxProjectsToShow - numberOfErrors, 1, maxProjectsToShow) - 1
-
-  const errorsToShow = showSummary
-    ? take(errors, maxProjectsToShow - 1)
-    : errors
+  const showSummary = size(projects) > maxProjectsToShow
+  const maxProjectsToShowClamped = clamp(maxProjectsToShow, 1, maxProjectsToShow) - 1
 
   const projectsToShow = showSummary
     ? take(projects, maxProjectsToShowClamped)
     : projects
 
   const projectsNotShown = difference(projects, projectsToShow)
-  const errorsNotShown = difference(errors, errorsToShow)
-
-  const errorComponents = map(errorsToShow, (error) => {
-    return <TileError key={`${error.trayId}#${error.description}`}
-                      error={error}/>
-  })
 
   const projectComponents = map(projectsToShow, (project) => {
-    return <TileProject key={`${project.trayId}#${project.projectId}`}
+    return <TileProject key={projectIdentifier(project)}
                         project={project}
                         visibleProjects={projectsToShow}/>
   })
 
-  const summary = showSummary && (
-    <TileProjectsNotShown key='summary'
-                          projectsNotShown={projectsNotShown}
-                          errorsNotShown={errorsNotShown}/>
+  const summary = !isEmpty(projectsNotShown) && (
+    <TileProjectsNotShown key='summary' projectsNotShown={projectsNotShown}/>
   )
 
   return (
@@ -57,11 +41,10 @@ export function InterestingProjects({projects, errors}: InterestingProjectsProps
          aria-live='assertive'
          aria-relevant='all'>
       <ScaledGrid>
-        {errorComponents}
         {projectComponents}
         {summary}
       </ScaledGrid>
-      <BrokenBuildSfx projects={projects} errors={errors}/>
+      <BrokenBuildSfx projects={projects}/>
     </div>
   )
 }

@@ -1,30 +1,9 @@
 import {fakeRequest, post} from './Gateway'
-import {Prognosis, Project} from '../domain/Project'
+import {Prognosis} from '../domain/Project'
 import {SelectedState} from '../tracking/SelectedReducer'
 import {size} from 'lodash'
 import {AuthTypes, Tray} from '../domain/Tray'
-
-export interface ApiError {
-  readonly description: string;
-  readonly prognosis: Prognosis.error;
-  readonly timestamp: string;
-  readonly trayId?: string;
-  readonly webUrl: string;
-}
-
-export interface ApiProject {
-  readonly description: string;
-  readonly isNew: boolean;
-  readonly lastBuildLabel: string;
-  readonly prognosis: Prognosis;
-  readonly projectId: string;
-  readonly serverType: string;
-  readonly timestamp: string;
-  readonly trayId: string;
-  readonly webUrl: string;
-}
-
-export type ProjectsResponse = ReadonlyArray<ApiProject | ApiError>
+import {SavedProject} from '../tracking/ProjectsReducer'
 
 interface ProjectsRequest {
   readonly accessToken?: string;
@@ -40,15 +19,7 @@ interface ProjectsRequest {
   readonly username?: string;
 }
 
-export function isApiError(data: ApiError | ApiProject): data is ApiError {
-  return data.prognosis === Prognosis.error
-}
-
-export function isApiProject(data: ApiError | ApiProject): data is ApiProject {
-  return data.prognosis !== Prognosis.error
-}
-
-function toProjectsRequest(tray: Tray, knownProjects: ReadonlyArray<Project>, selectedPerTray?: SelectedState): ProjectsRequest {
+function toProjectsRequest(tray: Tray, knownProjects: ReadonlyArray<SavedProject>, selectedPerTray?: SelectedState): ProjectsRequest {
   const seen = knownProjects
     .filter((project) => project.trayId === tray.trayId)
     .map((project) => project.projectId)
@@ -75,7 +46,7 @@ function hasIncludedProjects(projectsRequest: ProjectsRequest) {
   return projectsRequest.includeNew || size(projectsRequest.included) > 0
 }
 
-export function fetchAll(trays: ReadonlyArray<Tray>, knownProjects: ReadonlyArray<Project>) {
+export function fetchAll(trays: ReadonlyArray<Tray>, knownProjects: ReadonlyArray<SavedProject>) {
   const data = trays
     .map((tray) => toProjectsRequest(tray, knownProjects))
 
@@ -84,7 +55,7 @@ export function fetchAll(trays: ReadonlyArray<Tray>, knownProjects: ReadonlyArra
 
 export function interesting(
   trays: ReadonlyArray<Tray>,
-  knownProjects: ReadonlyArray<Project>,
+  knownProjects: ReadonlyArray<SavedProject>,
   selectedPerTray: SelectedState,
   prognosis: ReadonlyArray<Prognosis>
 ) {

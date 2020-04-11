@@ -1,7 +1,7 @@
 import {now} from '../common/DateTime'
 import {AuthTypes, createTray, Tray} from '../domain/Tray'
 import {Actions} from '../Actions'
-import {Project} from '../domain/Project'
+import {isError, Project, Projects} from '../domain/Project'
 import {Action} from 'redux'
 
 export interface ActionTrayAdded extends Action<Actions.TRAY_ADDED> {
@@ -60,14 +60,15 @@ export function trayRemoved(trayId: string): ActionRemoveTray {
   return {type: Actions.TRAY_REMOVED, trayId}
 }
 
-export function projectsFetched(trayId: string, projects: ReadonlyArray<Project>, includeNew: boolean): ActionProjectsFetched {
-  const first = projects[0]
+export function projectsFetched(trayId: string, projects: Projects, includeNew: boolean): ActionProjectsFetched {
+  const data = projects.filter((project): project is Project => !isError(project))
+  const first = data[0]
   const serverType = first ? first.serverType : ''
 
   return {
     type: Actions.PROJECTS_FETCHED,
     trayId,
-    data: projects,
+    data,
     serverType,
     timestamp: now(),
     includeNew

@@ -1,5 +1,31 @@
-import {isBuilding, isSick, Prognosis, projectBuildLabel, wrapProjects} from '../../../src/client/domain/Project'
-import {buildApiError, buildApiProject, buildProject} from '../testHelpers'
+import {
+  isBuilding,
+  isError,
+  isSick,
+  Prognosis,
+  projectBuildLabel,
+  projectIdentifier,
+  ProjectPrognosis,
+  updateProjects
+} from '../../../src/client/domain/Project'
+import {buildProject, buildProjectError} from '../testHelpers'
+
+describe('isError', () => {
+
+  it('should be true when error', () => {
+    expect(isError(buildProjectError())).toBe(true)
+  })
+
+  it.each<ProjectPrognosis>([
+    Prognosis.unknown,
+    Prognosis.healthy,
+    Prognosis.healthyBuilding,
+    Prognosis.sick,
+    Prognosis.sickBuilding
+  ])('should be false for value %s', (prognosis) => {
+    expect(isError(buildProject({prognosis}))).toBe(false)
+  })
+})
 
 describe('isSick', () => {
 
@@ -7,7 +33,7 @@ describe('isSick', () => {
     expect(isSick(buildProject({prognosis: Prognosis.sick}))).toBe(true)
   })
 
-  it.each([
+  it.each<ProjectPrognosis>([
     Prognosis.unknown,
     Prognosis.healthyBuilding,
     Prognosis.sickBuilding
@@ -26,7 +52,7 @@ describe('isBuilding', () => {
     expect(isBuilding(buildProject({prognosis: Prognosis.sickBuilding}))).toBe(true)
   })
 
-  it.each([
+  it.each<ProjectPrognosis>([
     Prognosis.unknown,
     Prognosis.sick
   ])('should be false for value %s', (prognosis) => {
@@ -34,9 +60,22 @@ describe('isBuilding', () => {
   })
 })
 
+describe('projectIdentifier', () => {
+
+  it('should return anc identifier for errors', () => {
+    const project = buildProjectError({webUrl: 'some-url'})
+    expect(projectIdentifier(project)).toBe('some-url')
+  })
+
+  it('should return an identifier for projects', () => {
+    const project = buildProject({trayId: 'some-tray-id', projectId: 'some-project-id'})
+    expect(projectIdentifier(project)).toBe('some-tray-id#some-project-id')
+  })
+})
+
 describe('projectBuildLabel', () => {
 
-  it.each([
+  it.each<ProjectPrognosis>([
     Prognosis.healthyBuilding,
     Prognosis.sickBuilding
   ])('should return an empty string if the project is %s because the label is only updated AFTER the project has finished building', (prognosis) => {
@@ -44,7 +83,7 @@ describe('projectBuildLabel', () => {
     expect(projectBuildLabel(project)).toBe('')
   })
 
-  it.each([
+  it.each<ProjectPrognosis>([
     Prognosis.sick,
     Prognosis.unknown,
     Prognosis.healthy
@@ -53,7 +92,7 @@ describe('projectBuildLabel', () => {
     expect(projectBuildLabel(project)).toBe('some-label')
   })
 
-  it.each([
+  it.each<ProjectPrognosis>([
     Prognosis.sick,
     Prognosis.unknown,
     Prognosis.healthy
@@ -63,40 +102,35 @@ describe('projectBuildLabel', () => {
   })
 })
 
-describe('wrapProjects', () => {
+describe('updateProjects', () => {
 
-  it('should remove errors', () => {
-    const fetched = [buildApiError()]
-    const result = wrapProjects(fetched, [])
-    expect(result).toEqual([])
+  it('should add how long a tray has been in error', () => {
+    const fetched = [buildProjectError({
+      timestamp: 'updated-fetched-time',
+      webUrl: 'some-url'
+    })]
+    const previous = [buildProjectError({
+      timestamp: 'original-fetched-time',
+      webUrl: 'some-url'
+    })]
+    const result = updateProjects(fetched, previous)
+    expect(result).toEqual(expect.arrayContaining([expect.objectContaining({timestamp: 'original-fetched-time'})]))
   })
 
-  it('should copy whether the project is new or not', () => {
-    const fetched = [
-      buildApiProject({projectId: '1', isNew: false}),
-      buildApiProject({projectId: '2', isNew: true})
-    ]
-    const result = wrapProjects(fetched, [])
-    expect(result).toEqual(expect.arrayContaining([
-      expect.objectContaining({projectId: '1', isNew: false}),
-      expect.objectContaining({projectId: '2', isNew: true})
-    ]))
-  })
-
-  it.each([
+  it.each<ProjectPrognosis>([
     Prognosis.healthyBuilding,
     Prognosis.sickBuilding
   ])('should add how long a %s project has been building', (prognosis) => {
-    const fetched = [buildApiProject({prognosis, timestamp: 'fetched-time'})]
-    const result = wrapProjects(fetched, [])
+    const fetched = [buildProject({prognosis, timestamp: 'fetched-time'})]
+    const result = updateProjects(fetched, [])
     expect(result).toEqual(expect.arrayContaining([expect.objectContaining({timestamp: 'fetched-time'})]))
   })
 
-  it.each([
+  it.each<ProjectPrognosis>([
     Prognosis.healthyBuilding,
     Prognosis.sickBuilding
   ])('should calculate how long a %s project has been building across multiple fetches', (prognosis) => {
-    const fetched = [buildApiProject({
+    const fetched = [buildProject({
       projectId: 'some-id',
       prognosis,
       lastBuildLabel: '1',
@@ -108,15 +142,15 @@ describe('wrapProjects', () => {
       lastBuildLabel: '1',
       timestamp: 'original-fetched-time'
     })]
-    const result = wrapProjects(fetched, previous)
+    const result = updateProjects(fetched, previous)
     expect(result).toEqual(expect.arrayContaining([expect.objectContaining({timestamp: 'original-fetched-time'})]))
   })
 
-  it.each([
+  it.each<ProjectPrognosis>([
     Prognosis.healthyBuilding,
     Prognosis.sickBuilding
   ])('should reset how long a %s project has been building if a new build was triggered between polling intervals', (prognosis) => {
-    const fetched = [buildApiProject({
+    const fetched = [buildProject({
       projectId: 'some-id',
       prognosis,
       lastBuildLabel: '2',
@@ -128,7 +162,7 @@ describe('wrapProjects', () => {
       lastBuildLabel: '1',
       timestamp: 'original-fetched-time'
     })]
-    const result = wrapProjects(fetched, previous)
+    const result = updateProjects(fetched, previous)
     expect(result).toEqual(expect.arrayContaining([expect.objectContaining({timestamp: 'updated-fetched-time'})]))
   })
 })

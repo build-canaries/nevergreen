@@ -1,13 +1,20 @@
 import {Actions} from '../Actions'
-import {Project} from '../domain/Project'
 import {unionWith} from 'lodash'
 import {ActionProjectsFetched, ActionRemoveTray, ActionTrayAdded} from './TrackingActionCreators'
 import {createReducer, createSelector} from '@reduxjs/toolkit'
 import {State} from '../Reducer'
 import {ActionConfigurationImported} from '../backup/BackupActionCreators'
 
+export interface SavedProject {
+  readonly description: string;
+  readonly isNew: boolean;
+  readonly projectId: string;
+  readonly removed: boolean;
+  readonly trayId: string;
+}
+
 export interface ProjectsState {
-  readonly [trayId: string]: ReadonlyArray<Project>;
+  readonly [trayId: string]: ReadonlyArray<SavedProject>;
 }
 
 export const PROJECTS_ROOT = 'projects'
@@ -29,8 +36,8 @@ export const reduce = createReducer<ProjectsState>(DEFAULT_STATE, {
   [Actions.PROJECTS_FETCHED]: (draft, action: ActionProjectsFetched) => {
     const existingProjects = draft[action.trayId]
 
-    draft[action.trayId] = unionWith(
-      action.data,
+    draft[action.trayId] = unionWith<SavedProject>(
+      action.data.map((fetched) => ({...fetched, removed: false})),
       existingProjects
         .filter((project) => !project.removed)
         .map((project) => ({...project, removed: true, isNew: false})),

@@ -4,19 +4,19 @@ import {ScaledGrid} from '../monitor/ScaledGrid'
 import {TileProject} from '../monitor/TileProject'
 import {randomDateInPast} from '../common/DateTime'
 import {TileProjectsNotShown} from '../monitor/TileProjectsNotShown'
-import {TileError} from '../monitor/TileError'
 import styles from './display-preview.scss'
 import {useSelector} from 'react-redux'
 import {getMaxProjectsToShow, getShowPrognosis} from './SettingsReducer'
-import {createProject, createProjectError, Prognosis} from '../domain/Project'
+import {isError, Prognosis, ProjectError, projectIdentifier, Project} from '../domain/Project'
 import {randomFrom} from '../common/Utils'
-import {ApiProject} from '../gateways/ProjectsGateway'
+
+type FakeProject = Project | ProjectError
 
 function randomBuildLabel() {
   return `${random(1, 9999)}`
 }
 
-function apiProject(apiProject: Partial<ApiProject>): ApiProject {
+function createFakeProject(project: Partial<FakeProject>): FakeProject {
   return {
     description: '',
     isNew: false,
@@ -27,7 +27,7 @@ function apiProject(apiProject: Partial<ApiProject>): ApiProject {
     serverType: '',
     trayId: '',
     webUrl: '',
-    ...apiProject
+    ...project
   }
 }
 
@@ -38,69 +38,67 @@ export function DisplayPreview() {
   const prognosisToShow = Object.values(Prognosis).filter((prognosis) => showPrognosis.includes(prognosis))
 
   const projectsNotShown = useMemo(() => Array.from({length: random(1, 99)}, (v, i) => {
-    return createProject(apiProject({
+    return createFakeProject({
       projectId: i.toString(),
       description: i.toString(),
       prognosis: randomFrom(prognosisToShow)
-    }))
+    })
   }), [prognosisToShow])
 
   const projects = [
-    createProject(apiProject({
+    createFakeProject({
+      description: 'some error happened!',
+      prognosis: Prognosis.error,
+      timestamp: randomDateInPast(),
+      webUrl: ''
+    }),
+    createFakeProject({
       projectId: 'unknown',
       description: 'unknown',
       prognosis: Prognosis.unknown,
       timestamp: randomDateInPast(),
       lastBuildLabel: randomBuildLabel(),
       webUrl: 'https://cctray.org/v1/'
-    })),
-    createProject(apiProject({
+    }),
+    createFakeProject({
       projectId: 'healthy',
       description: 'healthy',
       prognosis: Prognosis.healthy,
       timestamp: randomDateInPast(),
       lastBuildLabel: randomBuildLabel(),
       webUrl: 'https://nevergreen.io'
-    })),
-    createProject(apiProject({
+    }),
+    createFakeProject({
       projectId: 'healthy-building',
       description: 'healthy building',
       prognosis: Prognosis.healthyBuilding,
       timestamp: randomDateInPast(),
       lastBuildLabel: randomBuildLabel(),
       webUrl: 'https://github.com/build-canaries/nevergreen'
-    })),
-    createProject(apiProject({
+    }),
+    createFakeProject({
       projectId: 'sick-building',
       description: 'sick building',
       prognosis: Prognosis.sickBuilding,
       timestamp: randomDateInPast(),
       lastBuildLabel: randomBuildLabel(),
       webUrl: 'https://twitter.com/BuildCanaries'
-    })),
-    createProject(apiProject({
+    }),
+    createFakeProject({
       projectId: 'sick',
       description: 'sick',
       prognosis: Prognosis.sick,
       timestamp: randomDateInPast(),
       lastBuildLabel: randomBuildLabel(),
       webUrl: 'http://build-canaries.github.io/'
-    }))
+    })
   ]
 
-  const projectError = createProjectError({
-    description: 'some error happened!',
-    prognosis: Prognosis.error,
-    timestamp: '',
-    trayId: '',
-    webUrl: ''
-  })
-
   const children = projects
-    .filter((project) => showPrognosis.includes(project.prognosis))
+    .filter((project) => showPrognosis.includes(project.prognosis) || isError(project))
     .map((project) => {
       return (
-        <TileProject key={project.projectId}
+        <TileProject key={projectIdentifier(project)}
                      project={project}
                      visibleProjects={projects}/>
       )
@@ -113,11 +111,9 @@ export function DisplayPreview() {
       <h3 className={styles.title}>Preview</h3>
       <div className={styles.displayPreview}>
         <ScaledGrid>
-          <TileError error={projectError}/>
           {children}
           {showSummary && (
-            <TileProjectsNotShown projectsNotShown={projectsNotShown}
-                                  errorsNotShown={[projectError]}/>
+            <TileProjectsNotShown projectsNotShown={projectsNotShown}/>
           )}
         </ScaledGrid>
       </div>

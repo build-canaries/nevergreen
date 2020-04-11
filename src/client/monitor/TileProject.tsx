@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './tile-project.scss'
 import {isBlank} from '../common/Utils'
-import {Project, projectBuildLabel} from '../domain/Project'
+import {projectBuildLabel, ProjectError, Project, Projects} from '../domain/Project'
 import {VisuallyHidden} from '../common/VisuallyHidden'
 import {Duration} from '../common/Duration'
 import {ScaledTile} from './ScaledTile'
@@ -12,8 +12,8 @@ import {getShowBuildLabel, getShowBuildTime, getShowTrayName} from '../settings/
 import {ExternalLink} from '../common/ExternalLink'
 
 interface TileProjectProps {
-  readonly project: Project;
-  readonly visibleProjects: ReadonlyArray<Project>;
+  readonly project: Project | ProjectError;
+  readonly visibleProjects: Projects;
 }
 
 export function TileProject({project, visibleProjects}: TileProjectProps) {

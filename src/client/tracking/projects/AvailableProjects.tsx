@@ -10,12 +10,12 @@ import {VisuallyHidden} from '../../common/VisuallyHidden'
 import styles from './available-projects.scss'
 import {SecondaryButton} from '../../common/forms/Button'
 import {iCheckboxChecked, iCheckboxUnchecked} from '../../common/fonts/Icons'
-import {Project, wrapProjectErrors, wrapProjects} from '../../domain/Project'
-import {getProjectsForTray} from '../ProjectsReducer'
+import {isError, Projects, updateProjects} from '../../domain/Project'
+import {getProjectsForTray, SavedProject} from '../ProjectsReducer'
 import {getSelectedProjectsForTray} from '../SelectedReducer'
 import {useDispatch, useSelector} from 'react-redux'
 import {projectSelected, projectsFetched} from '../TrackingActionCreators'
-import {fetchAll, ProjectsResponse} from '../../gateways/ProjectsGateway'
+import {fetchAll} from '../../gateways/ProjectsGateway'
 import {send} from '../../gateways/Gateway'
 import {Loading} from '../../common/Loading'
 import {Tray} from '../../domain/Tray'
@@ -45,18 +45,17 @@ export function AvailableProjects({index, tray, requiresRefresh, setRequiresRefr
     setErrors([])
     pendingRequest.current = fetchAll([tray], projects)
     try {
-      const apiProjects = await send<ProjectsResponse>(pendingRequest.current)
-      const fetchedProjects = wrapProjects(apiProjects, [])
-      const projectErrors = wrapProjectErrors(apiProjects)
+      const apiProjects = await send<Projects>(pendingRequest.current)
+      const fetchedProjects = updateProjects(apiProjects, [])
 
-      if (projectErrors.length === 0) {
-        dispatch(projectsFetched(tray.trayId, fetchedProjects, tray.includeNew))
-      } else {
-        const errorMessages = projectErrors.map((projectError) => projectError.description)
+      if (fetchedProjects.some(isError)) {
+        const errorMessages = fetchedProjects.map((projectError) => projectError.description)
         setErrors(errorMessages)
+      } else {
+        dispatch(projectsFetched(tray.trayId, fetchedProjects, tray.includeNew))
       }
-    } catch (error) {
-      setErrors([error.message])
+    } catch (e) {
+      setErrors([e.message])
     }
     // eslint-disable-next-line require-atomic-updates
     pendingRequest.current = undefined
@@ -78,13 +77,13 @@ export function AvailableProjects({index, tray, requiresRefresh, setRequiresRefr
     }
   }, [])
 
-  const includeAll = (projects: ReadonlyArray<Project>) => () => {
+  const includeAll = (projects: ReadonlyArray<SavedProject>) => () => {
     projects
       .filter((project) => !project.removed)
       .forEach((project) => dispatch(projectSelected(tray.trayId, project.projectId, true)))
   }
 
-  const excludeAll = (projects: ReadonlyArray<Project>) => () => {
+  const excludeAll = (projects: ReadonlyArray<SavedProject>) => () => {
     projects.forEach((project) => dispatch(projectSelected(tray.trayId, project.projectId, false)))
   }
 

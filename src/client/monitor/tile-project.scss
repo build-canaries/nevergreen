@@ -75,6 +75,14 @@
   }
 }
 
+.error {
+  @include prognosis($white, $error);
+
+  .link {
+    @include link($white, $white, $error);
+  }
+}
+
 .time {
   @extend .icon-clock;
 

@@ -2,7 +2,7 @@ import React from 'react'
 import {noop} from 'lodash'
 import userEvent from '@testing-library/user-event'
 import {waitFor} from '@testing-library/react'
-import {buildApiError, buildApiProject, buildProject, buildTray, render} from '../../testHelpers'
+import {buildProject, buildProjectError, buildTray, render} from '../../testHelpers'
 import {fakeRequest} from '../../../../src/client/gateways/Gateway'
 import {AvailableProjects} from '../../../../src/client/tracking/projects/AvailableProjects'
 import {TRAYS_ROOT} from '../../../../src/client/tracking/TraysReducer'
@@ -48,10 +48,10 @@ it('should be able to select projects', () => {
 it('should correctly show and remove errors returned while refreshing', async () => {
   jest.spyOn(ProjectsGateway, 'fetchAll')
     .mockResolvedValueOnce(fakeRequest([
-      buildApiError({description: 'some-error'})
+      buildProjectError({description: 'some-error'})
     ]))
     .mockResolvedValueOnce(fakeRequest([
-      buildApiProject()
+      buildProject()
     ]))
   const tray = buildTray({trayId: 'trayId'})
   const state = {

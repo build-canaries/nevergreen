@@ -1,15 +1,5 @@
-import {trayIdentifier, sickProjects} from '../../../src/client/domain/Tray'
-import {Prognosis} from '../../../src/client/domain/Project'
-import {buildProject, buildTray} from '../testHelpers'
-
-describe('sickProjects', () => {
-
-  it('should return only sick projects', () => {
-    const healthyProject = buildProject({prognosis: Prognosis.healthyBuilding})
-    const sickProject = buildProject({prognosis: Prognosis.sick})
-    expect(sickProjects([healthyProject, sickProject])).toEqual([sickProject])
-  })
-})
+import {trayIdentifier} from '../../../src/client/domain/Tray'
+import {buildTray} from '../testHelpers'
 
 describe('getIdentifier', () => {
 

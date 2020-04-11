@@ -62,14 +62,14 @@ export async function send<T>(request: Request): Promise<T> {
   try {
     const res = await request
     return res.body || res.text
-  } catch (error) {
-    const url = error.url || 'unknown'
+  } catch (e) {
+    const url = e.url || 'unknown'
 
-    log.error(`An exception was thrown when calling URL '${url}'`, error)
+    log.error(`An exception was thrown when calling URL '${url}'`, e)
 
-    const message = error.timeout
+    const message = e.timeout
       ? TIMEOUT_ERROR
-      : _get(error, 'response.body.description') || error.message || UNKNOWN_ERROR
+      : _get(e, 'response.body.description') || e.message || UNKNOWN_ERROR
 
     throw new Error(message)
   }
@@ -78,4 +78,9 @@ export async function send<T>(request: Request): Promise<T> {
 export function fakeRequest(body: string | object): Request {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return {body, abort: noop} as any as Request
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function isAbortedRequest(e: any) {
+  return e.message === 'Aborted'
 }

@@ -3,7 +3,7 @@ import {merge} from 'lodash'
 import {reducer, State} from '../../src/client/Reducer'
 import {SETTINGS_ROOT} from '../../src/client/settings/SettingsReducer'
 import {BACKUP_ROOT} from '../../src/client/backup/BackupReducer'
-import {PROJECTS_ROOT} from '../../src/client/tracking/ProjectsReducer'
+import {PROJECTS_ROOT, SavedProject} from '../../src/client/tracking/ProjectsReducer'
 import {SELECTED_ROOT} from '../../src/client/tracking/SelectedReducer'
 import {SUCCESS_ROOT} from '../../src/client/success/SuccessReducer'
 import {TRAYS_ROOT} from '../../src/client/tracking/TraysReducer'
@@ -11,7 +11,6 @@ import {Prognosis, Project, ProjectError} from '../../src/client/domain/Project'
 import {createTray, Tray} from '../../src/client/domain/Tray'
 import {combineReducers, Reducer} from 'redux'
 import {RecursivePartial} from '../../src/client/common/Types'
-import {ApiError, ApiProject} from '../../src/client/gateways/ProjectsGateway'
 import {render as testRender} from '@testing-library/react'
 import {Provider} from 'react-redux'
 import {configureStore} from '@reduxjs/toolkit'
@@ -92,7 +91,6 @@ export function buildProject(project: Partial<Project> = {}): Project {
     description: 'some-name',
     prognosis: Prognosis.unknown,
     projectId: 'some-project-id',
-    removed: false,
     serverType: '',
     timestamp: '',
     trayId: '',
@@ -101,39 +99,26 @@ export function buildProject(project: Partial<Project> = {}): Project {
   return merge(defaultProject, project)
 }
 
+export function buildSavedProject(project: Partial<SavedProject> = {}): SavedProject {
+  const defaultProject: SavedProject = {
+    isNew: true,
+    description: 'some-name',
+    projectId: 'some-project-id',
+    removed: false,
+    trayId: ''
+  }
+  return merge(defaultProject, project)
+}
+
 export function buildProjectError(projectError: Partial<ProjectError> = {}): ProjectError {
   const defaultProjectError: ProjectError = {
     description: 'some-error',
-    timestamp: '',
-    trayId: ''
-  }
-  return merge(defaultProjectError, projectError)
-}
-
-export function buildApiProject(apiProject: Partial<ApiProject> = {}): ApiProject {
-  const defaultApiProject: ApiProject = {
-    description: '',
-    isNew: false,
-    lastBuildLabel: '',
-    prognosis: Prognosis.unknown,
-    projectId: '',
-    serverType: '',
-    timestamp: '',
-    trayId: '',
-    webUrl: ''
-  }
-  return merge(defaultApiProject, apiProject)
-}
-
-export function buildApiError(apiProject: Partial<ApiError> = {}): ApiError {
-  const defaultApiError: ApiError = {
-    description: '',
     prognosis: Prognosis.error,
     timestamp: '',
     trayId: '',
     webUrl: ''
   }
-  return merge(defaultApiError, apiProject)
+  return merge(defaultProjectError, projectError)
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any */

@@ -1,7 +1,7 @@
 import {getProjectsForTray, PROJECTS_ROOT, ProjectsState, reduce} from '../../../src/client/tracking/ProjectsReducer'
 import {Actions} from '../../../src/client/Actions'
 import {projectsFetched, trayAdded, trayRemoved} from '../../../src/client/tracking/TrackingActionCreators'
-import {buildProject, buildState, testReducer} from '../testHelpers'
+import {buildProject, buildSavedProject, buildState, testReducer} from '../testHelpers'
 import {RecursivePartial} from '../../../src/client/common/Types'
 import {AuthTypes} from '../../../src/client/domain/Tray'
 import {configurationImported} from '../../../src/client/backup/BackupActionCreators'
@@ -69,9 +69,9 @@ describe(Actions.PROJECTS_FETCHED, () => {
   it('should delete projects not fetched that were previously marked as removed', () => {
     const existingState = state({
       trayId: [
-        buildProject({projectId: 'projectId1', removed: true}),
-        buildProject({projectId: 'projectId2', removed: true}),
-        buildProject({projectId: 'projectId3', removed: true})
+        buildSavedProject({projectId: 'projectId1', removed: true}),
+        buildSavedProject({projectId: 'projectId2', removed: true}),
+        buildSavedProject({projectId: 'projectId3', removed: true})
       ]
     })
     const action = projectsFetched('trayId', [], false)
@@ -84,7 +84,7 @@ describe(Actions.PROJECTS_FETCHED, () => {
   it('should mark existing projects as removed if they haven\'t been fetched again', () => {
     const existingState = state({
       trayId: [
-        buildProject({projectId: 'projectId', removed: false})
+        buildSavedProject({projectId: 'projectId', removed: false})
       ]
     })
     const action = projectsFetched('trayId', [], false)
@@ -99,7 +99,7 @@ describe(Actions.PROJECTS_FETCHED, () => {
   it('should mark all existing projects as not new', () => {
     const existingState = state({
       trayId: [
-        buildProject({projectId: 'projectId', isNew: true})
+        buildSavedProject({projectId: 'projectId', isNew: true})
       ]
     })
     const action = projectsFetched('trayId', [], false)
@@ -114,7 +114,7 @@ describe(Actions.PROJECTS_FETCHED, () => {
   it('should mark existing projects that have been fetched again as not removed', () => {
     const existingState = state({
       trayId: [
-        buildProject({projectId: 'projectId'})
+        buildSavedProject({projectId: 'projectId'})
       ]
     })
     const action = projectsFetched(
@@ -134,7 +134,7 @@ describe(Actions.PROJECTS_FETCHED, () => {
   it('should correctly store existing and newly fetched projects', () => {
     const existingState = state({
       trayId: [
-        buildProject({projectId: 'projectId1'})
+        buildSavedProject({projectId: 'projectId1'})
       ]
     })
     const action = projectsFetched(

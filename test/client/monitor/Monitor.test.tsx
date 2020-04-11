@@ -101,7 +101,6 @@ it('should display an error if the Nevergreen server is having issues', async ()
   }
   const {queryByText} = render(<Monitor {...DEFAULT_PROPS}/>, state)
   await waitFor(() => {
-    expect(queryByText('Nevergreen')).toBeInTheDocument()
     expect(queryByText('some-error')).toBeInTheDocument()
   })
 })

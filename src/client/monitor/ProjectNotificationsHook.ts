@@ -1,11 +1,11 @@
 import {getShowSystemNotifications} from '../settings/SettingsReducer'
-import {isSick, Project} from '../domain/Project'
+import {isSick, Projects} from '../domain/Project'
 import {sendSystemNotification} from '../common/SystemNotifications'
 import * as log from '../common/Logger'
 import {useSelector} from 'react-redux'
 import {useEffect, useRef} from 'react'
 
-function body(projects: Project[]): string {
+function body(projects: Projects): string {
   return projects
     .map((project) => project.description)
     .join(', ')
@@ -23,7 +23,7 @@ function noLongerSickTitle(total: number): string {
     : `${total} projects are no longer sick!`
 }
 
-export function useProjectNotifications(projects: ReadonlyArray<Project>) {
+export function useProjectNotifications(projects: Projects) {
   const previousProjectsRef = useRef(projects)
   const showNotifications = useSelector(getShowSystemNotifications)
 

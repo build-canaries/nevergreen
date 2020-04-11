@@ -2,7 +2,7 @@ import React from 'react'
 import {noop} from 'lodash'
 import {InterestingProjects} from '../../../src/client/monitor/InterestingProjects'
 import {buildProject, buildProjectError, buildTray, render} from '../testHelpers'
-import {Prognosis} from '../../../src/client/domain/Project'
+import {Prognosis, ProjectPrognosis} from '../../../src/client/domain/Project'
 import {TRAYS_ROOT} from '../../../src/client/tracking/TraysReducer'
 import {SETTINGS_ROOT} from '../../../src/client/settings/SettingsReducer'
 import {setSystemTime} from '../clock'
@@ -30,8 +30,7 @@ describe('broken build sfx', () => {
     const props = {
       projects: [
         buildProject({trayId, prognosis: Prognosis.sick})
-      ],
-      errors: []
+      ]
     }
     const {getByTestId} = render(<InterestingProjects {...props}/>, state)
     expect(getByTestId('broken-build-sound')).toHaveAttribute('src', 'some-sfx')
@@ -68,8 +67,7 @@ describe('broken build sfx', () => {
     const props = {
       projects: [
         buildProject({trayId, prognosis: Prognosis.unknown})
-      ],
-      errors: []
+      ]
     }
     const {queryByTestId} = render(<InterestingProjects {...props}/>, state)
     expect(queryByTestId('broken-build-sound')).not.toBeInTheDocument()
@@ -88,8 +86,7 @@ describe('broken build sfx', () => {
     const props = {
       projects: [
         buildProject({trayId, prognosis: Prognosis.sick})
-      ],
-      errors: []
+      ]
     }
     const {queryByTestId} = render(<InterestingProjects {...props}/>, state)
     expect(queryByTestId('broken-build-sound')).not.toBeInTheDocument()
@@ -98,7 +95,7 @@ describe('broken build sfx', () => {
 
 describe('displaying project information', () => {
 
-  it.each([
+  it.each<ProjectPrognosis>([
     Prognosis.sick,
     Prognosis.healthy,
     Prognosis.unknown
@@ -123,8 +120,7 @@ describe('displaying project information', () => {
           lastBuildLabel: '1234',
           timestamp: '2020-01-25T19:23:00Z'
         })
-      ],
-      errors: []
+      ]
     }
 
     const {queryByText} = render(<InterestingProjects {...props}/>, state)
@@ -156,8 +152,7 @@ describe('displaying project information', () => {
           lastBuildLabel: '',
           timestamp: ''
         })
-      ],
-      errors: []
+      ]
     }
 
     const {queryByText, queryByTestId} = render(<InterestingProjects {...props}/>, state)
@@ -190,8 +185,7 @@ describe('displaying project information', () => {
           lastBuildLabel: '1234',
           timestamp: '2020-01-25T19:53:00Z'
         })
-      ],
-      errors: []
+      ]
     }
 
     const {queryByText} = render(<InterestingProjects {...props}/>, state)
@@ -223,8 +217,7 @@ describe('displaying project information', () => {
           lastBuildLabel: '1234',
           timestamp: '2020-01-25T19:23:00Z'
         })
-      ],
-      errors: []
+      ]
     }
 
     const {queryByText} = render(<InterestingProjects {...props}/>, state)
@@ -249,8 +242,7 @@ describe('displaying project information', () => {
           prognosis: Prognosis.sickBuilding,
           webUrl: 'some-url'
         })
-      ],
-      errors: []
+      ]
     }
 
     const {queryByText} = render(<InterestingProjects {...props}/>, state)
@@ -273,8 +265,7 @@ describe('limiting the projects displayed', () => {
     const props = {
       projects: [
         buildProject({trayId, prognosis: Prognosis.sick})
-      ],
-      errors: []
+      ]
     }
     const {queryByText} = render(<InterestingProjects {...props}/>, state)
     expect(queryByText(/\+\d+ not shown/)).not.toBeInTheDocument()
@@ -297,8 +288,7 @@ describe('limiting the projects displayed', () => {
         buildProject({projectId: '4', trayId}),
         buildProject({projectId: '5', trayId}),
         buildProject({projectId: '6', trayId})
-      ],
-      errors: []
+      ]
     }
     const {queryByText} = render(<InterestingProjects {...props}/>, state)
     expect(queryByText(/\+\d+ not shown/)).not.toBeInTheDocument()
@@ -323,8 +313,7 @@ describe('limiting the projects displayed', () => {
         buildProject({projectId: '6', trayId}),
         buildProject({projectId: '7', trayId}),
         buildProject({projectId: '8', trayId})
-      ],
-      errors: []
+      ]
     }
     const {queryByText} = render(<InterestingProjects {...props}/>, state)
     expect(queryByText('+3 not shown')).toBeInTheDocument()
@@ -340,8 +329,7 @@ describe('limiting the projects displayed', () => {
       }
     }
     const props = {
-      projects: [],
-      errors: [
+      projects: [
         buildProjectError({trayId, description: 'error 1'}),
         buildProjectError({trayId, description: 'error 2'}),
         buildProjectError({trayId, description: 'error 3'}),
@@ -353,7 +341,7 @@ describe('limiting the projects displayed', () => {
     }
     const {queryByText} = render(<InterestingProjects {...props}/>, state)
     expect(queryByText('+2 not shown')).toBeInTheDocument()
-    expect(queryByText('+2 errors')).toBeInTheDocument()
+    expect(queryByText('+2 error')).toBeInTheDocument()
   })
 
   it('should display a summary if the number of errors and projects is more than the max', () => {
@@ -367,15 +355,13 @@ describe('limiting the projects displayed', () => {
     }
     const props = {
       projects: [
-        buildProject({projectId: '1', trayId}),
-        buildProject({projectId: '2', trayId, prognosis: Prognosis.sick}),
-        buildProject({projectId: '3', trayId, prognosis: Prognosis.healthyBuilding})
-      ],
-      errors: [
         buildProjectError({trayId, description: 'error 1'}),
         buildProjectError({trayId, description: 'error 2'}),
         buildProjectError({trayId, description: 'error 3'}),
-        buildProjectError({trayId, description: 'error 4'})
+        buildProjectError({trayId, description: 'error 4'}),
+        buildProject({projectId: '1', trayId}),
+        buildProject({projectId: '2', trayId, prognosis: Prognosis.sick}),
+        buildProject({projectId: '3', trayId, prognosis: Prognosis.healthyBuilding})
       ]
     }
     const {queryByText} = render(<InterestingProjects {...props}/>, state)

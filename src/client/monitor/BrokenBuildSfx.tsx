@@ -1,16 +1,14 @@
 import React, {useEffect, useRef} from 'react'
-import {reduce, size} from 'lodash'
 import {isBlank} from '../common/Utils'
-import {isSick, Project, ProjectError} from '../domain/Project'
+import {isError, isSick, Projects} from '../domain/Project'
 import {useSelector} from 'react-redux'
 import {getBrokenBuildSoundFx, getPlayBrokenBuildSoundFx} from '../settings/SettingsReducer'
 
 interface BrokenBuildSfxProps {
-  readonly projects: ReadonlyArray<Project>;
-  readonly errors: ReadonlyArray<ProjectError>;
+  readonly projects: Projects;
 }
 
-export function BrokenBuildSfx({projects, errors}: BrokenBuildSfxProps) {
+export function BrokenBuildSfx({projects}: BrokenBuildSfxProps) {
   const sfxNode = useRef<HTMLAudioElement>(null)
   const playBrokenBuildSounds = useSelector(getPlayBrokenBuildSoundFx)
   const brokenBuildFx = useSelector(getBrokenBuildSoundFx)
@@ -24,9 +22,8 @@ export function BrokenBuildSfx({projects, errors}: BrokenBuildSfxProps) {
     }
   }, [])
 
-  const numberOfErrors = size(errors)
-  const projectIsBroken = reduce(projects, (previous, project) => previous || isSick(project), false)
-  const playBrokenSfx = playBrokenBuildSounds && !isBlank(brokenBuildFx) && (projectIsBroken || numberOfErrors > 0)
+  const projectIsBroken = projects.some((project) => isError(project) || isSick(project))
+  const playBrokenSfx = playBrokenBuildSounds && !isBlank(brokenBuildFx) && projectIsBroken
 
   if (!playBrokenSfx) {
     return null
