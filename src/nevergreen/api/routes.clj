@@ -19,12 +19,6 @@
 
 (defroutes api-routes
            (context "/api" []
-             ; deprecated in 3.5.0 by /projects, to be removed in 5.0.0
-             (OPTIONS "/projects/all" [] preflight-response)
-             (POST "/projects/all" {data :body} {:body (projects/get-projects data)})
-             (OPTIONS "/projects/interesting" [] preflight-response)
-             (POST "/projects/interesting" {data :body} {:body (projects/get-projects (map #(assoc % :prognosis [:sick :sick-building :healthy-building :unknown]) data))})
-
              (OPTIONS "/projects" [] preflight-response)
              (POST "/projects" {data :body} {:body (projects/get-projects data)})
 
@@ -43,6 +37,7 @@
              (GET "/version" [] {:headers {"Content-Type" "text/plain; charset=utf-8"}
                                  :body    (version)})
 
+             ; this stops the index.html getting served for unknown API routes
              (GET "*" [] {:status 404})))
 
 (defn wrap-api-middleware [routes]
