@@ -61,6 +61,7 @@ export function Nevergreen() {
         <Help/>
         <div className={styles.nevergreen}
              tabIndex={-1}
+             onKeyDown={disableFullScreen}
              {...disableFullScreenOn}>
           <Header fullScreen={fullScreen}/>
           <Notification notification={notification}
