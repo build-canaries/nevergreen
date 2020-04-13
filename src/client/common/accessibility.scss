@@ -23,7 +23,7 @@
   border-radius: 0;
   color: $color;
   outline: 3px solid $outline;
-  z-index: 1000; // make sure the focus outline isn't below adjacent elements
+  z-index: $focus-index; // make sure the focus outline isn't below adjacent elements
 }
 
 @mixin interactive(
