@@ -27,8 +27,8 @@ export function ExportGitLabHelp({searchQuery}: HelpProps) {
         personal <strong>access token</strong></ExternalLink> to allow a Snippet to be created. The
         token requires the <ExternalLink
         href='https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html#limiting-scopes-of-a-personal-access-token'><code>api</code> scope</ExternalLink>.
-        The <code>api</code> scope gives full access. Once <ExternalLink
-        href='https://gitlab.com/gitlab-org/gitlab-ce/issues/41165'>GitLab make scopes more fine
+        Please note, the <code>api</code> scope gives full access, Once <ExternalLink
+        href='https://gitlab.com/gitlab-org/gitlab/-/issues/20440'>GitLab make scopes more fine
         grained</ExternalLink> Nevergreen will use that.
       </p>
       <p>

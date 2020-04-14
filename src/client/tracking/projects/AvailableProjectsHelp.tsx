@@ -12,7 +12,7 @@ const KEYWORDS = [
   'filter'
 ]
 
-export function AvailableProjectsHelp({searchQuery}: HelpProps) {
+export function AvailableProjectsHelp({searchQuery, helpLink}: HelpProps) {
   return (
     <HelpArticle keywords={KEYWORDS}
                  searchQuery={searchQuery}
@@ -29,17 +29,19 @@ export function AvailableProjectsHelp({searchQuery}: HelpProps) {
         </dd>
         <dt>include all</dt>
         <dd>
-          Includes all the currently shown (see filter) projects for tracking which means they will be shown on the
-          Monitor page.
+          Includes all the currently shown {helpLink('filter')} projects for tracking which means they will be shown on
+          the Monitor page.
         </dd>
         <dt>exclude all</dt>
         <dd>
-          Excludes all the currently shown (see filter) projects for tracking which means they will not be shown on
-          the Monitor page.
+          Excludes all the currently shown {helpLink('filter')} projects for tracking which means they will not be shown
+          on the Monitor page.
         </dd>
         <dt>filter</dt>
         <dd>
-          Takes a regular expression and filters the visible project list to any projects with matching names.
+          Takes a regular expression and filters the visible project list to any projects with matching names. Clear the
+          input to show all projects again. The include all and exclude all buttons work on the currently visible
+          projects, so filtering can be used to quickly include or exclude a group of projects.
         </dd>
       </dl>
     </HelpArticle>

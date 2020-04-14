@@ -12,7 +12,7 @@ const KEYWORDS = [
   'broken build sound'
 ]
 
-export function NotificationSettingsHelp({searchQuery}: HelpProps) {
+export function NotificationSettingsHelp({searchQuery, helpLink}: HelpProps) {
   return (
     <HelpArticle keywords={KEYWORDS}
                  searchQuery={searchQuery}
@@ -29,7 +29,7 @@ export function NotificationSettingsHelp({searchQuery}: HelpProps) {
         <dt>broken build sound</dt>
         <dd>
           A URL to the sound file to play when a project is sick. This will only play if audio notifications are
-          enabled (see play audio notifications).
+          enabled {helpLink('play audio notifications')}.
         </dd>
       </dl>
     </HelpArticle>

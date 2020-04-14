@@ -7,6 +7,7 @@ import styles from './help-article.scss'
 
 export interface HelpProps {
   readonly searchQuery: string;
+  readonly helpLink: (to: string) => ReactNode;
 }
 
 interface KeywordProps {

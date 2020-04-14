@@ -14,12 +14,19 @@ import {ImportGitHubHelp} from '../backup/import/externally/ImportGitHubHelp'
 import {ImportGitLabHelp} from '../backup/import/externally/ImportGitLabHelp'
 import {DisplaySettingsHelp} from '../settings/DisplaySettingsHelp'
 import {NotificationSettingsHelp} from '../settings/NotificationSettingsHelp'
+import {MonitorHelp} from '../monitor/MonitorHelp'
+import {HelpLink} from './HelpLink'
 
 interface HelpProps {
   readonly initiallyShow?: boolean;
 }
 
 export const SHOW_HELP_SHORTCUT = 'h'
+
+export function withHelpLink(setSearchQuery: (q: string) => void) {
+  // eslint-disable-next-line react/display-name
+  return (to: string) => <HelpLink to={to} setSearchQuery={setSearchQuery}/>
+}
 
 export function Help({initiallyShow}: HelpProps) {
   const [show, setShow] = useState(initiallyShow || false)
@@ -31,6 +38,8 @@ export function Help({initiallyShow}: HelpProps) {
       Mousetrap.unbind(SHOW_HELP_SHORTCUT)
     }
   }, [])
+
+  const helpLink = withHelpLink(setSearchQuery)
 
   return (
     <Modal show={show}
@@ -46,18 +55,19 @@ export function Help({initiallyShow}: HelpProps) {
         <span>search</span>
       </Input>
       <ul className={styles.articles}>
-        <AddTrayHelp searchQuery={searchQuery}/>
-        <CCTrayLocationsHelp searchQuery={searchQuery}/>
-        <AvailableProjectsHelp searchQuery={searchQuery}/>
-        <TraySettingsHelp searchQuery={searchQuery}/>
-        <SuccessHelp searchQuery={searchQuery}/>
-        <GeneralSettingsHelp searchQuery={searchQuery}/>
-        <DisplaySettingsHelp searchQuery={searchQuery}/>
-        <NotificationSettingsHelp searchQuery={searchQuery}/>
-        <ImportGitHubHelp searchQuery={searchQuery}/>
-        <ImportGitLabHelp searchQuery={searchQuery}/>
-        <ExportGitHubHelp searchQuery={searchQuery}/>
-        <ExportGitLabHelp searchQuery={searchQuery}/>
+        <MonitorHelp searchQuery={searchQuery} helpLink={helpLink}/>
+        <AddTrayHelp searchQuery={searchQuery} helpLink={helpLink}/>
+        <CCTrayLocationsHelp searchQuery={searchQuery} helpLink={helpLink}/>
+        <AvailableProjectsHelp searchQuery={searchQuery} helpLink={helpLink}/>
+        <TraySettingsHelp searchQuery={searchQuery} helpLink={helpLink}/>
+        <SuccessHelp searchQuery={searchQuery} helpLink={helpLink}/>
+        <GeneralSettingsHelp searchQuery={searchQuery} helpLink={helpLink}/>
+        <DisplaySettingsHelp searchQuery={searchQuery} helpLink={helpLink}/>
+        <NotificationSettingsHelp searchQuery={searchQuery} helpLink={helpLink}/>
+        <ImportGitHubHelp searchQuery={searchQuery} helpLink={helpLink}/>
+        <ImportGitLabHelp searchQuery={searchQuery} helpLink={helpLink}/>
+        <ExportGitHubHelp searchQuery={searchQuery} helpLink={helpLink}/>
+        <ExportGitLabHelp searchQuery={searchQuery} helpLink={helpLink}/>
       </ul>
     </Modal>
   )

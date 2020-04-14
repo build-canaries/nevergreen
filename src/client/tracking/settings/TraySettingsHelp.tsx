@@ -17,7 +17,7 @@ const KEYWORDS = [
   'delete'
 ]
 
-export function TraySettingsHelp({searchQuery}: HelpProps) {
+export function TraySettingsHelp({searchQuery, helpLink}: HelpProps) {
   return (
     <HelpArticle
       keywords={KEYWORDS}
@@ -44,8 +44,9 @@ export function TraySettingsHelp({searchQuery}: HelpProps) {
         <dt>automatically include new projects</dt>
         <dd>
           When <em>enabled</em> (the default) any new projects added on the CI server will automatically be
-          included for tracking. To remove a new project that has been automatically added, refreshing (see refresh) the
-          CI server will make the project known to Nevergreen where it can be explicitly excluded by unchecking.
+          included for tracking. To remove a new project that has been automatically added,
+          refreshing {helpLink('refresh')} the CI server will make the project known to Nevergreen where it can be
+          explicitly excluded by unchecking.
         </dd>
         <dt>delete</dt>
         <dd>Removes the CI server. Click with care as this can not be undone!</dd>

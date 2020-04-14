@@ -11,7 +11,8 @@ const KEYWORDS = [
   'username',
   'password',
   'access token',
-  'auth'
+  'auth',
+  'getting started'
 ]
 
 export function AddTrayHelp({searchQuery}: HelpProps) {
@@ -26,7 +27,7 @@ export function AddTrayHelp({searchQuery}: HelpProps) {
         server is protected by auth.
       </p>
       <p>
-        Multiple CI servers can be tracked, <ExternalLink
+        Multiple CCTray XML feeds can be tracked, <ExternalLink
         href='https://www.thoughtworks.com/radar/techniques/a-single-ci-instance-for-all-teams'>allowing you to add
         other teams CI servers</ExternalLink>.
       </p>

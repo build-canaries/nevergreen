@@ -13,7 +13,7 @@ const KEYWORDS = [
   'png'
 ]
 
-export function SuccessHelp({searchQuery}: HelpProps) {
+export function SuccessHelp({searchQuery, helpLink}: HelpProps) {
   return (
     <HelpArticle keywords={KEYWORDS}
                  searchQuery={searchQuery}
@@ -22,8 +22,8 @@ export function SuccessHelp({searchQuery}: HelpProps) {
       <p>
         You can add text messages or any <ExternalLink
         href='https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#Supported_image_formats'>valid image
-        URLs</ExternalLink>, one of these will get randomly displayed when no projects are broken or building on the
-        Monitor page.
+        URLs</ExternalLink>, one of these will get randomly displayed when no interesting projects are displayed on the
+        Monitor page {helpLink('monitor')}.
       </p>
       <p>
         Messages are previewed in a 16:9 ratio which is how they would look on a full HD TV (1920x1080).
