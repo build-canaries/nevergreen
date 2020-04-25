@@ -8,7 +8,7 @@
                  [environ "1.1.0"]
                  [cheshire "5.10.0"]
                  [clj-cctray "2.0.0"]
-                 [clj-http "3.10.0"]
+                 [clj-http "3.10.1"]
                  [ring-curl "1.0.1"]
                  [ring/ring-json "0.5.0"]
                  [ring/ring-defaults "0.3.2"]
@@ -35,7 +35,7 @@
   :profiles {:dev  {:plugins [[lein-ancient "0.6.15"]
                               [jonase/eastwood "0.3.11"]
                               [lein-cloverage "1.1.2"]
-                              [lein-nvd "1.3.1"]]}
+                              [lein-nvd "1.4.0"]]}
              :test {:jvm-opts ["-Dlogback.configurationFile=./test/logback-unit.xml"]}}
   :cloverage {:output           "target/coverage-reports/server"
               :junit?           true
