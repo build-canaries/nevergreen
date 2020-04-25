@@ -6,8 +6,8 @@
             [ring.adapter.jetty :refer [run-jetty]]
             [cheshire.generate :as cheshire]
             [nevergreen.config :as config]
-            [nevergreen.api.routes :refer :all]
-            [nevergreen.app.routes :refer :all]
+            [nevergreen.api-routes :refer :all]
+            [nevergreen.app-routes :refer :all]
             [nevergreen.logging :refer [configure-logging]])
   (:gen-class))
 

@@ -17,7 +17,7 @@
 (defn- ^Key secret [^String aes-key]
   (SecretKeySpec. (.getBytes aes-key charset) "AES"))
 
-(defn- cipher [mode aes-key]
+(defn- cipher [^Integer mode aes-key]
   (doto (Cipher/getInstance transformation)
     (.init mode (secret aes-key))))
 
@@ -31,5 +31,5 @@
     (try
       (let [cipher (cipher Cipher/DECRYPT_MODE aes-key)]
         (String. (.doFinal cipher (base64->bytes base64-encoded)) charset))
-      (catch BadPaddingException e
+      (catch BadPaddingException _
         (throw (ex-info "Unable to decrypt password as the Nevergreen server's AES_KEY has changed" {:status 500}))))))
