@@ -62,7 +62,7 @@ export function ScaledGrid({children}: ScaledGridProps) {
     }
   }, [])
 
-  useLayoutEffect(calculate, [children])
+  useLayoutEffect(calculate, [children, calculate])
   useElementResized(listRef, calculate)
 
   const childrenToShow = Children.toArray(children)
@@ -71,21 +71,19 @@ export function ScaledGrid({children}: ScaledGridProps) {
   const childStyle = {width: `${childWidth}px`, height: `${childHeight}px`}
 
   return (
-    <>
-      <ul className={styles.scaledGrid}
-          ref={listRef}>
-        {
-          childrenToShow.map((child, index) => {
-            return (
-              <li key={index}
-                  className={styles.item}
-                  style={childStyle}>
-                {child}
-              </li>
-            )
-          })
-        }
-      </ul>
-    </>
+    <ul className={styles.scaledGrid}
+        ref={listRef}>
+      {
+        childrenToShow.map((child, index) => {
+          return (
+            <li key={index}
+                className={styles.item}
+                style={childStyle}>
+              {child}
+            </li>
+          )
+        })
+      }
+    </ul>
   )
 }

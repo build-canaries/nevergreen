@@ -1,5 +1,4 @@
 import {useCallback, useLayoutEffect, useRef, useState} from 'react'
-import {throttle} from 'lodash'
 
 type FullScreen = [
   boolean,
@@ -7,7 +6,6 @@ type FullScreen = [
   () => void
 ]
 
-const ONE_SECOND = 1000
 const THREE_SECONDS = 3 * 1000
 
 export function useFullScreen(): FullScreen {
@@ -15,20 +13,19 @@ export function useFullScreen(): FullScreen {
   const [fullScreen, setFullScreen] = useState(false)
   const [fullScreenRequested, setFullScreenRequested] = useState(false)
 
-  const disableFullScreen = useCallback(throttle(() => {
-      clearTimeout(fullScreenTimer.current)
+  const disableFullScreen = useCallback(() => {
+    clearTimeout(fullScreenTimer.current)
 
-      if (fullScreen) {
-        setFullScreen(false)
-      }
+    if (fullScreen) {
+      setFullScreen(false)
+    }
 
-      if (fullScreenRequested) {
-        fullScreenTimer.current = window.setTimeout(
-          () => setFullScreen(true),
-          THREE_SECONDS)
-      }
-    }, ONE_SECOND, {trailing: false}),
-    [fullScreen, fullScreenRequested])
+    if (fullScreenRequested) {
+      fullScreenTimer.current = window.setTimeout(
+        () => setFullScreen(true),
+        THREE_SECONDS)
+    }
+  }, [fullScreen, fullScreenRequested])
 
   useLayoutEffect(() => {
     setFullScreen(fullScreenRequested)
