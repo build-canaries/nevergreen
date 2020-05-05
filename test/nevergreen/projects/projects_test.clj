@@ -84,7 +84,7 @@
     (testing "removes keys not required by the UI"
       (binding [subject/parse (constantly [{:activity           "sleeping"
                                             :job                ""
-                                            :last-build-Label   "83"
+                                            :last-build-label   "83"
                                             :last-build-status  "success"
                                             :last-build-time    "2019-11-28T21:53:00.410Z"
                                             :messages           []
@@ -105,7 +105,7 @@
         (is (= [{:description      "clj cctray"
                  :timestamp        "2020-03-24T20:23:42.707190Z"
                  :is-new           false
-                 :last-build-Label "83"
+                 :last-build-label "83"
                  :prognosis        project-prognosis
                  :project-id       project-id
                  :server-type      ""

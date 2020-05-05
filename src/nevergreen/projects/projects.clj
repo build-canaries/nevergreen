@@ -11,7 +11,7 @@
 
 (def ^:private ui-required-keys [:description
                                  :is-new
-                                 :last-build-Label
+                                 :last-build-label
                                  :prognosis
                                  :project-id
                                  :server-type
@@ -26,14 +26,14 @@
                                    :unknown
                                    :healthy])
 
-(defn ^:dynamic fetch [tray]
-  (ci-gateway/fetch-cctray tray))
+(defn ^:dynamic fetch [feed]
+  (ci-gateway/fetch-cctray feed))
 
 (defn ^:dynamic parse [source options]
   (parser/get-projects source options))
 
-(defn ^:dynamic enrich [tray projects]
-  (ci-server/enrich-projects tray projects))
+(defn ^:dynamic enrich [feed projects]
+  (ci-server/enrich-projects feed projects))
 
 (defn- filter-by-ids [included ids projects]
   (if (nil? included)
