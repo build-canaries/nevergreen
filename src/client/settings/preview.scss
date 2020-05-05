@@ -1,0 +1,24 @@
+@import '../common/variables';
+
+.preview {
+  background-color: $black;
+  color: $off-white;
+  cursor: inherit;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+.projects {
+  flex: 1;
+  font-family: $monospace-font;
+  position: relative;
+}
+
+.projectsInner {
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}

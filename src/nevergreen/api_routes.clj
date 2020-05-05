@@ -5,6 +5,7 @@
             [nevergreen.backup.export :refer [export-config]]
             [nevergreen.backup.import :refer [import-config]]
             [nevergreen.projects.projects :as projects]
+            [nevergreen.projects.preview :as preview]
             [ring.middleware.json :refer [wrap-json-body wrap-json-response]]
             [nevergreen.middleware.wrap-cache-control :refer [wrap-no-cache]]
             [nevergreen.middleware.wrap-convert-keys :refer [wrap-convert-keys-req wrap-convert-keys-res]]
@@ -21,6 +22,9 @@
            (context "/api" []
              (OPTIONS "/projects" [] preflight-response)
              (POST "/projects" {data :body} {:body (projects/get-projects data)})
+
+             (OPTIONS "/preview" [] preflight-response)
+             (POST "/preview" {data :body} {:body (preview/preview data)})
 
              (OPTIONS "/encrypt" [] preflight-response)
              (POST "/encrypt" {data :body} {:headers {"Content-Type" "text/plain; charset=utf-8"}

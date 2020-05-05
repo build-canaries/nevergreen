@@ -1,6 +1,8 @@
 @import '../common/variables';
 @import '../common/layout';
 @import '../common/responsive';
+@import '../common/forms/button';
+@import '../common/fonts/icon-font';
 
 .container {
   padding: 1em;
@@ -26,4 +28,12 @@
   @include respond-to(tablet, desktop) {
     width: 42em;
   }
+}
+
+.preview {
+  @extend .secondary;
+  @extend .icon-eye;
+  @extend .withIcon;
+
+  margin-top: $margin-top;
 }

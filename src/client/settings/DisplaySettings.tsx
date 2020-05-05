@@ -3,7 +3,6 @@ import {Container} from '../common/Container'
 import {Checkbox} from '../common/forms/Checkbox'
 import {DropDown} from '../common/forms/DropDown'
 import styles from './display-settings.scss'
-import {DisplayPreview} from './DisplayPreview'
 import {DisplayPrognosisSelection} from './DisplayPrognosisSelection'
 import {useDispatch, useSelector} from 'react-redux'
 import {
@@ -16,6 +15,7 @@ import {
 } from './SettingsActionCreators'
 import {getMaxProjectsToShow, getShowBuildLabel, getShowBuildTime, getShowTrayName, getSort} from './SettingsReducer'
 import {SortBy} from '../gateways/ProjectsGateway'
+import {Link} from 'react-router-dom'
 
 export function DisplaySettings() {
   const dispatch = useDispatch()
@@ -78,7 +78,11 @@ export function DisplaySettings() {
         <span className={styles.dropDownLabel}>sort projects by</span>
       </DropDown>
 
-      <DisplayPreview/>
+      <Link to='/preview'
+            className={styles.preview}
+            data-locator='display-preview'>
+        Preview these display settings
+      </Link>
     </Container>
   )
 }

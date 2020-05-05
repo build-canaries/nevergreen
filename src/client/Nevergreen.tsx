@@ -21,6 +21,7 @@ import {useLocalConfiguration} from './configuration/ConfigurationHook'
 import {Help} from './help/Help'
 import {DEFAULT_FONT_METRICS, FontMetrics, FontMetricsContext} from './FontMetrics'
 import Mousetrap from 'mousetrap'
+import {Preview} from './settings/Preview'
 
 export function Nevergreen() {
   const loaded = useLocalConfiguration()
@@ -73,6 +74,7 @@ export function Nevergreen() {
                 <Monitor fullScreen={fullScreen}
                          requestFullScreen={requestFullScreen}/>
               </Route>
+              <Route exact path='/preview' component={Preview}/>
               <Route>
                 <div className={styles.settings}>
                   <Switch>

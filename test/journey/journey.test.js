@@ -75,17 +75,21 @@ function shouldBeAbleToChangeSettingsDisplay() {
   cy.locate('show-build-times').check()
   cy.locate('show-build-labels').check()
 
+  cy.locate('display-preview').click()
   cy.locate('build-label').should('exist')
   cy.locate('tray-name').should('exist')
   cy.locate('duration').should('exist') // TODO: building vs broken time
+  cy.visitPage('settings')
 
   cy.locate('show-tray-names').uncheck()
   cy.locate('show-build-times').uncheck()
   cy.locate('show-build-labels').uncheck()
 
+  cy.locate('display-preview').click()
   cy.locate('build-label').should('not.exist')
   cy.locate('tray-name').should('not.exist')
   cy.locate('duration').should('not.exist')
+  cy.visitPage('settings')
 
   cy.locate('max-projects-to-show').select('30')
   cy.locate('show-prognosis').each((prognosis) => {
