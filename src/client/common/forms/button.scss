@@ -5,7 +5,8 @@
 @import '../typography';
 
 @mixin button-interaction($color: $off-black, $background-color: $white, $border-color: $light-grey) {
-  &:enabled {
+  &:enabled,
+  &[href] {
     box-shadow: $shadow;
     cursor: pointer;
     transition: box-shadow 0.1s ease-in;
