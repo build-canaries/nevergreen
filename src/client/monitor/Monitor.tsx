@@ -9,7 +9,7 @@ import {isEmpty} from 'lodash'
 import {Title} from '../common/Title'
 import {useTimer} from '../common/TimerHook'
 import {useSelector} from 'react-redux'
-import {getRefreshTime, getShowPrognosis} from '../settings/SettingsReducer'
+import {getRefreshTime, getShowPrognosis, getSort} from '../settings/SettingsReducer'
 import {getTrays} from '../tracking/TraysReducer'
 import {getSelectedProjects} from '../tracking/SelectedReducer'
 import {getKnownProjects} from '../tracking/ProjectsReducer'
@@ -30,6 +30,7 @@ export function Monitor({fullScreen, requestFullScreen}: MonitorProps) {
   const selected = useSelector(getSelectedProjects)
   const knownProjects = useSelector(getKnownProjects)
   const prognosis = useSelector(getShowPrognosis)
+  const sort = useSelector(getSort)
 
   const [loaded, setLoaded] = useState(false)
   const [projects, setProjects] = useState<Projects>([])
@@ -44,7 +45,7 @@ export function Monitor({fullScreen, requestFullScreen}: MonitorProps) {
   useProjectNotifications(projects)
 
   const onTrigger = useCallback(async () => {
-    const request = interesting(trays, knownProjects, selected, prognosis)
+    const request = interesting(trays, knownProjects, selected, prognosis, sort)
 
     try {
       const response = await send<Projects>(request)
@@ -63,7 +64,7 @@ export function Monitor({fullScreen, requestFullScreen}: MonitorProps) {
     }
 
     return request.abort.bind(request)
-  }, [trays, knownProjects, selected, prognosis])
+  }, [trays, knownProjects, selected, prognosis, sort])
 
   useTimer(onTrigger, refreshTime)
 

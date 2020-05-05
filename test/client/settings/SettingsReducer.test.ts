@@ -9,6 +9,7 @@ import {
   getShowPrognosis,
   getShowSystemNotifications,
   getShowTrayName,
+  getSort,
   reduce,
   SETTINGS_ROOT,
   SettingsState
@@ -24,12 +25,14 @@ import {
   setShowBuildTime,
   setShowPrognosis,
   setShowSystemNotifications,
-  setShowTrayName
+  setShowTrayName,
+  setSort
 } from '../../../src/client/settings/SettingsActionCreators'
 import {buildState, testReducer} from '../testHelpers'
 import {RecursivePartial} from '../../../src/client/common/Types'
 import {Prognosis} from '../../../src/client/domain/Project'
 import {configurationImported} from '../../../src/client/backup/BackupActionCreators'
+import {SortBy} from '../../../src/client/gateways/ProjectsGateway'
 
 const reducer = testReducer({
   [SETTINGS_ROOT]: reduce
@@ -187,5 +190,15 @@ describe(Actions.SHOW_PROGNOSIS, () => {
     const action = setShowPrognosis(Prognosis.sick, false)
     const newState = reducer(existingState, action)
     expect(getShowPrognosis(newState)).toEqual([Prognosis.sickBuilding])
+  })
+})
+
+describe(Actions.SET_SORT, () => {
+
+  it('should add the sort', () => {
+    const existingState = state({sort: SortBy.default})
+    const action = setSort(SortBy.prognosis)
+    const newState = reducer(existingState, action)
+    expect(getSort(newState)).toEqual(SortBy.prognosis)
   })
 })

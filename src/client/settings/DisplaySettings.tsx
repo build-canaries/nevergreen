@@ -11,9 +11,11 @@ import {
   setShowBuildLabel,
   setShowBuildTime,
   setShowTrayName,
+  setSort,
   VALID_PROJECTS_TO_SHOW
 } from './SettingsActionCreators'
-import {getMaxProjectsToShow, getShowBuildLabel, getShowBuildTime, getShowTrayName} from './SettingsReducer'
+import {getMaxProjectsToShow, getShowBuildLabel, getShowBuildTime, getShowTrayName, getSort} from './SettingsReducer'
+import {SortBy} from '../gateways/ProjectsGateway'
 
 export function DisplaySettings() {
   const dispatch = useDispatch()
@@ -21,12 +23,20 @@ export function DisplaySettings() {
   const showBuildTime = useSelector(getShowBuildTime)
   const showBuildLabel = useSelector(getShowBuildLabel)
   const maxProjectsToShow = useSelector(getMaxProjectsToShow)
+  const sort = useSelector(getSort)
 
   const projectsToShowOptions = VALID_PROJECTS_TO_SHOW.map((value) => {
     const display = value === Number.MAX_SAFE_INTEGER
       ? 'all projects (not recommended)'
       : `${value.toString()} projects`
     return {value: value.toString(), display}
+  })
+
+  const sortOptions = Object.keys(SortBy).map((k) => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    const value = SortBy[k]
+    return {value, display: value}
   })
 
   return (
@@ -52,12 +62,20 @@ export function DisplaySettings() {
 
       <DisplayPrognosisSelection/>
 
-      <DropDown className={styles.maxProjects}
+      <DropDown className={styles.dropDown}
                 options={projectsToShowOptions}
                 value={maxProjectsToShow}
                 onChange={({target}) => dispatch(setMaxProjectsToShow(target.value))}
                 data-locator='max-projects-to-show'>
-        max number of projects to show
+        <span className={styles.dropDownLabel}>max number of projects to show</span>
+      </DropDown>
+
+      <DropDown className={styles.dropDown}
+                options={sortOptions}
+                value={sort}
+                onChange={({target}) => dispatch(setSort(target.value as SortBy))}
+                data-locator='sort-projects-by'>
+        <span className={styles.dropDownLabel}>sort projects by</span>
       </DropDown>
 
       <DisplayPreview/>

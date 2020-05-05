@@ -15,8 +15,15 @@
   @extend .checkbox;
 }
 
-.maxProjects {
+.dropDownLabel {
   @include respond-to(tablet, desktop) {
-    width: 40em;
+    display: inline-block;
+    width: 15em;
+  }
+}
+
+.dropDown {
+  @include respond-to(tablet, desktop) {
+    width: 42em;
   }
 }

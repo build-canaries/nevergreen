@@ -5,6 +5,7 @@ import {
   ActionPlayBrokenBuildSoundFx,
   ActionRefreshTime,
   ActionSetMaxProjects,
+  ActionSetSort,
   ActionShowBuildLabel,
   ActionShowBuildTime,
   ActionShowPrognosis,
@@ -19,6 +20,7 @@ import {State} from '../Reducer'
 import {Prognosis} from '../domain/Project'
 import {get, uniq} from 'lodash'
 import {ActionConfigurationImported} from '../backup/BackupActionCreators'
+import {SortBy} from '../gateways/ProjectsGateway'
 
 export interface SettingsState {
   readonly showTrayName: boolean;
@@ -31,6 +33,7 @@ export interface SettingsState {
   readonly maxProjectsToShow: number;
   readonly clickToShowMenu: boolean;
   readonly showPrognosis: ReadonlyArray<Prognosis>;
+  readonly sort: SortBy;
 }
 
 export const SETTINGS_ROOT = 'settings'
@@ -50,7 +53,8 @@ const DEFAULT_STATE: SettingsState = {
     Prognosis.sickBuilding,
     Prognosis.healthyBuilding,
     Prognosis.unknown
-  ]
+  ],
+  sort: SortBy.default
 }
 
 export const reduce = createReducer<SettingsState>(DEFAULT_STATE, {
@@ -89,6 +93,9 @@ export const reduce = createReducer<SettingsState>(DEFAULT_STATE, {
     draft.showPrognosis = action.show
       ? uniq(draft.showPrognosis.concat(action.prognosis))
       : draft.showPrognosis.filter((prognosis) => prognosis !== action.prognosis)
+  },
+  [Actions.SET_SORT]: (draft, action: ActionSetSort) => {
+    draft.sort = action.value
   }
 })
 
@@ -103,3 +110,4 @@ export const getRefreshTime = createSelector(getSettings, (settings) => settings
 export const getMaxProjectsToShow = createSelector(getSettings, (settings) => settings.maxProjectsToShow)
 export const getClickToShowMenu = createSelector(getSettings, (settings) => settings.clickToShowMenu)
 export const getShowPrognosis = createSelector(getSettings, (settings) => settings.showPrognosis)
+export const getSort = createSelector(getSettings, (settings) => settings.sort)

@@ -43,6 +43,9 @@
           "items": {
             "type": "string"
           }
+        },
+        "sort": {
+          "type": "string"
         }
       },
       "additionalProperties": false

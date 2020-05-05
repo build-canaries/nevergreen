@@ -18,6 +18,7 @@ import {MemoryRouter} from 'react-router-dom'
 import Modal from 'react-modal'
 import {DEFAULT_PROJECTS_TO_SHOW, DEFAULT_REFRESH_TIME} from '../../src/client/settings/SettingsActionCreators'
 import {APPLIED_MIGRATIONS_ROOT} from '../../src/client/configuration/MigrationsReducer'
+import {SortBy} from '../../src/client/gateways/ProjectsGateway'
 
 export function buildState(subState: RecursivePartial<State> = {}): State {
   return merge({
@@ -33,7 +34,8 @@ export function buildState(subState: RecursivePartial<State> = {}): State {
       showTrayName: false,
       systemNotificationPermissionDenied: false,
       systemNotificationRequestingPermission: false,
-      showPrognosis: []
+      showPrognosis: [],
+      sort: SortBy.default
     },
     [BACKUP_ROOT]: {
       github: {

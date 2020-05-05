@@ -2,6 +2,7 @@ import React from 'react'
 import {Tray} from '../../../src/client/tracking/Tray'
 import {buildTray, render} from '../testHelpers'
 import {TRAYS_ROOT} from '../../../src/client/tracking/TraysReducer'
+import {PROJECTS_ROOT} from '../../../src/client/tracking/ProjectsReducer'
 
 const DEFAULT_PROPS = {
   tray: buildTray(),
@@ -18,7 +19,8 @@ describe('tray title', () => {
       name: 'some-name'
     })
     const state = {
-      [TRAYS_ROOT]: {trayId: tray}
+      [TRAYS_ROOT]: {trayId: tray},
+      [PROJECTS_ROOT]: {trayId: []}
     }
     const {getByTestId} = render(<Tray {...DEFAULT_PROPS} tray={tray}/>, state)
     expect(getByTestId('container-title')).toHaveTextContent('some-name')
@@ -31,7 +33,8 @@ describe('tray title', () => {
       url: 'http://some-url'
     })
     const state = {
-      [TRAYS_ROOT]: {trayId: tray}
+      [TRAYS_ROOT]: {trayId: tray},
+      [PROJECTS_ROOT]: {trayId: []}
     }
     const {getByTestId} = render(<Tray {...DEFAULT_PROPS} tray={tray}/>, state)
     expect(getByTestId('container-sub-title')).toHaveTextContent('http://some-url')
@@ -44,7 +47,8 @@ describe('tray title', () => {
       url: 'https://username:password@some.url/?token=some-token'
     })
     const state = {
-      [TRAYS_ROOT]: {trayId: tray}
+      [TRAYS_ROOT]: {trayId: tray},
+      [PROJECTS_ROOT]: {trayId: []}
     }
     const {getByTestId} = render(<Tray {...DEFAULT_PROPS} tray={tray}/>, state)
     expect(getByTestId('container-title')).toHaveTextContent('https://username:*****@some.url/?token=*****')
@@ -57,7 +61,8 @@ describe('tray title', () => {
       url: 'invalid'
     })
     const state = {
-      [TRAYS_ROOT]: {trayId: tray}
+      [TRAYS_ROOT]: {trayId: tray},
+      [PROJECTS_ROOT]: {trayId: []}
     }
     const {getByTestId} = render(<Tray {...DEFAULT_PROPS} tray={tray}/>, state)
     expect(getByTestId('container-title')).toHaveTextContent('')

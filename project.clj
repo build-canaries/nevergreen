@@ -35,7 +35,8 @@
   :profiles {:dev  {:plugins [[lein-ancient "0.6.15"]
                               [jonase/eastwood "0.3.11"]
                               [lein-cloverage "1.1.2"]
-                              [lein-nvd "1.4.0"]]}
+                              [lein-nvd "1.4.0"]
+                              [lein-eftest "0.5.9"]]}
              :test {:jvm-opts ["-Dlogback.configurationFile=./test/logback-unit.xml"]}}
   :cloverage {:output           "target/coverage-reports/server"
               :junit?           true

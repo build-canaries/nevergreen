@@ -19,6 +19,13 @@
                                  :tray-id
                                  :web-url])
 
+(def ^:private prognosis-priority [:error
+                                   :sick
+                                   :sick-building
+                                   :healthy-building
+                                   :unknown
+                                   :healthy])
+
 (defn ^:dynamic fetch [tray]
   (ci-gateway/fetch-cctray tray))
 
@@ -50,23 +57,23 @@
         (str "XML is invalid. " exceptionMessage))
       e)))
 
-(defn- to-projects [{:keys [url tray-id] :as tray}]
+(defn- to-projects [{:keys [url tray-id] :as feed}]
   (try
-    (with-open [response (fetch tray)]
-      (parse response {:server (ci-server/get-server-type tray) :normalise true}))
+    (with-open [response (fetch feed)]
+      (parse response {:server (ci-server/get-server-type feed) :normalise true}))
     (catch Exception e
       [(assoc
          (err/create-error (handle-parsing-exception e) url)
          :tray-id tray-id)])))
 
-(defn- to-projects-filtered [{:keys [included include-new seen prognosis] :as tray}]
+(defn- to-projects-filtered [{:keys [included include-new seen] :as feed} prognosis]
   (if (and (not (nil? included)) (empty? included) (false? include-new))
     []
-    (let [projects (to-projects tray)]
+    (let [projects (to-projects feed)]
       (if (every? err/is-error? projects)
         projects
         (let [filtered-projects (filter-projects prognosis projects)
-              enriched-projects (enrich tray filtered-projects)
+              enriched-projects (enrich feed filtered-projects)
               returned-project-ids (map :project-id enriched-projects)
               new-project-ids (difference (set returned-project-ids) (set seen))
               include-project-ids (if (true? include-new)
@@ -75,7 +82,21 @@
               projects-to-return (filter-by-ids included include-project-ids enriched-projects)]
           (map #(select-keys % ui-required-keys) projects-to-return))))))
 
-(defn get-projects [trays]
-  (if (= (count trays) 1)
-    (to-projects-filtered (first trays))
-    (flatten (pmap #(to-projects-filtered %) trays))))
+(defn- sort-projects [projects sort]
+  (cond
+    (s/blank? sort) projects
+    (= (keyword sort) :description) (sort-by :description projects)
+    (= (keyword sort) :timestamp) (reverse (sort-by :timestamp projects))
+    (= (keyword sort) :prognosis) (sort-by #((into {}
+                                                   (map-indexed (fn [i e] [e i])
+                                                                prognosis-priority))
+                                             (:prognosis %))
+                                           projects)
+    :else projects))
+
+(defn get-projects [{:keys [feeds prognosis sort]}]
+  (let [projects
+        (if (= (count feeds) 1)
+          (to-projects-filtered (first feeds) prognosis)
+          (flatten (pmap #(to-projects-filtered % prognosis) feeds)))]
+    (sort-projects projects sort)))

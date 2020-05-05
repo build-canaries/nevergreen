@@ -93,6 +93,8 @@ function shouldBeAbleToChangeSettingsDisplay() {
   })
   // uncheck healthy as we assert it doesn't show on the monitor page
   cy.locate('show-prognosis-container').contains('healthy').click()
+
+  cy.locate('sort-projects-by').select('prognosis')
 }
 
 function shouldBeAbleToChangeSettingsNotifications() {

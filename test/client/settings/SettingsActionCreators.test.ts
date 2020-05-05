@@ -9,9 +9,11 @@ import {
   setShowBuildTime,
   setShowSystemNotifications,
   setShowTrayName,
+  setSort,
   VALID_PROJECTS_TO_SHOW
 } from '../../../src/client/settings/SettingsActionCreators'
 import {Actions} from '../../../src/client/Actions'
+import {SortBy} from '../../../src/client/gateways/ProjectsGateway'
 
 describe(Actions.SHOW_TRAY_NAME, () => {
 
@@ -156,5 +158,18 @@ describe(Actions.CLICK_TO_SHOW_MENU, () => {
   it('should return the given value', () => {
     const actual = setClickToShowMenu(true)
     expect(actual).toHaveProperty('value', true)
+  })
+})
+
+describe(Actions.SET_SORT, () => {
+
+  it('should return the correct type', () => {
+    const actual = setSort(SortBy.description)
+    expect(actual).toHaveProperty('type', Actions.SET_SORT)
+  })
+
+  it('should return the given value', () => {
+    const actual = setSort(SortBy.description)
+    expect(actual).toHaveProperty('value', SortBy.description)
   })
 })

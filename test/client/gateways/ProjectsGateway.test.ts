@@ -1,4 +1,4 @@
-import {fetchAll, interesting} from '../../../src/client/gateways/ProjectsGateway'
+import {fetchAll, interesting, SortBy} from '../../../src/client/gateways/ProjectsGateway'
 import * as gateway from '../../../src/client/gateways/Gateway'
 import {buildSavedProject, buildTray} from '../testHelpers'
 import {Prognosis} from '../../../src/client/domain/Project'
@@ -10,7 +10,9 @@ describe('fetchAll', () => {
   it('posts only the required data from the given trays', () => {
     jest.spyOn(gateway, 'post')
     jest.spyOn(gateway, 'fakeRequest')
-    const seen: SavedProject[] = [buildSavedProject({trayId: 'some-tray-id', projectId: 'some-project-id'})]
+    const seen: SavedProject[] = [
+      buildSavedProject({trayId: 'some-tray-id', projectId: 'some-project-id'})
+    ]
     const trays = [
       buildTray({
         authType: AuthTypes.basic,
@@ -22,19 +24,21 @@ describe('fetchAll', () => {
         username: 'uname'
       })
     ]
-    const expected = [
-      {
+    const expected = {
+      feeds: [{
         accessToken: '',
         authType: AuthTypes.basic,
         includeNew: true,
+        included: undefined,
         password: 'pword',
         seen: ['some-project-id'],
         serverType: 'GO',
         trayId: 'some-tray-id',
         url: 'url',
         username: 'uname'
-      }
-    ]
+      }],
+      sort: SortBy.description
+    }
 
     fetchAll(trays, seen)
 
@@ -55,19 +59,21 @@ describe('fetchAll', () => {
         url: 'url'
       })
     ]
-    const expected = [
-      {
+    const expected = {
+      feeds: [{
         accessToken: 'some-dummy-token',
         authType: AuthTypes.token,
         includeNew: true,
+        included: undefined,
         password: '',
         seen: ['some-project-id'],
         serverType: 'GO',
         trayId: 'some-tray-id',
         url: 'url',
         username: ''
-      }
-    ]
+      }],
+      sort: SortBy.description
+    }
 
     fetchAll(trays, seen)
 
@@ -93,23 +99,24 @@ describe('interesting', () => {
         username: 'some-uname'
       })
     ]
-    const expected = [
-      {
+    const expected = {
+      feeds: [{
         accessToken: '',
         authType: AuthTypes.basic,
         included: ['some-project-id'],
         includeNew: true,
         password: 'some-pword',
-        prognosis: [Prognosis.sick],
         seen: [],
         serverType: 'some-server-type',
         trayId: 'some-tray-id',
         url: 'some-url',
         username: 'some-uname'
-      }
-    ]
+      }],
+      prognosis: [Prognosis.sick],
+      sort: SortBy.default
+    }
 
-    interesting(trays, seen, selected, [Prognosis.sick])
+    interesting(trays, seen, selected, [Prognosis.sick], SortBy.default)
 
     expect(gateway.post).toBeCalledWith('/api/projects', expected)
     expect(gateway.fakeRequest).not.toBeCalled()
@@ -130,12 +137,13 @@ describe('interesting', () => {
       buildTray({trayId: 'none-selected-but-includes-new-id', includeNew: true})
     ]
 
-    interesting(trays, seen, selected, [])
+    interesting(trays, seen, selected, [], SortBy.default)
 
-    expect(gateway.post).toBeCalledWith(expect.anything(), expect.arrayContaining([
-      expect.objectContaining({trayId: 'some-tray-id'}),
-      expect.objectContaining({trayId: 'none-selected-but-includes-new-id'})
-    ]))
+    expect(gateway.post).toBeCalledWith(expect.anything(), expect.objectContaining({
+      feeds: expect.not.arrayContaining([
+        expect.objectContaining({trayId: 'none-selected-id'})
+      ])
+    }))
     expect(gateway.fakeRequest).not.toBeCalled()
   })
 
@@ -146,7 +154,7 @@ describe('interesting', () => {
     const selected = {'some-tray-id': []}
     const trays = [buildTray({trayId: 'some-tray-id', includeNew: false})]
 
-    interesting(trays, seen, selected, [])
+    interesting(trays, seen, selected, [], SortBy.default)
 
     expect(gateway.post).not.toBeCalled()
     expect(gateway.fakeRequest).toBeCalledWith([])

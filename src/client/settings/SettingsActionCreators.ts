@@ -1,6 +1,7 @@
 import {Actions} from '../Actions'
 import {Action} from 'redux'
 import {Prognosis} from '../domain/Project'
+import {SortBy} from '../gateways/ProjectsGateway'
 
 export interface ActionShowBuildTime extends Action<Actions.SHOW_BUILD_TIME> {
   readonly value: boolean;
@@ -41,6 +42,10 @@ export interface ActionClickToShowMenu extends Action<Actions.CLICK_TO_SHOW_MENU
 export interface ActionShowPrognosis extends Action<Actions.SHOW_PROGNOSIS> {
   readonly prognosis: Prognosis;
   readonly show: boolean;
+}
+
+export interface ActionSetSort extends Action<Actions.SET_SORT> {
+  readonly value: SortBy;
 }
 
 export const DEFAULT_REFRESH_TIME = 10
@@ -95,4 +100,8 @@ export function setClickToShowMenu(value: boolean): ActionClickToShowMenu {
 
 export function setShowPrognosis(prognosis: Prognosis, show: boolean): ActionShowPrognosis {
   return {type: Actions.SHOW_PROGNOSIS, prognosis, show}
+}
+
+export function setSort(value: SortBy): ActionSetSort {
+  return {type: Actions.SET_SORT, value}
 }

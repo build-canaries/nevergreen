@@ -1,5 +1,4 @@
 import React, {ChangeEvent, useCallback, useEffect, useMemo, useRef, useState} from 'react'
-import {sortBy} from 'lodash'
 import {AvailableProject} from './AvailableProject'
 import {Messages, MessagesType} from '../../common/Messages'
 import {Input} from '../../common/forms/Input'
@@ -64,6 +63,7 @@ export function AvailableProjects({index, tray, requiresRefresh, setRequiresRefr
 
   useEffect(() => {
     if (requiresRefresh) {
+      // noinspection JSIgnoredPromiseFromCall
       refreshTray()
       setRequiresRefresh(false)
     }
@@ -156,7 +156,7 @@ export function AvailableProjects({index, tray, requiresRefresh, setRequiresRefr
         aria-relevant='additions'
         data-locator='available-projects-list'>
       {
-        sortBy(filteredProjects, ['name', 'stage']).map((project) => {
+        filteredProjects.map((project) => {
           const isSelected = selected.includes(project.projectId)
 
           return <AvailableProject key={project.projectId}

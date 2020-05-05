@@ -14,7 +14,8 @@ const KEYWORDS = [
   'healthy',
   'healthy building',
   'unknown',
-  'max number of projects to show'
+  'max number of projects to show',
+  'sort projects by'
 ]
 
 export function DisplaySettingsHelp({searchQuery, helpLink}: HelpProps) {
@@ -58,6 +59,20 @@ export function DisplaySettingsHelp({searchQuery, helpLink}: HelpProps) {
           <p>
             The main purpose of Nevergreen is to be an information radiator for the team, and this setting can be used
             to stop the view becoming too crowded to read at a distance.
+          </p>
+        </dd>
+        <dt>sort projects by</dt>
+        <dd>
+          This sets the sort order of projects on the Monitor page (projects on the Tracking page will always be in
+          alphabetical order).
+          <p>
+            <em>default</em> applies no special sorting and uses the order the projects are returned in the CCTray XML
+            feed, which may be server specific but generally seems to be based on activity.
+          </p>
+          <p>
+            The timestamp for building projects is only updated after they have finished building, so sorting
+            by <em>timestamp</em> may not display projects as expected. If that is the case the <em>default</em> sort
+            order may be more appropriate.
           </p>
         </dd>
       </dl>

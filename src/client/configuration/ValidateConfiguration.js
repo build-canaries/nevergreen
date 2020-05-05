@@ -231,6 +231,24 @@ var validate = (function() {
             }
             var valid2 = errors === errs_2;
           }
+          if (data1.sort !== undefined) {
+            var errs_2 = errors;
+            if (typeof data1.sort !== "string") {
+              var err = {
+                keyword: 'type',
+                dataPath: (dataPath || '') + '.settings.sort',
+                schemaPath: '#/properties/settings/properties/sort/type',
+                params: {
+                  type: 'string'
+                },
+                message: 'should be string'
+              };
+              if (vErrors === null) vErrors = [err];
+              else vErrors.push(err);
+              errors++;
+            }
+            var valid2 = errors === errs_2;
+          }
         } else {
           var err = {
             keyword: 'type',
@@ -1165,6 +1183,9 @@ validate.schema = {
           "items": {
             "type": "string"
           }
+        },
+        "sort": {
+          "type": "string"
         }
       },
       "additionalProperties": false
