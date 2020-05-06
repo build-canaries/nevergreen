@@ -26,7 +26,7 @@ export function Modal({children, title, show, close, className}: ModalProps) {
         <SecondaryButton onClick={close}
                          icon={iCross}
                          iconOnly>
-          close
+          Close
         </SecondaryButton>
       </div>
       <div className={styles.content}

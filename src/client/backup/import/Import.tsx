@@ -8,7 +8,7 @@ import {BackupLocation} from '../BackupActionCreators'
 export function Import() {
   return (
     <Container title='Import'>
-      <Tabs titles={['locally', 'GitHub', 'GitLab']}>
+      <Tabs titles={['Locally', 'GitHub', 'GitLab']}>
         <Locally/>
         <Externally location={BackupLocation.GITHUB}/>
         <Externally location={BackupLocation.GITLAB} accessTokenRequired/>

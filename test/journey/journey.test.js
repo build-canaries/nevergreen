@@ -1,7 +1,7 @@
 /*global cy,Cypress,before */
 
 function shouldBeAbleToChangeTraySettings() {
-  cy.locate('tab-settings').click()
+  cy.locate('tab-Settings').click()
   cy.locate('generate-random').click()
   cy.locate('tray-name').clear().type('renamed tray').blur()
   cy.locate('container-title').should('have.text', 'renamed tray')

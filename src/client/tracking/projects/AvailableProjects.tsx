@@ -97,7 +97,7 @@ export function AvailableProjects({index, tray, requiresRefresh, setRequiresRefr
         setFilter(regEx)
         setFilterErrors([])
       } catch (e) {
-        setFilterErrors([`Project filter not applied, ${e.message}`])
+        setFilterErrors([`Project search not applied. ${e.message}`])
       }
     }
   }
@@ -127,21 +127,21 @@ export function AvailableProjects({index, tray, requiresRefresh, setRequiresRefr
                          onClick={includeAll(filteredProjects)}
                          data-locator='include-all'
                          icon={iCheckboxChecked}>
-          include all
+          Include all
           <Shortcut hotkeys={[`+ ${index}`, `= ${index}`]}/>
         </SecondaryButton>
         <SecondaryButton className={styles.excludeAll}
                          onClick={excludeAll(filteredProjects)}
                          data-locator='exclude-all'
                          icon={iCheckboxUnchecked}>
-          exclude all
+          Exclude all
           <Shortcut hotkeys={[`- ${index}`]}/>
         </SecondaryButton>
         <div className={styles.projectFilter}>
           <Input className={styles.projectFilterInput}
                  onChange={updateFilter}
                  placeholder='regular expression'>
-            filter
+            Search
           </Input>
         </div>
       </fieldset>

@@ -140,7 +140,7 @@ it('should set the include new setting on click without refreshing the tray', ()
   const props = {...DEFAULT_PROPS, tray, setRequiresRefresh}
 
   const {getByLabelText, store} = render(<TraySettings {...props}/>, state)
-  userEvent.click(getByLabelText('automatically include new projects'))
+  userEvent.click(getByLabelText('Automatically include new projects'))
 
   expect(setRequiresRefresh).not.toHaveBeenCalled()
   expect(getTrays(store.getState())[0].includeNew).toBeTruthy()
@@ -159,7 +159,7 @@ it('should remove the tray when clicking the delete button', () => {
     </FakePage>,
     state
   )
-  userEvent.click(getByText('delete'))
+  userEvent.click(getByText('Delete feed'))
   expect(getTrays(store.getState())).toEqual([])
 })
 
@@ -176,11 +176,11 @@ it('should be able to change the auth to basic', async () => {
   const props = {...DEFAULT_PROPS, tray, setRequiresRefresh}
 
   const {getByText, getByLabelText, getByTestId, store} = render(<TraySettings {...props}/>, state)
-  userEvent.click(getByText('change auth'))
-  userEvent.click(getByLabelText('basic auth'))
-  await userEvent.type(getByLabelText('username'), 'some-username')
+  userEvent.click(getByText('Change auth'))
+  userEvent.click(getByLabelText('Basic auth'))
+  await userEvent.type(getByLabelText('Username'), 'some-username')
   await userEvent.type(getByTestId('auth-password'), 'some-password')
-  userEvent.click(getByText('save changes'))
+  userEvent.click(getByText('Save changes'))
 
   await waitFor(() => {
     expect(setRequiresRefresh).toHaveBeenCalledWith(true)

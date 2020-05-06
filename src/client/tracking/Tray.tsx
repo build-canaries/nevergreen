@@ -48,7 +48,7 @@ export function Tray({tray, index, highlightTray, refreshTray}: TrayProps) {
                subTitle={subTitle}
                highlight={highlight}>
       <div data-locator='tray'>
-        <Tabs titles={['projects', 'settings']}>
+        <Tabs titles={['Projects', 'Settings']}>
           <AvailableProjects tray={tray}
                              index={index}
                              requiresRefresh={requiresRefresh}

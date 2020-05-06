@@ -47,7 +47,6 @@
   margin: 0;
   padding: 1em;
   text-align: left;
-  text-transform: uppercase;
   width: 100%;
 
   @include respond-to(tablet, desktop) {
@@ -110,7 +109,6 @@
   display: inline-block;
   padding: 1em;
   text-decoration: none;
-  text-transform: uppercase;
   width: 100%;
 
   &:visited {

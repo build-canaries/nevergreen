@@ -29,6 +29,6 @@ it('should be able to dismiss shown notifications', () => {
   const {queryByText, getByText} = render(<Notification {...props}/>)
   expect(queryByText('some notification')).toBeInTheDocument()
 
-  userEvent.click(getByText('dismiss'))
+  userEvent.click(getByText('Dismiss'))
   expect(dismiss).toHaveBeenCalled()
 })

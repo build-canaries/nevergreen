@@ -27,7 +27,7 @@ export function Locally() {
   return (
     <>
       <label>
-        <span className={styles.label}>current configuration</span>
+        <span className={styles.label}>Current configuration</span>
         <textarea className={styles.data}
                   id='export-data'
                   value={configuration}
@@ -39,7 +39,7 @@ export function Locally() {
                      id='copy-to-clipboard'
                      data-clipboard-target='#export-data'
                      icon={iPaste}>
-        copy to clipboard
+        Copy to clipboard
       </PrimaryButton>
       <Messages type={messageType} messages={messages}/>
     </>

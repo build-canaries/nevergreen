@@ -32,7 +32,7 @@ export function Notification({notification, dismiss, fullScreen}: NotificationPr
                      iconOnly
                      className={styles.dismiss}
                      onClick={dismiss}>
-        dismiss
+        Dismiss
       </PrimaryButton>
     </section>
   )

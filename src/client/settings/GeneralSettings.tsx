@@ -24,13 +24,13 @@ export function GeneralSettings() {
                 value={refreshTime}
                 onChange={({target}) => dispatch(setRefreshTime(target.value))}
                 data-locator='refresh-time'>
-        poll for CI changes every
+        Poll for feed changes every
       </DropDown>
       <Checkbox checked={clickToShowMenu}
                 onToggle={(newValue) => dispatch(setClickToShowMenu(newValue))}
                 className={styles.clickToShow}
                 data-locator='click-to-show-menu'>
-        click to show menu
+        Click to show menu
       </Checkbox>
     </Container>
   )

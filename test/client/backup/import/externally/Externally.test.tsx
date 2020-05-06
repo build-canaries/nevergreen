@@ -27,7 +27,7 @@ it('should import configuration when an ID and URL are given', async () => {
   const {getByLabelText, getByText, queryByText} = render(<Externally {...props} />)
   await userEvent.type(getByLabelText('ID'), 'some-id')
   await userEvent.type(getByLabelText('URL'), 'some-url')
-  userEvent.click(getByText('import'))
+  userEvent.click(getByText('Import'))
 
   await waitFor(() => {
     expect(BackupGateway.fetchConfiguration).toHaveBeenCalledWith(BackupLocation.GITHUB, 'some-id', '', 'some-url')
@@ -43,7 +43,7 @@ it('should not import configuration when access token is required but not provid
   const {getByLabelText, getByText, queryByText} = render(<Externally {...props} />)
   await userEvent.type(getByLabelText('ID'), 'some-id')
   await userEvent.type(getByLabelText('URL'), 'some-url')
-  userEvent.click(getByText('import'))
+  userEvent.click(getByText('Import'))
 
   expect(queryByText('You must provide an access token to import')).toBeInTheDocument()
   expect(BackupGateway.fetchConfiguration).not.toHaveBeenCalled()
@@ -56,7 +56,7 @@ it('should not import configuration when ID is missing', async () => {
   }
   const {getByLabelText, getByText, queryByText} = render(<Externally {...props} />)
   await userEvent.type(getByLabelText('URL'), 'some-url')
-  userEvent.click(getByText('import'))
+  userEvent.click(getByText('Import'))
 
   expect(queryByText('You must provide an ID to import')).toBeInTheDocument()
   expect(BackupGateway.fetchConfiguration).not.toHaveBeenCalled()
@@ -69,7 +69,7 @@ it('should not import configuration when URL is missing', async () => {
   }
   const {getByLabelText, getByText, queryByText} = render(<Externally {...props} />)
   await userEvent.type(getByLabelText('ID'), 'some-id')
-  userEvent.click(getByText('import'))
+  userEvent.click(getByText('Import'))
 
   expect(queryByText('You must provide a URL to import from')).toBeInTheDocument()
   expect(BackupGateway.fetchConfiguration).not.toHaveBeenCalled()
@@ -85,7 +85,7 @@ it('should display an message if an error occurs while importing', async () => {
   const {getByLabelText, getByText, queryByText} = render(<Externally {...props} />)
   await userEvent.type(getByLabelText('ID'), 'some-id')
   await userEvent.type(getByLabelText('URL'), 'some-url')
-  userEvent.click(getByText('import'))
+  userEvent.click(getByText('Import'))
 
   await waitFor(() => {
     expect(queryByText('some remote error')).toBeInTheDocument()
@@ -102,7 +102,7 @@ it('should display an message if the imported configuration is invalid', async (
   const {getByLabelText, getByText, queryByText} = render(<Externally {...props} />)
   await userEvent.type(getByLabelText('ID'), 'some-id')
   await userEvent.type(getByLabelText('URL'), 'some-url')
-  userEvent.click(getByText('import'))
+  userEvent.click(getByText('Import'))
 
   await waitFor(() => {
     expect(queryByText('Unexpected end of JSON input')).toBeInTheDocument()

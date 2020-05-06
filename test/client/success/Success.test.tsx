@@ -14,16 +14,16 @@ it('should show success messages', () => {
 it('should allow success messages to be added', async () => {
   const state = {[SUCCESS_ROOT]: []}
   const {getByText, getByLabelText, queryByText} = render(<Success/>, state)
-  await userEvent.type(getByLabelText('message'), 'some-message')
-  userEvent.click(getByText('add'))
+  await userEvent.type(getByLabelText('Message'), 'some-message')
+  userEvent.click(getByText('Add message'))
   expect(queryByText('some-message')).toBeInTheDocument()
 })
 
 it('should not allow a blank success messages to be added', async () => {
   const state = {[SUCCESS_ROOT]: []}
   const {getByText, getByLabelText, queryByText} = render(<Success/>, state)
-  await userEvent.type(getByLabelText('message'), '')
-  userEvent.click(getByText('add'))
+  await userEvent.type(getByLabelText('Message'), '')
+  userEvent.click(getByText('Add message'))
   expect(queryByText(NO_MESSAGES_WARNING)).toBeInTheDocument()
 })
 

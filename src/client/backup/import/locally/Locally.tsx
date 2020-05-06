@@ -45,7 +45,7 @@ export function Locally() {
   return (
     <>
       <label>
-        <span className={styles.label}>configuration to import</span>
+        <span className={styles.label}>Configuration to import</span>
         <textarea className={styles.data}
                   placeholder={PLACEHOLDER}
                   value={data}
@@ -57,7 +57,7 @@ export function Locally() {
                      onClick={doImport}
                      data-locator='import'
                      icon={iFloppyDisk}>
-        import
+        Import
       </PrimaryButton>
       <Messages type={messageType}
                 messages={messages}

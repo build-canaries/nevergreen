@@ -19,8 +19,8 @@ afterEach(() => {
 })
 
 it('should reset configuration and reload', async () => {
-  const {getByText} = render(<Reset/>)
-  userEvent.click(getByText('reset configuration'))
+  const {getByTestId} = render(<Reset/>)
+  userEvent.click(getByTestId('reset-configuration'))
   await waitFor(() => {
     expect(LocalConfiguration.clear).toHaveBeenCalled()
     // eslint-disable-next-line @typescript-eslint/unbound-method

@@ -71,15 +71,15 @@ export function Forms() {
       </StyleGuideSection>
 
       <StyleGuideSection title='Buttons'>
-        <PrimaryButton>primary button</PrimaryButton>
-        <PrimaryButton icon={iFloppyDisk}>primary button with icon</PrimaryButton>
-        <PrimaryButton icon={iFloppyDisk} iconOnly>primary button icon only</PrimaryButton>
-        <SecondaryButton>secondary button</SecondaryButton>
-        <SecondaryButton icon={iFloppyDisk}>secondary button with icon</SecondaryButton>
-        <SecondaryButton icon={iFloppyDisk} iconOnly>secondary button icon only</SecondaryButton>
+        <PrimaryButton>Primary button</PrimaryButton>
+        <PrimaryButton icon={iFloppyDisk}>Primary button with icon</PrimaryButton>
+        <PrimaryButton icon={iFloppyDisk} iconOnly>Primary button icon only</PrimaryButton>
+        <SecondaryButton>Secondary button</SecondaryButton>
+        <SecondaryButton icon={iFloppyDisk}>Secondary button with icon</SecondaryButton>
+        <SecondaryButton icon={iFloppyDisk} iconOnly>Secondary button icon only</SecondaryButton>
         <DangerButton>danger button</DangerButton>
-        <DangerButton icon={iFloppyDisk}>danger button with icon</DangerButton>
-        <DangerButton icon={iFloppyDisk} iconOnly>danger button icon only</DangerButton>
+        <DangerButton icon={iFloppyDisk}>Danger button with icon</DangerButton>
+        <DangerButton icon={iFloppyDisk} iconOnly>Danger button icon only</DangerButton>
       </StyleGuideSection>
     </>
   )

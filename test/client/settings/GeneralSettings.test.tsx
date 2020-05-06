@@ -12,7 +12,7 @@ it('should set the click to show menu setting', () => {
   }
 
   const {store, getByLabelText} = render(<GeneralSettings/>, state)
-  userEvent.click(getByLabelText('click to show menu'))
+  userEvent.click(getByLabelText('Click to show menu'))
 
   expect(getClickToShowMenu(store.getState())).toBeTruthy()
 })

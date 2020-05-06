@@ -114,7 +114,7 @@ export function AddTray({setHighlightTray, setRefreshTray}: AddTrayProps) {
                      data-locator='add-tray'
                      icon={iPlus}
                      disabled={adding}>
-        <span aria-label='add tray'>add</span>
+        Add feed
       </PrimaryButton>
     </div>
   )

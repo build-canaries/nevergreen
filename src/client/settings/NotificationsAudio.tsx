@@ -80,7 +80,7 @@ export function NotificationsAudio() {
                 checked={playBrokenBuildSoundFx}
                 onToggle={(newValue) => dispatch(setPlayBrokenBuildSoundFx(newValue))}
                 data-locator='play-sounds'>
-        play audio notifications
+        Play audio notifications
       </Checkbox>
       <div className={styles.soundFx}>
         <Input className={styles.brokenBuildSfx}
@@ -91,13 +91,13 @@ export function NotificationsAudio() {
                onEnter={setSoundFxX}
                required={playBrokenBuildSoundFx}
                disabled={playing}>
-          broken build sound
+          Broken build sound
         </Input>
         <SecondaryButton onClick={playing ? stop : play}
                          disabled={playingDisabled}
                          aria-disabled={playingDisabled}
                          icon={playing ? iStop : iPlay}>
-          {playing ? 'stop' : 'play'}
+          {playing ? 'Stop' : 'Play'}
         </SecondaryButton>
       </div>
       <Messages className={styles.playbackErrors}

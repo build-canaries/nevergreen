@@ -21,8 +21,8 @@ it('should export if an access token was entered', async () => {
   await userEvent.type(getByLabelText('URL'), 'some-url')
   await userEvent.type(getByLabelText('ID'), 'some-id')
   await userEvent.type(getByTestId('access-token'), 'some-access-token')
-  await userEvent.type(getByLabelText('description'), 'some-description')
-  userEvent.click(getByText('export'))
+  await userEvent.type(getByLabelText('Description'), 'some-description')
+  userEvent.click(getByText('Export'))
 
   await waitFor(() => {
     expect(backupGateway.exportConfiguration).toHaveBeenCalledWith(
@@ -39,7 +39,7 @@ it('should export if an access token was entered', async () => {
 
 it('should not try and export if no access token was entered', () => {
   const {getByText, queryByText} = render(<Externally {...DEFAULT_PROPS} />)
-  userEvent.click(getByText('export'))
+  userEvent.click(getByText('Export'))
   expect(backupGateway.exportConfiguration).not.toHaveBeenCalled()
   expect(queryByText('You must provide an access token to export')).toBeInTheDocument()
 })

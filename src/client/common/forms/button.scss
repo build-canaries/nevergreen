@@ -33,7 +33,6 @@
   padding: 0.5em 1em;
   text-decoration: none;
   text-overflow: ellipsis;
-  text-transform: uppercase;
   user-select: none;
   white-space: nowrap;
   width: 100%;
@@ -65,7 +64,7 @@
 
 .withIcon {
   &::before {
-    margin-right: 1em;
+    margin-right: 0.5em;
   }
 }
 

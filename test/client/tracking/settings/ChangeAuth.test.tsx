@@ -27,8 +27,8 @@ it('should be able to change the auth to none', () => {
   const props = {...DEFAULT_PROPS, show: true, authType: AuthTypes.basic, save}
 
   const {getByText, getByLabelText} = render(<ChangeAuth {...props} />)
-  userEvent.click(getByLabelText('no auth'))
-  userEvent.click(getByText('save changes'))
+  userEvent.click(getByLabelText('No auth'))
+  userEvent.click(getByText('Save changes'))
 
   expect(save).toBeCalledWith(AuthTypes.none, '', '', '')
 })
@@ -39,10 +39,10 @@ it('should be able to change the auth to basic', async () => {
   const props = {...DEFAULT_PROPS, show: true, save}
 
   const {getByTestId, getByText, getByLabelText} = render(<ChangeAuth {...props} />)
-  userEvent.click(getByLabelText('basic auth'))
-  await userEvent.type(getByLabelText('username'), 'some-username')
+  userEvent.click(getByLabelText('Basic auth'))
+  await userEvent.type(getByLabelText('Username'), 'some-username')
   await userEvent.type(getByTestId('auth-password'), 'some-password')
-  userEvent.click(getByText('save changes'))
+  userEvent.click(getByText('Save changes'))
 
   await waitFor(() => {
     expect(save).toBeCalledWith(AuthTypes.basic, 'some-username', 'some-encrypted-password', '')
@@ -55,9 +55,9 @@ it('should be able to change the auth to access token', async () => {
   const props = {...DEFAULT_PROPS, show: true, save}
 
   const {getByTestId, getByText, getByLabelText} = render(<ChangeAuth {...props} />)
-  userEvent.click(getByLabelText('access token'))
+  userEvent.click(getByLabelText('Access token'))
   await userEvent.type(getByTestId('auth-access-token'), 'some-token')
-  userEvent.click(getByText('save changes'))
+  userEvent.click(getByText('Save changes'))
 
   await waitFor(() => {
     expect(save).toBeCalledWith(AuthTypes.token, '', '', 'some-encrypted-token')
@@ -70,7 +70,7 @@ it('should be able to discard making changes', () => {
   const props = {...DEFAULT_PROPS, show: true, save, cancel}
 
   const {getByText} = render(<ChangeAuth {...props} />)
-  userEvent.click(getByText('discard changes'))
+  userEvent.click(getByText('Discard changes'))
 
   expect(cancel).toBeCalled()
   expect(save).not.toBeCalled()

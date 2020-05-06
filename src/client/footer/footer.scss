@@ -34,7 +34,6 @@
 
   display: block;
   margin: $margin-top 0 0 0;
-  text-transform: uppercase;
 
   @include respond-to(tablet, desktop) {
     margin: 0;

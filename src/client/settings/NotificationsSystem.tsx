@@ -45,7 +45,7 @@ export function NotificationsSystem() {
                   onToggle={toggleShowSystemNotifications}
                   data-locator='show-system-notifications'
                   disabled={requestingPermission}>
-            show system notifications
+            Show system notifications
         </Checkbox>
       }
       {

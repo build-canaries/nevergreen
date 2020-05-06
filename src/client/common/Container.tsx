@@ -40,7 +40,7 @@ export function Container({initiallyHidden, highlight, className, title, subTitl
   const bodyClasses = cn(styles.body, className, {
     [styles.hidden]: hidden
   })
-  const label = `${hidden ? 'show' : 'hide'} section ${title}`
+  const label = `${hidden ? 'Show' : 'Hide'} section ${title}`
 
   return (
     <section className={styles.container}

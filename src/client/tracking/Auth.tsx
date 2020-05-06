@@ -46,7 +46,7 @@ export function Auth(
                className={styles.authType}
                disabled={disabled}
                data-locator='auth-none'>
-          no auth
+          No auth
         </Radio>
         <Radio name={groupName}
                value={AuthTypes.basic}
@@ -55,7 +55,7 @@ export function Auth(
                className={styles.authType}
                disabled={disabled}
                data-locator='auth-basic'>
-          basic auth
+          Basic auth
         </Radio>
         <Radio name={groupName}
                value={AuthTypes.token}
@@ -64,7 +64,7 @@ export function Auth(
                className={styles.authType}
                disabled={disabled}
                data-locator='auth-token'>
-          access token
+          Access token
         </Radio>
       </fieldset>
       {authType == AuthTypes.basic && (
@@ -76,7 +76,7 @@ export function Auth(
                  disabled={disabled}
                  autoComplete='username'
                  data-locator='auth-username'>
-            <span className={styles.label}>username</span>
+            <span className={styles.label}>Username</span>
           </Input>
           <Password className={styles.password}
                     value={password}
@@ -85,7 +85,7 @@ export function Auth(
                     disabled={disabled}
                     autoComplete='new-password'
                     data-locator='auth-password'>
-            <span className={styles.label}>password</span>
+            <span className={styles.label}>Password</span>
           </Password>
         </div>
       )}
@@ -98,7 +98,7 @@ export function Auth(
                     disabled={disabled}
                     autoComplete='new-password'
                     data-locator='auth-access-token'>
-            <span className={styles.label}>token</span>
+            <span className={styles.label}>Token</span>
           </Password>
         </div>
       )}

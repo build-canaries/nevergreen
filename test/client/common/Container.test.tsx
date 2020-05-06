@@ -56,13 +56,13 @@ it('should allow toggling body visibility with the keyboard when the title bar h
   userEvent.tab()
   expect(getByTestId('title-bar')).toBe(document.activeElement)
   expect(getByTestId('title-bar')).toHaveAttribute('role', 'button')
-  expect(getByTestId('title-bar')).toHaveAttribute('aria-label', 'show section some-title')
+  expect(getByTestId('title-bar')).toHaveAttribute('aria-label', 'Show section some-title')
 
   fireEvent.keyPress(document.activeElement as Element, {key: 'Enter', charCode: 13})
   expect(getByTestId('body')).not.toHaveClass('hidden')
-  expect(getByTestId('title-bar')).toHaveAttribute('aria-label', 'hide section some-title')
+  expect(getByTestId('title-bar')).toHaveAttribute('aria-label', 'Hide section some-title')
 
   fireEvent.keyPress(document.activeElement as Element, {key: ' ', charCode: 32})
   expect(getByTestId('body')).toHaveClass('hidden')
-  expect(getByTestId('title-bar')).toHaveAttribute('aria-label', 'show section some-title')
+  expect(getByTestId('title-bar')).toHaveAttribute('aria-label', 'Show section some-title')
 })

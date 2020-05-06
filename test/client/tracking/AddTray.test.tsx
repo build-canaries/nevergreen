@@ -19,7 +19,7 @@ beforeEach(() => {
 
 it('should display an error if no URL is entered', () => {
   const {queryByText, getByText} = render(<AddTray {...DEFAULT_PROPS}/>)
-  userEvent.click(getByText('add'))
+  userEvent.click(getByText('Add feed'))
   expect(queryByText('Please enter the URL to the CCTray XML feed')).toBeInTheDocument()
 })
 
@@ -30,7 +30,7 @@ it('should allow adding trays without auth', async () => {
 
   const {getByText, getByLabelText, store} = render(<AddTray {...DEFAULT_PROPS}/>, state)
   await userEvent.type(getByLabelText('URL'), 'some-new-url')
-  userEvent.click(getByText('add'))
+  userEvent.click(getByText('Add feed'))
 
   expect(getTrays(store.getState())).toEqual(expect.arrayContaining([
     expect.objectContaining({
@@ -47,10 +47,10 @@ it('should allow adding trays with basic auth', async () => {
 
   const {getByTestId, getByText, getByLabelText, store} = render(<AddTray {...DEFAULT_PROPS}/>, state)
   await userEvent.type(getByLabelText('URL'), 'some-new-url')
-  userEvent.click(getByLabelText('basic auth'))
-  await userEvent.type(getByLabelText('username'), 'some-username')
+  userEvent.click(getByLabelText('Basic auth'))
+  await userEvent.type(getByLabelText('Username'), 'some-username')
   await userEvent.type(getByTestId('auth-password'), 'some-password')
-  userEvent.click(getByText('add'))
+  userEvent.click(getByText('Add feed'))
 
   await waitFor(() => {
     expect(SecurityGateway.encrypt).toHaveBeenCalledWith('some-password')
@@ -70,9 +70,9 @@ it('should allow adding trays with an access token', async () => {
 
   const {getByTestId, getByText, getByLabelText, store} = render(<AddTray {...DEFAULT_PROPS}/>, state)
   await userEvent.type(getByLabelText('URL'), 'some-new-url')
-  userEvent.click(getByLabelText('access token'))
+  userEvent.click(getByLabelText('Access token'))
   await userEvent.type(getByTestId('auth-access-token'), 'some-token')
-  userEvent.click(getByText('add'))
+  userEvent.click(getByText('Add feed'))
 
   await waitFor(() => {
     expect(SecurityGateway.encrypt).toHaveBeenCalledWith('some-token')
@@ -89,14 +89,14 @@ it('should reset the form after adding a tray', async () => {
     <AddTray {...DEFAULT_PROPS}/>
   )
   await userEvent.type(getByLabelText('URL'), 'some-new-url')
-  userEvent.click(getByLabelText('access token'))
+  userEvent.click(getByLabelText('Access token'))
   await userEvent.type(getByTestId('auth-access-token'), 'some-token')
-  userEvent.click(getByText('add'))
+  userEvent.click(getByText('Add feed'))
 
   await waitFor(() => {
     expect(getByLabelText('URL')).toHaveValue('')
     expect(queryByTestId('auth-access-token')).not.toBeInTheDocument()
-    expect(queryByLabelText('username')).not.toBeInTheDocument()
+    expect(queryByLabelText('Username')).not.toBeInTheDocument()
     expect(queryByTestId('auth-password')).not.toBeInTheDocument()
     expect(queryByText('Please enter the URL to the CCTray XML feed')).not.toBeInTheDocument()
   })
@@ -118,7 +118,7 @@ it('should not add an existing tray again', async () => {
     state
   )
   await userEvent.type(getByLabelText('URL'), 'http://some-url')
-  userEvent.click(getByText('add'))
+  userEvent.click(getByText('Add feed'))
 
   expect(setHighlightTray).toHaveBeenCalledWith('trayId')
 })

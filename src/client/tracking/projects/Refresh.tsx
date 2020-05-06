@@ -17,7 +17,7 @@ export function Refresh({index, timestamp, refreshTray}: RefreshProps) {
       <PrimaryButton className={styles.refresh}
                      onClick={refreshTray}
                      icon={iRefresh}>
-        refresh
+        Refresh
         <Shortcut hotkeys={[`r ${index}`]}/>
       </PrimaryButton>
       <div className={styles.lastFetch} data-locator='refresh-time'>

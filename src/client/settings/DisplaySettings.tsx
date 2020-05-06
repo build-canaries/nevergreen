@@ -45,19 +45,19 @@ export function DisplaySettings() {
                 checked={showTrayName}
                 onToggle={(newValue) => dispatch(setShowTrayName(newValue))}
                 data-locator='show-tray-names'>
-        show feed identifier
+        Show feed identifier
       </Checkbox>
       <Checkbox className={styles.checkbox}
                 checked={showBuildTime}
                 onToggle={(newValue) => dispatch(setShowBuildTime(newValue))}
                 data-locator='show-build-times'>
-        show build time
+        Show build time
       </Checkbox>
       <Checkbox className={styles.checkbox}
                 checked={showBuildLabel}
                 onToggle={(newValue) => dispatch(setShowBuildLabel(newValue))}
                 data-locator='show-build-labels'>
-        show build label
+        Show build label
       </Checkbox>
 
       <DisplayPrognosisSelection/>
@@ -67,7 +67,7 @@ export function DisplaySettings() {
                 value={maxProjectsToShow}
                 onChange={({target}) => dispatch(setMaxProjectsToShow(target.value))}
                 data-locator='max-projects-to-show'>
-        <span className={styles.dropDownLabel}>max number of projects to show</span>
+        <span className={styles.dropDownLabel}>Max number of projects to show</span>
       </DropDown>
 
       <DropDown className={styles.dropDown}
@@ -75,13 +75,13 @@ export function DisplaySettings() {
                 value={sort}
                 onChange={({target}) => dispatch(setSort(target.value as SortBy))}
                 data-locator='sort-projects-by'>
-        <span className={styles.dropDownLabel}>sort projects by</span>
+        <span className={styles.dropDownLabel}>Sort projects by</span>
       </DropDown>
 
       <Link to='/preview'
             className={styles.preview}
             data-locator='display-preview'>
-        Preview these display settings
+        Preview display
       </Link>
     </Container>
   )

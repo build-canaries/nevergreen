@@ -99,14 +99,14 @@ export function ChangeAuth({show, cancel, save, authType, username}: ChangeAuthP
                            icon={iCross}
                            onClick={discardChanges}
                            data-locator='change-password-cancel'>
-            discard changes
+            Discard changes
           </SecondaryButton>
           <PrimaryButton className={styles.changePasswordButtons}
                          icon={iFloppyDisk}
                          onClick={saveChanges}
                          disabled={encrypting}
                          data-locator='change-password-update'>
-            save changes
+            Save changes
           </PrimaryButton>
         </div>
         <Messages type={MessagesType.ERROR} messages={encryptionError}/>

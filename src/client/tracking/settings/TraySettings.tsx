@@ -60,7 +60,7 @@ export function TraySettings({tray, setRequiresRefresh}: TraySettingsProps) {
              placeholder='e.g. project or team name'
              data-locator='tray-name'
              button={randomNameButton}>
-        <span className={styles.label}>name</span>
+        <span className={styles.label}>Name</span>
       </Input>
       <Input value={newUrl}
              onChange={({target}) => setNewUrl(target.value)}
@@ -78,7 +78,7 @@ export function TraySettings({tray, setRequiresRefresh}: TraySettingsProps) {
                   setRequiresRefresh(true)
                 }}
                 data-locator='tray-server-type'>
-        <span className={styles.label}>server type</span>
+        <span className={styles.label}>Server type</span>
       </DropDown>
 
       <ChangeAuth show={updatingAuth}
@@ -90,29 +90,29 @@ export function TraySettings({tray, setRequiresRefresh}: TraySettingsProps) {
       <Input readOnly
              value={authType}
              className={styles.authType}>
-        <span className={styles.label}>auth</span>
+        <span className={styles.label}>Auth</span>
       </Input>
       <SecondaryButton className={styles.changeAuth}
                        icon={iUnlocked}
                        onClick={() => setUpdatingAuth(true)}
                        data-locator='change-password'>
-        change auth
+        Change auth
       </SecondaryButton>
 
       <Checkbox checked={includeNew}
                 onToggle={(newValue) => dispatch(trayUpdated(trayId, {includeNew: newValue}))}
                 className={styles.includeNew}
                 data-locator='include-new'>
-        automatically include new projects
+        Automatically include new projects
       </Checkbox>
       <div className={styles.dangerZone}>
         <h4 className={styles.dangerZoneTitle}>Danger Zone</h4>
         <div className={styles.dangerZoneContent}>
-          <div className={styles.deleteInfo}>Once you delete, there is no going back. Please be certain.</div>
+          <div className={styles.deleteInfo}>Once you delete, there is no going back! Please be certain.</div>
           <DangerButton icon={iBin}
                         onClick={() => dispatch(trayRemoved(trayId))}
                         data-locator='delete-tray'>
-            delete
+            Delete feed
           </DangerButton>
         </div>
       </div>

@@ -90,21 +90,21 @@ export function Externally({location}: ExternallyProps) {
                 value={accessToken}
                 disabled={disabled}
                 data-locator='access-token'>
-        <div className={styles.label}>access token</div>
+        <div className={styles.label}>Access token</div>
       </Password>
       <Input value={newDescription}
              onChange={({target}) => setNewDescription(target.value)}
              onBlur={() => dispatch(backupSetDescription(location, newDescription))}
              disabled={disabled}
              maxLength={256}>
-        <div className={styles.label}>description</div>
+        <div className={styles.label}>Description</div>
       </Input>
       <PrimaryButton className={styles.export}
                      onClick={upload}
                      disabled={disabled}
                      icon={iCloudUpload}
                      data-locator='export'>
-        export
+        Export
       </PrimaryButton>
       <Messages type={messageType}
                 messages={messages}

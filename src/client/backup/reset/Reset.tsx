@@ -21,11 +21,11 @@ export function Reset() {
         be undone!</strong>
       </p>
       <PrimaryButton className={styles.reset}
-                     id='reset-configuration'
+                     data-locator='reset-configuration'
                      onClick={resetConfiguration}
                      disabled={resetting}
                      icon={iBin}>
-        reset configuration
+        Reset configuration
       </PrimaryButton>
     </Container>
   )

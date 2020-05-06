@@ -110,7 +110,7 @@ export function Externally({location, accessTokenRequired}: ExternallyProps) {
                   onBlur={accessTokenChanged}
                   value={accessToken}
                   disabled={disabled}>
-          <div className={styles.label}>access token</div>
+          <div className={styles.label}>Access token</div>
         </Password>
       )}
       <PrimaryButton className={styles.import}
@@ -118,7 +118,7 @@ export function Externally({location, accessTokenRequired}: ExternallyProps) {
                      disabled={disabled}
                      icon={iCloudDownload}
                      data-locator='import-externally'>
-        import
+        Import
       </PrimaryButton>
       <Messages type={messageType}
                 messages={messages}

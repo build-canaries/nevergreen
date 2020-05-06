@@ -23,13 +23,13 @@ export function AddMessage({addMessage}: AddMessageProps) {
              onChange={({target}) => setMessage(target.value)}
              onEnter={triggerAddMessage}
              data-locator='message'>
-        message
+        Message
       </Input>
       <PrimaryButton className={styles.add}
                      onClick={triggerAddMessage}
                      data-locator='add-message'
                      icon={iPlus}>
-        <span aria-label='add success message'>add</span>
+        Add message
       </PrimaryButton>
     </div>
   )

@@ -25,13 +25,13 @@ it('should allow system notifications to be enabled', async () => {
     }
   }
   const {store, getByLabelText} = render(<NotificationsSystem/>, state)
-  userEvent.click(getByLabelText('show system notifications'))
+  userEvent.click(getByLabelText('Show system notifications'))
 
-  expect(getByLabelText('show system notifications')).toHaveAttribute('disabled')
+  expect(getByLabelText('Show system notifications')).toHaveAttribute('disabled')
 
   await waitFor(() => {
     expect(getShowSystemNotifications(store.getState())).toBeTruthy()
-    expect(getByLabelText('show system notifications')).not.toHaveAttribute('disabled')
+    expect(getByLabelText('Show system notifications')).not.toHaveAttribute('disabled')
     expect(SystemNotifications.sendSystemNotification).toHaveBeenCalledWith(NOTIFICATIONS_ENABLED_NOTIFICATION)
   })
 })
@@ -59,7 +59,7 @@ it('should show a message if notifications are supported but permission is denie
   jest.spyOn(SystemNotifications, 'permissionGranted').mockReturnValue(false)
 
   const {queryByText, getByLabelText} = render(<NotificationsSystem/>)
-  userEvent.click(getByLabelText('show system notifications'))
+  userEvent.click(getByLabelText('Show system notifications'))
 
   await waitFor(() => {
     expect(queryByText(PERMISSION_DENIED_MESSAGE)).toBeInTheDocument()

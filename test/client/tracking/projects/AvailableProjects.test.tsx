@@ -67,13 +67,13 @@ it('should correctly show and remove errors returned while refreshing', async ()
   }
 
   const {queryByTestId, getByText} = render(<AvailableProjects {...DEFAULT_PROPS} tray={tray}/>, state)
-  userEvent.click(getByText('refresh'))
+  userEvent.click(getByText('Refresh'))
 
   await waitFor(() => {
     expect(queryByTestId('error-messages')).toBeInTheDocument()
   })
 
-  userEvent.click(getByText('refresh'))
+  userEvent.click(getByText('Refresh'))
 
   await waitFor(() => {
     expect(queryByTestId('error-messages')).not.toBeInTheDocument()
@@ -117,12 +117,12 @@ it('should show a warning if no projects match the filter', async () => {
   }
 
   const {getByLabelText, queryByText} = render(<AvailableProjects {...DEFAULT_PROPS} tray={tray}/>, state)
-  await userEvent.type(getByLabelText('filter'), 'bar')
+  await userEvent.type(getByLabelText('Search'), 'bar')
 
   expect(queryByText('No matching projects, please update your filter')).toBeInTheDocument()
 })
 
-it('should show an error if the filter is invalid', async () => {
+it('should show an error if the search is invalid', async () => {
   const tray = buildTray({trayId: 'trayId'})
   const state = {
     [TRAYS_ROOT]: {
@@ -140,8 +140,8 @@ it('should show an error if the filter is invalid', async () => {
     }
   }
   const {getByLabelText, queryByText} = render(<AvailableProjects {...DEFAULT_PROPS} tray={tray}/>, state)
-  await userEvent.type(getByLabelText('filter'), '?')
-  expect(queryByText(/^Project filter not applied/)).toBeInTheDocument()
+  await userEvent.type(getByLabelText('Search'), '?')
+  expect(queryByText(/^Project search not applied/)).toBeInTheDocument()
 })
 
 describe('accessibility', () => {

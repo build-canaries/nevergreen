@@ -12,11 +12,11 @@ interface HeaderProps {
 }
 
 const MENU_ITEMS = [
-  {id: 'monitor', title: 'monitor', shortcuts: ['m', '1']},
-  {id: 'tracking', title: 'tracking', shortcuts: ['t', '2']},
-  {id: 'success', title: 'success', shortcuts: ['s', '3']},
-  {id: 'settings', title: 'settings', shortcuts: [',', '4']},
-  {id: 'backup', title: 'backup', shortcuts: ['b', '5']}
+  {id: 'monitor', title: 'Monitor', shortcuts: ['m', '1']},
+  {id: 'tracking', title: 'Tracking', shortcuts: ['t', '2']},
+  {id: 'success', title: 'Success', shortcuts: ['s', '3']},
+  {id: 'settings', title: 'Settings', shortcuts: [',', '4']},
+  {id: 'backup', title: 'Backup', shortcuts: ['b', '5']}
 ]
 
 export function Header({fullScreen}: HeaderProps) {
