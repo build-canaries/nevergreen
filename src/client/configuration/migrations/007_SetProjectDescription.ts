@@ -10,6 +10,7 @@ export const migrate: Migrate = (data) => {
   forEachArrayAt(data, PROJECTS_ROOT, (projects) => {
     projects.forEach((project) => {
       if (isObject(project)) {
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         project.description = isBlank(project.stage) ? project.name : `${project.name} ${project.stage}`
         unset(project, 'name')
         unset(project, 'stage')

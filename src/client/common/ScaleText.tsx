@@ -1,7 +1,7 @@
-import React, {ReactNode, useCallback, useContext, useMemo, useRef, useState} from 'react'
+import React, {ReactElement, ReactNode, useCallback, useContext, useMemo, useRef, useState} from 'react'
 import {flatten} from 'lodash'
 import {debug} from './Logger'
-import {FontMetricsContext} from '../FontMetrics'
+import {FontMetricsContext, Measurable} from '../FontMetrics'
 import {useElementResized} from './ResizableHook'
 import styles from './scaled-text.scss'
 
@@ -57,7 +57,7 @@ export function ideal(
   charHeightScale: number,
   charWidthScale: number,
   paddingEm: number
-) {
+): number {
   if (elementHeightPx <= 0 || elementWidthPx <= 0 || charHeightScale <= 0 || charWidthScale <= 0) {
     debug(`unable to calculate ideal fontSize for width [${elementWidthPx}px] height [${elementHeightPx}px] heightScale [${charHeightScale}px] widthScale [${charWidthScale}px]`)
     return MIN_FONT_SIZE
@@ -87,12 +87,12 @@ interface ScaleTextProps {
   readonly children: ReactNode;
 }
 
-export function ScaleText({sentences, children}: ScaleTextProps) {
+export function ScaleText({sentences, children}: ScaleTextProps): ReactElement {
   const elementRef = useRef<HTMLDivElement>(null)
   const {height: fontHeight, width: fontWidth} = useContext(FontMetricsContext)
   const [{elementHeight, elementWidth}, setElementSize] = useState({elementWidth: 0, elementHeight: 0})
 
-  const onResize = useCallback((currentSize) => {
+  const onResize = useCallback((currentSize: Measurable) => {
     setElementSize((previousSize) => {
       const heightChanged = Math.abs(currentSize.height - previousSize.elementHeight) > 1
       const widthChanged = Math.abs(currentSize.width - previousSize.elementWidth) > 1

@@ -1,11 +1,11 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {ReactElement, useEffect, useRef, useState} from 'react'
 import {PrimaryButton, SecondaryButton} from '../../common/forms/Button'
 import {iCross, iFloppyDisk} from '../../common/fonts/Icons'
 import {Modal} from '../../common/Modal'
 import {Auth} from '../Auth'
 import {AuthTypes} from '../../domain/Tray'
 import styles from './change-auth.scss'
-import {isBlank} from '../../common/Utils'
+import {errorMessage, isBlank} from '../../common/Utils'
 import {send} from '../../gateways/Gateway'
 import {encrypt, EncryptResponse} from '../../gateways/SecurityGateway'
 import {Messages, MessagesType} from '../../common/Messages'
@@ -19,7 +19,7 @@ interface ChangeAuthProps {
   readonly username: string;
 }
 
-export function ChangeAuth({show, cancel, save, authType, username}: ChangeAuthProps) {
+export function ChangeAuth({show, cancel, save, authType, username}: ChangeAuthProps): ReactElement {
   const [newAuthType, setAuthType] = useState(authType)
   const [newUsername, setUsername] = useState(username)
   const [newPassword, setPassword] = useState('')
@@ -54,7 +54,7 @@ export function ChangeAuth({show, cancel, save, authType, username}: ChangeAuthP
       }
       resetForm()
     } catch (error) {
-      setEncryptionError([error.message])
+      setEncryptionError([errorMessage(error)])
     }
     // eslint-disable-next-line require-atomic-updates
     pendingRequest.current = undefined

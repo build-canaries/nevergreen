@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react'
+import React, {ReactElement, useCallback, useEffect, useState} from 'react'
 import {Header} from './header/Header'
 import {Footer} from './footer/Footer'
 import {Notification} from './Notification'
@@ -23,7 +23,7 @@ import {DEFAULT_FONT_METRICS, FontMetrics, FontMetricsContext} from './FontMetri
 import Mousetrap from 'mousetrap'
 import {Preview} from './settings/Preview'
 
-export function Nevergreen() {
+export function Nevergreen(): ReactElement {
   const loaded = useLocalConfiguration()
 
   const [notification, setNotification] = useState('')

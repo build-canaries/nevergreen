@@ -1,4 +1,4 @@
-import React, {DetailedHTMLProps, InputHTMLAttributes, ReactNode} from 'react'
+import React, {DetailedHTMLProps, InputHTMLAttributes, ReactElement, ReactNode} from 'react'
 import classNames from 'classnames'
 import {uniqueId} from 'lodash'
 import styles from './checkbox.scss'
@@ -9,7 +9,7 @@ type CheckboxProps = {
   readonly className?: string;
 } & DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
 
-export function Checkbox({children, onToggle, className, ...inputProps}: CheckboxProps) {
+export function Checkbox({children, onToggle, className, ...inputProps}: CheckboxProps): ReactElement {
   const classes = classNames(styles.container, className)
   const id = uniqueId('c')
 

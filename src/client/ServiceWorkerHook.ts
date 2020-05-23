@@ -34,6 +34,6 @@ export function useServiceWorker(setNotification: (notification: string) => void
       }
     }
 
-    registerServiceWorker()
+    void registerServiceWorker()
   }, [setNotification])
 }

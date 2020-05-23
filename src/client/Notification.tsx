@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {ReactElement} from 'react'
 import {isBlank} from './common/Utils'
 import cn from 'classnames'
 import styles from './notification.scss'
@@ -11,7 +11,7 @@ interface NotificationProps {
   readonly fullScreen: boolean;
 }
 
-export function Notification({notification, dismiss, fullScreen}: NotificationProps) {
+export function Notification({notification, dismiss, fullScreen}: NotificationProps): ReactElement | null {
   if (isBlank(notification)) {
     return null
   }

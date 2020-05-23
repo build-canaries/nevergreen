@@ -26,4 +26,6 @@ export const reduce = createReducer<SuccessState>(DEFAULT_STATE, {
   }
 })
 
-export const getSuccessMessages = (state: State) => state[SUCCESS_ROOT]
+export function getSuccessMessages(state: State): ReadonlyArray<string> {
+  return state[SUCCESS_ROOT]
+}

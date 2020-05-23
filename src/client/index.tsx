@@ -24,7 +24,7 @@ const save = async () => {
 const saveDebounced = debounce(save, 200, {maxWait: ONE_SECOND})
 
 store.subscribe(() => {
-  saveDebounced()
+  void saveDebounced()
 })
 
 Modal.setAppElement('#root')

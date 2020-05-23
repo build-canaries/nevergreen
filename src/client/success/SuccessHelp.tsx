@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {ReactElement} from 'react'
 import {ExternalLink} from '../common/ExternalLink'
 import {HelpArticle, HelpProps} from '../help/HelpArticle'
 
@@ -13,7 +13,7 @@ const KEYWORDS = [
   'png'
 ]
 
-export function SuccessHelp({searchQuery, helpLink}: HelpProps) {
+export function SuccessHelp({searchQuery, helpLink}: HelpProps): ReactElement {
   return (
     <HelpArticle keywords={KEYWORDS}
                  searchQuery={searchQuery}

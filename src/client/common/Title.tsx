@@ -1,4 +1,4 @@
-import React, {useLayoutEffect} from 'react'
+import React, {ReactElement, useLayoutEffect} from 'react'
 import {VisuallyHidden} from './VisuallyHidden'
 import {useForceFocus} from './ForceFocusHook'
 
@@ -6,7 +6,7 @@ interface TitleProps {
   readonly children: string;
 }
 
-export function Title({children}: TitleProps) {
+export function Title({children}: TitleProps): ReactElement {
   const titleEl = useForceFocus<HTMLHeadingElement>()
 
   useLayoutEffect(() => {

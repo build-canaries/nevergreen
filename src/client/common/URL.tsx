@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react'
+import React, {Fragment, ReactElement} from 'react'
 import styles from './url.scss'
 
 interface URLProps {
@@ -17,7 +17,7 @@ function isPunctuation(c: string) {
   return c === '.' || c === '?' || c === '=' || c === '&'
 }
 
-export function URL({url}: URLProps) {
+export function URL({url}: URLProps): ReactElement {
   const chars = [...url]
   return (
     <span className={styles.url}>

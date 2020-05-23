@@ -1,4 +1,4 @@
-import {isBlank, isNumber} from '../common/Utils'
+import {isBlank, isNumeric} from '../common/Utils'
 
 export enum Prognosis {
   healthy = 'healthy',
@@ -35,7 +35,7 @@ export type Projects = ReadonlyArray<Project | ProjectError>
 
 function formatBuildLabel(buildLabel?: string) {
   if (buildLabel && !isBlank(buildLabel)) {
-    return isNumber(buildLabel)
+    return isNumeric(buildLabel)
       ? `#${buildLabel}`
       : buildLabel
   }
@@ -55,13 +55,13 @@ export function isBuilding(project: Project | ProjectError): project is Project 
   return project.prognosis === Prognosis.healthyBuilding || project.prognosis === Prognosis.sickBuilding
 }
 
-export function projectIdentifier(project: Project | ProjectError) {
+export function projectIdentifier(project: Project | ProjectError): string {
   return isError(project)
     ? project.webUrl
     : `${project.trayId}#${project.projectId}`
 }
 
-export function projectBuildLabel(project: Project | ProjectError) {
+export function projectBuildLabel(project: Project | ProjectError): string {
   if (isError(project) || isBuilding(project)) {
     return ''
   }

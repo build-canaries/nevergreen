@@ -17,9 +17,7 @@ it('should add all the given options', () => {
 // https://ffoodd.github.io/a11y.css/errors.html#namespace
 it('should generate an id (that does not start with a number) to associate the label and input correctly', () => {
   const {container} = render(<DropDown options={[]}>label</DropDown>)
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
-  const labelId = container.querySelector('label').htmlFor
+  const labelId = container.querySelector('label')?.htmlFor
   expect(labelId).toMatch(/i[0-9]/)
   expect(container.querySelector('select')).toHaveAttribute('id', labelId)
 })

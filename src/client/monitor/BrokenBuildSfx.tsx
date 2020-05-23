@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react'
+import React, {ReactElement, useEffect, useRef} from 'react'
 import {isBlank} from '../common/Utils'
 import {isError, isSick, Projects} from '../domain/Project'
 import {useSelector} from 'react-redux'
@@ -8,7 +8,7 @@ interface BrokenBuildSfxProps {
   readonly projects: Projects;
 }
 
-export function BrokenBuildSfx({projects}: BrokenBuildSfxProps) {
+export function BrokenBuildSfx({projects}: BrokenBuildSfxProps): ReactElement | null {
   const sfxNode = useRef<HTMLAudioElement>(null)
   const playBrokenBuildSounds = useSelector(getPlayBrokenBuildSoundFx)
   const brokenBuildFx = useSelector(getBrokenBuildSoundFx)

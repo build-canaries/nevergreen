@@ -1,5 +1,5 @@
-import React, {ChangeEvent, useEffect, useLayoutEffect, useState} from 'react'
-import {isBlank} from '../common/Utils'
+import React, {ChangeEvent, ReactElement, useEffect, useLayoutEffect, useState} from 'react'
+import {errorMessage, isBlank} from '../common/Utils'
 import {Messages, MessagesType} from '../common/Messages'
 import {Input} from '../common/forms/Input'
 import {Checkbox} from '../common/forms/Checkbox'
@@ -17,7 +17,7 @@ function pause(audio?: HTMLAudioElement) {
   }
 }
 
-export function NotificationsAudio() {
+export function NotificationsAudio(): ReactElement {
   const dispatch = useDispatch()
   const brokenBuildSoundFx = useSelector(getBrokenBuildSoundFx)
   const playBrokenBuildSoundFx = useSelector(getPlayBrokenBuildSoundFx)
@@ -57,7 +57,7 @@ export function NotificationsAudio() {
       await audio.play()
     } catch (e) {
       setPlaying(false)
-      setErrors(['Unable to play broken build sound because of an error.', e.message])
+      setErrors(['Unable to play broken build sound because of an error.', errorMessage(e)])
     }
   }
 

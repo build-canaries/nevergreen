@@ -36,6 +36,7 @@ export function migrate(data: UntrustedData): void {
 
 export function moveData(untrustedData: UntrustedData, fromPath: PropertyPath, toPath: PropertyPath): void {
   if (has(untrustedData, fromPath)) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const dataToMove = get(untrustedData, fromPath)
     set(untrustedData, toPath, dataToMove)
     unset(untrustedData, fromPath)
@@ -43,6 +44,7 @@ export function moveData(untrustedData: UntrustedData, fromPath: PropertyPath, t
 }
 
 function forEachAt(untrustedData: UntrustedData, atPath: PropertyPath, callback: (value: UntrustedData, key: string) => void): void {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const o = get(untrustedData, atPath)
   if (isObject(o)) {
     Object.entries(o).forEach(([key, value]) => {

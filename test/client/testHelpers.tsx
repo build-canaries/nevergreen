@@ -9,18 +9,24 @@ import {SUCCESS_ROOT} from '../../src/client/success/SuccessReducer'
 import {TRAYS_ROOT} from '../../src/client/tracking/TraysReducer'
 import {Prognosis, Project, ProjectError} from '../../src/client/domain/Project'
 import {createTray, Tray} from '../../src/client/domain/Tray'
-import {combineReducers, Reducer} from 'redux'
+import {CombinedState, combineReducers, Middleware, Reducer} from 'redux'
 import {RecursivePartial} from '../../src/client/common/Types'
-import {render as testRender} from '@testing-library/react'
+import {render as testRender, RenderResult} from '@testing-library/react'
 import {Provider} from 'react-redux'
-import {configureStore} from '@reduxjs/toolkit'
+import {AnyAction, configureStore, EnhancedStore} from '@reduxjs/toolkit'
 import {MemoryRouter} from 'react-router-dom'
 import Modal from 'react-modal'
 import {DEFAULT_PROJECTS_TO_SHOW, DEFAULT_REFRESH_TIME} from '../../src/client/settings/SettingsActionCreators'
 import {APPLIED_MIGRATIONS_ROOT} from '../../src/client/configuration/MigrationsReducer'
 import {SortBy} from '../../src/client/gateways/ProjectsGateway'
 
+interface ExtendedRenderResult extends RenderResult {
+  store: EnhancedStore<State, AnyAction, ReadonlyArray<Middleware<unknown, State>>>;
+}
+
 export function buildState(subState: RecursivePartial<State> = {}): State {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore This broke after upgrading to TypeScript > 3.8, see my comment on https://stackoverflow.com/a/51365037
   return merge({
     [SETTINGS_ROOT]: {
       brokenBuildSoundFx: '',
@@ -57,14 +63,14 @@ export function buildState(subState: RecursivePartial<State> = {}): State {
   }, subState)
 }
 
-export function setupReactModal() {
+export function setupReactModal(): void {
   const appElement = document.createElement('div')
   appElement.setAttribute('id', 'app-element')
   document.body.append(appElement)
   Modal.setAppElement('#app-element')
 }
 
-export function render(component: ReactNode, state: RecursivePartial<State> = {}, location = '/') {
+export function render(component: ReactNode, state: RecursivePartial<State> = {}, location = '/'): ExtendedRenderResult {
   const store = configureStore({reducer, preloadedState: buildState(state)})
 
   const wrapWithStoreAndRouter = (c: ReactNode) => (
@@ -77,7 +83,7 @@ export function render(component: ReactNode, state: RecursivePartial<State> = {}
 
   return {
     ...fns,
-    rerender: (c: ReactNode) => fns.rerender(wrapWithStoreAndRouter(c)),
+    rerender: (c: ReactNode): void => fns.rerender(wrapWithStoreAndRouter(c)),
     store
   }
 }
@@ -123,8 +129,8 @@ export function buildProjectError(projectError: Partial<ProjectError> = {}): Pro
   return merge(defaultProjectError, projectError)
 }
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-export function testReducer(reducer: Partial<Reducer<State>>) {
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-return */
+export function testReducer(reducer: Partial<Reducer<State>>): Reducer<CombinedState<State>> {
   return combineReducers<State>(merge({
     [SETTINGS_ROOT]: (state: any = null) => state,
     [BACKUP_ROOT]: (state: any = null) => state,
@@ -136,4 +142,4 @@ export function testReducer(reducer: Partial<Reducer<State>>) {
   }, reducer))
 }
 
-/* eslint-enable @typescript-eslint/no-explicit-any */
+/* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-return */

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {ReactElement, useState} from 'react'
 import styles from './locally.scss'
 import {PrimaryButton} from '../../../common/forms/Button'
 import {iFloppyDisk} from '../../../common/fonts/Icons'
@@ -11,7 +11,7 @@ import {isRight} from 'fp-ts/lib/Either'
 
 const PLACEHOLDER = 'paste exported configuration here and press import'
 
-export function Locally() {
+export function Locally(): ReactElement {
   const dispatch = useDispatch()
   const [messages, setMessages] = useState<ReadonlyArray<string>>([])
   const [messageType, setMessageType] = useState(MessagesType.INFO)

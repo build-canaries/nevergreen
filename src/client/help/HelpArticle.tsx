@@ -1,4 +1,4 @@
-import React, {ReactNode, useEffect, useState} from 'react'
+import React, {ReactElement, ReactNode, useEffect, useState} from 'react'
 import {useLocation} from 'react-router-dom'
 import matchSorter from 'match-sorter'
 import {isBlank} from '../common/Utils'
@@ -32,7 +32,7 @@ function Keyword({keyword, matches}: KeywordProps) {
   )
 }
 
-export function HelpArticle({title, keywords, children, searchQuery, page}: HelpArticleProps) {
+export function HelpArticle({title, keywords, children, searchQuery, page}: HelpArticleProps): ReactElement | null {
   const location = useLocation()
   const [show, setShow] = useState(location.pathname === page)
   const [matches, setMatches] = useState<ReadonlyArray<string>>([])

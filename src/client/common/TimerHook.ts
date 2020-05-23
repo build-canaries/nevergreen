@@ -8,7 +8,7 @@ function asMilliseconds(seconds: number) {
   return seconds * 1000
 }
 
-export const useTimer = (onTrigger: OnTrigger, intervalInSeconds: number) => {
+export const useTimer = (onTrigger: OnTrigger, intervalInSeconds: number): void => {
   useEffect(() => {
     let cancelled = false
     let timeoutId = 0
@@ -21,13 +21,13 @@ export const useTimer = (onTrigger: OnTrigger, intervalInSeconds: number) => {
         debug('cancelled so not rescheduling')
       } else {
         timeoutId = window.setTimeout(() => {
-          run()
+          void run()
         }, asMilliseconds(intervalInSeconds))
         debug(`created timeout [${timeoutId}] to run in [${intervalInSeconds}s]`)
       }
     }
 
-    run()
+    void run()
 
     return () => {
       debug(`clearing timeout [${timeoutId}]`)

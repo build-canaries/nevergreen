@@ -1,11 +1,11 @@
-import React from 'react'
+import React, {ReactElement} from 'react'
 import {Container} from '../../common/Container'
 import {Locally} from './locally/Locally'
 import {Tabs} from '../../common/Tabs'
 import {Externally} from './externally/Externally'
 import {BackupLocation} from '../BackupActionCreators'
 
-export function Import() {
+export function Import(): ReactElement {
   return (
     <Container title='Import'>
       <Tabs titles={['Locally', 'GitHub', 'GitLab']}>

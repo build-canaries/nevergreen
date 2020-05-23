@@ -1,4 +1,4 @@
-import React, {ButtonHTMLAttributes, DetailedHTMLProps, ReactNode} from 'react'
+import React, {ButtonHTMLAttributes, DetailedHTMLProps, ReactElement, ReactNode} from 'react'
 import cn from 'classnames'
 import styles from './button.scss'
 import iconStyles from '../fonts/icon-font.scss'
@@ -21,9 +21,9 @@ type BaseButtonProps = {
   theme: ButtonTheme;
 } & ButtonProps
 
-export function BaseButton({theme, className, icon, iconOnly, children, ...additionalProps}: BaseButtonProps) {
+export function BaseButton({theme, className, icon, iconOnly, children, ...additionalProps}: BaseButtonProps): ReactElement {
   const classes = cn(styles[theme], className, {
-    [iconStyles[`icon-${icon}`]]: icon,
+    [iconStyles[`icon-${icon || ''}`]]: icon,
     [styles.withIcon]: icon && !iconOnly,
     [styles.iconOnly]: icon && iconOnly
   })
@@ -39,18 +39,18 @@ export function BaseButton({theme, className, icon, iconOnly, children, ...addit
   )
 }
 
-export function PrimaryButton(props: ButtonProps) {
+export function PrimaryButton(props: ButtonProps): ReactElement {
   return <BaseButton theme={ButtonTheme.primary} {...props}/>
 }
 
-export function SecondaryButton(props: ButtonProps) {
+export function SecondaryButton(props: ButtonProps): ReactElement {
   return <BaseButton theme={ButtonTheme.secondary} {...props}/>
 }
 
-export function DangerButton(props: ButtonProps) {
+export function DangerButton(props: ButtonProps): ReactElement {
   return <BaseButton theme={ButtonTheme.danger} {...props}/>
 }
 
-export function InputButton(props: ButtonProps) {
+export function InputButton(props: ButtonProps): ReactElement {
   return <SecondaryButton iconOnly className={styles.inputButton} {...props}/>
 }

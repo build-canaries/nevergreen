@@ -1,4 +1,4 @@
-import React, {DetailedHTMLProps, ReactNode, SelectHTMLAttributes} from 'react'
+import React, {DetailedHTMLProps, ReactElement, ReactNode, SelectHTMLAttributes} from 'react'
 import classNames from 'classnames'
 import {uniqueId} from 'lodash'
 import styles from './drop-down.scss'
@@ -14,7 +14,7 @@ type DropDownProps = {
   readonly disabled?: boolean;
 } & DetailedHTMLProps<SelectHTMLAttributes<HTMLSelectElement>, HTMLSelectElement>
 
-export function DropDown({className, children, options, disabled, ...inputProps}: DropDownProps) {
+export function DropDown({className, children, options, disabled, ...inputProps}: DropDownProps): ReactElement {
   const labelClasses = classNames(formStyles.inputContainer, className)
   const id = uniqueId('i')
 

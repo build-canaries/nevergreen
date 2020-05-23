@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {ReactElement} from 'react'
 import {ExternalLink} from '../common/ExternalLink'
 import {CI_OPTIONS, Tray} from '../domain/Tray'
 import {isBlank} from '../common/Utils'
@@ -57,7 +57,7 @@ ${knownServerTypes(trays)}
 
 const ISSUE_URL = 'https://github.com/build-canaries/nevergreen/issues/new'
 
-export function SubmitAnIssue({version, className}: SubmitAnIssueProps) {
+export function SubmitAnIssue({version, className}: SubmitAnIssueProps): ReactElement {
   const trays = useSelector(getTrays)
 
   return (

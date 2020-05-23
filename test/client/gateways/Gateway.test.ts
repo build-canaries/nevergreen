@@ -1,13 +1,4 @@
-import {
-  fakeRequest,
-  get,
-  patch,
-  post,
-  put,
-  send,
-  TIMEOUT_ERROR,
-  UNKNOWN_ERROR
-} from '../../../src/client/gateways/Gateway'
+import {fakeRequest, get, patch, post, put, send, TIMEOUT_ERROR} from '../../../src/client/gateways/Gateway'
 import {Request, SuperAgentRequest} from 'superagent'
 
 const url = 'http://dummy-server.com/order'
@@ -88,7 +79,7 @@ describe('send', () => {
     try {
       await send(request)
     } catch (err) {
-      expect(err).toHaveProperty('message', UNKNOWN_ERROR)
+      expect(err).toHaveProperty('message', 'Unknown error')
     }
   })
 

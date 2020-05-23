@@ -45,8 +45,14 @@ export const reduce = createReducer<ProjectsState>(DEFAULT_STATE, {
   }
 })
 
-const getProjects = (state: State) => state[PROJECTS_ROOT]
-export const getProjectsForTray = (trayId: string) => createSelector(getProjects, (projects) => projects[trayId])
+function getProjects(state: State) {
+  return state[PROJECTS_ROOT]
+}
+
+export function getProjectsForTray(trayId: string): (state: State) => ReadonlyArray<SavedProject> {
+  return createSelector(getProjects, (projects) => projects[trayId])
+}
+
 export const getKnownProjects = createSelector(getProjects, (projects) => {
   return Object.values(projects).flatMap((projectsPerTray) => projectsPerTray)
 })

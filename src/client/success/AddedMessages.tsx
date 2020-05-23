@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {ReactElement} from 'react'
 import _ from 'lodash'
 import {Container} from '../common/Container'
 import {RemoveButton} from './RemoveButton'
@@ -11,7 +11,7 @@ interface AddedMessagesProps {
   readonly removeMessage: (message: string) => void;
 }
 
-export function AddedMessages({messages, removeMessage}: AddedMessagesProps) {
+export function AddedMessages({messages, removeMessage}: AddedMessagesProps): ReactElement | null {
   if (_.isEmpty(messages)) {
     return null
   }

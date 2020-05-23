@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {ReactElement} from 'react'
 import {HelpArticle, HelpProps} from '../help/HelpArticle'
 import styles from '../help/help-article.scss'
 
@@ -9,7 +9,7 @@ const KEYWORDS = [
   'click to show menu'
 ]
 
-export function GeneralSettingsHelp({searchQuery}: HelpProps) {
+export function GeneralSettingsHelp({searchQuery}: HelpProps): ReactElement {
   return (
     <HelpArticle keywords={KEYWORDS}
                  searchQuery={searchQuery}

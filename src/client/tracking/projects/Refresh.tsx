@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {ReactElement} from 'react'
 import {Shortcut} from '../../common/Shortcut'
 import {Duration} from '../../common/Duration'
 import styles from './refresh.scss'
@@ -11,7 +11,7 @@ interface RefreshProps {
   readonly refreshTray: () => void;
 }
 
-export function Refresh({index, timestamp, refreshTray}: RefreshProps) {
+export function Refresh({index, timestamp, refreshTray}: RefreshProps): ReactElement {
   return (
     <>
       <PrimaryButton className={styles.refresh}

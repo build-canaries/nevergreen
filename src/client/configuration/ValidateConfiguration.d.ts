@@ -1,4 +1,4 @@
-declare function ValidateConfiguration(data: object): boolean;
+declare function ValidateConfiguration(data: Record<string, unknown>): boolean;
 
 // eslint-disable-next-line no-redeclare
 declare namespace ValidateConfiguration {
@@ -6,7 +6,7 @@ declare namespace ValidateConfiguration {
     dataPath: string;
     message: string;
   }[]
-  const schema: object
+  const schema: Record<string, unknown>
 }
 
 export default ValidateConfiguration

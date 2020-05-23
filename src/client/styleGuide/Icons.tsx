@@ -1,9 +1,9 @@
-import React from 'react'
+import React, {ReactElement} from 'react'
 import icons from '../common/fonts/icon-font.scss'
 import {StyleGuideSection} from './StyleGuideSection'
 import styles from './style-guide.scss'
 
-export function Icons() {
+export function Icons(): ReactElement {
   return (
     <StyleGuideSection title='Icons (in a Responsive Grid)'>
       <div className={styles.icons}>

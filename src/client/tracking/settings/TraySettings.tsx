@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {ReactElement, useEffect, useState} from 'react'
 import {Input} from '../../common/forms/Input'
 import {DropDown} from '../../common/forms/DropDown'
 import {AuthTypes, CI_OPTIONS, generateRandomName, Tray} from '../../domain/Tray'
@@ -16,7 +16,7 @@ interface TraySettingsProps {
   readonly setRequiresRefresh: (required: boolean) => void;
 }
 
-export function TraySettings({tray, setRequiresRefresh}: TraySettingsProps) {
+export function TraySettings({tray, setRequiresRefresh}: TraySettingsProps): ReactElement {
   const dispatch = useDispatch()
 
   const {trayId, name, url, authType, username, serverType, includeNew} = tray

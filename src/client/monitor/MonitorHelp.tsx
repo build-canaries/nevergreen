@@ -1,11 +1,11 @@
-import React from 'react'
+import React, {ReactElement} from 'react'
 import {HelpArticle, HelpProps} from '../help/HelpArticle'
 
 const KEYWORDS = [
   'monitor'
 ]
 
-export function MonitorHelp({searchQuery, helpLink}: HelpProps) {
+export function MonitorHelp({searchQuery, helpLink}: HelpProps): ReactElement {
   return (
     <HelpArticle keywords={KEYWORDS}
                  searchQuery={searchQuery}

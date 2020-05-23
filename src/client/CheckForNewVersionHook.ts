@@ -11,7 +11,7 @@ interface GitHubResponse {
 const NEVERGREEN_IO_REGEX = /nevergreen\.io/i
 const TWENTY_FOUR_HOURS = 24 * 60 * 60
 
-export function useCheckForNewVersion(setNotification: (notification: string) => void) {
+export function useCheckForNewVersion(setNotification: (notification: string) => void): void {
   const checkVersion = useCallback(() => {
     const check = async () => {
       try {
@@ -28,7 +28,7 @@ export function useCheckForNewVersion(setNotification: (notification: string) =>
         // We don't care if checking for a new version fails
       }
     }
-    check()
+    void check()
   }, [setNotification])
 
   useTimer(checkVersion, TWENTY_FOUR_HOURS)

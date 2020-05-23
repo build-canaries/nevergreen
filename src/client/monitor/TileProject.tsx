@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {ReactElement} from 'react'
 import styles from './tile-project.scss'
 import {isBlank} from '../common/Utils'
 import {projectBuildLabel, ProjectError, Project, Projects} from '../domain/Project'
@@ -16,7 +16,7 @@ interface TileProjectProps {
   readonly visibleProjects: Projects;
 }
 
-export function TileProject({project, visibleProjects}: TileProjectProps) {
+export function TileProject({project, visibleProjects}: TileProjectProps): ReactElement {
   const trays = useSelector(getTrays)
   const showBuildTime = useSelector(getShowBuildTime)
   const showTrayName = useSelector(getShowTrayName)

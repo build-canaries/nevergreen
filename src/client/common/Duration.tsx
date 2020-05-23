@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react'
+import React, {ReactElement, useCallback, useState} from 'react'
 import {formatAsDuration} from './DateTime'
 import {useTimer} from './TimerHook'
 import {isBlank} from './Utils'
@@ -11,7 +11,7 @@ interface DurationProps {
 
 const ONE_MINUTE = 60
 
-export function Duration({timestamp, prefix, suffix}: DurationProps) {
+export function Duration({timestamp, prefix, suffix}: DurationProps): ReactElement {
   const [duration, setDuration] = useState(formatAsDuration(timestamp))
 
   const update = useCallback(() => setDuration(formatAsDuration(timestamp)), [timestamp])

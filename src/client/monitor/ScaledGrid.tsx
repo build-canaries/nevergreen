@@ -1,4 +1,4 @@
-import React, {Children, ReactNode, useCallback, useLayoutEffect, useRef, useState} from 'react'
+import React, {Children, ReactElement, ReactNode, useCallback, useLayoutEffect, useRef, useState} from 'react'
 import {isNil} from 'lodash'
 import styles from './scaled-grid.scss'
 import {useElementResized} from '../common/ResizableHook'
@@ -49,7 +49,7 @@ function updateChildSizes(parent: Element) {
   return {widthPx, heightPx}
 }
 
-export function ScaledGrid({children}: ScaledGridProps) {
+export function ScaledGrid({children}: ScaledGridProps): ReactElement {
   const listRef = useRef<HTMLUListElement>(null)
   const [childHeight, setChildHeight] = useState(1)
   const [childWidth, setChildWidth] = useState(1)

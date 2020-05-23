@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {ReactElement} from 'react'
 import {Input} from '../common/forms/Input'
 import styles from './auth.scss'
 import {Password} from '../common/forms/Password'
@@ -32,7 +32,7 @@ export function Auth(
     onEnter,
     disabled
   }: AuthProps
-) {
+): ReactElement {
   const groupName = uniqueId('auth')
 
   return (

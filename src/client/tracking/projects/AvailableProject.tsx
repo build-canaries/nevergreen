@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {ReactElement} from 'react'
 import classNames from 'classnames'
 import {Checkbox} from '../../common/forms/Checkbox'
 import styles from './available-project.scss'
@@ -11,7 +11,7 @@ interface AvailableProjectProps {
   readonly selectProject: (select: boolean) => void;
 }
 
-export function AvailableProject({removed, isNew, description, selected, selectProject}: AvailableProjectProps) {
+export function AvailableProject({removed, isNew, description, selected, selectProject}: AvailableProjectProps): ReactElement {
   const listClasses = classNames(styles.availableProject, {
     [styles.removedProject]: removed
   })

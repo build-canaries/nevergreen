@@ -1,10 +1,10 @@
-import React, {ChangeEvent, useCallback, useEffect, useMemo, useRef, useState} from 'react'
+import React, {ChangeEvent, ReactElement, useCallback, useEffect, useMemo, useRef, useState} from 'react'
 import {AvailableProject} from './AvailableProject'
 import {Messages, MessagesType} from '../../common/Messages'
 import {Input} from '../../common/forms/Input'
 import {Shortcut} from '../../common/Shortcut'
 import {Refresh} from './Refresh'
-import {isBlank, notEmpty} from '../../common/Utils'
+import {errorMessage, isBlank, notEmpty} from '../../common/Utils'
 import {VisuallyHidden} from '../../common/VisuallyHidden'
 import styles from './available-projects.scss'
 import {SecondaryButton} from '../../common/forms/Button'
@@ -27,7 +27,7 @@ interface AvailableProjectsProps {
   readonly setRequiresRefresh: (required: boolean) => void;
 }
 
-export function AvailableProjects({index, tray, requiresRefresh, setRequiresRefresh}: AvailableProjectsProps) {
+export function AvailableProjects({index, tray, requiresRefresh, setRequiresRefresh}: AvailableProjectsProps): ReactElement {
   const dispatch = useDispatch()
   const projects = useSelector(getProjectsForTray(tray.trayId))
   const selected = useSelector(getSelectedProjectsForTray(tray.trayId))
@@ -54,7 +54,7 @@ export function AvailableProjects({index, tray, requiresRefresh, setRequiresRefr
         dispatch(projectsFetched(tray.trayId, fetchedProjects, tray.includeNew))
       }
     } catch (e) {
-      setErrors([e.message])
+      setErrors([errorMessage(e)])
     }
     // eslint-disable-next-line require-atomic-updates
     pendingRequest.current = undefined
@@ -63,8 +63,7 @@ export function AvailableProjects({index, tray, requiresRefresh, setRequiresRefr
 
   useEffect(() => {
     if (requiresRefresh) {
-      // noinspection JSIgnoredPromiseFromCall
-      refreshTray()
+      void refreshTray()
       setRequiresRefresh(false)
     }
   }, [requiresRefresh, setRequiresRefresh, refreshTray])
@@ -97,7 +96,7 @@ export function AvailableProjects({index, tray, requiresRefresh, setRequiresRefr
         setFilter(regEx)
         setFilterErrors([])
       } catch (e) {
-        setFilterErrors([`Project search not applied. ${e.message}`])
+        setFilterErrors([`Project search not applied. ${errorMessage(e)}`])
       }
     }
   }

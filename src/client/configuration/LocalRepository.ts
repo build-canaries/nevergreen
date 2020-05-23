@@ -4,19 +4,15 @@ import {State} from '../Reducer'
 
 export type UntrustedData = { [key: string]: unknown }
 
-export async function init() {
+export async function init(): Promise<void> {
   localforage.config({name: 'nevergreen', storeName: 'nevergreen'})
   return localforage.ready()
 }
 
 export async function save(data: State): Promise<void> {
-  return Promise.all(toPairs(data).map((pair) => {
+  await Promise.all(toPairs(data).map((pair) => {
     return localforage.setItem(pair[0], pair[1])
-  })) as unknown as Promise<void>
-}
-
-export async function removeItems(keys: ReadonlyArray<string>): Promise<void> {
-  return Promise.all(keys.map((key) => localforage.removeItem(key))) as unknown as Promise<void>
+  }))
 }
 
 export async function load(): Promise<UntrustedData> {
@@ -27,6 +23,6 @@ export async function load(): Promise<UntrustedData> {
   return configuration
 }
 
-export async function clear() {
+export async function clear(): Promise<void> {
   return localforage.clear()
 }

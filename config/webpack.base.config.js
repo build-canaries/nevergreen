@@ -59,11 +59,13 @@ module.exports = {
       filename: '[name].[hash:8].css',
       allChunks: true
     }),
-    new CopyWebpackPlugin([
-      './src/client/robots.txt',
-      './src/client/favicons',
-      './src/client/configuration/schema.json'
-    ]),
+    new CopyWebpackPlugin({
+      patterns: [
+        './src/client/robots.txt',
+        './src/client/favicons',
+        './src/client/configuration/schema.json'
+      ]
+    }),
     new ManifestPlugin({fileName: 'asset-manifest.json'})
   ],
   resolve: {

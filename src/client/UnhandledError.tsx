@@ -22,11 +22,11 @@ export class UnhandledError extends Component<UnhandledErrorProps, UnhandledErro
     this.state = {hasError: false}
   }
 
-  public componentDidCatch() {
+  public componentDidCatch(): void {
     this.setState({hasError: true})
   }
 
-  public render() {
+  public render(): ReactNode {
     if (this.state.hasError) {
       return (
         <div className={styles.content}>

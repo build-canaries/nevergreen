@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {ReactElement, useState} from 'react'
 import {Checkbox} from '../common/forms/Checkbox'
 import {Messages, MessagesType} from '../common/Messages'
 import styles from './notification-system.scss'
@@ -11,7 +11,7 @@ export const NOT_SUPPORTED_MESSAGE = 'Unfortunately your browser doesn\'t suppor
 export const PERMISSION_DENIED_MESSAGE = 'System notifications permission denied, unable to show system notifications.'
 export const NOTIFICATIONS_ENABLED_NOTIFICATION = {body: 'System notifications are now enabled!'}
 
-export function NotificationsSystem() {
+export function NotificationsSystem(): ReactElement {
   const dispatch = useDispatch()
   const showSystemNotifications = useSelector(getShowSystemNotifications)
   const systemNotificationsSupported = supported()
@@ -26,7 +26,7 @@ export function NotificationsSystem() {
       if (permissionGranted(result)) {
         setPermissionDenied(false)
         dispatch(setShowSystemNotifications(true))
-        sendSystemNotification(NOTIFICATIONS_ENABLED_NOTIFICATION)
+        await sendSystemNotification(NOTIFICATIONS_ENABLED_NOTIFICATION)
       } else {
         setPermissionDenied(true)
       }

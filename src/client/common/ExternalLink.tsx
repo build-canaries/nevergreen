@@ -1,11 +1,11 @@
-import React, {AnchorHTMLAttributes, DetailedHTMLProps, ReactNode} from 'react'
+import React, {AnchorHTMLAttributes, DetailedHTMLProps, ReactElement, ReactNode} from 'react'
 import {VisuallyHidden} from './VisuallyHidden'
 
 type ExternalLinkProps = {
   readonly children: ReactNode;
 } & DetailedHTMLProps<AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>
 
-export function ExternalLink({children, ...aProps}: ExternalLinkProps) {
+export function ExternalLink({children, ...aProps}: ExternalLinkProps): ReactElement {
   return (
     <a {...aProps} target='_blank' rel='noopener noreferrer'>
       {children}

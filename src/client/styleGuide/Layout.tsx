@@ -1,9 +1,9 @@
-import React from 'react'
+import React, {ReactElement} from 'react'
 import {Tabs} from '../common/Tabs'
 import {Container} from '../common/Container'
 import {StyleGuideSection} from './StyleGuideSection'
 
-export function Layout() {
+export function Layout(): ReactElement {
   return (
     <>
       <StyleGuideSection title='Container'>

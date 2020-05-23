@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react'
+import React, {ReactElement, useCallback, useEffect, useState} from 'react'
 import cn from 'classnames'
 import {InterestingProjects} from './InterestingProjects'
 import {Success} from './Success'
@@ -18,13 +18,14 @@ import {isAbortedRequest, send} from '../gateways/Gateway'
 import {Prognosis, Projects, updateProjects} from '../domain/Project'
 import {useProjectNotifications} from './ProjectNotificationsHook'
 import {now} from '../common/DateTime'
+import {errorMessage} from '../common/Utils'
 
 interface MonitorProps {
   readonly fullScreen: boolean;
   readonly requestFullScreen: (fullScreen: boolean) => void;
 }
 
-export function Monitor({fullScreen, requestFullScreen}: MonitorProps) {
+export function Monitor({fullScreen, requestFullScreen}: MonitorProps): ReactElement {
   const refreshTime = useSelector(getRefreshTime)
   const trays = useSelector(getTrays)
   const selected = useSelector(getSelectedProjects)
@@ -54,7 +55,7 @@ export function Monitor({fullScreen, requestFullScreen}: MonitorProps) {
     } catch (e) {
       if (!isAbortedRequest(e)) {
         setProjects([{
-          description: e.message,
+          description: errorMessage(e),
           prognosis: Prognosis.error,
           timestamp: now(),
           webUrl: ''

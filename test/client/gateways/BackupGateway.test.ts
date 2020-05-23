@@ -11,7 +11,7 @@ describe('exportConfiguration', () => {
     const description = 'some-description'
     const configuration = 'some-configuration'
     const url = 'some-url'
-    exportConfiguration(where, id, description, configuration, token, url)
+    void exportConfiguration(where, id, description, configuration, token, url)
     expect(gateway.post).toBeCalledWith('/api/export', {where, id, description, configuration, token, url})
   })
 })
@@ -24,7 +24,7 @@ describe('fetchConfiguration', () => {
     const id = 'some-id'
     const token = 'some-token'
     const url = 'some-url'
-    fetchConfiguration(from, id, token, url)
+    void fetchConfiguration(from, id, token, url)
     expect(gateway.post).toBeCalledWith('/api/import', {from, id, token, url})
   })
 })

@@ -6,11 +6,12 @@ import {fromJson, toJson} from '../common/Json'
 import {migrate} from './Migrate'
 import {UntrustedData} from './LocalRepository'
 import {Either, left, right} from 'fp-ts/lib/Either'
+import {errorMessage} from '../common/Utils'
 
 export interface Configuration extends RecursivePartial<State> {
 }
 
-export const schema: Readonly<object> = validateConfiguration.schema
+export const schema: Readonly<Record<string, unknown>> = validateConfiguration.schema
 
 // ValidateConfiguration is generated using ajv-pack which is why it has a strange signature
 function validateAndFilter(data: UntrustedData): Either<ReadonlyArray<string>, Configuration> {
@@ -31,7 +32,7 @@ export function toConfiguration(raw: string | Readonly<UntrustedData>): Either<R
     migrate(data)
     return validateAndFilter(data)
   } catch (error) {
-    return left([error.message])
+    return left([errorMessage(error)])
   }
 }
 

@@ -1,4 +1,4 @@
-import React, {ReactNode} from 'react'
+import React, {ReactElement, ReactNode} from 'react'
 import ReactModal from 'react-modal'
 import cn from 'classnames'
 import styles from './modal.scss'
@@ -13,7 +13,7 @@ interface ModalProps {
   readonly className?: string;
 }
 
-export function Modal({children, title, show, close, className}: ModalProps) {
+export function Modal({children, title, show, close, className}: ModalProps): ReactElement {
   return (
     <ReactModal className={cn(styles.modal, className)}
                 bodyOpenClassName={styles.modelOpen}

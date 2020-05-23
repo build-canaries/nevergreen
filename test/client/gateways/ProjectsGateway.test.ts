@@ -1,4 +1,4 @@
-import {fetchAll, interesting, SortBy} from '../../../src/client/gateways/ProjectsGateway'
+import {FeedRequest, fetchAll, interesting, SortBy} from '../../../src/client/gateways/ProjectsGateway'
 import * as gateway from '../../../src/client/gateways/Gateway'
 import {buildSavedProject, buildTray} from '../testHelpers'
 import {Prognosis} from '../../../src/client/domain/Project'
@@ -40,7 +40,7 @@ describe('fetchAll', () => {
       sort: SortBy.description
     }
 
-    fetchAll(trays, seen)
+    void fetchAll(trays, seen)
 
     expect(gateway.post).toBeCalledWith('/api/projects', expected)
   })
@@ -75,7 +75,7 @@ describe('fetchAll', () => {
       sort: SortBy.description
     }
 
-    fetchAll(trays, seen)
+    void fetchAll(trays, seen)
 
     expect(gateway.post).toBeCalledWith('/api/projects', expected)
   })
@@ -116,7 +116,7 @@ describe('interesting', () => {
       sort: SortBy.default
     }
 
-    interesting(trays, seen, selected, [Prognosis.sick], SortBy.default)
+    void interesting(trays, seen, selected, [Prognosis.sick], SortBy.default)
 
     expect(gateway.post).toBeCalledWith('/api/projects', expected)
     expect(gateway.fakeRequest).not.toBeCalled()
@@ -137,12 +137,12 @@ describe('interesting', () => {
       buildTray({trayId: 'none-selected-but-includes-new-id', includeNew: true})
     ]
 
-    interesting(trays, seen, selected, [], SortBy.default)
+    void interesting(trays, seen, selected, [], SortBy.default)
 
     expect(gateway.post).toBeCalledWith(expect.anything(), expect.objectContaining({
       feeds: expect.not.arrayContaining([
         expect.objectContaining({trayId: 'none-selected-id'})
-      ])
+      ]) as ReadonlyArray<FeedRequest>
     }))
     expect(gateway.fakeRequest).not.toBeCalled()
   })
@@ -154,7 +154,7 @@ describe('interesting', () => {
     const selected = {'some-tray-id': []}
     const trays = [buildTray({trayId: 'some-tray-id', includeNew: false})]
 
-    interesting(trays, seen, selected, [], SortBy.default)
+    void interesting(trays, seen, selected, [], SortBy.default)
 
     expect(gateway.post).not.toBeCalled()
     expect(gateway.fakeRequest).toBeCalledWith([])

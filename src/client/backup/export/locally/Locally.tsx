@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react'
+import React, {ReactElement, useCallback, useState} from 'react'
 import styles from './locally.scss'
 import {PrimaryButton} from '../../../common/forms/Button'
 import {iPaste} from '../../../common/fonts/Icons'
@@ -7,7 +7,7 @@ import {Messages, MessagesType} from '../../../common/Messages'
 import {useSelector} from 'react-redux'
 import {getConfiguration} from '../../../configuration/Configuration'
 
-export function Locally() {
+export function Locally(): ReactElement {
   const configuration = useSelector(getConfiguration)
 
   const [messages, setMessages] = useState<ReadonlyArray<string>>([])

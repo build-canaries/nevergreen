@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {ReactElement} from 'react'
 import {Input} from '../common/forms/Input'
 import {noop} from 'lodash'
 import {Checkbox} from '../common/forms/Checkbox'
@@ -17,7 +17,7 @@ const DROP_DOWN_OPTIONS = [
   {value: '5', display: 'option 5'}
 ]
 
-export function Forms() {
+export function Forms(): ReactElement {
   return (
     <>
       <StyleGuideSection title='Text inputs'>

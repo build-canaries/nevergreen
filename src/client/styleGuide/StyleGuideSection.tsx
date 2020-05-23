@@ -1,4 +1,4 @@
-import React, {ReactNode} from 'react'
+import React, {ReactElement, ReactNode} from 'react'
 import styles from './style-guide.scss'
 
 interface StyleGuideSectionProps {
@@ -6,7 +6,7 @@ interface StyleGuideSectionProps {
   readonly children: ReactNode;
 }
 
-export function StyleGuideSection({title, children}: StyleGuideSectionProps) {
+export function StyleGuideSection({title, children}: StyleGuideSectionProps): ReactElement {
   return (
     <section className={styles.section}>
       <h2>{title}</h2>

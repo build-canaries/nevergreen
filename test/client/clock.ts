@@ -15,6 +15,6 @@ afterAll(() => {
 
 export {clock}
 
-export function setSystemTime(timestamp: string) {
+export function setSystemTime(timestamp: string): void {
   clock.setSystemTime(getTime(parseISO(timestamp)))
 }

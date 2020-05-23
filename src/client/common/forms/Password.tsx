@@ -1,10 +1,10 @@
-import React, {useState} from 'react'
+import React, {ReactElement, useState} from 'react'
 import {uniqueId} from 'lodash'
 import {InputButton} from './Button'
 import {iEye, iEyeBlocked} from '../fonts/Icons'
 import {Input, InputProps} from './Input'
 
-export function Password(props: InputProps) {
+export function Password(props: InputProps): ReactElement {
   const [type, setType] = useState('password')
 
   const id = uniqueId('p')

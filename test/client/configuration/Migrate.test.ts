@@ -16,7 +16,7 @@ it('should migrate the given data by mutating it, including adding any applied m
   expect(data).toHaveProperty('baz', 'bar')
   expect(data).toHaveProperty(APPLIED_MIGRATIONS_ROOT, [{
     id: migrationId,
-    timestamp: expect.stringMatching(isoDateTime)
+    timestamp: expect.stringMatching(isoDateTime) as string
   }])
   expect(data).not.toHaveProperty('foo')
 })

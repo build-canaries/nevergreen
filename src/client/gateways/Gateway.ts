@@ -1,7 +1,9 @@
 import request, {Request} from 'superagent'
 import * as log from '../common/Logger'
 import {get as _get, noop} from 'lodash'
+import {errorMessage} from '../common/Utils'
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 type ApiData = object | string
 
 const ONE_MINUTES = 1000 * 60
@@ -13,7 +15,6 @@ const RETRIES = 1
 const ACCEPT_HEADER = 'application/json; charset=utf-8'
 const CONTENT_TYPE = 'application/json; charset=utf-8'
 
-export const UNKNOWN_ERROR = 'Unknown error'
 export const TIMEOUT_ERROR = 'Connection timeout calling the Nevergreen server'
 
 export function post(url: string, data: ApiData, headers = {}): Request {
@@ -61,26 +62,24 @@ export function get(url: string, headers = {}): Request {
 export async function send<T>(request: Request): Promise<T> {
   try {
     const res = await request
-    return res.body || res.text
+    return (res.body || res.text) as T
   } catch (e) {
-    const url = e.url || 'unknown'
+    const url = _get(e, 'url') as string || 'unknown'
 
     log.error(`An exception was thrown when calling URL '${url}'`, e)
 
-    const message = e.timeout
+    const message = _get(e, 'timeout')
       ? TIMEOUT_ERROR
-      : _get(e, 'response.body.description') || e.message || UNKNOWN_ERROR
+      : _get(e, 'response.body.description') as string || errorMessage(e)
 
     throw new Error(message)
   }
 }
 
-export function fakeRequest(body: string | object): Request {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return {body, abort: noop} as any as Request
+export function fakeRequest(body: unknown): Request {
+  return {body, abort: noop} as unknown as Request
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function isAbortedRequest(e: any) {
-  return e.message === 'Aborted'
+export function isAbortedRequest(e: unknown): boolean {
+  return errorMessage(e) === 'Aborted'
 }

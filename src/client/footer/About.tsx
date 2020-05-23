@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {ReactElement} from 'react'
 import {Modal} from '../common/Modal'
 import {ExternalLink} from '../common/ExternalLink'
 import {SubmitAnIssue} from './SubmitAnIssue'
@@ -10,7 +10,7 @@ interface AboutProps {
   readonly version: string;
 }
 
-export function About({show, close, version}: AboutProps) {
+export function About({show, close, version}: AboutProps): ReactElement {
   return (
     <Modal show={show}
            close={close}

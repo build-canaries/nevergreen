@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {ReactElement, useEffect, useState} from 'react'
 import {InterestingProjects} from '../monitor/InterestingProjects'
 import {Loading} from '../common/Loading'
 import {useSelector} from 'react-redux'
@@ -10,8 +10,9 @@ import {createId, createTray} from '../domain/Tray'
 import {Notification} from '../Notification'
 import {useHistory} from 'react-router-dom'
 import styles from './preview.scss'
+import {errorMessage} from '../common/Utils'
 
-export function Preview() {
+export function Preview(): ReactElement {
   const prognosis = useSelector(getShowPrognosis)
   const sort = useSelector(getSort)
   const history = useHistory()
@@ -34,7 +35,7 @@ export function Preview() {
       } catch (e) {
         if (!isAbortedRequest(e)) {
           setProjects([{
-            description: e.message,
+            description: errorMessage(e),
             prognosis: Prognosis.error,
             timestamp: now(),
             webUrl: ''
@@ -44,8 +45,7 @@ export function Preview() {
       }
     }
 
-    // noinspection JSIgnoredPromiseFromCall
-    getProjects()
+    void getProjects()
 
     return () => {
       request.abort.bind(request)

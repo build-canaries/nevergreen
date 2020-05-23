@@ -56,7 +56,7 @@ it('should show a loading screen when first switching to the page', () => {
 
 it('should show a success message if there are no projects', async () => {
   jest.spyOn(TimerHook, 'useTimer').mockImplementationOnce((onTrigger) => {
-    onTrigger()
+    void onTrigger()
   })
   jest.spyOn(ProjectsGateway, 'interesting').mockReturnValue(fakeRequest([]))
   const state = {
@@ -73,7 +73,7 @@ it('should show a success message if there are no projects', async () => {
 
 it('should not try updating after the user has navigated away from the page', () => {
   jest.spyOn(TimerHook, 'useTimer').mockImplementationOnce((onTrigger) => {
-    onTrigger()
+    void onTrigger()
   })
   jest.spyOn(ProjectsGateway, 'interesting').mockReturnValue(fakeRequest([]))
   jest.spyOn(Gateway, 'send').mockRejectedValue(new Error('Aborted'))
@@ -91,7 +91,7 @@ it('should not try updating after the user has navigated away from the page', ()
 
 it('should display an error if the Nevergreen server is having issues', async () => {
   jest.spyOn(TimerHook, 'useTimer').mockImplementationOnce((onTrigger) => {
-    onTrigger()
+    void onTrigger()
   })
   jest.spyOn(Gateway, 'send').mockRejectedValue(new Error('some-error'))
   const state = {

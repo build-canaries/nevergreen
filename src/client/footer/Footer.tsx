@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {ReactElement, useState} from 'react'
 import cn from 'classnames'
 import version from '../../../resources/version.txt'
 import versionMeta from '../../../resources/version_meta.txt'
@@ -11,7 +11,7 @@ interface FooterProps {
   readonly fullScreen: boolean;
 }
 
-export function Footer({fullScreen}: FooterProps) {
+export function Footer({fullScreen}: FooterProps): ReactElement {
   const [showAbout, setShowAbout] = useState(false)
 
   const footerClassNames = cn(styles.siteFooter, {

@@ -1,10 +1,10 @@
-import React, {ChangeEvent, useLayoutEffect, useState} from 'react'
+import React, {ChangeEvent, ReactElement, useLayoutEffect, useState} from 'react'
 import styles from './externally.scss'
 import {PrimaryButton} from '../../../common/forms/Button'
 import {iCloudDownload} from '../../../common/fonts/Icons'
 import {Password} from '../../../common/forms/Password'
 import {Messages, MessagesType} from '../../../common/Messages'
-import {isBlank} from '../../../common/Utils'
+import {errorMessage, isBlank} from '../../../common/Utils'
 import {send} from '../../../gateways/Gateway'
 import {fetchConfiguration, ImportResponse} from '../../../gateways/BackupGateway'
 import {toConfiguration} from '../../../configuration/Configuration'
@@ -35,7 +35,7 @@ function validate(id: string, url: string, accessToken: string, accessTokenRequi
   return errors
 }
 
-export function Externally({location, accessTokenRequired}: ExternallyProps) {
+export function Externally({location, accessTokenRequired}: ExternallyProps): ReactElement {
   const dispatch = useDispatch()
   const id = useSelector<State, string>((state) => getBackupId(location, state))
   const url = useSelector<State, string>((state) => getBackupUrl(location, state))
@@ -80,7 +80,7 @@ export function Externally({location, accessTokenRequired}: ExternallyProps) {
           setErrors(result.left)
         }
       } catch (error) {
-        setErrors([error.message])
+        setErrors([errorMessage(error)])
       }
       setLoaded(true)
     } else {

@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react'
+import React, {ReactElement, useEffect, useState} from 'react'
 import Mousetrap from 'mousetrap'
 import {Modal} from './common/Modal'
 import styles from './keyboard-shortcuts.scss'
 import {SHOW_HELP_SHORTCUT} from './help/Help'
 
-export function KeyboardShortcuts() {
+export function KeyboardShortcuts(): ReactElement {
   const [show, setShow] = useState(false)
 
   useEffect(() => {

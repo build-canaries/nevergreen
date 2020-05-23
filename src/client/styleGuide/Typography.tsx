@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {ReactElement} from 'react'
 import {StyleGuideSection} from './StyleGuideSection'
 import {ExternalLink} from '../common/ExternalLink'
 import {Element} from './Element'
@@ -12,7 +12,7 @@ const MESSAGES = [
   'Sweet roll tart cake chupa chups soufflé wafer tiramisu chupa chups toffee'
 ]
 
-export function Typography() {
+export function Typography(): ReactElement {
   return (
     <>
       <StyleGuideSection title='Titles'>

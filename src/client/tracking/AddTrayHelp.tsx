@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {ReactElement} from 'react'
 import {HelpArticle, HelpProps} from '../help/HelpArticle'
 import {ExternalLink} from '../common/ExternalLink'
 
@@ -15,7 +15,7 @@ const KEYWORDS = [
   'getting started'
 ]
 
-export function AddTrayHelp({searchQuery}: HelpProps) {
+export function AddTrayHelp({searchQuery}: HelpProps): ReactElement {
   return (
     <HelpArticle title='Adding a CI server'
                  keywords={KEYWORDS}
@@ -35,7 +35,7 @@ export function AddTrayHelp({searchQuery}: HelpProps) {
   )
 }
 
-export function CCTrayLocationsHelp({searchQuery}: HelpProps) {
+export function CCTrayLocationsHelp({searchQuery}: HelpProps): ReactElement {
   return (
     <HelpArticle title='CCTray XML location'
                  keywords={['tracking', 'adding', 'cctray', 'xml', 'url', 'location', 'find', 'feed']}

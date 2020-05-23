@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {ReactElement} from 'react'
 import styles from '../../help/help-article.scss'
 import {HelpArticle, HelpProps} from '../../help/HelpArticle'
 
@@ -12,7 +12,7 @@ const KEYWORDS = [
   'filter'
 ]
 
-export function AvailableProjectsHelp({searchQuery, helpLink}: HelpProps) {
+export function AvailableProjectsHelp({searchQuery, helpLink}: HelpProps): ReactElement {
   return (
     <HelpArticle keywords={KEYWORDS}
                  searchQuery={searchQuery}

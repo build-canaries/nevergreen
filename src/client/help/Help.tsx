@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {ReactElement, useEffect, useState} from 'react'
 import Mousetrap from 'mousetrap'
 import {Modal} from '../common/Modal'
 import {Input} from '../common/forms/Input'
@@ -25,10 +25,10 @@ export const SHOW_HELP_SHORTCUT = 'h'
 
 export function withHelpLink(setSearchQuery: (q: string) => void) {
   // eslint-disable-next-line react/display-name
-  return (to: string) => <HelpLink to={to} setSearchQuery={setSearchQuery}/>
+  return (to: string): ReactElement => <HelpLink to={to} setSearchQuery={setSearchQuery}/>
 }
 
-export function Help({initiallyShow}: HelpProps) {
+export function Help({initiallyShow}: HelpProps): ReactElement {
   const [show, setShow] = useState(initiallyShow || false)
   const [searchQuery, setSearchQuery] = useState('')
 

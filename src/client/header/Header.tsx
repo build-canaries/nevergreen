@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {ReactElement, useState} from 'react'
 import cn from 'classnames'
 import styles from './header.scss'
 import logo from './buildcanaries-logo.png'
@@ -19,7 +19,7 @@ const MENU_ITEMS = [
   {id: 'backup', title: 'Backup', shortcuts: ['b', '5']}
 ]
 
-export function Header({fullScreen}: HeaderProps) {
+export function Header({fullScreen}: HeaderProps): ReactElement {
   const [menuVisible, setMenuVisible] = useState(false)
 
   const headerClassNames = cn(styles.siteHeader, {

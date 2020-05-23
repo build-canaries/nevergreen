@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {ReactElement} from 'react'
 import {ExternalLink} from '../../../common/ExternalLink'
 import {URL} from '../../../common/URL'
 import {HelpArticle, HelpProps} from '../../../help/HelpArticle'
@@ -11,7 +11,7 @@ const KEYWORDS = [
   'access token'
 ]
 
-export function ExportGitHubHelp({searchQuery}: HelpProps) {
+export function ExportGitHubHelp({searchQuery}: HelpProps): ReactElement {
   return (
     <HelpArticle keywords={KEYWORDS}
                  searchQuery={searchQuery}

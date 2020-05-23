@@ -1,4 +1,4 @@
-import React, {ReactNode, useCallback, useRef, useState} from 'react'
+import React, {ReactElement, ReactNode, useCallback, useRef, useState} from 'react'
 import styles from './scaled-tile.scss'
 import cn from 'classnames'
 import {useElementResized} from '../common/ResizableHook'
@@ -12,7 +12,7 @@ interface TileProps {
   readonly sentences: ReadonlyArray<string>;
 }
 
-export function ScaledTile({header, footer, children, className, sentences}: TileProps) {
+export function ScaledTile({header, footer, children, className, sentences}: TileProps): ReactElement {
   const tileRef = useRef<HTMLDivElement>(null)
 
   const [small, setSmall] = useState(false)

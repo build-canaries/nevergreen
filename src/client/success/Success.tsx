@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {ReactElement} from 'react'
 import {AddMessage} from './AddMessage'
 import {Title} from '../common/Title'
 import {Messages, MessagesType} from '../common/Messages'
@@ -10,7 +10,7 @@ import {addMessage, removeMessage} from './SuccessActionCreators'
 
 export const NO_MESSAGES_WARNING = 'No success messages added, a blank screen will be shown on the monitor page when no projects are broken or building'
 
-export function Success() {
+export function Success(): ReactElement {
   const dispatch = useDispatch()
   const messages = useSelector(getSuccessMessages)
 

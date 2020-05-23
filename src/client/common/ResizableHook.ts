@@ -1,19 +1,8 @@
 import {RefObject, useEffect} from 'react'
 import {isNil} from 'lodash'
 import {debug} from './Logger'
-import {ResizeObserver as Polyfill} from '@juggle/resize-observer'
+import {ResizeObserver} from '@juggle/resize-observer'
 import {ResizeObserverEntry} from '@juggle/resize-observer/lib/ResizeObserverEntry'
-
-interface ElementSize {
-  readonly x: number;
-  readonly y: number;
-  readonly width: number;
-  readonly height: number;
-  readonly top: number;
-  readonly left: number;
-  readonly bottom: number;
-  readonly right: number;
-}
 
 if ('ResizeObserver' in window) {
   debug('Using native ResizeObserver')
@@ -21,9 +10,9 @@ if ('ResizeObserver' in window) {
   debug('Using ResizeObserver polyfill')
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-const ResizeObserver = window.ResizeObserver || Polyfill
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore Suppressing TS2339 on window.ResizeObserver as it isn't standard, hence the polyfill
+const Observer = <typeof ResizeObserver>(window.ResizeObserver || ResizeObserver)
 
 function cancel(requestId: number) {
   if (requestId !== 0) {
@@ -31,7 +20,7 @@ function cancel(requestId: number) {
   }
 }
 
-export const useWindowResized = (onResize: () => void) => {
+export const useWindowResized = (onResize: () => void): void => {
   useEffect(() => {
     let requestId = 0
     const onResizeThrottled = () => {
@@ -46,7 +35,7 @@ export const useWindowResized = (onResize: () => void) => {
   }, [onResize])
 }
 
-export const useElementResized = (elementRef: RefObject<Element>, onResize: (size: ElementSize) => void) => {
+export const useElementResized = (elementRef: RefObject<Element>, onResize: (size: DOMRectReadOnly) => void): void => {
   useEffect(() => {
     const el = elementRef.current
 
@@ -56,7 +45,7 @@ export const useElementResized = (elementRef: RefObject<Element>, onResize: (siz
 
     let requestId = 0
 
-    const observer = new ResizeObserver((entries: ReadonlyArray<ResizeObserverEntry>) => {
+    const observer = new Observer((entries: ReadonlyArray<ResizeObserverEntry>) => {
       cancel(requestId)
       requestId = requestAnimationFrame(() => {
         entries.forEach((entry) => {

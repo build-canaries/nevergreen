@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {ReactElement} from 'react'
 import {Container} from '../common/Container'
 import {Checkbox} from '../common/forms/Checkbox'
 import {DropDown} from '../common/forms/DropDown'
@@ -17,7 +17,7 @@ import {getMaxProjectsToShow, getShowBuildLabel, getShowBuildTime, getShowTrayNa
 import {SortBy} from '../gateways/ProjectsGateway'
 import {Link} from 'react-router-dom'
 
-export function DisplaySettings() {
+export function DisplaySettings(): ReactElement {
   const dispatch = useDispatch()
   const showTrayName = useSelector(getShowTrayName)
   const showBuildTime = useSelector(getShowBuildTime)
@@ -32,10 +32,7 @@ export function DisplaySettings() {
     return {value: value.toString(), display}
   })
 
-  const sortOptions = Object.keys(SortBy).map((k) => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
-    const value = SortBy[k]
+  const sortOptions = Object.values(SortBy).map((value) => {
     return {value, display: value}
   })
 

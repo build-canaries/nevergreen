@@ -99,7 +99,10 @@ export const reduce = createReducer<SettingsState>(DEFAULT_STATE, {
   }
 })
 
-const getSettings = (state: State) => state[SETTINGS_ROOT]
+function getSettings(state: State) {
+  return state[SETTINGS_ROOT]
+}
+
 export const getShowTrayName = createSelector(getSettings, (settings) => settings.showTrayName)
 export const getShowBuildTime = createSelector(getSettings, (settings) => settings.showBuildTime)
 export const getPlayBrokenBuildSoundFx = createSelector(getSettings, (settings) => settings.playBrokenBuildSoundFx)

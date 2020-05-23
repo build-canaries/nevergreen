@@ -1,11 +1,11 @@
-import React, {useState} from 'react'
+import React, {ReactElement, useState} from 'react'
 import {Input} from '../common/forms/Input'
 import styles from './add-tray.scss'
 import {PrimaryButton} from '../common/forms/Button'
 import {iPlus} from '../common/fonts/Icons'
 import {Auth} from './Auth'
 import {AuthTypes, createId, Tray} from '../domain/Tray'
-import {isBlank} from '../common/Utils'
+import {errorMessage, isBlank} from '../common/Utils'
 import {getTrays} from './TraysReducer'
 import {ensureHasScheme, removeScheme} from '../domain/Url'
 import {trayAdded} from './TrackingActionCreators'
@@ -23,7 +23,7 @@ function urlMatches(tray: Tray, url: string): boolean {
   return removeScheme(url) === removeScheme(tray.url)
 }
 
-export function AddTray({setHighlightTray, setRefreshTray}: AddTrayProps) {
+export function AddTray({setHighlightTray, setRefreshTray}: AddTrayProps): ReactElement {
   const dispatch = useDispatch()
   const existingTrays = useSelector(getTrays)
 
@@ -74,8 +74,8 @@ export function AddTray({setHighlightTray, setRefreshTray}: AddTrayProps) {
         setRefreshTray(trayId)
         setHighlightTray(trayId)
         resetForm()
-      } catch (error) {
-        setErrors([error.message])
+      } catch (e) {
+        setErrors([errorMessage(e)])
       }
     }
 

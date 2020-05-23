@@ -1,4 +1,4 @@
-import React, {DetailedHTMLProps, InputHTMLAttributes, ReactNode} from 'react'
+import React, {DetailedHTMLProps, InputHTMLAttributes, ReactElement, ReactNode} from 'react'
 import classNames from 'classnames'
 import {uniqueId} from 'lodash'
 import styles from './radio.scss'
@@ -8,7 +8,7 @@ type RadioProps = {
   readonly className?: string;
 } & DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
 
-export function Radio({children, className, ...inputProps}: RadioProps) {
+export function Radio({children, className, ...inputProps}: RadioProps): ReactElement {
   const classes = classNames(styles.container, className)
   const id = uniqueId()
 

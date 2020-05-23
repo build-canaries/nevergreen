@@ -1,4 +1,4 @@
-import React, {ReactNode} from 'react'
+import React, {ReactElement, ReactNode} from 'react'
 import styles from './loading.scss'
 import {VisuallyHidden} from './VisuallyHidden'
 
@@ -7,7 +7,7 @@ interface LoadingProps {
   readonly loaded?: boolean;
 }
 
-export function Loading({loaded, children}: LoadingProps) {
+export function Loading({loaded, children}: LoadingProps): ReactElement {
   if (loaded) {
     return <>{children}</>
   } else {

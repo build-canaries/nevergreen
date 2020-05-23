@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {ReactElement} from 'react'
 import {clamp, difference, isEmpty, map, size, take} from 'lodash'
 import {ScaledGrid} from './ScaledGrid'
 import {projectIdentifier, Projects} from '../domain/Project'
@@ -13,7 +13,7 @@ interface InterestingProjectsProps {
   readonly projects: Projects;
 }
 
-export function InterestingProjects({projects}: InterestingProjectsProps) {
+export function InterestingProjects({projects}: InterestingProjectsProps): ReactElement {
   const maxProjectsToShow = useSelector(getMaxProjectsToShow)
 
   const showSummary = size(projects) > maxProjectsToShow

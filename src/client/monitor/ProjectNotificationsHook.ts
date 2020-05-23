@@ -23,7 +23,7 @@ function noLongerSickTitle(total: number): string {
     : `${total} projects are no longer sick!`
 }
 
-export function useProjectNotifications(projects: Projects) {
+export function useProjectNotifications(projects: Projects): void {
   const previousProjectsRef = useRef(projects)
   const showNotifications = useSelector(getShowSystemNotifications)
 
@@ -56,7 +56,7 @@ export function useProjectNotifications(projects: Projects) {
         }
       }
 
-      sendNotifications()
+      void sendNotifications()
     }
   }, [projects, showNotifications])
 

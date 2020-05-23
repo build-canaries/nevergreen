@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {ReactElement} from 'react'
 import styles from './tile-projects-not-shown.scss'
 import {ScaledTile} from './ScaledTile'
 import {countBy} from 'lodash'
@@ -12,7 +12,7 @@ function prognosisDisplay(prognosis: string) {
   return prognosis.replace('-', ' ')
 }
 
-export function TileProjectsNotShown({projectsNotShown}: TileNotShownProps) {
+export function TileProjectsNotShown({projectsNotShown}: TileNotShownProps): ReactElement {
   const header = `+${projectsNotShown.length} not shown`
 
   const counts = countBy(projectsNotShown, 'prognosis')

@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useLayoutEffect, useState} from 'react'
+import React, {ChangeEvent, ReactElement, useLayoutEffect, useState} from 'react'
 import {Input} from '../../../common/forms/Input'
 import {PrimaryButton} from '../../../common/forms/Button'
 import {iCloudUpload} from '../../../common/fonts/Icons'
@@ -7,7 +7,7 @@ import styles from './externally.scss'
 import {Messages, MessagesType} from '../../../common/Messages'
 import {BackupLocation, backupSetDescription, backupSetId, backupSetUrl} from '../../BackupActionCreators'
 import {exportConfiguration, ExportResponse} from '../../../gateways/BackupGateway'
-import {isBlank} from '../../../common/Utils'
+import {errorMessage, isBlank} from '../../../common/Utils'
 import {send} from '../../../gateways/Gateway'
 import {useDispatch, useSelector} from 'react-redux'
 import {getConfiguration} from '../../../configuration/Configuration'
@@ -18,7 +18,7 @@ interface ExternallyProps {
   readonly location: BackupLocation;
 }
 
-export function Externally({location}: ExternallyProps) {
+export function Externally({location}: ExternallyProps): ReactElement {
   const dispatch = useDispatch()
   const configuration = useSelector(getConfiguration)
   const url = useSelector<State, string>((state) => getBackupUrl(location, state))
@@ -62,7 +62,7 @@ export function Externally({location}: ExternallyProps) {
         setInfos(['Successfully exported configuration'])
         dispatch(backupSetId(location, res.id))
       } catch (error) {
-        setErrors([`Unable to export to ${location} because of an error`, error.message])
+        setErrors([`Unable to export to ${location} because of an error`, errorMessage(error)])
       }
       setLoaded(true)
     }

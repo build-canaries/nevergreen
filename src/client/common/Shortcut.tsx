@@ -1,4 +1,4 @@
-import React, {useLayoutEffect, useRef} from 'react'
+import React, {ReactElement, useLayoutEffect, useRef} from 'react'
 import Mousetrap from 'mousetrap'
 
 interface ShortcutProps {
@@ -13,7 +13,7 @@ function click(parent: HTMLSpanElement | null): boolean {
   return false
 }
 
-export function Shortcut({hotkeys}: ShortcutProps) {
+export function Shortcut({hotkeys}: ShortcutProps): ReactElement {
   const parentNode = useRef(null)
 
   useLayoutEffect(() => {

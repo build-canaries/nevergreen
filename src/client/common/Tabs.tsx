@@ -7,7 +7,7 @@ interface TabsProps {
   readonly titles: ReadonlyArray<string>;
 }
 
-export function Tabs({titles, children}: TabsProps) {
+export function Tabs({titles, children}: TabsProps): ReactElement {
   return (
     <ReactTabs forceRenderTabPanel>
       <TabList className={styles.tabs}>

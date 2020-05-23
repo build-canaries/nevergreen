@@ -1,11 +1,11 @@
-import React, {ReactNode} from 'react'
+import React, {ReactElement, ReactNode} from 'react'
 
 interface ElementProps {
   readonly type: string;
   readonly children: ReactNode;
 }
 
-export function Element({type, children}: ElementProps) {
+export function Element({type, children}: ElementProps): ReactElement {
   return React.createElement(type, {},
     <>
       &lt;{type}&gt;{children}&lt;/{type}&gt;

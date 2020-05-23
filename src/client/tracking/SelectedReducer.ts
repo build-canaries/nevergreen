@@ -47,5 +47,10 @@ export const reduce = createReducer<SelectedState>(DEFAULT_STATE, {
   }
 })
 
-export const getSelectedProjects = (state: State) => state[SELECTED_ROOT]
-export const getSelectedProjectsForTray = (trayId: string) => createSelector(getSelectedProjects, (selected) => selected[trayId])
+export function getSelectedProjects(state: State): SelectedState {
+  return state[SELECTED_ROOT]
+}
+
+export function getSelectedProjectsForTray(trayId: string): (state: State) => ReadonlyArray<string> {
+  return createSelector(getSelectedProjects, (selected) => selected[trayId])
+}

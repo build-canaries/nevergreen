@@ -7,7 +7,9 @@ import * as Logger from '../../src/client/common/Logger'
 configure({testIdAttribute: 'data-locator'})
 
 // Disable all logging for tests as it just adds noise to the console
+/* eslint-disable no-import-assign */
 Logger.error = jest.fn()
 Logger.warn = jest.fn()
 Logger.info = jest.fn()
 Logger.debug = jest.fn()
+/* eslint-enable no-import-assign */

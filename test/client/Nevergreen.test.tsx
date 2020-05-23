@@ -16,7 +16,6 @@ beforeEach(() => {
 
 it('should load configuration, register service worker and check for a new version', async () => {
   jest.spyOn(Gateway, 'get').mockReturnValue(fakeRequest({
-    // eslint-disable-next-line @typescript-eslint/camelcase
     tag_name: '9999.0.0' // this needs to be greater than the actual version in resources/version.txt
   }))
 

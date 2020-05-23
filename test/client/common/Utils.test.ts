@@ -1,25 +1,25 @@
-import {isBlank, isNumber} from '../../../src/client/common/Utils'
+import {errorMessage, isBlank, isNumeric} from '../../../src/client/common/Utils'
 
 describe('isNumber', () => {
 
   it('should know when it sees a number', () => {
-    expect(isNumber(0)).toBe(true)
+    expect(isNumeric(0)).toBe(true)
   })
 
   it('should treat a numeric string as a number', () => {
-    expect(isNumber('1')).toBe(true)
+    expect(isNumeric('1')).toBe(true)
   })
 
   it('should know null is not a number', () => {
-    expect(isNumber(null)).toBe(false)
+    expect(isNumeric(null)).toBe(false)
   })
 
   it('should know undefined is not a number', () => {
-    expect(isNumber(undefined)).toBe(false)
+    expect(isNumeric(undefined)).toBe(false)
   })
 
   it('should know a blank string is not a number', () => {
-    expect(isNumber(' ')).toBe(false)
+    expect(isNumeric(' ')).toBe(false)
   })
 })
 
@@ -63,5 +63,22 @@ describe('isBlank', () => {
 
   it('should treat a boolean as blank', () => {
     expect(isBlank(true)).toBe(true)
+  })
+})
+
+describe('errorMessage', () => {
+
+  it.each([
+    null, undefined, 'string', 1, {}
+  ])('should return generic message for %s', (val) => {
+    expect(errorMessage(val)).toBe('Unknown error')
+  })
+
+  it('should return the message for objects that have one', () => {
+    expect(errorMessage({message: 'some-message'})).toBe('some-message')
+  })
+
+  it('should return the message for Errors', () => {
+    expect(errorMessage(new Error('some-message'))).toBe('some-message')
   })
 })

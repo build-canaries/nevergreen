@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {ReactElement} from 'react'
 import cn from 'classnames'
 import {isEmpty} from 'lodash'
 import styles from './messages.scss'
@@ -15,7 +15,7 @@ export interface MessagesProps {
   readonly className?: string;
 }
 
-export function Messages({messages, type, className}: MessagesProps) {
+export function Messages({messages, type, className}: MessagesProps): ReactElement | null {
   if (isEmpty(messages)) {
     return null
   }

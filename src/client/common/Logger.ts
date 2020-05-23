@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function debug(message: string, ...data: any[]) {
+export function debug(message: string, ...data: any[]): void {
   if (process.env.NODE_ENV !== 'production') {
     if (console.debug) {
       console.debug(message, data)
@@ -10,20 +10,20 @@ export function debug(message: string, ...data: any[]) {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function info(message: string, ...data: any[]) {
+export function info(message: string, ...data: any[]): void {
   if (process.env.NODE_ENV !== 'production') {
     console.info(message, data)
   }
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function warn(message: string, ...data: any[]) {
+export function warn(message: string, ...data: any[]): void {
   if (process.env.NODE_ENV !== 'production') {
     console.warn(message, data)
   }
 }
 
-export function error(message: string, e: Error) {
+export function error(message: string, e: Error): void {
   if (process.env.NODE_ENV !== 'production') {
     console.error(message, e)
   }

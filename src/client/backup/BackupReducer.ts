@@ -49,14 +49,14 @@ export const reduce = createReducer<BackupState>(DEFAULT_STATE, {
   }
 })
 
-export function getBackupId(location: BackupLocation, state: State) {
+export function getBackupId(location: BackupLocation, state: State): string {
   return get(state, [BACKUP_ROOT, location, 'id'])
 }
 
-export function getBackupUrl(location: BackupLocation, state: State) {
+export function getBackupUrl(location: BackupLocation, state: State): string {
   return get(state, [BACKUP_ROOT, location, 'url'])
 }
 
-export function getBackupDescription(location: BackupLocation, state: State) {
+export function getBackupDescription(location: BackupLocation, state: State): string {
   return get(state, [BACKUP_ROOT, location, 'description'])
 }

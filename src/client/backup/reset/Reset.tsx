@@ -1,11 +1,11 @@
-import React, {useState} from 'react'
+import React, {ReactElement, useState} from 'react'
 import styles from './reset.scss'
 import {Container} from '../../common/Container'
 import {clear} from '../../configuration/LocalRepository'
 import {PrimaryButton} from '../../common/forms/Button'
 import {iBin} from '../../common/fonts/Icons'
 
-export function Reset() {
+export function Reset(): ReactElement {
   const [resetting, setResetting] = useState(false)
 
   const resetConfiguration = async () => {

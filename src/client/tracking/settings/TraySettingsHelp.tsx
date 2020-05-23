@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {ReactElement} from 'react'
 import styles from '../../help/help-article.scss'
 import {HelpArticle, HelpProps} from '../../help/HelpArticle'
 
@@ -17,7 +17,7 @@ const KEYWORDS = [
   'delete'
 ]
 
-export function TraySettingsHelp({searchQuery, helpLink}: HelpProps) {
+export function TraySettingsHelp({searchQuery, helpLink}: HelpProps): ReactElement {
   return (
     <HelpArticle
       keywords={KEYWORDS}

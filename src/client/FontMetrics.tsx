@@ -13,7 +13,7 @@ export const DEFAULT_FONT_METRICS = {
 
 const FONT_MEASURE_SIZE = 100 // px
 
-function Metrics(props: object, ref: Ref<Measurable>) {
+function Metrics(props: Record<string, unknown>, ref: Ref<Measurable>) {
   const measureNode = useRef<HTMLSpanElement>(null)
 
   useImperativeHandle(ref, () => {

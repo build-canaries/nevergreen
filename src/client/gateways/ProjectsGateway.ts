@@ -4,6 +4,7 @@ import {SelectedState} from '../tracking/SelectedReducer'
 import {size} from 'lodash'
 import {AuthTypes, Tray} from '../domain/Tray'
 import {SavedProject} from '../tracking/ProjectsReducer'
+import {Request} from 'superagent'
 
 export enum SortBy {
   default = 'default',
@@ -18,7 +19,7 @@ interface ProjectsRequest {
   readonly sort?: SortBy;
 }
 
-interface FeedRequest {
+export interface FeedRequest {
   readonly accessToken?: string;
   readonly authType: AuthTypes;
   readonly included?: ReadonlyArray<string>;
@@ -58,7 +59,7 @@ function hasIncludedProjects(projectsRequest: FeedRequest) {
   return projectsRequest.includeNew || size(projectsRequest.included) > 0
 }
 
-export function fetchAll(trays: ReadonlyArray<Tray>, knownProjects: ReadonlyArray<SavedProject>) {
+export function fetchAll(trays: ReadonlyArray<Tray>, knownProjects: ReadonlyArray<SavedProject>): Request {
   const feeds = trays
     .map((tray) => toProjectsRequest(tray, knownProjects))
 
@@ -76,7 +77,7 @@ export function interesting(
   selectedPerTray: SelectedState,
   prognosis: ReadonlyArray<Prognosis>,
   sort: SortBy
-) {
+): Request {
   const feeds = trays
     .map((tray) => toProjectsRequest(tray, knownProjects, selectedPerTray))
     .filter(hasIncludedProjects)

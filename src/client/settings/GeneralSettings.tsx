@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {ReactElement} from 'react'
 import {secondsToString} from '../common/DateTime'
 import {Container} from '../common/Container'
 import {DropDown} from '../common/forms/DropDown'
@@ -8,7 +8,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {getClickToShowMenu, getRefreshTime} from './SettingsReducer'
 import {setClickToShowMenu, setRefreshTime, VALID_REFRESH_TIMES} from './SettingsActionCreators'
 
-export function GeneralSettings() {
+export function GeneralSettings(): ReactElement {
   const dispatch = useDispatch()
   const refreshTime = useSelector(getRefreshTime)
   const clickToShowMenu = useSelector(getClickToShowMenu)

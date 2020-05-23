@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {ReactElement} from 'react'
 import {HelpArticle, HelpProps} from '../help/HelpArticle'
 import styles from '../help/help-article.scss'
 
@@ -18,7 +18,7 @@ const KEYWORDS = [
   'sort projects by'
 ]
 
-export function DisplaySettingsHelp({searchQuery, helpLink}: HelpProps) {
+export function DisplaySettingsHelp({searchQuery, helpLink}: HelpProps): ReactElement {
   return (
     <HelpArticle keywords={KEYWORDS}
                  searchQuery={searchQuery}

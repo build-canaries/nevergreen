@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {ReactElement} from 'react'
 import {HelpArticle, HelpProps} from '../help/HelpArticle'
 import styles from '../help/help-article.scss'
 
@@ -12,7 +12,7 @@ const KEYWORDS = [
   'broken build sound'
 ]
 
-export function NotificationSettingsHelp({searchQuery, helpLink}: HelpProps) {
+export function NotificationSettingsHelp({searchQuery, helpLink}: HelpProps): ReactElement {
   return (
     <HelpArticle keywords={KEYWORDS}
                  searchQuery={searchQuery}

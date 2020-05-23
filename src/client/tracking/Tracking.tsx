@@ -1,11 +1,11 @@
-import React, {useState} from 'react'
+import React, {ReactElement, useState} from 'react'
 import {AddTray} from './AddTray'
 import {Tray} from './Tray'
 import {Title} from '../common/Title'
 import {useSelector} from 'react-redux'
 import {getTrays} from './TraysReducer'
 
-export function Tracking() {
+export function Tracking(): ReactElement {
   const trays = useSelector(getTrays)
   const [highlightTray, setHighlightTray] = useState('')
   const [refreshTray, setRefreshTray] = useState('')

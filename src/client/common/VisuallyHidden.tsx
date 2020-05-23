@@ -1,4 +1,4 @@
-import React, {ReactNode} from 'react'
+import React, {ReactElement, ReactNode} from 'react'
 import styles from './visually-hidden.scss'
 
 interface VisuallyHiddenProps {
@@ -7,7 +7,7 @@ interface VisuallyHiddenProps {
 
 export const VISUALLY_HIDDEN_ATTRIBUTE = 'data-visually-hidden'
 
-export function VisuallyHidden({children}: VisuallyHiddenProps) {
+export function VisuallyHidden({children}: VisuallyHiddenProps): ReactElement {
   const hiddenAttribute = {[VISUALLY_HIDDEN_ATTRIBUTE]: true}
   return <span className={styles.content} {...hiddenAttribute}>{children}</span>
 }

@@ -1,7 +1,7 @@
 import nameGenerator from 'project-name-generator'
 import {v4 as uuid} from 'uuid'
 import {isNil, lowerCase} from 'lodash'
-import {isBlank} from '../common/Utils'
+import {isNotBlank} from '../common/Utils'
 
 export enum AuthTypes {
   none = 'none',
@@ -28,11 +28,11 @@ export const CI_OPTIONS = [
   {value: 'go', display: 'GoCD'}
 ]
 
-export function generateRandomName() {
+export function generateRandomName(): string {
   return lowerCase(nameGenerator().spaced)
 }
 
-export function createId() {
+export function createId(): string {
   return uuid()
 }
 
@@ -51,10 +51,10 @@ export function createTray(trayId: string, url: string, additional: Partial<Tray
   }
 }
 
-export function trayIdentifier(tray?: Tray | null) {
+export function trayIdentifier(tray?: Tray | null): string {
   return isNil(tray)
     ? 'Nevergreen'
-    : isBlank(tray.name)
-      ? tray.url
-      : tray.name
+    : isNotBlank(tray.name)
+      ? tray.name
+      : tray.url
 }

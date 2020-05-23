@@ -27,7 +27,7 @@ export function useLocalConfiguration(): boolean {
       setLoaded(true)
     }
 
-    loadData()
+    void loadData()
   }, [dispatch])
 
   return loaded

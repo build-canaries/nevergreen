@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {ReactElement, useState} from 'react'
 import {Input} from '../common/forms/Input'
 import styles from './add-message.scss'
 import {PrimaryButton} from '../common/forms/Button'
@@ -8,7 +8,7 @@ interface AddMessageProps {
   readonly addMessage: (message: string) => void;
 }
 
-export function AddMessage({addMessage}: AddMessageProps) {
+export function AddMessage({addMessage}: AddMessageProps): ReactElement {
   const [message, setMessage] = useState('')
   const triggerAddMessage = () => {
     addMessage(message)

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {ReactElement, useEffect, useState} from 'react'
 import {Container} from '../common/Container'
 import {Tabs} from '../common/Tabs'
 import {AvailableProjects} from './projects/AvailableProjects'
@@ -32,7 +32,7 @@ function redactedUrl(url: string) {
   }
 }
 
-export function Tray({tray, index, highlightTray, refreshTray}: TrayProps) {
+export function Tray({tray, index, highlightTray, refreshTray}: TrayProps): ReactElement {
   const [requiresRefresh, setRequiresRefresh] = useState(refreshTray === tray.trayId)
   useEffect(() => {
     setRequiresRefresh((existing) => existing || refreshTray === tray.trayId)

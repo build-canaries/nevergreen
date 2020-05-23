@@ -24,7 +24,7 @@ export type InputProps = {
   readonly button?: ReactElement;
 } & DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
 
-export function Input({children, onEnter, className, readOnly, focus, button, ...inputProps}: InputProps) {
+export function Input({children, onEnter, className, readOnly, focus, button, ...inputProps}: InputProps): ReactElement {
   const inputNode = useRef<HTMLInputElement>(null)
 
   useLayoutEffect(() => {
