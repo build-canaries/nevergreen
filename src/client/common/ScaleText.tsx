@@ -73,8 +73,10 @@ export function ideal(
     if (heightRequired > actualHeight) {
       fontSize--
     } else {
-      debug(`calculated fontSize [${fontSize}px] for width [${elementWidthPx}px] height [${elementHeightPx}px] charHeightScale [${charHeightScale}px] charWidthScale [${charWidthScale}px]`, sentences)
-      return fontSize
+      // -1px as this is the simplest way to avoid strange rounding behaviour resulting in some messages getting wrapped
+      const roundingAdjustedFont = fontSize - 1
+      debug(`calculated fontSize [${roundingAdjustedFont}px] for width [${elementWidthPx}px] height [${elementHeightPx}px] charHeightScale [${charHeightScale}px] charWidthScale [${charWidthScale}px]`, sentences)
+      return roundingAdjustedFont
     }
   }
 
