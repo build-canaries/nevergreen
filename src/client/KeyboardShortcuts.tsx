@@ -72,7 +72,7 @@ export function KeyboardShortcuts(): ReactElement {
         <li className={styles.shortcut}>
           <div>Go to the Settings page</div>
           <span className={styles.multipleShortcuts}>
-              <kbd className={styles.binding}>v</kbd> or <kbd className={styles.binding}>4</kbd>
+              <kbd className={styles.binding}>,</kbd> or <kbd className={styles.binding}>4</kbd>
             </span>
         </li>
         <li className={styles.shortcut}>
