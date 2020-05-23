@@ -16,10 +16,11 @@ html {
 
 html,
 body {
-  background: $light-grey;
+  background: $mid-grey;
   color: $off-black;
   cursor: default;
   font-family: $normal-font;
+  height: 100%;
   line-height: 1.5;
 }
 

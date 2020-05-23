@@ -9,14 +9,18 @@
   background-color: $off-black;
   color: $white;
   display: block;
-  padding: 0 1em;
   z-index: $header-footer-index;
+}
+
+.inner {
+  margin: 0 auto;
+  max-width: $max-page-width;
+  padding: 0 1em;
 
   @include respond-to(tablet, desktop) {
     align-items: center;
     display: flex;
-    padding-left: 2em;
-    padding-right: 2em;
+    padding: 0 2em;
   }
 }
 

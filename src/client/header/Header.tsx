@@ -36,47 +36,49 @@ export function Header({fullScreen}: HeaderProps): ReactElement {
 
   return (
     <header className={headerClassNames}>
-      <img src={logo} className={styles.logo} alt='Nevergreen' aria-hidden/>
-      <nav className={styles.siteMenu}>
-        <button className={styles.siteMenuToggle}
-                onClick={() => setMenuVisible(!menuVisible)}
-                aria-label={toggleLabel}
-                aria-expanded={menuVisible}
-                type='button'>
-          <span className={iconClassNames} aria-hidden/>
-        </button>
-        <ul className={menuClassNames}>
-          {
-            MENU_ITEMS.map((item) => {
-              const iconClasses = cn(styles.menuIcon, styles[item.id])
+      <div className={styles.inner}>
+        <img src={logo} className={styles.logo} alt='Nevergreen' aria-hidden/>
+        <nav className={styles.siteMenu}>
+          <button className={styles.siteMenuToggle}
+                  onClick={() => setMenuVisible(!menuVisible)}
+                  aria-label={toggleLabel}
+                  aria-expanded={menuVisible}
+                  type='button'>
+            <span className={iconClassNames} aria-hidden/>
+          </button>
+          <ul className={menuClassNames}>
+            {
+              MENU_ITEMS.map((item) => {
+                const iconClasses = cn(styles.menuIcon, styles[item.id])
 
-              return (
-                <li key={item.id}>
-                  <NavLink to={`/${item.id}`}
-                           className={styles.menuItem}
-                           activeClassName={styles.active}
-                           onClick={() => setMenuVisible(false)}
-                           data-locator={`menu-${item.id}`}>
-                    <span className={iconClasses} aria-hidden/>
-                    <div className={styles.menuTitle}>{item.title}</div>
-                    <Shortcut hotkeys={item.shortcuts}/>
-                  </NavLink>
-                </li>
-              )
-            })
-          }
-          <li>
-            <button className={styles.helpButton}
-                    onClick={() => {
-                      Mousetrap.trigger(SHOW_HELP_SHORTCUT)
-                      setMenuVisible(false)
-                    }}>
-              <span className={cn(styles.menuIcon, styles.help)} aria-hidden/>
-              <div className={styles.menuTitle}>Help</div>
-            </button>
-          </li>
-        </ul>
-      </nav>
+                return (
+                  <li key={item.id}>
+                    <NavLink to={`/${item.id}`}
+                             className={styles.menuItem}
+                             activeClassName={styles.active}
+                             onClick={() => setMenuVisible(false)}
+                             data-locator={`menu-${item.id}`}>
+                      <span className={iconClasses} aria-hidden/>
+                      <div className={styles.menuTitle}>{item.title}</div>
+                      <Shortcut hotkeys={item.shortcuts}/>
+                    </NavLink>
+                  </li>
+                )
+              })
+            }
+            <li>
+              <button className={styles.helpButton}
+                      onClick={() => {
+                        Mousetrap.trigger(SHOW_HELP_SHORTCUT)
+                        setMenuVisible(false)
+                      }}>
+                <span className={cn(styles.menuIcon, styles.help)} aria-hidden/>
+                <div className={styles.menuTitle}>Help</div>
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </header>
   )
 }

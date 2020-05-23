@@ -4,23 +4,6 @@
   margin: $margin-top 0 0 0;
 }
 
-.shortcuts {
-  list-style: none;
-}
-
-.shortcut {
-  align-items: center;
-  border-top: 1px solid $light-grey;
-  display: flex;
-  justify-content: space-between;
-  margin: 0.5em 0 0 0;
-  padding: 0.5em;
-}
-
-.multipleShortcuts {
-  white-space: nowrap;
-}
-
 .binding {
   background-image: linear-gradient(to bottom, #eee, #f9f9f9, #eee);
   border: $mid-grey 1px solid;
@@ -30,4 +13,28 @@
   font-family: $monospace-font;
   margin: 0.1em;
   padding: 0.1em 0.3em;
+}
+
+.shortcut {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin: 0.5em 0 0 0;
+  padding: 0.5em;
+
+  & .binding:first-child {
+    margin-left: 1em;
+  }
+}
+
+.shortcuts {
+  list-style: none;
+
+  & .shortcut:nth-child(odd) {
+    background: $light-grey;
+  }
+}
+
+.multipleShortcuts {
+  white-space: nowrap;
 }

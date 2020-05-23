@@ -83,7 +83,7 @@ export function Monitor({fullScreen, requestFullScreen}: MonitorProps): ReactEle
         <SuccessMessage message='Add a CI server via the tracking page to start monitoring'/>
       )}
       {traysAdded && (
-        <Loading loaded={loaded}>
+        <Loading dark={true} loaded={loaded}>
           {success && <Success/>}
           {!success && <InterestingProjects projects={projects}/>}
         </Loading>

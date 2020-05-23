@@ -55,7 +55,7 @@ export function Nevergreen(): ReactElement {
   }, [])
 
   return (
-    <Loading loaded={loaded}>
+    <Loading dark={true} loaded={loaded}>
       <FontMetrics ref={fontMetricsRef}/>
       <FontMetricsContext.Provider value={fontMetrics}>
         <KeyboardShortcuts/>

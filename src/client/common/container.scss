@@ -35,7 +35,7 @@
 }
 
 .titleBar {
-  background: $mid-grey;
+  background: $off-black;
   color: $white;
   cursor: pointer;
   overflow: hidden;
@@ -43,7 +43,7 @@
   position: relative;
   white-space: nowrap;
 
-  @include interactive($color: $white, $background-color: $mid-grey, $border-color: $mid-grey);
+  @include interactive($color: $white, $background-color: $off-black, $border-color: $off-black);
 }
 
 .title {
@@ -77,6 +77,6 @@
   }
 
   100% {
-    background: $mid-grey;
+    background: $off-black;
   }
 }

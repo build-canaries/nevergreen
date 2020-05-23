@@ -25,7 +25,7 @@
   display: flex;
   flex-direction: column;
   max-height: calc(100vh - #{$margin-top * 2});
-  max-width: 40em;
+  max-width: 900px;
   overflow: scroll;
   padding: 1em;
 }

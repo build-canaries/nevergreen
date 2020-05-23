@@ -34,21 +34,12 @@ $color-change-percentage: 8%;
 $input-border: 1px solid $light-grey;
 $border-radius: 2px;
 
-// Bourbon Neat grid
-
-$grid-columns: 4;
-$max-width: 1920px;
-$visual-grid: false;
-$visual-grid-index: front;
-$visual-grid-color: $blue;
-$grid-unit: 1em;
-$gutter: 1em;
-
 // Sizes
 
 $margin-top: 1.5em;
 $margin-right: 1em;
 $input-height: 44px;
+$max-page-width: 1440px;
 
 // Z Index
 $header-footer-index: 100;
