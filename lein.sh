@@ -8,7 +8,9 @@ function msg {
     echo "$@" 1>&2
 }
 
-export LEIN_VERSION="2.9.1"
+export LEIN_VERSION="2.9.3"
+# Must be sha256sum, will be replaced by bin/release
+export LEIN_CHECKSUM='23e1df18bc97226d570f47335a8d543e1b759ea303544ea57d5309be3dedcbbb'
 
 case $LEIN_VERSION in
     *SNAPSHOT) SNAPSHOT="YES" ;;
@@ -75,6 +77,17 @@ function download_failed_message {
 	EOS
 }
 
+function checksum_failed_message {
+    cat <<-EOS 1>&2
+	Failed to properly download $1
+	The checksum was mismatched. and we could not verify the downloaded
+	file. We expected a sha256 of
+	$2 and actually had
+	$3.
+	We used '$SHASUM_CMD' to verify the downloaded file.
+	EOS
+}
+
 function self_install {
   if [ -r "$LEIN_JAR" ]; then
     cat <<-EOS 1>&2
@@ -89,8 +102,16 @@ function self_install {
   $HTTP_CLIENT "$LEIN_JAR.pending" "$LEIN_URL"
   local exit_code=$?
   if [ $exit_code == 0 ]; then
-      # TODO: checksum
-      mv -f "$LEIN_JAR.pending" "$LEIN_JAR"
+      printf "$LEIN_CHECKSUM  $LEIN_JAR.pending\n" > "$LEIN_JAR.pending.shasum"
+      $SHASUM_CMD -c "$LEIN_JAR.pending.shasum"
+      if [ $? == 0 ]; then
+        mv -f "$LEIN_JAR.pending" "$LEIN_JAR"
+      else
+        got_sum="$($SHASUM_CMD "$LEIN_JAR.pending" | cut -f 1 -d ' ')"
+        checksum_failed_message "$LEIN_URL" "$LEIN_CHECKSUM" "$got_sum"
+        rm "$LEIN_JAR.pending" 2> /dev/null
+        exit 1
+      fi
   else
       rm "$LEIN_JAR.pending" 2> /dev/null
       download_failed_message "$LEIN_URL" "$exit_code"
@@ -160,6 +181,16 @@ if [ "$HTTP_CLIENT" = "" ]; then
     fi
 fi
 
+# This needs to be defined before we call SHASUM_CMD below
+if [ "$SHASUM_CMD" = "" ]; then
+    if type -p sha256sum >/dev/null 2>&1; then
+        export SHASUM_CMD="sha256sum"
+    elif type -p shasum >/dev/null 2>&1; then
+        export SHASUM_CMD="shasum --algorithm 256"
+    else
+        command_not_found sha256sum
+    fi
+fi
 
 # When :eval-in :classloader we need more memory
 grep -E -q '^\s*:eval-in\s+:classloader\s*$' project.clj 2> /dev/null && \
@@ -332,15 +363,7 @@ else
     if [ "$LEIN_FAST_TRAMPOLINE" != "" ] && [ -r project.clj ]; then
         INPUTS="$* $(cat project.clj) $LEIN_VERSION $(test -f "$LEIN_HOME/profiles.clj" && cat "$LEIN_HOME/profiles.clj")"
 
-        if command -v shasum >/dev/null 2>&1; then
-            SUM="shasum"
-        elif command -v sha1sum >/dev/null 2>&1; then
-            SUM="sha1sum"
-        else
-            command_not_found "sha1sum or shasum"
-        fi
-
-        INPUT_CHECKSUM=$(echo "$INPUTS" | $SUM | cut -f 1 -d " ")
+        INPUT_CHECKSUM=$(echo "$INPUTS" | $SHASUM_CMD | cut -f 1 -d " ")
         # Just don't change :target-path in project.clj, mkay?
         TRAMPOLINE_FILE="target/trampolines/$INPUT_CHECKSUM"
     else
