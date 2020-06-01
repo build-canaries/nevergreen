@@ -19,14 +19,14 @@ export function NotificationSettingsHelp({searchQuery, helpLink}: HelpProps): Re
                  title='Notifications settings'
                  page='/settings'>
       <dl className={styles.helpSettings}>
-        <dt>show system notifications</dt>
+        <dt>Show system notifications</dt>
         <dd>
           When <em>enabled</em> system (aka desktop) notifications will be shown when a project is sick or a sick
           project becomes healthy.
         </dd>
-        <dt>play audio notifications</dt>
+        <dt>Play audio notifications</dt>
         <dd>When <em>enabled</em> audio will be played when a project is sick.</dd>
-        <dt>broken build sound</dt>
+        <dt>Broken build sound</dt>
         <dd>
           A URL to the sound file to play when a project is sick. This will only play if audio notifications are
           enabled {helpLink('play audio notifications')}.

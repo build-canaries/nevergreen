@@ -33,7 +33,13 @@
           "type": "number"
         },
         "maxProjectsToShow": {
-          "type": "number"
+          "type": "string",
+          "enum": [
+            "focused",
+            "balanced",
+            "intense",
+            "everything"
+          ]
         },
         "clickToShowMenu": {
           "type": "boolean"

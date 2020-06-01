@@ -2,6 +2,7 @@ import {Actions} from '../Actions'
 import {Action} from 'redux'
 import {Prognosis} from '../domain/Project'
 import {SortBy} from '../gateways/ProjectsGateway'
+import {MaxProjectsToShow} from './SettingsReducer'
 
 export interface ActionShowBuildTime extends Action<Actions.SHOW_BUILD_TIME> {
   readonly value: boolean;
@@ -32,7 +33,7 @@ export interface ActionShowSystemNotifications extends Action<Actions.SHOW_SYSTE
 }
 
 export interface ActionSetMaxProjects extends Action<Actions.SET_MAX_PROJECTS> {
-  readonly value: number;
+  readonly value: MaxProjectsToShow;
 }
 
 export interface ActionClickToShowMenu extends Action<Actions.CLICK_TO_SHOW_MENU> {
@@ -51,8 +52,6 @@ export interface ActionSetSort extends Action<Actions.SET_SORT> {
 export const DEFAULT_REFRESH_TIME = 10
 export const MIN_REFRESH_TIME = 5
 export const VALID_REFRESH_TIMES = [5, 10, 30, 60, 300, 600, 1800, 3600, 43200, 86400]
-export const DEFAULT_PROJECTS_TO_SHOW = 12
-export const VALID_PROJECTS_TO_SHOW = [6, 9, 12, 18, 24, 30, Number.MAX_SAFE_INTEGER]
 
 function absoluteClosestNumber(actual: number, a: number, b: number): number {
   return Math.abs(b - actual) < Math.abs(a - actual) ? b : a
@@ -88,10 +87,8 @@ export function setShowSystemNotifications(value: boolean): ActionShowSystemNoti
   return {type: Actions.SHOW_SYSTEM_NOTIFICATIONS, value}
 }
 
-export function setMaxProjectsToShow(value: string): ActionSetMaxProjects {
-  const intValue = parseInt(value)
-  const closestMatch = VALID_PROJECTS_TO_SHOW.reduce((prev, curr) => absoluteClosestNumber(intValue, prev, curr))
-  return {type: Actions.SET_MAX_PROJECTS, value: closestMatch}
+export function setMaxProjectsToShow(value: MaxProjectsToShow): ActionSetMaxProjects {
+  return {type: Actions.SET_MAX_PROJECTS, value}
 }
 
 export function setClickToShowMenu(value: boolean): ActionClickToShowMenu {

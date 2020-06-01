@@ -1,7 +1,7 @@
 import React, {ReactNode} from 'react'
 import {merge} from 'lodash'
 import {reducer, State} from '../../src/client/Reducer'
-import {SETTINGS_ROOT} from '../../src/client/settings/SettingsReducer'
+import {MaxProjectsToShow, SETTINGS_ROOT} from '../../src/client/settings/SettingsReducer'
 import {BACKUP_ROOT} from '../../src/client/backup/BackupReducer'
 import {PROJECTS_ROOT, SavedProject} from '../../src/client/tracking/ProjectsReducer'
 import {SELECTED_ROOT} from '../../src/client/tracking/SelectedReducer'
@@ -16,7 +16,7 @@ import {Provider} from 'react-redux'
 import {AnyAction, configureStore, EnhancedStore} from '@reduxjs/toolkit'
 import {MemoryRouter} from 'react-router-dom'
 import Modal from 'react-modal'
-import {DEFAULT_PROJECTS_TO_SHOW, DEFAULT_REFRESH_TIME} from '../../src/client/settings/SettingsActionCreators'
+import {DEFAULT_REFRESH_TIME} from '../../src/client/settings/SettingsActionCreators'
 import {APPLIED_MIGRATIONS_ROOT} from '../../src/client/configuration/MigrationsReducer'
 import {SortBy} from '../../src/client/gateways/ProjectsGateway'
 
@@ -31,7 +31,7 @@ export function buildState(subState: RecursivePartial<State> = {}): State {
     [SETTINGS_ROOT]: {
       brokenBuildSoundFx: '',
       clickToShowMenu: false,
-      maxProjectsToShow: DEFAULT_PROJECTS_TO_SHOW,
+      maxProjectsToShow: MaxProjectsToShow.balanced,
       playBrokenBuildSoundFx: false,
       refreshTime: DEFAULT_REFRESH_TIME,
       showBuildLabel: false,

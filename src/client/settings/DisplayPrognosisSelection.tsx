@@ -12,7 +12,7 @@ export function DisplayPrognosisSelection(): ReactElement {
 
   return (
     <fieldset className={styles.container}>
-      <legend className={styles.legend}>show prognoses</legend>
+      <legend className={styles.legend}>Interesting projects</legend>
       <div data-locator='show-prognosis-container'>
         {
           Object.values(Prognosis)

@@ -11,7 +11,6 @@ import {
   ActionShowPrognosis,
   ActionShowSystemNotifications,
   ActionShowTrayName,
-  DEFAULT_PROJECTS_TO_SHOW,
   DEFAULT_REFRESH_TIME
 } from './SettingsActionCreators'
 import defaultSoundFx from './pacman_death.mp3'
@@ -22,6 +21,14 @@ import {get, uniq} from 'lodash'
 import {ActionConfigurationImported} from '../backup/BackupActionCreators'
 import {SortBy} from '../gateways/ProjectsGateway'
 
+// these also need to be updated in src/client/configuration/schema.json
+export enum MaxProjectsToShow {
+  focused = 'focused',
+  balanced = 'balanced',
+  intense = 'intense',
+  everything = 'everything'
+}
+
 export interface SettingsState {
   readonly showTrayName: boolean;
   readonly showBuildTime: boolean;
@@ -30,7 +37,7 @@ export interface SettingsState {
   readonly refreshTime: number;
   readonly showBuildLabel: boolean;
   readonly showSystemNotifications: boolean;
-  readonly maxProjectsToShow: number;
+  readonly maxProjectsToShow: MaxProjectsToShow;
   readonly clickToShowMenu: boolean;
   readonly showPrognosis: ReadonlyArray<Prognosis>;
   readonly sort: SortBy;
@@ -46,7 +53,7 @@ const DEFAULT_STATE: SettingsState = {
   refreshTime: DEFAULT_REFRESH_TIME,
   showBuildLabel: false,
   showSystemNotifications: false,
-  maxProjectsToShow: DEFAULT_PROJECTS_TO_SHOW,
+  maxProjectsToShow: MaxProjectsToShow.balanced,
   clickToShowMenu: false,
   showPrognosis: [
     Prognosis.sick,

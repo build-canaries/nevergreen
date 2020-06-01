@@ -2,19 +2,16 @@ import React, {Children, ReactElement, ReactNode, useCallback, useLayoutEffect, 
 import {isNil} from 'lodash'
 import styles from './scaled-grid.scss'
 import {useElementResized} from '../common/ResizableHook'
+import {isMobile, isTablet} from '../common/Style'
 
 interface ScaledGridProps {
   readonly children: ReactNode;
 }
 
-// These need to match those in the CSS
-const TABLET_BREAKPOINT = 768 // px
-const DESKTOP_BREAKPOINT = 1440 // px
-
 function columns() {
-  if (window.innerWidth < TABLET_BREAKPOINT) {
+  if (isMobile()) {
     return 1
-  } else if (window.innerWidth < DESKTOP_BREAKPOINT) {
+  } else if (isTablet()) {
     return 2
   } else {
     return 3

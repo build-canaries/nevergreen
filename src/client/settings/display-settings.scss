@@ -20,13 +20,13 @@
 .dropDownLabel {
   @include respond-to(tablet, desktop) {
     display: inline-block;
-    width: 15em;
+    width: 12em;
   }
 }
 
 .dropDown {
   @include respond-to(tablet, desktop) {
-    width: 42em;
+    width: 35em;
   }
 }
 

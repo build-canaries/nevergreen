@@ -5,7 +5,7 @@ import styles from '../help/help-article.scss'
 const KEYWORDS = [
   'settings',
   'general',
-  'poll for CI changes every',
+  'poll for feed changes every',
   'click to show menu'
 ]
 
@@ -16,9 +16,9 @@ export function GeneralSettingsHelp({searchQuery}: HelpProps): ReactElement {
                  title='General settings'
                  page='/settings'>
       <dl className={styles.helpSettings}>
-        <dt>poll for CI changes every</dt>
+        <dt>Poll for feed changes every</dt>
         <dd>How often to check the CI server for project updates.</dd>
-        <dt>click to show menu</dt>
+        <dt>Click to show menu</dt>
         <dd>
           While <em>disabled</em> (the default) moving the mouse on the Monitor page will show the menu.
           While <em>enabled</em> you will need to click while on the Monitor page to show the menu.

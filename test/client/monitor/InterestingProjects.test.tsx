@@ -4,7 +4,7 @@ import {InterestingProjects} from '../../../src/client/monitor/InterestingProjec
 import {buildProject, buildProjectError, buildTray, render} from '../testHelpers'
 import {Prognosis, ProjectPrognosis} from '../../../src/client/domain/Project'
 import {TRAYS_ROOT} from '../../../src/client/tracking/TraysReducer'
-import {SETTINGS_ROOT} from '../../../src/client/settings/SettingsReducer'
+import {MaxProjectsToShow, SETTINGS_ROOT} from '../../../src/client/settings/SettingsReducer'
 import {setSystemTime} from '../clock'
 
 const trayId = 'some-tray-id'
@@ -12,6 +12,7 @@ const trayId = 'some-tray-id'
 beforeAll(() => {
   // not implemented in jsdom, this stops errors being printed during tests
   // eslint-disable-next-line @typescript-eslint/unbound-method
+  // noinspection JSUnusedGlobalSymbols
   window.HTMLMediaElement.prototype.pause = noop
 })
 
@@ -259,7 +260,7 @@ describe('limiting the projects displayed', () => {
         [trayId]: buildTray({trayId})
       },
       [SETTINGS_ROOT]: {
-        maxProjectsToShow: 6
+        maxProjectsToShow: MaxProjectsToShow.focused
       }
     }
     const props = {
@@ -277,7 +278,7 @@ describe('limiting the projects displayed', () => {
         [trayId]: buildTray({trayId})
       },
       [SETTINGS_ROOT]: {
-        maxProjectsToShow: 6
+        maxProjectsToShow: MaxProjectsToShow.focused
       }
     }
     const props = {
@@ -286,8 +287,7 @@ describe('limiting the projects displayed', () => {
         buildProject({projectId: '2', trayId}),
         buildProject({projectId: '3', trayId}),
         buildProject({projectId: '4', trayId}),
-        buildProject({projectId: '5', trayId}),
-        buildProject({projectId: '6', trayId})
+        buildProject({projectId: '5', trayId})
       ]
     }
     const {queryByText} = render(<InterestingProjects {...props}/>, state)
@@ -300,7 +300,7 @@ describe('limiting the projects displayed', () => {
         [trayId]: buildTray({trayId})
       },
       [SETTINGS_ROOT]: {
-        maxProjectsToShow: 6
+        maxProjectsToShow: MaxProjectsToShow.focused
       }
     }
     const props = {
@@ -325,7 +325,7 @@ describe('limiting the projects displayed', () => {
         [trayId]: buildTray({trayId})
       },
       [SETTINGS_ROOT]: {
-        maxProjectsToShow: 6
+        maxProjectsToShow: MaxProjectsToShow.focused
       }
     }
     const props = {
@@ -350,7 +350,7 @@ describe('limiting the projects displayed', () => {
         [trayId]: buildTray({trayId})
       },
       [SETTINGS_ROOT]: {
-        maxProjectsToShow: 6
+        maxProjectsToShow: MaxProjectsToShow.focused
       }
     }
     const props = {

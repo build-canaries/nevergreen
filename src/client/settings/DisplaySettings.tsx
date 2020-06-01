@@ -10,10 +10,16 @@ import {
   setShowBuildLabel,
   setShowBuildTime,
   setShowTrayName,
-  setSort,
-  VALID_PROJECTS_TO_SHOW
+  setSort
 } from './SettingsActionCreators'
-import {getMaxProjectsToShow, getShowBuildLabel, getShowBuildTime, getShowTrayName, getSort} from './SettingsReducer'
+import {
+  getMaxProjectsToShow,
+  getShowBuildLabel,
+  getShowBuildTime,
+  getShowTrayName,
+  getSort,
+  MaxProjectsToShow
+} from './SettingsReducer'
 import {SortBy} from '../gateways/ProjectsGateway'
 import {Link} from 'react-router-dom'
 
@@ -25,16 +31,19 @@ export function DisplaySettings(): ReactElement {
   const maxProjectsToShow = useSelector(getMaxProjectsToShow)
   const sort = useSelector(getSort)
 
-  const projectsToShowOptions = VALID_PROJECTS_TO_SHOW.map((value) => {
-    const display = value === Number.MAX_SAFE_INTEGER
-      ? 'all projects (not recommended)'
-      : `${value.toString()} projects`
-    return {value: value.toString(), display}
-  })
+  const projectsToShowOptions = [
+    {value: MaxProjectsToShow.focused, display: 'Focused'},
+    {value: MaxProjectsToShow.balanced, display: 'Balanced'},
+    {value: MaxProjectsToShow.intense, display: 'Intense'},
+    {value: MaxProjectsToShow.everything, display: 'Everything (not recommended)'}
+  ]
 
-  const sortOptions = Object.values(SortBy).map((value) => {
-    return {value, display: value}
-  })
+  const sortOptions = [
+    {value: SortBy.default, display: 'Default'},
+    {value: SortBy.description, display: 'Description'},
+    {value: SortBy.prognosis, display: 'Prognosis'},
+    {value: SortBy.timestamp, display: 'Timestamp'}
+  ]
 
   return (
     <Container title='Display' className={styles.container}>
@@ -62,9 +71,9 @@ export function DisplaySettings(): ReactElement {
       <DropDown className={styles.dropDown}
                 options={projectsToShowOptions}
                 value={maxProjectsToShow}
-                onChange={({target}) => dispatch(setMaxProjectsToShow(target.value))}
+                onChange={({target}) => dispatch(setMaxProjectsToShow(target.value as MaxProjectsToShow))}
                 data-locator='max-projects-to-show'>
-        <span className={styles.dropDownLabel}>Max number of projects to show</span>
+        <span className={styles.dropDownLabel}>Amount of project to show</span>
       </DropDown>
 
       <DropDown className={styles.dropDown}

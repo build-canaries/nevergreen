@@ -8,14 +8,15 @@ const KEYWORDS = [
   'show feed identifier',
   'show build time',
   'show build label',
-  'show prognoses',
+  'interesting projects',
   'sick',
   'sick building',
   'healthy',
   'healthy building',
   'unknown',
-  'max number of projects to show',
-  'sort projects by'
+  'amount of projects to show',
+  'sort projects by',
+  'preview display'
 ]
 
 export function DisplaySettingsHelp({searchQuery, helpLink}: HelpProps): ReactElement {
@@ -25,11 +26,11 @@ export function DisplaySettingsHelp({searchQuery, helpLink}: HelpProps): ReactEl
                  title='Display settings'
                  page='/settings'>
       <dl className={styles.helpSettings}>
-        <dt>show feed identifier</dt>
+        <dt>Show feed identifier</dt>
         <dd>
           When <em>enabled</em> the CI server name {helpLink('name')} or URL will be displayed on the Monitor page.
         </dd>
-        <dt>show build time</dt>
+        <dt>Show build time</dt>
         <dd>
           When <em>enabled</em> (the default) the amount of time since a project was last built or the amount of time
           it has been building will be displayed on the Monitor page.
@@ -38,7 +39,7 @@ export function DisplaySettingsHelp({searchQuery, helpLink}: HelpProps): ReactEl
             calculated by Nevergreen, this means it may not be entirely accurate.
           </p>
         </dd>
-        <dt>show build label</dt>
+        <dt>Show build label</dt>
         <dd>
           When <em>enabled</em> the build label, for projects not building, will be displayed on the Monitor page.
           <p>
@@ -47,21 +48,21 @@ export function DisplaySettingsHelp({searchQuery, helpLink}: HelpProps): ReactEl
             projects.
           </p>
         </dd>
-        <dt>show prognoses</dt>
+        <dt>Interesting projects</dt>
         <dd>
           This determines projects in what status to show on the Monitor page. By default this is sick, sick building,
           healthy building and unknown.
         </dd>
-        <dt>max number of projects to show</dt>
+        <dt>Amount of projects to show</dt>
         <dd>
-          This limits the total number of projects show on the Monitor page (default is 12), any additional projects
-          will be counted and shown in a summary box.
+          This limits the total number of projects show on the Monitor page, any additional projects will be counted and
+          shown in a summary box. The exact number of projects shown varies depending on the window size.
           <p>
             The main purpose of Nevergreen is to be an information radiator for the team, and this setting can be used
             to stop the view becoming too crowded to read at a distance.
           </p>
         </dd>
-        <dt>sort projects by</dt>
+        <dt>Sort projects by</dt>
         <dd>
           This sets the sort order of projects on the Monitor page (projects on the Tracking page will always be in
           alphabetical order).
@@ -74,6 +75,11 @@ export function DisplaySettingsHelp({searchQuery, helpLink}: HelpProps): ReactEl
             by <em>timestamp</em> may not display projects as expected. If that is the case the <em>default</em> sort
             order may be more appropriate.
           </p>
+        </dd>
+        <dt>Preview display</dt>
+        <dd>
+          This displays a Monitor page preview with a randomly generated number of projects and your currently selected
+          settings.
         </dd>
       </dl>
       <p>

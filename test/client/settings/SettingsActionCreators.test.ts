@@ -9,11 +9,11 @@ import {
   setShowBuildTime,
   setShowSystemNotifications,
   setShowTrayName,
-  setSort,
-  VALID_PROJECTS_TO_SHOW
+  setSort
 } from '../../../src/client/settings/SettingsActionCreators'
 import {Actions} from '../../../src/client/Actions'
 import {SortBy} from '../../../src/client/gateways/ProjectsGateway'
+import {MaxProjectsToShow} from '../../../src/client/settings/SettingsReducer'
 
 describe(Actions.SHOW_TRAY_NAME, () => {
 
@@ -123,28 +123,14 @@ describe(Actions.SHOW_BUILD_TIME, () => {
 describe(Actions.SET_MAX_PROJECTS, () => {
 
   it('should return the correct type', () => {
-    const actual = setMaxProjectsToShow('')
+    const actual = setMaxProjectsToShow(MaxProjectsToShow.balanced)
     expect(actual).toHaveProperty('type', Actions.SET_MAX_PROJECTS)
   })
 
 
   it('should return the nearest valid value for an exact match', () => {
-    const actual = setMaxProjectsToShow('12')
-    expect(actual).toHaveProperty('value', 12)
-  })
-
-  it('should return the nearest valid value', () => {
-    const actual = setMaxProjectsToShow('13')
-    expect(actual).toHaveProperty('value', 12)
-  })
-
-  const invalidValues = ['-1', '4', 'some-string']
-
-  invalidValues.forEach(function (value) {
-    it(`should return min if the value is invalid (${value})`, () => {
-      const actual = setMaxProjectsToShow(value)
-      expect(actual).toHaveProperty('value', VALID_PROJECTS_TO_SHOW[0])
-    })
+    const actual = setMaxProjectsToShow(MaxProjectsToShow.everything)
+    expect(actual).toHaveProperty('value', MaxProjectsToShow.everything)
   })
 })
 

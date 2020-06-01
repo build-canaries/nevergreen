@@ -52,7 +52,9 @@ function shouldBeAbleToAddTrays(trayUrl, username, password) {
 function shouldBeAbleToChangeSuccessMessages() {
   cy.visitPage('success')
 
-  cy.locate('success-message').should('contain', '=(^.^)=').should('have.length', 1)
+  cy.locate('success-message')
+    .should('contain', '=(^.^)=')
+    .should('have.length', 1)
 
   cy.addSuccessMessage('some message')
   cy.locate('success-message')
@@ -78,7 +80,7 @@ function shouldBeAbleToChangeSettingsDisplay() {
   cy.locate('display-preview').click()
   cy.locate('build-label').should('exist')
   cy.locate('tray-name').should('exist')
-  cy.locate('duration').should('exist') // TODO: building vs broken time
+  cy.locate('duration').should('exist')
   cy.visitPage('settings')
 
   cy.locate('show-tray-names').uncheck()
@@ -91,7 +93,7 @@ function shouldBeAbleToChangeSettingsDisplay() {
   cy.locate('duration').should('not.exist')
   cy.visitPage('settings')
 
-  cy.locate('max-projects-to-show').select('30')
+  cy.locate('max-projects-to-show').select('Intense')
   cy.locate('show-prognosis').each((prognosis) => {
     cy.wrap(prognosis).check()
   })
@@ -105,7 +107,6 @@ function shouldBeAbleToChangeSettingsNotifications() {
   cy.locate('play-sounds').click()
   // force off so they don't play when the test gets to the Monitor page
   cy.locate('play-sounds').uncheck()
-
 }
 
 function shouldBeAbleToChangeSettings() {
@@ -115,7 +116,6 @@ function shouldBeAbleToChangeSettings() {
   shouldBeAbleToChangeSettingsDisplay()
   shouldBeAbleToChangeSettingsNotifications()
 
-  // TODO: [#211] Ideally we'd run this with all options enabled, but we have colour contrast issues on the build label/times
   cy.checkA11y()
 }
 

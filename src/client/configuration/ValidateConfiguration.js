@@ -1,4 +1,5 @@
 'use strict';
+var equal = require('ajv/lib/compile/equal');
 var validate = (function() {
   var pattern0 = new RegExp('.*');
   var pattern1 = new RegExp('additionalProperties');
@@ -155,17 +156,39 @@ var validate = (function() {
             }
             var valid2 = errors === errs_2;
           }
-          if (data1.maxProjectsToShow !== undefined) {
+          var data2 = data1.maxProjectsToShow;
+          if (data2 !== undefined) {
             var errs_2 = errors;
-            if (typeof data1.maxProjectsToShow !== "number") {
+            if (typeof data2 !== "string") {
               var err = {
                 keyword: 'type',
                 dataPath: (dataPath || '') + '.settings.maxProjectsToShow',
                 schemaPath: '#/properties/settings/properties/maxProjectsToShow/type',
                 params: {
-                  type: 'number'
+                  type: 'string'
                 },
-                message: 'should be number'
+                message: 'should be string'
+              };
+              if (vErrors === null) vErrors = [err];
+              else vErrors.push(err);
+              errors++;
+            }
+            var schema2 = validate.schema.properties.settings.properties.maxProjectsToShow.enum;
+            var valid2;
+            valid2 = false;
+            for (var i2 = 0; i2 < schema2.length; i2++)
+              if (equal(data2, schema2[i2])) {
+                valid2 = true;
+                break;
+              } if (!valid2) {
+              var err = {
+                keyword: 'enum',
+                dataPath: (dataPath || '') + '.settings.maxProjectsToShow',
+                schemaPath: '#/properties/settings/properties/maxProjectsToShow/enum',
+                params: {
+                  allowedValues: schema2
+                },
+                message: 'should be equal to one of the allowed values'
               };
               if (vErrors === null) vErrors = [err];
               else vErrors.push(err);
@@ -1173,7 +1196,8 @@ validate.schema = {
           "type": "number"
         },
         "maxProjectsToShow": {
-          "type": "number"
+          "type": "string",
+          "enum": ["focused", "balanced", "intense", "everything"]
         },
         "clickToShowMenu": {
           "type": "boolean"
