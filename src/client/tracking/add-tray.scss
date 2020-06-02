@@ -34,16 +34,18 @@
   margin: $margin-top $margin-right 0 0;
 
   @include respond-to(tablet, desktop) {
-    margin: 0 $margin-right 0 0;
+    margin: 0;
   }
 }
 
 .inputs {
   flex-grow: 1;
   margin: 0;
+  width: 100%;
 
   @include respond-to(tablet, desktop) {
     margin: 0 $margin-right 0 0;
+    width: auto;
   }
 }
 

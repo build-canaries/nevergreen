@@ -25,16 +25,20 @@
 
   input {
     font-family: $monospace-font;
-    margin: 0 $margin-right 0 0;
+    margin: 0;
     width: 100%;
+
+    @include respond-to(tablet, desktop) {
+      margin: 0 $margin-right 0 0;
+    }
   }
 }
 
 .add {
-  margin: $margin-top $margin-right 0 0;
+  margin: $margin-top 0 0 0;
 
   @include respond-to(tablet, desktop) {
-    margin: 0 $margin-right 0 0;
+    margin: 0;
   }
 }
 
