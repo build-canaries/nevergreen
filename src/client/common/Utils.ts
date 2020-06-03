@@ -1,4 +1,4 @@
-import {get, isEmpty, isNaN, isNumber, isString, sample, toNumber, trim} from 'lodash'
+import {get, isEmpty, isNaN, isNumber, isString, sample, startsWith, toNumber, trim, lowerCase} from 'lodash'
 
 export function isBlank(val: unknown): boolean {
   return isString(val) ? isEmpty(trim(val)) : true
@@ -29,5 +29,14 @@ export function notEmpty(val: unknown): boolean {
 }
 
 export function errorMessage(e: unknown): string {
-  return get(e, 'message') as string || 'Unknown error'
+  const originalMessage = get(e, 'message') as unknown
+  const message = isString(originalMessage)
+    ? originalMessage
+    : 'Unknown error'
+
+  if (startsWith(lowerCase(message), 'request has been terminated possible causes')) {
+    return 'The network is offline or the Nevergreen server is not running'
+  }
+
+  return message
 }

@@ -6,9 +6,27 @@ import {
   projectBuildLabel,
   projectIdentifier,
   ProjectPrognosis,
+  toProjectError,
   updateProjects
 } from '../../../src/client/domain/Project'
 import {buildProject, buildProjectError} from '../testHelpers'
+import * as DateTime from '../../../src/client/common/DateTime'
+
+describe('toProjectError', () => {
+
+  it('should set the prognosis to error', () => {
+    expect(toProjectError(new Error())).toHaveProperty('prognosis', Prognosis.error)
+  })
+
+  it('should set the timestamp to now', () => {
+    jest.spyOn(DateTime, 'now').mockReturnValue('now')
+    expect(toProjectError(new Error())).toHaveProperty('timestamp', 'now')
+  })
+
+  it('should set the exception message as description', () => {
+    expect(toProjectError(new Error('some-error'))).toHaveProperty('description', 'some-error')
+  })
+})
 
 describe('isError', () => {
 

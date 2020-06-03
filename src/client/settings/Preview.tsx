@@ -4,13 +4,11 @@ import {Loading} from '../common/Loading'
 import {useSelector} from 'react-redux'
 import {getShowPrognosis, getSort} from './SettingsReducer'
 import {isAbortedRequest, post, send} from '../gateways/Gateway'
-import {Prognosis, Projects, updateProjects} from '../domain/Project'
-import {now} from '../common/DateTime'
+import {Projects, toProjectError, updateProjects} from '../domain/Project'
 import {createId, createTray} from '../domain/Tray'
 import {Notification} from '../Notification'
 import {useHistory} from 'react-router-dom'
 import styles from './preview.scss'
-import {errorMessage} from '../common/Utils'
 
 export function Preview(): ReactElement {
   const prognosis = useSelector(getShowPrognosis)
@@ -34,12 +32,7 @@ export function Preview(): ReactElement {
         setLoaded(true)
       } catch (e) {
         if (!isAbortedRequest(e)) {
-          setProjects([{
-            description: errorMessage(e),
-            prognosis: Prognosis.error,
-            timestamp: now(),
-            webUrl: ''
-          }])
+          setProjects([toProjectError(e)])
           setLoaded(true)
         }
       }

@@ -1,4 +1,5 @@
-import {isBlank, isNumeric} from '../common/Utils'
+import {errorMessage, isBlank, isNumeric} from '../common/Utils'
+import {now} from '../common/DateTime'
 
 export enum Prognosis {
   healthy = 'healthy',
@@ -41,6 +42,15 @@ function formatBuildLabel(buildLabel?: string) {
   }
 
   return ''
+}
+
+export function toProjectError(e: unknown): ProjectError {
+  return {
+    description: errorMessage(e),
+    prognosis: Prognosis.error,
+    timestamp: now(),
+    webUrl: ''
+  }
 }
 
 export function isError(project: Project | ProjectError): project is ProjectError {

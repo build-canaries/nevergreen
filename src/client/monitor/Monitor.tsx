@@ -15,10 +15,8 @@ import {getSelectedProjects} from '../tracking/SelectedReducer'
 import {getKnownProjects} from '../tracking/ProjectsReducer'
 import {interesting} from '../gateways/ProjectsGateway'
 import {isAbortedRequest, send} from '../gateways/Gateway'
-import {Prognosis, Projects, updateProjects} from '../domain/Project'
+import {Projects, toProjectError, updateProjects} from '../domain/Project'
 import {useProjectNotifications} from './ProjectNotificationsHook'
-import {now} from '../common/DateTime'
-import {errorMessage} from '../common/Utils'
 
 interface MonitorProps {
   readonly fullScreen: boolean;
@@ -54,12 +52,7 @@ export function Monitor({fullScreen, requestFullScreen}: MonitorProps): ReactEle
       setLoaded(true)
     } catch (e) {
       if (!isAbortedRequest(e)) {
-        setProjects([{
-          description: errorMessage(e),
-          prognosis: Prognosis.error,
-          timestamp: now(),
-          webUrl: ''
-        }])
+        setProjects([toProjectError(e)])
         setLoaded(true)
       }
     }

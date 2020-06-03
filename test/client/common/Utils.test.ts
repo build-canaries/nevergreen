@@ -68,9 +68,14 @@ describe('isBlank', () => {
 
 describe('errorMessage', () => {
 
-  it.each([
-    null, undefined, 'string', 1, {}
-  ])('should return generic message for %s', (val) => {
+  it.each`
+    val          | what
+    ${null}      | ${'null'}
+    ${undefined} | ${'undefined'}
+    ${''}        | ${'a string'}
+    ${1}         | ${'a number'}
+    ${{}}        | ${'an object with a message key'}
+  `('should return a generic message for $what', ({val}) => {
     expect(errorMessage(val)).toBe('Unknown error')
   })
 
@@ -78,7 +83,16 @@ describe('errorMessage', () => {
     expect(errorMessage({message: 'some-message'})).toBe('some-message')
   })
 
+  it('should return a generic message for objects that have a message key that is not a string', () => {
+    expect(errorMessage({message: 1})).toBe('Unknown error')
+  })
+
   it('should return the message for Errors', () => {
     expect(errorMessage(new Error('some-message'))).toBe('some-message')
+  })
+
+  it('should reword the "Request has been terminated ..." Error as it is overly verbose and includes causes that are not likely', () => {
+    const message = 'Request has been terminated\nPossible causes: the network is offline, Origin is not allowed by Access-Control-Allow-Origin, the page is being unloaded, etc.'
+    expect(errorMessage(new Error(message))).toBe('The network is offline or the Nevergreen server is not running')
   })
 })
