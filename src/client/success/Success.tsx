@@ -8,7 +8,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {getSuccessMessages} from './SuccessReducer'
 import {addMessage, removeMessage} from './SuccessActionCreators'
 
-export const NO_MESSAGES_WARNING = 'No success messages added, a blank screen will be shown on the monitor page when no projects are broken or building'
+export const NO_MESSAGES_WARNING = 'No success messages added, a blank screen will be shown on the Monitor page when no interesting projects are displayed'
 
 export function Success(): ReactElement {
   const dispatch = useDispatch()
