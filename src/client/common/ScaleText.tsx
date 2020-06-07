@@ -43,9 +43,18 @@ function linesRequired(sentence: string, widthPixels: number, charWidthScale: nu
 function maximumPossibleFontSize(sentences: ReadonlyArray<string>, widthPixels: number, charWidthScale: number, paddingEm: number) {
   const longestWordCharacters = findLongestWord(sentences)
   const longestWordPixels = charWidthScale * longestWordCharacters
-  const fontSize = Math.floor(widthPixels / (longestWordPixels + totalPaddingPixels(charWidthScale, paddingEm)))
+  // We are calculating the pixels the longest word takes at a font size of 1, so this needs to be 1 and not charWidthScale
+  const fontSize = Math.floor(widthPixels / (longestWordPixels + totalPaddingPixels(1, paddingEm)))
 
-  debug(`maximum possible fontSize [${fontSize}px] for width [${widthPixels}px] as longest word is [${longestWordCharacters}]`)
+  debug('calculated maximum possible font size', {
+    fontSize,
+    sentences,
+    widthPixels,
+    charWidthScale,
+    paddingEm,
+    longestWordCharacters,
+    longestWordPixels
+  })
 
   return fontSize
 }
@@ -59,7 +68,15 @@ export function ideal(
   paddingEm: number
 ): number {
   if (elementHeightPx <= 0 || elementWidthPx <= 0 || charHeightScale <= 0 || charWidthScale <= 0) {
-    debug(`unable to calculate ideal fontSize for width [${elementWidthPx}px] height [${elementHeightPx}px] heightScale [${charHeightScale}px] widthScale [${charWidthScale}px]`)
+    debug('unable to calculate ideal font size because an element dimension or char scale value is 0, so returning minimum', {
+      fontSize: MIN_FONT_SIZE,
+      elementWidthPx,
+      elementHeightPx,
+      charHeightScale,
+      charWidthScale,
+      sentences,
+      paddingEm
+    })
     return MIN_FONT_SIZE
   }
 
@@ -71,16 +88,44 @@ export function ideal(
     const heightRequired = largestNumberOfLines * (charHeightScale * fontSize)
     const actualHeight = elementHeightPx - totalPaddingPixels(fontSize, paddingEm)
     if (heightRequired > actualHeight) {
+      debug('calculated font size too large, reducing and trying again...', {
+        fontSize,
+        numberOfLines,
+        largestNumberOfLines,
+        heightRequired,
+        actualHeight
+      })
       fontSize--
     } else {
       // -1px as this is the simplest way to avoid strange rounding behaviour resulting in some messages getting wrapped
       const roundingAdjustedFont = fontSize - 1
-      debug(`calculated fontSize [${roundingAdjustedFont}px] for width [${elementWidthPx}px] height [${elementHeightPx}px] charHeightScale [${charHeightScale}px] charWidthScale [${charWidthScale}px]`, sentences)
+      debug('calculated font size', {
+        fontSize,
+        roundingAdjustedFont,
+        elementWidthPx,
+        elementHeightPx,
+        charHeightScale,
+        charWidthScale,
+        sentences,
+        paddingEm,
+        numberOfLines,
+        largestNumberOfLines,
+        heightRequired,
+        actualHeight
+      })
       return roundingAdjustedFont
     }
   }
 
-  debug(`unable to calculate ideal fontSize for width [${elementWidthPx}px] height [${elementHeightPx}px] charHeightScale [${charHeightScale}px] charWidthScale [${charWidthScale}px]`)
+  debug('maximum possible font size smaller than the minimum, so returning minimum', {
+    fontSize: MIN_FONT_SIZE,
+    elementWidthPx,
+    elementHeightPx,
+    charHeightScale,
+    charWidthScale,
+    sentences,
+    paddingEm
+  })
   return MIN_FONT_SIZE
 }
 
@@ -96,6 +141,7 @@ export function ScaleText({sentences, children}: ScaleTextProps): ReactElement {
 
   const onResize = useCallback((currentSize: Measurable) => {
     setElementSize((previousSize) => {
+      // Only trigger a change if we register more than a whole pixel of resize
       const heightChanged = Math.abs(currentSize.height - previousSize.elementHeight) > 1
       const widthChanged = Math.abs(currentSize.width - previousSize.elementWidth) > 1
       return heightChanged || widthChanged
