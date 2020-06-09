@@ -1197,7 +1197,7 @@ validate.schema = {
         },
         "maxProjectsToShow": {
           "type": "string",
-          "enum": ["focused", "balanced", "intense", "everything"]
+          "enum": ["small", "medium", "large", "all"]
         },
         "clickToShowMenu": {
           "type": "boolean"

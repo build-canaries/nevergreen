@@ -93,7 +93,7 @@ function shouldBeAbleToChangeSettingsDisplay() {
   cy.locate('duration').should('not.exist')
   cy.visitPage('settings')
 
-  cy.locate('max-projects-to-show').select('Intense')
+  cy.locate('max-projects-to-show').select('Large')
   cy.locate('show-prognosis').each((prognosis) => {
     cy.wrap(prognosis).check()
   })

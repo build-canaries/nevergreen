@@ -260,7 +260,7 @@ describe('limiting the projects displayed', () => {
         [trayId]: buildTray({trayId})
       },
       [SETTINGS_ROOT]: {
-        maxProjectsToShow: MaxProjectsToShow.focused
+        maxProjectsToShow: MaxProjectsToShow.small
       }
     }
     const props = {
@@ -278,7 +278,7 @@ describe('limiting the projects displayed', () => {
         [trayId]: buildTray({trayId})
       },
       [SETTINGS_ROOT]: {
-        maxProjectsToShow: MaxProjectsToShow.focused
+        maxProjectsToShow: MaxProjectsToShow.small
       }
     }
     const props = {
@@ -300,7 +300,7 @@ describe('limiting the projects displayed', () => {
         [trayId]: buildTray({trayId})
       },
       [SETTINGS_ROOT]: {
-        maxProjectsToShow: MaxProjectsToShow.focused
+        maxProjectsToShow: MaxProjectsToShow.small
       }
     }
     const props = {
@@ -325,7 +325,7 @@ describe('limiting the projects displayed', () => {
         [trayId]: buildTray({trayId})
       },
       [SETTINGS_ROOT]: {
-        maxProjectsToShow: MaxProjectsToShow.focused
+        maxProjectsToShow: MaxProjectsToShow.small
       }
     }
     const props = {
@@ -350,7 +350,7 @@ describe('limiting the projects displayed', () => {
         [trayId]: buildTray({trayId})
       },
       [SETTINGS_ROOT]: {
-        maxProjectsToShow: MaxProjectsToShow.focused
+        maxProjectsToShow: MaxProjectsToShow.small
       }
     }
     const props = {

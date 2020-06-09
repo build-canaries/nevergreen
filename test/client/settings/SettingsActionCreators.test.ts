@@ -123,14 +123,14 @@ describe(Actions.SHOW_BUILD_TIME, () => {
 describe(Actions.SET_MAX_PROJECTS, () => {
 
   it('should return the correct type', () => {
-    const actual = setMaxProjectsToShow(MaxProjectsToShow.balanced)
+    const actual = setMaxProjectsToShow(MaxProjectsToShow.medium)
     expect(actual).toHaveProperty('type', Actions.SET_MAX_PROJECTS)
   })
 
 
   it('should return the nearest valid value for an exact match', () => {
-    const actual = setMaxProjectsToShow(MaxProjectsToShow.everything)
-    expect(actual).toHaveProperty('value', MaxProjectsToShow.everything)
+    const actual = setMaxProjectsToShow(MaxProjectsToShow.all)
+    expect(actual).toHaveProperty('value', MaxProjectsToShow.all)
   })
 })
 

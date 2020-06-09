@@ -16,26 +16,26 @@ interface InterestingProjectsProps {
 }
 
 const mobileProjectsToShow: Record<MaxProjectsToShow, number> = {
-  [MaxProjectsToShow.focused]: 3,
-  [MaxProjectsToShow.balanced]: 5,
-  [MaxProjectsToShow.intense]: 9,
-  [MaxProjectsToShow.everything]: Number.MAX_SAFE_INTEGER
+  [MaxProjectsToShow.small]: 3,
+  [MaxProjectsToShow.medium]: 5,
+  [MaxProjectsToShow.large]: 9,
+  [MaxProjectsToShow.all]: Number.MAX_SAFE_INTEGER
 }
 
 // tablet uses 2 columns, so these numbers should be (n * 2) - 1
 const tabletProjectsToShow: Record<MaxProjectsToShow, number> = {
-  [MaxProjectsToShow.focused]: 5,
-  [MaxProjectsToShow.balanced]: 9,
-  [MaxProjectsToShow.intense]: 15,
-  [MaxProjectsToShow.everything]: Number.MAX_SAFE_INTEGER
+  [MaxProjectsToShow.small]: 5,
+  [MaxProjectsToShow.medium]: 9,
+  [MaxProjectsToShow.large]: 15,
+  [MaxProjectsToShow.all]: Number.MAX_SAFE_INTEGER
 }
 
 // desktop uses 3 columns, so these numbers should be (n * 3) - 1
 const desktopProjectsToShow: Record<MaxProjectsToShow, number> = {
-  [MaxProjectsToShow.focused]: 8,
-  [MaxProjectsToShow.balanced]: 11,
-  [MaxProjectsToShow.intense]: 23,
-  [MaxProjectsToShow.everything]: Number.MAX_SAFE_INTEGER
+  [MaxProjectsToShow.small]: 8,
+  [MaxProjectsToShow.medium]: 11,
+  [MaxProjectsToShow.large]: 23,
+  [MaxProjectsToShow.all]: Number.MAX_SAFE_INTEGER
 }
 
 function calculateProjectsToShow(maxProjectsToShow: MaxProjectsToShow) {

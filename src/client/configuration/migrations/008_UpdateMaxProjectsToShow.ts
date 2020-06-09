@@ -9,13 +9,13 @@ export const migrate: Migrate = (data) => {
     const oldValue = get(data, [SETTINGS_ROOT, 'maxProjectsToShow']) as number
     let newValue
     if (oldValue < 12) {
-      newValue = MaxProjectsToShow.focused
+      newValue = MaxProjectsToShow.small
     } else if (oldValue === 12) {
-      newValue = MaxProjectsToShow.balanced
+      newValue = MaxProjectsToShow.medium
     } else if (oldValue > 12 && oldValue < Number.MAX_SAFE_INTEGER) {
-      newValue = MaxProjectsToShow.intense
+      newValue = MaxProjectsToShow.large
     } else {
-      newValue = MaxProjectsToShow.everything
+      newValue = MaxProjectsToShow.all
     }
     set(data, [SETTINGS_ROOT, 'maxProjectsToShow'], newValue)
   }

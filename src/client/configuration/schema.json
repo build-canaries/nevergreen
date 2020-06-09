@@ -35,10 +35,10 @@
         "maxProjectsToShow": {
           "type": "string",
           "enum": [
-            "focused",
-            "balanced",
-            "intense",
-            "everything"
+            "small",
+            "medium",
+            "large",
+            "all"
           ]
         },
         "clickToShowMenu": {

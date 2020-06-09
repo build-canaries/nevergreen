@@ -31,7 +31,7 @@ export function buildState(subState: RecursivePartial<State> = {}): State {
     [SETTINGS_ROOT]: {
       brokenBuildSoundFx: '',
       clickToShowMenu: false,
-      maxProjectsToShow: MaxProjectsToShow.balanced,
+      maxProjectsToShow: MaxProjectsToShow.medium,
       playBrokenBuildSoundFx: false,
       refreshTime: DEFAULT_REFRESH_TIME,
       showBuildLabel: false,

@@ -32,10 +32,10 @@ export function DisplaySettings(): ReactElement {
   const sort = useSelector(getSort)
 
   const projectsToShowOptions = [
-    {value: MaxProjectsToShow.focused, display: 'Focused'},
-    {value: MaxProjectsToShow.balanced, display: 'Balanced'},
-    {value: MaxProjectsToShow.intense, display: 'Intense'},
-    {value: MaxProjectsToShow.everything, display: 'Everything (not recommended)'}
+    {value: MaxProjectsToShow.small, display: 'Small'},
+    {value: MaxProjectsToShow.medium, display: 'Medium'},
+    {value: MaxProjectsToShow.large, display: 'Large'},
+    {value: MaxProjectsToShow.all, display: 'All (not recommended)'}
   ]
 
   const sortOptions = [

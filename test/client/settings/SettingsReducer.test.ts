@@ -160,10 +160,10 @@ describe(Actions.SHOW_SYSTEM_NOTIFICATIONS, () => {
 describe(Actions.SET_MAX_PROJECTS, () => {
 
   it('should set the max projects to show property', () => {
-    const existingState = state({maxProjectsToShow: MaxProjectsToShow.balanced})
-    const action = setMaxProjectsToShow(MaxProjectsToShow.focused)
+    const existingState = state({maxProjectsToShow: MaxProjectsToShow.medium})
+    const action = setMaxProjectsToShow(MaxProjectsToShow.small)
     const newState = reducer(existingState, action)
-    expect(getMaxProjectsToShow(newState)).toEqual(MaxProjectsToShow.focused)
+    expect(getMaxProjectsToShow(newState)).toEqual(MaxProjectsToShow.small)
   })
 })
 

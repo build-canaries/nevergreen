@@ -23,10 +23,10 @@ import {SortBy} from '../gateways/ProjectsGateway'
 
 // these also need to be updated in src/client/configuration/schema.json
 export enum MaxProjectsToShow {
-  focused = 'focused',
-  balanced = 'balanced',
-  intense = 'intense',
-  everything = 'everything'
+  small = 'small',
+  medium = 'medium',
+  large = 'large',
+  all = 'all'
 }
 
 export interface SettingsState {
@@ -53,7 +53,7 @@ const DEFAULT_STATE: SettingsState = {
   refreshTime: DEFAULT_REFRESH_TIME,
   showBuildLabel: false,
   showSystemNotifications: false,
-  maxProjectsToShow: MaxProjectsToShow.balanced,
+  maxProjectsToShow: MaxProjectsToShow.medium,
   clickToShowMenu: false,
   showPrognosis: [
     Prognosis.sick,
