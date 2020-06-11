@@ -4,6 +4,7 @@ import {debug} from './Logger'
 import {FontMetricsContext, Measurable} from '../FontMetrics'
 import {useElementResized} from './ResizableHook'
 import styles from './scaled-text.scss'
+import {toJson} from './Json'
 
 export const MIN_FONT_SIZE = 10 // px
 
@@ -144,9 +145,14 @@ export function ScaleText({sentences, children}: ScaleTextProps): ReactElement {
       // Only trigger a change if we register more than a whole pixel of resize
       const heightChanged = Math.abs(currentSize.height - previousSize.elementHeight) > 1
       const widthChanged = Math.abs(currentSize.width - previousSize.elementWidth) > 1
-      return heightChanged || widthChanged
-        ? {elementWidth: currentSize.width, elementHeight: currentSize.height}
-        : previousSize
+      if (heightChanged || widthChanged) {
+        return {
+          elementWidth: currentSize.width,
+          elementHeight: currentSize.height
+        }
+      } else {
+        return previousSize
+      }
     })
   }, [])
 
@@ -162,7 +168,8 @@ export function ScaleText({sentences, children}: ScaleTextProps): ReactElement {
       0.5)
 
     return {fontSize: `${fontSize}px`, padding: '0.5em'}
-  }, [sentences, elementHeight, elementWidth, fontHeight, fontWidth])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [toJson(sentences), elementHeight, elementWidth, fontHeight, fontWidth])
 
   return (
     <div className={styles.body}
