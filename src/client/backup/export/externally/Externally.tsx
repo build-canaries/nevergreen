@@ -1,4 +1,4 @@
-import React, {ChangeEvent, ReactElement, useLayoutEffect, useState} from 'react'
+import React, {ChangeEvent, ReactElement, useEffect, useState} from 'react'
 import {Input} from '../../../common/forms/Input'
 import {PrimaryButton} from '../../../common/forms/Button'
 import {iCloudUpload} from '../../../common/fonts/Icons'
@@ -29,9 +29,9 @@ export function Externally({location}: ExternallyProps): ReactElement {
   const [newId, setNewId] = useState(id)
   const [newDescription, setNewDescription] = useState(description)
 
-  useLayoutEffect(() => setNewUrl(url), [url])
-  useLayoutEffect(() => setNewId(id), [id])
-  useLayoutEffect(() => setNewDescription(description), [description])
+  useEffect(() => setNewUrl(url), [url])
+  useEffect(() => setNewId(id), [id])
+  useEffect(() => setNewDescription(description), [description])
 
   const [accessToken, setAccessToken] = useState('')
   const [loaded, setLoaded] = useState(true)

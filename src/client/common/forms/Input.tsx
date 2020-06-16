@@ -5,7 +5,7 @@ import React, {
   KeyboardEvent,
   ReactElement,
   ReactNode,
-  useLayoutEffect,
+  useEffect,
   useRef
 } from 'react'
 import classNames from 'classnames'
@@ -27,7 +27,7 @@ export type InputProps = {
 export function Input({children, onEnter, className, readOnly, focus, button, ...inputProps}: InputProps): ReactElement {
   const inputNode = useRef<HTMLInputElement>(null)
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (focus && inputNode.current) {
       inputNode.current.focus()
     }

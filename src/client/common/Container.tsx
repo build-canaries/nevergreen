@@ -1,4 +1,4 @@
-import React, {KeyboardEvent, ReactElement, ReactNode, useEffect, useLayoutEffect, useRef, useState} from 'react'
+import React, {KeyboardEvent, ReactElement, ReactNode, useEffect, useRef, useState} from 'react'
 import cn from 'classnames'
 import styles from './container.scss'
 
@@ -14,7 +14,7 @@ interface ContainerProps {
 export function Container({initiallyHidden, highlight, className, title, subTitle, children}: ContainerProps): ReactElement {
   const rootNode = useRef<HTMLElement>(null)
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (highlight && rootNode.current) {
       rootNode.current.scrollIntoView(true)
     }

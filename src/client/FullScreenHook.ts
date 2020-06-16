@@ -1,4 +1,4 @@
-import {useCallback, useLayoutEffect, useRef, useState} from 'react'
+import {useCallback, useEffect, useRef, useState} from 'react'
 
 type FullScreen = [
   boolean,
@@ -27,7 +27,7 @@ export function useFullScreen(): FullScreen {
     }
   }, [fullScreen, fullScreenRequested])
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     setFullScreen(fullScreenRequested)
     if (!fullScreenRequested) {
       clearTimeout(fullScreenTimer.current)

@@ -1,4 +1,4 @@
-import React, {ChangeEvent, ReactElement, useLayoutEffect, useState} from 'react'
+import React, {ChangeEvent, ReactElement, useEffect, useState} from 'react'
 import styles from './externally.scss'
 import {PrimaryButton} from '../../../common/forms/Button'
 import {iCloudDownload} from '../../../common/fonts/Icons'
@@ -43,8 +43,8 @@ export function Externally({location, accessTokenRequired}: ExternallyProps): Re
   const [newUrl, setNewUrl] = useState(url)
   const [newId, setNewId] = useState(id)
 
-  useLayoutEffect(() => setNewUrl(url), [url])
-  useLayoutEffect(() => setNewId(id), [id])
+  useEffect(() => setNewUrl(url), [url])
+  useEffect(() => setNewId(id), [id])
 
   const [accessToken, setAccessToken] = useState('')
   const [loaded, setLoaded] = useState(true)

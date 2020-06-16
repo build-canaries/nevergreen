@@ -1,4 +1,4 @@
-import React, {ChangeEvent, ReactElement, useEffect, useLayoutEffect, useState} from 'react'
+import React, {ChangeEvent, ReactElement, useEffect, useState} from 'react'
 import {errorMessage, isBlank} from '../common/Utils'
 import {Messages, MessagesType} from '../common/Messages'
 import {Input} from '../common/forms/Input'
@@ -28,7 +28,7 @@ export function NotificationsAudio(): ReactElement {
   const [playEnabled, setPlayEnabled] = useState(!isBlank(brokenBuildSoundFx))
   const [playing, setPlaying] = useState(false)
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     setSoundFx(brokenBuildSoundFx)
     setPlayEnabled(!isBlank(brokenBuildSoundFx))
   }, [brokenBuildSoundFx])

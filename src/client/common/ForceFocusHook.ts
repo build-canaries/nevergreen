@@ -1,9 +1,9 @@
-import {Ref, useLayoutEffect, useRef} from 'react'
+import {Ref, useEffect, useRef} from 'react'
 
 export function useForceFocus<T extends HTMLElement>(): Ref<T> {
   const el = useRef<T>(null)
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (el.current) {
       el.current.focus()
     }
