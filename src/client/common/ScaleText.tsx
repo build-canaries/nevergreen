@@ -1,6 +1,7 @@
 import React, {ReactElement, ReactNode, useCallback, useContext, useMemo, useRef, useState} from 'react'
-import {flatten} from 'lodash'
-import {debug} from './Logger'
+import {flatten, memoize} from 'lodash'
+import * as logger from './Logger'
+import {PerformanceMark} from './Logger'
 import {FontMetricsContext, Measurable} from '../FontMetrics'
 import {useElementResized} from './ResizableHook'
 import styles from './scaled-text.scss'
@@ -47,7 +48,7 @@ function maximumPossibleFontSize(sentences: ReadonlyArray<string>, widthPixels: 
   // We are calculating the pixels the longest word takes at a font size of 1, so this needs to be 1 and not charWidthScale
   const fontSize = Math.floor(widthPixels / (longestWordPixels + totalPaddingPixels(1, paddingEm)))
 
-  debug('calculated maximum possible font size', {
+  logger.debug('calculated maximum possible ideal font size', {
     fontSize,
     sentences,
     widthPixels,
@@ -60,6 +61,7 @@ function maximumPossibleFontSize(sentences: ReadonlyArray<string>, widthPixels: 
   return fontSize
 }
 
+// exported for testing
 export function ideal(
   sentences: ReadonlyArray<string>,
   elementHeightPx: number,
@@ -69,7 +71,7 @@ export function ideal(
   paddingEm: number
 ): number {
   if (elementHeightPx <= 0 || elementWidthPx <= 0 || charHeightScale <= 0 || charWidthScale <= 0) {
-    debug('unable to calculate ideal font size because an element dimension or char scale value is 0, so returning minimum', {
+    logger.debug('unable to calculate ideal font size because something is 0', {
       fontSize: MIN_FONT_SIZE,
       elementWidthPx,
       elementHeightPx,
@@ -81,6 +83,8 @@ export function ideal(
     return MIN_FONT_SIZE
   }
 
+  logger.mark(PerformanceMark.calculatingIdealFontSize)
+
   let fontSize = maximumPossibleFontSize(sentences, elementWidthPx, charWidthScale, paddingEm)
 
   while (fontSize > MIN_FONT_SIZE) {
@@ -89,20 +93,12 @@ export function ideal(
     const heightRequired = largestNumberOfLines * (charHeightScale * fontSize)
     const actualHeight = elementHeightPx - totalPaddingPixels(fontSize, paddingEm)
     if (heightRequired > actualHeight) {
-      debug('calculated font size too large, reducing and trying again...', {
-        fontSize,
-        numberOfLines,
-        largestNumberOfLines,
-        heightRequired,
-        actualHeight
-      })
       fontSize--
     } else {
       // -1px as this is the simplest way to avoid strange rounding behaviour resulting in some messages getting wrapped
-      const roundingAdjustedFont = fontSize - 1
-      debug('calculated font size', {
+      fontSize -= 1
+      logger.debug('calculated ideal font size', {
         fontSize,
-        roundingAdjustedFont,
         elementWidthPx,
         elementHeightPx,
         charHeightScale,
@@ -114,21 +110,19 @@ export function ideal(
         heightRequired,
         actualHeight
       })
-      return roundingAdjustedFont
+      break
     }
   }
 
-  debug('maximum possible font size smaller than the minimum, so returning minimum', {
-    fontSize: MIN_FONT_SIZE,
-    elementWidthPx,
-    elementHeightPx,
-    charHeightScale,
-    charWidthScale,
-    sentences,
-    paddingEm
-  })
-  return MIN_FONT_SIZE
+  logger.measure('Calculate ideal font size', PerformanceMark.calculatingIdealFontSize)
+  return fontSize
 }
+
+function resolver(...args: unknown[]) {
+  return args.reduce<string>((acc, val) => `${acc}-${JSON.stringify(val)}`, '')
+}
+
+const idealMemorised = memoize(ideal, resolver)
 
 interface ScaleTextProps {
   readonly sentences: ReadonlyArray<string>;
@@ -159,7 +153,7 @@ export function ScaleText({sentences, children}: ScaleTextProps): ReactElement {
   useElementResized(elementRef, onResize)
 
   const idealFontStyle = useMemo(() => {
-    const fontSize = ideal(
+    const fontSize = idealMemorised(
       sentences,
       elementHeight,
       elementWidth,
