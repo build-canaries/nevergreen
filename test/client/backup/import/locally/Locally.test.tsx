@@ -6,7 +6,7 @@ import {toJson} from '../../../../../src/client/common/Json'
 
 it('should import valid data after filtering and parsing', async () => {
   const {getByLabelText, getByText} = render(<Locally/>)
-  await userEvent.type(getByLabelText('Configuration to import'), toJson(buildState()), {allAtOnce: true})
+  await userEvent.type(getByLabelText('Configuration to import'), toJson(buildState()))
   userEvent.click(getByText('Import'))
 
   expect(getByText('Successfully imported configuration')).toBeInTheDocument()
@@ -22,7 +22,7 @@ test('should show an error if no data has been entered', () => {
 it('should show an error if the data is syntactically invalid (bad json)', async () => {
   const invalidConfiguration = '{'
   const {getByLabelText, getByText, getByDisplayValue} = render(<Locally/>)
-  await userEvent.type(getByLabelText('Configuration to import'), invalidConfiguration, {allAtOnce: true})
+  await userEvent.type(getByLabelText('Configuration to import'), invalidConfiguration)
   userEvent.click(getByText('Import'))
 
   expect(getByText('Unexpected end of JSON input')).toBeInTheDocument()
@@ -32,7 +32,7 @@ it('should show an error if the data is syntactically invalid (bad json)', async
 it('should show an error if the data is semantically invalid (missing required attributes)', async () => {
   const invalidConfiguration = '{"trays":{"some-id":{}}}'
   const {getByLabelText, getByText, getByDisplayValue} = render(<Locally/>)
-  await userEvent.type(getByLabelText('Configuration to import'), invalidConfiguration, {allAtOnce: true})
+  await userEvent.type(getByLabelText('Configuration to import'), invalidConfiguration)
   userEvent.click(getByText('Import'))
 
   expect(getByText('.trays[\'some-id\'] should have required property \'trayId\'')).toBeInTheDocument()
