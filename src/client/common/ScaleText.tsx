@@ -1,4 +1,4 @@
-import React, {ReactElement, ReactNode, useCallback, useContext, useMemo, useRef, useState} from 'react'
+import React, {ReactElement, ReactNode, useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react'
 import {flatten, memoize} from 'lodash'
 import * as logger from './Logger'
 import {PerformanceMark} from './Logger'
@@ -119,7 +119,7 @@ export function ideal(
 }
 
 function resolver(...args: unknown[]) {
-  return args.reduce<string>((acc, val) => `${acc}-${JSON.stringify(val)}`, '')
+  return JSON.stringify(args)
 }
 
 const idealMemorised = memoize(ideal, resolver)
@@ -141,8 +141,8 @@ export function ScaleText({sentences, children}: ScaleTextProps): ReactElement {
       const widthChanged = Math.abs(currentSize.width - previousSize.elementWidth) > 1
       if (heightChanged || widthChanged) {
         return {
-          elementWidth: currentSize.width,
-          elementHeight: currentSize.height
+          elementWidth: Math.floor(currentSize.width),
+          elementHeight: Math.floor(currentSize.height)
         }
       } else {
         return previousSize
@@ -164,6 +164,17 @@ export function ScaleText({sentences, children}: ScaleTextProps): ReactElement {
     return {fontSize: `${fontSize}px`, padding: '0.5em'}
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [toJson(sentences), elementHeight, elementWidth, fontHeight, fontWidth])
+
+  useEffect(() => {
+    return () => {
+      // clear cache when unmounted, this is probably OK because if this has unmounted its likely the sentences have
+      // changed resulting in a cache miss for the next render
+      if (idealMemorised.cache.clear) {
+        logger.debug('clearing the ideal font size cache')
+        idealMemorised.cache.clear()
+      }
+    }
+  }, [])
 
   return (
     <div className={styles.body}
