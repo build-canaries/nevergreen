@@ -9,39 +9,39 @@ const KEYWORDS = [
   'refresh',
   'include all',
   'exclude all',
-  'filter'
+  'search'
 ]
 
 export function AvailableProjectsHelp({searchQuery, helpLink}: HelpProps): ReactElement {
   return (
     <HelpArticle keywords={KEYWORDS}
                  searchQuery={searchQuery}
-                 title='CI server projects'
+                 title='CCTray XML feed projects'
                  page='/tracking'>
       <p>
         Once added you can choose which projects to include for tracking by selecting them.
       </p>
       <dl className={styles.helpSettings}>
-        <dt>refresh</dt>
+        <dt>Refresh</dt>
         <dd>
-          Fetches the latest list of projects from the CI server. If projects are added, removed or renamed on the
-          CI server you will need to refresh to see them in Nevergreen.
+          Fetches the latest list of projects from the CCTray XML feed. If projects are added, removed or renamed on the
+          server you will need to refresh to see them in Nevergreen.
         </dd>
-        <dt>include all</dt>
+        <dt>Include all</dt>
         <dd>
-          Includes all the currently shown {helpLink('filter')} projects for tracking which means they will be shown on
-          the Monitor page.
+          Includes all the currently shown {helpLink('search')} projects for tracking which means they can be shown
+          on the Monitor page if they are interesting {helpLink('interesting projects')}.
         </dd>
-        <dt>exclude all</dt>
+        <dt>Exclude all</dt>
         <dd>
-          Excludes all the currently shown {helpLink('filter')} projects for tracking which means they will not be shown
-          on the Monitor page.
+          Excludes all the currently shown {helpLink('search')} projects for tracking which means they will never be
+          shown on the Monitor page.
         </dd>
-        <dt>filter</dt>
+        <dt>Search</dt>
         <dd>
-          Takes a regular expression and filters the visible project list to any projects with matching names. Clear the
-          input to show all projects again. The include all and exclude all buttons work on the currently visible
-          projects, so filtering can be used to quickly include or exclude a group of projects.
+          Takes a regular expression and searches for any projects with matching names. Clear the input to show all
+          projects again. The include all and exclude all buttons work on the currently visible projects, so searching
+          can be used to quickly include or exclude a group of projects.
         </dd>
       </dl>
     </HelpArticle>

@@ -86,9 +86,8 @@ export function DisplaySettingsHelp({searchQuery, helpLink}: HelpProps): ReactEl
         Please note the feed identifier, build time and build labels will automatically be hidden, regardless of whether
         they are enabled, if the Monitor page becomes &quot;too crowded&quot;. This can happen if many projects are
         being shown on a small screen. This is done to make the project name larger and more visible, because this is
-        the most important information to display. Reducing the number of projects
-        shown {helpLink('max number of projects to show')} or increasing the size of the browser window can mitigate
-        this.
+        the most important information. Reducing the number of projects shown {helpLink('amount of projects to show')}
+        or increasing the size of the browser window can mitigate this.
       </p>
     </HelpArticle>
   )

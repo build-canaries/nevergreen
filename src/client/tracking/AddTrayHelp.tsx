@@ -17,19 +17,19 @@ const KEYWORDS = [
 
 export function AddTrayHelp({searchQuery}: HelpProps): ReactElement {
   return (
-    <HelpArticle title='Adding a CI server'
+    <HelpArticle title='Adding a CCTray XML feed'
                  keywords={KEYWORDS}
                  searchQuery={searchQuery}
                  page='/tracking'>
       <p>
-        To start tracking your CI server set the <strong>URL</strong> to point at the CCTray XML feed. You can also
-        add a <strong>username</strong> and <strong>password</strong> or an <strong>access token</strong> if your CI
-        server is protected by auth.
+        To start tracking your projects set the <strong>URL</strong> to point at the CCTray XML feed. You can also
+        add a <strong>username</strong> and <strong>password</strong> or an <strong>access token</strong> if your CCTray
+        XML feed is protected by auth.
       </p>
       <p>
         Multiple CCTray XML feeds can be tracked, <ExternalLink
-        href='https://www.thoughtworks.com/radar/techniques/a-single-ci-instance-for-all-teams'>allowing you to add
-        other teams CI servers</ExternalLink>.
+        href='https://www.thoughtworks.com/radar/techniques/a-single-ci-instance-for-all-teams'>allowing you to track
+        other teams projects</ExternalLink>.
       </p>
     </HelpArticle>
   )
@@ -37,12 +37,12 @@ export function AddTrayHelp({searchQuery}: HelpProps): ReactElement {
 
 export function CCTrayLocationsHelp({searchQuery}: HelpProps): ReactElement {
   return (
-    <HelpArticle title='CCTray XML location'
+    <HelpArticle title='CCTray XML feed location'
                  keywords={['tracking', 'adding', 'cctray', 'xml', 'url', 'location', 'find', 'feed']}
                  searchQuery={searchQuery}
                  page='/tracking'>
       See the <ExternalLink href='https://cctray.org/servers/'>CCTray specification servers page</ExternalLink> for
-      information about finding the CCTray XML feed for your CI server.
+      information about finding the CCTray XML feed for your server.
     </HelpArticle>
   )
 }
