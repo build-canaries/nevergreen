@@ -44,6 +44,7 @@ function delayedResponse(file) {
 const generic = response('cctray.xml')
 const go = response('go_cd.xml')
 const jenkins = response('jenkins.xml')
+const screenshot = response('screenshot.xml')
 
 app.get('/cc.xml', jenkins) // Jenkins, Hudson, CircleCI, CruiseControl
 app.get('/cc/uuid/cctray.xml', generic) // Solano CI
@@ -52,6 +53,7 @@ app.get('/go/cctray.xml', go) // GO CD
 app.get('/slow/go/cctray.xml', delayedResponse('go_cd.xml')) // GO CD
 app.get('/guestAuth/app/rest/cctray/projects.xml', generic) // TeamCity
 app.get('/XmlStatusReport.aspx', generic) // CruiseControl.rb, CruiseControl.NET
+app.get('/screenshot.xml', screenshot)
 
 app.get('/cctray.xml', generic)
 app.get('/secure/cctray.xml', basicAuth('u', 'p'), generic)

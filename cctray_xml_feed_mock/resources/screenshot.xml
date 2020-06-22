@@ -1,0 +1,16 @@
+<Projects>
+  <Project webUrl="1" name="netbeans-windows" lastBuildLabel="1874" lastBuildTime="2020-06-22T15:42:10Z" lastBuildStatus="Failure" activity="Sleeping"/>
+  <Project webUrl="1" name="Mesos-Reviewbot-Linux" lastBuildLabel="10608" lastBuildTime="2020-06-22T14:49:02Z" lastBuildStatus="Success" activity="Building"/>
+  <Project webUrl="1" name="Apache Camel" lastBuildLabel="9327" lastBuildTime="2020-06-22T03:37:57Z" lastBuildStatus="Success" activity="Building"/>
+  <Project webUrl="1" name="pulsar-manager-build" lastBuildLabel="125" lastBuildTime="2020-06-22T11:11:32Z" lastBuildStatus="Success" activity="Building"/>
+  <Project webUrl="1" name="netbeans-linux-experiment" lastBuildLabel="1518" lastBuildTime="2020-06-21T14:49:18Z" lastBuildStatus="Failure" activity="Sleeping"/>
+  <Project webUrl="1" name="netbeans-license" lastBuildLabel="204" lastBuildTime="2020-06-22T14:49:08Z" lastBuildStatus="Failure" activity="Building"/>
+  <Project webUrl="1" name="Tamaya-Site-Master" lastBuildLabel="1747" lastBuildTime="2020-06-22T14:15:04Z" lastBuildStatus="Success" activity="Building"/>
+  <Project webUrl="1" name="zeppelin-pull-request" lastBuildLabel="7435" lastBuildTime="2020-06-22T14:56:28Z" lastBuildStatus="Failure" activity="Sleeping"/>
+  <Project webUrl="1" name="hadoop-ozone-trunk-qbt-java8-linux-x86" lastBuildLabel="692" lastBuildTime="2020-06-22T14:56:05Z" lastBuildStatus="Failure" activity="Sleeping"/>
+  <Project webUrl="1" name="JMeter Ubuntu" lastBuildLabel="1034" lastBuildTime="2020-06-22T13:48:57Z" lastBuildStatus="Success" activity="Building"/>
+  <Project webUrl="1" name="Lucene-Solr-Tests-8.5" lastBuildLabel="346" lastBuildTime="2020-06-22T12:37:57Z" lastBuildStatus="Success" activity="Building"/>
+  <Project webUrl="1" name="HBase Nightly" lastBuildLabel="149" lastBuildTime="2020-06-22T03:37:57Z" lastBuildStatus="Failure" activity="Building"/>
+  <Project webUrl="1" name="netbeans-linux-jdk11" lastBuildLabel="717" lastBuildTime="2020-06-22T14:50:22Z" lastBuildStatus="Success" activity="Building"/>
+  <Project webUrl="1" name="OFBiz-Github-MultiBranch" lastBuildLabel="23" lastBuildTime="2020-06-22T14:21:24Z" lastBuildStatus="Failure" activity="Sleeping"/>
+</Projects>

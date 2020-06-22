@@ -9,6 +9,10 @@ Nevergreen is a build monitor with attitude. Continually deliver via fast clear 
 
 ![Example Monitor page](doc/screenshot_monitor.png)
 
+![Example Monitor page on tablet](doc/screenshot_monitor_tablet.png)
+
+![Example Monitor page on mobile](doc/screenshot_monitor_mobile.png)
+
 ![Example Tracking page](doc/screenshot_tracking.png)
 
 ## How do I start monitoring my builds?
