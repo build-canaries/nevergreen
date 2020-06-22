@@ -1,0 +1,212 @@
+{
+  "settings": {
+    "showTrayName": true,
+    "showBuildTime": true,
+    "playBrokenBuildSoundFx": true,
+    "brokenBuildSoundFx": "pacman_death.mp3",
+    "refreshTime": 5,
+    "showBuildLabel": true,
+    "showSystemNotifications": true,
+    "maxProjectsToShow": "medium",
+    "clickToShowMenu": true,
+    "showPrognosis": [
+      "sick",
+      "sick-building",
+      "healthy-building",
+      "unknown"
+    ],
+    "sort": "default"
+  },
+  "backup": {
+    "github": {
+      "id": "",
+      "description": "Nevergreen configuration backup",
+      "url": "https://api.github.com"
+    },
+    "gitlab": {
+      "id": "",
+      "description": "Nevergreen configuration backup",
+      "url": "https://gitlab.com"
+    }
+  },
+  "projects": {
+    "4c3325b7-21cd-4bab-bbbf-33eec3e70623": [
+      {
+        "isNew": true,
+        "projectId": "example-service-1",
+        "removed": false,
+        "trayId": "4c3325b7-21cd-4bab-bbbf-33eec3e70623",
+        "description": "example service 1"
+      },
+      {
+        "isNew": true,
+        "projectId": "example-service-2",
+        "removed": false,
+        "trayId": "4c3325b7-21cd-4bab-bbbf-33eec3e70623",
+        "description": "example service 2"
+      },
+      {
+        "isNew": true,
+        "projectId": "example-service-3",
+        "removed": false,
+        "trayId": "4c3325b7-21cd-4bab-bbbf-33eec3e70623",
+        "description": "example service 3"
+      }
+    ],
+    "d1469697-0e0e-4504-9921-8d1f820c43f3": [
+      {
+        "isNew": true,
+        "projectId": "success-sleeping-project",
+        "removed": false,
+        "trayId": "d1469697-0e0e-4504-9921-8d1f820c43f3",
+        "description": "success sleeping project"
+      },
+      {
+        "isNew": true,
+        "projectId": "success-building-project",
+        "removed": false,
+        "trayId": "d1469697-0e0e-4504-9921-8d1f820c43f3",
+        "description": "success building project"
+      },
+      {
+        "isNew": true,
+        "projectId": "failure_sleeping_project",
+        "removed": false,
+        "trayId": "d1469697-0e0e-4504-9921-8d1f820c43f3",
+        "description": "failure sleeping project"
+      },
+      {
+        "isNew": true,
+        "projectId": "failure_building_project",
+        "removed": false,
+        "trayId": "d1469697-0e0e-4504-9921-8d1f820c43f3",
+        "description": "failure building project"
+      }
+    ],
+    "bde6335b-220f-4213-9268-ae5a561768f3": [
+      {
+        "isNew": true,
+        "projectId": "success-sleeping-project",
+        "removed": false,
+        "trayId": "bde6335b-220f-4213-9268-ae5a561768f3",
+        "description": "success sleeping project"
+      },
+      {
+        "isNew": true,
+        "projectId": "success-building-project",
+        "removed": false,
+        "trayId": "bde6335b-220f-4213-9268-ae5a561768f3",
+        "description": "success building project"
+      },
+      {
+        "isNew": true,
+        "projectId": "failure_sleeping_project",
+        "removed": false,
+        "trayId": "bde6335b-220f-4213-9268-ae5a561768f3",
+        "description": "failure sleeping project"
+      },
+      {
+        "isNew": true,
+        "projectId": "failure_building_project",
+        "removed": false,
+        "trayId": "bde6335b-220f-4213-9268-ae5a561768f3",
+        "description": "failure building project"
+      }
+    ]
+  },
+  "selected": {
+    "4c3325b7-21cd-4bab-bbbf-33eec3e70623": [
+      "example-service-1",
+      "example-service-2",
+      "example-service-3"
+    ],
+    "d1469697-0e0e-4504-9921-8d1f820c43f3": [
+      "success-sleeping-project",
+      "success-building-project",
+      "failure_sleeping_project",
+      "failure_building_project"
+    ],
+    "bde6335b-220f-4213-9268-ae5a561768f3": [
+      "success-sleeping-project",
+      "success-building-project",
+      "failure_sleeping_project",
+      "failure_building_project"
+    ]
+  },
+  "success": [
+    "=(^.^)=",
+    "https://octodex.github.com/images/class-act.png"
+  ],
+  "trays": {
+    "4c3325b7-21cd-4bab-bbbf-33eec3e70623": {
+      "authType": "none",
+      "encryptedAccessToken": "",
+      "encryptedPassword": "",
+      "includeNew": true,
+      "name": "axiomatic scissors",
+      "serverType": "",
+      "trayId": "4c3325b7-21cd-4bab-bbbf-33eec3e70623",
+      "url": "http://localhost:5050/cc.xml",
+      "username": "",
+      "timestamp": "2019-11-02T18:48:18.799+00:00"
+    },
+    "d1469697-0e0e-4504-9921-8d1f820c43f3": {
+      "authType": "basic",
+      "encryptedAccessToken": "",
+      "encryptedPassword": "m8cWhDVxiQxSnm4ssJrecw==",
+      "includeNew": true,
+      "name": "obeisant pear",
+      "serverType": "",
+      "trayId": "d1469697-0e0e-4504-9921-8d1f820c43f3",
+      "url": "http://localhost:5050/secure/cctray.xml",
+      "username": "u",
+      "timestamp": "2019-11-02T18:48:32.262+00:00"
+    },
+    "bde6335b-220f-4213-9268-ae5a561768f3": {
+      "authType": "token",
+      "encryptedAccessToken": "68DZCuzVB6PHO7f3iMhZ8Q==",
+      "encryptedPassword": "",
+      "includeNew": true,
+      "name": "abundant branch",
+      "serverType": "",
+      "trayId": "bde6335b-220f-4213-9268-ae5a561768f3",
+      "url": "http://localhost:5050/token/cctray.xml",
+      "username": "",
+      "timestamp": "2019-11-02T18:48:50.531+00:00"
+    }
+  },
+  "appliedMigrations": [
+    {
+      "id": "001_MoveAudioVisualToSettings",
+      "timestamp": "2020-06-01T22:44:50.208+01:00"
+    },
+    {
+      "id": "002_PrefixEncryptedValues",
+      "timestamp": "2020-06-01T22:44:50.209+01:00"
+    },
+    {
+      "id": "003_FlattenProjects.ts",
+      "timestamp": "2020-06-01T22:44:50.209+01:00"
+    },
+    {
+      "id": "004_AddTrayIdToProjects",
+      "timestamp": "2020-06-01T22:44:50.209+01:00"
+    },
+    {
+      "id": "005_SetAuthType",
+      "timestamp": "2020-06-01T22:44:50.209+01:00"
+    },
+    {
+      "id": "006_RemoveShowBrokenBuildTime",
+      "timestamp": "2020-06-22T18:23:12.176+01:00"
+    },
+    {
+      "id": "007_SetProjectDescription",
+      "timestamp": "2020-06-22T18:23:12.177+01:00"
+    },
+    {
+      "id": "008_UpdateMaxProjectsToShow",
+      "timestamp": "2020-06-22T18:23:12.177+01:00"
+    }
+  ]
+}
