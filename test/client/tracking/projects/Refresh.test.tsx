@@ -1,8 +1,7 @@
-import {render} from '../../testHelpers'
+import {render, setSystemTime} from '../../testHelpers'
 import React from 'react'
 import {Refresh} from '../../../../src/client/tracking/projects/Refresh'
 import {noop} from 'lodash'
-import {setSystemTime} from '../../clock'
 
 const DEFAULT_PROPS = {
   index: 1,

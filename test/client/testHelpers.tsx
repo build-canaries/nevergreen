@@ -19,6 +19,7 @@ import Modal from 'react-modal'
 import {DEFAULT_REFRESH_TIME} from '../../src/client/settings/SettingsActionCreators'
 import {APPLIED_MIGRATIONS_ROOT} from '../../src/client/configuration/MigrationsReducer'
 import {SortBy} from '../../src/client/gateways/ProjectsGateway'
+import parseISO from 'date-fns/parseISO'
 
 interface ExtendedRenderResult extends RenderResult {
   store: EnhancedStore<State, AnyAction, ReadonlyArray<Middleware<unknown, State>>>;
@@ -143,3 +144,7 @@ export function testReducer(reducer: Partial<Reducer<State>>): Reducer<CombinedS
 }
 
 /* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-return */
+
+export function setSystemTime(timestamp: string): void {
+  jest.setSystemTime(parseISO(timestamp))
+}

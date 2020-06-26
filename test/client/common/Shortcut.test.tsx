@@ -6,6 +6,7 @@ import {render} from '../testHelpers'
 it('should bind the hot keys', () => {
   jest.spyOn(Mousetrap, 'bind')
   jest.spyOn(Mousetrap, 'unbind')
+  // eslint-disable-next-line @typescript-eslint/unbound-method
   const {bind, unbind} = Mousetrap
   const hotkeys = ['a']
 

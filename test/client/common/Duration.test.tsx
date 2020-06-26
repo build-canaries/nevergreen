@@ -1,6 +1,5 @@
-import {render} from '../testHelpers'
+import {render, setSystemTime} from '../testHelpers'
 import React from 'react'
-import {setSystemTime} from '../clock'
 import {Duration} from '../../../src/client/common/Duration'
 
 it('should display the given prefix and suffix', () => {

@@ -1,11 +1,10 @@
 import React from 'react'
 import {noop} from 'lodash'
 import {InterestingProjects} from '../../../src/client/monitor/InterestingProjects'
-import {buildProject, buildProjectError, buildTray, render} from '../testHelpers'
+import {buildProject, buildProjectError, buildTray, render, setSystemTime} from '../testHelpers'
 import {Prognosis, ProjectPrognosis} from '../../../src/client/domain/Project'
 import {TRAYS_ROOT} from '../../../src/client/tracking/TraysReducer'
 import {MaxProjectsToShow, SETTINGS_ROOT} from '../../../src/client/settings/SettingsReducer'
-import {setSystemTime} from '../clock'
 
 const trayId = 'some-tray-id'
 

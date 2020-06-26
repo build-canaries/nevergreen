@@ -1,5 +1,5 @@
-import {setSystemTime} from '../clock'
 import {formatAsDuration, secondsToString} from '../../../src/client/common/DateTime'
+import {setSystemTime} from '../testHelpers'
 
 describe('formatAsDuration', () => {
 
