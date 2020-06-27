@@ -3,9 +3,9 @@ import {Shortcut} from '../../../src/client/common/Shortcut'
 import Mousetrap from 'mousetrap'
 import {render} from '../testHelpers'
 
+jest.mock('mousetrap')
+
 it('should bind the hot keys', () => {
-  jest.spyOn(Mousetrap, 'bind')
-  jest.spyOn(Mousetrap, 'unbind')
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const {bind, unbind} = Mousetrap
   const hotkeys = ['a']

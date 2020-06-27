@@ -9,7 +9,6 @@ describe('fetchAll', () => {
 
   it('posts only the required data from the given trays', () => {
     jest.spyOn(gateway, 'post')
-    jest.spyOn(gateway, 'fakeRequest')
     const seen: SavedProject[] = [
       buildSavedProject({trayId: 'some-tray-id', projectId: 'some-project-id'})
     ]
@@ -47,7 +46,6 @@ describe('fetchAll', () => {
 
   it('posts with access token from the given trays', () => {
     jest.spyOn(gateway, 'post')
-    jest.spyOn(gateway, 'fakeRequest')
     const seen: SavedProject[] = [buildSavedProject({trayId: 'some-tray-id', projectId: 'some-project-id'})]
     const trays = [
       buildTray({
