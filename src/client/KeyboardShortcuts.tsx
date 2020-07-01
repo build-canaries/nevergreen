@@ -19,7 +19,7 @@ export function KeyboardShortcuts(): ReactElement {
            close={() => setShow(false)}
            title='Keyboard shortcuts'>
 
-      <h3 className={styles.header}>Basics</h3>
+      <h2 className={styles.header}>Basics</h2>
       <ul className={styles.shortcuts}>
         <li className={styles.shortcut}>
           <div>Shows keyboard shortcuts (this)</div>
@@ -35,7 +35,7 @@ export function KeyboardShortcuts(): ReactElement {
         </li>
       </ul>
 
-      <h3 className={styles.header}>Navigation</h3>
+      <h2 className={styles.header}>Navigation</h2>
       <ul className={styles.shortcuts}>
         <li className={styles.shortcut}>
           <div>Move focus to the next element</div>
@@ -83,7 +83,7 @@ export function KeyboardShortcuts(): ReactElement {
         </li>
       </ul>
 
-      <h3 className={styles.header}>Tracking</h3>
+      <h2 className={styles.header}>Tracking</h2>
       <ul className={styles.shortcuts}>
         <li className={styles.shortcut}>
           <div>Includes all projects for the tray with the given index (the first tray is at index 0)</div>

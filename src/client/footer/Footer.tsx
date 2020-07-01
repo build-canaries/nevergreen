@@ -25,7 +25,7 @@ export function Footer({fullScreen}: FooterProps): ReactElement {
       <About version={versionWithName}
              show={showAbout}
              close={() => setShowAbout(false)}/>
-      <footer className={footerClassNames}>
+      <footer className={footerClassNames} role='contentinfo'>
         <button className={styles.about}
                 onClick={() => setShowAbout(true)}
                 type='button'>

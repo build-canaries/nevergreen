@@ -35,10 +35,10 @@ export function Header({fullScreen}: HeaderProps): ReactElement {
   const toggleLabel = menuVisible ? 'hide menu' : 'show menu'
 
   return (
-    <header className={headerClassNames}>
+    <header className={headerClassNames} role='banner'>
       <div className={styles.inner}>
         <img src={logo} className={styles.logo} alt='Nevergreen' aria-hidden/>
-        <nav className={styles.siteMenu}>
+        <nav className={styles.siteMenu} role='navigation'>
           <button className={styles.siteMenuToggle}
                   onClick={() => setMenuVisible(!menuVisible)}
                   aria-label={toggleLabel}

@@ -51,15 +51,13 @@ export function HelpArticle({title, keywords, children, searchQuery, page}: Help
   if (show) {
     return (
       <li className={styles.help}>
-        <h4>{title}</h4>
+        <h2>{title}</h2>
         <div className={styles.article}>{children}</div>
+        <span>keywords:</span>
         <ul className={styles.keywords}>
-          <aside>
-            <span>keywords:</span>
-            {keywords.map((keyword) => <Keyword key={keyword}
-                                                keyword={keyword}
-                                                matches={matches}/>)}
-          </aside>
+          {keywords.map((keyword) => <Keyword key={keyword}
+                                              keyword={keyword}
+                                              matches={matches}/>)}
         </ul>
       </li>
     )

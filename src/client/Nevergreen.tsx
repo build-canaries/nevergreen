@@ -68,7 +68,7 @@ export function Nevergreen(): ReactElement {
           <Notification notification={notification}
                         dismiss={() => setNotification('')}
                         fullScreen={fullScreen}/>
-          <main className={styles.main}>
+          <main className={styles.main} role='main'>
             <Switch>
               <Route exact path='/monitor'>
                 <Monitor fullScreen={fullScreen}

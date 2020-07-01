@@ -29,7 +29,7 @@ export function About({show, close, version}: AboutProps): ReactElement {
       <p>
         Found a problem? <SubmitAnIssue version={version}/> on GitHub to help us!
       </p>
-      <h3 className={styles.title}>Licences</h3>
+      <h2 className={styles.title}>Licences</h2>
       <p>
         Nevergreen is open source under the <ExternalLink href='https://spdx.org/licenses/EPL-1.0'>Eclipse Public
         Licence 1.0 (EPL-1.0)</ExternalLink> and uses open source software.

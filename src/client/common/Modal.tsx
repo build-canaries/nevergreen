@@ -22,7 +22,7 @@ export function Modal({children, title, show, close, className}: ModalProps): Re
                 isOpen={show}
                 onRequestClose={close}>
       <div className={styles.header}>
-        <h2 className={styles.title}>{title}</h2>
+        <h1 className={styles.title}>{title}</h1>
         <SecondaryButton onClick={close}
                          icon={iCross}
                          iconOnly>
