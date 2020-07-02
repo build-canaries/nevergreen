@@ -1,9 +1,9 @@
 import React, {ReactElement} from 'react'
-import {Shortcut} from '../../common/Shortcut'
 import {Duration} from '../../common/Duration'
 import styles from './refresh.scss'
 import {PrimaryButton} from '../../common/forms/Button'
 import {iRefresh} from '../../common/fonts/Icons'
+import {useShortcut} from '../../common/Keyboard'
 
 interface RefreshProps {
   readonly index: number;
@@ -12,13 +12,14 @@ interface RefreshProps {
 }
 
 export function Refresh({index, timestamp, refreshTray}: RefreshProps): ReactElement {
+  useShortcut(`r ${index}`, refreshTray)
+
   return (
     <>
       <PrimaryButton className={styles.refresh}
                      onClick={refreshTray}
                      icon={iRefresh}>
         Refresh
-        <Shortcut hotkeys={[`r ${index}`]}/>
       </PrimaryButton>
       <div className={styles.lastFetch} data-locator='refresh-time'>
         {

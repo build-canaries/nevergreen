@@ -1,4 +1,4 @@
-import React, {ReactElement, useCallback, useEffect, useState} from 'react'
+import React, {ReactElement, useCallback, useState} from 'react'
 import {Header} from './header/Header'
 import {Footer} from './footer/Footer'
 import {Notification} from './Notification'
@@ -20,8 +20,8 @@ import {Loading} from './common/Loading'
 import {useLocalConfiguration} from './configuration/ConfigurationHook'
 import {Help} from './help/Help'
 import {DEFAULT_FONT_METRICS, FontMetrics, FontMetricsContext} from './FontMetrics'
-import Mousetrap from 'mousetrap'
 import {Preview} from './settings/Preview'
+import {useShortcut} from './common/Keyboard'
 
 export function Nevergreen(): ReactElement {
   const loaded = useLocalConfiguration()
@@ -42,17 +42,12 @@ export function Nevergreen(): ReactElement {
     ? {onClick: disableFullScreen}
     : {onMouseMove: disableFullScreen}
 
-  useEffect(() => {
-    Mousetrap.bind('esc', () => {
-      const active = document.activeElement as HTMLElement
-      if (active && active.blur) {
-        active.blur()
-      }
-    })
-    return () => {
-      Mousetrap.unbind('esc')
+  useShortcut('esc', () => {
+    const active = document.activeElement as HTMLElement
+    if (active && active.blur) {
+      active.blur()
     }
-  }, [])
+  })
 
   return (
     <Loading dark={true} loaded={loaded}>

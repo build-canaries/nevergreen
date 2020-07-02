@@ -4,6 +4,7 @@ import cn from 'classnames'
 import styles from './modal.scss'
 import {SecondaryButton} from './forms/Button'
 import {iCross} from './fonts/Icons'
+import {pauseShortcuts, unpauseShortcuts} from './Keyboard'
 
 interface ModalProps {
   readonly title: string;
@@ -20,6 +21,8 @@ export function Modal({children, title, show, close, className}: ModalProps): Re
                 overlayClassName={styles.overlay}
                 contentLabel={title}
                 isOpen={show}
+                onAfterOpen={pauseShortcuts}
+                onAfterClose={unpauseShortcuts}
                 onRequestClose={close}>
       <div className={styles.header}>
         <h1 className={styles.title}>{title}</h1>

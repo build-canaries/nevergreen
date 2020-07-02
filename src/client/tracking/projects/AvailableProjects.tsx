@@ -2,7 +2,6 @@ import React, {ChangeEvent, ReactElement, useCallback, useEffect, useMemo, useRe
 import {AvailableProject} from './AvailableProject'
 import {Messages, MessagesType} from '../../common/Messages'
 import {Input} from '../../common/forms/Input'
-import {Shortcut} from '../../common/Shortcut'
 import {Refresh} from './Refresh'
 import {errorMessage, isBlank, notEmpty} from '../../common/Utils'
 import {VisuallyHidden} from '../../common/VisuallyHidden'
@@ -10,7 +9,7 @@ import styles from './available-projects.scss'
 import {SecondaryButton} from '../../common/forms/Button'
 import {iCheckboxChecked, iCheckboxUnchecked} from '../../common/fonts/Icons'
 import {isError, Projects, updateProjects} from '../../domain/Project'
-import {getProjectsForTray, SavedProject} from '../ProjectsReducer'
+import {getProjectsForTray} from '../ProjectsReducer'
 import {getSelectedProjectsForTray} from '../SelectedReducer'
 import {useDispatch, useSelector} from 'react-redux'
 import {projectSelected, projectsFetched} from '../TrackingActionCreators'
@@ -19,6 +18,7 @@ import {send} from '../../gateways/Gateway'
 import {Loading} from '../../common/Loading'
 import {Tray} from '../../domain/Tray'
 import {Request} from 'superagent'
+import {useShortcut} from '../../common/Keyboard'
 
 interface AvailableProjectsProps {
   readonly tray: Tray;
@@ -76,16 +76,6 @@ export function AvailableProjects({index, tray, requiresRefresh, setRequiresRefr
     }
   }, [])
 
-  const includeAll = (projects: ReadonlyArray<SavedProject>) => () => {
-    projects
-      .filter((project) => !project.removed)
-      .forEach((project) => dispatch(projectSelected(tray.trayId, project.projectId, true)))
-  }
-
-  const excludeAll = (projects: ReadonlyArray<SavedProject>) => () => {
-    projects.forEach((project) => dispatch(projectSelected(tray.trayId, project.projectId, false)))
-  }
-
   const updateFilter = (evt: ChangeEvent<HTMLInputElement>) => {
     if (isBlank(evt.target.value)) {
       setFilter(undefined)
@@ -118,23 +108,34 @@ export function AvailableProjects({index, tray, requiresRefresh, setRequiresRefr
   const hasProjectsFiltered = notEmpty(filteredProjects)
   const hasErrors = notEmpty(errors)
 
+  const includeAll = useCallback(() => {
+    filteredProjects
+      .filter((project) => !project.removed)
+      .forEach((project) => dispatch(projectSelected(tray.trayId, project.projectId, true)))
+  }, [dispatch, tray.trayId, filteredProjects])
+
+  const excludeAll = useCallback(() => {
+    filteredProjects.forEach((project) => dispatch(projectSelected(tray.trayId, project.projectId, false)))
+  }, [dispatch, tray.trayId, filteredProjects])
+
+  useShortcut([`+ ${index}`, `= ${index}`], includeAll)
+  useShortcut(`- ${index}`, excludeAll)
+
   const controls = (
     <div className={styles.controls}>
       <fieldset className={styles.toggles}>
         <legend className={styles.legend}>Available projects</legend>
         <SecondaryButton className={styles.includeAll}
-                         onClick={includeAll(filteredProjects)}
+                         onClick={includeAll}
                          data-locator='include-all'
                          icon={iCheckboxChecked}>
           Include all
-          <Shortcut hotkeys={[`+ ${index}`, `= ${index}`]}/>
         </SecondaryButton>
         <SecondaryButton className={styles.excludeAll}
-                         onClick={excludeAll(filteredProjects)}
+                         onClick={excludeAll}
                          data-locator='exclude-all'
                          icon={iCheckboxUnchecked}>
           Exclude all
-          <Shortcut hotkeys={[`- ${index}`]}/>
         </SecondaryButton>
         <div className={styles.projectFilter}>
           <Input className={styles.projectFilterInput}

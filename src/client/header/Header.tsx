@@ -2,22 +2,13 @@ import React, {ReactElement, useState} from 'react'
 import cn from 'classnames'
 import styles from './header.scss'
 import logo from './buildcanaries-logo.png'
-import {NavLink} from 'react-router-dom'
-import {Shortcut} from '../common/Shortcut'
-import Mousetrap from 'mousetrap'
 import {SHOW_HELP_SHORTCUT} from '../help/Help'
+import {triggerShortcut} from '../common/Keyboard'
+import {HeaderLink} from './HeaderLink'
 
 interface HeaderProps {
   readonly fullScreen: boolean;
 }
-
-const MENU_ITEMS = [
-  {id: 'monitor', title: 'Monitor', shortcuts: ['m', '1']},
-  {id: 'tracking', title: 'Tracking', shortcuts: ['t', '2']},
-  {id: 'success', title: 'Success', shortcuts: ['s', '3']},
-  {id: 'settings', title: 'Settings', shortcuts: [',', '4']},
-  {id: 'backup', title: 'Backup', shortcuts: ['b', '5']}
-]
 
 export function Header({fullScreen}: HeaderProps): ReactElement {
   const [menuVisible, setMenuVisible] = useState(false)
@@ -34,6 +25,8 @@ export function Header({fullScreen}: HeaderProps): ReactElement {
   })
   const toggleLabel = menuVisible ? 'hide menu' : 'show menu'
 
+  const hideMenu = () => setMenuVisible(false)
+
   return (
     <header className={headerClassNames} role='banner'>
       <div className={styles.inner}>
@@ -47,30 +40,16 @@ export function Header({fullScreen}: HeaderProps): ReactElement {
             <span className={iconClassNames} aria-hidden/>
           </button>
           <ul className={menuClassNames}>
-            {
-              MENU_ITEMS.map((item) => {
-                const iconClasses = cn(styles.menuIcon, styles[item.id])
-
-                return (
-                  <li key={item.id}>
-                    <NavLink to={`/${item.id}`}
-                             className={styles.menuItem}
-                             activeClassName={styles.active}
-                             onClick={() => setMenuVisible(false)}
-                             data-locator={`menu-${item.id}`}>
-                      <span className={iconClasses} aria-hidden/>
-                      <div className={styles.menuTitle}>{item.title}</div>
-                      <Shortcut hotkeys={item.shortcuts}/>
-                    </NavLink>
-                  </li>
-                )
-              })
-            }
+            <HeaderLink path='monitor' title='Monitor' shortcuts={['m', '1']} hideMenu={hideMenu}/>
+            <HeaderLink path='tracking' title='Tracking' shortcuts={['t', '2']} hideMenu={hideMenu}/>
+            <HeaderLink path='success' title='Success' shortcuts={['s', '3']} hideMenu={hideMenu}/>
+            <HeaderLink path='settings' title='Settings' shortcuts={[',', '4']} hideMenu={hideMenu}/>
+            <HeaderLink path='backup' title='Backup' shortcuts={['b', '5']} hideMenu={hideMenu}/>
             <li>
               <button className={styles.helpButton}
                       onClick={() => {
-                        Mousetrap.trigger(SHOW_HELP_SHORTCUT)
-                        setMenuVisible(false)
+                        triggerShortcut(SHOW_HELP_SHORTCUT)
+                        hideMenu()
                       }}>
                 <span className={cn(styles.menuIcon, styles.help)} aria-hidden/>
                 <div className={styles.menuTitle}>Help</div>

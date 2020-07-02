@@ -1,5 +1,4 @@
-import React, {ReactElement, useEffect, useState} from 'react'
-import Mousetrap from 'mousetrap'
+import React, {ReactElement, useState} from 'react'
 import {Modal} from '../common/Modal'
 import {Input} from '../common/forms/Input'
 import {AddTrayHelp, CCTrayLocationsHelp} from '../tracking/AddTrayHelp'
@@ -16,6 +15,7 @@ import {DisplaySettingsHelp} from '../settings/DisplaySettingsHelp'
 import {NotificationSettingsHelp} from '../settings/NotificationSettingsHelp'
 import {MonitorHelp} from '../monitor/MonitorHelp'
 import {HelpLink} from './HelpLink'
+import {useShortcut} from '../common/Keyboard'
 
 interface HelpProps {
   readonly initiallyShow?: boolean;
@@ -32,12 +32,7 @@ export function Help({initiallyShow}: HelpProps): ReactElement {
   const [show, setShow] = useState(initiallyShow || false)
   const [searchQuery, setSearchQuery] = useState('')
 
-  useEffect(() => {
-    Mousetrap.bind(SHOW_HELP_SHORTCUT, () => setShow(true))
-    return () => {
-      Mousetrap.unbind(SHOW_HELP_SHORTCUT)
-    }
-  }, [])
+  useShortcut(SHOW_HELP_SHORTCUT, () => setShow(true))
 
   const helpLink = withHelpLink(setSearchQuery)
 
