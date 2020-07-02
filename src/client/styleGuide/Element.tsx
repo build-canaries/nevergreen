@@ -5,6 +5,7 @@ interface ElementProps {
   readonly children: ReactNode;
 }
 
+// eslint-disable-next-line react/prop-types
 export function Element({type, children}: ElementProps): ReactElement {
   return React.createElement(type, {},
     <>
