@@ -35,7 +35,7 @@ More information about how to get the CCTray XML feed for your CI server can be 
 
 - [The Nevergreen wiki](https://github.com/build-canaries/nevergreen/wiki)
 - [Tweet to @BuildCanaries](https://twitter.com/BuildCanaries) on Twitter
-- [Come chat to us on Slack](https://join.slack.com/t/nevergreen/shared_invite/enQtMzc4MDg5MTE2MDE2LWJjYjdiNDM4Y2U1YjBjZTdkZjFhZGQyOTM5ODQ2MzEwZDY4YjNiZDFmOTFlMGUwOWEyMjczNmUzNTlkZDk4ZmQ)
+- [Come chat to us on Slack](https://join.slack.com/t/nevergreen/shared_invite/zt-4towhx0w-7o6wJp0R_LwqXhGXb4niIA)
 
 ## How can I fix a bug / add a feature / contribute?
 
