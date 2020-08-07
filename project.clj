@@ -3,12 +3,12 @@
   :url "https://github.com/build-canaries/nevergreen"
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [ring "1.8.1" :exclusions [org.eclipse.jetty/jetty-server]]
-                 [org.eclipse.jetty/jetty-server "9.4.30.v20200611"]
-                 [compojure "1.6.1" :exclusions [ring/ring-codec]]
+                 [org.eclipse.jetty/jetty-server "9.4.31.v20200723"]
+                 [compojure "1.6.2" :exclusions [ring/ring-codec]]
                  [environ "1.2.0"]
                  [cheshire "5.10.0"]
                  [clj-cctray "2.0.0"]
-                 [clj-http "3.10.1"]
+                 [clj-http "3.10.2"]
                  [ring-curl "1.0.1"]
                  [ring/ring-json "0.5.0"]
                  [ring/ring-defaults "0.3.2"]
@@ -34,8 +34,8 @@
             "audit"         ["nvd" "check"]}
   :profiles {:dev  {:plugins [[lein-ancient "0.6.15"]
                               [jonase/eastwood "0.3.11"]
-                              [lein-cloverage "1.1.2"]
-                              [lein-nvd "1.4.0"]
+                              [lein-cloverage "1.2.0"]
+                              [lein-nvd "1.4.1"]
                               [lein-eftest "0.5.9"]]}
              :test {:jvm-opts ["-Dlogback.configurationFile=./test/logback-unit.xml"]}}
   :cloverage {:output           "target/coverage-reports/server"
