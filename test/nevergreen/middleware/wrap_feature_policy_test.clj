@@ -9,10 +9,4 @@
     (let [app (constantly {})
           req {}
           res ((subject/wrap-feature-policy app) req)]
-      (is (s/includes? (get (:headers res) "Feature-Policy") "autoplay 'self'"))))
-
-  (testing "allows speaker so broken build sounds can be heard"
-    (let [app (constantly {})
-          req {}
-          res ((subject/wrap-feature-policy app) req)]
-      (is (s/includes? (get (:headers res) "Feature-Policy") "speaker 'self'")))))
+      (is (s/includes? (get (:headers res) "Feature-Policy") "autoplay 'self'")))))

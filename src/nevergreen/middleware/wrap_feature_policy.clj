@@ -3,9 +3,9 @@
 
 (defn- feature-headers []
   ["accelerometer 'none'"
-   "ambient-light-sensor 'none'"
    "autoplay 'self'"
    "camera 'none'"
+   "document-domain 'none'"
    "encrypted-media 'none'"
    "fullscreen 'none'"
    "geolocation 'none'"
@@ -15,9 +15,11 @@
    "midi 'none'"
    "payment 'none'"
    "picture-in-picture 'none'"
-   "speaker 'self'"
+   "publickey-credentials-get 'none'"
+   "screen-wake-lock 'none'"
+   "sync-xhr 'none'"
    "usb 'none'"
-   "vr 'none'"])
+   "xr-spatial-tracking 'none'"])
 
 (defn wrap-feature-policy [app]
   (fn [req]
