@@ -7,8 +7,8 @@ import {KeyboardShortcuts} from './KeyboardShortcuts'
 import {useServiceWorker} from './ServiceWorkerHook'
 import {useFullScreen} from './FullScreenHook'
 import {useSelector} from 'react-redux'
-import {getClickToShowMenu} from './settings/SettingsReducer'
-import {useCheckForNewVersion} from './CheckForNewVersionHook'
+import {getClickToShowMenu, getToggleVersionCheck} from './settings/SettingsReducer'
+import {CheckForNewVersion} from './CheckForNewVersion'
 import {Redirect, Route, Switch} from 'react-router'
 import {Monitor} from './monitor/Monitor'
 import {Tracking} from './tracking/Tracking'
@@ -25,6 +25,7 @@ import {useShortcut} from './common/Keyboard'
 
 export function Nevergreen(): ReactElement {
   const loaded = useLocalConfiguration()
+  const toggleVersionCheckFlag = useSelector(getToggleVersionCheck)
 
   const [notification, setNotification] = useState('')
   const [fontMetrics, setFontMetrics] = useState(DEFAULT_FONT_METRICS)
@@ -34,7 +35,6 @@ export function Nevergreen(): ReactElement {
   const [fullScreen, requestFullScreen, disableFullScreen] = useFullScreen()
 
   useServiceWorker(setNotification)
-  useCheckForNewVersion(setNotification)
 
   const clickToShowMenu = useSelector(getClickToShowMenu)
 
@@ -52,6 +52,7 @@ export function Nevergreen(): ReactElement {
   return (
     <Loading dark={true} loaded={loaded}>
       <FontMetrics ref={fontMetricsRef}/>
+      {toggleVersionCheckFlag && <CheckForNewVersion setNotification={setNotification}/>}
       <FontMetricsContext.Provider value={fontMetrics}>
         <KeyboardShortcuts/>
         <Help/>

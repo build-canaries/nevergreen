@@ -9,7 +9,7 @@ import {
   getShowPrognosis,
   getShowSystemNotifications,
   getShowTrayName,
-  getSort,
+  getSort, getToggleVersionCheck,
   MaxProjectsToShow,
   reduce,
   SETTINGS_ROOT,
@@ -27,7 +27,7 @@ import {
   setShowPrognosis,
   setShowSystemNotifications,
   setShowTrayName,
-  setSort
+  setSort, toggleVersionCheck
 } from '../../../src/client/settings/SettingsActionCreators'
 import {buildState, testReducer} from '../testHelpers'
 import {RecursivePartial} from '../../../src/client/common/Types'
@@ -94,6 +94,16 @@ describe(Actions.SHOW_BUILD_TIME, () => {
     const action = setShowBuildTime(true)
     const newState = reducer(existingState, action)
     expect(getShowBuildTime(newState)).toBeTruthy()
+  })
+})
+
+describe(Actions.TOGGLE_VERSION_CHECK, () => {
+
+  it('should toggle the version check property', () => {
+    const existingState = state({enableNewVersionCheck: true})
+    const action = toggleVersionCheck()
+    const newState = reducer(existingState, action)
+    expect(getToggleVersionCheck(newState)).toBeFalsy()
   })
 })
 

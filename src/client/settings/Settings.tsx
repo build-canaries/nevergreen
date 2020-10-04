@@ -1,6 +1,7 @@
 import React, {ReactElement} from 'react'
 import {GeneralSettings} from './GeneralSettings'
 import {DisplaySettings} from './DisplaySettings'
+import {MiscellaneousSettings} from './MiscellaneousSettings'
 import {Title} from '../common/Title'
 import {NotificationSettings} from './NotificationSettings'
 
@@ -11,6 +12,7 @@ export function Settings(): ReactElement {
       <GeneralSettings/>
       <DisplaySettings/>
       <NotificationSettings/>
+      <MiscellaneousSettings/>
     </>
   )
 }

@@ -42,7 +42,8 @@ export function buildState(subState: RecursivePartial<State> = {}): State {
       systemNotificationPermissionDenied: false,
       systemNotificationRequestingPermission: false,
       showPrognosis: [],
-      sort: SortBy.default
+      sort: SortBy.default,
+      enableNewVersionCheck: true
     },
     [BACKUP_ROOT]: {
       github: {
