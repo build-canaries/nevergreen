@@ -10,7 +10,7 @@ import {
   ActionShowBuildTime,
   ActionShowPrognosis,
   ActionShowSystemNotifications,
-  ActionShowTrayName, ActionToggleVersionCheck,
+  ActionShowTrayName,
   DEFAULT_REFRESH_TIME
 } from './SettingsActionCreators'
 import defaultSoundFx from './pacman_death.mp3'
@@ -74,7 +74,7 @@ export const reduce = createReducer<SettingsState>(DEFAULT_STATE, {
   [Actions.SHOW_BUILD_TIME]: (draft, action: ActionShowBuildTime) => {
     draft.showBuildTime = action.value
   },
-  [Actions.TOGGLE_VERSION_CHECK]: (draft, action: ActionToggleVersionCheck) => {
+  [Actions.TOGGLE_VERSION_CHECK]: (draft) => {
     draft.enableNewVersionCheck = !draft.enableNewVersionCheck
   },
   [Actions.PLAY_BROKEN_BUILD_SOUND_FX]: (draft, action: ActionPlayBrokenBuildSoundFx) => {
