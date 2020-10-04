@@ -1,10 +1,10 @@
-import {useCheckForNewVersion} from "./CheckForNewVersionHook";
+import {useCheckForNewVersion} from './CheckForNewVersionHook'
 
 interface CheckForNewVersionProps {
   readonly setNotification: (notification: string) => void;
 }
 
-export function CheckForNewVersion({setNotification}: CheckForNewVersionProps) {
+export function CheckForNewVersion({setNotification}: CheckForNewVersionProps): null {
   useCheckForNewVersion(setNotification)
-  return null;
+  return null
 }

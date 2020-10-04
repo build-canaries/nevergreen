@@ -1,9 +1,8 @@
 import React from 'react'
-import {GeneralSettings} from '../../../src/client/settings/GeneralSettings'
 import {render} from '../testHelpers'
 import userEvent from '@testing-library/user-event'
-import {getClickToShowMenu, getToggleVersionCheck, SETTINGS_ROOT} from '../../../src/client/settings/SettingsReducer'
-import {MiscellaneousSettings} from "../../../src/client/settings/MiscellaneousSettings";
+import {getToggleVersionCheck, SETTINGS_ROOT} from '../../../src/client/settings/SettingsReducer'
+import {MiscellaneousSettings} from '../../../src/client/settings/MiscellaneousSettings'
 
 it('should set the state to check for new version', () => {
   const state = {
