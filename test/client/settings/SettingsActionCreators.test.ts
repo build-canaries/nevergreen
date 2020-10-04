@@ -9,7 +9,7 @@ import {
   setShowBuildTime,
   setShowSystemNotifications,
   setShowTrayName,
-  setSort
+  setSort, toggleVersionCheck
 } from '../../../src/client/settings/SettingsActionCreators'
 import {Actions} from '../../../src/client/Actions'
 import {SortBy} from '../../../src/client/gateways/ProjectsGateway'
@@ -159,3 +159,12 @@ describe(Actions.SET_SORT, () => {
     expect(actual).toHaveProperty('value', SortBy.description)
   })
 })
+
+describe(Actions.TOGGLE_VERSION_CHECK, () => {
+
+  it('should return the correct type', () => {
+    const actual = toggleVersionCheck()
+    expect(actual).toHaveProperty('type', Actions.TOGGLE_VERSION_CHECK)
+  })
+})
+
