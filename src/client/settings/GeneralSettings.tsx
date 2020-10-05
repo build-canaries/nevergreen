@@ -5,13 +5,14 @@ import {DropDown} from '../common/forms/DropDown'
 import styles from './general-settings.scss'
 import {Checkbox} from '../common/forms/Checkbox'
 import {useDispatch, useSelector} from 'react-redux'
-import {getClickToShowMenu, getRefreshTime} from './SettingsReducer'
-import {setClickToShowMenu, setRefreshTime, VALID_REFRESH_TIMES} from './SettingsActionCreators'
+import {getClickToShowMenu, getRefreshTime, getToggleVersionCheck} from './SettingsReducer'
+import {setClickToShowMenu, setRefreshTime, toggleVersionCheck, VALID_REFRESH_TIMES} from './SettingsActionCreators'
 
 export function GeneralSettings(): ReactElement {
   const dispatch = useDispatch()
   const refreshTime = useSelector(getRefreshTime)
   const clickToShowMenu = useSelector(getClickToShowMenu)
+  const toggleVersionCheckFlag = useSelector(getToggleVersionCheck)
 
   const options = VALID_REFRESH_TIMES.map((time) => {
     return {value: time.toString(), display: secondsToString(time)}
@@ -31,6 +32,12 @@ export function GeneralSettings(): ReactElement {
                 className={styles.clickToShow}
                 data-locator='click-to-show-menu'>
         Click to show menu
+      </Checkbox>
+      <Checkbox className={styles.checkbox}
+                checked={toggleVersionCheckFlag}
+                onToggle={() => dispatch(toggleVersionCheck())}
+                data-locator='toggle-version-check'>
+        Check for updates
       </Checkbox>
     </Container>
   )
