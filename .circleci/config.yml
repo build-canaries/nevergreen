@@ -1,9 +1,9 @@
 version: 2.1
 
 orbs:
-  build-tools: circleci/build-tools@2.6.0
-  jq: circleci/jq@1.9.0
-  docker: circleci/docker@0.5.1
+  build-tools: circleci/build-tools@2.7.0
+  jq: circleci/jq@2.2.0
+  docker: circleci/docker@1.4.0
 
 executors:
   clojure:
