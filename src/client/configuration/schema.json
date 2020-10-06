@@ -52,6 +52,9 @@
         },
         "sort": {
           "type": "string"
+        },
+        "enableNewVersionCheck": {
+          "type": "boolean"
         }
       },
       "additionalProperties": false

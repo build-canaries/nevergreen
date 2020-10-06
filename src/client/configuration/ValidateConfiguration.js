@@ -8,6 +8,7 @@ var validate = (function() {
     'use strict'; /*# sourceURL=https://nevergreen.io/schema.json */
     var vErrors = null;
     var errors = 0;
+    if (rootData === undefined) rootData = data;
     if ((data && typeof data === "object" && !Array.isArray(data))) {
       var errs__0 = errors;
       var valid1 = true;
@@ -140,7 +141,7 @@ var validate = (function() {
           }
           if (data1.refreshTime !== undefined) {
             var errs_2 = errors;
-            if (typeof data1.refreshTime !== "number") {
+            if ((typeof data1.refreshTime !== "number")) {
               var err = {
                 keyword: 'type',
                 dataPath: (dataPath || '') + '.settings.refreshTime',
@@ -272,6 +273,24 @@ var validate = (function() {
             }
             var valid2 = errors === errs_2;
           }
+          if (data1.enableNewVersionCheck !== undefined) {
+            var errs_2 = errors;
+            if (typeof data1.enableNewVersionCheck !== "boolean") {
+              var err = {
+                keyword: 'type',
+                dataPath: (dataPath || '') + '.settings.enableNewVersionCheck',
+                schemaPath: '#/properties/settings/properties/enableNewVersionCheck/type',
+                params: {
+                  type: 'boolean'
+                },
+                message: 'should be boolean'
+              };
+              if (vErrors === null) vErrors = [err];
+              else vErrors.push(err);
+              errors++;
+            }
+            var valid2 = errors === errs_2;
+          }
         } else {
           var err = {
             keyword: 'type',
@@ -296,6 +315,7 @@ var validate = (function() {
           var valid2 = true;
           for (var key1 in data1) {
             var isAdditional1 = !(false || pattern0.test(key1));
+            if (isAdditional1) {}
           }
           for (var key1 in data1) {
             if (pattern0.test(key1)) {
@@ -563,6 +583,7 @@ var validate = (function() {
           var valid2 = true;
           for (var key1 in data1) {
             var isAdditional1 = !(false || pattern0.test(key1));
+            if (isAdditional1) {}
           }
           for (var key1 in data1) {
             if (pattern0.test(key1)) {
@@ -904,6 +925,7 @@ var validate = (function() {
           var valid2 = true;
           for (var key1 in data1) {
             var isAdditional1 = !(false || pattern0.test(key1));
+            if (isAdditional1) {}
           }
           for (var key1 in data1) {
             if (pattern0.test(key1)) {
@@ -1049,6 +1071,7 @@ var validate = (function() {
               var valid3 = true;
               for (var key2 in data2) {
                 var isAdditional2 = !(false || key2 == 'id' || key2 == 'timestamp');
+                if (isAdditional2) {}
               }
               if (data2.id === undefined) {
                 valid3 = false;
@@ -1210,6 +1233,9 @@ validate.schema = {
         },
         "sort": {
           "type": "string"
+        },
+        "enableNewVersionCheck": {
+          "type": "boolean"
         }
       },
       "additionalProperties": false
