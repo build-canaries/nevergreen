@@ -9,6 +9,8 @@ const {location} = window
 
 beforeEach(() => {
   jest.spyOn(LocalConfiguration, 'clear').mockResolvedValue()
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   delete window.location
   // eslint-disable-next-line @typescript-eslint/unbound-method,@typescript-eslint/no-explicit-any
   window.location = {reload: jest.fn()} as any as Location

@@ -18,8 +18,10 @@ const cssLoader = {
 const postCssLoader = {
   loader: 'postcss-loader',
   options: {
-    sourceMap: true,
-    plugins: () => [autoprefixer()]
+    postcssOptions: {
+      sourceMap: true,
+      plugins: [autoprefixer()]
+    }
   }
 }
 

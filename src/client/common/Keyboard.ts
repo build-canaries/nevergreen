@@ -1,4 +1,4 @@
-import Mousetrap from 'mousetrap'
+import Mousetrap, {ExtendedKeyboardEvent} from 'mousetrap'
 import 'mousetrap/plugins/pause/mousetrap-pause'
 import {useCallback, useEffect} from 'react'
 
