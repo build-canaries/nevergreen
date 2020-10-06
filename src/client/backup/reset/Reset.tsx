@@ -2,7 +2,7 @@ import React, {ReactElement, useState} from 'react'
 import styles from './reset.scss'
 import {Container} from '../../common/Container'
 import {clear} from '../../configuration/LocalRepository'
-import {PrimaryButton} from '../../common/forms/Button'
+import {DangerButton} from '../../common/forms/Button'
 import {iBin} from '../../common/fonts/Icons'
 
 export function Reset(): ReactElement {
@@ -20,13 +20,13 @@ export function Reset(): ReactElement {
         Reset your Nevergreen configuration back to defaults. <strong>Please note, resetting your configuration can not
         be undone!</strong>
       </p>
-      <PrimaryButton className={styles.reset}
-                     data-locator='reset-configuration'
-                     onClick={resetConfiguration}
-                     disabled={resetting}
-                     icon={iBin}>
+      <DangerButton className={styles.reset}
+                    data-locator='reset-configuration'
+                    onClick={resetConfiguration}
+                    disabled={resetting}
+                    icon={iBin}>
         Reset configuration
-      </PrimaryButton>
+      </DangerButton>
     </Container>
   )
 }

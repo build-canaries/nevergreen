@@ -7,6 +7,7 @@ import {migrate} from './Migrate'
 import {UntrustedData} from './LocalRepository'
 import {Either, left, right} from 'fp-ts/lib/Either'
 import {errorMessage} from '../common/Utils'
+import {BACKUP_REMOTE_LOCATIONS_ROOT} from '../backup/remote/RemoteLocationsReducer'
 
 export interface Configuration extends RecursivePartial<State> {
 }
@@ -36,6 +37,18 @@ export function toConfiguration(raw: string | Readonly<UntrustedData>): Either<R
   }
 }
 
-export function getConfiguration(state: State): string {
-  return toJson(state)
+export function toExportableConfigurationJson(state: State): string {
+  const cloned = cloneDeep(state)
+  const remoteBackups = cloned[BACKUP_REMOTE_LOCATIONS_ROOT]
+
+  /* eslint-disable @typescript-eslint/ban-ts-comment */
+  Object.keys(remoteBackups).forEach((internalId) => {
+    // @ts-ignore
+    delete remoteBackups[internalId]['importTimestamp']
+    // @ts-ignore
+    delete remoteBackups[internalId]['exportTimestamp']
+  })
+  /* eslint-enable @typescript-eslint/ban-ts-comment*/
+
+  return toJson(cloned)
 }

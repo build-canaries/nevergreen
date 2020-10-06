@@ -170,30 +170,48 @@
       },
       "additionalProperties": false
     },
-    "backup": {
+    "backupRemoteLocations": {
       "type": "object",
       "patternProperties": {
         ".*": {
           "type": "object",
           "properties": {
-            "id": {
-              "type": [
-                "string",
-                "null"
-              ]
+            "internalId": {
+              "type": "string"
             },
-            "description": {
-              "type": [
-                "string",
-                "null"
+            "where": {
+              "type": "string",
+              "enum": [
+                "custom",
+                "github",
+                "gitlab"
               ]
             },
             "url": {
               "type": "string"
+            },
+            "exportTimestamp": {
+              "type": "string"
+            },
+            "importTimestamp": {
+              "type": "string"
+            },
+            "automaticallyExport": {
+              "type": "boolean"
+            },
+            "externalId": {
+              "type": "string"
+            },
+            "encryptedAccessToken": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
             }
           },
           "required": [
-            "id",
+            "internalId",
+            "where",
             "url"
           ],
           "additionalProperties": false

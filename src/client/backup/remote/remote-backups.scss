@@ -1,0 +1,46 @@
+@import '../../common/responsive';
+@import '../../common/typography';
+@import '../../common/layout';
+@import '../../common/variables';
+
+.container {
+  column-gap: 1em;
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 1em;
+  row-gap: 1em;
+
+  @include respond-to(tablet) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @include respond-to(desktop) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.addNew {
+  border: 1px solid $mid-grey;
+  padding: 1em;
+}
+
+.addNewButton {
+  @extend %fill-parent;
+
+  border-style: dashed;
+  border-width: 2px;
+  color: $mid-grey;
+  margin: 0;
+  min-height: 350px;
+  white-space: normal;
+
+  &:enabled {
+    box-shadow: none;
+  }
+
+  @include respond-to(tablet, desktop) {
+    @include font-scale(3);
+  }
+}

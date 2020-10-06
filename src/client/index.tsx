@@ -4,27 +4,22 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import {Provider} from 'react-redux'
 import {BrowserRouter as Router} from 'react-router-dom'
-import {clear, save as repositorySave} from './configuration/LocalRepository'
-import {reducer} from './Reducer'
+import {reducer, State} from './Reducer'
 import {Nevergreen} from './Nevergreen'
-import {debounce} from 'lodash'
 import {UnhandledError} from './UnhandledError'
 import Modal from 'react-modal'
 import {configureStore} from '@reduxjs/toolkit'
-
-const ONE_SECOND = 1000
+import {save} from './configuration/SaveListener'
+import {backup} from './backup/remote/AutomaticBackupListener'
 
 const store = configureStore({reducer})
-
-const save = async () => {
-  const currentState = store.getState()
-  await clear()
-  await repositorySave(currentState)
-}
-const saveDebounced = debounce(save, 200, {maxWait: ONE_SECOND})
+let previousState: State
 
 store.subscribe(() => {
-  void saveDebounced()
+  const currentState = store.getState()
+  void save(currentState)
+  void backup(previousState, currentState, store.dispatch)
+  previousState = currentState
 })
 
 Modal.setAppElement('#root')

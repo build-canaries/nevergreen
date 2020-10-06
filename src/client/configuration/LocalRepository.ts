@@ -2,7 +2,7 @@ import localforage from 'localforage'
 import {toPairs} from 'lodash'
 import {State} from '../Reducer'
 
-export type UntrustedData = { [key: string]: unknown }
+export type UntrustedData = Record<string, unknown>
 
 export async function init(): Promise<void> {
   localforage.config({name: 'nevergreen', storeName: 'nevergreen'})

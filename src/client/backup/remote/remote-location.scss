@@ -1,0 +1,33 @@
+@import '../../common/variables';
+
+.location {
+  border: 1px solid $mid-grey;
+  display: flex;
+  flex-direction: column;
+
+  &:focus-within {
+    border-color: $black;
+  }
+}
+
+.header {
+  background-color: $light-grey;
+  display: flex;
+  padding: 1em;
+}
+
+.body {
+  padding: 1em;
+}
+
+.spacing {
+  display: block;
+  margin: $margin-top 0 0 0;
+}
+
+.importButton,
+.exportButton {
+  display: block;
+  margin: 0.5em 0 0 0;
+  min-width: 212px;
+}

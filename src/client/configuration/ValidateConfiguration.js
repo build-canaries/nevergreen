@@ -13,7 +13,7 @@ var validate = (function() {
       var errs__0 = errors;
       var valid1 = true;
       for (var key0 in data) {
-        var isAdditional0 = !(false || key0 == 'settings' || key0 == 'trays' || key0 == 'projects' || key0 == 'success' || key0 == 'selected' || key0 == 'backup' || key0 == 'appliedMigrations');
+        var isAdditional0 = !(false || key0 == 'settings' || key0 == 'trays' || key0 == 'projects' || key0 == 'success' || key0 == 'selected' || key0 == 'backupRemoteLocations' || key0 == 'appliedMigrations');
         if (isAdditional0) {
           delete data[key0];
         }
@@ -917,7 +917,7 @@ var validate = (function() {
         }
         var valid1 = errors === errs_1;
       }
-      var data1 = data.backup;
+      var data1 = data.backupRemoteLocations;
       if (data1 !== undefined) {
         var errs_1 = errors;
         if ((data1 && typeof data1 === "object" && !Array.isArray(data1))) {
@@ -935,37 +935,36 @@ var validate = (function() {
                 var errs__2 = errors;
                 var valid3 = true;
                 for (var key2 in data2) {
-                  var isAdditional2 = !(false || key2 == 'id' || key2 == 'description' || key2 == 'url');
+                  var isAdditional2 = !(false || validate.schema.properties.backupRemoteLocations.patternProperties['.*'].properties.hasOwnProperty(key2));
                   if (isAdditional2) {
                     delete data2[key2];
                   }
                 }
-                var data3 = data2.id;
-                if (data3 === undefined) {
+                if (data2.internalId === undefined) {
                   valid3 = false;
                   var err = {
                     keyword: 'required',
-                    dataPath: (dataPath || '') + '.backup[\'' + key1 + '\']',
-                    schemaPath: '#/properties/backup/patternProperties/.*/required',
+                    dataPath: (dataPath || '') + '.backupRemoteLocations[\'' + key1 + '\']',
+                    schemaPath: '#/properties/backupRemoteLocations/patternProperties/.*/required',
                     params: {
-                      missingProperty: 'id'
+                      missingProperty: 'internalId'
                     },
-                    message: 'should have required property \'id\''
+                    message: 'should have required property \'internalId\''
                   };
                   if (vErrors === null) vErrors = [err];
                   else vErrors.push(err);
                   errors++;
                 } else {
                   var errs_3 = errors;
-                  if (typeof data3 !== "string" && data3 !== null) {
+                  if (typeof data2.internalId !== "string") {
                     var err = {
                       keyword: 'type',
-                      dataPath: (dataPath || '') + '.backup[\'' + key1 + '\'].id',
-                      schemaPath: '#/properties/backup/patternProperties/.*/properties/id/type',
+                      dataPath: (dataPath || '') + '.backupRemoteLocations[\'' + key1 + '\'].internalId',
+                      schemaPath: '#/properties/backupRemoteLocations/patternProperties/.*/properties/internalId/type',
                       params: {
-                        type: 'string,null'
+                        type: 'string'
                       },
-                      message: 'should be string,null'
+                      message: 'should be string'
                     };
                     if (vErrors === null) vErrors = [err];
                     else vErrors.push(err);
@@ -973,18 +972,53 @@ var validate = (function() {
                   }
                   var valid3 = errors === errs_3;
                 }
-                var data3 = data2.description;
-                if (data3 !== undefined) {
+                var data3 = data2.where;
+                if (data3 === undefined) {
+                  valid3 = false;
+                  var err = {
+                    keyword: 'required',
+                    dataPath: (dataPath || '') + '.backupRemoteLocations[\'' + key1 + '\']',
+                    schemaPath: '#/properties/backupRemoteLocations/patternProperties/.*/required',
+                    params: {
+                      missingProperty: 'where'
+                    },
+                    message: 'should have required property \'where\''
+                  };
+                  if (vErrors === null) vErrors = [err];
+                  else vErrors.push(err);
+                  errors++;
+                } else {
                   var errs_3 = errors;
-                  if (typeof data3 !== "string" && data3 !== null) {
+                  if (typeof data3 !== "string") {
                     var err = {
                       keyword: 'type',
-                      dataPath: (dataPath || '') + '.backup[\'' + key1 + '\'].description',
-                      schemaPath: '#/properties/backup/patternProperties/.*/properties/description/type',
+                      dataPath: (dataPath || '') + '.backupRemoteLocations[\'' + key1 + '\'].where',
+                      schemaPath: '#/properties/backupRemoteLocations/patternProperties/.*/properties/where/type',
                       params: {
-                        type: 'string,null'
+                        type: 'string'
                       },
-                      message: 'should be string,null'
+                      message: 'should be string'
+                    };
+                    if (vErrors === null) vErrors = [err];
+                    else vErrors.push(err);
+                    errors++;
+                  }
+                  var schema3 = validate.schema.properties.backupRemoteLocations.patternProperties['.*'].properties.where.enum;
+                  var valid3;
+                  valid3 = false;
+                  for (var i3 = 0; i3 < schema3.length; i3++)
+                    if (equal(data3, schema3[i3])) {
+                      valid3 = true;
+                      break;
+                    } if (!valid3) {
+                    var err = {
+                      keyword: 'enum',
+                      dataPath: (dataPath || '') + '.backupRemoteLocations[\'' + key1 + '\'].where',
+                      schemaPath: '#/properties/backupRemoteLocations/patternProperties/.*/properties/where/enum',
+                      params: {
+                        allowedValues: schema3
+                      },
+                      message: 'should be equal to one of the allowed values'
                     };
                     if (vErrors === null) vErrors = [err];
                     else vErrors.push(err);
@@ -996,8 +1030,8 @@ var validate = (function() {
                   valid3 = false;
                   var err = {
                     keyword: 'required',
-                    dataPath: (dataPath || '') + '.backup[\'' + key1 + '\']',
-                    schemaPath: '#/properties/backup/patternProperties/.*/required',
+                    dataPath: (dataPath || '') + '.backupRemoteLocations[\'' + key1 + '\']',
+                    schemaPath: '#/properties/backupRemoteLocations/patternProperties/.*/required',
                     params: {
                       missingProperty: 'url'
                     },
@@ -1011,8 +1045,116 @@ var validate = (function() {
                   if (typeof data2.url !== "string") {
                     var err = {
                       keyword: 'type',
-                      dataPath: (dataPath || '') + '.backup[\'' + key1 + '\'].url',
-                      schemaPath: '#/properties/backup/patternProperties/.*/properties/url/type',
+                      dataPath: (dataPath || '') + '.backupRemoteLocations[\'' + key1 + '\'].url',
+                      schemaPath: '#/properties/backupRemoteLocations/patternProperties/.*/properties/url/type',
+                      params: {
+                        type: 'string'
+                      },
+                      message: 'should be string'
+                    };
+                    if (vErrors === null) vErrors = [err];
+                    else vErrors.push(err);
+                    errors++;
+                  }
+                  var valid3 = errors === errs_3;
+                }
+                if (data2.exportTimestamp !== undefined) {
+                  var errs_3 = errors;
+                  if (typeof data2.exportTimestamp !== "string") {
+                    var err = {
+                      keyword: 'type',
+                      dataPath: (dataPath || '') + '.backupRemoteLocations[\'' + key1 + '\'].exportTimestamp',
+                      schemaPath: '#/properties/backupRemoteLocations/patternProperties/.*/properties/exportTimestamp/type',
+                      params: {
+                        type: 'string'
+                      },
+                      message: 'should be string'
+                    };
+                    if (vErrors === null) vErrors = [err];
+                    else vErrors.push(err);
+                    errors++;
+                  }
+                  var valid3 = errors === errs_3;
+                }
+                if (data2.importTimestamp !== undefined) {
+                  var errs_3 = errors;
+                  if (typeof data2.importTimestamp !== "string") {
+                    var err = {
+                      keyword: 'type',
+                      dataPath: (dataPath || '') + '.backupRemoteLocations[\'' + key1 + '\'].importTimestamp',
+                      schemaPath: '#/properties/backupRemoteLocations/patternProperties/.*/properties/importTimestamp/type',
+                      params: {
+                        type: 'string'
+                      },
+                      message: 'should be string'
+                    };
+                    if (vErrors === null) vErrors = [err];
+                    else vErrors.push(err);
+                    errors++;
+                  }
+                  var valid3 = errors === errs_3;
+                }
+                if (data2.automaticallyExport !== undefined) {
+                  var errs_3 = errors;
+                  if (typeof data2.automaticallyExport !== "boolean") {
+                    var err = {
+                      keyword: 'type',
+                      dataPath: (dataPath || '') + '.backupRemoteLocations[\'' + key1 + '\'].automaticallyExport',
+                      schemaPath: '#/properties/backupRemoteLocations/patternProperties/.*/properties/automaticallyExport/type',
+                      params: {
+                        type: 'boolean'
+                      },
+                      message: 'should be boolean'
+                    };
+                    if (vErrors === null) vErrors = [err];
+                    else vErrors.push(err);
+                    errors++;
+                  }
+                  var valid3 = errors === errs_3;
+                }
+                if (data2.externalId !== undefined) {
+                  var errs_3 = errors;
+                  if (typeof data2.externalId !== "string") {
+                    var err = {
+                      keyword: 'type',
+                      dataPath: (dataPath || '') + '.backupRemoteLocations[\'' + key1 + '\'].externalId',
+                      schemaPath: '#/properties/backupRemoteLocations/patternProperties/.*/properties/externalId/type',
+                      params: {
+                        type: 'string'
+                      },
+                      message: 'should be string'
+                    };
+                    if (vErrors === null) vErrors = [err];
+                    else vErrors.push(err);
+                    errors++;
+                  }
+                  var valid3 = errors === errs_3;
+                }
+                if (data2.encryptedAccessToken !== undefined) {
+                  var errs_3 = errors;
+                  if (typeof data2.encryptedAccessToken !== "string") {
+                    var err = {
+                      keyword: 'type',
+                      dataPath: (dataPath || '') + '.backupRemoteLocations[\'' + key1 + '\'].encryptedAccessToken',
+                      schemaPath: '#/properties/backupRemoteLocations/patternProperties/.*/properties/encryptedAccessToken/type',
+                      params: {
+                        type: 'string'
+                      },
+                      message: 'should be string'
+                    };
+                    if (vErrors === null) vErrors = [err];
+                    else vErrors.push(err);
+                    errors++;
+                  }
+                  var valid3 = errors === errs_3;
+                }
+                if (data2.description !== undefined) {
+                  var errs_3 = errors;
+                  if (typeof data2.description !== "string") {
+                    var err = {
+                      keyword: 'type',
+                      dataPath: (dataPath || '') + '.backupRemoteLocations[\'' + key1 + '\'].description',
+                      schemaPath: '#/properties/backupRemoteLocations/patternProperties/.*/properties/description/type',
                       params: {
                         type: 'string'
                       },
@@ -1027,8 +1169,8 @@ var validate = (function() {
               } else {
                 var err = {
                   keyword: 'type',
-                  dataPath: (dataPath || '') + '.backup[\'' + key1 + '\']',
-                  schemaPath: '#/properties/backup/patternProperties/.*/type',
+                  dataPath: (dataPath || '') + '.backupRemoteLocations[\'' + key1 + '\']',
+                  schemaPath: '#/properties/backupRemoteLocations/patternProperties/.*/type',
                   params: {
                     type: 'object'
                   },
@@ -1044,8 +1186,8 @@ var validate = (function() {
         } else {
           var err = {
             keyword: 'type',
-            dataPath: (dataPath || '') + '.backup',
-            schemaPath: '#/properties/backup/type',
+            dataPath: (dataPath || '') + '.backupRemoteLocations',
+            schemaPath: '#/properties/backupRemoteLocations/type',
             params: {
               type: 'object'
             },
@@ -1332,23 +1474,42 @@ validate.schema = {
       },
       "additionalProperties": false
     },
-    "backup": {
+    "backupRemoteLocations": {
       "type": "object",
       "patternProperties": {
         ".*": {
           "type": "object",
           "properties": {
-            "id": {
-              "type": ["string", "null"]
+            "internalId": {
+              "type": "string"
             },
-            "description": {
-              "type": ["string", "null"]
+            "where": {
+              "type": "string",
+              "enum": ["custom", "github", "gitlab"]
             },
             "url": {
               "type": "string"
+            },
+            "exportTimestamp": {
+              "type": "string"
+            },
+            "importTimestamp": {
+              "type": "string"
+            },
+            "automaticallyExport": {
+              "type": "boolean"
+            },
+            "externalId": {
+              "type": "string"
+            },
+            "encryptedAccessToken": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
             }
           },
-          "required": ["id", "url"],
+          "required": ["internalId", "where", "url"],
           "additionalProperties": false
         }
       }

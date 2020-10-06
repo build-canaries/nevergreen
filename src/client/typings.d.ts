@@ -16,6 +16,12 @@ declare module '*.png' {
   export default value
 }
 
+declare module '*.svg' {
+  const value: string
+  // noinspection JSDuplicatedDeclaration,JSUnusedGlobalSymbols
+  export default value
+}
+
 declare module '*.mp3' {
   const value: string
   // noinspection JSDuplicatedDeclaration,JSUnusedGlobalSymbols

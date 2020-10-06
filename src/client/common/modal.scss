@@ -2,6 +2,7 @@
 @import '../common/typography';
 @import '../common/layout';
 @import '../common/forms/button';
+@import '../common/responsive';
 
 .overlay {
   align-items: center;
@@ -28,6 +29,16 @@
   max-width: 900px;
   overflow: scroll;
   padding: 1em;
+  width: calc(100vw - 3em);
+
+  @include respond-to(very-small) {
+    max-height: 100vh;
+    width: 100vw;
+  }
+
+  @include respond-to(tablet, desktop) {
+    width: auto;
+  }
 }
 
 .header {

@@ -8,6 +8,7 @@
 
   display: inline-block;
   margin: $margin-top 0 0 0;
+  vertical-align: bottom;
 }
 
 .checkbox {
@@ -29,7 +30,7 @@
   touch-action: manipulation;
 
   &::before {
-    background: transparent;
+    background: $white;
     border: $input-border;
     border-radius: 2px;
     content: '';

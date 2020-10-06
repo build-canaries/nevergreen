@@ -2,7 +2,6 @@ import React, {ReactNode} from 'react'
 import {merge} from 'lodash'
 import {reducer, State} from '../../src/client/Reducer'
 import {MaxProjectsToShow, SETTINGS_ROOT} from '../../src/client/settings/SettingsReducer'
-import {BACKUP_ROOT} from '../../src/client/backup/BackupReducer'
 import {PROJECTS_ROOT, SavedProject} from '../../src/client/tracking/ProjectsReducer'
 import {SELECTED_ROOT} from '../../src/client/tracking/SelectedReducer'
 import {SUCCESS_ROOT} from '../../src/client/success/SuccessReducer'
@@ -20,6 +19,8 @@ import {DEFAULT_REFRESH_TIME} from '../../src/client/settings/SettingsActionCrea
 import {APPLIED_MIGRATIONS_ROOT} from '../../src/client/configuration/MigrationsReducer'
 import {SortBy} from '../../src/client/gateways/ProjectsGateway'
 import parseISO from 'date-fns/parseISO'
+import {BACKUP_REMOTE_LOCATIONS_ROOT, RemoteLocation} from '../../src/client/backup/remote/RemoteLocationsReducer'
+import {RemoteLocationOptions} from '../../src/client/backup/remote/RemoteLocationOptions'
 
 interface ExtendedRenderResult extends RenderResult {
   store: EnhancedStore<State, AnyAction, ReadonlyArray<Middleware<unknown, State>>>;
@@ -45,23 +46,12 @@ export function buildState(subState: RecursivePartial<State> = {}): State {
       sort: SortBy.default,
       enableNewVersionCheck: true
     },
-    [BACKUP_ROOT]: {
-      github: {
-        description: '',
-        id: '',
-        url: ''
-      },
-      gitlab: {
-        description: '',
-        id: '',
-        url: ''
-      }
-    },
     [PROJECTS_ROOT]: {},
     [SELECTED_ROOT]: {},
     [SUCCESS_ROOT]: [],
     [TRAYS_ROOT]: {},
-    [APPLIED_MIGRATIONS_ROOT]: []
+    [APPLIED_MIGRATIONS_ROOT]: [],
+    [BACKUP_REMOTE_LOCATIONS_ROOT]: {}
   }, subState)
 }
 
@@ -131,16 +121,31 @@ export function buildProjectError(projectError: Partial<ProjectError> = {}): Pro
   return merge(defaultProjectError, projectError)
 }
 
+export function buildRemoteBackupLocation(location: Partial<RemoteLocation> = {}): RemoteLocation {
+  const defaultLocation: RemoteLocation = {
+    internalId: '',
+    where: RemoteLocationOptions.Custom,
+    url: 'http://some-url',
+    exportTimestamp: '',
+    importTimestamp: '',
+    automaticallyExport: false,
+    externalId: '',
+    encryptedAccessToken: '',
+    description: ''
+  }
+  return merge(defaultLocation, location)
+}
+
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-return */
 export function testReducer(reducer: Partial<Reducer<State>>): Reducer<CombinedState<State>> {
   return combineReducers<State>(merge({
     [SETTINGS_ROOT]: (state: any = null) => state,
-    [BACKUP_ROOT]: (state: any = null) => state,
     [PROJECTS_ROOT]: (state: any = null) => state,
     [SELECTED_ROOT]: (state: any = null) => state,
     [SUCCESS_ROOT]: (state: any = null) => state,
     [TRAYS_ROOT]: (state: any = null) => state,
-    [APPLIED_MIGRATIONS_ROOT]: (state: any = null) => state
+    [APPLIED_MIGRATIONS_ROOT]: (state: any = null) => state,
+    [BACKUP_REMOTE_LOCATIONS_ROOT]: (state: any = null) => state
   }, reducer))
 }
 

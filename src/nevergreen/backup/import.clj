@@ -1,8 +1,14 @@
 (ns nevergreen.backup.import
   (:require [nevergreen.backup.github-gateway :as github]
-            [nevergreen.backup.gitlab-gateway :as gitlab]))
+            [nevergreen.backup.gitlab-gateway :as gitlab]
+            [nevergreen.backup.custom-gateway :as custom]
+            [nevergreen.crypto :as crypt]
+            [nevergreen.config :as config]))
 
 (def ^:private ten-megs 10485760)
+
+(defn ^:dynamic get-custom [url]
+  (custom/get-configuration url))
 
 (defn ^:dynamic get-gist [id url]
   (github/get-gist id url))
@@ -15,6 +21,9 @@
 
 (defn ^:dynamic get-snippet-content [data]
   (gitlab/get-snippet-content data))
+
+(defn ^:dynamic decrypt [password aes-key]
+  (crypt/decrypt password aes-key))
 
 (defn- from-github [{:keys [id, url]}]
   (let [{:keys [files, description]} (get-gist id url)
@@ -41,8 +50,17 @@
          :where         "gitlab"
          :configuration snippet}))))
 
+(defn- from-custom [{:keys [url]}]
+  {:where         "custom"
+   :configuration (get-custom url)})
+
 (defn import-config [{:keys [from] :as data}]
-  (case from
-    "github" (from-github data)
-    "gitlab" (from-gitlab data)
-    (throw (ex-info (str "importing from \"" from "\" is not supported") {:status 400}))))
+  (let [decrypted-data (update-in data [:token] (fn [token]
+                                                  (if (nil? token)
+                                                    (decrypt (:encrypted-token data) (config/aes-key))
+                                                    token)))]
+    (case from
+      "github" (from-github decrypted-data)
+      "gitlab" (from-gitlab decrypted-data)
+      "custom" (from-custom decrypted-data)
+      (throw (ex-info (str "importing from \"" from "\" is not supported") {:status 400})))))

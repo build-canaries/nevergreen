@@ -4,6 +4,8 @@ const fs = require('fs')
 
 const app = express()
 
+app.use(express.json())
+
 function getRandomInt(min, max) {
   min = Math.ceil(min)
   max = Math.floor(max)
@@ -46,14 +48,13 @@ const go = response('go_cd.xml')
 const jenkins = response('jenkins.xml')
 const screenshot = response('screenshot.xml')
 
-app.get('/cc.xml', jenkins) // Jenkins, Hudson, CircleCI, CruiseControl
+app.get('/cc.xml', jenkins) // Jenkins, CircleCI, CruiseControl
 app.get('/cc/uuid/cctray.xml', generic) // Solano CI
 app.get('/owner/repo/cc.xml', generic) // Travis CI
-app.get('/go/cctray.xml', go) // GO CD
-app.get('/slow/go/cctray.xml', delayedResponse('go_cd.xml')) // GO CD
+app.get('/go/cctray.xml', go) // GoCD
+app.get('/slow/go/cctray.xml', delayedResponse('go_cd.xml')) // GoCD
 app.get('/guestAuth/app/rest/cctray/projects.xml', generic) // TeamCity
-app.get('/XmlStatusReport.aspx', generic) // CruiseControl.rb, CruiseControl.NET
-app.get('/screenshot.xml', screenshot)
+app.get('/screenshot.xml', screenshot) // Used to take README screenshots
 
 app.get('/cctray.xml', generic)
 app.get('/secure/cctray.xml', basicAuth('u', 'p'), generic)
@@ -97,6 +98,22 @@ app.get('/invalid-xml', function (req, res) {
 
 app.get('/not-xml', function (req, res) {
   res.send('plain text')
+})
+
+// Custom server remote location backup testing
+const backups = {}
+
+app.get('/backup/:id', function (req, res) {
+  if (backups[req.params.id]) {
+    res.json(backups[req.params.id])
+  } else {
+    res.sendStatus(404)
+  }
+})
+
+app.post('/backup/:id', function (req, res) {
+  backups[req.params.id] = req.body
+  res.sendStatus(200)
 })
 
 app.listen(5050)

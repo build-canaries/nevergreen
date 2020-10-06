@@ -20,3 +20,7 @@ export function ensureHasScheme(url: string): string {
     return `http://${url}`
   }
 }
+
+export function isHttp(url: string): boolean {
+  return url.startsWith('http://') || url.startsWith('https://')
+}

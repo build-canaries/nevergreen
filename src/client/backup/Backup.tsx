@@ -1,16 +1,16 @@
 import React, {ReactElement} from 'react'
 import {Schema} from './Schema'
-import {Import} from './import/Import'
-import {Export} from './export/Export'
+import {LocalBackup} from './local/LocalBackup'
 import {Reset} from './reset/Reset'
 import {Title} from '../common/Title'
+import {RemoteBackups} from './remote/RemoteBackups'
 
 export function Backup(): ReactElement {
   return (
     <>
       <Title>Backup</Title>
-      <Import/>
-      <Export/>
+      <RemoteBackups/>
+      <LocalBackup/>
       <Reset/>
       <Schema/>
     </>

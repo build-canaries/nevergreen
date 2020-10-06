@@ -16,6 +16,22 @@
 
 (deftest import-config
 
+  (testing "decrypts the token if it is encrypted"
+    (binding [subject/decrypt (constantly "some-token")
+              subject/get-snippet-meta (constantly (snippet-meta))
+              subject/get-snippet-content (fn [data]
+                                            (is (= "some-token"
+                                                   (:token data))))]
+      (subject/import-config {:from "gitlab" :encrypted-token "encrypted-token"})))
+
+  (testing "custom"
+
+    (testing "returns the response"
+      (binding [subject/get-custom (constantly "some-configuration")]
+        (is (= {:where         "custom"
+                :configuration "some-configuration"}
+               (subject/import-config {:from "custom" :url "http://some-url"}))))))
+
   (testing "github"
 
     (testing "returns the response for a valid gist"

@@ -4,6 +4,13 @@
 
 (deftest export-config
 
+  (testing "custom"
+
+    (testing "creates custom configuration"
+      (binding [subject/create-custom (constantly {:id "some-id"})]
+        (is (= {:id "some-id"}
+               (subject/export-config {:where "custom"}))))))
+
   (testing "github"
 
     (testing "creates a gist if no id is provided"
@@ -27,6 +34,13 @@
       (binding [subject/update-snippet (constantly {:id "some-id"})]
         (is (= {:id "some-id"}
                (subject/export-config {:where "gitlab" :id "some-id"}))))))
+
+  (testing "decrypts the token if it is encrypted"
+    (binding [subject/decrypt (constantly "some-token")
+              subject/create-snippet (fn [data]
+                                       (is (= "some-token"
+                                              (:token data))))]
+      (subject/export-config {:where "gitlab" :encrypted-token "encrypted-token"})))
 
   (testing "trying to export to an unknown location throws an exception with a bad request status"
     (try

@@ -6,16 +6,18 @@ import {TraySettingsHelp} from '../tracking/settings/TraySettingsHelp'
 import {SuccessHelp} from '../success/SuccessHelp'
 import {AvailableProjectsHelp} from '../tracking/projects/AvailableProjectsHelp'
 import {GeneralSettingsHelp} from '../settings/GeneralSettingsHelp'
-import styles from './help.scss'
-import {ExportGitHubHelp} from '../backup/export/externally/ExportGitHubHelp'
-import {ExportGitLabHelp} from '../backup/export/externally/ExportGitLabHelp'
-import {ImportGitHubHelp} from '../backup/import/externally/ImportGitHubHelp'
-import {ImportGitLabHelp} from '../backup/import/externally/ImportGitLabHelp'
+import {
+  RemoteBackupCustomHelp,
+  RemoteBackupGitHubHelp,
+  RemoteBackupGitLabHelp,
+  RemoteBackupHelp
+} from '../backup/remote/RemoteBackupHelp'
 import {DisplaySettingsHelp} from '../settings/DisplaySettingsHelp'
 import {NotificationSettingsHelp} from '../settings/NotificationSettingsHelp'
 import {MonitorHelp} from '../monitor/MonitorHelp'
 import {HelpLink} from './HelpLink'
 import {useShortcut} from '../common/Keyboard'
+import styles from './help.scss'
 
 interface HelpProps {
   readonly initiallyShow?: boolean;
@@ -59,10 +61,10 @@ export function Help({initiallyShow}: HelpProps): ReactElement {
         <GeneralSettingsHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <DisplaySettingsHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <NotificationSettingsHelp searchQuery={searchQuery} helpLink={helpLink}/>
-        <ImportGitHubHelp searchQuery={searchQuery} helpLink={helpLink}/>
-        <ImportGitLabHelp searchQuery={searchQuery} helpLink={helpLink}/>
-        <ExportGitHubHelp searchQuery={searchQuery} helpLink={helpLink}/>
-        <ExportGitLabHelp searchQuery={searchQuery} helpLink={helpLink}/>
+        <RemoteBackupHelp searchQuery={searchQuery} helpLink={helpLink}/>
+        <RemoteBackupCustomHelp searchQuery={searchQuery} helpLink={helpLink}/>
+        <RemoteBackupGitHubHelp searchQuery={searchQuery} helpLink={helpLink}/>
+        <RemoteBackupGitLabHelp searchQuery={searchQuery} helpLink={helpLink}/>
       </ul>
     </Modal>
   )
