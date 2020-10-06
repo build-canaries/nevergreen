@@ -11,9 +11,12 @@ interface GitHubResponse {
 const NEVERGREEN_IO_REGEX = /nevergreen\.io/i
 const TWENTY_FOUR_HOURS = 24 * 60 * 60
 
-export function useCheckForNewVersion(setNotification: (notification: string) => void): void {
+export function useCheckForNewVersion(setNotification: (notification: string) => void, toggleVersionCheckFlag: boolean): void {
   const checkVersion = useCallback(() => {
     const check = async () => {
+      if (!toggleVersionCheckFlag){
+        return
+      }
       try {
         const data = await send<GitHubResponse>(get('https://api.github.com/repos/build-canaries/nevergreen/releases/latest'))
         const latestVersion = data.tag_name
@@ -29,7 +32,7 @@ export function useCheckForNewVersion(setNotification: (notification: string) =>
       }
     }
     void check()
-  }, [setNotification])
+  }, [setNotification, toggleVersionCheckFlag])
 
   useTimer(checkVersion, TWENTY_FOUR_HOURS)
 }
