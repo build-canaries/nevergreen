@@ -7,7 +7,7 @@ import {KeyboardShortcuts} from './KeyboardShortcuts'
 import {useServiceWorker} from './ServiceWorkerHook'
 import {useFullScreen} from './FullScreenHook'
 import {useSelector} from 'react-redux'
-import {getClickToShowMenu, getToggleVersionCheck} from './settings/SettingsReducer'
+import {getClickToShowMenu} from './settings/SettingsReducer'
 import {Redirect, Route, Switch} from 'react-router'
 import {Monitor} from './monitor/Monitor'
 import {Tracking} from './tracking/Tracking'
@@ -25,7 +25,6 @@ import {useCheckForNewVersion} from './CheckForNewVersionHook'
 
 export function Nevergreen(): ReactElement {
   const loaded = useLocalConfiguration()
-  const toggleVersionCheckFlag = useSelector(getToggleVersionCheck)
 
   const [notification, setNotification] = useState('')
   const [fontMetrics, setFontMetrics] = useState(DEFAULT_FONT_METRICS)
@@ -35,7 +34,7 @@ export function Nevergreen(): ReactElement {
   const [fullScreen, requestFullScreen, disableFullScreen] = useFullScreen()
 
   useServiceWorker(setNotification)
-  useCheckForNewVersion(setNotification, toggleVersionCheckFlag)
+  useCheckForNewVersion(setNotification)
 
   const clickToShowMenu = useSelector(getClickToShowMenu)
 
