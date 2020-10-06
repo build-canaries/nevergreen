@@ -21,7 +21,7 @@ import {Help} from './help/Help'
 import {DEFAULT_FONT_METRICS, FontMetrics, FontMetricsContext} from './FontMetrics'
 import {Preview} from './settings/Preview'
 import {useShortcut} from './common/Keyboard'
-import {useCheckForNewVersion} from "./CheckForNewVersionHook";
+import {useCheckForNewVersion} from './CheckForNewVersionHook'
 
 export function Nevergreen(): ReactElement {
   const loaded = useLocalConfiguration()
