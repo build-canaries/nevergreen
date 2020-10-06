@@ -2,18 +2,18 @@
   :description "A build monitor with attitude"
   :url "https://github.com/build-canaries/nevergreen"
   :dependencies [[org.clojure/clojure "1.10.1"]
-                 [ring "1.8.1" :exclusions [org.eclipse.jetty/jetty-server]]
-                 [org.eclipse.jetty/jetty-server "9.4.31.v20200723"]
+                 [ring "1.8.2" :exclusions [org.eclipse.jetty/jetty-server]]
+                 [org.eclipse.jetty/jetty-server "9.4.32.v20200930"]
                  [compojure "1.6.2" :exclusions [ring/ring-codec]]
                  [environ "1.2.0"]
                  [cheshire "5.10.0"]
                  [clj-cctray "2.0.0"]
-                 [clj-http "3.10.2"]
+                 [clj-http "3.10.3"]
                  [ring-curl "1.0.1"]
                  [ring/ring-json "0.5.0"]
                  [ring/ring-defaults "0.3.2"]
                  [bk/ring-gzip "0.3.0"]
-                 [ring-basic-authentication "1.0.5"]
+                 [ring-basic-authentication "1.1.0"]
                  [base64-clj "0.1.1"]
                  [camel-snake-kebab "0.4.1"]
                  [com.cemerick/url "0.1.1" :exclusions [com.cemerick/clojurescript.test]]
@@ -34,7 +34,7 @@
             "audit"         ["nvd" "check"]}
   :profiles {:dev  {:plugins [[lein-ancient "0.6.15"]
                               [jonase/eastwood "0.3.11"]
-                              [lein-cloverage "1.2.0"]
+                              [lein-cloverage "1.2.1"]
                               [lein-nvd "1.4.1"]
                               [lein-eftest "0.5.9"]]}
              :test {:jvm-opts ["-Dlogback.configurationFile=./test/logback-unit.xml"]}}
