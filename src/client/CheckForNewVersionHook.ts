@@ -3,6 +3,8 @@ import {useTimer} from './common/TimerHook'
 import {get, send} from './gateways/Gateway'
 import greaterThan from 'semver/functions/gt'
 import version from '../../resources/version.txt'
+import {useSelector} from 'react-redux'
+import {getToggleVersionCheck} from './settings/SettingsReducer'
 
 interface GitHubResponse {
   readonly tag_name: string;
@@ -11,7 +13,8 @@ interface GitHubResponse {
 const NEVERGREEN_IO_REGEX = /nevergreen\.io/i
 const TWENTY_FOUR_HOURS = 24 * 60 * 60
 
-export function useCheckForNewVersion(setNotification: (notification: string) => void, toggleVersionCheckFlag: boolean): void {
+export function useCheckForNewVersion(setNotification: (notification: string) => void): void {
+  const toggleVersionCheckFlag = useSelector(getToggleVersionCheck)
   const checkVersion = useCallback(() => {
     const check = async () => {
       if (!toggleVersionCheckFlag){
