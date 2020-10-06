@@ -25,7 +25,7 @@ it('should set the state to check for new version', () => {
   }
 
   const {store, getByLabelText} = render(<GeneralSettings/>, state)
-  userEvent.click(getByLabelText('Check for updates'))
+  userEvent.click(getByLabelText('Check for new Nevergreen versions'))
 
   expect(getToggleVersionCheck(store.getState())).toBeTruthy()
 })

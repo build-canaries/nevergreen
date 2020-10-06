@@ -5,6 +5,10 @@
   padding: 1em;
 }
 
+.checkbox {
+  width: 100%;
+}
+
 .refreshTime {
   @extend %first;
 

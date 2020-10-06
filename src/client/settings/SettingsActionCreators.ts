@@ -8,7 +8,8 @@ export interface ActionShowBuildTime extends Action<Actions.SHOW_BUILD_TIME> {
   readonly value: boolean;
 }
 
-export interface ActionToggleVersionCheck extends Action<Actions.TOGGLE_VERSION_CHECK> {}
+export interface ActionToggleVersionCheck extends Action<Actions.TOGGLE_VERSION_CHECK> {
+}
 
 export interface ActionShowTrayName extends Action<Actions.SHOW_TRAY_NAME> {
   readonly value: boolean;

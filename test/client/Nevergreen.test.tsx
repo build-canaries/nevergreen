@@ -7,6 +7,7 @@ import * as ServiceWorkerHook from '../../src/client/ServiceWorkerHook'
 import * as Gateway from '../../src/client/gateways/Gateway'
 import {fakeRequest} from '../../src/client/gateways/Gateway'
 import * as FullScreenHook from '../../src/client/FullScreenHook'
+import {SETTINGS_ROOT} from '../../src/client/settings/SettingsReducer'
 
 beforeEach(() => {
   jest.spyOn(LocalConfiguration, 'init').mockResolvedValue()
@@ -26,6 +27,21 @@ it('should load configuration, register service worker and check for a new versi
     expect(Gateway.get).toHaveBeenCalledWith('https://api.github.com/repos/build-canaries/nevergreen/releases/latest')
     expect(ServiceWorkerHook.useServiceWorker).toHaveBeenCalled()
     expect(getByTestId('notification')).toHaveTextContent(/^A new version [0-9.]* is available to download from GitHub now!$/)
+  })
+})
+
+it('should not check for a new version if the user has disabled checking', async () => {
+  jest.spyOn(Gateway, 'get')
+
+  const {queryByTestId} = render(<Nevergreen/>, {
+    [SETTINGS_ROOT]: {
+      enableNewVersionCheck: false
+    }
+  })
+
+  await waitFor(() => {
+    expect(Gateway.get).not.toHaveBeenCalledWith('https://api.github.com/repos/build-canaries/nevergreen/releases/latest')
+    expect(queryByTestId('notification')).not.toBeInTheDocument()
   })
 })
 

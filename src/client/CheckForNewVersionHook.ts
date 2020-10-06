@@ -14,10 +14,10 @@ const NEVERGREEN_IO_REGEX = /nevergreen\.io/i
 const TWENTY_FOUR_HOURS = 24 * 60 * 60
 
 export function useCheckForNewVersion(setNotification: (notification: string) => void): void {
-  const toggleVersionCheckFlag = useSelector(getToggleVersionCheck)
+  const shouldCheckForNewVersion = useSelector(getToggleVersionCheck)
   const checkVersion = useCallback(() => {
     const check = async () => {
-      if (!toggleVersionCheckFlag){
+      if (!shouldCheckForNewVersion) {
         return
       }
       try {
@@ -35,7 +35,7 @@ export function useCheckForNewVersion(setNotification: (notification: string) =>
       }
     }
     void check()
-  }, [setNotification, toggleVersionCheckFlag])
+  }, [setNotification, shouldCheckForNewVersion])
 
   useTimer(checkVersion, TWENTY_FOUR_HOURS)
 }

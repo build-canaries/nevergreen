@@ -37,7 +37,7 @@ export function GeneralSettings(): ReactElement {
                 checked={toggleVersionCheckFlag}
                 onToggle={() => dispatch(toggleVersionCheck())}
                 data-locator='toggle-version-check'>
-        Check for updates
+        Check for new Nevergreen versions
       </Checkbox>
     </Container>
   )
