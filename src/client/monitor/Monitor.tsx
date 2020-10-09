@@ -33,6 +33,11 @@ export function Monitor({fullScreen, requestFullScreen}: MonitorProps): ReactEle
 
   const [loaded, setLoaded] = useState(false)
   const [projects, setProjects] = useState<Projects>([])
+  const [monitorClassNames, setMonitorClassNames] = useState({
+    [styles.monitor]: true,
+    [styles.inactive]: true,
+    [styles.fullscreen]: fullScreen
+  })
 
   useEffect(() => {
     requestFullScreen(true)
@@ -65,12 +70,14 @@ export function Monitor({fullScreen, requestFullScreen}: MonitorProps): ReactEle
   const traysAdded = !isEmpty(trays)
   const success = isEmpty(projects)
 
-  const monitorClassNames = cn(styles.monitor, {
-    [styles.fullscreen]: fullScreen
-  })
+  document.onmousemove = () => {
+      setMonitorClassNames({
+        ...monitorClassNames, [styles.inactive]: false
+      })
+  }
 
   return (
-    <div className={monitorClassNames}>
+    <div className={cn({...monitorClassNames})}>
       <Title>Monitor</Title>
       {!traysAdded && (
         <SuccessMessage message='Add a CI server via the tracking page to start monitoring'/>
