@@ -1,6 +1,6 @@
 import React, {ReactElement, ReactNode, useEffect, useState} from 'react'
 import {useLocation} from 'react-router-dom'
-import matchSorter from 'match-sorter'
+import {matchSorter} from 'match-sorter'
 import {isBlank} from '../common/Utils'
 import cn from 'classnames'
 import styles from './help-article.scss'
