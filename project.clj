@@ -15,7 +15,7 @@
                  [bk/ring-gzip "0.3.0"]
                  [ring-basic-authentication "1.1.0"]
                  [base64-clj "0.1.1"]
-                 [camel-snake-kebab "0.4.1"]
+                 [camel-snake-kebab "0.4.2"]
                  [com.cemerick/url "0.1.1" :exclusions [com.cemerick/clojurescript.test]]
                  [ch.qos.logback/logback-classic "1.2.3" :exclusions [org.slf4j/slf4j-api]]
                  [org.slf4j/log4j-over-slf4j "1.7.30"]
