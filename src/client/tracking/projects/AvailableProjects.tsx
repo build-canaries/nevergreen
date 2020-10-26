@@ -1,6 +1,6 @@
 import React, {ChangeEvent, ReactElement, useCallback, useEffect, useMemo, useRef, useState} from 'react'
 import {AvailableProject} from './AvailableProject'
-import {Messages, MessagesType} from '../../common/Messages'
+import {ErrorMessages, WarningMessages} from '../../common/Messages'
 import {Input} from '../../common/forms/Input'
 import {Refresh} from './Refresh'
 import {errorMessage, isBlank, notEmpty} from '../../common/Utils'
@@ -36,7 +36,7 @@ export function AvailableProjects({index, tray, requiresRefresh, setRequiresRefr
   const [errors, setErrors] = useState<ReadonlyArray<string>>([])
   const [loaded, setLoaded] = useState(true)
   const pendingRequest = useRef<Request>()
-  const [filterErrors, setFilterErrors] = useState<ReadonlyArray<string>>([])
+  const [filterErrors, setFilterErrors] = useState('')
   const rootNode = useRef<HTMLDivElement>(null)
 
   const refreshTray = useCallback(async () => {
@@ -79,14 +79,14 @@ export function AvailableProjects({index, tray, requiresRefresh, setRequiresRefr
   const updateFilter = (evt: ChangeEvent<HTMLInputElement>) => {
     if (isBlank(evt.target.value)) {
       setFilter(undefined)
-      setFilterErrors([])
+      setFilterErrors('')
     } else {
       try {
         const regEx = new RegExp(evt.target.value)
         setFilter(regEx)
-        setFilterErrors([])
+        setFilterErrors('')
       } catch (e) {
-        setFilterErrors([`Project search not applied. ${errorMessage(e)}`])
+        setFilterErrors(`Project search not applied. ${errorMessage(e)}`)
       }
     }
   }
@@ -145,8 +145,7 @@ export function AvailableProjects({index, tray, requiresRefresh, setRequiresRefr
           </Input>
         </div>
       </fieldset>
-      <Messages type={MessagesType.ERROR}
-                messages={filterErrors}/>
+      <ErrorMessages messages={filterErrors}/>
     </div>
   )
 
@@ -169,15 +168,13 @@ export function AvailableProjects({index, tray, requiresRefresh, setRequiresRefr
   )
 
   const noProjectsWarning = (
-    <Messages type={MessagesType.WARNING}
-              messages={['No projects fetched, please refresh']}
-              data-locator='no-projects-warning'/>
+    <WarningMessages messages='No projects fetched, please refresh'
+                     data-locator='no-projects-warning'/>
   )
 
   const noProjectsMatchFilterWarning = (
-    <Messages type={MessagesType.WARNING}
-              messages={['No matching projects, please update your filter']}
-              data-locator='filter-warning'/>
+    <WarningMessages messages='No matching projects, please update your filter'
+                     data-locator='filter-warning'/>
   )
 
   const backToTop = (
@@ -196,9 +193,8 @@ export function AvailableProjects({index, tray, requiresRefresh, setRequiresRefr
         <Refresh index={index}
                  timestamp={tray.timestamp}
                  refreshTray={refreshTray}/>
-        <Messages type={MessagesType.ERROR}
-                  messages={errors}
-                  data-locator='errors'/>
+        <ErrorMessages messages={errors}
+                       data-locator='errors'/>
 
         {!hasErrors && hasProjects && controls}
         {!hasErrors && hasProjectsFiltered && buildItems}

@@ -1,5 +1,5 @@
 import React, {DetailedHTMLProps, ReactElement, ReactNode, SelectHTMLAttributes} from 'react'
-import classNames from 'classnames'
+import cn from 'classnames'
 import {uniqueId} from 'lodash'
 import styles from './drop-down.scss'
 import formStyles from './forms.scss'
@@ -14,21 +14,21 @@ type DropDownProps = {
   readonly disabled?: boolean;
 } & DetailedHTMLProps<SelectHTMLAttributes<HTMLSelectElement>, HTMLSelectElement>
 
-export function DropDown({className, children, options, disabled, ...inputProps}: DropDownProps): ReactElement {
-  const labelClasses = classNames(formStyles.inputContainer, className)
-  const id = uniqueId('i')
+export function DropDown({className, children, options, disabled, id, ...inputProps}: DropDownProps): ReactElement {
+  const labelClasses = cn(formStyles.inputContainer, className)
+  const actualId = id ?? uniqueId('i')
 
   return (
-    <label className={labelClasses} htmlFor={id}>
+    <label className={labelClasses} htmlFor={actualId}>
       <span className={formStyles.inputLabel}>{children}</span>
-      <select className={styles.input} {...inputProps} id={id}>
+      <select className={styles.input} {...inputProps} id={actualId}>
         {
           options.map((op) => {
             return <option key={op.value} value={op.value}>{op.display}</option>
           })
         }
       </select>
-      <span className={classNames(styles.arrow, {[styles.disabled]: disabled})} aria-hidden/>
+      <span className={cn(styles.arrow, {[styles.disabled]: disabled})} aria-hidden/>
     </label>
   )
 }

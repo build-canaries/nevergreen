@@ -12,7 +12,7 @@ import {trayAdded} from './TrackingActionCreators'
 import {useDispatch, useSelector} from 'react-redux'
 import {send} from '../gateways/Gateway'
 import {encrypt, EncryptResponse} from '../gateways/SecurityGateway'
-import {Messages, MessagesType} from '../common/Messages'
+import {ErrorMessages} from '../common/Messages'
 
 interface AddTrayProps {
   readonly setHighlightTray: (trayId: string) => void;
@@ -32,7 +32,7 @@ export function AddTray({setHighlightTray, setRefreshTray}: AddTrayProps): React
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [accessToken, setAccessToken] = useState('')
-  const [errors, setErrors] = useState<ReadonlyArray<string>>([])
+  const [errors, setErrors] = useState('')
   const [adding, setAdding] = useState(false)
 
   const resetForm = () => {
@@ -41,12 +41,12 @@ export function AddTray({setHighlightTray, setRefreshTray}: AddTrayProps): React
     setUsername('')
     setPassword('')
     setAccessToken('')
-    setErrors([])
+    setErrors('')
   }
 
   const addTray = async (enteredUrl: string) => {
     if (isBlank(enteredUrl)) {
-      setErrors(['Please enter the URL to the CCTray XML feed'])
+      setErrors('Please enter the URL to the CCTray XML feed')
       return
     }
 
@@ -75,7 +75,7 @@ export function AddTray({setHighlightTray, setRefreshTray}: AddTrayProps): React
         setHighlightTray(trayId)
         resetForm()
       } catch (e) {
-        setErrors([errorMessage(e)])
+        setErrors(errorMessage(e))
       }
     }
 
@@ -89,7 +89,7 @@ export function AddTray({setHighlightTray, setRefreshTray}: AddTrayProps): React
                placeholder='CCTray XML feed'
                value={url}
                onChange={({target}) => {
-                 setErrors([])
+                 setErrors('')
                  setUrl(target.value)
                }}
                onEnter={() => addTray(url)}
@@ -107,7 +107,7 @@ export function AddTray({setHighlightTray, setRefreshTray}: AddTrayProps): React
               accessToken={accessToken}
               setAccessToken={setAccessToken}
               onEnter={() => addTray(url)}/>
-        <Messages type={MessagesType.ERROR} messages={errors}/>
+        <ErrorMessages messages={errors}/>
       </div>
       <PrimaryButton className={styles.add}
                      onClick={() => addTray(url)}

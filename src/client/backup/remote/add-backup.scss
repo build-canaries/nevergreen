@@ -48,10 +48,6 @@
   @include fixed-width(38em);
 }
 
-.accessToken {
-  @include fixed-width(38em);
-}
-
 .add {
-  margin: $margin-top * 2 0 0 0;
+  margin: $margin-top 0 0 0;
 }

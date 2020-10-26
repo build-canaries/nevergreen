@@ -16,3 +16,9 @@ it('should generate an id (that does not start with a number) to associate the l
   expect(labelId).toMatch(/i[0-9]/)
   expect(container.querySelector('input')).toHaveAttribute('id', labelId)
 })
+
+it('should display given error message', () => {
+  const props = {error: 'some validation error'}
+  const {queryByText} = render(<Input {...props}>label</Input>)
+  expect(queryByText('some validation error')).toBeInTheDocument()
+})

@@ -14,6 +14,8 @@ import styles from './input.scss'
 import formStyles from './forms.scss'
 import {InputButton} from './Button'
 import {iLock} from '../fonts/Icons'
+import {ErrorMessages} from '../Messages'
+import {isBlank, isNotBlank} from '../Utils'
 
 export type InputProps = {
   readonly children: ReactNode;
@@ -22,16 +24,18 @@ export type InputProps = {
   readonly readOnly?: boolean;
   readonly focus?: boolean;
   readonly button?: ReactElement;
+  readonly error?: string;
 } & DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
 
-export function Input({children, onEnter, className, readOnly, focus, button, ...inputProps}: InputProps): ReactElement {
+export function Input({children, onEnter, className, readOnly, focus, button, error = '', id, ...inputProps}: InputProps): ReactElement {
   const inputNode = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    if (focus && inputNode.current) {
+    const shouldFocus = isNotBlank(error) || focus
+    if (shouldFocus && inputNode.current) {
       inputNode.current.focus()
     }
-  }, [focus])
+  }, [focus, error])
 
   const moveCaretToEnd = (evt: FocusEvent<HTMLInputElement>) => {
     const val = evt.target.value
@@ -45,31 +49,38 @@ export function Input({children, onEnter, className, readOnly, focus, button, ..
     }
   }
 
+  const actualId = id ?? uniqueId('i')
+  const errorId = uniqueId('e')
+
   const labelClasses = classNames(formStyles.inputContainer, className)
+  const wrapperClasses = classNames(styles.wrapper, {
+    [styles.error]: !isBlank(error)
+  })
   const inputClasses = classNames(styles.input, {
-    [styles.hasButton]: button
+    [styles.hasButton]: button || readOnly,
+    [styles.hasError]: !isBlank(error)
   })
 
-  const id = uniqueId('i')
-
   return (
-    <label className={labelClasses} htmlFor={id}>
+    <label className={labelClasses} htmlFor={actualId}>
       <span className={formStyles.inputLabel}>{children}</span>
-      <span className={styles.wrapper}>
+      <span className={wrapperClasses}>
           <input className={inputClasses}
                  onKeyPress={(evt) => onKeyPress(evt)}
                  spellCheck={false}
                  autoComplete='off'
                  readOnly={readOnly}
                  type='text'
-                 id={id}
+                 id={actualId}
                  {...inputProps}
                  ref={inputNode}
-                 onFocus={moveCaretToEnd}/>
+                 onFocus={moveCaretToEnd}
+                 aria-describedby={errorId}/>
         {
           readOnly && (
             <InputButton disabled
-                         icon={iLock}>
+                         icon={iLock}
+                         aria-hidden>
               read only
             </InputButton>
           )
@@ -77,7 +88,10 @@ export function Input({children, onEnter, className, readOnly, focus, button, ..
         {
           !readOnly && button
         }
-        </span>
+        <ErrorMessages id={errorId}
+                       className={styles.errorMessage}
+                       messages={error}/>
+      </span>
     </label>
   )
 }

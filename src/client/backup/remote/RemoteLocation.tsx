@@ -15,9 +15,9 @@ import {
   fetchConfigurationNew,
   ImportResponse
 } from '../../gateways/BackupGateway'
-import {toExportableConfigurationJson, toConfiguration} from '../../configuration/Configuration'
+import {toConfiguration, toExportableConfigurationJson} from '../../configuration/Configuration'
 import {errorMessage, isBlank, isNotBlank} from '../../common/Utils'
-import {Messages, MessagesType} from '../../common/Messages'
+import {ErrorMessages} from '../../common/Messages'
 import {isRight} from 'fp-ts/Either'
 import {configurationImported} from '../BackupActionCreators'
 
@@ -107,7 +107,7 @@ export function RemoteLocation({location}: RemoteLocationProps): ReactElement {
                          disabled={!loaded}>
           Import now
         </SecondaryButton>
-        <Messages type={MessagesType.ERROR} messages={errors}/>
+        <ErrorMessages messages={errors}/>
       </div>
     </li>
   )

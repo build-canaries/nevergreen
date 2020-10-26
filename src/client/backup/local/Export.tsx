@@ -10,16 +10,16 @@ import {toExportableConfigurationJson} from '../../configuration/Configuration'
 export function Export(): ReactElement {
   const configuration = useSelector(toExportableConfigurationJson)
 
-  const [messages, setMessages] = useState<ReadonlyArray<string>>([])
+  const [messages, setMessages] = useState('')
   const [messageType, setMessageType] = useState(MessagesType.INFO)
 
   const copySuccess = useCallback(() => {
     setMessageType(MessagesType.INFO)
-    setMessages(['Successfully copied to clipboard'])
+    setMessages('Successfully copied to clipboard')
   }, [])
   const copyError = useCallback(() => {
     setMessageType(MessagesType.ERROR)
-    setMessages(['Unfortunately your browser doesn\'t support automatically copying to clipboard, please manually copy'])
+    setMessages('Unfortunately your browser doesn\'t support automatically copying to clipboard, please manually copy')
   }, [])
 
   useClipboard('#copy-to-clipboard', copySuccess, copyError)

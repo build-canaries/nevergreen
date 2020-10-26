@@ -8,7 +8,8 @@
   align-items: normal;
   display: flex;
   flex-grow: 1;
-  margin-top: 0.5em;
+  flex-wrap: wrap;
+  margin: 0.5em 0 0 0;
   width: 100%;
 
   @include respond-to(tablet, desktop) {
@@ -16,6 +17,11 @@
     margin-top: 0;
     width: auto;
   }
+}
+
+.error {
+  margin-bottom: 0;
+  outline: 1px solid $error;
 }
 
 .input {
@@ -29,10 +35,6 @@
   min-width: 1em;
   padding: 0.5em;
   text-overflow: ellipsis;
-
-  &:invalid {
-    border-color: $error;
-  }
 
   &:disabled {
     border-color: $mid-grey;
@@ -59,4 +61,16 @@
 .hasButton {
   border-bottom-right-radius: 0;
   border-top-right-radius: 0;
+}
+
+.hasError {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.errorMessage {
+  flex-basis: 100%;
+  height: $input-height;
+  margin: 0;
+  width: 0;
 }

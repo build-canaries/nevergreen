@@ -24,7 +24,7 @@ export function ChangeAuth({show, cancel, save, authType, username}: ChangeAuthP
   const [newUsername, setUsername] = useState(username)
   const [newPassword, setPassword] = useState('')
   const [newAccessToken, setAccessToken] = useState('')
-  const [encryptionError, setEncryptionError] = useState<ReadonlyArray<string>>([])
+  const [encryptionError, setEncryptionError] = useState('')
   const [encrypting, setEncrypting] = useState(false)
   const pendingRequest = useRef<Request>()
 
@@ -32,7 +32,7 @@ export function ChangeAuth({show, cancel, save, authType, username}: ChangeAuthP
   useEffect(() => setUsername(username), [username])
 
   const resetForm = () => {
-    setEncryptionError([])
+    setEncryptionError('')
     setPassword('')
     setAccessToken('')
   }
@@ -54,7 +54,7 @@ export function ChangeAuth({show, cancel, save, authType, username}: ChangeAuthP
       }
       resetForm()
     } catch (error) {
-      setEncryptionError([errorMessage(error)])
+      setEncryptionError(errorMessage(error))
     }
     // eslint-disable-next-line require-atomic-updates
     pendingRequest.current = undefined

@@ -1,7 +1,7 @@
 import React, {ReactElement} from 'react'
 import {AddMessage} from './AddMessage'
 import {Title} from '../common/Title'
-import {Messages, MessagesType} from '../common/Messages'
+import {WarningMessages} from '../common/Messages'
 import {isBlank, notEmpty} from '../common/Utils'
 import {AddedMessages} from './AddedMessages'
 import {useDispatch, useSelector} from 'react-redux'
@@ -15,8 +15,8 @@ export function Success(): ReactElement {
   const messages = useSelector(getSuccessMessages)
 
   const noMessagesWarning = notEmpty(messages)
-    ? []
-    : [NO_MESSAGES_WARNING]
+    ? ''
+    : NO_MESSAGES_WARNING
 
   const add = (message: string) => {
     if (!isBlank(message)) {
@@ -30,8 +30,7 @@ export function Success(): ReactElement {
       <AddMessage addMessage={add}/>
       <AddedMessages messages={messages}
                      removeMessage={(message) => dispatch(removeMessage(message))}/>
-      <Messages type={MessagesType.WARNING}
-                messages={noMessagesWarning}/>
+      <WarningMessages messages={noMessagesWarning}/>
     </>
   )
 }

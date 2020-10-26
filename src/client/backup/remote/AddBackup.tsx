@@ -5,10 +5,9 @@ import {PrimaryButton} from '../../common/forms/Button'
 import {iPlus} from '../../common/fonts/Icons'
 import {DropDown} from '../../common/forms/DropDown'
 import {useDispatch} from 'react-redux'
-import {Messages, MessagesType} from '../../common/Messages'
 import {errorMessage, isBlank} from '../../common/Utils'
 import {DEFAULT_GITHUB_URL, DEFAULT_GITLAB_URL, RemoteLocationOptions} from './RemoteLocationOptions'
-import {addBackupGitHubLab, addBackupCustomServer} from './RemoteLocationActionCreators'
+import {addBackupCustomServer, addBackupGitHubLab} from './RemoteLocationActionCreators'
 import {Input} from '../../common/forms/Input'
 import {Password} from '../../common/forms/Password'
 import {send} from '../../gateways/Gateway'
@@ -16,6 +15,10 @@ import {encrypt, EncryptResponse} from '../../gateways/SecurityGateway'
 import styles from './add-backup.scss'
 import {isHttp} from '../../domain/Url'
 import {RemoteLocationLogo} from './RemoteLocationLogo'
+import {firstError, FormErrors} from '../../common/forms/Validation'
+import {ErrorMessages} from '../../common/Messages'
+
+type Fields = 'url' | 'accessToken'
 
 export function AddBackup(): ReactElement {
   const dispatch = useDispatch()
@@ -25,28 +28,29 @@ export function AddBackup(): ReactElement {
   const [id, setId] = useState('')
   const [description, setDescription] = useState('Nevergreen configuration backup')
   const [accessToken, setAccessToken] = useState('')
-  const [errors, setErrors] = useState<ReadonlyArray<string>>([])
+  const [validationErrors, setValidationErrors] = useState<Readonly<FormErrors<Fields>>>([])
+  const [submissionError, setSubmissionError] = useState('')
   const [adding, setAdding] = useState(false)
 
   const doAddBackup = async (evt: FormEvent) => {
     evt.preventDefault()
 
-    const validationErrors = []
+    const validationErrors: FormErrors<Fields> = []
 
     if (isBlank(url)) {
-      validationErrors.push('Please enter the URL')
+      validationErrors.push({field: 'url', message: 'Please enter the URL'})
     } else if (!isHttp(url)) {
-      validationErrors.push('Only http and https URLs are supported')
+      validationErrors.push({field: 'url', message: 'Only http and https URLs are supported'})
     }
 
     if (where === RemoteLocationOptions.GitLab || where === RemoteLocationOptions.GitHub) {
       if (isBlank(accessToken)) {
-        validationErrors.push('Please enter an access token')
+        validationErrors.push({field: 'accessToken', message: 'Please enter an access token'})
       }
     }
 
     if (!isEmpty(validationErrors)) {
-      setErrors(validationErrors)
+      setValidationErrors(validationErrors)
       return
     }
 
@@ -57,7 +61,8 @@ export function AddBackup(): ReactElement {
         setAdding(false)
         dispatch(addBackupGitHubLab(where, id, url, description, encryptedAccessToken))
       } catch (e) {
-        setErrors([errorMessage(e)])
+        setAdding(false)
+        setSubmissionError(errorMessage(e))
       }
     } else {
       dispatch(addBackupCustomServer(url))
@@ -72,7 +77,7 @@ export function AddBackup(): ReactElement {
     } else if (updatedWhere === RemoteLocationOptions.GitLab) {
       setUrl(DEFAULT_GITLAB_URL)
     }
-    setErrors([])
+    setValidationErrors([])
     setWhere(updatedWhere)
   }
 
@@ -97,29 +102,31 @@ export function AddBackup(): ReactElement {
       </div>
       <Input value={url}
              onChange={({target}) => {
-               setErrors([])
+               setValidationErrors([])
                setUrl(target.value)
              }}
              autoComplete='url'
+             error={firstError('url', validationErrors)}
              disabled={adding}>
         <span className={styles.label}>URL</span>
       </Input>
       <Input className={cn(styles.id, {[styles.gitHubLabOnly]: isCustomServer})}
              value={id}
              onChange={({target}) => {
-               setErrors([])
+               setValidationErrors([])
                setId(target.value)
              }}
              disabled={adding || isCustomServer}
              aria-hidden={isCustomServer}>
         <span className={styles.label}>ID</span>
       </Input>
-      <Password className={cn(styles.accessToken, {[styles.gitHubLabOnly]: isCustomServer})}
+      <Password className={cn({[styles.gitHubLabOnly]: isCustomServer})}
                 value={accessToken}
                 onChange={({target}) => {
-                  setErrors([])
+                  setValidationErrors([])
                   setAccessToken(target.value)
                 }}
+                error={firstError('accessToken', validationErrors)}
                 disabled={adding || isCustomServer}
                 aria-hidden={isCustomServer}
                 data-locator='access-token'>
@@ -128,7 +135,7 @@ export function AddBackup(): ReactElement {
       <Input className={cn({[styles.gitHubLabOnly]: isCustomServer})}
              value={description}
              onChange={({target}) => {
-               setErrors([])
+               setValidationErrors([])
                setDescription(target.value)
              }}
              maxLength={256}
@@ -136,13 +143,13 @@ export function AddBackup(): ReactElement {
              aria-hidden={isCustomServer}>
         <span className={styles.label}>Description</span>
       </Input>
-      <Messages type={MessagesType.ERROR} messages={errors}/>
       <PrimaryButton className={styles.add}
                      icon={iPlus}
                      type='submit'
                      disabled={adding}>
         Add location
       </PrimaryButton>
+      <ErrorMessages messages={submissionError}/>
     </form>
   )
 }

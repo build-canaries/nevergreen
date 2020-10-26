@@ -66,17 +66,17 @@ it('should correctly show and remove errors returned while refreshing', async ()
     }
   }
 
-  const {queryByTestId, getByText} = render(<AvailableProjects {...DEFAULT_PROPS} tray={tray}/>, state)
+  const {queryByTestId, getByText, queryByText} = render(<AvailableProjects {...DEFAULT_PROPS} tray={tray}/>, state)
   userEvent.click(getByText('Refresh'))
 
   await waitFor(() => {
-    expect(queryByTestId('error-messages')).toBeInTheDocument()
+    expect(queryByText('some-error')).toBeInTheDocument()
   })
 
   userEvent.click(getByText('Refresh'))
 
   await waitFor(() => {
-    expect(queryByTestId('error-messages')).not.toBeInTheDocument()
+    expect(queryByTestId('some-error')).not.toBeInTheDocument()
   })
 })
 

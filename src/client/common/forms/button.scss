@@ -70,8 +70,6 @@
 }
 
 .iconOnly {
-  @include font-scale(0);
-
   @extend %standard-input-dimensions;
 
   margin: 0;

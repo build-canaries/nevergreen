@@ -1,6 +1,6 @@
 import React, {ChangeEvent, ReactElement, useEffect, useState} from 'react'
 import {errorMessage, isBlank} from '../common/Utils'
-import {Messages, MessagesType} from '../common/Messages'
+import {ErrorMessages} from '../common/Messages'
 import {Input} from '../common/forms/Input'
 import {Checkbox} from '../common/forms/Checkbox'
 import {SecondaryButton} from '../common/forms/Button'
@@ -100,9 +100,8 @@ export function NotificationsAudio(): ReactElement {
           {playing ? 'Stop' : 'Play'}
         </SecondaryButton>
       </div>
-      <Messages className={styles.playbackErrors}
-                type={MessagesType.ERROR}
-                messages={errors}/>
+      <ErrorMessages className={styles.playbackErrors}
+                     messages={errors}/>
     </>
   )
 }

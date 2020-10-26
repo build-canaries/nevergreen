@@ -8,6 +8,7 @@ import styles from './style-guide.scss'
 import {DangerButton, PrimaryButton, SecondaryButton} from '../common/forms/Button'
 import {iFloppyDisk} from '../common/fonts/Icons'
 import {Radio} from '../common/forms/Radio'
+import {Password} from '../common/forms/Password'
 
 const DROP_DOWN_OPTIONS = [
   {value: '1', display: 'option 1'},
@@ -21,10 +22,15 @@ export function Forms(): ReactElement {
   return (
     <>
       <StyleGuideSection title='Text inputs'>
-        <Input placeholder='placeholder'>text</Input>
-        <Input readOnly defaultValue='in my restless dreams I see that town'>read only</Input>
-        <Input type='password' defaultValue='p4ssw0rd1'>password</Input>
-        <Input required placeholder='required'>invalid</Input>
+        <Input placeholder='this is a placeholder'>Placeholder example</Input>
+        <Input readOnly defaultValue='in my restless dreams I see that town'>Read only example</Input>
+        <Input error='some validation error'>
+          Error message example
+        </Input>
+        <Password>Password example</Password>
+        <Password error='some validation error'>Password
+          with error message example
+        </Password>
 
         <Input className={styles.fixedWidth}>fixed width</Input>
 

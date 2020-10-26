@@ -1,6 +1,6 @@
 import React, {ReactElement} from 'react'
 import cn from 'classnames'
-import {isEmpty} from 'lodash'
+import {isEmpty, isString} from 'lodash'
 import styles from './messages.scss'
 
 export enum MessagesType {
@@ -9,13 +9,14 @@ export enum MessagesType {
   ERROR = 'error'
 }
 
-export interface MessagesProps {
+export type MessagesProps = {
+  readonly id?: string;
   readonly type: MessagesType;
-  readonly messages: ReadonlyArray<string>;
+  readonly messages: ReadonlyArray<string> | string;
   readonly className?: string;
 }
 
-export function Messages({messages, type, className}: MessagesProps): ReactElement | null {
+export function Messages({messages, type, className, id}: MessagesProps): ReactElement | null {
   if (isEmpty(messages)) {
     return null
   }
@@ -26,12 +27,25 @@ export function Messages({messages, type, className}: MessagesProps): ReactEleme
   return (
     <ul className={classes}
         data-locator={`${type}-messages`}
-        aria-live={isError ? 'assertive' : 'polite'}>
+        aria-live={isError ? 'assertive' : 'polite'}
+        id={id}>
       {
-        messages.map((msg) => {
-          return <li key={msg} className={styles.message}>{msg}</li>
-        })
+        isString(messages)
+          ? <li className={styles.message}>{messages}</li>
+          : messages.map((msg) => <li key={msg} className={styles.message}>{msg}</li>)
       }
     </ul>
   )
+}
+
+export function ErrorMessages(props: Omit<MessagesProps, 'type'>): ReactElement | null {
+  return <Messages type={MessagesType.ERROR} {...props}/>
+}
+
+export function WarningMessages(props: Omit<MessagesProps, 'type'>): ReactElement | null {
+  return <Messages type={MessagesType.WARNING} {...props}/>
+}
+
+export function InfoMessages(props: Omit<MessagesProps, 'type'>): ReactElement | null {
+  return <Messages type={MessagesType.INFO} {...props}/>
 }
