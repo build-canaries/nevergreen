@@ -17,7 +17,7 @@ export function SuccessHelp({searchQuery, helpLink}: HelpProps): ReactElement {
   return (
     <HelpArticle keywords={KEYWORDS}
                  searchQuery={searchQuery}
-                 title='Success'
+                 title='Success messages'
                  page='/success'>
       <p>
         You can add text messages or any <ExternalLink

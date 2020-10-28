@@ -1,51 +1,27 @@
 @import '../common/variables';
 @import '../common/responsive';
+@import '../common/typography';
 
-.addMessage {
-  align-items: start;
+.container {
   background-color: $white;
-  box-shadow: $shadow;
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 1em;
+  height: 100%;
   padding: 1em;
+}
 
-  @include respond-to(very-small) {
-    overflow: scroll;
-  }
-
-  @include respond-to(tablet, desktop) {
-    flex-wrap: nowrap;
-  }
+.form {
+  border: 2px dashed $light-grey;
+  height: 100%;
+  padding: 1em;
 }
 
 .addMessageInput {
-  flex-grow: 1;
   margin: 0;
 
   input {
     font-family: $monospace-font;
-    margin: 0;
-    width: 100%;
-
-    @include respond-to(tablet, desktop) {
-      margin: 0 $margin-right 0 0;
-    }
   }
 }
 
 .add {
   margin: $margin-top 0 0 0;
-
-  @include respond-to(tablet, desktop) {
-    margin: 0;
-  }
-}
-
-.help {
-  margin: $margin-top 0 0 0;
-
-  @include respond-to(tablet, desktop) {
-    margin: 0;
-  }
 }

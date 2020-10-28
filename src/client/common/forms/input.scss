@@ -70,7 +70,7 @@
 
 .errorMessage {
   flex-basis: 100%;
-  height: $input-height;
   margin: 0;
+  min-height: $input-height;
   width: 0;
 }
