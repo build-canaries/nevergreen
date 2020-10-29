@@ -50,8 +50,6 @@ function shouldBeAbleToAddTrays(trayUrl, username, password) {
 }
 
 function shouldBeAbleToChangeSuccessMessages() {
-  cy.visitPage('success')
-
   cy.locate('success-message')
     .should('contain', '=(^.^)=')
     .should('have.length', 1)
@@ -114,6 +112,7 @@ function shouldBeAbleToChangeSettings() {
 
   shouldBeAbleToChangeSettingsGeneral()
   shouldBeAbleToChangeSettingsDisplay()
+  shouldBeAbleToChangeSuccessMessages()
   shouldBeAbleToChangeSettingsNotifications()
 
   cy.checkA11y()
@@ -166,7 +165,6 @@ describe('Journey', () => {
       Cypress.env('TRAY_USERNAME'),
       Cypress.env('TRAY_PASSWORD')
     )
-    shouldBeAbleToChangeSuccessMessages()
     shouldBeAbleToChangeSettings()
     shouldBeAbleToExportAndImportConfig()
     shouldMonitorSelectedProjects()

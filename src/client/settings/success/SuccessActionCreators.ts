@@ -1,4 +1,4 @@
-import {Actions} from '../Actions'
+import {Actions} from '../../Actions'
 import {Action} from 'redux'
 
 export interface ActionMessageAdded extends Action<Actions.MESSAGE_ADDED> {

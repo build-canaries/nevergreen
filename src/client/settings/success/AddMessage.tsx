@@ -1,13 +1,13 @@
 import React, {FormEvent, ReactElement, useState} from 'react'
-import {Input} from '../common/forms/Input'
+import {Input} from '../../common/forms/Input'
 import styles from './add-message.scss'
-import {PrimaryButton} from '../common/forms/Button'
-import {iPlus} from '../common/fonts/Icons'
+import {PrimaryButton} from '../../common/forms/Button'
+import {iPlus} from '../../common/fonts/Icons'
 import {addMessage} from './SuccessActionCreators'
 import {useDispatch, useSelector} from 'react-redux'
 import {getSuccessMessages} from './SuccessReducer'
-import {WarningMessages} from '../common/Messages'
-import {isBlank, notEmpty} from '../common/Utils'
+import {WarningMessages} from '../../common/Messages'
+import {isBlank, notEmpty} from '../../common/Utils'
 
 export const NO_MESSAGES_WARNING = 'No success messages added, a blank screen will be shown on the Monitor page when no interesting projects are displayed'
 

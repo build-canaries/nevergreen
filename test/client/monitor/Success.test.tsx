@@ -1,7 +1,7 @@
 import React from 'react'
 import {Success} from '../../../src/client/monitor/Success'
 import {render} from '../testHelpers'
-import {SUCCESS_ROOT} from '../../../src/client/success/SuccessReducer'
+import {SUCCESS_ROOT} from '../../../src/client/settings/success/SuccessReducer'
 
 it('should pick a message when first rendered to stop it changing after every successful refresh', () => {
   const state = {[SUCCESS_ROOT]: ['foo', 'bar', 'baz']}

@@ -1,6 +1,6 @@
 import React, {ReactElement} from 'react'
-import {ExternalLink} from '../common/ExternalLink'
-import {HelpArticle, HelpProps} from '../help/HelpArticle'
+import {ExternalLink} from '../../common/ExternalLink'
+import {HelpArticle, HelpProps} from '../../help/HelpArticle'
 
 const KEYWORDS = [
   'success',
@@ -18,7 +18,7 @@ export function SuccessHelp({searchQuery, helpLink}: HelpProps): ReactElement {
     <HelpArticle keywords={KEYWORDS}
                  searchQuery={searchQuery}
                  title='Success messages'
-                 page='/success'>
+                 page='/settings'>
       <p>
         You can add text messages or any <ExternalLink
         href='https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#Supported_image_formats'>valid image

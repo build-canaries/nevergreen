@@ -1,5 +1,5 @@
-import {addMessage, removeMessage} from '../../../src/client/success/SuccessActionCreators'
-import {Actions} from '../../../src/client/Actions'
+import {addMessage, removeMessage} from '../../../../src/client/settings/success/SuccessActionCreators'
+import {Actions} from '../../../../src/client/Actions'
 
 describe(Actions.MESSAGE_ADDED, () => {
 

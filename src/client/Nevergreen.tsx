@@ -11,7 +11,6 @@ import {getClickToShowMenu} from './settings/SettingsReducer'
 import {Redirect, Route, Switch} from 'react-router'
 import {Monitor} from './monitor/Monitor'
 import {Tracking} from './tracking/Tracking'
-import {Success} from './success/Success'
 import {Settings} from './settings/Settings'
 import {Backup} from './backup/Backup'
 import {StyleGuide} from './styleGuide/StyleGuide'
@@ -74,10 +73,12 @@ export function Nevergreen(): ReactElement {
                 <div className={styles.settings}>
                   <Switch>
                     <Route exact path='/tracking' component={Tracking}/>
-                    <Route exact path='/success' component={Success}/>
                     <Route exact path='/settings' component={Settings}/>
                     <Route exact path='/backup' component={Backup}/>
                     <Route exact path='/style-guide' component={StyleGuide}/>
+                    <Route exact path='/success'>
+                      <Redirect to='/settings'/>
+                    </Route>
                     <Route>
                       <Redirect to='/tracking'/>
                     </Route>

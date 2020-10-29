@@ -1,8 +1,8 @@
-import {getSuccessMessages, reduce, SUCCESS_ROOT, SuccessState} from '../../../src/client/success/SuccessReducer'
-import {Actions} from '../../../src/client/Actions'
-import {addMessage, removeMessage} from '../../../src/client/success/SuccessActionCreators'
-import {buildState, testReducer} from '../testHelpers'
-import {configurationImported} from '../../../src/client/backup/BackupActionCreators'
+import {getSuccessMessages, reduce, SUCCESS_ROOT, SuccessState} from '../../../../src/client/settings/success/SuccessReducer'
+import {Actions} from '../../../../src/client/Actions'
+import {addMessage, removeMessage} from '../../../../src/client/settings/success/SuccessActionCreators'
+import {buildState, testReducer} from '../../testHelpers'
+import {configurationImported} from '../../../../src/client/backup/BackupActionCreators'
 
 const reducer = testReducer({
   [SUCCESS_ROOT]: reduce

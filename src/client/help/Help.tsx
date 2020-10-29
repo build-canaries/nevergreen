@@ -3,7 +3,7 @@ import {Modal} from '../common/Modal'
 import {Input} from '../common/forms/Input'
 import {AddTrayHelp, CCTrayLocationsHelp} from '../tracking/AddTrayHelp'
 import {TraySettingsHelp} from '../tracking/settings/TraySettingsHelp'
-import {SuccessHelp} from '../success/SuccessHelp'
+import {SuccessHelp} from '../settings/success/SuccessHelp'
 import {AvailableProjectsHelp} from '../tracking/projects/AvailableProjectsHelp'
 import {GeneralSettingsHelp} from '../settings/GeneralSettingsHelp'
 import {

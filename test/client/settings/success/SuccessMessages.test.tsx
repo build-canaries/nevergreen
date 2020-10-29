@@ -1,9 +1,9 @@
 import React from 'react'
-import {SuccessMessages} from '../../../src/client/success/SuccessMessages'
-import {render} from '../testHelpers'
+import {SuccessMessages} from '../../../../src/client/settings/success/SuccessMessages'
+import {render} from '../../testHelpers'
 import userEvent from '@testing-library/user-event'
-import {SUCCESS_ROOT} from '../../../src/client/success/SuccessReducer'
-import {NO_MESSAGES_WARNING} from '../../../src/client/success/AddMessage'
+import {SUCCESS_ROOT} from '../../../../src/client/settings/success/SuccessReducer'
+import {NO_MESSAGES_WARNING} from '../../../../src/client/settings/success/AddMessage'
 
 it('should show success messages', () => {
   const state = {[SUCCESS_ROOT]: ['some-message', 'http://some-url']}

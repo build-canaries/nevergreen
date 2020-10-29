@@ -1,9 +1,9 @@
-import {Actions} from '../Actions'
+import {Actions} from '../../Actions'
 import {remove, uniq} from 'lodash'
 import {ActionMessageAdded, ActionMessageRemoved} from './SuccessActionCreators'
 import {createReducer} from '@reduxjs/toolkit'
-import {State} from '../Reducer'
-import {ActionConfigurationImported} from '../backup/BackupActionCreators'
+import {State} from '../../Reducer'
+import {ActionConfigurationImported} from '../../backup/BackupActionCreators'
 
 export type SuccessState = ReadonlyArray<string>
 
