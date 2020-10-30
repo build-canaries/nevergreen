@@ -15,7 +15,7 @@ import {encrypt, EncryptResponse} from '../../gateways/SecurityGateway'
 import styles from './add-backup.scss'
 import {isHttp} from '../../domain/Url'
 import {RemoteLocationLogo} from './RemoteLocationLogo'
-import {firstError, FormErrors} from '../../common/forms/Validation'
+import {firstError, FormErrors, removeErrorFromState} from '../../common/forms/Validation'
 import {ErrorMessages} from '../../common/Messages'
 
 type Fields = 'url' | 'accessToken'
@@ -102,12 +102,13 @@ export function AddBackup(): ReactElement {
       </div>
       <Input value={url}
              onChange={({target}) => {
-               setValidationErrors([])
+               setValidationErrors(removeErrorFromState<Fields>('url'))
                setUrl(target.value)
              }}
              autoComplete='url'
-             error={firstError('url', validationErrors)}
-             disabled={adding}>
+             error={firstError<Fields>('url', validationErrors)}
+             disabled={adding}
+             data-locator='url'>
         <span className={styles.label}>URL</span>
       </Input>
       <Input className={cn(styles.id, {[styles.gitHubLabOnly]: isCustomServer})}
@@ -123,10 +124,10 @@ export function AddBackup(): ReactElement {
       <Password className={cn({[styles.gitHubLabOnly]: isCustomServer})}
                 value={accessToken}
                 onChange={({target}) => {
-                  setValidationErrors([])
+                  setValidationErrors(removeErrorFromState<Fields>('accessToken'))
                   setAccessToken(target.value)
                 }}
-                error={firstError('accessToken', validationErrors)}
+                error={firstError<Fields>('accessToken', validationErrors)}
                 disabled={adding || isCustomServer}
                 aria-hidden={isCustomServer}
                 data-locator='access-token'>

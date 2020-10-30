@@ -97,3 +97,25 @@ it('should not be able to add a remote GitHub gist backup with a blank access to
     expect(queryByText('Please enter an access token')).toBeInTheDocument()
   })
 })
+
+it('should only clear errors for the changed field on type', async () => {
+  const {getByText, getByLabelText, queryByText, getByTestId} = render(<RemoteBackups/>)
+
+  userEvent.click(getByText('Add location'))
+
+  userEvent.selectOptions(getByLabelText('Where'), 'github')
+  userEvent.clear(getByLabelText('URL'))
+  userEvent.click(within(getByTestId('modal')).getByText('Add location'))
+
+  await waitFor(() => {
+    expect(queryByText('Please enter the URL')).toBeInTheDocument()
+    expect(queryByText('Please enter an access token')).toBeInTheDocument()
+  })
+
+  await userEvent.type(getByTestId('url'), 'h')
+
+  await waitFor(() => {
+    expect(queryByText('Please enter the URL')).not.toBeInTheDocument()
+    expect(queryByText('Please enter an access token')).toBeInTheDocument()
+  })
+})
