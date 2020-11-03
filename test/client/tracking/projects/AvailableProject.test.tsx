@@ -24,6 +24,6 @@ it('should render removed tag if the project was removed', () => {
 
 it('should render the description', () => {
   const props = {...DEFAULT_PROPS, description: 'name stage'}
-  const {getByTestId} = render(<AvailableProject {...props} />)
-  expect(getByTestId('name')).toHaveTextContent('name stage')
+  const {getByText} = render(<AvailableProject {...props} />)
+  expect(getByText('name stage')).toBeInTheDocument()
 })

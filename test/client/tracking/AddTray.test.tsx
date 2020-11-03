@@ -45,11 +45,11 @@ it('should allow adding trays with basic auth', async () => {
     [TRAYS_ROOT]: {}
   }
 
-  const {getByTestId, getByText, getByLabelText, store} = render(<AddTray {...DEFAULT_PROPS}/>, state)
+  const {getByText, getByLabelText, store} = render(<AddTray {...DEFAULT_PROPS}/>, state)
   await userEvent.type(getByLabelText('URL'), 'some-new-url')
   userEvent.click(getByLabelText('Basic auth'))
   await userEvent.type(getByLabelText('Username'), 'some-username')
-  await userEvent.type(getByTestId('auth-password'), 'some-password')
+  await userEvent.type(getByLabelText('Password'), 'some-password')
   userEvent.click(getByText('Add feed'))
 
   await waitFor(() => {
@@ -68,10 +68,10 @@ it('should allow adding trays with an access token', async () => {
     [TRAYS_ROOT]: {}
   }
 
-  const {getByTestId, getByText, getByLabelText, store} = render(<AddTray {...DEFAULT_PROPS}/>, state)
+  const {getByText, getByLabelText, store} = render(<AddTray {...DEFAULT_PROPS}/>, state)
   await userEvent.type(getByLabelText('URL'), 'some-new-url')
   userEvent.click(getByLabelText('Access token'))
-  await userEvent.type(getByTestId('auth-access-token'), 'some-token')
+  await userEvent.type(getByLabelText('Token'), 'some-token')
   userEvent.click(getByText('Add feed'))
 
   await waitFor(() => {
@@ -85,12 +85,12 @@ it('should allow adding trays with an access token', async () => {
 })
 
 it('should reset the form after adding a tray', async () => {
-  const {getByTestId, queryByTestId, getByText, getByLabelText, queryByLabelText, queryByText} = render(
+  const {queryByTestId, getByText, getByLabelText, queryByLabelText, queryByText} = render(
     <AddTray {...DEFAULT_PROPS}/>
   )
   await userEvent.type(getByLabelText('URL'), 'some-new-url')
   userEvent.click(getByLabelText('Access token'))
-  await userEvent.type(getByTestId('auth-access-token'), 'some-token')
+  await userEvent.type(getByLabelText('Token'), 'some-token')
   userEvent.click(getByText('Add feed'))
 
   await waitFor(() => {

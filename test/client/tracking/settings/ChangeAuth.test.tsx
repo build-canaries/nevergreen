@@ -38,10 +38,10 @@ it('should be able to change the auth to basic', async () => {
   const save = jest.fn()
   const props = {...DEFAULT_PROPS, show: true, save}
 
-  const {getByTestId, getByText, getByLabelText} = render(<ChangeAuth {...props} />)
+  const {getByText, getByLabelText} = render(<ChangeAuth {...props} />)
   userEvent.click(getByLabelText('Basic auth'))
   await userEvent.type(getByLabelText('Username'), 'some-username')
-  await userEvent.type(getByTestId('auth-password'), 'some-password')
+  await userEvent.type(getByLabelText('Password'), 'some-password')
   userEvent.click(getByText('Save changes'))
 
   await waitFor(() => {
@@ -54,9 +54,9 @@ it('should be able to change the auth to access token', async () => {
   const save = jest.fn()
   const props = {...DEFAULT_PROPS, show: true, save}
 
-  const {getByTestId, getByText, getByLabelText} = render(<ChangeAuth {...props} />)
+  const {getByText, getByLabelText} = render(<ChangeAuth {...props} />)
   userEvent.click(getByLabelText('Access token'))
-  await userEvent.type(getByTestId('auth-access-token'), 'some-token')
+  await userEvent.type(getByLabelText('Token'), 'some-token')
   userEvent.click(getByText('Save changes'))
 
   await waitFor(() => {

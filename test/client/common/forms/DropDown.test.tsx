@@ -8,10 +8,10 @@ it('should add all the given options', () => {
     {value: 'b', display: 'B'},
     {value: 'c', display: 'C'}
   ]
-  const {getByText} = render(<DropDown options={options}>label</DropDown>)
-  expect(getByText('A')).toBeInTheDocument()
-  expect(getByText('B')).toBeInTheDocument()
-  expect(getByText('C')).toBeInTheDocument()
+  const {queryByText} = render(<DropDown options={options}>label</DropDown>)
+  expect(queryByText('A')).toBeInTheDocument()
+  expect(queryByText('B')).toBeInTheDocument()
+  expect(queryByText('C')).toBeInTheDocument()
 })
 
 // https://ffoodd.github.io/a11y.css/errors.html#namespace

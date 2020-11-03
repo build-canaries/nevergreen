@@ -1,10 +1,9 @@
 import React, {ReactNode} from 'react'
-import {fireEvent} from '@testing-library/react'
+import {waitFor} from '@testing-library/react'
 import {TraySettings} from '../../../../src/client/tracking/settings/TraySettings'
 import {buildTray, render, setupReactModal} from '../../testHelpers'
 import {getTrays, TRAYS_ROOT} from '../../../../src/client/tracking/TraysReducer'
 import userEvent from '@testing-library/user-event'
-import {waitFor} from '@testing-library/react'
 import {AuthTypes} from '../../../../src/client/domain/Tray'
 import * as SecurityGateway from '../../../../src/client/gateways/SecurityGateway'
 import {fakeRequest} from '../../../../src/client/gateways/Gateway'
@@ -35,14 +34,12 @@ it('should set the tray name on blur', async () => {
   const state = {
     [TRAYS_ROOT]: {trayId: tray}
   }
-  const {getByTestId, store} = render(<TraySettings {...DEFAULT_PROPS} tray={tray}/>, state)
+  const {getByLabelText, store} = render(<TraySettings {...DEFAULT_PROPS} tray={tray}/>, state)
 
-  // clear the input before typing
-  fireEvent.change(getByTestId('tray-name'), { target: { value: '' } })
-
-  userEvent.click(getByTestId('tray-name'))
-  await userEvent.type(getByTestId('tray-name'), 'some-new-name')
-  getByTestId('tray-name').blur()
+  const nameInput = getByLabelText('Name')
+  userEvent.clear(nameInput)
+  await userEvent.type(nameInput, 'some-new-name')
+  nameInput.blur()
 
   expect(getTrays(store.getState())[0].name).toEqual('some-new-name')
 })
@@ -74,12 +71,10 @@ it('should set the tray URL on blur if it is different', async () => {
 
   const {getByLabelText, store} = render(<TraySettings {...props}/>, state)
 
-  // clear the input before typing
-  fireEvent.change(getByLabelText('URL'), { target: { value: '' } })
-
-  userEvent.click(getByLabelText('URL'))
-  await userEvent.type(getByLabelText('URL'), 'http://some-new-url')
-  getByLabelText('URL').blur()
+  const urlInput = getByLabelText('URL')
+  userEvent.clear(urlInput)
+  await userEvent.type(urlInput, 'http://some-new-url')
+  urlInput.blur()
 
   expect(setRequiresRefresh).toHaveBeenCalledWith(true)
   expect(getTrays(store.getState())[0].url).toEqual('http://some-new-url')
@@ -98,12 +93,10 @@ it('should not call requires refresh if the URL is the same', async () => {
 
   const {getByLabelText} = render(<TraySettings {...props}/>, state)
 
-  // clear the input before typing
-  fireEvent.change(getByLabelText('URL'), { target: { value: '' } })
-
-  userEvent.click(getByLabelText('URL'))
-  await userEvent.type(getByLabelText('URL'), 'http://some-url')
-  getByLabelText('URL').blur()
+  const urlInput = getByLabelText('URL')
+  userEvent.clear(urlInput)
+  await userEvent.type(urlInput, 'http://some-url')
+  urlInput.blur()
 
   expect(setRequiresRefresh).not.toHaveBeenCalled()
 })
@@ -175,11 +168,11 @@ it('should be able to change the auth to basic', async () => {
   }
   const props = {...DEFAULT_PROPS, tray, setRequiresRefresh}
 
-  const {getByText, getByLabelText, getByTestId, store} = render(<TraySettings {...props}/>, state)
+  const {getByText, getByLabelText, store} = render(<TraySettings {...props}/>, state)
   userEvent.click(getByText('Change auth'))
   userEvent.click(getByLabelText('Basic auth'))
   await userEvent.type(getByLabelText('Username'), 'some-username')
-  await userEvent.type(getByTestId('auth-password'), 'some-password')
+  await userEvent.type(getByLabelText('Password'), 'some-password')
   userEvent.click(getByText('Save changes'))
 
   await waitFor(() => {

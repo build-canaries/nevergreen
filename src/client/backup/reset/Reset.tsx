@@ -15,13 +15,12 @@ export function Reset(): ReactElement {
   }
 
   return (
-    <Container title='Reset configuration' className={styles.container}>
+    <Container title='Reset configuration' initiallyHidden className={styles.container}>
       <p className={styles.warning}>
         Reset your Nevergreen configuration back to defaults. <strong>Please note, resetting your configuration can not
         be undone!</strong>
       </p>
       <DangerButton className={styles.reset}
-                    data-locator='reset-configuration'
                     onClick={resetConfiguration}
                     disabled={resetting}
                     icon={iBin}>

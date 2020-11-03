@@ -107,8 +107,7 @@ export function AddBackup(): ReactElement {
              }}
              autoComplete='url'
              error={firstError<Fields>('url', validationErrors)}
-             disabled={adding}
-             data-locator='url'>
+             disabled={adding}>
         <span className={styles.label}>URL</span>
       </Input>
       <Input className={cn(styles.id, {[styles.gitHubLabOnly]: isCustomServer})}
@@ -129,8 +128,7 @@ export function AddBackup(): ReactElement {
                 }}
                 error={firstError<Fields>('accessToken', validationErrors)}
                 disabled={adding || isCustomServer}
-                aria-hidden={isCustomServer}
-                data-locator='access-token'>
+                aria-hidden={isCustomServer}>
         <span className={styles.label}>Access token</span>
       </Password>
       <Input className={cn({[styles.gitHubLabOnly]: isCustomServer})}

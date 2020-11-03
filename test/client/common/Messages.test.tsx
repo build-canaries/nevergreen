@@ -16,6 +16,7 @@ it('should not render anything if messages is a blank string', () => {
 
 it('should render the messages', () => {
   const props = {type: MessagesType.ERROR, messages: ['some-message', 'another-message']}
-  const {getByTestId} = render(<Messages {...props} />)
-  expect(getByTestId('error-messages')).toHaveTextContent('some-messageanother-message')
+  const {queryByText} = render(<Messages {...props} />)
+  expect(queryByText('some-message')).toBeInTheDocument()
+  expect(queryByText('another-message')).toBeInTheDocument()
 })

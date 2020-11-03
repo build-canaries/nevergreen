@@ -62,8 +62,11 @@ export function Input({children, onEnter, className, readOnly, focus, button, er
   })
 
   return (
-    <label className={labelClasses} htmlFor={actualId}>
-      <span className={formStyles.inputLabel}>{children}</span>
+    <div className={labelClasses}>
+      <label className={formStyles.inputLabel}
+             htmlFor={actualId}>
+        {children}
+      </label>
       <span className={wrapperClasses}>
           <input className={inputClasses}
                  onKeyPress={(evt) => onKeyPress(evt)}
@@ -92,6 +95,6 @@ export function Input({children, onEnter, className, readOnly, focus, button, er
                        className={styles.errorMessage}
                        messages={error}/>
       </span>
-    </label>
+    </div>
   )
 }

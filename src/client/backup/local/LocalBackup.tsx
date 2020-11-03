@@ -8,8 +8,12 @@ export function LocalBackup(): ReactElement {
   return (
     <Container title='Local backup'>
       <div className={styles.container}>
-        <Import/>
-        <Export/>
+        <div>
+          <Import/>
+        </div>
+        <div>
+          <Export/>
+        </div>
       </div>
     </Container>
   )

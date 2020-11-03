@@ -1,8 +1,8 @@
-import {BackupLocation} from '../backup/BackupActionCreators'
 import {post} from './Gateway'
 import {UntrustedData} from '../configuration/LocalRepository'
 import {Request} from 'superagent'
 import {RemoteLocation} from '../backup/remote/RemoteLocationsReducer'
+import {RemoteLocationOptions} from '../backup/remote/RemoteLocationOptions'
 
 export interface ExportResponse {
   readonly id: string;
@@ -12,7 +12,7 @@ export interface ImportResponse {
   readonly configuration: UntrustedData;
   readonly description: string;
   readonly id: string;
-  readonly where: BackupLocation;
+  readonly where: RemoteLocationOptions;
 }
 
 export function exportConfiguration(where: string, id: string, description: string, configuration: string, token: string, url: string): Request {

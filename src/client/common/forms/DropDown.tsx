@@ -19,8 +19,8 @@ export function DropDown({className, children, options, disabled, id, ...inputPr
   const actualId = id ?? uniqueId('i')
 
   return (
-    <label className={labelClasses} htmlFor={actualId}>
-      <span className={formStyles.inputLabel}>{children}</span>
+    <div className={labelClasses}>
+      <label className={formStyles.inputLabel} htmlFor={actualId}>{children}</label>
       <select className={styles.input} {...inputProps} id={actualId}>
         {
           options.map((op) => {
@@ -29,6 +29,6 @@ export function DropDown({className, children, options, disabled, id, ...inputPr
         }
       </select>
       <span className={cn(styles.arrow, {[styles.disabled]: disabled})} aria-hidden/>
-    </label>
+    </div>
   )
 }
