@@ -58,8 +58,7 @@ module.exports = {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: '[name].[hash:8].css',
-      allChunks: true
+      filename: '[name].[hash:8].css'
     }),
     new CopyWebpackPlugin({
       patterns: [
