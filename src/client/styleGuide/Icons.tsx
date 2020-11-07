@@ -24,8 +24,6 @@ export function Icons(): ReactElement {
         <span className={icons['icon-eye-blocked']}>eye blocked</span>
         <span className={icons['icon-floppy-disk']}>floppy disk</span>
         <span className={icons['icon-github4']}>github 4</span>
-        <span className={icons['icon-hipster']}>hipster</span>
-        <span className={icons['icon-list']}>list</span>
         <span className={icons['icon-lock']}>lock</span>
         <span className={icons['icon-loop2']}>loop 2</span>
         <span className={icons['icon-menu3']}>menu 3</span>
@@ -36,9 +34,9 @@ export function Icons(): ReactElement {
         <span className={icons['icon-plus']}>plus</span>
         <span className={icons['icon-question']}>question</span>
         <span className={icons['icon-stop2']}>stop 2</span>
-        <span className={icons['icon-stopwatch']}>stopwatch</span>
         <span className={icons['icon-twitter3']}>twitter 3</span>
         <span className={icons['icon-unlocked']}>unlocked</span>
+        <span className={icons['icon-folder-open']}>folder open</span>
       </div>
     </StyleGuideSection>
   )

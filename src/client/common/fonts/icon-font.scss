@@ -22,6 +22,12 @@
   text-transform: none;
 }
 
+.icon-folder-open::before {
+  @extend .icon;
+
+  content: '\e930';
+}
+
 .icon-floppy-disk::before {
   @extend .icon;
 

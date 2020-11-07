@@ -1,5 +1,11 @@
 @import '../../common/layout';
+@import './local-backup';
 
+.saveFile,
 .copy {
   @extend %blocking;
+
+  @include respond-to(tablet, desktop) {
+    width: $button-size;
+  }
 }
