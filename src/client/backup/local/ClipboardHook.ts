@@ -1,19 +1,27 @@
 import {useEffect} from 'react'
-import ClipboardJS, {Event} from 'clipboard'
+import ClipboardJS from 'clipboard'
 
-export function useClipboard(elementSelector: string, onSuccess: (evt: Event) => void, onError: (evt: Event) => void): void {
+export function useClipboard(elementSelector: string, onSuccess: () => void, onError: () => void): boolean {
+  const supported = ClipboardJS.isSupported()
+
   useEffect(() => {
+    if (!supported) {
+      return
+    }
+
     const clipboard = new ClipboardJS(elementSelector)
 
-    clipboard.on('error', (evt) => onError(evt))
+    clipboard.on('error', onError)
 
     clipboard.on('success', (evt) => {
-      onSuccess(evt)
+      onSuccess()
       evt.clearSelection()
     })
 
     return () => {
       clipboard.destroy()
     }
-  }, [elementSelector, onSuccess, onError])
+  }, [elementSelector, onSuccess, onError, supported])
+
+  return supported
 }

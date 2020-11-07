@@ -49,16 +49,18 @@ export function Input({children, onEnter, className, readOnly, focus, button, er
     }
   }
 
+  const hasError = !isBlank(error)
+
   const actualId = id ?? uniqueId('i')
-  const errorId = uniqueId('e')
+  const errorId = hasError ? uniqueId('e') : undefined
 
   const labelClasses = classNames(formStyles.inputContainer, className)
   const wrapperClasses = classNames(styles.wrapper, {
-    [styles.error]: !isBlank(error)
+    [styles.error]: hasError
   })
   const inputClasses = classNames(styles.input, {
     [styles.hasButton]: button || readOnly,
-    [styles.hasError]: !isBlank(error)
+    [styles.hasError]: hasError
   })
 
   return (

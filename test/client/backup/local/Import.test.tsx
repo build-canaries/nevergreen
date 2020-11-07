@@ -38,3 +38,11 @@ it('should show an error if the data is semantically invalid (missing required a
   expect(queryByText('.trays[\'some-id\'] should have required property \'trayId\'')).toBeInTheDocument()
   expect(getByDisplayValue(invalidConfiguration)).toBeInTheDocument()
 })
+
+it('should clear errors when the data is changed', async () => {
+  const {getByText, queryByText, getByLabelText} = render(<Import/>)
+  userEvent.click(getByText('Import'))
+  expect(queryByText('Please enter the configuration to import')).toBeInTheDocument()
+  await userEvent.type(getByLabelText('Configuration to import'), '{')
+  expect(queryByText('Please enter the configuration to import')).not.toBeInTheDocument()
+})

@@ -1,0 +1,42 @@
+@import '../../common/variables';
+@import '../../common/typography';
+@import '../../common/layout';
+@import '../../common/accessibility';
+
+.label {
+  @include font-scale(1);
+}
+
+.data {
+  @include font-scale(-2);
+
+  border: 1px solid $mid-grey;
+  font-family: $monospace-font;
+  height: 20em;
+  margin: $margin-top 0 0 0;
+  padding: 0.5em;
+  resize: vertical;
+  vertical-align: top; // remove whitespace from the bottom
+  white-space: pre;
+  width: 100%;
+
+  &:not(:disabled) {
+    &:read-write {
+      @include interactive($focus-color-change-percentage: 0%);
+    }
+
+    &:read-only {
+      &:focus {
+        @include focus($focus-color-change-percentage: 0%);
+      }
+    }
+  }
+}
+
+.error {
+  outline: 1px solid $error;
+}
+
+.errorMessages {
+  margin: 0;
+}

@@ -3,37 +3,32 @@ import styles from './import.scss'
 import {PrimaryButton} from '../../common/forms/Button'
 import {iFloppyDisk} from '../../common/fonts/Icons'
 import {toConfiguration} from '../../configuration/Configuration'
-import {Messages, MessagesType} from '../../common/Messages'
 import {isBlank} from '../../common/Utils'
 import {useDispatch} from 'react-redux'
 import {configurationImported} from '../BackupActionCreators'
 import {isRight} from 'fp-ts/lib/Either'
+import {TextArea} from './TextArea'
+import {TimedMessage} from './TimedMessage'
+import {MessagesType} from '../../common/Messages'
 
 const PLACEHOLDER = 'paste exported configuration here and press import'
 
 export function Import(): ReactElement {
   const dispatch = useDispatch()
-  const [messages, setMessages] = useState<ReadonlyArray<string>>([])
-  const [messageType, setMessageType] = useState(MessagesType.INFO)
+  const [success, setSuccess] = useState('')
+  const [errors, setErrors] = useState<ReadonlyArray<string>>([])
   const [data, setData] = useState('')
 
-  const setErrors = (errors: ReadonlyArray<string>) => {
-    setMessageType(MessagesType.ERROR)
-    setMessages(errors)
-  }
-
-  const setInfos = (infos: ReadonlyArray<string>) => {
-    setMessageType(MessagesType.INFO)
-    setMessages(infos)
-  }
-
   const doImport = () => {
+    setErrors([])
+    setSuccess('')
+
     if (isBlank(data)) {
       setErrors(['Please enter the configuration to import'])
     } else {
       const result = toConfiguration(data)
       if (isRight(result)) {
-        setInfos(['Successfully imported configuration'])
+        setSuccess('Successfully imported configuration')
         dispatch(configurationImported(result.right))
         setData('')
       } else {
@@ -44,24 +39,22 @@ export function Import(): ReactElement {
 
   return (
     <>
-      <label>
-        <span className={styles.label}>Configuration to import</span>
-        <textarea className={styles.data}
-                  placeholder={PLACEHOLDER}
-                  value={data}
-                  onChange={({target}) => setData(target.value)}
-                  spellCheck={false}
-                  data-locator='import-data'/>
-      </label>
+      <TextArea label='Configuration to import'
+                error={errors}
+                placeholder={PLACEHOLDER}
+                value={data}
+                onChange={({target}) => {
+                  setData(target.value)
+                  setErrors([])
+                }}
+                data-locator='import-data'/>
+      <TimedMessage type={MessagesType.INFO} clear={setSuccess} messages={success}/>
       <PrimaryButton className={styles.import}
                      onClick={doImport}
                      data-locator='import'
                      icon={iFloppyDisk}>
         Import
       </PrimaryButton>
-      <Messages type={messageType}
-                messages={messages}
-                data-locator='messages'/>
     </>
   )
 }
