@@ -2,6 +2,7 @@ import {toConfiguration, toExportableConfigurationJson} from '../../../src/clien
 import {isLeft, isRight} from 'fp-ts/lib/Either'
 import {buildRemoteBackupLocation, buildState} from '../testHelpers'
 import {BACKUP_REMOTE_LOCATIONS_ROOT} from '../../../src/client/backup/remote/RemoteLocationsReducer'
+import {SETTINGS_ROOT} from '../../../src/client/settings/SettingsReducer'
 
 describe('toConfiguration', () => {
 
@@ -146,5 +147,15 @@ describe('toExportableConfigurationJson', () => {
     const exportable = toExportableConfigurationJson(state)
     expect(exportable).not.toMatch('"exportTimestamp": "some-export-timestamp"')
     expect(exportable).not.toMatch('"importTimestamp": "some-import-timestamp"')
+  })
+
+  it('removes system notifications preference because we treat them as personal settings', () => {
+    const state = buildState({
+      [SETTINGS_ROOT]: {
+        showSystemNotifications: true
+      }
+    })
+    const exportable = toExportableConfigurationJson(state)
+    expect(exportable).not.toMatch('"showSystemNotifications": true')
   })
 })

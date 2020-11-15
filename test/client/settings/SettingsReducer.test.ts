@@ -85,6 +85,13 @@ describe(Actions.CONFIGURATION_IMPORTED, () => {
     const newState = reducer(existingState, action)
     expect(getShowBuildLabel(newState)).toBeTruthy()
   })
+
+  it('should not reset show system notification when imported state does not contain it', () => {
+    const existingState = state({showSystemNotifications: true})
+    const action = configurationImported({[SETTINGS_ROOT]: {}})
+    const newState = reducer(existingState, action)
+    expect(getShowSystemNotifications(newState)).toBeTruthy()
+  })
 })
 
 describe(Actions.SHOW_BUILD_TIME, () => {
