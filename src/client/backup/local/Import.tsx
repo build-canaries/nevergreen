@@ -2,7 +2,7 @@ import React, {ReactElement, useState} from 'react'
 import styles from './import.scss'
 import {PrimaryButton} from '../../common/forms/Button'
 import {iFloppyDisk} from '../../common/fonts/Icons'
-import {toConfiguration} from '../../configuration/Configuration'
+import {DataSource, toConfiguration} from '../../configuration/Configuration'
 import {isBlank} from '../../common/Utils'
 import {useDispatch} from 'react-redux'
 import {configurationImported} from '../BackupActionCreators'
@@ -72,7 +72,7 @@ export function Import(): ReactElement {
     if (isBlank(data)) {
       setErrors(['Please enter the configuration to import'])
     } else {
-      const result = toConfiguration(data)
+      const result = toConfiguration(data, DataSource.UserImport)
       if (isRight(result)) {
         setSuccess('Successfully imported configuration')
         dispatch(configurationImported(result.right))

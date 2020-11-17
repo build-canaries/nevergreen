@@ -1,5 +1,5 @@
 import validateConfiguration from './ValidateConfiguration'
-import {cloneDeep, isString} from 'lodash'
+import {cloneDeep, isString, unset} from 'lodash'
 import {RecursivePartial} from '../common/Types'
 import {State} from '../Reducer'
 import {fromJson, toJson} from '../common/Json'
@@ -10,13 +10,26 @@ import {errorMessage} from '../common/Utils'
 import {BACKUP_REMOTE_LOCATIONS_ROOT} from '../backup/remote/RemoteLocationsReducer'
 import {SETTINGS_ROOT} from '../settings/SettingsReducer'
 
+export enum DataSource {
+  BrowserStorage,
+  UserImport
+}
+
 export interface Configuration extends RecursivePartial<State> {
 }
 
 export const schema: Readonly<Record<string, unknown>> = validateConfiguration.schema
 
+function additionalFiltering(data: UntrustedData, dataSource: DataSource): void {
+  if (dataSource === DataSource.UserImport) {
+    unset(data, 'settings.showSystemNotifications')
+  }
+}
+
 // ValidateConfiguration is generated using ajv-pack which is why it has a strange signature
-function validateAndFilter(data: UntrustedData): Either<ReadonlyArray<string>, Configuration> {
+function validateAndFilter(data: UntrustedData, dataSource: DataSource): Either<ReadonlyArray<string>, Configuration> {
+  additionalFiltering(data, dataSource)
+
   // Mutates the given object to filter unknown properties, and returns a boolean whether valid or not
   if (validateConfiguration(data)) {
     return right(data)
@@ -26,13 +39,13 @@ function validateAndFilter(data: UntrustedData): Either<ReadonlyArray<string>, C
   }
 }
 
-export function toConfiguration(raw: string | Readonly<UntrustedData>): Either<ReadonlyArray<string>, Configuration> {
+export function toConfiguration(untrustedData: string | Readonly<UntrustedData>, dataSource: DataSource): Either<ReadonlyArray<string>, Configuration> {
   try {
-    const data = isString(raw)
-      ? fromJson(raw)
-      : cloneDeep(raw)
+    const data = isString(untrustedData)
+      ? fromJson(untrustedData)
+      : cloneDeep(untrustedData)
     migrate(data)
-    return validateAndFilter(data)
+    return validateAndFilter(data, dataSource)
   } catch (error) {
     return left([errorMessage(error)])
   }

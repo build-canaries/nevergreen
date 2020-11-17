@@ -1,4 +1,8 @@
-import {toConfiguration, toExportableConfigurationJson} from '../../../src/client/configuration/Configuration'
+import {
+  DataSource,
+  toConfiguration,
+  toExportableConfigurationJson
+} from '../../../src/client/configuration/Configuration'
 import {isLeft, isRight} from 'fp-ts/lib/Either'
 import {buildRemoteBackupLocation, buildState} from '../testHelpers'
 import {BACKUP_REMOTE_LOCATIONS_ROOT} from '../../../src/client/backup/remote/RemoteLocationsReducer'
@@ -14,7 +18,7 @@ describe('toConfiguration', () => {
         }
       }
     }
-    const result = toConfiguration(data)
+    const result = toConfiguration(data, DataSource.BrowserStorage)
     expect(isLeft(result)).toBeTruthy()
     if (isLeft(result)) {
       expect(result.left).not.toHaveLength(0)
@@ -29,7 +33,7 @@ describe('toConfiguration', () => {
         }
       }
     }
-    const result = toConfiguration(data)
+    const result = toConfiguration(data, DataSource.BrowserStorage)
     expect(isLeft(result)).toBeTruthy()
     if (isLeft(result)) {
       expect(result.left).not.toHaveLength(0)
@@ -44,7 +48,7 @@ describe('toConfiguration', () => {
         }
       }
     }
-    const result = toConfiguration(data)
+    const result = toConfiguration(data, DataSource.BrowserStorage)
     expect(isLeft(result)).toBeTruthy()
     if (isLeft(result)) {
       expect(result.left).not.toHaveLength(0)
@@ -59,7 +63,7 @@ describe('toConfiguration', () => {
         }
       }
     }
-    const result = toConfiguration(data)
+    const result = toConfiguration(data, DataSource.BrowserStorage)
     expect(isLeft(result)).toBeTruthy()
     if (isLeft(result)) {
       expect(result.left).not.toHaveLength(0)
@@ -75,7 +79,7 @@ describe('toConfiguration', () => {
         }
       }
     }
-    const result = toConfiguration(data)
+    const result = toConfiguration(data, DataSource.BrowserStorage)
     expect(isLeft(result)).toBeTruthy()
     if (isLeft(result)) {
       expect(result.left).not.toHaveLength(0)
@@ -91,7 +95,7 @@ describe('toConfiguration', () => {
         }
       }
     }
-    const result = toConfiguration(data)
+    const result = toConfiguration(data, DataSource.BrowserStorage)
     expect(isLeft(result)).toBeTruthy()
     if (isLeft(result)) {
       expect(result.left).not.toHaveLength(0)
@@ -107,7 +111,7 @@ describe('toConfiguration', () => {
         }
       }
     }
-    const result = toConfiguration(data)
+    const result = toConfiguration(data, DataSource.BrowserStorage)
     expect(isLeft(result)).toBeTruthy()
     if (isLeft(result)) {
       expect(result.left).not.toHaveLength(0)
@@ -116,7 +120,7 @@ describe('toConfiguration', () => {
 
   it('removes unknown properties', () => {
     const data = {foo: 'bar'}
-    const result = toConfiguration(data)
+    const result = toConfiguration(data, DataSource.BrowserStorage)
     expect(isRight(result)).toBeTruthy()
     if (isRight(result)) {
       expect(result.right).not.toHaveProperty('foo')
@@ -125,10 +129,28 @@ describe('toConfiguration', () => {
 
   it('keeps known properties', () => {
     const data = {trays: {}}
-    const result = toConfiguration(data)
+    const result = toConfiguration(data, DataSource.BrowserStorage)
     expect(isRight(result)).toBeTruthy()
     if (isRight(result)) {
       expect(result.right).toEqual(expect.objectContaining({trays: {}}))
+    }
+  })
+
+  it('removes the show system notifications property when a user import as this property is no longer exported (but this import could be from an old version)', () => {
+    const data = {settings: {showSystemNotifications: true}}
+    const result = toConfiguration(data, DataSource.UserImport)
+    expect(isRight(result)).toBeTruthy()
+    if (isRight(result)) {
+      expect(result.right).not.toHaveProperty('settings.showSystemNotifications')
+    }
+  })
+
+  it('keeps the show system notifications property when loading from browser storage', () => {
+    const data = {settings: {showSystemNotifications: true}}
+    const result = toConfiguration(data, DataSource.BrowserStorage)
+    expect(isRight(result)).toBeTruthy()
+    if (isRight(result)) {
+      expect(result.right).toHaveProperty('settings.showSystemNotifications')
     }
   })
 })

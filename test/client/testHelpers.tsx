@@ -27,9 +27,7 @@ interface ExtendedRenderResult extends RenderResult {
 }
 
 export function buildState(subState: RecursivePartial<State> = {}): State {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore This broke after upgrading to TypeScript > 3.8, see my comment on https://stackoverflow.com/a/51365037
-  return merge({
+  const defaultState: State = {
     [SETTINGS_ROOT]: {
       brokenBuildSoundFx: '',
       clickToShowMenu: false,
@@ -40,8 +38,6 @@ export function buildState(subState: RecursivePartial<State> = {}): State {
       showBuildTime: false,
       showSystemNotifications: false,
       showTrayName: false,
-      systemNotificationPermissionDenied: false,
-      systemNotificationRequestingPermission: false,
       showPrognosis: [],
       sort: SortBy.default,
       enableNewVersionCheck: true
@@ -52,7 +48,8 @@ export function buildState(subState: RecursivePartial<State> = {}): State {
     [TRAYS_ROOT]: {},
     [APPLIED_MIGRATIONS_ROOT]: [],
     [BACKUP_REMOTE_LOCATIONS_ROOT]: {}
-  }, subState)
+  }
+  return merge(defaultState, subState)
 }
 
 export function setupReactModal(): void {

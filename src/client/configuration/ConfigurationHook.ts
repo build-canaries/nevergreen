@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react'
 import {useDispatch} from 'react-redux'
 import {init, load} from './LocalRepository'
-import {toConfiguration} from './Configuration'
+import {DataSource, toConfiguration} from './Configuration'
 import {join} from 'lodash'
 import {configurationImported} from '../backup/BackupActionCreators'
 import {isRight} from 'fp-ts/lib/Either'
@@ -15,8 +15,8 @@ export function useLocalConfiguration(): boolean {
 
     const loadData = async () => {
       await init()
-      const rawData = await load()
-      const result = toConfiguration(rawData)
+      const untrustedData = await load()
+      const result = toConfiguration(untrustedData, DataSource.BrowserStorage)
 
       if (isRight(result)) {
         dispatch(configurationImported(result.right))

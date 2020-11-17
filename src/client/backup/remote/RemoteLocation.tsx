@@ -15,7 +15,7 @@ import {
   fetchConfigurationNew,
   ImportResponse
 } from '../../gateways/BackupGateway'
-import {toConfiguration, toExportableConfigurationJson} from '../../configuration/Configuration'
+import {DataSource, toConfiguration, toExportableConfigurationJson} from '../../configuration/Configuration'
 import {errorMessage, isBlank, isNotBlank} from '../../common/Utils'
 import {ErrorMessages} from '../../common/Messages'
 import {isRight} from 'fp-ts/Either'
@@ -48,7 +48,7 @@ export function RemoteLocation({location}: RemoteLocationProps): ReactElement {
     setErrors([])
     try {
       const res = await send<ImportResponse>(fetchConfigurationNew(location))
-      const result = toConfiguration(res.configuration)
+      const result = toConfiguration(res.configuration, DataSource.UserImport)
       if (isRight(result)) {
         dispatch(configurationImported(result.right))
         dispatch(backupImported(location.internalId))
