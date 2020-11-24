@@ -21,9 +21,10 @@ import {DEFAULT_FONT_METRICS, FontMetrics, FontMetricsContext} from './FontMetri
 import {Preview} from './settings/Preview'
 import {useShortcut} from './common/Keyboard'
 import {useCheckForNewVersion} from './CheckForNewVersionHook'
+import {UnhandledErrorMessage} from './UnhandledErrorMessage'
 
 export function Nevergreen(): ReactElement {
-  const loaded = useLocalConfiguration()
+  const {loaded, error} = useLocalConfiguration()
 
   const [notification, setNotification] = useState('')
   const [fontMetrics, setFontMetrics] = useState(DEFAULT_FONT_METRICS)
@@ -48,8 +49,12 @@ export function Nevergreen(): ReactElement {
     }
   })
 
+  if (error) {
+    return <UnhandledErrorMessage/>
+  }
+
   return (
-    <Loading dark={true} loaded={loaded}>
+    <Loading dark loaded={loaded}>
       <FontMetrics ref={fontMetricsRef}/>
       <FontMetricsContext.Provider value={fontMetrics}>
         <KeyboardShortcuts/>

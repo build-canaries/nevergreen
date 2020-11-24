@@ -2,26 +2,39 @@ import {useEffect, useState} from 'react'
 import {useDispatch} from 'react-redux'
 import {init, load} from './LocalRepository'
 import {DataSource, toConfiguration} from './Configuration'
-import {join} from 'lodash'
 import {configurationImported} from '../backup/BackupActionCreators'
 import {isRight} from 'fp-ts/lib/Either'
+import * as logger from '../common/Logger'
+import {join} from 'lodash'
 
-export function useLocalConfiguration(): boolean {
+interface Result {
+  readonly loaded: boolean;
+  readonly error: boolean;
+}
+
+export function useLocalConfiguration(): Result {
   const dispatch = useDispatch()
   const [loaded, setLoaded] = useState(false)
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     setLoaded(false)
 
     const loadData = async () => {
-      await init()
-      const untrustedData = await load()
-      const result = toConfiguration(untrustedData, DataSource.BrowserStorage)
+      try {
+        await init()
+        const untrustedData = await load()
+        const result = toConfiguration(untrustedData, DataSource.BrowserStorage)
 
-      if (isRight(result)) {
-        dispatch(configurationImported(result.right))
-      } else {
-        throw new Error(`Unable to initalise Nevergreen because of configuration loadings errors, ${join(result.left, ', ')}`)
+        if (isRight(result)) {
+          dispatch(configurationImported(result.right))
+        } else {
+          logger.error(`Unable to initalise Nevergreen because of configuration validation errors, ${join(result.left, ', ')}`)
+          setError(true)
+        }
+      } catch (e) {
+        logger.error('Unable to initalise Nevergreen because of configuration loading error', e)
+        setError(true)
       }
 
       setLoaded(true)
@@ -30,5 +43,5 @@ export function useLocalConfiguration(): boolean {
     void loadData()
   }, [dispatch])
 
-  return loaded
+  return {loaded, error}
 }

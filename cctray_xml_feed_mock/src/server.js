@@ -116,4 +116,8 @@ app.post('/backup/:id', function (req, res) {
   res.sendStatus(200)
 })
 
-app.listen(5050)
+const server = app.listen(5050)
+
+process.on('SIGTERM', () => {
+  server.close()
+})

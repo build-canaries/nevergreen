@@ -20,10 +20,8 @@ export function warn(message: string, ...data: unknown[]): void {
   }
 }
 
-export function error(message: string, e: Error): void {
-  if (process.env.NODE_ENV !== 'production') {
-    console.error(message, e)
-  }
+export function error(message: string, e?: Error): void {
+  console.error(message, e)
 }
 
 /* eslint-enable no-console */

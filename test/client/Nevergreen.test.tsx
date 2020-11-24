@@ -1,8 +1,10 @@
 import React from 'react'
+import {left} from 'fp-ts/lib/Either'
 import {Nevergreen} from '../../src/client/Nevergreen'
 import {render} from './testHelpers'
 import {fireEvent, waitFor} from '@testing-library/react'
 import * as LocalConfiguration from '../../src/client/configuration/LocalRepository'
+import * as Configuration from '../../src/client/configuration/Configuration'
 import * as ServiceWorkerHook from '../../src/client/ServiceWorkerHook'
 import * as Gateway from '../../src/client/gateways/Gateway'
 import {fakeRequest} from '../../src/client/gateways/Gateway'
@@ -27,6 +29,26 @@ it('should load configuration, register service worker and check for a new versi
     expect(Gateway.get).toHaveBeenCalledWith('https://api.github.com/repos/build-canaries/nevergreen/releases/latest')
     expect(ServiceWorkerHook.useServiceWorker).toHaveBeenCalled()
     expect(getByTestId('notification')).toHaveTextContent(/^A new version [0-9.]* is available to download from GitHub now!$/)
+  })
+})
+
+it('when loaded config is invalid, should show error screen', async () => {
+  jest.spyOn(Configuration, 'toConfiguration').mockReturnValue(left(['bang!']))
+
+  const {queryByText} = render(<Nevergreen/>)
+
+  await waitFor(() => {
+    expect(queryByText('Something went wrong.')).toBeInTheDocument()
+  })
+})
+
+it('when config fails to load, should show error screen', async () => {
+  jest.spyOn(LocalConfiguration, 'load').mockRejectedValue(new Error('bang!'))
+
+  const {queryByText} = render(<Nevergreen/>)
+
+  await waitFor(() => {
+    expect(queryByText('Something went wrong.')).toBeInTheDocument()
   })
 })
 
