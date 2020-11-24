@@ -7,9 +7,9 @@ import {ActionConfigurationImported} from '../backup/BackupActionCreators'
 
 export interface SavedProject {
   readonly description: string;
-  readonly isNew: boolean;
+  readonly isNew?: boolean;
   readonly projectId: string;
-  readonly removed: boolean;
+  readonly removed?: boolean;
   readonly trayId: string;
 }
 

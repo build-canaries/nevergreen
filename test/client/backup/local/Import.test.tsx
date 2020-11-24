@@ -35,7 +35,7 @@ it('should show an error if the data is semantically invalid (missing required a
   await userEvent.type(getByLabelText('Configuration to import'), invalidConfiguration)
   userEvent.click(getByText('Import now'))
 
-  expect(queryByText('.trays[\'some-id\'] should have required property \'trayId\'')).toBeInTheDocument()
+  expect(queryByText('Invalid value undefined supplied to /trays/some-id/trayId expected string')).toBeInTheDocument()
   expect(getByDisplayValue(invalidConfiguration)).toBeInTheDocument()
 })
 
