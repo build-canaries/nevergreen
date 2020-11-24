@@ -131,7 +131,10 @@ export function Import(): ReactElement {
              type='file'
              accept='.json,.txt,application/json,text/plain'
              multiple={false}
-             onChange={(evt) => openFile(evt.target.files)}/>
+             onChange={(evt) => {
+               void openFile(evt.target.files)
+               evt.target.value = '' // allows the same file to be opened multiple times in a row
+             }}/>
       <label className={styles.openFile} htmlFor='open-file'>Open backup...</label>
     </div>
   )

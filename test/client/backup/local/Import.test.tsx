@@ -46,3 +46,8 @@ it('should clear errors when the data is changed', async () => {
   await userEvent.type(getByLabelText('Configuration to import'), '{')
   expect(queryByText('Please enter the configuration to import')).not.toBeInTheDocument()
 })
+
+it('should allow JSON and plain text files to be opened', () => {
+  const {getByLabelText} = render(<Import/>)
+  expect(getByLabelText('Open backup...')).toHaveAttribute('accept', '.json,.txt,application/json,text/plain')
+})
