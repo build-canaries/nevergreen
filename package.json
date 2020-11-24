@@ -19,7 +19,6 @@
     "cypress:open": "cypress open",
     "build": "webpack --progress --config config/webpack.dev.config.js",
     "build:prod": "webpack --config config/webpack.prod.config.js",
-    "build:schema-validator": "ajv compile -s src/client/configuration/schema.json -o src/client/configuration/ValidateConfiguration.js --remove-additional --all-errors",
     "test": "jest --colors",
     "test:coverage": "jest --maxWorkers=2 --colors --coverage",
     "test:journey": "npm run cypress",
@@ -89,8 +88,6 @@
     "@types/uuid": "8.3.0",
     "@typescript-eslint/eslint-plugin": "4.6.1",
     "@typescript-eslint/parser": "4.6.1",
-    "ajv": "6.12.6",
-    "ajv-cli": "3.3.0",
     "autoprefixer": "10.0.1",
     "axe-core": "4.0.2",
     "babel-eslint": "10.1.0",
@@ -215,9 +212,6 @@
       "@typescript-eslint/no-empty-interface": "off"
     }
   },
-  "eslintIgnore": [
-    "src/client/configuration/ValidateConfiguration.js"
-  ],
   "stylelint": {
     "extends": "stylelint-config-standard",
     "plugins": [

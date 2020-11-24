@@ -63,8 +63,7 @@ module.exports = {
     new CopyWebpackPlugin({
       patterns: [
         './src/client/robots.txt',
-        './src/client/favicons',
-        './src/client/configuration/schema.json'
+        './src/client/favicons'
       ]
     }),
     new ManifestPlugin({fileName: 'asset-manifest.json'})

@@ -21,7 +21,6 @@ import {get, uniq} from 'lodash'
 import {ActionConfigurationImported} from '../backup/BackupActionCreators'
 import {SortBy} from '../gateways/ProjectsGateway'
 
-// these also need to be updated in src/client/configuration/schema.json
 export enum MaxProjectsToShow {
   small = 'small',
   medium = 'medium',

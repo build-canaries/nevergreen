@@ -13,8 +13,5 @@
   "include": [
     "./src/client",
     "./test/client"
-  ],
-  "exclude": [
-    "./src/client/configuration/ValidateConfiguration.js"
   ]
 }

@@ -1,6 +1,5 @@
 import * as t from 'io-ts'
 import {Errors} from 'io-ts'
-import validateConfiguration from './ValidateConfiguration'
 import {cloneDeep, isEmpty, isString, last, unset} from 'lodash'
 import {State} from '../Reducer'
 import {fromJson, toJson} from '../common/Json'
@@ -113,8 +112,6 @@ const Configuration = t.exact(t.partial({
 }))
 
 export type Configuration = t.TypeOf<typeof Configuration>
-
-export const schema: Readonly<Record<string, unknown>> = validateConfiguration.schema
 
 function validationErrorMessage(actual: unknown, path: string, expected: string) {
   return `Invalid value ${toJson(actual)} supplied to ${path} expected ${expected}`

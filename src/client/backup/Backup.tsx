@@ -1,5 +1,4 @@
 import React, {ReactElement} from 'react'
-import {Schema} from './Schema'
 import {LocalBackup} from './local/LocalBackup'
 import {Reset} from './reset/Reset'
 import {Title} from '../common/Title'
@@ -12,7 +11,6 @@ export function Backup(): ReactElement {
       <RemoteBackups/>
       <LocalBackup/>
       <Reset/>
-      <Schema/>
     </>
   )
 }
