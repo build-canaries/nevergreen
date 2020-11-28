@@ -1,19 +1,9 @@
 @import '../../common/variables';
-@import '~bourbon-neat/core/neat';
 @import '../../common/responsive';
 @import '../../common/typography';
 
 .availableProject {
-  @include grid-column(4 of 4);
   @include font-scale(1);
-
-  @include respond-to(tablet) {
-    @include grid-column(4 of 8);
-  }
-
-  @include respond-to(desktop) {
-    @include grid-column(4 of 12);
-  }
 
   @include respond-to(tablet, desktop) {
     @include font-scale(0);
@@ -53,4 +43,8 @@
   background-color: $yellow;
   color: $off-black;
   display: inline;
+}
+
+.checkbox {
+  margin: 0;
 }

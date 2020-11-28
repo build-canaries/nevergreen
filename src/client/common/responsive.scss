@@ -1,15 +1,13 @@
-@import '~bourbon-neat/core/neat';
-
 $breakpoints: (
-  very-small: (media: '(min-width: 0) and (max-width: 320px)', columns: 1),
-  mobile: (media: '(min-width: 0) and (max-width: 767px)', columns: 4),
-  tablet: (media: '(min-width: 768px) and (max-width: 1439px)', columns: 8),
-  desktop: (media: '(min-width: 1440px)', columns: 12)
+  very-small: '(min-width: 0) and (max-width: 320px)',
+  mobile: '(min-width: 0) and (max-width: 767px)',
+  tablet: '(min-width: 768px) and (max-width: 1439px)',
+  desktop: '(min-width: 1440px)'
 );
 
 @mixin respond-to($medias...) {
   @each $media in $medias {
-    @include grid-media(map-get($breakpoints, $media)) {
+    @media #{map-get($breakpoints, $media)} {
       @content;
     }
   }

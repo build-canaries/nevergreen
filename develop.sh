@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash
 set -euo pipefail
 
 kill_all() {
@@ -47,5 +47,5 @@ echo "running the server ..."
 
 wait
 
-# Proper clean up taken from this unix stackexchange post:
-# http://unix.stackexchange.com/questions/55558/how-can-i-kill-and-wait-for-background-processes-to-finish-in-a-shell-script-whe
+# Proper clean up taken from this unix stackexchange post:
+# http://unix.stackexchange.com/questions/55558/how-can-i-kill-and-wait-for-background-processes-to-finish-in-a-shell-script-whe

@@ -41,10 +41,10 @@
 }
 
 .buildItems {
-  display: block;
+  @extend %three-column-grid;
+
   list-style: none;
-  overflow: hidden; // required to give this element a height as its items are floating
-  width: 100%;
+  margin: 1em 0 0 0;
 
   @include respond-to(very-small) {
     overflow: scroll;

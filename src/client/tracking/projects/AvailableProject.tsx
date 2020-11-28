@@ -26,7 +26,8 @@ export function AvailableProject({removed, isNew, description, selected, selectP
 
   return (
     <li className={listClasses}>
-      <Checkbox checked={selected}
+      <Checkbox className={styles.checkbox}
+                checked={selected}
                 onToggle={selectProject}
                 disabled={removed}>
         {info}

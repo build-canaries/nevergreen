@@ -7,16 +7,14 @@
   @extend %standard-input-dimensions;
 
   display: inline-block;
+  height: auto;
   margin: $margin-top 0 0 0;
-  vertical-align: bottom;
 }
 
 .checkbox {
   @include font-scale(1);
 
-  clear: left;
   display: block;
-  float: left;
   line-height: initial;
   padding: 0 0 0 $input-height;
   position: relative;
@@ -25,7 +23,6 @@
 .children {
   cursor: pointer;
   display: block;
-  float: left;
   padding: 10.5px 1em;
   touch-action: manipulation;
 

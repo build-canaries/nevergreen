@@ -34,7 +34,6 @@
   "dependencies": {
     "@juggle/resize-observer": "3.2.0",
     "@reduxjs/toolkit": "1.4.0",
-    "bourbon-neat": "4.0.0",
     "classnames": "2.2.6",
     "clipboard": "2.0.6",
     "core-js": "3.7.0",
@@ -50,7 +49,7 @@
     "project-name-generator": "2.1.9",
     "react": "17.0.1",
     "react-dom": "17.0.1",
-    "react-modal": "3.11.2",
+    "react-modal": "3.12.1",
     "react-redux": "7.2.2",
     "react-router-dom": "5.2.0",
     "react-tabs": "3.1.1",
@@ -255,8 +254,7 @@
     "collectCoverageFrom": [
       "<rootDir>/src/client/**/*.{js,ts,tsx}",
       "!<rootDir>/src/client/styleGuide/**",
-      "!<rootDir>/src/client/common/Logger.ts",
-      "!<rootDir>/src/client/configuration/ValidateConfiguration.js"
+      "!<rootDir>/src/client/common/Logger.ts"
     ],
     "setupFilesAfterEnv": [
       "<rootDir>/test/client/setupTestEnv.js"

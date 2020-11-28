@@ -27,21 +27,11 @@
 }
 
 .icons {
-  display: inline-block;
+  @extend %three-column-grid;
 
   & > span {
-    @include grid-column(4 of 4);
-
     &::before {
       margin-right: 1em;
-    }
-
-    @include respond-to(tablet) {
-      @include grid-column(4 of 8);
-    }
-
-    @include respond-to(desktop) {
-      @include grid-column(4 of 12);
     }
   }
 }

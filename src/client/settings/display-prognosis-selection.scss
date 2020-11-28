@@ -1,23 +1,21 @@
 @import '../common/typography';
-@import '../common/responsive';
 @import '../common/variables';
+@import '../common/layout';
 
 .container {
+  border: 1px solid $light-grey;
   margin-top: $margin-top;
+  padding: 1em;
 }
 
 .legend {
   @include font-scale(1);
 }
 
+.options {
+  @extend %three-column-grid;
+}
+
 .checkbox {
-  @include grid-column(4 of 4);
-
-  @include respond-to(tablet) {
-    @include grid-column(4 of 8);
-  }
-
-  @include respond-to(desktop) {
-    @include grid-column(4 of 12);
-  }
+  margin: 0;
 }

@@ -4,21 +4,11 @@
 @import '../../common/variables';
 
 .container {
-  column-gap: 1em;
-  display: grid;
-  grid-template-columns: repeat(1, minmax(0, 1fr));
+  @extend %three-column-grid;
+
   list-style: none;
   margin: 0;
   padding: 1em;
-  row-gap: 1em;
-
-  @include respond-to(tablet) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  @include respond-to(desktop) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
 }
 
 .addNew {
