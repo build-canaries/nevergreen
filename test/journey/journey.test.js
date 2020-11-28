@@ -14,9 +14,6 @@ function shouldBeAbleToChangeTraySettings() {
       cy.locate('auth-access-token').type(Cypress.env('TRAY_TOKEN')).blur()
       cy.locate('change-password-update').click()
     })
-
-    // TODO: [#291] wait for the model to close otherwise the a11y check fails (but only when running headless!)
-    cy.locate('change-authentication').should('not.be.visible')
   }
 
   cy.checkA11y()

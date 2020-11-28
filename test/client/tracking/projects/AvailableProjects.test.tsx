@@ -97,7 +97,7 @@ it('should show a warning if there are no projects', () => {
   expect(queryByText('No projects fetched, please refresh')).toBeInTheDocument()
 })
 
-it('should show a warning if no projects match the filter', async () => {
+it('should show a warning if no projects match the filter', () => {
   const tray = buildTray({trayId: 'trayId'})
   const state = {
     [TRAYS_ROOT]: {
@@ -117,12 +117,12 @@ it('should show a warning if no projects match the filter', async () => {
   }
 
   const {getByLabelText, queryByText} = render(<AvailableProjects {...DEFAULT_PROPS} tray={tray}/>, state)
-  await userEvent.type(getByLabelText('Search'), 'bar')
+  userEvent.type(getByLabelText('Search'), 'bar')
 
   expect(queryByText('No matching projects, please update your filter')).toBeInTheDocument()
 })
 
-it('should show an error if the search is invalid', async () => {
+it('should show an error if the search is invalid', () => {
   const tray = buildTray({trayId: 'trayId'})
   const state = {
     [TRAYS_ROOT]: {
@@ -140,7 +140,7 @@ it('should show an error if the search is invalid', async () => {
     }
   }
   const {getByLabelText, queryByText} = render(<AvailableProjects {...DEFAULT_PROPS} tray={tray}/>, state)
-  await userEvent.type(getByLabelText('Search'), '?')
+  userEvent.type(getByLabelText('Search'), '?')
   expect(queryByText(/^Project search not applied/)).toBeInTheDocument()
 })
 

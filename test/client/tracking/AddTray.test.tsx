@@ -23,13 +23,13 @@ it('should display an error if no URL is entered', () => {
   expect(queryByText('Please enter the URL to the CCTray XML feed')).toBeInTheDocument()
 })
 
-it('should allow adding trays without auth', async () => {
+it('should allow adding trays without auth', () => {
   const state = {
     [TRAYS_ROOT]: {}
   }
 
   const {getByText, getByLabelText, store} = render(<AddTray {...DEFAULT_PROPS}/>, state)
-  await userEvent.type(getByLabelText('URL'), 'some-new-url')
+  userEvent.type(getByLabelText('URL'), 'some-new-url')
   userEvent.click(getByText('Add feed'))
 
   expect(getTrays(store.getState())).toEqual(expect.arrayContaining([
@@ -46,10 +46,10 @@ it('should allow adding trays with basic auth', async () => {
   }
 
   const {getByText, getByLabelText, store} = render(<AddTray {...DEFAULT_PROPS}/>, state)
-  await userEvent.type(getByLabelText('URL'), 'some-new-url')
+  userEvent.type(getByLabelText('URL'), 'some-new-url')
   userEvent.click(getByLabelText('Basic auth'))
-  await userEvent.type(getByLabelText('Username'), 'some-username')
-  await userEvent.type(getByLabelText('Password'), 'some-password')
+  userEvent.type(getByLabelText('Username'), 'some-username')
+  userEvent.type(getByLabelText('Password'), 'some-password')
   userEvent.click(getByText('Add feed'))
 
   await waitFor(() => {
@@ -69,9 +69,9 @@ it('should allow adding trays with an access token', async () => {
   }
 
   const {getByText, getByLabelText, store} = render(<AddTray {...DEFAULT_PROPS}/>, state)
-  await userEvent.type(getByLabelText('URL'), 'some-new-url')
+  userEvent.type(getByLabelText('URL'), 'some-new-url')
   userEvent.click(getByLabelText('Access token'))
-  await userEvent.type(getByLabelText('Token'), 'some-token')
+  userEvent.type(getByLabelText('Token'), 'some-token')
   userEvent.click(getByText('Add feed'))
 
   await waitFor(() => {
@@ -88,9 +88,9 @@ it('should reset the form after adding a tray', async () => {
   const {queryByTestId, getByText, getByLabelText, queryByLabelText, queryByText} = render(
     <AddTray {...DEFAULT_PROPS}/>
   )
-  await userEvent.type(getByLabelText('URL'), 'some-new-url')
+  userEvent.type(getByLabelText('URL'), 'some-new-url')
   userEvent.click(getByLabelText('Access token'))
-  await userEvent.type(getByLabelText('Token'), 'some-token')
+  userEvent.type(getByLabelText('Token'), 'some-token')
   userEvent.click(getByText('Add feed'))
 
   await waitFor(() => {
@@ -102,7 +102,7 @@ it('should reset the form after adding a tray', async () => {
   })
 })
 
-it('should not add an existing tray again', async () => {
+it('should not add an existing tray again', () => {
   const setHighlightTray = jest.fn()
   const state = {
     [TRAYS_ROOT]: {
@@ -117,7 +117,7 @@ it('should not add an existing tray again', async () => {
     <AddTray {...DEFAULT_PROPS} setHighlightTray={setHighlightTray}/>,
     state
   )
-  await userEvent.type(getByLabelText('URL'), 'http://some-url')
+  userEvent.type(getByLabelText('URL'), 'http://some-url')
   userEvent.click(getByText('Add feed'))
 
   expect(setHighlightTray).toHaveBeenCalledWith('trayId')

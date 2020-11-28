@@ -26,7 +26,7 @@ const DEFAULT_PROPS = {
 
 beforeEach(setupReactModal)
 
-it('should set the tray name on blur', async () => {
+it('should set the tray name on blur', () => {
   const tray = buildTray({
     trayId: 'trayId',
     name: 'some-name'
@@ -38,7 +38,7 @@ it('should set the tray name on blur', async () => {
 
   const nameInput = getByLabelText('Name')
   userEvent.clear(nameInput)
-  await userEvent.type(nameInput, 'some-new-name')
+  userEvent.type(nameInput, 'some-new-name')
   nameInput.blur()
 
   expect(getTrays(store.getState())[0].name).toEqual('some-new-name')
@@ -58,7 +58,7 @@ it('should generate a new random name', () => {
   expect(getTrays(store.getState())[0].name).not.toEqual('some-name')
 })
 
-it('should set the tray URL on blur if it is different', async () => {
+it('should set the tray URL on blur if it is different', () => {
   const setRequiresRefresh = jest.fn()
   const tray = buildTray({
     trayId: 'trayId',
@@ -73,14 +73,14 @@ it('should set the tray URL on blur if it is different', async () => {
 
   const urlInput = getByLabelText('URL')
   userEvent.clear(urlInput)
-  await userEvent.type(urlInput, 'http://some-new-url')
+  userEvent.type(urlInput, 'http://some-new-url')
   urlInput.blur()
 
   expect(setRequiresRefresh).toHaveBeenCalledWith(true)
   expect(getTrays(store.getState())[0].url).toEqual('http://some-new-url')
 })
 
-it('should not call requires refresh if the URL is the same', async () => {
+it('should not call requires refresh if the URL is the same', () => {
   const setRequiresRefresh = jest.fn()
   const tray = buildTray({
     trayId: 'trayId',
@@ -95,7 +95,7 @@ it('should not call requires refresh if the URL is the same', async () => {
 
   const urlInput = getByLabelText('URL')
   userEvent.clear(urlInput)
-  await userEvent.type(urlInput, 'http://some-url')
+  userEvent.type(urlInput, 'http://some-url')
   urlInput.blur()
 
   expect(setRequiresRefresh).not.toHaveBeenCalled()
@@ -171,8 +171,8 @@ it('should be able to change the auth to basic', async () => {
   const {getByText, getByLabelText, store} = render(<TraySettings {...props}/>, state)
   userEvent.click(getByText('Change auth'))
   userEvent.click(getByLabelText('Basic auth'))
-  await userEvent.type(getByLabelText('Username'), 'some-username')
-  await userEvent.type(getByLabelText('Password'), 'some-password')
+  userEvent.type(getByLabelText('Username'), 'some-username')
+  userEvent.type(getByLabelText('Password'), 'some-password')
   userEvent.click(getByText('Save changes'))
 
   await waitFor(() => {

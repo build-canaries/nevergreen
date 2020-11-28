@@ -40,8 +40,8 @@ it('should be able to change the auth to basic', async () => {
 
   const {getByText, getByLabelText} = render(<ChangeAuth {...props} />)
   userEvent.click(getByLabelText('Basic auth'))
-  await userEvent.type(getByLabelText('Username'), 'some-username')
-  await userEvent.type(getByLabelText('Password'), 'some-password')
+  userEvent.type(getByLabelText('Username'), 'some-username')
+  userEvent.type(getByLabelText('Password'), 'some-password')
   userEvent.click(getByText('Save changes'))
 
   await waitFor(() => {
@@ -56,7 +56,7 @@ it('should be able to change the auth to access token', async () => {
 
   const {getByText, getByLabelText} = render(<ChangeAuth {...props} />)
   userEvent.click(getByLabelText('Access token'))
-  await userEvent.type(getByLabelText('Token'), 'some-token')
+  userEvent.type(getByLabelText('Token'), 'some-token')
   userEvent.click(getByText('Save changes'))
 
   await waitFor(() => {

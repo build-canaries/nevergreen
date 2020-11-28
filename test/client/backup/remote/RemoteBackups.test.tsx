@@ -32,7 +32,7 @@ it('should not be able to add a remote backup with a non http(s) URL', async () 
   userEvent.click(getByText('Add location'))
 
   userEvent.selectOptions(getByLabelText('Where'), 'custom')
-  await userEvent.type(getByLabelText('URL'), 'file://example')
+  userEvent.type(getByLabelText('URL'), 'file://example')
   userEvent.click(within(getByTestId('modal')).getByText('Add location'))
 
   await waitFor(() => {
@@ -46,7 +46,7 @@ it('should be able to add and remove a remote custom server backup', async () =>
   userEvent.click(getByText('Add location'))
 
   userEvent.selectOptions(getByLabelText('Where'), 'custom')
-  await userEvent.type(getByLabelText('URL'), 'http://example.com')
+  userEvent.type(getByLabelText('URL'), 'http://example.com')
   userEvent.click(within(getByTestId('modal')).getByText('Add location'))
 
   await waitFor(() => {
@@ -70,7 +70,7 @@ it('should be able to add and remove a remote GitHub gist backup', async () => {
 
   expect(getByLabelText('URL')).toHaveValue(DEFAULT_GITHUB_URL)
 
-  await userEvent.type(getByLabelText('Access token'), 'some-token')
+  userEvent.type(getByLabelText('Access token'), 'some-token')
   userEvent.click(within(getByTestId('modal')).getByText('Add location'))
 
   await waitFor(() => {
@@ -112,7 +112,7 @@ it('should only clear errors for the changed field on type', async () => {
     expect(queryByText('Please enter an access token')).toBeInTheDocument()
   })
 
-  await userEvent.type(getByLabelText('URL'), 'h')
+  userEvent.type(getByLabelText('URL'), 'h')
 
   await waitFor(() => {
     expect(queryByText('Please enter the URL')).not.toBeInTheDocument()

@@ -17,7 +17,7 @@ interface KeywordProps {
 
 interface HelpArticleProps {
   readonly title: string;
-  readonly keywords: ReadonlyArray<string>;
+  readonly keywords: string[];
   readonly children: ReactNode;
   readonly searchQuery: string;
   readonly page?: string;
