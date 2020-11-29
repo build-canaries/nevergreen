@@ -8,9 +8,9 @@ function msg {
     echo "$@" 1>&2
 }
 
-export LEIN_VERSION="2.9.3"
+export LEIN_VERSION="2.9.4"
 # Must be sha256sum, will be replaced by bin/release
-export LEIN_CHECKSUM='23e1df18bc97226d570f47335a8d543e1b759ea303544ea57d5309be3dedcbbb'
+export LEIN_CHECKSUM='0e3c339480347df0445317d329accbd4a578ebbd8d91e568e661feb1b388706c'
 
 case $LEIN_VERSION in
     *SNAPSHOT) SNAPSHOT="YES" ;;
@@ -187,6 +187,8 @@ if [ "$SHASUM_CMD" = "" ]; then
         export SHASUM_CMD="sha256sum"
     elif type -p shasum >/dev/null 2>&1; then
         export SHASUM_CMD="shasum --algorithm 256"
+    elif type -p sha256 >/dev/null 2>&1; then
+        export SHASUM_CMD="sha256 -q"
     else
         command_not_found sha256sum
     fi
@@ -361,7 +363,7 @@ else
     fi
 
     if [ "$LEIN_FAST_TRAMPOLINE" != "" ] && [ -r project.clj ]; then
-        INPUTS="$* $(cat project.clj) $LEIN_VERSION $(test -f "$LEIN_HOME/profiles.clj" && cat "$LEIN_HOME/profiles.clj")"
+        INPUTS="$* $(cat project.clj) $LEIN_VERSION $(test -f "$LEIN_HOME/profiles.clj" && cat "$LEIN_HOME/profiles.clj") $(test -f profiles.clj && cat profiles.clj)"
 
         INPUT_CHECKSUM=$(echo "$INPUTS" | $SHASUM_CMD | cut -f 1 -d " ")
         # Just don't change :target-path in project.clj, mkay?
