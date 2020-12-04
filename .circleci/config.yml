@@ -165,7 +165,7 @@ jobs:
                   - ./.nvmrc
                   - ./project.clj
                   - ./cypress.json
-                  - ./test/journey/*
+                  - ./journey/*
 
   journey-tests:
     docker:
