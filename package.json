@@ -23,11 +23,11 @@
     "test:coverage": "jest --maxWorkers=2 --colors --coverage",
     "test:journey": "npm run cypress",
     "lint": "npm run lint:js && npm run lint:css",
-    "lint:js": "eslint ./src/client ./test/client --ext .js,.ts,.tsx",
+    "lint:js": "eslint ./src/client --ext .js,.ts,.tsx",
     "lint:css": "stylelint \"src/client/**/*.scss\" --syntax scss",
     "watch:js": "npm run clean && webpack --watch --config config/webpack.dev.config.js",
     "watch:test": "jest --watch",
-    "watch:lint": "watch 'npm run lint' src/client test/client",
+    "watch:lint": "watch 'npm run lint' src/client",
     "check-types": "tsc",
     "check-updates": "ncu"
   },
@@ -243,7 +243,7 @@
   },
   "jest": {
     "roots": [
-      "<rootDir>/test/client"
+      "<rootDir>/src/client"
     ],
     "reporters": [
       "default",
@@ -256,14 +256,14 @@
       "!<rootDir>/src/client/common/Logger.ts"
     ],
     "setupFilesAfterEnv": [
-      "<rootDir>/test/client/setupTestEnv.js"
+      "<rootDir>/src/client/setupTestEnv.js"
     ],
     "transform": {
       "\\.(js|ts|tsx)$": "babel-jest",
-      "\\.txt$": "<rootDir>/test/client/fileTransformer.js"
+      "\\.txt$": "<rootDir>/src/client/fileTransformer.js"
     },
     "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|svg|ttf|woff|woff2|mp3)$": "<rootDir>/test/client/fileMock.js",
+      "\\.(jpg|jpeg|png|gif|eot|svg|ttf|woff|woff2|mp3)$": "<rootDir>/src/client/fileMock.js",
       "\\.(css|scss)$": "identity-obj-proxy"
     },
     "clearMocks": true,

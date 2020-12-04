@@ -25,6 +25,8 @@
   :uberjar-name "nevergreen-standalone.jar"
   :main nevergreen.app
   :aot [nevergreen.app]
+  :source-paths ["src/server"]
+  :test-paths ["src/server"]
   :jvm-opts ["-Dclojure.compiler.direct-linking=true"
              "-Dclojure.compiler.elide-meta=[:doc :file :line :added]"
              "--illegal-access=deny"]
@@ -37,9 +39,9 @@
                               [lein-cloverage "1.2.1"]
                               [lein-nvd "1.4.1"]
                               [lein-eftest "0.5.9"]]}
-             :test {:jvm-opts ["-Dlogback.configurationFile=./test/logback-unit.xml"]}}
+             :test {:jvm-opts ["-Dlogback.configurationFile=./src/logback-tests.xml"]}}
   :cloverage {:output           "target/coverage-reports/server"
               :junit?           true
-              :ns-exclude-regex [#"nevergreen\.logging"]}
+              :ns-exclude-regex [#"nevergreen\.logging" #".*-test"]}
   :nvd {:output-dir       "target/security-reports/server"
         :suppression-file "config/nvd-suppressions.xml"})
