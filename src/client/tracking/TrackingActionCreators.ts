@@ -32,6 +32,12 @@ export interface ActionSelectProject extends Action<Actions.PROJECT_SELECTED> {
   readonly selected: boolean;
 }
 
+export interface ActionExcludeAllProject extends Action<Actions.ALL_PROJECT_SELECTED> {
+  readonly trayId: string;
+  readonly projectIds: string[];
+  readonly selected: boolean;
+}
+
 export function trayAdded(
   trayId: string,
   url: string,
@@ -77,4 +83,8 @@ export function projectsFetched(trayId: string, projects: Projects, includeNew: 
 
 export function projectSelected(trayId: string, projectId: string, selected: boolean): ActionSelectProject {
   return {type: Actions.PROJECT_SELECTED, trayId, projectId, selected}
+}
+
+export function selectAllProjects(trayId: string, projectIds: string[], selected: boolean): ActionExcludeAllProject {
+  return {type: Actions.ALL_PROJECT_SELECTED, trayId, projectIds, selected}
 }

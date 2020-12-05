@@ -12,7 +12,7 @@ import {isError, Projects, updateProjects} from '../../domain/Project'
 import {getProjectsForTray} from '../ProjectsReducer'
 import {getSelectedProjectsForTray} from '../SelectedReducer'
 import {useDispatch, useSelector} from 'react-redux'
-import {projectSelected, projectsFetched} from '../TrackingActionCreators'
+import {projectSelected, projectsFetched, selectAllProjects} from '../TrackingActionCreators'
 import {fetchAll} from '../../gateways/ProjectsGateway'
 import {send} from '../../gateways/Gateway'
 import {Loading} from '../../common/Loading'
@@ -109,13 +109,15 @@ export function AvailableProjects({index, tray, requiresRefresh, setRequiresRefr
   const hasErrors = notEmpty(errors)
 
   const includeAll = useCallback(() => {
-    filteredProjects
+    const projectIds = filteredProjects
       .filter((project) => !project.removed)
-      .forEach((project) => dispatch(projectSelected(tray.trayId, project.projectId, true)))
+      .map(project => project.projectId)
+    dispatch(selectAllProjects(tray.trayId, projectIds, false))
   }, [dispatch, tray.trayId, filteredProjects])
 
   const excludeAll = useCallback(() => {
-    filteredProjects.forEach((project) => dispatch(projectSelected(tray.trayId, project.projectId, false)))
+    const projectIds = filteredProjects.map(project => project.projectId)
+    dispatch(selectAllProjects(tray.trayId, projectIds, false))
   }, [dispatch, tray.trayId, filteredProjects])
 
   useShortcut([`+ ${index}`, `= ${index}`], includeAll)
