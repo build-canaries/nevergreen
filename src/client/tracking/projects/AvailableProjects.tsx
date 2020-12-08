@@ -111,12 +111,12 @@ export function AvailableProjects({index, tray, requiresRefresh, setRequiresRefr
   const includeAll = useCallback(() => {
     const projectIds = filteredProjects
       .filter((project) => !project.removed)
-      .map(project => project.projectId)
+      .map((project) => project.projectId)
     dispatch(selectAllProjects(tray.trayId, projectIds, false))
   }, [dispatch, tray.trayId, filteredProjects])
 
   const excludeAll = useCallback(() => {
-    const projectIds = filteredProjects.map(project => project.projectId)
+    const projectIds = filteredProjects.map((project) => project.projectId)
     dispatch(selectAllProjects(tray.trayId, projectIds, false))
   }, [dispatch, tray.trayId, filteredProjects])
 
