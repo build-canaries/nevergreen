@@ -1,5 +1,11 @@
 import {Actions} from '../Actions'
-import {ActionProjectsFetched, ActionRemoveTray, ActionSelectProject, ActionTrayAdded} from './TrackingActionCreators'
+import {
+  ActionExcludeAllProject,
+  ActionProjectsFetched,
+  ActionRemoveTray,
+  ActionSelectProject,
+  ActionTrayAdded
+} from './TrackingActionCreators'
 import {createReducer, createSelector} from '@reduxjs/toolkit'
 import {remove} from 'lodash'
 import {State} from '../Reducer'
@@ -29,6 +35,11 @@ export const reduce = createReducer<SelectedState>(DEFAULT_STATE, {
     action.selected
       ? draft[action.trayId].push(action.projectId)
       : remove(draft[action.trayId], (id) => id === action.projectId)
+  },
+  [Actions.ALL_PROJECT_SELECTED]: (draft, action: ActionExcludeAllProject) => {
+    action.selected
+      ? draft[action.trayId].push(...action.projectIds)
+      : remove(draft[action.trayId], (id) => action.projectIds.includes(id))
   },
   [Actions.PROJECTS_FETCHED]: (draft, action: ActionProjectsFetched) => {
     const fetchedProjectIds = action.data
