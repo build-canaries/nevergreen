@@ -7,9 +7,9 @@ import {TileProjectsNotShown} from './TileProjectsNotShown'
 import styles from './interesting-projects.scss'
 import {useSelector} from 'react-redux'
 import {getMaxProjectsToShow, MaxProjectsToShow} from '../settings/SettingsReducer'
-import {BrokenBuildSfx} from './BrokenBuildSfx'
 import {isMobile, isTablet} from '../common/Style'
 import {useWindowResized} from '../common/ResizableHook'
+import {useSoundEffect} from './SfxHook'
 
 interface InterestingProjectsProps {
   readonly projects: Projects;
@@ -75,6 +75,8 @@ export function InterestingProjects({projects}: InterestingProjectsProps): React
     <TileProjectsNotShown key='summary' projectsNotShown={projectsNotShown}/>
   )
 
+  useSoundEffect(projects)
+
   return (
     <div className={styles.interestingProjects}
          data-locator='interesting-projects'
@@ -84,7 +86,6 @@ export function InterestingProjects({projects}: InterestingProjectsProps): React
         {projectComponents}
         {summary}
       </ScaledGrid>
-      <BrokenBuildSfx projects={projects}/>
     </div>
   )
 }
