@@ -1,7 +1,7 @@
 import React, {ReactElement} from 'react'
 import styles from './tile-project.scss'
 import {isBlank} from '../common/Utils'
-import {projectBuildLabel, ProjectError, Project, Projects} from '../domain/Project'
+import {Project, projectBuildLabel, Projects} from '../domain/Project'
 import {VisuallyHidden} from '../common/VisuallyHidden'
 import {Duration} from '../common/Duration'
 import {ScaledTile} from './ScaledTile'
@@ -10,6 +10,7 @@ import {useSelector} from 'react-redux'
 import {getTrays} from '../tracking/TraysReducer'
 import {getShowBuildLabel, getShowBuildTime, getShowTrayName} from '../settings/SettingsReducer'
 import {ExternalLink} from '../common/ExternalLink'
+import {ProjectError} from '../gateways/ProjectsGateway'
 
 interface TileProjectProps {
   readonly project: Project | ProjectError;

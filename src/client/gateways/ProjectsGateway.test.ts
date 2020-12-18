@@ -3,13 +3,13 @@ import * as gateway from '../gateways/Gateway'
 import {buildSavedProject, buildTray} from '../testHelpers'
 import {Prognosis} from '../domain/Project'
 import {AuthTypes} from '../domain/Tray'
-import {SavedProject} from '../tracking/ProjectsReducer'
+import {ProjectState} from '../tracking/ProjectsReducer'
 
 describe('fetchAll', () => {
 
   it('posts only the required data from the given trays', () => {
     jest.spyOn(gateway, 'post')
-    const seen: SavedProject[] = [
+    const seen: ProjectState[] = [
       buildSavedProject({trayId: 'some-tray-id', projectId: 'some-project-id'})
     ]
     const trays = [
@@ -46,7 +46,7 @@ describe('fetchAll', () => {
 
   it('posts with access token from the given trays', () => {
     jest.spyOn(gateway, 'post')
-    const seen: SavedProject[] = [buildSavedProject({trayId: 'some-tray-id', projectId: 'some-project-id'})]
+    const seen: ProjectState[] = [buildSavedProject({trayId: 'some-tray-id', projectId: 'some-project-id'})]
     const trays = [
       buildTray({
         encryptedAccessToken: 'some-dummy-token',
@@ -84,7 +84,7 @@ describe('interesting', () => {
   it('maps selected projects to the posted data', () => {
     jest.spyOn(gateway, 'post')
     jest.spyOn(gateway, 'fakeRequest')
-    const seen: SavedProject[] = []
+    const seen: ProjectState[] = []
     const selected = {'some-tray-id': ['some-project-id']}
     const trays = [
       buildTray({
@@ -123,7 +123,7 @@ describe('interesting', () => {
   it('does not include trays with no selected projects and not including new', () => {
     jest.spyOn(gateway, 'post')
     jest.spyOn(gateway, 'fakeRequest')
-    const seen: SavedProject[] = []
+    const seen: ProjectState[] = []
     const selected = {
       'some-tray-id': ['some-project-id'],
       'none-selected-id': [],
@@ -148,7 +148,7 @@ describe('interesting', () => {
   it('does not call the server at all if no trays have selected projects and new projects are not included', () => {
     jest.spyOn(gateway, 'post')
     jest.spyOn(gateway, 'fakeRequest')
-    const seen: SavedProject[] = []
+    const seen: ProjectState[] = []
     const selected = {'some-tray-id': []}
     const trays = [buildTray({trayId: 'some-tray-id', includeNew: false})]
 

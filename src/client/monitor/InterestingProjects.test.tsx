@@ -1,5 +1,4 @@
 import React from 'react'
-import {noop} from 'lodash'
 import {InterestingProjects} from './InterestingProjects'
 import {buildProject, buildProjectError, buildTray, render, setSystemTime} from '../testHelpers'
 import {Prognosis, ProjectPrognosis} from '../domain/Project'
@@ -7,112 +6,6 @@ import {TRAYS_ROOT} from '../tracking/TraysReducer'
 import {MaxProjectsToShow, SETTINGS_ROOT} from '../settings/SettingsReducer'
 
 const trayId = 'some-tray-id'
-
-beforeAll(() => {
-  // not implemented in jsdom, this stops errors being printed during tests
-  // eslint-disable-next-line @typescript-eslint/unbound-method
-  // noinspection JSUnusedGlobalSymbols
-  window.HTMLMediaElement.prototype.pause = noop
-  // eslint-disable-next-line @typescript-eslint/unbound-method
-  // noinspection JSUnusedGlobalSymbols
-  window.HTMLMediaElement.prototype.play = () => Promise.resolve()
-})
-
-describe('broken build sfx', () => {
-
-  it('should play if its enabled and any project is broken', () => {
-    jest.spyOn(window.HTMLMediaElement.prototype, 'play').mockResolvedValue()
-    jest.spyOn(window.HTMLMediaElement.prototype, 'pause').mockReturnValue()
-    const state = {
-      [TRAYS_ROOT]: {
-        [trayId]: buildTray({trayId})
-      },
-      [SETTINGS_ROOT]: {
-        playBrokenBuildSoundFx: true,
-        brokenBuildSoundFx: 'some-sfx'
-      }
-    }
-    const props = {
-      projects: [
-        buildProject({trayId, prognosis: Prognosis.sick})
-      ]
-    }
-    const {unmount} = render(<InterestingProjects {...props}/>, state)
-
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    expect(window.HTMLMediaElement.prototype.play).toHaveBeenCalled()
-
-    unmount()
-
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    expect(window.HTMLMediaElement.prototype.pause).toHaveBeenCalled()
-  })
-
-  it('should not play if its off even if any project is sick', () => {
-    jest.spyOn(window.HTMLMediaElement.prototype, 'play').mockResolvedValue()
-    const state = {
-      [TRAYS_ROOT]: {
-        [trayId]: buildTray({trayId})
-      },
-      [SETTINGS_ROOT]: {
-        playBrokenBuildSoundFx: false
-      }
-    }
-    const props = {
-      projects: [
-        buildProject({trayId, prognosis: Prognosis.sick})
-      ],
-      errors: []
-    }
-    render(<InterestingProjects {...props}/>, state)
-
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    expect(window.HTMLMediaElement.prototype.play).not.toHaveBeenCalled()
-  })
-
-  it('should not play if its enabled but no projects are sick', () => {
-    jest.spyOn(window.HTMLMediaElement.prototype, 'play').mockResolvedValue()
-    const state = {
-      [TRAYS_ROOT]: {
-        [trayId]: buildTray({trayId})
-      },
-      [SETTINGS_ROOT]: {
-        playBrokenBuildSoundFx: true
-      }
-    }
-    const props = {
-      projects: [
-        buildProject({trayId, prognosis: Prognosis.unknown})
-      ]
-    }
-    render(<InterestingProjects {...props}/>, state)
-
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    expect(window.HTMLMediaElement.prototype.play).not.toHaveBeenCalled()
-  })
-
-  it('should not play if its enabled but a sound fx has not been set', () => {
-    jest.spyOn(window.HTMLMediaElement.prototype, 'play').mockResolvedValue()
-    const state = {
-      [TRAYS_ROOT]: {
-        [trayId]: buildTray({trayId})
-      },
-      [SETTINGS_ROOT]: {
-        playBrokenBuildSoundFx: true,
-        brokenBuildFx: ''
-      }
-    }
-    const props = {
-      projects: [
-        buildProject({trayId, prognosis: Prognosis.sick})
-      ]
-    }
-    render(<InterestingProjects {...props}/>, state)
-
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    expect(window.HTMLMediaElement.prototype.play).not.toHaveBeenCalled()
-  })
-})
 
 describe('displaying project information', () => {
 

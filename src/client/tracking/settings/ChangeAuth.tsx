@@ -6,10 +6,9 @@ import {Auth} from '../Auth'
 import {AuthTypes} from '../../domain/Tray'
 import styles from './change-auth.scss'
 import {errorMessage, isBlank} from '../../common/Utils'
-import {send} from '../../gateways/Gateway'
+import {Request, send} from '../../gateways/Gateway'
 import {encrypt, EncryptResponse} from '../../gateways/SecurityGateway'
 import {Messages, MessagesType} from '../../common/Messages'
-import {Request} from 'superagent'
 
 interface ChangeAuthProps {
   readonly show: boolean;
@@ -26,7 +25,7 @@ export function ChangeAuth({show, cancel, save, authType, username}: ChangeAuthP
   const [newAccessToken, setAccessToken] = useState('')
   const [encryptionError, setEncryptionError] = useState('')
   const [encrypting, setEncrypting] = useState(false)
-  const pendingRequest = useRef<Request>()
+  const pendingRequest = useRef<Request<EncryptResponse>>()
 
   useEffect(() => setAuthType(authType), [authType])
   useEffect(() => setUsername(username), [username])
@@ -43,11 +42,11 @@ export function ChangeAuth({show, cancel, save, authType, username}: ChangeAuthP
     try {
       if (newAuthType === AuthTypes.basic && !isBlank(newPassword)) {
         pendingRequest.current = encrypt(newPassword)
-        const encryptedPassword = await send<EncryptResponse>(pendingRequest.current)
+        const encryptedPassword = await send(pendingRequest.current)
         save(newAuthType, newUsername, encryptedPassword, '')
       } else if (newAuthType === AuthTypes.token && !isBlank(newAccessToken)) {
         pendingRequest.current = encrypt(newAccessToken)
-        const encryptedAccessToken = await send<EncryptResponse>(pendingRequest.current)
+        const encryptedAccessToken = await send(pendingRequest.current)
         save(newAuthType, '', '', encryptedAccessToken)
       } else {
         save(newAuthType, '', '', '')

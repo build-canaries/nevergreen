@@ -15,8 +15,9 @@ import {getSelectedProjects} from '../tracking/SelectedReducer'
 import {getKnownProjects} from '../tracking/ProjectsReducer'
 import {interesting} from '../gateways/ProjectsGateway'
 import {isAbortedRequest, send} from '../gateways/Gateway'
-import {Projects, toProjectError, updateProjects} from '../domain/Project'
-import {useProjectNotifications} from './ProjectNotificationsHook'
+import {enrichProjects, Projects, toProjectError} from '../domain/Project'
+import {useAudioNotifications} from './notifications/AudioNotificationsHook'
+import {useSystemNotifications} from './notifications/SystemNotificationsHook'
 
 interface MonitorProps {
   readonly fullScreen: boolean;
@@ -41,14 +42,12 @@ export function Monitor({fullScreen, requestFullScreen}: MonitorProps): ReactEle
     }
   }, [requestFullScreen])
 
-  useProjectNotifications(projects)
-
   const onTrigger = useCallback(async () => {
     const request = interesting(trays, knownProjects, selected, prognosis, sort)
 
     try {
-      const response = await send<Projects>(request)
-      setProjects((previouslyFetchedProjects) => updateProjects(response, previouslyFetchedProjects))
+      const response = await send(request)
+      setProjects((previouslyFetchedProjects) => enrichProjects(response, previouslyFetchedProjects))
       setLoaded(true)
     } catch (e) {
       if (!isAbortedRequest(e)) {
@@ -61,6 +60,9 @@ export function Monitor({fullScreen, requestFullScreen}: MonitorProps): ReactEle
   }, [trays, knownProjects, selected, prognosis, sort])
 
   useTimer(onTrigger, refreshTime)
+
+  useAudioNotifications(projects)
+  useSystemNotifications(projects)
 
   const traysAdded = !isEmpty(trays)
   const success = isEmpty(projects)
@@ -76,7 +78,7 @@ export function Monitor({fullScreen, requestFullScreen}: MonitorProps): ReactEle
         <SuccessMessage message='Add a CI server via the tracking page to start monitoring'/>
       )}
       {traysAdded && (
-        <Loading dark={true} loaded={loaded}>
+        <Loading dark loaded={loaded}>
           {success && <Success/>}
           {!success && <InterestingProjects projects={projects}/>}
         </Loading>

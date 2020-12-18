@@ -1,6 +1,5 @@
-import {post} from './Gateway'
+import {post, Request} from './Gateway'
 import {UntrustedData} from '../configuration/LocalRepository'
-import {Request} from 'superagent'
 import {RemoteLocation} from '../backup/remote/RemoteLocationsReducer'
 import {RemoteLocationOptions} from '../backup/remote/RemoteLocationOptions'
 
@@ -15,12 +14,12 @@ export interface ImportResponse {
   readonly where: RemoteLocationOptions;
 }
 
-export function exportConfiguration(where: string, id: string, description: string, configuration: string, token: string, url: string): Request {
-  return post('/api/export', {where, id, description, configuration, token, url})
+export function exportConfiguration(where: string, id: string, description: string, configuration: string, token: string, url: string): Request<ExportResponse> {
+  return post<ExportResponse>('/api/export', {where, id, description, configuration, token, url})
 }
 
-export function exportConfigurationNew(location: RemoteLocation, configuration: string): Request {
-  return post('/api/export', {
+export function exportConfigurationNew(location: RemoteLocation, configuration: string): Request<ExportResponse> {
+  return post<ExportResponse>('/api/export', {
     where: location.where,
     id: location.externalId,
     description: location.description,
@@ -30,12 +29,12 @@ export function exportConfigurationNew(location: RemoteLocation, configuration: 
   })
 }
 
-export function fetchConfiguration(from: string, id: string, token: string, url: string): Request {
-  return post('/api/import', {from, id, token, url})
+export function fetchConfiguration(from: string, id: string, token: string, url: string): Request<ImportResponse> {
+  return post<ImportResponse>('/api/import', {from, id, token, url})
 }
 
-export function fetchConfigurationNew(location: RemoteLocation): Request {
-  return post('/api/import', {
+export function fetchConfigurationNew(location: RemoteLocation): Request<ImportResponse> {
+  return post<ImportResponse>('/api/import', {
     from: location.where,
     id: location.externalId,
     encryptedToken: location.encryptedAccessToken,

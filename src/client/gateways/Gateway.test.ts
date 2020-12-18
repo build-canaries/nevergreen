@@ -1,5 +1,4 @@
-import {fakeRequest, get, patch, post, put, send, TIMEOUT_ERROR} from './Gateway'
-import {Request, SuperAgentRequest} from 'superagent'
+import {fakeRequest, get, post, Request, send, TIMEOUT_ERROR} from './Gateway'
 
 const url = 'http://dummy-server.com/order'
 const body = {orderId: 1}
@@ -7,7 +6,7 @@ const body = {orderId: 1}
 describe('request types', () => {
 
   it('post', () => {
-    const request = post(url, body) as SuperAgentRequest
+    const request = post(url, body)
 
     expect(request.url).toEqual(url)
     expect(request.method).toEqual('POST')
@@ -15,26 +14,8 @@ describe('request types', () => {
     expect(request.get('Content-Type')).toEqual('application/json; charset=utf-8')
   })
 
-  it('put', () => {
-    const request = put(url, body) as SuperAgentRequest
-
-    expect(request.url).toEqual(url)
-    expect(request.method).toEqual('PUT')
-    expect(request.get('Accept')).toEqual('application/json; charset=utf-8')
-    expect(request.get('Content-Type')).toEqual('application/json; charset=utf-8')
-  })
-
-  it('patch', () => {
-    const request = patch(url, body) as SuperAgentRequest
-
-    expect(request.url).toEqual(url)
-    expect(request.method).toEqual('PATCH')
-    expect(request.get('Accept')).toEqual('application/json; charset=utf-8')
-    expect(request.get('Content-Type')).toEqual('application/json; charset=utf-8')
-  })
-
   it('get', () => {
-    const request = get(url, body) as SuperAgentRequest
+    const request = get(url, body)
 
     expect(request.url).toEqual(url)
     expect(request.method).toEqual('GET')
@@ -45,19 +26,19 @@ describe('request types', () => {
 describe('send', () => {
 
   it('should return the response body if it exists', async () => {
-    const request = Promise.resolve({body: {foo: 'bar'}}) as Request
+    const request = Promise.resolve({body: {foo: 'bar'}}) as Request<unknown>
     const actual = await send(request)
     expect(actual).toEqual({foo: 'bar'})
   })
 
   it('should return the response text if no body exists (this will be the case for plain/text)', async () => {
-    const request = Promise.resolve({text: 'some-text'}) as Request
+    const request = Promise.resolve({text: 'some-text'}) as Request<unknown>
     const actual = await send(request)
     expect(actual).toEqual('some-text')
   })
 
   it('should throw the body on error', async () => {
-    const request = Promise.reject({response: {body: {description: 'some-error'}}}) as Request
+    const request = Promise.reject({response: {body: {description: 'some-error'}}}) as Request<unknown>
     try {
       await send(request)
     } catch (err) {
@@ -66,7 +47,7 @@ describe('send', () => {
   })
 
   it('should throw the message on error if no body exists', async () => {
-    const request = Promise.reject({message: 'some-error'}) as Request
+    const request = Promise.reject({message: 'some-error'}) as Request<unknown>
     try {
       await send(request)
     } catch (err) {
@@ -75,7 +56,7 @@ describe('send', () => {
   })
 
   it('should throw body as unknown if no response or message exists', async () => {
-    const request = Promise.reject({}) as Request
+    const request = Promise.reject({}) as Request<unknown>
     try {
       await send(request)
     } catch (err) {
@@ -84,7 +65,7 @@ describe('send', () => {
   })
 
   it('should throw the body on error as timeout when the request times out', async () => {
-    const request = Promise.reject({timeout: true}) as Request
+    const request = Promise.reject({timeout: true}) as Request<unknown>
     try {
       await send(request)
     } catch (err) {

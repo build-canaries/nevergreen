@@ -8,16 +8,15 @@ import {VisuallyHidden} from '../../common/VisuallyHidden'
 import styles from './available-projects.scss'
 import {SecondaryButton} from '../../common/forms/Button'
 import {iCheckboxChecked, iCheckboxUnchecked} from '../../common/fonts/Icons'
-import {isError, Projects, updateProjects} from '../../domain/Project'
+import {enrichProjects, isError} from '../../domain/Project'
 import {getProjectsForTray} from '../ProjectsReducer'
 import {getSelectedProjectsForTray} from '../SelectedReducer'
 import {useDispatch, useSelector} from 'react-redux'
 import {projectSelected, projectsFetched} from '../TrackingActionCreators'
-import {fetchAll} from '../../gateways/ProjectsGateway'
-import {send} from '../../gateways/Gateway'
+import {fetchAll, ProjectsResponse} from '../../gateways/ProjectsGateway'
+import {Request, send} from '../../gateways/Gateway'
 import {Loading} from '../../common/Loading'
 import {Tray} from '../../domain/Tray'
-import {Request} from 'superagent'
 import {useShortcut} from '../../common/Keyboard'
 
 interface AvailableProjectsProps {
@@ -27,7 +26,12 @@ interface AvailableProjectsProps {
   readonly setRequiresRefresh: (required: boolean) => void;
 }
 
-export function AvailableProjects({index, tray, requiresRefresh, setRequiresRefresh}: AvailableProjectsProps): ReactElement {
+export function AvailableProjects({
+                                    index,
+                                    tray,
+                                    requiresRefresh,
+                                    setRequiresRefresh
+                                  }: AvailableProjectsProps): ReactElement {
   const dispatch = useDispatch()
   const projects = useSelector(getProjectsForTray(tray.trayId))
   const selected = useSelector(getSelectedProjectsForTray(tray.trayId))
@@ -35,7 +39,7 @@ export function AvailableProjects({index, tray, requiresRefresh, setRequiresRefr
   const [filter, setFilter] = useState<RegExp | undefined>()
   const [errors, setErrors] = useState<ReadonlyArray<string>>([])
   const [loaded, setLoaded] = useState(true)
-  const pendingRequest = useRef<Request>()
+  const pendingRequest = useRef<Request<ProjectsResponse>>()
   const [filterErrors, setFilterErrors] = useState('')
   const rootNode = useRef<HTMLDivElement>(null)
 
@@ -44,8 +48,8 @@ export function AvailableProjects({index, tray, requiresRefresh, setRequiresRefr
     setErrors([])
     pendingRequest.current = fetchAll([tray], projects)
     try {
-      const apiProjects = await send<Projects>(pendingRequest.current)
-      const fetchedProjects = updateProjects(apiProjects, [])
+      const apiProjects = await send(pendingRequest.current)
+      const fetchedProjects = enrichProjects(apiProjects, [])
 
       if (fetchedProjects.some(isError)) {
         const errorMessages = fetchedProjects.map((projectError) => projectError.description)

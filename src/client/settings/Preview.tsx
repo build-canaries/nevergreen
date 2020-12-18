@@ -4,7 +4,7 @@ import {Loading} from '../common/Loading'
 import {useSelector} from 'react-redux'
 import {getShowPrognosis, getSort} from './SettingsReducer'
 import {isAbortedRequest, post, send} from '../gateways/Gateway'
-import {Projects, toProjectError, updateProjects} from '../domain/Project'
+import {Projects, toProjectError, enrichProjects} from '../domain/Project'
 import {createId, createTray} from '../domain/Tray'
 import {Notification} from '../Notification'
 import {useHistory} from 'react-router-dom'
@@ -28,7 +28,7 @@ export function Preview(): ReactElement {
     const getProjects = async () => {
       try {
         const response = await send<Projects>(request)
-        setProjects((previouslyFetchedProjects) => updateProjects(response, previouslyFetchedProjects))
+        setProjects((previouslyFetchedProjects) => enrichProjects(response, previouslyFetchedProjects))
         setLoaded(true)
       } catch (e) {
         if (!isAbortedRequest(e)) {

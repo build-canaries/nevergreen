@@ -1,10 +1,20 @@
-import request, {Request} from 'superagent'
+import request, {Response, SuperAgentRequest} from 'superagent'
 import * as log from '../common/Logger'
 import {get as _get, noop} from 'lodash'
 import {errorMessage} from '../common/Utils'
+import {Prognosis} from '../domain/Project'
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 type ApiData = object | string
+
+export type Request<T> = SuperAgentRequest & Promise<Response & { body: T; }>
+
+export interface ServerError {
+  readonly description: string;
+  readonly prognosis: Prognosis.error;
+  readonly timestamp: string;
+  readonly webUrl: string;
+}
 
 const ONE_MINUTES = 1000 * 60
 const TIMEOUT = {
@@ -17,7 +27,7 @@ const CONTENT_TYPE = 'application/json; charset=utf-8'
 
 export const TIMEOUT_ERROR = 'Connection timeout calling the Nevergreen server'
 
-export function post(url: string, data: ApiData, headers = {}): Request {
+export function post<T>(url: string, data: ApiData, headers = {}): Request<T> {
   return request
     .post(url)
     .send(data)
@@ -28,29 +38,7 @@ export function post(url: string, data: ApiData, headers = {}): Request {
     .retry(RETRIES)
 }
 
-export function put(url: string, data: ApiData, headers = {}): Request {
-  return request
-    .put(url)
-    .send(data)
-    .accept(ACCEPT_HEADER)
-    .type(CONTENT_TYPE)
-    .set(headers)
-    .timeout(TIMEOUT)
-    .retry(RETRIES)
-}
-
-export function patch(url: string, data: ApiData, headers = {}): Request {
-  return request
-    .patch(url)
-    .send(data)
-    .accept(ACCEPT_HEADER)
-    .type(CONTENT_TYPE)
-    .set(headers)
-    .timeout(TIMEOUT)
-    .retry(RETRIES)
-}
-
-export function get(url: string, headers = {}): Request {
+export function get<T>(url: string, headers = {}): Request<T> {
   return request
     .get(url)
     .accept(ACCEPT_HEADER)
@@ -59,7 +47,7 @@ export function get(url: string, headers = {}): Request {
     .retry(RETRIES)
 }
 
-export async function send<T>(request: Request): Promise<T> {
+export async function send<T>(request: Request<T>): Promise<T> {
   try {
     const res = await request
     return (res.body || res.text) as T
@@ -76,8 +64,8 @@ export async function send<T>(request: Request): Promise<T> {
   }
 }
 
-export function fakeRequest(body: unknown): Request {
-  return {body, abort: noop} as unknown as Request
+export function fakeRequest<T>(body: T): Request<T> {
+  return {body, abort: noop} as unknown as Request<T>
 }
 
 export function isAbortedRequest(e: unknown): boolean {

@@ -1,10 +1,9 @@
-import {fakeRequest, post} from './Gateway'
-import {Prognosis} from '../domain/Project'
+import {fakeRequest, post, Request, ServerError} from './Gateway'
+import {Prognosis, ProjectPrognosis} from '../domain/Project'
 import {SelectedState} from '../tracking/SelectedReducer'
 import {size} from 'lodash'
 import {AuthTypes, Tray} from '../domain/Tray'
-import {SavedProject} from '../tracking/ProjectsReducer'
-import {Request} from 'superagent'
+import {ProjectState} from '../tracking/ProjectsReducer'
 
 export enum SortBy {
   default = 'default',
@@ -32,7 +31,25 @@ export interface FeedRequest {
   readonly username?: string;
 }
 
-function toProjectsRequest(tray: Tray, knownProjects: ReadonlyArray<SavedProject>, selectedPerTray?: SelectedState): FeedRequest {
+export interface ProjectError extends ServerError {
+  readonly trayId: string;
+}
+
+export interface ProjectApi {
+  readonly description: string;
+  readonly isNew: boolean;
+  readonly lastBuildLabel: string;
+  readonly prognosis: ProjectPrognosis;
+  readonly projectId: string;
+  readonly serverType: string;
+  readonly timestamp: string;
+  readonly trayId: string;
+  readonly webUrl: string;
+}
+
+export type ProjectsResponse = ReadonlyArray<ProjectError | ProjectApi>
+
+function toProjectsRequest(tray: Tray, knownProjects: ReadonlyArray<ProjectState>, selectedPerTray?: SelectedState): FeedRequest {
   const seen = knownProjects
     .filter((project) => project.trayId === tray.trayId)
     .map((project) => project.projectId)
@@ -59,7 +76,7 @@ function hasIncludedProjects(projectsRequest: FeedRequest) {
   return projectsRequest.includeNew || size(projectsRequest.included) > 0
 }
 
-export function fetchAll(trays: ReadonlyArray<Tray>, knownProjects: ReadonlyArray<SavedProject>): Request {
+export function fetchAll(trays: ReadonlyArray<Tray>, knownProjects: ReadonlyArray<ProjectState>): Request<ProjectsResponse> {
   const feeds = trays
     .map((tray) => toProjectsRequest(tray, knownProjects))
 
@@ -73,11 +90,11 @@ export function fetchAll(trays: ReadonlyArray<Tray>, knownProjects: ReadonlyArra
 
 export function interesting(
   trays: ReadonlyArray<Tray>,
-  knownProjects: ReadonlyArray<SavedProject>,
+  knownProjects: ReadonlyArray<ProjectState>,
   selectedPerTray: SelectedState,
   prognosis: ReadonlyArray<Prognosis>,
   sort: SortBy
-): Request {
+): Request<ProjectsResponse> {
   const feeds = trays
     .map((tray) => toProjectsRequest(tray, knownProjects, selectedPerTray))
     .filter(hasIncludedProjects)

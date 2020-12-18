@@ -2,11 +2,11 @@ import React, {ReactNode} from 'react'
 import {merge} from 'lodash'
 import {reducer, State} from './Reducer'
 import {MaxProjectsToShow, SETTINGS_ROOT} from './settings/SettingsReducer'
-import {PROJECTS_ROOT, SavedProject} from './tracking/ProjectsReducer'
+import {PROJECTS_ROOT, ProjectState} from './tracking/ProjectsReducer'
 import {SELECTED_ROOT} from './tracking/SelectedReducer'
 import {SUCCESS_ROOT} from './settings/success/SuccessReducer'
 import {TRAYS_ROOT} from './tracking/TraysReducer'
-import {Prognosis, Project, ProjectError} from './domain/Project'
+import {Prognosis, Project} from './domain/Project'
 import {createTray, Tray} from './domain/Tray'
 import {CombinedState, combineReducers, Middleware, Reducer} from 'redux'
 import {RecursivePartial} from './common/Types'
@@ -17,7 +17,7 @@ import {MemoryRouter} from 'react-router-dom'
 import Modal from 'react-modal'
 import {DEFAULT_REFRESH_TIME} from './settings/SettingsActionCreators'
 import {APPLIED_MIGRATIONS_ROOT} from './configuration/MigrationsReducer'
-import {SortBy} from './gateways/ProjectsGateway'
+import {ProjectError, SortBy} from './gateways/ProjectsGateway'
 import parseISO from 'date-fns/parseISO'
 import {BACKUP_REMOTE_LOCATIONS_ROOT, RemoteLocation} from './backup/remote/RemoteLocationsReducer'
 import {RemoteLocationOptions} from './backup/remote/RemoteLocationOptions'
@@ -86,6 +86,7 @@ export function buildProject(project: Partial<Project> = {}): Project {
     isNew: true,
     lastBuildLabel: '',
     description: 'some-name',
+    previousPrognosis: undefined,
     prognosis: Prognosis.unknown,
     projectId: 'some-project-id',
     serverType: '',
@@ -96,8 +97,8 @@ export function buildProject(project: Partial<Project> = {}): Project {
   return merge(defaultProject, project)
 }
 
-export function buildSavedProject(project: Partial<SavedProject> = {}): SavedProject {
-  const defaultProject: SavedProject = {
+export function buildSavedProject(project: Partial<ProjectState> = {}): ProjectState {
+  const defaultProject: ProjectState = {
     isNew: true,
     description: 'some-name',
     projectId: 'some-project-id',

@@ -1,13 +1,14 @@
 import {
+  enrichProjects,
   isBuilding,
   isError,
+  isProject,
   isSick,
   Prognosis,
   projectBuildLabel,
   projectIdentifier,
   ProjectPrognosis,
-  toProjectError,
-  updateProjects
+  toProjectError
 } from './Project'
 import {buildProject, buildProjectError} from '../testHelpers'
 import * as DateTime from '../common/DateTime'
@@ -42,6 +43,23 @@ describe('isError', () => {
     Prognosis.sickBuilding
   ])('should be false for value %s', (prognosis) => {
     expect(isError(buildProject({prognosis}))).toBe(false)
+  })
+})
+
+describe('isProject', () => {
+
+  it('should be false when error', () => {
+    expect(isProject(buildProjectError())).toBe(false)
+  })
+
+  it.each<ProjectPrognosis>([
+    Prognosis.unknown,
+    Prognosis.healthy,
+    Prognosis.healthyBuilding,
+    Prognosis.sick,
+    Prognosis.sickBuilding
+  ])('should be true for value %s', (prognosis) => {
+    expect(isProject(buildProject({prognosis}))).toBe(true)
   })
 })
 
@@ -80,12 +98,12 @@ describe('isBuilding', () => {
 
 describe('projectIdentifier', () => {
 
-  it('should return anc identifier for errors', () => {
+  it('should return the web URL as the identifier for errors as they do not have project Ids', () => {
     const project = buildProjectError({webUrl: 'some-url'})
     expect(projectIdentifier(project)).toBe('some-url')
   })
 
-  it('should return an identifier for projects', () => {
+  it('should return the tray and project Ids as the identifier for projects as multiple trays could have the same projects', () => {
     const project = buildProject({trayId: 'some-tray-id', projectId: 'some-project-id'})
     expect(projectIdentifier(project)).toBe('some-tray-id#some-project-id')
   })
@@ -120,7 +138,7 @@ describe('projectBuildLabel', () => {
   })
 })
 
-describe('updateProjects', () => {
+describe('enrichProjects', () => {
 
   it('should add how long a tray has been in error', () => {
     const fetched = [buildProjectError({
@@ -131,7 +149,7 @@ describe('updateProjects', () => {
       timestamp: 'original-fetched-time',
       webUrl: 'some-url'
     })]
-    const result = updateProjects(fetched, previous)
+    const result = enrichProjects(fetched, previous)
     expect(result).toEqual(expect.arrayContaining([expect.objectContaining({timestamp: 'original-fetched-time'})]))
   })
 
@@ -140,7 +158,7 @@ describe('updateProjects', () => {
     Prognosis.sickBuilding
   ])('should add how long a %s project has been building', (prognosis) => {
     const fetched = [buildProject({prognosis, timestamp: 'fetched-time'})]
-    const result = updateProjects(fetched, [])
+    const result = enrichProjects(fetched, [])
     expect(result).toEqual(expect.arrayContaining([expect.objectContaining({timestamp: 'fetched-time'})]))
   })
 
@@ -160,7 +178,7 @@ describe('updateProjects', () => {
       lastBuildLabel: '1',
       timestamp: 'original-fetched-time'
     })]
-    const result = updateProjects(fetched, previous)
+    const result = enrichProjects(fetched, previous)
     expect(result).toEqual(expect.arrayContaining([expect.objectContaining({timestamp: 'original-fetched-time'})]))
   })
 
@@ -180,7 +198,20 @@ describe('updateProjects', () => {
       lastBuildLabel: '1',
       timestamp: 'original-fetched-time'
     })]
-    const result = updateProjects(fetched, previous)
+    const result = enrichProjects(fetched, previous)
     expect(result).toEqual(expect.arrayContaining([expect.objectContaining({timestamp: 'updated-fetched-time'})]))
+  })
+
+  it('should add the previous prognosis if the project was previously fetched', () => {
+    const fetched = [buildProject({
+      projectId: 'some-id',
+      prognosis: Prognosis.sickBuilding
+    })]
+    const previous = [buildProject({
+      projectId: 'some-id',
+      prognosis: Prognosis.sick
+    })]
+    const result = enrichProjects(fetched, previous)
+    expect(result).toEqual(expect.arrayContaining([expect.objectContaining({previousPrognosis: Prognosis.sick})]))
   })
 })

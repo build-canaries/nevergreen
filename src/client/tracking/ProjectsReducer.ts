@@ -5,7 +5,7 @@ import {createReducer, createSelector} from '@reduxjs/toolkit'
 import {State} from '../Reducer'
 import {ActionConfigurationImported} from '../backup/BackupActionCreators'
 
-export interface SavedProject {
+export interface ProjectState {
   readonly description: string;
   readonly isNew?: boolean;
   readonly projectId: string;
@@ -14,7 +14,7 @@ export interface SavedProject {
 }
 
 export interface ProjectsState {
-  readonly [trayId: string]: ReadonlyArray<SavedProject>;
+  readonly [trayId: string]: ReadonlyArray<ProjectState>;
 }
 
 export const PROJECTS_ROOT = 'projects'
@@ -36,7 +36,7 @@ export const reduce = createReducer<ProjectsState>(DEFAULT_STATE, {
   [Actions.PROJECTS_FETCHED]: (draft, action: ActionProjectsFetched) => {
     const existingProjects = draft[action.trayId]
 
-    draft[action.trayId] = unionWith<SavedProject>(
+    draft[action.trayId] = unionWith<ProjectState>(
       action.data.map((fetched) => ({...fetched, removed: false})),
       existingProjects
         .filter((project) => !project.removed)
@@ -49,7 +49,7 @@ function getProjects(state: State) {
   return state[PROJECTS_ROOT]
 }
 
-export function getProjectsForTray(trayId: string): (state: State) => ReadonlyArray<SavedProject> {
+export function getProjectsForTray(trayId: string): (state: State) => ReadonlyArray<ProjectState> {
   return createSelector(getProjects, (projects) => projects[trayId])
 }
 

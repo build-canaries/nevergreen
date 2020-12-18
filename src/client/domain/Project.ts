@@ -1,5 +1,6 @@
 import {errorMessage, isBlank, isNumeric} from '../common/Utils'
 import {now} from '../common/DateTime'
+import {ProjectApi, ProjectError, ProjectsResponse} from '../gateways/ProjectsGateway'
 
 export enum Prognosis {
   healthy = 'healthy',
@@ -12,24 +13,8 @@ export enum Prognosis {
 
 export type ProjectPrognosis = Exclude<Prognosis, Prognosis.error>
 
-export interface ProjectError {
-  readonly description: string;
-  readonly prognosis: Prognosis.error;
-  readonly timestamp: string;
-  readonly trayId?: string;
-  readonly webUrl: string;
-}
-
-export interface Project {
-  readonly description: string;
-  readonly isNew: boolean;
-  readonly lastBuildLabel: string;
-  readonly prognosis: ProjectPrognosis;
-  readonly projectId: string;
-  readonly serverType: string;
-  readonly timestamp: string;
-  readonly trayId: string;
-  readonly webUrl: string;
+export interface Project extends ProjectApi {
+  readonly previousPrognosis: ProjectPrognosis | undefined;
 }
 
 export type Projects = ReadonlyArray<Project | ProjectError>
@@ -49,19 +34,32 @@ export function toProjectError(e: unknown): ProjectError {
     description: errorMessage(e),
     prognosis: Prognosis.error,
     timestamp: now(),
-    webUrl: ''
+    webUrl: '',
+    trayId: ''
   }
 }
 
-export function isError(project: Project | ProjectError): project is ProjectError {
+export function isNewlySick(project: Project | ProjectError): boolean {
+  return isProject(project) && isSick(project) && project.previousPrognosis !== Prognosis.sick
+}
+
+export function isNoLongerSick(project: Project | ProjectError): boolean {
+  return isProject(project) && project.prognosis !== Prognosis.sick && project.previousPrognosis === Prognosis.sick
+}
+
+export function isError(project: ProjectApi | ProjectError): project is ProjectError {
   return project.prognosis === Prognosis.error
 }
 
-export function isSick(project: Project | ProjectError): project is Project {
+export function isProject<P extends ProjectApi>(project: P | ProjectError): project is P {
+  return project.prognosis !== Prognosis.error
+}
+
+export function isSick(project: ProjectApi | ProjectError): boolean {
   return project.prognosis === Prognosis.sick
 }
 
-export function isBuilding(project: Project | ProjectError): project is Project {
+export function isBuilding(project: ProjectApi | ProjectError): boolean {
   return project.prognosis === Prognosis.healthyBuilding || project.prognosis === Prognosis.sickBuilding
 }
 
@@ -71,14 +69,14 @@ export function projectIdentifier(project: Project | ProjectError): string {
     : `${project.trayId}#${project.projectId}`
 }
 
-export function projectBuildLabel(project: Project | ProjectError): string {
+export function projectBuildLabel(project: ProjectApi | ProjectError): string {
   if (isError(project) || isBuilding(project)) {
     return ''
   }
-  return formatBuildLabel((project as Project).lastBuildLabel)
+  return formatBuildLabel(project.lastBuildLabel)
 }
 
-function sameProject(previousProject: Project, currentProject: Project) {
+export function sameProject(previousProject: ProjectApi, currentProject: ProjectApi): boolean {
   return previousProject.projectId === currentProject.projectId
 }
 
@@ -86,21 +84,21 @@ function sameError(previousProject: ProjectError, currentProject: ProjectError) 
   return previousProject.webUrl === currentProject.webUrl
 }
 
-function sameBuild(previousProject: Project, currentProject: Project) {
+function sameBuild(previousProject: ProjectApi, currentProject: ProjectApi) {
   return previousProject.lastBuildLabel === currentProject.lastBuildLabel
 }
 
 function updateTimestamp(project: Project | ProjectError, previouslyFetchedProjects: Projects): Project | ProjectError {
-  if (isBuilding(project)) {
+  if (isProject(project) && isBuilding(project)) {
     const previousProject = previouslyFetchedProjects
-      .filter((previous): previous is Project => !isError(previous))
+      .filter(isProject)
       .find((previous) => sameProject(project, previous))
     if (previousProject && isBuilding(previousProject) && sameBuild(previousProject, project)) {
       return {...project, timestamp: previousProject.timestamp}
     }
   } else if (isError(project)) {
     const previousError = previouslyFetchedProjects
-      .filter((previous): previous is ProjectError => isError(previous))
+      .filter(isError)
       .find((previous) => sameError(project, previous))
     if (previousError) {
       return {...project, timestamp: previousError.timestamp}
@@ -109,7 +107,21 @@ function updateTimestamp(project: Project | ProjectError, previouslyFetchedProje
   return project
 }
 
-export function updateProjects(apiProjects: Projects, previouslyFetchedProjects: Projects): Projects {
+function addPreviousPrognosis(project: ProjectApi | ProjectError, previouslyFetchedProjects: Projects): Project | ProjectError {
+  if (isError(project)) {
+    return project
+  } else {
+    return {
+      ...project,
+      previousPrognosis: previouslyFetchedProjects
+        .filter(isProject)
+        .find((previous) => sameProject(previous, project))?.prognosis
+    }
+  }
+}
+
+export function enrichProjects(apiProjects: ProjectsResponse, previouslyFetchedProjects: Projects): Projects {
   return apiProjects
+    .map((project) => addPreviousPrognosis(project, previouslyFetchedProjects))
     .map((project) => updateTimestamp(project, previouslyFetchedProjects))
 }
