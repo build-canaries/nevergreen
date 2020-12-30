@@ -1,8 +1,8 @@
 const webpack = require('webpack')
 const {merge} = require('webpack-merge')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const {GenerateSW} = require('workbox-webpack-plugin')
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 
 const baseConfig = require('./webpack.base.config.js')
 
@@ -17,11 +17,10 @@ module.exports = merge(baseConfig, {
         removeRedundantAttributes: true
       }
     }),
-    new OptimizeCssAssetsPlugin(),
     new GenerateSW({
       swDest: 'service-worker.js',
       cacheId: 'nevergreen',
-      exclude: [/\.map$/, /asset-manifest\.json$/],
+      exclude: [/\.map$/],
       clientsClaim: true,
       skipWaiting: true,
       navigateFallback: '/index.html',
@@ -31,8 +30,10 @@ module.exports = merge(baseConfig, {
     })
   ],
   optimization: {
-    splitChunks: {
-      chunks: 'all'
-    }
+    minimize: true,
+    minimizer: [
+      `...`,
+      new CssMinimizerPlugin()
+    ]
   }
 })

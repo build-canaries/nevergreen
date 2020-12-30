@@ -3,14 +3,14 @@ const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const autoprefixer = require('autoprefixer')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const ManifestPlugin = require('webpack-manifest-plugin')
+const {CleanWebpackPlugin} = require('clean-webpack-plugin')
 
 const cssLoader = {
   loader: 'css-loader',
   options: {
     sourceMap: true,
     modules: {
-      localIdentName: '[name]-[local]-[hash:base64:6]'
+      localIdentName: '[name]-[local]-[contenthash:base64:6]'
     }
   }
 }
@@ -25,48 +25,26 @@ const postCssLoader = {
   }
 }
 
-const imgLoader = {
-  loader: 'img-loader',
-  options: {
-    plugins: [
-      require('imagemin-optipng')({}),
-      require('imagemin-svgo')({})
-    ]
-  }
-}
-
-const defaultName = '[name].[hash:8].[ext]'
-
-function urlLoader(mimeType) {
-  return {
-    loader: 'url-loader',
-    options: {
-      name: defaultName,
-      limit: 8192,
-      mimetype: mimeType
-    }
-  }
-}
-
 module.exports = {
   devtool: 'source-map',
   entry: ['./src/client/index'],
   output: {
     path: path.join(__dirname, '../resources/public'),
-    filename: '[name].[hash:8].js',
-    publicPath: ''
+    filename: '[name].[contenthash:8].js',
+    publicPath: '',
+    assetModuleFilename: '[name].[contenthash:8][ext]'
   },
   plugins: [
+    new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
-      filename: '[name].[hash:8].css'
+      filename: '[name].[contenthash:8].css'
     }),
     new CopyWebpackPlugin({
       patterns: [
         './src/client/robots.txt',
         './src/client/favicons'
       ]
-    }),
-    new ManifestPlugin({fileName: 'asset-manifest.json'})
+    })
   ],
   resolve: {
     extensions: ['.js', '.tsx', '.ts']
@@ -92,52 +70,19 @@ module.exports = {
         ]
       },
       {
-        test: /\.css$/i,
-        use: [
-          MiniCssExtractPlugin.loader,
-          cssLoader,
-          postCssLoader,
-          'resolve-url-loader'
-        ]
-      },
-      {
-        test: /\.png$/i,
-        use: [
-          urlLoader('image/png'),
-          imgLoader
-        ]
-      },
-      {
-        test: /\.woff2?(\?.*)?$/i,
-        use: [
-          urlLoader('application/font-woff')
-        ]
-      },
-      {
-        test: /\.ttf(\?.*)?$/i,
-        use: [
-          urlLoader('application/octet-stream')
-        ]
-      },
-      {
-        test: /\.svg(\?.*)?$/i,
-        use: [
-          urlLoader('image/svg+xml'),
-          imgLoader
-        ]
+        test: /\.(png|svg|woff|woff2|ttf)$/i,
+        type: 'asset'
       },
       {
         test: /\.mp3$/i,
-        use: [{
-          loader: 'file-loader',
-          options: {
-            name: '[name].[ext]'
-          }
-        }]
+        type: 'asset/resource',
+        generator: {
+          filename: '[name][ext]'
+        }
       },
       {
         test: /\.txt$/,
-        use: 'raw-loader'
+        type: 'asset/source'
       }
     ]
   },
