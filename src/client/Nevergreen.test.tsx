@@ -1,5 +1,5 @@
 import React from 'react'
-import {left} from 'fp-ts/lib/Either'
+import {left} from 'fp-ts/Either'
 import {Nevergreen} from './Nevergreen'
 import {render} from './testHelpers'
 import {fireEvent, waitFor} from '@testing-library/react'

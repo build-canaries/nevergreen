@@ -3,7 +3,7 @@ import {useDispatch} from 'react-redux'
 import {init, load} from './LocalRepository'
 import {DataSource, toConfiguration} from './Configuration'
 import {configurationImported} from '../backup/BackupActionCreators'
-import {isRight} from 'fp-ts/lib/Either'
+import {isRight} from 'fp-ts/Either'
 import * as logger from '../common/Logger'
 import {join} from 'lodash'
 
