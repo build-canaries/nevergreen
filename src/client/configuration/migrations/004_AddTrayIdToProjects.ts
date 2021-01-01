@@ -1,7 +1,7 @@
 import {forEachArrayAt} from '../Migrate'
 import {Migrate} from './index'
 import {PROJECTS_ROOT} from '../../tracking/ProjectsReducer'
-import {isObject} from 'lodash'
+import isObject from 'lodash/isObject'
 
 export const id = '004_AddTrayIdToProjects'
 

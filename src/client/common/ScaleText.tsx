@@ -1,5 +1,6 @@
 import React, {ReactElement, ReactNode, useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react'
-import {flatten, memoize} from 'lodash'
+import flatten from 'lodash/flatten'
+import memoize from 'lodash/memoize'
 import * as logger from './Logger'
 import {PerformanceMark} from './Logger'
 import {FontMetricsContext, Measurable} from '../FontMetrics'

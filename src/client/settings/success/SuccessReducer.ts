@@ -1,5 +1,6 @@
 import {Actions} from '../../Actions'
-import {remove, uniq} from 'lodash'
+import remove from 'lodash/remove'
+import uniq from 'lodash/uniq'
 import {ActionMessageAdded, ActionMessageRemoved} from './SuccessActionCreators'
 import {createReducer} from '@reduxjs/toolkit'
 import {State} from '../../Reducer'

@@ -1,5 +1,6 @@
 import {Migrate} from './index'
-import {isObject, unset} from 'lodash'
+import isObject from 'lodash/isObject'
+import unset from 'lodash/unset'
 import {forEachArrayAt} from '../Migrate'
 import {PROJECTS_ROOT} from '../../tracking/ProjectsReducer'
 import {isBlank} from '../../common/Utils'

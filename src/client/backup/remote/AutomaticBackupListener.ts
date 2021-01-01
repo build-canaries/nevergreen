@@ -1,4 +1,5 @@
-import {debounce, isNil} from 'lodash'
+import isNil from 'lodash/isNil'
+import debounce from 'lodash/debounce'
 import {Dispatch} from '@reduxjs/toolkit'
 import {State} from '../../Reducer'
 import {send} from '../../gateways/Gateway'

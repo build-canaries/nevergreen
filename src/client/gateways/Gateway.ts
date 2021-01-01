@@ -1,6 +1,7 @@
 import request, {Response, SuperAgentRequest} from 'superagent'
 import * as log from '../common/Logger'
-import {get as _get, noop} from 'lodash'
+import _get from 'lodash/get'
+import noop from 'lodash/noop'
 import {errorMessage} from '../common/Utils'
 import {Prognosis} from '../domain/Project'
 

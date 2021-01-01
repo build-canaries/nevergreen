@@ -1,4 +1,13 @@
-import {get, isEmpty, isNaN, isNumber, isString, sample, startsWith, toNumber, trim, lowerCase} from 'lodash'
+import get from 'lodash/get'
+import isEmpty from 'lodash/isEmpty'
+import isNaN from 'lodash/isNaN'
+import isNumber from 'lodash/isNumber'
+import isString from 'lodash/isString'
+import sample from 'lodash/sample'
+import startsWith from 'lodash/startsWith'
+import toNumber from 'lodash/toNumber'
+import trim from 'lodash/trim'
+import lowerCase from 'lodash/lowerCase'
 
 export function isBlank(val: unknown): boolean {
   return isString(val) ? isEmpty(trim(val)) : true

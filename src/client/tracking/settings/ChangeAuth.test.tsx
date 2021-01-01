@@ -1,7 +1,7 @@
 import React from 'react'
 import {ChangeAuth} from './ChangeAuth'
 import * as SecurityGateway from '../../gateways/SecurityGateway'
-import {noop} from 'lodash'
+import noop from 'lodash/noop'
 import {AuthTypes} from '../../domain/Tray'
 import {render, waitFor} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'

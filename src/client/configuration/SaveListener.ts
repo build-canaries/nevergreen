@@ -1,5 +1,5 @@
 import {clear, save as repositorySave} from './LocalRepository'
-import {debounce} from 'lodash'
+import debounce from 'lodash/debounce'
 import {State} from '../Reducer'
 
 const ONE_SECOND = 1000

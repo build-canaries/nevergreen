@@ -3,7 +3,7 @@ import {Messages, MessagesProps} from '../../common/Messages'
 import {CSSTransition} from 'react-transition-group'
 import cn from 'classnames'
 import styles from './timed-message.scss'
-import {isEmpty} from 'lodash'
+import isEmpty from 'lodash/isEmpty'
 
 interface TimedMessageProps extends MessagesProps {
   readonly clear: (value: string) => void;

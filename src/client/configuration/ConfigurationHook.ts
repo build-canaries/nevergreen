@@ -5,7 +5,7 @@ import {DataSource, toConfiguration} from './Configuration'
 import {configurationImported} from '../backup/BackupActionCreators'
 import {isRight} from 'fp-ts/Either'
 import * as logger from '../common/Logger'
-import {join} from 'lodash'
+import join from 'lodash/join'
 
 interface Result {
   readonly loaded: boolean;

@@ -1,5 +1,5 @@
 import React from 'react'
-import {noop} from 'lodash'
+import noop from 'lodash/noop'
 import userEvent from '@testing-library/user-event'
 import {waitFor} from '@testing-library/react'
 import {buildProject, buildProjectError, buildTray, render} from '../../testHelpers'

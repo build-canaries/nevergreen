@@ -1,5 +1,8 @@
 import React, {ReactElement, useCallback, useState} from 'react'
-import {difference, get, isEmpty, map, size, take} from 'lodash'
+import difference from 'lodash/difference'
+import get from 'lodash/get'
+import isEmpty from 'lodash/isEmpty'
+import take from 'lodash/take'
 import {ScaledGrid} from './ScaledGrid'
 import {projectIdentifier, Projects} from '../domain/Project'
 import {TileProject} from './TileProject'
@@ -56,7 +59,7 @@ export function InterestingProjects({projects}: InterestingProjectsProps): React
 
   useWindowResized(onWindowResize)
 
-  const showSummary = size(projects) > actualMaxProjectsToShow
+  const showSummary = projects.length > actualMaxProjectsToShow
 
   const projectsToShow = showSummary
     ? take(projects, actualMaxProjectsToShow)
@@ -64,7 +67,7 @@ export function InterestingProjects({projects}: InterestingProjectsProps): React
 
   const projectsNotShown = difference(projects, projectsToShow)
 
-  const projectComponents = map(projectsToShow, (project) => {
+  const projectComponents = projectsToShow.map((project) => {
     return <TileProject key={projectIdentifier(project)}
                         project={project}
                         visibleProjects={projectsToShow}/>

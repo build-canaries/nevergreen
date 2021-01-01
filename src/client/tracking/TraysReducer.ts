@@ -5,7 +5,7 @@ import {createReducer, createSelector} from '@reduxjs/toolkit'
 import {Draft} from 'immer'
 import {State} from '../Reducer'
 import {ActionConfigurationImported} from '../backup/BackupActionCreators'
-import {isNil} from 'lodash'
+import isNil from 'lodash/isNil'
 
 export interface TraysState {
   readonly [trayId: string]: Tray;

@@ -1,7 +1,7 @@
-import nameGenerator from 'project-name-generator'
 import {v4 as uuid} from 'uuid'
-import {isNil, lowerCase} from 'lodash'
-import {isNotBlank} from '../common/Utils'
+import isNil from 'lodash/isNil'
+import {isNotBlank, randomFrom} from '../common/Utils'
+import {adjectives, nouns} from './Words'
 
 export enum AuthTypes {
   none = 'none',
@@ -29,7 +29,7 @@ export const CI_OPTIONS = [
 ]
 
 export function generateRandomName(): string {
-  return lowerCase(nameGenerator().spaced)
+  return `${randomFrom(adjectives)} ${randomFrom(nouns)}`
 }
 
 export function createId(): string {

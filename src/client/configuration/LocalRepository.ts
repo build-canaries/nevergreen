@@ -1,5 +1,5 @@
 import localforage from 'localforage'
-import {toPairs} from 'lodash'
+import toPairs from 'lodash/toPairs'
 import {State} from '../Reducer'
 
 export type UntrustedData = Record<string, unknown>

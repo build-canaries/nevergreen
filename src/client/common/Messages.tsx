@@ -1,6 +1,7 @@
 import React, {ReactElement} from 'react'
 import cn from 'classnames'
-import {isEmpty, isString} from 'lodash'
+import isEmpty from 'lodash/isEmpty'
+import isString from 'lodash/isString'
 import styles from './messages.scss'
 
 export enum MessagesType {

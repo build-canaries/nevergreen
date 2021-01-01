@@ -2,7 +2,7 @@ import React from 'react'
 import userEvent from '@testing-library/user-event'
 import {Notification} from './Notification'
 import {render} from './testHelpers'
-import {noop} from 'lodash'
+import noop from 'lodash/noop'
 
 const DEFAULT_PROPS = {
   notification: '',

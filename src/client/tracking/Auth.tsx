@@ -4,7 +4,7 @@ import styles from './auth.scss'
 import {Password} from '../common/forms/Password'
 import {AuthTypes} from '../domain/Tray'
 import {Radio} from '../common/forms/Radio'
-import {uniqueId} from 'lodash'
+import uniqueId from 'lodash/uniqueId'
 
 interface AuthProps {
   readonly authType: AuthTypes;

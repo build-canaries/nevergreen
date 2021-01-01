@@ -1,6 +1,6 @@
 import React, {DetailedHTMLProps, InputHTMLAttributes, ReactElement, ReactNode} from 'react'
 import cn from 'classnames'
-import {uniqueId} from 'lodash'
+import uniqueId from 'lodash/uniqueId'
 import styles from './radio.scss'
 
 type RadioProps = {

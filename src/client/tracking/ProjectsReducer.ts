@@ -1,5 +1,5 @@
 import {Actions} from '../Actions'
-import {unionWith} from 'lodash'
+import unionWith from 'lodash/unionWith'
 import {ActionProjectsFetched, ActionRemoveTray, ActionTrayAdded} from './TrackingActionCreators'
 import {createReducer, createSelector} from '@reduxjs/toolkit'
 import {State} from '../Reducer'

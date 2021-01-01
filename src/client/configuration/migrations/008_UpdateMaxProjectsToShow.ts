@@ -1,5 +1,7 @@
 import {Migrate} from './index'
-import {get, has, set} from 'lodash'
+import get from 'lodash/get'
+import has from 'lodash/has'
+import set from 'lodash/set'
 import {MaxProjectsToShow, SETTINGS_ROOT} from '../../settings/SettingsReducer'
 
 export const id = '008_UpdateMaxProjectsToShow'

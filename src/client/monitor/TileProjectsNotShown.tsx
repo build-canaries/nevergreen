@@ -1,7 +1,7 @@
 import React, {ReactElement} from 'react'
 import styles from './tile-projects-not-shown.scss'
 import {ScaledTile} from './ScaledTile'
-import {countBy} from 'lodash'
+import countBy from 'lodash/countBy'
 import {Projects} from '../domain/Project'
 
 interface TileNotShownProps {

@@ -1,7 +1,7 @@
 import {render} from '../../testHelpers'
 import React from 'react'
 import {AvailableProject} from './AvailableProject'
-import {noop} from 'lodash'
+import noop from 'lodash/noop'
 
 const DEFAULT_PROPS = {
   description: '',

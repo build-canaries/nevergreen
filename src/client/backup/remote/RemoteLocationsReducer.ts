@@ -1,5 +1,7 @@
 import {Actions} from '../../Actions'
-import {get, isNil, merge} from 'lodash'
+import get from 'lodash/get'
+import isNil from 'lodash/isNil'
+import merge from 'lodash/merge'
 import {createReducer} from '@reduxjs/toolkit'
 import {State} from '../../Reducer'
 import {ActionConfigurationImported} from '../BackupActionCreators'

@@ -9,7 +9,7 @@ import React, {
   useRef
 } from 'react'
 import classNames from 'classnames'
-import {uniqueId} from 'lodash'
+import uniqueId from 'lodash/uniqueId'
 import styles from './input.scss'
 import formStyles from './forms.scss'
 import {InputButton} from './Button'

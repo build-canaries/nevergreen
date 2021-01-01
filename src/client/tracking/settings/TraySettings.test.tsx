@@ -8,7 +8,7 @@ import {AuthTypes} from '../../domain/Tray'
 import * as SecurityGateway from '../../gateways/SecurityGateway'
 import {fakeRequest} from '../../gateways/Gateway'
 import {useSelector} from 'react-redux'
-import {noop} from 'lodash'
+import noop from 'lodash/noop'
 
 const FakePage = ({trayId, children}: { trayId: string; children: ReactNode }) => {
   const trayExists = useSelector(getTrays).some((tray) => tray.trayId === trayId)

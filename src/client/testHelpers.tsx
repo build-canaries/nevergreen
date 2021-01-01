@@ -1,5 +1,5 @@
 import React, {ReactNode} from 'react'
-import {merge} from 'lodash'
+import merge from 'lodash/merge'
 import {reducer, State} from './Reducer'
 import {MaxProjectsToShow, SETTINGS_ROOT} from './settings/SettingsReducer'
 import {PROJECTS_ROOT, ProjectState} from './tracking/ProjectsReducer'

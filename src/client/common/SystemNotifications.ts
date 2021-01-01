@@ -1,5 +1,5 @@
 import {isBlank} from './Utils'
-import _ from 'lodash'
+import get from 'lodash/get'
 import {info} from './Logger'
 
 const NOTIFICATION_PERMISSION_GRANTED = 'granted'
@@ -11,7 +11,7 @@ export function supported(): boolean {
 
 export function permissionGranted(result?: string): boolean {
   if (isBlank(result)) {
-    return _.get(Notification, 'permission') === NOTIFICATION_PERMISSION_GRANTED
+    return get(Notification, 'permission') === NOTIFICATION_PERMISSION_GRANTED
   } else {
     return result === NOTIFICATION_PERMISSION_GRANTED
   }
@@ -41,7 +41,13 @@ interface Notification {
   readonly tag?: string;
 }
 
-export async function sendSystemNotification({title = 'Nevergreen', body, badge = '/mstile-144x144.png', icon = '/android-chrome-192x192.png', tag}: Notification): Promise<void> {
+export async function sendSystemNotification({
+                                               title = 'Nevergreen',
+                                               body,
+                                               badge = '/mstile-144x144.png',
+                                               icon = '/android-chrome-192x192.png',
+                                               tag
+                                             }: Notification): Promise<void> {
   if (supported() && permissionGranted()) {
     if (process.env.NODE_ENV === 'production') {
       const registration = await navigator.serviceWorker.ready

@@ -1,4 +1,4 @@
-import {random} from 'lodash'
+import random from 'lodash/random'
 import parseISO from 'date-fns/parseISO'
 import format from 'date-fns/format'
 import subSeconds from 'date-fns/subSeconds'

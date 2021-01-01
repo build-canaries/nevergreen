@@ -1,7 +1,7 @@
 import {Actions} from '../Actions'
 import {ActionProjectsFetched, ActionRemoveTray, ActionSelectProject, ActionTrayAdded} from './TrackingActionCreators'
 import {createReducer, createSelector} from '@reduxjs/toolkit'
-import {remove} from 'lodash'
+import remove from 'lodash/remove'
 import {State} from '../Reducer'
 import {ActionConfigurationImported} from '../backup/BackupActionCreators'
 

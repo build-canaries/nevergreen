@@ -1,6 +1,6 @@
 import React, {ReactElement} from 'react'
 import {Input} from '../common/forms/Input'
-import {noop} from 'lodash'
+import noop from 'lodash/noop'
 import {Checkbox} from '../common/forms/Checkbox'
 import {DropDown} from '../common/forms/DropDown'
 import {StyleGuideSection} from './StyleGuideSection'

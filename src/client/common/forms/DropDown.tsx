@@ -1,6 +1,6 @@
 import React, {DetailedHTMLProps, ReactElement, ReactNode, SelectHTMLAttributes} from 'react'
 import cn from 'classnames'
-import {uniqueId} from 'lodash'
+import uniqueId from 'lodash/uniqueId'
 import styles from './drop-down.scss'
 import formStyles from './forms.scss'
 

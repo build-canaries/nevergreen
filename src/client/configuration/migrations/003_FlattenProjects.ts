@@ -1,7 +1,7 @@
 import {forEachObjectAt} from '../Migrate'
 import {Migrate} from './index'
 import {PROJECTS_ROOT} from '../../tracking/ProjectsReducer'
-import {set} from 'lodash'
+import set from 'lodash/set'
 
 export const id = '003_FlattenProjects.ts'
 

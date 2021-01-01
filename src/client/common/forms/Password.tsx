@@ -1,5 +1,5 @@
 import React, {ReactElement, useState} from 'react'
-import {uniqueId} from 'lodash'
+import uniqueId from 'lodash/uniqueId'
 import {InputButton} from './Button'
 import {iEye, iEyeBlocked} from '../fonts/Icons'
 import {Input, InputProps} from './Input'

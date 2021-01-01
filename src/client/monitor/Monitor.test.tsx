@@ -1,6 +1,6 @@
 import React from 'react'
 import {waitFor} from '@testing-library/react'
-import {noop} from 'lodash'
+import noop from 'lodash/noop'
 import {Monitor} from './Monitor'
 import {buildProject, buildTray, render} from '../testHelpers'
 import {TRAYS_ROOT} from '../tracking/TraysReducer'

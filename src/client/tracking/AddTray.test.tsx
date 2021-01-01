@@ -1,5 +1,5 @@
 import React from 'react'
-import {noop} from 'lodash'
+import noop from 'lodash/noop'
 import {AddTray} from './AddTray'
 import userEvent from '@testing-library/user-event'
 import {waitFor} from '@testing-library/react'

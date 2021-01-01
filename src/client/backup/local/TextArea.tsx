@@ -1,7 +1,8 @@
 import React, {DetailedHTMLProps, InputHTMLAttributes, ReactElement} from 'react'
 import cn from 'classnames'
 import {ErrorMessages} from '../../common/Messages'
-import {isEmpty, uniqueId} from 'lodash'
+import isEmpty from 'lodash/isEmpty'
+import uniqueId from 'lodash/uniqueId'
 import styles from './text-area.scss'
 
 type TextAreaProps = {

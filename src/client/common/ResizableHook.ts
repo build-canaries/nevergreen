@@ -1,5 +1,5 @@
 import {RefObject, useEffect} from 'react'
-import {isNil} from 'lodash'
+import isNil from 'lodash/isNil'
 import {debug} from './Logger'
 import {ResizeObserver} from '@juggle/resize-observer'
 import {ResizeObserverEntry} from '@juggle/resize-observer/lib/ResizeObserverEntry'

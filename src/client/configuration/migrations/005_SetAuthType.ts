@@ -1,6 +1,6 @@
 import {forEachObjectAt} from '../Migrate'
 import {Migrate} from './index'
-import {has} from 'lodash'
+import has from 'lodash/has'
 import {TRAYS_ROOT} from '../../tracking/TraysReducer'
 import {AuthTypes} from '../../domain/Tray'
 import {isBlank} from '../../common/Utils'

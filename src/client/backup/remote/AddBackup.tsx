@@ -1,5 +1,5 @@
 import React, {FormEvent, ReactElement, useState} from 'react'
-import {isEmpty} from 'lodash'
+import isEmpty from 'lodash/isEmpty'
 import cn from 'classnames'
 import {PrimaryButton} from '../../common/forms/Button'
 import {iPlus} from '../../common/fonts/Icons'

@@ -1,7 +1,7 @@
 import {render, setSystemTime} from '../../testHelpers'
 import React from 'react'
 import {Refresh} from './Refresh'
-import {noop} from 'lodash'
+import noop from 'lodash/noop'
 
 const DEFAULT_PROPS = {
   index: 1,
