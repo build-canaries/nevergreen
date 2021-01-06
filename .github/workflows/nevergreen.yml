@@ -56,7 +56,7 @@ jobs:
           lein uberjar
 
       - name: Run Cypress
-        uses: cypress-io/github-action@v1
+        uses: cypress-io/github-action@v2
         env:
           CYPRESS_BASE_URL: "http://localhost:5000"
           CYPRESS_TRAY_URL: "https://raw.githubusercontent.com/build-canaries/nevergreen/master/cctray_xml_feed_mock/resources/cctray.xml"
@@ -68,17 +68,17 @@ jobs:
           start: java -jar target/nevergreen-standalone.jar
           wait-on: http://localhost:5000
 
-      - name: Store Cypress artifacts
-        uses: actions/upload-artifact@v1
+      - name: Store test reports
+        uses: actions/upload-artifact@v2
         if: always()
         with:
-          name: cypress-video
-          path: target/test-reports/journey/journey.test.js.mp4
+          name: test-reports
+          path: |
+            target/coverage-reports
+            target/test-reports
 
       - name: Store Nevergreen artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: nevergreen-jar
           path: target/nevergreen-standalone.jar
-
-
