@@ -29,12 +29,10 @@ export function GeneralSettings(): ReactElement {
       </DropDown>
       <Checkbox checked={clickToShowMenu}
                 onToggle={(newValue) => dispatch(setClickToShowMenu(newValue))}
-                className={styles.clickToShow}
                 data-locator='click-to-show-menu'>
         Click to show menu
       </Checkbox>
-      <Checkbox className={styles.checkbox}
-                checked={toggleVersionCheckFlag}
+      <Checkbox checked={toggleVersionCheckFlag}
                 onToggle={() => dispatch(toggleVersionCheck())}
                 data-locator='toggle-version-check'>
         Check for new Nevergreen versions

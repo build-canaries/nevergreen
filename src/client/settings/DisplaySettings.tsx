@@ -53,14 +53,12 @@ export function DisplaySettings(): ReactElement {
                 data-locator='show-tray-names'>
         Show feed identifier
       </Checkbox>
-      <Checkbox className={styles.checkbox}
-                checked={showBuildTime}
+      <Checkbox checked={showBuildTime}
                 onToggle={(newValue) => dispatch(setShowBuildTime(newValue))}
                 data-locator='show-build-times'>
         Show build time
       </Checkbox>
-      <Checkbox className={styles.checkbox}
-                checked={showBuildLabel}
+      <Checkbox checked={showBuildLabel}
                 onToggle={(newValue) => dispatch(setShowBuildLabel(newValue))}
                 data-locator='show-build-labels'>
         Show build label

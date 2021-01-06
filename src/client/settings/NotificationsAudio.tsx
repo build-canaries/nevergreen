@@ -76,8 +76,7 @@ export function NotificationsAudio(): ReactElement {
 
   return (
     <>
-      <Checkbox className={styles.playSfxs}
-                checked={playBrokenBuildSoundFx}
+      <Checkbox checked={playBrokenBuildSoundFx}
                 onToggle={(newValue) => dispatch(setPlayBrokenBuildSoundFx(newValue))}
                 data-locator='play-sounds'>
         Play audio notifications

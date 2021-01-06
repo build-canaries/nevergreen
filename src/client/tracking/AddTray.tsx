@@ -11,7 +11,7 @@ import {ensureHasScheme, removeScheme} from '../domain/Url'
 import {trayAdded} from './TrackingActionCreators'
 import {useDispatch, useSelector} from 'react-redux'
 import {send} from '../gateways/Gateway'
-import {encrypt, EncryptResponse} from '../gateways/SecurityGateway'
+import {encrypt} from '../gateways/SecurityGateway'
 import {ErrorMessages} from '../common/Messages'
 
 interface AddTrayProps {
@@ -66,9 +66,9 @@ export function AddTray({setHighlightTray, setRefreshTray}: AddTrayProps): React
 
       try {
         if (authType === AuthTypes.basic && !isBlank(password)) {
-          encryptedPassword = await send<EncryptResponse>(encrypt(password))
+          encryptedPassword = await send(encrypt(password))
         } else if (authType === AuthTypes.token && !isBlank(accessToken)) {
-          encryptedAccessToken = await send<EncryptResponse>(encrypt(accessToken))
+          encryptedAccessToken = await send(encrypt(accessToken))
         }
         dispatch(trayAdded(trayId, updatedUrl, authType, username, encryptedPassword, encryptedAccessToken))
         setRefreshTray(trayId)

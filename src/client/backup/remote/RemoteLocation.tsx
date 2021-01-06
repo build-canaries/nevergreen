@@ -9,12 +9,7 @@ import {RemoteLocationDescription} from './RemoteLocationDescription'
 import {RemoteLocation as RemoteLocationType} from './RemoteLocationsReducer'
 import {backupExported, backupImported, removeBackup, setAutomaticExport} from './RemoteLocationActionCreators'
 import {send} from '../../gateways/Gateway'
-import {
-  exportConfigurationNew,
-  ExportResponse,
-  fetchConfigurationNew,
-  ImportResponse
-} from '../../gateways/BackupGateway'
+import {exportConfigurationNew, fetchConfigurationNew} from '../../gateways/BackupGateway'
 import {DataSource, toConfiguration, toExportableConfigurationJson} from '../../configuration/Configuration'
 import {errorMessage, isBlank, isNotBlank} from '../../common/Utils'
 import {ErrorMessages} from '../../common/Messages'
@@ -35,7 +30,7 @@ export function RemoteLocation({location}: RemoteLocationProps): ReactElement {
     setLoaded(false)
     setErrors([])
     try {
-      const res = await send<ExportResponse>(exportConfigurationNew(location, configuration))
+      const res = await send(exportConfigurationNew(location, configuration))
       dispatch(backupExported(location.internalId, res.id))
     } catch (error) {
       setErrors(['Unable to export because of an error, please try again.', errorMessage(error)])
@@ -47,7 +42,7 @@ export function RemoteLocation({location}: RemoteLocationProps): ReactElement {
     setLoaded(false)
     setErrors([])
     try {
-      const res = await send<ImportResponse>(fetchConfigurationNew(location))
+      const res = await send(fetchConfigurationNew(location))
       const result = toConfiguration(res.configuration, DataSource.UserImport)
       if (isRight(result)) {
         dispatch(configurationImported(result.right))

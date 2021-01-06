@@ -8,13 +8,8 @@
   padding: 1em;
 }
 
-.checkbox {
-  width: 100%;
-}
-
 .showTrayName {
   @extend %first;
-  @extend .checkbox;
 }
 
 .dropDownLabel {

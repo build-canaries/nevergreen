@@ -1,14 +1,20 @@
 @import '../variables';
 @import '../typography';
 @import '../accessibility';
+@import '../responsive';
 @import './forms';
 
 .container {
   @extend %standard-input-dimensions;
 
-  display: inline-block;
+  display: block;
   height: auto;
   margin: $margin-top 0 0 0;
+  width: 100%;
+
+  @include respond-to(tablet, desktop) {
+    width: fit-content;
+  }
 }
 
 .checkbox {

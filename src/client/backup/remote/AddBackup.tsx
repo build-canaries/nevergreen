@@ -11,7 +11,7 @@ import {addBackupCustomServer, addBackupGitHubLab} from './RemoteLocationActionC
 import {Input} from '../../common/forms/Input'
 import {Password} from '../../common/forms/Password'
 import {send} from '../../gateways/Gateway'
-import {encrypt, EncryptResponse} from '../../gateways/SecurityGateway'
+import {encrypt} from '../../gateways/SecurityGateway'
 import styles from './add-backup.scss'
 import {isHttp} from '../../domain/Url'
 import {RemoteLocationLogo} from './RemoteLocationLogo'
@@ -57,7 +57,7 @@ export function AddBackup(): ReactElement {
     if (where === RemoteLocationOptions.GitLab || where === RemoteLocationOptions.GitHub) {
       try {
         setAdding(true)
-        const encryptedAccessToken = await send<EncryptResponse>(encrypt(accessToken))
+        const encryptedAccessToken = await send(encrypt(accessToken))
         setAdding(false)
         dispatch(addBackupGitHubLab(where, id, url, description, encryptedAccessToken))
       } catch (e) {

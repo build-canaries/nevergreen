@@ -3,7 +3,7 @@ import debounce from 'lodash/debounce'
 import {Dispatch} from '@reduxjs/toolkit'
 import {State} from '../../Reducer'
 import {send} from '../../gateways/Gateway'
-import {exportConfigurationNew, ExportResponse} from '../../gateways/BackupGateway'
+import {exportConfigurationNew} from '../../gateways/BackupGateway'
 import {backupExported} from './RemoteLocationActionCreators'
 import * as logger from '../../common/Logger'
 import {BACKUP_REMOTE_LOCATIONS_ROOT} from './RemoteLocationsReducer'
@@ -31,7 +31,7 @@ export async function backupRaw(previousState: State | undefined, currentState: 
           logger.info(`Attempting to automatically backup to location ${location.internalId}...`, location)
 
           try {
-            const res = await send<ExportResponse>(exportConfigurationNew(location, currentExport))
+            const res = await send(exportConfigurationNew(location, currentExport))
             dispatch(backupExported(location.internalId, res.id))
           } catch (error) {
             logger.error(`The automatic export to ${location.internalId} failed!`, error)
