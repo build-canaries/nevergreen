@@ -25,7 +25,7 @@ export function KeyboardShortcuts(): ReactElement {
           <kbd className={styles.binding}>{SHOW_HELP_SHORTCUT}</kbd>
         </li>
         <li className={styles.shortcut}>
-          <div>Dismiss dialogs (such as this) or blurs the focused element (expect text inputs)</div>
+          <div>Dismiss dialogs (such as this) or blurs the focused element (except text inputs)</div>
           <kbd className={styles.binding}>esc</kbd>
         </li>
       </ul>
@@ -39,8 +39,8 @@ export function KeyboardShortcuts(): ReactElement {
         <li className={styles.shortcut}>
           <div>Move focus to the previous element</div>
           <span className={styles.multipleShortcuts}>
-              <kbd className={styles.binding}>shift</kbd><kbd className={styles.binding}>tab</kbd>
-            </span>
+            <kbd className={styles.binding}>shift</kbd><kbd className={styles.binding}>tab</kbd>
+          </span>
         </li>
         <li className={styles.shortcut}>
           <div>Take action or &quot;click&quot; the selected element</div>
@@ -49,32 +49,27 @@ export function KeyboardShortcuts(): ReactElement {
         <li className={styles.shortcut}>
           <div>Go to the Monitor page</div>
           <span className={styles.multipleShortcuts}>
-              <kbd className={styles.binding}>m</kbd> or <kbd className={styles.binding}>1</kbd>
-            </span>
+            <kbd className={styles.binding}>m</kbd> or <kbd className={styles.binding}>1</kbd>
+          </span>
         </li>
         <li className={styles.shortcut}>
           <div>Go to the Tracking page</div>
           <span className={styles.multipleShortcuts}>
-              <kbd className={styles.binding}>t</kbd> or <kbd className={styles.binding}>2</kbd>
-            </span>
-        </li>
-        <li className={styles.shortcut}>
-          <div>Go to the Success page</div>
-          <span className={styles.multipleShortcuts}>
-              <kbd className={styles.binding}>s</kbd> or <kbd className={styles.binding}>3</kbd>
-            </span>
+            <kbd className={styles.binding}>t</kbd> or <kbd className={styles.binding}>2</kbd>
+          </span>
         </li>
         <li className={styles.shortcut}>
           <div>Go to the Settings page</div>
           <span className={styles.multipleShortcuts}>
-              <kbd className={styles.binding}>,</kbd> or <kbd className={styles.binding}>4</kbd>
-            </span>
+            <kbd className={styles.binding}>s</kbd> or <kbd className={styles.binding}>,</kbd> or <kbd
+            className={styles.binding}>3</kbd>
+          </span>
         </li>
         <li className={styles.shortcut}>
           <div>Go to the Backup page</div>
           <span className={styles.multipleShortcuts}>
-              <kbd className={styles.binding}>b</kbd> or <kbd className={styles.binding}>5</kbd>
-            </span>
+            <kbd className={styles.binding}>b</kbd> or <kbd className={styles.binding}>4</kbd>
+          </span>
         </li>
       </ul>
 
@@ -83,21 +78,21 @@ export function KeyboardShortcuts(): ReactElement {
         <li className={styles.shortcut}>
           <div>Includes all projects for the tray with the given index (the first tray is at index 0)</div>
           <span className={styles.multipleShortcuts}>
-              <kbd className={styles.binding}>+</kbd><kbd className={styles.binding}>0..n</kbd> or <kbd
+            <kbd className={styles.binding}>+</kbd><kbd className={styles.binding}>0..n</kbd> or <kbd
             className={styles.binding}>&#61;</kbd><kbd className={styles.binding}>0..n</kbd>
-            </span>
+          </span>
         </li>
         <li className={styles.shortcut}>
           <div>Excludes all projects for the tray with the given index (the first tray is at index 0)</div>
           <span className={styles.multipleShortcuts}>
-              <kbd className={styles.binding}>-</kbd><kbd className={styles.binding}>0..n</kbd>
-            </span>
+            <kbd className={styles.binding}>-</kbd><kbd className={styles.binding}>0..n</kbd>
+          </span>
         </li>
         <li className={styles.shortcut}>
           <div>Refresh the tray with the given index (the first tray is at index 0)</div>
           <span className={styles.multipleShortcuts}>
-              <kbd className={styles.binding}>r</kbd><kbd className={styles.binding}>0..n</kbd>
-            </span>
+            <kbd className={styles.binding}>r</kbd><kbd className={styles.binding}>0..n</kbd>
+          </span>
         </li>
       </ul>
     </Modal>
