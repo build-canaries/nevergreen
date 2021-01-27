@@ -101,9 +101,7 @@ it('should not call requires refresh if the URL is the same', () => {
   expect(setRequiresRefresh).not.toHaveBeenCalled()
 })
 
-// TODO: This fails with "RangeError: Maximum call stack size exceeded" since updating to Jest v25 which upgraded JSDOM
-//  from v11 to v15.
-xit('should set the tray server type on change', () => {
+it('should set the tray server type on change', () => {
   const setRequiresRefresh = jest.fn()
   const tray = buildTray({
     trayId: 'trayId',
