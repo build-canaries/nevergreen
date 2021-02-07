@@ -1,6 +1,6 @@
 import React, {ReactElement} from 'react'
 import {HelpArticle, HelpProps} from '../help/HelpArticle'
-import styles from '../help/help-article.scss'
+import {HelpForm, HelpInput} from '../help/HelpForms'
 
 const KEYWORDS = [
   'settings',
@@ -18,20 +18,19 @@ export function NotificationSettingsHelp({searchQuery, helpLink}: HelpProps): Re
                  searchQuery={searchQuery}
                  title='Notifications settings'
                  page='/settings'>
-      <dl className={styles.helpSettings}>
-        <dt>Show system notifications</dt>
-        <dd>
+      <HelpForm>
+        <HelpInput name='Show system notifications'>
           When <em>enabled</em> system (aka desktop) notifications will be shown when a project is sick or a sick
-          project becomes healthy.
-        </dd>
-        <dt>Play audio notifications</dt>
-        <dd>When <em>enabled</em> audio will be played when a project is sick.</dd>
-        <dt>Broken build sound</dt>
-        <dd>
+          project becomes healthy. This is a personal setting that won&apos;t get exported or changed via an import.
+        </HelpInput>
+        <HelpInput name='Play audio notifications'>
+          When <em>enabled</em> audio will be played when a project is sick.
+        </HelpInput>
+        <HelpInput name='Broken build sound'>
           A URL to the sound file to play when a project is sick. This will only play if audio notifications are
           enabled {helpLink('play audio notifications')}.
-        </dd>
-      </dl>
+        </HelpInput>
+      </HelpForm>
     </HelpArticle>
   )
 }

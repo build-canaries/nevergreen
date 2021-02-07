@@ -47,7 +47,7 @@ export function RemoteBackupCustomHelp({searchQuery}: HelpProps): ReactElement {
         a <code>GET</code> request.
       </p>
       <p>
-        Tip, if you need to support multiple exports with the same customer server, you can make it RESTful and specify
+        Tip, if you need to support multiple exports with the same custom server, you can make it RESTful and specify
         the ID directly in the <strong>URL</strong> field.
       </p>
     </HelpArticle>

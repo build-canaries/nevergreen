@@ -61,7 +61,7 @@ export function SubmitAnIssue({version, className}: SubmitAnIssueProps): ReactEl
   const trays = useSelector(getTrays)
 
   return (
-    <ExternalLink href={`${ISSUE_URL}?body=${bugReport(version, trays)}`}
+    <ExternalLink href={`${ISSUE_URL}?labels=bug&body=${bugReport(version, trays)}`}
                   className={className}
                   title='Submit an issue on GitHub'>
       Submit an issue

@@ -1,6 +1,6 @@
 import React, {ReactElement} from 'react'
-import styles from '../../help/help-article.scss'
 import {HelpArticle, HelpProps} from '../../help/HelpArticle'
+import {HelpForm, HelpInput} from '../../help/HelpForms'
 
 const KEYWORDS = [
   'tracking',
@@ -21,29 +21,25 @@ export function AvailableProjectsHelp({searchQuery, helpLink}: HelpProps): React
       <p>
         Once added you can choose which projects to include for tracking by selecting them.
       </p>
-      <dl className={styles.helpSettings}>
-        <dt>Refresh</dt>
-        <dd>
+      <HelpForm>
+        <HelpInput name='Refresh'>
           Fetches the latest list of projects from the CCTray XML feed. If projects are added, removed or renamed on the
           server you will need to refresh to see them in Nevergreen.
-        </dd>
-        <dt>Include all</dt>
-        <dd>
+        </HelpInput>
+        <HelpInput name='Include all'>
           Includes all the currently shown {helpLink('search')} projects for tracking which means they can be shown
           on the Monitor page if they are interesting {helpLink('interesting projects')}.
-        </dd>
-        <dt>Exclude all</dt>
-        <dd>
+        </HelpInput>
+        <HelpInput name='Exclude all'>
           Excludes all the currently shown {helpLink('search')} projects for tracking which means they will never be
           shown on the Monitor page.
-        </dd>
-        <dt>Search</dt>
-        <dd>
+        </HelpInput>
+        <HelpInput name='Search'>
           Takes a regular expression and searches for any projects with matching names. Clear the input to show all
           projects again. The include all and exclude all buttons work on the currently visible projects, so searching
           can be used to quickly include or exclude a group of projects.
-        </dd>
-      </dl>
+        </HelpInput>
+      </HelpForm>
     </HelpArticle>
   )
 }

@@ -16,4 +16,16 @@
   > li:last-child {
     margin: 0;
   }
+
+  &:empty {
+    display: none;
+  }
+}
+
+.notFound {
+  display: none;
+
+  ul:empty + & {
+    display: block;
+  }
 }

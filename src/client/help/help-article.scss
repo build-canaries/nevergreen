@@ -24,16 +24,3 @@
   color: $off-black;
   font-weight: bold;
 }
-
-.helpSettings {
-  margin: 1em 0 0 0;
-
-  > dt {
-    font-weight: bold;
-    margin: 0.5em 0 0 0;
-  }
-
-  > dd {
-    margin-left: $margin-right;
-  }
-}

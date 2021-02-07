@@ -1,6 +1,6 @@
 import React, {ReactElement} from 'react'
 import {HelpArticle, HelpProps} from '../help/HelpArticle'
-import styles from '../help/help-article.scss'
+import {HelpForm, HelpInput} from '../help/HelpForms'
 
 const KEYWORDS = [
   'settings',
@@ -25,45 +25,39 @@ export function DisplaySettingsHelp({searchQuery, helpLink}: HelpProps): ReactEl
                  searchQuery={searchQuery}
                  title='Display settings'
                  page='/settings'>
-      <dl className={styles.helpSettings}>
-        <dt>Show feed identifier</dt>
-        <dd>
+      <HelpForm>
+        <HelpInput name='Show feed identifier'>
           When <em>enabled</em> the CI server name {helpLink('name')} or URL will be displayed on the Monitor page.
-        </dd>
-        <dt>Show build time</dt>
-        <dd>
+        </HelpInput>
+        <HelpInput name='Show build time'>
           When <em>enabled</em> (the default) the amount of time since a project was last built or the amount of time
           it has been building will be displayed on the Monitor page.
           <p>
             Please note the building time is <strong>not</strong> provided by the CCTray XML feed and is manually
             calculated by Nevergreen, this means it may not be entirely accurate.
           </p>
-        </dd>
-        <dt>Show build label</dt>
-        <dd>
+        </HelpInput>
+        <HelpInput name='Show build label'>
           When <em>enabled</em> the build label, for projects not building, will be displayed on the Monitor page.
           <p>
             The reason this is only shown for non building projects is because the CCTray XML is only updated after a
             project has finished building, meaning the value Nevergreen gets is always out of date for building
             projects.
           </p>
-        </dd>
-        <dt>Interesting projects</dt>
-        <dd>
+        </HelpInput>
+        <HelpInput name='Interesting projects'>
           This determines projects in what status to show on the Monitor page. By default this is sick, sick building,
           healthy building and unknown.
-        </dd>
-        <dt>Amount of projects to show</dt>
-        <dd>
+        </HelpInput>
+        <HelpInput name='Amount of projects to show'>
           This limits the total number of projects show on the Monitor page, any additional projects will be counted and
           shown in a summary box. The exact number of projects shown varies depending on the window size.
           <p>
             The main purpose of Nevergreen is to be an information radiator for the team, and this setting can be used
             to stop the view becoming too crowded to read at a distance.
           </p>
-        </dd>
-        <dt>Sort projects by</dt>
-        <dd>
+        </HelpInput>
+        <HelpInput name='Sort projects by'>
           This sets the sort order of projects on the Monitor page (projects on the Tracking page will always be in
           alphabetical order).
           <p>
@@ -75,13 +69,12 @@ export function DisplaySettingsHelp({searchQuery, helpLink}: HelpProps): ReactEl
             by <em>timestamp</em> may not display projects as expected. If that is the case the <em>default</em> sort
             order may be more appropriate.
           </p>
-        </dd>
-        <dt>Preview display</dt>
-        <dd>
+        </HelpInput>
+        <HelpInput name='Preview display'>
           This displays a Monitor page preview with a randomly generated number of projects and your currently selected
           settings.
-        </dd>
-      </dl>
+        </HelpInput>
+      </HelpForm>
       <p>
         Please note the feed identifier, build time and build labels will automatically be hidden, regardless of whether
         they are enabled, if the Monitor page becomes &quot;too crowded&quot;. This can happen if many projects are

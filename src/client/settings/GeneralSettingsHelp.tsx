@@ -1,6 +1,6 @@
 import React, {ReactElement} from 'react'
 import {HelpArticle, HelpProps} from '../help/HelpArticle'
-import styles from '../help/help-article.scss'
+import {HelpForm, HelpInput} from '../help/HelpForms'
 
 const KEYWORDS = [
   'settings',
@@ -16,11 +16,11 @@ export function GeneralSettingsHelp({searchQuery}: HelpProps): ReactElement {
                  searchQuery={searchQuery}
                  title='General settings'
                  page='/settings'>
-      <dl className={styles.helpSettings}>
-        <dt>Poll for feed changes every</dt>
-        <dd>How often to check the CI server for project updates.</dd>
-        <dt>Click to show menu</dt>
-        <dd>
+      <HelpForm>
+        <HelpInput name='Poll for feed changes every'>
+          How often to check the CI server for project updates.
+        </HelpInput>
+        <HelpInput name='Click to show menu'>
           While <em>disabled</em> (the default) moving the mouse on the Monitor page will show the menu.
           While <em>enabled</em> you will need to click while on the Monitor page to show the menu.
           <p>
@@ -28,9 +28,8 @@ export function GeneralSettingsHelp({searchQuery}: HelpProps): ReactElement {
             rotates to the Nevergreen tab, a mouse move will be triggered and the menu will be shown.
             Regardless of whether this is enabled keyboard shortcuts can be used to navigate between all pages.
           </p>
-        </dd>
-        <dt>Check for new Nevergreen versions</dt>
-        <dd>
+        </HelpInput>
+        <HelpInput name='Check for new Nevergreen versions'>
           When <em>enabled</em> (the default) Nevergreen will check (every 24 hours) for a new version and display a
           notification if one is available.
           <p>
@@ -38,8 +37,8 @@ export function GeneralSettingsHelp({searchQuery}: HelpProps): ReactElement {
             notification to update. This is because you need to update the client (by refreshing) to make sure it is
             the correct version in relation to the server.
           </p>
-        </dd>
-      </dl>
+        </HelpInput>
+      </HelpForm>
     </HelpArticle>
   )
 }
