@@ -1,14 +1,14 @@
 (defproject nevergreen "0.0.0"
   :description "A build monitor with attitude"
   :url "https://github.com/build-canaries/nevergreen"
-  :dependencies [[org.clojure/clojure "1.10.1"]
-                 [ring "1.8.2" :exclusions [org.eclipse.jetty/jetty-server]]
-                 [org.eclipse.jetty/jetty-server "9.4.35.v20201120"]
+  :dependencies [[org.clojure/clojure "1.10.2"]
+                 [ring "1.9.0" :exclusions [org.eclipse.jetty/jetty-server]]
+                 [org.eclipse.jetty/jetty-server "9.4.36.v20210114"]
                  [compojure "1.6.2" :exclusions [ring/ring-codec]]
                  [environ "1.2.0"]
                  [cheshire "5.10.0"]
                  [clj-cctray "2.0.0"]
-                 [clj-http "3.11.0"]
+                 [clj-http "3.12.1"]
                  [ring-curl "1.0.1"]
                  [ring/ring-json "0.5.0"]
                  [ring/ring-defaults "0.3.2"]
@@ -34,9 +34,9 @@
             "coverage"      ["with-profile" "+test" "cloverage"]
             "check-updates" ["ancient" ":all"]
             "audit"         ["nvd" "check"]}
-  :profiles {:dev  {:plugins [[lein-ancient "0.6.15"]
-                              [jonase/eastwood "0.3.11"]
-                              [lein-cloverage "1.2.1"]
+  :profiles {:dev  {:plugins [[lein-ancient "0.7.0"]
+                              [jonase/eastwood "0.3.13"]
+                              [lein-cloverage "1.2.2"]
                               [lein-nvd "1.4.1"]
                               [lein-eftest "0.5.9"]]}
              :test {:jvm-opts ["-Dlogback.configurationFile=./src/logback-tests.xml"]}}
