@@ -27,12 +27,3 @@ declare module '*.mp3' {
   // noinspection JSDuplicatedDeclaration,JSUnusedGlobalSymbols
   export default value
 }
-
-declare module 'project-name-generator' {
-  export function generator(): {
-    spaced: string;
-  }
-
-  // noinspection JSDuplicatedDeclaration,JSUnusedGlobalSymbols
-  export default generator
-}

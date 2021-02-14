@@ -1,0 +1,26 @@
+@import '../../common/variables';
+@import '../../common/responsive';
+
+.form {
+  background-color: $white;
+
+  @include respond-to(very-small) {
+    overflow: scroll;
+  }
+}
+
+.formErrors {
+  margin: 0 0 $margin-top 0;
+}
+
+.submitButton {
+  margin: $margin-top 0 0 0;
+
+  @include respond-to(tablet, desktop) {
+    margin: $margin-top $margin-right 0 0;
+  }
+}
+
+.cancelButton {
+  margin: $margin-top 0 0 0;
+}

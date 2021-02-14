@@ -12,9 +12,19 @@ interface ModalProps {
   readonly children: ReactNode;
   readonly close: () => void;
   readonly className?: string;
+  readonly shouldCloseOnEsc?: boolean;
+  readonly shouldCloseOnOverlayClick?: boolean;
 }
 
-export function Modal({children, title, show, close, className}: ModalProps): ReactElement {
+export function Modal({
+                        children,
+                        title,
+                        show,
+                        close,
+                        className,
+                        shouldCloseOnEsc,
+                        shouldCloseOnOverlayClick
+                      }: ModalProps): ReactElement {
   return (
     <ReactModal className={cn(styles.modal, className)}
                 bodyOpenClassName={styles.modelOpen}
@@ -23,7 +33,9 @@ export function Modal({children, title, show, close, className}: ModalProps): Re
                 isOpen={show}
                 onAfterOpen={pauseShortcuts}
                 onAfterClose={unpauseShortcuts}
-                onRequestClose={close}>
+                onRequestClose={close}
+                shouldCloseOnEsc={shouldCloseOnEsc}
+                shouldCloseOnOverlayClick={shouldCloseOnOverlayClick}>
       <div className={styles.header}>
         <h1 className={styles.title}>{title}</h1>
         <SecondaryButton onClick={close}

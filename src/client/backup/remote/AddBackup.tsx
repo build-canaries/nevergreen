@@ -1,11 +1,8 @@
-import React, {FormEvent, ReactElement, useState} from 'react'
-import isEmpty from 'lodash/isEmpty'
+import React, {ReactElement, useState} from 'react'
 import cn from 'classnames'
-import {PrimaryButton} from '../../common/forms/Button'
-import {iPlus} from '../../common/fonts/Icons'
 import {DropDown} from '../../common/forms/DropDown'
 import {useDispatch} from 'react-redux'
-import {errorMessage, isBlank} from '../../common/Utils'
+import {isBlank} from '../../common/Utils'
 import {DEFAULT_GITHUB_URL, DEFAULT_GITLAB_URL, RemoteLocationOptions} from './RemoteLocationOptions'
 import {addBackupCustomServer, addBackupGitHubLab} from './RemoteLocationActionCreators'
 import {Input} from '../../common/forms/Input'
@@ -15,12 +12,16 @@ import {encrypt} from '../../gateways/SecurityGateway'
 import styles from './add-backup.scss'
 import {isHttp} from '../../domain/Url'
 import {RemoteLocationLogo} from './RemoteLocationLogo'
-import {firstError, FormErrors, removeErrorFromState} from '../../common/forms/Validation'
-import {ErrorMessages} from '../../common/Messages'
+import {firstError, FormErrors} from '../../common/forms/Validation'
+import {Form} from '../../common/forms/Form'
 
 type Fields = 'url' | 'accessToken'
 
-export function AddBackup(): ReactElement {
+interface AddBackupProps {
+  readonly onCancel: () => void;
+}
+
+export function AddBackup({onCancel}: AddBackupProps): ReactElement {
   const dispatch = useDispatch()
 
   const [where, setWhere] = useState(RemoteLocationOptions.Custom)
@@ -28,13 +29,8 @@ export function AddBackup(): ReactElement {
   const [id, setId] = useState('')
   const [description, setDescription] = useState('Nevergreen configuration backup')
   const [accessToken, setAccessToken] = useState('')
-  const [validationErrors, setValidationErrors] = useState<Readonly<FormErrors<Fields>>>([])
-  const [submissionError, setSubmissionError] = useState('')
-  const [adding, setAdding] = useState(false)
 
-  const doAddBackup = async (evt: FormEvent) => {
-    evt.preventDefault()
-
+  const onValidate = () => {
     const validationErrors: FormErrors<Fields> = []
 
     if (isBlank(url)) {
@@ -49,21 +45,13 @@ export function AddBackup(): ReactElement {
       }
     }
 
-    if (!isEmpty(validationErrors)) {
-      setValidationErrors(validationErrors)
-      return
-    }
+    return validationErrors
+  }
 
+  const onSuccess = async () => {
     if (where === RemoteLocationOptions.GitLab || where === RemoteLocationOptions.GitHub) {
-      try {
-        setAdding(true)
-        const encryptedAccessToken = await send(encrypt(accessToken))
-        setAdding(false)
-        dispatch(addBackupGitHubLab(where, id, url, description, encryptedAccessToken))
-      } catch (e) {
-        setAdding(false)
-        setSubmissionError(errorMessage(e))
-      }
+      const encryptedAccessToken = await send(encrypt(accessToken))
+      dispatch(addBackupGitHubLab(where, id, url, description, encryptedAccessToken))
     } else {
       dispatch(addBackupCustomServer(url))
     }
@@ -77,78 +65,82 @@ export function AddBackup(): ReactElement {
     } else if (updatedWhere === RemoteLocationOptions.GitLab) {
       setUrl(DEFAULT_GITLAB_URL)
     }
-    setValidationErrors([])
     setWhere(updatedWhere)
   }
 
   const isCustomServer = where === RemoteLocationOptions.Custom
 
   return (
-    <form className={styles.addBackup}
-          onSubmit={doAddBackup}>
-      <div className={styles.whereContainer}>
-        <DropDown className={styles.where}
-                  value={where}
-                  options={[
-                    {value: RemoteLocationOptions.Custom, display: 'Custom server'},
-                    {value: RemoteLocationOptions.GitHub, display: 'GitHub gist'},
-                    {value: RemoteLocationOptions.GitLab, display: 'GitLab snippet'}
-                  ]}
-                  onChange={({target}) => updateWhere(target.value as RemoteLocationOptions)}
-                  disabled={adding}>
-          <span className={styles.label}>Where</span>
-        </DropDown>
-        <RemoteLocationLogo where={where}/>
-      </div>
-      <Input value={url}
-             onChange={({target}) => {
-               setValidationErrors(removeErrorFromState<Fields>('url'))
-               setUrl(target.value)
-             }}
-             autoComplete='url'
-             error={firstError<Fields>('url', validationErrors)}
-             disabled={adding}>
-        <span className={styles.label}>URL</span>
-      </Input>
-      <Input className={cn(styles.id, {[styles.gitHubLabOnly]: isCustomServer})}
-             value={id}
-             onChange={({target}) => {
-               setValidationErrors([])
-               setId(target.value)
-             }}
-             disabled={adding || isCustomServer}
-             aria-hidden={isCustomServer}>
-        <span className={styles.label}>ID</span>
-      </Input>
-      <Password className={cn({[styles.gitHubLabOnly]: isCustomServer})}
-                value={accessToken}
-                onChange={({target}) => {
-                  setValidationErrors(removeErrorFromState<Fields>('accessToken'))
-                  setAccessToken(target.value)
-                }}
-                error={firstError<Fields>('accessToken', validationErrors)}
-                disabled={adding || isCustomServer}
-                aria-hidden={isCustomServer}>
-        <span className={styles.label}>Access token</span>
-      </Password>
-      <Input className={cn({[styles.gitHubLabOnly]: isCustomServer})}
-             value={description}
-             onChange={({target}) => {
-               setValidationErrors([])
-               setDescription(target.value)
-             }}
-             maxLength={256}
-             disabled={adding || isCustomServer}
-             aria-hidden={isCustomServer}>
-        <span className={styles.label}>Description</span>
-      </Input>
-      <PrimaryButton className={styles.add}
-                     icon={iPlus}
-                     type='submit'
-                     disabled={adding}>
-        Add location
-      </PrimaryButton>
-      <ErrorMessages messages={submissionError}/>
-    </form>
+    <Form className={styles.addBackup}
+          onValidate={onValidate}
+          onSuccess={onSuccess}
+          onCancel={onCancel}
+          submitButtonText='Add location'>
+      {(submitting, validationErrors, clearValidationErrors) => {
+        return (
+          <>
+            <div className={styles.whereContainer}>
+              <DropDown className={styles.where}
+                        value={where}
+                        options={[
+                          {value: RemoteLocationOptions.Custom, display: 'Custom server'},
+                          {value: RemoteLocationOptions.GitHub, display: 'GitHub gist'},
+                          {value: RemoteLocationOptions.GitLab, display: 'GitLab snippet'}
+                        ]}
+                        onChange={({target}) => {
+                          updateWhere(target.value as RemoteLocationOptions)
+                          clearValidationErrors()
+                        }}
+                        disabled={submitting}>
+                <span className={styles.label}>Where</span>
+              </DropDown>
+              <RemoteLocationLogo where={where}/>
+            </div>
+            <Input value={url}
+                   onChange={({target}) => {
+                     clearValidationErrors('url')
+                     setUrl(target.value)
+                   }}
+                   autoComplete='url'
+                   error={firstError<Fields>('url', validationErrors)}
+                   disabled={submitting}>
+              <span className={styles.label}>URL</span>
+            </Input>
+            <Input className={cn(styles.id, {[styles.gitHubLabOnly]: isCustomServer})}
+                   value={id}
+                   onChange={({target}) => {
+                     clearValidationErrors()
+                     setId(target.value)
+                   }}
+                   disabled={submitting || isCustomServer}
+                   aria-hidden={isCustomServer}>
+              <span className={styles.label}>ID</span>
+            </Input>
+            <Password className={cn({[styles.gitHubLabOnly]: isCustomServer})}
+                      value={accessToken}
+                      onChange={({target}) => {
+                        clearValidationErrors('accessToken')
+                        setAccessToken(target.value)
+                      }}
+                      error={firstError<Fields>('accessToken', validationErrors)}
+                      disabled={submitting || isCustomServer}
+                      aria-hidden={isCustomServer}>
+              <span className={styles.label}>Access token</span>
+            </Password>
+            <Input className={cn({[styles.gitHubLabOnly]: isCustomServer})}
+                   value={description}
+                   onChange={({target}) => {
+                     clearValidationErrors()
+                     setDescription(target.value)
+                   }}
+                   maxLength={256}
+                   disabled={submitting || isCustomServer}
+                   aria-hidden={isCustomServer}>
+              <span className={styles.label}>Description</span>
+            </Input>
+          </>
+        )
+      }}
+    </Form>
   )
 }

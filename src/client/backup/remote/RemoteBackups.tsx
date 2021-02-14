@@ -21,14 +21,18 @@ export function RemoteBackups(): ReactElement {
     <>
       <Modal show={adding}
              close={() => setAdding(false)}
-             title='Add location'>
-        <AddBackup/>
+             title='Add location'
+             shouldCloseOnOverlayClick={false}
+             shouldCloseOnEsc={false}>
+        <AddBackup onCancel={() => setAdding(false)}/>
       </Modal>
       <Container title='Remote backups'>
         <ul className={styles.container}>
           {Object.values(backupLocations).map((backupLocation) => {
             return (
-              <RemoteLocation key={backupLocation.internalId} location={backupLocation}/>
+              <li key={backupLocation.internalId}>
+                <RemoteLocation location={backupLocation}/>
+              </li>
             )
           })}
           <li className={styles.addNew}>

@@ -57,7 +57,7 @@ export function RemoteLocation({location}: RemoteLocationProps): ReactElement {
   }
 
   return (
-    <li className={styles.location}>
+    <div className={styles.location}>
       <div className={styles.header}>
         <RemoteLocationDescription location={location}/>
         <DangerButton onClick={() => dispatch(removeBackup(location.internalId))}
@@ -104,6 +104,6 @@ export function RemoteLocation({location}: RemoteLocationProps): ReactElement {
         </SecondaryButton>
         <ErrorMessages messages={errors}/>
       </div>
-    </li>
+    </div>
   )
 }
