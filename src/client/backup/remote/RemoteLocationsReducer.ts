@@ -13,7 +13,6 @@ import {
   ActionSetAutomaticExport
 } from './RemoteLocationActionCreators'
 import {RemoteLocationOptions} from './RemoteLocationOptions'
-import {RemoteLocation} from './RemoteLocation'
 
 export interface RemoteLocation {
   readonly internalId: string;

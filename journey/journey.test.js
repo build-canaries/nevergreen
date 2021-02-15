@@ -1,6 +1,6 @@
 /*global cy,Cypress,before */
 
-function shouldBeAbleToChangeTraySettings() {
+function shouldBeAbleToChangeFeedSettings() {
   cy.locate('tab-Settings').click()
   cy.locate('generate-random').click()
   cy.locate('tray-name').clear().type('renamed tray').blur()
@@ -19,7 +19,7 @@ function shouldBeAbleToChangeTraySettings() {
   cy.checkA11y()
 }
 
-function shouldBeAbleToAddTrays(trayUrl, username, password) {
+function shouldBeAbleToAddFeeds(trayUrl, username, password) {
   cy.visitPage('tracking')
 
   cy.locate('add-tray-url').type(trayUrl)
@@ -43,7 +43,7 @@ function shouldBeAbleToAddTrays(trayUrl, username, password) {
 
   cy.checkA11y()
 
-  shouldBeAbleToChangeTraySettings()
+  shouldBeAbleToChangeFeedSettings()
 }
 
 function shouldBeAbleToChangeSuccessMessages() {
@@ -132,6 +132,17 @@ function shouldBeAbleToExportAndImportConfig() {
   cy.checkA11y()
 }
 
+function shouldBeAbleToAddARemoteBackup() {
+  cy.visitPage('backup')
+
+  cy.findByText('Add location').click()
+  cy.findByLabelText('URL').type('http://test')
+  cy.locate('modal').findByText('Add location').click()
+
+  cy.findByText('Custom server').should('exist')
+  cy.findByText('http://test').should('exist')
+}
+
 function shouldMonitorSelectedProjects() {
   cy.visitPage('monitor')
 
@@ -146,24 +157,23 @@ function shouldMonitorSelectedProjects() {
 
 describe('Journey', () => {
 
-  before(() => {
-    cy.clearIndexDb()
-    cy.unregisterServiceWorkers()
-  })
-
   beforeEach(() => {
+    cy.unregisterServiceWorkers()
+    cy.clearIndexDb()
+
     cy.visit('/')
     cy.injectAxe()
   })
 
   it('should all work fine', () => {
-    shouldBeAbleToAddTrays(
+    shouldBeAbleToAddFeeds(
       Cypress.env('TRAY_URL'),
       Cypress.env('TRAY_USERNAME'),
       Cypress.env('TRAY_PASSWORD')
     )
     shouldBeAbleToChangeSettings()
     shouldBeAbleToExportAndImportConfig()
+    shouldBeAbleToAddARemoteBackup()
     shouldMonitorSelectedProjects()
   })
 })
