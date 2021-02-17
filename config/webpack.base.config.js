@@ -31,7 +31,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, '../resources/public'),
     filename: '[name].[contenthash:8].js',
-    publicPath: '',
+    publicPath: '/',
     assetModuleFilename: '[name].[contenthash:8][ext]'
   },
   plugins: [
