@@ -34,7 +34,7 @@ import {
 import {buildState, testReducer} from '../testHelpers'
 import {RecursivePartial} from '../common/Types'
 import {Prognosis} from '../domain/Project'
-import {configurationImported} from '../backup/BackupActionCreators'
+import {configurationImported} from './backup/BackupActionCreators'
 import {SortBy} from '../gateways/ProjectsGateway'
 
 const reducer = testReducer({

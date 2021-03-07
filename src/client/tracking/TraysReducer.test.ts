@@ -5,7 +5,7 @@ import * as DateTime from '../common/DateTime'
 import {buildProject, buildState, buildTray, testReducer} from '../testHelpers'
 import {RecursivePartial} from '../common/Types'
 import {AuthTypes} from '../domain/Tray'
-import {configurationImported} from '../backup/BackupActionCreators'
+import {configurationImported} from '../settings/backup/BackupActionCreators'
 
 const reducer = testReducer({
   [TRAYS_ROOT]: reduce

@@ -43,7 +43,6 @@ export function Header({fullScreen}: HeaderProps): ReactElement {
             <HeaderLink path='monitor' title='Monitor' shortcuts={['m', '1']} hideMenu={hideMenu}/>
             <HeaderLink path='tracking' title='Tracking' shortcuts={['t', '2']} hideMenu={hideMenu}/>
             <HeaderLink path='settings' title='Settings' shortcuts={['s', ',', '3']} hideMenu={hideMenu}/>
-            <HeaderLink path='backup' title='Backup' shortcuts={['b', '4']} hideMenu={hideMenu}/>
             <li>
               <button className={styles.helpButton}
                       onClick={() => {

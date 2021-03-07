@@ -7,11 +7,11 @@ import {SuccessHelp} from '../settings/success/SuccessHelp'
 import {AvailableProjectsHelp} from '../tracking/projects/AvailableProjectsHelp'
 import {GeneralSettingsHelp} from '../settings/GeneralSettingsHelp'
 import {
+  BackupHelp,
   RemoteBackupCustomHelp,
   RemoteBackupGitHubHelp,
-  RemoteBackupGitLabHelp,
-  RemoteBackupHelp
-} from '../backup/remote/RemoteBackupHelp'
+  RemoteBackupGitLabHelp
+} from '../settings/backup/BackupHelp'
 import {DisplaySettingsHelp} from '../settings/DisplaySettingsHelp'
 import {NotificationSettingsHelp} from '../settings/NotificationSettingsHelp'
 import {MonitorHelp} from '../monitor/MonitorHelp'
@@ -64,7 +64,7 @@ export function Help({initiallyShow}: HelpProps): ReactElement {
         <GeneralSettingsHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <DisplaySettingsHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <NotificationSettingsHelp searchQuery={searchQuery} helpLink={helpLink}/>
-        <RemoteBackupHelp searchQuery={searchQuery} helpLink={helpLink}/>
+        <BackupHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <RemoteBackupCustomHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <RemoteBackupGitHubHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <RemoteBackupGitLabHelp searchQuery={searchQuery} helpLink={helpLink}/>

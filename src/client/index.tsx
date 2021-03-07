@@ -10,7 +10,7 @@ import {UnhandledError} from './UnhandledError'
 import Modal from 'react-modal'
 import {configureStore} from '@reduxjs/toolkit'
 import {save} from './configuration/SaveListener'
-import {backup} from './backup/remote/AutomaticBackupListener'
+import {backup} from './settings/backup/AutomaticBackupListener'
 
 const store = configureStore({reducer})
 let previousState: State

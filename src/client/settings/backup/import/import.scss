@@ -1,0 +1,70 @@
+@import '../../../common/layout';
+@import '../../../common/variables';
+@import '../../../common/accessibility';
+@import '../../../common/forms/button';
+@import '../../../common/fonts/icon-font';
+
+$button-size: 250px;
+
+.page {
+  background: $white;
+}
+
+.header {
+  background-color: $light-grey;
+  padding: 1em;
+}
+
+.body {
+  padding: 1em;
+}
+
+.import,
+.fetch {
+  @extend %inline;
+
+  min-width: $button-size;
+}
+
+.cancel {
+  @extend .secondary;
+
+  min-width: $button-size;
+  vertical-align: bottom;
+}
+
+.importInput {
+  margin: $margin-top 0 0 0;
+}
+
+.openFile {
+  @include interactive();
+
+  @extend .secondary;
+  @extend .icon-folder-open;
+
+  box-shadow: $shadow;
+  cursor: pointer;
+  min-width: $button-size;
+  transition: box-shadow 0.1s ease-in;
+
+  &::before {
+    margin-right: 0.5em;
+  }
+
+  @include respond-to(tablet, desktop) {
+    margin: $margin-top 0 0 0;
+  }
+}
+
+.openFileInput {
+  @extend %visually-hidden;
+
+  &:focus + label {
+    @include focus();
+  }
+}
+
+.buttons {
+  margin: $margin-top * 2 0 0 0;
+}

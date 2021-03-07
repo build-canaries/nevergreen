@@ -1,7 +1,7 @@
 import {Configuration, DataSource, toConfiguration, toExportableConfigurationJson} from './Configuration'
 import {Either, isLeft, isRight} from 'fp-ts/Either'
 import {buildRemoteBackupLocation, buildState} from '../testHelpers'
-import {BACKUP_REMOTE_LOCATIONS_ROOT} from '../backup/remote/RemoteLocationsReducer'
+import {BACKUP_REMOTE_LOCATIONS_ROOT} from '../settings/backup/RemoteLocationsReducer'
 import {SETTINGS_ROOT} from '../settings/SettingsReducer'
 import {PROJECTS_ROOT} from '../tracking/ProjectsReducer'
 import {TRAYS_ROOT} from '../tracking/TraysReducer'

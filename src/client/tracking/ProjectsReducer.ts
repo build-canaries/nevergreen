@@ -3,7 +3,7 @@ import unionWith from 'lodash/unionWith'
 import {ActionProjectsFetched, ActionRemoveTray, ActionTrayAdded} from './TrackingActionCreators'
 import {createReducer, createSelector} from '@reduxjs/toolkit'
 import {State} from '../Reducer'
-import {ActionConfigurationImported} from '../backup/BackupActionCreators'
+import {ActionConfigurationImported} from '../settings/backup/BackupActionCreators'
 
 export interface ProjectState {
   readonly description: string;

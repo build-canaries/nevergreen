@@ -1,0 +1,32 @@
+@import '../../common/variables';
+@import '../../common/responsive';
+@import '../../common/forms/button';
+
+.location {
+  border: 1px solid $mid-grey;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  &:focus-within {
+    border-color: $black;
+  }
+}
+
+.header {
+  background-color: $light-grey;
+  display: flex;
+  padding: 1em;
+}
+
+.body {
+  padding: 1em;
+}
+
+.importButton,
+.exportButton {
+  @include respond-to(tablet, desktop) {
+    display: block;
+    margin: $margin-top 0 0 0;
+  }
+}

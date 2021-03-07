@@ -65,12 +65,6 @@ export function KeyboardShortcuts(): ReactElement {
             className={styles.binding}>3</kbd>
           </span>
         </li>
-        <li className={styles.shortcut}>
-          <div>Go to the Backup page</div>
-          <span className={styles.multipleShortcuts}>
-            <kbd className={styles.binding}>b</kbd> or <kbd className={styles.binding}>4</kbd>
-          </span>
-        </li>
       </ul>
 
       <h2 className={styles.header}>Tracking</h2>

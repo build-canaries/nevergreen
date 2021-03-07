@@ -12,7 +12,6 @@ import {Redirect, Route, Switch} from 'react-router'
 import {Monitor} from './monitor/Monitor'
 import {Tracking} from './tracking/Tracking'
 import {Settings} from './settings/Settings'
-import {Backup} from './backup/Backup'
 import {StyleGuide} from './styleGuide/StyleGuide'
 import {Loading} from './common/Loading'
 import {useLocalConfiguration} from './configuration/ConfigurationHook'
@@ -22,6 +21,19 @@ import {Preview} from './settings/Preview'
 import {useShortcut} from './common/Keyboard'
 import {useCheckForNewVersion} from './CheckForNewVersionHook'
 import {UnhandledErrorMessage} from './UnhandledErrorMessage'
+import {Export} from './settings/backup/export/Export'
+import {Import} from './settings/backup/import/Import'
+import {AddBackup} from './settings/backup/AddBackup'
+import {
+  ROUTE_BACKUP_ADD,
+  ROUTE_MONITOR,
+  ROUTE_PREVIEW,
+  ROUTE_SETTINGS,
+  ROUTE_STYLE_GUIDE,
+  ROUTE_TRACKING,
+  ROUTES_EXPORT,
+  ROUTES_IMPORT
+} from './Routes'
 
 export function Nevergreen(): ReactElement {
   const {loaded, error} = useLocalConfiguration()
@@ -69,23 +81,22 @@ export function Nevergreen(): ReactElement {
                         fullScreen={fullScreen}/>
           <main className={styles.main} role='main'>
             <Switch>
-              <Route exact path='/monitor'>
+              <Route exact path={ROUTE_MONITOR}>
                 <Monitor fullScreen={fullScreen}
                          requestFullScreen={requestFullScreen}/>
               </Route>
-              <Route exact path='/preview' component={Preview}/>
+              <Route exact path={ROUTE_PREVIEW} component={Preview}/>
               <Route>
                 <div className={styles.settings}>
                   <Switch>
-                    <Route exact path='/tracking' component={Tracking}/>
-                    <Route exact path='/settings' component={Settings}/>
-                    <Route exact path='/backup' component={Backup}/>
-                    <Route exact path='/style-guide' component={StyleGuide}/>
-                    <Route exact path='/success'>
-                      <Redirect to='/settings'/>
-                    </Route>
+                    <Route exact path={ROUTE_TRACKING} component={Tracking}/>
+                    <Route exact path={ROUTE_SETTINGS} component={Settings}/>
+                    <Route exact path={ROUTE_BACKUP_ADD} component={AddBackup}/>
+                    <Route exact path={ROUTES_EXPORT} component={Export}/>
+                    <Route exact path={ROUTES_IMPORT} component={Import}/>
+                    <Route exact path={ROUTE_STYLE_GUIDE} component={StyleGuide}/>
                     <Route>
-                      <Redirect to='/tracking'/>
+                      <Redirect to={ROUTE_TRACKING}/>
                     </Route>
                   </Switch>
                 </div>

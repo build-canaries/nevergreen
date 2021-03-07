@@ -13,7 +13,7 @@ import {
   BACKUP_REMOTE_LOCATIONS_ROOT,
   reduce as backupRemoteLocations,
   RemoteLocationsState
-} from './backup/remote/RemoteLocationsReducer'
+} from './settings/backup/RemoteLocationsReducer'
 
 export interface State {
   readonly [SETTINGS_ROOT]: SettingsState;

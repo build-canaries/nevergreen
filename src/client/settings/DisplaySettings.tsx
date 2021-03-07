@@ -21,7 +21,8 @@ import {
   MaxProjectsToShow
 } from './SettingsReducer'
 import {SortBy} from '../gateways/ProjectsGateway'
-import {Link} from 'react-router-dom'
+import {ROUTE_PREVIEW} from '../Routes'
+import {LinkButton} from '../common/LinkButton'
 
 export function DisplaySettings(): ReactElement {
   const dispatch = useDispatch()
@@ -82,11 +83,11 @@ export function DisplaySettings(): ReactElement {
         <span className={styles.dropDownLabel}>Sort projects by</span>
       </DropDown>
 
-      <Link to='/preview'
-            className={styles.preview}
-            data-locator='display-preview'>
+      <LinkButton to={ROUTE_PREVIEW}
+                  className={styles.preview}
+                  data-locator='display-preview'>
         Preview display
-      </Link>
+      </LinkButton>
     </Container>
   )
 }

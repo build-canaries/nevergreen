@@ -18,7 +18,7 @@ export function HeaderLink({path, title, shortcuts, hideMenu}: HeaderLinkProps):
 
   return (
     <li>
-      <NavLink to={path}
+      <NavLink to={`/${path}`}
                className={styles.menuItem}
                activeClassName={styles.active}
                onClick={hideMenu}

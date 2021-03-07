@@ -3,7 +3,7 @@ import {ActionProjectsFetched, ActionRemoveTray, ActionSelectProject, ActionTray
 import {createReducer, createSelector} from '@reduxjs/toolkit'
 import remove from 'lodash/remove'
 import {State} from '../Reducer'
-import {ActionConfigurationImported} from '../backup/BackupActionCreators'
+import {ActionConfigurationImported} from '../settings/backup/BackupActionCreators'
 
 export interface SelectedState {
   readonly [trayId: string]: ReadonlyArray<string>;

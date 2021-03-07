@@ -4,12 +4,10 @@
 @import 'responsive';
 
 @mixin _messages($icon, $color, $background-color) {
-  @include font-scale(1);
-
   background-color: $background-color;
   color: $color;
   list-style: none;
-  margin-top: 1em;
+  margin: 1em 0 0 0;
 
   @include respond-to(very-small) {
     overflow: scroll;
@@ -19,8 +17,6 @@
     @extend .icon-#{$icon};
 
     &::before {
-      @include font-scale(1);
-
       color: $color;
     }
   }

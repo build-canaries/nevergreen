@@ -19,7 +19,7 @@ import {State} from '../Reducer'
 import {Prognosis} from '../domain/Project'
 import get from 'lodash/get'
 import uniq from 'lodash/uniq'
-import {ActionConfigurationImported} from '../backup/BackupActionCreators'
+import {ActionConfigurationImported} from './backup/BackupActionCreators'
 import {SortBy} from '../gateways/ProjectsGateway'
 
 export enum MaxProjectsToShow {

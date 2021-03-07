@@ -19,8 +19,8 @@ import {DEFAULT_REFRESH_TIME} from './settings/SettingsActionCreators'
 import {APPLIED_MIGRATIONS_ROOT} from './configuration/MigrationsReducer'
 import {ProjectError, SortBy} from './gateways/ProjectsGateway'
 import parseISO from 'date-fns/parseISO'
-import {BACKUP_REMOTE_LOCATIONS_ROOT, RemoteLocation} from './backup/remote/RemoteLocationsReducer'
-import {RemoteLocationOptions} from './backup/remote/RemoteLocationOptions'
+import {BACKUP_REMOTE_LOCATIONS_ROOT, RemoteLocation} from './settings/backup/RemoteLocationsReducer'
+import {RemoteLocationOptions} from './settings/backup/RemoteLocationOptions'
 
 interface ExtendedRenderResult extends RenderResult {
   store: EnhancedStore<State, AnyAction, ReadonlyArray<Middleware<unknown, State>>>;

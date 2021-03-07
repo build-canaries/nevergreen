@@ -4,7 +4,7 @@ import {projectSelected, projectsFetched, trayAdded, trayRemoved} from './Tracki
 import {buildProject, buildState, testReducer} from '../testHelpers'
 import {RecursivePartial} from '../common/Types'
 import {AuthTypes} from '../domain/Tray'
-import {configurationImported} from '../backup/BackupActionCreators'
+import {configurationImported} from '../settings/backup/BackupActionCreators'
 
 const reducer = testReducer({
   [SELECTED_ROOT]: reduce

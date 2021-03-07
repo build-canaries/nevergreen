@@ -1,0 +1,12 @@
+@import '../../../common/variables';
+@import '../../../common/responsive';
+
+.logo {
+  height: $input-height;
+  margin: 0 1em 0 0;
+  width: $input-height;
+
+  @include respond-to(very-small) {
+    display: none;
+  }
+}

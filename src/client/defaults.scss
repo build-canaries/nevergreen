@@ -48,20 +48,20 @@ input {
 }
 
 h1 {
-  @include font-scale(4);
+  @include font-scale(3);
 
   line-height: 1.125;
   margin: 0;
 }
 
 h2 {
-  @include font-scale(3);
+  @include font-scale(2);
 
   line-height: 1.15;
 }
 
 h3 {
-  @include font-scale(2);
+  @include font-scale(1);
 
   line-height: 1.2;
 }

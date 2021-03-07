@@ -1,0 +1,13 @@
+@import '../../common/layout';
+
+.container {
+  padding: 1em;
+}
+
+.warning {
+  margin: 0;
+}
+
+.reset {
+  @extend %blocking;
+}

@@ -1,0 +1,7 @@
+@import './forms/button';
+
+.linkButton {
+  @extend .secondary;
+
+  vertical-align: bottom;
+}

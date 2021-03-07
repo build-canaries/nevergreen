@@ -4,6 +4,8 @@ import {DisplaySettings} from './DisplaySettings'
 import {Title} from '../common/Title'
 import {NotificationSettings} from './NotificationSettings'
 import {SuccessMessages} from './success/SuccessMessages'
+import {Reset} from './reset/Reset'
+import {Backup} from './backup/Backup'
 
 export function Settings(): ReactElement {
   return (
@@ -13,6 +15,8 @@ export function Settings(): ReactElement {
       <GeneralSettings/>
       <DisplaySettings/>
       <NotificationSettings/>
+      <Backup/>
+      <Reset/>
     </>
   )
 }

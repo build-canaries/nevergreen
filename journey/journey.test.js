@@ -116,28 +116,29 @@ function shouldBeAbleToChangeSettings() {
 }
 
 function shouldBeAbleToExportAndImportConfig() {
-  cy.visitPage('backup')
+  cy.visitPage('settings')
 
-  cy.locate('import-data').type('something invalid')
-  cy.locate('import').click()
-  cy.locate('error-messages').should('exist')
+  cy.findByRole('link', {name: 'Export'}).click()
 
-  cy.get('#export-data').then((textarea) => {
-    cy.locate('import-data').invoke('val', textarea.val()) // not using type() for speed reasons
+  cy.get('#export-data').then((exportInput) => {
+    cy.visitPage('settings')
+
+    cy.findByRole('link', {name: 'Import'}).click()
+
+    cy.locate('import-data').invoke('val', exportInput.val()) // not using type() for speed reasons
     cy.locate('import-data').type(' ') // trigger react updates
-    cy.locate('import').click()
-  })
-  cy.locate('info-messages').should('exist')
+    cy.findByRole('button', {name: 'Import'}).click()
 
-  cy.checkA11y()
+    cy.locate('info-messages').should('exist')
+  })
 }
 
 function shouldBeAbleToAddARemoteBackup() {
-  cy.visitPage('backup')
+  cy.visitPage('settings')
 
-  cy.findByText('Add location').click()
+  cy.findByRole('link', {name: 'Add remote backup'}).click()
   cy.findByLabelText('URL').type('http://test')
-  cy.locate('modal').findByText('Add location').click()
+  cy.findByRole('button', {name: 'Add location'}).click()
 
   cy.findByText('Custom server').should('exist')
   cy.findByText('http://test').should('exist')

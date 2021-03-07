@@ -1,7 +1,7 @@
 import {post, Request} from './Gateway'
 import {UntrustedData} from '../configuration/LocalRepository'
-import {RemoteLocation} from '../backup/remote/RemoteLocationsReducer'
-import {RemoteLocationOptions} from '../backup/remote/RemoteLocationOptions'
+import {RemoteLocation} from '../settings/backup/RemoteLocationsReducer'
+import {RemoteLocationOptions} from '../settings/backup/RemoteLocationOptions'
 
 export interface ExportResponse {
   readonly id: string;

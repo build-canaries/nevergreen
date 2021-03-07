@@ -1,0 +1,39 @@
+@import '../../common/variables';
+@import '../../common/layout';
+@import '../../common/forms/button';
+
+.location {
+  border: 1px solid $mid-grey;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  &:focus-within {
+    border-color: $black;
+  }
+}
+
+.header {
+  background-color: $light-grey;
+  display: flex;
+  flex-grow: 1;
+  padding: 1em;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+}
+
+.spacing {
+  display: block;
+  margin: $margin-top 0 0 0;
+}
+
+.importButton,
+.exportButton {
+  @include respond-to(tablet, desktop) {
+    margin: $margin-top 0 0 0;
+  }
+}

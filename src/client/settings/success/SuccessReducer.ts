@@ -4,7 +4,7 @@ import uniq from 'lodash/uniq'
 import {ActionMessageAdded, ActionMessageRemoved} from './SuccessActionCreators'
 import {createReducer} from '@reduxjs/toolkit'
 import {State} from '../../Reducer'
-import {ActionConfigurationImported} from '../../backup/BackupActionCreators'
+import {ActionConfigurationImported} from '../backup/BackupActionCreators'
 
 export type SuccessState = ReadonlyArray<string>
 

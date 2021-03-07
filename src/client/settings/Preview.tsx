@@ -4,11 +4,12 @@ import {Loading} from '../common/Loading'
 import {useSelector} from 'react-redux'
 import {getShowPrognosis, getSort} from './SettingsReducer'
 import {isAbortedRequest, post, send} from '../gateways/Gateway'
-import {Projects, toProjectError, enrichProjects} from '../domain/Project'
+import {enrichProjects, Projects, toProjectError} from '../domain/Project'
 import {createId, createTray} from '../domain/Tray'
 import {Notification} from '../Notification'
 import {useHistory} from 'react-router-dom'
 import styles from './preview.scss'
+import {ROUTE_SETTINGS} from '../Routes'
 
 export function Preview(): ReactElement {
   const prognosis = useSelector(getShowPrognosis)
@@ -49,7 +50,7 @@ export function Preview(): ReactElement {
     <div className={styles.preview}>
       <Notification notification='This is a preview showing your current display settings'
                     fullScreen={false}
-                    dismiss={() => history.push('/settings')}/>
+                    dismiss={() => history.push(ROUTE_SETTINGS)}/>
       <div className={styles.projects}>
         <div className={styles.projectsInner}>
           <Loading loaded={loaded}>

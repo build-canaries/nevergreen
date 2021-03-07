@@ -10,6 +10,10 @@
             [ring.middleware.gzip :refer :all]))
 
 (defroutes app-routes
+           ; redirect old deprecated routes
+           (GET "/success" [] (redirect "/settings" :moved-permanently))
+           (GET "/backup" [] (redirect "/settings" :moved-permanently))
+
            (GET "*" [] (clojure.java.io/resource "public/index.html")))
 
 (defn wrap-app-middleware [routes]
