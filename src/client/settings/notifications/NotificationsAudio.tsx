@@ -1,14 +1,14 @@
 import React, {ChangeEvent, ReactElement, useEffect, useState} from 'react'
-import {errorMessage, isBlank} from '../common/Utils'
-import {ErrorMessages} from '../common/Messages'
-import {Input} from '../common/forms/Input'
-import {Checkbox} from '../common/forms/Checkbox'
-import {SecondaryButton} from '../common/forms/Button'
-import {iPlay, iStop} from '../common/fonts/Icons'
+import {errorMessage, isBlank} from '../../common/Utils'
+import {ErrorMessages} from '../../common/Messages'
+import {Input} from '../../common/forms/Input'
+import {Checkbox} from '../../common/forms/Checkbox'
+import {SecondaryButton} from '../../common/forms/Button'
+import {iPlay, iStop} from '../../common/fonts/Icons'
 import styles from './notifications-audio.scss'
 import {useDispatch, useSelector} from 'react-redux'
-import {getBrokenBuildSoundFx, getPlayBrokenBuildSoundFx} from './SettingsReducer'
-import {setBrokenBuildSoundFx, setPlayBrokenBuildSoundFx} from './SettingsActionCreators'
+import {getBrokenBuildSoundFx, getPlayBrokenBuildSoundFx} from '../SettingsReducer'
+import {setBrokenBuildSoundFx, setPlayBrokenBuildSoundFx} from '../SettingsActionCreators'
 
 function pause(audio?: HTMLAudioElement) {
   if (audio) {

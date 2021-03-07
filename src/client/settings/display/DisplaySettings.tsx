@@ -1,7 +1,7 @@
 import React, {ReactElement} from 'react'
-import {Container} from '../common/Container'
-import {Checkbox} from '../common/forms/Checkbox'
-import {DropDown} from '../common/forms/DropDown'
+import {Container} from '../../common/Container'
+import {Checkbox} from '../../common/forms/Checkbox'
+import {DropDown} from '../../common/forms/DropDown'
 import styles from './display-settings.scss'
 import {DisplayPrognosisSelection} from './DisplayPrognosisSelection'
 import {useDispatch, useSelector} from 'react-redux'
@@ -11,7 +11,7 @@ import {
   setShowBuildTime,
   setShowTrayName,
   setSort
-} from './SettingsActionCreators'
+} from '../SettingsActionCreators'
 import {
   getMaxProjectsToShow,
   getShowBuildLabel,
@@ -19,10 +19,10 @@ import {
   getShowTrayName,
   getSort,
   MaxProjectsToShow
-} from './SettingsReducer'
-import {SortBy} from '../gateways/ProjectsGateway'
-import {ROUTE_PREVIEW} from '../Routes'
-import {LinkButton} from '../common/LinkButton'
+} from '../SettingsReducer'
+import {SortBy} from '../../gateways/ProjectsGateway'
+import {ROUTE_PREVIEW} from '../../Routes'
+import {LinkButton} from '../../common/LinkButton'
 
 export function DisplaySettings(): ReactElement {
   const dispatch = useDispatch()

@@ -5,15 +5,15 @@ import {AddTrayHelp, CCTrayLocationsHelp} from '../tracking/AddTrayHelp'
 import {TraySettingsHelp} from '../tracking/settings/TraySettingsHelp'
 import {SuccessHelp} from '../settings/success/SuccessHelp'
 import {AvailableProjectsHelp} from '../tracking/projects/AvailableProjectsHelp'
-import {GeneralSettingsHelp} from '../settings/GeneralSettingsHelp'
+import {GeneralSettingsHelp} from '../settings/general/GeneralSettingsHelp'
 import {
   BackupHelp,
   RemoteBackupCustomHelp,
   RemoteBackupGitHubHelp,
   RemoteBackupGitLabHelp
 } from '../settings/backup/BackupHelp'
-import {DisplaySettingsHelp} from '../settings/DisplaySettingsHelp'
-import {NotificationSettingsHelp} from '../settings/NotificationSettingsHelp'
+import {DisplaySettingsHelp} from '../settings/display/DisplaySettingsHelp'
+import {NotificationSettingsHelp} from '../settings/notifications/NotificationSettingsHelp'
 import {MonitorHelp} from '../monitor/MonitorHelp'
 import {HelpLink} from './HelpLink'
 import {useShortcut} from '../common/Keyboard'

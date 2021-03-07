@@ -1,6 +1,6 @@
 import React, {ReactElement} from 'react'
-import {HelpArticle, HelpProps} from '../help/HelpArticle'
-import {HelpForm, HelpInput} from '../help/HelpForms'
+import {HelpArticle, HelpProps} from '../../help/HelpArticle'
+import {HelpForm, HelpInput} from '../../help/HelpForms'
 
 const KEYWORDS = [
   'settings',

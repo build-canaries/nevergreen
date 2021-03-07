@@ -7,9 +7,9 @@ import {
   NotificationsSystem,
   PERMISSION_DENIED_MESSAGE
 } from './NotificationsSystem'
-import {render} from '../testHelpers'
-import {getShowSystemNotifications, SETTINGS_ROOT} from './SettingsReducer'
-import * as SystemNotifications from '../common/SystemNotifications'
+import {render} from '../../testHelpers'
+import {getShowSystemNotifications, SETTINGS_ROOT} from '../SettingsReducer'
+import * as SystemNotifications from '../../common/SystemNotifications'
 
 beforeEach(() => {
   jest.spyOn(SystemNotifications, 'requestPermission').mockResolvedValue('')

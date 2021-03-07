@@ -1,8 +1,8 @@
 import React from 'react'
 import {GeneralSettings} from './GeneralSettings'
-import {render} from '../testHelpers'
+import {render} from '../../testHelpers'
 import userEvent from '@testing-library/user-event'
-import {getClickToShowMenu, getToggleVersionCheck, SETTINGS_ROOT} from './SettingsReducer'
+import {getClickToShowMenu, getToggleVersionCheck, SETTINGS_ROOT} from '../SettingsReducer'
 
 it('should set the click to show menu setting', () => {
   const state = {

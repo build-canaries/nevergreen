@@ -1,10 +1,10 @@
 import React, {ReactElement} from 'react'
-import {Prognosis} from '../domain/Project'
-import {Checkbox} from '../common/forms/Checkbox'
+import {Prognosis} from '../../domain/Project'
+import {Checkbox} from '../../common/forms/Checkbox'
 import styles from './display-prognosis-selection.scss'
 import {useDispatch, useSelector} from 'react-redux'
-import {getShowPrognosis} from './SettingsReducer'
-import {setShowPrognosis} from './SettingsActionCreators'
+import {getShowPrognosis} from '../SettingsReducer'
+import {setShowPrognosis} from '../SettingsActionCreators'
 
 export function DisplayPrognosisSelection(): ReactElement {
   const dispatch = useDispatch()

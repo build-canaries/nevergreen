@@ -13,7 +13,7 @@ import {
   ActionShowTrayName,
   DEFAULT_REFRESH_TIME
 } from './SettingsActionCreators'
-import defaultSoundFx from './pacman_death.mp3'
+import defaultSoundFx from './notifications/pacman_death.mp3'
 import {createReducer, createSelector} from '@reduxjs/toolkit'
 import {State} from '../Reducer'
 import {Prognosis} from '../domain/Project'
