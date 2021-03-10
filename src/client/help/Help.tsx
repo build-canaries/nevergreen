@@ -60,10 +60,10 @@ export function Help({initiallyShow}: HelpProps): ReactElement {
         <CCTrayLocationsHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <AvailableProjectsHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <TraySettingsHelp searchQuery={searchQuery} helpLink={helpLink}/>
-        <SuccessHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <GeneralSettingsHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <DisplaySettingsHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <NotificationSettingsHelp searchQuery={searchQuery} helpLink={helpLink}/>
+        <SuccessHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <BackupHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <RemoteBackupCustomHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <RemoteBackupGitHubHelp searchQuery={searchQuery} helpLink={helpLink}/>

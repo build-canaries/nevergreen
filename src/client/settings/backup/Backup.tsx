@@ -13,7 +13,8 @@ export function Backup(): ReactElement {
 
   return (
     <Container title='Backup'>
-      <ul className={styles.container}>
+      <ul className={styles.container}
+          id='backup'>
         <li>
           <Locally/>
         </li>

@@ -1,5 +1,13 @@
 @import '../../common/variables';
 @import '../../common/responsive';
+@import '../../common/layout';
+@import '../../common/typography';
+@import '../../common/fonts/icon-font';
+@import '../../common/forms/button';
+
+.warning {
+  margin: 1em 1em 0 1em;
+}
 
 .messages {
   column-gap: 1em;
@@ -45,7 +53,31 @@
   width: 100%;
 }
 
-.add {
-  background-color: $white;
+.addNew {
   border: 1px solid $mid-grey;
+  padding: 1em;
+}
+
+// double classname to increase specificity so it overrides the default link button styles
+.addNewButton.addNewButton {
+  @extend %fill-parent;
+  @extend .icon-plus;
+  @extend .withIcon;
+
+  align-items: center;
+  border-style: dashed;
+  border-width: 2px;
+  color: $mid-grey;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  white-space: normal;
+
+  &:enabled {
+    box-shadow: none;
+  }
+
+  @include respond-to(tablet, desktop) {
+    @include font-scale(3);
+  }
 }

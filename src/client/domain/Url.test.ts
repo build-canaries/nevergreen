@@ -1,20 +1,9 @@
-import {ensureHasScheme, hasScheme, isHttp, removeScheme} from './Url'
-
-describe('hasScheme', () => {
-
-  it('should return true when there is a scheme', () => {
-    expect(hasScheme('http://some-url')).toBe(true)
-  })
-
-  it('should return false when there is no scheme', () => {
-    expect(hasScheme('some-thing')).toBe(false)
-  })
-})
+import {ensureHasScheme, isValidHttpUrl, removeScheme} from './Url'
 
 describe('removeScheme', () => {
 
   it('should remove the scheme', () => {
-    expect(removeScheme('http://some-url')).toBe('//some-url')
+    expect(removeScheme('http://some-url/')).toBe('//some-url/')
   })
 
   it('should do nothing if there is no scheme', () => {
@@ -37,17 +26,17 @@ describe('ensureHasScheme', () => {
   })
 })
 
-describe('isHttp', () => {
+describe('isValidHttpUrl', () => {
 
   it('should return true if the URL has a http scheme', () => {
-    expect(isHttp('http://')).toBe(true)
+    expect(isValidHttpUrl('http://example.com')).toBe(true)
   })
 
   it('should return true if the URL has a https scheme', () => {
-    expect(isHttp('https://')).toBe(true)
+    expect(isValidHttpUrl('https://example.com')).toBe(true)
   })
 
   it('should return false otherwise', () => {
-    expect(isHttp('file://')).toBe(false)
+    expect(isValidHttpUrl('file://example')).toBe(false)
   })
 })

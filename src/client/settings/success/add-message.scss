@@ -2,15 +2,8 @@
 @import '../../common/responsive';
 @import '../../common/typography';
 
-.container {
+.page {
   background-color: $white;
-  height: 100%;
-  padding: 1em;
-}
-
-.form {
-  border: 2px dashed $light-grey;
-  height: 100%;
   padding: 1em;
 }
 

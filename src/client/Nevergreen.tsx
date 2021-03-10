@@ -29,11 +29,12 @@ import {
   ROUTE_MONITOR,
   ROUTE_PREVIEW,
   ROUTE_SETTINGS,
-  ROUTE_STYLE_GUIDE,
+  ROUTE_STYLE_GUIDE, ROUTE_SUCCESS_ADD,
   ROUTE_TRACKING,
   ROUTES_EXPORT,
   ROUTES_IMPORT
 } from './Routes'
+import {AddMessage} from './settings/success/AddMessage'
 
 export function Nevergreen(): ReactElement {
   const {loaded, error} = useLocalConfiguration()
@@ -91,6 +92,7 @@ export function Nevergreen(): ReactElement {
                   <Switch>
                     <Route exact path={ROUTE_TRACKING} component={Tracking}/>
                     <Route exact path={ROUTE_SETTINGS} component={Settings}/>
+                    <Route exact path={ROUTE_SUCCESS_ADD} component={AddMessage}/>
                     <Route exact path={ROUTE_BACKUP_ADD} component={AddBackup}/>
                     <Route exact path={ROUTES_EXPORT} component={Export}/>
                     <Route exact path={ROUTES_IMPORT} component={Import}/>

@@ -12,7 +12,7 @@ import {iCheckmark, iCross} from '../fonts/Icons'
 interface FormProps<Fields extends string> {
   readonly children: (submitting: boolean, validationErrors: Readonly<FormErrors<Fields>>, clearValidationErrors: (field?: Fields) => void) => ReactNode;
   readonly onValidate: () => Readonly<FormErrors<Fields>>;
-  readonly onSuccess: () => Promise<void>;
+  readonly onSuccess: () => Promise<void> | void;
   readonly onCancel?: () => void;
   readonly className?: string;
   readonly submitButtonText?: string;

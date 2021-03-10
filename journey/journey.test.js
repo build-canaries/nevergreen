@@ -51,12 +51,18 @@ function shouldBeAbleToChangeSuccessMessages() {
     .should('contain', '=(^.^)=')
     .should('have.length', 1)
 
-  cy.addSuccessMessage('some message')
+  cy.findByRole('link', {name: 'Add message'}).click()
+  cy.findByLabelText('Message').type('some message')
+  cy.findByRole('button', {name: 'Add message'}).click()
+
   cy.locate('success-message')
     .should('contain', '=(^.^)=')
     .should('contain', 'some message')
 
-  cy.addSuccessMessage('https://raw.githubusercontent.com/build-canaries/nevergreen/master/doc/screenshot_monitor.png')
+  cy.findByRole('link', {name: 'Add message'}).click()
+  cy.findByLabelText('Message').type('https://raw.githubusercontent.com/build-canaries/nevergreen/master/doc/screenshot_monitor.png')
+  cy.findByRole('button', {name: 'Add message'}).click()
+
   cy.locate('success-image').should('be.visible')
 
   cy.checkA11y()

@@ -3,10 +3,11 @@ import {VisuallyHidden} from './VisuallyHidden'
 import {useForceFocus} from './ForceFocusHook'
 
 interface TitleProps {
+  readonly show?: boolean;
   readonly children: string;
 }
 
-export function Title({children}: TitleProps): ReactElement {
+export function Title({show, children}: TitleProps): ReactElement {
   const titleEl = useForceFocus<HTMLHeadingElement>()
 
   useEffect(() => {
@@ -16,13 +17,21 @@ export function Title({children}: TitleProps): ReactElement {
     }
   }, [children])
 
-  return (
-    <VisuallyHidden>
-      <h1 ref={titleEl}
-          tabIndex={-1}
-          data-locator='title'>
-        {children}
-      </h1>
-    </VisuallyHidden>
+  const title = (
+    <h1 ref={titleEl}
+        tabIndex={-1}
+        data-locator='title'>
+      {children}
+    </h1>
   )
+
+  if (show) {
+    return title
+  } else {
+    return (
+      <VisuallyHidden>
+        {title}
+      </VisuallyHidden>
+    )
+  }
 }

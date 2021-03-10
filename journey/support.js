@@ -12,11 +12,6 @@ Cypress.Commands.add('visitPage', (menuItem) => {
   cy.location('pathname').should('include', menuItem)
 })
 
-Cypress.Commands.add('addSuccessMessage', (message) => {
-  cy.locate('message').type(message)
-  cy.locate('add-message').click()
-})
-
 Cypress.Commands.add('clearIndexDb', () => {
   cy.window().then((window) => {
     window.indexedDB.deleteDatabase('nevergreen')

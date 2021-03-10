@@ -10,7 +10,7 @@ import {Password} from '../../common/forms/Password'
 import {send} from '../../gateways/Gateway'
 import {encrypt} from '../../gateways/SecurityGateway'
 import styles from './add-backup.scss'
-import {isHttp} from '../../domain/Url'
+import {isValidHttpUrl} from '../../domain/Url'
 import {BackupLogo} from './logo/BackupLogo'
 import {firstError, FormErrors} from '../../common/forms/Validation'
 import {Form} from '../../common/forms/Form'
@@ -35,7 +35,7 @@ export function AddBackup(): ReactElement {
 
     if (isBlank(url)) {
       validationErrors.push({field: 'url', message: 'Please enter the URL'})
-    } else if (!isHttp(url)) {
+    } else if (!isValidHttpUrl(url)) {
       validationErrors.push({field: 'url', message: 'Only http and https URLs are supported'})
     }
 
@@ -54,7 +54,7 @@ export function AddBackup(): ReactElement {
       dispatch(addBackupGitHubLab(where, id, url, description, encryptedAccessToken))
     } else {
       dispatch(addBackupCustomServer(url))
-      history.push(ROUTE_SETTINGS)
+      history.push(`${ROUTE_SETTINGS}#backup`)
     }
   }
 
@@ -73,7 +73,7 @@ export function AddBackup(): ReactElement {
 
   return (
     <div className={styles.page}>
-      <Title>Add backup</Title>
+      <Title show>Add backup</Title>
 
       <Form onValidate={onValidate}
             onSuccess={onSuccess}
