@@ -4,15 +4,16 @@ import isEmpty from 'lodash/isEmpty'
 import isNil from 'lodash/isNil'
 import {PrimaryButton, SecondaryButton} from './Button'
 import styles from './form.scss'
-import {FormErrors, removeErrorFromState} from './Validation'
+import {FormErrors} from './Validation'
 import {ErrorMessages} from '../Messages'
 import {errorMessage} from '../Utils'
 import {iCheckmark, iCross} from '../fonts/Icons'
+import {useHistory} from 'react-router-dom'
 
 interface FormProps<Fields extends string> {
-  readonly children: (submitting: boolean, validationErrors: Readonly<FormErrors<Fields>>, clearValidationErrors: (field?: Fields) => void) => ReactNode;
+  readonly children: (submitting: boolean, validationErrors: Readonly<FormErrors<Fields>>) => ReactNode;
   readonly onValidate: () => Readonly<FormErrors<Fields>>;
-  readonly onSuccess: () => Promise<void> | void;
+  readonly onSuccess: () => Promise<string | undefined | void> | string | undefined | void;
   readonly onCancel?: () => void;
   readonly className?: string;
   readonly submitButtonText?: string;
@@ -27,6 +28,7 @@ export function Form<Fields extends string>({
                                               submitButtonText = 'Save'
                                             }: FormProps<Fields>): ReactElement {
 
+  const history = useHistory()
   const [submitting, setSubmitting] = useState(false)
   const [validationErrors, setValidationErrors] = useState<Readonly<FormErrors<Fields>>>([])
   const [submissionError, setSubmissionError] = useState('')
@@ -43,20 +45,18 @@ export function Form<Fields extends string>({
       setValidationErrors(errors)
       setSubmitting(false)
     } else {
+      setValidationErrors([])
       try {
-        await onSuccess()
+        const navigateTo = await onSuccess()
+        if (navigateTo) {
+          history.push(navigateTo)
+        } else {
+          setSubmitting(false)
+        }
       } catch (e) {
         setSubmitting(false)
         setSubmissionError(errorMessage(e))
       }
-    }
-  }
-
-  const clear = (field?: Fields) => {
-    if (isNil(field)) {
-      setValidationErrors([])
-    } else {
-      setValidationErrors(removeErrorFromState<Fields>(field))
     }
   }
 
@@ -65,7 +65,7 @@ export function Form<Fields extends string>({
           className={cn(styles.form, className)}
           noValidate>
 
-      {children(submitting, validationErrors, clear)}
+      {children(submitting, validationErrors)}
 
       <ErrorMessages messages={submissionError}/>
 

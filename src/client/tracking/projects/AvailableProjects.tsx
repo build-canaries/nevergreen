@@ -144,8 +144,9 @@ export function AvailableProjects({
         <div className={styles.projectFilter}>
           <Input className={styles.projectFilterInput}
                  onChange={updateFilter}
+                 type='search'
                  placeholder='regular expression'>
-            Search
+            <span className={styles.search}>Search</span>
           </Input>
         </div>
       </fieldset>

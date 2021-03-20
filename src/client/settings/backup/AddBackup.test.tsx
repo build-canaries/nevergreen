@@ -7,6 +7,7 @@ import * as SecurityGateway from '../../gateways/SecurityGateway'
 import {fakeRequest} from '../../gateways/Gateway'
 import {AddBackup} from './AddBackup'
 import {getBackupLocations} from './RemoteLocationsReducer'
+import {ROUTE_SETTINGS} from '../../Routes'
 
 beforeEach(() => {
   jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValue(fakeRequest(''))
@@ -19,7 +20,7 @@ it('should not be able to add with a blank URL', async () => {
   userEvent.click(getByText('Add location'))
 
   await waitFor(() => {
-    expect(queryByText('Please enter the URL')).toBeInTheDocument()
+    expect(queryByText('Enter a URL')).toBeInTheDocument()
   })
 })
 
@@ -36,7 +37,7 @@ it('should not be able to add with a non http(s) URL', async () => {
 })
 
 it('should be able to add a custom server', async () => {
-  const {getByText, getByLabelText, store} = render(<AddBackup/>)
+  const {getByText, getByLabelText, store, history} = render(<AddBackup/>)
 
   userEvent.selectOptions(getByLabelText('Where'), 'custom')
   userEvent.type(getByLabelText('URL'), 'http://example.com')
@@ -47,11 +48,12 @@ it('should be able to add a custom server', async () => {
       where: 'custom',
       url: 'http://example.com'
     })])
+    expect(history.location.pathname).toEqual(ROUTE_SETTINGS)
   })
 })
 
 it('should be able to add a GitHub gist', async () => {
-  const {getByText, getByLabelText, store} = render(<AddBackup/>)
+  const {getByText, getByLabelText, store, history} = render(<AddBackup/>)
 
   userEvent.selectOptions(getByLabelText('Where'), 'github')
 
@@ -64,6 +66,7 @@ it('should be able to add a GitHub gist', async () => {
     expect(Object.values(getBackupLocations(store.getState()))).toEqual([expect.objectContaining({
       where: 'github'
     })])
+    expect(history.location.pathname).toEqual(ROUTE_SETTINGS)
   })
 })
 
@@ -74,26 +77,6 @@ it('should not be able to add a GitHub gist with a blank access token', async ()
   userEvent.click(getByText('Add location'))
 
   await waitFor(() => {
-    expect(queryByText('Please enter an access token')).toBeInTheDocument()
-  })
-})
-
-it('should only clear errors for the changed field on type', async () => {
-  const {getByText, getByLabelText, queryByText} = render(<AddBackup/>)
-
-  userEvent.selectOptions(getByLabelText('Where'), 'github')
-  userEvent.clear(getByLabelText('URL'))
-  userEvent.click(getByText('Add location'))
-
-  await waitFor(() => {
-    expect(queryByText('Please enter the URL')).toBeInTheDocument()
-    expect(queryByText('Please enter an access token')).toBeInTheDocument()
-  })
-
-  userEvent.type(getByLabelText('URL'), 'h')
-
-  await waitFor(() => {
-    expect(queryByText('Please enter the URL')).not.toBeInTheDocument()
-    expect(queryByText('Please enter an access token')).toBeInTheDocument()
+    expect(queryByText('Enter an access token')).toBeInTheDocument()
   })
 })

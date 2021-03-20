@@ -9,10 +9,10 @@ function shouldBeAbleToChangeFeedSettings() {
   if (Cypress.env('TRAY_URL_TOKEN')) {
     cy.locate('tray-url').clear().type(Cypress.env('TRAY_URL_TOKEN')).blur()
     cy.locate('change-password').click()
-    cy.locate('change-authentication').within(() => {
+    cy.locate('modal').within(() => {
       cy.locate('auth-token').click()
       cy.locate('auth-access-token').type(Cypress.env('TRAY_TOKEN')).blur()
-      cy.locate('change-password-update').click()
+      cy.findByRole('button', {name: 'Save'}).click()
     })
   }
 
@@ -28,7 +28,7 @@ function shouldBeAbleToAddFeeds(trayUrl, username, password) {
     cy.locate('auth-username').type(username)
     cy.locate('auth-password').type(password)
   }
-  cy.locate('add-tray').click()
+  cy.findByRole('button', {name: 'Add feed'}).click()
 
   cy.locate('tray').should('exist')
   cy.locate('container-sub-title').should('have.text', trayUrl)

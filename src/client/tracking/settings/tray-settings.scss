@@ -5,12 +5,6 @@
 @import '../../common/fonts/icon-font';
 @import '../../common/layout';
 
-.label {
-  @include fixed-width(5em);
-
-  display: inline-block;
-}
-
 .traySettingsName {
   @extend %first;
 }
@@ -21,12 +15,8 @@
   @include fixed-width(26em);
 }
 
-.traySettingsName,
-.authType {
-  @include respond-to(tablet, desktop) {
-    display: inline-flex;
-    margin-right: 1em;
-  }
+.changeAuth {
+  margin: $margin-top 0 0 0;
 }
 
 .dangerZone {
@@ -52,12 +42,6 @@
 
 .deleteInfo {
   @extend %inline;
-}
-
-.changeAuth {
-  @include respond-to(tablet, desktop) {
-    display: inline-block;
-  }
 }
 
 .includeNew {

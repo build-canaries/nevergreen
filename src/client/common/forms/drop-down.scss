@@ -31,11 +31,6 @@
   &:not(:disabled) {
     @include interactive($focus-color-change-percentage: 0%);
   }
-
-  @include respond-to(tablet, desktop) {
-    margin-top: 0;
-    width: auto;
-  }
 }
 
 .arrow {
@@ -43,8 +38,8 @@
   border-right: 0.5em solid transparent;
   border-top: 0.5em solid $off-black;
   left: -1.5em;
-  margin-right: -1em;
   position: relative;
+  top: 0.8em;
 }
 
 .disabled {

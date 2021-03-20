@@ -1,14 +1,13 @@
 import React, {ChangeEvent, ReactElement, useEffect, useState} from 'react'
 import {errorMessage, isBlank} from '../../common/Utils'
-import {ErrorMessages} from '../../common/Messages'
 import {Input} from '../../common/forms/Input'
 import {Checkbox} from '../../common/forms/Checkbox'
 import {SecondaryButton} from '../../common/forms/Button'
 import {iPlay, iStop} from '../../common/fonts/Icons'
-import styles from './notifications-audio.scss'
 import {useDispatch, useSelector} from 'react-redux'
 import {getBrokenBuildSoundFx, getPlayBrokenBuildSoundFx} from '../SettingsReducer'
 import {setBrokenBuildSoundFx, setPlayBrokenBuildSoundFx} from '../SettingsActionCreators'
+import styles from './notifications-audio.scss'
 
 function pause(audio?: HTMLAudioElement) {
   if (audio) {
@@ -22,7 +21,7 @@ export function NotificationsAudio(): ReactElement {
   const brokenBuildSoundFx = useSelector(getBrokenBuildSoundFx)
   const playBrokenBuildSoundFx = useSelector(getPlayBrokenBuildSoundFx)
 
-  const [errors, setErrors] = useState<ReadonlyArray<string>>([])
+  const [audioError, setAudioError] = useState('')
   const [audio, setAudio] = useState<HTMLAudioElement>()
   const [soundFx, setSoundFx] = useState(brokenBuildSoundFx)
   const [playEnabled, setPlayEnabled] = useState(!isBlank(brokenBuildSoundFx))
@@ -35,7 +34,7 @@ export function NotificationsAudio(): ReactElement {
 
   const updateSoundFx = ({target}: ChangeEvent<HTMLInputElement>) => {
     setSoundFx(target.value)
-    setErrors([])
+    setAudioError('')
   }
 
   const setSoundFxX = () => dispatch(setBrokenBuildSoundFx(soundFx))
@@ -50,14 +49,14 @@ export function NotificationsAudio(): ReactElement {
     audio.addEventListener('ended', audioStopped)
 
     setAudio(audio)
-    setErrors([])
+    setAudioError('')
     setPlaying(true)
 
     try {
       await audio.play()
     } catch (e) {
       setPlaying(false)
-      setErrors(['Unable to play broken build sound because of an error.', errorMessage(e)])
+      setAudioError(errorMessage(e))
     }
   }
 
@@ -81,26 +80,25 @@ export function NotificationsAudio(): ReactElement {
                 data-locator='play-sounds'>
         Play audio notifications
       </Checkbox>
-      <div className={styles.soundFx}>
-        <Input className={styles.brokenBuildSfx}
-               placeholder='audio file URL'
-               onChange={updateSoundFx}
-               value={soundFx}
-               onBlur={setSoundFxX}
-               onEnter={setSoundFxX}
-               required={playBrokenBuildSoundFx}
-               disabled={playing}>
-          Broken build sound
-        </Input>
-        <SecondaryButton onClick={playing ? stop : play}
-                         disabled={playingDisabled}
-                         aria-disabled={playingDisabled}
-                         icon={playing ? iStop : iPlay}>
-          {playing ? 'Stop' : 'Play'}
-        </SecondaryButton>
-      </div>
-      <ErrorMessages className={styles.playbackErrors}
-                     messages={errors}/>
+      <Input placeholder='audio file URL'
+             onChange={updateSoundFx}
+             value={soundFx}
+             onBlur={setSoundFxX}
+             onEnter={setSoundFxX}
+             required={playBrokenBuildSoundFx}
+             disabled={playing}
+             error={audioError}>
+        Broken build sound
+      </Input>
+      <SecondaryButton onClick={playing ? stop : play}
+                       disabled={playingDisabled}
+                       aria-disabled={playingDisabled}
+                       icon={playing ? iStop : iPlay}
+                       className={styles.play}>
+        {playing
+          ? 'Stop broken build sound'
+          : 'Preview broken build sound'}
+      </SecondaryButton>
     </>
   )
 }

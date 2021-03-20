@@ -8,7 +8,6 @@ import {Tray as TrayType} from '../domain/Tray'
 interface TrayProps {
   readonly tray: TrayType;
   readonly index: number;
-  readonly highlightTray: string;
   readonly refreshTray: string;
 }
 
@@ -32,21 +31,19 @@ function redactedUrl(url: string) {
   }
 }
 
-export function Tray({tray, index, highlightTray, refreshTray}: TrayProps): ReactElement {
+export function Tray({tray, index, refreshTray}: TrayProps): ReactElement {
   const [requiresRefresh, setRequiresRefresh] = useState(refreshTray === tray.trayId)
   useEffect(() => {
     setRequiresRefresh((existing) => existing || refreshTray === tray.trayId)
   }, [refreshTray, tray.trayId])
 
-  const highlight = highlightTray === tray.trayId
   const urlToShow = redactedUrl(tray.url)
   const title = tray.name || urlToShow
   const subTitle = tray.name ? urlToShow : ''
 
   return (
     <Container title={title}
-               subTitle={subTitle}
-               highlight={highlight}>
+               subTitle={subTitle}>
       <div data-locator='tray'>
         <Tabs titles={['Projects', 'Settings']}>
           <AvailableProjects tray={tray}

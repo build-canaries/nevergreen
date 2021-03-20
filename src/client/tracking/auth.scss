@@ -21,13 +21,6 @@
   margin: $margin-top 0 0 0;
 }
 
-.label {
-  @include fixed-width(5em);
-  @include font-scale(1);
-
-  display: inline-block;
-}
-
 .username,
 .password,
 .authToken {

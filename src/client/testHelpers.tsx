@@ -13,7 +13,8 @@ import {RecursivePartial} from './common/Types'
 import {render as testRender, RenderResult} from '@testing-library/react'
 import {Provider} from 'react-redux'
 import {AnyAction, configureStore, EnhancedStore} from '@reduxjs/toolkit'
-import {MemoryRouter} from 'react-router-dom'
+import {Router} from 'react-router-dom'
+import {createMemoryHistory, History} from 'history'
 import Modal from 'react-modal'
 import {DEFAULT_REFRESH_TIME} from './settings/SettingsActionCreators'
 import {APPLIED_MIGRATIONS_ROOT} from './configuration/MigrationsReducer'
@@ -24,6 +25,7 @@ import {RemoteLocationOptions} from './settings/backup/RemoteLocationOptions'
 
 interface ExtendedRenderResult extends RenderResult {
   store: EnhancedStore<State, AnyAction, ReadonlyArray<Middleware<unknown, State>>>;
+  history: History;
 }
 
 export function buildState(subState: RecursivePartial<State> = {}): State {
@@ -61,10 +63,11 @@ export function setupReactModal(): void {
 
 export function render(component: ReactNode, state: RecursivePartial<State> = {}, location = '/'): ExtendedRenderResult {
   const store = configureStore({reducer, preloadedState: buildState(state)})
+  const history = createMemoryHistory({initialEntries: [location]})
 
   const wrapWithStoreAndRouter = (c: ReactNode) => (
     <Provider store={store}>
-      <MemoryRouter initialEntries={[location]}>{c}</MemoryRouter>
+      <Router history={history}>{c}</Router>
     </Provider>
   )
 
@@ -73,7 +76,8 @@ export function render(component: ReactNode, state: RecursivePartial<State> = {}
   return {
     ...fns,
     rerender: (c: ReactNode): void => fns.rerender(wrapWithStoreAndRouter(c)),
-    store
+    store,
+    history
   }
 }
 

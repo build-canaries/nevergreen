@@ -1,27 +1,5 @@
-@import '../../common/forms/button';
-@import '../../common/responsive';
-@import '../../common/layout';
+@import '../../common/variables';
 
-.soundFx {
-  align-items: flex-start;
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 1.5em;
-
-  @include respond-to(tablet, desktop) {
-    flex-wrap: nowrap;
-  }
-}
-
-.brokenBuildSfx {
-  flex-grow: 1;
-  margin-top: 0;
-
-  @include respond-to(tablet, desktop) {
-    margin-right: 1em;
-  }
-}
-
-.playbackErrors {
-  margin-top: 1em;
+.play {
+  margin: $margin-top 0 0 0;
 }

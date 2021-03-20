@@ -14,8 +14,8 @@ import styles from './input.scss'
 import formStyles from './forms.scss'
 import {InputButton} from './Button'
 import {iLock} from '../fonts/Icons'
-import {ErrorMessages} from '../Messages'
 import {isBlank, isNotBlank} from '../Utils'
+import {VisuallyHidden} from '../VisuallyHidden'
 
 export type InputProps = {
   readonly children: ReactNode;
@@ -27,7 +27,17 @@ export type InputProps = {
   readonly error?: string;
 } & DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
 
-export function Input({children, onEnter, className, readOnly, focus, button, error = '', id, ...inputProps}: InputProps): ReactElement {
+export function Input({
+                        children,
+                        onEnter,
+                        className,
+                        readOnly,
+                        focus,
+                        button,
+                        error = '',
+                        id,
+                        ...inputProps
+                      }: InputProps): ReactElement {
   const inputNode = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
@@ -54,22 +64,28 @@ export function Input({children, onEnter, className, readOnly, focus, button, er
   const actualId = id ?? uniqueId('i')
   const errorId = hasError ? uniqueId('e') : undefined
 
-  const labelClasses = classNames(formStyles.inputContainer, className)
-  const wrapperClasses = classNames(styles.wrapper, {
-    [styles.error]: hasError
+  const containerClasses = classNames(formStyles.inputContainer, className, {
+    [styles.containerError]: hasError
   })
   const inputClasses = classNames(styles.input, {
     [styles.hasButton]: button || readOnly,
-    [styles.hasError]: hasError
+    [styles.error]: hasError
   })
 
   return (
-    <div className={labelClasses}>
+    <div className={containerClasses}>
       <label className={formStyles.inputLabel}
              htmlFor={actualId}>
         {children}
       </label>
-      <span className={wrapperClasses}>
+      {hasError && (
+        <p id={errorId}
+           className={styles.errorMessage}>
+          <VisuallyHidden>Error: </VisuallyHidden>
+          {error}
+        </p>
+      )}
+      <span className={classNames(styles.wrapper)}>
           <input className={inputClasses}
                  onKeyPress={(evt) => onKeyPress(evt)}
                  spellCheck={false}
@@ -93,9 +109,6 @@ export function Input({children, onEnter, className, readOnly, focus, button, er
         {
           !readOnly && button
         }
-        <ErrorMessages id={errorId}
-                       className={styles.errorMessage}
-                       messages={error}/>
       </span>
     </div>
   )

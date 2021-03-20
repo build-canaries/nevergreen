@@ -1,58 +1,15 @@
 @import '../common/variables';
 @import '../common/responsive';
-@import '../common/layout';
-
-.help {
-  margin: $margin-top 0 0 0;
-
-  @include respond-to(tablet, desktop) {
-    margin: 0;
-  }
-}
 
 .addTray {
-  align-items: stretch;
   background-color: $white;
   box-shadow: $shadow;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
   margin-bottom: 1em;
   padding: 1em;
 
   @include respond-to(very-small) {
     overflow: scroll;
   }
-
-  @include respond-to(tablet, desktop) {
-    flex-direction: row;
-    flex-wrap: nowrap;
-  }
-}
-
-.add {
-  margin: $margin-top $margin-right 0 0;
-
-  @include respond-to(tablet, desktop) {
-    margin: 0;
-  }
-}
-
-.inputs {
-  flex-grow: 1;
-  margin: 0;
-  width: 100%;
-
-  @include respond-to(tablet, desktop) {
-    margin: 0 $margin-right 0 0;
-    width: auto;
-  }
-}
-
-.label {
-  @include fixed-width(5em);
-
-  display: inline-block;
 }
 
 .url {

@@ -7,7 +7,6 @@ import {getSuccessMessages} from './SuccessReducer'
 import {isBlank} from '../../common/Utils'
 import {Form} from '../../common/forms/Form'
 import {firstError, FormErrors} from '../../common/forms/Validation'
-import {useHistory} from 'react-router-dom'
 import {ROUTE_SETTINGS} from '../../Routes'
 import {Title} from '../../common/Title'
 
@@ -15,22 +14,21 @@ type Fields = 'message'
 
 export function AddMessage(): ReactElement {
   const dispatch = useDispatch()
-  const history = useHistory()
   const messages = useSelector(getSuccessMessages)
   const [message, setMessage] = useState('')
 
   const onValidate = (): FormErrors<Fields> => {
     if (isBlank(message)) {
-      return [{field: 'message', message: 'Please enter a success message or image URL'}]
+      return [{field: 'message', message: 'Enter a message or image URL'}]
     } else if (messages.find((msg) => msg === message)) {
-      return [{field: 'message', message: 'Success message has already been added, please try another'}]
+      return [{field: 'message', message: 'Message has already been added'}]
     }
     return []
   }
 
   const onSuccess = () => {
     dispatch(addMessage(message))
-    history.push(`${ROUTE_SETTINGS}#success`)
+    return `${ROUTE_SETTINGS}#success`
   }
 
   return (
@@ -40,14 +38,13 @@ export function AddMessage(): ReactElement {
       <Form onValidate={onValidate}
             onSuccess={onSuccess}
             submitButtonText='Add message'>
-        {(submitting, validationErrors, clearValidationErrors) => {
+        {(submitting, validationErrors) => {
           return (
             <Input className={styles.addMessageInput}
-                   placeholder='text or image URL'
+                   placeholder='message or image URL'
                    value={message}
                    onChange={({target}) => {
                      setMessage(target.value)
-                     clearValidationErrors('message')
                    }}
                    error={firstError<Fields>('message', validationErrors)}
                    disabled={submitting}

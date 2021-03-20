@@ -14,16 +14,6 @@ export function removeScheme(value: string): string {
   return value
 }
 
-export function ensureHasScheme(value: string): string {
-  if (buildUrl(value)) {
-    return value
-  } else if (value.startsWith('//')) {
-    return `http:${value}`
-  } else {
-    return `http://${value}`
-  }
-}
-
 export function isValidHttpUrl(value: string): boolean {
   const url = buildUrl(value)
   return url?.protocol === 'http:' || url?.protocol === 'https:'

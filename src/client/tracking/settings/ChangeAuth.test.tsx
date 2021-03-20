@@ -28,7 +28,7 @@ it('should be able to change the auth to none', () => {
 
   const {getByText, getByLabelText} = render(<ChangeAuth {...props} />)
   userEvent.click(getByLabelText('No auth'))
-  userEvent.click(getByText('Save changes'))
+  userEvent.click(getByText('Save'))
 
   expect(save).toBeCalledWith(AuthTypes.none, '', '', '')
 })
@@ -42,7 +42,7 @@ it('should be able to change the auth to basic', async () => {
   userEvent.click(getByLabelText('Basic auth'))
   userEvent.type(getByLabelText('Username'), 'some-username')
   userEvent.type(getByLabelText('Password'), 'some-password')
-  userEvent.click(getByText('Save changes'))
+  userEvent.click(getByText('Save'))
 
   await waitFor(() => {
     expect(save).toBeCalledWith(AuthTypes.basic, 'some-username', 'some-encrypted-password', '')
@@ -57,7 +57,7 @@ it('should be able to change the auth to access token', async () => {
   const {getByText, getByLabelText} = render(<ChangeAuth {...props} />)
   userEvent.click(getByLabelText('Access token'))
   userEvent.type(getByLabelText('Token'), 'some-token')
-  userEvent.click(getByText('Save changes'))
+  userEvent.click(getByText('Save'))
 
   await waitFor(() => {
     expect(save).toBeCalledWith(AuthTypes.token, '', '', 'some-encrypted-token')
@@ -70,7 +70,7 @@ it('should be able to discard making changes', () => {
   const props = {...DEFAULT_PROPS, show: true, save, cancel}
 
   const {getByText} = render(<ChangeAuth {...props} />)
-  userEvent.click(getByText('Discard changes'))
+  userEvent.click(getByText('Cancel'))
 
   expect(cancel).toBeCalled()
   expect(save).not.toBeCalled()

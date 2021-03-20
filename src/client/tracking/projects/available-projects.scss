@@ -64,21 +64,20 @@
 
 .projectFilterInput {
   @include respond-to(tablet, desktop) {
+    align-items: baseline;
+    display: flex;
     margin-top: 0;
+  }
+}
+
+.search {
+  @include respond-to(tablet, desktop) {
+    margin: 0 $margin-right 0 0;
   }
 }
 
 .backToTop {
   @include respond-to(tablet, desktop) {
     display: none;
-  }
-}
-
-.helpSettings {
-  margin: 1em 0 0 0;
-
-  > dt {
-    font-weight: bold;
-    margin: 0.5em 0 0 0;
   }
 }

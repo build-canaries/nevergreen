@@ -30,16 +30,6 @@
   }
 }
 
-.gitHubLabOnly {
-  @include respond-to(very-small, mobile) {
-    display: none;
-  }
-
-  @include respond-to(tablet, desktop) {
-    visibility: hidden;
-  }
-}
-
 .id {
   @include fixed-width(38em);
 }

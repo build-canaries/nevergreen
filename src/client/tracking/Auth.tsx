@@ -15,7 +15,6 @@ interface AuthProps {
   readonly setPassword: (password: string) => void;
   readonly accessToken: string;
   readonly setAccessToken: (accessToken: string) => void;
-  readonly onEnter: () => void;
   readonly disabled?: boolean;
 }
 
@@ -29,7 +28,6 @@ export function Auth(
     setPassword,
     accessToken,
     setAccessToken,
-    onEnter,
     disabled
   }: AuthProps
 ): ReactElement {
@@ -72,20 +70,18 @@ export function Auth(
           <Input className={styles.username}
                  value={username}
                  onChange={({target}) => setUsername(target.value)}
-                 onEnter={onEnter}
                  disabled={disabled}
                  autoComplete='username'
                  data-locator='auth-username'>
-            <span className={styles.label}>Username</span>
+            Username
           </Input>
           <Password className={styles.password}
                     value={password}
                     onChange={({target}) => setPassword(target.value)}
-                    onEnter={onEnter}
                     disabled={disabled}
                     autoComplete='new-password'
                     data-locator='auth-password'>
-            <span className={styles.label}>Password</span>
+            Password
           </Password>
         </div>
       )}
@@ -94,11 +90,10 @@ export function Auth(
           <Password className={styles.authToken}
                     value={accessToken}
                     onChange={({target}) => setAccessToken(target.value)}
-                    onEnter={onEnter}
                     disabled={disabled}
                     autoComplete='new-password'
                     data-locator='auth-access-token'>
-            <span className={styles.label}>Token</span>
+            Token
           </Password>
         </div>
       )}

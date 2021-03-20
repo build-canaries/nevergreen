@@ -11,17 +11,6 @@
   flex-wrap: wrap;
   margin: 0.5em 0 0 0;
   width: 100%;
-
-  @include respond-to(tablet, desktop) {
-    display: inline-flex;
-    margin-top: 0;
-    width: auto;
-  }
-}
-
-.error {
-  margin-bottom: 0;
-  outline: 1px solid $error;
 }
 
 .input {
@@ -63,14 +52,20 @@
   border-top-right-radius: 0;
 }
 
-.hasError {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+.containerError {
+  border-left-color: $error;
+  border-left-style: solid;
+  border-left-width: 5px;
+  padding-left: 1em;
+}
+
+.error {
+  outline: 3px solid $error;
+  z-index: $focus-index;
 }
 
 .errorMessage {
-  flex-basis: 100%;
-  margin: 0;
-  min-height: $input-height;
-  width: 0;
+  color: $error;
+  font-weight: bold;
+  margin: 0.5em 0;
 }

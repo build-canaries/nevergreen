@@ -171,7 +171,7 @@ it('should be able to change the auth to basic', async () => {
   userEvent.click(getByLabelText('Basic auth'))
   userEvent.type(getByLabelText('Username'), 'some-username')
   userEvent.type(getByLabelText('Password'), 'some-password')
-  userEvent.click(getByText('Save changes'))
+  userEvent.click(getByText('Save'))
 
   await waitFor(() => {
     expect(setRequiresRefresh).toHaveBeenCalledWith(true)
