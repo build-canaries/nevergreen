@@ -80,7 +80,7 @@ commands:
           name: add nevergreen.io to known hosts
           command: |
             mkdir -p ~/.ssh
-            ssh-keyscan 35.176.150.70 >> ~/.ssh/known_hosts
+            ssh-keyscan 35.176.75.186 >> ~/.ssh/known_hosts
 
       - run:
           name: export version
