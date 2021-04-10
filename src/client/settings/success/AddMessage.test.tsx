@@ -23,7 +23,7 @@ it('should not allow a blank success messages to be added', () => {
   const state = {[SUCCESS_ROOT]: []}
   const {getByText, getByLabelText, queryByText} = render(<AddMessage/>, state)
 
-  userEvent.type(getByLabelText('Message'), '')
+  userEvent.clear(getByLabelText('Message'))
   userEvent.click(getByText('Add message'))
 
   expect(queryByText('Enter a message or image URL')).toBeInTheDocument()
