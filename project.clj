@@ -2,15 +2,15 @@
   :description "A build monitor with attitude"
   :url "https://github.com/build-canaries/nevergreen"
   :dependencies [[org.clojure/clojure "1.10.3"]
-                 [ring "1.9.1" :exclusions [org.eclipse.jetty/jetty-server]]
-                 [org.eclipse.jetty/jetty-server "9.4.38.v20210224"]
+                 [ring "1.9.2" :exclusions [org.eclipse.jetty/jetty-server]]
+                 [org.eclipse.jetty/jetty-server "9.4.39.v20210325"]
                  [compojure "1.6.2" :exclusions [ring/ring-codec]]
                  [environ "1.2.0"]
                  [cheshire "5.10.0"]
                  [clj-cctray "2.0.0"]
                  [clj-http "3.12.1"]
                  [ring-curl "1.0.1"]
-                 [ring/ring-json "0.5.0"]
+                 [ring/ring-json "0.5.1"]
                  [ring/ring-defaults "0.3.2"]
                  [bk/ring-gzip "0.3.0"]
                  [ring-basic-authentication "1.1.0"]
