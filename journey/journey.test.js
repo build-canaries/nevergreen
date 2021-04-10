@@ -135,7 +135,7 @@ function shouldBeAbleToExportAndImportConfig() {
     cy.locate('import-data').type(' ') // trigger react updates
     cy.findByRole('button', {name: 'Import'}).click()
 
-    cy.locate('info-messages').should('exist')
+    cy.location('pathname').should('eq', '/settings')
   })
 }
 

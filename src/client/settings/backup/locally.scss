@@ -23,7 +23,12 @@
   padding: 1em;
 }
 
-.importButton,
+.importButton {
+  @include respond-to(tablet, desktop) {
+    display: block;
+  }
+}
+
 .exportButton {
   @include respond-to(tablet, desktop) {
     display: block;

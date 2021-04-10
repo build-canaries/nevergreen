@@ -1,0 +1,34 @@
+@import '../../../common/layout';
+@import '../../../common/variables';
+@import '../../../common/accessibility';
+@import '../../../common/forms/button';
+@import '../../../common/fonts/icon-font';
+
+.openFile {
+  @include interactive();
+
+  @extend .secondary;
+  @extend .icon-folder-open;
+
+  box-shadow: $shadow;
+  cursor: pointer;
+  transition: box-shadow 0.1s ease-in;
+
+  &::before {
+    margin-right: 0.5em;
+  }
+}
+
+.openFileInput {
+  @extend %visually-hidden;
+
+  &:focus + label {
+    @include focus();
+  }
+
+  &:disabled + label {
+    background-color: $light-grey;
+    color: $mid-grey;
+    cursor: default;
+  }
+}

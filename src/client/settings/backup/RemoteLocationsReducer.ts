@@ -85,6 +85,6 @@ export function getBackupLocations(state: State): RemoteLocationsState {
   return get(state, [BACKUP_REMOTE_LOCATIONS_ROOT])
 }
 
-export function getBackupLocation(internalId: string): (state: State) => RemoteLocation {
+export function getBackupLocation(internalId: string): (state: State) => RemoteLocation | undefined {
   return createSelector(getBackupLocations, (locations) => locations[internalId])
 }

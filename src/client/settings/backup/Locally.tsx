@@ -11,13 +11,13 @@ export function Locally(): ReactElement {
         <BackupDescription/>
       </div>
       <div className={styles.body}>
-        <LinkButton to={ROUTE_EXPORT_LOCAL}
-                    className={styles.exportButton}>
-          Export
-        </LinkButton>
         <LinkButton to={ROUTE_IMPORT_LOCAL}
                     className={styles.importButton}>
           Import
+        </LinkButton>
+        <LinkButton to={ROUTE_EXPORT_LOCAL}
+                    className={styles.exportButton}>
+          Export
         </LinkButton>
       </div>
     </div>

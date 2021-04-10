@@ -14,7 +14,7 @@ import {BackupLogo} from './logo/BackupLogo'
 import {firstError, FormErrors} from '../../common/forms/Validation'
 import {Form} from '../../common/forms/Form'
 import {Title} from '../../common/Title'
-import {ROUTE_SETTINGS} from '../../Routes'
+import {ROUTE_SETTINGS_ANCHOR_BACKUP} from '../../Routes'
 
 type Fields = 'url' | 'accessToken'
 
@@ -52,7 +52,7 @@ export function AddBackup(): ReactElement {
     } else {
       dispatch(addBackupCustomServer(url))
     }
-    return `${ROUTE_SETTINGS}#backup`
+    return ROUTE_SETTINGS_ANCHOR_BACKUP
   }
 
   const updateWhere = (updatedWhere: RemoteLocationOptions) => {

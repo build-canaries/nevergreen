@@ -1,4 +1,4 @@
-import React, {FormEvent, ReactElement, ReactNode, useState} from 'react'
+import React, {FormEvent, ReactElement, ReactNode, useEffect, useState} from 'react'
 import cn from 'classnames'
 import isEmpty from 'lodash/isEmpty'
 import isNil from 'lodash/isNil'
@@ -12,11 +12,12 @@ import {useHistory} from 'react-router-dom'
 
 interface FormProps<Fields extends string> {
   readonly children: (submitting: boolean, validationErrors: Readonly<FormErrors<Fields>>) => ReactNode;
-  readonly onValidate: () => Readonly<FormErrors<Fields>>;
+  readonly onValidate: () => Readonly<FormErrors<Fields>> | undefined;
   readonly onSuccess: () => Promise<string | undefined | void> | string | undefined | void;
   readonly onCancel?: () => void;
   readonly className?: string;
   readonly submitButtonText?: string;
+  readonly clearErrors?: boolean;
 }
 
 export function Form<Fields extends string>({
@@ -25,13 +26,21 @@ export function Form<Fields extends string>({
                                               onValidate,
                                               onSuccess,
                                               onCancel,
-                                              submitButtonText = 'Save'
+                                              submitButtonText = 'Save',
+                                              clearErrors = false
                                             }: FormProps<Fields>): ReactElement {
 
   const history = useHistory()
   const [submitting, setSubmitting] = useState(false)
   const [validationErrors, setValidationErrors] = useState<Readonly<FormErrors<Fields>>>([])
   const [submissionError, setSubmissionError] = useState('')
+
+  useEffect(() => {
+    if (clearErrors) {
+      setValidationErrors([])
+      setSubmissionError('')
+    }
+  }, [clearErrors])
 
   const handleSubmit = async (evt: FormEvent) => {
     evt.preventDefault()
@@ -41,7 +50,7 @@ export function Form<Fields extends string>({
 
     const errors = onValidate()
 
-    if (!isEmpty(errors)) {
+    if (errors && !isEmpty(errors)) {
       setValidationErrors(errors)
       setSubmitting(false)
     } else {

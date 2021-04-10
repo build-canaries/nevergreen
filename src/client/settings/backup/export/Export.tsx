@@ -64,6 +64,10 @@ export function Export(): ReactElement {
   }
 
   const exportNow = async () => {
+    if (!location) {
+      return
+    }
+
     setLoaded(false)
     setMessage([])
     try {

@@ -26,14 +26,13 @@
   padding: 1em;
 }
 
-.spacing {
-  display: block;
-  margin: $margin-top 0 0 0;
-}
-
-.importButton,
 .exportButton {
   @include respond-to(tablet, desktop) {
     margin: $margin-top 0 0 0;
   }
+}
+
+.autoExport {
+  display: block;
+  margin: $margin-top 0 0 0;
 }

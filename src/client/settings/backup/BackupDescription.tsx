@@ -1,13 +1,37 @@
 import React, {ReactElement} from 'react'
 import {isBlank, isNotBlank} from '../../common/Utils'
 import isNil from 'lodash/isNil'
-import styles from './location-description.scss'
+import styles from './backup-description.scss'
 import {DEFAULT_GITHUB_URL, DEFAULT_GITLAB_URL, isCustomServer, isGitHub, isGitLab} from './RemoteLocationOptions'
 import {RemoteLocation} from './RemoteLocationsReducer'
 import {BackupLogo} from './logo/BackupLogo'
+import {Duration} from '../../common/Duration'
 
 interface BackupDescriptionProps {
   readonly location?: RemoteLocation;
+}
+
+function LastImportExport({location}: { location: RemoteLocation }): ReactElement {
+  return (
+    <>
+      <p className={styles.info}>
+        {isBlank(location.exportTimestamp) && 'Never exported'}
+        {isNotBlank(location.exportTimestamp) && (
+          <Duration prefix='Last export'
+                    suffix='ago'
+                    timestamp={location.exportTimestamp}/>
+        )}
+      </p>
+      <p className={styles.info}>
+        {isBlank(location.importTimestamp) && 'Never imported'}
+        {isNotBlank(location.importTimestamp) && (
+          <Duration prefix='Last import'
+                    suffix='ago'
+                    timestamp={location.importTimestamp}/>
+        )}
+      </p>
+    </>
+  )
 }
 
 export function BackupDescription({location}: BackupDescriptionProps): ReactElement {
@@ -44,6 +68,7 @@ export function BackupDescription({location}: BackupDescriptionProps): ReactElem
             <p className={styles.info}>
               {isNotBlank(location.externalId) && isNotBlank(location.description) && `"${location.description}"`}
             </p>
+            <LastImportExport location={location}/>
           </>
         )}
         {isCustomServer(location) && (
@@ -52,6 +77,7 @@ export function BackupDescription({location}: BackupDescriptionProps): ReactElem
             <p className={styles.info}>
               <code>{location.url}</code>
             </p>
+            <LastImportExport location={location}/>
           </>
         )}
       </div>
