@@ -2,8 +2,8 @@
   :description "A build monitor with attitude"
   :url "https://github.com/build-canaries/nevergreen"
   :dependencies [[org.clojure/clojure "1.10.3"]
-                 [ring "1.9.2" :exclusions [org.eclipse.jetty/jetty-server]]
-                 [org.eclipse.jetty/jetty-server "9.4.39.v20210325"]
+                 [ring "1.9.3" :exclusions [org.eclipse.jetty/jetty-server]]
+                 [org.eclipse.jetty/jetty-server "9.4.40.v20210413"]
                  [compojure "1.6.2" :exclusions [ring/ring-codec]]
                  [environ "1.2.0"]
                  [cheshire "5.10.0"]
@@ -35,7 +35,7 @@
             "check-updates" ["ancient" ":all"]
             "audit"         ["nvd" "check"]}
   :profiles {:dev  {:plugins [[lein-ancient "0.7.0"]
-                              [jonase/eastwood "0.3.14"]
+                              [jonase/eastwood "0.4.0"]
                               [lein-cloverage "1.2.2"]
                               [lein-nvd "1.4.1"]
                               [lein-eftest "0.5.9"]]}
