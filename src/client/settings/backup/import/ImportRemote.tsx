@@ -12,9 +12,8 @@ import {ErrorMessages} from '../../../common/Messages'
 import {useParams} from 'react-router-dom'
 import {getBackupLocation, RemoteLocation} from '../RemoteLocationsReducer'
 import {Request, send} from '../../../gateways/Gateway'
-import {fetchConfigurationNew, ImportResponse} from '../../../gateways/BackupGateway'
+import {fetchConfiguration, ImportResponse} from '../../../gateways/BackupGateway'
 import {fromJson, toJson} from '../../../common/Json'
-import {Title} from '../../../common/Title'
 import {BackupDescription} from '../BackupDescription'
 import {Form} from '../../../common/forms/Form'
 import {allErrors, FormErrors} from '../../../common/forms/Validation'
@@ -22,6 +21,7 @@ import isEmpty from 'lodash/isEmpty'
 import {ROUTE_SETTINGS_ANCHOR_BACKUP} from '../../../Routes'
 import {Loading} from '../../../common/Loading'
 import {Redirect} from 'react-router'
+import {Page} from '../../../common/Page'
 
 type Fields = 'import'
 
@@ -47,7 +47,7 @@ function ImportRemoteLocation({location}: ImportRemoteProps): ReactElement {
   const [loaded, setLoaded] = useState(false)
   const [fetchRequest, setFetchRequest] = useState<Request<ImportResponse>>()
 
-  const createRequest = useCallback(() => setFetchRequest(fetchConfigurationNew(location)), [location])
+  const createRequest = useCallback(() => setFetchRequest(fetchConfiguration(location)), [location])
 
   useEffect(createRequest, [createRequest])
 
@@ -98,9 +98,7 @@ function ImportRemoteLocation({location}: ImportRemoteProps): ReactElement {
 
     if (isRight(result)) {
       dispatch(configurationImported(result.right))
-      if (location) {
-        dispatch(backupImported(location.internalId))
-      }
+      dispatch(backupImported(location.internalId))
       return ROUTE_SETTINGS_ANCHOR_BACKUP
     }
   }
@@ -108,9 +106,7 @@ function ImportRemoteLocation({location}: ImportRemoteProps): ReactElement {
   const hasLoadErrors = !isEmpty(loadErrors)
 
   return (
-    <div className={styles.page}>
-      <Title>Import remote</Title>
-
+    <Page title='Import remote'>
       <div className={styles.header}>
         <BackupDescription location={location}/>
       </div>
@@ -138,7 +134,6 @@ function ImportRemoteLocation({location}: ImportRemoteProps): ReactElement {
                             errors={allErrors<Fields>('import', validationErrors)}
                             value={data}
                             onChange={({target}) => setData(target.value)}
-                            data-locator='import-data'
                             disabled={submitting}/>
                 )
               }}
@@ -146,6 +141,6 @@ function ImportRemoteLocation({location}: ImportRemoteProps): ReactElement {
           )}
         </Loading>
       </div>
-    </div>
+    </Page>
   )
 }

@@ -13,11 +13,7 @@ export interface ImportResponse {
   readonly where: RemoteLocationOptions;
 }
 
-export function exportConfiguration(where: string, id: string, description: string, configuration: string, token: string, url: string): Request<ExportResponse> {
-  return post<ExportResponse>('/api/export', {where, id, description, configuration, token, url})
-}
-
-export function exportConfigurationNew(location: RemoteLocation, configuration: string): Request<ExportResponse> {
+export function exportConfiguration(location: RemoteLocation, configuration: string): Request<ExportResponse> {
   return post<ExportResponse>('/api/export', {
     where: location.where,
     id: location.externalId,
@@ -28,11 +24,7 @@ export function exportConfigurationNew(location: RemoteLocation, configuration: 
   })
 }
 
-export function fetchConfiguration(from: string, id: string, token: string, url: string): Request<ImportResponse> {
-  return post<ImportResponse>('/api/import', {from, id, token, url})
-}
-
-export function fetchConfigurationNew(location: RemoteLocation): Request<ImportResponse> {
+export function fetchConfiguration(location: RemoteLocation): Request<ImportResponse> {
   return post<ImportResponse>('/api/import', {
     from: location.where,
     id: location.externalId,

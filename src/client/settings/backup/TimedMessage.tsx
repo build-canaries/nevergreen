@@ -1,7 +1,6 @@
 import React, {ReactElement, useEffect, useState} from 'react'
 import {Messages, MessagesProps} from '../../common/Messages'
 import {CSSTransition} from 'react-transition-group'
-import cn from 'classnames'
 import styles from './timed-message.scss'
 import isEmpty from 'lodash/isEmpty'
 
@@ -31,7 +30,7 @@ export function TimedMessage({className, clear, messages, ...props}: TimedMessag
                    timeout={300}
                    classNames={{...styles}}
                    onExited={clear}>
-      <Messages className={cn(className, styles.message)} messages={messages} {...props}/>
+      <Messages className={className} messages={messages} {...props}/>
     </CSSTransition>
   )
 }

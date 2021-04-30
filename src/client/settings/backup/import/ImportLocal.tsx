@@ -15,7 +15,7 @@ import {TimedMessage} from '../TimedMessage'
 import {FileDropTarget} from './FileDropTarget'
 import {ROUTE_SETTINGS_ANCHOR_BACKUP} from '../../../Routes'
 import {InputFile} from './InputFile'
-import {loadFile} from './FileSystem'
+import {loadFile} from '../FileSystem'
 
 const placeholder = 'Open, drag and drop or paste exported configuration here and press Import now'
 
@@ -114,7 +114,6 @@ export function ImportLocal(): ReactElement {
                         placeholder={placeholder}
                         value={data}
                         onChange={({target}) => setData(target.value)}
-                        data-locator='import-data'
                         disabled={submitting || !loaded}/>
             )
           }}

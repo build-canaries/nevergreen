@@ -1,0 +1,14 @@
+@import '../../../common/variables';
+
+.header {
+  background-color: $light-grey;
+  padding: 1em;
+}
+
+.body {
+  padding: 1em;
+
+  & > *:first-child {
+    margin-top: 0;
+  }
+}

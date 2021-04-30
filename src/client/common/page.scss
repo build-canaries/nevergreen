@@ -1,0 +1,9 @@
+@import './variables';
+
+.page {
+  background: $white;
+
+  & > *:first-child {
+    margin-top: 0;
+  }
+}

@@ -2,6 +2,7 @@ import React, {FormEvent, ReactElement, ReactNode, useEffect, useState} from 're
 import cn from 'classnames'
 import isEmpty from 'lodash/isEmpty'
 import isNil from 'lodash/isNil'
+import noop from 'lodash/noop'
 import {PrimaryButton, SecondaryButton} from './Button'
 import styles from './form.scss'
 import {FormErrors} from './Validation'
@@ -12,7 +13,7 @@ import {useHistory} from 'react-router-dom'
 
 interface FormProps<Fields extends string> {
   readonly children: (submitting: boolean, validationErrors: Readonly<FormErrors<Fields>>) => ReactNode;
-  readonly onValidate: () => Readonly<FormErrors<Fields>> | undefined;
+  readonly onValidate?: () => Readonly<FormErrors<Fields>> | undefined | void;
   readonly onSuccess: () => Promise<string | undefined | void> | string | undefined | void;
   readonly onCancel?: () => void;
   readonly className?: string;
@@ -23,7 +24,7 @@ interface FormProps<Fields extends string> {
 export function Form<Fields extends string>({
                                               className,
                                               children,
-                                              onValidate,
+                                              onValidate = noop,
                                               onSuccess,
                                               onCancel,
                                               submitButtonText = 'Save',
@@ -80,7 +81,7 @@ export function Form<Fields extends string>({
 
       <PrimaryButton className={styles.submitButton}
                      icon={iCheckmark}
-                     type='submit'
+                     type="submit"
                      disabled={submitting}>
         {submitButtonText}
       </PrimaryButton>

@@ -21,10 +21,11 @@ import {Preview} from './settings/Preview'
 import {useShortcut} from './common/Keyboard'
 import {useCheckForNewVersion} from './CheckForNewVersionHook'
 import {UnhandledErrorMessage} from './UnhandledErrorMessage'
-import {Export} from './settings/backup/export/Export'
 import {AddBackup} from './settings/backup/AddBackup'
 import {
   ROUTE_BACKUP_ADD,
+  ROUTE_EXPORT_LOCAL,
+  ROUTE_EXPORT_REMOTE,
   ROUTE_IMPORT_LOCAL,
   ROUTE_IMPORT_REMOTE,
   ROUTE_MONITOR,
@@ -32,12 +33,13 @@ import {
   ROUTE_SETTINGS,
   ROUTE_STYLE_GUIDE,
   ROUTE_SUCCESS_ADD,
-  ROUTE_TRACKING,
-  ROUTES_EXPORT
+  ROUTE_TRACKING
 } from './Routes'
 import {AddMessage} from './settings/success/AddMessage'
 import {ImportLocal} from './settings/backup/import/ImportLocal'
 import {ImportRemote} from './settings/backup/import/ImportRemote'
+import {ExportLocal} from './settings/backup/export/ExportLocal'
+import {ExportRemote} from './settings/backup/export/ExportRemote'
 
 export function Nevergreen(): ReactElement {
   const {loaded, error} = useLocalConfiguration()
@@ -97,7 +99,8 @@ export function Nevergreen(): ReactElement {
                     <Route exact path={ROUTE_SETTINGS} component={Settings}/>
                     <Route exact path={ROUTE_SUCCESS_ADD} component={AddMessage}/>
                     <Route exact path={ROUTE_BACKUP_ADD} component={AddBackup}/>
-                    <Route exact path={ROUTES_EXPORT} component={Export}/>
+                    <Route exact path={ROUTE_EXPORT_LOCAL} component={ExportLocal}/>
+                    <Route exact path={ROUTE_EXPORT_REMOTE} component={ExportRemote}/>
                     <Route exact path={ROUTE_IMPORT_LOCAL} component={ImportLocal}/>
                     <Route exact path={ROUTE_IMPORT_REMOTE} component={ImportRemote}/>
                     <Route exact path={ROUTE_STYLE_GUIDE} component={StyleGuide}/>

@@ -1,7 +1,9 @@
 import React from 'react'
 import {render} from '../../../testHelpers'
-import {Export} from './Export'
+import {ExportLocal} from './ExportLocal'
 import * as ClipboardHook from './ClipboardHook'
+import * as FileSystem from '../FileSystem'
+import userEvent from '@testing-library/user-event'
 
 it('should allowing copying to clipboard if supported', () => {
   let clipboardElementSelector = ''
@@ -11,7 +13,7 @@ it('should allowing copying to clipboard if supported', () => {
     return true
   })
 
-  const {queryByText, getByLabelText} = render(<Export/>)
+  const {queryByText, getByLabelText} = render(<ExportLocal/>)
 
   const currentConfiguration = getByLabelText('Current configuration')
   const copyButton = queryByText('Copy to clipboard')
@@ -27,6 +29,15 @@ it('should allowing copying to clipboard if supported', () => {
 // not sure if this applies to any browsers we actually support, but just in case
 it('should not have a copy to clipboard button if copying is not supported', () => {
   jest.spyOn(ClipboardHook, 'useClipboard').mockReturnValue(false)
-  const {queryByText} = render(<Export/>)
+  const {queryByText} = render(<ExportLocal/>)
   expect(queryByText('Copy to clipboard')).not.toBeInTheDocument()
+})
+
+it('should be able to save a file locally', () => {
+  jest.spyOn(FileSystem, 'saveFile')
+
+  const {getByRole} = render(<ExportLocal/>)
+  userEvent.click(getByRole('button', {name: 'Save locally...'}))
+
+  expect(FileSystem.saveFile).toHaveBeenCalled()
 })

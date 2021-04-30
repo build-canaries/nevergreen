@@ -126,13 +126,13 @@ function shouldBeAbleToExportAndImportConfig() {
 
   cy.findByRole('link', {name: 'Export'}).click()
 
-  cy.get('#export-data').then((exportInput) => {
+  cy.findByLabelText('Current configuration').then((exportInput) => {
     cy.visitPage('settings')
 
     cy.findByRole('link', {name: 'Import'}).click()
 
-    cy.locate('import-data').invoke('val', exportInput.val()) // not using type() for speed reasons
-    cy.locate('import-data').type(' ') // trigger react updates
+    cy.findByLabelText('Configuration to import').invoke('val', exportInput.val()) // not using type() for speed reasons
+    cy.findByLabelText('Configuration to import').type(' ') // trigger react updates
     cy.findByRole('button', {name: 'Import'}).click()
 
     cy.location('pathname').should('eq', '/settings')

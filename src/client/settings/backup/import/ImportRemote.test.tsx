@@ -19,7 +19,7 @@ it('should import valid configuration and redirect to the settings page', async 
       })
     }
   }
-  jest.spyOn(BackupGateway, 'fetchConfigurationNew').mockReturnValue(fakeRequest({
+  jest.spyOn(BackupGateway, 'fetchConfiguration').mockReturnValue(fakeRequest({
     configuration: toJson(buildState())
   }))
 
@@ -48,7 +48,7 @@ it('should display an error if the configuration is syntactically invalid JSON',
       })
     }
   }
-  jest.spyOn(BackupGateway, 'fetchConfigurationNew').mockReturnValue(fakeRequest({
+  jest.spyOn(BackupGateway, 'fetchConfiguration').mockReturnValue(fakeRequest({
     configuration: '{invalid-json'
   }))
 
@@ -70,7 +70,7 @@ it('should display an error if the configuration is semantically invalid JSON', 
       })
     }
   }
-  jest.spyOn(BackupGateway, 'fetchConfigurationNew').mockReturnValue(fakeRequest({
+  jest.spyOn(BackupGateway, 'fetchConfiguration').mockReturnValue(fakeRequest({
     configuration: '{"trays":{"id": {}}}' // missing required attributes
   }))
 

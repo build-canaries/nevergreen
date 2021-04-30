@@ -6,7 +6,7 @@ import {BACKUP_REMOTE_LOCATIONS_ROOT} from './RemoteLocationsReducer'
 import {toExportableConfigurationJson} from '../../configuration/Configuration'
 
 it('should export to any enabled remote locations if the configuration has changed since the last export', async () => {
-  jest.spyOn(BackupGateway, 'exportConfigurationNew').mockReturnValue(fakeRequest({id: 'some-external-id'}))
+  jest.spyOn(BackupGateway, 'exportConfiguration').mockReturnValue(fakeRequest({id: 'some-external-id'}))
 
   const location = buildRemoteBackupLocation({
     internalId: 'internalId',
@@ -23,11 +23,11 @@ it('should export to any enabled remote locations if the configuration has chang
 
   await backupRaw(previous, current, dispatch)
 
-  expect(BackupGateway.exportConfigurationNew).toHaveBeenCalledWith(location, toExportableConfigurationJson(current))
+  expect(BackupGateway.exportConfiguration).toHaveBeenCalledWith(location, toExportableConfigurationJson(current))
 })
 
 it('should not export to any enabled remote locations if the configuration is the same as the last export', async () => {
-  jest.spyOn(BackupGateway, 'exportConfigurationNew').mockReturnValue(fakeRequest({id: 'some-external-id'}))
+  jest.spyOn(BackupGateway, 'exportConfiguration').mockReturnValue(fakeRequest({id: 'some-external-id'}))
 
   const previous = buildState({
     [BACKUP_REMOTE_LOCATIONS_ROOT]: {
@@ -53,11 +53,11 @@ it('should not export to any enabled remote locations if the configuration is th
 
   await backupRaw(previous, current, dispatch)
 
-  expect(BackupGateway.exportConfigurationNew).not.toHaveBeenCalled()
+  expect(BackupGateway.exportConfiguration).not.toHaveBeenCalled()
 })
 
 it('should not export on first load when previous state is undefined', async () => {
-  jest.spyOn(BackupGateway, 'exportConfigurationNew').mockReturnValue(fakeRequest({id: 'some-external-id'}))
+  jest.spyOn(BackupGateway, 'exportConfiguration').mockReturnValue(fakeRequest({id: 'some-external-id'}))
 
   const previous = undefined
   const current = buildState({
@@ -72,5 +72,5 @@ it('should not export on first load when previous state is undefined', async () 
 
   await backupRaw(previous, current, dispatch)
 
-  expect(BackupGateway.exportConfigurationNew).not.toHaveBeenCalled()
+  expect(BackupGateway.exportConfiguration).not.toHaveBeenCalled()
 })

@@ -1,0 +1,29 @@
+@import '../../../common/variables';
+@import '../../../common/layout';
+@import '../../../common/forms/button';
+@import '../../../common/responsive';
+
+$button-size: 220px;
+
+.exportInput {
+  margin: $margin-top 0 0 0;
+}
+
+.message {
+  margin: 0 0 $margin-top 0;
+}
+
+.saveFile,
+.copy {
+  min-width: $button-size;
+
+  @include respond-to(tablet, desktop) {
+    display: block;
+  }
+}
+
+.copy {
+  @include respond-to(tablet, desktop) {
+    margin: $margin-top 0 0 0;
+  }
+}

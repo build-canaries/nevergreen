@@ -1,4 +1,5 @@
-import * as logger from '../../../common/Logger'
+import * as logger from '../../common/Logger'
+import format from 'date-fns/format'
 
 interface LoadedFile {
   readonly content: string;
@@ -34,4 +35,16 @@ export async function loadFile(file: File): Promise<LoadedFile> {
       reject(new Error(unsupportedMessage(file)))
     }
   })
+}
+
+export function saveFile(configuration: string): void {
+  const timestamp = format(new Date(), 'yyyyMMddHHmmssSSS')
+  const file = new Blob([configuration], {type: 'application/json'})
+  const a = document.createElement('a')
+
+  a.href = URL.createObjectURL(file)
+  a.download = `nevergreen-configuration-backup-${timestamp}.json`
+  a.click()
+
+  URL.revokeObjectURL(a.href)
 }
