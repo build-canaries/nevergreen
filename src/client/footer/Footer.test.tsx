@@ -3,6 +3,7 @@ import {buildState, buildTray, render, setupReactModal} from '../testHelpers'
 import {Footer} from './Footer'
 import userEvent from '@testing-library/user-event'
 import {TRAYS_ROOT} from '../tracking/TraysReducer'
+import {screen} from '@testing-library/react'
 
 beforeEach(setupReactModal)
 
@@ -12,11 +13,11 @@ it('should have "about" information', () => {
       trayId: buildTray({serverType: 'circle'})
     }
   })
-  const {getByText, queryByText} = render(<Footer fullScreen={false}/>, state)
-  userEvent.click(getByText(/Nevergreen v[\d.]+\+[\d]+\.[a-zA-Z0-9]+ [a-zA-Z ]+ by Build Canaries/))
+  render(<Footer fullScreen={false}/>, state)
+  userEvent.click(screen.getByText(/Nevergreen v[\d.]+\+[\d]+\.[a-zA-Z0-9]+ [a-zA-Z ]+ by Build Canaries/))
 
-  expect(queryByText('Eclipse Public Licence 1.0 (EPL-1.0)')).toBeInTheDocument()
-  userEvent.click(getByText('Close'))
+  expect(screen.queryByText('Eclipse Public Licence 1.0 (EPL-1.0)')).toBeInTheDocument()
+  userEvent.click(screen.getByText('Close'))
 
-  expect(queryByText('Eclipse Public Licence 1.0 (EPL-1.0)')).not.toBeInTheDocument()
+  expect(screen.queryByText('Eclipse Public Licence 1.0 (EPL-1.0)')).not.toBeInTheDocument()
 })

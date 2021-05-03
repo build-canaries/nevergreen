@@ -1,5 +1,5 @@
 import React from 'react'
-import {waitFor} from '@testing-library/react'
+import {screen, waitFor} from '@testing-library/react'
 import noop from 'lodash/noop'
 import {Monitor} from './Monitor'
 import {buildProject, buildTray, render} from '../testHelpers'
@@ -49,8 +49,8 @@ it('should show a helpful message if no trays are added', () => {
   const state = {
     [TRAYS_ROOT]: {}
   }
-  const {queryByText} = render(<Monitor {...DEFAULT_PROPS}/>, state)
-  expect(queryByText('Add a CI server via the tracking page to start monitoring')).toBeInTheDocument()
+  render(<Monitor {...DEFAULT_PROPS}/>, state)
+  expect(screen.queryByText('Add a CI server via the tracking page to start monitoring')).toBeInTheDocument()
 })
 
 it('should show a loading screen when first switching to the page', () => {
@@ -59,8 +59,8 @@ it('should show a loading screen when first switching to the page', () => {
       [trayId]: buildTray({trayId})
     }
   }
-  const {queryByTestId} = render(<Monitor {...DEFAULT_PROPS}/>, state)
-  expect(queryByTestId('loading')).toBeInTheDocument()
+  render(<Monitor {...DEFAULT_PROPS}/>, state)
+  expect(screen.queryByTestId('loading')).toBeInTheDocument()
 })
 
 it('should show a success message if there are no projects', async () => {
@@ -74,9 +74,9 @@ it('should show a success message if there are no projects', async () => {
     },
     [SUCCESS_ROOT]: ['some-success-message']
   }
-  const {queryByText} = render(<Monitor {...DEFAULT_PROPS}/>, state)
+  render(<Monitor {...DEFAULT_PROPS}/>, state)
   await waitFor(() => {
-    expect(queryByText('some-success-message')).toBeInTheDocument()
+    expect(screen.queryByText('some-success-message')).toBeInTheDocument()
   })
 })
 
@@ -108,9 +108,9 @@ it('should display an error if the Nevergreen server is having issues', async ()
       [trayId]: buildTray({trayId})
     }
   }
-  const {queryByText} = render(<Monitor {...DEFAULT_PROPS}/>, state)
+  render(<Monitor {...DEFAULT_PROPS}/>, state)
   await waitFor(() => {
-    expect(queryByText('some-error')).toBeInTheDocument()
+    expect(screen.queryByText('some-error')).toBeInTheDocument()
   })
 })
 

@@ -2,7 +2,7 @@ import React from 'react'
 import noop from 'lodash/noop'
 import {AddTray} from './AddTray'
 import userEvent from '@testing-library/user-event'
-import {waitFor} from '@testing-library/react'
+import {screen, waitFor} from '@testing-library/react'
 import * as SecurityGateway from '../gateways/SecurityGateway'
 import {getTrays, TRAYS_ROOT} from './TraysReducer'
 import {buildTray, render} from '../testHelpers'
@@ -17,16 +17,16 @@ beforeEach(() => {
 })
 
 it('should display an error if no URL is entered', () => {
-  const {queryByText, getByText} = render(<AddTray {...DEFAULT_PROPS}/>)
-  userEvent.click(getByText('Add feed'))
-  expect(queryByText('Enter a URL to the CCTray XML feed')).toBeInTheDocument()
+  render(<AddTray {...DEFAULT_PROPS}/>)
+  userEvent.click(screen.getByText('Add feed'))
+  expect(screen.queryByText('Enter a URL to the CCTray XML feed')).toBeInTheDocument()
 })
 
 it('should display an error if the URL entered is not http(s)', () => {
-  const {queryByText, getByText, getByLabelText} = render(<AddTray {...DEFAULT_PROPS}/>)
-  userEvent.type(getByLabelText('URL'), 'ftp://some-new-url')
-  userEvent.click(getByText('Add feed'))
-  expect(queryByText('Only http(s) URLs are supported')).toBeInTheDocument()
+  render(<AddTray {...DEFAULT_PROPS}/>)
+  userEvent.type(screen.getByLabelText('URL'), 'ftp://some-new-url')
+  userEvent.click(screen.getByText('Add feed'))
+  expect(screen.queryByText('Only http(s) URLs are supported')).toBeInTheDocument()
 })
 
 it('should display an error if a feed with the same URL has already been added', () => {
@@ -39,14 +39,14 @@ it('should display an error if a feed with the same URL has already been added',
     }
   }
 
-  const {getByText, getByLabelText, queryByText} = render(
+  render(
     <AddTray {...DEFAULT_PROPS}/>,
     state
   )
-  userEvent.type(getByLabelText('URL'), 'http://some-url')
-  userEvent.click(getByText('Add feed'))
+  userEvent.type(screen.getByLabelText('URL'), 'http://some-url')
+  userEvent.click(screen.getByText('Add feed'))
 
-  expect(queryByText('CCTray XML feed has already been added')).toBeInTheDocument()
+  expect(screen.queryByText('CCTray XML feed has already been added')).toBeInTheDocument()
 })
 
 it('should allow adding trays without auth', () => {
@@ -54,9 +54,9 @@ it('should allow adding trays without auth', () => {
     [TRAYS_ROOT]: {}
   }
 
-  const {getByText, getByLabelText, store} = render(<AddTray {...DEFAULT_PROPS}/>, state)
-  userEvent.type(getByLabelText('URL'), 'http://some-new-url')
-  userEvent.click(getByText('Add feed'))
+  const {store} = render(<AddTray {...DEFAULT_PROPS}/>, state)
+  userEvent.type(screen.getByLabelText('URL'), 'http://some-new-url')
+  userEvent.click(screen.getByText('Add feed'))
 
   expect(getTrays(store.getState())).toEqual(expect.arrayContaining([
     expect.objectContaining({
@@ -71,12 +71,12 @@ it('should allow adding trays with basic auth', async () => {
     [TRAYS_ROOT]: {}
   }
 
-  const {getByText, getByLabelText, store} = render(<AddTray {...DEFAULT_PROPS}/>, state)
-  userEvent.type(getByLabelText('URL'), 'http://some-new-url')
-  userEvent.click(getByLabelText('Basic auth'))
-  userEvent.type(getByLabelText('Username'), 'some-username')
-  userEvent.type(getByLabelText('Password'), 'some-password')
-  userEvent.click(getByText('Add feed'))
+  const {store} = render(<AddTray {...DEFAULT_PROPS}/>, state)
+  userEvent.type(screen.getByLabelText('URL'), 'http://some-new-url')
+  userEvent.click(screen.getByLabelText('Basic auth'))
+  userEvent.type(screen.getByLabelText('Username'), 'some-username')
+  userEvent.type(screen.getByLabelText('Password'), 'some-password')
+  userEvent.click(screen.getByText('Add feed'))
 
   await waitFor(() => {
     expect(SecurityGateway.encrypt).toHaveBeenCalledWith('some-password')
@@ -94,11 +94,11 @@ it('should allow adding trays with an access token', async () => {
     [TRAYS_ROOT]: {}
   }
 
-  const {getByText, getByLabelText, store} = render(<AddTray {...DEFAULT_PROPS}/>, state)
-  userEvent.type(getByLabelText('URL'), 'http://some-new-url')
-  userEvent.click(getByLabelText('Access token'))
-  userEvent.type(getByLabelText('Token'), 'some-token')
-  userEvent.click(getByText('Add feed'))
+  const {store} = render(<AddTray {...DEFAULT_PROPS}/>, state)
+  userEvent.type(screen.getByLabelText('URL'), 'http://some-new-url')
+  userEvent.click(screen.getByLabelText('Access token'))
+  userEvent.type(screen.getByLabelText('Token'), 'some-token')
+  userEvent.click(screen.getByText('Add feed'))
 
   await waitFor(() => {
     expect(SecurityGateway.encrypt).toHaveBeenCalledWith('some-token')
@@ -111,19 +111,19 @@ it('should allow adding trays with an access token', async () => {
 })
 
 it('should reset the form after adding a tray', async () => {
-  const {queryByTestId, getByText, getByLabelText, queryByLabelText, queryByText} = render(
+  render(
     <AddTray {...DEFAULT_PROPS}/>
   )
-  userEvent.type(getByLabelText('URL'), 'http://some-new-url')
-  userEvent.click(getByLabelText('Access token'))
-  userEvent.type(getByLabelText('Token'), 'some-token')
-  userEvent.click(getByText('Add feed'))
+  userEvent.type(screen.getByLabelText('URL'), 'http://some-new-url')
+  userEvent.click(screen.getByLabelText('Access token'))
+  userEvent.type(screen.getByLabelText('Token'), 'some-token')
+  userEvent.click(screen.getByRole('button', {name: 'Add feed'}))
 
   await waitFor(() => {
-    expect(getByLabelText('URL')).toHaveValue('')
-    expect(queryByTestId('auth-access-token')).not.toBeInTheDocument()
-    expect(queryByLabelText('Username')).not.toBeInTheDocument()
-    expect(queryByTestId('auth-password')).not.toBeInTheDocument()
-    expect(queryByText('Enter a URL to the CCTray XML feed')).not.toBeInTheDocument()
+    expect(screen.getByLabelText('URL')).toHaveValue('')
+    expect(screen.queryByTestId('auth-access-token')).not.toBeInTheDocument()
+    expect(screen.queryByLabelText('Username')).not.toBeInTheDocument()
+    expect(screen.queryByTestId('auth-password')).not.toBeInTheDocument()
+    expect(screen.queryByText('Enter a URL to the CCTray XML feed')).not.toBeInTheDocument()
   })
 })

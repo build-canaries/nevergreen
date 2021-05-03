@@ -1,13 +1,13 @@
 import {RefObject, useEffect} from 'react'
 import isNil from 'lodash/isNil'
-import {debug} from './Logger'
+import {info} from './Logger'
 import {ResizeObserver} from '@juggle/resize-observer'
 import {ResizeObserverEntry} from '@juggle/resize-observer/lib/ResizeObserverEntry'
 
 if ('ResizeObserver' in window) {
-  debug('Using native ResizeObserver')
+  info('Using native ResizeObserver')
 } else {
-  debug('Using ResizeObserver polyfill')
+  info('Using ResizeObserver polyfill')
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment

@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event'
 import {buildRemoteBackupLocation, buildState, render} from '../../../testHelpers'
 import {toJson} from '../../../common/Json'
 import {ROUTE_ANCHOR_BACKUP, ROUTE_IMPORT_REMOTE, ROUTE_SETTINGS, routeImportRemote} from '../../../Routes'
-import {waitFor} from '@testing-library/react'
+import {screen, waitFor} from '@testing-library/react'
 import {BACKUP_REMOTE_LOCATIONS_ROOT} from '../RemoteLocationsReducer'
 import {ImportRemote} from './ImportRemote'
 import * as BackupGateway from '../../../gateways/BackupGateway'
@@ -23,16 +23,16 @@ it('should import valid configuration and redirect to the settings page', async 
     configuration: toJson(buildState())
   }))
 
-  const {getByRole, queryByLabelText, history} = render(
+  const {history} = render(
     <Route path={ROUTE_IMPORT_REMOTE}><ImportRemote/></Route>,
     state,
     routeImportRemote('locationId'))
 
   await waitFor(() => {
-    expect(queryByLabelText('Configuration to import')).toBeInTheDocument()
+    expect(screen.queryByLabelText('Configuration to import')).toBeInTheDocument()
   })
 
-  userEvent.click(getByRole('button', {name: 'Import'}))
+  userEvent.click(screen.getByRole('button', {name: 'Import'}))
 
   await waitFor(() => {
     expect(history.location.pathname).toEqual(ROUTE_SETTINGS)
@@ -52,13 +52,13 @@ it('should display an error if the configuration is syntactically invalid JSON',
     configuration: '{invalid-json'
   }))
 
-  const {queryByText} = render(
+  render(
     <Route path={ROUTE_IMPORT_REMOTE}><ImportRemote/></Route>,
     state,
     routeImportRemote('locationId'))
 
   await waitFor(() => {
-    expect(queryByText('Unable to fetch remote backup because of an error')).toBeInTheDocument()
+    expect(screen.queryByText('Unable to fetch remote backup because of an error')).toBeInTheDocument()
   })
 })
 
@@ -74,20 +74,20 @@ it('should display an error if the configuration is semantically invalid JSON', 
     configuration: '{"trays":{"id": {}}}' // missing required attributes
   }))
 
-  const {getByRole, queryByLabelText, queryByText} = render(
+  render(
     <Route path={ROUTE_IMPORT_REMOTE}><ImportRemote/></Route>,
     state,
     routeImportRemote('locationId'))
 
   await waitFor(() => {
-    expect(queryByLabelText('Configuration to import')).toBeInTheDocument()
+    expect(screen.queryByLabelText('Configuration to import')).toBeInTheDocument()
   })
 
-  userEvent.click(getByRole('button', {name: 'Import'}))
+  userEvent.click(screen.getByRole('button', {name: 'Import'}))
 
   await waitFor(() => {
-    expect(queryByText('Invalid value undefined supplied to /trays/id/trayId expected string')).toBeInTheDocument()
-    expect(queryByText('Invalid value undefined supplied to /trays/id/url expected string')).toBeInTheDocument()
+    expect(screen.queryByText('Invalid value undefined supplied to /trays/id/trayId expected string')).toBeInTheDocument()
+    expect(screen.queryByText('Invalid value undefined supplied to /trays/id/url expected string')).toBeInTheDocument()
   })
 })
 
@@ -117,13 +117,13 @@ it('should display an error and a button to try again if configuration can not b
   }
   jest.spyOn(Gateway, 'send').mockRejectedValue(new Error('some-error'))
 
-  const {queryByText, queryByRole} = render(
+  render(
     <Route path={ROUTE_IMPORT_REMOTE}><ImportRemote/></Route>,
     state,
     routeImportRemote('locationId'))
 
   await waitFor(() => {
-    expect(queryByText('Unable to fetch remote backup because of an error')).toBeInTheDocument()
-    expect(queryByRole('button', {name: 'Try fetching again'})).toBeInTheDocument()
+    expect(screen.queryByText('Unable to fetch remote backup because of an error')).toBeInTheDocument()
+    expect(screen.queryByRole('button', {name: 'Try fetching again'})).toBeInTheDocument()
   })
 })

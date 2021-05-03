@@ -6,7 +6,7 @@ import {ROUTE_ANCHOR_BACKUP, ROUTE_EXPORT_REMOTE, ROUTE_SETTINGS, routeExportRem
 import * as BackupGateway from '../../../gateways/BackupGateway'
 import {fakeRequest} from '../../../gateways/Gateway'
 import userEvent from '@testing-library/user-event'
-import {waitFor} from '@testing-library/react'
+import {screen, waitFor} from '@testing-library/react'
 import {Route} from 'react-router'
 
 it('should export configuration and redirect to the settings page', async () => {
@@ -21,12 +21,12 @@ it('should export configuration and redirect to the settings page', async () => 
     id: 'some-remote-id'
   }))
 
-  const {getByRole, history} = render(
+  const {history} = render(
     <Route path={ROUTE_EXPORT_REMOTE}><ExportRemote/></Route>,
     state,
     routeExportRemote('locationId'))
 
-  userEvent.click(getByRole('button', {name: 'Export'}))
+  userEvent.click(screen.getByRole('button', {name: 'Export'}))
 
   await waitFor(() => {
     expect(history.location.pathname).toEqual(ROUTE_SETTINGS)

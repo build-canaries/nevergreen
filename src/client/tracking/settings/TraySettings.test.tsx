@@ -1,5 +1,5 @@
 import React, {ReactNode} from 'react'
-import {waitFor} from '@testing-library/react'
+import {screen, waitFor} from '@testing-library/react'
 import {TraySettings} from './TraySettings'
 import {buildTray, render, setupReactModal} from '../../testHelpers'
 import {getTrays, TRAYS_ROOT} from '../TraysReducer'
@@ -34,9 +34,9 @@ it('should set the tray name on blur', () => {
   const state = {
     [TRAYS_ROOT]: {trayId: tray}
   }
-  const {getByLabelText, store} = render(<TraySettings {...DEFAULT_PROPS} tray={tray}/>, state)
+  const {store} = render(<TraySettings {...DEFAULT_PROPS} tray={tray}/>, state)
 
-  const nameInput = getByLabelText('Name')
+  const nameInput = screen.getByLabelText('Name')
   userEvent.clear(nameInput)
   userEvent.type(nameInput, 'some-new-name')
   nameInput.blur()
@@ -52,8 +52,8 @@ it('should generate a new random name', () => {
   const state = {
     [TRAYS_ROOT]: {trayId: tray}
   }
-  const {getByText, store} = render(<TraySettings {...DEFAULT_PROPS} tray={tray}/>, state)
-  userEvent.click(getByText('randomise name'))
+  const {store} = render(<TraySettings {...DEFAULT_PROPS} tray={tray}/>, state)
+  userEvent.click(screen.getByText('randomise name'))
 
   expect(getTrays(store.getState())[0].name).not.toEqual('some-name')
 })
@@ -69,9 +69,9 @@ it('should set the tray URL on blur if it is different', () => {
   }
   const props = {...DEFAULT_PROPS, tray, setRequiresRefresh}
 
-  const {getByLabelText, store} = render(<TraySettings {...props}/>, state)
+  const {store} = render(<TraySettings {...props}/>, state)
 
-  const urlInput = getByLabelText('URL')
+  const urlInput = screen.getByLabelText('URL')
   userEvent.clear(urlInput)
   userEvent.type(urlInput, 'http://some-new-url')
   urlInput.blur()
@@ -91,9 +91,9 @@ it('should not call requires refresh if the URL is the same', () => {
   }
   const props = {...DEFAULT_PROPS, tray, setRequiresRefresh}
 
-  const {getByLabelText} = render(<TraySettings {...props}/>, state)
+  render(<TraySettings {...props}/>, state)
 
-  const urlInput = getByLabelText('URL')
+  const urlInput = screen.getByLabelText('URL')
   userEvent.clear(urlInput)
   userEvent.type(urlInput, 'http://some-url')
   urlInput.blur()
@@ -112,8 +112,8 @@ it('should set the tray server type on change', () => {
   }
   const props = {...DEFAULT_PROPS, tray, setRequiresRefresh}
 
-  const {getByTestId, store} = render(<TraySettings {...props} />, state)
-  userEvent.selectOptions(getByTestId('tray-server-type'), 'circle')
+  const {store} = render(<TraySettings {...props} />, state)
+  userEvent.selectOptions(screen.getByTestId('tray-server-type'), 'circle')
 
   expect(setRequiresRefresh).toHaveBeenCalledWith(true)
   expect(getTrays(store.getState())[0].serverType).toEqual('circle')
@@ -130,8 +130,8 @@ it('should set the include new setting on click without refreshing the tray', ()
   }
   const props = {...DEFAULT_PROPS, tray, setRequiresRefresh}
 
-  const {getByLabelText, store} = render(<TraySettings {...props}/>, state)
-  userEvent.click(getByLabelText('Automatically include new projects'))
+  const {store} = render(<TraySettings {...props}/>, state)
+  userEvent.click(screen.getByLabelText('Automatically include new projects'))
 
   expect(setRequiresRefresh).not.toHaveBeenCalled()
   expect(getTrays(store.getState())[0].includeNew).toBeTruthy()
@@ -144,13 +144,13 @@ it('should remove the tray when clicking the delete button', () => {
   const state = {
     [TRAYS_ROOT]: {trayId: tray}
   }
-  const {getByText, store} = render(
+  const {store} = render(
     <FakePage trayId='trayId'>
       <TraySettings {...DEFAULT_PROPS} tray={tray}/>
     </FakePage>,
     state
   )
-  userEvent.click(getByText('Delete feed'))
+  userEvent.click(screen.getByText('Delete feed'))
   expect(getTrays(store.getState())).toEqual([])
 })
 
@@ -166,12 +166,12 @@ it('should be able to change the auth to basic', async () => {
   }
   const props = {...DEFAULT_PROPS, tray, setRequiresRefresh}
 
-  const {getByText, getByLabelText, store} = render(<TraySettings {...props}/>, state)
-  userEvent.click(getByText('Change auth'))
-  userEvent.click(getByLabelText('Basic auth'))
-  userEvent.type(getByLabelText('Username'), 'some-username')
-  userEvent.type(getByLabelText('Password'), 'some-password')
-  userEvent.click(getByText('Save'))
+  const {store} = render(<TraySettings {...props}/>, state)
+  userEvent.click(screen.getByText('Change auth'))
+  userEvent.click(screen.getByLabelText('Basic auth'))
+  userEvent.type(screen.getByLabelText('Username'), 'some-username')
+  userEvent.type(screen.getByLabelText('Password'), 'some-password')
+  userEvent.click(screen.getByText('Save'))
 
   await waitFor(() => {
     expect(setRequiresRefresh).toHaveBeenCalledWith(true)

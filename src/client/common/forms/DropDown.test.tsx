@@ -1,6 +1,7 @@
 import React from 'react'
 import {DropDown} from './DropDown'
 import {render} from '../../testHelpers'
+import {screen} from '@testing-library/react'
 
 it('should add all the given options', () => {
   const options = [
@@ -8,16 +9,15 @@ it('should add all the given options', () => {
     {value: 'b', display: 'B'},
     {value: 'c', display: 'C'}
   ]
-  const {queryByText} = render(<DropDown options={options}>label</DropDown>)
-  expect(queryByText('A')).toBeInTheDocument()
-  expect(queryByText('B')).toBeInTheDocument()
-  expect(queryByText('C')).toBeInTheDocument()
+  render(<DropDown options={options}>label</DropDown>)
+  expect(screen.queryByText('A')).toBeInTheDocument()
+  expect(screen.queryByText('B')).toBeInTheDocument()
+  expect(screen.queryByText('C')).toBeInTheDocument()
 })
 
 // https://ffoodd.github.io/a11y.css/errors.html#namespace
 it('should generate an id (that does not start with a number) to associate the label and input correctly', () => {
-  const {container} = render(<DropDown options={[]}>label</DropDown>)
-  const labelId = container.querySelector('label')?.htmlFor
-  expect(labelId).toMatch(/i[0-9]/)
-  expect(container.querySelector('select')).toHaveAttribute('id', labelId)
+  render(<DropDown options={[]}>label</DropDown>)
+  expect(screen.getByText('label')).toHaveAttribute('for', expect.stringMatching(/i[0-9]/))
+  expect(screen.getByRole('combobox')).toHaveAttribute('id', expect.stringMatching(/i[0-9]/))
 })

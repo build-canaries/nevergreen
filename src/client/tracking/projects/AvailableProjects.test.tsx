@@ -1,7 +1,7 @@
 import React from 'react'
 import noop from 'lodash/noop'
 import userEvent from '@testing-library/user-event'
-import {waitFor} from '@testing-library/react'
+import {screen, waitFor} from '@testing-library/react'
 import {buildProject, buildProjectError, buildTray, render} from '../../testHelpers'
 import {fakeRequest} from '../../gateways/Gateway'
 import {AvailableProjects} from './AvailableProjects'
@@ -36,8 +36,8 @@ it('should be able to select projects', () => {
     }
   }
 
-  const {container} = render(<AvailableProjects {...DEFAULT_PROPS} tray={tray}/>, state)
-  const selectInput = container.querySelector('input[type="checkbox"]')
+  render(<AvailableProjects {...DEFAULT_PROPS} tray={tray}/>, state)
+  const selectInput = screen.getByLabelText(/some project/)
 
   expect(selectInput).not.toBeChecked()
 
@@ -66,17 +66,17 @@ it('should correctly show and remove errors returned while refreshing', async ()
     }
   }
 
-  const {queryByTestId, getByText, queryByText} = render(<AvailableProjects {...DEFAULT_PROPS} tray={tray}/>, state)
-  userEvent.click(getByText('Refresh'))
+  render(<AvailableProjects {...DEFAULT_PROPS} tray={tray}/>, state)
+  userEvent.click(screen.getByText('Refresh'))
 
   await waitFor(() => {
-    expect(queryByText('some-error')).toBeInTheDocument()
+    expect(screen.queryByText('some-error')).toBeInTheDocument()
   })
 
-  userEvent.click(getByText('Refresh'))
+  userEvent.click(screen.getByText('Refresh'))
 
   await waitFor(() => {
-    expect(queryByTestId('some-error')).not.toBeInTheDocument()
+    expect(screen.queryByTestId('some-error')).not.toBeInTheDocument()
   })
 })
 
@@ -93,8 +93,8 @@ it('should show a warning if there are no projects', () => {
       trayId: []
     }
   }
-  const {queryByText} = render(<AvailableProjects {...DEFAULT_PROPS} tray={tray}/>, state)
-  expect(queryByText('No projects fetched, please refresh')).toBeInTheDocument()
+  render(<AvailableProjects {...DEFAULT_PROPS} tray={tray}/>, state)
+  expect(screen.queryByText('No projects fetched, please refresh')).toBeInTheDocument()
 })
 
 it('should show a warning if no projects match the filter', () => {
@@ -116,10 +116,10 @@ it('should show a warning if no projects match the filter', () => {
     }
   }
 
-  const {getByLabelText, queryByText} = render(<AvailableProjects {...DEFAULT_PROPS} tray={tray}/>, state)
-  userEvent.type(getByLabelText('Search'), 'bar')
+  render(<AvailableProjects {...DEFAULT_PROPS} tray={tray}/>, state)
+  userEvent.type(screen.getByLabelText('Search'), 'bar')
 
-  expect(queryByText('No matching projects, please update your filter')).toBeInTheDocument()
+  expect(screen.queryByText('No matching projects, please update your filter')).toBeInTheDocument()
 })
 
 it('should show an error if the search is invalid', () => {
@@ -139,9 +139,9 @@ it('should show an error if the search is invalid', () => {
       trayId: []
     }
   }
-  const {getByLabelText, queryByText} = render(<AvailableProjects {...DEFAULT_PROPS} tray={tray}/>, state)
-  userEvent.type(getByLabelText('Search'), '?')
-  expect(queryByText(/^Project search not applied/)).toBeInTheDocument()
+  render(<AvailableProjects {...DEFAULT_PROPS} tray={tray}/>, state)
+  userEvent.type(screen.getByLabelText('Search'), '?')
+  expect(screen.queryByText(/^Project search not applied/)).toBeInTheDocument()
 })
 
 describe('accessibility', () => {
@@ -163,8 +163,8 @@ describe('accessibility', () => {
         trayId: []
       }
     }
-    const {getByTestId} = render(<AvailableProjects {...DEFAULT_PROPS} tray={tray}/>, state)
-    expect(getByTestId('available-projects-list')).toHaveAttribute('aria-live', 'polite')
+    render(<AvailableProjects {...DEFAULT_PROPS} tray={tray}/>, state)
+    expect(screen.getByTestId('available-projects-list')).toHaveAttribute('aria-live', 'polite')
   })
 
   // This is because we first mark removed projects by disabling the checkbox and adding a removed label.
@@ -187,7 +187,7 @@ describe('accessibility', () => {
         trayId: []
       }
     }
-    const {getByTestId} = render(<AvailableProjects {...DEFAULT_PROPS} tray={tray}/>, state)
-    expect(getByTestId('available-projects-list')).toHaveAttribute('aria-relevant', 'additions')
+    render(<AvailableProjects {...DEFAULT_PROPS} tray={tray}/>, state)
+    expect(screen.getByTestId('available-projects-list')).toHaveAttribute('aria-relevant', 'additions')
   })
 })

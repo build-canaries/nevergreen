@@ -1,24 +1,24 @@
 import React from 'react'
 import {Input} from './Input'
 import {render} from '../../testHelpers'
+import {screen} from '@testing-library/react'
 
 it('should apply the read only attribute and display an icon', () => {
   const props = {readOnly: true}
-  const {container, queryByText} = render(<Input {...props}>label</Input>)
-  expect(container.querySelector('input')).toHaveAttribute('readOnly')
-  expect(queryByText('read only')).toBeInTheDocument()
+  render(<Input {...props}>label</Input>)
+  expect(screen.getByRole('textbox')).toHaveAttribute('readOnly')
+  expect(screen.queryByText('read only')).toBeInTheDocument()
 })
 
 // https://ffoodd.github.io/a11y.css/errors.html#namespace
 it('should generate an id (that does not start with a number) to associate the label and input correctly', () => {
-  const {container} = render(<Input>label</Input>)
-  const labelId = container.querySelector('label')?.htmlFor
-  expect(labelId).toMatch(/i[0-9]/)
-  expect(container.querySelector('input')).toHaveAttribute('id', labelId)
+  render(<Input>label</Input>)
+  expect(screen.getByText('label')).toHaveAttribute('for', expect.stringMatching(/i[0-9]/))
+  expect(screen.getByRole('textbox')).toHaveAttribute('id', expect.stringMatching(/i[0-9]/))
 })
 
 it('should display given error message', () => {
   const props = {error: 'some validation error'}
-  const {queryByText} = render(<Input {...props}>label</Input>)
-  expect(queryByText('some validation error')).toBeInTheDocument()
+  render(<Input {...props}>label</Input>)
+  expect(screen.queryByText('some validation error')).toBeInTheDocument()
 })

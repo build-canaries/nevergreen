@@ -3,6 +3,7 @@ import {VisuallyHidden} from './VisuallyHidden'
 
 type ExternalLinkProps = {
   readonly children: ReactNode;
+  readonly href: string;
 } & DetailedHTMLProps<AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>
 
 export function ExternalLink({children, ...aProps}: ExternalLinkProps): ReactElement {

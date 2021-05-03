@@ -1,17 +1,17 @@
 /*global cy,Cypress,before */
 
 function shouldBeAbleToChangeFeedSettings() {
-  cy.locate('tab-Settings').click()
-  cy.locate('generate-random').click()
-  cy.locate('tray-name').clear().type('renamed tray').blur()
-  cy.locate('container-title').should('have.text', 'renamed tray')
+  cy.findByRole('tab', {name: 'Settings'}).click()
+  cy.findByRole('button', {name: 'randomise name'}).click()
+  cy.findByLabelText('Name').clear().type('renamed tray').blur()
+  cy.findByRole('heading', {name: 'renamed tray'}).should('exist')
 
   if (Cypress.env('TRAY_URL_TOKEN')) {
     cy.locate('tray-url').clear().type(Cypress.env('TRAY_URL_TOKEN')).blur()
-    cy.locate('change-password').click()
+    cy.findByRole('button', {name: 'Change auth'}).click()
     cy.locate('modal').within(() => {
-      cy.locate('auth-token').click()
-      cy.locate('auth-access-token').type(Cypress.env('TRAY_TOKEN')).blur()
+      cy.findByLabelText('Access token').click()
+      cy.findByLabelText('Token').type(Cypress.env('TRAY_TOKEN')).blur()
       cy.findByRole('button', {name: 'Save'}).click()
     })
   }
@@ -22,18 +22,17 @@ function shouldBeAbleToChangeFeedSettings() {
 function shouldBeAbleToAddFeeds(trayUrl, username, password) {
   cy.visitPage('tracking')
 
-  cy.locate('add-tray-url').type(trayUrl)
+  cy.findByLabelText('URL').type(trayUrl)
   if (username && password) {
-    cy.locate('auth-basic').click()
-    cy.locate('auth-username').type(username)
-    cy.locate('auth-password').type(password)
+    cy.findByLabelText('Basic auth').click()
+    cy.findByLabelText('Username').type(username)
+    cy.findByLabelText('Password').type(password)
   }
   cy.findByRole('button', {name: 'Add feed'}).click()
 
   cy.locate('tray').should('exist')
-  cy.locate('container-sub-title').should('have.text', trayUrl)
-  cy.locate('exclude-all').click()
-  cy.locate('include-all').click()
+  cy.findByRole('button', {name: 'Exclude all'}).click()
+  cy.findByRole('button', {name: 'Include all'}).click()
 
   cy.locate('available-projects-list')
     .should('contain', 'failure building project')

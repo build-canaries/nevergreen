@@ -52,9 +52,8 @@ export function Container({initiallyHidden, highlight, className, title, subTitl
            tabIndex={0}
            aria-label={label}
            aria-expanded={!hidden}
-           role='button'
-           data-locator='title-bar'>
-        <h2 className={styles.title} data-locator='container-title'>{title}</h2>
+           role='button'>
+        <h2 className={styles.title}>{title}</h2>
         {
           subTitle && (
             <div className={styles.subTitle}

@@ -1,6 +1,6 @@
 import React from 'react'
 import userEvent from '@testing-library/user-event'
-import {waitFor} from '@testing-library/react'
+import {screen, waitFor} from '@testing-library/react'
 import {render} from '../../testHelpers'
 import {DEFAULT_GITHUB_URL} from './RemoteLocationOptions'
 import * as SecurityGateway from '../../gateways/SecurityGateway'
@@ -14,34 +14,34 @@ beforeEach(() => {
 })
 
 it('should not be able to add with a blank URL', async () => {
-  const {getByText, getByLabelText, queryByText} = render(<AddBackup/>)
+  render(<AddBackup/>)
 
-  userEvent.selectOptions(getByLabelText('Where'), 'custom')
-  userEvent.click(getByText('Add location'))
+  userEvent.selectOptions(screen.getByLabelText('Where'), 'custom')
+  userEvent.click(screen.getByText('Add location'))
 
   await waitFor(() => {
-    expect(queryByText('Enter a URL')).toBeInTheDocument()
+    expect(screen.queryByText('Enter a URL')).toBeInTheDocument()
   })
 })
 
 it('should not be able to add with a non http(s) URL', async () => {
-  const {getByText, getByLabelText, queryByText} = render(<AddBackup/>)
+  render(<AddBackup/>)
 
-  userEvent.selectOptions(getByLabelText('Where'), 'custom')
-  userEvent.type(getByLabelText('URL'), 'file://example')
-  userEvent.click(getByText('Add location'))
+  userEvent.selectOptions(screen.getByLabelText('Where'), 'custom')
+  userEvent.type(screen.getByLabelText('URL'), 'file://example')
+  userEvent.click(screen.getByText('Add location'))
 
   await waitFor(() => {
-    expect(queryByText('Only http and https URLs are supported')).toBeInTheDocument()
+    expect(screen.queryByText('Only http and https URLs are supported')).toBeInTheDocument()
   })
 })
 
 it('should be able to add a custom server', async () => {
-  const {getByText, getByLabelText, store, history} = render(<AddBackup/>)
+  const {store, history} = render(<AddBackup/>)
 
-  userEvent.selectOptions(getByLabelText('Where'), 'custom')
-  userEvent.type(getByLabelText('URL'), 'http://example.com')
-  userEvent.click(getByText('Add location'))
+  userEvent.selectOptions(screen.getByLabelText('Where'), 'custom')
+  userEvent.type(screen.getByLabelText('URL'), 'http://example.com')
+  userEvent.click(screen.getByText('Add location'))
 
   await waitFor(() => {
     expect(Object.values(getBackupLocations(store.getState()))).toEqual([expect.objectContaining({
@@ -53,14 +53,14 @@ it('should be able to add a custom server', async () => {
 })
 
 it('should be able to add a GitHub gist', async () => {
-  const {getByText, getByLabelText, store, history} = render(<AddBackup/>)
+  const {store, history} = render(<AddBackup/>)
 
-  userEvent.selectOptions(getByLabelText('Where'), 'github')
+  userEvent.selectOptions(screen.getByLabelText('Where'), 'github')
 
-  expect(getByLabelText('URL')).toHaveValue(DEFAULT_GITHUB_URL)
+  expect(screen.getByLabelText('URL')).toHaveValue(DEFAULT_GITHUB_URL)
 
-  userEvent.type(getByLabelText('Access token'), 'some-token')
-  userEvent.click(getByText('Add location'))
+  userEvent.type(screen.getByLabelText('Access token'), 'some-token')
+  userEvent.click(screen.getByText('Add location'))
 
   await waitFor(() => {
     expect(Object.values(getBackupLocations(store.getState()))).toEqual([expect.objectContaining({
@@ -71,12 +71,12 @@ it('should be able to add a GitHub gist', async () => {
 })
 
 it('should not be able to add a GitHub gist with a blank access token', async () => {
-  const {getByText, getByLabelText, queryByText} = render(<AddBackup/>)
+  render(<AddBackup/>)
 
-  userEvent.selectOptions(getByLabelText('Where'), 'github')
-  userEvent.click(getByText('Add location'))
+  userEvent.selectOptions(screen.getByLabelText('Where'), 'github')
+  userEvent.click(screen.getByText('Add location'))
 
   await waitFor(() => {
-    expect(queryByText('Enter an access token')).toBeInTheDocument()
+    expect(screen.queryByText('Enter an access token')).toBeInTheDocument()
   })
 })

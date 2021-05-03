@@ -4,6 +4,8 @@ import {render} from '../testHelpers'
 
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/wbr#Example
 
+/* eslint-disable testing-library/no-container */
+
 it.each(
   ['/', '.', '=', '&', '?']
 )('should not add a word break opportunity at the start regardless of character (%s)', (c) => {

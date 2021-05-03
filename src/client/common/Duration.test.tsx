@@ -1,6 +1,7 @@
 import {render, setSystemTime} from '../testHelpers'
 import React from 'react'
 import {Duration} from './Duration'
+import {screen} from '@testing-library/react'
 
 it('should display the given prefix and suffix', () => {
   setSystemTime('2018-02-18T23:38:00Z')
@@ -10,6 +11,6 @@ it('should display the given prefix and suffix', () => {
     prefix: 'some prefix',
     suffix: 'some suffix'
   }
-  const {queryByText} = render(<Duration {...props} />)
-  expect(queryByText('some prefix about 17 years some suffix')).toBeInTheDocument()
+  render(<Duration {...props} />)
+  expect(screen.queryByText('some prefix about 17 years some suffix')).toBeInTheDocument()
 })

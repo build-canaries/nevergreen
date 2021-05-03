@@ -4,6 +4,7 @@ import {buildProject, buildProjectError, buildTray, render, setSystemTime} from 
 import {Prognosis, ProjectPrognosis} from '../domain/Project'
 import {TRAYS_ROOT} from '../tracking/TraysReducer'
 import {MaxProjectsToShow, SETTINGS_ROOT} from '../settings/SettingsReducer'
+import {screen} from '@testing-library/react'
 
 const trayId = 'some-tray-id'
 
@@ -37,12 +38,12 @@ describe('displaying project information', () => {
       ]
     }
 
-    const {queryByText} = render(<InterestingProjects {...props}/>, state)
+    render(<InterestingProjects {...props}/>, state)
 
-    expect(queryByText('some-tray-name')).toBeInTheDocument()
-    expect(queryByText('some-project-name')).toBeInTheDocument()
-    expect(queryByText('#1234')).toBeInTheDocument()
-    expect(queryByText('about 1 hour')).toBeInTheDocument()
+    expect(screen.queryByText('some-tray-name')).toBeInTheDocument()
+    expect(screen.queryByText('some-project-name')).toBeInTheDocument()
+    expect(screen.queryByText('#1234')).toBeInTheDocument()
+    expect(screen.queryByText('about 1 hour')).toBeInTheDocument()
   })
 
   it('should show the identifier, even when time and label is unavailable for unknown projects', () => {
@@ -69,12 +70,12 @@ describe('displaying project information', () => {
       ]
     }
 
-    const {queryByText, queryByTestId} = render(<InterestingProjects {...props}/>, state)
+    render(<InterestingProjects {...props}/>, state)
 
-    expect(queryByText('some-tray-name')).toBeInTheDocument()
-    expect(queryByText('some-project-name')).toBeInTheDocument()
-    expect(queryByTestId('build-label')).not.toBeInTheDocument()
-    expect(queryByText('unknown')).toBeInTheDocument()
+    expect(screen.queryByText('some-tray-name')).toBeInTheDocument()
+    expect(screen.queryByText('some-project-name')).toBeInTheDocument()
+    expect(screen.queryByTestId('build-label')).not.toBeInTheDocument()
+    expect(screen.queryByText('unknown')).toBeInTheDocument()
   })
 
   // labels can not be shown for building projects as they are not updated until after the project has finished building
@@ -102,12 +103,12 @@ describe('displaying project information', () => {
       ]
     }
 
-    const {queryByText} = render(<InterestingProjects {...props}/>, state)
+    render(<InterestingProjects {...props}/>, state)
 
-    expect(queryByText('some-tray-name')).toBeInTheDocument()
-    expect(queryByText('some-project-name')).toBeInTheDocument()
-    expect(queryByText('#1234')).not.toBeInTheDocument()
-    expect(queryByText('30 minutes')).toBeInTheDocument()
+    expect(screen.queryByText('some-tray-name')).toBeInTheDocument()
+    expect(screen.queryByText('some-project-name')).toBeInTheDocument()
+    expect(screen.queryByText('#1234')).not.toBeInTheDocument()
+    expect(screen.queryByText('30 minutes')).toBeInTheDocument()
   })
 
   it('should just show the project name if all display settings are not on', () => {
@@ -134,12 +135,12 @@ describe('displaying project information', () => {
       ]
     }
 
-    const {queryByText} = render(<InterestingProjects {...props}/>, state)
+    render(<InterestingProjects {...props}/>, state)
 
-    expect(queryByText('some-tray-name')).not.toBeInTheDocument()
-    expect(queryByText('some-project-name')).toBeInTheDocument()
-    expect(queryByText('#1234')).not.toBeInTheDocument()
-    expect(queryByText('about 1 hour')).not.toBeInTheDocument()
+    expect(screen.queryByText('some-tray-name')).not.toBeInTheDocument()
+    expect(screen.queryByText('some-project-name')).toBeInTheDocument()
+    expect(screen.queryByText('#1234')).not.toBeInTheDocument()
+    expect(screen.queryByText('about 1 hour')).not.toBeInTheDocument()
   })
 
   it('should add an external link to the project on the CI server', () => {
@@ -159,9 +160,9 @@ describe('displaying project information', () => {
       ]
     }
 
-    const {queryByText} = render(<InterestingProjects {...props}/>, state)
+    render(<InterestingProjects {...props}/>, state)
 
-    expect(queryByText('some-project-name')).toHaveAttribute('href', 'some-url')
+    expect(screen.queryByText('some-project-name')).toHaveAttribute('href', 'some-url')
   })
 })
 
@@ -181,8 +182,8 @@ describe('limiting the projects displayed', () => {
         buildProject({trayId, prognosis: Prognosis.sick})
       ]
     }
-    const {queryByText} = render(<InterestingProjects {...props}/>, state)
-    expect(queryByText(/\+\d+ not shown/)).not.toBeInTheDocument()
+    render(<InterestingProjects {...props}/>, state)
+    expect(screen.queryByText(/\+\d+ not shown/)).not.toBeInTheDocument()
   })
 
   it('should not display a summary if the number of projects is equal to the max', () => {
@@ -203,8 +204,8 @@ describe('limiting the projects displayed', () => {
         buildProject({projectId: '5', trayId})
       ]
     }
-    const {queryByText} = render(<InterestingProjects {...props}/>, state)
-    expect(queryByText(/\+\d+ not shown/)).not.toBeInTheDocument()
+    render(<InterestingProjects {...props}/>, state)
+    expect(screen.queryByText(/\+\d+ not shown/)).not.toBeInTheDocument()
   })
 
   it('should display a summary if the number of projects is more than the max', () => {
@@ -228,8 +229,8 @@ describe('limiting the projects displayed', () => {
         buildProject({projectId: '8', trayId})
       ]
     }
-    const {queryByText} = render(<InterestingProjects {...props}/>, state)
-    expect(queryByText('+3 not shown')).toBeInTheDocument()
+    render(<InterestingProjects {...props}/>, state)
+    expect(screen.queryByText('+3 not shown')).toBeInTheDocument()
   })
 
   it('should display a summary if the number of errors is more than the max', () => {
@@ -252,9 +253,9 @@ describe('limiting the projects displayed', () => {
         buildProjectError({trayId, description: 'error 7'})
       ]
     }
-    const {queryByText} = render(<InterestingProjects {...props}/>, state)
-    expect(queryByText('+2 not shown')).toBeInTheDocument()
-    expect(queryByText('+2 error')).toBeInTheDocument()
+    render(<InterestingProjects {...props}/>, state)
+    expect(screen.queryByText('+2 not shown')).toBeInTheDocument()
+    expect(screen.queryByText('+2 error')).toBeInTheDocument()
   })
 
   it('should display a summary if the number of errors and projects is more than the max', () => {
@@ -277,8 +278,8 @@ describe('limiting the projects displayed', () => {
         buildProject({projectId: '3', trayId, prognosis: Prognosis.healthyBuilding})
       ]
     }
-    const {queryByText} = render(<InterestingProjects {...props}/>, state)
-    expect(queryByText('+2 not shown')).toBeInTheDocument()
-    expect(queryByText('+1 sick, +1 healthy building')).toBeInTheDocument()
+    render(<InterestingProjects {...props}/>, state)
+    expect(screen.queryByText('+2 not shown')).toBeInTheDocument()
+    expect(screen.queryByText('+1 sick, +1 healthy building')).toBeInTheDocument()
   })
 })

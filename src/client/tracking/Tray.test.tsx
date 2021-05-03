@@ -3,6 +3,7 @@ import {Tray} from './Tray'
 import {buildTray, render} from '../testHelpers'
 import {TRAYS_ROOT} from './TraysReducer'
 import {PROJECTS_ROOT} from './ProjectsReducer'
+import {screen} from '@testing-library/react'
 
 const DEFAULT_PROPS = {
   tray: buildTray(),
@@ -22,8 +23,8 @@ describe('tray title', () => {
       [TRAYS_ROOT]: {trayId: tray},
       [PROJECTS_ROOT]: {trayId: []}
     }
-    const {getByTestId} = render(<Tray {...DEFAULT_PROPS} tray={tray}/>, state)
-    expect(getByTestId('container-title')).toHaveTextContent('some-name')
+    render(<Tray {...DEFAULT_PROPS} tray={tray}/>, state)
+    expect(screen.queryByRole('heading', {name: 'some-name'})).toBeInTheDocument()
   })
 
   it('should use the URL as the sub title if a name exists', () => {
@@ -36,8 +37,8 @@ describe('tray title', () => {
       [TRAYS_ROOT]: {trayId: tray},
       [PROJECTS_ROOT]: {trayId: []}
     }
-    const {getByTestId} = render(<Tray {...DEFAULT_PROPS} tray={tray}/>, state)
-    expect(getByTestId('container-sub-title')).toHaveTextContent('http://some-url')
+    render(<Tray {...DEFAULT_PROPS} tray={tray}/>, state)
+    expect(screen.getByTestId('container-sub-title')).toHaveTextContent('http://some-url')
   })
 
   it('should use the URL as the title if no name exists, redacting the password and any query parameters (as they are likely to be API tokens)', () => {
@@ -50,8 +51,8 @@ describe('tray title', () => {
       [TRAYS_ROOT]: {trayId: tray},
       [PROJECTS_ROOT]: {trayId: []}
     }
-    const {getByTestId} = render(<Tray {...DEFAULT_PROPS} tray={tray}/>, state)
-    expect(getByTestId('container-title')).toHaveTextContent('https://username:*****@some.url/?token=*****')
+    render(<Tray {...DEFAULT_PROPS} tray={tray}/>, state)
+    expect(screen.queryByRole('heading', {name: 'https://username:*****@some.url/?token=*****'})).toBeInTheDocument()
   })
 
   it('should not error when URL is invalid', () => {
@@ -64,7 +65,7 @@ describe('tray title', () => {
       [TRAYS_ROOT]: {trayId: tray},
       [PROJECTS_ROOT]: {trayId: []}
     }
-    const {getByTestId} = render(<Tray {...DEFAULT_PROPS} tray={tray}/>, state)
-    expect(getByTestId('container-title')).toHaveTextContent('')
+    render(<Tray {...DEFAULT_PROPS} tray={tray}/>, state)
+    expect(screen.getByRole('heading', {name: ''})).toBeInTheDocument()
   })
 })

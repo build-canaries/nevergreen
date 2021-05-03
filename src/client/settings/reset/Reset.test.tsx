@@ -1,6 +1,6 @@
 import React from 'react'
 import userEvent from '@testing-library/user-event'
-import {waitFor} from '@testing-library/react'
+import {screen, waitFor} from '@testing-library/react'
 import * as LocalConfiguration from '../../configuration/LocalRepository'
 import {Reset} from './Reset'
 import {render} from '../../testHelpers'
@@ -21,8 +21,8 @@ afterEach(() => {
 })
 
 it('should reset configuration and reload', async () => {
-  const {getByText} = render(<Reset/>)
-  userEvent.click(getByText('Reset configuration', {selector: 'button'}))
+  render(<Reset/>)
+  userEvent.click(screen.getByText('Reset configuration', {selector: 'button'}))
   await waitFor(() => {
     expect(LocalConfiguration.clear).toHaveBeenCalled()
     // eslint-disable-next-line @typescript-eslint/unbound-method

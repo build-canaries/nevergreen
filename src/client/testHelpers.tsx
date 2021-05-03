@@ -71,11 +71,11 @@ export function render(component: ReactNode, state: RecursivePartial<State> = {}
     </Provider>
   )
 
-  const fns = testRender(wrapWithStoreAndRouter(component))
+  const view = testRender(wrapWithStoreAndRouter(component))
 
   return {
-    ...fns,
-    rerender: (c: ReactNode): void => fns.rerender(wrapWithStoreAndRouter(c)),
+    ...view,
+    rerender: (c: ReactNode): void => view.rerender(wrapWithStoreAndRouter(c)),
     store,
     history
   }

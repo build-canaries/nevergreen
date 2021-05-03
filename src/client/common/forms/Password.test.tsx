@@ -1,11 +1,12 @@
 import React from 'react'
 import {Password} from './Password'
 import {render} from '../../testHelpers'
-import {fireEvent} from '@testing-library/react'
+import {screen} from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
 it('should allow the password to be shown', () => {
-  const {container, getByText} = render(<Password>label</Password>)
-  expect(container.querySelector('input')).toHaveAttribute('type', 'password')
-  fireEvent.click(getByText('show password'))
-  expect(container.querySelector('input')).toHaveAttribute('type', 'text')
+  render(<Password>label</Password>)
+  expect(screen.getByLabelText('label')).toHaveAttribute('type', 'password')
+  userEvent.click(screen.getByRole('button', {name: 'show password'}))
+  expect(screen.getByRole('textbox')).toHaveAttribute('type', 'text')
 })
