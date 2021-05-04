@@ -1,5 +1,3 @@
-/*global cy,Cypress,before */
-
 function shouldBeAbleToChangeFeedSettings() {
   cy.findByRole('tab', {name: 'Settings'}).click()
   cy.findByRole('button', {name: 'randomise name'}).click()
@@ -19,7 +17,7 @@ function shouldBeAbleToChangeFeedSettings() {
   cy.checkA11y()
 }
 
-function shouldBeAbleToAddFeeds(trayUrl, username, password) {
+function shouldBeAbleToAddFeeds(trayUrl: string, username: string, password: string) {
   cy.visitPage('tracking')
 
   cy.findByLabelText('URL').type(trayUrl)
