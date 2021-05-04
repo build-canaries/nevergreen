@@ -1,6 +1,7 @@
 (defproject nevergreen "0.0.0"
   :description "A build monitor with attitude"
   :url "https://github.com/build-canaries/nevergreen"
+  ; use lein deps :tree to check dependency problems and actual versions used
   :dependencies [[org.clojure/clojure "1.10.3"]
                  [ring "1.9.3" :exclusions [org.eclipse.jetty/jetty-server]]
                  [org.eclipse.jetty/jetty-server "9.4.40.v20210413"]
@@ -8,7 +9,10 @@
                  [environ "1.2.0"]
                  [cheshire "5.10.0"]
                  [clj-cctray "2.0.0"]
-                 [clj-http "3.12.1"]
+                 ; commons-codec is excluded as ring pulls in a newer version
+                 ; commons-io 2.6 has CVE-2021-29425, so exclude and explicitly use fixed version
+                 [clj-http "3.12.1" :exclusions [commons-codec commons-io]]
+                 [commons-io "2.7"] ; check if this is still required if clj-http is upgraded
                  [ring-curl "1.0.1"]
                  [ring/ring-json "0.5.1"]
                  [ring/ring-defaults "0.3.2"]
