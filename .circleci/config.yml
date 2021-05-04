@@ -166,6 +166,7 @@ jobs:
                   - ./project.clj
                   - ./cypress.json
                   - ./journey/*
+                  - ./tsconfig.json
 
   journey-tests:
     docker:
