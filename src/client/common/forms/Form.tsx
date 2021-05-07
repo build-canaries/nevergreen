@@ -12,7 +12,7 @@ import {iCheckmark, iCross} from '../fonts/Icons'
 import {useHistory} from 'react-router-dom'
 
 interface FormProps<Fields extends string> {
-  readonly children: (submitting: boolean, validationErrors: Readonly<FormErrors<Fields>>) => ReactNode;
+  readonly children: (submitting: boolean, validationErrors: Readonly<FormErrors<Fields>>, clearErrors: () => void) => ReactNode;
   readonly onValidate?: () => Readonly<FormErrors<Fields>> | undefined | void;
   readonly onSuccess: () => Promise<string | undefined | void> | string | undefined | void;
   readonly onCancel?: () => void;
@@ -70,12 +70,17 @@ export function Form<Fields extends string>({
     }
   }
 
+  const doClearErrors = () => {
+    setValidationErrors([])
+    setSubmissionError('')
+  }
+
   return (
     <form onSubmit={handleSubmit}
           className={cn(styles.form, className)}
           noValidate>
 
-      {children(submitting, validationErrors)}
+      {children(submitting, validationErrors, doClearErrors)}
 
       <ErrorMessages messages={submissionError}/>
 

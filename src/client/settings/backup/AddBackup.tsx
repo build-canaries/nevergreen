@@ -75,7 +75,7 @@ export function AddBackup(): ReactElement {
       <Form onValidate={onValidate}
             onSuccess={onSuccess}
             submitButtonText='Add location'>
-        {(submitting, validationErrors) => {
+        {(submitting, validationErrors, clearErrors) => {
           return (
             <>
               <div className={styles.whereContainer}>
@@ -88,6 +88,7 @@ export function AddBackup(): ReactElement {
                           ]}
                           onChange={({target}) => {
                             updateWhere(target.value as RemoteLocationOptions)
+                            clearErrors()
                           }}
                           disabled={submitting}>
                   <span className={styles.label}>Where</span>

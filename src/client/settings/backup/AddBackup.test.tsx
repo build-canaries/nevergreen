@@ -70,13 +70,22 @@ it('should be able to add a GitHub gist', async () => {
   })
 })
 
-it('should not be able to add a GitHub gist with a blank access token', async () => {
+it('should validate adding a GitHub gist and clear errors if "where" is changed', async () => {
   render(<AddBackup/>)
 
   userEvent.selectOptions(screen.getByLabelText('Where'), 'github')
+  userEvent.clear(screen.getByLabelText('URL'))
   userEvent.click(screen.getByText('Add location'))
 
   await waitFor(() => {
+    expect(screen.queryByText('Enter a URL')).toBeInTheDocument()
     expect(screen.queryByText('Enter an access token')).toBeInTheDocument()
+  })
+
+  userEvent.selectOptions(screen.getByLabelText('Where'), 'custom')
+
+  await waitFor(() => {
+    expect(screen.queryByText('Enter a URL')).not.toBeInTheDocument()
+    expect(screen.queryByText('Enter an access token')).not.toBeInTheDocument()
   })
 })
