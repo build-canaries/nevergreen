@@ -29,4 +29,8 @@
   @include respond-to(tablet, desktop) {
     padding: 2em;
   }
+
+  @include respond-to(very-small) {
+    padding: 0;
+  }
 }

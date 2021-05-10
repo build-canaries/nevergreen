@@ -7,8 +7,9 @@ import {getSuccessMessages} from './SuccessReducer'
 import {isBlank} from '../../common/Utils'
 import {Form} from '../../common/forms/Form'
 import {firstError, FormErrors} from '../../common/forms/Validation'
-import {ROUTE_SETTINGS} from '../../Routes'
+import {ROUTE_SETTINGS, ROUTE_SETTINGS_ANCHOR_SUCCESS} from '../../Routes'
 import {Title} from '../../common/Title'
+import {Link} from 'react-router-dom'
 
 type Fields = 'message'
 
@@ -54,6 +55,7 @@ export function AddMessage(): ReactElement {
           )
         }}
       </Form>
+      <Link to={ROUTE_SETTINGS_ANCHOR_SUCCESS} className={styles.cancel}>Cancel</Link>
     </div>
   )
 }

@@ -3,7 +3,7 @@ import {render} from '../../testHelpers'
 import userEvent from '@testing-library/user-event'
 import {getSuccessMessages, SUCCESS_ROOT} from './SuccessReducer'
 import {AddMessage} from './AddMessage'
-import {ROUTE_SETTINGS} from '../../Routes'
+import {ROUTE_ANCHOR_SUCCESS, ROUTE_SETTINGS} from '../../Routes'
 import {screen, waitFor} from '@testing-library/react'
 
 it('should allow success messages to be added', async () => {
@@ -37,4 +37,16 @@ it('should not allow the same success message to be added', () => {
   userEvent.click(screen.getByText('Add message'))
 
   expect(screen.queryByText('Message has already been added')).toBeInTheDocument()
+})
+
+it('should be able to cancel back to settings', async () => {
+  const state = {[SUCCESS_ROOT]: ['some-message']}
+  const {history} = render(<AddMessage/>, state)
+
+  userEvent.click(screen.getByRole('link', {name: 'Cancel'}))
+
+  await waitFor(() => {
+    expect(history.location.pathname).toEqual(ROUTE_SETTINGS)
+    expect(history.location.hash).toEqual(ROUTE_ANCHOR_SUCCESS)
+  })
 })

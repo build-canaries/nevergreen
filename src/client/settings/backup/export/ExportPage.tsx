@@ -3,6 +3,7 @@ import styles from './export-page.scss'
 import {BackupDescription} from '../BackupDescription'
 import {Page} from '../../../common/Page'
 import {RemoteLocation} from '../RemoteLocationsReducer'
+import {CancelLink} from '../CancelLink'
 
 interface ExportPageProps {
   readonly title: string;
@@ -18,6 +19,7 @@ export function ExportPage({title, children, location}: ExportPageProps): ReactE
       </div>
       <div className={styles.body}>
         {children}
+        <CancelLink/>
       </div>
     </Page>
   )

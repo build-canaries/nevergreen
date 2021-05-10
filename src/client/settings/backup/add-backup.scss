@@ -7,12 +7,6 @@
   padding: 1em;
 }
 
-.label {
-  @include fixed-width(6em);
-
-  display: inline-block;
-}
-
 .whereContainer {
   align-items: flex-end;
   display: flex;
@@ -30,7 +24,8 @@
   }
 }
 
-.id {
+.id,
+.password {
   @include fixed-width(38em);
 }
 

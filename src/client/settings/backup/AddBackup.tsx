@@ -15,6 +15,7 @@ import {firstError, FormErrors} from '../../common/forms/Validation'
 import {Form} from '../../common/forms/Form'
 import {Title} from '../../common/Title'
 import {ROUTE_SETTINGS_ANCHOR_BACKUP} from '../../Routes'
+import {CancelLink} from './CancelLink'
 
 type Fields = 'url' | 'accessToken'
 
@@ -91,7 +92,7 @@ export function AddBackup(): ReactElement {
                             clearErrors()
                           }}
                           disabled={submitting}>
-                  <span className={styles.label}>Where</span>
+                  Where
                 </DropDown>
                 <BackupLogo where={where}/>
               </div>
@@ -103,7 +104,7 @@ export function AddBackup(): ReactElement {
                      autoComplete='url'
                      error={firstError<Fields>('url', validationErrors)}
                      disabled={submitting}>
-                <span className={styles.label}>URL</span>
+                URL
               </Input>
               {!isCustomServer && (
                 <>
@@ -113,15 +114,16 @@ export function AddBackup(): ReactElement {
                            setId(target.value)
                          }}
                          disabled={submitting}>
-                    <span className={styles.label}>ID</span>
+                    ID
                   </Input>
-                  <Password value={accessToken}
+                  <Password className={styles.password}
+                            value={accessToken}
                             onChange={({target}) => {
                               setAccessToken(target.value)
                             }}
                             error={firstError<Fields>('accessToken', validationErrors)}
                             disabled={submitting}>
-                    <span className={styles.label}>Access token</span>
+                    Access token
                   </Password>
                   <Input value={description}
                          onChange={({target}) => {
@@ -129,7 +131,7 @@ export function AddBackup(): ReactElement {
                          }}
                          maxLength={256}
                          disabled={submitting}>
-                    <span className={styles.label}>Description</span>
+                    Description
                   </Input>
                 </>
               )}
@@ -137,6 +139,7 @@ export function AddBackup(): ReactElement {
           )
         }}
       </Form>
+      <CancelLink/>
     </div>
   )
 }

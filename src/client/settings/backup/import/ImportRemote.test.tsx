@@ -127,3 +127,32 @@ it('should display an error and a button to try again if configuration can not b
     expect(screen.queryByRole('button', {name: 'Try fetching again'})).toBeInTheDocument()
   })
 })
+
+it('should be able to cancel back to settings', async () => {
+  const state = {
+    [BACKUP_REMOTE_LOCATIONS_ROOT]: {
+      locationId: buildRemoteBackupLocation({
+        internalId: 'locationId'
+      })
+    }
+  }
+  jest.spyOn(BackupGateway, 'fetchConfiguration').mockReturnValue(fakeRequest({
+    configuration: toJson(buildState())
+  }))
+
+  const {history} = render(
+    <Route path={ROUTE_IMPORT_REMOTE}><ImportRemote/></Route>,
+    state,
+    routeImportRemote('locationId'))
+
+  await waitFor(() => {
+    expect(screen.queryByLabelText('Configuration to import')).toBeInTheDocument()
+  })
+
+  userEvent.click(screen.getByRole('link', {name: 'Cancel'}))
+
+  await waitFor(() => {
+    expect(history.location.pathname).toEqual(ROUTE_SETTINGS)
+    expect(history.location.hash).toEqual(ROUTE_ANCHOR_BACKUP)
+  })
+})

@@ -7,14 +7,18 @@ import {SuccessMessages} from './success/SuccessMessages'
 import {Reset} from './reset/Reset'
 import {Backup} from './backup/Backup'
 import {useLocation} from 'react-router-dom'
+import {isBlank} from '../common/Utils'
 
 export function Settings(): ReactElement {
   const {hash} = useLocation()
 
   useEffect(() => {
-    const el = document.getElementById(hash.replace('#', ''))
-    if (el) {
-      el.scrollIntoView({behavior: 'smooth'})
+    const hashRemoved = hash.replace('#', '')
+    if (!isBlank(hashRemoved)) {
+      const el = document.getElementById(hashRemoved)
+      if (el) {
+        el.scrollIntoView()
+      }
     }
   }, [hash])
 

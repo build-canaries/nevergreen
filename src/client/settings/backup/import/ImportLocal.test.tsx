@@ -59,6 +59,17 @@ it('should allow a single JSON and plain text files to be opened', async () => {
   })
 })
 
+it('should be able to cancel back to settings', async () => {
+  const {history} = render(<ImportLocal/>)
+
+  userEvent.click(screen.getByRole('link', {name: 'Cancel'}))
+
+  await waitFor(() => {
+    expect(history.location.pathname).toEqual(ROUTE_SETTINGS)
+    expect(history.location.hash).toEqual(ROUTE_ANCHOR_BACKUP)
+  })
+})
+
 // https://github.com/testing-library/user-event#special-characters
 function escapeSpecialCharacter(s: string) {
   return s

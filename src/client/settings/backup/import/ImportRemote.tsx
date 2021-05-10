@@ -22,6 +22,7 @@ import {ROUTE_SETTINGS_ANCHOR_BACKUP} from '../../../Routes'
 import {Loading} from '../../../common/Loading'
 import {Redirect} from 'react-router'
 import {Page} from '../../../common/Page'
+import {CancelLink} from '../CancelLink'
 
 type Fields = 'import'
 
@@ -139,6 +140,7 @@ function ImportRemoteLocation({location}: ImportRemoteProps): ReactElement {
               }}
             </Form>
           )}
+          <CancelLink/>
         </Loading>
       </div>
     </Page>

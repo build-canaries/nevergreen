@@ -33,3 +33,28 @@ it('should export configuration and redirect to the settings page', async () => 
     expect(history.location.hash).toEqual(ROUTE_ANCHOR_BACKUP)
   })
 })
+
+it('should allow cancelling back to settings', async () => {
+  const state = {
+    [BACKUP_REMOTE_LOCATIONS_ROOT]: {
+      locationId: buildRemoteBackupLocation({
+        internalId: 'locationId'
+      })
+    }
+  }
+  jest.spyOn(BackupGateway, 'exportConfiguration').mockReturnValue(fakeRequest({
+    id: 'some-remote-id'
+  }))
+
+  const {history} = render(
+    <Route path={ROUTE_EXPORT_REMOTE}><ExportRemote/></Route>,
+    state,
+    routeExportRemote('locationId'))
+
+  userEvent.click(screen.getByRole('link', {name: 'Cancel'}))
+
+  await waitFor(() => {
+    expect(history.location.pathname).toEqual(ROUTE_SETTINGS)
+    expect(history.location.hash).toEqual(ROUTE_ANCHOR_BACKUP)
+  })
+})
