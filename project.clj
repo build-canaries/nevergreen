@@ -39,7 +39,7 @@
             "check-updates" ["ancient" ":all"]
             "audit"         ["nvd" "check"]}
   :profiles {:dev  {:plugins [[lein-ancient "0.7.0"]
-                              [jonase/eastwood "0.4.0"]
+                              [jonase/eastwood "0.4.2"]
                               [lein-cloverage "1.2.2"]
                               [lein-nvd "1.4.1"]
                               [lein-eftest "0.5.9"]]}
