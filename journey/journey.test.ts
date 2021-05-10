@@ -48,7 +48,7 @@ function shouldBeAbleToChangeSuccessMessages() {
     .should('contain', '=(^.^)=')
     .should('have.length', 1)
 
-  cy.findByRole('link', {name: 'Add message'}).click()
+  cy.findByRole('button', {name: 'Add message'}).click()
   cy.findByLabelText('Message').type('some message')
   cy.findByRole('button', {name: 'Add message'}).click()
 
@@ -56,7 +56,7 @@ function shouldBeAbleToChangeSuccessMessages() {
     .should('contain', '=(^.^)=')
     .should('contain', 'some message')
 
-  cy.findByRole('link', {name: 'Add message'}).click()
+  cy.findByRole('button', {name: 'Add message'}).click()
   cy.findByLabelText('Message').type('https://raw.githubusercontent.com/build-canaries/nevergreen/master/doc/screenshot_monitor.png')
   cy.findByRole('button', {name: 'Add message'}).click()
 
@@ -121,12 +121,12 @@ function shouldBeAbleToChangeSettings() {
 function shouldBeAbleToExportAndImportConfig() {
   cy.visitPage('settings')
 
-  cy.findByRole('link', {name: 'Export'}).click()
+  cy.findByRole('button', {name: 'Export'}).click()
 
   cy.findByLabelText('Current configuration').then((exportInput) => {
     cy.visitPage('settings')
 
-    cy.findByRole('link', {name: 'Import'}).click()
+    cy.findByRole('button', {name: 'Import'}).click()
 
     cy.findByLabelText('Configuration to import').invoke('val', exportInput.val()) // not using type() for speed reasons
     cy.findByLabelText('Configuration to import').type(' ') // trigger react updates
@@ -139,7 +139,7 @@ function shouldBeAbleToExportAndImportConfig() {
 function shouldBeAbleToAddARemoteBackup() {
   cy.visitPage('settings')
 
-  cy.findByRole('link', {name: 'Add remote backup'}).click()
+  cy.findByRole('button', {name: 'Add remote backup'}).click()
   cy.findByLabelText('URL').type('http://test')
   cy.findByRole('button', {name: 'Add location'}).click()
 
