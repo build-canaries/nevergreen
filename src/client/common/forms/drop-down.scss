@@ -4,25 +4,42 @@
 @import '../responsive';
 @import '../accessibility';
 
-.input {
+// based on https://moderncss.dev/custom-select-styles-with-pure-css/
+
+.container {
+  align-items: center;
+  background-color: $white;
+  display: grid;
+  flex-grow: 1;
+  grid-template-areas: 'select';
+  margin-top: 0.5em;
+  width: 100%;
+
+  &::after {
+    background-color: $off-black;
+    clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+    content: '';
+    grid-area: select;
+    height: 0.5em;
+    justify-self: end;
+    margin-right: 0.5em;
+    width: 0.8em;
+  }
+}
+
+.select {
   @include font-scale(1);
 
   @extend %standard-input-dimensions;
 
   appearance: none;
-  background-color: $white;
+  background-color: transparent;
   border: $input-border;
   border-radius: 2px;
   cursor: pointer;
-  flex-grow: 1;
-  margin-top: 0.5em;
-  padding: 0.5em;
+  grid-area: select;
+  padding: 0.5em 1.5em 0.5em 0.5em;
   text-overflow: ellipsis;
-  width: 100%;
-
-  &:invalid {
-    border-color: $error;
-  }
 
   &:disabled {
     cursor: default;
@@ -31,17 +48,4 @@
   &:not(:disabled) {
     @include interactive($focus-color-change-percentage: 0%);
   }
-}
-
-.arrow {
-  border-left: 0.5em solid transparent;
-  border-right: 0.5em solid transparent;
-  border-top: 0.5em solid $off-black;
-  left: -1.5em;
-  position: relative;
-  top: 0.8em;
-}
-
-.disabled {
-  border-top: 0.5em solid graytext;
 }

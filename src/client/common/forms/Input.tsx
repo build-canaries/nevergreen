@@ -8,7 +8,7 @@ import React, {
   useEffect,
   useRef
 } from 'react'
-import classNames from 'classnames'
+import cn from 'classnames'
 import uniqueId from 'lodash/uniqueId'
 import styles from './input.scss'
 import formStyles from './forms.scss'
@@ -64,10 +64,10 @@ export function Input({
   const actualId = id ?? uniqueId('i')
   const errorId = hasError ? uniqueId('e') : undefined
 
-  const containerClasses = classNames(formStyles.inputContainer, className, {
+  const containerClasses = cn(formStyles.inputContainer, className, {
     [styles.containerError]: hasError
   })
-  const inputClasses = classNames(styles.input, {
+  const inputClasses = cn(styles.input, {
     [styles.hasButton]: button || readOnly,
     [styles.error]: hasError
   })
@@ -85,7 +85,7 @@ export function Input({
           {error}
         </p>
       )}
-      <span className={classNames(styles.wrapper)}>
+      <span className={styles.wrapper}>
           <input className={inputClasses}
                  onKeyPress={(evt) => onKeyPress(evt)}
                  spellCheck={false}
