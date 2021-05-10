@@ -19,10 +19,11 @@
   $focus-color-change-percentage: $color-change-percentage
 ) {
   background-color: darken($background-color, $focus-color-change-percentage);
-  border-color: darken($border-color, $focus-color-change-percentage);
+  border-color: $outline;
   border-radius: 0;
   color: $color;
   outline: 3px solid $outline;
+  outline-offset: unset;
   z-index: $focus-index; // make sure the focus outline isn't below adjacent elements
 }
 

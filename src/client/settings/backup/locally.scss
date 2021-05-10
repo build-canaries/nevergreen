@@ -21,6 +21,10 @@
 
 .body {
   padding: 1em;
+
+  & > *:first-child {
+    margin-top: 0;
+  }
 }
 
 .importButton {

@@ -24,6 +24,10 @@
   display: flex;
   flex-direction: column;
   padding: 1em;
+
+  & > *:first-child {
+    margin-top: 0;
+  }
 }
 
 .exportButton {
