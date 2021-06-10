@@ -41,7 +41,7 @@ it('should be able to add a custom server', async () => {
 
   userEvent.selectOptions(screen.getByLabelText('Where'), 'custom')
   userEvent.type(screen.getByLabelText('URL'), 'http://example.com')
-  userEvent.click(screen.getByText('Add location'))
+  userEvent.click(screen.getByRole('button', {name: 'Add location'}))
 
   await waitFor(() => {
     expect(Object.values(getBackupLocations(store.getState()))).toEqual([expect.objectContaining({
@@ -60,7 +60,7 @@ it('should be able to add a GitHub gist', async () => {
   expect(screen.getByLabelText('URL')).toHaveValue(DEFAULT_GITHUB_URL)
 
   userEvent.type(screen.getByLabelText('Access token'), 'some-token')
-  userEvent.click(screen.getByText('Add location'))
+  userEvent.click(screen.getByRole('button', {name: 'Add location'}))
 
   await waitFor(() => {
     expect(Object.values(getBackupLocations(store.getState()))).toEqual([expect.objectContaining({

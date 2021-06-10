@@ -13,8 +13,6 @@ function shouldBeAbleToChangeFeedSettings() {
       cy.findByRole('button', {name: 'Save'}).click()
     })
   }
-
-  cy.checkA11y()
 }
 
 function shouldBeAbleToAddFeeds(trayUrl: string, username: string, password: string) {
@@ -38,8 +36,6 @@ function shouldBeAbleToAddFeeds(trayUrl: string, username: string, password: str
     .should('contain', 'success building project')
     .should('contain', 'success sleeping project')
 
-  cy.checkA11y()
-
   shouldBeAbleToChangeFeedSettings()
 }
 
@@ -61,8 +57,6 @@ function shouldBeAbleToChangeSuccessMessages() {
   cy.findByRole('button', {name: 'Add message'}).click()
 
   cy.locate('success-image').should('be.visible')
-
-  cy.checkA11y()
 }
 
 function shouldBeAbleToChangeSettingsGeneral() {
@@ -114,8 +108,6 @@ function shouldBeAbleToChangeSettings() {
   shouldBeAbleToChangeSettingsDisplay()
   shouldBeAbleToChangeSuccessMessages()
   shouldBeAbleToChangeSettingsNotifications()
-
-  cy.checkA11y()
 }
 
 function shouldBeAbleToExportAndImportConfig() {
@@ -155,8 +147,6 @@ function shouldMonitorSelectedProjects() {
     .should('contain', 'failure sleeping project')
     .should('contain', 'success building project')
     .should('not.contain', 'success sleeping project')
-
-  cy.checkA11y()
 }
 
 describe('Journey', () => {
@@ -166,7 +156,6 @@ describe('Journey', () => {
     cy.clearIndexDb()
 
     cy.visit('/')
-    cy.injectAxe()
   })
 
   it('should all work fine', () => {

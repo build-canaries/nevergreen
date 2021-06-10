@@ -22,7 +22,7 @@ afterEach(() => {
 
 it('should reset configuration and reload', async () => {
   render(<Reset/>)
-  userEvent.click(screen.getByText('Reset configuration', {selector: 'button'}))
+  userEvent.click(screen.getByRole('button', {name: 'Reset configuration'}))
   await waitFor(() => {
     expect(LocalConfiguration.clear).toHaveBeenCalled()
     // eslint-disable-next-line @typescript-eslint/unbound-method

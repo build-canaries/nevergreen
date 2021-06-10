@@ -76,7 +76,7 @@ it('should disable fullscreen when any key is pressed, allowing the user to navi
   render(<Nevergreen/>, {}, '/monitor')
 
   await waitFor(() => {
-    expect(screen.getByRole('main')).not.toBeNull()
+    expect(screen.queryByRole('main')).not.toBeInTheDocument()
   })
 
   userEvent.type(screen.getByRole('main'), 'a', {skipClick: true})

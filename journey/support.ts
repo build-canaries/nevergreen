@@ -1,4 +1,3 @@
-import 'cypress-axe'
 import '@testing-library/cypress/add-commands'
 
 Cypress.Commands.add('locate', (thing) => {
@@ -11,13 +10,13 @@ Cypress.Commands.add('visitPage', (menuItem) => {
 })
 
 Cypress.Commands.add('clearIndexDb', () => {
-  cy.window().then((window) => {
+  Cypress.on('window:before:load', (window) => {
     window.indexedDB.deleteDatabase('nevergreen')
   })
 })
 
 Cypress.Commands.add('unregisterServiceWorkers', () => {
-  cy.window().then(async (window) => {
+  Cypress.on('window:before:load', (window) => {
     if (window.navigator && window.navigator.serviceWorker) {
       window.navigator.serviceWorker.getRegistrations().then((registrations) => {
         registrations.forEach((registration) => registration.unregister())

@@ -167,11 +167,11 @@ it('should be able to change the auth to basic', async () => {
   const props = {...DEFAULT_PROPS, tray, setRequiresRefresh}
 
   const {store} = render(<TraySettings {...props}/>, state)
-  userEvent.click(screen.getByText('Change auth'))
+  userEvent.click(screen.getByRole('button', {name: 'Change auth'}))
   userEvent.click(screen.getByLabelText('Basic auth'))
   userEvent.type(screen.getByLabelText('Username'), 'some-username')
   userEvent.type(screen.getByLabelText('Password'), 'some-password')
-  userEvent.click(screen.getByText('Save'))
+  userEvent.click(screen.getByRole('button', {name: 'Save'}))
 
   await waitFor(() => {
     expect(setRequiresRefresh).toHaveBeenCalledWith(true)

@@ -1,10 +1,6 @@
-@import '~modularscale-sass/stylesheets/modularscale';
-
-$modularscale: (
-  base: 1rem,
-  ratio: $minor-third
-);
+@use 'sass:math';
 
 @mixin font-scale($value) {
-  font-size: ms($value);
+  // 1.2 = minor third
+  font-size: #{math.pow(1.2, $value)}rem;
 }

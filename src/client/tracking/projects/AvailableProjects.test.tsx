@@ -67,16 +67,16 @@ it('should correctly show and remove errors returned while refreshing', async ()
   }
 
   render(<AvailableProjects {...DEFAULT_PROPS} tray={tray}/>, state)
-  userEvent.click(screen.getByText('Refresh'))
+  userEvent.click(screen.getByRole('button', {name: 'Refresh'}))
 
   await waitFor(() => {
     expect(screen.queryByText('some-error')).toBeInTheDocument()
   })
 
-  userEvent.click(screen.getByText('Refresh'))
+  userEvent.click(screen.getByRole('button', {name: 'Refresh'}))
 
   await waitFor(() => {
-    expect(screen.queryByTestId('some-error')).not.toBeInTheDocument()
+    expect(screen.queryByText('some-error')).not.toBeInTheDocument()
   })
 })
 

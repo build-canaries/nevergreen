@@ -111,9 +111,8 @@ it('should allow adding trays with an access token', async () => {
 })
 
 it('should reset the form after adding a tray', async () => {
-  render(
-    <AddTray {...DEFAULT_PROPS}/>
-  )
+  render(<AddTray {...DEFAULT_PROPS}/>)
+
   userEvent.type(screen.getByLabelText('URL'), 'http://some-new-url')
   userEvent.click(screen.getByLabelText('Access token'))
   userEvent.type(screen.getByLabelText('Token'), 'some-token')
