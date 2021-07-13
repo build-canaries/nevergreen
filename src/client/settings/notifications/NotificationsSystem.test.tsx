@@ -27,11 +27,8 @@ it('should allow system notifications to be enabled', async () => {
   const {store} = render(<NotificationsSystem/>, state)
   userEvent.click(screen.getByLabelText('Show system notifications'))
 
-  // expect(screen.getByLabelText('Show system notifications')).toHaveAttribute('disabled')
-
   await waitFor(() => {
     expect(getShowSystemNotifications(store.getState())).toBeTruthy()
-    expect(screen.getByLabelText('Show system notifications')).not.toHaveAttribute('disabled')
     expect(SystemNotifications.sendSystemNotification).toHaveBeenCalledWith(NOTIFICATIONS_ENABLED_NOTIFICATION)
   })
 })
