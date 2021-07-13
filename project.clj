@@ -4,13 +4,13 @@
   ; use lein deps :tree to check dependency problems and actual versions used
   :dependencies [[org.clojure/clojure "1.10.3"]
                  [ring "1.9.3" :exclusions [org.eclipse.jetty/jetty-server]]
-                 [org.eclipse.jetty/jetty-server "9.4.42.v20210604"]
+                 [org.eclipse.jetty/jetty-server "9.4.43.v20210629"]
                  [compojure "1.6.2" :exclusions [ring/ring-codec]]
                  [environ "1.2.0"]
-                 [cheshire "5.10.0"]
+                 [cheshire "5.10.1"]
                  [clj-cctray "2.0.0"]
                  ; commons-codec is excluded as ring pulls in a newer version
-                 [clj-http "3.12.2" :exclusions [commons-codec]]
+                 [clj-http "3.12.3" :exclusions [commons-codec]]
                  [ring-curl "1.0.1"]
                  [ring/ring-json "0.5.1"]
                  [ring/ring-defaults "0.3.3"]
@@ -37,7 +37,7 @@
             "check-updates" ["ancient" ":all"]
             "audit"         ["nvd" "check"]}
   :profiles {:dev  {:plugins [[lein-ancient "0.7.0"]
-                              [jonase/eastwood "0.5.2"]
+                              [jonase/eastwood "0.8.1"]
                               [lein-cloverage "1.2.2"]
                               [lein-nvd "1.5.0"]
                               [lein-eftest "0.5.9"]]}
