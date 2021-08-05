@@ -3,9 +3,17 @@
 @import '../../common/accessibility';
 @import '../../common/layout';
 
+%projects-container {
+  border: 1px solid $light-grey;
+  margin: 1em 0 0 0;
+}
+
 .availableProjects {
-  display: inline-block;
   width: 100%;
+}
+
+.loading {
+  @extend %projects-container;
 }
 
 .legend {
@@ -41,10 +49,12 @@
 }
 
 .buildItems {
-  @extend %three-column-grid;
+  @extend %two-column-grid;
+  @extend %projects-container;
 
   list-style: none;
-  margin: 1em 0 0 0;
+  overflow-y: scroll;
+  padding: 1em;
 
   @include respond-to(very-small) {
     overflow: scroll;

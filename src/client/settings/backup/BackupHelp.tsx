@@ -2,6 +2,7 @@ import React, {ReactElement} from 'react'
 import {ExternalLink} from '../../common/ExternalLink'
 import {HelpArticle, HelpProps} from '../../help/HelpArticle'
 import {URL} from '../../common/URL'
+import {ROUTE_SETTINGS_BACKUP} from '../../Routes'
 
 const KEYWORDS = [
   'backup',
@@ -16,9 +17,10 @@ export function BackupHelp({searchQuery}: HelpProps): ReactElement {
     <HelpArticle keywords={KEYWORDS}
                  searchQuery={searchQuery}
                  title='Backup'
-                 page='/settings'>
+                 page={ROUTE_SETTINGS_BACKUP}>
       <p>
-        You can import and export to multiple remote backup locations. Use <strong>Add remote backup</strong> to add a new
+        You can import and export to multiple remote backup locations. Use <strong>Add remote backup</strong> to add a
+        new
         remote backup location.
       </p>
       <p>
@@ -39,7 +41,7 @@ export function RemoteBackupCustomHelp({searchQuery}: HelpProps): ReactElement {
     <HelpArticle keywords={[...KEYWORDS, 'custom server']}
                  searchQuery={searchQuery}
                  title='Remote backup - Custom server'
-                 page='/backup'>
+                 page={ROUTE_SETTINGS_BACKUP}>
       <p>
         This allows you to export to a customer server. When exporting, the raw configuration <code>JSON</code> will
         be <code>POSTed</code> to the <strong>URL</strong> given. When importing, the raw
@@ -59,20 +61,23 @@ export function RemoteBackupGitHubHelp({searchQuery}: HelpProps): ReactElement {
     <HelpArticle keywords={[...KEYWORDS, 'access token', 'github', 'gist']}
                  searchQuery={searchQuery}
                  title='Remote backup - GitHub gist'
-                 page='/backup'>
+                 page={ROUTE_SETTINGS_BACKUP}>
       <p>
         The <strong>URL</strong> can be changed to backup to a GitHub Enterprise instance.
       </p>
       <p>
-        Add a gist <strong>ID</strong> to update an existing Gist or leave blank to create a new Gist. You can get
-        a Gist ID from the Gist URL, <URL url='https://gist.github.com/:username/:gistId'/>.
+        Add a gist <strong>ID</strong> to update an existing Gist or leave blank to create a new gist. You can get
+        a gist ID from the gist URL, <URL url='https://gist.github.com/:username/:gistId'/>. New gists will be
+        created as secret gists, but please note <ExternalLink
+        href='https://docs.github.com/en/github/writing-on-github/editing-and-sharing-content-with-gists/creating-gists'>secret
+        gists are not actually private</ExternalLink>.
       </p>
       <p>
         You need to <ExternalLink
-        href='https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/'>generate a
-        personal <strong>Access token</strong></ExternalLink> to allow a Gist to be created. The
+        href='https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token'>generate
+        a personal <strong>Access token</strong></ExternalLink> to allow a gist to be created. The
         token <em>only</em> requires the <ExternalLink
-        href='https://developer.github.com/apps/building-oauth-apps/understanding-scopes-for-oauth-apps/'><code>gist</code> scope</ExternalLink>.
+        href='https://docs.github.com/en/developers/apps/building-oauth-apps/scopes-for-oauth-apps'><code>gist</code> scope</ExternalLink>.
       </p>
     </HelpArticle>
   )
@@ -83,7 +88,7 @@ export function RemoteBackupGitLabHelp({searchQuery}: HelpProps): ReactElement {
     <HelpArticle keywords={[...KEYWORDS, 'access token', 'gitlab', 'snippet']}
                  searchQuery={searchQuery}
                  title='Remote backup - GitLab snippet'
-                 page='/backup'>
+                 page={ROUTE_SETTINGS_BACKUP}>
       <p>
         The <strong>URL</strong> can be changed to backup to a self host GitLab instance.
       </p>

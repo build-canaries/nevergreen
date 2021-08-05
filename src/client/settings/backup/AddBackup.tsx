@@ -10,12 +10,11 @@ import {send} from '../../gateways/Gateway'
 import {encrypt} from '../../gateways/SecurityGateway'
 import styles from './add-backup.scss'
 import {isValidHttpUrl} from '../../domain/Url'
-import {BackupLogo} from './logo/BackupLogo'
 import {firstError, FormErrors} from '../../common/forms/Validation'
 import {Form} from '../../common/forms/Form'
-import {Title} from '../../common/Title'
-import {ROUTE_SETTINGS_ANCHOR_BACKUP} from '../../Routes'
-import {CancelLink} from './CancelLink'
+import {ROUTE_SETTINGS_BACKUP} from '../../Routes'
+import {Page} from '../../common/Page'
+import {BackupLogo} from './logo/BackupLogo'
 
 type Fields = 'url' | 'accessToken'
 
@@ -53,7 +52,7 @@ export function AddBackup(): ReactElement {
     } else {
       dispatch(addBackupCustomServer(url))
     }
-    return ROUTE_SETTINGS_ANCHOR_BACKUP
+    return ROUTE_SETTINGS_BACKUP
   }
 
   const updateWhere = (updatedWhere: RemoteLocationOptions) => {
@@ -70,12 +69,11 @@ export function AddBackup(): ReactElement {
   const isCustomServer = where === RemoteLocationOptions.Custom
 
   return (
-    <div className={styles.page}>
-      <Title show>Add backup</Title>
-
+    <Page title='Add backup'>
       <Form onValidate={onValidate}
             onSuccess={onSuccess}
-            submitButtonText='Add location'>
+            submitButtonText='Add location'
+            onCancel={ROUTE_SETTINGS_BACKUP}>
         {(submitting, validationErrors, clearErrors) => {
           return (
             <>
@@ -94,7 +92,7 @@ export function AddBackup(): ReactElement {
                           disabled={submitting}>
                   Where
                 </DropDown>
-                <BackupLogo where={where}/>
+                <BackupLogo where={where} width={44} height={44}/>
               </div>
               <Input value={url}
                      onChange={({target}) => {
@@ -139,7 +137,6 @@ export function AddBackup(): ReactElement {
           )
         }}
       </Form>
-      <CancelLink/>
-    </div>
+    </Page>
   )
 }

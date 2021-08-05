@@ -1,41 +1,12 @@
-@import '../../common/variables';
 @import '../../common/responsive';
-@import '../../common/forms/button';
+@import '../../common/variables';
 
-.location {
-  border: 1px solid $mid-grey;
-  display: flex;
-  flex-direction: column;
+.card {
   height: 100%;
-
-  &:focus-within {
-    border-color: $black;
-  }
 }
 
-.header {
-  background-color: $light-grey;
-  display: flex;
-  padding: 1em;
-}
-
-.body {
-  padding: 1em;
-
-  & > *:first-child {
-    margin-top: 0;
-  }
-}
-
-.importButton {
+.export {
   @include respond-to(tablet, desktop) {
-    display: block;
-  }
-}
-
-.exportButton {
-  @include respond-to(tablet, desktop) {
-    display: block;
-    margin: $margin-top 0 0 0;
+    margin: $margin-top $margin-right 0 0;
   }
 }

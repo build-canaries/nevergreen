@@ -1,7 +1,7 @@
-import React, {ReactElement, useCallback, useEffect, useState} from 'react'
+import React, {ReactElement, useCallback, useEffect, useRef, useState} from 'react'
 import styles from './import.scss'
 import {SecondaryButton} from '../../../common/forms/Button'
-import {iCloudDownload} from '../../../common/fonts/Icons'
+import {iCloudDownload, iCross} from '../../../common/fonts/Icons'
 import {DataSource, toConfiguration} from '../../../configuration/Configuration'
 import {errorMessage, isBlank} from '../../../common/Utils'
 import {useDispatch, useSelector} from 'react-redux'
@@ -14,15 +14,16 @@ import {getBackupLocation, RemoteLocation} from '../RemoteLocationsReducer'
 import {Request, send} from '../../../gateways/Gateway'
 import {fetchConfiguration, ImportResponse} from '../../../gateways/BackupGateway'
 import {fromJson, toJson} from '../../../common/Json'
-import {BackupDescription} from '../BackupDescription'
 import {Form} from '../../../common/forms/Form'
 import {allErrors, FormErrors} from '../../../common/forms/Validation'
 import isEmpty from 'lodash/isEmpty'
-import {ROUTE_SETTINGS_ANCHOR_BACKUP} from '../../../Routes'
+import {ROUTE_SETTINGS_BACKUP} from '../../../Routes'
 import {Loading} from '../../../common/Loading'
 import {Redirect} from 'react-router'
 import {Page} from '../../../common/Page'
-import {CancelLink} from '../CancelLink'
+import {Summary} from '../../../common/Summary'
+import {backupSummary} from '../BackupSummary'
+import {LinkButton} from '../../../common/LinkButton'
 
 type Fields = 'import'
 
@@ -37,7 +38,7 @@ export function ImportRemote(): ReactElement {
   if (location) {
     return <ImportRemoteLocation location={location}/>
   } else {
-    return <Redirect to={ROUTE_SETTINGS_ANCHOR_BACKUP}/>
+    return <Redirect to={ROUTE_SETTINGS_BACKUP}/>
   }
 }
 
@@ -46,38 +47,30 @@ function ImportRemoteLocation({location}: ImportRemoteProps): ReactElement {
   const [loadErrors, setLoadErrors] = useState<ReadonlyArray<string>>([])
   const [data, setData] = useState('')
   const [loaded, setLoaded] = useState(false)
-  const [fetchRequest, setFetchRequest] = useState<Request<ImportResponse>>()
+  const fetchRequest = useRef<Request<ImportResponse>>()
 
-  const createRequest = useCallback(() => setFetchRequest(fetchConfiguration(location)), [location])
+  const fetchData = useCallback(async () => {
+    setLoaded(false)
+    setLoadErrors([])
 
-  useEffect(createRequest, [createRequest])
+    try {
+      fetchRequest.current = fetchConfiguration(location)
+      const res = await send(fetchRequest.current)
+      setData(toJson(fromJson(res.configuration)))
+    } catch (error) {
+      setLoadErrors(['Unable to fetch remote backup because of an error', errorMessage(error)])
+    }
+
+    fetchRequest.current = undefined
+    setLoaded(true)
+  }, [location])
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (!fetchRequest) {
-        return
-      }
-
-      setLoaded(false)
-      setLoadErrors([])
-
-      try {
-        const res = await send(fetchRequest)
-        setData(toJson(fromJson(res.configuration)))
-      } catch (error) {
-        setLoadErrors(['Unable to fetch remote backup because of an error', errorMessage(error)])
-      }
-
-      setFetchRequest(undefined)
-      setLoaded(true)
-    }
-
     void fetchData()
-
     return () => {
-      fetchRequest?.abort()
+      fetchRequest.current?.abort()
     }
-  }, [fetchRequest])
+  }, [fetchData])
 
   const onValidate = (): FormErrors<Fields> | undefined => {
     if (isBlank(data)) {
@@ -100,7 +93,7 @@ function ImportRemoteLocation({location}: ImportRemoteProps): ReactElement {
     if (isRight(result)) {
       dispatch(configurationImported(result.right))
       dispatch(backupImported(location.internalId))
-      return ROUTE_SETTINGS_ANCHOR_BACKUP
+      return ROUTE_SETTINGS_BACKUP
     }
   }
 
@@ -108,41 +101,43 @@ function ImportRemoteLocation({location}: ImportRemoteProps): ReactElement {
 
   return (
     <Page title='Import remote'>
-      <div className={styles.header}>
-        <BackupDescription location={location}/>
-      </div>
+      <Summary values={backupSummary(location)}/>
+      <Loading loaded={loaded}
+               className={styles.loading}>
+        <ErrorMessages messages={loadErrors}/>
 
-      <div className={styles.body}>
-        <Loading loaded={loaded}>
-          <ErrorMessages messages={loadErrors}
-                         className={styles.message}/>
-
-          {hasLoadErrors && (
-            <SecondaryButton className={styles.fetchButton}
+        {hasLoadErrors && (
+          <>
+            <SecondaryButton className={styles.tryAgain}
                              icon={iCloudDownload}
-                             onClick={createRequest}>
+                             onClick={fetchData}>
               Try fetching again
             </SecondaryButton>
-          )}
+            <LinkButton to={ROUTE_SETTINGS_BACKUP}
+                        icon={iCross}
+                        className={styles.cancel}>
+              Cancel
+            </LinkButton>
+          </>
+        )}
 
-          {!hasLoadErrors && (
-            <Form onValidate={onValidate}
-                  onSuccess={doImport}
-                  submitButtonText='Import'>
-              {(submitting, validationErrors) => {
-                return (
-                  <TextArea label='Configuration to import'
-                            errors={allErrors<Fields>('import', validationErrors)}
-                            value={data}
-                            onChange={({target}) => setData(target.value)}
-                            disabled={submitting}/>
-                )
-              }}
-            </Form>
-          )}
-          <CancelLink/>
-        </Loading>
-      </div>
+        {!hasLoadErrors && (
+          <Form onValidate={onValidate}
+                onSuccess={doImport}
+                onCancel={ROUTE_SETTINGS_BACKUP}
+                submitButtonText='Import'>
+            {(submitting, validationErrors) => {
+              return (
+                <TextArea label='Configuration to import'
+                          errors={allErrors<Fields>('import', validationErrors)}
+                          value={data}
+                          onChange={({target}) => setData(target.value)}
+                          disabled={submitting}/>
+              )
+            }}
+          </Form>
+        )}
+      </Loading>
     </Page>
   )
 }

@@ -7,9 +7,8 @@ import {getSuccessMessages} from './SuccessReducer'
 import {isBlank} from '../../common/Utils'
 import {Form} from '../../common/forms/Form'
 import {firstError, FormErrors} from '../../common/forms/Validation'
-import {ROUTE_SETTINGS, ROUTE_SETTINGS_ANCHOR_SUCCESS} from '../../Routes'
-import {Title} from '../../common/Title'
-import {Link} from 'react-router-dom'
+import {ROUTE_SETTINGS_SUCCESS} from '../../Routes'
+import {Page} from '../../common/Page'
 
 type Fields = 'message'
 
@@ -29,16 +28,15 @@ export function AddMessage(): ReactElement {
 
   const onSuccess = () => {
     dispatch(addMessage(message))
-    return `${ROUTE_SETTINGS}#success`
+    return ROUTE_SETTINGS_SUCCESS
   }
 
   return (
-    <div className={styles.page}>
-      <Title show>Add success message</Title>
-
+    <Page title='Add success message'>
       <Form onValidate={onValidate}
             onSuccess={onSuccess}
-            submitButtonText='Add message'>
+            submitButtonText='Add message'
+            onCancel={ROUTE_SETTINGS_SUCCESS}>
         {(submitting, validationErrors) => {
           return (
             <Input className={styles.addMessageInput}
@@ -49,13 +47,13 @@ export function AddMessage(): ReactElement {
                    }}
                    error={firstError<Fields>('message', validationErrors)}
                    disabled={submitting}
-                   data-locator='message'>
+                   data-locator='message'
+                   focus>
               Message
             </Input>
           )
         }}
       </Form>
-      <Link to={ROUTE_SETTINGS_ANCHOR_SUCCESS} className={styles.cancel}>Cancel</Link>
-    </div>
+    </Page>
   )
 }

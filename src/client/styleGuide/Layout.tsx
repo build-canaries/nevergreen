@@ -1,25 +1,21 @@
 import React, {ReactElement} from 'react'
-import {Tabs} from '../common/Tabs'
-import {Container} from '../common/Container'
 import {StyleGuideSection} from './StyleGuideSection'
+import {Card} from '../common/card/Card'
+import {CardHeading} from '../common/card/CardHeading'
+import {Loading} from '../common/Loading'
 
 export function Layout(): ReactElement {
   return (
     <>
-      <StyleGuideSection title='Container'>
-        <Container title='Title'>
-          This is an example container.
-        </Container>
+      <StyleGuideSection title='Loading'>
+        <Loading loaded={false}>You will not see this</Loading>
+        <Loading loaded={false} dark>You will not see this</Loading>
       </StyleGuideSection>
-
-      <StyleGuideSection title='Tabs'>
-        <Tabs titles={['Red', 'Blue', 'Yellow']}>
-          <div style={{backgroundColor: 'red'}}>&nbsp;</div>
-          <div style={{backgroundColor: 'blue'}}>&nbsp;</div>
-          <div style={{backgroundColor: 'yellow'}}>&nbsp;</div>
-        </Tabs>
+      <StyleGuideSection title='Card'>
+        <Card header={<CardHeading title='Title'/>}>
+          This is an example card.
+        </Card>
       </StyleGuideSection>
-
       <StyleGuideSection title='Table'>
         <table>
           <caption>The table caption</caption>

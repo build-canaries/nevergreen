@@ -38,7 +38,7 @@ describe('displaying project information', () => {
       ]
     }
 
-    render(<InterestingProjects {...props}/>, state)
+    render(<InterestingProjects {...props}/>, {state})
 
     expect(screen.queryByText('some-tray-name')).toBeInTheDocument()
     expect(screen.queryByText('some-project-name')).toBeInTheDocument()
@@ -70,7 +70,7 @@ describe('displaying project information', () => {
       ]
     }
 
-    render(<InterestingProjects {...props}/>, state)
+    render(<InterestingProjects {...props}/>, {state})
 
     expect(screen.queryByText('some-tray-name')).toBeInTheDocument()
     expect(screen.queryByText('some-project-name')).toBeInTheDocument()
@@ -103,7 +103,7 @@ describe('displaying project information', () => {
       ]
     }
 
-    render(<InterestingProjects {...props}/>, state)
+    render(<InterestingProjects {...props}/>, {state})
 
     expect(screen.queryByText('some-tray-name')).toBeInTheDocument()
     expect(screen.queryByText('some-project-name')).toBeInTheDocument()
@@ -135,7 +135,7 @@ describe('displaying project information', () => {
       ]
     }
 
-    render(<InterestingProjects {...props}/>, state)
+    render(<InterestingProjects {...props}/>, {state})
 
     expect(screen.queryByText('some-tray-name')).not.toBeInTheDocument()
     expect(screen.queryByText('some-project-name')).toBeInTheDocument()
@@ -160,7 +160,7 @@ describe('displaying project information', () => {
       ]
     }
 
-    render(<InterestingProjects {...props}/>, state)
+    render(<InterestingProjects {...props}/>, {state})
 
     expect(screen.queryByText('some-project-name')).toHaveAttribute('href', 'some-url')
   })
@@ -182,7 +182,7 @@ describe('limiting the projects displayed', () => {
         buildProject({trayId, prognosis: Prognosis.sick})
       ]
     }
-    render(<InterestingProjects {...props}/>, state)
+    render(<InterestingProjects {...props}/>, {state})
     expect(screen.queryByText(/\+\d+ not shown/)).not.toBeInTheDocument()
   })
 
@@ -204,7 +204,7 @@ describe('limiting the projects displayed', () => {
         buildProject({projectId: '5', trayId})
       ]
     }
-    render(<InterestingProjects {...props}/>, state)
+    render(<InterestingProjects {...props}/>, {state})
     expect(screen.queryByText(/\+\d+ not shown/)).not.toBeInTheDocument()
   })
 
@@ -229,7 +229,7 @@ describe('limiting the projects displayed', () => {
         buildProject({projectId: '8', trayId})
       ]
     }
-    render(<InterestingProjects {...props}/>, state)
+    render(<InterestingProjects {...props}/>, {state})
     expect(screen.queryByText('+3 not shown')).toBeInTheDocument()
   })
 
@@ -253,7 +253,7 @@ describe('limiting the projects displayed', () => {
         buildProjectError({trayId, description: 'error 7'})
       ]
     }
-    render(<InterestingProjects {...props}/>, state)
+    render(<InterestingProjects {...props}/>, {state})
     expect(screen.queryByText('+2 not shown')).toBeInTheDocument()
     expect(screen.queryByText('+2 error')).toBeInTheDocument()
   })
@@ -278,7 +278,7 @@ describe('limiting the projects displayed', () => {
         buildProject({projectId: '3', trayId, prognosis: Prognosis.healthyBuilding})
       ]
     }
-    render(<InterestingProjects {...props}/>, state)
+    render(<InterestingProjects {...props}/>, {state})
     expect(screen.queryByText('+2 not shown')).toBeInTheDocument()
     expect(screen.queryByText('+1 sick, +1 healthy building')).toBeInTheDocument()
   })

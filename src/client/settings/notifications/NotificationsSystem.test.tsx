@@ -24,7 +24,7 @@ it('should allow system notifications to be enabled', async () => {
       showSystemNotifications: false
     }
   }
-  const {store} = render(<NotificationsSystem/>, state)
+  const {store} = render(<NotificationsSystem/>, {state})
   userEvent.click(screen.getByLabelText('Show system notifications'))
 
   await waitFor(() => {

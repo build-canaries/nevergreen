@@ -1,0 +1,27 @@
+@import '../variables';
+@import '../layout';
+
+.card {
+  border: 1px solid $mid-grey;
+  display: flex;
+  flex-direction: column;
+
+  &:focus-within {
+    border-color: $black;
+  }
+}
+
+.header {
+  align-items: center;
+  background-color: $light-grey;
+  display: flex;
+  padding: 1em;
+}
+
+.body {
+  padding: 1em;
+
+  & > *:first-child {
+    margin-top: 0;
+  }
+}

@@ -2,6 +2,10 @@
 
 .page {
   background: $white;
+  height: 100%;
+  margin: auto;
+  max-width: $max-page-width;
+  padding: 1em;
 
   & > *:first-child {
     margin-top: 0;

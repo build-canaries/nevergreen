@@ -13,24 +13,6 @@
 }
 
 .main {
-  flex: 1;
-  position: relative;
-
-  &.active {
-    display: block;
-  }
-}
-
-.settings {
-  margin: 0 auto;
-  max-width: $max-page-width;
-  padding: 1em;
-
-  @include respond-to(tablet, desktop) {
-    padding: 2em;
-  }
-
-  @include respond-to(very-small) {
-    padding: 0;
-  }
+  display: flex;
+  flex-grow: 1;
 }

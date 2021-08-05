@@ -8,22 +8,20 @@ interface HeaderLinkProps {
   readonly path: string;
   readonly title: string;
   readonly shortcuts: string | string[];
-  readonly hideMenu: () => void;
 }
 
-export function HeaderLink({path, title, shortcuts, hideMenu}: HeaderLinkProps): ReactElement {
+export function HeaderLink({path, title, shortcuts}: HeaderLinkProps): ReactElement {
   const history = useHistory()
+  const icon = path.replace('/', '')
 
   useShortcut(shortcuts, () => history.push(path), [history, path])
 
   return (
     <li>
-      <NavLink to={`/${path}`}
+      <NavLink to={path}
                className={styles.menuItem}
-               activeClassName={styles.active}
-               onClick={hideMenu}
-               data-locator={`menu-${path}`}>
-        <span className={cn(styles.menuIcon, styles[path])} aria-hidden/>
+               activeClassName={styles.active}>
+        <span className={cn(styles.menuIcon, styles[icon])} aria-hidden/>
         <div className={styles.menuTitle}>{title}</div>
       </NavLink>
     </li>

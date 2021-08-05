@@ -12,7 +12,7 @@ it('should set the click to show menu setting', () => {
     }
   }
 
-  const {store} = render(<GeneralSettings/>, state)
+  const {store} = render(<GeneralSettings/>, {state})
   userEvent.click(screen.getByLabelText('Click to show menu'))
 
   expect(getClickToShowMenu(store.getState())).toBeTruthy()
@@ -25,7 +25,7 @@ it('should set the state to check for new version', () => {
     }
   }
 
-  const {store} = render(<GeneralSettings/>, state)
+  const {store} = render(<GeneralSettings/>, {state})
   userEvent.click(screen.getByLabelText('Check for new Nevergreen versions'))
 
   expect(getToggleVersionCheck(store.getState())).toBeTruthy()

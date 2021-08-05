@@ -1,0 +1,32 @@
+@import './variables';
+@import './layout';
+
+.summaryList {
+  @include respond-to(tablet, desktop) {
+    width: 100%;
+  }
+}
+
+.summaryListRow {
+  @include respond-to(tablet, desktop) {
+    display: grid;
+    grid-template-columns: 30% 50% 20%;
+  }
+}
+
+.key {
+  font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.value {
+  @include respond-to(tablet, desktop) {
+    margin-bottom: 0;
+    padding-bottom: 1em;
+  }
+
+  margin-bottom: 1em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

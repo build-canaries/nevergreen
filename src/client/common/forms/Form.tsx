@@ -1,7 +1,8 @@
 import React, {FormEvent, ReactElement, ReactNode, useEffect, useState} from 'react'
 import cn from 'classnames'
 import isEmpty from 'lodash/isEmpty'
-import isNil from 'lodash/isNil'
+import isString from 'lodash/isString'
+import isFunction from 'lodash/isFunction'
 import noop from 'lodash/noop'
 import {PrimaryButton, SecondaryButton} from './Button'
 import styles from './form.scss'
@@ -10,12 +11,13 @@ import {ErrorMessages} from '../Messages'
 import {errorMessage} from '../Utils'
 import {iCheckmark, iCross} from '../fonts/Icons'
 import {useHistory} from 'react-router-dom'
+import {LinkButton} from '../LinkButton'
 
 interface FormProps<Fields extends string> {
   readonly children: (submitting: boolean, validationErrors: Readonly<FormErrors<Fields>>, clearErrors: () => void) => ReactNode;
   readonly onValidate?: () => Readonly<FormErrors<Fields>> | undefined | void;
   readonly onSuccess: () => Promise<string | undefined | void> | string | undefined | void;
-  readonly onCancel?: () => void;
+  readonly onCancel?: string | (() => void);
   readonly className?: string;
   readonly submitButtonText?: string;
   readonly clearErrors?: boolean;
@@ -86,16 +88,22 @@ export function Form<Fields extends string>({
 
       <PrimaryButton className={styles.submitButton}
                      icon={iCheckmark}
-                     type="submit"
+                     type='submit'
                      disabled={submitting}>
         {submitButtonText}
       </PrimaryButton>
-      {!isNil(onCancel) && (
+      {isFunction(onCancel) && (
         <SecondaryButton onClick={onCancel}
                          icon={iCross}
                          disabled={submitting}>
           Cancel
         </SecondaryButton>
+      )}
+      {isString(onCancel) && !submitting && (
+        <LinkButton to={onCancel}
+                    icon={iCross}>
+          Cancel
+        </LinkButton>
       )}
     </form>
   )

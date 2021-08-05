@@ -34,13 +34,13 @@ function Keyword({keyword, matches}: KeywordProps) {
 
 export function HelpArticle({title, keywords, children, searchQuery, page}: HelpArticleProps): ReactElement | null {
   const location = useLocation()
-  const [show, setShow] = useState(location.pathname === page)
+  const [show, setShow] = useState(page && location.pathname.startsWith(page))
   const [matches, setMatches] = useState<ReadonlyArray<string>>([])
 
   useEffect(() => {
     if (isBlank(searchQuery)) {
       setMatches([])
-      setShow(location.pathname === page)
+      setShow(page && location.pathname.startsWith(page))
     } else {
       const keywordsMatched = matchSorter(keywords, searchQuery)
       setMatches(keywordsMatched)

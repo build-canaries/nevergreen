@@ -11,6 +11,7 @@ import {fakeRequest} from './gateways/Gateway'
 import * as FullScreenHook from './FullScreenHook'
 import {SETTINGS_ROOT} from './settings/SettingsReducer'
 import userEvent from '@testing-library/user-event'
+import {ROUTE_MONITOR, ROUTE_SETTINGS_TRACKING} from './Routes'
 
 beforeEach(() => {
   jest.spyOn(LocalConfiguration, 'init').mockResolvedValue()
@@ -23,7 +24,7 @@ it('should load configuration, register service worker and check for a new versi
     tag_name: '9999.0.0' // this needs to be greater than the actual version in resources/version.txt
   }))
 
-  render(<Nevergreen/>)
+  render(<Nevergreen/>, {mountPath: ROUTE_SETTINGS_TRACKING, currentLocation: ROUTE_SETTINGS_TRACKING})
 
   await waitFor(() => {
     expect(LocalConfiguration.load).toHaveBeenCalled()
@@ -57,8 +58,10 @@ it('should not check for a new version if the user has disabled checking', async
   jest.spyOn(Gateway, 'get')
 
   render(<Nevergreen/>, {
-    [SETTINGS_ROOT]: {
-      enableNewVersionCheck: false
+    state: {
+      [SETTINGS_ROOT]: {
+        enableNewVersionCheck: false
+      }
     }
   })
 
@@ -73,7 +76,7 @@ it('should disable fullscreen when any key is pressed, allowing the user to navi
   jest.spyOn(Gateway, 'get').mockReturnValue(fakeRequest({}))
   jest.spyOn(FullScreenHook, 'useFullScreen').mockReturnValue([true, jest.fn(), disableFullScreen])
 
-  render(<Nevergreen/>, {}, '/monitor')
+  render(<Nevergreen/>, {mountPath: ROUTE_MONITOR, currentLocation: ROUTE_MONITOR})
 
   await waitFor(() => {
     expect(screen.queryByRole('main')).not.toBeInTheDocument()

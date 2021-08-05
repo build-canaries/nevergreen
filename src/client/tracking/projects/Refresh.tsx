@@ -3,22 +3,20 @@ import {Duration} from '../../common/Duration'
 import styles from './refresh.scss'
 import {PrimaryButton} from '../../common/forms/Button'
 import {iRefresh} from '../../common/fonts/Icons'
-import {useShortcut} from '../../common/Keyboard'
 
 interface RefreshProps {
-  readonly index: number;
   readonly timestamp?: string;
   readonly refreshTray: () => void;
+  readonly loaded: boolean;
 }
 
-export function Refresh({index, timestamp, refreshTray}: RefreshProps): ReactElement {
-  useShortcut(`r ${index}`, refreshTray)
-
+export function Refresh({timestamp, refreshTray, loaded}: RefreshProps): ReactElement {
   return (
     <>
       <PrimaryButton className={styles.refresh}
                      onClick={refreshTray}
-                     icon={iRefresh}>
+                     icon={iRefresh}
+                     disabled={!loaded}>
         Refresh
       </PrimaryButton>
       <div className={styles.lastFetch} data-locator='refresh-time'>

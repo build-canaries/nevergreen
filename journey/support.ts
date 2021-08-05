@@ -1,26 +1,21 @@
 import '@testing-library/cypress/add-commands'
 
-Cypress.Commands.add('locate', (thing) => {
-  cy.get(`[data-locator=${thing}]`)
+Cypress.Promise.onPossiblyUnhandledRejection((error) => {
+  throw error
 })
 
-Cypress.Commands.add('visitPage', (menuItem) => {
-  cy.locate(`menu-${menuItem}`).click()
-  cy.location('pathname').should('include', menuItem)
+Cypress.Keyboard.defaults({
+  keystrokeDelay: 0
 })
 
-Cypress.Commands.add('clearIndexDb', () => {
-  Cypress.on('window:before:load', (window) => {
-    window.indexedDB.deleteDatabase('nevergreen')
-  })
+Cypress.Commands.add('locate', (thing: string) => {
+  return cy.get(`[data-locator=${thing}]`)
 })
 
-Cypress.Commands.add('unregisterServiceWorkers', () => {
-  Cypress.on('window:before:load', (window) => {
-    if (window.navigator && window.navigator.serviceWorker) {
-      window.navigator.serviceWorker.getRegistrations().then((registrations) => {
-        registrations.forEach((registration) => registration.unregister())
-      })
-    }
-  })
+Cypress.on('window:before:load', (win) => {
+  win.indexedDB.deleteDatabase('nevergreen')
+  // Stop the code from registering the service worker as it messes up the tests
+  // @ts-ignore
+  // noinspection JSConstantReassignment
+  delete win.navigator.__proto__.serviceWorker
 })

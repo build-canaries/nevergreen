@@ -20,5 +20,6 @@
     "TRAY_TOKEN": "abc123",
     "TRAY_USERNAME": "u",
     "TRAY_PASSWORD": "p"
-  }
+  },
+  "blockHosts": ["api.github.com"]
 }

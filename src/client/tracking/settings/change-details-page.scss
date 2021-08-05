@@ -1,0 +1,26 @@
+@import 'src/client/common/variables';
+@import 'src/client/common/layout';
+
+.traySettingsName,
+.serverType,
+.authType {
+  @include fixed-width(26em);
+}
+
+.authType {
+  margin-top: 1em;
+}
+
+.changeAuth {
+  margin: $margin-top 0 0 0;
+}
+
+.auth {
+  border: 1px solid $light-grey;
+  margin: $margin-top 0 0 0;
+  padding: 0 1em 1em 1em;
+}
+
+.includeNew {
+  display: block;
+}

@@ -9,7 +9,7 @@ import {createId, createTray} from '../domain/Tray'
 import {Notification} from '../Notification'
 import {useHistory} from 'react-router-dom'
 import styles from './preview.scss'
-import {ROUTE_SETTINGS} from '../Routes'
+import {ROUTE_SETTINGS_DISPLAY} from '../Routes'
 
 export function Preview(): ReactElement {
   const prognosis = useSelector(getShowPrognosis)
@@ -50,7 +50,7 @@ export function Preview(): ReactElement {
     <div className={styles.preview}>
       <Notification notification='This is a preview showing your current display settings'
                     fullScreen={false}
-                    dismiss={() => history.push(ROUTE_SETTINGS)}/>
+                    dismiss={() => history.push(ROUTE_SETTINGS_DISPLAY)}/>
       <div className={styles.projects}>
         <div className={styles.projectsInner}>
           <Loading loaded={loaded}>

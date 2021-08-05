@@ -3,6 +3,7 @@ import {StyleGuideSection} from './StyleGuideSection'
 import {ExternalLink} from '../common/ExternalLink'
 import {Element} from './Element'
 import {Messages, MessagesType} from '../common/Messages'
+import {LinkButton} from '../common/LinkButton'
 
 const TITLE = 'Cupcake toffee jelly beans'
 
@@ -69,6 +70,7 @@ export function Typography(): ReactElement {
 
       <StyleGuideSection title='Links'>
         <ExternalLink href='https://github.com/build-canaries/nevergreen'>external link</ExternalLink>
+        <LinkButton to='/style-guide'>link button</LinkButton>
       </StyleGuideSection>
 
       <StyleGuideSection title='Messages'>

@@ -17,9 +17,9 @@ type ButtonProps = {
   readonly iconOnly?: boolean;
 } & DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
 
-type BaseButtonProps = {
-  theme: ButtonTheme;
-} & ButtonProps
+interface BaseButtonProps extends ButtonProps {
+  readonly theme: ButtonTheme;
+}
 
 export function BaseButton({theme, className, icon, iconOnly, children, ...additionalProps}: BaseButtonProps): ReactElement {
   const classes = cn(styles[theme], className, {
@@ -30,7 +30,6 @@ export function BaseButton({theme, className, icon, iconOnly, children, ...addit
 
   return (
     <button className={classes}
-            title={iconOnly ? children as string : undefined}
             type='button'
             {...additionalProps}>
       {iconOnly && <VisuallyHidden>{children}</VisuallyHidden>}

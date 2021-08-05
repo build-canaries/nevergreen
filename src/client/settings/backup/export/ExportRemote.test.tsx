@@ -2,12 +2,11 @@ import React from 'react'
 import {buildRemoteBackupLocation, render} from '../../../testHelpers'
 import {ExportRemote} from './ExportRemote'
 import {BACKUP_REMOTE_LOCATIONS_ROOT} from '../RemoteLocationsReducer'
-import {ROUTE_ANCHOR_BACKUP, ROUTE_EXPORT_REMOTE, ROUTE_SETTINGS, routeExportRemote} from '../../../Routes'
+import {ROUTE_EXPORT_REMOTE, ROUTE_SETTINGS_BACKUP, routeExportRemote} from '../../../Routes'
 import * as BackupGateway from '../../../gateways/BackupGateway'
 import {fakeRequest} from '../../../gateways/Gateway'
 import userEvent from '@testing-library/user-event'
 import {screen, waitFor} from '@testing-library/react'
-import {Route} from 'react-router'
 
 it('should export configuration and redirect to the settings page', async () => {
   const state = {
@@ -21,16 +20,16 @@ it('should export configuration and redirect to the settings page', async () => 
     id: 'some-remote-id'
   }))
 
-  const {history} = render(
-    <Route path={ROUTE_EXPORT_REMOTE}><ExportRemote/></Route>,
+  const {history} = render(<ExportRemote/>, {
     state,
-    routeExportRemote('locationId'))
+    mountPath: ROUTE_EXPORT_REMOTE,
+    currentLocation: routeExportRemote('locationId')
+  })
 
   userEvent.click(screen.getByRole('button', {name: 'Export'}))
 
   await waitFor(() => {
-    expect(history.location.pathname).toEqual(ROUTE_SETTINGS)
-    expect(history.location.hash).toEqual(ROUTE_ANCHOR_BACKUP)
+    expect(history.location.pathname).toEqual(ROUTE_SETTINGS_BACKUP)
   })
 })
 
@@ -46,15 +45,15 @@ it('should allow cancelling back to settings', async () => {
     id: 'some-remote-id'
   }))
 
-  const {history} = render(
-    <Route path={ROUTE_EXPORT_REMOTE}><ExportRemote/></Route>,
+  const {history} = render(<ExportRemote/>, {
     state,
-    routeExportRemote('locationId'))
+    mountPath: ROUTE_EXPORT_REMOTE,
+    currentLocation: routeExportRemote('locationId')
+  })
 
-  userEvent.click(screen.getByRole('link', {name: 'Cancel'}))
+  userEvent.click(screen.getByRole('button', {name: 'Cancel'}))
 
   await waitFor(() => {
-    expect(history.location.pathname).toEqual(ROUTE_SETTINGS)
-    expect(history.location.hash).toEqual(ROUTE_ANCHOR_BACKUP)
+    expect(history.location.pathname).toEqual(ROUTE_SETTINGS_BACKUP)
   })
 })

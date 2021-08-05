@@ -1,11 +1,12 @@
 @import '../../common/responsive';
 @import '../../common/variables';
 @import '../../common/typography';
-@import '../../common/layout';
 
 .refresh {
-  @extend %inline;
-  @extend %first;
+  @include respond-to(tablet, desktop) {
+    display: inline-block;
+    margin: 0 $margin-right 0 0;
+  }
 }
 
 .lastFetch {

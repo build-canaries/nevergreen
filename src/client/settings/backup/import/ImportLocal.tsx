@@ -7,18 +7,16 @@ import {configurationImported} from '../BackupActionCreators'
 import {isLeft, isRight} from 'fp-ts/Either'
 import {TextArea} from '../TextArea'
 import {ErrorMessages, MessagesType} from '../../../common/Messages'
-import {Title} from '../../../common/Title'
-import {BackupDescription} from '../BackupDescription'
 import {Form} from '../../../common/forms/Form'
 import {allErrors, FormErrors} from '../../../common/forms/Validation'
 import {TimedMessage} from '../TimedMessage'
 import {FileDropTarget} from './FileDropTarget'
-import {ROUTE_SETTINGS_ANCHOR_BACKUP} from '../../../Routes'
+import {ROUTE_SETTINGS_BACKUP} from '../../../Routes'
 import {InputFile} from './InputFile'
 import {loadFile} from '../FileSystem'
-import {CancelLink} from '../CancelLink'
+import {Page} from '../../../common/Page'
 
-const placeholder = 'Open, drag and drop or paste exported configuration here and press Import now'
+const placeholder = 'Open, drag and drop or paste exported configuration here and press Import'
 
 export function ImportLocal(): ReactElement {
   const dispatch = useDispatch()
@@ -60,14 +58,14 @@ export function ImportLocal(): ReactElement {
 
     if (isBlank(data)) {
       validationMessage.push({field: 'import', message: 'Enter the configuration to import'})
-    }
+    } else {
+      const result = toConfiguration(data, DataSource.UserImport)
 
-    const result = toConfiguration(data, DataSource.UserImport)
-
-    if (isLeft(result)) {
-      result.left.forEach((message) => {
-        validationMessage.push({field: 'import', message})
-      })
+      if (isLeft(result)) {
+        result.left.forEach((message) => {
+          validationMessage.push({field: 'import', message})
+        })
+      }
     }
 
     return validationMessage
@@ -78,33 +76,27 @@ export function ImportLocal(): ReactElement {
 
     if (isRight(result)) {
       dispatch(configurationImported(result.right))
-      return ROUTE_SETTINGS_ANCHOR_BACKUP
+      return ROUTE_SETTINGS_BACKUP
     }
   }
 
   return (
-    <FileDropTarget onFileDropped={openFile}
-                    className={styles.page}
-                    disabled={!loaded}>
-      <Title>Import local</Title>
-
-      <div className={styles.header}>
-        <BackupDescription/>
-      </div>
-
-      <div className={styles.body}>
+    <Page title='Import local'>
+      <FileDropTarget onFileDropped={openFile}
+                      disabled={!loaded}>
         <ErrorMessages messages={loadErrors}
-                       className={styles.message}/>
+                       className={styles.messages}/>
         <TimedMessage type={MessagesType.INFO}
                       clear={() => setSuccess('')}
                       messages={success}
-                      className={styles.message}/>
+                      className={styles.messages}/>
 
         <InputFile onFileSelected={openFile}
                    disabled={!loaded}/>
 
         <Form onValidate={onValidate}
               onSuccess={doImport}
+              onCancel={ROUTE_SETTINGS_BACKUP}
               submitButtonText='Import'
               clearErrors={!loaded}
               className={styles.form}>
@@ -119,8 +111,7 @@ export function ImportLocal(): ReactElement {
             )
           }}
         </Form>
-        <CancelLink/>
-      </div>
-    </FileDropTarget>
+      </FileDropTarget>
+    </Page>
   )
 }

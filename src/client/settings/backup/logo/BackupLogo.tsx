@@ -1,23 +1,19 @@
-import React, {ReactElement} from 'react'
-import isNil from 'lodash/isNil'
+import React, {ReactElement, SVGProps} from 'react'
 import {RemoteLocationOptions} from '../RemoteLocationOptions'
-import styles from './backup-logo.scss'
-import GitHubLogo from './github-logo.svg'
-import GitLabLogo from './gitlab-logo.svg'
-import JsonLogo from './json-logo.svg'
-import LocalLogo from './local-logo.svg'
+import {GitHubLogo} from './GitHubLogo'
+import {GitLabLogo} from './GitLabLogo'
+import {JsonLogo} from './JsonLogo'
 
-interface RemoteLocationLogoProps {
-  readonly where?: RemoteLocationOptions;
+interface RemoteLocationLogoProps extends SVGProps<SVGSVGElement> {
+  readonly where: RemoteLocationOptions;
 }
 
-export function BackupLogo({where}: RemoteLocationLogoProps): ReactElement {
+export function BackupLogo({where, ...props}: RemoteLocationLogoProps): ReactElement {
   return (
     <>
-      {isNil(where) && <img className={styles.logo} src={LocalLogo} alt='' aria-hidden/>}
-      {where === RemoteLocationOptions.GitHub && <img className={styles.logo} src={GitHubLogo} alt='' aria-hidden/>}
-      {where === RemoteLocationOptions.GitLab && <img className={styles.logo} src={GitLabLogo} alt='' aria-hidden/>}
-      {where === RemoteLocationOptions.Custom && <img className={styles.logo} src={JsonLogo} alt='' aria-hidden/>}
+      {where === RemoteLocationOptions.GitHub && <GitHubLogo {...props}/>}
+      {where === RemoteLocationOptions.GitLab && <GitLabLogo {...props}/>}
+      {where === RemoteLocationOptions.Custom && <JsonLogo {...props}/>}
     </>
   )
 }

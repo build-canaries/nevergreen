@@ -50,3 +50,7 @@ export const reduce = createReducer<TraysState>(DEFAULT_STATE, {
 
 const getTracking = (state: State) => state[TRAYS_ROOT]
 export const getTrays = createSelector(getTracking, (trays) => Object.values(trays))
+
+export function getTray(id: string): (state: State) => Tray | undefined {
+  return createSelector(getTracking, (trays) => trays[id])
+}

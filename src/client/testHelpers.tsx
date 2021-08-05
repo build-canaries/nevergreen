@@ -22,10 +22,17 @@ import {ProjectError, SortBy} from './gateways/ProjectsGateway'
 import parseISO from 'date-fns/parseISO'
 import {BACKUP_REMOTE_LOCATIONS_ROOT, RemoteLocation} from './settings/backup/RemoteLocationsReducer'
 import {RemoteLocationOptions} from './settings/backup/RemoteLocationOptions'
+import {Route, Switch} from 'react-router'
 
 interface ExtendedRenderResult extends RenderResult {
-  store: EnhancedStore<State, AnyAction, ReadonlyArray<Middleware<unknown, State>>>;
-  history: History;
+  readonly store: EnhancedStore<State, AnyAction, ReadonlyArray<Middleware<unknown, State>>>;
+  readonly history: History;
+}
+
+interface RenderOptions {
+  readonly mountPath?: string;
+  readonly currentLocation?: string;
+  readonly state?: RecursivePartial<State>;
 }
 
 export function buildState(subState: RecursivePartial<State> = {}): State {
@@ -61,13 +68,23 @@ export function setupReactModal(): void {
   Modal.setAppElement('#app-element')
 }
 
-export function render(component: ReactNode, state: RecursivePartial<State> = {}, location = '/'): ExtendedRenderResult {
-  const store = configureStore({reducer, preloadedState: buildState(state)})
-  const history = createMemoryHistory({initialEntries: [location]})
+export function render(component: ReactNode, options: RenderOptions = {}): ExtendedRenderResult {
+  const mergedOptions = merge({
+    mountPath: '/',
+    currentLocation: '/',
+    state: {}
+  }, options)
+  const store = configureStore({reducer, preloadedState: buildState(mergedOptions.state)})
+  const history = createMemoryHistory({initialEntries: [mergedOptions.currentLocation]})
 
   const wrapWithStoreAndRouter = (c: ReactNode) => (
     <Provider store={store}>
-      <Router history={history}>{c}</Router>
+      <Router history={history}>
+        <Switch>
+          <Route exact path={mergedOptions.mountPath}>{c}</Route>
+          <Route>location changed</Route>
+        </Switch>
+      </Router>
     </Provider>
   )
 
@@ -82,7 +99,7 @@ export function render(component: ReactNode, state: RecursivePartial<State> = {}
 }
 
 export function buildTray(tray: Partial<Tray> = {}): Tray {
-  return createTray('some-tray-id', 'some-url', tray)
+  return createTray('some-tray-id', 'http://some-url', tray)
 }
 
 export function buildProject(project: Partial<Project> = {}): Project {

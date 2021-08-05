@@ -13,7 +13,7 @@ it('should have "about" information', () => {
       trayId: buildTray({serverType: 'circle'})
     }
   })
-  render(<Footer fullScreen={false}/>, state)
+  render(<Footer fullScreen={false}/>, {state})
   userEvent.click(screen.getByText(/Nevergreen v[\d.]+\+[\d]+\.[a-zA-Z0-9]+ [a-zA-Z ]+ by Build Canaries/))
 
   expect(screen.queryByText('Eclipse Public Licence 1.0 (EPL-1.0)')).toBeInTheDocument()

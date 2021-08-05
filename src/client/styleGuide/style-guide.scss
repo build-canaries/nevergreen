@@ -4,6 +4,7 @@
 
 .section {
   background-color: $white;
+  border: 1px solid $light-grey;
   margin-top: 1em;
   padding: 1em;
 }
@@ -27,7 +28,7 @@
 }
 
 .icons {
-  @extend %three-column-grid;
+  @extend %two-column-grid;
 
   & > span {
     &::before {

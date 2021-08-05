@@ -13,13 +13,13 @@
 }
 
 .inner {
-  margin: 0 auto;
+  align-items: center;
+  display: flex;
   max-width: $max-page-width;
-  padding: 0 1em;
+  padding: 0;
 
   @include respond-to(tablet, desktop) {
-    align-items: center;
-    display: flex;
+    margin: 0 auto;
     padding: 0 2em;
   }
 }
@@ -39,66 +39,28 @@
   }
 }
 
-.siteMenuToggle {
-  @include button-interaction($white, $off-black, $off-black);
-
-  background-color: transparent;
-  border: none;
-  box-shadow: none;
-  color: $white;
-  cursor: pointer;
-  height: auto;
-  margin: 0;
-  padding: 1em;
-  text-align: left;
+.nav {
   width: 100%;
 
-  @include respond-to(tablet, desktop) {
-    display: none;
+  @include respond-to(very-small) {
+    overflow: scroll;
   }
 }
 
-%site-menu-toggle-icon {
-  @include font-scale(3);
-
-  padding-right: 0.5em;
-}
-
-.siteMenuShow {
-  @extend %site-menu-toggle-icon;
-  @extend .icon-menu3;
-}
-
-.siteMenuHide {
-  @extend %site-menu-toggle-icon;
-  @extend .icon-menu4;
-}
-
-.siteMenu {
-  display: block;
-}
-
 .menu {
-  display: none;
+  display: flex;
   list-style: none;
   margin: 0;
   padding: 0;
 
   li {
-    display: block;
-
-    @include respond-to(tablet, desktop) {
-      display: inline-block;
-    }
+    display: inline-block;
+    flex-grow: 1;
   }
 
   @include respond-to(tablet, desktop) {
     display: block;
   }
-}
-
-.open {
-  display: inline;
 }
 
 .menuTitle {
@@ -150,7 +112,7 @@
 }
 
 .active {
-  background-color: $light-grey;
+  background-color: $white;
   color: $off-black;
 
   &:visited {
@@ -159,7 +121,7 @@
 
   &:hover,
   &:focus {
-    background-color: $light-grey;
+    background-color: $white;
     color: $off-black;
     cursor: default;
   }
@@ -169,16 +131,8 @@
   @extend .icon-display;
 }
 
-.tracking {
-  @extend .icon-list2;
-}
-
 .settings {
   @extend .icon-cog;
-}
-
-.backup {
-  @extend .icon-floppy-disk;
 }
 
 .help {

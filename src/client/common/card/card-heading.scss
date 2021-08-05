@@ -1,0 +1,15 @@
+@import '../variables';
+@import '../layout';
+
+.icon {
+  margin: 0 $margin-right 0 0;
+
+  @include respond-to(very-small) {
+    display: none;
+  }
+}
+
+.title {
+  flex-grow: 1;
+  margin: 0 $margin-right 0 0;
+}

@@ -1,5 +1,4 @@
 import React, {ReactElement} from 'react'
-import {Container} from '../../common/Container'
 import {Checkbox} from '../../common/forms/Checkbox'
 import {DropDown} from '../../common/forms/DropDown'
 import styles from './display-settings.scss'
@@ -23,6 +22,7 @@ import {
 import {SortBy} from '../../gateways/ProjectsGateway'
 import {ROUTE_PREVIEW} from '../../Routes'
 import {LinkButton} from '../../common/LinkButton'
+import {Page} from '../../common/Page'
 
 export function DisplaySettings(): ReactElement {
   const dispatch = useDispatch()
@@ -47,7 +47,7 @@ export function DisplaySettings(): ReactElement {
   ]
 
   return (
-    <Container title='Display' className={styles.container}>
+    <Page title='Display settings'>
       <Checkbox className={styles.showTrayName}
                 checked={showTrayName}
                 onToggle={(newValue) => dispatch(setShowTrayName(newValue))}
@@ -88,6 +88,6 @@ export function DisplaySettings(): ReactElement {
                   data-locator='display-preview'>
         Preview display
       </LinkButton>
-    </Container>
+    </Page>
   )
 }

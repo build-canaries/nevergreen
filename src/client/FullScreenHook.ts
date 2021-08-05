@@ -1,9 +1,9 @@
 import {useCallback, useEffect, useRef, useState} from 'react'
 
 type FullScreen = [
-  boolean,
-  (fullScreen: boolean) => void,
-  () => void
+  fullScreen: boolean,
+  requestFullScreen: (fullScreen: boolean) => void,
+  disableFullScreen: () => void
 ]
 
 const THREE_SECONDS = 3 * 1000

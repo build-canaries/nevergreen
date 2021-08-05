@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event'
 import {ImportLocal} from './ImportLocal'
 import {buildState, render} from '../../../testHelpers'
 import {toJson} from '../../../common/Json'
-import {ROUTE_ANCHOR_BACKUP, ROUTE_SETTINGS} from '../../../Routes'
+import {ROUTE_SETTINGS_BACKUP} from '../../../Routes'
 import {screen, waitFor} from '@testing-library/react'
 
 it('should import valid configuration and redirect to the settings page', async () => {
@@ -12,8 +12,7 @@ it('should import valid configuration and redirect to the settings page', async 
   userEvent.click(screen.getByRole('button', {name: 'Import'}))
 
   await waitFor(() => {
-    expect(history.location.pathname).toEqual(ROUTE_SETTINGS)
-    expect(history.location.hash).toEqual(ROUTE_ANCHOR_BACKUP)
+    expect(history.location.pathname).toEqual(ROUTE_SETTINGS_BACKUP)
   })
 })
 
@@ -21,6 +20,7 @@ it('should show an error if no data has been entered', () => {
   render(<ImportLocal/>)
   userEvent.click(screen.getByRole('button', {name: 'Import'}))
   expect(screen.queryByText('Enter the configuration to import')).toBeInTheDocument()
+  expect(screen.queryByText('Unexpected end of JSON input')).not.toBeInTheDocument()
 })
 
 it('should show an error if the data is syntactically invalid (bad json)', () => {
@@ -64,11 +64,10 @@ it('should allow a single JSON and plain text files to be opened', () => {
 it('should be able to cancel back to settings', async () => {
   const {history} = render(<ImportLocal/>)
 
-  userEvent.click(screen.getByRole('link', {name: 'Cancel'}))
+  userEvent.click(screen.getByRole('button', {name: 'Cancel'}))
 
   await waitFor(() => {
-    expect(history.location.pathname).toEqual(ROUTE_SETTINGS)
-    expect(history.location.hash).toEqual(ROUTE_ANCHOR_BACKUP)
+    expect(history.location.pathname).toEqual(ROUTE_SETTINGS_BACKUP)
   })
 })
 

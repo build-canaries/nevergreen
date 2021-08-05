@@ -1,21 +1,45 @@
-export const ROUTE_ANCHOR_BACKUP = '#backup'
-export const ROUTE_ANCHOR_SUCCESS = '#success'
-
 export const ROUTE_MONITOR = '/monitor'
 export const ROUTE_PREVIEW = '/preview'
-export const ROUTE_TRACKING = '/tracking'
 export const ROUTE_SETTINGS = '/settings'
-export const ROUTE_SETTINGS_ANCHOR_BACKUP = `${ROUTE_SETTINGS}${ROUTE_ANCHOR_BACKUP}`
-export const ROUTE_SETTINGS_ANCHOR_SUCCESS = `${ROUTE_SETTINGS}${ROUTE_ANCHOR_SUCCESS}`
-export const ROUTE_SUCCESS = `${ROUTE_SETTINGS}/success`
-export const ROUTE_SUCCESS_ADD = `${ROUTE_SUCCESS}/add`
-export const ROUTE_BACKUP = `${ROUTE_SETTINGS}/backup`
-export const ROUTE_BACKUP_ADD = `${ROUTE_BACKUP}/add`
-export const ROUTE_EXPORT_LOCAL = `${ROUTE_BACKUP}/export`
-export const ROUTE_EXPORT_REMOTE = `${ROUTE_BACKUP}/export/:internalId`
-export const ROUTE_IMPORT_LOCAL = `${ROUTE_BACKUP}/import`
-export const ROUTE_IMPORT_REMOTE = `${ROUTE_BACKUP}/import/:internalId`
-export const ROUTE_STYLE_GUIDE = '/style-guide'
+
+// Settings routes
+export const ROUTE_SETTINGS_TRACKING = `${ROUTE_SETTINGS}/tracking`
+export const ROUTE_SETTINGS_GENERAL = `${ROUTE_SETTINGS}/general`
+export const ROUTE_SETTINGS_DISPLAY = `${ROUTE_SETTINGS}/display`
+export const ROUTE_SETTINGS_NOTIFICATIONS = `${ROUTE_SETTINGS}/notifications`
+export const ROUTE_SETTINGS_SUCCESS = `${ROUTE_SETTINGS}/success`
+export const ROUTE_SETTINGS_BACKUP = `${ROUTE_SETTINGS}/backup`
+export const ROUTE_SETTINGS_RESET = `${ROUTE_SETTINGS}/reset`
+
+// Tracking
+export const ROUTE_TRACKING_ADD = `${ROUTE_SETTINGS_TRACKING}/add`
+export const ROUTE_TRACKING_FEED = `${ROUTE_SETTINGS_TRACKING}/:id`
+export const ROUTE_TRACKING_FEED_PROJECTS = `${ROUTE_TRACKING_FEED}/projects`
+export const ROUTE_TRACKING_FEED_DETAILS = `${ROUTE_TRACKING_FEED}/details`
+export const REFRESH_HASH = '#refresh'
+
+export function routeFeed(id: string): string {
+  return ROUTE_TRACKING_FEED.replace(':id', id)
+}
+
+export function routeFeedProjects(id: string, refresh = false): string {
+  const path = ROUTE_TRACKING_FEED_PROJECTS.replace(':id', id)
+  return refresh ? `${path}${REFRESH_HASH}` : path
+}
+
+export function routeFeedDetails(id: string): string {
+  return ROUTE_TRACKING_FEED_DETAILS.replace(':id', id)
+}
+
+// Success messages
+export const ROUTE_SUCCESS_ADD = `${ROUTE_SETTINGS_SUCCESS}/add`
+
+// Backups
+export const ROUTE_BACKUP_ADD = `${ROUTE_SETTINGS_BACKUP}/add`
+export const ROUTE_EXPORT_LOCAL = `${ROUTE_SETTINGS_BACKUP}/export`
+export const ROUTE_EXPORT_REMOTE = `${ROUTE_SETTINGS_BACKUP}/export/:internalId`
+export const ROUTE_IMPORT_LOCAL = `${ROUTE_SETTINGS_BACKUP}/import`
+export const ROUTE_IMPORT_REMOTE = `${ROUTE_SETTINGS_BACKUP}/import/:internalId`
 
 export function routeExportRemote(internalId: string): string {
   return ROUTE_EXPORT_REMOTE.replace(':internalId', internalId)

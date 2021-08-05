@@ -1,9 +1,10 @@
 import React, {ReactElement, useState} from 'react'
 import styles from './reset.scss'
-import {Container} from '../../common/Container'
 import {clear} from '../../configuration/LocalRepository'
 import {DangerButton} from '../../common/forms/Button'
 import {iBin} from '../../common/fonts/Icons'
+import {Page} from '../../common/Page'
+import {WarningMessages} from '../../common/Messages'
 
 export function Reset(): ReactElement {
   const [resetting, setResetting] = useState(false)
@@ -15,17 +16,18 @@ export function Reset(): ReactElement {
   }
 
   return (
-    <Container title='Reset configuration' initiallyHidden className={styles.container}>
-      <p className={styles.warning}>
-        Reset your Nevergreen configuration back to defaults. <strong>Please note, resetting your configuration can not
-        be undone!</strong>
-      </p>
+    <Page title='Reset configuration'>
+      <p>Reset your Nevergreen configuration back to defaults.</p>
+      <WarningMessages messages={[
+        'Please note, resetting your configuration can not be undone!',
+        'It\'s recommended to make a backup before resetting.'
+      ]}/>
       <DangerButton className={styles.reset}
                     onClick={resetConfiguration}
                     disabled={resetting}
                     icon={iBin}>
         Reset configuration
       </DangerButton>
-    </Container>
+    </Page>
   )
 }

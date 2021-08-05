@@ -7,15 +7,16 @@ interface LoadingProps {
   readonly children?: ReactNode;
   readonly loaded?: boolean;
   readonly dark?: boolean;
+  readonly className?: string;
 }
 
-export function Loading({loaded, children, dark = false}: LoadingProps): ReactElement {
+export function Loading({loaded, children, dark = false, className}: LoadingProps): ReactElement {
   if (loaded) {
     return <>{children}</>
   } else {
     const classes = cn(styles.loading, {
       [styles.dark]: dark
-    })
+    }, className)
 
     return (
       <div className={classes}

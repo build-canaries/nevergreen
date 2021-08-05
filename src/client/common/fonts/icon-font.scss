@@ -202,12 +202,6 @@
   content: '\e956';
 }
 
-.icon-list::before {
-  @extend .icon;
-
-  content: '\e9bb';
-}
-
 .icon-eye-blocked::before {
   @extend .icon;
 

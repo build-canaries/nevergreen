@@ -1,28 +1,29 @@
 @import '../../../common/layout';
 @import '../../../common/variables';
+@import '../../../common/responsive';
 
-.page {
-  background: $white;
+.tryAgain {
+  @include respond-to(tablet, desktop) {
+    display: inline-block;
+    margin: $margin-top $margin-right 0 0;
+  }
 }
 
-.header {
-  background-color: $light-grey;
-  padding: 1em;
+.cancel {
+  @include respond-to(tablet, desktop) {
+    display: inline-block;
+    margin: $margin-top 0 0 0;
+  }
 }
 
-.body {
-  padding: 1em;
-}
-
-.message {
+.messages {
   margin: 0 0 $margin-top 0;
-}
-
-.fetchButton {
-  display: block;
-  margin: $margin-top 0 0 0;
 }
 
 .form {
   margin: $margin-top 0 0 0;
+}
+
+.loading {
+  height: auto;
 }

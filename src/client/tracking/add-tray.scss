@@ -1,16 +1,4 @@
-@import '../common/variables';
 @import '../common/responsive';
-
-.addTray {
-  background-color: $white;
-  box-shadow: $shadow;
-  margin-bottom: 1em;
-  padding: 1em;
-
-  @include respond-to(very-small) {
-    overflow: scroll;
-  }
-}
 
 .url {
   margin-top: 0;

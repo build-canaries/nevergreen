@@ -12,18 +12,16 @@ import {send} from '../gateways/Gateway'
 import {encrypt} from '../gateways/SecurityGateway'
 import {Form} from '../common/forms/Form'
 import {firstError, FormErrors} from '../common/forms/Validation'
+import {Page} from '../common/Page'
+import {ROUTE_SETTINGS_TRACKING, routeFeedProjects} from '../Routes'
 
 type Fields = 'url'
-
-interface AddTrayProps {
-  readonly setRefreshTray: (trayId: string) => void;
-}
 
 function urlMatches(tray: Tray, url: string): boolean {
   return removeScheme(url) === removeScheme(tray.url)
 }
 
-export function AddTray({setRefreshTray}: AddTrayProps): ReactElement {
+export function AddTray(): ReactElement {
   const dispatch = useDispatch()
   const existingTrays = useSelector(getTrays)
 
@@ -32,14 +30,6 @@ export function AddTray({setRefreshTray}: AddTrayProps): ReactElement {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [accessToken, setAccessToken] = useState('')
-
-  const resetForm = () => {
-    setUrl('')
-    setAuthType(AuthTypes.none)
-    setUsername('')
-    setPassword('')
-    setAccessToken('')
-  }
 
   const onValidate = () => {
     const validationErrors: FormErrors<Fields> = []
@@ -68,15 +58,15 @@ export function AddTray({setRefreshTray}: AddTrayProps): ReactElement {
       encryptedAccessToken = await send(encrypt(accessToken))
     }
     dispatch(trayAdded(trayId, url, authType, username, encryptedPassword, encryptedAccessToken))
-    setRefreshTray(trayId)
-    resetForm()
+    return routeFeedProjects(trayId, true)
   }
 
   return (
-    <div className={styles.addTray}>
+    <Page title='Add CCTray XML feed'>
       <Form onValidate={onValidate}
             onSuccess={addTray}
-            submitButtonText='Add feed'>
+            submitButtonText='Add feed'
+            onCancel={ROUTE_SETTINGS_TRACKING}>
         {(submitting, validationErrors) => {
           return (
             <>
@@ -104,6 +94,6 @@ export function AddTray({setRefreshTray}: AddTrayProps): ReactElement {
           )
         }}
       </Form>
-    </div>
+    </Page>
   )
 }

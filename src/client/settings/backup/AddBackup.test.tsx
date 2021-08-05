@@ -7,7 +7,7 @@ import * as SecurityGateway from '../../gateways/SecurityGateway'
 import {fakeRequest} from '../../gateways/Gateway'
 import {AddBackup} from './AddBackup'
 import {getBackupLocations} from './RemoteLocationsReducer'
-import {ROUTE_SETTINGS} from '../../Routes'
+import {ROUTE_SETTINGS_BACKUP} from '../../Routes'
 
 beforeEach(() => {
   jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValue(fakeRequest(''))
@@ -48,7 +48,7 @@ it('should be able to add a custom server', async () => {
       where: 'custom',
       url: 'http://example.com'
     })])
-    expect(history.location.pathname).toEqual(ROUTE_SETTINGS)
+    expect(history.location.pathname).toEqual(ROUTE_SETTINGS_BACKUP)
   })
 })
 
@@ -66,7 +66,7 @@ it('should be able to add a GitHub gist', async () => {
     expect(Object.values(getBackupLocations(store.getState()))).toEqual([expect.objectContaining({
       where: 'github'
     })])
-    expect(history.location.pathname).toEqual(ROUTE_SETTINGS)
+    expect(history.location.pathname).toEqual(ROUTE_SETTINGS_BACKUP)
   })
 })
 

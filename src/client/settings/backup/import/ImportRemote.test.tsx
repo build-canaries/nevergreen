@@ -2,14 +2,13 @@ import React from 'react'
 import userEvent from '@testing-library/user-event'
 import {buildRemoteBackupLocation, buildState, render} from '../../../testHelpers'
 import {toJson} from '../../../common/Json'
-import {ROUTE_ANCHOR_BACKUP, ROUTE_IMPORT_REMOTE, ROUTE_SETTINGS, routeImportRemote} from '../../../Routes'
-import {screen, waitFor} from '@testing-library/react'
+import {ROUTE_IMPORT_REMOTE, ROUTE_SETTINGS_BACKUP, routeImportRemote} from '../../../Routes'
+import {screen, waitFor, waitForElementToBeRemoved} from '@testing-library/react'
 import {BACKUP_REMOTE_LOCATIONS_ROOT} from '../RemoteLocationsReducer'
 import {ImportRemote} from './ImportRemote'
 import * as BackupGateway from '../../../gateways/BackupGateway'
 import * as Gateway from '../../../gateways/Gateway'
 import {fakeRequest} from '../../../gateways/Gateway'
-import {Route} from 'react-router'
 
 it('should import valid configuration and redirect to the settings page', async () => {
   const state = {
@@ -23,20 +22,18 @@ it('should import valid configuration and redirect to the settings page', async 
     configuration: toJson(buildState())
   }))
 
-  const {history} = render(
-    <Route path={ROUTE_IMPORT_REMOTE}><ImportRemote/></Route>,
+  const {history} = render(<ImportRemote/>, {
     state,
-    routeImportRemote('locationId'))
-
-  await waitFor(() => {
-    expect(screen.queryByLabelText('Configuration to import')).toBeInTheDocument()
+    mountPath: ROUTE_IMPORT_REMOTE,
+    currentLocation: routeImportRemote('locationId')
   })
+
+  await waitForElementToBeRemoved(screen.queryByTestId('loading'))
 
   userEvent.click(screen.getByRole('button', {name: 'Import'}))
 
   await waitFor(() => {
-    expect(history.location.pathname).toEqual(ROUTE_SETTINGS)
-    expect(history.location.hash).toEqual(ROUTE_ANCHOR_BACKUP)
+    expect(history.location.pathname).toEqual(ROUTE_SETTINGS_BACKUP)
   })
 })
 
@@ -52,10 +49,11 @@ it('should display an error if the configuration is syntactically invalid JSON',
     configuration: '{invalid-json'
   }))
 
-  render(
-    <Route path={ROUTE_IMPORT_REMOTE}><ImportRemote/></Route>,
+  render(<ImportRemote/>, {
     state,
-    routeImportRemote('locationId'))
+    mountPath: ROUTE_IMPORT_REMOTE,
+    currentLocation: routeImportRemote('locationId')
+  })
 
   await waitFor(() => {
     expect(screen.queryByText('Unable to fetch remote backup because of an error')).toBeInTheDocument()
@@ -74,10 +72,11 @@ it('should display an error if the configuration is semantically invalid JSON', 
     configuration: '{"trays":{"id": {}}}' // missing required attributes
   }))
 
-  render(
-    <Route path={ROUTE_IMPORT_REMOTE}><ImportRemote/></Route>,
+  render(<ImportRemote/>, {
     state,
-    routeImportRemote('locationId'))
+    mountPath: ROUTE_IMPORT_REMOTE,
+    currentLocation: routeImportRemote('locationId')
+  })
 
   await waitFor(() => {
     expect(screen.queryByLabelText('Configuration to import')).toBeInTheDocument()
@@ -96,14 +95,14 @@ it('should redirect to the settings page if no backup location with ID exists', 
     [BACKUP_REMOTE_LOCATIONS_ROOT]: {}
   }
 
-  const {history} = render(
-    <Route path={ROUTE_IMPORT_REMOTE}><ImportRemote/></Route>,
+  const {history} = render(<ImportRemote/>, {
     state,
-    routeImportRemote('does-not-exist-id'))
+    mountPath: ROUTE_IMPORT_REMOTE,
+    currentLocation: routeImportRemote('does-not-existt-id')
+  })
 
   await waitFor(() => {
-    expect(history.location.pathname).toEqual(ROUTE_SETTINGS)
-    expect(history.location.hash).toEqual(ROUTE_ANCHOR_BACKUP)
+    expect(history.location.pathname).toEqual(ROUTE_SETTINGS_BACKUP)
   })
 })
 
@@ -117,10 +116,11 @@ it('should display an error and a button to try again if configuration can not b
   }
   jest.spyOn(Gateway, 'send').mockRejectedValue(new Error('some-error'))
 
-  render(
-    <Route path={ROUTE_IMPORT_REMOTE}><ImportRemote/></Route>,
+  render(<ImportRemote/>, {
     state,
-    routeImportRemote('locationId'))
+    mountPath: ROUTE_IMPORT_REMOTE,
+    currentLocation: routeImportRemote('locationId')
+  })
 
   await waitFor(() => {
     expect(screen.queryByText('Unable to fetch remote backup because of an error')).toBeInTheDocument()
@@ -140,19 +140,44 @@ it('should be able to cancel back to settings', async () => {
     configuration: toJson(buildState())
   }))
 
-  const {history} = render(
-    <Route path={ROUTE_IMPORT_REMOTE}><ImportRemote/></Route>,
+  const {history} = render(<ImportRemote/>, {
     state,
-    routeImportRemote('locationId'))
+    mountPath: ROUTE_IMPORT_REMOTE,
+    currentLocation: routeImportRemote('locationId')
+  })
 
   await waitFor(() => {
     expect(screen.queryByLabelText('Configuration to import')).toBeInTheDocument()
   })
 
-  userEvent.click(screen.getByRole('link', {name: 'Cancel'}))
+  userEvent.click(screen.getByRole('button', {name: 'Cancel'}))
 
   await waitFor(() => {
-    expect(history.location.pathname).toEqual(ROUTE_SETTINGS)
-    expect(history.location.hash).toEqual(ROUTE_ANCHOR_BACKUP)
+    expect(history.location.pathname).toEqual(ROUTE_SETTINGS_BACKUP)
+  })
+})
+
+it('should be able to cancel back to settings if configuration can not be fetched', async () => {
+  const state = {
+    [BACKUP_REMOTE_LOCATIONS_ROOT]: {
+      locationId: buildRemoteBackupLocation({
+        internalId: 'locationId'
+      })
+    }
+  }
+  jest.spyOn(Gateway, 'send').mockRejectedValue(new Error('some-error'))
+
+  const {history} = render(<ImportRemote/>, {
+    state,
+    mountPath: ROUTE_IMPORT_REMOTE,
+    currentLocation: routeImportRemote('locationId')
+  })
+
+  await waitForElementToBeRemoved(screen.queryByTestId('loading'))
+
+  userEvent.click(screen.getByRole('button', {name: 'Cancel'}))
+
+  await waitFor(() => {
+    expect(history.location.pathname).toEqual(ROUTE_SETTINGS_BACKUP)
   })
 })

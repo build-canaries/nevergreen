@@ -53,39 +53,10 @@ export function KeyboardShortcuts(): ReactElement {
           </span>
         </li>
         <li className={styles.shortcut}>
-          <div>Go to the Tracking page</div>
-          <span className={styles.multipleShortcuts}>
-            <kbd className={styles.binding}>t</kbd> or <kbd className={styles.binding}>2</kbd>
-          </span>
-        </li>
-        <li className={styles.shortcut}>
           <div>Go to the Settings page</div>
           <span className={styles.multipleShortcuts}>
             <kbd className={styles.binding}>s</kbd> or <kbd className={styles.binding}>,</kbd> or <kbd
-            className={styles.binding}>3</kbd>
-          </span>
-        </li>
-      </ul>
-
-      <h2 className={styles.header}>Tracking</h2>
-      <ul className={styles.shortcuts}>
-        <li className={styles.shortcut}>
-          <div>Includes all projects for the tray with the given index (the first tray is at index 0)</div>
-          <span className={styles.multipleShortcuts}>
-            <kbd className={styles.binding}>+</kbd><kbd className={styles.binding}>0..n</kbd> or <kbd
-            className={styles.binding}>&#61;</kbd><kbd className={styles.binding}>0..n</kbd>
-          </span>
-        </li>
-        <li className={styles.shortcut}>
-          <div>Excludes all projects for the tray with the given index (the first tray is at index 0)</div>
-          <span className={styles.multipleShortcuts}>
-            <kbd className={styles.binding}>-</kbd><kbd className={styles.binding}>0..n</kbd>
-          </span>
-        </li>
-        <li className={styles.shortcut}>
-          <div>Refresh the tray with the given index (the first tray is at index 0)</div>
-          <span className={styles.multipleShortcuts}>
-            <kbd className={styles.binding}>r</kbd><kbd className={styles.binding}>0..n</kbd>
+            className={styles.binding}>2</kbd>
           </span>
         </li>
       </ul>

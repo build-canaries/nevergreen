@@ -1,6 +1,7 @@
 import React, {ReactElement} from 'react'
 import {HelpArticle, HelpProps} from '../../help/HelpArticle'
 import {HelpForm, HelpInput} from '../../help/HelpForms'
+import {ROUTE_SETTINGS_NOTIFICATIONS} from '../../Routes'
 
 const KEYWORDS = [
   'settings',
@@ -17,7 +18,7 @@ export function NotificationSettingsHelp({searchQuery, helpLink}: HelpProps): Re
     <HelpArticle keywords={KEYWORDS}
                  searchQuery={searchQuery}
                  title='Notifications settings'
-                 page='/settings'>
+                 page={ROUTE_SETTINGS_NOTIFICATIONS}>
       <HelpForm>
         <HelpInput name='Show system notifications'>
           When <em>enabled</em> system (aka desktop) notifications will be shown when a project is sick or a sick

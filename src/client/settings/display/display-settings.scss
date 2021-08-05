@@ -4,10 +4,6 @@
 @import '../../common/forms/button';
 @import '../../common/fonts/icon-font';
 
-.container {
-  padding: 1em;
-}
-
 .showTrayName {
   @extend %first;
 }
@@ -21,7 +17,7 @@
 
 .dropDown {
   @include respond-to(tablet, desktop) {
-    width: 35em;
+    width: 20em;
   }
 }
 

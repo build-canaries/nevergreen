@@ -75,7 +75,7 @@ export function Monitor({fullScreen, requestFullScreen}: MonitorProps): ReactEle
     <div className={monitorClassNames}>
       <Title>Monitor</Title>
       {!traysAdded && (
-        <SuccessMessage message='Add a CI server via the tracking page to start monitoring'/>
+        <SuccessMessage message='Add a feed via the tracking page to start monitoring'/>
       )}
       {traysAdded && (
         <Loading dark loaded={loaded}>

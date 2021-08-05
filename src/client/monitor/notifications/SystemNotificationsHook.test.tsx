@@ -29,7 +29,7 @@ it('should not send notifications regardless of project transitions if system no
     })
   ]
 
-  render(<HookWrapper projects={projects}/>, state)
+  render(<HookWrapper projects={projects}/>, {state})
 
   expect(SystemNotifications.sendSystemNotification).not.toBeCalled()
 })
@@ -49,7 +49,7 @@ it('should send sick notification when project becomes sick', () => {
     })
   ]
 
-  render(<HookWrapper projects={projects}/>, state)
+  render(<HookWrapper projects={projects}/>, {state})
 
   expect(SystemNotifications.sendSystemNotification).toBeCalledWith({title: 'project is sick!', body: 'some-name'})
 })
@@ -69,7 +69,7 @@ it('should send not sick notification when project is no longer sick', () => {
     })
   ]
 
-  render(<HookWrapper projects={projects}/>, state)
+  render(<HookWrapper projects={projects}/>, {state})
 
   expect(SystemNotifications.sendSystemNotification).toBeCalledWith({
     title: 'project is no longer sick!',
@@ -92,7 +92,7 @@ it('should not send sick notifications when project is still sick', () => {
     })
   ]
 
-  render(<HookWrapper projects={projects}/>, state)
+  render(<HookWrapper projects={projects}/>, {state})
 
   expect(SystemNotifications.sendSystemNotification).not.toBeCalled()
 })

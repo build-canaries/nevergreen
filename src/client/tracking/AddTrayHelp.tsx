@@ -1,6 +1,7 @@
 import React, {ReactElement} from 'react'
 import {HelpArticle, HelpProps} from '../help/HelpArticle'
 import {ExternalLink} from '../common/ExternalLink'
+import {ROUTE_SETTINGS_TRACKING} from '../Routes'
 
 const KEYWORDS = [
   'tracking',
@@ -20,7 +21,7 @@ export function AddTrayHelp({searchQuery}: HelpProps): ReactElement {
     <HelpArticle title='Adding a CCTray XML feed'
                  keywords={KEYWORDS}
                  searchQuery={searchQuery}
-                 page='/tracking'>
+                 page={ROUTE_SETTINGS_TRACKING}>
       <p>
         To start tracking your projects set the <strong>URL</strong> to point at the CCTray XML feed. You can also
         add a <strong>username</strong> and <strong>password</strong> or an <strong>access token</strong> if your CCTray
@@ -40,7 +41,7 @@ export function CCTrayLocationsHelp({searchQuery}: HelpProps): ReactElement {
     <HelpArticle title='CCTray XML feed location'
                  keywords={['tracking', 'adding', 'cctray', 'xml', 'url', 'location', 'find', 'feed']}
                  searchQuery={searchQuery}
-                 page='/tracking'>
+                 page={ROUTE_SETTINGS_TRACKING}>
       See the <ExternalLink href='https://cctray.org/servers/'>CCTray specification servers page</ExternalLink> for
       information about finding the CCTray XML feed for your server.
     </HelpArticle>

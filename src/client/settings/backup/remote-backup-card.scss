@@ -1,0 +1,18 @@
+@import '../../common/variables';
+@import '../../common/layout';
+
+.card {
+  height: 100%;
+}
+
+.exportButton {
+  @include respond-to(tablet, desktop) {
+    display: inline-block;
+    margin: $margin-top $margin-right 0 0;
+  }
+}
+
+.autoExport {
+  display: block;
+  margin: $margin-top 0 0 0;
+}

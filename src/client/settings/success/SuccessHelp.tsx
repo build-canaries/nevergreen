@@ -1,6 +1,7 @@
 import React, {ReactElement} from 'react'
 import {ExternalLink} from '../../common/ExternalLink'
 import {HelpArticle, HelpProps} from '../../help/HelpArticle'
+import {ROUTE_SETTINGS_SUCCESS} from '../../Routes'
 
 const KEYWORDS = [
   'success',
@@ -18,12 +19,12 @@ export function SuccessHelp({searchQuery, helpLink}: HelpProps): ReactElement {
     <HelpArticle keywords={KEYWORDS}
                  searchQuery={searchQuery}
                  title='Success messages'
-                 page='/settings'>
+                 page={ROUTE_SETTINGS_SUCCESS}>
       <p>
         You can add text messages or any <ExternalLink
         href='https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#Supported_image_formats'>valid image
         URLs</ExternalLink>, one of these will get randomly displayed when no interesting projects are displayed on the
-        Monitor page {helpLink('monitor')}.
+        Monitor page {helpLink('monitor')}. If no success messages are added then a blank screen will be shown.
       </p>
       <p>
         Messages are previewed in a 16:9 ratio which is how they would look on a full HD TV (1920x1080).

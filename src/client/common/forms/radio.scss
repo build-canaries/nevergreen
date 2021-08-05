@@ -75,8 +75,11 @@
     & + .children {
       cursor: default;
       filter: alpha(opacity=50);
-      opacity: 0.5;
       zoom: 1;
+    }
+
+    &:not(.readOnly) + .children {
+      opacity: 0.5;
     }
   }
 

@@ -1,6 +1,7 @@
 import React, {ReactElement} from 'react'
 import {HelpArticle, HelpProps} from '../../help/HelpArticle'
 import {HelpForm, HelpInput} from '../../help/HelpForms'
+import {ROUTE_SETTINGS_DISPLAY} from '../../Routes'
 
 const KEYWORDS = [
   'settings',
@@ -24,7 +25,7 @@ export function DisplaySettingsHelp({searchQuery, helpLink}: HelpProps): ReactEl
     <HelpArticle keywords={KEYWORDS}
                  searchQuery={searchQuery}
                  title='Display settings'
-                 page='/settings'>
+                 page={ROUTE_SETTINGS_DISPLAY}>
       <HelpForm>
         <HelpInput name='Show feed identifier'>
           When <em>enabled</em> the CI server name {helpLink('name')} or URL will be displayed on the Monitor page.

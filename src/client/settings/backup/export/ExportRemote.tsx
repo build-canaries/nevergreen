@@ -9,8 +9,10 @@ import {backupExported} from '../BackupActionCreators'
 import {Form} from '../../../common/forms/Form'
 import {useParams} from 'react-router-dom'
 import {Redirect} from 'react-router'
-import {ROUTE_SETTINGS_ANCHOR_BACKUP} from '../../../Routes'
-import {ExportPage} from './ExportPage'
+import {ROUTE_SETTINGS_BACKUP} from '../../../Routes'
+import {Page} from '../../../common/Page'
+import {backupSummary} from '../BackupSummary'
+import {Summary} from '../../../common/Summary'
 
 interface ExportRemoteProps {
   readonly location: RemoteLocation;
@@ -23,7 +25,7 @@ export function ExportRemote(): ReactElement {
   if (location) {
     return <ExportRemoteLocation location={location}/>
   } else {
-    return <Redirect to={ROUTE_SETTINGS_ANCHOR_BACKUP}/>
+    return <Redirect to={ROUTE_SETTINGS_BACKUP}/>
   }
 }
 
@@ -34,13 +36,14 @@ function ExportRemoteLocation({location}: ExportRemoteProps): ReactElement {
   const exportNow = async () => {
     const res = await send(exportConfiguration(location, configuration))
     dispatch(backupExported(location.internalId, res.id))
-    return ROUTE_SETTINGS_ANCHOR_BACKUP
+    return ROUTE_SETTINGS_BACKUP
   }
 
   return (
-    <ExportPage title='Export remote'
-                location={location}>
+    <Page title='Export remote'>
+      <Summary values={backupSummary(location)}/>
       <Form onSuccess={exportNow}
+            onCancel={ROUTE_SETTINGS_BACKUP}
             submitButtonText='Export'>
         {() => {
           return (
@@ -50,6 +53,6 @@ function ExportRemoteLocation({location}: ExportRemoteProps): ReactElement {
           )
         }}
       </Form>
-    </ExportPage>
+    </Page>
   )
 }

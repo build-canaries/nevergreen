@@ -28,6 +28,22 @@ export const CI_OPTIONS = [
   {value: 'go', display: 'GoCD'}
 ]
 
+export function serverTypeDisplay(serverType: string): string {
+  const match = CI_OPTIONS.find((option) => option.value === serverType)
+  return match ? match.display : 'Unknown'
+}
+
+export function authTypeDisplay(authType: AuthTypes): string {
+  switch (authType) {
+    case AuthTypes.basic:
+      return 'Basic auth'
+    case AuthTypes.none:
+      return 'No auth'
+    case AuthTypes.token:
+      return 'Access token'
+  }
+}
+
 export function generateRandomName(): string {
   return `${randomFrom(adjectives)} ${randomFrom(nouns)}`
 }

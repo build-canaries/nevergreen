@@ -1,14 +1,13 @@
 import React, {ReactElement} from 'react'
-import {Container} from '../../common/Container'
 import {NotificationsSystem} from './NotificationsSystem'
 import {NotificationsAudio} from './NotificationsAudio'
-import styles from './notification-settings.scss'
+import {Page} from '../../common/Page'
 
 export function NotificationSettings(): ReactElement {
   return (
-    <Container title='Notifications' className={styles.container}>
+    <Page title='Notifications settings'>
       <NotificationsSystem/>
       <NotificationsAudio/>
-    </Container>
+    </Page>
   )
 }

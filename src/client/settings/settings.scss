@@ -1,0 +1,67 @@
+@import '../common/variables';
+@import '../common/responsive';
+@import '../common/accessibility';
+
+.settings {
+  margin: 0 auto;
+  max-width: $max-page-width;
+  width: 100%;
+
+  @include respond-to(tablet, desktop) {
+    display: grid;
+    grid-template-columns: 25% 1fr;
+  }
+}
+
+.menu {
+  background-color: $off-black;
+  color: $white;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.link {
+  color: $white;
+  display: inline-block;
+  padding: 1em;
+  text-decoration: none;
+  width: 100%;
+
+  &:visited {
+    color: $white;
+  }
+
+  &:not(.activeLink) {
+    @include interactive(
+      $color: $white,
+      $background-color: $off-black,
+      $border-color: transparent);
+  }
+
+  @include respond-to(tablet, desktop) {
+    padding: 1em 1em 1em 2em;
+  }
+}
+
+.activeLink {
+  background-color: $white;
+  color: $off-black;
+
+  &:visited {
+    color: $off-black;
+  }
+
+  &:hover,
+  &:focus {
+    background-color: $white;
+    color: $off-black;
+    cursor: default;
+  }
+}
+
+.menuIcon {
+  &::before {
+    margin-right: 1em;
+  }
+}

@@ -1,11 +1,4 @@
 @import '../../common/variables';
-@import '../../common/responsive';
-@import '../../common/typography';
-
-.page {
-  background-color: $white;
-  padding: 1em;
-}
 
 .addMessageInput {
   margin: 0;
@@ -16,10 +9,5 @@
 }
 
 .add {
-  margin: $margin-top 0 0 0;
-}
-
-.cancel {
-  display: inline-block;
   margin: $margin-top 0 0 0;
 }

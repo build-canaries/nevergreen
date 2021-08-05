@@ -2,7 +2,7 @@ import React, {ReactElement, useState} from 'react'
 import {Modal} from '../common/Modal'
 import {Input} from '../common/forms/Input'
 import {AddTrayHelp, CCTrayLocationsHelp} from '../tracking/AddTrayHelp'
-import {TraySettingsHelp} from '../tracking/settings/TraySettingsHelp'
+import {ChangeDetailsHelp} from '../tracking/settings/ChangeDetailsHelp'
 import {SuccessHelp} from '../settings/success/SuccessHelp'
 import {AvailableProjectsHelp} from '../tracking/projects/AvailableProjectsHelp'
 import {GeneralSettingsHelp} from '../settings/general/GeneralSettingsHelp'
@@ -59,7 +59,7 @@ export function Help({initiallyShow}: HelpProps): ReactElement {
         <AddTrayHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <CCTrayLocationsHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <AvailableProjectsHelp searchQuery={searchQuery} helpLink={helpLink}/>
-        <TraySettingsHelp searchQuery={searchQuery} helpLink={helpLink}/>
+        <ChangeDetailsHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <GeneralSettingsHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <DisplaySettingsHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <NotificationSettingsHelp searchQuery={searchQuery} helpLink={helpLink}/>

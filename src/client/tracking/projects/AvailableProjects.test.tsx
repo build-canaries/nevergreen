@@ -1,5 +1,4 @@
 import React from 'react'
-import noop from 'lodash/noop'
 import userEvent from '@testing-library/user-event'
 import {screen, waitFor} from '@testing-library/react'
 import {buildProject, buildProjectError, buildTray, render} from '../../testHelpers'
@@ -9,13 +8,7 @@ import {TRAYS_ROOT} from '../TraysReducer'
 import {PROJECTS_ROOT} from '../ProjectsReducer'
 import {SELECTED_ROOT} from '../SelectedReducer'
 import * as ProjectsGateway from '../../gateways/ProjectsGateway'
-
-const DEFAULT_PROPS = {
-  index: 1,
-  tray: buildTray(),
-  requiresRefresh: false,
-  setRequiresRefresh: noop
-}
+import {REFRESH_HASH} from '../../Routes'
 
 beforeEach(() => {
   jest.spyOn(ProjectsGateway, 'fetchAll').mockResolvedValue(fakeRequest([]))
@@ -36,7 +29,7 @@ it('should be able to select projects', () => {
     }
   }
 
-  render(<AvailableProjects {...DEFAULT_PROPS} tray={tray}/>, state)
+  render(<AvailableProjects tray={tray}/>, {state})
   const selectInput = screen.getByLabelText(/some project/)
 
   expect(selectInput).not.toBeChecked()
@@ -66,7 +59,7 @@ it('should correctly show and remove errors returned while refreshing', async ()
     }
   }
 
-  render(<AvailableProjects {...DEFAULT_PROPS} tray={tray}/>, state)
+  render(<AvailableProjects tray={tray}/>, {state})
   userEvent.click(screen.getByRole('button', {name: 'Refresh'}))
 
   await waitFor(() => {
@@ -93,7 +86,7 @@ it('should show a warning if there are no projects', () => {
       trayId: []
     }
   }
-  render(<AvailableProjects {...DEFAULT_PROPS} tray={tray}/>, state)
+  render(<AvailableProjects tray={tray}/>, {state})
   expect(screen.queryByText('No projects fetched, please refresh')).toBeInTheDocument()
 })
 
@@ -116,7 +109,7 @@ it('should show a warning if no projects match the filter', () => {
     }
   }
 
-  render(<AvailableProjects {...DEFAULT_PROPS} tray={tray}/>, state)
+  render(<AvailableProjects tray={tray}/>, {state})
   userEvent.type(screen.getByLabelText('Search'), 'bar')
 
   expect(screen.queryByText('No matching projects, please update your filter')).toBeInTheDocument()
@@ -139,9 +132,30 @@ it('should show an error if the search is invalid', () => {
       trayId: []
     }
   }
-  render(<AvailableProjects {...DEFAULT_PROPS} tray={tray}/>, state)
+  render(<AvailableProjects tray={tray}/>, {state})
   userEvent.type(screen.getByLabelText('Search'), '?')
   expect(screen.queryByText(/^Project search not applied/)).toBeInTheDocument()
+})
+
+it('should refresh automatically if the url contains #refresh', () => {
+  jest.spyOn(ProjectsGateway, 'fetchAll').mockResolvedValue(fakeRequest([]))
+  const tray = buildTray({trayId: 'trayId'})
+  const project = buildProject({trayId: 'trayId', projectId: 'projectId', description: 'some project'})
+  const state = {
+    [TRAYS_ROOT]: {
+      trayId: tray
+    },
+    [PROJECTS_ROOT]: {
+      trayId: [project]
+    },
+    [SELECTED_ROOT]: {
+      trayId: []
+    }
+  }
+
+  render(<AvailableProjects tray={tray}/>, {state, currentLocation: `/${REFRESH_HASH}`})
+
+  expect(ProjectsGateway.fetchAll).toHaveBeenCalled()
 })
 
 describe('accessibility', () => {
@@ -163,7 +177,7 @@ describe('accessibility', () => {
         trayId: []
       }
     }
-    render(<AvailableProjects {...DEFAULT_PROPS} tray={tray}/>, state)
+    render(<AvailableProjects tray={tray}/>, {state})
     expect(screen.getByTestId('available-projects-list')).toHaveAttribute('aria-live', 'polite')
   })
 
@@ -187,7 +201,7 @@ describe('accessibility', () => {
         trayId: []
       }
     }
-    render(<AvailableProjects {...DEFAULT_PROPS} tray={tray}/>, state)
+    render(<AvailableProjects tray={tray}/>, {state})
     expect(screen.getByTestId('available-projects-list')).toHaveAttribute('aria-relevant', 'additions')
   })
 })

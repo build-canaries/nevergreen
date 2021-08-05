@@ -1,7 +1,7 @@
 import React, {ReactElement, useCallback, useState} from 'react'
 import styles from './export-local.scss'
 import {SecondaryButton} from '../../../common/forms/Button'
-import {iFloppyDisk, iPaste} from '../../../common/fonts/Icons'
+import {iCross, iFloppyDisk, iPaste} from '../../../common/fonts/Icons'
 import {useClipboard} from './ClipboardHook'
 import {useSelector} from 'react-redux'
 import {toExportableConfigurationJson} from '../../../configuration/Configuration'
@@ -9,8 +9,10 @@ import {TextArea} from '../TextArea'
 import {TimedMessage} from '../TimedMessage'
 import {MessagesType} from '../../../common/Messages'
 import {errorMessage} from '../../../common/Utils'
-import {ExportPage} from './ExportPage'
 import {saveFile} from '../FileSystem'
+import {Page} from '../../../common/Page'
+import {ROUTE_SETTINGS_BACKUP} from '../../../Routes'
+import {LinkButton} from '../../../common/LinkButton'
 
 export function ExportLocal(): ReactElement {
   const configuration = useSelector(toExportableConfigurationJson)
@@ -42,7 +44,7 @@ export function ExportLocal(): ReactElement {
   }
 
   return (
-    <ExportPage title='Export local'>
+    <Page title='Export locally'>
       <TimedMessage className={styles.message}
                     type={messageType}
                     clear={() => setMessage([])}
@@ -68,6 +70,11 @@ export function ExportLocal(): ReactElement {
                 value={configuration}
                 readOnly
                 id='export-data'/>
-    </ExportPage>
+      <LinkButton to={ROUTE_SETTINGS_BACKUP}
+                  icon={iCross}
+                  className={styles.cancel}>
+        Cancel
+      </LinkButton>
+    </Page>
   )
 }

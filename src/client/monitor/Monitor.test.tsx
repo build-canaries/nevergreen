@@ -49,8 +49,8 @@ it('should show a helpful message if no trays are added', () => {
   const state = {
     [TRAYS_ROOT]: {}
   }
-  render(<Monitor {...DEFAULT_PROPS}/>, state)
-  expect(screen.queryByText('Add a CI server via the tracking page to start monitoring')).toBeInTheDocument()
+  render(<Monitor {...DEFAULT_PROPS}/>, {state})
+  expect(screen.queryByText('Add a feed via the tracking page to start monitoring')).toBeInTheDocument()
 })
 
 it('should show a loading screen when first switching to the page', () => {
@@ -59,7 +59,7 @@ it('should show a loading screen when first switching to the page', () => {
       [trayId]: buildTray({trayId})
     }
   }
-  render(<Monitor {...DEFAULT_PROPS}/>, state)
+  render(<Monitor {...DEFAULT_PROPS}/>, {state})
   expect(screen.queryByTestId('loading')).toBeInTheDocument()
 })
 
@@ -74,7 +74,7 @@ it('should show a success message if there are no projects', async () => {
     },
     [SUCCESS_ROOT]: ['some-success-message']
   }
-  render(<Monitor {...DEFAULT_PROPS}/>, state)
+  render(<Monitor {...DEFAULT_PROPS}/>, {state})
   await waitFor(() => {
     expect(screen.queryByText('some-success-message')).toBeInTheDocument()
   })
@@ -92,7 +92,7 @@ it('should not try updating after the user has navigated away from the page', ()
     },
     [SUCCESS_ROOT]: ['some-success-message']
   }
-  const {unmount} = render(<Monitor {...DEFAULT_PROPS}/>, state)
+  const {unmount} = render(<Monitor {...DEFAULT_PROPS}/>, {state})
   unmount()
   // we can't assert on React internals logging warnings, if this is broken you'll see
   // a log about "Warning: Can't perform a React state update on an unmounted component."
@@ -108,7 +108,7 @@ it('should display an error if the Nevergreen server is having issues', async ()
       [trayId]: buildTray({trayId})
     }
   }
-  render(<Monitor {...DEFAULT_PROPS}/>, state)
+  render(<Monitor {...DEFAULT_PROPS}/>, {state})
   await waitFor(() => {
     expect(screen.queryByText('some-error')).toBeInTheDocument()
   })
@@ -142,7 +142,7 @@ describe('audio notifications', () => {
       }
     }
 
-    const {unmount} = render(<Monitor {...DEFAULT_PROPS}/>, state)
+    const {unmount} = render(<Monitor {...DEFAULT_PROPS}/>, {state})
 
     await waitFor(() => {
       // eslint-disable-next-line @typescript-eslint/unbound-method
@@ -172,7 +172,7 @@ describe('audio notifications', () => {
       }
     }
 
-    render(<Monitor {...DEFAULT_PROPS}/>, state)
+    render(<Monitor {...DEFAULT_PROPS}/>, {state})
 
     await waitFor(() => {
       // eslint-disable-next-line @typescript-eslint/unbound-method
@@ -197,7 +197,7 @@ describe('audio notifications', () => {
       }
     }
 
-    render(<Monitor {...DEFAULT_PROPS}/>, state)
+    render(<Monitor {...DEFAULT_PROPS}/>, {state})
 
     await waitFor(() => {
       // eslint-disable-next-line @typescript-eslint/unbound-method
@@ -223,7 +223,7 @@ describe('audio notifications', () => {
       }
     }
 
-    render(<Monitor {...DEFAULT_PROPS}/>, state)
+    render(<Monitor {...DEFAULT_PROPS}/>, {state})
 
     await waitFor(() => {
       // eslint-disable-next-line @typescript-eslint/unbound-method

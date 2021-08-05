@@ -4,7 +4,6 @@ import {ErrorMessages, WarningMessages} from '../../common/Messages'
 import {Input} from '../../common/forms/Input'
 import {Refresh} from './Refresh'
 import {errorMessage, isBlank, notEmpty} from '../../common/Utils'
-import {VisuallyHidden} from '../../common/VisuallyHidden'
 import styles from './available-projects.scss'
 import {SecondaryButton} from '../../common/forms/Button'
 import {iCheckboxChecked, iCheckboxUnchecked} from '../../common/fonts/Icons'
@@ -17,21 +16,15 @@ import {fetchAll, ProjectsResponse} from '../../gateways/ProjectsGateway'
 import {Request, send} from '../../gateways/Gateway'
 import {Loading} from '../../common/Loading'
 import {Tray} from '../../domain/Tray'
-import {useShortcut} from '../../common/Keyboard'
+import {useLocation} from 'react-router-dom'
+import {REFRESH_HASH} from '../../Routes'
 
 interface AvailableProjectsProps {
   readonly tray: Tray;
-  readonly index: number;
-  readonly requiresRefresh: boolean;
-  readonly setRequiresRefresh: (required: boolean) => void;
 }
 
-export function AvailableProjects({
-                                    index,
-                                    tray,
-                                    requiresRefresh,
-                                    setRequiresRefresh
-                                  }: AvailableProjectsProps): ReactElement {
+export function AvailableProjects({tray}: AvailableProjectsProps): ReactElement {
+  const {hash} = useLocation()
   const dispatch = useDispatch()
   const projects = useSelector(getProjectsForTray(tray.trayId))
   const selected = useSelector(getSelectedProjectsForTray(tray.trayId))
@@ -41,7 +34,6 @@ export function AvailableProjects({
   const [loaded, setLoaded] = useState(true)
   const pendingRequest = useRef<Request<ProjectsResponse>>()
   const [filterErrors, setFilterErrors] = useState('')
-  const rootNode = useRef<HTMLDivElement>(null)
 
   const refreshTray = useCallback(async () => {
     setLoaded(false)
@@ -60,17 +52,16 @@ export function AvailableProjects({
     } catch (e) {
       setErrors([errorMessage(e)])
     }
-    // eslint-disable-next-line require-atomic-updates
     pendingRequest.current = undefined
     setLoaded(true)
   }, [dispatch, projects, tray])
 
   useEffect(() => {
-    if (requiresRefresh) {
+    if (hash === REFRESH_HASH) {
       void refreshTray()
-      setRequiresRefresh(false)
     }
-  }, [requiresRefresh, setRequiresRefresh, refreshTray])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     return () => {
@@ -95,12 +86,6 @@ export function AvailableProjects({
     }
   }
 
-  const scrollToTop = () => {
-    if (rootNode.current) {
-      rootNode.current.scrollIntoView()
-    }
-  }
-
   const filteredProjects = useMemo(() => {
     if (filter) {
       return projects.filter((project) => filter.exec(project.description))
@@ -111,6 +96,7 @@ export function AvailableProjects({
   const hasProjects = notEmpty(projects)
   const hasProjectsFiltered = notEmpty(filteredProjects)
   const hasErrors = notEmpty(errors)
+  const controlsDisabled = !loaded || !hasProjects || hasErrors
 
   const includeAll = useCallback(() => {
     filteredProjects
@@ -122,30 +108,28 @@ export function AvailableProjects({
     filteredProjects.forEach((project) => dispatch(projectSelected(tray.trayId, project.projectId, false)))
   }, [dispatch, tray.trayId, filteredProjects])
 
-  useShortcut([`+ ${index}`, `= ${index}`], includeAll)
-  useShortcut(`- ${index}`, excludeAll)
-
   const controls = (
     <div className={styles.controls}>
       <fieldset className={styles.toggles}>
         <legend className={styles.legend}>Available projects</legend>
         <SecondaryButton className={styles.includeAll}
                          onClick={includeAll}
-                         data-locator='include-all'
-                         icon={iCheckboxChecked}>
+                         icon={iCheckboxChecked}
+                         disabled={controlsDisabled}>
           Include all
         </SecondaryButton>
         <SecondaryButton className={styles.excludeAll}
                          onClick={excludeAll}
-                         data-locator='exclude-all'
-                         icon={iCheckboxUnchecked}>
+                         icon={iCheckboxUnchecked}
+                         disabled={controlsDisabled}>
           Exclude all
         </SecondaryButton>
         <div className={styles.projectFilter}>
           <Input className={styles.projectFilterInput}
                  onChange={updateFilter}
                  type='search'
-                 placeholder='regular expression'>
+                 placeholder='regular expression'
+                 disabled={controlsDisabled}>
             <span className={styles.search}>Search</span>
           </Input>
         </div>
@@ -155,58 +139,46 @@ export function AvailableProjects({
   )
 
   const buildItems = (
-    <ol className={styles.buildItems}
-        aria-live='polite'
-        aria-relevant='additions'
-        data-locator='available-projects-list'>
-      {
-        filteredProjects.map((project) => {
-          const isSelected = selected.includes(project.projectId)
+    <Loading loaded={loaded}
+             className={styles.loading}>
+      <ol className={styles.buildItems}
+          aria-live='polite'
+          aria-relevant='additions'
+          data-locator='available-projects-list'>
+        {
+          filteredProjects.map((project) => {
+            const isSelected = selected.includes(project.projectId)
 
-          return <AvailableProject key={project.projectId}
-                                   {...project}
-                                   selected={isSelected}
-                                   selectProject={(select) => dispatch(projectSelected(tray.trayId, project.projectId, select))}/>
-        })
-      }
-    </ol>
+            return <AvailableProject key={project.projectId}
+                                     {...project}
+                                     selected={isSelected}
+                                     selectProject={(select) => dispatch(projectSelected(tray.trayId, project.projectId, select))}/>
+          })
+        }
+      </ol>
+    </Loading>
   )
 
   const noProjectsWarning = (
-    <WarningMessages messages='No projects fetched, please refresh'
-                     data-locator='no-projects-warning'/>
+    <WarningMessages messages='No projects fetched, please refresh'/>
   )
 
   const noProjectsMatchFilterWarning = (
-    <WarningMessages messages='No matching projects, please update your filter'
-                     data-locator='filter-warning'/>
-  )
-
-  const backToTop = (
-    <SecondaryButton className={styles.backToTop}
-                     onClick={scrollToTop}>
-      back to top
-    </SecondaryButton>
+    <WarningMessages messages='No matching projects, please update your filter'/>
   )
 
   return (
     <section className={styles.availableProjects}
-             data-locator='available-projects'
-             ref={rootNode}>
-      <VisuallyHidden><h3>Available projects</h3></VisuallyHidden>
-      <Loading loaded={loaded}>
-        <Refresh index={index}
-                 timestamp={tray.timestamp}
-                 refreshTray={refreshTray}/>
-        <ErrorMessages messages={errors}
-                       data-locator='errors'/>
-
-        {!hasErrors && hasProjects && controls}
-        {!hasErrors && hasProjectsFiltered && buildItems}
-        {!hasErrors && !hasProjects && noProjectsWarning}
-        {!hasErrors && hasProjects && !hasProjectsFiltered && noProjectsMatchFilterWarning}
-        {!hasErrors && hasProjectsFiltered && backToTop}
-      </Loading>
+             data-locator='available-projects'>
+      <Refresh timestamp={tray.timestamp}
+               refreshTray={refreshTray}
+               loaded={loaded}/>
+      {controls}
+      {loaded && !hasErrors && !hasProjects && noProjectsWarning}
+      {!hasErrors && buildItems}
+      {!hasErrors && hasProjects && !hasProjectsFiltered && noProjectsMatchFilterWarning}
+      <ErrorMessages messages={errors}
+                     data-locator='errors'/>
     </section>
   )
 }

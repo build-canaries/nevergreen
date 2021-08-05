@@ -8,16 +8,20 @@ type RadioProps = {
   readonly className?: string;
 } & Omit<DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, 'type'>
 
-export function Radio({children, className, id, ...inputProps}: RadioProps): ReactElement {
-  const classes = cn(styles.container, className)
+export function Radio({children, className, id, readOnly, disabled, ...inputProps}: RadioProps): ReactElement {
+  const containerClasses = cn(styles.container, className)
+  const inputClasses = cn(styles.input, {
+    [styles.readOnly]: readOnly
+  })
   const actualId = id ?? uniqueId('i')
 
   return (
-    <div className={classes}>
+    <div className={containerClasses}>
       <div className={styles.radio}>
         <input id={actualId}
-               className={styles.input}
+               className={inputClasses}
                type='radio'
+               disabled={disabled || readOnly}
                {...inputProps}/>
         <label htmlFor={actualId} className={styles.children}>{children}</label>
       </div>

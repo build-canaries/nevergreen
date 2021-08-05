@@ -1,6 +1,7 @@
 import React, {ReactElement} from 'react'
 import {HelpArticle, HelpProps} from '../../help/HelpArticle'
 import {HelpForm, HelpInput} from '../../help/HelpForms'
+import {ROUTE_SETTINGS_GENERAL} from '../../Routes'
 
 const KEYWORDS = [
   'settings',
@@ -15,7 +16,7 @@ export function GeneralSettingsHelp({searchQuery}: HelpProps): ReactElement {
     <HelpArticle keywords={KEYWORDS}
                  searchQuery={searchQuery}
                  title='General settings'
-                 page='/settings'>
+                 page={ROUTE_SETTINGS_GENERAL}>
       <HelpForm>
         <HelpInput name='Poll for feed changes every'>
           How often to check the CI server for project updates.
