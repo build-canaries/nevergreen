@@ -2,7 +2,7 @@
   (:require [clojure.tools.logging :as log])
   (:import (java.time Clock)))
 
-(defn ^:dynamic now []
+(defn ^:dynamic *now* []
   (.instant (Clock/systemUTC)))
 
 (defn is-error? [o]
@@ -11,7 +11,7 @@
 (defmulti create-error
           (fn [error _] (class error)))
 
-(defmethod create-error Exception [e url]
+(defmethod create-error Exception [^Exception e url]
   (create-error (or
                   (.getMessage e)
                   (.getSimpleName (.getClass e)))
@@ -20,7 +20,7 @@
 (defmethod create-error String [message url]
   (log/info (str "Creating error response for [" url "] with message [" message "]"))
   {:description message
-   :timestamp   (now)
+   :timestamp   (*now*)
    :web-url     url
    :prognosis   :error})
 

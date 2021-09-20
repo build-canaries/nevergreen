@@ -27,10 +27,10 @@
 (deftest get-projects
 
   ; fetch needs to return something with a close method as we use (with-open)
-  (binding [subject/fetch (constantly (StringReader. "some-xml-response"))
-            subject/parse (constantly [example-project])
-            subject/enrich (fn [_ projects] projects)
-            err/now (constantly "some-time")]
+  (binding [subject/*fetch* (constantly (StringReader. "some-xml-response"))
+            subject/*parse* (constantly [example-project])
+            subject/*enrich* (fn [_ projects] projects)
+            err/*now* (constantly "some-time")]
 
     (testing "works when given a single tray"
       (is (= [example-project]
@@ -50,7 +50,7 @@
              (subject/get-projects {:feeds [example-tray]}))))
 
     (testing "filters out any projects that are jobs (these are currently exclusive to GoCD and add too much noise to the UI)"
-      (binding [subject/parse (constantly [(merge example-project {:job "some-job"})])]
+      (binding [subject/*parse* (constantly [(merge example-project {:job "some-job"})])]
         (is (= []
                (subject/get-projects {:feeds [example-tray]})))))
 
@@ -64,14 +64,14 @@
                                                                  :include-new false})]}))))
 
     (testing "includes new projects that have not been seen before"
-      (binding [subject/enrich (constantly [(merge example-project {:is-new true})])]
+      (binding [subject/*enrich* (constantly [(merge example-project {:is-new true})])]
         (is (= [(merge example-project {:is-new true})]
                (subject/get-projects {:feeds [(merge example-tray {:included    []
                                                                    :include-new true
                                                                    :seen        ["different-project-id"]})]})))))
 
     (testing "doesn't include new projects that have not been seen before"
-      (binding [subject/enrich (constantly [(merge example-project {:is-new true})])]
+      (binding [subject/*enrich* (constantly [(merge example-project {:is-new true})])]
         (is (= []
                (subject/get-projects {:feeds [(merge example-tray {:included    ["different-project-id"]
                                                                    :include-new false
@@ -82,7 +82,7 @@
              (subject/get-projects {:feeds [(merge example-tray {:included nil})]}))))
 
     (testing "removes keys not required by the UI"
-      (binding [subject/parse (constantly [{:activity           "sleeping"
+      (binding [subject/*parse* (constantly [{:activity         "sleeping"
                                             :job                ""
                                             :last-build-label   "83"
                                             :last-build-status  "success"
@@ -96,12 +96,12 @@
                                             :unnormalised-name  "clj-cctray"
                                             :unnormalised-owner "build-canaries"
                                             :web-url            "some-url"}])
-                subject/enrich (fn [_ projects] (map #(merge % {:description "clj cctray"
-                                                                :timestamp   "2020-03-24T20:23:42.707190Z"
-                                                                :is-new      false
-                                                                :project-id  project-id
-                                                                :server-type ""
-                                                                :tray-id     tray-id}) projects))]
+                subject/*enrich* (fn [_ projects] (map #(merge % {:description "clj cctray"
+                                                                :timestamp     "2020-03-24T20:23:42.707190Z"
+                                                                :is-new        false
+                                                                :project-id    project-id
+                                                                :server-type   ""
+                                                                :tray-id       tray-id}) projects))]
         (is (= [{:description      "clj cctray"
                  :timestamp        "2020-03-24T20:23:42.707190Z"
                  :is-new           false
@@ -141,7 +141,7 @@
                        :project-id  "d"
                        :tray-id     tray-id}
             feeds [(merge example-tray {:include-new true})]]
-        (binding [subject/enrich (fn [_ _] [project-1 project-2 project-3 project-4 project-5])]
+        (binding [subject/*enrich* (fn [_ _] [project-1 project-2 project-3 project-4 project-5])]
 
           (testing "nil (no sorting)"
             (is (= [project-1 project-2 project-3 project-4 project-5]
@@ -171,27 +171,27 @@
     (testing "error handling"
 
       (testing "returns the error message when fetching fails"
-        (binding [subject/fetch (fn [_] (throw (ex-info "some-error" {})))]
+        (binding [subject/*fetch* (fn [_] (throw (ex-info "some-error" {})))]
           (is (= [(expected-error "some-error")]
                  (subject/get-projects {:feeds [example-tray]})))))
 
       (testing "returns the error message when parsing fails with a generic exception"
-        (binding [subject/parse (fn [_ _] (throw (ex-info "some-error" {})))]
+        (binding [subject/*parse* (fn [_ _] (throw (ex-info "some-error" {})))]
           (is (= [(expected-error "some-error")]
                  (subject/get-projects {:feeds [example-tray]})))))
 
       (testing "returns a more friendly error message when parsing fails because the response is not XML at all"
-        (binding [subject/parse (fn [_ _] (throw (SAXParseException. "Content is not allowed in prolog." nil)))]
+        (binding [subject/*parse* (fn [_ _] (throw (SAXParseException. "Content is not allowed in prolog." nil)))]
           (is (= [(expected-error "Response is not XML, is the URL pointing to the CCTray XML feed?")]
                  (subject/get-projects {:feeds [example-tray]})))))
 
       (testing "returns a prefixed error message when parsing fails because the XML is invalid"
-        (binding [subject/parse (fn [_ _] (throw (SAXParseException. "some-error" nil)))]
+        (binding [subject/*parse* (fn [_ _] (throw (SAXParseException. "some-error" nil)))]
           (is (= [(expected-error "XML is invalid. some-error")]
                  (subject/get-projects {:feeds [example-tray]})))))
 
       (testing "returns errors and projects if only one tray fails for any reason"
-        (binding [subject/fetch (fn [{:keys [tray-id]}] (if (= "fail-id" tray-id)
+        (binding [subject/*fetch* (fn [{:keys [tray-id]}] (if (= "fail-id" tray-id)
                                                           (throw (ex-info "some-error" {}))
                                                           (StringReader. "some-xml-response")))]
           (is (= [example-project (expected-error "some-error" "fail-id")]

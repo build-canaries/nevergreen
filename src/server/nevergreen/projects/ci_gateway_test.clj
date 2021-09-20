@@ -16,21 +16,21 @@
                           (subject/fetch-cctray {:url "ftp://some-url"}))))
 
   (testing "sets the auth header if auth type is basic"
-    (binding [subject/http-get (fn [_ data]
+    (binding [subject/*http-get* (fn [_ data]
                                  (is (= {"Authorization" "Basic c29tZS11c2VybmFtZTpzb21lLWRlY3J5cHRlZC1wYXNzd29yZA=="}
                                         (:headers data))))
-              subject/decrypt (constantly "some-decrypted-password")]
+              subject/*decrypt* (constantly "some-decrypted-password")]
       (subject/fetch-cctray {:url "http://some-url" :auth-type "basic" :username "some-username" :password "some-encrypted-password"})))
 
   (testing "sets the auth header if auth type is token"
-    (binding [subject/http-get (fn [_ data]
+    (binding [subject/*http-get* (fn [_ data]
                                  (is (= {"Authorization" "Bearer some-decrypted-token"}
                                         (:headers data))))
-              subject/decrypt (constantly "some-decrypted-token")]
+              subject/*decrypt* (constantly "some-decrypted-token")]
       (subject/fetch-cctray {:url "http://some-url" :auth-type "token" :access-token "some-token"})))
 
   (testing "doesn't set the auth header if auth is none"
-    (binding [subject/http-get (fn [_ data]
+    (binding [subject/*http-get* (fn [_ data]
                                  (is (nil? (:headers data))))
-              subject/decrypt (constantly "some-decrypted-password")]
+              subject/*decrypt* (constantly "some-decrypted-password")]
       (subject/fetch-cctray {:url "http://some-url" :auth-type "none"}))))

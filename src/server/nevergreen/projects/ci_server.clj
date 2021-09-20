@@ -6,7 +6,7 @@
             [clj-cctray.util :refer [in?]])
   (:import (java.time Clock)))
 
-(defn ^:dynamic now []
+(defn ^:dynamic *now* []
   (.instant (Clock/systemUTC)))
 
 (defn- is-building [project]
@@ -35,7 +35,7 @@
 
 (defn- add-timestamp [project]
   (assoc project :timestamp (if (is-building project)
-                              (now)
+                              (*now*)
                               (:last-build-time project))))
 
 (defn- add-is-new [new-project-ids project]

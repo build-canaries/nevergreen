@@ -5,11 +5,11 @@
            (java.util Random)
            (java.time Clock)))
 
-(defn- rand-str [rnd]
+(defn- rand-str [^Random rnd]
   (apply str (take (+ (.nextInt rnd 6) 4)
                    (repeatedly #(char (+ (.nextInt rnd 26) 97))))))
 
-(defn- rand-prognosis [rnd]
+(defn- rand-prognosis [^Random rnd]
   (condp = (.nextInt rnd 6)
     0 :error
     1 :sick
@@ -18,7 +18,7 @@
     4 :healthy
     5 :unknown))
 
-(defn- generate-projects [source _]
+(defn- generate-projects [^StringReader source _]
   (let [tray-id (.toString source)
         rnd (Random. (.hashCode tray-id))
         projects-to-generate (range (+ 3 (.nextInt rnd 97)))]
@@ -37,6 +37,6 @@
 
 (defn preview [request]
   ; fetch needs to return something closeable
-  (binding [projects/fetch (fn [feed] (StringReader. (:tray-id feed)))
-            projects/parse generate-projects]
+  (binding [projects/*fetch* (fn [feed] (StringReader. (:tray-id feed)))
+            projects/*parse* generate-projects]
     (projects/get-projects request)))

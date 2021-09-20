@@ -17,9 +17,9 @@
 (deftest import-config
 
   (testing "decrypts the token if it is encrypted"
-    (binding [subject/decrypt (constantly "some-token")
-              subject/get-snippet-meta (constantly (snippet-meta))
-              subject/get-snippet-content (fn [data]
+    (binding [subject/*decrypt* (constantly "some-token")
+              subject/*get-snippet-meta* (constantly (snippet-meta))
+              subject/*get-snippet-content* (fn [data]
                                             (is (= "some-token"
                                                    (:token data))))]
       (subject/import-config {:from "gitlab" :encrypted-token "encrypted-token"})))
@@ -27,7 +27,7 @@
   (testing "custom"
 
     (testing "returns the response"
-      (binding [subject/get-custom (constantly "some-configuration")]
+      (binding [subject/*get-custom* (constantly "some-configuration")]
         (is (= {:where         "custom"
                 :configuration "some-configuration"}
                (subject/import-config {:from "custom" :url "http://some-url"}))))))
@@ -35,7 +35,7 @@
   (testing "github"
 
     (testing "returns the response for a valid gist"
-      (binding [subject/get-gist (constantly (gist false 12345))]
+      (binding [subject/*get-gist* (constantly (gist false 12345))]
         (is (= {:id            "some-id"
                 :description   "some-description"
                 :where         "github"
@@ -43,8 +43,8 @@
                (subject/import-config {:from "github" :id "some-id"})))))
 
     (testing "returns the response for a valid truncated gist"
-      (binding [subject/get-gist (constantly (gist true 12345))
-                subject/get-truncated-file (constantly "some-full-configuration")]
+      (binding [subject/*get-gist* (constantly (gist true 12345))
+                subject/*get-truncated-file* (constantly "some-full-configuration")]
         (is (= {:id            "some-id"
                 :description   "some-description"
                 :where         "github"
@@ -52,7 +52,7 @@
                (subject/import-config {:from "github" :id "some-id"})))))
 
     (testing "throws an error if the gist does not contain the configuration.json file"
-      (binding [subject/get-gist (constantly {})]
+      (binding [subject/*get-gist* (constantly {})]
         (try
           (subject/import-config {:from "github" :id "some-id"})
           (assert false "expected exception not thrown")
@@ -61,7 +61,7 @@
             (is (= {:id "some-id" :status 422} (ex-data e)))))))
 
     (testing "throws an error if the configuration is too large to fetch without git cloning (> 10MB)"
-      (binding [subject/get-gist (constantly (gist true 10485761))]
+      (binding [subject/*get-gist* (constantly (gist true 10485761))]
         (try
           (subject/import-config {:from "github" :id "some-id"})
           (assert false "expected exception not thrown")
@@ -72,8 +72,8 @@
   (testing "gitlab"
 
     (testing "returns the response for a valid snippet"
-      (binding [subject/get-snippet-meta (constantly (snippet-meta))
-                subject/get-snippet-content (constantly "some-configuration")]
+      (binding [subject/*get-snippet-meta* (constantly (snippet-meta))
+                subject/*get-snippet-content* (constantly "some-configuration")]
         (is (= {:id            "some-id"
                 :description   "some-description"
                 :where         "gitlab"
@@ -81,7 +81,7 @@
                (subject/import-config {:from "gitlab" :id "some-id"})))))
 
     (testing "throws an error if the snippet does not contain the configuration.json file"
-      (binding [subject/get-snippet-meta (constantly {})]
+      (binding [subject/*get-snippet-meta* (constantly {})]
         (try
           (subject/import-config {:from "gitlab" :id "some-id"})
           (assert false "expected exception not thrown")

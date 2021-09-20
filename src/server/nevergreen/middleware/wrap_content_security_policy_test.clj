@@ -13,7 +13,7 @@
   ; https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Clickjacking_Defense_Cheat_Sheet.md
 
   (testing "removes the X-Frame-Options if the user wants to use in a frame to avoid browsers using it over the value in the Content-Security-Policy"
-    (binding [subject/allow-iframe-from (fn [] "some-updated-value")]
+    (binding [subject/*allow-iframe-from* (fn [] "some-updated-value")]
       (let [app (constantly {})
             req {}
             res ((subject/wrap-content-security-policy app) req)]

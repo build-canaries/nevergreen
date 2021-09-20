@@ -5,7 +5,8 @@
             [cemerick.url :as u])
   (:import (java.net UnknownHostException URISyntaxException ConnectException SocketTimeoutException)
            (clojure.lang ExceptionInfo)
-           (java.time Duration)))
+           (java.time Duration)
+           (java.util.concurrent Future)))
 
 (def ^:const ten-seconds 10000)
 (def ^:const redacted "REDACTED")
@@ -19,16 +20,16 @@
 (defn get-result [promise timeout-ms timeout-val]
   (deref promise timeout-ms timeout-val))
 
-(defn ^:dynamic client-get [url data promise]
+(defn ^:dynamic *client-get* [url data promise]
   (client/get url data (on-respond promise) (on-raise promise)))
 
-(defn ^:dynamic client-post [url data promise]
+(defn ^:dynamic *client-post* [url data promise]
   (client/post url data (on-respond promise) (on-raise promise)))
 
-(defn ^:dynamic client-patch [url data promise]
+(defn ^:dynamic *client-patch* [url data promise]
   (client/patch url data (on-respond promise) (on-raise promise)))
 
-(defn ^:dynamic client-put [url data promise]
+(defn ^:dynamic *client-put* [url data promise]
   (client/put url data (on-respond promise) (on-raise promise)))
 
 (defn- update-values [m f & args]
@@ -41,7 +42,7 @@
       (update :password #(if (nil? %) nil redacted))
       str))
 
-(defn- handle-timeout [url redacted-url e]
+(defn- handle-timeout [url redacted-url ^Exception e]
   (log/info (str "[" redacted-url "] threw a SocketTimeoutException [" (.getMessage e) "]"))
   (throw (ex-info "Connection timeout" {:url url :status 504})))
 
@@ -49,18 +50,18 @@
   (log/info (str "[" redacted-url "] couldn't produce response within given time. Explicitly closing connection"))
   (throw (ex-info "Deadline timeout" {:url url :status 504})))
 
-(defn- handle-unknown-host [url redacted-url e]
+(defn- handle-unknown-host [url redacted-url ^Exception e]
   (let [host (first (s/split (.getMessage e) #":"))
         msg (str host " is an unknown host, is the URL correct?")]
     (log/info (str "[" redacted-url "] threw an UnknownHostException [" msg "]"))
     (throw (ex-info msg {:url url :status 400}))))
 
-(defn- handle-invalid-url [url redacted-url e]
+(defn- handle-invalid-url [url redacted-url ^Exception e]
   (let [msg (str "URL is invalid. " (.getMessage e))]
     (log/info (str "[" redacted-url "] threw a " (.getSimpleName (.getClass e)) " [" msg "]"))
     (throw (ex-info msg {:url url :status 400}))))
 
-(defn- handle-connection-refused [url redacted-url e]
+(defn- handle-connection-refused [url redacted-url ^Exception e]
   (log/info (str "[" redacted-url "] threw a ConnectException [" (.getMessage e) "]"))
   (throw (ex-info "Connection refused, is the URL correct?" {:url url :status 502})))
 
@@ -76,13 +77,13 @@
   (let [redacted-url (redact-url url)]
     (log/info (str "Calling [" redacted-url "]..."))
     (let [promise (promise)
-          future (method url (merge {:insecure?             true
-                                     :socket-timeout        ten-seconds
-                                     :conn-timeout          ten-seconds
-                                     :throw-entire-message? true
-                                     :cookie-policy         :standard
-                                     :async                 true}
-                                    data) promise)
+          ^Future future (method url (merge {:insecure?             true
+                                             :socket-timeout        ten-seconds
+                                             :conn-timeout          ten-seconds
+                                             :throw-entire-message? true
+                                             :cookie-policy         :standard
+                                             :async                 true}
+                                            data) promise)
           result (get-result promise (.toMillis (Duration/ofSeconds 50)) :deadline-timeout)]
       (when (= result :deadline-timeout)
         (.cancel future true)
@@ -96,13 +97,13 @@
         result))))
 
 (defn http-get [url data]
-  (http url data client-get))
+  (http url data *client-get*))
 
 (defn http-post [url data]
-  (http url data client-post))
+  (http url data *client-post*))
 
 (defn http-patch [url data]
-  (http url data client-patch))
+  (http url data *client-patch*))
 
 (defn http-put [url data]
-  (http url data client-put))
+  (http url data *client-put*))

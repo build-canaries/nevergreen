@@ -3,7 +3,7 @@
   :url "https://github.com/build-canaries/nevergreen"
   ; use lein deps :tree to check dependency problems and actual versions used
   :dependencies [[org.clojure/clojure "1.10.3"]
-                 [ring "1.9.3" :exclusions [org.eclipse.jetty/jetty-server]]
+                 [ring "1.9.4" :exclusions [org.eclipse.jetty/jetty-server]]
                  [org.eclipse.jetty/jetty-server "9.4.43.v20210629"]
                  [compojure "1.6.2" :exclusions [ring/ring-codec]]
                  [environ "1.2.0"]
@@ -19,10 +19,10 @@
                  [base64-clj "0.1.1"]
                  [camel-snake-kebab "0.4.2"]
                  [com.cemerick/url "0.1.1" :exclusions [com.cemerick/clojurescript.test]]
-                 [ch.qos.logback/logback-classic "1.2.3" :exclusions [org.slf4j/slf4j-api]]
-                 [org.slf4j/log4j-over-slf4j "1.7.31"]
-                 [org.slf4j/jul-to-slf4j "1.7.31"]
-                 [org.slf4j/jcl-over-slf4j "1.7.31"]]
+                 [ch.qos.logback/logback-classic "1.2.6" :exclusions [org.slf4j/slf4j-api]]
+                 [org.slf4j/log4j-over-slf4j "1.7.32"]
+                 [org.slf4j/jul-to-slf4j "1.7.32"]
+                 [org.slf4j/jcl-over-slf4j "1.7.32"]]
   :min-lein-version "2.0.0"
   :uberjar-name "nevergreen-standalone.jar"
   :main nevergreen.app
@@ -37,7 +37,7 @@
             "check-updates" ["ancient" ":all"]
             "audit"         ["nvd" "check"]}
   :profiles {:dev  {:plugins [[lein-ancient "0.7.0"]
-                              [jonase/eastwood "0.8.1"]
+                              [jonase/eastwood "0.9.9"]
                               [lein-cloverage "1.2.2"]
                               [lein-nvd "1.5.0"]
                               [lein-eftest "0.5.9"]]}

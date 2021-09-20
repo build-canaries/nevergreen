@@ -32,7 +32,7 @@
 
   (testing "adds the timestamp"
     (testing "set to now if the project is building so the UI can calculate the building time"
-      (binding [subject/now (constantly "some-time")]
+      (binding [subject/*now* (constantly "some-time")]
         (is (= "some-time" (:timestamp (first (subject/enrich-projects tray [{:prognosis :healthy-building}])))))))
 
     (testing "set to the last build time if the project is not building"

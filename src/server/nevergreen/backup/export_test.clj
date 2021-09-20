@@ -7,37 +7,37 @@
   (testing "custom"
 
     (testing "creates custom configuration"
-      (binding [subject/create-custom (constantly {:id "some-id"})]
+      (binding [subject/*create-custom* (constantly {:id "some-id"})]
         (is (= {:id "some-id"}
                (subject/export-config {:where "custom"}))))))
 
   (testing "github"
 
     (testing "creates a gist if no id is provided"
-      (binding [subject/create-gist (constantly {:id "some-id"})]
+      (binding [subject/*create-gist* (constantly {:id "some-id"})]
         (is (= {:id "some-id"}
                (subject/export-config {:where "github"})))))
 
     (testing "updates a gist if an id is provided"
-      (binding [subject/update-gist (constantly {:id "some-id"})]
+      (binding [subject/*update-gist* (constantly {:id "some-id"})]
         (is (= {:id "some-id"}
                (subject/export-config {:where "github" :id "some-id"}))))))
 
   (testing "gitlab"
 
     (testing "creates a snippet if no id is provided"
-      (binding [subject/create-snippet (constantly {:id 123456})]
+      (binding [subject/*create-snippet* (constantly {:id 123456})]
         (is (= {:id "123456"}
                (subject/export-config {:where "gitlab"})))))
 
     (testing "updates a snippet if an id is provided"
-      (binding [subject/update-snippet (constantly {:id "some-id"})]
+      (binding [subject/*update-snippet* (constantly {:id "some-id"})]
         (is (= {:id "some-id"}
                (subject/export-config {:where "gitlab" :id "some-id"}))))))
 
   (testing "decrypts the token if it is encrypted"
-    (binding [subject/decrypt (constantly "some-token")
-              subject/create-snippet (fn [data]
+    (binding [subject/*decrypt* (constantly "some-token")
+              subject/*create-snippet* (fn [data]
                                        (is (= "some-token"
                                               (:token data))))]
       (subject/export-config {:where "gitlab" :encrypted-token "encrypted-token"})))

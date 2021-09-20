@@ -5,7 +5,7 @@
 
 (deftest wrap-exceptions
 
-  (binding [errors/now (constantly "some-time")]
+  (binding [errors/*now* (constantly "some-time")]
 
     (testing "exceptions should be get a 500 status and a generic message"
       (let [app (fn [_] (throw (Exception. "message")))

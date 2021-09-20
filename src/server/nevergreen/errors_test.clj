@@ -8,7 +8,7 @@
 
 (deftest create-error
 
-  (binding [subject/now (constantly "some-time")]
+  (binding [subject/*now* (constantly "some-time")]
 
     (testing "create-error can be created with a message"
       (is (= {:description "some-text"

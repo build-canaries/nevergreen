@@ -5,10 +5,10 @@
             [nevergreen.crypto :as crypt]
             [nevergreen.config :as config]))
 
-(defn ^:dynamic http-get [url additional-headers]
+(defn ^:dynamic *http-get* [url additional-headers]
   (http/http-get url additional-headers))
 
-(defn ^:dynamic decrypt [password aes-key]
+(defn ^:dynamic *decrypt* [password aes-key]
   (crypt/decrypt password aes-key))
 
 (defn- invalid-url-error-message [url]
@@ -18,11 +18,11 @@
 
 (defn- auth-using-credentials [username password]
   (if-not (or (s/blank? username) (s/blank? password))
-    (let [decrypted-password (decrypt password (config/aes-key))]
+    (let [decrypted-password (*decrypt* password (config/aes-key))]
       (str "Basic " (base64/encode (s/join ":" [username decrypted-password]))))))
 
 (defn- auth-using-token [access-token]
-  (str "Bearer " (decrypt access-token (config/aes-key))))
+  (str "Bearer " (*decrypt* access-token (config/aes-key))))
 
 (defn- get-headers [auth-type username password access-token]
   (cond
@@ -37,6 +37,6 @@
 
 (defn fetch-cctray [{:keys [url auth-type username password access-token]}]
   (validate-scheme url)
-  (http-get url {:headers (get-headers auth-type username password access-token)
-                 :accept  "application/xml"
-                 :as      :stream}))
+  (*http-get* url {:headers (get-headers auth-type username password access-token)
+                 :accept    "application/xml"
+                 :as        :stream}))

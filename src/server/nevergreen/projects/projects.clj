@@ -7,7 +7,8 @@
             [nevergreen.projects.ci-server :as ci-server]
             [clojure.string :as s]
             [clojure.set :refer [difference]])
-  (:import (org.xml.sax SAXParseException)))
+  (:import (org.xml.sax SAXParseException)
+           (java.io Closeable)))
 
 (def ^:private ui-required-keys [:description
                                  :is-new
@@ -26,13 +27,13 @@
                                    :unknown
                                    :healthy])
 
-(defn ^:dynamic fetch [feed]
+(defn ^:dynamic ^Closeable *fetch* [feed]
   (ci-gateway/fetch-cctray feed))
 
-(defn ^:dynamic parse [source options]
+(defn ^:dynamic *parse* [source options]
   (parser/get-projects source options))
 
-(defn ^:dynamic enrich [feed projects]
+(defn ^:dynamic *enrich* [feed projects]
   (ci-server/enrich-projects feed projects))
 
 (defn- filter-by-ids [included ids projects]
@@ -49,7 +50,7 @@
     (filtering/by-prognosis (map keyword prognosis)
                             (filter-jobs projects))))
 
-(defn- handle-parsing-exception [e]
+(defn- handle-parsing-exception [^Exception e]
   (let [exceptionMessage (.getMessage e)]
     (if (instance? SAXParseException e)
       (if (= exceptionMessage "Content is not allowed in prolog.")
@@ -59,8 +60,8 @@
 
 (defn- to-projects [{:keys [url tray-id] :as feed}]
   (try
-    (with-open [response (fetch feed)]
-      (parse response {:server (ci-server/get-server-type feed) :normalise true}))
+    (with-open [response (*fetch* feed)]
+      (*parse* response {:server (ci-server/get-server-type feed) :normalise true}))
     (catch Exception e
       [(assoc
          (err/create-error (handle-parsing-exception e) url)
@@ -73,7 +74,7 @@
       (if (every? err/is-error? projects)
         projects
         (let [filtered-projects (filter-projects prognosis projects)
-              enriched-projects (enrich feed filtered-projects)
+              enriched-projects (*enrich* feed filtered-projects)
               returned-project-ids (map :project-id enriched-projects)
               new-project-ids (difference (set returned-project-ids) (set seen))
               include-project-ids (if (true? include-new)
