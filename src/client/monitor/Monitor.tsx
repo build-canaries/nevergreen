@@ -1,4 +1,4 @@
-import React, {ReactElement, useCallback, useEffect, useState} from 'react'
+import React, {ReactElement, useCallback, useEffect, useRef, useState} from 'react'
 import cn from 'classnames'
 import {InterestingProjects} from './InterestingProjects'
 import {Success} from './Success'
@@ -18,29 +18,32 @@ import {isAbortedRequest, send} from '../gateways/Gateway'
 import {enrichProjects, Projects, toProjectError} from '../domain/Project'
 import {useAudioNotifications} from './notifications/AudioNotificationsHook'
 import {useSystemNotifications} from './notifications/SystemNotificationsHook'
+import {useShortcut} from '../common/Keyboard'
+import screenfull from 'screenfull'
 
 interface MonitorProps {
-  readonly fullScreen: boolean;
-  readonly requestFullScreen: (fullScreen: boolean) => void;
+  readonly menusHidden: boolean;
+  readonly toggleMenusHidden: (hide: boolean) => void;
 }
 
-export function Monitor({fullScreen, requestFullScreen}: MonitorProps): ReactElement {
+export function Monitor({menusHidden, toggleMenusHidden}: MonitorProps): ReactElement {
   const refreshTime = useSelector(getRefreshTime)
   const trays = useSelector(getTrays)
   const selected = useSelector(getSelectedProjects)
   const knownProjects = useSelector(getKnownProjects)
   const prognosis = useSelector(getShowPrognosis)
   const sort = useSelector(getSort)
+  const ref = useRef<HTMLDivElement>(null)
 
   const [loaded, setLoaded] = useState(false)
   const [projects, setProjects] = useState<Projects>([])
 
   useEffect(() => {
-    requestFullScreen(true)
+    toggleMenusHidden(true)
     return () => {
-      requestFullScreen(false)
+      toggleMenusHidden(false)
     }
-  }, [requestFullScreen])
+  }, [toggleMenusHidden])
 
   const onTrigger = useCallback(async () => {
     const request = interesting(trays, knownProjects, selected, prognosis, sort)
@@ -64,15 +67,21 @@ export function Monitor({fullScreen, requestFullScreen}: MonitorProps): ReactEle
   useAudioNotifications(projects)
   useSystemNotifications(projects)
 
+  useShortcut('f', () => {
+    if (screenfull.isEnabled && ref.current) {
+      void screenfull.toggle(ref.current)
+    }
+  })
+
   const traysAdded = !isEmpty(trays)
   const success = isEmpty(projects)
 
   const monitorClassNames = cn(styles.monitor, {
-    [styles.fullscreen]: fullScreen
+    [styles.menusHidden]: menusHidden
   })
 
   return (
-    <div className={monitorClassNames}>
+    <div className={monitorClassNames} ref={ref}>
       <Title>Monitor</Title>
       {!traysAdded && (
         <SuccessMessage message='Add a feed via the tracking page to start monitoring'/>

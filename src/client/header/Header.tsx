@@ -7,12 +7,12 @@ import {triggerShortcut} from '../common/Keyboard'
 import {HeaderLink} from './HeaderLink'
 
 interface HeaderProps {
-  readonly fullScreen: boolean;
+  readonly hide: boolean;
 }
 
-export function Header({fullScreen}: HeaderProps): ReactElement {
+export function Header({hide}: HeaderProps): ReactElement {
   const headerClassNames = cn(styles.siteHeader, {
-    [styles.fullscreen]: fullScreen
+    [styles.hide]: hide
   })
 
   return (

@@ -13,8 +13,8 @@ import {SETTINGS_ROOT} from '../settings/SettingsReducer'
 import {Prognosis} from '../domain/Project'
 
 const DEFAULT_PROPS = {
-  fullScreen: false,
-  requestFullScreen: noop
+  menusHidden: false,
+  toggleMenusHidden: noop
 }
 
 const trayId = 'some-tray-id'
@@ -30,19 +30,19 @@ beforeEach(() => {
   window.HTMLMediaElement.prototype.play = () => Promise.resolve()
 })
 
-it('should request fullscreen on mount', () => {
-  const requestFullScreen = jest.fn()
-  const props = {...DEFAULT_PROPS, requestFullScreen}
+it('should request to hide the header and footer when the user first loads the page', () => {
+  const toggleMenusHidden = jest.fn()
+  const props = {...DEFAULT_PROPS, toggleMenusHidden}
   render(<Monitor {...props}/>)
-  expect(requestFullScreen).toHaveBeenCalledWith(true)
+  expect(toggleMenusHidden).toHaveBeenCalledWith(true)
 })
 
-it('should cancel fullscreen on unmount', () => {
-  const requestFullScreen = jest.fn()
-  const props = {...DEFAULT_PROPS, requestFullScreen}
+it('should request to show the header and footer when the user navigates away from the page', () => {
+  const toggleMenusHidden = jest.fn()
+  const props = {...DEFAULT_PROPS, toggleMenusHidden}
   const {unmount} = render(<Monitor {...props}/>)
   unmount()
-  expect(requestFullScreen).toHaveBeenCalledWith(false)
+  expect(toggleMenusHidden).toHaveBeenCalledWith(false)
 })
 
 it('should show a helpful message if no trays are added', () => {

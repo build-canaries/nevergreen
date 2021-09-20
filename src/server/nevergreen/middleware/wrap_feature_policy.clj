@@ -7,7 +7,7 @@
    "camera 'none'"
    "document-domain 'none'"
    "encrypted-media 'none'"
-   "fullscreen 'none'"
+   "fullscreen 'self'"
    "geolocation 'none'"
    "gyroscope 'none'"
    "magnetometer 'none'"

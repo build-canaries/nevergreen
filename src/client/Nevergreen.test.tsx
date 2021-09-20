@@ -8,7 +8,7 @@ import * as Configuration from './configuration/Configuration'
 import * as ServiceWorkerHook from './ServiceWorkerHook'
 import * as Gateway from './gateways/Gateway'
 import {fakeRequest} from './gateways/Gateway'
-import * as FullScreenHook from './FullScreenHook'
+import * as HideMenusHook from './HideMenusHook'
 import {SETTINGS_ROOT} from './settings/SettingsReducer'
 import userEvent from '@testing-library/user-event'
 import {ROUTE_MONITOR, ROUTE_SETTINGS_TRACKING} from './Routes'
@@ -74,7 +74,7 @@ it('should not check for a new version if the user has disabled checking', async
 it('should disable fullscreen when any key is pressed, allowing the user to navigate to the header via tabbing', async () => {
   const disableFullScreen = jest.fn()
   jest.spyOn(Gateway, 'get').mockReturnValue(fakeRequest({}))
-  jest.spyOn(FullScreenHook, 'useFullScreen').mockReturnValue([true, jest.fn(), disableFullScreen])
+  jest.spyOn(HideMenusHook, 'useHideMenus').mockReturnValue([true, jest.fn(), disableFullScreen])
 
   render(<Nevergreen/>, {mountPath: ROUTE_MONITOR, currentLocation: ROUTE_MONITOR})
 

@@ -9,4 +9,10 @@
     (let [app (constantly {})
           req {}
           res ((subject/wrap-feature-policy app) req)]
-      (is (s/includes? (get (:headers res) "Feature-Policy") "autoplay 'self'")))))
+      (is (s/includes? (get (:headers res) "Feature-Policy") "autoplay 'self'"))))
+
+  (testing "allows fullscreen"
+    (let [app (constantly {})
+          req {}
+          res ((subject/wrap-feature-policy app) req)]
+      (is (s/includes? (get (:headers res) "Feature-Policy") "fullscreen 'self'")))))

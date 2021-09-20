@@ -5,7 +5,7 @@ import {Notification} from './Notification'
 import styles from './nevergreen.scss'
 import {KeyboardShortcuts} from './KeyboardShortcuts'
 import {useServiceWorker} from './ServiceWorkerHook'
-import {useFullScreen} from './FullScreenHook'
+import {useHideMenus} from './HideMenusHook'
 import {useSelector} from 'react-redux'
 import {getClickToShowMenu} from './settings/SettingsReducer'
 import {Redirect, Route, Switch} from 'react-router'
@@ -30,16 +30,16 @@ export function Nevergreen(): ReactElement {
 
   const fontMetricsRef = useCallback((ref) => setFontMetrics(ref), [])
 
-  const [fullScreen, requestFullScreen, disableFullScreen] = useFullScreen()
+  const [menusHidden, toggleMenusHidden, showMenus] = useHideMenus()
 
   useServiceWorker(setNotification)
   useCheckForNewVersion(setNotification)
 
   const clickToShowMenu = useSelector(getClickToShowMenu)
 
-  const disableFullScreenOn = clickToShowMenu
-    ? {onClick: disableFullScreen}
-    : {onMouseMove: disableFullScreen}
+  const hideMenusOn = clickToShowMenu
+    ? {onClick: showMenus}
+    : {onMouseMove: showMenus}
 
   useShortcut('esc', () => {
     const active = document.activeElement as HTMLElement
@@ -60,17 +60,17 @@ export function Nevergreen(): ReactElement {
         <Help/>
         <div className={styles.nevergreen}
              tabIndex={-1}
-             onKeyDown={disableFullScreen}
-             {...disableFullScreenOn}>
-          <Header fullScreen={fullScreen}/>
+             onKeyDown={showMenus}
+             {...hideMenusOn}>
+          <Header hide={menusHidden}/>
           <Notification notification={notification}
                         dismiss={() => setNotification('')}
-                        fullScreen={fullScreen}/>
+                        hide={menusHidden}/>
           <main className={styles.main} role='main'>
             <Switch>
               <Route exact path={ROUTE_MONITOR}>
-                <Monitor fullScreen={fullScreen}
-                         requestFullScreen={requestFullScreen}/>
+                <Monitor menusHidden={menusHidden}
+                         toggleMenusHidden={toggleMenusHidden}/>
               </Route>
               <Route exact path={ROUTE_PREVIEW} component={Preview}/>
               <Route path={ROUTE_SETTINGS} component={Settings}/>
@@ -80,7 +80,7 @@ export function Nevergreen(): ReactElement {
               </Route>
             </Switch>
           </main>
-          <Footer fullScreen={fullScreen}/>
+          <Footer hide={menusHidden}/>
         </div>
       </FontMetricsContext.Provider>
     </Loading>

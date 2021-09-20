@@ -8,16 +8,16 @@ import {iCross} from './common/fonts/Icons'
 interface NotificationProps {
   readonly notification: string;
   readonly dismiss: () => void;
-  readonly fullScreen: boolean;
+  readonly hide: boolean;
 }
 
-export function Notification({notification, dismiss, fullScreen}: NotificationProps): ReactElement | null {
+export function Notification({notification, dismiss, hide}: NotificationProps): ReactElement | null {
   if (isBlank(notification)) {
     return null
   }
 
   const notificationClassNames = cn(styles.popUpNotification, {
-    [styles.fullscreen]: fullScreen
+    [styles.hide]: hide
   })
 
   return (

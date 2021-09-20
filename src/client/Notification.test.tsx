@@ -8,7 +8,7 @@ import {screen} from '@testing-library/react'
 const DEFAULT_PROPS = {
   notification: '',
   dismiss: noop,
-  fullScreen: false
+  hide: false
 }
 
 it('should not render anything if notification is empty', () => {

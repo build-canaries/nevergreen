@@ -3,6 +3,20 @@ import {Modal} from './common/Modal'
 import styles from './keyboard-shortcuts.scss'
 import {SHOW_HELP_SHORTCUT} from './help/Help'
 import {useShortcut} from './common/Keyboard'
+import screenfull from 'screenfull'
+
+function Shortcut({label, children}: { label: string, children: ReactElement }): ReactElement {
+  return (
+    <li className={styles.shortcut}>
+      <div>{label}</div>
+      {children}
+    </li>
+  )
+}
+
+function Binding({children}: { children: string }): ReactElement {
+  return <kbd className={styles.binding}>{children}</kbd>
+}
 
 export function KeyboardShortcuts(): ReactElement {
   const [show, setShow] = useState(false)
@@ -14,52 +28,57 @@ export function KeyboardShortcuts(): ReactElement {
            close={() => setShow(false)}
            title='Keyboard shortcuts'>
 
-      <h2 className={styles.header}>Basics</h2>
+      <h2 className={styles.header}>General</h2>
       <ul className={styles.shortcuts}>
-        <li className={styles.shortcut}>
-          <div>Shows keyboard shortcuts (this)</div>
-          <kbd className={styles.binding}>?</kbd>
-        </li>
-        <li className={styles.shortcut}>
-          <div>Shows help</div>
-          <kbd className={styles.binding}>{SHOW_HELP_SHORTCUT}</kbd>
-        </li>
-        <li className={styles.shortcut}>
-          <div>Dismiss dialogs (such as this) or blurs the focused element (except text inputs)</div>
-          <kbd className={styles.binding}>esc</kbd>
-        </li>
+        <Shortcut label='Shows keyboard shortcuts (this)'>
+          <Binding>?</Binding>
+        </Shortcut>
+        <Shortcut label='Shows help'>
+          <Binding>{SHOW_HELP_SHORTCUT}</Binding>
+        </Shortcut>
+        <Shortcut label='Dismiss dialogs (such as this) or blurs the focused element (except text inputs)'>
+          <Binding>esc</Binding>
+        </Shortcut>
       </ul>
 
       <h2 className={styles.header}>Navigation</h2>
       <ul className={styles.shortcuts}>
-        <li className={styles.shortcut}>
-          <div>Move focus to the next element</div>
-          <kbd className={styles.binding}>tab</kbd>
-        </li>
-        <li className={styles.shortcut}>
-          <div>Move focus to the previous element</div>
+        <Shortcut label='Move focus to the next element'>
+          <Binding>tab</Binding>
+        </Shortcut>
+        <Shortcut label='Move focus to the previous element'>
           <span className={styles.multipleShortcuts}>
-            <kbd className={styles.binding}>shift</kbd><kbd className={styles.binding}>tab</kbd>
+            <Binding>shift</Binding>
           </span>
-        </li>
-        <li className={styles.shortcut}>
-          <div>Take action or &quot;click&quot; the selected element</div>
-          <kbd className={styles.binding}>enter</kbd>
-        </li>
-        <li className={styles.shortcut}>
-          <div>Go to the Monitor page</div>
+        </Shortcut>
+        <Shortcut label='Take action or "click" the selected element'>
+          <Binding>enter</Binding>
+        </Shortcut>
+        <Shortcut label='Go to the Monitor page'>
           <span className={styles.multipleShortcuts}>
-            <kbd className={styles.binding}>m</kbd> or <kbd className={styles.binding}>1</kbd>
+            <Binding>m</Binding> or <Binding>1</Binding>
           </span>
-        </li>
-        <li className={styles.shortcut}>
-          <div>Go to the Settings page</div>
+        </Shortcut>
+        <Shortcut label='Go to the Settings page'>
           <span className={styles.multipleShortcuts}>
-            <kbd className={styles.binding}>s</kbd> or <kbd className={styles.binding}>,</kbd> or <kbd
-            className={styles.binding}>2</kbd>
+            <Binding>s</Binding> or <Binding>,</Binding> or <Binding>2</Binding>
           </span>
-        </li>
+        </Shortcut>
       </ul>
+
+      {screenfull.isEnabled && (
+        <>
+          <h2 className={styles.header}>Monitor page</h2>
+          <ul className={styles.shortcuts}>
+            <Shortcut label='Toggle fullscreen'>
+              <Binding>f</Binding>
+            </Shortcut>
+            <Shortcut label='Exit fullscreen'>
+              <Binding>esc</Binding>
+            </Shortcut>
+          </ul>
+        </>
+      )}
     </Modal>
   )
 }

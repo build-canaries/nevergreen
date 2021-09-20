@@ -8,14 +8,14 @@ import {About} from './About'
 import styles from './footer.scss'
 
 interface FooterProps {
-  readonly fullScreen: boolean;
+  readonly hide: boolean;
 }
 
-export function Footer({fullScreen}: FooterProps): ReactElement {
+export function Footer({hide}: FooterProps): ReactElement {
   const [showAbout, setShowAbout] = useState(false)
 
   const footerClassNames = cn(styles.siteFooter, {
-    [styles.fullscreen]: fullScreen
+    [styles.hide]: hide
   })
   const fullVersion = `${version}+${versionMeta}`
   const versionWithName = `v${fullVersion} ${versionName}`
