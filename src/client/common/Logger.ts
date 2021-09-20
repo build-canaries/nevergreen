@@ -20,7 +20,7 @@ export function warn(message: string, ...data: unknown[]): void {
   }
 }
 
-export function error(message: string, e?: Error): void {
+export function error(message: string, e?: unknown): void {
   console.error(message, e)
 }
 
