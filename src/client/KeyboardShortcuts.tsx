@@ -48,7 +48,7 @@ export function KeyboardShortcuts(): ReactElement {
         </Shortcut>
         <Shortcut label='Move focus to the previous element'>
           <span className={styles.multipleShortcuts}>
-            <Binding>shift</Binding>
+            <Binding>shift</Binding><Binding>tab</Binding>
           </span>
         </Shortcut>
         <Shortcut label='Take action or "click" the selected element'>
