@@ -1,7 +1,8 @@
 import React, {ReactElement, ReactNode, useEffect, useState} from 'react'
-import {useLocation} from 'react-router-dom'
+import {useRouteMatch} from 'react-router-dom'
 import {matchSorter} from 'match-sorter'
 import {isBlank} from '../common/Utils'
+import isNil from 'lodash/isNil'
 import cn from 'classnames'
 import styles from './help-article.scss'
 
@@ -33,20 +34,20 @@ function Keyword({keyword, matches}: KeywordProps) {
 }
 
 export function HelpArticle({title, keywords, children, searchQuery, page}: HelpArticleProps): ReactElement | null {
-  const location = useLocation()
-  const [show, setShow] = useState(page && location.pathname.startsWith(page))
+  const routeMatches = !isNil(useRouteMatch({path: page || '', exact: true}))
+  const [show, setShow] = useState(routeMatches)
   const [matches, setMatches] = useState<ReadonlyArray<string>>([])
 
   useEffect(() => {
     if (isBlank(searchQuery)) {
       setMatches([])
-      setShow(page && location.pathname.startsWith(page))
+      setShow(routeMatches)
     } else {
       const keywordsMatched = matchSorter(keywords, searchQuery)
       setMatches(keywordsMatched)
       setShow(keywordsMatched.length > 0)
     }
-  }, [keywords, searchQuery, location, page])
+  }, [keywords, searchQuery, page, routeMatches])
 
   if (show) {
     return (

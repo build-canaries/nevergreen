@@ -18,9 +18,6 @@ export function GeneralSettingsHelp({searchQuery}: HelpProps): ReactElement {
                  title='General settings'
                  page={ROUTE_SETTINGS_GENERAL}>
       <HelpForm>
-        <HelpInput name='Poll for feed changes every'>
-          How often to check the CI server for project updates.
-        </HelpInput>
         <HelpInput name='Click to show menu'>
           While <em>disabled</em> (the default) moving the mouse on the Monitor page will show the menu.
           While <em>enabled</em> you will need to click while on the Monitor page to show the menu.

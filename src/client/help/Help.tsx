@@ -19,6 +19,7 @@ import {HelpLink} from './HelpLink'
 import {useShortcut} from '../common/Keyboard'
 import styles from './help.scss'
 import {ExternalLink} from '../common/ExternalLink'
+import {TrackingPageHelp} from '../tracking/TrackingPageHelp'
 
 interface HelpProps {
   readonly initiallyShow?: boolean;
@@ -52,10 +53,11 @@ export function Help({initiallyShow}: HelpProps): ReactElement {
       <Input placeholder='by keyword'
              value={searchQuery}
              onChange={({target}) => setSearchQuery(target.value)}>
-        <span>search</span>
+        Search
       </Input>
       <ul className={styles.articles}>
         <MonitorHelp searchQuery={searchQuery} helpLink={helpLink}/>
+        <TrackingPageHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <AddTrayHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <CCTrayLocationsHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <AvailableProjectsHelp searchQuery={searchQuery} helpLink={helpLink}/>

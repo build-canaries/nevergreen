@@ -1,7 +1,7 @@
 import React, {ReactElement} from 'react'
 import {HelpArticle, HelpProps} from '../../help/HelpArticle'
 import {HelpForm, HelpInput} from '../../help/HelpForms'
-import {ROUTE_SETTINGS_TRACKING} from '../../Routes'
+import {ROUTE_TRACKING_FEED_PROJECTS} from '../../Routes'
 
 const KEYWORDS = [
   'tracking',
@@ -18,10 +18,7 @@ export function AvailableProjectsHelp({searchQuery, helpLink}: HelpProps): React
     <HelpArticle keywords={KEYWORDS}
                  searchQuery={searchQuery}
                  title='Manage projects'
-                 page={ROUTE_SETTINGS_TRACKING}>
-      <p>
-        Once added you can choose which projects to include for tracking by selecting them.
-      </p>
+                 page={ROUTE_TRACKING_FEED_PROJECTS}>
       <HelpForm>
         <HelpInput name='Refresh'>
           Fetches the latest list of projects from the CCTray XML feed. If projects are added, removed or renamed on the

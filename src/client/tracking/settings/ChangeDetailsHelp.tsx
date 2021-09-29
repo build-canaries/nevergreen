@@ -1,7 +1,7 @@
 import React, {ReactElement} from 'react'
 import {HelpArticle, HelpProps} from '../../help/HelpArticle'
 import {HelpForm, HelpInput} from '../../help/HelpForms'
-import {ROUTE_SETTINGS_TRACKING} from '../../Routes'
+import {ROUTE_TRACKING_FEED_DETAILS} from '../../Routes'
 
 const KEYWORDS = [
   'tracking',
@@ -22,11 +22,8 @@ export function ChangeDetailsHelp({searchQuery, helpLink}: HelpProps): ReactElem
     <HelpArticle
       keywords={KEYWORDS}
       searchQuery={searchQuery}
-      title='CCTray XML feed details'
-      page={ROUTE_SETTINGS_TRACKING}>
-      <p>
-        Each CCTray XML feed added has specific settings which can be changed via the <strong>Settings</strong> tab.
-      </p>
+      title='Change details'
+      page={ROUTE_TRACKING_FEED_DETAILS}>
       <HelpForm>
         <HelpInput name='Name'>
           A friendly name of the CCTray XML feed used in various places instead of the URL. A random name is generated
@@ -35,9 +32,10 @@ export function ChangeDetailsHelp({searchQuery, helpLink}: HelpProps): ReactElem
         <HelpInput name='URL'>
           The URL of the CCTray XML feed.
         </HelpInput>
-        <HelpInput name='Auth'>
+        <HelpInput name='Change auth'>
           The current auth mechanism of the CCTray XML feed. Since credentials are stored encrypted they can not be
-          pre-populated and are changed separately from other feed details.
+          pre-populated so you need to specifically click <strong>Change auth</strong> to be able to change them.
+          This makes it possible to update other details without being forced to re-enter the auth details everytime.
         </HelpInput>
         <HelpInput name='Server type'>
           The server type can be set to enable some server specific parsing. Only servers that require specific parsing
