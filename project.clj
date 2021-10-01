@@ -4,7 +4,7 @@
   ; use lein deps :tree to check dependency problems and actual versions used
   :dependencies [[org.clojure/clojure "1.10.3"]
                  [ring "1.9.4" :exclusions [org.eclipse.jetty/jetty-server]]
-                 [org.eclipse.jetty/jetty-server "9.4.43.v20210629"]
+                 [org.eclipse.jetty/jetty-server "9.4.44.v20210927"]
                  [compojure "1.6.2" :exclusions [ring/ring-codec]]
                  [environ "1.2.0"]
                  [cheshire "5.10.1"]
@@ -39,7 +39,7 @@
   :profiles {:dev  {:plugins [[lein-ancient "0.7.0"]
                               [jonase/eastwood "0.9.9"]
                               [lein-cloverage "1.2.2"]
-                              [lein-nvd "1.5.0"]
+                              [lein-nvd "1.7.0"]
                               [lein-eftest "0.5.9"]]}
              :test {:jvm-opts ["-Dlogback.configurationFile=./src/logback-tests.xml"]}}
   :cloverage {:output           "target/coverage-reports/server"
