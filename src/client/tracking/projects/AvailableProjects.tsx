@@ -1,4 +1,4 @@
-import React, {ChangeEvent, ReactElement, useCallback, useEffect, useMemo, useRef, useState} from 'react'
+import React, {ReactElement, useCallback, useEffect, useMemo, useRef, useState} from 'react'
 import {AvailableProject} from './AvailableProject'
 import {ErrorMessages, WarningMessages} from '../../common/Messages'
 import {Input} from '../../common/forms/Input'
@@ -18,6 +18,7 @@ import {Loading} from '../../common/Loading'
 import {Tray} from '../../domain/Tray'
 import {useLocation} from 'react-router-dom'
 import {REFRESH_HASH} from '../../Routes'
+import {matchSorter} from 'match-sorter'
 
 interface AvailableProjectsProps {
   readonly tray: Tray;
@@ -29,11 +30,10 @@ export function AvailableProjects({tray}: AvailableProjectsProps): ReactElement 
   const projects = useSelector(getProjectsForTray(tray.trayId))
   const selected = useSelector(getSelectedProjectsForTray(tray.trayId))
 
-  const [filter, setFilter] = useState<RegExp | undefined>()
+  const [search, setSearch] = useState<string>('')
   const [errors, setErrors] = useState<ReadonlyArray<string>>([])
   const [loaded, setLoaded] = useState(true)
   const pendingRequest = useRef<Request<ProjectsResponse>>()
-  const [filterErrors, setFilterErrors] = useState('')
 
   const refreshTray = useCallback(async () => {
     setLoaded(false)
@@ -71,27 +71,12 @@ export function AvailableProjects({tray}: AvailableProjectsProps): ReactElement 
     }
   }, [])
 
-  const updateFilter = (evt: ChangeEvent<HTMLInputElement>) => {
-    if (isBlank(evt.target.value)) {
-      setFilter(undefined)
-      setFilterErrors('')
-    } else {
-      try {
-        const regEx = new RegExp(evt.target.value)
-        setFilter(regEx)
-        setFilterErrors('')
-      } catch (e) {
-        setFilterErrors(`Project search not applied. ${errorMessage(e)}`)
-      }
-    }
-  }
-
   const filteredProjects = useMemo(() => {
-    if (filter) {
-      return projects.filter((project) => filter.exec(project.description))
+    if (!isBlank(search)) {
+      return matchSorter(projects, search, {keys: ['description']})
     }
     return projects
-  }, [projects, filter])
+  }, [projects, search])
 
   const hasProjects = notEmpty(projects)
   const hasProjectsFiltered = notEmpty(filteredProjects)
@@ -126,45 +111,40 @@ export function AvailableProjects({tray}: AvailableProjectsProps): ReactElement 
         </SecondaryButton>
         <div className={styles.projectFilter}>
           <Input className={styles.projectFilterInput}
-                 onChange={updateFilter}
+                 onChange={({target}) => setSearch(target.value)}
                  type='search'
-                 placeholder='regular expression'
                  disabled={controlsDisabled}>
             <span className={styles.search}>Search</span>
           </Input>
         </div>
       </fieldset>
-      <ErrorMessages messages={filterErrors}/>
     </div>
   )
 
   const buildItems = (
-    <Loading loaded={loaded}
-             className={styles.loading}>
-      <ol className={styles.buildItems}
-          aria-live='polite'
-          aria-relevant='additions'
-          data-locator='available-projects-list'>
-        {
-          filteredProjects.map((project) => {
-            const isSelected = selected.includes(project.projectId)
+    <ol className={styles.buildItems}
+        aria-live='polite'
+        aria-relevant='additions'
+        data-locator='available-projects-list'>
+      {
+        filteredProjects.map((project) => {
+          const isSelected = selected.includes(project.projectId)
 
-            return <AvailableProject key={project.projectId}
-                                     {...project}
-                                     selected={isSelected}
-                                     selectProject={(select) => dispatch(projectSelected(tray.trayId, project.projectId, select))}/>
-          })
-        }
-      </ol>
-    </Loading>
+          return <AvailableProject key={project.projectId}
+                                   {...project}
+                                   selected={isSelected}
+                                   selectProject={(select) => dispatch(projectSelected(tray.trayId, project.projectId, select))}/>
+        })
+      }
+    </ol>
   )
 
   const noProjectsWarning = (
     <WarningMessages messages='No projects fetched, please refresh'/>
   )
 
-  const noProjectsMatchFilterWarning = (
-    <WarningMessages messages='No matching projects, please update your filter'/>
+  const noProjectsMatchSearchWarning = (
+    <WarningMessages messages='No matching projects, please update your search'/>
   )
 
   return (
@@ -174,11 +154,14 @@ export function AvailableProjects({tray}: AvailableProjectsProps): ReactElement 
                refreshTray={refreshTray}
                loaded={loaded}/>
       {controls}
-      {loaded && !hasErrors && !hasProjects && noProjectsWarning}
-      {!hasErrors && buildItems}
-      {!hasErrors && hasProjects && !hasProjectsFiltered && noProjectsMatchFilterWarning}
-      <ErrorMessages messages={errors}
-                     data-locator='errors'/>
+      <Loading loaded={loaded}
+               className={styles.loading}>
+        {!hasErrors && !hasProjects && noProjectsWarning}
+        {!hasErrors && hasProjects && !hasProjectsFiltered && noProjectsMatchSearchWarning}
+        {!hasErrors && hasProjectsFiltered && buildItems}
+        <ErrorMessages messages={errors}
+                       data-locator='errors'/>
+      </Loading>
     </section>
   )
 }

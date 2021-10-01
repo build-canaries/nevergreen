@@ -90,7 +90,7 @@ it('should show a warning if there are no projects', () => {
   expect(screen.queryByText('No projects fetched, please refresh')).toBeInTheDocument()
 })
 
-it('should show a warning if no projects match the filter', () => {
+it('should show a warning if no projects match the search', () => {
   const tray = buildTray({trayId: 'trayId'})
   const state = {
     [TRAYS_ROOT]: {
@@ -112,29 +112,7 @@ it('should show a warning if no projects match the filter', () => {
   render(<AvailableProjects tray={tray}/>, {state})
   userEvent.type(screen.getByLabelText('Search'), 'bar')
 
-  expect(screen.queryByText('No matching projects, please update your filter')).toBeInTheDocument()
-})
-
-it('should show an error if the search is invalid', () => {
-  const tray = buildTray({trayId: 'trayId'})
-  const state = {
-    [TRAYS_ROOT]: {
-      trayId: tray
-    },
-    [PROJECTS_ROOT]: {
-      trayId: [
-        buildProject({
-          projectId: 'projectId'
-        })
-      ]
-    },
-    [SELECTED_ROOT]: {
-      trayId: []
-    }
-  }
-  render(<AvailableProjects tray={tray}/>, {state})
-  userEvent.type(screen.getByLabelText('Search'), '?')
-  expect(screen.queryByText(/^Project search not applied/)).toBeInTheDocument()
+  expect(screen.queryByText('No matching projects, please update your search')).toBeInTheDocument()
 })
 
 it('should refresh automatically if the url contains #refresh', () => {
