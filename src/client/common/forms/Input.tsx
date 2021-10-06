@@ -13,9 +13,9 @@ import uniqueId from 'lodash/uniqueId'
 import styles from './input.scss'
 import formStyles from './forms.scss'
 import {InputButton} from './Button'
-import {iLock} from '../fonts/Icons'
 import {isBlank, isNotBlank} from '../Utils'
 import {VisuallyHidden} from '../VisuallyHidden'
+import {Lock} from '../icons/Lock'
 
 export type InputProps = {
   readonly children: ReactNode;
@@ -100,7 +100,7 @@ export function Input({
         {
           readOnly && (
             <InputButton disabled
-                         icon={iLock}
+                         icon={<Lock/>}
                          aria-hidden>
               read only
             </InputButton>

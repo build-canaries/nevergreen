@@ -1,23 +1,5 @@
-@import '../common/responsive';
 @import '../common/variables';
-@import '../common/fonts/icon-font';
 
 .title {
   margin-top: $margin-top;
-}
-
-%help-link-icon {
-  &::before {
-    margin-right: 0.5em;
-  }
-}
-
-.github {
-  @extend %help-link-icon;
-  @extend .icon-github4;
-}
-
-.twitter {
-  @extend %help-link-icon;
-  @extend .icon-twitter3;
 }

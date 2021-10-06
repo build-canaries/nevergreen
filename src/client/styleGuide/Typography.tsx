@@ -2,8 +2,9 @@ import React, {ReactElement} from 'react'
 import {StyleGuideSection} from './StyleGuideSection'
 import {ExternalLink} from '../common/ExternalLink'
 import {Element} from './Element'
-import {Messages, MessagesType} from '../common/Messages'
+import {ErrorMessages, InfoMessages, WarningMessages} from '../common/Messages'
 import {LinkButton} from '../common/LinkButton'
+import {FloppyDisk} from '../common/icons/FloppyDisk'
 
 const TITLE = 'Cupcake toffee jelly beans'
 
@@ -69,14 +70,18 @@ export function Typography(): ReactElement {
       </StyleGuideSection>
 
       <StyleGuideSection title='Links'>
-        <ExternalLink href='https://github.com/build-canaries/nevergreen'>external link</ExternalLink>
-        <LinkButton to='/style-guide'>link button</LinkButton>
+        <ExternalLink href='https://github.com/build-canaries/nevergreen'>External link</ExternalLink>
+        <LinkButton to='/style-guide'>Link button</LinkButton>
+        <LinkButton to='/style-guide' icon={<FloppyDisk/>}>Link button with icon</LinkButton>
       </StyleGuideSection>
 
       <StyleGuideSection title='Messages'>
-        <Messages type={MessagesType.INFO} messages={['info messages', ...MESSAGES]}/>
-        <Messages type={MessagesType.ERROR} messages={['error messages', ...MESSAGES]}/>
-        <Messages type={MessagesType.WARNING} messages={['warning messages', ...MESSAGES]}/>
+        <InfoMessages messages={['info messages', ...MESSAGES]}/>
+        <InfoMessages messages='Chocolate bar tart jelly-o ice cream jelly pastry pastry candy pudding'/>
+        <ErrorMessages messages={['error messages', ...MESSAGES]}/>
+        <ErrorMessages messages='Chocolate bar tart jelly-o ice cream jelly pastry pastry candy pudding'/>
+        <WarningMessages messages={['warning messages', ...MESSAGES]}/>
+        <WarningMessages messages='Chocolate bar tart jelly-o ice cream jelly pastry pastry candy pudding'/>
       </StyleGuideSection>
     </>
   )

@@ -11,11 +11,12 @@ import {getProjectsForTray} from './ProjectsReducer'
 import {Card} from '../common/card/Card'
 import {CardHeading} from '../common/card/CardHeading'
 import {trayRemoved} from './TrackingActionCreators'
-import {FeedLogo} from './logo/FeedLogo'
 import {VisuallyHidden} from '../common/VisuallyHidden'
 import {LinkButton} from '../common/LinkButton'
 import styles from './feed-card.scss'
-import {iCheckboxChecked, iCog} from '../common/fonts/Icons'
+import {CheckboxChecked} from '../common/icons/CheckboxChecked'
+import {Cog} from '../common/icons/Cog'
+import {List} from '../common/icons/List'
 
 interface FeedCardProps {
   readonly tray: Tray;
@@ -42,18 +43,18 @@ export function FeedCard({tray, index}: FeedCardProps): ReactElement {
   ]
 
   const header = <CardHeading title={title}
-                              icon={<FeedLogo/>}
+                              icon={<List/>}
                               onRemove={() => dispatch(trayRemoved(tray.trayId))}/>
 
   return (
     <Card header={header}>
       <Summary values={summary}/>
       <LinkButton className={styles.manageProjects}
-                  icon={iCheckboxChecked}
+                  icon={<CheckboxChecked/>}
                   to={routeFeedProjects(tray.trayId)}>
         Manage projects<VisuallyHidden> for {title}</VisuallyHidden>
       </LinkButton>
-      <LinkButton icon={iCog}
+      <LinkButton icon={<Cog/>}
                   to={routeFeedDetails(tray.trayId)}>
         Change details<VisuallyHidden> for {title}</VisuallyHidden>
       </LinkButton>

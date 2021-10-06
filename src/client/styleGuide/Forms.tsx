@@ -6,9 +6,9 @@ import {DropDown} from '../common/forms/DropDown'
 import {StyleGuideSection} from './StyleGuideSection'
 import styles from './style-guide.scss'
 import {DangerButton, PrimaryButton, SecondaryButton} from '../common/forms/Button'
-import {iFloppyDisk} from '../common/fonts/Icons'
 import {Radio} from '../common/forms/Radio'
 import {Password} from '../common/forms/Password'
+import {FloppyDisk} from '../common/icons/FloppyDisk'
 
 const DROP_DOWN_OPTIONS = [
   {value: '1', display: 'option 1'},
@@ -78,14 +78,14 @@ export function Forms(): ReactElement {
 
       <StyleGuideSection title='Buttons'>
         <PrimaryButton>Primary button</PrimaryButton>
-        <PrimaryButton icon={iFloppyDisk}>Primary button with icon</PrimaryButton>
-        <PrimaryButton icon={iFloppyDisk} iconOnly>Primary button icon only</PrimaryButton>
+        <PrimaryButton icon={<FloppyDisk/>}>Primary button with icon</PrimaryButton>
+        <PrimaryButton icon={<FloppyDisk/>} iconOnly>Primary button icon only</PrimaryButton>
         <SecondaryButton>Secondary button</SecondaryButton>
-        <SecondaryButton icon={iFloppyDisk}>Secondary button with icon</SecondaryButton>
-        <SecondaryButton icon={iFloppyDisk} iconOnly>Secondary button icon only</SecondaryButton>
-        <DangerButton>danger button</DangerButton>
-        <DangerButton icon={iFloppyDisk}>Danger button with icon</DangerButton>
-        <DangerButton icon={iFloppyDisk} iconOnly>Danger button icon only</DangerButton>
+        <SecondaryButton icon={<FloppyDisk/>}>Secondary button with icon</SecondaryButton>
+        <SecondaryButton icon={<FloppyDisk/>} iconOnly>Secondary button icon only</SecondaryButton>
+        <DangerButton>Danger button</DangerButton>
+        <DangerButton icon={<FloppyDisk/>}>Danger button with icon</DangerButton>
+        <DangerButton icon={<FloppyDisk/>} iconOnly>Danger button icon only</DangerButton>
       </StyleGuideSection>
     </>
   )

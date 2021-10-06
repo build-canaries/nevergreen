@@ -35,14 +35,18 @@ import {BackupPage} from './backup/BackupPage'
 import {Reset} from './reset/Reset'
 import {AddTray} from '../tracking/AddTray'
 import {FeedPage} from '../tracking/FeedPage'
-import {iBin, iCog, iDisplay, iEye, iFloppyDisk, iList, iNotification} from '../common/fonts/Icons'
-import menuStyles from '../common/fonts/icon-font.scss'
-import cn from 'classnames'
+import {List} from '../common/icons/List'
+import {Display} from '../common/icons/Display'
+import {Bell} from '../common/icons/Bell'
+import {FloppyDisk} from '../common/icons/FloppyDisk'
+import {Cog} from '../common/icons/Cog'
+import {Bin} from '../common/icons/Bin'
+import {Image} from '../common/icons/Image'
 
 interface MenuItemProps {
   readonly to: string;
   readonly label: string;
-  readonly icon: string;
+  readonly icon: ReactElement;
 }
 
 function MenuItem({to, label, icon}: MenuItemProps): ReactElement {
@@ -52,7 +56,7 @@ function MenuItem({to, label, icon}: MenuItemProps): ReactElement {
                className={styles.link}
                activeClassName={styles.activeLink}
                role='menuitem'>
-        <span className={cn(styles.menuIcon, menuStyles[`icon-${icon}`])} aria-hidden/>
+        {icon}
         {label}
       </NavLink>
     </li>
@@ -66,13 +70,13 @@ export function Settings(): ReactElement {
         <Redirect to={ROUTE_SETTINGS_TRACKING}/>
       </Route>
       <ul className={styles.menu} role='menu' aria-label='Settings'>
-        <MenuItem to={ROUTE_SETTINGS_TRACKING} label='Tracking' icon={iList}/>
-        <MenuItem to={ROUTE_SETTINGS_SUCCESS} label='Success' icon={iEye}/>
-        <MenuItem to={ROUTE_SETTINGS_DISPLAY} label='Display' icon={iDisplay}/>
-        <MenuItem to={ROUTE_SETTINGS_NOTIFICATIONS} label='Notifications' icon={iNotification}/>
-        <MenuItem to={ROUTE_SETTINGS_BACKUP} label='Backup' icon={iFloppyDisk}/>
-        <MenuItem to={ROUTE_SETTINGS_GENERAL} label='General' icon={iCog}/>
-        <MenuItem to={ROUTE_SETTINGS_RESET} label='Reset' icon={iBin}/>
+        <MenuItem to={ROUTE_SETTINGS_TRACKING} label='Tracking' icon={<List/>}/>
+        <MenuItem to={ROUTE_SETTINGS_SUCCESS} label='Success' icon={<Image/>}/>
+        <MenuItem to={ROUTE_SETTINGS_DISPLAY} label='Display' icon={<Display/>}/>
+        <MenuItem to={ROUTE_SETTINGS_NOTIFICATIONS} label='Notifications' icon={<Bell/>}/>
+        <MenuItem to={ROUTE_SETTINGS_BACKUP} label='Backup' icon={<FloppyDisk/>}/>
+        <MenuItem to={ROUTE_SETTINGS_GENERAL} label='General' icon={<Cog/>}/>
+        <MenuItem to={ROUTE_SETTINGS_RESET} label='Reset' icon={<Bin/>}/>
       </ul>
       <div>
         <Switch>

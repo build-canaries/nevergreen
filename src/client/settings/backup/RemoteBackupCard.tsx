@@ -12,7 +12,8 @@ import {backupSummary} from './BackupSummary'
 import {routeExportRemote, routeImportRemote} from '../../Routes'
 import {VisuallyHidden} from '../../common/VisuallyHidden'
 import {LinkButton} from '../../common/LinkButton'
-import {iCloudDownload, iCloudUpload} from '../../common/fonts/Icons'
+import {CloudUpload} from '../../common/icons/CloudUpload'
+import {CloudDownload} from '../../common/icons/CloudDownload'
 
 interface RemoteLocationProps {
   readonly location: RemoteLocationType;
@@ -31,11 +32,11 @@ export function RemoteBackupCard({location, index}: RemoteLocationProps): ReactE
           className={styles.card}>
       <Summary values={backupSummary(location)}/>
       <LinkButton className={styles.exportButton}
-                  icon={iCloudUpload}
+                  icon={<CloudUpload/>}
                   to={routeExportRemote(location.internalId)}>
         Export<VisuallyHidden> remotely</VisuallyHidden>
       </LinkButton>
-      <LinkButton icon={iCloudDownload}
+      <LinkButton icon={<CloudDownload/>}
                   to={routeImportRemote(location.internalId)}>
         Import<VisuallyHidden> remote</VisuallyHidden>
       </LinkButton>

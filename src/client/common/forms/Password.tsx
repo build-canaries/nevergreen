@@ -1,8 +1,9 @@
 import React, {ReactElement, useState} from 'react'
 import uniqueId from 'lodash/uniqueId'
 import {InputButton} from './Button'
-import {iEye, iEyeBlocked} from '../fonts/Icons'
 import {Input, InputProps} from './Input'
+import {Eye} from '../icons/Eye'
+import {EyeBlocked} from '../icons/EyeBlocked'
 
 export function Password(props: Omit<InputProps, 'type'>): ReactElement {
   const [type, setType] = useState('password')
@@ -11,7 +12,7 @@ export function Password(props: Omit<InputProps, 'type'>): ReactElement {
 
   const showPassword = (
     <InputButton aria-controls={actualId}
-                 icon={iEye}
+                 icon={<Eye/>}
                  onClick={() => setType('text')}>
       show password
     </InputButton>
@@ -19,7 +20,7 @@ export function Password(props: Omit<InputProps, 'type'>): ReactElement {
 
   const hidePassword = (
     <InputButton aria-controls={actualId}
-                 icon={iEyeBlocked}
+                 icon={<EyeBlocked/>}
                  onClick={() => setType('password')}>
       hide password
     </InputButton>

@@ -3,11 +3,12 @@ import {errorMessage, isBlank} from '../../common/Utils'
 import {Input} from '../../common/forms/Input'
 import {Checkbox} from '../../common/forms/Checkbox'
 import {SecondaryButton} from '../../common/forms/Button'
-import {iPlay, iStop} from '../../common/fonts/Icons'
 import {useDispatch, useSelector} from 'react-redux'
 import {getBrokenBuildSoundFx, getPlayBrokenBuildSoundFx} from '../SettingsReducer'
 import {setBrokenBuildSoundFx, setPlayBrokenBuildSoundFx} from '../SettingsActionCreators'
 import styles from './notifications-audio.scss'
+import {Stop} from '../../common/icons/Stop'
+import {Play} from '../../common/icons/Play'
 
 function pause(audio?: HTMLAudioElement) {
   if (audio) {
@@ -93,7 +94,7 @@ export function NotificationsAudio(): ReactElement {
       <SecondaryButton onClick={playing ? stop : play}
                        disabled={playingDisabled}
                        aria-disabled={playingDisabled}
-                       icon={playing ? iStop : iPlay}
+                       icon={playing ? <Stop/> : <Play/>}
                        className={styles.play}>
         {playing
           ? 'Stop broken build sound'

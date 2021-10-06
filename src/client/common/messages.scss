@@ -1,50 +1,50 @@
 @import 'variables';
-@import 'fonts/icon-font';
 @import 'typography';
 @import 'responsive';
 
-@mixin _messages($icon, $color, $background-color) {
+@mixin _messages($color, $background-color) {
+  align-items: center;
   background-color: $background-color;
   color: $color;
-  list-style: none;
+  display: flex;
   margin: 1em 0 0 0;
+
+  & > .icon {
+    background-color: darken($background-color, 5%);
+    color: darken($background-color, 15%);
+  }
 
   @include respond-to(very-small) {
     overflow: scroll;
   }
-
-  .message:first-child {
-    @extend .icon-#{$icon};
-
-    &::before {
-      color: $color;
-    }
-  }
 }
 
 .error {
-  @include _messages('notification', $white, $error);
+  @include _messages($white, $error);
 }
 
 .warning {
-  @include _messages('notification', $off-black, $yellow);
+  @include _messages($off-black, $yellow);
 }
 
 .info {
-  @include _messages('checkmark', $off-white, $blue);
+  @include _messages($off-white, $blue);
+}
+
+.messages {
+  list-style: none;
+}
+
+.icon {
+  align-self: stretch;
+  font-size: 2em;
+  padding: 0.25em 0.5em;
+
+  & > svg {
+    margin: 0;
+  }
 }
 
 .message {
-  padding: 0.5em 0.5em 0.5em 2em;
-
-  &:first-child {
-    margin-left: 2em;
-    padding-left: 0;
-
-    &::before {
-      margin-left: -2em;
-      padding-left: 0.5em;
-      padding-right: 0.5em;
-    }
-  }
+  margin: 0.5em 1em;
 }

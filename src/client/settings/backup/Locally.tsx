@@ -5,10 +5,10 @@ import {Summary} from '../../common/Summary'
 import {URL} from '../../common/URL'
 import {Card} from '../../common/card/Card'
 import {CardHeading} from '../../common/card/CardHeading'
-import {LocalLogo} from './logo/LocalLogo'
 import {VisuallyHidden} from '../../common/VisuallyHidden'
 import {LinkButton} from '../../common/LinkButton'
-import {iFloppyDisk, iFolderOpen} from '../../common/fonts/Icons'
+import {FloppyDisk} from '../../common/icons/FloppyDisk'
+import {FolderOpen} from '../../common/icons/FolderOpen'
 
 export function Locally(): ReactElement {
   const summary = [
@@ -18,18 +18,18 @@ export function Locally(): ReactElement {
   ]
 
   const header = <CardHeading title='Local backups'
-                              icon={<LocalLogo/>}/>
+                              icon={<FloppyDisk/>}/>
 
   return (
     <Card header={header}
           className={styles.card}>
       <Summary values={summary}/>
       <LinkButton className={styles.export}
-                  icon={iFloppyDisk}
+                  icon={<FloppyDisk/>}
                   to={ROUTE_EXPORT_LOCAL}>
         Export<VisuallyHidden> locally</VisuallyHidden>
       </LinkButton>
-      <LinkButton icon={iFolderOpen}
+      <LinkButton icon={<FolderOpen/>}
                   to={ROUTE_IMPORT_LOCAL}>
         Import<VisuallyHidden> local</VisuallyHidden>
       </LinkButton>

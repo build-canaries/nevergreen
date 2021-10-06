@@ -23,6 +23,7 @@ import {SortBy} from '../../gateways/ProjectsGateway'
 import {ROUTE_PREVIEW} from '../../Routes'
 import {LinkButton} from '../../common/LinkButton'
 import {Page} from '../../common/Page'
+import {Eye} from '../../common/icons/Eye'
 
 export function DisplaySettings(): ReactElement {
   const dispatch = useDispatch()
@@ -85,7 +86,7 @@ export function DisplaySettings(): ReactElement {
 
       <LinkButton to={ROUTE_PREVIEW}
                   className={styles.preview}
-                  data-locator='display-preview'>
+                  icon={<Eye/>}>
         Preview display
       </LinkButton>
     </Page>

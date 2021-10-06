@@ -15,6 +15,7 @@ import {ROUTE_SETTINGS_BACKUP} from '../../../Routes'
 import {InputFile} from './InputFile'
 import {loadFile} from '../FileSystem'
 import {Page} from '../../../common/Page'
+import {Checkmark} from '../../../common/icons/Checkmark'
 
 const placeholder = 'Open, drag and drop or paste exported configuration here and press Import'
 
@@ -89,7 +90,8 @@ export function ImportLocal(): ReactElement {
         <TimedMessage type={MessagesType.INFO}
                       clear={() => setSuccess('')}
                       messages={success}
-                      className={styles.messages}/>
+                      className={styles.messages}
+                      icon={<Checkmark/>}/>
 
         <InputFile onFileSelected={openFile}
                    disabled={!loaded}/>

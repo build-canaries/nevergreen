@@ -3,6 +3,8 @@ import {Modal} from '../common/Modal'
 import {ExternalLink} from '../common/ExternalLink'
 import {SubmitAnIssue} from './SubmitAnIssue'
 import styles from './about.scss'
+import {Twitter} from '../common/icons/Twitter'
+import {GitHubLogo} from '../common/icons/GitHubLogo'
 
 interface AboutProps {
   readonly show: boolean;
@@ -18,11 +20,13 @@ export function About({show, close, version}: AboutProps): ReactElement {
       <p>
         Nevergreen {version} by Build Canaries.
       </p>
-      <p className={styles.twitter}>
+      <p>
+        <Twitter/>
         <ExternalLink href='https://twitter.com/BuildCanaries'>Follow Build Canaries on Twitter for news and
           updates</ExternalLink>.
       </p>
-      <p className={styles.github}>
+      <p>
+        <GitHubLogo/>
         <ExternalLink href='https://github.com/build-canaries/nevergreen'>The full Nevergreen source is available on
           GitHub</ExternalLink>.
       </p>

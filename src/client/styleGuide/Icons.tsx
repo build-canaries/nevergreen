@@ -1,42 +1,63 @@
 import React, {ReactElement} from 'react'
-import icons from '../common/fonts/icon-font.scss'
 import {StyleGuideSection} from './StyleGuideSection'
 import styles from './style-guide.scss'
+import {Bin} from '../common/icons/Bin'
+import {CheckboxChecked} from '../common/icons/CheckboxChecked'
+import {CheckboxUnchecked} from '../common/icons/CheckboxUnchecked'
+import {Checkmark} from '../common/icons/Checkmark'
+import {CloudDownload} from '../common/icons/CloudDownload'
+import {CloudUpload} from '../common/icons/CloudUpload'
+import {Cog} from '../common/icons/Cog'
+import {Cross} from '../common/icons/Cross'
+import {Dice} from '../common/icons/Dice'
+import {Display} from '../common/icons/Display'
+import {Eye} from '../common/icons/Eye'
+import {EyeBlocked} from '../common/icons/EyeBlocked'
+import {FloppyDisk} from '../common/icons/FloppyDisk'
+import {Lock} from '../common/icons/Lock'
+import {Loop} from '../common/icons/Loop'
+import {Bell} from '../common/icons/Bell'
+import {Clock} from '../common/icons/Clock'
+import {Paste} from '../common/icons/Paste'
+import {Play} from '../common/icons/Play'
+import {Plus} from '../common/icons/Plus'
+import {Question} from '../common/icons/Question'
+import {Stop} from '../common/icons/Stop'
+import {Twitter} from '../common/icons/Twitter'
+import {Unlocked} from '../common/icons/Unlocked'
+import {FolderOpen} from '../common/icons/FolderOpen'
+import {Warning} from '../common/icons/Warning'
 
 export function Icons(): ReactElement {
   return (
     <StyleGuideSection title='Icons (in a Responsive Grid)'>
       <div className={styles.icons}>
-        <span className={icons['icon-bin']}>bin</span>
-        <span className={icons['icon-checkbox-checked']}>checkbox checked</span>
-        <span className={icons['icon-checkbox-unchecked']}>checkbox unchecked</span>
-        <span className={icons['icon-checkmark']}>checkmark</span>
-        <span className={icons['icon-circle']}>circle</span>
-        <span className={icons['icon-circle-down']}>circle down</span>
-        <span className={icons['icon-circle-up']}>circle up</span>
-        <span className={icons['icon-cloud-download']}>cloud download</span>
-        <span className={icons['icon-cloud-upload']}>cloud upload</span>
-        <span className={icons['icon-cog']}>cog</span>
-        <span className={icons['icon-cross']}>cross</span>
-        <span className={icons['icon-dice']}>dice</span>
-        <span className={icons['icon-display']}>display</span>
-        <span className={icons['icon-eye']}>eye</span>
-        <span className={icons['icon-eye-blocked']}>eye blocked</span>
-        <span className={icons['icon-floppy-disk']}>floppy disk</span>
-        <span className={icons['icon-github4']}>github 4</span>
-        <span className={icons['icon-lock']}>lock</span>
-        <span className={icons['icon-loop2']}>loop 2</span>
-        <span className={icons['icon-menu3']}>menu 3</span>
-        <span className={icons['icon-menu4']}>menu 4</span>
-        <span className={icons['icon-notification']}>notification</span>
-        <span className={icons['icon-paste']}>paste</span>
-        <span className={icons['icon-play3']}>play 3</span>
-        <span className={icons['icon-plus']}>plus</span>
-        <span className={icons['icon-question']}>question</span>
-        <span className={icons['icon-stop2']}>stop 2</span>
-        <span className={icons['icon-twitter3']}>twitter 3</span>
-        <span className={icons['icon-unlocked']}>unlocked</span>
-        <span className={icons['icon-folder-open']}>folder open</span>
+        <span><Bell/>bell</span>
+        <span><Bin/>bin</span>
+        <span><CheckboxChecked/>checkbox checked</span>
+        <span><CheckboxUnchecked/>checkbox unchecked</span>
+        <span><Checkmark/>checkmark</span>
+        <span><Clock/>clock</span>
+        <span><CloudDownload/>cloud download</span>
+        <span><CloudUpload/>cloud upload</span>
+        <span><Cog/>cog</span>
+        <span><Cross/>cross</span>
+        <span><Dice/>dice</span>
+        <span><Display/>display</span>
+        <span><Eye/>eye</span>
+        <span><EyeBlocked/>eye blocked</span>
+        <span><FloppyDisk/>floppy disk</span>
+        <span><FolderOpen/>folder open</span>
+        <span><Lock/>lock</span>
+        <span><Loop/>loop</span>
+        <span><Paste/>paste</span>
+        <span><Play/>play</span>
+        <span><Plus/>plus</span>
+        <span><Question/>question</span>
+        <span><Stop/>stop</span>
+        <span><Twitter/>twitter</span>
+        <span><Unlocked/>unlocked</span>
+        <span><Warning/>warning</span>
       </div>
     </StyleGuideSection>
   )

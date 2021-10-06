@@ -9,9 +9,10 @@ import styles from './form.scss'
 import {FormErrors} from './Validation'
 import {ErrorMessages} from '../Messages'
 import {errorMessage} from '../Utils'
-import {iCheckmark, iCross} from '../fonts/Icons'
 import {useHistory} from 'react-router-dom'
 import {LinkButton} from '../LinkButton'
+import {Checkmark} from '../icons/Checkmark'
+import {Cross} from '../icons/Cross'
 
 interface FormProps<Fields extends string> {
   readonly children: (submitting: boolean, validationErrors: Readonly<FormErrors<Fields>>, clearErrors: () => void) => ReactNode;
@@ -87,21 +88,21 @@ export function Form<Fields extends string>({
       <ErrorMessages messages={submissionError}/>
 
       <PrimaryButton className={styles.submitButton}
-                     icon={iCheckmark}
+                     icon={<Checkmark/>}
                      type='submit'
                      disabled={submitting}>
         {submitButtonText}
       </PrimaryButton>
       {isFunction(onCancel) && (
         <SecondaryButton onClick={onCancel}
-                         icon={iCross}
+                         icon={<Cross/>}
                          disabled={submitting}>
           Cancel
         </SecondaryButton>
       )}
       {isString(onCancel) && !submitting && (
         <LinkButton to={onCancel}
-                    icon={iCross}>
+                    icon={<Cross/>}>
           Cancel
         </LinkButton>
       )}

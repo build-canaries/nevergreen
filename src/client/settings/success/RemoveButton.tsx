@@ -1,7 +1,7 @@
 import React, {ReactElement} from 'react'
 import {DangerButton} from '../../common/forms/Button'
 import styles from './remove-button.scss'
-import {iBin} from '../../common/fonts/Icons'
+import {Bin} from '../../common/icons/Bin'
 
 interface RemoveButtonProps {
   readonly removeMessage: () => void;
@@ -9,7 +9,7 @@ interface RemoveButtonProps {
 
 export function RemoveButton({removeMessage}: RemoveButtonProps): ReactElement {
   return (
-    <DangerButton icon={iBin}
+    <DangerButton icon={<Bin/>}
                   iconOnly
                   className={styles.remove}
                   onClick={removeMessage}>

@@ -1,5 +1,4 @@
 @import '../variables';
-@import '../fonts/icon-font';
 @import '../forms/forms';
 @import '../accessibility';
 @import '../typography';
@@ -63,12 +62,6 @@
   @include button($white, $error, $error);
 }
 
-.withIcon {
-  &::before {
-    margin-right: 0.5em;
-  }
-}
-
 .iconOnly {
   @extend %standard-input-dimensions;
 
@@ -77,6 +70,10 @@
   min-width: $input-height;
   padding: 0.5em;
   width: $input-height;
+
+  & > svg {
+    margin: 0;
+  }
 }
 
 .inputButton {

@@ -1,7 +1,6 @@
 import React, {ReactElement, useCallback, useState} from 'react'
 import styles from './export-local.scss'
 import {SecondaryButton} from '../../../common/forms/Button'
-import {iCross, iFloppyDisk, iPaste} from '../../../common/fonts/Icons'
 import {useClipboard} from './ClipboardHook'
 import {useSelector} from 'react-redux'
 import {toExportableConfigurationJson} from '../../../configuration/Configuration'
@@ -13,6 +12,10 @@ import {saveFile} from '../FileSystem'
 import {Page} from '../../../common/Page'
 import {ROUTE_SETTINGS_BACKUP} from '../../../Routes'
 import {LinkButton} from '../../../common/LinkButton'
+import {FloppyDisk} from '../../../common/icons/FloppyDisk'
+import {Paste} from '../../../common/icons/Paste'
+import {Cross} from '../../../common/icons/Cross'
+import {Checkmark} from '../../../common/icons/Checkmark'
 
 export function ExportLocal(): ReactElement {
   const configuration = useSelector(toExportableConfigurationJson)
@@ -48,10 +51,11 @@ export function ExportLocal(): ReactElement {
       <TimedMessage className={styles.message}
                     type={messageType}
                     clear={() => setMessage([])}
-                    messages={message}/>
+                    messages={message}
+                    icon={<Checkmark/>}/>
 
       <SecondaryButton className={styles.saveFile}
-                       icon={iFloppyDisk}
+                       icon={<FloppyDisk/>}
                        onClick={saveLocally}>
         Save locally...
       </SecondaryButton>
@@ -60,7 +64,7 @@ export function ExportLocal(): ReactElement {
         <SecondaryButton className={styles.copy}
                          id='copy-to-clipboard'
                          data-clipboard-target='#export-data'
-                         icon={iPaste}>
+                         icon={<Paste/>}>
           Copy to clipboard
         </SecondaryButton>
       )}
@@ -71,7 +75,7 @@ export function ExportLocal(): ReactElement {
                 readOnly
                 id='export-data'/>
       <LinkButton to={ROUTE_SETTINGS_BACKUP}
-                  icon={iCross}
+                  icon={<Cross/>}
                   className={styles.cancel}>
         Cancel
       </LinkButton>

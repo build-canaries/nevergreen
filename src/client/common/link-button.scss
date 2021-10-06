@@ -1,5 +1,4 @@
 @import './forms/button';
-@import './fonts/icon-font';
 @import './variables';
 
 .linkButton {
@@ -9,12 +8,6 @@
 
   &:visited {
     color: $off-black;
-  }
-}
-
-.withIcon {
-  &::before {
-    margin-right: 0.5em;
   }
 }
 

@@ -6,7 +6,6 @@ import {Refresh} from './Refresh'
 import {errorMessage, isBlank, notEmpty} from '../../common/Utils'
 import styles from './available-projects.scss'
 import {SecondaryButton} from '../../common/forms/Button'
-import {iCheckboxChecked, iCheckboxUnchecked} from '../../common/fonts/Icons'
 import {enrichProjects, isError} from '../../domain/Project'
 import {getProjectsForTray} from '../ProjectsReducer'
 import {getSelectedProjectsForTray} from '../SelectedReducer'
@@ -19,6 +18,8 @@ import {Tray} from '../../domain/Tray'
 import {useLocation} from 'react-router-dom'
 import {REFRESH_HASH} from '../../Routes'
 import {matchSorter} from 'match-sorter'
+import {CheckboxChecked} from '../../common/icons/CheckboxChecked'
+import {CheckboxUnchecked} from '../../common/icons/CheckboxUnchecked'
 
 interface AvailableProjectsProps {
   readonly tray: Tray;
@@ -99,13 +100,13 @@ export function AvailableProjects({tray}: AvailableProjectsProps): ReactElement 
         <legend className={styles.legend}>Available projects</legend>
         <SecondaryButton className={styles.includeAll}
                          onClick={includeAll}
-                         icon={iCheckboxChecked}
+                         icon={<CheckboxChecked/>}
                          disabled={controlsDisabled}>
           Include all
         </SecondaryButton>
         <SecondaryButton className={styles.excludeAll}
                          onClick={excludeAll}
-                         icon={iCheckboxUnchecked}
+                         icon={<CheckboxUnchecked/>}
                          disabled={controlsDisabled}>
           Exclude all
         </SecondaryButton>

@@ -3,8 +3,8 @@ import ReactModal from 'react-modal'
 import cn from 'classnames'
 import styles from './modal.scss'
 import {SecondaryButton} from './forms/Button'
-import {iCross} from './fonts/Icons'
 import {pauseShortcuts, unpauseShortcuts} from './Keyboard'
+import {Cross} from './icons/Cross'
 
 interface ModalProps {
   readonly title: string;
@@ -39,7 +39,7 @@ export function Modal({
       <div className={styles.header}>
         <h1 className={styles.title}>{title}</h1>
         <SecondaryButton onClick={close}
-                         icon={iCross}
+                         icon={<Cross/>}
                          iconOnly>
           Close
         </SecondaryButton>

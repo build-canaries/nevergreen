@@ -1,7 +1,6 @@
 import React, {ReactElement, useCallback, useEffect, useRef, useState} from 'react'
 import styles from './import.scss'
 import {SecondaryButton} from '../../../common/forms/Button'
-import {iCloudDownload, iCross} from '../../../common/fonts/Icons'
 import {DataSource, toConfiguration} from '../../../configuration/Configuration'
 import {errorMessage, isBlank} from '../../../common/Utils'
 import {useDispatch, useSelector} from 'react-redux'
@@ -24,6 +23,8 @@ import {Page} from '../../../common/Page'
 import {Summary} from '../../../common/Summary'
 import {backupSummary} from '../BackupSummary'
 import {LinkButton} from '../../../common/LinkButton'
+import {CloudDownload} from '../../../common/icons/CloudDownload'
+import {Cross} from '../../../common/icons/Cross'
 
 type Fields = 'import'
 
@@ -109,12 +110,12 @@ function ImportRemoteLocation({location}: ImportRemoteProps): ReactElement {
         {hasLoadErrors && (
           <>
             <SecondaryButton className={styles.tryAgain}
-                             icon={iCloudDownload}
+                             icon={<CloudDownload/>}
                              onClick={fetchData}>
               Try fetching again
             </SecondaryButton>
             <LinkButton to={ROUTE_SETTINGS_BACKUP}
-                        icon={iCross}
+                        icon={<Cross/>}
                         className={styles.cancel}>
               Cancel
             </LinkButton>

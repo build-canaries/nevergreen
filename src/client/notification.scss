@@ -1,6 +1,5 @@
 @import 'common/variables';
 @import 'common/typography';
-@import 'common/fonts/icon-font';
 
 .popUpNotification {
   background-color: $blue;
@@ -16,15 +15,9 @@
 .message {
   @include font-scale(2);
 
-  @extend .icon-notification;
-
   align-self: center;
   flex-grow: 1;
   margin: 0 $margin-right 0 0;
-
-  &::before {
-    padding-right: 1em;
-  }
 }
 
 .dismiss {

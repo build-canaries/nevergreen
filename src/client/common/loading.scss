@@ -1,7 +1,6 @@
 @import 'variables';
 @import 'typography';
 @import 'layout';
-@import 'fonts/icon-font';
 @import 'accessibility';
 
 .loading {
@@ -18,12 +17,13 @@
 .pulse {
   @include font-scale(4);
 
-  @extend .icon-circle;
-
   animation: bounce 1.4s infinite ease-in-out both;
-  color: $mid-grey;
+  background-color: $mid-grey;
+  border-radius: 50%;
   display: inline-block;
-  padding: 0.5rem;
+  height: 2rem;
+  margin: 0 1rem 0 0;
+  width: 2rem;
 
   &:nth-of-type(1) {
     animation-delay: -0.32s;
@@ -56,6 +56,6 @@
   background-color: $off-black;
 
   & .pulse {
-    color: $light-grey;
+    background-color: $light-grey;
   }
 }

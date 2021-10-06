@@ -1,6 +1,5 @@
 @import '../common/variables';
 @import '../common/responsive';
-@import '../common/fonts/icon-font';
 @import '../common/typography';
 @import '../common/accessibility';
 @import '../common/forms/button';
@@ -67,12 +66,16 @@
   background-color: inherit;
   color: inherit;
   display: inline;
-  vertical-align: middle;
 }
 
 .menuItem {
+  @include respond-to(tablet, desktop) {
+    @include font-scale(1);
+  }
+
   color: $white;
   display: inline-block;
+  height: 65px;
   padding: 1em;
   text-decoration: none;
   width: 100%;
@@ -95,20 +98,7 @@
   background-color: transparent;
   border: none;
   cursor: pointer;
-  height: 73px;
   text-align: left;
-}
-
-.menuIcon {
-  @include font-scale(3);
-
-  background-color: inherit;
-  color: inherit;
-  vertical-align: middle;
-
-  &::before {
-    padding-right: 0.5em;
-  }
 }
 
 .active {
@@ -125,16 +115,4 @@
     color: $off-black;
     cursor: default;
   }
-}
-
-.monitor {
-  @extend .icon-display;
-}
-
-.settings {
-  @extend .icon-cog;
-}
-
-.help {
-  @extend .icon-question;
 }

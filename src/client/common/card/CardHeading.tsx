@@ -1,7 +1,7 @@
 import React, {ReactElement} from 'react'
 import {DangerButton} from '../forms/Button'
-import {iBin} from '../fonts/Icons'
 import styles from './card-heading.scss'
+import {Bin} from '../icons/Bin'
 
 interface CardHeadingProps {
   readonly icon?: ReactElement;
@@ -16,7 +16,7 @@ export function CardHeading({icon, title, onRemove}: CardHeadingProps): ReactEle
       <h2 className={styles.title}>{title}</h2>
       {onRemove && (
         <DangerButton onClick={onRemove}
-                      icon={iBin}
+                      icon={<Bin/>}
                       iconOnly>
           Remove {title}
         </DangerButton>

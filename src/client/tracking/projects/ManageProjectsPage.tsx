@@ -6,7 +6,7 @@ import {AvailableProjects} from './AvailableProjects'
 import styles from './manage-projects-page.scss'
 import {Tray} from '../../domain/Tray'
 import {LinkButton} from '../../common/LinkButton'
-import {iCog} from '../../common/fonts/Icons'
+import {Cog} from '../../common/icons/Cog'
 
 interface ManageProjectsPageProps {
   readonly feed: Tray;
@@ -18,7 +18,7 @@ export function ManageProjectsPage({feed}: ManageProjectsPageProps): ReactElemen
       <AvailableProjects tray={feed}/>
       <LinkButton to={routeFeedDetails(feed.trayId)}
                   className={styles.link}
-                  icon={iCog}>
+                  icon={<Cog/>}>
         Change details
       </LinkButton>
       <Link to={ROUTE_SETTINGS_TRACKING} className={styles.link}>Back to tracking</Link>

@@ -1,8 +1,9 @@
 @import '../variables';
 @import '../layout';
+@import '../typography';
 
 .icon {
-  margin: 0 $margin-right 0 0;
+  @include font-scale(3);
 
   @include respond-to(very-small) {
     display: none;

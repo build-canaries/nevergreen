@@ -2,7 +2,7 @@ import React, {ReactElement} from 'react'
 import {Duration} from '../../common/Duration'
 import styles from './refresh.scss'
 import {PrimaryButton} from '../../common/forms/Button'
-import {iRefresh} from '../../common/fonts/Icons'
+import {Loop} from '../../common/icons/Loop'
 
 interface RefreshProps {
   readonly timestamp?: string;
@@ -15,7 +15,7 @@ export function Refresh({timestamp, refreshTray, loaded}: RefreshProps): ReactEl
     <>
       <PrimaryButton className={styles.refresh}
                      onClick={refreshTray}
-                     icon={iRefresh}
+                     icon={<Loop/>}
                      disabled={!loaded}>
         Refresh
       </PrimaryButton>

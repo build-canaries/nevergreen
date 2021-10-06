@@ -11,6 +11,7 @@ import {getTrays} from '../tracking/TraysReducer'
 import {getShowBuildLabel, getShowBuildTime, getShowTrayName} from '../settings/SettingsReducer'
 import {ExternalLink} from '../common/ExternalLink'
 import {ProjectError} from '../gateways/ProjectsGateway'
+import {Clock} from '../common/icons/Clock'
 
 interface TileProjectProps {
   readonly project: Project | ProjectError;
@@ -35,7 +36,8 @@ export function TileProject({project, visibleProjects}: TileProjectProps): React
   )
 
   const time = showBuildTime &&
-    <span className={styles.time}>
+    <span>
+      <Clock className={styles.time}/>
       <VisuallyHidden>time </VisuallyHidden>
       <Duration timestamp={project.timestamp}/>
     </span>

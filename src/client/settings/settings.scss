@@ -1,6 +1,7 @@
 @import '../common/variables';
 @import '../common/responsive';
 @import '../common/accessibility';
+@import '../common/typography';
 
 .settings {
   margin: 0 auto;
@@ -22,6 +23,10 @@
 }
 
 .link {
+  @include respond-to(desktop) {
+    @include font-scale(1);
+  }
+
   color: $white;
   display: inline-block;
   padding: 1em;
@@ -57,11 +62,5 @@
     background-color: $white;
     color: $off-black;
     cursor: default;
-  }
-}
-
-.menuIcon {
-  &::before {
-    margin-right: 1em;
   }
 }

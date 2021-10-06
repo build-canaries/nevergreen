@@ -3,7 +3,8 @@ import {isBlank} from './common/Utils'
 import cn from 'classnames'
 import styles from './notification.scss'
 import {PrimaryButton} from './common/forms/Button'
-import {iCross} from './common/fonts/Icons'
+import {Cross} from './common/icons/Cross'
+import {Bell} from './common/icons/Bell'
 
 interface NotificationProps {
   readonly notification: string;
@@ -26,9 +27,10 @@ export function Notification({notification, dismiss, hide}: NotificationProps): 
              role='complementary'>
       <div className={styles.message}
            data-locator='notification'>
+        <Bell/>
         {notification}
       </div>
-      <PrimaryButton icon={iCross}
+      <PrimaryButton icon={<Cross/>}
                      iconOnly
                      className={styles.dismiss}
                      onClick={dismiss}>

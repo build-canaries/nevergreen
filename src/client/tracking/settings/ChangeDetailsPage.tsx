@@ -6,7 +6,6 @@ import {trayUpdated} from '../TrackingActionCreators'
 import {ROUTE_SETTINGS_TRACKING, routeFeedProjects} from '../../Routes'
 import {Form} from '../../common/forms/Form'
 import {InputButton, SecondaryButton} from '../../common/forms/Button'
-import {iBin, iDice, iUnlocked} from '../../common/fonts/Icons'
 import {Input} from '../../common/forms/Input'
 import styles from './change-details-page.scss'
 import {DropDown} from '../../common/forms/DropDown'
@@ -18,6 +17,9 @@ import {getTrays} from '../TraysReducer'
 import {Request, send} from '../../gateways/Gateway'
 import {encrypt, EncryptResponse} from '../../gateways/SecurityGateway'
 import {Auth} from '../Auth'
+import {Dice} from '../../common/icons/Dice'
+import {Bin} from '../../common/icons/Bin'
+import {Unlocked} from '../../common/icons/Unlocked'
 
 interface ChangeDetailsPageProps {
   readonly feed: Tray;
@@ -130,7 +132,7 @@ export function ChangeDetailsPage({feed}: ChangeDetailsPageProps): ReactElement 
             onCancel={ROUTE_SETTINGS_TRACKING}>
         {(submitting, validationErrors) => {
           const randomNameButton = (
-            <InputButton icon={iDice}
+            <InputButton icon={<Dice/>}
                          onClick={() => setName(generateRandomName())}
                          disabled={submitting}>
               randomise name
@@ -159,7 +161,7 @@ export function ChangeDetailsPage({feed}: ChangeDetailsPageProps): ReactElement 
                       readOnly={!changingAuth}/>
                 <SecondaryButton className={styles.changeAuth}
                                  onClick={toggleAuth}
-                                 icon={changingAuth ? iBin : iUnlocked}>
+                                 icon={changingAuth ? <Bin/> : <Unlocked/>}>
                   {changingAuth ? 'Discard auth changes' : 'Change auth'}
                 </SecondaryButton>
               </section>

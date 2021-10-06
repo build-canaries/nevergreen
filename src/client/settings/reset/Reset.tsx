@@ -2,9 +2,9 @@ import React, {ReactElement, useState} from 'react'
 import styles from './reset.scss'
 import {clear} from '../../configuration/LocalRepository'
 import {DangerButton} from '../../common/forms/Button'
-import {iBin} from '../../common/fonts/Icons'
 import {Page} from '../../common/Page'
 import {WarningMessages} from '../../common/Messages'
+import {Bin} from '../../common/icons/Bin'
 
 export function Reset(): ReactElement {
   const [resetting, setResetting] = useState(false)
@@ -25,7 +25,7 @@ export function Reset(): ReactElement {
       <DangerButton className={styles.reset}
                     onClick={resetConfiguration}
                     disabled={resetting}
-                    icon={iBin}>
+                    icon={<Bin/>}>
         Reset configuration
       </DangerButton>
     </Page>

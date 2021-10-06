@@ -2,21 +2,15 @@
 @import '../../../common/variables';
 @import '../../../common/accessibility';
 @import '../../../common/forms/button';
-@import '../../../common/fonts/icon-font';
 
 .openFile {
   @include interactive();
 
   @extend .secondary;
-  @extend .icon-folder-open;
 
   box-shadow: $shadow;
   cursor: pointer;
   transition: box-shadow 0.1s ease-in;
-
-  &::before {
-    margin-right: 0.5em;
-  }
 }
 
 .openFileInput {

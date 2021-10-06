@@ -1,7 +1,6 @@
 import React, {ButtonHTMLAttributes, DetailedHTMLProps, ReactElement, ReactNode} from 'react'
 import cn from 'classnames'
 import styles from './button.scss'
-import iconStyles from '../fonts/icon-font.scss'
 import {VisuallyHidden} from '../VisuallyHidden'
 
 export enum ButtonTheme {
@@ -13,7 +12,7 @@ export enum ButtonTheme {
 type ButtonProps = {
   readonly children: ReactNode;
   readonly className?: string;
-  readonly icon?: string;
+  readonly icon?: ReactElement;
   readonly iconOnly?: boolean;
 } & DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
 
@@ -21,10 +20,15 @@ interface BaseButtonProps extends ButtonProps {
   readonly theme: ButtonTheme;
 }
 
-export function BaseButton({theme, className, icon, iconOnly, children, ...additionalProps}: BaseButtonProps): ReactElement {
+export function BaseButton({
+                             theme,
+                             className,
+                             icon,
+                             iconOnly,
+                             children,
+                             ...additionalProps
+                           }: BaseButtonProps): ReactElement {
   const classes = cn(styles[theme], className, {
-    [iconStyles[`icon-${icon || ''}`]]: icon,
-    [styles.withIcon]: icon && !iconOnly,
     [styles.iconOnly]: icon && iconOnly
   })
 
@@ -32,6 +36,7 @@ export function BaseButton({theme, className, icon, iconOnly, children, ...addit
     <button className={classes}
             type='button'
             {...additionalProps}>
+      {icon}
       {iconOnly && <VisuallyHidden>{children}</VisuallyHidden>}
       {!iconOnly && children}
     </button>

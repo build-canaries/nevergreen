@@ -1,8 +1,6 @@
 @import '../../common/variables';
 @import '../../common/layout';
 @import '../../common/responsive';
-@import '../../common/forms/button';
-@import '../../common/fonts/icon-font';
 
 .showTrayName {
   @extend %first;
@@ -21,9 +19,6 @@
   }
 }
 
-.preview.preview {
-  @extend .icon-eye;
-  @extend .withIcon;
-
+.preview {
   margin-top: $margin-top;
 }

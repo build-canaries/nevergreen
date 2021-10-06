@@ -2,6 +2,7 @@ import React, {ChangeEvent, ReactElement} from 'react'
 import cn from 'classnames'
 import isNil from 'lodash/isNil'
 import styles from './input-file.scss'
+import {FolderOpen} from '../../../common/icons/FolderOpen'
 
 interface InputFileProps {
   readonly onFileSelected: (files: FileList) => Promise<void>;
@@ -27,7 +28,10 @@ export function InputFile({onFileSelected, disabled, className}: InputFileProps)
              multiple={false}
              onChange={onChange}
              disabled={disabled}/>
-      <label className={cn(styles.openFile, className)} htmlFor='open-file'>Open local...</label>
+      <label className={cn(styles.openFile, className)} htmlFor='open-file'>
+        <FolderOpen/>
+        Open local...
+      </label>
     </>
   )
 }
