@@ -1,5 +1,4 @@
 @import '../common/variables';
-@import '../common/typography';
 @import '../common/layout';
 @import '../common/forms/button';
 @import '../common/responsive';
@@ -50,8 +49,6 @@
 }
 
 .title {
-  @include font-scale(4);
-
   margin: 0 1em 0 0;
 
   &::before {

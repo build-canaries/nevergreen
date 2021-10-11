@@ -18,7 +18,6 @@
 
 @mixin button($color: $off-black, $background-color: $white, $border-color: $light-grey) {
   @include button-interaction($color, $background-color, $border-color);
-  @include font-scale(1);
 
   @extend %standard-input-dimensions;
 

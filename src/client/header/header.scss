@@ -69,10 +69,6 @@
 }
 
 .menuItem {
-  @include respond-to(tablet, desktop) {
-    @include font-scale(1);
-  }
-
   color: $white;
   display: inline-block;
   height: 65px;

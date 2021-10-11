@@ -2,14 +2,6 @@
 @import '../../common/responsive';
 @import '../../common/typography';
 
-.availableProject {
-  @include font-scale(1);
-
-  @include respond-to(tablet, desktop) {
-    @include font-scale(0);
-  }
-}
-
 .name {
   display: inline;
 }

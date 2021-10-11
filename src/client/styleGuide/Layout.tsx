@@ -3,6 +3,7 @@ import {StyleGuideSection} from './StyleGuideSection'
 import {Card} from '../common/card/Card'
 import {CardHeading} from '../common/card/CardHeading'
 import {Loading} from '../common/Loading'
+import {FloppyDisk} from '../common/icons/FloppyDisk'
 
 export function Layout(): ReactElement {
   return (
@@ -14,6 +15,9 @@ export function Layout(): ReactElement {
       <StyleGuideSection title='Card'>
         <Card header={<CardHeading title='Title'/>}>
           This is an example card.
+        </Card>
+        <Card header={<CardHeading title='Title' icon={<FloppyDisk/>}/>}>
+          This is an example card with an icon.
         </Card>
       </StyleGuideSection>
       <StyleGuideSection title='Table'>

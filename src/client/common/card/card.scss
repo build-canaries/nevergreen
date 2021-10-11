@@ -5,6 +5,7 @@
   border: 1px solid $mid-grey;
   display: flex;
   flex-direction: column;
+  margin: $margin-top 0 0 0;
 
   &:focus-within {
     border-color: $black;

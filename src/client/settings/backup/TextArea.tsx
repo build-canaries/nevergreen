@@ -25,7 +25,7 @@ export function TextArea({label, errors = [], id, className, ...props}: TextArea
 
   return (
     <div className={containerClasses}>
-      <label className={styles.label} htmlFor={actualId}>
+      <label htmlFor={actualId}>
         {label}
       </label>
       {hasError && (

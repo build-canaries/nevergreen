@@ -49,8 +49,7 @@ export function DisplaySettings(): ReactElement {
 
   return (
     <Page title='Display settings'>
-      <Checkbox className={styles.showTrayName}
-                checked={showTrayName}
+      <Checkbox checked={showTrayName}
                 onToggle={(newValue) => dispatch(setShowTrayName(newValue))}
                 data-locator='show-tray-names'>
         Show feed identifier

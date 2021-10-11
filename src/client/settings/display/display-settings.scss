@@ -1,10 +1,5 @@
 @import '../../common/variables';
-@import '../../common/layout';
 @import '../../common/responsive';
-
-.showTrayName {
-  @extend %first;
-}
 
 .dropDownLabel {
   @include respond-to(tablet, desktop) {

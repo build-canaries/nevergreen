@@ -25,9 +25,8 @@ export function Notification({notification, dismiss, hide}: NotificationProps): 
     <section className={notificationClassNames}
              aria-live='polite'
              role='complementary'>
-      <div className={styles.message}
-           data-locator='notification'>
-        <Bell/>
+      <Bell/>
+      <div className={styles.message}>
         {notification}
       </div>
       <PrimaryButton icon={<Cross/>}

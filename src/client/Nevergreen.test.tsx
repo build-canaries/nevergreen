@@ -30,7 +30,7 @@ it('should load configuration, register service worker and check for a new versi
     expect(LocalConfiguration.load).toHaveBeenCalled()
     expect(Gateway.get).toHaveBeenCalledWith('https://api.github.com/repos/build-canaries/nevergreen/releases/latest')
     expect(ServiceWorkerHook.useServiceWorker).toHaveBeenCalled()
-    expect(screen.getByTestId('notification')).toHaveTextContent(/^A new version [0-9.]* is available to download from GitHub now!$/)
+    expect(screen.queryByText(/^A new version [0-9.]* is available to download from GitHub now!$/)).toBeInTheDocument()
   })
 })
 

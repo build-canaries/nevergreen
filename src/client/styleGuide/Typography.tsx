@@ -61,11 +61,6 @@ export function Typography(): ReactElement {
           pudding tart tootsie roll.
         </Element>
 
-        <Element type='pre'>
-          Lemon drops lollipop tiramisu croissant chocolate bar bonbon sesame snaps cake lemon drops. Caramels danish
-          candy canes. Fruitcake sugar plum icing icing dragée soufflé muffin.
-        </Element>
-
         <kbd><kbd>ctrl</kbd>+<kbd>H</kbd></kbd>
       </StyleGuideSection>
 

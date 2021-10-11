@@ -12,7 +12,7 @@ interface AvailableProjectProps {
 }
 
 export function AvailableProject({removed, isNew, description, selected, selectProject}: AvailableProjectProps): ReactElement {
-  const listClasses = classNames(styles.availableProject, {
+  const listClasses = classNames({
     [styles.removedProject]: removed
   })
 

@@ -3,10 +3,6 @@
 @import '../../common/layout';
 @import '../../common/accessibility';
 
-.label {
-  @include font-scale(1);
-}
-
 .data {
   @include font-scale(-2);
 

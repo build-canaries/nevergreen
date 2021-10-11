@@ -1,5 +1,4 @@
 @import '../variables';
-@import '../typography';
 @import '../responsive';
 
 %standard-input-dimensions {
@@ -14,7 +13,5 @@
 }
 
 .inputLabel {
-  @include font-scale(1);
-
   display: block;
 }

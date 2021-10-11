@@ -13,8 +13,6 @@
 }
 
 .input {
-  @include font-scale(1);
-
   @extend %standard-input-dimensions;
 
   border: $input-border;

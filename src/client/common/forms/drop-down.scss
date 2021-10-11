@@ -28,8 +28,6 @@
 }
 
 .select {
-  @include font-scale(1);
-
   @extend %standard-input-dimensions;
 
   appearance: none;

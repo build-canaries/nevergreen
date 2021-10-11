@@ -8,8 +8,6 @@
 }
 
 .where {
-  @extend %first;
-
   @include fixed-width(20em);
 
   margin-right: $margin-right;

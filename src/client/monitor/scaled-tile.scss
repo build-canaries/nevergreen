@@ -42,12 +42,8 @@ $border-radius: 5px;
 .footer {
   @include font-scale(-1);
 
-  @include respond-to(tablet) {
+  @include respond-to(tablet, desktop) {
     @include font-scale(0);
-  }
-
-  @include respond-to(desktop) {
-    @include font-scale(1);
   }
 
   border-bottom-left-radius: $border-radius;

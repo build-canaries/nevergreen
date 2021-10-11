@@ -3,7 +3,9 @@
 @import '../typography';
 
 .icon {
-  @include font-scale(3);
+  @include font-scale(2);
+
+  display: flex;
 
   @include respond-to(very-small) {
     display: none;

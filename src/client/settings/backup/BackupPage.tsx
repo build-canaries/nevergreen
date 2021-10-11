@@ -14,8 +14,7 @@ export function BackupPage(): ReactElement {
   return (
     <Page title='Backup settings'>
       <AddButton to={ROUTE_BACKUP_ADD}>Add remote backup</AddButton>
-      <ul className={styles.container}
-          id='backup'>
+      <ul className={styles.container}>
         <li>
           <Locally/>
         </li>

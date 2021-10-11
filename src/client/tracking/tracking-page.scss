@@ -16,11 +16,7 @@
   list-style: none;
   margin: 0;
 
-  & > li {
-    margin: $margin-top 0 0 0;
-
-    &:first-child {
-      margin: 0;
-    }
+  & > li:first-child > *:first-child {
+    margin: 0;
   }
 }

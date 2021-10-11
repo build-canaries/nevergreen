@@ -3,6 +3,7 @@
 @import './common/variables';
 @import './common/typography';
 @import './common/links';
+@import './common/responsive';
 
 * {
   box-sizing: border-box;
@@ -20,8 +21,13 @@ body {
   color: $off-black;
   cursor: default;
   font-family: $normal-font;
+  font-size: 16px;
   height: 100%;
   line-height: 1.5;
+
+  @include respond-to(tablet, desktop) {
+    font-size: 19px;
+  }
 }
 
 kbd {
@@ -39,6 +45,7 @@ a {
 }
 
 p {
+  line-height: 1.25;
   margin: $margin-top 0 0 0;
 }
 
@@ -47,31 +54,31 @@ input {
 }
 
 h1 {
-  @include font-scale(4);
+  @include font-scale(3);
 
-  line-height: 1.125;
+  line-height: 1.04167;
   margin: 0 0 $margin-top 0;
   outline: none;
 }
 
 h2 {
-  @include font-scale(3);
+  @include font-scale(2);
 
-  line-height: 1.15;
+  line-height: 1.11111;
 }
 
 h3 {
-  @include font-scale(2);
+  @include font-scale(1);
 
-  line-height: 1.2;
+  line-height: 1.25;
 }
 
 h4,
 h5,
 h6 {
-  @include font-scale(1);
+  @include font-scale(0);
 
-  line-height: 1.25;
+  line-height: 1.31579;
 }
 
 pre {
@@ -79,8 +86,6 @@ pre {
 }
 
 table {
-  @include font-scale(0);
-
   display: block;
   margin: $margin-top 0 0 0;
   overflow-y: scroll;

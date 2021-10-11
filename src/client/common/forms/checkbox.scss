@@ -18,8 +18,6 @@
 }
 
 .checkbox {
-  @include font-scale(1);
-
   display: block;
   line-height: initial;
   padding: 0 0 0 $input-height;

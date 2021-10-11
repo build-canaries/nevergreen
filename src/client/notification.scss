@@ -2,10 +2,11 @@
 @import 'common/typography';
 
 .popUpNotification {
+  align-items: center;
   background-color: $blue;
   color: $white;
   display: flex;
-  padding: 1em;
+  padding: 0.5em 1em;
 }
 
 .hide {
@@ -13,8 +14,6 @@
 }
 
 .message {
-  @include font-scale(2);
-
   align-self: center;
   flex-grow: 1;
   margin: 0 $margin-right 0 0;

@@ -8,10 +8,6 @@
   padding: 1em;
 }
 
-.legend {
-  @include font-scale(1);
-}
-
 .options {
   @extend %two-column-grid;
 }
