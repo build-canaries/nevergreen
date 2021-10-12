@@ -13,7 +13,7 @@ interface PageProps {
 export function Page({title, hideTitle = false, className, children}: PageProps): ReactElement {
   useLayoutEffect(() => {
     window.scrollTo(0, 0)
-  })
+  }, [])
 
   return (
     <div className={cn(styles.page, className)}>
