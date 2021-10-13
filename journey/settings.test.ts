@@ -58,7 +58,7 @@ describe('Settings', () => {
       .should('contain', 'some message')
 
     cy.findByRole('button', {name: 'Add message'}).click()
-    cy.findByLabelText('Message').type('https://raw.githubusercontent.com/build-canaries/nevergreen/master/doc/screenshot_monitor.png')
+    cy.findByLabelText('Message').type('https://raw.githubusercontent.com/build-canaries/nevergreen/main/doc/screenshot_monitor.png')
     cy.findByRole('button', {name: 'Add message'}).click()
 
     cy.locate('success-image').should('be.visible')

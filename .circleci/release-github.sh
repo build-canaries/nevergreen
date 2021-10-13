@@ -7,7 +7,7 @@ echo "Creating a GitHub release with tag [${VERSION}] and name [${VERSION_NAME}]
 responseJson=$(curl \
   -u ${GITHUB_USERNAME}:${GITHUB_TOKEN} \
   -H "Content-Type: application/vnd.github.v3+json" \
-  -d "{\"tag_name\": \"v${VERSION}\", \"target_commitish\": \"master\", \"name\": \"${VERSION_NAME}\", \"body\": \"${body}\", \"draft\": true, \"prerelease\": false}" \
+  -d "{\"tag_name\": \"v${VERSION}\", \"target_commitish\": \"main\", \"name\": \"${VERSION_NAME}\", \"body\": \"${body}\", \"draft\": true, \"prerelease\": false}" \
   https://api.github.com/repos/build-canaries/nevergreen/releases)
 
 echo "Got response [${responseJson}]"

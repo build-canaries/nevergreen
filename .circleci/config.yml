@@ -183,7 +183,7 @@ jobs:
                 environment:
                   BASH_ENV: "~/.nvm/nvm.sh"
                   CYPRESS_BASE_URL: "https://staging.nevergreen.io"
-                  CYPRESS_TRAY_URL: "https://raw.githubusercontent.com/build-canaries/nevergreen/master/cctray_xml_feed_mock/resources/cctray.xml"
+                  CYPRESS_TRAY_URL: "https://raw.githubusercontent.com/build-canaries/nevergreen/main/cctray_xml_feed_mock/resources/cctray.xml"
                   CYPRESS_TRAY_URL_TOKEN: ""
                   CYPRESS_TRAY_TOKEN: ""
                   CYPRESS_TRAY_USERNAME: ""
@@ -280,6 +280,6 @@ workflows:
           filters:
             branches:
               only:
-                - master
+                - main
     jobs:
       - security-audits
