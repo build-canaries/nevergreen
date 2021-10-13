@@ -8,7 +8,7 @@
                  [compojure "1.6.2" :exclusions [ring/ring-codec]]
                  [environ "1.2.0"]
                  [cheshire "5.10.1"]
-                 [clj-cctray "2.0.0"]
+                 [clj-cctray "2.1.1"]
                  ; commons-codec is excluded as ring pulls in a newer version
                  [clj-http "3.12.3" :exclusions [commons-codec]]
                  [ring-curl "1.0.1"]
