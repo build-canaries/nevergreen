@@ -14,7 +14,7 @@ import {Settings} from './settings/Settings'
 import {Loading} from './common/Loading'
 import {useLocalConfiguration} from './configuration/ConfigurationHook'
 import {Help} from './help/Help'
-import {DEFAULT_FONT_METRICS, FontMetrics, FontMetricsContext} from './FontMetrics'
+import {DEFAULT_FONT_METRICS, FontMetrics, FontMetricsContext, Measurable} from './FontMetrics'
 import {Preview} from './settings/Preview'
 import {useShortcut} from './common/Keyboard'
 import {useCheckForNewVersion} from './CheckForNewVersionHook'
@@ -28,7 +28,7 @@ export function Nevergreen(): ReactElement {
   const [notification, setNotification] = useState('')
   const [fontMetrics, setFontMetrics] = useState(DEFAULT_FONT_METRICS)
 
-  const fontMetricsRef = useCallback((ref) => setFontMetrics(ref), [])
+  const fontMetricsRef = useCallback((ref: Measurable) => setFontMetrics(ref), [])
 
   const [menusHidden, toggleMenusHidden, showMenus] = useHideMenus()
 

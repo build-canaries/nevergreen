@@ -6,7 +6,7 @@ export interface Measurable {
   readonly height: number;
 }
 
-export const DEFAULT_FONT_METRICS = {
+export const DEFAULT_FONT_METRICS: Measurable = {
   width: 0,
   height: 0
 }
