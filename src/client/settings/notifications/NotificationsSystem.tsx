@@ -1,7 +1,6 @@
 import React, {ReactElement, useState} from 'react'
 import {Checkbox} from '../../common/forms/Checkbox'
 import {ErrorMessages, WarningMessages} from '../../common/Messages'
-import styles from './notification-system.scss'
 import {useDispatch, useSelector} from 'react-redux'
 import {getShowSystemNotifications} from '../SettingsReducer'
 import {permissionGranted, requestPermission, sendSystemNotification, supported} from '../../common/SystemNotifications'
@@ -40,8 +39,7 @@ export function NotificationsSystem(): ReactElement {
     <>
       {
         systemNotificationsSupported &&
-        <Checkbox className={styles.checkbox}
-                  checked={showSystemNotifications}
+        <Checkbox checked={showSystemNotifications}
                   onToggle={toggleShowSystemNotifications}
                   data-locator='show-system-notifications'
                   disabled={requestingPermission}>

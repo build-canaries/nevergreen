@@ -67,6 +67,7 @@ describe('Settings', () => {
   it('changing notification settings', () => {
     cy.findByRole('menuitem', {name: 'Notifications'}).click()
 
+    cy.findByLabelText('Check for new Nevergreen versions').click()
     cy.findByLabelText('Play audio notifications').click()
   })
 
@@ -74,6 +75,5 @@ describe('Settings', () => {
     cy.findByRole('menuitem', {name: 'General'}).click()
 
     cy.findByLabelText('Click to show menu').click()
-    cy.findByLabelText('Check for new Nevergreen versions').click()
   })
 })
