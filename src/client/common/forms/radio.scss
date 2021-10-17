@@ -4,7 +4,7 @@
 @import './forms';
 
 .container {
-  @extend %standard-input-dimensions;
+  @include standard-input-dimensions();
 
   display: inline-block;
   margin-top: $margin-top;
@@ -15,8 +15,12 @@
   display: block;
   float: left;
   line-height: initial;
-  padding: 0 0 0 $input-height;
+  padding: 0 0 0 40px;
   position: relative;
+
+  @include respond-to(tablet, desktop) {
+    padding: 0 0 0 44px;
+  }
 }
 
 .children {
@@ -55,15 +59,15 @@
 }
 
 .input {
+  @include standard-input-dimensions(true);
+
   cursor: pointer;
   filter: alpha(opacity=0);
-  height: $input-height;
   left: 0;
   margin: 0;
   opacity: 0;
   position: absolute;
   top: 0;
-  width: $input-height;
   z-index: 1;
   zoom: 1;
 

@@ -13,7 +13,7 @@
 }
 
 .input {
-  @extend %standard-input-dimensions;
+  @include standard-input-dimensions();
 
   border: $input-border;
   border-radius: $border-radius;

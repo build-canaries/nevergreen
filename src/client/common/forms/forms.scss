@@ -1,9 +1,24 @@
 @import '../variables';
 @import '../responsive';
 
-%standard-input-dimensions {
-  height: $input-height;
-  min-height: $input-height;
+@mixin standard-input-dimensions($fix-width: false, $adjust-px: 0) {
+  height: 40px - $adjust-px;
+  min-height: 40px - $adjust-px;
+
+  @if $fix-width {
+    min-width: 40px - $adjust-px;
+    width: 40px - $adjust-px;
+  }
+
+  @include respond-to(tablet, desktop) {
+    height: 44px - $adjust-px;
+    min-height: 44px - $adjust-px;
+
+    @if $fix-width {
+      min-width: 44px - $adjust-px;
+      width: 44px - $adjust-px;
+    }
+  }
 }
 
 .inputContainer {

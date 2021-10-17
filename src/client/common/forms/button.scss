@@ -18,8 +18,7 @@
 
 @mixin button($color: $off-black, $background-color: $white, $border-color: $light-grey) {
   @include button-interaction($color, $background-color, $border-color);
-
-  @extend %standard-input-dimensions;
+  @include standard-input-dimensions();
 
   background-color: $background-color;
   border: 1px solid $border-color;
@@ -62,13 +61,11 @@
 }
 
 .iconOnly {
-  @extend %standard-input-dimensions;
+  @include standard-input-dimensions(true);
 
   margin: 0;
-  max-width: $input-height;
-  min-width: $input-height;
+  // max-width: $input-height;
   padding: 0.5em;
-  width: $input-height;
 
   & > svg {
     margin: 0;

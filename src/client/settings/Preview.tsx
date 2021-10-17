@@ -21,7 +21,7 @@ export function Preview(): ReactElement {
 
   useEffect(() => {
     const request = post('/api/preview', {
-      feeds: [createTray(createId(), 'https://nevergreen.io')],
+      feeds: [createTray(createId(), 'https://github.com/build-canaries/nevergreen')],
       sort,
       prognosis
     })
@@ -53,7 +53,7 @@ export function Preview(): ReactElement {
                     dismiss={() => history.push(ROUTE_SETTINGS_DISPLAY)}/>
       <div className={styles.projects}>
         <div className={styles.projectsInner}>
-          <Loading loaded={loaded}>
+          <Loading loaded={loaded} dark>
             <InterestingProjects projects={projects}/>
           </Loading>
         </div>
