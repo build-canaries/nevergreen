@@ -1,0 +1,3 @@
+fileignoreconfig:
+- filename: resources/preview.xml
+  checksum: be0caded0f8293c47bc06b2b0da9f207e7bb633cda9eac38e25a611b7cdf0737
