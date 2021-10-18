@@ -7,12 +7,13 @@ import {Locally} from './Locally'
 import {AddButton} from '../../common/LinkButton'
 import {ROUTE_BACKUP_ADD} from '../../Routes'
 import {Page} from '../../common/Page'
+import {FloppyDisk} from '../../common/icons/FloppyDisk'
 
 export function BackupPage(): ReactElement {
   const backupLocations = useSelector(getBackupLocations)
 
   return (
-    <Page title='Backup settings'>
+    <Page title='Backup settings' icon={<FloppyDisk/>}>
       <AddButton to={ROUTE_BACKUP_ADD}>Add remote backup</AddButton>
       <ul className={styles.container}>
         <li>

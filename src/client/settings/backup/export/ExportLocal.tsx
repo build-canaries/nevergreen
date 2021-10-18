@@ -47,7 +47,7 @@ export function ExportLocal(): ReactElement {
   }
 
   return (
-    <Page title='Export locally'>
+    <Page title='Export locally' icon={<FloppyDisk/>}>
       <TimedMessage className={styles.message}
                     type={messageType}
                     clear={() => setMessage([])}

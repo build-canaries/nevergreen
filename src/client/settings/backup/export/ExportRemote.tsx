@@ -13,6 +13,7 @@ import {ROUTE_SETTINGS_BACKUP} from '../../../Routes'
 import {Page} from '../../../common/Page'
 import {backupSummary} from '../BackupSummary'
 import {Summary} from '../../../common/Summary'
+import {BackupLogo} from '../logo/BackupLogo'
 
 interface ExportRemoteProps {
   readonly location: RemoteLocation;
@@ -40,7 +41,7 @@ function ExportRemoteLocation({location}: ExportRemoteProps): ReactElement {
   }
 
   return (
-    <Page title='Export remote'>
+    <Page title='Export remote' icon={<BackupLogo where={location.where}/>}>
       <Summary values={backupSummary(location)}/>
       <Form onSuccess={exportNow}
             onCancel={ROUTE_SETTINGS_BACKUP}

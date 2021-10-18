@@ -16,7 +16,7 @@ export function Reset(): ReactElement {
   }
 
   return (
-    <Page title='Reset configuration'>
+    <Page title='Reset configuration' icon={<Bin/>}>
       <p>Reset your Nevergreen configuration back to defaults.</p>
       <WarningMessages messages={[
         'Please note, resetting your configuration can not be undone!',

@@ -14,6 +14,7 @@ import {Form} from '../common/forms/Form'
 import {firstError, FormErrors} from '../common/forms/Validation'
 import {Page} from '../common/Page'
 import {ROUTE_SETTINGS_TRACKING, routeFeedProjects} from '../Routes'
+import {Xml} from '../common/icons/Xml'
 
 type Fields = 'url'
 
@@ -62,7 +63,7 @@ export function AddTray(): ReactElement {
   }
 
   return (
-    <Page title='Add CCTray XML feed'>
+    <Page title='Add CCTray XML feed' icon={<Xml/>}>
       <Form onValidate={onValidate}
             onSuccess={addTray}
             submitButtonText='Add feed'

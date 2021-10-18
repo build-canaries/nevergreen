@@ -16,6 +16,7 @@ import {InputFile} from './InputFile'
 import {loadFile} from '../FileSystem'
 import {Page} from '../../../common/Page'
 import {Checkmark} from '../../../common/icons/Checkmark'
+import {FolderOpen} from '../../../common/icons/FolderOpen'
 
 const placeholder = 'Open, drag and drop or paste exported configuration here and press Import'
 
@@ -82,7 +83,7 @@ export function ImportLocal(): ReactElement {
   }
 
   return (
-    <Page title='Import local'>
+    <Page title='Import local' icon={<FolderOpen/>}>
       <FileDropTarget onFileDropped={openFile}
                       disabled={!loaded}>
         <ErrorMessages messages={loadErrors}

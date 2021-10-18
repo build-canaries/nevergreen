@@ -11,6 +11,7 @@ import {DropDown} from '../common/forms/DropDown'
 import {setRefreshTime, VALID_REFRESH_TIMES} from '../settings/SettingsActionCreators'
 import {secondsToString} from '../common/DateTime'
 import {getRefreshTime} from '../settings/SettingsReducer'
+import {List} from '../common/icons/List'
 
 export function TrackingPage(): ReactElement {
   const dispatch = useDispatch()
@@ -21,7 +22,7 @@ export function TrackingPage(): ReactElement {
   })
 
   return (
-    <Page title='Tracking'>
+    <Page title='Tracking' icon={<List/>}>
       <DropDown className={styles.refreshTime}
                 options={options}
                 value={refreshTime}
@@ -40,7 +41,7 @@ export function TrackingPage(): ReactElement {
             return (
               <li key={tray.trayId}>
                 <FeedCard key={tray.trayId}
-                          tray={tray}
+                          feed={tray}
                           index={index + 1}/>
               </li>
             )

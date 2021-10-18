@@ -2,19 +2,8 @@
 @import '../../common/responsive';
 @import '../../common/layout';
 
-.whereContainer {
-  align-items: flex-end;
-  display: flex;
-}
-
 .where {
   @include fixed-width(20em);
-
-  margin-right: $margin-right;
-
-  @include respond-to(very-small) {
-    margin-right: 0;
-  }
 }
 
 .id,

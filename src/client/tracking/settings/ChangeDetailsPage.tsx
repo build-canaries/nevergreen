@@ -20,6 +20,7 @@ import {Auth} from '../Auth'
 import {Dice} from '../../common/icons/Dice'
 import {Bin} from '../../common/icons/Bin'
 import {Unlocked} from '../../common/icons/Unlocked'
+import {Cog} from '../../common/icons/Cog'
 
 interface ChangeDetailsPageProps {
   readonly feed: Tray;
@@ -126,7 +127,7 @@ export function ChangeDetailsPage({feed}: ChangeDetailsPageProps): ReactElement 
   }
 
   return (
-    <Page title='Change details'>
+    <Page title='Change details' icon={<Cog/>}>
       <Form onValidate={onValidate}
             onSuccess={updateDetails}
             onCancel={ROUTE_SETTINGS_TRACKING}>

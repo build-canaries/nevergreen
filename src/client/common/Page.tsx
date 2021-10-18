@@ -8,16 +8,17 @@ interface PageProps {
   readonly hideTitle?: boolean;
   readonly className?: string;
   readonly children: ReactNode;
+  readonly icon?: ReactElement;
 }
 
-export function Page({title, hideTitle = false, className, children}: PageProps): ReactElement {
+export function Page({title, hideTitle = false, className, children, icon}: PageProps): ReactElement {
   useLayoutEffect(() => {
     window.scrollTo(0, 0)
   }, [])
 
   return (
     <div className={cn(styles.page, className)}>
-      <Title show={!hideTitle}>{title}</Title>
+      <Title show={!hideTitle} icon={icon}>{title}</Title>
       {children}
     </div>
   )

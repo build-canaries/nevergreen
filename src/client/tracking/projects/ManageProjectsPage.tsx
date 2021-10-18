@@ -7,6 +7,7 @@ import styles from './manage-projects-page.scss'
 import {Tray} from '../../domain/Tray'
 import {LinkButton} from '../../common/LinkButton'
 import {Cog} from '../../common/icons/Cog'
+import {CheckboxChecked} from '../../common/icons/CheckboxChecked'
 
 interface ManageProjectsPageProps {
   readonly feed: Tray;
@@ -14,7 +15,7 @@ interface ManageProjectsPageProps {
 
 export function ManageProjectsPage({feed}: ManageProjectsPageProps): ReactElement {
   return (
-    <Page title='Manage projects'>
+    <Page title='Manage projects' icon={<CheckboxChecked/>}>
       <AvailableProjects tray={feed}/>
       <LinkButton to={routeFeedDetails(feed.trayId)}
                   className={styles.link}

@@ -9,6 +9,7 @@ import {Form} from '../../common/forms/Form'
 import {firstError, FormErrors} from '../../common/forms/Validation'
 import {ROUTE_SETTINGS_SUCCESS} from '../../Routes'
 import {Page} from '../../common/Page'
+import {Image} from '../../common/icons/Image'
 
 type Fields = 'message'
 
@@ -32,7 +33,7 @@ export function AddMessage(): ReactElement {
   }
 
   return (
-    <Page title='Add success message'>
+    <Page title='Add success message' icon={<Image/>}>
       <Form onValidate={onValidate}
             onSuccess={onSuccess}
             submitButtonText='Add message'

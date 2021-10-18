@@ -69,7 +69,7 @@ export function AddBackup(): ReactElement {
   const isCustomServer = where === RemoteLocationOptions.Custom
 
   return (
-    <Page title='Add backup'>
+    <Page title='Add backup' icon={<BackupLogo where={where}/>}>
       <Form onValidate={onValidate}
             onSuccess={onSuccess}
             submitButtonText='Add location'
@@ -77,23 +77,20 @@ export function AddBackup(): ReactElement {
         {(submitting, validationErrors, clearErrors) => {
           return (
             <>
-              <div className={styles.whereContainer}>
-                <DropDown className={styles.where}
-                          value={where}
-                          options={[
-                            {value: RemoteLocationOptions.Custom, display: 'Custom server'},
-                            {value: RemoteLocationOptions.GitHub, display: 'GitHub gist'},
-                            {value: RemoteLocationOptions.GitLab, display: 'GitLab snippet'}
-                          ]}
-                          onChange={({target}) => {
-                            updateWhere(target.value as RemoteLocationOptions)
-                            clearErrors()
-                          }}
-                          disabled={submitting}>
-                  Where
-                </DropDown>
-                <BackupLogo where={where} width={44} height={44}/>
-              </div>
+              <DropDown className={styles.where}
+                        value={where}
+                        options={[
+                          {value: RemoteLocationOptions.Custom, display: 'Custom server'},
+                          {value: RemoteLocationOptions.GitHub, display: 'GitHub gist'},
+                          {value: RemoteLocationOptions.GitLab, display: 'GitLab snippet'}
+                        ]}
+                        onChange={({target}) => {
+                          updateWhere(target.value as RemoteLocationOptions)
+                          clearErrors()
+                        }}
+                        disabled={submitting}>
+                Where
+              </DropDown>
               <Input value={url}
                      onChange={({target}) => {
                        setUrl(target.value)

@@ -25,6 +25,7 @@ import {backupSummary} from '../BackupSummary'
 import {LinkButton} from '../../../common/LinkButton'
 import {CloudDownload} from '../../../common/icons/CloudDownload'
 import {Cross} from '../../../common/icons/Cross'
+import {BackupLogo} from '../logo/BackupLogo'
 
 type Fields = 'import'
 
@@ -101,7 +102,7 @@ function ImportRemoteLocation({location}: ImportRemoteProps): ReactElement {
   const hasLoadErrors = !isEmpty(loadErrors)
 
   return (
-    <Page title='Import remote'>
+    <Page title='Import remote' icon={<BackupLogo where={location.where}/>}>
       <Summary values={backupSummary(location)}/>
       <Loading loaded={loaded}
                className={styles.loading}>

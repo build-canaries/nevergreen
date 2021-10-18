@@ -11,6 +11,7 @@ import {ROUTE_SUCCESS_ADD} from '../../Routes'
 import {WarningMessages} from '../../common/Messages'
 import {notEmpty} from '../../common/Utils'
 import {Page} from '../../common/Page'
+import {Image} from '../../common/icons/Image'
 
 export const NO_MESSAGES_WARNING = 'No success messages added, a blank screen will be shown on the Monitor page when no interesting projects are displayed'
 
@@ -33,7 +34,7 @@ export function SuccessMessages(): ReactElement {
     : NO_MESSAGES_WARNING
 
   return (
-    <Page title='Success messages'>
+    <Page title='Success messages' icon={<Image/>}>
       <AddButton to={ROUTE_SUCCESS_ADD}>Add message</AddButton>
       <WarningMessages messages={noMessagesWarning}/>
       <ol className={styles.messages}

@@ -24,6 +24,7 @@ import {ROUTE_PREVIEW} from '../../Routes'
 import {LinkButton} from '../../common/LinkButton'
 import {Page} from '../../common/Page'
 import {Eye} from '../../common/icons/Eye'
+import {Display} from '../../common/icons/Display'
 
 export function DisplaySettings(): ReactElement {
   const dispatch = useDispatch()
@@ -48,7 +49,7 @@ export function DisplaySettings(): ReactElement {
   ]
 
   return (
-    <Page title='Display settings'>
+    <Page title='Display settings' icon={<Display/>}>
       <Checkbox checked={showTrayName}
                 onToggle={(newValue) => dispatch(setShowTrayName(newValue))}
                 data-locator='show-tray-names'>

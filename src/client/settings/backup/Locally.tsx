@@ -17,8 +17,7 @@ export function Locally(): ReactElement {
     {label: 'Description', value: 'Manual local backups'}
   ]
 
-  const header = <CardHeading title='Local backups'
-                              icon={<FloppyDisk/>}/>
+  const header = <CardHeading title='Local backups'/>
 
   return (
     <Card header={header}
