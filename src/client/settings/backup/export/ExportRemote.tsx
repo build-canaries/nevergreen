@@ -13,7 +13,7 @@ import {ROUTE_SETTINGS_BACKUP} from '../../../Routes'
 import {Page} from '../../../common/Page'
 import {backupSummary} from '../BackupSummary'
 import {Summary} from '../../../common/Summary'
-import {BackupLogo} from '../logo/BackupLogo'
+import {BackupLogo} from '../BackupLogo'
 
 interface ExportRemoteProps {
   readonly location: RemoteLocation;

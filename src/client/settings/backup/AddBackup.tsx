@@ -14,7 +14,7 @@ import {firstError, FormErrors} from '../../common/forms/Validation'
 import {Form} from '../../common/forms/Form'
 import {ROUTE_SETTINGS_BACKUP} from '../../Routes'
 import {Page} from '../../common/Page'
-import {BackupLogo} from './logo/BackupLogo'
+import {BackupLogo} from './BackupLogo'
 
 type Fields = 'url' | 'accessToken'
 

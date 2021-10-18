@@ -25,7 +25,7 @@ import {backupSummary} from '../BackupSummary'
 import {LinkButton} from '../../../common/LinkButton'
 import {CloudDownload} from '../../../common/icons/CloudDownload'
 import {Cross} from '../../../common/icons/Cross'
-import {BackupLogo} from '../logo/BackupLogo'
+import {BackupLogo} from '../BackupLogo'
 
 type Fields = 'import'
 
