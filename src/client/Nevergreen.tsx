@@ -21,6 +21,7 @@ import {useCheckForNewVersion} from './CheckForNewVersionHook'
 import {UnhandledErrorMessage} from './UnhandledErrorMessage'
 import {ROUTE_MONITOR, ROUTE_PREVIEW, ROUTE_SETTINGS} from './Routes'
 import {StyleGuide} from './styleGuide/StyleGuide'
+import {useNavigationShortcuts} from './NavigationShortcutsHook'
 
 export function Nevergreen(): ReactElement {
   const {loaded, error} = useLocalConfiguration()
@@ -34,6 +35,7 @@ export function Nevergreen(): ReactElement {
 
   useServiceWorker(setNotification)
   useCheckForNewVersion(setNotification)
+  useNavigationShortcuts()
 
   const clickToShowMenu = useSelector(getClickToShowMenu)
 

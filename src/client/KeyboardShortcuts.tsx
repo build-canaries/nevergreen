@@ -64,6 +64,21 @@ export function KeyboardShortcuts(): ReactElement {
             <Binding>s</Binding> or <Binding>,</Binding> or <Binding>2</Binding>
           </span>
         </Shortcut>
+        <Shortcut label='Go directly to the Tracking page'>
+          <Binding>t</Binding>
+        </Shortcut>
+        <Shortcut label='Go directly to the Success messages page'>
+          <Binding>v</Binding>
+        </Shortcut>
+        <Shortcut label='Go directly to the Display settings page'>
+          <Binding>d</Binding>
+        </Shortcut>
+        <Shortcut label='Go directly to the Notifications settings page'>
+          <Binding>n</Binding>
+        </Shortcut>
+        <Shortcut label='Go directly to the Backup settings page'>
+          <Binding>b</Binding>
+        </Shortcut>
       </ul>
 
       {screenfull.isEnabled && (
@@ -79,6 +94,27 @@ export function KeyboardShortcuts(): ReactElement {
           </ul>
         </>
       )}
+
+      <h2 className={styles.header}>Tracking page</h2>
+      <ul className={styles.shortcuts}>
+        <Shortcut label='Add a new feed'>
+          <Binding>a</Binding>
+        </Shortcut>
+      </ul>
+
+      <h2 className={styles.header}>Success messages page</h2>
+      <ul className={styles.shortcuts}>
+        <Shortcut label='Add a new success message'>
+          <Binding>a</Binding>
+        </Shortcut>
+      </ul>
+
+      <h2 className={styles.header}>Backup settings page</h2>
+      <ul className={styles.shortcuts}>
+        <Shortcut label='Add a new remote backup'>
+          <Binding>a</Binding>
+        </Shortcut>
+      </ul>
     </Modal>
   )
 }
