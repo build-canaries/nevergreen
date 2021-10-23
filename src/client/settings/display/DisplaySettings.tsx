@@ -5,6 +5,7 @@ import styles from './display-settings.scss'
 import {DisplayPrognosisSelection} from './DisplayPrognosisSelection'
 import {useDispatch, useSelector} from 'react-redux'
 import {
+  setClickToShowMenu,
   setMaxProjectsToShow,
   setShowBuildLabel,
   setShowBuildTime,
@@ -12,6 +13,7 @@ import {
   setSort
 } from '../SettingsActionCreators'
 import {
+  getClickToShowMenu,
   getMaxProjectsToShow,
   getShowBuildLabel,
   getShowBuildTime,
@@ -28,6 +30,7 @@ import {Display} from '../../common/icons/Display'
 
 export function DisplaySettings(): ReactElement {
   const dispatch = useDispatch()
+  const clickToShowMenu = useSelector(getClickToShowMenu)
   const showTrayName = useSelector(getShowTrayName)
   const showBuildTime = useSelector(getShowBuildTime)
   const showBuildLabel = useSelector(getShowBuildLabel)
@@ -50,19 +53,20 @@ export function DisplaySettings(): ReactElement {
 
   return (
     <Page title='Display settings' icon={<Display/>}>
+      <Checkbox checked={clickToShowMenu}
+                onToggle={(newValue) => dispatch(setClickToShowMenu(newValue))}>
+        Click to show menu
+      </Checkbox>
       <Checkbox checked={showTrayName}
-                onToggle={(newValue) => dispatch(setShowTrayName(newValue))}
-                data-locator='show-tray-names'>
+                onToggle={(newValue) => dispatch(setShowTrayName(newValue))}>
         Show feed identifier
       </Checkbox>
       <Checkbox checked={showBuildTime}
-                onToggle={(newValue) => dispatch(setShowBuildTime(newValue))}
-                data-locator='show-build-times'>
+                onToggle={(newValue) => dispatch(setShowBuildTime(newValue))}>
         Show build time
       </Checkbox>
       <Checkbox checked={showBuildLabel}
-                onToggle={(newValue) => dispatch(setShowBuildLabel(newValue))}
-                data-locator='show-build-labels'>
+                onToggle={(newValue) => dispatch(setShowBuildLabel(newValue))}>
         Show build label
       </Checkbox>
 
@@ -71,16 +75,14 @@ export function DisplaySettings(): ReactElement {
       <DropDown className={styles.dropDown}
                 options={projectsToShowOptions}
                 value={maxProjectsToShow}
-                onChange={({target}) => dispatch(setMaxProjectsToShow(target.value as MaxProjectsToShow))}
-                data-locator='max-projects-to-show'>
+                onChange={({target}) => dispatch(setMaxProjectsToShow(target.value as MaxProjectsToShow))}>
         <span className={styles.dropDownLabel}>Amount of project to show</span>
       </DropDown>
 
       <DropDown className={styles.dropDown}
                 options={sortOptions}
                 value={sort}
-                onChange={({target}) => dispatch(setSort(target.value as SortBy))}
-                data-locator='sort-projects-by'>
+                onChange={({target}) => dispatch(setSort(target.value as SortBy))}>
         <span className={styles.dropDownLabel}>Sort projects by</span>
       </DropDown>
 

@@ -5,7 +5,6 @@ import {AddTrayHelp, CCTrayLocationsHelp} from '../tracking/AddTrayHelp'
 import {ChangeDetailsHelp} from '../tracking/settings/ChangeDetailsHelp'
 import {SuccessHelp} from '../settings/success/SuccessHelp'
 import {AvailableProjectsHelp} from '../tracking/projects/AvailableProjectsHelp'
-import {GeneralSettingsHelp} from '../settings/general/GeneralSettingsHelp'
 import {
   BackupHelp,
   RemoteBackupCustomHelp,
@@ -62,7 +61,6 @@ export function Help({initiallyShow}: HelpProps): ReactElement {
         <CCTrayLocationsHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <AvailableProjectsHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <ChangeDetailsHelp searchQuery={searchQuery} helpLink={helpLink}/>
-        <GeneralSettingsHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <DisplaySettingsHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <NotificationSettingsHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <SuccessHelp searchQuery={searchQuery} helpLink={helpLink}/>

@@ -4,7 +4,6 @@ export const ROUTE_SETTINGS = '/settings'
 
 // Settings routes
 export const ROUTE_SETTINGS_TRACKING = `${ROUTE_SETTINGS}/tracking`
-export const ROUTE_SETTINGS_GENERAL = `${ROUTE_SETTINGS}/general`
 export const ROUTE_SETTINGS_DISPLAY = `${ROUTE_SETTINGS}/display`
 export const ROUTE_SETTINGS_NOTIFICATIONS = `${ROUTE_SETTINGS}/notifications`
 export const ROUTE_SETTINGS_SUCCESS = `${ROUTE_SETTINGS}/success`

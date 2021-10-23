@@ -10,7 +10,6 @@ import {
   ROUTE_SETTINGS,
   ROUTE_SETTINGS_BACKUP,
   ROUTE_SETTINGS_DISPLAY,
-  ROUTE_SETTINGS_GENERAL,
   ROUTE_SETTINGS_NOTIFICATIONS,
   ROUTE_SETTINGS_RESET,
   ROUTE_SETTINGS_SUCCESS,
@@ -27,7 +26,6 @@ import {ExportRemote} from './backup/export/ExportRemote'
 import {ImportLocal} from './backup/import/ImportLocal'
 import {ImportRemote} from './backup/import/ImportRemote'
 import styles from './settings.scss'
-import {GeneralSettings} from './general/GeneralSettings'
 import {DisplaySettings} from './display/DisplaySettings'
 import {NotificationSettings} from './notifications/NotificationSettings'
 import {SuccessMessages} from './success/SuccessMessages'
@@ -39,7 +37,6 @@ import {List} from '../common/icons/List'
 import {Display} from '../common/icons/Display'
 import {Bell} from '../common/icons/Bell'
 import {FloppyDisk} from '../common/icons/FloppyDisk'
-import {Cog} from '../common/icons/Cog'
 import {Bin} from '../common/icons/Bin'
 import {Image} from '../common/icons/Image'
 
@@ -75,7 +72,6 @@ export function Settings(): ReactElement {
         <MenuItem to={ROUTE_SETTINGS_DISPLAY} label='Display' icon={<Display/>}/>
         <MenuItem to={ROUTE_SETTINGS_NOTIFICATIONS} label='Notifications' icon={<Bell/>}/>
         <MenuItem to={ROUTE_SETTINGS_BACKUP} label='Backup' icon={<FloppyDisk/>}/>
-        <MenuItem to={ROUTE_SETTINGS_GENERAL} label='General' icon={<Cog/>}/>
         <MenuItem to={ROUTE_SETTINGS_RESET} label='Reset' icon={<Bin/>}/>
       </ul>
       <div>
@@ -84,7 +80,6 @@ export function Settings(): ReactElement {
           <Route exact path={ROUTE_TRACKING_ADD} component={AddTray}/>
           <Route path={ROUTE_TRACKING_FEED} component={FeedPage}/>
           <Route exact path={ROUTE_SETTINGS_SUCCESS} component={SuccessMessages}/>
-          <Route exact path={ROUTE_SETTINGS_GENERAL} component={GeneralSettings}/>
           <Route exact path={ROUTE_SETTINGS_DISPLAY} component={DisplaySettings}/>
           <Route exact path={ROUTE_SETTINGS_NOTIFICATIONS} component={NotificationSettings}/>
           <Route exact path={ROUTE_SETTINGS_BACKUP} component={BackupPage}/>
