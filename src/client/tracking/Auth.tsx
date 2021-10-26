@@ -2,9 +2,8 @@ import React, {ReactElement} from 'react'
 import {Input} from '../common/forms/Input'
 import styles from './auth.scss'
 import {Password} from '../common/forms/Password'
-import {authTypeDisplay, AuthTypes} from '../domain/Tray'
-import {Radio} from '../common/forms/Radio'
-import uniqueId from 'lodash/uniqueId'
+import {AUTH_TYPE_OPTIONS, AuthTypes} from '../domain/Tray'
+import {DropDown} from '../common/forms/DropDown'
 
 interface AuthProps {
   readonly authType: AuthTypes;
@@ -33,37 +32,14 @@ export function Auth(
     readOnly
   }: AuthProps
 ): ReactElement {
-  const groupName = uniqueId('auth')
-
   return (
     <>
-      <fieldset disabled={disabled || readOnly}>
-        <legend className={styles.legend}>authentication</legend>
-        <Radio name={groupName}
-               value={AuthTypes.none}
-               checked={authType === AuthTypes.none}
-               onChange={() => setAuthType(AuthTypes.none)}
-               className={styles.authType}
-               readOnly={readOnly}>
-          {authTypeDisplay(AuthTypes.none)}
-        </Radio>
-        <Radio name={groupName}
-               value={AuthTypes.basic}
-               checked={authType === AuthTypes.basic}
-               onChange={() => setAuthType(AuthTypes.basic)}
-               className={styles.authType}
-               readOnly={readOnly}>
-          {authTypeDisplay(AuthTypes.basic)}
-        </Radio>
-        <Radio name={groupName}
-               value={AuthTypes.token}
-               checked={authType === AuthTypes.token}
-               onChange={() => setAuthType(AuthTypes.token)}
-               className={styles.authType}
-               readOnly={readOnly}>
-          {authTypeDisplay(AuthTypes.token)}
-        </Radio>
-      </fieldset>
+      <DropDown options={AUTH_TYPE_OPTIONS}
+                value={authType}
+                className={styles.authType}
+                onChange={({target}) => setAuthType(target.value as AuthTypes)}>
+        Authentication
+      </DropDown>
       {authType == AuthTypes.basic && (
         <div className={styles.inputs}>
           <Input className={styles.username}

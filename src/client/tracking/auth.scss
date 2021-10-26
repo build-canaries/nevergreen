@@ -1,26 +1,11 @@
-@import '../common/accessibility';
-@import '../common/responsive';
 @import '../common/variables';
 @import '../common/layout';
-@import '../common/typography';
-
-.authType {
-  width: 100%;
-
-  @include respond-to(tablet, desktop) {
-    margin-right: $margin-right;
-    width: auto;
-  }
-}
-
-.legend {
-  @extend %visually-hidden;
-}
 
 .inputs {
   margin: $margin-top 0 0 0;
 }
 
+.authType,
 .username,
 .password,
 .authToken {

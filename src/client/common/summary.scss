@@ -21,11 +21,6 @@
 }
 
 .value {
-  @include respond-to(tablet, desktop) {
-    margin-bottom: 0;
-    padding-bottom: 1em;
-  }
-
   margin-bottom: 1em;
   overflow: hidden;
   text-overflow: ellipsis;

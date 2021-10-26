@@ -38,7 +38,7 @@ export function FeedCard({feed, index}: FeedCardProps): ReactElement {
     {label: 'Projects selected', value: `${selectedProjects.length} of ${allProjects.length}`},
     {label: 'Last refresh', value: timestamp(feed.timestamp)},
     {label: 'URL', value: <URL url={feed.url}/>},
-    {label: 'Auth', value: authTypeDisplay(feed.authType)},
+    {label: 'Authentication', value: authTypeDisplay(feed.authType)},
     {label: 'Server type', value: serverTypeDisplay(feed.serverType)}
   ]
 

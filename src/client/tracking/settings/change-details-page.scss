@@ -18,7 +18,11 @@
 .auth {
   border: 1px solid $light-grey;
   margin: $margin-top 0 0 0;
-  padding: 0 1em 1em 1em;
+  padding: 1em;
+
+  & > *:first-child {
+    margin-top: 0;
+  }
 }
 
 .includeNew {

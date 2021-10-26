@@ -56,7 +56,7 @@ it('should be able to change auth', async () => {
   const {store} = render(<ChangeDetailsPage feed={feed}/>, {state})
 
   userEvent.click(screen.getByRole('button', {name: 'Change auth'}))
-  userEvent.click(screen.getByLabelText('Access token'))
+  userEvent.selectOptions(screen.getByLabelText('Authentication'), AuthTypes.token)
   userEvent.type(screen.getByLabelText('Token'), 'some-token')
   userEvent.click(screen.getByRole('button', {name: 'Save'}))
 
@@ -171,7 +171,7 @@ describe('redirections', () => {
     const {history} = render(<ChangeDetailsPage feed={feed}/>, {state})
 
     userEvent.click(screen.getByRole('button', {name: 'Change auth'}))
-    userEvent.click(screen.getByLabelText('Access token'))
+    userEvent.selectOptions(screen.getByLabelText('Authentication'), AuthTypes.token)
     userEvent.type(screen.getByLabelText('Token'), 'some-token')
     userEvent.click(screen.getByRole('button', {name: 'Save'}))
 

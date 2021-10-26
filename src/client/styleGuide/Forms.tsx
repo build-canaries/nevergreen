@@ -6,7 +6,6 @@ import {DropDown} from '../common/forms/DropDown'
 import {StyleGuideSection} from './StyleGuideSection'
 import styles from './style-guide.scss'
 import {DangerButton, PrimaryButton, SecondaryButton} from '../common/forms/Button'
-import {Radio} from '../common/forms/Radio'
 import {Password} from '../common/forms/Password'
 import {FloppyDisk} from '../common/icons/FloppyDisk'
 
@@ -51,20 +50,6 @@ export function Forms(): ReactElement {
         <Checkbox onToggle={noop}>
           <div className={styles.styledLabel}>styled label</div>
         </Checkbox>
-      </StyleGuideSection>
-
-      <StyleGuideSection title='Radio'>
-        <Radio onChange={noop} name='sweets'>chocolate</Radio>
-        <Radio onChange={noop} name='sweets'>bonbon</Radio>
-        <Radio onChange={noop} name='sweets'>jelly beans</Radio>
-
-        <Radio className={styles.newLineCheckbox} onChange={noop} name='sweets2'>chupa chups</Radio>
-        <Radio className={styles.newLineCheckbox} onChange={noop} name='sweets2'>apple pie</Radio>
-        <Radio className={styles.newLineCheckbox} onChange={noop} name='sweets2'>marzipan</Radio>
-
-        <Radio onChange={noop}>
-          <div className={styles.styledLabel}>styled label</div>
-        </Radio>
       </StyleGuideSection>
 
       <StyleGuideSection title='Drop down'>

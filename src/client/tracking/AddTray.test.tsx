@@ -8,6 +8,7 @@ import {buildTray, render} from '../testHelpers'
 import {fakeRequest} from '../gateways/Gateway'
 import {routeFeedProjects} from '../Routes'
 import * as Tray from '../domain/Tray'
+import {AuthTypes} from '../domain/Tray'
 
 beforeEach(() => {
   jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValue(fakeRequest(''))
@@ -75,7 +76,7 @@ it('should allow adding feeds with basic auth', async () => {
 
   const {store, history} = render(<AddTray/>, {state})
   userEvent.type(screen.getByLabelText('URL'), 'http://some-new-url')
-  userEvent.click(screen.getByLabelText('Basic auth'))
+  userEvent.selectOptions(screen.getByLabelText('Authentication'), AuthTypes.basic)
   userEvent.type(screen.getByLabelText('Username'), 'some-username')
   userEvent.type(screen.getByLabelText('Password'), 'some-password')
   userEvent.click(screen.getByText('Add feed'))
@@ -102,7 +103,7 @@ it('should allow adding trays with an access token', async () => {
 
   const {store, history} = render(<AddTray/>, {state})
   userEvent.type(screen.getByLabelText('URL'), 'http://some-new-url')
-  userEvent.click(screen.getByLabelText('Access token'))
+  userEvent.selectOptions(screen.getByLabelText('Authentication'), AuthTypes.token)
   userEvent.type(screen.getByLabelText('Token'), 'some-token')
   userEvent.click(screen.getByText('Add feed'))
 

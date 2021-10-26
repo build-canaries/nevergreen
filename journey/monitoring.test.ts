@@ -11,7 +11,7 @@ describe('Monitoring', () => {
 
     cy.findByLabelText('URL').type(Cypress.env('TRAY_URL'))
     if (Cypress.env('TRAY_USERNAME') && Cypress.env('TRAY_PASSWORD')) {
-      cy.findByLabelText('Basic auth').click()
+      cy.findByLabelText('Authentication').select('Basic auth')
       cy.findByLabelText('Username').type(Cypress.env('TRAY_USERNAME'))
       cy.findByLabelText('Password').type(Cypress.env('TRAY_PASSWORD'))
     }
@@ -49,7 +49,7 @@ describe('Monitoring', () => {
     if (Cypress.env('TRAY_URL_TOKEN')) {
       cy.findByLabelText('URL').clear().type(Cypress.env('TRAY_URL_TOKEN'))
       cy.findByRole('button', {name: 'Change auth'}).click()
-      cy.findByLabelText('Access token').click()
+      cy.findByLabelText('Authentication').select('Access token')
       cy.findByLabelText('Token').type(Cypress.env('TRAY_TOKEN'))
     }
     cy.findByRole('button', {name: 'randomise name'}).click()

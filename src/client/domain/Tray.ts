@@ -33,15 +33,15 @@ export function serverTypeDisplay(serverType: string): string {
   return match ? match.display : 'Unknown'
 }
 
+export const AUTH_TYPE_OPTIONS = [
+  {value: AuthTypes.none, display: 'No auth'},
+  {value: AuthTypes.basic, display: 'Basic auth'},
+  {value: AuthTypes.token, display: 'Access token'}
+]
+
 export function authTypeDisplay(authType: AuthTypes): string {
-  switch (authType) {
-    case AuthTypes.basic:
-      return 'Basic auth'
-    case AuthTypes.none:
-      return 'No auth'
-    case AuthTypes.token:
-      return 'Access token'
-  }
+  const match = AUTH_TYPE_OPTIONS.find((option) => option.value === authType)
+  return match ? match.display : 'Unknown'
 }
 
 export function generateRandomName(): string {

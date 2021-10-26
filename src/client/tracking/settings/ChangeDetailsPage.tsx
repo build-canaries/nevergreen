@@ -1,6 +1,6 @@
 import React, {ReactElement, useEffect, useRef, useState} from 'react'
 import {Page} from '../../common/Page'
-import {AuthTypes, CI_OPTIONS, generateRandomName, Tray} from '../../domain/Tray'
+import {authTypeDisplay, AuthTypes, CI_OPTIONS, generateRandomName, Tray} from '../../domain/Tray'
 import {useDispatch, useSelector} from 'react-redux'
 import {trayUpdated} from '../TrackingActionCreators'
 import {ROUTE_SETTINGS_TRACKING, routeFeedProjects} from '../../Routes'
@@ -21,6 +21,7 @@ import {Dice} from '../../common/icons/Dice'
 import {Bin} from '../../common/icons/Bin'
 import {Unlocked} from '../../common/icons/Unlocked'
 import {Cog} from '../../common/icons/Cog'
+import {Summary} from '../../common/Summary'
 
 interface ChangeDetailsPageProps {
   readonly feed: Tray;
@@ -150,16 +151,21 @@ export function ChangeDetailsPage({feed}: ChangeDetailsPageProps): ReactElement 
                 URL
               </Input>
               <section className={styles.auth}>
-                <Auth authType={authType}
-                      setAuthType={setAuthType}
-                      username={username}
-                      setUsername={setUsername}
-                      password={password}
-                      setPassword={setPassword}
-                      accessToken={accessToken}
-                      setAccessToken={setAccessToken}
-                      disabled={submitting}
-                      readOnly={!changingAuth}/>
+                {!changingAuth && (
+                  <Summary values={[{label: 'Authentication', value: authTypeDisplay(authType)}]}/>
+                )}
+                {changingAuth && (
+                  <Auth authType={authType}
+                        setAuthType={setAuthType}
+                        username={username}
+                        setUsername={setUsername}
+                        password={password}
+                        setPassword={setPassword}
+                        accessToken={accessToken}
+                        setAccessToken={setAccessToken}
+                        disabled={submitting}
+                        readOnly={!changingAuth}/>
+                )}
                 <SecondaryButton className={styles.changeAuth}
                                  onClick={toggleAuth}
                                  icon={changingAuth ? <Bin/> : <Unlocked/>}>
