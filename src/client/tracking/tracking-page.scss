@@ -4,7 +4,7 @@
 
 .refreshTime {
   @include respond-to(tablet, desktop) {
-    width: 30em;
+    width: 20em;
   }
 }
 

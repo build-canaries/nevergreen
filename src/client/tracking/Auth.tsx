@@ -3,7 +3,7 @@ import {Input} from '../common/forms/Input'
 import styles from './auth.scss'
 import {Password} from '../common/forms/Password'
 import {AUTH_TYPE_OPTIONS, AuthTypes} from '../domain/Tray'
-import {DropDown} from '../common/forms/DropDown'
+import {DropDown, DropDownOptions} from '../common/forms/DropDown'
 
 interface AuthProps {
   readonly authType: AuthTypes;
@@ -16,6 +16,7 @@ interface AuthProps {
   readonly setAccessToken: (accessToken: string) => void;
   readonly disabled?: boolean;
   readonly readOnly?: boolean;
+  readonly authenticationOptions?: DropDownOptions;
 }
 
 export function Auth(
@@ -29,12 +30,13 @@ export function Auth(
     accessToken,
     setAccessToken,
     disabled,
-    readOnly
+    readOnly,
+    authenticationOptions = AUTH_TYPE_OPTIONS
   }: AuthProps
 ): ReactElement {
   return (
     <>
-      <DropDown options={AUTH_TYPE_OPTIONS}
+      <DropDown options={authenticationOptions}
                 value={authType}
                 className={styles.authType}
                 onChange={({target}) => setAuthType(target.value as AuthTypes)}>

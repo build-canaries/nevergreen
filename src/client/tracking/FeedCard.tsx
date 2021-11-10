@@ -56,7 +56,7 @@ export function FeedCard({feed, index}: FeedCardProps): ReactElement {
       </LinkButton>
       <LinkButton icon={<Cog/>}
                   to={routeFeedDetails(feed.trayId)}>
-        Change details<VisuallyHidden> for {title}</VisuallyHidden>
+        Update details<VisuallyHidden> for {title}</VisuallyHidden>
       </LinkButton>
     </Card>
   )

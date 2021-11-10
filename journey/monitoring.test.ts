@@ -37,7 +37,7 @@ describe('Monitoring', () => {
       .should('not.contain', 'success sleeping project')
   })
 
-  it('changing a feeds details', () => {
+  it('updating a feeds details', () => {
     cy.findByRole('button', {name: 'Add feed'}).click()
 
     cy.findByLabelText('URL').type('http://localhost/not/a/real/url')
@@ -45,16 +45,20 @@ describe('Monitoring', () => {
 
     cy.findByRole('link', {name: 'Back to tracking'}).click()
 
-    cy.findByRole('button', {name: /Change details for/}).click()
-    if (Cypress.env('TRAY_URL_TOKEN')) {
-      cy.findByLabelText('URL').clear().type(Cypress.env('TRAY_URL_TOKEN'))
-      cy.findByRole('button', {name: 'Change auth'}).click()
-      cy.findByLabelText('Authentication').select('Access token')
-      cy.findByLabelText('Token').type(Cypress.env('TRAY_TOKEN'))
-    }
+    cy.findByRole('button', {name: /Update details for/}).click()
+
     cy.findByRole('button', {name: 'randomise name'}).click()
     cy.findByLabelText('Name').clear().type('renamed tray')
-    cy.findByRole('button', {name: 'Save'}).click()
+    cy.findByLabelText('Server type').select('circle')
+    cy.findByLabelText('Automatically include new projects').click()
+
+    if (Cypress.env('TRAY_URL_TOKEN')) {
+      cy.findByRole('button', {name: 'Update connection'}).click()
+      cy.findByLabelText('URL').clear().type(Cypress.env('TRAY_URL_TOKEN'))
+      cy.findByLabelText('Authentication').select('Access token')
+      cy.findByLabelText('Token').type(Cypress.env('TRAY_TOKEN'))
+      cy.findByRole('button', {name: 'Save'}).click()
+    }
 
     cy.findByRole('link', {name: 'Back to tracking'}).click()
     cy.findByRole('heading', {name: 'renamed tray'}).should('exist')

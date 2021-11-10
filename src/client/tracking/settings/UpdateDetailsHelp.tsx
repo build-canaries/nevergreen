@@ -5,7 +5,6 @@ import {ROUTE_TRACKING_FEED_DETAILS} from '../../Routes'
 
 const KEYWORDS = [
   'tracking',
-  'adding',
   'settings',
   'name',
   'url',
@@ -17,25 +16,20 @@ const KEYWORDS = [
   'automatically include new projects'
 ]
 
-export function ChangeDetailsHelp({searchQuery, helpLink}: HelpProps): ReactElement {
+export function UpdateDetailsHelp({searchQuery, helpLink}: HelpProps): ReactElement {
   return (
     <HelpArticle
       keywords={KEYWORDS}
       searchQuery={searchQuery}
-      title='Change details'
+      title='Update details'
       page={ROUTE_TRACKING_FEED_DETAILS}>
       <HelpForm>
+        <HelpInput name='Update connection'>
+          Update the connection URL and/or authentication.
+        </HelpInput>
         <HelpInput name='Name'>
           A friendly name of the CCTray XML feed used in various places instead of the URL. A random name is generated
           when a feed is added, this can be removed if a name is not desired.
-        </HelpInput>
-        <HelpInput name='URL'>
-          The URL of the CCTray XML feed.
-        </HelpInput>
-        <HelpInput name='Change auth'>
-          The current auth mechanism of the CCTray XML feed. Since credentials are stored encrypted they can not be
-          pre-populated so you need to specifically click <strong>Change auth</strong> to be able to change them.
-          This makes it possible to update other details without being forced to re-enter the auth details everytime.
         </HelpInput>
         <HelpInput name='Server type'>
           The server type can be set to enable some server specific parsing. Only servers that require specific parsing

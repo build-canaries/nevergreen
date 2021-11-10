@@ -2,7 +2,7 @@ import React, {ReactElement, useState} from 'react'
 import {Modal} from '../common/Modal'
 import {Input} from '../common/forms/Input'
 import {AddTrayHelp, CCTrayLocationsHelp} from '../tracking/AddTrayHelp'
-import {ChangeDetailsHelp} from '../tracking/settings/ChangeDetailsHelp'
+import {UpdateDetailsHelp} from '../tracking/settings/UpdateDetailsHelp'
 import {SuccessHelp} from '../settings/success/SuccessHelp'
 import {AvailableProjectsHelp} from '../tracking/projects/AvailableProjectsHelp'
 import {
@@ -19,6 +19,7 @@ import {useShortcut} from '../common/Keyboard'
 import styles from './help.scss'
 import {ExternalLink} from '../common/ExternalLink'
 import {TrackingPageHelp} from '../tracking/TrackingPageHelp'
+import {UpdateConnectionHelp} from '../tracking/settings/UpdateConnectionHelp'
 
 interface HelpProps {
   readonly initiallyShow?: boolean;
@@ -60,7 +61,8 @@ export function Help({initiallyShow}: HelpProps): ReactElement {
         <AddTrayHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <CCTrayLocationsHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <AvailableProjectsHelp searchQuery={searchQuery} helpLink={helpLink}/>
-        <ChangeDetailsHelp searchQuery={searchQuery} helpLink={helpLink}/>
+        <UpdateDetailsHelp searchQuery={searchQuery} helpLink={helpLink}/>
+        <UpdateConnectionHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <DisplaySettingsHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <NotificationSettingsHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <SuccessHelp searchQuery={searchQuery} helpLink={helpLink}/>

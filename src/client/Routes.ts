@@ -15,6 +15,7 @@ export const ROUTE_TRACKING_ADD = `${ROUTE_SETTINGS_TRACKING}/add`
 export const ROUTE_TRACKING_FEED = `${ROUTE_SETTINGS_TRACKING}/:id`
 export const ROUTE_TRACKING_FEED_PROJECTS = `${ROUTE_TRACKING_FEED}/projects`
 export const ROUTE_TRACKING_FEED_DETAILS = `${ROUTE_TRACKING_FEED}/details`
+export const ROUTE_TRACKING_FEED_CONNECTION = `${ROUTE_TRACKING_FEED_DETAILS}/connection`
 export const REFRESH_HASH = '#refresh'
 
 export function routeFeed(id: string): string {
@@ -28,6 +29,10 @@ export function routeFeedProjects(id: string, refresh = false): string {
 
 export function routeFeedDetails(id: string): string {
   return ROUTE_TRACKING_FEED_DETAILS.replace(':id', id)
+}
+
+export function routeFeedConnection(id: string): string {
+  return ROUTE_TRACKING_FEED_CONNECTION.replace(':id', id)
 }
 
 // Success messages

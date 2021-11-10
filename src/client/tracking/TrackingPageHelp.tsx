@@ -30,7 +30,7 @@ export function TrackingPageHelp({searchQuery, helpLink}: HelpProps): ReactEleme
         <HelpInput name='Manage projects'>
           This allows you to select interesting projects to display on the Monitor page.
         </HelpInput>
-        <HelpInput name='Change details'>
+        <HelpInput name='Update details'>
           This allows you to update details for the feed, such as the URL or name.
         </HelpInput>
         <HelpInput name='Remove'>

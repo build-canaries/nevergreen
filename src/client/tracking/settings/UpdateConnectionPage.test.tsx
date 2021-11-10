@@ -3,48 +3,38 @@ import {screen, waitFor} from '@testing-library/react'
 import {buildTray, render} from '../../testHelpers'
 import {getTray, TRAYS_ROOT} from '../TraysReducer'
 import userEvent from '@testing-library/user-event'
-import {ChangeDetailsPage} from './ChangeDetailsPage'
-import {REFRESH_HASH, ROUTE_SETTINGS_TRACKING, routeFeedProjects} from '../../Routes'
+import {REFRESH_HASH, routeFeedDetails, routeFeedProjects} from '../../Routes'
 import {AuthTypes} from '../../domain/Tray'
 import * as SecurityGateway from '../../gateways/SecurityGateway'
 import {fakeRequest} from '../../gateways/Gateway'
+import {UpdateConnectionPage} from './UpdateConnectionPage'
 
 beforeEach(() => {
   jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValue(fakeRequest(''))
 })
 
-it('should be able to update details', async () => {
+it('should be able to update the URL', async () => {
   const tray = buildTray({
     url: 'http://old',
-    trayId: 'trayId',
-    name: 'some-name',
-    serverType: 'go',
-    includeNew: false
+    trayId: 'trayId'
   })
   const state = {
     [TRAYS_ROOT]: {trayId: tray}
   }
-  const {store} = render(<ChangeDetailsPage feed={tray}/>, {state})
+  const {store} = render(<UpdateConnectionPage feed={tray}/>, {state})
 
-  userEvent.clear(screen.getByLabelText('Name'))
-  userEvent.type(screen.getByLabelText('Name'), 'some-new-name')
   userEvent.clear(screen.getByLabelText('URL'))
   userEvent.type(screen.getByLabelText('URL'), 'http://new')
-  userEvent.selectOptions(screen.getByLabelText('Server type'), 'circle')
-  userEvent.click(screen.getByLabelText('Automatically include new projects'))
   userEvent.click(screen.getByRole('button', {name: 'Save'}))
 
   await waitFor(() => {
     expect(getTray('trayId')(store.getState())).toEqual(expect.objectContaining({
-      url: 'http://new',
-      name: 'some-new-name',
-      serverType: 'circle',
-      includeNew: true
+      url: 'http://new'
     }))
   })
 })
 
-it('should be able to change auth', async () => {
+it('should be able to update authentication', async () => {
   jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValue(fakeRequest('encrypted-token'))
   const feed = buildTray({
     trayId: 'trayId',
@@ -53,9 +43,8 @@ it('should be able to change auth', async () => {
   const state = {
     [TRAYS_ROOT]: {trayId: feed}
   }
-  const {store} = render(<ChangeDetailsPage feed={feed}/>, {state})
+  const {store} = render(<UpdateConnectionPage feed={feed}/>, {state})
 
-  userEvent.click(screen.getByRole('button', {name: 'Change auth'}))
   userEvent.selectOptions(screen.getByLabelText('Authentication'), AuthTypes.token)
   userEvent.type(screen.getByLabelText('Token'), 'some-token')
   userEvent.click(screen.getByRole('button', {name: 'Save'}))
@@ -68,20 +57,6 @@ it('should be able to change auth', async () => {
   })
 })
 
-it('should be able to generate a new random name', () => {
-  const tray = buildTray({
-    trayId: 'trayId',
-    name: 'some-name'
-  })
-  const state = {
-    [TRAYS_ROOT]: {trayId: tray}
-  }
-  render(<ChangeDetailsPage feed={tray}/>, {state})
-  userEvent.click(screen.getByText('randomise name'))
-
-  expect(screen.getByLabelText('Name')).not.toHaveValue('some-name')
-})
-
 describe('validation errors', () => {
   it('should display an error if no URL is entered', () => {
     const tray = buildTray({
@@ -91,7 +66,7 @@ describe('validation errors', () => {
     const state = {
       [TRAYS_ROOT]: {trayId: tray}
     }
-    render(<ChangeDetailsPage feed={tray}/>, {state})
+    render(<UpdateConnectionPage feed={tray}/>, {state})
 
     userEvent.clear(screen.getByLabelText('URL'))
     userEvent.click(screen.getByRole('button', {name: 'Save'}))
@@ -107,7 +82,7 @@ describe('validation errors', () => {
     const state = {
       [TRAYS_ROOT]: {trayId: tray}
     }
-    render(<ChangeDetailsPage feed={tray}/>, {state})
+    render(<UpdateConnectionPage feed={tray}/>, {state})
 
     userEvent.clear(screen.getByLabelText('URL'))
     userEvent.type(screen.getByLabelText('URL'), 'file://some-file')
@@ -130,7 +105,7 @@ describe('validation errors', () => {
         otherId: other
       }
     }
-    render(<ChangeDetailsPage feed={tray}/>, {state})
+    render(<UpdateConnectionPage feed={tray}/>, {state})
 
     userEvent.clear(screen.getByLabelText('URL'))
     userEvent.type(screen.getByLabelText('URL'), 'http://other')
@@ -148,7 +123,7 @@ describe('redirections', () => {
     const state = {
       [TRAYS_ROOT]: {trayId: tray}
     }
-    const {history} = render(<ChangeDetailsPage feed={tray}/>, {state})
+    const {history} = render(<UpdateConnectionPage feed={tray}/>, {state})
 
     userEvent.clear(screen.getByLabelText('URL'))
     userEvent.type(screen.getByLabelText('URL'), 'http://new')
@@ -168,9 +143,8 @@ describe('redirections', () => {
     const state = {
       [TRAYS_ROOT]: {trayId: feed}
     }
-    const {history} = render(<ChangeDetailsPage feed={feed}/>, {state})
+    const {history} = render(<UpdateConnectionPage feed={feed}/>, {state})
 
-    userEvent.click(screen.getByRole('button', {name: 'Change auth'}))
     userEvent.selectOptions(screen.getByLabelText('Authentication'), AuthTypes.token)
     userEvent.type(screen.getByLabelText('Token'), 'some-token')
     userEvent.click(screen.getByRole('button', {name: 'Save'}))
@@ -181,19 +155,19 @@ describe('redirections', () => {
     })
   })
 
-  it('should redirect to tracking page if only details not affecting the connection have changed', async () => {
+  it('should redirect to details page if nothing has changed', async () => {
     const tray = buildTray({
       trayId: 'trayId'
     })
     const state = {
       [TRAYS_ROOT]: {trayId: tray}
     }
-    const {history} = render(<ChangeDetailsPage feed={tray}/>, {state})
+    const {history} = render(<UpdateConnectionPage feed={tray}/>, {state})
 
     userEvent.click(screen.getByRole('button', {name: 'Save'}))
 
     await waitFor(() => {
-      expect(history.location.pathname).toEqual(ROUTE_SETTINGS_TRACKING)
+      expect(history.location.pathname).toEqual(routeFeedDetails('trayId'))
     })
   })
 })

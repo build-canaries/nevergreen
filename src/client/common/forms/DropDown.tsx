@@ -4,12 +4,14 @@ import uniqueId from 'lodash/uniqueId'
 import styles from './drop-down.scss'
 import formStyles from './forms.scss'
 
+export type DropDownOptions = ReadonlyArray<{
+  value: string;
+  display: string;
+}>;
+
 type DropDownProps = {
   readonly children: ReactNode;
-  readonly options: ReadonlyArray<{
-    value: string;
-    display: string;
-  }>;
+  readonly options: DropDownOptions;
   readonly className?: string;
   readonly disabled?: boolean;
 } & DetailedHTMLProps<SelectHTMLAttributes<HTMLSelectElement>, HTMLSelectElement>

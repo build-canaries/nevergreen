@@ -1,0 +1,17 @@
+@import 'src/client/common/variables';
+@import 'src/client/common/layout';
+
+.traySettingsName,
+.serverType {
+  @include fixed-width(26em);
+}
+
+.includeNew {
+  display: block;
+}
+
+.link {
+  display: block;
+  margin: $margin-top 0 0 0;
+  width: fit-content;
+}
