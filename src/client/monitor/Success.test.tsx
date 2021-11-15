@@ -9,9 +9,9 @@ it('should pick a message when first rendered to stop it changing after every su
   const {rerender} = render(<Success/>, {state})
   const message = screen.getByTestId('success-message').textContent as string
   rerender(<Success/>)
-  expect(screen.queryByText(message)).toBeInTheDocument()
+  expect(screen.getByText(message)).toBeInTheDocument()
   rerender(<Success/>)
-  expect(screen.queryByText(message)).toBeInTheDocument()
+  expect(screen.getByText(message)).toBeInTheDocument()
 })
 
 it('should render text messages', () => {

@@ -8,7 +8,7 @@ import {screen} from '@testing-library/react'
 it('should show success messages', () => {
   const state = {[SUCCESS_ROOT]: ['some-message', 'http://some-url']}
   render(<SuccessMessages/>, {state})
-  expect(screen.queryByText('some-message')).toBeInTheDocument()
+  expect(screen.getByText('some-message')).toBeInTheDocument()
   expect(screen.getByTestId('success-image')).toHaveAttribute('src', 'http://some-url')
 })
 
@@ -22,7 +22,7 @@ it('should allow success messages to be removed', () => {
 it('should show a warning if all success messages are removed', () => {
   const state = {[SUCCESS_ROOT]: []}
   render(<SuccessMessages/>, {state})
-  expect(screen.queryByText(NO_MESSAGES_WARNING)).toBeInTheDocument()
+  expect(screen.getByText(NO_MESSAGES_WARNING)).toBeInTheDocument()
   expect(screen.queryByTestId('success-message')).not.toBeInTheDocument()
   expect(screen.queryByTestId('success-image')).not.toBeInTheDocument()
 })

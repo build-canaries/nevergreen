@@ -31,7 +31,7 @@ it('should render added trays', () => {
     [SELECTED_ROOT]: {trayId: []}
   }
   render(<TrackingPage/>, {state})
-  expect(screen.queryByRole('heading', {name: 'some-name'})).toBeInTheDocument()
+  expect(screen.getByRole('heading', {name: 'some-name'})).toBeInTheDocument()
 })
 
 it('should allow trays to be added', async () => {
@@ -48,5 +48,5 @@ it('should show a helpful message if no trays are added', () => {
     [PROJECTS_ROOT]: {}
   }
   render(<TrackingPage/>, {state})
-  expect(screen.queryByText('No feeds added, add a feed to start monitoring')).toBeInTheDocument()
+  expect(screen.getByText('No feeds added, add a feed to start monitoring')).toBeInTheDocument()
 })

@@ -26,7 +26,7 @@ it('should not allow a blank success messages to be added', () => {
   userEvent.clear(screen.getByLabelText('Message'))
   userEvent.click(screen.getByText('Add message'))
 
-  expect(screen.queryByText('Enter a message or image URL')).toBeInTheDocument()
+  expect(screen.getByText('Enter a message or image URL')).toBeInTheDocument()
 })
 
 it('should not allow the same success message to be added', () => {
@@ -36,7 +36,7 @@ it('should not allow the same success message to be added', () => {
   userEvent.type(screen.getByLabelText('Message'), 'some-message')
   userEvent.click(screen.getByText('Add message'))
 
-  expect(screen.queryByText('Message has already been added')).toBeInTheDocument()
+  expect(screen.getByText('Message has already been added')).toBeInTheDocument()
 })
 
 it('should be able to cancel back to settings', async () => {

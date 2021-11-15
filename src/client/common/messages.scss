@@ -1,3 +1,4 @@
+@use 'sass:color';
 @import 'variables';
 @import 'typography';
 @import 'responsive';
@@ -8,11 +9,11 @@
   border-radius: $border-radius;
   color: $color;
   display: flex;
-  margin: 1em 0 0 0;
+  margin: 1em 0 0;
 
   & > .icon {
-    background-color: darken($background-color, 5%);
-    color: darken($background-color, 15%);
+    background-color: color.scale($background-color, $lightness: -10%);
+    color: color.scale($background-color, $lightness: -25%);
   }
 
   @include respond-to(very-small) {

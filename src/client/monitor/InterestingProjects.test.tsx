@@ -40,10 +40,10 @@ describe('displaying project information', () => {
 
     render(<InterestingProjects {...props}/>, {state})
 
-    expect(screen.queryByText('some-tray-name')).toBeInTheDocument()
-    expect(screen.queryByText('some-project-name')).toBeInTheDocument()
-    expect(screen.queryByText('#1234')).toBeInTheDocument()
-    expect(screen.queryByText('about 1 hour')).toBeInTheDocument()
+    expect(screen.getByText('some-tray-name')).toBeInTheDocument()
+    expect(screen.getByText('some-project-name')).toBeInTheDocument()
+    expect(screen.getByText('#1234')).toBeInTheDocument()
+    expect(screen.getByText('about 1 hour')).toBeInTheDocument()
   })
 
   it('should show the identifier, even when time and label is unavailable for unknown projects', () => {
@@ -72,10 +72,10 @@ describe('displaying project information', () => {
 
     render(<InterestingProjects {...props}/>, {state})
 
-    expect(screen.queryByText('some-tray-name')).toBeInTheDocument()
-    expect(screen.queryByText('some-project-name')).toBeInTheDocument()
+    expect(screen.getByText('some-tray-name')).toBeInTheDocument()
+    expect(screen.getByText('some-project-name')).toBeInTheDocument()
     expect(screen.queryByTestId('build-label')).not.toBeInTheDocument()
-    expect(screen.queryByText('unknown')).toBeInTheDocument()
+    expect(screen.getByText('unknown')).toBeInTheDocument()
   })
 
   // labels can not be shown for building projects as they are not updated until after the project has finished building
@@ -105,10 +105,10 @@ describe('displaying project information', () => {
 
     render(<InterestingProjects {...props}/>, {state})
 
-    expect(screen.queryByText('some-tray-name')).toBeInTheDocument()
-    expect(screen.queryByText('some-project-name')).toBeInTheDocument()
+    expect(screen.getByText('some-tray-name')).toBeInTheDocument()
+    expect(screen.getByText('some-project-name')).toBeInTheDocument()
     expect(screen.queryByText('#1234')).not.toBeInTheDocument()
-    expect(screen.queryByText('30 minutes')).toBeInTheDocument()
+    expect(screen.getByText('30 minutes')).toBeInTheDocument()
   })
 
   it('should just show the project name if all display settings are not on', () => {
@@ -138,7 +138,7 @@ describe('displaying project information', () => {
     render(<InterestingProjects {...props}/>, {state})
 
     expect(screen.queryByText('some-tray-name')).not.toBeInTheDocument()
-    expect(screen.queryByText('some-project-name')).toBeInTheDocument()
+    expect(screen.getByText('some-project-name')).toBeInTheDocument()
     expect(screen.queryByText('#1234')).not.toBeInTheDocument()
     expect(screen.queryByText('about 1 hour')).not.toBeInTheDocument()
   })
@@ -230,7 +230,7 @@ describe('limiting the projects displayed', () => {
       ]
     }
     render(<InterestingProjects {...props}/>, {state})
-    expect(screen.queryByText('+3 not shown')).toBeInTheDocument()
+    expect(screen.getByText('+3 not shown')).toBeInTheDocument()
   })
 
   it('should display a summary if the number of errors is more than the max', () => {
@@ -254,8 +254,8 @@ describe('limiting the projects displayed', () => {
       ]
     }
     render(<InterestingProjects {...props}/>, {state})
-    expect(screen.queryByText('+2 not shown')).toBeInTheDocument()
-    expect(screen.queryByText('+2 error')).toBeInTheDocument()
+    expect(screen.getByText('+2 not shown')).toBeInTheDocument()
+    expect(screen.getByText('+2 error')).toBeInTheDocument()
   })
 
   it('should display a summary if the number of errors and projects is more than the max', () => {
@@ -279,7 +279,7 @@ describe('limiting the projects displayed', () => {
       ]
     }
     render(<InterestingProjects {...props}/>, {state})
-    expect(screen.queryByText('+2 not shown')).toBeInTheDocument()
-    expect(screen.queryByText('+1 sick, +1 healthy building')).toBeInTheDocument()
+    expect(screen.getByText('+2 not shown')).toBeInTheDocument()
+    expect(screen.getByText('+1 sick, +1 healthy building')).toBeInTheDocument()
   })
 })

@@ -20,6 +20,6 @@ it('should not render anything if messages is a blank string', () => {
 it('should render the messages', () => {
   const props = {type: MessagesType.ERROR, messages: ['some-message', 'another-message'], icon: <div/>}
   render(<Messages {...props} />)
-  expect(screen.queryByText('some-message')).toBeInTheDocument()
-  expect(screen.queryByText('another-message')).toBeInTheDocument()
+  expect(screen.getByText('some-message')).toBeInTheDocument()
+  expect(screen.getByText('another-message')).toBeInTheDocument()
 })

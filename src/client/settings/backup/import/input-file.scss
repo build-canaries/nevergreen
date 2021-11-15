@@ -4,8 +4,7 @@
 @import '../../../common/forms/button';
 
 .openFile {
-  @include interactive();
-
+  @include interactive;
   @extend .secondary;
 
   box-shadow: $shadow;
@@ -17,7 +16,7 @@
   @extend %visually-hidden;
 
   &:focus + label {
-    @include focus();
+    @include focus;
   }
 
   &:disabled + label {

@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 // Fonts
 
 $normal-font: roboto, sans-serif;
@@ -11,25 +13,21 @@ $white: #fff;
 $off-white: #fffed7;
 $light-grey: #ececec;
 $mid-grey: #797676;
-
 $blue: #0279c4;
 $yellow: #fdc626;
-
 $healthy: #058943;
 $healthy-building: #ffff18;
 $healthy-building-text: #4a2f27;
 $sick: #b30400;
 $sick-building: #d14904;
-
 $error: #de3535;
 $outline: #a4a4a4;
-
 $version-color: #a6a6a6;
 
 // Decorations
 
-$shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
-$focus-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.26);
+$shadow: 0 2px 5px color.adjust($black, $alpha: -0.74);
+$focus-shadow: 0 4px 8px 0 color.adjust($black, $alpha: -0.74);
 $color-change-percentage: 8%;
 $input-border: 1px solid $light-grey;
 $border-radius: 2px;

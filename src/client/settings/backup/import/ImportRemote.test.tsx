@@ -56,7 +56,7 @@ it('should display an error if the configuration is syntactically invalid JSON',
   })
 
   await waitFor(() => {
-    expect(screen.queryByText('Unable to fetch remote backup because of an error')).toBeInTheDocument()
+    expect(screen.getByText('Unable to fetch remote backup because of an error')).toBeInTheDocument()
   })
 })
 
@@ -79,15 +79,15 @@ it('should display an error if the configuration is semantically invalid JSON', 
   })
 
   await waitFor(() => {
-    expect(screen.queryByLabelText('Configuration to import')).toBeInTheDocument()
+    expect(screen.getByLabelText('Configuration to import')).toBeInTheDocument()
   })
 
   userEvent.click(screen.getByRole('button', {name: 'Import'}))
 
   await waitFor(() => {
-    expect(screen.queryByText('Invalid value undefined supplied to /trays/id/trayId expected string')).toBeInTheDocument()
-    expect(screen.queryByText('Invalid value undefined supplied to /trays/id/url expected string')).toBeInTheDocument()
+    expect(screen.getByText('Invalid value undefined supplied to /trays/id/trayId expected string')).toBeInTheDocument()
   })
+  expect(screen.getByText('Invalid value undefined supplied to /trays/id/url expected string')).toBeInTheDocument()
 })
 
 it('should redirect to the settings page if no backup location with ID exists', async () => {
@@ -123,9 +123,9 @@ it('should display an error and a button to try again if configuration can not b
   })
 
   await waitFor(() => {
-    expect(screen.queryByText('Unable to fetch remote backup because of an error')).toBeInTheDocument()
-    expect(screen.queryByRole('button', {name: 'Try fetching again'})).toBeInTheDocument()
+    expect(screen.getByText('Unable to fetch remote backup because of an error')).toBeInTheDocument()
   })
+  expect(screen.getByRole('button', {name: 'Try fetching again'})).toBeInTheDocument()
 })
 
 it('should be able to cancel back to settings', async () => {
@@ -147,7 +147,7 @@ it('should be able to cancel back to settings', async () => {
   })
 
   await waitFor(() => {
-    expect(screen.queryByLabelText('Configuration to import')).toBeInTheDocument()
+    expect(screen.getByLabelText('Configuration to import')).toBeInTheDocument()
   })
 
   userEvent.click(screen.getByRole('button', {name: 'Cancel'}))

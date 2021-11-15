@@ -28,7 +28,7 @@
 }
 
 .select {
-  @include standard-input-dimensions();
+  @include standard-input-dimensions;
 
   appearance: none;
   background-color: transparent;

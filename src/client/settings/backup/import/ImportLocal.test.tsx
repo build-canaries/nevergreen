@@ -19,7 +19,7 @@ it('should import valid configuration and redirect to the settings page', async 
 it('should show an error if no data has been entered', () => {
   render(<ImportLocal/>)
   userEvent.click(screen.getByRole('button', {name: 'Import'}))
-  expect(screen.queryByText('Enter the configuration to import')).toBeInTheDocument()
+  expect(screen.getByText('Enter the configuration to import')).toBeInTheDocument()
   expect(screen.queryByText('Unexpected end of JSON input')).not.toBeInTheDocument()
 })
 
@@ -29,7 +29,7 @@ it('should show an error if the data is syntactically invalid (bad json)', () =>
   userEvent.type(screen.getByLabelText('Configuration to import'), escapeSpecialCharacter(invalidConfiguration))
   userEvent.click(screen.getByRole('button', {name: 'Import'}))
 
-  expect(screen.queryByText('Unexpected end of JSON input')).toBeInTheDocument()
+  expect(screen.getByText('Unexpected end of JSON input')).toBeInTheDocument()
   expect(screen.getByDisplayValue(invalidConfiguration)).toBeInTheDocument()
 })
 
@@ -39,8 +39,8 @@ it('should show an error if the data is semantically invalid (missing required a
   userEvent.type(screen.getByLabelText('Configuration to import'), escapeSpecialCharacter(invalidConfiguration))
   userEvent.click(screen.getByRole('button', {name: 'Import'}))
 
-  expect(screen.queryByText('Invalid value undefined supplied to /trays/id/trayId expected string')).toBeInTheDocument()
-  expect(screen.queryByText('Invalid value undefined supplied to /trays/id/url expected string')).toBeInTheDocument()
+  expect(screen.getByText('Invalid value undefined supplied to /trays/id/trayId expected string')).toBeInTheDocument()
+  expect(screen.getByText('Invalid value undefined supplied to /trays/id/url expected string')).toBeInTheDocument()
   expect(screen.getByDisplayValue(invalidConfiguration)).toBeInTheDocument()
 })
 

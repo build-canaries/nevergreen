@@ -10,9 +10,9 @@ it('should add all the given options', () => {
     {value: 'c', display: 'C'}
   ]
   render(<DropDown options={options}>label</DropDown>)
-  expect(screen.queryByText('A')).toBeInTheDocument()
-  expect(screen.queryByText('B')).toBeInTheDocument()
-  expect(screen.queryByText('C')).toBeInTheDocument()
+  expect(screen.getByText('A')).toBeInTheDocument()
+  expect(screen.getByText('B')).toBeInTheDocument()
+  expect(screen.getByText('C')).toBeInTheDocument()
 })
 
 // https://ffoodd.github.io/a11y.css/errors.html#namespace

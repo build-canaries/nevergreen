@@ -1,7 +1,7 @@
 @import '../common/accessibility';
 
 .query {
-  @include interactive();
+  @include interactive;
 
   background: none;
   border: none;

@@ -29,8 +29,8 @@ it('should allow system notifications to be enabled', async () => {
 
   await waitFor(() => {
     expect(getShowSystemNotifications(store.getState())).toBeTruthy()
-    expect(SystemNotifications.sendSystemNotification).toHaveBeenCalledWith(NOTIFICATIONS_ENABLED_NOTIFICATION)
   })
+  expect(SystemNotifications.sendSystemNotification).toHaveBeenCalledWith(NOTIFICATIONS_ENABLED_NOTIFICATION)
 })
 
 it('should not show the not supported message if browser notifications are supported', () => {
@@ -42,7 +42,7 @@ it('should not show the not supported message if browser notifications are suppo
 it('should show the not supported message if browser notifications are not supported', () => {
   jest.spyOn(SystemNotifications, 'supported').mockReturnValue(false)
   render(<NotificationsSystem/>)
-  expect(screen.queryByText(NOT_SUPPORTED_MESSAGE)).toBeInTheDocument()
+  expect(screen.getByText(NOT_SUPPORTED_MESSAGE)).toBeInTheDocument()
 })
 
 it('should not give the option to show browser notifications if they are not supported', () => {
@@ -59,6 +59,6 @@ it('should show a message if notifications are supported but permission is denie
   userEvent.click(screen.getByLabelText('Show system notifications'))
 
   await waitFor(() => {
-    expect(screen.queryByText(PERMISSION_DENIED_MESSAGE)).toBeInTheDocument()
+    expect(screen.getByText(PERMISSION_DENIED_MESSAGE)).toBeInTheDocument()
   })
 })

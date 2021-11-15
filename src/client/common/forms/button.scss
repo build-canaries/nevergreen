@@ -18,7 +18,7 @@
 
 @mixin button($color: $off-black, $background-color: $white, $border-color: $light-grey) {
   @include button-interaction($color, $background-color, $border-color);
-  @include standard-input-dimensions();
+  @include standard-input-dimensions;
 
   background-color: $background-color;
   border: 1px solid $border-color;
@@ -53,7 +53,7 @@
 }
 
 .secondary {
-  @include button();
+  @include button;
 }
 
 .danger {
@@ -64,7 +64,6 @@
   @include standard-input-dimensions(true);
 
   margin: 0;
-  // max-width: $input-height;
   padding: 0.5em;
 
   & > svg {
@@ -73,11 +72,8 @@
 }
 
 .inputButton {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: $border-radius;
   border-left: none;
-  border-top-left-radius: 0;
-  border-top-right-radius: $border-radius;
+  border-radius: 0 $border-radius $border-radius 0;
 
   &:enabled {
     box-shadow: none;

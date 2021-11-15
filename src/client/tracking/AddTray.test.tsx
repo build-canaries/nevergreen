@@ -17,14 +17,14 @@ beforeEach(() => {
 it('should display an error if no URL is entered', () => {
   render(<AddTray/>)
   userEvent.click(screen.getByText('Add feed'))
-  expect(screen.queryByText('Enter a URL to the CCTray XML feed')).toBeInTheDocument()
+  expect(screen.getByText('Enter a URL to the CCTray XML feed')).toBeInTheDocument()
 })
 
 it('should display an error if the URL entered is not http(s)', () => {
   render(<AddTray/>)
   userEvent.type(screen.getByLabelText('URL'), 'ftp://some-new-url')
   userEvent.click(screen.getByText('Add feed'))
-  expect(screen.queryByText('Only http(s) URLs are supported')).toBeInTheDocument()
+  expect(screen.getByText('Only http(s) URLs are supported')).toBeInTheDocument()
 })
 
 it('should display an error if a feed with the same URL has already been added', () => {
@@ -41,7 +41,7 @@ it('should display an error if a feed with the same URL has already been added',
   userEvent.type(screen.getByLabelText('URL'), 'http://some-url')
   userEvent.click(screen.getByText('Add feed'))
 
-  expect(screen.queryByText('CCTray XML feed has already been added')).toBeInTheDocument()
+  expect(screen.getByText('CCTray XML feed has already been added')).toBeInTheDocument()
 })
 
 it('should allow adding feeds without auth', async () => {
@@ -61,8 +61,10 @@ it('should allow adding feeds without auth', async () => {
     })
   ]))
   await waitFor(() => {
-    expect(history.location.pathname).toEqual(routeFeedProjects('some-feed-id'))
-    expect(history.location.hash).toEqual('#refresh')
+    expect(history.location).toEqual(expect.objectContaining({
+      pathname: routeFeedProjects('some-feed-id'),
+      hash: '#refresh'
+    }))
   })
 })
 
@@ -83,14 +85,16 @@ it('should allow adding feeds with basic auth', async () => {
 
   await waitFor(() => {
     expect(SecurityGateway.encrypt).toHaveBeenCalledWith('some-password')
-    expect(getTrays(store.getState())).toEqual(expect.arrayContaining([
-      expect.objectContaining({
-        encryptedPassword: 'encrypted-password'
-      })
-    ]))
-    expect(history.location.pathname).toEqual(routeFeedProjects('some-feed-id'))
-    expect(history.location.hash).toEqual('#refresh')
   })
+  expect(getTrays(store.getState())).toEqual(expect.arrayContaining([
+    expect.objectContaining({
+      encryptedPassword: 'encrypted-password'
+    })
+  ]))
+  expect(history.location).toEqual(expect.objectContaining({
+    pathname: routeFeedProjects('some-feed-id'),
+    hash: '#refresh'
+  }))
 })
 
 it('should allow adding trays with an access token', async () => {
@@ -109,12 +113,14 @@ it('should allow adding trays with an access token', async () => {
 
   await waitFor(() => {
     expect(SecurityGateway.encrypt).toHaveBeenCalledWith('some-token')
-    expect(getTrays(store.getState())).toEqual(expect.arrayContaining([
-      expect.objectContaining({
-        encryptedAccessToken: 'encrypted-token'
-      })
-    ]))
-    expect(history.location.pathname).toEqual(routeFeedProjects('some-feed-id'))
-    expect(history.location.hash).toEqual('#refresh')
   })
+  expect(getTrays(store.getState())).toEqual(expect.arrayContaining([
+    expect.objectContaining({
+      encryptedAccessToken: 'encrypted-token'
+    })
+  ]))
+  expect(history.location).toEqual(expect.objectContaining({
+    pathname: routeFeedProjects('some-feed-id'),
+    hash: '#refresh'
+  }))
 })

@@ -18,7 +18,7 @@ it('should be able to remove remote locations', async () => {
   }
   render(<BackupPage/>, {state})
 
-  expect(screen.queryByText('http://example.com')).toBeInTheDocument()
+  expect(screen.getByText('http://example.com')).toBeInTheDocument()
 
   userEvent.click(screen.getByRole('button', {name: 'Remove Remote backup 1'}))
 

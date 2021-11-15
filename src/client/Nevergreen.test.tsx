@@ -28,10 +28,10 @@ it('should load configuration, register service worker and check for a new versi
 
   await waitFor(() => {
     expect(LocalConfiguration.load).toHaveBeenCalled()
-    expect(Gateway.get).toHaveBeenCalledWith('https://api.github.com/repos/build-canaries/nevergreen/releases/latest')
-    expect(ServiceWorkerHook.useServiceWorker).toHaveBeenCalled()
-    expect(screen.queryByText(/^A new version [0-9.]* is available to download from GitHub now!$/)).toBeInTheDocument()
   })
+  expect(Gateway.get).toHaveBeenCalledWith('https://api.github.com/repos/build-canaries/nevergreen/releases/latest')
+  expect(ServiceWorkerHook.useServiceWorker).toHaveBeenCalled()
+  expect(screen.getByText(/^A new version [0-9.]* is available to download from GitHub now!$/)).toBeInTheDocument()
 })
 
 it('when loaded config is invalid, should show error screen', async () => {
@@ -40,7 +40,7 @@ it('when loaded config is invalid, should show error screen', async () => {
   render(<Nevergreen/>)
 
   await waitFor(() => {
-    expect(screen.queryByText('Something went wrong.')).toBeInTheDocument()
+    expect(screen.getByText('Something went wrong.')).toBeInTheDocument()
   })
 })
 
@@ -50,7 +50,7 @@ it('when config fails to load, should show error screen', async () => {
   render(<Nevergreen/>)
 
   await waitFor(() => {
-    expect(screen.queryByText('Something went wrong.')).toBeInTheDocument()
+    expect(screen.getByText('Something went wrong.')).toBeInTheDocument()
   })
 })
 
@@ -67,8 +67,8 @@ it('should not check for a new version if the user has disabled checking', async
 
   await waitFor(() => {
     expect(Gateway.get).not.toHaveBeenCalledWith('https://api.github.com/repos/build-canaries/nevergreen/releases/latest')
-    expect(screen.queryByTestId('notification')).not.toBeInTheDocument()
   })
+  expect(screen.queryByTestId('notification')).not.toBeInTheDocument()
 })
 
 it('should disable fullscreen when any key is pressed, allowing the user to navigate to the header via tabbing', async () => {

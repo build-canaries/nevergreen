@@ -9,7 +9,7 @@ describe('custom server', () => {
   it('should display the URL', () => {
     const location = buildRemoteBackupLocation({where: RemoteLocationOptions.Custom, url: 'http://some-custom-server'})
     render(<RemoteBackupCard index={1} location={location}/>)
-    expect(screen.queryByText('http://some-custom-server')).toBeInTheDocument()
+    expect(screen.getByText('http://some-custom-server')).toBeInTheDocument()
   })
 })
 
@@ -21,7 +21,7 @@ describe('GitHub gists', () => {
       description: 'some description'
     })
     render(<RemoteBackupCard index={1} location={location}/>)
-    expect(screen.queryByText('some description')).toBeInTheDocument()
+    expect(screen.getByText('some description')).toBeInTheDocument()
   })
 
   it('should display the URL', () => {
@@ -30,8 +30,8 @@ describe('GitHub gists', () => {
       url: 'http://some-custom-github-url'
     })
     render(<RemoteBackupCard index={1} location={location}/>)
-    expect(screen.queryByText('GitHub Enterprise gist')).toBeInTheDocument()
-    expect(screen.queryByText('http://some-custom-github-url')).toBeInTheDocument()
+    expect(screen.getByText('GitHub Enterprise gist')).toBeInTheDocument()
+    expect(screen.getByText('http://some-custom-github-url')).toBeInTheDocument()
   })
 })
 
@@ -43,7 +43,7 @@ describe('GitLab snippets', () => {
       description: 'some description'
     })
     render(<RemoteBackupCard index={1} location={location}/>)
-    expect(screen.queryByText('some description')).toBeInTheDocument()
+    expect(screen.getByText('some description')).toBeInTheDocument()
   })
 
   it('should display the URL', () => {
@@ -52,6 +52,6 @@ describe('GitLab snippets', () => {
       url: 'http://some-custom-gitlab-url'
     })
     render(<RemoteBackupCard index={1} location={location}/>)
-    expect(screen.queryByText('http://some-custom-gitlab-url')).toBeInTheDocument()
+    expect(screen.getByText('http://some-custom-gitlab-url')).toBeInTheDocument()
   })
 })

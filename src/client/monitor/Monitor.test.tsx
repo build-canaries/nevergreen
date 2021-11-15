@@ -50,7 +50,7 @@ it('should show a helpful message if no trays are added', () => {
     [TRAYS_ROOT]: {}
   }
   render(<Monitor {...DEFAULT_PROPS}/>, {state})
-  expect(screen.queryByText('Add a feed via the tracking page to start monitoring')).toBeInTheDocument()
+  expect(screen.getByText('Add a feed via the tracking page to start monitoring')).toBeInTheDocument()
 })
 
 it('should show a loading screen when first switching to the page', () => {
@@ -60,7 +60,7 @@ it('should show a loading screen when first switching to the page', () => {
     }
   }
   render(<Monitor {...DEFAULT_PROPS}/>, {state})
-  expect(screen.queryByTestId('loading')).toBeInTheDocument()
+  expect(screen.getByTestId('loading')).toBeInTheDocument()
 })
 
 it('should show a success message if there are no projects', async () => {
@@ -76,7 +76,7 @@ it('should show a success message if there are no projects', async () => {
   }
   render(<Monitor {...DEFAULT_PROPS}/>, {state})
   await waitFor(() => {
-    expect(screen.queryByText('some-success-message')).toBeInTheDocument()
+    expect(screen.getByText('some-success-message')).toBeInTheDocument()
   })
 })
 
@@ -110,7 +110,7 @@ it('should display an error if the Nevergreen server is having issues', async ()
   }
   render(<Monitor {...DEFAULT_PROPS}/>, {state})
   await waitFor(() => {
-    expect(screen.queryByText('some-error')).toBeInTheDocument()
+    expect(screen.getByText('some-error')).toBeInTheDocument()
   })
 })
 

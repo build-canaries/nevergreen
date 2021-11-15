@@ -63,7 +63,7 @@ it('should correctly show and remove errors returned while refreshing', async ()
   userEvent.click(screen.getByRole('button', {name: 'Refresh'}))
 
   await waitFor(() => {
-    expect(screen.queryByText('some-error')).toBeInTheDocument()
+    expect(screen.getByText('some-error')).toBeInTheDocument()
   })
 
   userEvent.click(screen.getByRole('button', {name: 'Refresh'}))
@@ -87,7 +87,7 @@ it('should show a warning if there are no projects', () => {
     }
   }
   render(<AvailableProjects tray={tray}/>, {state})
-  expect(screen.queryByText('No projects fetched, please refresh')).toBeInTheDocument()
+  expect(screen.getByText('No projects fetched, please refresh')).toBeInTheDocument()
 })
 
 it('should show a warning if no projects match the search', () => {
@@ -112,7 +112,7 @@ it('should show a warning if no projects match the search', () => {
   render(<AvailableProjects tray={tray}/>, {state})
   userEvent.type(screen.getByLabelText('Search'), 'bar')
 
-  expect(screen.queryByText('No matching projects, please update your search')).toBeInTheDocument()
+  expect(screen.getByText('No matching projects, please update your search')).toBeInTheDocument()
 })
 
 it('should refresh automatically if the url contains #refresh', () => {

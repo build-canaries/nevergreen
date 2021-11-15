@@ -1,3 +1,4 @@
+@use 'sass:color';
 @import '../common/variables';
 @import '../common/layout';
 @import '../common/forms/button';
@@ -5,7 +6,7 @@
 
 .overlay {
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.75);
+  background-color: color.adjust($white, $alpha: -0.25);
   bottom: 0;
   display: flex;
   justify-content: center;
@@ -19,9 +20,8 @@
 .modal {
   background-color: #fff;
   border: 1px solid #ececec;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
+  box-shadow: 0 2px 5px color.adjust($black, $alpha: -0.74);
   color: #212121;
-  display: -webkit-box;
   display: flex;
   flex-direction: column;
   max-height: calc(100vh - #{$margin-top * 2});

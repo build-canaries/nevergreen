@@ -20,7 +20,7 @@ it('should not be able to add with a blank URL', async () => {
   userEvent.click(screen.getByText('Add location'))
 
   await waitFor(() => {
-    expect(screen.queryByText('Enter a URL')).toBeInTheDocument()
+    expect(screen.getByText('Enter a URL')).toBeInTheDocument()
   })
 })
 
@@ -32,7 +32,7 @@ it('should not be able to add with a non http(s) URL', async () => {
   userEvent.click(screen.getByText('Add location'))
 
   await waitFor(() => {
-    expect(screen.queryByText('Only http and https URLs are supported')).toBeInTheDocument()
+    expect(screen.getByText('Only http and https URLs are supported')).toBeInTheDocument()
   })
 })
 
@@ -48,8 +48,8 @@ it('should be able to add a custom server', async () => {
       where: 'custom',
       url: 'http://example.com'
     })])
-    expect(history.location.pathname).toEqual(ROUTE_SETTINGS_BACKUP)
   })
+  expect(history.location.pathname).toEqual(ROUTE_SETTINGS_BACKUP)
 })
 
 it('should be able to add a GitHub gist', async () => {
@@ -66,8 +66,8 @@ it('should be able to add a GitHub gist', async () => {
     expect(Object.values(getBackupLocations(store.getState()))).toEqual([expect.objectContaining({
       where: 'github'
     })])
-    expect(history.location.pathname).toEqual(ROUTE_SETTINGS_BACKUP)
   })
+  expect(history.location.pathname).toEqual(ROUTE_SETTINGS_BACKUP)
 })
 
 it('should validate adding a GitHub gist and clear errors if "where" is changed', async () => {
@@ -78,14 +78,14 @@ it('should validate adding a GitHub gist and clear errors if "where" is changed'
   userEvent.click(screen.getByText('Add location'))
 
   await waitFor(() => {
-    expect(screen.queryByText('Enter a URL')).toBeInTheDocument()
-    expect(screen.queryByText('Enter an access token')).toBeInTheDocument()
+    expect(screen.getByText('Enter a URL')).toBeInTheDocument()
   })
+  expect(screen.getByText('Enter an access token')).toBeInTheDocument()
 
   userEvent.selectOptions(screen.getByLabelText('Where'), 'custom')
 
   await waitFor(() => {
     expect(screen.queryByText('Enter a URL')).not.toBeInTheDocument()
-    expect(screen.queryByText('Enter an access token')).not.toBeInTheDocument()
   })
+  expect(screen.queryByText('Enter an access token')).not.toBeInTheDocument()
 })

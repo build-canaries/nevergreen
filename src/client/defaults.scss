@@ -41,7 +41,7 @@ fieldset {
 }
 
 a {
-  @include link();
+  @include link;
 }
 
 p {
@@ -56,7 +56,7 @@ input {
 h1 {
   @include font-scale(3);
 
-  line-height: 1.04167;
+  line-height: 1.0417;
   margin: 0 0 $margin-top 0;
   outline: none;
 }
@@ -64,7 +64,7 @@ h1 {
 h2 {
   @include font-scale(2);
 
-  line-height: 1.11111;
+  line-height: 1.1111;
 }
 
 h3 {
@@ -78,7 +78,7 @@ h5,
 h6 {
   @include font-scale(0);
 
-  line-height: 1.31579;
+  line-height: 1.3158;
 }
 
 pre {

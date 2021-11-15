@@ -30,7 +30,7 @@ it('should be able to dismiss shown notifications', () => {
   const props = {...DEFAULT_PROPS, notification: 'some notification', dismiss}
 
   render(<Notification {...props}/>)
-  expect(screen.queryByText('some notification')).toBeInTheDocument()
+  expect(screen.getByText('some notification')).toBeInTheDocument()
 
   userEvent.click(screen.getByText('Dismiss'))
   expect(dismiss).toHaveBeenCalled()

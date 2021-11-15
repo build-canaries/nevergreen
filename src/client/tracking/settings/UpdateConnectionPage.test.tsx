@@ -71,7 +71,7 @@ describe('validation errors', () => {
     userEvent.clear(screen.getByLabelText('URL'))
     userEvent.click(screen.getByRole('button', {name: 'Save'}))
 
-    expect(screen.queryByText('Enter a URL')).toBeInTheDocument()
+    expect(screen.getByText('Enter a URL')).toBeInTheDocument()
   })
 
   it('should display an error if non http(s) URL is entered', () => {
@@ -88,7 +88,7 @@ describe('validation errors', () => {
     userEvent.type(screen.getByLabelText('URL'), 'file://some-file')
     userEvent.click(screen.getByRole('button', {name: 'Save'}))
 
-    expect(screen.queryByText('Only http(s) URLs are supported')).toBeInTheDocument()
+    expect(screen.getByText('Only http(s) URLs are supported')).toBeInTheDocument()
   })
 
   it('should display an error if a URL already in use by another feed is entered', () => {
@@ -111,7 +111,7 @@ describe('validation errors', () => {
     userEvent.type(screen.getByLabelText('URL'), 'http://other')
     userEvent.click(screen.getByRole('button', {name: 'Save'}))
 
-    expect(screen.queryByText('An existing CCTray XML feed already has this URL')).toBeInTheDocument()
+    expect(screen.getByText('An existing CCTray XML feed already has this URL')).toBeInTheDocument()
   })
 })
 
@@ -131,8 +131,8 @@ describe('redirections', () => {
 
     await waitFor(() => {
       expect(history.location.pathname).toEqual(routeFeedProjects('trayId'))
-      expect(history.location.hash).toEqual(REFRESH_HASH)
     })
+    expect(history.location.hash).toEqual(REFRESH_HASH)
   })
 
   it('should redirect to projects if the auth has changed', async () => {
@@ -151,8 +151,8 @@ describe('redirections', () => {
 
     await waitFor(() => {
       expect(history.location.pathname).toEqual(routeFeedProjects('trayId'))
-      expect(history.location.hash).toEqual(REFRESH_HASH)
     })
+    expect(history.location.hash).toEqual(REFRESH_HASH)
   })
 
   it('should redirect to details page if nothing has changed', async () => {

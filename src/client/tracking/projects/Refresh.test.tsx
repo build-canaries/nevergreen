@@ -27,7 +27,7 @@ it('should allow projects to be refreshed if they are loaded', () => {
 it('should show projects were fetched "never" if there is no timestamp', () => {
   const props = {...DEFAULT_PROPS, timestamp: undefined}
   render(<Refresh {...props} />)
-  expect(screen.queryByText('projects last refreshed never')).toBeInTheDocument()
+  expect(screen.getByText('projects last refreshed never')).toBeInTheDocument()
 })
 
 it('should show how long ago projects were refreshed if a timestamp is given', () => {
@@ -37,5 +37,5 @@ it('should show how long ago projects were refreshed if a timestamp is given', (
   render(<Refresh {...props} />)
 
   expect(screen.queryByText('projects last refreshed never')).not.toBeInTheDocument()
-  expect(screen.queryByText('projects last refreshed about 1 hour ago')).toBeInTheDocument()
+  expect(screen.getByText('projects last refreshed about 1 hour ago')).toBeInTheDocument()
 })

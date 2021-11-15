@@ -25,7 +25,7 @@ it('should reset configuration and reload', async () => {
   userEvent.click(screen.getByRole('button', {name: 'Reset configuration'}))
   await waitFor(() => {
     expect(LocalConfiguration.clear).toHaveBeenCalled()
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    expect(window.location.reload).toHaveBeenCalled()
   })
+  // eslint-disable-next-line @typescript-eslint/unbound-method
+  expect(window.location.reload).toHaveBeenCalled()
 })
