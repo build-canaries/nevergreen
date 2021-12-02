@@ -71,7 +71,7 @@ describe('validation errors', () => {
     userEvent.clear(screen.getByLabelText('URL'))
     userEvent.click(screen.getByRole('button', {name: 'Save'}))
 
-    expect(screen.getByText('Enter a URL')).toBeInTheDocument()
+    expect(screen.getByText('Enter a URL to the CCTray XML feed')).toBeInTheDocument()
   })
 
   it('should display an error if non http(s) URL is entered', () => {

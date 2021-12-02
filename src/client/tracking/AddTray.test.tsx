@@ -41,7 +41,7 @@ it('should display an error if a feed with the same URL has already been added',
   userEvent.type(screen.getByLabelText('URL'), 'http://some-url')
   userEvent.click(screen.getByText('Add feed'))
 
-  expect(screen.getByText('CCTray XML feed has already been added')).toBeInTheDocument()
+  expect(screen.getByText('An existing CCTray XML feed already has this URL')).toBeInTheDocument()
 })
 
 it('should allow adding feeds without auth', async () => {
@@ -55,17 +55,17 @@ it('should allow adding feeds without auth', async () => {
   userEvent.type(screen.getByLabelText('URL'), 'http://some-new-url')
   userEvent.click(screen.getByText('Add feed'))
 
-  expect(getTrays(store.getState())).toEqual(expect.arrayContaining([
-    expect.objectContaining({
-      url: 'http://some-new-url'
-    })
-  ]))
   await waitFor(() => {
     expect(history.location).toEqual(expect.objectContaining({
       pathname: routeFeedProjects('some-feed-id'),
       hash: '#refresh'
     }))
   })
+  expect(getTrays(store.getState())).toEqual(expect.arrayContaining([
+    expect.objectContaining({
+      url: 'http://some-new-url'
+    })
+  ]))
 })
 
 it('should allow adding feeds with basic auth', async () => {
