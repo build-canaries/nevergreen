@@ -15,11 +15,11 @@
                  [ring/ring-json "0.5.1"]
                  [ring/ring-defaults "0.3.3"]
                  [bk/ring-gzip "0.3.0"]
-                 [ring-basic-authentication "1.1.0"]
+                 [ring-basic-authentication "1.1.1"]
                  [base64-clj "0.1.1"]
                  [camel-snake-kebab "0.4.2"]
                  [com.cemerick/url "0.1.1" :exclusions [com.cemerick/clojurescript.test]]
-                 [ch.qos.logback/logback-classic "1.2.6" :exclusions [org.slf4j/slf4j-api]]
+                 [ch.qos.logback/logback-classic "1.2.7" :exclusions [org.slf4j/slf4j-api]]
                  [org.slf4j/log4j-over-slf4j "1.7.32"]
                  [org.slf4j/jul-to-slf4j "1.7.32"]
                  [org.slf4j/jcl-over-slf4j "1.7.32"]]
@@ -39,7 +39,7 @@
   :profiles {:dev  {:plugins [[lein-ancient "0.7.0"]
                               [jonase/eastwood "0.9.9"]
                               [lein-cloverage "1.2.2"]
-                              [lein-nvd "1.7.0"]
+                              [lein-nvd "1.9.0"]
                               [lein-eftest "0.5.9"]]}
              :test {:jvm-opts ["-Dlogback.configurationFile=./src/logback-tests.xml"]}}
   :cloverage {:output           "target/coverage-reports/server"
