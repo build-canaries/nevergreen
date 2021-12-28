@@ -34,8 +34,8 @@ function ExportRemoteLocation({location}: ExportRemoteProps): ReactElement {
   const dispatch = useDispatch()
   const configuration = useSelector(toExportableConfigurationJson)
 
-  const exportNow = async () => {
-    const res = await send(exportConfiguration(location, configuration))
+  const exportNow = async (signal: AbortSignal | undefined) => {
+    const res = await send(exportConfiguration(location, configuration), signal)
     dispatch(backupExported(location.internalId, res.id))
     return ROUTE_SETTINGS_BACKUP
   }

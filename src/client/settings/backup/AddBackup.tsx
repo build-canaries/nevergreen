@@ -45,9 +45,9 @@ export function AddBackup(): ReactElement {
     return validationErrors
   }
 
-  const onSuccess = async () => {
+  const onSuccess = async (signal: AbortSignal | undefined) => {
     if (where === RemoteLocationOptions.GitLab || where === RemoteLocationOptions.GitHub) {
-      const encryptedAccessToken = await send(encrypt(accessToken))
+      const encryptedAccessToken = await send(encrypt(accessToken), signal)
       dispatch(addBackupGitHubLab(where, id, url, description, encryptedAccessToken))
     } else {
       dispatch(addBackupCustomServer(url))

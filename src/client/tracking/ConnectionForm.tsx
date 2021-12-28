@@ -1,4 +1,4 @@
-import React, {ReactElement, useEffect, useRef, useState} from 'react'
+import React, {ReactElement, useState} from 'react'
 import {AUTH_TYPE_OPTIONS, AuthTypes, Tray} from '../domain/Tray'
 import {useSelector} from 'react-redux'
 import {Form} from '../common/forms/Form'
@@ -7,8 +7,8 @@ import {firstError, FormErrors} from '../common/forms/Validation'
 import {isBlank} from '../common/Utils'
 import {isValidHttpUrl, removeScheme} from '../domain/Url'
 import {getTrays} from './TraysReducer'
-import {Request, send} from '../gateways/Gateway'
-import {encrypt, EncryptResponse} from '../gateways/SecurityGateway'
+import {send} from '../gateways/Gateway'
+import {encrypt} from '../gateways/SecurityGateway'
 import {DropDown} from '../common/forms/DropDown'
 import styles from './connection-form.scss'
 import {Password} from '../common/forms/Password'
@@ -56,16 +56,6 @@ export function ConnectionForm({existingFeed, onSuccess, onCancel}: ConnectionFo
   const [password, setPassword] = useState('')
   const [accessToken, setAccessToken] = useState('')
 
-  const pendingRequest = useRef<Request<EncryptResponse>>()
-
-  useEffect(() => {
-    return () => {
-      if (pendingRequest.current) {
-        pendingRequest.current.abort()
-      }
-    }
-  }, [])
-
   const onValidate = () => {
     const validationErrors: FormErrors<Fields> = []
 
@@ -81,10 +71,8 @@ export function ConnectionForm({existingFeed, onSuccess, onCancel}: ConnectionFo
     return validationErrors
   }
 
-  const encryptPassword = async () => {
-    pendingRequest.current = encrypt(password)
-    const encryptedPassword = await send(pendingRequest.current)
-    pendingRequest.current = undefined
+  const encryptPassword = async (signal: AbortSignal | undefined) => {
+    const encryptedPassword = await send(encrypt(password), signal)
     return {
       username,
       encryptedPassword,
@@ -92,10 +80,8 @@ export function ConnectionForm({existingFeed, onSuccess, onCancel}: ConnectionFo
     }
   }
 
-  const encryptToken = async () => {
-    pendingRequest.current = encrypt(accessToken)
-    const encryptedAccessToken = await send(pendingRequest.current)
-    pendingRequest.current = undefined
+  const encryptToken = async (signal: AbortSignal | undefined) => {
+    const encryptedAccessToken = await send(encrypt(accessToken), signal)
     return {
       username: '',
       encryptedPassword: '',
@@ -103,11 +89,11 @@ export function ConnectionForm({existingFeed, onSuccess, onCancel}: ConnectionFo
     }
   }
 
-  const authUpdates = async () => {
+  const authUpdates = async (signal: AbortSignal | undefined) => {
     if (authType === AuthTypes.basic && !isBlank(password)) {
-      return encryptPassword()
+      return encryptPassword(signal)
     } else if (authType === AuthTypes.token && !isBlank(accessToken)) {
-      return encryptToken()
+      return encryptToken(signal)
     } else {
       return {
         username: '',
@@ -117,8 +103,8 @@ export function ConnectionForm({existingFeed, onSuccess, onCancel}: ConnectionFo
     }
   }
 
-  const processForm = async () => {
-    const authData = await authUpdates()
+  const processForm = async (signal: AbortSignal | undefined) => {
+    const authData = await authUpdates(signal)
     const actualAuth = authType === KeepExistingAuth.keep
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       ? existingFeed!.authType

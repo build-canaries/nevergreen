@@ -13,11 +13,12 @@ import {useHistory} from 'react-router-dom'
 import {LinkButton} from '../LinkButton'
 import {Checkmark} from '../icons/Checkmark'
 import {Cross} from '../icons/Cross'
+import {useQuery} from 'react-query'
 
 interface FormProps<Fields extends string> {
   readonly children: (submitting: boolean, validationErrors: Readonly<FormErrors<Fields>>, clearErrors: () => void) => ReactNode;
   readonly onValidate?: () => Readonly<FormErrors<Fields>> | undefined | void;
-  readonly onSuccess: () => Promise<string | undefined | void> | string | undefined | void;
+  readonly onSuccess: (signal: AbortSignal | undefined) => Promise<string | undefined | void> | string | undefined | void;
   readonly onCancel?: string | (() => void);
   readonly className?: string;
   readonly submitButtonText?: string;
@@ -35,47 +36,41 @@ export function Form<Fields extends string>({
                                             }: FormProps<Fields>): ReactElement {
 
   const history = useHistory()
-  const [submitting, setSubmitting] = useState(false)
   const [validationErrors, setValidationErrors] = useState<Readonly<FormErrors<Fields>>>([])
-  const [submissionError, setSubmissionError] = useState('')
+
+  const {refetch, isLoading, isError, data, error} = useQuery('form', async ({signal}) => {
+    return onSuccess(signal)
+  }, {
+    enabled: false
+  })
 
   useEffect(() => {
     if (clearErrors) {
       setValidationErrors([])
-      setSubmissionError('')
     }
   }, [clearErrors])
 
-  const handleSubmit = async (evt: FormEvent) => {
-    evt.preventDefault()
+  useEffect(() => {
+    if (data) {
+      history.push(data)
+    }
+  }, [data, history])
 
-    setSubmissionError('')
-    setSubmitting(true)
+  const handleSubmit = (evt: FormEvent) => {
+    evt.preventDefault()
 
     const errors = onValidate()
 
     if (errors && !isEmpty(errors)) {
       setValidationErrors(errors)
-      setSubmitting(false)
     } else {
       setValidationErrors([])
-      try {
-        const navigateTo = await onSuccess()
-        if (navigateTo) {
-          history.push(navigateTo)
-        } else {
-          setSubmitting(false)
-        }
-      } catch (e) {
-        setSubmitting(false)
-        setSubmissionError(errorMessage(e))
-      }
+      void refetch()
     }
   }
 
   const doClearErrors = () => {
     setValidationErrors([])
-    setSubmissionError('')
   }
 
   return (
@@ -83,24 +78,24 @@ export function Form<Fields extends string>({
           className={cn(styles.form, className)}
           noValidate>
 
-      {children(submitting, validationErrors, doClearErrors)}
+      {children(isLoading, validationErrors, doClearErrors)}
 
-      <ErrorMessages messages={submissionError}/>
+      {isError && <ErrorMessages messages={errorMessage(error)}/>}
 
       <PrimaryButton className={styles.submitButton}
                      icon={<Checkmark/>}
                      type='submit'
-                     disabled={submitting}>
+                     disabled={isLoading}>
         {submitButtonText}
       </PrimaryButton>
       {isFunction(onCancel) && (
         <SecondaryButton onClick={onCancel}
                          icon={<Cross/>}
-                         disabled={submitting}>
+                         disabled={isLoading}>
           Cancel
         </SecondaryButton>
       )}
-      {isString(onCancel) && !submitting && (
+      {isString(onCancel) && !isLoading && (
         <LinkButton to={onCancel}
                     icon={<Cross/>}>
           Cancel

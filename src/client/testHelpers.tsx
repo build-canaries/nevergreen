@@ -23,6 +23,7 @@ import parseISO from 'date-fns/parseISO'
 import {BACKUP_REMOTE_LOCATIONS_ROOT, RemoteLocation} from './settings/backup/RemoteLocationsReducer'
 import {RemoteLocationOptions} from './settings/backup/RemoteLocationOptions'
 import {Route, Switch} from 'react-router'
+import {QueryClient, QueryClientProvider} from 'react-query'
 
 interface ExtendedRenderResult extends RenderResult {
   readonly store: EnhancedStore<State, AnyAction, ReadonlyArray<Middleware<unknown, State>>>;
@@ -74,18 +75,30 @@ export function render(component: ReactNode, options: RenderOptions = {}): Exten
     currentLocation: '/',
     state: {}
   }, options)
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        cacheTime: 0,
+        staleTime: 0,
+        refetchOnWindowFocus: false,
+        retry: false
+      }
+    }
+  })
   const store = configureStore({reducer, preloadedState: buildState(mergedOptions.state)})
   const history = createMemoryHistory({initialEntries: [mergedOptions.currentLocation]})
 
   const wrapWithStoreAndRouter = (c: ReactNode) => (
-    <Provider store={store}>
-      <Router history={history}>
-        <Switch>
-          <Route exact path={mergedOptions.mountPath}>{c}</Route>
-          <Route>location changed</Route>
-        </Switch>
-      </Router>
-    </Provider>
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <Router history={history}>
+          <Switch>
+            <Route exact path={mergedOptions.mountPath}>{c}</Route>
+            <Route>location changed</Route>
+          </Switch>
+        </Router>
+      </Provider>
+    </QueryClientProvider>
   )
 
   const view = testRender(wrapWithStoreAndRouter(component))

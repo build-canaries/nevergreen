@@ -1,4 +1,4 @@
-import React, {ReactElement, useCallback, useEffect, useMemo, useRef, useState} from 'react'
+import React, {ReactElement, useCallback, useMemo, useState} from 'react'
 import {AvailableProject} from './AvailableProject'
 import {ErrorMessages, WarningMessages} from '../../common/Messages'
 import {Input} from '../../common/forms/Input'
@@ -6,13 +6,13 @@ import {Refresh} from './Refresh'
 import {errorMessage, isBlank, notEmpty} from '../../common/Utils'
 import styles from './available-projects.scss'
 import {SecondaryButton} from '../../common/forms/Button'
-import {enrichProjects, isError} from '../../domain/Project'
+import {enrichProjects, isError as isProjectError} from '../../domain/Project'
 import {getProjectsForTray} from '../ProjectsReducer'
 import {getSelectedProjectsForTray} from '../SelectedReducer'
 import {useDispatch, useSelector} from 'react-redux'
 import {projectSelected, projectsFetched} from '../TrackingActionCreators'
-import {fetchAll, ProjectsResponse} from '../../gateways/ProjectsGateway'
-import {Request, send} from '../../gateways/Gateway'
+import {fetchAll} from '../../gateways/ProjectsGateway'
+import {send} from '../../gateways/Gateway'
 import {Loading} from '../../common/Loading'
 import {Tray} from '../../domain/Tray'
 import {useLocation} from 'react-router-dom'
@@ -20,6 +20,7 @@ import {REFRESH_HASH} from '../../Routes'
 import {matchSorter} from 'match-sorter'
 import {CheckboxChecked} from '../../common/icons/CheckboxChecked'
 import {CheckboxUnchecked} from '../../common/icons/CheckboxUnchecked'
+import {useQuery} from 'react-query'
 
 interface AvailableProjectsProps {
   readonly tray: Tray;
@@ -32,45 +33,28 @@ export function AvailableProjects({tray}: AvailableProjectsProps): ReactElement 
   const selected = useSelector(getSelectedProjectsForTray(tray.trayId))
 
   const [search, setSearch] = useState<string>('')
-  const [errors, setErrors] = useState<ReadonlyArray<string>>([])
-  const [loaded, setLoaded] = useState(true)
-  const pendingRequest = useRef<Request<ProjectsResponse>>()
 
-  const refreshTray = useCallback(async () => {
-    setLoaded(false)
-    setErrors([])
-    pendingRequest.current = fetchAll([tray], projects)
-    try {
-      const apiProjects = await send(pendingRequest.current)
-      const fetchedProjects = enrichProjects(apiProjects, [])
-
-      if (fetchedProjects.some(isError)) {
-        const errorMessages = fetchedProjects.map((projectError) => projectError.description)
-        setErrors(errorMessages)
-      } else {
-        dispatch(projectsFetched(tray.trayId, fetchedProjects, tray.includeNew))
-      }
-    } catch (e) {
-      setErrors([errorMessage(e)])
+  const {
+    isLoading,
+    isError,
+    error,
+    refetch
+  } = useQuery('available-projects', async ({signal}) => {
+    const request = fetchAll([tray], projects)
+    signal?.addEventListener('abort', () => request.abort())
+    const res = await send(request)
+    const fetchedProjects = enrichProjects(res, [])
+    if (fetchedProjects.some(isProjectError)) {
+      const errorMessages = fetchedProjects.map((projectError) => projectError.description)
+      throw new Error(errorMessages.join(', '))
     }
-    pendingRequest.current = undefined
-    setLoaded(true)
-  }, [dispatch, projects, tray])
-
-  useEffect(() => {
-    if (hash === REFRESH_HASH) {
-      void refreshTray()
+    return fetchedProjects
+  }, {
+    enabled: hash === REFRESH_HASH,
+    onSuccess: (res) => {
+      dispatch(projectsFetched(tray.trayId, res, tray.includeNew))
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  useEffect(() => {
-    return () => {
-      if (pendingRequest.current) {
-        pendingRequest.current.abort()
-      }
-    }
-  }, [])
+  })
 
   const filteredProjects = useMemo(() => {
     if (!isBlank(search)) {
@@ -81,8 +65,7 @@ export function AvailableProjects({tray}: AvailableProjectsProps): ReactElement 
 
   const hasProjects = notEmpty(projects)
   const hasProjectsFiltered = notEmpty(filteredProjects)
-  const hasErrors = notEmpty(errors)
-  const controlsDisabled = !loaded || !hasProjects || hasErrors
+  const controlsDisabled = isLoading || !hasProjects || isError
 
   const includeAll = useCallback(() => {
     filteredProjects
@@ -152,16 +135,15 @@ export function AvailableProjects({tray}: AvailableProjectsProps): ReactElement 
     <section className={styles.availableProjects}
              data-locator='available-projects'>
       <Refresh timestamp={tray.timestamp}
-               refreshTray={refreshTray}
-               loaded={loaded}/>
+               refreshTray={() => refetch()}
+               loaded={!isLoading}/>
       {controls}
-      <Loading loaded={loaded}
+      <Loading loaded={!isLoading}
                className={styles.loading}>
-        {!hasErrors && !hasProjects && noProjectsWarning}
-        {!hasErrors && hasProjects && !hasProjectsFiltered && noProjectsMatchSearchWarning}
-        {!hasErrors && hasProjectsFiltered && buildItems}
-        <ErrorMessages messages={errors}
-                       data-locator='errors'/>
+        {!isError && !hasProjects && noProjectsWarning}
+        {!isError && hasProjects && !hasProjectsFiltered && noProjectsMatchSearchWarning}
+        {!isError && hasProjectsFiltered && buildItems}
+        {isError && <ErrorMessages messages={errorMessage(error)}/>}
       </Loading>
     </section>
   )

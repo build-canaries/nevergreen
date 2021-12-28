@@ -1,4 +1,4 @@
-import React, {ReactElement, useCallback, useEffect, useRef, useState} from 'react'
+import React, {ReactElement, useState} from 'react'
 import styles from './import.scss'
 import {SecondaryButton} from '../../../common/forms/Button'
 import {DataSource, toConfiguration} from '../../../configuration/Configuration'
@@ -10,12 +10,11 @@ import {TextArea} from '../TextArea'
 import {ErrorMessages} from '../../../common/Messages'
 import {useParams} from 'react-router-dom'
 import {getBackupLocation, RemoteLocation} from '../RemoteLocationsReducer'
-import {Request, send} from '../../../gateways/Gateway'
-import {fetchConfiguration, ImportResponse} from '../../../gateways/BackupGateway'
+import {send} from '../../../gateways/Gateway'
+import {fetchConfiguration} from '../../../gateways/BackupGateway'
 import {fromJson, toJson} from '../../../common/Json'
 import {Form} from '../../../common/forms/Form'
 import {allErrors, FormErrors} from '../../../common/forms/Validation'
-import isEmpty from 'lodash/isEmpty'
 import {ROUTE_SETTINGS_BACKUP} from '../../../Routes'
 import {Loading} from '../../../common/Loading'
 import {Redirect} from 'react-router'
@@ -26,6 +25,7 @@ import {LinkButton} from '../../../common/LinkButton'
 import {CloudDownload} from '../../../common/icons/CloudDownload'
 import {Cross} from '../../../common/icons/Cross'
 import {BackupLogo} from '../BackupLogo'
+import {useQuery} from 'react-query'
 
 type Fields = 'import'
 
@@ -46,33 +46,22 @@ export function ImportRemote(): ReactElement {
 
 function ImportRemoteLocation({location}: ImportRemoteProps): ReactElement {
   const dispatch = useDispatch()
-  const [loadErrors, setLoadErrors] = useState<ReadonlyArray<string>>([])
   const [data, setData] = useState('')
-  const [loaded, setLoaded] = useState(false)
-  const fetchRequest = useRef<Request<ImportResponse>>()
 
-  const fetchData = useCallback(async () => {
-    setLoaded(false)
-    setLoadErrors([])
-
-    try {
-      fetchRequest.current = fetchConfiguration(location)
-      const res = await send(fetchRequest.current)
-      setData(toJson(fromJson(res.configuration)))
-    } catch (error) {
-      setLoadErrors(['Unable to fetch remote backup because of an error', errorMessage(error)])
-    }
-
-    fetchRequest.current = undefined
-    setLoaded(true)
-  }, [location])
-
-  useEffect(() => {
-    void fetchData()
-    return () => {
-      fetchRequest.current?.abort()
-    }
-  }, [fetchData])
+  const {
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+    refetch
+  } = useQuery('import-remote', async ({signal}) => {
+    const request = fetchConfiguration(location)
+    signal?.addEventListener('abort', () => request.abort())
+    const res = await send(request)
+    return toJson(fromJson(res.configuration))
+  }, {
+    onSuccess: setData
+  })
 
   const onValidate = (): FormErrors<Fields> | undefined => {
     if (isBlank(data)) {
@@ -99,20 +88,17 @@ function ImportRemoteLocation({location}: ImportRemoteProps): ReactElement {
     }
   }
 
-  const hasLoadErrors = !isEmpty(loadErrors)
-
   return (
     <Page title='Import remote' icon={<BackupLogo where={location.where}/>}>
       <Summary values={backupSummary(location)}/>
-      <Loading loaded={loaded}
+      <Loading loaded={!isLoading}
                className={styles.loading}>
-        <ErrorMessages messages={loadErrors}/>
-
-        {hasLoadErrors && (
+        {isError && (
           <>
+            <ErrorMessages messages={['Unable to fetch remote backup because of an error', errorMessage(error)]}/>
             <SecondaryButton className={styles.tryAgain}
                              icon={<CloudDownload/>}
-                             onClick={fetchData}>
+                             onClick={() => refetch()}>
               Try fetching again
             </SecondaryButton>
             <LinkButton to={ROUTE_SETTINGS_BACKUP}
@@ -122,8 +108,7 @@ function ImportRemoteLocation({location}: ImportRemoteProps): ReactElement {
             </LinkButton>
           </>
         )}
-
-        {!hasLoadErrors && (
+        {isSuccess && (
           <Form onValidate={onValidate}
                 onSuccess={doImport}
                 onCancel={ROUTE_SETTINGS_BACKUP}

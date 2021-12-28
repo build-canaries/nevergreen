@@ -11,6 +11,7 @@ import Modal from 'react-modal'
 import {configureStore} from '@reduxjs/toolkit'
 import {save} from './configuration/SaveListener'
 import {backup} from './settings/backup/AutomaticBackupListener'
+import {QueryClient, QueryClientProvider} from 'react-query'
 
 const store = configureStore({reducer})
 let previousState: State
@@ -22,14 +23,26 @@ store.subscribe(() => {
   previousState = currentState
 })
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      cacheTime: 0,
+      staleTime: 0,
+      refetchOnWindowFocus: false
+    }
+  }
+})
+
 Modal.setAppElement('#root')
 
 ReactDOM.render(
   <UnhandledError>
-    <Provider store={store}>
-      <Router>
-        <Nevergreen/>
-      </Router>
-    </Provider>
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <Router>
+          <Nevergreen/>
+        </Router>
+      </Provider>
+    </QueryClientProvider>
   </UnhandledError>,
   document.getElementById('root'))

@@ -48,7 +48,8 @@ export function get<T>(url: string, headers = {}): Request<T> {
     .retry(RETRIES)
 }
 
-export async function send<T>(request: Request<T>): Promise<T> {
+export async function send<T>(request: Request<T>, signal?: AbortSignal): Promise<T> {
+  signal?.addEventListener('abort', () => request.abort())
   try {
     const res = await request
     return (res.body || res.text) as T
@@ -67,8 +68,4 @@ export async function send<T>(request: Request<T>): Promise<T> {
 
 export function fakeRequest<T>(body: T): Request<T> {
   return {body, abort: noop} as unknown as Request<T>
-}
-
-export function isAbortedRequest(e: unknown): boolean {
-  return errorMessage(e) === 'Aborted'
 }

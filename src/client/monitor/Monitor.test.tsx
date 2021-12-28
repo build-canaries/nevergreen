@@ -5,7 +5,6 @@ import {Monitor} from './Monitor'
 import {buildProject, buildTray, render} from '../testHelpers'
 import {TRAYS_ROOT} from '../tracking/TraysReducer'
 import {SUCCESS_ROOT} from '../settings/success/SuccessReducer'
-import * as TimerHook from '../common/TimerHook'
 import * as ProjectsGateway from '../gateways/ProjectsGateway'
 import * as Gateway from '../gateways/Gateway'
 import {fakeRequest} from '../gateways/Gateway'
@@ -20,8 +19,6 @@ const DEFAULT_PROPS = {
 const trayId = 'some-tray-id'
 
 beforeEach(() => {
-  jest.spyOn(TimerHook, 'useTimer').mockImplementation(noop)
-
   // eslint-disable-next-line @typescript-eslint/unbound-method
   // noinspection JSUnusedGlobalSymbols
   window.HTMLMediaElement.prototype.pause = noop
@@ -64,9 +61,6 @@ it('should show a loading screen when first switching to the page', () => {
 })
 
 it('should show a success message if there are no projects', async () => {
-  jest.spyOn(TimerHook, 'useTimer').mockImplementationOnce((onTrigger) => {
-    void onTrigger()
-  })
   jest.spyOn(ProjectsGateway, 'interesting').mockReturnValue(fakeRequest([]))
   const state = {
     [TRAYS_ROOT]: {
@@ -81,9 +75,6 @@ it('should show a success message if there are no projects', async () => {
 })
 
 it('should not try updating after the user has navigated away from the page', () => {
-  jest.spyOn(TimerHook, 'useTimer').mockImplementationOnce((onTrigger) => {
-    void onTrigger()
-  })
   jest.spyOn(ProjectsGateway, 'interesting').mockReturnValue(fakeRequest([]))
   jest.spyOn(Gateway, 'send').mockRejectedValue(new Error('Aborted'))
   const state = {
@@ -99,9 +90,6 @@ it('should not try updating after the user has navigated away from the page', ()
 })
 
 it('should display an error if the Nevergreen server is having issues', async () => {
-  jest.spyOn(TimerHook, 'useTimer').mockImplementationOnce((onTrigger) => {
-    void onTrigger()
-  })
   jest.spyOn(Gateway, 'send').mockRejectedValue(new Error('some-error'))
   const state = {
     [TRAYS_ROOT]: {
@@ -125,9 +113,6 @@ describe('audio notifications', () => {
       get() {
         return false
       }
-    })
-    jest.spyOn(TimerHook, 'useTimer').mockImplementationOnce((onTrigger) => {
-      void onTrigger()
     })
     jest.spyOn(ProjectsGateway, 'interesting').mockReturnValue(fakeRequest([
       buildProject({trayId, prognosis: Prognosis.sick})
@@ -155,11 +140,8 @@ describe('audio notifications', () => {
     expect(window.HTMLMediaElement.prototype.pause).toHaveBeenCalled()
   })
 
-  it('should not play if its off even if any project is sick', async () => {
+  it('should not play when off even if any project is sick', async () => {
     jest.spyOn(window.HTMLMediaElement.prototype, 'play').mockResolvedValue()
-    jest.spyOn(TimerHook, 'useTimer').mockImplementationOnce((onTrigger) => {
-      void onTrigger()
-    })
     jest.spyOn(ProjectsGateway, 'interesting').mockReturnValue(fakeRequest([
       buildProject({trayId, prognosis: Prognosis.sick})
     ]))
@@ -180,11 +162,8 @@ describe('audio notifications', () => {
     })
   })
 
-  it('should not play if its enabled but no projects are sick', async () => {
+  it('should not play when enabled but no projects are sick', async () => {
     jest.spyOn(window.HTMLMediaElement.prototype, 'play').mockResolvedValue()
-    jest.spyOn(TimerHook, 'useTimer').mockImplementationOnce((onTrigger) => {
-      void onTrigger()
-    })
     jest.spyOn(ProjectsGateway, 'interesting').mockReturnValue(fakeRequest([
       buildProject({trayId, prognosis: Prognosis.unknown})
     ]))
@@ -205,11 +184,8 @@ describe('audio notifications', () => {
     })
   })
 
-  it('should not play if its enabled but a sound fx has not been set', async () => {
+  it('should not play when enabled but a sound fx has not been set', async () => {
     jest.spyOn(window.HTMLMediaElement.prototype, 'play').mockResolvedValue()
-    jest.spyOn(TimerHook, 'useTimer').mockImplementationOnce((onTrigger) => {
-      void onTrigger()
-    })
     jest.spyOn(ProjectsGateway, 'interesting').mockReturnValue(fakeRequest([
       buildProject({trayId, prognosis: Prognosis.sick})
     ]))

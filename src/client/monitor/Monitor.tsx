@@ -1,4 +1,4 @@
-import React, {ReactElement, useCallback, useEffect, useRef, useState} from 'react'
+import React, {ReactElement, useEffect, useRef, useState} from 'react'
 import cn from 'classnames'
 import {InterestingProjects} from './InterestingProjects'
 import {Success} from './Success'
@@ -7,19 +7,19 @@ import {Loading} from '../common/Loading'
 import styles from './monitor.scss'
 import isEmpty from 'lodash/isEmpty'
 import {Title} from '../common/Title'
-import {useTimer} from '../common/TimerHook'
 import {useSelector} from 'react-redux'
 import {getRefreshTime, getShowPrognosis, getSort} from '../settings/SettingsReducer'
 import {getTrays} from '../tracking/TraysReducer'
 import {getSelectedProjects} from '../tracking/SelectedReducer'
 import {getKnownProjects} from '../tracking/ProjectsReducer'
 import {interesting} from '../gateways/ProjectsGateway'
-import {isAbortedRequest, send} from '../gateways/Gateway'
+import {send} from '../gateways/Gateway'
 import {enrichProjects, Projects, toProjectError} from '../domain/Project'
 import {useAudioNotifications} from './notifications/AudioNotificationsHook'
 import {useSystemNotifications} from './notifications/SystemNotificationsHook'
 import {useShortcut} from '../common/Keyboard'
 import screenfull from 'screenfull'
+import {useQuery} from 'react-query'
 
 interface MonitorProps {
   readonly menusHidden: boolean;
@@ -35,7 +35,6 @@ export function Monitor({menusHidden, toggleMenusHidden}: MonitorProps): ReactEl
   const sort = useSelector(getSort)
   const ref = useRef<HTMLDivElement>(null)
 
-  const [loaded, setLoaded] = useState(false)
   const [projects, setProjects] = useState<Projects>([])
 
   useEffect(() => {
@@ -45,24 +44,18 @@ export function Monitor({menusHidden, toggleMenusHidden}: MonitorProps): ReactEl
     }
   }, [toggleMenusHidden])
 
-  const onTrigger = useCallback(async () => {
-    const request = interesting(trays, knownProjects, selected, prognosis, sort)
-
-    try {
-      const response = await send(request)
+  const {isLoading} = useQuery('monitor', async ({signal}) => {
+    return await send(interesting(trays, knownProjects, selected, prognosis, sort), signal)
+  }, {
+    refetchInterval: refreshTime * 1000,
+    refetchIntervalInBackground: true,
+    onSuccess: ((response) => {
       setProjects((previouslyFetchedProjects) => enrichProjects(response, previouslyFetchedProjects))
-      setLoaded(true)
-    } catch (e) {
-      if (!isAbortedRequest(e)) {
-        setProjects([toProjectError(e)])
-        setLoaded(true)
-      }
+    }),
+    onError: (e) => {
+      setProjects([toProjectError(e)])
     }
-
-    return request.abort.bind(request)
-  }, [trays, knownProjects, selected, prognosis, sort])
-
-  useTimer(onTrigger, refreshTime)
+  })
 
   useAudioNotifications(projects)
   useSystemNotifications(projects)
@@ -87,7 +80,7 @@ export function Monitor({menusHidden, toggleMenusHidden}: MonitorProps): ReactEl
         <SuccessMessage message='Add a feed via the tracking page to start monitoring'/>
       )}
       {traysAdded && (
-        <Loading dark loaded={loaded}>
+        <Loading dark loaded={!isLoading}>
           {success && <Success/>}
           {!success && <InterestingProjects projects={projects}/>}
         </Loading>
