@@ -49,7 +49,7 @@ function ImportRemoteLocation({location}: ImportRemoteProps): ReactElement {
   const [data, setData] = useState('')
 
   const {
-    isLoading,
+    isFetching,
     isSuccess,
     isError,
     error,
@@ -91,7 +91,7 @@ function ImportRemoteLocation({location}: ImportRemoteProps): ReactElement {
   return (
     <Page title='Import remote' icon={<BackupLogo where={location.where}/>}>
       <Summary values={backupSummary(location)}/>
-      <Loading loaded={!isLoading}
+      <Loading loaded={!isFetching}
                className={styles.loading}>
         {isError && (
           <>

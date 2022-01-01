@@ -38,7 +38,7 @@ export function Form<Fields extends string>({
   const history = useHistory()
   const [validationErrors, setValidationErrors] = useState<Readonly<FormErrors<Fields>>>([])
 
-  const {refetch, isLoading, isError, data, error} = useQuery('form', async ({signal}) => {
+  const {refetch, isFetching, isError, data, error} = useQuery('form', async ({signal}) => {
     return onSuccess(signal)
   }, {
     enabled: false
@@ -78,24 +78,24 @@ export function Form<Fields extends string>({
           className={cn(styles.form, className)}
           noValidate>
 
-      {children(isLoading, validationErrors, doClearErrors)}
+      {children(isFetching, validationErrors, doClearErrors)}
 
       {isError && <ErrorMessages messages={errorMessage(error)}/>}
 
       <PrimaryButton className={styles.submitButton}
                      icon={<Checkmark/>}
                      type='submit'
-                     disabled={isLoading}>
+                     disabled={isFetching}>
         {submitButtonText}
       </PrimaryButton>
       {isFunction(onCancel) && (
         <SecondaryButton onClick={onCancel}
                          icon={<Cross/>}
-                         disabled={isLoading}>
+                         disabled={isFetching}>
           Cancel
         </SecondaryButton>
       )}
-      {isString(onCancel) && !isLoading && (
+      {isString(onCancel) && !isFetching && (
         <LinkButton to={onCancel}
                     icon={<Cross/>}>
           Cancel

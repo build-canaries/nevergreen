@@ -26,7 +26,7 @@ describe('Monitoring', () => {
       .should('contain', 'success building project')
       .should('contain', 'success sleeping project')
 
-    cy.findByRole('link', {name: 'Back to tracking'}).click()
+    cy.findByRole('button', {name: 'Back to tracking'}).click()
 
     cy.findByRole('link', {name: 'Monitor'}).click()
 
@@ -43,7 +43,7 @@ describe('Monitoring', () => {
     cy.findByLabelText('URL').type('http://localhost/not/a/real/url')
     cy.findByRole('button', {name: 'Add feed'}).click()
 
-    cy.findByRole('link', {name: 'Back to tracking'}).click()
+    cy.findByRole('button', {name: 'Back to tracking'}).click()
 
     cy.findByRole('button', {name: /Update details for/}).click()
 
@@ -60,7 +60,7 @@ describe('Monitoring', () => {
       cy.findByRole('button', {name: 'Save'}).click()
     }
 
-    cy.findByRole('link', {name: 'Back to tracking'}).click()
+    cy.findByRole('button', {name: 'Back to tracking'}).click()
     cy.findByRole('heading', {name: 'renamed tray'}).should('exist')
   })
 })

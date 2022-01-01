@@ -4,16 +4,21 @@ import cn from 'classnames'
 import styles from './link-button.scss'
 import {Plus} from './icons/Plus'
 import {useNavigationShortcut} from '../NavigationShortcutsHook'
+import {CheckboxChecked} from './icons/CheckboxChecked'
+import {routeFeedDetails, routeFeedProjects} from '../Routes'
+import {VisuallyHidden} from './VisuallyHidden'
+import {Cog} from './icons/Cog'
+import {ArrowLeft} from './icons/ArrowLeft'
 
 interface LinkButtonProps extends LinkProps {
   readonly to: string;
   readonly icon?: ReactElement;
 }
 
+// This component is split out of LinkButton otherwise the AddButton CSS gets all messed up
 function NavigationButton({icon, className, children, ...props}: LinkButtonProps): ReactElement {
-  const classes = cn(className)
   return (
-    <Link className={classes}
+    <Link className={className}
           {...props}
           role='button'>
       {icon}
@@ -29,4 +34,32 @@ export function LinkButton({className, ...props}: LinkButtonProps): ReactElement
 export function AddButton({className, to, ...props}: LinkButtonProps): ReactElement {
   useNavigationShortcut('a', to)
   return <NavigationButton className={cn(styles.addButton, className)} to={to} {...props} icon={<Plus/>}/>
+}
+
+export function ManageFeedProjectsButton({feedId, title}: { feedId: string, title?: string }): ReactElement {
+  return (
+    <LinkButton className={styles.feedButtons}
+                icon={<CheckboxChecked/>}
+                to={routeFeedProjects(feedId)}>
+      Manage projects{title && <VisuallyHidden> for {title}</VisuallyHidden>}
+    </LinkButton>
+  )
+}
+
+export function UpdateFeedDetailsButton({feedId, title}: { feedId: string, title?: string }): ReactElement {
+  return (
+    <LinkButton className={styles.feedButtons}
+                icon={<Cog/>}
+                to={routeFeedDetails(feedId)}>
+      Update details{title && <VisuallyHidden> for {title}</VisuallyHidden>}
+    </LinkButton>
+  )
+}
+
+export function BackButton({children, ...props}: LinkButtonProps): ReactElement {
+  return (
+    <LinkButton {...props} icon={<ArrowLeft/>}>
+      {children}
+    </LinkButton>
+  )
 }

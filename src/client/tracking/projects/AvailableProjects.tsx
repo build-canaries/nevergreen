@@ -35,7 +35,7 @@ export function AvailableProjects({tray}: AvailableProjectsProps): ReactElement 
   const [search, setSearch] = useState<string>('')
 
   const {
-    isLoading,
+    isFetching,
     isError,
     error,
     refetch
@@ -65,7 +65,7 @@ export function AvailableProjects({tray}: AvailableProjectsProps): ReactElement 
 
   const hasProjects = notEmpty(projects)
   const hasProjectsFiltered = notEmpty(filteredProjects)
-  const controlsDisabled = isLoading || !hasProjects || isError
+  const controlsDisabled = isFetching || !hasProjects || isError
 
   const includeAll = useCallback(() => {
     filteredProjects
@@ -136,9 +136,9 @@ export function AvailableProjects({tray}: AvailableProjectsProps): ReactElement 
              data-locator='available-projects'>
       <Refresh timestamp={tray.timestamp}
                refreshTray={() => refetch()}
-               loaded={!isLoading}/>
+               loaded={!isFetching}/>
       {controls}
-      <Loading loaded={!isLoading}
+      <Loading loaded={!isFetching}
                className={styles.loading}>
         {!isError && !hasProjects && noProjectsWarning}
         {!isError && hasProjects && !hasProjectsFiltered && noProjectsMatchSearchWarning}

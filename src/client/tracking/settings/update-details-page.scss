@@ -11,7 +11,7 @@
 }
 
 .link {
-  display: block;
-  margin: $margin-top 0 0 0;
-  width: fit-content;
+  @include respond-to(tablet, desktop) {
+    margin: $margin-top $margin-right 0 0;
+  }
 }

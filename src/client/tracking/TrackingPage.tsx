@@ -15,7 +15,7 @@ import {List} from '../common/icons/List'
 
 export function TrackingPage(): ReactElement {
   const dispatch = useDispatch()
-  const trays = useSelector(getTrays)
+  const feeds = useSelector(getTrays)
   const refreshTime = useSelector(getRefreshTime)
   const options = VALID_REFRESH_TIMES.map((time) => {
     return {value: time.toString(), display: secondsToString(time)}
@@ -34,15 +34,13 @@ export function TrackingPage(): ReactElement {
                  className={styles.addFeed}>
         Add feed
       </AddButton>
-      {trays.length === 0 && <WarningMessages messages='No feeds added, add a feed to start monitoring'/>}
+      {feeds.length === 0 && <WarningMessages messages='No feeds added, add a feed to start monitoring'/>}
       <ul className={styles.container}>
         {
-          trays.map((tray, index) => {
+          feeds.map((feed) => {
             return (
-              <li key={tray.trayId}>
-                <FeedCard key={tray.trayId}
-                          feed={tray}
-                          index={index + 1}/>
+              <li key={feed.trayId}>
+                <FeedCard key={feed.trayId} feed={feed}/>
               </li>
             )
           })

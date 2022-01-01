@@ -10,9 +10,8 @@ import {DropDown} from '../../common/forms/DropDown'
 import {Checkbox} from '../../common/forms/Checkbox'
 import {Dice} from '../../common/icons/Dice'
 import {Summary} from '../../common/Summary'
-import {LinkButton} from '../../common/LinkButton'
+import {BackButton, LinkButton, ManageFeedProjectsButton} from '../../common/LinkButton'
 import {trayUpdated} from '../TrackingActionCreators'
-import {Link} from 'react-router-dom'
 import {FeedLogo} from '../FeedLogo'
 import {Cog} from '../../common/icons/Cog'
 
@@ -41,11 +40,12 @@ export function UpdateDetailsPage({feed}: UpdateDetailsPageProps): ReactElement 
     <Page title='Update details' icon={<FeedLogo feed={feed}/>}>
       <section className={styles.auth}>
         <Summary values={connectionDetails}/>
-        <LinkButton className={styles.changeAuth}
+        <LinkButton className={styles.link}
                     to={routeFeedConnection(feed.trayId)}
                     icon={<Cog/>}>
           Update connection
         </LinkButton>
+        <ManageFeedProjectsButton feedId={feed.trayId} title={feed.name}/>
       </section>
       <Input className={styles.traySettingsName}
              value={name}
@@ -66,7 +66,10 @@ export function UpdateDetailsPage({feed}: UpdateDetailsPageProps): ReactElement 
                 className={styles.includeNew}>
         Automatically include new projects
       </Checkbox>
-      <Link to={ROUTE_SETTINGS_TRACKING} className={styles.link}>Back to tracking</Link>
+      <BackButton to={ROUTE_SETTINGS_TRACKING}
+                  className={styles.link}>
+        Back to tracking
+      </BackButton>
     </Page>
   )
 }

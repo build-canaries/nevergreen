@@ -3,7 +3,7 @@ import {screen, waitFor} from '@testing-library/react'
 import {buildTray, render} from '../../testHelpers'
 import {getTray, TRAYS_ROOT} from '../TraysReducer'
 import userEvent from '@testing-library/user-event'
-import {REFRESH_HASH, routeFeedDetails, routeFeedProjects} from '../../Routes'
+import {routeFeedDetails} from '../../Routes'
 import {AuthTypes} from '../../domain/Tray'
 import * as SecurityGateway from '../../gateways/SecurityGateway'
 import {fakeRequest} from '../../gateways/Gateway'
@@ -21,7 +21,7 @@ it('should be able to update the URL', async () => {
   const state = {
     [TRAYS_ROOT]: {trayId: tray}
   }
-  const {store} = render(<UpdateConnectionPage feed={tray}/>, {state})
+  const {store, history} = render(<UpdateConnectionPage feed={tray}/>, {state})
 
   userEvent.clear(screen.getByLabelText('URL'))
   userEvent.type(screen.getByLabelText('URL'), 'http://new')
@@ -32,6 +32,7 @@ it('should be able to update the URL', async () => {
       url: 'http://new'
     }))
   })
+  expect(history.location.pathname).toEqual(routeFeedDetails('trayId'))
 })
 
 it('should be able to update authentication', async () => {
@@ -43,7 +44,7 @@ it('should be able to update authentication', async () => {
   const state = {
     [TRAYS_ROOT]: {trayId: feed}
   }
-  const {store} = render(<UpdateConnectionPage feed={feed}/>, {state})
+  const {store, history} = render(<UpdateConnectionPage feed={feed}/>, {state})
 
   userEvent.selectOptions(screen.getByLabelText('Authentication'), AuthTypes.token)
   userEvent.type(screen.getByLabelText('Token'), 'some-token')
@@ -55,6 +56,7 @@ it('should be able to update authentication', async () => {
       encryptedAccessToken: 'encrypted-token'
     }))
   })
+  expect(history.location.pathname).toEqual(routeFeedDetails('trayId'))
 })
 
 describe('validation errors', () => {
@@ -115,59 +117,3 @@ describe('validation errors', () => {
   })
 })
 
-describe('redirections', () => {
-  it('should redirect to projects if the URL has changed', async () => {
-    const tray = buildTray({
-      trayId: 'trayId'
-    })
-    const state = {
-      [TRAYS_ROOT]: {trayId: tray}
-    }
-    const {history} = render(<UpdateConnectionPage feed={tray}/>, {state})
-
-    userEvent.clear(screen.getByLabelText('URL'))
-    userEvent.type(screen.getByLabelText('URL'), 'http://new')
-    userEvent.click(screen.getByRole('button', {name: 'Save'}))
-
-    await waitFor(() => {
-      expect(history.location.pathname).toEqual(routeFeedProjects('trayId'))
-    })
-    expect(history.location.hash).toEqual(REFRESH_HASH)
-  })
-
-  it('should redirect to projects if the auth has changed', async () => {
-    const feed = buildTray({
-      trayId: 'trayId',
-      authType: AuthTypes.none
-    })
-    const state = {
-      [TRAYS_ROOT]: {trayId: feed}
-    }
-    const {history} = render(<UpdateConnectionPage feed={feed}/>, {state})
-
-    userEvent.selectOptions(screen.getByLabelText('Authentication'), AuthTypes.token)
-    userEvent.type(screen.getByLabelText('Token'), 'some-token')
-    userEvent.click(screen.getByRole('button', {name: 'Save'}))
-
-    await waitFor(() => {
-      expect(history.location.pathname).toEqual(routeFeedProjects('trayId'))
-    })
-    expect(history.location.hash).toEqual(REFRESH_HASH)
-  })
-
-  it('should redirect to details page if nothing has changed', async () => {
-    const tray = buildTray({
-      trayId: 'trayId'
-    })
-    const state = {
-      [TRAYS_ROOT]: {trayId: tray}
-    }
-    const {history} = render(<UpdateConnectionPage feed={tray}/>, {state})
-
-    userEvent.click(screen.getByRole('button', {name: 'Save'}))
-
-    await waitFor(() => {
-      expect(history.location.pathname).toEqual(routeFeedDetails('trayId'))
-    })
-  })
-})
