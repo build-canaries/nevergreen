@@ -1,5 +1,5 @@
 import React, {ReactElement, useState} from 'react'
-import {AUTH_TYPE_OPTIONS, AuthTypes, Tray} from '../domain/Tray'
+import {AUTH_TYPE_OPTIONS, AuthTypes, isBasicFeed, Tray} from '../domain/Tray'
 import {useSelector} from 'react-redux'
 import {Form} from '../common/forms/Form'
 import {Input} from '../common/forms/Input'
@@ -52,7 +52,7 @@ export function ConnectionForm({existingFeed, onSuccess, onCancel}: ConnectionFo
 
   const [url, setUrl] = useState(existingFeed?.url || '')
   const [authType, setAuthType] = useState<UpdateExistingAuthTypes>(initialAuth)
-  const [username, setUsername] = useState(existingFeed?.username || '')
+  const [username, setUsername] = useState(isBasicFeed(existingFeed) ? existingFeed?.username : '')
   const [password, setPassword] = useState('')
   const [accessToken, setAccessToken] = useState('')
 

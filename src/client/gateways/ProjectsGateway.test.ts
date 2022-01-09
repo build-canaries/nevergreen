@@ -25,11 +25,10 @@ describe('fetchAll', () => {
     ]
     const expected = {
       feeds: [{
-        accessToken: '',
         authType: AuthTypes.basic,
         includeNew: true,
         included: undefined,
-        password: 'pword',
+        encryptedPassword: 'pword',
         seen: ['some-project-id'],
         serverType: 'GO',
         trayId: 'some-tray-id',
@@ -59,16 +58,14 @@ describe('fetchAll', () => {
     ]
     const expected = {
       feeds: [{
-        accessToken: 'some-dummy-token',
+        encryptedAccessToken: 'some-dummy-token',
         authType: AuthTypes.token,
         includeNew: true,
         included: undefined,
-        password: '',
         seen: ['some-project-id'],
         serverType: 'GO',
         trayId: 'some-tray-id',
-        url: 'url',
-        username: ''
+        url: 'url'
       }],
       sort: SortBy.description
     }
@@ -99,11 +96,10 @@ describe('interesting', () => {
     ]
     const expected = {
       feeds: [{
-        accessToken: '',
         authType: AuthTypes.basic,
         included: ['some-project-id'],
         includeNew: true,
-        password: 'some-pword',
+        encryptedPassword: 'some-pword',
         seen: [],
         serverType: 'some-server-type',
         trayId: 'some-tray-id',

@@ -9,17 +9,35 @@ export enum AuthTypes {
   token = 'token'
 }
 
-export interface Tray {
+interface BaseFeed {
   readonly authType: AuthTypes;
-  readonly encryptedAccessToken?: string;
-  readonly encryptedPassword?: string;
   readonly includeNew: boolean;
   readonly name?: string;
   readonly serverType: string;
   readonly timestamp?: string;
   readonly trayId: string;
   readonly url: string;
-  readonly username?: string;
+}
+
+interface UnauthenticatedFeed extends BaseFeed {
+  readonly authType: AuthTypes.none;
+}
+
+interface BasicFeed extends BaseFeed {
+  readonly authType: AuthTypes.basic;
+  readonly encryptedPassword: string;
+  readonly username: string;
+}
+
+interface TokenFeed extends BaseFeed {
+  readonly authType: AuthTypes.token;
+  readonly encryptedAccessToken: string;
+}
+
+export type Tray = UnauthenticatedFeed | BasicFeed | TokenFeed
+
+export function isBasicFeed(feed?: Tray): feed is BasicFeed {
+  return feed?.authType === AuthTypes.basic
 }
 
 export const CI_OPTIONS = [
@@ -55,16 +73,13 @@ export function createId(): string {
 export function createTray(trayId: string, url: string, additional: Partial<Tray> = {}): Tray {
   return {
     authType: AuthTypes.none,
-    encryptedAccessToken: '',
-    encryptedPassword: '',
     includeNew: true,
     name: generateRandomName(),
     serverType: '',
     trayId,
     url,
-    username: '',
     ...additional
-  }
+  } as Tray
 }
 
 export function trayIdentifier(tray?: Tray | null): string {

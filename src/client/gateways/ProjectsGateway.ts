@@ -2,6 +2,7 @@ import {fakeRequest, post, Request, ServerError} from './Gateway'
 import {Prognosis, ProjectPrognosis} from '../domain/Project'
 import {SelectedState} from '../tracking/SelectedReducer'
 import size from 'lodash/size'
+import omit from 'lodash/omit'
 import {AuthTypes, Tray} from '../domain/Tray'
 import {ProjectState} from '../tracking/ProjectsReducer'
 
@@ -18,18 +19,48 @@ interface ProjectsRequest {
   readonly sort?: SortBy;
 }
 
-export interface FeedRequest {
-  readonly accessToken?: string;
+interface BaseFeedRequest {
   readonly authType: AuthTypes;
   readonly included?: ReadonlyArray<string>;
   readonly includeNew: boolean;
-  readonly password?: string;
   readonly seen: ReadonlyArray<string>;
   readonly serverType?: string;
   readonly trayId: string;
   readonly url: string;
-  readonly username?: string;
 }
+
+interface UnauthenticatedFeedRequest extends BaseFeedRequest {
+  readonly authType: AuthTypes.none;
+}
+
+interface EncryptedBasicFeedRequest extends BaseFeedRequest {
+  readonly authType: AuthTypes.basic;
+  readonly encryptedPassword: string;
+  readonly username: string;
+}
+
+interface UnencryptedBasicFeedRequest extends BaseFeedRequest {
+  readonly authType: AuthTypes.basic;
+  readonly password: string;
+  readonly username: string;
+}
+
+interface EncryptedTokenFeedRequest extends BaseFeedRequest {
+  readonly authType: AuthTypes.token;
+  readonly encryptedToken: string;
+}
+
+interface UnencryptedTokenFeedRequest extends BaseFeedRequest {
+  readonly authType: AuthTypes.token;
+  readonly accessToken: string;
+}
+
+export type FeedRequest =
+  UnauthenticatedFeedRequest
+  | UnencryptedBasicFeedRequest
+  | EncryptedBasicFeedRequest
+  | UnencryptedTokenFeedRequest
+  | EncryptedTokenFeedRequest
 
 export interface ProjectError extends ServerError {
   readonly trayId: string;
@@ -49,27 +80,20 @@ export interface ProjectApi {
 
 export type ProjectsResponse = ReadonlyArray<ProjectError | ProjectApi>
 
-function toProjectsRequest(tray: Tray, knownProjects: ReadonlyArray<ProjectState>, selectedPerTray?: SelectedState): FeedRequest {
+function toProjectsRequest(feed: Tray, knownProjects: ReadonlyArray<ProjectState>, selectedPerTray?: SelectedState): FeedRequest {
   const seen = knownProjects
-    .filter((project) => project.trayId === tray.trayId)
+    .filter((project) => project.trayId === feed.trayId)
     .map((project) => project.projectId)
 
   const included = selectedPerTray
-    ? selectedPerTray[tray.trayId]
+    ? selectedPerTray[feed.trayId]
     : undefined
 
   return {
-    trayId: tray.trayId,
-    url: tray.url,
-    authType: tray.authType,
-    username: tray.username,
-    password: tray.encryptedPassword,
-    accessToken: tray.encryptedAccessToken,
-    serverType: tray.serverType,
-    includeNew: tray.includeNew,
+    ...omit(feed, 'name'),
     included,
     seen
-  }
+  } as FeedRequest
 }
 
 function hasIncludedProjects(projectsRequest: FeedRequest) {
