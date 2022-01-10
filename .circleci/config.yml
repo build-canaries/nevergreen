@@ -245,13 +245,6 @@ jobs:
                   mkdir -p ./target/security-reports/client
                   npm --no-color audit | tee ./target/security-reports/client/npm-audit.txt
 
-            - run:
-                name: check server dependencies
-                when: always
-                environment:
-                  JAVA_TOOL_OPTIONS: "-Xmx2G"
-                command: ./lein.sh audit
-
             - store_artifacts:
                 path: ./target/security-reports
 

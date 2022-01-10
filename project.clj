@@ -9,8 +9,8 @@
                  [environ "1.2.0"]
                  [cheshire "5.10.1"]
                  [clj-cctray "2.1.1"]
-                 ; commons-codec is excluded as ring pulls in a newer version
-                 [clj-http "3.12.3" :exclusions [commons-codec]]
+                 ; commons-* are excluded as ring pulls in newer versions
+                 [clj-http "3.12.3" :exclusions [commons-codec commons-io]]
                  [ring-curl "1.0.1"]
                  [ring/ring-json "0.5.1"]
                  [ring/ring-defaults "0.3.3"]
@@ -19,7 +19,7 @@
                  [base64-clj "0.1.1"]
                  [camel-snake-kebab "0.4.2"]
                  [com.cemerick/url "0.1.1" :exclusions [com.cemerick/clojurescript.test]]
-                 [ch.qos.logback/logback-classic "1.2.7" :exclusions [org.slf4j/slf4j-api]]
+                 [ch.qos.logback/logback-classic "1.2.10" :exclusions [org.slf4j/slf4j-api]]
                  [org.slf4j/log4j-over-slf4j "1.7.32"]
                  [org.slf4j/jul-to-slf4j "1.7.32"]
                  [org.slf4j/jcl-over-slf4j "1.7.32"]]
@@ -34,16 +34,12 @@
              "--illegal-access=deny"]
   :aliases {"lint"          ["with-profile" "+test" "eastwood"]
             "coverage"      ["with-profile" "+test" "cloverage"]
-            "check-updates" ["ancient" ":all"]
-            "audit"         ["nvd" "check"]}
+            "check-updates" ["ancient" ":all"]}
   :profiles {:dev  {:plugins [[lein-ancient "0.7.0"]
-                              [jonase/eastwood "0.9.9"]
+                              [jonase/eastwood "1.1.0"]
                               [lein-cloverage "1.2.2"]
-                              [lein-nvd "1.9.0"]
                               [lein-eftest "0.5.9"]]}
              :test {:jvm-opts ["-Dlogback.configurationFile=./src/logback-tests.xml"]}}
   :cloverage {:output           "target/coverage-reports/server"
               :junit?           true
-              :ns-exclude-regex [#"nevergreen\.logging" #".*-test"]}
-  :nvd {:output-dir       "target/security-reports/server"
-        :suppression-file "config/nvd-suppressions.xml"})
+              :ns-exclude-regex [#"nevergreen\.logging" #".*-test"]})

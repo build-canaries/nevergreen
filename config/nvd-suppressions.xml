@@ -7,11 +7,4 @@
     <gav regex="true">^ring-curl:ring-curl:.*$</gav>
     <cpe>cpe:/a:curl:curl</cpe>
   </suppress>
-  <suppress>
-    <notes><![CDATA[
-   file name: log4j-over-slf4j-1.7.30.jar
-   ]]></notes>
-    <packageUrl regex="true">^pkg:maven/org\.slf4j/log4j\-over\-slf4j@.*$</packageUrl>
-    <cpe>cpe:/a:apache:log4j</cpe>
-  </suppress>
 </suppressions>

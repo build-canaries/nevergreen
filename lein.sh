@@ -8,9 +8,9 @@ function msg {
     echo "$@" 1>&2
 }
 
-export LEIN_VERSION="2.9.4"
+export LEIN_VERSION="2.9.8"
 # Must be sha256sum, will be replaced by bin/release
-export LEIN_CHECKSUM='0e3c339480347df0445317d329accbd4a578ebbd8d91e568e661feb1b388706c'
+export LEIN_CHECKSUM='2a0e9114e0d623c748a9ade5d72b54128b31b5ddb13f51b04c533f104bb0c48d'
 
 case $LEIN_VERSION in
     *SNAPSHOT) SNAPSHOT="YES" ;;
@@ -98,7 +98,7 @@ function self_install {
   fi
   msg "Downloading Leiningen to $LEIN_JAR now..."
   mkdir -p "$(dirname "$LEIN_JAR")"
-  LEIN_URL="https://github.com/technomancy/leiningen/releases/download/$LEIN_VERSION/leiningen-$LEIN_VERSION-standalone.zip"
+  LEIN_URL="https://github.com/technomancy/leiningen/releases/download/$LEIN_VERSION/leiningen-$LEIN_VERSION-standalone.jar"
   $HTTP_CLIENT "$LEIN_JAR.pending" "$LEIN_URL"
   local exit_code=$?
   if [ $exit_code == 0 ]; then
@@ -142,7 +142,7 @@ if $cygwin; then
     export LEIN_HOME=$(cygpath -w "$LEIN_HOME")
 fi
 
-LEIN_JAR="$LEIN_HOME/self-installs/leiningen-$LEIN_VERSION-standalone.jar"
+LEIN_JAR="${LEIN_JAR:-${LEIN_HOME}/self-installs/leiningen-${LEIN_VERSION}-standalone.jar}"
 
 # normalize $0 on certain BSDs
 if [ "$(dirname "$0")" = "." ]; then
@@ -167,7 +167,7 @@ done
 
 BIN_DIR="$(dirname "$SCRIPT")"
 
-export LEIN_JVM_OPTS="${LEIN_JVM_OPTS-"-Xverify:none -XX:+TieredCompilation -XX:TieredStopAtLevel=1"}"
+export LEIN_JVM_OPTS="${LEIN_JVM_OPTS-"-XX:+TieredCompilation -XX:TieredStopAtLevel=1"}"
 
 # This needs to be defined before we call HTTP_CLIENT below
 if [ "$HTTP_CLIENT" = "" ]; then
