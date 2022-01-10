@@ -29,6 +29,10 @@ export function UpdateConnectionHelp({searchQuery}: HelpProps): ReactElement {
           Since credentials are stored encrypted they can not be pre-populated, the <em>Keep existing auth</em> option
           makes it possible to update the URL without being forced to re-enter the auth details.
         </HelpInput>
+        <HelpInput name='Check connection'>
+          This will check the currently entered details and display a message whether the connection was successful
+          or not.
+        </HelpInput>
       </HelpForm>
     </HelpArticle>
   )

@@ -24,17 +24,17 @@ export function AvailableProjectsHelp({searchQuery, helpLink}: HelpProps): React
           server you will need to refresh to see them in Nevergreen.
         </HelpInput>
         <HelpInput name='Include all'>
-          Includes all the currently shown search projects for tracking which means they can be shown on the Monitor
+          Includes all the currently shown projects for tracking, which means they will be shown on the Monitor
           page if they are interesting {helpLink('interesting projects')}.
         </HelpInput>
         <HelpInput name='Exclude all'>
-          Excludes all the currently shown search projects for tracking which means they will never be shown on the
+          Excludes all the currently shown projects for tracking, which means they will never be shown on the
           Monitor page.
         </HelpInput>
         <HelpInput name='Search'>
-          Searches for any projects with matching names. Clear the input to show all
-          projects again. The include all and exclude all buttons work on the currently visible projects, so searching
-          can be used to quickly include or exclude a group of projects.
+          Searches for any projects with matching names. Clear the input to show all projects again. The include all
+          and exclude all buttons work on the currently visible projects, so searching can be used to quickly include
+          or exclude a group of projects.
         </HelpInput>
       </HelpForm>
     </HelpArticle>

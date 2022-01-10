@@ -28,23 +28,30 @@ export function AddTrayHelp({searchQuery}: HelpProps): ReactElement {
         <HelpInput name='URL'>
           This needs to point directly to the CCTray XML feed.
         </HelpInput>
-        <HelpInput name='No auth'>
-          Select this if access to the feed is not authenticated in any way. No <em>Authorization</em> header will be
-          sent with the request.
-        </HelpInput>
-        <HelpInput name='Basic auth'>
-          Select this if access to the feed is protected by basic auth. The entered username and password will be
-          sent in the <em>Authorization</em> header using the <em>Basic</em> scheme.
+        <HelpInput name='Authentication'>
+          <dl>
+            <dt>No auth</dt>
+            <dd>
+              Select this if access to the feed is not authenticated in any way. No <em>Authorization</em> header will
+              be sent with the request.
+            </dd>
+            <dt>Basic auth</dt>
+            <dd>
+              Select this if access to the feed is protected by basic auth. The entered username and password will be
+              sent in the <em>Authorization</em> header using the <em>Basic</em> scheme.
+            </dd>
+            <dt>Access token</dt>
+            <dd>
+              Select this if access to the feed is protected by an access token. The entered token will be sent in
+              the <em>Authorization</em> header using the <em>Bearer</em> scheme.
+            </dd>
+          </dl>
         </HelpInput>
         <HelpInput name='Username'>
           The username to send when using basic auth.
         </HelpInput>
         <HelpInput name='Password'>
           The password to send when using basic auth.
-        </HelpInput>
-        <HelpInput name='Access token'>
-          Select this if access to the feed is protected by an access token. The entered token will be sent in
-          the <em>Authorization</em> header using the <em>Bearer</em> scheme.
         </HelpInput>
         <HelpInput name='Token'>
           The token to send when using access token auth.
