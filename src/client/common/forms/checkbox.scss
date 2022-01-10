@@ -55,7 +55,7 @@
     content: '';
     height: 7px;
     left: 10px;
-    opacity: 0%;
+    opacity: 0;
     position: absolute;
     top: 12px;
     transform: rotate(-45deg);
@@ -75,7 +75,7 @@
   cursor: pointer;
   left: 0;
   margin: 0;
-  opacity: 0%;
+  opacity: 0;
   position: absolute;
   top: 0;
   z-index: 1;
@@ -86,7 +86,7 @@
 
     & + .children {
       cursor: default;
-      opacity: 50%;
+      opacity: 0.5;
       zoom: 1;
     }
   }
@@ -108,7 +108,7 @@
   }
 
   &:checked + .children::after {
-    opacity: 100%;
+    opacity: 1;
     zoom: 1;
   }
 }
