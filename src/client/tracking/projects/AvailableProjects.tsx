@@ -34,15 +34,8 @@ export function AvailableProjects({tray}: AvailableProjectsProps): ReactElement 
 
   const [search, setSearch] = useState<string>('')
 
-  const {
-    isFetching,
-    isError,
-    error,
-    refetch
-  } = useQuery('available-projects', async ({signal}) => {
-    const request = fetchAll([tray], projects)
-    signal?.addEventListener('abort', () => request.abort())
-    const res = await send(request)
+  const {isFetching, isError, error, refetch} = useQuery(['available-projects', tray.trayId], async ({signal}) => {
+    const res = await send(fetchAll([tray], projects), signal)
     const fetchedProjects = enrichProjects(res, [])
     if (fetchedProjects.some(isProjectError)) {
       const errorMessages = fetchedProjects.map((projectError) => projectError.description)

@@ -24,7 +24,7 @@ function timestamp(time: string | undefined): ReactElement | string {
 export function FeedCard({feed}: FeedCardProps): ReactElement {
   const dispatch = useDispatch()
   const selectedProjects = useSelector(getSelectedProjectsForTray(feed.trayId))
-  const allProjects = useSelector(getProjectsForTray(feed.trayId))
+  const allProjects = useSelector(getProjectsForTray(feed.trayId)).filter((project) => !project.removed)
 
   const title = feed.name ? feed.name : 'Unnamed feed'
 
