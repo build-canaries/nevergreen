@@ -6,6 +6,7 @@ import userEvent from '@testing-library/user-event'
 import {routeFeedDetails} from '../../Routes'
 import {AuthTypes} from '../../domain/Tray'
 import * as SecurityGateway from '../../gateways/SecurityGateway'
+import * as ProjectsGateway from '../../gateways/ProjectsGateway'
 import {fakeRequest} from '../../gateways/Gateway'
 import {UpdateConnectionPage} from './UpdateConnectionPage'
 
@@ -14,9 +15,14 @@ beforeEach(() => {
 })
 
 it('should be able to update the URL', async () => {
+  jest.spyOn(ProjectsGateway, 'testFeedConnection').mockResolvedValue(fakeRequest(undefined))
+
   const tray = buildTray({
     url: 'http://old',
-    trayId: 'trayId'
+    trayId: 'trayId',
+    authType: AuthTypes.basic,
+    username: 'some-username',
+    encryptedPassword: 'some-encrypted-password'
   })
   const state = {
     [TRAYS_ROOT]: {trayId: tray}
@@ -25,6 +31,19 @@ it('should be able to update the URL', async () => {
 
   userEvent.clear(screen.getByLabelText('URL'))
   userEvent.type(screen.getByLabelText('URL'), 'http://new')
+
+  userEvent.click(screen.getByRole('button', {name: 'Check connection'}))
+
+  await waitFor(() => {
+    expect(screen.getByText('Connected successfully')).toBeInTheDocument()
+  })
+  expect(ProjectsGateway.testFeedConnection).toHaveBeenCalledWith({
+    authType: AuthTypes.basic,
+    url: 'http://new',
+    encryptedPassword: 'some-encrypted-password',
+    username: 'some-username'
+  })
+
   userEvent.click(screen.getByRole('button', {name: 'Save'}))
 
   await waitFor(() => {
@@ -37,9 +56,12 @@ it('should be able to update the URL', async () => {
 
 it('should be able to update authentication', async () => {
   jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValue(fakeRequest('encrypted-token'))
+  jest.spyOn(ProjectsGateway, 'testFeedConnection').mockResolvedValue(fakeRequest(undefined))
+
   const feed = buildTray({
     trayId: 'trayId',
-    authType: AuthTypes.none
+    authType: AuthTypes.none,
+    url: 'http://some-url'
   })
   const state = {
     [TRAYS_ROOT]: {trayId: feed}
@@ -48,6 +70,20 @@ it('should be able to update authentication', async () => {
 
   userEvent.selectOptions(screen.getByLabelText('Authentication'), AuthTypes.token)
   userEvent.type(screen.getByLabelText('Token'), 'some-token')
+
+  userEvent.click(screen.getByRole('button', {name: 'Check connection'}))
+
+  await waitFor(() => {
+    expect(screen.getByText('Connected successfully')).toBeInTheDocument()
+  })
+  expect(ProjectsGateway.testFeedConnection).toHaveBeenCalledWith({
+    authType: AuthTypes.token,
+    url: 'http://some-url',
+    accessToken: 'some-token',
+    password: '',
+    username: ''
+  })
+
   userEvent.click(screen.getByRole('button', {name: 'Save'}))
 
   await waitFor(() => {
@@ -116,4 +152,3 @@ describe('validation errors', () => {
     expect(screen.getByText('An existing CCTray XML feed already has this URL')).toBeInTheDocument()
   })
 })
-

@@ -6,6 +6,7 @@
             [nevergreen.backup.import :refer [import-config]]
             [nevergreen.projects.projects :as projects]
             [nevergreen.projects.preview :as preview]
+            [nevergreen.projects.ci-gateway :refer [test-connection]]
             [ring.middleware.json :refer [wrap-json-body wrap-json-response]]
             [nevergreen.middleware.wrap-cache-control :refer [wrap-no-cache]]
             [nevergreen.middleware.wrap-convert-keys :refer [wrap-convert-keys-req wrap-convert-keys-res]]
@@ -35,6 +36,10 @@
 
              (OPTIONS "/import" [] preflight-response)
              (POST "/import" {data :body} {:body (import-config data)})
+
+             (OPTIONS "/test-connection" [] preflight-response)
+             (POST "/test-connection" {data :body} (do (test-connection data)
+                                                       {:status 204}))
 
              (GET "/ping" [] {:status 204})
 

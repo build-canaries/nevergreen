@@ -12,12 +12,13 @@ import {encrypt} from '../gateways/SecurityGateway'
 import {DropDown} from '../common/forms/DropDown'
 import styles from './connection-form.scss'
 import {Password} from '../common/forms/Password'
+import {TestConnection} from './TestConnection'
 
-enum KeepExistingAuth {
+export enum KeepExistingAuth {
   keep = 'keep'
 }
 
-type UpdateExistingAuthTypes = KeepExistingAuth | AuthTypes;
+export type UpdateExistingAuthTypes = KeepExistingAuth | AuthTypes;
 
 export interface ConnectionFormFields {
   readonly url: string;
@@ -105,11 +106,11 @@ export function ConnectionForm({existingFeed, onSuccess, onCancel}: ConnectionFo
 
   const processForm = async (signal: AbortSignal | undefined) => {
     const authData = await authUpdates(signal)
-    const actualAuth = authType === KeepExistingAuth.keep
+    const actualAuthType = authType === KeepExistingAuth.keep
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       ? existingFeed!.authType
       : authType
-    return onSuccess({url, authType: actualAuth, ...authData})
+    return onSuccess({url, authType: actualAuthType, ...authData})
   }
 
   return (
@@ -162,6 +163,13 @@ export function ConnectionForm({existingFeed, onSuccess, onCancel}: ConnectionFo
                 </Password>
               </div>
             )}
+            <TestConnection existingFeed={existingFeed} details={{
+              url,
+              authType,
+              username,
+              password,
+              accessToken
+            }}/>
           </>
         )
       }}

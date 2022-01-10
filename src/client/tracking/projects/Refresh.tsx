@@ -15,7 +15,7 @@ export function Refresh({timestamp, refreshTray, loaded}: RefreshProps): ReactEl
     <>
       <PrimaryButton className={styles.refresh}
                      onClick={refreshTray}
-                     icon={<Loop/>}
+                     icon={<Loop loaded={loaded}/>}
                      disabled={!loaded}>
         Refresh
       </PrimaryButton>

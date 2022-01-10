@@ -133,3 +133,17 @@ export function interesting(
     ? fakeRequest([])
     : post('/api/projects', data)
 }
+
+interface ConnectionDetailsRequest {
+  readonly authType: AuthTypes;
+  readonly url: string;
+  readonly accessToken?: string;
+  readonly encryptedAccessToken?: string;
+  readonly password?: string;
+  readonly encryptedPassword?: string;
+  readonly username?: string;
+}
+
+export function testFeedConnection(details: ConnectionDetailsRequest): Request<void> {
+  return post('/api/test-connection', details)
+}

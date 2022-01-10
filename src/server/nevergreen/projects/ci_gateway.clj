@@ -8,6 +8,9 @@
 (defn ^:dynamic *http-get* [url additional-headers]
   (http/http-get url additional-headers))
 
+(defn ^:dynamic *http-head* [url additional-headers]
+  (http/http-head url additional-headers))
+
 (defn ^:dynamic *decrypt* [password aes-key]
   (crypt/decrypt password aes-key))
 
@@ -38,8 +41,14 @@
           (not (re-find #"^https?://" url)))
     (throw (ex-info (invalid-url-error-message url) {:status 400}))))
 
-(defn fetch-cctray [{:keys [url] :as feed}]
+(defn- fetch [{:keys [url] :as feed} verb]
   (validate-scheme url)
-  (*http-get* url {:headers (get-headers feed)
-                   :accept  "application/xml"
-                   :as      :stream}))
+  (verb url {:headers (get-headers feed)
+             :accept  "application/xml"
+             :as      :stream}))
+
+(defn fetch-cctray [feed]
+  (fetch feed, *http-get*))
+
+(defn test-connection [feed]
+  (fetch feed *http-head*))

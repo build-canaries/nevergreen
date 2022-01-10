@@ -27,11 +27,15 @@ import {Twitter} from '../common/icons/Twitter'
 import {Unlocked} from '../common/icons/Unlocked'
 import {FolderOpen} from '../common/icons/FolderOpen'
 import {Warning} from '../common/icons/Warning'
+import {ArrowLeft} from '../common/icons/ArrowLeft'
+import {List} from '../common/icons/List'
+import {Xml} from '../common/icons/Xml'
 
 export function Icons(): ReactElement {
   return (
     <StyleGuideSection title='Icons (in a Responsive Grid)'>
       <div className={styles.icons}>
+        <span><ArrowLeft/>arrow left</span>
         <span><Bell/>bell</span>
         <span><Bin/>bin</span>
         <span><CheckboxChecked/>checkbox checked</span>
@@ -48,6 +52,7 @@ export function Icons(): ReactElement {
         <span><EyeBlocked/>eye blocked</span>
         <span><FloppyDisk/>floppy disk</span>
         <span><FolderOpen/>folder open</span>
+        <span><List/>list</span>
         <span><Lock/>lock</span>
         <span><Loop/>loop</span>
         <span><Paste/>paste</span>
@@ -58,6 +63,7 @@ export function Icons(): ReactElement {
         <span><Twitter/>twitter</span>
         <span><Unlocked/>unlocked</span>
         <span><Warning/>warning</span>
+        <span><Xml/>xml</span>
       </div>
     </StyleGuideSection>
   )

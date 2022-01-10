@@ -40,6 +40,10 @@ export function isBasicFeed(feed?: Tray): feed is BasicFeed {
   return feed?.authType === AuthTypes.basic
 }
 
+export function isTokenFeed(feed?: Tray): feed is TokenFeed {
+  return feed?.authType === AuthTypes.token
+}
+
 export const CI_OPTIONS = [
   {value: '', display: 'Generic'},
   {value: 'circle', display: 'CircleCI'},
@@ -88,4 +92,34 @@ export function trayIdentifier(tray?: Tray | null): string {
     : isNotBlank(tray.name)
       ? tray.name
       : tray.url
+}
+
+interface ConnectionDetails {
+  readonly url: string;
+  readonly authType: AuthTypes;
+  readonly username?: string;
+  readonly encryptedPassword?: string;
+  readonly encryptedAccessToken?: string;
+}
+
+export function connectionDetails(feed: Tray): ConnectionDetails {
+  if (isBasicFeed(feed)) {
+    return {
+      authType: feed.authType,
+      url: feed.url,
+      username: feed.username,
+      encryptedPassword: feed.encryptedPassword
+    }
+  } else if (isTokenFeed(feed)) {
+    return {
+      authType: feed.authType,
+      url: feed.url,
+      encryptedAccessToken: feed.encryptedAccessToken
+    }
+  } else {
+    return {
+      authType: feed.authType,
+      url: feed.url
+    }
+  }
 }

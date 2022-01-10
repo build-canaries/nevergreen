@@ -32,6 +32,9 @@
 (defn ^:dynamic *client-put* [url data promise]
   (client/put url data (on-respond promise) (on-raise promise)))
 
+(defn ^:dynamic *client-head* [url data promise]
+  (client/head url data (on-respond promise) (on-raise promise)))
+
 (defn- update-values [m f & args]
   (reduce (fn [r [k v]] (assoc r k (apply f v args))) {} m))
 
@@ -107,3 +110,6 @@
 
 (defn http-put [url data]
   (http url data *client-put*))
+
+(defn http-head [url data]
+  (http url data *client-head*))

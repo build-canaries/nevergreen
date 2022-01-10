@@ -15,6 +15,9 @@ describe('Monitoring', () => {
       cy.findByLabelText('Username').type(Cypress.env('TRAY_USERNAME'))
       cy.findByLabelText('Password').type(Cypress.env('TRAY_PASSWORD'))
     }
+    cy.findByRole('button', {name: 'Check connection'}).click()
+    cy.findByText('Connected successfully').should('exist')
+
     cy.findByRole('button', {name: 'Add feed'}).click()
 
     cy.findByRole('button', {name: 'Exclude all'}).click()
