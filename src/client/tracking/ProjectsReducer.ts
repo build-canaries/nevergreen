@@ -1,5 +1,6 @@
 import {Actions} from '../Actions'
 import unionWith from 'lodash/unionWith'
+import pick from 'lodash/pick'
 import {ActionProjectsFetched, ActionRemoveTray, ActionTrayAdded} from './TrackingActionCreators'
 import {createReducer, createSelector} from '@reduxjs/toolkit'
 import {State} from '../Reducer'
@@ -34,14 +35,19 @@ export const reduce = createReducer<ProjectsState>(DEFAULT_STATE, {
     delete draft[action.trayId]
   },
   [Actions.PROJECTS_FETCHED]: (draft, action: ActionProjectsFetched) => {
-    const existingProjects = draft[action.trayId]
+    const allExistingProjects = draft[action.trayId]
+    const activeExistingProjects = allExistingProjects
+      .filter((existing) => !existing.removed)
+      .map((existing) => ({...existing, removed: true, isNew: false}))
+    const fetchedProjects = action.data.map((fetched) => ({
+      ...pick(fetched, ['description', 'isNew', 'projectId', 'trayId']),
+      removed: false
+    }))
 
     draft[action.trayId] = unionWith<ProjectState>(
-      action.data.map((fetched) => ({...fetched, removed: false})),
-      existingProjects
-        .filter((project) => !project.removed)
-        .map((project) => ({...project, removed: true, isNew: false})),
-      (fetched, existing) => fetched.projectId === existing.projectId)
+      fetchedProjects,
+      activeExistingProjects,
+      (fetched, active) => fetched.projectId === active.projectId)
   }
 })
 

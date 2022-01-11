@@ -134,21 +134,21 @@ describe(Actions.PROJECTS_FETCHED, () => {
   it('should correctly store existing and newly fetched projects', () => {
     const existingState = state({
       trayId: [
-        buildSavedProject({projectId: 'projectId1'})
+        buildSavedProject({projectId: 'projectId1', description: '1', trayId: 'trayId'})
       ]
     })
     const action = projectsFetched(
       'trayId',
       [
-        buildProject({projectId: 'projectId2'})
+        buildProject({projectId: 'projectId2', description: '2', trayId: 'trayId'})
       ],
       false)
 
     const newState = reducer(existingState, action)
 
     expect(getProjectsForTray('trayId')(newState)).toEqual([
-      expect.objectContaining({projectId: 'projectId2'}),
-      expect.objectContaining({projectId: 'projectId1'})
+      {projectId: 'projectId2', description: '2', isNew: true, removed: false, trayId: 'trayId'},
+      {projectId: 'projectId1', description: '1', isNew: false, removed: true, trayId: 'trayId'}
     ])
   })
 })
