@@ -1,7 +1,6 @@
-import React, {ReactElement} from 'react'
+import React, {ReactElement, useEffect, useState} from 'react'
 import {send} from '../gateways/Gateway'
 import {SecondaryButton} from '../common/forms/Button'
-import {ErrorMessages, InfoMessages} from '../common/Messages'
 import {useQuery} from 'react-query'
 import {errorMessage} from '../common/Utils'
 import styles from './test-connection.scss'
@@ -9,6 +8,7 @@ import {AuthTypes, isBasicFeed, isTokenFeed, Tray} from '../domain/Tray'
 import {KeepExistingAuth, UpdateExistingAuthTypes} from './ConnectionForm'
 import {testFeedConnection} from '../gateways/ProjectsGateway'
 import {Loop} from '../common/icons/Loop'
+import {TimedErrorMessages, TimedInfoMessages} from '../common/TimedMessages'
 
 interface ConnectionDetails {
   readonly authType: UpdateExistingAuthTypes;
@@ -24,6 +24,8 @@ interface TestConnectionProps {
 }
 
 export function TestConnection({existingFeed, details}: TestConnectionProps): ReactElement {
+  const [showConnectionCheckMessages, setShowConnectionCheckMessages] = useState(true)
+
   const {isSuccess, refetch, isFetching, isError, error} = useQuery(['test-connection', details], async ({signal}) => {
     const keepingAuth = details.authType === KeepExistingAuth.keep
     const request = {
@@ -40,10 +42,20 @@ export function TestConnection({existingFeed, details}: TestConnectionProps): Re
     enabled: false
   })
 
+  useEffect(() => {
+    setShowConnectionCheckMessages(true)
+  }, [isFetching])
+
+  const dismiss = () => setShowConnectionCheckMessages(false)
+
   return (
     <>
-      {!isFetching && isSuccess && <InfoMessages messages='Connected successfully'/>}
-      {!isFetching && isError && <ErrorMessages messages={[errorMessage(error)]}/>}
+      {showConnectionCheckMessages && !isFetching && isSuccess && (
+        <TimedInfoMessages messages='Connected successfully' onDismiss={dismiss}/>
+      )}
+      {showConnectionCheckMessages && !isFetching && isError && (
+        <TimedErrorMessages messages={[errorMessage(error)]} onDismiss={dismiss}/>
+      )}
       <SecondaryButton className={styles.test}
                        onClick={() => refetch()}
                        disabled={isFetching}

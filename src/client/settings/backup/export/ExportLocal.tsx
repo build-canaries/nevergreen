@@ -5,8 +5,6 @@ import {useClipboard} from './ClipboardHook'
 import {useSelector} from 'react-redux'
 import {toExportableConfigurationJson} from '../../../configuration/Configuration'
 import {TextArea} from '../TextArea'
-import {TimedMessage} from '../TimedMessage'
-import {MessagesType} from '../../../common/Messages'
 import {errorMessage} from '../../../common/Utils'
 import {saveFile} from '../FileSystem'
 import {Page} from '../../../common/Page'
@@ -15,26 +13,17 @@ import {LinkButton} from '../../../common/LinkButton'
 import {FloppyDisk} from '../../../common/icons/FloppyDisk'
 import {Paste} from '../../../common/icons/Paste'
 import {Cross} from '../../../common/icons/Cross'
-import {Checkmark} from '../../../common/icons/Checkmark'
+import {TimedErrorMessages, TimedInfoMessages} from '../../../common/TimedMessages'
 
 export function ExportLocal(): ReactElement {
   const configuration = useSelector(toExportableConfigurationJson)
 
-  const [message, setMessage] = useState<ReadonlyArray<string>>([])
-  const [messageType, setMessageType] = useState(MessagesType.INFO)
+  const [saveFailure, setSaveFailure] = useState<ReadonlyArray<string>>([])
+  const [copyingSuccess, setCopyingSuccess] = useState<string>('')
+  const [copyingFailure, setCopyingFailure] = useState<string>('')
 
-  const setError = (message: ReadonlyArray<string>) => {
-    setMessage(message)
-    setMessageType(MessagesType.ERROR)
-  }
-
-  const setInfo = (message: ReadonlyArray<string>) => {
-    setMessage(message)
-    setMessageType(MessagesType.INFO)
-  }
-
-  const copySuccess = useCallback(() => setInfo(['Successfully copied to clipboard']), [])
-  const copyError = useCallback(() => setError(['Unable to copy, please manually copy']), [])
+  const copySuccess = useCallback(() => setCopyingSuccess('Successfully copied to clipboard'), [])
+  const copyError = useCallback(() => setCopyingFailure('Unable to copy, please manually copy'), [])
 
   const autoCopySupported = useClipboard('#copy-to-clipboard', copySuccess, copyError)
 
@@ -42,17 +31,17 @@ export function ExportLocal(): ReactElement {
     try {
       saveFile(configuration)
     } catch (e) {
-      setError(['Unable to save because of an error, try again or copy and save manually', errorMessage(e)])
+      setSaveFailure(['Unable to save because of an error, try again or copy and save manually', errorMessage(e)])
     }
   }
 
+  const dismissSaveFailure = useCallback(() => setSaveFailure([]), [])
+  const dismissCopyingSuccess = useCallback(() => setCopyingSuccess(''), [])
+  const dismissCopyingFailure = useCallback(() => setCopyingFailure(''), [])
+
   return (
     <Page title='Export locally' icon={<FloppyDisk/>}>
-      <TimedMessage className={styles.message}
-                    type={messageType}
-                    clear={() => setMessage([])}
-                    messages={message}
-                    icon={<Checkmark/>}/>
+      <TimedErrorMessages onDismiss={dismissSaveFailure} messages={saveFailure}/>
 
       <SecondaryButton className={styles.saveFile}
                        icon={<FloppyDisk/>}
@@ -61,12 +50,16 @@ export function ExportLocal(): ReactElement {
       </SecondaryButton>
 
       {autoCopySupported && (
-        <SecondaryButton className={styles.copy}
-                         id='copy-to-clipboard'
-                         data-clipboard-target='#export-data'
-                         icon={<Paste/>}>
-          Copy to clipboard
-        </SecondaryButton>
+        <>
+          <TimedInfoMessages onDismiss={dismissCopyingSuccess} messages={copyingSuccess}/>
+          <TimedErrorMessages onDismiss={dismissCopyingFailure} messages={copyingFailure}/>
+          <SecondaryButton className={styles.copy}
+                           id='copy-to-clipboard'
+                           data-clipboard-target='#export-data'
+                           icon={<Paste/>}>
+            Copy to clipboard
+          </SecondaryButton>
+        </>
       )}
 
       <TextArea className={styles.exportInput}

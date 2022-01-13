@@ -9,12 +9,9 @@ $button-size: 220px;
   margin: $margin-top 0 0 0;
 }
 
-.message {
-  margin: 0 0 $margin-top 0;
-}
-
 .saveFile,
 .copy {
+  margin: $margin-top 0 0 0;
   min-width: $button-size;
 
   @include respond-to(tablet, desktop) {

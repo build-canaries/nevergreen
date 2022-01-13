@@ -1,0 +1,58 @@
+@import './variables';
+
+.enter {
+  opacity: 0;
+}
+
+.enterActive {
+  opacity: 1;
+  transition: opacity 300ms;
+}
+
+.exit {
+  opacity: 1;
+}
+
+.exitActive {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.progress {
+  animation: progress-animation;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+  background: linear-gradient(90deg, $mid-grey 50%, $light-grey 50%);
+  background-size: 200%;
+  border-bottom-left-radius: $border-radius;
+  border-bottom-right-radius: $border-radius;
+  padding-bottom: 5px;
+
+  & > * {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    margin-bottom: 0;
+  }
+
+  &:hover {
+    animation-name: none;
+    background: $light-grey;
+  }
+}
+
+.progress.exitActive {
+  animation: none;
+  background: $light-grey;
+}
+
+@keyframes progress-animation {
+  from {
+    background-position-x: 100%;
+  }
+
+  to {
+    background-position-x: 0;
+  }
+}

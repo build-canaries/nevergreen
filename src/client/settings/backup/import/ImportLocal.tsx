@@ -6,17 +6,15 @@ import {useDispatch} from 'react-redux'
 import {configurationImported} from '../BackupActionCreators'
 import {isLeft, isRight} from 'fp-ts/Either'
 import {TextArea} from '../TextArea'
-import {ErrorMessages, MessagesType} from '../../../common/Messages'
 import {Form} from '../../../common/forms/Form'
 import {allErrors, FormErrors} from '../../../common/forms/Validation'
-import {TimedMessage} from '../TimedMessage'
 import {FileDropTarget} from './FileDropTarget'
 import {ROUTE_SETTINGS_BACKUP} from '../../../Routes'
 import {InputFile} from './InputFile'
 import {loadFile} from '../FileSystem'
 import {Page} from '../../../common/Page'
-import {Checkmark} from '../../../common/icons/Checkmark'
 import {FolderOpen} from '../../../common/icons/FolderOpen'
+import {TimedErrorMessages, TimedInfoMessages} from '../../../common/TimedMessages'
 
 const placeholder = 'Open, drag and drop or paste exported configuration here and press Import'
 
@@ -86,13 +84,12 @@ export function ImportLocal(): ReactElement {
     <Page title='Import local' icon={<FolderOpen/>}>
       <FileDropTarget onFileDropped={openFile}
                       disabled={!loaded}>
-        <ErrorMessages messages={loadErrors}
-                       className={styles.messages}/>
-        <TimedMessage type={MessagesType.INFO}
-                      clear={() => setSuccess('')}
-                      messages={success}
-                      className={styles.messages}
-                      icon={<Checkmark/>}/>
+        <div className={styles.messages}>
+          <TimedErrorMessages onDismiss={() => setLoadErrors([])}
+                              messages={loadErrors}/>
+          <TimedInfoMessages onDismiss={() => setSuccessState('')}
+                             messages={success}/>
+        </div>
 
         <InputFile onFileSelected={openFile}
                    disabled={!loaded}/>

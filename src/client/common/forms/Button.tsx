@@ -4,6 +4,7 @@ import styles from './button.scss'
 import {VisuallyHidden} from '../VisuallyHidden'
 
 export enum ButtonTheme {
+  transparent = 'transparent',
   primary = 'primary',
   secondary = 'secondary',
   danger = 'danger'

@@ -48,6 +48,14 @@
   }
 }
 
+.transparent {
+  @include button($color: inherit, $background-color: transparent, $border-color: transparent);
+
+  &:enabled {
+    box-shadow: none;
+  }
+}
+
 .primary {
   @include button($off-white, $blue, $blue);
 }

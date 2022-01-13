@@ -9,11 +9,15 @@
   border-radius: $border-radius;
   color: $color;
   display: flex;
-  margin: 1em 0 0;
+  margin: $margin-top 0 0;
 
   & > .icon {
     background-color: color.scale($background-color, $lightness: -10%);
     color: color.scale($background-color, $lightness: -25%);
+  }
+
+  & > .dismiss {
+    color: $color;
   }
 
   @include respond-to(very-small) {
@@ -34,6 +38,7 @@
 }
 
 .messages {
+  flex-grow: 1;
   list-style: none;
 }
 
@@ -53,4 +58,9 @@
 
 .message {
   margin: 0.5em 1em;
+}
+
+.dismiss {
+  align-self: start;
+  margin: 0.5em;
 }

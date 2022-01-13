@@ -4,14 +4,18 @@ import {ExportLocal} from './ExportLocal'
 import * as ClipboardHook from './ClipboardHook'
 import * as FileSystem from '../FileSystem'
 import userEvent from '@testing-library/user-event'
-import {screen, waitFor} from '@testing-library/react'
+import {act, screen, waitFor} from '@testing-library/react'
 import {ROUTE_SETTINGS_BACKUP} from '../../../Routes'
 
 it('should allowing copying to clipboard if supported', () => {
   let clipboardElementSelector = ''
+  let clipboardOnSuccess: () => void = jest.fn()
+  let clipboardOnError: () => void = jest.fn()
 
-  jest.spyOn(ClipboardHook, 'useClipboard').mockImplementation((id) => {
+  jest.spyOn(ClipboardHook, 'useClipboard').mockImplementation((id, onSuccess, onError) => {
     clipboardElementSelector = id
+    clipboardOnSuccess = onSuccess
+    clipboardOnError = onError
     return true
   })
 
@@ -26,6 +30,13 @@ it('should allowing copying to clipboard if supported', () => {
   expect(copyButton).toHaveAttribute('id', clipboardElementSelector.replace('#', ''))
   expect(currentConfiguration).toHaveAttribute('id')
   expect(copyButton).toHaveAttribute('data-clipboard-target', `#${currentConfiguration.id}`)
+
+  // clipboard.js registers its own onClick handler, so just manually trigger the callbacks given to the hook
+  act(() => clipboardOnSuccess())
+  expect(screen.getByText('Successfully copied to clipboard')).toBeInTheDocument()
+
+  act(() => clipboardOnError())
+  expect(screen.getByText('Unable to copy, please manually copy')).toBeInTheDocument()
 })
 
 // not sure if this applies to any browsers we actually support, but just in case

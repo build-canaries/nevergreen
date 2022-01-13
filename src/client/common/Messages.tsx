@@ -5,6 +5,8 @@ import isString from 'lodash/isString'
 import styles from './messages.scss'
 import {Warning} from './icons/Warning'
 import {Checkmark} from './icons/Checkmark'
+import {Cross} from './icons/Cross'
+import {BaseButton, ButtonTheme} from './forms/Button'
 
 export enum MessagesType {
   INFO = 'info',
@@ -12,15 +14,16 @@ export enum MessagesType {
   ERROR = 'error'
 }
 
-export type MessagesProps = {
+export interface MessagesProps {
   readonly id?: string;
   readonly type: MessagesType;
   readonly messages: ReadonlyArray<string> | string;
   readonly className?: string;
   readonly icon: ReactElement;
+  readonly onDismiss?: () => void;
 }
 
-export function Messages({messages, type, className, id, icon}: MessagesProps): ReactElement | null {
+export function Messages({messages, type, className, id, icon, onDismiss}: MessagesProps): ReactElement | null {
   if (isEmpty(messages)) {
     return null
   }
@@ -41,6 +44,15 @@ export function Messages({messages, type, className, id, icon}: MessagesProps): 
             : messages.map((msg) => <li key={msg} className={styles.message}>{msg}</li>)
         }
       </ul>
+      {onDismiss && (
+        <BaseButton onClick={onDismiss}
+                    icon={<Cross/>}
+                    iconOnly
+                    theme={ButtonTheme.transparent}
+                    className={styles.dismiss}>
+          Dismiss {type} messages
+        </BaseButton>
+      )}
     </div>
   )
 }

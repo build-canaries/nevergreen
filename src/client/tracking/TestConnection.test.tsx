@@ -35,9 +35,19 @@ it('should display messages about the connection', async () => {
     expect(screen.getByText('Connected successfully')).toBeInTheDocument()
   })
 
+  userEvent.click(screen.getByRole('button', {name: 'Dismiss info messages'}))
+  await waitFor(() => {
+    expect(screen.queryByText('Connected successfully')).not.toBeInTheDocument()
+  })
+
   testFeedConnectionSpy.mockRejectedValueOnce(new Error('some error happened'))
   userEvent.click(screen.getByRole('button', {name: 'Check connection'}))
   await waitFor(() => {
     expect(screen.getByText('some error happened')).toBeInTheDocument()
+  })
+
+  userEvent.click(screen.getByRole('button', {name: 'Dismiss error messages'}))
+  await waitFor(() => {
+    expect(screen.queryByText('some error happened')).not.toBeInTheDocument()
   })
 })
