@@ -24,7 +24,7 @@ describe('Settings', () => {
     cy.locate('build-label').should('exist')
     cy.locate('tray-name').should('exist')
     cy.locate('duration').should('exist')
-    cy.findByRole('button', {name: 'Dismiss'}).click()
+    cy.findByRole('button', {name: /dismiss/i}).click()
 
     cy.findByLabelText('Show feed identifier').uncheck()
     cy.findByLabelText('Show build time').uncheck()
@@ -34,7 +34,7 @@ describe('Settings', () => {
     cy.locate('build-label').should('not.exist')
     cy.locate('tray-name').should('not.exist')
     cy.locate('duration').should('not.exist')
-    cy.findByRole('button', {name: 'Dismiss'}).click()
+    cy.findByRole('button', {name: /dismiss/i}).click()
 
     cy.findByLabelText('Amount of project to show').select('Large')
     cy.locate('show-prognosis').each((prognosis) => {

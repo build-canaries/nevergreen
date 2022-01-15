@@ -1,7 +1,7 @@
-import React, {ReactElement, useCallback, useState} from 'react'
+import React, {ReactElement} from 'react'
 import {formatAsDuration} from './DateTime'
-import {useTimer} from './TimerHook'
 import {isBlank} from './Utils'
+import {useQuery} from 'react-query'
 
 interface DurationProps {
   readonly timestamp?: string | null;
@@ -9,14 +9,14 @@ interface DurationProps {
   readonly suffix?: string;
 }
 
-const ONE_MINUTE = 60
-
 export function Duration({timestamp, prefix, suffix}: DurationProps): ReactElement {
-  const [duration, setDuration] = useState(formatAsDuration(timestamp))
-
-  const update = useCallback(() => setDuration(formatAsDuration(timestamp)), [timestamp])
-
-  useTimer(update, ONE_MINUTE)
+  const {data: duration} = useQuery(['duration', timestamp],
+    () => formatAsDuration(timestamp),
+    {
+      initialData: formatAsDuration(timestamp),
+      refetchInterval: 60 * 1000,
+      refetchIntervalInBackground: true
+    })
 
   const fullDescription = [prefix, duration, suffix]
     .filter((text) => !isBlank(text))

@@ -1,40 +1,25 @@
 import React, {ReactElement} from 'react'
-import {isBlank} from './common/Utils'
 import cn from 'classnames'
 import styles from './notification.scss'
-import {PrimaryButton} from './common/forms/Button'
-import {Cross} from './common/icons/Cross'
 import {Bell} from './common/icons/Bell'
+import {Messages, MessagesType} from './common/Messages'
 
 interface NotificationProps {
   readonly notification: string;
-  readonly dismiss: () => void;
+  readonly onDismiss: () => void;
   readonly hide: boolean;
 }
 
-export function Notification({notification, dismiss, hide}: NotificationProps): ReactElement | null {
-  if (isBlank(notification)) {
-    return null
-  }
-
-  const notificationClassNames = cn(styles.popUpNotification, {
+export function Notification({notification, onDismiss, hide}: NotificationProps): ReactElement {
+  const notificationClassNames = cn(styles.messages, {
     [styles.hide]: hide
   })
 
   return (
-    <section className={notificationClassNames}
-             aria-live='polite'
-             role='complementary'>
-      <Bell/>
-      <div className={styles.message}>
-        {notification}
-      </div>
-      <PrimaryButton icon={<Cross/>}
-                     iconOnly
-                     className={styles.dismiss}
-                     onClick={dismiss}>
-        Dismiss
-      </PrimaryButton>
-    </section>
+    <Messages className={notificationClassNames}
+              type={MessagesType.INFO}
+              messages={notification}
+              icon={<Bell/>}
+              onDismiss={onDismiss}/>
   )
 }

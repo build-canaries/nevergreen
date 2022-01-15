@@ -1,24 +1,7 @@
-@import 'common/variables';
-@import 'common/typography';
-
-.popUpNotification {
-  align-items: center;
-  background-color: $blue;
-  color: $white;
-  display: flex;
-  padding: 0.5em 1em;
-}
-
 .hide {
   display: none;
 }
 
-.message {
-  align-self: center;
-  flex-grow: 1;
-  margin: 0 $margin-right 0 0;
-}
-
-.dismiss {
-  align-self: flex-start;
+.messages {
+  margin: 0;
 }

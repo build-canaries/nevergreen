@@ -66,7 +66,7 @@ export function Nevergreen(): ReactElement {
              {...hideMenusOn}>
           <Header hide={menusHidden}/>
           <Notification notification={notification}
-                        dismiss={() => setNotification('')}
+                        onDismiss={() => setNotification('')}
                         hide={menusHidden}/>
           <main className={styles.main} role='main'>
             <Switch>
@@ -76,7 +76,9 @@ export function Nevergreen(): ReactElement {
               </Route>
               <Route exact path={ROUTE_PREVIEW} component={Preview}/>
               <Route path={ROUTE_SETTINGS} component={Settings}/>
-              <Route exact path='/style-guide' component={StyleGuide}/>
+              <Route exact path='/style-guide'>
+                <StyleGuide setNotification={setNotification}/>
+              </Route>
               <Route>
                 <Redirect to={ROUTE_SETTINGS}/>
               </Route>

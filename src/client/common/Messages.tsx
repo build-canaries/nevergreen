@@ -7,6 +7,7 @@ import {Warning} from './icons/Warning'
 import {Checkmark} from './icons/Checkmark'
 import {Cross} from './icons/Cross'
 import {BaseButton, ButtonTheme} from './forms/Button'
+import {VisuallyHidden} from './VisuallyHidden'
 
 export enum MessagesType {
   INFO = 'info',
@@ -15,7 +16,6 @@ export enum MessagesType {
 }
 
 export interface MessagesProps {
-  readonly id?: string;
   readonly type: MessagesType;
   readonly messages: ReadonlyArray<string> | string;
   readonly className?: string;
@@ -23,7 +23,7 @@ export interface MessagesProps {
   readonly onDismiss?: () => void;
 }
 
-export function Messages({messages, type, className, id, icon, onDismiss}: MessagesProps): ReactElement | null {
+export function Messages({messages, type, className, icon, onDismiss}: MessagesProps): ReactElement | null {
   if (isEmpty(messages)) {
     return null
   }
@@ -31,13 +31,12 @@ export function Messages({messages, type, className, id, icon, onDismiss}: Messa
   const classes = cn(styles[type], className)
 
   return (
-    <div className={classes}>
+    <div className={classes} role='status'>
       <div className={styles.icon}>
+        <VisuallyHidden>{type}</VisuallyHidden>
         {icon}
       </div>
-      <ul className={styles.messages}
-          data-locator={`${type}-messages`}
-          id={id}>
+      <ul className={styles.messages}>
         {
           isString(messages)
             ? <li className={styles.message}>{messages}</li>

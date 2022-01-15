@@ -39,7 +39,7 @@ export function Preview(): ReactElement {
     <div className={styles.preview}>
       <Notification notification='This is a preview showing your current display settings'
                     hide={false}
-                    dismiss={() => history.push(ROUTE_SETTINGS_DISPLAY)}/>
+                    onDismiss={() => history.push(ROUTE_SETTINGS_DISPLAY)}/>
       <div className={styles.projects}>
         <div className={styles.projectsInner}>
           <Loading loaded={!isLoading} dark>
