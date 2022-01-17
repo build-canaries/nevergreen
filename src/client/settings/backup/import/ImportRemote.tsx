@@ -84,7 +84,7 @@ function ImportRemoteLocation({location}: ImportRemoteProps): ReactElement {
     if (isRight(result)) {
       dispatch(configurationImported(result.right))
       dispatch(backupImported(location.internalId))
-      return ROUTE_SETTINGS_BACKUP
+      return {successMessage: 'Configuration imported'}
     }
   }
 

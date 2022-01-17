@@ -7,18 +7,27 @@ import noop from 'lodash/noop'
 import {PrimaryButton, SecondaryButton} from './Button'
 import styles from './form.scss'
 import {FormErrors} from './Validation'
-import {ErrorMessages} from '../Messages'
+import {ErrorMessages, SuccessMessages} from '../Messages'
 import {errorMessage} from '../Utils'
 import {useHistory} from 'react-router-dom'
 import {LinkButton} from '../LinkButton'
 import {Checkmark} from '../icons/Checkmark'
 import {Cross} from '../icons/Cross'
 import {useQuery} from 'react-query'
+import {Loop} from '../icons/Loop'
+
+type OnSuccess = {
+  readonly navigateTo: string;
+  readonly successMessage?: undefined;
+} | {
+  readonly navigateTo?: undefined;
+  readonly successMessage: string;
+}
 
 interface FormProps<Fields extends string> {
   readonly children: (submitting: boolean, validationErrors: Readonly<FormErrors<Fields>>, clearErrors: () => void) => ReactNode;
   readonly onValidate?: () => Readonly<FormErrors<Fields>> | undefined | void;
-  readonly onSuccess: (signal: AbortSignal | undefined) => Promise<string | undefined | void> | string | undefined | void;
+  readonly onSuccess: (signal: AbortSignal | undefined) => Promise<OnSuccess | undefined | void> | OnSuccess | undefined | void;
   readonly onCancel?: string | (() => void);
   readonly className?: string;
   readonly submitButtonText?: string;
@@ -38,7 +47,7 @@ export function Form<Fields extends string>({
   const history = useHistory()
   const [validationErrors, setValidationErrors] = useState<Readonly<FormErrors<Fields>>>([])
 
-  const {refetch, isFetching, isError, data, error} = useQuery('form', async ({signal}) => {
+  const {refetch, isFetching, isError, isSuccess, data, error} = useQuery('form', async ({signal}) => {
     return onSuccess(signal)
   }, {
     enabled: false
@@ -51,18 +60,18 @@ export function Form<Fields extends string>({
   }, [clearErrors])
 
   useEffect(() => {
-    if (data) {
-      history.push(data)
+    if (data && data.navigateTo) {
+      history.push(data.navigateTo)
     }
   }, [data, history])
 
   const handleSubmit = (evt: FormEvent) => {
     evt.preventDefault()
 
-    const errors = onValidate()
+    const validationErrors = onValidate()
 
-    if (errors && !isEmpty(errors)) {
-      setValidationErrors(errors)
+    if (validationErrors && !isEmpty(validationErrors)) {
+      setValidationErrors(validationErrors)
     } else {
       setValidationErrors([])
       void refetch()
@@ -73,6 +82,9 @@ export function Form<Fields extends string>({
     setValidationErrors([])
   }
 
+  const showSubmissionErrors = isEmpty(validationErrors) && !isFetching && isError
+  const showSubmissionSuccess = isEmpty(validationErrors) && !isFetching && isSuccess && data?.successMessage
+
   return (
     <form onSubmit={handleSubmit}
           className={cn(styles.form, className)}
@@ -80,10 +92,11 @@ export function Form<Fields extends string>({
 
       {children(isFetching, validationErrors, doClearErrors)}
 
-      {isError && <ErrorMessages messages={errorMessage(error)}/>}
+      {showSubmissionErrors && <ErrorMessages messages={errorMessage(error)}/>}
+      {showSubmissionSuccess && <SuccessMessages messages={data.successMessage}/>}
 
       <PrimaryButton className={styles.submitButton}
-                     icon={<Checkmark/>}
+                     icon={isFetching ? <Loop loaded={false}/> : <Checkmark/>}
                      type='submit'
                      disabled={isFetching}>
         {submitButtonText}

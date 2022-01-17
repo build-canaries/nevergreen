@@ -8,7 +8,7 @@ import {fakeRequest} from '../../../gateways/Gateway'
 import userEvent from '@testing-library/user-event'
 import {screen, waitFor} from '@testing-library/react'
 
-it('should export configuration and redirect to the settings page', async () => {
+it('should export configuration', async () => {
   const state = {
     [BACKUP_REMOTE_LOCATIONS_ROOT]: {
       locationId: buildRemoteBackupLocation({
@@ -20,7 +20,7 @@ it('should export configuration and redirect to the settings page', async () => 
     id: 'some-remote-id'
   }))
 
-  const {history} = render(<ExportRemote/>, {
+  render(<ExportRemote/>, {
     state,
     mountPath: ROUTE_EXPORT_REMOTE,
     currentLocation: routeExportRemote('locationId')
@@ -29,7 +29,7 @@ it('should export configuration and redirect to the settings page', async () => 
   userEvent.click(screen.getByRole('button', {name: 'Export'}))
 
   await waitFor(() => {
-    expect(history.location.pathname).toEqual(ROUTE_SETTINGS_BACKUP)
+    expect(screen.getByText('Successfully exported configuration')).toBeInTheDocument()
   })
 })
 

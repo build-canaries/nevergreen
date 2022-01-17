@@ -30,6 +30,8 @@ import {Warning} from '../common/icons/Warning'
 import {ArrowLeft} from '../common/icons/ArrowLeft'
 import {List} from '../common/icons/List'
 import {Xml} from '../common/icons/Xml'
+import {Image} from '../common/icons/Image'
+import {Info} from '../common/icons/Info'
 
 export function Icons(): ReactElement {
   return (
@@ -52,6 +54,8 @@ export function Icons(): ReactElement {
         <span><EyeBlocked/>eye blocked</span>
         <span><FloppyDisk/>floppy disk</span>
         <span><FolderOpen/>folder open</span>
+        <span><Image/>image</span>
+        <span><Info/>info</span>
         <span><List/>list</span>
         <span><Lock/>lock</span>
         <span><Loop/>loop</span>

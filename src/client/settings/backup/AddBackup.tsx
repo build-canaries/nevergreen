@@ -52,7 +52,7 @@ export function AddBackup(): ReactElement {
     } else {
       dispatch(addBackupCustomServer(url))
     }
-    return ROUTE_SETTINGS_BACKUP
+    return {navigateTo: ROUTE_SETTINGS_BACKUP}
   }
 
   const updateWhere = (updatedWhere: RemoteLocationOptions) => {

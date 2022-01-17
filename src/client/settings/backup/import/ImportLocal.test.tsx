@@ -6,13 +6,13 @@ import {toJson} from '../../../common/Json'
 import {ROUTE_SETTINGS_BACKUP} from '../../../Routes'
 import {screen, waitFor} from '@testing-library/react'
 
-it('should import valid configuration and redirect to the settings page', async () => {
-  const {history} = render(<ImportLocal/>)
+it('should import valid configuration', async () => {
+  render(<ImportLocal/>)
   userEvent.type(screen.getByLabelText('Configuration to import'), escapeSpecialCharacter(toJson(buildState())))
   userEvent.click(screen.getByRole('button', {name: 'Import'}))
 
   await waitFor(() => {
-    expect(history.location.pathname).toEqual(ROUTE_SETTINGS_BACKUP)
+    expect(screen.getByText('Configuration imported')).toBeInTheDocument()
   })
 })
 

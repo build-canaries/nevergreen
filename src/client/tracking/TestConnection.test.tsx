@@ -35,7 +35,7 @@ it('should display messages about the connection', async () => {
     expect(screen.getByText('Connected successfully')).toBeInTheDocument()
   })
 
-  userEvent.click(screen.getByRole('button', {name: 'Dismiss info messages'}))
+  userEvent.click(screen.getByRole('button', {name: 'Dismiss success messages'}))
   await waitFor(() => {
     expect(screen.queryByText('Connected successfully')).not.toBeInTheDocument()
   })

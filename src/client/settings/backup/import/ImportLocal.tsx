@@ -76,7 +76,7 @@ export function ImportLocal(): ReactElement {
 
     if (isRight(result)) {
       dispatch(configurationImported(result.right))
-      return ROUTE_SETTINGS_BACKUP
+      return {successMessage: 'Configuration imported'}
     }
   }
 

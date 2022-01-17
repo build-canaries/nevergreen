@@ -110,7 +110,7 @@ export function ConnectionForm({existingFeed, onSuccess, onCancel}: ConnectionFo
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       ? existingFeed!.authType
       : authType
-    return onSuccess({url, authType: actualAuthType, ...authData})
+    return {navigateTo: onSuccess({url, authType: actualAuthType, ...authData})}
   }
 
   return (
@@ -163,13 +163,8 @@ export function ConnectionForm({existingFeed, onSuccess, onCancel}: ConnectionFo
                 </Password>
               </div>
             )}
-            <TestConnection existingFeed={existingFeed} details={{
-              url,
-              authType,
-              username,
-              password,
-              accessToken
-            }}/>
+            <TestConnection existingFeed={existingFeed}
+                            details={{url, authType, username, password, accessToken}}/>
           </>
         )
       }}

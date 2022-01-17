@@ -8,7 +8,7 @@ import {AuthTypes, isBasicFeed, isTokenFeed, Tray} from '../domain/Tray'
 import {KeepExistingAuth, UpdateExistingAuthTypes} from './ConnectionForm'
 import {testFeedConnection} from '../gateways/ProjectsGateway'
 import {Loop} from '../common/icons/Loop'
-import {TimedErrorMessages, TimedInfoMessages} from '../common/TimedMessages'
+import {TimedErrorMessages, TimedSuccessMessages} from '../common/TimedMessages'
 
 interface ConnectionDetails {
   readonly authType: UpdateExistingAuthTypes;
@@ -51,7 +51,7 @@ export function TestConnection({existingFeed, details}: TestConnectionProps): Re
   return (
     <>
       {showConnectionCheckMessages && !isFetching && isSuccess && (
-        <TimedInfoMessages messages='Connected successfully' onDismiss={dismiss}/>
+        <TimedSuccessMessages messages='Connected successfully' onDismiss={dismiss}/>
       )}
       {showConnectionCheckMessages && !isFetching && isError && (
         <TimedErrorMessages messages={[errorMessage(error)]} onDismiss={dismiss}/>

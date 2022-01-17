@@ -19,7 +19,7 @@ describe('Backups', () => {
       cy.findByLabelText('Configuration to import').type(' ') // trigger react updates
       cy.findByRole('button', {name: 'Import'}).click()
 
-      cy.location('pathname').should('eq', '/settings/backup')
+      cy.findByText(/configuration imported/i).should('exist')
     })
   })
 

@@ -29,7 +29,7 @@ export function AddMessage(): ReactElement {
 
   const onSuccess = () => {
     dispatch(addMessage(message))
-    return ROUTE_SETTINGS_SUCCESS
+    return {navigateTo: ROUTE_SETTINGS_SUCCESS}
   }
 
   return (

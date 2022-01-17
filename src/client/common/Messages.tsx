@@ -4,15 +4,17 @@ import isEmpty from 'lodash/isEmpty'
 import isString from 'lodash/isString'
 import styles from './messages.scss'
 import {Warning} from './icons/Warning'
-import {Checkmark} from './icons/Checkmark'
 import {Cross} from './icons/Cross'
 import {BaseButton, ButtonTheme} from './forms/Button'
 import {VisuallyHidden} from './VisuallyHidden'
+import {Info} from './icons/Info'
+import {Checkmark} from './icons/Checkmark'
 
 export enum MessagesType {
   INFO = 'info',
   WARNING = 'warning',
-  ERROR = 'error'
+  ERROR = 'error',
+  SUCCESS = 'success'
 }
 
 export interface MessagesProps {
@@ -65,5 +67,9 @@ export function WarningMessages(props: Omit<MessagesProps, 'type' | 'icon'>): Re
 }
 
 export function InfoMessages(props: Omit<MessagesProps, 'type' | 'icon'>): ReactElement | null {
-  return <Messages type={MessagesType.INFO} icon={<Checkmark/>} {...props}/>
+  return <Messages type={MessagesType.INFO} icon={<Info/>} {...props}/>
+}
+
+export function SuccessMessages(props: Omit<MessagesProps, 'type' | 'icon'>): ReactElement | null {
+  return <Messages type={MessagesType.SUCCESS} icon={<Checkmark/>} {...props}/>
 }

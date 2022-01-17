@@ -4,6 +4,7 @@ import {Timed} from './Timed'
 import {Messages, MessagesProps, MessagesType} from './Messages'
 import {Warning} from './icons/Warning'
 import {Checkmark} from './icons/Checkmark'
+import {Info} from './icons/Info'
 
 interface TimedMessagesProps extends MessagesProps {
   readonly onDismiss: () => void;
@@ -28,5 +29,9 @@ export function TimedErrorMessages(props: Omit<TimedMessagesProps, 'type' | 'ico
 }
 
 export function TimedInfoMessages(props: Omit<TimedMessagesProps, 'type' | 'icon'>): ReactElement {
-  return <TimedMessages type={MessagesType.INFO} icon={<Checkmark/>} {...props}/>
+  return <TimedMessages type={MessagesType.INFO} icon={<Info/>} {...props}/>
+}
+
+export function TimedSuccessMessages(props: Omit<TimedMessagesProps, 'type' | 'icon'>): ReactElement {
+  return <TimedMessages type={MessagesType.SUCCESS} icon={<Checkmark/>} {...props}/>
 }

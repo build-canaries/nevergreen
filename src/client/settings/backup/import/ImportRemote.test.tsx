@@ -10,7 +10,7 @@ import * as BackupGateway from '../../../gateways/BackupGateway'
 import * as Gateway from '../../../gateways/Gateway'
 import {fakeRequest} from '../../../gateways/Gateway'
 
-it('should import valid configuration and redirect to the settings page', async () => {
+it('should import valid configuration', async () => {
   const state = {
     [BACKUP_REMOTE_LOCATIONS_ROOT]: {
       locationId: buildRemoteBackupLocation({
@@ -22,7 +22,7 @@ it('should import valid configuration and redirect to the settings page', async 
     configuration: toJson(buildState())
   }))
 
-  const {history} = render(<ImportRemote/>, {
+  render(<ImportRemote/>, {
     state,
     mountPath: ROUTE_IMPORT_REMOTE,
     currentLocation: routeImportRemote('locationId')
@@ -33,7 +33,7 @@ it('should import valid configuration and redirect to the settings page', async 
   userEvent.click(screen.getByRole('button', {name: 'Import'}))
 
   await waitFor(() => {
-    expect(history.location.pathname).toEqual(ROUTE_SETTINGS_BACKUP)
+    expect(screen.getByText('Configuration imported')).toBeInTheDocument()
   })
 })
 

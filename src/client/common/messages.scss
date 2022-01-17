@@ -37,6 +37,10 @@
   @include _messages($off-white, $blue);
 }
 
+.success {
+  @include _messages($off-white, $blue);
+}
+
 .messages {
   flex-grow: 1;
   list-style: none;

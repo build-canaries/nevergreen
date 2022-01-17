@@ -13,7 +13,7 @@ import {LinkButton} from '../../../common/LinkButton'
 import {FloppyDisk} from '../../../common/icons/FloppyDisk'
 import {Paste} from '../../../common/icons/Paste'
 import {Cross} from '../../../common/icons/Cross'
-import {TimedErrorMessages, TimedInfoMessages} from '../../../common/TimedMessages'
+import {TimedErrorMessages, TimedSuccessMessages} from '../../../common/TimedMessages'
 
 export function ExportLocal(): ReactElement {
   const configuration = useSelector(toExportableConfigurationJson)
@@ -22,7 +22,7 @@ export function ExportLocal(): ReactElement {
   const [copyingSuccess, setCopyingSuccess] = useState<string>('')
   const [copyingFailure, setCopyingFailure] = useState<string>('')
 
-  const copySuccess = useCallback(() => setCopyingSuccess('Successfully copied to clipboard'), [])
+  const copySuccess = useCallback(() => setCopyingSuccess('Copied current configuration to clipboard'), [])
   const copyError = useCallback(() => setCopyingFailure('Unable to copy, please manually copy'), [])
 
   const autoCopySupported = useClipboard('#copy-to-clipboard', copySuccess, copyError)
@@ -51,7 +51,7 @@ export function ExportLocal(): ReactElement {
 
       {autoCopySupported && (
         <>
-          <TimedInfoMessages onDismiss={dismissCopyingSuccess} messages={copyingSuccess}/>
+          <TimedSuccessMessages onDismiss={dismissCopyingSuccess} messages={copyingSuccess}/>
           <TimedErrorMessages onDismiss={dismissCopyingFailure} messages={copyingFailure}/>
           <SecondaryButton className={styles.copy}
                            id='copy-to-clipboard'
