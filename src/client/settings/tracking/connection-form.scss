@@ -1,0 +1,13 @@
+@import '../../common/variables';
+@import '../../common/layout';
+
+.inputs {
+  margin: $margin-top 0 0 0;
+}
+
+.authType,
+.username,
+.password,
+.authToken {
+  @include fixed-width(30em);
+}

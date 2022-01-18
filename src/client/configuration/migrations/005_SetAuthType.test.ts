@@ -1,5 +1,5 @@
 import {migrate} from './005_SetAuthType'
-import {TRAYS_ROOT} from '../../tracking/TraysReducer'
+import {TRAYS_ROOT} from '../../settings/tracking/TraysReducer'
 import {AuthTypes} from '../../domain/Tray'
 
 it('should not modify the given data if it does not contain projects', () => {

@@ -1,6 +1,6 @@
 import {forEachObjectAt, moveData} from '../Migrate'
 import {Migrate} from './index'
-import {TRAYS_ROOT} from '../../tracking/TraysReducer'
+import {TRAYS_ROOT} from '../../settings/tracking/TraysReducer'
 
 export const id = '002_PrefixEncryptedValues'
 

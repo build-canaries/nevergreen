@@ -3,7 +3,7 @@ import * as gateway from '../gateways/Gateway'
 import {buildSavedProject, buildTray} from '../testHelpers'
 import {Prognosis} from '../domain/Project'
 import {AuthTypes} from '../domain/Tray'
-import {ProjectState} from '../tracking/ProjectsReducer'
+import {ProjectState} from '../settings/tracking/ProjectsReducer'
 
 describe('fetchAll', () => {
 

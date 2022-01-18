@@ -1,0 +1,17 @@
+@import '../../../common/variables';
+@import '../../../common/layout';
+
+.traySettingsName,
+.serverType {
+  @include fixed-width(26em);
+}
+
+.includeNew {
+  display: block;
+}
+
+.link {
+  @include respond-to(tablet, desktop) {
+    margin: $margin-top $margin-right 0 0;
+  }
+}

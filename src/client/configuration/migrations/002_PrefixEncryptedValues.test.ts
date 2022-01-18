@@ -1,5 +1,5 @@
 import {migrate} from './002_PrefixEncryptedValues'
-import {TRAYS_ROOT} from '../../tracking/TraysReducer'
+import {TRAYS_ROOT} from '../../settings/tracking/TraysReducer'
 
 it('should not modify the given data if it does not contain trays', () => {
   const data = {foo: 'bar'}

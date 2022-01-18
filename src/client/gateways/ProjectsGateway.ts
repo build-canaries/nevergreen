@@ -1,10 +1,10 @@
 import {fakeRequest, post, Request, ServerError} from './Gateway'
 import {Prognosis, ProjectPrognosis} from '../domain/Project'
-import {SelectedState} from '../tracking/SelectedReducer'
+import {SelectedState} from '../settings/tracking/SelectedReducer'
 import size from 'lodash/size'
 import omit from 'lodash/omit'
 import {AuthTypes, Tray} from '../domain/Tray'
-import {ProjectState} from '../tracking/ProjectsReducer'
+import {ProjectState} from '../settings/tracking/ProjectsReducer'
 
 export enum SortBy {
   default = 'default',

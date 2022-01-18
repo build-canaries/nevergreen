@@ -1,5 +1,5 @@
 import {migrate} from './007_SetProjectDescription'
-import {PROJECTS_ROOT} from '../../tracking/ProjectsReducer'
+import {PROJECTS_ROOT} from '../../settings/tracking/ProjectsReducer'
 
 it('should not modify the given data if it does not contain settings', () => {
   const data = {foo: 'bar'}

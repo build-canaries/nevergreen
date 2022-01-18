@@ -1,10 +1,10 @@
 import React, {ReactElement, useState} from 'react'
 import {Modal} from '../common/Modal'
 import {Input} from '../common/forms/Input'
-import {AddTrayHelp, CCTrayLocationsHelp} from '../tracking/AddTrayHelp'
-import {UpdateDetailsHelp} from '../tracking/settings/UpdateDetailsHelp'
+import {AddTrayHelp, CCTrayLocationsHelp} from '../settings/tracking/AddTrayHelp'
+import {UpdateDetailsHelp} from '../settings/tracking/settings/UpdateDetailsHelp'
 import {SuccessHelp} from '../settings/success/SuccessHelp'
-import {AvailableProjectsHelp} from '../tracking/projects/AvailableProjectsHelp'
+import {AvailableProjectsHelp} from '../settings/tracking/projects/AvailableProjectsHelp'
 import {
   BackupHelp,
   RemoteBackupCustomHelp,
@@ -18,8 +18,8 @@ import {HelpLink} from './HelpLink'
 import {useShortcut} from '../common/Keyboard'
 import styles from './help.scss'
 import {ExternalLink} from '../common/ExternalLink'
-import {TrackingPageHelp} from '../tracking/TrackingPageHelp'
-import {UpdateConnectionHelp} from '../tracking/settings/UpdateConnectionHelp'
+import {TrackingPageHelp} from '../settings/tracking/TrackingPageHelp'
+import {UpdateConnectionHelp} from '../settings/tracking/settings/UpdateConnectionHelp'
 
 interface HelpProps {
   readonly initiallyShow?: boolean;

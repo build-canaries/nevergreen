@@ -3,8 +3,8 @@ import {Either, isLeft, isRight} from 'fp-ts/Either'
 import {buildRemoteBackupLocation, buildState} from '../testHelpers'
 import {BACKUP_REMOTE_LOCATIONS_ROOT} from '../settings/backup/RemoteLocationsReducer'
 import {SETTINGS_ROOT} from '../settings/SettingsReducer'
-import {PROJECTS_ROOT} from '../tracking/ProjectsReducer'
-import {TRAYS_ROOT} from '../tracking/TraysReducer'
+import {PROJECTS_ROOT} from '../settings/tracking/ProjectsReducer'
+import {TRAYS_ROOT} from '../settings/tracking/TraysReducer'
 import {APPLIED_MIGRATIONS_ROOT} from './MigrationsReducer'
 
 function expectErrors(result: Either<ReadonlyArray<string>, Configuration>, errors: ReadonlyArray<string>): void {

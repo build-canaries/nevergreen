@@ -1,0 +1,92 @@
+@import '../../../common/variables';
+@import '../../../common/responsive';
+@import '../../../common/accessibility';
+@import '../../../common/layout';
+
+%projects-container {
+  margin: 1em 0 0;
+}
+
+.availableProjects {
+  width: 100%;
+}
+
+.loading {
+  @extend %projects-container;
+}
+
+.legend {
+  @extend %visually-hidden;
+}
+
+.controls {
+  @include respond-to(very-small) {
+    overflow: scroll;
+  }
+}
+
+.toggles {
+  display: block;
+  width: 100%;
+
+  @include respond-to(tablet, desktop) {
+    display: inline-block;
+    width: auto;
+  }
+}
+
+.includeAll {
+  @include respond-to(tablet, desktop) {
+    margin: $margin-top $margin-right 0 0;
+  }
+}
+
+.excludeAll {
+  @include respond-to(tablet, desktop) {
+    margin: $margin-top $margin-right 0 0;
+  }
+}
+
+.buildItems {
+  @extend %two-column-grid;
+  @extend %projects-container;
+
+  list-style: none;
+  overflow-y: scroll;
+  padding: 1em;
+
+  @include respond-to(very-small) {
+    overflow: scroll;
+  }
+}
+
+.projectFilter {
+  display: block;
+  width: 100%;
+
+  @include respond-to(tablet, desktop) {
+    display: inline-block;
+    margin: $margin-top 0 0 0;
+    width: auto;
+  }
+}
+
+.projectFilterInput {
+  @include respond-to(tablet, desktop) {
+    align-items: baseline;
+    display: flex;
+    margin-top: 0;
+  }
+}
+
+.search {
+  @include respond-to(tablet, desktop) {
+    margin: 0 $margin-right 0 0;
+  }
+}
+
+.backToTop {
+  @include respond-to(tablet, desktop) {
+    display: none;
+  }
+}

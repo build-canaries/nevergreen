@@ -2,7 +2,7 @@ import React from 'react'
 import {InterestingProjects} from './InterestingProjects'
 import {buildProject, buildProjectError, buildTray, render, setSystemTime} from '../testHelpers'
 import {Prognosis, ProjectPrognosis} from '../domain/Project'
-import {TRAYS_ROOT} from '../tracking/TraysReducer'
+import {TRAYS_ROOT} from '../settings/tracking/TraysReducer'
 import {MaxProjectsToShow, SETTINGS_ROOT} from '../settings/SettingsReducer'
 import {screen} from '@testing-library/react'
 

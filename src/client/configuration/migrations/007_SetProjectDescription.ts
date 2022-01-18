@@ -2,7 +2,7 @@ import {Migrate} from './index'
 import isObject from 'lodash/isObject'
 import unset from 'lodash/unset'
 import {forEachArrayAt} from '../Migrate'
-import {PROJECTS_ROOT} from '../../tracking/ProjectsReducer'
+import {PROJECTS_ROOT} from '../../settings/tracking/ProjectsReducer'
 import {isBlank} from '../../common/Utils'
 
 export const id = '007_SetProjectDescription'

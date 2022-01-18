@@ -3,7 +3,7 @@ import {ExternalLink} from '../common/ExternalLink'
 import {CI_OPTIONS, Tray} from '../domain/Tray'
 import {isBlank} from '../common/Utils'
 import {useSelector} from 'react-redux'
-import {getTrays} from '../tracking/TraysReducer'
+import {getTrays} from '../settings/tracking/TraysReducer'
 
 interface SubmitAnIssueProps {
   readonly version: string;

@@ -2,7 +2,7 @@ import React from 'react'
 import {buildState, buildTray, render, setupReactModal} from '../testHelpers'
 import {Footer} from './Footer'
 import userEvent from '@testing-library/user-event'
-import {TRAYS_ROOT} from '../tracking/TraysReducer'
+import {TRAYS_ROOT} from '../settings/tracking/TraysReducer'
 import {screen} from '@testing-library/react'
 
 beforeEach(setupReactModal)
