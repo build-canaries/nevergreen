@@ -3,7 +3,7 @@ import {Action} from 'redux'
 import {Configuration} from '../../configuration/Configuration'
 import {RemoteLocation} from './RemoteLocationsReducer'
 import {RemoteLocationOptions} from './RemoteLocationOptions'
-import {createId} from '../../domain/Tray'
+import {createId} from '../../domain/Feed'
 import {now} from '../../common/DateTime'
 
 export interface ActionConfigurationImported extends Action<Actions.CONFIGURATION_IMPORTED> {

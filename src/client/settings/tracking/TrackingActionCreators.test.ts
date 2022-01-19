@@ -1,61 +1,61 @@
 import {Actions} from '../../Actions'
-import {projectSelected, projectsFetched, trayAdded, trayRemoved, trayUpdated} from './TrackingActionCreators'
+import {projectSelected, projectsFetched, feedAdded, feedRemoved, feedUpdated} from './TrackingActionCreators'
 import {buildProject} from '../../testHelpers'
-import {AuthTypes} from '../../domain/Tray'
+import {AuthTypes} from '../../domain/Feed'
 
-describe(Actions.TRAY_ADDED, () => {
+describe(Actions.FEED_ADDED, () => {
 
   it('should return the correct type', () => {
-    const actual = trayAdded('irrelevant', 'irrelevant', AuthTypes.none, '', '', '')
-    expect(actual).toHaveProperty('type', Actions.TRAY_ADDED)
+    const actual = feedAdded('irrelevant', 'irrelevant', AuthTypes.none, '', '', '')
+    expect(actual).toHaveProperty('type', Actions.FEED_ADDED)
   })
 
   it('should return the tray id', () => {
-    const actual = trayAdded('some-tray-id', 'irrelevant', AuthTypes.none, '', '', '')
+    const actual = feedAdded('some-tray-id', 'irrelevant', AuthTypes.none, '', '', '')
     expect(actual).toHaveProperty('trayId', 'some-tray-id')
     expect(actual.data).toHaveProperty('trayId', 'some-tray-id')
   })
 
   it('should return the tray url', () => {
-    const actual = trayAdded('irrelevant', 'some-url', AuthTypes.none, '', '', '')
+    const actual = feedAdded('irrelevant', 'some-url', AuthTypes.none, '', '', '')
     expect(actual.data).toHaveProperty('url', 'some-url')
   })
 
   it('should return the tray username', () => {
     const username = 'some-username'
     const password = 'irrelevant'
-    const actual = trayAdded('irrelevant', 'irrelevant', AuthTypes.basic, username, password, '')
+    const actual = feedAdded('irrelevant', 'irrelevant', AuthTypes.basic, username, password, '')
     expect(actual.data).toHaveProperty('username', 'some-username')
   })
 
   it('should return a generated tray name', () => {
-    const actual = trayAdded('irrelevant', 'irrelevant', AuthTypes.none, '', '', '')
+    const actual = feedAdded('irrelevant', 'irrelevant', AuthTypes.none, '', '', '')
     expect(actual.data.name).not.toBeNull()
   })
 })
 
-describe(Actions.TRAY_UPDATED, () => {
+describe(Actions.FEED_UPDATED, () => {
 
   it('should return the correct type', () => {
-    const actual = trayUpdated('trayId', {})
-    expect(actual).toHaveProperty('type', Actions.TRAY_UPDATED)
+    const actual = feedUpdated('trayId', {})
+    expect(actual).toHaveProperty('type', Actions.FEED_UPDATED)
   })
 
   it('should return the data', () => {
-    const actual = trayUpdated('trayId', {})
+    const actual = feedUpdated('trayId', {})
     expect(actual).toHaveProperty('data', {})
   })
 })
 
-describe(Actions.TRAY_REMOVED, () => {
+describe(Actions.FEED_REMOVED, () => {
 
   it('should return the correct type', () => {
-    const actual = trayRemoved('irrelevant')
-    expect(actual).toHaveProperty('type', Actions.TRAY_REMOVED)
+    const actual = feedRemoved('irrelevant')
+    expect(actual).toHaveProperty('type', Actions.FEED_REMOVED)
   })
 
   it('should return the tray id', () => {
-    const actual = trayRemoved('some-tray-id')
+    const actual = feedRemoved('some-tray-id')
     expect(actual).toHaveProperty('trayId', 'some-tray-id')
   })
 })

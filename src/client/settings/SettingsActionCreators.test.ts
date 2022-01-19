@@ -8,7 +8,7 @@ import {
   setShowBuildLabel,
   setShowBuildTime,
   setShowSystemNotifications,
-  setShowTrayName,
+  setShowFeedIdentifier,
   setSort,
   toggleVersionCheck
 } from './SettingsActionCreators'
@@ -16,15 +16,15 @@ import {Actions} from '../Actions'
 import {SortBy} from '../gateways/ProjectsGateway'
 import {MaxProjectsToShow} from './SettingsReducer'
 
-describe(Actions.SHOW_TRAY_NAME, () => {
+describe(Actions.SHOW_FEED_IDENTIFIER, () => {
 
   it('should return the correct type', () => {
-    const actual = setShowTrayName(false)
-    expect(actual).toHaveProperty('type', Actions.SHOW_TRAY_NAME)
+    const actual = setShowFeedIdentifier(false)
+    expect(actual).toHaveProperty('type', Actions.SHOW_FEED_IDENTIFIER)
   })
 
   it('should return the given value', () => {
-    const actual = setShowTrayName(true)
+    const actual = setShowFeedIdentifier(true)
     expect(actual).toHaveProperty('value', true)
   })
 })
@@ -90,7 +90,7 @@ describe(Actions.SHOW_BUILD_LABEL, () => {
   })
 
   it('should return the given value', () => {
-    const actual = setShowTrayName(true)
+    const actual = setShowFeedIdentifier(true)
     expect(actual).toHaveProperty('value', true)
   })
 })

@@ -51,7 +51,7 @@ describe('Monitoring', () => {
     cy.findByRole('button', {name: /Update details for/}).click()
 
     cy.findByRole('button', {name: 'randomise name'}).click()
-    cy.findByLabelText('Name').clear().type('renamed tray')
+    cy.findByLabelText('Name').clear().type('renamed feed')
     cy.findByLabelText('Server type').select('circle')
     cy.findByLabelText('Automatically include new projects').click()
 
@@ -64,6 +64,6 @@ describe('Monitoring', () => {
     }
 
     cy.findByRole('button', {name: 'Back to tracking'}).click()
-    cy.findByRole('heading', {name: 'renamed tray'}).should('exist')
+    cy.findByRole('heading', {name: 'renamed feed'}).should('exist')
   })
 })

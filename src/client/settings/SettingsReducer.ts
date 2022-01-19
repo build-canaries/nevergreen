@@ -10,7 +10,7 @@ import {
   ActionShowBuildTime,
   ActionShowPrognosis,
   ActionShowSystemNotifications,
-  ActionShowTrayName,
+  ActionShowFeedIdentifier,
   DEFAULT_REFRESH_TIME
 } from './SettingsActionCreators'
 import defaultSoundFx from './notifications/pacman_death.mp3'
@@ -83,7 +83,7 @@ export const reduce = createReducer<SettingsState>(DEFAULT_STATE, {
   [Actions.BROKEN_BUILD_SOUND_FX]: (draft, action: ActionBrokenBuildSoundFx) => {
     draft.brokenBuildSoundFx = action.value
   },
-  [Actions.SHOW_TRAY_NAME]: (draft, action: ActionShowTrayName) => {
+  [Actions.SHOW_FEED_IDENTIFIER]: (draft, action: ActionShowFeedIdentifier) => {
     draft.showTrayName = action.value
   },
   [Actions.REFRESH_TIME]: (draft, action: ActionRefreshTime) => {
@@ -115,7 +115,7 @@ function getSettings(state: State) {
   return state[SETTINGS_ROOT]
 }
 
-export const getShowTrayName = createSelector(getSettings, (settings) => settings.showTrayName)
+export const getShowFeedIdentifier = createSelector(getSettings, (settings) => settings.showTrayName)
 export const getShowBuildTime = createSelector(getSettings, (settings) => settings.showBuildTime)
 export const getToggleVersionCheck = createSelector(getSettings, (settings) => settings.enableNewVersionCheck)
 export const getPlayBrokenBuildSoundFx = createSelector(getSettings, (settings) => settings.playBrokenBuildSoundFx)

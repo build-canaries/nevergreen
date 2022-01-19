@@ -16,7 +16,7 @@ import {SETTINGS_ROOT} from '../settings/SettingsReducer'
 import {PROJECTS_ROOT} from '../settings/tracking/ProjectsReducer'
 import {SELECTED_ROOT} from '../settings/tracking/SelectedReducer'
 import {SUCCESS_ROOT} from '../settings/success/SuccessReducer'
-import {TRAYS_ROOT} from '../settings/tracking/TraysReducer'
+import {FEEDS_ROOT} from '../settings/tracking/FeedsReducer'
 import {APPLIED_MIGRATIONS_ROOT} from './MigrationsReducer'
 import {errorMessage} from '../common/Utils'
 
@@ -70,7 +70,7 @@ const Configuration = t.exact(t.partial({
   ]))), PROJECTS_ROOT),
   [SELECTED_ROOT]: t.record(t.string, t.readonlyArray(t.string), SELECTED_ROOT),
   [SUCCESS_ROOT]: t.readonlyArray(t.string, SUCCESS_ROOT),
-  [TRAYS_ROOT]: t.record(t.string, t.exact(t.intersection([
+  [FEEDS_ROOT]: t.record(t.string, t.exact(t.intersection([
     t.type({
       trayId: t.string,
       url: t.string
@@ -89,7 +89,7 @@ const Configuration = t.exact(t.partial({
       timestamp: t.string,
       username: t.string
     })
-  ])), TRAYS_ROOT),
+  ])), FEEDS_ROOT),
   [APPLIED_MIGRATIONS_ROOT]: t.readonlyArray(t.exact(t.type({
     id: t.string,
     timestamp: t.string
@@ -135,15 +135,15 @@ function toErrorPath(errors: Errors): ReadonlyArray<string> {
   })
 }
 
-function validateTrayIdsMatchForTrays(configuration: Configuration, errors: string[]) {
-  Object.entries(configuration.trays || {}).forEach(([key, tray]) => {
-    if (tray && tray.trayId !== key) {
-      errors.push(validationErrorMessage(tray.trayId, `/${TRAYS_ROOT}/${key}/trayId`, toJson(key)))
+function validateFeedIdsMatchForFeeds(configuration: Configuration, errors: string[]) {
+  Object.entries(configuration.trays || {}).forEach(([key, feed]) => {
+    if (feed && feed.trayId !== key) {
+      errors.push(validationErrorMessage(feed.trayId, `/${FEEDS_ROOT}/${key}/trayId`, toJson(key)))
     }
   })
 }
 
-function validateTrayIdsMatchForProjects(configuration: Configuration, errors: string[]) {
+function validateFeedIdsMatchForProjects(configuration: Configuration, errors: string[]) {
   Object.entries(configuration.projects || {}).forEach(([key, projects]) => {
     projects.forEach((project, i) => {
       if (project.trayId !== key) {
@@ -164,8 +164,8 @@ function validateRemoteLocationIdsMatch(configuration: Configuration, errors: st
 function additionalValidation(configuration: Configuration): Either<ReadonlyArray<string>, Configuration> {
   const errors: string[] = []
 
-  validateTrayIdsMatchForTrays(configuration, errors)
-  validateTrayIdsMatchForProjects(configuration, errors)
+  validateFeedIdsMatchForFeeds(configuration, errors)
+  validateFeedIdsMatchForProjects(configuration, errors)
   validateRemoteLocationIdsMatch(configuration, errors)
 
   return isEmpty(errors)

@@ -1,5 +1,5 @@
 import {Actions} from '../../Actions'
-import {ActionProjectsFetched, ActionRemoveTray, ActionSelectProject, ActionTrayAdded} from './TrackingActionCreators'
+import {ActionProjectsFetched, ActionRemoveFeed, ActionSelectProject, ActionFeedAdded} from './TrackingActionCreators'
 import {createReducer, createSelector} from '@reduxjs/toolkit'
 import remove from 'lodash/remove'
 import {State} from '../../Reducer'
@@ -19,10 +19,10 @@ export const reduce = createReducer<SelectedState>(DEFAULT_STATE, {
       ? action.configuration[SELECTED_ROOT] as SelectedState
       : draft
   },
-  [Actions.TRAY_ADDED]: (draft, action: ActionTrayAdded) => {
+  [Actions.FEED_ADDED]: (draft, action: ActionFeedAdded) => {
     draft[action.trayId] = []
   },
-  [Actions.TRAY_REMOVED]: (draft, action: ActionRemoveTray) => {
+  [Actions.FEED_REMOVED]: (draft, action: ActionRemoveFeed) => {
     delete draft[action.trayId]
   },
   [Actions.PROJECT_SELECTED]: (draft, action: ActionSelectProject) => {
@@ -51,6 +51,6 @@ export function getSelectedProjects(state: State): SelectedState {
   return state[SELECTED_ROOT]
 }
 
-export function getSelectedProjectsForTray(trayId: string): (state: State) => ReadonlyArray<string> {
+export function getSelectedProjectsForFeed(trayId: string): (state: State) => ReadonlyArray<string> {
   return createSelector(getSelectedProjects, (selected) => selected[trayId])
 }

@@ -1,6 +1,6 @@
 import React from 'react'
-import {buildTray, render} from '../../testHelpers'
-import {TRAYS_ROOT} from './TraysReducer'
+import {buildFeed, render} from '../../testHelpers'
+import {FEEDS_ROOT} from './FeedsReducer'
 import {PROJECTS_ROOT} from './ProjectsReducer'
 import {screen, waitFor} from '@testing-library/react'
 import {TrackingPage} from './TrackingPage'
@@ -21,12 +21,12 @@ it('should allow changing the poll time', () => {
 })
 
 it('should render added trays', () => {
-  const tray = buildTray({
+  const tray = buildFeed({
     trayId: 'trayId',
     name: 'some-name'
   })
   const state = {
-    [TRAYS_ROOT]: {trayId: tray},
+    [FEEDS_ROOT]: {trayId: tray},
     [PROJECTS_ROOT]: {trayId: []},
     [SELECTED_ROOT]: {trayId: []}
   }
@@ -44,7 +44,7 @@ it('should allow trays to be added', async () => {
 
 it('should show a helpful message if no trays are added', () => {
   const state = {
-    [TRAYS_ROOT]: {},
+    [FEEDS_ROOT]: {},
     [PROJECTS_ROOT]: {}
   }
   render(<TrackingPage/>, {state})

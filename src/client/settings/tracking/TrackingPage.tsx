@@ -1,6 +1,6 @@
 import React, {ReactElement} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {getTrays} from './TraysReducer'
+import {getFeeds} from './FeedsReducer'
 import {Page} from '../../common/Page'
 import {AddButton} from '../../common/LinkButton'
 import {ROUTE_TRACKING_ADD} from '../../Routes'
@@ -15,7 +15,7 @@ import {List} from '../../common/icons/List'
 
 export function TrackingPage(): ReactElement {
   const dispatch = useDispatch()
-  const feeds = useSelector(getTrays)
+  const feeds = useSelector(getFeeds)
   const refreshTime = useSelector(getRefreshTime)
   const options = VALID_REFRESH_TIMES.map((time) => {
     return {value: time.toString(), display: secondsToString(time)}

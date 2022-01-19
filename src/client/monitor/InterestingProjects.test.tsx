@@ -1,8 +1,8 @@
 import React from 'react'
 import {InterestingProjects} from './InterestingProjects'
-import {buildProject, buildProjectError, buildTray, render, setSystemTime} from '../testHelpers'
+import {buildProject, buildProjectError, buildFeed, render, setSystemTime} from '../testHelpers'
 import {Prognosis, ProjectPrognosis} from '../domain/Project'
-import {TRAYS_ROOT} from '../settings/tracking/TraysReducer'
+import {FEEDS_ROOT} from '../settings/tracking/FeedsReducer'
 import {MaxProjectsToShow, SETTINGS_ROOT} from '../settings/SettingsReducer'
 import {screen} from '@testing-library/react'
 
@@ -17,8 +17,8 @@ describe('displaying project information', () => {
   ])('should show the identifier, time and label for %s projects', (prognosis) => {
     setSystemTime('2020-01-25T20:23:00Z')
     const state = {
-      [TRAYS_ROOT]: {
-        [trayId]: buildTray({trayId, name: 'some-tray-name'})
+      [FEEDS_ROOT]: {
+        [trayId]: buildFeed({trayId, name: 'some-feed-name'})
       },
       [SETTINGS_ROOT]: {
         showTrayName: true,
@@ -40,7 +40,7 @@ describe('displaying project information', () => {
 
     render(<InterestingProjects {...props}/>, {state})
 
-    expect(screen.getByText('some-tray-name')).toBeInTheDocument()
+    expect(screen.getByText('some-feed-name')).toBeInTheDocument()
     expect(screen.getByText('some-project-name')).toBeInTheDocument()
     expect(screen.getByText('#1234')).toBeInTheDocument()
     expect(screen.getByText('about 1 hour')).toBeInTheDocument()
@@ -49,8 +49,8 @@ describe('displaying project information', () => {
   it('should show the identifier, even when time and label is unavailable for unknown projects', () => {
     setSystemTime('2020-01-25T20:23:00Z')
     const state = {
-      [TRAYS_ROOT]: {
-        [trayId]: buildTray({trayId, name: 'some-tray-name'})
+      [FEEDS_ROOT]: {
+        [trayId]: buildFeed({trayId, name: 'some-feed-name'})
       },
       [SETTINGS_ROOT]: {
         showTrayName: true,
@@ -72,7 +72,7 @@ describe('displaying project information', () => {
 
     render(<InterestingProjects {...props}/>, {state})
 
-    expect(screen.getByText('some-tray-name')).toBeInTheDocument()
+    expect(screen.getByText('some-feed-name')).toBeInTheDocument()
     expect(screen.getByText('some-project-name')).toBeInTheDocument()
     expect(screen.queryByTestId('build-label')).not.toBeInTheDocument()
     expect(screen.getByText('unknown')).toBeInTheDocument()
@@ -82,8 +82,8 @@ describe('displaying project information', () => {
   it('should show the identifier and time but not the label for building projects', () => {
     setSystemTime('2020-01-25T20:23:00Z')
     const state = {
-      [TRAYS_ROOT]: {
-        [trayId]: buildTray({trayId, name: 'some-tray-name'})
+      [FEEDS_ROOT]: {
+        [trayId]: buildFeed({trayId, name: 'some-feed-name'})
       },
       [SETTINGS_ROOT]: {
         showTrayName: true,
@@ -105,7 +105,7 @@ describe('displaying project information', () => {
 
     render(<InterestingProjects {...props}/>, {state})
 
-    expect(screen.getByText('some-tray-name')).toBeInTheDocument()
+    expect(screen.getByText('some-feed-name')).toBeInTheDocument()
     expect(screen.getByText('some-project-name')).toBeInTheDocument()
     expect(screen.queryByText('#1234')).not.toBeInTheDocument()
     expect(screen.getByText('30 minutes')).toBeInTheDocument()
@@ -114,8 +114,8 @@ describe('displaying project information', () => {
   it('should just show the project name if all display settings are not on', () => {
     setSystemTime('2020-01-25T20:23:00Z')
     const state = {
-      [TRAYS_ROOT]: {
-        [trayId]: buildTray({trayId, name: 'some-tray-name'})
+      [FEEDS_ROOT]: {
+        [trayId]: buildFeed({trayId, name: 'some-feed-name'})
       },
       [SETTINGS_ROOT]: {
         showTrayName: false,
@@ -137,7 +137,7 @@ describe('displaying project information', () => {
 
     render(<InterestingProjects {...props}/>, {state})
 
-    expect(screen.queryByText('some-tray-name')).not.toBeInTheDocument()
+    expect(screen.queryByText('some-feed-name')).not.toBeInTheDocument()
     expect(screen.getByText('some-project-name')).toBeInTheDocument()
     expect(screen.queryByText('#1234')).not.toBeInTheDocument()
     expect(screen.queryByText('about 1 hour')).not.toBeInTheDocument()
@@ -145,8 +145,8 @@ describe('displaying project information', () => {
 
   it('should add an external link to the project on the CI server', () => {
     const state = {
-      [TRAYS_ROOT]: {
-        [trayId]: buildTray({trayId})
+      [FEEDS_ROOT]: {
+        [trayId]: buildFeed({trayId})
       }
     }
     const props = {
@@ -170,8 +170,8 @@ describe('limiting the projects displayed', () => {
 
   it('should not display a summary if the number of projects is less than the max', () => {
     const state = {
-      [TRAYS_ROOT]: {
-        [trayId]: buildTray({trayId})
+      [FEEDS_ROOT]: {
+        [trayId]: buildFeed({trayId})
       },
       [SETTINGS_ROOT]: {
         maxProjectsToShow: MaxProjectsToShow.small
@@ -188,8 +188,8 @@ describe('limiting the projects displayed', () => {
 
   it('should not display a summary if the number of projects is equal to the max', () => {
     const state = {
-      [TRAYS_ROOT]: {
-        [trayId]: buildTray({trayId})
+      [FEEDS_ROOT]: {
+        [trayId]: buildFeed({trayId})
       },
       [SETTINGS_ROOT]: {
         maxProjectsToShow: MaxProjectsToShow.small
@@ -210,8 +210,8 @@ describe('limiting the projects displayed', () => {
 
   it('should display a summary if the number of projects is more than the max', () => {
     const state = {
-      [TRAYS_ROOT]: {
-        [trayId]: buildTray({trayId})
+      [FEEDS_ROOT]: {
+        [trayId]: buildFeed({trayId})
       },
       [SETTINGS_ROOT]: {
         maxProjectsToShow: MaxProjectsToShow.small
@@ -235,8 +235,8 @@ describe('limiting the projects displayed', () => {
 
   it('should display a summary if the number of errors is more than the max', () => {
     const state = {
-      [TRAYS_ROOT]: {
-        [trayId]: buildTray({trayId})
+      [FEEDS_ROOT]: {
+        [trayId]: buildFeed({trayId})
       },
       [SETTINGS_ROOT]: {
         maxProjectsToShow: MaxProjectsToShow.small
@@ -260,8 +260,8 @@ describe('limiting the projects displayed', () => {
 
   it('should display a summary if the number of errors and projects is more than the max', () => {
     const state = {
-      [TRAYS_ROOT]: {
-        [trayId]: buildTray({trayId})
+      [FEEDS_ROOT]: {
+        [trayId]: buildFeed({trayId})
       },
       [SETTINGS_ROOT]: {
         maxProjectsToShow: MaxProjectsToShow.small

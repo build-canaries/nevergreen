@@ -5,7 +5,7 @@ import {
   getClickToShowMenu,
   getShowBuildLabel,
   getShowBuildTime,
-  getShowTrayName,
+  getShowFeedIdentifier,
   SETTINGS_ROOT
 } from '../SettingsReducer'
 import {screen} from '@testing-library/react'
@@ -34,7 +34,7 @@ it('should set the show feed identifier setting', () => {
   const {store} = render(<DisplaySettings/>, {state})
   userEvent.click(screen.getByLabelText('Show feed identifier'))
 
-  expect(getShowTrayName(store.getState())).toBeTruthy()
+  expect(getShowFeedIdentifier(store.getState())).toBeTruthy()
 })
 
 it('should set the show build time setting', () => {

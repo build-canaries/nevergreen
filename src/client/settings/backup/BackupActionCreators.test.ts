@@ -1,19 +1,19 @@
 import {Actions} from '../../Actions'
 import {addBackupCustomServer, addBackupGitHubLab, backupExported, backupImported} from './BackupActionCreators'
 import {RemoteLocationOptions} from './RemoteLocationOptions'
-import * as Tray from '../../domain/Tray'
+import * as Feed from '../../domain/Feed'
 import * as DateTime from '../../common/DateTime'
 
 describe(Actions.ADD_BACKUP, () => {
 
   it('should create a new internal ID when adding custom server backups', () => {
-    jest.spyOn(Tray, 'createId').mockReturnValue('some-id')
+    jest.spyOn(Feed, 'createId').mockReturnValue('some-id')
     const actual = addBackupCustomServer('irrelevant')
     expect(actual).toHaveProperty('data.internalId', 'some-id')
   })
 
   it('should create a new internal ID when adding GitHub/GitLab backups', () => {
-    jest.spyOn(Tray, 'createId').mockReturnValue('some-id')
+    jest.spyOn(Feed, 'createId').mockReturnValue('some-id')
     const actual = addBackupGitHubLab(RemoteLocationOptions.GitLab, 'irrelevant', 'irrelevant', 'irrelevant', 'irrelevant')
     expect(actual).toHaveProperty('data.internalId', 'some-id')
   })

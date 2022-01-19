@@ -9,7 +9,7 @@ import {
   setMaxProjectsToShow,
   setShowBuildLabel,
   setShowBuildTime,
-  setShowTrayName,
+  setShowFeedIdentifier,
   setSort
 } from '../SettingsActionCreators'
 import {
@@ -17,7 +17,7 @@ import {
   getMaxProjectsToShow,
   getShowBuildLabel,
   getShowBuildTime,
-  getShowTrayName,
+  getShowFeedIdentifier,
   getSort,
   MaxProjectsToShow
 } from '../SettingsReducer'
@@ -31,7 +31,7 @@ import {Display} from '../../common/icons/Display'
 export function DisplaySettings(): ReactElement {
   const dispatch = useDispatch()
   const clickToShowMenu = useSelector(getClickToShowMenu)
-  const showTrayName = useSelector(getShowTrayName)
+  const showFeedIdentifier = useSelector(getShowFeedIdentifier)
   const showBuildTime = useSelector(getShowBuildTime)
   const showBuildLabel = useSelector(getShowBuildLabel)
   const maxProjectsToShow = useSelector(getMaxProjectsToShow)
@@ -57,8 +57,8 @@ export function DisplaySettings(): ReactElement {
                 onToggle={(newValue) => dispatch(setClickToShowMenu(newValue))}>
         Click to show menu
       </Checkbox>
-      <Checkbox checked={showTrayName}
-                onToggle={(newValue) => dispatch(setShowTrayName(newValue))}>
+      <Checkbox checked={showFeedIdentifier}
+                onToggle={(newValue) => dispatch(setShowFeedIdentifier(newValue))}>
         Show feed identifier
       </Checkbox>
       <Checkbox checked={showBuildTime}

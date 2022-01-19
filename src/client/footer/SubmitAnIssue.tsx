@@ -1,9 +1,9 @@
 import React, {ReactElement} from 'react'
 import {ExternalLink} from '../common/ExternalLink'
-import {CI_OPTIONS, Tray} from '../domain/Tray'
+import {CI_OPTIONS, Feed} from '../domain/Feed'
 import {isBlank} from '../common/Utils'
 import {useSelector} from 'react-redux'
-import {getTrays} from '../settings/tracking/TraysReducer'
+import {getFeeds} from '../settings/tracking/FeedsReducer'
 
 interface SubmitAnIssueProps {
   readonly version: string;
@@ -15,9 +15,9 @@ function display(serverType: string) {
   return ciOption && ciOption.display
 }
 
-function knownServerTypes(trays: ReadonlyArray<Tray>) {
-  const servers = trays
-    .map((tray) => tray.serverType)
+function knownServerTypes(feeds: ReadonlyArray<Feed>) {
+  const servers = feeds
+    .map((feed) => feed.serverType)
     .filter((serverType) => serverType !== '')
     .map((serverType) => display(serverType))
     .join(', ')
@@ -27,7 +27,7 @@ function knownServerTypes(trays: ReadonlyArray<Tray>) {
     : servers
 }
 
-function bugReport(version: string, trays: ReadonlyArray<Tray>) {
+function bugReport(version: string, feeds: ReadonlyArray<Feed>) {
   return encodeURIComponent(`## Bug report
 
 **How are you running?**
@@ -40,7 +40,7 @@ ${version}
 ${navigator.userAgent}
 
 **Which CI server(s) are you monitoring?**
-${knownServerTypes(trays)}
+${knownServerTypes(feeds)}
 
 **Expected behaviour?**
 <!-- Tell us what you expected to happen -->
@@ -58,10 +58,10 @@ ${knownServerTypes(trays)}
 const ISSUE_URL = 'https://github.com/build-canaries/nevergreen/issues/new'
 
 export function SubmitAnIssue({version, className}: SubmitAnIssueProps): ReactElement {
-  const trays = useSelector(getTrays)
+  const feeds = useSelector(getFeeds)
 
   return (
-    <ExternalLink href={`${ISSUE_URL}?labels=bug&body=${bugReport(version, trays)}`}
+    <ExternalLink href={`${ISSUE_URL}?labels=bug&body=${bugReport(version, feeds)}`}
                   className={className}
                   title='Submit an issue on GitHub'>
       Submit an issue

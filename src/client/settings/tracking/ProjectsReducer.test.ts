@@ -1,9 +1,9 @@
-import {getProjectsForTray, PROJECTS_ROOT, ProjectsState, reduce} from './ProjectsReducer'
+import {getProjectsForFeed, PROJECTS_ROOT, ProjectsState, reduce} from './ProjectsReducer'
 import {Actions} from '../../Actions'
-import {projectsFetched, trayAdded, trayRemoved} from './TrackingActionCreators'
+import {projectsFetched, feedAdded, feedRemoved} from './TrackingActionCreators'
 import {buildProject, buildSavedProject, buildState, testReducer} from '../../testHelpers'
 import {RecursivePartial} from '../../common/Types'
-import {AuthTypes} from '../../domain/Tray'
+import {AuthTypes} from '../../domain/Feed'
 import {configurationImported} from '../backup/BackupActionCreators'
 
 const reducer = testReducer({
@@ -31,8 +31,8 @@ describe(Actions.CONFIGURATION_IMPORTED, () => {
 
     const newState = reducer(existingState, action)
 
-    expect(getProjectsForTray('oldTrayId')(newState)).toBeUndefined()
-    expect(getProjectsForTray('trayId')(newState)).toEqual([newProject])
+    expect(getProjectsForFeed('oldTrayId')(newState)).toBeUndefined()
+    expect(getProjectsForFeed('trayId')(newState)).toEqual([newProject])
   })
 
   it('should handle no projects data', () => {
@@ -40,27 +40,27 @@ describe(Actions.CONFIGURATION_IMPORTED, () => {
     const existingState = state({trayId: [project]})
     const action = configurationImported({})
     const newState = reducer(existingState, action)
-    expect(getProjectsForTray('trayId')(newState)).toEqual([project])
+    expect(getProjectsForFeed('trayId')(newState)).toEqual([project])
   })
 })
 
-describe(Actions.TRAY_ADDED, () => {
+describe(Actions.FEED_ADDED, () => {
 
   it('should add a tray id property', () => {
     const existingState = state({})
-    const action = trayAdded('trayId', '', AuthTypes.none, '', '', '')
+    const action = feedAdded('trayId', '', AuthTypes.none, '', '', '')
     const newState = reducer(existingState, action)
-    expect(getProjectsForTray('trayId')(newState)).toEqual([])
+    expect(getProjectsForFeed('trayId')(newState)).toEqual([])
   })
 })
 
-describe(Actions.TRAY_REMOVED, () => {
+describe(Actions.FEED_REMOVED, () => {
 
   it('should delete the tray id property', () => {
     const existingState = state({trayId: [buildProject()]})
-    const action = trayRemoved('trayId')
+    const action = feedRemoved('trayId')
     const newState = reducer(existingState, action)
-    expect(getProjectsForTray('trayId')(newState)).toBeUndefined()
+    expect(getProjectsForFeed('trayId')(newState)).toBeUndefined()
   })
 })
 
@@ -78,7 +78,7 @@ describe(Actions.PROJECTS_FETCHED, () => {
 
     const newState = reducer(existingState, action)
 
-    expect(getProjectsForTray('trayId')(newState)).toEqual([])
+    expect(getProjectsForFeed('trayId')(newState)).toEqual([])
   })
 
   it('should mark existing projects as removed if they haven\'t been fetched again', () => {
@@ -91,7 +91,7 @@ describe(Actions.PROJECTS_FETCHED, () => {
 
     const newState = reducer(existingState, action)
 
-    expect(getProjectsForTray('trayId')(newState)).toEqual([
+    expect(getProjectsForFeed('trayId')(newState)).toEqual([
       expect.objectContaining({projectId: 'projectId', removed: true})
     ])
   })
@@ -106,7 +106,7 @@ describe(Actions.PROJECTS_FETCHED, () => {
 
     const newState = reducer(existingState, action)
 
-    expect(getProjectsForTray('trayId')(newState)).toEqual([
+    expect(getProjectsForFeed('trayId')(newState)).toEqual([
       expect.objectContaining({projectId: 'projectId', isNew: false})
     ])
   })
@@ -126,7 +126,7 @@ describe(Actions.PROJECTS_FETCHED, () => {
 
     const newState = reducer(existingState, action)
 
-    expect(getProjectsForTray('trayId')(newState)).toEqual([
+    expect(getProjectsForFeed('trayId')(newState)).toEqual([
       expect.objectContaining({projectId: 'projectId', removed: false})
     ])
   })
@@ -146,7 +146,7 @@ describe(Actions.PROJECTS_FETCHED, () => {
 
     const newState = reducer(existingState, action)
 
-    expect(getProjectsForTray('trayId')(newState)).toEqual([
+    expect(getProjectsForFeed('trayId')(newState)).toEqual([
       {projectId: 'projectId2', description: '2', isNew: true, removed: false, trayId: 'trayId'},
       {projectId: 'projectId1', description: '1', isNew: false, removed: true, trayId: 'trayId'}
     ])

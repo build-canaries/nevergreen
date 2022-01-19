@@ -1,7 +1,7 @@
 import React, {ReactElement, useState} from 'react'
 import {Modal} from '../common/Modal'
 import {Input} from '../common/forms/Input'
-import {AddTrayHelp, CCTrayLocationsHelp} from '../settings/tracking/AddTrayHelp'
+import {AddFeedHelp, CCTrayLocationsHelp} from '../settings/tracking/AddFeedHelp'
 import {UpdateDetailsHelp} from '../settings/tracking/settings/UpdateDetailsHelp'
 import {SuccessHelp} from '../settings/success/SuccessHelp'
 import {AvailableProjectsHelp} from '../settings/tracking/projects/AvailableProjectsHelp'
@@ -58,7 +58,7 @@ export function Help({initiallyShow}: HelpProps): ReactElement {
       <ul className={styles.articles}>
         <MonitorHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <TrackingPageHelp searchQuery={searchQuery} helpLink={helpLink}/>
-        <AddTrayHelp searchQuery={searchQuery} helpLink={helpLink}/>
+        <AddFeedHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <CCTrayLocationsHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <AvailableProjectsHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <UpdateDetailsHelp searchQuery={searchQuery} helpLink={helpLink}/>

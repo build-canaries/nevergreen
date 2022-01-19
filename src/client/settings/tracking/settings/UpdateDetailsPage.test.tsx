@@ -1,22 +1,22 @@
 import React from 'react'
 import {screen, waitFor} from '@testing-library/react'
-import {buildTray, render} from '../../../testHelpers'
-import {getTray, TRAYS_ROOT} from '../TraysReducer'
+import {buildFeed, render} from '../../../testHelpers'
+import {getFeed, FEEDS_ROOT} from '../FeedsReducer'
 import userEvent from '@testing-library/user-event'
 import {UpdateDetailsPage} from './UpdateDetailsPage'
 import {ROUTE_SETTINGS_TRACKING} from '../../../Routes'
 
 it('should be able to update details', async () => {
-  const tray = buildTray({
+  const feed = buildFeed({
     trayId: 'trayId',
     name: 'some-name',
     serverType: 'go',
     includeNew: false
   })
   const state = {
-    [TRAYS_ROOT]: {trayId: tray}
+    [FEEDS_ROOT]: {trayId: feed}
   }
-  const {store} = render(<UpdateDetailsPage feed={tray}/>, {state})
+  const {store} = render(<UpdateDetailsPage feed={feed}/>, {state})
 
   userEvent.clear(screen.getByLabelText('Name'))
   userEvent.type(screen.getByLabelText('Name'), 'some-new-name')
@@ -24,7 +24,7 @@ it('should be able to update details', async () => {
   userEvent.click(screen.getByLabelText('Automatically include new projects'))
 
   await waitFor(() => {
-    expect(getTray('trayId')(store.getState())).toEqual(expect.objectContaining({
+    expect(getFeed('trayId')(store.getState())).toEqual(expect.objectContaining({
       name: 'some-new-name',
       serverType: 'circle',
       includeNew: true
@@ -33,35 +33,35 @@ it('should be able to update details', async () => {
 })
 
 it('should be able to generate a new random name', async () => {
-  const tray = buildTray({
+  const tray = buildFeed({
     trayId: 'trayId',
     name: 'some-name'
   })
   const state = {
-    [TRAYS_ROOT]: {trayId: tray}
+    [FEEDS_ROOT]: {trayId: tray}
   }
   const {store} = render(<UpdateDetailsPage feed={tray}/>, {state})
   userEvent.click(screen.getByText('randomise name'))
   userEvent.click(document.body) // trigger blur
 
   await waitFor(() => {
-    expect(getTray('trayId')(store.getState())).toEqual(expect.not.objectContaining({
+    expect(getFeed('trayId')(store.getState())).toEqual(expect.not.objectContaining({
       name: 'some-name'
     }))
   })
 })
 
 it('should be able to go back to the tracking page', async () => {
-  const tray = buildTray({
+  const feed = buildFeed({
     trayId: 'trayId',
     name: 'some-name',
     serverType: 'go',
     includeNew: false
   })
   const state = {
-    [TRAYS_ROOT]: {trayId: tray}
+    [FEEDS_ROOT]: {trayId: feed}
   }
-  const {history} = render(<UpdateDetailsPage feed={tray}/>, {state})
+  const {history} = render(<UpdateDetailsPage feed={feed}/>, {state})
 
   userEvent.click(screen.getByRole('button', {name: 'Back to tracking'}))
 

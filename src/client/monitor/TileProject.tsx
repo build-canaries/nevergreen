@@ -5,10 +5,10 @@ import {Project, projectBuildLabel, Projects} from '../domain/Project'
 import {VisuallyHidden} from '../common/VisuallyHidden'
 import {Duration} from '../common/Duration'
 import {ScaledTile} from './ScaledTile'
-import {trayIdentifier} from '../domain/Tray'
+import {feedIdentifier} from '../domain/Feed'
 import {useSelector} from 'react-redux'
-import {getTrays} from '../settings/tracking/TraysReducer'
-import {getShowBuildLabel, getShowBuildTime, getShowTrayName} from '../settings/SettingsReducer'
+import {getFeeds} from '../settings/tracking/FeedsReducer'
+import {getShowBuildLabel, getShowBuildTime, getShowFeedIdentifier} from '../settings/SettingsReducer'
 import {ExternalLink} from '../common/ExternalLink'
 import {ProjectError} from '../gateways/ProjectsGateway'
 import {Clock} from '../common/icons/Clock'
@@ -19,19 +19,19 @@ interface TileProjectProps {
 }
 
 export function TileProject({project, visibleProjects}: TileProjectProps): ReactElement {
-  const trays = useSelector(getTrays)
+  const feeds = useSelector(getFeeds)
   const showBuildTime = useSelector(getShowBuildTime)
-  const showTrayName = useSelector(getShowTrayName)
+  const showFeedIdentifier = useSelector(getShowFeedIdentifier)
   const showBuildLabel = useSelector(getShowBuildLabel)
 
   const sentences = visibleProjects.map((p) => p.description)
 
-  const myTray = trays.find((tray) => tray.trayId === project.trayId)
+  const myFeed = feeds.find((feed) => feed.trayId === project.trayId)
 
-  const identifier = showTrayName && (
+  const identifier = showFeedIdentifier && (
     <span className={styles.identifier}
           data-locator='tray-name'>
-      {trayIdentifier(myTray)}
+      {feedIdentifier(myFeed)}
     </span>
   )
 

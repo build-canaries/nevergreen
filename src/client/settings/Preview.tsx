@@ -5,7 +5,7 @@ import {useSelector} from 'react-redux'
 import {getShowPrognosis, getSort} from './SettingsReducer'
 import {post, send} from '../gateways/Gateway'
 import {enrichProjects, Projects, toProjectError} from '../domain/Project'
-import {createId, createTray} from '../domain/Tray'
+import {createId, createFeed} from '../domain/Feed'
 import {Notification} from '../Notification'
 import {useHistory} from 'react-router-dom'
 import styles from './preview.scss'
@@ -21,7 +21,7 @@ export function Preview(): ReactElement {
 
   const {isLoading} = useQuery('preview', async ({signal}) => {
     const request = post<Projects>('/api/preview', {
-      feeds: [createTray(createId(), 'https://github.com/build-canaries/nevergreen')],
+      feeds: [createFeed(createId(), 'https://github.com/build-canaries/nevergreen')],
       sort,
       prognosis
     })

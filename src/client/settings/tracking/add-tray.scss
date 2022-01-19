@@ -1,9 +1,0 @@
-@import '../../common/responsive';
-
-.url {
-  margin-top: 0;
-
-  @include respond-to(tablet, desktop) {
-    width: 100%;
-  }
-}

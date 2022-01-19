@@ -4,7 +4,7 @@ import {SecondaryButton} from '../../common/forms/Button'
 import {useQuery} from 'react-query'
 import {errorMessage} from '../../common/Utils'
 import styles from './test-connection.scss'
-import {AuthTypes, isBasicFeed, isTokenFeed, Tray} from '../../domain/Tray'
+import {AuthTypes, isBasicFeed, isTokenFeed, Feed} from '../../domain/Feed'
 import {KeepExistingAuth, UpdateExistingAuthTypes} from './ConnectionForm'
 import {testFeedConnection} from '../../gateways/ProjectsGateway'
 import {Loop} from '../../common/icons/Loop'
@@ -19,7 +19,7 @@ interface ConnectionDetails {
 }
 
 interface TestConnectionProps {
-  readonly existingFeed?: Tray;
+  readonly existingFeed?: Feed;
   readonly details: ConnectionDetails;
 }
 

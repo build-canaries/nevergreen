@@ -1,16 +1,16 @@
 import React from 'react'
-import {buildState, buildTray, render, setupReactModal} from '../testHelpers'
+import {buildState, buildFeed, render, setupReactModal} from '../testHelpers'
 import {Footer} from './Footer'
 import userEvent from '@testing-library/user-event'
-import {TRAYS_ROOT} from '../settings/tracking/TraysReducer'
+import {FEEDS_ROOT} from '../settings/tracking/FeedsReducer'
 import {screen} from '@testing-library/react'
 
 beforeEach(setupReactModal)
 
 it('should have "about" information', () => {
   const state = buildState({
-    [TRAYS_ROOT]: {
-      trayId: buildTray({serverType: 'circle'})
+    [FEEDS_ROOT]: {
+      trayId: buildFeed({serverType: 'circle'})
     }
   })
   render(<Footer hide={false}/>, {state})

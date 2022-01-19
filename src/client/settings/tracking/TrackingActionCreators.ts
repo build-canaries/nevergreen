@@ -1,20 +1,20 @@
 import {now} from '../../common/DateTime'
-import {AuthTypes, createTray, Tray} from '../../domain/Tray'
+import {AuthTypes, createFeed, Feed} from '../../domain/Feed'
 import {Actions} from '../../Actions'
 import {isError, Project, Projects} from '../../domain/Project'
 import {Action} from 'redux'
 
-export interface ActionTrayAdded extends Action<Actions.TRAY_ADDED> {
+export interface ActionFeedAdded extends Action<Actions.FEED_ADDED> {
   readonly trayId: string;
-  readonly data: Tray;
+  readonly data: Feed;
 }
 
-export interface ActionTrayUpdate extends Action<Actions.TRAY_UPDATED> {
+export interface ActionFeedUpdate extends Action<Actions.FEED_UPDATED> {
   readonly trayId: string;
-  readonly data: Partial<Tray>;
+  readonly data: Partial<Feed>;
 }
 
-export interface ActionRemoveTray extends Action<Actions.TRAY_REMOVED> {
+export interface ActionRemoveFeed extends Action<Actions.FEED_REMOVED> {
   readonly trayId: string;
 }
 
@@ -32,18 +32,18 @@ export interface ActionSelectProject extends Action<Actions.PROJECT_SELECTED> {
   readonly selected: boolean;
 }
 
-export function trayAdded(
+export function feedAdded(
   trayId: string,
   url: string,
   authType: AuthTypes,
   username: string,
   encryptedPassword: string,
   encryptedAccessToken: string
-): ActionTrayAdded {
+): ActionFeedAdded {
   return {
-    type: Actions.TRAY_ADDED,
+    type: Actions.FEED_ADDED,
     trayId,
-    data: createTray(trayId, url, {
+    data: createFeed(trayId, url, {
       authType,
       username,
       encryptedPassword,
@@ -52,12 +52,12 @@ export function trayAdded(
   }
 }
 
-export function trayUpdated(trayId: string, data: Partial<Tray>): ActionTrayUpdate {
-  return {type: Actions.TRAY_UPDATED, trayId, data}
+export function feedUpdated(trayId: string, data: Partial<Feed>): ActionFeedUpdate {
+  return {type: Actions.FEED_UPDATED, trayId, data}
 }
 
-export function trayRemoved(trayId: string): ActionRemoveTray {
-  return {type: Actions.TRAY_REMOVED, trayId}
+export function feedRemoved(trayId: string): ActionRemoveFeed {
+  return {type: Actions.FEED_REMOVED, trayId}
 }
 
 export function projectsFetched(trayId: string, projects: Projects, includeNew: boolean): ActionProjectsFetched {

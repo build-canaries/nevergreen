@@ -1,11 +1,11 @@
 import React, {ReactElement, SVGProps} from 'react'
-import {Tray} from '../../domain/Tray'
+import {Feed} from '../../domain/Feed'
 import {Xml} from '../../common/icons/Xml'
 import {CircleCi} from '../../common/icons/CircleCi'
 import {GoCd} from '../../common/icons/GoCd'
 
 interface FeedLogoProps extends SVGProps<SVGSVGElement> {
-  readonly feed: Tray;
+  readonly feed: Feed;
 }
 
 export function FeedLogo({feed, ...props}: FeedLogoProps): ReactElement {

@@ -4,7 +4,7 @@ import {buildRemoteBackupLocation, buildState} from '../testHelpers'
 import {BACKUP_REMOTE_LOCATIONS_ROOT} from '../settings/backup/RemoteLocationsReducer'
 import {SETTINGS_ROOT} from '../settings/SettingsReducer'
 import {PROJECTS_ROOT} from '../settings/tracking/ProjectsReducer'
-import {TRAYS_ROOT} from '../settings/tracking/TraysReducer'
+import {FEEDS_ROOT} from '../settings/tracking/FeedsReducer'
 import {APPLIED_MIGRATIONS_ROOT} from './MigrationsReducer'
 
 function expectErrors(result: Either<ReadonlyArray<string>, Configuration>, errors: ReadonlyArray<string>): void {
@@ -17,11 +17,11 @@ function expectErrors(result: Either<ReadonlyArray<string>, Configuration>, erro
 
 describe('toConfiguration', () => {
 
-  describe(TRAYS_ROOT, () => {
+  describe(FEEDS_ROOT, () => {
 
     it('parses valid to configuration', () => {
       const data: Configuration = {
-        [TRAYS_ROOT]: {
+        [FEEDS_ROOT]: {
           'some-tray-id': {
             url: 'some-url',
             trayId: 'some-tray-id'
@@ -36,9 +36,9 @@ describe('toConfiguration', () => {
       }
     })
 
-    it('rejects missing ID, as this is required to match projects to the owning tray', () => {
+    it('rejects missing ID, as this is required to match projects to the owning feed', () => {
       const data = {
-        [TRAYS_ROOT]: {
+        [FEEDS_ROOT]: {
           'some-tray-id': {
             url: 'some-url'
           }
@@ -50,7 +50,7 @@ describe('toConfiguration', () => {
 
     it('rejects missing URL, as this is required to actually contact the CI server', () => {
       const data = {
-        [TRAYS_ROOT]: {
+        [FEEDS_ROOT]: {
           'some-tray-id': {
             trayId: 'some-id'
           }
@@ -62,7 +62,7 @@ describe('toConfiguration', () => {
 
     it('rejects if the key does not match the ID', () => {
       const data = {
-        [TRAYS_ROOT]: {
+        [FEEDS_ROOT]: {
           'some-tray-id': {
             trayId: 'another-id',
             url: 'some-url'
@@ -252,7 +252,7 @@ describe('toConfiguration', () => {
   })
 
   it('keeps known properties', () => {
-    const data = {[TRAYS_ROOT]: {}}
+    const data = {[FEEDS_ROOT]: {}}
     const result = toConfiguration(data, DataSource.BrowserStorage)
     expect(isRight(result)).toBeTruthy()
     if (isRight(result)) {

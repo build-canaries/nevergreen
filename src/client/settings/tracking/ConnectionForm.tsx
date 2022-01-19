@@ -1,12 +1,12 @@
 import React, {ReactElement, useState} from 'react'
-import {AUTH_TYPE_OPTIONS, AuthTypes, isBasicFeed, Tray} from '../../domain/Tray'
+import {AUTH_TYPE_OPTIONS, AuthTypes, isBasicFeed, Feed} from '../../domain/Feed'
 import {useSelector} from 'react-redux'
 import {Form} from '../../common/forms/Form'
 import {Input} from '../../common/forms/Input'
 import {firstError, FormErrors} from '../../common/forms/Validation'
 import {isBlank} from '../../common/Utils'
 import {isValidHttpUrl, removeScheme} from '../../domain/Url'
-import {getTrays} from './TraysReducer'
+import {getFeeds} from './FeedsReducer'
 import {send} from '../../gateways/Gateway'
 import {encrypt} from '../../gateways/SecurityGateway'
 import {DropDown} from '../../common/forms/DropDown'
@@ -29,14 +29,14 @@ export interface ConnectionFormFields {
 }
 
 interface ConnectionFormProps {
-  readonly existingFeed?: Tray;
+  readonly existingFeed?: Feed;
   readonly onSuccess: (details: ConnectionFormFields) => string;
   readonly onCancel: string;
 }
 
 type Fields = 'url'
 
-function urlMatches(feed: Tray, url: string): boolean {
+function urlMatches(feed: Feed, url: string): boolean {
   return removeScheme(url) === removeScheme(feed.url)
 }
 
@@ -46,7 +46,7 @@ const EXTENDED_AUTH_TYPE_OPTIONS = [
 ]
 
 export function ConnectionForm({existingFeed, onSuccess, onCancel}: ConnectionFormProps): ReactElement {
-  const otherFeeds = useSelector(getTrays).filter((existing: Tray) => existing.trayId !== existingFeed?.trayId)
+  const otherFeeds = useSelector(getFeeds).filter((existing: Feed) => existing.trayId !== existingFeed?.trayId)
   const initialAuth = existingFeed ? KeepExistingAuth.keep : AuthTypes.none
   const authOptions = existingFeed ? EXTENDED_AUTH_TYPE_OPTIONS : AUTH_TYPE_OPTIONS
   const submitButtonText = existingFeed ? 'Save' : 'Add feed'

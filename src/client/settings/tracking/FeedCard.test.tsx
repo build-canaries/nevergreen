@@ -1,17 +1,17 @@
 import React from 'react'
-import {buildSavedProject, buildTray, render} from '../../testHelpers'
+import {buildSavedProject, buildFeed, render} from '../../testHelpers'
 import {screen} from '@testing-library/react'
 import {FeedCard} from './FeedCard'
-import {TRAYS_ROOT} from './TraysReducer'
+import {FEEDS_ROOT} from './FeedsReducer'
 import {PROJECTS_ROOT} from './ProjectsReducer'
 import {SELECTED_ROOT} from './SelectedReducer'
 
 it('should display the number of projects selected', () => {
-  const feed = buildTray({
+  const feed = buildFeed({
     trayId: 'trayId'
   })
   const state = {
-    [TRAYS_ROOT]: {trayId: feed},
+    [FEEDS_ROOT]: {trayId: feed},
     [PROJECTS_ROOT]: {
       trayId: [
         buildSavedProject({projectId: '1', removed: false}),

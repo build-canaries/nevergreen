@@ -9,7 +9,7 @@ import isEmpty from 'lodash/isEmpty'
 import {Title} from '../common/Title'
 import {useSelector} from 'react-redux'
 import {getRefreshTime, getShowPrognosis, getSort} from '../settings/SettingsReducer'
-import {getTrays} from '../settings/tracking/TraysReducer'
+import {getFeeds} from '../settings/tracking/FeedsReducer'
 import {getSelectedProjects} from '../settings/tracking/SelectedReducer'
 import {getKnownProjects} from '../settings/tracking/ProjectsReducer'
 import {interesting} from '../gateways/ProjectsGateway'
@@ -28,7 +28,7 @@ interface MonitorProps {
 
 export function Monitor({menusHidden, toggleMenusHidden}: MonitorProps): ReactElement {
   const refreshTime = useSelector(getRefreshTime)
-  const trays = useSelector(getTrays)
+  const feeds = useSelector(getFeeds)
   const selected = useSelector(getSelectedProjects)
   const knownProjects = useSelector(getKnownProjects)
   const prognosis = useSelector(getShowPrognosis)
@@ -45,7 +45,7 @@ export function Monitor({menusHidden, toggleMenusHidden}: MonitorProps): ReactEl
   }, [toggleMenusHidden])
 
   const {isLoading} = useQuery('monitor', async ({signal}) => {
-    return await send(interesting(trays, knownProjects, selected, prognosis, sort), signal)
+    return await send(interesting(feeds, knownProjects, selected, prognosis, sort), signal)
   }, {
     refetchInterval: refreshTime * 1000,
     refetchIntervalInBackground: true,
@@ -66,7 +66,7 @@ export function Monitor({menusHidden, toggleMenusHidden}: MonitorProps): ReactEl
     }
   })
 
-  const traysAdded = !isEmpty(trays)
+  const feedsAdded = !isEmpty(feeds)
   const success = isEmpty(projects)
 
   const monitorClassNames = cn(styles.monitor, {
@@ -76,10 +76,10 @@ export function Monitor({menusHidden, toggleMenusHidden}: MonitorProps): ReactEl
   return (
     <div className={monitorClassNames} ref={ref}>
       <Title>Monitor</Title>
-      {!traysAdded && (
+      {!feedsAdded && (
         <SuccessMessage message='Add a feed via the tracking page to start monitoring'/>
       )}
-      {traysAdded && (
+      {feedsAdded && (
         <Loading dark loaded={!isLoading}>
           {success && <Success/>}
           {!success && <InterestingProjects projects={projects}/>}

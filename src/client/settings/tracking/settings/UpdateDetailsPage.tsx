@@ -1,6 +1,6 @@
 import React, {ReactElement, useState} from 'react'
 import {Page} from '../../../common/Page'
-import {authTypeDisplay, CI_OPTIONS, generateRandomName, Tray} from '../../../domain/Tray'
+import {authTypeDisplay, CI_OPTIONS, generateRandomName, Feed} from '../../../domain/Feed'
 import {useDispatch} from 'react-redux'
 import {ROUTE_SETTINGS_TRACKING, routeFeedConnection} from '../../../Routes'
 import {InputButton} from '../../../common/forms/Button'
@@ -11,12 +11,12 @@ import {Checkbox} from '../../../common/forms/Checkbox'
 import {Dice} from '../../../common/icons/Dice'
 import {Summary} from '../../../common/Summary'
 import {BackButton, LinkButton, ManageFeedProjectsButton} from '../../../common/LinkButton'
-import {trayUpdated} from '../TrackingActionCreators'
+import {feedUpdated} from '../TrackingActionCreators'
 import {FeedLogo} from '../FeedLogo'
 import {Cog} from '../../../common/icons/Cog'
 
 interface UpdateDetailsPageProps {
-  readonly feed: Tray;
+  readonly feed: Feed;
 }
 
 export function UpdateDetailsPage({feed}: UpdateDetailsPageProps): ReactElement {
@@ -31,7 +31,7 @@ export function UpdateDetailsPage({feed}: UpdateDetailsPageProps): ReactElement 
   const randomNameButton = (
     <InputButton icon={<Dice/>}
                  onClick={() => setName(generateRandomName())}
-                 onBlur={() => dispatch(trayUpdated(feed.trayId, {name}))}>
+                 onBlur={() => dispatch(feedUpdated(feed.trayId, {name}))}>
       randomise name
     </InputButton>
   )
@@ -47,10 +47,10 @@ export function UpdateDetailsPage({feed}: UpdateDetailsPageProps): ReactElement 
         </LinkButton>
         <ManageFeedProjectsButton feedId={feed.trayId} title={feed.name}/>
       </section>
-      <Input className={styles.traySettingsName}
+      <Input className={styles.feedSettingsName}
              value={name}
              onChange={({target}) => setName(target.value)}
-             onBlur={() => dispatch(trayUpdated(feed.trayId, {name}))}
+             onBlur={() => dispatch(feedUpdated(feed.trayId, {name}))}
              placeholder='e.g. project or team name'
              button={randomNameButton}>
         Name
@@ -58,11 +58,11 @@ export function UpdateDetailsPage({feed}: UpdateDetailsPageProps): ReactElement 
       <DropDown className={styles.serverType}
                 options={CI_OPTIONS}
                 value={feed.serverType}
-                onChange={({target}) => dispatch(trayUpdated(feed.trayId, {serverType: target.value}))}>
+                onChange={({target}) => dispatch(feedUpdated(feed.trayId, {serverType: target.value}))}>
         Server type
       </DropDown>
       <Checkbox checked={feed.includeNew}
-                onToggle={(includeNew) => dispatch(trayUpdated(feed.trayId, {includeNew}))}
+                onToggle={(includeNew) => dispatch(feedUpdated(feed.trayId, {includeNew}))}
                 className={styles.includeNew}>
         Automatically include new projects
       </Checkbox>

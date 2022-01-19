@@ -18,7 +18,7 @@ const KEYWORDS = [
   'getting started'
 ]
 
-export function AddTrayHelp({searchQuery}: HelpProps): ReactElement {
+export function AddFeedHelp({searchQuery}: HelpProps): ReactElement {
   return (
     <HelpArticle title='Adding a CCTray XML feed'
                  keywords={KEYWORDS}

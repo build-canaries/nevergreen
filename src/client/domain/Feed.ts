@@ -34,13 +34,13 @@ interface TokenFeed extends BaseFeed {
   readonly encryptedAccessToken: string;
 }
 
-export type Tray = UnauthenticatedFeed | BasicFeed | TokenFeed
+export type Feed = UnauthenticatedFeed | BasicFeed | TokenFeed
 
-export function isBasicFeed(feed?: Tray): feed is BasicFeed {
+export function isBasicFeed(feed?: Feed): feed is BasicFeed {
   return feed?.authType === AuthTypes.basic
 }
 
-export function isTokenFeed(feed?: Tray): feed is TokenFeed {
+export function isTokenFeed(feed?: Feed): feed is TokenFeed {
   return feed?.authType === AuthTypes.token
 }
 
@@ -74,7 +74,7 @@ export function createId(): string {
   return uuid()
 }
 
-export function createTray(trayId: string, url: string, additional: Partial<Tray> = {}): Tray {
+export function createFeed(trayId: string, url: string, additional: Partial<Feed> = {}): Feed {
   return {
     authType: AuthTypes.none,
     includeNew: true,
@@ -83,15 +83,15 @@ export function createTray(trayId: string, url: string, additional: Partial<Tray
     trayId,
     url,
     ...additional
-  } as Tray
+  } as Feed
 }
 
-export function trayIdentifier(tray?: Tray | null): string {
-  return isNil(tray)
+export function feedIdentifier(feed?: Feed | null): string {
+  return isNil(feed)
     ? 'Nevergreen'
-    : isNotBlank(tray.name)
-      ? tray.name
-      : tray.url
+    : isNotBlank(feed.name)
+      ? feed.name
+      : feed.url
 }
 
 interface ConnectionDetails {
@@ -102,7 +102,7 @@ interface ConnectionDetails {
   readonly encryptedAccessToken?: string;
 }
 
-export function connectionDetails(feed: Tray): ConnectionDetails {
+export function connectionDetails(feed: Feed): ConnectionDetails {
   if (isBasicFeed(feed)) {
     return {
       authType: feed.authType,

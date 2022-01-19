@@ -7,14 +7,14 @@ import {errorMessage, isBlank, notEmpty} from '../../../common/Utils'
 import styles from './available-projects.scss'
 import {SecondaryButton} from '../../../common/forms/Button'
 import {enrichProjects, isError as isProjectError} from '../../../domain/Project'
-import {getProjectsForTray} from '../ProjectsReducer'
-import {getSelectedProjectsForTray} from '../SelectedReducer'
+import {getProjectsForFeed} from '../ProjectsReducer'
+import {getSelectedProjectsForFeed} from '../SelectedReducer'
 import {useDispatch, useSelector} from 'react-redux'
 import {projectSelected, projectsFetched} from '../TrackingActionCreators'
 import {fetchAll} from '../../../gateways/ProjectsGateway'
 import {send} from '../../../gateways/Gateway'
 import {Loading} from '../../../common/Loading'
-import {Tray} from '../../../domain/Tray'
+import {Feed} from '../../../domain/Feed'
 import {useLocation} from 'react-router-dom'
 import {REFRESH_HASH} from '../../../Routes'
 import {matchSorter} from 'match-sorter'
@@ -23,19 +23,19 @@ import {CheckboxUnchecked} from '../../../common/icons/CheckboxUnchecked'
 import {useQuery} from 'react-query'
 
 interface AvailableProjectsProps {
-  readonly tray: Tray;
+  readonly feed: Feed;
 }
 
-export function AvailableProjects({tray}: AvailableProjectsProps): ReactElement {
+export function AvailableProjects({feed}: AvailableProjectsProps): ReactElement {
   const {hash} = useLocation()
   const dispatch = useDispatch()
-  const projects = useSelector(getProjectsForTray(tray.trayId))
-  const selected = useSelector(getSelectedProjectsForTray(tray.trayId))
+  const projects = useSelector(getProjectsForFeed(feed.trayId))
+  const selected = useSelector(getSelectedProjectsForFeed(feed.trayId))
 
   const [search, setSearch] = useState<string>('')
 
-  const {isFetching, isError, error, refetch} = useQuery(['available-projects', tray.trayId], async ({signal}) => {
-    const res = await send(fetchAll([tray], projects), signal)
+  const {isFetching, isError, error, refetch} = useQuery(['available-projects', feed.trayId], async ({signal}) => {
+    const res = await send(fetchAll([feed], projects), signal)
     const fetchedProjects = enrichProjects(res, [])
     if (fetchedProjects.some(isProjectError)) {
       const errorMessages = fetchedProjects.map((projectError) => projectError.description)
@@ -45,7 +45,7 @@ export function AvailableProjects({tray}: AvailableProjectsProps): ReactElement 
   }, {
     enabled: hash === REFRESH_HASH,
     onSuccess: (res) => {
-      dispatch(projectsFetched(tray.trayId, res, tray.includeNew))
+      dispatch(projectsFetched(feed.trayId, res, feed.includeNew))
     }
   })
 
@@ -63,12 +63,12 @@ export function AvailableProjects({tray}: AvailableProjectsProps): ReactElement 
   const includeAll = useCallback(() => {
     filteredProjects
       .filter((project) => !project.removed)
-      .forEach((project) => dispatch(projectSelected(tray.trayId, project.projectId, true)))
-  }, [dispatch, tray.trayId, filteredProjects])
+      .forEach((project) => dispatch(projectSelected(feed.trayId, project.projectId, true)))
+  }, [dispatch, feed.trayId, filteredProjects])
 
   const excludeAll = useCallback(() => {
-    filteredProjects.forEach((project) => dispatch(projectSelected(tray.trayId, project.projectId, false)))
-  }, [dispatch, tray.trayId, filteredProjects])
+    filteredProjects.forEach((project) => dispatch(projectSelected(feed.trayId, project.projectId, false)))
+  }, [dispatch, feed.trayId, filteredProjects])
 
   const controls = (
     <div className={styles.controls}>
@@ -110,7 +110,7 @@ export function AvailableProjects({tray}: AvailableProjectsProps): ReactElement 
           return <AvailableProject key={project.projectId}
                                    {...project}
                                    selected={isSelected}
-                                   selectProject={(select) => dispatch(projectSelected(tray.trayId, project.projectId, select))}/>
+                                   selectProject={(select) => dispatch(projectSelected(feed.trayId, project.projectId, select))}/>
         })
       }
     </ol>
@@ -127,7 +127,7 @@ export function AvailableProjects({tray}: AvailableProjectsProps): ReactElement 
   return (
     <section className={styles.availableProjects}
              data-locator='available-projects'>
-      <Refresh timestamp={tray.timestamp}
+      <Refresh timestamp={feed.timestamp}
                refreshTray={() => refetch()}
                loaded={!isFetching}/>
       {controls}

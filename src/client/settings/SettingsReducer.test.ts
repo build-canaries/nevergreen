@@ -8,7 +8,7 @@ import {
   getShowBuildTime,
   getShowPrognosis,
   getShowSystemNotifications,
-  getShowTrayName,
+  getShowFeedIdentifier,
   getSort,
   getToggleVersionCheck,
   MaxProjectsToShow,
@@ -27,7 +27,7 @@ import {
   setShowBuildTime,
   setShowPrognosis,
   setShowSystemNotifications,
-  setShowTrayName,
+  setShowFeedIdentifier,
   setSort,
   toggleVersionCheck
 } from './SettingsActionCreators'
@@ -57,7 +57,7 @@ describe(Actions.CONFIGURATION_IMPORTED, () => {
     const existingState = state({showTrayName: false})
     const action = configurationImported({[SETTINGS_ROOT]: {showTrayName: true}})
     const newState = reducer(existingState, action)
-    expect(getShowTrayName(newState)).toBeTruthy()
+    expect(getShowFeedIdentifier(newState)).toBeTruthy()
   })
 
   it('should merge build timers enabled', () => {
@@ -136,13 +136,13 @@ describe(Actions.BROKEN_BUILD_SOUND_FX, () => {
   })
 })
 
-describe(Actions.SHOW_TRAY_NAME, () => {
+describe(Actions.SHOW_FEED_IDENTIFIER, () => {
 
   it('should set the tray name toggled property', () => {
     const existingState = state({showTrayName: false})
-    const action = setShowTrayName(true)
+    const action = setShowFeedIdentifier(true)
     const newState = reducer(existingState, action)
-    expect(getShowTrayName(newState)).toBeTruthy()
+    expect(getShowFeedIdentifier(newState)).toBeTruthy()
   })
 })
 

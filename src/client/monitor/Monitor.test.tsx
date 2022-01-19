@@ -2,8 +2,8 @@ import React from 'react'
 import {screen, waitFor} from '@testing-library/react'
 import noop from 'lodash/noop'
 import {Monitor} from './Monitor'
-import {buildProject, buildTray, render} from '../testHelpers'
-import {TRAYS_ROOT} from '../settings/tracking/TraysReducer'
+import {buildProject, buildFeed, render} from '../testHelpers'
+import {FEEDS_ROOT} from '../settings/tracking/FeedsReducer'
 import {SUCCESS_ROOT} from '../settings/success/SuccessReducer'
 import * as ProjectsGateway from '../gateways/ProjectsGateway'
 import * as Gateway from '../gateways/Gateway'
@@ -42,9 +42,9 @@ it('should request to show the header and footer when the user navigates away fr
   expect(toggleMenusHidden).toHaveBeenCalledWith(false)
 })
 
-it('should show a helpful message if no trays are added', () => {
+it('should show a helpful message if no feeds are added', () => {
   const state = {
-    [TRAYS_ROOT]: {}
+    [FEEDS_ROOT]: {}
   }
   render(<Monitor {...DEFAULT_PROPS}/>, {state})
   expect(screen.getByText('Add a feed via the tracking page to start monitoring')).toBeInTheDocument()
@@ -52,8 +52,8 @@ it('should show a helpful message if no trays are added', () => {
 
 it('should show a loading screen when first switching to the page', () => {
   const state = {
-    [TRAYS_ROOT]: {
-      [trayId]: buildTray({trayId})
+    [FEEDS_ROOT]: {
+      [trayId]: buildFeed({trayId})
     }
   }
   render(<Monitor {...DEFAULT_PROPS}/>, {state})
@@ -63,8 +63,8 @@ it('should show a loading screen when first switching to the page', () => {
 it('should show a success message if there are no projects', async () => {
   jest.spyOn(ProjectsGateway, 'interesting').mockReturnValue(fakeRequest([]))
   const state = {
-    [TRAYS_ROOT]: {
-      [trayId]: buildTray({trayId})
+    [FEEDS_ROOT]: {
+      [trayId]: buildFeed({trayId})
     },
     [SUCCESS_ROOT]: ['some-success-message']
   }
@@ -78,8 +78,8 @@ it('should not try updating after the user has navigated away from the page', ()
   jest.spyOn(ProjectsGateway, 'interesting').mockReturnValue(fakeRequest([]))
   jest.spyOn(Gateway, 'send').mockRejectedValue(new Error('Aborted'))
   const state = {
-    [TRAYS_ROOT]: {
-      [trayId]: buildTray({trayId})
+    [FEEDS_ROOT]: {
+      [trayId]: buildFeed({trayId})
     },
     [SUCCESS_ROOT]: ['some-success-message']
   }
@@ -92,8 +92,8 @@ it('should not try updating after the user has navigated away from the page', ()
 it('should display an error if the Nevergreen server is having issues', async () => {
   jest.spyOn(Gateway, 'send').mockRejectedValue(new Error('some-error'))
   const state = {
-    [TRAYS_ROOT]: {
-      [trayId]: buildTray({trayId})
+    [FEEDS_ROOT]: {
+      [trayId]: buildFeed({trayId})
     }
   }
   render(<Monitor {...DEFAULT_PROPS}/>, {state})
@@ -118,8 +118,8 @@ describe('audio notifications', () => {
       buildProject({trayId, prognosis: Prognosis.sick})
     ]))
     const state = {
-      [TRAYS_ROOT]: {
-        [trayId]: buildTray({trayId})
+      [FEEDS_ROOT]: {
+        [trayId]: buildFeed({trayId})
       },
       [SETTINGS_ROOT]: {
         playBrokenBuildSoundFx: true,
@@ -146,8 +146,8 @@ describe('audio notifications', () => {
       buildProject({trayId, prognosis: Prognosis.sick})
     ]))
     const state = {
-      [TRAYS_ROOT]: {
-        [trayId]: buildTray({trayId})
+      [FEEDS_ROOT]: {
+        [trayId]: buildFeed({trayId})
       },
       [SETTINGS_ROOT]: {
         playBrokenBuildSoundFx: false
@@ -168,8 +168,8 @@ describe('audio notifications', () => {
       buildProject({trayId, prognosis: Prognosis.unknown})
     ]))
     const state = {
-      [TRAYS_ROOT]: {
-        [trayId]: buildTray({trayId})
+      [FEEDS_ROOT]: {
+        [trayId]: buildFeed({trayId})
       },
       [SETTINGS_ROOT]: {
         playBrokenBuildSoundFx: true
@@ -190,8 +190,8 @@ describe('audio notifications', () => {
       buildProject({trayId, prognosis: Prognosis.sick})
     ]))
     const state = {
-      [TRAYS_ROOT]: {
-        [trayId]: buildTray({trayId})
+      [FEEDS_ROOT]: {
+        [trayId]: buildFeed({trayId})
       },
       [SETTINGS_ROOT]: {
         playBrokenBuildSoundFx: true,

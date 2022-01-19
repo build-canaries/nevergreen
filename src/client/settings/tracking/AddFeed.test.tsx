@@ -1,28 +1,28 @@
 import React from 'react'
-import {AddTray} from './AddTray'
+import {AddFeed} from './AddFeed'
 import userEvent from '@testing-library/user-event'
 import {screen, waitFor} from '@testing-library/react'
 import * as SecurityGateway from '../../gateways/SecurityGateway'
 import * as ProjectsGateway from '../../gateways/ProjectsGateway'
-import {getTrays, TRAYS_ROOT} from './TraysReducer'
-import {buildTray, render} from '../../testHelpers'
+import {getFeeds, FEEDS_ROOT} from './FeedsReducer'
+import {buildFeed, render} from '../../testHelpers'
 import {fakeRequest} from '../../gateways/Gateway'
 import {routeFeedProjects} from '../../Routes'
-import * as Tray from '../../domain/Tray'
-import {AuthTypes} from '../../domain/Tray'
+import * as Feed from '../../domain/Feed'
+import {AuthTypes} from '../../domain/Feed'
 
 beforeEach(() => {
   jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValue(fakeRequest(''))
 })
 
 it('should display an error if no URL is entered', () => {
-  render(<AddTray/>)
+  render(<AddFeed/>)
   userEvent.click(screen.getByText('Add feed'))
   expect(screen.getByText('Enter a URL to the CCTray XML feed')).toBeInTheDocument()
 })
 
 it('should display an error if the URL entered is not http(s)', () => {
-  render(<AddTray/>)
+  render(<AddFeed/>)
   userEvent.type(screen.getByLabelText('URL'), 'ftp://some-new-url')
   userEvent.click(screen.getByText('Add feed'))
   expect(screen.getByText('Only http(s) URLs are supported')).toBeInTheDocument()
@@ -30,15 +30,15 @@ it('should display an error if the URL entered is not http(s)', () => {
 
 it('should display an error if a feed with the same URL has already been added', () => {
   const state = {
-    [TRAYS_ROOT]: {
-      trayId: buildTray({
+    [FEEDS_ROOT]: {
+      trayId: buildFeed({
         trayId: 'trayId',
         url: 'https://some-url'
       })
     }
   }
 
-  render(<AddTray/>, {state})
+  render(<AddFeed/>, {state})
   userEvent.type(screen.getByLabelText('URL'), 'http://some-url')
   userEvent.click(screen.getByText('Add feed'))
 
@@ -46,14 +46,14 @@ it('should display an error if a feed with the same URL has already been added',
 })
 
 it('should allow adding feeds without auth', async () => {
-  jest.spyOn(Tray, 'createId').mockReturnValue('some-feed-id')
+  jest.spyOn(Feed, 'createId').mockReturnValue('some-feed-id')
   jest.spyOn(ProjectsGateway, 'testFeedConnection').mockResolvedValue(fakeRequest(undefined))
 
   const state = {
-    [TRAYS_ROOT]: {}
+    [FEEDS_ROOT]: {}
   }
 
-  const {store, history} = render(<AddTray/>, {state})
+  const {store, history} = render(<AddFeed/>, {state})
   userEvent.type(screen.getByLabelText('URL'), 'http://some-new-url')
 
   userEvent.click(screen.getByRole('button', {name: 'Check connection'}))
@@ -77,7 +77,7 @@ it('should allow adding feeds without auth', async () => {
       hash: '#refresh'
     }))
   })
-  expect(getTrays(store.getState())).toEqual(expect.arrayContaining([
+  expect(getFeeds(store.getState())).toEqual(expect.arrayContaining([
     expect.objectContaining({
       url: 'http://some-new-url'
     })
@@ -85,15 +85,15 @@ it('should allow adding feeds without auth', async () => {
 })
 
 it('should allow adding feeds with basic auth', async () => {
-  jest.spyOn(Tray, 'createId').mockReturnValue('some-feed-id')
+  jest.spyOn(Feed, 'createId').mockReturnValue('some-feed-id')
   jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValue(fakeRequest('encrypted-password'))
   jest.spyOn(ProjectsGateway, 'testFeedConnection').mockResolvedValue(fakeRequest(undefined))
 
   const state = {
-    [TRAYS_ROOT]: {}
+    [FEEDS_ROOT]: {}
   }
 
-  const {store, history} = render(<AddTray/>, {state})
+  const {store, history} = render(<AddFeed/>, {state})
   userEvent.type(screen.getByLabelText('URL'), 'http://some-new-url')
   userEvent.selectOptions(screen.getByLabelText('Authentication'), AuthTypes.basic)
   userEvent.type(screen.getByLabelText('Username'), 'some-username')
@@ -117,7 +117,7 @@ it('should allow adding feeds with basic auth', async () => {
   await waitFor(() => {
     expect(SecurityGateway.encrypt).toHaveBeenCalledWith('some-password')
   })
-  expect(getTrays(store.getState())).toEqual(expect.arrayContaining([
+  expect(getFeeds(store.getState())).toEqual(expect.arrayContaining([
     expect.objectContaining({
       encryptedPassword: 'encrypted-password'
     })
@@ -129,15 +129,15 @@ it('should allow adding feeds with basic auth', async () => {
 })
 
 it('should allow adding feeds with an access token', async () => {
-  jest.spyOn(Tray, 'createId').mockReturnValue('some-feed-id')
+  jest.spyOn(Feed, 'createId').mockReturnValue('some-feed-id')
   jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValue(fakeRequest('encrypted-token'))
   jest.spyOn(ProjectsGateway, 'testFeedConnection').mockResolvedValue(fakeRequest(undefined))
 
   const state = {
-    [TRAYS_ROOT]: {}
+    [FEEDS_ROOT]: {}
   }
 
-  const {store, history} = render(<AddTray/>, {state})
+  const {store, history} = render(<AddFeed/>, {state})
   userEvent.type(screen.getByLabelText('URL'), 'http://some-new-url')
   userEvent.selectOptions(screen.getByLabelText('Authentication'), AuthTypes.token)
   userEvent.type(screen.getByLabelText('Token'), 'some-token')
@@ -160,7 +160,7 @@ it('should allow adding feeds with an access token', async () => {
   await waitFor(() => {
     expect(SecurityGateway.encrypt).toHaveBeenCalledWith('some-token')
   })
-  expect(getTrays(store.getState())).toEqual(expect.arrayContaining([
+  expect(getFeeds(store.getState())).toEqual(expect.arrayContaining([
     expect.objectContaining({
       encryptedAccessToken: 'encrypted-token'
     })

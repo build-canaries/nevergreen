@@ -5,9 +5,9 @@ import {MaxProjectsToShow, SETTINGS_ROOT} from './settings/SettingsReducer'
 import {PROJECTS_ROOT, ProjectState} from './settings/tracking/ProjectsReducer'
 import {SELECTED_ROOT} from './settings/tracking/SelectedReducer'
 import {SUCCESS_ROOT} from './settings/success/SuccessReducer'
-import {TRAYS_ROOT} from './settings/tracking/TraysReducer'
+import {FEEDS_ROOT} from './settings/tracking/FeedsReducer'
 import {Prognosis, Project} from './domain/Project'
-import {createTray, Tray} from './domain/Tray'
+import {createFeed, Feed} from './domain/Feed'
 import {CombinedState, combineReducers, Middleware, Reducer} from 'redux'
 import {RecursivePartial} from './common/Types'
 import {render as testRender, RenderResult} from '@testing-library/react'
@@ -55,7 +55,7 @@ export function buildState(subState: RecursivePartial<State> = {}): State {
     [PROJECTS_ROOT]: {},
     [SELECTED_ROOT]: {},
     [SUCCESS_ROOT]: [],
-    [TRAYS_ROOT]: {},
+    [FEEDS_ROOT]: {},
     [APPLIED_MIGRATIONS_ROOT]: [],
     [BACKUP_REMOTE_LOCATIONS_ROOT]: {}
   }
@@ -111,8 +111,8 @@ export function render(component: ReactNode, options: RenderOptions = {}): Exten
   }
 }
 
-export function buildTray(tray: Partial<Tray> = {}): Tray {
-  return createTray('some-tray-id', 'http://some-url', tray)
+export function buildFeed(feed: Partial<Feed> = {}): Feed {
+  return createFeed('some-tray-id', 'http://some-url', feed)
 }
 
 export function buildProject(project: Partial<Project> = {}): Project {
@@ -175,7 +175,7 @@ export function testReducer(reducer: Partial<Reducer<State>>): Reducer<CombinedS
     [PROJECTS_ROOT]: (state: any = null) => state,
     [SELECTED_ROOT]: (state: any = null) => state,
     [SUCCESS_ROOT]: (state: any = null) => state,
-    [TRAYS_ROOT]: (state: any = null) => state,
+    [FEEDS_ROOT]: (state: any = null) => state,
     [APPLIED_MIGRATIONS_ROOT]: (state: any = null) => state,
     [BACKUP_REMOTE_LOCATIONS_ROOT]: (state: any = null) => state
   }, reducer))

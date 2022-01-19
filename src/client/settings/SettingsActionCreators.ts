@@ -11,7 +11,7 @@ export interface ActionShowBuildTime extends Action<Actions.SHOW_BUILD_TIME> {
 export interface ActionToggleVersionCheck extends Action<Actions.TOGGLE_VERSION_CHECK> {
 }
 
-export interface ActionShowTrayName extends Action<Actions.SHOW_TRAY_NAME> {
+export interface ActionShowFeedIdentifier extends Action<Actions.SHOW_FEED_IDENTIFIER> {
   readonly value: boolean;
 }
 
@@ -68,8 +68,8 @@ export function toggleVersionCheck(): ActionToggleVersionCheck {
   return {type: Actions.TOGGLE_VERSION_CHECK}
 }
 
-export function setShowTrayName(value: boolean): ActionShowTrayName {
-  return {type: Actions.SHOW_TRAY_NAME, value}
+export function setShowFeedIdentifier(value: boolean): ActionShowFeedIdentifier {
+  return {type: Actions.SHOW_FEED_IDENTIFIER, value}
 }
 
 export function setPlayBrokenBuildSoundFx(value: boolean): ActionPlayBrokenBuildSoundFx {

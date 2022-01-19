@@ -3,7 +3,7 @@ import {Prognosis, ProjectPrognosis} from '../domain/Project'
 import {SelectedState} from '../settings/tracking/SelectedReducer'
 import size from 'lodash/size'
 import omit from 'lodash/omit'
-import {AuthTypes, Tray} from '../domain/Tray'
+import {AuthTypes, Feed} from '../domain/Feed'
 import {ProjectState} from '../settings/tracking/ProjectsReducer'
 
 export enum SortBy {
@@ -80,13 +80,13 @@ export interface ProjectApi {
 
 export type ProjectsResponse = ReadonlyArray<ProjectError | ProjectApi>
 
-function toProjectsRequest(feed: Tray, knownProjects: ReadonlyArray<ProjectState>, selectedPerTray?: SelectedState): FeedRequest {
+function toProjectsRequest(feed: Feed, knownProjects: ReadonlyArray<ProjectState>, selectedPerFeed?: SelectedState): FeedRequest {
   const seen = knownProjects
     .filter((project) => project.trayId === feed.trayId)
     .map((project) => project.projectId)
 
-  const included = selectedPerTray
-    ? selectedPerTray[feed.trayId]
+  const included = selectedPerFeed
+    ? selectedPerFeed[feed.trayId]
     : undefined
 
   return {
@@ -100,12 +100,12 @@ function hasIncludedProjects(projectsRequest: FeedRequest) {
   return projectsRequest.includeNew || size(projectsRequest.included) > 0
 }
 
-export function fetchAll(trays: ReadonlyArray<Tray>, knownProjects: ReadonlyArray<ProjectState>): Request<ProjectsResponse> {
-  const feeds = trays
-    .map((tray) => toProjectsRequest(tray, knownProjects))
+export function fetchAll(feeds: ReadonlyArray<Feed>, knownProjects: ReadonlyArray<ProjectState>): Request<ProjectsResponse> {
+  const feedRequests = feeds
+    .map((feed) => toProjectsRequest(feed, knownProjects))
 
   const data: ProjectsRequest = {
-    feeds,
+    feeds: feedRequests,
     sort: SortBy.description
   }
 
@@ -113,23 +113,23 @@ export function fetchAll(trays: ReadonlyArray<Tray>, knownProjects: ReadonlyArra
 }
 
 export function interesting(
-  trays: ReadonlyArray<Tray>,
+  feeds: ReadonlyArray<Feed>,
   knownProjects: ReadonlyArray<ProjectState>,
   selectedPerTray: SelectedState,
   prognosis: ReadonlyArray<Prognosis>,
   sort: SortBy
 ): Request<ProjectsResponse> {
-  const feeds = trays
-    .map((tray) => toProjectsRequest(tray, knownProjects, selectedPerTray))
+  const feedRequests = feeds
+    .map((feed) => toProjectsRequest(feed, knownProjects, selectedPerTray))
     .filter(hasIncludedProjects)
 
   const data: ProjectsRequest = {
-    feeds,
+    feeds: feedRequests,
     prognosis,
     sort
   }
 
-  return size(feeds) === 0
+  return size(feedRequests) === 0
     ? fakeRequest([])
     : post('/api/projects', data)
 }

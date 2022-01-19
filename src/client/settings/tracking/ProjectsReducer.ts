@@ -1,7 +1,7 @@
 import {Actions} from '../../Actions'
 import unionWith from 'lodash/unionWith'
 import pick from 'lodash/pick'
-import {ActionProjectsFetched, ActionRemoveTray, ActionTrayAdded} from './TrackingActionCreators'
+import {ActionProjectsFetched, ActionRemoveFeed, ActionFeedAdded} from './TrackingActionCreators'
 import {createReducer, createSelector} from '@reduxjs/toolkit'
 import {State} from '../../Reducer'
 import {ActionConfigurationImported} from '../backup/BackupActionCreators'
@@ -28,10 +28,10 @@ export const reduce = createReducer<ProjectsState>(DEFAULT_STATE, {
       ? action.configuration[PROJECTS_ROOT] as ProjectsState
       : draft
   },
-  [Actions.TRAY_ADDED]: (draft, action: ActionTrayAdded) => {
+  [Actions.FEED_ADDED]: (draft, action: ActionFeedAdded) => {
     draft[action.trayId] = []
   },
-  [Actions.TRAY_REMOVED]: (draft, action: ActionRemoveTray) => {
+  [Actions.FEED_REMOVED]: (draft, action: ActionRemoveFeed) => {
     delete draft[action.trayId]
   },
   [Actions.PROJECTS_FETCHED]: (draft, action: ActionProjectsFetched) => {
@@ -55,7 +55,7 @@ function getProjects(state: State) {
   return state[PROJECTS_ROOT]
 }
 
-export function getProjectsForTray(trayId: string): (state: State) => ReadonlyArray<ProjectState> {
+export function getProjectsForFeed(trayId: string): (state: State) => ReadonlyArray<ProjectState> {
   return createSelector(getProjects, (projects) => projects[trayId])
 }
 

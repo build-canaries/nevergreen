@@ -1,10 +1,10 @@
 import React from 'react'
 import {screen, waitFor} from '@testing-library/react'
-import {buildTray, render} from '../../../testHelpers'
-import {getTray, TRAYS_ROOT} from '../TraysReducer'
+import {buildFeed, render} from '../../../testHelpers'
+import {getFeed, FEEDS_ROOT} from '../FeedsReducer'
 import userEvent from '@testing-library/user-event'
 import {routeFeedDetails} from '../../../Routes'
-import {AuthTypes} from '../../../domain/Tray'
+import {AuthTypes} from '../../../domain/Feed'
 import * as SecurityGateway from '../../../gateways/SecurityGateway'
 import * as ProjectsGateway from '../../../gateways/ProjectsGateway'
 import {fakeRequest} from '../../../gateways/Gateway'
@@ -17,7 +17,7 @@ beforeEach(() => {
 it('should be able to update the URL', async () => {
   jest.spyOn(ProjectsGateway, 'testFeedConnection').mockResolvedValue(fakeRequest(undefined))
 
-  const tray = buildTray({
+  const feed = buildFeed({
     url: 'http://old',
     trayId: 'trayId',
     authType: AuthTypes.basic,
@@ -25,9 +25,9 @@ it('should be able to update the URL', async () => {
     encryptedPassword: 'some-encrypted-password'
   })
   const state = {
-    [TRAYS_ROOT]: {trayId: tray}
+    [FEEDS_ROOT]: {trayId: feed}
   }
-  const {store, history} = render(<UpdateConnectionPage feed={tray}/>, {state})
+  const {store, history} = render(<UpdateConnectionPage feed={feed}/>, {state})
 
   userEvent.clear(screen.getByLabelText('URL'))
   userEvent.type(screen.getByLabelText('URL'), 'http://new')
@@ -47,7 +47,7 @@ it('should be able to update the URL', async () => {
   userEvent.click(screen.getByRole('button', {name: 'Save'}))
 
   await waitFor(() => {
-    expect(getTray('trayId')(store.getState())).toEqual(expect.objectContaining({
+    expect(getFeed('trayId')(store.getState())).toEqual(expect.objectContaining({
       url: 'http://new'
     }))
   })
@@ -58,13 +58,13 @@ it('should be able to update authentication', async () => {
   jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValue(fakeRequest('encrypted-token'))
   jest.spyOn(ProjectsGateway, 'testFeedConnection').mockResolvedValue(fakeRequest(undefined))
 
-  const feed = buildTray({
+  const feed = buildFeed({
     trayId: 'trayId',
     authType: AuthTypes.none,
     url: 'http://some-url'
   })
   const state = {
-    [TRAYS_ROOT]: {trayId: feed}
+    [FEEDS_ROOT]: {trayId: feed}
   }
   const {store, history} = render(<UpdateConnectionPage feed={feed}/>, {state})
 
@@ -87,7 +87,7 @@ it('should be able to update authentication', async () => {
   userEvent.click(screen.getByRole('button', {name: 'Save'}))
 
   await waitFor(() => {
-    expect(getTray('trayId')(store.getState())).toEqual(expect.objectContaining({
+    expect(getFeed('trayId')(store.getState())).toEqual(expect.objectContaining({
       authType: AuthTypes.token,
       encryptedAccessToken: 'encrypted-token'
     }))
@@ -97,14 +97,14 @@ it('should be able to update authentication', async () => {
 
 describe('validation errors', () => {
   it('should display an error if no URL is entered', () => {
-    const tray = buildTray({
+    const feed = buildFeed({
       trayId: 'trayId',
       name: 'some-name'
     })
     const state = {
-      [TRAYS_ROOT]: {trayId: tray}
+      [FEEDS_ROOT]: {trayId: feed}
     }
-    render(<UpdateConnectionPage feed={tray}/>, {state})
+    render(<UpdateConnectionPage feed={feed}/>, {state})
 
     userEvent.clear(screen.getByLabelText('URL'))
     userEvent.click(screen.getByRole('button', {name: 'Save'}))
@@ -113,12 +113,12 @@ describe('validation errors', () => {
   })
 
   it('should display an error if non http(s) URL is entered', () => {
-    const tray = buildTray({
+    const tray = buildFeed({
       trayId: 'trayId',
       name: 'some-name'
     })
     const state = {
-      [TRAYS_ROOT]: {trayId: tray}
+      [FEEDS_ROOT]: {trayId: tray}
     }
     render(<UpdateConnectionPage feed={tray}/>, {state})
 
@@ -130,20 +130,20 @@ describe('validation errors', () => {
   })
 
   it('should display an error if a URL already in use by another feed is entered', () => {
-    const tray = buildTray({
+    const feed = buildFeed({
       trayId: 'trayId'
     })
-    const other = buildTray({
+    const other = buildFeed({
       trayId: 'otherId',
       url: 'http://other'
     })
     const state = {
-      [TRAYS_ROOT]: {
-        trayId: tray,
+      [FEEDS_ROOT]: {
+        trayId: feed,
         otherId: other
       }
     }
-    render(<UpdateConnectionPage feed={tray}/>, {state})
+    render(<UpdateConnectionPage feed={feed}/>, {state})
 
     userEvent.clear(screen.getByLabelText('URL'))
     userEvent.type(screen.getByLabelText('URL'), 'http://other')

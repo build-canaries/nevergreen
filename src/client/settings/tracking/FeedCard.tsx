@@ -3,18 +3,18 @@ import {isBlank} from '../../common/Utils'
 import {Duration} from '../../common/Duration'
 import {URL} from '../../common/URL'
 import {Summary} from '../../common/Summary'
-import {authTypeDisplay, serverTypeDisplay, Tray} from '../../domain/Tray'
+import {authTypeDisplay, serverTypeDisplay, Feed} from '../../domain/Feed'
 import {useDispatch, useSelector} from 'react-redux'
-import {getSelectedProjectsForTray} from './SelectedReducer'
-import {getProjectsForTray} from './ProjectsReducer'
+import {getSelectedProjectsForFeed} from './SelectedReducer'
+import {getProjectsForFeed} from './ProjectsReducer'
 import {Card} from '../../common/card/Card'
 import {CardHeading} from '../../common/card/CardHeading'
-import {trayRemoved} from './TrackingActionCreators'
+import {feedRemoved} from './TrackingActionCreators'
 import {ManageFeedProjectsButton, UpdateFeedDetailsButton} from '../../common/LinkButton'
 import {FeedLogo} from './FeedLogo'
 
 interface FeedCardProps {
-  readonly feed: Tray;
+  readonly feed: Feed;
 }
 
 function timestamp(time: string | undefined): ReactElement | string {
@@ -23,8 +23,8 @@ function timestamp(time: string | undefined): ReactElement | string {
 
 export function FeedCard({feed}: FeedCardProps): ReactElement {
   const dispatch = useDispatch()
-  const selectedProjects = useSelector(getSelectedProjectsForTray(feed.trayId))
-  const allProjects = useSelector(getProjectsForTray(feed.trayId)).filter((project) => !project.removed)
+  const selectedProjects = useSelector(getSelectedProjectsForFeed(feed.trayId))
+  const allProjects = useSelector(getProjectsForFeed(feed.trayId)).filter((project) => !project.removed)
 
   const title = feed.name ? feed.name : 'Unnamed feed'
 
@@ -38,7 +38,7 @@ export function FeedCard({feed}: FeedCardProps): ReactElement {
 
   const header = <CardHeading title={title}
                               icon={<FeedLogo feed={feed}/>}
-                              onRemove={() => dispatch(trayRemoved(feed.trayId))}/>
+                              onRemove={() => dispatch(feedRemoved(feed.trayId))}/>
 
   return (
     <Card header={header}>

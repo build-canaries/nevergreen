@@ -3,7 +3,7 @@ import {render} from '../../testHelpers'
 import {screen, waitFor} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import {TestConnection} from './TestConnection'
-import {AuthTypes} from '../../domain/Tray'
+import {AuthTypes} from '../../domain/Feed'
 import * as ProjectsGateway from '../../gateways/ProjectsGateway'
 import {fakeRequest} from '../../gateways/Gateway'
 

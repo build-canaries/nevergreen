@@ -1,10 +1,10 @@
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import {screen, waitFor} from '@testing-library/react'
-import {buildProject, buildProjectError, buildTray, render} from '../../../testHelpers'
+import {buildProject, buildProjectError, buildFeed, render} from '../../../testHelpers'
 import {fakeRequest} from '../../../gateways/Gateway'
 import {AvailableProjects} from './AvailableProjects'
-import {TRAYS_ROOT} from '../TraysReducer'
+import {FEEDS_ROOT} from '../FeedsReducer'
 import {PROJECTS_ROOT} from '../ProjectsReducer'
 import {SELECTED_ROOT} from '../SelectedReducer'
 import * as ProjectsGateway from '../../../gateways/ProjectsGateway'
@@ -15,11 +15,11 @@ beforeEach(() => {
 })
 
 it('should be able to select projects', () => {
-  const tray = buildTray({trayId: 'trayId'})
+  const feed = buildFeed({trayId: 'trayId'})
   const project = buildProject({trayId: 'trayId', projectId: 'projectId', description: 'some project'})
   const state = {
-    [TRAYS_ROOT]: {
-      trayId: tray
+    [FEEDS_ROOT]: {
+      trayId: feed
     },
     [PROJECTS_ROOT]: {
       trayId: [project]
@@ -29,7 +29,7 @@ it('should be able to select projects', () => {
     }
   }
 
-  render(<AvailableProjects tray={tray}/>, {state})
+  render(<AvailableProjects feed={feed}/>, {state})
   const selectInput = screen.getByLabelText(/some project/)
 
   expect(selectInput).not.toBeChecked()
@@ -46,10 +46,10 @@ it('should correctly show and remove errors returned while refreshing', async ()
     .mockResolvedValueOnce(fakeRequest([
       buildProject()
     ]))
-  const tray = buildTray({trayId: 'trayId'})
+  const feed = buildFeed({trayId: 'trayId'})
   const state = {
-    [TRAYS_ROOT]: {
-      trayId: tray
+    [FEEDS_ROOT]: {
+      trayId: feed
     },
     [PROJECTS_ROOT]: {
       trayId: []
@@ -59,7 +59,7 @@ it('should correctly show and remove errors returned while refreshing', async ()
     }
   }
 
-  render(<AvailableProjects tray={tray}/>, {state})
+  render(<AvailableProjects feed={feed}/>, {state})
   userEvent.click(screen.getByRole('button', {name: 'Refresh'}))
 
   await waitFor(() => {
@@ -74,10 +74,10 @@ it('should correctly show and remove errors returned while refreshing', async ()
 })
 
 it('should show a warning if there are no projects', () => {
-  const tray = buildTray({trayId: 'trayId'})
+  const feed = buildFeed({trayId: 'trayId'})
   const state = {
-    [TRAYS_ROOT]: {
-      trayId: tray
+    [FEEDS_ROOT]: {
+      trayId: feed
     },
     [PROJECTS_ROOT]: {
       trayId: []
@@ -86,15 +86,15 @@ it('should show a warning if there are no projects', () => {
       trayId: []
     }
   }
-  render(<AvailableProjects tray={tray}/>, {state})
+  render(<AvailableProjects feed={feed}/>, {state})
   expect(screen.getByText('No projects fetched, please refresh')).toBeInTheDocument()
 })
 
 it('should show a warning if no projects match the search', () => {
-  const tray = buildTray({trayId: 'trayId'})
+  const feed = buildFeed({trayId: 'trayId'})
   const state = {
-    [TRAYS_ROOT]: {
-      trayId: tray
+    [FEEDS_ROOT]: {
+      trayId: feed
     },
     [PROJECTS_ROOT]: {
       trayId: [
@@ -109,7 +109,7 @@ it('should show a warning if no projects match the search', () => {
     }
   }
 
-  render(<AvailableProjects tray={tray}/>, {state})
+  render(<AvailableProjects feed={feed}/>, {state})
   userEvent.type(screen.getByLabelText('Search'), 'bar')
 
   expect(screen.getByText('No matching projects, please update your search')).toBeInTheDocument()
@@ -117,11 +117,11 @@ it('should show a warning if no projects match the search', () => {
 
 it('should refresh automatically if the url contains #refresh', () => {
   jest.spyOn(ProjectsGateway, 'fetchAll').mockResolvedValue(fakeRequest([]))
-  const tray = buildTray({trayId: 'trayId'})
+  const feed = buildFeed({trayId: 'trayId'})
   const project = buildProject({trayId: 'trayId', projectId: 'projectId', description: 'some project'})
   const state = {
-    [TRAYS_ROOT]: {
-      trayId: tray
+    [FEEDS_ROOT]: {
+      trayId: feed
     },
     [PROJECTS_ROOT]: {
       trayId: [project]
@@ -131,7 +131,7 @@ it('should refresh automatically if the url contains #refresh', () => {
     }
   }
 
-  render(<AvailableProjects tray={tray}/>, {state, currentLocation: `/${REFRESH_HASH}`})
+  render(<AvailableProjects feed={feed}/>, {state, currentLocation: `/${REFRESH_HASH}`})
 
   expect(ProjectsGateway.fetchAll).toHaveBeenCalled()
 })
@@ -139,10 +139,10 @@ it('should refresh automatically if the url contains #refresh', () => {
 describe('accessibility', () => {
 
   it('should announce projects if a user refreshes', () => {
-    const tray = buildTray({trayId: 'trayId'})
+    const feed = buildFeed({trayId: 'trayId'})
     const state = {
-      [TRAYS_ROOT]: {
-        trayId: tray
+      [FEEDS_ROOT]: {
+        trayId: feed
       },
       [PROJECTS_ROOT]: {
         trayId: [
@@ -155,7 +155,7 @@ describe('accessibility', () => {
         trayId: []
       }
     }
-    render(<AvailableProjects tray={tray}/>, {state})
+    render(<AvailableProjects feed={feed}/>, {state})
     expect(screen.getByTestId('available-projects-list')).toHaveAttribute('aria-live', 'polite')
   })
 
@@ -163,10 +163,10 @@ describe('accessibility', () => {
   // The user would need to refresh again to actually remove the project checkbox from the DOM, at which
   // point they should already know the project has been removed and thus it doesn't need to be announced
   it('should only announce project additions', () => {
-    const tray = buildTray({trayId: 'trayId'})
+    const feed = buildFeed({trayId: 'trayId'})
     const state = {
-      [TRAYS_ROOT]: {
-        trayId: tray
+      [FEEDS_ROOT]: {
+        trayId: feed
       },
       [PROJECTS_ROOT]: {
         trayId: [
@@ -179,7 +179,7 @@ describe('accessibility', () => {
         trayId: []
       }
     }
-    render(<AvailableProjects tray={tray}/>, {state})
+    render(<AvailableProjects feed={feed}/>, {state})
     expect(screen.getByTestId('available-projects-list')).toHaveAttribute('aria-relevant', 'additions')
   })
 })

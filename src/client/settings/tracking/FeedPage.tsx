@@ -1,6 +1,6 @@
 import React, {ReactElement} from 'react'
 import {useSelector} from 'react-redux'
-import {getTray} from './TraysReducer'
+import {getFeed} from './FeedsReducer'
 import {useParams} from 'react-router-dom'
 import {Redirect, Route, Switch} from 'react-router'
 import {
@@ -9,14 +9,14 @@ import {
   ROUTE_TRACKING_FEED_DETAILS,
   ROUTE_TRACKING_FEED_PROJECTS
 } from '../../Routes'
-import {Tray} from '../../domain/Tray'
+import {Feed} from '../../domain/Feed'
 import {ManageProjectsPage} from './projects/ManageProjectsPage'
 import {UpdateDetailsPage} from './settings/UpdateDetailsPage'
 import {UpdateConnectionPage} from './settings/UpdateConnectionPage'
 
 export function FeedPage(): ReactElement {
   const {id} = useParams<{ id: string }>()
-  const feed = useSelector(getTray(id))
+  const feed = useSelector(getFeed(id))
 
   if (feed) {
     return <FeedPageFeed feed={feed}/>
@@ -25,7 +25,7 @@ export function FeedPage(): ReactElement {
   }
 }
 
-function FeedPageFeed({feed}: { feed: Tray }): ReactElement {
+function FeedPageFeed({feed}: { feed: Feed }): ReactElement {
   return (
     <Switch>
       <Route exact path={ROUTE_TRACKING_FEED_PROJECTS}>

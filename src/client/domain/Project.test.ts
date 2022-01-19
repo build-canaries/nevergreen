@@ -103,7 +103,7 @@ describe('projectIdentifier', () => {
     expect(projectIdentifier(project)).toBe('some-url')
   })
 
-  it('should return the tray and project Ids as the identifier for projects as multiple trays could have the same projects', () => {
+  it('should return the feed and project Ids as the identifier for projects as multiple feeds could have the same projects', () => {
     const project = buildProject({trayId: 'some-tray-id', projectId: 'some-project-id'})
     expect(projectIdentifier(project)).toBe('some-tray-id#some-project-id')
   })
@@ -140,7 +140,7 @@ describe('projectBuildLabel', () => {
 
 describe('enrichProjects', () => {
 
-  it('should add how long a tray has been in error', () => {
+  it('should add how long a feed has been in error', () => {
     const fetched = [buildProjectError({
       timestamp: 'updated-fetched-time',
       webUrl: 'some-url'

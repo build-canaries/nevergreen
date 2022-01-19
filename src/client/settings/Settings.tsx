@@ -31,7 +31,7 @@ import {NotificationSettings} from './notifications/NotificationSettings'
 import {SuccessMessages} from './success/SuccessMessages'
 import {BackupPage} from './backup/BackupPage'
 import {Reset} from './reset/Reset'
-import {AddTray} from './tracking/AddTray'
+import {AddFeed} from './tracking/AddFeed'
 import {FeedPage} from './tracking/FeedPage'
 import {List} from '../common/icons/List'
 import {Display} from '../common/icons/Display'
@@ -77,7 +77,7 @@ export function Settings(): ReactElement {
       <div>
         <Switch>
           <Route exact path={ROUTE_SETTINGS_TRACKING} component={TrackingPage}/>
-          <Route exact path={ROUTE_TRACKING_ADD} component={AddTray}/>
+          <Route exact path={ROUTE_TRACKING_ADD} component={AddFeed}/>
           <Route path={ROUTE_TRACKING_FEED} component={FeedPage}/>
           <Route exact path={ROUTE_SETTINGS_SUCCESS} component={SuccessMessages}/>
           <Route exact path={ROUTE_SETTINGS_DISPLAY} component={DisplaySettings}/>
