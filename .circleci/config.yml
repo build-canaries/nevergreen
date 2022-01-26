@@ -232,22 +232,6 @@ jobs:
                 name: create release tweet
                 command: ./.circleci/release-tweet.sh
 
-  security-audits:
-    executor: clojure
-    steps:
-      - init:
-          after:
-            - run:
-                name: check client dependencies
-                environment:
-                  BASH_ENV: "~/.nvm/nvm.sh"
-                command: |
-                  mkdir -p ./target/security-reports/client
-                  npm --no-color audit | tee ./target/security-reports/client/npm-audit.txt
-
-            - store_artifacts:
-                path: ./target/security-reports
-
 workflows:
   version: 2
   build-deploy:
@@ -266,13 +250,3 @@ workflows:
       - deploy-prod:
           requires:
             - hold
-  security-audits-workflow:
-    triggers:
-      - schedule:
-          cron: "17 20 * * *"
-          filters:
-            branches:
-              only:
-                - main
-    jobs:
-      - security-audits
