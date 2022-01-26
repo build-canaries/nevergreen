@@ -4,7 +4,7 @@ import {SecondaryButton} from '../../common/forms/Button'
 import {useQuery} from 'react-query'
 import {errorMessage} from '../../common/Utils'
 import styles from './test-connection.scss'
-import {AuthTypes, isBasicFeed, isTokenFeed, Feed} from '../../domain/Feed'
+import {AuthTypes, Feed} from '../../domain/Feed'
 import {KeepExistingAuth, UpdateExistingAuthTypes} from './ConnectionForm'
 import {testFeedConnection} from '../../gateways/ProjectsGateway'
 import {Loop} from '../../common/icons/Loop'
@@ -32,10 +32,10 @@ export function TestConnection({existingFeed, details}: TestConnectionProps): Re
       authType: (keepingAuth ? existingFeed?.authType : details.authType) as AuthTypes,
       url: details.url,
       accessToken: keepingAuth ? undefined : details.accessToken,
-      encryptedAccessToken: keepingAuth && isTokenFeed(existingFeed) ? existingFeed.encryptedAccessToken : undefined,
+      encryptedAccessToken: keepingAuth ? existingFeed?.encryptedAccessToken : undefined,
       password: keepingAuth ? undefined : details.password,
-      encryptedPassword: keepingAuth && isBasicFeed(existingFeed) ? existingFeed.encryptedPassword : undefined,
-      username: keepingAuth && isBasicFeed(existingFeed) ? existingFeed.username : details.username
+      encryptedPassword: keepingAuth ? existingFeed?.encryptedPassword : undefined,
+      username: keepingAuth ? existingFeed?.username : details.username
     }
     return send(testFeedConnection(request), signal)
   }, {

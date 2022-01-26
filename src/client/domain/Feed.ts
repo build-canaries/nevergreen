@@ -9,39 +9,17 @@ export enum AuthTypes {
   token = 'token'
 }
 
-interface BaseFeed {
+export interface Feed {
   readonly authType: AuthTypes;
+  readonly encryptedAccessToken?: string;
+  readonly encryptedPassword?: string;
   readonly includeNew: boolean;
   readonly name?: string;
   readonly serverType: string;
   readonly timestamp?: string;
   readonly trayId: string;
   readonly url: string;
-}
-
-interface UnauthenticatedFeed extends BaseFeed {
-  readonly authType: AuthTypes.none;
-}
-
-interface BasicFeed extends BaseFeed {
-  readonly authType: AuthTypes.basic;
-  readonly encryptedPassword: string;
-  readonly username: string;
-}
-
-interface TokenFeed extends BaseFeed {
-  readonly authType: AuthTypes.token;
-  readonly encryptedAccessToken: string;
-}
-
-export type Feed = UnauthenticatedFeed | BasicFeed | TokenFeed
-
-export function isBasicFeed(feed?: Feed): feed is BasicFeed {
-  return feed?.authType === AuthTypes.basic
-}
-
-export function isTokenFeed(feed?: Feed): feed is TokenFeed {
-  return feed?.authType === AuthTypes.token
+  readonly username?: string;
 }
 
 export const CI_OPTIONS = [
@@ -83,7 +61,7 @@ export function createFeed(trayId: string, url: string, additional: Partial<Feed
     trayId,
     url,
     ...additional
-  } as Feed
+  }
 }
 
 export function feedIdentifier(feed?: Feed | null): string {
@@ -92,34 +70,4 @@ export function feedIdentifier(feed?: Feed | null): string {
     : isNotBlank(feed.name)
       ? feed.name
       : feed.url
-}
-
-interface ConnectionDetails {
-  readonly url: string;
-  readonly authType: AuthTypes;
-  readonly username?: string;
-  readonly encryptedPassword?: string;
-  readonly encryptedAccessToken?: string;
-}
-
-export function connectionDetails(feed: Feed): ConnectionDetails {
-  if (isBasicFeed(feed)) {
-    return {
-      authType: feed.authType,
-      url: feed.url,
-      username: feed.username,
-      encryptedPassword: feed.encryptedPassword
-    }
-  } else if (isTokenFeed(feed)) {
-    return {
-      authType: feed.authType,
-      url: feed.url,
-      encryptedAccessToken: feed.encryptedAccessToken
-    }
-  } else {
-    return {
-      authType: feed.authType,
-      url: feed.url
-    }
-  }
 }

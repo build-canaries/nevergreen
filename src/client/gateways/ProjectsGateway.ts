@@ -19,48 +19,18 @@ interface ProjectsRequest {
   readonly sort?: SortBy;
 }
 
-interface BaseFeedRequest {
+export interface FeedRequest {
   readonly authType: AuthTypes;
-  readonly included?: ReadonlyArray<string>;
+  readonly encryptedPassword?: string;
+  readonly encryptedToken?: string;
   readonly includeNew: boolean;
+  readonly included?: ReadonlyArray<string>;
   readonly seen: ReadonlyArray<string>;
   readonly serverType?: string;
   readonly trayId: string;
   readonly url: string;
+  readonly username?: string;
 }
-
-interface UnauthenticatedFeedRequest extends BaseFeedRequest {
-  readonly authType: AuthTypes.none;
-}
-
-interface EncryptedBasicFeedRequest extends BaseFeedRequest {
-  readonly authType: AuthTypes.basic;
-  readonly encryptedPassword: string;
-  readonly username: string;
-}
-
-interface UnencryptedBasicFeedRequest extends BaseFeedRequest {
-  readonly authType: AuthTypes.basic;
-  readonly password: string;
-  readonly username: string;
-}
-
-interface EncryptedTokenFeedRequest extends BaseFeedRequest {
-  readonly authType: AuthTypes.token;
-  readonly encryptedToken: string;
-}
-
-interface UnencryptedTokenFeedRequest extends BaseFeedRequest {
-  readonly authType: AuthTypes.token;
-  readonly accessToken: string;
-}
-
-export type FeedRequest =
-  UnauthenticatedFeedRequest
-  | UnencryptedBasicFeedRequest
-  | EncryptedBasicFeedRequest
-  | UnencryptedTokenFeedRequest
-  | EncryptedTokenFeedRequest
 
 export interface ProjectError extends ServerError {
   readonly trayId: string;
@@ -93,7 +63,7 @@ function toProjectsRequest(feed: Feed, knownProjects: ReadonlyArray<ProjectState
     ...omit(feed, 'name'),
     included,
     seen
-  } as FeedRequest
+  }
 }
 
 function hasIncludedProjects(projectsRequest: FeedRequest) {
