@@ -1,9 +1,7 @@
 import React, {ReactElement} from 'react'
-import {isBlank} from '../../common/Utils'
-import {Duration} from '../../common/Duration'
 import {URL} from '../../common/URL'
 import {Summary} from '../../common/Summary'
-import {authTypeDisplay, serverTypeDisplay, Feed} from '../../domain/Feed'
+import {Feed} from '../../domain/Feed'
 import {useDispatch, useSelector} from 'react-redux'
 import {getSelectedProjectsForFeed} from './SelectedReducer'
 import {getProjectsForFeed} from './ProjectsReducer'
@@ -17,10 +15,6 @@ interface FeedCardProps {
   readonly feed: Feed;
 }
 
-function timestamp(time: string | undefined): ReactElement | string {
-  return isBlank(time) ? 'Never' : <Duration suffix='ago' timestamp={time}/>
-}
-
 export function FeedCard({feed}: FeedCardProps): ReactElement {
   const dispatch = useDispatch()
   const selectedProjects = useSelector(getSelectedProjectsForFeed(feed.trayId))
@@ -30,10 +24,7 @@ export function FeedCard({feed}: FeedCardProps): ReactElement {
 
   const summary = [
     {label: 'Projects selected', value: `${selectedProjects.length} of ${allProjects.length}`},
-    {label: 'Last refresh', value: timestamp(feed.timestamp)},
-    {label: 'URL', value: <URL url={feed.url}/>},
-    {label: 'Authentication', value: authTypeDisplay(feed.authType)},
-    {label: 'Server type', value: serverTypeDisplay(feed.serverType)}
+    {label: 'URL', value: <URL url={feed.url}/>}
   ]
 
   const header = <CardHeading title={title}

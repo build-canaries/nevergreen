@@ -69,7 +69,7 @@ export function AddBackup(): ReactElement {
   const isCustomServer = where === RemoteLocationOptions.Custom
 
   return (
-    <Page title='Add backup' icon={<BackupLogo where={where}/>}>
+    <Page title='Add remote location' icon={<BackupLogo where={where}/>}>
       <Form onValidate={onValidate}
             onSuccess={onSuccess}
             submitButtonText='Add location'

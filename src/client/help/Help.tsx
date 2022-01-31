@@ -5,12 +5,7 @@ import {AddFeedHelp, CCTrayLocationsHelp} from '../settings/tracking/AddFeedHelp
 import {UpdateDetailsHelp} from '../settings/tracking/settings/UpdateDetailsHelp'
 import {SuccessHelp} from '../settings/success/SuccessHelp'
 import {AvailableProjectsHelp} from '../settings/tracking/projects/AvailableProjectsHelp'
-import {
-  BackupHelp,
-  RemoteBackupCustomHelp,
-  RemoteBackupGitHubHelp,
-  RemoteBackupGitLabHelp
-} from '../settings/backup/BackupHelp'
+import {BackupHelp} from '../settings/backup/BackupHelp'
 import {DisplaySettingsHelp} from '../settings/display/DisplaySettingsHelp'
 import {NotificationSettingsHelp} from '../settings/notifications/NotificationSettingsHelp'
 import {MonitorHelp} from '../monitor/MonitorHelp'
@@ -20,6 +15,16 @@ import styles from './help.scss'
 import {ExternalLink} from '../common/ExternalLink'
 import {TrackingPageHelp} from '../settings/tracking/TrackingPageHelp'
 import {UpdateConnectionHelp} from '../settings/tracking/settings/UpdateConnectionHelp'
+import {ImportLocalHelp} from '../settings/backup/import/ImportLocalHelp'
+import {ImportRemoteHelp} from '../settings/backup/import/ImportRemoteHelp'
+import {ExportLocalHelp} from '../settings/backup/export/ExportLocalHelp'
+import {ExportRemoteHelp} from '../settings/backup/export/ExportRemoteHelp'
+import {
+  AddBackupHelp,
+  RemoteBackupCustomHelp,
+  RemoteBackupGitHubHelp,
+  RemoteBackupGitLabHelp
+} from '../settings/backup/AddBackupHelp'
 
 interface HelpProps {
   readonly initiallyShow?: boolean;
@@ -67,6 +72,11 @@ export function Help({initiallyShow}: HelpProps): ReactElement {
         <NotificationSettingsHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <SuccessHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <BackupHelp searchQuery={searchQuery} helpLink={helpLink}/>
+        <AddBackupHelp searchQuery={searchQuery} helpLink={helpLink}/>
+        <ImportLocalHelp searchQuery={searchQuery} helpLink={helpLink}/>
+        <ImportRemoteHelp searchQuery={searchQuery} helpLink={helpLink}/>
+        <ExportLocalHelp searchQuery={searchQuery} helpLink={helpLink}/>
+        <ExportRemoteHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <RemoteBackupCustomHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <RemoteBackupGitHubHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <RemoteBackupGitLabHelp searchQuery={searchQuery} helpLink={helpLink}/>

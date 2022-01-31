@@ -1,8 +1,6 @@
 import React, {ReactElement} from 'react'
-import styles from './locally.scss'
+import styles from './local-backup-card.scss'
 import {ROUTE_EXPORT_LOCAL, ROUTE_IMPORT_LOCAL} from '../../Routes'
-import {Summary} from '../../common/Summary'
-import {URL} from '../../common/URL'
 import {Card} from '../../common/card/Card'
 import {CardHeading} from '../../common/card/CardHeading'
 import {VisuallyHidden} from '../../common/VisuallyHidden'
@@ -10,19 +8,11 @@ import {LinkButton} from '../../common/LinkButton'
 import {FloppyDisk} from '../../common/icons/FloppyDisk'
 import {FolderOpen} from '../../common/icons/FolderOpen'
 
-export function Locally(): ReactElement {
-  const summary = [
-    {label: 'Where', value: 'Locally'},
-    {label: 'URL', value: <URL url='file://...'/>},
-    {label: 'Description', value: 'Manual local backups'}
-  ]
-
-  const header = <CardHeading title='Local backups'/>
+export function LocalBackupCard(): ReactElement {
+  const header = <CardHeading title='Backup locally to a file'/>
 
   return (
-    <Card header={header}
-          className={styles.card}>
-      <Summary values={summary}/>
+    <Card header={header}>
       <LinkButton className={styles.export}
                   icon={<FloppyDisk/>}
                   to={ROUTE_EXPORT_LOCAL}>

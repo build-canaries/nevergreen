@@ -14,6 +14,7 @@ it('should import valid configuration', async () => {
   await waitFor(() => {
     expect(screen.getByText('Configuration imported')).toBeInTheDocument()
   })
+  expect(screen.getByLabelText('Configuration to import')).toHaveValue('')
 })
 
 it('should show an error if no data has been entered', () => {

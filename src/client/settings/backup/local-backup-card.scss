@@ -1,10 +1,6 @@
 @import '../../common/responsive';
 @import '../../common/variables';
 
-.card {
-  height: 100%;
-}
-
 .export {
   @include respond-to(tablet, desktop) {
     margin: $margin-top $margin-right 0 0;

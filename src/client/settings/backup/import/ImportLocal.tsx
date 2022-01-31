@@ -71,11 +71,12 @@ export function ImportLocal(): ReactElement {
     return validationMessage
   }
 
-  const doImport = () => {
+  const onSuccess = () => {
     const result = toConfiguration(data, DataSource.UserImport)
 
     if (isRight(result)) {
       dispatch(configurationImported(result.right))
+      setData('')
       return {successMessage: 'Configuration imported'}
     }
   }
@@ -95,7 +96,7 @@ export function ImportLocal(): ReactElement {
                    disabled={!loaded}/>
 
         <Form onValidate={onValidate}
-              onSuccess={doImport}
+              onSuccess={onSuccess}
               onCancel={ROUTE_SETTINGS_BACKUP}
               submitButtonText='Import'
               clearErrors={!loaded}

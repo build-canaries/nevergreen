@@ -24,7 +24,7 @@ describe('Backups', () => {
   })
 
   it('adding and removing a remote backup', () => {
-    cy.findByRole('button', {name: 'Add remote backup'}).click()
+    cy.findByRole('button', {name: 'Add remote location'}).click()
     cy.findByLabelText('URL').type('http://test')
     cy.findByRole('button', {name: 'Add location'}).click()
 
