@@ -1,5 +1,6 @@
 import React, {ReactElement} from 'react'
 import {HelpArticle, HelpProps} from '../help/HelpArticle'
+import {ROUTE_MONITOR} from '../Routes'
 
 const KEYWORDS = [
   'monitor'
@@ -10,7 +11,7 @@ export function MonitorHelp({searchQuery, helpLink}: HelpProps): ReactElement {
     <HelpArticle keywords={KEYWORDS}
                  searchQuery={searchQuery}
                  title='Monitor'
-                 page='/monitor'>
+                 page={ROUTE_MONITOR}>
       <p>
         The Monitor page displays interesting projects once a CCTray XML feed has been added via the Tracking
         page {helpLink('tracking')}.

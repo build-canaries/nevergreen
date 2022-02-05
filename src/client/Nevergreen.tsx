@@ -3,7 +3,6 @@ import {Header} from './header/Header'
 import {Footer} from './footer/Footer'
 import {Notification} from './Notification'
 import styles from './nevergreen.scss'
-import {KeyboardShortcuts} from './KeyboardShortcuts'
 import {useServiceWorker} from './ServiceWorkerHook'
 import {useHideMenus} from './HideMenusHook'
 import {useSelector} from 'react-redux'
@@ -58,7 +57,6 @@ export function Nevergreen(): ReactElement {
     <Loading dark loaded={loaded}>
       <FontMetrics ref={fontMetricsRef}/>
       <FontMetricsContext.Provider value={fontMetrics}>
-        <KeyboardShortcuts/>
         <Help/>
         <div className={styles.nevergreen}
              tabIndex={-1}

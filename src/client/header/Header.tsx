@@ -2,7 +2,7 @@ import React, {ReactElement} from 'react'
 import cn from 'classnames'
 import styles from './header.scss'
 import logo from './buildcanaries-logo.png'
-import {SHOW_HELP_SHORTCUT} from '../help/Help'
+import {showHelpShortcut} from '../help/Help'
 import {triggerShortcut} from '../common/Keyboard'
 import {Display} from '../common/icons/Display'
 import {Question} from '../common/icons/Question'
@@ -43,7 +43,7 @@ export function Header({hide}: HeaderProps): ReactElement {
             </li>
             <li>
               <button className={styles.helpButton}
-                      onClick={() => triggerShortcut(SHOW_HELP_SHORTCUT)}>
+                      onClick={() => triggerShortcut(showHelpShortcut)}>
                 <Question/>
                 <div className={styles.menuTitle}>Help</div>
               </button>

@@ -25,12 +25,14 @@ import {
   RemoteBackupGitHubHelp,
   RemoteBackupGitLabHelp
 } from '../settings/backup/AddBackupHelp'
+import {keyboardShortcutKeyword, KeyboardShortcuts} from './KeyboardShortcuts'
 
 interface HelpProps {
   readonly initiallyShow?: boolean;
 }
 
-export const SHOW_HELP_SHORTCUT = 'h'
+export const showHelpShortcut = 'h'
+export const showKeyboardShortcutsShortcut = '?'
 
 export function withHelpLink(setSearchQuery: (q: string) => void) {
   // eslint-disable-next-line react/display-name
@@ -43,7 +45,11 @@ export function Help({initiallyShow}: HelpProps): ReactElement {
   const [show, setShow] = useState(initiallyShow || false)
   const [searchQuery, setSearchQuery] = useState('')
 
-  useShortcut(SHOW_HELP_SHORTCUT, () => setShow(true))
+  useShortcut(showHelpShortcut, () => setShow(true))
+  useShortcut(showKeyboardShortcutsShortcut, () => {
+    setSearchQuery(keyboardShortcutKeyword)
+    setShow(true)
+  })
 
   const helpLink = withHelpLink(setSearchQuery)
 
@@ -80,6 +86,7 @@ export function Help({initiallyShow}: HelpProps): ReactElement {
         <RemoteBackupCustomHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <RemoteBackupGitHubHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <RemoteBackupGitLabHelp searchQuery={searchQuery} helpLink={helpLink}/>
+        <KeyboardShortcuts searchQuery={searchQuery} helpLink={helpLink}/>
       </ul>
       <p className={styles.notFound}>
         No matching articles found, please try a different keyword.
