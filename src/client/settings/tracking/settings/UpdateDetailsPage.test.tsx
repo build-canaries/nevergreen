@@ -1,10 +1,9 @@
 import React from 'react'
 import {screen, waitFor} from '@testing-library/react'
 import {buildFeed, render} from '../../../testHelpers'
-import {getFeed, FEEDS_ROOT} from '../FeedsReducer'
+import {FEEDS_ROOT, getFeed} from '../FeedsReducer'
 import userEvent from '@testing-library/user-event'
 import {UpdateDetailsPage} from './UpdateDetailsPage'
-import {ROUTE_SETTINGS_TRACKING} from '../../../Routes'
 
 it('should be able to update details', async () => {
   const feed = buildFeed({
@@ -16,7 +15,8 @@ it('should be able to update details', async () => {
   const state = {
     [FEEDS_ROOT]: {trayId: feed}
   }
-  const {store} = render(<UpdateDetailsPage feed={feed}/>, {state})
+
+  const {store} = render(<UpdateDetailsPage/>, {state, outletContext: feed})
 
   userEvent.clear(screen.getByLabelText('Name'))
   userEvent.type(screen.getByLabelText('Name'), 'some-new-name')
@@ -33,14 +33,16 @@ it('should be able to update details', async () => {
 })
 
 it('should be able to generate a new random name', async () => {
-  const tray = buildFeed({
+  const feed = buildFeed({
     trayId: 'trayId',
     name: 'some-name'
   })
   const state = {
-    [FEEDS_ROOT]: {trayId: tray}
+    [FEEDS_ROOT]: {trayId: feed}
   }
-  const {store} = render(<UpdateDetailsPage feed={tray}/>, {state})
+
+  const {store} = render(<UpdateDetailsPage/>, {state, outletContext: feed})
+
   userEvent.click(screen.getByText('randomise name'))
   userEvent.click(document.body) // trigger blur
 
@@ -61,11 +63,12 @@ it('should be able to go back to the tracking page', async () => {
   const state = {
     [FEEDS_ROOT]: {trayId: feed}
   }
-  const {history} = render(<UpdateDetailsPage feed={feed}/>, {state})
+
+  render(<UpdateDetailsPage/>, {state, mountPath: 'details', currentLocation: 'details', outletContext: feed})
 
   userEvent.click(screen.getByRole('button', {name: 'Back to tracking'}))
 
   await waitFor(() => {
-    expect(history.location.pathname).toEqual(ROUTE_SETTINGS_TRACKING)
+    expect(window.location.pathname).toEqual('/')
   })
 })

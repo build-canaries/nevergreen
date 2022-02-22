@@ -7,20 +7,21 @@ import {useServiceWorker} from './ServiceWorkerHook'
 import {useHideMenus} from './HideMenusHook'
 import {useSelector} from 'react-redux'
 import {getClickToShowMenu} from './settings/SettingsReducer'
-import {Redirect, Route, Switch} from 'react-router'
-import {Monitor} from './monitor/Monitor'
-import {Settings} from './settings/Settings'
 import {Loading} from './common/Loading'
 import {useLocalConfiguration} from './configuration/ConfigurationHook'
 import {Help} from './help/Help'
 import {DEFAULT_FONT_METRICS, FontMetrics, FontMetricsContext, Measurable} from './FontMetrics'
-import {Preview} from './settings/Preview'
 import {useShortcut} from './common/Keyboard'
 import {useCheckForNewVersion} from './CheckForNewVersionHook'
 import {UnhandledErrorMessage} from './UnhandledErrorMessage'
-import {ROUTE_MONITOR, ROUTE_PREVIEW, ROUTE_SETTINGS} from './Routes'
-import {StyleGuide} from './styleGuide/StyleGuide'
 import {useNavigationShortcuts} from './NavigationShortcutsHook'
+import {Outlet, useOutletContext} from 'react-router-dom'
+
+interface AppState {
+  readonly menusHidden: boolean;
+  readonly toggleMenusHidden: (hide: boolean) => void;
+  readonly setNotification: (notification: string) => void;
+}
 
 export function Nevergreen(): ReactElement {
   const {loaded, error} = useLocalConfiguration()
@@ -30,17 +31,13 @@ export function Nevergreen(): ReactElement {
 
   const fontMetricsRef = useCallback((ref: Measurable) => setFontMetrics(ref), [])
 
-  const [menusHidden, toggleMenusHidden, showMenus] = useHideMenus()
+  const {menusHidden, toggleMenusHidden, showMenus} = useHideMenus()
 
   useServiceWorker(setNotification)
   useCheckForNewVersion(setNotification)
   useNavigationShortcuts()
 
   const clickToShowMenu = useSelector(getClickToShowMenu)
-
-  const hideMenusOn = clickToShowMenu
-    ? {onClick: showMenus}
-    : {onMouseMove: showMenus}
 
   useShortcut('esc', () => {
     const active = document.activeElement as HTMLElement
@@ -53,6 +50,10 @@ export function Nevergreen(): ReactElement {
     return <UnhandledErrorMessage/>
   }
 
+  const showMenusOn = clickToShowMenu
+    ? {onClick: showMenus}
+    : {onMouseMove: showMenus}
+
   return (
     <Loading dark loaded={loaded}>
       <FontMetrics ref={fontMetricsRef}/>
@@ -61,30 +62,21 @@ export function Nevergreen(): ReactElement {
         <div className={styles.nevergreen}
              tabIndex={-1}
              onKeyDown={showMenus}
-             {...hideMenusOn}>
+             {...showMenusOn}>
           <Header hide={menusHidden}/>
           <Notification notification={notification}
                         onDismiss={() => setNotification('')}
                         hide={menusHidden}/>
           <main className={styles.main} role='main'>
-            <Switch>
-              <Route exact path={ROUTE_MONITOR}>
-                <Monitor menusHidden={menusHidden}
-                         toggleMenusHidden={toggleMenusHidden}/>
-              </Route>
-              <Route exact path={ROUTE_PREVIEW} component={Preview}/>
-              <Route path={ROUTE_SETTINGS} component={Settings}/>
-              <Route exact path='/style-guide'>
-                <StyleGuide setNotification={setNotification}/>
-              </Route>
-              <Route>
-                <Redirect to={ROUTE_SETTINGS}/>
-              </Route>
-            </Switch>
+            <Outlet context={{menusHidden, toggleMenusHidden, setNotification}}/>
           </main>
           <Footer hide={menusHidden}/>
         </div>
       </FontMetricsContext.Provider>
     </Loading>
   )
+}
+
+export function useNevergreenContext(): AppState {
+  return useOutletContext()
 }

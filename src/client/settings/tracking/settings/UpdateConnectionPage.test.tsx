@@ -1,9 +1,8 @@
 import React from 'react'
 import {screen, waitFor} from '@testing-library/react'
 import {buildFeed, render} from '../../../testHelpers'
-import {getFeed, FEEDS_ROOT} from '../FeedsReducer'
+import {FEEDS_ROOT, getFeed} from '../FeedsReducer'
 import userEvent from '@testing-library/user-event'
-import {routeFeedDetails} from '../../../Routes'
 import {AuthTypes} from '../../../domain/Feed'
 import * as SecurityGateway from '../../../gateways/SecurityGateway'
 import * as ProjectsGateway from '../../../gateways/ProjectsGateway'
@@ -27,7 +26,8 @@ it('should be able to update the URL', async () => {
   const state = {
     [FEEDS_ROOT]: {trayId: feed}
   }
-  const {store, history} = render(<UpdateConnectionPage feed={feed}/>, {state})
+
+  const {store} = render(<UpdateConnectionPage/>, {state, outletContext: feed})
 
   userEvent.clear(screen.getByLabelText('URL'))
   userEvent.type(screen.getByLabelText('URL'), 'http://new')
@@ -51,7 +51,7 @@ it('should be able to update the URL', async () => {
       url: 'http://new'
     }))
   })
-  expect(history.location.pathname).toEqual(routeFeedDetails('trayId'))
+  expect(window.location.pathname).toEqual('/settings/tracking/trayId/details')
 })
 
 it('should be able to update authentication', async () => {
@@ -66,7 +66,8 @@ it('should be able to update authentication', async () => {
   const state = {
     [FEEDS_ROOT]: {trayId: feed}
   }
-  const {store, history} = render(<UpdateConnectionPage feed={feed}/>, {state})
+
+  const {store} = render(<UpdateConnectionPage/>, {state, outletContext: feed})
 
   userEvent.selectOptions(screen.getByLabelText('Authentication'), AuthTypes.token)
   userEvent.type(screen.getByLabelText('Token'), 'some-token')
@@ -92,7 +93,7 @@ it('should be able to update authentication', async () => {
       encryptedAccessToken: 'encrypted-token'
     }))
   })
-  expect(history.location.pathname).toEqual(routeFeedDetails('trayId'))
+  expect(window.location.pathname).toEqual('/settings/tracking/trayId/details')
 })
 
 describe('validation errors', () => {
@@ -104,7 +105,8 @@ describe('validation errors', () => {
     const state = {
       [FEEDS_ROOT]: {trayId: feed}
     }
-    render(<UpdateConnectionPage feed={feed}/>, {state})
+
+    render(<UpdateConnectionPage/>, {state, outletContext: feed})
 
     userEvent.clear(screen.getByLabelText('URL'))
     userEvent.click(screen.getByRole('button', {name: 'Save'}))
@@ -113,14 +115,15 @@ describe('validation errors', () => {
   })
 
   it('should display an error if non http(s) URL is entered', () => {
-    const tray = buildFeed({
+    const feed = buildFeed({
       trayId: 'trayId',
       name: 'some-name'
     })
     const state = {
-      [FEEDS_ROOT]: {trayId: tray}
+      [FEEDS_ROOT]: {trayId: feed}
     }
-    render(<UpdateConnectionPage feed={tray}/>, {state})
+
+    render(<UpdateConnectionPage/>, {state, outletContext: feed})
 
     userEvent.clear(screen.getByLabelText('URL'))
     userEvent.type(screen.getByLabelText('URL'), 'file://some-file')
@@ -143,7 +146,8 @@ describe('validation errors', () => {
         otherId: other
       }
     }
-    render(<UpdateConnectionPage feed={feed}/>, {state})
+
+    render(<UpdateConnectionPage/>, {state, outletContext: feed})
 
     userEvent.clear(screen.getByLabelText('URL'))
     userEvent.type(screen.getByLabelText('URL'), 'http://other')

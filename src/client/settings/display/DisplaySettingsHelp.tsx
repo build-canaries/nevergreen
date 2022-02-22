@@ -1,7 +1,7 @@
 import React, {ReactElement} from 'react'
 import {HelpArticle, HelpProps} from '../../help/HelpArticle'
 import {HelpForm, HelpInput} from '../../help/HelpForms'
-import {ROUTE_SETTINGS_DISPLAY} from '../../Routes'
+import {routeDisplay} from '../../AppRoutes'
 
 const KEYWORDS = [
   'settings',
@@ -26,7 +26,7 @@ export function DisplaySettingsHelp({searchQuery, helpLink}: HelpProps): ReactEl
     <HelpArticle keywords={KEYWORDS}
                  searchQuery={searchQuery}
                  title='Display settings'
-                 page={ROUTE_SETTINGS_DISPLAY}>
+                 page={routeDisplay}>
       <HelpForm>
         <HelpInput name='Click to show menu'>
           While <em>disabled</em> (the default) moving the mouse on the Monitor page will show the menu.

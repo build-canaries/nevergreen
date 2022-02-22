@@ -74,9 +74,9 @@ export function Help({initiallyShow}: HelpProps): ReactElement {
         <AvailableProjectsHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <UpdateDetailsHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <UpdateConnectionHelp searchQuery={searchQuery} helpLink={helpLink}/>
+        <SuccessHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <DisplaySettingsHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <NotificationSettingsHelp searchQuery={searchQuery} helpLink={helpLink}/>
-        <SuccessHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <BackupHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <AddBackupHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <ImportLocalHelp searchQuery={searchQuery} helpLink={helpLink}/>

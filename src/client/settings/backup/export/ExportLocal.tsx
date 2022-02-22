@@ -8,7 +8,6 @@ import {TextArea} from '../TextArea'
 import {errorMessage} from '../../../common/Utils'
 import {saveFile} from '../FileSystem'
 import {Page} from '../../../common/Page'
-import {ROUTE_SETTINGS_BACKUP} from '../../../Routes'
 import {LinkButton} from '../../../common/LinkButton'
 import {FloppyDisk} from '../../../common/icons/FloppyDisk'
 import {Paste} from '../../../common/icons/Paste'
@@ -67,7 +66,7 @@ export function ExportLocal(): ReactElement {
                 value={configuration}
                 readOnly
                 id='export-data'/>
-      <LinkButton to={ROUTE_SETTINGS_BACKUP}
+      <LinkButton to='../backup'
                   icon={<Cross/>}
                   className={styles.cancel}>
         Cancel

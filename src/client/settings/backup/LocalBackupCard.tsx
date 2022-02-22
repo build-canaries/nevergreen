@@ -1,6 +1,5 @@
 import React, {ReactElement} from 'react'
 import styles from './local-backup-card.scss'
-import {ROUTE_EXPORT_LOCAL, ROUTE_IMPORT_LOCAL} from '../../Routes'
 import {Card} from '../../common/card/Card'
 import {CardHeading} from '../../common/card/CardHeading'
 import {VisuallyHidden} from '../../common/VisuallyHidden'
@@ -15,11 +14,11 @@ export function LocalBackupCard(): ReactElement {
     <Card header={header}>
       <LinkButton className={styles.export}
                   icon={<FloppyDisk/>}
-                  to={ROUTE_EXPORT_LOCAL}>
+                  to='local/export'>
         Export<VisuallyHidden> locally</VisuallyHidden>
       </LinkButton>
       <LinkButton icon={<FolderOpen/>}
-                  to={ROUTE_IMPORT_LOCAL}>
+                  to='local/import'>
         Import<VisuallyHidden> local</VisuallyHidden>
       </LinkButton>
     </Card>

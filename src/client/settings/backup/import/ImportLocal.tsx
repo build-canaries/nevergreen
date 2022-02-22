@@ -9,7 +9,6 @@ import {TextArea} from '../TextArea'
 import {Form} from '../../../common/forms/Form'
 import {allErrors, FormErrors} from '../../../common/forms/Validation'
 import {FileDropTarget} from './FileDropTarget'
-import {ROUTE_SETTINGS_BACKUP} from '../../../Routes'
 import {InputFile} from './InputFile'
 import {loadFile} from '../FileSystem'
 import {Page} from '../../../common/Page'
@@ -97,7 +96,7 @@ export function ImportLocal(): ReactElement {
 
         <Form onValidate={onValidate}
               onSuccess={onSuccess}
-              onCancel={ROUTE_SETTINGS_BACKUP}
+              onCancel='../backup'
               submitButtonText='Import'
               clearErrors={!loaded}
               className={styles.form}>

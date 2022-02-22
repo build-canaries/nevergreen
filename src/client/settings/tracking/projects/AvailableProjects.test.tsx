@@ -1,14 +1,13 @@
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import {screen, waitFor} from '@testing-library/react'
-import {buildProject, buildProjectError, buildFeed, render} from '../../../testHelpers'
+import {buildFeed, buildProject, buildProjectError, render} from '../../../testHelpers'
 import {fakeRequest} from '../../../gateways/Gateway'
 import {AvailableProjects} from './AvailableProjects'
 import {FEEDS_ROOT} from '../FeedsReducer'
 import {PROJECTS_ROOT} from '../ProjectsReducer'
 import {SELECTED_ROOT} from '../SelectedReducer'
 import * as ProjectsGateway from '../../../gateways/ProjectsGateway'
-import {REFRESH_HASH} from '../../../Routes'
 
 beforeEach(() => {
   jest.spyOn(ProjectsGateway, 'fetchAll').mockResolvedValue(fakeRequest([]))
@@ -131,7 +130,7 @@ it('should refresh automatically if the url contains #refresh', () => {
     }
   }
 
-  render(<AvailableProjects feed={feed}/>, {state, currentLocation: `/${REFRESH_HASH}`})
+  render(<AvailableProjects feed={feed}/>, {state, currentLocation: '/#refresh'})
 
   expect(ProjectsGateway.fetchAll).toHaveBeenCalled()
 })

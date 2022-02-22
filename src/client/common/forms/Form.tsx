@@ -9,7 +9,7 @@ import styles from './form.scss'
 import {FormErrors} from './Validation'
 import {ErrorMessages, SuccessMessages} from '../Messages'
 import {errorMessage} from '../Utils'
-import {useHistory} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import {LinkButton} from '../LinkButton'
 import {Checkmark} from '../icons/Checkmark'
 import {Cross} from '../icons/Cross'
@@ -44,7 +44,7 @@ export function Form<Fields extends string>({
                                               clearErrors = false
                                             }: FormProps<Fields>): ReactElement {
 
-  const history = useHistory()
+  const navigate = useNavigate()
   const [validationErrors, setValidationErrors] = useState<Readonly<FormErrors<Fields>>>([])
 
   const {refetch, isFetching, isError, isSuccess, data, error} = useQuery('form', async ({signal}) => {
@@ -61,9 +61,9 @@ export function Form<Fields extends string>({
 
   useEffect(() => {
     if (data && data.navigateTo) {
-      history.push(data.navigateTo)
+      navigate(data.navigateTo)
     }
-  }, [data, history])
+  }, [data, navigate])
 
   const handleSubmit = (evt: FormEvent) => {
     evt.preventDefault()

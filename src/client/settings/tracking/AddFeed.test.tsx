@@ -4,10 +4,9 @@ import userEvent from '@testing-library/user-event'
 import {screen, waitFor} from '@testing-library/react'
 import * as SecurityGateway from '../../gateways/SecurityGateway'
 import * as ProjectsGateway from '../../gateways/ProjectsGateway'
-import {getFeeds, FEEDS_ROOT} from './FeedsReducer'
+import {FEEDS_ROOT, getFeeds} from './FeedsReducer'
 import {buildFeed, render} from '../../testHelpers'
 import {fakeRequest} from '../../gateways/Gateway'
-import {routeFeedProjects} from '../../Routes'
 import * as Feed from '../../domain/Feed'
 import {AuthTypes} from '../../domain/Feed'
 
@@ -53,7 +52,7 @@ it('should allow adding feeds without auth', async () => {
     [FEEDS_ROOT]: {}
   }
 
-  const {store, history} = render(<AddFeed/>, {state})
+  const {store} = render(<AddFeed/>, {state})
   userEvent.type(screen.getByLabelText('URL'), 'http://some-new-url')
 
   userEvent.click(screen.getByRole('button', {name: 'Check connection'}))
@@ -72,8 +71,8 @@ it('should allow adding feeds without auth', async () => {
   userEvent.click(screen.getByText('Add feed'))
 
   await waitFor(() => {
-    expect(history.location).toEqual(expect.objectContaining({
-      pathname: routeFeedProjects('some-feed-id'),
+    expect(window.location).toEqual(expect.objectContaining({
+      pathname: '/settings/tracking/some-feed-id/projects',
       hash: '#refresh'
     }))
   })
@@ -93,7 +92,7 @@ it('should allow adding feeds with basic auth', async () => {
     [FEEDS_ROOT]: {}
   }
 
-  const {store, history} = render(<AddFeed/>, {state})
+  const {store} = render(<AddFeed/>, {state})
   userEvent.type(screen.getByLabelText('URL'), 'http://some-new-url')
   userEvent.selectOptions(screen.getByLabelText('Authentication'), AuthTypes.basic)
   userEvent.type(screen.getByLabelText('Username'), 'some-username')
@@ -122,8 +121,8 @@ it('should allow adding feeds with basic auth', async () => {
       encryptedPassword: 'encrypted-password'
     })
   ]))
-  expect(history.location).toEqual(expect.objectContaining({
-    pathname: routeFeedProjects('some-feed-id'),
+  expect(window.location).toEqual(expect.objectContaining({
+    pathname: '/settings/tracking/some-feed-id/projects',
     hash: '#refresh'
   }))
 })
@@ -137,7 +136,7 @@ it('should allow adding feeds with an access token', async () => {
     [FEEDS_ROOT]: {}
   }
 
-  const {store, history} = render(<AddFeed/>, {state})
+  const {store} = render(<AddFeed/>, {state})
   userEvent.type(screen.getByLabelText('URL'), 'http://some-new-url')
   userEvent.selectOptions(screen.getByLabelText('Authentication'), AuthTypes.token)
   userEvent.type(screen.getByLabelText('Token'), 'some-token')
@@ -165,8 +164,8 @@ it('should allow adding feeds with an access token', async () => {
       encryptedAccessToken: 'encrypted-token'
     })
   ]))
-  expect(history.location).toEqual(expect.objectContaining({
-    pathname: routeFeedProjects('some-feed-id'),
+  expect(window.location).toEqual(expect.objectContaining({
+    pathname: '/settings/tracking/some-feed-id/projects',
     hash: '#refresh'
   }))
 })

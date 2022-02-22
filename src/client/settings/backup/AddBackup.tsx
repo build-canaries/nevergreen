@@ -12,7 +12,6 @@ import styles from './add-backup.scss'
 import {isValidHttpUrl} from '../../domain/Url'
 import {firstError, FormErrors} from '../../common/forms/Validation'
 import {Form} from '../../common/forms/Form'
-import {ROUTE_SETTINGS_BACKUP} from '../../Routes'
 import {Page} from '../../common/Page'
 import {BackupLogo} from './BackupLogo'
 
@@ -52,7 +51,7 @@ export function AddBackup(): ReactElement {
     } else {
       dispatch(addBackupCustomServer(url))
     }
-    return {navigateTo: ROUTE_SETTINGS_BACKUP}
+    return {navigateTo: '/settings/backup'}
   }
 
   const updateWhere = (updatedWhere: RemoteLocationOptions) => {
@@ -73,7 +72,7 @@ export function AddBackup(): ReactElement {
       <Form onValidate={onValidate}
             onSuccess={onSuccess}
             submitButtonText='Add location'
-            onCancel={ROUTE_SETTINGS_BACKUP}>
+            onCancel='/settings/backup'>
         {(submitting, validationErrors, clearErrors) => {
           return (
             <>

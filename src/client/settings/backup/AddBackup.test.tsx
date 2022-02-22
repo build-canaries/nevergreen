@@ -7,7 +7,6 @@ import * as SecurityGateway from '../../gateways/SecurityGateway'
 import {fakeRequest} from '../../gateways/Gateway'
 import {AddBackup} from './AddBackup'
 import {getBackupLocations} from './RemoteLocationsReducer'
-import {ROUTE_SETTINGS_BACKUP} from '../../Routes'
 
 beforeEach(() => {
   jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValue(fakeRequest(''))
@@ -37,7 +36,7 @@ it('should not be able to add with a non http(s) URL', async () => {
 })
 
 it('should be able to add a custom server', async () => {
-  const {store, history} = render(<AddBackup/>)
+  const {store} = render(<AddBackup/>)
 
   userEvent.selectOptions(screen.getByLabelText('Where'), 'custom')
   userEvent.type(screen.getByLabelText('URL'), 'http://example.com')
@@ -49,11 +48,11 @@ it('should be able to add a custom server', async () => {
       url: 'http://example.com'
     })])
   })
-  expect(history.location.pathname).toEqual(ROUTE_SETTINGS_BACKUP)
+  expect(window.location.pathname).toEqual('/settings/backup')
 })
 
 it('should be able to add a GitHub gist', async () => {
-  const {store, history} = render(<AddBackup/>)
+  const {store} = render(<AddBackup/>)
 
   userEvent.selectOptions(screen.getByLabelText('Where'), 'github')
 
@@ -67,7 +66,7 @@ it('should be able to add a GitHub gist', async () => {
       where: 'github'
     })])
   })
-  expect(history.location.pathname).toEqual(ROUTE_SETTINGS_BACKUP)
+  expect(window.location.pathname).toEqual('/settings/backup')
 })
 
 it('should validate adding a GitHub gist and clear errors if "where" is changed', async () => {

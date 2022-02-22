@@ -1,8 +1,7 @@
 import React, {ReactElement, useState} from 'react'
 import {Page} from '../../../common/Page'
-import {authTypeDisplay, CI_OPTIONS, generateRandomName, Feed} from '../../../domain/Feed'
+import {authTypeDisplay, CI_OPTIONS, generateRandomName} from '../../../domain/Feed'
 import {useDispatch} from 'react-redux'
-import {ROUTE_SETTINGS_TRACKING, routeFeedConnection} from '../../../Routes'
 import {InputButton} from '../../../common/forms/Button'
 import {Input} from '../../../common/forms/Input'
 import styles from './update-details-page.scss'
@@ -14,12 +13,10 @@ import {BackButton, LinkButton, ManageFeedProjectsButton} from '../../../common/
 import {feedUpdated} from '../TrackingActionCreators'
 import {FeedLogo} from '../FeedLogo'
 import {Cog} from '../../../common/icons/Cog'
+import {useFeedContext} from '../FeedPage'
 
-interface UpdateDetailsPageProps {
-  readonly feed: Feed;
-}
-
-export function UpdateDetailsPage({feed}: UpdateDetailsPageProps): ReactElement {
+export function UpdateDetailsPage(): ReactElement {
+  const feed = useFeedContext()
   const dispatch = useDispatch()
   const [name, setName] = useState(feed.name)
 
@@ -41,7 +38,7 @@ export function UpdateDetailsPage({feed}: UpdateDetailsPageProps): ReactElement 
       <section className={styles.auth}>
         <Summary values={connectionDetails}/>
         <LinkButton className={styles.link}
-                    to={routeFeedConnection(feed.trayId)}
+                    to='connection'
                     icon={<Cog/>}>
           Update connection
         </LinkButton>
@@ -66,8 +63,7 @@ export function UpdateDetailsPage({feed}: UpdateDetailsPageProps): ReactElement 
                 className={styles.includeNew}>
         Automatically include new projects
       </Checkbox>
-      <BackButton to={ROUTE_SETTINGS_TRACKING}
-                  className={styles.link}>
+      <BackButton className={styles.link}>
         Back to tracking
       </BackButton>
     </Page>

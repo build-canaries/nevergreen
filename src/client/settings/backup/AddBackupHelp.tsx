@@ -2,8 +2,8 @@ import React, {ReactElement} from 'react'
 import {ExternalLink} from '../../common/ExternalLink'
 import {HelpArticle, HelpProps} from '../../help/HelpArticle'
 import {URL} from '../../common/URL'
-import {ROUTE_BACKUP_ADD} from '../../Routes'
 import {HelpForm, HelpInput} from '../../help/HelpForms'
+import {routeBackupAdd} from '../../AppRoutes'
 
 const KEYWORDS = [
   'backup',
@@ -18,7 +18,7 @@ export function AddBackupHelp({searchQuery}: HelpProps): ReactElement {
     <HelpArticle keywords={KEYWORDS}
                  searchQuery={searchQuery}
                  title='Add remote location'
-                 page={ROUTE_BACKUP_ADD}>
+                 page={routeBackupAdd}>
       <HelpForm>
         <HelpInput name='Where'>
           The remote location type. Additional fields will be required depending on where you are adding.
@@ -33,7 +33,7 @@ export function RemoteBackupCustomHelp({searchQuery}: HelpProps): ReactElement {
     <HelpArticle keywords={[...KEYWORDS, 'custom server']}
                  searchQuery={searchQuery}
                  title='Add remote location - Custom server'
-                 page={ROUTE_BACKUP_ADD}>
+                 page={routeBackupAdd}>
       <HelpForm>
         <HelpInput name='URL'>
           The configuration <code>JSON</code> will be <code>POSTed</code> to this <strong>URL</strong>. Tip, if you
@@ -50,7 +50,7 @@ export function RemoteBackupGitHubHelp({searchQuery}: HelpProps): ReactElement {
     <HelpArticle keywords={[...KEYWORDS, 'access token', 'github', 'gist']}
                  searchQuery={searchQuery}
                  title='Add remote location - GitHub gist'
-                 page={ROUTE_BACKUP_ADD}>
+                 page={routeBackupAdd}>
       <HelpForm>
         <HelpInput name='URL'>
           This will be pre-populated with the public GitHub API URL and can be edited to allow exporting to a
@@ -83,7 +83,7 @@ export function RemoteBackupGitLabHelp({searchQuery}: HelpProps): ReactElement {
     <HelpArticle keywords={[...KEYWORDS, 'access token', 'gitlab', 'snippet']}
                  searchQuery={searchQuery}
                  title='Add remote location - GitLab snippet'
-                 page={ROUTE_BACKUP_ADD}>
+                 page={routeBackupAdd}>
       <HelpForm>
         <HelpInput name='URL'>
           This will be pre-populated with the public GitLab URL and can be edited to allow exporting to a

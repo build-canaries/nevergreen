@@ -5,7 +5,6 @@ import {PROJECTS_ROOT} from './ProjectsReducer'
 import {screen, waitFor} from '@testing-library/react'
 import {TrackingPage} from './TrackingPage'
 import userEvent from '@testing-library/user-event'
-import {ROUTE_TRACKING_ADD} from '../../Routes'
 import {SELECTED_ROOT} from './SelectedReducer'
 import {getRefreshTime, SETTINGS_ROOT} from '../SettingsReducer'
 
@@ -35,10 +34,10 @@ it('should render added trays', () => {
 })
 
 it('should allow trays to be added', async () => {
-  const {history} = render(<TrackingPage/>)
+  render(<TrackingPage/>)
   userEvent.click(screen.getByRole('button', {name: 'Add feed'}))
   await waitFor(() => {
-    expect(history.location.pathname).toEqual(ROUTE_TRACKING_ADD)
+    expect(window.location.pathname).toEqual('/add')
   })
 })
 

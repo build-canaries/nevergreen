@@ -3,19 +3,18 @@ import {render} from '../../testHelpers'
 import userEvent from '@testing-library/user-event'
 import {getSuccessMessages, SUCCESS_ROOT} from './SuccessReducer'
 import {AddMessage} from './AddMessage'
-import {ROUTE_SETTINGS_SUCCESS} from '../../Routes'
 import {screen, waitFor} from '@testing-library/react'
 
 it('should allow success messages to be added', async () => {
   const state = {[SUCCESS_ROOT]: []}
 
-  const {store, history} = render(<AddMessage/>, {state})
+  const {store} = render(<AddMessage/>, {state, mountPath: 'add', currentLocation: 'add'})
   userEvent.type(screen.getByLabelText('Message'), 'some-message')
   userEvent.click(screen.getByText('Add message'))
 
   expect(getSuccessMessages(store.getState())).toEqual(['some-message'])
   await waitFor(() => {
-    expect(history.location.pathname).toEqual(ROUTE_SETTINGS_SUCCESS)
+    expect(window.location.pathname).toEqual('/settings/success')
   })
 })
 
@@ -41,11 +40,11 @@ it('should not allow the same success message to be added', () => {
 
 it('should be able to cancel back to settings', async () => {
   const state = {[SUCCESS_ROOT]: ['some-message']}
-  const {history} = render(<AddMessage/>, {state})
+  render(<AddMessage/>, {state, mountPath: 'add', currentLocation: 'add'})
 
   userEvent.click(screen.getByRole('button', {name: 'Cancel'}))
 
   await waitFor(() => {
-    expect(history.location.pathname).toEqual(ROUTE_SETTINGS_SUCCESS)
+    expect(window.location.pathname).toEqual('/settings/success')
   })
 })

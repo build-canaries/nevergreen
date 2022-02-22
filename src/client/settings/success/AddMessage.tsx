@@ -7,9 +7,9 @@ import {getSuccessMessages} from './SuccessReducer'
 import {isBlank} from '../../common/Utils'
 import {Form} from '../../common/forms/Form'
 import {firstError, FormErrors} from '../../common/forms/Validation'
-import {ROUTE_SETTINGS_SUCCESS} from '../../Routes'
 import {Page} from '../../common/Page'
 import {Image} from '../../common/icons/Image'
+import {routeSuccess} from '../../AppRoutes'
 
 type Fields = 'message'
 
@@ -29,7 +29,7 @@ export function AddMessage(): ReactElement {
 
   const onSuccess = () => {
     dispatch(addMessage(message))
-    return {navigateTo: ROUTE_SETTINGS_SUCCESS}
+    return {navigateTo: routeSuccess}
   }
 
   return (
@@ -37,7 +37,7 @@ export function AddMessage(): ReactElement {
       <Form onValidate={onValidate}
             onSuccess={onSuccess}
             submitButtonText='Add message'
-            onCancel={ROUTE_SETTINGS_SUCCESS}>
+            onCancel={routeSuccess}>
         {(submitting, validationErrors) => {
           return (
             <Input className={styles.addMessageInput}

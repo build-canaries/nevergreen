@@ -5,7 +5,6 @@ import * as ClipboardHook from './ClipboardHook'
 import * as FileSystem from '../FileSystem'
 import userEvent from '@testing-library/user-event'
 import {act, screen, waitFor} from '@testing-library/react'
-import {ROUTE_SETTINGS_BACKUP} from '../../../Routes'
 
 it('should allowing copying to clipboard if supported', () => {
   let clipboardElementSelector = ''
@@ -54,9 +53,9 @@ it('should be able to save a file locally', () => {
 })
 
 it('should be able to cancel back to settings', async () => {
-  const {history} = render(<ExportLocal/>)
+  render(<ExportLocal/>, {mountPath: 'import', currentLocation: 'import'})
   userEvent.click(screen.getByRole('button', {name: 'Cancel'}))
   await waitFor(() => {
-    expect(history.location.pathname).toEqual(ROUTE_SETTINGS_BACKUP)
+    expect(window.location.pathname).toEqual('/backup')
   })
 })

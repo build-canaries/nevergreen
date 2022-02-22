@@ -7,7 +7,6 @@ import {getSuccessMessages} from './SuccessReducer'
 import {removeMessage} from './SuccessActionCreators'
 import styles from './success-messages.scss'
 import {AddButton} from '../../common/LinkButton'
-import {ROUTE_SUCCESS_ADD} from '../../Routes'
 import {WarningMessages} from '../../common/Messages'
 import {notEmpty} from '../../common/Utils'
 import {Page} from '../../common/Page'
@@ -35,7 +34,7 @@ export function SuccessMessages(): ReactElement {
 
   return (
     <Page title='Success messages' icon={<Image/>}>
-      <AddButton to={ROUTE_SUCCESS_ADD}>Add message</AddButton>
+      <AddButton>Add message</AddButton>
       <WarningMessages messages={noMessagesWarning}/>
       <ol className={styles.messages}
           id='success'>

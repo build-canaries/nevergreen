@@ -1,5 +1,5 @@
 import React, {ReactElement, ReactNode, useEffect, useState} from 'react'
-import {useRouteMatch} from 'react-router-dom'
+import {useMatch} from 'react-router-dom'
 import {matchSorter} from 'match-sorter'
 import {isBlank} from '../common/Utils'
 import isNil from 'lodash/isNil'
@@ -34,7 +34,8 @@ function Keyword({keyword, matches}: KeywordProps) {
 }
 
 export function HelpArticle({title, keywords, children, searchQuery, page}: HelpArticleProps): ReactElement | null {
-  const routeMatches = !isNil(useRouteMatch({path: page || '', exact: true}))
+  const match = useMatch(page || '')
+  const routeMatches = !isNil(match)
   const [show, setShow] = useState(routeMatches)
   const [matches, setMatches] = useState<ReadonlyArray<string>>([])
 

@@ -1,9 +1,9 @@
 import React, {ReactElement} from 'react'
 import {HelpArticle, HelpProps} from '../../help/HelpArticle'
 import {ExternalLink} from '../../common/ExternalLink'
-import {ROUTE_TRACKING_ADD} from '../../Routes'
 import {HelpForm, HelpInput} from '../../help/HelpForms'
 import {InfoMessages} from '../../common/Messages'
+import {routeTrackingAdd} from '../../AppRoutes'
 
 const KEYWORDS = [
   'tracking',
@@ -23,7 +23,7 @@ export function AddFeedHelp({searchQuery}: HelpProps): ReactElement {
     <HelpArticle title='Adding a CCTray XML feed'
                  keywords={KEYWORDS}
                  searchQuery={searchQuery}
-                 page={ROUTE_TRACKING_ADD}>
+                 page={routeTrackingAdd}>
       <HelpForm>
         <HelpInput name='URL'>
           This needs to point directly to the CCTray XML feed.
@@ -73,7 +73,7 @@ export function CCTrayLocationsHelp({searchQuery}: HelpProps): ReactElement {
     <HelpArticle title='CCTray XML feed location'
                  keywords={['tracking', 'adding', 'cctray', 'xml', 'url', 'location', 'find', 'feed']}
                  searchQuery={searchQuery}
-                 page={ROUTE_TRACKING_ADD}>
+                 page={routeTrackingAdd}>
       See the <ExternalLink href='https://cctray.org/servers/'>CCTray specification servers page</ExternalLink> for
       information about finding the CCTray XML feed for your server.
     </HelpArticle>

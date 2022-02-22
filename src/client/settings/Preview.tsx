@@ -5,17 +5,17 @@ import {useSelector} from 'react-redux'
 import {getShowPrognosis, getSort} from './SettingsReducer'
 import {post, send} from '../gateways/Gateway'
 import {enrichProjects, Projects, toProjectError} from '../domain/Project'
-import {createId, createFeed} from '../domain/Feed'
+import {createFeed, createId} from '../domain/Feed'
 import {Notification} from '../Notification'
-import {useHistory} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import styles from './preview.scss'
-import {ROUTE_SETTINGS_DISPLAY} from '../Routes'
 import {useQuery} from 'react-query'
+import {routeDisplay} from '../AppRoutes'
 
 export function Preview(): ReactElement {
   const prognosis = useSelector(getShowPrognosis)
   const sort = useSelector(getSort)
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const [projects, setProjects] = useState<Projects>([])
 
@@ -39,7 +39,7 @@ export function Preview(): ReactElement {
     <div className={styles.preview}>
       <Notification notification='This is a preview showing your current display settings'
                     hide={false}
-                    onDismiss={() => history.push(ROUTE_SETTINGS_DISPLAY)}/>
+                    onDismiss={() => navigate(routeDisplay)}/>
       <div className={styles.projects}>
         <div className={styles.projectsInner}>
           <Loading loaded={!isLoading} dark>

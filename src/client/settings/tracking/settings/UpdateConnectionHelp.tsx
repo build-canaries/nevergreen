@@ -1,7 +1,7 @@
 import React, {ReactElement} from 'react'
 import {HelpArticle, HelpProps} from '../../../help/HelpArticle'
 import {HelpForm, HelpInput} from '../../../help/HelpForms'
-import {ROUTE_TRACKING_FEED_CONNECTION} from '../../../Routes'
+import {routeTrackingDetailsConnection} from '../../../AppRoutes'
 
 const KEYWORDS = [
   'tracking',
@@ -20,7 +20,7 @@ export function UpdateConnectionHelp({searchQuery}: HelpProps): ReactElement {
       keywords={KEYWORDS}
       searchQuery={searchQuery}
       title='Update connection'
-      page={ROUTE_TRACKING_FEED_CONNECTION}>
+      page={routeTrackingDetailsConnection}>
       <HelpForm>
         <HelpInput name='URL'>
           The URL of the CCTray XML feed.

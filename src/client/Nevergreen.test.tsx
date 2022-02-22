@@ -2,7 +2,7 @@ import React from 'react'
 import {left} from 'fp-ts/Either'
 import {Nevergreen} from './Nevergreen'
 import {render} from './testHelpers'
-import {screen, waitFor} from '@testing-library/react'
+import {screen} from '@testing-library/react'
 import * as LocalConfiguration from './configuration/LocalRepository'
 import * as Configuration from './configuration/Configuration'
 import * as ServiceWorkerHook from './ServiceWorkerHook'
@@ -11,7 +11,7 @@ import {fakeRequest} from './gateways/Gateway'
 import * as HideMenusHook from './HideMenusHook'
 import {SETTINGS_ROOT} from './settings/SettingsReducer'
 import userEvent from '@testing-library/user-event'
-import {ROUTE_MONITOR, ROUTE_SETTINGS_TRACKING} from './Routes'
+import {waitForLoadingToFinish} from './common/Loading.test'
 
 beforeEach(() => {
   jest.spyOn(LocalConfiguration, 'init').mockResolvedValue()
@@ -24,11 +24,11 @@ it('should load configuration, register service worker and check for a new versi
     tag_name: '9999.0.0' // this needs to be greater than the actual version in resources/version.txt
   }))
 
-  render(<Nevergreen/>, {mountPath: ROUTE_SETTINGS_TRACKING, currentLocation: ROUTE_SETTINGS_TRACKING})
+  render(<Nevergreen/>)
 
-  await waitFor(() => {
-    expect(LocalConfiguration.load).toHaveBeenCalled()
-  })
+  await waitForLoadingToFinish()
+
+  expect(LocalConfiguration.load).toHaveBeenCalled()
   expect(Gateway.get).toHaveBeenCalledWith('https://api.github.com/repos/build-canaries/nevergreen/releases/latest')
   expect(ServiceWorkerHook.useServiceWorker).toHaveBeenCalled()
   expect(screen.getByText(/^A new version [0-9.]* is available to download from GitHub now!$/)).toBeInTheDocument()
@@ -39,9 +39,9 @@ it('when loaded config is invalid, should show error screen', async () => {
 
   render(<Nevergreen/>)
 
-  await waitFor(() => {
-    expect(screen.getByText('Something went wrong.')).toBeInTheDocument()
-  })
+  await waitForLoadingToFinish()
+
+  expect(screen.getByText('Something went wrong.')).toBeInTheDocument()
 })
 
 it('when config fails to load, should show error screen', async () => {
@@ -49,9 +49,9 @@ it('when config fails to load, should show error screen', async () => {
 
   render(<Nevergreen/>)
 
-  await waitFor(() => {
-    expect(screen.getByText('Something went wrong.')).toBeInTheDocument()
-  })
+  await waitForLoadingToFinish()
+
+  expect(screen.getByText('Something went wrong.')).toBeInTheDocument()
 })
 
 it('should not check for a new version if the user has disabled checking', async () => {
@@ -65,26 +65,30 @@ it('should not check for a new version if the user has disabled checking', async
     }
   })
 
-  await waitFor(() => {
-    expect(Gateway.get).not.toHaveBeenCalledWith('https://api.github.com/repos/build-canaries/nevergreen/releases/latest')
-  })
+  await waitForLoadingToFinish()
+
+  expect(Gateway.get).not.toHaveBeenCalledWith('https://api.github.com/repos/build-canaries/nevergreen/releases/latest')
   expect(screen.queryByTestId('notification')).not.toBeInTheDocument()
 })
 
-it('should disable fullscreen when any key is pressed, allowing the user to navigate to the header via tabbing', async () => {
-  const disableFullScreen = jest.fn()
-  jest.spyOn(Gateway, 'get').mockReturnValue(fakeRequest({}))
-  jest.spyOn(HideMenusHook, 'useHideMenus').mockReturnValue([true, jest.fn(), disableFullScreen])
-
-  render(<Nevergreen/>, {mountPath: ROUTE_MONITOR, currentLocation: ROUTE_MONITOR})
-
-  await waitFor(() => {
-    expect(screen.queryByRole('main')).not.toBeInTheDocument()
+it('should show menus when any key is pressed, allowing the user to navigate to the header via tabbing', async () => {
+  const showMenus = jest.fn()
+  jest.spyOn(Gateway, 'get').mockReturnValue(fakeRequest({tag_name: '1.0.0'}))
+  jest.spyOn(HideMenusHook, 'useHideMenus').mockReturnValue({
+    menusHidden: true,
+    toggleMenusHidden: jest.fn(),
+    showMenus
   })
 
-  userEvent.type(screen.getByRole('main'), 'a', {skipClick: true})
+  render(<Nevergreen/>)
 
-  await waitFor(() => {
-    expect(disableFullScreen).toHaveBeenCalledTimes(1)
-  })
+  await waitForLoadingToFinish()
+
+  // The click is required to make sure focus is correct for the keyboard event.
+  // In production the <Title/> forces focus so focus would be correct already.
+  // The click also triggers showMenus, so we assert it's called twice
+  userEvent.click(screen.getByRole('main'))
+  userEvent.keyboard('a')
+
+  expect(showMenus).toHaveBeenCalledTimes(2)
 })

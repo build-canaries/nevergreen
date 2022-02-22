@@ -1,7 +1,7 @@
 import React, {ReactElement} from 'react'
 import {HelpArticle, HelpProps} from '../../../help/HelpArticle'
 import {HelpForm, HelpInput} from '../../../help/HelpForms'
-import {ROUTE_TRACKING_FEED_DETAILS} from '../../../Routes'
+import {routeTrackingDetails} from '../../../AppRoutes'
 
 const KEYWORDS = [
   'tracking',
@@ -22,7 +22,7 @@ export function UpdateDetailsHelp({searchQuery, helpLink}: HelpProps): ReactElem
       keywords={KEYWORDS}
       searchQuery={searchQuery}
       title='Update details'
-      page={ROUTE_TRACKING_FEED_DETAILS}>
+      page={routeTrackingDetails}>
       <HelpForm>
         <HelpInput name='Update connection'>
           Update the connection URL and/or authentication.

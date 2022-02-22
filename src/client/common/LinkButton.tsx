@@ -5,7 +5,6 @@ import styles from './link-button.scss'
 import {Plus} from './icons/Plus'
 import {useNavigationShortcut} from '../NavigationShortcutsHook'
 import {CheckboxChecked} from './icons/CheckboxChecked'
-import {routeFeedDetails, routeFeedProjects} from '../Routes'
 import {VisuallyHidden} from './VisuallyHidden'
 import {Cog} from './icons/Cog'
 import {ArrowLeft} from './icons/ArrowLeft'
@@ -31,16 +30,16 @@ export function LinkButton({className, ...props}: LinkButtonProps): ReactElement
   return <NavigationButton className={cn(styles.linkButton, className)} {...props}/>
 }
 
-export function AddButton({className, to, ...props}: LinkButtonProps): ReactElement {
-  useNavigationShortcut('a', to)
-  return <NavigationButton className={cn(styles.addButton, className)} to={to} {...props} icon={<Plus/>}/>
+export function AddButton({className, ...props}: Omit<LinkButtonProps, 'to'>): ReactElement {
+  useNavigationShortcut('a', 'add')
+  return <NavigationButton className={cn(styles.addButton, className)} to='add' {...props} icon={<Plus/>}/>
 }
 
 export function ManageFeedProjectsButton({feedId, title}: { feedId: string, title?: string }): ReactElement {
   return (
     <LinkButton className={styles.feedButtons}
                 icon={<CheckboxChecked/>}
-                to={routeFeedProjects(feedId)}>
+                to={`/settings/tracking/${feedId}/projects`}>
       Manage projects{title && <VisuallyHidden> for {title}</VisuallyHidden>}
     </LinkButton>
   )
@@ -50,15 +49,15 @@ export function UpdateFeedDetailsButton({feedId, title}: { feedId: string, title
   return (
     <LinkButton className={styles.feedButtons}
                 icon={<Cog/>}
-                to={routeFeedDetails(feedId)}>
+                to={`/settings/tracking/${feedId}/details`}>
       Update details{title && <VisuallyHidden> for {title}</VisuallyHidden>}
     </LinkButton>
   )
 }
 
-export function BackButton({children, ...props}: LinkButtonProps): ReactElement {
+export function BackButton({children, ...props}: Omit<LinkButtonProps, 'to'>): ReactElement {
   return (
-    <LinkButton {...props} icon={<ArrowLeft/>}>
+    <LinkButton {...props} to='..' icon={<ArrowLeft/>} replace>
       {children}
     </LinkButton>
   )

@@ -16,7 +16,6 @@ import {send} from '../../../gateways/Gateway'
 import {Loading} from '../../../common/Loading'
 import {Feed} from '../../../domain/Feed'
 import {useLocation} from 'react-router-dom'
-import {REFRESH_HASH} from '../../../Routes'
 import {matchSorter} from 'match-sorter'
 import {CheckboxChecked} from '../../../common/icons/CheckboxChecked'
 import {CheckboxUnchecked} from '../../../common/icons/CheckboxUnchecked'
@@ -43,7 +42,7 @@ export function AvailableProjects({feed}: AvailableProjectsProps): ReactElement 
     }
     return fetchedProjects
   }, {
-    enabled: hash === REFRESH_HASH,
+    enabled: hash === '#refresh',
     onSuccess: (res) => {
       dispatch(projectsFetched(feed.trayId, res, feed.includeNew))
     }

@@ -1,30 +1,26 @@
 import React from 'react'
 import {buildRemoteBackupLocation, render} from '../../../testHelpers'
 import {ExportRemote} from './ExportRemote'
-import {BACKUP_REMOTE_LOCATIONS_ROOT} from '../RemoteLocationsReducer'
-import {ROUTE_EXPORT_REMOTE, ROUTE_SETTINGS_BACKUP, routeExportRemote} from '../../../Routes'
 import * as BackupGateway from '../../../gateways/BackupGateway'
 import {fakeRequest} from '../../../gateways/Gateway'
 import userEvent from '@testing-library/user-event'
 import {screen, waitFor} from '@testing-library/react'
+import {BACKUP_REMOTE_LOCATIONS_ROOT} from '../RemoteLocationsReducer'
 
 it('should export configuration', async () => {
+  const remoteLocation = buildRemoteBackupLocation({
+    internalId: 'locationId'
+  })
   const state = {
     [BACKUP_REMOTE_LOCATIONS_ROOT]: {
-      locationId: buildRemoteBackupLocation({
-        internalId: 'locationId'
-      })
+      locationId: remoteLocation
     }
   }
   jest.spyOn(BackupGateway, 'exportConfiguration').mockReturnValue(fakeRequest({
     id: 'some-remote-id'
   }))
 
-  render(<ExportRemote/>, {
-    state,
-    mountPath: ROUTE_EXPORT_REMOTE,
-    currentLocation: routeExportRemote('locationId')
-  })
+  render(<ExportRemote/>, {state, outletContext: remoteLocation})
 
   userEvent.click(screen.getByRole('button', {name: 'Export'}))
 
@@ -34,26 +30,16 @@ it('should export configuration', async () => {
 })
 
 it('should allow cancelling back to settings', async () => {
-  const state = {
-    [BACKUP_REMOTE_LOCATIONS_ROOT]: {
-      locationId: buildRemoteBackupLocation({
-        internalId: 'locationId'
-      })
-    }
-  }
+  const outletContext = buildRemoteBackupLocation()
   jest.spyOn(BackupGateway, 'exportConfiguration').mockReturnValue(fakeRequest({
     id: 'some-remote-id'
   }))
 
-  const {history} = render(<ExportRemote/>, {
-    state,
-    mountPath: ROUTE_EXPORT_REMOTE,
-    currentLocation: routeExportRemote('locationId')
-  })
+  render(<ExportRemote/>, {outletContext})
 
   userEvent.click(screen.getByRole('button', {name: 'Cancel'}))
 
   await waitFor(() => {
-    expect(history.location.pathname).toEqual(ROUTE_SETTINGS_BACKUP)
+    expect(window.location.pathname).toEqual('/settings/backup')
   })
 })

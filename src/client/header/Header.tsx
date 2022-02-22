@@ -8,7 +8,6 @@ import {Display} from '../common/icons/Display'
 import {Question} from '../common/icons/Question'
 import {Cog} from '../common/icons/Cog'
 import {NavLink} from 'react-router-dom'
-import {ROUTE_MONITOR, ROUTE_SETTINGS} from '../Routes'
 
 interface HeaderProps {
   readonly hide: boolean;
@@ -26,17 +25,19 @@ export function Header({hide}: HeaderProps): ReactElement {
         <nav className={styles.nav} role='navigation'>
           <ul className={styles.menu}>
             <li>
-              <NavLink to={ROUTE_MONITOR}
-                       className={styles.menuItem}
-                       activeClassName={styles.active}>
+              <NavLink to='monitor'
+                       className={({isActive}) => {
+                         return cn(styles.menuItem, {[styles.active]: isActive})
+                       }}>
                 <Display/>
                 <div className={styles.menuTitle}>Monitor</div>
               </NavLink>
             </li>
             <li>
-              <NavLink to={ROUTE_SETTINGS}
-                       className={styles.menuItem}
-                       activeClassName={styles.active}>
+              <NavLink to='settings'
+                       className={({isActive}) => {
+                         return cn(styles.menuItem, {[styles.active]: isActive})
+                       }}>
                 <Cog/>
                 <div className={styles.menuTitle}>Settings</div>
               </NavLink>

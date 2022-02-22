@@ -1,26 +1,26 @@
 import {useShortcut} from './common/Keyboard'
-import {useHistory} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import {
-  ROUTE_MONITOR,
-  ROUTE_SETTINGS,
-  ROUTE_SETTINGS_BACKUP,
-  ROUTE_SETTINGS_DISPLAY,
-  ROUTE_SETTINGS_NOTIFICATIONS,
-  ROUTE_SETTINGS_SUCCESS,
-  ROUTE_SETTINGS_TRACKING
-} from './Routes'
+  routeBackup,
+  routeDisplay,
+  routeMonitor,
+  routeNotifications,
+  routeSettings,
+  routeSuccess,
+  routeTracking
+} from './AppRoutes'
 
 export function useNavigationShortcut(keys: string | string[], route: string) {
-  const history = useHistory()
-  useShortcut(keys, () => history.push(route), [route, history])
+  const navigate = useNavigate()
+  useShortcut(keys, () => navigate(route, {replace: true}), [route, navigate])
 }
 
 export function useNavigationShortcuts(): void {
-  useNavigationShortcut(['m', '1'], ROUTE_MONITOR)
-  useNavigationShortcut([',', 's', '2'], ROUTE_SETTINGS)
-  useNavigationShortcut('t', ROUTE_SETTINGS_TRACKING)
-  useNavigationShortcut('v', ROUTE_SETTINGS_SUCCESS)
-  useNavigationShortcut('d', ROUTE_SETTINGS_DISPLAY)
-  useNavigationShortcut('b', ROUTE_SETTINGS_BACKUP)
-  useNavigationShortcut('n', ROUTE_SETTINGS_NOTIFICATIONS)
+  useNavigationShortcut(['m', '1'], routeMonitor)
+  useNavigationShortcut([',', 's', '2'], routeSettings)
+  useNavigationShortcut('t', routeTracking)
+  useNavigationShortcut('v', routeSuccess)
+  useNavigationShortcut('d', routeDisplay)
+  useNavigationShortcut('b', routeBackup)
+  useNavigationShortcut('n', routeNotifications)
 }

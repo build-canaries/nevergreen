@@ -50,7 +50,7 @@
     "react-modal": "3.14.4",
     "react-query": "3.34.13",
     "react-redux": "7.2.6",
-    "react-router-dom": "5.3.0",
+    "react-router-dom": "6.2.1",
     "react-tabs": "3.2.3",
     "react-transition-group": "4.4.2",
     "regenerator-runtime": "0.13.9",
@@ -78,7 +78,6 @@
     "@types/react-dom": "17.0.11",
     "@types/react-modal": "3.13.1",
     "@types/react-redux": "7.1.22",
-    "@types/react-router-dom": "5.3.3",
     "@types/react-tabs": "2.3.4",
     "@types/react-transition-group": "4.4.4",
     "@types/semver": "7.3.9",
@@ -262,7 +261,7 @@
     ],
     "coverageDirectory": "./target/coverage-reports/client",
     "collectCoverageFrom": [
-      "<rootDir>/src/client/**/*.{js,ts,tsx}",
+      "<rootDir>/src/client/**/*.{ts,tsx}",
       "!<rootDir>/src/client/styleGuide/**",
       "!<rootDir>/src/client/common/Logger.ts"
     ],

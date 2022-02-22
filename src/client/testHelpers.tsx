@@ -13,8 +13,7 @@ import {RecursivePartial} from './common/Types'
 import {render as testRender, RenderResult} from '@testing-library/react'
 import {Provider} from 'react-redux'
 import {AnyAction, configureStore, EnhancedStore} from '@reduxjs/toolkit'
-import {Router} from 'react-router-dom'
-import {createMemoryHistory, History} from 'history'
+import {BrowserRouter, Outlet} from 'react-router-dom'
 import Modal from 'react-modal'
 import {DEFAULT_REFRESH_TIME} from './settings/SettingsActionCreators'
 import {APPLIED_MIGRATIONS_ROOT} from './configuration/MigrationsReducer'
@@ -22,18 +21,18 @@ import {ProjectError, SortBy} from './gateways/ProjectsGateway'
 import parseISO from 'date-fns/parseISO'
 import {BACKUP_REMOTE_LOCATIONS_ROOT, RemoteLocation} from './settings/backup/RemoteLocationsReducer'
 import {RemoteLocationOptions} from './settings/backup/RemoteLocationOptions'
-import {Route, Switch} from 'react-router'
+import {Route, Routes} from 'react-router'
 import {QueryClient, QueryClientProvider} from 'react-query'
 
 interface ExtendedRenderResult extends RenderResult {
   readonly store: EnhancedStore<State, AnyAction, ReadonlyArray<Middleware<unknown, State>>>;
-  readonly history: History;
 }
 
 interface RenderOptions {
   readonly mountPath?: string;
   readonly currentLocation?: string;
   readonly state?: RecursivePartial<State>;
+  readonly outletContext?: unknown;
 }
 
 export function buildState(subState: RecursivePartial<State> = {}): State {
@@ -70,11 +69,12 @@ export function setupReactModal(): void {
 }
 
 export function render(component: ReactNode, options: RenderOptions = {}): ExtendedRenderResult {
-  const mergedOptions = merge({
-    mountPath: '/',
+  const mergedOptions = {
+    mountPath: '/*',
     currentLocation: '/',
-    state: {}
-  }, options)
+    state: {},
+    ...options
+  }
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -86,17 +86,20 @@ export function render(component: ReactNode, options: RenderOptions = {}): Exten
     }
   })
   const store = configureStore({reducer, preloadedState: buildState(mergedOptions.state)})
-  const history = createMemoryHistory({initialEntries: [mergedOptions.currentLocation]})
+
+  window.history.pushState({}, '', mergedOptions.currentLocation)
 
   const wrapWithStoreAndRouter = (c: ReactNode) => (
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
-        <Router history={history}>
-          <Switch>
-            <Route exact path={mergedOptions.mountPath}>{c}</Route>
-            <Route>location changed</Route>
-          </Switch>
-        </Router>
+        <BrowserRouter>
+          <Routes>
+            <Route element={<Outlet context={mergedOptions.outletContext}/>}>
+              <Route path={mergedOptions.mountPath} element={c}/>
+              <Route path='*' element={<>location changed</>}/>
+            </Route>
+          </Routes>
+        </BrowserRouter>
       </Provider>
     </QueryClientProvider>
   )
@@ -106,8 +109,7 @@ export function render(component: ReactNode, options: RenderOptions = {}): Exten
   return {
     ...view,
     rerender: (c: ReactNode): void => view.rerender(wrapWithStoreAndRouter(c)),
-    store,
-    history
+    store
   }
 }
 

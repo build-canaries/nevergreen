@@ -20,13 +20,10 @@ import {useSystemNotifications} from './notifications/SystemNotificationsHook'
 import {useShortcut} from '../common/Keyboard'
 import screenfull from 'screenfull'
 import {useQuery} from 'react-query'
+import {useNevergreenContext} from '../Nevergreen'
 
-interface MonitorProps {
-  readonly menusHidden: boolean;
-  readonly toggleMenusHidden: (hide: boolean) => void;
-}
-
-export function Monitor({menusHidden, toggleMenusHidden}: MonitorProps): ReactElement {
+export function Monitor(): ReactElement {
+  const {menusHidden, toggleMenusHidden} = useNevergreenContext()
   const refreshTime = useSelector(getRefreshTime)
   const feeds = useSelector(getFeeds)
   const selected = useSelector(getSelectedProjects)

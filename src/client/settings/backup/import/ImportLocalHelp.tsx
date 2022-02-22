@@ -1,8 +1,8 @@
 import React, {ReactElement} from 'react'
 import {HelpArticle, HelpProps} from '../../../help/HelpArticle'
-import {ROUTE_IMPORT_LOCAL} from '../../../Routes'
 import {HelpForm, HelpInput} from '../../../help/HelpForms'
 import {WarningMessages} from '../../../common/Messages'
+import {routeBackupImportLocal} from '../../../AppRoutes'
 
 const KEYWORDS = [
   'backup',
@@ -16,7 +16,7 @@ export function ImportLocalHelp({searchQuery}: HelpProps): ReactElement {
     <HelpArticle keywords={KEYWORDS}
                  searchQuery={searchQuery}
                  title='Import local'
-                 page={ROUTE_IMPORT_LOCAL}>
+                 page={routeBackupImportLocal}>
       <HelpForm>
         <HelpInput name='Open local...'>
           Opens a local plain text or json file. The contents of the file is <strong>not</strong> automatically

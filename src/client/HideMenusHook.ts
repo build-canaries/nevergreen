@@ -1,17 +1,17 @@
 import {useCallback, useEffect, useRef, useState} from 'react'
 
-type HideMenusHookResponse = [
-  menusHidden: boolean,
-  toggleMenusHidden: (hide: boolean) => void,
-  showMenus: () => void
-]
+interface HideMenusHookResponse {
+  menusHidden: boolean;
+  toggleMenusHidden: (hide: boolean) => void;
+  showMenus: () => void;
+}
 
-const THREE_SECONDS = 3 * 1000
+const threeSeconds = 3 * 1000
 
 export function useHideMenus(): HideMenusHookResponse {
   const timer = useRef(0)
   const [menusHidden, setMenusHidden] = useState(false)
-  const [hideMenusRequested, setHideMenusRequested] = useState(false)
+  const [hideMenusRequested, toggleMenusHidden] = useState(false)
 
   const showMenus = useCallback(() => {
     clearTimeout(timer.current)
@@ -23,7 +23,7 @@ export function useHideMenus(): HideMenusHookResponse {
     if (hideMenusRequested) {
       timer.current = window.setTimeout(
         () => setMenusHidden(true),
-        THREE_SECONDS)
+        threeSeconds)
     }
   }, [menusHidden, hideMenusRequested])
 
@@ -34,5 +34,5 @@ export function useHideMenus(): HideMenusHookResponse {
     }
   }, [hideMenusRequested])
 
-  return [menusHidden, setHideMenusRequested, showMenus]
+  return {menusHidden, toggleMenusHidden, showMenus}
 }

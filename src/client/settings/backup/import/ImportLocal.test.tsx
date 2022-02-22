@@ -3,7 +3,6 @@ import userEvent from '@testing-library/user-event'
 import {ImportLocal} from './ImportLocal'
 import {buildState, render} from '../../../testHelpers'
 import {toJson} from '../../../common/Json'
-import {ROUTE_SETTINGS_BACKUP} from '../../../Routes'
 import {screen, waitFor} from '@testing-library/react'
 
 it('should import valid configuration', async () => {
@@ -65,12 +64,12 @@ it('should allow a single JSON and plain text files to be opened', () => {
 })
 
 it('should be able to cancel back to settings', async () => {
-  const {history} = render(<ImportLocal/>)
+  render(<ImportLocal/>)
 
   userEvent.click(screen.getByRole('button', {name: 'Cancel'}))
 
   await waitFor(() => {
-    expect(history.location.pathname).toEqual(ROUTE_SETTINGS_BACKUP)
+    expect(window.location.pathname).toEqual('/backup')
   })
 })
 

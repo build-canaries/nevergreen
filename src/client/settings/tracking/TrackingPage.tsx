@@ -3,7 +3,6 @@ import {useDispatch, useSelector} from 'react-redux'
 import {getFeeds} from './FeedsReducer'
 import {Page} from '../../common/Page'
 import {AddButton} from '../../common/LinkButton'
-import {ROUTE_TRACKING_ADD} from '../../Routes'
 import {WarningMessages} from '../../common/Messages'
 import {FeedCard} from './FeedCard'
 import styles from './tracking-page.scss'
@@ -30,8 +29,7 @@ export function TrackingPage(): ReactElement {
                 data-locator='refresh-time'>
         Poll for feed changes every
       </DropDown>
-      <AddButton to={ROUTE_TRACKING_ADD}
-                 className={styles.addFeed}>
+      <AddButton className={styles.addFeed}>
         Add feed
       </AddButton>
       {feeds.length === 0 && <WarningMessages messages='No feeds added, add a feed to start monitoring'/>}

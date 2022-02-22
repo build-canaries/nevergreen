@@ -9,7 +9,6 @@ import {CardHeading} from '../../common/card/CardHeading'
 import {BackupLogo} from './BackupLogo'
 import {Summary} from '../../common/Summary'
 import {backupSummary} from './BackupSummary'
-import {routeExportRemote, routeImportRemote} from '../../Routes'
 import {VisuallyHidden} from '../../common/VisuallyHidden'
 import {LinkButton} from '../../common/LinkButton'
 import {CloudUpload} from '../../common/icons/CloudUpload'
@@ -33,11 +32,11 @@ export function RemoteBackupCard({location, index}: RemoteLocationProps): ReactE
       <Summary values={backupSummary(location)}/>
       <LinkButton className={styles.exportButton}
                   icon={<CloudUpload/>}
-                  to={routeExportRemote(location.internalId)}>
+                  to={`${location.internalId}/export`}>
         Export<VisuallyHidden> remotely</VisuallyHidden>
       </LinkButton>
       <LinkButton icon={<CloudDownload/>}
-                  to={routeImportRemote(location.internalId)}>
+                  to={`${location.internalId}/import`}>
         Import<VisuallyHidden> remote</VisuallyHidden>
       </LinkButton>
       <Checkbox onToggle={(value) => dispatch(setAutomaticExport(location.internalId, value))}
