@@ -17,6 +17,10 @@ export function isGitHub(location?: RemoteLocation): location is RemoteLocation 
   return location?.where === RemoteLocationOptions.GitHub
 }
 
+export function isGitHubEnterprise(location?: RemoteLocation): location is RemoteLocation {
+  return location?.where === RemoteLocationOptions.GitHub && location.url !== DEFAULT_GITHUB_URL
+}
+
 export function isGitLab(location?: RemoteLocation): location is RemoteLocation {
   return location?.where === RemoteLocationOptions.GitLab
 }

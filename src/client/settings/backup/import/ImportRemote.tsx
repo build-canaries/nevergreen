@@ -16,7 +16,7 @@ import {allErrors, FormErrors} from '../../../common/forms/Validation'
 import {Loading} from '../../../common/Loading'
 import {Page} from '../../../common/Page'
 import {Summary} from '../../../common/Summary'
-import {backupSummary} from '../BackupSummary'
+import {fullBackupSummary} from '../BackupSummary'
 import {LinkButton} from '../../../common/LinkButton'
 import {CloudDownload} from '../../../common/icons/CloudDownload'
 import {Cross} from '../../../common/icons/Cross'
@@ -72,7 +72,7 @@ export function ImportRemote(): ReactElement {
 
   return (
     <Page title='Import remote' icon={<BackupLogo where={location.where}/>}>
-      <Summary values={backupSummary(location)}/>
+      <Summary values={fullBackupSummary(location)}/>
       <Loading loaded={!isFetching}
                className={styles.loading}>
         {isError && (

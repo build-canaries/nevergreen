@@ -23,16 +23,6 @@ describe('GitHub gists', () => {
     render(<RemoteBackupCard index={1} location={location}/>)
     expect(screen.getByText('some description')).toBeInTheDocument()
   })
-
-  it('should display the URL', () => {
-    const location = buildRemoteBackupLocation({
-      where: RemoteLocationOptions.GitHub,
-      url: 'http://some-custom-github-url'
-    })
-    render(<RemoteBackupCard index={1} location={location}/>)
-    expect(screen.getByText('GitHub Enterprise gist')).toBeInTheDocument()
-    expect(screen.getByText('http://some-custom-github-url')).toBeInTheDocument()
-  })
 })
 
 describe('GitLab snippets', () => {
@@ -44,14 +34,5 @@ describe('GitLab snippets', () => {
     })
     render(<RemoteBackupCard index={1} location={location}/>)
     expect(screen.getByText('some description')).toBeInTheDocument()
-  })
-
-  it('should display the URL', () => {
-    const location = buildRemoteBackupLocation({
-      where: RemoteLocationOptions.GitLab,
-      url: 'http://some-custom-gitlab-url'
-    })
-    render(<RemoteBackupCard index={1} location={location}/>)
-    expect(screen.getByText('http://some-custom-gitlab-url')).toBeInTheDocument()
   })
 })

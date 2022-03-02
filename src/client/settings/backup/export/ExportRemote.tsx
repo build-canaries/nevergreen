@@ -7,7 +7,7 @@ import {exportConfiguration} from '../../../gateways/BackupGateway'
 import {backupExported} from '../BackupActionCreators'
 import {Form} from '../../../common/forms/Form'
 import {Page} from '../../../common/Page'
-import {backupSummary} from '../BackupSummary'
+import {fullBackupSummary} from '../BackupSummary'
 import {Summary} from '../../../common/Summary'
 import {BackupLogo} from '../BackupLogo'
 import {useRemoteLocationContext} from '../RemoteLocationPage'
@@ -26,7 +26,7 @@ export function ExportRemote(): ReactElement {
 
   return (
     <Page title='Export remote' icon={<BackupLogo where={location.where}/>}>
-      <Summary values={backupSummary(location)}/>
+      <Summary values={fullBackupSummary(location)}/>
       <Form onSuccess={exportNow}
             onCancel={routeBackup}
             submitButtonText='Export'>
