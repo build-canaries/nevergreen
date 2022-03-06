@@ -57,7 +57,7 @@ export function TestConnection({existingFeed, details}: TestConnectionProps): Re
         <TimedErrorMessages messages={[errorMessage(error)]} onDismiss={dismiss}/>
       )}
       <SecondaryButton className={styles.test}
-                       onClick={() => refetch()}
+                       onClick={() => void refetch()}
                        disabled={isFetching}
                        icon={<Loop loaded={!isFetching}/>}>
         {isFetching ? 'Checking connection...' : 'Check connection'}

@@ -80,7 +80,7 @@ export function ImportRemote(): ReactElement {
             <ErrorMessages messages={['Unable to fetch remote backup because of an error', errorMessage(error)]}/>
             <SecondaryButton className={styles.tryAgain}
                              icon={<CloudDownload/>}
-                             onClick={() => refetch()}>
+                             onClick={() => void refetch()}>
               Try fetching again
             </SecondaryButton>
             <LinkButton to={routeBackup}

@@ -127,7 +127,7 @@ export function AvailableProjects({feed}: AvailableProjectsProps): ReactElement 
     <section className={styles.availableProjects}
              data-locator='available-projects'>
       <Refresh timestamp={feed.timestamp}
-               refreshTray={() => refetch()}
+               refreshTray={() => void refetch()}
                loaded={!isFetching}/>
       {controls}
       <Loading loaded={!isFetching}

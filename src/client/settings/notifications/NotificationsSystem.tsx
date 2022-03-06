@@ -40,7 +40,7 @@ export function NotificationsSystem(): ReactElement {
       {
         systemNotificationsSupported &&
         <Checkbox checked={showSystemNotifications}
-                  onToggle={toggleShowSystemNotifications}
+                  onToggle={(show) => void toggleShowSystemNotifications(show)}
                   data-locator='show-system-notifications'
                   disabled={requestingPermission}>
           Show system notifications

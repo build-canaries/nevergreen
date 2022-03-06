@@ -23,7 +23,7 @@ export function Reset(): ReactElement {
         'It\'s recommended to make a backup before resetting.'
       ]}/>
       <DangerButton className={styles.reset}
-                    onClick={resetConfiguration}
+                    onClick={() => void resetConfiguration()}
                     disabled={resetting}
                     icon={<Bin/>}>
         Reset configuration

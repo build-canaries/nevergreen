@@ -24,7 +24,7 @@ export function UnhandledErrorMessage(): ReactElement {
         configuration. <strong>Please note, deleting your configuration can not be undone!</strong>
       </p>
       <DangerButton className={styles.deleteConfiguration}
-                    onClick={clear}>
+                    onClick={() => void clear()}>
         delete configuration
       </DangerButton>
     </div>)
