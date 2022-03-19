@@ -1,19 +1,18 @@
-import React, {ReactElement, useState} from 'react'
+import React, {ReactElement} from 'react'
 import cn from 'classnames'
 import version from '../../../resources/version.txt'
 import versionMeta from '../../../resources/version_meta.txt'
 import versionName from '../../../resources/version_name.txt'
 import {SubmitAnIssue} from './SubmitAnIssue'
-import {About} from './About'
 import styles from './footer.scss'
+import {Link} from 'react-router-dom'
+import {ROUTE_ABOUT} from '../AppRoutes'
 
 interface FooterProps {
   readonly hide: boolean;
 }
 
 export function Footer({hide}: FooterProps): ReactElement {
-  const [showAbout, setShowAbout] = useState(false)
-
   const footerClassNames = cn(styles.siteFooter, {
     [styles.hide]: hide
   })
@@ -22,15 +21,10 @@ export function Footer({hide}: FooterProps): ReactElement {
 
   return (
     <>
-      <About version={versionWithName}
-             show={showAbout}
-             close={() => setShowAbout(false)}/>
       <footer className={footerClassNames} role='contentinfo'>
-        <button className={styles.about}
-                onClick={() => setShowAbout(true)}
-                type='button'>
+        <Link className={styles.about} to={ROUTE_ABOUT}>
           Nevergreen v{fullVersion} {versionName} by Build Canaries
-        </button>
+        </Link>
         <SubmitAnIssue version={versionWithName} className={styles.submitAnIssue}/>
       </footer>
     </>

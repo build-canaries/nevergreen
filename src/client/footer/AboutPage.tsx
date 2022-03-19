@@ -1,24 +1,22 @@
 import React, {ReactElement} from 'react'
-import {Modal} from '../common/Modal'
 import {ExternalLink} from '../common/ExternalLink'
 import {SubmitAnIssue} from './SubmitAnIssue'
-import styles from './about.scss'
+import styles from './about-page.scss'
 import {Twitter} from '../common/icons/Twitter'
 import {GitHubLogo} from '../common/icons/GitHubLogo'
+import {Page} from '../common/Page'
+import version from '../../../resources/version.txt'
+import versionMeta from '../../../resources/version_meta.txt'
+import versionName from '../../../resources/version_name.txt'
 
-interface AboutProps {
-  readonly show: boolean;
-  readonly close: () => void;
-  readonly version: string;
-}
+export function AboutPage(): ReactElement {
+  const fullVersion = `${version}+${versionMeta}`
+  const versionWithName = `v${fullVersion} ${versionName}`
 
-export function About({show, close, version}: AboutProps): ReactElement {
   return (
-    <Modal show={show}
-           close={close}
-           title='About'>
+    <Page title='About'>
       <p>
-        Nevergreen {version} by Build Canaries.
+        Nevergreen {versionWithName} by Build Canaries.
       </p>
       <p>
         <Twitter/>
@@ -31,7 +29,7 @@ export function About({show, close, version}: AboutProps): ReactElement {
           GitHub</ExternalLink>.
       </p>
       <p>
-        Found a problem? <SubmitAnIssue version={version}/> on GitHub to help us!
+        Found a problem? <SubmitAnIssue version={versionWithName}/> on GitHub to help us!
       </p>
       <h2 className={styles.title}>Licences</h2>
       <p>
@@ -50,6 +48,6 @@ export function About({show, close, version}: AboutProps): ReactElement {
         href='https://creativecommons.org/licenses/by-nc/4.0/'>Creative Commons Attribution-NonCommercial 4.0
         International (CC BY-NC 4.0)</ExternalLink>
       </p>
-    </Modal>
+    </Page>
   )
 }

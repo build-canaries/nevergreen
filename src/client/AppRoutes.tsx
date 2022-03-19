@@ -24,6 +24,7 @@ import {Navigate, Routes} from 'react-router-dom'
 import {StyleGuide} from './styleGuide/StyleGuide'
 import {Nevergreen} from './Nevergreen'
 import {RemoteLocationPage} from './settings/backup/RemoteLocationPage'
+import {AboutPage} from './footer/AboutPage'
 
 export const ROUTE_MONITOR = '/monitor'
 export const ROUTE_SETTINGS = '/settings'
@@ -41,6 +42,7 @@ export const ROUTE_BACKUP_IMPORT_LOCAL = '/settings/backup/local/import'
 export const ROUTE_BACKUP_IMPORT_REMOTE = '/settings/backup/:internalId/import'
 export const ROUTE_BACKUP_EXPORT_LOCAL = '/settings/backup/local/export'
 export const ROUTE_BACKUP_EXPORT_REMOTE = '/settings/backup/:internalId/export'
+export const ROUTE_ABOUT = '/settings/about'
 export const ROUTE_PREVIEW = '/preview'
 
 export function AppRoutes(): ReactElement {
@@ -71,6 +73,7 @@ export function AppRoutes(): ReactElement {
             <Route index element={<Navigate to={ROUTE_BACKUP}/>}/>
           </Route>
           <Route path='reset' element={<Reset/>}/>
+          <Route path='about' element={<AboutPage/>}/>
           <Route index element={<Navigate to='tracking'/>}/>
         </Route>
         <Route path={ROUTE_PREVIEW} element={<Preview/>}/>
