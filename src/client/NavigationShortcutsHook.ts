@@ -1,13 +1,13 @@
 import {useShortcut} from './common/Keyboard'
 import {useNavigate} from 'react-router-dom'
 import {
-  routeBackup,
-  routeDisplay,
-  routeMonitor,
-  routeNotifications,
-  routeSettings,
-  routeSuccess,
-  routeTracking
+  ROUTE_BACKUP,
+  ROUTE_DISPLAY,
+  ROUTE_MONITOR,
+  ROUTE_NOTIFICATIONS,
+  ROUTE_SETTINGS,
+  ROUTE_SUCCESS,
+  ROUTE_TRACKING
 } from './AppRoutes'
 
 export function useNavigationShortcut(keys: string | string[], route: string) {
@@ -16,11 +16,11 @@ export function useNavigationShortcut(keys: string | string[], route: string) {
 }
 
 export function useNavigationShortcuts(): void {
-  useNavigationShortcut(['m', '1'], routeMonitor)
-  useNavigationShortcut([',', 's', '2'], routeSettings)
-  useNavigationShortcut('t', routeTracking)
-  useNavigationShortcut('v', routeSuccess)
-  useNavigationShortcut('d', routeDisplay)
-  useNavigationShortcut('b', routeBackup)
-  useNavigationShortcut('n', routeNotifications)
+  useNavigationShortcut(['m', '1'], ROUTE_MONITOR)
+  useNavigationShortcut([',', 's', '2'], ROUTE_SETTINGS)
+  useNavigationShortcut('t', ROUTE_TRACKING)
+  useNavigationShortcut('v', ROUTE_SUCCESS)
+  useNavigationShortcut('d', ROUTE_DISPLAY)
+  useNavigationShortcut('b', ROUTE_BACKUP)
+  useNavigationShortcut('n', ROUTE_NOTIFICATIONS)
 }

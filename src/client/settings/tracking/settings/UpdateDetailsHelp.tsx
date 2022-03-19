@@ -1,9 +1,9 @@
 import React, {ReactElement} from 'react'
 import {HelpArticle, HelpProps} from '../../../help/HelpArticle'
 import {HelpForm, HelpInput} from '../../../help/HelpForms'
-import {routeTrackingDetails} from '../../../AppRoutes'
+import {ROUTE_TRACKING_DETAILS} from '../../../AppRoutes'
 
-const KEYWORDS = [
+const keywords = [
   'tracking',
   'settings',
   'name',
@@ -19,10 +19,10 @@ const KEYWORDS = [
 export function UpdateDetailsHelp({searchQuery, helpLink}: HelpProps): ReactElement {
   return (
     <HelpArticle
-      keywords={KEYWORDS}
+      keywords={keywords}
       searchQuery={searchQuery}
       title='Update details'
-      page={routeTrackingDetails}>
+      page={ROUTE_TRACKING_DETAILS}>
       <HelpForm>
         <HelpInput name='Update connection'>
           Update the connection URL and/or authentication.

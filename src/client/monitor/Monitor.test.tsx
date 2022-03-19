@@ -11,7 +11,7 @@ import {fakeRequest} from '../gateways/Gateway'
 import {SETTINGS_ROOT} from '../settings/SettingsReducer'
 import {Prognosis} from '../domain/Project'
 
-const DEFAULT_PROPS = {
+const defaultProps = {
   menusHidden: false,
   toggleMenusHidden: noop,
   setNotification: noop
@@ -30,14 +30,14 @@ beforeEach(() => {
 
 it('should request to hide the header and footer when the user first loads the page', () => {
   const toggleMenusHidden = jest.fn()
-  const outletContext = {...DEFAULT_PROPS, toggleMenusHidden}
+  const outletContext = {...defaultProps, toggleMenusHidden}
   render(<Monitor/>, {outletContext})
   expect(toggleMenusHidden).toHaveBeenCalledWith(true)
 })
 
 it('should request to show the header and footer when the user navigates away from the page', () => {
   const toggleMenusHidden = jest.fn()
-  const outletContext = {...DEFAULT_PROPS, toggleMenusHidden}
+  const outletContext = {...defaultProps, toggleMenusHidden}
   const {unmount} = render(<Monitor/>, {outletContext})
   unmount()
   expect(toggleMenusHidden).toHaveBeenCalledWith(false)
@@ -47,7 +47,7 @@ it('should show a helpful message if no feeds are added', () => {
   const state = {
     [FEEDS_ROOT]: {}
   }
-  const outletContext = DEFAULT_PROPS
+  const outletContext = defaultProps
   render(<Monitor/>, {state, outletContext})
   expect(screen.getByText('Add a feed via the tracking page to start monitoring')).toBeInTheDocument()
 })
@@ -58,7 +58,7 @@ it('should show a loading screen when first switching to the page', () => {
       [trayId]: buildFeed({trayId})
     }
   }
-  const outletContext = DEFAULT_PROPS
+  const outletContext = defaultProps
   render(<Monitor/>, {state, outletContext})
   expect(screen.getByTestId('loading')).toBeInTheDocument()
 })
@@ -71,7 +71,7 @@ it('should show a success message if there are no projects', async () => {
     },
     [SUCCESS_ROOT]: ['some-success-message']
   }
-  const outletContext = DEFAULT_PROPS
+  const outletContext = defaultProps
   render(<Monitor/>, {state, outletContext})
   await waitFor(() => {
     expect(screen.getByText('some-success-message')).toBeInTheDocument()
@@ -87,7 +87,7 @@ it('should not try updating after the user has navigated away from the page', ()
     },
     [SUCCESS_ROOT]: ['some-success-message']
   }
-  const outletContext = DEFAULT_PROPS
+  const outletContext = defaultProps
   const {unmount} = render(<Monitor/>, {state, outletContext})
   unmount()
   // we can't assert on React internals logging warnings, if this is broken you'll see
@@ -101,7 +101,7 @@ it('should display an error if the Nevergreen server is having issues', async ()
       [trayId]: buildFeed({trayId})
     }
   }
-  const outletContext = DEFAULT_PROPS
+  const outletContext = defaultProps
   render(<Monitor/>, {state, outletContext})
   await waitFor(() => {
     expect(screen.getByText('some-error')).toBeInTheDocument()
@@ -132,7 +132,7 @@ describe('audio notifications', () => {
         brokenBuildSoundFx: 'some-sfx'
       }
     }
-    const outletContext = DEFAULT_PROPS
+    const outletContext = defaultProps
 
     const {unmount} = render(<Monitor/>, {state, outletContext})
 
@@ -160,7 +160,7 @@ describe('audio notifications', () => {
         playBrokenBuildSoundFx: false
       }
     }
-    const outletContext = DEFAULT_PROPS
+    const outletContext = defaultProps
 
     render(<Monitor/>, {state, outletContext})
 
@@ -183,7 +183,7 @@ describe('audio notifications', () => {
         playBrokenBuildSoundFx: true
       }
     }
-    const outletContext = DEFAULT_PROPS
+    const outletContext = defaultProps
 
     render(<Monitor/>, {state, outletContext})
 
@@ -207,7 +207,7 @@ describe('audio notifications', () => {
         brokenBuildFx: ''
       }
     }
-    const outletContext = DEFAULT_PROPS
+    const outletContext = defaultProps
 
     render(<Monitor/>, {state, outletContext})
 

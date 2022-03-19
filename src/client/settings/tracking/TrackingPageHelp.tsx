@@ -1,9 +1,9 @@
 import React, {ReactElement} from 'react'
 import {HelpArticle, HelpProps} from '../../help/HelpArticle'
 import {HelpForm, HelpInput} from '../../help/HelpForms'
-import {routeTracking} from '../../AppRoutes'
+import {ROUTE_TRACKING} from '../../AppRoutes'
 
-const KEYWORDS = [
+const keywords = [
   'tracking',
   'adding',
   'cctray',
@@ -14,9 +14,9 @@ const KEYWORDS = [
 export function TrackingPageHelp({searchQuery, helpLink}: HelpProps): ReactElement {
   return (
     <HelpArticle title='Tracking'
-                 keywords={KEYWORDS}
+                 keywords={keywords}
                  searchQuery={searchQuery}
-                 page={routeTracking}>
+                 page={ROUTE_TRACKING}>
       <HelpForm>
         <HelpInput name='Poll for feed changes every'>
           How often to check the CI server(s) for project updates.

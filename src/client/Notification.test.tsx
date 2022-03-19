@@ -5,14 +5,14 @@ import {render} from './testHelpers'
 import noop from 'lodash/noop'
 import {screen} from '@testing-library/react'
 
-const DEFAULT_PROPS = {
+const defaultProps = {
   notification: '',
   onDismiss: noop,
   hide: false
 }
 
 it('should not render anything if notification is empty', () => {
-  const props = {...DEFAULT_PROPS, notification: ''}
+  const props = {...defaultProps, notification: ''}
   const {container} = render(<Notification {...props}/>)
   // eslint-disable-next-line testing-library/no-node-access
   expect(container.firstChild).toBeNull()
@@ -20,7 +20,7 @@ it('should not render anything if notification is empty', () => {
 
 it('should be able to dismiss shown notifications', () => {
   const onDismiss = jest.fn()
-  const props = {...DEFAULT_PROPS, notification: 'some notification', onDismiss}
+  const props = {...defaultProps, notification: 'some notification', onDismiss}
 
   render(<Notification {...props}/>)
   expect(screen.getByText('some notification')).toBeInTheDocument()

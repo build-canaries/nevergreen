@@ -1,10 +1,10 @@
 import React, {ReactElement} from 'react'
 import styles from './keyboard-shortcuts.scss'
-import {showHelpShortcut, showKeyboardShortcutsShortcut} from './Help'
+import {SHOW_HELP_SHORTCUT, SHOW_KEYBOARD_SHORTCUTS_SHORTCUT} from './Help'
 import screenfull from 'screenfull'
 import {HelpArticle, HelpProps} from './HelpArticle'
 
-export const keyboardShortcutKeyword = 'keyboard shortcuts'
+export const KEYBOARD_SHORTCUT_KEYWORD = 'keyboard shortcuts'
 
 function Shortcut({label, children}: { label: string, children: ReactElement }): ReactElement {
   return (
@@ -21,17 +21,17 @@ function Binding({children}: { children: string }): ReactElement {
 
 export function KeyboardShortcuts({searchQuery}: HelpProps): ReactElement {
   return (
-    <HelpArticle keywords={[keyboardShortcutKeyword]}
+    <HelpArticle keywords={[KEYBOARD_SHORTCUT_KEYWORD]}
                  searchQuery={searchQuery}
                  title='Keyboard shortcuts'>
 
       <h3 className={styles.header}>General</h3>
       <ul className={styles.shortcuts}>
         <Shortcut label='Shows keyboard shortcuts (this)'>
-          <Binding>{showKeyboardShortcutsShortcut}</Binding>
+          <Binding>{SHOW_KEYBOARD_SHORTCUTS_SHORTCUT}</Binding>
         </Shortcut>
         <Shortcut label='Shows help'>
-          <Binding>{showHelpShortcut}</Binding>
+          <Binding>{SHOW_HELP_SHORTCUT}</Binding>
         </Shortcut>
         <Shortcut label='Dismiss dialogs (such as this) or blurs the focused element (except text inputs)'>
           <Binding>esc</Binding>

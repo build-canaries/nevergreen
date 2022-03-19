@@ -43,7 +43,7 @@ export function addBackupCustomServer(url: string): ActionAddBackup {
   return {
     type: Actions.ADD_BACKUP,
     data: {
-      where: RemoteLocationOptions.Custom,
+      where: RemoteLocationOptions.custom,
       internalId: createId(),
       url,
       automaticallyExport: false,
@@ -56,7 +56,7 @@ export function addBackupCustomServer(url: string): ActionAddBackup {
   }
 }
 
-export function addBackupGitHubLab(where: RemoteLocationOptions.GitHub | RemoteLocationOptions.GitLab, externalId: string, url: string, description: string, encryptedAccessToken: string): ActionAddBackup {
+export function addBackupGitHubLab(where: RemoteLocationOptions.gitHub | RemoteLocationOptions.gitLab, externalId: string, url: string, description: string, encryptedAccessToken: string): ActionAddBackup {
   return {
     type: Actions.ADD_BACKUP,
     data: {

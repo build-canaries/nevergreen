@@ -20,9 +20,9 @@ export interface ProjectsState {
 
 export const PROJECTS_ROOT = 'projects'
 
-const DEFAULT_STATE: ProjectsState = {}
+const defaultState: ProjectsState = {}
 
-export const reduce = createReducer<ProjectsState>(DEFAULT_STATE, {
+export const reduce = createReducer<ProjectsState>(defaultState, {
   [Actions.CONFIGURATION_IMPORTED]: (draft, action: ActionConfigurationImported) => {
     return action.configuration[PROJECTS_ROOT]
       ? action.configuration[PROJECTS_ROOT] as ProjectsState

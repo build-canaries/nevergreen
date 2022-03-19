@@ -25,38 +25,37 @@ import {StyleGuide} from './styleGuide/StyleGuide'
 import {Nevergreen} from './Nevergreen'
 import {RemoteLocationPage} from './settings/backup/RemoteLocationPage'
 
-export const routeMonitor = '/monitor'
-export const routeSettings = '/settings'
-export const routeTracking = '/settings/tracking'
-export const routeTrackingAdd = '/settings/tracking/add'
-export const routeTrackingProjects = '/settings/tracking/:id/projects'
-export const routeTrackingDetails = '/settings/tracking/:id/details'
-export const routeTrackingDetailsConnection = '/settings/tracking/:id/details/connection'
-export const routeSuccess = '/settings/success'
-export const routeSuccessAdd = '/settings/success/add'
-export const routeDisplay = '/settings/display'
-export const routeNotifications = '/settings/notifications'
-export const routeBackup = '/settings/backup'
-export const routeBackupAdd = '/settings/backup/add'
-export const routeBackupImportLocal = '/settings/backup/local/import'
-export const routeBackupImportRemote = '/settings/backup/:internalId/import'
-export const routeBackupExportLocal = '/settings/backup/local/export'
-export const routeBackupExportRemote = '/settings/backup/:internalId/export'
-export const routePreview = '/preview'
+export const ROUTE_MONITOR = '/monitor'
+export const ROUTE_SETTINGS = '/settings'
+export const ROUTE_TRACKING = '/settings/tracking'
+export const ROUTE_TRACKING_ADD = '/settings/tracking/add'
+export const ROUTE_TRACKING_PROJECTS = '/settings/tracking/:id/projects'
+export const ROUTE_TRACKING_DETAILS = '/settings/tracking/:id/details'
+export const ROUTE_TRACKING_DETAILS_CONNECTION = '/settings/tracking/:id/details/connection'
+export const ROUTE_SUCCESS = '/settings/success'
+export const ROUTE_DISPLAY = '/settings/display'
+export const ROUTE_NOTIFICATIONS = '/settings/notifications'
+export const ROUTE_BACKUP = '/settings/backup'
+export const ROUTE_BACKUP_ADD = '/settings/backup/add'
+export const ROUTE_BACKUP_IMPORT_LOCAL = '/settings/backup/local/import'
+export const ROUTE_BACKUP_IMPORT_REMOTE = '/settings/backup/:internalId/import'
+export const ROUTE_BACKUP_EXPORT_LOCAL = '/settings/backup/local/export'
+export const ROUTE_BACKUP_EXPORT_REMOTE = '/settings/backup/:internalId/export'
+export const ROUTE_PREVIEW = '/preview'
 
 export function AppRoutes(): ReactElement {
   return (
     <Routes>
       <Route element={<Nevergreen/>}>
-        <Route path={routeMonitor} element={<Monitor/>}/>
-        <Route path={routeSettings} element={<Settings/>}>
+        <Route path={ROUTE_MONITOR} element={<Monitor/>}/>
+        <Route path={ROUTE_SETTINGS} element={<Settings/>}>
           <Route path='tracking' element={<TrackingPage/>}/>
           <Route path='tracking/add' element={<AddFeed/>}/>
           <Route path='tracking/:id' element={<FeedPage/>}>
             <Route path='projects' element={<ManageProjectsPage/>}/>
             <Route path='details' element={<UpdateDetailsPage/>}/>
             <Route path='details/connection' element={<UpdateConnectionPage/>}/>
-            <Route index element={<Navigate to={routeTracking}/>}/>
+            <Route index element={<Navigate to={ROUTE_TRACKING}/>}/>
           </Route>
           <Route path='success' element={<SuccessMessages/>}/>
           <Route path='success/add' element={<AddMessage/>}/>
@@ -69,14 +68,14 @@ export function AppRoutes(): ReactElement {
           <Route path='backup/:internalId' element={<RemoteLocationPage/>}>
             <Route path='export' element={<ExportRemote/>}/>
             <Route path='import' element={<ImportRemote/>}/>
-            <Route index element={<Navigate to={routeBackup}/>}/>
+            <Route index element={<Navigate to={ROUTE_BACKUP}/>}/>
           </Route>
           <Route path='reset' element={<Reset/>}/>
           <Route index element={<Navigate to='tracking'/>}/>
         </Route>
-        <Route path={routePreview} element={<Preview/>}/>
+        <Route path={ROUTE_PREVIEW} element={<Preview/>}/>
         <Route path='/style-guide' element={<StyleGuide/>}/>
-        <Route path='/*' element={<Navigate to={routeSettings}/>}/>
+        <Route path='/*' element={<Navigate to={ROUTE_SETTINGS}/>}/>
       </Route>
     </Routes>
   )

@@ -10,7 +10,7 @@ import {Notification} from '../Notification'
 import {useNavigate} from 'react-router-dom'
 import styles from './preview.scss'
 import {useQuery} from 'react-query'
-import {routeDisplay} from '../AppRoutes'
+import {ROUTE_DISPLAY} from '../AppRoutes'
 
 export function Preview(): ReactElement {
   const prognosis = useSelector(getShowPrognosis)
@@ -39,7 +39,7 @@ export function Preview(): ReactElement {
     <div className={styles.preview}>
       <Notification notification='This is a preview showing your current display settings'
                     hide={false}
-                    onDismiss={() => navigate(routeDisplay)}/>
+                    onDismiss={() => navigate(ROUTE_DISPLAY)}/>
       <div className={styles.projects}>
         <div className={styles.projectsInner}>
           <Loading loaded={!isLoading} dark>

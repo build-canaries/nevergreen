@@ -158,7 +158,7 @@ export function buildProjectError(projectError: Partial<ProjectError> = {}): Pro
 export function buildRemoteBackupLocation(location: Partial<RemoteLocation> = {}): RemoteLocation {
   const defaultLocation: RemoteLocation = {
     internalId: '',
-    where: RemoteLocationOptions.Custom,
+    where: RemoteLocationOptions.custom,
     url: 'http://some-url',
     exportTimestamp: '',
     importTimestamp: '',

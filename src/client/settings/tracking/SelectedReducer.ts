@@ -11,9 +11,9 @@ export interface SelectedState {
 
 export const SELECTED_ROOT = 'selected'
 
-const DEFAULT_STATE: SelectedState = {}
+const defaultState: SelectedState = {}
 
-export const reduce = createReducer<SelectedState>(DEFAULT_STATE, {
+export const reduce = createReducer<SelectedState>(defaultState, {
   [Actions.CONFIGURATION_IMPORTED]: (draft, action: ActionConfigurationImported) => {
     return action.configuration[SELECTED_ROOT]
       ? action.configuration[SELECTED_ROOT] as SelectedState

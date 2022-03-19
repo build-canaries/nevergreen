@@ -58,7 +58,7 @@ export function ImportLocal(): ReactElement {
     if (isBlank(data)) {
       validationMessage.push({field: 'import', message: 'Enter the configuration to import'})
     } else {
-      const result = toConfiguration(data, DataSource.UserImport)
+      const result = toConfiguration(data, DataSource.userImport)
 
       if (isLeft(result)) {
         result.left.forEach((message) => {
@@ -71,7 +71,7 @@ export function ImportLocal(): ReactElement {
   }
 
   const onSuccess = () => {
-    const result = toConfiguration(data, DataSource.UserImport)
+    const result = toConfiguration(data, DataSource.userImport)
 
     if (isRight(result)) {
       dispatch(configurationImported(result.right))

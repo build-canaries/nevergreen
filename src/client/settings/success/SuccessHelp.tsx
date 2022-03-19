@@ -1,9 +1,9 @@
 import React, {ReactElement} from 'react'
 import {ExternalLink} from '../../common/ExternalLink'
 import {HelpArticle, HelpProps} from '../../help/HelpArticle'
-import {routeSuccess} from '../../AppRoutes'
+import {ROUTE_SUCCESS} from '../../AppRoutes'
 
-const KEYWORDS = [
+const keywords = [
   'success',
   'messages',
   'images',
@@ -16,10 +16,10 @@ const KEYWORDS = [
 
 export function SuccessHelp({searchQuery, helpLink}: HelpProps): ReactElement {
   return (
-    <HelpArticle keywords={KEYWORDS}
+    <HelpArticle keywords={keywords}
                  searchQuery={searchQuery}
                  title='Success messages'
-                 page={routeSuccess}>
+                 page={ROUTE_SUCCESS}>
       <p>
         You can add text messages or any <ExternalLink
         href='https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#Supported_image_formats'>valid image

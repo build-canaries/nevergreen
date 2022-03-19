@@ -1,9 +1,9 @@
 import {useCallback, useEffect, useRef, useState} from 'react'
 
 interface HideMenusHookResponse {
-  menusHidden: boolean;
-  toggleMenusHidden: (hide: boolean) => void;
-  showMenus: () => void;
+  readonly menusHidden: boolean;
+  readonly toggleMenusHidden: (hide: boolean) => void;
+  readonly showMenus: () => void;
 }
 
 const threeSeconds = 3 * 1000

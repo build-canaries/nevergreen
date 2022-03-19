@@ -9,7 +9,7 @@ import * as logger from '../../common/Logger'
 import {BACKUP_REMOTE_LOCATIONS_ROOT} from './RemoteLocationsReducer'
 import {toExportableConfigurationJson} from '../../configuration/Configuration'
 
-const THIRTY_SECONDS = 1000 * 30
+const thirtySeconds = 1000 * 30
 
 // exported for testing
 export async function backupRaw(previousState: State | undefined, currentState: State, dispatch: Dispatch): Promise<void> {
@@ -42,4 +42,4 @@ export async function backupRaw(previousState: State | undefined, currentState: 
   }
 }
 
-export const backup = debounce(backupRaw, THIRTY_SECONDS)
+export const backup = debounce(backupRaw, thirtySeconds)

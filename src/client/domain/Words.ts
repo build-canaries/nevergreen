@@ -8,7 +8,7 @@
  * copyright notice and this permission notice appear in all copies.
  */
 
-export const adjectives = [
+export const ADJECTIVES = [
   'Abandoned',
   'Abashed',
   'Aberrant',
@@ -1264,7 +1264,7 @@ export const adjectives = [
   'Zonked'
 ]
 
-export const nouns = [
+export const NOUNS = [
   'account',
   'achiever',
   'acoustics',

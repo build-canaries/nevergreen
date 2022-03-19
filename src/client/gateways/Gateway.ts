@@ -17,14 +17,14 @@ export interface ServerError {
   readonly webUrl: string;
 }
 
-const ONE_MINUTES = 1000 * 60
-const TIMEOUT = {
-  response: ONE_MINUTES,
-  deadline: ONE_MINUTES
+const oneMinute = 1000 * 60
+const timeout = {
+  response: oneMinute,
+  deadline: oneMinute
 }
-const RETRIES = 1
-const ACCEPT_HEADER = 'application/json; charset=utf-8'
-const CONTENT_TYPE = 'application/json; charset=utf-8'
+const retries = 1
+const acceptHeader = 'application/json; charset=utf-8'
+const contentType = 'application/json; charset=utf-8'
 
 export const TIMEOUT_ERROR = 'Connection timeout calling the Nevergreen server'
 
@@ -32,20 +32,20 @@ export function post<T>(url: string, data: ApiData, headers = {}): Request<T> {
   return request
     .post(url)
     .send(data)
-    .accept(ACCEPT_HEADER)
-    .type(CONTENT_TYPE)
+    .accept(acceptHeader)
+    .type(contentType)
     .set(headers)
-    .timeout(TIMEOUT)
-    .retry(RETRIES)
+    .timeout(timeout)
+    .retry(retries)
 }
 
 export function get<T>(url: string, headers = {}): Request<T> {
   return request
     .get(url)
-    .accept(ACCEPT_HEADER)
+    .accept(acceptHeader)
     .set(headers)
-    .timeout(TIMEOUT)
-    .retry(RETRIES)
+    .timeout(timeout)
+    .retry(retries)
 }
 
 export async function send<T>(request: Request<T>, signal?: AbortSignal): Promise<T> {

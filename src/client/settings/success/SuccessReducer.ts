@@ -10,9 +10,9 @@ export type SuccessState = ReadonlyArray<string>
 
 export const SUCCESS_ROOT = 'success'
 
-const DEFAULT_STATE: SuccessState = ['=(^.^)=']
+const defaultState: SuccessState = ['=(^.^)=']
 
-export const reduce = createReducer<SuccessState>(DEFAULT_STATE, {
+export const reduce = createReducer<SuccessState>(defaultState, {
   [Actions.CONFIGURATION_IMPORTED]: (draft, action: ActionConfigurationImported) => {
     if (action.configuration[SUCCESS_ROOT]) {
       return uniq(action.configuration[SUCCESS_ROOT]) as SuccessState

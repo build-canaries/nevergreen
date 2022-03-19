@@ -20,7 +20,7 @@ type Fields = 'url' | 'accessToken'
 export function AddBackup(): ReactElement {
   const dispatch = useDispatch()
 
-  const [where, setWhere] = useState(RemoteLocationOptions.Custom)
+  const [where, setWhere] = useState(RemoteLocationOptions.custom)
   const [url, setUrl] = useState('')
   const [id, setId] = useState('')
   const [description, setDescription] = useState('Nevergreen configuration backup')
@@ -35,7 +35,7 @@ export function AddBackup(): ReactElement {
       validationErrors.push({field: 'url', message: 'Only http and https URLs are supported'})
     }
 
-    if (where === RemoteLocationOptions.GitLab || where === RemoteLocationOptions.GitHub) {
+    if (where === RemoteLocationOptions.gitLab || where === RemoteLocationOptions.gitHub) {
       if (isBlank(accessToken)) {
         validationErrors.push({field: 'accessToken', message: 'Enter an access token'})
       }
@@ -45,7 +45,7 @@ export function AddBackup(): ReactElement {
   }
 
   const onSuccess = async (signal: AbortSignal | undefined) => {
-    if (where === RemoteLocationOptions.GitLab || where === RemoteLocationOptions.GitHub) {
+    if (where === RemoteLocationOptions.gitLab || where === RemoteLocationOptions.gitHub) {
       const encryptedAccessToken = await send(encrypt(accessToken), signal)
       dispatch(addBackupGitHubLab(where, id, url, description, encryptedAccessToken))
     } else {
@@ -55,17 +55,17 @@ export function AddBackup(): ReactElement {
   }
 
   const updateWhere = (updatedWhere: RemoteLocationOptions) => {
-    if (updatedWhere === RemoteLocationOptions.Custom) {
+    if (updatedWhere === RemoteLocationOptions.custom) {
       setUrl('')
-    } else if (updatedWhere === RemoteLocationOptions.GitHub) {
+    } else if (updatedWhere === RemoteLocationOptions.gitHub) {
       setUrl(DEFAULT_GITHUB_URL)
-    } else if (updatedWhere === RemoteLocationOptions.GitLab) {
+    } else if (updatedWhere === RemoteLocationOptions.gitLab) {
       setUrl(DEFAULT_GITLAB_URL)
     }
     setWhere(updatedWhere)
   }
 
-  const isCustomServer = where === RemoteLocationOptions.Custom
+  const isCustomServer = where === RemoteLocationOptions.custom
 
   return (
     <Page title='Add remote location' icon={<BackupLogo where={where}/>}>
@@ -79,9 +79,9 @@ export function AddBackup(): ReactElement {
               <DropDown className={styles.where}
                         value={where}
                         options={[
-                          {value: RemoteLocationOptions.Custom, display: 'Custom server'},
-                          {value: RemoteLocationOptions.GitHub, display: 'GitHub gist'},
-                          {value: RemoteLocationOptions.GitLab, display: 'GitLab snippet'}
+                          {value: RemoteLocationOptions.custom, display: 'Custom server'},
+                          {value: RemoteLocationOptions.gitHub, display: 'GitHub gist'},
+                          {value: RemoteLocationOptions.gitLab, display: 'GitLab snippet'}
                         ]}
                         onChange={({target}) => {
                           updateWhere(target.value as RemoteLocationOptions)

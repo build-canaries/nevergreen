@@ -11,7 +11,7 @@ export const DEFAULT_FONT_METRICS: Measurable = {
   height: 0
 }
 
-const FONT_MEASURE_SIZE = 100 // px
+const fontMeasureSize = 100 // px
 
 function Metrics(props: Record<string, unknown>, ref: Ref<Measurable>) {
   const measureNode = useRef<HTMLSpanElement>(null)
@@ -20,13 +20,13 @@ function Metrics(props: Record<string, unknown>, ref: Ref<Measurable>) {
     const width = measureNode.current?.offsetWidth as number
     const height = measureNode.current?.offsetHeight as number
     return {
-      width: width / FONT_MEASURE_SIZE,
-      height: height / FONT_MEASURE_SIZE
+      width: width / fontMeasureSize,
+      height: height / fontMeasureSize
     }
   }, [])
 
   return <span className={styles.body}
-               style={{fontSize: `${FONT_MEASURE_SIZE}px`}}
+               style={{fontSize: `${fontMeasureSize}px`}}
                ref={measureNode}
                aria-hidden>a</span>
 }

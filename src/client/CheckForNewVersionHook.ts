@@ -9,7 +9,7 @@ interface GitHubResponse {
   readonly tag_name: string;
 }
 
-const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000
+const twentyFourHours = 24 * 60 * 60 * 1000
 
 export function useCheckForNewVersion(setNotification: (notification: string) => void): void {
   const shouldCheckForNewVersion = useSelector(getToggleVersionCheck)
@@ -18,7 +18,7 @@ export function useCheckForNewVersion(setNotification: (notification: string) =>
     return await send<GitHubResponse>(get('https://api.github.com/repos/build-canaries/nevergreen/releases/latest'), signal)
   }, {
     enabled: shouldCheckForNewVersion,
-    refetchInterval: TWENTY_FOUR_HOURS,
+    refetchInterval: twentyFourHours,
     onSuccess: (data) => {
       const latestVersion = data.tag_name
       if (greaterThan(latestVersion, version)) {

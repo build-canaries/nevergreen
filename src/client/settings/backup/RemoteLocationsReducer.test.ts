@@ -36,7 +36,7 @@ describe(Actions.CONFIGURATION_IMPORTED, () => {
       const existingState = state({
         'existing-id': buildRemoteBackupLocation({
           internalId: 'existing-id',
-          where: RemoteLocationOptions.Custom,
+          where: RemoteLocationOptions.custom,
           url: 'a'
         })
       })
@@ -44,7 +44,7 @@ describe(Actions.CONFIGURATION_IMPORTED, () => {
         [BACKUP_REMOTE_LOCATIONS_ROOT]: {
           'imported-id': buildRemoteBackupLocation({
             internalId: 'imported-id',
-            where: RemoteLocationOptions.Custom,
+            where: RemoteLocationOptions.custom,
             url: 'b'
           })
         }
@@ -58,8 +58,8 @@ describe(Actions.CONFIGURATION_IMPORTED, () => {
 
     // Realistically this would never happen, but it's simple to handle so we do
     it.each([
-      RemoteLocationOptions.GitHub,
-      RemoteLocationOptions.GitLab
+      RemoteLocationOptions.gitHub,
+      RemoteLocationOptions.gitLab
     ])('should add %s locations with different URLs even if external ID is the same', (where) => {
       const existingState = state({
         'existing-id': buildRemoteBackupLocation({
@@ -87,8 +87,8 @@ describe(Actions.CONFIGURATION_IMPORTED, () => {
     })
 
     it.each([
-      RemoteLocationOptions.GitHub,
-      RemoteLocationOptions.GitLab
+      RemoteLocationOptions.gitHub,
+      RemoteLocationOptions.gitLab
     ])('should add %s locations with same URL but different external ID', (where) => {
       const existingState = state({
         'existing-id': buildRemoteBackupLocation({
@@ -122,7 +122,7 @@ describe(Actions.CONFIGURATION_IMPORTED, () => {
       const existingState = state({
         'some-id': buildRemoteBackupLocation({
           internalId: 'some-id',
-          where: RemoteLocationOptions.GitHub,
+          where: RemoteLocationOptions.gitHub,
           url: 'a',
           automaticallyExport: false,
           externalId: 'a',
@@ -134,7 +134,7 @@ describe(Actions.CONFIGURATION_IMPORTED, () => {
       })
       const remoteLocation = buildRemoteBackupLocation({
         internalId: 'some-id',
-        where: RemoteLocationOptions.GitHub,
+        where: RemoteLocationOptions.gitHub,
         url: 'b',
         automaticallyExport: true,
         externalId: 'b',
@@ -154,13 +154,13 @@ describe(Actions.CONFIGURATION_IMPORTED, () => {
       const existingState = state({
         'some-id': buildRemoteBackupLocation({
           internalId: 'some-id',
-          where: RemoteLocationOptions.Custom,
+          where: RemoteLocationOptions.custom,
           url: 'a'
         })
       })
       const remoteLocation = buildRemoteBackupLocation({
         internalId: 'different-id',
-        where: RemoteLocationOptions.Custom,
+        where: RemoteLocationOptions.custom,
         url: 'a'
       })
       const action = configurationImported({[BACKUP_REMOTE_LOCATIONS_ROOT]: {'some-id': remoteLocation}})
@@ -172,8 +172,8 @@ describe(Actions.CONFIGURATION_IMPORTED, () => {
     })
 
     it.each([
-      RemoteLocationOptions.GitHub,
-      RemoteLocationOptions.GitLab
+      RemoteLocationOptions.gitHub,
+      RemoteLocationOptions.gitLab
     ])('should update %s locations with the same URL and external ID regardless of internal ID', (where) => {
       const existingState = state({
         'some-id': buildRemoteBackupLocation({

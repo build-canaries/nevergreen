@@ -1,9 +1,9 @@
 import React, {ReactElement} from 'react'
 import {HelpArticle, HelpProps} from '../../../help/HelpArticle'
 import {HelpForm, HelpInput} from '../../../help/HelpForms'
-import {routeBackupExportLocal} from '../../../AppRoutes'
+import {ROUTE_BACKUP_EXPORT_LOCAL} from '../../../AppRoutes'
 
-const KEYWORDS = [
+const keywords = [
   'backup',
   'export',
   'save locally',
@@ -15,10 +15,10 @@ export function ExportLocalHelp({searchQuery}: HelpProps): ReactElement {
   const timestamp = '${timestamp}'
 
   return (
-    <HelpArticle keywords={KEYWORDS}
+    <HelpArticle keywords={keywords}
                  searchQuery={searchQuery}
                  title='Export locally'
-                 page={routeBackupExportLocal}>
+                 page={ROUTE_BACKUP_EXPORT_LOCAL}>
       <HelpForm>
         <HelpInput name='Save locally...'>
           Saves the configuration to a local file. The default filename

@@ -1,9 +1,9 @@
 import React, {ReactElement} from 'react'
 import {HelpArticle, HelpProps} from '../../help/HelpArticle'
 import {HelpForm, HelpInput} from '../../help/HelpForms'
-import {routeBackup} from '../../AppRoutes'
+import {ROUTE_BACKUP} from '../../AppRoutes'
 
-const KEYWORDS = [
+const keywords = [
   'backup',
   'export',
   'import',
@@ -13,10 +13,10 @@ const KEYWORDS = [
 
 export function BackupHelp({searchQuery}: HelpProps): ReactElement {
   return (
-    <HelpArticle keywords={KEYWORDS}
+    <HelpArticle keywords={keywords}
                  searchQuery={searchQuery}
                  title='Backup'
-                 page={routeBackup}>
+                 page={ROUTE_BACKUP}>
       <HelpForm>
         <HelpInput name='Add remote location'>
           Adds a new remote backup location. You can import and export to multiple remote backup locations.

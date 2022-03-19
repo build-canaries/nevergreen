@@ -9,7 +9,7 @@ import {Form} from '../../common/forms/Form'
 import {firstError, FormErrors} from '../../common/forms/Validation'
 import {Page} from '../../common/Page'
 import {Image} from '../../common/icons/Image'
-import {routeSuccess} from '../../AppRoutes'
+import {ROUTE_SUCCESS} from '../../AppRoutes'
 
 type Fields = 'message'
 
@@ -29,7 +29,7 @@ export function AddMessage(): ReactElement {
 
   const onSuccess = () => {
     dispatch(addMessage(message))
-    return {navigateTo: routeSuccess}
+    return {navigateTo: ROUTE_SUCCESS}
   }
 
   return (
@@ -37,7 +37,7 @@ export function AddMessage(): ReactElement {
       <Form onValidate={onValidate}
             onSuccess={onSuccess}
             submitButtonText='Add message'
-            onCancel={routeSuccess}>
+            onCancel={ROUTE_SUCCESS}>
         {(submitting, validationErrors) => {
           return (
             <Input className={styles.addMessageInput}

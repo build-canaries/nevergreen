@@ -2,8 +2,8 @@ import {isBlank} from './Utils'
 import get from 'lodash/get'
 import {info} from './Logger'
 
-const NOTIFICATION_PERMISSION_GRANTED = 'granted'
-const NOTIFICATION_PERMISSION_DENIED = 'denied'
+const notificationPermissionGranted = 'granted'
+const notificationPermissionDenied = 'denied'
 
 export function supported(): boolean {
   return 'Notification' in window
@@ -11,16 +11,16 @@ export function supported(): boolean {
 
 export function permissionGranted(result?: string): boolean {
   if (isBlank(result)) {
-    return get(Notification, 'permission') === NOTIFICATION_PERMISSION_GRANTED
+    return get(Notification, 'permission') === notificationPermissionGranted
   } else {
-    return result === NOTIFICATION_PERMISSION_GRANTED
+    return result === notificationPermissionGranted
   }
 }
 
 export async function requestPermission(): Promise<string> {
   if (permissionGranted()) {
     info('Notification API permission already granted')
-    return NOTIFICATION_PERMISSION_GRANTED
+    return notificationPermissionGranted
   }
 
   if (supported()) {
@@ -30,7 +30,7 @@ export async function requestPermission(): Promise<string> {
   }
 
   info('Notification API not supported')
-  return NOTIFICATION_PERMISSION_DENIED
+  return notificationPermissionDenied
 }
 
 interface Notification {

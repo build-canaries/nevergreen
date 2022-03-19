@@ -40,7 +40,7 @@ function urlMatches(feed: Feed, url: string): boolean {
   return removeScheme(url) === removeScheme(feed.url)
 }
 
-const EXTENDED_AUTH_TYPE_OPTIONS = [
+const extendedAuthTypeOptions = [
   {value: KeepExistingAuth.keep, display: 'Keep existing auth'},
   ...AUTH_TYPE_OPTIONS
 ]
@@ -48,7 +48,7 @@ const EXTENDED_AUTH_TYPE_OPTIONS = [
 export function ConnectionForm({existingFeed, onSuccess, onCancel}: ConnectionFormProps): ReactElement {
   const otherFeeds = useSelector(getFeeds).filter((existing: Feed) => existing.trayId !== existingFeed?.trayId)
   const initialAuth = existingFeed ? KeepExistingAuth.keep : AuthTypes.none
-  const authOptions = existingFeed ? EXTENDED_AUTH_TYPE_OPTIONS : AUTH_TYPE_OPTIONS
+  const authOptions = existingFeed ? extendedAuthTypeOptions : AUTH_TYPE_OPTIONS
   const submitButtonText = existingFeed ? 'Save' : 'Add feed'
 
   const [url, setUrl] = useState(existingFeed?.url || '')

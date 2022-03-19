@@ -17,7 +17,7 @@ export function Notification({notification, onDismiss, hide}: NotificationProps)
 
   return (
     <Messages className={notificationClassNames}
-              type={MessagesType.INFO}
+              type={MessagesType.info}
               messages={notification}
               icon={<Bell/>}
               onDismiss={onDismiss}/>

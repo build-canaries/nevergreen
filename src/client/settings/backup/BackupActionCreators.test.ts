@@ -14,7 +14,7 @@ describe(Actions.ADD_BACKUP, () => {
 
   it('should create a new internal ID when adding GitHub/GitLab backups', () => {
     jest.spyOn(Feed, 'createId').mockReturnValue('some-id')
-    const actual = addBackupGitHubLab(RemoteLocationOptions.GitLab, 'irrelevant', 'irrelevant', 'irrelevant', 'irrelevant')
+    const actual = addBackupGitHubLab(RemoteLocationOptions.gitLab, 'irrelevant', 'irrelevant', 'irrelevant', 'irrelevant')
     expect(actual).toHaveProperty('data.internalId', 'some-id')
   })
 })

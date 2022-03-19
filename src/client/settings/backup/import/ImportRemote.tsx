@@ -23,7 +23,7 @@ import {Cross} from '../../../common/icons/Cross'
 import {BackupLogo} from '../BackupLogo'
 import {useQuery} from 'react-query'
 import {useRemoteLocationContext} from '../RemoteLocationPage'
-import {routeBackup} from '../../../AppRoutes'
+import {ROUTE_BACKUP} from '../../../AppRoutes'
 
 type Fields = 'import'
 
@@ -50,7 +50,7 @@ export function ImportRemote(): ReactElement {
       return [{field: 'import', message: 'Enter the configuration to import'}]
 
     } else {
-      const result = toConfiguration(data, DataSource.UserImport)
+      const result = toConfiguration(data, DataSource.userImport)
 
       if (isLeft(result)) {
         return result.left.map((message) => {
@@ -61,7 +61,7 @@ export function ImportRemote(): ReactElement {
   }
 
   const doImport = () => {
-    const result = toConfiguration(data, DataSource.UserImport)
+    const result = toConfiguration(data, DataSource.userImport)
 
     if (isRight(result)) {
       dispatch(configurationImported(result.right))
@@ -83,7 +83,7 @@ export function ImportRemote(): ReactElement {
                              onClick={() => void refetch()}>
               Try fetching again
             </SecondaryButton>
-            <LinkButton to={routeBackup}
+            <LinkButton to={ROUTE_BACKUP}
                         icon={<Cross/>}
                         className={styles.cancel}>
               Cancel
@@ -93,7 +93,7 @@ export function ImportRemote(): ReactElement {
         {isSuccess && (
           <Form onValidate={onValidate}
                 onSuccess={doImport}
-                onCancel={routeBackup}
+                onCancel={ROUTE_BACKUP}
                 submitButtonText='Import'>
             {(submitting, validationErrors) => {
               return (

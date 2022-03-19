@@ -21,8 +21,8 @@ import {APPLIED_MIGRATIONS_ROOT} from './MigrationsReducer'
 import {errorMessage} from '../common/Utils'
 
 export enum DataSource {
-  BrowserStorage,
-  UserImport
+  browserStorage,
+  userImport
 }
 
 const Configuration = t.exact(t.partial({
@@ -122,7 +122,7 @@ function validationErrorMessage(actual: unknown, path: string, expected: string)
 }
 
 function additionalFiltering(data: UntrustedData, dataSource: DataSource): void {
-  if (dataSource === DataSource.UserImport) {
+  if (dataSource === DataSource.userImport) {
     unset(data, [SETTINGS_ROOT, 'showSystemNotifications'])
   }
 }

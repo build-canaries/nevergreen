@@ -11,7 +11,7 @@ import {fullBackupSummary} from '../BackupSummary'
 import {Summary} from '../../../common/Summary'
 import {BackupLogo} from '../BackupLogo'
 import {useRemoteLocationContext} from '../RemoteLocationPage'
-import {routeBackup} from '../../../AppRoutes'
+import {ROUTE_BACKUP} from '../../../AppRoutes'
 
 export function ExportRemote(): ReactElement {
   const location = useRemoteLocationContext()
@@ -28,7 +28,7 @@ export function ExportRemote(): ReactElement {
     <Page title='Export remote' icon={<BackupLogo where={location.where}/>}>
       <Summary values={fullBackupSummary(location)}/>
       <Form onSuccess={exportNow}
-            onCancel={routeBackup}
+            onCancel={ROUTE_BACKUP}
             submitButtonText='Export'>
         {() => {
           return (

@@ -11,7 +11,7 @@ it('should be able to remove remote locations', async () => {
     [BACKUP_REMOTE_LOCATIONS_ROOT]: {
       internalId: buildRemoteBackupLocation({
         internalId: 'internalId',
-        where: RemoteLocationOptions.Custom,
+        where: RemoteLocationOptions.custom,
         url: 'http://example.com'
       })
     }

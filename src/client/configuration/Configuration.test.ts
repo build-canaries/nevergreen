@@ -28,7 +28,7 @@ describe('toConfiguration', () => {
           }
         }
       }
-      const result = toConfiguration(data, DataSource.BrowserStorage)
+      const result = toConfiguration(data, DataSource.browserStorage)
       if (isRight(result)) {
         expect(result.right.trays).toHaveProperty('some-tray-id')
       } else {
@@ -44,7 +44,7 @@ describe('toConfiguration', () => {
           }
         }
       }
-      const result = toConfiguration(data, DataSource.BrowserStorage)
+      const result = toConfiguration(data, DataSource.browserStorage)
       expectErrors(result, ['Invalid value undefined supplied to /trays/some-tray-id/trayId expected string'])
     })
 
@@ -56,7 +56,7 @@ describe('toConfiguration', () => {
           }
         }
       }
-      const result = toConfiguration(data, DataSource.BrowserStorage)
+      const result = toConfiguration(data, DataSource.browserStorage)
       expectErrors(result, ['Invalid value undefined supplied to /trays/some-tray-id/url expected string'])
     })
 
@@ -69,7 +69,7 @@ describe('toConfiguration', () => {
           }
         }
       }
-      const result = toConfiguration(data, DataSource.BrowserStorage)
+      const result = toConfiguration(data, DataSource.browserStorage)
       expectErrors(result, ['Invalid value "another-id" supplied to /trays/some-tray-id/trayId expected "some-tray-id"'])
     })
   })
@@ -93,7 +93,7 @@ describe('toConfiguration', () => {
           }
         ]
       }
-      const result = toConfiguration(data, DataSource.BrowserStorage)
+      const result = toConfiguration(data, DataSource.browserStorage)
       if (isRight(result)) {
         expect(result.right.projects).toHaveProperty('some-tray-id')
       } else {
@@ -117,7 +117,7 @@ describe('toConfiguration', () => {
           }
         ]
       }
-      const result = toConfiguration(data, DataSource.BrowserStorage)
+      const result = toConfiguration(data, DataSource.browserStorage)
       expectErrors(result, ['Invalid value undefined supplied to /projects/some-tray-id/0/projectId expected string'])
     })
 
@@ -137,7 +137,7 @@ describe('toConfiguration', () => {
           }
         ]
       }
-      const result = toConfiguration(data, DataSource.BrowserStorage)
+      const result = toConfiguration(data, DataSource.browserStorage)
       expectErrors(result, ['Invalid value undefined supplied to /projects/some-tray-id/0/description expected string'])
     })
 
@@ -163,7 +163,7 @@ describe('toConfiguration', () => {
           }
         ]
       }
-      const result = toConfiguration(data, DataSource.BrowserStorage)
+      const result = toConfiguration(data, DataSource.browserStorage)
       expectErrors(result, ['Invalid value "another-tray-id" supplied to /projects/some-tray-id/0/trayId expected "some-tray-id"'])
     })
   })
@@ -180,7 +180,7 @@ describe('toConfiguration', () => {
           }
         }
       }
-      const result = toConfiguration(data, DataSource.BrowserStorage)
+      const result = toConfiguration(data, DataSource.browserStorage)
       if (isRight(result)) {
         expect(result.right.backupRemoteLocations).toHaveProperty('some-id')
       } else {
@@ -197,7 +197,7 @@ describe('toConfiguration', () => {
           }
         }
       }
-      const result = toConfiguration(data, DataSource.BrowserStorage)
+      const result = toConfiguration(data, DataSource.browserStorage)
       expectErrors(result, ['Invalid value undefined supplied to /backupRemoteLocations/some-internal-id/internalId expected string'])
     })
 
@@ -210,7 +210,7 @@ describe('toConfiguration', () => {
           }
         }
       }
-      const result = toConfiguration(data, DataSource.BrowserStorage)
+      const result = toConfiguration(data, DataSource.browserStorage)
       expectErrors(result, ['Invalid value undefined supplied to /backupRemoteLocations/some-internal-id/url expected string'])
     })
 
@@ -223,7 +223,7 @@ describe('toConfiguration', () => {
           }
         }
       }
-      const result = toConfiguration(data, DataSource.BrowserStorage)
+      const result = toConfiguration(data, DataSource.browserStorage)
       expectErrors(result, ['Invalid value undefined supplied to /backupRemoteLocations/some-internal-id/where expected "custom" | "github" | "gitlab"'])
     })
 
@@ -237,14 +237,14 @@ describe('toConfiguration', () => {
           }
         }
       }
-      const result = toConfiguration(data, DataSource.BrowserStorage)
+      const result = toConfiguration(data, DataSource.browserStorage)
       expectErrors(result, ['Invalid value "another-id" supplied to /backupRemoteLocations/some-id/internalId expected "some-id"'])
     })
   })
 
   it('removes unknown properties', () => {
     const data = {foo: 'bar'}
-    const result = toConfiguration(data, DataSource.BrowserStorage)
+    const result = toConfiguration(data, DataSource.browserStorage)
     expect(isRight(result)).toBeTruthy()
     if (isRight(result)) {
       expect(result.right).not.toHaveProperty('foo')
@@ -253,7 +253,7 @@ describe('toConfiguration', () => {
 
   it('keeps known properties', () => {
     const data = {[FEEDS_ROOT]: {}}
-    const result = toConfiguration(data, DataSource.BrowserStorage)
+    const result = toConfiguration(data, DataSource.browserStorage)
     expect(isRight(result)).toBeTruthy()
     if (isRight(result)) {
       expect(result.right).toEqual(expect.objectContaining({trays: {}}))
@@ -262,7 +262,7 @@ describe('toConfiguration', () => {
 
   it('removes the show system notifications property when a user import, as this property is no longer exported (but this import could be from an old version)', () => {
     const data = {[SETTINGS_ROOT]: {showSystemNotifications: true}}
-    const result = toConfiguration(data, DataSource.UserImport)
+    const result = toConfiguration(data, DataSource.userImport)
     expect(isRight(result)).toBeTruthy()
     if (isRight(result)) {
       expect(result.right).not.toHaveProperty('settings.showSystemNotifications')
@@ -271,7 +271,7 @@ describe('toConfiguration', () => {
 
   it('keeps the show system notifications property when loading from browser storage', () => {
     const data = {[SETTINGS_ROOT]: {showSystemNotifications: true}}
-    const result = toConfiguration(data, DataSource.BrowserStorage)
+    const result = toConfiguration(data, DataSource.browserStorage)
     expect(isRight(result)).toBeTruthy()
     if (isRight(result)) {
       expect(result.right).toHaveProperty('settings.showSystemNotifications')

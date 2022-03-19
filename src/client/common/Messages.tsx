@@ -11,10 +11,10 @@ import {Info} from './icons/Info'
 import {Checkmark} from './icons/Checkmark'
 
 export enum MessagesType {
-  INFO = 'info',
-  WARNING = 'warning',
-  ERROR = 'error',
-  SUCCESS = 'success'
+  info = 'info',
+  warning = 'warning',
+  error = 'error',
+  success = 'success'
 }
 
 export interface MessagesProps {
@@ -59,17 +59,17 @@ export function Messages({messages, type, className, icon, onDismiss}: MessagesP
 }
 
 export function ErrorMessages(props: Omit<MessagesProps, 'type' | 'icon'>): ReactElement | null {
-  return <Messages type={MessagesType.ERROR} icon={<Warning/>} {...props}/>
+  return <Messages type={MessagesType.error} icon={<Warning/>} {...props}/>
 }
 
 export function WarningMessages(props: Omit<MessagesProps, 'type' | 'icon'>): ReactElement | null {
-  return <Messages type={MessagesType.WARNING} icon={<Warning/>} {...props}/>
+  return <Messages type={MessagesType.warning} icon={<Warning/>} {...props}/>
 }
 
 export function InfoMessages(props: Omit<MessagesProps, 'type' | 'icon'>): ReactElement | null {
-  return <Messages type={MessagesType.INFO} icon={<Info/>} {...props}/>
+  return <Messages type={MessagesType.info} icon={<Info/>} {...props}/>
 }
 
 export function SuccessMessages(props: Omit<MessagesProps, 'type' | 'icon'>): ReactElement | null {
-  return <Messages type={MessagesType.SUCCESS} icon={<Checkmark/>} {...props}/>
+  return <Messages type={MessagesType.success} icon={<Checkmark/>} {...props}/>
 }

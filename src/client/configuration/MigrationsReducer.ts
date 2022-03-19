@@ -11,9 +11,9 @@ export type AppliedMigrationsState = ReadonlyArray<AppliedMigration>
 
 export const APPLIED_MIGRATIONS_ROOT = 'appliedMigrations'
 
-const DEFAULT_STATE: AppliedMigrationsState = []
+const defaultState: AppliedMigrationsState = []
 
-export const reduce = createReducer<AppliedMigrationsState>(DEFAULT_STATE, {
+export const reduce = createReducer<AppliedMigrationsState>(defaultState, {
   [Actions.CONFIGURATION_IMPORTED]: (draft, action: ActionConfigurationImported) => {
     return action.configuration[APPLIED_MIGRATIONS_ROOT]
       ? action.configuration[APPLIED_MIGRATIONS_ROOT] as AppliedMigrationsState

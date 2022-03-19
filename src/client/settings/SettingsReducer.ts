@@ -46,7 +46,7 @@ export interface SettingsState {
 
 export const SETTINGS_ROOT = 'settings'
 
-const DEFAULT_STATE: SettingsState = {
+const defaultState: SettingsState = {
   showTrayName: false,
   showBuildTime: true,
   playBrokenBuildSoundFx: false,
@@ -66,7 +66,7 @@ const DEFAULT_STATE: SettingsState = {
   enableNewVersionCheck: true
 }
 
-export const reduce = createReducer<SettingsState>(DEFAULT_STATE, {
+export const reduce = createReducer<SettingsState>(defaultState, {
   [Actions.CONFIGURATION_IMPORTED]: (draft, action: ActionConfigurationImported) => {
     const importedState = get(action.configuration, SETTINGS_ROOT, {}) as SettingsState
     return {...draft, ...importedState}

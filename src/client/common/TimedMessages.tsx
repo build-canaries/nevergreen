@@ -25,13 +25,13 @@ function TimedMessages({onDismiss, messages, ...props}: TimedMessagesProps): Rea
 }
 
 export function TimedErrorMessages(props: Omit<TimedMessagesProps, 'type' | 'icon'>): ReactElement {
-  return <TimedMessages type={MessagesType.ERROR} icon={<Warning/>} {...props}/>
+  return <TimedMessages type={MessagesType.error} icon={<Warning/>} {...props}/>
 }
 
 export function TimedInfoMessages(props: Omit<TimedMessagesProps, 'type' | 'icon'>): ReactElement {
-  return <TimedMessages type={MessagesType.INFO} icon={<Info/>} {...props}/>
+  return <TimedMessages type={MessagesType.info} icon={<Info/>} {...props}/>
 }
 
 export function TimedSuccessMessages(props: Omit<TimedMessagesProps, 'type' | 'icon'>): ReactElement {
-  return <TimedMessages type={MessagesType.SUCCESS} icon={<Checkmark/>} {...props}/>
+  return <TimedMessages type={MessagesType.success} icon={<Checkmark/>} {...props}/>
 }

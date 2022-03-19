@@ -8,7 +8,6 @@ interface CardProps {
   readonly className?: string;
 }
 
-
 export function Card({header, children, className}: CardProps): ReactElement {
   return (
     <section className={cn(styles.card, className)}>

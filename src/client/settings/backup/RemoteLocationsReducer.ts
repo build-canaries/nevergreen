@@ -32,10 +32,10 @@ export type RemoteLocationsState = {
 
 export const BACKUP_REMOTE_LOCATIONS_ROOT = 'backupRemoteLocations'
 
-const DEFAULT_STATE: RemoteLocationsState = {}
+const defaultState: RemoteLocationsState = {}
 
 function handleImportedConfiguration(draft: RemoteLocationsState, action: ActionConfigurationImported) {
-  const importedState = get(action.configuration, [BACKUP_REMOTE_LOCATIONS_ROOT], DEFAULT_STATE)
+  const importedState = get(action.configuration, [BACKUP_REMOTE_LOCATIONS_ROOT], defaultState)
 
   // TS thinks importedLocation can be undefined because Configuration is a RecursivePartial<State>
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -61,7 +61,7 @@ function handleImportedConfiguration(draft: RemoteLocationsState, action: Action
   })
 }
 
-export const reduce = createReducer<RemoteLocationsState>(DEFAULT_STATE, {
+export const reduce = createReducer<RemoteLocationsState>(defaultState, {
   [Actions.CONFIGURATION_IMPORTED]: handleImportedConfiguration,
   [Actions.ADD_BACKUP]: (draft, action: ActionAddBackup) => {
     draft[action.data.internalId] = action.data

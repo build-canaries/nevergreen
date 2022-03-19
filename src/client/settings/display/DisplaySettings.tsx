@@ -26,7 +26,7 @@ import {LinkButton} from '../../common/LinkButton'
 import {Page} from '../../common/Page'
 import {Eye} from '../../common/icons/Eye'
 import {Display} from '../../common/icons/Display'
-import {routePreview} from '../../AppRoutes'
+import {ROUTE_PREVIEW} from '../../AppRoutes'
 
 export function DisplaySettings(): ReactElement {
   const dispatch = useDispatch()
@@ -86,7 +86,7 @@ export function DisplaySettings(): ReactElement {
         <span className={styles.dropDownLabel}>Sort projects by</span>
       </DropDown>
 
-      <LinkButton to={routePreview}
+      <LinkButton to={ROUTE_PREVIEW}
                   className={styles.preview}
                   icon={<Eye/>}>
         Preview display

@@ -2,9 +2,9 @@ import React, {ReactElement} from 'react'
 import {HelpArticle, HelpProps} from '../../../help/HelpArticle'
 import {HelpForm, HelpInput} from '../../../help/HelpForms'
 import {WarningMessages} from '../../../common/Messages'
-import {routeBackupImportRemote} from '../../../AppRoutes'
+import {ROUTE_BACKUP_IMPORT_REMOTE} from '../../../AppRoutes'
 
-const KEYWORDS = [
+const keywords = [
   'backup',
   'import',
   'configuration to import',
@@ -13,10 +13,10 @@ const KEYWORDS = [
 
 export function ImportRemoteHelp({searchQuery}: HelpProps): ReactElement {
   return (
-    <HelpArticle keywords={KEYWORDS}
+    <HelpArticle keywords={keywords}
                  searchQuery={searchQuery}
                  title='Import remote'
-                 page={routeBackupImportRemote}>
+                 page={ROUTE_BACKUP_IMPORT_REMOTE}>
       <p>
         The configuration will automatically be fetched from the remote location. The fetched configuration
         will <strong>not</strong> automatically be imported, instead the value of <em>Configuration to import</em> is

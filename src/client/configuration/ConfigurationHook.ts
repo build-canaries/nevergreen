@@ -24,7 +24,7 @@ export function useLocalConfiguration(): Result {
       try {
         await init()
         const untrustedData = await load()
-        const result = toConfiguration(untrustedData, DataSource.BrowserStorage)
+        const result = toConfiguration(untrustedData, DataSource.browserStorage)
 
         if (isRight(result)) {
           dispatch(configurationImported(result.right))

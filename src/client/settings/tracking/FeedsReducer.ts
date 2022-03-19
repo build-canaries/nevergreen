@@ -13,7 +13,7 @@ export interface FeedsState {
 
 export const FEEDS_ROOT = 'trays'
 
-const DEFAULT_STATE: FeedsState = {}
+const defaultState: FeedsState = {}
 
 function handleImportedConfiguration(draft: FeedsState, action: ActionConfigurationImported) {
   if (isNil(action.configuration[FEEDS_ROOT])) {
@@ -31,7 +31,7 @@ function handleImportedConfiguration(draft: FeedsState, action: ActionConfigurat
   return newState
 }
 
-export const reduce = createReducer<FeedsState>(DEFAULT_STATE, {
+export const reduce = createReducer<FeedsState>(defaultState, {
   [Actions.CONFIGURATION_IMPORTED]: handleImportedConfiguration,
   [Actions.FEED_ADDED]: (draft, action: ActionFeedAdded) => {
     draft[action.trayId] = action.data

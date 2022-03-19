@@ -1,11 +1,11 @@
 // These need to match those in src/client/common/responsive.scss
-const TABLET_BREAKPOINT = 768 // px
-const DESKTOP_BREAKPOINT = 1440 // px
+const tabletBreakpoint = 768 // px
+const desktopBreakpoint = 1440 // px
 
 export function isMobile(width = window.innerWidth): boolean {
-  return width < TABLET_BREAKPOINT
+  return width < tabletBreakpoint
 }
 
 export function isTablet(width = window.innerWidth): boolean {
-  return width >= TABLET_BREAKPOINT && width < DESKTOP_BREAKPOINT
+  return width >= tabletBreakpoint && width < desktopBreakpoint
 }

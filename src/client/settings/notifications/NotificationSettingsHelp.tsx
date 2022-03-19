@@ -1,9 +1,9 @@
 import React, {ReactElement} from 'react'
 import {HelpArticle, HelpProps} from '../../help/HelpArticle'
 import {HelpForm, HelpInput} from '../../help/HelpForms'
-import {routeNotifications} from '../../AppRoutes'
+import {ROUTE_NOTIFICATIONS} from '../../AppRoutes'
 
-const KEYWORDS = [
+const keywords = [
   'settings',
   'notifications',
   'desktop notifications',
@@ -16,10 +16,10 @@ const KEYWORDS = [
 
 export function NotificationSettingsHelp({searchQuery, helpLink}: HelpProps): ReactElement {
   return (
-    <HelpArticle keywords={KEYWORDS}
+    <HelpArticle keywords={keywords}
                  searchQuery={searchQuery}
                  title='Notifications settings'
-                 page={routeNotifications}>
+                 page={ROUTE_NOTIFICATIONS}>
       <HelpForm>
         <HelpInput name='Check for new Nevergreen versions'>
           When <em>enabled</em> (the default) Nevergreen will check (every 24 hours) for a new version and display a

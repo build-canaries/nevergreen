@@ -3,9 +3,9 @@ import {ExternalLink} from '../../common/ExternalLink'
 import {HelpArticle, HelpProps} from '../../help/HelpArticle'
 import {URL} from '../../common/URL'
 import {HelpForm, HelpInput} from '../../help/HelpForms'
-import {routeBackupAdd} from '../../AppRoutes'
+import {ROUTE_BACKUP_ADD} from '../../AppRoutes'
 
-const KEYWORDS = [
+const keywords = [
   'backup',
   'export',
   'import',
@@ -15,10 +15,10 @@ const KEYWORDS = [
 
 export function AddBackupHelp({searchQuery}: HelpProps): ReactElement {
   return (
-    <HelpArticle keywords={KEYWORDS}
+    <HelpArticle keywords={keywords}
                  searchQuery={searchQuery}
                  title='Add remote location'
-                 page={routeBackupAdd}>
+                 page={ROUTE_BACKUP_ADD}>
       <HelpForm>
         <HelpInput name='Where'>
           The remote location type. Additional fields will be required depending on where you are adding.
@@ -30,10 +30,10 @@ export function AddBackupHelp({searchQuery}: HelpProps): ReactElement {
 
 export function RemoteBackupCustomHelp({searchQuery}: HelpProps): ReactElement {
   return (
-    <HelpArticle keywords={[...KEYWORDS, 'custom server']}
+    <HelpArticle keywords={[...keywords, 'custom server']}
                  searchQuery={searchQuery}
                  title='Add remote location - Custom server'
-                 page={routeBackupAdd}>
+                 page={ROUTE_BACKUP_ADD}>
       <HelpForm>
         <HelpInput name='URL'>
           The configuration <code>JSON</code> will be <code>POSTed</code> to this <strong>URL</strong>. Tip, if you
@@ -47,10 +47,10 @@ export function RemoteBackupCustomHelp({searchQuery}: HelpProps): ReactElement {
 
 export function RemoteBackupGitHubHelp({searchQuery}: HelpProps): ReactElement {
   return (
-    <HelpArticle keywords={[...KEYWORDS, 'access token', 'github', 'gist']}
+    <HelpArticle keywords={[...keywords, 'access token', 'github', 'gist']}
                  searchQuery={searchQuery}
                  title='Add remote location - GitHub gist'
-                 page={routeBackupAdd}>
+                 page={ROUTE_BACKUP_ADD}>
       <HelpForm>
         <HelpInput name='URL'>
           This will be pre-populated with the public GitHub API URL and can be edited to allow exporting to a
@@ -80,10 +80,10 @@ export function RemoteBackupGitHubHelp({searchQuery}: HelpProps): ReactElement {
 
 export function RemoteBackupGitLabHelp({searchQuery}: HelpProps): ReactElement {
   return (
-    <HelpArticle keywords={[...KEYWORDS, 'access token', 'gitlab', 'snippet']}
+    <HelpArticle keywords={[...keywords, 'access token', 'gitlab', 'snippet']}
                  searchQuery={searchQuery}
                  title='Add remote location - GitLab snippet'
-                 page={routeBackupAdd}>
+                 page={ROUTE_BACKUP_ADD}>
       <HelpForm>
         <HelpInput name='URL'>
           This will be pre-populated with the public GitLab URL and can be edited to allow exporting to a

@@ -25,29 +25,29 @@ import {
   RemoteBackupGitHubHelp,
   RemoteBackupGitLabHelp
 } from '../settings/backup/AddBackupHelp'
-import {keyboardShortcutKeyword, KeyboardShortcuts} from './KeyboardShortcuts'
+import {KEYBOARD_SHORTCUT_KEYWORD, KeyboardShortcuts} from './KeyboardShortcuts'
 
 interface HelpProps {
   readonly initiallyShow?: boolean;
 }
 
-export const showHelpShortcut = 'h'
-export const showKeyboardShortcutsShortcut = '?'
+export const SHOW_HELP_SHORTCUT = 'h'
+export const SHOW_KEYBOARD_SHORTCUTS_SHORTCUT = '?'
 
 export function withHelpLink(setSearchQuery: (q: string) => void) {
   // eslint-disable-next-line react/display-name
   return (to: string): ReactElement => <HelpLink to={to} setSearchQuery={setSearchQuery}/>
 }
 
-const QUESTION_URL = 'https://github.com/build-canaries/nevergreen/issues/new?labels=question&template=Question.md'
+const questionUrl = 'https://github.com/build-canaries/nevergreen/issues/new?labels=question&template=Question.md'
 
 export function Help({initiallyShow}: HelpProps): ReactElement {
   const [show, setShow] = useState(initiallyShow || false)
   const [searchQuery, setSearchQuery] = useState('')
 
-  useShortcut(showHelpShortcut, () => setShow(true))
-  useShortcut(showKeyboardShortcutsShortcut, () => {
-    setSearchQuery(keyboardShortcutKeyword)
+  useShortcut(SHOW_HELP_SHORTCUT, () => setShow(true))
+  useShortcut(SHOW_KEYBOARD_SHORTCUTS_SHORTCUT, () => {
+    setSearchQuery(KEYBOARD_SHORTCUT_KEYWORD)
     setShow(true)
   })
 
@@ -90,7 +90,7 @@ export function Help({initiallyShow}: HelpProps): ReactElement {
       </ul>
       <p className={styles.notFound}>
         No matching articles found, please try a different keyword.
-        Can&apos;t find the help you need? <ExternalLink href={QUESTION_URL}>Ask a question on
+        Can&apos;t find the help you need? <ExternalLink href={questionUrl}>Ask a question on
         GitHub.</ExternalLink>
       </p>
     </Modal>

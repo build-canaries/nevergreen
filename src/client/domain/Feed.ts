@@ -1,7 +1,7 @@
 import {v4 as uuid} from 'uuid'
 import isNil from 'lodash/isNil'
 import {isNotBlank, randomFrom} from '../common/Utils'
-import {adjectives, nouns} from './Words'
+import {ADJECTIVES, NOUNS} from './Words'
 
 export enum AuthTypes {
   none = 'none',
@@ -28,11 +28,6 @@ export const CI_OPTIONS = [
   {value: 'go', display: 'GoCD'}
 ]
 
-export function serverTypeDisplay(serverType: string): string {
-  const match = CI_OPTIONS.find((option) => option.value === serverType)
-  return match ? match.display : 'Unknown'
-}
-
 export const AUTH_TYPE_OPTIONS = [
   {value: AuthTypes.none, display: 'No auth'},
   {value: AuthTypes.basic, display: 'Basic auth'},
@@ -45,7 +40,7 @@ export function authTypeDisplay(authType: AuthTypes): string {
 }
 
 export function generateRandomName(): string {
-  return `${randomFrom(adjectives)} ${randomFrom(nouns)}`
+  return `${randomFrom(ADJECTIVES)} ${randomFrom(NOUNS)}`
 }
 
 export function createId(): string {

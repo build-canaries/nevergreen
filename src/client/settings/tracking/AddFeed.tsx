@@ -5,6 +5,7 @@ import {useDispatch} from 'react-redux'
 import {Page} from '../../common/Page'
 import {Xml} from '../../common/icons/Xml'
 import {ConnectionForm, ConnectionFormFields} from './ConnectionForm'
+import {ROUTE_TRACKING} from '../../AppRoutes'
 
 export function AddFeed(): ReactElement {
   const dispatch = useDispatch()
@@ -18,7 +19,7 @@ export function AddFeed(): ReactElement {
   return (
     <Page title='Add CCTray XML feed' icon={<Xml/>}>
       <ConnectionForm onSuccess={onSuccess}
-                      onCancel='/settings/tracking'/>
+                      onCancel={ROUTE_TRACKING}/>
     </Page>
   )
 }

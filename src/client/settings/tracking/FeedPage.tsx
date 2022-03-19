@@ -3,7 +3,7 @@ import {useSelector} from 'react-redux'
 import {getFeed} from './FeedsReducer'
 import {Navigate, Outlet, useOutletContext, useParams} from 'react-router-dom'
 import {Feed} from '../../domain/Feed'
-import {routeTracking} from '../../AppRoutes'
+import {ROUTE_TRACKING} from '../../AppRoutes'
 
 export function FeedPage(): ReactElement {
   const {id} = useParams()
@@ -12,7 +12,7 @@ export function FeedPage(): ReactElement {
   if (feed) {
     return <Outlet context={feed}/>
   } else {
-    return <Navigate to={routeTracking}/>
+    return <Navigate to={ROUTE_TRACKING}/>
   }
 }
 

@@ -11,9 +11,9 @@ interface RemoteLocationLogoProps extends SVGProps<SVGSVGElement> {
 export function BackupLogo({where, ...props}: RemoteLocationLogoProps): ReactElement {
   return (
     <>
-      {where === RemoteLocationOptions.GitHub && <GitHubLogo {...props}/>}
-      {where === RemoteLocationOptions.GitLab && <GitLabLogo {...props}/>}
-      {where === RemoteLocationOptions.Custom && <JsonLogo {...props}/>}
+      {where === RemoteLocationOptions.gitHub && <GitHubLogo {...props}/>}
+      {where === RemoteLocationOptions.gitLab && <GitLabLogo {...props}/>}
+      {where === RemoteLocationOptions.custom && <JsonLogo {...props}/>}
     </>
   )
 }
