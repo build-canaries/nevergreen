@@ -29,7 +29,11 @@ export function Nevergreen(): ReactElement {
   const [notification, setNotification] = useState('')
   const [fontMetrics, setFontMetrics] = useState(DEFAULT_FONT_METRICS)
 
-  const fontMetricsRef = useCallback((ref: Measurable) => setFontMetrics(ref), [])
+  const fontMetricsRef = useCallback((measure: Measurable | null) => {
+    if (measure) {
+      setFontMetrics(measure)
+    }
+  }, [])
 
   const {menusHidden, toggleMenusHidden, showMenus} = useHideMenus()
 
