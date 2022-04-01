@@ -2,7 +2,7 @@
   :description "A build monitor with attitude"
   :url "https://github.com/build-canaries/nevergreen"
   ; use lein deps :tree to check dependency problems and actual versions used
-  :dependencies [[org.clojure/clojure "1.10.3"]
+  :dependencies [[org.clojure/clojure "1.11.0"]
                  [ring "1.9.5" :exclusions [org.eclipse.jetty/jetty-server]]
                  [org.eclipse.jetty/jetty-server "9.4.45.v20220203"]
                  [compojure "1.6.2" :exclusions [ring/ring-codec]]
@@ -30,14 +30,13 @@
   :source-paths ["src/server"]
   :test-paths ["src/server"]
   :jvm-opts ["-Dclojure.compiler.direct-linking=true"
-             "-Dclojure.compiler.elide-meta=[:doc :file :line :added]"
-             "--illegal-access=deny"]
+             "-Dclojure.compiler.elide-meta=[:doc :file :line :added]"]
   :aliases {"lint"          ["with-profile" "+test" "eastwood"]
             "coverage"      ["with-profile" "+test" "cloverage"]
             "check-updates" ["ancient" ":all"]}
   :profiles {:dev  {:plugins [[lein-ancient "0.7.0"]
                               [jonase/eastwood "1.2.3"]
-                              [lein-cloverage "1.2.2"]
+                              [lein-cloverage "1.2.3"]
                               [lein-eftest "0.5.9"]]}
              :test {:jvm-opts ["-Dlogback.configurationFile=./src/logback-tests.xml"]}}
   :cloverage {:output           "target/coverage-reports/server"
