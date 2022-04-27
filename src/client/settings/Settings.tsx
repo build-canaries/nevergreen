@@ -17,12 +17,11 @@ interface MenuItemProps {
 
 function MenuItem({to, label, icon}: MenuItemProps): ReactElement {
   return (
-    <li role='none'>
+    <li>
       <NavLink to={to}
                className={({isActive}) => {
                  return cn(styles.link, {[styles.activeLink]: isActive})
-               }}
-               role='menuitem'>
+               }}>
         {icon}
         {label}
       </NavLink>
@@ -33,14 +32,16 @@ function MenuItem({to, label, icon}: MenuItemProps): ReactElement {
 export function Settings(): ReactElement {
   return (
     <div className={styles.settings}>
-      <ul className={styles.menu} role='menu' aria-label='Settings'>
-        <MenuItem to='tracking' label='Tracking' icon={<List/>}/>
-        <MenuItem to='success' label='Success' icon={<Image/>}/>
-        <MenuItem to='display' label='Display' icon={<Display/>}/>
-        <MenuItem to='notifications' label='Notifications' icon={<Bell/>}/>
-        <MenuItem to='backup' label='Backup' icon={<FloppyDisk/>}/>
-        <MenuItem to='reset' label='Reset' icon={<Bin/>}/>
-      </ul>
+      <nav aria-label='Settings' className={styles.nav}>
+        <ul className={styles.menu}>
+          <MenuItem to='tracking' label='Tracking' icon={<List/>}/>
+          <MenuItem to='success' label='Success' icon={<Image/>}/>
+          <MenuItem to='display' label='Display' icon={<Display/>}/>
+          <MenuItem to='notifications' label='Notifications' icon={<Bell/>}/>
+          <MenuItem to='backup' label='Backup' icon={<FloppyDisk/>}/>
+          <MenuItem to='reset' label='Reset' icon={<Bin/>}/>
+        </ul>
+      </nav>
       <div>
         <Outlet/>
       </div>

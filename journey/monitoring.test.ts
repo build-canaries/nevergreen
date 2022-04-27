@@ -3,7 +3,7 @@ describe('Monitoring', () => {
   beforeEach(() => {
     cy.visit('/')
     cy.findByRole('link', {name: 'Settings'}).click()
-    cy.findByRole('menuitem', {name: 'Tracking'}).click()
+    cy.findByRole('link', {name: 'Tracking'}).click()
   })
 
   it('adding and monitoring a feed', () => {

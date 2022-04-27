@@ -6,13 +6,13 @@ describe('Settings', () => {
   })
 
   it('changing tracking settings', () => {
-    cy.findByRole('menuitem', {name: 'Tracking'}).click()
+    cy.findByRole('link', {name: 'Tracking'}).click()
 
     cy.findByLabelText('Poll for feed changes every').select('60')
   })
 
   it('changing display settings', () => {
-    cy.findByRole('menuitem', {name: 'Display'}).click()
+    cy.findByRole('link', {name: 'Display'}).click()
 
     cy.findByLabelText('Click to show menu').click()
 
@@ -45,7 +45,7 @@ describe('Settings', () => {
   })
 
   it('adding and removing success messages', () => {
-    cy.findByRole('menuitem', {name: 'Success'}).click()
+    cy.findByRole('link', {name: 'Success'}).click()
 
     cy.locate('success-message')
       .should('contain', '=(^.^)=')
@@ -67,7 +67,7 @@ describe('Settings', () => {
   })
 
   it('changing notification settings', () => {
-    cy.findByRole('menuitem', {name: 'Notifications'}).click()
+    cy.findByRole('link', {name: 'Notifications'}).click()
 
     cy.findByLabelText('Check for new Nevergreen versions').click()
     cy.findByLabelText('Play audio notifications').click()

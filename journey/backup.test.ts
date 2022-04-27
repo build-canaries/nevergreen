@@ -3,7 +3,7 @@ describe('Backups', () => {
   beforeEach(() => {
     cy.visit('/')
     cy.findByRole('link', {name: 'Settings'}).click()
-    cy.findByRole('menuitem', {name: 'Backup'}).click()
+    cy.findByRole('link', {name: 'Backup'}).click()
   })
 
   it('exporting and importing configuration locally', () => {
@@ -11,7 +11,7 @@ describe('Backups', () => {
 
     cy.findByLabelText('Current configuration').then((exportInput) => {
       cy.findByRole('link', {name: 'Settings'}).click()
-      cy.findByRole('menuitem', {name: 'Backup'}).click()
+      cy.findByRole('link', {name: 'Backup'}).click()
 
       cy.findByRole('button', {name: 'Import local'}).click()
 

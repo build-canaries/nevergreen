@@ -19,10 +19,10 @@ export function Header({hide}: HeaderProps): ReactElement {
   })
 
   return (
-    <header className={headerClassNames} role='banner'>
+    <header className={headerClassNames}>
       <div className={styles.inner}>
         <img src={logo} className={styles.logo} alt='Nevergreen' aria-hidden/>
-        <nav className={styles.nav} role='navigation'>
+        <nav className={styles.nav} aria-label='Primary'>
           <ul className={styles.menu}>
             <li>
               <NavLink to='monitor'
