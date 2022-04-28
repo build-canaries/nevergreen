@@ -10,8 +10,6 @@ configure({testIdAttribute: 'data-locator'})
 // Disable all logging for tests as it just adds noise to the console
 jest.mock('../../src/client/common/Logger')
 
-jest.useFakeTimers('modern')
-
 window.scrollTo = noop
 
 setLogger({
