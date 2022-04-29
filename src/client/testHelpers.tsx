@@ -23,9 +23,12 @@ import {BACKUP_REMOTE_LOCATIONS_ROOT, RemoteLocation} from './settings/backup/Re
 import {RemoteLocationOptions} from './settings/backup/RemoteLocationOptions'
 import {Route, Routes} from 'react-router'
 import {QueryClient, QueryClientProvider} from 'react-query'
+import userEvent from '@testing-library/user-event'
+import {UserEvent} from '@testing-library/user-event/dist/types/setup'
 
 interface ExtendedRenderResult extends RenderResult {
   readonly store: EnhancedStore<State, AnyAction, ReadonlyArray<Middleware<unknown, State>>>;
+  readonly user: UserEvent;
 }
 
 interface RenderOptions {
@@ -89,6 +92,10 @@ export function render(component: ReactNode, options: RenderOptions = {}): Exten
 
   window.history.pushState({}, '', mergedOptions.currentLocation)
 
+  const user = userEvent.setup({
+    advanceTimers: (delay) => jest.advanceTimersByTime(delay)
+  })
+
   const wrapWithStoreAndRouter = (c: ReactNode) => (
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
@@ -109,7 +116,8 @@ export function render(component: ReactNode, options: RenderOptions = {}): Exten
   return {
     ...view,
     rerender: (c: ReactNode): void => view.rerender(wrapWithStoreAndRouter(c)),
-    store
+    store,
+    user
   }
 }
 

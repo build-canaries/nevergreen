@@ -1,6 +1,5 @@
 import React from 'react'
 import {AddFeed} from './AddFeed'
-import userEvent from '@testing-library/user-event'
 import {screen, waitFor} from '@testing-library/react'
 import * as SecurityGateway from '../../gateways/SecurityGateway'
 import * as ProjectsGateway from '../../gateways/ProjectsGateway'
@@ -14,20 +13,20 @@ beforeEach(() => {
   jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValue(fakeRequest(''))
 })
 
-it('should display an error if no URL is entered', () => {
-  render(<AddFeed/>)
-  userEvent.click(screen.getByText('Add feed'))
+it('should display an error if no URL is entered', async () => {
+  const {user} = render(<AddFeed/>)
+  await user .click(screen.getByText('Add feed'))
   expect(screen.getByText('Enter a URL to the CCTray XML feed')).toBeInTheDocument()
 })
 
-it('should display an error if the URL entered is not http(s)', () => {
-  render(<AddFeed/>)
-  userEvent.type(screen.getByLabelText('URL'), 'ftp://some-new-url')
-  userEvent.click(screen.getByText('Add feed'))
+it('should display an error if the URL entered is not http(s)', async () => {
+  const {user} = render(<AddFeed/>)
+  await user.type(screen.getByLabelText('URL'), 'ftp://some-new-url')
+  await user.click(screen.getByText('Add feed'))
   expect(screen.getByText('Only http(s) URLs are supported')).toBeInTheDocument()
 })
 
-it('should display an error if a feed with the same URL has already been added', () => {
+it('should display an error if a feed with the same URL has already been added', async () => {
   const state = {
     [FEEDS_ROOT]: {
       trayId: buildFeed({
@@ -37,9 +36,9 @@ it('should display an error if a feed with the same URL has already been added',
     }
   }
 
-  render(<AddFeed/>, {state})
-  userEvent.type(screen.getByLabelText('URL'), 'http://some-url')
-  userEvent.click(screen.getByText('Add feed'))
+  const {user} = render(<AddFeed/>, {state})
+  await user.type(screen.getByLabelText('URL'), 'http://some-url')
+  await user.click(screen.getByText('Add feed'))
 
   expect(screen.getByText('An existing CCTray XML feed already has this URL')).toBeInTheDocument()
 })
@@ -52,10 +51,10 @@ it('should allow adding feeds without auth', async () => {
     [FEEDS_ROOT]: {}
   }
 
-  const {store} = render(<AddFeed/>, {state})
-  userEvent.type(screen.getByLabelText('URL'), 'http://some-new-url')
+  const {store, user} = render(<AddFeed/>, {state})
+  await user.type(screen.getByLabelText('URL'), 'http://some-new-url')
 
-  userEvent.click(screen.getByRole('button', {name: 'Check connection'}))
+  await user.click(screen.getByRole('button', {name: 'Check connection'}))
 
   await waitFor(() => {
     expect(screen.getByText('Connected successfully')).toBeInTheDocument()
@@ -68,7 +67,7 @@ it('should allow adding feeds without auth', async () => {
     username: ''
   })
 
-  userEvent.click(screen.getByText('Add feed'))
+  await user.click(screen.getByText('Add feed'))
 
   await waitFor(() => {
     expect(window.location).toEqual(expect.objectContaining({
@@ -92,13 +91,13 @@ it('should allow adding feeds with basic auth', async () => {
     [FEEDS_ROOT]: {}
   }
 
-  const {store} = render(<AddFeed/>, {state})
-  userEvent.type(screen.getByLabelText('URL'), 'http://some-new-url')
-  userEvent.selectOptions(screen.getByLabelText('Authentication'), AuthTypes.basic)
-  userEvent.type(screen.getByLabelText('Username'), 'some-username')
-  userEvent.type(screen.getByLabelText('Password'), 'some-password')
+  const {store, user} = render(<AddFeed/>, {state})
+  await user.type(screen.getByLabelText('URL'), 'http://some-new-url')
+  await user.selectOptions(screen.getByLabelText('Authentication'), AuthTypes.basic)
+  await user.type(screen.getByLabelText('Username'), 'some-username')
+  await user.type(screen.getByLabelText('Password'), 'some-password')
 
-  userEvent.click(screen.getByRole('button', {name: 'Check connection'}))
+  await user.click(screen.getByRole('button', {name: 'Check connection'}))
 
   await waitFor(() => {
     expect(screen.getByText('Connected successfully')).toBeInTheDocument()
@@ -111,7 +110,7 @@ it('should allow adding feeds with basic auth', async () => {
     username: 'some-username'
   })
 
-  userEvent.click(screen.getByText('Add feed'))
+  await user.click(screen.getByText('Add feed'))
 
   await waitFor(() => {
     expect(SecurityGateway.encrypt).toHaveBeenCalledWith('some-password')
@@ -136,12 +135,12 @@ it('should allow adding feeds with an access token', async () => {
     [FEEDS_ROOT]: {}
   }
 
-  const {store} = render(<AddFeed/>, {state})
-  userEvent.type(screen.getByLabelText('URL'), 'http://some-new-url')
-  userEvent.selectOptions(screen.getByLabelText('Authentication'), AuthTypes.token)
-  userEvent.type(screen.getByLabelText('Token'), 'some-token')
+  const {store, user} = render(<AddFeed/>, {state})
+  await user.type(screen.getByLabelText('URL'), 'http://some-new-url')
+  await user.selectOptions(screen.getByLabelText('Authentication'), AuthTypes.token)
+  await user.type(screen.getByLabelText('Token'), 'some-token')
 
-  userEvent.click(screen.getByRole('button', {name: 'Check connection'}))
+  await user.click(screen.getByRole('button', {name: 'Check connection'}))
 
   await waitFor(() => {
     expect(screen.getByText('Connected successfully')).toBeInTheDocument()
@@ -154,7 +153,7 @@ it('should allow adding feeds with an access token', async () => {
     username: ''
   })
 
-  userEvent.click(screen.getByText('Add feed'))
+  await user.click(screen.getByText('Add feed'))
 
   await waitFor(() => {
     expect(SecurityGateway.encrypt).toHaveBeenCalledWith('some-token')

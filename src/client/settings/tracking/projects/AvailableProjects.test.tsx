@@ -1,5 +1,4 @@
 import React from 'react'
-import userEvent from '@testing-library/user-event'
 import {screen, waitFor} from '@testing-library/react'
 import {buildFeed, buildProject, buildProjectError, render} from '../../../testHelpers'
 import {fakeRequest} from '../../../gateways/Gateway'
@@ -13,7 +12,7 @@ beforeEach(() => {
   jest.spyOn(ProjectsGateway, 'fetchAll').mockResolvedValue(fakeRequest([]))
 })
 
-it('should be able to select projects', () => {
+it('should be able to select projects', async () => {
   const feed = buildFeed({trayId: 'trayId'})
   const project = buildProject({trayId: 'trayId', projectId: 'projectId', description: 'some project'})
   const state = {
@@ -28,12 +27,12 @@ it('should be able to select projects', () => {
     }
   }
 
-  render(<AvailableProjects feed={feed}/>, {state})
+  const {user} = render(<AvailableProjects feed={feed}/>, {state})
   const selectInput = screen.getByLabelText(/some project/)
 
   expect(selectInput).not.toBeChecked()
 
-  userEvent.click(selectInput as Element)
+  await user.click(selectInput as Element)
   expect(selectInput).toBeChecked()
 })
 
@@ -58,14 +57,14 @@ it('should correctly show and remove errors returned while refreshing', async ()
     }
   }
 
-  render(<AvailableProjects feed={feed}/>, {state})
-  userEvent.click(screen.getByRole('button', {name: 'Refresh'}))
+  const {user} = render(<AvailableProjects feed={feed}/>, {state})
+  await user.click(screen.getByRole('button', {name: 'Refresh'}))
 
   await waitFor(() => {
     expect(screen.getByText('some-error')).toBeInTheDocument()
   })
 
-  userEvent.click(screen.getByRole('button', {name: 'Refresh'}))
+  await user.click(screen.getByRole('button', {name: 'Refresh'}))
 
   await waitFor(() => {
     expect(screen.queryByText('some-error')).not.toBeInTheDocument()
@@ -89,7 +88,7 @@ it('should show a warning if there are no projects', () => {
   expect(screen.getByText('No projects fetched, please refresh')).toBeInTheDocument()
 })
 
-it('should show a warning if no projects match the search', () => {
+it('should show a warning if no projects match the search', async () => {
   const feed = buildFeed({trayId: 'trayId'})
   const state = {
     [FEEDS_ROOT]: {
@@ -108,8 +107,8 @@ it('should show a warning if no projects match the search', () => {
     }
   }
 
-  render(<AvailableProjects feed={feed}/>, {state})
-  userEvent.type(screen.getByLabelText('Search'), 'bar')
+  const {user} = render(<AvailableProjects feed={feed}/>, {state})
+  await user.type(screen.getByLabelText('Search'), 'bar')
 
   expect(screen.getByText('No matching projects, please update your search')).toBeInTheDocument()
 })

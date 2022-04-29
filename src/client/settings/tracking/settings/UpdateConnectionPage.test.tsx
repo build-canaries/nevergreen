@@ -2,7 +2,6 @@ import React from 'react'
 import {screen, waitFor} from '@testing-library/react'
 import {buildFeed, render} from '../../../testHelpers'
 import {FEEDS_ROOT, getFeed} from '../FeedsReducer'
-import userEvent from '@testing-library/user-event'
 import {AuthTypes} from '../../../domain/Feed'
 import * as SecurityGateway from '../../../gateways/SecurityGateway'
 import * as ProjectsGateway from '../../../gateways/ProjectsGateway'
@@ -27,12 +26,12 @@ it('should be able to update the URL', async () => {
     [FEEDS_ROOT]: {trayId: feed}
   }
 
-  const {store} = render(<UpdateConnectionPage/>, {state, outletContext: feed})
+  const {store, user} = render(<UpdateConnectionPage/>, {state, outletContext: feed})
 
-  userEvent.clear(screen.getByLabelText('URL'))
-  userEvent.type(screen.getByLabelText('URL'), 'http://new')
+  await user.clear(screen.getByLabelText('URL'))
+  await user.type(screen.getByLabelText('URL'), 'http://new')
 
-  userEvent.click(screen.getByRole('button', {name: 'Check connection'}))
+  await user.click(screen.getByRole('button', {name: 'Check connection'}))
 
   await waitFor(() => {
     expect(screen.getByText('Connected successfully')).toBeInTheDocument()
@@ -44,7 +43,7 @@ it('should be able to update the URL', async () => {
     username: 'some-username'
   })
 
-  userEvent.click(screen.getByRole('button', {name: 'Save'}))
+  await user.click(screen.getByRole('button', {name: 'Save'}))
 
   await waitFor(() => {
     expect(getFeed('trayId')(store.getState())).toEqual(expect.objectContaining({
@@ -67,12 +66,12 @@ it('should be able to update authentication', async () => {
     [FEEDS_ROOT]: {trayId: feed}
   }
 
-  const {store} = render(<UpdateConnectionPage/>, {state, outletContext: feed})
+  const {store, user} = render(<UpdateConnectionPage/>, {state, outletContext: feed})
 
-  userEvent.selectOptions(screen.getByLabelText('Authentication'), AuthTypes.token)
-  userEvent.type(screen.getByLabelText('Token'), 'some-token')
+  await user.selectOptions(screen.getByLabelText('Authentication'), AuthTypes.token)
+  await user.type(screen.getByLabelText('Token'), 'some-token')
 
-  userEvent.click(screen.getByRole('button', {name: 'Check connection'}))
+  await user.click(screen.getByRole('button', {name: 'Check connection'}))
 
   await waitFor(() => {
     expect(screen.getByText('Connected successfully')).toBeInTheDocument()
@@ -85,7 +84,7 @@ it('should be able to update authentication', async () => {
     username: ''
   })
 
-  userEvent.click(screen.getByRole('button', {name: 'Save'}))
+  await user.click(screen.getByRole('button', {name: 'Save'}))
 
   await waitFor(() => {
     expect(getFeed('trayId')(store.getState())).toEqual(expect.objectContaining({
@@ -97,7 +96,7 @@ it('should be able to update authentication', async () => {
 })
 
 describe('validation errors', () => {
-  it('should display an error if no URL is entered', () => {
+  it('should display an error if no URL is entered', async () => {
     const feed = buildFeed({
       trayId: 'trayId',
       name: 'some-name'
@@ -106,15 +105,15 @@ describe('validation errors', () => {
       [FEEDS_ROOT]: {trayId: feed}
     }
 
-    render(<UpdateConnectionPage/>, {state, outletContext: feed})
+    const {user} = render(<UpdateConnectionPage/>, {state, outletContext: feed})
 
-    userEvent.clear(screen.getByLabelText('URL'))
-    userEvent.click(screen.getByRole('button', {name: 'Save'}))
+    await user.clear(screen.getByLabelText('URL'))
+    await user.click(screen.getByRole('button', {name: 'Save'}))
 
     expect(screen.getByText('Enter a URL to the CCTray XML feed')).toBeInTheDocument()
   })
 
-  it('should display an error if non http(s) URL is entered', () => {
+  it('should display an error if non http(s) URL is entered', async () => {
     const feed = buildFeed({
       trayId: 'trayId',
       name: 'some-name'
@@ -123,16 +122,16 @@ describe('validation errors', () => {
       [FEEDS_ROOT]: {trayId: feed}
     }
 
-    render(<UpdateConnectionPage/>, {state, outletContext: feed})
+    const {user} = render(<UpdateConnectionPage/>, {state, outletContext: feed})
 
-    userEvent.clear(screen.getByLabelText('URL'))
-    userEvent.type(screen.getByLabelText('URL'), 'file://some-file')
-    userEvent.click(screen.getByRole('button', {name: 'Save'}))
+    await user.clear(screen.getByLabelText('URL'))
+    await user.type(screen.getByLabelText('URL'), 'file://some-file')
+    await user.click(screen.getByRole('button', {name: 'Save'}))
 
     expect(screen.getByText('Only http(s) URLs are supported')).toBeInTheDocument()
   })
 
-  it('should display an error if a URL already in use by another feed is entered', () => {
+  it('should display an error if a URL already in use by another feed is entered', async () => {
     const feed = buildFeed({
       trayId: 'trayId'
     })
@@ -147,11 +146,11 @@ describe('validation errors', () => {
       }
     }
 
-    render(<UpdateConnectionPage/>, {state, outletContext: feed})
+    const {user} = render(<UpdateConnectionPage/>, {state, outletContext: feed})
 
-    userEvent.clear(screen.getByLabelText('URL'))
-    userEvent.type(screen.getByLabelText('URL'), 'http://other')
-    userEvent.click(screen.getByRole('button', {name: 'Save'}))
+    await user.clear(screen.getByLabelText('URL'))
+    await user.type(screen.getByLabelText('URL'), 'http://other')
+    await user.click(screen.getByRole('button', {name: 'Save'}))
 
     expect(screen.getByText('An existing CCTray XML feed already has this URL')).toBeInTheDocument()
   })

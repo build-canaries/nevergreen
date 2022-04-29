@@ -1,5 +1,4 @@
 import React from 'react'
-import userEvent from '@testing-library/user-event'
 import {screen, waitFor} from '@testing-library/react'
 import {buildRemoteBackupLocation, render} from '../../testHelpers'
 import {BackupPage} from './BackupPage'
@@ -16,11 +15,11 @@ it('should be able to remove remote locations', async () => {
       })
     }
   }
-  render(<BackupPage/>, {state})
+  const {user} = render(<BackupPage/>, {state})
 
   expect(screen.getByText('http://example.com')).toBeInTheDocument()
 
-  userEvent.click(screen.getByRole('button', {name: 'Remove Remote backup 1'}))
+  await user.click(screen.getByRole('button', {name: 'Remove Remote backup 1'}))
 
   await waitFor(() => {
     expect(screen.queryByText('http://example.com')).not.toBeInTheDocument()

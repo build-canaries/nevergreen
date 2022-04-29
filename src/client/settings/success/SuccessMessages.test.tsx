@@ -1,7 +1,6 @@
 import React from 'react'
 import {NO_MESSAGES_WARNING, SuccessMessages} from './SuccessMessages'
 import {render} from '../../testHelpers'
-import userEvent from '@testing-library/user-event'
 import {SUCCESS_ROOT} from './SuccessReducer'
 import {screen} from '@testing-library/react'
 
@@ -12,10 +11,10 @@ it('should show success messages', () => {
   expect(screen.getByTestId('success-image')).toHaveAttribute('src', 'http://some-url')
 })
 
-it('should allow success messages to be removed', () => {
+it('should allow success messages to be removed', async () => {
   const state = {[SUCCESS_ROOT]: ['some-message']}
-  render(<SuccessMessages/>, {state})
-  userEvent.click(screen.getByText('remove success message'))
+  const {user} = render(<SuccessMessages/>, {state})
+  await user.click(screen.getByText('remove success message'))
   expect(screen.queryByText('some-message')).not.toBeInTheDocument()
 })
 

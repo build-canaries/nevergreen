@@ -10,17 +10,15 @@ import {testFeedConnection} from '../../gateways/ProjectsGateway'
 import {Loop} from '../../common/icons/Loop'
 import {TimedErrorMessages, TimedSuccessMessages} from '../../common/TimedMessages'
 
-interface ConnectionDetails {
-  readonly authType: UpdateExistingAuthTypes;
-  readonly url: string;
-  readonly accessToken: string;
-  readonly password: string;
-  readonly username: string;
-}
-
 interface TestConnectionProps {
   readonly existingFeed?: Feed;
-  readonly details: ConnectionDetails;
+  readonly details: {
+    readonly authType: UpdateExistingAuthTypes;
+    readonly url: string;
+    readonly accessToken: string;
+    readonly password: string;
+    readonly username: string;
+  };
 }
 
 export function TestConnection({existingFeed, details}: TestConnectionProps): ReactElement {

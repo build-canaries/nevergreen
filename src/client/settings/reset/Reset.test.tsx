@@ -1,5 +1,4 @@
 import React from 'react'
-import userEvent from '@testing-library/user-event'
 import {screen, waitFor} from '@testing-library/react'
 import * as LocalConfiguration from '../../configuration/LocalRepository'
 import {Reset} from './Reset'
@@ -21,8 +20,8 @@ afterEach(() => {
 })
 
 it('should reset configuration and reload', async () => {
-  render(<Reset/>)
-  userEvent.click(screen.getByRole('button', {name: 'Reset configuration'}))
+  const {user} = render(<Reset/>)
+  await user.click(screen.getByRole('button', {name: 'Reset configuration'}))
   await waitFor(() => {
     expect(LocalConfiguration.clear).toHaveBeenCalled()
   })

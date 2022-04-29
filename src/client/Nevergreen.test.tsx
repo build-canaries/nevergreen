@@ -10,7 +10,6 @@ import * as Gateway from './gateways/Gateway'
 import {fakeRequest} from './gateways/Gateway'
 import * as HideMenusHook from './HideMenusHook'
 import {SETTINGS_ROOT} from './settings/SettingsReducer'
-import userEvent from '@testing-library/user-event'
 import {waitForLoadingToFinish} from './common/Loading.test'
 
 beforeEach(() => {
@@ -80,15 +79,15 @@ it('should show menus when any key is pressed, allowing the user to navigate to 
     showMenus
   })
 
-  render(<Nevergreen/>)
+  const {user} = render(<Nevergreen/>)
 
   await waitForLoadingToFinish()
 
   // The click is required to make sure focus is correct for the keyboard event.
   // In production the <Title/> forces focus so focus would be correct already.
   // The click also triggers showMenus, so we assert it's called twice
-  userEvent.click(screen.getByRole('main'))
-  userEvent.keyboard('a')
+  await user.click(screen.getByRole('main'))
+  await user.keyboard('a')
 
   expect(showMenus).toHaveBeenCalledTimes(2)
 })

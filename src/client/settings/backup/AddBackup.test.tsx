@@ -1,5 +1,4 @@
 import React from 'react'
-import userEvent from '@testing-library/user-event'
 import {screen, waitFor} from '@testing-library/react'
 import {render} from '../../testHelpers'
 import {DEFAULT_GITHUB_URL} from './RemoteLocationOptions'
@@ -13,10 +12,10 @@ beforeEach(() => {
 })
 
 it('should not be able to add with a blank URL', async () => {
-  render(<AddBackup/>)
+  const {user} = render(<AddBackup/>)
 
-  userEvent.selectOptions(screen.getByLabelText('Where'), 'custom')
-  userEvent.click(screen.getByText('Add location'))
+  await user.selectOptions(screen.getByLabelText('Where'), 'custom')
+  await user.click(screen.getByText('Add location'))
 
   await waitFor(() => {
     expect(screen.getByText('Enter a URL')).toBeInTheDocument()
@@ -24,11 +23,11 @@ it('should not be able to add with a blank URL', async () => {
 })
 
 it('should not be able to add with a non http(s) URL', async () => {
-  render(<AddBackup/>)
+  const {user} = render(<AddBackup/>)
 
-  userEvent.selectOptions(screen.getByLabelText('Where'), 'custom')
-  userEvent.type(screen.getByLabelText('URL'), 'file://example')
-  userEvent.click(screen.getByText('Add location'))
+  await user.selectOptions(screen.getByLabelText('Where'), 'custom')
+  await user.type(screen.getByLabelText('URL'), 'file://example')
+  await user.click(screen.getByText('Add location'))
 
   await waitFor(() => {
     expect(screen.getByText('Only http and https URLs are supported')).toBeInTheDocument()
@@ -36,11 +35,11 @@ it('should not be able to add with a non http(s) URL', async () => {
 })
 
 it('should be able to add a custom server', async () => {
-  const {store} = render(<AddBackup/>)
+  const {store, user} = render(<AddBackup/>)
 
-  userEvent.selectOptions(screen.getByLabelText('Where'), 'custom')
-  userEvent.type(screen.getByLabelText('URL'), 'http://example.com')
-  userEvent.click(screen.getByRole('button', {name: 'Add location'}))
+  await user.selectOptions(screen.getByLabelText('Where'), 'custom')
+  await user.type(screen.getByLabelText('URL'), 'http://example.com')
+  await user.click(screen.getByRole('button', {name: 'Add location'}))
 
   await waitFor(() => {
     expect(Object.values(getBackupLocations(store.getState()))).toEqual([expect.objectContaining({
@@ -52,14 +51,14 @@ it('should be able to add a custom server', async () => {
 })
 
 it('should be able to add a GitHub gist', async () => {
-  const {store} = render(<AddBackup/>)
+  const {store, user} = render(<AddBackup/>)
 
-  userEvent.selectOptions(screen.getByLabelText('Where'), 'github')
+  await user.selectOptions(screen.getByLabelText('Where'), 'github')
 
   expect(screen.getByLabelText('URL')).toHaveValue(DEFAULT_GITHUB_URL)
 
-  userEvent.type(screen.getByLabelText('Access token'), 'some-token')
-  userEvent.click(screen.getByRole('button', {name: 'Add location'}))
+  await user.type(screen.getByLabelText('Access token'), 'some-token')
+  await user.click(screen.getByRole('button', {name: 'Add location'}))
 
   await waitFor(() => {
     expect(Object.values(getBackupLocations(store.getState()))).toEqual([expect.objectContaining({
@@ -70,18 +69,18 @@ it('should be able to add a GitHub gist', async () => {
 })
 
 it('should validate adding a GitHub gist and clear errors if "where" is changed', async () => {
-  render(<AddBackup/>)
+  const {user} = render(<AddBackup/>)
 
-  userEvent.selectOptions(screen.getByLabelText('Where'), 'github')
-  userEvent.clear(screen.getByLabelText('URL'))
-  userEvent.click(screen.getByText('Add location'))
+  await user.selectOptions(screen.getByLabelText('Where'), 'github')
+  await user.clear(screen.getByLabelText('URL'))
+  await user.click(screen.getByText('Add location'))
 
   await waitFor(() => {
     expect(screen.getByText('Enter a URL')).toBeInTheDocument()
   })
   expect(screen.getByText('Enter an access token')).toBeInTheDocument()
 
-  userEvent.selectOptions(screen.getByLabelText('Where'), 'custom')
+  await user.selectOptions(screen.getByLabelText('Where'), 'custom')
 
   await waitFor(() => {
     expect(screen.queryByText('Enter a URL')).not.toBeInTheDocument()

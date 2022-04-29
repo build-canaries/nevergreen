@@ -1,7 +1,6 @@
 import React from 'react'
 import {render} from '../../testHelpers'
 import {screen, waitFor} from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
 import {TestConnection} from './TestConnection'
 import {AuthTypes} from '../../domain/Feed'
 import * as ProjectsGateway from '../../gateways/ProjectsGateway'
@@ -17,36 +16,37 @@ const details = {
 
 it('should update the button text while loading', async () => {
   jest.spyOn(ProjectsGateway, 'testFeedConnection').mockResolvedValue(fakeRequest(undefined))
-  render(<TestConnection details={details}/>)
-  userEvent.click(screen.getByRole('button', {name: 'Check connection'}))
+  const {user} = render(<TestConnection details={details}/>)
+  const click = user.click(screen.getByRole('button', {name: 'Check connection'}))
   await waitFor(() => {
     expect(screen.getByText('Checking connection...')).toBeInTheDocument()
   })
+  await click // wait for effects of the click otherwise it causes the next test to fail
 })
 
 it('should display messages about the connection', async () => {
   const testFeedConnectionSpy = jest.spyOn(ProjectsGateway, 'testFeedConnection')
 
-  render(<TestConnection details={details}/>)
+  const {user} = render(<TestConnection details={details}/>)
 
   testFeedConnectionSpy.mockResolvedValueOnce(fakeRequest(undefined))
-  userEvent.click(screen.getByRole('button', {name: 'Check connection'}))
+  await user.click(screen.getByRole('button', {name: 'Check connection'}))
   await waitFor(() => {
     expect(screen.getByText('Connected successfully')).toBeInTheDocument()
   })
 
-  userEvent.click(screen.getByRole('button', {name: 'Dismiss success messages'}))
+  await user.click(screen.getByRole('button', {name: 'Dismiss success messages'}))
   await waitFor(() => {
     expect(screen.queryByText('Connected successfully')).not.toBeInTheDocument()
   })
 
   testFeedConnectionSpy.mockRejectedValueOnce(new Error('some error happened'))
-  userEvent.click(screen.getByRole('button', {name: 'Check connection'}))
+  await user.click(screen.getByRole('button', {name: 'Check connection'}))
   await waitFor(() => {
     expect(screen.getByText('some error happened')).toBeInTheDocument()
   })
 
-  userEvent.click(screen.getByRole('button', {name: 'Dismiss error messages'}))
+  await user.click(screen.getByRole('button', {name: 'Dismiss error messages'}))
   await waitFor(() => {
     expect(screen.queryByText('some error happened')).not.toBeInTheDocument()
   })

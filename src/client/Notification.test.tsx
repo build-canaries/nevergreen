@@ -1,5 +1,4 @@
 import React from 'react'
-import userEvent from '@testing-library/user-event'
 import {Notification} from './Notification'
 import {render} from './testHelpers'
 import noop from 'lodash/noop'
@@ -18,13 +17,13 @@ it('should not render anything if notification is empty', () => {
   expect(container.firstChild).toBeNull()
 })
 
-it('should be able to dismiss shown notifications', () => {
+it('should be able to dismiss shown notifications', async () => {
   const onDismiss = jest.fn()
   const props = {...defaultProps, notification: 'some notification', onDismiss}
 
-  render(<Notification {...props}/>)
+  const {user} = render(<Notification {...props}/>)
   expect(screen.getByText('some notification')).toBeInTheDocument()
 
-  userEvent.click(screen.getByRole('button', {name: 'Dismiss info messages'}))
+  await user.click(screen.getByRole('button', {name: 'Dismiss info messages'}))
   expect(onDismiss).toHaveBeenCalled()
 })

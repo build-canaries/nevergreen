@@ -1,14 +1,13 @@
 import React from 'react'
-import userEvent from '@testing-library/user-event'
 import {ImportLocal} from './ImportLocal'
 import {buildState, render} from '../../../testHelpers'
 import {toJson} from '../../../common/Json'
 import {screen, waitFor} from '@testing-library/react'
 
 it('should import valid configuration', async () => {
-  render(<ImportLocal/>)
-  userEvent.type(screen.getByLabelText('Configuration to import'), escapeSpecialCharacter(toJson(buildState())))
-  userEvent.click(screen.getByRole('button', {name: 'Import'}))
+  const {user} = render(<ImportLocal/>)
+  await user.type(screen.getByLabelText('Configuration to import'), escapeSpecialCharacter(toJson(buildState())))
+  await user.click(screen.getByRole('button', {name: 'Import'}))
 
   await waitFor(() => {
     expect(screen.getByText('Configuration imported')).toBeInTheDocument()
@@ -16,28 +15,28 @@ it('should import valid configuration', async () => {
   expect(screen.getByLabelText('Configuration to import')).toHaveValue('')
 })
 
-it('should show an error if no data has been entered', () => {
-  render(<ImportLocal/>)
-  userEvent.click(screen.getByRole('button', {name: 'Import'}))
+it('should show an error if no data has been entered', async () => {
+  const {user} = render(<ImportLocal/>)
+  await user.click(screen.getByRole('button', {name: 'Import'}))
   expect(screen.getByText('Enter the configuration to import')).toBeInTheDocument()
   expect(screen.queryByText('Unexpected end of JSON input')).not.toBeInTheDocument()
 })
 
-it('should show an error if the data is syntactically invalid (bad json)', () => {
+it('should show an error if the data is syntactically invalid (bad json)', async () => {
   const invalidConfiguration = '{'
-  render(<ImportLocal/>)
-  userEvent.type(screen.getByLabelText('Configuration to import'), escapeSpecialCharacter(invalidConfiguration))
-  userEvent.click(screen.getByRole('button', {name: 'Import'}))
+  const {user} = render(<ImportLocal/>)
+  await user.type(screen.getByLabelText('Configuration to import'), escapeSpecialCharacter(invalidConfiguration))
+  await user.click(screen.getByRole('button', {name: 'Import'}))
 
   expect(screen.getByText('Unexpected end of JSON input')).toBeInTheDocument()
   expect(screen.getByDisplayValue(invalidConfiguration)).toBeInTheDocument()
 })
 
-it('should show an error if the data is semantically invalid (missing required attributes)', () => {
+it('should show an error if the data is semantically invalid (missing required attributes)', async () => {
   const invalidConfiguration = '{"trays":{"id":{}}}'
-  render(<ImportLocal/>)
-  userEvent.type(screen.getByLabelText('Configuration to import'), escapeSpecialCharacter(invalidConfiguration))
-  userEvent.click(screen.getByRole('button', {name: 'Import'}))
+  const {user} = render(<ImportLocal/>)
+  await user.type(screen.getByLabelText('Configuration to import'), escapeSpecialCharacter(invalidConfiguration))
+  await user.click(screen.getByRole('button', {name: 'Import'}))
 
   expect(screen.getByText('Invalid value undefined supplied to /trays/id/trayId expected string')).toBeInTheDocument()
   expect(screen.getByText('Invalid value undefined supplied to /trays/id/url expected string')).toBeInTheDocument()
@@ -64,9 +63,9 @@ it('should allow a single JSON and plain text files to be opened', () => {
 })
 
 it('should be able to cancel back to settings', async () => {
-  render(<ImportLocal/>)
+  const {user} = render(<ImportLocal/>)
 
-  userEvent.click(screen.getByRole('button', {name: 'Cancel'}))
+  await user.click(screen.getByRole('button', {name: 'Cancel'}))
 
   await waitFor(() => {
     expect(window.location.pathname).toEqual('/backup')

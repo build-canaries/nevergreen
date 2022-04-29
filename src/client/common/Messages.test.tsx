@@ -2,7 +2,6 @@ import {render} from '../testHelpers'
 import React from 'react'
 import {Messages, MessagesType} from './Messages'
 import {screen} from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
 
 it('should not render anything if messages is an empty array', () => {
   const props = {type: MessagesType.error, messages: [], icon: <div/>}
@@ -25,10 +24,10 @@ it('should render the messages', () => {
   expect(screen.getByText('another-message')).toBeInTheDocument()
 })
 
-it('should allow messages to be dismissed', () => {
+it('should allow messages to be dismissed', async () => {
   const onDismiss = jest.fn()
   const props = {type: MessagesType.info, messages: 'irrelevant', icon: <div/>, onDismiss}
-  render(<Messages {...props} />)
-  userEvent.click(screen.getByRole('button', {name: 'Dismiss info messages'}))
+  const {user} = render(<Messages {...props} />)
+  await user.click(screen.getByRole('button', {name: 'Dismiss info messages'}))
   expect(onDismiss).toHaveBeenCalled()
 })

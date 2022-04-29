@@ -1,5 +1,4 @@
 import React from 'react'
-import userEvent from '@testing-library/user-event'
 import {screen, waitFor} from '@testing-library/react'
 import {
   NOT_SUPPORTED_MESSAGE,
@@ -24,8 +23,8 @@ it('should allow system notifications to be enabled', async () => {
       showSystemNotifications: false
     }
   }
-  const {store} = render(<NotificationsSystem/>, {state})
-  userEvent.click(screen.getByLabelText('Show system notifications'))
+  const {store, user} = render(<NotificationsSystem/>, {state})
+  await user.click(screen.getByLabelText('Show system notifications'))
 
   await waitFor(() => {
     expect(getShowSystemNotifications(store.getState())).toBeTruthy()
@@ -55,8 +54,8 @@ it('should show a message if notifications are supported but permission is denie
   jest.spyOn(SystemNotifications, 'supported').mockReturnValue(true)
   jest.spyOn(SystemNotifications, 'permissionGranted').mockReturnValue(false)
 
-  render(<NotificationsSystem/>)
-  userEvent.click(screen.getByLabelText('Show system notifications'))
+  const {user} = render(<NotificationsSystem/>)
+  await user.click(screen.getByLabelText('Show system notifications'))
 
   await waitFor(() => {
     expect(screen.getByText(PERMISSION_DENIED_MESSAGE)).toBeInTheDocument()

@@ -3,7 +3,6 @@ import {render} from '../../../testHelpers'
 import {ExportLocal} from './ExportLocal'
 import * as ClipboardHook from './ClipboardHook'
 import * as FileSystem from '../FileSystem'
-import userEvent from '@testing-library/user-event'
 import {act, screen, waitFor} from '@testing-library/react'
 
 it('should allowing copying to clipboard if supported', () => {
@@ -45,16 +44,16 @@ it('should not have a copy to clipboard button if copying is not supported', () 
   expect(screen.queryByText('Copy to clipboard')).not.toBeInTheDocument()
 })
 
-it('should be able to save a file locally', () => {
+it('should be able to save a file locally', async () => {
   jest.spyOn(FileSystem, 'saveFile')
-  render(<ExportLocal/>)
-  userEvent.click(screen.getByRole('button', {name: 'Save locally...'}))
+  const {user} = render(<ExportLocal/>)
+  await user.click(screen.getByRole('button', {name: 'Save locally...'}))
   expect(FileSystem.saveFile).toHaveBeenCalled()
 })
 
 it('should be able to cancel back to settings', async () => {
-  render(<ExportLocal/>, {mountPath: 'import', currentLocation: 'import'})
-  userEvent.click(screen.getByRole('button', {name: 'Cancel'}))
+  const {user} = render(<ExportLocal/>, {mountPath: 'import', currentLocation: 'import'})
+  await user.click(screen.getByRole('button', {name: 'Cancel'}))
   await waitFor(() => {
     expect(window.location.pathname).toEqual('/backup')
   })

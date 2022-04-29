@@ -17,3 +17,7 @@ setLogger({
   warn: console.warn,
   error: noop
 })
+
+afterEach(() => {
+  jest.runOnlyPendingTimers()
+})

@@ -4,18 +4,17 @@ import {FEEDS_ROOT} from './FeedsReducer'
 import {PROJECTS_ROOT} from './ProjectsReducer'
 import {screen, waitFor} from '@testing-library/react'
 import {TrackingPage} from './TrackingPage'
-import userEvent from '@testing-library/user-event'
 import {SELECTED_ROOT} from './SelectedReducer'
 import {getRefreshTime, SETTINGS_ROOT} from '../SettingsReducer'
 
-it('should allow changing the poll time', () => {
+it('should allow changing the poll time', async () => {
   const state = {
     [SETTINGS_ROOT]: {
       refreshTime: 10
     }
   }
-  const {store} = render(<TrackingPage/>, {state})
-  userEvent.selectOptions(screen.getByLabelText('Poll for feed changes every'), '600')
+  const {store, user} = render(<TrackingPage/>, {state})
+  await user.selectOptions(screen.getByLabelText('Poll for feed changes every'), '600')
   expect(getRefreshTime(store.getState())).toEqual(600)
 })
 
@@ -34,8 +33,8 @@ it('should render added trays', () => {
 })
 
 it('should allow trays to be added', async () => {
-  render(<TrackingPage/>)
-  userEvent.click(screen.getByRole('button', {name: 'Add feed'}))
+  const {user} = render(<TrackingPage/>)
+  await user.click(screen.getByRole('button', {name: 'Add feed'}))
   await waitFor(() => {
     expect(window.location.pathname).toEqual('/add')
   })

@@ -1,5 +1,4 @@
 import React from 'react'
-import userEvent from '@testing-library/user-event'
 import {buildRemoteBackupLocation, buildState, render} from '../../../testHelpers'
 import {toJson} from '../../../common/Json'
 import {screen, waitFor, waitForElementToBeRemoved} from '@testing-library/react'
@@ -22,11 +21,11 @@ it('should import valid configuration', async () => {
     configuration: toJson(buildState())
   }))
 
-  render(<ImportRemote/>, {state, outletContext: remoteLocation})
+  const {user} = render(<ImportRemote/>, {state, outletContext: remoteLocation})
 
   await waitForElementToBeRemoved(screen.queryByTestId('loading'))
 
-  userEvent.click(screen.getByRole('button', {name: 'Import'}))
+  await user.click(screen.getByRole('button', {name: 'Import'}))
 
   await waitFor(() => {
     expect(screen.getByText('Configuration imported')).toBeInTheDocument()
@@ -52,13 +51,13 @@ it('should display an error if the configuration is semantically invalid JSON', 
     configuration: '{"trays":{"id": {}}}' // missing required attributes
   }))
 
-  render(<ImportRemote/>, {outletContext})
+  const {user} = render(<ImportRemote/>, {outletContext})
 
   await waitFor(() => {
     expect(screen.getByLabelText('Configuration to import')).toBeInTheDocument()
   })
 
-  userEvent.click(screen.getByRole('button', {name: 'Import'}))
+  await user.click(screen.getByRole('button', {name: 'Import'}))
 
   await waitFor(() => {
     expect(screen.getByText('Invalid value undefined supplied to /trays/id/trayId expected string')).toBeInTheDocument()
@@ -84,13 +83,13 @@ it('should be able to cancel back to settings', async () => {
     configuration: toJson(buildState())
   }))
 
-  render(<ImportRemote/>, {outletContext})
+  const {user} = render(<ImportRemote/>, {outletContext})
 
   await waitFor(() => {
     expect(screen.getByLabelText('Configuration to import')).toBeInTheDocument()
   })
 
-  userEvent.click(screen.getByRole('button', {name: 'Cancel'}))
+  await user.click(screen.getByRole('button', {name: 'Cancel'}))
 
   await waitFor(() => {
     expect(window.location.pathname).toEqual('/settings/backup')
@@ -101,11 +100,11 @@ it('should be able to cancel back to settings if configuration can not be fetche
   const outletContext = buildRemoteBackupLocation()
   jest.spyOn(Gateway, 'send').mockRejectedValue(new Error('some-error'))
 
-  render(<ImportRemote/>, {outletContext})
+  const {user} = render(<ImportRemote/>, {outletContext})
 
   await waitForElementToBeRemoved(screen.queryByTestId('loading'))
 
-  userEvent.click(screen.getByRole('button', {name: 'Cancel'}))
+  await user.click(screen.getByRole('button', {name: 'Cancel'}))
 
   await waitFor(() => {
     expect(window.location.pathname).toEqual('/settings/backup')
