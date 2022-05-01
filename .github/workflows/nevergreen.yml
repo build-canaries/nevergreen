@@ -39,7 +39,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
-          node-version: 17.2.0
+          node-version: 18.0.0
 
       - name: node - dependencies
         run: npm ci
