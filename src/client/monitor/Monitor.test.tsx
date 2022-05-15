@@ -2,7 +2,7 @@ import React from 'react'
 import {screen, waitFor} from '@testing-library/react'
 import noop from 'lodash/noop'
 import {Monitor} from './Monitor'
-import {buildFeed, buildProject, render} from '../testHelpers'
+import {buildFeed, buildProject, render, waitForLoadingToFinish} from '../testHelpers'
 import {FEEDS_ROOT} from '../settings/tracking/FeedsReducer'
 import {SUCCESS_ROOT} from '../settings/success/SuccessReducer'
 import * as ProjectsGateway from '../gateways/ProjectsGateway'
@@ -164,6 +164,7 @@ describe('audio notifications', () => {
 
     render(<Monitor/>, {state, outletContext})
 
+    await waitForLoadingToFinish()
     await waitFor(() => {
       // eslint-disable-next-line @typescript-eslint/unbound-method
       expect(window.HTMLMediaElement.prototype.play).not.toHaveBeenCalled()
@@ -187,6 +188,7 @@ describe('audio notifications', () => {
 
     render(<Monitor/>, {state, outletContext})
 
+    await waitForLoadingToFinish()
     await waitFor(() => {
       // eslint-disable-next-line @typescript-eslint/unbound-method
       expect(window.HTMLMediaElement.prototype.play).not.toHaveBeenCalled()
@@ -211,6 +213,7 @@ describe('audio notifications', () => {
 
     render(<Monitor/>, {state, outletContext})
 
+    await waitForLoadingToFinish()
     await waitFor(() => {
       // eslint-disable-next-line @typescript-eslint/unbound-method
       expect(window.HTMLMediaElement.prototype.play).not.toHaveBeenCalled()

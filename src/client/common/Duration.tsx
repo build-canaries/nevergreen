@@ -14,6 +14,7 @@ export function Duration({timestamp, prefix, suffix}: DurationProps): ReactEleme
     () => formatAsDuration(timestamp),
     {
       initialData: formatAsDuration(timestamp),
+      staleTime: 59 * 1000,
       refetchInterval: 60 * 1000,
       refetchIntervalInBackground: true
     })

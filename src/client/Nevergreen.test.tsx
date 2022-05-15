@@ -1,7 +1,7 @@
 import React from 'react'
 import {left} from 'fp-ts/Either'
 import {Nevergreen} from './Nevergreen'
-import {render} from './testHelpers'
+import {render, waitForLoadingToFinish} from './testHelpers'
 import {screen} from '@testing-library/react'
 import * as LocalConfiguration from './configuration/LocalRepository'
 import * as Configuration from './configuration/Configuration'
@@ -10,7 +10,6 @@ import * as Gateway from './gateways/Gateway'
 import {fakeRequest} from './gateways/Gateway'
 import * as HideMenusHook from './HideMenusHook'
 import {SETTINGS_ROOT} from './settings/SettingsReducer'
-import {waitForLoadingToFinish} from './common/Loading.test'
 
 beforeEach(() => {
   jest.spyOn(LocalConfiguration, 'init').mockResolvedValue()

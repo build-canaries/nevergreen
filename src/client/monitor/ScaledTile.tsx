@@ -19,7 +19,7 @@ export function ScaledTile({header, footer, children, className, sentences}: Til
   const smallClass = {[styles.small]: small}
 
   // this can't be done in CSS as media queries only work for the window size not element size
-  const checkSize = useCallback(({height}) => {
+  const checkSize = useCallback(({height}: DOMRectReadOnly) => {
     setSmall(height <= 90) // px
   }, [])
 

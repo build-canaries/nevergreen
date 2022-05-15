@@ -41,13 +41,18 @@ export function Monitor(): ReactElement {
     }
   }, [toggleMenusHidden])
 
+  const feedsAdded = !isEmpty(feeds)
+
   const {isLoading} = useQuery('monitor', async ({signal}) => {
     return await send(interesting(feeds, knownProjects, selected, prognosis, sort), signal)
   }, {
+    enabled: feedsAdded,
     refetchInterval: refreshTime * 1000,
     refetchIntervalInBackground: true,
     onSuccess: ((response) => {
-      setProjects((previouslyFetchedProjects) => enrichProjects(response, previouslyFetchedProjects))
+      setProjects((previouslyFetchedProjects) => {
+        return enrichProjects(response, previouslyFetchedProjects)
+      })
     }),
     onError: (e) => {
       setProjects([toProjectError(e)])
@@ -63,7 +68,6 @@ export function Monitor(): ReactElement {
     }
   })
 
-  const feedsAdded = !isEmpty(feeds)
   const success = isEmpty(projects)
 
   const monitorClassNames = cn(styles.monitor, {

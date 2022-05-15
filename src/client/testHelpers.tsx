@@ -10,7 +10,13 @@ import {Prognosis, Project} from './domain/Project'
 import {createFeed, Feed} from './domain/Feed'
 import {CombinedState, combineReducers, Middleware, Reducer} from 'redux'
 import {RecursivePartial} from './common/Types'
-import {render as testRender, RenderResult} from '@testing-library/react'
+import {
+  render as testRender,
+  RenderOptions,
+  RenderResult,
+  screen,
+  waitForElementToBeRemoved
+} from '@testing-library/react'
 import {Provider} from 'react-redux'
 import {AnyAction, configureStore, EnhancedStore} from '@reduxjs/toolkit'
 import {BrowserRouter, Outlet} from 'react-router-dom'
@@ -22,16 +28,17 @@ import parseISO from 'date-fns/parseISO'
 import {BACKUP_REMOTE_LOCATIONS_ROOT, RemoteLocation} from './settings/backup/RemoteLocationsReducer'
 import {RemoteLocationOptions} from './settings/backup/RemoteLocationOptions'
 import {Route, Routes} from 'react-router'
-import {QueryClient, QueryClientProvider} from 'react-query'
+import {QueryClientProvider} from 'react-query'
 import userEvent from '@testing-library/user-event'
 import {UserEvent} from '@testing-library/user-event/dist/types/setup'
+import {queryClient} from './queryClient'
 
 interface ExtendedRenderResult extends RenderResult {
   readonly store: EnhancedStore<State, AnyAction, ReadonlyArray<Middleware<unknown, State>>>;
   readonly user: UserEvent;
 }
 
-interface RenderOptions {
+interface ExtendedRenderOptions extends RenderOptions {
   readonly mountPath?: string;
   readonly currentLocation?: string;
   readonly state?: RecursivePartial<State>;
@@ -71,29 +78,21 @@ export function setupReactModal(): void {
   Modal.setAppElement('#app-element')
 }
 
-export function render(component: ReactNode, options: RenderOptions = {}): ExtendedRenderResult {
+export function render(component: ReactNode, options: ExtendedRenderOptions = {}): ExtendedRenderResult {
   const mergedOptions = {
     mountPath: '/*',
     currentLocation: '/',
     state: {},
     ...options
   }
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        cacheTime: 0,
-        staleTime: 0,
-        refetchOnWindowFocus: false,
-        retry: false
-      }
-    }
-  })
   const store = configureStore({reducer, preloadedState: buildState(mergedOptions.state)})
 
   window.history.pushState({}, '', mergedOptions.currentLocation)
 
   const user = userEvent.setup({
-    advanceTimers: (delay) => jest.advanceTimersByTime(delay)
+    advanceTimers: (delay) => {
+      jest.advanceTimersByTime(delay)
+    }
   })
 
   const wrapWithStoreAndRouter = (c: ReactNode) => (
@@ -111,7 +110,7 @@ export function render(component: ReactNode, options: RenderOptions = {}): Exten
     </QueryClientProvider>
   )
 
-  const view = testRender(wrapWithStoreAndRouter(component))
+  const view = testRender(wrapWithStoreAndRouter(component), options)
 
   return {
     ...view,
@@ -194,5 +193,10 @@ export function testReducer(reducer: Partial<Reducer<State>>): Reducer<CombinedS
 /* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-return */
 
 export function setSystemTime(timestamp: string): void {
+  jest.useFakeTimers()
   jest.setSystemTime(parseISO(timestamp))
+}
+
+export function waitForLoadingToFinish() {
+  return waitForElementToBeRemoved(screen.queryByTestId('loading'))
 }

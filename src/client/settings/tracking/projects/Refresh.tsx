@@ -19,7 +19,7 @@ export function Refresh({timestamp, refreshTray, loaded}: RefreshProps): ReactEl
                      disabled={!loaded}>
         Refresh
       </PrimaryButton>
-      <div className={styles.lastFetch} data-locator='refresh-time'>
+      <div className={styles.lastFetch}>
         {
           timestamp && <Duration prefix='projects last refreshed'
                                  suffix='ago'

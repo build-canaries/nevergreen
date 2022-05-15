@@ -24,12 +24,13 @@ export function NotificationsSystem(): ReactElement {
       const result = await requestPermission()
       if (permissionGranted(result)) {
         setPermissionDenied(false)
+        setRequestingPermission(false)
         dispatch(setShowSystemNotifications(true))
         await sendSystemNotification(NOTIFICATIONS_ENABLED_NOTIFICATION)
       } else {
         setPermissionDenied(true)
+        setRequestingPermission(false)
       }
-      setRequestingPermission(false)
     } else {
       dispatch(setShowSystemNotifications(false))
     }

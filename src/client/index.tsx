@@ -1,7 +1,7 @@
 import 'core-js/stable'
 import 'regenerator-runtime/runtime'
-import React from 'react'
-import ReactDOM from 'react-dom'
+import React, {StrictMode} from 'react'
+import {createRoot} from 'react-dom/client'
 import {Provider} from 'react-redux'
 import {BrowserRouter} from 'react-router-dom'
 import {reducer, State} from './Reducer'
@@ -10,8 +10,9 @@ import Modal from 'react-modal'
 import {configureStore} from '@reduxjs/toolkit'
 import {save} from './configuration/SaveListener'
 import {backup} from './settings/backup/AutomaticBackupListener'
-import {QueryClient, QueryClientProvider} from 'react-query'
+import {QueryClientProvider} from 'react-query'
 import {AppRoutes} from './AppRoutes'
+import {queryClient} from './queryClient'
 
 const store = configureStore({reducer})
 let previousState: State
@@ -23,21 +24,13 @@ store.subscribe(() => {
   previousState = currentState
 })
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      cacheTime: 0,
-      staleTime: 0,
-      refetchOnWindowFocus: false,
-      retry: false
-    }
-  }
-})
-
 Modal.setAppElement('#root')
 
-ReactDOM.render(
-  <UnhandledError>
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+const root = createRoot(document.getElementById('root')!)
+
+root.render(<UnhandledError>
+  <StrictMode>
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
         <BrowserRouter>
@@ -45,5 +38,5 @@ ReactDOM.render(
         </BrowserRouter>
       </Provider>
     </QueryClientProvider>
-  </UnhandledError>,
-  document.getElementById('root'))
+  </StrictMode>
+</UnhandledError>)

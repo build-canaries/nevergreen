@@ -4,7 +4,7 @@ import {screen, waitFor} from '@testing-library/react'
 import {TestConnection} from './TestConnection'
 import {AuthTypes} from '../../domain/Feed'
 import * as ProjectsGateway from '../../gateways/ProjectsGateway'
-import {fakeRequest} from '../../gateways/Gateway'
+import * as Gateway from '../../gateways/Gateway'
 
 const details = {
   url: 'http://some-url',
@@ -15,13 +15,13 @@ const details = {
 }
 
 it('should update the button text while loading', async () => {
-  jest.spyOn(ProjectsGateway, 'testFeedConnection').mockResolvedValue(fakeRequest(undefined))
+  const promise = new Promise((resolve) => setTimeout(resolve, 1))
+  jest.spyOn(Gateway, 'send').mockReturnValue(promise)
   const {user} = render(<TestConnection details={details}/>)
-  const click = user.click(screen.getByRole('button', {name: 'Check connection'}))
+  await user.click(screen.getByRole('button', {name: 'Check connection'}))
   await waitFor(() => {
     expect(screen.getByText('Checking connection...')).toBeInTheDocument()
   })
-  await click // wait for effects of the click otherwise it causes the next test to fail
 })
 
 it('should display messages about the connection', async () => {
@@ -29,7 +29,7 @@ it('should display messages about the connection', async () => {
 
   const {user} = render(<TestConnection details={details}/>)
 
-  testFeedConnectionSpy.mockResolvedValueOnce(fakeRequest(undefined))
+  testFeedConnectionSpy.mockResolvedValueOnce(Gateway.fakeRequest(undefined))
   await user.click(screen.getByRole('button', {name: 'Check connection'}))
   await waitFor(() => {
     expect(screen.getByText('Connected successfully')).toBeInTheDocument()

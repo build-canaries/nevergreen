@@ -50,7 +50,12 @@ export function Form<Fields extends string>({
   const {refetch, isFetching, isError, isSuccess, data, error} = useQuery('form', async ({signal}) => {
     return onSuccess(signal)
   }, {
-    enabled: false
+    enabled: false,
+    onSuccess: (res) => {
+      if (res && res.navigateTo) {
+        navigate(res.navigateTo)
+      }
+    }
   })
 
   useEffect(() => {
@@ -58,12 +63,6 @@ export function Form<Fields extends string>({
       setValidationErrors([])
     }
   }, [clearErrors])
-
-  useEffect(() => {
-    if (data && data.navigateTo) {
-      navigate(data.navigateTo)
-    }
-  }, [data, navigate])
 
   const handleSubmit = (evt: FormEvent) => {
     evt.preventDefault()
