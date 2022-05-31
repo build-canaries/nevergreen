@@ -3,7 +3,6 @@ import {Action} from 'redux'
 import {Configuration} from '../../configuration/Configuration'
 import {RemoteLocation} from './RemoteLocationsReducer'
 import {RemoteLocationOptions} from './RemoteLocationOptions'
-import {createId} from '../../domain/Feed'
 import {now} from '../../common/DateTime'
 
 export interface ActionConfigurationImported extends Action<Actions.CONFIGURATION_IMPORTED> {
@@ -39,12 +38,12 @@ export function configurationImported(configuration: Configuration): ActionConfi
 }
 
 
-export function addBackupCustomServer(url: string): ActionAddBackup {
+export function addBackupCustomServer(internalId: string, url: string): ActionAddBackup {
   return {
     type: Actions.ADD_BACKUP,
     data: {
       where: RemoteLocationOptions.custom,
-      internalId: createId(),
+      internalId,
       url,
       automaticallyExport: false,
       exportTimestamp: '',
@@ -56,12 +55,12 @@ export function addBackupCustomServer(url: string): ActionAddBackup {
   }
 }
 
-export function addBackupGitHubLab(where: RemoteLocationOptions.gitHub | RemoteLocationOptions.gitLab, externalId: string, url: string, description: string, encryptedAccessToken: string): ActionAddBackup {
+export function addBackupGitHubLab(internalId: string, where: RemoteLocationOptions.gitHub | RemoteLocationOptions.gitLab, externalId: string, url: string, description: string, encryptedAccessToken: string): ActionAddBackup {
   return {
     type: Actions.ADD_BACKUP,
     data: {
       where,
-      internalId: createId(),
+      internalId,
       url,
       description,
       encryptedAccessToken,

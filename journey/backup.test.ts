@@ -31,7 +31,9 @@ describe('Backups', () => {
     cy.findByText('Custom server').should('exist')
     cy.findByText('http://test').should('exist')
 
-    cy.findByRole('button', {name: 'Remove Remote backup 1'}).click()
+    cy.findByRole('link', {name: 'Backup'}).click()
+
+    cy.findByRole('button', {name: 'Remove Remote location 1'}).click()
 
     cy.findByText('Custom server').should('not.exist')
   })

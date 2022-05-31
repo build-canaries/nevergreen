@@ -14,6 +14,8 @@ import {firstError, FormErrors} from '../../common/forms/Validation'
 import {Form} from '../../common/forms/Form'
 import {Page} from '../../common/Page'
 import {BackupLogo} from './BackupLogo'
+import {ROUTE_BACKUP, ROUTE_BACKUP_EXPORT_DETAILS} from '../../AppRoutes'
+import {createId} from '../../domain/Feed'
 
 type Fields = 'url' | 'accessToken'
 
@@ -22,7 +24,7 @@ export function AddBackup(): ReactElement {
 
   const [where, setWhere] = useState(RemoteLocationOptions.custom)
   const [url, setUrl] = useState('')
-  const [id, setId] = useState('')
+  const [externalId, setExternalId] = useState('')
   const [description, setDescription] = useState('Nevergreen configuration backup')
   const [accessToken, setAccessToken] = useState('')
 
@@ -45,13 +47,20 @@ export function AddBackup(): ReactElement {
   }
 
   const onSuccess = async (signal: AbortSignal | undefined) => {
+    const internalId = createId()
     if (where === RemoteLocationOptions.gitLab || where === RemoteLocationOptions.gitHub) {
       const encryptedAccessToken = await send(encrypt(accessToken), signal)
-      dispatch(addBackupGitHubLab(where, id, url, description, encryptedAccessToken))
+      dispatch(addBackupGitHubLab(
+        internalId,
+        where,
+        externalId,
+        url,
+        description,
+        encryptedAccessToken))
     } else {
-      dispatch(addBackupCustomServer(url))
+      dispatch(addBackupCustomServer(internalId, url))
     }
-    return {navigateTo: '/settings/backup'}
+    return {navigateTo: ROUTE_BACKUP_EXPORT_DETAILS.replace(':internalId', internalId)}
   }
 
   const updateWhere = (updatedWhere: RemoteLocationOptions) => {
@@ -72,7 +81,7 @@ export function AddBackup(): ReactElement {
       <Form onValidate={onValidate}
             onSuccess={onSuccess}
             submitButtonText='Add location'
-            onCancel='/settings/backup'>
+            onCancel={ROUTE_BACKUP}>
         {(submitting, validationErrors, clearErrors) => {
           return (
             <>
@@ -103,9 +112,9 @@ export function AddBackup(): ReactElement {
               {!isCustomServer && (
                 <>
                   <Input className={styles.id}
-                         value={id}
+                         value={externalId}
                          onChange={({target}) => {
-                           setId(target.value)
+                           setExternalId(target.value)
                          }}
                          disabled={submitting}>
                     ID

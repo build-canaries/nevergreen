@@ -26,6 +26,7 @@ import {
   RemoteBackupGitLabHelp
 } from '../settings/backup/AddBackupHelp'
 import {KEYBOARD_SHORTCUT_KEYWORD, KeyboardShortcuts} from './KeyboardShortcuts'
+import {RemoteBackupDetailsPageHelp} from '../settings/backup/RemoteBackupDetailsPageHelp'
 
 interface HelpProps {
   readonly initiallyShow?: boolean;
@@ -78,6 +79,7 @@ export function Help({initiallyShow}: HelpProps): ReactElement {
         <DisplaySettingsHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <NotificationSettingsHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <BackupHelp searchQuery={searchQuery} helpLink={helpLink}/>
+        <RemoteBackupDetailsPageHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <AddBackupHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <ImportLocalHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <ImportRemoteHelp searchQuery={searchQuery} helpLink={helpLink}/>

@@ -1,9 +1,8 @@
 import React, {ReactElement} from 'react'
 import {useDispatch} from 'react-redux'
 import styles from './remote-backup-card.scss'
-import {Checkbox} from '../../common/forms/Checkbox'
 import {RemoteLocation as RemoteLocationType} from './RemoteLocationsReducer'
-import {removeBackup, setAutomaticExport} from './BackupActionCreators'
+import {removeBackup} from './BackupActionCreators'
 import {Card} from '../../common/card/Card'
 import {CardHeading} from '../../common/card/CardHeading'
 import {BackupLogo} from './BackupLogo'
@@ -13,6 +12,7 @@ import {VisuallyHidden} from '../../common/VisuallyHidden'
 import {LinkButton} from '../../common/LinkButton'
 import {CloudUpload} from '../../common/icons/CloudUpload'
 import {CloudDownload} from '../../common/icons/CloudDownload'
+import {Cog} from '../../common/icons/Cog'
 
 interface RemoteLocationProps {
   readonly location: RemoteLocationType;
@@ -22,7 +22,7 @@ interface RemoteLocationProps {
 export function RemoteBackupCard({location, index}: RemoteLocationProps): ReactElement {
   const dispatch = useDispatch()
 
-  const header = <CardHeading title={`Remote backup ${index}`}
+  const header = <CardHeading title={`Remote location ${index}`}
                               icon={<BackupLogo where={location.where}/>}
                               onRemove={() => dispatch(removeBackup(location.internalId))}/>
 
@@ -35,15 +35,16 @@ export function RemoteBackupCard({location, index}: RemoteLocationProps): ReactE
                   to={`${location.internalId}/export`}>
         Export<VisuallyHidden> remotely</VisuallyHidden>
       </LinkButton>
-      <LinkButton icon={<CloudDownload/>}
+      <LinkButton className={styles.importButton}
+                  icon={<CloudDownload/>}
                   to={`${location.internalId}/import`}>
         Import<VisuallyHidden> remote</VisuallyHidden>
       </LinkButton>
-      <Checkbox onToggle={(value) => dispatch(setAutomaticExport(location.internalId, value))}
-                checked={location.automaticallyExport}
-                className={styles.autoExport}>
-        Automatically export
-      </Checkbox>
+      <LinkButton className={styles.detailsButton}
+                  icon={<Cog/>}
+                  to={`${location.internalId}/details`}>
+        Details
+      </LinkButton>
     </Card>
   )
 }

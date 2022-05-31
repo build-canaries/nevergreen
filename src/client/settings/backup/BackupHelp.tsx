@@ -7,8 +7,7 @@ const keywords = [
   'backup',
   'export',
   'import',
-  'add remote location',
-  'automatically export'
+  'add remote location'
 ]
 
 export function BackupHelp({searchQuery}: HelpProps): ReactElement {
@@ -24,16 +23,14 @@ export function BackupHelp({searchQuery}: HelpProps): ReactElement {
       </HelpForm>
       <p>Added remote locations will appear and can be managed from this page.</p>
       <HelpForm>
+        <HelpInput name='Details'>
+          This will take you to the details page for the remote backup.
+        </HelpInput>
         <HelpInput name='Export'>
           This will take you to the export page where a manual export can be triggered.
         </HelpInput>
         <HelpInput name='Import'>
           This will take you to the import page where a manual import can be triggered.
-        </HelpInput>
-        <HelpInput name='Automatically export'>
-          While <em>enabled</em> configuration will automatically be exported to the given remote location when
-          it changes. Note, any errors that may occur while automatically exporting will be ignore (the error will
-          be output to the browsers console).
         </HelpInput>
         <HelpInput name='Remove'>
           This will permanently delete the remote location. Remote locations can be re-added at any time.

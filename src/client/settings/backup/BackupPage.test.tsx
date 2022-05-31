@@ -19,7 +19,7 @@ it('should be able to remove remote locations', async () => {
 
   expect(screen.getByText('http://example.com')).toBeInTheDocument()
 
-  await user.click(screen.getByRole('button', {name: 'Remove Remote backup 1'}))
+  await user.click(screen.getByRole('button', {name: 'Remove Remote location 1'}))
 
   await waitFor(() => {
     expect(screen.queryByText('http://example.com')).not.toBeInTheDocument()

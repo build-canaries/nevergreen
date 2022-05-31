@@ -6,6 +6,7 @@ import * as SecurityGateway from '../../gateways/SecurityGateway'
 import {fakeRequest} from '../../gateways/Gateway'
 import {AddBackup} from './AddBackup'
 import {getBackupLocations} from './RemoteLocationsReducer'
+import * as Feed from '../../domain/Feed'
 
 beforeEach(() => {
   jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValue(fakeRequest(''))
@@ -15,7 +16,7 @@ it('should not be able to add with a blank URL', async () => {
   const {user} = render(<AddBackup/>)
 
   await user.selectOptions(screen.getByLabelText('Where'), 'custom')
-  await user.click(screen.getByText('Add location'))
+  await user.click(screen.getByRole('button', {name: 'Add location'}))
 
   await waitFor(() => {
     expect(screen.getByText('Enter a URL')).toBeInTheDocument()
@@ -27,7 +28,7 @@ it('should not be able to add with a non http(s) URL', async () => {
 
   await user.selectOptions(screen.getByLabelText('Where'), 'custom')
   await user.type(screen.getByLabelText('URL'), 'file://example')
-  await user.click(screen.getByText('Add location'))
+  await user.click(screen.getByRole('button', {name: 'Add location'}))
 
   await waitFor(() => {
     expect(screen.getByText('Only http and https URLs are supported')).toBeInTheDocument()
@@ -35,6 +36,8 @@ it('should not be able to add with a non http(s) URL', async () => {
 })
 
 it('should be able to add a custom server', async () => {
+  jest.spyOn(Feed, 'createId').mockReturnValue('some-id')
+
   const {store, user} = render(<AddBackup/>)
 
   await user.selectOptions(screen.getByLabelText('Where'), 'custom')
@@ -47,10 +50,12 @@ it('should be able to add a custom server', async () => {
       url: 'http://example.com'
     })])
   })
-  expect(window.location.pathname).toEqual('/settings/backup')
+  expect(window.location.pathname).toMatch('/settings/backup/some-id/details')
 })
 
 it('should be able to add a GitHub gist', async () => {
+  jest.spyOn(Feed, 'createId').mockReturnValue('some-id')
+
   const {store, user} = render(<AddBackup/>)
 
   await user.selectOptions(screen.getByLabelText('Where'), 'github')
@@ -65,7 +70,7 @@ it('should be able to add a GitHub gist', async () => {
       where: 'github'
     })])
   })
-  expect(window.location.pathname).toEqual('/settings/backup')
+  expect(window.location.pathname).toEqual('/settings/backup/some-id/details')
 })
 
 it('should validate adding a GitHub gist and clear errors if "where" is changed', async () => {
@@ -73,7 +78,7 @@ it('should validate adding a GitHub gist and clear errors if "where" is changed'
 
   await user.selectOptions(screen.getByLabelText('Where'), 'github')
   await user.clear(screen.getByLabelText('URL'))
-  await user.click(screen.getByText('Add location'))
+  await user.click(screen.getByRole('button', {name: 'Add location'}))
 
   await waitFor(() => {
     expect(screen.getByText('Enter a URL')).toBeInTheDocument()
