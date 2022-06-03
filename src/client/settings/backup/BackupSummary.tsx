@@ -4,9 +4,9 @@ import {isCustomServer, isGitHub, isGitHubEnterprise, isGitLab} from './RemoteLo
 import {RemoteLocation as RemoteLocationType, RemoteLocation} from './RemoteLocationsReducer'
 import {Duration} from '../../common/Duration'
 import {URL} from '../../common/URL'
-import {SummaryValues} from '../../common/Summary'
+import {Summary, SummaryProps} from '../../common/Summary'
 
-function where(location: RemoteLocationType): string {
+export function where(location: RemoteLocationType): string {
   if (isCustomServer(location)) {
     return 'Custom server'
   }
@@ -49,21 +49,25 @@ function url(location: RemoteLocationType): ReactElement | null {
   return null
 }
 
-export function fullBackupSummary(location: RemoteLocation): SummaryValues[] {
-  return [
+interface BackupSummaryProps extends Omit<SummaryProps, 'values'> {
+  readonly location: RemoteLocation;
+}
+
+export function FullBackupSummary({location}: BackupSummaryProps): ReactElement {
+  return <Summary values={[
     {label: 'Where', value: where(location)},
     {label: 'URL', value: <URL url={location.url}/>},
     {label: 'ID', value: locationId(location)},
     {label: 'Description', value: description(location)},
     {label: 'Last export', value: timestamp(location.exportTimestamp)},
     {label: 'Last import', value: timestamp(location.importTimestamp)}
-  ]
+  ]}/>
 }
 
-export function backupSummary(location: RemoteLocation): SummaryValues[] {
-  return [
+export function BackupSummary({location}: BackupSummaryProps): ReactElement {
+  return <Summary values={[
     {label: 'Where', value: where(location)},
     {label: 'URL', value: url(location)},
     {label: 'Description', value: description(location)}
-  ]
+  ]}/>
 }

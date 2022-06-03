@@ -18,11 +18,10 @@ export function BackupPage(): ReactElement {
         Add remote location
       </AddButton>
       <ul className={styles.container}>
-        {Object.values(backupLocations).map((backupLocation, index) => {
+        {Object.values(backupLocations).map((backupLocation) => {
           return (
             <li key={backupLocation.internalId}>
-              <RemoteBackupCard location={backupLocation}
-                                index={index + 1}/>
+              <RemoteBackupCard location={backupLocation}/>
             </li>
           )
         })}

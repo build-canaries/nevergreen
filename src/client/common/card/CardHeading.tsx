@@ -5,7 +5,7 @@ import {Bin} from '../icons/Bin'
 
 interface CardHeadingProps {
   readonly icon?: ReactElement;
-  readonly title: string;
+  readonly title: ReactElement | string;
   readonly onRemove?: () => void;
 }
 

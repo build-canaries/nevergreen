@@ -33,7 +33,7 @@ describe('Backups', () => {
 
     cy.findByRole('link', {name: 'Backup'}).click()
 
-    cy.findByRole('button', {name: 'Remove Remote location 1'}).click()
+    cy.findByRole('button', {name: 'Remove Remote Custom server location'}).click()
 
     cy.findByText('Custom server').should('not.exist')
   })

@@ -6,8 +6,7 @@ import {removeBackup} from './BackupActionCreators'
 import {Card} from '../../common/card/Card'
 import {CardHeading} from '../../common/card/CardHeading'
 import {BackupLogo} from './BackupLogo'
-import {Summary} from '../../common/Summary'
-import {backupSummary} from './BackupSummary'
+import {BackupSummary, where} from './BackupSummary'
 import {VisuallyHidden} from '../../common/VisuallyHidden'
 import {LinkButton} from '../../common/LinkButton'
 import {CloudUpload} from '../../common/icons/CloudUpload'
@@ -16,34 +15,35 @@ import {Cog} from '../../common/icons/Cog'
 
 interface RemoteLocationProps {
   readonly location: RemoteLocationType;
-  readonly index: number;
 }
 
-export function RemoteBackupCard({location, index}: RemoteLocationProps): ReactElement {
+export function RemoteBackupCard({location}: RemoteLocationProps): ReactElement {
   const dispatch = useDispatch()
 
-  const header = <CardHeading title={`Remote location ${index}`}
+  const locationWhere = where(location)
+  const title = <>Remote<VisuallyHidden> {locationWhere}</VisuallyHidden> location</>
+  const header = <CardHeading title={title}
                               icon={<BackupLogo where={location.where}/>}
                               onRemove={() => dispatch(removeBackup(location.internalId))}/>
 
   return (
     <Card header={header}
           className={styles.card}>
-      <Summary values={backupSummary(location)}/>
+      <BackupSummary location={location}/>
       <LinkButton className={styles.exportButton}
                   icon={<CloudUpload/>}
                   to={`${location.internalId}/export`}>
-        Export<VisuallyHidden> remotely</VisuallyHidden>
+        Export<VisuallyHidden> remotely to {locationWhere}</VisuallyHidden>
       </LinkButton>
       <LinkButton className={styles.importButton}
                   icon={<CloudDownload/>}
                   to={`${location.internalId}/import`}>
-        Import<VisuallyHidden> remote</VisuallyHidden>
+        Import<VisuallyHidden> remote from {locationWhere}</VisuallyHidden>
       </LinkButton>
       <LinkButton className={styles.detailsButton}
                   icon={<Cog/>}
                   to={`${location.internalId}/details`}>
-        Details
+        Details<VisuallyHidden> of {locationWhere}</VisuallyHidden>
       </LinkButton>
     </Card>
   )

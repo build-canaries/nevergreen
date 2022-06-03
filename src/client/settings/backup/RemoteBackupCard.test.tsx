@@ -8,7 +8,7 @@ describe('custom server', () => {
 
   it('should display the URL', () => {
     const location = buildRemoteBackupLocation({where: RemoteLocationOptions.custom, url: 'http://some-custom-server'})
-    render(<RemoteBackupCard index={1} location={location}/>)
+    render(<RemoteBackupCard location={location}/>)
     expect(screen.getByText('http://some-custom-server')).toBeInTheDocument()
   })
 })
@@ -20,7 +20,7 @@ describe('GitHub gists', () => {
       where: RemoteLocationOptions.gitHub,
       description: 'some description'
     })
-    render(<RemoteBackupCard index={1} location={location}/>)
+    render(<RemoteBackupCard location={location}/>)
     expect(screen.getByText('some description')).toBeInTheDocument()
   })
 })
@@ -32,7 +32,7 @@ describe('GitLab snippets', () => {
       where: RemoteLocationOptions.gitLab,
       description: 'some description'
     })
-    render(<RemoteBackupCard index={1} location={location}/>)
+    render(<RemoteBackupCard location={location}/>)
     expect(screen.getByText('some description')).toBeInTheDocument()
   })
 })

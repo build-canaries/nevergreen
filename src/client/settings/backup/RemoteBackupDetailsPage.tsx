@@ -1,7 +1,6 @@
 import React, {ReactElement} from 'react'
 import {Page} from '../../common/Page'
-import {Summary} from '../../common/Summary'
-import {fullBackupSummary} from './BackupSummary'
+import {FullBackupSummary} from './BackupSummary'
 import {LinkButton} from '../../common/LinkButton'
 import {BackupLogo} from './BackupLogo'
 import {useRemoteLocationContext} from './RemoteLocationPage'
@@ -18,7 +17,7 @@ export function RemoteBackupDetailsPage(): ReactElement {
 
   return (
     <Page title='Remote location' icon={<BackupLogo where={location.where}/>}>
-      <Summary values={fullBackupSummary(location)}/>
+      <FullBackupSummary location={location}/>
       <Checkbox onToggle={(value) => dispatch(setAutomaticExport(location.internalId, value))}
                 checked={location.automaticallyExport}
                 className={styles.autoExport}>
