@@ -7,7 +7,6 @@ import {useNavigationShortcut} from '../NavigationShortcutsHook'
 import {CheckboxChecked} from './icons/CheckboxChecked'
 import {VisuallyHidden} from './VisuallyHidden'
 import {Cog} from './icons/Cog'
-import {ArrowLeft} from './icons/ArrowLeft'
 
 interface LinkButtonProps extends LinkProps {
   readonly to: string;
@@ -51,14 +50,6 @@ export function UpdateFeedDetailsButton({feedId, title}: { feedId: string, title
                 icon={<Cog/>}
                 to={`/settings/tracking/${feedId}/details`}>
       Update details{title && <VisuallyHidden> for {title}</VisuallyHidden>}
-    </LinkButton>
-  )
-}
-
-export function BackButton({children, ...props}: Omit<LinkButtonProps, 'to'>): ReactElement {
-  return (
-    <LinkButton {...props} to='..' icon={<ArrowLeft/>} replace>
-      {children}
     </LinkButton>
   )
 }

@@ -3,6 +3,8 @@ import {screen, waitFor} from '@testing-library/react'
 import {buildFeed, render} from '../../../testHelpers'
 import {FEEDS_ROOT, getFeed} from '../FeedsReducer'
 import {UpdateDetailsPage} from './UpdateDetailsPage'
+import {SELECTED_ROOT} from '../SelectedReducer'
+import {PROJECTS_ROOT} from '../ProjectsReducer'
 
 it('should be able to update details', async () => {
   const feed = buildFeed({
@@ -12,7 +14,9 @@ it('should be able to update details', async () => {
     includeNew: false
   })
   const state = {
-    [FEEDS_ROOT]: {trayId: feed}
+    [FEEDS_ROOT]: {trayId: feed},
+    [SELECTED_ROOT]: {trayId: []},
+    [PROJECTS_ROOT]: {trayId: []}
   }
 
   const {store, user} = render(<UpdateDetailsPage/>, {state, outletContext: feed})
@@ -37,7 +41,9 @@ it('should be able to generate a new random name', async () => {
     name: 'some-name'
   })
   const state = {
-    [FEEDS_ROOT]: {trayId: feed}
+    [FEEDS_ROOT]: {trayId: feed},
+    [SELECTED_ROOT]: {trayId: []},
+    [PROJECTS_ROOT]: {trayId: []}
   }
 
   const {store, user} = render(<UpdateDetailsPage/>, {state, outletContext: feed})
@@ -49,30 +55,5 @@ it('should be able to generate a new random name', async () => {
     expect(getFeed('trayId')(store.getState())).toEqual(expect.not.objectContaining({
       name: 'some-name'
     }))
-  })
-})
-
-it('should be able to go back to the tracking page', async () => {
-  const feed = buildFeed({
-    trayId: 'trayId',
-    name: 'some-name',
-    serverType: 'go',
-    includeNew: false
-  })
-  const state = {
-    [FEEDS_ROOT]: {trayId: feed}
-  }
-
-  const {user} = render(<UpdateDetailsPage/>, {
-    state,
-    mountPath: 'details',
-    currentLocation: 'details',
-    outletContext: feed
-  })
-
-  await user.click(screen.getByRole('button', {name: 'Back to tracking'}))
-
-  await waitFor(() => {
-    expect(window.location.pathname).toEqual('/')
   })
 })

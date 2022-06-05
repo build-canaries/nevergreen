@@ -1,6 +1,10 @@
 @import '../../../common/variables';
 @import '../../../common/layout';
 
+.section {
+  margin-top: $margin-top;
+}
+
 .feedSettingsName,
 .serverType {
   @include fixed-width(26em);
