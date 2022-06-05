@@ -32,12 +32,14 @@ import {List} from '../common/icons/List'
 import {Xml} from '../common/icons/Xml'
 import {Image} from '../common/icons/Image'
 import {Info} from '../common/icons/Info'
+import {ArrowUp} from '../common/icons/ArrowUp'
 
 export function Icons(): ReactElement {
   return (
     <StyleGuideSection title='Icons (in a Responsive Grid)'>
       <div className={styles.icons}>
         <span><ArrowLeft/>arrow left</span>
+        <span><ArrowUp/>arrow up</span>
         <span><Bell/>bell</span>
         <span><Bin/>bin</span>
         <span><CheckboxChecked/>checkbox checked</span>
