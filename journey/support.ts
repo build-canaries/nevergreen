@@ -9,7 +9,7 @@ Cypress.Keyboard.defaults({
 })
 
 Cypress.Commands.add('locate', (thing: string) => {
-  return cy.get(`[data-locator=${thing}]`)
+  cy.get(`[data-locator=${thing}]`)
 })
 
 Cypress.on('window:before:load', (win) => {

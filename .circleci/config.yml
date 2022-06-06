@@ -164,13 +164,13 @@ jobs:
                   - ./package-lock.json
                   - ./.nvmrc
                   - ./project.clj
-                  - ./cypress.json
+                  - ./cypress.config.ts
                   - ./journey/*
                   - ./tsconfig.json
 
   journey-tests:
     docker:
-      - image: cypress/base:16.5.0
+      - image: cypress/base:16.14.2
 
     working_directory: ~/nevergreen
 

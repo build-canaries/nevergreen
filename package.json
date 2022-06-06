@@ -31,7 +31,7 @@
     "watch:test": "jest --watch",
     "watch:lint": "watch 'npm run lint' src/client",
     "check-types": "tsc",
-    "check-updates": "ncu"
+    "check-updates": "npm-check-updates"
   },
   "dependencies": {
     "@juggle/resize-observer": "3.3.1",
@@ -93,7 +93,7 @@
     "copy-webpack-plugin": "11.0.0",
     "css-loader": "6.7.1",
     "css-minimizer-webpack-plugin": "4.0.0",
-    "cypress": "9.6.1",
+    "cypress": "10.0.2",
     "eslint": "8.17.0",
     "eslint-plugin-react": "7.30.0",
     "eslint-plugin-react-hooks": "4.5.0",
