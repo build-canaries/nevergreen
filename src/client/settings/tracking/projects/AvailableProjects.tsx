@@ -6,20 +6,17 @@ import {Refresh} from './Refresh'
 import {errorMessage, isBlank, notEmpty} from '../../../common/Utils'
 import styles from './available-projects.scss'
 import {SecondaryButton} from '../../../common/forms/Button'
-import {enrichProjects, isError as isProjectError} from '../../../domain/Project'
 import {getProjectsForFeed} from '../ProjectsReducer'
 import {getSelectedProjectsForFeed} from '../SelectedReducer'
 import {useDispatch, useSelector} from 'react-redux'
-import {projectSelected, projectsFetched} from '../TrackingActionCreators'
-import {fetchAll} from '../../../gateways/ProjectsGateway'
-import {send} from '../../../gateways/Gateway'
+import {projectSelected} from '../TrackingActionCreators'
 import {Loading} from '../../../common/Loading'
 import {Feed} from '../../../domain/Feed'
 import {useLocation} from 'react-router-dom'
 import {matchSorter} from 'match-sorter'
 import {CheckboxChecked} from '../../../common/icons/CheckboxChecked'
 import {CheckboxUnchecked} from '../../../common/icons/CheckboxUnchecked'
-import {useQuery} from 'react-query'
+import {useProjects} from './ProjectsHook'
 
 interface AvailableProjectsProps {
   readonly feed: Feed;
@@ -33,20 +30,7 @@ export function AvailableProjects({feed}: AvailableProjectsProps): ReactElement 
 
   const [search, setSearch] = useState<string>('')
 
-  const {isFetching, isError, error, refetch} = useQuery(['available-projects', feed.trayId], async ({signal}) => {
-    const res = await send(fetchAll([feed], projects), signal)
-    const fetchedProjects = enrichProjects(res, [])
-    if (fetchedProjects.some(isProjectError)) {
-      const errorMessages = fetchedProjects.map((projectError) => projectError.description)
-      throw new Error(errorMessages.join(', '))
-    }
-    return fetchedProjects
-  }, {
-    enabled: hash === '#refresh',
-    onSuccess: (res) => {
-      dispatch(projectsFetched(feed.trayId, res, feed.includeNew))
-    }
-  })
+  const {isFetching, isError, error, refetch} = useProjects(feed, hash === '#refresh')
 
   const filteredProjects = useMemo(() => {
     if (!isBlank(search)) {
@@ -88,7 +72,7 @@ export function AvailableProjects({feed}: AvailableProjectsProps): ReactElement 
         <div className={styles.projectFilter}>
           <Input className={styles.projectFilterInput}
                  onChange={({target}) => setSearch(target.value)}
-                 type='search'
+                 type="search"
                  disabled={controlsDisabled}>
             <span className={styles.search}>Search</span>
           </Input>
@@ -99,9 +83,9 @@ export function AvailableProjects({feed}: AvailableProjectsProps): ReactElement 
 
   const buildItems = (
     <ol className={styles.buildItems}
-        aria-live='polite'
-        aria-relevant='additions'
-        data-locator='available-projects-list'>
+        aria-live="polite"
+        aria-relevant="additions"
+        data-locator="available-projects-list">
       {
         filteredProjects.map((project) => {
           const isSelected = selected.includes(project.projectId)
@@ -116,16 +100,16 @@ export function AvailableProjects({feed}: AvailableProjectsProps): ReactElement 
   )
 
   const noProjectsWarning = (
-    <WarningMessages messages='No projects fetched, please refresh'/>
+    <WarningMessages messages="No projects fetched, please refresh"/>
   )
 
   const noProjectsMatchSearchWarning = (
-    <WarningMessages messages='No matching projects, please update your search'/>
+    <WarningMessages messages="No matching projects, please update your search"/>
   )
 
   return (
     <section className={styles.availableProjects}
-             data-locator='available-projects'>
+             data-locator="available-projects">
       <Refresh timestamp={feed.timestamp}
                refreshTray={() => void refetch()}
                loaded={!isFetching}/>

@@ -1,4 +1,4 @@
-import React, {ReactElement, useEffect, useRef, useState} from 'react'
+import React, {ReactElement, useEffect, useRef} from 'react'
 import cn from 'classnames'
 import {InterestingProjects} from './InterestingProjects'
 import {Success} from './Success'
@@ -8,31 +8,18 @@ import styles from './monitor.scss'
 import isEmpty from 'lodash/isEmpty'
 import {Title} from '../common/Title'
 import {useSelector} from 'react-redux'
-import {getRefreshTime, getShowPrognosis, getSort} from '../settings/SettingsReducer'
 import {getFeeds} from '../settings/tracking/FeedsReducer'
-import {getSelectedProjects} from '../settings/tracking/SelectedReducer'
-import {getKnownProjects} from '../settings/tracking/ProjectsReducer'
-import {interesting} from '../gateways/ProjectsGateway'
-import {send} from '../gateways/Gateway'
-import {enrichProjects, Projects, toProjectError} from '../domain/Project'
 import {useAudioNotifications} from './notifications/AudioNotificationsHook'
 import {useSystemNotifications} from './notifications/SystemNotificationsHook'
 import {useShortcut} from '../common/Keyboard'
 import screenfull from 'screenfull'
-import {useQuery} from 'react-query'
 import {useNevergreenContext} from '../Nevergreen'
+import {useInterestingProjects} from './InterestingProjectsHook'
 
 export function Monitor(): ReactElement {
   const {menusHidden, toggleMenusHidden} = useNevergreenContext()
-  const refreshTime = useSelector(getRefreshTime)
   const feeds = useSelector(getFeeds)
-  const selected = useSelector(getSelectedProjects)
-  const knownProjects = useSelector(getKnownProjects)
-  const prognosis = useSelector(getShowPrognosis)
-  const sort = useSelector(getSort)
   const ref = useRef<HTMLDivElement>(null)
-
-  const [projects, setProjects] = useState<Projects>([])
 
   useEffect(() => {
     toggleMenusHidden(true)
@@ -43,21 +30,7 @@ export function Monitor(): ReactElement {
 
   const feedsAdded = !isEmpty(feeds)
 
-  const {isLoading} = useQuery('monitor', async ({signal}) => {
-    return await send(interesting(feeds, knownProjects, selected, prognosis, sort), signal)
-  }, {
-    enabled: feedsAdded,
-    refetchInterval: refreshTime * 1000,
-    refetchIntervalInBackground: true,
-    onSuccess: ((response) => {
-      setProjects((previouslyFetchedProjects) => {
-        return enrichProjects(response, previouslyFetchedProjects)
-      })
-    }),
-    onError: (e) => {
-      setProjects([toProjectError(e)])
-    }
-  })
+  const {loaded, projects} = useInterestingProjects()
 
   useAudioNotifications(projects)
   useSystemNotifications(projects)
@@ -78,10 +51,10 @@ export function Monitor(): ReactElement {
     <div className={monitorClassNames} ref={ref}>
       <Title>Monitor</Title>
       {!feedsAdded && (
-        <SuccessMessage message='Add a feed via the tracking page to start monitoring'/>
+        <SuccessMessage message="Add a feed via the tracking page to start monitoring"/>
       )}
       {feedsAdded && (
-        <Loading dark loaded={!isLoading}>
+        <Loading dark loaded={loaded}>
           {success && <Success/>}
           {!success && <InterestingProjects projects={projects}/>}
         </Loading>

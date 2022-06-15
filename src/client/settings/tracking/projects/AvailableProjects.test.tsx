@@ -6,10 +6,10 @@ import {AvailableProjects} from './AvailableProjects'
 import {FEEDS_ROOT} from '../FeedsReducer'
 import {PROJECTS_ROOT} from '../ProjectsReducer'
 import {SELECTED_ROOT} from '../SelectedReducer'
-import * as ProjectsGateway from '../../../gateways/ProjectsGateway'
+import * as Gateway from '../../../gateways/Gateway'
 
 beforeEach(() => {
-  jest.spyOn(ProjectsGateway, 'fetchAll').mockResolvedValue(fakeRequest([]))
+  jest.spyOn(Gateway, 'post').mockResolvedValue(fakeRequest([]))
 })
 
 it('should be able to select projects', async () => {
@@ -37,7 +37,7 @@ it('should be able to select projects', async () => {
 })
 
 it('should correctly show and remove errors returned while refreshing', async () => {
-  jest.spyOn(ProjectsGateway, 'fetchAll')
+  jest.spyOn(Gateway, 'post')
     .mockResolvedValueOnce(fakeRequest([
       buildProjectError({description: 'some-error'})
     ]))
@@ -114,7 +114,7 @@ it('should show a warning if no projects match the search', async () => {
 })
 
 it('should refresh automatically if the url contains #refresh', () => {
-  jest.spyOn(ProjectsGateway, 'fetchAll').mockResolvedValue(fakeRequest([]))
+  jest.spyOn(Gateway, 'post').mockResolvedValue(fakeRequest([]))
   const feed = buildFeed({trayId: 'trayId'})
   const project = buildProject({trayId: 'trayId', projectId: 'projectId', description: 'some project'})
   const state = {
@@ -131,7 +131,7 @@ it('should refresh automatically if the url contains #refresh', () => {
 
   render(<AvailableProjects feed={feed}/>, {state, currentLocation: '/#refresh'})
 
-  expect(ProjectsGateway.fetchAll).toHaveBeenCalled()
+  expect(Gateway.post).toHaveBeenCalled()
 })
 
 describe('accessibility', () => {

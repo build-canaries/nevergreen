@@ -5,7 +5,6 @@ import {Monitor} from './Monitor'
 import {buildFeed, buildProject, render, waitForLoadingToFinish} from '../testHelpers'
 import {FEEDS_ROOT} from '../settings/tracking/FeedsReducer'
 import {SUCCESS_ROOT} from '../settings/success/SuccessReducer'
-import * as ProjectsGateway from '../gateways/ProjectsGateway'
 import * as Gateway from '../gateways/Gateway'
 import {fakeRequest} from '../gateways/Gateway'
 import {SETTINGS_ROOT} from '../settings/SettingsReducer'
@@ -64,7 +63,7 @@ it('should show a loading screen when first switching to the page', () => {
 })
 
 it('should show a success message if there are no projects', async () => {
-  jest.spyOn(ProjectsGateway, 'interesting').mockReturnValue(fakeRequest([]))
+  jest.spyOn(Gateway, 'post').mockReturnValue(fakeRequest([]))
   const state = {
     [FEEDS_ROOT]: {
       [trayId]: buildFeed({trayId})
@@ -79,7 +78,7 @@ it('should show a success message if there are no projects', async () => {
 })
 
 it('should not try updating after the user has navigated away from the page', () => {
-  jest.spyOn(ProjectsGateway, 'interesting').mockReturnValue(fakeRequest([]))
+  jest.spyOn(Gateway, 'post').mockReturnValue(fakeRequest([]))
   jest.spyOn(Gateway, 'send').mockRejectedValue(new Error('Aborted'))
   const state = {
     [FEEDS_ROOT]: {
@@ -120,7 +119,7 @@ describe('audio notifications', () => {
         return false
       }
     })
-    jest.spyOn(ProjectsGateway, 'interesting').mockReturnValue(fakeRequest([
+    jest.spyOn(Gateway, 'post').mockReturnValue(fakeRequest([
       buildProject({trayId, prognosis: Prognosis.sick})
     ]))
     const state = {
@@ -149,7 +148,7 @@ describe('audio notifications', () => {
 
   it('should not play when off even if any project is sick', async () => {
     jest.spyOn(window.HTMLMediaElement.prototype, 'play').mockResolvedValue()
-    jest.spyOn(ProjectsGateway, 'interesting').mockReturnValue(fakeRequest([
+    jest.spyOn(Gateway, 'post').mockReturnValue(fakeRequest([
       buildProject({trayId, prognosis: Prognosis.sick})
     ]))
     const state = {
@@ -173,7 +172,7 @@ describe('audio notifications', () => {
 
   it('should not play when enabled but no projects are sick', async () => {
     jest.spyOn(window.HTMLMediaElement.prototype, 'play').mockResolvedValue()
-    jest.spyOn(ProjectsGateway, 'interesting').mockReturnValue(fakeRequest([
+    jest.spyOn(Gateway, 'post').mockReturnValue(fakeRequest([
       buildProject({trayId, prognosis: Prognosis.unknown})
     ]))
     const state = {
@@ -197,7 +196,7 @@ describe('audio notifications', () => {
 
   it('should not play when enabled but a sound fx has not been set', async () => {
     jest.spyOn(window.HTMLMediaElement.prototype, 'play').mockResolvedValue()
-    jest.spyOn(ProjectsGateway, 'interesting').mockReturnValue(fakeRequest([
+    jest.spyOn(Gateway, 'post').mockReturnValue(fakeRequest([
       buildProject({trayId, prognosis: Prognosis.sick})
     ]))
     const state = {
