@@ -9,6 +9,7 @@ import * as Gateway from '../gateways/Gateway'
 import {fakeRequest} from '../gateways/Gateway'
 import {SETTINGS_ROOT} from '../settings/SettingsReducer'
 import {Prognosis} from '../domain/Project'
+import {SELECTED_ROOT} from '../settings/tracking/SelectedReducer'
 
 const defaultProps = {
   menusHidden: false,
@@ -51,17 +52,6 @@ it('should show a helpful message if no feeds are added', () => {
   expect(screen.getByText('Add a feed via the tracking page to start monitoring')).toBeInTheDocument()
 })
 
-it('should show a loading screen when first switching to the page', () => {
-  const state = {
-    [FEEDS_ROOT]: {
-      [trayId]: buildFeed({trayId})
-    }
-  }
-  const outletContext = defaultProps
-  render(<Monitor/>, {state, outletContext})
-  expect(screen.getByTestId('loading')).toBeInTheDocument()
-})
-
 it('should show a success message if there are no projects', async () => {
   jest.spyOn(Gateway, 'post').mockReturnValue(fakeRequest([]))
   const state = {
@@ -78,7 +68,6 @@ it('should show a success message if there are no projects', async () => {
 })
 
 it('should not try updating after the user has navigated away from the page', () => {
-  jest.spyOn(Gateway, 'post').mockReturnValue(fakeRequest([]))
   jest.spyOn(Gateway, 'send').mockRejectedValue(new Error('Aborted'))
   const state = {
     [FEEDS_ROOT]: {
@@ -98,6 +87,9 @@ it('should display an error if the Nevergreen server is having issues', async ()
   const state = {
     [FEEDS_ROOT]: {
       [trayId]: buildFeed({trayId})
+    },
+    [SELECTED_ROOT]: {
+      [trayId]: ['1']
     }
   }
   const outletContext = defaultProps
@@ -125,6 +117,9 @@ describe('audio notifications', () => {
     const state = {
       [FEEDS_ROOT]: {
         [trayId]: buildFeed({trayId})
+      },
+      [SELECTED_ROOT]: {
+        [trayId]: ['1']
       },
       [SETTINGS_ROOT]: {
         playBrokenBuildSoundFx: true,
@@ -155,6 +150,9 @@ describe('audio notifications', () => {
       [FEEDS_ROOT]: {
         [trayId]: buildFeed({trayId})
       },
+      [SELECTED_ROOT]: {
+        [trayId]: ['1']
+      },
       [SETTINGS_ROOT]: {
         playBrokenBuildSoundFx: false
       }
@@ -179,6 +177,9 @@ describe('audio notifications', () => {
       [FEEDS_ROOT]: {
         [trayId]: buildFeed({trayId})
       },
+      [SELECTED_ROOT]: {
+        [trayId]: ['1']
+      },
       [SETTINGS_ROOT]: {
         playBrokenBuildSoundFx: true
       }
@@ -202,6 +203,9 @@ describe('audio notifications', () => {
     const state = {
       [FEEDS_ROOT]: {
         [trayId]: buildFeed({trayId})
+      },
+      [SELECTED_ROOT]: {
+        [trayId]: ['1']
       },
       [SETTINGS_ROOT]: {
         playBrokenBuildSoundFx: true,

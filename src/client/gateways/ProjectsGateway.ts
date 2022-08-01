@@ -13,9 +13,7 @@ export interface FeedRequest {
   readonly authType: AuthTypes;
   readonly encryptedPassword?: string;
   readonly encryptedToken?: string;
-  readonly includeNew: boolean;
   readonly included?: ReadonlyArray<string>;
-  readonly seen: ReadonlyArray<string>;
   readonly serverType?: string;
   readonly trayId: string;
   readonly url: string;
@@ -28,7 +26,6 @@ export interface ProjectError extends ServerError {
 
 export interface ProjectApi {
   readonly description: string;
-  readonly isNew: boolean;
   readonly lastBuildLabel: string;
   readonly prognosis: ProjectPrognosis;
   readonly projectId: string;

@@ -2,7 +2,6 @@ import React, {ReactNode} from 'react'
 import merge from 'lodash/merge'
 import {reducer, State} from './Reducer'
 import {MaxProjectsToShow, SETTINGS_ROOT} from './settings/SettingsReducer'
-import {PROJECTS_ROOT, ProjectState} from './settings/tracking/ProjectsReducer'
 import {SELECTED_ROOT} from './settings/tracking/SelectedReducer'
 import {SUCCESS_ROOT} from './settings/success/SuccessReducer'
 import {FEEDS_ROOT} from './settings/tracking/FeedsReducer'
@@ -61,7 +60,6 @@ export function buildState(subState: RecursivePartial<State> = {}): State {
       sort: SortBy.default,
       enableNewVersionCheck: true
     },
-    [PROJECTS_ROOT]: {},
     [SELECTED_ROOT]: {},
     [SUCCESS_ROOT]: [],
     [FEEDS_ROOT]: {},
@@ -102,7 +100,7 @@ export function render(component: ReactNode, options: ExtendedRenderOptions = {}
           <Routes>
             <Route element={<Outlet context={mergedOptions.outletContext}/>}>
               <Route path={mergedOptions.mountPath} element={c}/>
-              <Route path='*' element={<>location changed</>}/>
+              <Route path="*" element={<>location changed</>}/>
             </Route>
           </Routes>
         </BrowserRouter>
@@ -126,7 +124,6 @@ export function buildFeed(feed: Partial<Feed> = {}): Feed {
 
 export function buildProject(project: Partial<Project> = {}): Project {
   const defaultProject: Project = {
-    isNew: true,
     lastBuildLabel: '',
     description: 'some-name',
     previousPrognosis: undefined,
@@ -136,17 +133,6 @@ export function buildProject(project: Partial<Project> = {}): Project {
     timestamp: '',
     trayId: '',
     webUrl: ''
-  }
-  return merge(defaultProject, project)
-}
-
-export function buildSavedProject(project: Partial<ProjectState> = {}): ProjectState {
-  const defaultProject: ProjectState = {
-    isNew: true,
-    description: 'some-name',
-    projectId: 'some-project-id',
-    removed: false,
-    trayId: ''
   }
   return merge(defaultProject, project)
 }
@@ -181,7 +167,6 @@ export function buildRemoteBackupLocation(location: Partial<RemoteLocation> = {}
 export function testReducer(reducer: Partial<Reducer<State>>): Reducer<CombinedState<State>> {
   return combineReducers<State>(merge({
     [SETTINGS_ROOT]: (state: any = null) => state,
-    [PROJECTS_ROOT]: (state: any = null) => state,
     [SELECTED_ROOT]: (state: any = null) => state,
     [SUCCESS_ROOT]: (state: any = null) => state,
     [FEEDS_ROOT]: (state: any = null) => state,

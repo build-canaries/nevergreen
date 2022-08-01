@@ -1,6 +1,5 @@
 import {Actions} from '../../Actions'
-import {projectSelected, projectsFetched, feedAdded, feedRemoved, feedUpdated} from './TrackingActionCreators'
-import {buildProject} from '../../testHelpers'
+import {feedAdded, feedRemoved, feedUpdated, projectSelected} from './TrackingActionCreators'
 import {AuthTypes} from '../../domain/Feed'
 
 describe(Actions.FEED_ADDED, () => {
@@ -57,39 +56,6 @@ describe(Actions.FEED_REMOVED, () => {
   it('should return the tray id', () => {
     const actual = feedRemoved('some-tray-id')
     expect(actual).toHaveProperty('trayId', 'some-tray-id')
-  })
-})
-
-describe(Actions.PROJECTS_FETCHED, () => {
-
-  it('should return the correct type', () => {
-    const actual = projectsFetched('irrelevant', [], false)
-    expect(actual).toHaveProperty('type', Actions.PROJECTS_FETCHED)
-  })
-
-  it('should return the tray id', () => {
-    const actual = projectsFetched('some-tray-id', [], false)
-    expect(actual).toHaveProperty('trayId', 'some-tray-id')
-  })
-
-  it('should return the projects', () => {
-    const actual = projectsFetched('irrelevant', [buildProject({webUrl: 'bar'})], false)
-    expect(actual.data[0]).toHaveProperty('webUrl', 'bar')
-  })
-
-  it('should return a timestamp', () => {
-    const actual = projectsFetched('irrelevant', [], false)
-    expect(actual).toHaveProperty('timestamp')
-  })
-
-  it('should return the server type', () => {
-    const actual = projectsFetched('irrelevant', [buildProject({serverType: 'some-type'})], false)
-    expect(actual).toHaveProperty('serverType', 'some-type')
-  })
-
-  it('should return whether to include new projects or not', () => {
-    const actual = projectsFetched('irrelevant', [], true)
-    expect(actual).toHaveProperty('includeNew', true)
   })
 })
 

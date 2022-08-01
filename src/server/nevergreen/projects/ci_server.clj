@@ -1,9 +1,8 @@
 (ns nevergreen.projects.ci-server
-  (:require [clojure.test :refer :all]
-            [clojure.set :refer [difference]]
+  (:require [clj-cctray.util :refer [in?]]
             [clojure.string :as s]
             [clojure.string :refer [includes?]]
-            [clj-cctray.util :refer [in?]])
+            [clojure.test :refer :all])
   (:import (java.time Clock)))
 
 (defn ^:dynamic *now* []
@@ -38,9 +37,6 @@
                               (*now*)
                               (:last-build-time project))))
 
-(defn- add-is-new [new-project-ids project]
-  (assoc project :is-new (or (in? new-project-ids (:project-id project)) false)))
-
 (defn- detect-server [url]
   (cond
     (nil? url) nil
@@ -51,16 +47,13 @@
 (defn- unknown-server? [server-type]
   (not (in? [:go :circle] server-type)))
 
-(defn enrich-projects [{:keys [server-type tray-id seen]} projects]
-  (let [project-with-ids (map add-project-id projects)
-        new-project-ids (difference (set (map :project-id project-with-ids))
-                                    (set seen))]
+(defn enrich-projects [{:keys [server-type tray-id]} projects]
+  (let [project-with-ids (map add-project-id projects)]
     (map #(->>
             (add-description %)
             (add-server-type server-type)
             (add-tray-id tray-id)
-            (add-timestamp)
-            (add-is-new new-project-ids))
+            (add-timestamp))
          project-with-ids)))
 
 (defn get-server-type [{:keys [server-type url]}]

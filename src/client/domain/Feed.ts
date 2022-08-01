@@ -9,17 +9,21 @@ export enum AuthTypes {
   token = 'token'
 }
 
+export enum TrackingMode {
+  everything = 'everything',
+  selected = 'selected'
+}
+
 export interface Feed {
   readonly authType: AuthTypes;
   readonly encryptedAccessToken?: string;
   readonly encryptedPassword?: string;
-  readonly includeNew: boolean;
   readonly name?: string;
   readonly serverType: string;
-  readonly timestamp?: string;
   readonly trayId: string;
   readonly url: string;
   readonly username?: string;
+  readonly trackingMode: TrackingMode;
 }
 
 export const CI_OPTIONS = [
@@ -34,8 +38,18 @@ export const AUTH_TYPE_OPTIONS = [
   {value: AuthTypes.token, display: 'Access token'}
 ]
 
+export const TRACKING_MODE_OPTIONS = [
+  {value: TrackingMode.everything, display: 'Everything'},
+  {value: TrackingMode.selected, display: 'Selected'}
+]
+
 export function authTypeDisplay(authType: AuthTypes): string {
   const match = AUTH_TYPE_OPTIONS.find((option) => option.value === authType)
+  return match ? match.display : 'Unknown'
+}
+
+export function trackingModeDisplay(trackingMode: TrackingMode): string {
+  const match = TRACKING_MODE_OPTIONS.find((option) => option.value === trackingMode)
   return match ? match.display : 'Unknown'
 }
 
@@ -50,10 +64,10 @@ export function createId(): string {
 export function createFeed(trayId: string, url: string, additional: Partial<Feed> = {}): Feed {
   return {
     authType: AuthTypes.none,
-    includeNew: true,
     name: generateRandomName(),
     serverType: '',
     trayId,
+    trackingMode: TrackingMode.everything,
     url,
     ...additional
   }

@@ -1,7 +1,6 @@
 import React from 'react'
 import {buildFeed, render} from '../../testHelpers'
 import {FEEDS_ROOT} from './FeedsReducer'
-import {PROJECTS_ROOT} from './ProjectsReducer'
 import {screen, waitFor} from '@testing-library/react'
 import {TrackingPage} from './TrackingPage'
 import {SELECTED_ROOT} from './SelectedReducer'
@@ -18,14 +17,13 @@ it('should allow changing the poll time', async () => {
   expect(getRefreshTime(store.getState())).toEqual(600)
 })
 
-it('should render added trays', () => {
+it('should show added trays', () => {
   const tray = buildFeed({
     trayId: 'trayId',
     name: 'some-name'
   })
   const state = {
     [FEEDS_ROOT]: {trayId: tray},
-    [PROJECTS_ROOT]: {trayId: []},
     [SELECTED_ROOT]: {trayId: []}
   }
   render(<TrackingPage/>, {state})
@@ -43,7 +41,6 @@ it('should allow trays to be added', async () => {
 it('should show a helpful message if no trays are added', () => {
   const state = {
     [FEEDS_ROOT]: {},
-    [PROJECTS_ROOT]: {}
   }
   render(<TrackingPage/>, {state})
   expect(screen.getByText('No feeds added, add a feed to start monitoring')).toBeInTheDocument()

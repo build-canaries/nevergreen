@@ -1,17 +1,15 @@
 (ns nevergreen.projects.projects
-  (:require [clj-cctray.filtering :as filtering]
+  (:require [clj-cctray.core :as parser]
+            [clj-cctray.filtering :as filtering]
             [clj-cctray.util :refer [in?]]
-            [clj-cctray.core :as parser]
+            [clojure.string :as s]
             [nevergreen.errors :as err]
             [nevergreen.projects.ci-gateway :as ci-gateway]
-            [nevergreen.projects.ci-server :as ci-server]
-            [clojure.string :as s]
-            [clojure.set :refer [difference]])
-  (:import (org.xml.sax SAXParseException)
-           (java.io Closeable)))
+            [nevergreen.projects.ci-server :as ci-server])
+  (:import (java.io Closeable)
+           (org.xml.sax SAXParseException)))
 
 (def ^:private ui-required-keys [:description
-                                 :is-new
                                  :last-build-label
                                  :prognosis
                                  :project-id
@@ -36,10 +34,10 @@
 (defn ^:dynamic *enrich* [feed projects]
   (ci-server/enrich-projects feed projects))
 
-(defn- filter-by-ids [included ids projects]
+(defn- filter-by-ids [included projects]
   (if (nil? included)
     projects
-    (filter #(in? ids (:project-id %)) projects)))
+    (filter #(in? included (:project-id %)) projects)))
 
 (defn- filter-jobs [projects]
   (filter #(s/blank? (:job %)) projects))
@@ -67,20 +65,15 @@
          (err/create-error (handle-parsing-exception e) url)
          :tray-id tray-id)])))
 
-(defn- to-projects-filtered [{:keys [included include-new seen] :as feed} prognosis]
-  (if (and (not (nil? included)) (empty? included) (false? include-new))
+(defn- to-projects-filtered [{:keys [included] :as feed} prognosis]
+  (if (and (not (nil? included)) (empty? included))
     []
     (let [projects (to-projects feed)]
       (if (every? err/is-error? projects)
         projects
         (let [filtered-projects (filter-projects prognosis projects)
               enriched-projects (*enrich* feed filtered-projects)
-              returned-project-ids (map :project-id enriched-projects)
-              new-project-ids (difference (set returned-project-ids) (set seen))
-              include-project-ids (if (true? include-new)
-                                    (concat included new-project-ids)
-                                    included)
-              projects-to-return (filter-by-ids included include-project-ids enriched-projects)]
+              projects-to-return (filter-by-ids included enriched-projects)]
           (map #(select-keys % ui-required-keys) projects-to-return))))))
 
 (defn- sort-projects [projects sort]

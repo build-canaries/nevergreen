@@ -1,8 +1,7 @@
-import {getFeeds, reduce, FEEDS_ROOT, FeedsState} from './FeedsReducer'
+import {FEEDS_ROOT, FeedsState, getFeeds, reduce} from './FeedsReducer'
 import {Actions} from '../../Actions'
-import {projectsFetched, feedAdded, feedRemoved, feedUpdated} from './TrackingActionCreators'
-import * as DateTime from '../../common/DateTime'
-import {buildProject, buildState, buildFeed, testReducer} from '../../testHelpers'
+import {feedAdded, feedRemoved, feedUpdated} from './TrackingActionCreators'
+import {buildFeed, buildState, testReducer} from '../../testHelpers'
 import {RecursivePartial} from '../../common/Types'
 import {AuthTypes} from '../../domain/Feed'
 import {configurationImported} from '../backup/BackupActionCreators'
@@ -84,23 +83,5 @@ describe(Actions.FEED_REMOVED, () => {
     const action = feedRemoved('trayId')
     const newState = reducer(existingState, action)
     expect(getFeeds(newState)).toEqual([])
-  })
-})
-
-describe(Actions.PROJECTS_FETCHED, () => {
-
-  it('should set timestamp', () => {
-    jest.spyOn(DateTime, 'now').mockReturnValue('some-timestamp')
-    const existingState = state({trayId: buildFeed()})
-    const action = projectsFetched('trayId', [], false)
-    const newState = reducer(existingState, action)
-    expect(getFeeds(newState)[0].timestamp).toEqual('some-timestamp')
-  })
-
-  it('should set server type', () => {
-    const existingState = state({trayId: buildFeed()})
-    const action = projectsFetched('trayId', [buildProject({serverType: 'some-type'})], false)
-    const newState = reducer(existingState, action)
-    expect(getFeeds(newState)[0].serverType).toEqual('some-type')
   })
 })

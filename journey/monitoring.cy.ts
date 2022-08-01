@@ -20,6 +20,7 @@ describe('Monitoring', () => {
 
     cy.findByRole('button', {name: 'Add feed'}).click()
 
+    cy.findByLabelText('Tracking mode').select('Selected')
     cy.findByRole('button', {name: 'Exclude all'}).click()
     cy.findByRole('button', {name: 'Include all'}).click()
 
@@ -53,7 +54,6 @@ describe('Monitoring', () => {
     cy.findByRole('button', {name: 'randomise name'}).click()
     cy.findByLabelText('Name').clear().type('renamed feed')
     cy.findByLabelText('Server type').select('circle')
-    cy.findByLabelText('Automatically include new projects').click()
 
     if (Cypress.env('TRAY_URL_TOKEN')) {
       cy.findByRole('button', {name: 'Update connection'}).click()

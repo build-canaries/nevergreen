@@ -13,7 +13,6 @@ import {Either, flatten, left, map, mapLeft, right} from 'fp-ts/Either'
 import {pipe} from 'fp-ts/function'
 import {BACKUP_REMOTE_LOCATIONS_ROOT} from '../settings/backup/RemoteLocationsReducer'
 import {SETTINGS_ROOT} from '../settings/SettingsReducer'
-import {PROJECTS_ROOT} from '../settings/tracking/ProjectsReducer'
 import {SELECTED_ROOT} from '../settings/tracking/SelectedReducer'
 import {SUCCESS_ROOT} from '../settings/success/SuccessReducer'
 import {FEEDS_ROOT} from '../settings/tracking/FeedsReducer'
@@ -57,17 +56,6 @@ const Configuration = t.exact(t.partial({
     }),
     enableNewVersionCheck: t.boolean
   }), SETTINGS_ROOT),
-  [PROJECTS_ROOT]: t.record(t.string, t.readonlyArray(t.exact(t.intersection([
-    t.type({
-      projectId: t.string,
-      trayId: t.string,
-      description: t.string
-    }),
-    t.partial({
-      isNew: t.boolean,
-      removed: t.boolean
-    })
-  ]))), PROJECTS_ROOT),
   [SELECTED_ROOT]: t.record(t.string, t.readonlyArray(t.string), SELECTED_ROOT),
   [SUCCESS_ROOT]: t.readonlyArray(t.string, SUCCESS_ROOT),
   [FEEDS_ROOT]: t.record(t.string, t.exact(t.intersection([
@@ -83,10 +71,13 @@ const Configuration = t.exact(t.partial({
       }),
       encryptedAccessToken: t.string,
       encryptedPassword: t.string,
-      includeNew: t.boolean,
       name: t.string,
       serverType: t.string,
       timestamp: t.string,
+      trackingMode: t.keyof({
+        everything: null,
+        selected: null
+      }),
       username: t.string
     })
   ])), FEEDS_ROOT),
@@ -143,16 +134,6 @@ function validateFeedIdsMatchForFeeds(configuration: Configuration, errors: stri
   })
 }
 
-function validateFeedIdsMatchForProjects(configuration: Configuration, errors: string[]) {
-  Object.entries(configuration.projects || {}).forEach(([key, projects]) => {
-    projects.forEach((project, i) => {
-      if (project.trayId !== key) {
-        errors.push(validationErrorMessage(project.trayId, `/${PROJECTS_ROOT}/${key}/${i}/trayId`, toJson(key)))
-      }
-    })
-  })
-}
-
 function validateRemoteLocationIdsMatch(configuration: Configuration, errors: string[]) {
   Object.entries(configuration.backupRemoteLocations || {}).forEach(([key, location]) => {
     if (location && location.internalId !== key) {
@@ -165,7 +146,6 @@ function additionalValidation(configuration: Configuration): Either<ReadonlyArra
   const errors: string[] = []
 
   validateFeedIdsMatchForFeeds(configuration, errors)
-  validateFeedIdsMatchForProjects(configuration, errors)
   validateRemoteLocationIdsMatch(configuration, errors)
 
   return isEmpty(errors)

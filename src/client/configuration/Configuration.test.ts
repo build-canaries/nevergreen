@@ -3,9 +3,7 @@ import {Either, isLeft, isRight} from 'fp-ts/Either'
 import {buildRemoteBackupLocation, buildState} from '../testHelpers'
 import {BACKUP_REMOTE_LOCATIONS_ROOT} from '../settings/backup/RemoteLocationsReducer'
 import {SETTINGS_ROOT} from '../settings/SettingsReducer'
-import {PROJECTS_ROOT} from '../settings/tracking/ProjectsReducer'
 import {FEEDS_ROOT} from '../settings/tracking/FeedsReducer'
-import {APPLIED_MIGRATIONS_ROOT} from './MigrationsReducer'
 
 function expectErrors(result: Either<ReadonlyArray<string>, Configuration>, errors: ReadonlyArray<string>): void {
   if (isLeft(result)) {
@@ -71,100 +69,6 @@ describe('toConfiguration', () => {
       }
       const result = toConfiguration(data, DataSource.browserStorage)
       expectErrors(result, ['Invalid value "another-id" supplied to /trays/some-tray-id/trayId expected "some-tray-id"'])
-    })
-  })
-
-  describe(PROJECTS_ROOT, () => {
-
-    it('parses valid to configuration', () => {
-      const data: Configuration = {
-        [PROJECTS_ROOT]: {
-          'some-tray-id': [{
-            projectId: 'some-project-id',
-            description: 'some-description',
-            trayId: 'some-tray-id'
-          }]
-        },
-        [APPLIED_MIGRATIONS_ROOT]: [
-          // this migration needs to have been run otherwise it will update the description based on the name and stage
-          {
-            id: '007_SetProjectDescription',
-            timestamp: '2020-08-08T01:57:14.285+01:00'
-          }
-        ]
-      }
-      const result = toConfiguration(data, DataSource.browserStorage)
-      if (isRight(result)) {
-        expect(result.right.projects).toHaveProperty('some-tray-id')
-      } else {
-        fail(`Expected right(configuration) but got left([${result.left.join(', ')}])`)
-      }
-    })
-
-    it('rejects missing project ID, as this is required to select projects', () => {
-      const data = {
-        [PROJECTS_ROOT]: {
-          'some-tray-id': [{
-            description: 'some-description',
-            trayId: 'some-tray-id'
-          }]
-        },
-        [APPLIED_MIGRATIONS_ROOT]: [
-          // this migration needs to have been run otherwise it will update the description based on the name and stage
-          {
-            id: '007_SetProjectDescription',
-            timestamp: '2020-08-08T01:57:14.285+01:00'
-          }
-        ]
-      }
-      const result = toConfiguration(data, DataSource.browserStorage)
-      expectErrors(result, ['Invalid value undefined supplied to /projects/some-tray-id/0/projectId expected string'])
-    })
-
-    it('rejects missing description, as this is required to display projects on the UI', () => {
-      const data = {
-        [PROJECTS_ROOT]: {
-          'some-tray-id': [{
-            projectId: 'some-id',
-            trayId: 'some-tray-id'
-          }]
-        },
-        [APPLIED_MIGRATIONS_ROOT]: [
-          // this migration needs to have been run otherwise it will update the description based on the name and stage
-          {
-            id: '007_SetProjectDescription',
-            timestamp: '2020-08-08T01:57:14.285+01:00'
-          }
-        ]
-      }
-      const result = toConfiguration(data, DataSource.browserStorage)
-      expectErrors(result, ['Invalid value undefined supplied to /projects/some-tray-id/0/description expected string'])
-    })
-
-    it('rejects if the key does not match the tray ID', () => {
-      const data = {
-        [PROJECTS_ROOT]: {
-          'some-tray-id': [{
-            projectId: 'some-id',
-            trayId: 'another-tray-id',
-            description: 'some-description'
-          }]
-        },
-        [APPLIED_MIGRATIONS_ROOT]: [
-          // this migration needs to have been run otherwise it will correctly set all the tray IDs
-          {
-            id: '004_AddTrayIdToProjects',
-            timestamp: '2020-08-08T01:57:14.280+01:00'
-          },
-          // this migration needs to have been run otherwise it will update the description based on the name and stage
-          {
-            id: '007_SetProjectDescription',
-            timestamp: '2020-08-08T01:57:14.285+01:00'
-          }
-        ]
-      }
-      const result = toConfiguration(data, DataSource.browserStorage)
-      expectErrors(result, ['Invalid value "another-tray-id" supplied to /projects/some-tray-id/0/trayId expected "some-tray-id"'])
     })
   })
 

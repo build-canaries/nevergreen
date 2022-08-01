@@ -8,6 +8,7 @@
 }
 
 .availableProjects {
+  margin: $margin-top 0 0 0;
   width: 100%;
 }
 
@@ -58,6 +59,10 @@
   @include respond-to(very-small) {
     overflow: scroll;
   }
+}
+
+.projectCheckbox.projectCheckbox {
+  margin: 0;
 }
 
 .projectFilter {

@@ -71,8 +71,7 @@ it('should allow adding feeds without auth', async () => {
 
   await waitFor(() => {
     expect(window.location).toEqual(expect.objectContaining({
-      pathname: '/settings/tracking/some-feed-id/projects',
-      hash: '#refresh'
+      pathname: '/settings/tracking/some-feed-id/projects'
     }))
   })
   expect(getFeeds(store.getState())).toEqual(expect.arrayContaining([
@@ -121,8 +120,7 @@ it('should allow adding feeds with basic auth', async () => {
     })
   ]))
   expect(window.location).toEqual(expect.objectContaining({
-    pathname: '/settings/tracking/some-feed-id/projects',
-    hash: '#refresh'
+    pathname: '/settings/tracking/some-feed-id/projects'
   }))
 })
 
@@ -164,7 +162,6 @@ it('should allow adding feeds with an access token', async () => {
     })
   ]))
   expect(window.location).toEqual(expect.objectContaining({
-    pathname: '/settings/tracking/some-feed-id/projects',
-    hash: '#refresh'
+    pathname: '/settings/tracking/some-feed-id/projects'
   }))
 })

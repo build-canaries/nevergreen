@@ -1,0 +1,6 @@
+@import '../../../common/variables';
+@import '../../../common/layout';
+
+.trackingMode {
+  @include fixed-width(20em);
+}

@@ -1,9 +1,9 @@
 import {getSelectedProjectsForFeed, reduce, SELECTED_ROOT, SelectedState} from './SelectedReducer'
 import {Actions} from '../../Actions'
-import {projectSelected, projectsFetched, feedAdded, feedRemoved} from './TrackingActionCreators'
-import {buildProject, buildState, testReducer} from '../../testHelpers'
+import {feedRemoved, feedUpdated, projectSelected} from './TrackingActionCreators'
+import {buildState, testReducer} from '../../testHelpers'
 import {RecursivePartial} from '../../common/Types'
-import {AuthTypes} from '../../domain/Feed'
+import {TrackingMode} from '../../domain/Feed'
 import {configurationImported} from '../backup/BackupActionCreators'
 
 const reducer = testReducer({
@@ -38,13 +38,20 @@ describe(Actions.CONFIGURATION_IMPORTED, () => {
   })
 })
 
-describe(Actions.FEED_ADDED, () => {
+describe(Actions.FEED_UPDATED, () => {
 
-  it('should add the tray id with an empty set of selected projects', () => {
+  it('should add the tray id with an empty set if tracking mode is updated to selected', () => {
     const existingState = state({})
-    const action = feedAdded('trayId', '', AuthTypes.none, '', '', '')
+    const action = feedUpdated('trayId', {trackingMode: TrackingMode.selected})
     const newState = reducer(existingState, action)
     expect(getSelectedProjectsForFeed('trayId')(newState)).toHaveLength(0)
+  })
+
+  it('should remove the tray id if tracking mode is updated to everything', () => {
+    const existingState = state({trayId: []})
+    const action = feedUpdated('trayId', {trackingMode: TrackingMode.everything})
+    const newState = reducer(existingState, action)
+    expect(getSelectedProjectsForFeed('trayId')(newState)).toBeUndefined()
   })
 })
 
@@ -72,27 +79,5 @@ describe(Actions.PROJECT_SELECTED, () => {
     const action = projectSelected('trayId', 'b', false)
     const newState = reducer(existingState, action)
     expect(getSelectedProjectsForFeed('trayId')(newState)).toEqual(['a', 'c'])
-  })
-})
-
-describe(Actions.PROJECTS_FETCHED, () => {
-
-  it('should remove selected projects that were not fetched', () => {
-    const existingState = state({trayId: ['a', 'b', 'c']})
-    const action = projectsFetched('trayId', [buildProject({projectId: 'b'})], false)
-    const newState = reducer(existingState, action)
-    expect(getSelectedProjectsForFeed('trayId')(newState)).toEqual(['b'])
-  })
-
-  it('should add new projects if select new is true', () => {
-    const existingState = state({trayId: []})
-    const fetchedProjects = [
-      buildProject({projectId: 'a', isNew: true}),
-      buildProject({projectId: 'b', isNew: false}),
-      buildProject({projectId: 'c', isNew: false})
-    ]
-    const action = projectsFetched('trayId', fetchedProjects, true)
-    const newState = reducer(existingState, action)
-    expect(getSelectedProjectsForFeed('trayId')(newState)).toEqual(['a'])
   })
 })

@@ -1,4 +1,4 @@
-import {render, setSystemTime} from '../../../testHelpers'
+import {render} from '../../../testHelpers'
 import React from 'react'
 import {Refresh} from './Refresh'
 import noop from 'lodash/noop'
@@ -21,20 +21,4 @@ it('should allow projects to be refreshed if they are loaded', async () => {
   const {user} = render(<Refresh {...props} />)
   await user.click(screen.getByRole('button', {name: 'Refresh'}))
   expect(refreshTray).toHaveBeenCalled()
-})
-
-it('should show projects were fetched "never" if there is no timestamp', () => {
-  const props = {...defaultProps, timestamp: undefined}
-  render(<Refresh {...props} />)
-  expect(screen.getByText('projects last refreshed never')).toBeInTheDocument()
-})
-
-it('should show how long ago projects were refreshed if a timestamp is given', () => {
-  setSystemTime('2017-06-07T22:40:00+01:00')
-  const props = {...defaultProps, timestamp: '2017-06-07T21:40:00+01:00'}
-
-  render(<Refresh {...props} />)
-
-  expect(screen.queryByText('projects last refreshed never')).not.toBeInTheDocument()
-  expect(screen.getByText('projects last refreshed about 1 hour ago')).toBeInTheDocument()
 })

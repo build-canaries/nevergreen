@@ -13,7 +13,7 @@ export function AddFeed(): ReactElement {
   const onSuccess = ({url, authType, username, encryptedPassword, encryptedAccessToken}: ConnectionFormFields) => {
     const trayId = createId()
     dispatch(feedAdded(trayId, url, authType, username, encryptedPassword, encryptedAccessToken))
-    return `/settings/tracking/${trayId}/projects#refresh`
+    return `/settings/tracking/${trayId}/projects`
   }
 
   return (

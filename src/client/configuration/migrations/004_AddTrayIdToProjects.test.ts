@@ -1,5 +1,4 @@
 import {migrate} from './004_AddTrayIdToProjects'
-import {PROJECTS_ROOT} from '../../settings/tracking/ProjectsReducer'
 
 it('should not modify the given data if it does not contain projects', () => {
   const data = {foo: 'bar'}
@@ -8,21 +7,21 @@ it('should not modify the given data if it does not contain projects', () => {
 })
 
 it('should not modify the given data if it contains the projects key but it is not an object', () => {
-  const data = {[PROJECTS_ROOT]: 'invalid'}
+  const data = {['projects']: 'invalid'}
   migrate(data)
-  expect(data).toEqual({[PROJECTS_ROOT]: 'invalid'})
+  expect(data).toEqual({['projects']: 'invalid'})
 })
 
 it('should not modify the given data if it contains the projects and tray id keys but it is not an array', () => {
-  const data = {[PROJECTS_ROOT]: {trayId: 'invalid'}}
+  const data = {['projects']: {trayId: 'invalid'}}
   migrate(data)
-  expect(data).toEqual({[PROJECTS_ROOT]: {trayId: 'invalid'}})
+  expect(data).toEqual({['projects']: {trayId: 'invalid'}})
 })
 
 it('should not modify the given data if it contains the projects and tray id keys but an array that does not contain an object', () => {
-  const data = {[PROJECTS_ROOT]: {trayId: ['invalid']}}
+  const data = {['projects']: {trayId: ['invalid']}}
   migrate(data)
-  expect(data).toEqual({[PROJECTS_ROOT]: {trayId: ['invalid']}})
+  expect(data).toEqual({['projects']: {trayId: ['invalid']}})
 })
 
 it('should add the tray id to projects', () => {
@@ -30,7 +29,7 @@ it('should add the tray id to projects', () => {
   const projectId1 = 'projectId1'
   const projectId2 = 'projectId2'
   const data = {
-    [PROJECTS_ROOT]: {
+    ['projects']: {
       [trayId]: [
         {projectId: projectId1},
         {projectId: projectId2}
@@ -38,7 +37,7 @@ it('should add the tray id to projects', () => {
     }
   }
   migrate(data)
-  expect(data).toHaveProperty([PROJECTS_ROOT, trayId], [
+  expect(data).toHaveProperty(['projects', trayId], [
     {projectId: projectId1, trayId},
     {projectId: projectId2, trayId}
   ])

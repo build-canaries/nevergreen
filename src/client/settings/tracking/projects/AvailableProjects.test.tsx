@@ -1,12 +1,11 @@
 import React from 'react'
 import {screen, waitFor} from '@testing-library/react'
-import {buildFeed, buildProject, buildProjectError, render} from '../../../testHelpers'
+import {buildFeed, buildProject, buildProjectError, render, waitForLoadingToFinish} from '../../../testHelpers'
+import * as Gateway from '../../../gateways/Gateway'
 import {fakeRequest} from '../../../gateways/Gateway'
 import {AvailableProjects} from './AvailableProjects'
 import {FEEDS_ROOT} from '../FeedsReducer'
-import {PROJECTS_ROOT} from '../ProjectsReducer'
 import {SELECTED_ROOT} from '../SelectedReducer'
-import * as Gateway from '../../../gateways/Gateway'
 
 beforeEach(() => {
   jest.spyOn(Gateway, 'post').mockResolvedValue(fakeRequest([]))
@@ -19,15 +18,16 @@ it('should be able to select projects', async () => {
     [FEEDS_ROOT]: {
       trayId: feed
     },
-    [PROJECTS_ROOT]: {
-      trayId: [project]
-    },
     [SELECTED_ROOT]: {
       trayId: []
     }
   }
+  jest.spyOn(Gateway, 'post').mockResolvedValue(fakeRequest([project]))
 
   const {user} = render(<AvailableProjects feed={feed}/>, {state})
+
+  await waitForLoadingToFinish()
+
   const selectInput = screen.getByLabelText(/some project/)
 
   expect(selectInput).not.toBeChecked()
@@ -49,16 +49,13 @@ it('should correctly show and remove errors returned while refreshing', async ()
     [FEEDS_ROOT]: {
       trayId: feed
     },
-    [PROJECTS_ROOT]: {
-      trayId: []
-    },
     [SELECTED_ROOT]: {
       trayId: []
     }
   }
 
   const {user} = render(<AvailableProjects feed={feed}/>, {state})
-  await user.click(screen.getByRole('button', {name: 'Refresh'}))
+  await waitForLoadingToFinish()
 
   await waitFor(() => {
     expect(screen.getByText('some-error')).toBeInTheDocument()
@@ -71,113 +68,65 @@ it('should correctly show and remove errors returned while refreshing', async ()
   })
 })
 
-it('should show a warning if there are no projects', () => {
+it('should show a warning if there are no projects', async () => {
   const feed = buildFeed({trayId: 'trayId'})
   const state = {
     [FEEDS_ROOT]: {
       trayId: feed
     },
-    [PROJECTS_ROOT]: {
-      trayId: []
-    },
     [SELECTED_ROOT]: {
       trayId: []
     }
   }
+  jest.spyOn(Gateway, 'post').mockResolvedValue(fakeRequest([]))
+
   render(<AvailableProjects feed={feed}/>, {state})
+  await waitForLoadingToFinish()
+
   expect(screen.getByText('No projects fetched, please refresh')).toBeInTheDocument()
 })
 
 it('should show a warning if no projects match the search', async () => {
   const feed = buildFeed({trayId: 'trayId'})
+  const project = buildProject({
+    projectId: 'projectId',
+    description: 'foo'
+  })
   const state = {
     [FEEDS_ROOT]: {
       trayId: feed
-    },
-    [PROJECTS_ROOT]: {
-      trayId: [
-        buildProject({
-          projectId: 'projectId',
-          description: 'foo'
-        })
-      ]
     },
     [SELECTED_ROOT]: {
       trayId: []
     }
   }
+  jest.spyOn(Gateway, 'post').mockResolvedValue(fakeRequest([project]))
 
   const {user} = render(<AvailableProjects feed={feed}/>, {state})
+  await waitForLoadingToFinish()
+
   await user.type(screen.getByLabelText('Search'), 'bar')
-
   expect(screen.getByText('No matching projects, please update your search')).toBeInTheDocument()
-})
-
-it('should refresh automatically if the url contains #refresh', () => {
-  jest.spyOn(Gateway, 'post').mockResolvedValue(fakeRequest([]))
-  const feed = buildFeed({trayId: 'trayId'})
-  const project = buildProject({trayId: 'trayId', projectId: 'projectId', description: 'some project'})
-  const state = {
-    [FEEDS_ROOT]: {
-      trayId: feed
-    },
-    [PROJECTS_ROOT]: {
-      trayId: [project]
-    },
-    [SELECTED_ROOT]: {
-      trayId: []
-    }
-  }
-
-  render(<AvailableProjects feed={feed}/>, {state, currentLocation: '/#refresh'})
-
-  expect(Gateway.post).toHaveBeenCalled()
 })
 
 describe('accessibility', () => {
 
-  it('should announce projects if a user refreshes', () => {
+  it('should announce projects if a user refreshes', async () => {
     const feed = buildFeed({trayId: 'trayId'})
+    const project = buildProject({
+      projectId: 'projectId'
+    })
     const state = {
       [FEEDS_ROOT]: {
         trayId: feed
-      },
-      [PROJECTS_ROOT]: {
-        trayId: [
-          buildProject({
-            projectId: 'projectId'
-          })
-        ]
       },
       [SELECTED_ROOT]: {
         trayId: []
       }
     }
+    jest.spyOn(Gateway, 'post').mockResolvedValue(fakeRequest([project]))
     render(<AvailableProjects feed={feed}/>, {state})
+    await waitForLoadingToFinish()
     expect(screen.getByTestId('available-projects-list')).toHaveAttribute('aria-live', 'polite')
-  })
-
-  // This is because we first mark removed projects by disabling the checkbox and adding a removed label.
-  // The user would need to refresh again to actually remove the project checkbox from the DOM, at which
-  // point they should already know the project has been removed and thus it doesn't need to be announced
-  it('should only announce project additions', () => {
-    const feed = buildFeed({trayId: 'trayId'})
-    const state = {
-      [FEEDS_ROOT]: {
-        trayId: feed
-      },
-      [PROJECTS_ROOT]: {
-        trayId: [
-          buildProject({
-            projectId: 'projectId'
-          })
-        ]
-      },
-      [SELECTED_ROOT]: {
-        trayId: []
-      }
-    }
-    render(<AvailableProjects feed={feed}/>, {state})
-    expect(screen.getByTestId('available-projects-list')).toHaveAttribute('aria-relevant', 'additions')
   })
 })

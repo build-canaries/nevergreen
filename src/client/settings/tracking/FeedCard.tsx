@@ -1,10 +1,8 @@
 import React, {ReactElement} from 'react'
 import {URL} from '../../common/URL'
 import {Summary} from '../../common/Summary'
-import {Feed} from '../../domain/Feed'
-import {useDispatch, useSelector} from 'react-redux'
-import {getSelectedProjectsForFeed} from './SelectedReducer'
-import {getProjectsForFeed} from './ProjectsReducer'
+import {Feed, trackingModeDisplay} from '../../domain/Feed'
+import {useDispatch} from 'react-redux'
 import {Card} from '../../common/card/Card'
 import {CardHeading} from '../../common/card/CardHeading'
 import {feedRemoved} from './TrackingActionCreators'
@@ -17,14 +15,12 @@ interface FeedCardProps {
 
 export function FeedCard({feed}: FeedCardProps): ReactElement {
   const dispatch = useDispatch()
-  const selectedProjects = useSelector(getSelectedProjectsForFeed(feed.trayId))
-  const allProjects = useSelector(getProjectsForFeed(feed.trayId)).filter((project) => !project.removed)
 
   const title = feed.name ? feed.name : 'Unnamed feed'
 
   const summary = [
-    {label: 'Projects selected', value: `${selectedProjects.length} of ${allProjects.length}`},
-    {label: 'URL', value: <URL url={feed.url}/>}
+    {label: 'URL', value: <URL url={feed.url}/>},
+    {label: 'Tracking mode', value: trackingModeDisplay(feed.trackingMode)}
   ]
 
   const header = <CardHeading title={title}

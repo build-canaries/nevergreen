@@ -1,6 +1,6 @@
 import {Actions} from '../../Actions'
 import {createFeed, Feed} from '../../domain/Feed'
-import {ActionProjectsFetched, ActionRemoveFeed, ActionFeedAdded, ActionFeedUpdate} from './TrackingActionCreators'
+import {ActionFeedAdded, ActionFeedUpdate, ActionRemoveFeed} from './TrackingActionCreators'
 import {createReducer, createSelector} from '@reduxjs/toolkit'
 import {Draft} from 'immer'
 import {State} from '../../Reducer'
@@ -41,10 +41,6 @@ export const reduce = createReducer<FeedsState>(defaultState, {
   },
   [Actions.FEED_REMOVED]: (draft, action: ActionRemoveFeed) => {
     delete draft[action.trayId]
-  },
-  [Actions.PROJECTS_FETCHED]: (draft, action: ActionProjectsFetched) => {
-    draft[action.trayId].timestamp = action.timestamp
-    draft[action.trayId].serverType = action.serverType
   }
 })
 

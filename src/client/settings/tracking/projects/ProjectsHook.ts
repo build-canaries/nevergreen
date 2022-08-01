@@ -1,14 +1,11 @@
 import {useQuery, UseQueryResult} from 'react-query'
 import {post, send} from '../../../gateways/Gateway'
 import {ProjectsResponse, SortBy} from '../../../gateways/ProjectsGateway'
-import {isError as isProjectError, Projects} from '../../../domain/Project'
+import {isError as isProjectError, Project} from '../../../domain/Project'
 import {Feed} from '../../../domain/Feed'
 import omit from 'lodash/omit'
-import {projectsFetched} from '../TrackingActionCreators'
-import {useDispatch} from 'react-redux'
 
-export function useProjects(feed: Feed, enabled: boolean): UseQueryResult<Projects, Error> {
-  const dispatch = useDispatch()
+export function useProjects(feed: Feed): UseQueryResult<ReadonlyArray<Project>, Error> {
   return useQuery(['available-projects', feed.trayId], async ({signal}) => {
     const data = {
       feeds: [{
@@ -22,10 +19,5 @@ export function useProjects(feed: Feed, enabled: boolean): UseQueryResult<Projec
       throw new Error(errorMessages.join(', '))
     }
     return fetchedProjects
-  }, {
-    enabled,
-    onSuccess: (res) => {
-      dispatch(projectsFetched(feed.trayId, res, feed.includeNew))
-    }
   })
 }

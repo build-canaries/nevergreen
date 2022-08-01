@@ -1,5 +1,4 @@
 import {migrate} from './007_SetProjectDescription'
-import {PROJECTS_ROOT} from '../../settings/tracking/ProjectsReducer'
 
 it('should not modify the given data if it does not contain settings', () => {
   const data = {foo: 'bar'}
@@ -8,14 +7,14 @@ it('should not modify the given data if it does not contain settings', () => {
 })
 
 it('should not modify the given data if it contains the projects key but it is not an array', () => {
-  const data = {[PROJECTS_ROOT]: 'invalid'}
+  const data = {['projects']: 'invalid'}
   migrate(data)
-  expect(data).toEqual({[PROJECTS_ROOT]: 'invalid'})
+  expect(data).toEqual({['projects']: 'invalid'})
 })
 
 it('should set the description to the name if stage is blank', () => {
   const data = {
-    [PROJECTS_ROOT]: {
+    ['projects']: {
       trayId: [{
         name: 'some-name',
         stage: ''
@@ -23,12 +22,12 @@ it('should set the description to the name if stage is blank', () => {
     }
   }
   migrate(data)
-  expect(data).toEqual({[PROJECTS_ROOT]: {trayId: [{description: 'some-name'}]}})
+  expect(data).toEqual({['projects']: {trayId: [{description: 'some-name'}]}})
 })
 
 it('should set the description to the name and stage if the stage is not blank', () => {
   const data = {
-    [PROJECTS_ROOT]: {
+    ['projects']: {
       trayId: [{
         name: 'some-name',
         stage: 'some-stage'
@@ -36,5 +35,5 @@ it('should set the description to the name and stage if the stage is not blank',
     }
   }
   migrate(data)
-  expect(data).toEqual({[PROJECTS_ROOT]: {trayId: [{description: 'some-name some-stage'}]}})
+  expect(data).toEqual({['projects']: {trayId: [{description: 'some-name some-stage'}]}})
 })

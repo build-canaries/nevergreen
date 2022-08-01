@@ -1,7 +1,6 @@
 import {combineReducers} from 'redux'
 import {reduce as settings, SETTINGS_ROOT, SettingsState} from './settings/SettingsReducer'
 import {reduce as feeds, FEEDS_ROOT, FeedsState} from './settings/tracking/FeedsReducer'
-import {PROJECTS_ROOT, ProjectsState, reduce as projects} from './settings/tracking/ProjectsReducer'
 import {reduce as success, SUCCESS_ROOT, SuccessState} from './settings/success/SuccessReducer'
 import {reduce as selected, SELECTED_ROOT, SelectedState} from './settings/tracking/SelectedReducer'
 import {
@@ -17,7 +16,6 @@ import {
 
 export interface State {
   readonly [SETTINGS_ROOT]: SettingsState;
-  readonly [PROJECTS_ROOT]: ProjectsState;
   readonly [SELECTED_ROOT]: SelectedState;
   readonly [SUCCESS_ROOT]: SuccessState;
   readonly [FEEDS_ROOT]: FeedsState;
@@ -27,7 +25,6 @@ export interface State {
 
 export const reducer = combineReducers<State>({
   [SETTINGS_ROOT]: settings,
-  [PROJECTS_ROOT]: projects,
   [SELECTED_ROOT]: selected,
   [SUCCESS_ROOT]: success,
   [FEEDS_ROOT]: feeds,
