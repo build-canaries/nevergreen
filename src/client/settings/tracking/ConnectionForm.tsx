@@ -72,45 +72,59 @@ export function ConnectionForm({existingFeed, onSuccess, onCancel}: ConnectionFo
     return validationErrors
   }
 
-  const encryptPassword = async (signal: AbortSignal | undefined) => {
-    const encryptedPassword = await send(encrypt(password), signal)
-    return {
-      username,
-      encryptedPassword,
-      encryptedAccessToken: ''
+  const newAuthType = (): AuthTypes => {
+    switch (authType) {
+      case KeepExistingAuth.keep:
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        return existingFeed!.authType
+      default:
+        return authType
     }
   }
 
-  const encryptToken = async (signal: AbortSignal | undefined) => {
-    const encryptedAccessToken = await send(encrypt(accessToken), signal)
-    return {
-      username: '',
-      encryptedPassword: '',
-      encryptedAccessToken
+  const newUsername = (): string => {
+    switch (authType) {
+      case AuthTypes.basic:
+        return username
+      case KeepExistingAuth.keep:
+        return existingFeed?.username || ''
+      default:
+        return ''
     }
   }
 
-  const authUpdates = async (signal: AbortSignal | undefined) => {
-    if (authType === AuthTypes.basic && !isBlank(password)) {
-      return encryptPassword(signal)
-    } else if (authType === AuthTypes.token && !isBlank(accessToken)) {
-      return encryptToken(signal)
-    } else {
-      return {
-        username: '',
-        encryptedPassword: '',
-        encryptedAccessToken: ''
-      }
+  const newEncryptedPassword = async (signal: AbortSignal | undefined): Promise<string> => {
+    switch (authType) {
+      case AuthTypes.basic:
+        return send(encrypt(password), signal)
+      case KeepExistingAuth.keep:
+        return existingFeed?.encryptedPassword || ''
+      default:
+        return ''
+    }
+  }
+
+  const newEncryptedAccessToken = async (signal: AbortSignal | undefined): Promise<string> => {
+    switch (authType) {
+      case AuthTypes.token:
+        return send(encrypt(accessToken), signal)
+      case KeepExistingAuth.keep:
+        return existingFeed?.encryptedAccessToken || ''
+      default:
+        return ''
     }
   }
 
   const processForm = async (signal: AbortSignal | undefined) => {
-    const authData = await authUpdates(signal)
-    const actualAuthType = authType === KeepExistingAuth.keep
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      ? existingFeed!.authType
-      : authType
-    return {navigateTo: onSuccess({url, authType: actualAuthType, ...authData})}
+    return {
+      navigateTo: onSuccess({
+        url,
+        authType: newAuthType(),
+        username: newUsername(),
+        encryptedPassword: await newEncryptedPassword(signal),
+        encryptedAccessToken: await newEncryptedAccessToken(signal)
+      })
+    }
   }
 
   return (
@@ -123,7 +137,7 @@ export function ConnectionForm({existingFeed, onSuccess, onCancel}: ConnectionFo
           <>
             <Input value={url}
                    onChange={({target}) => setUrl(target.value)}
-                   autoComplete='url'
+                   autoComplete="url"
                    disabled={submitting}
                    error={firstError<Fields>('url', validationErrors)}>
               URL
@@ -140,14 +154,14 @@ export function ConnectionForm({existingFeed, onSuccess, onCancel}: ConnectionFo
                        value={username}
                        onChange={({target}) => setUsername(target.value)}
                        disabled={submitting}
-                       autoComplete='username'>
+                       autoComplete="username">
                   Username
                 </Input>
                 <Password className={styles.password}
                           value={password}
                           onChange={({target}) => setPassword(target.value)}
                           disabled={submitting}
-                          autoComplete='new-password'>
+                          autoComplete="new-password">
                   Password
                 </Password>
               </div>
@@ -158,7 +172,7 @@ export function ConnectionForm({existingFeed, onSuccess, onCancel}: ConnectionFo
                           value={accessToken}
                           onChange={({target}) => setAccessToken(target.value)}
                           disabled={submitting}
-                          autoComplete='new-password'>
+                          autoComplete="new-password">
                   Token
                 </Password>
               </div>

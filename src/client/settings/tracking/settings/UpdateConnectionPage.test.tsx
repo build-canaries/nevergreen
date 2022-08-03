@@ -7,20 +7,28 @@ import * as SecurityGateway from '../../../gateways/SecurityGateway'
 import * as ProjectsGateway from '../../../gateways/ProjectsGateway'
 import {fakeRequest} from '../../../gateways/Gateway'
 import {UpdateConnectionPage} from './UpdateConnectionPage'
+import {UserEvent} from '@testing-library/user-event/dist/types/setup'
+import {KeepExistingAuth, UpdateExistingAuthTypes} from '../ConnectionForm'
 
 beforeEach(() => {
   jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValue(fakeRequest(''))
 })
 
-it('should be able to update the URL', async () => {
+it.each([
+  AuthTypes.token,
+  AuthTypes.basic,
+  AuthTypes.none,
+  KeepExistingAuth.keep
+])('should be able to update connection details auth to %s', async (authType: UpdateExistingAuthTypes) => {
+  jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValue(fakeRequest('encrypted'))
   jest.spyOn(ProjectsGateway, 'testFeedConnection').mockResolvedValue(fakeRequest(undefined))
 
   const feed = buildFeed({
-    url: 'http://old',
     trayId: 'trayId',
     authType: AuthTypes.basic,
-    username: 'some-username',
-    encryptedPassword: 'some-encrypted-password'
+    url: 'http://old',
+    username: 'old-username',
+    encryptedPassword: 'old-password'
   })
   const state = {
     [FEEDS_ROOT]: {trayId: feed}
@@ -31,65 +39,24 @@ it('should be able to update the URL', async () => {
   await user.clear(screen.getByLabelText('URL'))
   await user.type(screen.getByLabelText('URL'), 'http://new')
 
+  await enterAuth[authType](user)
+
   await user.click(screen.getByRole('button', {name: 'Check connection'}))
 
   await waitFor(() => {
     expect(screen.getByText('Connected successfully')).toBeInTheDocument()
   })
   expect(ProjectsGateway.testFeedConnection).toHaveBeenCalledWith({
-    authType: AuthTypes.basic,
     url: 'http://new',
-    encryptedPassword: 'some-encrypted-password',
-    username: 'some-username'
+    ...testConnectionExpected[authType]
   })
 
   await user.click(screen.getByRole('button', {name: 'Save'}))
 
   await waitFor(() => {
     expect(getFeed('trayId')(store.getState())).toEqual(expect.objectContaining({
-      url: 'http://new'
-    }))
-  })
-  expect(window.location.pathname).toEqual('/settings/tracking/trayId/details')
-})
-
-it('should be able to update authentication', async () => {
-  jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValue(fakeRequest('encrypted-token'))
-  jest.spyOn(ProjectsGateway, 'testFeedConnection').mockResolvedValue(fakeRequest(undefined))
-
-  const feed = buildFeed({
-    trayId: 'trayId',
-    authType: AuthTypes.none,
-    url: 'http://some-url'
-  })
-  const state = {
-    [FEEDS_ROOT]: {trayId: feed}
-  }
-
-  const {store, user} = render(<UpdateConnectionPage/>, {state, outletContext: feed})
-
-  await user.selectOptions(screen.getByLabelText('Authentication'), AuthTypes.token)
-  await user.type(screen.getByLabelText('Token'), 'some-token')
-
-  await user.click(screen.getByRole('button', {name: 'Check connection'}))
-
-  await waitFor(() => {
-    expect(screen.getByText('Connected successfully')).toBeInTheDocument()
-  })
-  expect(ProjectsGateway.testFeedConnection).toHaveBeenCalledWith({
-    authType: AuthTypes.token,
-    url: 'http://some-url',
-    accessToken: 'some-token',
-    password: '',
-    username: ''
-  })
-
-  await user.click(screen.getByRole('button', {name: 'Save'}))
-
-  await waitFor(() => {
-    expect(getFeed('trayId')(store.getState())).toEqual(expect.objectContaining({
-      authType: AuthTypes.token,
-      encryptedAccessToken: 'encrypted-token'
+      url: 'http://new',
+      ...feedExpected[authType]
     }))
   })
   expect(window.location.pathname).toEqual('/settings/tracking/trayId/details')
@@ -155,3 +122,62 @@ describe('validation errors', () => {
     expect(screen.getByText('An existing CCTray XML feed already has this URL')).toBeInTheDocument()
   })
 })
+
+const enterAuth = {
+  [AuthTypes.token]: async (user: UserEvent) => {
+    await user.selectOptions(screen.getByLabelText('Authentication'), AuthTypes.token)
+    await user.type(screen.getByLabelText('Token'), 'new-token')
+  },
+  [AuthTypes.basic]: async (user: UserEvent) => {
+    await user.selectOptions(screen.getByLabelText('Authentication'), AuthTypes.basic)
+    await user.clear(screen.getByLabelText('Username'))
+    await user.type(screen.getByLabelText('Username'), 'new-username')
+    await user.type(screen.getByLabelText('Password'), 'new-password')
+  },
+  [AuthTypes.none]: async (user: UserEvent) => {
+    await user.selectOptions(screen.getByLabelText('Authentication'), AuthTypes.none)
+  },
+  [KeepExistingAuth.keep]: async (user: UserEvent) => {
+    await user.selectOptions(screen.getByLabelText('Authentication'), KeepExistingAuth.keep)
+  }
+}
+
+const testConnectionExpected = {
+  [AuthTypes.token]: {
+    authType: AuthTypes.token,
+    accessToken: 'new-token'
+  },
+  [AuthTypes.basic]: {
+    authType: AuthTypes.basic,
+    username: 'new-username',
+    password: 'new-password'
+  },
+  [AuthTypes.none]: {
+    authType: AuthTypes.none
+  },
+  [KeepExistingAuth.keep]: {
+    authType: AuthTypes.basic,
+    username: 'old-username',
+    encryptedPassword: 'old-password'
+  },
+}
+
+const feedExpected = {
+  [AuthTypes.token]: {
+    authType: AuthTypes.token,
+    encryptedAccessToken: 'encrypted'
+  },
+  [AuthTypes.basic]: {
+    authType: AuthTypes.basic,
+    username: 'new-username',
+    encryptedPassword: 'encrypted'
+  },
+  [AuthTypes.none]: {
+    authType: AuthTypes.none
+  },
+  [KeepExistingAuth.keep]: {
+    authType: AuthTypes.basic,
+    username: 'old-username',
+    encryptedPassword: 'old-password'
+  }
+}
