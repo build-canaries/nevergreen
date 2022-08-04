@@ -40,18 +40,25 @@ describe(Actions.CONFIGURATION_IMPORTED, () => {
 
 describe(Actions.FEED_UPDATED, () => {
 
-  it('should add the tray id with an empty set if tracking mode is updated to selected', () => {
+  it('should add the feed id with an empty set if tracking mode is updated to selected', () => {
     const existingState = state({})
     const action = feedUpdated('trayId', {trackingMode: TrackingMode.selected})
     const newState = reducer(existingState, action)
     expect(getSelectedProjectsForFeed('trayId')(newState)).toHaveLength(0)
   })
 
-  it('should remove the tray id if tracking mode is updated to everything', () => {
+  it('should remove the feed id if tracking mode is updated to everything', () => {
     const existingState = state({trayId: []})
     const action = feedUpdated('trayId', {trackingMode: TrackingMode.everything})
     const newState = reducer(existingState, action)
     expect(getSelectedProjectsForFeed('trayId')(newState)).toBeUndefined()
+  })
+
+  it('should not remove the feed id if tracking mode was not part of the update', () => {
+    const existingState = state({trayId: ['some-project-id']})
+    const action = feedUpdated('trayId', {name: 'some-name'})
+    const newState = reducer(existingState, action)
+    expect(getSelectedProjectsForFeed('trayId')(newState)).toHaveLength(1)
   })
 })
 

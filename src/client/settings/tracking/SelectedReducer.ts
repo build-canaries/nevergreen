@@ -23,7 +23,7 @@ export const reduce = createReducer<SelectedState>(defaultState, {
   [Actions.FEED_UPDATED]: (draft, action: ActionFeedUpdate) => {
     if (action.data.trackingMode === TrackingMode.selected) {
       draft[action.trayId] = []
-    } else {
+    } else if (action.data.trackingMode === TrackingMode.everything) {
       delete draft[action.trayId]
     }
   },
