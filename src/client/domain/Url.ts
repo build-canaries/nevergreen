@@ -1,4 +1,4 @@
-function buildUrl(value: string): URL | null {
+export function buildUrl(value: string): URL | null {
   try {
     return new URL(value)
   } catch (_) {

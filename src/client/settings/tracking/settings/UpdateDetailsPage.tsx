@@ -13,6 +13,7 @@ import {feedUpdated} from '../TrackingActionCreators'
 import {FeedLogo} from '../FeedLogo'
 import {Cog} from '../../../common/icons/Cog'
 import {useFeedContext} from '../FeedPage'
+import {URL} from '../../../common/URL'
 
 export function UpdateDetailsPage(): ReactElement {
   const feed = useFeedContext()
@@ -20,7 +21,7 @@ export function UpdateDetailsPage(): ReactElement {
   const [name, setName] = useState(feed.name)
 
   const connectionDetails = [
-    {label: 'URL', value: feed.url},
+    {label: 'URL', value: <URL url={feed.url}/>},
     {label: 'Authentication', value: authTypeDisplay(feed.authType)}
   ]
 

@@ -29,7 +29,7 @@ describe('Backups', () => {
     cy.findByRole('button', {name: 'Add location'}).click()
 
     cy.findByText('Custom server').should('exist')
-    cy.findByText('http://test').should('exist')
+    cy.findByText(/http:\/\/test/).should('exist')
 
     cy.findByRole('link', {name: 'Backup'}).click()
 

@@ -9,7 +9,7 @@ describe('custom server', () => {
   it('should display the URL', () => {
     const location = buildRemoteBackupLocation({where: RemoteLocationOptions.custom, url: 'http://some-custom-server'})
     render(<RemoteBackupCard location={location}/>)
-    expect(screen.getByText('http://some-custom-server')).toBeInTheDocument()
+    expect(screen.getByText(/http:\/\/some-custom-server/)).toBeInTheDocument()
   })
 })
 

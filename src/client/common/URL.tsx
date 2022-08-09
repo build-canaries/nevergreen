@@ -1,29 +1,50 @@
 import React, {Fragment, ReactElement} from 'react'
 import styles from './url.scss'
+import {buildUrl} from '../domain/Url'
+import {isNotBlank} from './Utils'
 
 interface URLProps {
   readonly url: string;
 }
 
-function notPartOfScheme(i: number, arr: string[]) {
-  return arr[i - 1] !== '/' && arr[i - 1] !== ':'
-}
-
-function isPathSeparator(c: string, i: number, arr: string[]) {
-  return c === '/' && notPartOfScheme(i, arr)
+function isPathSeparator(c: string) {
+  return c === '/'
 }
 
 function isPunctuation(c: string) {
-  return c === '.' || c === '?' || c === '=' || c === '&'
+  return c === '.' || c === '?' || c === '=' || c === '&' || c === '@' || c === ':'
+}
+
+function redactPassword(url: URL) {
+  if (url.password) {
+    url.password = 'REDACTED'
+  }
+}
+
+function redactQueryParams(url: URL) {
+  url.searchParams.forEach((v, k) => {
+    if (isNotBlank(v)) {
+      url.searchParams.set(k, 'REDACTED')
+    }
+  })
 }
 
 export function URL({url}: URLProps): ReactElement {
-  const chars = [...url]
+  const u = buildUrl(url)
+  if (u === null) {
+    return <span/>
+  }
+  redactPassword(u)
+  redactQueryParams(u)
+  const chars = [...u.href.replace(`${u.protocol}//`, '')]
   return (
     <span className={styles.url}>
+      {u.protocol}
+      {'//'}
+      <wbr/>
       {
-        chars.map((c, i, arr) => {
-          if (i > 0 && (isPathSeparator(c, i, arr) || isPunctuation(c))) {
+        chars.map((c, i) => {
+          if (isPathSeparator(c) || isPunctuation(c)) {
             return (
               <Fragment key={i}>
                 <wbr/>

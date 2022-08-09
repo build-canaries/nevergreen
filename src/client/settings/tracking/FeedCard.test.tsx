@@ -17,6 +17,6 @@ it('should display some feed details', () => {
     [SELECTED_ROOT]: {trayId: ['1']}
   }
   render(<FeedCard feed={feed}/>, {state})
-  expect(screen.getByText('http://some-url')).toBeInTheDocument()
+  expect(screen.getByText(/http:\/\/some-url/)).toBeInTheDocument()
   expect(screen.getByText('Selected')).toBeInTheDocument()
 })

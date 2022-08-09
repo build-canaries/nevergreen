@@ -1,5 +1,5 @@
 import React from 'react'
-import {screen, waitFor} from '@testing-library/react'
+import {screen, waitForElementToBeRemoved} from '@testing-library/react'
 import {buildRemoteBackupLocation, render} from '../../testHelpers'
 import {BackupPage} from './BackupPage'
 import {BACKUP_REMOTE_LOCATIONS_ROOT} from './RemoteLocationsReducer'
@@ -17,11 +17,9 @@ it('should be able to remove remote locations', async () => {
   }
   const {user} = render(<BackupPage/>, {state})
 
-  expect(screen.getByText('http://example.com')).toBeInTheDocument()
+  expect(screen.getByText(/http:\/\/example.com/)).toBeInTheDocument()
 
-  await user.click(screen.getByRole('button', {name: 'Remove Remote Custom server location'}))
+  void user.click(screen.getByRole('button', {name: 'Remove Remote Custom server location'}))
 
-  await waitFor(() => {
-    expect(screen.queryByText('http://example.com')).not.toBeInTheDocument()
-  })
+  await waitForElementToBeRemoved(() => screen.queryByText(/http:\/\/example.com/))
 })
