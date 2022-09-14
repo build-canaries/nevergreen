@@ -29,8 +29,8 @@ import {RemoteLocationOptions} from './settings/backup/RemoteLocationOptions'
 import {Route, Routes} from 'react-router'
 import {QueryClientProvider} from 'react-query'
 import userEvent from '@testing-library/user-event'
-import {UserEvent} from '@testing-library/user-event/dist/types/setup'
 import {queryClient} from './queryClient'
+import {UserEvent} from '@testing-library/user-event/setup/setup'
 
 interface ExtendedRenderResult extends RenderResult {
   readonly store: EnhancedStore<State, AnyAction, ReadonlyArray<Middleware<unknown, State>>>;
@@ -78,7 +78,7 @@ export function setupReactModal(): void {
 
 export function render(component: ReactNode, options: ExtendedRenderOptions = {}): ExtendedRenderResult {
   const mergedOptions = {
-    mountPath: '/*',
+    mountPath: '/',
     currentLocation: '/',
     state: {},
     ...options
@@ -184,4 +184,8 @@ export function setSystemTime(timestamp: string): void {
 
 export function waitForLoadingToFinish() {
   return waitForElementToBeRemoved(screen.queryByTestId('loading'))
+}
+
+export async function waitForLocationToChange() {
+  await screen.findByText('location changed')
 }

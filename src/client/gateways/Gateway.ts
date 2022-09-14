@@ -66,6 +66,6 @@ export async function send<T>(request: Request<T>, signal?: AbortSignal): Promis
   }
 }
 
-export function fakeRequest<T>(body: T): Request<T> {
+export function fakeRequest<T>(body?: T): Request<T> {
   return {body, abort: noop} as unknown as Request<T>
 }

@@ -52,7 +52,7 @@ export function Form<Fields extends string>({
   }, {
     enabled: false,
     onSuccess: (res) => {
-      if (res && res.navigateTo) {
+      if (res?.navigateTo) {
         navigate(res.navigateTo)
       }
     }

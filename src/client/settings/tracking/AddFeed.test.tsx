@@ -4,11 +4,11 @@ import {screen, waitFor} from '@testing-library/react'
 import * as SecurityGateway from '../../gateways/SecurityGateway'
 import * as ProjectsGateway from '../../gateways/ProjectsGateway'
 import {FEEDS_ROOT, getFeeds} from './FeedsReducer'
-import {buildFeed, render} from '../../testHelpers'
+import {buildFeed, render, waitForLocationToChange} from '../../testHelpers'
 import {fakeRequest} from '../../gateways/Gateway'
 import * as Feed from '../../domain/Feed'
 import {AuthTypes} from '../../domain/Feed'
-import {UserEvent} from '@testing-library/user-event/dist/types/setup'
+import {UserEvent} from '@testing-library/user-event/setup/setup'
 
 beforeEach(() => {
   jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValue(fakeRequest(''))
@@ -53,7 +53,7 @@ it.each([
 ])('should allow adding feeds with auth %s', async (authType) => {
   jest.spyOn(Feed, 'createId').mockReturnValue('some-feed-id')
   jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValue(fakeRequest('encrypted'))
-  jest.spyOn(ProjectsGateway, 'testFeedConnection').mockResolvedValue(fakeRequest(undefined))
+  jest.spyOn(ProjectsGateway, 'testFeedConnection').mockResolvedValue(fakeRequest())
 
   const state = {
     [FEEDS_ROOT]: {}
@@ -76,16 +76,13 @@ it.each([
 
   await user.click(screen.getByText('Add feed'))
 
-  await waitFor(() => {
-    expect(getFeeds(store.getState())).toEqual(expect.arrayContaining([
-      expect.objectContaining({
-        ...feedExpected[authType]
-      })
-    ]))
-  })
-  expect(window.location).toEqual(expect.objectContaining({
-    pathname: '/settings/tracking/some-feed-id/projects'
-  }))
+  await waitForLocationToChange()
+  expect(getFeeds(store.getState())).toEqual(expect.arrayContaining([
+    expect.objectContaining({
+      ...feedExpected[authType]
+    })
+  ]))
+  expect(window.location.pathname).toEqual('/settings/tracking/some-feed-id/projects')
 })
 
 const enterAuth = {

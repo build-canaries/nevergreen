@@ -116,13 +116,15 @@ export function ConnectionForm({existingFeed, onSuccess, onCancel}: ConnectionFo
   }
 
   const processForm = async (signal: AbortSignal | undefined) => {
+    const encryptedPassword = await newEncryptedPassword(signal)
+    const encryptedAccessToken = await newEncryptedAccessToken(signal)
     return {
       navigateTo: onSuccess({
         url,
         authType: newAuthType(),
         username: newUsername(),
-        encryptedPassword: await newEncryptedPassword(signal),
-        encryptedAccessToken: await newEncryptedAccessToken(signal)
+        encryptedPassword,
+        encryptedAccessToken
       })
     }
   }
