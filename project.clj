@@ -4,7 +4,7 @@
   ; use lein deps :tree to check dependency problems and actual versions used
   :dependencies [[org.clojure/clojure "1.11.1"]
                  [ring "1.9.5" :exclusions [org.eclipse.jetty/jetty-server]]
-                 [org.eclipse.jetty/jetty-server "9.4.48.v20220622"]
+                 [org.eclipse.jetty/jetty-server "9.4.49.v20220914"]
                  [compojure "1.7.0" :exclusions [ring/ring-codec]]
                  [environ "1.2.0"]
                  [cheshire "5.11.0"]
@@ -13,16 +13,16 @@
                  [clj-http "3.12.3" :exclusions [commons-codec commons-io]]
                  [ring-curl "1.0.1"]
                  [ring/ring-json "0.5.1"]
-                 [ring/ring-defaults "0.3.3"]
+                 [ring/ring-defaults "0.3.4"]
                  [bk/ring-gzip "0.3.0"]
                  [ring-basic-authentication "1.1.1"]
                  [base64-clj "0.1.1"]
                  [camel-snake-kebab "0.4.3"]
                  [com.cemerick/url "0.1.1" :exclusions [com.cemerick/clojurescript.test]]
-                 [ch.qos.logback/logback-classic "1.2.11" :exclusions [org.slf4j/slf4j-api]]
-                 [org.slf4j/log4j-over-slf4j "1.7.36"]
-                 [org.slf4j/jul-to-slf4j "1.7.36"]
-                 [org.slf4j/jcl-over-slf4j "1.7.36"]]
+                 [ch.qos.logback/logback-classic "1.4.3" :exclusions [org.slf4j/slf4j-api]]
+                 [org.slf4j/log4j-over-slf4j "2.0.3"]
+                 [org.slf4j/jul-to-slf4j "2.0.3"]
+                 [org.slf4j/jcl-over-slf4j "2.0.3"]]
   :min-lein-version "2.0.0"
   :uberjar-name "nevergreen-standalone.jar"
   :main nevergreen.app
@@ -35,7 +35,7 @@
             "coverage"      ["with-profile" "+test" "cloverage"]
             "check-updates" ["ancient" ":all"]}
   :profiles {:dev  {:plugins [[lein-ancient "0.7.0"]
-                              [jonase/eastwood "1.2.4"]
+                              [jonase/eastwood "1.3.0"]
                               [lein-cloverage "1.2.4"]
                               [lein-eftest "0.5.9"]]}
              :test {:jvm-opts ["-Dlogback.configurationFile=./src/logback-tests.xml"]}}
