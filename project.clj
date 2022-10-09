@@ -3,7 +3,7 @@
   :url "https://github.com/build-canaries/nevergreen"
   ; use lein deps :tree to check dependency problems and actual versions used
   :dependencies [[org.clojure/clojure "1.11.1"]
-                 [ring "1.9.5" :exclusions [org.eclipse.jetty/jetty-server]]
+                 [ring "1.9.6" :exclusions [org.eclipse.jetty/jetty-server]]
                  [org.eclipse.jetty/jetty-server "9.4.49.v20220914"]
                  [compojure "1.7.0" :exclusions [ring/ring-codec]]
                  [environ "1.2.0"]
