@@ -9,6 +9,7 @@ import * as SetProjectDescription from './007_SetProjectDescription'
 import * as UpdateMaxProjectsToShow from './008_UpdateMaxProjectsToShow'
 import * as RemoveProjects from './009_RemoveProjects'
 import * as SetTrackingMode from './010_SetTrackingMode'
+import * as RemoveOldKeys from './011_RemoveOldKeys'
 
 export type Migrate = (data: UntrustedData) => void
 
@@ -28,6 +29,7 @@ export function getOrderedMigrations(): ReadonlyArray<Migration> {
     SetProjectDescription,
     UpdateMaxProjectsToShow,
     RemoveProjects,
-    SetTrackingMode
+    SetTrackingMode,
+    RemoveOldKeys
   ]
 }

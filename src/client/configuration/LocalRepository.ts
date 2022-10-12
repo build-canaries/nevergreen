@@ -10,8 +10,8 @@ export async function init(): Promise<void> {
 }
 
 export async function save(data: State): Promise<void> {
-  await Promise.all(toPairs(data).map((pair) => {
-    return localforage.setItem(pair[0], pair[1])
+  await Promise.all(toPairs(data).map(([key, value]) => {
+    return localforage.setItem(key, value)
   }))
 }
 
