@@ -1,5 +1,6 @@
 import React from 'react'
-import {buildFeed, render} from '../../testUtils/testHelpers'
+import {render} from '../../testUtils/testHelpers'
+import {buildFeed} from '../../testUtils/builders'
 import {FEEDS_ROOT} from './FeedsReducer'
 import {screen, waitFor} from '@testing-library/react'
 import {TrackingPage} from './TrackingPage'

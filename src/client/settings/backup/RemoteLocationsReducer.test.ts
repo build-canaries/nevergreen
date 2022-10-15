@@ -1,6 +1,7 @@
 import {BACKUP_REMOTE_LOCATIONS_ROOT, getBackupLocations, reduce, RemoteLocationsState} from './RemoteLocationsReducer'
 import {Actions} from '../../Actions'
-import {buildRemoteBackupLocation, buildState, testReducer} from '../../testUtils/testHelpers'
+import {testReducer} from '../../testUtils/testHelpers'
+import {buildRemoteBackupLocation, buildState} from '../../testUtils/builders'
 import {State} from '../../Reducer'
 import {RecursivePartial} from '../../common/Types'
 import {configurationImported, removeBackup} from './BackupActionCreators'

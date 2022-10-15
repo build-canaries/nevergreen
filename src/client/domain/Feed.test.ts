@@ -1,5 +1,5 @@
 import {feedIdentifier} from './Feed'
-import {buildFeed} from '../testUtils/testHelpers'
+import {buildFeed} from '../testUtils/builders'
 
 describe('feedIdentifier', () => {
 

@@ -6,9 +6,9 @@ import {
   getRefreshTime,
   getShowBuildLabel,
   getShowBuildTime,
+  getShowFeedIdentifier,
   getShowPrognosis,
   getShowSystemNotifications,
-  getShowFeedIdentifier,
   getSort,
   getToggleVersionCheck,
   MaxProjectsToShow,
@@ -25,13 +25,14 @@ import {
   setRefreshTime,
   setShowBuildLabel,
   setShowBuildTime,
+  setShowFeedIdentifier,
   setShowPrognosis,
   setShowSystemNotifications,
-  setShowFeedIdentifier,
   setSort,
   toggleVersionCheck
 } from './SettingsActionCreators'
-import {buildState, testReducer} from '../testUtils/testHelpers'
+import {testReducer} from '../testUtils/testHelpers'
+import {buildState} from '../testUtils/builders'
 import {RecursivePartial} from '../common/Types'
 import {Prognosis} from '../domain/Project'
 import {configurationImported} from './backup/BackupActionCreators'

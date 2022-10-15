@@ -1,6 +1,7 @@
 import React from 'react'
 import {screen, waitFor} from '@testing-library/react'
-import {buildFeed, render, waitForLocationToChange} from '../../../testUtils/testHelpers'
+import {render, waitForLocationToChange} from '../../../testUtils/testHelpers'
+import {buildFeed} from '../../../testUtils/builders'
 import {FEEDS_ROOT, getFeed} from '../FeedsReducer'
 import {AuthTypes} from '../../../domain/Feed'
 import * as SecurityGateway from '../../../gateways/SecurityGateway'

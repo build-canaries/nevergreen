@@ -1,6 +1,7 @@
 import React from 'react'
 import {InterestingProjects} from './InterestingProjects'
-import {buildProject, buildProjectError, buildFeed, render, setSystemTime} from '../testUtils/testHelpers'
+import {render, setSystemTime} from '../testUtils/testHelpers'
+import {buildFeed, buildProject, buildProjectError} from '../testUtils/builders'
 import {Prognosis, ProjectPrognosis} from '../domain/Project'
 import {FEEDS_ROOT} from '../settings/tracking/FeedsReducer'
 import {MaxProjectsToShow, SETTINGS_ROOT} from '../settings/SettingsReducer'

@@ -1,6 +1,7 @@
 import React from 'react'
 import {screen, waitFor} from '@testing-library/react'
-import {buildFeed, render} from '../../../testUtils/testHelpers'
+import {render} from '../../../testUtils/testHelpers'
+import {buildFeed} from '../../../testUtils/builders'
 import {FEEDS_ROOT, getFeed} from '../FeedsReducer'
 import {UpdateDetailsPage} from './UpdateDetailsPage'
 import {SELECTED_ROOT} from '../SelectedReducer'

@@ -1,5 +1,6 @@
 import React from 'react'
-import {buildRemoteBackupLocation, render} from '../../testUtils/testHelpers'
+import {render} from '../../testUtils/testHelpers'
+import {buildRemoteBackupLocation} from '../../testUtils/builders'
 import {RemoteLocationOptions} from './RemoteLocationOptions'
 import {RemoteBackupCard} from './RemoteBackupCard'
 import {screen} from '@testing-library/react'

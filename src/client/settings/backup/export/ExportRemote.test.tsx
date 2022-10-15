@@ -1,5 +1,6 @@
 import React from 'react'
-import {buildRemoteBackupLocation, render} from '../../../testUtils/testHelpers'
+import {render} from '../../../testUtils/testHelpers'
+import {buildRemoteBackupLocation} from '../../../testUtils/builders'
 import {ExportRemote} from './ExportRemote'
 import * as BackupGateway from '../../../gateways/BackupGateway'
 import {fakeRequest} from '../../../gateways/Gateway'

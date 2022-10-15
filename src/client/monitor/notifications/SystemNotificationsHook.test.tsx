@@ -2,7 +2,8 @@ import React from 'react'
 import * as SystemNotifications from '../../common/SystemNotifications'
 import {Prognosis, Projects} from '../../domain/Project'
 import {useSystemNotifications} from './SystemNotificationsHook'
-import {buildProject, render} from '../../testUtils/testHelpers'
+import {render} from '../../testUtils/testHelpers'
+import {buildProject} from '../../testUtils/builders'
 import {SETTINGS_ROOT} from '../../settings/SettingsReducer'
 
 function HookWrapper({projects}: { projects: Projects }) {
