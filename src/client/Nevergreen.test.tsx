@@ -1,7 +1,7 @@
 import React from 'react'
 import {left} from 'fp-ts/Either'
 import {Nevergreen} from './Nevergreen'
-import {render, waitForLoadingToFinish} from './testHelpers'
+import {render, waitForLoadingToFinish} from './testUtils/testHelpers'
 import {screen} from '@testing-library/react'
 import * as LocalConfiguration from './configuration/LocalRepository'
 import * as Configuration from './configuration/Configuration'

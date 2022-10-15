@@ -1,6 +1,6 @@
 import React from 'react'
 import {BaseButton, ButtonTheme} from './Button'
-import {render} from '../../testHelpers'
+import {render} from '../../testUtils/testHelpers'
 import {screen} from '@testing-library/react'
 
 it('should explicitly set the type as the default is "submit"', () => {

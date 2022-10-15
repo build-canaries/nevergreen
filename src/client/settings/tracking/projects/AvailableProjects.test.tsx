@@ -1,6 +1,6 @@
 import React from 'react'
 import {screen, waitFor} from '@testing-library/react'
-import {buildFeed, buildProject, buildProjectError, render, waitForLoadingToFinish} from '../../../testHelpers'
+import {buildFeed, buildProject, buildProjectError, render, waitForLoadingToFinish} from '../../../testUtils/testHelpers'
 import * as Gateway from '../../../gateways/Gateway'
 import {fakeRequest} from '../../../gateways/Gateway'
 import {AvailableProjects} from './AvailableProjects'

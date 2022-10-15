@@ -1,5 +1,5 @@
 import React from 'react'
-import {buildFeed, render} from '../../testHelpers'
+import {buildFeed, render} from '../../testUtils/testHelpers'
 import {screen} from '@testing-library/react'
 import {FeedCard} from './FeedCard'
 import {FEEDS_ROOT} from './FeedsReducer'

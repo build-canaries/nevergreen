@@ -1,6 +1,6 @@
 import React from 'react'
 import {Password} from './Password'
-import {render} from '../../testHelpers'
+import {render} from '../../testUtils/testHelpers'
 import {screen} from '@testing-library/react'
 
 it('should allow the password to be shown', async () => {

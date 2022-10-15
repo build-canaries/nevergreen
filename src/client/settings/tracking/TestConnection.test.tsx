@@ -1,5 +1,5 @@
 import React from 'react'
-import {render} from '../../testHelpers'
+import {render} from '../../testUtils/testHelpers'
 import {screen, waitFor} from '@testing-library/react'
 import {TestConnection} from './TestConnection'
 import {AuthTypes} from '../../domain/Feed'

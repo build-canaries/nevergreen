@@ -1,5 +1,5 @@
 import React from 'react'
-import {buildRemoteBackupLocation, buildState, render} from '../../../testHelpers'
+import {buildRemoteBackupLocation, buildState, render} from '../../../testUtils/testHelpers'
 import {toJson} from '../../../common/Json'
 import {screen, waitFor, waitForElementToBeRemoved} from '@testing-library/react'
 import {ImportRemote} from './ImportRemote'

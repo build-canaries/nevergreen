@@ -31,7 +31,7 @@ import {
   setSort,
   toggleVersionCheck
 } from './SettingsActionCreators'
-import {buildState, testReducer} from '../testHelpers'
+import {buildState, testReducer} from '../testUtils/testHelpers'
 import {RecursivePartial} from '../common/Types'
 import {Prognosis} from '../domain/Project'
 import {configurationImported} from './backup/BackupActionCreators'

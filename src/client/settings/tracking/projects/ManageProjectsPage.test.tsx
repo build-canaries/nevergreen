@@ -1,4 +1,4 @@
-import {buildFeed, render} from '../../../testHelpers'
+import {buildFeed, render} from '../../../testUtils/testHelpers'
 import React from 'react'
 import {screen} from '@testing-library/react'
 import {ManageProjectsPage} from './ManageProjectsPage'

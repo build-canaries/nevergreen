@@ -1,6 +1,6 @@
 import {exportConfiguration, fetchConfiguration} from './BackupGateway'
 import * as gateway from '../gateways/Gateway'
-import {buildRemoteBackupLocation} from '../testHelpers'
+import {buildRemoteBackupLocation} from '../testUtils/testHelpers'
 import {RemoteLocationOptions} from '../settings/backup/RemoteLocationOptions'
 
 describe('exportConfiguration', () => {

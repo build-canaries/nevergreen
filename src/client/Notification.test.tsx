@@ -1,6 +1,6 @@
 import React from 'react'
 import {Notification} from './Notification'
-import {render} from './testHelpers'
+import {render} from './testUtils/testHelpers'
 import noop from 'lodash/noop'
 import {screen} from '@testing-library/react'
 

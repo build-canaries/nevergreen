@@ -1,6 +1,6 @@
 import React from 'react'
 import {screen, waitFor} from '@testing-library/react'
-import {render} from '../../testHelpers'
+import {render} from '../../testUtils/testHelpers'
 import {DEFAULT_GITHUB_URL} from './RemoteLocationOptions'
 import * as SecurityGateway from '../../gateways/SecurityGateway'
 import {fakeRequest} from '../../gateways/Gateway'

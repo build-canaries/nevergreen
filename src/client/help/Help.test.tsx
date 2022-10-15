@@ -1,6 +1,6 @@
 import React from 'react'
 import {Help} from './Help'
-import {render, setupReactModal} from '../testHelpers'
+import {render, setupReactModal} from '../testUtils/testHelpers'
 import {screen} from '@testing-library/react'
 import {ROUTE_TRACKING} from '../AppRoutes'
 

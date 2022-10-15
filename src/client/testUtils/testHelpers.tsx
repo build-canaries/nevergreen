@@ -1,14 +1,14 @@
-import React, {ReactNode} from 'react'
+import React, {ReactElement, ReactNode} from 'react'
 import merge from 'lodash/merge'
-import {reducer, State} from './Reducer'
-import {MaxProjectsToShow, SETTINGS_ROOT} from './settings/SettingsReducer'
-import {SELECTED_ROOT} from './settings/tracking/SelectedReducer'
-import {SUCCESS_ROOT} from './settings/success/SuccessReducer'
-import {FEEDS_ROOT} from './settings/tracking/FeedsReducer'
-import {Prognosis, Project} from './domain/Project'
-import {createFeed, Feed} from './domain/Feed'
+import {reducer, State} from '../Reducer'
+import {MaxProjectsToShow, SETTINGS_ROOT} from '../settings/SettingsReducer'
+import {SELECTED_ROOT} from '../settings/tracking/SelectedReducer'
+import {SUCCESS_ROOT} from '../settings/success/SuccessReducer'
+import {FEEDS_ROOT} from '../settings/tracking/FeedsReducer'
+import {Prognosis, Project} from '../domain/Project'
+import {createFeed, Feed} from '../domain/Feed'
 import {CombinedState, combineReducers, Middleware, Reducer} from 'redux'
-import {RecursivePartial} from './common/Types'
+import {RecursivePartial} from '../common/Types'
 import {
   render as testRender,
   RenderOptions,
@@ -20,16 +20,16 @@ import {Provider} from 'react-redux'
 import {AnyAction, configureStore, EnhancedStore} from '@reduxjs/toolkit'
 import {BrowserRouter, Outlet} from 'react-router-dom'
 import Modal from 'react-modal'
-import {DEFAULT_REFRESH_TIME} from './settings/SettingsActionCreators'
-import {APPLIED_MIGRATIONS_ROOT} from './configuration/MigrationsReducer'
-import {ProjectError, SortBy} from './gateways/ProjectsGateway'
+import {DEFAULT_REFRESH_TIME} from '../settings/SettingsActionCreators'
+import {APPLIED_MIGRATIONS_ROOT} from '../configuration/MigrationsReducer'
+import {ProjectError, SortBy} from '../gateways/ProjectsGateway'
 import parseISO from 'date-fns/parseISO'
-import {BACKUP_REMOTE_LOCATIONS_ROOT, RemoteLocation} from './settings/backup/RemoteLocationsReducer'
-import {RemoteLocationOptions} from './settings/backup/RemoteLocationOptions'
+import {BACKUP_REMOTE_LOCATIONS_ROOT, RemoteLocation} from '../settings/backup/RemoteLocationsReducer'
+import {RemoteLocationOptions} from '../settings/backup/RemoteLocationOptions'
 import {Route, Routes} from 'react-router'
 import {QueryClientProvider} from 'react-query'
 import userEvent from '@testing-library/user-event'
-import {queryClient} from './queryClient'
+import {queryClient} from '../queryClient'
 import {UserEvent} from '@testing-library/user-event/setup/setup'
 
 interface ExtendedRenderResult extends RenderResult {
@@ -76,7 +76,7 @@ export function setupReactModal(): void {
   Modal.setAppElement('#app-element')
 }
 
-export function render(component: ReactNode, options: ExtendedRenderOptions = {}): ExtendedRenderResult {
+export function render(component: ReactElement, options: ExtendedRenderOptions = {}): ExtendedRenderResult {
   const mergedOptions = {
     mountPath: '/',
     currentLocation: '/',
@@ -93,13 +93,13 @@ export function render(component: ReactNode, options: ExtendedRenderOptions = {}
     }
   })
 
-  const wrapWithStoreAndRouter = (c: ReactNode) => (
+  const wrapper = ({children}: { children: ReactNode }) => (
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
         <BrowserRouter>
           <Routes>
             <Route element={<Outlet context={mergedOptions.outletContext}/>}>
-              <Route path={mergedOptions.mountPath} element={c}/>
+              <Route path={mergedOptions.mountPath} element={children}/>
               <Route path="*" element={<>location changed</>}/>
             </Route>
           </Routes>
@@ -108,11 +108,10 @@ export function render(component: ReactNode, options: ExtendedRenderOptions = {}
     </QueryClientProvider>
   )
 
-  const view = testRender(wrapWithStoreAndRouter(component), options)
+  const view = testRender(component, {...options, wrapper})
 
   return {
     ...view,
-    rerender: (c: ReactNode): void => view.rerender(wrapWithStoreAndRouter(c)),
     store,
     user
   }

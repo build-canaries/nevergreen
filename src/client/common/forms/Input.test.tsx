@@ -1,6 +1,6 @@
 import React from 'react'
 import {Input} from './Input'
-import {render} from '../../testHelpers'
+import {render} from '../../testUtils/testHelpers'
 import {screen} from '@testing-library/react'
 
 it('should apply the read only attribute and display an icon', () => {

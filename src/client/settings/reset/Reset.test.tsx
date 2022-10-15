@@ -2,7 +2,7 @@ import React from 'react'
 import {screen, waitFor} from '@testing-library/react'
 import * as LocalConfiguration from '../../configuration/LocalRepository'
 import {Reset} from './Reset'
-import {render} from '../../testHelpers'
+import {render} from '../../testUtils/testHelpers'
 
 const {location} = window
 

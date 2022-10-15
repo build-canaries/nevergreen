@@ -6,7 +6,7 @@ import {
   NotificationsSystem,
   PERMISSION_DENIED_MESSAGE
 } from './NotificationsSystem'
-import {render} from '../../testHelpers'
+import {render} from '../../testUtils/testHelpers'
 import {getShowSystemNotifications, SETTINGS_ROOT} from '../SettingsReducer'
 import * as SystemNotifications from '../../common/SystemNotifications'
 

@@ -1,6 +1,6 @@
 import {Configuration, DataSource, toConfiguration, toExportableConfigurationJson} from './Configuration'
 import {Either, isLeft, isRight} from 'fp-ts/Either'
-import {buildRemoteBackupLocation, buildState} from '../testHelpers'
+import {buildRemoteBackupLocation, buildState} from '../testUtils/testHelpers'
 import {BACKUP_REMOTE_LOCATIONS_ROOT} from '../settings/backup/RemoteLocationsReducer'
 import {SETTINGS_ROOT} from '../settings/SettingsReducer'
 import {FEEDS_ROOT} from '../settings/tracking/FeedsReducer'

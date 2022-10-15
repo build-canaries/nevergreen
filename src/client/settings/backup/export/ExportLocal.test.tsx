@@ -1,5 +1,5 @@
 import React from 'react'
-import {render} from '../../../testHelpers'
+import {render} from '../../../testUtils/testHelpers'
 import {ExportLocal} from './ExportLocal'
 import * as ClipboardHook from './ClipboardHook'
 import * as FileSystem from '../FileSystem'

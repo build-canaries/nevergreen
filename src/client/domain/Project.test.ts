@@ -10,7 +10,7 @@ import {
   ProjectPrognosis,
   toProjectError
 } from './Project'
-import {buildProject, buildProjectError} from '../testHelpers'
+import {buildProject, buildProjectError} from '../testUtils/testHelpers'
 import * as DateTime from '../common/DateTime'
 
 describe('toProjectError', () => {

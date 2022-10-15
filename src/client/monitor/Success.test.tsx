@@ -1,6 +1,6 @@
 import React from 'react'
 import {Success} from './Success'
-import {render} from '../testHelpers'
+import {render} from '../testUtils/testHelpers'
 import {SUCCESS_ROOT} from '../settings/success/SuccessReducer'
 import {screen} from '@testing-library/react'
 

@@ -1,7 +1,7 @@
 import {getSelectedProjectsForFeed, reduce, SELECTED_ROOT, SelectedState} from './SelectedReducer'
 import {Actions} from '../../Actions'
 import {feedRemoved, feedUpdated, projectSelected} from './TrackingActionCreators'
-import {buildState, testReducer} from '../../testHelpers'
+import {buildState, testReducer} from '../../testUtils/testHelpers'
 import {RecursivePartial} from '../../common/Types'
 import {TrackingMode} from '../../domain/Feed'
 import {configurationImported} from '../backup/BackupActionCreators'

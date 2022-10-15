@@ -1,4 +1,4 @@
-import {render, setSystemTime} from '../testHelpers'
+import {render, setSystemTime} from '../testUtils/testHelpers'
 import React from 'react'
 import {Duration} from './Duration'
 import {screen} from '@testing-library/react'

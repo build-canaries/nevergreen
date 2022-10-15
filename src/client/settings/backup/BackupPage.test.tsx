@@ -1,6 +1,6 @@
 import React from 'react'
 import {screen, waitForElementToBeRemoved} from '@testing-library/react'
-import {buildRemoteBackupLocation, render} from '../../testHelpers'
+import {buildRemoteBackupLocation, render} from '../../testUtils/testHelpers'
 import {BackupPage} from './BackupPage'
 import {BACKUP_REMOTE_LOCATIONS_ROOT} from './RemoteLocationsReducer'
 import {RemoteLocationOptions} from './RemoteLocationOptions'

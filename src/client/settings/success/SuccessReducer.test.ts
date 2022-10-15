@@ -1,7 +1,7 @@
 import {getSuccessMessages, reduce, SUCCESS_ROOT, SuccessState} from './SuccessReducer'
 import {Actions} from '../../Actions'
 import {addMessage, removeMessage} from './SuccessActionCreators'
-import {buildState, testReducer} from '../../testHelpers'
+import {buildState, testReducer} from '../../testUtils/testHelpers'
 import {configurationImported} from '../backup/BackupActionCreators'
 
 const reducer = testReducer({

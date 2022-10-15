@@ -1,5 +1,5 @@
 import React from 'react'
-import {render} from '../../testHelpers'
+import {render} from '../../testUtils/testHelpers'
 import {getSuccessMessages, SUCCESS_ROOT} from './SuccessReducer'
 import {AddMessage} from './AddMessage'
 import {screen, waitFor} from '@testing-library/react'

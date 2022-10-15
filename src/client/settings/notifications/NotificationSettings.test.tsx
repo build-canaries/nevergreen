@@ -1,5 +1,5 @@
 import React from 'react'
-import {render} from '../../testHelpers'
+import {render} from '../../testUtils/testHelpers'
 import {getToggleVersionCheck, SETTINGS_ROOT} from '../SettingsReducer'
 import {screen} from '@testing-library/react'
 import {NotificationSettings} from './NotificationSettings'

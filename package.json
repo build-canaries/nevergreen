@@ -266,14 +266,14 @@
       "!<rootDir>/src/client/common/Logger.ts"
     ],
     "setupFilesAfterEnv": [
-      "<rootDir>/src/client/setupTestEnv.js"
+      "<rootDir>/src/client/testUtils/setupTestEnv.js"
     ],
     "transform": {
       "\\.(js|ts|tsx)$": "babel-jest",
-      "\\.txt$": "<rootDir>/src/client/fileTransformer.js"
+      "\\.txt$": "<rootDir>/src/client/testUtils/fileTransformer.js"
     },
     "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|svg|ttf|woff|woff2|mp3)$": "<rootDir>/src/client/fileMock.js",
+      "\\.(jpg|jpeg|png|gif|eot|svg|ttf|woff|woff2|mp3)$": "<rootDir>/src/client/testUtils/fileMock.js",
       "\\.(css|scss)$": "identity-obj-proxy",
       "^uuid$": "<rootDir>/node_modules/uuid/dist/index.js"
     },

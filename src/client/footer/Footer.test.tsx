@@ -1,5 +1,5 @@
 import React from 'react'
-import {render} from '../testHelpers'
+import {render} from '../testUtils/testHelpers'
 import {Footer} from './Footer'
 import {screen} from '@testing-library/react'
 import {ROUTE_ABOUT} from '../AppRoutes'

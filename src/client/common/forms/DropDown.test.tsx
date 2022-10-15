@@ -1,6 +1,6 @@
 import React from 'react'
 import {DropDown} from './DropDown'
-import {render} from '../../testHelpers'
+import {render} from '../../testUtils/testHelpers'
 import {screen} from '@testing-library/react'
 
 it('should add all the given options', () => {

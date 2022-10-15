@@ -1,5 +1,5 @@
 import {backupRaw} from './AutomaticBackupListener'
-import {buildRemoteBackupLocation, buildState} from '../../testHelpers'
+import {buildRemoteBackupLocation, buildState} from '../../testUtils/testHelpers'
 import {fakeRequest} from '../../gateways/Gateway'
 import * as BackupGateway from '../../gateways/BackupGateway'
 import {BACKUP_REMOTE_LOCATIONS_ROOT} from './RemoteLocationsReducer'

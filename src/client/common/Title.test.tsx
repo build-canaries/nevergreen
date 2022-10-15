@@ -1,5 +1,5 @@
 import React from 'react'
-import {render} from '../testHelpers'
+import {render} from '../testUtils/testHelpers'
 import {Title} from './Title'
 import {screen} from '@testing-library/react'
 

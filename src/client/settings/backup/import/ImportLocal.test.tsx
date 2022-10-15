@@ -1,6 +1,6 @@
 import React from 'react'
 import {ImportLocal} from './ImportLocal'
-import {buildState, render} from '../../../testHelpers'
+import {buildState, render} from '../../../testUtils/testHelpers'
 import {toJson} from '../../../common/Json'
 import {screen, waitFor} from '@testing-library/react'
 

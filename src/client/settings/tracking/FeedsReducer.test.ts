@@ -1,7 +1,7 @@
 import {FEEDS_ROOT, FeedsState, getFeeds, reduce} from './FeedsReducer'
 import {Actions} from '../../Actions'
 import {feedAdded, feedRemoved, feedUpdated} from './TrackingActionCreators'
-import {buildFeed, buildState, testReducer} from '../../testHelpers'
+import {buildFeed, buildState, testReducer} from '../../testUtils/testHelpers'
 import {RecursivePartial} from '../../common/Types'
 import {AuthTypes} from '../../domain/Feed'
 import {configurationImported} from '../backup/BackupActionCreators'

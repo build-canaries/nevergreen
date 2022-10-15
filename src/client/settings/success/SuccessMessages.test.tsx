@@ -1,6 +1,6 @@
 import React from 'react'
 import {NO_MESSAGES_WARNING, SuccessMessages} from './SuccessMessages'
-import {render} from '../../testHelpers'
+import {render} from '../../testUtils/testHelpers'
 import {SUCCESS_ROOT} from './SuccessReducer'
 import {screen} from '@testing-library/react'
 
