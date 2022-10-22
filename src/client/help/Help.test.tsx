@@ -1,14 +1,17 @@
 import React from 'react'
-import {Help} from './Help'
-import {render, setupReactModal} from '../testUtils/testHelpers'
-import {screen} from '@testing-library/react'
+import {Help, SHOW_HELP_SHORTCUT} from './Help'
+import {render} from '../testUtils/testHelpers'
+import {act, screen} from '@testing-library/react'
 import {ROUTE_TRACKING} from '../AppRoutes'
-
-beforeEach(setupReactModal)
+import {triggerShortcut} from '../common/Keyboard'
 
 it('should show help articles based on location or search query', async () => {
-  // I added the initiallyShow prop as I couldn't figure out how to get the model to show by firing key events :'(
-  const {user} = render(<Help initiallyShow/>, {mountPath: ROUTE_TRACKING, currentLocation: ROUTE_TRACKING})
+  const {user} = render(<Help/>, {mountPath: ROUTE_TRACKING, currentLocation: ROUTE_TRACKING})
+
+  // Trigger shortcut manually as I couldn't figure out how to get the model to show by firing key events :'(
+  act(() => {
+    triggerShortcut(SHOW_HELP_SHORTCUT)
+  })
 
   expect(screen.getByRole('heading', {level: 2, name: 'Tracking'})).toBeInTheDocument()
 

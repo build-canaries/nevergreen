@@ -28,22 +28,13 @@ import {
 import {KEYBOARD_SHORTCUT_KEYWORD, KeyboardShortcuts} from './KeyboardShortcuts'
 import {RemoteBackupDetailsPageHelp} from '../settings/backup/RemoteBackupDetailsPageHelp'
 
-interface HelpProps {
-  readonly initiallyShow?: boolean;
-}
-
 export const SHOW_HELP_SHORTCUT = 'h'
 export const SHOW_KEYBOARD_SHORTCUTS_SHORTCUT = '?'
 
-export function withHelpLink(setSearchQuery: (q: string) => void) {
-  // eslint-disable-next-line react/display-name
-  return (to: string): ReactElement => <HelpLink to={to} setSearchQuery={setSearchQuery}/>
-}
-
 const questionUrl = 'https://github.com/build-canaries/nevergreen/issues/new?labels=question&template=Question.md'
 
-export function Help({initiallyShow}: HelpProps): ReactElement {
-  const [show, setShow] = useState(initiallyShow || false)
+export function Help(): ReactElement {
+  const [show, setShow] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
 
   useShortcut(SHOW_HELP_SHORTCUT, () => setShow(true))
@@ -52,7 +43,7 @@ export function Help({initiallyShow}: HelpProps): ReactElement {
     setShow(true)
   })
 
-  const helpLink = withHelpLink(setSearchQuery)
+  const helpLink = (to: string) => <HelpLink to={to} setSearchQuery={setSearchQuery}/>
 
   return (
     <Modal show={show}
@@ -60,9 +51,9 @@ export function Help({initiallyShow}: HelpProps): ReactElement {
              setShow(false)
              setSearchQuery('')
            }}
-           title='Help'
+           title="Help"
            className={styles.modal}>
-      <Input placeholder='by keyword'
+      <Input placeholder="by keyword"
              value={searchQuery}
              onChange={({target}) => setSearchQuery(target.value)}>
         Search

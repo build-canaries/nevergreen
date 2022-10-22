@@ -1,4 +1,4 @@
-import React, {ReactElement, ReactNode, StrictMode, useEffect} from 'react'
+import React, {ReactElement, ReactNode, useEffect} from 'react'
 import {Provider} from 'react-redux'
 import {BrowserRouter} from 'react-router-dom'
 import {UnhandledError} from './UnhandledError'
@@ -19,15 +19,13 @@ export function App({appElement, store, children}: AppProps): ReactElement {
 
   return (
     <UnhandledError>
-      <StrictMode>
-        <QueryClientProvider client={queryClient}>
-          <Provider store={store}>
-            <BrowserRouter>
-              {children}
-            </BrowserRouter>
-          </Provider>
-        </QueryClientProvider>
-      </StrictMode>
+      <QueryClientProvider client={queryClient}>
+        <Provider store={store}>
+          <BrowserRouter>
+            {children}
+          </BrowserRouter>
+        </Provider>
+      </QueryClientProvider>
     </UnhandledError>
   )
 }

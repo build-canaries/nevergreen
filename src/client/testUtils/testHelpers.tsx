@@ -14,19 +14,16 @@ import {
   screen,
   waitForElementToBeRemoved
 } from '@testing-library/react'
-import {Provider} from 'react-redux'
 import {AnyAction, configureStore, EnhancedStore} from '@reduxjs/toolkit'
-import {BrowserRouter, Outlet} from 'react-router-dom'
-import Modal from 'react-modal'
+import {Outlet} from 'react-router-dom'
 import {APPLIED_MIGRATIONS_ROOT} from '../configuration/MigrationsReducer'
 import parseISO from 'date-fns/parseISO'
 import {BACKUP_REMOTE_LOCATIONS_ROOT} from '../settings/backup/RemoteLocationsReducer'
 import {Route, Routes} from 'react-router'
-import {QueryClientProvider} from 'react-query'
 import userEvent from '@testing-library/user-event'
-import {queryClient} from '../queryClient'
 import {UserEvent} from '@testing-library/user-event/setup/setup'
 import {buildState} from './builders'
+import {App} from '../App'
 
 interface ExtendedRenderResult extends RenderResult {
   readonly store: EnhancedStore<State, AnyAction, ReadonlyArray<Middleware<unknown, State>>>;
@@ -40,18 +37,16 @@ interface ExtendedRenderOptions extends RenderOptions {
   readonly outletContext?: unknown;
 }
 
-export function setupReactModal(): void {
-  const appElement = document.createElement('div')
-  appElement.setAttribute('id', 'app-element')
-  document.body.append(appElement)
-  Modal.setAppElement('#app-element')
-}
-
 export function render(component: ReactElement, options: ExtendedRenderOptions = {}): ExtendedRenderResult {
+  const appElement = document.createElement('div')
+  appElement.setAttribute('id', 'root')
+
   const mergedOptions = {
     mountPath: '/',
     currentLocation: '/',
     state: {},
+    container: document.body.appendChild(appElement),
+    baseElement: document.body,
     ...options
   }
   const store = configureStore({reducer, preloadedState: buildState(mergedOptions.state)})
@@ -65,21 +60,20 @@ export function render(component: ReactElement, options: ExtendedRenderOptions =
   })
 
   const wrapper = ({children}: { children: ReactNode }) => (
-    <QueryClientProvider client={queryClient}>
-      <Provider store={store}>
-        <BrowserRouter>
-          <Routes>
-            <Route element={<Outlet context={mergedOptions.outletContext}/>}>
-              <Route path={mergedOptions.mountPath} element={children}/>
-              <Route path="*" element={<>location changed</>}/>
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </Provider>
-    </QueryClientProvider>
+    <App store={store} appElement="#root">
+      <Routes>
+        <Route element={<Outlet context={mergedOptions.outletContext}/>}>
+          <Route path={mergedOptions.mountPath} element={children}/>
+          <Route path="*" element={<>location changed</>}/>
+        </Route>
+      </Routes>
+    </App>
   )
 
-  const view = testRender(component, {...options, wrapper})
+  const view = testRender(component, {
+    ...options,
+    wrapper
+  })
 
   return {
     ...view,
