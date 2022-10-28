@@ -3,11 +3,6 @@
 @import '../common/typography';
 @import '../common/links';
 
-@mixin prognosis($color, $background-color) {
-  background-color: $background-color;
-  color: $color;
-}
-
 .identifier {
   @extend %fill-parent;
 

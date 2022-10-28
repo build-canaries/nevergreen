@@ -1,16 +1,12 @@
 import {
   MIN_REFRESH_TIME,
-  setBrokenBuildSoundFx,
   setClickToShowMenu,
   setMaxProjectsToShow,
-  setPlayBrokenBuildSoundFx,
   setRefreshTime,
   setShowBuildLabel,
   setShowBuildTime,
-  setShowSystemNotifications,
   setShowFeedIdentifier,
   setSort,
-  toggleVersionCheck
 } from './SettingsActionCreators'
 import {Actions} from '../Actions'
 import {SortBy} from '../gateways/ProjectsGateway'
@@ -26,32 +22,6 @@ describe(Actions.SHOW_FEED_IDENTIFIER, () => {
   it('should return the given value', () => {
     const actual = setShowFeedIdentifier(true)
     expect(actual).toHaveProperty('value', true)
-  })
-})
-
-describe(Actions.PLAY_BROKEN_BUILD_SOUND_FX, () => {
-
-  it('should return the correct type', () => {
-    const actual = setPlayBrokenBuildSoundFx(false)
-    expect(actual).toHaveProperty('type', Actions.PLAY_BROKEN_BUILD_SOUND_FX)
-  })
-
-  it('should return the given value', () => {
-    const actual = setPlayBrokenBuildSoundFx(true)
-    expect(actual).toHaveProperty('value', true)
-  })
-})
-
-describe(Actions.BROKEN_BUILD_SOUND_FX, () => {
-
-  it('should return the correct type', () => {
-    const actual = setBrokenBuildSoundFx('irrelevant')
-    expect(actual).toHaveProperty('type', Actions.BROKEN_BUILD_SOUND_FX)
-  })
-
-  it('should return the given value', () => {
-    const actual = setBrokenBuildSoundFx('some-url')
-    expect(actual).toHaveProperty('value', 'some-url')
   })
 })
 
@@ -91,19 +61,6 @@ describe(Actions.SHOW_BUILD_LABEL, () => {
 
   it('should return the given value', () => {
     const actual = setShowFeedIdentifier(true)
-    expect(actual).toHaveProperty('value', true)
-  })
-})
-
-describe(Actions.SHOW_SYSTEM_NOTIFICATIONS, () => {
-
-  it('should return the correct type', () => {
-    const actual = setShowSystemNotifications(false)
-    expect(actual).toHaveProperty('type', Actions.SHOW_SYSTEM_NOTIFICATIONS)
-  })
-
-  it('should return the given value', () => {
-    const actual = setShowSystemNotifications(true)
     expect(actual).toHaveProperty('value', true)
   })
 })
@@ -160,12 +117,3 @@ describe(Actions.SET_SORT, () => {
     expect(actual).toHaveProperty('value', SortBy.description)
   })
 })
-
-describe(Actions.TOGGLE_VERSION_CHECK, () => {
-
-  it('should return the correct type', () => {
-    const actual = toggleVersionCheck()
-    expect(actual).toHaveProperty('type', Actions.TOGGLE_VERSION_CHECK)
-  })
-})
-

@@ -1,6 +1,6 @@
-import {errorMessage, isBlank, isNumeric} from '../common/Utils'
-import {now} from '../common/DateTime'
-import {ProjectApi, ProjectError, ProjectsResponse} from '../gateways/ProjectsGateway'
+import {isBlank, isNumeric} from '../common/Utils'
+import {FeedApiError, ProjectApi, ProjectsResponse} from '../gateways/ProjectsGateway'
+import {FeedError, isError} from './FeedError'
 
 export enum Prognosis {
   healthy = 'healthy',
@@ -17,7 +17,7 @@ export interface Project extends ProjectApi {
   readonly previousPrognosis: ProjectPrognosis | undefined;
 }
 
-export type Projects = ReadonlyArray<Project | ProjectError>
+export type Projects = ReadonlyArray<Project>
 
 function formatBuildLabel(buildLabel?: string) {
   if (buildLabel && !isBlank(buildLabel)) {
@@ -29,99 +29,63 @@ function formatBuildLabel(buildLabel?: string) {
   return ''
 }
 
-export function toProjectError(e: unknown): ProjectError {
-  return {
-    description: errorMessage(e),
-    prognosis: Prognosis.error,
-    timestamp: now(),
-    webUrl: '',
-    trayId: ''
-  }
-}
-
-export function isNewlySick(project: Project | ProjectError): boolean {
-  return isProject(project) && isSick(project) && project.previousPrognosis !== Prognosis.sick
-}
-
-export function isNoLongerSick(project: Project | ProjectError): boolean {
-  return isProject(project) && project.prognosis !== Prognosis.sick && project.previousPrognosis === Prognosis.sick
-}
-
-export function isError(project: ProjectApi | ProjectError): project is ProjectError {
-  return project.prognosis === Prognosis.error
-}
-
-export function isProject<P extends ProjectApi>(project: P | ProjectError): project is P {
-  return project.prognosis !== Prognosis.error
-}
-
-export function isSick(project: ProjectApi | ProjectError): boolean {
-  return project.prognosis === Prognosis.sick
-}
-
-export function isBuilding(project: ProjectApi | ProjectError): boolean {
+function isBuilding(project: Project): boolean {
   return project.prognosis === Prognosis.healthyBuilding || project.prognosis === Prognosis.sickBuilding
 }
 
-export function projectIdentifier(project: Project | ProjectError): string {
-  return isError(project)
-    ? project.webUrl
-    : `${project.trayId}#${project.projectId}`
-}
-
-export function projectBuildLabel(project: ProjectApi | ProjectError): string {
-  if (isError(project) || isBuilding(project)) {
-    return ''
-  }
-  return formatBuildLabel(project.lastBuildLabel)
-}
-
-export function sameProject(previousProject: ProjectApi, currentProject: ProjectApi): boolean {
+function sameProject(previousProject: Project, currentProject: ProjectApi): boolean {
   return previousProject.projectId === currentProject.projectId
-}
-
-function sameError(previousProject: ProjectError, currentProject: ProjectError) {
-  return previousProject.webUrl === currentProject.webUrl
 }
 
 function sameBuild(previousProject: ProjectApi, currentProject: ProjectApi) {
   return previousProject.lastBuildLabel === currentProject.lastBuildLabel
 }
 
-function updateTimestamp(project: Project | ProjectError, previouslyFetchedProjects: Projects): Project | ProjectError {
-  if (isProject(project) && isBuilding(project)) {
+export function isProject<P extends ProjectApi, E extends FeedApiError>(project: P | E): project is P {
+  return project.prognosis !== Prognosis.error
+}
+
+export function projectIdentifier(project: Project | FeedError): string {
+  return isError(project)
+    ? project.webUrl
+    : `${project.trayId}#${project.projectId}`
+}
+
+export function projectBuildLabel(project: Project | FeedError): string {
+  if (isError(project) || isBuilding(project)) {
+    return ''
+  }
+  return formatBuildLabel(project.lastBuildLabel)
+}
+
+function updateTimestamp(project: Project, previouslyFetchedProjects: Projects): Project {
+  if (isBuilding(project)) {
     const previousProject = previouslyFetchedProjects
-      .filter(isProject)
       .find((previous) => sameProject(project, previous))
     if (previousProject && isBuilding(previousProject) && sameBuild(previousProject, project)) {
       return {...project, timestamp: previousProject.timestamp}
-    }
-  } else if (isError(project)) {
-    const previousError = previouslyFetchedProjects
-      .filter(isError)
-      .find((previous) => sameError(project, previous))
-    if (previousError) {
-      return {...project, timestamp: previousError.timestamp}
     }
   }
   return project
 }
 
-function addPreviousPrognosis(project: ProjectApi | ProjectError, previouslyFetchedProjects: Projects): Project | ProjectError {
-  if (isError(project)) {
-    return project
-  } else {
-    return {
-      ...project,
-      previousPrognosis: previouslyFetchedProjects
-        .filter(isProject)
-        .find((previous) => sameProject(previous, project))?.prognosis
-    }
+function addPreviousPrognosis(project: ProjectApi, previouslyFetchedProjects: Projects): Project {
+  const previousPrognosis = previouslyFetchedProjects
+    .find((previous) => sameProject(previous, project))
+    ?.prognosis
+  return {
+    ...project,
+    previousPrognosis
   }
 }
 
 export function enrichProjects(apiProjects: ProjectsResponse, previouslyFetchedProjects: Projects): Projects {
   return apiProjects
+    .filter(isProject)
     .map((project) => addPreviousPrognosis(project, previouslyFetchedProjects))
     .map((project) => updateTimestamp(project, previouslyFetchedProjects))
+}
+
+export function prognosisDisplay(prognosis: Prognosis): string {
+  return prognosis.replace('-', ' ')
 }

@@ -7,16 +7,16 @@ import {Page} from '../common/Page'
 import {useNevergreenContext} from '../Nevergreen'
 
 export function StyleGuide(): ReactElement {
-  const {setNotification} = useNevergreenContext()
+  const {setBannerMessage} = useNevergreenContext()
   useEffect(() => {
-    setNotification('Sweet roll cookie chocolate cake gingerbread marshmallow jelly beans')
+    setBannerMessage('Sweet roll cookie chocolate cake gingerbread marshmallow jelly beans')
     return () => {
-      setNotification('')
+      setBannerMessage('')
     }
-  }, [setNotification])
+  }, [setBannerMessage])
 
   return (
-    <Page title='Style guide'>
+    <Page title="Style guide">
       <Typography/>
       <Forms/>
       <Layout/>

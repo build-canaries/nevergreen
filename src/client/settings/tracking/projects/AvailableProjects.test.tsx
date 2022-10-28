@@ -1,7 +1,7 @@
 import React from 'react'
 import {screen, waitFor} from '@testing-library/react'
 import {render, waitForLoadingToFinish} from '../../../testUtils/testHelpers'
-import {buildFeed, buildProject, buildProjectError} from '../../../testUtils/builders'
+import {buildFeed, buildProject, buildFeedError} from '../../../testUtils/builders'
 import * as Gateway from '../../../gateways/Gateway'
 import {fakeRequest} from '../../../gateways/Gateway'
 import {AvailableProjects} from './AvailableProjects'
@@ -40,7 +40,7 @@ it('should be able to select projects', async () => {
 it('should correctly show and remove errors returned while refreshing', async () => {
   jest.spyOn(Gateway, 'post')
     .mockResolvedValueOnce(fakeRequest([
-      buildProjectError({description: 'some-error'})
+      buildFeedError({description: 'some-error'})
     ]))
     .mockResolvedValueOnce(fakeRequest([
       buildProject()

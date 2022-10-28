@@ -1,55 +1,10 @@
-import {
-  enrichProjects,
-  isBuilding,
-  isError,
-  isProject,
-  isSick,
-  Prognosis,
-  projectBuildLabel,
-  projectIdentifier,
-  ProjectPrognosis,
-  toProjectError
-} from './Project'
-import {buildProject, buildProjectError} from '../testUtils/builders'
-import * as DateTime from '../common/DateTime'
-
-describe('toProjectError', () => {
-
-  it('should set the prognosis to error', () => {
-    expect(toProjectError(new Error())).toHaveProperty('prognosis', Prognosis.error)
-  })
-
-  it('should set the timestamp to now', () => {
-    jest.spyOn(DateTime, 'now').mockReturnValue('now')
-    expect(toProjectError(new Error())).toHaveProperty('timestamp', 'now')
-  })
-
-  it('should set the exception message as description', () => {
-    expect(toProjectError(new Error('some-error'))).toHaveProperty('description', 'some-error')
-  })
-})
-
-describe('isError', () => {
-
-  it('should be true when error', () => {
-    expect(isError(buildProjectError())).toBe(true)
-  })
-
-  it.each<ProjectPrognosis>([
-    Prognosis.unknown,
-    Prognosis.healthy,
-    Prognosis.healthyBuilding,
-    Prognosis.sick,
-    Prognosis.sickBuilding
-  ])('should be false for value %s', (prognosis) => {
-    expect(isError(buildProject({prognosis}))).toBe(false)
-  })
-})
+import {enrichProjects, isProject, Prognosis, projectBuildLabel, projectIdentifier, ProjectPrognosis,} from './Project'
+import {buildFeedError, buildProject} from '../testUtils/builders'
 
 describe('isProject', () => {
 
   it('should be false when error', () => {
-    expect(isProject(buildProjectError())).toBe(false)
+    expect(isProject(buildFeedError())).toBe(false)
   })
 
   it.each<ProjectPrognosis>([
@@ -63,43 +18,10 @@ describe('isProject', () => {
   })
 })
 
-describe('isSick', () => {
-
-  it('should be true when sick', () => {
-    expect(isSick(buildProject({prognosis: Prognosis.sick}))).toBe(true)
-  })
-
-  it.each<ProjectPrognosis>([
-    Prognosis.unknown,
-    Prognosis.healthyBuilding,
-    Prognosis.sickBuilding
-  ])('should be false for value %s', (prognosis) => {
-    expect(isSick(buildProject({prognosis}))).toBe(false)
-  })
-})
-
-describe('isBuilding', () => {
-
-  it('should be true when healthy building', () => {
-    expect(isBuilding(buildProject({prognosis: Prognosis.healthyBuilding}))).toBe(true)
-  })
-
-  it('should be true when sick building', () => {
-    expect(isBuilding(buildProject({prognosis: Prognosis.sickBuilding}))).toBe(true)
-  })
-
-  it.each<ProjectPrognosis>([
-    Prognosis.unknown,
-    Prognosis.sick
-  ])('should be false for value %s', (prognosis) => {
-    expect(isBuilding(buildProject({prognosis}))).toBe(false)
-  })
-})
-
 describe('projectIdentifier', () => {
 
   it('should return the web URL as the identifier for errors as they do not have project Ids', () => {
-    const project = buildProjectError({webUrl: 'some-url'})
+    const project = buildFeedError({webUrl: 'some-url'})
     expect(projectIdentifier(project)).toBe('some-url')
   })
 
@@ -139,19 +61,6 @@ describe('projectBuildLabel', () => {
 })
 
 describe('enrichProjects', () => {
-
-  it('should add how long a feed has been in error', () => {
-    const fetched = [buildProjectError({
-      timestamp: 'updated-fetched-time',
-      webUrl: 'some-url'
-    })]
-    const previous = [buildProjectError({
-      timestamp: 'original-fetched-time',
-      webUrl: 'some-url'
-    })]
-    const result = enrichProjects(fetched, previous)
-    expect(result).toEqual(expect.arrayContaining([expect.objectContaining({timestamp: 'original-fetched-time'})]))
-  })
 
   it.each<ProjectPrognosis>([
     Prognosis.healthyBuilding,

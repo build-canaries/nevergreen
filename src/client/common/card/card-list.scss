@@ -1,8 +1,6 @@
-@import '../../common/variables';
-
-.addButton {
-  margin-top: $margin-top;
-}
+@import '../variables';
+@import '../layout';
+@import '../typography';
 
 .container {
   list-style: none;

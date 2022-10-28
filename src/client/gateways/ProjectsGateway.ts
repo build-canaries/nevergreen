@@ -20,7 +20,7 @@ export interface FeedRequest {
   readonly username?: string;
 }
 
-export interface ProjectError extends ServerError {
+export interface FeedApiError extends ServerError {
   readonly trayId: string;
 }
 
@@ -35,7 +35,7 @@ export interface ProjectApi {
   readonly webUrl: string;
 }
 
-export type ProjectsResponse = ReadonlyArray<ProjectError | ProjectApi>
+export type ProjectsResponse = ReadonlyArray<FeedApiError | ProjectApi>
 
 interface ConnectionDetailsRequest {
   readonly authType: AuthTypes;

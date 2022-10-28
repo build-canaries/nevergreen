@@ -9,7 +9,7 @@ import * as ServiceWorkerHook from './ServiceWorkerHook'
 import * as Gateway from './gateways/Gateway'
 import {fakeRequest} from './gateways/Gateway'
 import * as HideMenusHook from './HideMenusHook'
-import {SETTINGS_ROOT} from './settings/SettingsReducer'
+import {NOTIFICATIONS_ROOT} from './settings/notifications/NotificationsReducer'
 
 beforeEach(() => {
   jest.spyOn(LocalConfiguration, 'init').mockResolvedValue()
@@ -57,7 +57,7 @@ it('should not check for a new version if the user has disabled checking', async
 
   render(<Nevergreen/>, {
     state: {
-      [SETTINGS_ROOT]: {
+      [NOTIFICATIONS_ROOT]: {
         enableNewVersionCheck: false
       }
     }

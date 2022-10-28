@@ -41,11 +41,15 @@ export function migrate(data: UntrustedData): void {
 }
 
 export function moveData(untrustedData: UntrustedData, fromPath: PropertyPath, toPath: PropertyPath): void {
+  copyData(untrustedData, fromPath, toPath)
+  unset(untrustedData, fromPath)
+}
+
+export function copyData(untrustedData: UntrustedData, fromPath: PropertyPath, toPath: PropertyPath): void {
   if (has(untrustedData, fromPath)) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const dataToMove = get(untrustedData, fromPath)
     set(untrustedData, toPath, dataToMove)
-    unset(untrustedData, fromPath)
   }
 }
 

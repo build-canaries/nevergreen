@@ -9,12 +9,14 @@ import {TileProject} from './TileProject'
 import {TileProjectsNotShown} from './TileProjectsNotShown'
 import styles from './interesting-projects.scss'
 import {useSelector} from 'react-redux'
-import {getMaxProjectsToShow, MaxProjectsToShow} from '../settings/SettingsReducer'
+import {getMaxProjectsToShow, getShowPrognosis, MaxProjectsToShow} from '../settings/SettingsReducer'
 import {isMobile, isTablet} from '../common/Style'
 import {useWindowResized} from '../common/ResizableHook'
+import {FeedErrors, isError} from '../domain/FeedError'
 
 interface InterestingProjectsProps {
   readonly projects: Projects;
+  readonly feedErrors: FeedErrors;
 }
 
 const mobileProjectsToShow: Record<MaxProjectsToShow, number> = {
@@ -49,8 +51,9 @@ function calculateProjectsToShow(maxProjectsToShow: MaxProjectsToShow) {
   return get(desktopProjectsToShow, maxProjectsToShow)
 }
 
-export function InterestingProjects({projects}: InterestingProjectsProps): ReactElement {
+export function InterestingProjects({projects, feedErrors}: InterestingProjectsProps): ReactElement {
   const maxProjectsToShow = useSelector(getMaxProjectsToShow)
+  const prognosisToShow = useSelector(getShowPrognosis)
   const [actualMaxProjectsToShow, setActualMaxProjectsToShow] = useState(calculateProjectsToShow(maxProjectsToShow))
 
   const onWindowResize = useCallback(() => {
@@ -59,13 +62,16 @@ export function InterestingProjects({projects}: InterestingProjectsProps): React
 
   useWindowResized(onWindowResize)
 
-  const showSummary = projects.length > actualMaxProjectsToShow
+  const filteredProjects = [...feedErrors, ...projects]
+    .filter((project) => isError(project) || prognosisToShow.includes(project.prognosis))
+
+  const showSummary = filteredProjects.length > actualMaxProjectsToShow
 
   const projectsToShow = showSummary
-    ? take(projects, actualMaxProjectsToShow)
-    : projects
+    ? take(filteredProjects, actualMaxProjectsToShow)
+    : filteredProjects
 
-  const projectsNotShown = difference(projects, projectsToShow)
+  const projectsNotShown = difference(filteredProjects, projectsToShow)
 
   const projectComponents = projectsToShow.map((project) => {
     return <TileProject key={projectIdentifier(project)}
@@ -74,14 +80,14 @@ export function InterestingProjects({projects}: InterestingProjectsProps): React
   })
 
   const summary = !isEmpty(projectsNotShown) && (
-    <TileProjectsNotShown key='summary' projectsNotShown={projectsNotShown}/>
+    <TileProjectsNotShown key="summary" projectsNotShown={projectsNotShown}/>
   )
 
   return (
     <div className={styles.interestingProjects}
-         data-locator='interesting-projects'
-         aria-live='assertive'
-         aria-relevant='all'>
+         data-locator="interesting-projects"
+         aria-live="assertive"
+         aria-relevant="all">
       <ScaledGrid>
         {projectComponents}
         {summary}

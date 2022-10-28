@@ -2,8 +2,9 @@ import {Configuration, DataSource, toConfiguration, toExportableConfigurationJso
 import {Either, isLeft, isRight} from 'fp-ts/Either'
 import {buildRemoteBackupLocation, buildState} from '../testUtils/builders'
 import {BACKUP_REMOTE_LOCATIONS_ROOT} from '../settings/backup/RemoteLocationsReducer'
-import {SETTINGS_ROOT} from '../settings/SettingsReducer'
 import {FEEDS_ROOT} from '../settings/tracking/FeedsReducer'
+import {NOTIFICATIONS_ROOT} from '../settings/notifications/NotificationsReducer'
+import {RemoteLocationOptions} from '../settings/backup/RemoteLocationOptions'
 
 function expectErrors(result: Either<ReadonlyArray<string>, Configuration>, errors: ReadonlyArray<string>): void {
   if (isLeft(result)) {
@@ -79,7 +80,7 @@ describe('toConfiguration', () => {
         [BACKUP_REMOTE_LOCATIONS_ROOT]: {
           'some-id': {
             internalId: 'some-id',
-            where: 'custom',
+            where: RemoteLocationOptions.custom,
             url: 'some-url'
           }
         }
@@ -165,20 +166,20 @@ describe('toConfiguration', () => {
   })
 
   it('removes the show system notifications property when a user import, as this property is no longer exported (but this import could be from an old version)', () => {
-    const data = {[SETTINGS_ROOT]: {showSystemNotifications: true}}
+    const data = {[NOTIFICATIONS_ROOT]: {allowSystemNotifications: true}}
     const result = toConfiguration(data, DataSource.userImport)
     expect(isRight(result)).toBeTruthy()
     if (isRight(result)) {
-      expect(result.right).not.toHaveProperty('settings.showSystemNotifications')
+      expect(result.right).not.toHaveProperty('notifications.allowSystemNotifications')
     }
   })
 
   it('keeps the show system notifications property when loading from browser storage', () => {
-    const data = {[SETTINGS_ROOT]: {showSystemNotifications: true}}
+    const data = {[NOTIFICATIONS_ROOT]: {allowSystemNotifications: true}}
     const result = toConfiguration(data, DataSource.browserStorage)
     expect(isRight(result)).toBeTruthy()
     if (isRight(result)) {
-      expect(result.right).toHaveProperty('settings.showSystemNotifications')
+      expect(result.right).toHaveProperty('notifications.allowSystemNotifications')
     }
   })
 })
@@ -201,11 +202,11 @@ describe('toExportableConfigurationJson', () => {
 
   it('removes system notifications preference because we treat them as personal settings', () => {
     const state = buildState({
-      [SETTINGS_ROOT]: {
-        showSystemNotifications: true
+      [NOTIFICATIONS_ROOT]: {
+        allowSystemNotifications: true
       }
     })
     const exportable = toExportableConfigurationJson(state)
-    expect(exportable).not.toMatch('"showSystemNotifications": true')
+    expect(exportable).not.toMatch('"allowSystemNotifications": true')
   })
 })

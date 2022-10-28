@@ -12,41 +12,47 @@ import {UntrustedData} from './LocalRepository'
 import {Either, flatten, left, map, mapLeft, right} from 'fp-ts/Either'
 import {pipe} from 'fp-ts/function'
 import {BACKUP_REMOTE_LOCATIONS_ROOT} from '../settings/backup/RemoteLocationsReducer'
-import {SETTINGS_ROOT} from '../settings/SettingsReducer'
+import {MaxProjectsToShow, SETTINGS_ROOT} from '../settings/SettingsReducer'
 import {SELECTED_ROOT} from '../settings/tracking/SelectedReducer'
 import {SUCCESS_ROOT} from '../settings/success/SuccessReducer'
 import {FEEDS_ROOT} from '../settings/tracking/FeedsReducer'
 import {APPLIED_MIGRATIONS_ROOT} from './MigrationsReducer'
 import {errorMessage} from '../common/Utils'
+import {NOTIFICATIONS_ROOT} from '../settings/notifications/NotificationsReducer'
+import {Prognosis} from '../domain/Project'
+import {RemoteLocationOptions} from '../settings/backup/RemoteLocationOptions'
+import {AuthTypes, TrackingMode} from '../domain/Feed'
 
 export enum DataSource {
   browserStorage,
   userImport
 }
 
+const NotificationDetails = t.exact(t.partial({
+  systemNotification: t.boolean,
+  sfx: t.string
+}))
+
 const Configuration = t.exact(t.partial({
   [SETTINGS_ROOT]: t.exact(t.partial({
     showTrayName: t.boolean,
     showBuildTime: t.boolean,
-    playBrokenBuildSoundFx: t.boolean,
-    brokenBuildSoundFx: t.string,
     refreshTime: t.number,
     showBuildLabel: t.boolean,
-    showSystemNotifications: t.boolean,
     maxProjectsToShow: t.keyof({
-      small: null,
-      medium: null,
-      large: null,
-      all: null
+      [MaxProjectsToShow.small]: null,
+      [MaxProjectsToShow.medium]: null,
+      [MaxProjectsToShow.large]: null,
+      [MaxProjectsToShow.all]: null
     }),
     clickToShowMenu: t.boolean,
     showPrognosis: t.readonlyArray(t.keyof({
-      healthy: null,
-      sick: null,
-      'healthy-building': null,
-      'sick-building': null,
-      unknown: null,
-      error: null
+      [Prognosis.healthy]: null,
+      [Prognosis.sick]: null,
+      [Prognosis.healthyBuilding]: null,
+      [Prognosis.sickBuilding]: null,
+      [Prognosis.unknown]: null,
+      [Prognosis.error]: null
     })),
     sort: t.keyof({
       default: null,
@@ -54,7 +60,6 @@ const Configuration = t.exact(t.partial({
       prognosis: null,
       timestamp: null
     }),
-    enableNewVersionCheck: t.boolean
   }), SETTINGS_ROOT),
   [SELECTED_ROOT]: t.record(t.string, t.readonlyArray(t.string), SELECTED_ROOT),
   [SUCCESS_ROOT]: t.readonlyArray(t.string, SUCCESS_ROOT),
@@ -65,9 +70,9 @@ const Configuration = t.exact(t.partial({
     }),
     t.partial({
       authType: t.keyof({
-        none: null,
-        basic: null,
-        token: null
+        [AuthTypes.none]: null,
+        [AuthTypes.basic]: null,
+        [AuthTypes.token]: null
       }),
       encryptedAccessToken: t.string,
       encryptedPassword: t.string,
@@ -75,8 +80,8 @@ const Configuration = t.exact(t.partial({
       serverType: t.string,
       timestamp: t.string,
       trackingMode: t.keyof({
-        everything: null,
-        selected: null
+        [TrackingMode.everything]: null,
+        [TrackingMode.selected]: null
       }),
       username: t.string
     })
@@ -90,9 +95,9 @@ const Configuration = t.exact(t.partial({
       internalId: t.string,
       url: t.string,
       where: t.keyof({
-        custom: null,
-        github: null,
-        gitlab: null
+        [RemoteLocationOptions.custom]: null,
+        [RemoteLocationOptions.gitHub]: null,
+        [RemoteLocationOptions.gitLab]: null
       })
     }),
     t.partial({
@@ -103,7 +108,20 @@ const Configuration = t.exact(t.partial({
       encryptedAccessToken: t.string,
       description: t.string
     })
-  ])), BACKUP_REMOTE_LOCATIONS_ROOT)
+  ])), BACKUP_REMOTE_LOCATIONS_ROOT),
+  [NOTIFICATIONS_ROOT]: t.exact(t.partial({
+    allowAudioNotifications: t.boolean,
+    allowSystemNotifications: t.boolean,
+    enableNewVersionCheck: t.boolean,
+    notifications: t.exact(t.partial({
+      [Prognosis.error]: NotificationDetails,
+      [Prognosis.sick]: NotificationDetails,
+      [Prognosis.sickBuilding]: NotificationDetails,
+      [Prognosis.healthyBuilding]: NotificationDetails,
+      [Prognosis.unknown]: NotificationDetails,
+      [Prognosis.healthy]: NotificationDetails
+    }))
+  }), NOTIFICATIONS_ROOT)
 }))
 
 export type Configuration = t.TypeOf<typeof Configuration>
@@ -114,7 +132,7 @@ function validationErrorMessage(actual: unknown, path: string, expected: string)
 
 function additionalFiltering(data: UntrustedData, dataSource: DataSource): void {
   if (dataSource === DataSource.userImport) {
-    unset(data, [SETTINGS_ROOT, 'showSystemNotifications'])
+    unset(data, [NOTIFICATIONS_ROOT, 'allowSystemNotifications'])
   }
 }
 
@@ -188,7 +206,7 @@ export function toExportableConfigurationJson(state: State): string {
   })
 
   // @ts-ignore
-  delete cloned[SETTINGS_ROOT]['showSystemNotifications']
+  delete cloned[NOTIFICATIONS_ROOT]['allowSystemNotifications']
   /* eslint-enable @typescript-eslint/ban-ts-comment*/
 
   return toJson(cloned)

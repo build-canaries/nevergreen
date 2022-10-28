@@ -9,12 +9,12 @@ import isEmpty from 'lodash/isEmpty'
 import {Title} from '../common/Title'
 import {useSelector} from 'react-redux'
 import {getFeeds} from '../settings/tracking/FeedsReducer'
-import {useAudioNotifications} from './notifications/AudioNotificationsHook'
-import {useSystemNotifications} from './notifications/SystemNotificationsHook'
 import {useShortcut} from '../common/Keyboard'
 import screenfull from 'screenfull'
 import {useNevergreenContext} from '../Nevergreen'
 import {useInterestingProjects} from './InterestingProjectsHook'
+import {useNotifications} from './notifications/NotificationsHook'
+import {stopAudio} from '../common/AudioPlayer'
 
 export function Monitor(): ReactElement {
   const {menusHidden, toggleMenusHidden} = useNevergreenContext()
@@ -30,18 +30,20 @@ export function Monitor(): ReactElement {
 
   const feedsAdded = !isEmpty(feeds)
 
-  const {loaded, projects} = useInterestingProjects()
+  const {loaded, projects, feedErrors} = useInterestingProjects()
+  const sfx = useNotifications(projects, feedErrors)
 
-  useAudioNotifications(projects)
-  useSystemNotifications(projects)
+  useEffect(() => {
+    if (sfx) {
+      stopAudio(sfx)
+    }
+  }, [sfx])
 
   useShortcut('f', () => {
     if (screenfull.isEnabled && ref.current) {
       void screenfull.toggle(ref.current)
     }
   })
-
-  const success = isEmpty(projects)
 
   const monitorClassNames = cn(styles.monitor, {
     [styles.menusHidden]: menusHidden
@@ -55,8 +57,8 @@ export function Monitor(): ReactElement {
       )}
       {feedsAdded && (
         <Loading dark loaded={loaded}>
-          {success && <Success/>}
-          {!success && <InterestingProjects projects={projects}/>}
+          <Success projects={projects} feedErrors={feedErrors}/>
+          <InterestingProjects projects={projects} feedErrors={feedErrors}/>
         </Loading>
       )}
     </div>

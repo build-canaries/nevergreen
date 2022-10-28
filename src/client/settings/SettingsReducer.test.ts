@@ -1,16 +1,12 @@
 import {
-  getBrokenBuildSoundFx,
   getClickToShowMenu,
   getMaxProjectsToShow,
-  getPlayBrokenBuildSoundFx,
   getRefreshTime,
   getShowBuildLabel,
   getShowBuildTime,
   getShowFeedIdentifier,
   getShowPrognosis,
-  getShowSystemNotifications,
   getSort,
-  getToggleVersionCheck,
   MaxProjectsToShow,
   reduce,
   SETTINGS_ROOT,
@@ -18,18 +14,14 @@ import {
 } from './SettingsReducer'
 import {Actions} from '../Actions'
 import {
-  setBrokenBuildSoundFx,
   setClickToShowMenu,
   setMaxProjectsToShow,
-  setPlayBrokenBuildSoundFx,
   setRefreshTime,
   setShowBuildLabel,
   setShowBuildTime,
   setShowFeedIdentifier,
   setShowPrognosis,
-  setShowSystemNotifications,
   setSort,
-  toggleVersionCheck
 } from './SettingsActionCreators'
 import {testReducer} from '../testUtils/testHelpers'
 import {buildState} from '../testUtils/builders'
@@ -68,32 +60,11 @@ describe(Actions.CONFIGURATION_IMPORTED, () => {
     expect(getShowBuildTime(newState)).toBeTruthy()
   })
 
-  it('should merge broken build sounds enabled', () => {
-    const existingState = state({playBrokenBuildSoundFx: false})
-    const action = configurationImported({[SETTINGS_ROOT]: {playBrokenBuildSoundFx: true}})
-    const newState = reducer(existingState, action)
-    expect(getPlayBrokenBuildSoundFx(newState)).toBeTruthy()
-  })
-
-  it('should merge broken build sound fx', () => {
-    const existingState = state({brokenBuildSoundFx: 'some-url'})
-    const action = configurationImported({[SETTINGS_ROOT]: {brokenBuildSoundFx: 'another-url'}})
-    const newState = reducer(existingState, action)
-    expect(getBrokenBuildSoundFx(newState)).toEqual('another-url')
-  })
-
   it('should merge show build label', () => {
     const existingState = state({showBuildLabel: false})
     const action = configurationImported({[SETTINGS_ROOT]: {showBuildLabel: true}})
     const newState = reducer(existingState, action)
     expect(getShowBuildLabel(newState)).toBeTruthy()
-  })
-
-  it('should not reset show system notification when imported state does not contain it', () => {
-    const existingState = state({showSystemNotifications: true})
-    const action = configurationImported({[SETTINGS_ROOT]: {}})
-    const newState = reducer(existingState, action)
-    expect(getShowSystemNotifications(newState)).toBeTruthy()
   })
 })
 
@@ -104,36 +75,6 @@ describe(Actions.SHOW_BUILD_TIME, () => {
     const action = setShowBuildTime(true)
     const newState = reducer(existingState, action)
     expect(getShowBuildTime(newState)).toBeTruthy()
-  })
-})
-
-describe(Actions.TOGGLE_VERSION_CHECK, () => {
-
-  it('should toggle the version check property', () => {
-    const existingState = state({enableNewVersionCheck: true})
-    const action = toggleVersionCheck()
-    const newState = reducer(existingState, action)
-    expect(getToggleVersionCheck(newState)).toBeFalsy()
-  })
-})
-
-describe(Actions.PLAY_BROKEN_BUILD_SOUND_FX, () => {
-
-  it('should set the broken build sounds enabled property', () => {
-    const existingState = state({playBrokenBuildSoundFx: false})
-    const action = setPlayBrokenBuildSoundFx(true)
-    const newState = reducer(existingState, action)
-    expect(getPlayBrokenBuildSoundFx(newState)).toBeTruthy()
-  })
-})
-
-describe(Actions.BROKEN_BUILD_SOUND_FX, () => {
-
-  it('should set the broken build sound fx property', () => {
-    const existingState = state({brokenBuildSoundFx: 'some-url'})
-    const action = setBrokenBuildSoundFx('another-url')
-    const newState = reducer(existingState, action)
-    expect(getBrokenBuildSoundFx(newState)).toEqual('another-url')
   })
 })
 
@@ -164,16 +105,6 @@ describe(Actions.SHOW_BUILD_LABEL, () => {
     const action = setShowBuildLabel(true)
     const newState = reducer(existingState, action)
     expect(getShowBuildLabel(newState)).toBeTruthy()
-  })
-})
-
-describe(Actions.SHOW_SYSTEM_NOTIFICATIONS, () => {
-
-  it('should set the show browser notifications property', () => {
-    const existingState = state({showSystemNotifications: false})
-    const action = setShowSystemNotifications(true)
-    const newState = reducer(existingState, action)
-    expect(getShowSystemNotifications(newState)).toBeTruthy()
   })
 })
 

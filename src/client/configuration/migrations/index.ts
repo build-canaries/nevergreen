@@ -10,6 +10,8 @@ import * as UpdateMaxProjectsToShow from './008_UpdateMaxProjectsToShow'
 import * as RemoveProjects from './009_RemoveProjects'
 import * as SetTrackingMode from './010_SetTrackingMode'
 import * as RemoveOldKeys from './011_RemoveOldKeys'
+import * as MoveNotificationSettings from './012_MoveNotificationSettings'
+import * as MigrateNotifications from './013_MigrateNotifications'
 
 export type Migrate = (data: UntrustedData) => void
 
@@ -30,6 +32,8 @@ export function getOrderedMigrations(): ReadonlyArray<Migration> {
     UpdateMaxProjectsToShow,
     RemoveProjects,
     SetTrackingMode,
-    RemoveOldKeys
+    RemoveOldKeys,
+    MoveNotificationSettings,
+    MigrateNotifications
   ]
 }

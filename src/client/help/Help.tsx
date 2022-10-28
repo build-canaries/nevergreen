@@ -27,6 +27,7 @@ import {
 } from '../settings/backup/AddBackupHelp'
 import {KEYBOARD_SHORTCUT_KEYWORD, KeyboardShortcuts} from './KeyboardShortcuts'
 import {RemoteBackupDetailsPageHelp} from '../settings/backup/RemoteBackupDetailsPageHelp'
+import {AddNotificationHelp} from '../settings/notifications/AddNotificationHelp'
 
 export const SHOW_HELP_SHORTCUT = 'h'
 export const SHOW_KEYBOARD_SHORTCUTS_SHORTCUT = '?'
@@ -69,6 +70,7 @@ export function Help(): ReactElement {
         <SuccessHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <DisplaySettingsHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <NotificationSettingsHelp searchQuery={searchQuery} helpLink={helpLink}/>
+        <AddNotificationHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <BackupHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <RemoteBackupDetailsPageHelp searchQuery={searchQuery} helpLink={helpLink}/>
         <AddBackupHelp searchQuery={searchQuery} helpLink={helpLink}/>

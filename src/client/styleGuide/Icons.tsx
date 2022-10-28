@@ -33,6 +33,7 @@ import {Xml} from '../common/icons/Xml'
 import {Image} from '../common/icons/Image'
 import {Info} from '../common/icons/Info'
 import {ArrowUp} from '../common/icons/ArrowUp'
+import {Note} from '../common/icons/Note'
 
 export function Icons(): ReactElement {
   return (
@@ -61,6 +62,7 @@ export function Icons(): ReactElement {
         <span><List/>list</span>
         <span><Lock/>lock</span>
         <span><Loop/>loop</span>
+        <span><Note/>note</span>
         <span><Paste/>paste</span>
         <span><Play/>play</span>
         <span><Plus/>plus</span>

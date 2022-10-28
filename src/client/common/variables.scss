@@ -42,3 +42,8 @@ $max-page-width: 1280px;
 $header-footer-index: 100;
 $focus-index: 1000;
 $model-index: 9999;
+
+@mixin prognosis($color, $background-color) {
+  background-color: $background-color;
+  color: $color;
+}

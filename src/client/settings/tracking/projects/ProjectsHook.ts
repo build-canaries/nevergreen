@@ -1,7 +1,8 @@
 import {useQuery, UseQueryResult} from 'react-query'
 import {post, send} from '../../../gateways/Gateway'
 import {ProjectsResponse, SortBy} from '../../../gateways/ProjectsGateway'
-import {isError as isProjectError, Project} from '../../../domain/Project'
+import {Project} from '../../../domain/Project'
+import {isError as isProjectError} from '../../../domain/FeedError'
 import {Feed} from '../../../domain/Feed'
 import omit from 'lodash/omit'
 

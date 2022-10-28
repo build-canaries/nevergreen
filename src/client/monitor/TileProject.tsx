@@ -1,7 +1,7 @@
 import React, {ReactElement} from 'react'
 import styles from './tile-project.scss'
 import {isBlank} from '../common/Utils'
-import {Project, projectBuildLabel, Projects} from '../domain/Project'
+import {Project, projectBuildLabel} from '../domain/Project'
 import {VisuallyHidden} from '../common/VisuallyHidden'
 import {Duration} from '../common/Duration'
 import {ScaledTile} from './ScaledTile'
@@ -10,12 +10,12 @@ import {useSelector} from 'react-redux'
 import {getFeeds} from '../settings/tracking/FeedsReducer'
 import {getShowBuildLabel, getShowBuildTime, getShowFeedIdentifier} from '../settings/SettingsReducer'
 import {ExternalLink} from '../common/ExternalLink'
-import {ProjectError} from '../gateways/ProjectsGateway'
 import {Clock} from '../common/icons/Clock'
+import {FeedError} from '../domain/FeedError'
 
 interface TileProjectProps {
-  readonly project: Project | ProjectError;
-  readonly visibleProjects: Projects;
+  readonly project: Project | FeedError;
+  readonly visibleProjects: ReadonlyArray<Project | FeedError>;
 }
 
 export function TileProject({project, visibleProjects}: TileProjectProps): ReactElement {
@@ -30,7 +30,7 @@ export function TileProject({project, visibleProjects}: TileProjectProps): React
 
   const identifier = showFeedIdentifier && (
     <span className={styles.identifier}
-          data-locator='tray-name'>
+          data-locator="tray-name">
       {feedIdentifier(myFeed)}
     </span>
   )
@@ -45,7 +45,7 @@ export function TileProject({project, visibleProjects}: TileProjectProps): React
   const buildLabel = projectBuildLabel(project)
   const buildLabelComponent = showBuildLabel && !isBlank(buildLabel) && (
     <div className={styles.buildLabel}
-         data-locator='build-label'>
+         data-locator="build-label">
       <VisuallyHidden>build label </VisuallyHidden>
       {buildLabel}
     </div>

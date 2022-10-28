@@ -70,6 +70,6 @@ describe('Settings', () => {
     cy.findByRole('link', {name: 'Notifications'}).click()
 
     cy.findByLabelText('Check for new Nevergreen versions').click()
-    cy.findByLabelText('Play audio notifications').click()
+    cy.findByLabelText('Allow audio notifications').click()
   })
 })

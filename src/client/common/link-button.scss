@@ -14,7 +14,7 @@
 .addButton {
   @extend .primary;
 
-  margin: 0 0 $margin-top 0;
+  margin: $margin-top 0;
   vertical-align: bottom;
 
   &:visited {

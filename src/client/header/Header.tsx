@@ -1,7 +1,6 @@
 import React, {ReactElement} from 'react'
 import cn from 'classnames'
 import styles from './header.scss'
-import logo from './buildcanaries-logo.png'
 import {SHOW_HELP_SHORTCUT} from '../help/Help'
 import {triggerShortcut} from '../common/Keyboard'
 import {Display} from '../common/icons/Display'
@@ -21,11 +20,11 @@ export function Header({hide}: HeaderProps): ReactElement {
   return (
     <header className={headerClassNames}>
       <div className={styles.inner}>
-        <img src={logo} className={styles.logo} alt='Nevergreen' aria-hidden/>
-        <nav className={styles.nav} aria-label='Primary'>
+        <img src="/canaries.svg" className={styles.logo} alt="Nevergreen" aria-hidden/>
+        <nav className={styles.nav} aria-label="Primary">
           <ul className={styles.menu}>
             <li>
-              <NavLink to='monitor'
+              <NavLink to="monitor"
                        className={({isActive}) => {
                          return cn(styles.menuItem, {[styles.active]: isActive})
                        }}>
@@ -34,7 +33,7 @@ export function Header({hide}: HeaderProps): ReactElement {
               </NavLink>
             </li>
             <li>
-              <NavLink to='settings'
+              <NavLink to="settings"
                        className={({isActive}) => {
                          return cn(styles.menuItem, {[styles.active]: isActive})
                        }}>

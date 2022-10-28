@@ -1,10 +1,11 @@
 import React, {ReactElement} from 'react'
-import {Prognosis} from '../../domain/Project'
+import {Prognosis, prognosisDisplay} from '../../domain/Project'
 import {Checkbox} from '../../common/forms/Checkbox'
 import styles from './display-prognosis-selection.scss'
 import {useDispatch, useSelector} from 'react-redux'
 import {getShowPrognosis} from '../SettingsReducer'
 import {setShowPrognosis} from '../SettingsActionCreators'
+import capitalize from 'lodash/capitalize'
 
 export function DisplayPrognosisSelection(): ReactElement {
   const dispatch = useDispatch()
@@ -13,7 +14,7 @@ export function DisplayPrognosisSelection(): ReactElement {
   return (
     <fieldset className={styles.container}>
       <legend>Interesting projects</legend>
-      <div className={styles.options} data-locator='show-prognosis-container'>
+      <div className={styles.options} data-locator="show-prognosis-container">
         {
           Object.values(Prognosis)
             .filter((prognosis) => prognosis !== Prognosis.error)
@@ -23,8 +24,8 @@ export function DisplayPrognosisSelection(): ReactElement {
                           className={styles.checkbox}
                           checked={showPrognosis.includes(prognosis)}
                           onToggle={(newValue) => dispatch(setShowPrognosis(prognosis, newValue))}
-                          data-locator='show-prognosis'>
-                  {prognosis.replace('-', ' ')}
+                          data-locator="show-prognosis">
+                  {capitalize(prognosisDisplay(prognosis))}
                 </Checkbox>
               )
             })

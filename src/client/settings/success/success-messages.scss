@@ -3,6 +3,10 @@
 @import '../../common/layout';
 @import '../../common/typography';
 
+.add {
+  margin-top: 0;
+}
+
 .messages {
   @extend %two-column-grid;
 

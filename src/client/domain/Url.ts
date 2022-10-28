@@ -1,6 +1,6 @@
-export function buildUrl(value: string): URL | null {
+export function buildUrl(value: string, base?: string): URL | null {
   try {
-    return new URL(value)
+    return new URL(value, base)
   } catch (_) {
     return null
   }

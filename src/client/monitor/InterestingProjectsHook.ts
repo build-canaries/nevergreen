@@ -1,19 +1,21 @@
 import {useQuery} from 'react-query'
 import {post, send} from '../gateways/Gateway'
 import {FeedRequest, ProjectsResponse} from '../gateways/ProjectsGateway'
-import {enrichProjects, Projects, toProjectError} from '../domain/Project'
+import {enrichProjects, Projects} from '../domain/Project'
 import {useSelector} from 'react-redux'
 import {getFeeds} from '../settings/tracking/FeedsReducer'
 import {getSelectedProjects, SelectedState} from '../settings/tracking/SelectedReducer'
-import {getRefreshTime, getShowPrognosis, getSort} from '../settings/SettingsReducer'
+import {getRefreshTime, getSort} from '../settings/SettingsReducer'
 import isEmpty from 'lodash/isEmpty'
 import {useState} from 'react'
 import {Feed} from '../domain/Feed'
 import omit from 'lodash/omit'
+import {enrichErrors, FeedErrors, toFeedApiError} from '../domain/FeedError'
 
 interface InterestingProjectsHook {
   readonly loaded: boolean;
   readonly projects: Projects;
+  readonly feedErrors: FeedErrors;
 }
 
 function toProjectsRequest(feed: Feed, selectedPerFeed: SelectedState): FeedRequest {
@@ -28,10 +30,10 @@ function toProjectsRequest(feed: Feed, selectedPerFeed: SelectedState): FeedRequ
 export function useInterestingProjects(): InterestingProjectsHook {
   const feeds = useSelector(getFeeds)
   const selected = useSelector(getSelectedProjects)
-  const prognosis = useSelector(getShowPrognosis)
   const sort = useSelector(getSort)
   const refreshTime = useSelector(getRefreshTime)
   const [projects, setProjects] = useState<Projects>([])
+  const [feedErrors, setFeedErrors] = useState<FeedErrors>([])
 
   const feedRequests = feeds
     .map((feed) => toProjectsRequest(feed, selected))
@@ -42,7 +44,6 @@ export function useInterestingProjects(): InterestingProjectsHook {
   const {isLoading} = useQuery('interesting', async ({signal}) => {
     const data = {
       feeds: feedRequests,
-      prognosis,
       sort
     }
     return await send(post<ProjectsResponse>('/api/projects', data), signal)
@@ -54,13 +55,20 @@ export function useInterestingProjects(): InterestingProjectsHook {
       setProjects((previouslyFetchedProjects) => {
         return enrichProjects(response, previouslyFetchedProjects)
       })
+      setFeedErrors((previousErrors) => {
+        return enrichErrors(response, previousErrors)
+      })
     }),
     onError: (e) => {
-      setProjects([toProjectError(e)])
+      setProjects([])
+      setFeedErrors((previousErrors) => {
+        return enrichErrors([toFeedApiError(e)], previousErrors)
+      })
     }
   })
   return {
     loaded: !isLoading,
-    projects
+    projects,
+    feedErrors
   }
 }

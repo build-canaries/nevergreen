@@ -1,16 +1,33 @@
-import React, {ReactElement, useState} from 'react'
+import React, {ReactElement, useEffect, useState} from 'react'
 import {SuccessMessage} from '../common/SuccessMessage'
 import {SuccessImage} from './SuccessImage'
 import {isBlank, randomFrom} from '../common/Utils'
 import {isValidHttpUrl} from '../domain/Url'
 import {useSelector} from 'react-redux'
 import {getSuccessMessages} from '../settings/success/SuccessReducer'
+import {Projects} from '../domain/Project'
+import {FeedErrors} from '../domain/FeedError'
+import isEmpty from 'lodash/isEmpty'
+import {getShowPrognosis} from '../settings/SettingsReducer'
 
-export function Success(): ReactElement | null {
+interface SuccessProps {
+  readonly projects: Projects;
+  readonly feedErrors: FeedErrors;
+}
+
+export function Success({projects, feedErrors}: SuccessProps): ReactElement | null {
+  const showPrognosis = useSelector(getShowPrognosis)
   const messages = useSelector(getSuccessMessages)
-  const [message] = useState(randomFrom(messages))
+  const [message, setMessage] = useState(randomFrom(messages))
 
-  if (isBlank(message)) {
+  const interestingProjects = projects.filter((project) => showPrognosis.includes(project.prognosis))
+  const success = isEmpty(interestingProjects) && isEmpty(feedErrors)
+
+  useEffect(() => {
+    setMessage(randomFrom(messages))
+  }, [success, messages])
+
+  if (!success || isBlank(message)) {
     return null
   }
 

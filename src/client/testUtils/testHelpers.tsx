@@ -24,6 +24,7 @@ import userEvent from '@testing-library/user-event'
 import {UserEvent} from '@testing-library/user-event/setup/setup'
 import {buildState} from './builders'
 import {App} from '../App'
+import {NOTIFICATIONS_ROOT} from '../settings/notifications/NotificationsReducer'
 
 interface ExtendedRenderResult extends RenderResult {
   readonly store: EnhancedStore<State, AnyAction, ReadonlyArray<Middleware<unknown, State>>>;
@@ -38,7 +39,7 @@ interface ExtendedRenderOptions extends RenderOptions {
 }
 
 export function render(component: ReactElement, options: ExtendedRenderOptions = {}): ExtendedRenderResult {
-  const appElement = document.createElement('div')
+  const appElement = document.querySelector('#root') || document.createElement('div')
   appElement.setAttribute('id', 'root')
 
   const mergedOptions = {
@@ -90,7 +91,8 @@ export function testReducer(reducer: Partial<Reducer<State>>): Reducer<CombinedS
     [SUCCESS_ROOT]: (state: any = null) => state,
     [FEEDS_ROOT]: (state: any = null) => state,
     [APPLIED_MIGRATIONS_ROOT]: (state: any = null) => state,
-    [BACKUP_REMOTE_LOCATIONS_ROOT]: (state: any = null) => state
+    [BACKUP_REMOTE_LOCATIONS_ROOT]: (state: any = null) => state,
+    [NOTIFICATIONS_ROOT]: (state: any = null) => state
   }, reducer))
 }
 

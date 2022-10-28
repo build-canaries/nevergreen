@@ -9,31 +9,35 @@ import {createFeed, Feed} from '../domain/Feed'
 import {RecursivePartial} from '../common/Types'
 import {DEFAULT_REFRESH_TIME} from '../settings/SettingsActionCreators'
 import {APPLIED_MIGRATIONS_ROOT} from '../configuration/MigrationsReducer'
-import {ProjectError, SortBy} from '../gateways/ProjectsGateway'
+import {ProjectApi, SortBy} from '../gateways/ProjectsGateway'
 import {BACKUP_REMOTE_LOCATIONS_ROOT, RemoteLocation} from '../settings/backup/RemoteLocationsReducer'
 import {RemoteLocationOptions} from '../settings/backup/RemoteLocationOptions'
+import {NOTIFICATIONS_ROOT} from '../settings/notifications/NotificationsReducer'
+import {FeedError} from '../domain/FeedError'
 
 export function buildState(subState: RecursivePartial<State> = {}): State {
   const defaultState: State = {
     [SETTINGS_ROOT]: {
-      brokenBuildSoundFx: '',
       clickToShowMenu: false,
       maxProjectsToShow: MaxProjectsToShow.medium,
-      playBrokenBuildSoundFx: false,
       refreshTime: DEFAULT_REFRESH_TIME,
       showBuildLabel: false,
       showBuildTime: false,
-      showSystemNotifications: false,
       showTrayName: false,
       showPrognosis: [],
-      sort: SortBy.default,
-      enableNewVersionCheck: true
+      sort: SortBy.default
     },
     [SELECTED_ROOT]: {},
     [SUCCESS_ROOT]: [],
     [FEEDS_ROOT]: {},
     [APPLIED_MIGRATIONS_ROOT]: [],
-    [BACKUP_REMOTE_LOCATIONS_ROOT]: {}
+    [BACKUP_REMOTE_LOCATIONS_ROOT]: {},
+    [NOTIFICATIONS_ROOT]: {
+      allowAudioNotifications: false,
+      allowSystemNotifications: false,
+      enableNewVersionCheck: true,
+      notifications: {}
+    }
   }
   return merge(defaultState, subState)
 }
@@ -57,15 +61,30 @@ export function buildProject(project: Partial<Project> = {}): Project {
   return merge(defaultProject, project)
 }
 
-export function buildProjectError(projectError: Partial<ProjectError> = {}): ProjectError {
-  const defaultProjectError: ProjectError = {
-    description: 'some-error',
-    prognosis: Prognosis.error,
+export function buildProjectApi(project: Partial<ProjectApi> = {}): ProjectApi {
+  const defaultProject: ProjectApi = {
+    lastBuildLabel: '',
+    description: 'some-name',
+    prognosis: Prognosis.unknown,
+    projectId: 'some-project-id',
+    serverType: '',
     timestamp: '',
     trayId: '',
     webUrl: ''
   }
-  return merge(defaultProjectError, projectError)
+  return merge(defaultProject, project)
+}
+
+export function buildFeedError(feedError: Partial<FeedError> = {}): FeedError {
+  const defaultFeedError: FeedError = {
+    description: 'some-error',
+    prognosis: Prognosis.error,
+    previousPrognosis: undefined,
+    timestamp: '',
+    trayId: '',
+    webUrl: ''
+  }
+  return merge(defaultFeedError, feedError)
 }
 
 export function buildRemoteBackupLocation(location: Partial<RemoteLocation> = {}): RemoteLocation {

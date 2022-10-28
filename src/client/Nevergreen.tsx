@@ -1,7 +1,7 @@
 import React, {ReactElement, useCallback, useState} from 'react'
 import {Header} from './header/Header'
 import {Footer} from './footer/Footer'
-import {Notification} from './Notification'
+import {Banner} from './Banner'
 import styles from './nevergreen.scss'
 import {useServiceWorker} from './ServiceWorkerHook'
 import {useHideMenus} from './HideMenusHook'
@@ -20,13 +20,13 @@ import {Outlet, useOutletContext} from 'react-router-dom'
 interface AppState {
   readonly menusHidden: boolean;
   readonly toggleMenusHidden: (hide: boolean) => void;
-  readonly setNotification: (notification: string) => void;
+  readonly setBannerMessage: (message: string) => void;
 }
 
 export function Nevergreen(): ReactElement {
   const {loaded, error} = useLocalConfiguration()
 
-  const [notification, setNotification] = useState('')
+  const [bannerMessage, setBannerMessage] = useState('')
   const [fontMetrics, setFontMetrics] = useState(DEFAULT_FONT_METRICS)
 
   const fontMetricsRef = useCallback((measure: Measurable | null) => {
@@ -37,8 +37,8 @@ export function Nevergreen(): ReactElement {
 
   const {menusHidden, toggleMenusHidden, showMenus} = useHideMenus()
 
-  useServiceWorker(setNotification)
-  useCheckForNewVersion(setNotification)
+  useServiceWorker(setBannerMessage)
+  useCheckForNewVersion(setBannerMessage)
   useNavigationShortcuts()
 
   const clickToShowMenu = useSelector(getClickToShowMenu)
@@ -68,11 +68,11 @@ export function Nevergreen(): ReactElement {
              onKeyDown={showMenus}
              {...showMenusOn}>
           <Header hide={menusHidden}/>
-          <Notification notification={notification}
-                        onDismiss={() => setNotification('')}
-                        hide={menusHidden}/>
+          <Banner message={bannerMessage}
+                  onDismiss={() => setBannerMessage('')}
+                  hide={menusHidden}/>
           <main className={styles.main} role='main'>
-            <Outlet context={{menusHidden, toggleMenusHidden, setNotification}}/>
+            <Outlet context={{menusHidden, toggleMenusHidden, setBannerMessage}}/>
           </main>
           <Footer hide={menusHidden}/>
         </div>

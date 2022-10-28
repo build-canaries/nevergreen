@@ -1,13 +1,13 @@
 import React from 'react'
 import {InterestingProjects} from './InterestingProjects'
 import {render, setSystemTime} from '../testUtils/testHelpers'
-import {buildFeed, buildProject, buildProjectError} from '../testUtils/builders'
+import {buildFeed, buildProject, buildFeedError} from '../testUtils/builders'
 import {Prognosis, ProjectPrognosis} from '../domain/Project'
 import {FEEDS_ROOT} from '../settings/tracking/FeedsReducer'
 import {MaxProjectsToShow, SETTINGS_ROOT} from '../settings/SettingsReducer'
 import {screen} from '@testing-library/react'
 
-const trayId = 'some-tray-id'
+const feedId = 'some-tray-id'
 
 describe('displaying project information', () => {
 
@@ -19,9 +19,10 @@ describe('displaying project information', () => {
     setSystemTime('2020-01-25T20:23:00Z')
     const state = {
       [FEEDS_ROOT]: {
-        [trayId]: buildFeed({trayId, name: 'some-feed-name'})
+        [feedId]: buildFeed({trayId: feedId, name: 'some-feed-name'})
       },
       [SETTINGS_ROOT]: {
+        showPrognosis: [prognosis],
         showTrayName: true,
         showBuildTime: true,
         showBuildLabel: true
@@ -30,13 +31,14 @@ describe('displaying project information', () => {
     const props = {
       projects: [
         buildProject({
-          trayId,
+          trayId: feedId,
           description: 'some-project-name',
           prognosis,
           lastBuildLabel: '1234',
           timestamp: '2020-01-25T19:23:00Z'
         })
-      ]
+      ],
+      feedErrors: []
     }
 
     render(<InterestingProjects {...props}/>, {state})
@@ -51,9 +53,10 @@ describe('displaying project information', () => {
     setSystemTime('2020-01-25T20:23:00Z')
     const state = {
       [FEEDS_ROOT]: {
-        [trayId]: buildFeed({trayId, name: 'some-feed-name'})
+        [feedId]: buildFeed({trayId: feedId, name: 'some-feed-name'})
       },
       [SETTINGS_ROOT]: {
+        showPrognosis: [Prognosis.unknown],
         showTrayName: true,
         showBuildTime: true,
         showBuildLabel: true
@@ -62,13 +65,14 @@ describe('displaying project information', () => {
     const props = {
       projects: [
         buildProject({
-          trayId,
+          trayId: feedId,
           description: 'some-project-name',
           prognosis: Prognosis.unknown,
           lastBuildLabel: '',
           timestamp: ''
         })
-      ]
+      ],
+      feedErrors: []
     }
 
     render(<InterestingProjects {...props}/>, {state})
@@ -84,9 +88,10 @@ describe('displaying project information', () => {
     setSystemTime('2020-01-25T20:23:00Z')
     const state = {
       [FEEDS_ROOT]: {
-        [trayId]: buildFeed({trayId, name: 'some-feed-name'})
+        [feedId]: buildFeed({trayId: feedId, name: 'some-feed-name'})
       },
       [SETTINGS_ROOT]: {
+        showPrognosis: [Prognosis.sickBuilding],
         showTrayName: true,
         showBuildTime: true,
         showBuildLabel: true
@@ -95,13 +100,14 @@ describe('displaying project information', () => {
     const props = {
       projects: [
         buildProject({
-          trayId,
+          trayId: feedId,
           description: 'some-project-name',
           prognosis: Prognosis.sickBuilding,
           lastBuildLabel: '1234',
           timestamp: '2020-01-25T19:53:00Z'
         })
-      ]
+      ],
+      feedErrors: []
     }
 
     render(<InterestingProjects {...props}/>, {state})
@@ -116,9 +122,10 @@ describe('displaying project information', () => {
     setSystemTime('2020-01-25T20:23:00Z')
     const state = {
       [FEEDS_ROOT]: {
-        [trayId]: buildFeed({trayId, name: 'some-feed-name'})
+        [feedId]: buildFeed({trayId: feedId, name: 'some-feed-name'})
       },
       [SETTINGS_ROOT]: {
+        showPrognosis: [Prognosis.sick],
         showTrayName: false,
         showBuildTime: false,
         showBuildLabel: false
@@ -127,13 +134,14 @@ describe('displaying project information', () => {
     const props = {
       projects: [
         buildProject({
-          trayId,
+          trayId: feedId,
           description: 'some-project-name',
           prognosis: Prognosis.sick,
           lastBuildLabel: '1234',
           timestamp: '2020-01-25T19:23:00Z'
         })
-      ]
+      ],
+      feedErrors: []
     }
 
     render(<InterestingProjects {...props}/>, {state})
@@ -147,18 +155,22 @@ describe('displaying project information', () => {
   it('should add an external link to the project on the CI server', () => {
     const state = {
       [FEEDS_ROOT]: {
-        [trayId]: buildFeed({trayId})
+        [feedId]: buildFeed({trayId: feedId})
+      },
+      [SETTINGS_ROOT]: {
+        showPrognosis: [Prognosis.sickBuilding],
       }
     }
     const props = {
       projects: [
         buildProject({
-          trayId,
+          trayId: feedId,
           description: 'some-project-name',
           prognosis: Prognosis.sickBuilding,
           webUrl: 'some-url'
         })
-      ]
+      ],
+      feedErrors: []
     }
 
     render(<InterestingProjects {...props}/>, {state})
@@ -172,7 +184,7 @@ describe('limiting the projects displayed', () => {
   it('should not display a summary if the number of projects is less than the max', () => {
     const state = {
       [FEEDS_ROOT]: {
-        [trayId]: buildFeed({trayId})
+        [feedId]: buildFeed({trayId: feedId})
       },
       [SETTINGS_ROOT]: {
         maxProjectsToShow: MaxProjectsToShow.small
@@ -180,8 +192,9 @@ describe('limiting the projects displayed', () => {
     }
     const props = {
       projects: [
-        buildProject({trayId, prognosis: Prognosis.sick})
-      ]
+        buildProject({trayId: feedId, prognosis: Prognosis.sick})
+      ],
+      feedErrors: []
     }
     render(<InterestingProjects {...props}/>, {state})
     expect(screen.queryByText(/\+\d+ not shown/)).not.toBeInTheDocument()
@@ -190,7 +203,7 @@ describe('limiting the projects displayed', () => {
   it('should not display a summary if the number of projects is equal to the max', () => {
     const state = {
       [FEEDS_ROOT]: {
-        [trayId]: buildFeed({trayId})
+        [feedId]: buildFeed({trayId: feedId})
       },
       [SETTINGS_ROOT]: {
         maxProjectsToShow: MaxProjectsToShow.small
@@ -198,12 +211,13 @@ describe('limiting the projects displayed', () => {
     }
     const props = {
       projects: [
-        buildProject({projectId: '1', trayId}),
-        buildProject({projectId: '2', trayId}),
-        buildProject({projectId: '3', trayId}),
-        buildProject({projectId: '4', trayId}),
-        buildProject({projectId: '5', trayId})
-      ]
+        buildProject({projectId: '1', trayId: feedId}),
+        buildProject({projectId: '2', trayId: feedId}),
+        buildProject({projectId: '3', trayId: feedId}),
+        buildProject({projectId: '4', trayId: feedId}),
+        buildProject({projectId: '5', trayId: feedId})
+      ],
+      feedErrors: []
     }
     render(<InterestingProjects {...props}/>, {state})
     expect(screen.queryByText(/\+\d+ not shown/)).not.toBeInTheDocument()
@@ -212,23 +226,25 @@ describe('limiting the projects displayed', () => {
   it('should display a summary if the number of projects is more than the max', () => {
     const state = {
       [FEEDS_ROOT]: {
-        [trayId]: buildFeed({trayId})
+        [feedId]: buildFeed({trayId: feedId})
       },
       [SETTINGS_ROOT]: {
+        showPrognosis: [Prognosis.sick, Prognosis.sickBuilding, Prognosis.healthy, Prognosis.healthyBuilding, Prognosis.unknown],
         maxProjectsToShow: MaxProjectsToShow.small
       }
     }
     const props = {
       projects: [
-        buildProject({projectId: '1', trayId}),
-        buildProject({projectId: '2', trayId}),
-        buildProject({projectId: '3', trayId}),
-        buildProject({projectId: '4', trayId}),
-        buildProject({projectId: '5', trayId}),
-        buildProject({projectId: '6', trayId}),
-        buildProject({projectId: '7', trayId}),
-        buildProject({projectId: '8', trayId})
-      ]
+        buildProject({projectId: '1', trayId: feedId}),
+        buildProject({projectId: '2', trayId: feedId}),
+        buildProject({projectId: '3', trayId: feedId}),
+        buildProject({projectId: '4', trayId: feedId}),
+        buildProject({projectId: '5', trayId: feedId}),
+        buildProject({projectId: '6', trayId: feedId}),
+        buildProject({projectId: '7', trayId: feedId}),
+        buildProject({projectId: '8', trayId: feedId})
+      ],
+      feedErrors: []
     }
     render(<InterestingProjects {...props}/>, {state})
     expect(screen.getByText('+3 not shown')).toBeInTheDocument()
@@ -237,21 +253,23 @@ describe('limiting the projects displayed', () => {
   it('should display a summary if the number of errors is more than the max', () => {
     const state = {
       [FEEDS_ROOT]: {
-        [trayId]: buildFeed({trayId})
+        [feedId]: buildFeed({trayId: feedId})
       },
       [SETTINGS_ROOT]: {
+        showPrognosis: [Prognosis.error],
         maxProjectsToShow: MaxProjectsToShow.small
       }
     }
     const props = {
-      projects: [
-        buildProjectError({trayId, description: 'error 1'}),
-        buildProjectError({trayId, description: 'error 2'}),
-        buildProjectError({trayId, description: 'error 3'}),
-        buildProjectError({trayId, description: 'error 4'}),
-        buildProjectError({trayId, description: 'error 5'}),
-        buildProjectError({trayId, description: 'error 6'}),
-        buildProjectError({trayId, description: 'error 7'})
+      projects: [],
+      feedErrors: [
+        buildFeedError({trayId: feedId, description: 'error 1'}),
+        buildFeedError({trayId: feedId, description: 'error 2'}),
+        buildFeedError({trayId: feedId, description: 'error 3'}),
+        buildFeedError({trayId: feedId, description: 'error 4'}),
+        buildFeedError({trayId: feedId, description: 'error 5'}),
+        buildFeedError({trayId: feedId, description: 'error 6'}),
+        buildFeedError({trayId: feedId, description: 'error 7'})
       ]
     }
     render(<InterestingProjects {...props}/>, {state})
@@ -262,25 +280,68 @@ describe('limiting the projects displayed', () => {
   it('should display a summary if the number of errors and projects is more than the max', () => {
     const state = {
       [FEEDS_ROOT]: {
-        [trayId]: buildFeed({trayId})
+        [feedId]: buildFeed({trayId: feedId})
       },
       [SETTINGS_ROOT]: {
+        showPrognosis: [
+          Prognosis.sick,
+          Prognosis.sickBuilding,
+          Prognosis.healthy,
+          Prognosis.healthyBuilding,
+          Prognosis.unknown,
+          Prognosis.error
+        ],
         maxProjectsToShow: MaxProjectsToShow.small
       }
     }
     const props = {
       projects: [
-        buildProjectError({trayId, description: 'error 1'}),
-        buildProjectError({trayId, description: 'error 2'}),
-        buildProjectError({trayId, description: 'error 3'}),
-        buildProjectError({trayId, description: 'error 4'}),
-        buildProject({projectId: '1', trayId}),
-        buildProject({projectId: '2', trayId, prognosis: Prognosis.sick}),
-        buildProject({projectId: '3', trayId, prognosis: Prognosis.healthyBuilding})
+        buildProject({projectId: '1', trayId: feedId}),
+        buildProject({projectId: '2', trayId: feedId, prognosis: Prognosis.sick}),
+        buildProject({projectId: '3', trayId: feedId, prognosis: Prognosis.healthyBuilding})
+      ],
+      feedErrors: [
+        buildFeedError({trayId: feedId, description: 'error 1'}),
+        buildFeedError({trayId: feedId, description: 'error 2'}),
+        buildFeedError({trayId: feedId, description: 'error 3'}),
+        buildFeedError({trayId: feedId, description: 'error 4'})
       ]
     }
     render(<InterestingProjects {...props}/>, {state})
     expect(screen.getByText('+2 not shown')).toBeInTheDocument()
     expect(screen.getByText('+1 sick, +1 healthy building')).toBeInTheDocument()
   })
+})
+
+it('should filter projects based on prognosis', () => {
+  const state = {
+    [FEEDS_ROOT]: {
+      [feedId]: buildFeed({trayId: feedId, name: 'some-feed-name'})
+    },
+    [SETTINGS_ROOT]: {
+      showPrognosis: [Prognosis.sick],
+      showBuildTime: true,
+      showBuildLabel: true
+    }
+  }
+  const props = {
+    projects: [
+      buildProject({
+        trayId: feedId,
+        description: 'some-project-name',
+        prognosis: Prognosis.healthy,
+      }),
+      buildProject({
+        trayId: feedId,
+        description: 'another-project-name',
+        prognosis: Prognosis.sick,
+      })
+    ],
+    feedErrors: []
+  }
+
+  render(<InterestingProjects {...props}/>, {state})
+
+  expect(screen.getByText('another-project-name')).toBeInTheDocument()
+  expect(screen.queryByText('some-project-name')).not.toBeInTheDocument()
 })

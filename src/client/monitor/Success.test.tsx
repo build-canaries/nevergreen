@@ -3,32 +3,67 @@ import {Success} from './Success'
 import {render} from '../testUtils/testHelpers'
 import {SUCCESS_ROOT} from '../settings/success/SuccessReducer'
 import {screen} from '@testing-library/react'
+import {buildFeedError, buildProject} from '../testUtils/builders'
+import {Prognosis} from '../domain/Project'
+import {SETTINGS_ROOT} from '../settings/SettingsReducer'
 
 it('should pick a message when first rendered to stop it changing after every successful refresh', () => {
   const state = {[SUCCESS_ROOT]: ['foo', 'bar', 'baz']}
-  const {rerender} = render(<Success/>, {state})
+  const {rerender} = render(<Success projects={[]} feedErrors={[]}/>, {state})
   const message = screen.getByTestId('success-message').textContent as string
-  rerender(<Success/>)
+  rerender(<Success projects={[]} feedErrors={[]}/>)
   expect(screen.getByText(message)).toBeInTheDocument()
-  rerender(<Success/>)
+  rerender(<Success projects={[]} feedErrors={[]}/>)
   expect(screen.getByText(message)).toBeInTheDocument()
 })
 
 it('should render text messages', () => {
   const state = {[SUCCESS_ROOT]: ['some-message']}
-  render(<Success/>, {state})
+  render(<Success projects={[]} feedErrors={[]}/>, {state})
   expect(screen.getByText('some-message')).toBeInTheDocument()
 })
 
 it('should render images', () => {
   const state = {[SUCCESS_ROOT]: ['http://some-url']}
-  render(<Success/>, {state})
+  render(<Success projects={[]} feedErrors={[]}/>, {state})
   expect(screen.getByRole('img')).toHaveAttribute('src', 'http://some-url')
 })
 
 it('should render nothing if there are no success messages', () => {
   const state = {[SUCCESS_ROOT]: []}
-  const {container} = render(<Success/>, {state})
+  const {container} = render(<Success projects={[]} feedErrors={[]}/>, {state})
   // eslint-disable-next-line testing-library/no-node-access
   expect(container.firstChild).toBeNull()
+})
+
+it('should render nothing if not successful due to an error', () => {
+  const state = {[SUCCESS_ROOT]: ['some-message']}
+  const {container} = render(<Success projects={[]} feedErrors={[buildFeedError()]}/>, {state})
+  // eslint-disable-next-line testing-library/no-node-access
+  expect(container.firstChild).toBeNull()
+})
+
+it('should render nothing if not successful due to an interesting project', () => {
+  const state = {
+    [SETTINGS_ROOT]: {
+      showPrognosis: [Prognosis.sick]
+    },
+    [SUCCESS_ROOT]: ['some-message']
+  }
+  const projects = [buildProject({prognosis: Prognosis.sick})]
+  const {container} = render(<Success projects={projects} feedErrors={[]}/>, {state})
+  // eslint-disable-next-line testing-library/no-node-access
+  expect(container.firstChild).toBeNull()
+})
+
+it('should render a message if only uninteresting projects', () => {
+  const state = {
+    [SETTINGS_ROOT]: {
+      showPrognosis: [Prognosis.sick]
+    },
+    [SUCCESS_ROOT]: ['some-message']
+  }
+  const projects = [buildProject({prognosis: Prognosis.healthy})]
+  render(<Success projects={projects} feedErrors={[]}/>, {state})
+  expect(screen.getByText('some-message')).toBeInTheDocument()
 })

@@ -1,7 +1,7 @@
 import {useEffect} from 'react'
 import {error, info} from './common/Logger'
 
-export function useServiceWorker(setNotification: (notification: string) => void): void {
+export function useServiceWorker(showBanner: (message: string) => void): void {
   useEffect(() => {
     const registerServiceWorker = async () => {
       if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
@@ -15,7 +15,7 @@ export function useServiceWorker(setNotification: (notification: string) => void
                 switch (installingWorker.state) {
                   case 'installed':
                     if (navigator.serviceWorker.controller) {
-                      setNotification('A new version is available, refresh to update!')
+                      showBanner('A new version is available, refresh to update!')
                     } else {
                       info('Content is now available offline')
                     }
@@ -35,5 +35,5 @@ export function useServiceWorker(setNotification: (notification: string) => void
     }
 
     void registerServiceWorker()
-  }, [setNotification])
+  }, [showBanner])
 }

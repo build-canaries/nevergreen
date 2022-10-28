@@ -1,22 +1,7 @@
-@import '../../common/variables';
-@import '../../common/layout';
 @import '../../common/responsive';
 
 .refreshTime {
   @include respond-to(tablet, desktop) {
     width: 20em;
-  }
-}
-
-.addFeed {
-  margin-top: $margin-top;
-}
-
-.container {
-  list-style: none;
-  margin: 0;
-
-  & > li:first-child > *:first-child {
-    margin: 0;
   }
 }

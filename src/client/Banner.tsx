@@ -4,13 +4,13 @@ import styles from './notification.scss'
 import {Bell} from './common/icons/Bell'
 import {Messages, MessagesType} from './common/Messages'
 
-interface NotificationProps {
-  readonly notification: string;
+interface BannerProps {
+  readonly message: string;
   readonly onDismiss: () => void;
   readonly hide: boolean;
 }
 
-export function Notification({notification, onDismiss, hide}: NotificationProps): ReactElement {
+export function Banner({message, onDismiss, hide}: BannerProps): ReactElement {
   const notificationClassNames = cn(styles.messages, {
     [styles.hide]: hide
   })
@@ -18,7 +18,7 @@ export function Notification({notification, onDismiss, hide}: NotificationProps)
   return (
     <Messages className={notificationClassNames}
               type={MessagesType.info}
-              messages={notification}
+              messages={message}
               icon={<Bell/>}
               onDismiss={onDismiss}/>
   )

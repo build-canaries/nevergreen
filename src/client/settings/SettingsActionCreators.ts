@@ -8,19 +8,8 @@ export interface ActionShowBuildTime extends Action<Actions.SHOW_BUILD_TIME> {
   readonly value: boolean;
 }
 
-export interface ActionToggleVersionCheck extends Action<Actions.TOGGLE_VERSION_CHECK> {
-}
-
 export interface ActionShowFeedIdentifier extends Action<Actions.SHOW_FEED_IDENTIFIER> {
   readonly value: boolean;
-}
-
-export interface ActionPlayBrokenBuildSoundFx extends Action<Actions.PLAY_BROKEN_BUILD_SOUND_FX> {
-  readonly value: boolean;
-}
-
-export interface ActionBrokenBuildSoundFx extends Action<Actions.BROKEN_BUILD_SOUND_FX> {
-  readonly value: string;
 }
 
 export interface ActionRefreshTime extends Action<Actions.REFRESH_TIME> {
@@ -28,10 +17,6 @@ export interface ActionRefreshTime extends Action<Actions.REFRESH_TIME> {
 }
 
 export interface ActionShowBuildLabel extends Action<Actions.SHOW_BUILD_LABEL> {
-  readonly value: boolean;
-}
-
-export interface ActionShowSystemNotifications extends Action<Actions.SHOW_SYSTEM_NOTIFICATIONS> {
   readonly value: boolean;
 }
 
@@ -64,20 +49,8 @@ export function setShowBuildTime(value: boolean): ActionShowBuildTime {
   return {type: Actions.SHOW_BUILD_TIME, value}
 }
 
-export function toggleVersionCheck(): ActionToggleVersionCheck {
-  return {type: Actions.TOGGLE_VERSION_CHECK}
-}
-
 export function setShowFeedIdentifier(value: boolean): ActionShowFeedIdentifier {
   return {type: Actions.SHOW_FEED_IDENTIFIER, value}
-}
-
-export function setPlayBrokenBuildSoundFx(value: boolean): ActionPlayBrokenBuildSoundFx {
-  return {type: Actions.PLAY_BROKEN_BUILD_SOUND_FX, value}
-}
-
-export function setBrokenBuildSoundFx(value: string): ActionBrokenBuildSoundFx {
-  return {type: Actions.BROKEN_BUILD_SOUND_FX, value}
 }
 
 export function setRefreshTime(value: string): ActionRefreshTime {
@@ -88,10 +61,6 @@ export function setRefreshTime(value: string): ActionRefreshTime {
 
 export function setShowBuildLabel(value: boolean): ActionShowBuildLabel {
   return {type: Actions.SHOW_BUILD_LABEL, value}
-}
-
-export function setShowSystemNotifications(value: boolean): ActionShowSystemNotifications {
-  return {type: Actions.SHOW_SYSTEM_NOTIFICATIONS, value}
 }
 
 export function setMaxProjectsToShow(value: MaxProjectsToShow): ActionSetMaxProjects {

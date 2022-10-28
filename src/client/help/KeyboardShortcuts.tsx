@@ -106,6 +106,13 @@ export function KeyboardShortcuts({searchQuery}: HelpProps): ReactElement {
         </Shortcut>
       </ul>
 
+      <h3 className={styles.header}>Notifications settings page</h3>
+      <ul className={styles.shortcuts}>
+        <Shortcut label='Add a new notification'>
+          <Binding>a</Binding>
+        </Shortcut>
+      </ul>
+
       <h3 className={styles.header}>Backup settings page</h3>
       <ul className={styles.shortcuts}>
         <Shortcut label='Add a new remote backup'>

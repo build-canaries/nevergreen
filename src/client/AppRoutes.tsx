@@ -26,6 +26,7 @@ import {Nevergreen} from './Nevergreen'
 import {RemoteLocationPage} from './settings/backup/RemoteLocationPage'
 import {AboutPage} from './footer/AboutPage'
 import {RemoteBackupDetailsPage} from './settings/backup/RemoteBackupDetailsPage'
+import {AddNotification} from './settings/notifications/AddNotification'
 
 export const ROUTE_MONITOR = '/monitor'
 export const ROUTE_SETTINGS = '/settings'
@@ -37,6 +38,7 @@ export const ROUTE_TRACKING_DETAILS_CONNECTION = '/settings/tracking/:id/details
 export const ROUTE_SUCCESS = '/settings/success'
 export const ROUTE_DISPLAY = '/settings/display'
 export const ROUTE_NOTIFICATIONS = '/settings/notifications'
+export const ROUTE_NOTIFICATIONS_ADD = '/settings/notifications/add'
 export const ROUTE_BACKUP = '/settings/backup'
 export const ROUTE_BACKUP_ADD = '/settings/backup/add'
 export const ROUTE_BACKUP_IMPORT_LOCAL = '/settings/backup/local/import'
@@ -65,6 +67,7 @@ export function AppRoutes(): ReactElement {
           <Route path='success/add' element={<AddMessage/>}/>
           <Route path='display' element={<DisplaySettings/>}/>
           <Route path='notifications' element={<NotificationSettings/>}/>
+          <Route path='notifications/add' element={<AddNotification/>}/>
           <Route path='backup' element={<BackupPage/>}/>
           <Route path='backup/add' element={<AddBackup/>}/>
           <Route path='backup/local/export' element={<ExportLocal/>}/>

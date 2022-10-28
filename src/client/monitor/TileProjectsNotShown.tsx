@@ -2,14 +2,11 @@ import React, {ReactElement} from 'react'
 import styles from './tile-projects-not-shown.scss'
 import {ScaledTile} from './ScaledTile'
 import countBy from 'lodash/countBy'
-import {Projects} from '../domain/Project'
+import {Prognosis, prognosisDisplay, Project} from '../domain/Project'
+import {FeedError} from '../domain/FeedError'
 
 interface TileNotShownProps {
-  readonly projectsNotShown: Projects;
-}
-
-function prognosisDisplay(prognosis: string) {
-  return prognosis.replace('-', ' ')
+  readonly projectsNotShown: ReadonlyArray<Project | FeedError>;
 }
 
 export function TileProjectsNotShown({projectsNotShown}: TileNotShownProps): ReactElement {
@@ -19,7 +16,7 @@ export function TileProjectsNotShown({projectsNotShown}: TileNotShownProps): Rea
 
   const body = Object.keys(counts)
     .filter((prognosis) => counts[prognosis] > 0)
-    .map((prognosis) => `+${counts[prognosis]} ${prognosisDisplay(prognosis)}`)
+    .map((prognosis) => `+${counts[prognosis]} ${prognosisDisplay(prognosis as Prognosis)}`)
     .join(', ')
 
   const footer = (

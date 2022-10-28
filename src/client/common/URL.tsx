@@ -5,6 +5,7 @@ import {isNotBlank} from './Utils'
 
 interface URLProps {
   readonly url: string;
+  readonly base?: string;
 }
 
 function isPathSeparator(c: string) {
@@ -29,8 +30,8 @@ function redactQueryParams(url: URL) {
   })
 }
 
-export function URL({url}: URLProps): ReactElement {
-  const u = buildUrl(url)
+export function URL({url, base}: URLProps): ReactElement {
+  const u = buildUrl(url, base)
   if (u === null) {
     return <span/>
   }

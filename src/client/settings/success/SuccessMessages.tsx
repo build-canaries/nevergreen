@@ -33,11 +33,13 @@ export function SuccessMessages(): ReactElement {
     : NO_MESSAGES_WARNING
 
   return (
-    <Page title='Success messages' icon={<Image/>}>
-      <AddButton>Add message</AddButton>
+    <Page title="Success messages" icon={<Image/>}>
+      <AddButton className={styles.add}>
+        Add message
+      </AddButton>
       <WarningMessages messages={noMessagesWarning}/>
       <ol className={styles.messages}
-          id='success'>
+          id="success">
         {
           messages.map((msg) => {
             return (
@@ -47,7 +49,7 @@ export function SuccessMessages(): ReactElement {
                        src={msg}
                        alt={msg}
                        title={msg}
-                       data-locator='success-image'/>
+                       data-locator="success-image"/>
                 ) : (
                   <div className={styles.message}>
                     <SuccessMessage message={msg}/>

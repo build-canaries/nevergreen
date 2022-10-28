@@ -11,6 +11,7 @@ import {setRefreshTime, VALID_REFRESH_TIMES} from '../SettingsActionCreators'
 import {secondsToString} from '../../common/DateTime'
 import {getRefreshTime} from '../SettingsReducer'
 import {List} from '../../common/icons/List'
+import {CardList} from '../../common/card/CardList'
 
 export function TrackingPage(): ReactElement {
   const dispatch = useDispatch()
@@ -21,29 +22,23 @@ export function TrackingPage(): ReactElement {
   })
 
   return (
-    <Page title='Tracking' icon={<List/>}>
+    <Page title="Tracking" icon={<List/>}>
       <DropDown className={styles.refreshTime}
                 options={options}
                 value={refreshTime}
                 onChange={({target}) => dispatch(setRefreshTime(target.value))}
-                data-locator='refresh-time'>
+                data-locator="refresh-time">
         Poll for feed changes every
       </DropDown>
-      <AddButton className={styles.addFeed}>
-        Add feed
-      </AddButton>
-      {feeds.length === 0 && <WarningMessages messages='No feeds added, add a feed to start monitoring'/>}
-      <ul className={styles.container}>
-        {
-          feeds.map((feed) => {
-            return (
-              <li key={feed.trayId}>
-                <FeedCard key={feed.trayId} feed={feed}/>
-              </li>
-            )
-          })
-        }
-      </ul>
+      <AddButton>Add feed</AddButton>
+      {feeds.length === 0 && <WarningMessages messages="No feeds added, add a feed to start monitoring"/>}
+      <CardList>
+        {feeds.map((feed) => {
+          return (
+            <FeedCard key={feed.trayId} feed={feed}/>
+          )
+        })}
+      </CardList>
     </Page>
   )
 }
