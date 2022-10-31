@@ -1,4 +1,4 @@
-import React, {ReactElement, useEffect, useState} from 'react'
+import React, {ReactElement, useState} from 'react'
 import {send} from '../../gateways/Gateway'
 import {SecondaryButton} from '../../common/forms/Button'
 import {useQuery} from 'react-query'
@@ -33,10 +33,6 @@ export function TestConnection({existingFeed, details}: TestConnectionProps): Re
     enabled: false
   })
 
-  useEffect(() => {
-    setShowConnectionCheckMessages(true)
-  }, [isFetching])
-
   const dismiss = () => setShowConnectionCheckMessages(false)
 
   return (
@@ -48,7 +44,10 @@ export function TestConnection({existingFeed, details}: TestConnectionProps): Re
         <TimedErrorMessages messages={[errorMessage(error)]} onDismiss={dismiss}/>
       )}
       <SecondaryButton className={styles.test}
-                       onClick={() => void refetch()}
+                       onClick={() => {
+                         setShowConnectionCheckMessages(true)
+                         void refetch()
+                       }}
                        disabled={isFetching}
                        icon={<Loop loaded={!isFetching}/>}>
         {isFetching ? 'Checking connection...' : 'Check connection'}

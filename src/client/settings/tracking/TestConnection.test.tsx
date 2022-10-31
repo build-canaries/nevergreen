@@ -16,7 +16,7 @@ const details = {
 
 it('should update the button text while loading', async () => {
   const promise = new Promise((resolve) => setTimeout(resolve, 1))
-  jest.spyOn(Gateway, 'send').mockReturnValue(promise)
+  jest.spyOn(Gateway, 'send').mockReturnValueOnce(promise)
   const {user} = render(<TestConnection details={details}/>)
   await user.click(screen.getByRole('button', {name: 'Check connection'}))
   await waitFor(() => {
@@ -25,11 +25,12 @@ it('should update the button text while loading', async () => {
 })
 
 it('should display messages about the connection', async () => {
-  const testFeedConnectionSpy = jest.spyOn(ProjectsGateway, 'testFeedConnection')
+  jest.spyOn(ProjectsGateway, 'testFeedConnection')
+    .mockResolvedValueOnce(Gateway.fakeRequest(undefined))
+    .mockRejectedValueOnce(new Error('some error happened'))
 
   const {user} = render(<TestConnection details={details}/>)
 
-  testFeedConnectionSpy.mockResolvedValueOnce(Gateway.fakeRequest(undefined))
   await user.click(screen.getByRole('button', {name: 'Check connection'}))
   await waitFor(() => {
     expect(screen.getByText('Connected successfully')).toBeInTheDocument()
@@ -39,8 +40,6 @@ it('should display messages about the connection', async () => {
   await waitFor(() => {
     expect(screen.queryByText('Connected successfully')).not.toBeInTheDocument()
   })
-
-  testFeedConnectionSpy.mockRejectedValueOnce(new Error('some error happened'))
   await user.click(screen.getByRole('button', {name: 'Check connection'}))
   await waitFor(() => {
     expect(screen.getByText('some error happened')).toBeInTheDocument()
