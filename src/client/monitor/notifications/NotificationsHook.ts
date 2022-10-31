@@ -1,4 +1,4 @@
-import {Prognosis, Project, Projects} from '../../domain/Project'
+import {Prognosis, prognosisDisplay, Project, Projects} from '../../domain/Project'
 import {useSelector} from 'react-redux'
 import {
   getAllowAudioNotifications,
@@ -6,7 +6,7 @@ import {
   getNotifications
 } from '../../settings/notifications/NotificationsReducer'
 import {sendSystemNotification} from '../../common/SystemNotifications'
-import {useEffect, useRef} from 'react'
+import {useEffect, useRef, useState} from 'react'
 import {isNotBlank} from '../../common/Utils'
 import {anyAudioPlaying, playAudio} from '../../common/AudioPlayer'
 import {FeedError, FeedErrors} from '../../domain/FeedError'
@@ -17,8 +17,12 @@ import healthyBuildingIcon from './healthy-building.png'
 import sickBuildingIcon from './sick-building.png'
 import sickIcon from './sick.png'
 import errorIcon from './error.png'
+import groupBy from 'lodash/groupBy'
+import capitalize from 'lodash/capitalize'
+import {notificationIcons} from '../../settings/notifications/icons/NotificationIcon'
+import {UpdateBrowserTitleHookProps, useUpdateBrowserTitle} from '../../common/BrowserTitleHook'
 
-const icon = {
+const systemNotificationIcons = {
   [Prognosis.healthy]: healthyIcon,
   [Prognosis.unknown]: unknownIcon,
   [Prognosis.healthyBuilding]: healthyBuildingIcon,
@@ -63,39 +67,50 @@ export function useNotifications(projects: Projects, feedErrors: FeedErrors): st
   const allowSystemNotifications = useSelector(getAllowSystemNotifications)
   const allowAudioNotifications = useSelector(getAllowAudioNotifications)
   const sfxSrc = useRef<string>()
+  const [browserTitle, setBrowserTitle] = useState<UpdateBrowserTitleHookProps>({title: 'Monitor'})
+
+  useUpdateBrowserTitle(browserTitle)
 
   useEffect(() => {
     sfxSrc.current = undefined
-    const toCheck = [...feedErrors, ...projects]
+    const all = [...feedErrors, ...projects]
 
-    Object
-      .entries(notifications)
+    Object.entries(groupBy(all, 'prognosis'))
       .sort(([aPrognosis], [bPrognosis]) => {
         return prognosisPriority.indexOf(aPrognosis as Prognosis) - prognosisPriority.indexOf(bPrognosis as Prognosis)
       })
-      .forEach(([key, notification]) => {
+      .forEach(([key, toCheck]) => {
         const prognosis = key as Prognosis
+        const notification = notifications[prognosis]
         const projectsToAlert = toCheck.filter((project) => justTransitionedTo(project, prognosis))
 
-        const shouldSendSystemNotification = projectsToAlert.length > 0
-          && allowSystemNotifications
-          && notification.systemNotification
+        if (projectsToAlert.length > 0) {
+          if (notification) {
+            const shouldSendSystemNotification = allowSystemNotifications
+              && notification.systemNotification
 
-        const shouldPlayAudio = projectsToAlert.length > 0
-          && allowAudioNotifications
-          && !anyAudioPlaying()
-          && isNotBlank(notification.sfx)
+            const shouldPlayAudio = allowAudioNotifications
+              && !anyAudioPlaying()
+              && isNotBlank(notification.sfx)
 
-        if (shouldSendSystemNotification) {
-          void sendSystemNotification({
-            title: title(prognosis, projectsToAlert.length),
-            body: body(projectsToAlert),
-            icon: icon[prognosis]
-          })
+            if (shouldSendSystemNotification) {
+              void sendSystemNotification({
+                title: title(prognosis, projectsToAlert.length),
+                body: body(projectsToAlert),
+                icon: systemNotificationIcons[prognosis]
+              })
+            }
+
+            if (shouldPlayAudio) {
+              sfxSrc.current = notification.sfx
+            }
+          }
         }
-        if (shouldPlayAudio) {
-          sfxSrc.current = notification.sfx
-        }
+
+        setBrowserTitle({
+          title: capitalize(prognosisDisplay(prognosis)),
+          faviconHref: notificationIcons[prognosis]
+        })
       })
 
     if (sfxSrc.current) {

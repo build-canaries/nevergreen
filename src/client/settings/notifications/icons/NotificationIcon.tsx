@@ -8,7 +8,7 @@ import errorIcon from './error.svg'
 import {Prognosis} from '../../../domain/Project'
 import styles from './notification-icon.scss'
 
-const icons = {
+export const notificationIcons = {
   [Prognosis.healthy]: healthyIcon,
   [Prognosis.unknown]: unknownIcon,
   [Prognosis.healthyBuilding]: healthyBuildingIcon,
@@ -22,5 +22,5 @@ interface NotificationIconProps {
 }
 
 export function NotificationIcon({prognosis}: NotificationIconProps): ReactElement {
-  return <img src={icons[prognosis]} alt="" className={styles.icon}/>
+  return <img src={notificationIcons[prognosis]} alt="" className={styles.icon}/>
 }

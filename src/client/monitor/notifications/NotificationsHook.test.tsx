@@ -1,12 +1,13 @@
 import React from 'react'
 import * as SystemNotifications from '../../common/SystemNotifications'
-import {Prognosis, ProjectPrognosis, Projects} from '../../domain/Project'
+import {Prognosis, prognosisDisplay, ProjectPrognosis, Projects} from '../../domain/Project'
 import {render} from '../../testUtils/testHelpers'
 import {buildFeedError, buildProject} from '../../testUtils/builders'
 import {NOTIFICATIONS_ROOT} from '../../settings/notifications/NotificationsReducer'
 import {useNotifications} from './NotificationsHook'
 import {FeedErrors} from '../../domain/FeedError'
 import * as AudioPlayer from '../../common/AudioPlayer'
+import capitalize from 'lodash/capitalize'
 
 interface PrognosisTest {
   readonly previous: ProjectPrognosis,
@@ -368,5 +369,29 @@ describe('audio notifications', () => {
     rerender(<HookWrapper projects={projectsSecondFetch} errors={errors}/>)
 
     expect(AudioPlayer.playAudio).toHaveBeenCalledTimes(1)
+  })
+})
+
+describe('browser title', () => {
+
+  it.each<ProjectPrognosis>([
+    Prognosis.sick,
+    Prognosis.sickBuilding,
+    Prognosis.healthyBuilding,
+    Prognosis.healthy,
+    Prognosis.unknown
+  ])('should update title for %s', (current) => {
+    const projects = [
+      buildProject({
+        projectId: 'some-id',
+        description: 'some-name',
+        prognosis: current
+      })
+    ]
+    const errors: FeedErrors = []
+
+    render(<HookWrapper projects={projects} errors={errors}/>)
+
+    expect(document).toHaveProperty('title', capitalize(prognosisDisplay(current)))
   })
 })

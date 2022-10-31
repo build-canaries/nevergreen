@@ -2,19 +2,37 @@ import React from 'react'
 import {Success} from './Success'
 import {render} from '../testUtils/testHelpers'
 import {SUCCESS_ROOT} from '../settings/success/SuccessReducer'
-import {screen} from '@testing-library/react'
+import {screen, waitFor} from '@testing-library/react'
 import {buildFeedError, buildProject} from '../testUtils/builders'
 import {Prognosis} from '../domain/Project'
 import {SETTINGS_ROOT} from '../settings/SettingsReducer'
+import * as Utils from '../common/Utils'
 
-it('should pick a message when first rendered to stop it changing after every successful refresh', () => {
-  const state = {[SUCCESS_ROOT]: ['foo', 'bar', 'baz']}
+it('should only switch the message on a new success state not every refresh', async () => {
+  jest.spyOn(Utils, 'randomFrom')
+    .mockReturnValueOnce('foo')
+    .mockReturnValueOnce('bar')
+  const state = {
+    [SETTINGS_ROOT]: {
+      showPrognosis: [Prognosis.sick]
+    },
+    [SUCCESS_ROOT]: ['foo', 'bar']
+  }
+
   const {rerender} = render(<Success projects={[]} feedErrors={[]}/>, {state})
-  const message = screen.getByTestId('success-message').textContent as string
+
   rerender(<Success projects={[]} feedErrors={[]}/>)
-  expect(screen.getByText(message)).toBeInTheDocument()
+  expect(screen.getByText('foo')).toBeInTheDocument()
+
   rerender(<Success projects={[]} feedErrors={[]}/>)
-  expect(screen.getByText(message)).toBeInTheDocument()
+  expect(screen.getByText('foo')).toBeInTheDocument()
+
+  rerender(<Success projects={[buildProject({prognosis: Prognosis.sick})]} feedErrors={[]}/>)
+
+  rerender(<Success projects={[]} feedErrors={[]}/>)
+  await waitFor(() => {
+    expect(screen.getByText('bar')).toBeInTheDocument()
+  })
 })
 
 it('should render text messages', () => {

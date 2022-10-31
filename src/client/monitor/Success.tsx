@@ -18,13 +18,15 @@ interface SuccessProps {
 export function Success({projects, feedErrors}: SuccessProps): ReactElement | null {
   const showPrognosis = useSelector(getShowPrognosis)
   const messages = useSelector(getSuccessMessages)
-  const [message, setMessage] = useState(randomFrom(messages))
+  const [message, setMessage] = useState('')
 
   const interestingProjects = projects.filter((project) => showPrognosis.includes(project.prognosis))
   const success = isEmpty(interestingProjects) && isEmpty(feedErrors)
 
   useEffect(() => {
-    setMessage(randomFrom(messages))
+    if (success) {
+      setMessage(randomFrom(messages))
+    }
   }, [success, messages])
 
   if (!success || isBlank(message)) {

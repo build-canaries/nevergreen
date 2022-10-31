@@ -1,6 +1,7 @@
-import React, {ReactElement, useEffect} from 'react'
+import React, {ReactElement} from 'react'
 import {VisuallyHidden} from './VisuallyHidden'
 import {useForceFocus} from './ForceFocusHook'
+import {useUpdateBrowserTitle} from './BrowserTitleHook'
 
 interface TitleProps {
   readonly show?: boolean;
@@ -11,17 +12,11 @@ interface TitleProps {
 export function Title({show, children, icon}: TitleProps): ReactElement {
   const titleEl = useForceFocus<HTMLHeadingElement>()
 
-  useEffect(() => {
-    document.title = children
-    return () => {
-      document.title = 'Nevergreen'
-    }
-  }, [children])
+  useUpdateBrowserTitle({title: children})
 
   const title = (
     <h1 ref={titleEl}
-        tabIndex={-1}
-        data-locator='title'>
+        tabIndex={-1}>
       {icon}
       {children}
     </h1>
