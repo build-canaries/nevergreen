@@ -1,5 +1,5 @@
 #!/bin/bash
-set -euo pipefail
+set -eo pipefail
 
 if [ -f ~/.nvm/nvm.sh ]; then
     echo "nvm.sh found, using to set the correct version of Node"
@@ -15,13 +15,12 @@ hash node 2>/dev/null || {
     exit 1
 }
 
-if [ -f ~/.jabba/jabba.sh ]; then
-    echo "jabba command found, using to set the correct version of Java"
-    . ~/.jabba/jabba.sh
-    jabba install
-    jabba use
+if [ -f ~/.sdkman/bin/sdkman-init.sh ]; then
+    echo "sdkman found, using to set the correct version of Java"
+    . ~/.sdkman/bin/sdkman-init.sh
+    sdk env install
 else
-  echo "jabba command not found, you will need to manually install the correct version of Java. See wiki/contributing for more details."
+  echo "sdkman not found, you will need to manually install the correct version of Java. See wiki/contributing for more details."
 fi
 
 hash java 2>/dev/null || {
