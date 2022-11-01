@@ -8,9 +8,9 @@ function msg {
     echo "$@" 1>&2
 }
 
-export LEIN_VERSION="2.9.8"
+export LEIN_VERSION="2.9.10"
 # Must be sha256sum, will be replaced by bin/release
-export LEIN_CHECKSUM='2a0e9114e0d623c748a9ade5d72b54128b31b5ddb13f51b04c533f104bb0c48d'
+export LEIN_CHECKSUM='a228530f00b50753acfddc3de38a0d737b6f5c1aec49af202e70a0ad28c249c9'
 
 case $LEIN_VERSION in
     *SNAPSHOT) SNAPSHOT="YES" ;;
@@ -321,7 +321,11 @@ elif [ "$1" = "upgrade" ] || [ "$1" = "downgrade" ]; then
             y|Y|"")
                 echo
                 msg "Upgrading..."
-                TARGET="/tmp/lein-${$}-upgrade"
+                if hash mktemp 2>/dev/null; then
+                    TARGET="(mktemp -t lein-upgrade.XXXXXXXXX)"
+                else
+                    TARGET="/tmp/lein-${$}-upgrade"
+                fi
                 if $cygwin; then
                     TARGET=$(cygpath -w "$TARGET")
                 fi
@@ -371,7 +375,7 @@ else
     else
         if hash mktemp 2>/dev/null; then
             # Check if mktemp is available before using it
-            TRAMPOLINE_FILE="$(mktemp /tmp/lein-trampoline-XXXXXXXXXXXXX)"
+            TRAMPOLINE_FILE="$(mktemp -t lein-trampoline-XXXXXXXXXXXXX)"
         else
             TRAMPOLINE_FILE="/tmp/lein-trampoline-$$"
         fi
