@@ -38,7 +38,7 @@ export function notEmpty(val: unknown): boolean {
 }
 
 export function errorMessage(e: unknown): string {
-  const originalMessage = get(e, 'message') as unknown
+  const originalMessage = get(e, 'message')
   const message = isString(originalMessage)
     ? originalMessage
     : 'Unknown error'
