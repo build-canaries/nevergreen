@@ -24,10 +24,9 @@ jobs:
           java-version: 19.0.1
 
       - name: Install clojure tools-deps
-        uses: DeLaGuardo/setup-clojure@master
+        uses: DeLaGuardo/setup-clojure@9.5
         with:
-          tools-deps: latest
-          lein: latest
+          lein: 2.9.10
 
       - name: Clojure - dependencies
         run: lein deps
