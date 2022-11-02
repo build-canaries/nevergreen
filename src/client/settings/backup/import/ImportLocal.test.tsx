@@ -29,7 +29,7 @@ it('should show an error if the data is syntactically invalid (bad json)', async
   await user.type(screen.getByLabelText('Configuration to import'), escapeSpecialCharacter(invalidConfiguration))
   await user.click(screen.getByRole('button', {name: 'Import'}))
 
-  expect(screen.getByText('Unexpected end of JSON input')).toBeInTheDocument()
+  expect(screen.getByText('Expected property name or \'}\' in JSON at position 1')).toBeInTheDocument()
   expect(screen.getByDisplayValue(invalidConfiguration)).toBeInTheDocument()
 })
 
