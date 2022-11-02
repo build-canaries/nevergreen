@@ -23,19 +23,19 @@ You can use [hosted Nevergreen](https://nevergreen.io) at `nevergreen.io` or
 Once loaded:
 
 1. Add the URL of your CCTray XML feed on the Tracking page
-2. Select which projects you'd like to track
-3. Head to the Monitor page to see their current status!
+2. Head to the Monitor page to see their current status!
 
 ### How can I find my CCTray XML feed URL?
 
-More information about how to get the CCTray XML feed for your CI server can be found on the 
-[Nevergreen wiki finding your CCTray XML](https://github.com/build-canaries/nevergreen/wiki/find-cctray) page.
+More information about how to get the CCTray XML feed for your CI server can be found on the official
+[CCTray XML website](https://cctray.org/servers/).
 
 ### How can I get more help?
 
 - [The Nevergreen wiki](https://github.com/build-canaries/nevergreen/wiki)
 - [Tweet to @BuildCanaries](https://twitter.com/BuildCanaries) on Twitter
 - [Come chat to us on Slack](https://join.slack.com/t/nevergreen/shared_invite/zt-4towhx0w-7o6wJp0R_LwqXhGXb4niIA)
+- Nevergreen has built in help that can be accessed from the menu or by pressing the `h` key
 
 ## How can I fix a bug / add a feature / contribute?
 
@@ -49,6 +49,6 @@ You can also help us out by taking this [short usage survey](https://build-canar
 
 ## License
 
-Copyright © 2014 - 2021 Build Canaries
+Copyright © 2014 - 2022 Build Canaries
 
 Distributed under the Eclipse Public License either version 1.0 or (at your option) any later version.
