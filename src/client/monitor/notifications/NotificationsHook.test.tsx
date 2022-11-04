@@ -8,6 +8,7 @@ import {useNotifications} from './NotificationsHook'
 import {FeedErrors} from '../../domain/FeedError'
 import * as AudioPlayer from '../../common/AudioPlayer'
 import capitalize from 'lodash/capitalize'
+import {waitFor} from '@testing-library/react'
 
 interface PrognosisTest {
   readonly previous: ProjectPrognosis,
@@ -217,8 +218,6 @@ describe('audio notifications', () => {
     ${Prognosis.healthyBuilding} | ${Prognosis.healthy}
     ${Prognosis.healthyBuilding} | ${Prognosis.unknown}
   `('should play notification for transition $previous -> $current', ({previous, current}: PrognosisTest) => {
-    jest.spyOn(AudioPlayer, 'playAudio').mockResolvedValue()
-
     const state = {
       [NOTIFICATIONS_ROOT]: {
         allowAudioNotifications: true,
@@ -275,7 +274,7 @@ describe('audio notifications', () => {
   })
 
   it('should not play more notifications if a previous notification is still playing', () => {
-    jest.spyOn(AudioPlayer, 'anyAudioPlaying').mockReturnValue(false)
+    jest.spyOn(AudioPlayer, 'anyAudioPlaying').mockReturnValueOnce(false)
 
     const state = {
       [NOTIFICATIONS_ROOT]: {
@@ -336,9 +335,7 @@ describe('audio notifications', () => {
     expect(AudioPlayer.playAudio).not.toHaveBeenCalled()
   })
 
-  it('should not play audio notification if nothing has changed', () => {
-    jest.spyOn(AudioPlayer, 'playAudio').mockResolvedValue()
-
+  it('should not play audio notification if nothing has changed', async () => {
     const state = {
       [NOTIFICATIONS_ROOT]: {
         allowAudioNotifications: true,
@@ -368,7 +365,9 @@ describe('audio notifications', () => {
     const {rerender} = render(<HookWrapper projects={projectsFirstFetch} errors={errors}/>, {state})
     rerender(<HookWrapper projects={projectsSecondFetch} errors={errors}/>)
 
-    expect(AudioPlayer.playAudio).toHaveBeenCalledTimes(1)
+    await waitFor(() => {
+      expect(AudioPlayer.playAudio).toHaveBeenCalledTimes(1)
+    })
   })
 })
 

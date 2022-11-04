@@ -6,11 +6,10 @@ import {
   getNotifications
 } from '../../settings/notifications/NotificationsReducer'
 import {sendSystemNotification} from '../../common/SystemNotifications'
-import {useEffect, useRef, useState} from 'react'
+import {useEffect, useState} from 'react'
 import {isNotBlank} from '../../common/Utils'
-import {anyAudioPlaying, playAudio} from '../../common/AudioPlayer'
+import {anyAudioPlaying} from '../../common/AudioPlayer'
 import {FeedError, FeedErrors} from '../../domain/FeedError'
-import {error} from '../../common/Logger'
 import healthyIcon from './healthy.png'
 import unknownIcon from './unknown.png'
 import healthyBuildingIcon from './healthy-building.png'
@@ -21,6 +20,7 @@ import groupBy from 'lodash/groupBy'
 import capitalize from 'lodash/capitalize'
 import {notificationIcons} from '../../settings/notifications/icons/NotificationIcon'
 import {UpdateBrowserTitleHookProps, useUpdateBrowserTitle} from '../../common/BrowserTitleHook'
+import {usePlayAudio} from './AudioPlayerHook'
 
 const systemNotificationIcons = {
   [Prognosis.healthy]: healthyIcon,
@@ -44,13 +44,13 @@ function justTransitionedTo(project: Project | FeedError, prognosis: Prognosis):
   return project.prognosis === prognosis && project.previousPrognosis !== prognosis
 }
 
-function body(projects: ReadonlyArray<Project | FeedError>): string {
+function notificationBody(projects: ReadonlyArray<Project | FeedError>): string {
   return projects
     .map(({description}) => description)
     .join(', ')
 }
 
-function title(prognosis: Prognosis, total: number): string {
+function notificationTitle(prognosis: Prognosis, total: number): string {
   if (Prognosis.error === prognosis) {
     return total === 1
       ? 'feed error!'
@@ -62,18 +62,20 @@ function title(prognosis: Prognosis, total: number): string {
   }
 }
 
-export function useNotifications(projects: Projects, feedErrors: FeedErrors): string | undefined {
+export function useNotifications(projects: Projects, feedErrors: FeedErrors): void {
   const notifications = useSelector(getNotifications)
   const allowSystemNotifications = useSelector(getAllowSystemNotifications)
   const allowAudioNotifications = useSelector(getAllowAudioNotifications)
-  const sfxSrc = useRef<string>()
+  const [sfxSrc, setSfxSrc] = useState('')
   const [browserTitle, setBrowserTitle] = useState<UpdateBrowserTitleHookProps>({title: 'Monitor'})
 
   useUpdateBrowserTitle(browserTitle)
+  usePlayAudio(sfxSrc)
 
   useEffect(() => {
-    sfxSrc.current = undefined
     const all = [...feedErrors, ...projects]
+
+    setSfxSrc('')
 
     Object.entries(groupBy(all, 'prognosis'))
       .sort(([aPrognosis], [bPrognosis]) => {
@@ -95,14 +97,14 @@ export function useNotifications(projects: Projects, feedErrors: FeedErrors): st
 
             if (shouldSendSystemNotification) {
               void sendSystemNotification({
-                title: title(prognosis, projectsToAlert.length),
-                body: body(projectsToAlert),
+                title: notificationTitle(prognosis, projectsToAlert.length),
+                body: notificationBody(projectsToAlert),
                 icon: systemNotificationIcons[prognosis]
               })
             }
 
             if (shouldPlayAudio) {
-              sfxSrc.current = notification.sfx
+              setSfxSrc(notification.sfx)
             }
           }
         }
@@ -112,15 +114,5 @@ export function useNotifications(projects: Projects, feedErrors: FeedErrors): st
           faviconHref: notificationIcons[prognosis]
         })
       })
-
-    if (sfxSrc.current) {
-      try {
-        void playAudio(sfxSrc.current)
-      } catch (e) {
-        error('Unable to play audio notification', e)
-      }
-    }
   }, [projects, feedErrors, notifications, allowSystemNotifications, allowAudioNotifications])
-
-  return sfxSrc.current
 }

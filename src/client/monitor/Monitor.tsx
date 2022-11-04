@@ -14,7 +14,7 @@ import screenfull from 'screenfull'
 import {useNevergreenContext} from '../Nevergreen'
 import {useInterestingProjects} from './InterestingProjectsHook'
 import {useNotifications} from './notifications/NotificationsHook'
-import {stopAudio} from '../common/AudioPlayer'
+import {stopAnyPlayingAudio} from '../common/AudioPlayer'
 
 export function Monitor(): ReactElement {
   const {menusHidden, toggleMenusHidden} = useNevergreenContext()
@@ -31,13 +31,13 @@ export function Monitor(): ReactElement {
   const feedsAdded = !isEmpty(feeds)
 
   const {loaded, projects, feedErrors} = useInterestingProjects()
-  const sfx = useNotifications(projects, feedErrors)
+  useNotifications(projects, feedErrors)
 
   useEffect(() => {
-    if (sfx) {
-      stopAudio(sfx)
+    return () => {
+      stopAnyPlayingAudio()
     }
-  }, [sfx])
+  }, [])
 
   useShortcut('f', () => {
     if (screenfull.isEnabled && ref.current) {

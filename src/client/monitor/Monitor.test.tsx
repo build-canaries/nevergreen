@@ -150,11 +150,11 @@ it('should show feed errors', async () => {
 
 it('should trigger notifications and stop any audio notifications if user leaves the page', () => {
   const feedId = 'some-tray-id'
-  jest.spyOn(NotificationsHook, 'useNotifications').mockReturnValueOnce('some-sfx.mp3')
+  jest.spyOn(NotificationsHook, 'useNotifications').mockReturnValueOnce()
   jest.spyOn(Gateway, 'post').mockReturnValueOnce(fakeRequest([
     buildProjectApi({trayId: feedId, prognosis: Prognosis.sick})
   ]))
-  jest.spyOn(AudioPlayer, 'stopAudio')
+  jest.spyOn(AudioPlayer, 'stopAnyPlayingAudio')
   const state = {
     [FEEDS_ROOT]: {
       [feedId]: buildFeed({trayId: feedId})
@@ -167,5 +167,5 @@ it('should trigger notifications and stop any audio notifications if user leaves
 
   unmount()
 
-  expect(AudioPlayer.stopAudio).toHaveBeenCalledWith('some-sfx.mp3')
+  expect(AudioPlayer.stopAnyPlayingAudio).toHaveBeenCalled()
 })

@@ -1,8 +1,15 @@
-const playing = new Map<string, HTMLAudioElement>()
+const cachedAudio = new Map<string, HTMLAudioElement>()
+
+function stop(audio?: HTMLAudioElement): void {
+  if (audio) {
+    audio.pause()
+    audio.currentTime = 0
+  }
+}
 
 export function playAudio(src: string, onStop?: () => void): Promise<void> {
-  const audio = playing.get(src) || new Audio(src)
-  playing.set(src, audio)
+  const audio = cachedAudio.get(src) || new Audio(src)
+  cachedAudio.set(src, audio)
   if (onStop) {
     audio.addEventListener('ended', onStop)
     audio.addEventListener('pause', onStop)
@@ -11,15 +18,18 @@ export function playAudio(src: string, onStop?: () => void): Promise<void> {
 }
 
 export function stopAudio(src: string) {
-  const audio = playing.get(src)
-  if (audio) {
-    audio.pause()
-    audio.currentTime = 0
+  const audio = cachedAudio.get(src)
+  stop(audio)
+}
+
+export function stopAnyPlayingAudio() {
+  for (const audio of cachedAudio.values()) {
+    stop(audio)
   }
 }
 
 export function anyAudioPlaying(): boolean {
-  for (const audio of playing.values()) {
+  for (const audio of cachedAudio.values()) {
     if (!audio.paused) {
       return true
     }
@@ -28,5 +38,5 @@ export function anyAudioPlaying(): boolean {
 }
 
 export function deleteAudio(src: string) {
-  playing.delete(src)
+  cachedAudio.delete(src)
 }
