@@ -123,4 +123,19 @@ describe('enrichProjects', () => {
     const result = enrichProjects(fetched, previous)
     expect(result).toEqual(expect.arrayContaining([expect.objectContaining({previousPrognosis: Prognosis.sick})]))
   })
+
+  it('should not confused projects from different feeds with the same project id', () => {
+    const fetched = [buildProject({
+      projectId: 'some-id',
+      prognosis: Prognosis.sickBuilding,
+      trayId: 'feed-1'
+    })]
+    const previous = [buildProject({
+      projectId: 'some-id',
+      prognosis: Prognosis.sick,
+      trayId: 'feed-2'
+    })]
+    const result = enrichProjects(fetched, previous)
+    expect(result).toEqual(expect.arrayContaining([expect.objectContaining({previousPrognosis: undefined})]))
+  })
 })

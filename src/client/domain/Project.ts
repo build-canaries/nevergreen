@@ -35,6 +35,7 @@ function isBuilding(project: Project): boolean {
 
 function sameProject(previousProject: Project, currentProject: ProjectApi): boolean {
   return previousProject.projectId === currentProject.projectId
+    && previousProject.trayId === currentProject.trayId
 }
 
 function sameBuild(previousProject: ProjectApi, currentProject: ProjectApi) {
