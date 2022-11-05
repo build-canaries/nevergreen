@@ -1,14 +1,13 @@
 import React from 'react'
 import * as SystemNotifications from '../../common/SystemNotifications'
-import {Prognosis, prognosisDisplay, ProjectPrognosis, Projects} from '../../domain/Project'
+import {Prognosis, ProjectPrognosis, Projects} from '../../domain/Project'
 import {render} from '../../testUtils/testHelpers'
 import {buildFeedError, buildProject} from '../../testUtils/builders'
 import {NOTIFICATIONS_ROOT} from '../../settings/notifications/NotificationsReducer'
 import {useNotifications} from './NotificationsHook'
 import {FeedErrors} from '../../domain/FeedError'
 import * as AudioPlayer from '../../common/AudioPlayer'
-import capitalize from 'lodash/capitalize'
-import {waitFor} from '@testing-library/react'
+import {SETTINGS_ROOT} from '../../settings/SettingsReducer'
 
 interface PrognosisTest {
   readonly previous: ProjectPrognosis,
@@ -335,7 +334,7 @@ describe('audio notifications', () => {
     expect(AudioPlayer.playAudio).not.toHaveBeenCalled()
   })
 
-  it('should not play audio notification if nothing has changed', async () => {
+  it('should not play audio notification if nothing has changed', () => {
     const state = {
       [NOTIFICATIONS_ROOT]: {
         allowAudioNotifications: true,
@@ -365,32 +364,161 @@ describe('audio notifications', () => {
     const {rerender} = render(<HookWrapper projects={projectsFirstFetch} errors={errors}/>, {state})
     rerender(<HookWrapper projects={projectsSecondFetch} errors={errors}/>)
 
-    await waitFor(() => {
-      expect(AudioPlayer.playAudio).toHaveBeenCalledTimes(1)
-    })
+    expect(AudioPlayer.playAudio).toHaveBeenCalledTimes(1)
   })
 })
 
 describe('browser title', () => {
 
-  it.each<ProjectPrognosis>([
-    Prognosis.sick,
-    Prognosis.sickBuilding,
-    Prognosis.healthyBuilding,
-    Prognosis.healthy,
-    Prognosis.unknown
-  ])('should update title for %s', (current) => {
+  it('should update the title with a summary', () => {
+    const state = {
+      [SETTINGS_ROOT]: {
+        showPrognosis: [
+          Prognosis.sick,
+          Prognosis.sickBuilding,
+          Prognosis.healthyBuilding,
+          Prognosis.unknown,
+          Prognosis.healthy
+        ]
+      }
+    }
     const projects = [
       buildProject({
-        projectId: 'some-id',
-        description: 'some-name',
-        prognosis: current
+        projectId: '1',
+        prognosis: Prognosis.sick
+      }),
+      buildProject({
+        projectId: '2',
+        prognosis: Prognosis.sickBuilding
+      }),
+      buildProject({
+        projectId: '3',
+        prognosis: Prognosis.healthyBuilding
+      }),
+      buildProject({
+        projectId: '4',
+        prognosis: Prognosis.unknown
+      }),
+      buildProject({
+        projectId: '5',
+        prognosis: Prognosis.healthy
+      })
+    ]
+    const errors: FeedErrors = [
+      buildFeedError({
+        description: 'feed-error'
+      })
+    ]
+
+    render(<HookWrapper projects={projects} errors={errors}/>, {state})
+
+    expect(document)
+      .toHaveProperty('title', '1 Error, 1 Sick, 1 Sick building, 1 Healthy building, 1 Unknown, 1 Healthy')
+  })
+
+  it('should exclude prognoses that have no projects', () => {
+    const state = {
+      [SETTINGS_ROOT]: {
+        showPrognosis: [
+          Prognosis.sick,
+          Prognosis.sickBuilding,
+          Prognosis.healthyBuilding,
+          Prognosis.unknown,
+          Prognosis.healthy
+        ]
+      }
+    }
+    const projects = [
+      buildProject({
+        projectId: '1',
+        prognosis: Prognosis.sick
+      }),
+      buildProject({
+        projectId: '2',
+        prognosis: Prognosis.healthy
       })
     ]
     const errors: FeedErrors = []
 
+    render(<HookWrapper projects={projects} errors={errors}/>, {state})
+
+    expect(document)
+      .toHaveProperty('title', '1 Sick, 1 Healthy')
+  })
+
+  it('should count projects in each prognosis', () => {
+    const state = {
+      [SETTINGS_ROOT]: {
+        showPrognosis: [
+          Prognosis.sick,
+          Prognosis.sickBuilding,
+          Prognosis.healthyBuilding,
+          Prognosis.unknown,
+          Prognosis.healthy
+        ]
+      }
+    }
+    const projects = [
+      buildProject({
+        projectId: '1',
+        prognosis: Prognosis.sick
+      }),
+      buildProject({
+        projectId: '2',
+        prognosis: Prognosis.sick
+      })
+    ]
+    const errors: FeedErrors = []
+
+    render(<HookWrapper projects={projects} errors={errors}/>, {state})
+
+    expect(document)
+      .toHaveProperty('title', '2 Sick')
+  })
+
+  it('should set title to Monitor if no projects', () => {
+    const projects: Projects = []
+    const errors: FeedErrors = []
+
     render(<HookWrapper projects={projects} errors={errors}/>)
 
-    expect(document).toHaveProperty('title', capitalize(prognosisDisplay(current)))
+    expect(document)
+      .toHaveProperty('title', 'Monitor')
+  })
+
+  it('should only show interesting projects', () => {
+    const state = {
+      [SETTINGS_ROOT]: {
+        showPrognosis: [Prognosis.sick, Prognosis.healthy]
+      }
+    }
+    const projects = [
+      buildProject({
+        projectId: '1',
+        prognosis: Prognosis.sick
+      }),
+      buildProject({
+        projectId: '2',
+        prognosis: Prognosis.sickBuilding
+      }),
+      buildProject({
+        projectId: '3',
+        prognosis: Prognosis.healthyBuilding
+      }),
+      buildProject({
+        projectId: '4',
+        prognosis: Prognosis.unknown
+      }),
+      buildProject({
+        projectId: '5',
+        prognosis: Prognosis.healthy
+      })
+    ]
+    const errors: FeedErrors = []
+
+    render(<HookWrapper projects={projects} errors={errors}/>, {state})
+
+    expect(document)
+      .toHaveProperty('title', '1 Sick, 1 Healthy')
   })
 })

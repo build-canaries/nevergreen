@@ -12,7 +12,7 @@ interface TitleProps {
 export function Title({show, children, icon}: TitleProps): ReactElement {
   const titleEl = useForceFocus<HTMLHeadingElement>()
 
-  useUpdateBrowserTitle({title: children})
+  useUpdateBrowserTitle(children)
 
   const title = (
     <h1 ref={titleEl}

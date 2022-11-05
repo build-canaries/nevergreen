@@ -1,12 +1,7 @@
 import {useEffect} from 'react'
 import set from 'lodash/set'
 
-export interface UpdateBrowserTitleHookProps {
-  readonly title: string;
-  readonly faviconHref?: string;
-}
-
-export function useUpdateBrowserTitle({title, faviconHref = '/canaries.svg'}: UpdateBrowserTitleHookProps): void {
+export function useUpdateBrowserTitle(title: string, faviconHref = '/canaries.svg'): void {
   useEffect(() => {
     document.title = title
     const favicon = document.querySelector('#favicon')
