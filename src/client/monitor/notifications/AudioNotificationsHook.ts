@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react'
+import {useEffect} from 'react'
 import {isNotBlank} from '../../common/Utils'
 import {anyAudioPlaying, playAudio} from '../../common/AudioPlayer'
 import {error} from '../../common/Logger'
@@ -11,7 +11,6 @@ import {FeedErrors} from '../../domain/FeedError'
 export function useAudioNotifications(projects: Projects, feedErrors: FeedErrors): void {
   const notifications = useSelector(getNotifications)
   const allowAudioNotifications = useSelector(getAllowAudioNotifications)
-  const [sfxHref, setSfxHref] = useState<string>()
 
   useEffect(() => {
     if (!allowAudioNotifications || anyAudioPlaying()) {
@@ -19,9 +18,8 @@ export function useAudioNotifications(projects: Projects, feedErrors: FeedErrors
     }
 
     const toCheck = [...feedErrors, ...projects]
-
-    reversePrognosisPriority
-      .forEach((prognosis) => {
+    const sfxToPlay = reversePrognosisPriority
+      .reduce((previousSfxToPlay, prognosis) => {
         const allWithPrognosis = toCheck.filter((project) => project.prognosis === prognosis)
         const toAlert = recentlyTransitioned(allWithPrognosis, prognosis)
         const notification = notifications[prognosis]
@@ -29,19 +27,17 @@ export function useAudioNotifications(projects: Projects, feedErrors: FeedErrors
           && isNotBlank(notification.sfx)
           && toAlert.length > 0
 
-        if (shouldPlay) {
-          setSfxHref(notification.sfx)
-        }
-      })
-  }, [projects, feedErrors, notifications, allowAudioNotifications])
+        return shouldPlay
+          ? notification.sfx
+          : previousSfxToPlay
+      }, '')
 
-  useEffect(() => {
-    if (isNotBlank(sfxHref)) {
+    if (isNotBlank(sfxToPlay)) {
       try {
-        void playAudio(sfxHref)
+        void playAudio(sfxToPlay)
       } catch (e) {
         error('Unable to play audio', e)
       }
     }
-  }, [sfxHref])
+  }, [projects, feedErrors, notifications, allowAudioNotifications])
 }
