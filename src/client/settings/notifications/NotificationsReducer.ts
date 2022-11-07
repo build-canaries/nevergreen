@@ -2,7 +2,8 @@ import {Actions} from '../../Actions'
 import {
   ActionAddNotification,
   ActionAllowAudioNotifications,
-  ActionAllowSystemNotifications
+  ActionAllowSystemNotifications,
+  ActionRemoveNotification
 } from './NotificationsActionCreators'
 import defaultSoundFx from './pacman_death.mp3'
 import {createReducer, createSelector} from '@reduxjs/toolkit'
@@ -41,26 +42,27 @@ const defaultState: NotificationsState = {
   }
 }
 
-export const reduce = createReducer<NotificationsState>(defaultState, {
-  [Actions.CONFIGURATION_IMPORTED]: (draft, action: ActionConfigurationImported) => {
-    const importedState = get(action.configuration, NOTIFICATIONS_ROOT, {}) as NotificationsState
-    return {...draft, ...importedState}
-  },
-  [Actions.TOGGLE_VERSION_CHECK]: (draft) => {
-    draft.enableNewVersionCheck = !draft.enableNewVersionCheck
-  },
-  [Actions.ALLOW_AUDIO_NOTIFICATIONS]: (draft, action: ActionAllowAudioNotifications) => {
-    draft.allowAudioNotifications = action.value
-  },
-  [Actions.ALLOW_SYSTEM_NOTIFICATIONS]: (draft, action: ActionAllowSystemNotifications) => {
-    draft.allowSystemNotifications = action.value
-  },
-  [Actions.ADD_NOTIFICATION]: (draft, action: ActionAddNotification) => {
-    draft.notifications[action.prognosis] = {systemNotification: action.systemNotification, sfx: action.sfx}
-  },
-  [Actions.REMOVE_NOTIFICATION]: (draft, action: ActionAddNotification) => {
-    delete draft.notifications[action.prognosis]
-  }
+export const reduce = createReducer<NotificationsState>(defaultState, (builder) => {
+  builder
+    .addCase(Actions.CONFIGURATION_IMPORTED, (draft, action: ActionConfigurationImported) => {
+      const importedState = get(action.configuration, NOTIFICATIONS_ROOT, {}) as NotificationsState
+      return {...draft, ...importedState}
+    })
+    .addCase(Actions.TOGGLE_VERSION_CHECK, (draft) => {
+      draft.enableNewVersionCheck = !draft.enableNewVersionCheck
+    })
+    .addCase(Actions.ALLOW_AUDIO_NOTIFICATIONS, (draft, action: ActionAllowAudioNotifications) => {
+      draft.allowAudioNotifications = action.value
+    })
+    .addCase(Actions.ALLOW_SYSTEM_NOTIFICATIONS, (draft, action: ActionAllowSystemNotifications) => {
+      draft.allowSystemNotifications = action.value
+    })
+    .addCase(Actions.ADD_NOTIFICATION, (draft, action: ActionAddNotification) => {
+      draft.notifications[action.prognosis] = {systemNotification: action.systemNotification, sfx: action.sfx}
+    })
+    .addCase(Actions.REMOVE_NOTIFICATION, (draft, action: ActionRemoveNotification) => {
+      delete draft.notifications[action.prognosis]
+    })
 })
 
 function getNotificationsRoot(state: State) {

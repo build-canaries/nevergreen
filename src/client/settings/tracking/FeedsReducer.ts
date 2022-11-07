@@ -31,17 +31,18 @@ function handleImportedConfiguration(draft: FeedsState, action: ActionConfigurat
   return newState
 }
 
-export const reduce = createReducer<FeedsState>(defaultState, {
-  [Actions.CONFIGURATION_IMPORTED]: handleImportedConfiguration,
-  [Actions.FEED_ADDED]: (draft, action: ActionFeedAdded) => {
-    draft[action.trayId] = action.data
-  },
-  [Actions.FEED_UPDATED]: (draft, action: ActionFeedUpdate) => {
-    Object.assign(draft[action.trayId], action.data)
-  },
-  [Actions.FEED_REMOVED]: (draft, action: ActionRemoveFeed) => {
-    delete draft[action.trayId]
-  }
+export const reduce = createReducer<FeedsState>(defaultState, (builder) => {
+  builder
+    .addCase(Actions.CONFIGURATION_IMPORTED, handleImportedConfiguration)
+    .addCase(Actions.FEED_ADDED, (draft, action: ActionFeedAdded) => {
+      draft[action.trayId] = action.data
+    })
+    .addCase(Actions.FEED_UPDATED, (draft, action: ActionFeedUpdate) => {
+      Object.assign(draft[action.trayId], action.data)
+    })
+    .addCase(Actions.FEED_REMOVED, (draft, action: ActionRemoveFeed) => {
+      delete draft[action.trayId]
+    })
 })
 
 const getTracking = (state: State) => state[FEEDS_ROOT]

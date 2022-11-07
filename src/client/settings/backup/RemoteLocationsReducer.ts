@@ -61,24 +61,25 @@ function handleImportedConfiguration(draft: RemoteLocationsState, action: Action
   })
 }
 
-export const reduce = createReducer<RemoteLocationsState>(defaultState, {
-  [Actions.CONFIGURATION_IMPORTED]: handleImportedConfiguration,
-  [Actions.ADD_BACKUP]: (draft, action: ActionAddBackup) => {
-    draft[action.data.internalId] = action.data
-  },
-  [Actions.BACKUP_SET_AUTOMATIC_EXPORT]: (draft, action: ActionSetAutomaticExport) => {
-    draft[action.internalId].automaticallyExport = action.value
-  },
-  [Actions.BACKUP_EXPORTED]: (draft, action: ActionBackupExported) => {
-    draft[action.internalId].externalId = action.externalId
-    draft[action.internalId].exportTimestamp = action.timestamp
-  },
-  [Actions.BACKUP_IMPORTED]: (draft, action: ActionBackupImported) => {
-    draft[action.internalId].importTimestamp = action.timestamp
-  },
-  [Actions.BACKUP_REMOVE]: (draft, action: ActionRemoveBackup) => {
-    delete draft[action.internalId]
-  }
+export const reduce = createReducer<RemoteLocationsState>(defaultState, (builder) => {
+  builder
+    .addCase(Actions.CONFIGURATION_IMPORTED, handleImportedConfiguration)
+    .addCase(Actions.ADD_BACKUP, (draft, action: ActionAddBackup) => {
+      draft[action.data.internalId] = action.data
+    })
+    .addCase(Actions.BACKUP_SET_AUTOMATIC_EXPORT, (draft, action: ActionSetAutomaticExport) => {
+      draft[action.internalId].automaticallyExport = action.value
+    })
+    .addCase(Actions.BACKUP_EXPORTED, (draft, action: ActionBackupExported) => {
+      draft[action.internalId].externalId = action.externalId
+      draft[action.internalId].exportTimestamp = action.timestamp
+    })
+    .addCase(Actions.BACKUP_IMPORTED, (draft, action: ActionBackupImported) => {
+      draft[action.internalId].importTimestamp = action.timestamp
+    })
+    .addCase(Actions.BACKUP_REMOVE, (draft, action: ActionRemoveBackup) => {
+      delete draft[action.internalId]
+    })
 })
 
 export function getBackupLocations(state: State): RemoteLocationsState {

@@ -54,37 +54,38 @@ const defaultState: SettingsState = {
   sort: SortBy.default
 }
 
-export const reduce = createReducer<SettingsState>(defaultState, {
-  [Actions.CONFIGURATION_IMPORTED]: (draft, action: ActionConfigurationImported) => {
-    const importedState = get(action.configuration, SETTINGS_ROOT, {}) as SettingsState
-    return {...draft, ...importedState}
-  },
-  [Actions.SHOW_BUILD_TIME]: (draft, action: ActionShowBuildTime) => {
-    draft.showBuildTime = action.value
-  },
-  [Actions.SHOW_FEED_IDENTIFIER]: (draft, action: ActionShowFeedIdentifier) => {
-    draft.showTrayName = action.value
-  },
-  [Actions.REFRESH_TIME]: (draft, action: ActionRefreshTime) => {
-    draft.refreshTime = action.value
-  },
-  [Actions.SHOW_BUILD_LABEL]: (draft, action: ActionShowBuildLabel) => {
-    draft.showBuildLabel = action.value
-  },
-  [Actions.SET_MAX_PROJECTS]: (draft, action: ActionSetMaxProjects) => {
-    draft.maxProjectsToShow = action.value
-  },
-  [Actions.CLICK_TO_SHOW_MENU]: (draft, action: ActionClickToShowMenu) => {
-    draft.clickToShowMenu = action.value
-  },
-  [Actions.SHOW_PROGNOSIS]: (draft, action: ActionShowPrognosis) => {
-    draft.showPrognosis = action.show
-      ? uniq(draft.showPrognosis.concat(action.prognosis))
-      : draft.showPrognosis.filter((prognosis) => prognosis !== action.prognosis)
-  },
-  [Actions.SET_SORT]: (draft, action: ActionSetSort) => {
-    draft.sort = action.value
-  }
+export const reduce = createReducer<SettingsState>(defaultState, (builder) => {
+  builder
+    .addCase(Actions.CONFIGURATION_IMPORTED, (draft, action: ActionConfigurationImported) => {
+      const importedState = get(action.configuration, SETTINGS_ROOT, {}) as SettingsState
+      return {...draft, ...importedState}
+    })
+    .addCase(Actions.SHOW_BUILD_TIME, (draft, action: ActionShowBuildTime) => {
+      draft.showBuildTime = action.value
+    })
+    .addCase(Actions.SHOW_FEED_IDENTIFIER, (draft, action: ActionShowFeedIdentifier) => {
+      draft.showTrayName = action.value
+    })
+    .addCase(Actions.REFRESH_TIME, (draft, action: ActionRefreshTime) => {
+      draft.refreshTime = action.value
+    })
+    .addCase(Actions.SHOW_BUILD_LABEL, (draft, action: ActionShowBuildLabel) => {
+      draft.showBuildLabel = action.value
+    })
+    .addCase(Actions.SET_MAX_PROJECTS, (draft, action: ActionSetMaxProjects) => {
+      draft.maxProjectsToShow = action.value
+    })
+    .addCase(Actions.CLICK_TO_SHOW_MENU, (draft, action: ActionClickToShowMenu) => {
+      draft.clickToShowMenu = action.value
+    })
+    .addCase(Actions.SHOW_PROGNOSIS, (draft, action: ActionShowPrognosis) => {
+      draft.showPrognosis = action.show
+        ? uniq(draft.showPrognosis.concat(action.prognosis))
+        : draft.showPrognosis.filter((prognosis) => prognosis !== action.prognosis)
+    })
+    .addCase(Actions.SET_SORT, (draft, action: ActionSetSort) => {
+      draft.sort = action.value
+    })
 })
 
 function getSettings(state: State) {

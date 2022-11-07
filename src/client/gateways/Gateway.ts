@@ -54,13 +54,13 @@ export async function send<T>(request: Request<T>, signal?: AbortSignal): Promis
     const res = await request
     return (res.body || res.text) as T
   } catch (e) {
-    const url = _get(e, 'url') as string || 'unknown'
+    const url = _get(e, 'url') || 'unknown'
 
     log.error(`An exception was thrown when calling URL '${url}'`, e)
 
     const message = _get(e, 'timeout')
       ? TIMEOUT_ERROR
-      : _get(e, 'response.body.description') as string || errorMessage(e)
+      : _get(e, 'response.body.description') || errorMessage(e)
 
     throw new Error(message)
   }

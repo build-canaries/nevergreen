@@ -13,10 +13,11 @@ export const APPLIED_MIGRATIONS_ROOT = 'appliedMigrations'
 
 const defaultState: AppliedMigrationsState = []
 
-export const reduce = createReducer<AppliedMigrationsState>(defaultState, {
-  [Actions.CONFIGURATION_IMPORTED]: (draft, action: ActionConfigurationImported) => {
-    return action.configuration[APPLIED_MIGRATIONS_ROOT]
-      ? action.configuration[APPLIED_MIGRATIONS_ROOT] as AppliedMigrationsState
-      : draft
-  }
+export const reduce = createReducer<AppliedMigrationsState>(defaultState, (builder) => {
+  builder
+    .addCase(Actions.CONFIGURATION_IMPORTED, (draft, action: ActionConfigurationImported) => {
+      return action.configuration[APPLIED_MIGRATIONS_ROOT]
+        ? action.configuration[APPLIED_MIGRATIONS_ROOT] as AppliedMigrationsState
+        : draft
+    })
 })

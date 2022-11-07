@@ -14,27 +14,28 @@ export const SELECTED_ROOT = 'selected'
 
 const defaultState: SelectedState = {}
 
-export const reduce = createReducer<SelectedState>(defaultState, {
-  [Actions.CONFIGURATION_IMPORTED]: (draft, action: ActionConfigurationImported) => {
-    return action.configuration[SELECTED_ROOT]
-      ? action.configuration[SELECTED_ROOT] as SelectedState
-      : draft
-  },
-  [Actions.FEED_UPDATED]: (draft, action: ActionFeedUpdate) => {
-    if (action.data.trackingMode === TrackingMode.selected) {
-      draft[action.trayId] = []
-    } else if (action.data.trackingMode === TrackingMode.everything) {
+export const reduce = createReducer<SelectedState>(defaultState, (builder) => {
+  builder
+    .addCase(Actions.CONFIGURATION_IMPORTED, (draft, action: ActionConfigurationImported) => {
+      return action.configuration[SELECTED_ROOT]
+        ? action.configuration[SELECTED_ROOT] as SelectedState
+        : draft
+    })
+    .addCase(Actions.FEED_UPDATED, (draft, action: ActionFeedUpdate) => {
+      if (action.data.trackingMode === TrackingMode.selected) {
+        draft[action.trayId] = []
+      } else if (action.data.trackingMode === TrackingMode.everything) {
+        delete draft[action.trayId]
+      }
+    })
+    .addCase(Actions.FEED_REMOVED, (draft, action: ActionRemoveFeed) => {
       delete draft[action.trayId]
-    }
-  },
-  [Actions.FEED_REMOVED]: (draft, action: ActionRemoveFeed) => {
-    delete draft[action.trayId]
-  },
-  [Actions.PROJECT_SELECTED]: (draft, action: ActionSelectProject) => {
-    action.selected
-      ? draft[action.trayId].push(action.projectId)
-      : remove(draft[action.trayId], (id) => id === action.projectId)
-  }
+    })
+    .addCase(Actions.PROJECT_SELECTED, (draft, action: ActionSelectProject) => {
+      action.selected
+        ? draft[action.trayId].push(action.projectId)
+        : remove(draft[action.trayId], (id) => id === action.projectId)
+    })
 })
 
 export function getSelectedProjects(state: State): SelectedState {
