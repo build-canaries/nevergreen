@@ -8,7 +8,6 @@ responseJson=$(curl \
   -X POST \
   -H "Accept: application/vnd.github+json" \
   -H "Authorization: Bearer ${GITHUB_TOKEN}" \
-  https://api.github.com/repos/build-canaries/nevergreen/releases \
   -d "{\"tag_name\": \"v${VERSION}\", \"target_commitish\": \"main\", \"name\": \"${VERSION_NAME}\", \"body\": \"${body}\", \"draft\": true, \"prerelease\": false}" \
   https://api.github.com/repos/build-canaries/nevergreen/releases)
 
