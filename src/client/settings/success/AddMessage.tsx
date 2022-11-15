@@ -47,9 +47,7 @@ export function AddMessage(): ReactElement {
                      setMessage(target.value)
                    }}
                    error={firstError<Fields>('message', validationErrors)}
-                   disabled={submitting}
-                   data-locator='message'
-                   focus>
+                   disabled={submitting}>
               Message
             </Input>
           )

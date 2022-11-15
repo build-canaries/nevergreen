@@ -2,7 +2,6 @@ import React, {
   DetailedHTMLProps,
   FocusEvent,
   InputHTMLAttributes,
-  KeyboardEvent,
   ReactElement,
   ReactNode,
   useEffect,
@@ -13,26 +12,21 @@ import uniqueId from 'lodash/uniqueId'
 import styles from './input.scss'
 import formStyles from './forms.scss'
 import {InputButton} from './Button'
-import {isBlank, isNotBlank} from '../Utils'
+import {isNotBlank} from '../Utils'
 import {VisuallyHidden} from '../VisuallyHidden'
 import {Lock} from '../icons/Lock'
 
 export type InputProps = {
   readonly children: ReactNode;
-  readonly onEnter?: (evt: KeyboardEvent<HTMLInputElement>) => void;
-  readonly className?: string;
   readonly readOnly?: boolean;
-  readonly focus?: boolean;
   readonly button?: ReactElement;
   readonly error?: string;
 } & DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
 
 export function Input({
                         children,
-                        onEnter,
                         className,
                         readOnly,
-                        focus,
                         button,
                         error = '',
                         id,
@@ -41,11 +35,11 @@ export function Input({
   const inputNode = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    const shouldFocus = isNotBlank(error) || focus
+    const shouldFocus = isNotBlank(error)
     if (shouldFocus && inputNode.current) {
       inputNode.current.focus()
     }
-  }, [focus, error])
+  }, [error])
 
   const moveCaretToEnd = (evt: FocusEvent<HTMLInputElement>) => {
     const val = evt.target.value
@@ -53,13 +47,7 @@ export function Input({
     evt.target.value = val
   }
 
-  const onKeyPress = (evt: KeyboardEvent<HTMLInputElement>) => {
-    if (evt.key === 'Enter' && onEnter) {
-      onEnter(evt)
-    }
-  }
-
-  const hasError = !isBlank(error)
+  const hasError = isNotBlank(error)
 
   const actualId = id ?? uniqueId('i')
   const errorId = hasError ? uniqueId('e') : undefined
@@ -87,11 +75,10 @@ export function Input({
       )}
       <span className={styles.wrapper}>
           <input className={inputClasses}
-                 onKeyPress={(evt) => onKeyPress(evt)}
                  spellCheck={false}
-                 autoComplete='off'
+                 autoComplete="off"
                  readOnly={readOnly}
-                 type='text'
+                 type="text"
                  id={actualId}
                  {...inputProps}
                  ref={inputNode}
