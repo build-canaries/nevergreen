@@ -5,7 +5,7 @@ import * as ClipboardHook from './ClipboardHook'
 import * as FileSystem from '../FileSystem'
 import {act, screen, waitFor} from '@testing-library/react'
 
-it('should allowing copying to clipboard if supported', () => {
+it('should allowing copying to clipboard if supported', async () => {
   let clipboardElementSelector = ''
   let clipboardOnSuccess: () => void = jest.fn()
   let clipboardOnError: () => void = jest.fn()
@@ -30,10 +30,10 @@ it('should allowing copying to clipboard if supported', () => {
   expect(copyButton).toHaveAttribute('data-clipboard-target', `#${currentConfiguration.id}`)
 
   // clipboard.js registers its own onClick handler, so just manually trigger the callbacks given to the hook
-  act(() => clipboardOnSuccess())
+  await act(() => clipboardOnSuccess())
   expect(screen.getByText('Copied current configuration to clipboard')).toBeInTheDocument()
 
-  act(() => clipboardOnError())
+  await act(() => clipboardOnError())
   expect(screen.getByText('Unable to copy, please manually copy')).toBeInTheDocument()
 })
 

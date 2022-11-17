@@ -9,7 +9,7 @@ it('should show help articles based on location or search query', async () => {
   const {user} = render(<Help/>, {mountPath: ROUTE_TRACKING, currentLocation: ROUTE_TRACKING})
 
   // Trigger shortcut manually as I couldn't figure out how to get the model to show by firing key events :'(
-  act(() => {
+  await act(() => {
     triggerShortcut(SHOW_HELP_SHORTCUT)
   })
 
