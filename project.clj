@@ -36,8 +36,7 @@
             "check-updates" ["ancient" ":all"]}
   :profiles {:dev  {:plugins [[lein-ancient "0.7.0"]
                               [jonase/eastwood "1.3.0"]
-                              [lein-cloverage "1.2.4"]
-                              [lein-eftest "0.5.9"]]}
+                              [lein-cloverage "1.2.4"]]}
              :test {:jvm-opts ["-Dlogback.configurationFile=./src/logback-tests.xml"]}}
   :cloverage {:output           "target/coverage-reports/server"
               :junit?           true
