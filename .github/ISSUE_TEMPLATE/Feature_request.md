@@ -11,4 +11,4 @@ labels: new feature
 <!-- Provide a description of the change or addition you are proposing -->
 
 **What problem would it solve?**
-<!-- Knowing why can help us prioritise and possibly provide simplier alternatives -->
+<!-- Knowing why can help us prioritise and possibly provide simpler alternatives -->
