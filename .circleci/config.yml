@@ -1,14 +1,12 @@
 version: 2.1
 
 orbs:
-  build-tools: circleci/build-tools@2.9.1
-  jq: circleci/jq@2.2.0
   docker: circleci/docker@1.7.0
 
 executors:
   clojure:
     docker:
-      - image: azul/zulu-openjdk:19.0.1
+      - image: cimg/openjdk:19.0.1
     working_directory: ~/nevergreen
 
 commands:
@@ -25,7 +23,6 @@ commands:
       - when:
           condition: << parameters.checkout >>
           steps:
-            - build-tools/install-ci-tools
             - checkout
 
       - unless:
@@ -65,8 +62,6 @@ commands:
         type: steps
         default: []
     steps:
-      - build-tools/install-ci-tools
-      - jq/install
       - docker/install-docker
 
       - attach_workspace:
