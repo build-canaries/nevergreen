@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  docker: circleci/docker@1.7.0
+  docker: circleci/docker@2.1.4
 
 executors:
   clojure:
