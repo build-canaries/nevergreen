@@ -33,12 +33,12 @@ commands:
 
       - restore_cache:
           keys:
-            - v7-nevergreen-ui-{{ checksum ".nvmrc" }}-{{ checksum "package-lock.json" }}
-            - v7-nevergreen-ui-{{ checksum ".nvmrc" }}- # fall back to any cache for the current version of node
+            - v8-nevergreen-ui-{{ checksum ".nvmrc" }}-{{ checksum "package-lock.json" }}
+            - v8-nevergreen-ui-{{ checksum ".nvmrc" }}- # fall back to any cache for the current version of node
 
       - restore_cache:
           keys:
-            - v3-nevergreen-server-{{ checksum "project.clj" }}
+            - v4-nevergreen-server-{{ checksum "project.clj" }}
 
       - run:
           name: install node
@@ -123,12 +123,12 @@ jobs:
                   ./.circleci/compile.sh
 
             - save_cache:
-                key: v3-nevergreen-server-{{ checksum "project.clj" }}
+                key: v4-nevergreen-server-{{ checksum "project.clj" }}
                 paths:
                   - ~/.m2
                   - ~/.lein
             - save_cache:
-                key: v7-nevergreen-ui-{{ checksum ".nvmrc" }}-{{ checksum "package-lock.json" }}
+                key: v8-nevergreen-ui-{{ checksum ".nvmrc" }}-{{ checksum "package-lock.json" }}
                 paths:
                   - ~/.nvm
                   - ~/.npm
