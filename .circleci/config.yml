@@ -168,6 +168,8 @@ jobs:
       - image: cypress/base:18.12.0
     working_directory: ~/nevergreen
     steps:
+      - run:
+          command: apt-get install --no-install-recommends -y curl
       - init:
           checkout: false
           after:
