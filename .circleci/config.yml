@@ -233,6 +233,10 @@ workflows:
       - deploy-staging:
           requires:
             - build
+          filters:
+            branches:
+              only:
+                - main
       - journey-tests:
           requires:
             - deploy-staging
