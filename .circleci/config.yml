@@ -165,10 +165,8 @@ jobs:
 
   journey-tests:
     docker:
-      - image: cypress/base:17.8.0
-
+      - image: cypress/base:18.12.0
     working_directory: ~/nevergreen
-
     steps:
       - init:
           checkout: false
