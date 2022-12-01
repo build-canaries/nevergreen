@@ -9,7 +9,7 @@ import {createFeed, createId} from '../domain/Feed'
 import {Banner} from '../Banner'
 import {useNavigate} from 'react-router-dom'
 import styles from './preview.scss'
-import {useQuery} from 'react-query'
+import {useQuery} from '@tanstack/react-query'
 import {ROUTE_DISPLAY} from '../AppRoutes'
 import {enrichErrors, FeedErrors, toFeedApiError} from '../domain/FeedError'
 
@@ -21,7 +21,7 @@ export function Preview(): ReactElement {
   const [projects, setProjects] = useState<Projects>([])
   const [feedErrors, setFeedErrors] = useState<FeedErrors>([])
 
-  const {isLoading} = useQuery('preview', async ({signal}) => {
+  const {isLoading} = useQuery(['preview'], async ({signal}) => {
     const request = post<Projects>('/api/preview', {
       feeds: [createFeed(createId(), 'https://github.com/build-canaries/nevergreen')],
       sort,

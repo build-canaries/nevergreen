@@ -36,6 +36,7 @@
   "dependencies": {
     "@juggle/resize-observer": "3.4.0",
     "@reduxjs/toolkit": "1.9.0",
+    "@tanstack/react-query": "4.18.0",
     "classnames": "2.3.2",
     "clipboard": "2.0.11",
     "core-js": "3.26.1",
@@ -50,7 +51,6 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-modal": "3.16.1",
-    "react-query": "3.39.2",
     "react-redux": "8.0.5",
     "react-router-dom": "6.4.3",
     "react-transition-group": "4.4.5",

@@ -1,4 +1,4 @@
-import {useQuery, UseQueryResult} from 'react-query'
+import {useQuery, UseQueryResult} from '@tanstack/react-query'
 import {post, send} from '../../../gateways/Gateway'
 import {ProjectsResponse, SortBy} from '../../../gateways/ProjectsGateway'
 import {Project} from '../../../domain/Project'

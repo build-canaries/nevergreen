@@ -1,4 +1,4 @@
-import {useQuery} from 'react-query'
+import {useQuery} from '@tanstack/react-query'
 import {post, send} from '../gateways/Gateway'
 import {FeedRequest, ProjectsResponse} from '../gateways/ProjectsGateway'
 import {enrichProjects, Projects} from '../domain/Project'
@@ -41,7 +41,7 @@ export function useInterestingProjects(): InterestingProjectsHook {
   const enabled = !isEmpty(feedRequests)
   const refetchInterval = refreshTime * 1000
 
-  const {isLoading} = useQuery('interesting', async ({signal}) => {
+  const {isLoading} = useQuery(['interesting'], async ({signal}) => {
     const data = {
       feeds: feedRequests,
       sort

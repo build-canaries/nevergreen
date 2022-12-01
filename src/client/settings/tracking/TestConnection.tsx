@@ -1,7 +1,7 @@
 import React, {ReactElement, useState} from 'react'
 import {send} from '../../gateways/Gateway'
 import {SecondaryButton} from '../../common/forms/Button'
-import {useQuery} from 'react-query'
+import {useQuery} from '@tanstack/react-query'
 import {errorMessage} from '../../common/Utils'
 import styles from './test-connection.scss'
 import {AuthTypes, Feed} from '../../domain/Feed'
@@ -28,7 +28,8 @@ export function TestConnection({existingFeed, details}: TestConnectionProps): Re
 
   const {isSuccess, refetch, isFetching, isError, error} = useQuery(['test-connection', details], async ({signal}) => {
     const request = createRequest(details, existingFeed)
-    return send(testFeedConnection(request), signal)
+    await send(testFeedConnection(request), signal)
+    return true
   }, {
     enabled: false
   })

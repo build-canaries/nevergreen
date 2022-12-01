@@ -13,7 +13,7 @@ import {useNavigate} from 'react-router-dom'
 import {LinkButton} from '../LinkButton'
 import {Checkmark} from '../icons/Checkmark'
 import {Cross} from '../icons/Cross'
-import {useQuery} from 'react-query'
+import {useQuery} from '@tanstack/react-query'
 import {Loop} from '../icons/Loop'
 
 type OnSuccess = {
@@ -47,7 +47,7 @@ export function Form<Fields extends string>({
   const navigate = useNavigate()
   const [validationErrors, setValidationErrors] = useState<Readonly<FormErrors<Fields>>>([])
 
-  const {refetch, isFetching, isError, isSuccess, data, error} = useQuery('form', async ({signal}) => {
+  const {refetch, isFetching, isError, isSuccess, data, error} = useQuery(['form'], async ({signal}) => {
     return onSuccess(signal)
   }, {
     enabled: false,

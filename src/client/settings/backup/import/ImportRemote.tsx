@@ -20,7 +20,7 @@ import {LinkButton} from '../../../common/LinkButton'
 import {CloudDownload} from '../../../common/icons/CloudDownload'
 import {Cross} from '../../../common/icons/Cross'
 import {BackupLogo} from '../BackupLogo'
-import {useQuery} from 'react-query'
+import {useQuery} from '@tanstack/react-query'
 import {useRemoteLocationContext} from '../RemoteLocationPage'
 import {ROUTE_BACKUP} from '../../../AppRoutes'
 
@@ -37,7 +37,7 @@ export function ImportRemote(): ReactElement {
     isError,
     error,
     refetch
-  } = useQuery('import-remote', async ({signal}) => {
+  } = useQuery(['import-remote'], async ({signal}) => {
     const res = await send(fetchConfiguration(location), signal)
     return toJson(fromJson(res.configuration))
   }, {

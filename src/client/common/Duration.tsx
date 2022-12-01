@@ -1,7 +1,7 @@
 import React, {ReactElement} from 'react'
 import {formatAsDuration} from './DateTime'
 import {isBlank} from './Utils'
-import {useQuery} from 'react-query'
+import {useQuery} from '@tanstack/react-query'
 
 interface DurationProps {
   readonly timestamp?: string | null;
