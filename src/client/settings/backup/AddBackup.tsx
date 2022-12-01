@@ -6,7 +6,6 @@ import {DEFAULT_GITHUB_URL, DEFAULT_GITLAB_URL, RemoteLocationOptions} from './R
 import {addBackupCustomServer, addBackupGitHubLab} from './BackupActionCreators'
 import {Input} from '../../common/forms/Input'
 import {Password} from '../../common/forms/Password'
-import {send} from '../../gateways/Gateway'
 import {encrypt} from '../../gateways/SecurityGateway'
 import styles from './add-backup.scss'
 import {isValidHttpUrl} from '../../domain/Url'
@@ -49,7 +48,7 @@ export function AddBackup(): ReactElement {
   const onSuccess = async (signal: AbortSignal | undefined) => {
     const internalId = createId()
     if (where === RemoteLocationOptions.gitLab || where === RemoteLocationOptions.gitHub) {
-      const encryptedAccessToken = await send(encrypt(accessToken), signal)
+      const encryptedAccessToken = await encrypt(accessToken, signal)
       dispatch(addBackupGitHubLab(
         internalId,
         where,
@@ -77,10 +76,10 @@ export function AddBackup(): ReactElement {
   const isCustomServer = where === RemoteLocationOptions.custom
 
   return (
-    <Page title='Add remote location' icon={<BackupLogo where={where}/>}>
+    <Page title="Add remote location" icon={<BackupLogo where={where}/>}>
       <Form onValidate={onValidate}
             onSuccess={onSuccess}
-            submitButtonText='Add location'
+            submitButtonText="Add location"
             onCancel={ROUTE_BACKUP}>
         {(submitting, validationErrors, clearErrors) => {
           return (
@@ -103,8 +102,8 @@ export function AddBackup(): ReactElement {
                      onChange={({target}) => {
                        setUrl(target.value)
                      }}
-                     type='url'
-                     autoComplete='url'
+                     type="url"
+                     autoComplete="url"
                      error={firstError<Fields>('url', validationErrors)}
                      disabled={submitting}>
                 URL

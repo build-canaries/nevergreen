@@ -7,7 +7,6 @@ import {firstError, FormErrors} from '../../common/forms/Validation'
 import {isBlank} from '../../common/Utils'
 import {isValidHttpUrl, removeScheme} from '../../domain/Url'
 import {getFeeds} from './FeedsReducer'
-import {send} from '../../gateways/Gateway'
 import {encrypt} from '../../gateways/SecurityGateway'
 import {DropDown} from '../../common/forms/DropDown'
 import styles from './connection-form.scss'
@@ -96,7 +95,7 @@ export function ConnectionForm({existingFeed, onSuccess, onCancel}: ConnectionFo
   const newEncryptedPassword = async (signal: AbortSignal | undefined): Promise<string> => {
     switch (authType) {
       case AuthTypes.basic:
-        return send(encrypt(password), signal)
+        return encrypt(password, signal)
       case KeepExistingAuth.keep:
         return existingFeed?.encryptedPassword || ''
       default:
@@ -107,7 +106,7 @@ export function ConnectionForm({existingFeed, onSuccess, onCancel}: ConnectionFo
   const newEncryptedAccessToken = async (signal: AbortSignal | undefined): Promise<string> => {
     switch (authType) {
       case AuthTypes.token:
-        return send(encrypt(accessToken), signal)
+        return encrypt(accessToken, signal)
       case KeepExistingAuth.keep:
         return existingFeed?.encryptedAccessToken || ''
       default:

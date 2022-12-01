@@ -1,4 +1,4 @@
-import {post, Request, ServerError} from './Gateway'
+import {post, ServerError} from './Gateway'
 import {ProjectPrognosis} from '../domain/Project'
 import {AuthTypes} from '../domain/Feed'
 
@@ -47,6 +47,6 @@ interface ConnectionDetailsRequest {
   readonly username?: string;
 }
 
-export function testFeedConnection(details: ConnectionDetailsRequest): Request<void> {
-  return post('/api/test-connection', details)
+export function testFeedConnection(data: ConnectionDetailsRequest, signal?: AbortSignal): Promise<void> {
+  return post({url: '/api/test-connection', data, signal})
 }

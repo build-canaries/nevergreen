@@ -1,7 +1,7 @@
 import React from 'react'
 import {left} from 'fp-ts/Either'
 import {Nevergreen} from './Nevergreen'
-import {fakeRequest, render, waitForLoadingToFinish} from './testUtils/testHelpers'
+import {render, waitForLoadingToFinish} from './testUtils/testHelpers'
 import {screen} from '@testing-library/react'
 import * as LocalConfiguration from './configuration/LocalRepository'
 import * as Configuration from './configuration/Configuration'
@@ -17,16 +17,19 @@ beforeEach(() => {
 })
 
 it('should load configuration, register service worker and check for a new version', async () => {
-  jest.spyOn(Gateway, 'get').mockReturnValue(fakeRequest({
+  jest.spyOn(Gateway, 'get').mockResolvedValueOnce({
     tag_name: '9999.0.0' // this needs to be greater than the actual version in resources/version.txt
-  }))
+  })
 
   render(<Nevergreen/>)
 
   await waitForLoadingToFinish()
 
   expect(LocalConfiguration.load).toHaveBeenCalled()
-  expect(Gateway.get).toHaveBeenCalledWith('https://api.github.com/repos/build-canaries/nevergreen/releases/latest')
+  expect(Gateway.get).toHaveBeenCalledWith({
+    url: 'https://api.github.com/repos/build-canaries/nevergreen/releases/latest',
+    signal: expect.any(AbortSignal)
+  })
   expect(ServiceWorkerHook.useServiceWorker).toHaveBeenCalled()
   expect(screen.getByText(/^A new version [0-9.]* is available to download from GitHub now!$/)).toBeInTheDocument()
 })
@@ -70,7 +73,7 @@ it('should not check for a new version if the user has disabled checking', async
 
 it('should show menus when any key is pressed, allowing the user to navigate to the header via tabbing', async () => {
   const showMenus = jest.fn()
-  jest.spyOn(Gateway, 'get').mockReturnValue(fakeRequest({tag_name: '1.0.0'}))
+  jest.spyOn(Gateway, 'get').mockResolvedValueOnce({tag_name: '1.0.0'})
   jest.spyOn(HideMenusHook, 'useHideMenus').mockReturnValue({
     menusHidden: true,
     toggleMenusHidden: jest.fn(),

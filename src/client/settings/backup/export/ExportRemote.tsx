@@ -2,7 +2,6 @@ import React, {ReactElement} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {toExportableConfigurationJson} from '../../../configuration/Configuration'
 import {TextArea} from '../TextArea'
-import {send} from '../../../gateways/Gateway'
 import {exportConfiguration} from '../../../gateways/BackupGateway'
 import {backupExported} from '../BackupActionCreators'
 import {Form} from '../../../common/forms/Form'
@@ -17,21 +16,21 @@ export function ExportRemote(): ReactElement {
   const dispatch = useDispatch()
   const configuration = useSelector(toExportableConfigurationJson)
 
-  const exportNow = async (signal: AbortSignal | undefined) => {
-    const res = await send(exportConfiguration(location, configuration), signal)
+  const exportNow = async (signal?: AbortSignal) => {
+    const res = await exportConfiguration(location, configuration, signal)
     dispatch(backupExported(location.internalId, res.id))
     return {successMessage: 'Successfully exported configuration'}
   }
 
   return (
-    <Page title='Export remote' icon={<BackupLogo where={location.where}/>}>
+    <Page title="Export remote" icon={<BackupLogo where={location.where}/>}>
       <FullBackupSummary location={location}/>
       <Form onSuccess={exportNow}
             onCancel={ROUTE_BACKUP}
-            submitButtonText='Export'>
+            submitButtonText="Export">
         {() => {
           return (
-            <TextArea label='Current configuration'
+            <TextArea label="Current configuration"
                       value={configuration}
                       readOnly/>
           )

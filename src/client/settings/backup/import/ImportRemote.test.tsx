@@ -1,5 +1,5 @@
 import React from 'react'
-import {fakeRequest, render} from '../../../testUtils/testHelpers'
+import {render} from '../../../testUtils/testHelpers'
 import {buildRemoteBackupLocation, buildState} from '../../../testUtils/builders'
 import {toJson} from '../../../common/Json'
 import {screen, waitFor, waitForElementToBeRemoved} from '@testing-library/react'
@@ -7,6 +7,7 @@ import {ImportRemote} from './ImportRemote'
 import * as BackupGateway from '../../../gateways/BackupGateway'
 import * as Gateway from '../../../gateways/Gateway'
 import {BACKUP_REMOTE_LOCATIONS_ROOT} from '../RemoteLocationsReducer'
+import {RemoteLocationOptions} from '../RemoteLocationOptions'
 
 it('should import valid configuration', async () => {
   const remoteLocation = buildRemoteBackupLocation({
@@ -17,9 +18,12 @@ it('should import valid configuration', async () => {
       locationId: remoteLocation
     }
   }
-  jest.spyOn(BackupGateway, 'fetchConfiguration').mockReturnValue(fakeRequest({
-    configuration: toJson(buildState())
-  }))
+  jest.spyOn(BackupGateway, 'fetchConfiguration').mockResolvedValueOnce({
+    configuration: toJson(buildState()),
+    description: '',
+    id: '',
+    where: RemoteLocationOptions.custom
+  })
 
   const {user} = render(<ImportRemote/>, {state, outletContext: remoteLocation})
 
@@ -34,9 +38,12 @@ it('should import valid configuration', async () => {
 
 it('should display an error if the configuration is syntactically invalid JSON', async () => {
   const outletContext = buildRemoteBackupLocation()
-  jest.spyOn(BackupGateway, 'fetchConfiguration').mockReturnValue(fakeRequest({
-    configuration: '{invalid-json'
-  }))
+  jest.spyOn(BackupGateway, 'fetchConfiguration').mockResolvedValueOnce({
+    configuration: '{invalid-json',
+    description: '',
+    id: '',
+    where: RemoteLocationOptions.custom
+  })
 
   render(<ImportRemote/>, {outletContext})
 
@@ -47,9 +54,12 @@ it('should display an error if the configuration is syntactically invalid JSON',
 
 it('should display an error if the configuration is semantically invalid JSON', async () => {
   const outletContext = buildRemoteBackupLocation()
-  jest.spyOn(BackupGateway, 'fetchConfiguration').mockReturnValue(fakeRequest({
-    configuration: '{"trays":{"id": {}}}' // missing required attributes
-  }))
+  jest.spyOn(BackupGateway, 'fetchConfiguration').mockResolvedValueOnce({
+    configuration: '{"trays":{"id": {}}}', // missing required attributes
+    description: '',
+    id: '',
+    where: RemoteLocationOptions.custom
+  })
 
   const {user} = render(<ImportRemote/>, {outletContext})
 
@@ -67,7 +77,7 @@ it('should display an error if the configuration is semantically invalid JSON', 
 
 it('should display an error and a button to try again if configuration can not be fetched', async () => {
   const outletContext = buildRemoteBackupLocation()
-  jest.spyOn(Gateway, 'send').mockRejectedValue(new Error('some-error'))
+  jest.spyOn(Gateway, 'get').mockRejectedValueOnce(new Error('some-error'))
 
   render(<ImportRemote/>, {outletContext})
 
@@ -79,9 +89,12 @@ it('should display an error and a button to try again if configuration can not b
 
 it('should be able to cancel back to settings', async () => {
   const outletContext = buildRemoteBackupLocation()
-  jest.spyOn(BackupGateway, 'fetchConfiguration').mockReturnValue(fakeRequest({
-    configuration: toJson(buildState())
-  }))
+  jest.spyOn(BackupGateway, 'fetchConfiguration').mockResolvedValueOnce({
+    configuration: toJson(buildState()),
+    description: '',
+    id: '',
+    where: RemoteLocationOptions.custom
+  })
 
   const {user} = render(<ImportRemote/>, {outletContext})
 
@@ -98,7 +111,7 @@ it('should be able to cancel back to settings', async () => {
 
 it('should be able to cancel back to settings if configuration can not be fetched', async () => {
   const outletContext = buildRemoteBackupLocation()
-  jest.spyOn(Gateway, 'send').mockRejectedValue(new Error('some-error'))
+  jest.spyOn(Gateway, 'get').mockRejectedValue(new Error('some-error'))
 
   const {user} = render(<ImportRemote/>, {outletContext})
 

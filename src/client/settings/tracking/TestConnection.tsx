@@ -1,5 +1,4 @@
 import React, {ReactElement, useState} from 'react'
-import {send} from '../../gateways/Gateway'
 import {SecondaryButton} from '../../common/forms/Button'
 import {useQuery} from '@tanstack/react-query'
 import {errorMessage} from '../../common/Utils'
@@ -27,8 +26,7 @@ export function TestConnection({existingFeed, details}: TestConnectionProps): Re
   const [showConnectionCheckMessages, setShowConnectionCheckMessages] = useState(true)
 
   const {isSuccess, refetch, isFetching, isError, error} = useQuery(['test-connection', details], async ({signal}) => {
-    const request = createRequest(details, existingFeed)
-    await send(testFeedConnection(request), signal)
+    await testFeedConnection(createRequestData(details, existingFeed), signal)
     return true
   }, {
     enabled: false
@@ -57,7 +55,7 @@ export function TestConnection({existingFeed, details}: TestConnectionProps): Re
   )
 }
 
-function createRequest(details: Details, existingFeed?: Feed) {
+function createRequestData(details: Details, existingFeed?: Feed) {
   switch (details.authType) {
     case AuthTypes.basic:
       return basicRequest(details)

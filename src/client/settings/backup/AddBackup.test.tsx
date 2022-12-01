@@ -1,6 +1,6 @@
 import React from 'react'
 import {screen, waitFor} from '@testing-library/react'
-import {fakeRequest, render} from '../../testUtils/testHelpers'
+import {render} from '../../testUtils/testHelpers'
 import {DEFAULT_GITHUB_URL} from './RemoteLocationOptions'
 import * as SecurityGateway from '../../gateways/SecurityGateway'
 import {AddBackup} from './AddBackup'
@@ -8,7 +8,7 @@ import {getBackupLocations} from './RemoteLocationsReducer'
 import * as Feed from '../../domain/Feed'
 
 beforeEach(() => {
-  jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValue(fakeRequest(''))
+  jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValue('')
 })
 
 it('should not be able to add with a blank URL', async () => {

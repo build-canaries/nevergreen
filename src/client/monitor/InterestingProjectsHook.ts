@@ -1,5 +1,5 @@
 import {useQuery} from '@tanstack/react-query'
-import {post, send} from '../gateways/Gateway'
+import {post} from '../gateways/Gateway'
 import {FeedRequest, ProjectsResponse} from '../gateways/ProjectsGateway'
 import {enrichProjects, Projects} from '../domain/Project'
 import {useSelector} from 'react-redux'
@@ -46,7 +46,7 @@ export function useInterestingProjects(): InterestingProjectsHook {
       feeds: feedRequests,
       sort
     }
-    return await send(post<ProjectsResponse>('/api/projects', data), signal)
+    return await post<ProjectsResponse>({url: '/api/projects', data, signal})
   }, {
     enabled,
     refetchInterval,

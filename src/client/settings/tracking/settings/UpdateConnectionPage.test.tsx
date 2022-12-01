@@ -1,6 +1,6 @@
 import React from 'react'
 import {screen, waitFor} from '@testing-library/react'
-import {fakeRequest, render, waitForLocationToChange} from '../../../testUtils/testHelpers'
+import {render, waitForLocationToChange} from '../../../testUtils/testHelpers'
 import {buildFeed} from '../../../testUtils/builders'
 import {FEEDS_ROOT, getFeed} from '../FeedsReducer'
 import {AuthTypes} from '../../../domain/Feed'
@@ -11,7 +11,7 @@ import {KeepExistingAuth, UpdateExistingAuthTypes} from '../ConnectionForm'
 import {UserEvent} from '@testing-library/user-event/setup/setup'
 
 beforeEach(() => {
-  jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValue(fakeRequest(''))
+  jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValue('')
 })
 
 it.each([
@@ -20,8 +20,8 @@ it.each([
   AuthTypes.none,
   KeepExistingAuth.keep
 ])('should be able to update connection details auth to %s', async (authType: UpdateExistingAuthTypes) => {
-  jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValue(fakeRequest('encrypted'))
-  jest.spyOn(ProjectsGateway, 'testFeedConnection').mockResolvedValue(fakeRequest())
+  jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValueOnce('encrypted')
+  jest.spyOn(ProjectsGateway, 'testFeedConnection').mockResolvedValueOnce()
 
   const feed = buildFeed({
     trayId: 'trayId',
@@ -49,7 +49,7 @@ it.each([
   expect(ProjectsGateway.testFeedConnection).toHaveBeenCalledWith({
     url: 'http://new',
     ...testConnectionExpected[authType]
-  })
+  }, expect.any(AbortSignal))
 
   await user.click(screen.getByRole('button', {name: 'Save'}))
 

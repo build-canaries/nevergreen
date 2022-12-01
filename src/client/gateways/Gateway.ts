@@ -9,6 +9,16 @@ type ApiData = object | string
 
 export type Request<T> = SuperAgentRequest & Promise<Response & { body: T; }>
 
+interface Get {
+  readonly url: string;
+  readonly headers?: Record<string, string>;
+  readonly signal?: AbortSignal;
+}
+
+interface Post extends Get {
+  readonly data: ApiData;
+}
+
 export interface ServerError {
   readonly description: string;
   readonly prognosis: Prognosis.error;
@@ -27,27 +37,7 @@ const contentType = 'application/json; charset=utf-8'
 
 export const TIMEOUT_ERROR = 'Connection timeout calling the Nevergreen server'
 
-export function post<T>(url: string, data: ApiData, headers = {}): Request<T> {
-  return request
-    .post(url)
-    .send(data)
-    .accept(acceptHeader)
-    .type(contentType)
-    .set(headers)
-    .timeout(timeout)
-    .retry(retries)
-}
-
-export function get<T>(url: string, headers = {}): Request<T> {
-  return request
-    .get(url)
-    .accept(acceptHeader)
-    .set(headers)
-    .timeout(timeout)
-    .retry(retries)
-}
-
-export async function send<T>(request: Request<T>, signal?: AbortSignal): Promise<T> {
+async function send<T>(request: Request<T>, signal?: AbortSignal): Promise<T> {
   signal?.addEventListener('abort', () => request.abort())
   try {
     const res = await request
@@ -63,4 +53,24 @@ export async function send<T>(request: Request<T>, signal?: AbortSignal): Promis
 
     throw new Error(message)
   }
+}
+
+export function post<T>({url, data, headers = {}, signal}: Post): Promise<T> {
+  return send<T>(request
+    .post(url)
+    .send(data)
+    .accept(acceptHeader)
+    .type(contentType)
+    .set(headers)
+    .timeout(timeout)
+    .retry(retries), signal)
+}
+
+export function get<T>({url, headers = {}, signal}: Get): Promise<T> {
+  return send<T>(request
+    .get(url)
+    .accept(acceptHeader)
+    .set(headers)
+    .timeout(timeout)
+    .retry(retries), signal)
 }

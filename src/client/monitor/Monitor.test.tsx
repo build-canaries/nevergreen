@@ -2,7 +2,7 @@ import React from 'react'
 import {screen, waitFor} from '@testing-library/react'
 import noop from 'lodash/noop'
 import {Monitor} from './Monitor'
-import {fakeRequest, render, waitForLoadingToFinish} from '../testUtils/testHelpers'
+import {render, waitForLoadingToFinish} from '../testUtils/testHelpers'
 import {buildFeed, buildFeedError, buildProjectApi} from '../testUtils/builders'
 import {FEEDS_ROOT} from '../settings/tracking/FeedsReducer'
 import {SUCCESS_ROOT} from '../settings/success/SuccessReducer'
@@ -22,7 +22,7 @@ const outletContext = {
 const feedId = 'some-tray-id'
 
 beforeEach(() => {
-  jest.spyOn(Gateway, 'post').mockReturnValue(fakeRequest())
+  jest.spyOn(Gateway, 'post').mockResolvedValue({})
 })
 
 it('should hide the header and footer on load and show them on leave', () => {
@@ -42,11 +42,11 @@ it('should show a helpful message if no feeds are added', () => {
 })
 
 it('should show a success message if there are no interesting projects', async () => {
-  jest.spyOn(Gateway, 'post').mockReturnValueOnce(fakeRequest([
+  jest.spyOn(Gateway, 'post').mockResolvedValueOnce([
     buildProjectApi({
       prognosis: Prognosis.healthy
     })
-  ]))
+  ])
   const state = {
     [FEEDS_ROOT]: {
       [feedId]: buildFeed({trayId: feedId})
@@ -64,13 +64,13 @@ it('should show a success message if there are no interesting projects', async (
 
 it('should display an error if the Nevergreen server is having issues', async () => {
   jest.spyOn(Gateway, 'post')
-    .mockResolvedValueOnce(fakeRequest([
+    .mockResolvedValueOnce([
       buildProjectApi({
         trayId: feedId,
         description: 'some-project',
         prognosis: Prognosis.sick,
       })
-    ]))
+    ])
     .mockRejectedValueOnce(new Error('some-error'))
   const state = {
     [FEEDS_ROOT]: {
@@ -97,13 +97,13 @@ it('should display an error if the Nevergreen server is having issues', async ()
 })
 
 it('should show projects', async () => {
-  jest.spyOn(Gateway, 'post').mockReturnValueOnce(fakeRequest([
+  jest.spyOn(Gateway, 'post').mockResolvedValueOnce([
     buildProjectApi({
       trayId: feedId,
       description: 'some-project-name',
       prognosis: Prognosis.sick,
     })
-  ]))
+  ])
   const state = {
     [FEEDS_ROOT]: {
       [feedId]: buildFeed({trayId: feedId})
@@ -118,19 +118,23 @@ it('should show projects', async () => {
   await waitForLoadingToFinish()
 
   expect(screen.getByText('some-project-name')).toBeInTheDocument()
-  expect(Gateway.post).toHaveBeenCalledWith('/api/projects', {
-    feeds: [expect.objectContaining({trayId: feedId})],
-    sort: SortBy.default
+  expect(Gateway.post).toHaveBeenCalledWith({
+    url: '/api/projects',
+    data: {
+      feeds: [expect.objectContaining({trayId: feedId})],
+      sort: SortBy.default
+    },
+    signal: expect.any(AbortSignal)
   })
 })
 
 it('should show feed errors', async () => {
-  jest.spyOn(Gateway, 'post').mockReturnValueOnce(fakeRequest([
+  jest.spyOn(Gateway, 'post').mockResolvedValueOnce([
     buildFeedError({
       trayId: feedId,
       description: 'some-error'
     })
-  ]))
+  ])
   const state = {
     [FEEDS_ROOT]: {
       [feedId]: buildFeed({trayId: feedId})
@@ -150,9 +154,9 @@ it('should show feed errors', async () => {
 it('should trigger notifications and stop any audio notifications if user leaves the page', () => {
   const feedId = 'some-tray-id'
   jest.spyOn(NotificationsHook, 'useNotifications').mockReturnValueOnce()
-  jest.spyOn(Gateway, 'post').mockReturnValueOnce(fakeRequest([
+  jest.spyOn(Gateway, 'post').mockResolvedValueOnce([
     buildProjectApi({trayId: feedId, prognosis: Prognosis.sick})
-  ]))
+  ])
   jest.spyOn(AudioPlayer, 'stopAnyPlayingAudio')
   const state = {
     [FEEDS_ROOT]: {

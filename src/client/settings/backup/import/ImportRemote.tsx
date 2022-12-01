@@ -8,7 +8,6 @@ import {backupImported, configurationImported} from '../BackupActionCreators'
 import {isLeft, isRight} from 'fp-ts/Either'
 import {TextArea} from '../TextArea'
 import {ErrorMessages} from '../../../common/Messages'
-import {send} from '../../../gateways/Gateway'
 import {fetchConfiguration} from '../../../gateways/BackupGateway'
 import {fromJson, toJson} from '../../../common/Json'
 import {Form} from '../../../common/forms/Form'
@@ -38,7 +37,7 @@ export function ImportRemote(): ReactElement {
     error,
     refetch
   } = useQuery(['import-remote'], async ({signal}) => {
-    const res = await send(fetchConfiguration(location), signal)
+    const res = await fetchConfiguration(location, signal)
     return toJson(fromJson(res.configuration))
   }, {
     onSuccess: setData
@@ -70,7 +69,7 @@ export function ImportRemote(): ReactElement {
   }
 
   return (
-    <Page title='Import remote' icon={<BackupLogo where={location.where}/>}>
+    <Page title="Import remote" icon={<BackupLogo where={location.where}/>}>
       <FullBackupSummary location={location}/>
       <Loading loaded={!isFetching}
                className={styles.loading}>
@@ -93,10 +92,10 @@ export function ImportRemote(): ReactElement {
           <Form onValidate={onValidate}
                 onSuccess={doImport}
                 onCancel={ROUTE_BACKUP}
-                submitButtonText='Import'>
+                submitButtonText="Import">
             {(submitting, validationErrors) => {
               return (
-                <TextArea label='Configuration to import'
+                <TextArea label="Configuration to import"
                           errors={allErrors<Fields>('import', validationErrors)}
                           value={data}
                           onChange={({target}) => setData(target.value)}

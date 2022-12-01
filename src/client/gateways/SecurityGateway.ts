@@ -1,5 +1,10 @@
-import {post, Request} from './Gateway'
+import {post} from './Gateway'
 
-export function encrypt(value: string): Request<string> {
-  return post<string>('/api/encrypt', value, {'Content-Type': 'text/plain'})
+export function encrypt(data: string, signal?: AbortSignal): Promise<string> {
+  return post<string>({
+    url: '/api/encrypt',
+    data,
+    headers: {'Content-Type': 'text/plain'},
+    signal
+  })
 }

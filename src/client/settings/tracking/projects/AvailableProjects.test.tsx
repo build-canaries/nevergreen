@@ -1,14 +1,14 @@
 import React from 'react'
 import {screen, waitFor} from '@testing-library/react'
-import {fakeRequest, render, waitForLoadingToFinish} from '../../../testUtils/testHelpers'
-import {buildFeed, buildProject, buildFeedError} from '../../../testUtils/builders'
+import {render, waitForLoadingToFinish} from '../../../testUtils/testHelpers'
+import {buildFeed, buildFeedError, buildProject} from '../../../testUtils/builders'
 import * as Gateway from '../../../gateways/Gateway'
 import {AvailableProjects} from './AvailableProjects'
 import {FEEDS_ROOT} from '../FeedsReducer'
 import {SELECTED_ROOT} from '../SelectedReducer'
 
 beforeEach(() => {
-  jest.spyOn(Gateway, 'post').mockResolvedValue(fakeRequest([]))
+  jest.spyOn(Gateway, 'post').mockResolvedValue([])
 })
 
 it('should be able to select projects', async () => {
@@ -22,7 +22,7 @@ it('should be able to select projects', async () => {
       trayId: []
     }
   }
-  jest.spyOn(Gateway, 'post').mockResolvedValue(fakeRequest([project]))
+  jest.spyOn(Gateway, 'post').mockResolvedValue([project])
 
   const {user} = render(<AvailableProjects feed={feed}/>, {state})
 
@@ -38,12 +38,12 @@ it('should be able to select projects', async () => {
 
 it('should correctly show and remove errors returned while refreshing', async () => {
   jest.spyOn(Gateway, 'post')
-    .mockResolvedValueOnce(fakeRequest([
+    .mockResolvedValueOnce([
       buildFeedError({description: 'some-error'})
-    ]))
-    .mockResolvedValueOnce(fakeRequest([
+    ])
+    .mockResolvedValueOnce([
       buildProject()
-    ]))
+    ])
   const feed = buildFeed({trayId: 'trayId'})
   const state = {
     [FEEDS_ROOT]: {
@@ -78,7 +78,7 @@ it('should show a warning if there are no projects', async () => {
       trayId: []
     }
   }
-  jest.spyOn(Gateway, 'post').mockResolvedValue(fakeRequest([]))
+  jest.spyOn(Gateway, 'post').mockResolvedValue([])
 
   render(<AvailableProjects feed={feed}/>, {state})
   await waitForLoadingToFinish()
@@ -100,7 +100,7 @@ it('should show a warning if no projects match the search', async () => {
       trayId: []
     }
   }
-  jest.spyOn(Gateway, 'post').mockResolvedValue(fakeRequest([project]))
+  jest.spyOn(Gateway, 'post').mockResolvedValue([project])
 
   const {user} = render(<AvailableProjects feed={feed}/>, {state})
   await waitForLoadingToFinish()
@@ -124,7 +124,7 @@ describe('accessibility', () => {
         trayId: []
       }
     }
-    jest.spyOn(Gateway, 'post').mockResolvedValue(fakeRequest([project]))
+    jest.spyOn(Gateway, 'post').mockResolvedValue([project])
     render(<AvailableProjects feed={feed}/>, {state})
     await waitForLoadingToFinish()
     expect(screen.getByTestId('available-projects-list')).toHaveAttribute('aria-live', 'polite')

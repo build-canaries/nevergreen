@@ -1,4 +1,4 @@
-import {get, send} from './gateways/Gateway'
+import {get} from './gateways/Gateway'
 import greaterThan from 'semver/functions/gt'
 import version from '../../resources/version.txt'
 import {useSelector} from 'react-redux'
@@ -15,7 +15,10 @@ export function useCheckForNewVersion(showBanner: (message: string) => void): vo
   const shouldCheckForNewVersion = useSelector(getToggleVersionCheck)
 
   useQuery(['check-for-new-version'], async ({signal}) => {
-    return await send<GitHubResponse>(get('https://api.github.com/repos/build-canaries/nevergreen/releases/latest'), signal)
+    return await get<GitHubResponse>({
+      url: 'https://api.github.com/repos/build-canaries/nevergreen/releases/latest',
+      signal
+    })
   }, {
     enabled: shouldCheckForNewVersion,
     refetchInterval: twentyFourHours,

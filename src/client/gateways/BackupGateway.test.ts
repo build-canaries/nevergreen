@@ -5,8 +5,8 @@ import {RemoteLocationOptions} from '../settings/backup/RemoteLocationOptions'
 
 describe('exportConfiguration', () => {
 
-  it('should call the export URL', () => {
-    jest.spyOn(gateway, 'post')
+  it('should call the export URL', async () => {
+    jest.spyOn(gateway, 'post').mockResolvedValueOnce({})
     const location = buildRemoteBackupLocation({
       where: RemoteLocationOptions.gitHub,
       externalId: 'some-id',
@@ -14,34 +14,40 @@ describe('exportConfiguration', () => {
       description: 'some-description',
       url: 'some-url'
     })
-    void exportConfiguration(location, 'some-configuration')
-    expect(gateway.post).toBeCalledWith('/api/export', {
-      where: RemoteLocationOptions.gitHub,
-      id: 'some-id',
-      encryptedToken: 'some-token',
-      description: 'some-description',
-      url: 'some-url',
-      configuration: 'some-configuration'
+    await exportConfiguration(location, 'some-configuration')
+    expect(gateway.post).toBeCalledWith({
+      url: '/api/export',
+      data: {
+        where: RemoteLocationOptions.gitHub,
+        id: 'some-id',
+        encryptedToken: 'some-token',
+        description: 'some-description',
+        url: 'some-url',
+        configuration: 'some-configuration'
+      }
     })
   })
 })
 
 describe('fetchConfiguration', () => {
 
-  it('should call the import URL', () => {
-    jest.spyOn(gateway, 'post')
+  it('should call the import URL', async () => {
+    jest.spyOn(gateway, 'post').mockResolvedValueOnce({})
     const location = buildRemoteBackupLocation({
       where: RemoteLocationOptions.gitHub,
       externalId: 'some-id',
       encryptedAccessToken: 'some-token',
       url: 'some-url'
     })
-    void fetchConfiguration(location)
-    expect(gateway.post).toBeCalledWith('/api/import', {
-      from: RemoteLocationOptions.gitHub,
-      id: 'some-id',
-      encryptedToken: 'some-token',
-      url: 'some-url'
+    await fetchConfiguration(location)
+    expect(gateway.post).toBeCalledWith({
+      url: '/api/import',
+      data: {
+        from: RemoteLocationOptions.gitHub,
+        id: 'some-id',
+        encryptedToken: 'some-token',
+        url: 'some-url'
+      }
     })
   })
 })

@@ -1,5 +1,5 @@
 import React from 'react'
-import {fakeRequest, render} from '../../../testUtils/testHelpers'
+import {render} from '../../../testUtils/testHelpers'
 import {buildRemoteBackupLocation} from '../../../testUtils/builders'
 import {ExportRemote} from './ExportRemote'
 import * as BackupGateway from '../../../gateways/BackupGateway'
@@ -15,9 +15,9 @@ it('should export configuration', async () => {
       locationId: remoteLocation
     }
   }
-  jest.spyOn(BackupGateway, 'exportConfiguration').mockReturnValue(fakeRequest({
+  jest.spyOn(BackupGateway, 'exportConfiguration').mockResolvedValueOnce({
     id: 'some-remote-id'
-  }))
+  })
 
   const {user} = render(<ExportRemote/>, {state, outletContext: remoteLocation})
 
@@ -30,9 +30,9 @@ it('should export configuration', async () => {
 
 it('should allow cancelling back to settings', async () => {
   const outletContext = buildRemoteBackupLocation()
-  jest.spyOn(BackupGateway, 'exportConfiguration').mockReturnValue(fakeRequest({
+  jest.spyOn(BackupGateway, 'exportConfiguration').mockResolvedValueOnce({
     id: 'some-remote-id'
-  }))
+  })
 
   const {user} = render(<ExportRemote/>, {outletContext})
 

@@ -4,14 +4,14 @@ import {screen, waitFor} from '@testing-library/react'
 import * as SecurityGateway from '../../gateways/SecurityGateway'
 import * as ProjectsGateway from '../../gateways/ProjectsGateway'
 import {FEEDS_ROOT, getFeeds} from './FeedsReducer'
-import {fakeRequest, render, waitForLocationToChange} from '../../testUtils/testHelpers'
+import {render, waitForLocationToChange} from '../../testUtils/testHelpers'
 import {buildFeed} from '../../testUtils/builders'
 import * as Feed from '../../domain/Feed'
 import {AuthTypes} from '../../domain/Feed'
 import {UserEvent} from '@testing-library/user-event/setup/setup'
 
 beforeEach(() => {
-  jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValue(fakeRequest(''))
+  jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValue('')
 })
 
 describe('validation errors', () => {
@@ -52,8 +52,8 @@ it.each([
   AuthTypes.none
 ])('should allow adding feeds with auth %s', async (authType) => {
   jest.spyOn(Feed, 'createId').mockReturnValue('some-feed-id')
-  jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValue(fakeRequest('encrypted'))
-  jest.spyOn(ProjectsGateway, 'testFeedConnection').mockResolvedValue(fakeRequest())
+  jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValue('encrypted')
+  jest.spyOn(ProjectsGateway, 'testFeedConnection').mockResolvedValue()
 
   const state = {
     [FEEDS_ROOT]: {}
@@ -72,7 +72,7 @@ it.each([
   expect(ProjectsGateway.testFeedConnection).toHaveBeenCalledWith({
     url: 'http://some-new-url',
     ...testConnectionExpected[authType]
-  })
+  }, expect.any(AbortSignal))
 
   await user.click(screen.getByText('Add feed'))
 
