@@ -25,6 +25,8 @@ import {UserEvent} from '@testing-library/user-event/setup/setup'
 import {buildState} from './builders'
 import {App} from '../App'
 import {NOTIFICATIONS_ROOT} from '../settings/notifications/NotificationsReducer'
+import noop from 'lodash/noop'
+import {Request} from '../gateways/Gateway'
 
 interface ExtendedRenderResult extends RenderResult {
   readonly store: EnhancedStore<State, AnyAction, ReadonlyArray<Middleware<unknown, State>>>;
@@ -109,4 +111,8 @@ export function waitForLoadingToFinish() {
 
 export async function waitForLocationToChange() {
   await screen.findByText('location changed')
+}
+
+export function fakeRequest<T>(body?: T): Request<T> {
+  return {body, abort: noop} as unknown as Request<T>
 }

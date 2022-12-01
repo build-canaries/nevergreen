@@ -1,5 +1,5 @@
 import React from 'react'
-import {render} from '../../testUtils/testHelpers'
+import {fakeRequest, render} from '../../testUtils/testHelpers'
 import {screen, waitFor} from '@testing-library/react'
 import {TestConnection} from './TestConnection'
 import {AuthTypes} from '../../domain/Feed'
@@ -26,7 +26,7 @@ it('should update the button text while loading', async () => {
 
 it('should display messages about the connection', async () => {
   jest.spyOn(ProjectsGateway, 'testFeedConnection')
-    .mockResolvedValueOnce(Gateway.fakeRequest(undefined))
+    .mockResolvedValueOnce(fakeRequest(undefined))
     .mockRejectedValueOnce(new Error('some error happened'))
 
   const {user} = render(<TestConnection details={details}/>)

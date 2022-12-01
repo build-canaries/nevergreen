@@ -1,9 +1,8 @@
 import React from 'react'
-import {render} from '../../../testUtils/testHelpers'
+import {fakeRequest, render} from '../../../testUtils/testHelpers'
 import {buildRemoteBackupLocation} from '../../../testUtils/builders'
 import {ExportRemote} from './ExportRemote'
 import * as BackupGateway from '../../../gateways/BackupGateway'
-import {fakeRequest} from '../../../gateways/Gateway'
 import {screen, waitFor} from '@testing-library/react'
 import {BACKUP_REMOTE_LOCATIONS_ROOT} from '../RemoteLocationsReducer'
 

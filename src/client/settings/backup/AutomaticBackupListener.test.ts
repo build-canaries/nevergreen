@@ -1,9 +1,9 @@
 import {backupRaw} from './AutomaticBackupListener'
 import {buildRemoteBackupLocation, buildState} from '../../testUtils/builders'
-import {fakeRequest} from '../../gateways/Gateway'
 import * as BackupGateway from '../../gateways/BackupGateway'
 import {BACKUP_REMOTE_LOCATIONS_ROOT} from './RemoteLocationsReducer'
 import {toExportableConfigurationJson} from '../../configuration/Configuration'
+import {fakeRequest} from '../../testUtils/testHelpers'
 
 it('should export to any enabled remote locations if the configuration has changed since the last export', async () => {
   jest.spyOn(BackupGateway, 'exportConfiguration').mockReturnValue(fakeRequest({id: 'some-external-id'}))

@@ -1,12 +1,11 @@
 import React from 'react'
-import {render} from '../../../testUtils/testHelpers'
+import {fakeRequest, render} from '../../../testUtils/testHelpers'
 import {buildRemoteBackupLocation, buildState} from '../../../testUtils/builders'
 import {toJson} from '../../../common/Json'
 import {screen, waitFor, waitForElementToBeRemoved} from '@testing-library/react'
 import {ImportRemote} from './ImportRemote'
 import * as BackupGateway from '../../../gateways/BackupGateway'
 import * as Gateway from '../../../gateways/Gateway'
-import {fakeRequest} from '../../../gateways/Gateway'
 import {BACKUP_REMOTE_LOCATIONS_ROOT} from '../RemoteLocationsReducer'
 
 it('should import valid configuration', async () => {

@@ -1,7 +1,6 @@
 import request, {Response, SuperAgentRequest} from 'superagent'
 import * as log from '../common/Logger'
 import _get from 'lodash/get'
-import noop from 'lodash/noop'
 import {errorMessage} from '../common/Utils'
 import {Prognosis} from '../domain/Project'
 
@@ -64,8 +63,4 @@ export async function send<T>(request: Request<T>, signal?: AbortSignal): Promis
 
     throw new Error(message)
   }
-}
-
-export function fakeRequest<T>(body?: T): Request<T> {
-  return {body, abort: noop} as unknown as Request<T>
 }

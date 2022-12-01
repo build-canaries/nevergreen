@@ -1,4 +1,4 @@
-import {fakeRequest, get, post, Request, send, TIMEOUT_ERROR} from './Gateway'
+import {get, post, Request, send, TIMEOUT_ERROR} from './Gateway'
 
 const url = 'http://dummy-server.com/order'
 const body = {orderId: 1}
@@ -71,19 +71,5 @@ describe('send', () => {
     } catch (err) {
       expect(err).toHaveProperty('message', TIMEOUT_ERROR)
     }
-  })
-})
-
-describe('fakeRequest', () => {
-
-  it('should return a plain JS object as this is what superagent returns', async () => {
-      const response = await fakeRequest('whatever')
-      expect(response).toBeInstanceOf(Object)
-    }
-  )
-
-  it('should return the given body', async () => {
-    const response = await fakeRequest('whatever')
-    expect(response).toHaveProperty('body', 'whatever')
   })
 })
