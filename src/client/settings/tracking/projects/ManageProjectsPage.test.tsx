@@ -4,13 +4,13 @@ import React from 'react'
 import {screen} from '@testing-library/react'
 import {ManageProjectsPage} from './ManageProjectsPage'
 import {TrackingMode} from '../../../domain/Feed'
-import {FEEDS_ROOT, getFeed} from '../FeedsReducer'
+import {getFeed, feedsRoot} from '../FeedsReducer'
 
 it('should allow the tracking mode to be changed', async () => {
   const trayId = 'some-id'
   const feed = buildFeed({trayId, trackingMode: TrackingMode.selected})
   const state = {
-    [FEEDS_ROOT]: {
+    [feedsRoot]: {
       [trayId]: feed
     }
   }

@@ -1,7 +1,7 @@
 import {backupRaw} from './AutomaticBackupListener'
 import {buildRemoteBackupLocation, buildState} from '../../testUtils/builders'
 import * as BackupGateway from '../../gateways/BackupGateway'
-import {BACKUP_REMOTE_LOCATIONS_ROOT} from './RemoteLocationsReducer'
+import {remoteLocationsRoot} from './RemoteLocationsReducer'
 import {toExportableConfigurationJson} from '../../configuration/Configuration'
 
 it('should export to any enabled remote locations if the configuration has changed since the last export', async () => {
@@ -14,7 +14,7 @@ it('should export to any enabled remote locations if the configuration has chang
 
   const previous = buildState()
   const current = buildState({
-    [BACKUP_REMOTE_LOCATIONS_ROOT]: {
+    [remoteLocationsRoot]: {
       internalId: location
     }
   })
@@ -29,7 +29,7 @@ it('should not export to any enabled remote locations if the configuration is th
   jest.spyOn(BackupGateway, 'exportConfiguration').mockResolvedValueOnce({id: 'some-external-id'})
 
   const previous = buildState({
-    [BACKUP_REMOTE_LOCATIONS_ROOT]: {
+    [remoteLocationsRoot]: {
       internalId: buildRemoteBackupLocation({
         internalId: 'internalId',
         automaticallyExport: true,
@@ -39,7 +39,7 @@ it('should not export to any enabled remote locations if the configuration is th
     }
   })
   const current = buildState({
-    [BACKUP_REMOTE_LOCATIONS_ROOT]: {
+    [remoteLocationsRoot]: {
       internalId: buildRemoteBackupLocation({
         internalId: 'internalId',
         automaticallyExport: true,
@@ -60,7 +60,7 @@ it('should not export on first load when previous state is undefined', async () 
 
   const previous = undefined
   const current = buildState({
-    [BACKUP_REMOTE_LOCATIONS_ROOT]: {
+    [remoteLocationsRoot]: {
       internalId: buildRemoteBackupLocation({
         internalId: 'internalId',
         automaticallyExport: true

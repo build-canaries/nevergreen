@@ -1,26 +1,26 @@
-import {Actions} from '../../Actions'
-import {createFeed, Feed} from '../../domain/Feed'
-import {ActionFeedAdded, ActionFeedUpdate, ActionRemoveFeed} from './TrackingActionCreators'
-import {createReducer, createSelector} from '@reduxjs/toolkit'
-import {Draft} from 'immer'
-import {State} from '../../Reducer'
-import {ActionConfigurationImported} from '../backup/BackupActionCreators'
+import type {Draft} from 'immer'
+import type {RootState} from '../../configuration/ReduxStore'
+import type {Feed} from '../../domain/Feed'
+import {createFeed} from '../../domain/Feed'
+import {createSelector, createSlice} from '@reduxjs/toolkit'
 import isNil from 'lodash/isNil'
+import {feedAdded, feedRemoved, feedUpdated} from './TrackingActionCreators'
+import {configurationImported} from '../backup/BackupActionCreators'
 
 export interface FeedsState {
   readonly [trayId: string]: Feed;
 }
 
-export const FEEDS_ROOT = 'trays'
+export const feedsRoot = 'trays'
 
-const defaultState: FeedsState = {}
+const initialState: FeedsState = {}
 
-function handleImportedConfiguration(draft: FeedsState, action: ActionConfigurationImported) {
-  if (isNil(action.configuration[FEEDS_ROOT])) {
+function handleImportedConfiguration(draft: FeedsState, action: ReturnType<typeof configurationImported>) {
+  if (isNil(action.payload.trays)) {
     return draft
   }
 
-  const importedFeeds = action.configuration[FEEDS_ROOT] as FeedsState
+  const importedFeeds = action.payload.trays
   const newState: Draft<FeedsState> = {}
 
   Object.keys(importedFeeds).forEach((trayId) => {
@@ -31,23 +31,30 @@ function handleImportedConfiguration(draft: FeedsState, action: ActionConfigurat
   return newState
 }
 
-export const reduce = createReducer<FeedsState>(defaultState, (builder) => {
-  builder
-    .addCase(Actions.CONFIGURATION_IMPORTED, handleImportedConfiguration)
-    .addCase(Actions.FEED_ADDED, (draft, action: ActionFeedAdded) => {
-      draft[action.trayId] = action.data
-    })
-    .addCase(Actions.FEED_UPDATED, (draft, action: ActionFeedUpdate) => {
-      Object.assign(draft[action.trayId], action.data)
-    })
-    .addCase(Actions.FEED_REMOVED, (draft, action: ActionRemoveFeed) => {
-      delete draft[action.trayId]
-    })
+const slice = createSlice({
+  name: feedsRoot,
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(configurationImported, handleImportedConfiguration)
+      .addCase(feedAdded, (draft, action) => {
+        draft[action.payload.trayId] = action.payload.feed
+      })
+      .addCase(feedUpdated, (draft, action) => {
+        Object.assign(draft[action.payload.trayId], action.payload.feed)
+      })
+      .addCase(feedRemoved, (draft, action) => {
+        delete draft[action.payload]
+      })
+  }
 })
 
-const getTracking = (state: State) => state[FEEDS_ROOT]
+export const {reducer} = slice
+
+const getTracking = (state: RootState) => state.trays
 export const getFeeds = createSelector(getTracking, (trays) => Object.values(trays))
 
-export function getFeed(id: string): (state: State) => Feed | undefined {
+export function getFeed(id: string): (state: RootState) => Feed | undefined {
   return createSelector(getTracking, (trays) => trays[id])
 }

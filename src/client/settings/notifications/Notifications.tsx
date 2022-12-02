@@ -1,14 +1,14 @@
 import React, {ReactElement} from 'react'
-import {useSelector} from 'react-redux'
 import {getNotifications} from './NotificationsReducer'
 import {AddButton} from '../../common/LinkButton'
 import {Prognosis} from '../../domain/Project'
 import {NotificationCard} from './NotificationCard'
 import {WarningMessages} from '../../common/Messages'
 import {CardList} from '../../common/card/CardList'
+import {useAppSelector} from '../../configuration/Hooks'
 
 export function Notifications(): ReactElement {
-  const notifications = useSelector(getNotifications)
+  const notifications = useAppSelector(getNotifications)
   const entries = Object.entries(notifications)
 
   return (

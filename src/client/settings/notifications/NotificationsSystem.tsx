@@ -1,17 +1,17 @@
 import React, {ReactElement, useEffect, useState} from 'react'
 import {Checkbox} from '../../common/forms/Checkbox'
 import {ErrorMessages, WarningMessages} from '../../common/Messages'
-import {useDispatch, useSelector} from 'react-redux'
-import {getAllowSystemNotifications} from './NotificationsReducer'
+import {useSelector} from 'react-redux'
+import {getAllowSystemNotifications, setAllowSystemNotifications} from './NotificationsReducer'
 import {permissionGranted, requestPermission, sendSystemNotification, supported} from '../../common/SystemNotifications'
-import {setAllowSystemNotifications} from './NotificationsActionCreators'
+import {useAppDispatch} from '../../configuration/Hooks'
 
 export const NOT_SUPPORTED_MESSAGE = 'Unfortunately your browser doesn\'t support notifications.'
 export const PERMISSION_DENIED_MESSAGE = 'System notifications permission denied, unable to show system notifications.'
 export const NOTIFICATIONS_ENABLED_NOTIFICATION = {body: 'System notifications are now enabled!'}
 
 export function NotificationsSystem(): ReactElement {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const allowSystemNotifications = useSelector(getAllowSystemNotifications)
   const systemNotificationsSupported = supported()
   const [requestingPermission, setRequestingPermission] = useState(false)

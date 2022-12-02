@@ -1,22 +1,11 @@
-import {Actions} from '../Actions'
-import {
-  ActionClickToShowMenu,
-  ActionRefreshTime,
-  ActionSetMaxProjects,
-  ActionSetSort,
-  ActionShowBuildLabel,
-  ActionShowBuildTime,
-  ActionShowFeedIdentifier,
-  ActionShowPrognosis,
-  DEFAULT_REFRESH_TIME
-} from './SettingsActionCreators'
-import {createReducer, createSelector} from '@reduxjs/toolkit'
-import {State} from '../Reducer'
-import {Prognosis} from '../domain/Project'
-import get from 'lodash/get'
-import uniq from 'lodash/uniq'
-import {ActionConfigurationImported} from './backup/BackupActionCreators'
+import type {RootState} from '../configuration/ReduxStore'
+import type {PayloadAction} from '@reduxjs/toolkit'
+import {createSelector, createSlice} from '@reduxjs/toolkit'
 import {SortBy} from '../gateways/ProjectsGateway'
+import {Prognosis} from '../domain/Project'
+import merge from 'lodash/merge'
+import uniq from 'lodash/uniq'
+import {configurationImported} from './backup/BackupActionCreators'
 
 export enum MaxProjectsToShow {
   small = 'small',
@@ -36,12 +25,14 @@ export interface SettingsState {
   readonly sort: SortBy;
 }
 
-export const SETTINGS_ROOT = 'settings'
+export const validRefreshTimes = [5, 10, 30, 60, 300, 600, 1800, 3600, 43200, 86400]
 
-const defaultState: SettingsState = {
+export const settingsRoot = 'settings'
+
+const initialState: SettingsState = {
   showTrayName: false,
   showBuildTime: true,
-  refreshTime: DEFAULT_REFRESH_TIME,
+  refreshTime: 10,
   showBuildLabel: false,
   maxProjectsToShow: MaxProjectsToShow.medium,
   clickToShowMenu: false,
@@ -54,44 +45,69 @@ const defaultState: SettingsState = {
   sort: SortBy.default
 }
 
-export const reduce = createReducer<SettingsState>(defaultState, (builder) => {
-  builder
-    .addCase(Actions.CONFIGURATION_IMPORTED, (draft, action: ActionConfigurationImported) => {
-      const importedState = get(action.configuration, SETTINGS_ROOT, {}) as SettingsState
-      return {...draft, ...importedState}
-    })
-    .addCase(Actions.SHOW_BUILD_TIME, (draft, action: ActionShowBuildTime) => {
-      draft.showBuildTime = action.value
-    })
-    .addCase(Actions.SHOW_FEED_IDENTIFIER, (draft, action: ActionShowFeedIdentifier) => {
-      draft.showTrayName = action.value
-    })
-    .addCase(Actions.REFRESH_TIME, (draft, action: ActionRefreshTime) => {
-      draft.refreshTime = action.value
-    })
-    .addCase(Actions.SHOW_BUILD_LABEL, (draft, action: ActionShowBuildLabel) => {
-      draft.showBuildLabel = action.value
-    })
-    .addCase(Actions.SET_MAX_PROJECTS, (draft, action: ActionSetMaxProjects) => {
-      draft.maxProjectsToShow = action.value
-    })
-    .addCase(Actions.CLICK_TO_SHOW_MENU, (draft, action: ActionClickToShowMenu) => {
-      draft.clickToShowMenu = action.value
-    })
-    .addCase(Actions.SHOW_PROGNOSIS, (draft, action: ActionShowPrognosis) => {
-      draft.showPrognosis = action.show
-        ? uniq(draft.showPrognosis.concat(action.prognosis))
-        : draft.showPrognosis.filter((prognosis) => prognosis !== action.prognosis)
-    })
-    .addCase(Actions.SET_SORT, (draft, action: ActionSetSort) => {
-      draft.sort = action.value
-    })
-})
-
-function getSettings(state: State) {
-  return state[SETTINGS_ROOT]
+function absoluteClosestNumber(actual: number, a: number, b: number): number {
+  return Math.abs(b - actual) < Math.abs(a - actual) ? b : a
 }
 
+const slice = createSlice({
+  name: settingsRoot,
+  initialState,
+  reducers: {
+    setShowBuildTime: (draft, action: PayloadAction<boolean>) => {
+      draft.showBuildTime = action.payload
+    },
+    setShowFeedIdentifier: (draft, action: PayloadAction<boolean>) => {
+      draft.showTrayName = action.payload
+    },
+    setRefreshTime: {
+      reducer: (draft, action: PayloadAction<number>) => {
+        draft.refreshTime = action.payload
+      },
+      prepare: (value: number) => {
+        return {
+          payload: validRefreshTimes.reduce((prev, curr) => absoluteClosestNumber(value, prev, curr))
+        }
+      }
+    },
+    setShowBuildLabel: (draft, action: PayloadAction<boolean>) => {
+      draft.showBuildLabel = action.payload
+    },
+    setMaxProjectsToShow: (draft, action: PayloadAction<MaxProjectsToShow>) => {
+      draft.maxProjectsToShow = action.payload
+    },
+    setClickToShowMenu: (draft, action: PayloadAction<boolean>) => {
+      draft.clickToShowMenu = action.payload
+    },
+    setShowPrognosis: (draft, action: PayloadAction<{ show: boolean, prognosis: Prognosis }>) => {
+      const {show, prognosis} = action.payload
+      draft.showPrognosis = show
+        ? uniq(draft.showPrognosis.concat(prognosis))
+        : draft.showPrognosis.filter((p) => p !== prognosis)
+    },
+    setSort: (draft, action: PayloadAction<SortBy>) => {
+      draft.sort = action.payload
+    }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(configurationImported, (draft, action) => {
+      return merge(draft, action.payload.settings)
+    })
+  }
+})
+
+export const {reducer} = slice
+export const {
+  setShowBuildTime,
+  setRefreshTime,
+  setShowBuildLabel,
+  setShowPrognosis,
+  setShowFeedIdentifier,
+  setMaxProjectsToShow,
+  setClickToShowMenu,
+  setSort
+} = slice.actions
+
+const getSettings = (state: RootState) => state.settings
 export const getShowFeedIdentifier = createSelector(getSettings, (settings) => settings.showTrayName)
 export const getShowBuildTime = createSelector(getSettings, (settings) => settings.showBuildTime)
 export const getShowBuildLabel = createSelector(getSettings, (settings) => settings.showBuildLabel)

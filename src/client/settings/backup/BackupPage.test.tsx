@@ -3,12 +3,12 @@ import {screen, waitForElementToBeRemoved} from '@testing-library/react'
 import {render} from '../../testUtils/testHelpers'
 import {buildRemoteBackupLocation} from '../../testUtils/builders'
 import {BackupPage} from './BackupPage'
-import {BACKUP_REMOTE_LOCATIONS_ROOT} from './RemoteLocationsReducer'
+import {remoteLocationsRoot} from './RemoteLocationsReducer'
 import {RemoteLocationOptions} from './RemoteLocationOptions'
 
 it('should be able to remove remote locations', async () => {
   const state = {
-    [BACKUP_REMOTE_LOCATIONS_ROOT]: {
+    [remoteLocationsRoot]: {
       internalId: buildRemoteBackupLocation({
         internalId: 'internalId',
         where: RemoteLocationOptions.custom,

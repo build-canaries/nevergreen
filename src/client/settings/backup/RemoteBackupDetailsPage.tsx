@@ -8,27 +8,27 @@ import {CloudDownload} from '../../common/icons/CloudDownload'
 import {CloudUpload} from '../../common/icons/CloudUpload'
 import styles from './remote-backup-details-page.scss'
 import {Checkbox} from '../../common/forms/Checkbox'
-import {setAutomaticExport} from './BackupActionCreators'
-import {useDispatch} from 'react-redux'
+import {useAppDispatch} from '../../configuration/Hooks'
+import {setAutomaticExport} from './RemoteLocationsReducer'
 
 export function RemoteBackupDetailsPage(): ReactElement {
   const location = useRemoteLocationContext()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   return (
-    <Page title='Remote location' icon={<BackupLogo where={location.where}/>}>
+    <Page title="Remote location" icon={<BackupLogo where={location.where}/>}>
       <FullBackupSummary location={location}/>
-      <Checkbox onToggle={(value) => dispatch(setAutomaticExport(location.internalId, value))}
+      <Checkbox onToggle={(value) => dispatch(setAutomaticExport({internalId: location.internalId, value}))}
                 checked={location.automaticallyExport}
                 className={styles.autoExport}>
         Automatically export
       </Checkbox>
-      <LinkButton to='../export'
+      <LinkButton to="../export"
                   icon={<CloudUpload/>}
                   className={styles.exportButton}>
         Export
       </LinkButton>
-      <LinkButton to='../import'
+      <LinkButton to="../import"
                   icon={<CloudDownload/>}
                   className={styles.importButton}>
         Import

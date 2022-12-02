@@ -1,6 +1,6 @@
 import localforage from 'localforage'
 import toPairs from 'lodash/toPairs'
-import {State} from '../Reducer'
+import type {RootState} from './ReduxStore'
 
 export type UntrustedData = Record<string, unknown>
 
@@ -9,7 +9,7 @@ export async function init(): Promise<void> {
   return localforage.ready()
 }
 
-export async function save(data: State): Promise<void> {
+export async function save(data: RootState): Promise<void> {
   await Promise.all(toPairs(data).map(([key, value]) => {
     return localforage.setItem(key, value)
   }))

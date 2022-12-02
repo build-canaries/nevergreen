@@ -3,19 +3,19 @@ import {errorMessage, isBlank} from '../../common/Utils'
 import {Input} from '../../common/forms/Input'
 import {Checkbox} from '../../common/forms/Checkbox'
 import {InputButton} from '../../common/forms/Button'
-import {useDispatch, useSelector} from 'react-redux'
+import {useSelector} from 'react-redux'
 import {Stop} from '../../common/icons/Stop'
 import {Play} from '../../common/icons/Play'
 import {Page} from '../../common/Page'
 import {Form} from '../../common/forms/Form'
 import {DropDown} from '../../common/forms/DropDown'
 import {Prognosis} from '../../domain/Project'
-import {addNotification} from './NotificationsActionCreators'
 import {ROUTE_NOTIFICATIONS} from '../../AppRoutes'
 import {deleteAudio, playAudio, stopAudio} from '../../common/AudioPlayer'
 import {WarningMessages} from '../../common/Messages'
-import {getAllowAudioNotifications, getAllowSystemNotifications} from './NotificationsReducer'
+import {addNotification, getAllowAudioNotifications, getAllowSystemNotifications} from './NotificationsReducer'
 import {NotificationIcon} from './icons/NotificationIcon'
+import {useAppDispatch} from '../../configuration/Hooks'
 
 const PROGNOSIS_OPTIONS = [
   {value: Prognosis.error, display: 'Error'},
@@ -49,7 +49,7 @@ function getWarnings(allowSystemNotifications: boolean, allowAudioNotifications:
 }
 
 export function AddNotification(): ReactElement {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const allowSystemNotifications = useSelector(getAllowSystemNotifications)
   const allowAudioNotifications = useSelector(getAllowAudioNotifications)
 
@@ -102,7 +102,7 @@ export function AddNotification(): ReactElement {
   const warnings = getWarnings(allowSystemNotifications, allowAudioNotifications)
 
   const processForm = () => {
-    dispatch(addNotification(prognosis, systemNotification, sfx))
+    dispatch(addNotification({prognosis, systemNotification, sfx}))
     return {navigateTo: ROUTE_NOTIFICATIONS}
   }
 

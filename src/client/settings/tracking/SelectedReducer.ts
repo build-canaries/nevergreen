@@ -1,47 +1,56 @@
-import {Actions} from '../../Actions'
-import {ActionFeedUpdate, ActionRemoveFeed, ActionSelectProject} from './TrackingActionCreators'
-import {createReducer, createSelector} from '@reduxjs/toolkit'
+import type {PayloadAction} from '@reduxjs/toolkit'
+import {createSelector, createSlice} from '@reduxjs/toolkit'
+import type {RootState} from '../../configuration/ReduxStore'
+import {feedRemoved, feedUpdated} from './TrackingActionCreators'
 import remove from 'lodash/remove'
-import {State} from '../../Reducer'
-import {ActionConfigurationImported} from '../backup/BackupActionCreators'
+import {configurationImported} from '../backup/BackupActionCreators'
 import {TrackingMode} from '../../domain/Feed'
 
 export interface SelectedState {
   readonly [trayId: string]: ReadonlyArray<string>;
 }
 
-export const SELECTED_ROOT = 'selected'
+export const selectedRoot = 'selected'
 
-const defaultState: SelectedState = {}
+const initialState: SelectedState = {}
 
-export const reduce = createReducer<SelectedState>(defaultState, (builder) => {
-  builder
-    .addCase(Actions.CONFIGURATION_IMPORTED, (draft, action: ActionConfigurationImported) => {
-      return action.configuration[SELECTED_ROOT]
-        ? action.configuration[SELECTED_ROOT] as SelectedState
-        : draft
-    })
-    .addCase(Actions.FEED_UPDATED, (draft, action: ActionFeedUpdate) => {
-      if (action.data.trackingMode === TrackingMode.selected) {
-        draft[action.trayId] = []
-      } else if (action.data.trackingMode === TrackingMode.everything) {
-        delete draft[action.trayId]
-      }
-    })
-    .addCase(Actions.FEED_REMOVED, (draft, action: ActionRemoveFeed) => {
-      delete draft[action.trayId]
-    })
-    .addCase(Actions.PROJECT_SELECTED, (draft, action: ActionSelectProject) => {
-      action.selected
-        ? draft[action.trayId].push(action.projectId)
-        : remove(draft[action.trayId], (id) => id === action.projectId)
-    })
+const slice = createSlice({
+  name: selectedRoot,
+  initialState,
+  reducers: {
+    projectSelected: (draft, action: PayloadAction<{ trayId: string, projectId: string, selected: boolean }>) => {
+      action.payload.selected
+        ? draft[action.payload.trayId].push(action.payload.projectId)
+        : remove(draft[action.payload.trayId], (id) => id === action.payload.projectId)
+    }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(configurationImported, (draft, action) => {
+        return action.payload.selected ?? draft
+      })
+      .addCase(feedUpdated, (draft, action) => {
+        if (action.payload.feed.trackingMode === TrackingMode.selected) {
+          draft[action.payload.trayId] = []
+        } else if (action.payload.feed.trackingMode === TrackingMode.everything) {
+          delete draft[action.payload.trayId]
+        }
+      })
+      .addCase(feedRemoved, (draft, action) => {
+        delete draft[action.payload]
+      })
+  }
 })
 
-export function getSelectedProjects(state: State): SelectedState {
-  return state[SELECTED_ROOT]
+export const {reducer} = slice
+export const {
+  projectSelected
+} = slice.actions
+
+export function getSelectedProjects(state: RootState): SelectedState {
+  return state.selected
 }
 
-export function getSelectedProjectsForFeed(trayId: string): (state: State) => ReadonlyArray<string> {
+export function getSelectedProjectsForFeed(trayId: string): (state: RootState) => ReadonlyArray<string> {
   return createSelector(getSelectedProjects, (selected) => selected[trayId])
 }

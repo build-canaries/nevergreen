@@ -1,33 +1,49 @@
-import {Actions} from '../../Actions'
+import type {RootState} from '../../configuration/ReduxStore'
 import remove from 'lodash/remove'
 import uniq from 'lodash/uniq'
-import {ActionMessageAdded, ActionMessageRemoved} from './SuccessActionCreators'
-import {createReducer} from '@reduxjs/toolkit'
-import {State} from '../../Reducer'
-import {ActionConfigurationImported} from '../backup/BackupActionCreators'
+import {createSlice, PayloadAction} from '@reduxjs/toolkit'
+import {configurationImported} from '../backup/BackupActionCreators'
 
 export type SuccessState = ReadonlyArray<string>
 
-export const SUCCESS_ROOT = 'success'
+const initialState: SuccessState = ['=(^.^)=']
 
-const defaultState: SuccessState = ['=(^.^)=']
+const spaces = / /g
+const nonBreakingSpace = String.fromCharCode(160)
 
-export const reduce = createReducer<SuccessState>(defaultState, (builder) => {
-  builder
-    .addCase(Actions.CONFIGURATION_IMPORTED, (draft, action: ActionConfigurationImported) => {
-      if (action.configuration[SUCCESS_ROOT]) {
-        return uniq(action.configuration[SUCCESS_ROOT]) as SuccessState
-      }
-      return draft
+function isSentenceLike(message: string): boolean {
+  const numberOfLetters = (message.match(/[A-Za-z]/g) || []).length
+  return (numberOfLetters / message.length) > 0.3
+}
+
+function transformMessage(message: string): string {
+  return isSentenceLike(message) ? message : message.replace(spaces, nonBreakingSpace)
+}
+
+export const successRoot = 'success'
+
+const slice = createSlice({
+  name: successRoot,
+  initialState,
+  reducers: {
+    addMessage: (draft, action: PayloadAction<string>) => {
+      return uniq(draft.concat(transformMessage(action.payload)))
+    },
+    removeMessage: (draft, action: PayloadAction<string>) => {
+      const transformed = transformMessage(action.payload)
+      remove(draft, (message) => message === transformed)
+    }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(configurationImported, (draft, action) => {
+      return action.payload.success ?? draft
     })
-    .addCase(Actions.MESSAGE_ADDED, (draft, action: ActionMessageAdded) => {
-      return uniq(draft.concat(action.message))
-    })
-    .addCase(Actions.MESSAGE_REMOVED, (draft, action: ActionMessageRemoved) => {
-      remove(draft, (message) => message === action.message)
-    })
+  }
 })
 
-export function getSuccessMessages(state: State): ReadonlyArray<string> {
-  return state[SUCCESS_ROOT]
+export const {reducer} = slice
+export const {addMessage, removeMessage} = slice.actions
+
+export function getSuccessMessages(state: RootState): ReadonlyArray<string> {
+  return state.success
 }

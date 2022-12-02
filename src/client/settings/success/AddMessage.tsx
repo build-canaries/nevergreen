@@ -1,20 +1,20 @@
 import React, {ReactElement, useState} from 'react'
 import {Input} from '../../common/forms/Input'
 import styles from './add-message.scss'
-import {addMessage} from './SuccessActionCreators'
-import {useDispatch, useSelector} from 'react-redux'
-import {getSuccessMessages} from './SuccessReducer'
+import {useSelector} from 'react-redux'
+import {addMessage, getSuccessMessages} from './SuccessReducer'
 import {isBlank} from '../../common/Utils'
 import {Form} from '../../common/forms/Form'
 import {firstError, FormErrors} from '../../common/forms/Validation'
 import {Page} from '../../common/Page'
 import {Image} from '../../common/icons/Image'
 import {ROUTE_SUCCESS} from '../../AppRoutes'
+import {useAppDispatch} from '../../configuration/Hooks'
 
 type Fields = 'message'
 
 export function AddMessage(): ReactElement {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const messages = useSelector(getSuccessMessages)
   const [message, setMessage] = useState('')
 
@@ -33,15 +33,15 @@ export function AddMessage(): ReactElement {
   }
 
   return (
-    <Page title='Add success message' icon={<Image/>}>
+    <Page title="Add success message" icon={<Image/>}>
       <Form onValidate={onValidate}
             onSuccess={onSuccess}
-            submitButtonText='Add message'
+            submitButtonText="Add message"
             onCancel={ROUTE_SUCCESS}>
         {(submitting, validationErrors) => {
           return (
             <Input className={styles.addMessageInput}
-                   placeholder='message or image URL'
+                   placeholder="message or image URL"
                    value={message}
                    onChange={({target}) => {
                      setMessage(target.value)

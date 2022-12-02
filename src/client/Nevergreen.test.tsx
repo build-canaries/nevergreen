@@ -8,7 +8,7 @@ import * as Configuration from './configuration/Configuration'
 import * as ServiceWorkerHook from './ServiceWorkerHook'
 import * as Gateway from './gateways/Gateway'
 import * as HideMenusHook from './HideMenusHook'
-import {NOTIFICATIONS_ROOT} from './settings/notifications/NotificationsReducer'
+import {notificationsRoot} from './settings/notifications/NotificationsReducer'
 
 beforeEach(() => {
   jest.spyOn(LocalConfiguration, 'init').mockResolvedValue()
@@ -35,7 +35,7 @@ it('should load configuration, register service worker and check for a new versi
 })
 
 it('when loaded config is invalid, should show error screen', async () => {
-  jest.spyOn(Configuration, 'toConfiguration').mockReturnValue(left(['bang!']))
+  jest.spyOn(Configuration, 'toConfiguration').mockReturnValueOnce(left(['bang!']))
 
   render(<Nevergreen/>)
 
@@ -45,7 +45,7 @@ it('when loaded config is invalid, should show error screen', async () => {
 })
 
 it('when config fails to load, should show error screen', async () => {
-  jest.spyOn(LocalConfiguration, 'load').mockRejectedValue(new Error('bang!'))
+  jest.spyOn(LocalConfiguration, 'load').mockRejectedValueOnce(new Error('bang!'))
 
   render(<Nevergreen/>)
 
@@ -59,7 +59,7 @@ it('should not check for a new version if the user has disabled checking', async
 
   render(<Nevergreen/>, {
     state: {
-      [NOTIFICATIONS_ROOT]: {
+      [notificationsRoot]: {
         enableNewVersionCheck: false
       }
     }

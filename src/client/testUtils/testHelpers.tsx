@@ -1,10 +1,11 @@
+import type {RootState} from '../configuration/ReduxStore'
+import {reducer} from '../configuration/ReduxStore'
 import React, {ReactElement, ReactNode} from 'react'
 import merge from 'lodash/merge'
-import {reducer, State} from '../Reducer'
-import {SETTINGS_ROOT} from '../settings/SettingsReducer'
-import {SELECTED_ROOT} from '../settings/tracking/SelectedReducer'
-import {SUCCESS_ROOT} from '../settings/success/SuccessReducer'
-import {FEEDS_ROOT} from '../settings/tracking/FeedsReducer'
+import {settingsRoot as settingsName} from '../settings/SettingsReducer'
+import {selectedRoot as selectedName} from '../settings/tracking/SelectedReducer'
+import {successRoot as successName} from '../settings/success/SuccessReducer'
+import {feedsRoot as feedsName} from '../settings/tracking/FeedsReducer'
 import {CombinedState, combineReducers, Middleware, Reducer} from 'redux'
 import {RecursivePartial} from '../common/Types'
 import {
@@ -16,25 +17,25 @@ import {
 } from '@testing-library/react'
 import {AnyAction, configureStore, EnhancedStore} from '@reduxjs/toolkit'
 import {Outlet} from 'react-router-dom'
-import {APPLIED_MIGRATIONS_ROOT} from '../configuration/MigrationsReducer'
+import {migrationsRoot as migrationsName} from '../configuration/MigrationsReducer'
 import parseISO from 'date-fns/parseISO'
-import {BACKUP_REMOTE_LOCATIONS_ROOT} from '../settings/backup/RemoteLocationsReducer'
+import {remoteLocationsRoot as remoteLocationsName} from '../settings/backup/RemoteLocationsReducer'
 import {Route, Routes} from 'react-router'
 import userEvent from '@testing-library/user-event'
 import {UserEvent} from '@testing-library/user-event/setup/setup'
 import {buildState} from './builders'
 import {App} from '../App'
-import {NOTIFICATIONS_ROOT} from '../settings/notifications/NotificationsReducer'
+import {notificationsRoot as notificationsName} from '../settings/notifications/NotificationsReducer'
 
 interface ExtendedRenderResult extends RenderResult {
-  readonly store: EnhancedStore<State, AnyAction, ReadonlyArray<Middleware<unknown, State>>>;
+  readonly store: EnhancedStore<RootState, AnyAction, ReadonlyArray<Middleware<unknown, RootState>>>;
   readonly user: UserEvent;
 }
 
 interface ExtendedRenderOptions extends RenderOptions {
   readonly mountPath?: string;
   readonly currentLocation?: string;
-  readonly state?: RecursivePartial<State>;
+  readonly state?: RecursivePartial<RootState>;
   readonly outletContext?: unknown;
 }
 
@@ -84,15 +85,15 @@ export function render(component: ReactElement, options: ExtendedRenderOptions =
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-return */
-export function testReducer(reducer: Partial<Reducer<State>>): Reducer<CombinedState<State>> {
-  return combineReducers<State>(merge({
-    [SETTINGS_ROOT]: (state: any = null) => state,
-    [SELECTED_ROOT]: (state: any = null) => state,
-    [SUCCESS_ROOT]: (state: any = null) => state,
-    [FEEDS_ROOT]: (state: any = null) => state,
-    [APPLIED_MIGRATIONS_ROOT]: (state: any = null) => state,
-    [BACKUP_REMOTE_LOCATIONS_ROOT]: (state: any = null) => state,
-    [NOTIFICATIONS_ROOT]: (state: any = null) => state
+export function testReducer(reducer: Partial<Reducer<RootState>>): Reducer<CombinedState<RootState>> {
+  return combineReducers<RootState>(merge({
+    [settingsName]: (state: any = null) => state,
+    [selectedName]: (state: any = null) => state,
+    [successName]: (state: any = null) => state,
+    [feedsName]: (state: any = null) => state,
+    [migrationsName]: (state: any = null) => state,
+    [remoteLocationsName]: (state: any = null) => state,
+    [notificationsName]: (state: any = null) => state
   }, reducer))
 }
 

@@ -5,14 +5,14 @@ import {
   getShowBuildLabel,
   getShowBuildTime,
   getShowFeedIdentifier,
-  SETTINGS_ROOT
+  settingsRoot
 } from '../SettingsReducer'
 import {screen} from '@testing-library/react'
 import {DisplaySettings} from './DisplaySettings'
 
 it('should set the click to show menu setting', async () => {
   const state = {
-    [SETTINGS_ROOT]: {
+    [settingsRoot]: {
       clickToShowMenu: false
     }
   }
@@ -25,7 +25,7 @@ it('should set the click to show menu setting', async () => {
 
 it('should set the show feed identifier setting', async () => {
   const state = {
-    [SETTINGS_ROOT]: {
+    [settingsRoot]: {
       showTrayName: false
     }
   }
@@ -38,7 +38,7 @@ it('should set the show feed identifier setting', async () => {
 
 it('should set the show build time setting', async () => {
   const state = {
-    [SETTINGS_ROOT]: {
+    [settingsRoot]: {
       showBuildTime: false
     }
   }
@@ -51,7 +51,7 @@ it('should set the show build time setting', async () => {
 
 it('should set the show build label setting', async () => {
   const state = {
-    [SETTINGS_ROOT]: {
+    [settingsRoot]: {
       showBuildLabel: false
     }
   }

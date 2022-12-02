@@ -1,7 +1,7 @@
 import React from 'react'
 import {render} from '../../testUtils/testHelpers'
 import {screen} from '@testing-library/react'
-import {getNotifications, NOTIFICATIONS_ROOT} from './NotificationsReducer'
+import {getNotifications, notificationsRoot} from './NotificationsReducer'
 import {AddNotification} from './AddNotification'
 import {Prognosis} from '../../domain/Project'
 import * as AudioPlayer from '../../common/AudioPlayer'
@@ -14,7 +14,7 @@ it.each([
   Prognosis.unknown,
   Prognosis.healthy
 ])('should allow adding a %s notification', async (prognosis) => {
-  const state = {[NOTIFICATIONS_ROOT]: {}}
+  const state = {[notificationsRoot]: {}}
 
   const {store, user} = render(<AddNotification/>, {state})
   await user.selectOptions(screen.getByLabelText('When transitioning to'), prognosis)
@@ -34,7 +34,7 @@ it.each([
 it('should be able to preview audio files', async () => {
   jest.spyOn(AudioPlayer, 'playAudio').mockResolvedValue()
   jest.spyOn(AudioPlayer, 'stopAudio').mockReturnValue()
-  const state = {[NOTIFICATIONS_ROOT]: {}}
+  const state = {[notificationsRoot]: {}}
 
   const {user} = render(<AddNotification/>, {state})
   await user.type(screen.getByLabelText('Play audio'), '/some-sfx.mp3')
@@ -46,7 +46,7 @@ it('should be able to preview audio files', async () => {
 })
 
 it('should be able to cancel without adding', async () => {
-  const state = {[NOTIFICATIONS_ROOT]: {}}
+  const state = {[notificationsRoot]: {}}
 
   const {store, user} = render(<AddNotification/>, {state})
   await user.click(screen.getByRole('button', {name: 'Cancel'}))
@@ -58,7 +58,7 @@ it('should be able to cancel without adding', async () => {
 describe('warnings', () => {
   it('system notifications have not been allowed', () => {
     const state = {
-      [NOTIFICATIONS_ROOT]: {
+      [notificationsRoot]: {
         allowSystemNotifications: false,
         allowAudioNotifications: true
       }
@@ -72,7 +72,7 @@ describe('warnings', () => {
 
   it('audio notifications have not been allowed', () => {
     const state = {
-      [NOTIFICATIONS_ROOT]: {
+      [notificationsRoot]: {
         allowSystemNotifications: true,
         allowAudioNotifications: false
       }
@@ -86,7 +86,7 @@ describe('warnings', () => {
 
   it('system and audio notifications have not been allowed', () => {
     const state = {
-      [NOTIFICATIONS_ROOT]: {
+      [notificationsRoot]: {
         allowSystemNotifications: false,
         allowAudioNotifications: false
       }

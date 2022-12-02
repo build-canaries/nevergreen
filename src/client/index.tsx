@@ -5,7 +5,7 @@ import {createRoot} from 'react-dom/client'
 import {App} from './App'
 import {error} from './common/Logger'
 import {AppRoutes} from './AppRoutes'
-import {store} from './configuration/Store'
+import {store} from './configuration/ReduxStore'
 
 const rootNodeId = 'root'
 const rootNode = document.getElementById(rootNodeId)

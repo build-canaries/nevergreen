@@ -1,5 +1,5 @@
 import {migrate} from './013_MigrateNotifications'
-import {NOTIFICATIONS_ROOT} from '../../settings/notifications/NotificationsReducer'
+import {notificationsRoot} from '../../settings/notifications/NotificationsReducer'
 
 it('should return the given data if it does not contain settings', () => {
   const data = {foo: 'bar'}
@@ -9,14 +9,14 @@ it('should return the given data if it does not contain settings', () => {
 
 it('should add sick and healthy notifications if sfx is set and system notifications are on', () => {
   const data = {
-    [NOTIFICATIONS_ROOT]: {
+    [notificationsRoot]: {
       showSystemNotifications: true,
       brokenBuildSoundFx: 'some-sfx.mp3'
     }
   }
   migrate(data)
   expect(data).toEqual({
-    [NOTIFICATIONS_ROOT]: {
+    [notificationsRoot]: {
       allowSystemNotifications: true,
       notifications: {
         sick: {
@@ -34,14 +34,14 @@ it('should add sick and healthy notifications if sfx is set and system notificat
 
 it('should add sick notification if sfx is set but system notifications are off', () => {
   const data = {
-    [NOTIFICATIONS_ROOT]: {
+    [notificationsRoot]: {
       showSystemNotifications: false,
       brokenBuildSoundFx: 'some-sfx.mp3'
     }
   }
   migrate(data)
   expect(data).toEqual({
-    [NOTIFICATIONS_ROOT]: {
+    [notificationsRoot]: {
       allowSystemNotifications: false,
       notifications: {
         sick: {
@@ -55,13 +55,13 @@ it('should add sick notification if sfx is set but system notifications are off'
 
 it('should add sick and healthy notifications system notifications are on', () => {
   const data = {
-    [NOTIFICATIONS_ROOT]: {
+    [notificationsRoot]: {
       showSystemNotifications: true
     }
   }
   migrate(data)
   expect(data).toEqual({
-    [NOTIFICATIONS_ROOT]: {
+    [notificationsRoot]: {
       allowSystemNotifications: true,
       notifications: {
         sick: {
@@ -79,13 +79,13 @@ it('should add sick and healthy notifications system notifications are on', () =
 
 it('should not add any notifications if sfx is not set and system notifications are off', () => {
   const data = {
-    [NOTIFICATIONS_ROOT]: {
+    [notificationsRoot]: {
       showSystemNotifications: false
     }
   }
   migrate(data)
   expect(data).toEqual({
-    [NOTIFICATIONS_ROOT]: {
+    [notificationsRoot]: {
       allowSystemNotifications: false
     }
   })
@@ -93,13 +93,13 @@ it('should not add any notifications if sfx is not set and system notifications 
 
 it('should migrate playBrokenBuildSoundFx to allowAudioNotifications', () => {
   const data = {
-    [NOTIFICATIONS_ROOT]: {
+    [notificationsRoot]: {
       playBrokenBuildSoundFx: true
     }
   }
   migrate(data)
   expect(data).toEqual({
-    [NOTIFICATIONS_ROOT]: {
+    [notificationsRoot]: {
       allowAudioNotifications: true
     }
   })

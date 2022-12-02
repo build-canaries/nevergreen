@@ -1,18 +1,23 @@
-import {BACKUP_REMOTE_LOCATIONS_ROOT, getBackupLocations, reduce, RemoteLocationsState} from './RemoteLocationsReducer'
-import {Actions} from '../../Actions'
+import {
+  getBackupLocations,
+  remoteLocationsRoot,
+  reducer as remoteBackupReducer,
+  RemoteLocationsState,
+  removeBackup
+} from './RemoteLocationsReducer'
 import {testReducer} from '../../testUtils/testHelpers'
 import {buildRemoteBackupLocation, buildState} from '../../testUtils/builders'
-import {State} from '../../Reducer'
+import type {RootState} from '../../configuration/ReduxStore'
 import {RecursivePartial} from '../../common/Types'
-import {configurationImported, removeBackup} from './BackupActionCreators'
+import {configurationImported} from './BackupActionCreators'
 import {RemoteLocationOptions} from './RemoteLocationOptions'
 
 const reducer = testReducer({
-  [BACKUP_REMOTE_LOCATIONS_ROOT]: reduce
+  [remoteLocationsRoot]: remoteBackupReducer
 })
 
-function state(existing?: RecursivePartial<RemoteLocationsState>): State {
-  return buildState({[BACKUP_REMOTE_LOCATIONS_ROOT]: existing})
+function state(existing?: RecursivePartial<RemoteLocationsState>): RootState {
+  return buildState({[remoteLocationsRoot]: existing})
 }
 
 it('should return the state unmodified for an unknown action', () => {
@@ -21,14 +26,14 @@ it('should return the state unmodified for an unknown action', () => {
   expect(newState).toEqual(existingState)
 })
 
-describe(Actions.CONFIGURATION_IMPORTED, () => {
+describe(configurationImported.toString(), () => {
 
   describe('adding locations', () => {
 
     it('should add all locations if the existing state is empty', () => {
       const existingState = state()
       const remoteLocation = buildRemoteBackupLocation({internalId: 'some-id'})
-      const action = configurationImported({[BACKUP_REMOTE_LOCATIONS_ROOT]: {'some-id': remoteLocation}})
+      const action = configurationImported({[remoteLocationsRoot]: {'some-id': remoteLocation}})
       const newState = reducer(existingState, action)
       expect(getBackupLocations(newState)).toHaveProperty('some-id', remoteLocation)
     })
@@ -42,7 +47,7 @@ describe(Actions.CONFIGURATION_IMPORTED, () => {
         })
       })
       const action = configurationImported({
-        [BACKUP_REMOTE_LOCATIONS_ROOT]: {
+        [remoteLocationsRoot]: {
           'imported-id': buildRemoteBackupLocation({
             internalId: 'imported-id',
             where: RemoteLocationOptions.custom,
@@ -71,7 +76,7 @@ describe(Actions.CONFIGURATION_IMPORTED, () => {
         })
       })
       const action = configurationImported({
-        [BACKUP_REMOTE_LOCATIONS_ROOT]: {
+        [remoteLocationsRoot]: {
           'imported-id': buildRemoteBackupLocation({
             internalId: 'imported-id',
             where,
@@ -100,7 +105,7 @@ describe(Actions.CONFIGURATION_IMPORTED, () => {
         })
       })
       const action = configurationImported({
-        [BACKUP_REMOTE_LOCATIONS_ROOT]: {
+        [remoteLocationsRoot]: {
           'imported-id': buildRemoteBackupLocation({
             internalId: 'imported-id',
             where,
@@ -144,7 +149,7 @@ describe(Actions.CONFIGURATION_IMPORTED, () => {
         exportTimestamp: 'b',
         importTimestamp: 'b'
       })
-      const action = configurationImported({[BACKUP_REMOTE_LOCATIONS_ROOT]: {'some-id': remoteLocation}})
+      const action = configurationImported({[remoteLocationsRoot]: {'some-id': remoteLocation}})
 
       const newState = reducer(existingState, action)
 
@@ -164,7 +169,7 @@ describe(Actions.CONFIGURATION_IMPORTED, () => {
         where: RemoteLocationOptions.custom,
         url: 'a'
       })
-      const action = configurationImported({[BACKUP_REMOTE_LOCATIONS_ROOT]: {'some-id': remoteLocation}})
+      const action = configurationImported({[remoteLocationsRoot]: {'some-id': remoteLocation}})
 
       const newState = reducer(existingState, action)
 
@@ -190,7 +195,7 @@ describe(Actions.CONFIGURATION_IMPORTED, () => {
         url: 'a',
         externalId: 'a'
       })
-      const action = configurationImported({[BACKUP_REMOTE_LOCATIONS_ROOT]: {'some-id': remoteLocation}})
+      const action = configurationImported({[remoteLocationsRoot]: {'some-id': remoteLocation}})
 
       const newState = reducer(existingState, action)
 
@@ -200,7 +205,7 @@ describe(Actions.CONFIGURATION_IMPORTED, () => {
   })
 })
 
-describe(Actions.BACKUP_REMOVE, () => {
+describe(removeBackup.toString(), () => {
 
   it('should remove the location with the given internal ID', () => {
     const existingState = state({

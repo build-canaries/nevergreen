@@ -1,10 +1,10 @@
 import React from 'react'
 import {InterestingProjects} from './InterestingProjects'
 import {render, setSystemTime} from '../testUtils/testHelpers'
-import {buildFeed, buildProject, buildFeedError} from '../testUtils/builders'
+import {buildFeed, buildFeedError, buildProject} from '../testUtils/builders'
 import {Prognosis, ProjectPrognosis} from '../domain/Project'
-import {FEEDS_ROOT} from '../settings/tracking/FeedsReducer'
-import {MaxProjectsToShow, SETTINGS_ROOT} from '../settings/SettingsReducer'
+import {feedsRoot} from '../settings/tracking/FeedsReducer'
+import {MaxProjectsToShow, settingsRoot} from '../settings/SettingsReducer'
 import {screen} from '@testing-library/react'
 
 const feedId = 'some-tray-id'
@@ -18,10 +18,10 @@ describe('displaying project information', () => {
   ])('should show the identifier, time and label for %s projects', (prognosis) => {
     setSystemTime('2020-01-25T20:23:00Z')
     const state = {
-      [FEEDS_ROOT]: {
+      [feedsRoot]: {
         [feedId]: buildFeed({trayId: feedId, name: 'some-feed-name'})
       },
-      [SETTINGS_ROOT]: {
+      [settingsRoot]: {
         showPrognosis: [prognosis],
         showTrayName: true,
         showBuildTime: true,
@@ -52,10 +52,10 @@ describe('displaying project information', () => {
   it('should show the identifier, even when time and label is unavailable for unknown projects', () => {
     setSystemTime('2020-01-25T20:23:00Z')
     const state = {
-      [FEEDS_ROOT]: {
+      [feedsRoot]: {
         [feedId]: buildFeed({trayId: feedId, name: 'some-feed-name'})
       },
-      [SETTINGS_ROOT]: {
+      [settingsRoot]: {
         showPrognosis: [Prognosis.unknown],
         showTrayName: true,
         showBuildTime: true,
@@ -87,10 +87,10 @@ describe('displaying project information', () => {
   it('should show the identifier and time but not the label for building projects', () => {
     setSystemTime('2020-01-25T20:23:00Z')
     const state = {
-      [FEEDS_ROOT]: {
+      [feedsRoot]: {
         [feedId]: buildFeed({trayId: feedId, name: 'some-feed-name'})
       },
-      [SETTINGS_ROOT]: {
+      [settingsRoot]: {
         showPrognosis: [Prognosis.sickBuilding],
         showTrayName: true,
         showBuildTime: true,
@@ -121,10 +121,10 @@ describe('displaying project information', () => {
   it('should just show the project name if all display settings are not on', () => {
     setSystemTime('2020-01-25T20:23:00Z')
     const state = {
-      [FEEDS_ROOT]: {
+      [feedsRoot]: {
         [feedId]: buildFeed({trayId: feedId, name: 'some-feed-name'})
       },
-      [SETTINGS_ROOT]: {
+      [settingsRoot]: {
         showPrognosis: [Prognosis.sick],
         showTrayName: false,
         showBuildTime: false,
@@ -154,10 +154,10 @@ describe('displaying project information', () => {
 
   it('should add an external link to the project on the CI server', () => {
     const state = {
-      [FEEDS_ROOT]: {
+      [feedsRoot]: {
         [feedId]: buildFeed({trayId: feedId})
       },
-      [SETTINGS_ROOT]: {
+      [settingsRoot]: {
         showPrognosis: [Prognosis.sickBuilding],
       }
     }
@@ -183,10 +183,10 @@ describe('limiting the projects displayed', () => {
 
   it('should not display a summary if the number of projects is less than the max', () => {
     const state = {
-      [FEEDS_ROOT]: {
+      [feedsRoot]: {
         [feedId]: buildFeed({trayId: feedId})
       },
-      [SETTINGS_ROOT]: {
+      [settingsRoot]: {
         maxProjectsToShow: MaxProjectsToShow.small
       }
     }
@@ -202,10 +202,10 @@ describe('limiting the projects displayed', () => {
 
   it('should not display a summary if the number of projects is equal to the max', () => {
     const state = {
-      [FEEDS_ROOT]: {
+      [feedsRoot]: {
         [feedId]: buildFeed({trayId: feedId})
       },
-      [SETTINGS_ROOT]: {
+      [settingsRoot]: {
         maxProjectsToShow: MaxProjectsToShow.small
       }
     }
@@ -225,10 +225,10 @@ describe('limiting the projects displayed', () => {
 
   it('should display a summary if the number of projects is more than the max', () => {
     const state = {
-      [FEEDS_ROOT]: {
+      [feedsRoot]: {
         [feedId]: buildFeed({trayId: feedId})
       },
-      [SETTINGS_ROOT]: {
+      [settingsRoot]: {
         showPrognosis: [Prognosis.sick, Prognosis.sickBuilding, Prognosis.healthy, Prognosis.healthyBuilding, Prognosis.unknown],
         maxProjectsToShow: MaxProjectsToShow.small
       }
@@ -252,10 +252,10 @@ describe('limiting the projects displayed', () => {
 
   it('should display a summary if the number of errors is more than the max', () => {
     const state = {
-      [FEEDS_ROOT]: {
+      [feedsRoot]: {
         [feedId]: buildFeed({trayId: feedId})
       },
-      [SETTINGS_ROOT]: {
+      [settingsRoot]: {
         showPrognosis: [Prognosis.error],
         maxProjectsToShow: MaxProjectsToShow.small
       }
@@ -279,10 +279,10 @@ describe('limiting the projects displayed', () => {
 
   it('should display a summary if the number of errors and projects is more than the max', () => {
     const state = {
-      [FEEDS_ROOT]: {
+      [feedsRoot]: {
         [feedId]: buildFeed({trayId: feedId})
       },
-      [SETTINGS_ROOT]: {
+      [settingsRoot]: {
         showPrognosis: [
           Prognosis.sick,
           Prognosis.sickBuilding,
@@ -315,10 +315,10 @@ describe('limiting the projects displayed', () => {
 
 it('should filter projects based on prognosis', () => {
   const state = {
-    [FEEDS_ROOT]: {
+    [feedsRoot]: {
       [feedId]: buildFeed({trayId: feedId, name: 'some-feed-name'})
     },
-    [SETTINGS_ROOT]: {
+    [settingsRoot]: {
       showPrognosis: [Prognosis.sick],
       showBuildTime: true,
       showBuildLabel: true

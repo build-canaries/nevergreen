@@ -7,18 +7,21 @@ import {useFeedContext} from '../FeedPage'
 import {TRACKING_MODE_OPTIONS, TrackingMode} from '../../../domain/Feed'
 import {DropDown} from '../../../common/forms/DropDown'
 import {feedUpdated} from '../TrackingActionCreators'
-import {useDispatch} from 'react-redux'
 import styles from './manage-projects-page.scss'
+import {useAppDispatch} from '../../../configuration/Hooks'
 
 export function ManageProjectsPage(): ReactElement {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const feed = useFeedContext()
 
   return (
     <Page title="Manage projects" icon={<CheckboxChecked/>}>
       <DropDown options={TRACKING_MODE_OPTIONS}
                 value={feed.trackingMode}
-                onChange={({target}) => dispatch(feedUpdated(feed.trayId, {trackingMode: target.value as TrackingMode}))}
+                onChange={({target}) => dispatch(feedUpdated({
+                  trayId: feed.trayId,
+                  feed: {trackingMode: target.value as TrackingMode}
+                }))}
                 className={styles.trackingMode}>
         Tracking mode
       </DropDown>

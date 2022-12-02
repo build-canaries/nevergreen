@@ -1,6 +1,11 @@
-import {getSelectedProjectsForFeed, reduce, SELECTED_ROOT, SelectedState} from './SelectedReducer'
-import {Actions} from '../../Actions'
-import {feedRemoved, feedUpdated, projectSelected} from './TrackingActionCreators'
+import {
+  getSelectedProjectsForFeed,
+  selectedRoot,
+  projectSelected,
+  reducer as selectedReducer,
+  SelectedState
+} from './SelectedReducer'
+import {feedRemoved, feedUpdated} from './TrackingActionCreators'
 import {testReducer} from '../../testUtils/testHelpers'
 import {buildState} from '../../testUtils/builders'
 import {RecursivePartial} from '../../common/Types'
@@ -8,11 +13,11 @@ import {TrackingMode} from '../../domain/Feed'
 import {configurationImported} from '../backup/BackupActionCreators'
 
 const reducer = testReducer({
-  [SELECTED_ROOT]: reduce
+  [selectedRoot]: selectedReducer
 })
 
 function state(existing?: RecursivePartial<SelectedState>) {
-  return buildState({[SELECTED_ROOT]: existing})
+  return buildState({[selectedRoot]: existing})
 }
 
 it('should return the state unmodified for an unknown action', () => {
@@ -21,7 +26,7 @@ it('should return the state unmodified for an unknown action', () => {
   expect(newState).toEqual(existingState)
 })
 
-describe(Actions.CONFIGURATION_IMPORTED, () => {
+describe(configurationImported.toString(), () => {
 
   it('should set the selected data', () => {
     const existingState = state({oldId: ['foo']})
@@ -39,31 +44,31 @@ describe(Actions.CONFIGURATION_IMPORTED, () => {
   })
 })
 
-describe(Actions.FEED_UPDATED, () => {
+describe(feedUpdated.toString(), () => {
 
   it('should add the feed id with an empty set if tracking mode is updated to selected', () => {
     const existingState = state({})
-    const action = feedUpdated('trayId', {trackingMode: TrackingMode.selected})
+    const action = feedUpdated({trayId: 'trayId', feed: {trackingMode: TrackingMode.selected}})
     const newState = reducer(existingState, action)
     expect(getSelectedProjectsForFeed('trayId')(newState)).toHaveLength(0)
   })
 
   it('should remove the feed id if tracking mode is updated to everything', () => {
     const existingState = state({trayId: []})
-    const action = feedUpdated('trayId', {trackingMode: TrackingMode.everything})
+    const action = feedUpdated({trayId: 'trayId', feed: {trackingMode: TrackingMode.everything}})
     const newState = reducer(existingState, action)
     expect(getSelectedProjectsForFeed('trayId')(newState)).toBeUndefined()
   })
 
   it('should not remove the feed id if tracking mode was not part of the update', () => {
     const existingState = state({trayId: ['some-project-id']})
-    const action = feedUpdated('trayId', {name: 'some-name'})
+    const action = feedUpdated({trayId: 'trayId', feed: {name: 'some-name'}})
     const newState = reducer(existingState, action)
     expect(getSelectedProjectsForFeed('trayId')(newState)).toHaveLength(1)
   })
 })
 
-describe(Actions.FEED_REMOVED, () => {
+describe(feedRemoved.toString(), () => {
 
   it('should remove the tray id', () => {
     const existingState = state({trayId: []})
@@ -73,18 +78,18 @@ describe(Actions.FEED_REMOVED, () => {
   })
 })
 
-describe(Actions.PROJECT_SELECTED, () => {
+describe(projectSelected.toString(), () => {
 
   it('should add the project if selected', () => {
     const existingState = state({trayId: ['a', 'b', 'c']})
-    const action = projectSelected('trayId', 'd', true)
+    const action = projectSelected({trayId: 'trayId', projectId: 'd', selected: true})
     const newState = reducer(existingState, action)
     expect(getSelectedProjectsForFeed('trayId')(newState)).toEqual(['a', 'b', 'c', 'd'])
   })
 
   it('should remove the project if not selected', () => {
     const existingState = state({trayId: ['a', 'b', 'c']})
-    const action = projectSelected('trayId', 'b', false)
+    const action = projectSelected({trayId: 'trayId', projectId: 'b', selected: false})
     const newState = reducer(existingState, action)
     expect(getSelectedProjectsForFeed('trayId')(newState)).toEqual(['a', 'c'])
   })

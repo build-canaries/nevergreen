@@ -4,8 +4,8 @@ import {render, waitForLoadingToFinish} from '../../../testUtils/testHelpers'
 import {buildFeed, buildFeedError, buildProject} from '../../../testUtils/builders'
 import * as Gateway from '../../../gateways/Gateway'
 import {AvailableProjects} from './AvailableProjects'
-import {FEEDS_ROOT} from '../FeedsReducer'
-import {SELECTED_ROOT} from '../SelectedReducer'
+import {feedsRoot as feedsName} from '../FeedsReducer'
+import {selectedRoot as selectedName} from '../SelectedReducer'
 
 beforeEach(() => {
   jest.spyOn(Gateway, 'post').mockResolvedValue([])
@@ -15,10 +15,10 @@ it('should be able to select projects', async () => {
   const feed = buildFeed({trayId: 'trayId'})
   const project = buildProject({trayId: 'trayId', projectId: 'projectId', description: 'some project'})
   const state = {
-    [FEEDS_ROOT]: {
+    [feedsName]: {
       trayId: feed
     },
-    [SELECTED_ROOT]: {
+    [selectedName]: {
       trayId: []
     }
   }
@@ -46,10 +46,10 @@ it('should correctly show and remove errors returned while refreshing', async ()
     ])
   const feed = buildFeed({trayId: 'trayId'})
   const state = {
-    [FEEDS_ROOT]: {
+    [feedsName]: {
       trayId: feed
     },
-    [SELECTED_ROOT]: {
+    [selectedName]: {
       trayId: []
     }
   }
@@ -71,10 +71,10 @@ it('should correctly show and remove errors returned while refreshing', async ()
 it('should show a warning if there are no projects', async () => {
   const feed = buildFeed({trayId: 'trayId'})
   const state = {
-    [FEEDS_ROOT]: {
+    [feedsName]: {
       trayId: feed
     },
-    [SELECTED_ROOT]: {
+    [selectedName]: {
       trayId: []
     }
   }
@@ -93,10 +93,10 @@ it('should show a warning if no projects match the search', async () => {
     description: 'foo'
   })
   const state = {
-    [FEEDS_ROOT]: {
+    [feedsName]: {
       trayId: feed
     },
-    [SELECTED_ROOT]: {
+    [selectedName]: {
       trayId: []
     }
   }
@@ -117,10 +117,10 @@ describe('accessibility', () => {
       projectId: 'projectId'
     })
     const state = {
-      [FEEDS_ROOT]: {
+      [feedsName]: {
         trayId: feed
       },
-      [SELECTED_ROOT]: {
+      [selectedName]: {
         trayId: []
       }
     }

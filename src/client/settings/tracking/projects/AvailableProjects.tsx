@@ -5,9 +5,8 @@ import {Refresh} from './Refresh'
 import {errorMessage, isBlank, notEmpty} from '../../../common/Utils'
 import styles from './available-projects.scss'
 import {SecondaryButton} from '../../../common/forms/Button'
-import {getSelectedProjectsForFeed} from '../SelectedReducer'
-import {useDispatch, useSelector} from 'react-redux'
-import {projectSelected} from '../TrackingActionCreators'
+import {getSelectedProjectsForFeed, projectSelected} from '../SelectedReducer'
+import {useSelector} from 'react-redux'
 import {Loading} from '../../../common/Loading'
 import {Feed} from '../../../domain/Feed'
 import {matchSorter} from 'match-sorter'
@@ -15,13 +14,14 @@ import {CheckboxChecked} from '../../../common/icons/CheckboxChecked'
 import {CheckboxUnchecked} from '../../../common/icons/CheckboxUnchecked'
 import {useProjects} from './ProjectsHook'
 import {Checkbox} from '../../../common/forms/Checkbox'
+import {useAppDispatch} from '../../../configuration/Hooks'
 
 interface AvailableProjectsProps {
   readonly feed: Feed;
 }
 
 export function AvailableProjects({feed}: AvailableProjectsProps): ReactElement {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const selected = useSelector(getSelectedProjectsForFeed(feed.trayId))
 
   const [search, setSearch] = useState<string>('')
@@ -40,11 +40,19 @@ export function AvailableProjects({feed}: AvailableProjectsProps): ReactElement 
   const controlsDisabled = isFetching || !hasProjects || isError
 
   const includeAll = () => {
-    filteredProjects.forEach((project) => dispatch(projectSelected(feed.trayId, project.projectId, true)))
+    filteredProjects.forEach((project) => dispatch(projectSelected({
+      trayId: feed.trayId,
+      projectId: project.projectId,
+      selected: true
+    })))
   }
 
   const excludeAll = () => {
-    filteredProjects.forEach((project) => dispatch(projectSelected(feed.trayId, project.projectId, false)))
+    filteredProjects.forEach((project) => dispatch(projectSelected({
+      trayId: feed.trayId,
+      projectId: project.projectId,
+      selected: false
+    })))
   }
 
   const controls = (
@@ -88,7 +96,11 @@ export function AvailableProjects({feed}: AvailableProjectsProps): ReactElement 
             <li key={project.projectId}>
               <Checkbox className={styles.projectCheckbox}
                         checked={isSelected}
-                        onToggle={(select) => dispatch(projectSelected(feed.trayId, project.projectId, select))}>
+                        onToggle={(selected) => dispatch(projectSelected({
+                          trayId: feed.trayId,
+                          projectId: project.projectId,
+                          selected
+                        }))}>
                 {project.description}
               </Checkbox>
             </li>

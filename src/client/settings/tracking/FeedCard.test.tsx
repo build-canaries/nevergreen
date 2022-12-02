@@ -3,8 +3,8 @@ import {render} from '../../testUtils/testHelpers'
 import {buildFeed} from '../../testUtils/builders'
 import {screen} from '@testing-library/react'
 import {FeedCard} from './FeedCard'
-import {FEEDS_ROOT} from './FeedsReducer'
-import {SELECTED_ROOT} from './SelectedReducer'
+import {feedsRoot as feedsName} from './FeedsReducer'
+import {selectedRoot as selectedName} from './SelectedReducer'
 import {TrackingMode} from '../../domain/Feed'
 
 it('should display some feed details', () => {
@@ -14,8 +14,8 @@ it('should display some feed details', () => {
     trackingMode: TrackingMode.selected
   })
   const state = {
-    [FEEDS_ROOT]: {trayId: feed},
-    [SELECTED_ROOT]: {trayId: ['1']}
+    [feedsName]: {trayId: feed},
+    [selectedName]: {trayId: ['1']}
   }
   render(<FeedCard feed={feed}/>, {state})
   expect(screen.getByText(/http:\/\/some-url/)).toBeInTheDocument()

@@ -1,45 +1,34 @@
-import {Actions} from '../../Actions'
-import get from 'lodash/get'
+import type {RootState} from '../../configuration/ReduxStore'
 import isNil from 'lodash/isNil'
 import merge from 'lodash/merge'
-import {createReducer, createSelector} from '@reduxjs/toolkit'
-import {State} from '../../Reducer'
-import {
-  ActionAddBackup,
-  ActionBackupExported,
-  ActionBackupImported,
-  ActionConfigurationImported,
-  ActionRemoveBackup,
-  ActionSetAutomaticExport
-} from './BackupActionCreators'
+import {createSelector, createSlice, PayloadAction} from '@reduxjs/toolkit'
+import {configurationImported} from './BackupActionCreators'
 import {RemoteLocationOptions} from './RemoteLocationOptions'
+import {now} from '../../common/DateTime'
 
 export interface RemoteLocation {
   readonly internalId: string;
   readonly where: RemoteLocationOptions;
   readonly url: string;
-  readonly exportTimestamp: string;
-  readonly importTimestamp: string;
-  readonly automaticallyExport: boolean;
-  readonly externalId: string;
-  readonly encryptedAccessToken: string;
-  readonly description: string;
+  readonly exportTimestamp?: string;
+  readonly importTimestamp?: string;
+  readonly automaticallyExport?: boolean;
+  readonly externalId?: string;
+  readonly encryptedAccessToken?: string;
+  readonly description?: string;
 }
 
 export type RemoteLocationsState = {
   [id: string]: RemoteLocation;
 }
 
-export const BACKUP_REMOTE_LOCATIONS_ROOT = 'backupRemoteLocations'
+export const remoteLocationsRoot = 'backupRemoteLocations'
 
-const defaultState: RemoteLocationsState = {}
+const initialState: RemoteLocationsState = {}
 
-function handleImportedConfiguration(draft: RemoteLocationsState, action: ActionConfigurationImported) {
-  const importedState = get(action.configuration, [BACKUP_REMOTE_LOCATIONS_ROOT], defaultState)
+function handleImportedConfiguration(draft: RemoteLocationsState, action: ReturnType<typeof configurationImported>) {
+  const importedState = action.payload.backupRemoteLocations ?? {}
 
-  // TS thinks importedLocation can be undefined because Configuration is a RecursivePartial<State>
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   Object.values(importedState).forEach((importedLocation: RemoteLocation) => {
     const internalId = importedLocation.internalId
 
@@ -61,31 +50,98 @@ function handleImportedConfiguration(draft: RemoteLocationsState, action: Action
   })
 }
 
-export const reduce = createReducer<RemoteLocationsState>(defaultState, (builder) => {
-  builder
-    .addCase(Actions.CONFIGURATION_IMPORTED, handleImportedConfiguration)
-    .addCase(Actions.ADD_BACKUP, (draft, action: ActionAddBackup) => {
-      draft[action.data.internalId] = action.data
-    })
-    .addCase(Actions.BACKUP_SET_AUTOMATIC_EXPORT, (draft, action: ActionSetAutomaticExport) => {
-      draft[action.internalId].automaticallyExport = action.value
-    })
-    .addCase(Actions.BACKUP_EXPORTED, (draft, action: ActionBackupExported) => {
-      draft[action.internalId].externalId = action.externalId
-      draft[action.internalId].exportTimestamp = action.timestamp
-    })
-    .addCase(Actions.BACKUP_IMPORTED, (draft, action: ActionBackupImported) => {
-      draft[action.internalId].importTimestamp = action.timestamp
-    })
-    .addCase(Actions.BACKUP_REMOVE, (draft, action: ActionRemoveBackup) => {
-      delete draft[action.internalId]
-    })
-})
-
-export function getBackupLocations(state: State): RemoteLocationsState {
-  return get(state, [BACKUP_REMOTE_LOCATIONS_ROOT])
+interface AddBackup {
+  readonly internalId: string;
+  readonly where: RemoteLocationOptions;
+  readonly url: string;
+  readonly description?: string;
+  readonly encryptedAccessToken?: string;
+  readonly externalId?: string;
 }
 
-export function getBackupLocation(internalId: string): (state: State) => RemoteLocation | undefined {
+const slice = createSlice({
+  name: remoteLocationsRoot,
+  initialState,
+  reducers: {
+    addBackup: {
+      reducer: (draft, action: PayloadAction<RemoteLocation>) => {
+        draft[action.payload.internalId] = action.payload
+      },
+      prepare: ({
+                  internalId,
+                  where,
+                  url,
+                  externalId = '',
+                  description = '',
+                  encryptedAccessToken = ''
+                }: AddBackup) => {
+        return {
+          payload: {
+            where,
+            internalId,
+            url,
+            description,
+            encryptedAccessToken,
+            automaticallyExport: false,
+            externalId,
+            exportTimestamp: '',
+            importTimestamp: ''
+          }
+        }
+      }
+    },
+    setAutomaticExport: (draft, action: PayloadAction<{ internalId: string, value: boolean }>) => {
+      draft[action.payload.internalId].automaticallyExport = action.payload.value
+    },
+    backupExported: {
+      reducer: (draft, action: PayloadAction<{ internalId: string, externalId: string, timestamp: string }>) => {
+        draft[action.payload.internalId].externalId = action.payload.externalId
+        draft[action.payload.internalId].exportTimestamp = action.payload.timestamp
+      },
+      prepare: (internalId: string, externalId: string) => {
+        return {
+          payload: {
+            internalId,
+            externalId,
+            timestamp: now()
+          }
+        }
+      }
+    },
+    backupImported: {
+      reducer: (draft, action: PayloadAction<{ internalId: string, timestamp: string }>) => {
+        draft[action.payload.internalId].importTimestamp = action.payload.timestamp
+      }, prepare: (internalId: string) => {
+        return {
+          payload: {
+            internalId,
+            timestamp: now()
+          }
+        }
+      }
+    },
+    removeBackup: (draft, action: PayloadAction<string>) => {
+      delete draft[action.payload]
+    }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(configurationImported, handleImportedConfiguration)
+  }
+})
+
+export const {reducer} = slice
+export const {
+  addBackup,
+  setAutomaticExport,
+  backupImported,
+  backupExported,
+  removeBackup
+} = slice.actions
+
+export function getBackupLocations(state: RootState): RemoteLocationsState {
+  return state.backupRemoteLocations
+}
+
+export function getBackupLocation(internalId: string): (state: RootState) => RemoteLocation | undefined {
   return createSelector(getBackupLocations, (locations) => locations[internalId])
 }

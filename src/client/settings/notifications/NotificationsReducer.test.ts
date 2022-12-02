@@ -1,20 +1,17 @@
 import {
-  getNotifications,
+  addNotification,
   getAllowAudioNotifications,
   getAllowSystemNotifications,
+  getNotifications,
   getToggleVersionCheck,
-  NOTIFICATIONS_ROOT,
+  notificationsRoot,
   NotificationsState,
-  reduce,
-} from './NotificationsReducer'
-import {Actions} from '../../Actions'
-import {
-  addNotification,
+  reducer as notificationsReducer,
   removeNotification,
   setAllowAudioNotifications,
   setAllowSystemNotifications,
-  toggleVersionCheck
-} from './NotificationsActionCreators'
+  toggleVersionCheck,
+} from './NotificationsReducer'
 import {testReducer} from '../../testUtils/testHelpers'
 import {buildState} from '../../testUtils/builders'
 import {RecursivePartial} from '../../common/Types'
@@ -22,11 +19,11 @@ import {configurationImported} from '../backup/BackupActionCreators'
 import {Prognosis} from '../../domain/Project'
 
 const reducer = testReducer({
-  [NOTIFICATIONS_ROOT]: reduce
+  [notificationsRoot]: notificationsReducer
 })
 
 function state(existing?: RecursivePartial<NotificationsState>) {
-  return buildState({[NOTIFICATIONS_ROOT]: existing})
+  return buildState({[notificationsRoot]: existing})
 }
 
 it('should return the state unmodified for an unknown action', () => {
@@ -35,24 +32,42 @@ it('should return the state unmodified for an unknown action', () => {
   expect(newState).toEqual(existingState)
 })
 
-describe(Actions.CONFIGURATION_IMPORTED, () => {
+describe(configurationImported.toString(), () => {
 
   it('should merge broken build sounds enabled', () => {
     const existingState = state({allowAudioNotifications: false})
-    const action = configurationImported({[NOTIFICATIONS_ROOT]: {allowAudioNotifications: true}})
+    const action = configurationImported({[notificationsRoot]: {allowAudioNotifications: true}})
     const newState = reducer(existingState, action)
     expect(getAllowAudioNotifications(newState)).toBeTruthy()
   })
 
   it('should not reset show system notification when imported state does not contain it', () => {
     const existingState = state({allowSystemNotifications: true})
-    const action = configurationImported({[NOTIFICATIONS_ROOT]: {}})
+    const action = configurationImported({[notificationsRoot]: {}})
     const newState = reducer(existingState, action)
     expect(getAllowSystemNotifications(newState)).toBeTruthy()
   })
+
+  it('should merge notifications', () => {
+    const existingNotification = {systemNotification: false, sfx: 'sick-sfx'}
+    const importedNotification = {systemNotification: true, sfx: 'healthy-sfx'}
+    const existingState = state({notifications: {[Prognosis.sick]: existingNotification}})
+    const action = configurationImported({
+      [notificationsRoot]: {
+        notifications: {
+          [Prognosis.healthy]: importedNotification
+        }
+      }
+    })
+    const newState = reducer(existingState, action)
+    expect(getNotifications(newState)).toEqual({
+      [Prognosis.sick]: existingNotification,
+      [Prognosis.healthy]: importedNotification
+    })
+  })
 })
 
-describe(Actions.TOGGLE_VERSION_CHECK, () => {
+describe(toggleVersionCheck.toString(), () => {
 
   it('should toggle the version check property', () => {
     const existingState = state({enableNewVersionCheck: true})
@@ -62,7 +77,7 @@ describe(Actions.TOGGLE_VERSION_CHECK, () => {
   })
 })
 
-describe(Actions.ALLOW_AUDIO_NOTIFICATIONS, () => {
+describe(setAllowAudioNotifications.toString(), () => {
 
   it('should set the broken build sounds enabled property', () => {
     const existingState = state({allowAudioNotifications: false})
@@ -72,7 +87,7 @@ describe(Actions.ALLOW_AUDIO_NOTIFICATIONS, () => {
   })
 })
 
-describe(Actions.ALLOW_SYSTEM_NOTIFICATIONS, () => {
+describe(setAllowSystemNotifications.toString(), () => {
 
   it('should set the show browser notifications property', () => {
     const existingState = state({allowSystemNotifications: false})
@@ -82,11 +97,11 @@ describe(Actions.ALLOW_SYSTEM_NOTIFICATIONS, () => {
   })
 })
 
-describe(Actions.ADD_NOTIFICATION, () => {
+describe(addNotification.toString(), () => {
 
   it('should add the notification', () => {
     const existingState = state({notifications: {}})
-    const action = addNotification(Prognosis.sick, true, 'some-sfx')
+    const action = addNotification({prognosis: Prognosis.sick, systemNotification: true, sfx: 'some-sfx'})
     const newState = reducer(existingState, action)
     expect(getNotifications(newState)).toEqual({
       [Prognosis.sick]: {systemNotification: true, sfx: 'some-sfx'}
@@ -94,7 +109,7 @@ describe(Actions.ADD_NOTIFICATION, () => {
   })
 })
 
-describe(Actions.REMOVE_NOTIFICATION, () => {
+describe(removeNotification.toString(), () => {
 
   it('should remove the notification', () => {
     const existingState = state({

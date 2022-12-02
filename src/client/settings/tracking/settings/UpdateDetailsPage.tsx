@@ -1,7 +1,6 @@
 import React, {ReactElement, useState} from 'react'
 import {Page} from '../../../common/Page'
 import {authTypeDisplay, CI_OPTIONS, generateRandomName} from '../../../domain/Feed'
-import {useDispatch} from 'react-redux'
 import {InputButton} from '../../../common/forms/Button'
 import {Input} from '../../../common/forms/Input'
 import styles from './update-details-page.scss'
@@ -14,10 +13,11 @@ import {FeedLogo} from '../FeedLogo'
 import {Cog} from '../../../common/icons/Cog'
 import {useFeedContext} from '../FeedPage'
 import {URL} from '../../../common/URL'
+import {useAppDispatch} from '../../../configuration/Hooks'
 
 export function UpdateDetailsPage(): ReactElement {
   const feed = useFeedContext()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const [name, setName] = useState(feed.name)
 
   const connectionDetails = [
@@ -28,7 +28,7 @@ export function UpdateDetailsPage(): ReactElement {
   const randomNameButton = (
     <InputButton icon={<Dice/>}
                  onClick={() => setName(generateRandomName())}
-                 onBlur={() => dispatch(feedUpdated(feed.trayId, {name}))}>
+                 onBlur={() => dispatch(feedUpdated({trayId: feed.trayId, feed: {name}}))}>
       randomise name
     </InputButton>
   )
@@ -47,7 +47,7 @@ export function UpdateDetailsPage(): ReactElement {
         <Input className={styles.feedSettingsName}
                value={name}
                onChange={({target}) => setName(target.value)}
-               onBlur={() => dispatch(feedUpdated(feed.trayId, {name}))}
+               onBlur={() => dispatch(feedUpdated({trayId: feed.trayId, feed: {name}}))}
                placeholder="e.g. project or team name"
                button={randomNameButton}>
           Name
@@ -55,7 +55,10 @@ export function UpdateDetailsPage(): ReactElement {
         <DropDown className={styles.serverType}
                   options={CI_OPTIONS}
                   value={feed.serverType}
-                  onChange={({target}) => dispatch(feedUpdated(feed.trayId, {serverType: target.value}))}>
+                  onChange={({target}) => dispatch(feedUpdated({
+                    trayId: feed.trayId,
+                    feed: {serverType: target.value}
+                  }))}>
           Server type
         </DropDown>
       </section>

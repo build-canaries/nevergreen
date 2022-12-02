@@ -2,12 +2,12 @@ import React from 'react'
 import {render} from '../../testUtils/testHelpers'
 import {screen} from '@testing-library/react'
 import {NotificationSettings} from './NotificationSettings'
-import {getAllowAudioNotifications, getToggleVersionCheck, NOTIFICATIONS_ROOT} from './NotificationsReducer'
+import {getAllowAudioNotifications, getToggleVersionCheck, notificationsRoot} from './NotificationsReducer'
 import {Prognosis} from '../../domain/Project'
 
 it('should allow for turning on and off checking for new versions', async () => {
   const state = {
-    [NOTIFICATIONS_ROOT]: {
+    [notificationsRoot]: {
       enableNewVersionCheck: false
     }
   }
@@ -20,7 +20,7 @@ it('should allow for turning on and off checking for new versions', async () => 
 
 it('should allow turning on and off play audio notifications', async () => {
   const state = {
-    [NOTIFICATIONS_ROOT]: {
+    [notificationsRoot]: {
       allowAudioNotifications: false
     }
   }
@@ -33,7 +33,7 @@ it('should allow turning on and off play audio notifications', async () => {
 
 it('should display a message if no notifications have been added', () => {
   const state = {
-    [NOTIFICATIONS_ROOT]: {
+    [notificationsRoot]: {
       notifications: {}
     }
   }
@@ -43,7 +43,7 @@ it('should display a message if no notifications have been added', () => {
 
 it('should display added notifications', () => {
   const state = {
-    [NOTIFICATIONS_ROOT]: {
+    [notificationsRoot]: {
       notifications: {
         [Prognosis.sick]: {systemNotification: true, sfx: '/some-sfx.mp3'}
       }

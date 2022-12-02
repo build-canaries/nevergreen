@@ -1,9 +1,9 @@
 import {Configuration, DataSource, toConfiguration, toExportableConfigurationJson} from './Configuration'
 import {Either, isLeft, isRight} from 'fp-ts/Either'
 import {buildRemoteBackupLocation, buildState} from '../testUtils/builders'
-import {BACKUP_REMOTE_LOCATIONS_ROOT} from '../settings/backup/RemoteLocationsReducer'
-import {FEEDS_ROOT} from '../settings/tracking/FeedsReducer'
-import {NOTIFICATIONS_ROOT} from '../settings/notifications/NotificationsReducer'
+import {remoteLocationsRoot} from '../settings/backup/RemoteLocationsReducer'
+import {feedsRoot} from '../settings/tracking/FeedsReducer'
+import {notificationsRoot} from '../settings/notifications/NotificationsReducer'
 import {RemoteLocationOptions} from '../settings/backup/RemoteLocationOptions'
 
 function expectErrors(result: Either<ReadonlyArray<string>, Configuration>, errors: ReadonlyArray<string>): void {
@@ -16,11 +16,11 @@ function expectErrors(result: Either<ReadonlyArray<string>, Configuration>, erro
 
 describe('toConfiguration', () => {
 
-  describe(FEEDS_ROOT, () => {
+  describe(feedsRoot, () => {
 
     it('parses valid to configuration', () => {
       const data: Configuration = {
-        [FEEDS_ROOT]: {
+        [feedsRoot]: {
           'some-tray-id': {
             url: 'some-url',
             trayId: 'some-tray-id'
@@ -37,7 +37,7 @@ describe('toConfiguration', () => {
 
     it('rejects missing ID, as this is required to match projects to the owning feed', () => {
       const data = {
-        [FEEDS_ROOT]: {
+        [feedsRoot]: {
           'some-tray-id': {
             url: 'some-url'
           }
@@ -49,7 +49,7 @@ describe('toConfiguration', () => {
 
     it('rejects missing URL, as this is required to actually contact the CI server', () => {
       const data = {
-        [FEEDS_ROOT]: {
+        [feedsRoot]: {
           'some-tray-id': {
             trayId: 'some-id'
           }
@@ -61,7 +61,7 @@ describe('toConfiguration', () => {
 
     it('rejects if the key does not match the ID', () => {
       const data = {
-        [FEEDS_ROOT]: {
+        [feedsRoot]: {
           'some-tray-id': {
             trayId: 'another-id',
             url: 'some-url'
@@ -73,11 +73,11 @@ describe('toConfiguration', () => {
     })
   })
 
-  describe(BACKUP_REMOTE_LOCATIONS_ROOT, () => {
+  describe(remoteLocationsRoot, () => {
 
     it('parses valid to configuration', () => {
       const data: Configuration = {
-        [BACKUP_REMOTE_LOCATIONS_ROOT]: {
+        [remoteLocationsRoot]: {
           'some-id': {
             internalId: 'some-id',
             where: RemoteLocationOptions.custom,
@@ -95,7 +95,7 @@ describe('toConfiguration', () => {
 
     it('rejects a missing internal ID, as this is required to actually do anything', () => {
       const data = {
-        [BACKUP_REMOTE_LOCATIONS_ROOT]: {
+        [remoteLocationsRoot]: {
           'some-internal-id': {
             where: 'custom',
             url: 'some-url'
@@ -108,7 +108,7 @@ describe('toConfiguration', () => {
 
     it('rejects a missing URL, as this is required to actually do anything', () => {
       const data = {
-        [BACKUP_REMOTE_LOCATIONS_ROOT]: {
+        [remoteLocationsRoot]: {
           'some-internal-id': {
             internalId: 'some-internal-id',
             where: 'custom'
@@ -121,7 +121,7 @@ describe('toConfiguration', () => {
 
     it('rejects a missing where, as this is required to actually do anything', () => {
       const data = {
-        [BACKUP_REMOTE_LOCATIONS_ROOT]: {
+        [remoteLocationsRoot]: {
           'some-internal-id': {
             internalId: 'some-internal-id',
             url: 'some-url'
@@ -134,7 +134,7 @@ describe('toConfiguration', () => {
 
     it('rejects if the key does not match the internal ID', () => {
       const data = {
-        [BACKUP_REMOTE_LOCATIONS_ROOT]: {
+        [remoteLocationsRoot]: {
           'some-id': {
             internalId: 'another-id',
             where: 'custom',
@@ -157,7 +157,7 @@ describe('toConfiguration', () => {
   })
 
   it('keeps known properties', () => {
-    const data = {[FEEDS_ROOT]: {}}
+    const data = {[feedsRoot]: {}}
     const result = toConfiguration(data, DataSource.browserStorage)
     expect(isRight(result)).toBeTruthy()
     if (isRight(result)) {
@@ -166,7 +166,7 @@ describe('toConfiguration', () => {
   })
 
   it('removes the show system notifications property when a user import, as this property is no longer exported (but this import could be from an old version)', () => {
-    const data = {[NOTIFICATIONS_ROOT]: {allowSystemNotifications: true}}
+    const data = {[notificationsRoot]: {allowSystemNotifications: true}}
     const result = toConfiguration(data, DataSource.userImport)
     expect(isRight(result)).toBeTruthy()
     if (isRight(result)) {
@@ -175,7 +175,7 @@ describe('toConfiguration', () => {
   })
 
   it('keeps the show system notifications property when loading from browser storage', () => {
-    const data = {[NOTIFICATIONS_ROOT]: {allowSystemNotifications: true}}
+    const data = {[notificationsRoot]: {allowSystemNotifications: true}}
     const result = toConfiguration(data, DataSource.browserStorage)
     expect(isRight(result)).toBeTruthy()
     if (isRight(result)) {
@@ -188,7 +188,7 @@ describe('toExportableConfigurationJson', () => {
 
   it('removes timestamps from remote backups as they should be the last time those action were done on this instance of Nevergreen', () => {
     const state = buildState({
-      [BACKUP_REMOTE_LOCATIONS_ROOT]: {
+      [remoteLocationsRoot]: {
         internalId: buildRemoteBackupLocation({
           exportTimestamp: 'some-export-timestamp',
           importTimestamp: 'some-import-timestamp'
@@ -202,7 +202,7 @@ describe('toExportableConfigurationJson', () => {
 
   it('removes system notifications preference because we treat them as personal settings', () => {
     const state = buildState({
-      [NOTIFICATIONS_ROOT]: {
+      [notificationsRoot]: {
         allowSystemNotifications: true
       }
     })

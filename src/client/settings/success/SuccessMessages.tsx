@@ -2,15 +2,15 @@ import React, {ReactElement, ReactNode} from 'react'
 import {RemoveButton} from './RemoveButton'
 import {isValidHttpUrl} from '../../domain/Url'
 import {SuccessMessage} from '../../common/SuccessMessage'
-import {useDispatch, useSelector} from 'react-redux'
-import {getSuccessMessages} from './SuccessReducer'
-import {removeMessage} from './SuccessActionCreators'
+import {useSelector} from 'react-redux'
+import {getSuccessMessages, removeMessage} from './SuccessReducer'
 import styles from './success-messages.scss'
 import {AddButton} from '../../common/LinkButton'
 import {WarningMessages} from '../../common/Messages'
 import {notEmpty} from '../../common/Utils'
 import {Page} from '../../common/Page'
 import {Image} from '../../common/icons/Image'
+import {useAppDispatch} from '../../configuration/Hooks'
 
 export const NO_MESSAGES_WARNING = 'No success messages added, a blank screen will be shown on the Monitor page when no interesting projects are displayed'
 
@@ -25,7 +25,7 @@ function AspectRatio({children}: { children: ReactNode }): ReactElement {
 }
 
 export function SuccessMessages(): ReactElement {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const messages = useSelector(getSuccessMessages)
 
   const noMessagesWarning = notEmpty(messages)

@@ -2,14 +2,19 @@ import React, {ReactElement} from 'react'
 import {NotificationsSystem} from './NotificationsSystem'
 import {Page} from '../../common/Page'
 import {Checkbox} from '../../common/forms/Checkbox'
-import {setAllowAudioNotifications, toggleVersionCheck} from './NotificationsActionCreators'
-import {useDispatch, useSelector} from 'react-redux'
-import {getAllowAudioNotifications, getToggleVersionCheck} from './NotificationsReducer'
+import {useSelector} from 'react-redux'
+import {
+  getAllowAudioNotifications,
+  getToggleVersionCheck,
+  setAllowAudioNotifications,
+  toggleVersionCheck
+} from './NotificationsReducer'
 import {Bell} from '../../common/icons/Bell'
 import {Notifications} from './Notifications'
+import {useAppDispatch} from '../../configuration/Hooks'
 
 export function NotificationSettings(): ReactElement {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const allowAudioNotifications = useSelector(getAllowAudioNotifications)
   const toggleVersionCheckFlag = useSelector(getToggleVersionCheck)
 

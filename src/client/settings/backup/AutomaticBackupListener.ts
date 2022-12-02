@@ -1,17 +1,16 @@
 import isNil from 'lodash/isNil'
 import debounce from 'lodash/debounce'
 import {Dispatch} from '@reduxjs/toolkit'
-import {State} from '../../Reducer'
+import type {RootState} from '../../configuration/ReduxStore'
 import {exportConfiguration} from '../../gateways/BackupGateway'
-import {backupExported} from './BackupActionCreators'
 import * as logger from '../../common/Logger'
-import {BACKUP_REMOTE_LOCATIONS_ROOT} from './RemoteLocationsReducer'
+import {backupExported, remoteLocationsRoot} from './RemoteLocationsReducer'
 import {toExportableConfigurationJson} from '../../configuration/Configuration'
 
 const thirtySeconds = 1000 * 30
 
 // exported for testing
-export async function backupRaw(previousState: State | undefined, currentState: State, dispatch: Dispatch): Promise<void> {
+export async function backupRaw(previousState: RootState | undefined, currentState: RootState, dispatch: Dispatch): Promise<void> {
   if (isNil(previousState)) {
     return
   }
@@ -20,7 +19,7 @@ export async function backupRaw(previousState: State | undefined, currentState: 
   const currentExport = toExportableConfigurationJson(currentState)
 
   if (previouslyExported !== currentExport) {
-    const remoteBackups = currentState[BACKUP_REMOTE_LOCATIONS_ROOT]
+    const remoteBackups = currentState[remoteLocationsRoot]
 
     await Promise.all(
       Object.keys(remoteBackups).map(async (internalId) => {

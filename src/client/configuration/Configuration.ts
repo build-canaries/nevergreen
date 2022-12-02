@@ -1,24 +1,24 @@
+import type {RootState} from './ReduxStore'
+import type {UntrustedData} from './LocalRepository'
+import type {Errors} from 'io-ts'
 import * as t from 'io-ts'
-import {Errors} from 'io-ts'
 import cloneDeep from 'lodash/cloneDeep'
 import isEmpty from 'lodash/isEmpty'
 import isString from 'lodash/isString'
 import last from 'lodash/last'
 import unset from 'lodash/unset'
-import {State} from '../Reducer'
 import {fromJson, toJson} from '../common/Json'
 import {migrate} from './Migrate'
-import {UntrustedData} from './LocalRepository'
 import {Either, flatten, left, map, mapLeft, right} from 'fp-ts/Either'
 import {pipe} from 'fp-ts/function'
-import {BACKUP_REMOTE_LOCATIONS_ROOT} from '../settings/backup/RemoteLocationsReducer'
-import {MaxProjectsToShow, SETTINGS_ROOT} from '../settings/SettingsReducer'
-import {SELECTED_ROOT} from '../settings/tracking/SelectedReducer'
-import {SUCCESS_ROOT} from '../settings/success/SuccessReducer'
-import {FEEDS_ROOT} from '../settings/tracking/FeedsReducer'
-import {APPLIED_MIGRATIONS_ROOT} from './MigrationsReducer'
+import {remoteLocationsRoot} from '../settings/backup/RemoteLocationsReducer'
+import {MaxProjectsToShow, settingsRoot} from '../settings/SettingsReducer'
+import {selectedRoot} from '../settings/tracking/SelectedReducer'
+import {successRoot} from '../settings/success/SuccessReducer'
+import {feedsRoot} from '../settings/tracking/FeedsReducer'
+import {migrationsRoot} from './MigrationsReducer'
 import {errorMessage} from '../common/Utils'
-import {NOTIFICATIONS_ROOT} from '../settings/notifications/NotificationsReducer'
+import {notificationsRoot} from '../settings/notifications/NotificationsReducer'
 import {Prognosis} from '../domain/Project'
 import {RemoteLocationOptions} from '../settings/backup/RemoteLocationOptions'
 import {AuthTypes, TrackingMode} from '../domain/Feed'
@@ -34,7 +34,7 @@ const NotificationDetails = t.exact(t.partial({
 }))
 
 const Configuration = t.exact(t.partial({
-  [SETTINGS_ROOT]: t.exact(t.partial({
+  [settingsRoot]: t.exact(t.partial({
     showTrayName: t.boolean,
     showBuildTime: t.boolean,
     refreshTime: t.number,
@@ -60,10 +60,10 @@ const Configuration = t.exact(t.partial({
       prognosis: null,
       timestamp: null
     }),
-  }), SETTINGS_ROOT),
-  [SELECTED_ROOT]: t.record(t.string, t.readonlyArray(t.string), SELECTED_ROOT),
-  [SUCCESS_ROOT]: t.readonlyArray(t.string, SUCCESS_ROOT),
-  [FEEDS_ROOT]: t.record(t.string, t.exact(t.intersection([
+  }), settingsRoot),
+  [selectedRoot]: t.record(t.string, t.readonlyArray(t.string), selectedRoot),
+  [successRoot]: t.readonlyArray(t.string, successRoot),
+  [feedsRoot]: t.record(t.string, t.exact(t.intersection([
     t.type({
       trayId: t.string,
       url: t.string
@@ -85,12 +85,12 @@ const Configuration = t.exact(t.partial({
       }),
       username: t.string
     })
-  ])), FEEDS_ROOT),
-  [APPLIED_MIGRATIONS_ROOT]: t.readonlyArray(t.exact(t.type({
+  ])), feedsRoot),
+  [migrationsRoot]: t.readonlyArray(t.exact(t.type({
     id: t.string,
     timestamp: t.string
-  })), APPLIED_MIGRATIONS_ROOT),
-  [BACKUP_REMOTE_LOCATIONS_ROOT]: t.record(t.string, t.exact(t.intersection([
+  })), migrationsRoot),
+  [remoteLocationsRoot]: t.record(t.string, t.exact(t.intersection([
     t.type({
       internalId: t.string,
       url: t.string,
@@ -108,8 +108,8 @@ const Configuration = t.exact(t.partial({
       encryptedAccessToken: t.string,
       description: t.string
     })
-  ])), BACKUP_REMOTE_LOCATIONS_ROOT),
-  [NOTIFICATIONS_ROOT]: t.exact(t.partial({
+  ])), remoteLocationsRoot),
+  [notificationsRoot]: t.exact(t.partial({
     allowAudioNotifications: t.boolean,
     allowSystemNotifications: t.boolean,
     enableNewVersionCheck: t.boolean,
@@ -121,7 +121,7 @@ const Configuration = t.exact(t.partial({
       [Prognosis.unknown]: NotificationDetails,
       [Prognosis.healthy]: NotificationDetails
     }))
-  }), NOTIFICATIONS_ROOT)
+  }), notificationsRoot)
 }))
 
 export type Configuration = t.TypeOf<typeof Configuration>
@@ -132,7 +132,7 @@ function validationErrorMessage(actual: unknown, path: string, expected: string)
 
 function additionalFiltering(data: UntrustedData, dataSource: DataSource): void {
   if (dataSource === DataSource.userImport) {
-    unset(data, [NOTIFICATIONS_ROOT, 'allowSystemNotifications'])
+    unset(data, [notificationsRoot, 'allowSystemNotifications'])
   }
 }
 
@@ -147,7 +147,7 @@ function toErrorPath(errors: Errors): ReadonlyArray<string> {
 function validateFeedIdsMatchForFeeds(configuration: Configuration, errors: string[]) {
   Object.entries(configuration.trays || {}).forEach(([key, feed]) => {
     if (feed && feed.trayId !== key) {
-      errors.push(validationErrorMessage(feed.trayId, `/${FEEDS_ROOT}/${key}/trayId`, toJson(key)))
+      errors.push(validationErrorMessage(feed.trayId, `/${feedsRoot}/${key}/trayId`, toJson(key)))
     }
   })
 }
@@ -155,7 +155,7 @@ function validateFeedIdsMatchForFeeds(configuration: Configuration, errors: stri
 function validateRemoteLocationIdsMatch(configuration: Configuration, errors: string[]) {
   Object.entries(configuration.backupRemoteLocations || {}).forEach(([key, location]) => {
     if (location && location.internalId !== key) {
-      errors.push(validationErrorMessage(location.internalId, `/${BACKUP_REMOTE_LOCATIONS_ROOT}/${key}/internalId`, toJson(key)))
+      errors.push(validationErrorMessage(location.internalId, `/${remoteLocationsRoot}/${key}/internalId`, toJson(key)))
     }
   })
 }
@@ -193,10 +193,10 @@ export function toConfiguration(untrustedData: string | Readonly<UntrustedData>,
   }
 }
 
-export function toExportableConfigurationJson(state: State): string {
+export function toExportableConfigurationJson(state: RootState): string {
   const cloned = cloneDeep(state)
 
-  const remoteBackups = cloned[BACKUP_REMOTE_LOCATIONS_ROOT]
+  const remoteBackups = cloned[remoteLocationsRoot]
   /* eslint-disable @typescript-eslint/ban-ts-comment */
   Object.keys(remoteBackups).forEach((internalId) => {
     // @ts-ignore
@@ -206,7 +206,7 @@ export function toExportableConfigurationJson(state: State): string {
   })
 
   // @ts-ignore
-  delete cloned[NOTIFICATIONS_ROOT]['allowSystemNotifications']
+  delete cloned[notificationsRoot]['allowSystemNotifications']
   /* eslint-enable @typescript-eslint/ban-ts-comment*/
 
   return toJson(cloned)

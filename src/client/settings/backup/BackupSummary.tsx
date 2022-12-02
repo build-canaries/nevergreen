@@ -22,7 +22,7 @@ export function where(location: RemoteLocationType): string {
   return ''
 }
 
-function timestamp(time: string): ReactElement | string {
+function timestamp(time?: string): ReactElement | string {
   return isBlank(time) ? 'Never' : <Duration suffix='ago' timestamp={time}/>
 }
 

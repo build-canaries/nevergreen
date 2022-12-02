@@ -2,9 +2,9 @@ import React from 'react'
 import {screen, waitFor} from '@testing-library/react'
 import {render} from '../../../testUtils/testHelpers'
 import {buildFeed} from '../../../testUtils/builders'
-import {FEEDS_ROOT, getFeed} from '../FeedsReducer'
+import {getFeed, feedsRoot as feedsName} from '../FeedsReducer'
 import {UpdateDetailsPage} from './UpdateDetailsPage'
-import {SELECTED_ROOT} from '../SelectedReducer'
+import {selectedRoot as selectedName} from '../SelectedReducer'
 
 it('should be able to update details', async () => {
   const feed = buildFeed({
@@ -13,8 +13,8 @@ it('should be able to update details', async () => {
     serverType: 'go'
   })
   const state = {
-    [FEEDS_ROOT]: {trayId: feed},
-    [SELECTED_ROOT]: {trayId: []}
+    [feedsName]: {trayId: feed},
+    [selectedName]: {trayId: []}
   }
 
   const {store, user} = render(<UpdateDetailsPage/>, {state, outletContext: feed})
@@ -37,8 +37,8 @@ it('should be able to generate a new random name', async () => {
     name: 'some-name'
   })
   const state = {
-    [FEEDS_ROOT]: {trayId: feed},
-    [SELECTED_ROOT]: {trayId: []}
+    [feedsName]: {trayId: feed},
+    [selectedName]: {trayId: []}
   }
 
   const {store, user} = render(<UpdateDetailsPage/>, {state, outletContext: feed})

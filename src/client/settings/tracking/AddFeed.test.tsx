@@ -3,7 +3,7 @@ import {AddFeed} from './AddFeed'
 import {screen, waitFor} from '@testing-library/react'
 import * as SecurityGateway from '../../gateways/SecurityGateway'
 import * as ProjectsGateway from '../../gateways/ProjectsGateway'
-import {FEEDS_ROOT, getFeeds} from './FeedsReducer'
+import {feedsRoot, getFeeds} from './FeedsReducer'
 import {render, waitForLocationToChange} from '../../testUtils/testHelpers'
 import {buildFeed} from '../../testUtils/builders'
 import * as Feed from '../../domain/Feed'
@@ -30,7 +30,7 @@ describe('validation errors', () => {
 
   it('should display an error if a feed with the same URL has already been added', async () => {
     const state = {
-      [FEEDS_ROOT]: {
+      [feedsRoot]: {
         trayId: buildFeed({
           trayId: 'trayId',
           url: 'https://some-url'
@@ -56,7 +56,7 @@ it.each([
   jest.spyOn(ProjectsGateway, 'testFeedConnection').mockResolvedValue()
 
   const state = {
-    [FEEDS_ROOT]: {}
+    [feedsRoot]: {}
   }
 
   const {store, user} = render(<AddFeed/>, {state})

@@ -8,17 +8,17 @@ import isNil from 'lodash/isNil'
 import isObject from 'lodash/isObject'
 import set from 'lodash/set'
 import unset from 'lodash/unset'
-import {APPLIED_MIGRATIONS_ROOT, AppliedMigration} from './MigrationsReducer'
+import {AppliedMigration, migrationsRoot} from './MigrationsReducer'
 import {getOrderedMigrations} from './migrations'
 
 type PropertyPath = string | ReadonlyArray<string>
 
 export function migrate(data: UntrustedData): void {
-  if (!has(data, APPLIED_MIGRATIONS_ROOT)) {
-    data[APPLIED_MIGRATIONS_ROOT] = []
+  if (!has(data, migrationsRoot)) {
+    data[migrationsRoot] = []
   }
 
-  const appliedMigrations = data[APPLIED_MIGRATIONS_ROOT] as AppliedMigration[]
+  const appliedMigrations = data[migrationsRoot] as AppliedMigration[]
 
   getOrderedMigrations().forEach((migration) => {
     info(`Checking if migration [${migration.id}] has been applied...`)

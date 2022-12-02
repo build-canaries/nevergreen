@@ -2,19 +2,19 @@ import React, {ReactElement} from 'react'
 import {URL} from '../../common/URL'
 import {Summary} from '../../common/Summary'
 import {Feed, trackingModeDisplay} from '../../domain/Feed'
-import {useDispatch} from 'react-redux'
 import {Card} from '../../common/card/Card'
 import {CardHeading} from '../../common/card/CardHeading'
 import {feedRemoved} from './TrackingActionCreators'
 import {ManageFeedProjectsButton, UpdateFeedDetailsButton} from '../../common/LinkButton'
 import {FeedLogo} from './FeedLogo'
+import {useAppDispatch} from '../../configuration/Hooks'
 
 interface FeedCardProps {
   readonly feed: Feed;
 }
 
 export function FeedCard({feed}: FeedCardProps): ReactElement {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const title = feed.name ? feed.name : 'Unnamed feed'
 

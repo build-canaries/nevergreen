@@ -1,8 +1,8 @@
-import React, {ReactElement} from 'react'
-import {useDispatch} from 'react-redux'
+import type {RemoteLocation} from './RemoteLocationsReducer'
+import {removeBackup} from './RemoteLocationsReducer'
+import type {ReactElement} from 'react'
+import React from 'react'
 import styles from './remote-backup-card.scss'
-import {RemoteLocation as RemoteLocationType} from './RemoteLocationsReducer'
-import {removeBackup} from './BackupActionCreators'
 import {Card} from '../../common/card/Card'
 import {CardHeading} from '../../common/card/CardHeading'
 import {BackupLogo} from './BackupLogo'
@@ -12,13 +12,14 @@ import {LinkButton} from '../../common/LinkButton'
 import {CloudUpload} from '../../common/icons/CloudUpload'
 import {CloudDownload} from '../../common/icons/CloudDownload'
 import {Cog} from '../../common/icons/Cog'
+import {useAppDispatch} from '../../configuration/Hooks'
 
 interface RemoteLocationProps {
-  readonly location: RemoteLocationType;
+  readonly location: RemoteLocation;
 }
 
 export function RemoteBackupCard({location}: RemoteLocationProps): ReactElement {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const locationWhere = where(location)
   const title = <>Remote<VisuallyHidden> {locationWhere}</VisuallyHidden> location</>

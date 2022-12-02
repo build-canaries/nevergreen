@@ -4,14 +4,14 @@ import {buildRemoteBackupLocation} from '../../../testUtils/builders'
 import {ExportRemote} from './ExportRemote'
 import * as BackupGateway from '../../../gateways/BackupGateway'
 import {screen, waitFor} from '@testing-library/react'
-import {BACKUP_REMOTE_LOCATIONS_ROOT} from '../RemoteLocationsReducer'
+import {remoteLocationsRoot} from '../RemoteLocationsReducer'
 
 it('should export configuration', async () => {
   const remoteLocation = buildRemoteBackupLocation({
     internalId: 'locationId'
   })
   const state = {
-    [BACKUP_REMOTE_LOCATIONS_ROOT]: {
+    [remoteLocationsRoot]: {
       locationId: remoteLocation
     }
   }

@@ -7,7 +7,7 @@ import {
   PERMISSION_DENIED_MESSAGE
 } from './NotificationsSystem'
 import {render} from '../../testUtils/testHelpers'
-import {getAllowSystemNotifications, NOTIFICATIONS_ROOT} from './NotificationsReducer'
+import {getAllowSystemNotifications, notificationsRoot} from './NotificationsReducer'
 import * as SystemNotifications from '../../common/SystemNotifications'
 
 beforeEach(() => {
@@ -19,7 +19,7 @@ it('should allow system notifications to be enabled', async () => {
   jest.spyOn(SystemNotifications, 'supported').mockReturnValue(true)
   jest.spyOn(SystemNotifications, 'permissionGranted').mockReturnValue(true)
   const state = {
-    [NOTIFICATIONS_ROOT]: {
+    [notificationsRoot]: {
       allowSystemNotifications: false
     }
   }
@@ -65,7 +65,7 @@ it('should show a message if notifications are supported but permission is denie
 it('should unselect if previously selected by permission has been revoked via the browser settings', async () => {
   jest.spyOn(SystemNotifications, 'permissionGranted').mockReturnValue(false)
   const state = {
-    [NOTIFICATIONS_ROOT]: {
+    [notificationsRoot]: {
       allowSystemNotifications: true
     }
   }

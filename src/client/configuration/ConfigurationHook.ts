@@ -1,11 +1,11 @@
 import {useEffect, useState} from 'react'
-import {useDispatch} from 'react-redux'
 import {init, load} from './LocalRepository'
 import {DataSource, toConfiguration} from './Configuration'
 import {configurationImported} from '../settings/backup/BackupActionCreators'
 import {isRight} from 'fp-ts/Either'
 import * as logger from '../common/Logger'
 import join from 'lodash/join'
+import {useAppDispatch} from './Hooks'
 
 interface Result {
   readonly loaded: boolean;
@@ -13,7 +13,7 @@ interface Result {
 }
 
 export function useLocalConfiguration(): Result {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const [loaded, setLoaded] = useState(false)
   const [error, setError] = useState(false)
 

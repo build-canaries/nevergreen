@@ -3,8 +3,7 @@ import styles from './import.scss'
 import {SecondaryButton} from '../../../common/forms/Button'
 import {DataSource, toConfiguration} from '../../../configuration/Configuration'
 import {errorMessage, isBlank} from '../../../common/Utils'
-import {useDispatch} from 'react-redux'
-import {backupImported, configurationImported} from '../BackupActionCreators'
+import {configurationImported} from '../BackupActionCreators'
 import {isLeft, isRight} from 'fp-ts/Either'
 import {TextArea} from '../TextArea'
 import {ErrorMessages} from '../../../common/Messages'
@@ -22,12 +21,14 @@ import {BackupLogo} from '../BackupLogo'
 import {useQuery} from '@tanstack/react-query'
 import {useRemoteLocationContext} from '../RemoteLocationPage'
 import {ROUTE_BACKUP} from '../../../AppRoutes'
+import {useAppDispatch} from '../../../configuration/Hooks'
+import {backupImported} from '../RemoteLocationsReducer'
 
 type Fields = 'import'
 
 export function ImportRemote(): ReactElement {
   const location = useRemoteLocationContext()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const [data, setData] = useState('')
 
   const {

@@ -2,7 +2,6 @@ import React, {ReactElement, useState} from 'react'
 import styles from './import.scss'
 import {DataSource, toConfiguration} from '../../../configuration/Configuration'
 import {errorMessage, isBlank} from '../../../common/Utils'
-import {useDispatch} from 'react-redux'
 import {configurationImported} from '../BackupActionCreators'
 import {isLeft, isRight} from 'fp-ts/Either'
 import {TextArea} from '../TextArea'
@@ -14,11 +13,12 @@ import {loadFile} from '../FileSystem'
 import {Page} from '../../../common/Page'
 import {FolderOpen} from '../../../common/icons/FolderOpen'
 import {TimedErrorMessages, TimedInfoMessages} from '../../../common/TimedMessages'
+import {useAppDispatch} from '../../../configuration/Hooks'
 
 const placeholder = 'Open, drag and drop or paste exported configuration here and press Import'
 
 export function ImportLocal(): ReactElement {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const [success, setSuccessState] = useState('')
   const [loadErrors, setLoadErrors] = useState<ReadonlyArray<string>>([])
   const [data, setData] = useState('')
@@ -81,7 +81,7 @@ export function ImportLocal(): ReactElement {
   }
 
   return (
-    <Page title='Import local' icon={<FolderOpen/>}>
+    <Page title="Import local" icon={<FolderOpen/>}>
       <FileDropTarget onFileDropped={openFile}
                       disabled={!loaded}>
         <div className={styles.messages}>
@@ -96,13 +96,13 @@ export function ImportLocal(): ReactElement {
 
         <Form onValidate={onValidate}
               onSuccess={onSuccess}
-              onCancel='../backup'
-              submitButtonText='Import'
+              onCancel="../backup"
+              submitButtonText="Import"
               clearErrors={!loaded}
               className={styles.form}>
           {(submitting, validationErrors) => {
             return (
-              <TextArea label='Configuration to import'
+              <TextArea label="Configuration to import"
                         errors={allErrors('import', validationErrors)}
                         placeholder={placeholder}
                         value={data}

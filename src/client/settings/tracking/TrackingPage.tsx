@@ -1,5 +1,5 @@
 import React, {ReactElement} from 'react'
-import {useDispatch, useSelector} from 'react-redux'
+import {useSelector} from 'react-redux'
 import {getFeeds} from './FeedsReducer'
 import {Page} from '../../common/Page'
 import {AddButton} from '../../common/LinkButton'
@@ -7,17 +7,17 @@ import {WarningMessages} from '../../common/Messages'
 import {FeedCard} from './FeedCard'
 import styles from './tracking-page.scss'
 import {DropDown} from '../../common/forms/DropDown'
-import {setRefreshTime, VALID_REFRESH_TIMES} from '../SettingsActionCreators'
 import {secondsToString} from '../../common/DateTime'
-import {getRefreshTime} from '../SettingsReducer'
+import {getRefreshTime, setRefreshTime, validRefreshTimes} from '../SettingsReducer'
 import {List} from '../../common/icons/List'
 import {CardList} from '../../common/card/CardList'
+import {useAppDispatch, useAppSelector} from '../../configuration/Hooks'
 
 export function TrackingPage(): ReactElement {
-  const dispatch = useDispatch()
-  const feeds = useSelector(getFeeds)
+  const dispatch = useAppDispatch()
+  const feeds = useAppSelector(getFeeds)
   const refreshTime = useSelector(getRefreshTime)
-  const options = VALID_REFRESH_TIMES.map((time) => {
+  const options = validRefreshTimes.map((time) => {
     return {value: time.toString(), display: secondsToString(time)}
   })
 
@@ -26,7 +26,7 @@ export function TrackingPage(): ReactElement {
       <DropDown className={styles.refreshTime}
                 options={options}
                 value={refreshTime}
-                onChange={({target}) => dispatch(setRefreshTime(target.value))}
+                onChange={({target}) => dispatch(setRefreshTime(Number.parseInt(target.value)))}
                 data-locator="refresh-time">
         Poll for feed changes every
       </DropDown>

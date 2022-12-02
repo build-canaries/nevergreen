@@ -1,11 +1,11 @@
 import React from 'react'
 import {render} from '../../testUtils/testHelpers'
-import {getSuccessMessages, SUCCESS_ROOT} from './SuccessReducer'
+import {getSuccessMessages, successRoot} from './SuccessReducer'
 import {AddMessage} from './AddMessage'
 import {screen, waitFor} from '@testing-library/react'
 
 it('should allow success messages to be added', async () => {
-  const state = {[SUCCESS_ROOT]: []}
+  const state = {[successRoot]: []}
 
   const {store, user} = render(<AddMessage/>, {state, mountPath: 'add', currentLocation: 'add'})
   await user.type(screen.getByLabelText('Message'), 'some-message')
@@ -18,7 +18,7 @@ it('should allow success messages to be added', async () => {
 })
 
 it('should not allow a blank success messages to be added', async () => {
-  const state = {[SUCCESS_ROOT]: []}
+  const state = {[successRoot]: []}
   const {user} = render(<AddMessage/>, {state})
 
   await user.clear(screen.getByLabelText('Message'))
@@ -28,7 +28,7 @@ it('should not allow a blank success messages to be added', async () => {
 })
 
 it('should not allow the same success message to be added', async () => {
-  const state = {[SUCCESS_ROOT]: ['some-message']}
+  const state = {[successRoot]: ['some-message']}
   const {user} = render(<AddMessage/>, {state})
 
   await user.type(screen.getByLabelText('Message'), 'some-message')
@@ -38,7 +38,7 @@ it('should not allow the same success message to be added', async () => {
 })
 
 it('should be able to cancel back to settings', async () => {
-  const state = {[SUCCESS_ROOT]: ['some-message']}
+  const state = {[successRoot]: ['some-message']}
   const {user} = render(<AddMessage/>, {state, mountPath: 'add', currentLocation: 'add'})
 
   await user.click(screen.getByRole('button', {name: 'Cancel'}))

@@ -1,16 +1,17 @@
-import React, {ReactElement, ReactNode, useEffect} from 'react'
+import type {RootState} from './configuration/ReduxStore'
+import type {ReactElement, ReactNode} from 'react'
+import React, {useEffect} from 'react'
+import type {Store} from '@reduxjs/toolkit'
 import {Provider} from 'react-redux'
 import {BrowserRouter} from 'react-router-dom'
 import {UnhandledError} from './UnhandledError'
 import Modal from 'react-modal'
 import {QueryClientProvider} from '@tanstack/react-query'
 import {queryClient} from './queryClient'
-import {Store} from '@reduxjs/toolkit'
-import {State} from './Reducer'
 
 interface AppProps {
   readonly appElement: string;
-  readonly store: Store<State>;
+  readonly store: Store<RootState>;
   readonly children: ReactNode;
 }
 

@@ -1,6 +1,6 @@
 import {migrate, moveData} from './Migrate'
 import * as migrations from '../configuration/migrations'
-import {APPLIED_MIGRATIONS_ROOT} from './MigrationsReducer'
+import {migrationsRoot} from './MigrationsReducer'
 
 const isoDateTime = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/
 
@@ -14,7 +14,7 @@ it('should migrate the given data by mutating it, including adding any applied m
   migrate(data)
 
   expect(data).toHaveProperty('baz', 'bar')
-  expect(data).toHaveProperty(APPLIED_MIGRATIONS_ROOT, [{
+  expect(data).toHaveProperty(migrationsRoot, [{
     id: migrationId,
     timestamp: expect.stringMatching(isoDateTime) as string
   }])
@@ -41,7 +41,7 @@ it('should not apply already applied migrations', () => {
     {id: migrationId, migrate: migration}
   ])
   const data = {
-    [APPLIED_MIGRATIONS_ROOT]: [
+    [migrationsRoot]: [
       {
         id: migrationId,
         timestamp: 'some-timestamp'

@@ -1,15 +1,15 @@
 import React from 'react'
 import {render} from '../../testUtils/testHelpers'
 import {buildFeed} from '../../testUtils/builders'
-import {FEEDS_ROOT} from './FeedsReducer'
+import {feedsRoot as feedsName} from './FeedsReducer'
 import {screen, waitFor} from '@testing-library/react'
 import {TrackingPage} from './TrackingPage'
-import {SELECTED_ROOT} from './SelectedReducer'
-import {getRefreshTime, SETTINGS_ROOT} from '../SettingsReducer'
+import {selectedRoot as selectedName} from './SelectedReducer'
+import {getRefreshTime, settingsRoot as settingsName} from '../SettingsReducer'
 
 it('should allow changing the poll time', async () => {
   const state = {
-    [SETTINGS_ROOT]: {
+    [settingsName]: {
       refreshTime: 10
     }
   }
@@ -18,20 +18,20 @@ it('should allow changing the poll time', async () => {
   expect(getRefreshTime(store.getState())).toEqual(600)
 })
 
-it('should show added trays', () => {
+it('should show added feeds', () => {
   const tray = buildFeed({
     trayId: 'trayId',
     name: 'some-name'
   })
   const state = {
-    [FEEDS_ROOT]: {trayId: tray},
-    [SELECTED_ROOT]: {trayId: []}
+    [feedsName]: {trayId: tray},
+    [selectedName]: {trayId: []}
   }
   render(<TrackingPage/>, {state})
   expect(screen.getByRole('heading', {name: 'some-name'})).toBeInTheDocument()
 })
 
-it('should allow trays to be added', async () => {
+it('should allow feeds to be added', async () => {
   const {user} = render(<TrackingPage/>)
   await user.click(screen.getByRole('button', {name: 'Add feed'}))
   await waitFor(() => {
@@ -39,9 +39,9 @@ it('should allow trays to be added', async () => {
   })
 })
 
-it('should show a helpful message if no trays are added', () => {
+it('should show a helpful message if no feeds are added', () => {
   const state = {
-    [FEEDS_ROOT]: {},
+    [feedsName]: {},
   }
   render(<TrackingPage/>, {state})
   expect(screen.getByText('No feeds added, add a feed to start monitoring')).toBeInTheDocument()

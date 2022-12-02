@@ -1,9 +1,7 @@
 import React, {ReactElement, useState} from 'react'
 import {DropDown} from '../../common/forms/DropDown'
-import {useDispatch} from 'react-redux'
 import {isBlank} from '../../common/Utils'
 import {DEFAULT_GITHUB_URL, DEFAULT_GITLAB_URL, RemoteLocationOptions} from './RemoteLocationOptions'
-import {addBackupCustomServer, addBackupGitHubLab} from './BackupActionCreators'
 import {Input} from '../../common/forms/Input'
 import {Password} from '../../common/forms/Password'
 import {encrypt} from '../../gateways/SecurityGateway'
@@ -15,11 +13,13 @@ import {Page} from '../../common/Page'
 import {BackupLogo} from './BackupLogo'
 import {ROUTE_BACKUP, ROUTE_BACKUP_EXPORT_DETAILS} from '../../AppRoutes'
 import {createId} from '../../domain/Feed'
+import {useAppDispatch} from '../../configuration/Hooks'
+import {addBackup} from './RemoteLocationsReducer'
 
 type Fields = 'url' | 'accessToken'
 
 export function AddBackup(): ReactElement {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const [where, setWhere] = useState(RemoteLocationOptions.custom)
   const [url, setUrl] = useState('')
@@ -49,15 +49,16 @@ export function AddBackup(): ReactElement {
     const internalId = createId()
     if (where === RemoteLocationOptions.gitLab || where === RemoteLocationOptions.gitHub) {
       const encryptedAccessToken = await encrypt(accessToken, signal)
-      dispatch(addBackupGitHubLab(
+      dispatch(addBackup({
         internalId,
         where,
         externalId,
         url,
         description,
-        encryptedAccessToken))
+        encryptedAccessToken
+      }))
     } else {
-      dispatch(addBackupCustomServer(internalId, url))
+      dispatch(addBackup({where: RemoteLocationOptions.custom, internalId, url}))
     }
     return {navigateTo: ROUTE_BACKUP_EXPORT_DETAILS.replace(':internalId', internalId)}
   }

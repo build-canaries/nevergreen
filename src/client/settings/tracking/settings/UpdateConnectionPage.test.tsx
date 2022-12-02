@@ -2,7 +2,7 @@ import React from 'react'
 import {screen, waitFor} from '@testing-library/react'
 import {render, waitForLocationToChange} from '../../../testUtils/testHelpers'
 import {buildFeed} from '../../../testUtils/builders'
-import {FEEDS_ROOT, getFeed} from '../FeedsReducer'
+import {feedsRoot, getFeed} from '../FeedsReducer'
 import {AuthTypes} from '../../../domain/Feed'
 import * as SecurityGateway from '../../../gateways/SecurityGateway'
 import * as ProjectsGateway from '../../../gateways/ProjectsGateway'
@@ -31,7 +31,7 @@ it.each([
     encryptedPassword: 'old-password'
   })
   const state = {
-    [FEEDS_ROOT]: {trayId: feed}
+    [feedsRoot]: {trayId: feed}
   }
 
   const {store, user} = render(<UpdateConnectionPage/>, {state, outletContext: feed})
@@ -68,7 +68,7 @@ describe('validation errors', () => {
       name: 'some-name'
     })
     const state = {
-      [FEEDS_ROOT]: {trayId: feed}
+      [feedsRoot]: {trayId: feed}
     }
 
     const {user} = render(<UpdateConnectionPage/>, {state, outletContext: feed})
@@ -85,7 +85,7 @@ describe('validation errors', () => {
       name: 'some-name'
     })
     const state = {
-      [FEEDS_ROOT]: {trayId: feed}
+      [feedsRoot]: {trayId: feed}
     }
 
     const {user} = render(<UpdateConnectionPage/>, {state, outletContext: feed})
@@ -106,7 +106,7 @@ describe('validation errors', () => {
       url: 'http://other'
     })
     const state = {
-      [FEEDS_ROOT]: {
+      [feedsRoot]: {
         trayId: feed,
         otherId: other
       }

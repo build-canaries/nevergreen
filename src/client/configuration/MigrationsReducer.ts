@@ -1,6 +1,5 @@
-import {createReducer} from '@reduxjs/toolkit'
-import {Actions} from '../Actions'
-import {ActionConfigurationImported} from '../settings/backup/BackupActionCreators'
+import {createSlice} from '@reduxjs/toolkit'
+import {configurationImported} from '../settings/backup/BackupActionCreators'
 
 export interface AppliedMigration {
   readonly id: string;
@@ -9,15 +8,20 @@ export interface AppliedMigration {
 
 export type AppliedMigrationsState = ReadonlyArray<AppliedMigration>
 
-export const APPLIED_MIGRATIONS_ROOT = 'appliedMigrations'
+export const migrationsRoot = 'appliedMigrations'
 
-const defaultState: AppliedMigrationsState = []
+const initialState: AppliedMigrationsState = []
 
-export const reduce = createReducer<AppliedMigrationsState>(defaultState, (builder) => {
-  builder
-    .addCase(Actions.CONFIGURATION_IMPORTED, (draft, action: ActionConfigurationImported) => {
-      return action.configuration[APPLIED_MIGRATIONS_ROOT]
-        ? action.configuration[APPLIED_MIGRATIONS_ROOT] as AppliedMigrationsState
-        : draft
-    })
+const slice = createSlice({
+  name: migrationsRoot,
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(configurationImported, (draft, action) => {
+        return action.payload.appliedMigrations ?? draft
+      })
+  }
 })
+
+export const {reducer} = slice

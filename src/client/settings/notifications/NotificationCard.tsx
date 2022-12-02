@@ -1,11 +1,9 @@
 import React, {ReactElement} from 'react'
 import {Summary} from '../../common/Summary'
-import {useDispatch} from 'react-redux'
 import {Card} from '../../common/card/Card'
 import {CardHeading} from '../../common/card/CardHeading'
 import {Prognosis, prognosisDisplay} from '../../domain/Project'
-import {removeNotification} from './NotificationsActionCreators'
-import {NotificationDetails} from './NotificationsReducer'
+import {NotificationDetails, removeNotification} from './NotificationsReducer'
 import {Cross} from '../../common/icons/Cross'
 import {Checkmark} from '../../common/icons/Checkmark'
 import styles from './notifications-card.scss'
@@ -14,6 +12,7 @@ import {Note} from '../../common/icons/Note'
 import {URL} from '../../common/URL'
 import {NotificationIcon} from './icons/NotificationIcon'
 import capitalize from 'lodash/capitalize'
+import {useAppDispatch} from '../../configuration/Hooks'
 
 interface NotificationCardProps {
   readonly prognosis: Prognosis;
@@ -21,7 +20,7 @@ interface NotificationCardProps {
 }
 
 export function NotificationCard({prognosis, notification}: NotificationCardProps): ReactElement {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const systemNotificationSummary = notification.systemNotification
     ? <><Checkmark className={styles.yes}/>Yes</>

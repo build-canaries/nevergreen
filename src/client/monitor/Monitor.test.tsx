@@ -4,10 +4,10 @@ import noop from 'lodash/noop'
 import {Monitor} from './Monitor'
 import {render, waitForLoadingToFinish} from '../testUtils/testHelpers'
 import {buildFeed, buildFeedError, buildProjectApi} from '../testUtils/builders'
-import {FEEDS_ROOT} from '../settings/tracking/FeedsReducer'
-import {SUCCESS_ROOT} from '../settings/success/SuccessReducer'
+import {feedsRoot} from '../settings/tracking/FeedsReducer'
+import {successRoot} from '../settings/success/SuccessReducer'
 import * as Gateway from '../gateways/Gateway'
-import {SETTINGS_ROOT} from '../settings/SettingsReducer'
+import {settingsRoot} from '../settings/SettingsReducer'
 import {Prognosis} from '../domain/Project'
 import {SortBy} from '../gateways/ProjectsGateway'
 import * as NotificationsHook from './notifications/NotificationsHook'
@@ -35,7 +35,7 @@ it('should hide the header and footer on load and show them on leave', () => {
 
 it('should show a helpful message if no feeds are added', () => {
   const state = {
-    [FEEDS_ROOT]: {}
+    [feedsRoot]: {}
   }
   render(<Monitor/>, {state, outletContext})
   expect(screen.getByText('Add a feed via the tracking page to start monitoring')).toBeInTheDocument()
@@ -48,11 +48,11 @@ it('should show a success message if there are no interesting projects', async (
     })
   ])
   const state = {
-    [FEEDS_ROOT]: {
+    [feedsRoot]: {
       [feedId]: buildFeed({trayId: feedId})
     },
-    [SUCCESS_ROOT]: ['some-success-message'],
-    [SETTINGS_ROOT]: {
+    [successRoot]: ['some-success-message'],
+    [settingsRoot]: {
       showPrognosis: [Prognosis.sick]
     }
   }
@@ -73,10 +73,10 @@ it('should display an error if the Nevergreen server is having issues', async ()
     ])
     .mockRejectedValueOnce(new Error('some-error'))
   const state = {
-    [FEEDS_ROOT]: {
+    [feedsRoot]: {
       [feedId]: buildFeed({trayId: feedId})
     },
-    [SETTINGS_ROOT]: {
+    [settingsRoot]: {
       refreshTime: 1,
       showPrognosis: [Prognosis.sick]
     }
@@ -105,10 +105,10 @@ it('should show projects', async () => {
     })
   ])
   const state = {
-    [FEEDS_ROOT]: {
+    [feedsRoot]: {
       [feedId]: buildFeed({trayId: feedId})
     },
-    [SETTINGS_ROOT]: {
+    [settingsRoot]: {
       showPrognosis: [Prognosis.sick]
     }
   }
@@ -136,10 +136,10 @@ it('should show feed errors', async () => {
     })
   ])
   const state = {
-    [FEEDS_ROOT]: {
+    [feedsRoot]: {
       [feedId]: buildFeed({trayId: feedId})
     },
-    [SETTINGS_ROOT]: {
+    [settingsRoot]: {
       showPrognosis: [Prognosis.sick]
     }
   }
@@ -159,7 +159,7 @@ it('should trigger notifications and stop any audio notifications if user leaves
   ])
   jest.spyOn(AudioPlayer, 'stopAnyPlayingAudio')
   const state = {
-    [FEEDS_ROOT]: {
+    [feedsRoot]: {
       [feedId]: buildFeed({trayId: feedId})
     }
   }

@@ -1,5 +1,4 @@
-import {FEEDS_ROOT, FeedsState, getFeeds, reduce} from './FeedsReducer'
-import {Actions} from '../../Actions'
+import {FeedsState, getFeeds, feedsRoot, reducer as feedsReducer} from './FeedsReducer'
 import {feedAdded, feedRemoved, feedUpdated} from './TrackingActionCreators'
 import {testReducer} from '../../testUtils/testHelpers'
 import {buildFeed, buildState} from '../../testUtils/builders'
@@ -8,11 +7,11 @@ import {AuthTypes} from '../../domain/Feed'
 import {configurationImported} from '../backup/BackupActionCreators'
 
 const reducer = testReducer({
-  [FEEDS_ROOT]: reduce
+  [feedsRoot]: feedsReducer
 })
 
 function state(existing?: RecursivePartial<FeedsState>) {
-  return buildState({[FEEDS_ROOT]: existing})
+  return buildState({[feedsRoot]: existing})
 }
 
 it('should return the state unmodified for an unknown action', () => {
@@ -21,12 +20,12 @@ it('should return the state unmodified for an unknown action', () => {
   expect(newState).toEqual(existingState)
 })
 
-describe(Actions.CONFIGURATION_IMPORTED, () => {
+describe(configurationImported.toString(), () => {
 
   it('should set the trays if it is included in the import', () => {
     const feed = buildFeed({trayId: 'trayId'})
     const existingState = state({someId: {}})
-    const action = configurationImported({[FEEDS_ROOT]: {trayId: feed}})
+    const action = configurationImported({[feedsRoot]: {trayId: feed}})
 
     const newState = reducer(existingState, action)
 
@@ -42,7 +41,7 @@ describe(Actions.CONFIGURATION_IMPORTED, () => {
       url: completeFeed.url,
       name: completeFeed.name // name isn't required but the default name is random, so setting makes the test simpler
     }
-    const action = configurationImported({[FEEDS_ROOT]: {trayId: partiallyImportedFeed}})
+    const action = configurationImported({[feedsRoot]: {trayId: partiallyImportedFeed}})
 
     const newState = reducer(existingState, action)
 
@@ -57,27 +56,34 @@ describe(Actions.CONFIGURATION_IMPORTED, () => {
   })
 })
 
-describe(Actions.FEED_ADDED, () => {
+describe(feedAdded.toString(), () => {
 
   it('should set the tray data', () => {
     const existingState = state({})
-    const action = feedAdded('trayId', '', AuthTypes.none, '', '', '')
+    const action = feedAdded({
+      trayId: 'trayId',
+      authType: AuthTypes.none,
+      url: '',
+      username: '',
+      encryptedPassword: '',
+      encryptedAccessToken: ''
+    })
     const newState = reducer(existingState, action)
     expect(getFeeds(newState)[0]).toHaveProperty('trayId', 'trayId')
   })
 })
 
-describe(Actions.FEED_UPDATED, () => {
+describe(feedUpdated.toString(), () => {
 
   it('should set the given tray data', () => {
     const existingState = state({trayId: buildFeed()})
-    const action = feedUpdated('trayId', {name: 'some-name'})
+    const action = feedUpdated({trayId: 'trayId', feed: {name: 'some-name'}})
     const newState = reducer(existingState, action)
     expect(getFeeds(newState)[0].name).toEqual('some-name')
   })
 })
 
-describe(Actions.FEED_REMOVED, () => {
+describe(feedRemoved.toString(), () => {
 
   it('should set the tray data', () => {
     const existingState = state({trayId: buildFeed()})

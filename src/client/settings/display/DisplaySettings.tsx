@@ -3,15 +3,7 @@ import {Checkbox} from '../../common/forms/Checkbox'
 import {DropDown} from '../../common/forms/DropDown'
 import styles from './display-settings.scss'
 import {DisplayPrognosisSelection} from './DisplayPrognosisSelection'
-import {useDispatch, useSelector} from 'react-redux'
-import {
-  setClickToShowMenu,
-  setMaxProjectsToShow,
-  setShowBuildLabel,
-  setShowBuildTime,
-  setShowFeedIdentifier,
-  setSort
-} from '../SettingsActionCreators'
+import {useSelector} from 'react-redux'
 import {
   getClickToShowMenu,
   getMaxProjectsToShow,
@@ -19,7 +11,13 @@ import {
   getShowBuildTime,
   getShowFeedIdentifier,
   getSort,
-  MaxProjectsToShow
+  MaxProjectsToShow,
+  setClickToShowMenu,
+  setMaxProjectsToShow,
+  setShowBuildLabel,
+  setShowBuildTime,
+  setShowFeedIdentifier,
+  setSort
 } from '../SettingsReducer'
 import {SortBy} from '../../gateways/ProjectsGateway'
 import {LinkButton} from '../../common/LinkButton'
@@ -27,9 +25,24 @@ import {Page} from '../../common/Page'
 import {Eye} from '../../common/icons/Eye'
 import {Display} from '../../common/icons/Display'
 import {ROUTE_PREVIEW} from '../../AppRoutes'
+import {useAppDispatch} from '../../configuration/Hooks'
+
+const projectsToShowOptions = [
+  {value: MaxProjectsToShow.small, display: 'Small'},
+  {value: MaxProjectsToShow.medium, display: 'Medium'},
+  {value: MaxProjectsToShow.large, display: 'Large'},
+  {value: MaxProjectsToShow.all, display: 'All (not recommended)'}
+]
+
+const sortOptions = [
+  {value: SortBy.default, display: 'Default'},
+  {value: SortBy.description, display: 'Description'},
+  {value: SortBy.prognosis, display: 'Prognosis'},
+  {value: SortBy.timestamp, display: 'Timestamp'}
+]
 
 export function DisplaySettings(): ReactElement {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const clickToShowMenu = useSelector(getClickToShowMenu)
   const showFeedIdentifier = useSelector(getShowFeedIdentifier)
   const showBuildTime = useSelector(getShowBuildTime)
@@ -37,22 +50,8 @@ export function DisplaySettings(): ReactElement {
   const maxProjectsToShow = useSelector(getMaxProjectsToShow)
   const sort = useSelector(getSort)
 
-  const projectsToShowOptions = [
-    {value: MaxProjectsToShow.small, display: 'Small'},
-    {value: MaxProjectsToShow.medium, display: 'Medium'},
-    {value: MaxProjectsToShow.large, display: 'Large'},
-    {value: MaxProjectsToShow.all, display: 'All (not recommended)'}
-  ]
-
-  const sortOptions = [
-    {value: SortBy.default, display: 'Default'},
-    {value: SortBy.description, display: 'Description'},
-    {value: SortBy.prognosis, display: 'Prognosis'},
-    {value: SortBy.timestamp, display: 'Timestamp'}
-  ]
-
   return (
-    <Page title='Display settings' icon={<Display/>}>
+    <Page title="Display settings" icon={<Display/>}>
       <Checkbox checked={clickToShowMenu}
                 onToggle={(newValue) => dispatch(setClickToShowMenu(newValue))}>
         Click to show menu

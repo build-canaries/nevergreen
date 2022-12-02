@@ -1,16 +1,21 @@
-import {getSuccessMessages, reduce, SUCCESS_ROOT, SuccessState} from './SuccessReducer'
-import {Actions} from '../../Actions'
-import {addMessage, removeMessage} from './SuccessActionCreators'
+import {
+  addMessage,
+  getSuccessMessages,
+  successRoot,
+  reducer as successReducer,
+  removeMessage,
+  SuccessState
+} from './SuccessReducer'
 import {testReducer} from '../../testUtils/testHelpers'
 import {buildState} from '../../testUtils/builders'
 import {configurationImported} from '../backup/BackupActionCreators'
 
 const reducer = testReducer({
-  [SUCCESS_ROOT]: reduce
+  [successRoot]: successReducer
 })
 
 function state(existing?: SuccessState) {
-  return buildState({[SUCCESS_ROOT]: existing})
+  return buildState({[successRoot]: existing})
 }
 
 it('should return the state unmodified for an unknown action', () => {
@@ -19,7 +24,7 @@ it('should return the state unmodified for an unknown action', () => {
   expect(newState).toEqual(existingState)
 })
 
-describe(Actions.CONFIGURATION_IMPORTED, () => {
+describe(configurationImported.toString(), () => {
 
   it('should merge the success data', () => {
     const existingState = state([])
@@ -36,7 +41,7 @@ describe(Actions.CONFIGURATION_IMPORTED, () => {
   })
 })
 
-describe(Actions.MESSAGE_ADDED, () => {
+describe(addMessage.toString(), () => {
 
   it('should add the given message', () => {
     const existingState = state([])
@@ -51,9 +56,23 @@ describe(Actions.MESSAGE_ADDED, () => {
     const newState = reducer(existingState, action)
     expect(getSuccessMessages(newState)).toHaveLength(1)
   })
+
+  it('should replace spaces with non-breaking spaces in emoticons so they don\'t get wrapped on the monitor page', () => {
+    const existingState = state([])
+    const action = addMessage('(*＾3＾) /～♡')
+    const newState = reducer(existingState, action)
+    expect(getSuccessMessages(newState)).toEqual(['(*＾3＾)\xa0/～♡'])
+  })
+
+  it('should not replace spaces in sentences so they do get wrapped on the monitor page', () => {
+    const existingState = state([])
+    const action = addMessage('nevergreen is awesome')
+    const newState = reducer(existingState, action)
+    expect(getSuccessMessages(newState)).toEqual(['nevergreen is awesome'])
+  })
 })
 
-describe(Actions.MESSAGE_REMOVED, () => {
+describe(removeMessage.toString(), () => {
 
   it('should remove the given message', () => {
     const existingState = state(['a', 'b', 'c'])

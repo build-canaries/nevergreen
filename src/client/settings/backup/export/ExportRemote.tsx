@@ -1,19 +1,20 @@
 import React, {ReactElement} from 'react'
-import {useDispatch, useSelector} from 'react-redux'
+import {useSelector} from 'react-redux'
 import {toExportableConfigurationJson} from '../../../configuration/Configuration'
 import {TextArea} from '../TextArea'
 import {exportConfiguration} from '../../../gateways/BackupGateway'
-import {backupExported} from '../BackupActionCreators'
 import {Form} from '../../../common/forms/Form'
 import {Page} from '../../../common/Page'
 import {FullBackupSummary} from '../BackupSummary'
 import {BackupLogo} from '../BackupLogo'
 import {useRemoteLocationContext} from '../RemoteLocationPage'
 import {ROUTE_BACKUP} from '../../../AppRoutes'
+import {useAppDispatch} from '../../../configuration/Hooks'
+import {backupExported} from '../RemoteLocationsReducer'
 
 export function ExportRemote(): ReactElement {
   const location = useRemoteLocationContext()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const configuration = useSelector(toExportableConfigurationJson)
 
   const exportNow = async (signal?: AbortSignal) => {
