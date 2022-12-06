@@ -1,4 +1,4 @@
-import {v4 as uuid} from 'uuid'
+import {nanoid} from '@reduxjs/toolkit'
 import isNil from 'lodash/isNil'
 import {isNotBlank, randomFrom} from '../common/Utils'
 import {ADJECTIVES, NOUNS} from './Words'
@@ -58,7 +58,7 @@ export function generateRandomName(): string {
 }
 
 export function createId(): string {
-  return uuid()
+  return nanoid(10)
 }
 
 export function createFeed(trayId: string, url: string, additional: Partial<Feed> = {}): Feed {
