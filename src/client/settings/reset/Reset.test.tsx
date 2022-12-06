@@ -7,12 +7,10 @@ import {render} from '../../testUtils/testHelpers'
 const {location} = window
 
 beforeEach(() => {
-  jest.spyOn(LocalConfiguration, 'clear').mockResolvedValue()
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   delete window.location
-  // eslint-disable-next-line @typescript-eslint/unbound-method,@typescript-eslint/no-explicit-any
-  window.location = {reload: jest.fn()} as any as Location
+  window.location = {...location, reload: jest.fn()}
 })
 
 afterEach(() => {
@@ -20,6 +18,7 @@ afterEach(() => {
 })
 
 it('should reset configuration and reload', async () => {
+  jest.spyOn(LocalConfiguration, 'clear').mockResolvedValueOnce()
   const {user} = render(<Reset/>)
   await user.click(screen.getByRole('button', {name: 'Reset configuration'}))
   await waitFor(() => {

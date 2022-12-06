@@ -28,7 +28,7 @@ it('should load configuration, register service worker and check for a new versi
   expect(LocalConfiguration.load).toHaveBeenCalled()
   expect(Gateway.get).toHaveBeenCalledWith({
     url: 'https://api.github.com/repos/build-canaries/nevergreen/releases/latest',
-    signal: expect.any(AbortSignal)
+    signal: expect.any(AbortSignal) as AbortSignal
   })
   expect(ServiceWorkerHook.useServiceWorker).toHaveBeenCalled()
   expect(screen.getByText(/^A new version [0-9.]* is available to download from GitHub now!$/)).toBeInTheDocument()

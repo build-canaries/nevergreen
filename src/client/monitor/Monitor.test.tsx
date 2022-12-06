@@ -124,7 +124,7 @@ it('should show projects', async () => {
       feeds: [expect.objectContaining({trayId: feedId})],
       sort: SortBy.default
     },
-    signal: expect.any(AbortSignal)
+    signal: expect.any(AbortSignal) as AbortSignal
   })
 })
 
