@@ -36,7 +36,8 @@
     margin-bottom: 0;
   }
 
-  &:hover {
+  &:hover,
+  &:focus-within {
     animation-name: none;
     background: $light-grey;
   }
