@@ -1,7 +1,10 @@
-import React, {ReactElement, useState} from 'react'
+import type {ReactElement} from 'react'
+import React, {useState} from 'react'
+import {DataSource, toConfiguration} from '../../../configuration/Configuration'
+import type {FormErrors} from '../../../common/forms/Validation'
+import {allErrors} from '../../../common/forms/Validation'
 import styles from './import.scss'
 import {SecondaryButton} from '../../../common/forms/Button'
-import {DataSource, toConfiguration} from '../../../configuration/Configuration'
 import {errorMessage, isBlank} from '../../../common/Utils'
 import {configurationImported} from '../BackupActionCreators'
 import {isLeft, isRight} from 'fp-ts/Either'
@@ -10,7 +13,6 @@ import {ErrorMessages} from '../../../common/Messages'
 import {fetchConfiguration} from '../../../gateways/BackupGateway'
 import {fromJson, toJson} from '../../../common/Json'
 import {Form} from '../../../common/forms/Form'
-import {allErrors, FormErrors} from '../../../common/forms/Validation'
 import {Loading} from '../../../common/Loading'
 import {Page} from '../../../common/Page'
 import {FullBackupSummary} from '../BackupSummary'
@@ -38,8 +40,8 @@ export function ImportRemote(): ReactElement {
     error,
     refetch
   } = useQuery(['import-remote'], async ({signal}) => {
-    const res = await fetchConfiguration(location, signal)
-    return toJson(fromJson(res.configuration))
+    const {configuration} = await fetchConfiguration(location, signal)
+    return toJson(fromJson(configuration))
   }, {
     onSuccess: setData
   })
@@ -69,11 +71,15 @@ export function ImportRemote(): ReactElement {
     }
   }
 
+  const title = 'Import remote'
+
   return (
-    <Page title="Import remote" icon={<BackupLogo where={location.where}/>}>
+    <Page title={title} icon={<BackupLogo where={location.where}/>} focusTitle={false}>
       <FullBackupSummary location={location}/>
       <Loading loaded={!isFetching}
-               className={styles.loading}>
+               className={styles.loading}
+               title={title}
+               focus>
         {isError && (
           <>
             <ErrorMessages messages={['Unable to fetch remote backup because of an error', errorMessage(error)]}/>

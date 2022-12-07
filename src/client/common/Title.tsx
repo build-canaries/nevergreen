@@ -4,13 +4,14 @@ import {useForceFocus} from './ForceFocusHook'
 import {useUpdateBrowserTitle} from './BrowserTitleHook'
 
 interface TitleProps {
-  readonly show?: boolean;
   readonly children: string;
+  readonly show?: boolean;
   readonly icon?: ReactElement;
+  readonly focus?: boolean;
 }
 
-export function Title({show, children, icon}: TitleProps): ReactElement {
-  const titleEl = useForceFocus<HTMLHeadingElement>()
+export function Title({show, children, icon, focus}: TitleProps): ReactElement {
+  const titleEl = useForceFocus<HTMLHeadingElement>(focus)
 
   useUpdateBrowserTitle(children)
 

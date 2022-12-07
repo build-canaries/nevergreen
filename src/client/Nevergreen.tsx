@@ -59,7 +59,10 @@ export function Nevergreen(): ReactElement {
     : {onMouseMove: showMenus}
 
   return (
-    <Loading dark loaded={loaded}>
+    <Loading dark
+             loaded={loaded}
+             title="Nevergreen"
+             focus>
       <FontMetrics ref={fontMetricsRef}/>
       <FontMetricsContext.Provider value={fontMetrics}>
         <Help/>
@@ -71,7 +74,7 @@ export function Nevergreen(): ReactElement {
           <Banner message={bannerMessage}
                   onDismiss={() => setBannerMessage('')}
                   hide={menusHidden}/>
-          <main className={styles.main} role='main'>
+          <main className={styles.main} role="main">
             <Outlet context={{menusHidden, toggleMenusHidden, setBannerMessage}}/>
           </main>
           <Footer hide={menusHidden}/>

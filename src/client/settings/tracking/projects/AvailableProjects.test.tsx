@@ -4,8 +4,8 @@ import {render, waitForLoadingToFinish} from '../../../testUtils/testHelpers'
 import {buildFeed, buildFeedError, buildProject} from '../../../testUtils/builders'
 import * as Gateway from '../../../gateways/Gateway'
 import {AvailableProjects} from './AvailableProjects'
-import {feedsRoot as feedsName} from '../FeedsReducer'
-import {selectedRoot as selectedName} from '../SelectedReducer'
+import {feedsRoot} from '../FeedsReducer'
+import {selectedRoot} from '../SelectedReducer'
 
 beforeEach(() => {
   jest.spyOn(Gateway, 'post').mockResolvedValue([])
@@ -15,10 +15,10 @@ it('should be able to select projects', async () => {
   const feed = buildFeed({trayId: 'trayId'})
   const project = buildProject({trayId: 'trayId', projectId: 'projectId', description: 'some project'})
   const state = {
-    [feedsName]: {
+    [feedsRoot]: {
       trayId: feed
     },
-    [selectedName]: {
+    [selectedRoot]: {
       trayId: []
     }
   }
@@ -46,10 +46,10 @@ it('should correctly show and remove errors returned while refreshing', async ()
     ])
   const feed = buildFeed({trayId: 'trayId'})
   const state = {
-    [feedsName]: {
+    [feedsRoot]: {
       trayId: feed
     },
-    [selectedName]: {
+    [selectedRoot]: {
       trayId: []
     }
   }
@@ -71,10 +71,10 @@ it('should correctly show and remove errors returned while refreshing', async ()
 it('should show a warning if there are no projects', async () => {
   const feed = buildFeed({trayId: 'trayId'})
   const state = {
-    [feedsName]: {
+    [feedsRoot]: {
       trayId: feed
     },
-    [selectedName]: {
+    [selectedRoot]: {
       trayId: []
     }
   }
@@ -93,10 +93,10 @@ it('should show a warning if no projects match the search', async () => {
     description: 'foo'
   })
   const state = {
-    [feedsName]: {
+    [feedsRoot]: {
       trayId: feed
     },
-    [selectedName]: {
+    [selectedRoot]: {
       trayId: []
     }
   }
@@ -107,26 +107,4 @@ it('should show a warning if no projects match the search', async () => {
 
   await user.type(screen.getByLabelText('Search'), 'bar')
   expect(screen.getByText('No matching projects, please update your search')).toBeInTheDocument()
-})
-
-describe('accessibility', () => {
-
-  it('should announce projects if a user refreshes', async () => {
-    const feed = buildFeed({trayId: 'trayId'})
-    const project = buildProject({
-      projectId: 'projectId'
-    })
-    const state = {
-      [feedsName]: {
-        trayId: feed
-      },
-      [selectedName]: {
-        trayId: []
-      }
-    }
-    jest.spyOn(Gateway, 'post').mockResolvedValue([project])
-    render(<AvailableProjects feed={feed}/>, {state})
-    await waitForLoadingToFinish()
-    expect(screen.getByTestId('available-projects-list')).toHaveAttribute('aria-live', 'polite')
-  })
 })

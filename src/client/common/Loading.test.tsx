@@ -3,22 +3,31 @@ import React from 'react'
 import {Loading} from './Loading'
 import {screen} from '@testing-library/react'
 
-it('should render loading if loaded is not given', () => {
-  render(<Loading loaded={undefined}/>)
-  expect(screen.getByTestId('loading')).toBeInTheDocument()
-})
-
-it('should render loading if loaded is false', () => {
-  render(<Loading loaded={false}/>)
-  expect(screen.getByTestId('loading')).toBeInTheDocument()
-})
-
-it('should render children if loaded is true', () => {
+it('should render progress but not children if not loaded', () => {
   render(
-    <Loading loaded={true}>
-      <div data-locator='child'/>
+    <Loading loaded={false} title="">
+      <div>content</div>
     </Loading>
   )
-  expect(screen.getByTestId('child')).toBeInTheDocument()
-  expect(screen.queryByTestId('loading')).not.toBeInTheDocument()
+  expect(screen.queryByText('content')).not.toBeInTheDocument()
+  expect(screen.getByRole('progressbar')).toBeInTheDocument()
+})
+
+it('should still render progress so focus does not get reset as well as children when loaded', () => {
+  render(
+    <Loading loaded title="">
+      <div>content</div>
+    </Loading>
+  )
+  expect(screen.getByText('content')).toBeInTheDocument()
+  expect(screen.getByRole('progressbar')).toBeInTheDocument()
+})
+
+it('should allow getting focus for more accessible loading feedback', () => {
+  render(
+    <Loading focus loaded={false} title="">
+      <div>content</div>
+    </Loading>
+  )
+  expect(screen.getByRole('progressbar')).toHaveFocus()
 })

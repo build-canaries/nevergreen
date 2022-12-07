@@ -1,17 +1,20 @@
-import React, {ReactElement, useState} from 'react'
+import type {ReactElement} from 'react'
+import React, {useState} from 'react'
+import type {FeedErrors} from '../domain/FeedError'
+import {enrichErrors, toFeedApiError} from '../domain/FeedError'
+import type {Projects} from '../domain/Project'
+import {enrichProjects} from '../domain/Project'
 import {InterestingProjects} from '../monitor/InterestingProjects'
 import {Loading} from '../common/Loading'
 import {useSelector} from 'react-redux'
 import {getShowPrognosis, getSort} from './SettingsReducer'
 import {post} from '../gateways/Gateway'
-import {enrichProjects, Projects} from '../domain/Project'
 import {createFeed, createId} from '../domain/Feed'
 import {Banner} from '../Banner'
 import {useNavigate} from 'react-router-dom'
 import styles from './preview.scss'
 import {useQuery} from '@tanstack/react-query'
 import {ROUTE_DISPLAY} from '../AppRoutes'
-import {enrichErrors, FeedErrors, toFeedApiError} from '../domain/FeedError'
 
 export function Preview(): ReactElement {
   const prognosis = useSelector(getShowPrognosis)
@@ -48,7 +51,10 @@ export function Preview(): ReactElement {
               onDismiss={() => navigate(ROUTE_DISPLAY)}/>
       <div className={styles.projects}>
         <div className={styles.projectsInner}>
-          <Loading loaded={!isLoading} dark>
+          <Loading loaded={!isLoading}
+                   title="Preview"
+                   dark
+                   focus>
             <InterestingProjects projects={projects} feedErrors={feedErrors}/>
           </Loading>
         </div>

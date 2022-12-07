@@ -1,4 +1,6 @@
-import React, {ReactElement, useMemo, useState} from 'react'
+import type {Feed} from '../../../domain/Feed'
+import type {ReactElement} from 'react'
+import React, {useMemo, useState} from 'react'
 import {ErrorMessages, WarningMessages} from '../../../common/Messages'
 import {Input} from '../../../common/forms/Input'
 import {Refresh} from './Refresh'
@@ -8,7 +10,6 @@ import {SecondaryButton} from '../../../common/forms/Button'
 import {getSelectedProjectsForFeed, projectSelected} from '../SelectedReducer'
 import {useSelector} from 'react-redux'
 import {Loading} from '../../../common/Loading'
-import {Feed} from '../../../domain/Feed'
 import {matchSorter} from 'match-sorter'
 import {CheckboxChecked} from '../../../common/icons/CheckboxChecked'
 import {CheckboxUnchecked} from '../../../common/icons/CheckboxUnchecked'
@@ -85,8 +86,6 @@ export function AvailableProjects({feed}: AvailableProjectsProps): ReactElement 
 
   const buildItems = (
     <ol className={styles.buildItems}
-        aria-live="polite"
-        aria-relevant="additions"
         data-locator="available-projects-list">
       {
         filteredProjects.map((project) => {
@@ -124,7 +123,8 @@ export function AvailableProjects({feed}: AvailableProjectsProps): ReactElement 
                loaded={!isFetching}/>
       {controls}
       <Loading loaded={!isFetching}
-               className={styles.loading}>
+               className={styles.loading}
+               title="Projects">
         {!isError && !hasProjects && noProjectsWarning}
         {!isError && hasProjects && !hasProjectsFiltered && noProjectsMatchSearchWarning}
         {!isError && hasProjectsFiltered && buildItems}

@@ -15,39 +15,30 @@
 }
 
 .pulse {
-  @include font-scale(4);
-
-  animation: bounce 1.4s infinite ease-in-out both;
-  background-color: $mid-grey;
-  border-radius: 50%;
+  animation: dot-flashing 1.5s infinite linear alternate;
+  background-color: $off-black;
+  border-radius: $border-radius;
   display: inline-block;
-  height: 2rem;
-  margin: 0 1rem 0 0;
-  width: 2rem;
+  height: 1.5rem;
+  margin: 0 0.5rem 0 0;
+  width: 1.5rem;
 
-  &:nth-of-type(1) {
-    animation-delay: -0.32s;
+  &:nth-of-type(3) {
+    animation-delay: 0.5s;
   }
 
-  &:nth-of-type(2) {
-    animation-delay: -0.16s;
+  &:nth-of-type(4) {
+    animation-delay: 1s;
   }
 
-  @keyframes bounce {
+  @keyframes dot-flashing {
     0% {
-      transform: scale(0);
+      opacity: 1;
     }
 
-    40% {
-      transform: scale(1);
-    }
-
-    80% {
-      transform: scale(0);
-    }
-
+    50%,
     100% {
-      transform: scale(0);
+      opacity: 0.2;
     }
   }
 }
@@ -56,6 +47,6 @@
   background-color: $off-black;
 
   & .pulse {
-    background-color: $light-grey;
+    background-color: $white;
   }
 }

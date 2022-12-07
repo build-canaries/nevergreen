@@ -49,14 +49,19 @@ export function Monitor(): ReactElement {
     [styles.menusHidden]: menusHidden
   })
 
+  const title = 'Monitor'
+
   return (
     <div className={monitorClassNames} ref={ref}>
-      <Title>Monitor</Title>
+      <Title focus={false}>{title}</Title>
       {!feedsAdded && (
         <SuccessMessage message="Add a feed via the tracking page to start monitoring"/>
       )}
       {feedsAdded && (
-        <Loading dark loaded={loaded}>
+        <Loading dark
+                 loaded={loaded}
+                 title={title}
+                 focus>
           <Success projects={projects} feedErrors={feedErrors}/>
           <InterestingProjects projects={projects} feedErrors={feedErrors}/>
         </Loading>

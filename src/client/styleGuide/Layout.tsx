@@ -8,19 +8,19 @@ import {FloppyDisk} from '../common/icons/FloppyDisk'
 export function Layout(): ReactElement {
   return (
     <>
-      <StyleGuideSection title='Loading'>
-        <Loading loaded={false}>You will not see this</Loading>
-        <Loading loaded={false} dark>You will not see this</Loading>
+      <StyleGuideSection title="Loading">
+        <Loading loaded={false} title="light">You will not see this</Loading>
+        <Loading loaded={false} title="dark" dark>You will not see this</Loading>
       </StyleGuideSection>
-      <StyleGuideSection title='Card'>
-        <Card header={<CardHeading title='Title'/>}>
+      <StyleGuideSection title="Card">
+        <Card header={<CardHeading title="Title"/>}>
           This is an example card.
         </Card>
-        <Card header={<CardHeading title='Title' icon={<FloppyDisk/>}/>}>
+        <Card header={<CardHeading title="Title" icon={<FloppyDisk/>}/>}>
           This is an example card with an icon.
         </Card>
       </StyleGuideSection>
-      <StyleGuideSection title='Table'>
+      <StyleGuideSection title="Table">
         <table>
           <caption>The table caption</caption>
           <thead>
