@@ -41,19 +41,19 @@ export function AvailableProjects({feed}: AvailableProjectsProps): ReactElement 
   const controlsDisabled = isFetching || !hasProjects || isError
 
   const includeAll = () => {
-    filteredProjects.forEach((project) => dispatch(projectSelected({
+    dispatch(projectSelected({
       trayId: feed.trayId,
-      projectId: project.projectId,
+      projectIds: filteredProjects.map((project) => project.projectId),
       selected: true
-    })))
+    }))
   }
 
   const excludeAll = () => {
-    filteredProjects.forEach((project) => dispatch(projectSelected({
+    dispatch(projectSelected({
       trayId: feed.trayId,
-      projectId: project.projectId,
+      projectIds: filteredProjects.map((project) => project.projectId),
       selected: false
-    })))
+    }))
   }
 
   const controls = (
@@ -97,7 +97,7 @@ export function AvailableProjects({feed}: AvailableProjectsProps): ReactElement 
                         checked={isSelected}
                         onToggle={(selected) => dispatch(projectSelected({
                           trayId: feed.trayId,
-                          projectId: project.projectId,
+                          projectIds: [project.projectId],
                           selected
                         }))}>
                 {project.description}

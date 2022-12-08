@@ -82,14 +82,14 @@ describe(projectSelected.toString(), () => {
 
   it('should add the project if selected', () => {
     const existingState = state({trayId: ['a', 'b', 'c']})
-    const action = projectSelected({trayId: 'trayId', projectId: 'd', selected: true})
+    const action = projectSelected({trayId: 'trayId', projectIds: ['d'], selected: true})
     const newState = reducer(existingState, action)
     expect(getSelectedProjectsForFeed('trayId')(newState)).toEqual(['a', 'b', 'c', 'd'])
   })
 
   it('should remove the project if not selected', () => {
     const existingState = state({trayId: ['a', 'b', 'c']})
-    const action = projectSelected({trayId: 'trayId', projectId: 'b', selected: false})
+    const action = projectSelected({trayId: 'trayId', projectIds: ['b'], selected: false})
     const newState = reducer(existingState, action)
     expect(getSelectedProjectsForFeed('trayId')(newState)).toEqual(['a', 'c'])
   })

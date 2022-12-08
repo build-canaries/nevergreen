@@ -5,15 +5,17 @@ import {buildFeed, buildFeedError, buildProject} from '../../../testUtils/builde
 import * as Gateway from '../../../gateways/Gateway'
 import {AvailableProjects} from './AvailableProjects'
 import {feedsRoot} from '../FeedsReducer'
-import {selectedRoot} from '../SelectedReducer'
+import {getSelectedProjectsForFeed, selectedRoot} from '../SelectedReducer'
 
 beforeEach(() => {
   jest.spyOn(Gateway, 'post').mockResolvedValue([])
 })
 
-it('should be able to select projects', async () => {
-  const feed = buildFeed({trayId: 'trayId'})
-  const project = buildProject({trayId: 'trayId', projectId: 'projectId', description: 'some project'})
+const trayId = 'trayId'
+
+it('should be able to select and unselect projects', async () => {
+  const feed = buildFeed({trayId})
+  const project = buildProject({trayId, projectId: 'projectId', description: 'some project'})
   const state = {
     [feedsRoot]: {
       trayId: feed
@@ -22,18 +24,59 @@ it('should be able to select projects', async () => {
       trayId: []
     }
   }
-  jest.spyOn(Gateway, 'post').mockResolvedValue([project])
+  jest.spyOn(Gateway, 'post').mockResolvedValueOnce([project])
 
-  const {user} = render(<AvailableProjects feed={feed}/>, {state})
+  const {user, store} = render(<AvailableProjects feed={feed}/>, {state})
 
   await waitForLoadingToFinish()
 
-  const selectInput = screen.getByLabelText(/some project/)
+  expect(screen.getByLabelText(/some project/)).not.toBeChecked()
+  expect(getSelectedProjectsForFeed(trayId)(store.getState())).toEqual([])
 
-  expect(selectInput).not.toBeChecked()
+  await user.click(screen.getByLabelText(/some project/))
 
-  await user.click(selectInput as Element)
-  expect(selectInput).toBeChecked()
+  expect(screen.getByLabelText(/some project/)).toBeChecked()
+  expect(getSelectedProjectsForFeed(trayId)(store.getState())).toEqual(['projectId'])
+
+  await user.click(screen.getByLabelText(/some project/))
+
+  expect(screen.getByLabelText(/some project/)).not.toBeChecked()
+  expect(getSelectedProjectsForFeed(trayId)(store.getState())).toEqual([])
+})
+
+it('should be able to include and exclude all projects', async () => {
+  const feed = buildFeed({trayId})
+  const project1 = buildProject({trayId, projectId: '1', description: '1'})
+  const project2 = buildProject({trayId, projectId: '2', description: '2'})
+  const state = {
+    [feedsRoot]: {
+      trayId: feed
+    },
+    [selectedRoot]: {
+      trayId: []
+    }
+  }
+  jest.spyOn(Gateway, 'post').mockResolvedValueOnce([project1, project2])
+
+  const {user, store} = render(<AvailableProjects feed={feed}/>, {state})
+
+  await waitForLoadingToFinish()
+
+  expect(screen.getByLabelText(/1/)).not.toBeChecked()
+  expect(screen.getByLabelText(/2/)).not.toBeChecked()
+  expect(getSelectedProjectsForFeed(trayId)(store.getState())).toEqual([])
+
+  await user.click(screen.getByRole('button', {name: 'Include all'}))
+
+  expect(screen.getByLabelText(/1/)).toBeChecked()
+  expect(screen.getByLabelText(/2/)).toBeChecked()
+  expect(getSelectedProjectsForFeed(trayId)(store.getState())).toEqual(['1', '2'])
+
+  await user.click(screen.getByRole('button', {name: 'Exclude all'}))
+
+  expect(screen.getByLabelText(/1/)).not.toBeChecked()
+  expect(screen.getByLabelText(/2/)).not.toBeChecked()
+  expect(getSelectedProjectsForFeed(trayId)(store.getState())).toEqual([])
 })
 
 it('should correctly show and remove errors returned while refreshing', async () => {
@@ -44,7 +87,7 @@ it('should correctly show and remove errors returned while refreshing', async ()
     .mockResolvedValueOnce([
       buildProject()
     ])
-  const feed = buildFeed({trayId: 'trayId'})
+  const feed = buildFeed({trayId})
   const state = {
     [feedsRoot]: {
       trayId: feed
@@ -69,7 +112,7 @@ it('should correctly show and remove errors returned while refreshing', async ()
 })
 
 it('should show a warning if there are no projects', async () => {
-  const feed = buildFeed({trayId: 'trayId'})
+  const feed = buildFeed({trayId})
   const state = {
     [feedsRoot]: {
       trayId: feed
@@ -87,7 +130,7 @@ it('should show a warning if there are no projects', async () => {
 })
 
 it('should show a warning if no projects match the search', async () => {
-  const feed = buildFeed({trayId: 'trayId'})
+  const feed = buildFeed({trayId})
   const project = buildProject({
     projectId: 'projectId',
     description: 'foo'

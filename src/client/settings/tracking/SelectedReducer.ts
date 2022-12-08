@@ -10,6 +10,12 @@ export interface SelectedState {
   readonly [trayId: string]: ReadonlyArray<string>;
 }
 
+interface ProjectSelectedAction {
+  readonly trayId: string;
+  readonly projectIds: ReadonlyArray<string>;
+  readonly selected: boolean;
+}
+
 export const selectedRoot = 'selected'
 
 const initialState: SelectedState = {}
@@ -18,10 +24,10 @@ const slice = createSlice({
   name: selectedRoot,
   initialState,
   reducers: {
-    projectSelected: (draft, action: PayloadAction<{ trayId: string, projectId: string, selected: boolean }>) => {
+    projectSelected: (draft, action: PayloadAction<ProjectSelectedAction>) => {
       action.payload.selected
-        ? draft[action.payload.trayId].push(action.payload.projectId)
-        : remove(draft[action.payload.trayId], (id) => id === action.payload.projectId)
+        ? draft[action.payload.trayId].push(...action.payload.projectIds)
+        : remove(draft[action.payload.trayId], (id) => action.payload.projectIds.includes(id))
     }
   },
   extraReducers: (builder) => {
