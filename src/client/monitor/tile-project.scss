@@ -1,17 +1,21 @@
-@import '../common/variables';
-@import '../common/layout';
-@import '../common/typography';
-@import '../common/links';
+@use '../common/colours';
+@use '../common/layout';
+@use '../common/links';
+
+@mixin prognosis($color, $background-color) {
+  background-color: $background-color;
+  color: $color;
+}
 
 .identifier {
-  @extend %fill-parent;
+  @include layout.fill-parent;
 
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .additionalInfo {
-  @extend %fill-parent;
+  @include layout.fill-parent;
 
   align-items: baseline;
   display: flex;
@@ -30,50 +34,53 @@
 }
 
 .healthy {
-  @include prognosis($white, $healthy);
+  @include prognosis(colours.$white, colours.$healthy);
 
   .link {
-    @include link($white, $white, $healthy);
+    @include links.link(colours.$white, colours.$white, colours.$healthy);
   }
 }
 
 .healthy-building {
-  @include prognosis($healthy-building-text, $healthy-building);
+  @include prognosis(colours.$healthy-building-text, colours.$healthy-building);
 
   .link {
-    @include link($healthy-building-text, $healthy-building-text, $healthy-building);
+    @include links.link(
+      colours.$healthy-building-text,
+      colours.$healthy-building-text,
+      colours.$healthy-building);
   }
 }
 
 .sick {
-  @include prognosis($off-white, $sick);
+  @include prognosis(colours.$off-white, colours.$sick);
 
   .link {
-    @include link($off-white, $off-white, $sick);
+    @include links.link(colours.$off-white, colours.$off-white, colours.$sick);
   }
 }
 
 .sick-building {
-  @include prognosis($white, $sick-building);
+  @include prognosis(colours.$white, colours.$sick-building);
 
   .link {
-    @include link($white, $white, $sick-building);
+    @include links.link(colours.$white, colours.$white, colours.$sick-building);
   }
 }
 
 .unknown {
-  @include prognosis($off-black, $light-grey);
+  @include prognosis(colours.$off-black, colours.$light-grey);
 
   .link {
-    @include link($off-black, $off-black, $light-grey);
+    @include links.link(colours.$off-black, colours.$off-black, colours.$light-grey);
   }
 }
 
 .error {
-  @include prognosis($white, $error);
+  @include prognosis(colours.$white, colours.$error);
 
   .link {
-    @include link($white, $white, $error);
+    @include links.link(colours.$white, colours.$white, colours.$error);
   }
 }
 

@@ -1,8 +1,8 @@
-@import '../../common/responsive';
-@import '../../common/variables';
+@use '../../common/responsive';
+@use '../../common/layout';
 
 .export {
-  @include respond-to(tablet, desktop) {
-    margin: $margin-top $margin-right 0 0;
+  @include responsive.respond-to(tablet, desktop) {
+    margin: layout.$spacing-height layout.$spacing-width 0 0;
   }
 }

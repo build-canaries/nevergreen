@@ -1,14 +1,14 @@
-@import '../../../common/variables';
-@import '../../../common/responsive';
-@import '../../../common/accessibility';
-@import '../../../common/layout';
+@use '../../../common/colours';
+@use '../../../common/responsive';
+@use '../../../common/accessibility';
+@use '../../../common/layout';
 
 %projects-container {
   margin: 1em 0 0;
 }
 
 .availableProjects {
-  margin: $margin-top 0 0 0;
+  margin: layout.$spacing-height 0 0 0;
   width: 100%;
 }
 
@@ -17,11 +17,11 @@
 }
 
 .legend {
-  @extend %visually-hidden;
+  @include accessibility.visually-hidden;
 }
 
 .controls {
-  @include respond-to(very-small) {
+  @include responsive.respond-to(very-small) {
     overflow: scroll;
   }
 }
@@ -30,33 +30,33 @@
   display: block;
   width: 100%;
 
-  @include respond-to(tablet, desktop) {
+  @include responsive.respond-to(tablet, desktop) {
     display: inline-block;
     width: auto;
   }
 }
 
 .includeAll {
-  @include respond-to(tablet, desktop) {
-    margin: $margin-top $margin-right 0 0;
+  @include responsive.respond-to(tablet, desktop) {
+    margin: layout.$spacing-height layout.$spacing-width 0 0;
   }
 }
 
 .excludeAll {
-  @include respond-to(tablet, desktop) {
-    margin: $margin-top $margin-right 0 0;
+  @include responsive.respond-to(tablet, desktop) {
+    margin: layout.$spacing-height layout.$spacing-width 0 0;
   }
 }
 
 .buildItems {
-  @extend %two-column-grid;
+  @include layout.two-column-grid;
   @extend %projects-container;
 
   list-style: none;
   overflow-y: scroll;
   padding: 1em;
 
-  @include respond-to(very-small) {
+  @include responsive.respond-to(very-small) {
     overflow: scroll;
   }
 }
@@ -69,15 +69,15 @@
   display: block;
   width: 100%;
 
-  @include respond-to(tablet, desktop) {
+  @include responsive.respond-to(tablet, desktop) {
     display: inline-block;
-    margin: $margin-top 0 0 0;
+    margin: layout.$spacing-height 0 0 0;
     width: auto;
   }
 }
 
 .projectFilterInput {
-  @include respond-to(tablet, desktop) {
+  @include responsive.respond-to(tablet, desktop) {
     align-items: baseline;
     display: flex;
     margin-top: 0;
@@ -85,13 +85,13 @@
 }
 
 .search {
-  @include respond-to(tablet, desktop) {
-    margin: 0 $margin-right 0 0;
+  @include responsive.respond-to(tablet, desktop) {
+    margin: 0 layout.$spacing-width 0 0;
   }
 }
 
 .backToTop {
-  @include respond-to(tablet, desktop) {
+  @include responsive.respond-to(tablet, desktop) {
     display: none;
   }
 }

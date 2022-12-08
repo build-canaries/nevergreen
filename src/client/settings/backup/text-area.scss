@@ -1,15 +1,15 @@
-@import '../../common/variables';
-@import '../../common/typography';
-@import '../../common/layout';
-@import '../../common/accessibility';
+@use '../../common/colours';
+@use '../../common/typography';
+@use '../../common/accessibility';
+@use '../../common/layout';
 
 .data {
-  @include font-scale(-2);
+  @include typography.font-scale(-2);
 
-  border: 1px solid $mid-grey;
-  font-family: $monospace-font;
+  border: 1px solid colours.$mid-grey;
+  font-family: typography.$monospace-font;
   height: 20em;
-  margin: $margin-top 0 0 0;
+  margin: layout.$spacing-height 0 0 0;
   padding: 0.5em;
   resize: vertical;
   vertical-align: top; // remove whitespace from the bottom
@@ -18,29 +18,29 @@
 
   &:not(:disabled) {
     &:read-write {
-      @include interactive($focus-color-change-percentage: 0%);
+      @include accessibility.interactive($focus-color-change-percentage: 0%);
     }
 
     &:read-only {
       &:focus {
-        @include focus($focus-color-change-percentage: 0%);
+        @include accessibility.focus($focus-color-change-percentage: 0%);
       }
     }
   }
 }
 
 .containerError {
-  border-left: 5px solid $error;
+  border-left: 5px solid colours.$error;
   padding-left: 1em;
 }
 
 .error {
-  outline: 3px solid $error;
-  z-index: $focus-index;
+  outline: 3px solid colours.$error;
+  z-index: layout.$focus-index;
 }
 
 .errorMessage {
-  color: $error;
+  color: colours.$error;
   font-weight: bold;
   list-style: none;
   margin: 0.5em 0;

@@ -1,5 +1,6 @@
-@import '../variables';
-@import '../responsive';
+@use '../colours';
+@use '../responsive';
+@use '../layout';
 
 @mixin standard-input-dimensions($fix-width: false, $adjust-px: 0) {
   height: 40px - $adjust-px;
@@ -10,7 +11,7 @@
     width: 40px - $adjust-px;
   }
 
-  @include respond-to(tablet, desktop) {
+  @include responsive.respond-to(tablet, desktop) {
     height: 44px - $adjust-px;
     min-height: 44px - $adjust-px;
 
@@ -22,7 +23,7 @@
 }
 
 .inputContainer {
-  margin-top: $margin-top;
+  margin-top: layout.$spacing-height;
   min-width: 1em;
   width: 100%;
 }

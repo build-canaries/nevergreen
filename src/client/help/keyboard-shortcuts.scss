@@ -1,16 +1,18 @@
-@import '../common/variables';
+@use '../common/colours';
+@use '../common/typography';
+@use '../common/layout';
 
 .header {
-  margin: $margin-top 0 0 0;
+  margin: layout.$spacing-height 0 0 0;
 }
 
 .binding {
   background-image: linear-gradient(to bottom, #eee, #f9f9f9, #eee);
-  border: $mid-grey 1px solid;
+  border: colours.$mid-grey 1px solid;
   border-radius: 5px;
   box-shadow: 0 1px 0 #919193;
-  color: $off-black;
-  font-family: $monospace-font;
+  color: colours.$off-black;
+  font-family: typography.$monospace-font;
   margin: 0.1em;
   padding: 0.1em 0.3em;
 }
@@ -31,7 +33,7 @@
   list-style: none;
 
   & .shortcut:nth-child(odd) {
-    background: $light-grey;
+    background: colours.$light-grey;
   }
 }
 

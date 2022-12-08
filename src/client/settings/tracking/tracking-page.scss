@@ -1,7 +1,7 @@
-@import '../../common/responsive';
+@use '../../common/responsive';
 
 .refreshTime {
-  @include respond-to(tablet, desktop) {
+  @include responsive.respond-to(tablet, desktop) {
     width: 20em;
   }
 }

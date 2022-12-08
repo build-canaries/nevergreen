@@ -1,7 +1,7 @@
-@import '../common/layout';
+@use '../common/layout';
 
 .interestingProjects {
-  @extend %fill-parent;
+  @include layout.fill-parent;
 
   overflow: scroll;
 }

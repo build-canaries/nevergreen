@@ -1,20 +1,20 @@
-@import '../variables';
-@import '../layout';
+@use '../colours';
+@use '../layout';
 
 .card {
-  border: 1px solid $mid-grey;
+  border: 1px solid colours.$mid-grey;
   display: flex;
   flex-direction: column;
-  margin: $margin-top 0 0 0;
+  margin: layout.$spacing-height 0 0 0;
 
   &:focus-within {
-    border-color: $black;
+    border-color: colours.$black;
   }
 }
 
 .header {
   align-items: center;
-  background-color: $light-grey;
+  background-color: colours.$light-grey;
   display: flex;
   padding: 1em;
 }

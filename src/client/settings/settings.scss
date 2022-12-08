@@ -1,22 +1,23 @@
-@import '../common/variables';
-@import '../common/responsive';
-@import '../common/accessibility';
-@import '../common/typography';
+@use '../common/colours';
+@use '../common/responsive';
+@use '../common/accessibility';
+@use '../common/typography';
+@use '../common/layout';
 
 .settings {
   margin: 0 auto;
-  max-width: $max-page-width;
+  max-width: layout.$max-page-width;
   width: 100%;
 
-  @include respond-to(tablet, desktop) {
+  @include responsive.respond-to(tablet, desktop) {
     display: grid;
     grid-template-columns: 25% 1fr;
   }
 }
 
 .nav {
-  background-color: $off-black;
-  color: $white;
+  background-color: colours.$off-black;
+  color: colours.$white;
 }
 
 .menu {
@@ -26,39 +27,39 @@
 }
 
 .link {
-  color: $white;
+  color: colours.$white;
   display: inline-block;
   padding: 1em;
   text-decoration: none;
   width: 100%;
 
   &:visited {
-    color: $white;
+    color: colours.$white;
   }
 
   &:not(.activeLink) {
-    @include interactive(
-      $color: $white,
-      $background-color: $off-black,
+    @include accessibility.interactive(
+      $color: colours.$white,
+      $background-color: colours.$off-black,
       $border-color: transparent);
   }
 
-  @include respond-to(tablet, desktop) {
+  @include responsive.respond-to(tablet, desktop) {
     padding: 1em 1em 1em 2em;
   }
 }
 
 .activeLink {
-  background-color: $white;
-  color: $off-black;
+  background-color: colours.$white;
+  color: colours.$off-black;
 
   &:visited {
-    color: $off-black;
+    color: colours.$off-black;
   }
 
   &:hover,
   &:focus {
-    background-color: $white;
-    color: $off-black;
+    background-color: colours.$white;
+    color: colours.$off-black;
   }
 }

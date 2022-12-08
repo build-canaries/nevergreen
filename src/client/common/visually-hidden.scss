@@ -1,5 +1,5 @@
-@import 'accessibility';
+@use 'accessibility';
 
 .content {
-  @extend %visually-hidden;
+  @include accessibility.visually-hidden;
 }

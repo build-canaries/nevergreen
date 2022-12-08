@@ -1,24 +1,24 @@
-@import '../common/variables';
-@import '../common/layout';
-@import '../common/typography';
+@use '../common/layout';
+@use '../common/typography';
+@use '../common/responsive';
 
 $border-radius: 5px;
 
 .tile {
-  @extend %fill-parent;
+  @include layout.fill-parent;
 
   border-radius: $border-radius;
   display: flex;
   flex-direction: column;
-  font-family: $monospace-font;
+  font-family: typography.$monospace-font;
   text-transform: lowercase;
 }
 
 .header {
-  @include font-scale(-1);
+  @include typography.font-scale(-1);
 
-  @include respond-to(tablet, desktop) {
-    @include font-scale(0);
+  @include responsive.respond-to(tablet, desktop) {
+    @include typography.font-scale(0);
   }
 
   border-top-left-radius: $border-radius;
@@ -40,10 +40,10 @@ $border-radius: 5px;
 }
 
 .footer {
-  @include font-scale(-1);
+  @include typography.font-scale(-1);
 
-  @include respond-to(tablet, desktop) {
-    @include font-scale(0);
+  @include responsive.respond-to(tablet, desktop) {
+    @include typography.font-scale(0);
   }
 
   border-bottom-left-radius: $border-radius;

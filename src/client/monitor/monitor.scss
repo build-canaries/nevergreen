@@ -1,10 +1,11 @@
-@import '../common/variables';
+@use '../common/colours';
+@use '../common/typography';
 
 .monitor {
-  background-color: $black;
-  color: $off-white;
+  background-color: colours.$black;
+  color: colours.$off-white;
   cursor: inherit;
-  font-family: $monospace-font;
+  font-family: typography.$monospace-font;
   height: 100vh;
   position: fixed;
   top: 0;

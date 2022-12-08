@@ -1,7 +1,7 @@
-@import './variables';
-@import './accessibility';
+@use 'accessibility';
+@use 'colours';
 
-@mixin link($color: $blue, $visited-color: $blue, $interactive-color: $light-grey) {
+@mixin link($color: colours.$blue, $visited-color: colours.$blue, $interactive-color: colours.$light-grey) {
   background: none;
   border: none;
   color: $color;
@@ -13,7 +13,7 @@
     color: $visited-color;
   }
 
-  @include interactive(
+  @include accessibility.interactive(
     $color: $color,
     $background-color: $interactive-color,
     $border-color: transparent,

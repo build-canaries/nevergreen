@@ -1,7 +1,7 @@
-@import './common/variables';
+@use 'common/typography';
 
 .body {
-  font-family: $monospace-font;
+  font-family: typography.$monospace-font;
   left: -99999px;
   padding: 0;
   position: absolute;

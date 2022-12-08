@@ -1,16 +1,16 @@
-@import '../common/variables';
-@import '../common/responsive';
-@import '../common/typography';
-@import '../common/links';
+@use '../common/colours';
+@use '../common/responsive';
+@use '../common/links';
+@use '../common/layout';
 
 .siteFooter {
-  background-color: $off-black;
-  border-bottom: 0.5em solid $version-color;
+  background-color: colours.$off-black;
+  border-bottom: 0.5em solid colours.$version-color;
   display: block;
   padding: 1em;
-  z-index: $header-footer-index;
+  z-index: layout.$header-footer-index;
 
-  @include respond-to(tablet, desktop) {
+  @include responsive.respond-to(tablet, desktop) {
     display: flex;
     justify-content: space-between;
     padding-left: 2em;
@@ -23,19 +23,19 @@
 }
 
 .about {
-  @include link($white, $white, $black);
+  @include links.link(colours.$white, colours.$white, colours.$black);
 
   text-align: left;
   text-decoration: none;
 }
 
 .submitAnIssue {
-  @include link($white, $white, $black);
+  @include links.link(colours.$white, colours.$white, colours.$black);
 
   display: block;
-  margin: $margin-top 0 0 0;
+  margin: layout.$spacing-height 0 0 0;
 
-  @include respond-to(tablet, desktop) {
+  @include responsive.respond-to(tablet, desktop) {
     margin: 0;
   }
 }

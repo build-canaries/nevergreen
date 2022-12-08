@@ -1,27 +1,26 @@
-@import '../../../common/layout';
-@import '../../../common/variables';
-@import '../../../common/accessibility';
-@import '../../../common/forms/button';
+@use '../../../common/colours';
+@use '../../../common/accessibility';
+@use '../../../common/forms/button';
 
 .openFile {
-  @include interactive;
+  @include accessibility.interactive;
   @extend .secondary;
 
-  box-shadow: $shadow;
+  box-shadow: colours.$shadow;
   cursor: pointer;
   transition: box-shadow 0.1s ease-in;
 }
 
 .openFileInput {
-  @extend %visually-hidden;
+  @include accessibility.visually-hidden;
 
   &:focus + label {
-    @include focus;
+    @include accessibility.focus;
   }
 
   &:disabled + label {
-    background-color: $light-grey;
-    color: $mid-grey;
+    background-color: colours.$light-grey;
+    color: colours.$mid-grey;
     cursor: default;
   }
 }

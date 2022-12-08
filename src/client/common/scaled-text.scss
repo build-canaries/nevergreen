@@ -1,7 +1,7 @@
-@import 'layout';
+@use 'layout';
 
 .body {
-  @extend %fill-parent;
+  @include layout.fill-parent;
 
   align-items: center;
   display: flex;

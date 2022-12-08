@@ -1,19 +1,19 @@
 @use 'sass:color';
-@import '../variables';
-@import '../typography';
-@import '../accessibility';
-@import '../responsive';
-@import './forms';
+@use '../colours';
+@use '../responsive';
+@use '../accessibility';
+@use '../layout';
+@use 'forms';
 
 .container {
-  @include standard-input-dimensions;
+  @include forms.standard-input-dimensions;
 
   display: block;
   height: auto;
-  margin: $margin-top 0 0 0;
+  margin: layout.$spacing-height 0 0 0;
   width: 100%;
 
-  @include respond-to(tablet, desktop) {
+  @include responsive.respond-to(tablet, desktop) {
     width: fit-content;
   }
 }
@@ -24,7 +24,7 @@
   padding: 0 0 0 40px;
   position: relative;
 
-  @include respond-to(tablet, desktop) {
+  @include responsive.respond-to(tablet, desktop) {
     padding: 0 0 0 44px;
   }
 }
@@ -36,10 +36,10 @@
   touch-action: manipulation;
 
   &::before {
-    @include standard-input-dimensions(true, 2);
+    @include forms.standard-input-dimensions(true, 2);
 
-    background: $white;
-    border: $input-border;
+    background: colours.$white;
+    border: colours.$input-border;
     border-radius: 2px;
     content: '';
     left: 0;
@@ -49,7 +49,7 @@
 
   &::after {
     background: transparent;
-    border: solid $mid-grey;
+    border: solid colours.$mid-grey;
     border-top-color: transparent;
     border-width: 0 0 5px 5px;
     content: '';
@@ -62,7 +62,7 @@
     width: 20px;
     zoom: 1;
 
-    @include respond-to(tablet, desktop) {
+    @include responsive.respond-to(tablet, desktop) {
       height: 9px;
       width: 22px;
     }
@@ -70,7 +70,7 @@
 }
 
 .input {
-  @include standard-input-dimensions(true);
+  @include forms.standard-input-dimensions(true);
 
   cursor: pointer;
   left: 0;
@@ -93,16 +93,16 @@
 
   &:focus + .children::before {
     border-radius: 0;
-    box-shadow: 0 0 0 3px $outline;
+    box-shadow: 0 0 0 3px colours.$outline;
   }
 
   &:enabled:hover {
     & + .children {
-      @include hover;
+      @include accessibility.hover;
     }
 
     & + .children::before {
-      border-color: color.scale($light-grey, $lightness: $color-change-percentage);
+      border-color: color.scale(colours.$light-grey, $lightness: colours.$color-change-percentage);
       border-radius: 0;
     }
   }

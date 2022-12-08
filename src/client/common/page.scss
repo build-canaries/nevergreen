@@ -1,22 +1,23 @@
-@import './variables';
-@import './responsive';
+@use 'colours';
+@use 'responsive';
+@use 'layout';
 
 .page {
-  background: $white;
+  background: colours.$white;
   height: 100%;
   margin: auto;
-  max-width: $max-page-width;
+  max-width: layout.$max-page-width;
   padding: 1em;
 
   & > *:first-child {
     margin-top: 0;
   }
 
-  @include respond-to(desktop) {
+  @include responsive.respond-to(desktop) {
     padding: 2em;
   }
 }
 
 .backToTop {
-  margin-top: $margin-top * 2;
+  margin-top: layout.$spacing-height * 2;
 }

@@ -1,5 +1,5 @@
-@import '../common/variables';
+@use '../common/layout';
 
 .title {
-  margin-top: $margin-top;
+  margin-top: layout.$spacing-height;
 }

@@ -1,12 +1,11 @@
 @use 'sass:color';
-@import '../common/variables';
-@import '../common/layout';
-@import '../common/forms/button';
-@import '../common/responsive';
+@use 'colours';
+@use 'responsive';
+@use 'layout';
 
 .overlay {
   align-items: center;
-  background-color: color.adjust($white, $alpha: -0.25);
+  background-color: color.adjust(colours.$white, $alpha: -0.25);
   bottom: 0;
   display: flex;
   justify-content: center;
@@ -14,23 +13,23 @@
   position: fixed;
   right: 0;
   top: 0;
-  z-index: $model-index;
+  z-index: layout.$model-index;
 }
 
 .modal {
   background-color: #fff;
   border: 1px solid #ececec;
-  box-shadow: 0 2px 5px color.adjust($black, $alpha: -0.74);
+  box-shadow: 0 2px 5px color.adjust(colours.$black, $alpha: -0.74);
   color: #212121;
   display: flex;
   flex-direction: column;
-  max-height: calc(100vh - #{$margin-top * 2});
+  max-height: calc(100vh - #{layout.$spacing-height * 2});
   max-width: 52em;
   overflow: scroll;
   padding: 1em;
   width: calc(100vw - 3em);
 
-  @include respond-to(very-small) {
+  @include responsive.respond-to(very-small) {
     max-height: 100vh;
     width: 100vw;
   }

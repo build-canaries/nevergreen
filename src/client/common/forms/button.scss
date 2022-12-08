@@ -1,31 +1,42 @@
-@import '../variables';
-@import '../forms/forms';
-@import '../accessibility';
-@import '../typography';
+@use 'sass:color';
+@use '../colours';
+@use '../accessibility';
+@use '../typography';
+@use '../responsive';
+@use '../layout';
+@use 'forms';
 
-@mixin button-interaction($color: $off-black, $background-color: $white, $border-color: $light-grey) {
+@mixin button-interaction(
+  $color: colours.$off-black,
+  $background-color: colours.$white,
+  $border-color: colours.$light-grey
+) {
   &:enabled,
   &[href] {
-    box-shadow: $shadow;
+    box-shadow: colours.$shadow;
     cursor: pointer;
     transition: box-shadow 0.1s ease-in;
 
-    @include interactive($color, $background-color, $border-color) {
-      box-shadow: $focus-shadow;
+    @include accessibility.interactive($color, $background-color, $border-color) {
+      box-shadow: 0 4px 8px 0 color.adjust(colours.$black, $alpha: -0.74);
     }
   }
 }
 
-@mixin button($color: $off-black, $background-color: $white, $border-color: $light-grey) {
+@mixin button(
+  $color: colours.$off-black,
+  $background-color: colours.$white,
+  $border-color: colours.$light-grey
+) {
   @include button-interaction($color, $background-color, $border-color);
-  @include standard-input-dimensions;
+  @include forms.standard-input-dimensions;
 
   background-color: $background-color;
   border: 1px solid $border-color;
-  border-radius: $border-radius;
+  border-radius: colours.$border-radius;
   color: $color;
   display: block;
-  margin: $margin-top 0 0 0;
+  margin: layout.$spacing-height 0 0 0;
   overflow: hidden;
   padding: 0.5em 1em;
   text-align: center;
@@ -36,12 +47,12 @@
   width: 100%;
 
   &:disabled {
-    background-color: $light-grey;
-    color: $mid-grey;
+    background-color: colours.$light-grey;
+    color: colours.$mid-grey;
     cursor: default;
   }
 
-  @include respond-to(tablet, desktop) {
+  @include responsive.respond-to(tablet, desktop) {
     display: inline-block;
     margin: 0;
     width: auto;
@@ -57,7 +68,7 @@
 }
 
 .primary {
-  @include button($off-white, $blue, $blue);
+  @include button(colours.$off-white, colours.$blue, colours.$blue);
 }
 
 .secondary {
@@ -65,11 +76,11 @@
 }
 
 .danger {
-  @include button($white, $error, $error);
+  @include button(colours.$white, colours.$error, colours.$error);
 }
 
 .iconOnly {
-  @include standard-input-dimensions(true);
+  @include forms.standard-input-dimensions(true);
 
   margin: 0;
   padding: 0.5em;
@@ -81,7 +92,7 @@
 
 .inputButton {
   border-left: none;
-  border-radius: 0 $border-radius $border-radius 0;
+  border-radius: 0 colours.$border-radius colours.$border-radius 0;
 
   &:enabled {
     box-shadow: none;

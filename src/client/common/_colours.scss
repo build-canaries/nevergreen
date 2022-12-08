@@ -1,12 +1,5 @@
 @use 'sass:color';
 
-// Fonts
-
-$normal-font: roboto, sans-serif;
-$monospace-font: roboto mono, monospace;
-
-// Colours
-
 $black: black;
 $off-black: #212121;
 $white: #fff;
@@ -27,23 +20,6 @@ $version-color: #e3256b;
 // Decorations
 
 $shadow: 0 2px 5px color.adjust($black, $alpha: -0.74);
-$focus-shadow: 0 4px 8px 0 color.adjust($black, $alpha: -0.74);
 $color-change-percentage: 8%;
 $input-border: 1px solid $light-grey;
 $border-radius: 2px;
-
-// Sizes
-
-$margin-top: 1.5em;
-$margin-right: 1em;
-$max-page-width: 1280px;
-
-// Z Index
-$header-footer-index: 100;
-$focus-index: 1000;
-$model-index: 9999;
-
-@mixin prognosis($color, $background-color) {
-  background-color: $background-color;
-  color: $color;
-}

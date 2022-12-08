@@ -1,12 +1,12 @@
-@import './common/variables';
-@import './common/layout';
+@use 'common/colours';
+@use 'common/layout';
 
 .content {
-  background-color: $white;
+  background-color: colours.$white;
   height: 100vh;
   padding: 2em;
 }
 
 .deleteConfiguration {
-  @extend %blocking;
+  @include layout.blocking;
 }

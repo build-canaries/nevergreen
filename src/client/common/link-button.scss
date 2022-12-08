@@ -1,5 +1,7 @@
-@import './forms/button';
-@import './variables';
+@use './forms/button';
+@use 'colours';
+@use 'responsive';
+@use 'layout';
 
 .linkButton {
   @extend .secondary;
@@ -7,23 +9,23 @@
   vertical-align: bottom;
 
   &:visited {
-    color: $off-black;
+    color: colours.$off-black;
   }
 }
 
 .addButton {
   @extend .primary;
 
-  margin: $margin-top 0;
+  margin: layout.$spacing-height 0;
   vertical-align: bottom;
 
   &:visited {
-    color: $off-white;
+    color: colours.$off-white;
   }
 }
 
 .feedButtons {
-  @include respond-to(tablet, desktop) {
-    margin: $margin-top $margin-right 0 0;
+  @include responsive.respond-to(tablet, desktop) {
+    margin: layout.$spacing-height layout.$spacing-width 0 0;
   }
 }

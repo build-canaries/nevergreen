@@ -1,18 +1,18 @@
-@import '../variables';
-@import '../layout';
-@import '../typography';
+@use '../layout';
+@use '../typography';
+@use '../responsive';
 
 .icon {
-  @include font-scale(2);
+  @include typography.font-scale(2);
 
   display: flex;
 
-  @include respond-to(very-small) {
+  @include responsive.respond-to(very-small) {
     display: none;
   }
 }
 
 .title {
   flex-grow: 1;
-  margin: 0 $margin-right 0 0;
+  margin: 0 layout.$spacing-width 0 0;
 }

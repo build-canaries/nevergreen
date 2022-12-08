@@ -1,19 +1,19 @@
-@import '../../common/variables';
-@import '../../common/responsive';
+@use '../../common/responsive';
+@use '../../common/layout';
 
 .dropDownLabel {
-  @include respond-to(tablet, desktop) {
+  @include responsive.respond-to(tablet, desktop) {
     display: inline-block;
     width: 12em;
   }
 }
 
 .dropDown {
-  @include respond-to(tablet, desktop) {
+  @include responsive.respond-to(tablet, desktop) {
     width: 20em;
   }
 }
 
 .preview {
-  margin-top: $margin-top;
+  margin-top: layout.$spacing-height;
 }

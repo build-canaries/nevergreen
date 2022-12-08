@@ -1,15 +1,14 @@
-@import '../../common/typography';
-@import '../../common/variables';
-@import '../../common/layout';
+@use '../../common/colours';
+@use '../../common/layout';
 
 .container {
-  border: 1px solid $light-grey;
-  margin-top: $margin-top;
+  border: colours.$input-border;
+  margin-top: layout.$spacing-height;
   padding: 1em;
 }
 
 .options {
-  @extend %two-column-grid;
+  @include layout.two-column-grid;
 }
 
 .checkbox {

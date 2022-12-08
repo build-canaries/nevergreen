@@ -164,7 +164,7 @@
     "parser": "@typescript-eslint/parser",
     "settings": {
       "react": {
-        "version": "17.0"
+        "version": "18.0"
       }
     },
     "env": {

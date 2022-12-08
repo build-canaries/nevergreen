@@ -1,16 +1,16 @@
-@import '../common/variables';
+@use '../common/layout';
 
 .modal {
   align-self: normal;
-  margin: $margin-top 0;
+  margin: layout.$spacing-height 0;
 }
 
 .articles {
   list-style: none;
-  margin: $margin-top 0 0 0;
+  margin: layout.$spacing-height 0 0 0;
 
   > li {
-    margin: 0 0 $margin-top 0;
+    margin: 0 0 layout.$spacing-height 0;
   }
 
   > li:last-child {

@@ -1,10 +1,10 @@
-@import '../../common/variables';
-@import '../../common/responsive';
+@use '../../common/layout';
+@use '../../common/responsive';
 
 .exportButton,
 .importButton {
-  @include respond-to(tablet, desktop) {
+  @include responsive.respond-to(tablet, desktop) {
     display: inline-block;
-    margin: $margin-top $margin-right 0 0;
+    margin: layout.$spacing-height layout.$spacing-width 0 0;
   }
 }

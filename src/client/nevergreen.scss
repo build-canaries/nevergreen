@@ -1,6 +1,5 @@
+@use 'common/colours';
 @import 'defaults';
-@import './common/variables';
-@import './common/responsive';
 
 .nevergreen {
   display: flex;
@@ -13,7 +12,7 @@
 }
 
 .main {
-  background-color: $black;
+  background-color: colours.$black;
   display: flex;
   flex-grow: 1;
 }

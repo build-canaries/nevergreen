@@ -1,23 +1,22 @@
-@import '../common/variables';
-@import '../common/responsive';
-@import '../common/typography';
-@import '../common/accessibility';
-@import '../common/forms/button';
+@use '../common/colours';
+@use '../common/responsive';
+@use '../common/accessibility';
+@use '../common/layout';
 
 .siteHeader {
-  background-color: $off-black;
-  color: $white;
+  background-color: colours.$off-black;
+  color: colours.$white;
   display: block;
-  z-index: $header-footer-index;
+  z-index: layout.$header-footer-index;
 }
 
 .inner {
   align-items: center;
   display: flex;
-  max-width: $max-page-width;
+  max-width: layout.$max-page-width;
   padding: 0;
 
-  @include respond-to(tablet, desktop) {
+  @include responsive.respond-to(tablet, desktop) {
     margin: 0 auto;
     padding: 0 2em;
   }
@@ -30,7 +29,7 @@
 .logo {
   display: none;
 
-  @include respond-to(tablet, desktop) {
+  @include responsive.respond-to(tablet, desktop) {
     display: block;
     height: 55px;
     margin-right: 1em;
@@ -41,7 +40,7 @@
 .nav {
   width: 100%;
 
-  @include respond-to(very-small) {
+  @include responsive.respond-to(very-small) {
     overflow: scroll;
   }
 }
@@ -57,7 +56,7 @@
     flex-grow: 1;
   }
 
-  @include respond-to(tablet, desktop) {
+  @include responsive.respond-to(tablet, desktop) {
     display: block;
   }
 }
@@ -69,7 +68,7 @@
 }
 
 .menuItem {
-  color: $white;
+  color: colours.$white;
   display: inline-block;
   height: 65px;
   padding: 1em;
@@ -77,13 +76,13 @@
   width: 100%;
 
   &:visited {
-    color: $white;
+    color: colours.$white;
   }
 
   &:not(.active) {
-    @include interactive(
-      $color: $white,
-      $background-color: $off-black,
+    @include accessibility.interactive(
+      $color: colours.$white,
+      $background-color: colours.$off-black,
       $border-color: transparent);
   }
 }
@@ -98,17 +97,17 @@
 }
 
 .active {
-  background-color: $white;
-  color: $off-black;
+  background-color: colours.$white;
+  color: colours.$off-black;
 
   &:visited {
-    color: $off-black;
+    color: colours.$off-black;
   }
 
   &:hover,
   &:focus {
-    background-color: $white;
-    color: $off-black;
+    background-color: colours.$white;
+    color: colours.$off-black;
     cursor: default;
   }
 }

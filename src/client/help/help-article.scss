@@ -1,12 +1,13 @@
-@import '../common/variables';
+@use '../common/colours';
+@use '../common/layout';
 
 .help {
-  border: 1px solid #ececec;
+  border: colours.$input-border;
   padding: 1em;
 }
 
 .article {
-  margin: $margin-top 0;
+  margin: layout.$spacing-height 0;
 }
 
 .keywords {
@@ -15,12 +16,12 @@
 }
 
 .keyword {
-  color: $mid-grey;
+  color: colours.$mid-grey;
   display: inline-block;
   margin: 0 0.5em;
 }
 
 .keywordMatched {
-  color: $off-black;
+  color: colours.$off-black;
   font-weight: bold;
 }

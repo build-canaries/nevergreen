@@ -1,17 +1,17 @@
-@import '../../../common/variables';
-@import '../../../common/layout';
+@use '../../../common/layout';
+@use '../../../common/responsive';
 
 .section {
-  margin-top: $margin-top;
+  margin-top: layout.$spacing-height;
 }
 
 .feedSettingsName,
 .serverType {
-  @include fixed-width(26em);
+  @include layout.fixed-width(26em);
 }
 
 .link {
-  @include respond-to(tablet, desktop) {
-    margin: $margin-top $margin-right 0 0;
+  @include responsive.respond-to(tablet, desktop) {
+    margin: layout.$spacing-height layout.$spacing-width 0 0;
   }
 }

@@ -1,8 +1,8 @@
-@import '../common/variables';
+@use '../common/colours';
 
 .summary {
-  background-color: $off-black;
-  color: $off-white;
+  background-color: colours.$off-black;
+  color: colours.$off-white;
   text-align: center;
 }
 
@@ -13,25 +13,25 @@
 }
 
 .error {
-  background-color: $error;
+  background-color: colours.$error;
 }
 
 .healthy {
-  background-color: $healthy;
+  background-color: colours.$healthy;
 }
 
 .healthy-building {
-  background-color: $healthy-building;
+  background-color: colours.$healthy-building;
 }
 
 .sick {
-  background-color: $sick;
+  background-color: colours.$sick;
 }
 
 .sick-building {
-  background-color: $sick-building;
+  background-color: colours.$sick-building;
 }
 
 .unknown {
-  background-color: $light-grey;
+  background-color: colours.$light-grey;
 }

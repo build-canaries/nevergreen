@@ -1,8 +1,7 @@
-@import './forms';
-@import '../variables';
-@import '../typography';
-@import '../responsive';
-@import '../accessibility';
+@use 'forms';
+@use '../colours';
+@use '../accessibility';
+@use '../layout';
 
 .wrapper {
   align-items: normal;
@@ -13,18 +12,18 @@
 }
 
 .input {
-  @include standard-input-dimensions;
+  @include forms.standard-input-dimensions;
 
-  border: $input-border;
-  border-radius: $border-radius;
+  border: colours.$input-border;
+  border-radius: colours.$border-radius;
   flex-grow: 1;
   min-width: 1em;
   padding: 0.5em;
   text-overflow: ellipsis;
 
   &:disabled {
-    border-color: $mid-grey;
-    color: $mid-grey;
+    border-color: colours.$mid-grey;
+    color: colours.$mid-grey;
   }
 
   &:read-only {
@@ -33,12 +32,12 @@
 
   &:not(:disabled) {
     &:read-write {
-      @include interactive($focus-color-change-percentage: 0%);
+      @include accessibility.interactive($focus-color-change-percentage: 0%);
     }
 
     &:read-only {
       &:focus {
-        @include focus($focus-color-change-percentage: 0%);
+        @include accessibility.focus($focus-color-change-percentage: 0%);
       }
     }
   }
@@ -50,17 +49,17 @@
 }
 
 .containerError {
-  border-left: 5px solid $error;
+  border-left: 5px solid colours.$error;
   padding-left: 1em;
 }
 
 .error {
-  outline: 3px solid $error;
-  z-index: $focus-index;
+  outline: 3px solid colours.$error;
+  z-index: layout.$focus-index;
 }
 
 .errorMessage {
-  color: $error;
+  color: colours.$error;
   font-weight: bold;
   margin: 0.5em 0;
 }

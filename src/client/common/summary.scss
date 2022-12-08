@@ -1,14 +1,13 @@
-@import './variables';
-@import './layout';
+@use './responsive';
 
 .summaryList {
-  @include respond-to(tablet, desktop) {
+  @include responsive.respond-to(tablet, desktop) {
     width: 100%;
   }
 }
 
 .summaryListRow {
-  @include respond-to(tablet, desktop) {
+  @include responsive.respond-to(tablet, desktop) {
     display: grid;
     grid-template-columns: 30% 70%;
   }

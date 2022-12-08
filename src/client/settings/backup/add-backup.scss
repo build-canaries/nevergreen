@@ -1,16 +1,14 @@
-@import '../../common/variables';
-@import '../../common/responsive';
-@import '../../common/layout';
+@use '../../common/layout';
 
 .where {
-  @include fixed-width(20em);
+  @include layout.fixed-width(20em);
 }
 
 .id,
 .password {
-  @include fixed-width(38em);
+  @include layout.fixed-width(38em);
 }
 
 .add {
-  margin: $margin-top 0 0 0;
+  margin: layout.$spacing-height 0 0 0;
 }

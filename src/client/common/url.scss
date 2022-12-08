@@ -1,6 +1,5 @@
-@import './typography';
-@import './variables';
+@use 'typography';
 
 .url {
-  font-family: $monospace-font;
+  font-family: typography.$monospace-font;
 }

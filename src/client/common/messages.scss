@@ -1,15 +1,15 @@
 @use 'sass:color';
-@import 'variables';
-@import 'typography';
-@import 'responsive';
+@use 'colours';
+@use 'responsive';
+@use 'layout';
 
 @mixin _messages($color, $background-color) {
   align-items: center;
   background-color: $background-color;
-  border-radius: $border-radius;
+  border-radius: colours.$border-radius;
   color: $color;
   display: flex;
-  margin: $margin-top 0 0;
+  margin: layout.$spacing-height 0 0;
 
   & > .icon {
     background-color: color.scale($background-color, $lightness: -10%);
@@ -20,25 +20,25 @@
     color: $color;
   }
 
-  @include respond-to(very-small) {
+  @include responsive.respond-to(very-small) {
     overflow: scroll;
   }
 }
 
 .error {
-  @include _messages($white, $error);
+  @include _messages(colours.$white, colours.$error);
 }
 
 .warning {
-  @include _messages($off-black, $yellow);
+  @include _messages(colours.$off-black, colours.$yellow);
 }
 
 .info {
-  @include _messages($off-white, $blue);
+  @include _messages(colours.$off-white, colours.$blue);
 }
 
 .success {
-  @include _messages($off-white, $blue);
+  @include _messages(colours.$off-white, colours.$blue);
 }
 
 .messages {

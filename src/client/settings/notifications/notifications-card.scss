@@ -1,9 +1,9 @@
-@import '../../common/variables';
+@use '../../common/colours';
 
 .yes {
-  color: $blue;
+  color: colours.$blue;
 }
 
 .no {
-  color: $sick;
+  color: colours.$sick;
 }

@@ -1,8 +1,9 @@
-@import '../common/variables';
+@use '../common/colours';
+@use '../common/typography';
 
 .preview {
-  background-color: $black;
-  color: $off-white;
+  background-color: colours.$black;
+  color: colours.$off-white;
   cursor: inherit;
   display: flex;
   flex-direction: column;
@@ -12,7 +13,7 @@
 
 .projects {
   flex: 1;
-  font-family: $monospace-font;
+  font-family: typography.$monospace-font;
   position: relative;
 }
 

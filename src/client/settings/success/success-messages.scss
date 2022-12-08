@@ -1,22 +1,21 @@
-@import '../../common/variables';
-@import '../../common/responsive';
-@import '../../common/layout';
-@import '../../common/typography';
+@use '../../common/colours';
+@use '../../common/layout';
+@use '../../common/typography';
 
 .add {
   margin-top: 0;
 }
 
 .messages {
-  @extend %two-column-grid;
+  @include layout.two-column-grid;
 
   list-style: none;
   margin: 0;
 }
 
 .messageItem {
-  background-color: $black;
-  border: 1px solid $mid-grey;
+  background-color: colours.$black;
+  border: 1px solid colours.$mid-grey;
 }
 
 .messageWrapper {
@@ -31,10 +30,10 @@
 }
 
 .message {
-  background-color: $black;
+  background-color: colours.$black;
   bottom: 0;
-  color: $off-white;
-  font-family: $monospace-font;
+  color: colours.$off-white;
+  font-family: typography.$monospace-font;
   height: 100%;
   position: absolute;
   width: 100%;

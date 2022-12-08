@@ -1,5 +1,5 @@
-@import '../../common/layout';
+@use '../../common/layout';
 
 .reset {
-  @extend %blocking;
+  @include layout.blocking;
 }

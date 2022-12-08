@@ -1,9 +1,10 @@
+@use 'common/colours';
+@use 'common/typography';
+@use 'common/links';
+@use 'common/responsive';
+@use 'common/layout';
 @import '~normalize.css';
-@import './common/fonts/fonts';
-@import './common/variables';
-@import './common/typography';
-@import './common/links';
-@import './common/responsive';
+@import 'common/fonts/fonts';
 
 * {
   box-sizing: border-box;
@@ -17,21 +18,21 @@ html {
 
 html,
 body {
-  background: $off-black;
-  color: $off-black;
+  background: colours.$off-black;
+  color: colours.$off-black;
   cursor: default;
-  font-family: $normal-font;
+  font-family: typography.$normal-font;
   font-size: 16px;
   height: 100%;
   line-height: 1.5;
 
-  @include respond-to(tablet, desktop) {
+  @include responsive.respond-to(tablet, desktop) {
     font-size: 19px;
   }
 }
 
 kbd {
-  font-family: $monospace-font;
+  font-family: typography.$monospace-font;
 }
 
 fieldset {
@@ -41,34 +42,34 @@ fieldset {
 }
 
 a {
-  @include link;
+  @include links.link;
 }
 
 p {
   line-height: 1.25;
-  margin: $margin-top 0 0 0;
+  margin: layout.$spacing-height 0 0 0;
 }
 
 input {
-  font-family: $normal-font;
+  font-family: typography.$normal-font;
 }
 
 h1 {
-  @include font-scale(3);
+  @include typography.font-scale(3);
 
   line-height: 1.0417;
-  margin: 0 0 $margin-top 0;
+  margin: 0 0 layout.$spacing-height 0;
   outline: none;
 }
 
 h2 {
-  @include font-scale(2);
+  @include typography.font-scale(2);
 
   line-height: 1.1111;
 }
 
 h3 {
-  @include font-scale(1);
+  @include typography.font-scale(1);
 
   line-height: 1.25;
 }
@@ -76,7 +77,7 @@ h3 {
 h4,
 h5,
 h6 {
-  @include font-scale(0);
+  @include typography.font-scale(0);
 
   line-height: 1.3158;
 }
@@ -87,13 +88,13 @@ pre {
 
 table {
   display: block;
-  margin: $margin-top 0 0 0;
+  margin: layout.$spacing-height 0 0 0;
   overflow-y: scroll;
   width: 100%;
 }
 
 tr:nth-child(even) {
-  background-color: $light-grey;
+  background-color: colours.$light-grey;
 }
 
 td {

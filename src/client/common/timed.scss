@@ -1,4 +1,4 @@
-@import './variables';
+@use 'colours';
 
 .enter {
   opacity: 0;
@@ -34,10 +34,10 @@
   animation-fill-mode: forwards;
   animation-iteration-count: 1;
   animation-timing-function: linear;
-  background: linear-gradient(90deg, $mid-grey 50%, $light-grey 50%);
+  background: linear-gradient(90deg, colours.$mid-grey 50%, colours.$light-grey 50%);
   background-size: 200%;
-  border-bottom-left-radius: $border-radius;
-  border-bottom-right-radius: $border-radius;
+  border-bottom-left-radius: colours.$border-radius;
+  border-bottom-right-radius: colours.$border-radius;
   padding-bottom: 5px;
 
   & > * {
@@ -49,13 +49,13 @@
   &:hover,
   &:focus-within {
     animation-name: none;
-    background: $light-grey;
+    background: colours.$light-grey;
   }
 }
 
 .progress.exitActive {
   animation: none;
-  background: $light-grey;
+  background: colours.$light-grey;
 }
 
 @keyframes progress-animation {

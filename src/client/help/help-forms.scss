@@ -1,4 +1,4 @@
-@import '../common/variables';
+@use '../common/layout';
 
 .helpForm {
   margin: 1em 0 0;
@@ -9,6 +9,6 @@
   }
 
   > dd {
-    margin-left: $margin-right;
+    margin-left: layout.$spacing-width;
   }
 }

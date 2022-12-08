@@ -1,9 +1,9 @@
-@import '../../../common/responsive';
-@import '../../../common/variables';
+@use '../../../common/responsive';
+@use '../../../common/layout';
 
 .refresh {
-  @include respond-to(tablet, desktop) {
+  @include responsive.respond-to(tablet, desktop) {
     display: inline-block;
-    margin: 0 $margin-right 0 0;
+    margin: 0 layout.$spacing-width 0 0;
   }
 }

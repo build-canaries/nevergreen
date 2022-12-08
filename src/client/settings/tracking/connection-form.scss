@@ -1,13 +1,12 @@
-@import '../../common/variables';
-@import '../../common/layout';
+@use '../../common/layout';
 
 .inputs {
-  margin: $margin-top 0 0 0;
+  margin: layout.$spacing-height 0 0 0;
 }
 
 .authType,
 .username,
 .password,
 .authToken {
-  @include fixed-width(30em);
+  @include layout.fixed-width(30em);
 }

@@ -1,14 +1,15 @@
 /* stylelint-disable */
-@import '../variables';
-@import '../typography';
-@import '../accessibility';
-@import './forms';
+@use '../colours';
+@use '../responsive';
+@use '../accessibility';
+@use '../layout';
+@use 'forms';
 
 .container {
-  @include standard-input-dimensions();
+  @include forms.standard-input-dimensions();
 
   display: inline-block;
-  margin-top: $margin-top;
+  margin-top: layout.$spacing-height;
 }
 
 .radio {
@@ -19,7 +20,7 @@
   padding: 0 0 0 40px;
   position: relative;
 
-  @include respond-to(tablet, desktop) {
+  @include responsive.respond-to(tablet, desktop) {
     padding: 0 0 0 44px;
   }
 }
@@ -33,7 +34,7 @@
 
   &::before {
     background: transparent;
-    border: $input-border;
+    border: colours.$input-border;
     border-radius: 34px;
     content: '';
     height: 34px;
@@ -45,7 +46,7 @@
 
   &::after {
     background: transparent;
-    border: 8px solid $mid-grey;
+    border: 8px solid colours.$mid-grey;
     border-radius: 34px;
     content: '';
     filter: alpha(opacity=0);
@@ -60,7 +61,7 @@
 }
 
 .input {
-  @include standard-input-dimensions(true);
+  @include forms.standard-input-dimensions(true);
 
   cursor: pointer;
   filter: alpha(opacity=0);
@@ -87,16 +88,16 @@
   }
 
   &:focus + .children::before {
-    box-shadow: 0 0 0 3px $outline;
+    box-shadow: 0 0 0 3px colours.$outline;
   }
 
   &:enabled:hover {
     & + .children {
-      @include hover;
+      @include accessibility.hover;
     }
 
     & + .children::before {
-      border-color: darken($light-grey, $color-change-percentage);
+      border-color: darken(colours.$light-grey, colours.$color-change-percentage);
     }
   }
 

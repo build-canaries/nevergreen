@@ -1,14 +1,12 @@
-@import './forms';
-@import '../variables';
-@import '../typography';
-@import '../responsive';
-@import '../accessibility';
+@use 'forms';
+@use '../colours';
+@use '../accessibility';
 
 // based on https://moderncss.dev/custom-select-styles-with-pure-css/
 
 .container {
   align-items: center;
-  background-color: $white;
+  background-color: colours.$white;
   display: grid;
   flex-grow: 1;
   grid-template-areas: 'select';
@@ -16,7 +14,7 @@
   width: 100%;
 
   &::after {
-    background-color: $off-black;
+    background-color: colours.$off-black;
     clip-path: polygon(100% 0%, 0 0%, 50% 100%);
     content: '';
     grid-area: select;
@@ -28,11 +26,11 @@
 }
 
 .select {
-  @include standard-input-dimensions;
+  @include forms.standard-input-dimensions;
 
   appearance: none;
   background-color: transparent;
-  border: $input-border;
+  border: colours.$input-border;
   border-radius: 2px;
   cursor: pointer;
   grid-area: select;
@@ -44,6 +42,6 @@
   }
 
   &:not(:disabled) {
-    @include interactive($focus-color-change-percentage: 0%);
+    @include accessibility.interactive($focus-color-change-percentage: 0%);
   }
 }

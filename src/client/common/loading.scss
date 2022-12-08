@@ -1,13 +1,11 @@
-@import 'variables';
-@import 'typography';
-@import 'layout';
-@import 'accessibility';
+@use 'colours';
+@use 'layout';
 
 .loading {
-  @extend %fill-parent;
+  @include layout.fill-parent;
 
   align-items: center;
-  background-color: $white;
+  background-color: colours.$white;
   display: flex;
   justify-content: center;
   padding-bottom: 1em;
@@ -16,8 +14,8 @@
 
 .pulse {
   animation: dot-flashing 1.5s infinite linear alternate;
-  background-color: $off-black;
-  border-radius: $border-radius;
+  background-color: colours.$off-black;
+  border-radius: colours.$border-radius;
   display: inline-block;
   height: 1.5rem;
   margin: 0 0.5rem 0 0;
@@ -44,9 +42,9 @@
 }
 
 .dark {
-  background-color: $off-black;
+  background-color: colours.$off-black;
 
   & .pulse {
-    background-color: $white;
+    background-color: colours.$white;
   }
 }
