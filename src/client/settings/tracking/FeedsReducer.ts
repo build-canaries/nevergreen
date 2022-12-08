@@ -1,21 +1,24 @@
-import type {Draft} from 'immer'
-import type {RootState} from '../../configuration/ReduxStore'
-import type {Feed} from '../../domain/Feed'
-import {createFeed} from '../../domain/Feed'
-import {createSelector, createSlice} from '@reduxjs/toolkit'
+import type { Draft } from 'immer'
+import type { RootState } from '../../configuration/ReduxStore'
+import type { Feed } from '../../domain/Feed'
+import { createFeed } from '../../domain/Feed'
+import { createSelector, createSlice } from '@reduxjs/toolkit'
 import isNil from 'lodash/isNil'
-import {feedAdded, feedRemoved, feedUpdated} from './TrackingActionCreators'
-import {configurationImported} from '../backup/BackupActionCreators'
+import { feedAdded, feedRemoved, feedUpdated } from './TrackingActionCreators'
+import { configurationImported } from '../backup/BackupActionCreators'
 
 export interface FeedsState {
-  readonly [trayId: string]: Feed;
+  readonly [trayId: string]: Feed
 }
 
 export const feedsRoot = 'trays'
 
 const initialState: FeedsState = {}
 
-function handleImportedConfiguration(draft: FeedsState, action: ReturnType<typeof configurationImported>) {
+function handleImportedConfiguration(
+  draft: FeedsState,
+  action: ReturnType<typeof configurationImported>
+) {
   if (isNil(action.payload.trays)) {
     return draft
   }
@@ -47,13 +50,15 @@ const slice = createSlice({
       .addCase(feedRemoved, (draft, action) => {
         delete draft[action.payload]
       })
-  }
+  },
 })
 
-export const {reducer} = slice
+export const { reducer } = slice
 
 const getTracking = (state: RootState) => state.trays
-export const getFeeds = createSelector(getTracking, (trays) => Object.values(trays))
+export const getFeeds = createSelector(getTracking, (trays) =>
+  Object.values(trays)
+)
 
 export function getFeed(id: string): (state: RootState) => Feed | undefined {
   return createSelector(getTracking, (trays) => trays[id])

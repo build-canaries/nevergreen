@@ -1,7 +1,11 @@
 @use 'accessibility';
 @use 'colours';
 
-@mixin link($color: colours.$blue, $visited-color: colours.$blue, $interactive-color: colours.$light-grey) {
+@mixin link(
+  $color: colours.$blue,
+  $visited-color: colours.$blue,
+  $interactive-color: colours.$light-grey
+) {
   background: none;
   border: none;
   color: $color;
@@ -18,5 +22,6 @@
     $background-color: $interactive-color,
     $border-color: transparent,
     $hover-color-change-percentage: 0%,
-    $focus-color-change-percentage: 0%);
+    $focus-color-change-percentage: 0%
+  );
 }

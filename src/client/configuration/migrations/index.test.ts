@@ -1,4 +1,4 @@
-import {getOrderedMigrations} from './'
+import { getOrderedMigrations } from './'
 
 it('every migration should have a unique id', () => {
   const migrations = getOrderedMigrations()

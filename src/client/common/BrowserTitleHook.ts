@@ -1,7 +1,10 @@
-import {useEffect} from 'react'
+import { useEffect } from 'react'
 import set from 'lodash/set'
 
-export function useUpdateBrowserTitle(title: string, faviconHref = '/canaries.svg'): void {
+export function useUpdateBrowserTitle(
+  title: string,
+  faviconHref = '/canaries.svg'
+): void {
   useEffect(() => {
     document.title = title
     const favicon = document.querySelector('#favicon')

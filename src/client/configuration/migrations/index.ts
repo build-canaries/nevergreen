@@ -1,4 +1,4 @@
-import {UntrustedData} from '../LocalRepository'
+import { UntrustedData } from '../LocalRepository'
 import * as MoveAudioVisualToSettings from './001_MoveAudioVisualToSettings'
 import * as PrefixEncryptedValues from './002_PrefixEncryptedValues'
 import * as FlattenProjects from './003_FlattenProjects'
@@ -16,8 +16,8 @@ import * as MigrateNotifications from './013_MigrateNotifications'
 export type Migrate = (data: UntrustedData) => void
 
 interface Migration {
-  id: string;
-  migrate: Migrate;
+  id: string
+  migrate: Migrate
 }
 
 export function getOrderedMigrations(): ReadonlyArray<Migration> {
@@ -34,6 +34,6 @@ export function getOrderedMigrations(): ReadonlyArray<Migration> {
     SetTrackingMode,
     RemoveOldKeys,
     MoveNotificationSettings,
-    MigrateNotifications
+    MigrateNotifications,
   ]
 }

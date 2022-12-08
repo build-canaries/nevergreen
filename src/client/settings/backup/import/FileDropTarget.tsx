@@ -1,20 +1,20 @@
-import React, {DragEvent, ReactElement, ReactNode} from 'react'
+import React, { DragEvent, ReactElement, ReactNode } from 'react'
 import isNil from 'lodash/isNil'
-import {useStopDefaultDragAndDropBehaviour} from './StopDefaultDragAndDropBehaviourHook'
+import { useStopDefaultDragAndDropBehaviour } from './StopDefaultDragAndDropBehaviourHook'
 
 interface FileDropTargetProps {
-  readonly onFileDropped: (files: FileList) => Promise<void>;
-  readonly className?: string;
-  readonly disabled?: boolean;
-  readonly children: ReactNode;
+  readonly onFileDropped: (files: FileList) => Promise<void>
+  readonly className?: string
+  readonly disabled?: boolean
+  readonly children: ReactNode
 }
 
 export function FileDropTarget({
-                                 onFileDropped,
-                                 className,
-                                 children,
-                                 disabled = false
-                               }: FileDropTargetProps): ReactElement {
+  onFileDropped,
+  className,
+  children,
+  disabled = false,
+}: FileDropTargetProps): ReactElement {
   useStopDefaultDragAndDropBehaviour()
 
   const setCopyIcon = (evt: DragEvent<HTMLDivElement>) => {
@@ -37,9 +37,7 @@ export function FileDropTarget({
   }
 
   return (
-    <div onDragOver={setCopyIcon}
-         onDrop={openFile}
-         className={className}>
+    <div onDragOver={setCopyIcon} onDrop={openFile} className={className}>
       {children}
     </div>
   )

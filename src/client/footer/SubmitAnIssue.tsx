@@ -1,13 +1,13 @@
-import React, {ReactElement} from 'react'
-import {ExternalLink} from '../common/ExternalLink'
-import {CI_OPTIONS, Feed} from '../domain/Feed'
-import {isBlank} from '../common/Utils'
-import {useSelector} from 'react-redux'
-import {getFeeds} from '../settings/tracking/FeedsReducer'
+import React, { ReactElement } from 'react'
+import { ExternalLink } from '../common/ExternalLink'
+import { CI_OPTIONS, Feed } from '../domain/Feed'
+import { isBlank } from '../common/Utils'
+import { useSelector } from 'react-redux'
+import { getFeeds } from '../settings/tracking/FeedsReducer'
 
 interface SubmitAnIssueProps {
-  readonly version: string;
-  readonly className?: string;
+  readonly version: string
+  readonly className?: string
 }
 
 function display(serverType: string) {
@@ -22,9 +22,7 @@ function knownServerTypes(feeds: ReadonlyArray<Feed>) {
     .map((serverType) => display(serverType))
     .join(', ')
 
-  return isBlank(servers)
-    ? '<!-- e.g. Jenkins or GoCD etc -->'
-    : servers
+  return isBlank(servers) ? '<!-- e.g. Jenkins or GoCD etc -->' : servers
 }
 
 function bugReport(version: string, feeds: ReadonlyArray<Feed>) {
@@ -57,13 +55,18 @@ ${knownServerTypes(feeds)}
 
 const ISSUE_URL = 'https://github.com/build-canaries/nevergreen/issues/new'
 
-export function SubmitAnIssue({version, className}: SubmitAnIssueProps): ReactElement {
+export function SubmitAnIssue({
+  version,
+  className,
+}: SubmitAnIssueProps): ReactElement {
   const feeds = useSelector(getFeeds)
 
   return (
-    <ExternalLink href={`${ISSUE_URL}?labels=bug&body=${bugReport(version, feeds)}`}
-                  className={className}
-                  title='Submit an issue on GitHub'>
+    <ExternalLink
+      href={`${ISSUE_URL}?labels=bug&body=${bugReport(version, feeds)}`}
+      className={className}
+      title="Submit an issue on GitHub"
+    >
       Submit an issue
     </ExternalLink>
   )

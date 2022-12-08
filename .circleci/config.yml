@@ -13,11 +13,11 @@ commands:
   init:
     parameters:
       checkout:
-        description: "true to checkout Nevergreen from source control, false to attach the workspace"
+        description: 'true to checkout Nevergreen from source control, false to attach the workspace'
         type: boolean
         default: true
       after:
-        description: "Steps to execute after the environment has been initialised"
+        description: 'Steps to execute after the environment has been initialised'
         type: steps
     steps:
       - when:
@@ -49,16 +49,16 @@ commands:
   deploy-nevergreen:
     parameters:
       host:
-        description: "The host being deployed to"
+        description: 'The host being deployed to'
         type: string
       docker-tag:
-        description: "The Docker tag to push"
+        description: 'The Docker tag to push'
         type: string
       deploy:
-        description: "The steps to run to actually deploy"
+        description: 'The steps to run to actually deploy'
         type: steps
       after-deployment:
-        description: "The steps to run after successfully deploying"
+        description: 'The steps to run after successfully deploying'
         type: steps
         default: []
     steps:
@@ -69,7 +69,7 @@ commands:
 
       - add_ssh_keys:
           fingerprints:
-            - "84:1d:85:ed:80:92:c5:21:53:15:54:b9:52:99:29:35"
+            - '84:1d:85:ed:80:92:c5:21:53:15:54:b9:52:99:29:35'
 
       - run:
           name: add nevergreen.io to known hosts
@@ -117,7 +117,7 @@ jobs:
             - run:
                 name: build
                 environment:
-                  BASH_ENV: "~/.nvm/nvm.sh"
+                  BASH_ENV: '~/.nvm/nvm.sh'
                 command: |
                   ./.circleci/dependencies.sh
                   ./.circleci/compile.sh
@@ -137,7 +137,7 @@ jobs:
             - run:
                 name: test
                 environment:
-                  BASH_ENV: "~/.nvm/nvm.sh"
+                  BASH_ENV: '~/.nvm/nvm.sh'
                 command: ./.circleci/test.sh
 
             - store_test_results:
@@ -176,13 +176,13 @@ jobs:
             - run:
                 name: functional tests
                 environment:
-                  BASH_ENV: "~/.nvm/nvm.sh"
-                  CYPRESS_BASE_URL: "https://staging.nevergreen.io"
-                  CYPRESS_TRAY_URL: "https://raw.githubusercontent.com/build-canaries/nevergreen/main/cctray_xml_feed_mock/resources/cctray.xml"
-                  CYPRESS_TRAY_URL_TOKEN: ""
-                  CYPRESS_TRAY_TOKEN: ""
-                  CYPRESS_TRAY_USERNAME: ""
-                  CYPRESS_TRAY_PASSWORD: ""
+                  BASH_ENV: '~/.nvm/nvm.sh'
+                  CYPRESS_BASE_URL: 'https://staging.nevergreen.io'
+                  CYPRESS_TRAY_URL: 'https://raw.githubusercontent.com/build-canaries/nevergreen/main/cctray_xml_feed_mock/resources/cctray.xml'
+                  CYPRESS_TRAY_URL_TOKEN: ''
+                  CYPRESS_TRAY_TOKEN: ''
+                  CYPRESS_TRAY_USERNAME: ''
+                  CYPRESS_TRAY_PASSWORD: ''
                 command: |
                   npm ci
                   npm run test:journey
@@ -197,7 +197,7 @@ jobs:
     executor: clojure
     steps:
       - deploy-nevergreen:
-          host: "https://staging.nevergreen.io"
+          host: 'https://staging.nevergreen.io'
           docker-tag: staging
           deploy:
             - run: ./.circleci/deploy.sh
@@ -206,7 +206,7 @@ jobs:
     executor: clojure
     steps:
       - deploy-nevergreen:
-          host: "https://nevergreen.io"
+          host: 'https://nevergreen.io'
           docker-tag: ${VERSION}
           deploy:
             - run: ./.circleci/release.sh

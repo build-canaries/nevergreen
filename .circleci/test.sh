@@ -1,6 +1,7 @@
 #!/bin/bash -eu
 
 echo "running linting"
+npm run prettier:check
 npm run lint
 ./lein.sh lint
 

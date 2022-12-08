@@ -1,25 +1,39 @@
-import React, {ReactElement} from 'react'
-import {createId} from '../../domain/Feed'
-import {feedAdded} from './TrackingActionCreators'
-import {Page} from '../../common/Page'
-import {Xml} from '../../common/icons/Xml'
-import {ConnectionForm, ConnectionFormFields} from './ConnectionForm'
-import {ROUTE_TRACKING} from '../../AppRoutes'
-import {useAppDispatch} from '../../configuration/Hooks'
+import React, { ReactElement } from 'react'
+import { createId } from '../../domain/Feed'
+import { feedAdded } from './TrackingActionCreators'
+import { Page } from '../../common/Page'
+import { Xml } from '../../common/icons/Xml'
+import { ConnectionForm, ConnectionFormFields } from './ConnectionForm'
+import { ROUTE_TRACKING } from '../../AppRoutes'
+import { useAppDispatch } from '../../configuration/Hooks'
 
 export function AddFeed(): ReactElement {
   const dispatch = useAppDispatch()
 
-  const onSuccess = ({url, authType, username, encryptedPassword, encryptedAccessToken}: ConnectionFormFields) => {
+  const onSuccess = ({
+    url,
+    authType,
+    username,
+    encryptedPassword,
+    encryptedAccessToken,
+  }: ConnectionFormFields) => {
     const trayId = createId()
-    dispatch(feedAdded({trayId, url, authType, username, encryptedPassword, encryptedAccessToken}))
+    dispatch(
+      feedAdded({
+        trayId,
+        url,
+        authType,
+        username,
+        encryptedPassword,
+        encryptedAccessToken,
+      })
+    )
     return `/settings/tracking/${trayId}/projects`
   }
 
   return (
-    <Page title="Add CCTray XML feed" icon={<Xml/>}>
-      <ConnectionForm onSuccess={onSuccess}
-                      onCancel={ROUTE_TRACKING}/>
+    <Page title="Add CCTray XML feed" icon={<Xml />}>
+      <ConnectionForm onSuccess={onSuccess} onCancel={ROUTE_TRACKING} />
     </Page>
   )
 }

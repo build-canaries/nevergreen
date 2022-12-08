@@ -102,7 +102,10 @@
     }
 
     & + .children::before {
-      border-color: color.scale(colours.$light-grey, $lightness: colours.$color-change-percentage);
+      border-color: color.scale(
+        colours.$light-grey,
+        $lightness: colours.$color-change-percentage
+      );
       border-radius: 0;
     }
   }

@@ -31,7 +31,9 @@
     "watch:test": "jest --watch",
     "watch:lint": "watch 'npm run lint' src/client",
     "check-types": "tsc",
-    "check-updates": "npm-check-updates"
+    "check-updates": "npm-check-updates",
+    "prettier": "prettier --write .",
+    "prettier:check": "prettier --check ."
   },
   "dependencies": {
     "@juggle/resize-observer": "3.4.0",
@@ -93,6 +95,7 @@
     "css-minimizer-webpack-plugin": "4.2.2",
     "cypress": "11.2.0",
     "eslint": "8.29.0",
+    "eslint-config-prettier": "8.5.0",
     "eslint-plugin-react": "7.31.11",
     "eslint-plugin-react-hooks": "4.6.0",
     "eslint-plugin-testing-library": "5.9.1",
@@ -106,6 +109,7 @@
     "npm-check-updates": "16.4.3",
     "postcss": "8.4.19",
     "postcss-loader": "7.0.2",
+    "prettier": "2.8.1",
     "raw-loader": "4.0.2",
     "react-test-renderer": "18.2.0",
     "resolve-url-loader": "5.0.0",
@@ -113,6 +117,7 @@
     "sass-loader": "13.2.0",
     "style-loader": "3.3.1",
     "stylelint": "14.16.0",
+    "stylelint-config-prettier": "9.0.4",
     "stylelint-config-standard": "29.0.0",
     "stylelint-config-standard-scss": "6.1.0",
     "stylelint-order": "5.0.0",
@@ -148,13 +153,18 @@
     "not op_mini all",
     "not ie <= 11"
   ],
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
+  },
   "eslintConfig": {
     "extends": [
       "eslint:recommended",
       "plugin:react/recommended",
       "plugin:@typescript-eslint/eslint-recommended",
       "plugin:@typescript-eslint/recommended",
-      "plugin:@typescript-eslint/recommended-requiring-type-checking"
+      "plugin:@typescript-eslint/recommended-requiring-type-checking",
+      "prettier"
     ],
     "plugins": [
       "react",
@@ -184,17 +194,7 @@
       ]
     },
     "rules": {
-      "quotes": [
-        "error",
-        "single"
-      ],
-      "semi": [
-        "error",
-        "never"
-      ],
-      "generator-star-spacing": "error",
       "object-shorthand": "error",
-      "arrow-parens": "error",
       "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": "error",
       "@typescript-eslint/no-unused-vars": "error",
@@ -217,13 +217,15 @@
     ]
   },
   "stylelint": {
-    "extends": "stylelint-config-standard-scss",
+    "extends": [
+      "stylelint-config-standard-scss",
+      "stylelint-config-prettier"
+    ],
     "plugins": [
       "stylelint-order",
       "stylelint-scss"
     ],
     "rules": {
-      "string-quotes": "single",
       "font-family-name-quotes": "always-where-required",
       "function-url-quotes": "always",
       "at-rule-no-unknown": null,

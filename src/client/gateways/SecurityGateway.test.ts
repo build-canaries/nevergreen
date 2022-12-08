@@ -1,4 +1,4 @@
-import {encrypt} from './SecurityGateway'
+import { encrypt } from './SecurityGateway'
 import * as gateway from '../gateways/Gateway'
 
 it('should call the encrypt URL', async () => {
@@ -7,6 +7,6 @@ it('should call the encrypt URL', async () => {
   expect(gateway.post).toBeCalledWith({
     url: '/api/encrypt',
     data: 'some-password',
-    headers: {'Content-Type': 'text/plain'}
+    headers: { 'Content-Type': 'text/plain' },
   })
 })

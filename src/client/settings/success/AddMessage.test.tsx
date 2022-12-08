@@ -1,13 +1,17 @@
 import React from 'react'
-import {render} from '../../testUtils/testHelpers'
-import {getSuccessMessages, successRoot} from './SuccessReducer'
-import {AddMessage} from './AddMessage'
-import {screen, waitFor} from '@testing-library/react'
+import { render } from '../../testUtils/testHelpers'
+import { getSuccessMessages, successRoot } from './SuccessReducer'
+import { AddMessage } from './AddMessage'
+import { screen, waitFor } from '@testing-library/react'
 
 it('should allow success messages to be added', async () => {
-  const state = {[successRoot]: []}
+  const state = { [successRoot]: [] }
 
-  const {store, user} = render(<AddMessage/>, {state, mountPath: 'add', currentLocation: 'add'})
+  const { store, user } = render(<AddMessage />, {
+    state,
+    mountPath: 'add',
+    currentLocation: 'add',
+  })
   await user.type(screen.getByLabelText('Message'), 'some-message')
   await user.click(screen.getByText('Add message'))
 
@@ -18,8 +22,8 @@ it('should allow success messages to be added', async () => {
 })
 
 it('should not allow a blank success messages to be added', async () => {
-  const state = {[successRoot]: []}
-  const {user} = render(<AddMessage/>, {state})
+  const state = { [successRoot]: [] }
+  const { user } = render(<AddMessage />, { state })
 
   await user.clear(screen.getByLabelText('Message'))
   await user.click(screen.getByText('Add message'))
@@ -28,8 +32,8 @@ it('should not allow a blank success messages to be added', async () => {
 })
 
 it('should not allow the same success message to be added', async () => {
-  const state = {[successRoot]: ['some-message']}
-  const {user} = render(<AddMessage/>, {state})
+  const state = { [successRoot]: ['some-message'] }
+  const { user } = render(<AddMessage />, { state })
 
   await user.type(screen.getByLabelText('Message'), 'some-message')
   await user.click(screen.getByText('Add message'))
@@ -38,10 +42,14 @@ it('should not allow the same success message to be added', async () => {
 })
 
 it('should be able to cancel back to settings', async () => {
-  const state = {[successRoot]: ['some-message']}
-  const {user} = render(<AddMessage/>, {state, mountPath: 'add', currentLocation: 'add'})
+  const state = { [successRoot]: ['some-message'] }
+  const { user } = render(<AddMessage />, {
+    state,
+    mountPath: 'add',
+    currentLocation: 'add',
+  })
 
-  await user.click(screen.getByRole('button', {name: 'Cancel'}))
+  await user.click(screen.getByRole('button', { name: 'Cancel' }))
 
   await waitFor(() => {
     expect(window.location.pathname).toEqual('/settings/success')

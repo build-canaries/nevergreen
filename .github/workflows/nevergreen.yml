@@ -2,9 +2,9 @@ name: Nevergreen CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
@@ -58,12 +58,12 @@ jobs:
       - name: Run Cypress
         uses: cypress-io/github-action@v4
         env:
-          CYPRESS_BASE_URL: "http://localhost:5000"
-          CYPRESS_TRAY_URL: "https://raw.githubusercontent.com/build-canaries/nevergreen/main/cctray_xml_feed_mock/resources/cctray.xml"
-          CYPRESS_TRAY_URL_TOKEN: ""
-          CYPRESS_TRAY_TOKEN: ""
-          CYPRESS_TRAY_USERNAME: ""
-          CYPRESS_TRAY_PASSWORD: ""
+          CYPRESS_BASE_URL: 'http://localhost:5000'
+          CYPRESS_TRAY_URL: 'https://raw.githubusercontent.com/build-canaries/nevergreen/main/cctray_xml_feed_mock/resources/cctray.xml'
+          CYPRESS_TRAY_URL_TOKEN: ''
+          CYPRESS_TRAY_TOKEN: ''
+          CYPRESS_TRAY_USERNAME: ''
+          CYPRESS_TRAY_PASSWORD: ''
         with:
           start: java -jar target/nevergreen-standalone.jar
           wait-on: http://localhost:5000

@@ -1,4 +1,4 @@
-import {useEffect} from 'react'
+import { useEffect } from 'react'
 
 /** This stops the browser allowing files to be dropped anywhere in the window to open them */
 export function useStopDefaultDragAndDropBehaviour(): void {

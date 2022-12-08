@@ -39,11 +39,14 @@ export function notEmpty(val: unknown): boolean {
 
 export function errorMessage(e: unknown): string {
   const originalMessage = get(e, 'message')
-  const message = isString(originalMessage)
-    ? originalMessage
-    : 'Unknown error'
+  const message = isString(originalMessage) ? originalMessage : 'Unknown error'
 
-  if (startsWith(lowerCase(message), 'request has been terminated possible causes')) {
+  if (
+    startsWith(
+      lowerCase(message),
+      'request has been terminated possible causes'
+    )
+  ) {
     return 'The network is offline or the Nevergreen server is not running'
   }
 

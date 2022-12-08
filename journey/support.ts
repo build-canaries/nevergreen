@@ -5,7 +5,7 @@ Cypress.Promise.onPossiblyUnhandledRejection((error) => {
 })
 
 Cypress.Keyboard.defaults({
-  keystrokeDelay: 0
+  keystrokeDelay: 0,
 })
 
 Cypress.Commands.add('locate', (thing: string) => {

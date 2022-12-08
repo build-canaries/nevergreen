@@ -1,11 +1,11 @@
-import React, {Fragment, ReactElement} from 'react'
+import React, { Fragment, ReactElement } from 'react'
 import styles from './url.scss'
-import {buildUrl} from '../domain/Url'
-import {isNotBlank} from './Utils'
+import { buildUrl } from '../domain/Url'
+import { isNotBlank } from './Utils'
 
 interface URLProps {
-  readonly url: string;
-  readonly base?: string;
+  readonly url: string
+  readonly base?: string
 }
 
 function isPathSeparator(c: string) {
@@ -13,7 +13,9 @@ function isPathSeparator(c: string) {
 }
 
 function isPunctuation(c: string) {
-  return c === '.' || c === '?' || c === '=' || c === '&' || c === '@' || c === ':'
+  return (
+    c === '.' || c === '?' || c === '=' || c === '&' || c === '@' || c === ':'
+  )
 }
 
 function redactPassword(url: URL) {
@@ -30,10 +32,10 @@ function redactQueryParams(url: URL) {
   })
 }
 
-export function URL({url, base}: URLProps): ReactElement {
+export function URL({ url, base }: URLProps): ReactElement {
   const u = buildUrl(url, base)
   if (u === null) {
-    return <span/>
+    return <span />
   }
   redactPassword(u)
   redactQueryParams(u)
@@ -42,20 +44,18 @@ export function URL({url, base}: URLProps): ReactElement {
     <span className={styles.url}>
       {u.protocol}
       {'//'}
-      <wbr/>
-      {
-        chars.map((c, i) => {
-          if (isPathSeparator(c) || isPunctuation(c)) {
-            return (
-              <Fragment key={i}>
-                <wbr/>
-                {c}
-              </Fragment>
-            )
-          }
-          return c
-        })
-      }
+      <wbr />
+      {chars.map((c, i) => {
+        if (isPathSeparator(c) || isPunctuation(c)) {
+          return (
+            <Fragment key={i}>
+              <wbr />
+              {c}
+            </Fragment>
+          )
+        }
+        return c
+      })}
     </span>
   )
 }

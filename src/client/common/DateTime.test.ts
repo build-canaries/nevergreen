@@ -1,13 +1,13 @@
-import {formatAsDuration, secondsToString} from './DateTime'
-import {setSystemTime} from '../testUtils/testHelpers'
+import { formatAsDuration, secondsToString } from './DateTime'
+import { setSystemTime } from '../testUtils/testHelpers'
 
 describe('formatAsDuration', () => {
-
-  it.each(
-    [null, undefined, '', '  ']
-  )('should return "unknown" for undisplayble string value "%s"', (val) => {
-    expect(formatAsDuration(val)).toBe('unknown')
-  })
+  it.each([null, undefined, '', '  '])(
+    'should return "unknown" for undisplayble string value "%s"',
+    (val) => {
+      expect(formatAsDuration(val)).toBe('unknown')
+    }
+  )
 
   it('should return the duration for a valid date timestamp', () => {
     setSystemTime('2018-02-18T23:38:00Z')
@@ -16,7 +16,6 @@ describe('formatAsDuration', () => {
 })
 
 describe('secondsToString', () => {
-
   it('should format anything less than a minute as seconds', () => {
     expect(secondsToString(1)).toBe('1 second')
     expect(secondsToString(59)).toBe('59 seconds')

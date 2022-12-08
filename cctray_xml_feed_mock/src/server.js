@@ -21,7 +21,8 @@ function response(file) {
   }
 }
 
-const sleep = (waitTimeInMs) => new Promise((resolve) => setTimeout(resolve, waitTimeInMs))
+const sleep = (waitTimeInMs) =>
+  new Promise((resolve) => setTimeout(resolve, waitTimeInMs))
 
 function delayedResponse(file) {
   return async function (req, res) {
@@ -68,7 +69,9 @@ app.get('/token/cctray.xml', function (req, res) {
 })
 
 app.get('/error/:code', function (req, res) {
-  res.status(req.params.code).send('Oh no, an error ' + req.params.code + ' happened!')
+  res
+    .status(req.params.code)
+    .send('Oh no, an error ' + req.params.code + ' happened!')
 })
 
 app.get('/timeout', function () {

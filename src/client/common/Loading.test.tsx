@@ -1,7 +1,7 @@
-import {render} from '../testUtils/testHelpers'
+import { render } from '../testUtils/testHelpers'
 import React from 'react'
-import {Loading} from './Loading'
-import {screen} from '@testing-library/react'
+import { Loading } from './Loading'
+import { screen } from '@testing-library/react'
 
 it('should render progress but not children if not loaded', () => {
   render(

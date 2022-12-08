@@ -1,21 +1,27 @@
-import type {ReactElement, ReactNode} from 'react'
-import React, {useLayoutEffect, useRef, useState} from 'react'
+import type { ReactElement, ReactNode } from 'react'
+import React, { useLayoutEffect, useRef, useState } from 'react'
 import styles from './page.scss'
-import {Title} from './Title'
+import { Title } from './Title'
 import cn from 'classnames'
-import {SecondaryButton} from './forms/Button'
-import {useElementResized} from './ResizableHook'
-import {ArrowUp} from './icons/ArrowUp'
+import { SecondaryButton } from './forms/Button'
+import { useElementResized } from './ResizableHook'
+import { ArrowUp } from './icons/ArrowUp'
 
 interface PageProps {
-  readonly title: string;
-  readonly children: ReactNode;
-  readonly className?: string;
-  readonly icon?: ReactElement;
-  readonly focusTitle?: boolean;
+  readonly title: string
+  readonly children: ReactNode
+  readonly className?: string
+  readonly icon?: ReactElement
+  readonly focusTitle?: boolean
 }
 
-export function Page({title, className, children, icon, focusTitle = true}: PageProps): ReactElement {
+export function Page({
+  title,
+  className,
+  children,
+  icon,
+  focusTitle = true,
+}: PageProps): ReactElement {
   const pageDiv = useRef<HTMLDivElement>(null)
   const [pageTop, setPageTop] = useState(0)
   const [backToTopDisplay, setBackToTopDisplay] = useState('none')
@@ -36,16 +42,17 @@ export function Page({title, className, children, icon, focusTitle = true}: Page
   })
 
   return (
-    <div className={cn(styles.page, className)}
-         ref={pageDiv}>
+    <div className={cn(styles.page, className)} ref={pageDiv}>
       <Title show icon={icon} focus={focusTitle}>
         {title}
       </Title>
       {children}
-      <SecondaryButton onClick={() => window.scrollTo(0, pageTop)}
-                       className={styles.backToTop}
-                       style={{display: backToTopDisplay}}
-                       icon={<ArrowUp/>}>
+      <SecondaryButton
+        onClick={() => window.scrollTo(0, pageTop)}
+        className={styles.backToTop}
+        style={{ display: backToTopDisplay }}
+        icon={<ArrowUp />}
+      >
         Back to top
       </SecondaryButton>
     </div>

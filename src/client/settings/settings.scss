@@ -41,7 +41,8 @@
     @include accessibility.interactive(
       $color: colours.$white,
       $background-color: colours.$off-black,
-      $border-color: transparent);
+      $border-color: transparent
+    );
   }
 
   @include responsive.respond-to(tablet, desktop) {

@@ -1,18 +1,18 @@
-import {migrate} from './013_MigrateNotifications'
-import {notificationsRoot} from '../../settings/notifications/NotificationsReducer'
+import { migrate } from './013_MigrateNotifications'
+import { notificationsRoot } from '../../settings/notifications/NotificationsReducer'
 
 it('should return the given data if it does not contain settings', () => {
-  const data = {foo: 'bar'}
+  const data = { foo: 'bar' }
   migrate(data)
-  expect(data).toEqual({foo: 'bar'})
+  expect(data).toEqual({ foo: 'bar' })
 })
 
 it('should add sick and healthy notifications if sfx is set and system notifications are on', () => {
   const data = {
     [notificationsRoot]: {
       showSystemNotifications: true,
-      brokenBuildSoundFx: 'some-sfx.mp3'
-    }
+      brokenBuildSoundFx: 'some-sfx.mp3',
+    },
   }
   migrate(data)
   expect(data).toEqual({
@@ -21,14 +21,14 @@ it('should add sick and healthy notifications if sfx is set and system notificat
       notifications: {
         sick: {
           systemNotification: true,
-          sfx: 'some-sfx.mp3'
+          sfx: 'some-sfx.mp3',
         },
         healthy: {
           systemNotification: true,
-          sfx: ''
-        }
-      }
-    }
+          sfx: '',
+        },
+      },
+    },
   })
 })
 
@@ -36,8 +36,8 @@ it('should add sick notification if sfx is set but system notifications are off'
   const data = {
     [notificationsRoot]: {
       showSystemNotifications: false,
-      brokenBuildSoundFx: 'some-sfx.mp3'
-    }
+      brokenBuildSoundFx: 'some-sfx.mp3',
+    },
   }
   migrate(data)
   expect(data).toEqual({
@@ -46,18 +46,18 @@ it('should add sick notification if sfx is set but system notifications are off'
       notifications: {
         sick: {
           systemNotification: false,
-          sfx: 'some-sfx.mp3'
-        }
-      }
-    }
+          sfx: 'some-sfx.mp3',
+        },
+      },
+    },
   })
 })
 
 it('should add sick and healthy notifications system notifications are on', () => {
   const data = {
     [notificationsRoot]: {
-      showSystemNotifications: true
-    }
+      showSystemNotifications: true,
+    },
   }
   migrate(data)
   expect(data).toEqual({
@@ -66,41 +66,41 @@ it('should add sick and healthy notifications system notifications are on', () =
       notifications: {
         sick: {
           systemNotification: true,
-          sfx: ''
+          sfx: '',
         },
         healthy: {
           systemNotification: true,
-          sfx: ''
-        }
-      }
-    }
+          sfx: '',
+        },
+      },
+    },
   })
 })
 
 it('should not add any notifications if sfx is not set and system notifications are off', () => {
   const data = {
     [notificationsRoot]: {
-      showSystemNotifications: false
-    }
+      showSystemNotifications: false,
+    },
   }
   migrate(data)
   expect(data).toEqual({
     [notificationsRoot]: {
-      allowSystemNotifications: false
-    }
+      allowSystemNotifications: false,
+    },
   })
 })
 
 it('should migrate playBrokenBuildSoundFx to allowAudioNotifications', () => {
   const data = {
     [notificationsRoot]: {
-      playBrokenBuildSoundFx: true
-    }
+      playBrokenBuildSoundFx: true,
+    },
   }
   migrate(data)
   expect(data).toEqual({
     [notificationsRoot]: {
-      allowAudioNotifications: true
-    }
+      allowAudioNotifications: true,
+    },
   })
 })

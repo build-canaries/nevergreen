@@ -1,7 +1,6 @@
-import {errorMessage, isBlank, isNumeric} from './Utils'
+import { errorMessage, isBlank, isNumeric } from './Utils'
 
 describe('isNumber', () => {
-
   it('should know when it sees a number', () => {
     expect(isNumeric(0)).toBe(true)
   })
@@ -24,7 +23,6 @@ describe('isNumber', () => {
 })
 
 describe('isBlank', () => {
-
   it('should treat null as blank', () => {
     expect(isBlank(null)).toBe(true)
   })
@@ -67,7 +65,6 @@ describe('isBlank', () => {
 })
 
 describe('errorMessage', () => {
-
   it.each`
     val          | what
     ${null}      | ${'null'}
@@ -75,16 +72,16 @@ describe('errorMessage', () => {
     ${''}        | ${'a string'}
     ${1}         | ${'a number'}
     ${{}}        | ${'an object with a message key'}
-  `('should return a generic message for $what', ({val}) => {
+  `('should return a generic message for $what', ({ val }) => {
     expect(errorMessage(val)).toBe('Unknown error')
   })
 
   it('should return the message for objects that have one', () => {
-    expect(errorMessage({message: 'some-message'})).toBe('some-message')
+    expect(errorMessage({ message: 'some-message' })).toBe('some-message')
   })
 
   it('should return a generic message for objects that have a message key that is not a string', () => {
-    expect(errorMessage({message: 1})).toBe('Unknown error')
+    expect(errorMessage({ message: 1 })).toBe('Unknown error')
   })
 
   it('should return the message for Errors', () => {
@@ -92,7 +89,10 @@ describe('errorMessage', () => {
   })
 
   it('should reword the "Request has been terminated ..." Error as it is overly verbose and includes causes that are not likely', () => {
-    const message = 'Request has been terminated\nPossible causes: the network is offline, Origin is not allowed by Access-Control-Allow-Origin, the page is being unloaded, etc.'
-    expect(errorMessage(new Error(message))).toBe('The network is offline or the Nevergreen server is not running')
+    const message =
+      'Request has been terminated\nPossible causes: the network is offline, Origin is not allowed by Access-Control-Allow-Origin, the page is being unloaded, etc.'
+    expect(errorMessage(new Error(message))).toBe(
+      'The network is offline or the Nevergreen server is not running'
+    )
   })
 })

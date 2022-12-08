@@ -1,14 +1,14 @@
-import {migrate} from './009_RemoveProjects'
+import { migrate } from './009_RemoveProjects'
 
 it('should not modify the given data if it does not contain projects', () => {
-  const data = {foo: 'bar'}
+  const data = { foo: 'bar' }
   migrate(data)
-  expect(data).toEqual({foo: 'bar'})
+  expect(data).toEqual({ foo: 'bar' })
 })
 
 it('should remove projects', () => {
   const data = {
-    projects: {}
+    projects: {},
   }
   migrate(data)
   expect(data).toEqual({})

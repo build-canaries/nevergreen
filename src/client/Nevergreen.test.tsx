@@ -1,14 +1,14 @@
 import React from 'react'
-import {left} from 'fp-ts/Either'
-import {Nevergreen} from './Nevergreen'
-import {render, waitForLoadingToFinish} from './testUtils/testHelpers'
-import {screen} from '@testing-library/react'
+import { left } from 'fp-ts/Either'
+import { Nevergreen } from './Nevergreen'
+import { render, waitForLoadingToFinish } from './testUtils/testHelpers'
+import { screen } from '@testing-library/react'
 import * as LocalConfiguration from './configuration/LocalRepository'
 import * as Configuration from './configuration/Configuration'
 import * as ServiceWorkerHook from './ServiceWorkerHook'
 import * as Gateway from './gateways/Gateway'
 import * as HideMenusHook from './HideMenusHook'
-import {notificationsRoot} from './settings/notifications/NotificationsReducer'
+import { notificationsRoot } from './settings/notifications/NotificationsReducer'
 
 beforeEach(() => {
   jest.spyOn(LocalConfiguration, 'init').mockResolvedValue()
@@ -18,26 +18,32 @@ beforeEach(() => {
 
 it('should load configuration, register service worker and check for a new version', async () => {
   jest.spyOn(Gateway, 'get').mockResolvedValueOnce({
-    tag_name: '9999.0.0' // this needs to be greater than the actual version in resources/version.txt
+    tag_name: '9999.0.0', // this needs to be greater than the actual version in resources/version.txt
   })
 
-  render(<Nevergreen/>)
+  render(<Nevergreen />)
 
   await waitForLoadingToFinish()
 
   expect(LocalConfiguration.load).toHaveBeenCalled()
   expect(Gateway.get).toHaveBeenCalledWith({
     url: 'https://api.github.com/repos/build-canaries/nevergreen/releases/latest',
-    signal: expect.any(AbortSignal) as AbortSignal
+    signal: expect.any(AbortSignal) as AbortSignal,
   })
   expect(ServiceWorkerHook.useServiceWorker).toHaveBeenCalled()
-  expect(screen.getByText(/^A new version [0-9.]* is available to download from GitHub now!$/)).toBeInTheDocument()
+  expect(
+    screen.getByText(
+      /^A new version [0-9.]* is available to download from GitHub now!$/
+    )
+  ).toBeInTheDocument()
 })
 
 it('when loaded config is invalid, should show error screen', async () => {
-  jest.spyOn(Configuration, 'toConfiguration').mockReturnValueOnce(left(['bang!']))
+  jest
+    .spyOn(Configuration, 'toConfiguration')
+    .mockReturnValueOnce(left(['bang!']))
 
-  render(<Nevergreen/>)
+  render(<Nevergreen />)
 
   await waitForLoadingToFinish()
 
@@ -45,9 +51,11 @@ it('when loaded config is invalid, should show error screen', async () => {
 })
 
 it('when config fails to load, should show error screen', async () => {
-  jest.spyOn(LocalConfiguration, 'load').mockRejectedValueOnce(new Error('bang!'))
+  jest
+    .spyOn(LocalConfiguration, 'load')
+    .mockRejectedValueOnce(new Error('bang!'))
 
-  render(<Nevergreen/>)
+  render(<Nevergreen />)
 
   await waitForLoadingToFinish()
 
@@ -57,30 +65,32 @@ it('when config fails to load, should show error screen', async () => {
 it('should not check for a new version if the user has disabled checking', async () => {
   jest.spyOn(Gateway, 'get')
 
-  render(<Nevergreen/>, {
+  render(<Nevergreen />, {
     state: {
       [notificationsRoot]: {
-        enableNewVersionCheck: false
-      }
-    }
+        enableNewVersionCheck: false,
+      },
+    },
   })
 
   await waitForLoadingToFinish()
 
-  expect(Gateway.get).not.toHaveBeenCalledWith('https://api.github.com/repos/build-canaries/nevergreen/releases/latest')
+  expect(Gateway.get).not.toHaveBeenCalledWith(
+    'https://api.github.com/repos/build-canaries/nevergreen/releases/latest'
+  )
   expect(screen.queryByTestId('notification')).not.toBeInTheDocument()
 })
 
 it('should show menus when any key is pressed, allowing the user to navigate to the header via tabbing', async () => {
   const showMenus = jest.fn()
-  jest.spyOn(Gateway, 'get').mockResolvedValueOnce({tag_name: '1.0.0'})
+  jest.spyOn(Gateway, 'get').mockResolvedValueOnce({ tag_name: '1.0.0' })
   jest.spyOn(HideMenusHook, 'useHideMenus').mockReturnValue({
     menusHidden: true,
     toggleMenusHidden: jest.fn(),
-    showMenus
+    showMenus,
   })
 
-  const {user} = render(<Nevergreen/>)
+  const { user } = render(<Nevergreen />)
 
   await waitForLoadingToFinish()
 

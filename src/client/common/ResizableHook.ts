@@ -1,8 +1,8 @@
-import {RefObject, useEffect} from 'react'
+import { RefObject, useEffect } from 'react'
 import isNil from 'lodash/isNil'
-import {info} from './Logger'
-import {ResizeObserver} from '@juggle/resize-observer'
-import {ResizeObserverEntry} from '@juggle/resize-observer/lib/ResizeObserverEntry'
+import { info } from './Logger'
+import { ResizeObserver } from '@juggle/resize-observer'
+import { ResizeObserverEntry } from '@juggle/resize-observer/lib/ResizeObserverEntry'
 
 if ('ResizeObserver' in window) {
   info('Using native ResizeObserver')
@@ -12,7 +12,9 @@ if ('ResizeObserver' in window) {
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore Suppressing TS2339 on window.ResizeObserver as it isn't standard, hence the polyfill
-const Observer = <typeof ResizeObserver>(window.ResizeObserver || ResizeObserver)
+const Observer = <typeof ResizeObserver>(
+  (window.ResizeObserver || ResizeObserver)
+)
 
 function cancel(requestId: number) {
   if (requestId !== 0) {
@@ -35,7 +37,10 @@ export const useWindowResized = (onResize: () => void): void => {
   }, [onResize])
 }
 
-export const useElementResized = (elementRef: RefObject<Element>, onResize: (size: DOMRectReadOnly) => void): void => {
+export const useElementResized = (
+  elementRef: RefObject<Element>,
+  onResize: (size: DOMRectReadOnly) => void
+): void => {
   useEffect(() => {
     const el = elementRef.current
 
@@ -45,14 +50,16 @@ export const useElementResized = (elementRef: RefObject<Element>, onResize: (siz
 
     let requestId = 0
 
-    const observer = new Observer((entries: ReadonlyArray<ResizeObserverEntry>) => {
-      cancel(requestId)
-      requestId = requestAnimationFrame(() => {
-        entries.forEach((entry) => {
-          onResize(entry.contentRect)
+    const observer = new Observer(
+      (entries: ReadonlyArray<ResizeObserverEntry>) => {
+        cancel(requestId)
+        requestId = requestAnimationFrame(() => {
+          entries.forEach((entry) => {
+            onResize(entry.contentRect)
+          })
         })
-      })
-    })
+      }
+    )
     observer.observe(el)
 
     return () => {

@@ -8,8 +8,14 @@
   $border-color: colours.$light-grey,
   $hover-color-change-percentage: colours.$color-change-percentage
 ) {
-  background-color: color.scale($background-color, $lightness: $hover-color-change-percentage * -1);
-  border-color: color.scale($border-color, $lightness: $hover-color-change-percentage * -1);
+  background-color: color.scale(
+    $background-color,
+    $lightness: $hover-color-change-percentage * -1
+  );
+  border-color: color.scale(
+    $border-color,
+    $lightness: $hover-color-change-percentage * -1
+  );
   border-radius: 0;
   color: $color;
 }
@@ -20,7 +26,10 @@
   $border-color: colours.$light-grey,
   $focus-color-change-percentage: colours.$color-change-percentage
 ) {
-  background-color: color.scale($background-color, $lightness: $focus-color-change-percentage * -1);
+  background-color: color.scale(
+    $background-color,
+    $lightness: $focus-color-change-percentage * -1
+  );
   border-color: colours.$outline;
   border-radius: 0;
   color: $color;
@@ -37,13 +46,23 @@
   $focus-color-change-percentage: colours.$color-change-percentage
 ) {
   &:hover {
-    @include hover($color, $background-color, $border-color, $hover-color-change-percentage);
+    @include hover(
+      $color,
+      $background-color,
+      $border-color,
+      $hover-color-change-percentage
+    );
 
     @content;
   }
 
   &:focus {
-    @include focus($color, $background-color, $border-color, $focus-color-change-percentage);
+    @include focus(
+      $color,
+      $background-color,
+      $border-color,
+      $focus-color-change-percentage
+    );
 
     @content;
   }

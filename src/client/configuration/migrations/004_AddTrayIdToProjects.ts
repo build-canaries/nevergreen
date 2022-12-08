@@ -1,5 +1,5 @@
-import {forEachArrayAt} from '../Migrate'
-import {Migrate} from './index'
+import { forEachArrayAt } from '../Migrate'
+import { Migrate } from './index'
 import isObject from 'lodash/isObject'
 
 export const id = '004_AddTrayIdToProjects'

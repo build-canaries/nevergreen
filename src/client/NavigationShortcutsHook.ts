@@ -1,5 +1,5 @@
-import {useShortcut} from './common/Keyboard'
-import {useNavigate} from 'react-router-dom'
+import { useShortcut } from './common/Keyboard'
+import { useNavigate } from 'react-router-dom'
 import {
   ROUTE_BACKUP,
   ROUTE_DISPLAY,
@@ -7,12 +7,12 @@ import {
   ROUTE_NOTIFICATIONS,
   ROUTE_SETTINGS,
   ROUTE_SUCCESS,
-  ROUTE_TRACKING
+  ROUTE_TRACKING,
 } from './AppRoutes'
 
 export function useNavigationShortcut(keys: string | string[], route: string) {
   const navigate = useNavigate()
-  useShortcut(keys, () => navigate(route, {replace: true}), [route, navigate])
+  useShortcut(keys, () => navigate(route, { replace: true }), [route, navigate])
 }
 
 export function useNavigationShortcuts(): void {

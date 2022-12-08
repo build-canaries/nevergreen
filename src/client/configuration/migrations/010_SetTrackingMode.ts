@@ -1,8 +1,8 @@
-import {Migrate} from './index'
-import {forEachObjectAt} from '../Migrate'
-import {feedsRoot} from '../../settings/tracking/FeedsReducer'
+import { Migrate } from './index'
+import { forEachObjectAt } from '../Migrate'
+import { feedsRoot } from '../../settings/tracking/FeedsReducer'
 import has from 'lodash/has'
-import {TrackingMode} from '../../domain/Feed'
+import { TrackingMode } from '../../domain/Feed'
 
 export const id = '010_SetTrackingMode'
 

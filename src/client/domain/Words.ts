@@ -1261,7 +1261,7 @@ export const ADJECTIVES = [
   'Zealous',
   'Zesty',
   'Zippy',
-  'Zonked'
+  'Zonked',
 ]
 
 export const NOUNS = [
@@ -2114,5 +2114,5 @@ export const NOUNS = [
   'zephyr',
   'zinc',
   'zipper',
-  'zoo'
+  'zoo',
 ]

@@ -1,8 +1,7 @@
-import {feedIdentifier} from './Feed'
-import {buildFeed} from '../testUtils/builders'
+import { feedIdentifier } from './Feed'
+import { buildFeed } from '../testUtils/builders'
 
 describe('feedIdentifier', () => {
-
   it('should return Nevergreen for null because that means there was not a matching feed', () => {
     expect(feedIdentifier(null)).toEqual('Nevergreen')
   })
@@ -12,10 +11,14 @@ describe('feedIdentifier', () => {
   })
 
   it('should return the name by preference', () => {
-    expect(feedIdentifier(buildFeed({name: 'some-name'}))).toEqual('some-name')
+    expect(feedIdentifier(buildFeed({ name: 'some-name' }))).toEqual(
+      'some-name'
+    )
   })
 
   it('should return the URL if there is no name', () => {
-    expect(feedIdentifier(buildFeed({name: '', url: 'some-url'}))).toEqual('some-url')
+    expect(feedIdentifier(buildFeed({ name: '', url: 'some-url' }))).toEqual(
+      'some-url'
+    )
   })
 })

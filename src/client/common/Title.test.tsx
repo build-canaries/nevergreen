@@ -1,10 +1,10 @@
 import React from 'react'
-import {render} from '../testUtils/testHelpers'
-import {Title} from './Title'
-import {screen} from '@testing-library/react'
+import { render } from '../testUtils/testHelpers'
+import { Title } from './Title'
+import { screen } from '@testing-library/react'
 
 it('should set the document title', () => {
-  const {unmount} = render(<Title>some-title</Title>)
+  const { unmount } = render(<Title>some-title</Title>)
   expect(document).toHaveProperty('title', 'some-title')
   unmount()
   expect(document).toHaveProperty('title', 'Nevergreen')

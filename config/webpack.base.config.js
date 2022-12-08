@@ -3,16 +3,16 @@ const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const autoprefixer = require('autoprefixer')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const {CleanWebpackPlugin} = require('clean-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 const cssLoader = {
   loader: 'css-loader',
   options: {
     sourceMap: true,
     modules: {
-      localIdentName: '[name]-[local]-[contenthash:base64:6]'
-    }
-  }
+      localIdentName: '[name]-[local]-[contenthash:base64:6]',
+    },
+  },
 }
 
 const postCssLoader = {
@@ -20,9 +20,9 @@ const postCssLoader = {
   options: {
     postcssOptions: {
       sourceMap: true,
-      plugins: [autoprefixer()]
-    }
-  }
+      plugins: [autoprefixer()],
+    },
+  },
 }
 
 module.exports = {
@@ -32,29 +32,26 @@ module.exports = {
     path: path.join(__dirname, '../resources/public'),
     filename: '[name].[contenthash:8].js',
     publicPath: '/',
-    assetModuleFilename: '[name].[contenthash:8][ext]'
+    assetModuleFilename: '[name].[contenthash:8][ext]',
   },
   plugins: [
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
-      filename: '[name].[contenthash:8].css'
+      filename: '[name].[contenthash:8].css',
     }),
     new CopyWebpackPlugin({
-      patterns: [
-        './src/client/robots.txt',
-        './src/client/favicons'
-      ]
-    })
+      patterns: ['./src/client/robots.txt', './src/client/favicons'],
+    }),
   ],
   resolve: {
-    extensions: ['.js', '.tsx', '.ts']
+    extensions: ['.js', '.tsx', '.ts'],
   },
   module: {
     rules: [
       {
         test: /\.(js|ts|tsx)$/,
         use: 'babel-loader',
-        include: path.join(__dirname, '../src/client')
+        include: path.join(__dirname, '../src/client'),
       },
       {
         test: /\.scss$/i,
@@ -65,26 +62,26 @@ module.exports = {
           'resolve-url-loader',
           {
             loader: 'sass-loader',
-            options: {sourceMap: true}
-          }
-        ]
+            options: { sourceMap: true },
+          },
+        ],
       },
       {
         test: /\.(png|svg|woff|woff2|ttf)$/i,
-        type: 'asset'
+        type: 'asset',
       },
       {
         test: /\.mp3$/i,
         type: 'asset/resource',
         generator: {
-          filename: '[name][ext]'
-        }
+          filename: '[name][ext]',
+        },
       },
       {
         test: /\.txt$/,
-        type: 'asset/source'
-      }
-    ]
+        type: 'asset/source',
+      },
+    ],
   },
-  stats: 'minimal'
+  stats: 'minimal',
 }

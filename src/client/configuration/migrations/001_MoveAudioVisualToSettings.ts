@@ -1,5 +1,5 @@
-import {moveData} from '../Migrate'
-import {Migrate} from './index'
+import { moveData } from '../Migrate'
+import { Migrate } from './index'
 
 export const id = '001_MoveAudioVisualToSettings'
 

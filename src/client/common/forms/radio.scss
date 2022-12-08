@@ -97,7 +97,10 @@
     }
 
     & + .children::before {
-      border-color: darken(colours.$light-grey, colours.$color-change-percentage);
+      border-color: darken(
+        colours.$light-grey,
+        colours.$color-change-percentage
+      );
     }
   }
 

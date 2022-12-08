@@ -48,7 +48,8 @@
     @include links.link(
       colours.$healthy-building-text,
       colours.$healthy-building-text,
-      colours.$healthy-building);
+      colours.$healthy-building
+    );
   }
 }
 
@@ -72,7 +73,11 @@
   @include prognosis(colours.$off-black, colours.$light-grey);
 
   .link {
-    @include links.link(colours.$off-black, colours.$off-black, colours.$light-grey);
+    @include links.link(
+      colours.$off-black,
+      colours.$off-black,
+      colours.$light-grey
+    );
   }
 }
 

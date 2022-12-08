@@ -1,15 +1,15 @@
-import {useEffect, useState} from 'react'
-import {init, load} from './LocalRepository'
-import {DataSource, toConfiguration} from './Configuration'
-import {configurationImported} from '../settings/backup/BackupActionCreators'
-import {isRight} from 'fp-ts/Either'
+import { useEffect, useState } from 'react'
+import { init, load } from './LocalRepository'
+import { DataSource, toConfiguration } from './Configuration'
+import { configurationImported } from '../settings/backup/BackupActionCreators'
+import { isRight } from 'fp-ts/Either'
 import * as logger from '../common/Logger'
 import join from 'lodash/join'
-import {useAppDispatch} from './Hooks'
+import { useAppDispatch } from './Hooks'
 
 interface Result {
-  readonly loaded: boolean;
-  readonly error: boolean;
+  readonly loaded: boolean
+  readonly error: boolean
 }
 
 export function useLocalConfiguration(): Result {
@@ -29,11 +29,19 @@ export function useLocalConfiguration(): Result {
         if (isRight(result)) {
           dispatch(configurationImported(result.right))
         } else {
-          logger.error(`Unable to initalise Nevergreen because of configuration validation errors, ${join(result.left, ', ')}`)
+          logger.error(
+            `Unable to initalise Nevergreen because of configuration validation errors, ${join(
+              result.left,
+              ', '
+            )}`
+          )
           setError(true)
         }
       } catch (e) {
-        logger.error('Unable to initalise Nevergreen because of configuration loading error', e)
+        logger.error(
+          'Unable to initalise Nevergreen because of configuration loading error',
+          e
+        )
         setError(true)
       }
 
@@ -43,5 +51,5 @@ export function useLocalConfiguration(): Result {
     void loadData()
   }, [dispatch])
 
-  return {loaded, error}
+  return { loaded, error }
 }

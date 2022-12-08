@@ -1,7 +1,11 @@
-import {useEffect} from 'react'
+import { useEffect } from 'react'
 import ClipboardJS from 'clipboard'
 
-export function useClipboard(elementSelector: string, onSuccess: () => void, onError: () => void): boolean {
+export function useClipboard(
+  elementSelector: string,
+  onSuccess: () => void,
+  onError: () => void
+): boolean {
   const supported = ClipboardJS.isSupported()
 
   useEffect(() => {

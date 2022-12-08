@@ -1,24 +1,31 @@
-import React, {ReactElement} from 'react'
+import React, { ReactElement } from 'react'
 import styles from './tile-project.scss'
-import {isBlank} from '../common/Utils'
-import {Project, projectBuildLabel} from '../domain/Project'
-import {VisuallyHidden} from '../common/VisuallyHidden'
-import {Duration} from '../common/Duration'
-import {ScaledTile} from './ScaledTile'
-import {feedIdentifier} from '../domain/Feed'
-import {useSelector} from 'react-redux'
-import {getFeeds} from '../settings/tracking/FeedsReducer'
-import {getShowBuildLabel, getShowBuildTime, getShowFeedIdentifier} from '../settings/SettingsReducer'
-import {ExternalLink} from '../common/ExternalLink'
-import {Clock} from '../common/icons/Clock'
-import {FeedError} from '../domain/FeedError'
+import { isBlank } from '../common/Utils'
+import { Project, projectBuildLabel } from '../domain/Project'
+import { VisuallyHidden } from '../common/VisuallyHidden'
+import { Duration } from '../common/Duration'
+import { ScaledTile } from './ScaledTile'
+import { feedIdentifier } from '../domain/Feed'
+import { useSelector } from 'react-redux'
+import { getFeeds } from '../settings/tracking/FeedsReducer'
+import {
+  getShowBuildLabel,
+  getShowBuildTime,
+  getShowFeedIdentifier,
+} from '../settings/SettingsReducer'
+import { ExternalLink } from '../common/ExternalLink'
+import { Clock } from '../common/icons/Clock'
+import { FeedError } from '../domain/FeedError'
 
 interface TileProjectProps {
-  readonly project: Project | FeedError;
-  readonly visibleProjects: ReadonlyArray<Project | FeedError>;
+  readonly project: Project | FeedError
+  readonly visibleProjects: ReadonlyArray<Project | FeedError>
 }
 
-export function TileProject({project, visibleProjects}: TileProjectProps): ReactElement {
+export function TileProject({
+  project,
+  visibleProjects,
+}: TileProjectProps): ReactElement {
   const feeds = useSelector(getFeeds)
   const showBuildTime = useSelector(getShowBuildTime)
   const showFeedIdentifier = useSelector(getShowFeedIdentifier)
@@ -29,23 +36,22 @@ export function TileProject({project, visibleProjects}: TileProjectProps): React
   const myFeed = feeds.find((feed) => feed.trayId === project.trayId)
 
   const identifier = showFeedIdentifier && (
-    <span className={styles.identifier}
-          data-locator="tray-name">
+    <span className={styles.identifier} data-locator="tray-name">
       {feedIdentifier(myFeed)}
     </span>
   )
 
-  const time = showBuildTime &&
+  const time = showBuildTime && (
     <span>
-      <Clock className={styles.time}/>
+      <Clock className={styles.time} />
       <VisuallyHidden>time </VisuallyHidden>
-      <Duration timestamp={project.timestamp}/>
+      <Duration timestamp={project.timestamp} />
     </span>
+  )
 
   const buildLabel = projectBuildLabel(project)
   const buildLabelComponent = showBuildLabel && !isBlank(buildLabel) && (
-    <div className={styles.buildLabel}
-         data-locator="build-label">
+    <div className={styles.buildLabel} data-locator="build-label">
       <VisuallyHidden>build label </VisuallyHidden>
       {buildLabel}
     </div>
@@ -64,12 +70,13 @@ export function TileProject({project, visibleProjects}: TileProjectProps): React
   )
 
   return (
-    <ScaledTile header={identifier}
-                footer={additional}
-                className={styles[project.prognosis]}
-                sentences={sentences}>
-      <ExternalLink href={project.webUrl}
-                    className={styles.link}>
+    <ScaledTile
+      header={identifier}
+      footer={additional}
+      className={styles[project.prognosis]}
+      sentences={sentences}
+    >
+      <ExternalLink href={project.webUrl} className={styles.link}>
         {project.description}
       </ExternalLink>
     </ScaledTile>

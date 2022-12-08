@@ -1,4 +1,6 @@
-import {Configuration} from '../../configuration/Configuration'
-import {createAction} from '@reduxjs/toolkit'
+import { Configuration } from '../../configuration/Configuration'
+import { createAction } from '@reduxjs/toolkit'
 
-export const configurationImported = createAction<Configuration>('configurationImported')
+export const configurationImported = createAction<Configuration>(
+  'configurationImported'
+)

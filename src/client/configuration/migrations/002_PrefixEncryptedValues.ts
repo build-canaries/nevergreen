@@ -1,6 +1,6 @@
-import {forEachObjectAt, moveData} from '../Migrate'
-import {Migrate} from './index'
-import {feedsRoot} from '../../settings/tracking/FeedsReducer'
+import { forEachObjectAt, moveData } from '../Migrate'
+import { Migrate } from './index'
+import { feedsRoot } from '../../settings/tracking/FeedsReducer'
 
 export const id = '002_PrefixEncryptedValues'
 

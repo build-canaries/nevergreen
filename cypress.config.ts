@@ -1,4 +1,4 @@
-import {defineConfig} from 'cypress'
+import { defineConfig } from 'cypress'
 
 export default defineConfig({
   e2e: {
@@ -6,7 +6,7 @@ export default defineConfig({
     projectId: 'oc7zg3',
     reporter: 'junit',
     reporterOptions: {
-      mochaFile: './target/test-reports/journey/test-results.xml'
+      mochaFile: './target/test-reports/journey/test-results.xml',
     },
     fixturesFolder: false,
     specPattern: './journey/*.cy.ts',
@@ -20,10 +20,8 @@ export default defineConfig({
       TRAY_URL_TOKEN: 'http://localhost:5050/token/cctray.xml',
       TRAY_TOKEN: 'abc123',
       TRAY_USERNAME: 'u',
-      TRAY_PASSWORD: 'p'
+      TRAY_PASSWORD: 'p',
     },
-    blockHosts: [
-      'api.github.com'
-    ]
-  }
+    blockHosts: ['api.github.com'],
+  },
 })

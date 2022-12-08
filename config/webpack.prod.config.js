@@ -1,7 +1,7 @@
 const webpack = require('webpack')
-const {merge} = require('webpack-merge')
+const { merge } = require('webpack-merge')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const {GenerateSW} = require('workbox-webpack-plugin')
+const { GenerateSW } = require('workbox-webpack-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 
 const baseConfig = require('./webpack.base.config.js')
@@ -14,8 +14,8 @@ module.exports = merge(baseConfig, {
       minify: {
         collapseWhitespace: true,
         removeComments: true,
-        removeRedundantAttributes: true
-      }
+        removeRedundantAttributes: true,
+      },
     }),
     new GenerateSW({
       swDest: 'service-worker.js',
@@ -25,15 +25,12 @@ module.exports = merge(baseConfig, {
       skipWaiting: true,
       navigateFallback: '/index.html',
       navigateFallbackDenylist: [
-        new RegExp('/[^/]+\\.[^/]+$') // Exclude URLs containing a dot, as they're likely a resource in public
-      ]
-    })
+        new RegExp('/[^/]+\\.[^/]+$'), // Exclude URLs containing a dot, as they're likely a resource in public
+      ],
+    }),
   ],
   optimization: {
     minimize: true,
-    minimizer: [
-      `...`,
-      new CssMinimizerPlugin()
-    ]
-  }
+    minimizer: [`...`, new CssMinimizerPlugin()],
+  },
 })

@@ -1,18 +1,18 @@
-import React, {ReactElement} from 'react'
-import {useSelector} from 'react-redux'
-import {getFeed} from './FeedsReducer'
-import {Navigate, Outlet, useOutletContext, useParams} from 'react-router-dom'
-import {Feed} from '../../domain/Feed'
-import {ROUTE_TRACKING} from '../../AppRoutes'
+import React, { ReactElement } from 'react'
+import { useSelector } from 'react-redux'
+import { getFeed } from './FeedsReducer'
+import { Navigate, Outlet, useOutletContext, useParams } from 'react-router-dom'
+import { Feed } from '../../domain/Feed'
+import { ROUTE_TRACKING } from '../../AppRoutes'
 
 export function FeedPage(): ReactElement {
-  const {id} = useParams()
+  const { id } = useParams()
   const feed = useSelector(getFeed(id || ''))
 
   if (feed) {
-    return <Outlet context={feed}/>
+    return <Outlet context={feed} />
   } else {
-    return <Navigate to={ROUTE_TRACKING}/>
+    return <Navigate to={ROUTE_TRACKING} />
   }
 }
 

@@ -30,7 +30,7 @@ export enum PerformanceMark {
   calculatingIdealFontSize = 'Calculating ideal font size',
 }
 
-const nevergreenEmoji = String.fromCodePoint(0x1F424) // baby chick
+const nevergreenEmoji = String.fromCodePoint(0x1f424) // baby chick
 
 export function mark(name: PerformanceMark): void {
   if ('performance' in window) {

@@ -1,28 +1,30 @@
-import React, {Component, ReactNode} from 'react'
-import {UnhandledErrorMessage} from './UnhandledErrorMessage'
+import React, { Component, ReactNode } from 'react'
+import { UnhandledErrorMessage } from './UnhandledErrorMessage'
 
 interface UnhandledErrorProps {
-  readonly children: ReactNode;
+  readonly children: ReactNode
 }
 
 interface UnhandledErrorState {
-  readonly hasError: boolean;
+  readonly hasError: boolean
 }
 
-export class UnhandledError extends Component<UnhandledErrorProps, UnhandledErrorState> {
-
+export class UnhandledError extends Component<
+  UnhandledErrorProps,
+  UnhandledErrorState
+> {
   public constructor(props: UnhandledErrorProps) {
     super(props)
-    this.state = {hasError: false}
+    this.state = { hasError: false }
   }
 
   public componentDidCatch(): void {
-    this.setState({hasError: true})
+    this.setState({ hasError: true })
   }
 
   public render(): ReactNode {
     if (this.state.hasError) {
-      return <UnhandledErrorMessage/>
+      return <UnhandledErrorMessage />
     }
     return this.props.children
   }

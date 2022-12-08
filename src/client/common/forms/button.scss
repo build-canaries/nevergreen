@@ -17,7 +17,11 @@
     cursor: pointer;
     transition: box-shadow 0.1s ease-in;
 
-    @include accessibility.interactive($color, $background-color, $border-color) {
+    @include accessibility.interactive(
+      $color,
+      $background-color,
+      $border-color
+    ) {
       box-shadow: 0 4px 8px 0 color.adjust(colours.$black, $alpha: -0.74);
     }
   }
@@ -60,7 +64,11 @@
 }
 
 .transparent {
-  @include button($color: inherit, $background-color: transparent, $border-color: transparent);
+  @include button(
+    $color: inherit,
+    $background-color: transparent,
+    $border-color: transparent
+  );
 
   &:enabled {
     box-shadow: none;

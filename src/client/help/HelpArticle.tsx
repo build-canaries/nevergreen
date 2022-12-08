@@ -1,39 +1,43 @@
-import React, {ReactElement, ReactNode, useEffect, useState} from 'react'
-import {useMatch} from 'react-router-dom'
-import {matchSorter} from 'match-sorter'
-import {isBlank} from '../common/Utils'
+import React, { ReactElement, ReactNode, useEffect, useState } from 'react'
+import { useMatch } from 'react-router-dom'
+import { matchSorter } from 'match-sorter'
+import { isBlank } from '../common/Utils'
 import isNil from 'lodash/isNil'
 import cn from 'classnames'
 import styles from './help-article.scss'
 
 export interface HelpProps {
-  readonly searchQuery: string;
-  readonly helpLink: (to: string) => ReactNode;
+  readonly searchQuery: string
+  readonly helpLink: (to: string) => ReactNode
 }
 
 interface KeywordProps {
-  readonly keyword: string;
-  readonly matches: ReadonlyArray<string>;
+  readonly keyword: string
+  readonly matches: ReadonlyArray<string>
 }
 
 interface HelpArticleProps {
-  readonly title: string;
-  readonly keywords: string[];
-  readonly children: ReactNode;
-  readonly searchQuery: string;
-  readonly page?: string;
+  readonly title: string
+  readonly keywords: string[]
+  readonly children: ReactNode
+  readonly searchQuery: string
+  readonly page?: string
 }
 
-function Keyword({keyword, matches}: KeywordProps) {
+function Keyword({ keyword, matches }: KeywordProps) {
   const classes = cn(styles.keyword, {
-    [styles.keywordMatched]: matches.includes(keyword)
+    [styles.keywordMatched]: matches.includes(keyword),
   })
-  return (
-    <li className={classes}>{keyword}</li>
-  )
+  return <li className={classes}>{keyword}</li>
 }
 
-export function HelpArticle({title, keywords, children, searchQuery, page}: HelpArticleProps): ReactElement | null {
+export function HelpArticle({
+  title,
+  keywords,
+  children,
+  searchQuery,
+  page,
+}: HelpArticleProps): ReactElement | null {
   const match = useMatch(page || '')
   const routeMatches = !isNil(match)
   const [show, setShow] = useState(routeMatches)
@@ -57,9 +61,9 @@ export function HelpArticle({title, keywords, children, searchQuery, page}: Help
         <div className={styles.article}>{children}</div>
         <span>keywords:</span>
         <ul className={styles.keywords}>
-          {keywords.map((keyword) => <Keyword key={keyword}
-                                              keyword={keyword}
-                                              matches={matches}/>)}
+          {keywords.map((keyword) => (
+            <Keyword key={keyword} keyword={keyword} matches={matches} />
+          ))}
         </ul>
       </li>
     )

@@ -1,6 +1,9 @@
-import {Ref, useEffect, useRef} from 'react'
+import { Ref, useEffect, useRef } from 'react'
 
-export function useForceFocus<T extends HTMLElement>(focus = true, deps: ReadonlyArray<unknown> = []): Ref<T> {
+export function useForceFocus<T extends HTMLElement>(
+  focus = true,
+  deps: ReadonlyArray<unknown> = []
+): Ref<T> {
   const el = useRef<T>(null)
 
   useEffect(() => {

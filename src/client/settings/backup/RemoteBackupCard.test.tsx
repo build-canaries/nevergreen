@@ -1,39 +1,39 @@
 import React from 'react'
-import {render} from '../../testUtils/testHelpers'
-import {buildRemoteBackupLocation} from '../../testUtils/builders'
-import {RemoteLocationOptions} from './RemoteLocationOptions'
-import {RemoteBackupCard} from './RemoteBackupCard'
-import {screen} from '@testing-library/react'
+import { render } from '../../testUtils/testHelpers'
+import { buildRemoteBackupLocation } from '../../testUtils/builders'
+import { RemoteLocationOptions } from './RemoteLocationOptions'
+import { RemoteBackupCard } from './RemoteBackupCard'
+import { screen } from '@testing-library/react'
 
 describe('custom server', () => {
-
   it('should display the URL', () => {
-    const location = buildRemoteBackupLocation({where: RemoteLocationOptions.custom, url: 'http://some-custom-server'})
-    render(<RemoteBackupCard location={location}/>)
+    const location = buildRemoteBackupLocation({
+      where: RemoteLocationOptions.custom,
+      url: 'http://some-custom-server',
+    })
+    render(<RemoteBackupCard location={location} />)
     expect(screen.getByText(/http:\/\/some-custom-server/)).toBeInTheDocument()
   })
 })
 
 describe('GitHub gists', () => {
-
   it('should display the description', () => {
     const location = buildRemoteBackupLocation({
       where: RemoteLocationOptions.gitHub,
-      description: 'some description'
+      description: 'some description',
     })
-    render(<RemoteBackupCard location={location}/>)
+    render(<RemoteBackupCard location={location} />)
     expect(screen.getByText('some description')).toBeInTheDocument()
   })
 })
 
 describe('GitLab snippets', () => {
-
   it('should display the description', () => {
     const location = buildRemoteBackupLocation({
       where: RemoteLocationOptions.gitLab,
-      description: 'some description'
+      description: 'some description',
     })
-    render(<RemoteBackupCard location={location}/>)
+    render(<RemoteBackupCard location={location} />)
     expect(screen.getByText('some description')).toBeInTheDocument()
   })
 })

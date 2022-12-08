@@ -1,6 +1,6 @@
-import Mousetrap, {ExtendedKeyboardEvent} from 'mousetrap'
+import Mousetrap, { ExtendedKeyboardEvent } from 'mousetrap'
 import 'mousetrap/plugins/pause/mousetrap-pause'
-import {useCallback, useEffect} from 'react'
+import { useCallback, useEffect } from 'react'
 
 type Callback = (e: ExtendedKeyboardEvent, combo: string) => void
 
@@ -22,7 +22,11 @@ export function unpauseShortcuts(): void {
   Mousetrap.unpause()
 }
 
-export function useShortcut(keys: string | string[], callback: Callback, deps: ReadonlyArray<unknown> = []): void {
+export function useShortcut(
+  keys: string | string[],
+  callback: Callback,
+  deps: ReadonlyArray<unknown> = []
+): void {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const memoCallback = useCallback(callback, deps)
 

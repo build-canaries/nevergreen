@@ -2,7 +2,7 @@ import random from 'lodash/random'
 import parseISO from 'date-fns/parseISO'
 import format from 'date-fns/format'
 import subSeconds from 'date-fns/subSeconds'
-import {isBlank} from './Utils'
+import { isBlank } from './Utils'
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 
 const oneMinuteInSeconds = 60
@@ -25,11 +25,14 @@ export function secondsToString(seconds: number): string {
 }
 
 export function now(): string {
-  return format(new Date(), 'yyyy-MM-dd\'T\'HH:mm:ss.SSS')
+  return format(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSS")
 }
 
 export function randomDateInPast(seconds = oneDayInSeconds): string {
-  return format(subSeconds(new Date(), random(0, seconds)), 'yyyy-MM-dd\'T\'HH:mm:ss.SSS')
+  return format(
+    subSeconds(new Date(), random(0, seconds)),
+    "yyyy-MM-dd'T'HH:mm:ss.SSS"
+  )
 }
 
 export function formatAsDuration(timestamp?: string | null): string {
