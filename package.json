@@ -274,8 +274,7 @@
     },
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|svg|ttf|woff|woff2|mp3)$": "<rootDir>/src/client/testUtils/fileMock.js",
-      "\\.(css|scss)$": "identity-obj-proxy",
-      "^uuid$": "<rootDir>/node_modules/uuid/dist/index.js"
+      "\\.(css|scss)$": "identity-obj-proxy"
     },
     "clearMocks": true,
     "resetMocks": true,

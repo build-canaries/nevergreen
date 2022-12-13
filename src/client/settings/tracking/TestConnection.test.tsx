@@ -2,9 +2,9 @@ import React from 'react'
 import { render } from '../../testUtils/testHelpers'
 import { screen, waitFor } from '@testing-library/react'
 import { TestConnection } from './TestConnection'
-import { AuthTypes } from '../../domain/Feed'
 import * as ProjectsGateway from '../../gateways/ProjectsGateway'
 import * as Gateway from '../../gateways/Gateway'
+import { AuthTypes } from './FeedsReducer'
 
 const details = {
   url: 'http://some-url',

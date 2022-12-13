@@ -8,7 +8,9 @@
  * copyright notice and this permission notice appear in all copies.
  */
 
-export const ADJECTIVES = [
+import { randomFrom } from './Utils'
+
+const adjectives = [
   'Abandoned',
   'Abashed',
   'Aberrant',
@@ -1264,7 +1266,7 @@ export const ADJECTIVES = [
   'Zonked',
 ]
 
-export const NOUNS = [
+const nouns = [
   'account',
   'achiever',
   'acoustics',
@@ -2116,3 +2118,7 @@ export const NOUNS = [
   'zipper',
   'zoo',
 ]
+
+export function generateRandomName(): string {
+  return `${randomFrom(adjectives)} ${randomFrom(nouns)}`
+}

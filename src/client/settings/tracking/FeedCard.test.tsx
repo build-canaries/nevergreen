@@ -3,9 +3,8 @@ import { render } from '../../testUtils/testHelpers'
 import { buildFeed } from '../../testUtils/builders'
 import { screen } from '@testing-library/react'
 import { FeedCard } from './FeedCard'
-import { feedsRoot as feedsName } from './FeedsReducer'
+import { feedsRoot, TrackingMode } from './FeedsReducer'
 import { selectedRoot as selectedName } from './SelectedReducer'
-import { TrackingMode } from '../../domain/Feed'
 
 it('should display some feed details', () => {
   const feed = buildFeed({
@@ -14,7 +13,7 @@ it('should display some feed details', () => {
     trackingMode: TrackingMode.selected,
   })
   const state = {
-    [feedsName]: { trayId: feed },
+    [feedsRoot]: { trayId: feed },
     [selectedName]: { trayId: ['1'] },
   }
   render(<FeedCard feed={feed} />, { state })

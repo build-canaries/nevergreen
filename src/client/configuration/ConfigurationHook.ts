@@ -24,13 +24,13 @@ export function useLocalConfiguration(): Result {
       try {
         await init()
         const untrustedData = await load()
-        const result = toConfiguration(untrustedData, DataSource.browserStorage)
+        const result = toConfiguration(untrustedData, DataSource.systemImport)
 
         if (isRight(result)) {
           dispatch(configurationImported(result.right))
         } else {
           logger.error(
-            `Unable to initalise Nevergreen because of configuration validation errors, ${join(
+            `Unable to initialise Nevergreen because of configuration validation errors, ${join(
               result.left,
               ', '
             )}`
@@ -39,7 +39,7 @@ export function useLocalConfiguration(): Result {
         }
       } catch (e) {
         logger.error(
-          'Unable to initalise Nevergreen because of configuration loading error',
+          'Unable to initialise Nevergreen because of configuration loading error',
           e
         )
         setError(true)

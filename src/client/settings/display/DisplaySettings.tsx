@@ -18,8 +18,8 @@ import {
   setShowBuildTime,
   setShowFeedIdentifier,
   setSort,
+  SortBy,
 } from '../SettingsReducer'
-import { SortBy } from '../../gateways/ProjectsGateway'
 import { LinkButton } from '../../common/LinkButton'
 import { Page } from '../../common/Page'
 import { Eye } from '../../common/icons/Eye'

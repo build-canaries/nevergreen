@@ -9,8 +9,8 @@ import { feedRemoved, feedUpdated } from './TrackingActionCreators'
 import { testReducer } from '../../testUtils/testHelpers'
 import { buildState } from '../../testUtils/builders'
 import { RecursivePartial } from '../../common/Types'
-import { TrackingMode } from '../../domain/Feed'
 import { configurationImported } from '../backup/BackupActionCreators'
+import { TrackingMode } from './FeedsReducer'
 
 const reducer = testReducer({
   [selectedRoot]: selectedReducer,

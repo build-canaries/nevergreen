@@ -4,19 +4,24 @@ import type { RootState } from '../../configuration/ReduxStore'
 import { feedRemoved, feedUpdated } from './TrackingActionCreators'
 import remove from 'lodash/remove'
 import { configurationImported } from '../backup/BackupActionCreators'
-import { TrackingMode } from '../../domain/Feed'
+import * as t from 'io-ts'
+import { TrackingMode } from './FeedsReducer'
 
-export interface SelectedState {
-  readonly [trayId: string]: ReadonlyArray<string>
-}
+export const selectedRoot = 'selected'
+
+export const SelectedState = t.record(
+  t.string,
+  t.readonlyArray(t.string),
+  selectedRoot
+)
+
+export type SelectedState = t.TypeOf<typeof SelectedState>
 
 interface ProjectSelectedAction {
   readonly trayId: string
   readonly projectIds: ReadonlyArray<string>
   readonly selected: boolean
 }
-
-export const selectedRoot = 'selected'
 
 const initialState: SelectedState = {}
 

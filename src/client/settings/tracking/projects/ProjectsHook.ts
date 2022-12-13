@@ -1,10 +1,11 @@
+import type { Feed } from '../FeedsReducer'
 import { useQuery, UseQueryResult } from '@tanstack/react-query'
 import { post } from '../../../gateways/Gateway'
-import { ProjectsResponse, SortBy } from '../../../gateways/ProjectsGateway'
+import { ProjectsResponse } from '../../../gateways/ProjectsGateway'
 import { Project } from '../../../domain/Project'
 import { isError as isProjectError } from '../../../domain/FeedError'
-import { Feed } from '../../../domain/Feed'
 import omit from 'lodash/omit'
+import { SortBy } from '../../SettingsReducer'
 
 export function useProjects(
   feed: Feed

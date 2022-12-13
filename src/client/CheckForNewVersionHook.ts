@@ -2,7 +2,7 @@ import { get } from './gateways/Gateway'
 import greaterThan from 'semver/functions/gt'
 import version from '../../resources/version.txt'
 import { useSelector } from 'react-redux'
-import { getToggleVersionCheck } from './settings/notifications/NotificationsReducer'
+import { getEnableNewVersionCheck } from './settings/notifications/NotificationsReducer'
 import { useQuery } from '@tanstack/react-query'
 
 interface GitHubResponse {
@@ -14,7 +14,7 @@ const twentyFourHours = 24 * 60 * 60 * 1000
 export function useCheckForNewVersion(
   showBanner: (message: string) => void
 ): void {
-  const shouldCheckForNewVersion = useSelector(getToggleVersionCheck)
+  const shouldCheckForNewVersion = useSelector(getEnableNewVersionCheck)
 
   useQuery(
     ['check-for-new-version'],

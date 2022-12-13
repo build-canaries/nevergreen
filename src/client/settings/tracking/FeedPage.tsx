@@ -1,8 +1,8 @@
 import React, { ReactElement } from 'react'
-import { useSelector } from 'react-redux'
+import type { Feed } from './FeedsReducer'
 import { getFeed } from './FeedsReducer'
+import { useSelector } from 'react-redux'
 import { Navigate, Outlet, useOutletContext, useParams } from 'react-router-dom'
-import { Feed } from '../../domain/Feed'
 import { ROUTE_TRACKING } from '../../AppRoutes'
 
 export function FeedPage(): ReactElement {

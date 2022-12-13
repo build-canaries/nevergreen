@@ -1,28 +1,23 @@
-import { AuthTypes, createFeed, Feed } from '../../domain/Feed'
+import type { Feed } from './FeedsReducer'
+import { AuthTypes } from './FeedsReducer'
 import { createAction } from '@reduxjs/toolkit'
 
-interface FeedAdded {
+export interface FeedAddedAction {
   readonly trayId: string
   readonly url: string
   readonly authType: AuthTypes
-  readonly username: string
-  readonly encryptedPassword: string
-  readonly encryptedAccessToken: string
+  readonly username?: string
+  readonly encryptedPassword?: string
+  readonly encryptedAccessToken?: string
 }
 
-export const feedAdded = createAction(
-  'tracking/feedAdded',
-  (data: FeedAdded) => {
-    return {
-      payload: {
-        trayId: data.trayId,
-        feed: createFeed(data.trayId, data.url, data),
-      },
-    }
-  }
+interface FeedUpdatedAction {
+  readonly trayId: string
+  readonly feed: Partial<Feed>
+}
+
+export const feedAdded = createAction<FeedAddedAction>('tracking/feedAdded')
+export const feedUpdated = createAction<FeedUpdatedAction>(
+  'tracking/feedUpdated'
 )
-export const feedUpdated = createAction<{
-  trayId: string
-  feed: Partial<Feed>
-}>('tracking/feedUpdated')
 export const feedRemoved = createAction<string>('tracking/feedRemoved')

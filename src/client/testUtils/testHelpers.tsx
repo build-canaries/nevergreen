@@ -2,10 +2,10 @@ import type { RootState } from '../configuration/ReduxStore'
 import { reducer } from '../configuration/ReduxStore'
 import React, { ReactElement, ReactNode } from 'react'
 import merge from 'lodash/merge'
-import { settingsRoot as settingsName } from '../settings/SettingsReducer'
-import { selectedRoot as selectedName } from '../settings/tracking/SelectedReducer'
-import { successRoot as successName } from '../settings/success/SuccessReducer'
-import { feedsRoot as feedsName } from '../settings/tracking/FeedsReducer'
+import { settingsRoot } from '../settings/SettingsReducer'
+import { selectedRoot } from '../settings/tracking/SelectedReducer'
+import { successRoot } from '../settings/success/SuccessReducer'
+import { feedsRoot } from '../settings/tracking/FeedsReducer'
 import { CombinedState, combineReducers, Middleware, Reducer } from 'redux'
 import { RecursivePartial } from '../common/Types'
 import {
@@ -17,15 +17,15 @@ import {
 } from '@testing-library/react'
 import { AnyAction, configureStore, EnhancedStore } from '@reduxjs/toolkit'
 import { Outlet } from 'react-router-dom'
-import { migrationsRoot as migrationsName } from '../configuration/MigrationsReducer'
+import { migrationsRoot } from '../configuration/MigrationsReducer'
 import parseISO from 'date-fns/parseISO'
-import { remoteLocationsRoot as remoteLocationsName } from '../settings/backup/RemoteLocationsReducer'
+import { remoteLocationsRoot } from '../settings/backup/RemoteLocationsReducer'
 import { Route, Routes } from 'react-router'
 import userEvent from '@testing-library/user-event'
 import { UserEvent } from '@testing-library/user-event/setup/setup'
 import { buildState } from './builders'
 import { App } from '../App'
-import { notificationsRoot as notificationsName } from '../settings/notifications/NotificationsReducer'
+import { notificationsRoot } from '../settings/notifications/NotificationsReducer'
 
 interface ExtendedRenderResult extends RenderResult {
   readonly store: EnhancedStore<
@@ -102,13 +102,13 @@ export function testReducer(
   return combineReducers<RootState>(
     merge(
       {
-        [settingsName]: (state: any = null) => state,
-        [selectedName]: (state: any = null) => state,
-        [successName]: (state: any = null) => state,
-        [feedsName]: (state: any = null) => state,
-        [migrationsName]: (state: any = null) => state,
-        [remoteLocationsName]: (state: any = null) => state,
-        [notificationsName]: (state: any = null) => state,
+        [settingsRoot]: (state: any = null) => state,
+        [selectedRoot]: (state: any = null) => state,
+        [successRoot]: (state: any = null) => state,
+        [feedsRoot]: (state: any = null) => state,
+        [migrationsRoot]: (state: any = null) => state,
+        [remoteLocationsRoot]: (state: any = null) => state,
+        [notificationsRoot]: (state: any = null) => state,
       },
       reducer
     )
@@ -118,7 +118,6 @@ export function testReducer(
 /* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-return */
 
 export function setSystemTime(timestamp: string): void {
-  jest.useFakeTimers()
   jest.setSystemTime(parseISO(timestamp))
 }
 

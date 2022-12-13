@@ -1,13 +1,12 @@
 import React, { ReactElement } from 'react'
 import styles from './tile-project.scss'
-import { isBlank } from '../common/Utils'
+import { isBlank, isNotBlank } from '../common/Utils'
 import { Project, projectBuildLabel } from '../domain/Project'
 import { VisuallyHidden } from '../common/VisuallyHidden'
 import { Duration } from '../common/Duration'
 import { ScaledTile } from './ScaledTile'
-import { feedIdentifier } from '../domain/Feed'
 import { useSelector } from 'react-redux'
-import { getFeeds } from '../settings/tracking/FeedsReducer'
+import { Feed, getFeeds } from '../settings/tracking/FeedsReducer'
 import {
   getShowBuildLabel,
   getShowBuildTime,
@@ -16,10 +15,19 @@ import {
 import { ExternalLink } from '../common/ExternalLink'
 import { Clock } from '../common/icons/Clock'
 import { FeedError } from '../domain/FeedError'
+import isNil from 'lodash/isNil'
 
 interface TileProjectProps {
   readonly project: Project | FeedError
   readonly visibleProjects: ReadonlyArray<Project | FeedError>
+}
+
+function feedIdentifier(feed?: Feed | null): string {
+  return isNil(feed)
+    ? 'Nevergreen'
+    : isNotBlank(feed.name)
+    ? feed.name
+    : feed.url
 }
 
 export function TileProject({

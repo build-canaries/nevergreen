@@ -11,9 +11,8 @@ import {
 import { feedsRoot } from '../settings/tracking/FeedsReducer'
 import { successRoot } from '../settings/success/SuccessReducer'
 import * as Gateway from '../gateways/Gateway'
-import { settingsRoot } from '../settings/SettingsReducer'
+import { settingsRoot, SortBy } from '../settings/SettingsReducer'
 import { Prognosis } from '../domain/Project'
-import { SortBy } from '../gateways/ProjectsGateway'
 import * as NotificationsHook from './notifications/NotificationsHook'
 import * as AudioPlayer from '../common/AudioPlayer'
 

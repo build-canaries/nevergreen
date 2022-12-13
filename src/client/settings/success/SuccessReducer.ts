@@ -3,8 +3,12 @@ import remove from 'lodash/remove'
 import uniq from 'lodash/uniq'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { configurationImported } from '../backup/BackupActionCreators'
+import * as t from 'io-ts'
 
-export type SuccessState = ReadonlyArray<string>
+export const successRoot = 'success'
+
+export const SuccessState = t.readonlyArray(t.string, successRoot)
+export type SuccessState = t.TypeOf<typeof SuccessState>
 
 const initialState: SuccessState = ['=(^.^)=']
 
@@ -21,8 +25,6 @@ function transformMessage(message: string): string {
     ? message
     : message.replace(spaces, nonBreakingSpace)
 }
-
-export const successRoot = 'success'
 
 const slice = createSlice({
   name: successRoot,

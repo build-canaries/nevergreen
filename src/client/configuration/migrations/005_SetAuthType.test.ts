@@ -1,6 +1,5 @@
 import { migrate } from './005_SetAuthType'
-import { feedsRoot } from '../../settings/tracking/FeedsReducer'
-import { AuthTypes } from '../../domain/Feed'
+import { AuthTypes, feedsRoot } from '../../settings/tracking/FeedsReducer'
 
 it('should not modify the given data if it does not contain projects', () => {
   const data = { foo: 'bar' }

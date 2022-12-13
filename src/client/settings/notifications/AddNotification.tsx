@@ -31,8 +31,8 @@ const PROGNOSIS_OPTIONS = [
 ]
 
 function getWarnings(
-  allowSystemNotifications: boolean,
-  allowAudioNotifications: boolean
+  allowSystemNotifications?: boolean,
+  allowAudioNotifications?: boolean
 ): ReadonlyArray<string> {
   if (!allowSystemNotifications && !allowAudioNotifications) {
     return [

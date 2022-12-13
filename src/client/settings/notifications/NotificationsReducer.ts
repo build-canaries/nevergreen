@@ -4,34 +4,48 @@ import { createSelector, createSlice } from '@reduxjs/toolkit'
 import defaultSoundFx from './pacman_death.mp3'
 import { configurationImported } from '../backup/BackupActionCreators'
 import { Prognosis } from '../../domain/Project'
-import merge from 'lodash/merge'
+import * as t from 'io-ts'
 
-export interface NotificationsState {
-  readonly allowAudioNotifications: boolean
-  readonly allowSystemNotifications: boolean
-  readonly enableNewVersionCheck: boolean
-  readonly notifications: {
-    [Prognosis.error]?: NotificationDetails
-    [Prognosis.sick]?: NotificationDetails
-    [Prognosis.sickBuilding]?: NotificationDetails
-    [Prognosis.healthy]?: NotificationDetails
-    [Prognosis.healthyBuilding]?: NotificationDetails
-    [Prognosis.unknown]?: NotificationDetails
-  }
-}
+export const notificationsRoot = 'notifications'
 
-export interface NotificationDetails {
-  readonly systemNotification: boolean
-  readonly sfx: string
-}
+const NotificationDetails = t.exact(
+  t.type({
+    systemNotification: t.readonly(t.boolean),
+    sfx: t.readonly(t.string),
+  })
+)
+
+const NotificationsState = t.type({
+  allowAudioNotifications: t.readonly(t.boolean),
+  allowSystemNotifications: t.readonly(t.boolean),
+  enableNewVersionCheck: t.readonly(t.boolean),
+  notifications: t.readonly(
+    t.exact(
+      t.partial({
+        [Prognosis.error]: NotificationDetails,
+        [Prognosis.sick]: NotificationDetails,
+        [Prognosis.sickBuilding]: NotificationDetails,
+        [Prognosis.healthyBuilding]: NotificationDetails,
+        [Prognosis.unknown]: NotificationDetails,
+        [Prognosis.healthy]: NotificationDetails,
+      })
+    )
+  ),
+})
+
+export const NotificationsConfiguration = t.exact(
+  t.partial(NotificationsState.props),
+  notificationsRoot
+)
+
+export type NotificationDetails = t.TypeOf<typeof NotificationDetails>
+export type NotificationsState = t.TypeOf<typeof NotificationsState>
 
 interface AddNotificationAction {
   readonly prognosis: Prognosis
   readonly systemNotification: boolean
   readonly sfx: string
 }
-
-export const notificationsRoot = 'notifications'
 
 const initialState: NotificationsState = {
   allowAudioNotifications: false,
@@ -65,7 +79,7 @@ const slice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(configurationImported, (draft, action) => {
-      return merge(draft, action.payload.notifications)
+      return { ...draft, ...action.payload.notifications }
     })
   },
 })
@@ -80,7 +94,7 @@ export const {
 } = slice.actions
 
 const getNotificationsRoot = (state: RootState) => state.notifications
-export const getToggleVersionCheck = createSelector(
+export const getEnableNewVersionCheck = createSelector(
   getNotificationsRoot,
   (settings) => settings.enableNewVersionCheck
 )

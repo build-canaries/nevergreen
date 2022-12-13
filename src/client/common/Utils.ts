@@ -8,6 +8,7 @@ import startsWith from 'lodash/startsWith'
 import toNumber from 'lodash/toNumber'
 import trim from 'lodash/trim'
 import lowerCase from 'lodash/lowerCase'
+import { nanoid } from '@reduxjs/toolkit'
 
 export function isBlank(val: unknown): boolean {
   return isString(val) ? isEmpty(trim(val)) : true
@@ -51,4 +52,8 @@ export function errorMessage(e: unknown): string {
   }
 
   return message
+}
+
+export function createId(): string {
+  return nanoid(10)
 }

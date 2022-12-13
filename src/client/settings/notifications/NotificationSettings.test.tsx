@@ -4,7 +4,7 @@ import { screen } from '@testing-library/react'
 import { NotificationSettings } from './NotificationSettings'
 import {
   getAllowAudioNotifications,
-  getToggleVersionCheck,
+  getEnableNewVersionCheck,
   notificationsRoot,
 } from './NotificationsReducer'
 import { Prognosis } from '../../domain/Project'
@@ -19,7 +19,7 @@ it('should allow for turning on and off checking for new versions', async () => 
   const { store, user } = render(<NotificationSettings />, { state })
   await user.click(screen.getByLabelText('Check for new Nevergreen versions'))
 
-  expect(getToggleVersionCheck(store.getState())).toBeTruthy()
+  expect(getEnableNewVersionCheck(store.getState())).toBeTruthy()
 })
 
 it('should allow turning on and off play audio notifications', async () => {

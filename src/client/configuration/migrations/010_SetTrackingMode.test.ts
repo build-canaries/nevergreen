@@ -1,6 +1,5 @@
 import { migrate } from './010_SetTrackingMode'
-import { feedsRoot } from '../../settings/tracking/FeedsReducer'
-import { TrackingMode } from '../../domain/Feed'
+import { feedsRoot, TrackingMode } from '../../settings/tracking/FeedsReducer'
 
 it('should not modify the given data if it does not contain projects', () => {
   const data = { foo: 'bar' }

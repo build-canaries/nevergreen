@@ -3,8 +3,7 @@ import { buildFeed } from '../../../testUtils/builders'
 import React from 'react'
 import { screen } from '@testing-library/react'
 import { ManageProjectsPage } from './ManageProjectsPage'
-import { TrackingMode } from '../../../domain/Feed'
-import { getFeed, feedsRoot } from '../FeedsReducer'
+import { feedsRoot, getFeed, TrackingMode } from '../FeedsReducer'
 
 it('should allow the tracking mode to be changed', async () => {
   const trayId = 'some-id'

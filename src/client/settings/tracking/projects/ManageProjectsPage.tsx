@@ -4,11 +4,11 @@ import { AvailableProjects } from './AvailableProjects'
 import { CheckboxChecked } from '../../../common/icons/CheckboxChecked'
 import { UpdateFeedDetailsButton } from '../../../common/LinkButton'
 import { useFeedContext } from '../FeedPage'
-import { TRACKING_MODE_OPTIONS, TrackingMode } from '../../../domain/Feed'
 import { DropDown } from '../../../common/forms/DropDown'
 import { feedUpdated } from '../TrackingActionCreators'
 import styles from './manage-projects-page.scss'
 import { useAppDispatch } from '../../../configuration/Hooks'
+import { TrackingMode } from '../FeedsReducer'
 
 export function ManageProjectsPage(): ReactElement {
   const dispatch = useAppDispatch()
@@ -17,7 +17,10 @@ export function ManageProjectsPage(): ReactElement {
   return (
     <Page title="Manage projects" icon={<CheckboxChecked />}>
       <DropDown
-        options={TRACKING_MODE_OPTIONS}
+        options={[
+          { value: TrackingMode.everything, display: 'Everything' },
+          { value: TrackingMode.selected, display: 'Selected' },
+        ]}
         value={feed.trackingMode}
         onChange={({ target }) =>
           dispatch(

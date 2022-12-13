@@ -1,14 +1,16 @@
 import {
+  AuthTypes,
+  feedsRoot,
   FeedsState,
   getFeeds,
-  feedsRoot,
   reducer as feedsReducer,
+  ServerTypes,
+  TrackingMode,
 } from './FeedsReducer'
 import { feedAdded, feedRemoved, feedUpdated } from './TrackingActionCreators'
 import { testReducer } from '../../testUtils/testHelpers'
 import { buildFeed, buildState } from '../../testUtils/builders'
 import { RecursivePartial } from '../../common/Types'
-import { AuthTypes } from '../../domain/Feed'
 import { configurationImported } from '../backup/BackupActionCreators'
 
 const reducer = testReducer({
@@ -26,14 +28,16 @@ it('should return the state unmodified for an unknown action', () => {
 })
 
 describe(configurationImported.toString(), () => {
-  it('should set the trays if it is included in the import', () => {
+  it('should set the feeds if it is included in the import', () => {
     const feed = buildFeed({ trayId: 'trayId' })
     const existingState = state({ someId: {} })
     const action = configurationImported({ [feedsRoot]: { trayId: feed } })
 
     const newState = reducer(existingState, action)
 
-    expect(getFeeds(newState)).toEqual([feed])
+    expect(getFeeds(newState)).toEqual([
+      expect.objectContaining({ ...feed, name: expect.any(String) as string }),
+    ])
   })
 
   it('should set any required missing values to defaults', () => {
@@ -43,7 +47,9 @@ describe(configurationImported.toString(), () => {
     const partiallyImportedFeed = {
       trayId,
       url: completeFeed.url,
-      name: completeFeed.name, // name isn't required but the default name is random, so setting makes the test simpler
+      authType: AuthTypes.none,
+      trackingMode: TrackingMode.everything,
+      serverType: ServerTypes.generic,
     }
     const action = configurationImported({
       [feedsRoot]: { trayId: partiallyImportedFeed },
@@ -51,7 +57,12 @@ describe(configurationImported.toString(), () => {
 
     const newState = reducer(existingState, action)
 
-    expect(getFeeds(newState)).toEqual([completeFeed])
+    expect(getFeeds(newState)).toEqual([
+      expect.objectContaining({
+        ...completeFeed,
+        name: expect.any(String) as string,
+      }),
+    ])
   })
 
   it('should handle no trays data', () => {

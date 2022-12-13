@@ -1,9 +1,9 @@
+import type { Feed } from './FeedsReducer'
 import React, { ReactElement, useState } from 'react'
 import { SecondaryButton } from '../../common/forms/Button'
 import { useQuery } from '@tanstack/react-query'
 import { errorMessage } from '../../common/Utils'
 import styles from './test-connection.scss'
-import { AuthTypes, Feed } from '../../domain/Feed'
 import { KeepExistingAuth, UpdateExistingAuthTypes } from './ConnectionForm'
 import { testFeedConnection } from '../../gateways/ProjectsGateway'
 import { Loop } from '../../common/icons/Loop'
@@ -11,6 +11,7 @@ import {
   TimedErrorMessages,
   TimedSuccessMessages,
 } from '../../common/TimedMessages'
+import { AuthTypes } from './FeedsReducer'
 
 interface Details {
   readonly authType: UpdateExistingAuthTypes

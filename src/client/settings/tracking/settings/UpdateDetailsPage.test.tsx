@@ -2,7 +2,7 @@ import React from 'react'
 import { screen, waitFor } from '@testing-library/react'
 import { render } from '../../../testUtils/testHelpers'
 import { buildFeed } from '../../../testUtils/builders'
-import { getFeed, feedsRoot as feedsName } from '../FeedsReducer'
+import { feedsRoot as feedsName, getFeed, ServerTypes } from '../FeedsReducer'
 import { UpdateDetailsPage } from './UpdateDetailsPage'
 import { selectedRoot as selectedName } from '../SelectedReducer'
 
@@ -10,7 +10,7 @@ it('should be able to update details', async () => {
   const feed = buildFeed({
     trayId: 'trayId',
     name: 'some-name',
-    serverType: 'go',
+    serverType: ServerTypes.go,
   })
   const state = {
     [feedsName]: { trayId: feed },

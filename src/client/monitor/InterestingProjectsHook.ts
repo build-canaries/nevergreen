@@ -3,7 +3,7 @@ import { post } from '../gateways/Gateway'
 import { FeedRequest, ProjectsResponse } from '../gateways/ProjectsGateway'
 import { enrichProjects, Projects } from '../domain/Project'
 import { useSelector } from 'react-redux'
-import { getFeeds } from '../settings/tracking/FeedsReducer'
+import { Feed, getFeeds } from '../settings/tracking/FeedsReducer'
 import {
   getSelectedProjects,
   SelectedState,
@@ -11,7 +11,6 @@ import {
 import { getRefreshTime, getSort } from '../settings/SettingsReducer'
 import isEmpty from 'lodash/isEmpty'
 import { useState } from 'react'
-import { Feed } from '../domain/Feed'
 import omit from 'lodash/omit'
 import { enrichErrors, FeedErrors, toFeedApiError } from '../domain/FeedError'
 

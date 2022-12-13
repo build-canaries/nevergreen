@@ -5,7 +5,7 @@ import { Checkbox } from '../../common/forms/Checkbox'
 import { useSelector } from 'react-redux'
 import {
   getAllowAudioNotifications,
-  getToggleVersionCheck,
+  getEnableNewVersionCheck,
   setAllowAudioNotifications,
   toggleVersionCheck,
 } from './NotificationsReducer'
@@ -16,7 +16,7 @@ import { useAppDispatch } from '../../configuration/Hooks'
 export function NotificationSettings(): ReactElement {
   const dispatch = useAppDispatch()
   const allowAudioNotifications = useSelector(getAllowAudioNotifications)
-  const toggleVersionCheckFlag = useSelector(getToggleVersionCheck)
+  const toggleVersionCheckFlag = useSelector(getEnableNewVersionCheck)
 
   return (
     <Page title="Notifications settings" icon={<Bell />}>

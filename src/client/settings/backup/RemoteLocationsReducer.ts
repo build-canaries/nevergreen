@@ -5,55 +5,44 @@ import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { configurationImported } from './BackupActionCreators'
 import { RemoteLocationOptions } from './RemoteLocationOptions'
 import { now } from '../../common/DateTime'
-
-export interface RemoteLocation {
-  readonly internalId: string
-  readonly where: RemoteLocationOptions
-  readonly url: string
-  readonly exportTimestamp?: string
-  readonly importTimestamp?: string
-  readonly automaticallyExport?: boolean
-  readonly externalId?: string
-  readonly encryptedAccessToken?: string
-  readonly description?: string
-}
-
-export type RemoteLocationsState = {
-  [id: string]: RemoteLocation
-}
+import * as t from 'io-ts'
 
 export const remoteLocationsRoot = 'backupRemoteLocations'
 
+const RemoteLocation = t.exact(
+  t.intersection([
+    t.type({
+      internalId: t.readonly(t.string),
+      url: t.readonly(t.string),
+      where: t.readonly(
+        t.keyof({
+          [RemoteLocationOptions.custom]: null,
+          [RemoteLocationOptions.gitHub]: null,
+          [RemoteLocationOptions.gitLab]: null,
+        })
+      ),
+    }),
+    t.partial({
+      exportTimestamp: t.readonly(t.string),
+      importTimestamp: t.readonly(t.string),
+      automaticallyExport: t.readonly(t.boolean),
+      externalId: t.readonly(t.string),
+      encryptedAccessToken: t.readonly(t.string),
+      description: t.readonly(t.string),
+    }),
+  ])
+)
+
+export const RemoteLocationsState = t.record(
+  t.string,
+  RemoteLocation,
+  remoteLocationsRoot
+)
+
+export type RemoteLocation = t.TypeOf<typeof RemoteLocation>
+export type RemoteLocationsState = t.TypeOf<typeof RemoteLocationsState>
+
 const initialState: RemoteLocationsState = {}
-
-function handleImportedConfiguration(
-  draft: RemoteLocationsState,
-  action: ReturnType<typeof configurationImported>
-) {
-  const importedState = action.payload.backupRemoteLocations ?? {}
-
-  Object.values(importedState).forEach((importedLocation: RemoteLocation) => {
-    const internalId = importedLocation.internalId
-
-    if (isNil(draft[internalId])) {
-      const matchingLocation = Object.values(draft).find((existingLocation) => {
-        return (
-          existingLocation.where === importedLocation.where &&
-          existingLocation.url === importedLocation.url &&
-          existingLocation.externalId === importedLocation.externalId
-        )
-      })
-      if (isNil(matchingLocation)) {
-        draft[internalId] = importedLocation
-      } else {
-        draft[internalId] = { ...matchingLocation, ...importedLocation }
-        delete draft[matchingLocation.internalId]
-      }
-    } else {
-      merge(draft[internalId], importedLocation)
-    }
-  })
-}
 
 interface AddBackup {
   readonly internalId: string
@@ -147,7 +136,35 @@ const slice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(configurationImported, handleImportedConfiguration)
+    builder.addCase(configurationImported, function (draft, action) {
+      const importedState = action.payload.backupRemoteLocations ?? {}
+
+      Object.values(importedState).forEach(
+        (importedLocation: RemoteLocation) => {
+          const internalId = importedLocation.internalId
+
+          if (isNil(draft[internalId])) {
+            const matchingLocation = Object.values(draft).find(
+              (existingLocation) => {
+                return (
+                  existingLocation.where === importedLocation.where &&
+                  existingLocation.url === importedLocation.url &&
+                  existingLocation.externalId === importedLocation.externalId
+                )
+              }
+            )
+            if (isNil(matchingLocation)) {
+              draft[internalId] = importedLocation
+            } else {
+              draft[internalId] = { ...matchingLocation, ...importedLocation }
+              delete draft[matchingLocation.internalId]
+            }
+          } else {
+            merge(draft[internalId], importedLocation)
+          }
+        }
+      )
+    })
   },
 })
 

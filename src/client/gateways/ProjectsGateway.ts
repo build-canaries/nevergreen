@@ -1,13 +1,6 @@
 import { post, ServerError } from './Gateway'
 import { ProjectPrognosis } from '../domain/Project'
-import { AuthTypes } from '../domain/Feed'
-
-export enum SortBy {
-  default = 'default',
-  description = 'description',
-  prognosis = 'prognosis',
-  timestamp = 'timestamp',
-}
+import { AuthTypes } from '../settings/tracking/FeedsReducer'
 
 export interface FeedRequest {
   readonly authType: AuthTypes

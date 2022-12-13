@@ -9,12 +9,12 @@ import { Loading } from '../common/Loading'
 import { useSelector } from 'react-redux'
 import { getShowPrognosis, getSort } from './SettingsReducer'
 import { post } from '../gateways/Gateway'
-import { createFeed, createId } from '../domain/Feed'
 import { Banner } from '../Banner'
 import { useNavigate } from 'react-router-dom'
 import styles from './preview.scss'
 import { useQuery } from '@tanstack/react-query'
 import { ROUTE_DISPLAY } from '../AppRoutes'
+import { createId } from '../common/Utils'
 
 export function Preview(): ReactElement {
   const prognosis = useSelector(getShowPrognosis)
@@ -31,10 +31,10 @@ export function Preview(): ReactElement {
         url: '/api/preview',
         data: {
           feeds: [
-            createFeed(
-              createId(),
-              'https://github.com/build-canaries/nevergreen'
-            ),
+            {
+              trayId: createId(),
+              url: 'https://github.com/build-canaries/nevergreen',
+            },
           ],
           sort,
           prognosis,

@@ -20,12 +20,12 @@ import {
   setSort,
   settingsRoot,
   SettingsState,
+  SortBy,
 } from './SettingsReducer'
 import { testReducer } from '../testUtils/testHelpers'
 import { buildState } from '../testUtils/builders'
 import { Prognosis } from '../domain/Project'
 import { configurationImported } from './backup/BackupActionCreators'
-import { SortBy } from '../gateways/ProjectsGateway'
 
 const reducer = testReducer({
   [settingsRoot]: settingsReducer,

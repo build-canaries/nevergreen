@@ -11,147 +11,41 @@ import { fromJson, toJson } from '../common/Json'
 import { migrate } from './Migrate'
 import { Either, flatten, left, map, mapLeft, right } from 'fp-ts/Either'
 import { pipe } from 'fp-ts/function'
-import { remoteLocationsRoot } from '../settings/backup/RemoteLocationsReducer'
-import { MaxProjectsToShow, settingsRoot } from '../settings/SettingsReducer'
-import { selectedRoot } from '../settings/tracking/SelectedReducer'
-import { successRoot } from '../settings/success/SuccessReducer'
-import { feedsRoot } from '../settings/tracking/FeedsReducer'
-import { migrationsRoot } from './MigrationsReducer'
+import {
+  remoteLocationsRoot,
+  RemoteLocationsState,
+} from '../settings/backup/RemoteLocationsReducer'
+import {
+  SettingsConfiguration,
+  settingsRoot,
+} from '../settings/SettingsReducer'
+import {
+  selectedRoot,
+  SelectedState,
+} from '../settings/tracking/SelectedReducer'
+import { successRoot, SuccessState } from '../settings/success/SuccessReducer'
+import { feedsRoot, FeedsState } from '../settings/tracking/FeedsReducer'
+import { AppliedMigrationsState, migrationsRoot } from './MigrationsReducer'
 import { errorMessage } from '../common/Utils'
-import { notificationsRoot } from '../settings/notifications/NotificationsReducer'
-import { Prognosis } from '../domain/Project'
-import { RemoteLocationOptions } from '../settings/backup/RemoteLocationOptions'
-import { AuthTypes, TrackingMode } from '../domain/Feed'
+import {
+  NotificationsConfiguration,
+  notificationsRoot,
+} from '../settings/notifications/NotificationsReducer'
 
 export enum DataSource {
-  browserStorage,
+  systemImport,
   userImport,
 }
 
-const NotificationDetails = t.exact(
-  t.partial({
-    systemNotification: t.boolean,
-    sfx: t.string,
-  })
-)
-
 const Configuration = t.exact(
   t.partial({
-    [settingsRoot]: t.exact(
-      t.partial({
-        showTrayName: t.boolean,
-        showBuildTime: t.boolean,
-        refreshTime: t.number,
-        showBuildLabel: t.boolean,
-        maxProjectsToShow: t.keyof({
-          [MaxProjectsToShow.small]: null,
-          [MaxProjectsToShow.medium]: null,
-          [MaxProjectsToShow.large]: null,
-          [MaxProjectsToShow.all]: null,
-        }),
-        clickToShowMenu: t.boolean,
-        showPrognosis: t.readonlyArray(
-          t.keyof({
-            [Prognosis.healthy]: null,
-            [Prognosis.sick]: null,
-            [Prognosis.healthyBuilding]: null,
-            [Prognosis.sickBuilding]: null,
-            [Prognosis.unknown]: null,
-            [Prognosis.error]: null,
-          })
-        ),
-        sort: t.keyof({
-          default: null,
-          description: null,
-          prognosis: null,
-          timestamp: null,
-        }),
-      }),
-      settingsRoot
-    ),
-    [selectedRoot]: t.record(t.string, t.readonlyArray(t.string), selectedRoot),
-    [successRoot]: t.readonlyArray(t.string, successRoot),
-    [feedsRoot]: t.record(
-      t.string,
-      t.exact(
-        t.intersection([
-          t.type({
-            trayId: t.string,
-            url: t.string,
-          }),
-          t.partial({
-            authType: t.keyof({
-              [AuthTypes.none]: null,
-              [AuthTypes.basic]: null,
-              [AuthTypes.token]: null,
-            }),
-            encryptedAccessToken: t.string,
-            encryptedPassword: t.string,
-            name: t.string,
-            serverType: t.string,
-            timestamp: t.string,
-            trackingMode: t.keyof({
-              [TrackingMode.everything]: null,
-              [TrackingMode.selected]: null,
-            }),
-            username: t.string,
-          }),
-        ])
-      ),
-      feedsRoot
-    ),
-    [migrationsRoot]: t.readonlyArray(
-      t.exact(
-        t.type({
-          id: t.string,
-          timestamp: t.string,
-        })
-      ),
-      migrationsRoot
-    ),
-    [remoteLocationsRoot]: t.record(
-      t.string,
-      t.exact(
-        t.intersection([
-          t.type({
-            internalId: t.string,
-            url: t.string,
-            where: t.keyof({
-              [RemoteLocationOptions.custom]: null,
-              [RemoteLocationOptions.gitHub]: null,
-              [RemoteLocationOptions.gitLab]: null,
-            }),
-          }),
-          t.partial({
-            exportTimestamp: t.string,
-            importTimestamp: t.string,
-            automaticallyExport: t.boolean,
-            externalId: t.string,
-            encryptedAccessToken: t.string,
-            description: t.string,
-          }),
-        ])
-      ),
-      remoteLocationsRoot
-    ),
-    [notificationsRoot]: t.exact(
-      t.partial({
-        allowAudioNotifications: t.boolean,
-        allowSystemNotifications: t.boolean,
-        enableNewVersionCheck: t.boolean,
-        notifications: t.exact(
-          t.partial({
-            [Prognosis.error]: NotificationDetails,
-            [Prognosis.sick]: NotificationDetails,
-            [Prognosis.sickBuilding]: NotificationDetails,
-            [Prognosis.healthyBuilding]: NotificationDetails,
-            [Prognosis.unknown]: NotificationDetails,
-            [Prognosis.healthy]: NotificationDetails,
-          })
-        ),
-      }),
-      notificationsRoot
-    ),
+    [settingsRoot]: SettingsConfiguration,
+    [selectedRoot]: SelectedState,
+    [successRoot]: SuccessState,
+    [feedsRoot]: FeedsState,
+    [migrationsRoot]: AppliedMigrationsState,
+    [remoteLocationsRoot]: RemoteLocationsState,
+    [notificationsRoot]: NotificationsConfiguration,
   })
 )
 
@@ -164,7 +58,7 @@ function validationErrorMessage(
 ) {
   return `Invalid value ${toJson(
     actual
-  )} supplied to ${path} expected ${expected}`
+  )} supplied to ${path} expected ${expected.replace(/Readonly<(.*)>/, '$1')}`
 }
 
 function additionalFiltering(

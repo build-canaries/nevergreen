@@ -7,7 +7,12 @@ import {
 import { Either, isLeft, isRight } from 'fp-ts/Either'
 import { buildRemoteBackupLocation, buildState } from '../testUtils/builders'
 import { remoteLocationsRoot } from '../settings/backup/RemoteLocationsReducer'
-import { feedsRoot } from '../settings/tracking/FeedsReducer'
+import {
+  AuthTypes,
+  feedsRoot,
+  ServerTypes,
+  TrackingMode,
+} from '../settings/tracking/FeedsReducer'
 import { notificationsRoot } from '../settings/notifications/NotificationsReducer'
 import { RemoteLocationOptions } from '../settings/backup/RemoteLocationOptions'
 
@@ -32,10 +37,13 @@ describe('toConfiguration', () => {
           'some-tray-id': {
             url: 'some-url',
             trayId: 'some-tray-id',
+            authType: AuthTypes.none,
+            trackingMode: TrackingMode.everything,
+            serverType: ServerTypes.generic,
           },
         },
       }
-      const result = toConfiguration(data, DataSource.browserStorage)
+      const result = toConfiguration(data, DataSource.systemImport)
       if (isRight(result)) {
         expect(result.right.trays).toHaveProperty('some-tray-id')
       } else {
@@ -52,10 +60,11 @@ describe('toConfiguration', () => {
         [feedsRoot]: {
           'some-tray-id': {
             url: 'some-url',
+            serverType: '',
           },
         },
       }
-      const result = toConfiguration(data, DataSource.browserStorage)
+      const result = toConfiguration(data, DataSource.systemImport)
       expectErrors(result, [
         'Invalid value undefined supplied to /trays/some-tray-id/trayId expected string',
       ])
@@ -66,10 +75,11 @@ describe('toConfiguration', () => {
         [feedsRoot]: {
           'some-tray-id': {
             trayId: 'some-id',
+            serverType: '',
           },
         },
       }
-      const result = toConfiguration(data, DataSource.browserStorage)
+      const result = toConfiguration(data, DataSource.systemImport)
       expectErrors(result, [
         'Invalid value undefined supplied to /trays/some-tray-id/url expected string',
       ])
@@ -81,10 +91,11 @@ describe('toConfiguration', () => {
           'some-tray-id': {
             trayId: 'another-id',
             url: 'some-url',
+            serverType: '',
           },
         },
       }
-      const result = toConfiguration(data, DataSource.browserStorage)
+      const result = toConfiguration(data, DataSource.systemImport)
       expectErrors(result, [
         'Invalid value "another-id" supplied to /trays/some-tray-id/trayId expected "some-tray-id"',
       ])
@@ -102,7 +113,7 @@ describe('toConfiguration', () => {
           },
         },
       }
-      const result = toConfiguration(data, DataSource.browserStorage)
+      const result = toConfiguration(data, DataSource.systemImport)
       if (isRight(result)) {
         expect(result.right.backupRemoteLocations).toHaveProperty('some-id')
       } else {
@@ -123,7 +134,7 @@ describe('toConfiguration', () => {
           },
         },
       }
-      const result = toConfiguration(data, DataSource.browserStorage)
+      const result = toConfiguration(data, DataSource.systemImport)
       expectErrors(result, [
         'Invalid value undefined supplied to /backupRemoteLocations/some-internal-id/internalId expected string',
       ])
@@ -138,7 +149,7 @@ describe('toConfiguration', () => {
           },
         },
       }
-      const result = toConfiguration(data, DataSource.browserStorage)
+      const result = toConfiguration(data, DataSource.systemImport)
       expectErrors(result, [
         'Invalid value undefined supplied to /backupRemoteLocations/some-internal-id/url expected string',
       ])
@@ -153,7 +164,7 @@ describe('toConfiguration', () => {
           },
         },
       }
-      const result = toConfiguration(data, DataSource.browserStorage)
+      const result = toConfiguration(data, DataSource.systemImport)
       expectErrors(result, [
         'Invalid value undefined supplied to /backupRemoteLocations/some-internal-id/where expected "custom" | "github" | "gitlab"',
       ])
@@ -169,7 +180,7 @@ describe('toConfiguration', () => {
           },
         },
       }
-      const result = toConfiguration(data, DataSource.browserStorage)
+      const result = toConfiguration(data, DataSource.systemImport)
       expectErrors(result, [
         'Invalid value "another-id" supplied to /backupRemoteLocations/some-id/internalId expected "some-id"',
       ])
@@ -178,7 +189,7 @@ describe('toConfiguration', () => {
 
   it('removes unknown properties', () => {
     const data = { foo: 'bar' }
-    const result = toConfiguration(data, DataSource.browserStorage)
+    const result = toConfiguration(data, DataSource.systemImport)
     expect(isRight(result)).toBeTruthy()
     if (isRight(result)) {
       expect(result.right).not.toHaveProperty('foo')
@@ -187,7 +198,7 @@ describe('toConfiguration', () => {
 
   it('keeps known properties', () => {
     const data = { [feedsRoot]: {} }
-    const result = toConfiguration(data, DataSource.browserStorage)
+    const result = toConfiguration(data, DataSource.systemImport)
     expect(isRight(result)).toBeTruthy()
     if (isRight(result)) {
       expect(result.right).toEqual(expect.objectContaining({ trays: {} }))
@@ -207,7 +218,7 @@ describe('toConfiguration', () => {
 
   it('keeps the show system notifications property when loading from browser storage', () => {
     const data = { [notificationsRoot]: { allowSystemNotifications: true } }
-    const result = toConfiguration(data, DataSource.browserStorage)
+    const result = toConfiguration(data, DataSource.systemImport)
     expect(isRight(result)).toBeTruthy()
     if (isRight(result)) {
       expect(result.right).toHaveProperty(

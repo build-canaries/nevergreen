@@ -1,11 +1,11 @@
 import React, { ReactElement } from 'react'
-import { createId } from '../../domain/Feed'
 import { feedAdded } from './TrackingActionCreators'
 import { Page } from '../../common/Page'
 import { Xml } from '../../common/icons/Xml'
 import { ConnectionForm, ConnectionFormFields } from './ConnectionForm'
 import { ROUTE_TRACKING } from '../../AppRoutes'
 import { useAppDispatch } from '../../configuration/Hooks'
+import { createId } from '../../common/Utils'
 
 export function AddFeed(): ReactElement {
   const dispatch = useAppDispatch()

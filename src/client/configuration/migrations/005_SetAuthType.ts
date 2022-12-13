@@ -1,8 +1,7 @@
 import { forEachObjectAt } from '../Migrate'
 import { Migrate } from './index'
 import has from 'lodash/has'
-import { feedsRoot } from '../../settings/tracking/FeedsReducer'
-import { AuthTypes } from '../../domain/Feed'
+import { AuthTypes, feedsRoot } from '../../settings/tracking/FeedsReducer'
 import { isBlank } from '../../common/Utils'
 
 export const id = '005_SetAuthType'

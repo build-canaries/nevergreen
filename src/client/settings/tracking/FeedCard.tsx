@@ -1,7 +1,8 @@
+import type { Feed } from './FeedsReducer'
+import { TrackingMode } from './FeedsReducer'
 import React, { ReactElement } from 'react'
 import { URL } from '../../common/URL'
 import { Summary } from '../../common/Summary'
-import { Feed, trackingModeDisplay } from '../../domain/Feed'
 import { Card } from '../../common/card/Card'
 import { CardHeading } from '../../common/card/CardHeading'
 import { feedRemoved } from './TrackingActionCreators'
@@ -14,6 +15,15 @@ import { useAppDispatch } from '../../configuration/Hooks'
 
 interface FeedCardProps {
   readonly feed: Feed
+}
+
+function trackingModeDisplay(trackingMode: TrackingMode): string {
+  switch (trackingMode) {
+    case TrackingMode.everything:
+      return 'Everything'
+    case TrackingMode.selected:
+      return 'Selected'
+  }
 }
 
 export function FeedCard({ feed }: FeedCardProps): ReactElement {

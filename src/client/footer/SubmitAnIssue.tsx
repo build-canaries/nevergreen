@@ -1,31 +1,12 @@
 import React, { ReactElement } from 'react'
 import { ExternalLink } from '../common/ExternalLink'
-import { CI_OPTIONS, Feed } from '../domain/Feed'
-import { isBlank } from '../common/Utils'
-import { useSelector } from 'react-redux'
-import { getFeeds } from '../settings/tracking/FeedsReducer'
 
 interface SubmitAnIssueProps {
   readonly version: string
   readonly className?: string
 }
 
-function display(serverType: string) {
-  const ciOption = CI_OPTIONS.find((option) => option.value === serverType)
-  return ciOption && ciOption.display
-}
-
-function knownServerTypes(feeds: ReadonlyArray<Feed>) {
-  const servers = feeds
-    .map((feed) => feed.serverType)
-    .filter((serverType) => serverType !== '')
-    .map((serverType) => display(serverType))
-    .join(', ')
-
-  return isBlank(servers) ? '<!-- e.g. Jenkins or GoCD etc -->' : servers
-}
-
-function bugReport(version: string, feeds: ReadonlyArray<Feed>) {
+function bugReport(version: string) {
   return encodeURIComponent(`## Bug report
 
 **How are you running?**
@@ -38,7 +19,7 @@ ${version}
 ${navigator.userAgent}
 
 **Which CI server(s) are you monitoring?**
-${knownServerTypes(feeds)}
+<!-- e.g. Jenkins or GoCD etc -->
 
 **Expected behaviour?**
 <!-- Tell us what you expected to happen -->
@@ -59,11 +40,9 @@ export function SubmitAnIssue({
   version,
   className,
 }: SubmitAnIssueProps): ReactElement {
-  const feeds = useSelector(getFeeds)
-
   return (
     <ExternalLink
-      href={`${ISSUE_URL}?labels=bug&body=${bugReport(version, feeds)}`}
+      href={`${ISSUE_URL}?labels=bug&body=${bugReport(version)}`}
       className={className}
       title="Submit an issue on GitHub"
     >

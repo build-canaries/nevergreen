@@ -1,4 +1,4 @@
-import type { Feed } from '../../../domain/Feed'
+import type { Feed } from '../FeedsReducer'
 import type { ReactElement } from 'react'
 import React, { useMemo, useState } from 'react'
 import { ErrorMessages, WarningMessages } from '../../../common/Messages'

@@ -3,11 +3,10 @@ import { AddFeed } from './AddFeed'
 import { screen, waitFor } from '@testing-library/react'
 import * as SecurityGateway from '../../gateways/SecurityGateway'
 import * as ProjectsGateway from '../../gateways/ProjectsGateway'
-import { feedsRoot, getFeeds } from './FeedsReducer'
+import { AuthTypes, feedsRoot, getFeeds } from './FeedsReducer'
 import { render, waitForLocationToChange } from '../../testUtils/testHelpers'
 import { buildFeed } from '../../testUtils/builders'
-import * as Feed from '../../domain/Feed'
-import { AuthTypes } from '../../domain/Feed'
+import * as Utils from '../../common/Utils'
 import { UserEvent } from '@testing-library/user-event/setup/setup'
 
 beforeEach(() => {
@@ -55,7 +54,7 @@ describe('validation errors', () => {
 it.each([AuthTypes.token, AuthTypes.basic, AuthTypes.none])(
   'should allow adding feeds with auth %s',
   async (authType) => {
-    jest.spyOn(Feed, 'createId').mockReturnValue('some-feed-id')
+    jest.spyOn(Utils, 'createId').mockReturnValue('some-feed-id')
     jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValue('encrypted')
     jest.spyOn(ProjectsGateway, 'testFeedConnection').mockResolvedValue()
 

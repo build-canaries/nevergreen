@@ -2,8 +2,8 @@ import {
   addNotification,
   getAllowAudioNotifications,
   getAllowSystemNotifications,
+  getEnableNewVersionCheck,
   getNotifications,
-  getToggleVersionCheck,
   notificationsRoot,
   NotificationsState,
   reducer as notificationsReducer,
@@ -33,23 +33,58 @@ it('should return the state unmodified for an unknown action', () => {
 })
 
 describe(configurationImported.toString(), () => {
-  it('should merge broken build sounds enabled', () => {
-    const existingState = state({ allowAudioNotifications: false })
+  it('should overwrite any included state', () => {
+    const existingState = state({
+      allowAudioNotifications: false,
+      allowSystemNotifications: false,
+      enableNewVersionCheck: false,
+      notifications: {},
+    })
     const action = configurationImported({
-      [notificationsRoot]: { allowAudioNotifications: true },
+      [notificationsRoot]: {
+        allowAudioNotifications: true,
+        allowSystemNotifications: true,
+        enableNewVersionCheck: true,
+        notifications: {
+          [Prognosis.sick]: {
+            systemNotification: false,
+            sfx: 'sick-sfx',
+          },
+        },
+      },
     })
     const newState = reducer(existingState, action)
     expect(getAllowAudioNotifications(newState)).toBeTruthy()
+    expect(getAllowSystemNotifications(newState)).toBeTruthy()
+    expect(getEnableNewVersionCheck(newState)).toBeTruthy()
+    expect(getNotifications(newState)).toEqual({
+      [Prognosis.sick]: { systemNotification: false, sfx: 'sick-sfx' },
+    })
   })
 
-  it('should not reset show system notification when imported state does not contain it', () => {
-    const existingState = state({ allowSystemNotifications: true })
+  it('should not overwrite any missing state', () => {
+    const existingState = state({
+      allowAudioNotifications: true,
+      allowSystemNotifications: true,
+      enableNewVersionCheck: true,
+      notifications: {
+        [Prognosis.sick]: {
+          systemNotification: false,
+          sfx: 'sick-sfx',
+        },
+      },
+    })
     const action = configurationImported({ [notificationsRoot]: {} })
     const newState = reducer(existingState, action)
+    expect(getAllowAudioNotifications(newState)).toBeTruthy()
     expect(getAllowSystemNotifications(newState)).toBeTruthy()
+    expect(getEnableNewVersionCheck(newState)).toBeTruthy()
+    expect(getNotifications(newState)).toEqual({
+      [Prognosis.sick]: { systemNotification: false, sfx: 'sick-sfx' },
+    })
   })
 
-  it('should merge notifications', () => {
+  it('should overwrite notifications state with configuration', () => {
     const existingNotification = { systemNotification: false, sfx: 'sick-sfx' }
     const importedNotification = {
       systemNotification: true,
@@ -67,7 +102,6 @@ describe(configurationImported.toString(), () => {
     })
     const newState = reducer(existingState, action)
     expect(getNotifications(newState)).toEqual({
-      [Prognosis.sick]: existingNotification,
       [Prognosis.healthy]: importedNotification,
     })
   })
@@ -78,7 +112,7 @@ describe(toggleVersionCheck.toString(), () => {
     const existingState = state({ enableNewVersionCheck: true })
     const action = toggleVersionCheck()
     const newState = reducer(existingState, action)
-    expect(getToggleVersionCheck(newState)).toBeFalsy()
+    expect(getEnableNewVersionCheck(newState)).toBeFalsy()
   })
 })
 

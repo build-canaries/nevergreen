@@ -5,7 +5,7 @@ import { DEFAULT_GITHUB_URL } from './RemoteLocationOptions'
 import * as SecurityGateway from '../../gateways/SecurityGateway'
 import { AddBackup } from './AddBackup'
 import { getBackupLocations } from './RemoteLocationsReducer'
-import * as Feed from '../../domain/Feed'
+import * as Utils from '../../common/Utils'
 
 beforeEach(() => {
   jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValue('')
@@ -37,7 +37,7 @@ it('should not be able to add with a non http(s) URL', async () => {
 })
 
 it('should be able to add a custom server', async () => {
-  jest.spyOn(Feed, 'createId').mockReturnValue('some-id')
+  jest.spyOn(Utils, 'createId').mockReturnValue('some-id')
 
   const { store, user } = render(<AddBackup />)
 
@@ -57,7 +57,7 @@ it('should be able to add a custom server', async () => {
 })
 
 it('should be able to add a GitHub gist', async () => {
-  jest.spyOn(Feed, 'createId').mockReturnValue('some-id')
+  jest.spyOn(Utils, 'createId').mockReturnValue('some-id')
 
   const { store, user } = render(<AddBackup />)
 

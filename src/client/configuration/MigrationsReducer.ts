@@ -1,14 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { configurationImported } from '../settings/backup/BackupActionCreators'
-
-export interface AppliedMigration {
-  readonly id: string
-  readonly timestamp: string
-}
-
-export type AppliedMigrationsState = ReadonlyArray<AppliedMigration>
+import * as t from 'io-ts'
 
 export const migrationsRoot = 'appliedMigrations'
+
+const AppliedMigration = t.exact(
+  t.type({
+    id: t.readonly(t.string),
+    timestamp: t.readonly(t.string),
+  })
+)
+
+export const AppliedMigrationsState = t.readonlyArray(
+  AppliedMigration,
+  migrationsRoot
+)
+
+export type AppliedMigration = t.TypeOf<typeof AppliedMigration>
+export type AppliedMigrationsState = t.TypeOf<typeof AppliedMigrationsState>
 
 const initialState: AppliedMigrationsState = []
 

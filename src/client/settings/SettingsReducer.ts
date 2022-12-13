@@ -1,11 +1,13 @@
 import type { RootState } from '../configuration/ReduxStore'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSelector, createSlice } from '@reduxjs/toolkit'
-import { SortBy } from '../gateways/ProjectsGateway'
 import { Prognosis } from '../domain/Project'
 import merge from 'lodash/merge'
 import uniq from 'lodash/uniq'
 import { configurationImported } from './backup/BackupActionCreators'
+import * as t from 'io-ts'
+
+export const settingsRoot = 'settings'
 
 export enum MaxProjectsToShow {
   small = 'small',
@@ -14,22 +16,57 @@ export enum MaxProjectsToShow {
   all = 'all',
 }
 
-export interface SettingsState {
-  readonly showTrayName: boolean
-  readonly showBuildTime: boolean
-  readonly refreshTime: number
-  readonly showBuildLabel: boolean
-  readonly maxProjectsToShow: MaxProjectsToShow
-  readonly clickToShowMenu: boolean
-  readonly showPrognosis: ReadonlyArray<Prognosis>
-  readonly sort: SortBy
+export enum SortBy {
+  default = 'default',
+  description = 'description',
+  prognosis = 'prognosis',
+  timestamp = 'timestamp',
 }
+
+const SettingsState = t.type({
+  showTrayName: t.readonly(t.boolean),
+  showBuildTime: t.readonly(t.boolean),
+  refreshTime: t.readonly(t.number),
+  showBuildLabel: t.readonly(t.boolean),
+  maxProjectsToShow: t.readonly(
+    t.keyof({
+      [MaxProjectsToShow.small]: null,
+      [MaxProjectsToShow.medium]: null,
+      [MaxProjectsToShow.large]: null,
+      [MaxProjectsToShow.all]: null,
+    })
+  ),
+  clickToShowMenu: t.readonly(t.boolean),
+  showPrognosis: t.readonlyArray(
+    t.keyof({
+      [Prognosis.healthy]: null,
+      [Prognosis.sick]: null,
+      [Prognosis.healthyBuilding]: null,
+      [Prognosis.sickBuilding]: null,
+      [Prognosis.unknown]: null,
+      [Prognosis.error]: null,
+    })
+  ),
+  sort: t.readonly(
+    t.keyof({
+      [SortBy.default]: null,
+      [SortBy.description]: null,
+      [SortBy.prognosis]: null,
+      [SortBy.timestamp]: null,
+    })
+  ),
+})
+
+export const SettingsConfiguration = t.exact(
+  t.partial(SettingsState.props),
+  settingsRoot
+)
+
+export type SettingsState = t.TypeOf<typeof SettingsState>
 
 export const validRefreshTimes = [
   5, 10, 30, 60, 300, 600, 1800, 3600, 43200, 86400,
 ]
-
-export const settingsRoot = 'settings'
 
 const initialState: SettingsState = {
   showTrayName: false,
