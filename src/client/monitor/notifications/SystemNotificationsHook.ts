@@ -1,9 +1,6 @@
 import { Prognosis, Project, Projects } from '../../domain/Project'
 import { useSelector } from 'react-redux'
-import {
-  getAllowSystemNotifications,
-  getNotifications,
-} from '../../settings/notifications/NotificationsReducer'
+import { getNotifications } from '../../settings/notifications/NotificationsReducer'
 import { sendSystemNotification } from '../../common/SystemNotifications'
 import { useEffect } from 'react'
 import { FeedError, FeedErrors } from '../../domain/FeedError'
@@ -17,6 +14,7 @@ import {
   recentlyTransitioned,
   reversePrognosisPriority,
 } from './NotificationsHook'
+import { getAllowSystemNotifications } from '../../settings/PersonalSettingsReducer'
 
 const systemNotificationIcons = {
   [Prognosis.healthy]: healthyIcon,

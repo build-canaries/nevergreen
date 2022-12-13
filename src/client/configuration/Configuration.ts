@@ -31,6 +31,10 @@ import {
   NotificationsConfiguration,
   notificationsRoot,
 } from '../settings/notifications/NotificationsReducer'
+import {
+  personalSettingsRoot,
+  PersonalSettingsState,
+} from '../settings/PersonalSettingsReducer'
 
 export enum DataSource {
   systemImport,
@@ -46,6 +50,7 @@ const Configuration = t.exact(
     [migrationsRoot]: AppliedMigrationsState,
     [remoteLocationsRoot]: RemoteLocationsState,
     [notificationsRoot]: NotificationsConfiguration,
+    [personalSettingsRoot]: PersonalSettingsState,
   })
 )
 
@@ -59,15 +64,6 @@ function validationErrorMessage(
   return `Invalid value ${toJson(
     actual
   )} supplied to ${path} expected ${expected.replace(/Readonly<(.*)>/, '$1')}`
-}
-
-function additionalFiltering(
-  data: UntrustedData,
-  dataSource: DataSource
-): void {
-  if (dataSource === DataSource.userImport) {
-    unset(data, [notificationsRoot, 'allowSystemNotifications'])
-  }
 }
 
 function toErrorPath(errors: Errors): ReadonlyArray<string> {
@@ -136,7 +132,9 @@ function validateAndFilter(
   data: UntrustedData,
   dataSource: DataSource
 ): Either<ReadonlyArray<string>, Configuration> {
-  additionalFiltering(data, dataSource)
+  if (dataSource === DataSource.userImport) {
+    unset(data, personalSettingsRoot)
+  }
 
   return pipe(
     Configuration.decode(data),
@@ -174,7 +172,7 @@ export function toExportableConfigurationJson(state: RootState): string {
   })
 
   // @ts-ignore
-  delete cloned[notificationsRoot]['allowSystemNotifications']
+  delete cloned[personalSettingsRoot]
   /* eslint-enable @typescript-eslint/ban-ts-comment*/
 
   return toJson(cloned)

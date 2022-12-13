@@ -25,6 +25,7 @@ import {
 import { RemoteLocationOptions } from '../settings/backup/RemoteLocationOptions'
 import { notificationsRoot } from '../settings/notifications/NotificationsReducer'
 import { FeedError } from '../domain/FeedError'
+import { personalSettingsRoot } from '../settings/PersonalSettingsReducer'
 
 export function buildState(
   subState: RecursivePartial<RootState> = {}
@@ -46,10 +47,12 @@ export function buildState(
     [migrationsRoot]: [],
     [remoteLocationsRoot]: {},
     [notificationsRoot]: {
-      allowAudioNotifications: false,
-      allowSystemNotifications: false,
       enableNewVersionCheck: true,
       notifications: {},
+    },
+    [personalSettingsRoot]: {
+      allowAudioNotifications: false,
+      allowSystemNotifications: false,
     },
   }
   return merge(defaultState, subState)

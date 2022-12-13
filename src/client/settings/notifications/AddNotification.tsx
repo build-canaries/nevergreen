@@ -13,13 +13,13 @@ import { Prognosis } from '../../domain/Project'
 import { ROUTE_NOTIFICATIONS } from '../../AppRoutes'
 import { deleteAudio, playAudio, stopAudio } from '../../common/AudioPlayer'
 import { WarningMessages } from '../../common/Messages'
-import {
-  addNotification,
-  getAllowAudioNotifications,
-  getAllowSystemNotifications,
-} from './NotificationsReducer'
+import { addNotification } from './NotificationsReducer'
 import { NotificationIcon } from './icons/NotificationIcon'
 import { useAppDispatch } from '../../configuration/Hooks'
+import {
+  getAllowAudioNotifications,
+  getAllowSystemNotifications,
+} from '../PersonalSettingsReducer'
 
 const PROGNOSIS_OPTIONS = [
   { value: Prognosis.error, display: 'Error' },

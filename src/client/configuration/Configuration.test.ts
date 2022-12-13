@@ -13,8 +13,8 @@ import {
   ServerTypes,
   TrackingMode,
 } from '../settings/tracking/FeedsReducer'
-import { notificationsRoot } from '../settings/notifications/NotificationsReducer'
 import { RemoteLocationOptions } from '../settings/backup/RemoteLocationOptions'
+import { personalSettingsRoot } from '../settings/PersonalSettingsReducer'
 
 function expectErrors(
   result: Either<ReadonlyArray<string>, Configuration>,
@@ -205,25 +205,31 @@ describe('toConfiguration', () => {
     }
   })
 
-  it('removes the show system notifications property when a user import, as this property is no longer exported (but this import could be from an old version)', () => {
-    const data = { [notificationsRoot]: { allowSystemNotifications: true } }
+  it('removes personal settings when a user imports', () => {
+    const data = {
+      [personalSettingsRoot]: {
+        allowSystemNotifications: true,
+        allowAudioNotifications: true,
+      },
+    }
     const result = toConfiguration(data, DataSource.userImport)
     expect(isRight(result)).toBeTruthy()
     if (isRight(result)) {
-      expect(result.right).not.toHaveProperty(
-        'notifications.allowSystemNotifications'
-      )
+      expect(result.right).not.toHaveProperty(personalSettingsRoot)
     }
   })
 
-  it('keeps the show system notifications property when loading from browser storage', () => {
-    const data = { [notificationsRoot]: { allowSystemNotifications: true } }
+  it('keeps personal settings when loading from browser storage', () => {
+    const data = {
+      [personalSettingsRoot]: {
+        allowSystemNotifications: true,
+        allowAudioNotifications: true,
+      },
+    }
     const result = toConfiguration(data, DataSource.systemImport)
     expect(isRight(result)).toBeTruthy()
     if (isRight(result)) {
-      expect(result.right).toHaveProperty(
-        'notifications.allowSystemNotifications'
-      )
+      expect(result.right).toHaveProperty(personalSettingsRoot)
     }
   })
 })
@@ -243,13 +249,14 @@ describe('toExportableConfigurationJson', () => {
     expect(exportable).not.toMatch('"importTimestamp": "some-import-timestamp"')
   })
 
-  it('removes system notifications preference because we treat them as personal settings', () => {
+  it('removes personal settings which are specific to the current user', () => {
     const state = buildState({
-      [notificationsRoot]: {
+      [personalSettingsRoot]: {
         allowSystemNotifications: true,
+        allowAudioNotifications: true,
       },
     })
     const exportable = toExportableConfigurationJson(state)
-    expect(exportable).not.toMatch('"allowSystemNotifications": true')
+    expect(exportable).not.toMatch('"personal": {')
   })
 })

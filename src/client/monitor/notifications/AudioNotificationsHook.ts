@@ -3,16 +3,14 @@ import { isNotBlank } from '../../common/Utils'
 import { anyAudioPlaying, playAudio } from '../../common/AudioPlayer'
 import { error } from '../../common/Logger'
 import { useSelector } from 'react-redux'
-import {
-  getAllowAudioNotifications,
-  getNotifications,
-} from '../../settings/notifications/NotificationsReducer'
+import { getNotifications } from '../../settings/notifications/NotificationsReducer'
 import {
   recentlyTransitioned,
   reversePrognosisPriority,
 } from './NotificationsHook'
 import { Projects } from '../../domain/Project'
 import { FeedErrors } from '../../domain/FeedError'
+import { getAllowAudioNotifications } from '../../settings/PersonalSettingsReducer'
 
 export function useAudioNotifications(
   projects: Projects,

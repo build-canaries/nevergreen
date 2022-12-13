@@ -12,6 +12,7 @@ import * as SetTrackingMode from './010_SetTrackingMode'
 import * as RemoveOldKeys from './011_RemoveOldKeys'
 import * as MoveNotificationSettings from './012_MoveNotificationSettings'
 import * as MigrateNotifications from './013_MigrateNotifications'
+import * as MigratePersonalSettings from './014_MigratePersonalSettings'
 
 export type Migrate = (data: UntrustedData) => void
 
@@ -35,5 +36,6 @@ export function getOrderedMigrations(): ReadonlyArray<Migration> {
     RemoveOldKeys,
     MoveNotificationSettings,
     MigrateNotifications,
+    MigratePersonalSettings,
   ]
 }

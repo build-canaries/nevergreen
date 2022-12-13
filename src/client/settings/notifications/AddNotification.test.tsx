@@ -5,6 +5,7 @@ import { getNotifications, notificationsRoot } from './NotificationsReducer'
 import { AddNotification } from './AddNotification'
 import { Prognosis } from '../../domain/Project'
 import * as AudioPlayer from '../../common/AudioPlayer'
+import { personalSettingsRoot } from '../PersonalSettingsReducer'
 
 it.each([
   Prognosis.error,
@@ -66,7 +67,7 @@ it('should be able to cancel without adding', async () => {
 describe('warnings', () => {
   it('system notifications have not been allowed', () => {
     const state = {
-      [notificationsRoot]: {
+      [personalSettingsRoot]: {
         allowSystemNotifications: false,
         allowAudioNotifications: true,
       },
@@ -84,7 +85,7 @@ describe('warnings', () => {
 
   it('audio notifications have not been allowed', () => {
     const state = {
-      [notificationsRoot]: {
+      [personalSettingsRoot]: {
         allowSystemNotifications: true,
         allowAudioNotifications: false,
       },
@@ -102,7 +103,7 @@ describe('warnings', () => {
 
   it('system and audio notifications have not been allowed', () => {
     const state = {
-      [notificationsRoot]: {
+      [personalSettingsRoot]: {
         allowSystemNotifications: false,
         allowAudioNotifications: false,
       },

@@ -3,16 +3,16 @@ import { Checkbox } from '../../common/forms/Checkbox'
 import { ErrorMessages, WarningMessages } from '../../common/Messages'
 import { useSelector } from 'react-redux'
 import {
-  getAllowSystemNotifications,
-  setAllowSystemNotifications,
-} from './NotificationsReducer'
-import {
   permissionGranted,
   requestPermission,
   sendSystemNotification,
   supported,
 } from '../../common/SystemNotifications'
 import { useAppDispatch } from '../../configuration/Hooks'
+import {
+  getAllowSystemNotifications,
+  setAllowSystemNotifications,
+} from '../PersonalSettingsReducer'
 
 export const NOT_SUPPORTED_MESSAGE =
   "Unfortunately your browser doesn't support notifications."

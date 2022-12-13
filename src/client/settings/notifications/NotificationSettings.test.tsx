@@ -3,11 +3,14 @@ import { render } from '../../testUtils/testHelpers'
 import { screen } from '@testing-library/react'
 import { NotificationSettings } from './NotificationSettings'
 import {
-  getAllowAudioNotifications,
   getEnableNewVersionCheck,
   notificationsRoot,
 } from './NotificationsReducer'
 import { Prognosis } from '../../domain/Project'
+import {
+  getAllowAudioNotifications,
+  personalSettingsRoot,
+} from '../PersonalSettingsReducer'
 
 it('should allow for turning on and off checking for new versions', async () => {
   const state = {
@@ -24,7 +27,7 @@ it('should allow for turning on and off checking for new versions', async () => 
 
 it('should allow turning on and off play audio notifications', async () => {
   const state = {
-    [notificationsRoot]: {
+    [personalSettingsRoot]: {
       allowAudioNotifications: false,
     },
   }

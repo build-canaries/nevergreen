@@ -8,6 +8,7 @@ import { useNotifications } from './NotificationsHook'
 import { FeedErrors } from '../../domain/FeedError'
 import * as AudioPlayer from '../../common/AudioPlayer'
 import { settingsRoot } from '../../settings/SettingsReducer'
+import { personalSettingsRoot } from '../../settings/PersonalSettingsReducer'
 
 interface PrognosisTest {
   readonly previous: ProjectPrognosis
@@ -67,10 +68,12 @@ describe('system notifications', () => {
     ({ previous, current }: PrognosisTest) => {
       const state = {
         [notificationsRoot]: {
-          allowSystemNotifications: true,
           notifications: {
             [current]: { systemNotification: true, sfx: '' },
           },
+        },
+        [personalSettingsRoot]: {
+          allowSystemNotifications: true,
         },
       }
       const projects = [
@@ -97,10 +100,12 @@ describe('system notifications', () => {
   it('should send notification for first transition to a feed error', () => {
     const state = {
       [notificationsRoot]: {
-        allowSystemNotifications: true,
         notifications: {
           [Prognosis.error]: { systemNotification: true, sfx: '' },
         },
+      },
+      [personalSettingsRoot]: {
+        allowSystemNotifications: true,
       },
     }
     const projects: Projects = []
@@ -139,11 +144,13 @@ describe('system notifications', () => {
   it('should send multiple notifications', () => {
     const state = {
       [notificationsRoot]: {
-        allowSystemNotifications: true,
         notifications: {
           [Prognosis.sick]: { systemNotification: true, sfx: '' },
           [Prognosis.healthy]: { systemNotification: true, sfx: '' },
         },
+      },
+      [personalSettingsRoot]: {
+        allowSystemNotifications: true,
       },
     }
     const projects = [
@@ -181,10 +188,12 @@ describe('system notifications', () => {
   it('should not send notifications when project is still in same prognosis', () => {
     const state = {
       [notificationsRoot]: {
-        allowSystemNotifications: true,
         notifications: {
           [Prognosis.sick]: { systemNotification: true, sfx: '' },
         },
+      },
+      [personalSettingsRoot]: {
+        allowSystemNotifications: true,
       },
     }
     const projects = [
@@ -207,10 +216,12 @@ describe('audio notifications', () => {
   it('should not play regardless of project transitions if they are globally turned off', () => {
     const state = {
       [notificationsRoot]: {
-        allowAudioNotifications: false,
         notifications: {
           [Prognosis.sick]: { systemNotification: false, sfx: 'some-sfx.mp3' },
         },
+      },
+      [personalSettingsRoot]: {
+        allowAudioNotifications: false,
       },
     }
     const projects = [
@@ -239,10 +250,12 @@ describe('audio notifications', () => {
     ({ previous, current }: PrognosisTest) => {
       const state = {
         [notificationsRoot]: {
-          allowAudioNotifications: true,
           notifications: {
             [current]: { systemNotification: false, sfx: 'some-sfx.mp3' },
           },
+        },
+        [personalSettingsRoot]: {
+          allowAudioNotifications: true,
         },
       }
       const projects = [
@@ -264,7 +277,6 @@ describe('audio notifications', () => {
   it('should only play one notification at a time even if multiple projects transition to valid prognosis', () => {
     const state = {
       [notificationsRoot]: {
-        allowAudioNotifications: true,
         notifications: {
           [Prognosis.sick]: { systemNotification: false, sfx: 'some-sfx.mp3' },
           [Prognosis.healthy]: {
@@ -272,6 +284,9 @@ describe('audio notifications', () => {
             sfx: 'another-sfx.mp3',
           },
         },
+      },
+      [personalSettingsRoot]: {
+        allowAudioNotifications: true,
       },
     }
     const projects = [
@@ -301,7 +316,6 @@ describe('audio notifications', () => {
 
     const state = {
       [notificationsRoot]: {
-        allowAudioNotifications: true,
         notifications: {
           [Prognosis.sick]: { systemNotification: false, sfx: 'some-sfx.mp3' },
           [Prognosis.healthy]: {
@@ -309,6 +323,9 @@ describe('audio notifications', () => {
             sfx: 'another-sfx.mp3',
           },
         },
+      },
+      [personalSettingsRoot]: {
+        allowAudioNotifications: true,
       },
     }
     const firstRender = [
@@ -343,10 +360,12 @@ describe('audio notifications', () => {
   it('should not play notifications when project is still in same prognosis', () => {
     const state = {
       [notificationsRoot]: {
-        allowAudioNotifications: true,
         notifications: {
           [Prognosis.sick]: { systemNotification: false, sfx: 'some-sfx.mp3' },
         },
+      },
+      [personalSettingsRoot]: {
+        allowAudioNotifications: true,
       },
     }
     const projects = [
@@ -367,10 +386,12 @@ describe('audio notifications', () => {
   it('should not play audio notification if nothing has changed', () => {
     const state = {
       [notificationsRoot]: {
-        allowAudioNotifications: true,
         notifications: {
           [Prognosis.sick]: { systemNotification: false, sfx: 'some-sfx.mp3' },
         },
+      },
+      [personalSettingsRoot]: {
+        allowAudioNotifications: true,
       },
     }
     const projectsFirstFetch = [

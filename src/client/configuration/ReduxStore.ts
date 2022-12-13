@@ -31,6 +31,10 @@ import {
   notificationsRoot,
   reducer as notificationsReducer,
 } from '../settings/notifications/NotificationsReducer'
+import {
+  personalSettingsRoot,
+  reducer as personalSettingsReducer,
+} from '../settings/PersonalSettingsReducer'
 
 async function saveRaw(currentState: RootState) {
   await save(currentState)
@@ -52,6 +56,7 @@ export const reducer = combineReducers({
   [migrationsRoot]: migrationsReducer,
   [remoteLocationsRoot]: remoteLocationsReducer,
   [notificationsRoot]: notificationsReducer,
+  [personalSettingsRoot]: personalSettingsReducer,
 })
 
 export const store = configureStore({ reducer })

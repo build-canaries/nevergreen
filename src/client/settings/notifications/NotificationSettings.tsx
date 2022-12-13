@@ -4,14 +4,16 @@ import { Page } from '../../common/Page'
 import { Checkbox } from '../../common/forms/Checkbox'
 import { useSelector } from 'react-redux'
 import {
-  getAllowAudioNotifications,
   getEnableNewVersionCheck,
-  setAllowAudioNotifications,
   toggleVersionCheck,
 } from './NotificationsReducer'
 import { Bell } from '../../common/icons/Bell'
 import { Notifications } from './Notifications'
 import { useAppDispatch } from '../../configuration/Hooks'
+import {
+  getAllowAudioNotifications,
+  setAllowAudioNotifications,
+} from '../PersonalSettingsReducer'
 
 export function NotificationSettings(): ReactElement {
   const dispatch = useAppDispatch()

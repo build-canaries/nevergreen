@@ -26,6 +26,7 @@ import { UserEvent } from '@testing-library/user-event/setup/setup'
 import { buildState } from './builders'
 import { App } from '../App'
 import { notificationsRoot } from '../settings/notifications/NotificationsReducer'
+import { personalSettingsRoot } from '../settings/PersonalSettingsReducer'
 
 interface ExtendedRenderResult extends RenderResult {
   readonly store: EnhancedStore<
@@ -109,6 +110,7 @@ export function testReducer(
         [migrationsRoot]: (state: any = null) => state,
         [remoteLocationsRoot]: (state: any = null) => state,
         [notificationsRoot]: (state: any = null) => state,
+        [personalSettingsRoot]: (state: any = null) => state,
       },
       reducer
     )

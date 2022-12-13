@@ -1,15 +1,11 @@
 import {
   addNotification,
-  getAllowAudioNotifications,
-  getAllowSystemNotifications,
   getEnableNewVersionCheck,
   getNotifications,
   notificationsRoot,
   NotificationsState,
   reducer as notificationsReducer,
   removeNotification,
-  setAllowAudioNotifications,
-  setAllowSystemNotifications,
   toggleVersionCheck,
 } from './NotificationsReducer'
 import { testReducer } from '../../testUtils/testHelpers'
@@ -35,15 +31,11 @@ it('should return the state unmodified for an unknown action', () => {
 describe(configurationImported.toString(), () => {
   it('should overwrite any included state', () => {
     const existingState = state({
-      allowAudioNotifications: false,
-      allowSystemNotifications: false,
       enableNewVersionCheck: false,
       notifications: {},
     })
     const action = configurationImported({
       [notificationsRoot]: {
-        allowAudioNotifications: true,
-        allowSystemNotifications: true,
         enableNewVersionCheck: true,
         notifications: {
           [Prognosis.sick]: {
@@ -54,8 +46,6 @@ describe(configurationImported.toString(), () => {
       },
     })
     const newState = reducer(existingState, action)
-    expect(getAllowAudioNotifications(newState)).toBeTruthy()
-    expect(getAllowSystemNotifications(newState)).toBeTruthy()
     expect(getEnableNewVersionCheck(newState)).toBeTruthy()
     expect(getNotifications(newState)).toEqual({
       [Prognosis.sick]: { systemNotification: false, sfx: 'sick-sfx' },
@@ -64,8 +54,6 @@ describe(configurationImported.toString(), () => {
 
   it('should not overwrite any missing state', () => {
     const existingState = state({
-      allowAudioNotifications: true,
-      allowSystemNotifications: true,
       enableNewVersionCheck: true,
       notifications: {
         [Prognosis.sick]: {
@@ -76,8 +64,6 @@ describe(configurationImported.toString(), () => {
     })
     const action = configurationImported({ [notificationsRoot]: {} })
     const newState = reducer(existingState, action)
-    expect(getAllowAudioNotifications(newState)).toBeTruthy()
-    expect(getAllowSystemNotifications(newState)).toBeTruthy()
     expect(getEnableNewVersionCheck(newState)).toBeTruthy()
     expect(getNotifications(newState)).toEqual({
       [Prognosis.sick]: { systemNotification: false, sfx: 'sick-sfx' },
@@ -113,24 +99,6 @@ describe(toggleVersionCheck.toString(), () => {
     const action = toggleVersionCheck()
     const newState = reducer(existingState, action)
     expect(getEnableNewVersionCheck(newState)).toBeFalsy()
-  })
-})
-
-describe(setAllowAudioNotifications.toString(), () => {
-  it('should set the broken build sounds enabled property', () => {
-    const existingState = state({ allowAudioNotifications: false })
-    const action = setAllowAudioNotifications(true)
-    const newState = reducer(existingState, action)
-    expect(getAllowAudioNotifications(newState)).toBeTruthy()
-  })
-})
-
-describe(setAllowSystemNotifications.toString(), () => {
-  it('should set the show browser notifications property', () => {
-    const existingState = state({ allowSystemNotifications: false })
-    const action = setAllowSystemNotifications(true)
-    const newState = reducer(existingState, action)
-    expect(getAllowSystemNotifications(newState)).toBeTruthy()
   })
 })
 

@@ -16,8 +16,6 @@ const NotificationDetails = t.exact(
 )
 
 const NotificationsState = t.type({
-  allowAudioNotifications: t.readonly(t.boolean),
-  allowSystemNotifications: t.readonly(t.boolean),
   enableNewVersionCheck: t.readonly(t.boolean),
   notifications: t.readonly(
     t.exact(
@@ -48,8 +46,6 @@ interface AddNotificationAction {
 }
 
 const initialState: NotificationsState = {
-  allowAudioNotifications: false,
-  allowSystemNotifications: false,
   enableNewVersionCheck: true,
   notifications: {
     [Prognosis.sick]: { systemNotification: false, sfx: defaultSoundFx },
@@ -62,12 +58,6 @@ const slice = createSlice({
   reducers: {
     toggleVersionCheck: (draft) => {
       draft.enableNewVersionCheck = !draft.enableNewVersionCheck
-    },
-    setAllowAudioNotifications: (draft, action: PayloadAction<boolean>) => {
-      draft.allowAudioNotifications = action.payload
-    },
-    setAllowSystemNotifications: (draft, action: PayloadAction<boolean>) => {
-      draft.allowSystemNotifications = action.payload
     },
     addNotification: (draft, action: PayloadAction<AddNotificationAction>) => {
       const { prognosis, systemNotification, sfx } = action.payload
@@ -85,26 +75,13 @@ const slice = createSlice({
 })
 
 export const { reducer } = slice
-export const {
-  toggleVersionCheck,
-  setAllowAudioNotifications,
-  setAllowSystemNotifications,
-  addNotification,
-  removeNotification,
-} = slice.actions
+export const { toggleVersionCheck, addNotification, removeNotification } =
+  slice.actions
 
 const getNotificationsRoot = (state: RootState) => state.notifications
 export const getEnableNewVersionCheck = createSelector(
   getNotificationsRoot,
   (settings) => settings.enableNewVersionCheck
-)
-export const getAllowAudioNotifications = createSelector(
-  getNotificationsRoot,
-  (settings) => settings.allowAudioNotifications
-)
-export const getAllowSystemNotifications = createSelector(
-  getNotificationsRoot,
-  (settings) => settings.allowSystemNotifications
 )
 export const getNotifications = createSelector(
   getNotificationsRoot,
