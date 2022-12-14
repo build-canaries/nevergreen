@@ -1,4 +1,5 @@
 import type { Feed } from './FeedsReducer'
+import { AuthTypes } from './FeedsReducer'
 import React, { ReactElement, useState } from 'react'
 import { SecondaryButton } from '../../common/forms/Button'
 import { useQuery } from '@tanstack/react-query'
@@ -11,7 +12,6 @@ import {
   TimedErrorMessages,
   TimedSuccessMessages,
 } from '../../common/TimedMessages'
-import { AuthTypes } from './FeedsReducer'
 
 interface Details {
   readonly authType: UpdateExistingAuthTypes
@@ -67,7 +67,7 @@ export function TestConnection({
           void refetch()
         }}
         disabled={isFetching}
-        icon={<Loop loaded={!isFetching} />}
+        icon={<Loop isLoading={isFetching} />}
       >
         {isFetching ? 'Checking connection...' : 'Check connection'}
       </SecondaryButton>

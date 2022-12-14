@@ -15,7 +15,7 @@ import omit from 'lodash/omit'
 import { enrichErrors, FeedErrors, toFeedApiError } from '../domain/FeedError'
 
 interface InterestingProjectsHook {
-  readonly loaded: boolean
+  readonly isLoading: boolean
   readonly projects: Projects
   readonly feedErrors: FeedErrors
 }
@@ -79,7 +79,7 @@ export function useInterestingProjects(): InterestingProjectsHook {
     }
   )
   return {
-    loaded: !isLoading,
+    isLoading,
     projects,
     feedErrors,
   }

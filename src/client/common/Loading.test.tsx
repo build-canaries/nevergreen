@@ -5,7 +5,7 @@ import { screen } from '@testing-library/react'
 
 it('should render progress but not children if not loaded', () => {
   render(
-    <Loading loaded={false} title="">
+    <Loading isLoading title="">
       <div>content</div>
     </Loading>
   )
@@ -15,7 +15,7 @@ it('should render progress but not children if not loaded', () => {
 
 it('should still render progress so focus does not get reset as well as children when loaded', () => {
   render(
-    <Loading loaded title="">
+    <Loading isLoading={false} title="">
       <div>content</div>
     </Loading>
   )
@@ -25,7 +25,7 @@ it('should still render progress so focus does not get reset as well as children
 
 it('should allow getting focus for more accessible loading feedback', () => {
   render(
-    <Loading focus loaded={false} title="">
+    <Loading focus isLoading title="">
       <div>content</div>
     </Loading>
   )

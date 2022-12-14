@@ -30,7 +30,7 @@ export function Monitor(): ReactElement {
 
   const feedsAdded = !isEmpty(feeds)
 
-  const { loaded, projects, feedErrors } = useInterestingProjects()
+  const { isLoading, projects, feedErrors } = useInterestingProjects()
   useNotifications(projects, feedErrors)
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export function Monitor(): ReactElement {
         <SuccessMessage message="Add a feed via the tracking page to start monitoring" />
       )}
       {feedsAdded && (
-        <Loading dark loaded={loaded} title={title} focus>
+        <Loading dark isLoading={isLoading} title={title} focus>
           <Success projects={projects} feedErrors={feedErrors} />
           <InterestingProjects projects={projects} feedErrors={feedErrors} />
         </Loading>

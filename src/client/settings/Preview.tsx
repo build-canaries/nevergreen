@@ -68,7 +68,7 @@ export function Preview(): ReactElement {
       />
       <div className={styles.projects}>
         <div className={styles.projectsInner}>
-          <Loading loaded={!isLoading} title="Preview" dark focus>
+          <Loading isLoading={isLoading} title="Preview" dark focus>
             <InterestingProjects projects={projects} feedErrors={feedErrors} />
           </Loading>
         </div>

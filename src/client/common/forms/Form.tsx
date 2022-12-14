@@ -123,7 +123,7 @@ export function Form<Fields extends string>({
 
       <PrimaryButton
         className={styles.submitButton}
-        icon={isFetching ? <Loop loaded={false} /> : <Checkmark />}
+        icon={isFetching ? <Loop isLoading /> : <Checkmark />}
         type="submit"
         disabled={isFetching}
       >

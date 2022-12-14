@@ -7,7 +7,7 @@ import { useForceFocus } from './ForceFocusHook'
 
 interface LoadingProps {
   readonly title: string
-  readonly loaded: boolean
+  readonly isLoading: boolean
   readonly children: ReactNode
   readonly className?: string
   readonly dark?: boolean
@@ -15,18 +15,18 @@ interface LoadingProps {
 }
 
 export function Loading({
-  loaded,
+  isLoading,
   children,
   className,
   dark = false,
   title = '',
   focus = false,
 }: LoadingProps): ReactElement {
-  const progressRef = useForceFocus<HTMLProgressElement>(focus, [loaded])
+  const progressRef = useForceFocus<HTMLProgressElement>(focus, [isLoading])
 
-  const progressProps = loaded
-    ? { 'aria-valuetext': 'loaded', value: '1' }
-    : { 'aria-valuetext': 'loading', role: 'progressbar' }
+  const progressProps = isLoading
+    ? { 'aria-valuetext': 'loading', role: 'progressbar' }
+    : { 'aria-valuetext': 'loaded', value: '1' }
 
   const classes = cn(
     styles.loading,
@@ -36,14 +36,14 @@ export function Loading({
     className
   )
 
-  const content = loaded ? (
-    children
-  ) : (
+  const content = isLoading ? (
     <div className={classes} data-locator="loading">
       <span className={styles.pulse} aria-hidden="true" />
       <span className={styles.pulse} aria-hidden="true" />
       <span className={styles.pulse} aria-hidden="true" />
     </div>
+  ) : (
+    children
   )
 
   return (

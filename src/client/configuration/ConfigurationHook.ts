@@ -7,8 +7,8 @@ import { useQuery } from '@tanstack/react-query'
 import { info } from '../common/Logger'
 
 interface Result {
-  readonly loaded: boolean
-  readonly error: boolean
+  readonly isLoading: boolean
+  readonly isError: boolean
 }
 
 export function useLocalConfiguration(): Result {
@@ -33,5 +33,5 @@ export function useLocalConfiguration(): Result {
     }
   })
 
-  return { loaded: !isLoading, error: isError }
+  return { isLoading, isError }
 }

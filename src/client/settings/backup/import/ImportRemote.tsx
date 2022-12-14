@@ -81,7 +81,7 @@ export function ImportRemote(): ReactElement {
     >
       <FullBackupSummary location={location} />
       <Loading
-        loaded={!isFetching}
+        isLoading={isFetching}
         className={styles.loading}
         title={title}
         focus

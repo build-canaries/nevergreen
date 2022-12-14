@@ -5,16 +5,19 @@ import { Loop } from '../../../common/icons/Loop'
 
 interface RefreshProps {
   readonly refreshTray: () => void
-  readonly loaded: boolean
+  readonly isLoading: boolean
 }
 
-export function Refresh({ refreshTray, loaded }: RefreshProps): ReactElement {
+export function Refresh({
+  refreshTray,
+  isLoading,
+}: RefreshProps): ReactElement {
   return (
     <PrimaryButton
       className={styles.refresh}
       onClick={refreshTray}
-      icon={<Loop loaded={loaded} />}
-      disabled={!loaded}
+      icon={<Loop isLoading={isLoading} />}
+      disabled={isLoading}
     >
       Refresh
     </PrimaryButton>

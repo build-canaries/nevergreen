@@ -9,10 +9,10 @@ export function Layout(): ReactElement {
   return (
     <>
       <StyleGuideSection title="Loading">
-        <Loading loaded={false} title="light">
+        <Loading isLoading title="light">
           You will not see this
         </Loading>
-        <Loading loaded={false} title="dark" dark>
+        <Loading isLoading title="dark" dark>
           You will not see this
         </Loading>
       </StyleGuideSection>

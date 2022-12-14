@@ -21,28 +21,25 @@ import {
 } from '../../../common/TimedMessages'
 import { useAppDispatch } from '../../../configuration/Hooks'
 
-const placeholder =
-  'Open, drag and drop or paste exported configuration here and press Import'
-
 export function ImportLocal(): ReactElement {
   const dispatch = useAppDispatch()
   const [success, setSuccessState] = useState('')
-  const [loadErrors, setLoadErrors] = useState<ReadonlyArray<string>>([])
+  const [openFileError, setOpenFileError] = useState<string>('')
   const [data, setData] = useState('')
-  const [loaded, setLoaded] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
 
   const setSuccess = (message: string) => {
     setSuccessState(message)
-    setLoadErrors([])
+    setOpenFileError('')
   }
 
-  const setErrors = (messages: ReadonlyArray<string>) => {
+  const setError = (message: string) => {
     setSuccessState('')
-    setLoadErrors(messages)
+    setOpenFileError(message)
   }
 
   const openFile = async (files: FileList) => {
-    setLoaded(false)
+    setIsLoading(true)
 
     if (files.length === 1) {
       try {
@@ -50,15 +47,15 @@ export function ImportLocal(): ReactElement {
         setData(content)
         setSuccess(`Opened file "${filename}"`)
       } catch (e) {
-        setErrors([errorMessage(e)])
+        setError(errorMessage(e))
       }
     } else {
-      setErrors([
-        `Only 1 backup file can be opened (attempted to open ${files.length} files)`,
-      ])
+      setError(
+        `Only 1 backup file can be opened (attempted to open ${files.length} files)`
+      )
     }
 
-    setLoaded(true)
+    setIsLoading(false)
   }
 
   const onValidate = () => {
@@ -94,11 +91,11 @@ export function ImportLocal(): ReactElement {
 
   return (
     <Page title="Import local" icon={<FolderOpen />}>
-      <FileDropTarget onFileDropped={openFile} disabled={!loaded}>
+      <FileDropTarget onFileDropped={openFile} disabled={isLoading}>
         <div className={styles.messages}>
           <TimedErrorMessages
-            onDismiss={() => setLoadErrors([])}
-            messages={loadErrors}
+            onDismiss={() => setOpenFileError('')}
+            messages={openFileError}
           />
           <TimedInfoMessages
             onDismiss={() => setSuccessState('')}
@@ -106,14 +103,14 @@ export function ImportLocal(): ReactElement {
           />
         </div>
 
-        <InputFile onFileSelected={openFile} disabled={!loaded} />
+        <InputFile onFileSelected={openFile} disabled={isLoading} />
 
         <Form
           onValidate={onValidate}
           onSuccess={onSuccess}
           onCancel="../backup"
           submitButtonText="Import"
-          clearErrors={!loaded}
+          clearErrors={isLoading}
           className={styles.form}
         >
           {(submitting, validationErrors) => {
@@ -121,10 +118,10 @@ export function ImportLocal(): ReactElement {
               <TextArea
                 label="Configuration to import"
                 errors={allErrors('import', validationErrors)}
-                placeholder={placeholder}
+                placeholder="Open, drag and drop or paste exported configuration here and press Import"
                 value={data}
                 onChange={({ target }) => setData(target.value)}
-                disabled={submitting || !loaded}
+                disabled={submitting || isLoading}
               />
             )
           }}

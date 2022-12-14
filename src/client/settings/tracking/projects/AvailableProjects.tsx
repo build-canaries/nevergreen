@@ -140,9 +140,13 @@ export function AvailableProjects({
 
   return (
     <section className={styles.availableProjects}>
-      <Refresh refreshTray={() => void refetch()} loaded={!isFetching} />
+      <Refresh refreshTray={() => void refetch()} isLoading={isFetching} />
       {controls}
-      <Loading loaded={!isFetching} className={styles.loading} title="Projects">
+      <Loading
+        isLoading={isFetching}
+        className={styles.loading}
+        title="Projects"
+      >
         {!isError && !hasProjects && noProjectsWarning}
         {!isError &&
           hasProjects &&

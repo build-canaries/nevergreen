@@ -4,13 +4,8 @@ import { Refresh } from './Refresh'
 import noop from 'lodash/noop'
 import { screen } from '@testing-library/react'
 
-const defaultProps = {
-  refreshTray: noop,
-  loaded: false,
-}
-
 it('should disable the refresh button if projects are loading', () => {
-  const props = { ...defaultProps, loaded: false }
+  const props = { refreshTray: noop, isLoading: true }
   render(<Refresh {...props} />)
   expect(screen.getByRole('button', { name: 'Refresh' })).toHaveAttribute(
     'disabled',
@@ -20,7 +15,7 @@ it('should disable the refresh button if projects are loading', () => {
 
 it('should allow projects to be refreshed if they are loaded', async () => {
   const refreshTray = jest.fn()
-  const props = { ...defaultProps, loaded: true, refreshTray }
+  const props = { isLoading: false, refreshTray }
   const { user } = render(<Refresh {...props} />)
   await user.click(screen.getByRole('button', { name: 'Refresh' }))
   expect(refreshTray).toHaveBeenCalled()

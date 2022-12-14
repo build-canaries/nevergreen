@@ -29,7 +29,7 @@ interface AppState {
 }
 
 export function Nevergreen(): ReactElement {
-  const { loaded, error } = useLocalConfiguration()
+  const { isLoading, isError } = useLocalConfiguration()
 
   const [bannerMessage, setBannerMessage] = useState('')
   const [fontMetrics, setFontMetrics] = useState(DEFAULT_FONT_METRICS)
@@ -55,7 +55,7 @@ export function Nevergreen(): ReactElement {
     }
   })
 
-  if (error) {
+  if (isError) {
     return <UnhandledErrorMessage />
   }
 
@@ -64,7 +64,7 @@ export function Nevergreen(): ReactElement {
     : { onMouseMove: showMenus }
 
   return (
-    <Loading dark loaded={loaded} title="Nevergreen" focus>
+    <Loading dark isLoading={isLoading} title="Nevergreen" focus>
       <FontMetrics ref={fontMetricsRef} />
       <FontMetricsContext.Provider value={fontMetrics}>
         <Help />
