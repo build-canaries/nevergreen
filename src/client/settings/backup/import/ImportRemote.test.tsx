@@ -14,6 +14,8 @@ import { ImportRemote } from './ImportRemote'
 import * as BackupGateway from '../../../gateways/BackupGateway'
 import { remoteLocationsRoot } from '../RemoteLocationsReducer'
 import { RemoteLocationOptions } from '../RemoteLocationOptions'
+import { toExportableConfigurationJson } from '../../../configuration/Configuration'
+import { personalSettingsRoot } from '../../PersonalSettingsReducer'
 
 it('should import valid configuration', async () => {
   const remoteLocation = buildRemoteBackupLocation({
@@ -23,9 +25,14 @@ it('should import valid configuration', async () => {
     [remoteLocationsRoot]: {
       locationId: remoteLocation,
     },
+    [personalSettingsRoot]: {
+      backupRemoteLocations: {
+        locationId: {},
+      },
+    },
   }
   jest.spyOn(BackupGateway, 'fetchConfiguration').mockResolvedValueOnce({
-    configuration: toJson(buildState()),
+    configuration: toExportableConfigurationJson(buildState()),
     description: '',
     id: '',
     where: RemoteLocationOptions.custom,

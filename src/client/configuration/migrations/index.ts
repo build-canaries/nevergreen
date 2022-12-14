@@ -13,6 +13,7 @@ import * as RemoveOldKeys from './011_RemoveOldKeys'
 import * as MoveNotificationSettings from './012_MoveNotificationSettings'
 import * as MigrateNotifications from './013_MigrateNotifications'
 import * as MigratePersonalSettings from './014_MigratePersonalSettings'
+import * as MigrateRemoteLocationTimestamps from './015_MigrateRemoteLocationTimestamps'
 
 export type Migrate = (data: UntrustedData) => void
 
@@ -37,5 +38,6 @@ export function getOrderedMigrations(): ReadonlyArray<Migration> {
     MoveNotificationSettings,
     MigrateNotifications,
     MigratePersonalSettings,
+    MigrateRemoteLocationTimestamps,
   ]
 }

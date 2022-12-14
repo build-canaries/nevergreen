@@ -3,22 +3,42 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSelector, createSlice } from '@reduxjs/toolkit'
 import { configurationImported } from './backup/BackupActionCreators'
 import * as t from 'io-ts'
+import {
+  addBackupLocation,
+  backupExported,
+  backupImported,
+  removeBackupLocation,
+} from './backup/RemoteLocationsActions'
+import set from 'lodash/set'
+import unset from 'lodash/unset'
 
 export const personalSettingsRoot = 'personal'
 
+const BackRemoteLocationTimestamps = t.exact(
+  t.partial({
+    exportTimestamp: t.readonly(t.string),
+    importTimestamp: t.readonly(t.string),
+  })
+)
+
 export const PersonalSettingsState = t.exact(
-  t.type({
+  t.partial({
     allowAudioNotifications: t.readonly(t.boolean),
     allowSystemNotifications: t.readonly(t.boolean),
+    backupRemoteLocations: t.record(t.string, BackRemoteLocationTimestamps),
   }),
   personalSettingsRoot
 )
 
+type BackRemoteLocationTimestamps = t.TypeOf<
+  typeof BackRemoteLocationTimestamps
+>
 export type PersonalSettingsState = t.TypeOf<typeof PersonalSettingsState>
 
 const initialState: PersonalSettingsState = {
   allowAudioNotifications: false,
   allowSystemNotifications: false,
+  backupRemoteLocations: {},
 }
 
 const slice = createSlice({
@@ -33,9 +53,38 @@ const slice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(configurationImported, (draft, action) => {
-      return action.payload.personal ?? draft
-    })
+    builder
+      .addCase(configurationImported, (draft, action) => {
+        return { ...draft, ...action.payload.personal }
+      })
+      .addCase(addBackupLocation, (draft, action) => {
+        set(draft, ['backupRemoteLocations', action.payload.internalId], {})
+      })
+      .addCase(removeBackupLocation, (draft, action) => {
+        unset(draft, ['backupRemoteLocations', action.payload])
+      })
+      .addCase(backupImported, (draft, action) => {
+        set(
+          draft,
+          [
+            'backupRemoteLocations',
+            action.payload.internalId,
+            'importTimestamp',
+          ],
+          action.payload.timestamp
+        )
+      })
+      .addCase(backupExported, (draft, action) => {
+        set(
+          draft,
+          [
+            'backupRemoteLocations',
+            action.payload.internalId,
+            'exportTimestamp',
+          ],
+          action.payload.timestamp
+        )
+      })
   },
 })
 
@@ -52,3 +101,14 @@ export const getAllowSystemNotifications = createSelector(
   getPersonalSettingsRoot,
   (settings) => settings.allowSystemNotifications
 )
+
+export function getBackupLocationTimestamps(
+  internalId: string
+): (state: RootState) => BackRemoteLocationTimestamps | undefined {
+  return createSelector(
+    getPersonalSettingsRoot,
+    (settings) =>
+      settings.backupRemoteLocations &&
+      settings.backupRemoteLocations[internalId]
+  )
+}

@@ -5,7 +5,7 @@ import {
   toExportableConfigurationJson,
 } from './Configuration'
 import { Either, isLeft, isRight } from 'fp-ts/Either'
-import { buildRemoteBackupLocation, buildState } from '../testUtils/builders'
+import { buildState } from '../testUtils/builders'
 import { remoteLocationsRoot } from '../settings/backup/RemoteLocationsReducer'
 import {
   AuthTypes,
@@ -23,7 +23,7 @@ function expectErrors(
   if (isLeft(result)) {
     expect(result.left).toEqual(errors)
   } else {
-    fail(
+    throw new Error(
       'Expected result to contain left(errors) but it was right(configuration)'
     )
   }
@@ -47,7 +47,7 @@ describe('toConfiguration', () => {
       if (isRight(result)) {
         expect(result.right.trays).toHaveProperty('some-tray-id')
       } else {
-        fail(
+        throw new Error(
           `Expected right(configuration) but got left([${result.left.join(
             ', '
           )}])`
@@ -117,7 +117,7 @@ describe('toConfiguration', () => {
       if (isRight(result)) {
         expect(result.right.backupRemoteLocations).toHaveProperty('some-id')
       } else {
-        fail(
+        throw new Error(
           `Expected right(configuration) but got left([${result.left.join(
             ', '
           )}])`
@@ -224,6 +224,7 @@ describe('toConfiguration', () => {
       [personalSettingsRoot]: {
         allowSystemNotifications: true,
         allowAudioNotifications: true,
+        backupRemoteLocations: {},
       },
     }
     const result = toConfiguration(data, DataSource.systemImport)
@@ -235,20 +236,6 @@ describe('toConfiguration', () => {
 })
 
 describe('toExportableConfigurationJson', () => {
-  it('removes timestamps from remote backups as they should be the last time those action were done on this instance of Nevergreen', () => {
-    const state = buildState({
-      [remoteLocationsRoot]: {
-        internalId: buildRemoteBackupLocation({
-          exportTimestamp: 'some-export-timestamp',
-          importTimestamp: 'some-import-timestamp',
-        }),
-      },
-    })
-    const exportable = toExportableConfigurationJson(state)
-    expect(exportable).not.toMatch('"exportTimestamp": "some-export-timestamp"')
-    expect(exportable).not.toMatch('"importTimestamp": "some-import-timestamp"')
-  })
-
   it('removes personal settings which are specific to the current user', () => {
     const state = buildState({
       [personalSettingsRoot]: {

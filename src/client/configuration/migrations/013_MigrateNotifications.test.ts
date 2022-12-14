@@ -1,12 +1,6 @@
 import { migrate } from './013_MigrateNotifications'
 import { notificationsRoot } from '../../settings/notifications/NotificationsReducer'
 
-it('should return the given data if it does not contain settings', () => {
-  const data = { foo: 'bar' }
-  migrate(data)
-  expect(data).toEqual({ foo: 'bar' })
-})
-
 it('should add sick and healthy notifications if sfx is set and system notifications are on', () => {
   const data = {
     [notificationsRoot]: {

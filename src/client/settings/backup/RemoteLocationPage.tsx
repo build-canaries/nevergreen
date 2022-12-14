@@ -7,7 +7,7 @@ import { ROUTE_BACKUP } from '../../AppRoutes'
 
 export function RemoteLocationPage(): ReactElement {
   const { internalId } = useParams()
-  const location = useSelector(getBackupLocation(internalId || ''))
+  const location = useSelector(getBackupLocation(internalId ?? ''))
 
   if (location) {
     return <Outlet context={location} />

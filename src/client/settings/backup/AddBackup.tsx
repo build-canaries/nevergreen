@@ -17,7 +17,7 @@ import { Page } from '../../common/Page'
 import { BackupLogo } from './BackupLogo'
 import { ROUTE_BACKUP, ROUTE_BACKUP_EXPORT_DETAILS } from '../../AppRoutes'
 import { useAppDispatch } from '../../configuration/Hooks'
-import { addBackup } from './RemoteLocationsReducer'
+import { addBackupLocation } from './RemoteLocationsActions'
 
 type Fields = 'url' | 'accessToken'
 
@@ -67,7 +67,7 @@ export function AddBackup(): ReactElement {
     ) {
       const encryptedAccessToken = await encrypt(accessToken, signal)
       dispatch(
-        addBackup({
+        addBackupLocation({
           internalId,
           where,
           externalId,
@@ -78,7 +78,11 @@ export function AddBackup(): ReactElement {
       )
     } else {
       dispatch(
-        addBackup({ where: RemoteLocationOptions.custom, internalId, url })
+        addBackupLocation({
+          where: RemoteLocationOptions.custom,
+          internalId,
+          url,
+        })
       )
     }
     return {

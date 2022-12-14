@@ -63,7 +63,10 @@ function validationErrorMessage(
 ) {
   return `Invalid value ${toJson(
     actual
-  )} supplied to ${path} expected ${expected.replace(/Readonly<(.*)>/, '$1')}`
+  )} supplied to ${path} expected ${expected.replaceAll(
+    /Readonly<(.*)>/g,
+    '$1'
+  )}`
 }
 
 function toErrorPath(errors: Errors): ReadonlyArray<string> {
@@ -161,19 +164,6 @@ export function toConfiguration(
 
 export function toExportableConfigurationJson(state: RootState): string {
   const cloned = cloneDeep(state)
-
-  const remoteBackups = cloned[remoteLocationsRoot]
-  /* eslint-disable @typescript-eslint/ban-ts-comment */
-  Object.keys(remoteBackups).forEach((internalId) => {
-    // @ts-ignore
-    delete remoteBackups[internalId]['importTimestamp']
-    // @ts-ignore
-    delete remoteBackups[internalId]['exportTimestamp']
-  })
-
-  // @ts-ignore
-  delete cloned[personalSettingsRoot]
-  /* eslint-enable @typescript-eslint/ban-ts-comment*/
-
+  unset(cloned, personalSettingsRoot)
   return toJson(cloned)
 }

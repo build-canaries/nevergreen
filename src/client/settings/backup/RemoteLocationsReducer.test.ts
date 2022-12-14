@@ -1,9 +1,9 @@
 import {
+  getBackupLocation,
   getBackupLocations,
-  remoteLocationsRoot,
   reducer as remoteBackupReducer,
+  remoteLocationsRoot,
   RemoteLocationsState,
-  removeBackup,
 } from './RemoteLocationsReducer'
 import { testReducer } from '../../testUtils/testHelpers'
 import { buildRemoteBackupLocation, buildState } from '../../testUtils/builders'
@@ -11,6 +11,7 @@ import type { RootState } from '../../configuration/ReduxStore'
 import { RecursivePartial } from '../../common/Types'
 import { configurationImported } from './BackupActionCreators'
 import { RemoteLocationOptions } from './RemoteLocationOptions'
+import { backupExported, removeBackupLocation } from './RemoteLocationsActions'
 
 const reducer = testReducer({
   [remoteLocationsRoot]: remoteBackupReducer,
@@ -138,8 +139,6 @@ describe(configurationImported.toString(), () => {
           externalId: 'a',
           encryptedAccessToken: 'a',
           description: 'a',
-          exportTimestamp: 'a',
-          importTimestamp: 'a',
         }),
       })
       const remoteLocation = buildRemoteBackupLocation({
@@ -150,8 +149,6 @@ describe(configurationImported.toString(), () => {
         externalId: 'b',
         encryptedAccessToken: 'b',
         description: 'b',
-        exportTimestamp: 'b',
-        importTimestamp: 'b',
       })
       const action = configurationImported({
         [remoteLocationsRoot]: { 'some-id': remoteLocation },
@@ -224,13 +221,28 @@ describe(configurationImported.toString(), () => {
   })
 })
 
-describe(removeBackup.toString(), () => {
+describe(removeBackupLocation.toString(), () => {
   it('should remove the location with the given internal ID', () => {
     const existingState = state({
       'some-id': buildRemoteBackupLocation({ internalId: 'some-id' }),
     })
-    const action = removeBackup('some-id')
+    const action = removeBackupLocation('some-id')
     const newState = reducer(existingState, action)
     expect(getBackupLocations(newState)).toEqual({})
+  })
+})
+
+describe(backupExported.toString(), () => {
+  it('should set the external id', () => {
+    const existingState = state({
+      'internal-id': buildRemoteBackupLocation({ externalId: '' }),
+    })
+    const action = backupExported('internal-id', 'external-id')
+    const newState = reducer(existingState, action)
+    expect(getBackupLocation('internal-id')(newState)).toEqual(
+      expect.objectContaining({
+        externalId: 'external-id',
+      })
+    )
   })
 })

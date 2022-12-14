@@ -53,6 +53,7 @@ export function buildState(
     [personalSettingsRoot]: {
       allowAudioNotifications: false,
       allowSystemNotifications: false,
+      backupRemoteLocations: {},
     },
   }
   return merge(defaultState, subState)
@@ -117,12 +118,6 @@ export function buildRemoteBackupLocation(
     internalId: '',
     where: RemoteLocationOptions.custom,
     url: 'http://some-url',
-    exportTimestamp: '',
-    importTimestamp: '',
-    automaticallyExport: false,
-    externalId: '',
-    encryptedAccessToken: '',
-    description: '',
   }
   return merge(defaultLocation, location)
 }

@@ -40,8 +40,6 @@ it('should not export to any enabled remote locations if the configuration is th
       internalId: buildRemoteBackupLocation({
         internalId: 'internalId',
         automaticallyExport: true,
-        exportTimestamp: '1',
-        importTimestamp: '1',
       }),
     },
   })
@@ -50,8 +48,6 @@ it('should not export to any enabled remote locations if the configuration is th
       internalId: buildRemoteBackupLocation({
         internalId: 'internalId',
         automaticallyExport: true,
-        exportTimestamp: '2', // timestamps aren't exported so these shouldn't trigger an export even though they different
-        importTimestamp: '2',
       }),
     },
   })

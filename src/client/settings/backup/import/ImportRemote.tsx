@@ -27,7 +27,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useRemoteLocationContext } from '../RemoteLocationPage'
 import { ROUTE_BACKUP } from '../../../AppRoutes'
 import { useAppDispatch } from '../../../configuration/Hooks'
-import { backupImported } from '../RemoteLocationsReducer'
+import { backupImported } from '../RemoteLocationsActions'
 
 type Fields = 'import'
 

@@ -10,7 +10,7 @@ import { BackupLogo } from '../BackupLogo'
 import { useRemoteLocationContext } from '../RemoteLocationPage'
 import { ROUTE_BACKUP } from '../../../AppRoutes'
 import { useAppDispatch } from '../../../configuration/Hooks'
-import { backupExported } from '../RemoteLocationsReducer'
+import { backupExported } from '../RemoteLocationsActions'
 
 export function ExportRemote(): ReactElement {
   const location = useRemoteLocationContext()

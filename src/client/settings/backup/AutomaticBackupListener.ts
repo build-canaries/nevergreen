@@ -4,8 +4,9 @@ import isNil from 'lodash/isNil'
 import debounce from 'lodash/debounce'
 import { exportConfiguration } from '../../gateways/BackupGateway'
 import * as logger from '../../common/Logger'
-import { backupExported, remoteLocationsRoot } from './RemoteLocationsReducer'
+import { remoteLocationsRoot } from './RemoteLocationsReducer'
 import { toExportableConfigurationJson } from '../../configuration/Configuration'
+import { backupExported } from './RemoteLocationsActions'
 
 const thirtySeconds = 1000 * 30
 
