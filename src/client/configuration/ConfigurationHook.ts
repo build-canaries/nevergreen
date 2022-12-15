@@ -23,7 +23,7 @@ export function useLocalConfiguration(): Result {
 
     if (isRight(result)) {
       dispatch(configurationImported(result.right))
-      return result.right
+      return true
     } else {
       throw new Error(
         `Unable to initialise Nevergreen because of configuration validation errors, ${result.left.join(
