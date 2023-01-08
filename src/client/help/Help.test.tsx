@@ -12,7 +12,7 @@ it('should show help articles based on location or search query', async () => {
   })
 
   // Trigger shortcut manually as I couldn't figure out how to get the model to show by firing key events :'(
-  await act(() => {
+  act(() => {
     triggerShortcut(SHOW_HELP_SHORTCUT)
   })
 
