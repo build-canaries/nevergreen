@@ -11,13 +11,13 @@ npm run clean
 echo "Fetching node modules and performing first build..."
 . ./.circleci/dependencies.sh
 
-echo "Building uberjar..."
-./lein.sh uberjar
-
 echo "Building webapp..."
 npm run build:prod
+
+echo "Building uberjar..."
+./lein.sh uberjar
 
 echo "Building docker image..."
 docker build . -t nevergreen
 
-printf "All done! To run nevergreen, execute:\n./run.sh"
+printf "All done! To run nevergreen, execute:\n./run.sh\n"
