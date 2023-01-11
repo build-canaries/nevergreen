@@ -1,12 +1,14 @@
 import {
   getAllowAudioNotifications,
   getAllowSystemNotifications,
+  getAudioNotificationVolume,
   getBackupLocationTimestamps,
   personalSettingsRoot,
   PersonalSettingsState,
   reducer as personalSettingsReducer,
   setAllowAudioNotifications,
   setAllowSystemNotifications,
+  setAudioNotificationVolume,
 } from './PersonalSettingsReducer'
 import { setSystemTime, testReducer } from '../testUtils/testHelpers'
 import { buildRemoteBackupLocation, buildState } from '../testUtils/builders'
@@ -71,6 +73,16 @@ describe(setAllowSystemNotifications.toString(), () => {
     const action = setAllowSystemNotifications(true)
     const newState = reducer(existingState, action)
     expect(getAllowSystemNotifications(newState)).toBeTruthy()
+  })
+})
+
+describe(setAudioNotificationVolume.toString(), () => {
+  it('should set the audio notification volume property', () => {
+    const expectedVolume = 0.5
+    const existingState = state({ audioNotificationVolume: 1 })
+    const action = setAudioNotificationVolume(expectedVolume)
+    const newState = reducer(existingState, action)
+    expect(getAudioNotificationVolume(newState)).toEqual(expectedVolume)
   })
 })
 

@@ -19,6 +19,7 @@ import { useAppDispatch } from '../../configuration/Hooks'
 import {
   getAllowAudioNotifications,
   getAllowSystemNotifications,
+  getAudioNotificationVolume,
 } from '../PersonalSettingsReducer'
 
 const PROGNOSIS_OPTIONS = [
@@ -59,6 +60,7 @@ export function AddNotification(): ReactElement {
   const dispatch = useAppDispatch()
   const allowSystemNotifications = useSelector(getAllowSystemNotifications)
   const allowAudioNotifications = useSelector(getAllowAudioNotifications)
+  const audioNotificationVolume = useSelector(getAudioNotificationVolume)
 
   const [prognosis, setPrognosis] = useState(Prognosis.sick)
   const [systemNotification, setSystemNotification] = useState(false)
@@ -78,7 +80,7 @@ export function AddNotification(): ReactElement {
     setPlaying(true)
 
     try {
-      await playAudio(sfx, () => setPlaying(false))
+      await playAudio(sfx, audioNotificationVolume, () => setPlaying(false))
     } catch (e) {
       setPlaying(false)
       setAudioError(errorMessage(e))

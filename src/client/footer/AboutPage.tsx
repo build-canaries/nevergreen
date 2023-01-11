@@ -64,6 +64,16 @@ export function AboutPage(): ReactElement {
           4.0)
         </ExternalLink>
       </p>
+      <p>
+        <ExternalLink href="http://www.orangefreesounds.com/usb-connection-sound-effect/">
+          &quot;Usb Connection Sound Effect&quot; by Alexander
+        </ExternalLink>{' '}
+        is licenced under{' '}
+        <ExternalLink href="https://creativecommons.org/licenses/by-nc/4.0/">
+          Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC
+          4.0)
+        </ExternalLink>
+      </p>
     </Page>
   )
 }

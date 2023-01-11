@@ -7,8 +7,14 @@ function stop(audio?: HTMLAudioElement): void {
   }
 }
 
-export function playAudio(src: string, onStop?: () => void): Promise<void> {
+export function playAudio(
+  src: string,
+  volume: number,
+  onStop?: () => void
+): Promise<void> {
   const audio = cachedAudio.get(src) || new Audio(src)
+  audio.volume = volume
+
   cachedAudio.set(src, audio)
   if (onStop) {
     audio.addEventListener('ended', onStop)

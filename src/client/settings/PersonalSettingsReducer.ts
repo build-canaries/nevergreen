@@ -23,6 +23,7 @@ const BackRemoteLocationTimestamps = t.exact(
 
 export const PersonalSettingsState = t.exact(
   t.partial({
+    audioNotificationVolume: t.readonly(t.number),
     allowAudioNotifications: t.readonly(t.boolean),
     allowSystemNotifications: t.readonly(t.boolean),
     backupRemoteLocations: t.record(t.string, BackRemoteLocationTimestamps),
@@ -36,6 +37,7 @@ type BackRemoteLocationTimestamps = t.TypeOf<
 export type PersonalSettingsState = t.TypeOf<typeof PersonalSettingsState>
 
 const initialState: PersonalSettingsState = {
+  audioNotificationVolume: 1.0,
   allowAudioNotifications: false,
   allowSystemNotifications: false,
   backupRemoteLocations: {},
@@ -45,6 +47,9 @@ const slice = createSlice({
   name: personalSettingsRoot,
   initialState,
   reducers: {
+    setAudioNotificationVolume: (draft, action: PayloadAction<number>) => {
+      draft.audioNotificationVolume = action.payload
+    },
     setAllowAudioNotifications: (draft, action: PayloadAction<boolean>) => {
       draft.allowAudioNotifications = action.payload
     },
@@ -89,13 +94,20 @@ const slice = createSlice({
 })
 
 export const { reducer } = slice
-export const { setAllowAudioNotifications, setAllowSystemNotifications } =
-  slice.actions
+export const {
+  setAllowAudioNotifications,
+  setAllowSystemNotifications,
+  setAudioNotificationVolume,
+} = slice.actions
 
 const getPersonalSettingsRoot = (state: RootState) => state.personal
 export const getAllowAudioNotifications = createSelector(
   getPersonalSettingsRoot,
   (settings) => settings.allowAudioNotifications
+)
+export const getAudioNotificationVolume = createSelector(
+  getPersonalSettingsRoot,
+  (settings) => settings.audioNotificationVolume || 1
 )
 export const getAllowSystemNotifications = createSelector(
   getPersonalSettingsRoot,
