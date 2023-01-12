@@ -107,7 +107,7 @@ export const getAllowAudioNotifications = createSelector(
 )
 export const getAudioNotificationVolume = createSelector(
   getPersonalSettingsRoot,
-  (settings) => settings.audioNotificationVolume || 1
+  (settings) => settings.audioNotificationVolume ?? 1
 )
 export const getAllowSystemNotifications = createSelector(
   getPersonalSettingsRoot,

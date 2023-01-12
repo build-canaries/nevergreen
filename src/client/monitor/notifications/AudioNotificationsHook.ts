@@ -10,7 +10,10 @@ import {
 } from './NotificationsHook'
 import { Projects } from '../../domain/Project'
 import { FeedErrors } from '../../domain/FeedError'
-import { getAllowAudioNotifications } from '../../settings/PersonalSettingsReducer'
+import {
+  getAllowAudioNotifications,
+  getAudioNotificationVolume,
+} from '../../settings/PersonalSettingsReducer'
 
 export function useAudioNotifications(
   projects: Projects,
@@ -18,6 +21,7 @@ export function useAudioNotifications(
 ): void {
   const notifications = useSelector(getNotifications)
   const allowAudioNotifications = useSelector(getAllowAudioNotifications)
+  const audioNotificationVolume = useSelector(getAudioNotificationVolume)
 
   useEffect(() => {
     if (!allowAudioNotifications || anyAudioPlaying()) {
@@ -42,10 +46,16 @@ export function useAudioNotifications(
 
     if (isNotBlank(sfxToPlay)) {
       try {
-        void playAudio(sfxToPlay)
+        void playAudio(sfxToPlay, audioNotificationVolume)
       } catch (e) {
         error('Unable to play audio', e)
       }
     }
-  }, [projects, feedErrors, notifications, allowAudioNotifications])
+  }, [
+    projects,
+    feedErrors,
+    notifications,
+    allowAudioNotifications,
+    audioNotificationVolume,
+  ])
 }

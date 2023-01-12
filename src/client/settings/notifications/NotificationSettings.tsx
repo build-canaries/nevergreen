@@ -19,6 +19,7 @@ import {
 import { Slider } from '../../common/forms/Slider'
 import { SecondaryButton } from '../../common/forms/Button'
 import testAudio from './test_audio_volume.mp3'
+import { playAudio } from '../../common/AudioPlayer'
 
 export function NotificationSettings(): ReactElement {
   const dispatch = useAppDispatch()
@@ -27,10 +28,7 @@ export function NotificationSettings(): ReactElement {
   const audioNotificationVolume = useSelector(getAudioNotificationVolume)
 
   const testAudioVolume = async () => {
-    const audio = new Audio(testAudio)
-    audio.volume = audioNotificationVolume
-
-    await audio.play()
+    await playAudio(testAudio, audioNotificationVolume)
   }
 
   return (
@@ -48,9 +46,14 @@ export function NotificationSettings(): ReactElement {
         Allow audio notifications
       </Checkbox>
       <Slider
+        min={0}
+        max={1}
+        step={0.05}
+        style={{ marginBottom: '1em' }}
+        defaultValue={audioNotificationVolume}
         disabled={!allowAudioNotifications}
         onChange={({ target }) =>
-          dispatch(setAudioNotificationVolume(parseInt(target.value) / 100))
+          dispatch(setAudioNotificationVolume(parseFloat(target.value)))
         }
       >
         Audio notification volume

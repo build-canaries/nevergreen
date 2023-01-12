@@ -9,8 +9,10 @@ import {
 import { Prognosis } from '../../domain/Project'
 import {
   getAllowAudioNotifications,
+  getAudioNotificationVolume,
   personalSettingsRoot,
 } from '../PersonalSettingsReducer'
+import * as AudioPlayer from '../../common/AudioPlayer'
 
 it('should allow for turning on and off checking for new versions', async () => {
   const state = {
@@ -36,6 +38,26 @@ it('should allow turning on and off play audio notifications', async () => {
   await user.click(screen.getByLabelText('Allow audio notifications'))
 
   expect(getAllowAudioNotifications(store.getState())).toBeTruthy()
+})
+
+it('should allow the audio notification volume to be previewed', async () => {
+  jest.spyOn(AudioPlayer, 'playAudio').mockResolvedValue()
+  jest.spyOn(AudioPlayer, 'stopAudio').mockReturnValue()
+
+  const state = {
+    [personalSettingsRoot]: {
+      allowAudioNotifications: true,
+      audioNotificationVolume: 0.75,
+    },
+  }
+
+  const { store, user } = render(<NotificationSettings />, { state })
+  await user.click(screen.getByRole('button', { name: 'Test audio volume' }))
+
+  expect(getAllowAudioNotifications(store.getState())).toBeTruthy()
+  expect(getAudioNotificationVolume(store.getState())).toEqual(0.75)
+
+  expect(AudioPlayer.playAudio).toHaveBeenCalledWith('test-file-stub', 0.75)
 })
 
 it('should display a message if no notifications have been added', () => {

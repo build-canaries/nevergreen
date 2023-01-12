@@ -49,6 +49,7 @@ it('should be able to preview audio files', async () => {
 
   expect(AudioPlayer.playAudio).toHaveBeenCalledWith(
     '/some-sfx.mp3',
+    1,
     expect.anything()
   )
   expect(AudioPlayer.stopAudio).toHaveBeenCalledWith('/some-sfx.mp3')

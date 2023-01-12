@@ -270,7 +270,7 @@ describe('audio notifications', () => {
 
       render(<HookWrapper projects={projects} errors={errors} />, { state })
 
-      expect(AudioPlayer.playAudio).toHaveBeenCalledWith('some-sfx.mp3')
+      expect(AudioPlayer.playAudio).toHaveBeenCalledWith('some-sfx.mp3', 1)
     }
   )
 
@@ -307,8 +307,8 @@ describe('audio notifications', () => {
 
     render(<HookWrapper projects={projects} errors={errors} />, { state })
 
-    expect(AudioPlayer.playAudio).toHaveBeenCalledWith('some-sfx.mp3')
-    expect(AudioPlayer.playAudio).not.toHaveBeenCalledWith('another-sfx.mp3')
+    expect(AudioPlayer.playAudio).toHaveBeenCalledWith('some-sfx.mp3', 1)
+    expect(AudioPlayer.playAudio).not.toHaveBeenCalledWith('another-sfx.mp3', 1)
   })
 
   it('should not play more notifications if a previous notification is still playing', () => {
@@ -353,8 +353,8 @@ describe('audio notifications', () => {
 
     rerender(<HookWrapper projects={secondRender} errors={errors} />)
 
-    expect(AudioPlayer.playAudio).toHaveBeenCalledWith('some-sfx.mp3')
-    expect(AudioPlayer.playAudio).not.toHaveBeenCalledWith('another-sfx.mp3')
+    expect(AudioPlayer.playAudio).toHaveBeenCalledWith('some-sfx.mp3', 1)
+    expect(AudioPlayer.playAudio).not.toHaveBeenCalledWith('another-sfx.mp3', 1)
   })
 
   it('should not play notifications when project is still in same prognosis', () => {
