@@ -42,7 +42,6 @@ it('should allow turning on and off play audio notifications', async () => {
 
 it('should allow the audio notification volume to be previewed', async () => {
   jest.spyOn(AudioPlayer, 'playAudio').mockResolvedValue()
-  jest.spyOn(AudioPlayer, 'stopAudio').mockReturnValue()
 
   const state = {
     [personalSettingsRoot]: {
@@ -54,9 +53,7 @@ it('should allow the audio notification volume to be previewed', async () => {
   const { store, user } = render(<NotificationSettings />, { state })
   await user.click(screen.getByRole('button', { name: 'Test audio volume' }))
 
-  expect(getAllowAudioNotifications(store.getState())).toBeTruthy()
   expect(getAudioNotificationVolume(store.getState())).toEqual(0.75)
-
   expect(AudioPlayer.playAudio).toHaveBeenCalledWith('test-file-stub', 0.75)
 })
 

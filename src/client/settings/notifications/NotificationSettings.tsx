@@ -12,24 +12,22 @@ import { Notifications } from './Notifications'
 import { useAppDispatch } from '../../configuration/Hooks'
 import {
   getAllowAudioNotifications,
-  setAllowAudioNotifications,
   getAudioNotificationVolume,
+  setAllowAudioNotifications,
   setAudioNotificationVolume,
 } from '../PersonalSettingsReducer'
 import { Slider } from '../../common/forms/Slider'
 import { SecondaryButton } from '../../common/forms/Button'
 import testAudio from './test_audio_volume.mp3'
 import { playAudio } from '../../common/AudioPlayer'
+import styles from './notifications-settings.scss'
+import { Note } from '../../common/icons/Note'
 
 export function NotificationSettings(): ReactElement {
   const dispatch = useAppDispatch()
   const allowAudioNotifications = useSelector(getAllowAudioNotifications)
   const toggleVersionCheckFlag = useSelector(getEnableNewVersionCheck)
   const audioNotificationVolume = useSelector(getAudioNotificationVolume)
-
-  const testAudioVolume = async () => {
-    await playAudio(testAudio, audioNotificationVolume)
-  }
 
   return (
     <Page title="Notifications settings" icon={<Bell />}>
@@ -49,22 +47,26 @@ export function NotificationSettings(): ReactElement {
         min={0}
         max={1}
         step={0.05}
-        style={{ marginBottom: '1em' }}
+        aria-valuetext={`${Math.round(audioNotificationVolume * 100)}%`}
         defaultValue={audioNotificationVolume}
         disabled={!allowAudioNotifications}
         onChange={({ target }) =>
           dispatch(setAudioNotificationVolume(parseFloat(target.value)))
         }
+        button={
+          <SecondaryButton
+            className={styles.testVolume}
+            disabled={!allowAudioNotifications}
+            icon={<Note />}
+            iconOnly
+            onClick={() => void playAudio(testAudio, audioNotificationVolume)}
+          >
+            Test audio volume
+          </SecondaryButton>
+        }
       >
         Audio notification volume
       </Slider>
-      <SecondaryButton
-        disabled={!allowAudioNotifications}
-        icon={<Bell />}
-        onClick={() => void testAudioVolume()}
-      >
-        Test audio volume
-      </SecondaryButton>
       <NotificationsSystem />
       <Notifications />
     </Page>

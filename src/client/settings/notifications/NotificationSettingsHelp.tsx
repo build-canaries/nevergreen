@@ -43,10 +43,8 @@ export function NotificationSettingsHelp({
           When <em>enabled</em> any added audio notifications can be played.
         </HelpInput>
         <HelpInput name="Audio notification volume">
-          <p>
-            When audio notifications are <em>enabled</em>, controls the volume.
-            A value of zero will effectively mute the notification.
-          </p>
+          When audio notifications are <em>enabled</em>, controls the volume. A
+          value of zero will effectively mute the notification.
         </HelpInput>
         <HelpInput name="Add notification">Adds a new notification.</HelpInput>
       </HelpForm>
