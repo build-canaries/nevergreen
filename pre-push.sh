@@ -26,7 +26,7 @@ print_step 'Checking prerequisites'
 
 print_step 'Stopping the ./develop.sh script (if it is running)'
 set +e
-pkill -SIGINT -f ./develop.sh
+kill -9 -- -$(pgrep -f develop.sh)
 set -e
 
 print_step 'Validating CI configuration (if the CircleCI CLI is installed)'
