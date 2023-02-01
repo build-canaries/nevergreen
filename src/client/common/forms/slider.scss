@@ -18,6 +18,7 @@ $thumb-colour: colours.$blue;
   background-color: $thumb-colour;
   border: none;
   border-radius: colours.$border-radius;
+  box-shadow: colours.$shadow;
   height: 2rem;
   margin-top: -0.75rem;
   width: 1.25rem;
@@ -44,6 +45,20 @@ $thumb-colour: colours.$blue;
 
   &::-moz-range-thumb {
     @include _thumb;
+  }
+
+  &:disabled {
+    cursor: default;
+
+    &::-webkit-slider-thumb {
+      background-color: colours.$mid-grey;
+      box-shadow: none;
+    }
+
+    &::-moz-range-thumb {
+      background-color: colours.$mid-grey;
+      box-shadow: none;
+    }
   }
 
   &:not(:disabled) {
