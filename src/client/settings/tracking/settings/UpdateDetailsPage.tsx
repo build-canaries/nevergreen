@@ -68,7 +68,7 @@ export function UpdateDetailsPage(): ReactElement {
       </section>
       <section className={styles.section}>
         <Input
-          className={styles.feedSettingsName}
+          classNameContainer={styles.feedSettingsName}
           value={name}
           onChange={({ target }) => setName(target.value)}
           onBlur={() =>

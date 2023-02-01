@@ -21,11 +21,18 @@ export type InputProps = {
   readonly readOnly?: boolean
   readonly button?: ReactElement
   readonly error?: string
-} & DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
+  readonly classNameContainer?: string
+  readonly classNameLabel?: string
+  readonly classNameInput?: string
+} & Omit<
+  DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
+  'className'
+>
 
 export function Input({
   children,
-  className,
+  classNameContainer,
+  classNameInput,
   readOnly,
   button,
   error = '',
@@ -52,10 +59,10 @@ export function Input({
   const actualId = id ?? uniqueId('i')
   const errorId = hasError ? uniqueId('e') : undefined
 
-  const containerClasses = cn(formStyles.inputContainer, className, {
+  const containerClasses = cn(formStyles.inputContainer, classNameContainer, {
     [styles.containerError]: hasError,
   })
-  const inputClasses = cn(styles.input, {
+  const inputClasses = cn(styles.input, classNameInput, {
     [styles.hasButton]: button || readOnly,
     [styles.error]: hasError,
   })

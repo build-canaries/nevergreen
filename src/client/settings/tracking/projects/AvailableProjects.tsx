@@ -90,7 +90,7 @@ export function AvailableProjects({
         </SecondaryButton>
         <div className={styles.projectFilter}>
           <Input
-            className={styles.projectFilterInput}
+            classNameContainer={styles.projectFilterInput}
             onChange={({ target }) => setSearch(target.value)}
             type="search"
             disabled={controlsDisabled}

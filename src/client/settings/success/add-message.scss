@@ -1,12 +1,12 @@
 @use '../../common/layout';
 @use '../../common/typography';
 
-.addMessageInput {
+.addMessageContainer {
   margin: 0;
+}
 
-  input {
-    font-family: typography.$monospace-font;
-  }
+.addMessageInput {
+  font-family: typography.$monospace-font;
 }
 
 .add {

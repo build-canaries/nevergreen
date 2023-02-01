@@ -35,7 +35,7 @@ export function Forms(): ReactElement {
           Password with error message example
         </Password>
 
-        <Input className={styles.fixedWidth}>fixed width</Input>
+        <Input classNameContainer={styles.fixedWidth}>fixed width</Input>
 
         <Input>
           <div className={styles.styledLabel}>styled label</div>

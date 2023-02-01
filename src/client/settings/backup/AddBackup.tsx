@@ -157,7 +157,7 @@ export function AddBackup(): ReactElement {
               {!isCustomServer && (
                 <>
                   <Input
-                    className={styles.id}
+                    classNameContainer={styles.id}
                     value={externalId}
                     onChange={({ target }) => {
                       setExternalId(target.value)
@@ -167,7 +167,7 @@ export function AddBackup(): ReactElement {
                     ID
                   </Input>
                   <Password
-                    className={styles.password}
+                    classNameContainer={styles.password}
                     value={accessToken}
                     onChange={({ target }) => {
                       setAccessToken(target.value)

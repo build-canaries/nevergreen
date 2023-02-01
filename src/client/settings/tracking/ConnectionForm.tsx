@@ -184,7 +184,7 @@ export function ConnectionForm({
             {authType == AuthTypes.basic && (
               <div className={styles.inputs}>
                 <Input
-                  className={styles.username}
+                  classNameContainer={styles.username}
                   value={username}
                   onChange={({ target }) => setUsername(target.value)}
                   disabled={submitting}
@@ -193,7 +193,7 @@ export function ConnectionForm({
                   Username
                 </Input>
                 <Password
-                  className={styles.password}
+                  classNameContainer={styles.password}
                   value={password}
                   onChange={({ target }) => setPassword(target.value)}
                   disabled={submitting}
@@ -206,7 +206,7 @@ export function ConnectionForm({
             {authType == AuthTypes.token && (
               <div className={styles.inputs}>
                 <Password
-                  className={styles.authToken}
+                  classNameContainer={styles.authToken}
                   value={accessToken}
                   onChange={({ target }) => setAccessToken(target.value)}
                   disabled={submitting}

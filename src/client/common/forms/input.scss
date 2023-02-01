@@ -26,10 +26,6 @@
     color: colours.$mid-grey;
   }
 
-  &:read-only {
-    cursor: default;
-  }
-
   &:not(:disabled) {
     &:read-write {
       @include accessibility.interactive($focus-color-change-percentage: 0%);

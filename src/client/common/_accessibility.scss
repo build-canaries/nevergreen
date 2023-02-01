@@ -33,8 +33,9 @@
   border-color: colours.$outline;
   border-radius: 0;
   color: $color;
-  outline: 3px solid colours.$outline;
+  outline: 5px solid colours.$outline;
   outline-offset: unset;
+  position: relative;
   z-index: layout.$focus-index; // make sure the focus outline isn't below adjacent elements
 }
 

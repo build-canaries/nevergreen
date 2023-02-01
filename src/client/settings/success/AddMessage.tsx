@@ -43,7 +43,8 @@ export function AddMessage(): ReactElement {
         {(submitting, validationErrors) => {
           return (
             <Input
-              className={styles.addMessageInput}
+              classNameContainer={styles.addMessageContainer}
+              classNameInput={styles.addMessageInput}
               placeholder="message or image URL"
               value={message}
               onChange={({ target }) => {
