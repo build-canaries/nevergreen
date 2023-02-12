@@ -32,7 +32,7 @@ $thumb-colour: colours.$blue;
   padding: 0;
 
   &::-webkit-slider-runnable-track {
-    @include -thumb;
+    @include -track;
   }
 
   &::-moz-range-track {
