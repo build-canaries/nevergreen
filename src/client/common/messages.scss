@@ -3,7 +3,7 @@
 @use 'responsive';
 @use 'layout';
 
-@mixin _messages($color, $background-color) {
+@mixin -messages($color, $background-color) {
   align-items: center;
   background-color: $background-color;
   border-radius: colours.$border-radius;
@@ -26,19 +26,19 @@
 }
 
 .error {
-  @include _messages(colours.$white, colours.$error);
+  @include -messages(colours.$white, colours.$error);
 }
 
 .warning {
-  @include _messages(colours.$off-black, colours.$yellow);
+  @include -messages(colours.$off-black, colours.$yellow);
 }
 
 .info {
-  @include _messages(colours.$off-white, colours.$blue);
+  @include -messages(colours.$off-white, colours.$blue);
 }
 
 .success {
-  @include _messages(colours.$off-white, colours.$blue);
+  @include -messages(colours.$off-white, colours.$blue);
 }
 
 .messages {

@@ -7,13 +7,13 @@ $thumb-colour: colours.$blue;
 // which breaks the styling on Chrome
 // https://stackoverflow.com/q/67113887
 
-@mixin _track {
+@mixin -track {
   background-color: colours.$light-grey;
   border-radius: colours.$border-radius;
   height: 0.5rem;
 }
 
-@mixin _thumb {
+@mixin -thumb {
   appearance: none;
   background-color: $thumb-colour;
   border: none;
@@ -32,19 +32,19 @@ $thumb-colour: colours.$blue;
   padding: 0;
 
   &::-webkit-slider-runnable-track {
-    @include _track;
+    @include -thumb;
   }
 
   &::-moz-range-track {
-    @include _track;
+    @include -track;
   }
 
   &::-webkit-slider-thumb {
-    @include _thumb;
+    @include -thumb;
   }
 
   &::-moz-range-thumb {
-    @include _thumb;
+    @include -thumb;
   }
 
   &:disabled {

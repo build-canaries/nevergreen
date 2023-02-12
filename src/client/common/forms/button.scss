@@ -75,12 +75,20 @@
   }
 }
 
-.primary {
+%primary {
   @include button(colours.$off-white, colours.$blue, colours.$blue);
 }
 
-.secondary {
+.primary {
+  @extend %primary;
+}
+
+%secondary {
   @include button;
+}
+
+.secondary {
+  @extend %secondary;
 }
 
 .danger {

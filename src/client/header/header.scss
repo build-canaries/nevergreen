@@ -67,7 +67,7 @@
   display: inline;
 }
 
-.menuItem {
+%menu-item {
   color: colours.$white;
   display: inline-block;
   height: 65px;
@@ -88,8 +88,12 @@
   }
 }
 
+.menuItem {
+  @extend %menu-item;
+}
+
 .helpButton {
-  @extend .menuItem;
+  @extend %menu-item;
 
   background-color: transparent;
   border: none;
