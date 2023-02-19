@@ -18,7 +18,6 @@ import {
 } from './FontMetrics'
 import { useShortcut } from './common/Keyboard'
 import { useCheckForNewVersion } from './CheckForNewVersionHook'
-import { UnhandledErrorMessage } from './UnhandledErrorMessage'
 import { useNavigationShortcuts } from './NavigationShortcutsHook'
 import { Outlet, useOutletContext } from 'react-router-dom'
 
@@ -29,7 +28,7 @@ interface AppState {
 }
 
 export function Nevergreen(): ReactElement {
-  const { isLoading, isError } = useLocalConfiguration()
+  const { isLoading, isError, error } = useLocalConfiguration()
 
   const [bannerMessage, setBannerMessage] = useState('')
   const [fontMetrics, setFontMetrics] = useState(DEFAULT_FONT_METRICS)
@@ -56,7 +55,8 @@ export function Nevergreen(): ReactElement {
   })
 
   if (isError) {
-    return <UnhandledErrorMessage />
+    // throw to trigger "unhandled" error page for loading config errors
+    throw error
   }
 
   const showMenusOn = clickToShowMenu

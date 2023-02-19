@@ -1,8 +1,8 @@
 import React, { ReactElement } from 'react'
-import styles from './unhandled-error-message.scss'
 import { ExternalLink } from './common/ExternalLink'
 import { DangerButton } from './common/forms/Button'
 import { clear } from './configuration/LocalRepository'
+import styles from './unhandled-error-message.scss'
 
 const developerToolsLink =
   'https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_are_browser_developer_tools#Find_out_more_2'

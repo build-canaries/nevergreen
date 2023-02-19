@@ -9,12 +9,13 @@ import { info } from '../common/Logger'
 interface Result {
   readonly isLoading: boolean
   readonly isError: boolean
+  readonly error: unknown
 }
 
 export function useLocalConfiguration(): Result {
   const dispatch = useAppDispatch()
 
-  const { isError, isLoading } = useQuery(['load-config'], async () => {
+  const { isError, isLoading, error } = useQuery(['load-config'], async () => {
     info('Loading local configuration')
 
     await init()
@@ -33,5 +34,5 @@ export function useLocalConfiguration(): Result {
     }
   })
 
-  return { isLoading, isError }
+  return { isLoading, isError, error }
 }
