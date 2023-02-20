@@ -6,7 +6,6 @@ import type { Projects } from '../domain/Project'
 import { enrichProjects } from '../domain/Project'
 import { InterestingProjects } from '../monitor/InterestingProjects'
 import { Loading } from '../common/Loading'
-import { useSelector } from 'react-redux'
 import { getShowPrognosis, getSort } from './SettingsReducer'
 import { post } from '../gateways/Gateway'
 import { Banner } from '../Banner'
@@ -15,10 +14,11 @@ import styles from './preview.scss'
 import { useQuery } from '@tanstack/react-query'
 import { ROUTE_DISPLAY } from '../AppRoutes'
 import { createId } from '../common/Utils'
+import { useAppSelector } from '../configuration/Hooks'
 
 export function Preview(): ReactElement {
-  const prognosis = useSelector(getShowPrognosis)
-  const sort = useSelector(getSort)
+  const prognosis = useAppSelector(getShowPrognosis)
+  const sort = useAppSelector(getSort)
   const navigate = useNavigate()
 
   const [projects, setProjects] = useState<Projects>([])

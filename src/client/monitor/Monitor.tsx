@@ -7,7 +7,6 @@ import { Loading } from '../common/Loading'
 import styles from './monitor.scss'
 import isEmpty from 'lodash/isEmpty'
 import { Title } from '../common/Title'
-import { useSelector } from 'react-redux'
 import { getFeeds } from '../settings/tracking/FeedsReducer'
 import { useShortcut } from '../common/Keyboard'
 import screenfull from 'screenfull'
@@ -15,10 +14,11 @@ import { useNevergreenContext } from '../Nevergreen'
 import { useInterestingProjects } from './InterestingProjectsHook'
 import { useNotifications } from './notifications/NotificationsHook'
 import { stopAnyPlayingAudio } from '../common/AudioPlayer'
+import { useAppSelector } from '../configuration/Hooks'
 
 export function Monitor(): ReactElement {
   const { menusHidden, toggleMenusHidden } = useNevergreenContext()
-  const feeds = useSelector(getFeeds)
+  const feeds = useAppSelector(getFeeds)
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {

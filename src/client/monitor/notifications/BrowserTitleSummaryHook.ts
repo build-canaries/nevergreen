@@ -4,9 +4,9 @@ import capitalize from 'lodash/capitalize'
 import { notificationIcons } from '../../settings/notifications/icons/NotificationIcon'
 import { useUpdateBrowserTitle } from '../../common/BrowserTitleHook'
 import { reversePrognosisPriority } from './NotificationsHook'
-import { useSelector } from 'react-redux'
 import { getShowPrognosis } from '../../settings/SettingsReducer'
 import { FeedErrors } from '../../domain/FeedError'
+import { useAppSelector } from '../../configuration/Hooks'
 
 const defaultTitle = 'Monitor'
 
@@ -14,7 +14,7 @@ export function useBrowserTitleSummary(
   projects: Projects,
   feedErrors: FeedErrors
 ): void {
-  const showPrognosis = useSelector(getShowPrognosis)
+  const showPrognosis = useAppSelector(getShowPrognosis)
   const [title, setTitle] = useState<string>(defaultTitle)
   const [favicon, setFavicon] = useState<string>()
 

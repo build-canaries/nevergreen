@@ -1,5 +1,4 @@
 import React, { ReactElement } from 'react'
-import { useSelector } from 'react-redux'
 import { toExportableConfigurationJson } from '../../../configuration/Configuration'
 import { TextArea } from '../TextArea'
 import { exportConfiguration } from '../../../gateways/BackupGateway'
@@ -9,13 +8,13 @@ import { FullBackupSummary } from '../BackupSummary'
 import { BackupLogo } from '../BackupLogo'
 import { useRemoteLocationContext } from '../RemoteLocationPage'
 import { ROUTE_BACKUP } from '../../../AppRoutes'
-import { useAppDispatch } from '../../../configuration/Hooks'
+import { useAppDispatch, useAppSelector } from '../../../configuration/Hooks'
 import { backupExported } from '../RemoteLocationsActions'
 
 export function ExportRemote(): ReactElement {
   const location = useRemoteLocationContext()
   const dispatch = useAppDispatch()
-  const configuration = useSelector(toExportableConfigurationJson)
+  const configuration = useAppSelector(toExportableConfigurationJson)
 
   const exportNow = async (signal?: AbortSignal) => {
     const res = await exportConfiguration(location, configuration, signal)

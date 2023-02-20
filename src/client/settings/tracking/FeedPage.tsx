@@ -1,13 +1,13 @@
 import React, { ReactElement } from 'react'
 import type { Feed } from './FeedsReducer'
 import { getFeed } from './FeedsReducer'
-import { useSelector } from 'react-redux'
 import { Navigate, Outlet, useOutletContext, useParams } from 'react-router-dom'
 import { ROUTE_TRACKING } from '../../AppRoutes'
+import { useAppSelector } from '../../configuration/Hooks'
 
 export function FeedPage(): ReactElement {
   const { id } = useParams()
-  const feed = useSelector(getFeed(id || ''))
+  const feed = useAppSelector(getFeed(id || ''))
 
   if (feed) {
     return <Outlet context={feed} />

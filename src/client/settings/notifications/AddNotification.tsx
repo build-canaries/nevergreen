@@ -3,7 +3,6 @@ import { errorMessage, isBlank } from '../../common/Utils'
 import { Input } from '../../common/forms/Input'
 import { Checkbox } from '../../common/forms/Checkbox'
 import { InputButton } from '../../common/forms/Button'
-import { useSelector } from 'react-redux'
 import { Stop } from '../../common/icons/Stop'
 import { Play } from '../../common/icons/Play'
 import { Page } from '../../common/Page'
@@ -15,7 +14,7 @@ import { deleteAudio, playAudio, stopAudio } from '../../common/AudioPlayer'
 import { WarningMessages } from '../../common/Messages'
 import { addNotification } from './NotificationsReducer'
 import { NotificationIcon } from './icons/NotificationIcon'
-import { useAppDispatch } from '../../configuration/Hooks'
+import { useAppDispatch, useAppSelector } from '../../configuration/Hooks'
 import {
   getAllowAudioNotifications,
   getAllowSystemNotifications,
@@ -58,9 +57,9 @@ function getWarnings(
 
 export function AddNotification(): ReactElement {
   const dispatch = useAppDispatch()
-  const allowSystemNotifications = useSelector(getAllowSystemNotifications)
-  const allowAudioNotifications = useSelector(getAllowAudioNotifications)
-  const audioNotificationVolume = useSelector(getAudioNotificationVolume)
+  const allowSystemNotifications = useAppSelector(getAllowSystemNotifications)
+  const allowAudioNotifications = useAppSelector(getAllowAudioNotifications)
+  const audioNotificationVolume = useAppSelector(getAudioNotificationVolume)
 
   const [prognosis, setPrognosis] = useState(Prognosis.sick)
   const [systemNotification, setSystemNotification] = useState(false)

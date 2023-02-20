@@ -8,7 +8,6 @@ import { projectIdentifier, Projects } from '../domain/Project'
 import { TileProject } from './TileProject'
 import { TileProjectsNotShown } from './TileProjectsNotShown'
 import styles from './interesting-projects.scss'
-import { useSelector } from 'react-redux'
 import {
   getMaxProjectsToShow,
   getShowPrognosis,
@@ -17,6 +16,7 @@ import {
 import { isMobile, isTablet } from '../common/Style'
 import { useWindowResized } from '../common/ResizableHook'
 import { FeedErrors, isError } from '../domain/FeedError'
+import { useAppSelector } from '../configuration/Hooks'
 
 interface InterestingProjectsProps {
   readonly projects: Projects
@@ -59,8 +59,8 @@ export function InterestingProjects({
   projects,
   feedErrors,
 }: InterestingProjectsProps): ReactElement {
-  const maxProjectsToShow = useSelector(getMaxProjectsToShow)
-  const prognosisToShow = useSelector(getShowPrognosis)
+  const maxProjectsToShow = useAppSelector(getMaxProjectsToShow)
+  const prognosisToShow = useAppSelector(getShowPrognosis)
   const [actualMaxProjectsToShow, setActualMaxProjectsToShow] = useState(
     calculateProjectsToShow(maxProjectsToShow)
   )

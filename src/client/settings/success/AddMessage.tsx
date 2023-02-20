@@ -1,7 +1,5 @@
 import React, { ReactElement, useState } from 'react'
 import { Input } from '../../common/forms/Input'
-import styles from './add-message.scss'
-import { useSelector } from 'react-redux'
 import { addMessage, getSuccessMessages } from './SuccessReducer'
 import { isBlank } from '../../common/Utils'
 import { Form } from '../../common/forms/Form'
@@ -9,13 +7,14 @@ import { firstError, FormErrors } from '../../common/forms/Validation'
 import { Page } from '../../common/Page'
 import { Image } from '../../common/icons/Image'
 import { ROUTE_SUCCESS } from '../../AppRoutes'
-import { useAppDispatch } from '../../configuration/Hooks'
+import { useAppDispatch, useAppSelector } from '../../configuration/Hooks'
+import styles from './add-message.scss'
 
 type Fields = 'message'
 
 export function AddMessage(): ReactElement {
   const dispatch = useAppDispatch()
-  const messages = useSelector(getSuccessMessages)
+  const messages = useAppSelector(getSuccessMessages)
   const [message, setMessage] = useState('')
 
   const onValidate = (): FormErrors<Fields> => {

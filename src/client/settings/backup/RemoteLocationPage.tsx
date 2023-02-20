@@ -1,13 +1,13 @@
 import React, { ReactElement } from 'react'
-import { useSelector } from 'react-redux'
 import { getBackupLocation, RemoteLocation } from './RemoteLocationsReducer'
 import { Outlet, useOutletContext, useParams } from 'react-router-dom'
 import { Navigate } from 'react-router'
 import { ROUTE_BACKUP } from '../../AppRoutes'
+import { useAppSelector } from '../../configuration/Hooks'
 
 export function RemoteLocationPage(): ReactElement {
   const { internalId } = useParams()
-  const location = useSelector(getBackupLocation(internalId ?? ''))
+  const location = useAppSelector(getBackupLocation(internalId ?? ''))
 
   if (location) {
     return <Outlet context={location} />

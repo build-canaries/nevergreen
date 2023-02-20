@@ -8,14 +8,13 @@ import { errorMessage, isBlank, notEmpty } from '../../../common/Utils'
 import styles from './available-projects.scss'
 import { SecondaryButton } from '../../../common/forms/Button'
 import { getSelectedProjectsForFeed, projectSelected } from '../SelectedReducer'
-import { useSelector } from 'react-redux'
 import { Loading } from '../../../common/Loading'
 import { matchSorter } from 'match-sorter'
 import { CheckboxChecked } from '../../../common/icons/CheckboxChecked'
 import { CheckboxUnchecked } from '../../../common/icons/CheckboxUnchecked'
 import { useProjects } from './ProjectsHook'
 import { Checkbox } from '../../../common/forms/Checkbox'
-import { useAppDispatch } from '../../../configuration/Hooks'
+import { useAppDispatch, useAppSelector } from '../../../configuration/Hooks'
 
 interface AvailableProjectsProps {
   readonly feed: Feed
@@ -25,7 +24,7 @@ export function AvailableProjects({
   feed,
 }: AvailableProjectsProps): ReactElement {
   const dispatch = useAppDispatch()
-  const selected = useSelector(getSelectedProjectsForFeed(feed.trayId))
+  const selected = useAppSelector(getSelectedProjectsForFeed(feed.trayId))
 
   const [search, setSearch] = useState<string>('')
 

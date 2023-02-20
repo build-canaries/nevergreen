@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 import { isNotBlank } from '../../common/Utils'
 import { anyAudioPlaying, playAudio } from '../../common/AudioPlayer'
 import { error } from '../../common/Logger'
-import { useSelector } from 'react-redux'
 import { getNotifications } from '../../settings/notifications/NotificationsReducer'
 import {
   recentlyTransitioned,
@@ -14,14 +13,15 @@ import {
   getAllowAudioNotifications,
   getAudioNotificationVolume,
 } from '../../settings/PersonalSettingsReducer'
+import { useAppSelector } from '../../configuration/Hooks'
 
 export function useAudioNotifications(
   projects: Projects,
   feedErrors: FeedErrors
 ): void {
-  const notifications = useSelector(getNotifications)
-  const allowAudioNotifications = useSelector(getAllowAudioNotifications)
-  const audioNotificationVolume = useSelector(getAudioNotificationVolume)
+  const notifications = useAppSelector(getNotifications)
+  const allowAudioNotifications = useAppSelector(getAllowAudioNotifications)
+  const audioNotificationVolume = useAppSelector(getAudioNotificationVolume)
 
   useEffect(() => {
     if (!allowAudioNotifications || anyAudioPlaying()) {

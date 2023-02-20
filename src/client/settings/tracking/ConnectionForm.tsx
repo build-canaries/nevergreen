@@ -1,5 +1,4 @@
 import React, { ReactElement, useState } from 'react'
-import { useSelector } from 'react-redux'
 import { Form } from '../../common/forms/Form'
 import { Input } from '../../common/forms/Input'
 import { firstError, FormErrors } from '../../common/forms/Validation'
@@ -11,6 +10,7 @@ import { DropDown } from '../../common/forms/DropDown'
 import styles from './connection-form.scss'
 import { Password } from '../../common/forms/Password'
 import { TestConnection } from './TestConnection'
+import { useAppSelector } from '../../configuration/Hooks'
 
 export enum KeepExistingAuth {
   keep = 'keep',
@@ -54,7 +54,7 @@ export function ConnectionForm({
   onSuccess,
   onCancel,
 }: ConnectionFormProps): ReactElement {
-  const otherFeeds = useSelector(getFeeds).filter(
+  const otherFeeds = useAppSelector(getFeeds).filter(
     (existing: Feed) => existing.trayId !== existingFeed?.trayId
   )
   const initialAuth = existingFeed ? KeepExistingAuth.keep : AuthTypes.none

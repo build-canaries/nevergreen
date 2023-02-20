@@ -1,5 +1,4 @@
 import { Prognosis, Project, Projects } from '../../domain/Project'
-import { useSelector } from 'react-redux'
 import { getNotifications } from '../../settings/notifications/NotificationsReducer'
 import { sendSystemNotification } from '../../common/SystemNotifications'
 import { useEffect } from 'react'
@@ -15,6 +14,7 @@ import {
   reversePrognosisPriority,
 } from './NotificationsHook'
 import { getAllowSystemNotifications } from '../../settings/PersonalSettingsReducer'
+import { useAppSelector } from '../../configuration/Hooks'
 
 const systemNotificationIcons = {
   [Prognosis.healthy]: healthyIcon,
@@ -45,8 +45,8 @@ export function useSystemNotifications(
   projects: Projects,
   feedErrors: FeedErrors
 ): void {
-  const notifications = useSelector(getNotifications)
-  const allowSystemNotifications = useSelector(getAllowSystemNotifications)
+  const notifications = useAppSelector(getNotifications)
+  const allowSystemNotifications = useAppSelector(getAllowSystemNotifications)
 
   useEffect(() => {
     if (!allowSystemNotifications) {

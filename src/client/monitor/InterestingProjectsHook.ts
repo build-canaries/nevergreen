@@ -2,7 +2,6 @@ import { useQuery } from '@tanstack/react-query'
 import { post } from '../gateways/Gateway'
 import { FeedRequest, ProjectsResponse } from '../gateways/ProjectsGateway'
 import { enrichProjects, Projects } from '../domain/Project'
-import { useSelector } from 'react-redux'
 import { Feed, getFeeds } from '../settings/tracking/FeedsReducer'
 import {
   getSelectedProjects,
@@ -13,6 +12,7 @@ import isEmpty from 'lodash/isEmpty'
 import { useState } from 'react'
 import omit from 'lodash/omit'
 import { enrichErrors, FeedErrors, toFeedApiError } from '../domain/FeedError'
+import { useAppSelector } from '../configuration/Hooks'
 
 interface InterestingProjectsHook {
   readonly isLoading: boolean
@@ -33,10 +33,10 @@ function toProjectsRequest(
 }
 
 export function useInterestingProjects(): InterestingProjectsHook {
-  const feeds = useSelector(getFeeds)
-  const selected = useSelector(getSelectedProjects)
-  const sort = useSelector(getSort)
-  const refreshTime = useSelector(getRefreshTime)
+  const feeds = useAppSelector(getFeeds)
+  const selected = useAppSelector(getSelectedProjects)
+  const sort = useAppSelector(getSort)
+  const refreshTime = useAppSelector(getRefreshTime)
   const [projects, setProjects] = useState<Projects>([])
   const [feedErrors, setFeedErrors] = useState<FeedErrors>([])
 

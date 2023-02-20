@@ -2,14 +2,13 @@ import React, { ReactElement } from 'react'
 import { NotificationsSystem } from './NotificationsSystem'
 import { Page } from '../../common/Page'
 import { Checkbox } from '../../common/forms/Checkbox'
-import { useSelector } from 'react-redux'
 import {
   getEnableNewVersionCheck,
   toggleVersionCheck,
 } from './NotificationsReducer'
 import { Bell } from '../../common/icons/Bell'
 import { Notifications } from './Notifications'
-import { useAppDispatch } from '../../configuration/Hooks'
+import { useAppDispatch, useAppSelector } from '../../configuration/Hooks'
 import {
   getAllowAudioNotifications,
   getAudioNotificationVolume,
@@ -25,9 +24,9 @@ import { Note } from '../../common/icons/Note'
 
 export function NotificationSettings(): ReactElement {
   const dispatch = useAppDispatch()
-  const allowAudioNotifications = useSelector(getAllowAudioNotifications)
-  const toggleVersionCheckFlag = useSelector(getEnableNewVersionCheck)
-  const audioNotificationVolume = useSelector(getAudioNotificationVolume)
+  const allowAudioNotifications = useAppSelector(getAllowAudioNotifications)
+  const toggleVersionCheckFlag = useAppSelector(getEnableNewVersionCheck)
+  const audioNotificationVolume = useAppSelector(getAudioNotificationVolume)
 
   return (
     <Page title="Notifications settings" icon={<Bell />}>

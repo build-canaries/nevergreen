@@ -2,14 +2,13 @@ import React, { ReactElement } from 'react'
 import { Prognosis, prognosisDisplay } from '../../domain/Project'
 import { Checkbox } from '../../common/forms/Checkbox'
 import styles from './display-prognosis-selection.scss'
-import { useSelector } from 'react-redux'
 import { getShowPrognosis, setShowPrognosis } from '../SettingsReducer'
 import capitalize from 'lodash/capitalize'
-import { useAppDispatch } from '../../configuration/Hooks'
+import { useAppDispatch, useAppSelector } from '../../configuration/Hooks'
 
 export function DisplayPrognosisSelection(): ReactElement {
   const dispatch = useAppDispatch()
-  const showPrognosis = useSelector(getShowPrognosis)
+  const showPrognosis = useAppSelector(getShowPrognosis)
 
   return (
     <fieldset className={styles.container}>

@@ -2,7 +2,6 @@ import React, { ReactElement, useCallback, useState } from 'react'
 import styles from './export-local.scss'
 import { SecondaryButton } from '../../../common/forms/Button'
 import { useClipboard } from './ClipboardHook'
-import { useSelector } from 'react-redux'
 import { toExportableConfigurationJson } from '../../../configuration/Configuration'
 import { TextArea } from '../TextArea'
 import { errorMessage } from '../../../common/Utils'
@@ -16,9 +15,10 @@ import {
   TimedErrorMessages,
   TimedSuccessMessages,
 } from '../../../common/TimedMessages'
+import { useAppSelector } from '../../../configuration/Hooks'
 
 export function ExportLocal(): ReactElement {
-  const configuration = useSelector(toExportableConfigurationJson)
+  const configuration = useAppSelector(toExportableConfigurationJson)
 
   const [saveFailure, setSaveFailure] = useState<ReadonlyArray<string>>([])
   const [copyingSuccess, setCopyingSuccess] = useState<string>('')

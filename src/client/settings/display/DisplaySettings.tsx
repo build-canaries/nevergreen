@@ -3,7 +3,6 @@ import { Checkbox } from '../../common/forms/Checkbox'
 import { DropDown } from '../../common/forms/DropDown'
 import styles from './display-settings.scss'
 import { DisplayPrognosisSelection } from './DisplayPrognosisSelection'
-import { useSelector } from 'react-redux'
 import {
   getClickToShowMenu,
   getMaxProjectsToShow,
@@ -25,7 +24,7 @@ import { Page } from '../../common/Page'
 import { Eye } from '../../common/icons/Eye'
 import { Display } from '../../common/icons/Display'
 import { ROUTE_PREVIEW } from '../../AppRoutes'
-import { useAppDispatch } from '../../configuration/Hooks'
+import { useAppDispatch, useAppSelector } from '../../configuration/Hooks'
 
 const projectsToShowOptions = [
   { value: MaxProjectsToShow.small, display: 'Small' },
@@ -43,12 +42,12 @@ const sortOptions = [
 
 export function DisplaySettings(): ReactElement {
   const dispatch = useAppDispatch()
-  const clickToShowMenu = useSelector(getClickToShowMenu)
-  const showFeedIdentifier = useSelector(getShowFeedIdentifier)
-  const showBuildTime = useSelector(getShowBuildTime)
-  const showBuildLabel = useSelector(getShowBuildLabel)
-  const maxProjectsToShow = useSelector(getMaxProjectsToShow)
-  const sort = useSelector(getSort)
+  const clickToShowMenu = useAppSelector(getClickToShowMenu)
+  const showFeedIdentifier = useAppSelector(getShowFeedIdentifier)
+  const showBuildTime = useAppSelector(getShowBuildTime)
+  const showBuildLabel = useAppSelector(getShowBuildLabel)
+  const maxProjectsToShow = useAppSelector(getMaxProjectsToShow)
+  const sort = useAppSelector(getSort)
 
   return (
     <Page title="Display settings" icon={<Display />}>

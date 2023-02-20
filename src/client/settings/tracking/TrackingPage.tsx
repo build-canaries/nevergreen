@@ -1,5 +1,4 @@
 import React, { ReactElement } from 'react'
-import { useSelector } from 'react-redux'
 import { getFeeds } from './FeedsReducer'
 import { Page } from '../../common/Page'
 import { AddButton } from '../../common/LinkButton'
@@ -20,7 +19,7 @@ import { useAppDispatch, useAppSelector } from '../../configuration/Hooks'
 export function TrackingPage(): ReactElement {
   const dispatch = useAppDispatch()
   const feeds = useAppSelector(getFeeds)
-  const refreshTime = useSelector(getRefreshTime)
+  const refreshTime = useAppSelector(getRefreshTime)
   const options = validRefreshTimes.map((time) => {
     return { value: time.toString(), display: secondsToString(time) }
   })

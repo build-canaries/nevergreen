@@ -5,7 +5,6 @@ import { Project, projectBuildLabel } from '../domain/Project'
 import { VisuallyHidden } from '../common/VisuallyHidden'
 import { Duration } from '../common/Duration'
 import { ScaledTile } from './ScaledTile'
-import { useSelector } from 'react-redux'
 import { Feed, getFeeds } from '../settings/tracking/FeedsReducer'
 import {
   getShowBuildLabel,
@@ -16,6 +15,7 @@ import { ExternalLink } from '../common/ExternalLink'
 import { Clock } from '../common/icons/Clock'
 import { FeedError } from '../domain/FeedError'
 import isNil from 'lodash/isNil'
+import { useAppSelector } from '../configuration/Hooks'
 
 interface TileProjectProps {
   readonly project: Project | FeedError
@@ -34,10 +34,10 @@ export function TileProject({
   project,
   visibleProjects,
 }: TileProjectProps): ReactElement {
-  const feeds = useSelector(getFeeds)
-  const showBuildTime = useSelector(getShowBuildTime)
-  const showFeedIdentifier = useSelector(getShowFeedIdentifier)
-  const showBuildLabel = useSelector(getShowBuildLabel)
+  const feeds = useAppSelector(getFeeds)
+  const showBuildTime = useAppSelector(getShowBuildTime)
+  const showFeedIdentifier = useAppSelector(getShowFeedIdentifier)
+  const showBuildLabel = useAppSelector(getShowBuildLabel)
 
   const sentences = visibleProjects.map((p) => p.description)
 

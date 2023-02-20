@@ -13,8 +13,8 @@ import {
 import { Duration } from '../../common/Duration'
 import { URL } from '../../common/URL'
 import { Summary, SummaryProps } from '../../common/Summary'
-import { useSelector } from 'react-redux'
 import { getBackupLocationTimestamps } from '../PersonalSettingsReducer'
+import { useAppSelector } from '../../configuration/Hooks'
 
 export function where(location: RemoteLocationType): string {
   if (isCustomServer(location)) {
@@ -70,7 +70,7 @@ interface BackupSummaryProps extends Omit<SummaryProps, 'values'> {
 export function FullBackupSummary({
   location,
 }: BackupSummaryProps): ReactElement {
-  const timestamps = useSelector(
+  const timestamps = useAppSelector(
     getBackupLocationTimestamps(location.internalId)
   )
 

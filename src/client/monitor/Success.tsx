@@ -3,12 +3,12 @@ import { SuccessMessage } from '../common/SuccessMessage'
 import { SuccessImage } from './SuccessImage'
 import { isBlank, randomFrom } from '../common/Utils'
 import { isValidHttpUrl } from '../domain/Url'
-import { useSelector } from 'react-redux'
 import { getSuccessMessages } from '../settings/success/SuccessReducer'
 import { Projects } from '../domain/Project'
 import { FeedErrors } from '../domain/FeedError'
 import isEmpty from 'lodash/isEmpty'
 import { getShowPrognosis } from '../settings/SettingsReducer'
+import { useAppSelector } from '../configuration/Hooks'
 
 interface SuccessProps {
   readonly projects: Projects
@@ -19,8 +19,8 @@ export function Success({
   projects,
   feedErrors,
 }: SuccessProps): ReactElement | null {
-  const showPrognosis = useSelector(getShowPrognosis)
-  const messages = useSelector(getSuccessMessages)
+  const showPrognosis = useAppSelector(getShowPrognosis)
+  const messages = useAppSelector(getSuccessMessages)
   const [message, setMessage] = useState('')
 
   const interestingProjects = projects.filter((project) =>

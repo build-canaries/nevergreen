@@ -5,7 +5,6 @@ import { Banner } from './Banner'
 import styles from './nevergreen.scss'
 import { useServiceWorker } from './ServiceWorkerHook'
 import { useHideMenus } from './HideMenusHook'
-import { useSelector } from 'react-redux'
 import { getClickToShowMenu } from './settings/SettingsReducer'
 import { Loading } from './common/Loading'
 import { useLocalConfiguration } from './configuration/ConfigurationHook'
@@ -20,6 +19,7 @@ import { useShortcut } from './common/Keyboard'
 import { useCheckForNewVersion } from './CheckForNewVersionHook'
 import { useNavigationShortcuts } from './NavigationShortcutsHook'
 import { Outlet, useOutletContext } from 'react-router-dom'
+import { useAppSelector } from './configuration/Hooks'
 
 interface AppState {
   readonly menusHidden: boolean
@@ -45,7 +45,7 @@ export function Nevergreen(): ReactElement {
   useCheckForNewVersion(setBannerMessage)
   useNavigationShortcuts()
 
-  const clickToShowMenu = useSelector(getClickToShowMenu)
+  const clickToShowMenu = useAppSelector(getClickToShowMenu)
 
   useShortcut('esc', () => {
     const active = document.activeElement as HTMLElement

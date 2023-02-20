@@ -1,5 +1,4 @@
 import React, { ReactElement } from 'react'
-import { useSelector } from 'react-redux'
 import { RemoteBackupCard } from './RemoteBackupCard'
 import { getBackupLocations } from './RemoteLocationsReducer'
 import { LocalBackupCard } from './LocalBackupCard'
@@ -7,9 +6,10 @@ import { AddButton } from '../../common/LinkButton'
 import { Page } from '../../common/Page'
 import { FloppyDisk } from '../../common/icons/FloppyDisk'
 import { CardList } from '../../common/card/CardList'
+import { useAppSelector } from '../../configuration/Hooks'
 
 export function BackupPage(): ReactElement {
-  const backupLocations = useSelector(getBackupLocations)
+  const backupLocations = useAppSelector(getBackupLocations)
 
   return (
     <Page title="Backup settings" icon={<FloppyDisk />}>
