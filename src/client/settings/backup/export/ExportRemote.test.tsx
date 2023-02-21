@@ -1,4 +1,3 @@
-import React from 'react'
 import { render } from '../../../testUtils/testHelpers'
 import { buildRemoteBackupLocation } from '../../../testUtils/builders'
 import { ExportRemote } from './ExportRemote'

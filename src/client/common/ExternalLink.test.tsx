@@ -1,4 +1,3 @@
-import React from 'react'
 import { ExternalLink } from './ExternalLink'
 import { render } from '../testUtils/testHelpers'
 import { VISUALLY_HIDDEN_ATTRIBUTE } from './VisuallyHidden'

@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import { formatAsDuration } from './DateTime'
 import { isBlank } from './Utils'
 import { useQuery } from '@tanstack/react-query'

@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import { HelpArticle, HelpProps } from '../../../help/HelpArticle'
 import { HelpForm, HelpInput } from '../../../help/HelpForms'
 import { ROUTE_TRACKING_DETAILS_CONNECTION } from '../../../AppRoutes'

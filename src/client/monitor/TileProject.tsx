@@ -1,5 +1,4 @@
-import React, { ReactElement } from 'react'
-import styles from './tile-project.scss'
+import type { ReactElement } from 'react'
 import { isBlank, isNotBlank } from '../common/Utils'
 import { Project, projectBuildLabel } from '../domain/Project'
 import { VisuallyHidden } from '../common/VisuallyHidden'
@@ -16,6 +15,7 @@ import { Clock } from '../common/icons/Clock'
 import { FeedError } from '../domain/FeedError'
 import isNil from 'lodash/isNil'
 import { useAppSelector } from '../configuration/Hooks'
+import styles from './tile-project.scss'
 
 interface TileProjectProps {
   readonly project: Project | FeedError

@@ -1,4 +1,5 @@
-import React, { ReactElement, useState } from 'react'
+import type { ReactElement } from 'react'
+import { useState } from 'react'
 import { Modal } from '../common/Modal'
 import { Input } from '../common/forms/Input'
 import {
@@ -14,7 +15,6 @@ import { NotificationSettingsHelp } from '../settings/notifications/Notification
 import { MonitorHelp } from '../monitor/MonitorHelp'
 import { HelpLink } from './HelpLink'
 import { useShortcut } from '../common/Keyboard'
-import styles from './help.scss'
 import { ExternalLink } from '../common/ExternalLink'
 import { TrackingPageHelp } from '../settings/tracking/TrackingPageHelp'
 import { UpdateConnectionHelp } from '../settings/tracking/settings/UpdateConnectionHelp'
@@ -34,6 +34,7 @@ import {
 } from './KeyboardShortcuts'
 import { RemoteBackupDetailsPageHelp } from '../settings/backup/RemoteBackupDetailsPageHelp'
 import { AddNotificationHelp } from '../settings/notifications/AddNotificationHelp'
+import styles from './help.scss'
 
 export const SHOW_HELP_SHORTCUT = 'h'
 export const SHOW_KEYBOARD_SHORTCUTS_SHORTCUT = '?'

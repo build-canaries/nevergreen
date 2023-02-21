@@ -1,10 +1,11 @@
-import React, { ReactElement, useState } from 'react'
-import styles from './reset.scss'
+import type { ReactElement } from 'react'
+import { useState } from 'react'
 import { clear } from '../../configuration/LocalRepository'
 import { DangerButton } from '../../common/forms/Button'
 import { Page } from '../../common/Page'
 import { WarningMessages } from '../../common/Messages'
 import { Bin } from '../../common/icons/Bin'
+import styles from './reset.scss'
 
 export function Reset(): ReactElement {
   const [resetting, setResetting] = useState(false)

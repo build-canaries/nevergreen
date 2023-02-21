@@ -1,12 +1,12 @@
-import React, {
+import type {
   ButtonHTMLAttributes,
   DetailedHTMLProps,
   ReactElement,
   ReactNode,
 } from 'react'
 import cn from 'classnames'
-import styles from './button.scss'
 import { VisuallyHidden } from '../VisuallyHidden'
+import styles from './button.scss'
 
 export enum ButtonTheme {
   transparent = 'transparent',

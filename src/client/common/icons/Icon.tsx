@@ -1,6 +1,6 @@
-import React, { ReactElement, SVGProps } from 'react'
-import styles from './icon.scss'
+import type { ReactElement, SVGProps } from 'react'
 import cn from 'classnames'
+import styles from './icon.scss'
 
 /**
  * Icons from: https://icomoon.io/app

@@ -1,5 +1,4 @@
 import { render } from '../testUtils/testHelpers'
-import React from 'react'
 import { Messages, MessagesType } from './Messages'
 import { screen } from '@testing-library/react'
 

@@ -1,4 +1,5 @@
-import React, { ReactElement, useEffect } from 'react'
+import type { ReactElement } from 'react'
+import { useEffect } from 'react'
 import { Typography } from './Typography'
 import { Forms } from './Forms'
 import { Layout } from './Layout'

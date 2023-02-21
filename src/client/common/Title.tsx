@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import { VisuallyHidden } from './VisuallyHidden'
 import { useForceFocus } from './ForceFocusHook'
 import { useUpdateBrowserTitle } from './BrowserTitleHook'

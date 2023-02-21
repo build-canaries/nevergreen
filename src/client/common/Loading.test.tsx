@@ -1,5 +1,4 @@
 import { render } from '../testUtils/testHelpers'
-import React from 'react'
 import { Loading } from './Loading'
 import { screen } from '@testing-library/react'
 

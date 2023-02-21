@@ -1,10 +1,10 @@
-import React, { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import { Prognosis, prognosisDisplay } from '../../domain/Project'
 import { Checkbox } from '../../common/forms/Checkbox'
-import styles from './display-prognosis-selection.scss'
 import { getShowPrognosis, setShowPrognosis } from '../SettingsReducer'
 import capitalize from 'lodash/capitalize'
 import { useAppDispatch, useAppSelector } from '../../configuration/Hooks'
+import styles from './display-prognosis-selection.scss'
 
 export function DisplayPrognosisSelection(): ReactElement {
   const dispatch = useAppDispatch()

@@ -1,4 +1,3 @@
-import React from 'react'
 import { render } from '../../testUtils/testHelpers'
 import { buildFeed } from '../../testUtils/builders'
 import { screen } from '@testing-library/react'

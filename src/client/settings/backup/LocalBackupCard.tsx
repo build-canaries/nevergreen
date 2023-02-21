@@ -1,11 +1,11 @@
-import React, { ReactElement } from 'react'
-import styles from './local-backup-card.scss'
+import type { ReactElement } from 'react'
 import { Card } from '../../common/card/Card'
 import { CardHeading } from '../../common/card/CardHeading'
 import { VisuallyHidden } from '../../common/VisuallyHidden'
 import { LinkButton } from '../../common/LinkButton'
 import { FloppyDisk } from '../../common/icons/FloppyDisk'
 import { FolderOpen } from '../../common/icons/FolderOpen'
+import styles from './local-backup-card.scss'
 
 export function LocalBackupCard(): ReactElement {
   const header = <CardHeading title="Backup locally to a file" />

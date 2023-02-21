@@ -1,20 +1,19 @@
-import React, {
+import type {
   DetailedHTMLProps,
   FocusEvent,
   InputHTMLAttributes,
   ReactElement,
   ReactNode,
-  useEffect,
-  useRef,
 } from 'react'
+import { useEffect, useRef } from 'react'
 import cn from 'classnames'
 import uniqueId from 'lodash/uniqueId'
-import styles from './input.scss'
-import formStyles from './forms.scss'
 import { InputButton } from './Button'
 import { isNotBlank } from '../Utils'
 import { VisuallyHidden } from '../VisuallyHidden'
 import { Lock } from '../icons/Lock'
+import formStyles from './forms.scss'
+import styles from './input.scss'
 
 export type InputProps = {
   readonly children: ReactNode

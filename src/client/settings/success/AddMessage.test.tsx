@@ -1,4 +1,3 @@
-import React from 'react'
 import { render } from '../../testUtils/testHelpers'
 import { getSuccessMessages, successRoot } from './SuccessReducer'
 import { AddMessage } from './AddMessage'

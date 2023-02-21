@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import { StyleGuideSection } from './StyleGuideSection'
 import { ExternalLink } from '../common/ExternalLink'
 import { Element } from './Element'

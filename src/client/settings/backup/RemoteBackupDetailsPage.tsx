@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import { Page } from '../../common/Page'
 import { FullBackupSummary } from './BackupSummary'
 import { LinkButton } from '../../common/LinkButton'
@@ -6,10 +6,10 @@ import { BackupLogo } from './BackupLogo'
 import { useRemoteLocationContext } from './RemoteLocationPage'
 import { CloudDownload } from '../../common/icons/CloudDownload'
 import { CloudUpload } from '../../common/icons/CloudUpload'
-import styles from './remote-backup-details-page.scss'
 import { Checkbox } from '../../common/forms/Checkbox'
 import { useAppDispatch } from '../../configuration/Hooks'
 import { setAutomaticExport } from './RemoteLocationsReducer'
+import styles from './remote-backup-details-page.scss'
 
 export function RemoteBackupDetailsPage(): ReactElement {
   const location = useRemoteLocationContext()

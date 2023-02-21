@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode } from 'react'
+import type { ReactElement, ReactNode } from 'react'
 import styles from './help-forms.scss'
 
 interface HelpFormProps {

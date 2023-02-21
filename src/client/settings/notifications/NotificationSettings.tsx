@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import { NotificationsSystem } from './NotificationsSystem'
 import { Page } from '../../common/Page'
 import { Checkbox } from '../../common/forms/Checkbox'
@@ -19,8 +19,8 @@ import { Slider } from '../../common/forms/Slider'
 import { SecondaryButton } from '../../common/forms/Button'
 import testAudio from './test_audio_volume.mp3'
 import { playAudio } from '../../common/AudioPlayer'
-import styles from './notifications-settings.scss'
 import { Note } from '../../common/icons/Note'
+import styles from './notifications-settings.scss'
 
 export function NotificationSettings(): ReactElement {
   const dispatch = useAppDispatch()

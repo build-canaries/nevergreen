@@ -1,4 +1,3 @@
-import React from 'react'
 import { NO_MESSAGES_WARNING, SuccessMessages } from './SuccessMessages'
 import { render } from '../../testUtils/testHelpers'
 import { successRoot } from './SuccessReducer'

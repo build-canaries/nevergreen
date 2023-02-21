@@ -1,4 +1,3 @@
-import React from 'react'
 import { AddFeed } from './AddFeed'
 import { screen, waitFor } from '@testing-library/react'
 import * as SecurityGateway from '../../gateways/SecurityGateway'

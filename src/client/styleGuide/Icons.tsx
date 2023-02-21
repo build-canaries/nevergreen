@@ -1,6 +1,5 @@
-import React, { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import { StyleGuideSection } from './StyleGuideSection'
-import styles from './style-guide.scss'
 import { Bin } from '../common/icons/Bin'
 import { CheckboxChecked } from '../common/icons/CheckboxChecked'
 import { CheckboxUnchecked } from '../common/icons/CheckboxUnchecked'
@@ -34,6 +33,7 @@ import { Image } from '../common/icons/Image'
 import { Info } from '../common/icons/Info'
 import { ArrowUp } from '../common/icons/ArrowUp'
 import { Note } from '../common/icons/Note'
+import styles from './style-guide.scss'
 
 export function Icons(): ReactElement {
   return (

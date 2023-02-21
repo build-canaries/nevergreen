@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import type { FeedErrors } from '../domain/FeedError'
 import { enrichErrors, toFeedApiError } from '../domain/FeedError'
 import type { Projects } from '../domain/Project'
@@ -10,11 +10,11 @@ import { getShowPrognosis, getSort } from './SettingsReducer'
 import { post } from '../gateways/Gateway'
 import { Banner } from '../Banner'
 import { useNavigate } from 'react-router-dom'
-import styles from './preview.scss'
 import { useQuery } from '@tanstack/react-query'
 import { ROUTE_DISPLAY } from '../AppRoutes'
 import { createId } from '../common/Utils'
 import { useAppSelector } from '../configuration/Hooks'
+import styles from './preview.scss'
 
 export function Preview(): ReactElement {
   const prognosis = useAppSelector(getShowPrognosis)

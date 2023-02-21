@@ -1,5 +1,5 @@
-import React, { ReactElement, useCallback, useState } from 'react'
-import styles from './export-local.scss'
+import type { ReactElement } from 'react'
+import { useCallback, useState } from 'react'
 import { SecondaryButton } from '../../../common/forms/Button'
 import { useClipboard } from './ClipboardHook'
 import { toExportableConfigurationJson } from '../../../configuration/Configuration'
@@ -16,6 +16,7 @@ import {
   TimedSuccessMessages,
 } from '../../../common/TimedMessages'
 import { useAppSelector } from '../../../configuration/Hooks'
+import styles from './export-local.scss'
 
 export function ExportLocal(): ReactElement {
   const configuration = useAppSelector(toExportableConfigurationJson)

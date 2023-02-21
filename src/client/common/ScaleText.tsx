@@ -1,6 +1,5 @@
-import React, {
-  ReactElement,
-  ReactNode,
+import type { ReactElement, ReactNode } from 'react'
+import {
   useCallback,
   useContext,
   useEffect,
@@ -14,8 +13,8 @@ import * as logger from './Logger'
 import { PerformanceMark } from './Logger'
 import { FontMetricsContext, Measurable } from '../FontMetrics'
 import { useElementResized } from './ResizableHook'
-import styles from './scaled-text.scss'
 import { toJson } from './Json'
+import styles from './scaled-text.scss'
 
 export const MIN_FONT_SIZE = 10 // px
 

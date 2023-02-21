@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import styles from './success-image.scss'
 
 interface SuccessImageProps {

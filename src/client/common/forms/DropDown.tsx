@@ -1,4 +1,4 @@
-import React, {
+import type {
   DetailedHTMLProps,
   ReactElement,
   ReactNode,
@@ -6,8 +6,8 @@ import React, {
 } from 'react'
 import cn from 'classnames'
 import uniqueId from 'lodash/uniqueId'
-import styles from './drop-down.scss'
 import formStyles from './forms.scss'
+import styles from './drop-down.scss'
 
 export type DropDownOptions = ReadonlyArray<{
   value: string

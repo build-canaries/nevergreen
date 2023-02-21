@@ -1,12 +1,11 @@
 import type { ReactElement } from 'react'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import {
   DataSource,
   toConfiguration,
 } from '../../../configuration/Configuration'
 import type { FormErrors } from '../../../common/forms/Validation'
 import { allErrors } from '../../../common/forms/Validation'
-import styles from './import.scss'
 import { SecondaryButton } from '../../../common/forms/Button'
 import { errorMessage, isBlank } from '../../../common/Utils'
 import { configurationImported } from '../BackupActionCreators'
@@ -28,6 +27,7 @@ import { useRemoteLocationContext } from '../RemoteLocationPage'
 import { ROUTE_BACKUP } from '../../../AppRoutes'
 import { useAppDispatch } from '../../../configuration/Hooks'
 import { backupImported } from '../RemoteLocationsActions'
+import styles from './import.scss'
 
 type Fields = 'import'
 

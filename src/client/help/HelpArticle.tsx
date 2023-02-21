@@ -1,4 +1,5 @@
-import React, { ReactElement, ReactNode, useEffect, useState } from 'react'
+import type { ReactElement, ReactNode } from 'react'
+import { useEffect, useState } from 'react'
 import { useMatch } from 'react-router-dom'
 import { matchSorter } from 'match-sorter'
 import { isBlank } from '../common/Utils'

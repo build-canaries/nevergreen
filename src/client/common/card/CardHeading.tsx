@@ -1,7 +1,7 @@
-import React, { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import { DangerButton } from '../forms/Button'
-import styles from './card-heading.scss'
 import { Bin } from '../icons/Bin'
+import styles from './card-heading.scss'
 
 interface CardHeadingProps {
   readonly icon?: ReactElement

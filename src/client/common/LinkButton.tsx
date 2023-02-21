@@ -1,12 +1,12 @@
-import React, { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import { Link, LinkProps } from 'react-router-dom'
 import cn from 'classnames'
-import styles from './link-button.scss'
 import { Plus } from './icons/Plus'
 import { useNavigationShortcut } from '../NavigationShortcutsHook'
 import { CheckboxChecked } from './icons/CheckboxChecked'
 import { VisuallyHidden } from './VisuallyHidden'
 import { Cog } from './icons/Cog'
+import styles from './link-button.scss'
 
 interface LinkButtonProps extends LinkProps {
   readonly to: string

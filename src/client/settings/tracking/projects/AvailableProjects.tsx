@@ -1,11 +1,10 @@
 import type { Feed } from '../FeedsReducer'
 import type { ReactElement } from 'react'
-import React, { useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { ErrorMessages, WarningMessages } from '../../../common/Messages'
 import { Input } from '../../../common/forms/Input'
 import { Refresh } from './Refresh'
 import { errorMessage, isBlank, notEmpty } from '../../../common/Utils'
-import styles from './available-projects.scss'
 import { SecondaryButton } from '../../../common/forms/Button'
 import { getSelectedProjectsForFeed, projectSelected } from '../SelectedReducer'
 import { Loading } from '../../../common/Loading'
@@ -15,6 +14,7 @@ import { CheckboxUnchecked } from '../../../common/icons/CheckboxUnchecked'
 import { useProjects } from './ProjectsHook'
 import { Checkbox } from '../../../common/forms/Checkbox'
 import { useAppDispatch, useAppSelector } from '../../../configuration/Hooks'
+import styles from './available-projects.scss'
 
 interface AvailableProjectsProps {
   readonly feed: Feed

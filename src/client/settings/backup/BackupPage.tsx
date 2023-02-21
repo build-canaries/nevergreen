@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import { RemoteBackupCard } from './RemoteBackupCard'
 import { getBackupLocations } from './RemoteLocationsReducer'
 import { LocalBackupCard } from './LocalBackupCard'

@@ -1,4 +1,5 @@
-import React, { ReactElement, useEffect, useState } from 'react'
+import type { ReactElement } from 'react'
+import { useEffect, useState } from 'react'
 import { SuccessMessage } from '../common/SuccessMessage'
 import { SuccessImage } from './SuccessImage'
 import { isBlank, randomFrom } from '../common/Utils'

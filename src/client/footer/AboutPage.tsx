@@ -1,13 +1,13 @@
-import React, { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import { ExternalLink } from '../common/ExternalLink'
 import { SubmitAnIssue } from './SubmitAnIssue'
-import styles from './about-page.scss'
 import { Twitter } from '../common/icons/Twitter'
 import { GitHubLogo } from '../common/icons/GitHubLogo'
 import { Page } from '../common/Page'
 import version from '../../../resources/version.txt'
 import versionMeta from '../../../resources/version_meta.txt'
 import versionName from '../../../resources/version_name.txt'
+import styles from './about-page.scss'
 
 export function AboutPage(): ReactElement {
   const fullVersion = `${version}+${versionMeta}`

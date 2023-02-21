@@ -1,16 +1,9 @@
-import React, {
-  Children,
-  ReactElement,
-  ReactNode,
-  useCallback,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from 'react'
+import type { ReactElement, ReactNode } from 'react'
+import { Children, useCallback, useLayoutEffect, useRef, useState } from 'react'
 import isNil from 'lodash/isNil'
-import styles from './scaled-grid.scss'
 import { useElementResized } from '../common/ResizableHook'
 import { isMobile, isTablet } from '../common/Style'
+import styles from './scaled-grid.scss'
 
 interface ScaledGridProps {
   readonly children: ReactNode

@@ -1,4 +1,3 @@
-import React from 'react'
 import { BaseButton, ButtonTheme } from './Button'
 import { render } from '../../testUtils/testHelpers'
 import { screen } from '@testing-library/react'

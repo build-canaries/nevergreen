@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import { StyleGuideSection } from './StyleGuideSection'
 import { Card } from '../common/card/Card'
 import { CardHeading } from '../common/card/CardHeading'

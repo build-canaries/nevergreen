@@ -1,17 +1,11 @@
-import React, {
-  FormEvent,
-  ReactElement,
-  ReactNode,
-  useEffect,
-  useState,
-} from 'react'
+import type { FormEvent, ReactElement, ReactNode } from 'react'
+import { useEffect, useState } from 'react'
 import cn from 'classnames'
 import isEmpty from 'lodash/isEmpty'
 import isString from 'lodash/isString'
 import isFunction from 'lodash/isFunction'
 import noop from 'lodash/noop'
 import { PrimaryButton, SecondaryButton } from './Button'
-import styles from './form.scss'
 import { FormErrors } from './Validation'
 import { ErrorMessages, SuccessMessages } from '../Messages'
 import { errorMessage } from '../Utils'
@@ -21,6 +15,7 @@ import { Checkmark } from '../icons/Checkmark'
 import { Cross } from '../icons/Cross'
 import { useQuery } from '@tanstack/react-query'
 import { Loop } from '../icons/Loop'
+import styles from './form.scss'
 
 type OnSuccess =
   | {

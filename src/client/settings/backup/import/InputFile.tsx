@@ -1,8 +1,8 @@
-import React, { ChangeEvent, ReactElement } from 'react'
+import type { ChangeEvent, ReactElement } from 'react'
 import cn from 'classnames'
 import isNil from 'lodash/isNil'
-import styles from './input-file.scss'
 import { FolderOpen } from '../../../common/icons/FolderOpen'
+import styles from './input-file.scss'
 
 interface InputFileProps {
   readonly onFileSelected: (files: FileList) => Promise<void>

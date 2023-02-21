@@ -1,4 +1,4 @@
-import React, { DragEvent, ReactElement, ReactNode } from 'react'
+import type { DragEvent, ReactElement, ReactNode } from 'react'
 import isNil from 'lodash/isNil'
 import { useStopDefaultDragAndDropBehaviour } from './StopDefaultDragAndDropBehaviourHook'
 

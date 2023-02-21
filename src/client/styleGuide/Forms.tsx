@@ -1,10 +1,9 @@
-import React, { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import { Input } from '../common/forms/Input'
 import noop from 'lodash/noop'
 import { Checkbox } from '../common/forms/Checkbox'
 import { DropDown } from '../common/forms/DropDown'
 import { StyleGuideSection } from './StyleGuideSection'
-import styles from './style-guide.scss'
 import {
   DangerButton,
   PrimaryButton,
@@ -12,6 +11,7 @@ import {
 } from '../common/forms/Button'
 import { Password } from '../common/forms/Password'
 import { FloppyDisk } from '../common/icons/FloppyDisk'
+import styles from './style-guide.scss'
 
 const DROP_DOWN_OPTIONS = [
   { value: '1', display: 'option 1' },

@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import { feedAdded } from './TrackingActionCreators'
 import { Page } from '../../common/Page'
 import { Xml } from '../../common/icons/Xml'

@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import { getNotifications } from './NotificationsReducer'
 import { AddButton } from '../../common/LinkButton'
 import { Prognosis } from '../../domain/Project'

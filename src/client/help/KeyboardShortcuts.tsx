@@ -1,8 +1,8 @@
-import React, { ReactElement } from 'react'
-import styles from './keyboard-shortcuts.scss'
+import type { ReactElement } from 'react'
 import { SHOW_HELP_SHORTCUT, SHOW_KEYBOARD_SHORTCUTS_SHORTCUT } from './Help'
 import screenfull from 'screenfull'
 import { HelpArticle, HelpProps } from './HelpArticle'
+import styles from './keyboard-shortcuts.scss'
 
 export const KEYBOARD_SHORTCUT_KEYWORD = 'keyboard shortcuts'
 

@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import { ExternalLink } from '../common/ExternalLink'
 
 interface SubmitAnIssueProps {

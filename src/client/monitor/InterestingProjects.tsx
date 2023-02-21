@@ -1,4 +1,5 @@
-import React, { ReactElement, useCallback, useState } from 'react'
+import type { ReactElement } from 'react'
+import { useCallback, useState } from 'react'
 import difference from 'lodash/difference'
 import get from 'lodash/get'
 import isEmpty from 'lodash/isEmpty'
@@ -7,7 +8,6 @@ import { ScaledGrid } from './ScaledGrid'
 import { projectIdentifier, Projects } from '../domain/Project'
 import { TileProject } from './TileProject'
 import { TileProjectsNotShown } from './TileProjectsNotShown'
-import styles from './interesting-projects.scss'
 import {
   getMaxProjectsToShow,
   getShowPrognosis,
@@ -17,6 +17,7 @@ import { isMobile, isTablet } from '../common/Style'
 import { useWindowResized } from '../common/ResizableHook'
 import { FeedErrors, isError } from '../domain/FeedError'
 import { useAppSelector } from '../configuration/Hooks'
+import styles from './interesting-projects.scss'
 
 interface InterestingProjectsProps {
   readonly projects: Projects

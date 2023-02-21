@@ -1,15 +1,15 @@
-import React, { ReactElement, ReactNode } from 'react'
+import type { ReactElement, ReactNode } from 'react'
 import { RemoveButton } from './RemoveButton'
 import { isValidHttpUrl } from '../../domain/Url'
 import { SuccessMessage } from '../../common/SuccessMessage'
 import { getSuccessMessages, removeMessage } from './SuccessReducer'
-import styles from './success-messages.scss'
 import { AddButton } from '../../common/LinkButton'
 import { WarningMessages } from '../../common/Messages'
 import { notEmpty } from '../../common/Utils'
 import { Page } from '../../common/Page'
 import { Image } from '../../common/icons/Image'
 import { useAppDispatch, useAppSelector } from '../../configuration/Hooks'
+import styles from './success-messages.scss'
 
 export const NO_MESSAGES_WARNING =
   'No success messages added, a blank screen will be shown on the Monitor page when no interesting projects are displayed'

@@ -1,12 +1,12 @@
-import React, { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import cn from 'classnames'
 import version from '../../../resources/version.txt'
 import versionMeta from '../../../resources/version_meta.txt'
 import versionName from '../../../resources/version_name.txt'
 import { SubmitAnIssue } from './SubmitAnIssue'
-import styles from './footer.scss'
 import { Link } from 'react-router-dom'
 import { ROUTE_ABOUT } from '../AppRoutes'
+import styles from './footer.scss'
 
 interface FooterProps {
   readonly hide: boolean

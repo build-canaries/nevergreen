@@ -1,4 +1,3 @@
-import React from 'react'
 import { Help, SHOW_HELP_SHORTCUT } from './Help'
 import { render } from '../testUtils/testHelpers'
 import { act, screen } from '@testing-library/react'

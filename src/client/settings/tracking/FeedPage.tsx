@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import type { Feed } from './FeedsReducer'
 import { getFeed } from './FeedsReducer'
 import { Navigate, Outlet, useOutletContext, useParams } from 'react-router-dom'

@@ -1,14 +1,14 @@
-import React, { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import cn from 'classnames'
 import isEmpty from 'lodash/isEmpty'
 import isString from 'lodash/isString'
-import styles from './messages.scss'
 import { Warning } from './icons/Warning'
 import { Cross } from './icons/Cross'
 import { BaseButton, ButtonTheme } from './forms/Button'
 import { VisuallyHidden } from './VisuallyHidden'
 import { Info } from './icons/Info'
 import { Checkmark } from './icons/Checkmark'
+import styles from './messages.scss'
 
 export enum MessagesType {
   info = 'info',

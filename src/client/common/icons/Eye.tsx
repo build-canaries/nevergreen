@@ -1,4 +1,4 @@
-import React, { ReactElement, SVGProps } from 'react'
+import type { ReactElement, SVGProps } from 'react'
 import { Icon } from './Icon'
 
 export function Eye(props: SVGProps<SVGSVGElement>): ReactElement {

@@ -1,7 +1,6 @@
-import React, { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import { Checkbox } from '../../common/forms/Checkbox'
 import { DropDown } from '../../common/forms/DropDown'
-import styles from './display-settings.scss'
 import { DisplayPrognosisSelection } from './DisplayPrognosisSelection'
 import {
   getClickToShowMenu,
@@ -25,6 +24,7 @@ import { Eye } from '../../common/icons/Eye'
 import { Display } from '../../common/icons/Display'
 import { ROUTE_PREVIEW } from '../../AppRoutes'
 import { useAppDispatch, useAppSelector } from '../../configuration/Hooks'
+import styles from './display-settings.scss'
 
 const projectsToShowOptions = [
   { value: MaxProjectsToShow.small, display: 'Small' },

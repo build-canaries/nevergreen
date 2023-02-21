@@ -1,4 +1,5 @@
-import React, { ReactElement, useState } from 'react'
+import type { ReactElement } from 'react'
+import { useState } from 'react'
 import { Form } from '../../common/forms/Form'
 import { Input } from '../../common/forms/Input'
 import { firstError, FormErrors } from '../../common/forms/Validation'
@@ -7,10 +8,10 @@ import { isValidHttpUrl, removeScheme } from '../../domain/Url'
 import { AuthTypes, Feed, getFeeds } from './FeedsReducer'
 import { encrypt } from '../../gateways/SecurityGateway'
 import { DropDown } from '../../common/forms/DropDown'
-import styles from './connection-form.scss'
 import { Password } from '../../common/forms/Password'
 import { TestConnection } from './TestConnection'
 import { useAppSelector } from '../../configuration/Hooks'
+import styles from './connection-form.scss'
 
 export enum KeepExistingAuth {
   keep = 'keep',

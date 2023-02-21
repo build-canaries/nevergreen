@@ -1,6 +1,5 @@
 import { render } from '../../../testUtils/testHelpers'
 import { buildFeed } from '../../../testUtils/builders'
-import React from 'react'
 import { screen } from '@testing-library/react'
 import { ManageProjectsPage } from './ManageProjectsPage'
 import { feedsRoot, getFeed, TrackingMode } from '../FeedsReducer'

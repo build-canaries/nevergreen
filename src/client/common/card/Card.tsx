@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import cn from 'classnames'
 import styles from './card.scss'
 

@@ -1,4 +1,5 @@
-import React, { ReactElement, useState } from 'react'
+import type { ReactElement } from 'react'
+import { useState } from 'react'
 import { DropDown } from '../../common/forms/DropDown'
 import { createId, isBlank } from '../../common/Utils'
 import {
@@ -9,7 +10,6 @@ import {
 import { Input } from '../../common/forms/Input'
 import { Password } from '../../common/forms/Password'
 import { encrypt } from '../../gateways/SecurityGateway'
-import styles from './add-backup.scss'
 import { isValidHttpUrl } from '../../domain/Url'
 import { firstError, FormErrors } from '../../common/forms/Validation'
 import { Form } from '../../common/forms/Form'
@@ -18,6 +18,7 @@ import { BackupLogo } from './BackupLogo'
 import { ROUTE_BACKUP, ROUTE_BACKUP_EXPORT_DETAILS } from '../../AppRoutes'
 import { useAppDispatch } from '../../configuration/Hooks'
 import { addBackupLocation } from './RemoteLocationsActions'
+import styles from './add-backup.scss'
 
 type Fields = 'url' | 'accessToken'
 

@@ -1,6 +1,6 @@
-import React, { DetailedHTMLProps, HTMLAttributes, ReactElement } from 'react'
-import styles from './summary.scss'
+import type { DetailedHTMLProps, HTMLAttributes, ReactElement } from 'react'
 import cn from 'classnames'
+import styles from './summary.scss'
 
 export interface SummaryValues {
   readonly label: string

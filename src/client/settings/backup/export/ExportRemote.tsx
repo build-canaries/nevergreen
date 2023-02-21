@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import { toExportableConfigurationJson } from '../../../configuration/Configuration'
 import { TextArea } from '../TextArea'
 import { exportConfiguration } from '../../../gateways/BackupGateway'

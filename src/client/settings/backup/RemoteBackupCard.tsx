@@ -1,7 +1,5 @@
 import type { RemoteLocation } from './RemoteLocationsReducer'
 import type { ReactElement } from 'react'
-import React from 'react'
-import styles from './remote-backup-card.scss'
 import { Card } from '../../common/card/Card'
 import { CardHeading } from '../../common/card/CardHeading'
 import { BackupLogo } from './BackupLogo'
@@ -13,6 +11,7 @@ import { CloudDownload } from '../../common/icons/CloudDownload'
 import { Cog } from '../../common/icons/Cog'
 import { useAppDispatch } from '../../configuration/Hooks'
 import { removeBackupLocation } from './RemoteLocationsActions'
+import styles from './remote-backup-card.scss'
 
 interface RemoteLocationProps {
   readonly location: RemoteLocation

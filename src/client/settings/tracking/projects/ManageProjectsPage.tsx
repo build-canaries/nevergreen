@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import { Page } from '../../../common/Page'
 import { AvailableProjects } from './AvailableProjects'
 import { CheckboxChecked } from '../../../common/icons/CheckboxChecked'
@@ -6,9 +6,9 @@ import { UpdateFeedDetailsButton } from '../../../common/LinkButton'
 import { useFeedContext } from '../FeedPage'
 import { DropDown } from '../../../common/forms/DropDown'
 import { feedUpdated } from '../TrackingActionCreators'
-import styles from './manage-projects-page.scss'
 import { useAppDispatch } from '../../../configuration/Hooks'
 import { TrackingMode } from '../FeedsReducer'
+import styles from './manage-projects-page.scss'
 
 export function ManageProjectsPage(): ReactElement {
   const dispatch = useAppDispatch()

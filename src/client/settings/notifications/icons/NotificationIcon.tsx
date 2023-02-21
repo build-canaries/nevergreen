@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import healthyIcon from './healthy.svg'
 import unknownIcon from './unknown.svg'
 import healthyBuildingIcon from './healthy-building.svg'

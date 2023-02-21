@@ -1,4 +1,3 @@
-import React from 'react'
 import { Password } from './Password'
 import { render } from '../../testUtils/testHelpers'
 import { screen } from '@testing-library/react'

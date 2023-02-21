@@ -1,10 +1,10 @@
-import React, { ReactElement, ReactNode } from 'react'
+import type { ReactElement, ReactNode } from 'react'
 import ReactModal from 'react-modal'
 import cn from 'classnames'
-import styles from './modal.scss'
 import { SecondaryButton } from './forms/Button'
 import { pauseShortcuts, unpauseShortcuts } from './Keyboard'
 import { Cross } from './icons/Cross'
+import styles from './modal.scss'
 
 interface ModalProps {
   readonly title: string

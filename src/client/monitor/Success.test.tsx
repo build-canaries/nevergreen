@@ -1,4 +1,3 @@
-import React from 'react'
 import { Success } from './Success'
 import { render } from '../testUtils/testHelpers'
 import { successRoot } from '../settings/success/SuccessReducer'

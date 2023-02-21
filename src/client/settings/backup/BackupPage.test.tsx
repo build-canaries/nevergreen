@@ -1,4 +1,3 @@
-import React from 'react'
 import { screen, waitForElementToBeRemoved } from '@testing-library/react'
 import { render } from '../../testUtils/testHelpers'
 import { buildRemoteBackupLocation } from '../../testUtils/builders'

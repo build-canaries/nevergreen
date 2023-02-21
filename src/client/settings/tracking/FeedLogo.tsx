@@ -1,4 +1,4 @@
-import React, { ReactElement, SVGProps } from 'react'
+import type { ReactElement, SVGProps } from 'react'
 import type { Feed } from './FeedsReducer'
 import { ServerTypes } from './FeedsReducer'
 import { Xml } from '../../common/icons/Xml'

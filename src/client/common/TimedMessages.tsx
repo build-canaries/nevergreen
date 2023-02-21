@@ -1,4 +1,5 @@
-import React, { ReactElement, useEffect, useState } from 'react'
+import type { ReactElement } from 'react'
+import { useEffect, useState } from 'react'
 import isEmpty from 'lodash/isEmpty'
 import { Timed } from './Timed'
 import { Messages, MessagesProps, MessagesType } from './Messages'

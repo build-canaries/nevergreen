@@ -1,10 +1,5 @@
-import React, {
-  createContext,
-  forwardRef,
-  Ref,
-  useImperativeHandle,
-  useRef,
-} from 'react'
+import type { Ref } from 'react'
+import { createContext, forwardRef, useImperativeHandle, useRef } from 'react'
 import styles from './font-metrics.scss'
 
 export interface Measurable {

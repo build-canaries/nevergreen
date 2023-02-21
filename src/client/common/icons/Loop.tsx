@@ -1,7 +1,7 @@
-import React, { ReactElement, SVGProps } from 'react'
+import type { ReactElement, SVGProps } from 'react'
 import { Icon } from './Icon'
-import styles from './icon.scss'
 import cn from 'classnames'
+import styles from './icon.scss'
 
 interface LoopProps extends SVGProps<SVGSVGElement> {
   readonly isLoading?: boolean

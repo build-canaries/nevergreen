@@ -1,6 +1,6 @@
 import type { Feed } from './FeedsReducer'
 import { TrackingMode } from './FeedsReducer'
-import React, { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import { URL } from '../../common/URL'
 import { Summary } from '../../common/Summary'
 import { Card } from '../../common/card/Card'

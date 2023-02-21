@@ -1,6 +1,6 @@
-import React, { ReactElement } from 'react'
-import styles from './success-message.scss'
+import type { ReactElement } from 'react'
 import { ScaleText } from './ScaleText'
+import styles from './success-message.scss'
 
 interface SuccessMessageProps {
   readonly message: string

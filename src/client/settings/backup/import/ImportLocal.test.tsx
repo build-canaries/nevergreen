@@ -1,4 +1,3 @@
-import React from 'react'
 import { ImportLocal } from './ImportLocal'
 import { render } from '../../../testUtils/testHelpers'
 import { buildState } from '../../../testUtils/builders'

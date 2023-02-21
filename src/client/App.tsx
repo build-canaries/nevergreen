@@ -1,6 +1,6 @@
 import type { RootState } from './configuration/ReduxStore'
 import type { ReactElement, ReactNode } from 'react'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import type { Store } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'

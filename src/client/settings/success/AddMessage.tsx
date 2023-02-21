@@ -1,4 +1,5 @@
-import React, { ReactElement, useState } from 'react'
+import type { ReactElement } from 'react'
+import { useState } from 'react'
 import { Input } from '../../common/forms/Input'
 import { addMessage, getSuccessMessages } from './SuccessReducer'
 import { isBlank } from '../../common/Utils'

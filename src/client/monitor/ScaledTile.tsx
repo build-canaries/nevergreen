@@ -1,14 +1,9 @@
-import React, {
-  ReactElement,
-  ReactNode,
-  useCallback,
-  useRef,
-  useState,
-} from 'react'
-import styles from './scaled-tile.scss'
+import type { ReactElement, ReactNode } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import cn from 'classnames'
 import { useElementResized } from '../common/ResizableHook'
 import { ScaleText } from '../common/ScaleText'
+import styles from './scaled-tile.scss'
 
 interface TileProps {
   readonly className?: string

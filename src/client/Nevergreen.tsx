@@ -1,8 +1,8 @@
-import React, { ReactElement, useCallback, useState } from 'react'
+import type { ReactElement } from 'react'
+import { useCallback, useState } from 'react'
 import { Header } from './header/Header'
 import { Footer } from './footer/Footer'
 import { Banner } from './Banner'
-import styles from './nevergreen.scss'
 import { useServiceWorker } from './ServiceWorkerHook'
 import { useHideMenus } from './HideMenusHook'
 import { getClickToShowMenu } from './settings/SettingsReducer'
@@ -20,6 +20,7 @@ import { useCheckForNewVersion } from './CheckForNewVersionHook'
 import { useNavigationShortcuts } from './NavigationShortcutsHook'
 import { Outlet, useOutletContext } from 'react-router-dom'
 import { useAppSelector } from './configuration/Hooks'
+import styles from './nevergreen.scss'
 
 interface AppState {
   readonly menusHidden: boolean

@@ -1,4 +1,5 @@
-import React, { ChangeEvent, ReactElement, useEffect, useState } from 'react'
+import type { ChangeEvent, ReactElement } from 'react'
+import { useEffect, useState } from 'react'
 import { errorMessage, isBlank } from '../../common/Utils'
 import { Input } from '../../common/forms/Input'
 import { Checkbox } from '../../common/forms/Checkbox'

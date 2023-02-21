@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import { ExternalLink } from './common/ExternalLink'
 import { DangerButton } from './common/forms/Button'
 import { clear } from './configuration/LocalRepository'

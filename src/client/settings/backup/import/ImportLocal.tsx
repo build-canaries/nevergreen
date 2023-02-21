@@ -1,5 +1,5 @@
-import React, { ReactElement, useState } from 'react'
-import styles from './import.scss'
+import type { ReactElement } from 'react'
+import { useState } from 'react'
 import {
   DataSource,
   toConfiguration,
@@ -20,6 +20,7 @@ import {
   TimedInfoMessages,
 } from '../../../common/TimedMessages'
 import { useAppDispatch } from '../../../configuration/Hooks'
+import styles from './import.scss'
 
 export function ImportLocal(): ReactElement {
   const dispatch = useAppDispatch()

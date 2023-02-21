@@ -1,4 +1,3 @@
-import React from 'react'
 import { render } from '../../testUtils/testHelpers'
 import { screen } from '@testing-library/react'
 import { getNotifications, notificationsRoot } from './NotificationsReducer'

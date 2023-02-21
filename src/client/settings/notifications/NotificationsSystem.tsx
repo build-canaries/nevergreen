@@ -1,4 +1,5 @@
-import React, { ReactElement, useEffect, useState } from 'react'
+import type { ReactElement } from 'react'
+import { useEffect, useState } from 'react'
 import { Checkbox } from '../../common/forms/Checkbox'
 import { ErrorMessages, WarningMessages } from '../../common/Messages'
 import {

@@ -1,13 +1,13 @@
-import React, { ReactElement } from 'react'
+import type { ReactElement } from 'react'
+import cn from 'classnames'
 import { NavLink, Outlet } from 'react-router-dom'
-import styles from './settings.scss'
 import { List } from '../common/icons/List'
 import { Display } from '../common/icons/Display'
 import { Bell } from '../common/icons/Bell'
 import { FloppyDisk } from '../common/icons/FloppyDisk'
 import { Bin } from '../common/icons/Bin'
 import { Image } from '../common/icons/Image'
-import cn from 'classnames'
+import styles from './settings.scss'
 
 interface MenuItemProps {
   readonly to: string

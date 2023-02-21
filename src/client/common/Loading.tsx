@@ -1,9 +1,8 @@
 import type { ReactElement, ReactNode } from 'react'
-import React from 'react'
 import cn from 'classnames'
-import styles from './loading.scss'
 import { VisuallyHidden } from './VisuallyHidden'
 import { useForceFocus } from './ForceFocusHook'
+import styles from './loading.scss'
 
 interface LoadingProps {
   readonly title: string

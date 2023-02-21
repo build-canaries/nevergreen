@@ -1,7 +1,8 @@
-import React, { Fragment, ReactElement } from 'react'
-import styles from './url.scss'
+import type { ReactElement } from 'react'
+import { Fragment } from 'react'
 import { buildUrl } from '../domain/Url'
 import { isNotBlank } from './Utils'
+import styles from './url.scss'
 
 interface URLProps {
   readonly url: string

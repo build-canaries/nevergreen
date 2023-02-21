@@ -1,5 +1,4 @@
 import { render } from '../../../testUtils/testHelpers'
-import React from 'react'
 import { Refresh } from './Refresh'
 import noop from 'lodash/noop'
 import { screen } from '@testing-library/react'

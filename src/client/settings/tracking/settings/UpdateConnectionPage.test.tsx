@@ -1,4 +1,3 @@
-import React from 'react'
 import { screen, waitFor } from '@testing-library/react'
 import { render, waitForLocationToChange } from '../../../testUtils/testHelpers'
 import { buildFeed } from '../../../testUtils/builders'

@@ -1,7 +1,7 @@
-import React, { ReactElement } from 'react'
-import styles from './refresh.scss'
+import type { ReactElement } from 'react'
 import { PrimaryButton } from '../../../common/forms/Button'
 import { Loop } from '../../../common/icons/Loop'
+import styles from './refresh.scss'
 
 interface RefreshProps {
   readonly refreshTray: () => void

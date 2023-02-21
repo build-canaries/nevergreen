@@ -1,8 +1,8 @@
-import React, { ReactElement, useState } from 'react'
+import type { ReactElement } from 'react'
+import { useState } from 'react'
 import { Page } from '../../../common/Page'
 import { InputButton } from '../../../common/forms/Button'
 import { Input } from '../../../common/forms/Input'
-import styles from './update-details-page.scss'
 import { DropDown } from '../../../common/forms/DropDown'
 import { Dice } from '../../../common/icons/Dice'
 import { Summary } from '../../../common/Summary'
@@ -18,6 +18,7 @@ import { URL } from '../../../common/URL'
 import { useAppDispatch } from '../../../configuration/Hooks'
 import { AuthTypes, ServerTypes } from '../FeedsReducer'
 import { generateRandomName } from '../../../common/Words'
+import styles from './update-details-page.scss'
 
 const serverTypeOptions = [
   { value: ServerTypes.generic, display: 'Generic' },

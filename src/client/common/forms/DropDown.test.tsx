@@ -1,4 +1,3 @@
-import React from 'react'
 import { DropDown } from './DropDown'
 import { render } from '../../testUtils/testHelpers'
 import { screen } from '@testing-library/react'

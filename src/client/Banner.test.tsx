@@ -1,4 +1,3 @@
-import React from 'react'
 import { Banner } from './Banner'
 import { render } from './testUtils/testHelpers'
 import noop from 'lodash/noop'

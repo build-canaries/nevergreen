@@ -1,4 +1,3 @@
-import React from 'react'
 import * as SystemNotifications from '../../common/SystemNotifications'
 import { Prognosis, ProjectPrognosis, Projects } from '../../domain/Project'
 import { render } from '../../testUtils/testHelpers'

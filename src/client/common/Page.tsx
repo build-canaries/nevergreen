@@ -1,11 +1,11 @@
 import type { ReactElement, ReactNode } from 'react'
-import React, { useLayoutEffect, useRef, useState } from 'react'
-import styles from './page.scss'
+import { useLayoutEffect, useRef, useState } from 'react'
 import { Title } from './Title'
 import cn from 'classnames'
 import { SecondaryButton } from './forms/Button'
 import { useElementResized } from './ResizableHook'
 import { ArrowUp } from './icons/ArrowUp'
+import styles from './page.scss'
 
 interface PageProps {
   readonly title: string

@@ -1,4 +1,5 @@
-import React, { Children, ReactElement, ReactNode } from 'react'
+import type { ReactElement, ReactNode } from 'react'
+import { Children } from 'react'
 import styles from './card-list.scss'
 
 interface CardListProps {

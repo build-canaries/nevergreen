@@ -1,4 +1,4 @@
-import React, {
+import type {
   DetailedHTMLProps,
   InputHTMLAttributes,
   ReactElement,
@@ -7,8 +7,8 @@ import cn from 'classnames'
 import classNames from 'classnames'
 import isEmpty from 'lodash/isEmpty'
 import uniqueId from 'lodash/uniqueId'
-import styles from './text-area.scss'
 import { VisuallyHidden } from '../../common/VisuallyHidden'
+import styles from './text-area.scss'
 
 type TextAreaProps = {
   readonly label: string

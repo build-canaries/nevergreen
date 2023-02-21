@@ -1,4 +1,3 @@
-import React from 'react'
 import { InterestingProjects } from './InterestingProjects'
 import { render, setSystemTime } from '../testUtils/testHelpers'
 import { buildFeed, buildFeedError, buildProject } from '../testUtils/builders'

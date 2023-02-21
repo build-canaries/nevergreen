@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import { Input, InputProps } from './Input'
 import styles from './slider.scss'
 

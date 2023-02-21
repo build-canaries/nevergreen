@@ -1,4 +1,4 @@
-import React, { ReactElement, SVGProps } from 'react'
+import type { ReactElement, SVGProps } from 'react'
 import { RemoteLocationOptions } from './RemoteLocationOptions'
 import { GitHubLogo } from '../../common/icons/GitHubLogo'
 import { GitLabLogo } from '../../common/icons/GitLabLogo'

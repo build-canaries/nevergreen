@@ -1,28 +1,29 @@
 import type { RootState } from '../configuration/ReduxStore'
 import { reducer } from '../configuration/ReduxStore'
-import React, { ReactElement, ReactNode } from 'react'
+import type { RecursivePartial } from '../common/Types'
+import type { CombinedState, Middleware, Reducer } from 'redux'
+import { combineReducers } from 'redux'
+import type { RenderOptions, RenderResult } from '@testing-library/react'
+import {
+  render as testRender,
+  screen,
+  waitForElementToBeRemoved,
+} from '@testing-library/react'
+import type { ReactElement, ReactNode } from 'react'
+import type { AnyAction, EnhancedStore } from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit'
 import merge from 'lodash/merge'
 import { settingsRoot } from '../settings/SettingsReducer'
 import { selectedRoot } from '../settings/tracking/SelectedReducer'
 import { successRoot } from '../settings/success/SuccessReducer'
 import { feedsRoot } from '../settings/tracking/FeedsReducer'
-import { CombinedState, combineReducers, Middleware, Reducer } from 'redux'
-import { RecursivePartial } from '../common/Types'
-import {
-  render as testRender,
-  RenderOptions,
-  RenderResult,
-  screen,
-  waitForElementToBeRemoved,
-} from '@testing-library/react'
-import { AnyAction, configureStore, EnhancedStore } from '@reduxjs/toolkit'
 import { Outlet } from 'react-router-dom'
 import { migrationsRoot } from '../configuration/MigrationsReducer'
 import parseISO from 'date-fns/parseISO'
 import { remoteLocationsRoot } from '../settings/backup/RemoteLocationsReducer'
 import { Route, Routes } from 'react-router'
 import userEvent from '@testing-library/user-event'
-import { UserEvent } from '@testing-library/user-event/setup/setup'
+import type { UserEvent } from '@testing-library/user-event/setup/setup'
 import { buildState } from './builders'
 import { App } from '../App'
 import { notificationsRoot } from '../settings/notifications/NotificationsReducer'

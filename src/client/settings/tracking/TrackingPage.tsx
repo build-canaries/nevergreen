@@ -1,10 +1,9 @@
-import React, { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import { getFeeds } from './FeedsReducer'
 import { Page } from '../../common/Page'
 import { AddButton } from '../../common/LinkButton'
 import { WarningMessages } from '../../common/Messages'
 import { FeedCard } from './FeedCard'
-import styles from './tracking-page.scss'
 import { DropDown } from '../../common/forms/DropDown'
 import { secondsToString } from '../../common/DateTime'
 import {
@@ -15,6 +14,7 @@ import {
 import { List } from '../../common/icons/List'
 import { CardList } from '../../common/card/CardList'
 import { useAppDispatch, useAppSelector } from '../../configuration/Hooks'
+import styles from './tracking-page.scss'
 
 export function TrackingPage(): ReactElement {
   const dispatch = useAppDispatch()

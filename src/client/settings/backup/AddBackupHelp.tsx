@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import { ExternalLink } from '../../common/ExternalLink'
 import { HelpArticle, HelpProps } from '../../help/HelpArticle'
 import { URL } from '../../common/URL'

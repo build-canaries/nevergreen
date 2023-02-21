@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import { Page } from '../../../common/Page'
 import { feedUpdated } from '../TrackingActionCreators'
 import { FeedLogo } from '../FeedLogo'

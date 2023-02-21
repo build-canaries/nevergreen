@@ -1,7 +1,7 @@
-import React, { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import { DangerButton } from '../../common/forms/Button'
-import styles from './remove-button.scss'
 import { Bin } from '../../common/icons/Bin'
+import styles from './remove-button.scss'
 
 interface RemoveButtonProps {
   readonly removeMessage: () => void

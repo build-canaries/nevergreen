@@ -1,8 +1,8 @@
-import React, { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import cn from 'classnames'
-import styles from './notification.scss'
 import { Bell } from './common/icons/Bell'
 import { Messages, MessagesType } from './common/Messages'
+import styles from './notification.scss'
 
 interface BannerProps {
   readonly message: string

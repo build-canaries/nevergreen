@@ -1,4 +1,3 @@
-import React from 'react'
 import { screen, waitFor } from '@testing-library/react'
 import { render } from '../../testUtils/testHelpers'
 import { DEFAULT_GITHUB_URL } from './RemoteLocationOptions'

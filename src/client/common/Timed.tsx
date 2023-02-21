@@ -1,4 +1,5 @@
-import React, { ReactElement, useEffect, useState } from 'react'
+import type { ReactElement } from 'react'
+import { useEffect, useState } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import styles from './timed.scss'
 

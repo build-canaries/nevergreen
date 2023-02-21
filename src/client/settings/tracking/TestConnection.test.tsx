@@ -1,4 +1,3 @@
-import React from 'react'
 import { render } from '../../testUtils/testHelpers'
 import { screen, waitFor } from '@testing-library/react'
 import { TestConnection } from './TestConnection'

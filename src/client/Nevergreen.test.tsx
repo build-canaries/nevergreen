@@ -1,4 +1,3 @@
-import React from 'react'
 import { left } from 'fp-ts/Either'
 import { Nevergreen } from './Nevergreen'
 import { render, waitForLoadingToFinish } from './testUtils/testHelpers'

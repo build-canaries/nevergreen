@@ -1,7 +1,9 @@
-import React, { ReactElement, useState } from 'react'
+import type { ReactElement } from 'react'
+import { useState } from 'react'
+import type { InputProps } from './Input'
+import { Input } from './Input'
 import uniqueId from 'lodash/uniqueId'
 import { InputButton } from './Button'
-import { Input, InputProps } from './Input'
 import { Eye } from '../icons/Eye'
 import { EyeBlocked } from '../icons/EyeBlocked'
 
