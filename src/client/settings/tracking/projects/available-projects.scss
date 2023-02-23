@@ -49,7 +49,7 @@
 }
 
 .buildItems {
-  @include layout.two-column-grid;
+  @include layout.grid($desktop-columns: 2);
   @extend %projects-container;
 
   list-style: none;

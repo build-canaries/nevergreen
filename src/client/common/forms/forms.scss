@@ -2,22 +2,25 @@
 @use '../responsive';
 @use '../layout';
 
+$standard-input-size-mobile: 40px;
+$standard-input-size-above-mobile: 44px;
+
 @mixin standard-input-dimensions($fix-width: false, $adjust-px: 0) {
-  height: 40px - $adjust-px;
-  min-height: 40px - $adjust-px;
+  height: $standard-input-size-mobile - $adjust-px;
+  min-height: $standard-input-size-mobile - $adjust-px;
 
   @if $fix-width {
-    min-width: 40px - $adjust-px;
-    width: 40px - $adjust-px;
+    min-width: $standard-input-size-mobile - $adjust-px;
+    width: $standard-input-size-mobile - $adjust-px;
   }
 
   @include responsive.respond-to(tablet, desktop) {
-    height: 44px - $adjust-px;
-    min-height: 44px - $adjust-px;
+    height: $standard-input-size-above-mobile - $adjust-px;
+    min-height: $standard-input-size-above-mobile - $adjust-px;
 
     @if $fix-width {
-      min-width: 44px - $adjust-px;
-      width: 44px - $adjust-px;
+      min-width: $standard-input-size-above-mobile - $adjust-px;
+      width: $standard-input-size-above-mobile - $adjust-px;
     }
   }
 }

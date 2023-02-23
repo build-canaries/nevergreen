@@ -27,7 +27,7 @@
 }
 
 .icons {
-  @include layout.two-column-grid;
+  @include layout.grid;
 
   & > span {
     &::before {

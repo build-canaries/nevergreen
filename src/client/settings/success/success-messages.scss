@@ -1,40 +1,44 @@
 @use '../../common/colours';
 @use '../../common/layout';
 @use '../../common/typography';
+@use '../../common/forms/forms';
+@use '../../common/responsive';
 
 .add {
   margin-top: 0;
 }
 
 .messages {
-  @include layout.two-column-grid;
+  @include layout.grid($mobile-columns: 2);
 
   list-style: none;
   margin: 0;
 }
 
 .messageItem {
+  align-items: flex-end;
   background-color: colours.$black;
-  border: 1px solid colours.$mid-grey;
+  display: flex;
+  flex-direction: column;
 }
 
-.messageWrapper {
-  position: relative;
-
-  &::before {
-    content: '';
-    display: block;
-    padding-top: 56.25%; // 16:9
-    width: 100%;
-  }
+.remove {
+  margin: 0.5em;
+  z-index: 1;
 }
 
 .message {
   background-color: colours.$black;
-  bottom: 0;
   color: colours.$off-white;
+  display: block;
   font-family: typography.$monospace-font;
-  height: 100%;
-  position: absolute;
+
+  // this puts the remove button on top of the message
+  margin-top: calc(-#{forms.$standard-input-size-mobile} - 1em);
+  object-fit: contain;
   width: 100%;
+
+  @include responsive.respond-to(tablet, desktop) {
+    margin-top: calc(-#{forms.$standard-input-size-above-mobile} - 1em);
+  }
 }

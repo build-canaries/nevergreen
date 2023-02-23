@@ -34,10 +34,6 @@ export function SuccessHelp({
         are displayed on the Monitor page {helpLink('monitor')}. If no success
         messages are added then a blank screen will be shown.
       </p>
-      <p>
-        Messages are previewed in a 16:9 ratio which is how they would look on a
-        full HD TV (1920x1080).
-      </p>
       <p>Need some inspiration?</p>
       <p>
         Try searching for some{' '}
