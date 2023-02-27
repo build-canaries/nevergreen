@@ -1,5 +1,5 @@
 import type { ReactElement, ReactNode } from 'react'
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { Title } from './Title'
 import cn from 'classnames'
 import { SecondaryButton } from './forms/Button'
@@ -23,17 +23,9 @@ export function Page({
   focusTitle = true,
 }: PageProps): ReactElement {
   const pageDiv = useRef<HTMLDivElement>(null)
-  const [pageTop, setPageTop] = useState(0)
   const [backToTopDisplay, setBackToTopDisplay] = useState('none')
 
-  useLayoutEffect(() => {
-    const top = pageDiv.current?.offsetTop || 0
-    setPageTop(top)
-    window.scrollTo(0, top)
-  }, [])
-
   useElementResized(pageDiv, (size) => {
-    setPageTop(pageDiv.current?.offsetTop || 0)
     if (size.bottom > window.innerHeight) {
       setBackToTopDisplay('block')
     } else {
@@ -48,7 +40,7 @@ export function Page({
       </Title>
       {children}
       <SecondaryButton
-        onClick={() => window.scrollTo(0, pageTop)}
+        onClick={() => window.scrollTo(0, 0)}
         className={styles.backToTop}
         style={{ display: backToTopDisplay }}
         icon={<ArrowUp />}
