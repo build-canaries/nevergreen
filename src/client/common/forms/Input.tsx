@@ -1,6 +1,5 @@
 import type {
   DetailedHTMLProps,
-  FocusEvent,
   InputHTMLAttributes,
   ReactElement,
   ReactNode,
@@ -47,12 +46,6 @@ export function Input({
     }
   }, [error])
 
-  const moveCaretToEnd = (evt: FocusEvent<HTMLInputElement>) => {
-    const val = evt.target.value
-    evt.target.value = ''
-    evt.target.value = val
-  }
-
   const hasError = isNotBlank(error)
 
   const actualId = id ?? uniqueId('i')
@@ -87,7 +80,6 @@ export function Input({
           id={actualId}
           {...inputProps}
           ref={inputNode}
-          onFocus={moveCaretToEnd}
           aria-describedby={errorId}
         />
         {readOnly && (

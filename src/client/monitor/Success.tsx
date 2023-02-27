@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react'
 import { useEffect, useState } from 'react'
 import { SuccessMessage } from '../common/SuccessMessage'
-import { SuccessImage } from './SuccessImage'
+import { SuccessImage } from '../common/SuccessImage'
 import { isBlank, randomFrom } from '../common/Utils'
 import { isValidHttpUrl } from '../domain/Url'
 import { getSuccessMessages } from '../settings/success/SuccessReducer'

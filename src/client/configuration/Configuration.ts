@@ -23,7 +23,10 @@ import {
   selectedRoot,
   SelectedState,
 } from '../settings/tracking/SelectedReducer'
-import { successRoot, SuccessState } from '../settings/success/SuccessReducer'
+import {
+  SuccessConfiguration,
+  successRoot,
+} from '../settings/success/SuccessReducer'
 import { feedsRoot, FeedsState } from '../settings/tracking/FeedsReducer'
 import { AppliedMigrationsState, migrationsRoot } from './MigrationsReducer'
 import { errorMessage } from '../common/Utils'
@@ -45,7 +48,7 @@ const Configuration = t.exact(
   t.partial({
     [settingsRoot]: SettingsConfiguration,
     [selectedRoot]: SelectedState,
-    [successRoot]: SuccessState,
+    [successRoot]: SuccessConfiguration,
     [feedsRoot]: FeedsState,
     [migrationsRoot]: AppliedMigrationsState,
     [remoteLocationsRoot]: RemoteLocationsState,

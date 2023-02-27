@@ -46,17 +46,20 @@ describe('Settings', () => {
   it('adding and removing success messages', () => {
     cy.findByRole('link', { name: 'Success' }).click()
 
-    cy.locate('success-message')
+    cy.findByRole('list', { name: 'messages' })
       .should('contain', '=(^.^)=')
+      .findAllByRole('listitem')
       .should('have.length', 1)
 
     cy.findByRole('button', { name: 'Add message' }).click()
     cy.findByLabelText('Message').type('some message')
     cy.findByRole('button', { name: 'Add message' }).click()
 
-    cy.locate('success-message')
+    cy.findByRole('list', { name: 'messages' })
       .should('contain', '=(^.^)=')
       .should('contain', 'some message')
+      .findAllByRole('listitem')
+      .should('have.length', 2)
 
     cy.findByRole('button', { name: 'Add message' }).click()
     cy.findByLabelText('Message').type(
@@ -64,7 +67,10 @@ describe('Settings', () => {
     )
     cy.findByRole('button', { name: 'Add message' }).click()
 
-    cy.locate('success-image').should('be.visible')
+    cy.findByRole('img', { name: 'success' }).should('exist')
+    cy.findByRole('list', { name: 'messages' })
+      .findAllByRole('listitem')
+      .should('have.length', 3)
   })
 
   it('changing notification settings', () => {

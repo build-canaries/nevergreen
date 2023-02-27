@@ -57,7 +57,7 @@ it('should show a success message if there are no interesting projects', async (
     [feedsRoot]: {
       [feedId]: buildFeed({ trayId: feedId }),
     },
-    [successRoot]: ['some-success-message'],
+    [successRoot]: { messages: ['some-success-message'] },
     [settingsRoot]: {
       showPrognosis: [Prognosis.sick],
     },

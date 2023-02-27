@@ -1,5 +1,8 @@
 @use 'layout';
+@use 'typography';
 
 .successMessage {
   @include layout.fill-parent;
+
+  font-family: typography.$monospace-font;
 }

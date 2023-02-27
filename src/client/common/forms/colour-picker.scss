@@ -1,0 +1,12 @@
+@use 'forms';
+
+.input {
+  @include forms.standard-input-dimensions($fix-width: true);
+
+  flex-grow: unset;
+  padding: 0;
+
+  &::-webkit-color-swatch-wrapper {
+    padding: 0;
+  }
+}

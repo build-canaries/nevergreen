@@ -42,7 +42,11 @@ export function buildState(
       sort: SortBy.default,
     },
     [selectedRoot]: {},
-    [successRoot]: [],
+    [successRoot]: {
+      messages: [],
+      backgroundColour: '',
+      textColour: '',
+    },
     [feedsRoot]: {},
     [migrationsRoot]: [],
     [remoteLocationsRoot]: {},

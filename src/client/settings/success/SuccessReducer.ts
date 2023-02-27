@@ -1,16 +1,30 @@
 import type { RootState } from '../../configuration/ReduxStore'
 import remove from 'lodash/remove'
 import uniq from 'lodash/uniq'
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { configurationImported } from '../backup/BackupActionCreators'
 import * as t from 'io-ts'
+import merge from 'lodash/merge'
 
 export const successRoot = 'success'
 
-export const SuccessState = t.readonlyArray(t.string, successRoot)
+export const SuccessState = t.type({
+  messages: t.readonlyArray(t.string, successRoot),
+  backgroundColour: t.readonly(t.string),
+  textColour: t.readonly(t.string),
+})
 export type SuccessState = t.TypeOf<typeof SuccessState>
 
-const initialState: SuccessState = ['=(^.^)=']
+export const SuccessConfiguration = t.exact(
+  t.partial(SuccessState.props),
+  successRoot
+)
+
+const initialState: SuccessState = {
+  messages: ['=(^.^)='],
+  backgroundColour: '#000000',
+  textColour: '#fffed7',
+}
 
 const spaces = / /g
 const nonBreakingSpace = String.fromCharCode(160)
@@ -31,23 +45,46 @@ const slice = createSlice({
   initialState,
   reducers: {
     addMessage: (draft, action: PayloadAction<string>) => {
-      return uniq(draft.concat(transformMessage(action.payload)))
+      draft.messages = uniq(
+        draft.messages.concat(transformMessage(action.payload))
+      )
     },
     removeMessage: (draft, action: PayloadAction<string>) => {
       const transformed = transformMessage(action.payload)
-      remove(draft, (message) => message === transformed)
+      remove(draft.messages, (message) => message === transformed)
+    },
+    setSuccessBackgroundColour: (draft, action: PayloadAction<string>) => {
+      draft.backgroundColour = action.payload
+    },
+    setSuccessTextColour: (draft, action: PayloadAction<string>) => {
+      draft.textColour = action.payload
     },
   },
   extraReducers: (builder) => {
     builder.addCase(configurationImported, (draft, action) => {
-      return action.payload.success ?? draft
+      return merge(draft, action.payload.success)
     })
   },
 })
 
 export const { reducer } = slice
-export const { addMessage, removeMessage } = slice.actions
+export const {
+  addMessage,
+  removeMessage,
+  setSuccessBackgroundColour,
+  setSuccessTextColour,
+} = slice.actions
 
-export function getSuccessMessages(state: RootState): ReadonlyArray<string> {
-  return state.success
-}
+const getSuccess = (state: RootState) => state.success
+export const getSuccessMessages = createSelector(
+  getSuccess,
+  (success) => success.messages
+)
+export const getSuccessBackgroundColour = createSelector(
+  getSuccess,
+  (success) => success.backgroundColour
+)
+export const getSuccessTextColour = createSelector(
+  getSuccess,
+  (success) => success.textColour
+)

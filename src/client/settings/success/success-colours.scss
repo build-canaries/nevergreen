@@ -1,0 +1,10 @@
+@use '../../common/layout';
+@use '../../common/colours';
+
+.container {
+  @include layout.grid($mobile-columns: 2, $desktop-columns: 2);
+}
+
+.picker {
+  margin-top: 0;
+}

@@ -1,5 +1,4 @@
 import type { ReactElement } from 'react'
-import { useState } from 'react'
 import { isValidHttpUrl } from '../../domain/Url'
 import { SuccessMessage } from '../../common/SuccessMessage'
 import { getSuccessMessages, removeMessage } from './SuccessReducer'
@@ -11,7 +10,9 @@ import { Image } from '../../common/icons/Image'
 import { useAppDispatch, useAppSelector } from '../../configuration/Hooks'
 import { Bin } from '../../common/icons/Bin'
 import { DangerButton } from '../../common/forms/Button'
-import { useWindowResized } from '../../common/ResizableHook'
+import { SuccessColours } from './SuccessColours'
+import { SuccessImage } from '../../common/SuccessImage'
+import { useAspectRatio } from '../../common/AspectRationHook'
 import styles from './success-messages.scss'
 
 export const NO_MESSAGES_WARNING =
@@ -20,13 +21,7 @@ export const NO_MESSAGES_WARNING =
 export function SuccessMessages(): ReactElement {
   const dispatch = useAppDispatch()
   const messages = useAppSelector(getSuccessMessages)
-  const [aspectRatio, setAspectRatio] = useState(
-    `${window.innerWidth} / ${window.innerHeight}`
-  )
-
-  useWindowResized(() =>
-    setAspectRatio(`${window.innerWidth} / ${window.innerHeight}`)
-  )
+  const aspectRatio = useAspectRatio()
 
   const noMessagesWarning = notEmpty(messages) ? '' : NO_MESSAGES_WARNING
 
@@ -34,7 +29,7 @@ export function SuccessMessages(): ReactElement {
     <Page title="Success messages" icon={<Image />}>
       <AddButton className={styles.add}>Add message</AddButton>
       <WarningMessages messages={noMessagesWarning} />
-      <ol className={styles.messages}>
+      <ol className={styles.messages} aria-label="messages">
         {messages.map((msg) => {
           return (
             <li key={msg} className={styles.messageItem}>
@@ -46,24 +41,18 @@ export function SuccessMessages(): ReactElement {
               >
                 remove success message
               </DangerButton>
-              {isValidHttpUrl(msg) ? (
-                <img
-                  className={styles.message}
-                  style={{ aspectRatio }}
-                  src={msg}
-                  alt={msg}
-                  title={msg}
-                  data-locator="success-image"
-                />
-              ) : (
-                <div className={styles.message} style={{ aspectRatio }}>
+              <div className={styles.messageContainer} style={{ aspectRatio }}>
+                {isValidHttpUrl(msg) ? (
+                  <SuccessImage url={msg} />
+                ) : (
                   <SuccessMessage message={msg} />
-                </div>
-              )}
+                )}
+              </div>
             </li>
           )
         })}
       </ol>
+      <SuccessColours />
     </Page>
   )
 }

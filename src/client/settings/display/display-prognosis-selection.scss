@@ -1,13 +1,6 @@
-@use '../../common/colours';
 @use '../../common/layout';
 
 .container {
-  border: colours.$input-border;
-  margin-top: layout.$spacing-height;
-  padding: 1em;
-}
-
-.options {
   @include layout.grid;
 }
 

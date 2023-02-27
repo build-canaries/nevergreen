@@ -1,0 +1,8 @@
+@use '../colours';
+@use '../layout';
+
+.container {
+  border: colours.$input-border;
+  margin-top: layout.$spacing-height;
+  padding: 1em;
+}

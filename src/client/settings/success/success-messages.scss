@@ -20,6 +20,11 @@
   background-color: colours.$black;
   display: flex;
   flex-direction: column;
+  min-height: calc(#{forms.$standard-input-size-mobile} + 1em);
+
+  @include responsive.respond-to(tablet, desktop) {
+    min-height: calc(#{forms.$standard-input-size-above-mobile} + 1em);
+  }
 }
 
 .remove {
@@ -27,12 +32,7 @@
   z-index: 1;
 }
 
-.message {
-  background-color: colours.$black;
-  color: colours.$off-white;
-  display: block;
-  font-family: typography.$monospace-font;
-
+.messageContainer {
   // this puts the remove button on top of the message
   margin-top: calc(-#{forms.$standard-input-size-mobile} - 1em);
   object-fit: contain;

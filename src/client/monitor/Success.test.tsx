@@ -16,7 +16,7 @@ it('should only switch the message on a new success state not every refresh', as
     [settingsRoot]: {
       showPrognosis: [Prognosis.sick],
     },
-    [successRoot]: ['foo', 'bar'],
+    [successRoot]: { messages: ['foo', 'bar'] },
   }
 
   const { rerender } = render(<Success projects={[]} feedErrors={[]} />, {
@@ -43,19 +43,19 @@ it('should only switch the message on a new success state not every refresh', as
 })
 
 it('should render text messages', () => {
-  const state = { [successRoot]: ['some-message'] }
+  const state = { [successRoot]: { messages: ['some-message'] } }
   render(<Success projects={[]} feedErrors={[]} />, { state })
   expect(screen.getByText('some-message')).toBeInTheDocument()
 })
 
 it('should render images', () => {
-  const state = { [successRoot]: ['http://some-url'] }
+  const state = { [successRoot]: { messages: ['http://some-url'] } }
   render(<Success projects={[]} feedErrors={[]} />, { state })
   expect(screen.getByRole('img')).toHaveAttribute('src', 'http://some-url')
 })
 
 it('should render nothing if there are no success messages', () => {
-  const state = { [successRoot]: [] }
+  const state = { [successRoot]: { messages: [] } }
   const { container } = render(<Success projects={[]} feedErrors={[]} />, {
     state,
   })
@@ -64,7 +64,7 @@ it('should render nothing if there are no success messages', () => {
 })
 
 it('should render nothing if not successful due to an error', () => {
-  const state = { [successRoot]: ['some-message'] }
+  const state = { [successRoot]: { messages: ['some-message'] } }
   const { container } = render(
     <Success projects={[]} feedErrors={[buildFeedError()]} />,
     { state }
@@ -78,7 +78,7 @@ it('should render nothing if not successful due to an interesting project', () =
     [settingsRoot]: {
       showPrognosis: [Prognosis.sick],
     },
-    [successRoot]: ['some-message'],
+    [successRoot]: { messages: ['some-message'] },
   }
   const projects = [buildProject({ prognosis: Prognosis.sick })]
   const { container } = render(
@@ -94,7 +94,7 @@ it('should render a message if only uninteresting projects', () => {
     [settingsRoot]: {
       showPrognosis: [Prognosis.sick],
     },
-    [successRoot]: ['some-message'],
+    [successRoot]: { messages: ['some-message'] },
   }
   const projects = [buildProject({ prognosis: Prognosis.healthy })]
   render(<Success projects={projects} feedErrors={[]} />, { state })

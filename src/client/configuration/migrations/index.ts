@@ -14,6 +14,7 @@ import * as MoveNotificationSettings from './012_MoveNotificationSettings'
 import * as MigrateNotifications from './013_MigrateNotifications'
 import * as MigratePersonalSettings from './014_MigratePersonalSettings'
 import * as MigrateRemoteLocationTimestamps from './015_MigrateRemoteLocationTimestamps'
+import * as MigrateSuccess from './016_MigrateSuccess'
 
 export type Migrate = (data: UntrustedData) => void
 
@@ -39,5 +40,6 @@ export function getOrderedMigrations(): ReadonlyArray<Migration> {
     MigrateNotifications,
     MigratePersonalSettings,
     MigrateRemoteLocationTimestamps,
+    MigrateSuccess,
   ]
 }

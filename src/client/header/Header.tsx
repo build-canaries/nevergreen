@@ -20,12 +20,7 @@ export function Header({ hide }: HeaderProps): ReactElement {
   return (
     <header className={headerClassNames}>
       <div className={styles.inner}>
-        <img
-          src="/canaries.svg"
-          className={styles.logo}
-          alt="Nevergreen"
-          aria-hidden
-        />
+        <img src="/canaries.svg" className={styles.logo} alt="" aria-hidden />
         <nav className={styles.nav} aria-label="Primary">
           <ul className={styles.menu}>
             <li>

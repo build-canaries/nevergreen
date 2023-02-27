@@ -1,0 +1,8 @@
+@use 'layout';
+
+.image {
+  @include layout.fill-parent;
+
+  display: block;
+  object-fit: contain;
+}
