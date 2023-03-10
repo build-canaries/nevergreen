@@ -40,6 +40,30 @@ export function buildState(
       showTrayName: false,
       showPrognosis: [],
       sort: SortBy.default,
+      [Prognosis.healthy]: {
+        backgroundColour: '#058943',
+        textColour: '#ffffff',
+      },
+      [Prognosis.sick]: {
+        backgroundColour: '#b30400',
+        textColour: '#fffed7',
+      },
+      [Prognosis.healthyBuilding]: {
+        backgroundColour: '#ffff18',
+        textColour: '#4a2f27',
+      },
+      [Prognosis.sickBuilding]: {
+        backgroundColour: '#d14904',
+        textColour: '#ffffff',
+      },
+      [Prognosis.unknown]: {
+        backgroundColour: '#ececec',
+        textColour: '#212121',
+      },
+      [Prognosis.error]: {
+        backgroundColour: '#de3535',
+        textColour: '#ffffff',
+      },
     },
     [selectedRoot]: {},
     [successRoot]: {

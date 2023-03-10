@@ -6,6 +6,7 @@ import { Duration } from '../common/Duration'
 import { ScaledTile } from './ScaledTile'
 import { Feed, getFeeds } from '../settings/tracking/FeedsReducer'
 import {
+  getSettings,
   getShowBuildLabel,
   getShowBuildTime,
   getShowFeedIdentifier,
@@ -38,6 +39,7 @@ export function TileProject({
   const showBuildTime = useAppSelector(getShowBuildTime)
   const showFeedIdentifier = useAppSelector(getShowFeedIdentifier)
   const showBuildLabel = useAppSelector(getShowBuildLabel)
+  const settings = useAppSelector(getSettings)
 
   const sentences = visibleProjects.map((p) => p.description)
 
@@ -83,6 +85,10 @@ export function TileProject({
       footer={additional}
       className={styles[project.prognosis]}
       sentences={sentences}
+      style={{
+        color: settings[project.prognosis].textColour,
+        backgroundColor: settings[project.prognosis].backgroundColour,
+      }}
     >
       <ExternalLink href={project.webUrl} className={styles.link}>
         {project.description}

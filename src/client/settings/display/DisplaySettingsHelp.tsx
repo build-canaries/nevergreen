@@ -2,6 +2,7 @@ import type { ReactElement } from 'react'
 import { HelpArticle, HelpProps } from '../../help/HelpArticle'
 import { HelpForm, HelpInput } from '../../help/HelpForms'
 import { ROUTE_DISPLAY } from '../../AppRoutes'
+import { ExternalLink } from '../../common/ExternalLink'
 
 const keywords = [
   'settings',
@@ -69,10 +70,23 @@ export function DisplaySettingsHelp({
             for building projects.
           </p>
         </HelpInput>
-        <HelpInput name="Interesting projects">
-          This determines projects in what status to show on the Monitor page.
-          By default this is sick, sick building, healthy building and unknown.
+        <HelpInput name="Show on the Monitor page">
+          When <em>enabled</em> the corresponding prognosis will be displayed on
+          the Monitor page.
         </HelpInput>
+        <HelpInput name="Background colour">
+          Changes the background colour of the corresponding prognosis.
+        </HelpInput>
+        <HelpInput name="Text colour">
+          Changes the text colour of the corresponding prognosis.
+        </HelpInput>
+        <p>
+          You should consider the{' '}
+          <ExternalLink href="https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html">
+            minimum contrast
+          </ExternalLink>{' '}
+          when changing colours to make sure they are easy to read.
+        </p>
         <HelpInput name="Amount of projects to show">
           This limits the total number of projects show on the Monitor page, any
           additional projects will be counted and shown in a summary box. The
@@ -110,8 +124,8 @@ export function DisplaySettingsHelp({
         projects are being shown on a small screen. This is done to make the
         project name larger and more visible, because this is the most important
         information. Reducing the number of projects shown{' '}
-        {helpLink('amount of projects to show')}
-        or increasing the size of the browser window can mitigate this.
+        {helpLink('amount of projects to show')} or increasing the size of the
+        browser window can mitigate this.
       </p>
     </HelpArticle>
   )

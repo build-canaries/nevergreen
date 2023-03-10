@@ -1,9 +1,13 @@
 @use '../../common/layout';
 
 .container {
-  @include layout.grid;
+  @include layout.grid($tablet-columns: 1, $desktop-columns: 2);
 }
 
 .checkbox {
   margin: 0;
+}
+
+.colours {
+  @include layout.grid($mobile-columns: 2, $desktop-columns: 2);
 }

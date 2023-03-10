@@ -1,15 +1,22 @@
-import type { ReactElement, ReactNode } from 'react'
+import type {
+  DetailedHTMLProps,
+  InputHTMLAttributes,
+  ReactElement,
+  ReactNode,
+} from 'react'
 import { useCallback, useRef, useState } from 'react'
 import cn from 'classnames'
 import { useElementResized } from '../common/ResizableHook'
 import { ScaleText } from '../common/ScaleText'
 import styles from './scaled-tile.scss'
 
-interface TileProps {
-  readonly className?: string
+interface TileProps
+  extends DetailedHTMLProps<
+    InputHTMLAttributes<HTMLDivElement>,
+    HTMLDivElement
+  > {
   readonly header?: ReactNode | null
   readonly footer?: ReactNode | null
-  readonly children: ReactNode
   readonly sentences: ReadonlyArray<string>
 }
 
@@ -19,6 +26,7 @@ export function ScaledTile({
   children,
   className,
   sentences,
+  ...props
 }: TileProps): ReactElement {
   const tileRef = useRef<HTMLDivElement>(null)
 
@@ -37,6 +45,7 @@ export function ScaledTile({
       className={cn(styles.tile, className)}
       ref={tileRef}
       data-locator="tile"
+      {...props}
     >
       {header && <div className={cn(styles.header, smallClass)}>{header}</div>}
       <div className={styles.body}>

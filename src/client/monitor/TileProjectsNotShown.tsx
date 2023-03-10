@@ -4,6 +4,8 @@ import countBy from 'lodash/countBy'
 import { Prognosis, prognosisDisplay, Project } from '../domain/Project'
 import { FeedError } from '../domain/FeedError'
 import styles from './tile-projects-not-shown.scss'
+import { useAppSelector } from '../configuration/Hooks'
+import { getSettings } from '../settings/SettingsReducer'
 
 interface TileNotShownProps {
   readonly projectsNotShown: ReadonlyArray<Project | FeedError>
@@ -12,8 +14,9 @@ interface TileNotShownProps {
 export function TileProjectsNotShown({
   projectsNotShown,
 }: TileNotShownProps): ReactElement {
-  const header = `+${projectsNotShown.length} not shown`
+  const settings = useAppSelector(getSettings)
 
+  const header = `+${projectsNotShown.length} not shown`
   const counts = countBy(projectsNotShown, 'prognosis')
 
   const body = Object.keys(counts)
@@ -30,8 +33,12 @@ export function TileProjectsNotShown({
         return (
           <span
             key={prognosis}
-            className={styles[prognosis]}
-            style={{ flexGrow: counts[prognosis] }}
+            style={{
+              flexGrow: counts[prognosis],
+              color: settings[prognosis as Prognosis].textColour,
+              backgroundColor:
+                settings[prognosis as Prognosis].backgroundColour,
+            }}
           >
             &nbsp;
           </span>

@@ -3,6 +3,7 @@ import {
   getClickToShowMenu,
   getMaxProjectsToShow,
   getRefreshTime,
+  getSettings,
   getShowBuildLabel,
   getShowBuildTime,
   getShowFeedIdentifier,
@@ -12,6 +13,8 @@ import {
   reducer as settingsReducer,
   setClickToShowMenu,
   setMaxProjectsToShow,
+  setPrognosisBackgroundColour,
+  setPrognosisTextColour,
   setRefreshTime,
   setShowBuildLabel,
   setShowBuildTime,
@@ -168,5 +171,43 @@ describe(setSort.toString(), () => {
     const action = setSort(SortBy.prognosis)
     const newState = reducer(existingState, action)
     expect(getSort(newState)).toEqual(SortBy.prognosis)
+  })
+})
+
+describe(setPrognosisBackgroundColour.toString(), () => {
+  it('should set the background colour for the given prognosis', () => {
+    const existingState = state({
+      [Prognosis.sick]: { textColour: '', backgroundColour: '' },
+    })
+    const action = setPrognosisBackgroundColour({
+      prognosis: Prognosis.sick,
+      colour: 'a',
+    })
+    const newState = reducer(existingState, action)
+    expect(getSettings(newState)[Prognosis.sick]).toEqual(
+      expect.objectContaining({
+        textColour: '',
+        backgroundColour: 'a',
+      })
+    )
+  })
+})
+
+describe(setPrognosisTextColour.toString(), () => {
+  it('should set the text colour for the given prognosis', () => {
+    const existingState = state({
+      [Prognosis.sick]: { textColour: '', backgroundColour: '' },
+    })
+    const action = setPrognosisTextColour({
+      prognosis: Prognosis.sick,
+      colour: 'a',
+    })
+    const newState = reducer(existingState, action)
+    expect(getSettings(newState)[Prognosis.sick]).toEqual(
+      expect.objectContaining({
+        textColour: 'a',
+        backgroundColour: '',
+      })
+    )
   })
 })

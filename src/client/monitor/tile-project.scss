@@ -2,11 +2,6 @@
 @use '../common/layout';
 @use '../common/links';
 
-@mixin prognosis($color, $background-color) {
-  background-color: $background-color;
-  color: $color;
-}
-
 .identifier {
   @include layout.fill-parent;
 
@@ -20,72 +15,26 @@
   align-items: baseline;
   display: flex;
   justify-content: space-between;
-  overflow: hidden;
   padding: 0 1em;
-  text-overflow: ellipsis;
 }
 
 .link {
+  color: inherit;
   text-decoration-line: none;
 
+  &:visited {
+    color: inherit;
+  }
+
   &:hover {
+    background-color: inherit;
+    color: inherit;
     text-decoration-line: underline;
   }
-}
 
-.healthy {
-  @include prognosis(colours.$white, colours.$healthy);
-
-  .link {
-    @include links.link(colours.$white, colours.$white, colours.$healthy);
-  }
-}
-
-.healthy-building {
-  @include prognosis(colours.$healthy-building-text, colours.$healthy-building);
-
-  .link {
-    @include links.link(
-      colours.$healthy-building-text,
-      colours.$healthy-building-text,
-      colours.$healthy-building
-    );
-  }
-}
-
-.sick {
-  @include prognosis(colours.$off-white, colours.$sick);
-
-  .link {
-    @include links.link(colours.$off-white, colours.$off-white, colours.$sick);
-  }
-}
-
-.sick-building {
-  @include prognosis(colours.$white, colours.$sick-building);
-
-  .link {
-    @include links.link(colours.$white, colours.$white, colours.$sick-building);
-  }
-}
-
-.unknown {
-  @include prognosis(colours.$off-black, colours.$light-grey);
-
-  .link {
-    @include links.link(
-      colours.$off-black,
-      colours.$off-black,
-      colours.$light-grey
-    );
-  }
-}
-
-.error {
-  @include prognosis(colours.$white, colours.$error);
-
-  .link {
-    @include links.link(colours.$white, colours.$white, colours.$error);
+  &:focus {
+    background-color: inherit;
+    color: inherit;
   }
 }
 

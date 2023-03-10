@@ -23,6 +23,13 @@ export enum SortBy {
   timestamp = 'timestamp',
 }
 
+const PrognosisState = t.readonly(
+  t.type({
+    backgroundColour: t.readonly(t.string),
+    textColour: t.readonly(t.string),
+  })
+)
+
 const SettingsState = t.type({
   showTrayName: t.readonly(t.boolean),
   showBuildTime: t.readonly(t.boolean),
@@ -55,6 +62,12 @@ const SettingsState = t.type({
       [SortBy.timestamp]: null,
     })
   ),
+  [Prognosis.healthy]: PrognosisState,
+  [Prognosis.sick]: PrognosisState,
+  [Prognosis.healthyBuilding]: PrognosisState,
+  [Prognosis.sickBuilding]: PrognosisState,
+  [Prognosis.unknown]: PrognosisState,
+  [Prognosis.error]: PrognosisState,
 })
 
 export const SettingsConfiguration = t.exact(
@@ -82,6 +95,30 @@ const initialState: SettingsState = {
     Prognosis.unknown,
   ],
   sort: SortBy.default,
+  [Prognosis.healthy]: {
+    backgroundColour: '#058943',
+    textColour: '#ffffff',
+  },
+  [Prognosis.sick]: {
+    backgroundColour: '#b30400',
+    textColour: '#fffed7',
+  },
+  [Prognosis.healthyBuilding]: {
+    backgroundColour: '#ffff18',
+    textColour: '#4a2f27',
+  },
+  [Prognosis.sickBuilding]: {
+    backgroundColour: '#d14904',
+    textColour: '#ffffff',
+  },
+  [Prognosis.unknown]: {
+    backgroundColour: '#ececec',
+    textColour: '#212121',
+  },
+  [Prognosis.error]: {
+    backgroundColour: '#de3535',
+    textColour: '#ffffff',
+  },
 }
 
 function absoluteClosestNumber(actual: number, a: number, b: number): number {
@@ -128,6 +165,20 @@ const slice = createSlice({
         ? uniq(draft.showPrognosis.concat(prognosis))
         : draft.showPrognosis.filter((p) => p !== prognosis)
     },
+    setPrognosisBackgroundColour: (
+      draft,
+      action: PayloadAction<{ colour: string; prognosis: Prognosis }>
+    ) => {
+      const { colour, prognosis } = action.payload
+      draft[prognosis].backgroundColour = colour
+    },
+    setPrognosisTextColour: (
+      draft,
+      action: PayloadAction<{ colour: string; prognosis: Prognosis }>
+    ) => {
+      const { colour, prognosis } = action.payload
+      draft[prognosis].textColour = colour
+    },
     setSort: (draft, action: PayloadAction<SortBy>) => {
       draft.sort = action.payload
     },
@@ -149,9 +200,11 @@ export const {
   setMaxProjectsToShow,
   setClickToShowMenu,
   setSort,
+  setPrognosisTextColour,
+  setPrognosisBackgroundColour,
 } = slice.actions
 
-const getSettings = (state: RootState) => state.settings
+export const getSettings = (state: RootState) => state.settings
 export const getShowFeedIdentifier = createSelector(
   getSettings,
   (settings) => settings.showTrayName

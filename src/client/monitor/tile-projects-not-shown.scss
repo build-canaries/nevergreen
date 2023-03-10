@@ -11,27 +11,3 @@
   flex-wrap: nowrap;
   font-size: 0.25em;
 }
-
-.error {
-  background-color: colours.$error;
-}
-
-.healthy {
-  background-color: colours.$healthy;
-}
-
-.healthy-building {
-  background-color: colours.$healthy-building;
-}
-
-.sick {
-  background-color: colours.$sick;
-}
-
-.sick-building {
-  background-color: colours.$sick-building;
-}
-
-.unknown {
-  background-color: colours.$light-grey;
-}
