@@ -6,13 +6,10 @@
 .overlay {
   align-items: center;
   background-color: color.adjust(colours.$white, $alpha: -0.25);
-  bottom: 0;
   display: flex;
+  inset: 0;
   justify-content: center;
-  left: 0;
   position: fixed;
-  right: 0;
-  top: 0;
   z-index: layout.$model-index;
 }
 
