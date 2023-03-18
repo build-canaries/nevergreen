@@ -7,7 +7,6 @@ import {
 } from './SuccessReducer'
 import { useAppDispatch, useAppSelector } from '../../configuration/Hooks'
 import { ColourPicker } from '../../common/forms/ColourPicker'
-import { Group } from '../../common/forms/Group'
 import styles from './success-colours.scss'
 
 export function SuccessColours(): ReactElement {
@@ -16,7 +15,7 @@ export function SuccessColours(): ReactElement {
   const dispatch = useAppDispatch()
 
   return (
-    <Group title="Colours" className={styles.container}>
+    <div className={styles.container}>
       <ColourPicker
         value={backgroundColour}
         onChange={({ target }) =>
@@ -33,6 +32,6 @@ export function SuccessColours(): ReactElement {
       >
         Text colour
       </ColourPicker>
-    </Group>
+    </div>
   )
 }

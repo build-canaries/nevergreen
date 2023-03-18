@@ -1,12 +1,39 @@
+@use '../responsive';
 @use 'forms';
+@use 'sass:math';
+
+// We need to use mixins otherwise SASS will combine the classes into a comma seperated list
+// which breaks the styling in Chrome
+// https://stackoverflow.com/q/67113887
+
+@mixin -swatch {
+  border-radius: math.div(forms.$standard-input-size-mobile, 2);
+
+  @include responsive.respond-to(tablet, desktop) {
+    border-radius: math.div(forms.$standard-input-size-above-mobile, 2);
+  }
+}
 
 .input {
   @include forms.standard-input-dimensions($fix-width: true);
 
+  border-radius: math.div(forms.$standard-input-size-mobile, 2);
   flex-grow: unset;
   padding: 0;
 
+  @include responsive.respond-to(tablet, desktop) {
+    border-radius: math.div(forms.$standard-input-size-above-mobile, 2);
+  }
+
   &::-webkit-color-swatch-wrapper {
     padding: 0;
+  }
+
+  &::-webkit-color-swatch {
+    @include -swatch;
+  }
+
+  &::-moz-color-swatch {
+    @include -swatch;
   }
 }

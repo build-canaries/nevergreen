@@ -3,8 +3,8 @@
 
 $thumb-colour: colours.$blue;
 
-// These need to be mixins otherwise SASS will combine the classes into a comma seperated list
-// which breaks the styling on Chrome
+// We need to use mixins otherwise SASS will combine the classes into a comma seperated list
+// which breaks the styling in Chrome
 // https://stackoverflow.com/q/67113887
 
 @mixin -track {
