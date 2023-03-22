@@ -15,4 +15,7 @@
 .title {
   flex-grow: 1;
   margin: 0 layout.$spacing-width 0 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

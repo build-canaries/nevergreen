@@ -6,6 +6,7 @@
   display: flex;
   flex-direction: column;
   margin: layout.$spacing-height 0 0 0;
+  width: 100%;
 
   &:focus-within {
     border-color: colours.$black;

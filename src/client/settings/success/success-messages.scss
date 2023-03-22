@@ -1,8 +1,4 @@
-@use '../../common/colours';
 @use '../../common/layout';
-@use '../../common/typography';
-@use '../../common/forms/forms';
-@use '../../common/responsive';
 
 .add {
   margin-top: 0;
@@ -15,30 +11,10 @@
   margin: 0;
 }
 
-.messageItem {
-  align-items: flex-end;
-  background-color: colours.$black;
-  display: flex;
-  flex-direction: column;
-  min-height: calc(#{forms.$standard-input-size-mobile} + 1em);
-
-  @include responsive.respond-to(tablet, desktop) {
-    min-height: calc(#{forms.$standard-input-size-above-mobile} + 1em);
-  }
+.card {
+  margin: 0;
 }
 
-.remove {
-  margin: 0.5em;
-  z-index: 1;
-}
-
-.messageContainer {
-  // this puts the remove button on top of the message
-  margin-top: calc(-#{forms.$standard-input-size-mobile} - 1em);
-  object-fit: contain;
-  width: 100%;
-
-  @include responsive.respond-to(tablet, desktop) {
-    margin-top: calc(-#{forms.$standard-input-size-above-mobile} - 1em);
-  }
+.cardBody {
+  padding: 0;
 }

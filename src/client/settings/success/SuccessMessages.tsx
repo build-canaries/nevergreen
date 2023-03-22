@@ -8,11 +8,11 @@ import { notEmpty } from '../../common/Utils'
 import { Page } from '../../common/Page'
 import { Image } from '../../common/icons/Image'
 import { useAppDispatch, useAppSelector } from '../../configuration/Hooks'
-import { Bin } from '../../common/icons/Bin'
-import { DangerButton } from '../../common/forms/Button'
 import { SuccessColours } from './SuccessColours'
 import { SuccessImage } from '../../common/SuccessImage'
 import { useAspectRatio } from '../../common/AspectRationHook'
+import { Card } from '../../common/card/Card'
+import { CardHeading } from '../../common/card/CardHeading'
 import styles from './success-messages.scss'
 
 export const NO_MESSAGES_WARNING =
@@ -31,23 +31,28 @@ export function SuccessMessages(): ReactElement {
       <WarningMessages messages={noMessagesWarning} />
       <ol className={styles.messages} aria-label="messages">
         {messages.map((msg) => {
+          const header = (
+            <CardHeading
+              title={msg}
+              onRemove={() => dispatch(removeMessage(msg))}
+            />
+          )
+
           return (
-            <li key={msg} className={styles.messageItem}>
-              <DangerButton
-                icon={<Bin />}
-                iconOnly
-                className={styles.remove}
-                onClick={() => dispatch(removeMessage(msg))}
+            <li key={msg}>
+              <Card
+                header={header}
+                className={styles.card}
+                classNameBody={styles.cardBody}
               >
-                remove success message
-              </DangerButton>
-              <div className={styles.messageContainer} style={{ aspectRatio }}>
-                {isValidHttpUrl(msg) ? (
-                  <SuccessImage url={msg} />
-                ) : (
-                  <SuccessMessage message={msg} />
-                )}
-              </div>
+                <div style={{ aspectRatio }}>
+                  {isValidHttpUrl(msg) ? (
+                    <SuccessImage url={msg} />
+                  ) : (
+                    <SuccessMessage message={msg} />
+                  )}
+                </div>
+              </Card>
             </li>
           )
         })}

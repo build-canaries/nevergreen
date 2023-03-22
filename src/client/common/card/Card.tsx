@@ -6,13 +6,19 @@ interface CardProps {
   readonly header: ReactElement
   readonly children: string | ReactElement | ReadonlyArray<ReactElement>
   readonly className?: string
+  readonly classNameBody?: string
 }
 
-export function Card({ header, children, className }: CardProps): ReactElement {
+export function Card({
+  header,
+  children,
+  className,
+  classNameBody,
+}: CardProps): ReactElement {
   return (
     <section className={cn(styles.card, className)}>
       <div className={styles.header}>{header}</div>
-      <div className={styles.body}>{children}</div>
+      <div className={cn(styles.body, classNameBody)}>{children}</div>
     </section>
   )
 }

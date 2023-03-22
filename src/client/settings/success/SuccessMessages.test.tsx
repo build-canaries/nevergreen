@@ -12,14 +12,16 @@ it('should show success messages', () => {
     [successRoot]: { messages: ['some-message', 'http://some-url'] },
   }
   render(<SuccessMessages />, { state })
-  expect(screen.getByText('some-message')).toBeInTheDocument()
+  expect(
+    screen.getByText('some-message', { selector: 'div' })
+  ).toBeInTheDocument()
   expect(screen.getByRole('img')).toHaveAttribute('src', 'http://some-url')
 })
 
 it('should allow success messages to be removed', async () => {
   const state = { [successRoot]: { messages: ['some-message'] } }
   const { user } = render(<SuccessMessages />, { state })
-  await user.click(screen.getByText('remove success message'))
+  await user.click(screen.getByText('Remove some-message'))
   expect(screen.queryByText('some-message')).not.toBeInTheDocument()
 })
 
