@@ -3,7 +3,10 @@ import { render, setSystemTime } from '../testUtils/testHelpers'
 import { buildFeed, buildFeedError, buildProject } from '../testUtils/builders'
 import { Prognosis, ProjectPrognosis } from '../domain/Project'
 import { feedsRoot } from '../settings/tracking/FeedsReducer'
-import { MaxProjectsToShow, settingsRoot } from '../settings/SettingsReducer'
+import {
+  MaxProjectsToShow,
+  displaySettingsRoot,
+} from '../settings/display/DisplaySettingsReducer'
 import { screen } from '@testing-library/react'
 
 const feedId = 'some-tray-id'
@@ -21,7 +24,7 @@ describe('displaying project information', () => {
         [feedsRoot]: {
           [feedId]: buildFeed({ trayId: feedId, name: 'some-feed-name' }),
         },
-        [settingsRoot]: {
+        [displaySettingsRoot]: {
           showPrognosis: [prognosis],
           showTrayName: true,
           showBuildTime: true,
@@ -56,7 +59,7 @@ describe('displaying project information', () => {
       [feedsRoot]: {
         [feedId]: buildFeed({ trayId: feedId, name: 'some-feed-name' }),
       },
-      [settingsRoot]: {
+      [displaySettingsRoot]: {
         showPrognosis: [Prognosis.unknown],
         showTrayName: true,
         showBuildTime: true,
@@ -91,7 +94,7 @@ describe('displaying project information', () => {
       [feedsRoot]: {
         [feedId]: buildFeed({ trayId: feedId, name: 'some-feed-name' }),
       },
-      [settingsRoot]: {
+      [displaySettingsRoot]: {
         showPrognosis: [Prognosis.sickBuilding],
         showTrayName: true,
         showBuildTime: true,
@@ -125,7 +128,7 @@ describe('displaying project information', () => {
       [feedsRoot]: {
         [feedId]: buildFeed({ trayId: feedId, name: 'some-feed-name' }),
       },
-      [settingsRoot]: {
+      [displaySettingsRoot]: {
         showPrognosis: [Prognosis.sick],
         showTrayName: false,
         showBuildTime: false,
@@ -158,7 +161,7 @@ describe('displaying project information', () => {
       [feedsRoot]: {
         [feedId]: buildFeed({ trayId: feedId }),
       },
-      [settingsRoot]: {
+      [displaySettingsRoot]: {
         showPrognosis: [Prognosis.sickBuilding],
       },
     }
@@ -189,7 +192,7 @@ describe('limiting the projects displayed', () => {
       [feedsRoot]: {
         [feedId]: buildFeed({ trayId: feedId }),
       },
-      [settingsRoot]: {
+      [displaySettingsRoot]: {
         maxProjectsToShow: MaxProjectsToShow.small,
       },
     }
@@ -206,7 +209,7 @@ describe('limiting the projects displayed', () => {
       [feedsRoot]: {
         [feedId]: buildFeed({ trayId: feedId }),
       },
-      [settingsRoot]: {
+      [displaySettingsRoot]: {
         maxProjectsToShow: MaxProjectsToShow.small,
       },
     }
@@ -229,7 +232,7 @@ describe('limiting the projects displayed', () => {
       [feedsRoot]: {
         [feedId]: buildFeed({ trayId: feedId }),
       },
-      [settingsRoot]: {
+      [displaySettingsRoot]: {
         showPrognosis: [
           Prognosis.sick,
           Prognosis.sickBuilding,
@@ -262,7 +265,7 @@ describe('limiting the projects displayed', () => {
       [feedsRoot]: {
         [feedId]: buildFeed({ trayId: feedId }),
       },
-      [settingsRoot]: {
+      [displaySettingsRoot]: {
         showPrognosis: [Prognosis.error],
         maxProjectsToShow: MaxProjectsToShow.small,
       },
@@ -289,7 +292,7 @@ describe('limiting the projects displayed', () => {
       [feedsRoot]: {
         [feedId]: buildFeed({ trayId: feedId }),
       },
-      [settingsRoot]: {
+      [displaySettingsRoot]: {
         showPrognosis: [
           Prognosis.sick,
           Prognosis.sickBuilding,
@@ -333,7 +336,7 @@ it('should filter projects based on prognosis', () => {
     [feedsRoot]: {
       [feedId]: buildFeed({ trayId: feedId, name: 'some-feed-name' }),
     },
-    [settingsRoot]: {
+    [displaySettingsRoot]: {
       showPrognosis: [Prognosis.sick],
       showBuildTime: true,
       showBuildLabel: true,

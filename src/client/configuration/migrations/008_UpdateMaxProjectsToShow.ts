@@ -2,13 +2,13 @@ import { Migrate } from './index'
 import get from 'lodash/get'
 import has from 'lodash/has'
 import set from 'lodash/set'
-import { MaxProjectsToShow, settingsRoot } from '../../settings/SettingsReducer'
+import { MaxProjectsToShow } from '../../settings/display/DisplaySettingsReducer'
 
 export const id = '008_UpdateMaxProjectsToShow'
 
 export const migrate: Migrate = (data) => {
-  if (has(data, [settingsRoot, 'maxProjectsToShow'])) {
-    const oldValue = get(data, [settingsRoot, 'maxProjectsToShow']) as number
+  if (has(data, ['settings', 'maxProjectsToShow'])) {
+    const oldValue = get(data, ['settings', 'maxProjectsToShow']) as number
     let newValue
     if (oldValue < 12) {
       newValue = MaxProjectsToShow.small
@@ -19,6 +19,6 @@ export const migrate: Migrate = (data) => {
     } else {
       newValue = MaxProjectsToShow.all
     }
-    set(data, [settingsRoot, 'maxProjectsToShow'], newValue)
+    set(data, ['settings', 'maxProjectsToShow'], newValue)
   }
 }

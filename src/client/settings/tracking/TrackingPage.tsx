@@ -10,7 +10,7 @@ import {
   getRefreshTime,
   setRefreshTime,
   validRefreshTimes,
-} from '../SettingsReducer'
+} from '../display/DisplaySettingsReducer'
 import { List } from '../../common/icons/List'
 import { CardList } from '../../common/card/CardList'
 import { useAppDispatch, useAppSelector } from '../../configuration/Hooks'

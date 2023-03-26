@@ -2,10 +2,10 @@ import type { RootState } from '../configuration/ReduxStore'
 import type { ProjectApi } from '../gateways/ProjectsGateway'
 import merge from 'lodash/merge'
 import {
+  displaySettingsRoot,
   MaxProjectsToShow,
-  settingsRoot as settingsName,
   SortBy,
-} from '../settings/SettingsReducer'
+} from '../settings/display/DisplaySettingsReducer'
 import { selectedRoot } from '../settings/tracking/SelectedReducer'
 import { successRoot } from '../settings/success/SuccessReducer'
 import {
@@ -26,13 +26,13 @@ import { RemoteLocationOptions } from '../settings/backup/RemoteLocationOptions'
 import { notificationsRoot } from '../settings/notifications/NotificationsReducer'
 import { FeedError } from '../domain/FeedError'
 import { personalSettingsRoot } from '../settings/PersonalSettingsReducer'
+import { otherSettingsRoot } from '../settings/other/OtherSettingsReducer'
 
 export function buildState(
   subState: RecursivePartial<RootState> = {}
 ): RootState {
   const defaultState: RootState = {
-    [settingsName]: {
-      clickToShowMenu: false,
+    [displaySettingsRoot]: {
       maxProjectsToShow: MaxProjectsToShow.medium,
       refreshTime: 10,
       showBuildLabel: false,
@@ -64,6 +64,9 @@ export function buildState(
         backgroundColour: '#de3535',
         textColour: '#ffffff',
       },
+    },
+    [otherSettingsRoot]: {
+      clickToShowMenu: false,
     },
     [selectedRoot]: {},
     [successRoot]: {

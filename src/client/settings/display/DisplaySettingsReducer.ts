@@ -1,13 +1,13 @@
-import type { RootState } from '../configuration/ReduxStore'
+import type { RootState } from '../../configuration/ReduxStore'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSelector, createSlice } from '@reduxjs/toolkit'
-import { Prognosis } from '../domain/Project'
+import { Prognosis } from '../../domain/Project'
 import merge from 'lodash/merge'
 import uniq from 'lodash/uniq'
-import { configurationImported } from './backup/BackupActionCreators'
+import { configurationImported } from '../backup/BackupActionCreators'
 import * as t from 'io-ts'
 
-export const settingsRoot = 'settings'
+export const displaySettingsRoot = 'settings'
 
 export enum MaxProjectsToShow {
   small = 'small',
@@ -30,7 +30,7 @@ const PrognosisState = t.readonly(
   })
 )
 
-const SettingsState = t.type({
+const DisplaySettingsState = t.type({
   showTrayName: t.readonly(t.boolean),
   showBuildTime: t.readonly(t.boolean),
   refreshTime: t.readonly(t.number),
@@ -43,7 +43,6 @@ const SettingsState = t.type({
       [MaxProjectsToShow.all]: null,
     })
   ),
-  clickToShowMenu: t.readonly(t.boolean),
   showPrognosis: t.readonlyArray(
     t.keyof({
       [Prognosis.healthy]: null,
@@ -70,24 +69,23 @@ const SettingsState = t.type({
   [Prognosis.error]: PrognosisState,
 })
 
-export const SettingsConfiguration = t.exact(
-  t.partial(SettingsState.props),
-  settingsRoot
+export const DisplaySettingsConfiguration = t.exact(
+  t.partial(DisplaySettingsState.props),
+  displaySettingsRoot
 )
 
-export type SettingsState = t.TypeOf<typeof SettingsState>
+export type DisplaySettingsState = t.TypeOf<typeof DisplaySettingsState>
 
 export const validRefreshTimes = [
   5, 10, 30, 60, 300, 600, 1800, 3600, 43200, 86400,
 ]
 
-const initialState: SettingsState = {
+const initialState: DisplaySettingsState = {
   showTrayName: false,
   showBuildTime: true,
   refreshTime: 10,
   showBuildLabel: false,
   maxProjectsToShow: MaxProjectsToShow.medium,
-  clickToShowMenu: false,
   showPrognosis: [
     Prognosis.sick,
     Prognosis.sickBuilding,
@@ -126,7 +124,7 @@ function absoluteClosestNumber(actual: number, a: number, b: number): number {
 }
 
 const slice = createSlice({
-  name: settingsRoot,
+  name: displaySettingsRoot,
   initialState,
   reducers: {
     setShowBuildTime: (draft, action: PayloadAction<boolean>) => {
@@ -152,9 +150,6 @@ const slice = createSlice({
     },
     setMaxProjectsToShow: (draft, action: PayloadAction<MaxProjectsToShow>) => {
       draft.maxProjectsToShow = action.payload
-    },
-    setClickToShowMenu: (draft, action: PayloadAction<boolean>) => {
-      draft.clickToShowMenu = action.payload
     },
     setShowPrognosis: (
       draft,
@@ -198,39 +193,37 @@ export const {
   setShowPrognosis,
   setShowFeedIdentifier,
   setMaxProjectsToShow,
-  setClickToShowMenu,
   setSort,
   setPrognosisTextColour,
   setPrognosisBackgroundColour,
 } = slice.actions
 
-export const getSettings = (state: RootState) => state.settings
+export const getDisplaySettings = (state: RootState) => state.settings
 export const getShowFeedIdentifier = createSelector(
-  getSettings,
+  getDisplaySettings,
   (settings) => settings.showTrayName
 )
 export const getShowBuildTime = createSelector(
-  getSettings,
+  getDisplaySettings,
   (settings) => settings.showBuildTime
 )
 export const getShowBuildLabel = createSelector(
-  getSettings,
+  getDisplaySettings,
   (settings) => settings.showBuildLabel
 )
 export const getRefreshTime = createSelector(
-  getSettings,
+  getDisplaySettings,
   (settings) => settings.refreshTime
 )
 export const getMaxProjectsToShow = createSelector(
-  getSettings,
+  getDisplaySettings,
   (settings) => settings.maxProjectsToShow
 )
-export const getClickToShowMenu = createSelector(
-  getSettings,
-  (settings) => settings.clickToShowMenu
-)
 export const getShowPrognosis = createSelector(
-  getSettings,
+  getDisplaySettings,
   (settings) => settings.showPrognosis
 )
-export const getSort = createSelector(getSettings, (settings) => settings.sort)
+export const getSort = createSelector(
+  getDisplaySettings,
+  (settings) => settings.sort
+)

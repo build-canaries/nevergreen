@@ -12,7 +12,7 @@ import {
   getMaxProjectsToShow,
   getShowPrognosis,
   MaxProjectsToShow,
-} from '../settings/SettingsReducer'
+} from '../settings/display/DisplaySettingsReducer'
 import { isMobile, isTablet } from '../common/Style'
 import { useWindowResized } from '../common/ResizableHook'
 import { FeedErrors, isError } from '../domain/FeedError'

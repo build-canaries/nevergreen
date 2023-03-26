@@ -5,7 +5,7 @@ import { ProjectsResponse } from '../../../gateways/ProjectsGateway'
 import { Project } from '../../../domain/Project'
 import { isError as isProjectError } from '../../../domain/FeedError'
 import omit from 'lodash/omit'
-import { SortBy } from '../../SettingsReducer'
+import { SortBy } from '../../display/DisplaySettingsReducer'
 
 export function useProjects(
   feed: Feed

@@ -7,7 +7,10 @@ import {
   getSelectedProjects,
   SelectedState,
 } from '../settings/tracking/SelectedReducer'
-import { getRefreshTime, getSort } from '../settings/SettingsReducer'
+import {
+  getRefreshTime,
+  getSort,
+} from '../settings/display/DisplaySettingsReducer'
 import isEmpty from 'lodash/isEmpty'
 import { useState } from 'react'
 import omit from 'lodash/omit'

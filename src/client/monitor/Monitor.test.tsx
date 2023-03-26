@@ -10,7 +10,10 @@ import {
 import { feedsRoot } from '../settings/tracking/FeedsReducer'
 import { successRoot } from '../settings/success/SuccessReducer'
 import * as Gateway from '../gateways/Gateway'
-import { settingsRoot, SortBy } from '../settings/SettingsReducer'
+import {
+  displaySettingsRoot,
+  SortBy,
+} from '../settings/display/DisplaySettingsReducer'
 import { Prognosis } from '../domain/Project'
 import * as NotificationsHook from './notifications/NotificationsHook'
 import * as AudioPlayer from '../common/AudioPlayer'
@@ -58,7 +61,7 @@ it('should show a success message if there are no interesting projects', async (
       [feedId]: buildFeed({ trayId: feedId }),
     },
     [successRoot]: { messages: ['some-success-message'] },
-    [settingsRoot]: {
+    [displaySettingsRoot]: {
       showPrognosis: [Prognosis.sick],
     },
   }
@@ -83,7 +86,7 @@ it('should display an error if the Nevergreen server is having issues', async ()
     [feedsRoot]: {
       [feedId]: buildFeed({ trayId: feedId }),
     },
-    [settingsRoot]: {
+    [displaySettingsRoot]: {
       refreshTime: 1,
       showPrognosis: [Prognosis.sick],
     },
@@ -118,7 +121,7 @@ it('should show projects', async () => {
     [feedsRoot]: {
       [feedId]: buildFeed({ trayId: feedId }),
     },
-    [settingsRoot]: {
+    [displaySettingsRoot]: {
       showPrognosis: [Prognosis.sick],
     },
   }
@@ -149,7 +152,7 @@ it('should show feed errors', async () => {
     [feedsRoot]: {
       [feedId]: buildFeed({ trayId: feedId }),
     },
-    [settingsRoot]: {
+    [displaySettingsRoot]: {
       showPrognosis: [Prognosis.sick],
     },
   }

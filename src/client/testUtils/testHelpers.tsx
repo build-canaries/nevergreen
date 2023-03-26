@@ -13,7 +13,7 @@ import type { ReactElement, ReactNode } from 'react'
 import type { AnyAction, EnhancedStore } from '@reduxjs/toolkit'
 import { configureStore } from '@reduxjs/toolkit'
 import merge from 'lodash/merge'
-import { settingsRoot } from '../settings/SettingsReducer'
+import { displaySettingsRoot } from '../settings/display/DisplaySettingsReducer'
 import { selectedRoot } from '../settings/tracking/SelectedReducer'
 import { successRoot } from '../settings/success/SuccessReducer'
 import { feedsRoot } from '../settings/tracking/FeedsReducer'
@@ -28,6 +28,7 @@ import { buildState } from './builders'
 import { App } from '../App'
 import { notificationsRoot } from '../settings/notifications/NotificationsReducer'
 import { personalSettingsRoot } from '../settings/PersonalSettingsReducer'
+import { otherSettingsRoot } from '../settings/other/OtherSettingsReducer'
 
 interface ExtendedRenderResult extends RenderResult {
   readonly store: EnhancedStore<
@@ -104,7 +105,8 @@ export function testReducer(
   return combineReducers<RootState>(
     merge(
       {
-        [settingsRoot]: (state: any = null) => state,
+        [displaySettingsRoot]: (state: any = null) => state,
+        [otherSettingsRoot]: (state: any = null) => state,
         [selectedRoot]: (state: any = null) => state,
         [successRoot]: (state: any = null) => state,
         [feedsRoot]: (state: any = null) => state,

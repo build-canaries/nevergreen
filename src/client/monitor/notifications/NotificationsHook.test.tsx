@@ -6,7 +6,7 @@ import { notificationsRoot } from '../../settings/notifications/NotificationsRed
 import { useNotifications } from './NotificationsHook'
 import { FeedErrors } from '../../domain/FeedError'
 import * as AudioPlayer from '../../common/AudioPlayer'
-import { settingsRoot } from '../../settings/SettingsReducer'
+import { displaySettingsRoot } from '../../settings/display/DisplaySettingsReducer'
 import { personalSettingsRoot } from '../../settings/PersonalSettingsReducer'
 
 interface PrognosisTest {
@@ -424,7 +424,7 @@ describe('audio notifications', () => {
 describe('browser title', () => {
   it('should update the title with a summary', () => {
     const state = {
-      [settingsRoot]: {
+      [displaySettingsRoot]: {
         showPrognosis: [
           Prognosis.sick,
           Prognosis.sickBuilding,
@@ -472,7 +472,7 @@ describe('browser title', () => {
 
   it('should exclude prognoses that have no projects', () => {
     const state = {
-      [settingsRoot]: {
+      [displaySettingsRoot]: {
         showPrognosis: [
           Prognosis.sick,
           Prognosis.sickBuilding,
@@ -501,7 +501,7 @@ describe('browser title', () => {
 
   it('should count projects in each prognosis', () => {
     const state = {
-      [settingsRoot]: {
+      [displaySettingsRoot]: {
         showPrognosis: [
           Prognosis.sick,
           Prognosis.sickBuilding,
@@ -539,7 +539,7 @@ describe('browser title', () => {
 
   it('should only show interesting projects', () => {
     const state = {
-      [settingsRoot]: {
+      [displaySettingsRoot]: {
         showPrognosis: [Prognosis.sick, Prognosis.healthy],
       },
     }

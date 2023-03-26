@@ -6,8 +6,8 @@ import { TrackingPage } from './TrackingPage'
 import { selectedRoot as selectedName } from './SelectedReducer'
 import {
   getRefreshTime,
-  settingsRoot as settingsName,
-} from '../SettingsReducer'
+  displaySettingsRoot as settingsName,
+} from '../display/DisplaySettingsReducer'
 
 it('should allow changing the poll time', async () => {
   const state = {

@@ -4,7 +4,7 @@ import capitalize from 'lodash/capitalize'
 import { notificationIcons } from '../../settings/notifications/icons/NotificationIcon'
 import { useUpdateBrowserTitle } from '../../common/BrowserTitleHook'
 import { reversePrognosisPriority } from './NotificationsHook'
-import { getShowPrognosis } from '../../settings/SettingsReducer'
+import { getShowPrognosis } from '../../settings/display/DisplaySettingsReducer'
 import { FeedErrors } from '../../domain/FeedError'
 import { useAppSelector } from '../../configuration/Hooks'
 

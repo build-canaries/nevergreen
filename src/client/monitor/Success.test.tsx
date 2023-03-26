@@ -4,7 +4,7 @@ import { successRoot } from '../settings/success/SuccessReducer'
 import { screen, waitFor } from '@testing-library/react'
 import { buildFeedError, buildProject } from '../testUtils/builders'
 import { Prognosis } from '../domain/Project'
-import { settingsRoot } from '../settings/SettingsReducer'
+import { displaySettingsRoot } from '../settings/display/DisplaySettingsReducer'
 import * as Utils from '../common/Utils'
 
 it('should only switch the message on a new success state not every refresh', async () => {
@@ -13,7 +13,7 @@ it('should only switch the message on a new success state not every refresh', as
     .mockReturnValueOnce('foo')
     .mockReturnValueOnce('bar')
   const state = {
-    [settingsRoot]: {
+    [displaySettingsRoot]: {
       showPrognosis: [Prognosis.sick],
     },
     [successRoot]: { messages: ['foo', 'bar'] },
@@ -75,7 +75,7 @@ it('should render nothing if not successful due to an error', () => {
 
 it('should render nothing if not successful due to an interesting project', () => {
   const state = {
-    [settingsRoot]: {
+    [displaySettingsRoot]: {
       showPrognosis: [Prognosis.sick],
     },
     [successRoot]: { messages: ['some-message'] },
@@ -91,7 +91,7 @@ it('should render nothing if not successful due to an interesting project', () =
 
 it('should render a message if only uninteresting projects', () => {
   const state = {
-    [settingsRoot]: {
+    [displaySettingsRoot]: {
       showPrognosis: [Prognosis.sick],
     },
     [successRoot]: { messages: ['some-message'] },

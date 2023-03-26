@@ -1,6 +1,4 @@
 import { migrate } from './012_MoveNotificationSettings'
-import { settingsRoot } from '../../settings/SettingsReducer'
-import { notificationsRoot } from '../../settings/notifications/NotificationsReducer'
 
 it('should return the given data if it does not contain settings', () => {
   const data = { foo: 'bar' }
@@ -10,7 +8,7 @@ it('should return the given data if it does not contain settings', () => {
 
 it('should move settings to notifications', () => {
   const data = {
-    [settingsRoot]: {
+    settings: {
       enableNewVersionCheck: true,
       showSystemNotifications: false,
       playBrokenBuildSoundFx: false,
@@ -19,24 +17,24 @@ it('should move settings to notifications', () => {
   }
   migrate(data)
   expect(data).toEqual({
-    [notificationsRoot]: {
+    notifications: {
       enableNewVersionCheck: true,
       showSystemNotifications: false,
       playBrokenBuildSoundFx: false,
       brokenBuildSoundFx: 'defaultSoundFx',
     },
-    [settingsRoot]: {},
+    settings: {},
   })
 })
 
 it('should keep all non notification settings', () => {
   const data = {
-    [settingsRoot]: {
+    settings: {
       someKey: 'someValue',
     },
   }
   migrate(data)
   expect(data).toEqual({
-    [settingsRoot]: { someKey: 'someValue' },
+    settings: { someKey: 'someValue' },
   })
 })

@@ -6,11 +6,11 @@ import { Duration } from '../common/Duration'
 import { ScaledTile } from './ScaledTile'
 import { Feed, getFeeds } from '../settings/tracking/FeedsReducer'
 import {
-  getSettings,
+  getDisplaySettings,
   getShowBuildLabel,
   getShowBuildTime,
   getShowFeedIdentifier,
-} from '../settings/SettingsReducer'
+} from '../settings/display/DisplaySettingsReducer'
 import { ExternalLink } from '../common/ExternalLink'
 import { Clock } from '../common/icons/Clock'
 import { FeedError } from '../domain/FeedError'
@@ -39,7 +39,7 @@ export function TileProject({
   const showBuildTime = useAppSelector(getShowBuildTime)
   const showFeedIdentifier = useAppSelector(getShowFeedIdentifier)
   const showBuildLabel = useAppSelector(getShowBuildLabel)
-  const settings = useAppSelector(getSettings)
+  const settings = useAppSelector(getDisplaySettings)
 
   const sentences = visibleProjects.map((p) => p.description)
 

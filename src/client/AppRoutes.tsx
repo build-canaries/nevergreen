@@ -27,6 +27,7 @@ import { RemoteLocationPage } from './settings/backup/RemoteLocationPage'
 import { AboutPage } from './footer/AboutPage'
 import { RemoteBackupDetailsPage } from './settings/backup/RemoteBackupDetailsPage'
 import { AddNotification } from './settings/notifications/AddNotification'
+import { OtherSettingsPage } from './settings/other/OtherSettingsPage'
 
 export const ROUTE_MONITOR = '/monitor'
 export const ROUTE_SETTINGS = '/settings'
@@ -48,6 +49,7 @@ export const ROUTE_BACKUP_EXPORT_LOCAL = '/settings/backup/local/export'
 export const ROUTE_BACKUP_EXPORT_REMOTE = '/settings/backup/:internalId/export'
 export const ROUTE_BACKUP_EXPORT_DETAILS =
   '/settings/backup/:internalId/details'
+export const ROUTE_OTHER = '/settings/other'
 export const ROUTE_ABOUT = '/settings/about'
 export const ROUTE_PREVIEW = '/preview'
 
@@ -83,6 +85,7 @@ export function AppRoutes(): ReactElement {
             <Route path="details" element={<RemoteBackupDetailsPage />} />
             <Route index element={<Navigate to={ROUTE_BACKUP} />} />
           </Route>
+          <Route path="other" element={<OtherSettingsPage />} />
           <Route path="reset" element={<Reset />} />
           <Route path="about" element={<AboutPage />} />
           <Route index element={<Navigate to="tracking" />} />

@@ -1,33 +1,19 @@
 import { render } from '../../testUtils/testHelpers'
 import {
-  getClickToShowMenu,
-  getSettings,
+  displaySettingsRoot,
+  getDisplaySettings,
   getShowBuildLabel,
   getShowBuildTime,
   getShowFeedIdentifier,
   getShowPrognosis,
-  settingsRoot,
-} from '../SettingsReducer'
+} from './DisplaySettingsReducer'
 import { fireEvent, screen, within } from '@testing-library/react'
 import { DisplaySettings } from './DisplaySettings'
 import { Prognosis } from '../../domain/Project'
 
-it('should set the click to show menu setting', async () => {
-  const state = {
-    [settingsRoot]: {
-      clickToShowMenu: false,
-    },
-  }
-
-  const { store, user } = render(<DisplaySettings />, { state })
-  await user.click(screen.getByLabelText('Click to show menu'))
-
-  expect(getClickToShowMenu(store.getState())).toBeTruthy()
-})
-
 it('should set the show feed identifier setting', async () => {
   const state = {
-    [settingsRoot]: {
+    [displaySettingsRoot]: {
       showTrayName: false,
     },
   }
@@ -40,7 +26,7 @@ it('should set the show feed identifier setting', async () => {
 
 it('should set the show build time setting', async () => {
   const state = {
-    [settingsRoot]: {
+    [displaySettingsRoot]: {
       showBuildTime: false,
     },
   }
@@ -53,7 +39,7 @@ it('should set the show build time setting', async () => {
 
 it('should set the show build label setting', async () => {
   const state = {
-    [settingsRoot]: {
+    [displaySettingsRoot]: {
       showBuildLabel: false,
     },
   }
@@ -76,7 +62,7 @@ describe('showing on the monitor page', () => {
     '$prognosis',
     async ({ prognosis, name }: { prognosis: Prognosis; name: string }) => {
       const state = {
-        [settingsRoot]: {
+        [displaySettingsRoot]: {
           showPrognosis: [],
         },
       }
@@ -103,7 +89,7 @@ describe('updating colours', () => {
     '$prognosis',
     ({ prognosis, name }: { prognosis: Prognosis; name: string }) => {
       const state = {
-        [settingsRoot]: {
+        [displaySettingsRoot]: {
           [prognosis]: {
             backgroundColour: '#aaaaaa',
             textColour: '#bbbbbb',
@@ -122,7 +108,7 @@ describe('updating colours', () => {
         target: { value: '#dddddd' },
       })
 
-      expect(getSettings(store.getState())[prognosis]).toEqual({
+      expect(getDisplaySettings(store.getState())[prognosis]).toEqual({
         backgroundColour: '#cccccc',
         textColour: '#dddddd',
       })

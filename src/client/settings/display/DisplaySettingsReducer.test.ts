@@ -1,9 +1,10 @@
-import type { RecursivePartial } from '../common/Types'
+import type { RecursivePartial } from '../../common/Types'
 import {
-  getClickToShowMenu,
+  displaySettingsRoot,
+  DisplaySettingsState,
+  getDisplaySettings,
   getMaxProjectsToShow,
   getRefreshTime,
-  getSettings,
   getShowBuildLabel,
   getShowBuildTime,
   getShowFeedIdentifier,
@@ -11,7 +12,6 @@ import {
   getSort,
   MaxProjectsToShow,
   reducer as settingsReducer,
-  setClickToShowMenu,
   setMaxProjectsToShow,
   setPrognosisBackgroundColour,
   setPrognosisTextColour,
@@ -21,21 +21,19 @@ import {
   setShowFeedIdentifier,
   setShowPrognosis,
   setSort,
-  settingsRoot,
-  SettingsState,
   SortBy,
-} from './SettingsReducer'
-import { testReducer } from '../testUtils/testHelpers'
-import { buildState } from '../testUtils/builders'
-import { Prognosis } from '../domain/Project'
-import { configurationImported } from './backup/BackupActionCreators'
+} from './DisplaySettingsReducer'
+import { testReducer } from '../../testUtils/testHelpers'
+import { buildState } from '../../testUtils/builders'
+import { Prognosis } from '../../domain/Project'
+import { configurationImported } from '../backup/BackupActionCreators'
 
 const reducer = testReducer({
-  [settingsRoot]: settingsReducer,
+  [displaySettingsRoot]: settingsReducer,
 })
 
-function state(existing?: RecursivePartial<SettingsState>) {
-  return buildState({ [settingsRoot]: existing })
+function state(existing?: RecursivePartial<DisplaySettingsState>) {
+  return buildState({ [displaySettingsRoot]: existing })
 }
 
 it('should return the state unmodified for an unknown action', () => {
@@ -48,7 +46,7 @@ describe(configurationImported.toString(), () => {
   it('should merge show tray name', () => {
     const existingState = state({ showTrayName: false })
     const action = configurationImported({
-      [settingsRoot]: { showTrayName: true },
+      [displaySettingsRoot]: { showTrayName: true },
     })
     const newState = reducer(existingState, action)
     expect(getShowFeedIdentifier(newState)).toBeTruthy()
@@ -57,7 +55,7 @@ describe(configurationImported.toString(), () => {
   it('should merge build timers enabled', () => {
     const existingState = state({ showBuildTime: false })
     const action = configurationImported({
-      [settingsRoot]: { showBuildTime: true },
+      [displaySettingsRoot]: { showBuildTime: true },
     })
     const newState = reducer(existingState, action)
     expect(getShowBuildTime(newState)).toBeTruthy()
@@ -66,7 +64,7 @@ describe(configurationImported.toString(), () => {
   it('should merge show build label', () => {
     const existingState = state({ showBuildLabel: false })
     const action = configurationImported({
-      [settingsRoot]: { showBuildLabel: true },
+      [displaySettingsRoot]: { showBuildLabel: true },
     })
     const newState = reducer(existingState, action)
     expect(getShowBuildLabel(newState)).toBeTruthy()
@@ -138,15 +136,6 @@ describe(setMaxProjectsToShow.toString(), () => {
   })
 })
 
-describe(setClickToShowMenu.toString(), () => {
-  it('should set the click to show menu property', () => {
-    const existingState = state({ clickToShowMenu: false })
-    const action = setClickToShowMenu(true)
-    const newState = reducer(existingState, action)
-    expect(getClickToShowMenu(newState)).toBeTruthy()
-  })
-})
-
 describe(setShowPrognosis.toString(), () => {
   it('should add the prognosis to show', () => {
     const existingState = state({ showPrognosis: [] })
@@ -184,7 +173,7 @@ describe(setPrognosisBackgroundColour.toString(), () => {
       colour: 'a',
     })
     const newState = reducer(existingState, action)
-    expect(getSettings(newState)[Prognosis.sick]).toEqual(
+    expect(getDisplaySettings(newState)[Prognosis.sick]).toEqual(
       expect.objectContaining({
         textColour: '',
         backgroundColour: 'a',
@@ -203,7 +192,7 @@ describe(setPrognosisTextColour.toString(), () => {
       colour: 'a',
     })
     const newState = reducer(existingState, action)
-    expect(getSettings(newState)[Prognosis.sick]).toEqual(
+    expect(getDisplaySettings(newState)[Prognosis.sick]).toEqual(
       expect.objectContaining({
         textColour: 'a',
         backgroundColour: '',

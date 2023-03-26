@@ -16,9 +16,9 @@ import {
   RemoteLocationsState,
 } from '../settings/backup/RemoteLocationsReducer'
 import {
-  SettingsConfiguration,
-  settingsRoot,
-} from '../settings/SettingsReducer'
+  displaySettingsRoot,
+  DisplaySettingsConfiguration,
+} from '../settings/display/DisplaySettingsReducer'
 import {
   selectedRoot,
   SelectedState,
@@ -38,6 +38,10 @@ import {
   personalSettingsRoot,
   PersonalSettingsState,
 } from '../settings/PersonalSettingsReducer'
+import {
+  otherSettingsRoot,
+  OtherSettingsState,
+} from '../settings/other/OtherSettingsReducer'
 
 export enum DataSource {
   systemImport,
@@ -46,7 +50,8 @@ export enum DataSource {
 
 const Configuration = t.exact(
   t.partial({
-    [settingsRoot]: SettingsConfiguration,
+    [displaySettingsRoot]: DisplaySettingsConfiguration,
+    [otherSettingsRoot]: OtherSettingsState,
     [selectedRoot]: SelectedState,
     [successRoot]: SuccessConfiguration,
     [feedsRoot]: FeedsState,

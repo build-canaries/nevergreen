@@ -35,6 +35,7 @@ import {
 import { RemoteBackupDetailsPageHelp } from '../settings/backup/RemoteBackupDetailsPageHelp'
 import { AddNotificationHelp } from '../settings/notifications/AddNotificationHelp'
 import styles from './help.scss'
+import { OtherSettingsPageHelp } from '../settings/other/OtherSettingsPageHelp'
 
 export const SHOW_HELP_SHORTCUT = 'h'
 export const SHOW_KEYBOARD_SHORTCUTS_SHORTCUT = '?'
@@ -101,6 +102,7 @@ export function Help(): ReactElement {
         <RemoteBackupCustomHelp searchQuery={searchQuery} helpLink={helpLink} />
         <RemoteBackupGitHubHelp searchQuery={searchQuery} helpLink={helpLink} />
         <RemoteBackupGitLabHelp searchQuery={searchQuery} helpLink={helpLink} />
+        <OtherSettingsPageHelp searchQuery={searchQuery} helpLink={helpLink} />
         <KeyboardShortcuts searchQuery={searchQuery} helpLink={helpLink} />
       </ul>
       <p className={styles.notFound}>

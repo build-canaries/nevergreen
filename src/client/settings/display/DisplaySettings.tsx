@@ -3,21 +3,19 @@ import { Checkbox } from '../../common/forms/Checkbox'
 import { DropDown } from '../../common/forms/DropDown'
 import { DisplayPrognosisSelection } from './DisplayPrognosisSelection'
 import {
-  getClickToShowMenu,
   getMaxProjectsToShow,
   getShowBuildLabel,
   getShowBuildTime,
   getShowFeedIdentifier,
   getSort,
   MaxProjectsToShow,
-  setClickToShowMenu,
   setMaxProjectsToShow,
   setShowBuildLabel,
   setShowBuildTime,
   setShowFeedIdentifier,
   setSort,
   SortBy,
-} from '../SettingsReducer'
+} from './DisplaySettingsReducer'
 import { LinkButton } from '../../common/LinkButton'
 import { Page } from '../../common/Page'
 import { Eye } from '../../common/icons/Eye'
@@ -42,7 +40,6 @@ const sortOptions = [
 
 export function DisplaySettings(): ReactElement {
   const dispatch = useAppDispatch()
-  const clickToShowMenu = useAppSelector(getClickToShowMenu)
   const showFeedIdentifier = useAppSelector(getShowFeedIdentifier)
   const showBuildTime = useAppSelector(getShowBuildTime)
   const showBuildLabel = useAppSelector(getShowBuildLabel)
@@ -51,12 +48,6 @@ export function DisplaySettings(): ReactElement {
 
   return (
     <Page title="Display settings" icon={<Display />}>
-      <Checkbox
-        checked={clickToShowMenu}
-        onToggle={(newValue) => dispatch(setClickToShowMenu(newValue))}
-      >
-        Click to show menu
-      </Checkbox>
       <Checkbox
         checked={showFeedIdentifier}
         onToggle={(newValue) => dispatch(setShowFeedIdentifier(newValue))}

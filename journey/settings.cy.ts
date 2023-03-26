@@ -13,8 +13,6 @@ describe('Settings', () => {
   it('changing display settings', () => {
     cy.findByRole('link', { name: 'Display' }).click()
 
-    cy.findByLabelText('Click to show menu').click()
-
     cy.findByLabelText('Show feed identifier').check()
     cy.findByLabelText('Show build time').check()
     cy.findByLabelText('Show build label').check()
@@ -78,5 +76,11 @@ describe('Settings', () => {
 
     cy.findByLabelText('Check for new Nevergreen versions').click()
     cy.findByLabelText('Allow audio notifications').click()
+  })
+
+  it('changing other settings', () => {
+    cy.findByRole('link', { name: 'Other' }).click()
+
+    cy.findByLabelText('Click to show menu').click()
   })
 })

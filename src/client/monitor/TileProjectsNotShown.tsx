@@ -5,7 +5,7 @@ import { Prognosis, prognosisDisplay, Project } from '../domain/Project'
 import { FeedError } from '../domain/FeedError'
 import styles from './tile-projects-not-shown.scss'
 import { useAppSelector } from '../configuration/Hooks'
-import { getSettings } from '../settings/SettingsReducer'
+import { getDisplaySettings } from '../settings/display/DisplaySettingsReducer'
 
 interface TileNotShownProps {
   readonly projectsNotShown: ReadonlyArray<Project | FeedError>
@@ -14,7 +14,7 @@ interface TileNotShownProps {
 export function TileProjectsNotShown({
   projectsNotShown,
 }: TileNotShownProps): ReactElement {
-  const settings = useAppSelector(getSettings)
+  const settings = useAppSelector(getDisplaySettings)
 
   const header = `+${projectsNotShown.length} not shown`
   const counts = countBy(projectsNotShown, 'prognosis')

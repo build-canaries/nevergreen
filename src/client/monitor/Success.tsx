@@ -8,7 +8,7 @@ import { getSuccessMessages } from '../settings/success/SuccessReducer'
 import { Projects } from '../domain/Project'
 import { FeedErrors } from '../domain/FeedError'
 import isEmpty from 'lodash/isEmpty'
-import { getShowPrognosis } from '../settings/SettingsReducer'
+import { getShowPrognosis } from '../settings/display/DisplaySettingsReducer'
 import { useAppSelector } from '../configuration/Hooks'
 
 interface SuccessProps {

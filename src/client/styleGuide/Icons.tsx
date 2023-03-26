@@ -7,6 +7,7 @@ import { Checkmark } from '../common/icons/Checkmark'
 import { CloudDownload } from '../common/icons/CloudDownload'
 import { CloudUpload } from '../common/icons/CloudUpload'
 import { Cog } from '../common/icons/Cog'
+import { Cogs } from '../common/icons/Cogs'
 import { Cross } from '../common/icons/Cross'
 import { Dice } from '../common/icons/Dice'
 import { Display } from '../common/icons/Display'
@@ -82,6 +83,10 @@ export function Icons(): ReactElement {
         <span>
           <Cog />
           cog
+        </span>
+        <span>
+          <Cogs />
+          cogs
         </span>
         <span>
           <Cross />

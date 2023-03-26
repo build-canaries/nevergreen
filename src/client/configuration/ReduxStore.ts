@@ -4,9 +4,9 @@ import { configureStore } from '@reduxjs/toolkit'
 import { backup } from '../settings/backup/AutomaticBackupListener'
 import { combineReducers } from 'redux'
 import {
-  reducer as settingsReducer,
-  settingsRoot,
-} from '../settings/SettingsReducer'
+  displaySettingsRoot,
+  reducer as displaySettingsReducer,
+} from '../settings/display/DisplaySettingsReducer'
 import {
   reducer as selectedReducer,
   selectedRoot,
@@ -35,6 +35,10 @@ import {
   personalSettingsRoot,
   reducer as personalSettingsReducer,
 } from '../settings/PersonalSettingsReducer'
+import {
+  otherSettingsRoot,
+  reducer as otherSettingsReducer,
+} from '../settings/other/OtherSettingsReducer'
 
 async function saveRaw(currentState: RootState) {
   await save(currentState)
@@ -49,7 +53,8 @@ document.addEventListener('visibilitychange', () => {
 })
 
 export const reducer = combineReducers({
-  [settingsRoot]: settingsReducer,
+  [displaySettingsRoot]: displaySettingsReducer,
+  [otherSettingsRoot]: otherSettingsReducer,
   [selectedRoot]: selectedReducer,
   [successRoot]: successReducer,
   [feedsRoot]: feedsReducer,

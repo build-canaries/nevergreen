@@ -2,12 +2,12 @@ import type { ReactElement } from 'react'
 import { Prognosis, prognosisDisplay } from '../../domain/Project'
 import { Checkbox } from '../../common/forms/Checkbox'
 import {
-  getSettings,
+  getDisplaySettings,
   getShowPrognosis,
   setPrognosisBackgroundColour,
   setPrognosisTextColour,
   setShowPrognosis,
-} from '../SettingsReducer'
+} from './DisplaySettingsReducer'
 import capitalize from 'lodash/capitalize'
 import { useAppDispatch, useAppSelector } from '../../configuration/Hooks'
 import { Group } from '../../common/forms/Group'
@@ -25,7 +25,7 @@ function groupTitle(prognosis: Prognosis): string {
 
 export function DisplayPrognosisSelection(): ReactElement {
   const dispatch = useAppDispatch()
-  const settings = useAppSelector(getSettings)
+  const settings = useAppSelector(getDisplaySettings)
   const showing = useAppSelector(getShowPrognosis)
 
   return (
