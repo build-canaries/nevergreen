@@ -9,7 +9,7 @@ import {
 } from '../../../testUtils/builders'
 import { toJson } from '../../../common/Json'
 import { screen, waitFor } from '@testing-library/react'
-import { ImportRemote } from './ImportRemote'
+import { ImportRemotePage } from './ImportRemotePage'
 import * as BackupGateway from '../../../gateways/BackupGateway'
 import { remoteLocationsRoot } from '../RemoteLocationsReducer'
 import { RemoteLocationOptions } from '../RemoteLocationOptions'
@@ -37,7 +37,7 @@ it('should import valid configuration', async () => {
     where: RemoteLocationOptions.custom,
   })
 
-  const { user } = render(<ImportRemote />, {
+  const { user } = render(<ImportRemotePage />, {
     state,
     outletContext: remoteLocation,
   })
@@ -60,7 +60,7 @@ it('should display an error if the configuration is syntactically invalid JSON',
     where: RemoteLocationOptions.custom,
   })
 
-  render(<ImportRemote />, { outletContext })
+  render(<ImportRemotePage />, { outletContext })
 
   await waitFor(() => {
     expect(
@@ -78,7 +78,7 @@ it('should display an error if the configuration is semantically invalid JSON', 
     where: RemoteLocationOptions.custom,
   })
 
-  const { user } = render(<ImportRemote />, { outletContext })
+  const { user } = render(<ImportRemotePage />, { outletContext })
 
   await waitForLoadingToFinish()
 
@@ -104,7 +104,7 @@ it('should display an error and a button to try again if configuration can not b
     .spyOn(BackupGateway, 'fetchConfiguration')
     .mockRejectedValueOnce(new Error('some-error'))
 
-  render(<ImportRemote />, { outletContext })
+  render(<ImportRemotePage />, { outletContext })
 
   await waitFor(() => {
     expect(
@@ -125,7 +125,7 @@ it('should be able to cancel back to settings', async () => {
     where: RemoteLocationOptions.custom,
   })
 
-  const { user } = render(<ImportRemote />, { outletContext })
+  const { user } = render(<ImportRemotePage />, { outletContext })
 
   await waitForLoadingToFinish()
 
@@ -142,7 +142,7 @@ it('should be able to cancel back to settings if configuration can not be fetche
     .spyOn(BackupGateway, 'fetchConfiguration')
     .mockRejectedValueOnce(new Error('some-error'))
 
-  const { user } = render(<ImportRemote />, { outletContext })
+  const { user } = render(<ImportRemotePage />, { outletContext })
 
   await waitForLoadingToFinish()
 

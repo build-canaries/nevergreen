@@ -13,7 +13,7 @@ import styles from './add-message.scss'
 
 type Fields = 'message'
 
-export function AddMessage(): ReactElement {
+export function AddMessagePage(): ReactElement {
   const dispatch = useAppDispatch()
   const messages = useAppSelector(getSuccessMessages)
   const [message, setMessage] = useState('')

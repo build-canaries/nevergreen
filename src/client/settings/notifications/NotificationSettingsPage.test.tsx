@@ -1,6 +1,6 @@
 import { render } from '../../testUtils/testHelpers'
 import { screen } from '@testing-library/react'
-import { NotificationSettings } from './NotificationSettings'
+import { NotificationSettingsPage } from './NotificationSettingsPage'
 import {
   getEnableNewVersionCheck,
   notificationsRoot,
@@ -20,7 +20,7 @@ it('should allow for turning on and off checking for new versions', async () => 
     },
   }
 
-  const { store, user } = render(<NotificationSettings />, { state })
+  const { store, user } = render(<NotificationSettingsPage />, { state })
   await user.click(screen.getByLabelText('Check for new Nevergreen versions'))
 
   expect(getEnableNewVersionCheck(store.getState())).toBeTruthy()
@@ -33,7 +33,7 @@ it('should allow turning on and off play audio notifications', async () => {
     },
   }
 
-  const { store, user } = render(<NotificationSettings />, { state })
+  const { store, user } = render(<NotificationSettingsPage />, { state })
   await user.click(screen.getByLabelText('Allow audio notifications'))
 
   expect(getAllowAudioNotifications(store.getState())).toBeTruthy()
@@ -49,7 +49,7 @@ it('should allow the audio notification volume to be previewed', async () => {
     },
   }
 
-  const { store, user } = render(<NotificationSettings />, { state })
+  const { store, user } = render(<NotificationSettingsPage />, { state })
   await user.click(screen.getByRole('button', { name: 'Test audio volume' }))
 
   expect(getAudioNotificationVolume(store.getState())).toEqual(0.75)
@@ -62,7 +62,7 @@ it('should display a message if no notifications have been added', () => {
       notifications: {},
     },
   }
-  render(<NotificationSettings />, { state })
+  render(<NotificationSettingsPage />, { state })
   expect(screen.getByText('No notifications added')).toBeInTheDocument()
 })
 
@@ -75,7 +75,7 @@ it('should display added notifications', () => {
     },
   }
 
-  render(<NotificationSettings />, { state })
+  render(<NotificationSettingsPage />, { state })
 
   expect(
     screen.getByRole('heading', { level: 2, name: 'Sick notification' })

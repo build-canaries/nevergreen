@@ -1,4 +1,4 @@
-import { AddFeed } from './AddFeed'
+import { AddFeedPage } from './AddFeedPage'
 import { screen, waitFor } from '@testing-library/react'
 import * as SecurityGateway from '../../gateways/SecurityGateway'
 import * as ProjectsGateway from '../../gateways/ProjectsGateway'
@@ -14,7 +14,7 @@ beforeEach(() => {
 
 describe('validation errors', () => {
   it('should display an error if no URL is entered', async () => {
-    const { user } = render(<AddFeed />)
+    const { user } = render(<AddFeedPage />)
     await user.click(screen.getByText('Add feed'))
     expect(
       screen.getByText('Enter a URL to the CCTray XML feed')
@@ -22,7 +22,7 @@ describe('validation errors', () => {
   })
 
   it('should display an error if the URL entered is not http(s)', async () => {
-    const { user } = render(<AddFeed />)
+    const { user } = render(<AddFeedPage />)
     await user.type(screen.getByLabelText('URL'), 'ftp://some-new-url')
     await user.click(screen.getByText('Add feed'))
     expect(
@@ -40,7 +40,7 @@ describe('validation errors', () => {
       },
     }
 
-    const { user } = render(<AddFeed />, { state })
+    const { user } = render(<AddFeedPage />, { state })
     await user.type(screen.getByLabelText('URL'), 'http://some-url')
     await user.click(screen.getByText('Add feed'))
 
@@ -61,7 +61,7 @@ it.each([AuthTypes.token, AuthTypes.basic, AuthTypes.none])(
       [feedsRoot]: {},
     }
 
-    const { store, user } = render(<AddFeed />, { state })
+    const { store, user } = render(<AddFeedPage />, { state })
 
     await user.type(screen.getByLabelText('URL'), 'http://some-new-url')
     await enterAuth[authType](user)

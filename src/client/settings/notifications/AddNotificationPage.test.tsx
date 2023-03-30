@@ -1,7 +1,7 @@
 import { render } from '../../testUtils/testHelpers'
 import { screen } from '@testing-library/react'
 import { getNotifications, notificationsRoot } from './NotificationsReducer'
-import { AddNotification } from './AddNotification'
+import { AddNotificationPage } from './AddNotificationPage'
 import { Prognosis } from '../../domain/Project'
 import * as AudioPlayer from '../../common/AudioPlayer'
 import { personalSettingsRoot } from '../PersonalSettingsReducer'
@@ -16,7 +16,7 @@ it.each([
 ])('should allow adding a %s notification', async (prognosis) => {
   const state = { [notificationsRoot]: {} }
 
-  const { store, user } = render(<AddNotification />, { state })
+  const { store, user } = render(<AddNotificationPage />, { state })
   await user.selectOptions(
     screen.getByLabelText('When transitioning to'),
     prognosis
@@ -41,7 +41,7 @@ it('should be able to preview audio files', async () => {
   jest.spyOn(AudioPlayer, 'stopAudio').mockReturnValue()
   const state = { [notificationsRoot]: {} }
 
-  const { user } = render(<AddNotification />, { state })
+  const { user } = render(<AddNotificationPage />, { state })
   await user.type(screen.getByLabelText('Play audio'), '/some-sfx.mp3')
   await user.click(screen.getByRole('button', { name: 'Play' }))
   await user.click(screen.getByRole('button', { name: 'Stop' }))
@@ -57,7 +57,7 @@ it('should be able to preview audio files', async () => {
 it('should be able to cancel without adding', async () => {
   const state = { [notificationsRoot]: {} }
 
-  const { store, user } = render(<AddNotification />, { state })
+  const { store, user } = render(<AddNotificationPage />, { state })
   await user.click(screen.getByRole('button', { name: 'Cancel' }))
 
   expect(getNotifications(store.getState())).toEqual({})
@@ -73,7 +73,7 @@ describe('warnings', () => {
       },
     }
 
-    render(<AddNotification />, { state })
+    render(<AddNotificationPage />, { state })
 
     expect(
       screen.getByText('System notification have not been allowed yet.')
@@ -91,7 +91,7 @@ describe('warnings', () => {
       },
     }
 
-    render(<AddNotification />, { state })
+    render(<AddNotificationPage />, { state })
 
     expect(
       screen.getByText('Audio notification have not been allowed yet.')
@@ -109,7 +109,7 @@ describe('warnings', () => {
       },
     }
 
-    render(<AddNotification />, { state })
+    render(<AddNotificationPage />, { state })
 
     expect(
       screen.getByText(

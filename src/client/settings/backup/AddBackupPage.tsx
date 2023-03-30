@@ -22,7 +22,7 @@ import styles from './add-backup.scss'
 
 type Fields = 'url' | 'accessToken'
 
-export function AddBackup(): ReactElement {
+export function AddBackupPage(): ReactElement {
   const dispatch = useAppDispatch()
 
   const [where, setWhere] = useState(RemoteLocationOptions.custom)

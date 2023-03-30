@@ -4,29 +4,28 @@ import { Navigate, Routes } from 'react-router-dom'
 import { Monitor } from './monitor/Monitor'
 import { Settings } from './settings/Settings'
 import { TrackingPage } from './settings/tracking/TrackingPage'
-import { AddFeed } from './settings/tracking/AddFeed'
+import { AddFeedPage } from './settings/tracking/AddFeedPage'
 import { FeedPage } from './settings/tracking/FeedPage'
 import { ManageProjectsPage } from './settings/tracking/projects/ManageProjectsPage'
 import { UpdateDetailsPage } from './settings/tracking/settings/UpdateDetailsPage'
 import { UpdateConnectionPage } from './settings/tracking/settings/UpdateConnectionPage'
-import { SuccessMessages } from './settings/success/SuccessMessages'
-import { AddMessage } from './settings/success/AddMessage'
-import { DisplaySettings } from './settings/display/DisplaySettings'
+import { SuccessMessagesPage } from './settings/success/SuccessMessagesPage'
+import { AddMessagePage } from './settings/success/AddMessagePage'
+import { DisplaySettingsPage } from './settings/display/DisplaySettingsPage'
 import { Preview } from './settings/Preview'
-import { NotificationSettings } from './settings/notifications/NotificationSettings'
+import { NotificationSettingsPage } from './settings/notifications/NotificationSettingsPage'
 import { BackupPage } from './settings/backup/BackupPage'
-import { AddBackup } from './settings/backup/AddBackup'
-import { ExportLocal } from './settings/backup/export/ExportLocal'
-import { ImportLocal } from './settings/backup/import/ImportLocal'
-import { ExportRemote } from './settings/backup/export/ExportRemote'
-import { ImportRemote } from './settings/backup/import/ImportRemote'
-import { Reset } from './settings/reset/Reset'
+import { AddBackupPage } from './settings/backup/AddBackupPage'
+import { ExportLocallyPage } from './settings/backup/export/ExportLocallyPage'
+import { ImportLocalPage } from './settings/backup/import/ImportLocalPage'
+import { ExportRemotePage } from './settings/backup/export/ExportRemotePage'
+import { ImportRemotePage } from './settings/backup/import/ImportRemotePage'
 import { StyleGuide } from './styleGuide/StyleGuide'
 import { Nevergreen } from './Nevergreen'
 import { RemoteLocationPage } from './settings/backup/RemoteLocationPage'
 import { AboutPage } from './footer/AboutPage'
 import { RemoteBackupDetailsPage } from './settings/backup/RemoteBackupDetailsPage'
-import { AddNotification } from './settings/notifications/AddNotification'
+import { AddNotificationPage } from './settings/notifications/AddNotificationPage'
 import { OtherSettingsPage } from './settings/other/OtherSettingsPage'
 
 export const ROUTE_MONITOR = '/monitor'
@@ -60,7 +59,7 @@ export function AppRoutes(): ReactElement {
         <Route path={ROUTE_MONITOR} element={<Monitor />} />
         <Route path={ROUTE_SETTINGS} element={<Settings />}>
           <Route path="tracking" element={<TrackingPage />} />
-          <Route path="tracking/add" element={<AddFeed />} />
+          <Route path="tracking/add" element={<AddFeedPage />} />
           <Route path="tracking/:id" element={<FeedPage />}>
             <Route path="projects" element={<ManageProjectsPage />} />
             <Route path="details" element={<UpdateDetailsPage />} />
@@ -70,23 +69,22 @@ export function AppRoutes(): ReactElement {
             />
             <Route index element={<Navigate to={ROUTE_TRACKING} />} />
           </Route>
-          <Route path="success" element={<SuccessMessages />} />
-          <Route path="success/add" element={<AddMessage />} />
-          <Route path="display" element={<DisplaySettings />} />
-          <Route path="notifications" element={<NotificationSettings />} />
-          <Route path="notifications/add" element={<AddNotification />} />
+          <Route path="success" element={<SuccessMessagesPage />} />
+          <Route path="success/add" element={<AddMessagePage />} />
+          <Route path="display" element={<DisplaySettingsPage />} />
+          <Route path="notifications" element={<NotificationSettingsPage />} />
+          <Route path="notifications/add" element={<AddNotificationPage />} />
           <Route path="backup" element={<BackupPage />} />
-          <Route path="backup/add" element={<AddBackup />} />
-          <Route path="backup/local/export" element={<ExportLocal />} />
-          <Route path="backup/local/import" element={<ImportLocal />} />
+          <Route path="backup/add" element={<AddBackupPage />} />
+          <Route path="backup/local/export" element={<ExportLocallyPage />} />
+          <Route path="backup/local/import" element={<ImportLocalPage />} />
           <Route path="backup/:internalId" element={<RemoteLocationPage />}>
-            <Route path="export" element={<ExportRemote />} />
-            <Route path="import" element={<ImportRemote />} />
+            <Route path="export" element={<ExportRemotePage />} />
+            <Route path="import" element={<ImportRemotePage />} />
             <Route path="details" element={<RemoteBackupDetailsPage />} />
             <Route index element={<Navigate to={ROUTE_BACKUP} />} />
           </Route>
           <Route path="other" element={<OtherSettingsPage />} />
-          <Route path="reset" element={<Reset />} />
           <Route path="about" element={<AboutPage />} />
           <Route index element={<Navigate to="tracking" />} />
         </Route>

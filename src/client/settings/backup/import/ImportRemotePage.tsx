@@ -27,11 +27,11 @@ import { useRemoteLocationContext } from '../RemoteLocationPage'
 import { ROUTE_BACKUP } from '../../../AppRoutes'
 import { useAppDispatch } from '../../../configuration/Hooks'
 import { backupImported } from '../RemoteLocationsActions'
-import styles from './import.scss'
+import styles from './import-page.scss'
 
 type Fields = 'import'
 
-export function ImportRemote(): ReactElement {
+export function ImportRemotePage(): ReactElement {
   const location = useRemoteLocationContext()
   const dispatch = useAppDispatch()
   const [data, setData] = useState('')

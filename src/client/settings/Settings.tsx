@@ -5,10 +5,9 @@ import { List } from '../common/icons/List'
 import { Display } from '../common/icons/Display'
 import { Bell } from '../common/icons/Bell'
 import { FloppyDisk } from '../common/icons/FloppyDisk'
-import { Bin } from '../common/icons/Bin'
 import { Image } from '../common/icons/Image'
-import styles from './settings.scss'
 import { Cogs } from '../common/icons/Cogs'
+import styles from './settings.scss'
 
 interface MenuItemProps {
   readonly to: string
@@ -43,7 +42,6 @@ export function Settings(): ReactElement {
           <MenuItem to="notifications" label="Notifications" icon={<Bell />} />
           <MenuItem to="backup" label="Backup" icon={<FloppyDisk />} />
           <MenuItem to="other" label="Other" icon={<Cogs />} />
-          <MenuItem to="reset" label="Reset" icon={<Bin />} />
         </ul>
       </nav>
       <div>

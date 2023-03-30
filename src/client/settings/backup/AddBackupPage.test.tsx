@@ -2,7 +2,7 @@ import { screen, waitFor } from '@testing-library/react'
 import { render } from '../../testUtils/testHelpers'
 import { DEFAULT_GITHUB_URL } from './RemoteLocationOptions'
 import * as SecurityGateway from '../../gateways/SecurityGateway'
-import { AddBackup } from './AddBackup'
+import { AddBackupPage } from './AddBackupPage'
 import { getBackupLocations } from './RemoteLocationsReducer'
 import * as Utils from '../../common/Utils'
 
@@ -11,7 +11,7 @@ beforeEach(() => {
 })
 
 it('should not be able to add with a blank URL', async () => {
-  const { user } = render(<AddBackup />)
+  const { user } = render(<AddBackupPage />)
 
   await user.selectOptions(screen.getByLabelText('Where'), 'custom')
   await user.click(screen.getByRole('button', { name: 'Add location' }))
@@ -22,7 +22,7 @@ it('should not be able to add with a blank URL', async () => {
 })
 
 it('should not be able to add with a non http(s) URL', async () => {
-  const { user } = render(<AddBackup />)
+  const { user } = render(<AddBackupPage />)
 
   await user.selectOptions(screen.getByLabelText('Where'), 'custom')
   await user.type(screen.getByLabelText('URL'), 'file://example')
@@ -38,7 +38,7 @@ it('should not be able to add with a non http(s) URL', async () => {
 it('should be able to add a custom server', async () => {
   jest.spyOn(Utils, 'createId').mockReturnValue('some-id')
 
-  const { store, user } = render(<AddBackup />)
+  const { store, user } = render(<AddBackupPage />)
 
   await user.selectOptions(screen.getByLabelText('Where'), 'custom')
   await user.type(screen.getByLabelText('URL'), 'http://example.com')
@@ -58,7 +58,7 @@ it('should be able to add a custom server', async () => {
 it('should be able to add a GitHub gist', async () => {
   jest.spyOn(Utils, 'createId').mockReturnValue('some-id')
 
-  const { store, user } = render(<AddBackup />)
+  const { store, user } = render(<AddBackupPage />)
 
   await user.selectOptions(screen.getByLabelText('Where'), 'github')
 
@@ -78,7 +78,7 @@ it('should be able to add a GitHub gist', async () => {
 })
 
 it('should validate adding a GitHub gist and clear errors if "where" is changed', async () => {
-  const { user } = render(<AddBackup />)
+  const { user } = render(<AddBackupPage />)
 
   await user.selectOptions(screen.getByLabelText('Where'), 'github')
   await user.clear(screen.getByLabelText('URL'))

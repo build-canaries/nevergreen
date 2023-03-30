@@ -38,7 +38,7 @@ const sortOptions = [
   { value: SortBy.timestamp, display: 'Timestamp' },
 ]
 
-export function DisplaySettings(): ReactElement {
+export function DisplaySettingsPage(): ReactElement {
   const dispatch = useAppDispatch()
   const showFeedIdentifier = useAppSelector(getShowFeedIdentifier)
   const showBuildTime = useAppSelector(getShowBuildTime)

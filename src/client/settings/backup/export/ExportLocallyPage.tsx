@@ -16,9 +16,9 @@ import {
   TimedSuccessMessages,
 } from '../../../common/TimedMessages'
 import { useAppSelector } from '../../../configuration/Hooks'
-import styles from './export-local.scss'
+import styles from './export-locally-page.scss'
 
-export function ExportLocal(): ReactElement {
+export function ExportLocallyPage(): ReactElement {
   const configuration = useAppSelector(toExportableConfigurationJson)
 
   const [saveFailure, setSaveFailure] = useState<ReadonlyArray<string>>([])

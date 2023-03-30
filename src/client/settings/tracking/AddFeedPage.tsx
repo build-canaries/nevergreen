@@ -7,7 +7,7 @@ import { ROUTE_TRACKING } from '../../AppRoutes'
 import { useAppDispatch } from '../../configuration/Hooks'
 import { createId } from '../../common/Utils'
 
-export function AddFeed(): ReactElement {
+export function AddFeedPage(): ReactElement {
   const dispatch = useAppDispatch()
 
   const onSuccess = ({

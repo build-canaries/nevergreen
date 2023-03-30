@@ -56,7 +56,7 @@ function getWarnings(
   return []
 }
 
-export function AddNotification(): ReactElement {
+export function AddNotificationPage(): ReactElement {
   const dispatch = useAppDispatch()
   const allowSystemNotifications = useAppSelector(getAllowSystemNotifications)
   const allowAudioNotifications = useAppSelector(getAllowAudioNotifications)

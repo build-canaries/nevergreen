@@ -1,11 +1,11 @@
-import { ImportLocal } from './ImportLocal'
+import { ImportLocalPage } from './ImportLocalPage'
 import { render } from '../../../testUtils/testHelpers'
 import { buildState } from '../../../testUtils/builders'
 import { toJson } from '../../../common/Json'
 import { screen, waitFor } from '@testing-library/react'
 
 it('should import valid configuration', async () => {
-  const { user } = render(<ImportLocal />)
+  const { user } = render(<ImportLocalPage />)
   await user.type(
     screen.getByLabelText('Configuration to import'),
     escapeSpecialCharacter(toJson(buildState()))
@@ -19,7 +19,7 @@ it('should import valid configuration', async () => {
 })
 
 it('should show an error if no data has been entered', async () => {
-  const { user } = render(<ImportLocal />)
+  const { user } = render(<ImportLocalPage />)
   await user.click(screen.getByRole('button', { name: 'Import' }))
   expect(
     screen.getByText('Enter the configuration to import')
@@ -31,7 +31,7 @@ it('should show an error if no data has been entered', async () => {
 
 it('should show an error if the data is syntactically invalid (bad json)', async () => {
   const invalidConfiguration = '{'
-  const { user } = render(<ImportLocal />)
+  const { user } = render(<ImportLocalPage />)
   await user.type(
     screen.getByLabelText('Configuration to import'),
     escapeSpecialCharacter(invalidConfiguration)
@@ -46,7 +46,7 @@ it('should show an error if the data is syntactically invalid (bad json)', async
 
 it('should show an error if the data is semantically invalid (missing required attributes)', async () => {
   const invalidConfiguration = '{"trays":{"id":{}}}'
-  const { user } = render(<ImportLocal />)
+  const { user } = render(<ImportLocalPage />)
   await user.type(
     screen.getByLabelText('Configuration to import'),
     escapeSpecialCharacter(invalidConfiguration)
@@ -69,7 +69,7 @@ it('should show an error if the data is semantically invalid (missing required a
 it('should allow a single JSON and plain text files to be opened', () => {
   // const file = new File(['file-content'], 'configuration.json', {type: 'application/json'})
 
-  render(<ImportLocal />)
+  render(<ImportLocalPage />)
 
   const input = screen.getByLabelText('Open local...')
   expect(input).toHaveAttribute(
@@ -89,7 +89,7 @@ it('should allow a single JSON and plain text files to be opened', () => {
 })
 
 it('should be able to cancel back to settings', async () => {
-  const { user } = render(<ImportLocal />)
+  const { user } = render(<ImportLocalPage />)
 
   await user.click(screen.getByRole('button', { name: 'Cancel' }))
 

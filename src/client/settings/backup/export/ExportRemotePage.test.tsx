@@ -1,6 +1,6 @@
 import { render } from '../../../testUtils/testHelpers'
 import { buildRemoteBackupLocation } from '../../../testUtils/builders'
-import { ExportRemote } from './ExportRemote'
+import { ExportRemotePage } from './ExportRemotePage'
 import * as BackupGateway from '../../../gateways/BackupGateway'
 import { screen, waitFor } from '@testing-library/react'
 import { remoteLocationsRoot } from '../RemoteLocationsReducer'
@@ -24,7 +24,7 @@ it('should export configuration', async () => {
     id: 'some-remote-id',
   })
 
-  const { user } = render(<ExportRemote />, {
+  const { user } = render(<ExportRemotePage />, {
     state,
     outletContext: remoteLocation,
   })
@@ -44,7 +44,7 @@ it('should allow cancelling back to settings', async () => {
     id: 'some-remote-id',
   })
 
-  const { user } = render(<ExportRemote />, { outletContext })
+  const { user } = render(<ExportRemotePage />, { outletContext })
 
   await user.click(screen.getByRole('button', { name: 'Cancel' }))
 

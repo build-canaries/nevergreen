@@ -11,7 +11,7 @@ import { ROUTE_BACKUP } from '../../../AppRoutes'
 import { useAppDispatch, useAppSelector } from '../../../configuration/Hooks'
 import { backupExported } from '../RemoteLocationsActions'
 
-export function ExportRemote(): ReactElement {
+export function ExportRemotePage(): ReactElement {
   const location = useRemoteLocationContext()
   const dispatch = useAppDispatch()
   const configuration = useAppSelector(toExportableConfigurationJson)

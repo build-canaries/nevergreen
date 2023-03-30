@@ -8,7 +8,7 @@ import {
   getShowPrognosis,
 } from './DisplaySettingsReducer'
 import { fireEvent, screen, within } from '@testing-library/react'
-import { DisplaySettings } from './DisplaySettings'
+import { DisplaySettingsPage } from './DisplaySettingsPage'
 import { Prognosis } from '../../domain/Project'
 
 it('should set the show feed identifier setting', async () => {
@@ -18,7 +18,7 @@ it('should set the show feed identifier setting', async () => {
     },
   }
 
-  const { store, user } = render(<DisplaySettings />, { state })
+  const { store, user } = render(<DisplaySettingsPage />, { state })
   await user.click(screen.getByLabelText('Show feed identifier'))
 
   expect(getShowFeedIdentifier(store.getState())).toBeTruthy()
@@ -31,7 +31,7 @@ it('should set the show build time setting', async () => {
     },
   }
 
-  const { store, user } = render(<DisplaySettings />, { state })
+  const { store, user } = render(<DisplaySettingsPage />, { state })
   await user.click(screen.getByLabelText('Show build time'))
 
   expect(getShowBuildTime(store.getState())).toBeTruthy()
@@ -44,7 +44,7 @@ it('should set the show build label setting', async () => {
     },
   }
 
-  const { store, user } = render(<DisplaySettings />, { state })
+  const { store, user } = render(<DisplaySettingsPage />, { state })
   await user.click(screen.getByLabelText('Show build label'))
 
   expect(getShowBuildLabel(store.getState())).toBeTruthy()
@@ -67,7 +67,7 @@ describe('showing on the monitor page', () => {
         },
       }
 
-      const { store, user } = render(<DisplaySettings />, { state })
+      const { store, user } = render(<DisplaySettingsPage />, { state })
       const group = screen.getByRole('group', { name })
       await user.click(within(group).getByLabelText('Show on the Monitor page'))
 
@@ -97,7 +97,7 @@ describe('updating colours', () => {
         },
       }
 
-      const { store } = render(<DisplaySettings />, { state })
+      const { store } = render(<DisplaySettingsPage />, { state })
       const group = screen.getByRole('group', { name })
       // Color inputs not supported by user events
       // https://github.com/testing-library/user-event/issues/423

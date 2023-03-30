@@ -22,7 +22,7 @@ import { playAudio } from '../../common/AudioPlayer'
 import { Note } from '../../common/icons/Note'
 import styles from './notifications-settings.scss'
 
-export function NotificationSettings(): ReactElement {
+export function NotificationSettingsPage(): ReactElement {
   const dispatch = useAppDispatch()
   const allowAudioNotifications = useAppSelector(getAllowAudioNotifications)
   const toggleVersionCheckFlag = useAppSelector(getEnableNewVersionCheck)

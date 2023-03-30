@@ -20,9 +20,9 @@ import {
   TimedInfoMessages,
 } from '../../../common/TimedMessages'
 import { useAppDispatch } from '../../../configuration/Hooks'
-import styles from './import.scss'
+import styles from './import-page.scss'
 
-export function ImportLocal(): ReactElement {
+export function ImportLocalPage(): ReactElement {
   const dispatch = useAppDispatch()
   const [success, setSuccessState] = useState('')
   const [openFileError, setOpenFileError] = useState<string>('')
