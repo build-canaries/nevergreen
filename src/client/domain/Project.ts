@@ -7,12 +7,12 @@ import {
 import { FeedError, isError } from './FeedError'
 
 export enum Prognosis {
-  healthy = 'healthy',
-  sick = 'sick',
-  healthyBuilding = 'healthy-building',
-  sickBuilding = 'sick-building',
-  unknown = 'unknown',
   error = 'error',
+  sick = 'sick',
+  sickBuilding = 'sick-building',
+  healthyBuilding = 'healthy-building',
+  unknown = 'unknown',
+  healthy = 'healthy',
 }
 
 export type ProjectPrognosis = Exclude<Prognosis, Prognosis.error>

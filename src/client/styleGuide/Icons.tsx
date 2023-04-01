@@ -35,6 +35,7 @@ import { Info } from '../common/icons/Info'
 import { ArrowUp } from '../common/icons/ArrowUp'
 import { Note } from '../common/icons/Note'
 import styles from './style-guide.scss'
+import { PaintFormat } from '../common/icons/PaintFormat'
 
 export function Icons(): ReactElement {
   return (
@@ -139,6 +140,10 @@ export function Icons(): ReactElement {
         <span>
           <Note />
           note
+        </span>
+        <span>
+          <PaintFormat />
+          paint format
         </span>
         <span>
           <Paste />

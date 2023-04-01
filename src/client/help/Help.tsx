@@ -36,6 +36,7 @@ import { RemoteBackupDetailsPageHelp } from '../settings/backup/RemoteBackupDeta
 import { AddNotificationHelp } from '../settings/notifications/AddNotificationHelp'
 import styles from './help.scss'
 import { OtherSettingsPageHelp } from '../settings/other/OtherSettingsPageHelp'
+import { ChangeColoursPageHelp } from '../settings/colours/ChangeColoursPageHelp'
 
 export const SHOW_HELP_SHORTCUT = 'h'
 export const SHOW_KEYBOARD_SHORTCUTS_SHORTCUT = '?'
@@ -84,6 +85,7 @@ export function Help(): ReactElement {
         <UpdateConnectionHelp searchQuery={searchQuery} helpLink={helpLink} />
         <SuccessHelp searchQuery={searchQuery} helpLink={helpLink} />
         <DisplaySettingsHelp searchQuery={searchQuery} helpLink={helpLink} />
+        <ChangeColoursPageHelp searchQuery={searchQuery} helpLink={helpLink} />
         <NotificationSettingsHelp
           searchQuery={searchQuery}
           helpLink={helpLink}

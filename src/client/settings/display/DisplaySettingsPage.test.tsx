@@ -1,13 +1,12 @@
 import { render } from '../../testUtils/testHelpers'
 import {
   displaySettingsRoot,
-  getDisplaySettings,
   getShowBuildLabel,
   getShowBuildTime,
   getShowFeedIdentifier,
   getShowPrognosis,
 } from './DisplaySettingsReducer'
-import { fireEvent, screen, within } from '@testing-library/react'
+import { screen, within } from '@testing-library/react'
 import { DisplaySettingsPage } from './DisplaySettingsPage'
 import { Prognosis } from '../../domain/Project'
 
@@ -53,11 +52,11 @@ it('should set the show build label setting', async () => {
 describe('showing on the monitor page', () => {
   it.each`
     prognosis                    | name
-    ${Prognosis.healthy}         | ${'Healthy projects'}
-    ${Prognosis.healthyBuilding} | ${'Healthy building projects'}
-    ${Prognosis.sick}            | ${'Sick projects'}
-    ${Prognosis.sickBuilding}    | ${'Sick building projects'}
-    ${Prognosis.unknown}         | ${'Unknown projects'}
+    ${Prognosis.healthy}         | ${'Healthy prognosis'}
+    ${Prognosis.healthyBuilding} | ${'Healthy building prognosis'}
+    ${Prognosis.sick}            | ${'Sick prognosis'}
+    ${Prognosis.sickBuilding}    | ${'Sick building prognosis'}
+    ${Prognosis.unknown}         | ${'Unknown prognosis'}
   `(
     '$prognosis',
     async ({ prognosis, name }: { prognosis: Prognosis; name: string }) => {
@@ -77,41 +76,19 @@ describe('showing on the monitor page', () => {
 })
 
 describe('updating colours', () => {
-  it.each`
-    prognosis                    | name
-    ${Prognosis.healthy}         | ${'Healthy projects'}
-    ${Prognosis.healthyBuilding} | ${'Healthy building projects'}
-    ${Prognosis.sick}            | ${'Sick projects'}
-    ${Prognosis.sickBuilding}    | ${'Sick building projects'}
-    ${Prognosis.unknown}         | ${'Unknown projects'}
-    ${Prognosis.error}           | ${'Errors'}
-  `(
-    '$prognosis',
-    ({ prognosis, name }: { prognosis: Prognosis; name: string }) => {
-      const state = {
-        [displaySettingsRoot]: {
-          [prognosis]: {
-            backgroundColour: '#aaaaaa',
-            textColour: '#bbbbbb',
-          },
-        },
-      }
+  it.each([
+    { name: 'healthy prognosis', path: 'healthy' },
+    { name: 'healthy building prognosis', path: 'healthy-building' },
+    { name: 'sick prognosis', path: 'sick' },
+    { name: 'sick building prognosis', path: 'sick-building' },
+    { name: 'unknown prognosis', path: 'unknown' },
+    { name: 'errors', path: 'error' },
+  ])('$name', async ({ name, path }) => {
+    const { user } = render(<DisplaySettingsPage />)
+    await user.click(
+      screen.getByRole('button', { name: `Change colours for ${name}` })
+    )
 
-      const { store } = render(<DisplaySettingsPage />, { state })
-      const group = screen.getByRole('group', { name })
-      // Color inputs not supported by user events
-      // https://github.com/testing-library/user-event/issues/423
-      fireEvent.input(within(group).getByLabelText('Background colour'), {
-        target: { value: '#cccccc' },
-      })
-      fireEvent.input(within(group).getByLabelText('Text colour'), {
-        target: { value: '#dddddd' },
-      })
-
-      expect(getDisplaySettings(store.getState())[prognosis]).toEqual({
-        backgroundColour: '#cccccc',
-        textColour: '#dddddd',
-      })
-    }
-  )
+    expect(window.location.pathname).toEqual(`/settings/colours/${path}`)
+  })
 })

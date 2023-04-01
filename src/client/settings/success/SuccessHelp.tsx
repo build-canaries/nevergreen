@@ -38,16 +38,8 @@ export function SuccessHelp({
           no success messages are added then a blank screen will be shown.
           <p>Added messages will appear and can be managed from this page.</p>
         </HelpInput>
-        <HelpInput name="Colours">
-          Changes the background or text colour success messages will be
-          displayed with.
-          <p>
-            You should consider the{' '}
-            <ExternalLink href="https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html">
-              minimum contrast
-            </ExternalLink>{' '}
-            when changing colours to make sure they are easy to read.
-          </p>
+        <HelpInput name="Change colours">
+          Allows changing of the background and text colour.
         </HelpInput>
       </HelpForm>
       <p>Need some inspiration?</p>

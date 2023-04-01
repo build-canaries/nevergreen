@@ -8,11 +8,11 @@ import { notEmpty } from '../../common/Utils'
 import { Page } from '../../common/Page'
 import { Image } from '../../common/icons/Image'
 import { useAppDispatch, useAppSelector } from '../../configuration/Hooks'
-import { SuccessColours } from './SuccessColours'
 import { SuccessImage } from '../../common/SuccessImage'
 import { useAspectRatio } from '../../common/AspectRationHook'
 import { Card } from '../../common/card/Card'
 import { CardHeading } from '../../common/card/CardHeading'
+import { ChangeColoursLink } from '../colours/ChangeColoursLink'
 import styles from './success-messages.scss'
 
 export const NO_MESSAGES_WARNING =
@@ -57,7 +57,7 @@ export function SuccessMessagesPage(): ReactElement {
           )
         })}
       </ol>
-      <SuccessColours />
+      <ChangeColoursLink path="success" />
     </Page>
   )
 }

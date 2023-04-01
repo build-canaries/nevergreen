@@ -27,6 +27,9 @@ import { AboutPage } from './footer/AboutPage'
 import { RemoteBackupDetailsPage } from './settings/backup/RemoteBackupDetailsPage'
 import { AddNotificationPage } from './settings/notifications/AddNotificationPage'
 import { OtherSettingsPage } from './settings/other/OtherSettingsPage'
+import { ChangePrognosisColoursPage } from './settings/display/ChangePrognosisColoursPage'
+import { Prognosis } from './domain/Project'
+import { ChangeSuccessColoursPage } from './settings/success/ChangeSuccessColoursPage'
 
 export const ROUTE_MONITOR = '/monitor'
 export const ROUTE_SETTINGS = '/settings'
@@ -38,6 +41,7 @@ export const ROUTE_TRACKING_DETAILS_CONNECTION =
   '/settings/tracking/:id/details/connection'
 export const ROUTE_SUCCESS = '/settings/success'
 export const ROUTE_DISPLAY = '/settings/display'
+export const ROUTE_COLOURS = '/settings/colours/:for'
 export const ROUTE_NOTIFICATIONS = '/settings/notifications'
 export const ROUTE_NOTIFICATIONS_ADD = '/settings/notifications/add'
 export const ROUTE_BACKUP = '/settings/backup'
@@ -72,6 +76,19 @@ export function AppRoutes(): ReactElement {
           <Route path="success" element={<SuccessMessagesPage />} />
           <Route path="success/add" element={<AddMessagePage />} />
           <Route path="display" element={<DisplaySettingsPage />} />
+          <Route
+            path="colours/success"
+            element={<ChangeSuccessColoursPage />}
+          />
+          {Object.values(Prognosis).map((prognosis) => {
+            return (
+              <Route
+                key={prognosis}
+                path={`colours/${prognosis}`}
+                element={<ChangePrognosisColoursPage prognosis={prognosis} />}
+              />
+            )
+          })}
           <Route path="notifications" element={<NotificationSettingsPage />} />
           <Route path="notifications/add" element={<AddNotificationPage />} />
           <Route path="backup" element={<BackupPage />} />

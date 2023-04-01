@@ -2,7 +2,6 @@ import type { ReactElement } from 'react'
 import { HelpArticle, HelpProps } from '../../help/HelpArticle'
 import { HelpForm, HelpInput } from '../../help/HelpForms'
 import { ROUTE_DISPLAY } from '../../AppRoutes'
-import { ExternalLink } from '../../common/ExternalLink'
 
 const keywords = [
   'settings',
@@ -59,21 +58,12 @@ export function DisplaySettingsHelp({
         </HelpInput>
         <HelpInput name="Show on the Monitor page">
           When <em>enabled</em> the corresponding prognosis will be displayed on
-          the Monitor page.
+          the Monitor page. Errors are always shown and can not be removed.
         </HelpInput>
-        <HelpInput name="Background colour">
-          Changes the background colour of the corresponding prognosis.
+        <HelpInput name="Change colours">
+          Allows changing of the background and text colour of the corresponding
+          prognosis.
         </HelpInput>
-        <HelpInput name="Text colour">
-          Changes the text colour of the corresponding prognosis.
-        </HelpInput>
-        <p>
-          You should consider the{' '}
-          <ExternalLink href="https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html">
-            minimum contrast
-          </ExternalLink>{' '}
-          when changing colours to make sure they are easy to read.
-        </p>
         <HelpInput name="Amount of projects to show">
           This limits the total number of projects show on the Monitor page, any
           additional projects will be counted and shown in a summary box. The

@@ -1,26 +1,21 @@
 import type { ReactElement } from 'react'
 import { Prognosis, prognosisDisplay } from '../../domain/Project'
-import { Checkbox } from '../../common/forms/Checkbox'
 import {
   getDisplaySettings,
   getShowPrognosis,
-  setPrognosisBackgroundColour,
-  setPrognosisTextColour,
   setShowPrognosis,
 } from './DisplaySettingsReducer'
 import capitalize from 'lodash/capitalize'
 import { useAppDispatch, useAppSelector } from '../../configuration/Hooks'
+import { Card } from '../../common/card/Card'
+import { CardHeading } from '../../common/card/CardHeading'
+import { Checkbox } from '../../common/forms/Checkbox'
+import { ChangeColoursLink } from '../colours/ChangeColoursLink'
 import { Group } from '../../common/forms/Group'
-import { ColourPicker } from '../../common/forms/ColourPicker'
-import cn from 'classnames'
 import styles from './display-prognosis-selection.scss'
 
 function groupTitle(prognosis: Prognosis): string {
-  if (prognosis === Prognosis.error) {
-    return 'Errors'
-  } else {
-    return `${capitalize(prognosisDisplay(prognosis))} projects`
-  }
+  return `${capitalize(prognosisDisplay(prognosis))} prognosis`
 }
 
 export function DisplayPrognosisSelection(): ReactElement {
@@ -30,51 +25,50 @@ export function DisplayPrognosisSelection(): ReactElement {
 
   return (
     <div className={styles.container}>
-      {Object.values(Prognosis).map((prognosis) => {
-        const isError = prognosis === Prognosis.error
-        return (
-          <Group title={groupTitle(prognosis)} key={prognosis}>
-            {!isError && (
-              <Checkbox
-                className={styles.checkbox}
-                checked={showing.includes(prognosis)}
-                onToggle={(show) =>
-                  dispatch(setShowPrognosis({ prognosis, show }))
-                }
-              >
-                Show on the Monitor page
-              </Checkbox>
-            )}
-            <div className={styles.colours}>
-              <ColourPicker
-                classNameContainer={cn({ [styles.checkbox]: isError })}
-                value={settings[prognosis].backgroundColour}
-                onChange={({ target }) =>
-                  dispatch(
-                    setPrognosisBackgroundColour({
-                      prognosis,
-                      colour: target.value,
-                    })
-                  )
-                }
-              >
-                Background colour
-              </ColourPicker>
-              <ColourPicker
-                classNameContainer={cn({ [styles.checkbox]: isError })}
-                value={settings[prognosis].textColour}
-                onChange={({ target }) =>
-                  dispatch(
-                    setPrognosisTextColour({ prognosis, colour: target.value })
-                  )
-                }
-              >
-                Text colour
-              </ColourPicker>
-            </div>
-          </Group>
-        )
-      })}
+      <Card
+        header={<CardHeading title="Errors" />}
+        styleHeader={{
+          color: settings[Prognosis.error].textColour,
+          backgroundColor: settings[Prognosis.error].backgroundColour,
+        }}
+      >
+        <ChangeColoursLink
+          path={Prognosis.error}
+          additionalContext="for errors"
+        />
+      </Card>
+      {Object.values(Prognosis)
+        .filter((prognosis) => prognosis !== Prognosis.error)
+        .map((prognosis) => {
+          return (
+            <Card
+              header={<CardHeading title={groupTitle(prognosis)} />}
+              styleHeader={{
+                color: settings[prognosis].textColour,
+                backgroundColor: settings[prognosis].backgroundColour,
+              }}
+              key={prognosis}
+            >
+              <Group title={groupTitle(prognosis)}>
+                <Checkbox
+                  className={styles.checkbox}
+                  checked={showing.includes(prognosis)}
+                  onToggle={(show) =>
+                    dispatch(setShowPrognosis({ prognosis, show }))
+                  }
+                >
+                  Show on the Monitor page
+                </Checkbox>
+                <ChangeColoursLink
+                  path={prognosis}
+                  additionalContext={`for ${prognosisDisplay(
+                    prognosis
+                  )} prognosis`}
+                />
+              </Group>
+            </Card>
+          )
+        })}
     </div>
   )
 }

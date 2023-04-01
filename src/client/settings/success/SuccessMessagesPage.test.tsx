@@ -1,11 +1,7 @@
 import { NO_MESSAGES_WARNING, SuccessMessagesPage } from './SuccessMessagesPage'
 import { render } from '../../testUtils/testHelpers'
-import {
-  getSuccessBackgroundColour,
-  getSuccessTextColour,
-  successRoot,
-} from './SuccessReducer'
-import { fireEvent, screen } from '@testing-library/react'
+import { successRoot } from './SuccessReducer'
+import { screen } from '@testing-library/react'
 
 it('should show success messages', () => {
   const state = {
@@ -39,21 +35,8 @@ it('should not show a warning if at least one success messages exists', () => {
   expect(screen.queryByText(NO_MESSAGES_WARNING)).not.toBeInTheDocument()
 })
 
-it('should allow colours to be changed', () => {
-  const state = {
-    [successRoot]: { backgroundColour: '#aaaaaa', textColour: '#bbbbbb' },
-  }
-  const { store } = render(<SuccessMessagesPage />, { state })
-
-  // Color inputs not supported by user events
-  // https://github.com/testing-library/user-event/issues/423
-  fireEvent.input(screen.getByLabelText('Background colour'), {
-    target: { value: '#cccccc' },
-  })
-  fireEvent.input(screen.getByLabelText('Text colour'), {
-    target: { value: '#dddddd' },
-  })
-
-  expect(getSuccessBackgroundColour(store.getState())).toEqual('#cccccc')
-  expect(getSuccessTextColour(store.getState())).toEqual('#dddddd')
+it('should allow colours to be changed', async () => {
+  const { user } = render(<SuccessMessagesPage />)
+  await user.click(screen.getByRole('button', { name: `Change colours` }))
+  expect(window.location.pathname).toEqual(`/settings/colours/success`)
 })

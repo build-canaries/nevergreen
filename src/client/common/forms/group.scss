@@ -1,8 +1,17 @@
 @use '../colours';
 @use '../layout';
+@use '../accessibility';
 
 .container {
-  border: colours.$input-border;
-  margin-top: layout.$spacing-height;
-  padding: 1em;
+  border: none;
+}
+
+.legend {
+  @include accessibility.visually-hidden;
+}
+
+.children {
+  & *:first-child {
+    margin-top: 0;
+  }
 }
