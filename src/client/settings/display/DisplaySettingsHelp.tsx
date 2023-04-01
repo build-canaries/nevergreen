@@ -32,6 +32,10 @@ export function DisplaySettingsHelp({
       page={ROUTE_DISPLAY}
     >
       <HelpForm>
+        <HelpInput name="Preview display">
+          This displays a Monitor page preview with a randomly generated number
+          of projects and your currently selected settings.
+        </HelpInput>
         <HelpInput name="Show feed identifier">
           When <em>enabled</em> the CI server name {helpLink('name')} or URL
           will be displayed on the Monitor page.
@@ -55,14 +59,6 @@ export function DisplaySettingsHelp({
             building, meaning the value Nevergreen gets is always out of date
             for building projects.
           </p>
-        </HelpInput>
-        <HelpInput name="Show on the Monitor page">
-          When <em>enabled</em> the corresponding prognosis will be displayed on
-          the Monitor page. Errors are always shown and can not be removed.
-        </HelpInput>
-        <HelpInput name="Change colours">
-          Allows changing of the background and text colour of the corresponding
-          prognosis.
         </HelpInput>
         <HelpInput name="Amount of projects to show">
           This limits the total number of projects show on the Monitor page, any
@@ -89,9 +85,13 @@ export function DisplaySettingsHelp({
             order may be more appropriate.
           </p>
         </HelpInput>
-        <HelpInput name="Preview display">
-          This displays a Monitor page preview with a randomly generated number
-          of projects and your currently selected settings.
+        <HelpInput name="Show on the Monitor page">
+          When <em>enabled</em> the corresponding prognosis will be displayed on
+          the Monitor page. Errors are always shown and can not be removed.
+        </HelpInput>
+        <HelpInput name="Change colours">
+          Allows changing of the background and text colour of the corresponding
+          prognosis.
         </HelpInput>
       </HelpForm>
       <p>

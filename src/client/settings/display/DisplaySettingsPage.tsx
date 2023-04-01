@@ -48,6 +48,9 @@ export function DisplaySettingsPage(): ReactElement {
 
   return (
     <Page title="Display settings" icon={<Display />}>
+      <LinkButton to={ROUTE_PREVIEW} icon={<Eye />}>
+        Preview display
+      </LinkButton>
       <Checkbox
         checked={showFeedIdentifier}
         onToggle={(newValue) => dispatch(setShowFeedIdentifier(newValue))}
@@ -66,9 +69,6 @@ export function DisplaySettingsPage(): ReactElement {
       >
         Show build label
       </Checkbox>
-
-      <DisplayPrognosisSelection />
-
       <DropDown
         className={styles.dropDown}
         options={projectsToShowOptions}
@@ -79,7 +79,6 @@ export function DisplaySettingsPage(): ReactElement {
       >
         <span className={styles.dropDownLabel}>Amount of project to show</span>
       </DropDown>
-
       <DropDown
         className={styles.dropDown}
         options={sortOptions}
@@ -88,10 +87,7 @@ export function DisplaySettingsPage(): ReactElement {
       >
         <span className={styles.dropDownLabel}>Sort projects by</span>
       </DropDown>
-
-      <LinkButton to={ROUTE_PREVIEW} className={styles.preview} icon={<Eye />}>
-        Preview display
-      </LinkButton>
+      <DisplayPrognosisSelection />
     </Page>
   )
 }
