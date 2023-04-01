@@ -4,7 +4,7 @@
   ; use lein deps :tree to check dependency problems and actual versions used
   :dependencies [[org.clojure/clojure "1.11.1"]
                  [ring "1.9.6" :exclusions [org.eclipse.jetty/jetty-server]]
-                 [org.eclipse.jetty/jetty-server "9.4.50.v20221201"]
+                 [org.eclipse.jetty/jetty-server "9.4.51.v20230217"]
                  [compojure "1.7.0" :exclusions [ring/ring-codec]]
                  [environ "1.2.0"]
                  [cheshire "5.11.0"]
@@ -15,14 +15,14 @@
                  [ring/ring-json "0.5.1"]
                  [ring/ring-defaults "0.3.4"]
                  [bk/ring-gzip "0.3.0"]
-                 [ring-basic-authentication "1.1.1"]
+                 [ring-basic-authentication "1.2.0"]
                  [base64-clj "0.1.1"]
                  [camel-snake-kebab "0.4.3"]
                  [com.cemerick/url "0.1.1" :exclusions [com.cemerick/clojurescript.test]]
-                 [ch.qos.logback/logback-classic "1.4.5" :exclusions [org.slf4j/slf4j-api]]
-                 [org.slf4j/log4j-over-slf4j "2.0.6"]
-                 [org.slf4j/jul-to-slf4j "2.0.6"]
-                 [org.slf4j/jcl-over-slf4j "2.0.6"]]
+                 [ch.qos.logback/logback-classic "1.4.6" :exclusions [org.slf4j/slf4j-api]]
+                 [org.slf4j/log4j-over-slf4j "2.0.7"]
+                 [org.slf4j/jul-to-slf4j "2.0.7"]
+                 [org.slf4j/jcl-over-slf4j "2.0.7"]]
   :min-lein-version "2.0.0"
   :uberjar-name "nevergreen-standalone.jar"
   :main nevergreen.app
