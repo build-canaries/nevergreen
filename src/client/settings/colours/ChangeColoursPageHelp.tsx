@@ -14,6 +14,7 @@ const keywords = [
   'healthy building',
   'unknown',
   'success',
+  'lightness contrast',
 ]
 
 export function ChangeColoursPageHelp({
@@ -35,14 +36,15 @@ export function ChangeColoursPageHelp({
         </HelpInput>
       </HelpForm>
       <p>
-        A preview of the currently selected colours is shown under the form.
-      </p>
-      <p>
-        You should consider the{' '}
-        <ExternalLink href="https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html">
-          minimum contrast
-        </ExternalLink>{' '}
-        when changing colours to make sure they are easy to read.
+        A visual preview of the currently selected colours is shown under the
+        form. The preview shows the lightness contrast (L<sup>c</sup>) which is
+        calculated using the{' '}
+        <ExternalLink href="https://git.apcacontrast.com/documentation/WhyAPCA">
+          Accessible Perceptual Contrast Algorithm
+        </ExternalLink>
+        . The L<sup>c</sup> ranges from 0 to 108 and in general the higher the L
+        <sup>c</sup> the more readable the colour combination. A warning will be
+        shown if the L<sup>c</sup> is lower than 60.
       </p>
     </HelpArticle>
   )

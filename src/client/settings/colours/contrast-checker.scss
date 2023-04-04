@@ -1,0 +1,8 @@
+@use '../../common/layout';
+
+.preview {
+  aspect-ratio: 16 / 9;
+  border-radius: 5px;
+  margin: layout.$spacing-height 0 0 0;
+  width: 100%;
+}

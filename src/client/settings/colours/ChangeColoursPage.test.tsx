@@ -2,6 +2,9 @@ import { render } from '../../testUtils/testHelpers'
 import { fireEvent, screen } from '@testing-library/react'
 import { ChangeColoursPage } from './ChangeColoursPage'
 
+// Color inputs not supported by user events
+// https://github.com/testing-library/user-event/issues/423
+
 it('should be able to change colours', async () => {
   let backgroundColour = '#aaaaaa'
   let textColour = '#bbbbbb'
@@ -19,8 +22,6 @@ it('should be able to change colours', async () => {
       }}
     />
   )
-  // Color inputs not supported by user events
-  // https://github.com/testing-library/user-event/issues/423
   fireEvent.input(screen.getByLabelText('Background colour'), {
     target: { value: '#cccccc' },
   })
@@ -49,4 +50,34 @@ it('should be able to cancel making changes', async () => {
   await user.click(screen.getByRole('button', { name: 'Cancel' }))
 
   expect(window.location.pathname).toEqual('/cancelled-url')
+})
+
+it('should show a warning if contrast is low', () => {
+  let backgroundColour = '#000000'
+  let textColour = '#000000'
+
+  render(
+    <ChangeColoursPage
+      title=""
+      onCancel=""
+      initialBackgroundColour={backgroundColour}
+      initialTextColour={textColour}
+      onSuccess={(background, text) => {
+        backgroundColour = background
+        textColour = text
+        return 'success-url'
+      }}
+    />
+  )
+
+  expect(
+    screen.getByText(
+      'The chosen colours have a low perceptual lightness contrast.'
+    )
+  ).toBeInTheDocument()
+  expect(
+    screen.getByText(
+      'You should consider picking different colours to improve readability.'
+    )
+  ).toBeInTheDocument()
 })

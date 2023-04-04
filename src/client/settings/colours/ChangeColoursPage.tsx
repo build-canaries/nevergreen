@@ -2,12 +2,12 @@ import type { ReactElement } from 'react'
 import { useState } from 'react'
 import { Page } from '../../common/Page'
 import { Form } from '../../common/forms/Form'
-import { ScaleText } from '../../common/ScaleText'
 import { ColourPicker } from '../../common/forms/ColourPicker'
 import { PaintFormat } from '../../common/icons/PaintFormat'
+import { ContrastChecker } from './ContrastChecker'
 import styles from './change-colours-page.scss'
 
-interface ChangePrognosisColoursPage {
+interface ChangePrognosisColoursPageProps {
   readonly title: string
   readonly onSuccess: (backgroundColour: string, textColour: string) => string
   readonly onCancel: string
@@ -21,7 +21,7 @@ export function ChangeColoursPage({
   onCancel,
   initialTextColour,
   initialBackgroundColour,
-}: ChangePrognosisColoursPage): ReactElement {
+}: ChangePrognosisColoursPageProps): ReactElement {
   const [text, setText] = useState(initialTextColour)
   const [background, setBackground] = useState(initialBackgroundColour)
 
@@ -53,12 +53,7 @@ export function ChangeColoursPage({
           )
         }}
       </Form>
-      <div
-        className={styles.preview}
-        style={{ color: text, backgroundColor: background }}
-      >
-        <ScaleText sentences={['preview']}>preview</ScaleText>
-      </div>
+      <ContrastChecker backgroundColour={background} textColour={text} />
     </Page>
   )
 }
