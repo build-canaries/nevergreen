@@ -4,8 +4,8 @@ import type {
   ReactElement,
   ReactNode,
 } from 'react'
+import { useId } from 'react'
 import cn from 'classnames'
-import uniqueId from 'lodash/uniqueId'
 import styles from './radio.scss'
 
 type RadioProps = {
@@ -24,11 +24,12 @@ export function Radio({
   disabled,
   ...inputProps
 }: RadioProps): ReactElement {
+  const idIfNotProvided = useId()
   const containerClasses = cn(styles.container, className)
   const inputClasses = cn(styles.input, {
     [styles.readOnly]: readOnly,
   })
-  const actualId = id ?? uniqueId('i')
+  const actualId = id ?? idIfNotProvided
 
   return (
     <div className={containerClasses}>

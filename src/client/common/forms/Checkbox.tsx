@@ -4,8 +4,8 @@ import type {
   ReactElement,
   ReactNode,
 } from 'react'
+import { useId } from 'react'
 import classNames from 'classnames'
-import uniqueId from 'lodash/uniqueId'
 import styles from './checkbox.scss'
 
 type CheckboxProps = {
@@ -24,8 +24,9 @@ export function Checkbox({
   id,
   ...inputProps
 }: CheckboxProps): ReactElement {
+  const idIfNotProvided = useId()
   const classes = classNames(styles.container, className)
-  const actualId = id ?? uniqueId('c')
+  const actualId = id ?? idIfNotProvided
 
   return (
     <div className={classes}>

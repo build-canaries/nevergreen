@@ -4,9 +4,8 @@ import type {
   ReactElement,
   ReactNode,
 } from 'react'
-import { useEffect, useRef } from 'react'
+import { useEffect, useId, useRef } from 'react'
 import cn from 'classnames'
-import uniqueId from 'lodash/uniqueId'
 import { InputButton } from './Button'
 import { isNotBlank } from '../Utils'
 import { VisuallyHidden } from '../VisuallyHidden'
@@ -38,6 +37,8 @@ export function Input({
   ...inputProps
 }: InputProps): ReactElement {
   const inputNode = useRef<HTMLInputElement>(null)
+  const idIfNotProvided = useId()
+  const errorId = useId()
 
   useEffect(() => {
     const shouldFocus = isNotBlank(error)
@@ -48,8 +49,7 @@ export function Input({
 
   const hasError = isNotBlank(error)
 
-  const actualId = id ?? uniqueId('i')
-  const errorId = hasError ? uniqueId('e') : undefined
+  const actualId = id ?? idIfNotProvided
 
   const containerClasses = cn(formStyles.inputContainer, classNameContainer, {
     [styles.containerError]: hasError,

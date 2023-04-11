@@ -4,8 +4,8 @@ import type {
   ReactNode,
   SelectHTMLAttributes,
 } from 'react'
+import { useId } from 'react'
 import cn from 'classnames'
-import uniqueId from 'lodash/uniqueId'
 import formStyles from './forms.scss'
 import styles from './drop-down.scss'
 
@@ -31,8 +31,9 @@ export function DropDown({
   id,
   ...inputProps
 }: DropDownProps): ReactElement {
+  const idIfNotProvided = useId()
   const labelClasses = cn(formStyles.inputContainer, className)
-  const actualId = id ?? uniqueId('i')
+  const actualId = id ?? idIfNotProvided
 
   return (
     <div className={labelClasses}>

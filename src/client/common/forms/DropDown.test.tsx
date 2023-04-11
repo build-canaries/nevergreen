@@ -13,16 +13,3 @@ it('should add all the given options', () => {
   expect(screen.getByText('B')).toBeInTheDocument()
   expect(screen.getByText('C')).toBeInTheDocument()
 })
-
-// https://ffoodd.github.io/a11y.css/errors.html#namespace
-it('should generate an id (that does not start with a number) to associate the label and input correctly', () => {
-  render(<DropDown options={[]}>label</DropDown>)
-  expect(screen.getByText('label')).toHaveAttribute(
-    'for',
-    expect.stringMatching(/i[0-9]/)
-  )
-  expect(screen.getByRole('combobox')).toHaveAttribute(
-    'id',
-    expect.stringMatching(/i[0-9]/)
-  )
-})

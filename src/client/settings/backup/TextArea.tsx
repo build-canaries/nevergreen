@@ -3,10 +3,10 @@ import type {
   InputHTMLAttributes,
   ReactElement,
 } from 'react'
+import { useId } from 'react'
 import cn from 'classnames'
 import classNames from 'classnames'
 import isEmpty from 'lodash/isEmpty'
-import uniqueId from 'lodash/uniqueId'
 import { VisuallyHidden } from '../../common/VisuallyHidden'
 import styles from './text-area.scss'
 
@@ -25,9 +25,10 @@ export function TextArea({
   className,
   ...props
 }: TextAreaProps): ReactElement {
+  const idIfNotProvided = useId()
+  const errorId = useId()
   const hasError = !isEmpty(errors)
-  const actualId = id ?? uniqueId('i')
-  const errorId = hasError ? uniqueId('e') : undefined
+  const actualId = id ?? idIfNotProvided
 
   const containerClasses = classNames(className, {
     [styles.containerError]: hasError,

@@ -1,16 +1,20 @@
 import type { ReactElement } from 'react'
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import type { InputProps } from './Input'
 import { Input } from './Input'
-import uniqueId from 'lodash/uniqueId'
 import { InputButton } from './Button'
 import { Eye } from '../icons/Eye'
 import { EyeBlocked } from '../icons/EyeBlocked'
 
-export function Password(props: Omit<InputProps, 'type'>): ReactElement {
+export function Password({
+  id,
+  children,
+  ...props
+}: Omit<InputProps, 'type'>): ReactElement {
   const [type, setType] = useState('password')
+  const idIfNotProvided = useId()
 
-  const actualId = props.id ?? uniqueId('i')
+  const actualId = id ?? idIfNotProvided
 
   const showPassword = (
     <InputButton
@@ -39,6 +43,8 @@ export function Password(props: Omit<InputProps, 'type'>): ReactElement {
       button={type === 'password' ? showPassword : hidePassword}
       autoComplete="new-password"
       {...props}
-    />
+    >
+      {children}
+    </Input>
   )
 }

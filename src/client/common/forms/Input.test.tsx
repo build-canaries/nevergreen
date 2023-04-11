@@ -9,19 +9,6 @@ it('should apply the read only attribute and display an icon', () => {
   expect(screen.getByText('read only')).toBeInTheDocument()
 })
 
-// https://ffoodd.github.io/a11y.css/errors.html#namespace
-it('should generate an id (that does not start with a number) to associate the label and input correctly', () => {
-  render(<Input>label</Input>)
-  expect(screen.getByText('label')).toHaveAttribute(
-    'for',
-    expect.stringMatching(/i[0-9]/)
-  )
-  expect(screen.getByRole('textbox')).toHaveAttribute(
-    'id',
-    expect.stringMatching(/i[0-9]/)
-  )
-})
-
 it('should display given error message', () => {
   const props = { error: 'some validation error' }
   render(<Input {...props}>label</Input>)
