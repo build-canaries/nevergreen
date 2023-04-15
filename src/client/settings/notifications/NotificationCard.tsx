@@ -9,9 +9,9 @@ import { Checkmark } from '../../common/icons/Checkmark'
 import { isBlank } from '../../common/Utils'
 import { Note } from '../../common/icons/Note'
 import { URL } from '../../common/URL'
-import { NotificationIcon } from './icons/NotificationIcon'
 import capitalize from 'lodash/capitalize'
 import { useAppDispatch } from '../../configuration/Hooks'
+import { IconPrognosis } from '../../common/icons/prognosis/IconPrognosis'
 import styles from './notifications-card.scss'
 
 interface NotificationCardProps {
@@ -57,7 +57,7 @@ export function NotificationCard({
     <CardHeading
       title={`${capitalize(prognosisDisplay(prognosis))} notification`}
       onRemove={() => dispatch(removeNotification(prognosis))}
-      icon={<NotificationIcon prognosis={prognosis} />}
+      icon={<IconPrognosis prognosis={prognosis} />}
     />
   )
 

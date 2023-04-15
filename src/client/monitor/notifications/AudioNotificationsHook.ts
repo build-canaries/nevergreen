@@ -3,11 +3,8 @@ import { isNotBlank } from '../../common/Utils'
 import { anyAudioPlaying, playAudio } from '../../common/AudioPlayer'
 import { error } from '../../common/Logger'
 import { getNotifications } from '../../settings/notifications/NotificationsReducer'
-import {
-  recentlyTransitioned,
-  reversePrognosisPriority,
-} from './NotificationsHook'
-import { Projects } from '../../domain/Project'
+import { recentlyTransitioned } from './NotificationsHook'
+import { Prognosis, Projects } from '../../domain/Project'
 import { FeedErrors } from '../../domain/FeedError'
 import {
   getAllowAudioNotifications,
@@ -29,8 +26,9 @@ export function useAudioNotifications(
     }
 
     const toCheck = [...feedErrors, ...projects]
-    const sfxToPlay = reversePrognosisPriority.reduce(
-      (previousSfxToPlay, prognosis) => {
+    const sfxToPlay = Object.values(Prognosis)
+      .reverse()
+      .reduce((previousSfxToPlay, prognosis) => {
         const allWithPrognosis = toCheck.filter(
           (project) => project.prognosis === prognosis
         )
@@ -40,9 +38,7 @@ export function useAudioNotifications(
           notification && isNotBlank(notification.sfx) && toAlert.length > 0
 
         return shouldPlay ? notification.sfx : previousSfxToPlay
-      },
-      ''
-    )
+      }, '')
 
     if (isNotBlank(sfxToPlay)) {
       try {

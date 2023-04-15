@@ -1,5 +1,10 @@
 import * as SystemNotifications from '../../common/SystemNotifications'
-import { Prognosis, ProjectPrognosis, Projects } from '../../domain/Project'
+import {
+  Prognosis,
+  prognosisDisplay,
+  ProjectPrognosis,
+  Projects,
+} from '../../domain/Project'
 import { render } from '../../testUtils/testHelpers'
 import { buildFeedError, buildProject } from '../../testUtils/builders'
 import { notificationsRoot } from '../../settings/notifications/NotificationsReducer'
@@ -89,7 +94,7 @@ describe('system notifications', () => {
 
       expect(SystemNotifications.sendSystemNotification).toBeCalledWith(
         expect.objectContaining({
-          title: `project is ${current}!`,
+          title: `project is ${prognosisDisplay(current)}!`,
           body: 'some-name',
         })
       )

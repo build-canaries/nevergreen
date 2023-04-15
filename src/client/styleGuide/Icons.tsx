@@ -27,23 +27,43 @@ import { Twitter } from '../common/icons/Twitter'
 import { Unlocked } from '../common/icons/Unlocked'
 import { FolderOpen } from '../common/icons/FolderOpen'
 import { Warning } from '../common/icons/Warning'
-import { ArrowLeft } from '../common/icons/ArrowLeft'
 import { List } from '../common/icons/List'
 import { Xml } from '../common/icons/Xml'
 import { Image } from '../common/icons/Image'
 import { Info } from '../common/icons/Info'
 import { ArrowUp } from '../common/icons/ArrowUp'
 import { Note } from '../common/icons/Note'
-import styles from './style-guide.scss'
 import { PaintFormat } from '../common/icons/PaintFormat'
+import { IconHealthyBuilding } from '../common/icons/prognosis/IconHealthyBuilding'
+import { IconHealthy } from '../common/icons/prognosis/IconHealthy'
+import { IconSick } from '../common/icons/prognosis/IconSick'
+import styles from './style-guide.scss'
+import { IconSickBuilding } from '../common/icons/prognosis/IconSickBuilding'
+import { IconError } from '../common/icons/prognosis/IconError'
 
 export function Icons(): ReactElement {
   return (
     <StyleGuideSection title="Icons (in a Responsive Grid)">
       <div className={styles.icons}>
         <span>
-          <ArrowLeft />
-          arrow left
+          <IconError />
+          error
+        </span>
+        <span>
+          <IconSick />
+          sick
+        </span>
+        <span>
+          <IconSickBuilding />
+          sick building
+        </span>
+        <span>
+          <IconHealthyBuilding />
+          healthy building
+        </span>
+        <span>
+          <IconHealthy />
+          healthy
         </span>
         <span>
           <ArrowUp />

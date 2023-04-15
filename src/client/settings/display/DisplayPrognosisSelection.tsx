@@ -12,6 +12,7 @@ import { CardHeading } from '../../common/card/CardHeading'
 import { Checkbox } from '../../common/forms/Checkbox'
 import { ChangeColoursLink } from '../colours/ChangeColoursLink'
 import { Group } from '../../common/forms/Group'
+import { IconPrognosis } from '../../common/icons/prognosis/IconPrognosis'
 import styles from './display-prognosis-selection.scss'
 
 function groupTitle(prognosis: Prognosis): string {
@@ -26,7 +27,12 @@ export function DisplayPrognosisSelection(): ReactElement {
   return (
     <div className={styles.container}>
       <Card
-        header={<CardHeading title="Errors" />}
+        header={
+          <CardHeading
+            title="Errors"
+            icon={<IconPrognosis prognosis={Prognosis.error} />}
+          />
+        }
         styleHeader={{
           color: settings[Prognosis.error].textColour,
           backgroundColor: settings[Prognosis.error].backgroundColour,
@@ -42,7 +48,12 @@ export function DisplayPrognosisSelection(): ReactElement {
         .map((prognosis) => {
           return (
             <Card
-              header={<CardHeading title={groupTitle(prognosis)} />}
+              header={
+                <CardHeading
+                  title={groupTitle(prognosis)}
+                  icon={<IconPrognosis prognosis={prognosis} />}
+                />
+              }
               styleHeader={{
                 color: settings[prognosis].textColour,
                 backgroundColor: settings[prognosis].backgroundColour,

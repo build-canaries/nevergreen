@@ -15,15 +15,6 @@ export function recentlyTransitioned(
   })
 }
 
-export const reversePrognosisPriority = [
-  Prognosis.healthy,
-  Prognosis.unknown,
-  Prognosis.healthyBuilding,
-  Prognosis.sickBuilding,
-  Prognosis.sick,
-  Prognosis.error,
-]
-
 export function useNotifications(
   projects: Projects,
   feedErrors: FeedErrors

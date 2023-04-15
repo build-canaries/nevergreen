@@ -14,13 +14,13 @@ import { ROUTE_NOTIFICATIONS } from '../../AppRoutes'
 import { deleteAudio, playAudio, stopAudio } from '../../common/AudioPlayer'
 import { WarningMessages } from '../../common/Messages'
 import { addNotification } from './NotificationsReducer'
-import { NotificationIcon } from './icons/NotificationIcon'
 import { useAppDispatch, useAppSelector } from '../../configuration/Hooks'
 import {
   getAllowAudioNotifications,
   getAllowSystemNotifications,
   getAudioNotificationVolume,
 } from '../PersonalSettingsReducer'
+import { IconPrognosis } from '../../common/icons/prognosis/IconPrognosis'
 
 const PROGNOSIS_OPTIONS = [
   { value: Prognosis.error, display: 'Error' },
@@ -125,7 +125,7 @@ export function AddNotificationPage(): ReactElement {
   return (
     <Page
       title="Add notification"
-      icon={<NotificationIcon prognosis={prognosis} />}
+      icon={<IconPrognosis prognosis={prognosis} />}
     >
       <WarningMessages messages={warnings} />
 
