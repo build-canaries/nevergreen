@@ -39,7 +39,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 19.0.0
+          node-version: 19.9.0
 
       - name: node - dependencies
         run: npm ci
