@@ -28,6 +28,10 @@ export function ChangeColoursPageHelp({
       page={ROUTE_COLOURS}
     >
       <HelpForm>
+        <HelpInput name="Presets">
+          These allow you to quickly select preset colour combinations. Choosing
+          any preset will override the currently selected colours.
+        </HelpInput>
         <HelpInput name="Background colour">
           Changes the background colour.
         </HelpInput>
@@ -45,6 +49,18 @@ export function ChangeColoursPageHelp({
         . The L<sup>c</sup> ranges from 0 to 108 and in general the higher the L
         <sup>c</sup> the more readable the colour combination. A warning will be
         shown if the L<sup>c</sup> is lower than 60.
+      </p>
+      <p>
+        Dead Cells preset colours are inspired by the video game{' '}
+        <ExternalLink href="https://dead-cells.com/">Dead Cells</ExternalLink>,
+        a rogue-lite, metroidvania action-platformer.
+      </p>
+      <p>
+        Melatonin preset colours are inspired by the video game{' '}
+        <ExternalLink href="https://www.halfasleep.games/melatonin/">
+          Melatonin
+        </ExternalLink>
+        , a rhythm game about dreams and reality merging together.
       </p>
     </HelpArticle>
   )

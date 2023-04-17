@@ -1,7 +1,7 @@
 @use '../../common/layout';
 
 .container {
-  @include layout.grid($mobile-columns: 2, $desktop-columns: 3);
+  @include layout.grid($mobile-columns: 2);
 
   margin: layout.$spacing-height 0 0 0;
 }

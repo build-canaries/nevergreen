@@ -27,6 +27,7 @@ export function ChangeSuccessColoursPage(): ReactElement {
       onCancel={ROUTE_SUCCESS}
       initialBackgroundColour={initialBackgroundColour}
       initialTextColour={initialTextColour}
+      group="success"
     />
   )
 }

@@ -22,7 +22,7 @@ export function Group({
 }: GroupProps): ReactElement {
   return (
     <fieldset className={cn(styles.container, className)} {...props}>
-      <legend className={styles.legend}>{title}</legend>
+      <legend>{title}</legend>
       <div className={styles.children}>{children}</div>
     </fieldset>
   )

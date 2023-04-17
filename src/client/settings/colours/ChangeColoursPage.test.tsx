@@ -1,6 +1,7 @@
 import { render } from '../../testUtils/testHelpers'
 import { fireEvent, screen } from '@testing-library/react'
 import { ChangeColoursPage } from './ChangeColoursPage'
+import { Prognosis } from '../../domain/Project'
 
 // Color inputs not supported by user events
 // https://github.com/testing-library/user-event/issues/423
@@ -15,6 +16,7 @@ it('should be able to change colours', async () => {
       onCancel=""
       initialBackgroundColour={backgroundColour}
       initialTextColour={textColour}
+      group={Prognosis.error}
       onSuccess={(background, text) => {
         backgroundColour = background
         textColour = text
@@ -42,6 +44,7 @@ it('should be able to cancel making changes', async () => {
       onCancel="cancelled-url"
       initialBackgroundColour=""
       initialTextColour=""
+      group={Prognosis.error}
       onSuccess={() => {
         return ''
       }}
@@ -62,6 +65,7 @@ it('should show a warning if contrast is low', () => {
       onCancel=""
       initialBackgroundColour={backgroundColour}
       initialTextColour={textColour}
+      group={Prognosis.error}
       onSuccess={(background, text) => {
         backgroundColour = background
         textColour = text
@@ -80,4 +84,29 @@ it('should show a warning if contrast is low', () => {
       'You should consider picking different colours to improve readability.'
     )
   ).toBeInTheDocument()
+})
+
+it('should be able to select default preset colours', async () => {
+  let backgroundColour = '#000000'
+  let textColour = '#000000'
+
+  const { user } = render(
+    <ChangeColoursPage
+      title=""
+      onCancel=""
+      initialBackgroundColour={backgroundColour}
+      initialTextColour={textColour}
+      group={Prognosis.error}
+      onSuccess={(background, text) => {
+        backgroundColour = background
+        textColour = text
+        return 'success-url'
+      }}
+    />
+  )
+
+  await user.click(screen.getByRole('button', { name: 'Default' }))
+
+  expect(screen.getByLabelText('Background colour')).toHaveValue('#de3535')
+  expect(screen.getByLabelText('Text colour')).toHaveValue('#ffffff')
 })

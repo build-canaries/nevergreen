@@ -5,6 +5,8 @@ import { Form } from '../../common/forms/Form'
 import { ColourPicker } from '../../common/forms/ColourPicker'
 import { PaintFormat } from '../../common/icons/PaintFormat'
 import { ContrastChecker } from './ContrastChecker'
+import { Presets } from './Presets'
+import { Prognosis } from '../../domain/Project'
 import styles from './change-colours-page.scss'
 
 interface ChangePrognosisColoursPageProps {
@@ -13,6 +15,7 @@ interface ChangePrognosisColoursPageProps {
   readonly onCancel: string
   readonly initialBackgroundColour: string
   readonly initialTextColour: string
+  readonly group: Prognosis | 'success'
 }
 
 export function ChangeColoursPage({
@@ -21,6 +24,7 @@ export function ChangeColoursPage({
   onCancel,
   initialTextColour,
   initialBackgroundColour,
+  group,
 }: ChangePrognosisColoursPageProps): ReactElement {
   const [text, setText] = useState(initialTextColour)
   const [background, setBackground] = useState(initialBackgroundColour)
@@ -34,22 +38,29 @@ export function ChangeColoursPage({
       <Form onSuccess={onSuccessInternal} onCancel={onCancel}>
         {() => {
           return (
-            <div className={styles.container}>
-              <ColourPicker
-                value={background}
-                onChange={({ target }) => setBackground(target.value)}
-                classNameContainer={styles.picker}
-              >
-                Background colour
-              </ColourPicker>
-              <ColourPicker
-                value={text}
-                onChange={({ target }) => setText(target.value)}
-                classNameContainer={styles.picker}
-              >
-                Text colour
-              </ColourPicker>
-            </div>
+            <>
+              <Presets
+                group={group}
+                setBackgroundColour={setBackground}
+                setTextColour={setText}
+              />
+              <div className={styles.container}>
+                <ColourPicker
+                  value={background}
+                  onChange={({ target }) => setBackground(target.value)}
+                  classNameContainer={styles.picker}
+                >
+                  Background colour
+                </ColourPicker>
+                <ColourPicker
+                  value={text}
+                  onChange={({ target }) => setText(target.value)}
+                  classNameContainer={styles.picker}
+                >
+                  Text colour
+                </ColourPicker>
+              </div>
+            </>
           )
         }}
       </Form>

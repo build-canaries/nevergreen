@@ -34,6 +34,7 @@ export function ChangePrognosisColoursPage({
       onCancel={ROUTE_DISPLAY}
       initialBackgroundColour={settings[prognosis].backgroundColour}
       initialTextColour={settings[prognosis].textColour}
+      group={prognosis}
     />
   )
 }
