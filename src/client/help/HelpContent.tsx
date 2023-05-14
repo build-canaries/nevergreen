@@ -33,9 +33,6 @@ import { OtherSettingsPageHelp } from '../settings/other/OtherSettingsPageHelp'
 import { ChangeColoursPageHelp } from '../settings/colours/ChangeColoursPageHelp'
 import styles from './help-content.scss'
 
-const questionUrl =
-  'https://github.com/build-canaries/nevergreen/issues/new?labels=question&template=Question.md'
-
 interface HelpContentProps {
   readonly initialSearchQuery?: string
 }
@@ -93,7 +90,7 @@ export default function HelpContent({
       <p className={styles.notFound}>
         No matching articles found, please try a different keyword. Can&apos;t
         find the help you need?{' '}
-        <ExternalLink href={questionUrl}>
+        <ExternalLink href="https://github.com/build-canaries/nevergreen/discussions">
           Ask a question on GitHub.
         </ExternalLink>
       </p>
