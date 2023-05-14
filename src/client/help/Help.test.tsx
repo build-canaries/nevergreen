@@ -1,5 +1,5 @@
 import { Help, SHOW_HELP_SHORTCUT } from './Help'
-import { render } from '../testUtils/testHelpers'
+import { render, waitForLoadingToFinish } from '../testUtils/testHelpers'
 import { act, screen } from '@testing-library/react'
 import { ROUTE_TRACKING } from '../AppRoutes'
 import { triggerShortcut } from '../common/Keyboard'
@@ -14,6 +14,8 @@ it('should show help articles based on location or search query', async () => {
   act(() => {
     triggerShortcut(SHOW_HELP_SHORTCUT)
   })
+
+  await waitForLoadingToFinish()
 
   expect(
     screen.getByRole('heading', { level: 2, name: 'Tracking' })
