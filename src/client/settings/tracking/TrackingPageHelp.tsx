@@ -2,6 +2,10 @@ import type { ReactElement } from 'react'
 import { HelpArticle, HelpProps } from '../../help/HelpArticle'
 import { HelpForm, HelpInput } from '../../help/HelpForms'
 import { ROUTE_TRACKING } from '../../AppRoutes'
+import { Plus } from '../../common/icons/Plus'
+import { Cog } from '../../common/icons/Cog'
+import { CheckboxChecked } from '../../common/icons/CheckboxChecked'
+import { Bin } from '../../common/icons/Bin'
 
 const keywords = ['tracking', 'adding', 'cctray', 'xml', 'getting started']
 
@@ -18,23 +22,27 @@ export function TrackingPageHelp({
     >
       <HelpForm>
         <HelpInput name="Poll for feed changes every">
-          How often to check the CI server(s) for project updates.
+          How often to check the CCTray XML feed(s) for project updates.
         </HelpInput>
-        <HelpInput name="Add feed">Adds a new feed.</HelpInput>
+        <HelpInput name="Add feed" icon={<Plus />}>
+          Adds a new CCTray XML feed.
+        </HelpInput>
       </HelpForm>
-      <p>Added feeds will appear and can be managed from this page.</p>
+      <p>
+        Added CCTray XML feeds will appear and can be managed from this page.
+      </p>
       <HelpForm>
-        <HelpInput name="Manage projects">
+        <HelpInput name="Manage projects" icon={<CheckboxChecked />}>
           This allows you to select interesting projects to display on the
           Monitor page.
         </HelpInput>
-        <HelpInput name="Update details">
-          This allows you to update details for the feed, such as the URL or
-          name.
+        <HelpInput name="Update details" icon={<Cog />}>
+          This allows you to update details for the CCTray XML feed, such as the
+          URL or name.
         </HelpInput>
-        <HelpInput name="Remove">
-          This will permanently delete the feed. Feeds can be re-added at any
-          time and you can also make a backup before deleting{' '}
+        <HelpInput name="Remove" icon={<Bin />}>
+          This will permanently delete the CCTray XML feed. Feeds can be
+          re-added at any time and you can also make a backup before removing{' '}
           {helpLink('backup')}.
         </HelpInput>
       </HelpForm>

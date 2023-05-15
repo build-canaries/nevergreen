@@ -2,6 +2,9 @@ import type { ReactElement } from 'react'
 import { HelpArticle, HelpProps } from '../../../help/HelpArticle'
 import { HelpForm, HelpInput } from '../../../help/HelpForms'
 import { ROUTE_TRACKING_PROJECTS } from '../../../AppRoutes'
+import { Loop } from '../../../common/icons/Loop'
+import { CheckboxChecked } from '../../../common/icons/CheckboxChecked'
+import { CheckboxUnchecked } from '../../../common/icons/CheckboxUnchecked'
 
 const keywords = [
   'tracking',
@@ -34,20 +37,20 @@ export function AvailableProjectsHelp({
           </dl>
         </HelpInput>
         <p>
-          The following options are only available if Tracking mode is{' '}
+          The following options are only available if Tracking mode is set to{' '}
           <em>Selected</em>.
         </p>
-        <HelpInput name="Refresh">
+        <HelpInput name="Refresh" icon={<Loop />}>
           Fetches the latest list of projects from the CCTray XML feed. If
           projects are added, removed or renamed on the server you will need to
           refresh to see them in Nevergreen.
         </HelpInput>
-        <HelpInput name="Include all">
+        <HelpInput name="Include all" icon={<CheckboxChecked />}>
           Includes all the currently shown projects for tracking, which means
           they will be shown on the Monitor page if they are interesting{' '}
           {helpLink('interesting projects')}.
         </HelpInput>
-        <HelpInput name="Exclude all">
+        <HelpInput name="Exclude all" icon={<CheckboxUnchecked />}>
           Excludes all the currently shown projects for tracking, which means
           they will never be shown on the Monitor page.
         </HelpInput>

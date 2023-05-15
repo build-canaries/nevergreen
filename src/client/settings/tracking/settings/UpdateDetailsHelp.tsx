@@ -3,24 +3,18 @@ import type { HelpProps } from '../../../help/HelpArticle'
 import { HelpArticle } from '../../../help/HelpArticle'
 import { HelpForm, HelpInput } from '../../../help/HelpForms'
 import { ROUTE_TRACKING_DETAILS } from '../../../AppRoutes'
+import { Dice } from '../../../common/icons/Dice'
+import { Cog } from '../../../common/icons/Cog'
 
 const keywords = [
   'tracking',
   'settings',
+  'update connection',
   'name',
-  'url',
   'server type',
-  'username',
-  'password',
-  'access token',
-  'auth',
-  'automatically include new projects',
 ]
 
-export function UpdateDetailsHelp({
-  searchQuery,
-  helpLink,
-}: HelpProps): ReactElement {
+export function UpdateDetailsHelp({ searchQuery }: HelpProps): ReactElement {
   return (
     <HelpArticle
       keywords={keywords}
@@ -29,13 +23,16 @@ export function UpdateDetailsHelp({
       page={ROUTE_TRACKING_DETAILS}
     >
       <HelpForm>
-        <HelpInput name="Update connection">
-          Update the connection URL and/or authentication.
+        <HelpInput name="Update connection" icon={<Cog />}>
+          Allows updating of the connection URL and/or authentication.
         </HelpInput>
         <HelpInput name="Name">
           A friendly name of the CCTray XML feed used in various places instead
           of the URL. A random name is generated when a feed is added, this can
           be removed if a name is not desired.
+        </HelpInput>
+        <HelpInput name="Randomise name" icon={<Dice />}>
+          Generates and sets a new random name.
         </HelpInput>
         <HelpInput name="Server type">
           The server type can be set to enable some server specific parsing.
@@ -44,13 +41,6 @@ export function UpdateDetailsHelp({
           some specific parsing. Please submit an issue telling us the server
           you are using and ideally an anonymised copy of the CCTray XML feed it
           produced.
-        </HelpInput>
-        <HelpInput name="Automatically include new projects">
-          When <em>enabled</em> (the default) any new projects returned by the
-          CCTray XML feed will automatically be included for tracking. To remove
-          a new project that has been automatically added, refreshing{' '}
-          {helpLink('refresh')} the CCTray XML feed will make the project known
-          to Nevergreen where it can be explicitly excluded by unchecking.
         </HelpInput>
       </HelpForm>
     </HelpArticle>

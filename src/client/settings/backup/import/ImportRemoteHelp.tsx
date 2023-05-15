@@ -3,6 +3,8 @@ import { HelpArticle, HelpProps } from '../../../help/HelpArticle'
 import { HelpForm, HelpInput } from '../../../help/HelpForms'
 import { WarningMessages } from '../../../common/Messages'
 import { ROUTE_BACKUP_IMPORT_REMOTE } from '../../../AppRoutes'
+import { CloudDownload } from '../../../common/icons/CloudDownload'
+import { Checkmark } from '../../../common/icons/Checkmark'
 
 const keywords = [
   'backup',
@@ -30,12 +32,11 @@ export function ImportRemoteHelp({ searchQuery }: HelpProps): ReactElement {
         <HelpInput name="Configuration to import">
           This is the configuration that will be imported on <em>Import</em>.
         </HelpInput>
-        <HelpInput name="Import">
+        <HelpInput name="Import" icon={<Checkmark />}>
           This will perform the import of the configuration in{' '}
           <em>Configuration to import</em>.
         </HelpInput>
-        <HelpInput name="Cancel">Cancels importing.</HelpInput>
-        <HelpInput name="Try fetching again">
+        <HelpInput name="Try fetching again" icon={<CloudDownload />}>
           Try to fetch the configuration from the remote location again. This
           will only be available if fetching the configuration failed for any
           reason.

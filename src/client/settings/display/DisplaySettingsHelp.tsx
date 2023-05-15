@@ -2,6 +2,8 @@ import type { ReactElement } from 'react'
 import { HelpArticle, HelpProps } from '../../help/HelpArticle'
 import { HelpForm, HelpInput } from '../../help/HelpForms'
 import { ROUTE_DISPLAY } from '../../AppRoutes'
+import { Eye } from '../../common/icons/Eye'
+import { PaintFormat } from '../../common/icons/PaintFormat'
 
 const keywords = [
   'settings',
@@ -32,13 +34,13 @@ export function DisplaySettingsHelp({
       page={ROUTE_DISPLAY}
     >
       <HelpForm>
-        <HelpInput name="Preview display">
-          This displays a Monitor page preview with a randomly generated number
-          of projects and your currently selected settings.
+        <HelpInput name="Preview display" icon={<Eye />}>
+          This displays a Monitor page preview with some preset fake projects
+          and your currently selected settings.
         </HelpInput>
         <HelpInput name="Show feed identifier">
-          When <em>enabled</em> the CI server name {helpLink('name')} or URL
-          will be displayed on the Monitor page.
+          When <em>enabled</em> the feed name {helpLink('name')} or URL will be
+          displayed on the Monitor page.
         </HelpInput>
         <HelpInput name="Show build time">
           When <em>enabled</em> (the default) the amount of time since a project
@@ -72,7 +74,7 @@ export function DisplaySettingsHelp({
         </HelpInput>
         <HelpInput name="Sort projects by">
           This sets the sort order of projects on the Monitor page (projects on
-          the Tracking page will always be in alphabetical order).
+          the Manage projects page will always be in alphabetical order).
           <p>
             <em>default</em> applies no special sorting and uses the order the
             projects are returned in the CCTray XML feed, which may be server
@@ -89,7 +91,7 @@ export function DisplaySettingsHelp({
           When <em>enabled</em> the corresponding prognosis will be displayed on
           the Monitor page. Errors are always shown and can not be removed.
         </HelpInput>
-        <HelpInput name="Change colours">
+        <HelpInput name="Change colours" icon={<PaintFormat />}>
           Allows changing of the background and text colour of the corresponding
           prognosis.
         </HelpInput>

@@ -3,6 +3,9 @@ import { ExternalLink } from '../../common/ExternalLink'
 import { HelpArticle, HelpProps } from '../../help/HelpArticle'
 import { ROUTE_SUCCESS } from '../../AppRoutes'
 import { HelpForm, HelpInput } from '../../help/HelpForms'
+import { Plus } from '../../common/icons/Plus'
+import { PaintFormat } from '../../common/icons/PaintFormat'
+import { Bin } from '../../common/icons/Bin'
 
 const keywords = [
   'success',
@@ -28,7 +31,7 @@ export function SuccessHelp({
       page={ROUTE_SUCCESS}
     >
       <HelpForm>
-        <HelpInput name="Add message">
+        <HelpInput name="Add message" icon={<Plus />}>
           You can add text messages or any{' '}
           <ExternalLink href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#Supported_image_formats">
             valid image URLs
@@ -36,25 +39,19 @@ export function SuccessHelp({
           , one of these will get randomly displayed when no interesting
           projects are displayed on the Monitor page {helpLink('monitor')}. If
           no success messages are added then a blank screen will be shown.
-          <p>Added messages will appear and can be managed from this page.</p>
         </HelpInput>
-        <HelpInput name="Change colours">
+        <HelpInput name="Change colours" icon={<PaintFormat />}>
           Allows changing of the background and text colour.
         </HelpInput>
       </HelpForm>
-      <p>Need some inspiration?</p>
-      <p>
-        Try searching for some{' '}
-        <ExternalLink href="https://duckduckgo.com/?q=nature+1920x1080&iax=1&ia=images">
-          nice images
-        </ExternalLink>{' '}
-        or checkout{' '}
-        <ExternalLink href="http://www.disapprovallook.com/">
-          Disapproval Look
-        </ExternalLink>{' '}
-        for some fun messages, like jelly guy!{' '}
-        <span style={{ whiteSpace: 'nowrap' }}>༼ つ◕_◕ ༽つ</span>
-      </p>
+      <p>Added messages will appear and can be managed from this page.</p>
+      <HelpForm>
+        <HelpInput name="Remove" icon={<Bin />}>
+          This will permanently delete the message. Messages can be re-added at
+          any time and you can also make a backup before removing{' '}
+          {helpLink('backup')}.
+        </HelpInput>
+      </HelpForm>
     </HelpArticle>
   )
 }

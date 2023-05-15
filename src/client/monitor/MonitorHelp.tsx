@@ -17,11 +17,11 @@ export function MonitorHelp({
     >
       <p>
         The Monitor page displays interesting projects once a CCTray XML feed
-        has been added via the Tracking page {helpLink('tracking')}.
+        has been added via the Tracking settings {helpLink('tracking')}.
       </p>
       <p>
-        The Settings page contains various settings that can change how the
-        Monitor page looks and behaves {helpLink('settings')}.
+        The Display settings contains various options that can change how the
+        Monitor page looks and behaves {helpLink('display')}.
       </p>
       <p>
         If no interesting projects are being displayed then a random success
