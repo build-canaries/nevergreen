@@ -1,9 +1,13 @@
 (ns nevergreen.logging
-  (:import org.slf4j.bridge.SLF4JBridgeHandler
-           ch.qos.logback.classic.Level
+  (:require [cemerick.url :as u]
+            [nevergreen.config :as config])
+  (:import ch.qos.logback.classic.Level
            ch.qos.logback.classic.Logger
-           org.slf4j.LoggerFactory)
-  (:require [nevergreen.config :as config]))
+           (java.net MalformedURLException)
+           org.slf4j.LoggerFactory
+           org.slf4j.bridge.SLF4JBridgeHandler))
+
+(def ^:const ^:private redacted "REDACTED")
 
 (defn- convert-log-level [level]
   (case level
@@ -15,6 +19,19 @@
     :trace Level/TRACE
     :all Level/ALL
     Level/INFO))
+
+(defn- update-values [m f & args]
+  (reduce (fn [r [k v]] (assoc r k (apply f v args))) {} m))
+
+(defn redact-url [url]
+  (try
+    (-> (u/url url)
+        (update :query #(update-values % (constantly redacted)))
+        (update :username #(if (nil? %) nil redacted))
+        (update :password #(if (nil? %) nil redacted))
+        str)
+    (catch MalformedURLException _
+      url)))
 
 (defn configure-logging []
   (SLF4JBridgeHandler/removeHandlersForRootLogger)

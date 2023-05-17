@@ -1,5 +1,6 @@
 (ns nevergreen.errors
-  (:require [clojure.tools.logging :as log])
+  (:require [clojure.tools.logging :as log]
+            [nevergreen.logging :refer [redact-url]])
   (:import (java.time Clock)))
 
 (defn ^:dynamic *now* []
@@ -18,7 +19,7 @@
                 url))
 
 (defmethod create-error String [message url]
-  (log/info (str "Creating error response for [" url "] with message [" message "]"))
+  (log/info (str "Creating error response for [" (redact-url url) "] with message [" message "]"))
   {:description message
    :timestamp   (*now*)
    :web-url     url

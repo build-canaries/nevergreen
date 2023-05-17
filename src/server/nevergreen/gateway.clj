@@ -1,15 +1,14 @@
 (ns nevergreen.gateway
   (:require [clj-http.client :as client]
-            [clojure.tools.logging :as log]
             [clojure.string :as s]
-            [cemerick.url :as u])
-  (:import (java.net UnknownHostException URISyntaxException ConnectException SocketTimeoutException)
-           (clojure.lang ExceptionInfo)
+            [clojure.tools.logging :as log]
+            [nevergreen.logging :refer [redact-url]])
+  (:import (clojure.lang ExceptionInfo)
+           (java.net ConnectException SocketTimeoutException URISyntaxException UnknownHostException)
            (java.time Duration)
            (java.util.concurrent Future)))
 
 (def ^:const ten-seconds 10000)
-(def ^:const redacted "REDACTED")
 
 (defn on-respond [promise]
   (fn [response] (deliver promise (:body response))))
@@ -37,13 +36,6 @@
 
 (defn- update-values [m f & args]
   (reduce (fn [r [k v]] (assoc r k (apply f v args))) {} m))
-
-(defn- redact-url [url]
-  (-> (u/url url)
-      (update :query #(update-values % (constantly redacted))) ; query params might contain an API token so redact
-      (update :username #(if (nil? %) nil redacted))
-      (update :password #(if (nil? %) nil redacted))
-      str))
 
 (defn- handle-timeout [url redacted-url ^Exception e]
   (log/info (str "[" redacted-url "] threw a SocketTimeoutException [" (.getMessage e) "]"))
