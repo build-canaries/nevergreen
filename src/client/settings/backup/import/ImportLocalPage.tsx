@@ -21,6 +21,7 @@ import {
 } from '../../../common/TimedMessages'
 import { useAppDispatch } from '../../../configuration/Hooks'
 import styles from './import-page.scss'
+import { ROUTE_BACKUP } from '../../../AppRoutes'
 
 export function ImportLocalPage(): ReactElement {
   const dispatch = useAppDispatch()
@@ -86,7 +87,7 @@ export function ImportLocalPage(): ReactElement {
     if (isRight(result)) {
       dispatch(configurationImported(result.right))
       setData('')
-      return { successMessage: 'Configuration imported' }
+      return { navigateTo: '../success' }
     }
   }
 
@@ -109,7 +110,7 @@ export function ImportLocalPage(): ReactElement {
         <Form
           onValidate={onValidate}
           onSuccess={onSuccess}
-          onCancel="../backup"
+          onCancel={ROUTE_BACKUP}
           submitButtonText="Import"
           clearErrors={isLoading}
           className={styles.form}

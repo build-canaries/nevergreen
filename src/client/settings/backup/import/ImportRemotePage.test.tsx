@@ -46,9 +46,7 @@ it('should import valid configuration', async () => {
 
   await user.click(screen.getByRole('button', { name: 'Import' }))
 
-  await waitFor(() => {
-    expect(screen.getByText('Configuration imported')).toBeInTheDocument()
-  })
+  expect(window.location.pathname).toEqual('/success')
 })
 
 it('should display an error if the configuration is syntactically invalid JSON', async () => {

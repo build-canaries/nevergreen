@@ -12,10 +12,7 @@ it('should import valid configuration', async () => {
   )
   await user.click(screen.getByRole('button', { name: 'Import' }))
 
-  await waitFor(() => {
-    expect(screen.getByText('Configuration imported')).toBeInTheDocument()
-  })
-  expect(screen.getByLabelText('Configuration to import')).toHaveValue('')
+  expect(window.location.pathname).toEqual('/success')
 })
 
 it('should show an error if no data has been entered', async () => {
@@ -94,7 +91,7 @@ it('should be able to cancel back to settings', async () => {
   await user.click(screen.getByRole('button', { name: 'Cancel' }))
 
   await waitFor(() => {
-    expect(window.location.pathname).toEqual('/backup')
+    expect(window.location.pathname).toEqual('/settings/backup')
   })
 })
 

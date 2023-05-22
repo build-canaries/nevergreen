@@ -67,7 +67,7 @@ export function ImportRemotePage(): ReactElement {
     if (isRight(result)) {
       dispatch(configurationImported(result.right))
       dispatch(backupImported(location.internalId))
-      return { successMessage: 'Configuration imported' }
+      return { navigateTo: '../success' }
     }
   }
 
