@@ -4,7 +4,6 @@ import uniq from 'lodash/uniq'
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { configurationImported } from '../backup/BackupActionCreators'
 import * as t from 'io-ts'
-import merge from 'lodash/merge'
 
 export const successRoot = 'success'
 
@@ -62,7 +61,7 @@ const slice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(configurationImported, (draft, action) => {
-      return merge(draft, action.payload.success)
+      return { ...draft, ...action.payload.configuration.success }
     })
   },
 })

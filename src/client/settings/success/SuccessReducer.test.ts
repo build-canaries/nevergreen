@@ -31,19 +31,25 @@ it('should return the state unmodified for an unknown action', () => {
 
 describe(configurationImported.toString(), () => {
   it('should merge the success data', () => {
-    const existingState = state({ messages: [] })
+    const existingState = state({
+      messages: ['old'],
+      backgroundColour: 'a',
+      textColour: 'b',
+    })
     const action = configurationImported({
-      success: { messages: ['some-message'] },
+      success: { messages: ['new'], backgroundColour: 'c', textColour: 'd' },
     })
     const newState = reducer(existingState, action)
-    expect(getSuccessMessages(newState)).toEqual(['some-message'])
+    expect(getSuccessMessages(newState)).toEqual(['new'])
+    expect(getSuccessBackgroundColour(newState)).toEqual('c')
+    expect(getSuccessTextColour(newState)).toEqual('d')
   })
 
   it('should handle no success data', () => {
-    const existingState = state({ messages: [] })
+    const existingState = state({ messages: ['old'] })
     const action = configurationImported({})
     const newState = reducer(existingState, action)
-    expect(getSuccessMessages(newState)).toHaveLength(0)
+    expect(getSuccessMessages(newState)).toEqual(['old'])
   })
 })
 
