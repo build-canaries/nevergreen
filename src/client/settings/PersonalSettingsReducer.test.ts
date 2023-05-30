@@ -17,9 +17,9 @@ import { configurationImported } from './backup/BackupActionCreators'
 import {
   addBackupLocation,
   backupExported,
-  backupImported,
   removeBackupLocation,
 } from './backup/RemoteLocationsActions'
+import { remoteLocationsRoot } from './backup/RemoteLocationsReducer'
 
 const reducer = testReducer({
   [personalSettingsRoot]: personalSettingsReducer,
@@ -55,6 +55,62 @@ describe(configurationImported.toString(), () => {
     expect(getAllowAudioNotifications(newState)).toBeTruthy()
     expect(getAllowSystemNotifications(newState)).toBeTruthy()
     expect(getBackupLocationTimestamps('locationId')(newState)).toEqual({})
+  })
+
+  it('should handle no personal settings root', () => {
+    const existingState = state({
+      allowAudioNotifications: false,
+      allowSystemNotifications: false,
+      backupRemoteLocations: {},
+    })
+    const action = configurationImported({})
+    const newState = reducer(existingState, action)
+    expect(getAllowAudioNotifications(newState)).toBeFalsy()
+    expect(getAllowSystemNotifications(newState)).toBeFalsy()
+  })
+
+  it('should removed remote locations timestamps for removed locations', () => {
+    const existingState = state({
+      allowAudioNotifications: false,
+      allowSystemNotifications: false,
+      backupRemoteLocations: {
+        oldId: {
+          importTimestamp: 'irrelevant',
+          exportTimestamp: 'irrelevant',
+        },
+      },
+    })
+    const action = configurationImported({
+      [remoteLocationsRoot]: {},
+    })
+    const newState = reducer(existingState, action)
+    expect(getBackupLocationTimestamps('oldId')(newState)).toBeUndefined()
+  })
+
+  it('should update the import timestamp if the configuration was imported from a matching location id', () => {
+    setSystemTime('2022-12-13T17:24:00Z')
+    const existingState = state({
+      allowAudioNotifications: false,
+      allowSystemNotifications: false,
+      backupRemoteLocations: {
+        locationId: {
+          importTimestamp: '',
+        },
+      },
+    })
+    const location = buildRemoteBackupLocation({ internalId: 'locationId' })
+    const action = configurationImported(
+      {
+        [remoteLocationsRoot]: {
+          locationId: location,
+        },
+      },
+      location
+    )
+    const newState = reducer(existingState, action)
+    expect(getBackupLocationTimestamps('locationId')(newState)).toEqual({
+      importTimestamp: expect.stringMatching(/2022-12-13T17:24:00/) as string,
+    })
   })
 })
 
@@ -123,23 +179,7 @@ describe(backupExported.toString(), () => {
     const action = backupExported('internal-id', 'external-id')
     const newState = reducer(existingState, action)
     expect(getBackupLocationTimestamps('internal-id')(newState)).toEqual({
-      exportTimestamp: '2022-12-13T17:24:00.000',
-    })
-  })
-})
-
-describe(backupImported.toString(), () => {
-  it('should set the import timestamp', () => {
-    setSystemTime('2022-12-13T17:24:00Z')
-    const existingState = state({
-      backupRemoteLocations: {
-        'internal-id': {},
-      },
-    })
-    const action = backupImported('internal-id')
-    const newState = reducer(existingState, action)
-    expect(getBackupLocationTimestamps('internal-id')(newState)).toEqual({
-      importTimestamp: '2022-12-13T17:24:00.000',
+      exportTimestamp: expect.stringMatching(/2022-12-13T17:24:00/) as string,
     })
   })
 })

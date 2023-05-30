@@ -69,7 +69,7 @@ const slice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(configurationImported, (draft, action) => {
-      return { ...draft, ...action.payload.notifications }
+      return { ...draft, ...action.payload.configuration.notifications }
     })
   },
 })

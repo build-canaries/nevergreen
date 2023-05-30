@@ -29,7 +29,6 @@ import { OtherSettingsPage } from './settings/other/OtherSettingsPage'
 import { ChangePrognosisColoursPage } from './settings/display/ChangePrognosisColoursPage'
 import { Prognosis } from './domain/Project'
 import { ChangeSuccessColoursPage } from './settings/success/ChangeSuccessColoursPage'
-import { ImportPage } from './settings/backup/import/ImportPage'
 import { ImportLocalPage } from './settings/backup/import/ImportLocalPage'
 import { ImportSuccessPage } from './settings/backup/import/ImportSuccessPage'
 
@@ -48,6 +47,7 @@ export const ROUTE_NOTIFICATIONS = '/settings/notifications'
 export const ROUTE_NOTIFICATIONS_ADD = '/settings/notifications/add'
 export const ROUTE_BACKUP = '/settings/backup'
 export const ROUTE_BACKUP_ADD = '/settings/backup/add'
+export const ROUTE_BACKUP_IMPORT_SUCCESS = '/settings/backup/import-success'
 export const ROUTE_BACKUP_IMPORT_LOCAL = '/settings/backup/local/import'
 export const ROUTE_BACKUP_IMPORT_REMOTE = '/settings/backup/:internalId/import'
 export const ROUTE_BACKUP_EXPORT_LOCAL = '/settings/backup/local/export'
@@ -95,22 +95,15 @@ export function AppRoutes(): ReactElement {
           <Route path="notifications/add" element={<AddNotificationPage />} />
           <Route path="backup" element={<BackupPage />} />
           <Route path="backup/add" element={<AddBackupPage />} />
+          <Route path="backup/import-success" element={<ImportSuccessPage />} />
           <Route path="backup/local">
             <Route path="export" element={<ExportLocallyPage />} />
-            <Route element={<ImportPage />}>
-              <Route path="import" element={<ImportLocalPage />} />
-              <Route path="success" element={<ImportSuccessPage />} />
-            </Route>
+            <Route path="import" element={<ImportLocalPage />} />
           </Route>
           <Route path="backup/:internalId" element={<RemoteLocationPage />}>
-            <Route path="details" element={<RemoteBackupDetailsPage />} />
             <Route path="export" element={<ExportRemotePage />} />
-          </Route>
-          <Route path="backup/:internalId" element={<ImportPage />}>
-            <Route path="success" element={<ImportSuccessPage />} />
-            <Route element={<RemoteLocationPage />}>
-              <Route path="import" element={<ImportRemotePage />} />
-            </Route>
+            <Route path="import" element={<ImportRemotePage />} />
+            <Route path="details" element={<RemoteBackupDetailsPage />} />
           </Route>
           <Route path="other" element={<OtherSettingsPage />} />
           <Route path="about" element={<AboutPage />} />

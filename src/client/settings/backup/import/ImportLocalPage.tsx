@@ -20,8 +20,8 @@ import {
   TimedInfoMessages,
 } from '../../../common/TimedMessages'
 import { useAppDispatch } from '../../../configuration/Hooks'
+import { ROUTE_BACKUP, ROUTE_BACKUP_IMPORT_SUCCESS } from '../../../AppRoutes'
 import styles from './import-page.scss'
-import { ROUTE_BACKUP } from '../../../AppRoutes'
 
 export function ImportLocalPage(): ReactElement {
   const dispatch = useAppDispatch()
@@ -86,8 +86,7 @@ export function ImportLocalPage(): ReactElement {
 
     if (isRight(result)) {
       dispatch(configurationImported(result.right))
-      setData('')
-      return { navigateTo: '../success' }
+      return { navigateTo: ROUTE_BACKUP_IMPORT_SUCCESS }
     }
   }
 

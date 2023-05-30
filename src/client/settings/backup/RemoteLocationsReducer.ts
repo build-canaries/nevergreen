@@ -1,6 +1,4 @@
 import type { RootState } from '../../configuration/ReduxStore'
-import isNil from 'lodash/isNil'
-import merge from 'lodash/merge'
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { configurationImported } from './BackupActionCreators'
 import { RemoteLocationOptions } from './RemoteLocationOptions'
@@ -61,33 +59,7 @@ const slice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(configurationImported, (draft, action) => {
-        const importedState = action.payload.backupRemoteLocations ?? {}
-
-        Object.values(importedState).forEach(
-          (importedLocation: RemoteLocation) => {
-            const internalId = importedLocation.internalId
-
-            if (isNil(draft[internalId])) {
-              const matchingLocation = Object.values(draft).find(
-                (existingLocation) => {
-                  return (
-                    existingLocation.where === importedLocation.where &&
-                    existingLocation.url === importedLocation.url &&
-                    existingLocation.externalId === importedLocation.externalId
-                  )
-                }
-              )
-              if (isNil(matchingLocation)) {
-                draft[internalId] = importedLocation
-              } else {
-                draft[internalId] = { ...matchingLocation, ...importedLocation }
-                delete draft[matchingLocation.internalId]
-              }
-            } else {
-              merge(draft[internalId], importedLocation)
-            }
-          }
-        )
+        return action.payload.configuration.backupRemoteLocations ?? draft
       })
       .addCase(addBackupLocation, (draft, action) => {
         draft[action.payload.internalId] = action.payload

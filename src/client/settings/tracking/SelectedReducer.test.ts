@@ -1,8 +1,8 @@
 import {
   getSelectedProjectsForFeed,
-  selectedRoot,
   projectSelected,
   reducer as selectedReducer,
+  selectedRoot,
   SelectedState,
 } from './SelectedReducer'
 import { feedRemoved, feedUpdated } from './TrackingActionCreators'

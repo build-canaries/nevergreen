@@ -40,7 +40,7 @@ const slice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(configurationImported, (draft, action) => {
-        return action.payload.selected ?? draft
+        return action.payload.configuration.selected ?? draft
       })
       .addCase(feedUpdated, (draft, action) => {
         if (action.payload.feed.trackingMode === TrackingMode.selected) {

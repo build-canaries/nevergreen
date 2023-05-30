@@ -6,6 +6,7 @@ import {
 } from '../../../configuration/Configuration'
 import type { FormErrors } from '../../../common/forms/Validation'
 import { allErrors } from '../../../common/forms/Validation'
+import type { RemoteLocation } from '../RemoteLocationsReducer'
 import { SecondaryButton } from '../../../common/forms/Button'
 import { errorMessage, isBlank } from '../../../common/Utils'
 import { configurationImported } from '../BackupActionCreators'
@@ -24,12 +25,24 @@ import { Cross } from '../../../common/icons/Cross'
 import { BackupLogo } from '../BackupLogo'
 import { useQuery } from '@tanstack/react-query'
 import { useRemoteLocationContext } from '../RemoteLocationPage'
-import { ROUTE_BACKUP } from '../../../AppRoutes'
+import { ROUTE_BACKUP, ROUTE_BACKUP_IMPORT_SUCCESS } from '../../../AppRoutes'
 import { useAppDispatch } from '../../../configuration/Hooks'
-import { backupImported } from '../RemoteLocationsActions'
 import styles from './import-page.scss'
 
 type Fields = 'import'
+
+function matchingLocation(
+  searchIn: ReadonlyArray<RemoteLocation>,
+  forLocation: RemoteLocation
+): RemoteLocation | undefined {
+  return searchIn.find((location) => {
+    return (
+      location.where === forLocation.where &&
+      location.url === forLocation.url &&
+      location.externalId === forLocation.externalId
+    )
+  })
+}
 
 export function ImportRemotePage(): ReactElement {
   const location = useRemoteLocationContext()
@@ -37,7 +50,7 @@ export function ImportRemotePage(): ReactElement {
   const [data, setData] = useState('')
 
   const { isFetching, isSuccess, isError, error, refetch } = useQuery(
-    ['import-remote'],
+    ['import-remote', location.internalId],
     async ({ signal }) => {
       const { configuration } = await fetchConfiguration(location, signal)
       return toJson(fromJson(configuration))
@@ -65,9 +78,10 @@ export function ImportRemotePage(): ReactElement {
     const result = toConfiguration(data, DataSource.userImport)
 
     if (isRight(result)) {
-      dispatch(configurationImported(result.right))
-      dispatch(backupImported(location.internalId))
-      return { navigateTo: '../success' }
+      const searchIn = Object.values(result.right.backupRemoteLocations ?? {})
+      const matching = matchingLocation(searchIn, location)
+      dispatch(configurationImported(result.right, matching))
+      return { navigateTo: ROUTE_BACKUP_IMPORT_SUCCESS }
     }
   }
 

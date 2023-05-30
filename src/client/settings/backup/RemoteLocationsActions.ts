@@ -18,16 +18,4 @@ export const backupExported = createAction(
   }
 )
 
-export const backupImported = createAction(
-  'backupImported',
-  (internalId: string) => {
-    return {
-      payload: {
-        internalId,
-        timestamp: now(),
-      },
-    }
-  }
-)
-
 export const removeBackupLocation = createAction<string>('removeBackupLocation')

@@ -27,7 +27,7 @@ const slice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(configurationImported, (draft, action) => {
-      return action.payload.appliedMigrations ?? draft
+      return action.payload.configuration.appliedMigrations ?? draft
     })
   },
 })

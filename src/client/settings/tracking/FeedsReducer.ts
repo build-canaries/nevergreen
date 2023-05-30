@@ -87,11 +87,11 @@ const slice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(configurationImported, function (draft, action) {
-        if (isNil(action.payload.trays)) {
+        if (isNil(action.payload.configuration.trays)) {
           return draft
         }
 
-        const importedFeeds = action.payload.trays
+        const importedFeeds = action.payload.configuration.trays
         const newState: Draft<FeedsState> = {}
 
         Object.keys(importedFeeds).forEach((trayId) => {

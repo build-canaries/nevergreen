@@ -1,7 +1,6 @@
 import type { RootState } from '../../configuration/ReduxStore'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSelector, createSlice } from '@reduxjs/toolkit'
-import merge from 'lodash/merge'
 import { configurationImported } from '../backup/BackupActionCreators'
 import * as t from 'io-ts'
 
@@ -30,7 +29,7 @@ const slice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(configurationImported, (draft, action) => {
-      return merge(draft, action.payload.otherSettings)
+      return { ...draft, ...action.payload.configuration.otherSettings }
     })
   },
 })

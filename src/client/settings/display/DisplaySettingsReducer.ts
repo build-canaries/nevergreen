@@ -180,7 +180,7 @@ const slice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(configurationImported, (draft, action) => {
-      return merge(draft, action.payload.settings)
+      merge(draft, action.payload.configuration.settings)
     })
   },
 })

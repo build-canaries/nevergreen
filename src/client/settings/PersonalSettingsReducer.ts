@@ -6,11 +6,12 @@ import * as t from 'io-ts'
 import {
   addBackupLocation,
   backupExported,
-  backupImported,
   removeBackupLocation,
 } from './backup/RemoteLocationsActions'
 import set from 'lodash/set'
 import unset from 'lodash/unset'
+import difference from 'lodash/difference'
+import merge from 'lodash/merge'
 
 export const personalSettingsRoot = 'personal'
 
@@ -60,24 +61,41 @@ const slice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(configurationImported, (draft, action) => {
-        return { ...draft, ...action.payload.personal }
+        const { configuration, fromLocation, timestamp } = action.payload
+
+        merge(draft, configuration.personal)
+
+        if (
+          configuration.backupRemoteLocations &&
+          draft.backupRemoteLocations
+        ) {
+          const removedLocationIds = difference(
+            Object.keys(draft.backupRemoteLocations),
+            Object.keys(configuration.backupRemoteLocations)
+          )
+
+          removedLocationIds.forEach((id) => {
+            unset(draft, ['backupRemoteLocations', id])
+          })
+        }
+
+        if (fromLocation) {
+          set(
+            draft,
+            [
+              'backupRemoteLocations',
+              fromLocation.internalId,
+              'importTimestamp',
+            ],
+            timestamp
+          )
+        }
       })
       .addCase(addBackupLocation, (draft, action) => {
         set(draft, ['backupRemoteLocations', action.payload.internalId], {})
       })
       .addCase(removeBackupLocation, (draft, action) => {
         unset(draft, ['backupRemoteLocations', action.payload])
-      })
-      .addCase(backupImported, (draft, action) => {
-        set(
-          draft,
-          [
-            'backupRemoteLocations',
-            action.payload.internalId,
-            'importTimestamp',
-          ],
-          action.payload.timestamp
-        )
       })
       .addCase(backupExported, (draft, action) => {
         set(
