@@ -20,20 +20,18 @@ export function Footer({ hide }: FooterProps): ReactElement {
   const versionWithName = `v${fullVersion} ${versionName}`
 
   return (
-    <>
-      <footer className={footerClassNames}>
-        <Link
-          className={styles.about}
-          to={ROUTE_ABOUT}
-          aria-label="About Nevergreen"
-        >
-          Nevergreen v{fullVersion} {versionName} by Build Canaries
-        </Link>
-        <SubmitAnIssue
-          version={versionWithName}
-          className={styles.submitAnIssue}
-        />
-      </footer>
-    </>
+    <footer className={footerClassNames}>
+      <Link
+        className={styles.about}
+        to={ROUTE_ABOUT}
+        aria-label="About Nevergreen"
+      >
+        Nevergreen v{fullVersion} {versionName} by Build Canaries
+      </Link>
+      <SubmitAnIssue
+        version={versionWithName}
+        className={styles.submitAnIssue}
+      />
+    </footer>
   )
 }
