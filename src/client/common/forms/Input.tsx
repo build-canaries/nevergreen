@@ -80,7 +80,7 @@ export function Input({
           id={actualId}
           {...inputProps}
           ref={inputNode}
-          aria-describedby={errorId}
+          aria-describedby={hasError ? errorId : undefined}
         />
         {readOnly && (
           <InputButton disabled icon={<Lock />} aria-hidden>
