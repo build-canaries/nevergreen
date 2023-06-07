@@ -2,7 +2,7 @@ import type { ReactElement } from 'react'
 import { HelpArticle, HelpProps } from '../../../help/HelpArticle'
 import { HelpForm, HelpInput } from '../../../help/HelpForms'
 import { WarningMessages } from '../../../common/Messages'
-import { ROUTE_BACKUP_IMPORT_LOCAL } from '../../../AppRoutes'
+import { RoutePaths } from '../../../AppRoutes'
 import { FolderOpen } from '../../../common/icons/FolderOpen'
 import { Checkmark } from '../../../common/icons/Checkmark'
 
@@ -14,7 +14,7 @@ export function ImportLocalHelp({ searchQuery }: HelpProps): ReactElement {
       keywords={keywords}
       searchQuery={searchQuery}
       title="Import local"
-      page={ROUTE_BACKUP_IMPORT_LOCAL}
+      page={RoutePaths.backupImportLocal}
     >
       <HelpForm>
         <HelpInput name="Open local..." icon={<FolderOpen />}>

@@ -8,7 +8,7 @@ import { Page } from '../../../common/Page'
 import { FullBackupSummary } from '../BackupSummary'
 import { BackupLogo } from '../BackupLogo'
 import { useRemoteLocationContext } from '../RemoteLocationPage'
-import { ROUTE_BACKUP } from '../../../AppRoutes'
+import { RoutePaths } from '../../../AppRoutes'
 import { useAppDispatch, useAppSelector } from '../../../configuration/Hooks'
 import { backupExported } from '../RemoteLocationsActions'
 import { isBlank } from '../../../common/Utils'
@@ -54,7 +54,7 @@ export function ExportRemotePage(): ReactElement {
       <FullBackupSummary location={location} />
       <Form
         onSuccess={exportNow}
-        onCancel={ROUTE_BACKUP}
+        onCancel={RoutePaths.backup}
         submitButtonText="Export"
       >
         {() => {

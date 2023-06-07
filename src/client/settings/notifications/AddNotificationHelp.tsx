@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react'
 import { HelpArticle, HelpProps } from '../../help/HelpArticle'
 import { HelpForm, HelpInput } from '../../help/HelpForms'
-import { ROUTE_NOTIFICATIONS_ADD } from '../../AppRoutes'
+import { RoutePaths } from '../../AppRoutes'
 import { Play } from '../../common/icons/Play'
 import { Stop } from '../../common/icons/Stop'
 
@@ -23,7 +23,7 @@ export function AddNotificationHelp({
       keywords={keywords}
       searchQuery={searchQuery}
       title="Add notification"
-      page={ROUTE_NOTIFICATIONS_ADD}
+      page={RoutePaths.notificationsAdd}
     >
       <p>
         To actually show or play notifications they need to be allowed{' '}

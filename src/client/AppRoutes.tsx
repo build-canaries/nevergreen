@@ -32,38 +32,38 @@ import { ChangeSuccessColoursPage } from './settings/success/ChangeSuccessColour
 import { ImportLocalPage } from './settings/backup/import/ImportLocalPage'
 import { ImportSuccessPage } from './settings/backup/import/ImportSuccessPage'
 
-export const ROUTE_MONITOR = '/monitor'
-export const ROUTE_SETTINGS = '/settings'
-export const ROUTE_TRACKING = '/settings/tracking'
-export const ROUTE_TRACKING_ADD = '/settings/tracking/add'
-export const ROUTE_TRACKING_PROJECTS = '/settings/tracking/:id/projects'
-export const ROUTE_TRACKING_DETAILS = '/settings/tracking/:id/details'
-export const ROUTE_TRACKING_DETAILS_CONNECTION =
-  '/settings/tracking/:id/details/connection'
-export const ROUTE_SUCCESS = '/settings/success'
-export const ROUTE_DISPLAY = '/settings/display'
-export const ROUTE_COLOURS = '/settings/colours/:for'
-export const ROUTE_NOTIFICATIONS = '/settings/notifications'
-export const ROUTE_NOTIFICATIONS_ADD = '/settings/notifications/add'
-export const ROUTE_BACKUP = '/settings/backup'
-export const ROUTE_BACKUP_ADD = '/settings/backup/add'
-export const ROUTE_BACKUP_IMPORT_SUCCESS = '/settings/backup/import-success'
-export const ROUTE_BACKUP_IMPORT_LOCAL = '/settings/backup/local/import'
-export const ROUTE_BACKUP_IMPORT_REMOTE = '/settings/backup/:internalId/import'
-export const ROUTE_BACKUP_EXPORT_LOCAL = '/settings/backup/local/export'
-export const ROUTE_BACKUP_EXPORT_REMOTE = '/settings/backup/:internalId/export'
-export const ROUTE_BACKUP_EXPORT_DETAILS =
-  '/settings/backup/:internalId/details'
-export const ROUTE_OTHER = '/settings/other'
-export const ROUTE_ABOUT = '/settings/about'
-export const ROUTE_PREVIEW = '/preview'
+export enum RoutePaths {
+  about = '/settings/about',
+  backup = '/settings/backup',
+  backupAdd = '/settings/backup/add',
+  backupExportDetails = '/settings/backup/:internalId/details',
+  backupExportLocal = '/settings/backup/local/export',
+  backupExportRemote = '/settings/backup/:internalId/export',
+  backupImportLocal = '/settings/backup/local/import',
+  backupImportRemote = '/settings/backup/:internalId/import',
+  backupImportSuccess = '/settings/backup/import-success',
+  colours = '/settings/colours/:for',
+  display = '/settings/display',
+  monitor = '/monitor',
+  notifications = '/settings/notifications',
+  notificationsAdd = '/settings/notifications/add',
+  other = '/settings/other',
+  preview = '/preview',
+  settings = '/settings',
+  success = '/settings/success',
+  tracking = '/settings/tracking',
+  trackingAdd = '/settings/tracking/add',
+  trackingDetails = '/settings/tracking/:id/details',
+  trackingDetailsConnection = '/settings/tracking/:id/details/connection',
+  trackingProjects = '/settings/tracking/:id/projects',
+}
 
 export function AppRoutes(): ReactElement {
   return (
     <Routes>
       <Route element={<Nevergreen />}>
-        <Route path={ROUTE_MONITOR} element={<Monitor />} />
-        <Route path={ROUTE_SETTINGS} element={<Settings />}>
+        <Route path={RoutePaths.monitor} element={<Monitor />} />
+        <Route path={RoutePaths.settings} element={<Settings />}>
           <Route path="tracking" element={<TrackingPage />} />
           <Route path="tracking/add" element={<AddFeedPage />} />
           <Route path="tracking/:id" element={<FeedPage />}>
@@ -73,7 +73,7 @@ export function AppRoutes(): ReactElement {
               path="details/connection"
               element={<UpdateConnectionPage />}
             />
-            <Route index element={<Navigate to={ROUTE_TRACKING} />} />
+            <Route index element={<Navigate to={RoutePaths.tracking} />} />
           </Route>
           <Route path="success" element={<SuccessMessagesPage />} />
           <Route path="success/add" element={<AddMessagePage />} />
@@ -109,9 +109,9 @@ export function AppRoutes(): ReactElement {
           <Route path="about" element={<AboutPage />} />
           <Route index element={<Navigate to="tracking" />} />
         </Route>
-        <Route path={ROUTE_PREVIEW} element={<Preview />} />
+        <Route path={RoutePaths.preview} element={<Preview />} />
         <Route path="/style-guide" element={<StyleGuide />} />
-        <Route path="/*" element={<Navigate to={ROUTE_SETTINGS} />} />
+        <Route path="/*" element={<Navigate to={RoutePaths.settings} />} />
       </Route>
     </Routes>
   )

@@ -2,7 +2,7 @@ import type { ReactElement } from 'react'
 import { HelpArticle, HelpProps } from '../../../help/HelpArticle'
 import { HelpForm, HelpInput } from '../../../help/HelpForms'
 import { WarningMessages } from '../../../common/Messages'
-import { ROUTE_BACKUP_IMPORT_REMOTE } from '../../../AppRoutes'
+import { RoutePaths } from '../../../AppRoutes'
 import { CloudDownload } from '../../../common/icons/CloudDownload'
 import { Checkmark } from '../../../common/icons/Checkmark'
 
@@ -19,7 +19,7 @@ export function ImportRemoteHelp({ searchQuery }: HelpProps): ReactElement {
       keywords={keywords}
       searchQuery={searchQuery}
       title="Import remote"
-      page={ROUTE_BACKUP_IMPORT_REMOTE}
+      page={RoutePaths.backupImportRemote}
     >
       <p>
         The configuration will automatically be fetched from the remote

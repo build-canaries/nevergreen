@@ -5,7 +5,7 @@ import versionMeta from '../../../resources/version_meta.txt'
 import versionName from '../../../resources/version_name.txt'
 import { SubmitAnIssue } from './SubmitAnIssue'
 import { Link } from 'react-router-dom'
-import { ROUTE_ABOUT } from '../AppRoutes'
+import { RoutePaths } from '../AppRoutes'
 import styles from './footer.scss'
 
 interface FooterProps {
@@ -23,7 +23,7 @@ export function Footer({ hide }: FooterProps): ReactElement {
     <footer className={footerClassNames}>
       <Link
         className={styles.about}
-        to={ROUTE_ABOUT}
+        to={RoutePaths.about}
         aria-label="About Nevergreen"
       >
         Nevergreen v{fullVersion} {versionName} by Build Canaries

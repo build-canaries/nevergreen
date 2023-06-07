@@ -7,7 +7,7 @@ import { Form } from '../../common/forms/Form'
 import { firstError, FormErrors } from '../../common/forms/Validation'
 import { Page } from '../../common/Page'
 import { Image } from '../../common/icons/Image'
-import { ROUTE_SUCCESS } from '../../AppRoutes'
+import { RoutePaths } from '../../AppRoutes'
 import { useAppDispatch, useAppSelector } from '../../configuration/Hooks'
 import styles from './add-message.scss'
 
@@ -29,7 +29,7 @@ export function AddMessagePage(): ReactElement {
 
   const onSuccess = () => {
     dispatch(addMessage(message))
-    return { navigateTo: ROUTE_SUCCESS }
+    return { navigateTo: RoutePaths.success }
   }
 
   return (
@@ -38,7 +38,7 @@ export function AddMessagePage(): ReactElement {
         onValidate={onValidate}
         onSuccess={onSuccess}
         submitButtonText="Add message"
-        onCancel={ROUTE_SUCCESS}
+        onCancel={RoutePaths.success}
       >
         {(submitting, validationErrors) => {
           return (

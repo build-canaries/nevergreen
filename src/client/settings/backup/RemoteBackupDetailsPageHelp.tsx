@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react'
 import { HelpArticle, HelpProps } from '../../help/HelpArticle'
 import { HelpForm, HelpInput } from '../../help/HelpForms'
-import { ROUTE_BACKUP_EXPORT_DETAILS } from '../../AppRoutes'
+import { RoutePaths } from '../../AppRoutes'
 import { CloudUpload } from '../../common/icons/CloudUpload'
 import { CloudDownload } from '../../common/icons/CloudDownload'
 import { WarningMessages } from '../../common/Messages'
@@ -16,7 +16,7 @@ export function RemoteBackupDetailsPageHelp({
       keywords={keywords}
       searchQuery={searchQuery}
       title="Remote location details"
-      page={ROUTE_BACKUP_EXPORT_DETAILS}
+      page={RoutePaths.backupExportDetails}
     >
       <HelpForm>
         <HelpInput name="Automatically export">

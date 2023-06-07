@@ -3,7 +3,7 @@ import { ExternalLink } from '../../common/ExternalLink'
 import { HelpArticle, HelpProps } from '../../help/HelpArticle'
 import { URL } from '../../common/URL'
 import { HelpForm, HelpInput } from '../../help/HelpForms'
-import { ROUTE_BACKUP_ADD } from '../../AppRoutes'
+import { RoutePaths } from '../../AppRoutes'
 
 const keywords = ['backup', 'export', 'import', 'where', 'url']
 
@@ -13,7 +13,7 @@ export function AddBackupHelp({ searchQuery }: HelpProps): ReactElement {
       keywords={keywords}
       searchQuery={searchQuery}
       title="Add remote location"
-      page={ROUTE_BACKUP_ADD}
+      page={RoutePaths.backupAdd}
     >
       <HelpForm>
         <HelpInput name="Where">
@@ -33,7 +33,7 @@ export function RemoteBackupCustomHelp({
       keywords={[...keywords, 'custom server']}
       searchQuery={searchQuery}
       title="Add remote location - Custom server"
-      page={ROUTE_BACKUP_ADD}
+      page={RoutePaths.backupAdd}
     >
       <HelpForm>
         <HelpInput name="URL">
@@ -54,7 +54,7 @@ export function RemoteBackupGitHubHelp({
       keywords={[...keywords, 'access token', 'github', 'gist']}
       searchQuery={searchQuery}
       title="Add remote location - GitHub gist"
-      page={ROUTE_BACKUP_ADD}
+      page={RoutePaths.backupAdd}
     >
       <HelpForm>
         <HelpInput name="URL">
@@ -99,7 +99,7 @@ export function RemoteBackupGitLabHelp({
       keywords={[...keywords, 'access token', 'gitlab', 'snippet']}
       searchQuery={searchQuery}
       title="Add remote location - GitLab snippet"
-      page={ROUTE_BACKUP_ADD}
+      page={RoutePaths.backupAdd}
     >
       <HelpForm>
         <HelpInput name="URL">

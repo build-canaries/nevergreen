@@ -6,6 +6,7 @@ import { isBlank } from '../common/Utils'
 import isNil from 'lodash/isNil'
 import cn from 'classnames'
 import styles from './help-article.scss'
+import { RoutePaths } from '../AppRoutes'
 
 export interface HelpProps {
   readonly searchQuery: string
@@ -22,7 +23,7 @@ interface HelpArticleProps {
   readonly keywords: string[]
   readonly children: ReactNode
   readonly searchQuery: string
-  readonly page?: string
+  readonly page?: RoutePaths
 }
 
 function Keyword({ keyword, matches }: KeywordProps) {

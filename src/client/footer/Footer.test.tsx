@@ -1,7 +1,7 @@
 import { render } from '../testUtils/testHelpers'
 import { Footer } from './Footer'
 import { screen } from '@testing-library/react'
-import { ROUTE_ABOUT } from '../AppRoutes'
+import { RoutePaths } from '../AppRoutes'
 
 it('should have "about" information', async () => {
   const { user } = render(<Footer hide={false} />)
@@ -11,5 +11,5 @@ it('should have "about" information', async () => {
     )
   )
 
-  expect(window.location.pathname).toEqual(ROUTE_ABOUT)
+  expect(window.location.pathname).toEqual(RoutePaths.about)
 })

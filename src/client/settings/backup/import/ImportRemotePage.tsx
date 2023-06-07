@@ -25,7 +25,7 @@ import { Cross } from '../../../common/icons/Cross'
 import { BackupLogo } from '../BackupLogo'
 import { useQuery } from '@tanstack/react-query'
 import { useRemoteLocationContext } from '../RemoteLocationPage'
-import { ROUTE_BACKUP, ROUTE_BACKUP_IMPORT_SUCCESS } from '../../../AppRoutes'
+import { RoutePaths } from '../../../AppRoutes'
 import { useAppDispatch } from '../../../configuration/Hooks'
 import styles from './import-page.scss'
 
@@ -81,7 +81,7 @@ export function ImportRemotePage(): ReactElement {
       const searchIn = Object.values(result.right.backupRemoteLocations ?? {})
       const matching = matchingLocation(searchIn, location)
       dispatch(configurationImported(result.right, matching))
-      return { navigateTo: ROUTE_BACKUP_IMPORT_SUCCESS }
+      return { navigateTo: RoutePaths.backupImportSuccess }
     }
   }
 
@@ -116,7 +116,7 @@ export function ImportRemotePage(): ReactElement {
               Try fetching again
             </SecondaryButton>
             <LinkButton
-              to={ROUTE_BACKUP}
+              to={RoutePaths.backup}
               icon={<Cross />}
               className={styles.cancel}
             >
@@ -128,7 +128,7 @@ export function ImportRemotePage(): ReactElement {
           <Form
             onValidate={onValidate}
             onSuccess={doImport}
-            onCancel={ROUTE_BACKUP}
+            onCancel={RoutePaths.backup}
             submitButtonText="Import"
           >
             {(submitting, validationErrors) => {

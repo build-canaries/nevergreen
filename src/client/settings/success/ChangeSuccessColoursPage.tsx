@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react'
 import { useAppDispatch, useAppSelector } from '../../configuration/Hooks'
-import { ROUTE_SUCCESS } from '../../AppRoutes'
+import { RoutePaths } from '../../AppRoutes'
 import { ChangeColoursPage } from '../colours/ChangeColoursPage'
 import {
   getSuccessBackgroundColour,
@@ -17,14 +17,14 @@ export function ChangeSuccessColoursPage(): ReactElement {
   const onSuccess = (backgroundColour: string, textColour: string) => {
     dispatch(setSuccessBackgroundColour(backgroundColour))
     dispatch(setSuccessTextColour(textColour))
-    return ROUTE_SUCCESS
+    return RoutePaths.success
   }
 
   return (
     <ChangeColoursPage
       title="success"
       onSuccess={onSuccess}
-      onCancel={ROUTE_SUCCESS}
+      onCancel={RoutePaths.success}
       initialBackgroundColour={initialBackgroundColour}
       initialTextColour={initialTextColour}
       group="success"

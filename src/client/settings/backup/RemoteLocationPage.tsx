@@ -3,7 +3,7 @@ import type { RemoteLocation } from './RemoteLocationsReducer'
 import { getBackupLocation } from './RemoteLocationsReducer'
 import { Outlet, useOutletContext, useParams } from 'react-router-dom'
 import { Navigate } from 'react-router'
-import { ROUTE_BACKUP } from '../../AppRoutes'
+import { RoutePaths } from '../../AppRoutes'
 import { useAppSelector } from '../../configuration/Hooks'
 
 export function RemoteLocationPage(): ReactElement {
@@ -13,7 +13,7 @@ export function RemoteLocationPage(): ReactElement {
   if (location) {
     return <Outlet context={location} />
   } else {
-    return <Navigate to={ROUTE_BACKUP} />
+    return <Navigate to={RoutePaths.backup} />
   }
 }
 

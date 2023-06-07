@@ -3,7 +3,7 @@ import { feedAdded } from './TrackingActionCreators'
 import { Page } from '../../common/Page'
 import { Xml } from '../../common/icons/Xml'
 import { ConnectionForm, ConnectionFormFields } from './ConnectionForm'
-import { ROUTE_TRACKING } from '../../AppRoutes'
+import { RoutePaths } from '../../AppRoutes'
 import { useAppDispatch } from '../../configuration/Hooks'
 import { createId } from '../../common/Utils'
 
@@ -33,7 +33,7 @@ export function AddFeedPage(): ReactElement {
 
   return (
     <Page title="Add CCTray XML feed" icon={<Xml />}>
-      <ConnectionForm onSuccess={onSuccess} onCancel={ROUTE_TRACKING} />
+      <ConnectionForm onSuccess={onSuccess} onCancel={RoutePaths.tracking} />
     </Page>
   )
 }

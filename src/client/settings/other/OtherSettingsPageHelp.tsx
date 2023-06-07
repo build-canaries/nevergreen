@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react'
 import { HelpArticle, HelpProps } from '../../help/HelpArticle'
 import { HelpForm, HelpInput } from '../../help/HelpForms'
-import { ROUTE_OTHER } from '../../AppRoutes'
+import { RoutePaths } from '../../AppRoutes'
 
 const keywords = ['settings', 'other', 'click to show menu']
 
@@ -13,7 +13,7 @@ export function OtherSettingsPageHelp({
       keywords={keywords}
       searchQuery={searchQuery}
       title="Other settings"
-      page={ROUTE_OTHER}
+      page={RoutePaths.other}
     >
       <HelpForm>
         <HelpInput name="Click to show menu">

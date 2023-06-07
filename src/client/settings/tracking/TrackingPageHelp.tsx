@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react'
 import { HelpArticle, HelpProps } from '../../help/HelpArticle'
 import { HelpForm, HelpInput } from '../../help/HelpForms'
-import { ROUTE_TRACKING } from '../../AppRoutes'
+import { RoutePaths } from '../../AppRoutes'
 import { Plus } from '../../common/icons/Plus'
 import { Cog } from '../../common/icons/Cog'
 import { CheckboxChecked } from '../../common/icons/CheckboxChecked'
@@ -18,7 +18,7 @@ export function TrackingPageHelp({
       title="Tracking"
       keywords={keywords}
       searchQuery={searchQuery}
-      page={ROUTE_TRACKING}
+      page={RoutePaths.tracking}
     >
       <HelpForm>
         <HelpInput name="Poll for feed changes every">

@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react'
 import { HelpArticle, HelpProps } from '../../../help/HelpArticle'
 import { HelpForm, HelpInput } from '../../../help/HelpForms'
-import { ROUTE_BACKUP_EXPORT_REMOTE } from '../../../AppRoutes'
+import { RoutePaths } from '../../../AppRoutes'
 
 const keywords = ['backup', 'export', 'current configuration']
 
@@ -11,7 +11,7 @@ export function ExportRemoteHelp({ searchQuery }: HelpProps): ReactElement {
       keywords={keywords}
       searchQuery={searchQuery}
       title="Export remote"
-      page={ROUTE_BACKUP_EXPORT_REMOTE}
+      page={RoutePaths.backupExportRemote}
     >
       <HelpForm>
         <HelpInput name="Current configuration">

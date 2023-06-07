@@ -10,7 +10,7 @@ import { Page } from '../../common/Page'
 import { Form } from '../../common/forms/Form'
 import { DropDown } from '../../common/forms/DropDown'
 import { Prognosis } from '../../domain/Project'
-import { ROUTE_NOTIFICATIONS } from '../../AppRoutes'
+import { RoutePaths } from '../../AppRoutes'
 import { deleteAudio, playAudio, stopAudio } from '../../common/AudioPlayer'
 import { WarningMessages } from '../../common/Messages'
 import { addNotification } from './NotificationsReducer'
@@ -119,7 +119,7 @@ export function AddNotificationPage(): ReactElement {
 
   const processForm = () => {
     dispatch(addNotification({ prognosis, systemNotification, sfx }))
-    return { navigateTo: ROUTE_NOTIFICATIONS }
+    return { navigateTo: RoutePaths.notifications }
   }
 
   return (
@@ -131,7 +131,7 @@ export function AddNotificationPage(): ReactElement {
 
       <Form
         onSuccess={processForm}
-        onCancel={ROUTE_NOTIFICATIONS}
+        onCancel={RoutePaths.notifications}
         submitButtonText="Add notification"
       >
         {(submitting) => {

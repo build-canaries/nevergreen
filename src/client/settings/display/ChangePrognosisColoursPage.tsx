@@ -6,7 +6,7 @@ import {
   setPrognosisTextColour,
 } from './DisplaySettingsReducer'
 import { Prognosis, prognosisDisplay } from '../../domain/Project'
-import { ROUTE_DISPLAY } from '../../AppRoutes'
+import { RoutePaths } from '../../AppRoutes'
 import { ChangeColoursPage } from '../colours/ChangeColoursPage'
 
 interface ChangePrognosisColoursPage {
@@ -24,14 +24,14 @@ export function ChangePrognosisColoursPage({
       setPrognosisBackgroundColour({ prognosis, colour: backgroundColour })
     )
     dispatch(setPrognosisTextColour({ prognosis, colour: textColour }))
-    return ROUTE_DISPLAY
+    return RoutePaths.display
   }
 
   return (
     <ChangeColoursPage
       title={prognosisDisplay(prognosis)}
       onSuccess={onSuccess}
-      onCancel={ROUTE_DISPLAY}
+      onCancel={RoutePaths.display}
       initialBackgroundColour={settings[prognosis].backgroundColour}
       initialTextColour={settings[prognosis].textColour}
       group={prognosis}

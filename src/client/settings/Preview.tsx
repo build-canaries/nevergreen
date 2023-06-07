@@ -11,7 +11,7 @@ import { post } from '../gateways/Gateway'
 import { Banner } from '../Banner'
 import { useNavigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
-import { ROUTE_DISPLAY } from '../AppRoutes'
+import { RoutePaths } from '../AppRoutes'
 import { createId } from '../common/Utils'
 import { useAppSelector } from '../configuration/Hooks'
 import styles from './preview.scss'
@@ -64,7 +64,7 @@ export function Preview(): ReactElement {
       <Banner
         message="This is a preview showing your current display settings"
         hide={false}
-        onDismiss={() => navigate(ROUTE_DISPLAY)}
+        onDismiss={() => navigate(RoutePaths.display)}
       />
       <div className={styles.projects}>
         <div className={styles.projectsInner}>

@@ -16,7 +16,7 @@ import {
   TimedSuccessMessages,
 } from '../../../common/TimedMessages'
 import { useAppSelector } from '../../../configuration/Hooks'
-import { ROUTE_BACKUP } from '../../../AppRoutes'
+import { RoutePaths } from '../../../AppRoutes'
 import styles from './export-locally-page.scss'
 
 export function ExportLocallyPage(): ReactElement {
@@ -99,7 +99,11 @@ export function ExportLocallyPage(): ReactElement {
         readOnly
         id="export-data"
       />
-      <LinkButton to={ROUTE_BACKUP} icon={<Cross />} className={styles.cancel}>
+      <LinkButton
+        to={RoutePaths.backup}
+        icon={<Cross />}
+        className={styles.cancel}
+      >
         Cancel
       </LinkButton>
     </Page>

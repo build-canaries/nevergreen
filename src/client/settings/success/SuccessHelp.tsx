@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react'
 import { ExternalLink } from '../../common/ExternalLink'
 import { HelpArticle, HelpProps } from '../../help/HelpArticle'
-import { ROUTE_SUCCESS } from '../../AppRoutes'
+import { RoutePaths } from '../../AppRoutes'
 import { HelpForm, HelpInput } from '../../help/HelpForms'
 import { Plus } from '../../common/icons/Plus'
 import { PaintFormat } from '../../common/icons/PaintFormat'
@@ -28,7 +28,7 @@ export function SuccessHelp({
       keywords={keywords}
       searchQuery={searchQuery}
       title="Success messages"
-      page={ROUTE_SUCCESS}
+      page={RoutePaths.success}
     >
       <HelpForm>
         <HelpInput name="Add message" icon={<Plus />}>

@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react'
 import { LinkButton } from '../../common/LinkButton'
-import { ROUTE_COLOURS } from '../../AppRoutes'
+import { RoutePaths } from '../../AppRoutes'
 import { VisuallyHidden } from '../../common/VisuallyHidden'
 import { PaintFormat } from '../../common/icons/PaintFormat'
 import styles from './change-colours-link.scss'
@@ -16,7 +16,7 @@ export function ChangeColoursLink({
 }: ChangeColoursLinkProps): ReactElement {
   return (
     <LinkButton
-      to={ROUTE_COLOURS.replace(':for', path)}
+      to={RoutePaths.colours.replace(':for', path)}
       className={styles.link}
       icon={<PaintFormat />}
     >

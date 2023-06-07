@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react'
 import { HelpArticle, HelpProps } from '../../help/HelpArticle'
 import { HelpForm, HelpInput } from '../../help/HelpForms'
-import { ROUTE_NOTIFICATIONS } from '../../AppRoutes'
+import { RoutePaths } from '../../AppRoutes'
 import { Bin } from '../../common/icons/Bin'
 import { Plus } from '../../common/icons/Plus'
 import { Note } from '../../common/icons/Note'
@@ -24,7 +24,7 @@ export function NotificationSettingsHelp({
       keywords={keywords}
       searchQuery={searchQuery}
       title="Notifications settings"
-      page={ROUTE_NOTIFICATIONS}
+      page={RoutePaths.notifications}
     >
       <HelpForm>
         <HelpInput name="Check for new Nevergreen versions">

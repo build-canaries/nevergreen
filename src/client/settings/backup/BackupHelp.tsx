@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react'
 import { HelpArticle, HelpProps } from '../../help/HelpArticle'
 import { HelpForm, HelpInput } from '../../help/HelpForms'
-import { ROUTE_BACKUP } from '../../AppRoutes'
+import { RoutePaths } from '../../AppRoutes'
 import { Plus } from '../../common/icons/Plus'
 import { Cog } from '../../common/icons/Cog'
 import { CloudUpload } from '../../common/icons/CloudUpload'
@@ -18,7 +18,7 @@ export function BackupHelp({ searchQuery }: HelpProps): ReactElement {
       keywords={keywords}
       searchQuery={searchQuery}
       title="Backup"
-      page={ROUTE_BACKUP}
+      page={RoutePaths.backup}
     >
       <HelpForm>
         <HelpInput name="Export locally" icon={<FloppyDisk />}>

@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react'
 import { HelpArticle, HelpProps } from '../../help/HelpArticle'
 import { HelpForm, HelpInput } from '../../help/HelpForms'
-import { ROUTE_COLOURS } from '../../AppRoutes'
+import { RoutePaths } from '../../AppRoutes'
 import { ExternalLink } from '../../common/ExternalLink'
 
 const keywords = [
@@ -25,7 +25,7 @@ export function ChangeColoursPageHelp({
       keywords={keywords}
       searchQuery={searchQuery}
       title="Change colours"
-      page={ROUTE_COLOURS}
+      page={RoutePaths.colours}
     >
       <HelpForm>
         <HelpInput name="Presets">

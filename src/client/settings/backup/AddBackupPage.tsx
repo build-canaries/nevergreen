@@ -15,7 +15,7 @@ import { firstError, FormErrors } from '../../common/forms/Validation'
 import { Form } from '../../common/forms/Form'
 import { Page } from '../../common/Page'
 import { BackupLogo } from './BackupLogo'
-import { ROUTE_BACKUP, ROUTE_BACKUP_EXPORT_DETAILS } from '../../AppRoutes'
+import { RoutePaths } from '../../AppRoutes'
 import { useAppDispatch } from '../../configuration/Hooks'
 import { addBackupLocation } from './RemoteLocationsActions'
 import styles from './add-backup.scss'
@@ -87,7 +87,7 @@ export function AddBackupPage(): ReactElement {
       )
     }
     return {
-      navigateTo: ROUTE_BACKUP_EXPORT_DETAILS.replace(
+      navigateTo: RoutePaths.backupExportDetails.replace(
         ':internalId',
         internalId
       ),
@@ -113,7 +113,7 @@ export function AddBackupPage(): ReactElement {
         onValidate={onValidate}
         onSuccess={onSuccess}
         submitButtonText="Add location"
-        onCancel={ROUTE_BACKUP}
+        onCancel={RoutePaths.backup}
       >
         {(submitting, validationErrors, clearErrors) => {
           return (

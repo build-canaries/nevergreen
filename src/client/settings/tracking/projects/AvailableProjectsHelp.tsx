@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react'
 import { HelpArticle, HelpProps } from '../../../help/HelpArticle'
 import { HelpForm, HelpInput } from '../../../help/HelpForms'
-import { ROUTE_TRACKING_PROJECTS } from '../../../AppRoutes'
+import { RoutePaths } from '../../../AppRoutes'
 import { Loop } from '../../../common/icons/Loop'
 import { CheckboxChecked } from '../../../common/icons/CheckboxChecked'
 import { CheckboxUnchecked } from '../../../common/icons/CheckboxUnchecked'
@@ -25,7 +25,7 @@ export function AvailableProjectsHelp({
       keywords={keywords}
       searchQuery={searchQuery}
       title="Manage projects"
-      page={ROUTE_TRACKING_PROJECTS}
+      page={RoutePaths.trackingProjects}
     >
       <HelpForm>
         <HelpInput name="Tracking mode">

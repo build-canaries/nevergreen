@@ -2,7 +2,7 @@ import type { ReactElement } from 'react'
 import type { HelpProps } from '../../../help/HelpArticle'
 import { HelpArticle } from '../../../help/HelpArticle'
 import { HelpForm, HelpInput } from '../../../help/HelpForms'
-import { ROUTE_TRACKING_DETAILS } from '../../../AppRoutes'
+import { RoutePaths } from '../../../AppRoutes'
 import { Dice } from '../../../common/icons/Dice'
 import { Cog } from '../../../common/icons/Cog'
 
@@ -20,7 +20,7 @@ export function UpdateDetailsHelp({ searchQuery }: HelpProps): ReactElement {
       keywords={keywords}
       searchQuery={searchQuery}
       title="Update details"
-      page={ROUTE_TRACKING_DETAILS}
+      page={RoutePaths.trackingDetails}
     >
       <HelpForm>
         <HelpInput name="Update connection" icon={<Cog />}>

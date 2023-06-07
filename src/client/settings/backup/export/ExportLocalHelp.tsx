@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react'
 import { HelpArticle, HelpProps } from '../../../help/HelpArticle'
 import { HelpForm, HelpInput } from '../../../help/HelpForms'
-import { ROUTE_BACKUP_EXPORT_LOCAL } from '../../../AppRoutes'
+import { RoutePaths } from '../../../AppRoutes'
 import { FloppyDisk } from '../../../common/icons/FloppyDisk'
 import { Paste } from '../../../common/icons/Paste'
 
@@ -21,7 +21,7 @@ export function ExportLocalHelp({ searchQuery }: HelpProps): ReactElement {
       keywords={keywords}
       searchQuery={searchQuery}
       title="Export locally"
-      page={ROUTE_BACKUP_EXPORT_LOCAL}
+      page={RoutePaths.backupExportLocal}
     >
       <HelpForm>
         <HelpInput name="Save locally..." icon={<FloppyDisk />}>

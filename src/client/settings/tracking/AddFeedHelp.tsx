@@ -3,7 +3,7 @@ import { HelpArticle, HelpProps } from '../../help/HelpArticle'
 import { ExternalLink } from '../../common/ExternalLink'
 import { HelpForm, HelpInput } from '../../help/HelpForms'
 import { InfoMessages } from '../../common/Messages'
-import { ROUTE_TRACKING_ADD } from '../../AppRoutes'
+import { RoutePaths } from '../../AppRoutes'
 import { Loop } from '../../common/icons/Loop'
 
 const keywords = [
@@ -25,7 +25,7 @@ export function AddFeedHelp({ searchQuery }: HelpProps): ReactElement {
       title="Adding a CCTray XML feed"
       keywords={keywords}
       searchQuery={searchQuery}
-      page={ROUTE_TRACKING_ADD}
+      page={RoutePaths.trackingAdd}
     >
       <HelpForm>
         <HelpInput name="URL">
@@ -96,7 +96,7 @@ export function CCTrayLocationsHelp({ searchQuery }: HelpProps): ReactElement {
         'feed',
       ]}
       searchQuery={searchQuery}
-      page={ROUTE_TRACKING_ADD}
+      page={RoutePaths.trackingAdd}
     >
       See the{' '}
       <ExternalLink href="https://cctray.org/servers/">

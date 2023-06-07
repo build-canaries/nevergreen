@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react'
 import { HelpArticle, HelpProps } from '../../help/HelpArticle'
 import { HelpForm, HelpInput } from '../../help/HelpForms'
-import { ROUTE_DISPLAY } from '../../AppRoutes'
+import { RoutePaths } from '../../AppRoutes'
 import { Eye } from '../../common/icons/Eye'
 import { PaintFormat } from '../../common/icons/PaintFormat'
 
@@ -31,7 +31,7 @@ export function DisplaySettingsHelp({
       keywords={keywords}
       searchQuery={searchQuery}
       title="Display settings"
-      page={ROUTE_DISPLAY}
+      page={RoutePaths.display}
     >
       <HelpForm>
         <HelpInput name="Preview display" icon={<Eye />}>

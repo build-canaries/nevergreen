@@ -20,7 +20,7 @@ import { LinkButton } from '../../common/LinkButton'
 import { Page } from '../../common/Page'
 import { Eye } from '../../common/icons/Eye'
 import { Display } from '../../common/icons/Display'
-import { ROUTE_PREVIEW } from '../../AppRoutes'
+import { RoutePaths } from '../../AppRoutes'
 import { useAppDispatch, useAppSelector } from '../../configuration/Hooks'
 import styles from './display-settings.scss'
 
@@ -48,7 +48,7 @@ export function DisplaySettingsPage(): ReactElement {
 
   return (
     <Page title="Display settings" icon={<Display />}>
-      <LinkButton to={ROUTE_PREVIEW} icon={<Eye />}>
+      <LinkButton to={RoutePaths.preview} icon={<Eye />}>
         Preview display
       </LinkButton>
       <Checkbox

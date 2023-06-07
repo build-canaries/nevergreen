@@ -1,13 +1,13 @@
 import { Help, SHOW_HELP_SHORTCUT } from './Help'
 import { render, waitForLoadingToFinish } from '../testUtils/testHelpers'
 import { act, screen } from '@testing-library/react'
-import { ROUTE_TRACKING } from '../AppRoutes'
+import { RoutePaths } from '../AppRoutes'
 import { triggerShortcut } from '../common/Keyboard'
 
 it('should show help articles based on location or search query', async () => {
   const { user } = render(<Help />, {
-    mountPath: ROUTE_TRACKING,
-    currentLocation: ROUTE_TRACKING,
+    mountPath: RoutePaths.tracking,
+    currentLocation: RoutePaths.tracking,
   })
 
   // Trigger shortcut manually as I couldn't figure out how to get the model to show by firing key events :'(

@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react'
 import { HelpArticle, HelpProps } from '../help/HelpArticle'
-import { ROUTE_MONITOR } from '../AppRoutes'
+import { RoutePaths } from '../AppRoutes'
 
 const keywords = ['monitor']
 
@@ -13,7 +13,7 @@ export function MonitorHelp({
       keywords={keywords}
       searchQuery={searchQuery}
       title="Monitor"
-      page={ROUTE_MONITOR}
+      page={RoutePaths.monitor}
     >
       <p>
         The Monitor page displays interesting projects once a CCTray XML feed

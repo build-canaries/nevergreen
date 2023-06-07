@@ -2,7 +2,7 @@ import type { ReactElement } from 'react'
 import type { Feed } from './FeedsReducer'
 import { getFeed } from './FeedsReducer'
 import { Navigate, Outlet, useOutletContext, useParams } from 'react-router-dom'
-import { ROUTE_TRACKING } from '../../AppRoutes'
+import { RoutePaths } from '../../AppRoutes'
 import { useAppSelector } from '../../configuration/Hooks'
 
 export function FeedPage(): ReactElement {
@@ -12,7 +12,7 @@ export function FeedPage(): ReactElement {
   if (feed) {
     return <Outlet context={feed} />
   } else {
-    return <Navigate to={ROUTE_TRACKING} />
+    return <Navigate to={RoutePaths.tracking} />
   }
 }
 
