@@ -4,7 +4,7 @@ import {
   getSuccessBackgroundColour,
   getSuccessTextColour,
 } from '../settings/success/SuccessReducer'
-import { useAspectRatio } from './AspectRationHook'
+import { useAspectRatio } from './AspectRatioHook'
 import styles from './success-image.scss'
 
 interface SuccessImageProps {
