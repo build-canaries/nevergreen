@@ -7,6 +7,21 @@ import { remoteLocationsRoot } from '../RemoteLocationsReducer'
 import { personalSettingsRoot } from '../../PersonalSettingsReducer'
 import { RemoteLocationOptions } from '../RemoteLocationOptions'
 
+/* We need to mock the store to test the 2nd export for new locations */
+const mockSomeConstantValueGetter = jest.fn<unknown, never[], unknown>()
+jest.mock('../../../configuration/ReduxStore', () => {
+  const originalModule = jest.requireActual<object>(
+    '../../../configuration/ReduxStore'
+  )
+  return {
+    __esModule: true,
+    ...originalModule,
+    get store() {
+      return mockSomeConstantValueGetter()
+    },
+  }
+})
+
 it('should export configuration', async () => {
   const remoteLocation = buildRemoteBackupLocation({
     internalId: 'locationId',
@@ -63,10 +78,12 @@ it.each([RemoteLocationOptions.gitHub, RemoteLocationOptions.gitLab])(
       id: 'some-remote-id',
     })
 
-    const { user } = render(<ExportRemotePage />, {
+    const { user, store } = render(<ExportRemotePage />, {
       state,
       outletContext: remoteLocation,
     })
+
+    mockSomeConstantValueGetter.mockReturnValueOnce(store)
 
     await user.click(screen.getByRole('button', { name: 'Export' }))
 

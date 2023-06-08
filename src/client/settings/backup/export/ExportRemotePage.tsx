@@ -1,5 +1,4 @@
 import type { ReactElement } from 'react'
-import { useEffect, useState } from 'react'
 import { toExportableConfigurationJson } from '../../../configuration/Configuration'
 import { TextArea } from '../TextArea'
 import { exportConfiguration } from '../../../gateways/BackupGateway'
@@ -13,6 +12,7 @@ import { useAppDispatch, useAppSelector } from '../../../configuration/Hooks'
 import { backupExported } from '../RemoteLocationsActions'
 import { isBlank } from '../../../common/Utils'
 import { RemoteLocationOptions } from '../RemoteLocationOptions'
+import { store } from '../../../configuration/ReduxStore'
 
 const usesExternalId = [
   RemoteLocationOptions.gitHub,
@@ -23,29 +23,30 @@ export function ExportRemotePage(): ReactElement {
   const location = useRemoteLocationContext()
   const dispatch = useAppDispatch()
   const configuration = useAppSelector(toExportableConfigurationJson)
-  const [shouldTrigger2ndExport, setShouldTrigger2ndExport] = useState(false)
-
-  /*
-   * We have to trigger the 2nd export in an effect as we need the configuration
-   * to have been updated correctly by the reducers for it to contain the
-   * external id.
-   */
-  useEffect(() => {
-    if (shouldTrigger2ndExport) {
-      void exportConfiguration(location, configuration)
-      setShouldTrigger2ndExport(false)
-    }
-  }, [shouldTrigger2ndExport, location, configuration])
 
   const exportNow = async (signal?: AbortSignal) => {
+    const isNewLocation =
+      isBlank(location.externalId) && usesExternalId.includes(location.where)
+
     const { id } = await exportConfiguration(location, configuration, signal)
+
     dispatch(backupExported(location.internalId, id))
-    const aborted = signal?.aborted ?? false
-    setShouldTrigger2ndExport(
-      !aborted &&
-        isBlank(location.externalId) &&
-        usesExternalId.includes(location.where)
-    )
+
+    /*
+     * We need to trigger a 2nd export for new locations to make sure the
+     * external ID is set in the exported configuration.
+     * We need to use the store.getState() as the configuration variable
+     * is a snapshot of the store state and isn't updated until this component
+     * re-renders.
+     * See issue #347 for more details.
+     */
+    if (isNewLocation) {
+      await exportConfiguration(
+        location,
+        toExportableConfigurationJson(store.getState())
+      )
+    }
+
     return { successMessage: 'Successfully exported configuration' }
   }
 
