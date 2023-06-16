@@ -22,7 +22,7 @@ jest.mock('../../../configuration/ReduxStore', () => {
   }
 })
 
-it('should export configuration', async () => {
+it('should show an error message if configuration can not be exported', async () => {
   const remoteLocation = buildRemoteBackupLocation({
     internalId: 'locationId',
     externalId: 'some-remote-id',
@@ -37,9 +37,9 @@ it('should export configuration', async () => {
       },
     },
   }
-  jest.spyOn(BackupGateway, 'exportConfiguration').mockResolvedValueOnce({
-    id: 'some-remote-id',
-  })
+  jest
+    .spyOn(BackupGateway, 'exportConfiguration')
+    .mockRejectedValueOnce(new Error('Some error message'))
 
   const { user } = render(<ExportRemotePage />, {
     state,
@@ -49,11 +49,45 @@ it('should export configuration', async () => {
   await user.click(screen.getByRole('button', { name: 'Export' }))
 
   await waitFor(() => {
-    expect(
-      screen.getByText('Successfully exported configuration')
-    ).toBeInTheDocument()
+    expect(screen.getByText('Some error message')).toBeInTheDocument()
   })
   expect(BackupGateway.exportConfiguration).toHaveBeenCalledTimes(1)
+})
+
+it('should show an error message if the 2nd export fails', async () => {
+  const remoteLocation = buildRemoteBackupLocation({
+    where: RemoteLocationOptions.gitHub,
+    internalId: 'locationId',
+    externalId: '',
+  })
+  const state = {
+    [remoteLocationsRoot]: {
+      locationId: remoteLocation,
+    },
+    [personalSettingsRoot]: {
+      backupRemoteLocations: {
+        locationId: {},
+      },
+    },
+  }
+  jest
+    .spyOn(BackupGateway, 'exportConfiguration')
+    .mockResolvedValueOnce({ id: 'external-id' })
+    .mockRejectedValueOnce(new Error('Some error message'))
+
+  const { user, store } = render(<ExportRemotePage />, {
+    state,
+    outletContext: remoteLocation,
+  })
+
+  mockSomeConstantValueGetter.mockReturnValueOnce(store)
+
+  await user.click(screen.getByRole('button', { name: 'Export' }))
+
+  await waitFor(() => {
+    expect(screen.getByText('Some error message')).toBeInTheDocument()
+  })
+  expect(BackupGateway.exportConfiguration).toHaveBeenCalledTimes(2)
 })
 
 it.each([RemoteLocationOptions.gitHub, RemoteLocationOptions.gitLab])(
