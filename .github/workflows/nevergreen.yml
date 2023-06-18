@@ -24,7 +24,7 @@ jobs:
           java-version: 20.0.1
 
       - name: Install clojure tools-deps
-        uses: DeLaGuardo/setup-clojure@9.5
+        uses: DeLaGuardo/setup-clojure@11.0
         with:
           lein: 2.9.10
 
@@ -56,7 +56,7 @@ jobs:
           lein uberjar
 
       - name: Run Cypress
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v5
         env:
           CYPRESS_BASE_URL: 'http://localhost:5000'
           CYPRESS_TRAY_URL: 'https://raw.githubusercontent.com/build-canaries/nevergreen/main/cctray_xml_feed_mock/resources/cctray.xml'
@@ -69,7 +69,7 @@ jobs:
           wait-on: http://localhost:5000
 
       - name: Store test reports
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: always()
         with:
           name: test-reports
