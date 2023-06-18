@@ -1,4 +1,4 @@
-FROM azul/zulu-openjdk-alpine:19.0.1-jre
+FROM azul/zulu-openjdk-alpine:20.0.1-jre
 
 MAINTAINER Build Canaries <team@nevergreen.io>
 

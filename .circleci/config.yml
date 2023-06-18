@@ -6,7 +6,7 @@ orbs:
 executors:
   clojure:
     docker:
-      - image: cimg/openjdk:19.0.1
+      - image: cimg/openjdk:20.0.1
     working_directory: ~/nevergreen
 
 commands:
