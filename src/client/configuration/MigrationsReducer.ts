@@ -1,23 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { configurationImported } from '../settings/backup/BackupActionCreators'
-import * as t from 'io-ts'
+import { z } from 'zod'
 
 export const migrationsRoot = 'appliedMigrations'
 
-const AppliedMigration = t.exact(
-  t.type({
-    id: t.readonly(t.string),
-    timestamp: t.readonly(t.string),
-  })
-)
+const AppliedMigration = z.object({
+  id: z.string(),
+  timestamp: z.string(),
+})
 
-export const AppliedMigrationsState = t.readonlyArray(
-  AppliedMigration,
-  migrationsRoot
-)
+export const AppliedMigrationsState = z.array(AppliedMigration)
 
-export type AppliedMigration = t.TypeOf<typeof AppliedMigration>
-export type AppliedMigrationsState = t.TypeOf<typeof AppliedMigrationsState>
+export type AppliedMigration = z.infer<typeof AppliedMigration>
+export type AppliedMigrationsState = z.infer<typeof AppliedMigrationsState>
 
 const initialState: AppliedMigrationsState = []
 

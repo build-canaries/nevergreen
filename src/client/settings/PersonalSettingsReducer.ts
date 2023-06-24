@@ -2,7 +2,6 @@ import type { RootState } from '../configuration/ReduxStore'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSelector, createSlice } from '@reduxjs/toolkit'
 import { configurationImported } from './backup/BackupActionCreators'
-import * as t from 'io-ts'
 import {
   addBackupLocation,
   backupExported,
@@ -12,30 +11,26 @@ import set from 'lodash/set'
 import unset from 'lodash/unset'
 import difference from 'lodash/difference'
 import merge from 'lodash/merge'
+import { z } from 'zod'
 
 export const personalSettingsRoot = 'personal'
 
-const BackRemoteLocationTimestamps = t.exact(
-  t.partial({
-    exportTimestamp: t.readonly(t.string),
-    importTimestamp: t.readonly(t.string),
-  })
-)
+const BackRemoteLocationTimestamps = z.object({
+  exportTimestamp: z.string().optional(),
+  importTimestamp: z.string().optional(),
+})
 
-export const PersonalSettingsState = t.exact(
-  t.partial({
-    audioNotificationVolume: t.readonly(t.number),
-    allowAudioNotifications: t.readonly(t.boolean),
-    allowSystemNotifications: t.readonly(t.boolean),
-    backupRemoteLocations: t.record(t.string, BackRemoteLocationTimestamps),
-  }),
-  personalSettingsRoot
-)
+export const PersonalSettingsState = z.object({
+  audioNotificationVolume: z.number().optional(),
+  allowAudioNotifications: z.boolean().optional(),
+  allowSystemNotifications: z.boolean().optional(),
+  backupRemoteLocations: z
+    .record(z.string(), BackRemoteLocationTimestamps)
+    .optional(),
+})
 
-type BackRemoteLocationTimestamps = t.TypeOf<
-  typeof BackRemoteLocationTimestamps
->
-export type PersonalSettingsState = t.TypeOf<typeof PersonalSettingsState>
+type BackRemoteLocationTimestamps = z.infer<typeof BackRemoteLocationTimestamps>
+export type PersonalSettingsState = z.infer<typeof PersonalSettingsState>
 
 const initialState: PersonalSettingsState = {
   audioNotificationVolume: 1.0,

@@ -1,23 +1,17 @@
 import type { RootState } from './ReduxStore'
 import type { UntrustedData } from './LocalRepository'
-import type { Errors } from 'io-ts'
-import * as t from 'io-ts'
 import cloneDeep from 'lodash/cloneDeep'
-import isEmpty from 'lodash/isEmpty'
 import isString from 'lodash/isString'
-import last from 'lodash/last'
 import unset from 'lodash/unset'
 import { fromJson, toJson } from '../common/Json'
 import { migrate } from './Migrate'
-import { Either, flatten, left, map, mapLeft, right } from 'fp-ts/Either'
-import { pipe } from 'fp-ts/function'
 import {
   remoteLocationsRoot,
   RemoteLocationsState,
 } from '../settings/backup/RemoteLocationsReducer'
 import {
-  displaySettingsRoot,
   DisplaySettingsConfiguration,
+  displaySettingsRoot,
 } from '../settings/display/DisplaySettingsReducer'
 import {
   selectedRoot,
@@ -29,7 +23,6 @@ import {
 } from '../settings/success/SuccessReducer'
 import { feedsRoot, FeedsState } from '../settings/tracking/FeedsReducer'
 import { AppliedMigrationsState, migrationsRoot } from './MigrationsReducer'
-import { errorMessage } from '../common/Utils'
 import {
   NotificationsConfiguration,
   notificationsRoot,
@@ -42,136 +35,97 @@ import {
   otherSettingsRoot,
   OtherSettingsState,
 } from '../settings/other/OtherSettingsReducer'
+import { z } from 'zod'
+import { errorMessage } from '../common/Utils'
 
 export enum DataSource {
   systemImport,
   userImport,
 }
 
-const Configuration = t.exact(
-  t.partial({
+const Configuration = z
+  .object({
     [displaySettingsRoot]: DisplaySettingsConfiguration,
     [otherSettingsRoot]: OtherSettingsState,
     [selectedRoot]: SelectedState,
     [successRoot]: SuccessConfiguration,
-    [feedsRoot]: FeedsState,
+    [feedsRoot]: FeedsState.superRefine(validateFeedIdsMatchForFeeds),
     [migrationsRoot]: AppliedMigrationsState,
-    [remoteLocationsRoot]: RemoteLocationsState,
+    [remoteLocationsRoot]: RemoteLocationsState.superRefine(
+      validateRemoteLocationIdsMatch
+    ),
     [notificationsRoot]: NotificationsConfiguration,
     [personalSettingsRoot]: PersonalSettingsState,
   })
-)
+  .partial()
 
-export type Configuration = t.TypeOf<typeof Configuration>
+export type Configuration = z.infer<typeof Configuration>
 
-function validationErrorMessage(
-  actual: unknown,
-  path: string,
-  expected: string
+function validateIdsMatch<K extends string>(
+  o: Record<string, Record<K, string>>,
+  ctx: z.RefinementCtx,
+  idKey: K
 ) {
-  return `Invalid value ${toJson(
-    actual
-  )} supplied to ${path} expected ${expected.replaceAll(
-    /Readonly<(.*)>/g,
-    '$1'
-  )}`
-}
-
-function toErrorPath(errors: Errors): ReadonlyArray<string> {
-  return errors.map((error) => {
-    // io-ts seems to add a 0 to every context, not sure why so just remove the first instance
-    const path = error.context
-      .map((context) => context.key)
-      .join('/')
-      .replace('/0/', '/')
-    return validationErrorMessage(
-      error.value,
-      path,
-      last(error.context)?.type?.name || '???'
-    )
-  })
-}
-
-function validateFeedIdsMatchForFeeds(
-  configuration: Configuration,
-  errors: string[]
-) {
-  Object.entries(configuration.trays || {}).forEach(([key, feed]) => {
-    if (feed && feed.trayId !== key) {
-      errors.push(
-        validationErrorMessage(
-          feed.trayId,
-          `/${feedsRoot}/${key}/trayId`,
-          toJson(key)
-        )
-      )
+  Object.entries(o).forEach(([key, val]) => {
+    if (val && val[idKey] !== key) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: `Mismatched ID expected "${key}", received "${val[idKey]}"`,
+        path: [key, idKey],
+      })
     }
   })
+}
+
+function validateFeedIdsMatchForFeeds(feeds: FeedsState, ctx: z.RefinementCtx) {
+  validateIdsMatch<'trayId'>(feeds, ctx, 'trayId')
 }
 
 function validateRemoteLocationIdsMatch(
-  configuration: Configuration,
-  errors: string[]
+  backupRemoteLocations: RemoteLocationsState,
+  ctx: z.RefinementCtx
 ) {
-  Object.entries(configuration.backupRemoteLocations || {}).forEach(
-    ([key, location]) => {
-      if (location && location.internalId !== key) {
-        errors.push(
-          validationErrorMessage(
-            location.internalId,
-            `/${remoteLocationsRoot}/${key}/internalId`,
-            toJson(key)
-          )
-        )
-      }
-    }
-  )
-}
-
-function additionalValidation(
-  configuration: Configuration
-): Either<ReadonlyArray<string>, Configuration> {
-  const errors: string[] = []
-
-  validateFeedIdsMatchForFeeds(configuration, errors)
-  validateRemoteLocationIdsMatch(configuration, errors)
-
-  return isEmpty(errors) ? right(configuration) : left(errors)
+  validateIdsMatch<'internalId'>(backupRemoteLocations, ctx, 'internalId')
 }
 
 function validateAndFilter(
   data: UntrustedData,
   dataSource: DataSource
-): Either<ReadonlyArray<string>, Configuration> {
+): Configuration {
   if (dataSource === DataSource.userImport) {
     unset(data, personalSettingsRoot)
   }
 
-  return pipe(
-    Configuration.decode(data),
-    mapLeft(toErrorPath),
-    map(additionalValidation),
-    flatten
-  )
+  return Configuration.parse(data)
 }
 
 export function toConfiguration(
   untrustedData: string | Readonly<UntrustedData>,
   dataSource: DataSource
-): Either<ReadonlyArray<string>, Configuration> {
-  try {
-    const data = isString(untrustedData)
-      ? fromJson(untrustedData)
-      : cloneDeep(untrustedData)
-    migrate(data)
-    return validateAndFilter(data, dataSource)
-  } catch (error) {
-    return left([errorMessage(error)])
-  }
+): Configuration {
+  const data = isString(untrustedData)
+    ? fromJson(untrustedData)
+    : cloneDeep(untrustedData)
+  migrate(data)
+  return validateAndFilter(data, dataSource)
 }
 
 export function toExportableConfigurationJson(state: RootState): string {
   const cloned = cloneDeep(state)
   unset(cloned, personalSettingsRoot)
   return toJson(cloned)
+}
+
+function formatZodIssue(zi: z.ZodIssue): string {
+  return `${zi.message} at $.${zi.path.join('.')}`
+}
+
+export function formatConfigurationErrorMessages(
+  err: unknown
+): ReadonlyArray<string> {
+  if (err instanceof z.ZodError) {
+    return err.issues.map(formatZodIssue)
+  } else {
+    return [errorMessage(err)]
+  }
 }

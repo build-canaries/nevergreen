@@ -4,40 +4,33 @@ import { createSelector, createSlice } from '@reduxjs/toolkit'
 import defaultSoundFx from './pacman_death.mp3'
 import { configurationImported } from '../backup/BackupActionCreators'
 import { Prognosis } from '../../domain/Project'
-import * as t from 'io-ts'
+import { z } from 'zod'
 
 export const notificationsRoot = 'notifications'
 
-const NotificationDetails = t.exact(
-  t.type({
-    systemNotification: t.readonly(t.boolean),
-    sfx: t.readonly(t.string),
-  })
-)
-
-const NotificationsState = t.type({
-  enableNewVersionCheck: t.readonly(t.boolean),
-  notifications: t.readonly(
-    t.exact(
-      t.partial({
-        [Prognosis.error]: NotificationDetails,
-        [Prognosis.sick]: NotificationDetails,
-        [Prognosis.sickBuilding]: NotificationDetails,
-        [Prognosis.healthyBuilding]: NotificationDetails,
-        [Prognosis.unknown]: NotificationDetails,
-        [Prognosis.healthy]: NotificationDetails,
-      })
-    )
-  ),
+const NotificationDetails = z.object({
+  systemNotification: z.boolean(),
+  sfx: z.string(),
 })
 
-export const NotificationsConfiguration = t.exact(
-  t.partial(NotificationsState.props),
-  notificationsRoot
-)
+const NotificationsState = z.object({
+  enableNewVersionCheck: z.boolean(),
+  notifications: z
+    .object({
+      [Prognosis.error]: NotificationDetails,
+      [Prognosis.sick]: NotificationDetails,
+      [Prognosis.sickBuilding]: NotificationDetails,
+      [Prognosis.healthyBuilding]: NotificationDetails,
+      [Prognosis.unknown]: NotificationDetails,
+      [Prognosis.healthy]: NotificationDetails,
+    })
+    .partial(),
+})
 
-export type NotificationDetails = t.TypeOf<typeof NotificationDetails>
-export type NotificationsState = t.TypeOf<typeof NotificationsState>
+export const NotificationsConfiguration = NotificationsState.partial()
+
+export type NotificationDetails = z.infer<typeof NotificationDetails>
+export type NotificationsState = z.infer<typeof NotificationsState>
 
 interface AddNotificationAction {
   readonly prognosis: Prognosis

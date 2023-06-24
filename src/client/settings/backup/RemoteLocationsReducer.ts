@@ -2,45 +2,29 @@ import type { RootState } from '../../configuration/ReduxStore'
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { configurationImported } from './BackupActionCreators'
 import { RemoteLocationOptions } from './RemoteLocationOptions'
-import * as t from 'io-ts'
 import {
   addBackupLocation,
   backupExported,
   removeBackupLocation,
 } from './RemoteLocationsActions'
+import { z } from 'zod'
 
 export const remoteLocationsRoot = 'backupRemoteLocations'
 
-const RemoteLocation = t.exact(
-  t.intersection([
-    t.type({
-      internalId: t.readonly(t.string),
-      url: t.readonly(t.string),
-      where: t.readonly(
-        t.keyof({
-          [RemoteLocationOptions.custom]: null,
-          [RemoteLocationOptions.gitHub]: null,
-          [RemoteLocationOptions.gitLab]: null,
-        })
-      ),
-    }),
-    t.partial({
-      automaticallyExport: t.readonly(t.boolean),
-      externalId: t.readonly(t.string),
-      encryptedAccessToken: t.readonly(t.string),
-      description: t.readonly(t.string),
-    }),
-  ])
-)
+const RemoteLocation = z.object({
+  internalId: z.string(),
+  url: z.string(),
+  where: z.nativeEnum(RemoteLocationOptions),
+  automaticallyExport: z.boolean().optional(),
+  externalId: z.string().optional(),
+  encryptedAccessToken: z.string().optional(),
+  description: z.string().optional(),
+})
 
-export const RemoteLocationsState = t.record(
-  t.string,
-  RemoteLocation,
-  remoteLocationsRoot
-)
+export const RemoteLocationsState = z.record(RemoteLocation)
 
-export type RemoteLocation = t.TypeOf<typeof RemoteLocation>
-export type RemoteLocationsState = t.TypeOf<typeof RemoteLocationsState>
+export type RemoteLocation = z.infer<typeof RemoteLocation>
+export type RemoteLocationsState = z.infer<typeof RemoteLocationsState>
 
 const initialState: RemoteLocationsState = {}
 

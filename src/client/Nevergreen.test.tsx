@@ -1,4 +1,3 @@
-import { left } from 'fp-ts/Either'
 import { Nevergreen } from './Nevergreen'
 import { render, waitForLoadingToFinish } from './testUtils/testHelpers'
 import { screen } from '@testing-library/react'
@@ -38,9 +37,9 @@ it('should load configuration, register service worker and check for a new versi
 })
 
 it('when loaded config is invalid, should show error screen', async () => {
-  jest
-    .spyOn(Configuration, 'toConfiguration')
-    .mockReturnValueOnce(left(['bang!']))
+  jest.spyOn(Configuration, 'toConfiguration').mockImplementationOnce(() => {
+    throw new Error('bang!')
+  })
 
   render(<Nevergreen />)
 

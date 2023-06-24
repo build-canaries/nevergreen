@@ -2,18 +2,15 @@ import type { RootState } from '../../configuration/ReduxStore'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSelector, createSlice } from '@reduxjs/toolkit'
 import { configurationImported } from '../backup/BackupActionCreators'
-import * as t from 'io-ts'
+import { z } from 'zod'
 
 export const otherSettingsRoot = 'otherSettings'
 
-export const OtherSettingsState = t.exact(
-  t.partial({
-    clickToShowMenu: t.readonly(t.boolean),
-  }),
-  otherSettingsRoot
-)
+export const OtherSettingsState = z.object({
+  clickToShowMenu: z.boolean().optional(),
+})
 
-export type OtherSettingsState = t.TypeOf<typeof OtherSettingsState>
+export type OtherSettingsState = z.infer<typeof OtherSettingsState>
 
 const initialState: OtherSettingsState = {
   clickToShowMenu: false,

@@ -4,7 +4,6 @@ import {
   toConfiguration,
   toExportableConfigurationJson,
 } from './Configuration'
-import { Either, isLeft, isRight } from 'fp-ts/Either'
 import { buildState } from '../testUtils/builders'
 import { remoteLocationsRoot } from '../settings/backup/RemoteLocationsReducer'
 import {
@@ -15,19 +14,6 @@ import {
 } from '../settings/tracking/FeedsReducer'
 import { RemoteLocationOptions } from '../settings/backup/RemoteLocationOptions'
 import { personalSettingsRoot } from '../settings/PersonalSettingsReducer'
-
-function expectErrors(
-  result: Either<ReadonlyArray<string>, Configuration>,
-  errors: ReadonlyArray<string>
-): void {
-  if (isLeft(result)) {
-    expect(result.left).toEqual(errors)
-  } else {
-    throw new Error(
-      'Expected result to contain left(errors) but it was right(configuration)'
-    )
-  }
-}
 
 describe('toConfiguration', () => {
   describe(feedsRoot, () => {
@@ -43,16 +29,8 @@ describe('toConfiguration', () => {
           },
         },
       }
-      const result = toConfiguration(data, DataSource.systemImport)
-      if (isRight(result)) {
-        expect(result.right.trays).toHaveProperty('some-tray-id')
-      } else {
-        throw new Error(
-          `Expected right(configuration) but got left([${result.left.join(
-            ', '
-          )}])`
-        )
-      }
+      const configuration = toConfiguration(data, DataSource.systemImport)
+      expect(configuration.trays).toHaveProperty('some-tray-id')
     })
 
     it('rejects missing ID, as this is required to match projects to the owning feed', () => {
@@ -64,10 +42,7 @@ describe('toConfiguration', () => {
           },
         },
       }
-      const result = toConfiguration(data, DataSource.systemImport)
-      expectErrors(result, [
-        'Invalid value undefined supplied to /trays/some-tray-id/trayId expected string',
-      ])
+      expect(() => toConfiguration(data, DataSource.systemImport)).toThrow()
     })
 
     it('rejects missing URL, as this is required to actually contact the CI server', () => {
@@ -79,10 +54,7 @@ describe('toConfiguration', () => {
           },
         },
       }
-      const result = toConfiguration(data, DataSource.systemImport)
-      expectErrors(result, [
-        'Invalid value undefined supplied to /trays/some-tray-id/url expected string',
-      ])
+      expect(() => toConfiguration(data, DataSource.systemImport)).toThrow()
     })
 
     it('rejects if the key does not match the ID', () => {
@@ -95,10 +67,7 @@ describe('toConfiguration', () => {
           },
         },
       }
-      const result = toConfiguration(data, DataSource.systemImport)
-      expectErrors(result, [
-        'Invalid value "another-id" supplied to /trays/some-tray-id/trayId expected "some-tray-id"',
-      ])
+      expect(() => toConfiguration(data, DataSource.systemImport)).toThrow()
     })
   })
 
@@ -113,16 +82,8 @@ describe('toConfiguration', () => {
           },
         },
       }
-      const result = toConfiguration(data, DataSource.systemImport)
-      if (isRight(result)) {
-        expect(result.right.backupRemoteLocations).toHaveProperty('some-id')
-      } else {
-        throw new Error(
-          `Expected right(configuration) but got left([${result.left.join(
-            ', '
-          )}])`
-        )
-      }
+      const configuration = toConfiguration(data, DataSource.systemImport)
+      expect(configuration.backupRemoteLocations).toHaveProperty('some-id')
     })
 
     it('rejects a missing internal ID, as this is required to actually do anything', () => {
@@ -134,10 +95,7 @@ describe('toConfiguration', () => {
           },
         },
       }
-      const result = toConfiguration(data, DataSource.systemImport)
-      expectErrors(result, [
-        'Invalid value undefined supplied to /backupRemoteLocations/some-internal-id/internalId expected string',
-      ])
+      expect(() => toConfiguration(data, DataSource.systemImport)).toThrow()
     })
 
     it('rejects a missing URL, as this is required to actually do anything', () => {
@@ -149,10 +107,7 @@ describe('toConfiguration', () => {
           },
         },
       }
-      const result = toConfiguration(data, DataSource.systemImport)
-      expectErrors(result, [
-        'Invalid value undefined supplied to /backupRemoteLocations/some-internal-id/url expected string',
-      ])
+      expect(() => toConfiguration(data, DataSource.systemImport)).toThrow()
     })
 
     it('rejects a missing where, as this is required to actually do anything', () => {
@@ -164,10 +119,7 @@ describe('toConfiguration', () => {
           },
         },
       }
-      const result = toConfiguration(data, DataSource.systemImport)
-      expectErrors(result, [
-        'Invalid value undefined supplied to /backupRemoteLocations/some-internal-id/where expected "custom" | "github" | "gitlab"',
-      ])
+      expect(() => toConfiguration(data, DataSource.systemImport)).toThrow()
     })
 
     it('rejects if the key does not match the internal ID', () => {
@@ -180,29 +132,20 @@ describe('toConfiguration', () => {
           },
         },
       }
-      const result = toConfiguration(data, DataSource.systemImport)
-      expectErrors(result, [
-        'Invalid value "another-id" supplied to /backupRemoteLocations/some-id/internalId expected "some-id"',
-      ])
+      expect(() => toConfiguration(data, DataSource.systemImport)).toThrow()
     })
   })
 
   it('removes unknown properties', () => {
     const data = { foo: 'bar' }
-    const result = toConfiguration(data, DataSource.systemImport)
-    expect(isRight(result)).toBeTruthy()
-    if (isRight(result)) {
-      expect(result.right).not.toHaveProperty('foo')
-    }
+    const configuration = toConfiguration(data, DataSource.systemImport)
+    expect(configuration).not.toHaveProperty('foo')
   })
 
   it('keeps known properties', () => {
     const data = { [feedsRoot]: {} }
-    const result = toConfiguration(data, DataSource.systemImport)
-    expect(isRight(result)).toBeTruthy()
-    if (isRight(result)) {
-      expect(result.right).toEqual(expect.objectContaining({ trays: {} }))
-    }
+    const configuration = toConfiguration(data, DataSource.systemImport)
+    expect(configuration).toEqual(expect.objectContaining({ trays: {} }))
   })
 
   it('removes personal settings when a user imports', () => {
@@ -212,11 +155,8 @@ describe('toConfiguration', () => {
         allowAudioNotifications: true,
       },
     }
-    const result = toConfiguration(data, DataSource.userImport)
-    expect(isRight(result)).toBeTruthy()
-    if (isRight(result)) {
-      expect(result.right).not.toHaveProperty(personalSettingsRoot)
-    }
+    const configuration = toConfiguration(data, DataSource.userImport)
+    expect(configuration).not.toHaveProperty(personalSettingsRoot)
   })
 
   it('keeps personal settings when loading from browser storage', () => {
@@ -227,11 +167,8 @@ describe('toConfiguration', () => {
         backupRemoteLocations: {},
       },
     }
-    const result = toConfiguration(data, DataSource.systemImport)
-    expect(isRight(result)).toBeTruthy()
-    if (isRight(result)) {
-      expect(result.right).toHaveProperty(personalSettingsRoot)
-    }
+    const configuration = toConfiguration(data, DataSource.systemImport)
+    expect(configuration).toHaveProperty(personalSettingsRoot)
   })
 })
 

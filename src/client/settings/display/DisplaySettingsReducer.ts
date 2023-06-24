@@ -5,7 +5,7 @@ import { Prognosis } from '../../domain/Project'
 import merge from 'lodash/merge'
 import uniq from 'lodash/uniq'
 import { configurationImported } from '../backup/BackupActionCreators'
-import * as t from 'io-ts'
+import { z } from 'zod'
 
 export const displaySettingsRoot = 'settings'
 
@@ -23,44 +23,19 @@ export enum SortBy {
   timestamp = 'timestamp',
 }
 
-const PrognosisState = t.readonly(
-  t.type({
-    backgroundColour: t.readonly(t.string),
-    textColour: t.readonly(t.string),
-  })
-)
+const PrognosisState = z.object({
+  backgroundColour: z.string(),
+  textColour: z.string(),
+})
 
-const DisplaySettingsState = t.type({
-  showTrayName: t.readonly(t.boolean),
-  showBuildTime: t.readonly(t.boolean),
-  refreshTime: t.readonly(t.number),
-  showBuildLabel: t.readonly(t.boolean),
-  maxProjectsToShow: t.readonly(
-    t.keyof({
-      [MaxProjectsToShow.small]: null,
-      [MaxProjectsToShow.medium]: null,
-      [MaxProjectsToShow.large]: null,
-      [MaxProjectsToShow.all]: null,
-    })
-  ),
-  showPrognosis: t.readonlyArray(
-    t.keyof({
-      [Prognosis.healthy]: null,
-      [Prognosis.sick]: null,
-      [Prognosis.healthyBuilding]: null,
-      [Prognosis.sickBuilding]: null,
-      [Prognosis.unknown]: null,
-      [Prognosis.error]: null,
-    })
-  ),
-  sort: t.readonly(
-    t.keyof({
-      [SortBy.default]: null,
-      [SortBy.description]: null,
-      [SortBy.prognosis]: null,
-      [SortBy.timestamp]: null,
-    })
-  ),
+const DisplaySettingsState = z.object({
+  showTrayName: z.boolean(),
+  showBuildTime: z.boolean(),
+  refreshTime: z.number(),
+  showBuildLabel: z.boolean(),
+  maxProjectsToShow: z.nativeEnum(MaxProjectsToShow),
+  showPrognosis: z.array(z.nativeEnum(Prognosis)),
+  sort: z.nativeEnum(SortBy),
   [Prognosis.healthy]: PrognosisState,
   [Prognosis.sick]: PrognosisState,
   [Prognosis.healthyBuilding]: PrognosisState,
@@ -69,12 +44,9 @@ const DisplaySettingsState = t.type({
   [Prognosis.error]: PrognosisState,
 })
 
-export const DisplaySettingsConfiguration = t.exact(
-  t.partial(DisplaySettingsState.props),
-  displaySettingsRoot
-)
+export const DisplaySettingsConfiguration = DisplaySettingsState.partial()
 
-export type DisplaySettingsState = t.TypeOf<typeof DisplaySettingsState>
+export type DisplaySettingsState = z.infer<typeof DisplaySettingsState>
 
 export const validRefreshTimes = [
   5, 10, 30, 60, 300, 600, 1800, 3600, 43200, 86400,

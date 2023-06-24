@@ -4,18 +4,14 @@ import type { RootState } from '../../configuration/ReduxStore'
 import { feedRemoved, feedUpdated } from './TrackingActionCreators'
 import remove from 'lodash/remove'
 import { configurationImported } from '../backup/BackupActionCreators'
-import * as t from 'io-ts'
 import { TrackingMode } from './FeedsReducer'
+import { z } from 'zod'
 
 export const selectedRoot = 'selected'
 
-export const SelectedState = t.record(
-  t.string,
-  t.readonlyArray(t.string),
-  selectedRoot
-)
+export const SelectedState = z.record(z.array(z.string()))
 
-export type SelectedState = t.TypeOf<typeof SelectedState>
+export type SelectedState = z.infer<typeof SelectedState>
 
 interface ProjectSelectedAction {
   readonly trayId: string

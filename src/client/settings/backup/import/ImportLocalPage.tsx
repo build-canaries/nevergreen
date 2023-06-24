@@ -2,11 +2,11 @@ import type { ReactElement } from 'react'
 import { useState } from 'react'
 import {
   DataSource,
+  formatConfigurationErrorMessages,
   toConfiguration,
 } from '../../../configuration/Configuration'
 import { errorMessage, isBlank } from '../../../common/Utils'
 import { configurationImported } from '../BackupActionCreators'
-import { isLeft, isRight } from 'fp-ts/Either'
 import { TextArea } from '../TextArea'
 import { Form } from '../../../common/forms/Form'
 import { allErrors, FormErrors } from '../../../common/forms/Validation'
@@ -69,10 +69,10 @@ export function ImportLocalPage(): ReactElement {
         message: 'Enter the configuration to import',
       })
     } else {
-      const result = toConfiguration(data, DataSource.userImport)
-
-      if (isLeft(result)) {
-        result.left.forEach((message) => {
+      try {
+        toConfiguration(data, DataSource.userImport)
+      } catch (err) {
+        formatConfigurationErrorMessages(err).forEach((message) => {
           validationMessage.push({ field: 'import', message })
         })
       }
@@ -82,12 +82,9 @@ export function ImportLocalPage(): ReactElement {
   }
 
   const onSuccess = () => {
-    const result = toConfiguration(data, DataSource.userImport)
-
-    if (isRight(result)) {
-      dispatch(configurationImported(result.right))
-      return { navigateTo: RoutePaths.backupImportSuccess }
-    }
+    const configuration = toConfiguration(data, DataSource.userImport)
+    dispatch(configurationImported(configuration))
+    return { navigateTo: RoutePaths.backupImportSuccess }
   }
 
   return (

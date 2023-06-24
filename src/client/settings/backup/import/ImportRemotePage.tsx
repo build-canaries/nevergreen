@@ -2,6 +2,7 @@ import type { ReactElement } from 'react'
 import { useState } from 'react'
 import {
   DataSource,
+  formatConfigurationErrorMessages,
   toConfiguration,
 } from '../../../configuration/Configuration'
 import type { FormErrors } from '../../../common/forms/Validation'
@@ -10,7 +11,6 @@ import type { RemoteLocation } from '../RemoteLocationsReducer'
 import { SecondaryButton } from '../../../common/forms/Button'
 import { errorMessage, isBlank } from '../../../common/Utils'
 import { configurationImported } from '../BackupActionCreators'
-import { isLeft, isRight } from 'fp-ts/Either'
 import { TextArea } from '../TextArea'
 import { ErrorMessages } from '../../../common/Messages'
 import { fetchConfiguration } from '../../../gateways/BackupGateway'
@@ -64,10 +64,10 @@ export function ImportRemotePage(): ReactElement {
     if (isBlank(data)) {
       return [{ field: 'import', message: 'Enter the configuration to import' }]
     } else {
-      const result = toConfiguration(data, DataSource.userImport)
-
-      if (isLeft(result)) {
-        return result.left.map((message) => {
+      try {
+        toConfiguration(data, DataSource.userImport)
+      } catch (err) {
+        return formatConfigurationErrorMessages(err).map((message) => {
           return { field: 'import', message }
         })
       }
@@ -75,14 +75,11 @@ export function ImportRemotePage(): ReactElement {
   }
 
   const doImport = () => {
-    const result = toConfiguration(data, DataSource.userImport)
-
-    if (isRight(result)) {
-      const searchIn = Object.values(result.right.backupRemoteLocations ?? {})
-      const matching = matchingLocation(searchIn, location)
-      dispatch(configurationImported(result.right, matching))
-      return { navigateTo: RoutePaths.backupImportSuccess }
-    }
+    const configuration = toConfiguration(data, DataSource.userImport)
+    const searchIn = Object.values(configuration.backupRemoteLocations ?? {})
+    const matching = matchingLocation(searchIn, location)
+    dispatch(configurationImported(configuration, matching))
+    return { navigateTo: RoutePaths.backupImportSuccess }
   }
 
   const title = 'Import remote'

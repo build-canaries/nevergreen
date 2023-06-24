@@ -9,8 +9,8 @@ import {
   feedUpdated,
 } from './TrackingActionCreators'
 import { configurationImported } from '../backup/BackupActionCreators'
-import * as t from 'io-ts'
 import { generateRandomName } from '../../common/Words'
+import { z } from 'zod'
 
 export const feedsRoot = 'trays'
 
@@ -31,43 +31,22 @@ export enum TrackingMode {
   selected = 'selected',
 }
 
-const Feed = t.intersection([
-  t.type({
-    trayId: t.readonly(t.string),
-    url: t.readonly(t.string),
-    authType: t.readonly(
-      t.keyof({
-        [AuthTypes.none]: null,
-        [AuthTypes.basic]: null,
-        [AuthTypes.token]: null,
-      })
-    ),
-    trackingMode: t.readonly(
-      t.keyof({
-        [TrackingMode.everything]: null,
-        [TrackingMode.selected]: null,
-      })
-    ),
-    serverType: t.readonly(
-      t.keyof({
-        [ServerTypes.generic]: null,
-        [ServerTypes.go]: null,
-        [ServerTypes.circle]: null,
-      })
-    ),
-  }),
-  t.partial({
-    encryptedAccessToken: t.readonly(t.string),
-    encryptedPassword: t.readonly(t.string),
-    name: t.readonly(t.string),
-    timestamp: t.readonly(t.string),
-    username: t.readonly(t.string),
-  }),
-])
-export type Feed = t.TypeOf<typeof Feed>
+const Feed = z.object({
+  trayId: z.string(),
+  url: z.string(),
+  authType: z.nativeEnum(AuthTypes),
+  trackingMode: z.nativeEnum(TrackingMode),
+  serverType: z.nativeEnum(ServerTypes).optional(),
+  encryptedAccessToken: z.string().optional(),
+  encryptedPassword: z.string().optional(),
+  name: z.string().optional(),
+  timestamp: z.string().optional(),
+  username: z.string().optional(),
+})
+export type Feed = z.infer<typeof Feed>
 
-export const FeedsState = t.record(t.string, t.exact(Feed), feedsRoot)
-export type FeedsState = t.TypeOf<typeof FeedsState>
+export const FeedsState = z.record(z.string(), Feed)
+export type FeedsState = z.infer<typeof FeedsState>
 
 const initialState: FeedsState = {}
 

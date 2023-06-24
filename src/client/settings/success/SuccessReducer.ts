@@ -3,21 +3,18 @@ import remove from 'lodash/remove'
 import uniq from 'lodash/uniq'
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { configurationImported } from '../backup/BackupActionCreators'
-import * as t from 'io-ts'
+import { z } from 'zod'
 
 export const successRoot = 'success'
 
-export const SuccessState = t.type({
-  messages: t.readonlyArray(t.string, successRoot),
-  backgroundColour: t.readonly(t.string),
-  textColour: t.readonly(t.string),
+export const SuccessState = z.object({
+  messages: z.array(z.string()),
+  backgroundColour: z.string(),
+  textColour: z.string(),
 })
-export type SuccessState = t.TypeOf<typeof SuccessState>
+export type SuccessState = z.infer<typeof SuccessState>
 
-export const SuccessConfiguration = t.exact(
-  t.partial(SuccessState.props),
-  successRoot
-)
+export const SuccessConfiguration = SuccessState.partial()
 
 const initialState: SuccessState = {
   messages: ['=(^.^)='],

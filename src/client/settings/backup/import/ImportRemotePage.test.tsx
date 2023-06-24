@@ -149,16 +149,10 @@ describe('invalid configuration', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText(
-          'Invalid value undefined supplied to /trays/id/trayId expected string'
-        )
+        screen.getByText('Required at $.trays.id.trayId')
       ).toBeInTheDocument()
     })
-    expect(
-      screen.getByText(
-        'Invalid value undefined supplied to /trays/id/url expected string'
-      )
-    ).toBeInTheDocument()
+    expect(screen.getByText('Required at $.trays.id.url')).toBeInTheDocument()
   })
 
   it('should display an error and a button to try again if configuration can not be fetched', async () => {
