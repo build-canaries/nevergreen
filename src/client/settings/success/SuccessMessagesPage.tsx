@@ -11,9 +11,10 @@ import { useAppDispatch, useAppSelector } from '../../configuration/Hooks'
 import { SuccessImage } from '../../common/SuccessImage'
 import { useAspectRatio } from '../../common/AspectRatioHook'
 import { Card } from '../../common/card/Card'
-import { CardHeading } from '../../common/card/CardHeading'
 import { ChangeColoursLink } from '../colours/ChangeColoursLink'
 import styles from './success-messages.scss'
+import { Bin } from '../../common/icons/Bin'
+import { DangerButton } from '../../common/forms/Button'
 
 export const NO_MESSAGES_WARNING =
   'No success messages added, a blank screen will be shown on the Monitor page when no interesting projects are displayed'
@@ -32,10 +33,14 @@ export function SuccessMessagesPage(): ReactElement {
       <ol className={styles.messages} aria-label="messages">
         {messages.map((msg) => {
           const header = (
-            <CardHeading
-              title={msg}
-              onRemove={() => dispatch(removeMessage(msg))}
-            />
+            <DangerButton
+              onClick={() => dispatch(removeMessage(msg))}
+              icon={<Bin />}
+              iconOnly
+              className={styles.remove}
+            >
+              Remove {msg}
+            </DangerButton>
           )
 
           return (
@@ -43,6 +48,7 @@ export function SuccessMessagesPage(): ReactElement {
               <Card
                 header={header}
                 className={styles.card}
+                classNameHeader={styles.cardHeader}
                 classNameBody={styles.cardBody}
               >
                 <div style={{ aspectRatio }}>

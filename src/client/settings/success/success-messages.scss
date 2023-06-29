@@ -1,11 +1,13 @@
 @use '../../common/layout';
+@use '../../common/responsive';
+@use '../../common/forms/forms';
 
 .add {
   margin-top: 0;
 }
 
 .messages {
-  @include layout.grid($mobile-columns: 2);
+  @include layout.grid($mobile-columns: 2, $desktop-columns: 2);
 
   list-style: none;
   margin: 0;
@@ -13,6 +15,21 @@
 
 .card {
   margin: 0;
+}
+
+.cardHeader {
+  background-color: black;
+  justify-content: flex-end;
+  margin-bottom: calc(-2em - #{forms.$standard-input-size-mobile});
+  overflow: visible;
+
+  @include responsive.respond-to(tablet, desktop) {
+    margin-bottom: calc(-2em - #{forms.$standard-input-size-above-mobile});
+  }
+}
+
+.remove {
+  z-index: 1;
 }
 
 .cardBody {
