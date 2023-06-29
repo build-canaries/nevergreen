@@ -1,5 +1,4 @@
-(ns nevergreen.middleware.wrap-cache-control
-  (:require [clojure.string :refer [starts-with?]]))
+(ns nevergreen.middleware.wrap-cache-control)
 
 (def no-cache "private, max-age=0, no-store")
 (def max-cache "max-age=31556926")
