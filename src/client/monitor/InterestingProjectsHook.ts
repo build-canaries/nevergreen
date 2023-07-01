@@ -12,7 +12,7 @@ import {
   getSort,
 } from '../settings/display/DisplaySettingsReducer'
 import isEmpty from 'lodash/isEmpty'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import omit from 'lodash/omit'
 import { enrichErrors, FeedErrors, toFeedApiError } from '../domain/FeedError'
 import { useAppSelector } from '../configuration/Hooks'
@@ -48,7 +48,7 @@ export function useInterestingProjects(): InterestingProjectsHook {
   const enabled = !isEmpty(feedRequests)
   const refetchInterval = refreshTime * 1000
 
-  const { isLoading } = useQuery(
+  const { isLoading, data, error } = useQuery(
     ['interesting'],
     async ({ signal }) => {
       const data = {
@@ -65,22 +65,27 @@ export function useInterestingProjects(): InterestingProjectsHook {
       enabled,
       refetchInterval,
       refetchIntervalInBackground: true,
-      onSuccess: (response) => {
-        setProjects((previouslyFetchedProjects) => {
-          return enrichProjects(response, previouslyFetchedProjects)
-        })
-        setFeedErrors((previousErrors) => {
-          return enrichErrors(response, previousErrors)
-        })
-      },
-      onError: (e) => {
-        setProjects([])
-        setFeedErrors((previousErrors) => {
-          return enrichErrors([toFeedApiError(e)], previousErrors)
-        })
-      },
     }
   )
+
+  useEffect(() => {
+    if (data) {
+      setProjects((previouslyFetchedProjects) =>
+        enrichProjects(data, previouslyFetchedProjects)
+      )
+      setFeedErrors((previousErrors) => enrichErrors(data, previousErrors))
+    }
+  }, [data])
+
+  useEffect(() => {
+    if (error) {
+      setProjects([])
+      setFeedErrors((previousErrors) =>
+        enrichErrors([toFeedApiError(error)], previousErrors)
+      )
+    }
+  }, [error])
+
   return {
     isLoading,
     projects,

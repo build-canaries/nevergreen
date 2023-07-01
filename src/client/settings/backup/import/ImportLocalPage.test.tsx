@@ -12,7 +12,9 @@ it('should import valid configuration', async () => {
   )
   await user.click(screen.getByRole('button', { name: 'Import' }))
 
-  expect(window.location.pathname).toEqual('/settings/backup/import-success')
+  await waitFor(() => {
+    expect(window.location.pathname).toEqual('/settings/backup/import-success')
+  })
 })
 
 it('should show an error if no data has been entered', async () => {

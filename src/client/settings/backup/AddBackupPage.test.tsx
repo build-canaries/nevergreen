@@ -52,7 +52,9 @@ it('should be able to add a custom server', async () => {
       }),
     ])
   })
-  expect(window.location.pathname).toMatch('/settings/backup/some-id/details')
+  await waitFor(() => {
+    expect(window.location.pathname).toMatch('/settings/backup/some-id/details')
+  })
 })
 
 it('should be able to add a GitHub gist', async () => {
@@ -74,7 +76,9 @@ it('should be able to add a GitHub gist', async () => {
       }),
     ])
   })
-  expect(window.location.pathname).toEqual('/settings/backup/some-id/details')
+  await waitFor(() => {
+    expect(window.location.pathname).toEqual('/settings/backup/some-id/details')
+  })
 })
 
 it('should validate adding a GitHub gist and clear errors if "where" is changed', async () => {

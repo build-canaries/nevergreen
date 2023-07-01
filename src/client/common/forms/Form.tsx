@@ -64,13 +64,14 @@ export function Form<Fields extends string>({
     },
     {
       enabled: false,
-      onSuccess: (res) => {
-        if (res?.navigateTo) {
-          navigate(res.navigateTo)
-        }
-      },
     }
   )
+
+  useEffect(() => {
+    if (data?.navigateTo) {
+      navigate(data.navigateTo)
+    }
+  }, [data, navigate])
 
   useEffect(() => {
     if (clearErrors) {

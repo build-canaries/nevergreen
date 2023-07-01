@@ -1,5 +1,5 @@
 import { render } from '../../testUtils/testHelpers'
-import { fireEvent, screen } from '@testing-library/react'
+import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { ChangeColoursPage } from './ChangeColoursPage'
 import { Prognosis } from '../../domain/Project'
 
@@ -34,7 +34,9 @@ it('should be able to change colours', async () => {
 
   expect(backgroundColour).toEqual('#cccccc')
   expect(textColour).toEqual('#dddddd')
-  expect(window.location.pathname).toEqual('/success-url')
+  await waitFor(() => {
+    expect(window.location.pathname).toEqual('/success-url')
+  })
 })
 
 it('should be able to cancel making changes', async () => {

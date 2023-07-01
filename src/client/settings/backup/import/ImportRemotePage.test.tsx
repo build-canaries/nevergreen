@@ -57,7 +57,9 @@ it('should import valid configuration', async () => {
 
   await user.click(screen.getByRole('button', { name: 'Import' }))
 
-  expect(window.location.pathname).toEqual('/settings/backup/import-success')
+  await waitFor(() => {
+    expect(window.location.pathname).toEqual('/settings/backup/import-success')
+  })
   expect(getBackupLocationTimestamps('locationId')(store.getState())).toEqual({
     importTimestamp: expect.stringMatching(/2023-05-26T19:45.00/) as string,
   })

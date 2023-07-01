@@ -8,6 +8,7 @@ import { configurationImported } from '../settings/backup/BackupActionCreators'
 import { useAppDispatch } from './Hooks'
 import { useQuery } from '@tanstack/react-query'
 import { info } from '../common/Logger'
+import { useEffect } from 'react'
 
 interface Result {
   readonly isLoading: boolean
@@ -18,27 +19,35 @@ interface Result {
 export function useLocalConfiguration(): Result {
   const dispatch = useAppDispatch()
 
-  const { isError, isLoading, error } = useQuery(['load-config'], async () => {
-    info('Loading local configuration')
+  const { isError, isLoading, error, data } = useQuery(
+    ['load-config'],
+    async () => {
+      info('Loading local configuration')
 
-    await init()
-    const untrustedData = await load()
+      await init()
+      const untrustedData = await load()
 
-    try {
-      const configuration = toConfiguration(
-        untrustedData,
-        DataSource.systemImport
-      )
-      dispatch(configurationImported(configuration))
-      return true
-    } catch (err) {
-      throw new Error(
-        `Unable to initialise Nevergreen because of configuration validation errors, ${formatConfigurationErrorMessages(
-          err
-        ).join(', ')}`
-      )
+      try {
+        const configuration = toConfiguration(
+          untrustedData,
+          DataSource.systemImport
+        )
+        return configurationImported(configuration)
+      } catch (err) {
+        throw new Error(
+          `Unable to initialise Nevergreen because of configuration validation errors, ${formatConfigurationErrorMessages(
+            err
+          ).join(', ')}`
+        )
+      }
     }
-  })
+  )
+
+  useEffect(() => {
+    if (data) {
+      dispatch(data)
+    }
+  }, [data, dispatch])
 
   return { isLoading, isError, error }
 }

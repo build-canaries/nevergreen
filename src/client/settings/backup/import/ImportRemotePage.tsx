@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   DataSource,
   formatConfigurationErrorMessages,
@@ -47,25 +47,28 @@ function matchingLocation(
 export function ImportRemotePage(): ReactElement {
   const location = useRemoteLocationContext()
   const dispatch = useAppDispatch()
-  const [data, setData] = useState('')
+  const [configToImport, setConfigToImport] = useState('')
 
-  const { isFetching, isSuccess, isError, error, refetch } = useQuery(
+  const { isFetching, isSuccess, isError, error, refetch, data } = useQuery(
     ['import-remote', location.internalId],
     async ({ signal }) => {
       const { configuration } = await fetchConfiguration(location, signal)
       return toJson(fromJson(configuration))
-    },
-    {
-      onSuccess: setData,
     }
   )
 
+  useEffect(() => {
+    if (data) {
+      setConfigToImport(data)
+    }
+  }, [data])
+
   const onValidate = (): FormErrors<Fields> | undefined => {
-    if (isBlank(data)) {
+    if (isBlank(configToImport)) {
       return [{ field: 'import', message: 'Enter the configuration to import' }]
     } else {
       try {
-        toConfiguration(data, DataSource.userImport)
+        toConfiguration(configToImport, DataSource.userImport)
       } catch (err) {
         return formatConfigurationErrorMessages(err).map((message) => {
           return { field: 'import', message }
@@ -75,7 +78,7 @@ export function ImportRemotePage(): ReactElement {
   }
 
   const doImport = () => {
-    const configuration = toConfiguration(data, DataSource.userImport)
+    const configuration = toConfiguration(configToImport, DataSource.userImport)
     const searchIn = Object.values(configuration.backupRemoteLocations ?? {})
     const matching = matchingLocation(searchIn, location)
     dispatch(configurationImported(configuration, matching))
@@ -133,8 +136,8 @@ export function ImportRemotePage(): ReactElement {
                 <TextArea
                   label="Configuration to import"
                   errors={allErrors<Fields>('import', validationErrors)}
-                  value={data}
-                  onChange={({ target }) => setData(target.value)}
+                  value={configToImport}
+                  onChange={({ target }) => setConfigToImport(target.value)}
                   disabled={submitting}
                 />
               )

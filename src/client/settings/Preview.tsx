@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { FeedErrors } from '../domain/FeedError'
 import { enrichErrors, toFeedApiError } from '../domain/FeedError'
 import type { Projects } from '../domain/Project'
@@ -24,7 +24,7 @@ export function Preview(): ReactElement {
   const [projects, setProjects] = useState<Projects>([])
   const [feedErrors, setFeedErrors] = useState<FeedErrors>([])
 
-  const { isLoading } = useQuery(
+  const { isLoading, data, error } = useQuery(
     ['preview'],
     async ({ signal }) => {
       return post<Projects>({
@@ -41,23 +41,25 @@ export function Preview(): ReactElement {
         },
         signal,
       })
-    },
-    {
-      onSuccess: (response) => {
-        setProjects((previouslyFetchedProjects) =>
-          enrichProjects(response, previouslyFetchedProjects)
-        )
-        setFeedErrors((previousErrors) =>
-          enrichErrors(response, previousErrors)
-        )
-      },
-      onError: (e) => {
-        setFeedErrors((previousErrors) =>
-          enrichErrors([toFeedApiError(e)], previousErrors)
-        )
-      },
     }
   )
+
+  useEffect(() => {
+    if (data) {
+      setProjects((previouslyFetchedProjects) =>
+        enrichProjects(data, previouslyFetchedProjects)
+      )
+      setFeedErrors((previousErrors) => enrichErrors(data, previousErrors))
+    }
+  }, [data])
+
+  useEffect(() => {
+    if (error) {
+      setFeedErrors((previousErrors) =>
+        enrichErrors([toFeedApiError(error)], previousErrors)
+      )
+    }
+  }, [error])
 
   return (
     <div className={styles.preview}>

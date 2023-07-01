@@ -1,5 +1,5 @@
 import { render } from '../../testUtils/testHelpers'
-import { screen } from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 import { getNotifications, notificationsRoot } from './NotificationsReducer'
 import { AddNotificationPage } from './AddNotificationPage'
 import { Prognosis } from '../../domain/Project'
@@ -33,7 +33,9 @@ it.each([
       },
     })
   )
-  expect(window.location.pathname).toMatch('/settings/notifications')
+  await waitFor(() => {
+    expect(window.location.pathname).toMatch('/settings/notifications')
+  })
 })
 
 it('should be able to preview audio files', async () => {

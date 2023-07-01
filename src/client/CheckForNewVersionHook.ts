@@ -4,6 +4,7 @@ import version from '../../resources/version.txt'
 import { getEnableNewVersionCheck } from './settings/notifications/NotificationsReducer'
 import { useQuery } from '@tanstack/react-query'
 import { useAppSelector } from './configuration/Hooks'
+import { useEffect } from 'react'
 
 interface GitHubResponse {
   readonly tag_name: string
@@ -16,7 +17,7 @@ export function useCheckForNewVersion(
 ): void {
   const shouldCheckForNewVersion = useAppSelector(getEnableNewVersionCheck)
 
-  useQuery(
+  const { data } = useQuery(
     ['check-for-new-version'],
     async ({ signal }) => {
       return await get<GitHubResponse>({
@@ -27,14 +28,17 @@ export function useCheckForNewVersion(
     {
       enabled: shouldCheckForNewVersion,
       refetchInterval: twentyFourHours,
-      onSuccess: (data) => {
-        const latestVersion = data.tag_name
-        if (greaterThan(latestVersion, version)) {
-          showBanner(
-            `A new version ${latestVersion} is available to download from GitHub now!`
-          )
-        }
-      },
     }
   )
+
+  useEffect(() => {
+    if (data) {
+      const latestVersion = data.tag_name
+      if (greaterThan(latestVersion, version)) {
+        showBanner(
+          `A new version ${latestVersion} is available to download from GitHub now!`
+        )
+      }
+    }
+  }, [data, showBanner])
 }
