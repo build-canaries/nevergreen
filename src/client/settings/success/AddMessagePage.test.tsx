@@ -8,8 +8,6 @@ it('should allow success messages to be added', async () => {
 
   const { store, user } = render(<AddMessagePage />, {
     state,
-    mountPath: 'add',
-    currentLocation: 'add',
   })
   await user.type(screen.getByLabelText('Message'), 'some-message')
   await user.click(screen.getByText('Add message'))
@@ -44,8 +42,6 @@ it('should be able to cancel back to settings', async () => {
   const state = { [successRoot]: { messages: ['some-message'] } }
   const { user } = render(<AddMessagePage />, {
     state,
-    mountPath: 'add',
-    currentLocation: 'add',
   })
 
   await user.click(screen.getByRole('button', { name: 'Cancel' }))
