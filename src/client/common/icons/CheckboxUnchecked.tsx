@@ -2,7 +2,7 @@ import type { ReactElement, SVGProps } from 'react'
 import { Icon } from './Icon'
 
 export function CheckboxUnchecked(
-  props: SVGProps<SVGSVGElement>
+  props: SVGProps<SVGSVGElement>,
 ): ReactElement {
   return (
     <Icon {...props}>

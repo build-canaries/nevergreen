@@ -7,7 +7,7 @@ describe('toFeedApiError', () => {
   it('should set the prognosis to error', () => {
     expect(toFeedApiError(new Error())).toHaveProperty(
       'prognosis',
-      Prognosis.error
+      Prognosis.error,
     )
   })
 
@@ -19,7 +19,7 @@ describe('toFeedApiError', () => {
   it('should set the exception message as description', () => {
     expect(toFeedApiError(new Error('some-error'))).toHaveProperty(
       'description',
-      'some-error'
+      'some-error',
     )
   })
 })
@@ -58,7 +58,7 @@ describe('enrichErrors', () => {
     expect(result).toEqual(
       expect.arrayContaining([
         expect.objectContaining({ timestamp: 'original-fetched-time' }),
-      ])
+      ]),
     )
   })
 
@@ -79,7 +79,7 @@ describe('enrichErrors', () => {
     expect(result).toEqual(
       expect.arrayContaining([
         expect.objectContaining({ previousPrognosis: Prognosis.error }),
-      ])
+      ]),
     )
   })
 })

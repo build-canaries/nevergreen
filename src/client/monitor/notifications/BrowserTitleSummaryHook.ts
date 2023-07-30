@@ -16,7 +16,7 @@ const defaultTitle = 'Monitor'
 
 export function useBrowserTitleSummary(
   projects: Projects,
-  feedErrors: FeedErrors
+  feedErrors: FeedErrors,
 ): void {
   const showPrognosis = useAppSelector(getShowPrognosis)
   const [title, setTitle] = useState<string>(defaultTitle)
@@ -32,7 +32,7 @@ export function useBrowserTitleSummary(
     }
     const countProjectsWithPrognosis = (prognosis: Prognosis): Interesting => {
       const withPrognosis = toCheck.filter(
-        (project) => project.prognosis === prognosis
+        (project) => project.prognosis === prognosis,
       )
       return { prognosis, count: withPrognosis.length }
     }
@@ -41,7 +41,7 @@ export function useBrowserTitleSummary(
     }
     const summary = (interesting: Interesting): string => {
       return `${interesting.count} ${capitalize(
-        prognosisDisplay(interesting.prognosis)
+        prognosisDisplay(interesting.prognosis),
       )}`
     }
 

@@ -29,7 +29,7 @@ export function AddBackupPage(): ReactElement {
   const [url, setUrl] = useState('')
   const [externalId, setExternalId] = useState('')
   const [description, setDescription] = useState(
-    'Nevergreen configuration backup'
+    'Nevergreen configuration backup',
   )
   const [accessToken, setAccessToken] = useState('')
 
@@ -75,7 +75,7 @@ export function AddBackupPage(): ReactElement {
           url,
           description,
           encryptedAccessToken,
-        })
+        }),
       )
     } else {
       dispatch(
@@ -83,13 +83,13 @@ export function AddBackupPage(): ReactElement {
           where: RemoteLocationOptions.custom,
           internalId,
           url,
-        })
+        }),
       )
     }
     return {
       navigateTo: RoutePaths.backupExportDetails.replace(
         ':internalId',
-        internalId
+        internalId,
       ),
     }
   }

@@ -7,21 +7,21 @@ export const migrate: Migrate = (data) => {
   moveData(
     data,
     'settings.enableNewVersionCheck',
-    'notifications.enableNewVersionCheck'
+    'notifications.enableNewVersionCheck',
   )
   moveData(
     data,
     'settings.showSystemNotifications',
-    'notifications.showSystemNotifications'
+    'notifications.showSystemNotifications',
   )
   moveData(
     data,
     'settings.playBrokenBuildSoundFx',
-    'notifications.playBrokenBuildSoundFx'
+    'notifications.playBrokenBuildSoundFx',
   )
   moveData(
     data,
     'settings.brokenBuildSoundFx',
-    'notifications.brokenBuildSoundFx'
+    'notifications.brokenBuildSoundFx',
   )
 }

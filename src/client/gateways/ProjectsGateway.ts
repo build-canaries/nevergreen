@@ -42,7 +42,7 @@ interface ConnectionDetailsRequest {
 
 export function testFeedConnection(
   data: ConnectionDetailsRequest,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ): Promise<void> {
   return post({ url: '/api/test-connection', data, signal })
 }

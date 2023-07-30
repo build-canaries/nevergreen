@@ -4,7 +4,7 @@ import ClipboardJS from 'clipboard'
 export function useClipboard(
   elementSelector: string,
   onSuccess: () => void,
-  onError: () => void
+  onError: () => void,
 ): boolean {
   const supported = ClipboardJS.isSupported()
 

@@ -31,7 +31,7 @@ it('should not change the tracking mode if it already exists', () => {
   migrate(data)
   expect(data).toHaveProperty(
     [feedsRoot, trayId, 'trackingMode'],
-    TrackingMode.everything
+    TrackingMode.everything,
   )
 })
 
@@ -45,6 +45,6 @@ it('should add the tracking mode selected as this was the old default mode', () 
   migrate(data)
   expect(data).toHaveProperty(
     [feedsRoot, trayId, 'trackingMode'],
-    TrackingMode.selected
+    TrackingMode.selected,
   )
 })

@@ -10,27 +10,27 @@ export const migrate: Migrate = (data) => {
   moveData(
     data,
     'notifications.playBrokenBuildSoundFx',
-    'notifications.allowAudioNotifications'
+    'notifications.allowAudioNotifications',
   )
   if (get(data, 'notifications.showSystemNotifications')) {
     set(data, 'notifications.notifications.sick.sfx', '')
     copyData(
       data,
       'notifications.showSystemNotifications',
-      'notifications.notifications.sick.systemNotification'
+      'notifications.notifications.sick.systemNotification',
     )
     set(data, 'notifications.notifications.healthy.sfx', '')
     copyData(
       data,
       'notifications.showSystemNotifications',
-      'notifications.notifications.healthy.systemNotification'
+      'notifications.notifications.healthy.systemNotification',
     )
   }
   if (isNotBlank(get(data, 'notifications.brokenBuildSoundFx'))) {
     moveData(
       data,
       'notifications.brokenBuildSoundFx',
-      'notifications.notifications.sick.sfx'
+      'notifications.notifications.sick.sfx',
     )
     if (!get(data, 'notifications.showSystemNotifications')) {
       set(data, 'notifications.notifications.sick.systemNotification', false)
@@ -39,6 +39,6 @@ export const migrate: Migrate = (data) => {
   moveData(
     data,
     'notifications.showSystemNotifications',
-    'notifications.allowSystemNotifications'
+    'notifications.allowSystemNotifications',
   )
 }

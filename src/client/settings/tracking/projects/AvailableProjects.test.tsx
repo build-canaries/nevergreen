@@ -136,7 +136,7 @@ it('should show a warning if there are no projects', async () => {
   await waitForLoadingToFinish()
 
   expect(
-    screen.getByText('No projects fetched, please refresh')
+    screen.getByText('No projects fetched, please refresh'),
   ).toBeInTheDocument()
 })
 
@@ -161,6 +161,6 @@ it('should show a warning if no projects match the search', async () => {
 
   await user.type(screen.getByLabelText('Search'), 'bar')
   expect(
-    screen.getByText('No matching projects, please update your search')
+    screen.getByText('No matching projects, please update your search'),
   ).toBeInTheDocument()
 })

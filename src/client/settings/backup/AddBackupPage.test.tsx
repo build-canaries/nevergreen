@@ -30,7 +30,7 @@ it('should not be able to add with a non http(s) URL', async () => {
 
   await waitFor(() => {
     expect(
-      screen.getByText('Only http and https URLs are supported')
+      screen.getByText('Only http and https URLs are supported'),
     ).toBeInTheDocument()
   })
 })

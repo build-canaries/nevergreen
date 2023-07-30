@@ -42,7 +42,7 @@ export function TestConnection({
     },
     {
       enabled: false,
-    }
+    },
   )
 
   const dismiss = () => setShowConnectionCheckMessages(false)

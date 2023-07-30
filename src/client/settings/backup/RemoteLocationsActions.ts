@@ -15,7 +15,7 @@ export const backupExported = createAction(
         timestamp: now(),
       },
     }
-  }
+  },
 )
 
 export const removeBackupLocation = createAction<string>('removeBackupLocation')

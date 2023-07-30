@@ -42,7 +42,7 @@ const slice = createSlice({
   reducers: {
     addMessage: (draft, action: PayloadAction<string>) => {
       draft.messages = uniq(
-        draft.messages.concat(transformMessage(action.payload))
+        draft.messages.concat(transformMessage(action.payload)),
       )
     },
     removeMessage: (draft, action: PayloadAction<string>) => {
@@ -74,13 +74,13 @@ export const {
 const getSuccess = (state: RootState) => state.success
 export const getSuccessMessages = createSelector(
   getSuccess,
-  (success) => success.messages
+  (success) => success.messages,
 )
 export const getSuccessBackgroundColour = createSelector(
   getSuccess,
-  (success) => success.backgroundColour
+  (success) => success.backgroundColour,
 )
 export const getSuccessTextColour = createSelector(
   getSuccess,
-  (success) => success.textColour
+  (success) => success.textColour,
 )

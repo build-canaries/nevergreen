@@ -71,25 +71,25 @@ export function Messages({
 }
 
 export function ErrorMessages(
-  props: Omit<MessagesProps, 'type' | 'icon'>
+  props: Omit<MessagesProps, 'type' | 'icon'>,
 ): ReactElement | null {
   return <Messages type={MessagesType.error} icon={<Warning />} {...props} />
 }
 
 export function WarningMessages(
-  props: Omit<MessagesProps, 'type' | 'icon'>
+  props: Omit<MessagesProps, 'type' | 'icon'>,
 ): ReactElement | null {
   return <Messages type={MessagesType.warning} icon={<Warning />} {...props} />
 }
 
 export function InfoMessages(
-  props: Omit<MessagesProps, 'type' | 'icon'>
+  props: Omit<MessagesProps, 'type' | 'icon'>,
 ): ReactElement | null {
   return <Messages type={MessagesType.info} icon={<Info />} {...props} />
 }
 
 export function SuccessMessages(
-  props: Omit<MessagesProps, 'type' | 'icon'>
+  props: Omit<MessagesProps, 'type' | 'icon'>,
 ): ReactElement | null {
   return (
     <Messages type={MessagesType.success} icon={<Checkmark />} {...props} />

@@ -43,7 +43,7 @@ export function ExportRemotePage(): ReactElement {
     if (isNewLocation) {
       await exportConfiguration(
         location,
-        toExportableConfigurationJson(store.getState())
+        toExportableConfigurationJson(store.getState()),
       )
     }
 

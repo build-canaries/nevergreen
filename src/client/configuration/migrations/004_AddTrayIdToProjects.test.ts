@@ -39,6 +39,6 @@ it('should add the tray id to projects', () => {
     [
       { projectId: projectId1, trayId },
       { projectId: projectId2, trayId },
-    ]
+    ],
   )
 })

@@ -2,7 +2,7 @@ import { Ref, useEffect, useRef } from 'react'
 
 export function useForceFocus<T extends HTMLElement>(
   focus = true,
-  deps: ReadonlyArray<unknown> = []
+  deps: ReadonlyArray<unknown> = [],
 ): Ref<T> {
   const el = useRef<T>(null)
 

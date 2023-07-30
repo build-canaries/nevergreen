@@ -23,7 +23,7 @@ export function TileProjectsNotShown({
     .filter((prognosis) => counts[prognosis] > 0)
     .map(
       (prognosis) =>
-        `+${counts[prognosis]} ${prognosisDisplay(prognosis as Prognosis)}`
+        `+${counts[prognosis]} ${prognosisDisplay(prognosis as Prognosis)}`,
     )
     .join(', ')
 

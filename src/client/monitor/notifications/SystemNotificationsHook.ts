@@ -14,7 +14,7 @@ import { useAppSelector } from '../../configuration/Hooks'
 import { prognosisIconsPng } from '../../common/icons/prognosis/IconPrognosis'
 
 function notificationBody(
-  projects: ReadonlyArray<Project | FeedError>
+  projects: ReadonlyArray<Project | FeedError>,
 ): string {
   return projects.map(({ description }) => description).join(', ')
 }
@@ -31,7 +31,7 @@ function notificationTitle(prognosis: Prognosis, total: number): string {
 
 export function useSystemNotifications(
   projects: Projects,
-  feedErrors: FeedErrors
+  feedErrors: FeedErrors,
 ): void {
   const notifications = useAppSelector(getNotifications)
   const allowSystemNotifications = useAppSelector(getAllowSystemNotifications)
@@ -47,7 +47,7 @@ export function useSystemNotifications(
       .reverse()
       .forEach((prognosis) => {
         const allWithPrognosis = toCheck.filter(
-          (project) => project.prognosis === prognosis
+          (project) => project.prognosis === prognosis,
         )
         const toAlert = recentlyTransitioned(allWithPrognosis, prognosis)
         const notification = notifications[prognosis]

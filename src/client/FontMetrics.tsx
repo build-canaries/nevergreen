@@ -27,7 +27,7 @@ function Metrics(props: Record<string, unknown>, ref: Ref<Measurable>) {
         height: height / fontMeasureSize,
       }
     },
-    []
+    [],
   )
 
   return (

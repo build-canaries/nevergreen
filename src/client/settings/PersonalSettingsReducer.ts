@@ -66,7 +66,7 @@ const slice = createSlice({
         ) {
           const removedLocationIds = difference(
             Object.keys(draft.backupRemoteLocations),
-            Object.keys(configuration.backupRemoteLocations)
+            Object.keys(configuration.backupRemoteLocations),
           )
 
           removedLocationIds.forEach((id) => {
@@ -82,7 +82,7 @@ const slice = createSlice({
               fromLocation.internalId,
               'importTimestamp',
             ],
-            timestamp
+            timestamp,
           )
         }
       })
@@ -100,7 +100,7 @@ const slice = createSlice({
             action.payload.internalId,
             'exportTimestamp',
           ],
-          action.payload.timestamp
+          action.payload.timestamp,
         )
       })
   },
@@ -116,24 +116,24 @@ export const {
 const getPersonalSettingsRoot = (state: RootState) => state.personal
 export const getAllowAudioNotifications = createSelector(
   getPersonalSettingsRoot,
-  (settings) => settings.allowAudioNotifications
+  (settings) => settings.allowAudioNotifications,
 )
 export const getAudioNotificationVolume = createSelector(
   getPersonalSettingsRoot,
-  (settings) => settings.audioNotificationVolume ?? 1
+  (settings) => settings.audioNotificationVolume ?? 1,
 )
 export const getAllowSystemNotifications = createSelector(
   getPersonalSettingsRoot,
-  (settings) => settings.allowSystemNotifications
+  (settings) => settings.allowSystemNotifications,
 )
 
 export function getBackupLocationTimestamps(
-  internalId: string
+  internalId: string,
 ): (state: RootState) => BackRemoteLocationTimestamps | undefined {
   return createSelector(
     getPersonalSettingsRoot,
     (settings) =>
       settings.backupRemoteLocations &&
-      settings.backupRemoteLocations[internalId]
+      settings.backupRemoteLocations[internalId],
   )
 }

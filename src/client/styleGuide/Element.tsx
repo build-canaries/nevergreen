@@ -13,6 +13,6 @@ export function Element({ type, children }: ElementProps): ReactElement {
     {},
     <>
       &lt;{type}&gt;{children}&lt;/{type}&gt;
-    </>
+    </>,
   )
 }

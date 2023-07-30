@@ -25,7 +25,7 @@ interface InterestingProjectsHook {
 
 function toProjectsRequest(
   feed: Feed,
-  selectedPerFeed: SelectedState
+  selectedPerFeed: SelectedState,
 ): FeedRequest {
   const included = selectedPerFeed[feed.trayId]
 
@@ -65,13 +65,13 @@ export function useInterestingProjects(): InterestingProjectsHook {
       enabled,
       refetchInterval,
       refetchIntervalInBackground: true,
-    }
+    },
   )
 
   useEffect(() => {
     if (data) {
       setProjects((previouslyFetchedProjects) =>
-        enrichProjects(data, previouslyFetchedProjects)
+        enrichProjects(data, previouslyFetchedProjects),
       )
       setFeedErrors((previousErrors) => enrichErrors(data, previousErrors))
     }
@@ -81,7 +81,7 @@ export function useInterestingProjects(): InterestingProjectsHook {
     if (error) {
       setProjects([])
       setFeedErrors((previousErrors) =>
-        enrichErrors([toFeedApiError(error)], previousErrors)
+        enrichErrors([toFeedApiError(error)], previousErrors),
       )
     }
   }, [error])

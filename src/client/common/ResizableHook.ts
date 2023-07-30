@@ -39,7 +39,7 @@ export const useWindowResized = (onResize: () => void): void => {
 
 export const useElementResized = (
   elementRef: RefObject<Element>,
-  onResize: (size: DOMRectReadOnly) => void
+  onResize: (size: DOMRectReadOnly) => void,
 ): void => {
   useEffect(() => {
     const el = elementRef.current
@@ -58,7 +58,7 @@ export const useElementResized = (
             onResize(entry.contentRect)
           })
         })
-      }
+      },
     )
     observer.observe(el)
 

@@ -18,6 +18,6 @@ interface FeedUpdatedAction {
 
 export const feedAdded = createAction<FeedAddedAction>('tracking/feedAdded')
 export const feedUpdated = createAction<FeedUpdatedAction>(
-  'tracking/feedUpdated'
+  'tracking/feedUpdated',
 )
 export const feedRemoved = createAction<string>('tracking/feedRemoved')

@@ -37,7 +37,7 @@ function timestamp(time?: string): ReactElement | string {
 }
 
 function locationId(
-  location: RemoteLocationType
+  location: RemoteLocationType,
 ): ReactElement | string | null {
   if (isGitHub(location) || isGitLab(location)) {
     return location.externalId ? <code>{location.externalId}</code> : 'Not set'
@@ -47,7 +47,7 @@ function locationId(
 }
 
 function description(
-  location: RemoteLocationType
+  location: RemoteLocationType,
 ): ReactElement | string | null {
   if (isGitHub(location) || isGitLab(location)) {
     return location.description ? location.description : 'Not set'
@@ -71,7 +71,7 @@ export function FullBackupSummary({
   location,
 }: BackupSummaryProps): ReactElement {
   const timestamps = useAppSelector(
-    getBackupLocationTimestamps(location.internalId)
+    getBackupLocationTimestamps(location.internalId),
   )
 
   return (

@@ -14,7 +14,7 @@ const thirtySeconds = 1000 * 30
 export async function backupRaw(
   previousState: RootState | undefined,
   currentState: RootState,
-  dispatch: Dispatch
+  dispatch: Dispatch,
 ): Promise<void> {
   if (isNil(previousState)) {
     return
@@ -33,7 +33,7 @@ export async function backupRaw(
         if (location.automaticallyExport) {
           logger.info(
             `Attempting to automatically backup to location ${location.internalId}...`,
-            location
+            location,
           )
 
           try {
@@ -42,11 +42,11 @@ export async function backupRaw(
           } catch (error) {
             logger.error(
               `The automatic export to ${location.internalId} failed!`,
-              error
+              error,
             )
           }
         }
-      })
+      }),
     )
   }
 }

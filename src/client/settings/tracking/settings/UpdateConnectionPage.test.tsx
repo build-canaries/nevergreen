@@ -54,7 +54,7 @@ it.each([
         url: 'http://new',
         ...testConnectionExpected[authType],
       },
-      expect.any(AbortSignal)
+      expect.any(AbortSignal),
     )
 
     await user.click(screen.getByRole('button', { name: 'Save' }))
@@ -64,12 +64,12 @@ it.each([
       expect.objectContaining({
         url: 'http://new',
         ...feedExpected[authType],
-      })
+      }),
     )
     expect(window.location.pathname).toEqual(
-      '/settings/tracking/trayId/details'
+      '/settings/tracking/trayId/details',
     )
-  }
+  },
 )
 
 describe('validation errors', () => {
@@ -91,7 +91,7 @@ describe('validation errors', () => {
     await user.click(screen.getByRole('button', { name: 'Save' }))
 
     expect(
-      screen.getByText('Enter a URL to the CCTray XML feed')
+      screen.getByText('Enter a URL to the CCTray XML feed'),
     ).toBeInTheDocument()
   })
 
@@ -114,7 +114,7 @@ describe('validation errors', () => {
     await user.click(screen.getByRole('button', { name: 'Save' }))
 
     expect(
-      screen.getByText('Only http(s) URLs are supported')
+      screen.getByText('Only http(s) URLs are supported'),
     ).toBeInTheDocument()
   })
 
@@ -143,7 +143,7 @@ describe('validation errors', () => {
     await user.click(screen.getByRole('button', { name: 'Save' }))
 
     expect(
-      screen.getByText('An existing CCTray XML feed already has this URL')
+      screen.getByText('An existing CCTray XML feed already has this URL'),
     ).toBeInTheDocument()
   })
 })
@@ -152,14 +152,14 @@ const enterAuth = {
   [AuthTypes.token]: async (user: UserEvent) => {
     await user.selectOptions(
       screen.getByLabelText('Authentication'),
-      AuthTypes.token
+      AuthTypes.token,
     )
     await user.type(screen.getByLabelText('Token'), 'new-token')
   },
   [AuthTypes.basic]: async (user: UserEvent) => {
     await user.selectOptions(
       screen.getByLabelText('Authentication'),
-      AuthTypes.basic
+      AuthTypes.basic,
     )
     await user.clear(screen.getByLabelText('Username'))
     await user.type(screen.getByLabelText('Username'), 'new-username')
@@ -168,13 +168,13 @@ const enterAuth = {
   [AuthTypes.none]: async (user: UserEvent) => {
     await user.selectOptions(
       screen.getByLabelText('Authentication'),
-      AuthTypes.none
+      AuthTypes.none,
     )
   },
   [KeepExistingAuth.keep]: async (user: UserEvent) => {
     await user.selectOptions(
       screen.getByLabelText('Authentication'),
-      KeepExistingAuth.keep
+      KeepExistingAuth.keep,
     )
   },
 }

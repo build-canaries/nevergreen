@@ -6,7 +6,7 @@ describe('formatAsDuration', () => {
     'should return "unknown" for undisplayble string value "%s"',
     (val) => {
       expect(formatAsDuration(val)).toBe('unknown')
-    }
+    },
   )
 
   it('should return the duration for a valid date timestamp', () => {

@@ -37,7 +37,7 @@ it('should display messages about the connection', async () => {
   })
 
   await user.click(
-    screen.getByRole('button', { name: 'Dismiss success messages' })
+    screen.getByRole('button', { name: 'Dismiss success messages' }),
   )
   await waitFor(() => {
     expect(screen.queryByText('Connected successfully')).not.toBeInTheDocument()
@@ -48,7 +48,7 @@ it('should display messages about the connection', async () => {
   })
 
   await user.click(
-    screen.getByRole('button', { name: 'Dismiss error messages' })
+    screen.getByRole('button', { name: 'Dismiss error messages' }),
   )
   await waitFor(() => {
     expect(screen.queryByText('some error happened')).not.toBeInTheDocument()

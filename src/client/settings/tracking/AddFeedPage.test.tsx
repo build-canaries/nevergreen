@@ -17,7 +17,7 @@ describe('validation errors', () => {
     const { user } = render(<AddFeedPage />)
     await user.click(screen.getByText('Add feed'))
     expect(
-      screen.getByText('Enter a URL to the CCTray XML feed')
+      screen.getByText('Enter a URL to the CCTray XML feed'),
     ).toBeInTheDocument()
   })
 
@@ -26,7 +26,7 @@ describe('validation errors', () => {
     await user.type(screen.getByLabelText('URL'), 'ftp://some-new-url')
     await user.click(screen.getByText('Add feed'))
     expect(
-      screen.getByText('Only http(s) URLs are supported')
+      screen.getByText('Only http(s) URLs are supported'),
     ).toBeInTheDocument()
   })
 
@@ -45,7 +45,7 @@ describe('validation errors', () => {
     await user.click(screen.getByText('Add feed'))
 
     expect(
-      screen.getByText('An existing CCTray XML feed already has this URL')
+      screen.getByText('An existing CCTray XML feed already has this URL'),
     ).toBeInTheDocument()
   })
 })
@@ -76,7 +76,7 @@ it.each([AuthTypes.token, AuthTypes.basic, AuthTypes.none])(
         url: 'http://some-new-url',
         ...testConnectionExpected[authType],
       },
-      expect.any(AbortSignal)
+      expect.any(AbortSignal),
     )
 
     await user.click(screen.getByText('Add feed'))
@@ -87,26 +87,26 @@ it.each([AuthTypes.token, AuthTypes.basic, AuthTypes.none])(
         expect.objectContaining({
           ...feedExpected[authType],
         }),
-      ])
+      ]),
     )
     expect(window.location.pathname).toEqual(
-      '/settings/tracking/some-feed-id/projects'
+      '/settings/tracking/some-feed-id/projects',
     )
-  }
+  },
 )
 
 const enterAuth = {
   [AuthTypes.token]: async (user: UserEvent) => {
     await user.selectOptions(
       screen.getByLabelText('Authentication'),
-      AuthTypes.token
+      AuthTypes.token,
     )
     await user.type(screen.getByLabelText('Token'), 'new-token')
   },
   [AuthTypes.basic]: async (user: UserEvent) => {
     await user.selectOptions(
       screen.getByLabelText('Authentication'),
-      AuthTypes.basic
+      AuthTypes.basic,
     )
     await user.clear(screen.getByLabelText('Username'))
     await user.type(screen.getByLabelText('Username'), 'new-username')
@@ -115,7 +115,7 @@ const enterAuth = {
   [AuthTypes.none]: async (user: UserEvent) => {
     await user.selectOptions(
       screen.getByLabelText('Authentication'),
-      AuthTypes.none
+      AuthTypes.none,
     )
   },
 }

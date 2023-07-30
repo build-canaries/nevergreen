@@ -26,7 +26,7 @@ it('should export to any enabled remote locations if the configuration has chang
 
   expect(BackupGateway.exportConfiguration).toHaveBeenCalledWith(
     location,
-    toExportableConfigurationJson(current)
+    toExportableConfigurationJson(current),
   )
 })
 

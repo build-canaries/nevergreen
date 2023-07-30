@@ -16,7 +16,7 @@ export interface ImportResponse {
 export function exportConfiguration(
   location: RemoteLocation,
   configuration: string,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ): Promise<ExportResponse> {
   return post<ExportResponse>({
     url: '/api/export',
@@ -34,7 +34,7 @@ export function exportConfiguration(
 
 export function fetchConfiguration(
   location: RemoteLocation,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ): Promise<ImportResponse> {
   return post<ImportResponse>({
     url: '/api/import',

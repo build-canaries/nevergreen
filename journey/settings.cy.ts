@@ -61,7 +61,7 @@ describe('Settings', () => {
 
     cy.findByRole('button', { name: 'Add message' }).click()
     cy.findByLabelText('Message').type(
-      'https://raw.githubusercontent.com/build-canaries/nevergreen/main/doc/screenshot_monitor.png'
+      'https://raw.githubusercontent.com/build-canaries/nevergreen/main/doc/screenshot_monitor.png',
     )
     cy.findByRole('button', { name: 'Add message' }).click()
 

@@ -34,7 +34,7 @@ const slice = createSlice({
   reducers: {
     setAutomaticExport: (
       draft,
-      action: PayloadAction<{ internalId: string; value: boolean }>
+      action: PayloadAction<{ internalId: string; value: boolean }>,
     ) => {
       draft[action.payload.internalId].automaticallyExport =
         action.payload.value
@@ -65,10 +65,10 @@ export function getBackupLocations(state: RootState): RemoteLocationsState {
 }
 
 export function getBackupLocation(
-  internalId: string
+  internalId: string,
 ): (state: RootState) => RemoteLocation | undefined {
   return createSelector(
     getBackupLocations,
-    (locations) => locations[internalId]
+    (locations) => locations[internalId],
   )
 }

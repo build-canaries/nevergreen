@@ -53,7 +53,7 @@ export function AvailableProjects({
         trayId: feed.trayId,
         projectIds: filteredProjects.map((project) => project.projectId),
         selected: true,
-      })
+      }),
     )
   }
 
@@ -63,7 +63,7 @@ export function AvailableProjects({
         trayId: feed.trayId,
         projectIds: filteredProjects.map((project) => project.projectId),
         selected: false,
-      })
+      }),
     )
   }
 
@@ -117,7 +117,7 @@ export function AvailableProjects({
                     trayId: feed.trayId,
                     projectIds: [project.projectId],
                     selected,
-                  })
+                  }),
                 )
               }
             >

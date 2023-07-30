@@ -96,7 +96,7 @@ export const { reducer } = slice
 
 const getTracking = (state: RootState) => state.trays
 export const getFeeds = createSelector(getTracking, (trays) =>
-  Object.values(trays)
+  Object.values(trays),
 )
 
 export function getFeed(id: string): (state: RootState) => Feed | undefined {

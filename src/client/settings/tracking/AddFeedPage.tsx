@@ -26,7 +26,7 @@ export function AddFeedPage(): ReactElement {
         username,
         encryptedPassword,
         encryptedAccessToken,
-      })
+      }),
     )
     return `/settings/tracking/${trayId}/projects`
   }

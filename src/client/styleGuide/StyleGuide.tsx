@@ -11,7 +11,7 @@ export function StyleGuide(): ReactElement {
   const { setBannerMessage } = useNevergreenContext()
   useEffect(() => {
     setBannerMessage(
-      'Sweet roll cookie chocolate cake gingerbread marshmallow jelly beans'
+      'Sweet roll cookie chocolate cake gingerbread marshmallow jelly beans',
     )
     return () => {
       setBannerMessage('')

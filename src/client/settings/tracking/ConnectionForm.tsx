@@ -56,7 +56,7 @@ export function ConnectionForm({
   onCancel,
 }: ConnectionFormProps): ReactElement {
   const otherFeeds = useAppSelector(getFeeds).filter(
-    (existing: Feed) => existing.trayId !== existingFeed?.trayId
+    (existing: Feed) => existing.trayId !== existingFeed?.trayId,
   )
   const initialAuth = existingFeed ? KeepExistingAuth.keep : AuthTypes.none
   const authOptions = existingFeed ? extendedAuthTypeOptions : authTypeOptions
@@ -114,7 +114,7 @@ export function ConnectionForm({
   }
 
   const newEncryptedPassword = async (
-    signal: AbortSignal | undefined
+    signal: AbortSignal | undefined,
   ): Promise<string> => {
     switch (authType) {
       case AuthTypes.basic:
@@ -127,7 +127,7 @@ export function ConnectionForm({
   }
 
   const newEncryptedAccessToken = async (
-    signal: AbortSignal | undefined
+    signal: AbortSignal | undefined,
   ): Promise<string> => {
     switch (authType) {
       case AuthTypes.token:

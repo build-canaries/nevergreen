@@ -33,7 +33,7 @@ it('should only switch the message on a new success state not every refresh', as
     <Success
       projects={[buildProject({ prognosis: Prognosis.sick })]}
       feedErrors={[]}
-    />
+    />,
   )
 
   rerender(<Success projects={[]} feedErrors={[]} />)
@@ -67,7 +67,7 @@ it('should render nothing if not successful due to an error', () => {
   const state = { [successRoot]: { messages: ['some-message'] } }
   const { container } = render(
     <Success projects={[]} feedErrors={[buildFeedError()]} />,
-    { state }
+    { state },
   )
   // eslint-disable-next-line testing-library/no-node-access
   expect(container.firstChild).toBeNull()
@@ -83,7 +83,7 @@ it('should render nothing if not successful due to an interesting project', () =
   const projects = [buildProject({ prognosis: Prognosis.sick })]
   const { container } = render(
     <Success projects={projects} feedErrors={[]} />,
-    { state }
+    { state },
   )
   // eslint-disable-next-line testing-library/no-node-access
   expect(container.firstChild).toBeNull()

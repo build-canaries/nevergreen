@@ -12,12 +12,12 @@ export const migrate: Migrate = (data) => {
     moveData(
       data,
       [remoteLocationsRoot, id, 'exportTimestamp'],
-      [personalSettingsRoot, 'backupRemoteLocations', id, 'exportTimestamp']
+      [personalSettingsRoot, 'backupRemoteLocations', id, 'exportTimestamp'],
     )
     moveData(
       data,
       [remoteLocationsRoot, id, 'importTimestamp'],
-      [personalSettingsRoot, 'backupRemoteLocations', id, 'importTimestamp']
+      [personalSettingsRoot, 'backupRemoteLocations', id, 'importTimestamp'],
     )
   })
 }

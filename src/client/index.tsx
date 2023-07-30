@@ -14,7 +14,7 @@ if (rootNode) {
   root.render(
     <App appElement={`#${rootNodeId}`} store={store}>
       <AppRoutes />
-    </App>
+    </App>,
   )
 } else {
   error(`Unable to find the #${rootNodeId} node to mount!`)

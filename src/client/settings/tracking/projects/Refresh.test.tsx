@@ -8,7 +8,7 @@ it('should disable the refresh button if projects are loading', () => {
   render(<Refresh {...props} />)
   expect(screen.getByRole('button', { name: 'Refresh' })).toHaveAttribute(
     'disabled',
-    ''
+    '',
   )
 })
 

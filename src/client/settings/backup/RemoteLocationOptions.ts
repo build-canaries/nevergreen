@@ -10,19 +10,19 @@ export enum RemoteLocationOptions {
 }
 
 export function isCustomServer(
-  location?: RemoteLocation
+  location?: RemoteLocation,
 ): location is RemoteLocation {
   return location?.where === RemoteLocationOptions.custom
 }
 
 export function isGitHub(
-  location?: RemoteLocation
+  location?: RemoteLocation,
 ): location is RemoteLocation {
   return location?.where === RemoteLocationOptions.gitHub
 }
 
 export function isGitHubEnterprise(
-  location?: RemoteLocation
+  location?: RemoteLocation,
 ): location is RemoteLocation {
   return (
     location?.where === RemoteLocationOptions.gitHub &&
@@ -31,7 +31,7 @@ export function isGitHubEnterprise(
 }
 
 export function isGitLab(
-  location?: RemoteLocation
+  location?: RemoteLocation,
 ): location is RemoteLocation {
   return location?.where === RemoteLocationOptions.gitLab
 }

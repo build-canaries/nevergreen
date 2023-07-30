@@ -45,7 +45,7 @@ export function errorMessage(e: unknown): string {
   if (
     startsWith(
       lowerCase(message),
-      'request has been terminated possible causes'
+      'request has been terminated possible causes',
     )
   ) {
     return 'The network is offline or the Nevergreen server is not running'

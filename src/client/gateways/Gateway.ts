@@ -65,7 +65,7 @@ export function post<T>({ url, data, headers = {}, signal }: Post): Promise<T> {
       .set(headers)
       .timeout(timeout)
       .retry(retries),
-    signal
+    signal,
   )
 }
 
@@ -77,6 +77,6 @@ export function get<T>({ url, headers = {}, signal }: Get): Promise<T> {
       .set(headers)
       .timeout(timeout)
       .retry(retries),
-    signal
+    signal,
   )
 }

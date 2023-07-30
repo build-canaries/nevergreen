@@ -112,7 +112,7 @@ const slice = createSlice({
       prepare: (value: number) => {
         return {
           payload: validRefreshTimes.reduce((prev, curr) =>
-            absoluteClosestNumber(value, prev, curr)
+            absoluteClosestNumber(value, prev, curr),
           ),
         }
       },
@@ -125,7 +125,7 @@ const slice = createSlice({
     },
     setShowPrognosis: (
       draft,
-      action: PayloadAction<{ show: boolean; prognosis: Prognosis }>
+      action: PayloadAction<{ show: boolean; prognosis: Prognosis }>,
     ) => {
       const { show, prognosis } = action.payload
       draft.showPrognosis = show
@@ -134,14 +134,14 @@ const slice = createSlice({
     },
     setPrognosisBackgroundColour: (
       draft,
-      action: PayloadAction<{ colour: string; prognosis: Prognosis }>
+      action: PayloadAction<{ colour: string; prognosis: Prognosis }>,
     ) => {
       const { colour, prognosis } = action.payload
       draft[prognosis].backgroundColour = colour
     },
     setPrognosisTextColour: (
       draft,
-      action: PayloadAction<{ colour: string; prognosis: Prognosis }>
+      action: PayloadAction<{ colour: string; prognosis: Prognosis }>,
     ) => {
       const { colour, prognosis } = action.payload
       draft[prognosis].textColour = colour
@@ -173,29 +173,29 @@ export const {
 export const getDisplaySettings = (state: RootState) => state.settings
 export const getShowFeedIdentifier = createSelector(
   getDisplaySettings,
-  (settings) => settings.showTrayName
+  (settings) => settings.showTrayName,
 )
 export const getShowBuildTime = createSelector(
   getDisplaySettings,
-  (settings) => settings.showBuildTime
+  (settings) => settings.showBuildTime,
 )
 export const getShowBuildLabel = createSelector(
   getDisplaySettings,
-  (settings) => settings.showBuildLabel
+  (settings) => settings.showBuildLabel,
 )
 export const getRefreshTime = createSelector(
   getDisplaySettings,
-  (settings) => settings.refreshTime
+  (settings) => settings.refreshTime,
 )
 export const getMaxProjectsToShow = createSelector(
   getDisplaySettings,
-  (settings) => settings.maxProjectsToShow
+  (settings) => settings.maxProjectsToShow,
 )
 export const getShowPrognosis = createSelector(
   getDisplaySettings,
-  (settings) => settings.showPrognosis
+  (settings) => settings.showPrognosis,
 )
 export const getSort = createSelector(
   getDisplaySettings,
-  (settings) => settings.sort
+  (settings) => settings.sort,
 )

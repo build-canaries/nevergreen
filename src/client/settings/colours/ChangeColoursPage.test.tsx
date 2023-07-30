@@ -22,7 +22,7 @@ it('should be able to change colours', async () => {
         textColour = text
         return 'success-url'
       }}
-    />
+    />,
   )
   fireEvent.input(screen.getByLabelText('Background colour'), {
     target: { value: '#cccccc' },
@@ -50,7 +50,7 @@ it('should be able to cancel making changes', async () => {
       onSuccess={() => {
         return ''
       }}
-    />
+    />,
   )
   await user.click(screen.getByRole('button', { name: 'Cancel' }))
 
@@ -73,18 +73,18 @@ it('should show a warning if contrast is low', () => {
         textColour = text
         return 'success-url'
       }}
-    />
+    />,
   )
 
   expect(
     screen.getByText(
-      'The chosen colours have a low perceptual lightness contrast.'
-    )
+      'The chosen colours have a low perceptual lightness contrast.',
+    ),
   ).toBeInTheDocument()
   expect(
     screen.getByText(
-      'You should consider picking different colours to improve readability.'
-    )
+      'You should consider picking different colours to improve readability.',
+    ),
   ).toBeInTheDocument()
 })
 
@@ -104,7 +104,7 @@ it('should be able to select default preset colours', async () => {
         textColour = text
         return 'success-url'
       }}
-    />
+    />,
   )
 
   await user.click(screen.getByRole('button', { name: 'Default' }))

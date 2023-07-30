@@ -34,7 +34,9 @@ it('should reset configuration and reload', async () => {
   jest.spyOn(LocalConfiguration, 'clear').mockResolvedValueOnce()
   const { user } = render(<OtherSettingsPage />)
   await user.click(
-    screen.getByRole('button', { name: 'Reset configuration back to defaults' })
+    screen.getByRole('button', {
+      name: 'Reset configuration back to defaults',
+    }),
   )
   await waitFor(() => {
     expect(LocalConfiguration.clear).toHaveBeenCalled()

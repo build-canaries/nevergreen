@@ -27,7 +27,7 @@ export function ManageProjectsPage(): ReactElement {
             feedUpdated({
               trayId: feed.trayId,
               feed: { trackingMode: target.value as TrackingMode },
-            })
+            }),
           )
         }
         className={styles.trackingMode}

@@ -33,7 +33,7 @@ type Fields = 'import'
 
 function matchingLocation(
   searchIn: ReadonlyArray<RemoteLocation>,
-  forLocation: RemoteLocation
+  forLocation: RemoteLocation,
 ): RemoteLocation | undefined {
   return searchIn.find((location) => {
     return (
@@ -54,7 +54,7 @@ export function ImportRemotePage(): ReactElement {
     async ({ signal }) => {
       const { configuration } = await fetchConfiguration(location, signal)
       return toJson(fromJson(configuration))
-    }
+    },
   )
 
   useEffect(() => {

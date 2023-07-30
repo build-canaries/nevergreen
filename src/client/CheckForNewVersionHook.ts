@@ -13,7 +13,7 @@ interface GitHubResponse {
 const twentyFourHours = 24 * 60 * 60 * 1000
 
 export function useCheckForNewVersion(
-  showBanner: (message: string) => void
+  showBanner: (message: string) => void,
 ): void {
   const shouldCheckForNewVersion = useAppSelector(getEnableNewVersionCheck)
 
@@ -28,7 +28,7 @@ export function useCheckForNewVersion(
     {
       enabled: shouldCheckForNewVersion,
       refetchInterval: twentyFourHours,
-    }
+    },
   )
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export function useCheckForNewVersion(
       const latestVersion = data.tag_name
       if (greaterThan(latestVersion, version)) {
         showBanner(
-          `A new version ${latestVersion} is available to download from GitHub now!`
+          `A new version ${latestVersion} is available to download from GitHub now!`,
         )
       }
     }

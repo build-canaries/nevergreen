@@ -177,7 +177,7 @@ describe(setPrognosisBackgroundColour.toString(), () => {
       expect.objectContaining({
         textColour: '',
         backgroundColour: 'a',
-      })
+      }),
     )
   })
 })
@@ -196,7 +196,7 @@ describe(setPrognosisTextColour.toString(), () => {
       expect.objectContaining({
         textColour: 'a',
         backgroundColour: '',
-      })
+      }),
     )
   })
 })

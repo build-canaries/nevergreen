@@ -50,7 +50,7 @@ describe('displaying project information', () => {
       expect(screen.getByText('some-project-name')).toBeInTheDocument()
       expect(screen.getByText('#1234')).toBeInTheDocument()
       expect(screen.getByText('about 1 hour')).toBeInTheDocument()
-    }
+    },
   )
 
   it('should show the identifier, even when time and label is unavailable for unknown projects', () => {
@@ -181,7 +181,7 @@ describe('displaying project information', () => {
 
     expect(screen.queryByText('some-project-name')).toHaveAttribute(
       'href',
-      'some-url'
+      'some-url',
     )
   })
 })

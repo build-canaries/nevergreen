@@ -110,7 +110,7 @@
     "npm-check-updates": "16.10.17",
     "postcss": "8.4.27",
     "postcss-loader": "7.3.3",
-    "prettier": "2.8.8",
+    "prettier": "3.0.0",
     "raw-loader": "4.0.2",
     "react-test-renderer": "18.2.0",
     "resolve-url-loader": "5.0.0",
@@ -118,6 +118,7 @@
     "sass-loader": "13.3.2",
     "style-loader": "3.3.3",
     "stylelint": "15.10.2",
+    "stylelint-config-prettier-scss": "1.0.0",
     "stylelint-config-standard-scss": "10.0.0",
     "stylelint-order": "6.0.3",
     "typescript": "5.1.6",
@@ -222,7 +223,8 @@
   },
   "stylelint": {
     "extends": [
-      "stylelint-config-standard-scss"
+      "stylelint-config-standard-scss",
+      "stylelint-config-prettier-scss"
     ],
     "plugins": [
       "stylelint-order"

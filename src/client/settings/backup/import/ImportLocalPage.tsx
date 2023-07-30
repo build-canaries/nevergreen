@@ -53,7 +53,7 @@ export function ImportLocalPage(): ReactElement {
       }
     } else {
       setError(
-        `Only 1 backup file can be opened (attempted to open ${files.length} files)`
+        `Only 1 backup file can be opened (attempted to open ${files.length} files)`,
       )
     }
 

@@ -92,7 +92,7 @@ describe('errorMessage', () => {
     const message =
       'Request has been terminated\nPossible causes: the network is offline, Origin is not allowed by Access-Control-Allow-Origin, the page is being unloaded, etc.'
     expect(errorMessage(new Error(message))).toBe(
-      'The network is offline or the Nevergreen server is not running'
+      'The network is offline or the Nevergreen server is not running',
     )
   })
 })

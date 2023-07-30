@@ -10,7 +10,7 @@ function stop(audio?: HTMLAudioElement): void {
 export function playAudio(
   src: string,
   volume: number,
-  onStop?: () => void
+  onStop?: () => void,
 ): Promise<void> {
   const audio = cachedAudio.get(src) || new Audio(src)
   audio.volume = volume

@@ -96,9 +96,9 @@ describe('system notifications', () => {
         expect.objectContaining({
           title: `project is ${prognosisDisplay(current)}!`,
           body: 'some-name',
-        })
+        }),
       )
-    }
+    },
   )
 
   it('should send notification for first transition to a feed error', () => {
@@ -130,14 +130,14 @@ describe('system notifications', () => {
 
     const { rerender } = render(
       <HookWrapper projects={projects} errors={errorsFirstFetch} />,
-      { state }
+      { state },
     )
 
     expect(SystemNotifications.sendSystemNotification).toBeCalledWith(
       expect.objectContaining({
         title: 'feed error!',
         body: 'some-error',
-      })
+      }),
     )
 
     rerender(<HookWrapper projects={projects} errors={errorsSecondFetch} />)
@@ -179,13 +179,13 @@ describe('system notifications', () => {
       expect.objectContaining({
         title: 'project is healthy!',
         body: 'another-name',
-      })
+      }),
     )
     expect(SystemNotifications.sendSystemNotification).toBeCalledWith(
       expect.objectContaining({
         title: 'project is sick!',
         body: 'some-name',
-      })
+      }),
     )
   })
 
@@ -275,7 +275,7 @@ describe('audio notifications', () => {
       render(<HookWrapper projects={projects} errors={errors} />, { state })
 
       expect(AudioPlayer.playAudio).toHaveBeenCalledWith('some-sfx.mp3', 1)
-    }
+    },
   )
 
   it('should only play one notification at a time even if multiple projects transition to valid prognosis', () => {
@@ -350,7 +350,7 @@ describe('audio notifications', () => {
 
     const { rerender } = render(
       <HookWrapper projects={firstRender} errors={errors} />,
-      { state }
+      { state },
     )
 
     jest.spyOn(AudioPlayer, 'anyAudioPlaying').mockReturnValue(true)
@@ -418,7 +418,7 @@ describe('audio notifications', () => {
 
     const { rerender } = render(
       <HookWrapper projects={projectsFirstFetch} errors={errors} />,
-      { state }
+      { state },
     )
     rerender(<HookWrapper projects={projectsSecondFetch} errors={errors} />)
 
@@ -471,7 +471,7 @@ describe('browser title', () => {
 
     expect(document).toHaveProperty(
       'title',
-      '1 Error, 1 Sick, 1 Sick building, 1 Healthy building, 1 Unknown, 1 Healthy'
+      '1 Error, 1 Sick, 1 Sick building, 1 Healthy building, 1 Unknown, 1 Healthy',
     )
   })
 

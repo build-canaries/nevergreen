@@ -19,11 +19,11 @@ it('should allow the tracking mode to be changed', async () => {
   })
   await user.selectOptions(
     screen.getByLabelText('Tracking mode'),
-    TrackingMode.everything
+    TrackingMode.everything,
   )
   expect(getFeed(trayId)(store.getState())).toEqual(
     expect.objectContaining({
       trackingMode: TrackingMode.everything,
-    })
+    }),
   )
 })

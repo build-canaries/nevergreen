@@ -105,7 +105,7 @@ describe(configurationImported.toString(), () => {
           locationId: location,
         },
       },
-      location
+      location,
     )
     const newState = reducer(existingState, action)
     expect(getBackupLocationTimestamps('locationId')(newState)).toEqual({
@@ -148,7 +148,7 @@ describe(addBackupLocation.toString(), () => {
       backupRemoteLocations: {},
     })
     const action = addBackupLocation(
-      buildRemoteBackupLocation({ internalId: 'some-id' })
+      buildRemoteBackupLocation({ internalId: 'some-id' }),
     )
     const newState = reducer(existingState, action)
     expect(getBackupLocationTimestamps('some-id')(newState)).toEqual({})

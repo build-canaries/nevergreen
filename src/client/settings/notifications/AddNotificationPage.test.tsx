@@ -19,7 +19,7 @@ it.each([
   const { store, user } = render(<AddNotificationPage />, { state })
   await user.selectOptions(
     screen.getByLabelText('When transitioning to'),
-    prognosis
+    prognosis,
   )
   await user.click(screen.getByLabelText('Show system notification'))
   await user.type(screen.getByLabelText('Play audio'), '/some-sfx.mp3')
@@ -31,7 +31,7 @@ it.each([
         systemNotification: true,
         sfx: '/some-sfx.mp3',
       },
-    })
+    }),
   )
   await waitFor(() => {
     expect(window.location.pathname).toMatch('/settings/notifications')
@@ -51,7 +51,7 @@ it('should be able to preview audio files', async () => {
   expect(AudioPlayer.playAudio).toHaveBeenCalledWith(
     '/some-sfx.mp3',
     1,
-    expect.anything()
+    expect.anything(),
   )
   expect(AudioPlayer.stopAudio).toHaveBeenCalledWith('/some-sfx.mp3')
 })
@@ -78,10 +78,10 @@ describe('warnings', () => {
     render(<AddNotificationPage />, { state })
 
     expect(
-      screen.getByText('System notification have not been allowed yet.')
+      screen.getByText('System notification have not been allowed yet.'),
     ).toBeInTheDocument()
     expect(
-      screen.getByText('They will need to be allowed before they will show.')
+      screen.getByText('They will need to be allowed before they will show.'),
     ).toBeInTheDocument()
   })
 
@@ -96,10 +96,10 @@ describe('warnings', () => {
     render(<AddNotificationPage />, { state })
 
     expect(
-      screen.getByText('Audio notification have not been allowed yet.')
+      screen.getByText('Audio notification have not been allowed yet.'),
     ).toBeInTheDocument()
     expect(
-      screen.getByText('They will need to be allowed before they will play.')
+      screen.getByText('They will need to be allowed before they will play.'),
     ).toBeInTheDocument()
   })
 
@@ -115,13 +115,13 @@ describe('warnings', () => {
 
     expect(
       screen.getByText(
-        'System and audio notifications have not been allowed yet.'
-      )
+        'System and audio notifications have not been allowed yet.',
+      ),
     ).toBeInTheDocument()
     expect(
       screen.getByText(
-        'They will need to be allowed before they will show or play.'
-      )
+        'They will need to be allowed before they will show or play.',
+      ),
     ).toBeInTheDocument()
   })
 })

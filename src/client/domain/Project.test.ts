@@ -48,7 +48,7 @@ describe('projectBuildLabel', () => {
     (prognosis) => {
       const project = buildProject({ prognosis, lastBuildLabel: 'some-label' })
       expect(projectBuildLabel(project)).toBe('')
-    }
+    },
   )
 
   it.each<ProjectPrognosis>([
@@ -69,7 +69,7 @@ describe('projectBuildLabel', () => {
     (prognosis) => {
       const project = buildProject({ prognosis, lastBuildLabel: '1234' })
       expect(projectBuildLabel(project)).toBe('#1234')
-    }
+    },
   )
 })
 
@@ -83,7 +83,7 @@ describe('enrichProjects', () => {
     expect(result).toEqual(
       expect.arrayContaining([
         expect.objectContaining({ timestamp: 'fetched-time' }),
-      ])
+      ]),
     )
   })
 
@@ -113,9 +113,9 @@ describe('enrichProjects', () => {
       expect(result).toEqual(
         expect.arrayContaining([
           expect.objectContaining({ timestamp: 'original-fetched-time' }),
-        ])
+        ]),
       )
-    }
+    },
   )
 
   it.each<ProjectPrognosis>([
@@ -144,9 +144,9 @@ describe('enrichProjects', () => {
       expect(result).toEqual(
         expect.arrayContaining([
           expect.objectContaining({ timestamp: 'updated-fetched-time' }),
-        ])
+        ]),
       )
-    }
+    },
   )
 
   it('should add the previous prognosis if the project was previously fetched', () => {
@@ -166,7 +166,7 @@ describe('enrichProjects', () => {
     expect(result).toEqual(
       expect.arrayContaining([
         expect.objectContaining({ previousPrognosis: Prognosis.sick }),
-      ])
+      ]),
     )
   })
 
@@ -189,7 +189,7 @@ describe('enrichProjects', () => {
     expect(result).toEqual(
       expect.arrayContaining([
         expect.objectContaining({ previousPrognosis: undefined }),
-      ])
+      ]),
     )
   })
 })

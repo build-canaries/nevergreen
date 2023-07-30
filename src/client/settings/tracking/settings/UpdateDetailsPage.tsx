@@ -89,7 +89,7 @@ export function UpdateDetailsPage(): ReactElement {
               feedUpdated({
                 trayId: feed.trayId,
                 feed: { serverType: target.value as ServerTypes },
-              })
+              }),
             )
           }
         >

@@ -29,7 +29,7 @@ const slice = createSlice({
       action.payload.selected
         ? draft[action.payload.trayId].push(...action.payload.projectIds)
         : remove(draft[action.payload.trayId], (id) =>
-            action.payload.projectIds.includes(id)
+            action.payload.projectIds.includes(id),
           )
     },
   },
@@ -61,7 +61,7 @@ export function getSelectedProjects(state: RootState): SelectedState {
 }
 
 export function getSelectedProjectsForFeed(
-  trayId: string
+  trayId: string,
 ): (state: RootState) => ReadonlyArray<string> {
   return createSelector(getSelectedProjects, (selected) => selected[trayId])
 }

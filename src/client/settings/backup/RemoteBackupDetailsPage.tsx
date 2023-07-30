@@ -21,7 +21,7 @@ export function RemoteBackupDetailsPage(): ReactElement {
       <Checkbox
         onToggle={(value) =>
           dispatch(
-            setAutomaticExport({ internalId: location.internalId, value })
+            setAutomaticExport({ internalId: location.internalId, value }),
           )
         }
         checked={location.automaticallyExport}

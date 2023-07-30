@@ -41,13 +41,13 @@ export function Preview(): ReactElement {
         },
         signal,
       })
-    }
+    },
   )
 
   useEffect(() => {
     if (data) {
       setProjects((previouslyFetchedProjects) =>
-        enrichProjects(data, previouslyFetchedProjects)
+        enrichProjects(data, previouslyFetchedProjects),
       )
       setFeedErrors((previousErrors) => enrichErrors(data, previousErrors))
     }
@@ -56,7 +56,7 @@ export function Preview(): ReactElement {
   useEffect(() => {
     if (error) {
       setFeedErrors((previousErrors) =>
-        enrichErrors([toFeedApiError(error)], previousErrors)
+        enrichErrors([toFeedApiError(error)], previousErrors),
       )
     }
   }, [error])

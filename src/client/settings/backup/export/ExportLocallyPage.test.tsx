@@ -28,23 +28,23 @@ it('should allowing copying to clipboard if supported', () => {
   // these IDs must all be set for clipboard.js to work
   expect(copyButton).toHaveAttribute(
     'id',
-    clipboardElementSelector.replace('#', '')
+    clipboardElementSelector.replace('#', ''),
   )
   expect(currentConfiguration).toHaveAttribute('id')
   expect(copyButton).toHaveAttribute(
     'data-clipboard-target',
-    `#${currentConfiguration.id}`
+    `#${currentConfiguration.id}`,
   )
 
   // clipboard.js registers its own onClick handler, so just manually trigger the callbacks given to the hook
   act(() => clipboardOnSuccess())
   expect(
-    screen.getByText('Copied current configuration to clipboard')
+    screen.getByText('Copied current configuration to clipboard'),
   ).toBeInTheDocument()
 
   act(() => clipboardOnError())
   expect(
-    screen.getByText('Unable to copy, please manually copy')
+    screen.getByText('Unable to copy, please manually copy'),
   ).toBeInTheDocument()
 })
 

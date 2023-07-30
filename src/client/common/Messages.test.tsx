@@ -37,7 +37,7 @@ it('should allow messages to be dismissed', async () => {
   }
   const { user } = render(<Messages {...props} />)
   await user.click(
-    screen.getByRole('button', { name: 'Dismiss info messages' })
+    screen.getByRole('button', { name: 'Dismiss info messages' }),
   )
   expect(onDismiss).toHaveBeenCalled()
 })

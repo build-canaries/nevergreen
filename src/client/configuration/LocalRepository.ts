@@ -13,7 +13,7 @@ export async function save(data: RootState): Promise<void> {
   await Promise.all(
     toPairs(data).map(([key, value]) => {
       return localforage.setItem(key, value)
-    })
+    }),
   )
 }
 

@@ -3,7 +3,7 @@ import set from 'lodash/set'
 
 export function useUpdateBrowserTitle(
   title: string,
-  faviconHref = '/canaries.svg'
+  faviconHref = '/canaries.svg',
 ): void {
   useEffect(() => {
     document.title = title

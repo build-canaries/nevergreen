@@ -24,24 +24,24 @@ export function toFeedApiError(e: unknown): FeedApiError {
 }
 
 export function isError<P extends ProjectApi, E extends FeedApiError>(
-  project: P | E
+  project: P | E,
 ): project is E {
   return project.prognosis === Prognosis.error
 }
 
 function sameError(
   previousProject: FeedApiError,
-  currentProject: FeedApiError
+  currentProject: FeedApiError,
 ) {
   return previousProject.webUrl === currentProject.webUrl
 }
 
 function updateTimestamp(
   error: FeedError,
-  previousErrors: FeedErrors
+  previousErrors: FeedErrors,
 ): FeedError {
   const previousError = previousErrors.find((previous) =>
-    sameError(error, previous)
+    sameError(error, previous),
   )
   if (previousError) {
     return { ...error, timestamp: previousError.timestamp }
@@ -51,10 +51,10 @@ function updateTimestamp(
 
 function addPreviousPrognosis(
   error: FeedApiError,
-  previousErrors: FeedErrors
+  previousErrors: FeedErrors,
 ): FeedError {
   const previousPrognosis = previousErrors.find((previous) =>
-    sameError(previous, error)
+    sameError(previous, error),
   )?.prognosis
   return {
     ...error,
@@ -64,7 +64,7 @@ function addPreviousPrognosis(
 
 export function enrichErrors(
   apiProjects: ProjectsResponse,
-  previouslyErrors: FeedErrors
+  previouslyErrors: FeedErrors,
 ): FeedErrors {
   return apiProjects
     .filter(isError)

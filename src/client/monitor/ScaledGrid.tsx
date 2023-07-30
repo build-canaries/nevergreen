@@ -36,7 +36,7 @@ function calculateChildWidth(totalNumberOfItems: number, width: number) {
 function calculateChildHeight(
   totalNumberOfItems: number,
   width: number,
-  height: number
+  height: number,
 ) {
   const rows = numberOfRows(totalNumberOfItems)
   const calculated = Math.floor(height / rows)
@@ -49,7 +49,7 @@ function updateChildSizes(parent: Element) {
   const heightPx = calculateChildHeight(
     children.length,
     parent.clientWidth,
-    parent.clientHeight
+    parent.clientHeight,
   )
 
   return { widthPx, heightPx }
@@ -72,7 +72,7 @@ export function ScaledGrid({ children }: ScaledGridProps): ReactElement {
   useElementResized(listRef, calculate)
 
   const childrenToShow = Children.toArray(children).filter(
-    (child) => !isNil(child)
+    (child) => !isNil(child),
   )
 
   const childStyle = { width: `${childWidth}px`, height: `${childHeight}px` }

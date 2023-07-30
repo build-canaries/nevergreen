@@ -6,6 +6,6 @@ it('should show a success message', () => {
   render(<ImportSuccessPage />)
 
   expect(
-    screen.getByText('Successfully imported configuration')
+    screen.getByText('Successfully imported configuration'),
   ).toBeInTheDocument()
 })

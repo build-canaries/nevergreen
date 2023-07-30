@@ -41,7 +41,7 @@ it('should import valid configuration', async () => {
         [remoteLocationsRoot]: {
           locationId: remoteLocation,
         },
-      })
+      }),
     ),
     description: 'irrelevant',
     id: 'irrelevant',
@@ -94,7 +94,7 @@ it('should find the matching location in the imported configuration', async () =
             externalId: '',
           }),
         },
-      })
+      }),
     ),
     description: 'irrelevant',
     id: 'irrelevant',
@@ -129,7 +129,7 @@ describe('invalid configuration', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText('Unable to fetch remote backup because of an error')
+        screen.getByText('Unable to fetch remote backup because of an error'),
       ).toBeInTheDocument()
     })
   })
@@ -151,7 +151,7 @@ describe('invalid configuration', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText('Required at $.trays.id.trayId')
+        screen.getByText('Required at $.trays.id.trayId'),
       ).toBeInTheDocument()
     })
     expect(screen.getByText('Required at $.trays.id.url')).toBeInTheDocument()
@@ -167,11 +167,11 @@ describe('invalid configuration', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText('Unable to fetch remote backup because of an error')
+        screen.getByText('Unable to fetch remote backup because of an error'),
       ).toBeInTheDocument()
     })
     expect(
-      screen.getByRole('button', { name: 'Try fetching again' })
+      screen.getByRole('button', { name: 'Try fetching again' }),
     ).toBeInTheDocument()
   })
 })

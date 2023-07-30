@@ -33,7 +33,7 @@ it('should flatten projects', () => {
   migrate(data)
   expect(data).toHaveProperty(
     ['projects', trayId],
-    [{ foo: 'bar' }, { baz: 'bux' }]
+    [{ foo: 'bar' }, { baz: 'bux' }],
   )
   expect(data).not.toHaveProperty(['projects', trayId, projectId1])
   expect(data).not.toHaveProperty(['projects', trayId, projectId2])

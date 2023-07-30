@@ -25,7 +25,7 @@ export function Success({
   const [message, setMessage] = useState('')
 
   const interestingProjects = projects.filter((project) =>
-    showPrognosis.includes(project.prognosis)
+    showPrognosis.includes(project.prognosis),
   )
   const success = isEmpty(interestingProjects) && isEmpty(feedErrors)
 

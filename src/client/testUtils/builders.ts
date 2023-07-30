@@ -29,7 +29,7 @@ import { personalSettingsRoot } from '../settings/PersonalSettingsReducer'
 import { otherSettingsRoot } from '../settings/other/OtherSettingsReducer'
 
 export function buildState(
-  subState: RecursivePartial<RootState> = {}
+  subState: RecursivePartial<RootState> = {},
 ): RootState {
   const defaultState: RootState = {
     [displaySettingsRoot]: {
@@ -143,7 +143,7 @@ export function buildFeedError(feedError: Partial<FeedError> = {}): FeedError {
 }
 
 export function buildRemoteBackupLocation(
-  location: Partial<RemoteLocation> = {}
+  location: Partial<RemoteLocation> = {},
 ): RemoteLocation {
   const defaultLocation: RemoteLocation = {
     internalId: '',

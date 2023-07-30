@@ -16,7 +16,7 @@ describe('Backups', () => {
 
       cy.findByLabelText('Configuration to import').invoke(
         'val',
-        exportInput.val()
+        exportInput.val(),
       ) // not using type() for speed reasons
       cy.findByLabelText('Configuration to import').type(' ') // trigger react updates
       cy.findByRole('button', { name: 'Import' }).click()

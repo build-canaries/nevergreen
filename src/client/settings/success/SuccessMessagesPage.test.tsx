@@ -9,7 +9,7 @@ it('should show success messages', () => {
   }
   render(<SuccessMessagesPage />, { state })
   expect(
-    screen.getByText('some-message', { selector: 'div' })
+    screen.getByText('some-message', { selector: 'div' }),
   ).toBeInTheDocument()
   expect(screen.getByRole('img')).toHaveAttribute('src', 'http://some-url')
 })

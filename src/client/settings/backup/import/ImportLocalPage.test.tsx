@@ -8,7 +8,7 @@ it('should import valid configuration', async () => {
   const { user } = render(<ImportLocalPage />)
   await user.type(
     screen.getByLabelText('Configuration to import'),
-    escapeSpecialCharacter(toJson(buildState()))
+    escapeSpecialCharacter(toJson(buildState())),
   )
   await user.click(screen.getByRole('button', { name: 'Import' }))
 
@@ -21,10 +21,10 @@ it('should show an error if no data has been entered', async () => {
   const { user } = render(<ImportLocalPage />)
   await user.click(screen.getByRole('button', { name: 'Import' }))
   expect(
-    screen.getByText('Enter the configuration to import')
+    screen.getByText('Enter the configuration to import'),
   ).toBeInTheDocument()
   expect(
-    screen.queryByText('Unexpected end of JSON input')
+    screen.queryByText('Unexpected end of JSON input'),
   ).not.toBeInTheDocument()
 })
 
@@ -33,12 +33,12 @@ it('should show an error if the data is syntactically invalid (bad json)', async
   const { user } = render(<ImportLocalPage />)
   await user.type(
     screen.getByLabelText('Configuration to import'),
-    escapeSpecialCharacter(invalidConfiguration)
+    escapeSpecialCharacter(invalidConfiguration),
   )
   await user.click(screen.getByRole('button', { name: 'Import' }))
 
   expect(
-    screen.getByText("Expected property name or '}' in JSON at position 1")
+    screen.getByText("Expected property name or '}' in JSON at position 1"),
   ).toBeInTheDocument()
   expect(screen.getByDisplayValue(invalidConfiguration)).toBeInTheDocument()
 })
@@ -48,7 +48,7 @@ it('should show an error if the data is semantically invalid (missing required a
   const { user } = render(<ImportLocalPage />)
   await user.type(
     screen.getByLabelText('Configuration to import'),
-    escapeSpecialCharacter(invalidConfiguration)
+    escapeSpecialCharacter(invalidConfiguration),
   )
   await user.click(screen.getByRole('button', { name: 'Import' }))
 
@@ -65,7 +65,7 @@ it('should allow a single JSON and plain text files to be opened', () => {
   const input = screen.getByLabelText('Open local...')
   expect(input).toHaveAttribute(
     'accept',
-    '.json,.txt,application/json,text/plain'
+    '.json,.txt,application/json,text/plain',
   )
   expect(input).not.toHaveAttribute('multiple')
 

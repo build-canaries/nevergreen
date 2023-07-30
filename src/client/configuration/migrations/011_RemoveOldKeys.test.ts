@@ -12,5 +12,5 @@ it.each(['nevergreen', 'github', 'gitlab', 'backup'])(
     const data = { [key]: {} }
     migrate(data)
     expect(data).not.toHaveProperty(key)
-  }
+  },
 )

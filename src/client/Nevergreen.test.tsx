@@ -31,8 +31,8 @@ it('should load configuration, register service worker and check for a new versi
   expect(ServiceWorkerHook.useServiceWorker).toHaveBeenCalled()
   expect(
     screen.getByText(
-      /^A new version [0-9.]* is available to download from GitHub now!$/
-    )
+      /^A new version [0-9.]* is available to download from GitHub now!$/,
+    ),
   ).toBeInTheDocument()
 })
 
@@ -74,7 +74,7 @@ it('should not check for a new version if the user has disabled checking', async
   await waitForLoadingToFinish()
 
   expect(Gateway.get).not.toHaveBeenCalledWith(
-    'https://api.github.com/repos/build-canaries/nevergreen/releases/latest'
+    'https://api.github.com/repos/build-canaries/nevergreen/releases/latest',
   )
   expect(screen.queryByTestId('notification')).not.toBeInTheDocument()
 })

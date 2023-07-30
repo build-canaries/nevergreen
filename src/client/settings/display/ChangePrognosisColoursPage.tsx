@@ -21,7 +21,7 @@ export function ChangePrognosisColoursPage({
 
   const onSuccess = (backgroundColour: string, textColour: string) => {
     dispatch(
-      setPrognosisBackgroundColour({ prognosis, colour: backgroundColour })
+      setPrognosisBackgroundColour({ prognosis, colour: backgroundColour }),
     )
     dispatch(setPrognosisTextColour({ prognosis, colour: textColour }))
     return RoutePaths.display

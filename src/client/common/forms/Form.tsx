@@ -31,11 +31,11 @@ interface FormProps<Fields extends string> {
   readonly children: (
     submitting: boolean,
     validationErrors: Readonly<FormErrors<Fields>>,
-    clearErrors: () => void
+    clearErrors: () => void,
   ) => ReactNode
   readonly onValidate?: () => Readonly<FormErrors<Fields>> | undefined | void
   readonly onSuccess: (
-    signal: AbortSignal | undefined
+    signal: AbortSignal | undefined,
   ) => Promise<OnSuccess | undefined | void> | OnSuccess | undefined | void
   readonly onCancel?: string | (() => void)
   readonly className?: string
@@ -64,7 +64,7 @@ export function Form<Fields extends string>({
     },
     {
       enabled: false,
-    }
+    },
   )
 
   useEffect(() => {

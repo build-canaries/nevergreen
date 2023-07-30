@@ -24,7 +24,7 @@ export function migrate(data: UntrustedData): void {
     info(`Checking if migration [${migration.id}] has been applied...`)
 
     const appliedMigration = appliedMigrations.find(
-      (m) => m.id === migration.id
+      (m) => m.id === migration.id,
     )
 
     if (isNil(appliedMigration)) {
@@ -38,7 +38,7 @@ export function migrate(data: UntrustedData): void {
       info(`Migration [${migration.id}] successfully applied at ${timestamp}`)
     } else {
       info(
-        `Migration [${migration.id}] already applied on ${appliedMigration.timestamp}`
+        `Migration [${migration.id}] already applied on ${appliedMigration.timestamp}`,
       )
     }
   })
@@ -47,7 +47,7 @@ export function migrate(data: UntrustedData): void {
 export function moveData(
   untrustedData: UntrustedData,
   fromPath: PropertyPath,
-  toPath: PropertyPath
+  toPath: PropertyPath,
 ): void {
   copyData(untrustedData, fromPath, toPath)
   unset(untrustedData, fromPath)
@@ -56,7 +56,7 @@ export function moveData(
 export function copyData(
   untrustedData: UntrustedData,
   fromPath: PropertyPath,
-  toPath: PropertyPath
+  toPath: PropertyPath,
 ): void {
   if (has(untrustedData, fromPath)) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -68,7 +68,7 @@ export function copyData(
 function forEachAt(
   untrustedData: UntrustedData,
   atPath: PropertyPath,
-  callback: (value: UntrustedData, key: string) => void
+  callback: (value: UntrustedData, key: string) => void,
 ): void {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const o = get(untrustedData, atPath)
@@ -82,7 +82,7 @@ function forEachAt(
 export function forEachObjectAt(
   untrustedData: UntrustedData,
   atPath: PropertyPath,
-  callback: (value: UntrustedData, key: string) => void
+  callback: (value: UntrustedData, key: string) => void,
 ): void {
   forEachAt(untrustedData, atPath, (value, key) => {
     if (isObject(value)) {
@@ -94,7 +94,7 @@ export function forEachObjectAt(
 export function forEachArrayAt(
   untrustedData: UntrustedData,
   atPath: PropertyPath,
-  callback: (value: UntrustedData[], key: string) => void
+  callback: (value: UntrustedData[], key: string) => void,
 ): void {
   forEachAt(untrustedData, atPath, (value, key) => {
     if (isArray(value)) {

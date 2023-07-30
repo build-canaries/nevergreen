@@ -1,7 +1,9 @@
 @use 'sass:math';
 
 $normal-font: roboto, sans-serif;
-$monospace-font: roboto mono, monospace;
+$monospace-font:
+  roboto mono,
+  monospace;
 
 @mixin font-scale($value) {
   // 1.2 = minor third

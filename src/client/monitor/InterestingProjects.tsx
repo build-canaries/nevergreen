@@ -63,7 +63,7 @@ export function InterestingProjects({
   const maxProjectsToShow = useAppSelector(getMaxProjectsToShow)
   const prognosisToShow = useAppSelector(getShowPrognosis)
   const [actualMaxProjectsToShow, setActualMaxProjectsToShow] = useState(
-    calculateProjectsToShow(maxProjectsToShow)
+    calculateProjectsToShow(maxProjectsToShow),
   )
 
   const onWindowResize = useCallback(() => {
@@ -73,7 +73,8 @@ export function InterestingProjects({
   useWindowResized(onWindowResize)
 
   const filteredProjects = [...feedErrors, ...projects].filter(
-    (project) => isError(project) || prognosisToShow.includes(project.prognosis)
+    (project) =>
+      isError(project) || prognosisToShow.includes(project.prognosis),
   )
 
   const showSummary = filteredProjects.length > actualMaxProjectsToShow

@@ -32,7 +32,7 @@ it('should move password to encryptedPassword', () => {
   migrate(data)
   expect(data).toHaveProperty(
     [feedsRoot, trayId, 'encryptedPassword'],
-    'some-encrypted-password'
+    'some-encrypted-password',
   )
   expect(data).not.toHaveProperty([feedsRoot, trayId, 'password'])
 })
@@ -50,7 +50,7 @@ it('should move accessToken to encryptedAccessToken', () => {
   migrate(data)
   expect(data).toHaveProperty(
     [feedsRoot, trayId, 'encryptedAccessToken'],
-    'some-encrypted-token'
+    'some-encrypted-token',
   )
   expect(data).not.toHaveProperty([feedsRoot, trayId, 'accessToken'])
 })

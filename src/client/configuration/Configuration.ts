@@ -52,7 +52,7 @@ const Configuration = z
     [feedsRoot]: FeedsState.superRefine(validateFeedIdsMatchForFeeds),
     [migrationsRoot]: AppliedMigrationsState,
     [remoteLocationsRoot]: RemoteLocationsState.superRefine(
-      validateRemoteLocationIdsMatch
+      validateRemoteLocationIdsMatch,
     ),
     [notificationsRoot]: NotificationsConfiguration,
     [personalSettingsRoot]: PersonalSettingsState,
@@ -64,7 +64,7 @@ export type Configuration = z.infer<typeof Configuration>
 function validateIdsMatch<K extends string>(
   o: Record<string, Record<K, string>>,
   ctx: z.RefinementCtx,
-  idKey: K
+  idKey: K,
 ) {
   Object.entries(o).forEach(([key, val]) => {
     if (val && val[idKey] !== key) {
@@ -83,14 +83,14 @@ function validateFeedIdsMatchForFeeds(feeds: FeedsState, ctx: z.RefinementCtx) {
 
 function validateRemoteLocationIdsMatch(
   backupRemoteLocations: RemoteLocationsState,
-  ctx: z.RefinementCtx
+  ctx: z.RefinementCtx,
 ) {
   validateIdsMatch<'internalId'>(backupRemoteLocations, ctx, 'internalId')
 }
 
 function validateAndFilter(
   data: UntrustedData,
-  dataSource: DataSource
+  dataSource: DataSource,
 ): Configuration {
   if (dataSource === DataSource.userImport) {
     unset(data, personalSettingsRoot)
@@ -101,7 +101,7 @@ function validateAndFilter(
 
 export function toConfiguration(
   untrustedData: string | Readonly<UntrustedData>,
-  dataSource: DataSource
+  dataSource: DataSource,
 ): Configuration {
   const data = isString(untrustedData)
     ? fromJson(untrustedData)
@@ -121,7 +121,7 @@ function formatZodIssue(zi: z.ZodIssue): string {
 }
 
 export function formatConfigurationErrorMessages(
-  err: unknown
+  err: unknown,
 ): ReadonlyArray<string> {
   if (err instanceof z.ZodError) {
     return err.issues.map(formatZodIssue)

@@ -78,7 +78,7 @@ it('should display added notifications', () => {
   render(<NotificationSettingsPage />, { state })
 
   expect(
-    screen.getByRole('heading', { level: 2, name: 'Sick notification' })
+    screen.getByRole('heading', { level: 2, name: 'Sick notification' }),
   ).toBeInTheDocument()
   expect(screen.queryByText('No notifications added')).not.toBeInTheDocument()
 })

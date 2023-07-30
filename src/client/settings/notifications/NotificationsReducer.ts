@@ -74,9 +74,9 @@ export const { toggleVersionCheck, addNotification, removeNotification } =
 const getNotificationsRoot = (state: RootState) => state.notifications
 export const getEnableNewVersionCheck = createSelector(
   getNotificationsRoot,
-  (settings) => settings.enableNewVersionCheck
+  (settings) => settings.enableNewVersionCheck,
 )
 export const getNotifications = createSelector(
   getNotificationsRoot,
-  (settings) => settings.notifications
+  (settings) => settings.notifications,
 )

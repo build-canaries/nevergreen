@@ -73,7 +73,7 @@ export function DisplayPrognosisSelection(): ReactElement {
                 <ChangeColoursLink
                   path={prognosis}
                   additionalContext={`for ${prognosisDisplay(
-                    prognosis
+                    prognosis,
                   )} prognosis`}
                 />
               </Group>

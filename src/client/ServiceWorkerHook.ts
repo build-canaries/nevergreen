@@ -10,7 +10,7 @@ export function useServiceWorker(showBanner: (message: string) => void): void {
       ) {
         try {
           const registration = await navigator.serviceWorker.register(
-            '/service-worker.js'
+            '/service-worker.js',
           )
           registration.onupdatefound = () => {
             const installingWorker = registration.installing
@@ -21,7 +21,7 @@ export function useServiceWorker(showBanner: (message: string) => void): void {
                   case 'installed':
                     if (navigator.serviceWorker.controller) {
                       showBanner(
-                        'A new version is available, refresh to update!'
+                        'A new version is available, refresh to update!',
                       )
                     } else {
                       info('Content is now available offline')

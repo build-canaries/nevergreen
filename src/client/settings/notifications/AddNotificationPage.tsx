@@ -33,7 +33,7 @@ const PROGNOSIS_OPTIONS = [
 
 function getWarnings(
   allowSystemNotifications?: boolean,
-  allowAudioNotifications?: boolean
+  allowAudioNotifications?: boolean,
 ): ReadonlyArray<string> {
   if (!allowSystemNotifications && !allowAudioNotifications) {
     return [
@@ -114,7 +114,7 @@ export function AddNotificationPage(): ReactElement {
 
   const warnings = getWarnings(
     allowSystemNotifications,
-    allowAudioNotifications
+    allowAudioNotifications,
   )
 
   const processForm = () => {

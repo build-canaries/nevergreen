@@ -78,7 +78,7 @@ describe(backupExported.toString(), () => {
     expect(getBackupLocation('internal-id')(newState)).toEqual(
       expect.objectContaining({
         externalId: 'external-id',
-      })
+      }),
     )
   })
 })

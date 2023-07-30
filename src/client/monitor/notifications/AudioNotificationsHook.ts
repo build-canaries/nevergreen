@@ -14,7 +14,7 @@ import { useAppSelector } from '../../configuration/Hooks'
 
 export function useAudioNotifications(
   projects: Projects,
-  feedErrors: FeedErrors
+  feedErrors: FeedErrors,
 ): void {
   const notifications = useAppSelector(getNotifications)
   const allowAudioNotifications = useAppSelector(getAllowAudioNotifications)
@@ -30,7 +30,7 @@ export function useAudioNotifications(
       .reverse()
       .reduce((previousSfxToPlay, prognosis) => {
         const allWithPrognosis = toCheck.filter(
-          (project) => project.prognosis === prognosis
+          (project) => project.prognosis === prognosis,
         )
         const toAlert = recentlyTransitioned(allWithPrognosis, prognosis)
         const notification = notifications[prognosis]

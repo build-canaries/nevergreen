@@ -32,7 +32,7 @@ export function Loading({
     {
       [styles.dark]: dark,
     },
-    className
+    className,
   )
 
   const content = isLoading ? (

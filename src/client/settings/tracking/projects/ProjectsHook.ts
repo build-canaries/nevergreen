@@ -8,7 +8,7 @@ import omit from 'lodash/omit'
 import { SortBy } from '../../display/DisplaySettingsReducer'
 
 export function useProjects(
-  feed: Feed
+  feed: Feed,
 ): UseQueryResult<ReadonlyArray<Project>, Error> {
   return useQuery(['available-projects', feed.trayId], async ({ signal }) => {
     const data = {
@@ -26,7 +26,7 @@ export function useProjects(
     })
     if (fetchedProjects.some(isProjectError)) {
       const errorMessages = fetchedProjects.map(
-        (projectError) => projectError.description
+        (projectError) => projectError.description,
       )
       throw new Error(errorMessages.join(', '))
     }

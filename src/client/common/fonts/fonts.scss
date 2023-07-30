@@ -3,7 +3,9 @@
   font-family: Roboto;
   font-style: normal;
   font-weight: 400;
-  src: local('Roboto'), local('Roboto-regular'),
+  src:
+    local('Roboto'),
+    local('Roboto-regular'),
     url('./Roboto-regular/Roboto-regular.woff2') format('woff2'),
     url('./Roboto-regular/Roboto-regular.woff') format('woff'),
     url('./Roboto-regular/Roboto-regular.ttf') format('truetype'),
@@ -15,7 +17,9 @@
   font-family: Roboto;
   font-style: normal;
   font-weight: 700;
-  src: local('Roboto Bold'), local('Roboto-700'),
+  src:
+    local('Roboto Bold'),
+    local('Roboto-700'),
     url('./Roboto-700/Roboto-700.woff2') format('woff2'),
     url('./Roboto-700/Roboto-700.woff') format('woff'),
     url('./Roboto-700/Roboto-700.ttf') format('truetype'),
@@ -27,7 +31,9 @@
   font-family: 'Roboto Mono';
   font-style: normal;
   font-weight: 400;
-  src: local('Roboto Mono'), local('Roboto-Mono-regular'),
+  src:
+    local('Roboto Mono'),
+    local('Roboto-Mono-regular'),
     url('./Roboto-Mono-regular/Roboto-Mono-regular.woff2') format('woff2'),
     url('./Roboto-Mono-regular/Roboto-Mono-regular.woff') format('woff'),
     url('./Roboto-Mono-regular/Roboto-Mono-regular.ttf') format('truetype'),

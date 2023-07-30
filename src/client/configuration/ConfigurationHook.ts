@@ -30,17 +30,17 @@ export function useLocalConfiguration(): Result {
       try {
         const configuration = toConfiguration(
           untrustedData,
-          DataSource.systemImport
+          DataSource.systemImport,
         )
         return configurationImported(configuration)
       } catch (err) {
         throw new Error(
           `Unable to initialise Nevergreen because of configuration validation errors, ${formatConfigurationErrorMessages(
-            err
-          ).join(', ')}`
+            err,
+          ).join(', ')}`,
         )
       }
-    }
+    },
   )
 
   useEffect(() => {

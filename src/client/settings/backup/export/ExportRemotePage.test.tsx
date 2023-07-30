@@ -11,7 +11,7 @@ import { RemoteLocationOptions } from '../RemoteLocationOptions'
 const mockSomeConstantValueGetter = jest.fn<unknown, never[], unknown>()
 jest.mock('../../../configuration/ReduxStore', () => {
   const originalModule = jest.requireActual<object>(
-    '../../../configuration/ReduxStore'
+    '../../../configuration/ReduxStore',
   )
   return {
     __esModule: true,
@@ -123,7 +123,7 @@ it.each([RemoteLocationOptions.gitHub, RemoteLocationOptions.gitLab])(
 
     await waitFor(() => {
       expect(
-        screen.getByText('Successfully exported configuration')
+        screen.getByText('Successfully exported configuration'),
       ).toBeInTheDocument()
     })
     expect(BackupGateway.exportConfiguration).toHaveBeenCalledTimes(2)
@@ -131,14 +131,14 @@ it.each([RemoteLocationOptions.gitHub, RemoteLocationOptions.gitLab])(
       1,
       remoteLocation,
       expect.stringContaining('"externalId": ""'),
-      expect.any(AbortSignal)
+      expect.any(AbortSignal),
     )
     expect(BackupGateway.exportConfiguration).toHaveBeenNthCalledWith(
       2,
       remoteLocation,
-      expect.stringContaining('"externalId": "some-remote-id"')
+      expect.stringContaining('"externalId": "some-remote-id"'),
     )
-  }
+  },
 )
 
 it('should not export configuration to a new custom location twice, as custom locations do not use external IDs', async () => {
@@ -170,7 +170,7 @@ it('should not export configuration to a new custom location twice, as custom lo
 
   await waitFor(() => {
     expect(
-      screen.getByText('Successfully exported configuration')
+      screen.getByText('Successfully exported configuration'),
     ).toBeInTheDocument()
   })
   expect(BackupGateway.exportConfiguration).toHaveBeenCalledTimes(1)

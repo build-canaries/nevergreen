@@ -40,7 +40,7 @@ function isBuilding(project: Project): boolean {
 
 function sameProject(
   previousProject: Project,
-  currentProject: ProjectApi
+  currentProject: ProjectApi,
 ): boolean {
   return (
     previousProject.projectId === currentProject.projectId &&
@@ -53,7 +53,7 @@ function sameBuild(previousProject: ProjectApi, currentProject: ProjectApi) {
 }
 
 export function isProject<P extends ProjectApi, E extends FeedApiError>(
-  project: P | E
+  project: P | E,
 ): project is P {
   return project.prognosis !== Prognosis.error
 }
@@ -73,11 +73,11 @@ export function projectBuildLabel(project: Project | FeedError): string {
 
 function updateTimestamp(
   project: Project,
-  previouslyFetchedProjects: Projects
+  previouslyFetchedProjects: Projects,
 ): Project {
   if (isBuilding(project)) {
     const previousProject = previouslyFetchedProjects.find((previous) =>
-      sameProject(project, previous)
+      sameProject(project, previous),
     )
     if (
       previousProject &&
@@ -92,10 +92,10 @@ function updateTimestamp(
 
 function addPreviousPrognosis(
   project: ProjectApi,
-  previouslyFetchedProjects: Projects
+  previouslyFetchedProjects: Projects,
 ): Project {
   const previousPrognosis = previouslyFetchedProjects.find((previous) =>
-    sameProject(previous, project)
+    sameProject(previous, project),
   )?.prognosis
   return {
     ...project,
@@ -105,7 +105,7 @@ function addPreviousPrognosis(
 
 export function enrichProjects(
   apiProjects: ProjectsResponse,
-  previouslyFetchedProjects: Projects
+  previouslyFetchedProjects: Projects,
 ): Projects {
   return apiProjects
     .filter(isProject)

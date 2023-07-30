@@ -13,5 +13,5 @@ export const configurationImported = createAction(
         timestamp: now(),
       },
     }
-  }
+  },
 )

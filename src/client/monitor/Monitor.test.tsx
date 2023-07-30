@@ -46,7 +46,7 @@ it('should show a helpful message if no feeds are added', () => {
   }
   render(<Monitor />, { state, outletContext })
   expect(
-    screen.getByText('Add a feed via the tracking page to start monitoring')
+    screen.getByText('Add a feed via the tracking page to start monitoring'),
   ).toBeInTheDocument()
 })
 
@@ -104,7 +104,7 @@ it('should display an error if the Nevergreen server is having issues', async ()
     () => {
       expect(screen.getByText('some-error')).toBeInTheDocument()
     },
-    { timeout: 4000 }
+    { timeout: 4000 },
   )
   expect(screen.queryByText('some-project')).not.toBeInTheDocument()
 })

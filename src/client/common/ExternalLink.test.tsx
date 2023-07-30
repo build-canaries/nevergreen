@@ -11,6 +11,6 @@ it('should have the correct target, defend against "reverse tabnabbing" and let 
   expect(anchor).toHaveAttribute('target', '_blank')
   expect(anchor).toHaveAttribute('rel', 'noopener noreferrer')
   expect(screen.queryByText('(opens in a new window)')).toHaveAttribute(
-    VISUALLY_HIDDEN_ATTRIBUTE
+    VISUALLY_HIDDEN_ATTRIBUTE,
   )
 })

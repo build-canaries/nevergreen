@@ -25,13 +25,13 @@ function totalPaddingPixels(fontSize: number, padding: number) {
 function longestStringInArray(words: ReadonlyArray<string>) {
   return words.reduce(
     (largestFound, candidate) => Math.max(candidate.length, largestFound),
-    0
+    0,
   )
 }
 
 function findLongestWord(sentences: ReadonlyArray<string>) {
   const individualWords = flatten(
-    sentences.map((sentence) => sentence.split(' '))
+    sentences.map((sentence) => sentence.split(' ')),
   )
   return longestStringInArray(individualWords)
 }
@@ -41,7 +41,7 @@ function linesRequired(
   widthPixels: number,
   charWidthScale: number,
   fontSize: number,
-  paddingEm: number
+  paddingEm: number,
 ) {
   const actualWidth = widthPixels - totalPaddingPixels(fontSize, paddingEm)
   let lineNumber = 1
@@ -66,13 +66,13 @@ function maximumPossibleFontSize(
   sentences: ReadonlyArray<string>,
   widthPixels: number,
   charWidthScale: number,
-  paddingEm: number
+  paddingEm: number,
 ) {
   const longestWordCharacters = findLongestWord(sentences)
   const longestWordPixels = charWidthScale * longestWordCharacters
   // We are calculating the pixels the longest word takes at a font size of 1, so this needs to be 1 and not charWidthScale
   const fontSize = Math.floor(
-    widthPixels / (longestWordPixels + totalPaddingPixels(1, paddingEm))
+    widthPixels / (longestWordPixels + totalPaddingPixels(1, paddingEm)),
   )
 
   logger.debug('calculated maximum possible ideal font size', {
@@ -95,7 +95,7 @@ export function ideal(
   elementWidthPx: number,
   charHeightScale: number,
   charWidthScale: number,
-  paddingEm: number
+  paddingEm: number,
 ): number {
   if (
     elementHeightPx <= 0 ||
@@ -121,7 +121,7 @@ export function ideal(
     sentences,
     elementWidthPx,
     charWidthScale,
-    paddingEm
+    paddingEm,
   )
 
   while (fontSize > MIN_FONT_SIZE) {
@@ -131,8 +131,8 @@ export function ideal(
         elementWidthPx,
         charWidthScale,
         fontSize,
-        paddingEm
-      )
+        paddingEm,
+      ),
     )
     const largestNumberOfLines = Math.max(...numberOfLines)
     const heightRequired = largestNumberOfLines * (charHeightScale * fontSize)
@@ -162,7 +162,7 @@ export function ideal(
 
   logger.measure(
     'Calculate ideal font size',
-    PerformanceMark.calculatingIdealFontSize
+    PerformanceMark.calculatingIdealFontSize,
   )
   return fontSize
 }
@@ -217,7 +217,7 @@ export function ScaleText({
       elementWidth,
       fontHeight,
       fontWidth,
-      0.5
+      0.5,
     )
 
     return { fontSize: `${fontSize}px`, padding: '0.5em' }

@@ -37,5 +37,5 @@ export const { setClickToShowMenu } = slice.actions
 const getOtherSettings = (state: RootState) => state.otherSettings
 export const getClickToShowMenu = createSelector(
   getOtherSettings,
-  (settings) => settings.clickToShowMenu
+  (settings) => settings.clickToShowMenu,
 )

@@ -48,7 +48,7 @@ interface ExtendedRenderOptions extends RenderOptions {
 
 export function render(
   component: ReactElement,
-  options: ExtendedRenderOptions = {}
+  options: ExtendedRenderOptions = {},
 ): ExtendedRenderResult {
   const appElement =
     document.querySelector('#root') || document.createElement('div')
@@ -100,7 +100,7 @@ export function render(
 
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-return */
 export function testReducer(
-  reducer: Partial<Reducer<RootState>>
+  reducer: Partial<Reducer<RootState>>,
 ): Reducer<CombinedState<RootState>> {
   return combineReducers<RootState>(
     merge(
@@ -115,8 +115,8 @@ export function testReducer(
         [notificationsRoot]: (state: any = null) => state,
         [personalSettingsRoot]: (state: any = null) => state,
       },
-      reducer
-    )
+      reducer,
+    ),
   )
 }
 

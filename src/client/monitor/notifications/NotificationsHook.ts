@@ -6,7 +6,7 @@ import { useSystemNotifications } from './SystemNotificationsHook'
 
 export function recentlyTransitioned(
   projects: ReadonlyArray<Project | FeedError>,
-  prognosis: Prognosis
+  prognosis: Prognosis,
 ) {
   return projects.filter((project) => {
     return (
@@ -17,7 +17,7 @@ export function recentlyTransitioned(
 
 export function useNotifications(
   projects: Projects,
-  feedErrors: FeedErrors
+  feedErrors: FeedErrors,
 ): void {
   useBrowserTitleSummary(projects, feedErrors)
   useAudioNotifications(projects, feedErrors)

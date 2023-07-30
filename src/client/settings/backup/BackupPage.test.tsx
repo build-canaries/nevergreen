@@ -20,10 +20,12 @@ it('should be able to remove remote locations', async () => {
   expect(screen.getByText(/http:\/\/example.com/)).toBeInTheDocument()
 
   void user.click(
-    screen.getByRole('button', { name: 'Remove Remote Custom server location' })
+    screen.getByRole('button', {
+      name: 'Remove Remote Custom server location',
+    }),
   )
 
   await waitForElementToBeRemoved(() =>
-    screen.queryByText(/http:\/\/example.com/)
+    screen.queryByText(/http:\/\/example.com/),
   )
 })

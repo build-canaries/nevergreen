@@ -28,17 +28,17 @@ export function ExportLocallyPage(): ReactElement {
 
   const copySuccess = useCallback(
     () => setCopyingSuccess('Copied current configuration to clipboard'),
-    []
+    [],
   )
   const copyError = useCallback(
     () => setCopyingFailure('Unable to copy, please manually copy'),
-    []
+    [],
   )
 
   const autoCopySupported = useClipboard(
     '#copy-to-clipboard',
     copySuccess,
-    copyError
+    copyError,
   )
 
   const saveLocally = () => {

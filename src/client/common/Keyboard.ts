@@ -25,7 +25,7 @@ export function unpauseShortcuts(): void {
 export function useShortcut(
   keys: string | string[],
   callback: Callback,
-  deps: ReadonlyArray<unknown> = []
+  deps: ReadonlyArray<unknown> = [],
 ): void {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const memoCallback = useCallback(callback, deps)

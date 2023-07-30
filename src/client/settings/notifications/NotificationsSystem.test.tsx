@@ -32,7 +32,7 @@ it('should allow system notifications to be enabled', async () => {
     expect(getAllowSystemNotifications(store.getState())).toBeTruthy()
   })
   expect(SystemNotifications.sendSystemNotification).toHaveBeenCalledWith(
-    NOTIFICATIONS_ENABLED_NOTIFICATION
+    NOTIFICATIONS_ENABLED_NOTIFICATION,
   )
 })
 
@@ -41,8 +41,8 @@ it('should not show the not supported message if browser notifications are suppo
   render(<NotificationsSystem />)
   expect(
     screen.queryByText(
-      "Unfortunately your browser doesn't support notifications."
-    )
+      "Unfortunately your browser doesn't support notifications.",
+    ),
   ).not.toBeInTheDocument()
 })
 
@@ -56,7 +56,7 @@ it('should not give the option to show browser notifications if they are not sup
   jest.spyOn(SystemNotifications, 'supported').mockReturnValue(false)
   render(<NotificationsSystem />)
   expect(
-    screen.queryByLabelText('show system notifications')
+    screen.queryByLabelText('show system notifications'),
   ).not.toBeInTheDocument()
 })
 

@@ -22,7 +22,7 @@ export function Duration({
       staleTime: 59 * 1000,
       refetchInterval: 60 * 1000,
       refetchIntervalInBackground: true,
-    }
+    },
   )
 
   const fullDescription = [prefix, duration, suffix]

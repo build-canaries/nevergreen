@@ -23,5 +23,5 @@ it.each`
   ({ sentences, height, width, expected }: TestProps) => {
     const actual = ideal(sentences, height, width, heightScale, widthScale, 0.5)
     expect(actual).toEqual(expected)
-  }
+  },
 )

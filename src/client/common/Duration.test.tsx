@@ -12,6 +12,6 @@ it('should display the given prefix and suffix', () => {
   }
   render(<Duration {...props} />)
   expect(
-    screen.getByText('some prefix about 17 years some suffix')
+    screen.getByText('some prefix about 17 years some suffix'),
   ).toBeInTheDocument()
 })

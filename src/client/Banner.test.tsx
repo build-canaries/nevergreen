@@ -24,7 +24,7 @@ it('should be able to dismiss', async () => {
   expect(screen.getByText('some notification')).toBeInTheDocument()
 
   await user.click(
-    screen.getByRole('button', { name: 'Dismiss info messages' })
+    screen.getByRole('button', { name: 'Dismiss info messages' }),
   )
   expect(onDismiss).toHaveBeenCalled()
 })

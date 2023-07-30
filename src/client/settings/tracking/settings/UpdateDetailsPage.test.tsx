@@ -30,7 +30,7 @@ it('should be able to update details', async () => {
       expect.objectContaining({
         name: 'some-new-name',
         serverType: 'circle',
-      })
+      }),
     )
   })
 })
@@ -57,7 +57,7 @@ it('should be able to generate a new random name', async () => {
     expect(getFeed('trayId')(store.getState())).toEqual(
       expect.not.objectContaining({
         name: 'some-name',
-      })
+      }),
     )
   })
 })

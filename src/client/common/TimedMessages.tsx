@@ -34,7 +34,7 @@ function TimedMessages({
 }
 
 export function TimedErrorMessages(
-  props: Omit<TimedMessagesProps, 'type' | 'icon'>
+  props: Omit<TimedMessagesProps, 'type' | 'icon'>,
 ): ReactElement {
   return (
     <TimedMessages type={MessagesType.error} icon={<Warning />} {...props} />
@@ -42,13 +42,13 @@ export function TimedErrorMessages(
 }
 
 export function TimedInfoMessages(
-  props: Omit<TimedMessagesProps, 'type' | 'icon'>
+  props: Omit<TimedMessagesProps, 'type' | 'icon'>,
 ): ReactElement {
   return <TimedMessages type={MessagesType.info} icon={<Info />} {...props} />
 }
 
 export function TimedSuccessMessages(
-  props: Omit<TimedMessagesProps, 'type' | 'icon'>
+  props: Omit<TimedMessagesProps, 'type' | 'icon'>,
 ): ReactElement {
   return (
     <TimedMessages

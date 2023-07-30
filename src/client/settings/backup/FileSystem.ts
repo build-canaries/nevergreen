@@ -28,7 +28,7 @@ export async function loadFile(file: File): Promise<LoadedFile> {
       } catch (e) {
         logger.error('Unable to load file because of an error', e)
         reject(
-          new Error('An error occurred while trying to open, please try again')
+          new Error('An error occurred while trying to open, please try again'),
         )
       }
     } else {

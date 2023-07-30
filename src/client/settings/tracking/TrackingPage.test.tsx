@@ -18,7 +18,7 @@ it('should allow changing the poll time', async () => {
   const { store, user } = render(<TrackingPage />, { state })
   await user.selectOptions(
     screen.getByLabelText('Poll for feed changes every'),
-    '600'
+    '600',
   )
   expect(getRefreshTime(store.getState())).toEqual(600)
 })
@@ -50,6 +50,6 @@ it('should show a helpful message if no feeds are added', () => {
   }
   render(<TrackingPage />, { state })
   expect(
-    screen.getByText('No feeds added, add a feed to start monitoring')
+    screen.getByText('No feeds added, add a feed to start monitoring'),
   ).toBeInTheDocument()
 })
