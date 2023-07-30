@@ -67,3 +67,5 @@ export function Monitor(): ReactElement {
     </div>
   )
 }
+
+export const Component = Monitor

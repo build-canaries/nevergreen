@@ -28,3 +28,5 @@ export function BackupPage(): ReactElement {
     </Page>
   )
 }
+
+export const Component = BackupPage

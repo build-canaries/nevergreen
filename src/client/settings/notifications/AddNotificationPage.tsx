@@ -173,3 +173,5 @@ export function AddNotificationPage(): ReactElement {
     </Page>
   )
 }
+
+export const Component = AddNotificationPage

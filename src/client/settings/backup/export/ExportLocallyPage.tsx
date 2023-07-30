@@ -109,3 +109,5 @@ export function ExportLocallyPage(): ReactElement {
     </Page>
   )
 }
+
+export const Component = ExportLocallyPage

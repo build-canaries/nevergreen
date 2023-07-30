@@ -102,3 +102,5 @@ export function UpdateDetailsPage(): ReactElement {
     </Page>
   )
 }
+
+export const Component = UpdateDetailsPage

@@ -26,3 +26,5 @@ export function UpdateConnectionPage(): ReactElement {
     </Page>
   )
 }
+
+export const Component = UpdateConnectionPage

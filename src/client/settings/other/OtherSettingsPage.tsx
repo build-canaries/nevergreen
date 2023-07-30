@@ -47,3 +47,5 @@ export function OtherSettingsPage(): ReactElement {
     </Page>
   )
 }
+
+export const Component = OtherSettingsPage

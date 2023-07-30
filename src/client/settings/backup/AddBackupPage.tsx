@@ -197,3 +197,5 @@ export function AddBackupPage(): ReactElement {
     </Page>
   )
 }
+
+export const Component = AddBackupPage

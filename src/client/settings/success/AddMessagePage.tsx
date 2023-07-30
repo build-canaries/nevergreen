@@ -61,3 +61,5 @@ export function AddMessagePage(): ReactElement {
     </Page>
   )
 }
+
+export const Component = AddMessagePage

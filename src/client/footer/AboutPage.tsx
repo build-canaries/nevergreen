@@ -77,3 +77,5 @@ export function AboutPage(): ReactElement {
     </Page>
   )
 }
+
+export const Component = AboutPage

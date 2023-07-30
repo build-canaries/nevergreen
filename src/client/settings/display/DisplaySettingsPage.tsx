@@ -91,3 +91,5 @@ export function DisplaySettingsPage(): ReactElement {
     </Page>
   )
 }
+
+export const Component = DisplaySettingsPage

@@ -17,11 +17,10 @@ import { displaySettingsRoot } from '../settings/display/DisplaySettingsReducer'
 import { selectedRoot } from '../settings/tracking/SelectedReducer'
 import { successRoot } from '../settings/success/SuccessReducer'
 import { feedsRoot } from '../settings/tracking/FeedsReducer'
-import { Outlet } from 'react-router-dom'
+import { createBrowserRouter, Outlet } from 'react-router-dom'
 import { migrationsRoot } from '../configuration/MigrationsReducer'
 import parseISO from 'date-fns/parseISO'
 import { remoteLocationsRoot } from '../settings/backup/RemoteLocationsReducer'
-import { Route, Routes } from 'react-router'
 import userEvent from '@testing-library/user-event'
 import type { UserEvent } from '@testing-library/user-event/setup/setup'
 import { buildState } from './builders'
@@ -29,6 +28,7 @@ import { App } from '../App'
 import { notificationsRoot } from '../settings/notifications/NotificationsReducer'
 import { personalSettingsRoot } from '../settings/PersonalSettingsReducer'
 import { otherSettingsRoot } from '../settings/other/OtherSettingsReducer'
+import { UnhandledErrorMessage } from '../UnhandledErrorMessage'
 
 interface ExtendedRenderResult extends RenderResult {
   readonly store: EnhancedStore<
@@ -76,14 +76,20 @@ export function render(
   })
 
   const wrapper = ({ children }: { children: ReactNode }) => (
-    <App store={store} appElement="#root">
-      <Routes>
-        <Route element={<Outlet context={mergedOptions.outletContext} />}>
-          <Route path={mergedOptions.mountPath} element={children} />
-          <Route path="*" element={<>location changed</>} />
-        </Route>
-      </Routes>
-    </App>
+    <App
+      store={store}
+      appElement="#root"
+      router={createBrowserRouter([
+        {
+          element: <Outlet context={mergedOptions.outletContext} />,
+          errorElement: <UnhandledErrorMessage />,
+          children: [
+            { path: mergedOptions.mountPath, element: children },
+            { path: '*', element: <>location changed</> },
+          ],
+        },
+      ])}
+    />
   )
 
   const view = testRender(component, {

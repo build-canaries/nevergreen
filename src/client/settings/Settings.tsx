@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react'
 import cn from 'classnames'
-import { NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Outlet, useNavigation } from 'react-router-dom'
 import { List } from '../common/icons/List'
 import { Display } from '../common/icons/Display'
 import { Bell } from '../common/icons/Bell'
@@ -8,6 +8,7 @@ import { FloppyDisk } from '../common/icons/FloppyDisk'
 import { Image } from '../common/icons/Image'
 import { Cogs } from '../common/icons/Cogs'
 import styles from './settings.scss'
+import { Loading } from '../common/Loading'
 
 interface MenuItemProps {
   readonly to: string
@@ -32,6 +33,8 @@ function MenuItem({ to, label, icon }: MenuItemProps): ReactElement {
 }
 
 export function Settings(): ReactElement {
+  const { state } = useNavigation()
+
   return (
     <div className={styles.settings}>
       <nav aria-label="Settings" className={styles.nav}>
@@ -44,9 +47,9 @@ export function Settings(): ReactElement {
           <MenuItem to="other" label="Other" icon={<Cogs />} />
         </ul>
       </nav>
-      <div>
+      <Loading isLoading={state === 'loading'} title={'Settings'}>
         <Outlet />
-      </div>
+      </Loading>
     </div>
   )
 }

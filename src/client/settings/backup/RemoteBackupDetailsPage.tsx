@@ -46,3 +46,5 @@ export function RemoteBackupDetailsPage(): ReactElement {
     </Page>
   )
 }
+
+export const Component = RemoteBackupDetailsPage

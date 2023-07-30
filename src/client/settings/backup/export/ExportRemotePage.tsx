@@ -71,3 +71,5 @@ export function ExportRemotePage(): ReactElement {
     </Page>
   )
 }
+
+export const Component = ExportRemotePage

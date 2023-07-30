@@ -10,3 +10,5 @@ export function ImportSuccessPage(): ReactElement {
     </Page>
   )
 }
+
+export const Component = ImportSuccessPage

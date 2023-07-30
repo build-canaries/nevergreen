@@ -128,3 +128,5 @@ export function ImportLocalPage(): ReactElement {
     </Page>
   )
 }
+
+export const Component = ImportLocalPage

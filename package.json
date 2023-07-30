@@ -263,7 +263,7 @@
     "clearMocks": true,
     "resetMocks": true,
     "restoreMocks": true,
-    "testEnvironment": "jsdom",
+    "testEnvironment": "<rootDir>/src/client/testUtils/fixJSDOMEnvironment.ts",
     "fakeTimers": {
       "enableGlobally": true
     }

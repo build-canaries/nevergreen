@@ -78,3 +78,5 @@ export function Preview(): ReactElement {
     </div>
   )
 }
+
+export const Component = Preview

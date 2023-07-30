@@ -27,3 +27,5 @@ export function StyleGuide(): ReactElement {
     </Page>
   )
 }
+
+export const Component = StyleGuide

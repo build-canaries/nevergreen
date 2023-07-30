@@ -5,6 +5,8 @@
 @use '../common/layout';
 
 .settings {
+  display: flex;
+  flex-direction: column;
   margin: 0 auto;
   max-width: layout.$max-page-width;
   width: 100%;

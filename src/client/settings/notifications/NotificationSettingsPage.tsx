@@ -71,3 +71,5 @@ export function NotificationSettingsPage(): ReactElement {
     </Page>
   )
 }
+
+export const Component = NotificationSettingsPage

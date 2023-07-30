@@ -41,3 +41,5 @@ export function ManageProjectsPage(): ReactElement {
     </Page>
   )
 }
+
+export const Component = ManageProjectsPage

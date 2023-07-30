@@ -148,3 +148,5 @@ export function ImportRemotePage(): ReactElement {
     </Page>
   )
 }
+
+export const Component = ImportRemotePage

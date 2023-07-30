@@ -67,3 +67,5 @@ export function SuccessMessagesPage(): ReactElement {
     </Page>
   )
 }
+
+export const Component = SuccessMessagesPage

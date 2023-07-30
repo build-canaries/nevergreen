@@ -31,3 +31,5 @@ export function ChangeSuccessColoursPage(): ReactElement {
     />
   )
 }
+
+export const Component = ChangeSuccessColoursPage

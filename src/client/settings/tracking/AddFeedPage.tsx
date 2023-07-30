@@ -37,3 +37,5 @@ export function AddFeedPage(): ReactElement {
     </Page>
   )
 }
+
+export const Component = AddFeedPage
