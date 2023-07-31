@@ -4,6 +4,7 @@ import { RoutePaths } from '../../AppRoutes'
 import { VisuallyHidden } from '../../common/VisuallyHidden'
 import { PaintFormat } from '../../common/icons/PaintFormat'
 import styles from './change-colours-link.scss'
+import { generatePath } from 'react-router-dom'
 
 interface ChangeColoursLinkProps {
   readonly path: string
@@ -16,7 +17,7 @@ export function ChangeColoursLink({
 }: ChangeColoursLinkProps): ReactElement {
   return (
     <LinkButton
-      to={RoutePaths.colours.replace(':for', path)}
+      to={generatePath(RoutePaths.colours, { for: path })}
       className={styles.link}
       icon={<PaintFormat />}
     >

@@ -19,6 +19,7 @@ import { RoutePaths } from '../../AppRoutes'
 import { useAppDispatch } from '../../configuration/Hooks'
 import { addBackupLocation } from './RemoteLocationsActions'
 import styles from './add-backup.scss'
+import { generatePath } from 'react-router-dom'
 
 type Fields = 'url' | 'accessToken'
 
@@ -87,10 +88,7 @@ export function AddBackupPage(): ReactElement {
       )
     }
     return {
-      navigateTo: RoutePaths.backupExportDetails.replace(
-        ':internalId',
-        internalId,
-      ),
+      navigateTo: generatePath(RoutePaths.backupExportDetails, { internalId }),
     }
   }
 
