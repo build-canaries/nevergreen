@@ -57,6 +57,8 @@ export function useBrowserTitleSummary(
     const highestPriority = activePrognosis.at(0)
     if (highestPriority) {
       setFavicon(prognosisIconsSvg[highestPriority.prognosis])
+    } else {
+      setFavicon(undefined)
     }
   }, [projects, feedErrors, showPrognosis])
 }
