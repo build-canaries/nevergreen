@@ -48,9 +48,41 @@ describe('validation errors', () => {
       screen.getByText('An existing CCTray XML feed already has this URL'),
     ).toBeInTheDocument()
   })
+
+  it('should display an error if auth type is query param and query key is blank', async () => {
+    const state = {
+      [feedsRoot]: {},
+    }
+
+    const { user } = render(<AddFeedPage />, { state })
+    await user.type(screen.getByLabelText('URL'), 'http://some-url')
+    await user.selectOptions(
+      screen.getByLabelText('Authentication'),
+      AuthTypes.queryParam,
+    )
+    await user.click(screen.getByText('Add feed'))
+
+    expect(screen.getByText('Enter a query key')).toBeInTheDocument()
+  })
+
+  it('should display an error if auth type is query param and query value is blank', async () => {
+    const state = {
+      [feedsRoot]: {},
+    }
+
+    const { user } = render(<AddFeedPage />, { state })
+    await user.type(screen.getByLabelText('URL'), 'http://some-url')
+    await user.selectOptions(
+      screen.getByLabelText('Authentication'),
+      AuthTypes.queryParam,
+    )
+    await user.click(screen.getByText('Add feed'))
+
+    expect(screen.getByText('Enter a query value')).toBeInTheDocument()
+  })
 })
 
-it.each([AuthTypes.token, AuthTypes.basic, AuthTypes.none])(
+it.each(Object.values(AuthTypes))(
   'should allow adding feeds with auth %s',
   async (authType) => {
     jest.spyOn(Utils, 'createId').mockReturnValue('some-feed-id')
@@ -118,6 +150,15 @@ const enterAuth = {
       AuthTypes.none,
     )
   },
+  [AuthTypes.queryParam]: async (user: UserEvent) => {
+    await user.selectOptions(
+      screen.getByLabelText('Authentication'),
+      AuthTypes.queryParam,
+    )
+    await user.clear(screen.getByLabelText('Query key'))
+    await user.type(screen.getByLabelText('Query key'), 'new-key')
+    await user.type(screen.getByLabelText('Query value'), 'new-query')
+  },
 }
 
 const testConnectionExpected = {
@@ -133,19 +174,29 @@ const testConnectionExpected = {
   [AuthTypes.none]: {
     authType: AuthTypes.none,
   },
+  [AuthTypes.queryParam]: {
+    authType: AuthTypes.queryParam,
+    username: 'new-key',
+    password: 'new-query',
+  },
 }
 
 const feedExpected = {
   [AuthTypes.token]: {
     authType: AuthTypes.token,
-    encryptedAccessToken: 'encrypted',
+    encryptedAuth: 'encrypted',
   },
   [AuthTypes.basic]: {
     authType: AuthTypes.basic,
     username: 'new-username',
-    encryptedPassword: 'encrypted',
+    encryptedAuth: 'encrypted',
   },
   [AuthTypes.none]: {
     authType: AuthTypes.none,
+  },
+  [AuthTypes.queryParam]: {
+    authType: AuthTypes.queryParam,
+    username: 'new-key',
+    encryptedAuth: 'encrypted',
   },
 }

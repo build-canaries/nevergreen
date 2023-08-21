@@ -23,8 +23,7 @@ export interface ConnectionFormFields {
   readonly url: string
   readonly authType: AuthTypes
   readonly username: string
-  readonly encryptedPassword: string
-  readonly encryptedAccessToken: string
+  readonly encryptedAuth: string
 }
 
 interface ConnectionFormProps {
@@ -33,7 +32,7 @@ interface ConnectionFormProps {
   readonly onCancel: string
 }
 
-type Fields = 'url'
+type Fields = 'url' | 'queryKey' | 'queryValue'
 
 function urlMatches(feed: Feed, url: string): boolean {
   return removeScheme(url) === removeScheme(feed.url)
@@ -43,6 +42,7 @@ const authTypeOptions = [
   { value: AuthTypes.none, display: 'No auth' },
   { value: AuthTypes.basic, display: 'Basic auth' },
   { value: AuthTypes.token, display: 'Access token' },
+  { value: AuthTypes.queryParam, display: 'Query parameter' },
 ]
 
 const extendedAuthTypeOptions = [
@@ -60,13 +60,23 @@ export function ConnectionForm({
   )
   const initialAuth = existingFeed ? KeepExistingAuth.keep : AuthTypes.none
   const authOptions = existingFeed ? extendedAuthTypeOptions : authTypeOptions
+  const initialUsername =
+    existingFeed?.authType === AuthTypes.basic
+      ? existingFeed?.username ?? ''
+      : ''
+  const initialQueryKey =
+    existingFeed?.authType === AuthTypes.queryParam
+      ? existingFeed?.username ?? ''
+      : ''
   const submitButtonText = existingFeed ? 'Save' : 'Add feed'
 
-  const [url, setUrl] = useState(existingFeed?.url || '')
+  const [url, setUrl] = useState(existingFeed?.url ?? '')
   const [authType, setAuthType] = useState<UpdateExistingAuthTypes>(initialAuth)
-  const [username, setUsername] = useState(existingFeed?.username || '')
+  const [username, setUsername] = useState(initialUsername)
   const [password, setPassword] = useState('')
   const [accessToken, setAccessToken] = useState('')
+  const [queryKey, setQueryKey] = useState(initialQueryKey)
+  const [queryValue, setQueryValue] = useState('')
 
   const onValidate = () => {
     const validationErrors: FormErrors<Fields> = []
@@ -88,6 +98,20 @@ export function ConnectionForm({
         message: 'An existing CCTray XML feed already has this URL',
       })
     }
+    if (authType === AuthTypes.queryParam) {
+      if (isBlank(queryKey)) {
+        validationErrors.push({
+          field: 'queryKey',
+          message: 'Enter a query key',
+        })
+      }
+      if (isBlank(queryValue)) {
+        validationErrors.push({
+          field: 'queryValue',
+          message: 'Enter a query value',
+        })
+      }
+    }
 
     return validationErrors
   }
@@ -106,6 +130,8 @@ export function ConnectionForm({
     switch (authType) {
       case AuthTypes.basic:
         return username
+      case AuthTypes.queryParam:
+        return queryKey
       case KeepExistingAuth.keep:
         return existingFeed?.username || ''
       default:
@@ -113,42 +139,31 @@ export function ConnectionForm({
     }
   }
 
-  const newEncryptedPassword = async (
+  const newEncryptedAuth = async (
     signal: AbortSignal | undefined,
   ): Promise<string> => {
     switch (authType) {
       case AuthTypes.basic:
         return encrypt(password, signal)
-      case KeepExistingAuth.keep:
-        return existingFeed?.encryptedPassword || ''
-      default:
-        return ''
-    }
-  }
-
-  const newEncryptedAccessToken = async (
-    signal: AbortSignal | undefined,
-  ): Promise<string> => {
-    switch (authType) {
       case AuthTypes.token:
         return encrypt(accessToken, signal)
+      case AuthTypes.queryParam:
+        return encrypt(queryValue, signal)
       case KeepExistingAuth.keep:
-        return existingFeed?.encryptedAccessToken || ''
+        return existingFeed?.encryptedAuth || ''
       default:
         return ''
     }
   }
 
   const processForm = async (signal: AbortSignal | undefined) => {
-    const encryptedPassword = await newEncryptedPassword(signal)
-    const encryptedAccessToken = await newEncryptedAccessToken(signal)
+    const encryptedAuth = await newEncryptedAuth(signal)
     return {
       navigateTo: onSuccess({
         url,
         authType: newAuthType(),
         username: newUsername(),
-        encryptedPassword,
-        encryptedAccessToken,
+        encryptedAuth,
       }),
     }
   }
@@ -217,9 +232,39 @@ export function ConnectionForm({
                 </Password>
               </div>
             )}
+            {authType == AuthTypes.queryParam && (
+              <div className={styles.inputs}>
+                <Input
+                  classNameContainer={styles.username}
+                  value={queryKey}
+                  onChange={({ target }) => setQueryKey(target.value)}
+                  disabled={submitting}
+                  error={firstError<Fields>('queryKey', validationErrors)}
+                >
+                  Query key
+                </Input>
+                <Password
+                  classNameContainer={styles.password}
+                  value={queryValue}
+                  onChange={({ target }) => setQueryValue(target.value)}
+                  disabled={submitting}
+                  error={firstError<Fields>('queryValue', validationErrors)}
+                >
+                  Query value
+                </Password>
+              </div>
+            )}
             <TestConnection
               existingFeed={existingFeed}
-              details={{ url, authType, username, password, accessToken }}
+              details={{
+                url,
+                authType,
+                username,
+                password,
+                accessToken,
+                queryKey,
+                queryValue,
+              }}
             />
           </>
         )

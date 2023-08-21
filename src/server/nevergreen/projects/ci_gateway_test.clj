@@ -23,7 +23,7 @@
       (subject/fetch-cctray {:url                "http://some-url"
                              :auth-type          "basic"
                              :username           "some-username"
-                             :encrypted-password "some-encrypted-password"})))
+                             :encrypted-auth     "some-encrypted-password"})))
 
   (testing "sets the auth header if auth type is basic using the encrypted password over an unencrypted password"
     (binding [subject/*http-get* (fn [_ data]
@@ -33,7 +33,7 @@
       (subject/fetch-cctray {:url                "http://some-url"
                              :auth-type          "basic"
                              :username           "some-username"
-                             :encrypted-password "some-encrypted-password"
+                             :encrypted-auth     "some-encrypted-password"
                              :password           "unencrypted-password"})))
 
   (testing "sets the auth header if auth type is basic using the given unencrypted password"
@@ -52,7 +52,7 @@
               subject/*decrypt* (constantly "some-decrypted-token")]
       (subject/fetch-cctray {:url                    "http://some-url"
                              :auth-type              "token"
-                             :encrypted-access-token "some-token"})))
+                             :encrypted-auth         "some-token"})))
 
   (testing "sets the auth header if auth type is token using the encrypted token over the unencrypted token"
     (binding [subject/*http-get* (fn [_ data]
@@ -61,7 +61,7 @@
               subject/*decrypt* (constantly "some-decrypted-token")]
       (subject/fetch-cctray {:url                    "http://some-url"
                              :auth-type              "token"
-                             :encrypted-access-token "some-token"
+                             :encrypted-auth         "some-token"
                              :access-token           "unencrypted-token"})))
 
   (testing "sets the auth header if auth type is token using the given unencrypted access token"
@@ -71,6 +71,56 @@
       (subject/fetch-cctray {:url          "http://some-url"
                              :auth-type    "token"
                              :access-token "unencrypted-token"})))
+
+  (testing "sets the query param if auth type is query param after decrypting"
+    (binding [subject/*http-get* (fn [url _]
+                                   (is (= "http://some-url?query-key=some-decrypted-token"
+                                          url)))
+              subject/*decrypt* (constantly "some-decrypted-token")]
+      (subject/fetch-cctray {:url            "http://some-url"
+                             :auth-type      "queryParam"
+                             :username       "query-key"
+                             :encrypted-auth "some-token"})))
+
+  (testing "sets the query param if auth type is query param using the encrypted password over the unencrypted password"
+    (binding [subject/*http-get* (fn [url _]
+                                   (is (= "http://some-url?query-key=some-decrypted-token"
+                                          url)))
+              subject/*decrypt* (constantly "some-decrypted-token")]
+      (subject/fetch-cctray {:url            "http://some-url"
+                             :auth-type      "queryParam"
+                             :username       "query-key"
+                             :password       "unencrypted-password"
+                             :encrypted-auth "some-token"})))
+
+  (testing "sets the query param if auth type is query param using the given unencrypted password"
+    (binding [subject/*http-get* (fn [url _]
+                                   (is (= "http://some-url?query-key=unencrypted-password"
+                                          url)))]
+      (subject/fetch-cctray {:url       "http://some-url"
+                             :auth-type "queryParam"
+                             :username  "query-key"
+                             :password  "unencrypted-password"})))
+
+  (testing "sets the query param without overriding existing query params"
+    (binding [subject/*http-get* (fn [url _]
+                                   (is (= "http://some-url?a=b&c=d&query-key=some-decrypted-token"
+                                          url)))
+              subject/*decrypt* (constantly "some-decrypted-token")]
+      (subject/fetch-cctray {:url            "http://some-url?a=b&c=d"
+                             :auth-type      "queryParam"
+                             :username       "query-key"
+                             :encrypted-auth "some-token"})))
+
+  (testing "sets the query param overriding if the key already exists"
+    (binding [subject/*http-get* (fn [url _]
+                                   (is (= "http://some-url?query-key=some-decrypted-token"
+                                          url)))
+              subject/*decrypt* (constantly "some-decrypted-token")]
+      (subject/fetch-cctray {:url            "http://some-url?query-key=this-gets-overridden"
+                             :auth-type      "queryParam"
+                             :username       "query-key"
+                             :encrypted-auth "some-token"})))
 
   (testing "doesn't set the auth header if auth is none"
     (binding [subject/*http-get* (fn [_ data]
@@ -99,7 +149,7 @@
       (subject/test-connection {:url                "http://some-url"
                                 :auth-type          "basic"
                                 :username           "some-username"
-                                :encrypted-password "some-encrypted-password"})))
+                                :encrypted-auth     "some-encrypted-password"})))
 
   (testing "sets the auth header if auth type is basic using the encrypted password over an unencrypted password"
     (binding [subject/*http-head* (fn [_ data]
@@ -109,7 +159,7 @@
       (subject/test-connection {:url                "http://some-url"
                                 :auth-type          "basic"
                                 :username           "some-username"
-                                :encrypted-password "some-encrypted-password"
+                                :encrypted-auth     "some-encrypted-password"
                                 :password           "unencrypted-password"})))
 
   (testing "sets the auth header if auth type is basic using the given unencrypted password"
@@ -128,7 +178,7 @@
               subject/*decrypt* (constantly "some-decrypted-token")]
       (subject/test-connection {:url                    "http://some-url"
                                 :auth-type              "token"
-                                :encrypted-access-token "some-token"})))
+                                :encrypted-auth         "some-token"})))
 
   (testing "sets the auth header if auth type is token using the encrypted token over the unencrypted token"
     (binding [subject/*http-head* (fn [_ data]
@@ -137,7 +187,7 @@
               subject/*decrypt* (constantly "some-decrypted-token")]
       (subject/test-connection {:url                    "http://some-url"
                                 :auth-type              "token"
-                                :encrypted-access-token "some-token"
+                                :encrypted-auth         "some-token"
                                 :access-token           "unencrypted-token"})))
 
   (testing "sets the auth header if auth type is token using the given unencrypted access token"

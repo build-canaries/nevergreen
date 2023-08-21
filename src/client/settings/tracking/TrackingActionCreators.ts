@@ -7,8 +7,7 @@ export interface FeedAddedAction {
   readonly url: string
   readonly authType: AuthTypes
   readonly username?: string
-  readonly encryptedPassword?: string
-  readonly encryptedAccessToken?: string
+  readonly encryptedAuth?: string
 }
 
 interface FeedUpdatedAction {

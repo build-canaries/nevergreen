@@ -81,8 +81,7 @@ describe(feedAdded.toString(), () => {
       authType: AuthTypes.none,
       url: '',
       username: '',
-      encryptedPassword: '',
-      encryptedAccessToken: '',
+      encryptedAuth: '',
     })
     const newState = reducer(existingState, action)
     expect(getFeeds(newState)[0]).toHaveProperty('trayId', 'trayId')

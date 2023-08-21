@@ -16,6 +16,7 @@ it.each([
   AuthTypes.token,
   AuthTypes.basic,
   AuthTypes.none,
+  AuthTypes.queryParam,
   KeepExistingAuth.keep,
 ])(
   'should be able to update connection details auth to %s',
@@ -28,7 +29,7 @@ it.each([
       authType: AuthTypes.basic,
       url: 'http://old',
       username: 'old-username',
-      encryptedPassword: 'old-password',
+      encryptedAuth: 'old-password',
     })
     const state = {
       [feedsRoot]: { trayId: feed },
@@ -171,6 +172,15 @@ const enterAuth = {
       AuthTypes.none,
     )
   },
+  [AuthTypes.queryParam]: async (user: UserEvent) => {
+    await user.selectOptions(
+      screen.getByLabelText('Authentication'),
+      AuthTypes.queryParam,
+    )
+    await user.clear(screen.getByLabelText('Query key'))
+    await user.type(screen.getByLabelText('Query key'), 'query-key')
+    await user.type(screen.getByLabelText('Query value'), 'new-query')
+  },
   [KeepExistingAuth.keep]: async (user: UserEvent) => {
     await user.selectOptions(
       screen.getByLabelText('Authentication'),
@@ -192,29 +202,39 @@ const testConnectionExpected = {
   [AuthTypes.none]: {
     authType: AuthTypes.none,
   },
+  [AuthTypes.queryParam]: {
+    authType: AuthTypes.queryParam,
+    username: 'query-key',
+    password: 'new-query',
+  },
   [KeepExistingAuth.keep]: {
     authType: AuthTypes.basic,
     username: 'old-username',
-    encryptedPassword: 'old-password',
+    encryptedAuth: 'old-password',
   },
 }
 
 const feedExpected = {
   [AuthTypes.token]: {
     authType: AuthTypes.token,
-    encryptedAccessToken: 'encrypted',
+    encryptedAuth: 'encrypted',
   },
   [AuthTypes.basic]: {
     authType: AuthTypes.basic,
     username: 'new-username',
-    encryptedPassword: 'encrypted',
+    encryptedAuth: 'encrypted',
   },
   [AuthTypes.none]: {
     authType: AuthTypes.none,
   },
+  [AuthTypes.queryParam]: {
+    authType: AuthTypes.queryParam,
+    username: 'query-key',
+    encryptedAuth: 'encrypted',
+  },
   [KeepExistingAuth.keep]: {
     authType: AuthTypes.basic,
     username: 'old-username',
-    encryptedPassword: 'old-password',
+    encryptedAuth: 'old-password',
   },
 }

@@ -34,6 +34,8 @@ function authTypeDisplay(authType: AuthTypes): string {
       return 'No auth'
     case AuthTypes.token:
       return 'Access token'
+    case AuthTypes.queryParam:
+      return 'Query parameter'
   }
 }
 

@@ -1,16 +1,18 @@
 import { render } from '../../testUtils/testHelpers'
 import { screen, waitFor } from '@testing-library/react'
-import { TestConnection } from './TestConnection'
+import { Details, TestConnection } from './TestConnection'
 import * as ProjectsGateway from '../../gateways/ProjectsGateway'
 import * as Gateway from '../../gateways/Gateway'
 import { AuthTypes } from './FeedsReducer'
 
-const details = {
+const details: Details = {
   url: 'http://some-url',
   authType: AuthTypes.none,
   username: '',
   password: '',
   accessToken: '',
+  queryKey: '',
+  queryValue: '',
 }
 
 it('should update the button text while loading', async () => {

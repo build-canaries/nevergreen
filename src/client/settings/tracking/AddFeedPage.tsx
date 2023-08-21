@@ -14,9 +14,8 @@ export function AddFeedPage(): ReactElement {
     url,
     authType,
     username,
-    encryptedPassword,
-    encryptedAccessToken,
-  }: ConnectionFormFields) => {
+    encryptedAuth,
+  }: ConnectionFormFields): string => {
     const trayId = createId()
     dispatch(
       feedAdded({
@@ -24,8 +23,7 @@ export function AddFeedPage(): ReactElement {
         url,
         authType,
         username,
-        encryptedPassword,
-        encryptedAccessToken,
+        encryptedAuth,
       }),
     )
     return `/settings/tracking/${trayId}/projects`

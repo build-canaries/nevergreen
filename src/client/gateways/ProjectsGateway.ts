@@ -4,8 +4,7 @@ import { AuthTypes } from '../settings/tracking/FeedsReducer'
 
 export interface FeedRequest {
   readonly authType: AuthTypes
-  readonly encryptedPassword?: string
-  readonly encryptedToken?: string
+  readonly encryptedAuth?: string
   readonly included?: ReadonlyArray<string>
   readonly serverType?: string
   readonly trayId: string
@@ -30,13 +29,12 @@ export interface ProjectApi {
 
 export type ProjectsResponse = ReadonlyArray<FeedApiError | ProjectApi>
 
-interface ConnectionDetailsRequest {
+export interface ConnectionDetailsRequest {
   readonly authType: AuthTypes
   readonly url: string
   readonly accessToken?: string
-  readonly encryptedAccessToken?: string
+  readonly encryptedAuth?: string
   readonly password?: string
-  readonly encryptedPassword?: string
   readonly username?: string
 }
 

@@ -24,6 +24,7 @@ export enum AuthTypes {
   none = 'none',
   basic = 'basic',
   token = 'token',
+  queryParam = 'queryParam',
 }
 
 export enum TrackingMode {
@@ -37,8 +38,7 @@ const Feed = z.object({
   authType: z.nativeEnum(AuthTypes),
   trackingMode: z.nativeEnum(TrackingMode),
   serverType: z.nativeEnum(ServerTypes).optional(),
-  encryptedAccessToken: z.string().optional(),
-  encryptedPassword: z.string().optional(),
+  encryptedAuth: z.string().optional(),
   name: z.string().optional(),
   timestamp: z.string().optional(),
   username: z.string().optional(),

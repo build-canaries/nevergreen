@@ -6,7 +6,10 @@ import { SecondaryButton } from '../../common/forms/Button'
 import { useQuery } from '@tanstack/react-query'
 import { errorMessage } from '../../common/Utils'
 import { KeepExistingAuth, UpdateExistingAuthTypes } from './ConnectionForm'
-import { testFeedConnection } from '../../gateways/ProjectsGateway'
+import {
+  ConnectionDetailsRequest,
+  testFeedConnection,
+} from '../../gateways/ProjectsGateway'
 import { Loop } from '../../common/icons/Loop'
 import {
   TimedErrorMessages,
@@ -14,12 +17,14 @@ import {
 } from '../../common/TimedMessages'
 import styles from './test-connection.scss'
 
-interface Details {
+export interface Details {
   readonly authType: UpdateExistingAuthTypes
   readonly url: string
   readonly accessToken: string
   readonly password: string
   readonly username: string
+  readonly queryKey: string
+  readonly queryValue: string
 }
 
 interface TestConnectionProps {
@@ -76,12 +81,17 @@ export function TestConnection({
   )
 }
 
-function createRequestData(details: Details, existingFeed?: Feed) {
+function createRequestData(
+  details: Details,
+  existingFeed?: Feed,
+): ConnectionDetailsRequest {
   switch (details.authType) {
     case AuthTypes.basic:
       return basicRequest(details)
     case AuthTypes.token:
       return tokenRequest(details)
+    case AuthTypes.queryParam:
+      return queryParamRequest(details)
     case KeepExistingAuth.keep:
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       return keepRequest(details, existingFeed!)
@@ -90,7 +100,7 @@ function createRequestData(details: Details, existingFeed?: Feed) {
   }
 }
 
-function tokenRequest(details: Details) {
+function tokenRequest(details: Details): ConnectionDetailsRequest {
   return {
     authType: AuthTypes.token,
     url: details.url,
@@ -98,7 +108,7 @@ function tokenRequest(details: Details) {
   }
 }
 
-function basicRequest(details: Details) {
+function basicRequest(details: Details): ConnectionDetailsRequest {
   return {
     authType: AuthTypes.basic,
     url: details.url,
@@ -107,17 +117,28 @@ function basicRequest(details: Details) {
   }
 }
 
-function keepRequest(details: Details, existing: Feed) {
+function keepRequest(
+  details: Details,
+  existing: Feed,
+): ConnectionDetailsRequest {
   return {
     authType: existing.authType,
     url: details.url,
     username: existing.username,
-    encryptedPassword: existing.encryptedPassword,
-    encryptedAccessToken: existing.encryptedAccessToken,
+    encryptedAuth: existing.encryptedAuth,
   }
 }
 
-function noneRequest(details: Details) {
+function queryParamRequest(details: Details): ConnectionDetailsRequest {
+  return {
+    authType: AuthTypes.queryParam,
+    url: details.url,
+    username: details.queryKey,
+    password: details.queryValue,
+  }
+}
+
+function noneRequest(details: Details): ConnectionDetailsRequest {
   return {
     authType: AuthTypes.none,
     url: details.url,
