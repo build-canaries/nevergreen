@@ -1,13 +1,13 @@
 import { forEachObjectAt } from '../Migrate'
 import { Migrate } from './index'
 import has from 'lodash/has'
-import { AuthTypes, feedsRoot } from '../../settings/tracking/FeedsReducer'
+import { AuthTypes } from '../../settings/tracking/FeedsReducer'
 import { isBlank } from '../../common/Utils'
 
 export const id = '005_SetAuthType'
 
 export const migrate: Migrate = (data) => {
-  forEachObjectAt(data, feedsRoot, (feed) => {
+  forEachObjectAt(data, 'trays', (feed) => {
     if (!has(feed, 'authType')) {
       if (!isBlank(feed.username) || !isBlank(feed.encryptedPassword)) {
         feed.authType = AuthTypes.basic
