@@ -108,7 +108,7 @@
     "jest-junit": "16.0.0",
     "mini-css-extract-plugin": "2.7.6",
     "npm-check-updates": "16.10.17",
-    "postcss": "8.4.27",
+    "postcss": "8.4.31",
     "postcss-loader": "7.3.3",
     "prettier": "3.0.0",
     "raw-loader": "4.0.2",
