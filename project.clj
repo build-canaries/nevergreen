@@ -3,26 +3,26 @@
   :url "https://github.com/build-canaries/nevergreen"
   ; use lein deps :tree to check dependency problems and actual versions used
   :dependencies [[org.clojure/clojure "1.11.1"]
-                 [ring "1.9.6" :exclusions [org.eclipse.jetty/jetty-server]]
-                 [org.eclipse.jetty/jetty-server "9.4.51.v20230217"]
+                 [ring "1.10.0" :exclusions [org.eclipse.jetty/jetty-server]]
+                 [org.eclipse.jetty/jetty-server "9.4.52.v20230823"]
                  [compojure "1.7.0" :exclusions [ring/ring-codec]]
                  [environ "1.2.0"]
-                 [cheshire "5.11.0"]
+                 [cheshire "5.12.0"]
                  [clj-cctray "2.1.1"]
                  ; commons-* are excluded as ring pulls in newer versions
                  [clj-http "3.12.3" :exclusions [commons-codec commons-io]]
                  [ring-curl "1.0.1"]
                  [ring/ring-json "0.5.1"]
-                 [ring/ring-defaults "0.3.4"]
+                 [ring/ring-defaults "0.4.0"]
                  [bk/ring-gzip "0.3.0"]
                  [ring-basic-authentication "1.2.0"]
                  [base64-clj "0.1.1"]
                  [camel-snake-kebab "0.4.3"]
                  [com.cemerick/url "0.1.1" :exclusions [com.cemerick/clojurescript.test]]
-                 [ch.qos.logback/logback-classic "1.4.6" :exclusions [org.slf4j/slf4j-api]]
-                 [org.slf4j/log4j-over-slf4j "2.0.7"]
-                 [org.slf4j/jul-to-slf4j "2.0.7"]
-                 [org.slf4j/jcl-over-slf4j "2.0.7"]]
+                 [ch.qos.logback/logback-classic "1.4.11" :exclusions [org.slf4j/slf4j-api]]
+                 [org.slf4j/log4j-over-slf4j "2.0.9"]
+                 [org.slf4j/jul-to-slf4j "2.0.9"]
+                 [org.slf4j/jcl-over-slf4j "2.0.9"]]
   :min-lein-version "2.0.0"
   :uberjar-name "nevergreen-standalone.jar"
   :main nevergreen.app
@@ -35,7 +35,7 @@
             "coverage"      ["with-profile" "+test" "cloverage"]
             "check-updates" ["ancient" ":all"]}
   :profiles {:dev  {:plugins [[lein-ancient "0.7.0"]
-                              [jonase/eastwood "1.3.0"]
+                              [jonase/eastwood "1.4.0"]
                               [lein-cloverage "1.2.4"]]}
              :test {:jvm-opts ["-Dlogback.configurationFile=./src/logback-tests.xml"]}}
   :cloverage {:output           "target/coverage-reports/server"
