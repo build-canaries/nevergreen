@@ -9,9 +9,8 @@ export function useServiceWorker(showBanner: (message: string) => void): void {
         'serviceWorker' in navigator
       ) {
         try {
-          const registration = await navigator.serviceWorker.register(
-            '/service-worker.js',
-          )
+          const registration =
+            await navigator.serviceWorker.register('/service-worker.js')
           registration.onupdatefound = () => {
             const installingWorker = registration.installing
 
