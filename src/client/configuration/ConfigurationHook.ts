@@ -19,9 +19,9 @@ interface Result {
 export function useLocalConfiguration(): Result {
   const dispatch = useAppDispatch()
 
-  const { isError, isLoading, error, data } = useQuery(
-    ['load-config'],
-    async () => {
+  const { isError, isLoading, error, data } = useQuery({
+    queryKey: ['load-config'],
+    queryFn: async () => {
       info('Loading local configuration')
 
       await init()
@@ -41,7 +41,7 @@ export function useLocalConfiguration(): Result {
         )
       }
     },
-  )
+  })
 
   useEffect(() => {
     if (data) {

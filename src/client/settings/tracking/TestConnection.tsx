@@ -39,16 +39,14 @@ export function TestConnection({
   const [showConnectionCheckMessages, setShowConnectionCheckMessages] =
     useState(true)
 
-  const { isSuccess, refetch, isFetching, isError, error } = useQuery(
-    ['test-connection', details],
-    async ({ signal }) => {
+  const { isSuccess, refetch, isFetching, isError, error } = useQuery({
+    queryKey: ['test-connection', details],
+    queryFn: async ({ signal }) => {
       await testFeedConnection(createRequestData(details, existingFeed), signal)
       return true
     },
-    {
-      enabled: false,
-    },
-  )
+    enabled: false,
+  })
 
   const dismiss = () => setShowConnectionCheckMessages(false)
 

@@ -48,9 +48,9 @@ export function useInterestingProjects(): InterestingProjectsHook {
   const enabled = !isEmpty(feedRequests)
   const refetchInterval = refreshTime * 1000
 
-  const { isLoading, data, error } = useQuery(
-    ['interesting'],
-    async ({ signal }) => {
+  const { isLoading, data, error } = useQuery({
+    queryKey: ['interesting'],
+    queryFn: async ({ signal }) => {
       const data = {
         feeds: feedRequests,
         sort,
@@ -61,12 +61,10 @@ export function useInterestingProjects(): InterestingProjectsHook {
         signal,
       })
     },
-    {
-      enabled,
-      refetchInterval,
-      refetchIntervalInBackground: true,
-    },
-  )
+    enabled,
+    refetchInterval,
+    refetchIntervalInBackground: true,
+  })
 
   useEffect(() => {
     if (data) {

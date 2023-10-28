@@ -17,19 +17,17 @@ export function useCheckForNewVersion(
 ): void {
   const shouldCheckForNewVersion = useAppSelector(getEnableNewVersionCheck)
 
-  const { data } = useQuery(
-    ['check-for-new-version'],
-    async ({ signal }) => {
+  const { data } = useQuery({
+    queryKey: ['check-for-new-version'],
+    queryFn: async ({ signal }) => {
       return await get<GitHubResponse>({
         url: 'https://api.github.com/repos/build-canaries/nevergreen/releases/latest',
         signal,
       })
     },
-    {
-      enabled: shouldCheckForNewVersion,
-      refetchInterval: twentyFourHours,
-    },
-  )
+    enabled: shouldCheckForNewVersion,
+    refetchInterval: twentyFourHours,
+  })
 
   useEffect(() => {
     if (data) {

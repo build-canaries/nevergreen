@@ -14,16 +14,14 @@ export function Duration({
   prefix,
   suffix,
 }: DurationProps): ReactElement {
-  const { data: duration } = useQuery(
-    ['duration', timestamp],
-    () => formatAsDuration(timestamp),
-    {
-      initialData: formatAsDuration(timestamp),
-      staleTime: 59 * 1000,
-      refetchInterval: 60 * 1000,
-      refetchIntervalInBackground: true,
-    },
-  )
+  const { data: duration } = useQuery({
+    queryKey: ['duration', timestamp],
+    queryFn: () => formatAsDuration(timestamp),
+    initialData: formatAsDuration(timestamp),
+    staleTime: 59 * 1000,
+    refetchInterval: 60 * 1000,
+    refetchIntervalInBackground: true,
+  })
 
   const fullDescription = [prefix, duration, suffix]
     .filter((text) => !isBlank(text))

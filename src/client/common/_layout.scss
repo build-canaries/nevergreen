@@ -30,10 +30,9 @@ $model-index: 9999;
 }
 
 @mixin grid($mobile-columns: 1, $tablet-columns: 2, $desktop-columns: 3) {
-  column-gap: 1em;
   display: grid;
+  gap: 1em;
   grid-template-columns: repeat($mobile-columns, minmax(0, 1fr));
-  row-gap: 1em;
 
   @include responsive.respond-to(tablet) {
     grid-template-columns: repeat($tablet-columns, minmax(0, 1fr));

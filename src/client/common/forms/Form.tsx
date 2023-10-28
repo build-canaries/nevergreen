@@ -57,15 +57,13 @@ export function Form<Fields extends string>({
     Readonly<FormErrors<Fields>>
   >([])
 
-  const { refetch, isFetching, isError, isSuccess, data, error } = useQuery(
-    ['form'],
-    async ({ signal }) => {
+  const { refetch, isFetching, isError, isSuccess, data, error } = useQuery({
+    queryKey: ['form'],
+    queryFn: async ({ signal }) => {
       return onSuccess(signal)
     },
-    {
-      enabled: false,
-    },
-  )
+    enabled: false,
+  })
 
   useEffect(() => {
     if (data?.navigateTo) {

@@ -10,26 +10,29 @@ import { SortBy } from '../../display/DisplaySettingsReducer'
 export function useProjects(
   feed: Feed,
 ): UseQueryResult<ReadonlyArray<Project>, Error> {
-  return useQuery(['available-projects', feed.trayId], async ({ signal }) => {
-    const data = {
-      feeds: [
-        {
-          ...omit(feed, 'name'),
-        },
-      ],
-      sort: SortBy.description,
-    }
-    const fetchedProjects = await post<ProjectsResponse>({
-      url: '/api/projects',
-      data,
-      signal,
-    })
-    if (fetchedProjects.some(isProjectError)) {
-      const errorMessages = fetchedProjects.map(
-        (projectError) => projectError.description,
-      )
-      throw new Error(errorMessages.join(', '))
-    }
-    return fetchedProjects
+  return useQuery({
+    queryKey: ['available-projects', feed.trayId],
+    queryFn: async ({ signal }) => {
+      const data = {
+        feeds: [
+          {
+            ...omit(feed, 'name'),
+          },
+        ],
+        sort: SortBy.description,
+      }
+      const fetchedProjects = await post<ProjectsResponse>({
+        url: '/api/projects',
+        data,
+        signal,
+      })
+      if (fetchedProjects.some(isProjectError)) {
+        const errorMessages = fetchedProjects.map(
+          (projectError) => projectError.description,
+        )
+        throw new Error(errorMessages.join(', '))
+      }
+      return fetchedProjects
+    },
   })
 }

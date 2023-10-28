@@ -49,13 +49,13 @@ export function ImportRemotePage(): ReactElement {
   const dispatch = useAppDispatch()
   const [configToImport, setConfigToImport] = useState('')
 
-  const { isFetching, isSuccess, isError, error, refetch, data } = useQuery(
-    ['import-remote', location.internalId],
-    async ({ signal }) => {
+  const { isFetching, isSuccess, isError, error, refetch, data } = useQuery({
+    queryKey: ['import-remote', location.internalId],
+    queryFn: async ({ signal }) => {
       const { configuration } = await fetchConfiguration(location, signal)
       return toJson(fromJson(configuration))
     },
-  )
+  })
 
   useEffect(() => {
     if (data) {

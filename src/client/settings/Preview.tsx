@@ -24,9 +24,9 @@ export function Preview(): ReactElement {
   const [projects, setProjects] = useState<Projects>([])
   const [feedErrors, setFeedErrors] = useState<FeedErrors>([])
 
-  const { isLoading, data, error } = useQuery(
-    ['preview'],
-    async ({ signal }) => {
+  const { isLoading, data, error } = useQuery({
+    queryKey: ['preview'],
+    queryFn: async ({ signal }) => {
       return post<Projects>({
         url: '/api/preview',
         data: {
@@ -42,7 +42,7 @@ export function Preview(): ReactElement {
         signal,
       })
     },
-  )
+  })
 
   useEffect(() => {
     if (data) {
