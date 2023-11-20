@@ -27,8 +27,8 @@ function feedIdentifier(feed?: Feed | null): string {
   return isNil(feed)
     ? 'Nevergreen'
     : isNotBlank(feed.name)
-    ? feed.name
-    : feed.url
+      ? feed.name
+      : feed.url
 }
 
 export function TileProject({
