@@ -138,10 +138,10 @@ export function setSystemTime(timestamp: string): void {
   jest.setSystemTime(parseISO(timestamp))
 }
 
-export function waitForLoadingToFinish() {
-  return waitForElementToBeRemoved(screen.queryByTestId('loading'))
+export function waitForLoadingToFinish(): Promise<void> {
+  return waitForElementToBeRemoved(() => screen.queryByTestId('loading'))
 }
 
-export async function waitForLocationToChange() {
+export async function waitForLocationToChange(): Promise<void> {
   await screen.findByText('location changed')
 }
