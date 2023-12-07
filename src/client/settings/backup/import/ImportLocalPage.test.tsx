@@ -38,7 +38,7 @@ it('should show an error if the data is syntactically invalid (bad json)', async
   await user.click(screen.getByRole('button', { name: 'Import' }))
 
   expect(
-    screen.getByText("Expected property name or '}' in JSON at position 1"),
+    screen.getByText(/Expected property name or '}' in JSON at position 1/),
   ).toBeInTheDocument()
   expect(screen.getByDisplayValue(invalidConfiguration)).toBeInTheDocument()
 })
