@@ -1,8 +1,13 @@
 import type { RootState } from '../configuration/ReduxStore'
 import { reducer } from '../configuration/ReduxStore'
 import type { RecursivePartial } from '../common/Types'
-import type { CombinedState, Middleware, Reducer } from 'redux'
-import { combineReducers } from 'redux'
+import type {
+  EnhancedStore,
+  Reducer,
+  StoreEnhancer,
+  UnknownAction,
+} from '@reduxjs/toolkit'
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import type { RenderOptions, RenderResult } from '@testing-library/react'
 import {
   render as testRender,
@@ -10,31 +15,39 @@ import {
   waitForElementToBeRemoved,
 } from '@testing-library/react'
 import type { ReactElement, ReactNode } from 'react'
-import type { AnyAction, EnhancedStore } from '@reduxjs/toolkit'
-import { configureStore } from '@reduxjs/toolkit'
-import merge from 'lodash/merge'
+import type { DisplaySettingsState } from '../settings/display/DisplaySettingsReducer'
 import { displaySettingsRoot } from '../settings/display/DisplaySettingsReducer'
-import { selectedRoot } from '../settings/tracking/SelectedReducer'
+import {
+  selectedRoot,
+  SelectedState,
+} from '../settings/tracking/SelectedReducer'
+import type { SuccessState } from '../settings/success/SuccessReducer'
 import { successRoot } from '../settings/success/SuccessReducer'
+import type { FeedsState } from '../settings/tracking/FeedsReducer'
 import { feedsRoot } from '../settings/tracking/FeedsReducer'
 import { createBrowserRouter, Outlet } from 'react-router-dom'
+import type { AppliedMigrationsState } from '../configuration/MigrationsReducer'
 import { migrationsRoot } from '../configuration/MigrationsReducer'
 import parseISO from 'date-fns/parseISO'
+import type { RemoteLocationsState } from '../settings/backup/RemoteLocationsReducer'
 import { remoteLocationsRoot } from '../settings/backup/RemoteLocationsReducer'
 import userEvent from '@testing-library/user-event'
 import type { UserEvent } from '@testing-library/user-event/setup/setup'
 import { buildState } from './builders'
 import { App } from '../App'
+import type { NotificationsState } from '../settings/notifications/NotificationsReducer'
 import { notificationsRoot } from '../settings/notifications/NotificationsReducer'
+import type { PersonalSettingsState } from '../settings/PersonalSettingsReducer'
 import { personalSettingsRoot } from '../settings/PersonalSettingsReducer'
+import type { OtherSettingsState } from '../settings/other/OtherSettingsReducer'
 import { otherSettingsRoot } from '../settings/other/OtherSettingsReducer'
 import { UnhandledErrorMessage } from '../UnhandledErrorMessage'
 
 interface ExtendedRenderResult extends RenderResult {
   readonly store: EnhancedStore<
     RootState,
-    AnyAction,
-    ReadonlyArray<Middleware<unknown, RootState>>
+    UnknownAction,
+    ReadonlyArray<StoreEnhancer<object, RootState>>
   >
   readonly user: UserEvent
 }
@@ -104,29 +117,22 @@ export function render(
   }
 }
 
-/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-return */
 export function testReducer(
   reducer: Partial<Reducer<RootState>>,
-): Reducer<CombinedState<RootState>> {
-  return combineReducers<RootState>(
-    merge(
-      {
-        [displaySettingsRoot]: (state: any = null) => state,
-        [otherSettingsRoot]: (state: any = null) => state,
-        [selectedRoot]: (state: any = null) => state,
-        [successRoot]: (state: any = null) => state,
-        [feedsRoot]: (state: any = null) => state,
-        [migrationsRoot]: (state: any = null) => state,
-        [remoteLocationsRoot]: (state: any = null) => state,
-        [notificationsRoot]: (state: any = null) => state,
-        [personalSettingsRoot]: (state: any = null) => state,
-      },
-      reducer,
-    ),
-  )
+): Reducer<RootState> {
+  return combineReducers({
+    [displaySettingsRoot]: (state: DisplaySettingsState) => state ?? null,
+    [otherSettingsRoot]: (state: OtherSettingsState) => state ?? null,
+    [selectedRoot]: (state: SelectedState) => state ?? null,
+    [successRoot]: (state: SuccessState) => state ?? null,
+    [feedsRoot]: (state: FeedsState) => state ?? null,
+    [migrationsRoot]: (state: AppliedMigrationsState) => state ?? null,
+    [remoteLocationsRoot]: (state: RemoteLocationsState) => state ?? null,
+    [notificationsRoot]: (state: NotificationsState) => state ?? null,
+    [personalSettingsRoot]: (state: PersonalSettingsState) => state ?? null,
+    ...reducer,
+  })
 }
-
-/* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-return */
 
 export function setSystemTime(timestamp: string): void {
   jest.setSystemTime(parseISO(timestamp))
