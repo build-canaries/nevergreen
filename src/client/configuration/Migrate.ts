@@ -1,4 +1,4 @@
-import format from 'date-fns/format'
+import { format } from 'date-fns/format'
 import { info } from '../common/Logger'
 import { UntrustedData } from './LocalRepository'
 import get from 'lodash/get'

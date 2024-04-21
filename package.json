@@ -43,7 +43,7 @@
     "classnames": "2.5.1",
     "clipboard": "2.0.11",
     "core-js": "3.37.0",
-    "date-fns": "2.30.0",
+    "date-fns": "3.6.0",
     "localforage": "1.10.0",
     "lodash": "4.17.21",
     "match-sorter": "6.3.4",

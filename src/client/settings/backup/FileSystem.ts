@@ -1,5 +1,5 @@
 import * as logger from '../../common/Logger'
-import format from 'date-fns/format'
+import { format } from 'date-fns/format'
 
 interface LoadedFile {
   readonly content: string

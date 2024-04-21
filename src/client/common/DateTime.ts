@@ -1,7 +1,7 @@
-import parseISO from 'date-fns/parseISO'
-import formatISO from 'date-fns/formatISO'
+import { parseISO } from 'date-fns/parseISO'
+import { formatISO } from 'date-fns/formatISO'
 import { isBlank } from './Utils'
-import formatDistanceToNow from 'date-fns/formatDistanceToNow'
+import { formatDistanceToNow } from 'date-fns/formatDistanceToNow'
 
 const oneMinuteInSeconds = 60
 const oneHourInSeconds = 3600
