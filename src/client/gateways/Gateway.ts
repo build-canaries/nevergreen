@@ -38,7 +38,7 @@ const contentType = 'application/json; charset=utf-8'
 export const TIMEOUT_ERROR = 'Connection timeout calling the Nevergreen server'
 
 async function send<T>(request: Request<T>, signal?: AbortSignal): Promise<T> {
-  signal?.addEventListener('abort', () => request.abort())
+  signal?.addEventListener('abort', () => void request.abort())
   try {
     const res = await request
     return (res.body || res.text) as T

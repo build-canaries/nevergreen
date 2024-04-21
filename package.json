@@ -81,7 +81,7 @@
     "@types/react-modal": "3.16.3",
     "@types/react-transition-group": "4.4.10",
     "@types/semver": "7.5.8",
-    "@types/superagent": "4.1.24",
+    "@types/superagent": "8.1.6",
     "@typescript-eslint/eslint-plugin": "7.7.0",
     "@typescript-eslint/parser": "7.7.0",
     "autoprefixer": "10.4.19",
