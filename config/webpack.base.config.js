@@ -10,6 +10,8 @@ const cssLoader = {
   options: {
     sourceMap: true,
     modules: {
+      namedExport: false,
+      exportLocalsConvention: 'as-is',
       localIdentName: '[name]-[local]-[contenthash:base64:6]',
     },
   },
