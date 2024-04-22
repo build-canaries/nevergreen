@@ -1,6 +1,10 @@
 @use './responsive';
 
 .summaryList {
+  div:last-child > dd {
+    margin-bottom: 0;
+  }
+
   @include responsive.respond-to(tablet, desktop) {
     width: 100%;
   }

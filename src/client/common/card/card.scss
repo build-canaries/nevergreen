@@ -17,7 +17,7 @@
   align-items: center;
   background-color: colours.$light-grey;
   display: flex;
-  padding: 1em;
+  padding: layout.$card-header-padding;
 }
 
 .body {
