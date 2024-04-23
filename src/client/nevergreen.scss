@@ -1,4 +1,5 @@
 @use 'common/colours';
+@use 'common/accessibility';
 @import 'defaults';
 
 .nevergreen {
@@ -8,6 +9,17 @@
 
   &:focus {
     outline: none;
+  }
+}
+
+.skipButton {
+  &:not(:focus) {
+    @include accessibility.visually-hidden;
+  }
+
+  &:enabled:focus {
+    margin: 0;
+    position: absolute;
   }
 }
 

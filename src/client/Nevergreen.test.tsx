@@ -100,3 +100,11 @@ it('should show menus when any key is pressed, allowing the user to navigate to 
 
   expect(showMenus).toHaveBeenCalledTimes(2)
 })
+
+it('should have a skip to content button', async () => {
+  render(<Nevergreen />)
+  await waitForLoadingToFinish()
+  expect(
+    screen.getByRole('button', { name: 'Skip to content' }),
+  ).toBeInTheDocument()
+})
