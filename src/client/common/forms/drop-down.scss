@@ -1,6 +1,17 @@
 @use 'forms';
+@use '../layout';
 @use '../colours';
 @use '../accessibility';
+
+.inputContainer {
+  margin-top: layout.$spacing-height;
+  min-width: 1em;
+  width: 100%;
+}
+
+.inputLabel {
+  display: block;
+}
 
 // based on https://moderncss.dev/custom-select-styles-with-pure-css/
 

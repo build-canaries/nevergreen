@@ -6,7 +6,6 @@ import type {
 } from 'react'
 import { useId } from 'react'
 import cn from 'classnames'
-import formStyles from './forms.scss'
 import styles from './drop-down.scss'
 
 export type DropDownOptions = ReadonlyArray<{
@@ -32,12 +31,12 @@ export function DropDown({
   ...inputProps
 }: DropDownProps): ReactElement {
   const idIfNotProvided = useId()
-  const labelClasses = cn(formStyles.inputContainer, className)
+  const labelClasses = cn(styles.inputContainer, className)
   const actualId = id ?? idIfNotProvided
 
   return (
     <div className={labelClasses}>
-      <label className={formStyles.inputLabel} htmlFor={actualId}>
+      <label className={styles.inputLabel} htmlFor={actualId}>
         {children}
       </label>
       <div className={styles.container}>

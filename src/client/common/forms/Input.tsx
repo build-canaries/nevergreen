@@ -10,7 +10,6 @@ import { InputButton } from './Button'
 import { isNotBlank } from '../Utils'
 import { VisuallyHidden } from '../VisuallyHidden'
 import { Lock } from '../icons/Lock'
-import formStyles from './forms.scss'
 import styles from './input.scss'
 
 export type InputProps = {
@@ -51,7 +50,7 @@ export function Input({
 
   const actualId = id ?? idIfNotProvided
 
-  const containerClasses = cn(formStyles.inputContainer, classNameContainer, {
+  const containerClasses = cn(styles.inputContainer, classNameContainer, {
     [styles.containerError]: hasError,
   })
   const inputClasses = cn(styles.input, classNameInput, {
@@ -61,7 +60,7 @@ export function Input({
 
   return (
     <div className={containerClasses}>
-      <label className={formStyles.inputLabel} htmlFor={actualId}>
+      <label className={styles.inputLabel} htmlFor={actualId}>
         {children}
       </label>
       {hasError && (

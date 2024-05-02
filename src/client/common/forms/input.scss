@@ -11,6 +11,16 @@
   width: 100%;
 }
 
+.inputContainer {
+  margin-top: layout.$spacing-height;
+  min-width: 1em;
+  width: 100%;
+}
+
+.inputLabel {
+  display: block;
+}
+
 .input {
   @include forms.standard-input-dimensions;
 
