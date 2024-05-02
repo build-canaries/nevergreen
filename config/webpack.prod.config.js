@@ -31,9 +31,6 @@ module.exports = merge(baseConfig, {
   ],
   optimization: {
     minimize: true,
-    minimizer: [`...`, new CssMinimizerPlugin()],
-    splitChunks: {
-      chunks: 'all',
-    },
+    minimizer: ['...', new CssMinimizerPlugin()],
   },
 })
