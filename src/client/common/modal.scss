@@ -26,6 +26,10 @@
   padding: 1em;
   width: calc(100vw - 3em);
 
+  &:focus-visible {
+    outline: none;
+  }
+
   @include responsive.respond-to(very-small) {
     max-height: 100vh;
     width: 100vw;
