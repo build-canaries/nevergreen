@@ -18,6 +18,7 @@
   );
   border-radius: 0;
   color: $color;
+  text-decoration-thickness: 3px;
 }
 
 @mixin focus(
