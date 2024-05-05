@@ -3,9 +3,9 @@ import { ScaledTile } from './ScaledTile'
 import countBy from 'lodash/countBy'
 import { Prognosis, prognosisDisplay, Project } from '../domain/Project'
 import { FeedError } from '../domain/FeedError'
-import styles from './tile-projects-not-shown.scss'
 import { useAppSelector } from '../configuration/Hooks'
 import { getDisplaySettings } from '../settings/display/DisplaySettingsReducer'
+import styles from './tile-projects-not-shown.scss'
 
 interface TileNotShownProps {
   readonly projectsNotShown: ReadonlyArray<Project | FeedError>

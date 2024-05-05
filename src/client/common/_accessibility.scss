@@ -12,31 +12,20 @@
     $background-color,
     $lightness: $hover-color-change-percentage * -1
   );
-  border-color: color.scale(
-    $border-color,
-    $lightness: $hover-color-change-percentage * -1
-  );
+  border-color: colours.$black;
   border-radius: 0;
   color: $color;
   text-decoration-thickness: 3px;
 }
 
-@mixin focus(
-  $color: colours.$off-black,
-  $background-color: colours.$white,
-  $border-color: colours.$light-grey,
-  $focus-color-change-percentage: colours.$color-change-percentage
-) {
-  background-color: color.scale(
-    $background-color,
-    $lightness: $focus-color-change-percentage * -1
-  );
-  border-color: colours.$outline;
+@mixin focus($color: colours.$off-black) {
+  border-color: colours.$black;
   border-radius: 0;
   color: $color;
-  outline: 5px solid colours.$outline;
+  outline: layout.$outline-size solid colours.$outline;
   outline-offset: unset;
   position: relative;
+  text-decoration: none;
   z-index: layout.$focus-index; // make sure the focus outline isn't below adjacent elements
 }
 
@@ -59,12 +48,7 @@
   }
 
   &:focus {
-    @include focus(
-      $color,
-      $background-color,
-      $border-color,
-      $focus-color-change-percentage
-    );
+    @include focus($color);
 
     @content;
   }

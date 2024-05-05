@@ -2,9 +2,6 @@
 @use '../common/typography';
 
 .preview {
-  background-color: colours.$black;
-  color: colours.$off-white;
-  cursor: inherit;
   display: flex;
   flex-direction: column;
   min-height: 100%;

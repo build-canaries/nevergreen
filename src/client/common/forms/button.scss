@@ -14,7 +14,6 @@
   &:enabled,
   &[href] {
     box-shadow: colours.$shadow;
-    cursor: pointer;
     transition: box-shadow 0.1s ease-in;
 
     @include accessibility.interactive(
@@ -53,7 +52,6 @@
   &:disabled {
     background-color: colours.$light-grey;
     color: colours.$mid-grey;
-    cursor: default;
   }
 
   @include responsive.respond-to(tablet, desktop) {
@@ -112,5 +110,10 @@
 
   &:enabled {
     box-shadow: none;
+  }
+
+  &:focus,
+  &:hover {
+    border-left: 1px solid;
   }
 }

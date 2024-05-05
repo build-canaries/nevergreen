@@ -28,7 +28,6 @@ $thumb-colour: colours.$blue;
   appearance: none;
   background: transparent;
   border: none;
-  cursor: pointer;
   padding: 0;
 
   &::-webkit-slider-runnable-track {
@@ -48,8 +47,6 @@ $thumb-colour: colours.$blue;
   }
 
   &:disabled {
-    cursor: default;
-
     &::-webkit-slider-thumb {
       background-color: colours.$mid-grey;
       box-shadow: none;
@@ -78,11 +75,11 @@ $thumb-colour: colours.$blue;
       }
 
       &:focus::-webkit-slider-thumb {
-        @include accessibility.focus($background-color: $thumb-colour);
+        @include accessibility.focus;
       }
 
       &:focus::-moz-range-thumb {
-        @include accessibility.focus($background-color: $thumb-colour);
+        @include accessibility.focus;
       }
 
       &:hover::-webkit-slider-thumb {

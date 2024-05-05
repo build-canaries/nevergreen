@@ -37,9 +37,10 @@ import { PaintFormat } from '../common/icons/PaintFormat'
 import { IconHealthyBuilding } from '../common/icons/prognosis/IconHealthyBuilding'
 import { IconHealthy } from '../common/icons/prognosis/IconHealthy'
 import { IconSick } from '../common/icons/prognosis/IconSick'
-import styles from './style-guide.scss'
 import { IconSickBuilding } from '../common/icons/prognosis/IconSickBuilding'
 import { IconError } from '../common/icons/prognosis/IconError'
+import { IconUnknown } from '../common/icons/prognosis/IconUnknown'
+import styles from './icons.scss'
 
 export function Icons(): ReactElement {
   return (
@@ -47,23 +48,27 @@ export function Icons(): ReactElement {
       <div className={styles.icons}>
         <span>
           <IconError />
-          error
+          error prognosis
         </span>
         <span>
           <IconSick />
-          sick
+          sick prognosis
         </span>
         <span>
           <IconSickBuilding />
-          sick building
+          sick building prognosis
         </span>
         <span>
           <IconHealthyBuilding />
-          healthy building
+          healthy building prognosis
         </span>
         <span>
           <IconHealthy />
-          healthy
+          healthy prognosis
+        </span>
+        <span>
+          <IconUnknown />
+          unknown prognosis
         </span>
         <span>
           <ArrowUp />

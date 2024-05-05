@@ -8,8 +8,7 @@ import cn from 'classnames'
 import { VisuallyHidden } from '../VisuallyHidden'
 import styles from './button.scss'
 
-export enum ButtonTheme {
-  transparent = 'transparent',
+enum ButtonTheme {
   primary = 'primary',
   secondary = 'secondary',
   danger = 'danger',
@@ -29,7 +28,7 @@ interface BaseButtonProps extends ButtonProps {
   readonly theme: ButtonTheme
 }
 
-export function BaseButton({
+function BaseButton({
   theme,
   className,
   icon,

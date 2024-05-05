@@ -7,7 +7,6 @@
   @extend %secondary;
 
   box-shadow: colours.$shadow;
-  cursor: pointer;
   transition: box-shadow 0.1s ease-in;
 }
 
@@ -21,6 +20,5 @@
   &:disabled + label {
     background-color: colours.$light-grey;
     color: colours.$mid-grey;
-    cursor: default;
   }
 }

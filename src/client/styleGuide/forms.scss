@@ -1,0 +1,10 @@
+@use '../common/colours';
+@use '../common/layout';
+
+.fixedWidth {
+  @include layout.fixed-width(35em);
+}
+
+.styledLabel {
+  font-weight: bold;
+}

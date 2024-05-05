@@ -49,7 +49,9 @@
       $color: colours.$white,
       $background-color: colours.$off-black,
       $border-color: transparent
-    );
+    ) {
+      outline-offset: -#{layout.$outline-size};
+    }
   }
 
   @include responsive.respond-to(tablet, desktop) {
@@ -69,5 +71,6 @@
   &:focus {
     background-color: colours.$white;
     color: colours.$off-black;
+    outline-offset: -#{layout.$outline-size};
   }
 }

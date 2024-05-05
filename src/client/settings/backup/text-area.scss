@@ -23,7 +23,7 @@
 
     &:read-only {
       &:focus {
-        @include accessibility.focus($focus-color-change-percentage: 0%);
+        @include accessibility.focus;
       }
     }
   }
@@ -35,7 +35,7 @@
 }
 
 .error {
-  outline: 3px solid colours.$error;
+  outline: layout.$outline-size solid colours.$error;
   z-index: layout.$focus-index;
 }
 

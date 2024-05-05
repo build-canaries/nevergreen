@@ -20,10 +20,10 @@ export function StyleGuide(): ReactElement {
 
   return (
     <Page title="Style guide">
-      <Typography />
       <Forms />
       <Layout />
       <Icons />
+      <Typography />
     </Page>
   )
 }

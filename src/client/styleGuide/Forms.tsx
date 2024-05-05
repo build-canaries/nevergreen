@@ -11,7 +11,10 @@ import {
 } from '../common/forms/Button'
 import { Password } from '../common/forms/Password'
 import { FloppyDisk } from '../common/icons/FloppyDisk'
-import styles from './style-guide.scss'
+import { ColourPicker } from '../common/forms/ColourPicker'
+import { Slider } from '../common/forms/Slider'
+import { Form } from '../common/forms/Form'
+import styles from './forms.scss'
 
 const DROP_DOWN_OPTIONS = [
   { value: '1', display: 'option 1' },
@@ -24,6 +27,12 @@ const DROP_DOWN_OPTIONS = [
 export function Forms(): ReactElement {
   return (
     <>
+      <StyleGuideSection title="Form">
+        <Form onSuccess={noop} onCancel={noop}>
+          {() => <Input>example input</Input>}
+        </Form>
+      </StyleGuideSection>
+
       <StyleGuideSection title="Text inputs">
         <Input placeholder="this is a placeholder">Placeholder example</Input>
         <Input readOnly defaultValue="in my restless dreams I see that town">
@@ -34,29 +43,16 @@ export function Forms(): ReactElement {
         <Password error="some validation error">
           Password with error message example
         </Password>
-
         <Input classNameContainer={styles.fixedWidth}>fixed width</Input>
-
-        <Input>
-          <div className={styles.styledLabel}>styled label</div>
-        </Input>
+        <Input classNameLabel={styles.styledLabel}>styled label</Input>
       </StyleGuideSection>
 
       <StyleGuideSection title="Checkboxes">
         <Checkbox onToggle={noop}>chocolate</Checkbox>
         <Checkbox onToggle={noop}>bonbon</Checkbox>
-        <Checkbox onToggle={noop}>jelly beans</Checkbox>
-
-        <Checkbox className={styles.newLineCheckbox} onToggle={noop}>
-          chupa chups
+        <Checkbox onToggle={noop} disabled>
+          disabled
         </Checkbox>
-        <Checkbox className={styles.newLineCheckbox} onToggle={noop}>
-          apple pie
-        </Checkbox>
-        <Checkbox className={styles.newLineCheckbox} onToggle={noop}>
-          marzipan
-        </Checkbox>
-
         <Checkbox onToggle={noop}>
           <div className={styles.styledLabel}>styled label</div>
         </Checkbox>
@@ -73,6 +69,18 @@ export function Forms(): ReactElement {
         <DropDown options={DROP_DOWN_OPTIONS}>
           <div className={styles.styledLabel}>styled label</div>
         </DropDown>
+      </StyleGuideSection>
+
+      <StyleGuideSection title="Colour picker">
+        <ColourPicker>colour picker</ColourPicker>
+        <ColourPicker disabled>disabled</ColourPicker>
+      </StyleGuideSection>
+
+      <StyleGuideSection title="Slider">
+        <Slider>slider</Slider>
+        <Slider classNameContainer={styles.fixedWidth}>fixed width</Slider>
+        <Slider disabled>disabled</Slider>
+        <Slider classNameLabel={styles.styledLabel}>styled label</Slider>
       </StyleGuideSection>
 
       <StyleGuideSection title="Buttons">

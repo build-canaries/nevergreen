@@ -43,14 +43,9 @@
   background-color: transparent;
   border: colours.$input-border;
   border-radius: 2px;
-  cursor: pointer;
   grid-area: select;
   padding: 0.5em 1.5em 0.5em 0.5em;
   text-overflow: ellipsis;
-
-  &:disabled {
-    cursor: default;
-  }
 
   &:not(:disabled) {
     @include accessibility.interactive($focus-color-change-percentage: 0%);

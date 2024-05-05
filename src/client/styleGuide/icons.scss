@@ -1,0 +1,11 @@
+@use '../common/layout';
+
+.icons {
+  @include layout.grid;
+
+  & > span {
+    &::before {
+      margin-right: 1em;
+    }
+  }
+}

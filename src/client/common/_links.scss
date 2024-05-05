@@ -4,12 +4,12 @@
 @mixin link(
   $color: colours.$blue,
   $visited-color: colours.$blue,
-  $interactive-color: colours.$light-grey
+  $interactive-color: colours.$black,
+  $interactive-background-color: colours.$white
 ) {
   background: none;
   border: none;
   color: $color;
-  cursor: pointer;
   margin: 0;
   padding: 0;
 
@@ -18,8 +18,8 @@
   }
 
   @include accessibility.interactive(
-    $color: $color,
-    $background-color: $interactive-color,
+    $color: $interactive-color,
+    $background-color: $interactive-background-color,
     $border-color: transparent,
     $hover-color-change-percentage: 0%,
     $focus-color-change-percentage: 0%

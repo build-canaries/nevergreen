@@ -1,22 +1,17 @@
-@use 'sass:color';
 @use 'colours';
 @use 'responsive';
 @use 'layout';
 
 @mixin -messages($color, $background-color) {
   align-items: center;
-  background-color: $background-color;
+  background-color: colours.$white;
+  border: 1px solid $background-color;
   border-radius: colours.$border-radius;
-  color: $color;
   display: flex;
   margin: layout.$spacing-height 0 0;
 
   & > .icon {
-    background-color: color.scale($background-color, $lightness: -10%);
-    color: color.scale($background-color, $lightness: -25%);
-  }
-
-  & > .dismiss {
+    background-color: $background-color;
     color: $color;
   }
 

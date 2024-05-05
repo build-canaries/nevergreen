@@ -1,4 +1,4 @@
-import type { ReactElement } from 'react'
+import type { ReactElement, KeyboardEvent } from 'react'
 import { Link, LinkProps } from 'react-router-dom'
 import cn from 'classnames'
 import { Plus } from './icons/Plus'
@@ -21,7 +21,23 @@ function NavigationButton({
   ...props
 }: LinkButtonProps): ReactElement {
   return (
-    <Link className={className} {...props} role="button">
+    <Link
+      className={className}
+      {...props}
+      role="button"
+      draggable="false"
+      onKeyDown={(evt: KeyboardEvent<HTMLAnchorElement>) => {
+        if (evt.key === ' ') {
+          evt.preventDefault()
+        }
+      }}
+      onKeyUp={(evt: KeyboardEvent<HTMLAnchorElement>) => {
+        if (evt.key === ' ') {
+          evt.preventDefault()
+          evt.currentTarget.click()
+        }
+      }}
+    >
       {icon}
       {children}
     </Link>

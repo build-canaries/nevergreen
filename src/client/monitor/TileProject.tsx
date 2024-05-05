@@ -83,7 +83,7 @@ export function TileProject({
     <ScaledTile
       header={identifier}
       footer={additional}
-      className={styles[project.prognosis]}
+      className={styles.tile}
       sentences={sentences}
       style={{
         color: settings[project.prognosis].textColour,

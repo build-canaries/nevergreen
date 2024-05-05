@@ -4,7 +4,7 @@ import isEmpty from 'lodash/isEmpty'
 import isString from 'lodash/isString'
 import { Warning } from './icons/Warning'
 import { Cross } from './icons/Cross'
-import { BaseButton, ButtonTheme } from './forms/Button'
+import { SecondaryButton } from './forms/Button'
 import { VisuallyHidden } from './VisuallyHidden'
 import { Info } from './icons/Info'
 import { Checkmark } from './icons/Checkmark'
@@ -56,15 +56,14 @@ export function Messages({
         )}
       </ul>
       {onDismiss && (
-        <BaseButton
+        <SecondaryButton
           onClick={onDismiss}
           icon={<Cross />}
           iconOnly
-          theme={ButtonTheme.transparent}
           className={styles.dismiss}
         >
           Dismiss {type} messages
-        </BaseButton>
+        </SecondaryButton>
       )}
     </div>
   )

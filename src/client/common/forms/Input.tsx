@@ -29,6 +29,7 @@ export function Input({
   children,
   classNameContainer,
   classNameInput,
+  classNameLabel,
   readOnly,
   button,
   error = '',
@@ -60,7 +61,10 @@ export function Input({
 
   return (
     <div className={containerClasses}>
-      <label className={styles.inputLabel} htmlFor={actualId}>
+      <label
+        className={cn(styles.inputLabel, classNameLabel)}
+        htmlFor={actualId}
+      >
         {children}
       </label>
       {hasError && (

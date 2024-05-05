@@ -1,6 +1,11 @@
 @use '../common/colours';
 @use '../common/layout';
 @use '../common/links';
+@use '../common/accessibility';
+
+.tile:focus-within {
+  @include accessibility.focus;
+}
 
 .identifier {
   @include layout.fill-parent;
@@ -35,6 +40,7 @@
   &:focus {
     background-color: inherit;
     color: inherit;
+    outline: none;
   }
 }
 

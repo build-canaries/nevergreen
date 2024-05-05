@@ -26,7 +26,6 @@
 }
 
 .children {
-  cursor: pointer;
   display: block;
   float: left;
   padding: 10.5px 1em;
@@ -63,7 +62,6 @@
 .input {
   @include forms.standard-input-dimensions(true);
 
-  cursor: pointer;
   filter: alpha(opacity=0);
   left: 0;
   margin: 0;
@@ -74,10 +72,7 @@
   zoom: 1;
 
   &:disabled {
-    cursor: default;
-
     & + .children {
-      cursor: default;
       filter: alpha(opacity=50);
       zoom: 1;
     }

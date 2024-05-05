@@ -23,14 +23,24 @@
 }
 
 .about {
-  @include links.link(colours.$white, colours.$white, colours.$black);
+  @include links.link(
+    $color: colours.$white,
+    $visited-color: colours.$white,
+    $interactive-color: colours.$white,
+    $interactive-background-color: colours.$black
+  );
 
   text-align: left;
   text-decoration: none;
 }
 
 .submitAnIssue {
-  @include links.link(colours.$white, colours.$white, colours.$black);
+  @include links.link(
+    $color: colours.$white,
+    $visited-color: colours.$white,
+    $interactive-color: colours.$white,
+    $interactive-background-color: colours.$black
+  );
 
   display: block;
   margin: layout.$spacing-height 0 0 0;

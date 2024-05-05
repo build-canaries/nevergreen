@@ -21,8 +21,16 @@
   flex-grow: unset;
   padding: 0;
 
+  &:not(:disabled):read-only:focus {
+    border-radius: math.div(forms.$standard-input-size-mobile, 2);
+  }
+
   @include responsive.respond-to(tablet, desktop) {
     border-radius: math.div(forms.$standard-input-size-above-mobile, 2);
+
+    &:not(:disabled):read-only:focus {
+      border-radius: math.div(forms.$standard-input-size-above-mobile, 2);
+    }
   }
 
   &::-webkit-color-swatch-wrapper {

@@ -2,7 +2,7 @@ import type { ReactElement } from 'react'
 import cn from 'classnames'
 import { Bell } from './common/icons/Bell'
 import { Messages, MessagesType } from './common/Messages'
-import styles from './notification.scss'
+import styles from './banner.scss'
 
 interface BannerProps {
   readonly message: string
