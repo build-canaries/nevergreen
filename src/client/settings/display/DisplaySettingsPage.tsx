@@ -22,7 +22,7 @@ import { Eye } from '../../common/icons/Eye'
 import { Display } from '../../common/icons/Display'
 import { RoutePaths } from '../../AppRoutes'
 import { useAppDispatch, useAppSelector } from '../../configuration/Hooks'
-import styles from './display-settings.scss'
+import styles from './display-settings-page.scss'
 
 const projectsToShowOptions = [
   { value: MaxProjectsToShow.small, display: 'Small' },
@@ -48,7 +48,11 @@ export function DisplaySettingsPage(): ReactElement {
 
   return (
     <Page title="Display settings" icon={<Display />}>
-      <LinkButton to={RoutePaths.preview} icon={<Eye />}>
+      <LinkButton
+        to={RoutePaths.preview}
+        icon={<Eye />}
+        className={styles.preview}
+      >
         Preview display
       </LinkButton>
       <Checkbox

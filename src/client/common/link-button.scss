@@ -2,32 +2,25 @@
 @use 'colours';
 @use 'responsive';
 @use 'layout';
+@use 'links';
 
 .linkButton {
-  @extend %secondary;
-
-  cursor: default;
-  vertical-align: bottom;
-
-  &:visited {
-    color: colours.$off-black;
-  }
+  align-items: center;
+  display: inline-flex;
+  margin: layout.$spacing-height layout.$spacing-width 0 0;
 }
 
 .addButton {
-  @extend %primary;
+  @include links.link(
+    $color: colours.$white,
+    $visited-color: colours.$white,
+    $interactive-color: colours.$white,
+    $interactive-background-color: colours.$blue
+  );
 
-  cursor: default;
+  align-items: center;
+  background-color: colours.$blue;
+  display: inline-flex;
   margin: layout.$spacing-height 0;
-  vertical-align: bottom;
-
-  &:visited {
-    color: colours.$off-white;
-  }
-}
-
-.feedButtons {
-  @include responsive.respond-to(tablet, desktop) {
-    margin: layout.$spacing-height layout.$spacing-width 0 0;
-  }
+  padding: 0.5em 1em;
 }

@@ -11,7 +11,6 @@ import { CloudDownload } from '../../common/icons/CloudDownload'
 import { Cog } from '../../common/icons/Cog'
 import { useAppDispatch } from '../../configuration/Hooks'
 import { removeBackupLocation } from './RemoteLocationsActions'
-import styles from './remote-backup-card.scss'
 
 interface RemoteLocationProps {
   readonly location: RemoteLocation
@@ -37,27 +36,15 @@ export function RemoteBackupCard({
   )
 
   return (
-    <Card header={header} className={styles.card}>
+    <Card header={header}>
       <BackupSummary location={location} />
-      <LinkButton
-        className={styles.exportButton}
-        icon={<CloudUpload />}
-        to={`${location.internalId}/export`}
-      >
+      <LinkButton icon={<CloudUpload />} to={`${location.internalId}/export`}>
         Export<VisuallyHidden> remotely to {locationWhere}</VisuallyHidden>
       </LinkButton>
-      <LinkButton
-        className={styles.importButton}
-        icon={<CloudDownload />}
-        to={`${location.internalId}/import`}
-      >
+      <LinkButton icon={<CloudDownload />} to={`${location.internalId}/import`}>
         Import<VisuallyHidden> remote from {locationWhere}</VisuallyHidden>
       </LinkButton>
-      <LinkButton
-        className={styles.detailsButton}
-        icon={<Cog />}
-        to={`${location.internalId}/details`}
-      >
+      <LinkButton icon={<Cog />} to={`${location.internalId}/details`}>
         Details<VisuallyHidden> of {locationWhere}</VisuallyHidden>
       </LinkButton>
     </Card>

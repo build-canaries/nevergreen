@@ -1,4 +1,4 @@
-import type { ReactElement, KeyboardEvent } from 'react'
+import type { ReactElement } from 'react'
 import { Link, LinkProps } from 'react-router-dom'
 import cn from 'classnames'
 import { Plus } from './icons/Plus'
@@ -21,23 +21,7 @@ function NavigationButton({
   ...props
 }: LinkButtonProps): ReactElement {
   return (
-    <Link
-      className={className}
-      {...props}
-      role="button"
-      draggable="false"
-      onKeyDown={(evt: KeyboardEvent<HTMLAnchorElement>) => {
-        if (evt.key === ' ') {
-          evt.preventDefault()
-        }
-      }}
-      onKeyUp={(evt: KeyboardEvent<HTMLAnchorElement>) => {
-        if (evt.key === ' ') {
-          evt.preventDefault()
-          evt.currentTarget.click()
-        }
-      }}
-    >
+    <Link className={className} {...props}>
       {icon}
       {children}
     </Link>
@@ -77,7 +61,6 @@ export function ManageFeedProjectsButton({
 }): ReactElement {
   return (
     <LinkButton
-      className={styles.feedButtons}
       icon={<CheckboxChecked />}
       to={`/settings/tracking/${feedId}/projects`}
     >
@@ -94,11 +77,7 @@ export function UpdateFeedDetailsButton({
   title?: string
 }): ReactElement {
   return (
-    <LinkButton
-      className={styles.feedButtons}
-      icon={<Cog />}
-      to={`/settings/tracking/${feedId}/details`}
-    >
+    <LinkButton icon={<Cog />} to={`/settings/tracking/${feedId}/details`}>
       Update details{title && <VisuallyHidden> for {title}</VisuallyHidden>}
     </LinkButton>
   )

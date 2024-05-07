@@ -6,13 +6,13 @@ describe('Backups', () => {
   })
 
   it('exporting and importing configuration locally', () => {
-    cy.findByRole('button', { name: 'Export locally' }).click()
+    cy.findByRole('link', { name: 'Export locally' }).click()
 
     cy.findByLabelText('Current configuration').then((exportInput) => {
       cy.findByRole('link', { name: 'Settings' }).click()
       cy.findByRole('link', { name: 'Backup' }).click()
 
-      cy.findByRole('button', { name: 'Import local' }).click()
+      cy.findByRole('link', { name: 'Import local' }).click()
 
       cy.findByLabelText('Configuration to import').invoke(
         'val',
@@ -26,7 +26,7 @@ describe('Backups', () => {
   })
 
   it('adding and removing a remote backup', () => {
-    cy.findByRole('button', { name: 'Add remote location' }).click()
+    cy.findByRole('link', { name: 'Add remote location' }).click()
     cy.findByLabelText('URL').type('http://test')
     cy.findByRole('button', { name: 'Add location' }).click()
 

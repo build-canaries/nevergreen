@@ -82,7 +82,7 @@ it('should allow a single JSON and plain text files to be opened', () => {
 it('should be able to cancel back to settings', async () => {
   const { user } = render(<ImportLocalPage />)
 
-  await user.click(screen.getByRole('button', { name: 'Cancel' }))
+  await user.click(screen.getByRole('link', { name: 'Cancel' }))
 
   await waitFor(() => {
     expect(window.location.pathname).toEqual('/settings/backup')

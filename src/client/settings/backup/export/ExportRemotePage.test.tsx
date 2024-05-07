@@ -184,7 +184,7 @@ it('should allow cancelling back to settings', async () => {
 
   const { user } = render(<ExportRemotePage />, { outletContext })
 
-  await user.click(screen.getByRole('button', { name: 'Cancel' }))
+  await user.click(screen.getByRole('link', { name: 'Cancel' }))
 
   await waitFor(() => {
     expect(window.location.pathname).toEqual('/settings/backup')

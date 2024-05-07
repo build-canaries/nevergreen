@@ -60,7 +60,7 @@ it('should be able to cancel without adding', async () => {
   const state = { [notificationsRoot]: {} }
 
   const { store, user } = render(<AddNotificationPage />, { state })
-  await user.click(screen.getByRole('button', { name: 'Cancel' }))
+  await user.click(screen.getByRole('link', { name: 'Cancel' }))
 
   expect(getNotifications(store.getState())).toEqual({})
   expect(window.location.pathname).toMatch('/settings/notifications')

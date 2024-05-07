@@ -17,7 +17,7 @@ describe('Settings', () => {
     cy.findByLabelText('Show build time').check()
     cy.findByLabelText('Show build label').check()
 
-    cy.findByRole('button', { name: 'Preview display' }).click()
+    cy.findByRole('link', { name: 'Preview display' }).click()
     cy.locate('build-label').should('exist')
     cy.locate('tray-name').should('exist')
     cy.locate('duration').should('exist')
@@ -27,7 +27,7 @@ describe('Settings', () => {
     cy.findByLabelText('Show build time').uncheck()
     cy.findByLabelText('Show build label').uncheck()
 
-    cy.findByRole('button', { name: 'Preview display' }).click()
+    cy.findByRole('link', { name: 'Preview display' }).click()
     cy.locate('build-label').should('not.exist')
     cy.locate('tray-name').should('not.exist')
     cy.locate('duration').should('not.exist')
@@ -49,7 +49,7 @@ describe('Settings', () => {
       .findAllByRole('listitem')
       .should('have.length', 1)
 
-    cy.findByRole('button', { name: 'Add message' }).click()
+    cy.findByRole('link', { name: 'Add message' }).click()
     cy.findByLabelText('Message').type('some message')
     cy.findByRole('button', { name: 'Add message' }).click()
 
@@ -59,7 +59,7 @@ describe('Settings', () => {
       .findAllByRole('listitem')
       .should('have.length', 2)
 
-    cy.findByRole('button', { name: 'Add message' }).click()
+    cy.findByRole('link', { name: 'Add message' }).click()
     cy.findByLabelText('Message').type(
       'https://raw.githubusercontent.com/build-canaries/nevergreen/main/doc/screenshot_monitor.png',
     )

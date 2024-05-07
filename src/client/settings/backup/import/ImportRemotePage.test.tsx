@@ -189,7 +189,7 @@ it('should be able to cancel back to settings', async () => {
 
   await waitForLoadingToFinish()
 
-  await user.click(screen.getByRole('button', { name: 'Cancel' }))
+  await user.click(screen.getByRole('link', { name: 'Cancel' }))
 
   await waitForLocationToChange()
 
@@ -206,7 +206,7 @@ it('should be able to cancel back to settings if configuration can not be fetche
 
   await waitForLoadingToFinish()
 
-  await user.click(screen.getByRole('button', { name: 'Cancel' }))
+  await user.click(screen.getByRole('link', { name: 'Cancel' }))
 
   await waitForLocationToChange()
 

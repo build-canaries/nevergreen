@@ -9,7 +9,7 @@ it('should link to the export page', async () => {
   const { user } = render(<RemoteBackupDetailsPage />, {
     outletContext,
   })
-  await user.click(screen.getByRole('button', { name: 'Export' }))
+  await user.click(screen.getByRole('link', { name: 'Export' }))
 
   expect(window.location.pathname).toEqual('/export')
 })
@@ -20,7 +20,7 @@ it('should link to the import page', async () => {
   const { user } = render(<RemoteBackupDetailsPage />, {
     outletContext,
   })
-  await user.click(screen.getByRole('button', { name: 'Import' }))
+  await user.click(screen.getByRole('link', { name: 'Import' }))
 
   expect(window.location.pathname).toEqual('/import')
 })

@@ -86,7 +86,7 @@ describe('updating colours', () => {
   ])('$name', async ({ name, path }) => {
     const { user } = render(<DisplaySettingsPage />)
     await user.click(
-      screen.getByRole('button', { name: `Change colours for ${name}` }),
+      screen.getByRole('link', { name: `Change colours for ${name}` }),
     )
 
     expect(window.location.pathname).toEqual(`/settings/colours/${path}`)

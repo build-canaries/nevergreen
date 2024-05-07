@@ -1,8 +1,9 @@
 @use '../../common/responsive';
 @use '../../common/layout';
 
-.export {
+.export,
+.import {
   @include responsive.respond-to(tablet, desktop) {
-    margin: layout.$spacing-height layout.$spacing-width 0 0;
+    margin: 0 layout.$spacing-width 0 0;
   }
 }

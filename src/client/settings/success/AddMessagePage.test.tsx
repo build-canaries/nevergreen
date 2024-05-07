@@ -44,7 +44,7 @@ it('should be able to cancel back to settings', async () => {
     state,
   })
 
-  await user.click(screen.getByRole('button', { name: 'Cancel' }))
+  await user.click(screen.getByRole('link', { name: 'Cancel' }))
 
   await waitFor(() => {
     expect(window.location.pathname).toEqual('/settings/success')

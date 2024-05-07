@@ -6,7 +6,7 @@ describe('Monitoring', () => {
   })
 
   it('adding and monitoring a feed', () => {
-    cy.findByRole('button', { name: 'Add feed' }).click()
+    cy.findByRole('link', { name: 'Add feed' }).click()
 
     cy.findByLabelText('URL').type(Cypress.env('TRAY_URL'))
     if (Cypress.env('TRAY_USERNAME') && Cypress.env('TRAY_PASSWORD')) {
@@ -41,21 +41,21 @@ describe('Monitoring', () => {
   })
 
   it('updating a feeds details', () => {
-    cy.findByRole('button', { name: 'Add feed' }).click()
+    cy.findByRole('link', { name: 'Add feed' }).click()
 
     cy.findByLabelText('URL').type('http://localhost/not/a/real/url')
     cy.findByRole('button', { name: 'Add feed' }).click()
 
     cy.findByRole('link', { name: 'Tracking' }).click()
 
-    cy.findByRole('button', { name: /Update details for/ }).click()
+    cy.findByRole('link', { name: /Update details for/ }).click()
 
     cy.findByRole('button', { name: 'randomise name' }).click()
     cy.findByLabelText('Name').clear().type('renamed feed')
     cy.findByLabelText('Server type').select('circle')
 
     if (Cypress.env('TRAY_URL_TOKEN')) {
-      cy.findByRole('button', { name: 'Update connection' }).click()
+      cy.findByRole('link', { name: 'Update connection' }).click()
       cy.findByLabelText('URL').clear().type(Cypress.env('TRAY_URL_TOKEN'))
       cy.findByLabelText('Authentication').select('Access token')
       cy.findByLabelText('Token').type(Cypress.env('TRAY_TOKEN'))

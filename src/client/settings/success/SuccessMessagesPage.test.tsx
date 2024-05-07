@@ -37,6 +37,6 @@ it('should not show a warning if at least one success messages exists', () => {
 
 it('should allow colours to be changed', async () => {
   const { user } = render(<SuccessMessagesPage />)
-  await user.click(screen.getByRole('button', { name: `Change colours` }))
+  await user.click(screen.getByRole('link', { name: `Change colours` }))
   expect(window.location.pathname).toEqual(`/settings/colours/success`)
 })

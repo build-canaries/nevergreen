@@ -19,7 +19,11 @@ export function LocalBackupCard(): ReactElement {
       >
         Export<VisuallyHidden> locally</VisuallyHidden>
       </LinkButton>
-      <LinkButton icon={<FolderOpen />} to="local/import">
+      <LinkButton
+        className={styles.import}
+        icon={<FolderOpen />}
+        to="local/import"
+      >
         Import<VisuallyHidden> local</VisuallyHidden>
       </LinkButton>
     </Card>

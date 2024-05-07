@@ -38,7 +38,7 @@ it('should show added feeds', () => {
 
 it('should allow feeds to be added', async () => {
   const { user } = render(<TrackingPage />)
-  await user.click(screen.getByRole('button', { name: 'Add feed' }))
+  await user.click(screen.getByRole('link', { name: 'Add feed' }))
   await waitFor(() => {
     expect(window.location.pathname).toEqual('/add')
   })

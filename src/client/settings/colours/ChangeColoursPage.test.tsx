@@ -52,7 +52,7 @@ it('should be able to cancel making changes', async () => {
       }}
     />,
   )
-  await user.click(screen.getByRole('button', { name: 'Cancel' }))
+  await user.click(screen.getByRole('link', { name: 'Cancel' }))
 
   expect(window.location.pathname).toEqual('/cancelled-url')
 })
