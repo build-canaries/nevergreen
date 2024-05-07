@@ -48,14 +48,12 @@ export function NotificationSettingsPage(): ReactElement {
         step={0.05}
         aria-valuetext={`${Math.round(audioNotificationVolume * 100)}%`}
         defaultValue={audioNotificationVolume}
-        disabled={!allowAudioNotifications}
         onChange={({ target }) =>
           dispatch(setAudioNotificationVolume(parseFloat(target.value)))
         }
         button={
           <SecondaryButton
             className={styles.testVolume}
-            disabled={!allowAudioNotifications}
             icon={<Note />}
             iconOnly
             onClick={() => void playAudio(testAudio, audioNotificationVolume)}
