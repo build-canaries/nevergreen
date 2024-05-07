@@ -6,12 +6,10 @@ import { Summary } from '../../common/Summary'
 import { Card } from '../../common/card/Card'
 import { CardHeading } from '../../common/card/CardHeading'
 import { feedRemoved } from './TrackingActionCreators'
-import {
-  ManageFeedProjectsButton,
-  UpdateFeedDetailsButton,
-} from '../../common/LinkButton'
 import { FeedLogo } from './FeedLogo'
 import { useAppDispatch } from '../../configuration/Hooks'
+import { UpdateFeedDetailsLink } from './UpdateFeedDetailsLink'
+import { ManageFeedProjectsLink } from './ManageFeedProjectsLink'
 
 interface FeedCardProps {
   readonly feed: Feed
@@ -47,8 +45,8 @@ export function FeedCard({ feed }: FeedCardProps): ReactElement {
   return (
     <Card header={header}>
       <Summary values={summary} />
-      <ManageFeedProjectsButton feedId={feed.trayId} title={title} />
-      <UpdateFeedDetailsButton feedId={feed.trayId} title={title} />
+      <ManageFeedProjectsLink feedId={feed.trayId} title={title} />
+      <UpdateFeedDetailsLink feedId={feed.trayId} title={title} />
     </Card>
   )
 }

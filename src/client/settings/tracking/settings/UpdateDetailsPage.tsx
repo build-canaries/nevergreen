@@ -6,10 +6,7 @@ import { Input } from '../../../common/forms/Input'
 import { DropDown } from '../../../common/forms/DropDown'
 import { Dice } from '../../../common/icons/Dice'
 import { Summary } from '../../../common/Summary'
-import {
-  LinkButton,
-  ManageFeedProjectsButton,
-} from '../../../common/LinkButton'
+import { LinkButton } from '../../../common/LinkButton'
 import { feedUpdated } from '../TrackingActionCreators'
 import { FeedLogo } from '../FeedLogo'
 import { Cog } from '../../../common/icons/Cog'
@@ -18,6 +15,7 @@ import { URL } from '../../../common/URL'
 import { useAppDispatch } from '../../../configuration/Hooks'
 import { AuthTypes, ServerTypes } from '../FeedsReducer'
 import { generateRandomName } from '../../../common/Words'
+import { ManageFeedProjectsLink } from '../ManageFeedProjectsLink'
 import styles from './update-details-page.scss'
 
 const serverTypeOptions = [
@@ -99,7 +97,7 @@ export function UpdateDetailsPage(): ReactElement {
         </DropDown>
       </section>
       <section className={styles.section}>
-        <ManageFeedProjectsButton feedId={feed.trayId} title={feed.name} />
+        <ManageFeedProjectsLink feedId={feed.trayId} title={feed.name} />
       </section>
     </Page>
   )

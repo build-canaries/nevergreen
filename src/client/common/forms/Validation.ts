@@ -16,17 +16,3 @@ export function allErrors<Fields extends string>(
 ): ReadonlyArray<string> {
   return errors.filter((e) => e.field === field).map((e) => e.message)
 }
-
-export function removeError<Fields extends string>(
-  field: Fields,
-  errors: Readonly<FormErrors<Fields>>,
-): Readonly<FormErrors<Fields>> {
-  return errors.filter((e) => e.field !== field)
-}
-
-export function removeErrorFromState<Fields extends string>(
-  field: Fields,
-): (errors: Readonly<FormErrors<Fields>>) => Readonly<FormErrors<Fields>> {
-  return (errors: Readonly<FormErrors<Fields>>) =>
-    removeError<Fields>(field, errors)
-}

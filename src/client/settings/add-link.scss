@@ -1,0 +1,18 @@
+@use '../common/colours';
+@use '../common/layout';
+@use '../common/links';
+
+.addButton {
+  @include links.link(
+    $color: colours.$white,
+    $visited-color: colours.$white,
+    $interactive-color: colours.$white,
+    $interactive-background-color: colours.$blue
+  );
+
+  align-items: center;
+  background-color: colours.$blue;
+  display: inline-flex;
+  margin: layout.$spacing-height 0;
+  padding: 0.5em 1em;
+}

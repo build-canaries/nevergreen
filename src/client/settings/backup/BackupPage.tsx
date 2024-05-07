@@ -2,11 +2,11 @@ import type { ReactElement } from 'react'
 import { RemoteBackupCard } from './RemoteBackupCard'
 import { getBackupLocations } from './RemoteLocationsReducer'
 import { LocalBackupCard } from './LocalBackupCard'
-import { AddButton } from '../../common/LinkButton'
 import { Page } from '../../common/Page'
 import { FloppyDisk } from '../../common/icons/FloppyDisk'
 import { CardList } from '../../common/card/CardList'
 import { useAppSelector } from '../../configuration/Hooks'
+import { AddLink } from '../AddLink'
 
 export function BackupPage(): ReactElement {
   const backupLocations = useAppSelector(getBackupLocations)
@@ -14,7 +14,7 @@ export function BackupPage(): ReactElement {
   return (
     <Page title="Backup settings" icon={<FloppyDisk />}>
       <LocalBackupCard />
-      <AddButton>Add remote location</AddButton>
+      <AddLink>Add remote location</AddLink>
       <CardList>
         {Object.values(backupLocations).map((backupLocation) => {
           return (

@@ -1,5 +1,6 @@
 import type { ReactElement } from 'react'
-import { Input, InputProps } from './Input'
+import type { InputProps } from './Input'
+import { Input } from './Input'
 import styles from './colour-picker.scss'
 
 export function ColourPicker({

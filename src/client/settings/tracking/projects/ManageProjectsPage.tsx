@@ -2,12 +2,12 @@ import type { ReactElement } from 'react'
 import { Page } from '../../../common/Page'
 import { AvailableProjects } from './AvailableProjects'
 import { CheckboxChecked } from '../../../common/icons/CheckboxChecked'
-import { UpdateFeedDetailsButton } from '../../../common/LinkButton'
 import { useFeedContext } from '../FeedPage'
 import { DropDown } from '../../../common/forms/DropDown'
 import { feedUpdated } from '../TrackingActionCreators'
 import { useAppDispatch } from '../../../configuration/Hooks'
 import { TrackingMode } from '../FeedsReducer'
+import { UpdateFeedDetailsLink } from '../UpdateFeedDetailsLink'
 import styles from './manage-projects-page.scss'
 
 export function ManageProjectsPage(): ReactElement {
@@ -37,7 +37,7 @@ export function ManageProjectsPage(): ReactElement {
       {feed.trackingMode === TrackingMode.selected && (
         <AvailableProjects feed={feed} />
       )}
-      <UpdateFeedDetailsButton feedId={feed.trayId} title={feed.name} />
+      <UpdateFeedDetailsLink feedId={feed.trayId} title={feed.name} />
     </Page>
   )
 }

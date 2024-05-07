@@ -1,11 +1,11 @@
 import type { ReactElement } from 'react'
 import { getNotifications } from './NotificationsReducer'
-import { AddButton } from '../../common/LinkButton'
 import { Prognosis } from '../../domain/Project'
 import { NotificationCard } from './NotificationCard'
 import { WarningMessages } from '../../common/Messages'
 import { CardList } from '../../common/card/CardList'
 import { useAppSelector } from '../../configuration/Hooks'
+import { AddLink } from '../AddLink'
 
 export function Notifications(): ReactElement {
   const notifications = useAppSelector(getNotifications)
@@ -13,7 +13,7 @@ export function Notifications(): ReactElement {
 
   return (
     <>
-      <AddButton>Add notification</AddButton>
+      <AddLink>Add notification</AddLink>
       {entries.length === 0 && (
         <WarningMessages messages="No notifications added" />
       )}
