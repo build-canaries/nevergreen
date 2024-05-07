@@ -9,7 +9,7 @@ import { Page } from '../../common/Page'
 import { Image } from '../../common/icons/Image'
 import { RoutePaths } from '../../AppRoutes'
 import { useAppDispatch, useAppSelector } from '../../configuration/Hooks'
-import styles from './add-message.scss'
+import styles from './add-message-page.scss'
 
 type Fields = 'message'
 

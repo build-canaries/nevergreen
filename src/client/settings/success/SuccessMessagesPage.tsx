@@ -11,10 +11,10 @@ import { SuccessImage } from '../../common/SuccessImage'
 import { useAspectRatio } from '../../common/AspectRatioHook'
 import { Card } from '../../common/card/Card'
 import { ChangeColoursLink } from '../colours/ChangeColoursLink'
-import styles from './success-messages.scss'
 import { Bin } from '../../common/icons/Bin'
 import { DangerButton } from '../../common/forms/Button'
 import { AddLink } from '../AddLink'
+import styles from './success-messages-page.scss'
 
 export const NO_MESSAGES_WARNING =
   'No success messages added, a blank screen will be shown on the Monitor page when no interesting projects are displayed'
@@ -28,7 +28,8 @@ export function SuccessMessagesPage(): ReactElement {
 
   return (
     <Page title="Success messages" icon={<Image />}>
-      <AddLink className={styles.add}>Add message</AddLink>
+      <ChangeColoursLink className={styles.changeColours} path="success" />
+      <AddLink>Add message</AddLink>
       <WarningMessages messages={noMessagesWarning} />
       <ol className={styles.messages} aria-label="messages">
         {messages.map((msg) => {
@@ -63,7 +64,6 @@ export function SuccessMessagesPage(): ReactElement {
           )
         })}
       </ol>
-      <ChangeColoursLink path="success" />
     </Page>
   )
 }
