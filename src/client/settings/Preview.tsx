@@ -15,6 +15,7 @@ import { RoutePaths } from '../AppRoutes'
 import { createId } from '../common/Utils'
 import { useAppSelector } from '../configuration/Hooks'
 import styles from './preview.scss'
+import { Title } from '../common/Title'
 
 export function Preview(): ReactElement {
   const prognosis = useAppSelector(getShowPrognosis)
@@ -63,6 +64,7 @@ export function Preview(): ReactElement {
 
   return (
     <div className={styles.preview}>
+      <Title focus={false}>Preview</Title>
       <Banner
         message="This is a preview showing your current display settings"
         hide={false}

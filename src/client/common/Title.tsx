@@ -11,7 +11,7 @@ interface TitleProps {
 }
 
 export function Title({
-  show,
+  show = false,
   children,
   icon,
   focus,
