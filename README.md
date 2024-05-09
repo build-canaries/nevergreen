@@ -33,8 +33,7 @@ More information about how to get the CCTray XML feed for your CI server can be 
 ### How can I get more help?
 
 -   [The Nevergreen wiki](https://github.com/build-canaries/nevergreen/wiki)
--   [Tweet to @BuildCanaries](https://twitter.com/BuildCanaries) on Twitter
--   [Come chat to us on Slack](https://join.slack.com/t/nevergreen/shared_invite/zt-4towhx0w-7o6wJp0R_LwqXhGXb4niIA)
+-   [Ask questions on GitHub](https://github.com/build-canaries/nevergreen/discussions)
 -   Nevergreen has built in help that can be accessed from the menu or by pressing the `h` key
 
 ## How can I fix a bug / add a feature / contribute?
@@ -49,6 +48,6 @@ You can also help us out by taking this [short usage survey](https://build-canar
 
 ## License
 
-Copyright © 2014 - 2023 Build Canaries
+Copyright © 2014 - 2024 Build Canaries
 
 Distributed under the Eclipse Public License either version 1.0 or (at your option) any later version.

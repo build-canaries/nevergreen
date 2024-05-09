@@ -23,7 +23,6 @@ import { Play } from '../common/icons/Play'
 import { Plus } from '../common/icons/Plus'
 import { Question } from '../common/icons/Question'
 import { Stop } from '../common/icons/Stop'
-import { Twitter } from '../common/icons/Twitter'
 import { Unlocked } from '../common/icons/Unlocked'
 import { FolderOpen } from '../common/icons/FolderOpen'
 import { Warning } from '../common/icons/Warning'
@@ -189,10 +188,6 @@ export function Icons(): ReactElement {
         <span>
           <Stop />
           stop
-        </span>
-        <span>
-          <Twitter />
-          twitter
         </span>
         <span>
           <Unlocked />

@@ -1,7 +1,6 @@
 import type { ReactElement } from 'react'
 import { ExternalLink } from '../common/ExternalLink'
 import { SubmitAnIssue } from './SubmitAnIssue'
-import { Twitter } from '../common/icons/Twitter'
 import { GitHubLogo } from '../common/icons/GitHubLogo'
 import { Page } from '../common/Page'
 import version from '../../../resources/version.txt'
@@ -16,13 +15,6 @@ export function AboutPage(): ReactElement {
   return (
     <Page title="About">
       <p>Nevergreen {versionWithName} by Build Canaries.</p>
-      <p>
-        <Twitter />
-        <ExternalLink href="https://twitter.com/BuildCanaries">
-          Follow Build Canaries on Twitter for news and updates
-        </ExternalLink>
-        .
-      </p>
       <p>
         <GitHubLogo />
         <ExternalLink href="https://github.com/build-canaries/nevergreen">

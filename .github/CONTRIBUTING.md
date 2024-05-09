@@ -12,7 +12,7 @@ pulling them from CDNs.
 
 We do not maintain older versions of Nevergreen, we always roll new features, improvements and bug fixes (if they
 still exist!) into newer versions of Nevergreen. If for some reason you can't or don't want to update to a newer version,
-then you'll need to fork and make the changes yourself. Feel free to jump onto chat if you'd like some advice from the
+then you'll need to fork and make the changes yourself. Feel free to ask questions if you'd like some advice from the
 team.
 
 We assume our users are very technical and have control over the environment Nevergreen is running on. For this reason
@@ -39,8 +39,7 @@ For more specific information about building and running, see the wiki [contribu
 
 #### Questions?
 
-Feel free to ask any question in [chat](https://join.slack.com/t/nevergreen/shared_invite/enQtMzc4MDg5MTE2MDE2LWJjYjdiNDM4Y2U1YjBjZTdkZjFhZGQyOTM5ODQ2MzEwZDY4YjNiZDFmOTFlMGUwOWEyMjczNmUzNTlkZDk4ZmQ) or
-on [Twitter](https://twitter.com/BuildCanaries).
+Feel free to ask any question on [GitHub](https://github.com/build-canaries/nevergreen/discussions).
 
 Thanks!
 
