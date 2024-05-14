@@ -6,7 +6,7 @@ import {
   CCTrayLocationsHelp,
 } from '../settings/tracking/AddFeedHelp'
 import { UpdateDetailsHelp } from '../settings/tracking/settings/UpdateDetailsHelp'
-import { SuccessHelp } from '../settings/success/SuccessHelp'
+import { SuccessMessagesPageHelp } from '../settings/success/SuccessMessagesPageHelp'
 import { AvailableProjectsHelp } from '../settings/tracking/projects/AvailableProjectsHelp'
 import { BackupHelp } from '../settings/backup/BackupHelp'
 import { DisplaySettingsHelp } from '../settings/display/DisplaySettingsHelp'
@@ -32,6 +32,7 @@ import { AddNotificationHelp } from '../settings/notifications/AddNotificationHe
 import { OtherSettingsPageHelp } from '../settings/other/OtherSettingsPageHelp'
 import { ChangeColoursPageHelp } from '../settings/colours/ChangeColoursPageHelp'
 import styles from './help-content.scss'
+import { AddMessagePageHelp } from '../settings/success/AddMessagePageHelp'
 
 interface HelpContentProps {
   readonly initialSearchQuery?: string
@@ -63,7 +64,11 @@ export default function HelpContent({
         <AvailableProjectsHelp searchQuery={searchQuery} helpLink={helpLink} />
         <UpdateDetailsHelp searchQuery={searchQuery} helpLink={helpLink} />
         <UpdateConnectionHelp searchQuery={searchQuery} helpLink={helpLink} />
-        <SuccessHelp searchQuery={searchQuery} helpLink={helpLink} />
+        <SuccessMessagesPageHelp
+          searchQuery={searchQuery}
+          helpLink={helpLink}
+        />
+        <AddMessagePageHelp searchQuery={searchQuery} helpLink={helpLink} />
         <DisplaySettingsHelp searchQuery={searchQuery} helpLink={helpLink} />
         <ChangeColoursPageHelp searchQuery={searchQuery} helpLink={helpLink} />
         <NotificationSettingsHelp

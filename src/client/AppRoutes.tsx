@@ -27,6 +27,7 @@ export enum RoutePaths {
   preview = '/preview',
   settings = '/settings',
   success = '/settings/success',
+  successAdd = '/settings/success/add',
   tracking = '/settings/tracking',
   trackingAdd = '/settings/tracking/add',
   trackingDetails = '/settings/tracking/:id/details',

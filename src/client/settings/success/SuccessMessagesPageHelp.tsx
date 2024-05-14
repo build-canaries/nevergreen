@@ -1,11 +1,11 @@
 import type { ReactElement } from 'react'
-import { ExternalLink } from '../../common/ExternalLink'
 import { HelpArticle, HelpProps } from '../../help/HelpArticle'
 import { RoutePaths } from '../../AppRoutes'
 import { HelpForm, HelpInput } from '../../help/HelpForms'
 import { Plus } from '../../common/icons/Plus'
 import { PaintFormat } from '../../common/icons/PaintFormat'
 import { Bin } from '../../common/icons/Bin'
+import { InfoMessages } from '../../common/Messages'
 
 const keywords = [
   'success',
@@ -19,9 +19,8 @@ const keywords = [
   'colour',
 ]
 
-export function SuccessHelp({
+export function SuccessMessagesPageHelp({
   searchQuery,
-  helpLink,
 }: HelpProps): ReactElement {
   return (
     <HelpArticle
@@ -31,25 +30,23 @@ export function SuccessHelp({
       page={RoutePaths.success}
     >
       <HelpForm>
-        <HelpInput name="Add message" icon={<Plus />}>
-          You can add text messages or any{' '}
-          <ExternalLink href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#Supported_image_formats">
-            valid image URLs
-          </ExternalLink>
-          , one of these will get randomly displayed when no interesting
-          projects are displayed on the Monitor page {helpLink('monitor')}. If
-          no success messages are added then a blank screen will be shown.
-        </HelpInput>
         <HelpInput name="Change colours" icon={<PaintFormat />}>
           Allows changing of the background and text colour.
         </HelpInput>
+        <HelpInput name="Add message" icon={<Plus />}>
+          Adds a new success message.
+        </HelpInput>
       </HelpForm>
+      <InfoMessages
+        messages={[
+          'A random success message will be displayed on the Monitor page when there are no interesting projects. If no success messages are added then a blank screen will be shown.',
+        ]}
+      />
       <p>Added messages will appear and can be managed from this page.</p>
       <HelpForm>
         <HelpInput name="Remove" icon={<Bin />}>
           This will permanently delete the message. Messages can be re-added at
-          any time and you can also make a backup before removing{' '}
-          {helpLink('backup')}.
+          any time.
         </HelpInput>
       </HelpForm>
     </HelpArticle>
