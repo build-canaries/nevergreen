@@ -223,10 +223,6 @@ jobs:
                 name: create release on GitHub
                 command: ./.circleci/release-github.sh
 
-            - run:
-                name: create release tweet
-                command: ./.circleci/release-tweet.sh
-
 workflows:
   version: 2
   build-deploy:
