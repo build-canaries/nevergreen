@@ -2,7 +2,7 @@
   :description "A build monitor with attitude"
   :url "https://github.com/build-canaries/nevergreen"
   ; use lein deps :tree to check dependency problems and actual versions used
-  :dependencies [[org.clojure/clojure "1.11.2"]
+  :dependencies [[org.clojure/clojure "1.11.3"]
                  [ring "1.12.1"]
                  [compojure "1.7.1" :exclusions [ring/ring-codec]]
                  [environ "1.2.0"]
@@ -12,7 +12,7 @@
                  [clj-http "3.13.0" :exclusions [commons-codec commons-io]]
                  [ring-curl "1.0.1"]
                  [ring/ring-json "0.5.1"]
-                 [ring/ring-defaults "0.4.0"]
+                 [ring/ring-defaults "0.5.0"]
                  [bk/ring-gzip "0.3.0"]
                  [ring-basic-authentication "1.2.0"]
                  [base64-clj "0.1.1"]
