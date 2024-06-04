@@ -17,18 +17,14 @@ const fontMeasureSize = 100 // px
 function Metrics(props: Record<string, unknown>, ref: Ref<Measurable>) {
   const measureNode = useRef<HTMLSpanElement>(null)
 
-  useImperativeHandle(
-    ref,
-    () => {
-      const width = measureNode.current?.offsetWidth as number
-      const height = measureNode.current?.offsetHeight as number
-      return {
-        width: width / fontMeasureSize,
-        height: height / fontMeasureSize,
-      }
-    },
-    [],
-  )
+  useImperativeHandle(ref, () => {
+    const width = measureNode.current?.offsetWidth as number
+    const height = measureNode.current?.offsetHeight as number
+    return {
+      width: width / fontMeasureSize,
+      height: height / fontMeasureSize,
+    }
+  }, [])
 
   return (
     <span
