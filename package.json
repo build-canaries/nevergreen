@@ -244,7 +244,8 @@
     "collectCoverageFrom": [
       "<rootDir>/src/client/**/*.{ts,tsx}",
       "!<rootDir>/src/client/styleGuide/**",
-      "!<rootDir>/src/client/common/Logger.ts"
+      "!<rootDir>/src/client/common/Logger.ts",
+      "!<rootDir>/src/client/testUtils/**"
     ],
     "setupFilesAfterEnv": [
       "<rootDir>/src/client/testUtils/setupTestEnv.js"
