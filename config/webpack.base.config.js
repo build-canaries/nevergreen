@@ -3,7 +3,6 @@ const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const autoprefixer = require('autoprefixer')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 const cssLoader = {
   loader: 'css-loader',
@@ -31,13 +30,13 @@ module.exports = {
   devtool: 'source-map',
   entry: ['./src/client/index'],
   output: {
+    clean: true,
     path: path.join(__dirname, '../resources/public'),
     filename: '[name].[contenthash:8].js',
     publicPath: '/',
     assetModuleFilename: '[name].[contenthash:8][ext]',
   },
   plugins: [
-    new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash:8].css',
     }),
