@@ -85,4 +85,9 @@ module.exports = {
     ],
   },
   stats: 'minimal',
+  optimization: {
+    splitChunks: {
+      minSize: 0,
+    },
+  },
 }
