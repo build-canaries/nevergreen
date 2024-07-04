@@ -1,4 +1,4 @@
-import type { ReactElement } from 'react'
+import type { ReactElement, SVGProps } from 'react'
 import healthyIconSvg from './healthy.svg'
 import unknownIconSvg from './unknown.svg'
 import healthyBuildingIconSvg from './healthy-building.svg'
@@ -43,23 +43,26 @@ export const prognosisIconsPng = {
   [Prognosis.error]: errorIconPng,
 }
 
-interface PrognosisIconProps {
+interface PrognosisIconProps extends SVGProps<SVGSVGElement> {
   readonly prognosis: Prognosis
 }
 
-export function IconPrognosis({ prognosis }: PrognosisIconProps): ReactElement {
+export function IconPrognosis({
+  prognosis,
+  ...props
+}: PrognosisIconProps): ReactElement {
   switch (prognosis) {
     case Prognosis.error:
-      return <IconError />
+      return <IconError {...props} />
     case Prognosis.sick:
-      return <IconSick />
+      return <IconSick {...props} />
     case Prognosis.sickBuilding:
-      return <IconSickBuilding />
+      return <IconSickBuilding {...props} />
     case Prognosis.healthyBuilding:
-      return <IconHealthyBuilding />
+      return <IconHealthyBuilding {...props} />
     case Prognosis.unknown:
-      return <IconUnknown />
+      return <IconUnknown {...props} />
     case Prognosis.healthy:
-      return <IconHealthy />
+      return <IconHealthy {...props} />
   }
 }

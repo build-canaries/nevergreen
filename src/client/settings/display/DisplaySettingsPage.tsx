@@ -7,12 +7,14 @@ import {
   getShowBuildLabel,
   getShowBuildTime,
   getShowFeedIdentifier,
+  getShowPrognosisName,
   getSort,
   MaxProjectsToShow,
   setMaxProjectsToShow,
   setShowBuildLabel,
   setShowBuildTime,
   setShowFeedIdentifier,
+  setShowPrognosisName,
   setSort,
   SortBy,
 } from './DisplaySettingsReducer'
@@ -43,6 +45,7 @@ export function DisplaySettingsPage(): ReactElement {
   const showFeedIdentifier = useAppSelector(getShowFeedIdentifier)
   const showBuildTime = useAppSelector(getShowBuildTime)
   const showBuildLabel = useAppSelector(getShowBuildLabel)
+  const showPrognosisLabel = useAppSelector(getShowPrognosisName)
   const maxProjectsToShow = useAppSelector(getMaxProjectsToShow)
   const sort = useAppSelector(getSort)
 
@@ -60,6 +63,12 @@ export function DisplaySettingsPage(): ReactElement {
         onToggle={(newValue) => dispatch(setShowFeedIdentifier(newValue))}
       >
         Show feed identifier
+      </Checkbox>
+      <Checkbox
+        checked={showPrognosisLabel}
+        onToggle={(newValue) => dispatch(setShowPrognosisName(newValue))}
+      >
+        Show prognosis name
       </Checkbox>
       <Checkbox
         checked={showBuildTime}

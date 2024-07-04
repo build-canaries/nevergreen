@@ -33,6 +33,7 @@ import { OtherSettingsPageHelp } from '../settings/other/OtherSettingsPageHelp'
 import { ChangeColoursPageHelp } from '../settings/colours/ChangeColoursPageHelp'
 import styles from './help-content.scss'
 import { AddMessagePageHelp } from '../settings/success/AddMessagePageHelp'
+import { PrognosisHelp } from '../settings/display/PrognosisHelp'
 
 interface HelpContentProps {
   readonly initialSearchQuery?: string
@@ -70,6 +71,7 @@ export default function HelpContent({
         />
         <AddMessagePageHelp searchQuery={searchQuery} helpLink={helpLink} />
         <DisplaySettingsHelp searchQuery={searchQuery} helpLink={helpLink} />
+        <PrognosisHelp searchQuery={searchQuery} helpLink={helpLink} />
         <ChangeColoursPageHelp searchQuery={searchQuery} helpLink={helpLink} />
         <NotificationSettingsHelp
           searchQuery={searchQuery}

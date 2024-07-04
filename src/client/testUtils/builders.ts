@@ -35,6 +35,7 @@ export function buildState(
     [displaySettingsRoot]: {
       maxProjectsToShow: MaxProjectsToShow.medium,
       refreshTime: 10,
+      showPrognosisName: false,
       showBuildLabel: false,
       showBuildTime: false,
       showTrayName: false,

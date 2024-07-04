@@ -9,6 +9,7 @@ import {
   getShowBuildTime,
   getShowFeedIdentifier,
   getShowPrognosis,
+  getShowPrognosisName,
   getSort,
   MaxProjectsToShow,
   reducer as settingsReducer,
@@ -20,6 +21,7 @@ import {
   setShowBuildTime,
   setShowFeedIdentifier,
   setShowPrognosis,
+  setShowPrognosisName,
   setSort,
   SortBy,
 } from './DisplaySettingsReducer'
@@ -52,6 +54,15 @@ describe(configurationImported.toString(), () => {
     expect(getShowFeedIdentifier(newState)).toBeTruthy()
   })
 
+  it('should merge show prognosis name enabled', () => {
+    const existingState = state({ showPrognosisName: false })
+    const action = configurationImported({
+      [displaySettingsRoot]: { showPrognosisName: true },
+    })
+    const newState = reducer(existingState, action)
+    expect(getShowPrognosisName(newState)).toBeTruthy()
+  })
+
   it('should merge build timers enabled', () => {
     const existingState = state({ showBuildTime: false })
     const action = configurationImported({
@@ -68,6 +79,15 @@ describe(configurationImported.toString(), () => {
     })
     const newState = reducer(existingState, action)
     expect(getShowBuildLabel(newState)).toBeTruthy()
+  })
+})
+
+describe(setShowPrognosisName.toString(), () => {
+  it('should set the broken build timer enabled property', () => {
+    const existingState = state({ showPrognosisName: false })
+    const action = setShowPrognosisName(true)
+    const newState = reducer(existingState, action)
+    expect(getShowPrognosisName(newState)).toBeTruthy()
   })
 })
 

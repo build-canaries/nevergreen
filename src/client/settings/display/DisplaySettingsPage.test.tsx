@@ -5,6 +5,7 @@ import {
   getShowBuildTime,
   getShowFeedIdentifier,
   getShowPrognosis,
+  getShowPrognosisName,
 } from './DisplaySettingsReducer'
 import { screen, within } from '@testing-library/react'
 import { DisplaySettingsPage } from './DisplaySettingsPage'
@@ -47,6 +48,19 @@ it('should set the show build label setting', async () => {
   await user.click(screen.getByLabelText('Show build label'))
 
   expect(getShowBuildLabel(store.getState())).toBeTruthy()
+})
+
+it('should set the show prognosis name setting', async () => {
+  const state = {
+    [displaySettingsRoot]: {
+      showPrognosisName: false,
+    },
+  }
+
+  const { store, user } = render(<DisplaySettingsPage />, { state })
+  await user.click(screen.getByLabelText('Show prognosis name'))
+
+  expect(getShowPrognosisName(store.getState())).toBeTruthy()
 })
 
 describe('showing on the monitor page', () => {

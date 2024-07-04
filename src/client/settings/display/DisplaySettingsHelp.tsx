@@ -4,11 +4,13 @@ import { HelpForm, HelpInput } from '../../help/HelpForms'
 import { RoutePaths } from '../../AppRoutes'
 import { Eye } from '../../common/icons/Eye'
 import { PaintFormat } from '../../common/icons/PaintFormat'
+import { InfoMessages, WarningMessages } from '../../common/Messages'
 
 const keywords = [
   'settings',
   'display',
   'show feed identifier',
+  'show prognosis name',
   'show build time',
   'show build label',
   'interesting projects',
@@ -42,15 +44,19 @@ export function DisplaySettingsHelp({
           When <em>enabled</em> the feed name {helpLink('name')} or URL will be
           displayed on the Monitor page.
         </HelpInput>
+        <HelpInput name="Show prognosis name">
+          When <em>enabled</em> the project prognosis will be displayed on the
+          Monitor page.
+        </HelpInput>
         <HelpInput name="Show build time">
           When <em>enabled</em> (the default) the amount of time since a project
           was last built or the amount of time it has been building will be
           displayed on the Monitor page.
-          <p>
-            Please note the building time is <strong>not</strong> provided by
-            the CCTray XML feed and is manually calculated by Nevergreen, this
-            means it may not be entirely accurate.
-          </p>
+          <WarningMessages
+            messages={
+              'The building time is not provided by the CCTray XML feed and is manually calculated by Nevergreen, this means it may not be entirely accurate.'
+            }
+          />
         </HelpInput>
         <HelpInput name="Show build label">
           When <em>enabled</em> the build label, for projects not building, will
@@ -96,16 +102,13 @@ export function DisplaySettingsHelp({
           prognosis.
         </HelpInput>
       </HelpForm>
-      <p>
-        Please note the feed identifier, build time and build labels will
-        automatically be hidden, regardless of whether they are enabled, if the
-        Monitor page becomes &quot;too crowded&quot;. This can happen if many
-        projects are being shown on a small screen. This is done to make the
-        project name larger and more visible, because this is the most important
-        information. Reducing the number of projects shown{' '}
-        {helpLink('amount of projects to show')} or increasing the size of the
-        browser window can mitigate this.
-      </p>
+      <InfoMessages
+        messages={[
+          'Please note the feed identifier, build time and build labels will automatically be hidden, regardless of whether they are enabled, if the Monitor page becomes "too crowded".',
+          'This can happen if many projects are being shown on a small screen. This is done to make the project name larger and more visible, because this is the most important information.',
+          'Reducing the number of projects shown or increasing the size of the browser window can mitigate this.',
+        ]}
+      />
     </HelpArticle>
   )
 }

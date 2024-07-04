@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react'
 import { isBlank, isNotBlank } from '../common/Utils'
-import { Project, projectBuildLabel } from '../domain/Project'
+import { prognosisDisplay, Project, projectBuildLabel } from '../domain/Project'
 import { VisuallyHidden } from '../common/VisuallyHidden'
 import { Duration } from '../common/Duration'
 import { ScaledTile } from './ScaledTile'
@@ -10,6 +10,7 @@ import {
   getShowBuildLabel,
   getShowBuildTime,
   getShowFeedIdentifier,
+  getShowPrognosisName,
 } from '../settings/display/DisplaySettingsReducer'
 import { ExternalLink } from '../common/ExternalLink'
 import { Clock } from '../common/icons/Clock'
@@ -17,6 +18,7 @@ import { FeedError } from '../domain/FeedError'
 import isNil from 'lodash/isNil'
 import { useAppSelector } from '../configuration/Hooks'
 import styles from './tile-project.scss'
+import { IconPrognosis } from '../common/icons/prognosis/IconPrognosis'
 
 interface TileProjectProps {
   readonly project: Project | FeedError
@@ -39,6 +41,7 @@ export function TileProject({
   const showBuildTime = useAppSelector(getShowBuildTime)
   const showFeedIdentifier = useAppSelector(getShowFeedIdentifier)
   const showBuildLabel = useAppSelector(getShowBuildLabel)
+  const showPrognosisIcon = useAppSelector(getShowPrognosisName)
   const settings = useAppSelector(getDisplaySettings)
 
   const sentences = visibleProjects.map((p) => p.description)
@@ -53,7 +56,7 @@ export function TileProject({
 
   const time = showBuildTime && (
     <span>
-      <Clock className={styles.time} />
+      <Clock className={styles.icon} />
       <VisuallyHidden>time </VisuallyHidden>
       <Duration timestamp={project.timestamp} />
     </span>
@@ -67,14 +70,23 @@ export function TileProject({
     </div>
   )
 
-  const showAdditionalInfo = showBuildTime || showBuildLabel
+  const prognosis = showPrognosisIcon && (
+    <span className={styles.prognosis}>
+      <IconPrognosis prognosis={project.prognosis} className={styles.icon} />
+      <VisuallyHidden>prognosis </VisuallyHidden>
+      <span>{prognosisDisplay(project.prognosis)}</span>
+    </span>
+  )
 
-  const spacer = <div>&nbsp;</div>
+  const showAdditionalInfo =
+    showBuildTime || showBuildLabel || showPrognosisIcon
 
   const additional = showAdditionalInfo && (
     <span className={styles.additionalInfo}>
-      <VisuallyHidden>prognosis {project.prognosis}</VisuallyHidden>
-      {time || spacer}
+      <span>
+        {prognosis}
+        {time}
+      </span>
       {buildLabelComponent}
     </span>
   )

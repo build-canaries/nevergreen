@@ -14,6 +14,7 @@ describe('Settings', () => {
     cy.findByRole('link', { name: 'Display' }).click()
 
     cy.findByLabelText('Show feed identifier').check()
+    cy.findByLabelText('Show prognosis name').check()
     cy.findByLabelText('Show build time').check()
     cy.findByLabelText('Show build label').check()
 
@@ -24,6 +25,7 @@ describe('Settings', () => {
     cy.findByRole('button', { name: /dismiss/i }).click()
 
     cy.findByLabelText('Show feed identifier').uncheck()
+    cy.findByLabelText('Show prognosis name').uncheck()
     cy.findByLabelText('Show build time').uncheck()
     cy.findByLabelText('Show build label').uncheck()
 

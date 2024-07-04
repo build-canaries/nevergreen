@@ -33,6 +33,7 @@ const DisplaySettingsState = z.object({
   showBuildTime: z.boolean(),
   refreshTime: z.number(),
   showBuildLabel: z.boolean(),
+  showPrognosisName: z.boolean(),
   maxProjectsToShow: z.nativeEnum(MaxProjectsToShow),
   showPrognosis: z.array(z.nativeEnum(Prognosis)),
   sort: z.nativeEnum(SortBy),
@@ -57,6 +58,7 @@ const initialState: DisplaySettingsState = {
   showBuildTime: true,
   refreshTime: 10,
   showBuildLabel: false,
+  showPrognosisName: true,
   maxProjectsToShow: MaxProjectsToShow.medium,
   showPrognosis: [
     Prognosis.sick,
@@ -120,6 +122,9 @@ const slice = createSlice({
     setShowBuildLabel: (draft, action: PayloadAction<boolean>) => {
       draft.showBuildLabel = action.payload
     },
+    setShowPrognosisName: (draft, action: PayloadAction<boolean>) => {
+      draft.showPrognosisName = action.payload
+    },
     setMaxProjectsToShow: (draft, action: PayloadAction<MaxProjectsToShow>) => {
       draft.maxProjectsToShow = action.payload
     },
@@ -162,6 +167,7 @@ export const {
   setShowBuildTime,
   setRefreshTime,
   setShowBuildLabel,
+  setShowPrognosisName,
   setShowPrognosis,
   setShowFeedIdentifier,
   setMaxProjectsToShow,
@@ -182,6 +188,10 @@ export const getShowBuildTime = createSelector(
 export const getShowBuildLabel = createSelector(
   getDisplaySettings,
   (settings) => settings.showBuildLabel,
+)
+export const getShowPrognosisName = createSelector(
+  getDisplaySettings,
+  (settings) => settings.showPrognosisName,
 )
 export const getRefreshTime = createSelector(
   getDisplaySettings,
