@@ -7,7 +7,7 @@ import {
   getShowPrognosis,
   getShowPrognosisName,
 } from './DisplaySettingsReducer'
-import { screen, within } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 import { DisplaySettingsPage } from './DisplaySettingsPage'
 import { Prognosis } from '../../domain/Project'
 
@@ -66,11 +66,11 @@ it('should set the show prognosis name setting', async () => {
 describe('showing on the monitor page', () => {
   it.each`
     prognosis                    | name
-    ${Prognosis.healthy}         | ${'Healthy prognosis'}
-    ${Prognosis.healthyBuilding} | ${'Healthy building prognosis'}
-    ${Prognosis.sick}            | ${'Sick prognosis'}
-    ${Prognosis.sickBuilding}    | ${'Sick building prognosis'}
-    ${Prognosis.unknown}         | ${'Unknown prognosis'}
+    ${Prognosis.healthy}         | ${'healthy prognosis'}
+    ${Prognosis.healthyBuilding} | ${'healthy building prognosis'}
+    ${Prognosis.sick}            | ${'sick prognosis'}
+    ${Prognosis.sickBuilding}    | ${'sick building prognosis'}
+    ${Prognosis.unknown}         | ${'unknown prognosis'}
   `(
     '$prognosis',
     async ({ prognosis, name }: { prognosis: Prognosis; name: string }) => {
@@ -81,8 +81,9 @@ describe('showing on the monitor page', () => {
       }
 
       const { store, user } = render(<DisplaySettingsPage />, { state })
-      const group = screen.getByRole('group', { name })
-      await user.click(within(group).getByLabelText('Show on the Monitor page'))
+      await user.click(
+        screen.getByLabelText(`Show ${name} on the Monitor page`),
+      )
 
       expect(getShowPrognosis(store.getState())).toContain(prognosis)
     },

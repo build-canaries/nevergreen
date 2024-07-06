@@ -35,9 +35,15 @@ describe('Settings', () => {
     cy.locate('duration').should('not.exist')
     cy.findByRole('button', { name: /dismiss/i }).click()
 
-    cy.findAllByLabelText('Show on the Monitor page').each((prognosis) => {
-      cy.wrap(prognosis).check()
-    })
+    cy.findByLabelText('Show sick prognosis on the Monitor page').check()
+    cy.findByLabelText(
+      'Show sick building prognosis on the Monitor page',
+    ).check()
+    cy.findByLabelText(
+      'Show healthy building prognosis on the Monitor page',
+    ).check()
+    cy.findByLabelText('Show unknown prognosis on the Monitor page').check()
+    cy.findByLabelText('Show healthy prognosis on the Monitor page').check()
 
     cy.findByLabelText('Amount of project to show').select('Large')
     cy.findByLabelText('Sort projects by').select('prognosis')
