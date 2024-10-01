@@ -2,8 +2,8 @@
   :description "A build monitor with attitude"
   :url "https://github.com/build-canaries/nevergreen"
   ; use lein deps :tree to check dependency problems and actual versions used
-  :dependencies [[org.clojure/clojure "1.11.3"]
-                 [ring "1.12.1"]
+  :dependencies [[org.clojure/clojure "1.12.0"]
+                 [ring "1.12.2"]
                  [compojure "1.7.1" :exclusions [ring/ring-codec]]
                  [environ "1.2.0"]
                  [cheshire "5.13.0"]
@@ -18,10 +18,10 @@
                  [base64-clj "0.1.1"]
                  [camel-snake-kebab "0.4.3"]
                  [com.cemerick/url "0.1.1" :exclusions [com.cemerick/clojurescript.test]]
-                 [ch.qos.logback/logback-classic "1.5.6" :exclusions [org.slf4j/slf4j-api]]
-                 [org.slf4j/log4j-over-slf4j "2.0.13"]
-                 [org.slf4j/jul-to-slf4j "2.0.13"]
-                 [org.slf4j/jcl-over-slf4j "2.0.13"]]
+                 [ch.qos.logback/logback-classic "1.5.8" :exclusions [org.slf4j/slf4j-api]]
+                 [org.slf4j/log4j-over-slf4j "2.0.16"]
+                 [org.slf4j/jul-to-slf4j "2.0.16"]
+                 [org.slf4j/jcl-over-slf4j "2.0.16"]]
   :min-lein-version "2.0.0"
   :uberjar-name "nevergreen-standalone.jar"
   :main nevergreen.app
@@ -34,7 +34,7 @@
             "coverage"      ["with-profile" "+test" "cloverage"]
             "check-updates" ["ancient" ":all"]}
   :profiles {:dev  {:plugins [[lein-ancient "0.7.0"]
-                              [jonase/eastwood "1.4.2"]
+                              [jonase/eastwood "1.4.3"]
                               [lein-cloverage "1.2.4"]]}
              :test {:jvm-opts ["-Dlogback.configurationFile=./src/logback-tests.xml"]}}
   :cloverage {:output           "target/coverage-reports/server"
