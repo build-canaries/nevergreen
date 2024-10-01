@@ -26,11 +26,13 @@ const slice = createSlice({
   initialState,
   reducers: {
     projectSelected: (draft, action: PayloadAction<ProjectSelectedAction>) => {
-      action.payload.selected
-        ? draft[action.payload.trayId].push(...action.payload.projectIds)
-        : remove(draft[action.payload.trayId], (id) =>
-            action.payload.projectIds.includes(id),
-          )
+      if (action.payload.selected) {
+        draft[action.payload.trayId].push(...action.payload.projectIds)
+      } else {
+        remove(draft[action.payload.trayId], (id) =>
+          action.payload.projectIds.includes(id),
+        )
+      }
     },
   },
   extraReducers: (builder) => {

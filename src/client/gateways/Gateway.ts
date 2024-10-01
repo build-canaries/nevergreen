@@ -4,7 +4,6 @@ import _get from 'lodash/get'
 import { errorMessage } from '../common/Utils'
 import { Prognosis } from '../domain/Project'
 
-// eslint-disable-next-line @typescript-eslint/ban-types
 type ApiData = object | string
 
 export type Request<T> = SuperAgentRequest & Promise<Response & { body: T }>

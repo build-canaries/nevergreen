@@ -1,7 +1,7 @@
 export function buildUrl(value: string, base?: string): URL | null {
   try {
     return new URL(value, base)
-  } catch (_) {
+  } catch {
     return null
   }
 }
