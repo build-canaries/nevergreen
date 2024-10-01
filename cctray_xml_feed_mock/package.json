@@ -17,8 +17,8 @@
     "start": "node src/server"
   },
   "dependencies": {
-    "basic-auth-connect": "1.0.0",
-    "express": "4.19.2"
+    "basic-auth-connect": "1.1.0",
+    "express": "4.21.0"
   },
   "devDependencies": {}
 }

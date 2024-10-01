@@ -62,11 +62,11 @@ export function ConnectionForm({
   const authOptions = existingFeed ? extendedAuthTypeOptions : authTypeOptions
   const initialUsername =
     existingFeed?.authType === AuthTypes.basic
-      ? existingFeed?.username ?? ''
+      ? (existingFeed?.username ?? '')
       : ''
   const initialQueryKey =
     existingFeed?.authType === AuthTypes.queryParam
-      ? existingFeed?.username ?? ''
+      ? (existingFeed?.username ?? '')
       : ''
   const submitButtonText = existingFeed ? 'Save' : 'Add feed'
 
