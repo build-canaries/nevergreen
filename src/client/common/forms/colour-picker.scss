@@ -15,11 +15,11 @@
 }
 
 .input {
-  @include forms.standard-input-dimensions($fix-width: true);
-
   border-radius: math.div(forms.$standard-input-size-mobile, 2);
   flex-grow: unset;
   padding: 0;
+
+  @include forms.standard-input-dimensions($fix-width: true);
 
   &:not(:disabled):read-only:focus {
     border-radius: math.div(forms.$standard-input-size-mobile, 2);

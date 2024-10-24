@@ -15,17 +15,17 @@ $border-radius: 5px;
 }
 
 .header {
-  @include typography.font-scale(-1);
-
-  @include responsive.respond-to(tablet, desktop) {
-    @include typography.font-scale(0);
-  }
-
   border-top-left-radius: $border-radius;
   border-top-right-radius: $border-radius;
   padding: 0 1em;
   text-align: center;
   white-space: nowrap;
+
+  @include typography.font-scale(-1);
+
+  @include responsive.respond-to(tablet, desktop) {
+    @include typography.font-scale(0);
+  }
 
   &.small {
     display: none;
@@ -39,16 +39,16 @@ $border-radius: 5px;
 }
 
 .footer {
+  border-bottom-left-radius: $border-radius;
+  border-bottom-right-radius: $border-radius;
+  overflow: hidden;
+  white-space: nowrap;
+
   @include typography.font-scale(-1);
 
   @include responsive.respond-to(tablet, desktop) {
     @include typography.font-scale(0);
   }
-
-  border-bottom-left-radius: $border-radius;
-  border-bottom-right-radius: $border-radius;
-  overflow: hidden;
-  white-space: nowrap;
 
   &.small {
     display: none;

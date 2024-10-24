@@ -2,7 +2,7 @@
 @use 'common/accessibility';
 @use 'common/layout';
 @use 'common/responsive';
-@import 'defaults';
+@use 'defaults';
 
 .nevergreen {
   display: flex;

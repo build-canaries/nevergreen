@@ -37,8 +37,6 @@
 }
 
 .select {
-  @include forms.standard-input-dimensions;
-
   appearance: none;
   background-color: transparent;
   border: colours.$input-border;
@@ -46,6 +44,8 @@
   grid-area: select;
   padding: 0.5em 1.5em 0.5em 0.5em;
   text-overflow: ellipsis;
+
+  @include forms.standard-input-dimensions;
 
   &:not(:disabled) {
     @include accessibility.interactive($focus-color-change-percentage: 0%);

@@ -22,14 +22,14 @@
 }
 
 .input {
-  @include forms.standard-input-dimensions;
-
   border: colours.$input-border;
   border-radius: colours.$border-radius;
   flex-grow: 1;
   min-width: 1em;
   padding: 0.5em;
   text-overflow: ellipsis;
+
+  @include forms.standard-input-dimensions;
 
   &:disabled {
     border-color: colours.$mid-grey;

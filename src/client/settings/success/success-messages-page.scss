@@ -8,10 +8,10 @@
 }
 
 .messages {
-  @include layout.grid($mobile-columns: 2, $desktop-columns: 2);
-
   list-style: none;
   margin: 0;
+
+  @include layout.grid($mobile-columns: 2, $desktop-columns: 2);
 }
 
 .card {

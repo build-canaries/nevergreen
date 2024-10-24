@@ -1,10 +1,11 @@
+@use 'sass:meta';
 @use 'common/colours';
 @use 'common/typography';
 @use 'common/links';
 @use 'common/responsive';
 @use 'common/layout';
 @import '~normalize.css';
-@import 'common/fonts/fonts';
+@include meta.load-css('common/fonts/fonts');
 
 * {
   box-sizing: border-box;

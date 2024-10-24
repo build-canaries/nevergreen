@@ -5,12 +5,12 @@
 @use 'forms';
 
 .container {
-  @include forms.standard-input-dimensions;
-
   display: block;
   height: auto;
   margin: layout.$spacing-height 0 0 0;
   width: 100%;
+
+  @include forms.standard-input-dimensions;
 
   @include responsive.respond-to(tablet, desktop) {
     width: fit-content;
@@ -34,8 +34,6 @@
   touch-action: manipulation;
 
   &::before {
-    @include forms.standard-input-dimensions(true, 2);
-
     background: colours.$white;
     border: colours.$input-border;
     border-radius: 2px;
@@ -43,6 +41,8 @@
     left: 0;
     position: absolute;
     top: 0;
+
+    @include forms.standard-input-dimensions(true, 2);
   }
 
   &::after {
@@ -68,8 +68,6 @@
 }
 
 .input {
-  @include forms.standard-input-dimensions(true);
-
   left: 0;
   margin: 0;
   opacity: 0;
@@ -77,6 +75,8 @@
   top: 0;
   z-index: 1;
   zoom: 1;
+
+  @include forms.standard-input-dimensions(true);
 
   &:disabled {
     & + .children {

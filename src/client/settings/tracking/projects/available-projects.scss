@@ -49,12 +49,12 @@
 }
 
 .buildItems {
-  @include layout.grid($desktop-columns: 2);
-  @extend %projects-container;
-
   list-style: none;
   overflow-y: scroll;
   padding: 1em;
+
+  @include layout.grid($desktop-columns: 2);
+  @extend %projects-container;
 
   @include responsive.respond-to(very-small) {
     overflow: scroll;
