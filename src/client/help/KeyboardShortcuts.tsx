@@ -86,19 +86,22 @@ export function KeyboardShortcuts({ searchQuery }: HelpProps): ReactElement {
         </Shortcut>
       </ul>
 
-      {screenfull.isEnabled && (
-        <>
-          <h3 className={styles.header}>Monitor page</h3>
-          <ul className={styles.shortcuts}>
+      <h3 className={styles.header}>Monitor page</h3>
+      <ul className={styles.shortcuts}>
+        <Shortcut label="Toggle mute audio notifications">
+          <Binding>space</Binding>
+        </Shortcut>
+        {screenfull.isEnabled && (
+          <>
             <Shortcut label="Toggle fullscreen">
               <Binding>f</Binding>
             </Shortcut>
             <Shortcut label="Exit fullscreen">
               <Binding>esc</Binding>
             </Shortcut>
-          </ul>
-        </>
-      )}
+          </>
+        )}
+      </ul>
 
       <h3 className={styles.header}>Tracking page</h3>
       <ul className={styles.shortcuts}>

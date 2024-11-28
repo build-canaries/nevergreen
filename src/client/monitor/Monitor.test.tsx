@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react'
+import { act, screen, waitFor } from '@testing-library/react'
 import noop from 'lodash/noop'
 import { Monitor } from './Monitor'
 import { render, waitForLoadingToFinish } from '../testUtils/testHelpers'
@@ -17,6 +17,9 @@ import {
 import { Prognosis } from '../domain/Project'
 import * as NotificationsHook from './notifications/NotificationsHook'
 import * as AudioPlayer from '../common/AudioPlayer'
+import { notificationsRoot } from '../settings/notifications/NotificationsReducer'
+import { personalSettingsRoot } from '../settings/PersonalSettingsReducer'
+import { triggerShortcut } from '../common/Keyboard'
 
 const outletContext = {
   menusHidden: false,
@@ -56,6 +59,7 @@ it('should show a success message if there are no interesting projects', async (
       prognosis: Prognosis.healthy,
     }),
   ])
+  jest.spyOn(AudioPlayer, 'playAudio')
   const state = {
     [feedsRoot]: {
       [feedId]: buildFeed({ trayId: feedId }),
@@ -69,6 +73,7 @@ it('should show a success message if there are no interesting projects', async (
   await waitFor(() => {
     expect(screen.getByText('some-success-message')).toBeInTheDocument()
   })
+  expect(AudioPlayer.playAudio).not.toHaveBeenCalled()
 })
 
 it('should display an error if the Nevergreen server is having issues', async () => {
@@ -97,8 +102,6 @@ it('should display an error if the Nevergreen server is having issues', async ()
   await waitForLoadingToFinish()
 
   expect(screen.getByText('some-project')).toBeInTheDocument()
-
-  jest.advanceTimersToNextTimer()
 
   await waitFor(
     () => {
@@ -186,4 +189,71 @@ it('should trigger notifications and stop any audio notifications if user leaves
   unmount()
 
   expect(AudioPlayer.stopAnyPlayingAudio).toHaveBeenCalled()
+})
+
+it('should allow muting audio notifications', async () => {
+  const feedId = 'some-tray-id'
+  jest
+    .spyOn(Gateway, 'post')
+    .mockResolvedValueOnce([
+      buildProjectApi({
+        trayId: feedId,
+        prognosis: Prognosis.sick,
+        description: 'some-project-sick',
+      }),
+    ])
+    .mockResolvedValueOnce([
+      buildProjectApi({
+        trayId: feedId,
+        prognosis: Prognosis.healthy,
+        description: 'some-project-healthy',
+      }),
+    ])
+  jest.spyOn(AudioPlayer, 'playAudio').mockResolvedValue()
+  jest.spyOn(AudioPlayer, 'stopAnyPlayingAudio')
+  const state = {
+    [feedsRoot]: {
+      [feedId]: buildFeed({ trayId: feedId }),
+    },
+    [personalSettingsRoot]: {
+      allowAudioNotifications: true,
+    },
+    [notificationsRoot]: {
+      notifications: {
+        [Prognosis.sick]: { sfx: 'sick-sfx', systemNotification: false },
+        [Prognosis.healthy]: { sfx: 'healthy-sfx', systemNotification: false },
+      },
+    },
+    [displaySettingsRoot]: {
+      refreshTime: 1,
+      showPrognosis: [Prognosis.sick, Prognosis.healthy],
+    },
+  }
+
+  render(<Monitor />, { state, outletContext })
+
+  await waitForLoadingToFinish()
+
+  expect(AudioPlayer.playAudio).toHaveBeenCalledWith(
+    'sick-sfx',
+    expect.any(Number),
+  )
+
+  // Trigger shortcut manually as I couldn't figure out how to get it working by firing key events :'(
+  act(() => {
+    triggerShortcut('space')
+  })
+
+  expect(AudioPlayer.stopAnyPlayingAudio).toHaveBeenCalled()
+
+  await waitFor(
+    () => {
+      expect(screen.getByText('some-project-healthy')).toBeInTheDocument()
+    },
+    { timeout: 4000 },
+  )
+  expect(AudioPlayer.playAudio).not.toHaveBeenCalledWith(
+    'healthy-sfx',
+    expect.any(Number),
+  )
 })

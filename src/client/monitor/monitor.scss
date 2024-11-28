@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use '../common/colours';
 @use '../common/typography';
 
@@ -13,4 +14,16 @@
 
 .menusHidden {
   cursor: none;
+}
+
+.mute {
+  background: color.change(colours.$off-black, $alpha: 0.5);
+  border-radius: 1em;
+  bottom: 1em;
+  color: color.change(colours.$off-white, $alpha: 0.75);
+  font-size: 2em;
+  margin: 0;
+  outline: 0.3em solid color.change(colours.$off-black, $alpha: 0.5);
+  position: absolute;
+  right: 1em;
 }

@@ -22,11 +22,13 @@ interface PrognosisTest {
 function HookWrapper({
   projects,
   errors,
+  mute = false,
 }: {
   projects: Projects
   errors: FeedErrors
+  mute?: boolean
 }) {
-  useNotifications(projects, errors)
+  useNotifications(projects, errors, mute)
   return <div />
 }
 
@@ -277,6 +279,37 @@ describe('audio notifications', () => {
       expect(AudioPlayer.playAudio).toHaveBeenCalledWith('some-sfx.mp3', 1)
     },
   )
+
+  it('should not play notification if muted', () => {
+    const state = {
+      [notificationsRoot]: {
+        notifications: {
+          [Prognosis.healthyBuilding]: {
+            systemNotification: false,
+            sfx: 'some-sfx.mp3',
+          },
+        },
+      },
+      [personalSettingsRoot]: {
+        allowAudioNotifications: true,
+      },
+    }
+    const projects = [
+      buildProject({
+        projectId: 'some-id',
+        description: 'some-name',
+        previousPrognosis: Prognosis.healthy,
+        prognosis: Prognosis.healthyBuilding,
+      }),
+    ]
+    const errors: FeedErrors = []
+
+    render(<HookWrapper projects={projects} errors={errors} mute={true} />, {
+      state,
+    })
+
+    expect(AudioPlayer.playAudio).not.toHaveBeenCalled()
+  })
 
   it('should only play one notification at a time even if multiple projects transition to valid prognosis', () => {
     const state = {

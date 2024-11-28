@@ -15,13 +15,14 @@ import { useAppSelector } from '../../configuration/Hooks'
 export function useAudioNotifications(
   projects: Projects,
   feedErrors: FeedErrors,
+  muted: boolean,
 ): void {
   const notifications = useAppSelector(getNotifications)
   const allowAudioNotifications = useAppSelector(getAllowAudioNotifications)
   const audioNotificationVolume = useAppSelector(getAudioNotificationVolume)
 
   useEffect(() => {
-    if (!allowAudioNotifications || anyAudioPlaying()) {
+    if (!allowAudioNotifications || anyAudioPlaying() || muted) {
       return
     }
 
@@ -53,5 +54,6 @@ export function useAudioNotifications(
     notifications,
     allowAudioNotifications,
     audioNotificationVolume,
+    muted,
   ])
 }

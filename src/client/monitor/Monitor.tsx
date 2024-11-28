@@ -1,4 +1,4 @@
-import type { ReactElement } from 'react'
+import { ReactElement, useState } from 'react'
 import { useEffect, useRef } from 'react'
 import cn from 'classnames'
 import isEmpty from 'lodash/isEmpty'
@@ -15,12 +15,14 @@ import { useInterestingProjects } from './InterestingProjectsHook'
 import { useNotifications } from './notifications/NotificationsHook'
 import { stopAnyPlayingAudio } from '../common/AudioPlayer'
 import { useAppSelector } from '../configuration/Hooks'
+import { Mute } from '../common/icons/Mute'
 import styles from './monitor.scss'
 
 export function Monitor(): ReactElement {
   const { menusHidden, toggleMenusHidden } = useNevergreenContext()
   const feeds = useAppSelector(getFeeds)
   const ref = useRef<HTMLDivElement>(null)
+  const [muted, setMuted] = useState(false)
 
   useEffect(() => {
     toggleMenusHidden(true)
@@ -32,7 +34,7 @@ export function Monitor(): ReactElement {
   const feedsAdded = !isEmpty(feeds)
 
   const { isLoading, projects, feedErrors } = useInterestingProjects()
-  useNotifications(projects, feedErrors)
+  useNotifications(projects, feedErrors, muted)
 
   useEffect(() => {
     return () => {
@@ -44,6 +46,10 @@ export function Monitor(): ReactElement {
     if (screenfull.isEnabled && ref.current) {
       void screenfull.toggle(ref.current)
     }
+  })
+  useShortcut('space', () => {
+    stopAnyPlayingAudio()
+    setMuted((m) => !m)
   })
 
   const monitorClassNames = cn(styles.monitor, {
@@ -64,6 +70,7 @@ export function Monitor(): ReactElement {
           <InterestingProjects projects={projects} feedErrors={feedErrors} />
         </Loading>
       )}
+      {muted && <Mute className={styles.mute} />}
     </div>
   )
 }

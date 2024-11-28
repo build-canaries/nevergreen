@@ -18,8 +18,9 @@ export function recentlyTransitioned(
 export function useNotifications(
   projects: Projects,
   feedErrors: FeedErrors,
+  muted: boolean,
 ): void {
   useBrowserTitleSummary(projects, feedErrors)
-  useAudioNotifications(projects, feedErrors)
+  useAudioNotifications(projects, feedErrors, muted)
   useSystemNotifications(projects, feedErrors)
 }

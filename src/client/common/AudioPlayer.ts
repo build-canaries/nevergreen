@@ -23,12 +23,12 @@ export function playAudio(
   return audio.play()
 }
 
-export function stopAudio(src: string) {
+export function stopAudio(src: string): void {
   const audio = cachedAudio.get(src)
   stop(audio)
 }
 
-export function stopAnyPlayingAudio() {
+export function stopAnyPlayingAudio(): void {
   for (const audio of cachedAudio.values()) {
     stop(audio)
   }
@@ -43,6 +43,6 @@ export function anyAudioPlaying(): boolean {
   return false
 }
 
-export function deleteAudio(src: string) {
+export function deleteAudio(src: string): void {
   cachedAudio.delete(src)
 }
