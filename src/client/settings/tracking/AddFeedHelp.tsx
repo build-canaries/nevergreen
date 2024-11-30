@@ -67,7 +67,8 @@ export function AddFeedHelp({ searchQuery }: HelpProps): ReactElement {
         <HelpInput name="Query value">The query value to send.</HelpInput>
         <HelpInput name="Check connection" icon={<Loop />}>
           This will check the currently entered details and display a message
-          whether the connection was successful or not.
+          whether the connection was successful or not. This will perform a HEAD
+          request, rather than a full GET.
         </HelpInput>
       </HelpForm>
       <InfoMessages
