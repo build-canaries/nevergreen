@@ -116,3 +116,18 @@ export function enrichProjects(
 export function prognosisDisplay(prognosis: Prognosis): string {
   return prognosis.replace('-', ' ')
 }
+
+const orderedPrognosis: ReadonlyArray<Prognosis> = [
+  Prognosis.error,
+  Prognosis.sick,
+  Prognosis.sickBuilding,
+  Prognosis.healthyBuilding,
+  Prognosis.unknown,
+  Prognosis.healthy,
+]
+
+export function sortedPrognosisByPriority(
+  prognosis: ReadonlyArray<Prognosis> = orderedPrognosis,
+): ReadonlyArray<Prognosis> {
+  return orderedPrognosis.filter((p) => prognosis.includes(p))
+}

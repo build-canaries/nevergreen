@@ -4,19 +4,25 @@ import { anyAudioPlaying, playAudio } from '../../common/AudioPlayer'
 import { error } from '../../common/Logger'
 import { getNotifications } from '../../settings/notifications/NotificationsReducer'
 import { recentlyTransitioned } from './NotificationsHook'
-import { Prognosis, Projects } from '../../domain/Project'
+import {
+  Prognosis,
+  Projects,
+  sortedPrognosisByPriority,
+} from '../../domain/Project'
 import { FeedErrors } from '../../domain/FeedError'
 import {
   getAllowAudioNotifications,
   getAudioNotificationVolume,
 } from '../../settings/PersonalSettingsReducer'
 import { useAppSelector } from '../../configuration/Hooks'
+import { getShowPrognosis } from '../../settings/display/DisplaySettingsReducer'
 
 export function useAudioNotifications(
   projects: Projects,
   feedErrors: FeedErrors,
   muted: boolean,
 ): void {
+  const showPrognosis = useAppSelector(getShowPrognosis)
   const notifications = useAppSelector(getNotifications)
   const allowAudioNotifications = useAppSelector(getAllowAudioNotifications)
   const audioNotificationVolume = useAppSelector(getAudioNotificationVolume)
@@ -27,16 +33,17 @@ export function useAudioNotifications(
     }
 
     const toCheck = [...feedErrors, ...projects]
-    const sfxToPlay = Object.values(Prognosis)
-      .reverse()
+    const sfxToPlay = sortedPrognosisByPriority(
+      showPrognosis.concat(Prognosis.error),
+    )
+      .toReversed()
       .reduce((previousSfxToPlay, prognosis) => {
         const allWithPrognosis = toCheck.filter(
           (project) => project.prognosis === prognosis,
         )
-        const toAlert = recentlyTransitioned(allWithPrognosis, prognosis)
         const notification = notifications[prognosis]
-        const shouldPlay =
-          notification && isNotBlank(notification.sfx) && toAlert.length > 0
+        const toAlert = recentlyTransitioned(allWithPrognosis, prognosis)
+        const shouldPlay = isNotBlank(notification?.sfx) && toAlert.length > 0
 
         return shouldPlay ? notification.sfx : previousSfxToPlay
       }, '')
@@ -55,5 +62,6 @@ export function useAudioNotifications(
     allowAudioNotifications,
     audioNotificationVolume,
     muted,
+    showPrognosis,
   ])
 }

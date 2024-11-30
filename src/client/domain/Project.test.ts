@@ -5,6 +5,7 @@ import {
   projectBuildLabel,
   projectIdentifier,
   ProjectPrognosis,
+  sortedPrognosisByPriority,
 } from './Project'
 import { buildFeedError, buildProject } from '../testUtils/builders'
 
@@ -191,5 +192,28 @@ describe('enrichProjects', () => {
         expect.objectContaining({ previousPrognosis: undefined }),
       ]),
     )
+  })
+})
+
+describe('sortedPrognosisByPriority', () => {
+  it('should sort all prognosis with highest priority first', () => {
+    expect(sortedPrognosisByPriority()).toEqual([
+      Prognosis.error,
+      Prognosis.sick,
+      Prognosis.sickBuilding,
+      Prognosis.healthyBuilding,
+      Prognosis.unknown,
+      Prognosis.healthy,
+    ])
+  })
+
+  it('should sort given prognosis correctly', () => {
+    expect(
+      sortedPrognosisByPriority([
+        Prognosis.unknown,
+        Prognosis.error,
+        Prognosis.sickBuilding,
+      ]),
+    ).toEqual([Prognosis.error, Prognosis.sickBuilding, Prognosis.unknown])
   })
 })

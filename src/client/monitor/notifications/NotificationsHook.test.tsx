@@ -11,6 +11,9 @@ import { notificationsRoot } from '../../settings/notifications/NotificationsRed
 import { useNotifications } from './NotificationsHook'
 import { FeedErrors } from '../../domain/FeedError'
 import * as AudioPlayer from '../../common/AudioPlayer'
+import * as BrowserTitleSummaryHook from './BrowserTitleSummaryHook'
+import * as SystemNotificationsHook from './SystemNotificationsHook'
+import * as AudioNotificationsHook from './AudioNotificationsHook'
 import { displaySettingsRoot } from '../../settings/display/DisplaySettingsReducer'
 import { personalSettingsRoot } from '../../settings/PersonalSettingsReducer'
 
@@ -35,6 +38,53 @@ function HookWrapper({
 beforeEach(() => {
   jest.spyOn(SystemNotifications, 'sendSystemNotification').mockResolvedValue()
   jest.spyOn(AudioPlayer, 'playAudio').mockResolvedValue()
+})
+
+it('should only pass interesting projects', () => {
+  jest.spyOn(BrowserTitleSummaryHook, 'useBrowserTitleSummary')
+  jest.spyOn(SystemNotificationsHook, 'useSystemNotifications')
+  jest.spyOn(AudioNotificationsHook, 'useAudioNotifications')
+  const state = {
+    [notificationsRoot]: {
+      notifications: {
+        [Prognosis.sick]: { systemNotification: true, sfx: 'some-audio' },
+      },
+    },
+    [personalSettingsRoot]: {
+      allowSystemNotifications: true,
+      allowAudioNotifications: true,
+    },
+    [displaySettingsRoot]: {
+      showPrognosis: [],
+    },
+  }
+  const projects = [
+    buildProject({
+      projectId: 'some-id',
+      description: 'some-name',
+      previousPrognosis: Prognosis.healthyBuilding,
+      prognosis: Prognosis.sick,
+    }),
+  ]
+  const errors: FeedErrors = []
+
+  render(<HookWrapper projects={projects} errors={errors} />, {
+    state,
+  })
+
+  expect(BrowserTitleSummaryHook.useBrowserTitleSummary).toBeCalledWith(
+    [],
+    errors,
+  )
+  expect(SystemNotificationsHook.useSystemNotifications).toBeCalledWith(
+    [],
+    errors,
+  )
+  expect(AudioNotificationsHook.useAudioNotifications).toBeCalledWith(
+    [],
+    errors,
+    expect.any(Boolean),
+  )
 })
 
 describe('system notifications', () => {
@@ -80,6 +130,9 @@ describe('system notifications', () => {
         },
         [personalSettingsRoot]: {
           allowSystemNotifications: true,
+        },
+        [displaySettingsRoot]: {
+          showPrognosis: [current],
         },
       }
       const projects = [
@@ -157,6 +210,9 @@ describe('system notifications', () => {
       },
       [personalSettingsRoot]: {
         allowSystemNotifications: true,
+      },
+      [displaySettingsRoot]: {
+        showPrognosis: [Prognosis.sick, Prognosis.healthy],
       },
     }
     const projects = [
@@ -263,6 +319,9 @@ describe('audio notifications', () => {
         [personalSettingsRoot]: {
           allowAudioNotifications: true,
         },
+        [displaySettingsRoot]: {
+          showPrognosis: [current],
+        },
       }
       const projects = [
         buildProject({
@@ -315,15 +374,18 @@ describe('audio notifications', () => {
     const state = {
       [notificationsRoot]: {
         notifications: {
-          [Prognosis.sick]: { systemNotification: false, sfx: 'some-sfx.mp3' },
+          [Prognosis.sick]: { systemNotification: false, sfx: 'sick-sfx.mp3' },
           [Prognosis.healthy]: {
             systemNotification: false,
-            sfx: 'another-sfx.mp3',
+            sfx: 'healthy-sfx.mp3',
           },
         },
       },
       [personalSettingsRoot]: {
         allowAudioNotifications: true,
+      },
+      [displaySettingsRoot]: {
+        showPrognosis: [Prognosis.sick, Prognosis.healthy],
       },
     }
     const projects = [
@@ -344,8 +406,8 @@ describe('audio notifications', () => {
 
     render(<HookWrapper projects={projects} errors={errors} />, { state })
 
-    expect(AudioPlayer.playAudio).toHaveBeenCalledWith('some-sfx.mp3', 1)
-    expect(AudioPlayer.playAudio).not.toHaveBeenCalledWith('another-sfx.mp3', 1)
+    expect(AudioPlayer.playAudio).toHaveBeenCalledWith('sick-sfx.mp3', 1)
+    expect(AudioPlayer.playAudio).not.toHaveBeenCalledWith('healthy-sfx.mp3', 1)
   })
 
   it('should not play more notifications if a previous notification is still playing', () => {
@@ -354,15 +416,18 @@ describe('audio notifications', () => {
     const state = {
       [notificationsRoot]: {
         notifications: {
-          [Prognosis.sick]: { systemNotification: false, sfx: 'some-sfx.mp3' },
+          [Prognosis.sick]: { systemNotification: false, sfx: 'sick-sfx.mp3' },
           [Prognosis.healthy]: {
             systemNotification: false,
-            sfx: 'another-sfx.mp3',
+            sfx: 'healthy-sfx.mp3',
           },
         },
       },
       [personalSettingsRoot]: {
         allowAudioNotifications: true,
+      },
+      [displaySettingsRoot]: {
+        showPrognosis: [Prognosis.sick, Prognosis.healthy],
       },
     }
     const firstRender = [
@@ -390,8 +455,8 @@ describe('audio notifications', () => {
 
     rerender(<HookWrapper projects={secondRender} errors={errors} />)
 
-    expect(AudioPlayer.playAudio).toHaveBeenCalledWith('some-sfx.mp3', 1)
-    expect(AudioPlayer.playAudio).not.toHaveBeenCalledWith('another-sfx.mp3', 1)
+    expect(AudioPlayer.playAudio).toHaveBeenCalledWith('sick-sfx.mp3', 1)
+    expect(AudioPlayer.playAudio).not.toHaveBeenCalledWith('healthy-sfx.mp3', 1)
   })
 
   it('should not play notifications when project is still in same prognosis', () => {
@@ -424,17 +489,19 @@ describe('audio notifications', () => {
     const state = {
       [notificationsRoot]: {
         notifications: {
-          [Prognosis.sick]: { systemNotification: false, sfx: 'some-sfx.mp3' },
+          [Prognosis.sick]: { systemNotification: false, sfx: 'sick-sfx.mp3' },
         },
       },
       [personalSettingsRoot]: {
         allowAudioNotifications: true,
       },
+      [displaySettingsRoot]: {
+        showPrognosis: [Prognosis.sick],
+      },
     }
     const projectsFirstFetch = [
       buildProject({
         projectId: 'some-id',
-        description: 'some-name',
         previousPrognosis: Prognosis.healthyBuilding,
         prognosis: Prognosis.sick,
       }),
@@ -442,7 +509,6 @@ describe('audio notifications', () => {
     const projectsSecondFetch = [
       buildProject({
         projectId: 'some-id',
-        description: 'some-name',
         previousPrognosis: Prognosis.sick,
         prognosis: Prognosis.sick,
       }),
@@ -573,40 +639,5 @@ describe('browser title', () => {
     render(<HookWrapper projects={projects} errors={errors} />)
 
     expect(document).toHaveProperty('title', 'Monitor')
-  })
-
-  it('should only show interesting projects', () => {
-    const state = {
-      [displaySettingsRoot]: {
-        showPrognosis: [Prognosis.sick, Prognosis.healthy],
-      },
-    }
-    const projects = [
-      buildProject({
-        projectId: '1',
-        prognosis: Prognosis.sick,
-      }),
-      buildProject({
-        projectId: '2',
-        prognosis: Prognosis.sickBuilding,
-      }),
-      buildProject({
-        projectId: '3',
-        prognosis: Prognosis.healthyBuilding,
-      }),
-      buildProject({
-        projectId: '4',
-        prognosis: Prognosis.unknown,
-      }),
-      buildProject({
-        projectId: '5',
-        prognosis: Prognosis.healthy,
-      }),
-    ]
-    const errors: FeedErrors = []
-
-    render(<HookWrapper projects={projects} errors={errors} />, { state })
-
-    expect(document).toHaveProperty('title', '1 Sick, 1 Healthy')
   })
 })

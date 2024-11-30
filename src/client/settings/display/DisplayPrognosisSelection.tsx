@@ -1,5 +1,9 @@
 import type { ReactElement } from 'react'
-import { Prognosis, prognosisDisplay } from '../../domain/Project'
+import {
+  Prognosis,
+  prognosisDisplay,
+  sortedPrognosisByPriority,
+} from '../../domain/Project'
 import {
   getDisplaySettings,
   getShowPrognosis,
@@ -43,7 +47,7 @@ export function DisplayPrognosisSelection(): ReactElement {
           additionalContext="for errors"
         />
       </Card>
-      {Object.values(Prognosis)
+      {sortedPrognosisByPriority()
         .filter((prognosis) => prognosis !== Prognosis.error)
         .map((prognosis) => {
           return (

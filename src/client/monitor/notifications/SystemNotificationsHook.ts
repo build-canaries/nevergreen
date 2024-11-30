@@ -3,6 +3,7 @@ import {
   prognosisDisplay,
   Project,
   Projects,
+  sortedPrognosisByPriority,
 } from '../../domain/Project'
 import { getNotifications } from '../../settings/notifications/NotificationsReducer'
 import { sendSystemNotification } from '../../common/SystemNotifications'
@@ -12,6 +13,7 @@ import { recentlyTransitioned } from './NotificationsHook'
 import { getAllowSystemNotifications } from '../../settings/PersonalSettingsReducer'
 import { useAppSelector } from '../../configuration/Hooks'
 import { prognosisIconsPng } from '../../common/icons/prognosis/IconPrognosis'
+import { getShowPrognosis } from '../../settings/display/DisplaySettingsReducer'
 
 function notificationBody(
   projects: ReadonlyArray<Project | FeedError>,
@@ -33,6 +35,7 @@ export function useSystemNotifications(
   projects: Projects,
   feedErrors: FeedErrors,
 ): void {
+  const showPrognosis = useAppSelector(getShowPrognosis)
   const notifications = useAppSelector(getNotifications)
   const allowSystemNotifications = useAppSelector(getAllowSystemNotifications)
 
@@ -43,24 +46,30 @@ export function useSystemNotifications(
 
     const toCheck = [...feedErrors, ...projects]
 
-    Object.values(Prognosis)
-      .reverse()
+    // reverse so the highest priority notification is sent last
+    sortedPrognosisByPriority(showPrognosis.concat(Prognosis.error))
+      .toReversed()
       .forEach((prognosis) => {
-        const allWithPrognosis = toCheck.filter(
-          (project) => project.prognosis === prognosis,
-        )
-        const toAlert = recentlyTransitioned(allWithPrognosis, prognosis)
         const notification = notifications[prognosis]
-        const shouldSend =
-          notification && notification.systemNotification && toAlert.length > 0
-
-        if (shouldSend) {
-          void sendSystemNotification({
-            title: notificationTitle(prognosis, toAlert.length),
-            body: notificationBody(toAlert),
-            icon: prognosisIconsPng[prognosis],
-          })
+        if (notification?.systemNotification) {
+          const allWithPrognosis = toCheck.filter(
+            (project) => project.prognosis === prognosis,
+          )
+          const toAlert = recentlyTransitioned(allWithPrognosis, prognosis)
+          if (toAlert.length > 0) {
+            void sendSystemNotification({
+              title: notificationTitle(prognosis, toAlert.length),
+              body: notificationBody(toAlert),
+              icon: prognosisIconsPng[prognosis],
+            })
+          }
         }
       })
-  }, [projects, feedErrors, notifications, allowSystemNotifications])
+  }, [
+    projects,
+    feedErrors,
+    notifications,
+    allowSystemNotifications,
+    showPrognosis,
+  ])
 }

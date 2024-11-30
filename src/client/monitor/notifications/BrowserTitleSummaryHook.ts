@@ -1,10 +1,13 @@
-import { Prognosis, prognosisDisplay, Projects } from '../../domain/Project'
+import {
+  Prognosis,
+  prognosisDisplay,
+  Projects,
+  sortedPrognosisByPriority,
+} from '../../domain/Project'
 import { useEffect, useState } from 'react'
 import capitalize from 'lodash/capitalize'
 import { useUpdateBrowserTitle } from '../../common/BrowserTitleHook'
-import { getShowPrognosis } from '../../settings/display/DisplaySettingsReducer'
 import { FeedErrors } from '../../domain/FeedError'
-import { useAppSelector } from '../../configuration/Hooks'
 import { prognosisIconsSvg } from '../../common/icons/prognosis/IconPrognosis'
 
 interface Interesting {
@@ -18,7 +21,6 @@ export function useBrowserTitleSummary(
   projects: Projects,
   feedErrors: FeedErrors,
 ): void {
-  const showPrognosis = useAppSelector(getShowPrognosis)
   const [title, setTitle] = useState<string>(defaultTitle)
   const [favicon, setFavicon] = useState<string>()
 
@@ -27,9 +29,6 @@ export function useBrowserTitleSummary(
   useEffect(() => {
     const toCheck = [...feedErrors, ...projects]
 
-    const isBeingShown = (prognosis: Prognosis): boolean => {
-      return prognosis === Prognosis.error || showPrognosis.includes(prognosis)
-    }
     const countProjectsWithPrognosis = (prognosis: Prognosis): Interesting => {
       const withPrognosis = toCheck.filter(
         (project) => project.prognosis === prognosis,
@@ -45,8 +44,7 @@ export function useBrowserTitleSummary(
       )}`
     }
 
-    const activePrognosis = Object.values(Prognosis)
-      .filter(isBeingShown)
+    const activePrognosis = sortedPrognosisByPriority()
       .map(countProjectsWithPrognosis)
       .filter(hasProjects)
 
@@ -60,5 +58,5 @@ export function useBrowserTitleSummary(
     } else {
       setFavicon(undefined)
     }
-  }, [projects, feedErrors, showPrognosis])
+  }, [projects, feedErrors])
 }

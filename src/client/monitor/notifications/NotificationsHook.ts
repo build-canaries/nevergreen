@@ -3,14 +3,18 @@ import { FeedError, FeedErrors } from '../../domain/FeedError'
 import { useAudioNotifications } from './AudioNotificationsHook'
 import { useBrowserTitleSummary } from './BrowserTitleSummaryHook'
 import { useSystemNotifications } from './SystemNotificationsHook'
+import { useAppSelector } from '../../configuration/Hooks'
+import { getShowPrognosis } from '../../settings/display/DisplaySettingsReducer'
+import { useMemo } from 'react'
 
 export function recentlyTransitioned(
-  projects: ReadonlyArray<Project | FeedError>,
+  projectsAndErrors: ReadonlyArray<Project | FeedError>,
   prognosis: Prognosis,
-) {
-  return projects.filter((project) => {
+): ReadonlyArray<Project | FeedError> {
+  return projectsAndErrors.filter((projectOrError) => {
     return (
-      project.prognosis === prognosis && project.previousPrognosis !== prognosis
+      projectOrError.prognosis === prognosis &&
+      projectOrError.previousPrognosis !== prognosis
     )
   })
 }
@@ -20,7 +24,16 @@ export function useNotifications(
   feedErrors: FeedErrors,
   muted: boolean,
 ): void {
-  useBrowserTitleSummary(projects, feedErrors)
-  useAudioNotifications(projects, feedErrors, muted)
-  useSystemNotifications(projects, feedErrors)
+  const showPrognosis = useAppSelector(getShowPrognosis)
+  const interestingProjects = useMemo(
+    () =>
+      projects.filter((project: Project): boolean => {
+        return showPrognosis.includes(project.prognosis)
+      }),
+    [projects, showPrognosis],
+  )
+
+  useBrowserTitleSummary(interestingProjects, feedErrors)
+  useAudioNotifications(interestingProjects, feedErrors, muted)
+  useSystemNotifications(interestingProjects, feedErrors)
 }
