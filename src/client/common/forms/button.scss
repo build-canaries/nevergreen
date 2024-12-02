@@ -110,10 +110,10 @@
 
   &:enabled {
     box-shadow: none;
-  }
 
-  &:focus,
-  &:hover {
-    border-left: 1px solid;
+    &:focus,
+    &:hover {
+      border-left: 1px solid;
+    }
   }
 }
