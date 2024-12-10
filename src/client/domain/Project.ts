@@ -5,6 +5,7 @@ import {
   ProjectsResponse,
 } from '../gateways/ProjectsGateway'
 import { FeedError, isError } from './FeedError'
+import capitalize from 'lodash/capitalize'
 
 export enum Prognosis {
   error = 'error',
@@ -113,8 +114,12 @@ export function enrichProjects(
     .map((project) => updateTimestamp(project, previouslyFetchedProjects))
 }
 
-export function prognosisDisplay(prognosis: Prognosis): string {
-  return prognosis.replace('-', ' ')
+export function prognosisDisplay(
+  prognosis: Prognosis,
+  capitalise: boolean = false,
+): string {
+  const withSpaces = prognosis.replace('-', ' ')
+  return capitalise ? capitalize(withSpaces) : withSpaces
 }
 
 const orderedPrognosis: ReadonlyArray<Prognosis> = [

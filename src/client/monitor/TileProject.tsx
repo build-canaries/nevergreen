@@ -6,7 +6,6 @@ import { Duration } from '../common/Duration'
 import { ScaledTile } from './ScaledTile'
 import { Feed, getFeeds } from '../settings/tracking/FeedsReducer'
 import {
-  getDisplaySettings,
   getShowBuildLabel,
   getShowBuildTime,
   getShowFeedIdentifier,
@@ -19,6 +18,7 @@ import isNil from 'lodash/isNil'
 import { useAppSelector } from '../configuration/Hooks'
 import styles from './tile-project.scss'
 import { IconPrognosis } from '../common/icons/prognosis/IconPrognosis'
+import { getAllPrognosisSettings } from '../settings/prognosis/PrognosisSettingsReducer'
 
 interface TileProjectProps {
   readonly project: Project | FeedError
@@ -42,7 +42,7 @@ export function TileProject({
   const showFeedIdentifier = useAppSelector(getShowFeedIdentifier)
   const showBuildLabel = useAppSelector(getShowBuildLabel)
   const showPrognosisIcon = useAppSelector(getShowPrognosisName)
-  const settings = useAppSelector(getDisplaySettings)
+  const settings = useAppSelector(getAllPrognosisSettings)
 
   const sentences = visibleProjects.map((p) => p.description)
 

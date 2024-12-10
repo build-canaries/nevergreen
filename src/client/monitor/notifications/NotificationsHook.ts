@@ -4,8 +4,8 @@ import { useAudioNotifications } from './AudioNotificationsHook'
 import { useBrowserTitleSummary } from './BrowserTitleSummaryHook'
 import { useSystemNotifications } from './SystemNotificationsHook'
 import { useAppSelector } from '../../configuration/Hooks'
-import { getShowPrognosis } from '../../settings/display/DisplaySettingsReducer'
 import { useMemo } from 'react'
+import { getShowPrognosis } from '../../settings/prognosis/PrognosisSettingsReducer'
 
 export function recentlyTransitioned(
   projectsAndErrors: ReadonlyArray<Project | FeedError>,

@@ -12,6 +12,7 @@
 
 .summaryListRow {
   @include responsive.respond-to(tablet, desktop) {
+    column-gap: 0.5em;
     display: grid;
     grid-template-columns: 30% 70%;
   }

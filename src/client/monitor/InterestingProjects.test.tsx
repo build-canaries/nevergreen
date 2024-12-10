@@ -8,6 +8,7 @@ import {
   displaySettingsRoot,
 } from '../settings/display/DisplaySettingsReducer'
 import { screen } from '@testing-library/react'
+import { prognosisSettingsRoot } from '../settings/prognosis/PrognosisSettingsReducer'
 
 const feedId = 'some-tray-id'
 
@@ -25,10 +26,12 @@ describe('displaying project information', () => {
           [feedId]: buildFeed({ trayId: feedId, name: 'some-feed-name' }),
         },
         [displaySettingsRoot]: {
-          showPrognosis: [prognosis],
           showTrayName: true,
           showBuildTime: true,
           showBuildLabel: true,
+        },
+        [prognosisSettingsRoot]: {
+          [prognosis]: { show: true },
         },
       }
       const props = {
@@ -60,10 +63,12 @@ describe('displaying project information', () => {
         [feedId]: buildFeed({ trayId: feedId, name: 'some-feed-name' }),
       },
       [displaySettingsRoot]: {
-        showPrognosis: [Prognosis.unknown],
         showTrayName: true,
         showBuildTime: true,
         showBuildLabel: true,
+      },
+      [prognosisSettingsRoot]: {
+        [Prognosis.unknown]: { show: true },
       },
     }
     const props = {
@@ -95,10 +100,12 @@ describe('displaying project information', () => {
         [feedId]: buildFeed({ trayId: feedId, name: 'some-feed-name' }),
       },
       [displaySettingsRoot]: {
-        showPrognosis: [Prognosis.sickBuilding],
         showTrayName: true,
         showBuildTime: true,
         showBuildLabel: true,
+      },
+      [prognosisSettingsRoot]: {
+        [Prognosis.sickBuilding]: { show: true },
       },
     }
     const props = {
@@ -129,10 +136,12 @@ describe('displaying project information', () => {
         [feedId]: buildFeed({ trayId: feedId, name: 'some-feed-name' }),
       },
       [displaySettingsRoot]: {
-        showPrognosis: [Prognosis.sick],
         showTrayName: false,
         showBuildTime: false,
         showBuildLabel: false,
+      },
+      [prognosisSettingsRoot]: {
+        [Prognosis.sick]: { show: true },
       },
     }
     const props = {
@@ -161,8 +170,8 @@ describe('displaying project information', () => {
       [feedsRoot]: {
         [feedId]: buildFeed({ trayId: feedId }),
       },
-      [displaySettingsRoot]: {
-        showPrognosis: [Prognosis.sickBuilding],
+      [prognosisSettingsRoot]: {
+        [Prognosis.sickBuilding]: { show: true },
       },
     }
     const props = {
@@ -233,14 +242,14 @@ describe('limiting the projects displayed', () => {
         [feedId]: buildFeed({ trayId: feedId }),
       },
       [displaySettingsRoot]: {
-        showPrognosis: [
-          Prognosis.sick,
-          Prognosis.sickBuilding,
-          Prognosis.healthy,
-          Prognosis.healthyBuilding,
-          Prognosis.unknown,
-        ],
         maxProjectsToShow: MaxProjectsToShow.small,
+      },
+      [prognosisSettingsRoot]: {
+        [Prognosis.sick]: { show: true },
+        [Prognosis.sickBuilding]: { show: true },
+        [Prognosis.healthy]: { show: true },
+        [Prognosis.healthyBuilding]: { show: true },
+        [Prognosis.unknown]: { show: true },
       },
     }
     const props = {
@@ -293,15 +302,15 @@ describe('limiting the projects displayed', () => {
         [feedId]: buildFeed({ trayId: feedId }),
       },
       [displaySettingsRoot]: {
-        showPrognosis: [
-          Prognosis.sick,
-          Prognosis.sickBuilding,
-          Prognosis.healthy,
-          Prognosis.healthyBuilding,
-          Prognosis.unknown,
-          Prognosis.error,
-        ],
         maxProjectsToShow: MaxProjectsToShow.small,
+      },
+      [prognosisSettingsRoot]: {
+        [Prognosis.sick]: { show: true },
+        [Prognosis.sickBuilding]: { show: true },
+        [Prognosis.healthy]: { show: true },
+        [Prognosis.healthyBuilding]: { show: true },
+        [Prognosis.unknown]: { show: true },
+        [Prognosis.error]: { show: true },
       },
     }
     const props = {
@@ -337,9 +346,11 @@ it('should filter projects based on prognosis', () => {
       [feedId]: buildFeed({ trayId: feedId, name: 'some-feed-name' }),
     },
     [displaySettingsRoot]: {
-      showPrognosis: [Prognosis.sick],
       showBuildTime: true,
       showBuildLabel: true,
+    },
+    [prognosisSettingsRoot]: {
+      [Prognosis.sick]: { show: true },
     },
   }
   const props = {

@@ -10,7 +10,6 @@ import { TileProject } from './TileProject'
 import { TileProjectsNotShown } from './TileProjectsNotShown'
 import {
   getMaxProjectsToShow,
-  getShowPrognosis,
   MaxProjectsToShow,
 } from '../settings/display/DisplaySettingsReducer'
 import { isMobile, isTablet } from '../common/Style'
@@ -18,6 +17,7 @@ import { useWindowResized } from '../common/ResizableHook'
 import { FeedErrors, isError } from '../domain/FeedError'
 import { useAppSelector } from '../configuration/Hooks'
 import styles from './interesting-projects.scss'
+import { getShowPrognosis } from '../settings/prognosis/PrognosisSettingsReducer'
 
 interface InterestingProjectsProps {
   readonly projects: Projects

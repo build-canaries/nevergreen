@@ -2,9 +2,8 @@
 @use '../../common/responsive';
 @use '../../common/forms/forms';
 
-.changeColours {
-  display: flex;
-  width: fit-content;
+.addButton {
+  margin-top: 0;
 }
 
 .messages {

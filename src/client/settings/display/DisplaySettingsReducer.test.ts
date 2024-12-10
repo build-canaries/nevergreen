@@ -2,32 +2,26 @@ import type { RecursivePartial } from '../../common/Types'
 import {
   displaySettingsRoot,
   DisplaySettingsState,
-  getDisplaySettings,
   getMaxProjectsToShow,
   getRefreshTime,
   getShowBuildLabel,
   getShowBuildTime,
   getShowFeedIdentifier,
-  getShowPrognosis,
   getShowPrognosisName,
   getSort,
   MaxProjectsToShow,
   reducer as settingsReducer,
   setMaxProjectsToShow,
-  setPrognosisBackgroundColour,
-  setPrognosisTextColour,
   setRefreshTime,
   setShowBuildLabel,
   setShowBuildTime,
   setShowFeedIdentifier,
-  setShowPrognosis,
   setShowPrognosisName,
   setSort,
   SortBy,
 } from './DisplaySettingsReducer'
 import { testReducer } from '../../testUtils/testHelpers'
 import { buildState } from '../../testUtils/builders'
-import { Prognosis } from '../../domain/Project'
 import { configurationImported } from '../backup/BackupActionCreators'
 
 const reducer = testReducer({
@@ -156,67 +150,11 @@ describe(setMaxProjectsToShow.toString(), () => {
   })
 })
 
-describe(setShowPrognosis.toString(), () => {
-  it('should add the prognosis to show', () => {
-    const existingState = state({ showPrognosis: [] })
-    const action = setShowPrognosis({ prognosis: Prognosis.sick, show: true })
-    const newState = reducer(existingState, action)
-    expect(getShowPrognosis(newState)).toEqual([Prognosis.sick])
-  })
-
-  it('should remove the prognosis to hide', () => {
-    const existingState = state({
-      showPrognosis: [Prognosis.sick, Prognosis.sickBuilding],
-    })
-    const action = setShowPrognosis({ prognosis: Prognosis.sick, show: false })
-    const newState = reducer(existingState, action)
-    expect(getShowPrognosis(newState)).toEqual([Prognosis.sickBuilding])
-  })
-})
-
 describe(setSort.toString(), () => {
   it('should add the sort', () => {
     const existingState = state({ sort: SortBy.default })
     const action = setSort(SortBy.prognosis)
     const newState = reducer(existingState, action)
     expect(getSort(newState)).toEqual(SortBy.prognosis)
-  })
-})
-
-describe(setPrognosisBackgroundColour.toString(), () => {
-  it('should set the background colour for the given prognosis', () => {
-    const existingState = state({
-      [Prognosis.sick]: { textColour: '', backgroundColour: '' },
-    })
-    const action = setPrognosisBackgroundColour({
-      prognosis: Prognosis.sick,
-      colour: 'a',
-    })
-    const newState = reducer(existingState, action)
-    expect(getDisplaySettings(newState)[Prognosis.sick]).toEqual(
-      expect.objectContaining({
-        textColour: '',
-        backgroundColour: 'a',
-      }),
-    )
-  })
-})
-
-describe(setPrognosisTextColour.toString(), () => {
-  it('should set the text colour for the given prognosis', () => {
-    const existingState = state({
-      [Prognosis.sick]: { textColour: '', backgroundColour: '' },
-    })
-    const action = setPrognosisTextColour({
-      prognosis: Prognosis.sick,
-      colour: 'a',
-    })
-    const newState = reducer(existingState, action)
-    expect(getDisplaySettings(newState)[Prognosis.sick]).toEqual(
-      expect.objectContaining({
-        textColour: 'a',
-        backgroundColour: '',
-      }),
-    )
   })
 })

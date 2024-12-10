@@ -37,6 +37,10 @@ import {
 } from '../settings/other/OtherSettingsReducer'
 import { z } from 'zod'
 import { errorMessage } from '../common/Utils'
+import {
+  PrognosisSettingsConfiguration,
+  prognosisSettingsRoot,
+} from '../settings/prognosis/PrognosisSettingsReducer'
 
 export enum DataSource {
   systemImport,
@@ -56,6 +60,7 @@ const Configuration = z
     ),
     [notificationsRoot]: NotificationsConfiguration,
     [personalSettingsRoot]: PersonalSettingsState,
+    [prognosisSettingsRoot]: PrognosisSettingsConfiguration,
   })
   .partial()
 

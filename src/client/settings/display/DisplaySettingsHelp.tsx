@@ -3,7 +3,6 @@ import { HelpArticle, HelpProps } from '../../help/HelpArticle'
 import { HelpForm, HelpInput } from '../../help/HelpForms'
 import { RoutePaths } from '../../AppRoutes'
 import { Eye } from '../../common/icons/Eye'
-import { PaintFormat } from '../../common/icons/PaintFormat'
 import { InfoMessages, WarningMessages } from '../../common/Messages'
 
 const keywords = [
@@ -14,11 +13,6 @@ const keywords = [
   'show build time',
   'show build label',
   'interesting projects',
-  'sick',
-  'sick building',
-  'healthy',
-  'healthy building',
-  'unknown',
   'amount of projects to show',
   'sort projects by',
   'preview display',
@@ -69,9 +63,10 @@ export function DisplaySettingsHelp({
           </p>
         </HelpInput>
         <HelpInput name="Amount of projects to show">
-          This limits the total number of projects show on the Monitor page, any
-          additional projects will be counted and shown in a summary box. The
-          exact number of projects shown varies depending on the window size.
+          This limits the total number of projects shown on the Monitor page,
+          any additional projects will be counted and shown in a summary box.
+          The exact number of projects shown varies depending on the window
+          size.
           <p>
             The main purpose of Nevergreen is to be an information radiator for
             the team, and this setting can be used to stop the view becoming too
@@ -92,14 +87,6 @@ export function DisplaySettingsHelp({
             projects as expected. If that is the case the <em>default</em> sort
             order may be more appropriate.
           </p>
-        </HelpInput>
-        <HelpInput name="Show on the Monitor page">
-          When <em>enabled</em> the corresponding prognosis will be displayed on
-          the Monitor page. Errors are always shown and can not be removed.
-        </HelpInput>
-        <HelpInput name="Change colours" icon={<PaintFormat />}>
-          Allows changing of the background and text colour of the corresponding
-          prognosis.
         </HelpInput>
       </HelpForm>
       <InfoMessages

@@ -18,11 +18,11 @@ export enum RoutePaths {
   backupImportLocal = '/settings/backup/local/import',
   backupImportRemote = '/settings/backup/:internalId/import',
   backupImportSuccess = '/settings/backup/import-success',
-  colours = '/settings/colours/:for',
   display = '/settings/display',
+  prognosis = '/settings/prognosis',
+  prognosisEdit = '/settings/prognosis/:for',
   monitor = '/monitor',
   notifications = '/settings/notifications',
-  notificationsAdd = '/settings/notifications/add',
   other = '/settings/other',
   preview = '/preview',
   settings = '/settings',
@@ -86,34 +86,27 @@ export function appRoutes(): Router {
               lazy: () => import('./settings/display/DisplaySettingsPage'),
             },
             {
-              path: 'colours/success',
-              lazy: () => import('./settings/success/ChangeSuccessColoursPage'),
-            },
-            ...Object.values(Prognosis).map((prognosis) => {
-              return {
-                path: `colours/${prognosis}`,
-                async lazy() {
-                  const { ChangePrognosisColoursPage } = await import(
-                    './settings/display/ChangePrognosisColoursPage'
-                  )
-                  return {
-                    element: (
-                      <ChangePrognosisColoursPage prognosis={prognosis} />
-                    ),
-                  }
-                },
-              }
-            }),
-            {
               path: 'notifications',
               lazy: () =>
                 import('./settings/notifications/NotificationSettingsPage'),
             },
             {
-              path: 'notifications/add',
-              lazy: () =>
-                import('./settings/notifications/AddNotificationPage'),
+              path: 'prognosis',
+              lazy: () => import('./settings/prognosis/PrognosisSettingsPage'),
             },
+            ...Object.values(Prognosis).map((prognosis) => {
+              return {
+                path: `prognosis/${prognosis}`,
+                async lazy() {
+                  const { PrognosisEditPage } = await import(
+                    './settings/prognosis/PrognosisEditPage'
+                  )
+                  return {
+                    element: <PrognosisEditPage prognosis={prognosis} />,
+                  }
+                },
+              }
+            }),
             {
               path: 'backup',
               lazy: () => import('./settings/backup/BackupPage'),

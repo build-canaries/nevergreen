@@ -1,9 +1,7 @@
 import type { RootState } from '../../configuration/ReduxStore'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSelector, createSlice } from '@reduxjs/toolkit'
-import { Prognosis } from '../../domain/Project'
 import merge from 'lodash/merge'
-import uniq from 'lodash/uniq'
 import { configurationImported } from '../backup/BackupActionCreators'
 import { z } from 'zod'
 
@@ -23,11 +21,6 @@ export enum SortBy {
   timestamp = 'timestamp',
 }
 
-const PrognosisState = z.object({
-  backgroundColour: z.string(),
-  textColour: z.string(),
-})
-
 const DisplaySettingsState = z.object({
   showTrayName: z.boolean(),
   showBuildTime: z.boolean(),
@@ -35,14 +28,7 @@ const DisplaySettingsState = z.object({
   showBuildLabel: z.boolean(),
   showPrognosisName: z.boolean(),
   maxProjectsToShow: z.nativeEnum(MaxProjectsToShow),
-  showPrognosis: z.array(z.nativeEnum(Prognosis)),
   sort: z.nativeEnum(SortBy),
-  [Prognosis.healthy]: PrognosisState,
-  [Prognosis.sick]: PrognosisState,
-  [Prognosis.healthyBuilding]: PrognosisState,
-  [Prognosis.sickBuilding]: PrognosisState,
-  [Prognosis.unknown]: PrognosisState,
-  [Prognosis.error]: PrognosisState,
 })
 
 export const DisplaySettingsConfiguration = DisplaySettingsState.partial()
@@ -60,37 +46,7 @@ const initialState: DisplaySettingsState = {
   showBuildLabel: false,
   showPrognosisName: true,
   maxProjectsToShow: MaxProjectsToShow.medium,
-  showPrognosis: [
-    Prognosis.sick,
-    Prognosis.sickBuilding,
-    Prognosis.healthyBuilding,
-    Prognosis.unknown,
-  ],
   sort: SortBy.default,
-  [Prognosis.healthy]: {
-    backgroundColour: '#058943',
-    textColour: '#ffffff',
-  },
-  [Prognosis.sick]: {
-    backgroundColour: '#b30400',
-    textColour: '#fffed7',
-  },
-  [Prognosis.healthyBuilding]: {
-    backgroundColour: '#ffff18',
-    textColour: '#4a2f27',
-  },
-  [Prognosis.sickBuilding]: {
-    backgroundColour: '#d14904',
-    textColour: '#ffffff',
-  },
-  [Prognosis.unknown]: {
-    backgroundColour: '#ececec',
-    textColour: '#212121',
-  },
-  [Prognosis.error]: {
-    backgroundColour: '#de3535',
-    textColour: '#ffffff',
-  },
 }
 
 function absoluteClosestNumber(actual: number, a: number, b: number): number {
@@ -128,29 +84,6 @@ const slice = createSlice({
     setMaxProjectsToShow: (draft, action: PayloadAction<MaxProjectsToShow>) => {
       draft.maxProjectsToShow = action.payload
     },
-    setShowPrognosis: (
-      draft,
-      action: PayloadAction<{ show: boolean; prognosis: Prognosis }>,
-    ) => {
-      const { show, prognosis } = action.payload
-      draft.showPrognosis = show
-        ? uniq(draft.showPrognosis.concat(prognosis))
-        : draft.showPrognosis.filter((p) => p !== prognosis)
-    },
-    setPrognosisBackgroundColour: (
-      draft,
-      action: PayloadAction<{ colour: string; prognosis: Prognosis }>,
-    ) => {
-      const { colour, prognosis } = action.payload
-      draft[prognosis].backgroundColour = colour
-    },
-    setPrognosisTextColour: (
-      draft,
-      action: PayloadAction<{ colour: string; prognosis: Prognosis }>,
-    ) => {
-      const { colour, prognosis } = action.payload
-      draft[prognosis].textColour = colour
-    },
     setSort: (draft, action: PayloadAction<SortBy>) => {
       draft.sort = action.payload
     },
@@ -168,12 +101,9 @@ export const {
   setRefreshTime,
   setShowBuildLabel,
   setShowPrognosisName,
-  setShowPrognosis,
   setShowFeedIdentifier,
   setMaxProjectsToShow,
   setSort,
-  setPrognosisTextColour,
-  setPrognosisBackgroundColour,
 } = slice.actions
 
 export const getDisplaySettings = (state: RootState) => state.settings
@@ -200,10 +130,6 @@ export const getRefreshTime = createSelector(
 export const getMaxProjectsToShow = createSelector(
   getDisplaySettings,
   (settings) => settings.maxProjectsToShow,
-)
-export const getShowPrognosis = createSelector(
-  getDisplaySettings,
-  (settings) => settings.showPrognosis,
 )
 export const getSort = createSelector(
   getDisplaySettings,

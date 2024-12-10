@@ -4,8 +4,8 @@ import { successRoot } from '../settings/success/SuccessReducer'
 import { screen, waitFor } from '@testing-library/react'
 import { buildFeedError, buildProject } from '../testUtils/builders'
 import { Prognosis } from '../domain/Project'
-import { displaySettingsRoot } from '../settings/display/DisplaySettingsReducer'
 import * as Utils from '../common/Utils'
+import { prognosisSettingsRoot } from '../settings/prognosis/PrognosisSettingsReducer'
 
 it('should only switch the message on a new success state not every refresh', async () => {
   jest
@@ -13,8 +13,8 @@ it('should only switch the message on a new success state not every refresh', as
     .mockReturnValueOnce('foo')
     .mockReturnValueOnce('bar')
   const state = {
-    [displaySettingsRoot]: {
-      showPrognosis: [Prognosis.sick],
+    [prognosisSettingsRoot]: {
+      [Prognosis.sick]: { show: true },
     },
     [successRoot]: { messages: ['foo', 'bar'] },
   }
@@ -75,8 +75,8 @@ it('should render nothing if not successful due to an error', () => {
 
 it('should render nothing if not successful due to an interesting project', () => {
   const state = {
-    [displaySettingsRoot]: {
-      showPrognosis: [Prognosis.sick],
+    [prognosisSettingsRoot]: {
+      [Prognosis.sick]: { show: true },
     },
     [successRoot]: { messages: ['some-message'] },
   }
@@ -91,8 +91,8 @@ it('should render nothing if not successful due to an interesting project', () =
 
 it('should render a message if only uninteresting projects', () => {
   const state = {
-    [displaySettingsRoot]: {
-      showPrognosis: [Prognosis.sick],
+    [prognosisSettingsRoot]: {
+      [Prognosis.sick]: { show: true },
     },
     [successRoot]: { messages: ['some-message'] },
   }

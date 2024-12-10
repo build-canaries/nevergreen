@@ -42,6 +42,10 @@ import { personalSettingsRoot } from '../settings/PersonalSettingsReducer'
 import type { OtherSettingsState } from '../settings/other/OtherSettingsReducer'
 import { otherSettingsRoot } from '../settings/other/OtherSettingsReducer'
 import { UnhandledErrorMessage } from '../UnhandledErrorMessage'
+import {
+  prognosisSettingsRoot,
+  PrognosisSettingsState,
+} from '../settings/prognosis/PrognosisSettingsReducer'
 
 interface ExtendedRenderResult extends RenderResult {
   readonly store: EnhancedStore<
@@ -130,6 +134,7 @@ export function testReducer(
     [remoteLocationsRoot]: (state: RemoteLocationsState) => state ?? null,
     [notificationsRoot]: (state: NotificationsState) => state ?? null,
     [personalSettingsRoot]: (state: PersonalSettingsState) => state ?? null,
+    [prognosisSettingsRoot]: (state: PrognosisSettingsState) => state ?? null,
     ...reducer,
   })
 }

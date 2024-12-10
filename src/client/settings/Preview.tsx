@@ -6,7 +6,7 @@ import type { Projects } from '../domain/Project'
 import { enrichProjects } from '../domain/Project'
 import { InterestingProjects } from '../monitor/InterestingProjects'
 import { Loading } from '../common/Loading'
-import { getShowPrognosis, getSort } from './display/DisplaySettingsReducer'
+import { getSort } from './display/DisplaySettingsReducer'
 import { post } from '../gateways/Gateway'
 import { Banner } from '../Banner'
 import { useNavigate } from 'react-router-dom'
@@ -16,6 +16,7 @@ import { createId } from '../common/Utils'
 import { useAppSelector } from '../configuration/Hooks'
 import styles from './preview.scss'
 import { Title } from '../common/Title'
+import { getShowPrognosis } from './prognosis/PrognosisSettingsReducer'
 
 export function Preview(): ReactElement {
   const prognosis = useAppSelector(getShowPrognosis)

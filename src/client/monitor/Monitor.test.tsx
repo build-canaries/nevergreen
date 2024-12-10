@@ -17,9 +17,9 @@ import {
 import { Prognosis } from '../domain/Project'
 import * as NotificationsHook from './notifications/NotificationsHook'
 import * as AudioPlayer from '../common/AudioPlayer'
-import { notificationsRoot } from '../settings/notifications/NotificationsReducer'
 import { personalSettingsRoot } from '../settings/PersonalSettingsReducer'
 import { triggerShortcut } from '../common/Keyboard'
+import { prognosisSettingsRoot } from '../settings/prognosis/PrognosisSettingsReducer'
 
 const outletContext = {
   menusHidden: false,
@@ -65,8 +65,8 @@ it('should show a success message if there are no interesting projects', async (
       [feedId]: buildFeed({ trayId: feedId }),
     },
     [successRoot]: { messages: ['some-success-message'] },
-    [displaySettingsRoot]: {
-      showPrognosis: [Prognosis.sick],
+    [prognosisSettingsRoot]: {
+      [Prognosis.sick]: { show: true },
     },
   }
   render(<Monitor />, { state, outletContext })
@@ -93,7 +93,9 @@ it('should display an error if the Nevergreen server is having issues', async ()
     },
     [displaySettingsRoot]: {
       refreshTime: 1,
-      showPrognosis: [Prognosis.sick],
+    },
+    [prognosisSettingsRoot]: {
+      [Prognosis.sick]: { show: true },
     },
   }
 
@@ -124,8 +126,8 @@ it('should show projects', async () => {
     [feedsRoot]: {
       [feedId]: buildFeed({ trayId: feedId }),
     },
-    [displaySettingsRoot]: {
-      showPrognosis: [Prognosis.sick],
+    [prognosisSettingsRoot]: {
+      [Prognosis.sick]: { show: true },
     },
   }
 
@@ -155,8 +157,8 @@ it('should show feed errors', async () => {
     [feedsRoot]: {
       [feedId]: buildFeed({ trayId: feedId }),
     },
-    [displaySettingsRoot]: {
-      showPrognosis: [Prognosis.sick],
+    [prognosisSettingsRoot]: {
+      [Prognosis.sick]: { show: true },
     },
   }
 
@@ -218,15 +220,20 @@ it('should allow muting audio notifications', async () => {
     [personalSettingsRoot]: {
       allowAudioNotifications: true,
     },
-    [notificationsRoot]: {
-      notifications: {
-        [Prognosis.sick]: { sfx: 'sick-sfx', systemNotification: false },
-        [Prognosis.healthy]: { sfx: 'healthy-sfx', systemNotification: false },
+    [prognosisSettingsRoot]: {
+      [Prognosis.sick]: {
+        sfx: 'sick-sfx',
+        systemNotification: false,
+        show: true,
+      },
+      [Prognosis.healthy]: {
+        sfx: 'healthy-sfx',
+        systemNotification: false,
+        show: true,
       },
     },
     [displaySettingsRoot]: {
       refreshTime: 1,
-      showPrognosis: [Prognosis.sick, Prognosis.healthy],
     },
   }
 

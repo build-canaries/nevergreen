@@ -27,6 +27,7 @@ import { notificationsRoot } from '../settings/notifications/NotificationsReduce
 import { FeedError } from '../domain/FeedError'
 import { personalSettingsRoot } from '../settings/PersonalSettingsReducer'
 import { otherSettingsRoot } from '../settings/other/OtherSettingsReducer'
+import { prognosisSettingsRoot } from '../settings/prognosis/PrognosisSettingsReducer'
 
 export function buildState(
   subState: RecursivePartial<RootState> = {},
@@ -39,32 +40,7 @@ export function buildState(
       showBuildLabel: false,
       showBuildTime: false,
       showTrayName: false,
-      showPrognosis: [],
       sort: SortBy.default,
-      [Prognosis.healthy]: {
-        backgroundColour: '#058943',
-        textColour: '#ffffff',
-      },
-      [Prognosis.sick]: {
-        backgroundColour: '#b30400',
-        textColour: '#fffed7',
-      },
-      [Prognosis.healthyBuilding]: {
-        backgroundColour: '#ffff18',
-        textColour: '#4a2f27',
-      },
-      [Prognosis.sickBuilding]: {
-        backgroundColour: '#d14904',
-        textColour: '#ffffff',
-      },
-      [Prognosis.unknown]: {
-        backgroundColour: '#ececec',
-        textColour: '#212121',
-      },
-      [Prognosis.error]: {
-        backgroundColour: '#de3535',
-        textColour: '#ffffff',
-      },
     },
     [otherSettingsRoot]: {
       clickToShowMenu: false,
@@ -80,12 +56,55 @@ export function buildState(
     [remoteLocationsRoot]: {},
     [notificationsRoot]: {
       enableNewVersionCheck: true,
-      notifications: {},
     },
     [personalSettingsRoot]: {
       allowAudioNotifications: false,
       allowSystemNotifications: false,
       backupRemoteLocations: {},
+    },
+    [prognosisSettingsRoot]: {
+      [Prognosis.error]: {
+        show: false,
+        systemNotification: false,
+        sfx: '',
+        textColour: '',
+        backgroundColour: '',
+      },
+      [Prognosis.sick]: {
+        show: false,
+        systemNotification: false,
+        sfx: '',
+        textColour: '',
+        backgroundColour: '',
+      },
+      [Prognosis.sickBuilding]: {
+        show: false,
+        systemNotification: false,
+        sfx: '',
+        textColour: '',
+        backgroundColour: '',
+      },
+      [Prognosis.healthy]: {
+        show: false,
+        systemNotification: false,
+        sfx: '',
+        textColour: '',
+        backgroundColour: '',
+      },
+      [Prognosis.healthyBuilding]: {
+        show: false,
+        systemNotification: false,
+        sfx: '',
+        textColour: '',
+        backgroundColour: '',
+      },
+      [Prognosis.unknown]: {
+        show: false,
+        systemNotification: false,
+        sfx: '',
+        textColour: '',
+        backgroundColour: '',
+      },
     },
   }
   return merge(defaultState, subState)

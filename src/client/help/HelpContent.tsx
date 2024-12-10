@@ -28,12 +28,11 @@ import {
 } from '../settings/backup/AddBackupHelp'
 import { KeyboardShortcuts } from './KeyboardShortcuts'
 import { RemoteBackupDetailsPageHelp } from '../settings/backup/RemoteBackupDetailsPageHelp'
-import { AddNotificationHelp } from '../settings/notifications/AddNotificationHelp'
 import { OtherSettingsPageHelp } from '../settings/other/OtherSettingsPageHelp'
-import { ChangeColoursPageHelp } from '../settings/colours/ChangeColoursPageHelp'
-import styles from './help-content.scss'
 import { AddMessagePageHelp } from '../settings/success/AddMessagePageHelp'
-import { PrognosisHelp } from '../settings/display/PrognosisHelp'
+import { PrognosisSettingsHelp } from '../settings/prognosis/PrognosisSettingsHelp'
+import { PrognosisEditPageHelp } from '../settings/prognosis/PrognosisEditPageHelp'
+import styles from './help-content.scss'
 
 interface HelpContentProps {
   readonly initialSearchQuery?: string
@@ -71,13 +70,12 @@ export default function HelpContent({
         />
         <AddMessagePageHelp searchQuery={searchQuery} helpLink={helpLink} />
         <DisplaySettingsHelp searchQuery={searchQuery} helpLink={helpLink} />
-        <PrognosisHelp searchQuery={searchQuery} helpLink={helpLink} />
-        <ChangeColoursPageHelp searchQuery={searchQuery} helpLink={helpLink} />
+        <PrognosisSettingsHelp searchQuery={searchQuery} helpLink={helpLink} />
+        <PrognosisEditPageHelp searchQuery={searchQuery} helpLink={helpLink} />
         <NotificationSettingsHelp
           searchQuery={searchQuery}
           helpLink={helpLink}
         />
-        <AddNotificationHelp searchQuery={searchQuery} helpLink={helpLink} />
         <BackupHelp searchQuery={searchQuery} helpLink={helpLink} />
         <RemoteBackupDetailsPageHelp
           searchQuery={searchQuery}

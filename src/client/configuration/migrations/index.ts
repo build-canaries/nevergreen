@@ -17,6 +17,7 @@ import * as MigrateRemoteLocationTimestamps from './015_MigrateRemoteLocationTim
 import * as MigrateSuccess from './016_MigrateSuccess'
 import * as MoveClickToShowMenuSetting from './017_MoveClickToShowMenuSetting'
 import * as CombineFeedAuthSettings from './018_CombineFeedAuthSettings'
+import * as MigratePrognosisSettings from './019_MigratePrognosisSettings'
 
 export type Migrate = (data: UntrustedData) => void
 
@@ -45,5 +46,6 @@ export function getOrderedMigrations(): ReadonlyArray<Migration> {
     MigrateSuccess,
     MoveClickToShowMenuSetting,
     CombineFeedAuthSettings,
+    MigratePrognosisSettings,
   ]
 }

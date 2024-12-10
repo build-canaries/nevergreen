@@ -2,8 +2,6 @@ import type { ReactElement } from 'react'
 import { HelpArticle, HelpProps } from '../../help/HelpArticle'
 import { HelpForm, HelpInput } from '../../help/HelpForms'
 import { RoutePaths } from '../../AppRoutes'
-import { Bin } from '../../common/icons/Bin'
-import { Plus } from '../../common/icons/Plus'
 import { Note } from '../../common/icons/Note'
 
 const keywords = [
@@ -55,16 +53,6 @@ export function NotificationSettingsHelp({
           When <em>enabled</em> any added system (aka desktop) notifications can
           be shown. This is a personal setting that won&apos;t get exported or
           changed via an import.
-        </HelpInput>
-        <HelpInput name="Add notification" icon={<Plus />}>
-          Adds a new notification.
-        </HelpInput>
-      </HelpForm>
-      <p>Added notifications will appear and can be managed from this page.</p>
-      <HelpForm>
-        <HelpInput name="Remove notification" icon={<Bin />}>
-          Removes the given notification. Notifications can be re-added at any
-          time.
         </HelpInput>
       </HelpForm>
     </HelpArticle>

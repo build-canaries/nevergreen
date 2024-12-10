@@ -35,18 +35,40 @@ describe('Settings', () => {
     cy.locate('duration').should('not.exist')
     cy.findByRole('button', { name: /dismiss/i }).click()
 
-    cy.findByLabelText('Show sick prognosis on the Monitor page').check()
-    cy.findByLabelText(
-      'Show sick building prognosis on the Monitor page',
-    ).check()
-    cy.findByLabelText(
-      'Show healthy building prognosis on the Monitor page',
-    ).check()
-    cy.findByLabelText('Show unknown prognosis on the Monitor page').check()
-    cy.findByLabelText('Show healthy prognosis on the Monitor page').check()
-
     cy.findByLabelText('Amount of project to show').select('Large')
     cy.findByLabelText('Sort projects by').select('prognosis')
+  })
+
+  it('changing prognosis settings', () => {
+    cy.findByRole('link', { name: 'Prognosis' }).click()
+
+    cy.findByRole('link', { name: 'Update details for Errors' }).click()
+    cy.findByLabelText('Show on Monitor page').check()
+    cy.findByLabelText('Show system notification').check()
+    cy.findByLabelText('Play audio notification').clear().type('some-sfx')
+    cy.findByLabelText('Background colour').clear().type('#aaaaaa')
+    cy.findByLabelText('Text colour').clear().type('#aaaaaa')
+    cy.findByRole('button', { name: 'Save changes' }).click()
+
+    // Just check all other prognosis exist without changing any details
+    cy.findByRole('link', { name: 'Update details for Sick projects' }).click()
+    cy.findByRole('link', { name: 'Cancel' }).click()
+    cy.findByRole('link', {
+      name: 'Update details for Sick building projects',
+    }).click()
+    cy.findByRole('link', { name: 'Cancel' }).click()
+    cy.findByRole('link', {
+      name: 'Update details for Healthy building projects',
+    }).click()
+    cy.findByRole('link', { name: 'Cancel' }).click()
+    cy.findByRole('link', {
+      name: 'Update details for Unknown projects',
+    }).click()
+    cy.findByRole('link', { name: 'Cancel' }).click()
+    cy.findByRole('link', {
+      name: 'Update details for Healthy projects',
+    }).click()
+    cy.findByRole('link', { name: 'Cancel' }).click()
   })
 
   it('adding and removing success messages', () => {

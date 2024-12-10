@@ -5,7 +5,6 @@ import {
   sortedPrognosisByPriority,
 } from '../../domain/Project'
 import { useEffect, useState } from 'react'
-import capitalize from 'lodash/capitalize'
 import { useUpdateBrowserTitle } from '../../common/BrowserTitleHook'
 import { FeedErrors } from '../../domain/FeedError'
 import { prognosisIconsSvg } from '../../common/icons/prognosis/IconPrognosis'
@@ -39,8 +38,9 @@ export function useBrowserTitleSummary(
       return interesting.count > 0
     }
     const summary = (interesting: Interesting): string => {
-      return `${interesting.count} ${capitalize(
-        prognosisDisplay(interesting.prognosis),
+      return `${interesting.count} ${prognosisDisplay(
+        interesting.prognosis,
+        true,
       )}`
     }
 

@@ -9,6 +9,7 @@ import { Image } from '../common/icons/Image'
 import { Cogs } from '../common/icons/Cogs'
 import styles from './settings.scss'
 import { Loading } from '../common/Loading'
+import { AidKit } from '../common/icons/AidKit'
 
 interface MenuItemProps {
   readonly to: string
@@ -43,6 +44,7 @@ export function Settings(): ReactElement {
           <MenuItem to="success" label="Success" icon={<Image />} />
           <MenuItem to="display" label="Display" icon={<Display />} />
           <MenuItem to="notifications" label="Notifications" icon={<Bell />} />
+          <MenuItem to="prognosis" label="Prognosis" icon={<AidKit />} />
           <MenuItem to="backup" label="Backup" icon={<FloppyDisk />} />
           <MenuItem to="other" label="Other" icon={<Cogs />} />
         </ul>

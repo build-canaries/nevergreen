@@ -39,6 +39,10 @@ import {
   otherSettingsRoot,
   reducer as otherSettingsReducer,
 } from '../settings/other/OtherSettingsReducer'
+import {
+  prognosisSettingsRoot,
+  reducer as prognosisSettingsReducer,
+} from '../settings/prognosis/PrognosisSettingsReducer'
 
 async function saveRaw(currentState: RootState) {
   await save(currentState)
@@ -62,6 +66,7 @@ export const reducer = combineReducers({
   [remoteLocationsRoot]: remoteLocationsReducer,
   [notificationsRoot]: notificationsReducer,
   [personalSettingsRoot]: personalSettingsReducer,
+  [prognosisSettingsRoot]: prognosisSettingsReducer,
 })
 
 export const store = configureStore({ reducer })

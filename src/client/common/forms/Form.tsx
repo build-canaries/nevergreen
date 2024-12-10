@@ -49,7 +49,7 @@ export function Form<Fields extends string>({
   onValidate = noop,
   onSuccess,
   onCancel,
-  submitButtonText = 'Save',
+  submitButtonText = 'Save changes',
   clearErrors = false,
 }: FormProps<Fields>): ReactElement {
   const navigate = useNavigate()

@@ -7,7 +7,6 @@ import {
   toggleVersionCheck,
 } from './NotificationsReducer'
 import { Bell } from '../../common/icons/Bell'
-import { Notifications } from './Notifications'
 import { useAppDispatch, useAppSelector } from '../../configuration/Hooks'
 import {
   getAllowAudioNotifications,
@@ -21,6 +20,8 @@ import testAudio from './test_audio_volume.mp3'
 import { playAudio } from '../../common/AudioPlayer'
 import { Note } from '../../common/icons/Note'
 import styles from './notifications-settings.scss'
+import { Link } from 'react-router-dom'
+import { RoutePaths } from '../../AppRoutes'
 
 export function NotificationSettingsPage(): ReactElement {
   const dispatch = useAppDispatch()
@@ -65,7 +66,10 @@ export function NotificationSettingsPage(): ReactElement {
         Audio notification volume
       </Slider>
       <NotificationsSystem />
-      <Notifications />
+      <p>
+        Configure specific notifications on the{' '}
+        <Link to={RoutePaths.prognosis}>Prognosis settings page</Link>.
+      </p>
     </Page>
   )
 }

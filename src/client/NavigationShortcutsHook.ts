@@ -15,4 +15,5 @@ export function useNavigationShortcuts(): void {
   useNavigationShortcut('d', RoutePaths.display)
   useNavigationShortcut('b', RoutePaths.backup)
   useNavigationShortcut('n', RoutePaths.notifications)
+  useNavigationShortcut('p', RoutePaths.prognosis)
 }

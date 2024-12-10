@@ -1,7 +1,6 @@
 import type { ReactElement } from 'react'
 import { Checkbox } from '../../common/forms/Checkbox'
 import { DropDown } from '../../common/forms/DropDown'
-import { DisplayPrognosisSelection } from './DisplayPrognosisSelection'
 import {
   getMaxProjectsToShow,
   getShowBuildLabel,
@@ -100,7 +99,6 @@ export function DisplaySettingsPage(): ReactElement {
       >
         <span className={styles.dropDownLabel}>Sort projects by</span>
       </DropDown>
-      <DisplayPrognosisSelection />
     </Page>
   )
 }

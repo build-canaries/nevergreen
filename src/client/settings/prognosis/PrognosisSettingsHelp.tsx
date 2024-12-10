@@ -2,12 +2,13 @@ import type { ReactElement } from 'react'
 import { HelpArticle, HelpProps } from '../../help/HelpArticle'
 import { HelpForm, HelpInput } from '../../help/HelpForms'
 import { RoutePaths } from '../../AppRoutes'
+import { Cog } from '../../common/icons/Cog'
 import { IconPrognosis } from '../../common/icons/prognosis/IconPrognosis'
 import { Prognosis } from '../../domain/Project'
 
 const keywords = [
-  'show prognosis name',
-  'interesting projects',
+  'settings',
+  'prognosis',
   'sick',
   'sick building',
   'healthy',
@@ -15,13 +16,15 @@ const keywords = [
   'unknown',
 ]
 
-export function PrognosisHelp({ searchQuery }: HelpProps): ReactElement {
+export function PrognosisSettingsHelp({
+  searchQuery,
+}: HelpProps): ReactElement {
   return (
     <HelpArticle
       keywords={keywords}
       searchQuery={searchQuery}
-      title="Prognosis"
-      page={RoutePaths.display}
+      title="Prognosis settings"
+      page={RoutePaths.prognosis}
     >
       <p>Prognosis gives important information about the state of projects.</p>
       <HelpForm>
@@ -67,6 +70,12 @@ export function PrognosisHelp({ searchQuery }: HelpProps): ReactElement {
           icon={<IconPrognosis prognosis={Prognosis.healthy} />}
         >
           The project is currently successful.
+        </HelpInput>
+      </HelpForm>
+      <HelpForm>
+        <HelpInput name="Update details" icon={<Cog />}>
+          Allows updating the details for projects in the corresponding
+          prognosis.
         </HelpInput>
       </HelpForm>
     </HelpArticle>

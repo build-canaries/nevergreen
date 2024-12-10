@@ -81,6 +81,9 @@ export function KeyboardShortcuts({ searchQuery }: HelpProps): ReactElement {
         <Shortcut label="Go directly to the Notifications settings page">
           <Binding>n</Binding>
         </Shortcut>
+        <Shortcut label="Go directly to the Prognosis settings page">
+          <Binding>p</Binding>
+        </Shortcut>
         <Shortcut label="Go directly to the Backup settings page">
           <Binding>b</Binding>
         </Shortcut>
@@ -113,13 +116,6 @@ export function KeyboardShortcuts({ searchQuery }: HelpProps): ReactElement {
       <h3 className={styles.header}>Success messages page</h3>
       <ul className={styles.shortcuts}>
         <Shortcut label="Add a new success message">
-          <Binding>a</Binding>
-        </Shortcut>
-      </ul>
-
-      <h3 className={styles.header}>Notifications settings page</h3>
-      <ul className={styles.shortcuts}>
-        <Shortcut label="Add a new notification">
           <Binding>a</Binding>
         </Shortcut>
       </ul>

@@ -40,6 +40,14 @@ import { IconSickBuilding } from '../common/icons/prognosis/IconSickBuilding'
 import { IconError } from '../common/icons/prognosis/IconError'
 import { IconUnknown } from '../common/icons/prognosis/IconUnknown'
 import styles from './icons.scss'
+import { ArrowLeft } from '../common/icons/ArrowLeft'
+import { AidKit } from '../common/icons/AidKit'
+import { Mute } from '../common/icons/Mute'
+import { JsonLogo } from '../common/icons/JsonLogo'
+import { GoCd } from '../common/icons/GoCd'
+import { GitLabLogo } from '../common/icons/GitLabLogo'
+import { GitHubLogo } from '../common/icons/GitHubLogo'
+import { CircleCi } from '../common/icons/CircleCi'
 
 export function Icons(): ReactElement {
   return (
@@ -70,6 +78,14 @@ export function Icons(): ReactElement {
           unknown prognosis
         </span>
         <span>
+          <AidKit />
+          aid kit
+        </span>
+        <span>
+          <ArrowLeft />
+          arrow left
+        </span>
+        <span>
           <ArrowUp />
           arrow up
         </span>
@@ -92,6 +108,10 @@ export function Icons(): ReactElement {
         <span>
           <Checkmark />
           checkmark
+        </span>
+        <span>
+          <CircleCi />
+          circle ci
         </span>
         <span>
           <Clock />
@@ -142,12 +162,28 @@ export function Icons(): ReactElement {
           folder open
         </span>
         <span>
+          <GitHubLogo />
+          github logo
+        </span>
+        <span>
+          <GitLabLogo />
+          gitlab logo
+        </span>
+        <span>
+          <GoCd />
+          gocd
+        </span>
+        <span>
           <Image />
           image
         </span>
         <span>
           <Info />
           info
+        </span>
+        <span>
+          <JsonLogo />
+          json logo
         </span>
         <span>
           <List />
@@ -160,6 +196,10 @@ export function Icons(): ReactElement {
         <span>
           <Loop />
           loop
+        </span>
+        <span>
+          <Mute />
+          mute
         </span>
         <span>
           <Note />

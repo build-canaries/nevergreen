@@ -1,9 +1,0 @@
-@use '../../common/layout';
-
-.group {
-  @include layout.grid($mobile-columns: 2);
-}
-
-.button {
-  margin: 0;
-}

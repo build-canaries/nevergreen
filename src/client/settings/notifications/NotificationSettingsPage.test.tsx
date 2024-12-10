@@ -5,7 +5,6 @@ import {
   getEnableNewVersionCheck,
   notificationsRoot,
 } from './NotificationsReducer'
-import { Prognosis } from '../../domain/Project'
 import {
   getAllowAudioNotifications,
   getAudioNotificationVolume,
@@ -54,31 +53,4 @@ it('should allow the audio notification volume to be previewed', async () => {
 
   expect(getAudioNotificationVolume(store.getState())).toEqual(0.75)
   expect(AudioPlayer.playAudio).toHaveBeenCalledWith('test-file-stub', 0.75)
-})
-
-it('should display a message if no notifications have been added', () => {
-  const state = {
-    [notificationsRoot]: {
-      notifications: {},
-    },
-  }
-  render(<NotificationSettingsPage />, { state })
-  expect(screen.getByText('No notifications added')).toBeInTheDocument()
-})
-
-it('should display added notifications', () => {
-  const state = {
-    [notificationsRoot]: {
-      notifications: {
-        [Prognosis.sick]: { systemNotification: true, sfx: '/some-sfx.mp3' },
-      },
-    },
-  }
-
-  render(<NotificationSettingsPage />, { state })
-
-  expect(
-    screen.getByRole('heading', { level: 2, name: 'Sick notification' }),
-  ).toBeInTheDocument()
-  expect(screen.queryByText('No notifications added')).not.toBeInTheDocument()
 })

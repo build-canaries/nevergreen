@@ -1,47 +1,49 @@
-@use '../responsive';
+@use '../../common/accessibility';
+@use '../../common/typography';
+@use '../../common/colours';
+@use '../../common/responsive';
+@use '../../common/layout';
 @use 'forms';
-@use 'sass:math';
+@use 'sass:color';
 
-// We need to use mixins otherwise SASS will combine the classes into a comma seperated list
-// which breaks the styling in Chrome
-// https://stackoverflow.com/q/67113887
-
-@mixin -swatch {
-  border-radius: math.div(forms.$standard-input-size-mobile, 2);
-
-  @include responsive.respond-to(tablet, desktop) {
-    border-radius: math.div(forms.$standard-input-size-above-mobile, 2);
-  }
+.textContainer {
+  width: fit-content;
 }
 
-.input {
-  border-radius: math.div(forms.$standard-input-size-mobile, 2);
+.textInput {
+  font-family: typography.$monospace-font;
+  width: 6em;
+}
+
+.colorContainer {
+  margin-top: 0;
+  width: auto;
+}
+
+.colorInput {
+  border: colours.$input-border;
+  border-radius: 0 colours.$border-radius colours.$border-radius 0;
   flex-grow: unset;
   padding: 0;
 
   @include forms.standard-input-dimensions($fix-width: true);
-
-  &:not(:disabled):read-only:focus {
-    border-radius: math.div(forms.$standard-input-size-mobile, 2);
-  }
-
-  @include responsive.respond-to(tablet, desktop) {
-    border-radius: math.div(forms.$standard-input-size-above-mobile, 2);
-
-    &:not(:disabled):read-only:focus {
-      border-radius: math.div(forms.$standard-input-size-above-mobile, 2);
-    }
-  }
 
   &::-webkit-color-swatch-wrapper {
     padding: 0;
   }
 
   &::-webkit-color-swatch {
-    @include -swatch;
+    border: 0;
   }
 
-  &::-moz-color-swatch {
-    @include -swatch;
+  &:enabled {
+    @include accessibility.interactive($focus-color-change-percentage: 0%) {
+      box-shadow: 0 4px 8px 0 color.adjust(colours.$black, $alpha: -0.74);
+    }
   }
+}
+
+span:has(> .colorInput) {
+  height: 0;
+  margin: 0;
 }
