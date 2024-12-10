@@ -1,5 +1,5 @@
 import { render } from '../../testUtils/testHelpers'
-import { screen } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
 import { NotificationSettingsPage } from './NotificationSettingsPage'
 import {
   getEnableNewVersionCheck,
@@ -38,7 +38,7 @@ it('should allow turning on and off play audio notifications', async () => {
   expect(getAllowAudioNotifications(store.getState())).toBeTruthy()
 })
 
-it('should allow the audio notification volume to be previewed', async () => {
+it('should allow the audio notification volume to be changed and previewed', async () => {
   jest.spyOn(AudioPlayer, 'playAudio').mockResolvedValue()
 
   const state = {
@@ -49,8 +49,12 @@ it('should allow the audio notification volume to be previewed', async () => {
   }
 
   const { store, user } = render(<NotificationSettingsPage />, { state })
+  // range input not supported by userEvent, see https://github.com/testing-library/user-event/issues/871
+  fireEvent.change(screen.getByLabelText('Audio notification volume'), {
+    target: { value: 0.5 },
+  })
   await user.click(screen.getByRole('button', { name: 'Test audio volume' }))
 
-  expect(getAudioNotificationVolume(store.getState())).toEqual(0.75)
-  expect(AudioPlayer.playAudio).toHaveBeenCalledWith('test-file-stub', 0.75)
+  expect(getAudioNotificationVolume(store.getState())).toEqual(0.5)
+  expect(AudioPlayer.playAudio).toHaveBeenCalledWith('test-file-stub', 0.5)
 })

@@ -43,28 +43,30 @@ export function NotificationSettingsPage(): ReactElement {
       >
         Allow audio notifications
       </Checkbox>
-      <Slider
-        min={0}
-        max={1}
-        step={0.05}
-        aria-valuetext={`${Math.round(audioNotificationVolume * 100)}%`}
-        defaultValue={audioNotificationVolume}
-        onChange={({ target }) =>
-          dispatch(setAudioNotificationVolume(parseFloat(target.value)))
-        }
-        button={
-          <SecondaryButton
-            className={styles.testVolume}
-            icon={<Note />}
-            iconOnly
-            onClick={() => void playAudio(testAudio, audioNotificationVolume)}
-          >
-            Test audio volume
-          </SecondaryButton>
-        }
-      >
-        Audio notification volume
-      </Slider>
+      {allowAudioNotifications && (
+        <Slider
+          min={0}
+          max={1}
+          step={0.05}
+          aria-valuetext={`${Math.round(audioNotificationVolume * 100)}%`}
+          defaultValue={audioNotificationVolume}
+          onChange={({ target }) =>
+            dispatch(setAudioNotificationVolume(parseFloat(target.value)))
+          }
+          button={
+            <SecondaryButton
+              className={styles.testVolume}
+              icon={<Note />}
+              iconOnly
+              onClick={() => void playAudio(testAudio, audioNotificationVolume)}
+            >
+              Test audio volume
+            </SecondaryButton>
+          }
+        >
+          Audio notification volume
+        </Slider>
+      )}
       <NotificationsSystem />
       <p>
         Configure specific notifications on the{' '}
