@@ -5,7 +5,7 @@ import {
   prognosisDisplay,
   sortedPrognosisByPriority,
 } from '../../domain/Project'
-import { isBlank } from '../../common/Utils'
+import { isNotBlank } from '../../common/Utils'
 import { URL } from '../../common/URL'
 import { Card } from '../../common/card/Card'
 import { CardHeading } from '../../common/card/CardHeading'
@@ -33,18 +33,24 @@ export function PrognosisSettingsPage(): ReactElement {
   return (
     <Page title={'Prognosis settings'} icon={<AidKit />}>
       {sortedPrognosisByPriority().map((prognosis) => {
+        const title = groupTitle(prognosis)
         const prognosisSettings = settings[prognosis]
-        const showSummary = prognosisSettings.show ? <>Yes</> : <>No</>
+        const showOnMonitor = prognosisSettings.show ? <>Yes</> : <>No</>
         const systemNotificationSummary =
-          prognosisSettings.systemNotification ? <>Yes</> : <>No</>
-        const sfxSummary = isBlank(prognosisSettings.sfx) ? (
-          <>No</>
-        ) : (
-          <URL url={prognosisSettings.sfx} base={document.baseURI} />
-        )
+          prognosisSettings.show && prognosisSettings.systemNotification ? (
+            <>Yes</>
+          ) : (
+            <>No</>
+          )
+        const sfxSummary =
+          prognosisSettings.show && isNotBlank(prognosisSettings.sfx) ? (
+            <URL url={prognosisSettings.sfx} base={document.baseURI} />
+          ) : (
+            <>No</>
+          )
 
         const summary = [
-          { label: 'Show on Monitor page', value: showSummary },
+          { label: 'Show on Monitor page', value: showOnMonitor },
           {
             label: 'Show system notification',
             value: systemNotificationSummary,
@@ -56,7 +62,7 @@ export function PrognosisSettingsPage(): ReactElement {
           <Card
             header={
               <CardHeading
-                title={groupTitle(prognosis)}
+                title={title}
                 icon={<IconPrognosis prognosis={prognosis} />}
               />
             }
@@ -66,13 +72,12 @@ export function PrognosisSettingsPage(): ReactElement {
             }}
             key={prognosis}
           >
-            <Summary values={summary} />
+            <Summary values={summary} title={title} />
             <LinkButton
               to={generatePath(RoutePaths.prognosisEdit, { for: prognosis })}
               icon={<Cog />}
             >
-              Update details{' '}
-              <VisuallyHidden>for {groupTitle(prognosis)}</VisuallyHidden>
+              Update details <VisuallyHidden>for {title}</VisuallyHidden>
             </LinkButton>
           </Card>
         )

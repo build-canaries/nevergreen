@@ -28,7 +28,9 @@ export function Summary({
           return (
             <div className={styles.summaryListRow} key={label}>
               <dt className={styles.key}>{label}</dt>
-              <dd className={styles.value}>{value}</dd>
+              <dd className={styles.value} aria-label={label}>
+                {value}
+              </dd>
             </div>
           )
         })}
