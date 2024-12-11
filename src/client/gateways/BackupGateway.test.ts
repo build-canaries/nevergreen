@@ -14,7 +14,7 @@ describe('exportConfiguration', () => {
       url: 'some-url',
     })
     await exportConfiguration(location, 'some-configuration')
-    expect(gateway.post).toBeCalledWith({
+    expect(gateway.post).toHaveBeenCalledWith({
       url: '/api/export',
       data: {
         where: RemoteLocationOptions.gitHub,
@@ -38,7 +38,7 @@ describe('fetchConfiguration', () => {
       url: 'some-url',
     })
     await fetchConfiguration(location)
-    expect(gateway.post).toBeCalledWith({
+    expect(gateway.post).toHaveBeenCalledWith({
       url: '/api/import',
       data: {
         from: RemoteLocationOptions.gitHub,

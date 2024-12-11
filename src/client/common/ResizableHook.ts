@@ -1,20 +1,5 @@
 import { RefObject, useEffect } from 'react'
 import isNil from 'lodash/isNil'
-import { info } from './Logger'
-import { ResizeObserver } from '@juggle/resize-observer'
-import { ResizeObserverEntry } from '@juggle/resize-observer/lib/ResizeObserverEntry'
-
-if ('ResizeObserver' in window) {
-  info('Using native ResizeObserver')
-} else {
-  info('Using ResizeObserver polyfill')
-}
-
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore Suppressing TS2339 on window.ResizeObserver as it isn't standard, hence the polyfill
-const Observer = <typeof ResizeObserver>(
-  (window.ResizeObserver || ResizeObserver)
-)
 
 function cancel(requestId: number) {
   if (requestId !== 0) {
@@ -50,7 +35,7 @@ export const useElementResized = (
 
     let requestId = 0
 
-    const observer = new Observer(
+    const observer = new ResizeObserver(
       (entries: ReadonlyArray<ResizeObserverEntry>) => {
         cancel(requestId)
         requestId = requestAnimationFrame(() => {

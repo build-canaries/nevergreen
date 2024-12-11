@@ -26,7 +26,9 @@ function TimedMessages({
     <Timed onTimeout={onDismiss} show={show}>
       <Messages
         {...props}
-        onDismiss={() => setShow(false)}
+        onDismiss={() => {
+          setShow(false)
+        }}
         messages={messages}
       />
     </Timed>

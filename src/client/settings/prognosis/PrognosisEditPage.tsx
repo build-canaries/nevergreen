@@ -86,7 +86,9 @@ export function PrognosisEditPage({
     setPlaying(true)
 
     try {
-      await playAudio(sfx, audioNotificationVolume, () => setPlaying(false))
+      await playAudio(sfx, audioNotificationVolume, () => {
+        setPlaying(false)
+      })
     } catch (e) {
       setPlaying(false)
       setAudioError(errorMessage(e))
@@ -111,7 +113,9 @@ export function PrognosisEditPage({
   const stopButton = (
     <InputButton
       icon={<Stop />}
-      onClick={() => stopAudio(sfx)}
+      onClick={() => {
+        stopAudio(sfx)
+      }}
       disabled={isBlank(sfx)}
     >
       Stop
@@ -151,7 +155,9 @@ export function PrognosisEditPage({
             <>
               <Checkbox
                 checked={displayOnMonitor}
-                onToggle={(show) => setDisplayOnMonitor(show)}
+                onToggle={(show) => {
+                  setDisplayOnMonitor(show)
+                }}
               >
                 Show on Monitor page
               </Checkbox>
@@ -159,7 +165,9 @@ export function PrognosisEditPage({
                 <>
                   <Checkbox
                     checked={system}
-                    onToggle={(newValue) => setSystem(newValue)}
+                    onToggle={(newValue) => {
+                      setSystem(newValue)
+                    }}
                     disabled={submitting}
                   >
                     Show system notification

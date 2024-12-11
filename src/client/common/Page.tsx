@@ -40,7 +40,9 @@ export function Page({
       </Title>
       {children}
       <SecondaryButton
-        onClick={() => window.scrollTo(0, 0)}
+        onClick={() => {
+          window.scrollTo(0, 0)
+        }}
         className={styles.backToTop}
         style={{ display: backToTopDisplay }}
         icon={<ArrowUp />}

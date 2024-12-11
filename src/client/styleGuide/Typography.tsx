@@ -100,42 +100,58 @@ export function Typography(): ReactElement {
         <InfoMessages messages={['info messages', ...MESSAGES]} />
         <InfoMessages
           messages={['info messages', ...MESSAGES]}
-          onDismiss={() => alert('Dismissed')}
+          onDismiss={() => {
+            alert('Dismissed')
+          }}
         />
         <InfoMessages messages="Chocolate bar tart jelly-o ice cream jelly pastry pastry candy pudding" />
         <InfoMessages
           messages="Chocolate bar tart jelly-o ice cream jelly pastry pastry candy pudding"
-          onDismiss={() => alert('Dismissed')}
+          onDismiss={() => {
+            alert('Dismissed')
+          }}
         />
         <SuccessMessages messages={['success messages', ...MESSAGES]} />
         <SuccessMessages
           messages={['success messages', ...MESSAGES]}
-          onDismiss={() => alert('Dismissed')}
+          onDismiss={() => {
+            alert('Dismissed')
+          }}
         />
         <SuccessMessages messages="Chocolate bar tart jelly-o ice cream jelly pastry pastry candy pudding" />
         <SuccessMessages
           messages="Chocolate bar tart jelly-o ice cream jelly pastry pastry candy pudding"
-          onDismiss={() => alert('Dismissed')}
+          onDismiss={() => {
+            alert('Dismissed')
+          }}
         />
         <ErrorMessages messages={['error messages', ...MESSAGES]} />
         <ErrorMessages
           messages={['error messages', ...MESSAGES]}
-          onDismiss={() => alert('Dismissed')}
+          onDismiss={() => {
+            alert('Dismissed')
+          }}
         />
         <ErrorMessages messages="Chocolate bar tart jelly-o ice cream jelly pastry pastry candy pudding" />
         <ErrorMessages
           messages="Chocolate bar tart jelly-o ice cream jelly pastry pastry candy pudding"
-          onDismiss={() => alert('Dismissed')}
+          onDismiss={() => {
+            alert('Dismissed')
+          }}
         />
         <WarningMessages messages={['warning messages', ...MESSAGES]} />
         <WarningMessages
           messages={['warning messages', ...MESSAGES]}
-          onDismiss={() => alert('Dismissed')}
+          onDismiss={() => {
+            alert('Dismissed')
+          }}
         />
         <WarningMessages messages="Chocolate bar tart jelly-o ice cream jelly pastry pastry candy pudding" />
         <WarningMessages
           messages="Chocolate bar tart jelly-o ice cream jelly pastry pastry candy pudding"
-          onDismiss={() => alert('Dismissed')}
+          onDismiss={() => {
+            alert('Dismissed')
+          }}
         />
       </StyleGuideSection>
 

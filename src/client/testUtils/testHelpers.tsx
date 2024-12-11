@@ -68,6 +68,7 @@ export function render(
   options: ExtendedRenderOptions = {},
 ): ExtendedRenderResult {
   const appElement =
+    // eslint-disable-next-line testing-library/no-node-access
     document.querySelector('#root') || document.createElement('div')
   appElement.setAttribute('id', 'root')
 
@@ -121,6 +122,7 @@ export function render(
   }
 }
 
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 export function testReducer(
   reducer: Partial<Reducer<RootState>>,
 ): Reducer<RootState> {
@@ -138,6 +140,7 @@ export function testReducer(
     ...reducer,
   })
 }
+/* eslint-enable @typescript-eslint/no-unnecessary-condition */
 
 export function setSystemTime(timestamp: string): void {
   jest.setSystemTime(parseISO(timestamp))

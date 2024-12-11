@@ -121,7 +121,7 @@ describe(setRefreshTime.toString(), () => {
   const invalidValues = [-1, 4, NaN]
 
   invalidValues.forEach(function (value) {
-    it(`should return the minimum if the value is invalid (${value})`, () => {
+    it(`should return the minimum if the value is invalid (${value.toString()})`, () => {
       const existingState = state({ refreshTime: 300 })
       const action = setRefreshTime(value)
       const newState = reducer(existingState, action)

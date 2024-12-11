@@ -69,7 +69,9 @@ export function Preview(): ReactElement {
       <Banner
         message="This is a preview showing your current display settings"
         hide={false}
-        onDismiss={() => navigate(RoutePaths.display)}
+        onDismiss={() => {
+          navigate(RoutePaths.display)
+        }}
       />
       <div className={styles.projects}>
         <div className={styles.projectsInner}>

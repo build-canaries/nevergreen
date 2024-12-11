@@ -39,6 +39,7 @@ export function notEmpty(val: unknown): boolean {
 }
 
 export function errorMessage(e: unknown): string {
+  // eslint-disable-next-line @typescript-eslint/no-confusing-void-expression
   const originalMessage = get(e, 'message')
   const message = isString(originalMessage) ? originalMessage : 'Unknown error'
 

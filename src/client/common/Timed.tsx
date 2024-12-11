@@ -17,7 +17,9 @@ export function Timed({
   timeout = 20000,
 }: TimedProps): ReactElement {
   const [showing, setShowing] = useState(show)
-  useEffect(() => setShowing(show), [show])
+  useEffect(() => {
+    setShowing(show)
+  }, [show])
 
   return (
     <CSSTransition
@@ -30,8 +32,10 @@ export function Timed({
     >
       <div
         className={styles.progress}
-        style={{ animationDuration: `${timeout}ms` }}
-        onAnimationEnd={() => setShowing(false)}
+        style={{ animationDuration: `${timeout.toString()}ms` }}
+        onAnimationEnd={() => {
+          setShowing(false)
+        }}
       >
         {children}
       </div>

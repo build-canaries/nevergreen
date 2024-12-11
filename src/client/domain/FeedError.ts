@@ -23,8 +23,8 @@ export function toFeedApiError(e: unknown): FeedApiError {
   }
 }
 
-export function isError<P extends ProjectApi, E extends FeedApiError>(
-  project: P | E,
+export function isError<E extends FeedApiError>(
+  project: ProjectApi | E,
 ): project is E {
   return project.prognosis === Prognosis.error
 }

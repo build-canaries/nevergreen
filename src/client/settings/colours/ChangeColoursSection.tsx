@@ -25,13 +25,17 @@ export function ChangeColoursSection({
       <div className={styles.coloursInputContainer}>
         <ColourPicker
           value={background}
-          onChange={({ target }) => setBackground(target.value)}
+          onChange={({ target }) => {
+            setBackground(target.value)
+          }}
         >
           Background colour
         </ColourPicker>
         <ColourPicker
           value={text}
-          onChange={({ target }) => setText(target.value)}
+          onChange={({ target }) => {
+            setText(target.value)
+          }}
         >
           Text colour
         </ColourPicker>

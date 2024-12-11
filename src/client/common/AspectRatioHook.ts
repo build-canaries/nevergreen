@@ -3,12 +3,14 @@ import { useWindowResized } from './ResizableHook'
 
 export function useAspectRatio(): string {
   const [aspectRatio, setAspectRatio] = useState(
-    `${window.innerWidth} / ${window.innerHeight}`,
+    `${window.innerWidth.toString()} / ${window.innerHeight.toString()}`,
   )
 
-  useWindowResized(() =>
-    setAspectRatio(`${window.innerWidth} / ${window.innerHeight}`),
-  )
+  useWindowResized(() => {
+    setAspectRatio(
+      `${window.innerWidth.toString()} / ${window.innerHeight.toString()}`,
+    )
+  })
 
   return aspectRatio
 }

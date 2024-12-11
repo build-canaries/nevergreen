@@ -4,7 +4,6 @@ import cn from 'classnames'
 import isEmpty from 'lodash/isEmpty'
 import isString from 'lodash/isString'
 import isFunction from 'lodash/isFunction'
-import noop from 'lodash/noop'
 import { PrimaryButton, SecondaryButton } from './Button'
 import { FormErrors } from './Validation'
 import { ErrorMessages, SuccessMessages } from '../Messages'
@@ -33,10 +32,10 @@ interface FormProps<Fields extends string> {
     validationErrors: Readonly<FormErrors<Fields>>,
     clearErrors: () => void,
   ) => ReactNode
-  readonly onValidate?: () => Readonly<FormErrors<Fields>> | undefined | void
+  readonly onValidate?: () => Readonly<FormErrors<Fields>> | undefined
   readonly onSuccess: (
     signal: AbortSignal | undefined,
-  ) => Promise<OnSuccess | undefined | void> | OnSuccess | undefined | void
+  ) => Promise<OnSuccess | undefined> | OnSuccess | undefined
   readonly onCancel?: string | (() => void)
   readonly className?: string
   readonly submitButtonText?: string
@@ -46,7 +45,9 @@ interface FormProps<Fields extends string> {
 export function Form<Fields extends string>({
   className,
   children,
-  onValidate = noop,
+  onValidate = () => {
+    return undefined
+  },
   onSuccess,
   onCancel,
   submitButtonText = 'Save changes',

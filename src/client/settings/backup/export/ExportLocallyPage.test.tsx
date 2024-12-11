@@ -37,12 +37,16 @@ it('should allowing copying to clipboard if supported', () => {
   )
 
   // clipboard.js registers its own onClick handler, so just manually trigger the callbacks given to the hook
-  act(() => clipboardOnSuccess())
+  act(() => {
+    clipboardOnSuccess()
+  })
   expect(
     screen.getByText('Copied current configuration to clipboard'),
   ).toBeInTheDocument()
 
-  act(() => clipboardOnError())
+  act(() => {
+    clipboardOnError()
+  })
   expect(
     screen.getByText('Unable to copy, please manually copy'),
   ).toBeInTheDocument()

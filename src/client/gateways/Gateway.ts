@@ -42,13 +42,14 @@ async function send<T>(request: Request<T>, signal?: AbortSignal): Promise<T> {
     const res = await request
     return (res.body || res.text) as T
   } catch (e) {
-    const url = _get(e, 'url') || 'unknown'
+    const url = _get<unknown, string, string>(e, 'url', 'unknown')
 
     log.error(`An exception was thrown when calling URL '${url}'`, e)
 
-    const message = _get(e, 'timeout')
+    const isTimeout = _get<unknown, string, boolean>(e, 'timeout', false)
+    const message: string = isTimeout
       ? TIMEOUT_ERROR
-      : _get(e, 'response.body.description') || errorMessage(e)
+      : _get(e, 'response.body.description', errorMessage(e))
 
     throw new Error(message)
   }

@@ -137,7 +137,9 @@ export function ImportRemotePage(): ReactElement {
                   label="Configuration to import"
                   errors={allErrors<Fields>('import', validationErrors)}
                   value={configToImport}
-                  onChange={({ target }) => setConfigToImport(target.value)}
+                  onChange={({ target }) => {
+                    setConfigToImport(target.value)
+                  }}
                   disabled={submitting}
                 />
               )

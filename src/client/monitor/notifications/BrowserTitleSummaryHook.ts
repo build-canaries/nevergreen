@@ -38,7 +38,7 @@ export function useBrowserTitleSummary(
       return interesting.count > 0
     }
     const summary = (interesting: Interesting): string => {
-      return `${interesting.count} ${prognosisDisplay(
+      return `${interesting.count.toString()} ${prognosisDisplay(
         interesting.prognosis,
         true,
       )}`

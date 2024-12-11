@@ -2,9 +2,7 @@
 
 export function debug(message: string, ...data: unknown[]): void {
   if (process.env.NODE_ENV !== 'production') {
-    if (console.debug) {
-      console.debug(message, data)
-    }
+    console.debug(message, data)
   }
 }
 

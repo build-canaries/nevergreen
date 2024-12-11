@@ -9,16 +9,10 @@ export function triggerShortcut(keys: string): void {
 }
 
 export function pauseShortcuts(): void {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   Mousetrap.pause()
 }
 
 export function unpauseShortcuts(): void {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   Mousetrap.unpause()
 }
 

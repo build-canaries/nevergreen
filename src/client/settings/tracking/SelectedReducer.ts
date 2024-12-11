@@ -28,12 +28,14 @@ const slice = createSlice({
       .addCase(feedUpdated, (draft, action) => {
         const { trayId, feed, selectedProjects } = action.payload
         if (feed.trackingMode === TrackingMode.selected) {
-          draft[trayId] = (selectedProjects as string[]) ?? []
+          draft[trayId] = (selectedProjects ?? []) as string[]
         } else if (feed.trackingMode === TrackingMode.everything) {
+          // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
           delete draft[trayId]
         }
       })
       .addCase(feedRemoved, (draft, action) => {
+        // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
         delete draft[action.payload]
       })
   },

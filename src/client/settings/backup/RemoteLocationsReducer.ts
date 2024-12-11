@@ -49,6 +49,7 @@ const slice = createSlice({
         draft[action.payload.internalId] = action.payload
       })
       .addCase(removeBackupLocation, (draft, action) => {
+        // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
         delete draft[action.payload]
       })
       .addCase(backupExported, (draft, action) => {

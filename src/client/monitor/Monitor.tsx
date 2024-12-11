@@ -43,6 +43,7 @@ export function Monitor(): ReactElement {
   }, [])
 
   useShortcut('f', () => {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (screenfull.isEnabled && ref.current) {
       void screenfull.toggle(ref.current)
     }

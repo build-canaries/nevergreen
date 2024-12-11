@@ -53,7 +53,7 @@ export function ImportLocalPage(): ReactElement {
       }
     } else {
       setError(
-        `Only 1 backup file can be opened (attempted to open ${files.length} files)`,
+        `Only 1 backup file can be opened (attempted to open ${files.length.toString()} files)`,
       )
     }
 
@@ -92,11 +92,15 @@ export function ImportLocalPage(): ReactElement {
       <FileDropTarget onFileDropped={openFile} disabled={isLoading}>
         <div className={styles.messages}>
           <TimedErrorMessages
-            onDismiss={() => setOpenFileError('')}
+            onDismiss={() => {
+              setOpenFileError('')
+            }}
             messages={openFileError}
           />
           <TimedInfoMessages
-            onDismiss={() => setSuccessState('')}
+            onDismiss={() => {
+              setSuccessState('')
+            }}
             messages={success}
           />
         </div>
@@ -118,7 +122,9 @@ export function ImportLocalPage(): ReactElement {
                 errors={allErrors('import', validationErrors)}
                 placeholder="Open, drag and drop or paste exported configuration here and press Import"
                 value={data}
-                onChange={({ target }) => setData(target.value)}
+                onChange={({ target }) => {
+                  setData(target.value)
+                }}
                 disabled={submitting || isLoading}
               />
             )

@@ -17,7 +17,9 @@ interface AppProps {
 }
 
 export function App({ appElement, store, router }: AppProps): ReactElement {
-  useEffect(() => Modal.setAppElement(appElement), [appElement])
+  useEffect(() => {
+    Modal.setAppElement(appElement)
+  }, [appElement])
 
   return (
     <UnhandledError>

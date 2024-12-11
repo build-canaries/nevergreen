@@ -6,11 +6,14 @@ const isoDateTime = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/
 
 it('should migrate the given data by mutating it, including adding any applied migrations', () => {
   const migrationId = '20191004195445_A'
-  jest
-    .spyOn(migrations, 'getOrderedMigrations')
-    .mockReturnValue([
-      { id: migrationId, migrate: (data) => moveData(data, 'foo', 'baz') },
-    ])
+  jest.spyOn(migrations, 'getOrderedMigrations').mockReturnValue([
+    {
+      id: migrationId,
+      migrate: (data) => {
+        moveData(data, 'foo', 'baz')
+      },
+    },
+  ])
   const data = { foo: 'bar' }
 
   migrate(data)
@@ -27,9 +30,24 @@ it('should migrate the given data by mutating it, including adding any applied m
 
 it('should apply migrations in the order they are returned', () => {
   jest.spyOn(migrations, 'getOrderedMigrations').mockReturnValue([
-    { id: '20191004195445_A', migrate: (data) => moveData(data, 'foo', 'baz') },
-    { id: '20191005125402_B', migrate: (data) => moveData(data, 'baz', 'bux') },
-    { id: '20191006120427_C', migrate: (data) => moveData(data, 'bux', 'fiz') },
+    {
+      id: '20191004195445_A',
+      migrate: (data) => {
+        moveData(data, 'foo', 'baz')
+      },
+    },
+    {
+      id: '20191005125402_B',
+      migrate: (data) => {
+        moveData(data, 'baz', 'bux')
+      },
+    },
+    {
+      id: '20191006120427_C',
+      migrate: (data) => {
+        moveData(data, 'bux', 'fiz')
+      },
+    },
   ])
   const data = { foo: 'bar' }
 

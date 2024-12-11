@@ -25,11 +25,11 @@ function notificationBody(
 
 function notificationTitle(prognosis: Prognosis, total: number): string {
   if (Prognosis.error === prognosis) {
-    return total === 1 ? 'feed error!' : `${total} feed errors!`
+    return total === 1 ? 'feed error!' : `${total.toString()} feed errors!`
   } else {
     return total === 1
       ? `project is ${prognosisDisplay(prognosis)}!`
-      : `${total} projects are ${prognosisDisplay(prognosis)}!`
+      : `${total.toString()} projects are ${prognosisDisplay(prognosis)}!`
   }
 }
 

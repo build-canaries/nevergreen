@@ -10,10 +10,15 @@ configure({ testIdAttribute: 'data-locator' })
 jest.mock('../../../src/client/common/Logger')
 
 window.scrollTo = noop
+window.ResizeObserver = class ResizeObserver {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
 
 afterEach(async () => {
   // This has to be awaited otherwise tests don't clean up properly and cause failures
-  // eslint-disable-next-line @typescript-eslint/await-thenable
+  // eslint-disable-next-line @typescript-eslint/await-thenable,@typescript-eslint/no-confusing-void-expression
   await act(() => {
     jest.runAllTimers()
   })

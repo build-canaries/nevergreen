@@ -26,14 +26,12 @@ export function ExportLocallyPage(): ReactElement {
   const [copyingSuccess, setCopyingSuccess] = useState<string>('')
   const [copyingFailure, setCopyingFailure] = useState<string>('')
 
-  const copySuccess = useCallback(
-    () => setCopyingSuccess('Copied current configuration to clipboard'),
-    [],
-  )
-  const copyError = useCallback(
-    () => setCopyingFailure('Unable to copy, please manually copy'),
-    [],
-  )
+  const copySuccess = useCallback(() => {
+    setCopyingSuccess('Copied current configuration to clipboard')
+  }, [])
+  const copyError = useCallback(() => {
+    setCopyingFailure('Unable to copy, please manually copy')
+  }, [])
 
   const autoCopySupported = useClipboard(
     '#copy-to-clipboard',
@@ -52,9 +50,15 @@ export function ExportLocallyPage(): ReactElement {
     }
   }
 
-  const dismissSaveFailure = useCallback(() => setSaveFailure([]), [])
-  const dismissCopyingSuccess = useCallback(() => setCopyingSuccess(''), [])
-  const dismissCopyingFailure = useCallback(() => setCopyingFailure(''), [])
+  const dismissSaveFailure = useCallback(() => {
+    setSaveFailure([])
+  }, [])
+  const dismissCopyingSuccess = useCallback(() => {
+    setCopyingSuccess('')
+  }, [])
+  const dismissCopyingFailure = useCallback(() => {
+    setCopyingFailure('')
+  }, [])
 
   return (
     <Page title="Export locally" icon={<FloppyDisk />}>

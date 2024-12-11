@@ -8,7 +8,12 @@ interface HelpLinkProps {
 
 export function HelpLink({ to, setSearchQuery }: HelpLinkProps): ReactElement {
   return (
-    <button className={styles.query} onClick={() => setSearchQuery(to)}>
+    <button
+      className={styles.query}
+      onClick={() => {
+        setSearchQuery(to)
+      }}
+    >
       (see <em>{to}</em> for more details)
     </button>
   )

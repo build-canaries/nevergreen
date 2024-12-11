@@ -50,8 +50,8 @@ export function Nevergreen(): ReactElement {
   const clickToShowMenu = useAppSelector(getClickToShowMenu)
 
   useShortcut('esc', () => {
-    const active = document.activeElement as HTMLElement
-    if (active && active.blur) {
+    const active = document.activeElement
+    if (active && active instanceof HTMLElement) {
       active.blur()
     }
   })
@@ -87,7 +87,9 @@ export function Nevergreen(): ReactElement {
           <Header hide={menusHidden} />
           <Banner
             message={bannerMessage}
-            onDismiss={() => setBannerMessage('')}
+            onDismiss={() => {
+              setBannerMessage('')
+            }}
             hide={menusHidden}
           />
           <main className={styles.main} role="main">

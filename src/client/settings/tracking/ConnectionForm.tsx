@@ -62,11 +62,11 @@ export function ConnectionForm({
   const authOptions = existingFeed ? extendedAuthTypeOptions : authTypeOptions
   const initialUsername =
     existingFeed?.authType === AuthTypes.basic
-      ? (existingFeed?.username ?? '')
+      ? (existingFeed.username ?? '')
       : ''
   const initialQueryKey =
     existingFeed?.authType === AuthTypes.queryParam
-      ? (existingFeed?.username ?? '')
+      ? (existingFeed.username ?? '')
       : ''
   const submitButtonText = existingFeed ? 'Save changes' : 'Add feed'
 
@@ -180,7 +180,9 @@ export function ConnectionForm({
           <>
             <Input
               value={url}
-              onChange={({ target }) => setUrl(target.value)}
+              onChange={({ target }) => {
+                setUrl(target.value)
+              }}
               autoComplete="url"
               disabled={submitting}
               error={firstError<Fields>('url', validationErrors)}
@@ -191,9 +193,9 @@ export function ConnectionForm({
               options={authOptions}
               value={authType}
               className={styles.authType}
-              onChange={({ target }) =>
+              onChange={({ target }) => {
                 setAuthType(target.value as UpdateExistingAuthTypes)
-              }
+              }}
             >
               Authentication
             </DropDown>
@@ -202,7 +204,9 @@ export function ConnectionForm({
                 <Input
                   classNameContainer={styles.username}
                   value={username}
-                  onChange={({ target }) => setUsername(target.value)}
+                  onChange={({ target }) => {
+                    setUsername(target.value)
+                  }}
                   disabled={submitting}
                   autoComplete="username"
                 >
@@ -211,7 +215,9 @@ export function ConnectionForm({
                 <Password
                   classNameContainer={styles.password}
                   value={password}
-                  onChange={({ target }) => setPassword(target.value)}
+                  onChange={({ target }) => {
+                    setPassword(target.value)
+                  }}
                   disabled={submitting}
                   autoComplete="new-password"
                 >
@@ -224,7 +230,9 @@ export function ConnectionForm({
                 <Password
                   classNameContainer={styles.authToken}
                   value={accessToken}
-                  onChange={({ target }) => setAccessToken(target.value)}
+                  onChange={({ target }) => {
+                    setAccessToken(target.value)
+                  }}
                   disabled={submitting}
                   autoComplete="new-password"
                 >
@@ -237,7 +245,9 @@ export function ConnectionForm({
                 <Input
                   classNameContainer={styles.username}
                   value={queryKey}
-                  onChange={({ target }) => setQueryKey(target.value)}
+                  onChange={({ target }) => {
+                    setQueryKey(target.value)
+                  }}
                   disabled={submitting}
                   error={firstError<Fields>('queryKey', validationErrors)}
                 >
@@ -246,7 +256,9 @@ export function ConnectionForm({
                 <Password
                   classNameContainer={styles.password}
                   value={queryValue}
-                  onChange={({ target }) => setQueryValue(target.value)}
+                  onChange={({ target }) => {
+                    setQueryValue(target.value)
+                  }}
                   disabled={submitting}
                   error={firstError<Fields>('queryValue', validationErrors)}
                 >

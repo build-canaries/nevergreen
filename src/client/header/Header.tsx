@@ -48,7 +48,9 @@ export function Header({ hide }: HeaderProps): ReactElement {
             <li>
               <button
                 className={styles.helpButton}
-                onClick={() => triggerShortcut(SHOW_HELP_SHORTCUT)}
+                onClick={() => {
+                  triggerShortcut(SHOW_HELP_SHORTCUT)
+                }}
               >
                 <Question />
                 <div className={styles.menuTitle}>Help</div>

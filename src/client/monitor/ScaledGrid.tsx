@@ -75,7 +75,10 @@ export function ScaledGrid({ children }: ScaledGridProps): ReactElement {
     (child) => !isNil(child),
   )
 
-  const childStyle = { width: `${childWidth}px`, height: `${childHeight}px` }
+  const childStyle = {
+    width: `${childWidth.toString()}px`,
+    height: `${childHeight.toString()}px`,
+  }
 
   return (
     <ul className={styles.scaledGrid} ref={listRef}>

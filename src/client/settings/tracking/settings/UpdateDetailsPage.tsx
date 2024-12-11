@@ -34,23 +34,23 @@ export function UpdateDetailsPage(): ReactElement {
 
   return (
     <Page title="Update details" icon={<FeedLogo feed={feed} />}>
-      <Form
-        onValidate={() => {}}
-        onSuccess={onSuccess}
-        onCancel={RoutePaths.tracking}
-      >
+      <Form onSuccess={onSuccess} onCancel={RoutePaths.tracking}>
         {() => {
           return (
             <>
               <Input
                 classNameContainer={styles.feedSettingsName}
                 value={name}
-                onChange={({ target }) => setName(target.value)}
+                onChange={({ target }) => {
+                  setName(target.value)
+                }}
                 placeholder="e.g. project or team name"
                 button={
                   <InputButton
                     icon={<Dice />}
-                    onClick={() => setName(generateRandomName())}
+                    onClick={() => {
+                      setName(generateRandomName())
+                    }}
                   >
                     randomise name
                   </InputButton>
@@ -62,9 +62,9 @@ export function UpdateDetailsPage(): ReactElement {
                 className={styles.serverType}
                 options={serverTypeOptions}
                 value={serverType}
-                onChange={({ target }) =>
+                onChange={({ target }) => {
                   setServerType(target.value as ServerTypes)
-                }
+                }}
               >
                 Server type
               </DropDown>

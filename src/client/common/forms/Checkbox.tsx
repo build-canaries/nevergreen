@@ -35,7 +35,9 @@ export function Checkbox({
           id={actualId}
           className={styles.input}
           type="checkbox"
-          onChange={(evt) => onToggle(evt.target.checked)}
+          onChange={(evt) => {
+            onToggle(evt.target.checked)
+          }}
           {...inputProps}
         />
         <label htmlFor={actualId} className={styles.children}>

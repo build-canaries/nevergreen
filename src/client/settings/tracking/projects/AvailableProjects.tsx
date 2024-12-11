@@ -80,7 +80,9 @@ export function AvailableProjects({
         <div className={styles.projectFilter}>
           <Input
             classNameContainer={styles.projectFilterInput}
-            onChange={({ target }) => setSearch(target.value)}
+            onChange={({ target }) => {
+              setSearch(target.value)
+            }}
             type="search"
             disabled={controlsDisabled}
           >

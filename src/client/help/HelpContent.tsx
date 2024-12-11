@@ -52,7 +52,9 @@ export default function HelpContent({
       <Input
         placeholder="by keyword"
         value={searchQuery}
-        onChange={({ target }) => setSearchQuery(target.value)}
+        onChange={({ target }) => {
+          setSearchQuery(target.value)
+        }}
       >
         Search
       </Input>

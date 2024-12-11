@@ -9,16 +9,16 @@ const oneDayInSeconds = 86400
 
 export function secondsToString(seconds: number): string {
   if (seconds < oneMinuteInSeconds) {
-    return `${seconds} ${seconds === 1 ? 'second' : 'seconds'}`
+    return `${seconds.toString()} ${seconds === 1 ? 'second' : 'seconds'}`
   } else if (seconds < oneHourInSeconds) {
     const minutes = Math.floor(seconds / oneMinuteInSeconds)
-    return `${minutes} ${minutes === 1 ? 'minute' : 'minutes'}`
+    return `${minutes.toString()} ${minutes === 1 ? 'minute' : 'minutes'}`
   } else if (seconds < oneDayInSeconds) {
     const hours = Math.floor(seconds / oneHourInSeconds)
-    return `${hours} ${hours === 1 ? 'hour' : 'hours'}`
+    return `${hours.toString()} ${hours === 1 ? 'hour' : 'hours'}`
   } else {
     const days = Math.floor(seconds / oneDayInSeconds)
-    return `${days} ${days === 1 ? 'day' : 'days'}`
+    return `${days.toString()} ${days === 1 ? 'day' : 'days'}`
   }
 }
 

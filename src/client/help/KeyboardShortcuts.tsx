@@ -94,6 +94,7 @@ export function KeyboardShortcuts({ searchQuery }: HelpProps): ReactElement {
         <Shortcut label="Toggle mute audio notifications">
           <Binding>space</Binding>
         </Shortcut>
+        {/*eslint-disable-next-line @typescript-eslint/no-unnecessary-condition*/}
         {screenfull.isEnabled && (
           <>
             <Shortcut label="Toggle fullscreen">

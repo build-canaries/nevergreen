@@ -16,7 +16,7 @@ import { useElementResized } from './ResizableHook'
 import { toJson } from './Json'
 import styles from './scaled-text.scss'
 
-export const MIN_FONT_SIZE = 10 // px
+export const MIN_FONT_SIZE: number = 10 // px
 
 function totalPaddingPixels(fontSize: number, padding: number) {
   return padding * 2 * fontSize
@@ -220,7 +220,7 @@ export function ScaleText({
       0.5,
     )
 
-    return { fontSize: `${fontSize}px`, padding: '0.5em' }
+    return { fontSize: `${fontSize.toString()}px`, padding: '0.5em' }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [toJson(sentences), elementHeight, elementWidth, fontHeight, fontWidth])
 

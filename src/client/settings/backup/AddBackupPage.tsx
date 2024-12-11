@@ -93,12 +93,15 @@ export function AddBackupPage(): ReactElement {
   }
 
   const updateWhere = (updatedWhere: RemoteLocationOptions) => {
-    if (updatedWhere === RemoteLocationOptions.custom) {
-      setUrl('')
-    } else if (updatedWhere === RemoteLocationOptions.gitHub) {
-      setUrl(DEFAULT_GITHUB_URL)
-    } else if (updatedWhere === RemoteLocationOptions.gitLab) {
-      setUrl(DEFAULT_GITLAB_URL)
+    switch (updatedWhere) {
+      case RemoteLocationOptions.custom:
+        setUrl('')
+        break
+      case RemoteLocationOptions.gitHub:
+        setUrl(DEFAULT_GITHUB_URL)
+        break
+      case RemoteLocationOptions.gitLab:
+        setUrl(DEFAULT_GITLAB_URL)
     }
     setWhere(updatedWhere)
   }

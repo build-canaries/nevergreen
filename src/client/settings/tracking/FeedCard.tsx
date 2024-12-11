@@ -42,7 +42,7 @@ function trackingModeDisplay(
     case TrackingMode.everything:
       return 'Everything'
     case TrackingMode.selected:
-      return `Selected |${selected?.length ?? 0}|`
+      return `Selected |${selected?.length.toString() ?? '0'}|`
   }
 }
 

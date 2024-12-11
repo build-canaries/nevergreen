@@ -48,7 +48,7 @@ export function NotificationSettingsPage(): ReactElement {
           min={0}
           max={1}
           step={0.05}
-          aria-valuetext={`${Math.round(audioNotificationVolume * 100)}%`}
+          aria-valuetext={`${Math.round(audioNotificationVolume * 100).toString()}%`}
           defaultValue={audioNotificationVolume}
           onChange={({ target }) =>
             dispatch(setAudioNotificationVolume(parseFloat(target.value)))

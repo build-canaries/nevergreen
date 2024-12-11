@@ -4,7 +4,9 @@ import { RoutePaths } from './AppRoutes'
 
 export function useNavigationShortcut(keys: string | string[], route: string) {
   const navigate = useNavigate()
-  useShortcut(keys, () => navigate(route, { replace: true }), [route, navigate])
+  useShortcut(keys, () => {
+    navigate(route, { replace: true })
+  }, [route, navigate])
 }
 
 export function useNavigationShortcuts(): void {

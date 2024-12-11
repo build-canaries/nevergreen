@@ -16,14 +16,14 @@ export function TileProjectsNotShown({
 }: TileNotShownProps): ReactElement {
   const settings = useAppSelector(getAllPrognosisSettings)
 
-  const header = `+${projectsNotShown.length} not shown`
+  const header = `+${projectsNotShown.length.toString()} not shown`
   const counts = countBy(projectsNotShown, 'prognosis')
 
   const body = Object.keys(counts)
     .filter((prognosis) => counts[prognosis] > 0)
     .map(
       (prognosis) =>
-        `+${counts[prognosis]} ${prognosisDisplay(prognosis as Prognosis)}`,
+        `+${counts[prognosis].toString()} ${prognosisDisplay(prognosis as Prognosis)}`,
     )
     .join(', ')
 

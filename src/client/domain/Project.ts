@@ -53,8 +53,8 @@ function sameBuild(previousProject: ProjectApi, currentProject: ProjectApi) {
   return previousProject.lastBuildLabel === currentProject.lastBuildLabel
 }
 
-export function isProject<P extends ProjectApi, E extends FeedApiError>(
-  project: P | E,
+export function isProject<P extends ProjectApi>(
+  project: P | FeedApiError,
 ): project is P {
   return project.prognosis !== Prognosis.error
 }

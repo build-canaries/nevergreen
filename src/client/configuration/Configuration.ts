@@ -72,7 +72,7 @@ function validateIdsMatch<K extends string>(
   idKey: K,
 ) {
   Object.entries(o).forEach(([key, val]) => {
-    if (val && val[idKey] !== key) {
+    if (val[idKey] !== key) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: `Mismatched ID expected "${key}", received "${val[idKey]}"`,

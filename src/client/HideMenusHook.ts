@@ -21,10 +21,9 @@ export function useHideMenus(): HideMenusHookResponse {
     }
 
     if (hideMenusRequested) {
-      timer.current = window.setTimeout(
-        () => setMenusHidden(true),
-        threeSeconds,
-      )
+      timer.current = window.setTimeout(() => {
+        setMenusHidden(true)
+      }, threeSeconds)
     }
   }, [menusHidden, hideMenusRequested])
 

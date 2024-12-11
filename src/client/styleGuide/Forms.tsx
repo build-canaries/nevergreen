@@ -28,7 +28,12 @@ export function Forms(): ReactElement {
   return (
     <>
       <StyleGuideSection title="Form">
-        <Form onSuccess={noop} onCancel={noop}>
+        <Form
+          onSuccess={() => {
+            return undefined
+          }}
+          onCancel={noop}
+        >
           {() => <Input>example input</Input>}
         </Form>
       </StyleGuideSection>

@@ -37,11 +37,7 @@ export function ManageProjectsPage(): ReactElement {
 
   return (
     <Page title="Manage projects" icon={<CheckboxChecked />}>
-      <Form
-        onValidate={() => {}}
-        onSuccess={onSuccess}
-        onCancel={RoutePaths.tracking}
-      >
+      <Form onSuccess={onSuccess} onCancel={RoutePaths.tracking}>
         {() => {
           return (
             <>
@@ -51,9 +47,9 @@ export function ManageProjectsPage(): ReactElement {
                   { value: TrackingMode.selected, display: 'Selected' },
                 ]}
                 value={trackingMode}
-                onChange={({ target }) =>
+                onChange={({ target }) => {
                   setTrackingMode(target.value as TrackingMode)
-                }
+                }}
                 className={styles.trackingMode}
               >
                 Tracking mode

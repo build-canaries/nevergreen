@@ -87,6 +87,7 @@ const slice = createSlice({
         Object.assign(draft[action.payload.trayId], action.payload.feed)
       })
       .addCase(feedRemoved, (draft, action) => {
+        // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
         delete draft[action.payload]
       })
   },

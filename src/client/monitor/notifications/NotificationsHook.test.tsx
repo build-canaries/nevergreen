@@ -140,7 +140,7 @@ describe('system notifications', () => {
 
       render(<HookWrapper projects={projects} errors={errors} />, { state })
 
-      expect(SystemNotifications.sendSystemNotification).toBeCalledWith(
+      expect(SystemNotifications.sendSystemNotification).toHaveBeenCalledWith(
         expect.objectContaining({
           title: `project is ${prognosisDisplay(current)}!`,
           body: 'some-name',
@@ -179,7 +179,7 @@ describe('system notifications', () => {
       { state },
     )
 
-    expect(SystemNotifications.sendSystemNotification).toBeCalledWith(
+    expect(SystemNotifications.sendSystemNotification).toHaveBeenCalledWith(
       expect.objectContaining({
         title: 'feed error!',
         body: 'some-error',
@@ -188,7 +188,7 @@ describe('system notifications', () => {
 
     rerender(<HookWrapper projects={projects} errors={errorsSecondFetch} />)
 
-    expect(SystemNotifications.sendSystemNotification).toBeCalledTimes(1)
+    expect(SystemNotifications.sendSystemNotification).toHaveBeenCalledTimes(1)
   })
 
   it('should send multiple notifications', () => {

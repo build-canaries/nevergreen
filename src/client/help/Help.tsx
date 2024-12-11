@@ -15,7 +15,9 @@ export function Help(): ReactElement {
   const [show, setShow] = useState(false)
   const [initialSearchQuery, setInitialSearchQuery] = useState('')
 
-  useShortcut(SHOW_HELP_SHORTCUT, () => setShow(true))
+  useShortcut(SHOW_HELP_SHORTCUT, () => {
+    setShow(true)
+  })
   useShortcut(SHOW_KEYBOARD_SHORTCUTS_SHORTCUT, () => {
     setInitialSearchQuery(KEYBOARD_SHORTCUT_KEYWORD)
     setShow(true)

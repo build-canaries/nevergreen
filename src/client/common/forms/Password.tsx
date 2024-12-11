@@ -20,7 +20,9 @@ export function Password({
     <InputButton
       aria-controls={actualId}
       icon={<Eye />}
-      onClick={() => setType('text')}
+      onClick={() => {
+        setType('text')
+      }}
     >
       show password
     </InputButton>
@@ -30,7 +32,9 @@ export function Password({
     <InputButton
       aria-controls={actualId}
       icon={<EyeBlocked />}
-      onClick={() => setType('password')}
+      onClick={() => {
+        setType('password')
+      }}
     >
       hide password
     </InputButton>
