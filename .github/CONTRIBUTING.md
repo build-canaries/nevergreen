@@ -21,12 +21,12 @@ kept up to date.
 
 #### Reporting bugs
 
--   Check the bug was not already reported by searching [existing issues](https://github.com/build-canaries/nevergreen/issues).
--   If you're unable to find an open issue addressing the problem, [open a new issue](https://github.com/build-canaries/nevergreen/issues/new).
+- Check the bug was not already reported by searching [existing issues](https://github.com/build-canaries/nevergreen/issues).
+- If you're unable to find an open issue addressing the problem, [open a new issue](https://github.com/build-canaries/nevergreen/issues/new).
 
 #### Requesting new features
 
--   [Open an issue on GitHub](https://github.com/build-canaries/nevergreen/issues/new) with your idea or change.
+- [Open an issue on GitHub](https://github.com/build-canaries/nevergreen/issues/new) with your idea or change.
 
 #### Submitting patches
 

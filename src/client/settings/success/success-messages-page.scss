@@ -27,7 +27,8 @@
 
   @include responsive.respond-to(tablet, desktop) {
     margin-bottom: calc(
-      -#{layout.$card-header-padding * 2} - #{forms.$standard-input-size-above-mobile}
+      -#{layout.$card-header-padding * 2} -
+        #{forms.$standard-input-size-above-mobile}
     );
   }
 }

@@ -2,10 +2,10 @@
 
 Nevergreen is a build monitor with attitude. Continually deliver via fast clear feedback.
 
--   Your builds should always be green. Nevergreen understands this and only shows you projects that have failed or are building
--   Nevergreen uses your local browser to store configuration. You only need to run it once to host different build monitors for every team
--   Nevergreen is fully responsive, it'll look just as good full screen or sharing the space with other dashboards
--   You can track as many CI servers as you like, allowing you to easily track dependent builds from other teams
+- Your builds should always be green. Nevergreen understands this and only shows you projects that have failed or are building
+- Nevergreen uses your local browser to store configuration. You only need to run it once to host different build monitors for every team
+- Nevergreen is fully responsive, it'll look just as good full screen or sharing the space with other dashboards
+- You can track as many CI servers as you like, allowing you to easily track dependent builds from other teams
 
 ![Example Monitor page](doc/screenshot_monitor.png)
 
@@ -32,9 +32,9 @@ More information about how to get the CCTray XML feed for your CI server can be 
 
 ### How can I get more help?
 
--   [The Nevergreen wiki](https://github.com/build-canaries/nevergreen/wiki)
--   [Ask questions on GitHub](https://github.com/build-canaries/nevergreen/discussions)
--   Nevergreen has built in help that can be accessed from the menu or by pressing the `h` key
+- [The Nevergreen wiki](https://github.com/build-canaries/nevergreen/wiki)
+- [Ask questions on GitHub](https://github.com/build-canaries/nevergreen/discussions)
+- Nevergreen has built in help that can be accessed from the menu or by pressing the `h` key
 
 ## How can I fix a bug / add a feature / contribute?
 
