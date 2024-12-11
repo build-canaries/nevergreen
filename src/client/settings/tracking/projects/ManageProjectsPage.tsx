@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from '../../../configuration/Hooks'
 import { TrackingMode } from '../FeedsReducer'
 import { RoutePaths } from '../../../AppRoutes'
 import { Form } from '../../../common/forms/Form'
-import { getSelectedProjectsForFeed, projectSelected } from '../SelectedReducer'
+import { getSelectedProjectsForFeed } from '../SelectedReducer'
 import styles from './manage-projects-page.scss'
 
 export function ManageProjectsPage(): ReactElement {
@@ -20,19 +20,14 @@ export function ManageProjectsPage(): ReactElement {
   )
 
   const [trackingMode, setTrackingMode] = useState(feed.trackingMode)
-  const [selected, setSelected] = useState(currentlySelected)
+  const [selected, setSelected] = useState(currentlySelected ?? [])
 
   const onSuccess = () => {
     dispatch(
       feedUpdated({
         trayId: feed.trayId,
         feed: { trackingMode },
-      }),
-    )
-    dispatch(
-      projectSelected({
-        trayId: feed.trayId,
-        projectIds: selected,
+        selectedProjects: selected,
       }),
     )
     return {

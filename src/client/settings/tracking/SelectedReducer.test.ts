@@ -1,16 +1,15 @@
 import {
   getSelectedProjectsForFeed,
-  projectSelected,
   reducer as selectedReducer,
   selectedRoot,
   SelectedState,
 } from './SelectedReducer'
-import { feedRemoved, feedUpdated } from './TrackingActionCreators'
+import { feedAdded, feedRemoved, feedUpdated } from './TrackingActionCreators'
 import { testReducer } from '../../testUtils/testHelpers'
 import { buildState } from '../../testUtils/builders'
 import { RecursivePartial } from '../../common/Types'
 import { configurationImported } from '../backup/BackupActionCreators'
-import { TrackingMode } from './FeedsReducer'
+import { AuthTypes, TrackingMode } from './FeedsReducer'
 
 const reducer = testReducer({
   [selectedRoot]: selectedReducer,
@@ -31,7 +30,7 @@ describe(configurationImported.toString(), () => {
     const existingState = state({ oldId: ['foo'] })
     const action = configurationImported({ selected: { trayId: ['bar'] } })
     const newState = reducer(existingState, action)
-    expect(getSelectedProjectsForFeed('oldId')(newState)).toEqual([])
+    expect(getSelectedProjectsForFeed('oldId')(newState)).toBeUndefined()
     expect(getSelectedProjectsForFeed('trayId')(newState)).toEqual(['bar'])
   })
 
@@ -44,14 +43,29 @@ describe(configurationImported.toString(), () => {
 })
 
 describe(feedUpdated.toString(), () => {
-  it('should add the feed id with an empty set if tracking mode is updated to selected', () => {
+  it('should add the feed id with selected projects if tracking mode is updated to selected', () => {
+    const existingState = state({})
+    const action = feedUpdated({
+      trayId: 'trayId',
+      feed: { trackingMode: TrackingMode.selected },
+      selectedProjects: ['a', 'b', 'c'],
+    })
+    const newState = reducer(existingState, action)
+    expect(getSelectedProjectsForFeed('trayId')(newState)).toEqual([
+      'a',
+      'b',
+      'c',
+    ])
+  })
+
+  it('should add the feed id with an empty set if tracking mode is updated to selected and no selected projects', () => {
     const existingState = state({})
     const action = feedUpdated({
       trayId: 'trayId',
       feed: { trackingMode: TrackingMode.selected },
     })
     const newState = reducer(existingState, action)
-    expect(getSelectedProjectsForFeed('trayId')(newState)).toHaveLength(0)
+    expect(getSelectedProjectsForFeed('trayId')(newState)).toEqual([])
   })
 
   it('should remove the feed id if tracking mode is updated to everything', () => {
@@ -61,7 +75,7 @@ describe(feedUpdated.toString(), () => {
       feed: { trackingMode: TrackingMode.everything },
     })
     const newState = reducer(existingState, action)
-    expect(getSelectedProjectsForFeed('trayId')(newState)).toEqual([])
+    expect(getSelectedProjectsForFeed('trayId')(newState)).toBeUndefined()
   })
 
   it('should not remove the feed id if tracking mode was not part of the update', () => {
@@ -75,23 +89,24 @@ describe(feedUpdated.toString(), () => {
   })
 })
 
-describe(feedRemoved.toString(), () => {
-  it('should remove the tray id', () => {
-    const existingState = state({ trayId: [] })
-    const action = feedRemoved('trayId')
+describe(feedAdded.toString(), () => {
+  it('should add the tray id', () => {
+    const existingState = state({})
+    const action = feedAdded({
+      trayId: 'trayId',
+      url: '',
+      authType: AuthTypes.none,
+    })
     const newState = reducer(existingState, action)
     expect(getSelectedProjectsForFeed('trayId')(newState)).toEqual([])
   })
 })
 
-describe(projectSelected.toString(), () => {
-  it('should set the selected project', () => {
-    const existingState = state({ trayId: ['a', 'b', 'c'] })
-    const action = projectSelected({
-      trayId: 'trayId',
-      projectIds: ['d'],
-    })
+describe(feedRemoved.toString(), () => {
+  it('should remove the tray id', () => {
+    const existingState = state({ trayId: [] })
+    const action = feedRemoved('trayId')
     const newState = reducer(existingState, action)
-    expect(getSelectedProjectsForFeed('trayId')(newState)).toEqual(['d'])
+    expect(getSelectedProjectsForFeed('trayId')(newState)).toBeUndefined()
   })
 })

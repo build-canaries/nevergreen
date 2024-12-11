@@ -36,13 +36,13 @@ function authTypeDisplay(authType: AuthTypes): string {
 
 function trackingModeDisplay(
   trackingMode: TrackingMode,
-  selected: ReadonlyArray<string>,
+  selected: ReadonlyArray<string> | undefined,
 ): string {
   switch (trackingMode) {
     case TrackingMode.everything:
       return 'Everything'
     case TrackingMode.selected:
-      return `Selected |${selected.length}|`
+      return `Selected |${selected?.length ?? 0}|`
   }
 }
 

@@ -13,6 +13,7 @@ export interface FeedAddedAction {
 interface FeedUpdatedAction {
   readonly trayId: string
   readonly feed: Partial<Feed>
+  readonly selectedProjects?: ReadonlyArray<string>
 }
 
 export const feedAdded = createAction<FeedAddedAction>('tracking/feedAdded')

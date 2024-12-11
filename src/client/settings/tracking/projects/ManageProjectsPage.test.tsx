@@ -41,6 +41,7 @@ it('should allow the tracking mode to be changed', async () => {
       trackingMode: TrackingMode.everything,
     }),
   )
+  expect(getSelectedProjectsForFeed(trayId)(store.getState())).toBeUndefined()
   expect(window.location.pathname).toEqual('/settings/tracking')
 })
 

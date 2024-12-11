@@ -1,7 +1,6 @@
-import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSelector, createSlice } from '@reduxjs/toolkit'
 import type { RootState } from '../../configuration/ReduxStore'
-import { feedRemoved, feedUpdated } from './TrackingActionCreators'
+import { feedAdded, feedRemoved, feedUpdated } from './TrackingActionCreators'
 import { configurationImported } from '../backup/BackupActionCreators'
 import { TrackingMode } from './FeedsReducer'
 import { z } from 'zod'
@@ -12,33 +11,26 @@ export const SelectedState = z.record(z.array(z.string()))
 
 export type SelectedState = z.infer<typeof SelectedState>
 
-interface ProjectSelectedAction {
-  readonly trayId: string
-  readonly projectIds: ReadonlyArray<string>
-}
-
 const initialState: SelectedState = {}
 
 const slice = createSlice({
   name: selectedRoot,
   initialState,
-  reducers: {
-    projectSelected: (draft, action: PayloadAction<ProjectSelectedAction>) => {
-      draft[action.payload.trayId] = action.payload.projectIds as string[]
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(configurationImported, (draft, action) => {
         return action.payload.configuration.selected ?? draft
       })
+      .addCase(feedAdded, (draft, action) => {
+        draft[action.payload.trayId] = []
+      })
       .addCase(feedUpdated, (draft, action) => {
-        if (action.payload.feed.trackingMode === TrackingMode.selected) {
-          draft[action.payload.trayId] = []
-        } else if (
-          action.payload.feed.trackingMode === TrackingMode.everything
-        ) {
-          delete draft[action.payload.trayId]
+        const { trayId, feed, selectedProjects } = action.payload
+        if (feed.trackingMode === TrackingMode.selected) {
+          draft[trayId] = (selectedProjects as string[]) ?? []
+        } else if (feed.trackingMode === TrackingMode.everything) {
+          delete draft[trayId]
         }
       })
       .addCase(feedRemoved, (draft, action) => {
@@ -48,7 +40,6 @@ const slice = createSlice({
 })
 
 export const { reducer } = slice
-export const { projectSelected } = slice.actions
 
 export function getSelectedProjects(state: RootState): SelectedState {
   return state.selected
@@ -56,9 +47,6 @@ export function getSelectedProjects(state: RootState): SelectedState {
 
 export function getSelectedProjectsForFeed(
   trayId: string,
-): (state: RootState) => ReadonlyArray<string> {
-  return createSelector(
-    getSelectedProjects,
-    (selected) => selected[trayId] ?? [],
-  )
+): (state: RootState) => ReadonlyArray<string> | undefined {
+  return createSelector(getSelectedProjects, (selected) => selected[trayId])
 }
