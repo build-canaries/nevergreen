@@ -18,7 +18,7 @@
                  [base64-clj "0.1.1"]
                  [camel-snake-kebab "0.4.3"]
                  [com.cemerick/url "0.1.1" :exclusions [com.cemerick/clojurescript.test]]
-                 [ch.qos.logback/logback-classic "1.5.11" :exclusions [org.slf4j/slf4j-api]]
+                 [ch.qos.logback/logback-classic "1.5.12" :exclusions [org.slf4j/slf4j-api]]
                  [org.slf4j/log4j-over-slf4j "2.0.16"]
                  [org.slf4j/jul-to-slf4j "2.0.16"]
                  [org.slf4j/jcl-over-slf4j "2.0.16"]]
