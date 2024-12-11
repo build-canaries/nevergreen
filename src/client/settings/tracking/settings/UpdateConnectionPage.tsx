@@ -5,15 +5,15 @@ import { FeedLogo } from '../FeedLogo'
 import { ConnectionForm, ConnectionFormFields } from '../ConnectionForm'
 import { useFeedContext } from '../FeedPage'
 import { useAppDispatch } from '../../../configuration/Hooks'
+import { RoutePaths } from '../../../AppRoutes'
 
 export function UpdateConnectionPage(): ReactElement {
   const feed = useFeedContext()
   const dispatch = useAppDispatch()
-  const detailsRoute = `/settings/tracking/${feed.trayId}/details`
 
   const updateDetails = (details: ConnectionFormFields) => {
     dispatch(feedUpdated({ trayId: feed.trayId, feed: details }))
-    return detailsRoute
+    return RoutePaths.tracking
   }
 
   return (
@@ -21,7 +21,7 @@ export function UpdateConnectionPage(): ReactElement {
       <ConnectionForm
         existingFeed={feed}
         onSuccess={updateDetails}
-        onCancel={detailsRoute}
+        onCancel={RoutePaths.tracking}
       />
     </Page>
   )

@@ -2,7 +2,6 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSelector, createSlice } from '@reduxjs/toolkit'
 import type { RootState } from '../../configuration/ReduxStore'
 import { feedRemoved, feedUpdated } from './TrackingActionCreators'
-import remove from 'lodash/remove'
 import { configurationImported } from '../backup/BackupActionCreators'
 import { TrackingMode } from './FeedsReducer'
 import { z } from 'zod'
@@ -16,7 +15,6 @@ export type SelectedState = z.infer<typeof SelectedState>
 interface ProjectSelectedAction {
   readonly trayId: string
   readonly projectIds: ReadonlyArray<string>
-  readonly selected: boolean
 }
 
 const initialState: SelectedState = {}
@@ -26,13 +24,7 @@ const slice = createSlice({
   initialState,
   reducers: {
     projectSelected: (draft, action: PayloadAction<ProjectSelectedAction>) => {
-      if (action.payload.selected) {
-        draft[action.payload.trayId].push(...action.payload.projectIds)
-      } else {
-        remove(draft[action.payload.trayId], (id) =>
-          action.payload.projectIds.includes(id),
-        )
-      }
+      draft[action.payload.trayId] = action.payload.projectIds as string[]
     },
   },
   extraReducers: (builder) => {
@@ -65,5 +57,8 @@ export function getSelectedProjects(state: RootState): SelectedState {
 export function getSelectedProjectsForFeed(
   trayId: string,
 ): (state: RootState) => ReadonlyArray<string> {
-  return createSelector(getSelectedProjects, (selected) => selected[trayId])
+  return createSelector(
+    getSelectedProjects,
+    (selected) => selected[trayId] ?? [],
+  )
 }

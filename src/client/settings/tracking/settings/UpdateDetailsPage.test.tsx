@@ -1,5 +1,5 @@
-import { screen, waitFor } from '@testing-library/react'
-import { render } from '../../../testUtils/testHelpers'
+import { screen } from '@testing-library/react'
+import { render, waitForLocationToChange } from '../../../testUtils/testHelpers'
 import { buildFeed } from '../../../testUtils/builders'
 import { feedsRoot as feedsName, getFeed, ServerTypes } from '../FeedsReducer'
 import { UpdateDetailsPage } from './UpdateDetailsPage'
@@ -24,15 +24,17 @@ it('should be able to update details', async () => {
   await user.clear(screen.getByLabelText('Name'))
   await user.type(screen.getByLabelText('Name'), 'some-new-name')
   await user.selectOptions(screen.getByLabelText('Server type'), 'circle')
+  await user.click(screen.getByRole('button', { name: 'Save changes' }))
 
-  await waitFor(() => {
-    expect(getFeed('trayId')(store.getState())).toEqual(
-      expect.objectContaining({
-        name: 'some-new-name',
-        serverType: 'circle',
-      }),
-    )
-  })
+  await waitForLocationToChange()
+
+  expect(getFeed('trayId')(store.getState())).toEqual(
+    expect.objectContaining({
+      name: 'some-new-name',
+      serverType: 'circle',
+    }),
+  )
+  expect(window.location.pathname).toEqual('/settings/tracking')
 })
 
 it('should be able to generate a new random name', async () => {
@@ -51,13 +53,13 @@ it('should be able to generate a new random name', async () => {
   })
 
   await user.click(screen.getByText('randomise name'))
-  await user.click(document.body) // trigger blur
+  await user.click(screen.getByRole('button', { name: 'Save changes' }))
 
-  await waitFor(() => {
-    expect(getFeed('trayId')(store.getState())).toEqual(
-      expect.not.objectContaining({
-        name: 'some-name',
-      }),
-    )
-  })
+  await waitForLocationToChange()
+
+  expect(getFeed('trayId')(store.getState())).toEqual(
+    expect.not.objectContaining({
+      name: 'some-name',
+    }),
+  )
 })

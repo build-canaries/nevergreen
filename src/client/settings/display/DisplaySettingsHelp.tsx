@@ -12,7 +12,6 @@ const keywords = [
   'show prognosis name',
   'show build time',
   'show build label',
-  'interesting projects',
   'amount of projects to show',
   'sort projects by',
   'preview display',

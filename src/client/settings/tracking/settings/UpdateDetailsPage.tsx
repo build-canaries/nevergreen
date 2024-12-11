@@ -5,17 +5,14 @@ import { InputButton } from '../../../common/forms/Button'
 import { Input } from '../../../common/forms/Input'
 import { DropDown } from '../../../common/forms/DropDown'
 import { Dice } from '../../../common/icons/Dice'
-import { Summary } from '../../../common/Summary'
-import { LinkButton } from '../../../common/LinkButton'
 import { feedUpdated } from '../TrackingActionCreators'
 import { FeedLogo } from '../FeedLogo'
-import { Cog } from '../../../common/icons/Cog'
 import { useFeedContext } from '../FeedPage'
-import { URL } from '../../../common/URL'
 import { useAppDispatch } from '../../../configuration/Hooks'
-import { AuthTypes, ServerTypes } from '../FeedsReducer'
+import { ServerTypes } from '../FeedsReducer'
 import { generateRandomName } from '../../../common/Words'
-import { ManageFeedProjectsLink } from '../ManageFeedProjectsLink'
+import { Form } from '../../../common/forms/Form'
+import { RoutePaths } from '../../../AppRoutes'
 import styles from './update-details-page.scss'
 
 const serverTypeOptions = [
@@ -24,81 +21,57 @@ const serverTypeOptions = [
   { value: ServerTypes.go, display: 'GoCD' },
 ]
 
-function authTypeDisplay(authType: AuthTypes): string {
-  switch (authType) {
-    case AuthTypes.basic:
-      return 'Basic auth'
-    case AuthTypes.none:
-      return 'No auth'
-    case AuthTypes.token:
-      return 'Access token'
-    case AuthTypes.queryParam:
-      return 'Query parameter'
-  }
-}
-
 export function UpdateDetailsPage(): ReactElement {
   const feed = useFeedContext()
   const dispatch = useAppDispatch()
   const [name, setName] = useState(feed.name)
+  const [serverType, setServerType] = useState(feed.serverType)
 
-  const connectionDetails = [
-    { label: 'URL', value: <URL url={feed.url} /> },
-    { label: 'Authentication', value: authTypeDisplay(feed.authType) },
-  ]
-
-  const randomNameButton = (
-    <InputButton
-      icon={<Dice />}
-      onClick={() => setName(generateRandomName())}
-      onBlur={() =>
-        dispatch(feedUpdated({ trayId: feed.trayId, feed: { name } }))
-      }
-    >
-      randomise name
-    </InputButton>
-  )
+  const onSuccess = () => {
+    dispatch(feedUpdated({ trayId: feed.trayId, feed: { name, serverType } }))
+    return { navigateTo: RoutePaths.tracking }
+  }
 
   return (
     <Page title="Update details" icon={<FeedLogo feed={feed} />}>
-      <section className={styles.section}>
-        <Summary values={connectionDetails} />
-        <LinkButton className={styles.link} to="connection" icon={<Cog />}>
-          Update connection
-        </LinkButton>
-      </section>
-      <section className={styles.section}>
-        <Input
-          classNameContainer={styles.feedSettingsName}
-          value={name}
-          onChange={({ target }) => setName(target.value)}
-          onBlur={() =>
-            dispatch(feedUpdated({ trayId: feed.trayId, feed: { name } }))
-          }
-          placeholder="e.g. project or team name"
-          button={randomNameButton}
-        >
-          Name
-        </Input>
-        <DropDown
-          className={styles.serverType}
-          options={serverTypeOptions}
-          value={feed.serverType}
-          onChange={({ target }) =>
-            dispatch(
-              feedUpdated({
-                trayId: feed.trayId,
-                feed: { serverType: target.value as ServerTypes },
-              }),
-            )
-          }
-        >
-          Server type
-        </DropDown>
-      </section>
-      <section className={styles.section}>
-        <ManageFeedProjectsLink feedId={feed.trayId} title={feed.name} />
-      </section>
+      <Form
+        onValidate={() => {}}
+        onSuccess={onSuccess}
+        onCancel={RoutePaths.tracking}
+      >
+        {() => {
+          return (
+            <>
+              <Input
+                classNameContainer={styles.feedSettingsName}
+                value={name}
+                onChange={({ target }) => setName(target.value)}
+                placeholder="e.g. project or team name"
+                button={
+                  <InputButton
+                    icon={<Dice />}
+                    onClick={() => setName(generateRandomName())}
+                  >
+                    randomise name
+                  </InputButton>
+                }
+              >
+                Name
+              </Input>
+              <DropDown
+                className={styles.serverType}
+                options={serverTypeOptions}
+                value={serverType}
+                onChange={({ target }) =>
+                  setServerType(target.value as ServerTypes)
+                }
+              >
+                Server type
+              </DropDown>
+            </>
+          )
+        }}
+      </Form>
     </Page>
   )
 }

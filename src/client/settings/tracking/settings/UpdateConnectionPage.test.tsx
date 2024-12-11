@@ -58,7 +58,7 @@ it.each([
       expect.any(AbortSignal),
     )
 
-    await user.click(screen.getByRole('button', { name: 'Save' }))
+    await user.click(screen.getByRole('button', { name: 'Save changes' }))
 
     await waitForLocationToChange()
     expect(getFeed('trayId')(store.getState())).toEqual(
@@ -67,9 +67,7 @@ it.each([
         ...feedExpected[authType],
       }),
     )
-    expect(window.location.pathname).toEqual(
-      '/settings/tracking/trayId/details',
-    )
+    expect(window.location.pathname).toEqual('/settings/tracking')
   },
 )
 
@@ -89,7 +87,7 @@ describe('validation errors', () => {
     })
 
     await user.clear(screen.getByLabelText('URL'))
-    await user.click(screen.getByRole('button', { name: 'Save' }))
+    await user.click(screen.getByRole('button', { name: 'Save changes' }))
 
     expect(
       screen.getByText('Enter a URL to the CCTray XML feed'),
@@ -112,7 +110,7 @@ describe('validation errors', () => {
 
     await user.clear(screen.getByLabelText('URL'))
     await user.type(screen.getByLabelText('URL'), 'file://some-file')
-    await user.click(screen.getByRole('button', { name: 'Save' }))
+    await user.click(screen.getByRole('button', { name: 'Save changes' }))
 
     expect(
       screen.getByText('Only http(s) URLs are supported'),
@@ -141,7 +139,7 @@ describe('validation errors', () => {
 
     await user.clear(screen.getByLabelText('URL'))
     await user.type(screen.getByLabelText('URL'), 'http://other')
-    await user.click(screen.getByRole('button', { name: 'Save' }))
+    await user.click(screen.getByRole('button', { name: 'Save changes' }))
 
     expect(
       screen.getByText('An existing CCTray XML feed already has this URL'),

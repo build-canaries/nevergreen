@@ -1,10 +1,6 @@
 @use '../../../common/layout';
 @use '../../../common/responsive';
 
-.section {
-  margin-top: layout.$spacing-height;
-}
-
 .feedSettingsName,
 .serverType {
   @include layout.fixed-width(26em);

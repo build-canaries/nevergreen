@@ -14,6 +14,7 @@ const keywords = [
   'audio',
   'play audio notifications',
   'prognosis',
+  'interesting projects',
 ]
 
 export function PrognosisEditPageHelp({
@@ -33,8 +34,8 @@ export function PrognosisEditPageHelp({
           the Monitor page.
         </HelpInput>
         <p>
-          The following options are only available if Show on Monitor page is{' '}
-          <em>enabled</em>.
+          The following options are only available if &quot;Show on Monitor
+          page&quot; is <em>enabled</em>.
         </p>
         <HelpInput name="Show system notification">
           When <em>enabled</em> a system (aka desktop) notifications will be

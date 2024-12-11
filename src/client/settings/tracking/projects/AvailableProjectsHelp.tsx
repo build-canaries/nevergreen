@@ -56,7 +56,7 @@ export function AvailableProjectsHelp({
         </HelpInput>
         <HelpInput name="Search">
           Searches for any projects with matching names. Clear the input to show
-          all projects again. The include all and exclude all buttons work on
+          all projects again. The Include all and Exclude all buttons work on
           the currently visible projects, so searching can be used to quickly
           include or exclude a group of projects.
         </HelpInput>

@@ -1,31 +1,30 @@
 import type { Feed } from '../FeedsReducer'
-import type { ReactElement } from 'react'
+import { Dispatch, ReactElement, SetStateAction } from 'react'
 import { useMemo, useState } from 'react'
 import { ErrorMessages, WarningMessages } from '../../../common/Messages'
 import { Input } from '../../../common/forms/Input'
 import { Refresh } from './Refresh'
 import { errorMessage, isBlank, notEmpty } from '../../../common/Utils'
 import { SecondaryButton } from '../../../common/forms/Button'
-import { getSelectedProjectsForFeed, projectSelected } from '../SelectedReducer'
 import { Loading } from '../../../common/Loading'
 import { matchSorter } from 'match-sorter'
 import { CheckboxChecked } from '../../../common/icons/CheckboxChecked'
 import { CheckboxUnchecked } from '../../../common/icons/CheckboxUnchecked'
 import { useProjects } from './ProjectsHook'
 import { Checkbox } from '../../../common/forms/Checkbox'
-import { useAppDispatch, useAppSelector } from '../../../configuration/Hooks'
 import styles from './available-projects.scss'
 
 interface AvailableProjectsProps {
   readonly feed: Feed
+  readonly selected: ReadonlyArray<string>
+  readonly setSelected: Dispatch<SetStateAction<ReadonlyArray<string>>>
 }
 
 export function AvailableProjects({
   feed,
+  selected,
+  setSelected,
 }: AvailableProjectsProps): ReactElement {
-  const dispatch = useAppDispatch()
-  const selected = useAppSelector(getSelectedProjectsForFeed(feed.trayId))
-
   const [search, setSearch] = useState<string>('')
 
   const {
@@ -48,23 +47,14 @@ export function AvailableProjects({
   const controlsDisabled = isFetching || !hasProjects || isError
 
   const includeAll = () => {
-    dispatch(
-      projectSelected({
-        trayId: feed.trayId,
-        projectIds: filteredProjects.map((project) => project.projectId),
-        selected: true,
-      }),
+    setSelected((s) =>
+      s.concat(filteredProjects.map((project) => project.projectId)),
     )
   }
 
   const excludeAll = () => {
-    dispatch(
-      projectSelected({
-        trayId: feed.trayId,
-        projectIds: filteredProjects.map((project) => project.projectId),
-        selected: false,
-      }),
-    )
+    const excludeIds = filteredProjects.map((project) => project.projectId)
+    setSelected((s) => s.filter((id) => !excludeIds.includes(id)))
   }
 
   const controls = (
@@ -111,15 +101,13 @@ export function AvailableProjects({
             <Checkbox
               className={styles.projectCheckbox}
               checked={isSelected}
-              onToggle={(selected) =>
-                dispatch(
-                  projectSelected({
-                    trayId: feed.trayId,
-                    projectIds: [project.projectId],
-                    selected,
-                  }),
-                )
-              }
+              onToggle={(val) => {
+                if (val) {
+                  setSelected((s) => s.concat(project.projectId))
+                } else {
+                  setSelected((s) => s.filter((id) => id !== project.projectId))
+                }
+              }}
             >
               {project.description}
             </Checkbox>

@@ -68,7 +68,7 @@ export function ConnectionForm({
     existingFeed?.authType === AuthTypes.queryParam
       ? (existingFeed?.username ?? '')
       : ''
-  const submitButtonText = existingFeed ? 'Save' : 'Add feed'
+  const submitButtonText = existingFeed ? 'Save changes' : 'Add feed'
 
   const [url, setUrl] = useState(existingFeed?.url ?? '')
   const [authType, setAuthType] = useState<UpdateExistingAuthTypes>(initialAuth)

@@ -14,6 +14,7 @@ const keywords = [
   'healthy',
   'healthy building',
   'unknown',
+  'interesting projects',
 ]
 
 export function PrognosisSettingsHelp({

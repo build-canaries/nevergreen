@@ -31,7 +31,7 @@ export enum RoutePaths {
   tracking = '/settings/tracking',
   trackingAdd = '/settings/tracking/add',
   trackingDetails = '/settings/tracking/:id/details',
-  trackingDetailsConnection = '/settings/tracking/:id/details/connection',
+  trackingConnection = '/settings/tracking/:id/connection',
   trackingProjects = '/settings/tracking/:id/projects',
 }
 
@@ -66,7 +66,7 @@ export function appRoutes(): Router {
                     import('./settings/tracking/settings/UpdateDetailsPage'),
                 },
                 {
-                  path: 'details/connection',
+                  path: 'connection',
                   lazy: () =>
                     import('./settings/tracking/settings/UpdateConnectionPage'),
                 },

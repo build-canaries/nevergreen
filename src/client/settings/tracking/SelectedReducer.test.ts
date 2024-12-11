@@ -31,7 +31,7 @@ describe(configurationImported.toString(), () => {
     const existingState = state({ oldId: ['foo'] })
     const action = configurationImported({ selected: { trayId: ['bar'] } })
     const newState = reducer(existingState, action)
-    expect(getSelectedProjectsForFeed('oldId')(newState)).toBeUndefined()
+    expect(getSelectedProjectsForFeed('oldId')(newState)).toEqual([])
     expect(getSelectedProjectsForFeed('trayId')(newState)).toEqual(['bar'])
   })
 
@@ -61,7 +61,7 @@ describe(feedUpdated.toString(), () => {
       feed: { trackingMode: TrackingMode.everything },
     })
     const newState = reducer(existingState, action)
-    expect(getSelectedProjectsForFeed('trayId')(newState)).toBeUndefined()
+    expect(getSelectedProjectsForFeed('trayId')(newState)).toEqual([])
   })
 
   it('should not remove the feed id if tracking mode was not part of the update', () => {
@@ -80,35 +80,18 @@ describe(feedRemoved.toString(), () => {
     const existingState = state({ trayId: [] })
     const action = feedRemoved('trayId')
     const newState = reducer(existingState, action)
-    expect(getSelectedProjectsForFeed('trayId')(newState)).toBeUndefined()
+    expect(getSelectedProjectsForFeed('trayId')(newState)).toEqual([])
   })
 })
 
 describe(projectSelected.toString(), () => {
-  it('should add the project if selected', () => {
+  it('should set the selected project', () => {
     const existingState = state({ trayId: ['a', 'b', 'c'] })
     const action = projectSelected({
       trayId: 'trayId',
       projectIds: ['d'],
-      selected: true,
     })
     const newState = reducer(existingState, action)
-    expect(getSelectedProjectsForFeed('trayId')(newState)).toEqual([
-      'a',
-      'b',
-      'c',
-      'd',
-    ])
-  })
-
-  it('should remove the project if not selected', () => {
-    const existingState = state({ trayId: ['a', 'b', 'c'] })
-    const action = projectSelected({
-      trayId: 'trayId',
-      projectIds: ['b'],
-      selected: false,
-    })
-    const newState = reducer(existingState, action)
-    expect(getSelectedProjectsForFeed('trayId')(newState)).toEqual(['a', 'c'])
+    expect(getSelectedProjectsForFeed('trayId')(newState)).toEqual(['d'])
   })
 })

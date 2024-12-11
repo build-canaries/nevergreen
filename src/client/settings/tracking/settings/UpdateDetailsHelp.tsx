@@ -4,7 +4,6 @@ import { HelpArticle } from '../../../help/HelpArticle'
 import { HelpForm, HelpInput } from '../../../help/HelpForms'
 import { RoutePaths } from '../../../AppRoutes'
 import { Dice } from '../../../common/icons/Dice'
-import { Cog } from '../../../common/icons/Cog'
 
 const keywords = [
   'tracking',
@@ -23,16 +22,13 @@ export function UpdateDetailsHelp({ searchQuery }: HelpProps): ReactElement {
       page={RoutePaths.trackingDetails}
     >
       <HelpForm>
-        <HelpInput name="Update connection" icon={<Cog />}>
-          Allows updating of the connection URL and/or authentication.
-        </HelpInput>
         <HelpInput name="Name">
           A friendly name of the CCTray XML feed used in various places instead
           of the URL. A random name is generated when a feed is added, this can
           be removed if a name is not desired.
         </HelpInput>
         <HelpInput name="Randomise name" icon={<Dice />}>
-          Generates and sets a new random name.
+          Generates a new random name.
         </HelpInput>
         <HelpInput name="Server type">
           The server type can be set to enable some server specific parsing.

@@ -29,7 +29,7 @@ describe('Monitoring', () => {
       .should('contain', 'success building project')
       .should('contain', 'success sleeping project')
 
-    cy.findByRole('link', { name: 'Tracking' }).click()
+    cy.findByRole('button', { name: 'Save changes' }).click()
 
     cy.findByRole('link', { name: 'Monitor' }).click()
 
@@ -54,12 +54,14 @@ describe('Monitoring', () => {
     cy.findByLabelText('Name').clear().type('renamed feed')
     cy.findByLabelText('Server type').select('circle')
 
+    cy.findByRole('button', { name: 'Save changes' }).click()
+
     if (Cypress.env('TRAY_URL_TOKEN')) {
-      cy.findByRole('link', { name: 'Update connection' }).click()
+      cy.findByRole('link', { name: /Update connection/ }).click()
       cy.findByLabelText('URL').clear().type(Cypress.env('TRAY_URL_TOKEN'))
       cy.findByLabelText('Authentication').select('Access token')
       cy.findByLabelText('Token').type(Cypress.env('TRAY_TOKEN'))
-      cy.findByRole('button', { name: 'Save' }).click()
+      cy.findByRole('button', { name: 'Save changes' }).click()
     }
 
     cy.findByRole('link', { name: 'Tracking' }).click()
