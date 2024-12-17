@@ -24,6 +24,7 @@ import { Display } from '../../common/icons/Display'
 import { RoutePaths } from '../../AppRoutes'
 import { useAppDispatch, useAppSelector } from '../../configuration/Hooks'
 import styles from './display-settings-page.scss'
+import { Link } from 'react-router-dom'
 
 const projectsToShowOptions = [
   { value: MaxProjectsToShow.small, display: 'Small' },
@@ -99,6 +100,10 @@ export function DisplaySettingsPage(): ReactElement {
       >
         <span className={styles.dropDownLabel}>Sort projects by</span>
       </DropDown>
+      <p>
+        Configure colours on the{' '}
+        <Link to={RoutePaths.prognosis}>Prognosis settings page</Link>.
+      </p>
     </Page>
   )
 }
