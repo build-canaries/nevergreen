@@ -39,11 +39,12 @@ export function PrognosisEditPageHelp({
         </p>
         <HelpInput name="Show system notification">
           When <em>enabled</em> a system (aka desktop) notifications will be
-          shown.
+          shown when a project first transitions to this prognosis.
         </HelpInput>
-        <HelpInput name="Play audio">
-          When set to a audio URL it will be played. It is recommended to use
-          short sound effects for notifications.
+        <HelpInput name="Play audio notification">
+          When set to a audio URL it will be played when a project first
+          transitions to this prognosis. It is recommended to use short sound
+          effects for notifications.
         </HelpInput>
         <HelpInput name="Play" icon={<Play />}>
           Plays the inputted audio file URL. Displays an error message if the
@@ -55,16 +56,16 @@ export function PrognosisEditPageHelp({
           Stops the playing audio.
         </HelpInput>
         <HelpInput name="Background colour">
-          Changes the background colour.
+          Changes the background colour displayed on the Monitor page.
         </HelpInput>
         <HelpInput name="Text colour">
-          Changes the text/foreground colour.
+          Changes the text/foreground colour displayed on the Monitor page.
         </HelpInput>
       </HelpForm>
       <p>
-        A visual preview of the currently selected colours is shown under the
-        form. The preview shows the lightness contrast (L<sup>c</sup>) which is
-        calculated using the{' '}
+        A visual preview of the currently selected colours is shown. The preview
+        shows the lightness contrast (L<sup>c</sup>) which is calculated using
+        the{' '}
         <ExternalLink href="https://git.apcacontrast.com/documentation/WhyAPCA">
           Accessible Perceptual Contrast Algorithm
         </ExternalLink>
@@ -76,7 +77,7 @@ export function PrognosisEditPageHelp({
         To actually show or play notifications they need to be allowed{' '}
         {helpLink('allow')}. Notifications can still be set even if neither are
         allowed. This allows system and/or audio notifications to be temporarily
-        stopped without needing to update projects.
+        stopped without needing to update each prognosis.
       </p>
     </HelpArticle>
   )
