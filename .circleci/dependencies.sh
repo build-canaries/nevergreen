@@ -4,4 +4,4 @@ echo "downloading ui dependencies"
 npm ci
 
 echo "downloading server dependencies"
-./lein.sh deps
+npm run install:server

@@ -28,10 +28,10 @@ jobs:
         with:
           lein: 2.11.2
 
-      - name: Clojure - dependencies
+      - name: Server - dependencies
         run: lein deps
 
-      - name: Clojure - tests
+      - name: Server - tests
         run: |
           lein coverage
           lein lint
@@ -41,21 +41,21 @@ jobs:
         with:
           node-version: 23.0.0
 
-      - name: node - dependencies
+      - name: Client - dependencies
         run: npm ci
 
-      - name: node - tests
+      - name: Client - tests
         run: |
           npm run check-types
           npm run test:coverage
-          npm run lint
+          npm run lint:client
 
       - name: Package
         run: |
-          npm run build:prod
+          npm run build:client
           lein uberjar
 
-      - name: Run Cypress
+      - name: Journey tests
         uses: cypress-io/github-action@v6
         env:
           CYPRESS_BASE_URL: 'http://localhost:5000'

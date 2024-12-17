@@ -1,14 +1,10 @@
 #!/bin/bash -eu
 
-echo "cleaning client build folders"
-npm run clean
+echo "cleaning build folders"
+npm run clean:all
 
-echo "building ui"
+echo "type checking"
 npm run check-types
-npm run build:prod
 
-echo "cleaning server build folders"
-./lein.sh clean
-
-echo "building the server jar"
-./lein.sh uberjar
+echo "building"
+npm run build:all

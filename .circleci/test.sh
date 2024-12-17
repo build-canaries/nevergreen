@@ -2,8 +2,7 @@
 
 echo "running linting"
 npm run prettier:check
-npm run lint
-./lein.sh lint
+npm run lint:all
 
 echo "running unit tests"
 mkdir -p ./target/test-reports/client
