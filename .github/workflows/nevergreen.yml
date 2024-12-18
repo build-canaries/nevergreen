@@ -52,7 +52,7 @@ jobs:
 
       - name: Package
         run: |
-          npm run build:client
+          npm run build
           lein uberjar
 
       - name: Journey tests

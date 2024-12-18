@@ -49,7 +49,7 @@ print_step 'Running the CI test script'
 
 print_step 'Starting the server'
 npm run start:mock &
-npm run start:server &
+java -jar ./target/nevergreen-standalone.jar &
 
 export HOST="http://localhost:5000"
 FULL_VERSION="$(cat "./resources/version.txt")+$(cat "./resources/version_meta.txt")"

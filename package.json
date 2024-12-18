@@ -14,9 +14,7 @@
     "url": "https://github.com/build-canaries/nevergreen/issues"
   },
   "scripts": {
-    "build:all": "concurrently -g -c auto -n server,client -p name npm:build:server npm:build:client",
-    "build:client": "webpack --config config/webpack.prod.config.js",
-    "build:server": "./lein.sh uberjar",
+    "build": "webpack --config config/webpack.prod.config.js",
     "check-types": "tsc",
     "check-updates": "npx npm-check-updates --reject \"screenfull\"",
     "check-updates:all": "concurrently -g -c auto -n server,client -p name npm:check-updates:server npm:check-updates",

@@ -7,4 +7,5 @@ echo "type checking"
 npm run check-types
 
 echo "building"
-npm run build:all
+npm run build
+./lein.sh uberjar
