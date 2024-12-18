@@ -26,7 +26,7 @@ const spaces = / /g
 const nonBreakingSpace = String.fromCharCode(160)
 
 function isSentenceLike(message: string): boolean {
-  const numberOfLetters = (message.match(/[A-Za-z]/g) || []).length
+  const numberOfLetters = message.match(/[A-Za-z]/g)?.length ?? 0
   return numberOfLetters / message.length > 0.3
 }
 

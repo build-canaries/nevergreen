@@ -133,7 +133,7 @@ export function ConnectionForm({
       case AuthTypes.queryParam:
         return queryKey
       case KeepExistingAuth.keep:
-        return existingFeed?.username || ''
+        return existingFeed?.username ?? ''
       default:
         return ''
     }
@@ -150,7 +150,7 @@ export function ConnectionForm({
       case AuthTypes.queryParam:
         return encrypt(queryValue, signal)
       case KeepExistingAuth.keep:
-        return existingFeed?.encryptedAuth || ''
+        return existingFeed?.encryptedAuth ?? ''
       default:
         return ''
     }

@@ -7,7 +7,7 @@ import { useAppSelector } from '../../configuration/Hooks'
 
 export function FeedPage(): ReactElement {
   const { id } = useParams()
-  const feed = useAppSelector(getFeed(id || ''))
+  const feed = useAppSelector(getFeed(id ?? ''))
 
   if (feed) {
     return <Outlet context={feed} />

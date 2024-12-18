@@ -40,7 +40,7 @@ export function HelpArticle({
   searchQuery,
   page,
 }: HelpArticleProps): ReactElement | null {
-  const match = useMatch(page || '')
+  const match = useMatch(page ?? '')
   const routeMatches = !isNil(match)
   const [show, setShow] = useState(routeMatches)
   const [matches, setMatches] = useState<ReadonlyArray<string>>([])

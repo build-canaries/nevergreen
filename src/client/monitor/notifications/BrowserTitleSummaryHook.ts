@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react'
 import { useUpdateBrowserTitle } from '../../common/BrowserTitleHook'
 import { FeedErrors } from '../../domain/FeedError'
 import { prognosisIconsSvg } from '../../common/icons/prognosis/IconPrognosis'
+import { isBlank } from '../../common/Utils'
 
 interface Interesting {
   readonly prognosis: Prognosis
@@ -49,8 +50,9 @@ export function useBrowserTitleSummary(
       .filter(hasProjects)
 
     const summaries = activePrognosis.map(summary)
+    const title = summaries.join(', ')
 
-    setTitle(summaries.join(', ') || defaultTitle)
+    setTitle(isBlank(title) ? defaultTitle : title)
 
     const highestPriority = activePrognosis.at(0)
     if (highestPriority) {

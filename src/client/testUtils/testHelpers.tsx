@@ -69,7 +69,7 @@ export function render(
 ): ExtendedRenderResult {
   const appElement =
     // eslint-disable-next-line testing-library/no-node-access
-    document.querySelector('#root') || document.createElement('div')
+    document.querySelector('#root') ?? document.createElement('div')
   appElement.setAttribute('id', 'root')
 
   const mergedOptions = {

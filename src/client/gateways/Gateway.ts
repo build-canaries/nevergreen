@@ -40,7 +40,7 @@ async function send<T>(request: Request<T>, signal?: AbortSignal): Promise<T> {
   signal?.addEventListener('abort', () => void request.abort())
   try {
     const res = await request
-    return (res.body || res.text) as T
+    return (res.body ?? res.text) as T
   } catch (e) {
     const url = _get<unknown, string, string>(e, 'url', 'unknown')
 
