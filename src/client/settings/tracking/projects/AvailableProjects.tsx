@@ -1,6 +1,16 @@
 import type { Feed } from '../FeedsReducer'
-import { Dispatch, ReactElement, SetStateAction } from 'react'
-import { useMemo, useState } from 'react'
+import type { Projects } from '../../../domain/Project'
+import {
+  Dispatch,
+  ReactElement,
+  SetStateAction,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
+import union from 'lodash/union'
+import difference from 'lodash/difference'
+import intersection from 'lodash/intersection'
 import { ErrorMessages, WarningMessages } from '../../../common/Messages'
 import { Input } from '../../../common/forms/Input'
 import { Refresh } from './Refresh'
@@ -20,6 +30,10 @@ interface AvailableProjectsProps {
   readonly setSelected: Dispatch<SetStateAction<ReadonlyArray<string>>>
 }
 
+function toProjectIds(projects: Projects): ReadonlyArray<string> {
+  return projects.map((project) => project.projectId)
+}
+
 export function AvailableProjects({
   feed,
   selected,
@@ -35,27 +49,23 @@ export function AvailableProjects({
     data: projects,
   } = useProjects(feed)
 
+  useEffect(() => {
+    if (projects) {
+      setSelected((s) => intersection(s, toProjectIds(projects)))
+    }
+  }, [projects, setSelected])
+
   const filteredProjects = useMemo(() => {
     if (!isBlank(search) && projects) {
       return matchSorter(projects, search, { keys: ['description'] })
     }
-    return projects || []
+    return projects ?? []
   }, [projects, search])
 
   const hasProjects = notEmpty(projects)
   const hasProjectsFiltered = notEmpty(filteredProjects)
-  const controlsDisabled = isFetching || !hasProjects || isError
-
-  const includeAll = () => {
-    setSelected((s) =>
-      s.concat(filteredProjects.map((project) => project.projectId)),
-    )
-  }
-
-  const excludeAll = () => {
-    const excludeIds = filteredProjects.map((project) => project.projectId)
-    setSelected((s) => s.filter((id) => !excludeIds.includes(id)))
-  }
+  const searchDisabled = isFetching || !hasProjects || isError
+  const includeExcludeDisabled = searchDisabled || !hasProjectsFiltered
 
   const controls = (
     <div className={styles.controls}>
@@ -63,17 +73,21 @@ export function AvailableProjects({
         <legend className={styles.legend}>Available projects</legend>
         <SecondaryButton
           className={styles.includeAll}
-          onClick={includeAll}
+          onClick={() => {
+            setSelected((s) => union(s, toProjectIds(filteredProjects)))
+          }}
           icon={<CheckboxChecked />}
-          disabled={controlsDisabled}
+          disabled={includeExcludeDisabled}
         >
           Include all
         </SecondaryButton>
         <SecondaryButton
           className={styles.excludeAll}
-          onClick={excludeAll}
+          onClick={() => {
+            setSelected((s) => difference(s, toProjectIds(filteredProjects)))
+          }}
           icon={<CheckboxUnchecked />}
-          disabled={controlsDisabled}
+          disabled={includeExcludeDisabled}
         >
           Exclude all
         </SecondaryButton>
@@ -84,7 +98,7 @@ export function AvailableProjects({
               setSearch(target.value)
             }}
             type="search"
-            disabled={controlsDisabled}
+            disabled={searchDisabled}
           >
             <span className={styles.search}>Search</span>
           </Input>
@@ -94,37 +108,36 @@ export function AvailableProjects({
   )
 
   const buildItems = (
-    <ol className={styles.buildItems} data-locator="available-projects-list">
-      {filteredProjects.map((project) => {
-        const isSelected = selected.includes(project.projectId)
+    <>
+      <ol className={styles.buildItems} data-locator="available-projects-list">
+        {filteredProjects.map((project) => {
+          const isSelected = selected.includes(project.projectId)
 
-        return (
-          <li key={project.projectId}>
-            <Checkbox
-              className={styles.projectCheckbox}
-              checked={isSelected}
-              onToggle={(val) => {
-                if (val) {
-                  setSelected((s) => s.concat(project.projectId))
-                } else {
-                  setSelected((s) => s.filter((id) => id !== project.projectId))
-                }
-              }}
-            >
-              {project.description}
-            </Checkbox>
-          </li>
-        )
-      })}
-    </ol>
-  )
-
-  const noProjectsWarning = (
-    <WarningMessages messages="No projects fetched, please refresh" />
-  )
-
-  const noProjectsMatchSearchWarning = (
-    <WarningMessages messages="No matching projects, please update your search" />
+          return (
+            <li key={project.projectId}>
+              <Checkbox
+                className={styles.projectCheckbox}
+                checked={isSelected}
+                onToggle={(val) => {
+                  if (val) {
+                    setSelected((s) => union(s, [project.projectId]))
+                  } else {
+                    setSelected((s) => difference(s, [project.projectId]))
+                  }
+                }}
+              >
+                {project.description}
+              </Checkbox>
+            </li>
+          )
+        })}
+      </ol>
+      <div className={styles.projectCount}>
+        Showing {filteredProjects.length.toString()} of{' '}
+        {projects?.length.toString() ?? '0'} projects (
+        {selected.length.toString()} selected)
+      </div>
+    </>
   )
 
   return (
@@ -136,11 +149,12 @@ export function AvailableProjects({
         className={styles.loading}
         title="Projects"
       >
-        {!isError && !hasProjects && noProjectsWarning}
-        {!isError &&
-          hasProjects &&
-          !hasProjectsFiltered &&
-          noProjectsMatchSearchWarning}
+        {!isError && !hasProjects && (
+          <WarningMessages messages="No projects fetched, try refreshing" />
+        )}
+        {!isError && hasProjects && !hasProjectsFiltered && (
+          <WarningMessages messages="No matching projects, update your search" />
+        )}
         {!isError && hasProjectsFiltered && buildItems}
         {isError && <ErrorMessages messages={errorMessage(error)} />}
       </Loading>

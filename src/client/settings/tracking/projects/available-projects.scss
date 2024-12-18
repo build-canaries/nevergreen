@@ -2,6 +2,7 @@
 @use '../../../common/responsive';
 @use '../../../common/accessibility';
 @use '../../../common/layout';
+@use '../../../common/typography';
 
 %projects-container {
   margin: 1em 0 0;
@@ -88,6 +89,12 @@
   @include responsive.respond-to(tablet, desktop) {
     margin: 0 layout.$spacing-width 0 0;
   }
+}
+
+.projectCount {
+  color: colours.$mid-grey;
+
+  @include typography.font-scale(-1);
 }
 
 .backToTop {
