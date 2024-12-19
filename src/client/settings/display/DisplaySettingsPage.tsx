@@ -90,7 +90,7 @@ export function DisplaySettingsPage(): ReactElement {
           dispatch(setMaxProjectsToShow(target.value as MaxProjectsToShow))
         }
       >
-        <span className={styles.dropDownLabel}>Amount of project to show</span>
+        Amount of projects to show
       </DropDown>
       <DropDown
         className={styles.dropDown}
@@ -98,7 +98,7 @@ export function DisplaySettingsPage(): ReactElement {
         value={sort}
         onChange={({ target }) => dispatch(setSort(target.value as SortBy))}
       >
-        <span className={styles.dropDownLabel}>Sort projects by</span>
+        Sort projects by
       </DropDown>
       <p>
         Configure colours on the{' '}

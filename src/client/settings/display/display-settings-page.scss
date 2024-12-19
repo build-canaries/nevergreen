@@ -1,12 +1,4 @@
 @use '../../common/responsive';
-@use '../../common/layout';
-
-.dropDownLabel {
-  @include responsive.respond-to(tablet, desktop) {
-    display: inline-block;
-    width: 12em;
-  }
-}
 
 .dropDown {
   @include responsive.respond-to(tablet, desktop) {

@@ -35,7 +35,7 @@ describe('Settings', () => {
     cy.locate('duration').should('not.exist')
     cy.findByRole('button', { name: /dismiss/i }).click()
 
-    cy.findByLabelText('Amount of project to show').select('Large')
+    cy.findByLabelText('Amount of projects to show').select('Large')
     cy.findByLabelText('Sort projects by').select('prognosis')
   })
 

@@ -1,10 +1,12 @@
 import { render } from '../../testUtils/testHelpers'
 import {
   displaySettingsRoot,
+  getMaxProjectsToShow,
   getShowBuildLabel,
   getShowBuildTime,
   getShowFeedIdentifier,
   getShowPrognosisName,
+  MaxProjectsToShow,
 } from './DisplaySettingsReducer'
 import { screen } from '@testing-library/react'
 import { DisplaySettingsPage } from './DisplaySettingsPage'
@@ -59,4 +61,22 @@ it('should set the show prognosis name setting', async () => {
   await user.click(screen.getByLabelText('Show prognosis name'))
 
   expect(getShowPrognosisName(store.getState())).toBeTruthy()
+})
+
+it('should set the amount of projects to show setting', async () => {
+  const state = {
+    [displaySettingsRoot]: {
+      maxProjectsToShow: MaxProjectsToShow.all,
+    },
+  }
+
+  const { store, user } = render(<DisplaySettingsPage />, { state })
+  await user.selectOptions(
+    screen.getByLabelText('Amount of projects to show'),
+    MaxProjectsToShow.small,
+  )
+
+  expect(getMaxProjectsToShow(store.getState())).toEqual(
+    MaxProjectsToShow.small,
+  )
 })
