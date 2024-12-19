@@ -5,7 +5,7 @@
 
 .overlay {
   align-items: center;
-  background-color: color.adjust(colours.$white, $alpha: -0.25);
+  background-color: color.adjust(colours.$black, $alpha: -0.3);
   display: flex;
   inset: 0;
   justify-content: center;
