@@ -44,8 +44,8 @@ interface Notification {
 export async function sendSystemNotification({
   title = 'Nevergreen',
   body,
-  badge = '/badge-96x96.png',
-  icon = '/android-chrome-192x192.png',
+  badge = '/favicon-96x96.png',
+  icon = '/web-app-manifest-192x192.png',
   tag,
 }: Notification): Promise<void> {
   if (supported() && permissionGranted()) {
