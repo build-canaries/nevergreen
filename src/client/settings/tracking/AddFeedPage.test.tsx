@@ -1,3 +1,4 @@
+import type { UserEvent } from '@testing-library/user-event'
 import { AddFeedPage } from './AddFeedPage'
 import { screen, waitFor } from '@testing-library/react'
 import * as SecurityGateway from '../../gateways/SecurityGateway'
@@ -6,7 +7,6 @@ import { AuthTypes, feedsRoot, getFeeds } from './FeedsReducer'
 import { render, waitForLocationToChange } from '../../testUtils/testHelpers'
 import { buildFeed } from '../../testUtils/builders'
 import * as Utils from '../../common/Utils'
-import { UserEvent } from '@testing-library/user-event/setup/setup'
 
 beforeEach(() => {
   jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValue('')

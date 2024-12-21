@@ -1,11 +1,14 @@
 import { useShortcut } from './common/Keyboard'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import { RoutePaths } from './AppRoutes'
 
-export function useNavigationShortcut(keys: string | string[], route: string) {
+export function useNavigationShortcut(
+  keys: string | string[],
+  route: string,
+): void {
   const navigate = useNavigate()
   useShortcut(keys, () => {
-    navigate(route, { replace: true })
+    void navigate(route, { replace: true })
   }, [route, navigate])
 }
 

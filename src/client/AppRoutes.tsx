@@ -1,5 +1,4 @@
-import type { Router } from '@remix-run/router'
-import { createBrowserRouter, Navigate } from 'react-router-dom'
+import { createBrowserRouter, Navigate } from 'react-router'
 import { Settings } from './settings/Settings'
 import { TrackingPage } from './settings/tracking/TrackingPage'
 import { FeedPage } from './settings/tracking/FeedPage'
@@ -35,7 +34,7 @@ export enum RoutePaths {
   trackingProjects = '/settings/tracking/:id/projects',
 }
 
-export function appRoutes(): Router {
+export function appRoutes() {
   return createBrowserRouter([
     {
       element: <Nevergreen />,

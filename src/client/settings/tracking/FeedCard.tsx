@@ -13,7 +13,7 @@ import { Cog } from '../../common/icons/Cog'
 import { LinkButton } from '../../common/LinkButton'
 import { CheckboxChecked } from '../../common/icons/CheckboxChecked'
 import { VisuallyHidden } from '../../common/VisuallyHidden'
-import { generatePath } from 'react-router-dom'
+import { generatePath } from 'react-router'
 import { RoutePaths } from '../../AppRoutes'
 import { getSelectedProjectsForFeed } from './SelectedReducer'
 

@@ -1,10 +1,10 @@
 import type { RootState } from './configuration/ReduxStore'
 import type { ReactElement } from 'react'
-import type { Router } from '@remix-run/router'
-import type { Store } from '@reduxjs/toolkit'
 import { useEffect } from 'react'
+import type { Store } from '@reduxjs/toolkit'
+import type { createBrowserRouter } from 'react-router'
+import { RouterProvider } from 'react-router'
 import { Provider } from 'react-redux'
-import { RouterProvider } from 'react-router-dom'
 import { UnhandledError } from './UnhandledError'
 import Modal from 'react-modal'
 import { QueryClientProvider } from '@tanstack/react-query'
@@ -13,7 +13,7 @@ import { queryClient } from './queryClient'
 interface AppProps {
   readonly appElement: string
   readonly store: Store<RootState>
-  readonly router: Router
+  readonly router: ReturnType<typeof createBrowserRouter>
 }
 
 export function App({ appElement, store, router }: AppProps): ReactElement {

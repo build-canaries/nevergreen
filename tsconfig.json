@@ -3,7 +3,7 @@
     "target": "esnext",
     "module": "esnext",
     "jsx": "preserve",
-    "moduleResolution": "node",
+    "moduleResolution": "Bundler",
     "allowJs": true,
     "noEmit": true,
     "strict": true,

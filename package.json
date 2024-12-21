@@ -59,7 +59,7 @@
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-modal": "3.16.3",
-    "react-router-dom": "6.27.0",
+    "react-router": "7.1.0",
     "react-transition-group": "4.4.5",
     "regenerator-runtime": "0.14.1",
     "screenfull": "5.2.0",
@@ -111,6 +111,7 @@
     "identity-obj-proxy": "3.0.0",
     "jest": "29.7.0",
     "jest-environment-jsdom": "29.7.0",
+    "jest-fixed-jsdom": "0.0.9",
     "jest-junit": "16.0.0",
     "mini-css-extract-plugin": "2.9.2",
     "postcss": "8.4.49",
@@ -131,7 +132,7 @@
     "url-loader": "4.1.1",
     "webpack": "5.97.1",
     "webpack-bundle-analyzer": "4.10.2",
-    "webpack-cli": "6.0.0",
+    "webpack-cli": "6.0.1",
     "webpack-merge": "6.0.1",
     "workbox-webpack-plugin": "7.3.0"
   },
@@ -209,7 +210,7 @@
     "clearMocks": true,
     "resetMocks": true,
     "restoreMocks": true,
-    "testEnvironment": "<rootDir>/src/client/testUtils/fixJSDOMEnvironment.ts",
+    "testEnvironment": "jest-fixed-jsdom",
     "fakeTimers": {
       "enableGlobally": true
     }

@@ -1,6 +1,6 @@
 import type { ReactElement, ReactNode } from 'react'
 import { useEffect, useState } from 'react'
-import { useMatch } from 'react-router-dom'
+import { useMatch } from 'react-router'
 import { matchSorter } from 'match-sorter'
 import { isBlank } from '../common/Utils'
 import isNil from 'lodash/isNil'

@@ -19,7 +19,7 @@ import { RoutePaths } from '../../AppRoutes'
 import { useAppDispatch } from '../../configuration/Hooks'
 import { addBackupLocation } from './RemoteLocationsActions'
 import styles from './add-backup.scss'
-import { generatePath } from 'react-router-dom'
+import { generatePath } from 'react-router'
 
 type Fields = 'url' | 'accessToken'
 

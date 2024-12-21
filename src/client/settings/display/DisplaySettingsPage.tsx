@@ -24,7 +24,7 @@ import { Display } from '../../common/icons/Display'
 import { RoutePaths } from '../../AppRoutes'
 import { useAppDispatch, useAppSelector } from '../../configuration/Hooks'
 import styles from './display-settings-page.scss'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 
 const projectsToShowOptions = [
   { value: MaxProjectsToShow.small, display: 'Small' },

@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react'
-import { Link, LinkProps } from 'react-router-dom'
+import { Link, LinkProps } from 'react-router'
 import cn from 'classnames'
 import styles from './link-button.scss'
 

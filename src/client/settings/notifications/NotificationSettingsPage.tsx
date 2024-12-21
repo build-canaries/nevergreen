@@ -20,7 +20,7 @@ import testAudio from './test_audio_volume.mp3'
 import { playAudio } from '../../common/AudioPlayer'
 import { Note } from '../../common/icons/Note'
 import styles from './notifications-settings.scss'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { RoutePaths } from '../../AppRoutes'
 
 export function NotificationSettingsPage(): ReactElement {

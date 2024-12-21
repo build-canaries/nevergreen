@@ -5,7 +5,7 @@ import { triggerShortcut } from '../common/Keyboard'
 import { Display } from '../common/icons/Display'
 import { Question } from '../common/icons/Question'
 import { Cog } from '../common/icons/Cog'
-import { NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router'
 import styles from './header.scss'
 
 interface HeaderProps {

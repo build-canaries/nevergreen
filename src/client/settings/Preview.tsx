@@ -9,7 +9,7 @@ import { Loading } from '../common/Loading'
 import { getSort } from './display/DisplaySettingsReducer'
 import { post } from '../gateways/Gateway'
 import { Banner } from '../Banner'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import { useQuery } from '@tanstack/react-query'
 import { RoutePaths } from '../AppRoutes'
 import { createId } from '../common/Utils'
@@ -70,7 +70,7 @@ export function Preview(): ReactElement {
         message="This is a preview showing your current display settings"
         hide={false}
         onDismiss={() => {
-          navigate(RoutePaths.display)
+          void navigate(RoutePaths.display)
         }}
       />
       <div className={styles.projects}>

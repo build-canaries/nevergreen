@@ -1,3 +1,4 @@
+import type { UserEvent } from '@testing-library/user-event'
 import { screen, waitFor } from '@testing-library/react'
 import { render, waitForLocationToChange } from '../../../testUtils/testHelpers'
 import { buildFeed } from '../../../testUtils/builders'
@@ -6,7 +7,6 @@ import * as SecurityGateway from '../../../gateways/SecurityGateway'
 import * as ProjectsGateway from '../../../gateways/ProjectsGateway'
 import { UpdateConnectionPage } from './UpdateConnectionPage'
 import { KeepExistingAuth, UpdateExistingAuthTypes } from '../ConnectionForm'
-import { UserEvent } from '@testing-library/user-event/setup/setup'
 
 beforeEach(() => {
   jest.spyOn(SecurityGateway, 'encrypt').mockResolvedValue('')

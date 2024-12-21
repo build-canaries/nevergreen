@@ -18,7 +18,7 @@ import {
 import { useShortcut } from './common/Keyboard'
 import { useCheckForNewVersion } from './CheckForNewVersionHook'
 import { useNavigationShortcuts } from './NavigationShortcutsHook'
-import { Outlet, useOutletContext } from 'react-router-dom'
+import { Outlet, useOutletContext } from 'react-router'
 import { useAppSelector } from './configuration/Hooks'
 import styles from './nevergreen.scss'
 import { PrimaryButton } from './common/forms/Button'

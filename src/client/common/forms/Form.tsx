@@ -8,7 +8,7 @@ import { PrimaryButton, SecondaryButton } from './Button'
 import { FormErrors } from './Validation'
 import { ErrorMessages, SuccessMessages } from '../Messages'
 import { errorMessage } from '../Utils'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import { LinkButton } from '../LinkButton'
 import { Checkmark } from '../icons/Checkmark'
 import { Cross } from '../icons/Cross'
@@ -68,7 +68,7 @@ export function Form<Fields extends string>({
 
   useEffect(() => {
     if (data?.navigateTo) {
-      navigate(data.navigateTo)
+      void navigate(data.navigateTo)
     }
   }, [data, navigate])
 

@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react'
 import type { Feed } from './FeedsReducer'
 import { getFeed } from './FeedsReducer'
-import { Navigate, Outlet, useOutletContext, useParams } from 'react-router-dom'
+import { Navigate, Outlet, useOutletContext, useParams } from 'react-router'
 import { RoutePaths } from '../../AppRoutes'
 import { useAppSelector } from '../../configuration/Hooks'
 

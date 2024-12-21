@@ -4,7 +4,7 @@ import version from '../../../resources/version.txt'
 import versionMeta from '../../../resources/version_meta.txt'
 import versionName from '../../../resources/version_name.txt'
 import { SubmitAnIssue } from './SubmitAnIssue'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { RoutePaths } from '../AppRoutes'
 import styles from './footer.scss'
 

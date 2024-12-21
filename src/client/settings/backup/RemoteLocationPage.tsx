@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react'
 import type { RemoteLocation } from './RemoteLocationsReducer'
 import { getBackupLocation } from './RemoteLocationsReducer'
-import { Outlet, useOutletContext, useParams } from 'react-router-dom'
+import { Outlet, useOutletContext, useParams } from 'react-router'
 import { Navigate } from 'react-router'
 import { RoutePaths } from '../../AppRoutes'
 import { useAppSelector } from '../../configuration/Hooks'

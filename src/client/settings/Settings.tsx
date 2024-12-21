@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react'
 import cn from 'classnames'
-import { NavLink, Outlet, useNavigation } from 'react-router-dom'
+import { NavLink, Outlet, useNavigation } from 'react-router'
 import { List } from '../common/icons/List'
 import { Display } from '../common/icons/Display'
 import { Bell } from '../common/icons/Bell'
