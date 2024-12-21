@@ -5,7 +5,7 @@
   "private": true,
   "author": "Build Canaries",
   "homepage": "https://nevergreen.io",
-  "license": "EPL-1.0",
+  "license": "EPL-2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/build-canaries/nevergreen.git"

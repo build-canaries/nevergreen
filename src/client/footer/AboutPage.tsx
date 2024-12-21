@@ -29,8 +29,8 @@ export function AboutPage(): ReactElement {
       <h2 className={styles.title}>Licences</h2>
       <p>
         Nevergreen is open source under the{' '}
-        <ExternalLink href="https://spdx.org/licenses/EPL-1.0">
-          Eclipse Public Licence 1.0 (EPL-1.0)
+        <ExternalLink href="https://www.eclipse.org/legal/epl-2.0/">
+          Eclipse Public Licence 2.0 (EPL-2.0)
         </ExternalLink>{' '}
         and uses open source software.
       </p>
