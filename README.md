@@ -50,4 +50,4 @@ You can also help us out by taking this [short usage survey](https://build-canar
 
 Copyright © 2014 - 2024 Build Canaries
 
-Distributed under the Eclipse Public License either version 1.0 or (at your option) any later version.
+Distributed under the Eclipse Public License either version 2.0 or (at your option) any later version.
