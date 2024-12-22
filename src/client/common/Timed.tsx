@@ -1,4 +1,4 @@
-import type { ReactElement } from 'react'
+import { ReactElement, useRef } from 'react'
 import { useEffect, useState } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import styles from './timed.scss'
@@ -20,6 +20,7 @@ export function Timed({
   useEffect(() => {
     setShowing(show)
   }, [show])
+  const nodeRef = useRef()
 
   return (
     <CSSTransition
@@ -29,6 +30,7 @@ export function Timed({
       onExited={onTimeout}
       mountOnEnter
       unmountOnExit
+      nodeRef={nodeRef}
     >
       <div
         className={styles.progress}
