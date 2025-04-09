@@ -48,6 +48,6 @@ You can also help us out by taking this [short usage survey](https://build-canar
 
 ## License
 
-Copyright © 2014 - 2024 Build Canaries
+Copyright © 2014 - 2025 Build Canaries
 
 Distributed under the Eclipse Public License either version 2.0 or (at your option) any later version.
