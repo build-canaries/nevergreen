@@ -14,6 +14,8 @@ import {
 } from '../settings/tracking/FeedsReducer'
 import { RemoteLocationOptions } from '../settings/backup/RemoteLocationOptions'
 import { personalSettingsRoot } from '../settings/PersonalSettingsReducer'
+import { prognosisSettingsRoot } from '../settings/prognosis/PrognosisSettingsReducer'
+import { Prognosis } from '../domain/Project'
 
 describe('toConfiguration', () => {
   describe(feedsRoot, () => {
@@ -133,6 +135,21 @@ describe('toConfiguration', () => {
         },
       }
       expect(() => toConfiguration(data, DataSource.systemImport)).toThrow()
+    })
+  })
+
+  describe(prognosisSettingsRoot, () => {
+    it('allows partial configuration to be imported', () => {
+      const data: Configuration = {
+        [prognosisSettingsRoot]: {
+          [Prognosis.sick]: {
+            systemNotification: true,
+            sfx: 'a',
+          },
+        },
+      }
+      const configuration = toConfiguration(data, DataSource.systemImport)
+      expect(configuration.prognosis?.sick).not.toBeNull()
     })
   })
 

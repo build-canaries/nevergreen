@@ -34,15 +34,14 @@ export const PrognosisSettingsState = z.object({
 })
 
 export type PrognosisSettingsState = z.infer<typeof PrognosisSettingsState>
-export const PrognosisSettingsConfiguration =
-  PrognosisSettingsState.partial().extend({
-    [Prognosis.healthy]: PrognosisState.partial(),
-    [Prognosis.sick]: PrognosisState.partial(),
-    [Prognosis.healthyBuilding]: PrognosisState.partial(),
-    [Prognosis.sickBuilding]: PrognosisState.partial(),
-    [Prognosis.unknown]: PrognosisState.partial(),
-    [Prognosis.error]: PrognosisState.partial(),
-  })
+export const PrognosisSettingsConfiguration = PrognosisSettingsState.extend({
+  [Prognosis.healthy]: PrognosisState.partial(),
+  [Prognosis.sick]: PrognosisState.partial(),
+  [Prognosis.healthyBuilding]: PrognosisState.partial(),
+  [Prognosis.sickBuilding]: PrognosisState.partial(),
+  [Prognosis.unknown]: PrognosisState.partial(),
+  [Prognosis.error]: PrognosisState.partial(),
+}).partial()
 type PrognosisState = z.infer<typeof PrognosisState>
 
 const initialState: PrognosisSettingsState = {
