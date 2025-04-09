@@ -60,7 +60,7 @@ it('should not have a copy to clipboard button if copying is not supported', () 
 })
 
 it('should be able to save a file locally', async () => {
-  jest.spyOn(FileSystem, 'saveFile')
+  jest.spyOn(FileSystem, 'saveFile').mockImplementation()
   const { user } = render(<ExportLocallyPage />)
   await user.click(screen.getByRole('button', { name: 'Save locally...' }))
   expect(FileSystem.saveFile).toHaveBeenCalled()
