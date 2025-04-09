@@ -39,7 +39,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 23.0.0
+          node-version: 23.11.0
 
       - name: Client - dependencies
         run: npm ci
