@@ -29,7 +29,7 @@ it('should only switch the message on a new success state not every refresh', as
 
   rerender(<Success projects={[]} feedErrors={[]} />)
   expect(screen.getByText('foo')).toBeInTheDocument()
-  screen.debug()
+
   rerender(
     <Success
       projects={[buildProject({ prognosis: Prognosis.sick })]}
