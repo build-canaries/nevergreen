@@ -11,7 +11,7 @@ it('should only switch the message on a new success state not every refresh', as
   jest
     .spyOn(Utils, 'randomFrom')
     .mockReturnValueOnce('foo')
-    .mockReturnValueOnce('bar')
+    .mockReturnValue('bar')
   const state = {
     [prognosisSettingsRoot]: {
       [Prognosis.sick]: { show: true },
@@ -22,19 +22,21 @@ it('should only switch the message on a new success state not every refresh', as
   const { rerender } = render(<Success projects={[]} feedErrors={[]} />, {
     state,
   })
-
-  rerender(<Success projects={[]} feedErrors={[]} />)
   expect(screen.getByText('foo')).toBeInTheDocument()
 
   rerender(<Success projects={[]} feedErrors={[]} />)
   expect(screen.getByText('foo')).toBeInTheDocument()
 
+  rerender(<Success projects={[]} feedErrors={[]} />)
+  expect(screen.getByText('foo')).toBeInTheDocument()
+  screen.debug()
   rerender(
     <Success
       projects={[buildProject({ prognosis: Prognosis.sick })]}
       feedErrors={[]}
     />,
   )
+  expect(screen.queryByText('foo')).not.toBeInTheDocument()
 
   rerender(<Success projects={[]} feedErrors={[]} />)
   await waitFor(() => {

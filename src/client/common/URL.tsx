@@ -40,7 +40,10 @@ export function URL({ url, base }: URLProps): ReactElement {
   }
   redactPassword(u)
   redactQueryParams(u)
-  const chars = [...u.href.replace(`${u.protocol}//`, '')]
+  const segmenter = new Intl.Segmenter()
+  const chars = Array.from(
+    segmenter.segment(u.href.replace(`${u.protocol}//`, '')),
+  ).map((segment) => segment.segment)
   return (
     <span className={styles.url}>
       {u.protocol}

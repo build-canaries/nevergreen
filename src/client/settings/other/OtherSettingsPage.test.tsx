@@ -8,8 +8,9 @@ const { location } = window
 
 beforeEach(() => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
+  // @ts-expect-error
   delete window.location
+  // eslint-disable-next-line @typescript-eslint/no-misused-spread
   window.location = { ...location, reload: jest.fn() }
 })
 
