@@ -17,6 +17,8 @@ import { useAppSelector } from '../configuration/Hooks'
 import styles from './preview.scss'
 import { Title } from '../common/Title'
 import { getShowPrognosis } from './prognosis/PrognosisSettingsReducer'
+import { Main } from '../common/Main'
+import { useAutoHideMenus } from '../common/AutoHideMenusHook'
 
 export function Preview(): ReactElement {
   const prognosis = useAppSelector(getShowPrognosis)
@@ -25,6 +27,8 @@ export function Preview(): ReactElement {
 
   const [projects, setProjects] = useState<Projects>([])
   const [feedErrors, setFeedErrors] = useState<FeedErrors>([])
+
+  useAutoHideMenus()
 
   const { isLoading, data, error } = useQuery({
     queryKey: ['preview'],
@@ -64,23 +68,28 @@ export function Preview(): ReactElement {
   }, [error])
 
   return (
-    <div className={styles.preview}>
-      <Title focus={false}>Preview</Title>
-      <Banner
-        message="This is a preview showing your current display settings"
-        hide={false}
-        onDismiss={() => {
-          void navigate(RoutePaths.display)
-        }}
-      />
-      <div className={styles.projects}>
-        <div className={styles.projectsInner}>
-          <Loading isLoading={isLoading} title="Preview" dark focus>
-            <InterestingProjects projects={projects} feedErrors={feedErrors} />
-          </Loading>
+    <Main>
+      <div className={styles.preview}>
+        <Title focus={false}>Preview</Title>
+        <Banner
+          message="This is a preview showing your current display settings"
+          hide={false}
+          onDismiss={() => {
+            void navigate(RoutePaths.display)
+          }}
+        />
+        <div className={styles.projects}>
+          <div className={styles.projectsInner}>
+            <Loading isLoading={isLoading} title="Preview" dark focus>
+              <InterestingProjects
+                projects={projects}
+                feedErrors={feedErrors}
+              />
+            </Loading>
+          </div>
         </div>
       </div>
-    </div>
+    </Main>
   )
 }
 

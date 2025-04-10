@@ -18,10 +18,6 @@
   }
 }
 
-.hide {
-  display: none;
-}
-
 .about {
   @include links.link(
     $color: colours.$white,

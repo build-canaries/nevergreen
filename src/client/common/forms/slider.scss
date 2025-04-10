@@ -75,11 +75,11 @@ $thumb-colour: colours.$blue;
       }
 
       &:focus::-webkit-slider-thumb {
-        @include accessibility.focus;
+        @include accessibility.focus($background-color: $thumb-colour);
       }
 
       &:focus::-moz-range-thumb {
-        @include accessibility.focus;
+        @include accessibility.focus($background-color: $thumb-colour);
       }
 
       &:hover::-webkit-slider-thumb {

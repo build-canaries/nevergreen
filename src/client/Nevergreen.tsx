@@ -1,7 +1,6 @@
 import type { ReactElement } from 'react'
 import { useCallback, useState } from 'react'
 import { Header } from './header/Header'
-import { Footer } from './footer/Footer'
 import { Banner } from './Banner'
 import { useServiceWorker } from './ServiceWorkerHook'
 import { useHideMenus } from './HideMenusHook'
@@ -92,12 +91,9 @@ export function Nevergreen(): ReactElement {
             }}
             hide={menusHidden}
           />
-          <main className={styles.main} role="main">
-            <Outlet
-              context={{ menusHidden, toggleMenusHidden, setBannerMessage }}
-            />
-          </main>
-          <Footer hide={menusHidden} />
+          <Outlet
+            context={{ menusHidden, toggleMenusHidden, setBannerMessage }}
+          />
         </div>
       </FontMetricsContext.Provider>
     </Loading>

@@ -1,0 +1,7 @@
+@use 'colours';
+
+.main {
+  background-color: colours.$black;
+  display: flex;
+  flex-grow: 1;
+}

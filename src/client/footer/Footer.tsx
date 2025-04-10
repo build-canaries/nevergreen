@@ -1,5 +1,4 @@
 import type { ReactElement } from 'react'
-import cn from 'classnames'
 import version from '../../../resources/version.txt'
 import versionMeta from '../../../resources/version_meta.txt'
 import versionName from '../../../resources/version_name.txt'
@@ -8,19 +7,12 @@ import { Link } from 'react-router'
 import { RoutePaths } from '../AppRoutes'
 import styles from './footer.scss'
 
-interface FooterProps {
-  readonly hide: boolean
-}
-
-export function Footer({ hide }: FooterProps): ReactElement {
-  const footerClassNames = cn(styles.siteFooter, {
-    [styles.hide]: hide,
-  })
+export function Footer(): ReactElement {
   const fullVersion = `${version}+${versionMeta}`
   const versionWithName = `v${fullVersion} ${versionName}`
 
   return (
-    <footer className={footerClassNames}>
+    <footer className={styles.siteFooter}>
       <Link
         className={styles.about}
         to={RoutePaths.about}

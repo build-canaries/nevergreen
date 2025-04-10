@@ -10,6 +10,8 @@ import { Cogs } from '../common/icons/Cogs'
 import styles from './settings.scss'
 import { Loading } from '../common/Loading'
 import { AidKit } from '../common/icons/AidKit'
+import { Main } from '../common/Main'
+import { Footer } from '../footer/Footer'
 
 interface MenuItemProps {
   readonly to: string
@@ -37,21 +39,30 @@ export function Settings(): ReactElement {
   const { state } = useNavigation()
 
   return (
-    <div className={styles.settings}>
-      <nav aria-label="Settings" className={styles.nav}>
-        <ul className={styles.menu}>
-          <MenuItem to="tracking" label="Tracking" icon={<List />} />
-          <MenuItem to="success" label="Success" icon={<Image />} />
-          <MenuItem to="display" label="Display" icon={<Display />} />
-          <MenuItem to="notifications" label="Notifications" icon={<Bell />} />
-          <MenuItem to="prognosis" label="Prognosis" icon={<AidKit />} />
-          <MenuItem to="backup" label="Backup" icon={<FloppyDisk />} />
-          <MenuItem to="other" label="Other" icon={<Cogs />} />
-        </ul>
-      </nav>
-      <Loading isLoading={state === 'loading'} title={'Settings'}>
-        <Outlet />
-      </Loading>
-    </div>
+    <>
+      <Main>
+        <div className={styles.settings}>
+          <nav aria-label="Settings" className={styles.nav}>
+            <ul className={styles.menu}>
+              <MenuItem to="tracking" label="Tracking" icon={<List />} />
+              <MenuItem to="success" label="Success" icon={<Image />} />
+              <MenuItem to="display" label="Display" icon={<Display />} />
+              <MenuItem
+                to="notifications"
+                label="Notifications"
+                icon={<Bell />}
+              />
+              <MenuItem to="prognosis" label="Prognosis" icon={<AidKit />} />
+              <MenuItem to="backup" label="Backup" icon={<FloppyDisk />} />
+              <MenuItem to="other" label="Other" icon={<Cogs />} />
+            </ul>
+          </nav>
+          <Loading isLoading={state === 'loading'} title={'Settings'}>
+            <Outlet />
+          </Loading>
+        </div>
+      </Main>
+      <Footer />
+    </>
   )
 }
