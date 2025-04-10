@@ -69,9 +69,11 @@
 }
 
 %menu-item {
+  align-items: center;
   color: colours.$white;
-  display: inline-block;
+  display: flex;
   height: 65px;
+  justify-content: center;
   padding: 1em;
   text-decoration: none;
   width: 100%;
