@@ -17,13 +17,13 @@
 }
 
 .mute {
-  background: color.change(colours.$off-black, $alpha: 0.5);
+  background: color.change(colours.$off-black, $alpha: 0.6);
   border-radius: 1em;
   bottom: 1em;
-  color: color.change(colours.$off-white, $alpha: 0.75);
+  color: color.change(colours.$off-white, $alpha: 0.8);
   font-size: 2em;
   margin: 0;
-  outline: 0.3em solid color.change(colours.$off-black, $alpha: 0.5);
+  outline: 0.3em solid color.change(colours.$off-black, $alpha: 0.6);
   position: absolute;
   right: 1em;
 }
