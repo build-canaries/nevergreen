@@ -6,7 +6,7 @@ interface HideMenusHookResponse {
   readonly showMenus: () => void
 }
 
-const threeSeconds = 3 * 1000
+const fiveSeconds = 5 * 1000
 
 export function useHideMenus(): HideMenusHookResponse {
   const timer = useRef(0)
@@ -23,7 +23,7 @@ export function useHideMenus(): HideMenusHookResponse {
     if (hideMenusRequested) {
       timer.current = window.setTimeout(() => {
         setMenusHidden(true)
-      }, threeSeconds)
+      }, fiveSeconds)
     }
   }, [menusHidden, hideMenusRequested])
 
