@@ -22,6 +22,38 @@
   color: colours.$white;
 }
 
+.toggleMenu {
+  background-color: colours.$off-black;
+  border: none;
+  color: colours.$white;
+  margin: 0 layout.$outline-size;
+  padding: 1em calc(1em - #{layout.$outline-size * 2});
+  text-align: left;
+  width: calc(100% - #{layout.$outline-size * 2});
+
+  @include accessibility.interactive(
+    $color: colours.$white,
+    $background-color: colours.$off-black,
+    $border-color: transparent
+  );
+
+  @include responsive.respond-to(tablet, desktop) {
+    display: none;
+  }
+}
+
+.menuOpen {
+  display: block;
+}
+
+.menuClosed {
+  display: none;
+
+  @include responsive.respond-to(tablet, desktop) {
+    display: block;
+  }
+}
+
 .menu {
   list-style: none;
   margin: 0;

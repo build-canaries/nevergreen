@@ -48,6 +48,8 @@ import { GoCd } from '../common/icons/GoCd'
 import { GitLabLogo } from '../common/icons/GitLabLogo'
 import { GitHubLogo } from '../common/icons/GitHubLogo'
 import { CircleCi } from '../common/icons/CircleCi'
+import { MenuClose } from '../common/icons/MenuClose'
+import { MenuOpen } from '../common/icons/MenuOpen'
 
 export function Icons(): ReactElement {
   return (
@@ -196,6 +198,14 @@ export function Icons(): ReactElement {
         <span>
           <Loop />
           loop
+        </span>
+        <span>
+          <MenuClose />
+          menu close
+        </span>
+        <span>
+          <MenuOpen />
+          menu open
         </span>
         <span>
           <Mute />
