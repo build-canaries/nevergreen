@@ -12,6 +12,8 @@ import { prognosisSettingsRoot } from '../settings/prognosis/PrognosisSettingsRe
 
 const feedId = 'some-tray-id'
 
+const outletContext = { menusHidden: false }
+
 describe('displaying project information', () => {
   it.each<ProjectPrognosis>([
     Prognosis.sick,
@@ -47,7 +49,7 @@ describe('displaying project information', () => {
         feedErrors: [],
       }
 
-      render(<InterestingProjects {...props} />, { state })
+      render(<InterestingProjects {...props} />, { state, outletContext })
 
       expect(screen.getByText('some-feed-name')).toBeInTheDocument()
       expect(screen.getByText('some-project-name')).toBeInTheDocument()
@@ -84,7 +86,7 @@ describe('displaying project information', () => {
       feedErrors: [],
     }
 
-    render(<InterestingProjects {...props} />, { state })
+    render(<InterestingProjects {...props} />, { state, outletContext })
 
     expect(screen.getByText('some-feed-name')).toBeInTheDocument()
     expect(screen.getByText('some-project-name')).toBeInTheDocument()
@@ -121,7 +123,7 @@ describe('displaying project information', () => {
       feedErrors: [],
     }
 
-    render(<InterestingProjects {...props} />, { state })
+    render(<InterestingProjects {...props} />, { state, outletContext })
 
     expect(screen.getByText('some-feed-name')).toBeInTheDocument()
     expect(screen.getByText('some-project-name')).toBeInTheDocument()
@@ -157,7 +159,7 @@ describe('displaying project information', () => {
       feedErrors: [],
     }
 
-    render(<InterestingProjects {...props} />, { state })
+    render(<InterestingProjects {...props} />, { state, outletContext })
 
     expect(screen.queryByText('some-feed-name')).not.toBeInTheDocument()
     expect(screen.getByText('some-project-name')).toBeInTheDocument()
@@ -186,7 +188,7 @@ describe('displaying project information', () => {
       feedErrors: [],
     }
 
-    render(<InterestingProjects {...props} />, { state })
+    render(<InterestingProjects {...props} />, { state, outletContext })
 
     expect(screen.queryByText('some-project-name')).toHaveAttribute(
       'href',
@@ -265,7 +267,7 @@ describe('limiting the projects displayed', () => {
       ],
       feedErrors: [],
     }
-    render(<InterestingProjects {...props} />, { state })
+    render(<InterestingProjects {...props} />, { state, outletContext })
     expect(screen.getByText('+3 not shown')).toBeInTheDocument()
   })
 
@@ -291,7 +293,7 @@ describe('limiting the projects displayed', () => {
         buildFeedError({ trayId: feedId, description: 'error 7' }),
       ],
     }
-    render(<InterestingProjects {...props} />, { state })
+    render(<InterestingProjects {...props} />, { state, outletContext })
     expect(screen.getByText('+2 not shown')).toBeInTheDocument()
     expect(screen.getByText('+2 error')).toBeInTheDocument()
   })
@@ -334,7 +336,7 @@ describe('limiting the projects displayed', () => {
         buildFeedError({ trayId: feedId, description: 'error 4' }),
       ],
     }
-    render(<InterestingProjects {...props} />, { state })
+    render(<InterestingProjects {...props} />, { state, outletContext })
     expect(screen.getByText('+2 not shown')).toBeInTheDocument()
     expect(screen.getByText('+1 sick, +1 healthy building')).toBeInTheDocument()
   })
@@ -369,7 +371,7 @@ it('should filter projects based on prognosis', () => {
     feedErrors: [],
   }
 
-  render(<InterestingProjects {...props} />, { state })
+  render(<InterestingProjects {...props} />, { state, outletContext })
 
   expect(screen.getByText('another-project-name')).toBeInTheDocument()
   expect(screen.queryByText('some-project-name')).not.toBeInTheDocument()

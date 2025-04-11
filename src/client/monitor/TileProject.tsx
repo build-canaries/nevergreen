@@ -19,6 +19,7 @@ import { useAppSelector } from '../configuration/Hooks'
 import styles from './tile-project.scss'
 import { IconPrognosis } from '../common/icons/prognosis/IconPrognosis'
 import { getAllPrognosisSettings } from '../settings/prognosis/PrognosisSettingsReducer'
+import { useNevergreenContext } from '../Nevergreen'
 
 interface TileProjectProps {
   readonly project: Project | FeedError
@@ -37,6 +38,7 @@ export function TileProject({
   project,
   visibleProjects,
 }: TileProjectProps): ReactElement {
+  const { menusHidden } = useNevergreenContext()
   const feeds = useAppSelector(getFeeds)
   const showBuildTime = useAppSelector(getShowBuildTime)
   const showFeedIdentifier = useAppSelector(getShowFeedIdentifier)
@@ -102,9 +104,12 @@ export function TileProject({
         backgroundColor: settings[project.prognosis].backgroundColour,
       }}
     >
-      <ExternalLink href={project.webUrl} className={styles.link}>
-        {project.description}
-      </ExternalLink>
+      {menusHidden && project.description}
+      {!menusHidden && (
+        <ExternalLink href={project.webUrl} className={styles.link}>
+          {project.description}
+        </ExternalLink>
+      )}
     </ScaledTile>
   )
 }

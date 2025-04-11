@@ -33,7 +33,7 @@ beforeEach(() => {
   jest.spyOn(Gateway, 'post').mockResolvedValue({})
 })
 
-it('should hide the header and footer on load and show them on leave', () => {
+it('should hide the header on load and show them on leave', () => {
   const toggleMenusHidden = jest.fn()
   const { unmount } = render(<Monitor />, {
     outletContext: { ...outletContext, toggleMenusHidden },
@@ -120,6 +120,7 @@ it('should show projects', async () => {
       trayId: feedId,
       description: 'some-project-name',
       prognosis: Prognosis.sick,
+      webUrl: 'some-url',
     }),
   ])
   const state = {
@@ -135,7 +136,9 @@ it('should show projects', async () => {
 
   await waitForLoadingToFinish()
 
-  expect(screen.getByText('some-project-name')).toBeInTheDocument()
+  expect(
+    screen.getByRole('link', { name: /^some-project-name/ }),
+  ).toBeInTheDocument()
   expect(Gateway.post).toHaveBeenCalledWith({
     url: '/api/projects',
     data: {
@@ -144,6 +147,35 @@ it('should show projects', async () => {
     },
     signal: expect.any(AbortSignal) as AbortSignal,
   })
+})
+
+it('should show projects without links if the menus are hidden', async () => {
+  jest.spyOn(Gateway, 'post').mockResolvedValueOnce([
+    buildProjectApi({
+      trayId: feedId,
+      description: 'some-project-name',
+      prognosis: Prognosis.sick,
+      webUrl: 'some-url',
+    }),
+  ])
+  const state = {
+    [feedsRoot]: {
+      [feedId]: buildFeed({ trayId: feedId }),
+    },
+    [prognosisSettingsRoot]: {
+      [Prognosis.sick]: { show: true },
+    },
+  }
+
+  render(<Monitor />, {
+    state,
+    outletContext: { ...outletContext, menusHidden: true },
+  })
+
+  await waitForLoadingToFinish()
+
+  expect(screen.getByText('some-project-name')).toBeInTheDocument()
+  expect(screen.queryByRole('link')).not.toBeInTheDocument()
 })
 
 it('should show feed errors', async () => {
