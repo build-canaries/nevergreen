@@ -1,0 +1,22 @@
+@use './common/accessibility';
+@use './common/layout';
+@use './common/responsive';
+
+.skipButton {
+  &:not(:focus) {
+    @include accessibility.visually-hidden;
+  }
+
+  &:enabled:focus {
+    height: 55px;
+    left: layout.$outline-size;
+    margin: 0;
+    position: absolute;
+    top: layout.$outline-size;
+    width: calc(100% - #{layout.$outline-size * 2});
+
+    @include responsive.respond-to(tablet, desktop) {
+      width: auto;
+    }
+  }
+}

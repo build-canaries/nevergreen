@@ -19,8 +19,8 @@ import { useCheckForNewVersion } from './CheckForNewVersionHook'
 import { useNavigationShortcuts } from './NavigationShortcutsHook'
 import { Outlet, useOutletContext } from 'react-router'
 import { useAppSelector } from './configuration/Hooks'
+import { SkipToContent } from './SkipToContent'
 import styles from './nevergreen.scss'
-import { PrimaryButton } from './common/forms/Button'
 
 interface AppState {
   readonly menusHidden: boolean
@@ -75,14 +75,7 @@ export function Nevergreen(): ReactElement {
           onKeyDown={showMenus}
           {...showMenusOn}
         >
-          <PrimaryButton
-            onClick={() => {
-              document.getElementsByTagName('h1').item(0)?.focus()
-            }}
-            className={styles.skipButton}
-          >
-            Skip to content
-          </PrimaryButton>
+          <SkipToContent />
           <Header hide={menusHidden} />
           <Banner
             message={bannerMessage}

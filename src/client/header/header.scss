@@ -1,11 +1,10 @@
-@use 'sass:color';
 @use '../common/colours';
 @use '../common/responsive';
 @use '../common/accessibility';
 @use '../common/layout';
 
 .siteHeader {
-  background-color: color.change(colours.$off-black, $alpha: 0.85);
+  background-color: colours.$off-black;
   color: colours.$white;
   display: block;
   z-index: layout.$header-footer-index;

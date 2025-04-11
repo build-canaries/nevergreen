@@ -5,11 +5,21 @@
 .monitor {
   background-color: colours.$black;
   color: colours.$off-white;
+  display: flex;
   font-family: typography.$monospace-font;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  width: 100vw;
+  min-height: 100%;
+  width: 100%;
+}
+
+.projects {
+  flex: 1;
+  position: relative;
+}
+
+.projectsInner {
+  height: 100%;
+  position: absolute;
+  width: 100%;
 }
 
 .menusHidden {

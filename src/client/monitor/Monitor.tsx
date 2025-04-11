@@ -61,17 +61,24 @@ export function Monitor(): ReactElement {
   return (
     <Main>
       <div className={monitorClassNames} ref={ref}>
-        <Title focus={false}>{title}</Title>
-        {!feedsAdded && (
-          <SuccessMessage message="Add a feed via the tracking page to start monitoring" />
-        )}
-        {feedsAdded && (
-          <Loading dark isLoading={isLoading} title={title} focus>
-            <Success projects={projects} feedErrors={feedErrors} />
-            <InterestingProjects projects={projects} feedErrors={feedErrors} />
-          </Loading>
-        )}
-        {muted && <Mute className={styles.mute} />}
+        <div className={styles.projects}>
+          <div className={styles.projectsInner}>
+            <Title focus={false}>{title}</Title>
+            {!feedsAdded && (
+              <SuccessMessage message="Add a feed via the tracking page to start monitoring" />
+            )}
+            {feedsAdded && (
+              <Loading dark isLoading={isLoading} title={title} focus>
+                <Success projects={projects} feedErrors={feedErrors} />
+                <InterestingProjects
+                  projects={projects}
+                  feedErrors={feedErrors}
+                />
+              </Loading>
+            )}
+            {muted && <Mute className={styles.mute} />}
+          </div>
+        </div>
       </div>
     </Main>
   )
