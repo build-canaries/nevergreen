@@ -14,9 +14,13 @@ import { useNotifications } from './notifications/NotificationsHook'
 import { stopAnyPlayingAudio } from '../common/AudioPlayer'
 import { useAppSelector } from '../configuration/Hooks'
 import { Mute } from '../common/icons/Mute'
-import styles from './monitor.scss'
 import { Main } from '../common/Main'
 import { useAutoHideMenus } from '../common/AutoHideMenusHook'
+import styles from './monitor.scss'
+
+function isButton(element: Element | null): boolean {
+  return element instanceof HTMLButtonElement || element?.role === 'button'
+}
 
 export function Monitor(): ReactElement {
   const menusHidden = useAutoHideMenus()
@@ -42,8 +46,10 @@ export function Monitor(): ReactElement {
     }
   })
   useShortcut('space', () => {
-    stopAnyPlayingAudio()
-    setMuted((m) => !m)
+    if (!isButton(document.activeElement)) {
+      stopAnyPlayingAudio()
+      setMuted((m) => !m)
+    }
   })
 
   const monitorClassNames = cn(styles.monitor, {
