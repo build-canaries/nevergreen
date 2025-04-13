@@ -20,7 +20,7 @@ export function Timed({
   useEffect(() => {
     setShowing(show)
   }, [show])
-  const nodeRef = useRef()
+  const nodeRef = useRef(null)
 
   return (
     <CSSTransition

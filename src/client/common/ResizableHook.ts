@@ -23,7 +23,7 @@ export const useWindowResized = (onResize: () => void): void => {
 }
 
 export const useElementResized = (
-  elementRef: RefObject<Element>,
+  elementRef: RefObject<Element | null>,
   onResize: (size: DOMRectReadOnly) => void,
 ): void => {
   useEffect(() => {

@@ -7,14 +7,15 @@ import * as LocalConfiguration from '../../configuration/LocalRepository'
 const { location } = window
 
 beforeEach(() => {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
+  // @ts-expect-error I don't know how else to test reload
   delete window.location
+  // @ts-expect-error I don't know how else to test reload
   // eslint-disable-next-line @typescript-eslint/no-misused-spread
   window.location = { ...location, reload: jest.fn() }
 })
 
 afterEach(() => {
+  // @ts-expect-error I don't know how else to test reload
   window.location = location
 })
 
