@@ -1,5 +1,5 @@
-import type { Ref } from 'react'
-import { createContext, forwardRef, useImperativeHandle, useRef } from 'react'
+import type { ReactElement, Ref } from 'react'
+import { createContext, useImperativeHandle, useRef } from 'react'
 import styles from './font-metrics.scss'
 
 export interface Measurable {
@@ -14,7 +14,7 @@ export const DEFAULT_FONT_METRICS: Measurable = {
 
 const fontMeasureSize: number = 100 // px
 
-function Metrics(props: Record<string, unknown>, ref: Ref<Measurable>) {
+export function FontMetrics({ ref }: { ref: Ref<Measurable> }): ReactElement {
   const measureNode = useRef<HTMLSpanElement>(null)
 
   useImperativeHandle(ref, () => {
@@ -37,8 +37,6 @@ function Metrics(props: Record<string, unknown>, ref: Ref<Measurable>) {
     </span>
   )
 }
-
-export const FontMetrics = forwardRef(Metrics)
 
 export const FontMetricsContext =
   createContext<Measurable>(DEFAULT_FONT_METRICS)

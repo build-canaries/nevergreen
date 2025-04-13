@@ -67,7 +67,7 @@ export function Nevergreen(): ReactElement {
   return (
     <Loading dark isLoading={isLoading} title="Nevergreen" focus>
       <FontMetrics ref={fontMetricsRef} />
-      <FontMetricsContext.Provider value={fontMetrics}>
+      <FontMetricsContext value={fontMetrics}>
         <Help />
         <div
           className={styles.nevergreen}
@@ -88,7 +88,7 @@ export function Nevergreen(): ReactElement {
             context={{ menusHidden, toggleMenusHidden, setBannerMessage }}
           />
         </div>
-      </FontMetricsContext.Provider>
+      </FontMetricsContext>
     </Loading>
   )
 }
