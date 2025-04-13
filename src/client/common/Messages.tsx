@@ -1,7 +1,7 @@
-import type { ReactElement } from 'react'
+import type { ReactElement, ReactNode } from 'react'
 import cn from 'classnames'
 import isEmpty from 'lodash/isEmpty'
-import isString from 'lodash/isString'
+import isArray from 'lodash/isArray'
 import { Warning } from './icons/Warning'
 import { Cross } from './icons/Cross'
 import { SecondaryButton } from './forms/Button'
@@ -19,7 +19,7 @@ export enum MessagesType {
 
 export interface MessagesProps {
   readonly type: MessagesType
-  readonly messages: ReadonlyArray<string> | string
+  readonly messages: ReadonlyArray<ReactNode> | ReactNode
   readonly className?: string
   readonly icon: ReactElement
   readonly onDismiss?: () => void
@@ -45,14 +45,14 @@ export function Messages({
         {icon}
       </div>
       <ul className={styles.messages}>
-        {isString(messages) ? (
-          <li className={styles.message}>{messages}</li>
-        ) : (
-          messages.map((msg) => (
-            <li key={msg} className={styles.message}>
+        {isArray(messages) ? (
+          messages.map((msg, i) => (
+            <li key={i} className={styles.message}>
               {msg}
             </li>
           ))
+        ) : (
+          <li className={styles.message}>{messages}</li>
         )}
       </ul>
       {onDismiss && (

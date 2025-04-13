@@ -26,10 +26,10 @@ $model-index: 9999;
   width: 100%;
 }
 
-@mixin blocking {
+@mixin blocking($margin-top: $spacing-height) {
   @include responsive.respond-to(tablet, desktop) {
     display: block;
-    margin: $spacing-height 0 0 0;
+    margin: $margin-top 0 0 0;
   }
 }
 

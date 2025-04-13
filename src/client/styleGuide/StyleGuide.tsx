@@ -6,6 +6,7 @@ import { Layout } from './Layout'
 import { Icons } from './Icons'
 import { Page } from '../common/Page'
 import { useNevergreenContext } from '../Nevergreen'
+import { UnhandledErrorMessage } from '../UnhandledErrorMessage'
 
 export function StyleGuide(): ReactElement {
   const { setBannerMessage } = useNevergreenContext()
@@ -24,6 +25,7 @@ export function StyleGuide(): ReactElement {
       <Layout />
       <Icons />
       <Typography />
+      <UnhandledErrorMessage />
     </Page>
   )
 }

@@ -8,5 +8,5 @@
 }
 
 .deleteConfiguration {
-  @include layout.blocking;
+  @include layout.blocking($margin-top: 5em);
 }
