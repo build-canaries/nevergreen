@@ -59,7 +59,7 @@ function calculateProjectsToShow(maxProjectsToShow: MaxProjectsToShow) {
 export function InterestingProjects({
   projects,
   feedErrors,
-}: InterestingProjectsProps): ReactElement {
+}: InterestingProjectsProps): ReactElement | null {
   const maxProjectsToShow = useAppSelector(getMaxProjectsToShow)
   const prognosisToShow = useAppSelector(getShowPrognosis)
   const [actualMaxProjectsToShow, setActualMaxProjectsToShow] = useState(
@@ -84,6 +84,10 @@ export function InterestingProjects({
     : filteredProjects
 
   const projectsNotShown = difference(filteredProjects, projectsToShow)
+
+  if (isEmpty(projectsToShow)) {
+    return null
+  }
 
   const projectComponents = projectsToShow.map((project) => {
     return (

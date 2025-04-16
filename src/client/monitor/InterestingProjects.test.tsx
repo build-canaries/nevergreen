@@ -4,8 +4,8 @@ import { buildFeed, buildFeedError, buildProject } from '../testUtils/builders'
 import { Prognosis, ProjectPrognosis } from '../domain/Project'
 import { feedsRoot } from '../settings/tracking/FeedsReducer'
 import {
-  MaxProjectsToShow,
   displaySettingsRoot,
+  MaxProjectsToShow,
 } from '../settings/display/DisplaySettingsReducer'
 import { screen } from '@testing-library/react'
 import { prognosisSettingsRoot } from '../settings/prognosis/PrognosisSettingsReducer'
@@ -375,4 +375,12 @@ it('should filter projects based on prognosis', () => {
 
   expect(screen.getByText('another-project-name')).toBeInTheDocument()
   expect(screen.queryByText('some-project-name')).not.toBeInTheDocument()
+})
+
+it('should render nothing if there are no interesting projects', () => {
+  const { container } = render(
+    <InterestingProjects projects={[]} feedErrors={[]} />,
+  )
+  // eslint-disable-next-line testing-library/no-node-access
+  expect(container.firstChild).toBeNull()
 })
