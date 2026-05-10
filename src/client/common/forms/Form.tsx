@@ -1,4 +1,4 @@
-import type { FormEvent, ReactElement, ReactNode } from 'react'
+import type { SubmitEvent, ReactElement, ReactNode } from 'react'
 import { useEffect, useState } from 'react'
 import cn from 'classnames'
 import isEmpty from 'lodash/isEmpty'
@@ -78,7 +78,7 @@ export function Form<Fields extends string>({
     }
   }, [clearErrors])
 
-  const handleSubmit = (evt: FormEvent) => {
+  const handleSubmit = (evt: SubmitEvent) => {
     evt.preventDefault()
 
     const validationErrors = onValidate()

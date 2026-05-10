@@ -14,11 +14,11 @@ interface LoadingProps {
 }
 
 export function Loading({
+  title,
   isLoading,
   children,
   className,
   dark = false,
-  title = '',
   focus = false,
 }: LoadingProps): ReactElement {
   const progressRef = useForceFocus<HTMLProgressElement>(focus, [isLoading])

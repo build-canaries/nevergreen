@@ -10,11 +10,10 @@ import { useElementResized } from '../common/ResizableHook'
 import { ScaleText } from '../common/ScaleText'
 import styles from './scaled-tile.scss'
 
-interface TileProps
-  extends DetailedHTMLProps<
-    InputHTMLAttributes<HTMLDivElement>,
-    HTMLDivElement
-  > {
+interface TileProps extends DetailedHTMLProps<
+  InputHTMLAttributes<HTMLDivElement>,
+  HTMLDivElement
+> {
   readonly header?: ReactNode | null
   readonly footer?: ReactNode | null
   readonly sentences: ReadonlyArray<string>

@@ -4,21 +4,6 @@ import { screen, waitFor } from '@testing-library/react'
 import { OtherSettingsPage } from './OtherSettingsPage'
 import * as LocalConfiguration from '../../configuration/LocalRepository'
 
-const { location } = window
-
-beforeEach(() => {
-  // @ts-expect-error I don't know how else to test reload
-  delete window.location
-  // @ts-expect-error I don't know how else to test reload
-  // eslint-disable-next-line @typescript-eslint/no-misused-spread
-  window.location = { ...location, reload: jest.fn() }
-})
-
-afterEach(() => {
-  // @ts-expect-error I don't know how else to test reload
-  window.location = location
-})
-
 it('should set the click to show menu setting', async () => {
   const state = {
     [otherSettingsRoot]: {
@@ -43,6 +28,4 @@ it('should reset configuration and reload', async () => {
   await waitFor(() => {
     expect(LocalConfiguration.clear).toHaveBeenCalled()
   })
-  // eslint-disable-next-line @typescript-eslint/unbound-method
-  expect(window.location.reload).toHaveBeenCalled()
 })

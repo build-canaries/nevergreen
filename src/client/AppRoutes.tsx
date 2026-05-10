@@ -97,9 +97,8 @@ export function appRoutes() {
               return {
                 path: `prognosis/${prognosis}`,
                 async lazy() {
-                  const { PrognosisEditPage } = await import(
-                    './settings/prognosis/PrognosisEditPage'
-                  )
+                  const { PrognosisEditPage } =
+                    await import('./settings/prognosis/PrognosisEditPage')
                   return {
                     element: <PrognosisEditPage prognosis={prognosis} />,
                   }

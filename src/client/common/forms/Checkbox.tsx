@@ -8,11 +8,10 @@ import { useId } from 'react'
 import classNames from 'classnames'
 import styles from './checkbox.scss'
 
-interface CheckboxProps
-  extends Omit<
-    DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
-    'type' | 'onToggle'
-  > {
+interface CheckboxProps extends Omit<
+  DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
+  'type' | 'onToggle'
+> {
   readonly children: ReactNode
   readonly onToggle: (checked: boolean) => void
   readonly className?: string

@@ -9,8 +9,7 @@ import { SortBy } from '../../display/DisplaySettingsReducer'
 
 export function useProjects(
   feed: Feed,
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-arguments
-): UseQueryResult<ReadonlyArray<Project>, Error> {
+): UseQueryResult<ReadonlyArray<Project>> {
   return useQuery({
     queryKey: ['available-projects', feed.trayId],
     queryFn: async ({ signal }) => {
@@ -33,7 +32,7 @@ export function useProjects(
         )
         throw new Error(errorMessages.join(', '))
       }
-      return fetchedProjects
+      return fetchedProjects as ReadonlyArray<Project>
     },
   })
 }

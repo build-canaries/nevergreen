@@ -6,11 +6,10 @@ import type {
 import cn from 'classnames'
 import styles from './group.scss'
 
-interface GroupProps
-  extends DetailedHTMLProps<
-    InputHTMLAttributes<HTMLFieldSetElement>,
-    HTMLFieldSetElement
-  > {
+interface GroupProps extends DetailedHTMLProps<
+  InputHTMLAttributes<HTMLFieldSetElement>,
+  HTMLFieldSetElement
+> {
   readonly title: string
 }
 

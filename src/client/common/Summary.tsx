@@ -7,11 +7,10 @@ export interface SummaryValues {
   readonly value: ReactElement | string | null
 }
 
-export interface SummaryProps
-  extends DetailedHTMLProps<
-    HTMLAttributes<HTMLDListElement>,
-    HTMLDListElement
-  > {
+export interface SummaryProps extends DetailedHTMLProps<
+  HTMLAttributes<HTMLDListElement>,
+  HTMLDListElement
+> {
   readonly values: ReadonlyArray<SummaryValues>
 }
 

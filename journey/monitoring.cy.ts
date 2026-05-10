@@ -8,12 +8,17 @@ describe('Monitoring', () => {
   it('adding and monitoring a feed', () => {
     cy.findByRole('link', { name: 'Add feed' }).click()
 
-    cy.findByLabelText('URL').type(Cypress.env('TRAY_URL'))
-    if (Cypress.env('TRAY_USERNAME') && Cypress.env('TRAY_PASSWORD')) {
-      cy.findByLabelText('Authentication').select('Basic auth')
-      cy.findByLabelText('Username').type(Cypress.env('TRAY_USERNAME'))
-      cy.findByLabelText('Password').type(Cypress.env('TRAY_PASSWORD'))
-    }
+    cy.env(['TRAY_URL', 'TRAY_USERNAME', 'TRAY_PASSWORD']).then(
+      ({ TRAY_URL, TRAY_USERNAME, TRAY_PASSWORD }) => {
+        cy.findByLabelText('URL').type(TRAY_URL)
+
+        if (TRAY_USERNAME && TRAY_PASSWORD) {
+          cy.findByLabelText('Authentication').select('Basic auth')
+          cy.findByLabelText('Username').type(TRAY_USERNAME)
+          cy.findByLabelText('Password').type(TRAY_PASSWORD)
+        }
+      },
+    )
     cy.findByRole('button', { name: 'Check connection' }).click()
     cy.findByText('Connected successfully').should('exist')
 
@@ -56,13 +61,17 @@ describe('Monitoring', () => {
 
     cy.findByRole('button', { name: 'Save changes' }).click()
 
-    if (Cypress.env('TRAY_URL_TOKEN')) {
-      cy.findByRole('link', { name: /Update connection/ }).click()
-      cy.findByLabelText('URL').clear().type(Cypress.env('TRAY_URL_TOKEN'))
-      cy.findByLabelText('Authentication').select('Access token')
-      cy.findByLabelText('Token').type(Cypress.env('TRAY_TOKEN'))
-      cy.findByRole('button', { name: 'Save changes' }).click()
-    }
+    cy.env(['TRAY_URL_TOKEN', 'TRAY_TOKEN']).then(
+      ({ TRAY_URL_TOKEN, TRAY_TOKEN }) => {
+        if (TRAY_URL_TOKEN) {
+          cy.findByRole('link', { name: /Update connection/ }).click()
+          cy.findByLabelText('URL').clear().type(TRAY_URL_TOKEN)
+          cy.findByLabelText('Authentication').select('Access token')
+          cy.findByLabelText('Token').type(TRAY_TOKEN)
+          cy.findByRole('button', { name: 'Save changes' }).click()
+        }
+      },
+    )
 
     cy.findByRole('link', { name: 'Tracking' }).click()
     cy.findByRole('heading', { name: 'renamed feed' }).should('exist')
