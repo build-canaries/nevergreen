@@ -1,5 +1,7 @@
 name: Nevergreen CI
 
+permissions: {}
+
 on:
   push:
     branches: [main]
@@ -15,16 +17,16 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup JDK
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: zulu
           java-version: 25.0.1
 
       - name: Install clojure tools-deps
-        uses: DeLaGuardo/setup-clojure@12.5
+        uses: DeLaGuardo/setup-clojure@13.6.0
         with:
           lein: 2.11.2
 
@@ -37,7 +39,7 @@ jobs:
           lein lint
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 26.1.0
 
@@ -56,7 +58,7 @@ jobs:
           lein uberjar
 
       - name: Journey tests
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v7
         env:
           CYPRESS_BASE_URL: 'http://localhost:5000'
           CYPRESS_TRAY_URL: 'https://raw.githubusercontent.com/build-canaries/nevergreen/main/cctray_xml_feed_mock/resources/cctray.xml'
@@ -69,7 +71,7 @@ jobs:
           wait-on: http://localhost:5000
 
       - name: Store test reports
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: test-reports
@@ -78,7 +80,7 @@ jobs:
             target/test-reports
 
       - name: Store Nevergreen artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: nevergreen-jar
           path: target/nevergreen-standalone.jar
