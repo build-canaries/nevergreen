@@ -2,8 +2,8 @@
   :description "A build monitor with attitude"
   :url "https://github.com/build-canaries/nevergreen"
   ; use lein deps :tree to check dependency problems and actual versions used
-  :dependencies [[org.clojure/clojure "1.12.4"]
-                 [ring "1.15.4"]
+  :dependencies [[org.clojure/clojure "1.12.5"]
+                 [ring "1.15.5"]
                  [compojure "1.7.2" :exclusions [ring/ring-codec]]
                  [environ "1.2.0"]
                  [cheshire "6.2.0"]
@@ -12,16 +12,16 @@
                  [clj-http "3.13.1" :exclusions [commons-codec commons-io]]
                  [ring-curl "1.0.1"]
                  [ring/ring-json "0.5.1"]
-                 [ring/ring-defaults "0.7.0"]
+                 [ring/ring-defaults "0.7.1"]
                  [bk/ring-gzip "0.3.0"]
                  [ring-basic-authentication "1.2.0"]
                  [base64-clj "0.1.1"]
                  [camel-snake-kebab "0.4.3"]
                  [com.cemerick/url "0.1.1" :exclusions [com.cemerick/clojurescript.test]]
-                 [ch.qos.logback/logback-classic "1.5.32" :exclusions [org.slf4j/slf4j-api]]
-                 [org.slf4j/log4j-over-slf4j "2.0.17"]
-                 [org.slf4j/jul-to-slf4j "2.0.17"]
-                 [org.slf4j/jcl-over-slf4j "2.0.17"]]
+                 [ch.qos.logback/logback-classic "1.6.3" :exclusions [org.slf4j/slf4j-api]]
+                 [org.slf4j/log4j-over-slf4j "2.0.18"]
+                 [org.slf4j/jul-to-slf4j "2.0.18"]
+                 [org.slf4j/jcl-over-slf4j "2.0.18"]]
   :min-lein-version "2.0.0"
   :uberjar-name "nevergreen-standalone.jar"
   :main nevergreen.app
@@ -33,7 +33,7 @@
   :aliases {"lint"          ["with-profile" "+test" "eastwood"]
             "coverage"      ["with-profile" "+test" "cloverage"]
             "check-updates" ["ancient" ":all"]}
-  :profiles {:dev  {:plugins [[lein-ancient "0.7.0"]
+  :profiles {:dev  {:plugins [[lein-ancient "1.0.0"]
                               [jonase/eastwood "1.4.3"]
                               [lein-cloverage "1.2.4"]]}
              :test {:jvm-opts ["-Dlogback.configurationFile=./src/logback-tests.xml"]}}
