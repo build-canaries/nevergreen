@@ -35,9 +35,9 @@ export enum TrackingMode {
 const Feed = z.object({
   trayId: z.string(),
   url: z.string(),
-  authType: z.nativeEnum(AuthTypes),
-  trackingMode: z.nativeEnum(TrackingMode),
-  serverType: z.nativeEnum(ServerTypes).optional(),
+  authType: z.enum(AuthTypes),
+  trackingMode: z.enum(TrackingMode),
+  serverType: z.enum(ServerTypes).optional(),
   encryptedAuth: z.string().optional(),
   name: z.string().optional(),
   timestamp: z.string().optional(),

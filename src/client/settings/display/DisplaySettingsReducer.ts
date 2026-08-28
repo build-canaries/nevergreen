@@ -27,8 +27,8 @@ const DisplaySettingsState = z.object({
   refreshTime: z.number(),
   showBuildLabel: z.boolean(),
   showPrognosisName: z.boolean(),
-  maxProjectsToShow: z.nativeEnum(MaxProjectsToShow),
-  sort: z.nativeEnum(SortBy),
+  maxProjectsToShow: z.enum(MaxProjectsToShow),
+  sort: z.enum(SortBy),
 })
 
 export const DisplaySettingsConfiguration = DisplaySettingsState.partial()

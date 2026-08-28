@@ -52,8 +52,16 @@ it('should show an error if the data is semantically invalid (missing required a
   )
   await user.click(screen.getByRole('button', { name: 'Import' }))
 
-  expect(screen.getByText('Required at $.trays.id.trayId')).toBeInTheDocument()
-  expect(screen.getByText('Required at $.trays.id.url')).toBeInTheDocument()
+  expect(
+    screen.getByText(
+      'Invalid input: expected string, received undefined at $.trays.id.trayId',
+    ),
+  ).toBeInTheDocument()
+  expect(
+    screen.getByText(
+      'Invalid input: expected string, received undefined at $.trays.id.url',
+    ),
+  ).toBeInTheDocument()
   expect(screen.getByDisplayValue(invalidConfiguration)).toBeInTheDocument()
 })
 

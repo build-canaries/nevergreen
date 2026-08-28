@@ -7,21 +7,21 @@ import {
   backupExported,
   removeBackupLocation,
 } from './RemoteLocationsActions'
-import { z } from 'zod'
+import * as z from 'zod'
 
 export const remoteLocationsRoot = 'backupRemoteLocations'
 
 const RemoteLocation = z.object({
   internalId: z.string(),
   url: z.string(),
-  where: z.nativeEnum(RemoteLocationOptions),
+  where: z.enum(RemoteLocationOptions),
   automaticallyExport: z.boolean().optional(),
   externalId: z.string().optional(),
   encryptedAccessToken: z.string().optional(),
   description: z.string().optional(),
 })
 
-export const RemoteLocationsState = z.record(RemoteLocation)
+export const RemoteLocationsState = z.record(z.string(), RemoteLocation)
 
 export type RemoteLocation = z.infer<typeof RemoteLocation>
 export type RemoteLocationsState = z.infer<typeof RemoteLocationsState>

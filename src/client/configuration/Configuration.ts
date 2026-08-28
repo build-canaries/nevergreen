@@ -35,7 +35,7 @@ import {
   otherSettingsRoot,
   OtherSettingsState,
 } from '../settings/other/OtherSettingsReducer'
-import { z } from 'zod'
+import * as z from 'zod'
 import { errorMessage } from '../common/Utils'
 import {
   PrognosisSettingsConfiguration,
@@ -74,7 +74,7 @@ function validateIdsMatch<K extends string>(
   Object.entries(o).forEach(([key, val]) => {
     if (val[idKey] !== key) {
       ctx.addIssue({
-        code: z.ZodIssueCode.custom,
+        code: 'custom',
         message: `Mismatched ID expected "${key}", received "${val[idKey]}"`,
         path: [key, idKey],
       })
@@ -121,7 +121,7 @@ export function toExportableConfigurationJson(state: RootState): string {
   return toJson(cloned)
 }
 
-function formatZodIssue(zi: z.ZodIssue): string {
+function formatZodIssue(zi: z.core.$ZodIssue): string {
   return `${zi.message} at $.${zi.path.join('.')}`
 }
 

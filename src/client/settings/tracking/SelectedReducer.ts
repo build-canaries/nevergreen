@@ -3,11 +3,11 @@ import type { RootState } from '../../configuration/ReduxStore'
 import { feedAdded, feedRemoved, feedUpdated } from './TrackingActionCreators'
 import { configurationImported } from '../backup/BackupActionCreators'
 import { TrackingMode } from './FeedsReducer'
-import { z } from 'zod'
+import * as z from 'zod'
 
 export const selectedRoot = 'selected'
 
-export const SelectedState = z.record(z.array(z.string()))
+export const SelectedState = z.record(z.string(), z.array(z.string()))
 
 export type SelectedState = z.infer<typeof SelectedState>
 
