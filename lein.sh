@@ -4,9 +4,9 @@
 # somewhere on your $PATH, like ~/bin. The rest of Leiningen will be
 # installed upon first run into the ~/.lein/self-installs directory.
 
-export LEIN_VERSION="2.11.2"
+export LEIN_VERSION="2.13.0"
 # Must be sha256sum, will be replaced by bin/release
-export LEIN_CHECKSUM='7d31ae23ae769e927438b0cd55d15a93e7dabab09fd4fc15877979161e108774'
+export LEIN_CHECKSUM='5f5231f06c3c7924e3241e3dfa52885577fb44ddf8a9ea373d2c5e2f27217565'
 
 case $LEIN_VERSION in
     *SNAPSHOT) SNAPSHOT="YES" ;;
@@ -285,7 +285,6 @@ function cmd_run {
         "$LEIN_JAVA_CMD" \
             -Dfile.encoding=UTF-8 \
             -Dmaven.wagon.http.ssl.easy=false \
-            -Dmaven.wagon.rto=10000 \
             $LEIN_JVM_OPTS \
             -Dleiningen.input-checksum="$INPUT_CHECKSUM" \
             -Dleiningen.original.pwd="$ORIGINAL_PWD" \
@@ -346,7 +345,7 @@ for f in "/etc/leinrc" "$LEIN_HOME/leinrc" ".leinrc"; do
 done
 
 if $cygwin; then
-    export LEIN_HOME=$(cygpath -w "$LEIN_HOME")
+    export LEIN_HOME=$(cygpath -m "$LEIN_HOME")
 fi
 
 # normalize $0 on certain BSDs
@@ -446,7 +445,6 @@ if $cygterm; then
   stty -icanon min 1 -echo > /dev/null 2>&1
 fi
 
-# TODO: investigate http://skife.org/java/unix/2.11.26/20/really_executable_jars.html
 # If you're packaging this for a package manager (.deb, homebrew, etc)
 # you need to remove the self-install and upgrade functionality or see lein-pkg.
 if [ "$1" = "self-install" ]; then
