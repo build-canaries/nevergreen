@@ -2,8 +2,8 @@
   :description "A build monitor with attitude"
   :url "https://github.com/build-canaries/nevergreen"
   ; use lein deps :tree to check dependency problems and actual versions used
-  :dependencies [[org.clojure/clojure "1.12.5"]
-                 [ring "1.15.5"]
+  :dependencies [[org.clojure/clojure "1.12.6"]
+                 [ring "1.15.6"]
                  [compojure "1.7.2" :exclusions [ring/ring-codec]]
                  [environ "1.2.0"]
                  [cheshire "6.2.0"]
@@ -18,10 +18,10 @@
                  [base64-clj "0.1.1"]
                  [camel-snake-kebab "0.4.3"]
                  [com.cemerick/url "0.1.1" :exclusions [com.cemerick/clojurescript.test]]
-                 [ch.qos.logback/logback-classic "1.6.3" :exclusions [org.slf4j/slf4j-api]]
-                 [org.slf4j/log4j-over-slf4j "2.0.18"]
-                 [org.slf4j/jul-to-slf4j "2.0.18"]
-                 [org.slf4j/jcl-over-slf4j "2.0.18"]]
+                 [ch.qos.logback/logback-classic "1.6.6" :exclusions [org.slf4j/slf4j-api]]
+                 [org.slf4j/log4j-over-slf4j "2.0.20"]
+                 [org.slf4j/jul-to-slf4j "2.0.20"]
+                 [org.slf4j/jcl-over-slf4j "2.0.20"]]
   :min-lein-version "2.0.0"
   :uberjar-name "nevergreen-standalone.jar"
   :main nevergreen.app
