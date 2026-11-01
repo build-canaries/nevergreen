@@ -41,7 +41,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
-          node-version: 26.1.0
+          node-version: 26.13.0
 
       - name: Client - dependencies
         run: npm ci
