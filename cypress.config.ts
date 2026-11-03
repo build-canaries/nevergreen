@@ -2,7 +2,7 @@ import { defineConfig } from 'cypress'
 
 export default defineConfig({
   e2e: {
-    allowCypressEnv: false,
+    defaultBrowser: 'chrome',
     baseUrl: 'http://localhost:5000',
     projectId: 'oc7zg3',
     reporter: 'junit',
